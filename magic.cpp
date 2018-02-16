@@ -40,6 +40,8 @@ int magic()
     }
     efsource = 0;
     efbad = 0;
+
+
     if (efid >= 300)
     {
         if (efid < 661)
@@ -1138,7 +1140,14 @@ int magic()
             }
         }
     }
+
+
+
 label_2181_internal:
+
+
+
+
     switch (efid)
     {
     case 636:
@@ -1166,14 +1175,14 @@ label_2181_internal:
                     + u8" tentacles."s);
         }
         dmgsan(tc, rnd(role(dice1, dice2, bonus) + 1));
-        goto label_2186_internal;
+        break;
     case 1136:
         if (mdata(6) != 1)
         {
             txt(lang(
                 u8"それはグローバルマップで読む必要がある。"s,
                 u8"You need to read it while you are in the global map."s));
-            goto label_2186_internal;
+            break;
         }
         if (efstatus <= -1)
         {
@@ -1187,7 +1196,7 @@ label_2181_internal:
                 {
                     cell_refresh(inv[ci].position.x, inv[ci].position.y);
                 }
-                goto label_2186_internal;
+                break;
             }
         }
         if (inv[ci].param1 == 0)
@@ -1302,7 +1311,7 @@ label_2181_internal:
         redraw(1);
         press();
         snd(71);
-        goto label_2186_internal;
+        break;
     case 1135:
         if (efstatus <= -1)
         {
@@ -1321,7 +1330,7 @@ label_2181_internal:
                 modimp(tc, -15);
             }
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         cdata[tc].emotion_icon = 317;
         if (potionspill || potionthrow)
@@ -1332,7 +1341,7 @@ label_2181_internal:
             modimp(tc, std::clamp(efp / 15, 0, 15));
             dmgcon(tc, 7, 100);
             lovemiracle(tc);
-            goto label_2186_internal;
+            break;
         }
         if (tc == 0)
         {
@@ -1348,7 +1357,7 @@ label_2181_internal:
             modimp(tc, std::clamp(efp / 4, 0, 25));
         }
         dmgcon(tc, 7, 500);
-        goto label_2186_internal;
+        break;
     case 654:
         if (is_in_fov(tc))
         {
@@ -1359,13 +1368,13 @@ label_2181_internal:
                     + your(tc) + u8" body!"s));
         }
         get_pregnant();
-        goto label_2186_internal;
+        break;
     case 626:
         txt(lang(
             u8"あなたは自分の状態を調べた。"s, u8"You examine yourself."s));
         animeload(10, tc);
         label_1964();
-        goto label_2186_internal;
+        break;
     case 1101:
         if (is_in_fov(tc))
         {
@@ -1413,7 +1422,7 @@ label_2181_internal:
         }
         eatstatus(efstatus, tc);
         animeload(15, tc);
-        goto label_2186_internal;
+        break;
     case 1102:
         if (is_in_fov(tc))
         {
@@ -1443,7 +1452,7 @@ label_2181_internal:
         }
         dmgcon(tc, 8, efp);
         eatstatus(efstatus, tc);
-        goto label_2186_internal;
+        break;
     case 1116:
         if (is_in_fov(tc))
         {
@@ -1467,7 +1476,7 @@ label_2181_internal:
             }
         }
         dmghp(tc, efp * efstatusfix(500, 400, 100, 50) / 1000, -15, 63, efp);
-        goto label_2186_internal;
+        break;
     case 1103:
         if (is_in_fov(tc))
         {
@@ -1483,7 +1492,7 @@ label_2181_internal:
             }
         }
         sickifcursed(efstatus, tc, 1);
-        goto label_2186_internal;
+        break;
     case 1146:
         if (is_in_fov(tc))
         {
@@ -1494,7 +1503,7 @@ label_2181_internal:
         }
         healsp(tc, 25);
         sickifcursed(efstatus, tc, 1);
-        goto label_2186_internal;
+        break;
     case 1147:
         if (is_in_fov(tc))
         {
@@ -1505,7 +1514,7 @@ label_2181_internal:
         }
         healsp(tc, 100);
         sickifcursed(efstatus, tc, 1);
-        goto label_2186_internal;
+        break;
     case 1142:
         if (cdatan(2, tc) == u8"snail"s)
         {
@@ -1533,7 +1542,7 @@ label_2181_internal:
             txtmore();
             txt(lang(u8"「しょっぱ〜」"s, cnvtalk(u8"Salty!"s)));
         }
-        goto label_2186_internal;
+        break;
     case 1130:
         if (is_in_fov(tc))
         {
@@ -1547,7 +1556,7 @@ label_2181_internal:
             }
         }
         sickifcursed(efstatus, tc, 1);
-        goto label_2186_internal;
+        break;
     case 300:
         if (gdata_executing_immediate_quest_type == 1008
             || gdata_executing_immediate_quest_type == 1010)
@@ -1567,7 +1576,7 @@ label_2181_internal:
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
                     dmgsp(0, the_ability_db[efid].cost / 2 + 1);
-                    goto label_2186_internal;
+                    break;
                 }
             }
             dmgsp(
@@ -1580,7 +1589,7 @@ label_2181_internal:
         invctrl(1) = 0;
         snd(100);
         ctrl_inventory();
-        goto label_2186_internal;
+        break;
     case 301:
         if (cc == 0)
         {
@@ -1592,7 +1601,7 @@ label_2181_internal:
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
                     dmgsp(0, the_ability_db[efid].cost / 2 + 1);
-                    goto label_2186_internal;
+                    break;
                 }
             }
             dmgsp(
@@ -1611,7 +1620,7 @@ label_2181_internal:
                     txt(lang(
                         u8"降りるスペースがない。"s,
                         u8"There's no place to get off."s));
-                    goto label_2186_internal;
+                    break;
                 }
                 cell_setchara(gdata_mount, rtval, rtval(1));
                 txt(lang(
@@ -1636,7 +1645,7 @@ label_2181_internal:
                             + cnvtalk(u8"It was nice."s));
                 }
                 ride_end();
-                goto label_2186_internal;
+                break;
             }
         }
         if (tc >= 16)
@@ -1644,14 +1653,14 @@ label_2181_internal:
             txt(lang(
                 u8"仲間にしか騎乗できない。"s,
                 u8"You can only ride an ally."s));
-            goto label_2186_internal;
+            break;
         }
         if (cbit(963, tc) == 1 || cbit(971, tc) == 1)
         {
             txt(lang(
                 u8"護衛対象には騎乗できない。"s,
                 u8"You can't ride a client."s));
-            goto label_2186_internal;
+            break;
         }
         if (tc == cc)
         {
@@ -1661,14 +1670,14 @@ label_2181_internal:
                     name(cc) + u8"は自分に乗ろうとした。"s,
                     u8"You try to ride yourself."s));
             }
-            goto label_2186_internal;
+            break;
         }
         if (cdata[tc].current_map != 0)
         {
             txt(lang(
                 u8"その仲間はこの場所に滞在中だ。"s,
                 u8"The ally currently stays in this area."s));
-            goto label_2186_internal;
+            break;
         }
         if (gdata_mount != 0)
         {
@@ -1698,7 +1707,7 @@ label_2181_internal:
                     name(gdata_mount) + u8" "s + cnvtalk(u8"Be gentle."s));
             }
         }
-        goto label_2186_internal;
+        break;
     case 183:
         if (cc != 0)
         {
@@ -1746,7 +1755,7 @@ label_2181_internal:
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
                     dmgsp(0, the_ability_db[efid].cost / 2 + 1);
-                    goto label_2186_internal;
+                    break;
                 }
             }
             dmgsp(
@@ -1755,7 +1764,7 @@ label_2181_internal:
                     + the_ability_db[efid].cost / 2 + 1);
         }
         label_2146();
-        goto label_2186_internal;
+        break;
     case 184:
         if (sdata(184, 0) == 0)
         {
@@ -1784,7 +1793,7 @@ label_2181_internal:
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
                     dmgsp(0, the_ability_db[efid].cost / 2 + 1);
-                    goto label_2186_internal;
+                    break;
                 }
             }
             dmgsp(
@@ -1793,7 +1802,7 @@ label_2181_internal:
                     + the_ability_db[efid].cost / 2 + 1);
         }
         cook();
-        goto label_2186_internal;
+        break;
     case 185:
         if (sdata(185, 0) == 0)
         {
@@ -1899,7 +1908,7 @@ label_2181_internal:
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
                     dmgsp(0, the_ability_db[efid].cost / 2 + 1);
-                    goto label_2186_internal;
+                    break;
                 }
             }
             dmgsp(
@@ -1911,7 +1920,7 @@ label_2181_internal:
         --inv[ci].count;
         rowactre = 0;
         label_2156();
-        goto label_2186_internal;
+        break;
     case 406:
     case 407:
         if (efstatus <= -1)
@@ -1961,7 +1970,7 @@ label_2181_internal:
         }
         addbuff(tc, 10, efp, 5 + efp / 30);
         animeload(11, tc);
-        goto label_2186_internal;
+        break;
     case 1120:
         txtef(5);
         txt(lang(
@@ -1969,13 +1978,13 @@ label_2181_internal:
             u8"A golden aura wraps "s + name(tc) + u8"!"s));
         label_2188();
         play_animation(5);
-        goto label_2186_internal;
+        break;
     case 1117:
         if (tc >= 16)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         if (efstatus >= 0)
         {
@@ -2009,7 +2018,7 @@ label_2181_internal:
                 matgetmain(p, 1);
             }
         }
-        goto label_2186_internal;
+        break;
     case 632:
     case 454:
     case 1144:
@@ -2028,14 +2037,14 @@ label_2181_internal:
                     + name(tc) + u8"."s));
             if (rnd(3))
             {
-                goto label_2186_internal;
+                break;
             }
             txtmore();
         }
         if (tc != 0)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-            goto label_2186_internal;
+            break;
         }
         if (encfind(tc, 33) != -1)
         {
@@ -2044,7 +2053,7 @@ label_2181_internal:
                 txt(lang(
                     u8"あなたは変異を受け付けなかった。"s,
                     u8"You resist the threat of mutation."s));
-                goto label_2186_internal;
+                break;
             }
         }
     label_2182_internal:
@@ -2131,12 +2140,12 @@ label_2181_internal:
         }
         r1 = 0;
         refresh_character();
-        goto label_2186_internal;
+        break;
     case 1121:
         if (tc != 0)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-            goto label_2186_internal;
+            break;
         }
         if (efstatus <= -1)
         {
@@ -2203,25 +2212,25 @@ label_2181_internal:
         }
         r1 = 0;
         refresh_character();
-        goto label_2186_internal;
+        break;
     case 411:
         if (cc != 0)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         invsubroutine = 1;
         invctrl = 13;
         snd(100);
         ctrl_inventory();
-        goto label_2186_internal;
+        break;
     case 461:
         if (mdata(6) == 1)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         if (efstatus <= -1)
         {
@@ -2239,7 +2248,7 @@ label_2181_internal:
                 }
             }
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         allyctrl = 2;
         {
@@ -2248,7 +2257,7 @@ label_2181_internal:
             {
                 txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
                 obvious = 0;
-                goto label_2186_internal;
+                break;
             }
             if (bonus < rnd(100))
             {
@@ -2259,7 +2268,7 @@ label_2181_internal:
                         name(cc) + your(cc)
                             + u8" prayer doesn't reach the underworld."s));
                 }
-                goto label_2186_internal;
+                break;
             }
             rc = stat;
         }
@@ -2286,7 +2295,7 @@ label_2181_internal:
                 modkarma(0, 2);
             }
         }
-        goto label_2186_internal;
+        break;
     case 412:
         if (efstatus == 0)
         {
@@ -2408,12 +2417,12 @@ label_2181_internal:
         }
         r1 = tc;
         refresh_character();
-        goto label_2186_internal;
+        break;
     case 413:
         if (tc >= 16)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-            goto label_2186_internal;
+            break;
         }
         if (efstatus <= -1)
         {
@@ -2421,7 +2430,7 @@ label_2181_internal:
             txt(lang(
                 u8"何かがあなたの耳元でささやいたが、あなたは聞き取ることができなかった。"s,
                 u8"You hear a sepulchral whisper but the voice is too small to distinguish a word."s));
-            goto label_2186_internal;
+            break;
         }
         if (std::empty(artifactlocation))
         {
@@ -2435,13 +2444,13 @@ label_2181_internal:
                 artifactlocation, [](const auto& line) { txt(cnven(line)); });
             artifactlocation.clear();
         }
-        goto label_2186_internal;
+        break;
     case 1104:
         if (tc != 0)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         f = 0;
         {
@@ -2532,10 +2541,10 @@ label_2181_internal:
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         autosave = 1 * (gdata_current_map != 35);
-        goto label_2186_internal;
+        break;
     case 1143:
         if (efstatus <= 0)
         {
@@ -2543,7 +2552,7 @@ label_2181_internal:
             {
                 txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
                 obvious = 0;
-                goto label_2186_internal;
+                break;
             }
             --cdata[tc].level;
             cdata[tc].experience = 0;
@@ -2587,7 +2596,7 @@ label_2181_internal:
             animeload(8, tc);
         }
         refresh_character();
-        goto label_2186_internal;
+        break;
     case 1105:
     {
         int cnt = 0;
@@ -2643,19 +2652,19 @@ label_2181_internal:
         r1 = tc;
         refresh_character();
         autosave = 1 * (gdata_current_map != 35);
-        goto label_2186_internal;
+        break;
     case 1107:
         if (tc != 0)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         if (cdata[0].god == 0)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         if (efstatus <= -1)
         {
@@ -2665,7 +2674,7 @@ label_2181_internal:
             snd(117);
             animeload(14, 0);
             skillexp(181, 0, -1000);
-            goto label_2186_internal;
+            break;
         }
         if (cdata[0].god == 0)
         {
@@ -2695,7 +2704,7 @@ label_2181_internal:
         }
         r1 = tc;
         refresh_character();
-        goto label_2186_internal;
+        break;
     case 1119:
     {
         int cnt = 0;
@@ -2773,14 +2782,14 @@ label_2181_internal:
         r1 = tc;
         refresh_character();
         autosave = 1 * (gdata_current_map != 35);
-        goto label_2186_internal;
+        break;
     case 1106:
         i = rnd(10) + 10;
         skillexp(i, tc, efstatusfix(-2000, -2000, -1000, -250));
         play_animation(6);
         r1 = tc;
         refresh_character();
-        goto label_2186_internal;
+        break;
     case 1139:
         txt(lang(
             name(tc) + u8"の血は沸きあがるように熱くなった。"s,
@@ -2795,7 +2804,7 @@ label_2181_internal:
         }
         r1 = tc;
         refresh_character();
-        goto label_2186_internal;
+        break;
     case 1113:
         if (efstatus >= 1)
         {
@@ -2844,28 +2853,28 @@ label_2181_internal:
             }
         }
         autosave = 1 * (gdata_current_map != 35);
-        goto label_2186_internal;
+        break;
     case 653:
         if (tc < 57)
         {
-            goto label_2186_internal;
+            break;
         }
         if (cdata[tc].quality >= 4)
         {
-            goto label_2186_internal;
+            break;
         }
         txt(lang(
             name(tc) + u8"は消え去った。"s,
             name(tc) + u8" vanish"s + _s(tc) + u8"."s));
         chara_vanquish(tc);
-        goto label_2186_internal;
+        break;
     case 430:
     case 429:
         if (tc >= 16)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         p = 1;
         if (efid == 430)
@@ -2951,11 +2960,11 @@ label_2181_internal:
         redraw(0);
         update_minimap();
         update_screen();
-        goto label_2186_internal;
+        break;
     case 658:
         if (cdata[tc].hp > cdata[tc].max_hp / 8)
         {
-            goto label_2186_internal;
+            break;
         }
         if (is_in_fov(tc))
         {
@@ -2980,7 +2989,7 @@ label_2181_internal:
             }
         }
         dmghp(tc, cdata[tc].max_hp, cc, 658);
-        goto label_2186_internal;
+        break;
     case 440:
     case 439:
         if (efid == 439)
@@ -3083,18 +3092,18 @@ label_2181_internal:
         }
         r1 = tc;
         refresh_character();
-        goto label_2186_internal;
+        break;
     case 441:
         what_do_you_wish_for();
         screenupdate = -1;
         label_1416();
-        goto label_2186_internal;
+        break;
     case 1141:
         if (tc != 0)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         if (gdata_is_returning_or_escaping != 0)
         {
@@ -3125,7 +3134,7 @@ label_2181_internal:
                 show_prompt();
                 if (rtval != 0)
                 {
-                    goto label_2186_internal;
+                    break;
                 }
             }
             txt(lang(
@@ -3155,13 +3164,13 @@ label_2181_internal:
             }
             gdata_is_returning_or_escaping = 5 + rnd(10);
         }
-        goto label_2186_internal;
+        break;
     case 428:
         if (tc != 0)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         if (gdata_is_returning_or_escaping != 0)
         {
@@ -3182,7 +3191,7 @@ label_2181_internal:
                 }
             }
         }
-        goto label_2186_internal;
+        break;
     case 621:
         healmp(tc, efp / 2 + rnd((efp / 2 + 1)));
         if (is_in_fov(tc))
@@ -3192,7 +3201,7 @@ label_2181_internal:
                 name(tc) + your(tc) + u8" mana is restored."s));
             play_animation(5);
         }
-        goto label_2186_internal;
+        break;
     case 624:
         healmp(tc, role(dice1, dice2, bonus));
         if (is_in_fov(tc))
@@ -3202,7 +3211,7 @@ label_2181_internal:
                 name(tc) + u8" absorb"s + _s(tc) + u8" mana from the air."s));
             play_animation(5);
         }
-        goto label_2186_internal;
+        break;
     case 1108:
         if (is_in_fov(tc))
         {
@@ -3222,7 +3231,7 @@ label_2181_internal:
             }
         }
         dmgcon(tc, 1, efp);
-        goto label_2186_internal;
+        break;
     case 1111:
         if (is_in_fov(tc))
         {
@@ -3231,7 +3240,7 @@ label_2181_internal:
                 u8"Ink squirts into "s + name(tc) + your(tc) + u8" face!"s));
         }
         dmgcon(tc, 4, efp);
-        goto label_2186_internal;
+        break;
     case 1109:
         if (is_in_fov(tc))
         {
@@ -3241,7 +3250,7 @@ label_2181_internal:
                     + u8" nostrils!"s));
         }
         dmgcon(tc, 5, efp);
-        goto label_2186_internal;
+        break;
     case 1110:
         if (is_in_fov(tc))
         {
@@ -3250,7 +3259,7 @@ label_2181_internal:
                 name(tc) + u8" get"s + _s(tc) + u8" numbness!"s));
         }
         dmgcon(tc, 3, efp);
-        goto label_2186_internal;
+        break;
     case 1112:
         if (is_in_fov(tc))
         {
@@ -3259,7 +3268,7 @@ label_2181_internal:
                 u8"Strange sweet liquid splashs onto "s + name(tc) + u8"!"s));
         }
         dmgcon(tc, 2, efp);
-        goto label_2186_internal;
+        break;
     case 645:
     case 1114:
     label_2183_internal:
@@ -3281,7 +3290,7 @@ label_2181_internal:
         }
         if (rnd(p) > efp / 2 + (efstatus <= -1) * 100)
         {
-            goto label_2186_internal;
+            break;
         }
         if (tc < 16)
         {
@@ -3292,7 +3301,7 @@ label_2181_internal:
                     txt(lang(
                         u8"あなたは祈祷を捧げ呪いのつぶやきを無効にした。"s,
                         u8"Your prayer nullifies the curse."s));
-                    goto label_2186_internal;
+                    break;
                 }
             }
         }
@@ -3369,7 +3378,7 @@ label_2181_internal:
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
         }
-        goto label_2186_internal;
+        break;
     case 1118:
         f = 0;
         {
@@ -3399,7 +3408,7 @@ label_2181_internal:
         }
         r1 = tc;
         refresh_character();
-        goto label_2186_internal;
+        break;
     case 1138:
     case 1123:
     case 1122:
@@ -3407,7 +3416,7 @@ label_2181_internal:
         if (cc != 0 && cc < 16)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-            goto label_2186_internal;
+            break;
         }
         flt(cdata[0].level / 2 + 5, 3);
         p = 0;
@@ -3440,13 +3449,13 @@ label_2181_internal:
         characreate(56, p, -3, 0);
         rc = 56;
         new_ally_joins();
-        goto label_2186_internal;
+        break;
     case 435:
         if (cc != 0 || tc == 0 || cdata[tc].relationship == 10)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         if (gdata_current_map == 6 || gdata_current_map == 40
             || gdata_current_map == 42)
@@ -3455,7 +3464,7 @@ label_2181_internal:
             txt(lang(
                 u8"この場所では効果がない。"s,
                 u8"The effect doesn't work in this area."s));
-            goto label_2186_internal;
+            break;
         }
         f = 1;
         {
@@ -3492,7 +3501,7 @@ label_2181_internal:
                 name(tc) + u8"は支配できない。"s,
                 name(tc) + u8" cannot be charmed."s));
         }
-        goto label_2186_internal;
+        break;
     case 436:
     case 437:
     case 455:
@@ -3590,13 +3599,13 @@ label_2181_internal:
                 }
             }
         }
-        goto label_2186_internal;
+        break;
     case 1145:
         if (cc != 0)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         invsubroutine = 1;
         invctrl(0) = 23;
@@ -3607,7 +3616,7 @@ label_2181_internal:
         {
             txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         txt(lang(
             u8"アーティファクトの新しい銘は？"s,
@@ -3619,7 +3628,7 @@ label_2181_internal:
             {
                 obvious = 0;
                 randomize();
-                goto label_2186_internal;
+                break;
             }
             p = stat;
         }
@@ -3628,13 +3637,13 @@ label_2181_internal:
         txt(lang(
             u8"それは"s + listn(0, p) + u8"という銘になった。"s,
             u8"It's now called "s + listn(0, p) + u8"."s));
-        goto label_2186_internal;
+        break;
     case 49:
         if (cc != 0)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         invsubroutine = 1;
         invctrl(0) = 23;
@@ -3651,7 +3660,7 @@ label_2181_internal:
                 u8"This item leaves no room for improvement."s));
             fixmaterial = 0;
             objfix = 0;
-            goto label_2186_internal;
+            break;
         }
         randomize(inv[efcibk].param1);
         equip = inv[ci].body_part;
@@ -3694,14 +3703,14 @@ label_2181_internal:
         --inv[ci].number;
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
         autosave = 1 * (gdata_current_map != 35);
-        goto label_2186_internal;
+        break;
     case 21:
     case 1127:
         if (cc != 0)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         invsubroutine = 1;
         invctrl(0) = 23;
@@ -3728,7 +3737,7 @@ label_2181_internal:
                     txt(lang(
                         u8"アーティファクトの再生成にはパワーが足りない。"s,
                         u8"More magic power is needed to reconstruct an artifact."s));
-                    goto label_2186_internal;
+                    break;
                 }
                 animeload(8, cc);
                 txt(lang(
@@ -3778,13 +3787,13 @@ label_2181_internal:
         refresh_character();
         fixmaterial = 0;
         objfix = 0;
-        goto label_2186_internal;
+        break;
     case 1128:
         if (cc != 0)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         snd(24);
         p = rnd((efp + 1)) / 100 + 1;
@@ -3798,13 +3807,13 @@ label_2181_internal:
                 + u8"個の遺産を相続できる。"s,
             u8"You can now inherit "s + gdata_rights_to_succeed_to
                 + u8" items."s));
-        goto label_2186_internal;
+        break;
     case 1124:
     case 1125:
         if (cc != 0)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-            goto label_2186_internal;
+            break;
         }
         invsubroutine = 1;
         if (efid == 1124)
@@ -3846,14 +3855,14 @@ label_2181_internal:
                 obvious = 0;
             }
         }
-        goto label_2186_internal;
+        break;
     case 630:
     case 1129:
         if (cc != 0)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         if (efid == 630)
         {
@@ -3862,7 +3871,7 @@ label_2181_internal:
                 txt(lang(
                     u8"充填するには最低でも魔力の貯蓄が10必要だ。"s,
                     u8"You need at least 10 recharge powers to recharge items."s));
-                goto label_2186_internal;
+                break;
             }
             gdata_charge_power -= 10;
             txt(lang(
@@ -3887,7 +3896,7 @@ label_2181_internal:
                     txt(lang(
                         u8"それは充填ができないようだ。"s,
                         u8"You can't recharge this item."s));
-                    goto label_2186_internal;
+                    break;
                 }
                 f = 1;
                 if (inv[ci].count > ichargelevel)
@@ -3899,7 +3908,7 @@ label_2181_internal:
                     txt(lang(
                         itemname(ci) + u8"はこれ以上充填できないようだ。"s,
                         itemname(ci) + u8" cannot be recharged anymore."s));
-                    goto label_2186_internal;
+                    break;
                 }
                 if (rnd(efp / 25 + 1) == 0)
                 {
@@ -3944,7 +3953,7 @@ label_2181_internal:
                                 + u8"."s));
                         --inv[ci].number;
                         refresh_burden_state();
-                        goto label_2186_internal;
+                        break;
                     }
                     txt(lang(
                         itemname(ci) + u8"への充填は失敗した。"s,
@@ -3956,13 +3965,13 @@ label_2181_internal:
                 obvious = 0;
             }
         }
-        goto label_2186_internal;
+        break;
     case 629:
         if (cc != 0)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         invsubroutine = 1;
         invctrl(0) = 23;
@@ -4015,14 +4024,14 @@ label_2181_internal:
                 refresh_burden_state();
             }
         }
-        goto label_2186_internal;
+        break;
     case 628:
     label_2184_internal:
         if (tc == 0)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         f = 1;
         if (efp / 10 + 10 < cdata[tc].level)
@@ -4063,13 +4072,13 @@ label_2181_internal:
                 name(tc) + u8"は変化できない。"s,
                 name(tc) + u8" cannot be changed."s));
         }
-        goto label_2186_internal;
+        break;
     case 1140:
         if (cc != 0)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         invsubroutine = 1;
         invctrl(0) = 23;
@@ -4130,13 +4139,13 @@ label_2181_internal:
         }
         r1 = cc;
         refresh_character();
-        goto label_2186_internal;
+        break;
     case 1132:
         if (cc != 0)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
-            goto label_2186_internal;
+            break;
         }
         invsubroutine = 1;
         invctrl(0) = 23;
@@ -4196,7 +4205,7 @@ label_2181_internal:
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
         }
-        goto label_2186_internal;
+        break;
     case 457:
     case 438:
         x = tlocx;
@@ -4256,7 +4265,7 @@ label_2181_internal:
                     txt(lang(
                         u8"この壁は魔法を受け付けないようだ。"s,
                         u8"These walls seem to resist your magic."s));
-                    goto label_2186_internal;
+                    break;
                 }
                 txt(lang(u8"扉が出現した。"s, u8"A door appears."s));
                 cell_featset(x, y, tile_doorclosed, 21, rnd(efp / 10 + 1));
@@ -4274,7 +4283,7 @@ label_2181_internal:
             }
             obvious = 0;
         }
-        goto label_2186_internal;
+        break;
     case 631:
         txtef(4);
         txt(lang(u8"スウォーム！"s, u8"Swarm!"s));
@@ -4315,15 +4324,15 @@ label_2181_internal:
                 try_to_melee_attack();
             }
         }
-        goto label_2186_internal;
+        break;
     case 659:
         if (mdata(6) == 1)
         {
-            goto label_2186_internal;
+            break;
         }
         if (map(cdata[cc].position.x, cdata[cc].position.y, 6) != 0)
         {
-            goto label_2186_internal;
+            break;
         }
         cell_featset(cdata[cc].position.x, cdata[cc].position.y, 0, 14, 7, cc);
         if (is_in_fov(cc))
@@ -4333,7 +4342,7 @@ label_2181_internal:
                 name(cc) + u8" drop"s + _s(cc)
                     + u8" something on the ground."s));
         }
-        goto label_2186_internal;
+        break;
     case 466:
     {
         int cnt = 0;
@@ -4367,7 +4376,7 @@ label_2181_internal:
             cdata[tc].gravity += 100 + rnd(100);
         }
     }
-        goto label_2186_internal;
+        break;
     case 657:
         txtef(4);
         txt(lang(u8"うみみゃぁ！"s, u8"Mewmewmew!"s));
@@ -4393,7 +4402,7 @@ label_2181_internal:
                 dmghp(tc, 9999999, cc);
             }
         }
-        goto label_2186_internal;
+        break;
     case 465:
         txtef(4);
         txt(lang(
@@ -4428,7 +4437,7 @@ label_2181_internal:
                 }
             }
         }
-        goto label_2186_internal;
+        break;
     case 656:
         if (is_in_fov(cc))
         {
@@ -4484,12 +4493,12 @@ label_2181_internal:
                 addbuff(tc, 18, 1500, 30);
             }
         }
-        goto label_2186_internal;
+        break;
     case 1131:
         if (tc != 0)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-            goto label_2186_internal;
+            break;
         }
         snd(64);
         if (efstatus >= 0)
@@ -4508,18 +4517,18 @@ label_2181_internal:
                 u8" The Ether Disease spreads around your body."s));
             modcorrupt(200);
         }
-        goto label_2186_internal;
+        break;
     case 633:
         if (tc != 0)
         {
-            goto label_2186_internal;
+            break;
         }
         txtef(8);
         txt(lang(
             name(cc) + u8"に睨まれ、あなたはエーテルに侵食された。"s,
             name(cc) + u8" gazes you. Your Ether Disease deteriorates."s));
         modcorrupt(100);
-        goto label_2186_internal;
+        break;
     case 638:
     case 648:
         if (efid == 648)
@@ -4583,7 +4592,7 @@ label_2181_internal:
             }
         }
         dmgcon(tc, 7, 200);
-        goto label_2186_internal;
+        break;
     case 652:
         if (is_in_fov(tc))
         {
@@ -4592,7 +4601,7 @@ label_2181_internal:
                 name(cc) + u8" gaze"s + _s(cc) + u8" "s + name(tc) + u8"."s));
         }
         dmgmp(tc, rnd(20) + 1);
-        goto label_2186_internal;
+        break;
     case 1133:
         if (is_in_fov(tc))
         {
@@ -4661,7 +4670,7 @@ label_2181_internal:
         }
         if (p == -1)
         {
-            goto label_2186_internal;
+            break;
         }
         ci = p;
         if (ibit(6, ci))
@@ -4675,7 +4684,7 @@ label_2181_internal:
                         + itemname(ci, 1) + u8" and step"s + _s(cc)
                         + u8" back."s));
             }
-            goto label_2186_internal;
+            break;
         }
         rowact_item(ci);
         if (is_in_fov(tc))
@@ -4689,7 +4698,7 @@ label_2181_internal:
         healhp(cc, cdata[cc].max_hp / 3);
         label_2161();
         refresh_burden_state();
-        goto label_2186_internal;
+        break;
     case 464:
         animeload(10, tc);
         {
@@ -4730,7 +4739,7 @@ label_2181_internal:
                 redraw(1);
             }
         }
-        goto label_2186_internal;
+        break;
     case 463:
         snd(72);
         txt(lang(
@@ -4766,8 +4775,10 @@ label_2181_internal:
         ctrl_file(4, u8"shop"s + invfile + u8".s2");
         ctrl_file(3, u8"shoptmp.s2");
         mode = 0;
-        goto label_2186_internal;
+        break;
     }
+
+
 label_2186_internal:
     ci = efcibk;
     efstatus = 0;
