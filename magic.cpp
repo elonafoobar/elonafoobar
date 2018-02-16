@@ -144,7 +144,7 @@ int magic()
                         incognitobegin();
                     }
                 }
-                goto label_2186_internal;
+                goto the_end;
             }
             {
                 const auto damage = calc_skill_damage(efid, cc, efp);
@@ -176,14 +176,14 @@ int magic()
             case 10:
                 play_animation(18);
                 try_to_melee_attack();
-                goto label_2186_internal;
+                goto the_end;
             case 1:
             {
                 int stat = get_route(
                     cdata[cc].position.x, cdata[cc].position.y, tlocx, tlocy);
                 if (stat == 0)
                 {
-                    goto label_2186_internal;
+                    goto the_end;
                 }
             }
                 play_animation(0);
@@ -272,7 +272,7 @@ int magic()
                         }
                     }
                 }
-                goto label_2186_internal;
+                goto the_end;
             case 3:
                 chainbomb = 0;
                 ccbk = cc;
@@ -491,35 +491,35 @@ int magic()
                 }
                 if (chainbomb > 0)
                 {
-                label_2178_internal:
-                    --chainbomb;
-                    if (chainbomb < 0)
+                    while (1)
                     {
-                        goto label_2179_internal;
+                        --chainbomb;
+                        if (chainbomb < 0)
+                            break;
+                        cc = chainbomblist(chainbomb);
+                        tlocx = cdata[cc].position.x;
+                        tlocy = cdata[cc].position.y;
+                        if (cdata[cc].state == 1)
+                        {
+                            const auto damage =
+                                calc_skill_damage(efid, cc, efp);
+                            dice1 = damage->dice_x;
+                            dice2 = damage->dice_y;
+                            bonus = damage->damage_bonus;
+                            ele = damage->element;
+                            elep = damage->element_power;
+                            stxt(
+                                cc,
+                                lang(
+                                    name(cc) + u8"は誘爆した。"s,
+                                    name(cc) + u8" explode"s + _s(cc)
+                                        + u8"."s));
+                            goto label_2177_internal;
+                        }
                     }
-                    cc = chainbomblist(chainbomb);
-                    tlocx = cdata[cc].position.x;
-                    tlocy = cdata[cc].position.y;
-                    if (cdata[cc].state == 1)
-                    {
-                        const auto damage = calc_skill_damage(efid, cc, efp);
-                        dice1 = damage->dice_x;
-                        dice2 = damage->dice_y;
-                        bonus = damage->damage_bonus;
-                        ele = damage->element;
-                        elep = damage->element_power;
-                        stxt(
-                            cc,
-                            lang(
-                                name(cc) + u8"は誘爆した。"s,
-                                name(cc) + u8" explode"s + _s(cc) + u8"."s));
-                        goto label_2177_internal;
-                    }
-                    goto label_2178_internal;
                 }
-            label_2179_internal:
                 cc = ccbk;
-                goto label_2186_internal;
+                goto the_end;
             case 2:
                 play_animation(1);
                 dmg = role(dice1, dice2, bonus);
@@ -542,7 +542,7 @@ int magic()
                     }
                 }
                 dmghp(tc, dmg, cc, ele, elep);
-                goto label_2186_internal;
+                goto the_end;
             case 4:
                 if (efid == 400)
                 {
@@ -590,7 +590,7 @@ int magic()
                 }
                 sickifcursed(efstatus, tc, 3);
                 play_animation(5);
-                goto label_2186_internal;
+                goto the_end;
             case 6:
                 if (cdata[cc].special_attack_type != 0)
                 {
@@ -683,7 +683,7 @@ int magic()
                         u8"「余分な機能は削除してしまえ」"s,
                         cnvtalk(u8"Delete."s)));
                     cdata[tc].hp = cdata[tc].max_hp / 12 + 1;
-                    goto label_2186_internal;
+                    goto the_end;
                 }
                 dmghp(tc, role(dice1, dice2, bonus), cc, ele, elep);
                 if (efid == 617)
@@ -738,7 +738,7 @@ int magic()
                         refresh_character();
                     }
                 }
-                goto label_2186_internal;
+                goto the_end;
             case 7:
                 if (cc == 0)
                 {
@@ -746,7 +746,7 @@ int magic()
                     {
                         txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
                         obvious = 0;
-                        goto label_2186_internal;
+                        goto the_end;
                     }
                 }
                 p = 3;
@@ -827,14 +827,14 @@ int magic()
                         u8"魔法でモンスターが召喚された。"s,
                         u8"Several monsters come out from a portal."s));
                 }
-                goto label_2186_internal;
+                goto the_end;
             case 5:
                 tcprev = tc;
                 if (gdata_mount != 0)
                 {
                     if (gdata_mount == tc)
                     {
-                        goto label_2186_internal;
+                        goto the_end;
                     }
                 }
                 if (efid == 408)
@@ -858,7 +858,7 @@ int magic()
                     {
                         txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
                         obvious = 0;
-                        goto label_2186_internal;
+                        goto the_end;
                     }
                     tc = map(tlocx, tlocy, 1) - 1;
                 }
@@ -871,7 +871,7 @@ int magic()
                             u8"魔法の力がテレポートを防いだ。"s,
                             u8"Magical field prevents teleportation."s));
                     }
-                    goto label_2186_internal;
+                    goto the_end;
                 }
                 if (efid != 619 && encfind(tc, 22) != -1)
                 {
@@ -881,7 +881,7 @@ int magic()
                             u8"魔法の力がテレポートを防いだ。"s,
                             u8"Magical field prevents teleportation."s));
                     }
-                    goto label_2186_internal;
+                    goto the_end;
                 }
                 if (efid == 635)
                 {
@@ -893,7 +893,7 @@ int magic()
                                 u8"魔法の力がテレポートを防いだ。"s,
                                 u8"Magical field prevents teleportation."s));
                         }
-                        goto label_2186_internal;
+                        goto the_end;
                     }
                     p = rnd(cdata[tc].gold / 10 + 1);
                     if (rnd(sdata(13, tc)) > rnd(sdata(12, cc) * 4)
@@ -921,7 +921,7 @@ int magic()
                     {
                         if (gdata_mount == tc)
                         {
-                            goto label_2186_internal;
+                            goto the_end;
                         }
                     }
                 }
@@ -1024,13 +1024,13 @@ int magic()
                     }
                 }
                 tc = tcprev;
-                goto label_2186_internal;
+                goto the_end;
             case 8:
                 int stat = get_route(
                     cdata[cc].position.x, cdata[cc].position.y, tlocx, tlocy);
                 if (stat == 0)
                 {
-                    goto label_2186_internal;
+                    goto the_end;
                 }
                 if (ele)
                 {
@@ -1123,10 +1123,9 @@ int magic()
                         }
                     }
                 }
-                goto label_2186_internal;
+                goto the_end;
             }
             goto label_2181_internal;
-            goto label_2186_internal;
         }
         else
         {
@@ -1141,12 +1140,7 @@ int magic()
         }
     }
 
-
-
 label_2181_internal:
-
-
-
 
     switch (efid)
     {
@@ -4376,7 +4370,7 @@ label_2181_internal:
             cdata[tc].gravity += 100 + rnd(100);
         }
     }
-        break;
+    break;
     case 657:
         txtef(4);
         txt(lang(u8"うみみゃぁ！"s, u8"Mewmewmew!"s));
@@ -4778,8 +4772,7 @@ label_2181_internal:
         break;
     }
 
-
-label_2186_internal:
+the_end:
     ci = efcibk;
     efstatus = 0;
     efsource = 0;
