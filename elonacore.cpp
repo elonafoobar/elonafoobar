@@ -47980,7 +47980,7 @@ void do_short_cut()
 
 
 
-void label_2004()
+void do_dig_command()
 {
     txt(lang(
         u8"どの方向を掘る？ "s, u8"Which direction do you want to dig? "s));
@@ -78351,7 +78351,7 @@ label_2747:
     }
     if (key == key_dig)
     {
-        label_2004();
+        do_dig_command();
         return;
     }
     if (key == key_bash)
