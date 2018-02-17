@@ -46734,6 +46734,14 @@ label_1990_internal:
 
 void fix_wish()
 {
+    if (debug::voldemort)
+    {
+        const auto pos = inputlog(0).find_first_not_of(u8"0123456789");
+        if (pos != std::string::npos)
+        {
+            inputlog = inputlog(0).substr(pos);
+        }
+    }
     if (jp)
     {
         inputlog = strutil::remove_str(inputlog, u8",");
@@ -47107,7 +47115,9 @@ void what_do_you_wish_for()
         wish_for_figure();
         return;
     }
+    int number_of_items;
 label_1998_internal:
+    number_of_items = elona::stoi(inputlog(0));
     fix_wish();
     i = 0;
     {
@@ -47272,6 +47282,10 @@ label_1998_internal:
                     {
                         inv[ci].number = 1;
                     }
+                }
+                if (debug::voldemort && number_of_items != 0)
+                {
+                    inv[ci].number = number_of_items;
                 }
                 item_identify(ci, 3);
                 txt(lang(
