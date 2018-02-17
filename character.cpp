@@ -68,7 +68,6 @@ int define(lua_State* state)
     FIELD_I(damage_reaction_info, 0);
     FIELD_I(dbmode16_dbspec3, 0);
     FIELD_I(dbmode16_dbspec5, 0);
-    FIELD_I(dbmode16_dbspec6, 0);
     FIELD_I(element_of_unarmed_attack, 0);
     FIELD_I(eqammo_0, 0);
     FIELD_I(eqammo_1, 0);
@@ -141,7 +140,6 @@ int define(lua_State* state)
             damage_reaction_info,
             dbmode16_dbspec3,
             dbmode16_dbspec5,
-            dbmode16_dbspec6,
             element_of_unarmed_attack,
             eqammo_0,
             eqammo_1,

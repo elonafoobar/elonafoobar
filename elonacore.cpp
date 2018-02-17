@@ -33467,7 +33467,7 @@ void label_1727()
         {
             rtval = rtval / 2 * 3 + 40;
         }
-        p = refchara(cdata[56].id, 6);
+        p = the_character_db[cdata[56].id]->rarity / 1000;
         if (p < 80)
         {
             rtval = rtval + 80 - p;

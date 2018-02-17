@@ -28,7 +28,6 @@ int access_character_info()
             return 0;
         case 3: return data->dbmode16_dbspec3;
         case 5: return data->dbmode16_dbspec5;
-        case 6: return data->dbmode16_dbspec6;
         case 8: refstr = data->filter; return 0;
         default: assert(0);
         }
