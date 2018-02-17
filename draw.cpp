@@ -15,7 +15,6 @@ void prepare_item_image(int id, int color_or_character_id)
     const auto h = chipi(3, id);
 
     gsel(1);
-    color(0);
     boxf(0, 960, w, h + 960);
 
     if (id == 528)

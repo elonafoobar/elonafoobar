@@ -573,7 +573,6 @@ void load_config()
         while (1)
         {
             redraw(0);
-            color(0, 0, 0);
             boxf();
             pos(160, 170);
             gcopy(4, 0, 0, 340, 100);

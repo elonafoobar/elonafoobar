@@ -257,35 +257,31 @@ void bgscr(int window_id, int width, int height, int, int)
 
 
 
-void boxf(int x1, int y1, int x2, int y2)
+void boxf(int x1, int y1, int x2, int y2, const snail::color& color)
 {
-    if (detail::current_tex_buffer().color.r == 0
-        && detail::current_tex_buffer().color.g == 0
-        && detail::current_tex_buffer().color.b == 0)
+    const auto save_alpha = detail::current_tex_buffer().color.a;
+    detail::current_tex_buffer().color = color;
+    snail::application::instance().get_renderer().set_draw_color(color);
+    if (color == snail::color{0, 0, 0, 0})
     {
         snail::application::instance().get_renderer().set_blend_mode(
             snail::blend_mode_t::none);
-        snail::application::instance().get_renderer().set_draw_color(
-            {0, 0, 0, 0});
     }
     snail::application::instance().get_renderer().fill_rect(
         x1, y1, x2 - x1, y2 - y1);
+    detail::current_tex_buffer().color.a = save_alpha;
 }
 
 
 
-void boxf()
+void boxf(const snail::color& color)
 {
-    if (detail::current_tex_buffer().color.r == 0
-        && detail::current_tex_buffer().color.g == 0
-        && detail::current_tex_buffer().color.b == 0)
-    {
-        snail::application::instance().get_renderer().set_blend_mode(
-            snail::blend_mode_t::none);
-        snail::application::instance().get_renderer().set_draw_color(
-            {0, 0, 0, 0});
-    }
-    snail::application::instance().get_renderer().clear();
+    boxf(
+        0,
+        0,
+        detail::current_tex_buffer().tex_width,
+        detail::current_tex_buffer().tex_height,
+        color);
 }
 
 

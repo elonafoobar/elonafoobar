@@ -3275,7 +3275,6 @@ void load_pcc_part(int cc, int body_part, const char* body_part_str)
 
     pos(128, 0);
     picload(filepath, 1);
-    color(0, 0, 0);
     boxf(256, 0, 384, 198);
     gmode(4, -1, -1, 256);
     color(43, 133, 133);
@@ -3319,7 +3318,6 @@ void set_pcc_depending_on_equipments(int cc, int ci)
 void create_pcpic(int cc, bool prm_410)
 {
     buffer(10 + cc, 384, 198);
-    color(0, 0, 0);
     boxf();
 
     if (pcc(15, cc) == 0)
@@ -9042,7 +9040,6 @@ void chara_preparepic(int prm_618, int prm_619)
         p_at_m83 = prm_619;
     }
     gsel(5);
-    color(0);
     boxf(0, 960, chipc(2, prm_618), chipc(3, prm_618) + 960);
     pos(0, 960);
     gcopy(
@@ -20495,7 +20492,6 @@ void label_1443()
 void label_1444()
 {
     redraw(0);
-    color(0, 0, 0);
     boxf();
     evx = 12;
     evy = 14;
@@ -37864,7 +37860,6 @@ void label_1872()
     x(1) = 300;
     cs = -1;
     redraw(0);
-    color(0, 0, 0);
     boxf(
         170,
         noteinfo(0) * 20 + 120 + txtadvmsgfix + 16,
@@ -50424,7 +50419,6 @@ int change_appearance()
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/face1.bmp"), 1);
     buffer(7, 800, 112);
-    color(0, 0, 0);
     boxf();
     {
         int cnt = 0;
@@ -72091,7 +72085,6 @@ label_2682_internal:
     if (s == u8"{fade}"s)
     {
         gsel(4);
-        color(0, 0, 0);
         boxf();
         gsel(0);
         label_1443();
@@ -72204,9 +72197,8 @@ label_2684_internal:
     pos(0, y1);
     gzoom(windoww, y2 - y1, 4, 0, 0, 640, 480);
     gmode(2);
-    color(5, 5, 5);
-    boxf(0, 0, windoww, y1);
-    boxf(0, y2, windoww, windowh);
+    boxf(0, 0, windoww, y1, {5, 5, 5});
+    boxf(0, y2, windoww, windowh, {5, 5, 5});
     if (val == 1)
     {
         gsel(0);
@@ -72294,9 +72286,8 @@ label_2684_internal:
     y_at_txtfunc = windowh - 60;
     anime_halt();
     redraw(0);
-    color(5, 5, 5);
-    boxf(0, 0, windoww, y1);
-    boxf(0, y2, windoww, windowh);
+    boxf(0, 0, windoww, y1, {5, 5, 5});
+    boxf(0, y2, windoww, windowh, {5, 5, 5});
     goto label_2681;
 }
 
@@ -72305,7 +72296,6 @@ label_2684_internal:
 void label_2685()
 {
     gsel(4);
-    color(0, 0, 0);
     boxf();
     gsel(0);
     label_1443();
@@ -75153,7 +75143,6 @@ void label_2710()
     }
     gsel(4);
     gmode(0);
-    color(0, 0, 0);
     boxf();
     {
         int cnt = 0;

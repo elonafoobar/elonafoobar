@@ -995,7 +995,6 @@ void cell_draw()
                             chipc(4, p_) += 24;
                         }
                         gsel(5);
-                        color(0);
                         boxf(0, 960, chipc(2, p_), chipc(3, p_) + 960);
                         pos(0, 960);
                         gcopy(

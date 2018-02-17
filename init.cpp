@@ -140,7 +140,6 @@ void initialize_elona()
     }
     gsel(0);
     redraw(0);
-    color(0);
     boxf();
     redraw(1);
     buffer(3, 1440, 800);
