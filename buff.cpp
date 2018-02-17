@@ -7,6 +7,7 @@ namespace elona
 
 buff_db::buff_db()
 {
+    storage.emplace(0, buff_data{buff_data::type_t::buff}); // dummy
     storage.emplace(1, buff_data{buff_data::type_t::buff});
     storage.emplace(2, buff_data{buff_data::type_t::hex});
     storage.emplace(3, buff_data{buff_data::type_t::buff});
