@@ -1808,14 +1808,16 @@ void remain_make(int prm_521, int prm_522)
     {
         inv[prm_521].weight = 20 * (inv[prm_521].weight + 500) / 500;
         inv[prm_521].value = cdata[prm_522].level * 40 + 600;
-        if (refchara(cdata[prm_522].id, 6) < 20)
+        if (the_character_db[cdata[prm_522].id]->rarity / 1000 < 20)
         {
             if (cdata[prm_522].original_relationship < -1)
             {
-                inv[prm_521].value =
-                    inv[prm_521].value
-                    * std::clamp(
-                          (4 - refchara(cdata[prm_522].id, 6) / 5), 1, 5);
+                inv[prm_521].value = inv[prm_521].value
+                    * std::clamp((4
+                                  - the_character_db[cdata[prm_522].id]->rarity
+                                      / 1000 / 5),
+                                 1,
+                                 5);
             }
         }
     }

@@ -26,9 +26,7 @@ int access_character_info()
         case 2:
             refstr = i18n::_(u8"character", std::to_string(dbid), u8"name");
             return 0;
-        case 3: return data->dbmode16_dbspec3;
-        case 5: return data->dbmode16_dbspec5;
-        case 6: return data->dbmode16_dbspec6;
+        case 3: return data->item_type;
         case 8: refstr = data->filter; return 0;
         default: assert(0);
         }

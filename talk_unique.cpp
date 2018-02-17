@@ -4431,7 +4431,8 @@ void talk_unique()
                         {
                             flt(10);
                             characreate(56, 0, -3, 0);
-                            if (refchara(cdata[56].id, 6) < 70)
+                            if (the_character_db[cdata[56].id]->rarity / 1000
+                                < 70)
                             {
                                 continue;
                             }
@@ -4564,7 +4565,7 @@ void talk_unique()
                 {
                     flt(cdata[0].level + 10);
                     characreate(56, 0, -3, 0);
-                    if (refchara(cdata[56].id, 6) < 70)
+                    if (the_character_db[cdata[56].id]->rarity / 1000 < 70)
                     {
                         continue;
                     }
