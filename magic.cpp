@@ -2654,7 +2654,7 @@ label_2181_internal:
             obvious = 0;
             break;
         }
-        if (cdata[0].god == 0)
+        if (std::empty(cdata[0].god_id))
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
@@ -2670,7 +2670,7 @@ label_2181_internal:
             skillexp(181, 0, -1000);
             break;
         }
-        if (cdata[0].god == 0)
+        if (std::empty(cdata[0].god_id))
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
@@ -2679,9 +2679,10 @@ label_2181_internal:
         {
             txtef(2);
             txt(lang(
-                u8"あなたは"s + godname(cdata[0].god)
+                u8"あなたは"s + i18n::_(u8"god", cdata[0].god_id, u8"name")
                     + u8"の暖かい眼差しを感じた。"s,
-                u8"You feel as if "s + godname(cdata[0].god)
+                u8"You feel as if "s
+                    + i18n::_(u8"god", cdata[0].god_id, u8"name")
                     + u8" is watching you."s));
             if (efstatus >= 1)
             {

@@ -16289,7 +16289,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
     }
     rtdmg = dmg_at_m141;
 
-    if (prm_853 == 0 && cdata[0].god == 5)
+    if (prm_853 == 0 && cdata[0].god_id == core_god::opatos)
     {
         dmg_at_m141 = dmg_at_m141 * 90 / 100;
     }
@@ -17520,7 +17520,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 if (rnd(20) == 0)
                 {
-                    txtgod(cdata[0].god, 9);
+                    txtgod(cdata[0].god_id, 9);
                 }
             }
         }
@@ -25446,7 +25446,8 @@ void label_1576()
                                     }
                                     if (p == 0)
                                     {
-                                        if (cdata[0].god == 7)
+                                        if (cdata[0].god_id
+                                            == core_god::kumiromi)
                                         {
                                             i = the_item_db[inv[cnt].id]
                                                     ->subcategory;
@@ -38863,7 +38864,7 @@ int modpiety(int prm_1035)
         if (cdata[0].piety_point >= 4000)
         {
             ++gdata_god_rank;
-            txtgod(cdata[0].god, 8);
+            txtgod(cdata[0].god_id, 8);
         }
     }
     if (gdata_god_rank == 2)
@@ -38871,7 +38872,7 @@ int modpiety(int prm_1035)
         if (cdata[0].piety_point >= 2500)
         {
             ++gdata_god_rank;
-            txtgod(cdata[0].god, 7);
+            txtgod(cdata[0].god_id, 7);
         }
     }
     if (gdata_god_rank == 0)
@@ -38879,7 +38880,7 @@ int modpiety(int prm_1035)
         if (cdata[0].piety_point >= 1500)
         {
             ++gdata_god_rank;
-            txtgod(cdata[0].god, 7);
+            txtgod(cdata[0].god_id, 7);
         }
     }
     if (sdata(181, 0) * 100 < cdata[0].piety_point)
@@ -38897,14 +38898,14 @@ int modpiety(int prm_1035)
 
 void set_npc_religion()
 {
-    if (cdata[tc].god != 0 || cbit(990, tc) || tc == 0)
+    if (!std::empty(cdata[tc].god_id) || cbit(990, tc) || tc == 0)
     {
         return;
     }
     randomize(gdata_random_seed + gdata_current_map);
-    cdata[tc].god = rnd(8);
+    cdata[tc].god_id = core_god::int2godid(rnd(8));
     randomize();
-    if (cdata[tc].god == 0 || rnd(4) == 0)
+    if (std::empty(cdata[tc].god_id) || rnd(4) == 0)
     {
         cbitmod(990, tc, 1);
     }
@@ -38913,25 +38914,9 @@ void set_npc_religion()
 
 
 
-void initialize_god_name()
-{
-    SDIM3(godname, 20, 8);
-    godname(0) = lang(u8"無のエイス"s, u8"Eyth of Infidel"s);
-    godname(1) = lang(u8"機械のマニ"s, u8"Mani of Machine"s);
-    godname(2) = lang(u8"風のルルウィ"s, u8"Lulwy of Wind"s);
-    godname(3) = lang(u8"元素のイツパロトル"s, u8"Itzpalt of Element"s);
-    godname(4) = lang(u8"幸運のエヘカトル"s, u8"Ehekatl of Luck"s);
-    godname(5) = lang(u8"地のオパートス"s, u8"Opatos of Earth"s);
-    godname(6) = lang(u8"癒しのジュア"s, u8"Jure of Healing"s);
-    godname(7) = lang(u8"収穫のクミロミ"s, u8"Kumiromi of Harvest"s);
-    return;
-}
-
-
-
 void apply_god_blessing()
 {
-    if (cdata[r1].god == 1)
+    if (cdata[r1].god_id == core_god::mani)
     {
         if (sdata(12, r1) > 0)
         {
@@ -38974,7 +38959,7 @@ void apply_god_blessing()
                 cdata[r1].piety_point / 350, 1, 12 + sdata(181, 0) / 10);
         }
     }
-    if (cdata[r1].god == 2)
+    if (cdata[r1].god_id == core_god::lulwy)
     {
         if (sdata(13, r1) > 0)
         {
@@ -39007,7 +38992,7 @@ void apply_god_blessing()
                 cdata[r1].piety_point / 550, 1, 8 + sdata(181, 0) / 10);
         }
     }
-    if (cdata[r1].god == 3)
+    if (cdata[r1].god_id == core_god::itzpalt)
     {
         if (sdata(16, r1) > 0)
         {
@@ -39035,7 +39020,7 @@ void apply_god_blessing()
                 cdata[r1].piety_point / 50, 1, 200 + sdata(181, 0) / 10);
         }
     }
-    if (cdata[r1].god == 4)
+    if (cdata[r1].god_id == core_god::ehekatl)
     {
         if (sdata(17, r1) > 0)
         {
@@ -39068,7 +39053,7 @@ void apply_god_blessing()
                 cdata[r1].piety_point / 450, 1, 8 + sdata(181, 0) / 10);
         }
     }
-    if (cdata[r1].god == 5)
+    if (cdata[r1].god_id == core_god::opatos)
     {
         if (sdata(10, r1) > 0)
         {
@@ -39101,7 +39086,7 @@ void apply_god_blessing()
                 cdata[r1].piety_point / 450, 1, 8 + sdata(181, 0) / 10);
         }
     }
-    if (cdata[r1].god == 6)
+    if (cdata[r1].god_id == core_god::jure)
     {
         if (sdata(15, r1) > 0)
         {
@@ -39139,7 +39124,7 @@ void apply_god_blessing()
                 cdata[r1].piety_point / 400, 1, 12 + sdata(181, 0) / 10);
         }
     }
-    if (cdata[r1].god == 7)
+    if (cdata[r1].god_id == core_god::kumiromi)
     {
         if (sdata(13, r1) > 0)
         {
@@ -39302,7 +39287,7 @@ void label_1886()
     keylog = "";
     listmax = 0;
     chatesc = 2;
-    if (cdata[0].god != 0)
+    if (!std::empty(cdata[0].god_id))
     {
         if (inv[ci].param1 == 0)
         {
@@ -39311,8 +39296,13 @@ void label_1886()
         else
         {
             s = lang(
-                godname(inv[ci].param1) + u8"に改宗する"s,
-                u8"Convert to "s + godname(inv[ci].param1));
+                i18n::_(u8"god", core_god::int2godid(inv[ci].param1), u8"name")
+                    + u8"に改宗する"s,
+                u8"Convert to "s
+                    + i18n::_(
+                          u8"god",
+                          core_god::int2godid(inv[ci].param1),
+                          u8"name"));
         }
         list(0, listmax) = 0;
         listn(0, listmax) = s;
@@ -39322,8 +39312,11 @@ void label_1886()
     {
         list(0, listmax) = 0;
         listn(0, listmax) = lang(
-            godname(inv[ci].param1) + u8"を信仰する"s,
-            u8"Believe in "s + godname(inv[ci].param1));
+            i18n::_(u8"god", core_god::int2godid(inv[ci].param1), u8"name")
+                + u8"を信仰する"s,
+            u8"Believe in "s
+                + i18n::_(
+                      u8"god", core_god::int2godid(inv[ci].param1), u8"name"));
         ++listmax;
     }
     list(0, listmax) = 2;
@@ -39369,7 +39362,8 @@ label_1887_internal:
     pos(wx + 20, wy + 20);
     color(0, 0, 0);
     bmes(
-        lang(u8"《 "s, u8"< "s) + godname(inv[ci].param1)
+        lang(u8"《 "s, u8"< "s)
+            + i18n::_(u8"god", core_god::int2godid(inv[ci].param1), u8"name")
             + lang(u8" 》"s, u8" >"s),
         255,
         255,
@@ -39439,14 +39433,15 @@ void label_1888()
         gmode(2);
         render_hud();
         redraw(1);
-        if (cdata[0].god != 0)
+        if (!std::empty(cdata[0].god_id))
         {
             mode = 9;
             txtef(8);
             txt(lang(
-                godname(cdata[0].god) + u8"は激怒した。"s,
-                godname(cdata[0].god) + u8" is enraged."s));
-            txtgod(cdata[0].god, 1);
+                i18n::_(u8"god", cdata[0].god_id, u8"name") + u8"は激怒した。"s,
+                i18n::_(u8"god", cdata[0].god_id, u8"name")
+                    + u8" is enraged."s));
+            txtgod(cdata[0].god_id, 1);
             redraw(1);
             efid = 622;
             efp = 10000;
@@ -39456,7 +39451,7 @@ void label_1888()
             mode = 0;
             await(500);
         }
-        cdata[0].god = inv[ci].param1;
+        cdata[0].god_id = core_god::int2godid(inv[ci].param1);
         switch_religion();
         msg_halt();
     }
@@ -39475,7 +39470,7 @@ void switch_religion()
     spact(23) = 0;
     spact(24) = 0;
     spact(25) = 0;
-    if (cdata[0].god == 0)
+    if (std::empty(cdata[0].god_id))
     {
         txtef(5);
         txt(lang(
@@ -39488,21 +39483,23 @@ void switch_religion()
         snd(51);
         txtef(5);
         txt(lang(
-            u8"あなたは今や"s + godname(cdata[0].god) + u8"の信者だ！"s,
-            u8"You become a follower of "s + godname(cdata[0].god) + u8"!"s));
-        if (cdata[0].god == 3)
+            u8"あなたは今や"s + i18n::_(u8"god", cdata[0].god_id, u8"name")
+                + u8"の信者だ！"s,
+            u8"You become a follower of "s
+                + i18n::_(u8"god", cdata[0].god_id, u8"name") + u8"!"s));
+        if (cdata[0].god_id == core_god::itzpalt)
         {
             spact(24) = 1;
         }
-        if (cdata[0].god == 6)
+        if (cdata[0].god_id == core_god::jure)
         {
             spact(23) = 1;
         }
-        if (cdata[0].god == 2)
+        if (cdata[0].god_id == core_god::lulwy)
         {
             spact(25) = 1;
         }
-        txtgod(cdata[0].god, 5);
+        txtgod(cdata[0].god_id, 5);
     }
     return;
 }
@@ -39511,7 +39508,7 @@ void switch_religion()
 
 void pray()
 {
-    if (cdata[0].god == 0)
+    if (std::empty(cdata[0].god_id))
     {
         txt(lang(
             name(0) + u8"は神を信仰していないが、試しに祈ってみた。"s,
@@ -39539,14 +39536,17 @@ void pray()
         pc_turn(false);
     }
     txt(lang(
-        godname(cdata[0].god) + u8"に祈った。"s,
-        u8"You pray to "s + godname(cdata[0].god) + u8"."s));
+        i18n::_(u8"god", cdata[0].god_id, u8"name") + u8"に祈った。"s,
+        u8"You pray to "s + i18n::_(u8"god", cdata[0].god_id, u8"name")
+            + u8"."s));
     if (cdata[0].piety_point < 200 || cdata[0].praying_point < 1000)
     {
         txtmore();
         txt(lang(
-            godname(cdata[0].god) + u8"はあなたに無関心だ。"s,
-            godname(cdata[0].god) + u8" is indifferent to you."s));
+            i18n::_(u8"god", cdata[0].god_id, u8"name")
+                + u8"はあなたに無関心だ。"s,
+            i18n::_(u8"god", cdata[0].god_id, u8"name")
+                + u8" is indifferent to you."s));
         turn_end();
         return;
     }
@@ -39565,7 +39565,7 @@ void pray()
     cdata[0].piety_point = cdata[0].piety_point * 85 / 100;
     if (gdata_god_rank % 2 == 1)
     {
-        txtgod(cdata[0].god, 6);
+        txtgod(cdata[0].god_id, 6);
         if (gdata_god_rank == 1)
         {
             f = 0;
@@ -39630,49 +39630,49 @@ void pray()
             dbid = 0;
             txtef(4);
             txtmore();
-            if (cdata[0].god == 1)
+            if (cdata[0].god_id == core_god::mani)
             {
                 dbid = 262;
                 txt(lang(
                     u8"このアンドロイドはブーストした時に恐るべき力を発揮するようだ。"s,
                     u8"This android shows enormous strength when boosting."s));
             }
-            if (cdata[0].god == 2)
+            if (cdata[0].god_id == core_god::lulwy)
             {
                 dbid = 263;
                 txt(lang(
                     u8"この黒天使はブーストした時に恐るべき力を発揮するようだ。"s,
                     u8"This black angel shows enormous strength when boosting."s));
             }
-            if (cdata[0].god == 3)
+            if (cdata[0].god_id == core_god::itzpalt)
             {
                 dbid = 264;
                 txt(lang(
                     u8"この追放者は連続魔法を使えるようだ。"s,
                     u8"This exile can cast several spells in a raw."s));
             }
-            if (cdata[0].god == 4)
+            if (cdata[0].god_id == core_god::ehekatl)
             {
                 dbid = 260;
                 txt(lang(
                     u8"この猫に舐められた武具は、エヘカトルの祝福を授かるようだ。祝福を受けた武具にはエンチャントが一つ付与される。"s,
                     u8"Weapons and armor licked by this cat receive a blessing of Ehekatl which adds an extra enchantment."s));
             }
-            if (cdata[0].god == 5)
+            if (cdata[0].god_id == core_god::opatos)
             {
                 dbid = 265;
                 txt(lang(
                     u8"この騎士はある程度重いものをもたせても文句をいわないようだ。"s,
                     u8"This knight can hold really heavy stuff for you."s));
             }
-            if (cdata[0].god == 6)
+            if (cdata[0].god_id == core_god::jure)
             {
                 dbid = 266;
                 txt(lang(
                     u8"この防衛者は致死ダメージを受けた仲間をレイハンドで回復できるようだ。レイハンドは眠るたびに再使用可能になる。"s,
                     u8"This defender can use Lay on hand to heal a deadly wounded ally. The ability becomes re-useable after sleeping."s));
             }
-            if (cdata[0].god == 7)
+            if (cdata[0].god_id == core_god::kumiromi)
             {
                 dbid = 261;
                 txt(lang(
@@ -39688,19 +39688,19 @@ void pray()
         {
             flt();
             dbid = 0;
-            if (cdata[0].god == 2)
+            if (cdata[0].god_id == core_god::lulwy)
             {
                 dbid = 680;
             }
-            if (cdata[0].god == 6)
+            if (cdata[0].god_id == core_god::jure)
             {
                 dbid = 681;
             }
-            if (cdata[0].god == 7)
+            if (cdata[0].god_id == core_god::kumiromi)
             {
                 dbid = 682;
             }
-            if (cdata[0].god == 1)
+            if (cdata[0].god_id == core_god::mani)
             {
                 dbid = 683;
             }
@@ -39718,20 +39718,20 @@ void pray()
                 nostack = 1;
                 itemcreate(
                     -1, 672, cdata[0].position.x, cdata[0].position.y, 0);
-                if (cdata[0].god == 3)
+                if (cdata[0].god_id == core_god::itzpalt)
                 {
                     inv[ci].param1 = 165;
                 }
-                if (cdata[0].god == 4)
+                if (cdata[0].god_id == core_god::ehekatl)
                 {
                     inv[ci].param1 = 163;
                 }
-                if (cdata[0].god == 5)
+                if (cdata[0].god_id == core_god::opatos)
                 {
                     inv[ci].param1 = 164;
                 }
             }
-            if (cdata[0].god == 6)
+            if (cdata[0].god_id == core_god::jure)
             {
                 flt();
                 nostack = 1;
@@ -39747,31 +39747,31 @@ void pray()
         {
             flt();
             dbid = 0;
-            if (cdata[0].god == 1)
+            if (cdata[0].god_id == core_god::mani)
             {
                 dbid = 674;
             }
-            if (cdata[0].god == 2)
+            if (cdata[0].god_id == core_god::lulwy)
             {
                 dbid = 673;
             }
-            if (cdata[0].god == 3)
+            if (cdata[0].god_id == core_god::itzpalt)
             {
                 dbid = 676;
             }
-            if (cdata[0].god == 4)
+            if (cdata[0].god_id == core_god::ehekatl)
             {
                 dbid = 678;
             }
-            if (cdata[0].god == 5)
+            if (cdata[0].god_id == core_god::opatos)
             {
                 dbid = 679;
             }
-            if (cdata[0].god == 6)
+            if (cdata[0].god_id == core_god::jure)
             {
                 dbid = 677;
             }
-            if (cdata[0].god == 7)
+            if (cdata[0].god_id == core_god::kumiromi)
             {
                 dbid = 675;
             }
@@ -39794,7 +39794,7 @@ void pray()
 
 void offer()
 {
-    if (cdata[0].god == 0)
+    if (std::empty(cdata[0].god_id))
     {
         txt(lang(
             u8"あなたは神を信仰していないが、試しに捧げてみた。"s,
@@ -39805,11 +39805,12 @@ void offer()
     rowact_item(ci);
     item_separate(ci);
     txt(lang(
-        u8"あなたは"s + itemname(ci) + u8"を"s + godname(cdata[0].god)
+        u8"あなたは"s + itemname(ci) + u8"を"s
+            + i18n::_(u8"god", cdata[0].god_id, u8"name")
             + u8"に捧げ、その名を唱えた。"s,
         u8"You put "s + itemname(ci)
-            + u8" on the altar and mutter the name of "s + godname(cdata[0].god)
-            + u8"."s));
+            + u8" on the altar and mutter the name of "s
+            + i18n::_(u8"god", cdata[0].god_id, u8"name") + u8"."s));
     snd(121);
     play_animation(7);
     int stat = item_find(60002);
@@ -39834,25 +39835,35 @@ void offer()
     {
         i = 25;
     }
-    if (inv[ti].param1 != cdata[0].god)
+    if (core_god::int2godid(inv[ti].param1) != cdata[0].god_id)
     {
         f = 0;
         if (inv[ti].param1 == 0)
         {
             f = 1;
             txt(lang(
-                u8"異世界で、"s + godname(cdata[0].god)
+                u8"異世界で、"s + i18n::_(u8"god", cdata[0].god_id, u8"name")
                     + u8"が空白の祭壇の権利を主張した。"s,
-                godname(cdata[0].god) + u8" claims the empty altar."s));
+                i18n::_(u8"god", cdata[0].god_id, u8"name")
+                    + u8" claims the empty altar."s));
         }
         else
         {
             txt(lang(
-                u8"異様な霧が現れ、"s + godname(cdata[0].god) + u8"と"s
-                    + godname(inv[ti].param1) + u8"の幻影がせめぎあった。"s,
+                u8"異様な霧が現れ、"s
+                    + i18n::_(u8"god", cdata[0].god_id, u8"name") + u8"と"s
+                    + i18n::_(
+                          u8"god",
+                          core_god::int2godid(inv[ti].param1),
+                          u8"name")
+                    + u8"の幻影がせめぎあった。"s,
                 u8"Strange fogs surround all over the place. You see shadows of "s
-                    + godname(cdata[0].god) + u8" and "s
-                    + godname(inv[ti].param1) + u8" make a fierce dance."s));
+                    + i18n::_(u8"god", cdata[0].god_id, u8"name") + u8" and "s
+                    + i18n::_(
+                          u8"god",
+                          core_god::int2godid(inv[ti].param1),
+                          u8"name")
+                    + u8" make a fierce dance."s));
             if (rnd(17) <= i)
             {
                 f = 1;
@@ -39877,18 +39888,21 @@ void offer()
             }
             txtef(5);
             txt(lang(
-                godname(cdata[0].god) + u8"は"s + itemname(ti)
-                    + u8"を支配した。"s,
-                godname(cdata[0].god) + u8" takes over the altar."s));
-            txtgod(cdata[0].god, 2);
-            inv[ti].param1 = cdata[0].god;
+                i18n::_(u8"god", cdata[0].god_id, u8"name") + u8"は"s
+                    + itemname(ti) + u8"を支配した。"s,
+                i18n::_(u8"god", cdata[0].god_id, u8"name")
+                    + u8" takes over the altar."s));
+            txtgod(cdata[0].god_id, 2);
+            inv[ti].param1 = core_god::godid2int(cdata[0].god_id);
         }
         else
         {
             txt(lang(
-                godname(inv[ti].param1) + u8"は祭壇を守りきった。"s,
-                godname(inv[ti].param1) + u8" keeps the altar."s));
-            txtgod(inv[ti].param1, 3);
+                i18n::_(u8"god", core_god::int2godid(inv[ti].param1), u8"name")
+                    + u8"は祭壇を守りきった。"s,
+                i18n::_(u8"god", core_god::int2godid(inv[ti].param1), u8"name")
+                    + u8" keeps the altar."s));
+            txtgod(core_god::int2godid(inv[ti].param1), 3);
             label_1892();
         }
     }
@@ -39906,7 +39920,7 @@ void offer()
                         itemname(ci) + u8" shine"s + _s2(inv[ci].number)
                             + u8" all around and disappear"s
                             + _s2(inv[ci].number) + u8"."s));
-                    txtgod(cdata[0].god, 4);
+                    txtgod(cdata[0].god_id, 4);
                     break;
                 }
                 if (i >= 10)
@@ -39993,7 +40007,7 @@ int proc_random_event()
     }
     if (mode == 9)
     {
-        if (cdata[0].god != 0)
+        if (!std::empty(cdata[0].god_id))
         {
             if (rnd(12) == 0)
             {
@@ -44755,7 +44769,7 @@ void label_1964()
     del_chara(56);
     r1 = 56;
     cdata[r1].piety_point = cdata[0].piety_point;
-    cdata[r1].god = cdata[0].god;
+    cdata[r1].god_id = cdata[0].god_id;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (600); cnt < cnt_end; ++cnt)
@@ -44764,9 +44778,9 @@ void label_1964()
         }
     }
     apply_god_blessing();
-    if (cdata[0].god != 0)
+    if (!std::empty(cdata[0].god_id))
     {
-        buff += u8"<title1>◆ "s + godname(cdata[0].god)
+        buff += u8"<title1>◆ "s + i18n::_(u8"god", cdata[0].god_id, u8"name")
             + u8"による能力の恩恵<def>\n"s;
         {
             int cnt = 0;
@@ -49662,7 +49676,7 @@ label_2035_internal:
         s(0) = ""s + cdata[cc].level;
         s(1) = ""s + cdata[cc].experience;
         s(2) = ""s + cdata[cc].required_experience;
-        s(3) = godname(cdata[cc].god);
+        s(3) = i18n::_(u8"god", cdata[cc].god_id, u8"name");
         s(4) = guildname();
         {
             int cnt = 0;
@@ -53143,7 +53157,9 @@ void label_2085()
     noteadd(
         fixtxt(
             u8"種族       : "s + i18n::_(u8"race", cdatan(2, 0), u8"name"), 30)
-        + fixtxt((u8"信仰      : "s + godname(cdata[0].god)), 32));
+        + fixtxt(
+              (u8"信仰      : "s + i18n::_(u8"god", cdata[0].god_id, u8"name")),
+              32));
     noteadd(
         fixtxt(u8"職業       : "s + classname, 30)
         + fixtxt((u8"所属      : "s + guildname()), 32));
@@ -55729,7 +55745,7 @@ int label_2143()
 void label_2144()
 {
     cell_featset(movx, movy, 0);
-    if (cdata[cc].god == 1)
+    if (cdata[cc].god_id == core_god::mani)
     {
         txt(lang(u8"あなたは罠を解体した。"s, u8"You dismantle the trap."s));
         {
@@ -57291,7 +57307,7 @@ void label_2151()
     }
     if (gdata_catches_god_signal)
     {
-        txtgod(cdata[0].god, 10);
+        txtgod(cdata[0].god_id, 10);
     }
     redraw(0);
     label_2150();
@@ -58819,7 +58835,7 @@ int label_2168()
         mp = calcspellcostmp(efid, cc);
         if (cc == 0)
         {
-            if (cdata[0].god == 4)
+            if (cdata[0].god_id == core_god::ehekatl)
             {
                 mp = rnd(mp * 140 / 100 + 1) + 1;
             }
@@ -60143,7 +60159,7 @@ void label_2190()
     if (stat != -1)
     {
         ci = stat;
-        if (inv[ci].param1 != cdata[0].god)
+        if (core_god::int2godid(inv[ci].param1) != cdata[0].god_id)
         {
             label_1886();
             turn_end();
@@ -60575,7 +60591,7 @@ int drop_item()
         if (stat != -1)
         {
             p = stat;
-            if (inv[p].param1 == cdata[cc].god)
+            if (core_god::int2godid(inv[p].param1) == cdata[cc].god_id)
             {
                 if (inv[ti].curse_state != 1)
                 {
@@ -64051,7 +64067,7 @@ void label_2221()
     {
         if (feat(0) == tile_trap)
         {
-            if (cdata[0].god == 1)
+            if (cdata[0].god_id == core_god::mani)
             {
                 if (cc == 0)
                 {
@@ -68513,7 +68529,7 @@ void show_talk_window()
     }
     if (gdata_reveals_religion)
     {
-        s += u8" ("s + godname(cdata[tc].god) + u8")"s;
+        s += u8" ("s + i18n::_(u8"god", cdata[tc].god_id, u8"name") + u8")"s;
     }
     if (scenemode)
     {
@@ -76887,7 +76903,7 @@ void pc_turn(bool label_2747_flg)
         {
             if (rnd(1000) == 0)
             {
-                txtgod(cdata[0].god, 12);
+                txtgod(cdata[0].god_id, 12);
             }
         }
         gdata(808) = 0;
@@ -77232,7 +77248,7 @@ label_2747:
     {
         if (gdata_catches_god_signal)
         {
-            txtgod(cdata[0].god, 11);
+            txtgod(cdata[0].god_id, 11);
         }
         firstturn = 0;
     }
@@ -77562,7 +77578,7 @@ label_2747:
         }
         if (p == 3)
         {
-            if (cdata[0].god != 0)
+            if (!std::empty(cdata[0].god_id))
             {
                 key = key_offer;
             }
