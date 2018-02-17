@@ -58204,8 +58204,8 @@ void label_2159()
             }
             map(refx, refy, 0) = tile_tunnel;
             spillfrag(refx, refy, 2);
-            x = refx;
-            y = refy;
+            FIXME_dig_animation_x = refx;
+            FIXME_dig_animation_y = refy;
             snd(45);
             aniref = 5;
             play_animation(14);
