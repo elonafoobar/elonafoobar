@@ -1048,8 +1048,15 @@ void itemname_additional_info()
         if (inv[prm_518].param1 != 0)
         {
             s_at_m63 += lang(
-                godname(inv[prm_518].param1) + u8"の"s,
-                u8" <"s + godname(inv[prm_518].param1) + u8">"s);
+                i18n::_(
+                    u8"god", core_god::int2godid(inv[prm_518].param1), u8"name")
+                    + u8"の"s,
+                u8" <"s
+                    + i18n::_(
+                          u8"god",
+                          core_god::int2godid(inv[prm_518].param1),
+                          u8"name")
+                    + u8">"s);
         }
     }
     if (a_at_m63 == 57000)

@@ -382,7 +382,6 @@ void initialize_elona()
     load_random_title_table();
     gdata_random_seed = rnd(800) + 2;
     gdata(9) = rnd(200) + 2;
-    initialize_god_name();
     set_item_info();
     clear_trait_data();
     initialize_rankn();
@@ -2059,7 +2058,7 @@ void initialize_game()
         gdata_home_scale = 0;
         gdata_number_of_waiting_guests = 2;
         gdata_charge_power = 1000;
-        cdata[0].god = 2;
+        cdata[0].god_id = core_god::int2godid(2);
         cdata[0].piety_point = 1000;
         cdata[0].praying_point = 1000;
         gdata_pael_and_her_mom = 1000;

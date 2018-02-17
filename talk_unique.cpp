@@ -5140,7 +5140,7 @@ void talk_unique()
         {
             goto label_2247_internal;
         }
-        if (cdata[0].god == 6)
+        if (cdata[0].god_id == core_god::jure)
         {
             listmax = 0;
             buff = lang(
@@ -5189,7 +5189,7 @@ void talk_unique()
                 flt();
                 itemcreate(
                     -1, 767, cdata[0].position.x, cdata[0].position.y, 0);
-                cdata[0].god = 6;
+                cdata[0].god_id = core_god::int2godid(6);
                 switch_religion();
                 talk_end();
                 return;

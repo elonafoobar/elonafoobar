@@ -3,6 +3,7 @@
 #include <memory>
 #include <unordered_map>
 #include <vector>
+#include "god.hpp"
 #include "optional_ref.hpp"
 #include "position.hpp"
 #include "range.hpp"
@@ -199,7 +200,7 @@ struct character
     int mp = 0;
     int max_mp = 0;
     int heal_value_per_nether_attack = 0;
-    int god = 0;
+    god_id_t god_id;
     int piety_point = 0;
     int praying_point = 0;
     int sum_of_equipment_weight = 0;
@@ -338,7 +339,7 @@ struct character
         ar(mp);
         ar(max_mp);
         ar(heal_value_per_nether_attack);
-        ar(god);
+        ar(god_id);
         ar(piety_point);
         ar(praying_point);
         ar(sum_of_equipment_weight);
