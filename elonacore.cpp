@@ -77433,6 +77433,7 @@ label_2747:
     {
         if (debug::voldemort)
         {
+            gdata_wizard = 1;
             for (int i = 400; i < 467; ++i)
             {
                 if (i != 426 && i != 427)
