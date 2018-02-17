@@ -1,6 +1,5 @@
 define('0', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 1,
   portrait = -1,
@@ -22,7 +21,6 @@ define('0', {
 })
 define('343', {
   item_type = 6,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 1,
   portrait = -1,
@@ -47,7 +45,6 @@ define('343', {
 })
 define('1', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 35,
   portrait = 0,
@@ -73,7 +70,6 @@ define('1', {
 })
 define('353', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 22,
   portrait = 0,
@@ -97,7 +93,6 @@ define('353', {
 })
 define('70', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 20,
   portrait = 0,
@@ -123,7 +118,6 @@ define('70', {
 })
 define('69', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 20,
   portrait = 0,
@@ -149,7 +143,6 @@ define('69', {
 })
 define('73', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 40,
   portrait = 0,
@@ -175,7 +168,6 @@ define('73', {
 })
 define('74', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 20,
   portrait = 0,
@@ -201,7 +193,6 @@ define('74', {
 })
 define('206', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 50,
   portrait = 0,
@@ -227,7 +218,6 @@ define('206', {
 })
 define('38', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 20,
   portrait = 0,
@@ -253,7 +243,6 @@ define('38', {
 })
 define('40', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 40,
   portrait = 0,
@@ -279,7 +268,6 @@ define('40', {
 })
 define('333', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 69,
   portrait = 0,
@@ -305,7 +293,6 @@ define('333', {
 })
 define('76', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 40,
   portrait = 0,
@@ -330,7 +317,6 @@ define('76', {
 })
 define('77', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 40,
   portrait = 0,
@@ -355,7 +341,6 @@ define('77', {
 })
 define('204', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 10,
   portrait = 0,
@@ -383,7 +368,6 @@ define('204', {
 })
 define('2', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 55,
   portrait = 53,
@@ -414,7 +398,6 @@ define('2', {
 })
 define('37', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 1,
   portrait = 53,
@@ -439,7 +422,6 @@ define('37', {
 })
 define('23', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/god/",
   level = 20,
   portrait = 51,
@@ -466,7 +448,6 @@ define('23', {
 })
 define('26', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 6,
   portrait = 6,
@@ -491,7 +472,6 @@ define('26', {
 })
 define('27', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/god/",
   level = 42,
   portrait = 51,
@@ -516,7 +496,6 @@ define('27', {
 })
 define('28', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 78,
   portrait = 50,
@@ -543,7 +522,6 @@ define('28', {
 })
 define('29', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 50,
   portrait = 49,
@@ -569,7 +547,6 @@ define('29', {
 })
 define('140', {
   item_type = 5,
-  dbmode16_dbspec5 = 0,
   filter = "/dragon/",
   level = 25,
   portrait = -1,
@@ -595,7 +572,6 @@ define('140', {
 })
 define('30', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 20,
   portrait = 50,
@@ -621,7 +597,6 @@ define('30', {
 })
 define('31', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 20,
   portrait = 49,
@@ -647,7 +622,6 @@ define('31', {
 })
 define('351', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 130,
   portrait = -1,
@@ -676,7 +650,6 @@ define('351', {
 })
 define('352', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 1,
   portrait = -1,
@@ -702,7 +675,6 @@ define('352', {
 })
 define('32', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 20,
   portrait = -1,
@@ -728,7 +700,6 @@ define('32', {
 })
 define('33', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 20,
   portrait = 48,
@@ -756,7 +727,6 @@ define('33', {
 })
 define('34', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 20,
   portrait = 57,
@@ -787,7 +757,6 @@ define('34', {
 })
 define('139', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 10,
   portrait = 56,
@@ -813,7 +782,6 @@ define('139', {
 })
 define('146', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 10,
   portrait = 56,
@@ -839,7 +807,6 @@ define('146', {
 })
 define('142', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 10,
   portrait = 55,
@@ -865,7 +832,6 @@ define('142', {
 })
 define('141', {
   item_type = 6,
-  dbmode16_dbspec5 = 0,
   filter = "/undead/god/",
   level = 28,
   portrait = -1,
@@ -895,7 +861,6 @@ define('141', {
 })
 define('143', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 25,
   portrait = -1,
@@ -924,7 +889,6 @@ define('143', {
 })
 define('144', {
   item_type = 6,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 24,
   portrait = -1,
@@ -954,7 +918,6 @@ define('144', {
 })
 define('145', {
   item_type = 5,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 16,
   portrait = -1,
@@ -979,7 +942,6 @@ define('145', {
 })
 define('306', {
   item_type = 6,
-  dbmode16_dbspec5 = 0,
   filter = "/god/",
   level = 350,
   portrait = -1,
@@ -1006,7 +968,6 @@ define('306', {
 })
 define('331', {
   item_type = 6,
-  dbmode16_dbspec5 = 0,
   filter = "/god/",
   level = 350,
   portrait = -1,
@@ -1032,7 +993,6 @@ define('331', {
 })
 define('336', {
   item_type = 6,
-  dbmode16_dbspec5 = 0,
   filter = "/god/",
   level = 1200,
   portrait = -1,
@@ -1063,7 +1023,6 @@ define('336', {
 })
 define('338', {
   item_type = 6,
-  dbmode16_dbspec5 = 0,
   filter = "/god/",
   level = 350,
   portrait = -1,
@@ -1091,7 +1050,6 @@ define('338', {
 })
 define('339', {
   item_type = 6,
-  dbmode16_dbspec5 = 0,
   filter = "/god/",
   level = 350,
   portrait = -1,
@@ -1119,7 +1077,6 @@ define('339', {
 })
 define('342', {
   item_type = 6,
-  dbmode16_dbspec5 = 0,
   filter = "/god/",
   level = 350,
   portrait = -1,
@@ -1147,7 +1104,6 @@ define('342', {
 })
 define('340', {
   item_type = 6,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 1200,
   portrait = -1,
@@ -1178,7 +1134,6 @@ define('340', {
 })
 define('3', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/slime/",
   level = 1,
   portrait = -1,
@@ -1202,7 +1157,6 @@ define('3', {
 })
 define('4', {
   item_type = 1,
-  dbmode16_dbspec5 = 3,
   filter = "/fire/slime/",
   level = 4,
   portrait = -1,
@@ -1226,7 +1180,6 @@ define('4', {
 })
 define('169', {
   item_type = 1,
-  dbmode16_dbspec5 = 4,
   filter = "/slime/",
   level = 10,
   portrait = -1,
@@ -1253,7 +1206,6 @@ define('169', {
 })
 define('194', {
   item_type = 1,
-  dbmode16_dbspec5 = 2,
   filter = "/slime/",
   level = 16,
   portrait = -1,
@@ -1282,7 +1234,6 @@ define('194', {
 })
 define('286', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/slime/",
   level = 9,
   portrait = -1,
@@ -1306,7 +1257,6 @@ define('286', {
 })
 define('285', {
   item_type = 1,
-  dbmode16_dbspec5 = 17,
   filter = "/slime/",
   level = 22,
   portrait = -1,
@@ -1331,7 +1281,6 @@ define('285', {
 })
 define('287', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 20,
   portrait = -1,
@@ -1354,7 +1303,6 @@ define('287', {
 })
 define('327', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 52,
   portrait = -1,
@@ -1377,7 +1325,6 @@ define('327', {
 })
 define('5', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/wild/",
   level = 1,
   portrait = -1,
@@ -1399,7 +1346,6 @@ define('5', {
 })
 define('6', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/wild/",
   level = 1,
   portrait = -1,
@@ -1422,7 +1368,6 @@ define('6', {
 })
 define('7', {
   item_type = 0,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 3,
   portrait = 0,
@@ -1446,7 +1391,6 @@ define('7', {
 })
 define('8', {
   item_type = 0,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 4,
   portrait = 0,
@@ -1471,7 +1415,6 @@ define('8', {
 })
 define('9', {
   item_type = 0,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 2,
   portrait = 0,
@@ -1497,7 +1440,6 @@ define('9', {
 })
 define('269', {
   item_type = 0,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 5,
   portrait = 0,
@@ -1523,7 +1465,6 @@ define('269', {
 })
 define('320', {
   item_type = 0,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 32,
   portrait = 0,
@@ -1550,7 +1491,6 @@ define('320', {
 })
 define('273', {
   item_type = 0,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 5,
   portrait = 0,
@@ -1576,7 +1516,6 @@ define('273', {
 })
 define('326', {
   item_type = 0,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 16,
   portrait = 0,
@@ -1601,7 +1540,6 @@ define('326', {
 })
 define('270', {
   item_type = 0,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 5,
   portrait = 0,
@@ -1627,7 +1565,6 @@ define('270', {
 })
 define('349', {
   item_type = 0,
-  dbmode16_dbspec5 = 0,
   filter = "/man/god/",
   level = 12,
   portrait = -1,
@@ -1651,7 +1588,6 @@ define('349', {
 })
 define('348', {
   item_type = 0,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 35,
   portrait = -1,
@@ -1676,7 +1612,6 @@ define('348', {
 })
 define('347', {
   item_type = 0,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 5,
   portrait = 0,
@@ -1703,7 +1638,6 @@ define('347', {
 })
 define('271', {
   item_type = 0,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 8,
   portrait = 0,
@@ -1730,7 +1664,6 @@ define('271', {
 })
 define('335', {
   item_type = 0,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 8,
   portrait = 0,
@@ -1756,7 +1689,6 @@ define('335', {
 })
 define('337', {
   item_type = 0,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 3,
   portrait = 0,
@@ -1782,7 +1714,6 @@ define('337', {
 })
 define('272', {
   item_type = 0,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 6,
   portrait = 0,
@@ -1808,7 +1739,6 @@ define('272', {
 })
 define('274', {
   item_type = 0,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 10,
   portrait = 0,
@@ -1834,7 +1764,6 @@ define('274', {
 })
 define('289', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 26,
   portrait = 0,
@@ -1863,7 +1792,6 @@ define('289', {
 })
 define('293', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 26,
   portrait = 0,
@@ -1889,7 +1817,6 @@ define('293', {
 })
 define('295', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 26,
   portrait = 0,
@@ -1915,7 +1842,6 @@ define('295', {
 })
 define('35', {
   item_type = 0,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 1,
   portrait = 0,
@@ -1941,7 +1867,6 @@ define('35', {
 })
 define('36', {
   item_type = 0,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 1,
   portrait = 0,
@@ -1967,7 +1892,6 @@ define('36', {
 })
 define('174', {
   item_type = 0,
-  dbmode16_dbspec5 = 0,
   filter = "/man/sf/",
   level = 1,
   portrait = 0,
@@ -1992,7 +1916,6 @@ define('174', {
 })
 define('10', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/wild/",
   level = 1,
   portrait = -1,
@@ -2014,7 +1937,6 @@ define('10', {
 })
 define('11', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/wild/",
   level = 2,
   portrait = -1,
@@ -2036,7 +1958,6 @@ define('11', {
 })
 define('12', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 3,
   portrait = 0,
@@ -2061,7 +1982,6 @@ define('12', {
 })
 define('13', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 3,
   portrait = -1,
@@ -2083,7 +2003,6 @@ define('13', {
 })
 define('236', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/yeek/",
   level = 2,
   portrait = -1,
@@ -2104,7 +2023,6 @@ define('236', {
 })
 define('238', {
   item_type = 3,
-  dbmode16_dbspec5 = 6,
   filter = "/yeek/",
   level = 6,
   portrait = -1,
@@ -2126,7 +2044,6 @@ define('238', {
 })
 define('241', {
   item_type = 3,
-  dbmode16_dbspec5 = 2,
   filter = "/yeek/",
   level = 4,
   portrait = -1,
@@ -2149,7 +2066,6 @@ define('241', {
 })
 define('240', {
   item_type = 3,
-  dbmode16_dbspec5 = 8,
   filter = "/yeek/",
   level = 9,
   portrait = -1,
@@ -2175,7 +2091,6 @@ define('240', {
 })
 define('237', {
   item_type = 3,
-  dbmode16_dbspec5 = 3,
   filter = "/yeek/",
   level = 6,
   portrait = -1,
@@ -2197,7 +2112,6 @@ define('237', {
 })
 define('244', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 18,
   portrait = -1,
@@ -2221,7 +2135,6 @@ define('244', {
 })
 define('245', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 25,
   portrait = -1,
@@ -2245,7 +2158,6 @@ define('245', {
 })
 define('321', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 10,
   portrait = -1,
@@ -2270,7 +2182,6 @@ define('321', {
 })
 define('242', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/yeek/",
   level = 14,
   portrait = -1,
@@ -2301,7 +2212,6 @@ define('242', {
 })
 define('239', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 5,
   portrait = 0,
@@ -2326,7 +2236,6 @@ define('239', {
 })
 define('14', {
   item_type = 2,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 4,
   portrait = -1,
@@ -2347,7 +2256,6 @@ define('14', {
 })
 define('15', {
   item_type = 2,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 4,
   portrait = -1,
@@ -2370,7 +2278,6 @@ define('15', {
 })
 define('283', {
   item_type = 2,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 8,
   portrait = -1,
@@ -2394,7 +2301,6 @@ define('283', {
 })
 define('284', {
   item_type = 2,
-  dbmode16_dbspec5 = 8,
   filter = "",
   level = 21,
   portrait = -1,
@@ -2419,7 +2325,6 @@ define('284', {
 })
 define('16', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 5,
   portrait = 0,
@@ -2445,7 +2350,6 @@ define('16', {
 })
 define('39', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 5,
   portrait = 0,
@@ -2471,7 +2375,6 @@ define('39', {
 })
 define('171', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 5,
   portrait = 0,
@@ -2497,7 +2400,6 @@ define('171', {
 })
 define('172', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 5,
   portrait = 0,
@@ -2523,7 +2425,6 @@ define('172', {
 })
 define('173', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 20,
   portrait = 0,
@@ -2549,7 +2450,6 @@ define('173', {
 })
 define('71', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 5,
   portrait = 0,
@@ -2575,7 +2475,6 @@ define('71', {
 })
 define('72', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 5,
   portrait = 0,
@@ -2601,7 +2500,6 @@ define('72', {
 })
 define('79', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 25,
   portrait = 54,
@@ -2627,7 +2525,6 @@ define('79', {
 })
 define('80', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 35,
   portrait = 55,
@@ -2653,7 +2550,6 @@ define('80', {
 })
 define('17', {
   item_type = 3,
-  dbmode16_dbspec5 = 17,
   filter = "",
   level = 5,
   portrait = -1,
@@ -2675,7 +2571,6 @@ define('17', {
 })
 define('281', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/dragon/",
   level = 7,
   portrait = -1,
@@ -2697,7 +2592,6 @@ define('281', {
 })
 define('282', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/mino/",
   level = 18,
   portrait = -1,
@@ -2719,7 +2613,6 @@ define('282', {
 })
 define('296', {
   item_type = 3,
-  dbmode16_dbspec5 = 4,
   filter = "/mino/",
   level = 22,
   portrait = -1,
@@ -2746,7 +2639,6 @@ define('296', {
 })
 define('298', {
   item_type = 3,
-  dbmode16_dbspec5 = 3,
   filter = "/mino/",
   level = 23,
   portrait = -1,
@@ -2769,7 +2661,6 @@ define('298', {
 })
 define('299', {
   item_type = 3,
-  dbmode16_dbspec5 = 8,
   filter = "/mino/",
   level = 25,
   portrait = -1,
@@ -2793,7 +2684,6 @@ define('299', {
 })
 define('300', {
   item_type = 3,
-  dbmode16_dbspec5 = 10,
   filter = "/mino/",
   level = 31,
   portrait = -1,
@@ -2820,7 +2710,6 @@ define('300', {
 })
 define('251', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 14,
   portrait = -1,
@@ -2842,7 +2731,6 @@ define('251', {
 })
 define('18', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 5,
   portrait = 0,
@@ -2865,7 +2753,6 @@ define('18', {
 })
 define('24', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 5,
   portrait = 0,
@@ -2892,7 +2779,6 @@ define('24', {
 })
 define('309', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/god/",
   level = 12,
   portrait = -1,
@@ -2915,7 +2801,6 @@ define('309', {
 })
 define('310', {
   item_type = 3,
-  dbmode16_dbspec5 = 2,
   filter = "/god/",
   level = 26,
   portrait = -1,
@@ -2939,7 +2824,6 @@ define('310', {
 })
 define('311', {
   item_type = 3,
-  dbmode16_dbspec5 = 3,
   filter = "/god/",
   level = 37,
   portrait = -1,
@@ -2963,7 +2847,6 @@ define('311', {
 })
 define('41', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 5,
   portrait = 0,
@@ -2992,7 +2875,6 @@ define('41', {
 })
 define('75', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 5,
   portrait = 0,
@@ -3017,7 +2899,6 @@ define('75', {
 })
 define('19', {
   item_type = 2,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 5,
   portrait = -1,
@@ -3038,7 +2919,6 @@ define('19', {
 })
 define('22', {
   item_type = 2,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 5,
   portrait = -1,
@@ -3060,7 +2940,6 @@ define('22', {
 })
 define('20', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 10,
   portrait = -1,
@@ -3082,7 +2961,6 @@ define('20', {
 })
 define('25', {
   item_type = 3,
-  dbmode16_dbspec5 = 3,
   filter = "",
   level = 25,
   portrait = -1,
@@ -3106,7 +2984,6 @@ define('25', {
 })
 define('21', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/undead/",
   level = 8,
   portrait = -1,
@@ -3128,7 +3005,6 @@ define('21', {
 })
 define('42', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/wild/",
   level = 1,
   portrait = -1,
@@ -3149,7 +3025,6 @@ define('42', {
 })
 define('43', {
   item_type = 1,
-  dbmode16_dbspec5 = 3,
   filter = "/wild/",
   level = 10,
   portrait = -1,
@@ -3174,7 +3049,6 @@ define('43', {
 })
 define('44', {
   item_type = 1,
-  dbmode16_dbspec5 = 4,
   filter = "/wild/fire/dragon/",
   level = 30,
   portrait = -1,
@@ -3197,7 +3071,6 @@ define('44', {
 })
 define('45', {
   item_type = 1,
-  dbmode16_dbspec5 = 16,
   filter = "/fire/",
   level = 15,
   portrait = -1,
@@ -3225,7 +3098,6 @@ define('45', {
 })
 define('46', {
   item_type = 1,
-  dbmode16_dbspec5 = 17,
   filter = "",
   level = 15,
   portrait = -1,
@@ -3253,7 +3125,6 @@ define('46', {
 })
 define('47', {
   item_type = 6,
-  dbmode16_dbspec5 = 0,
   filter = "/undead/",
   level = 20,
   portrait = -1,
@@ -3279,7 +3150,6 @@ define('47', {
 })
 define('48', {
   item_type = 6,
-  dbmode16_dbspec5 = 16,
   filter = "/undead/",
   level = 30,
   portrait = -1,
@@ -3307,7 +3177,6 @@ define('48', {
 })
 define('49', {
   item_type = 6,
-  dbmode16_dbspec5 = 17,
   filter = "/undead/",
   level = 45,
   portrait = -1,
@@ -3334,7 +3203,6 @@ define('49', {
 })
 define('307', {
   item_type = 6,
-  dbmode16_dbspec5 = 0,
   filter = "/undead/",
   level = 18,
   portrait = -1,
@@ -3363,7 +3231,6 @@ define('307', {
 })
 define('308', {
   item_type = 6,
-  dbmode16_dbspec5 = 4,
   filter = "/undead/",
   level = 35,
   portrait = -1,
@@ -3391,7 +3258,6 @@ define('308', {
 })
 define('50', {
   item_type = 1,
-  dbmode16_dbspec5 = 6,
   filter = "/wild/",
   level = 5,
   portrait = -1,
@@ -3415,7 +3281,6 @@ define('50', {
 })
 define('51', {
   item_type = 1,
-  dbmode16_dbspec5 = 3,
   filter = "/wild/fire/",
   level = 10,
   portrait = -1,
@@ -3443,7 +3308,6 @@ define('51', {
 })
 define('52', {
   item_type = 1,
-  dbmode16_dbspec5 = 12,
   filter = "/wild/",
   level = 10,
   portrait = -1,
@@ -3471,7 +3335,6 @@ define('52', {
 })
 define('53', {
   item_type = 1,
-  dbmode16_dbspec5 = 5,
   filter = "/wild/",
   level = 12,
   portrait = -1,
@@ -3496,7 +3359,6 @@ define('53', {
 })
 define('54', {
   item_type = 1,
-  dbmode16_dbspec5 = 4,
   filter = "/wild/",
   level = 12,
   portrait = -1,
@@ -3521,7 +3383,6 @@ define('54', {
 })
 define('55', {
   item_type = 1,
-  dbmode16_dbspec5 = 10,
   filter = "/wild/",
   level = 18,
   portrait = -1,
@@ -3546,7 +3407,6 @@ define('55', {
 })
 define('56', {
   item_type = 1,
-  dbmode16_dbspec5 = 9,
   filter = "/wild/",
   level = 18,
   portrait = -1,
@@ -3571,7 +3431,6 @@ define('56', {
 })
 define('57', {
   item_type = 1,
-  dbmode16_dbspec5 = 2,
   filter = "/wild/",
   level = 15,
   portrait = -1,
@@ -3596,7 +3455,6 @@ define('57', {
 })
 define('58', {
   item_type = 1,
-  dbmode16_dbspec5 = 11,
   filter = "/wild/",
   level = 22,
   portrait = -1,
@@ -3621,7 +3479,6 @@ define('58', {
 })
 define('59', {
   item_type = 1,
-  dbmode16_dbspec5 = 15,
   filter = "/wild/",
   level = 25,
   portrait = -1,
@@ -3646,7 +3503,6 @@ define('59', {
 })
 define('60', {
   item_type = 1,
-  dbmode16_dbspec5 = 18,
   filter = "/wild/",
   level = 30,
   portrait = -1,
@@ -3671,7 +3527,6 @@ define('60', {
 })
 define('61', {
   item_type = 1,
-  dbmode16_dbspec5 = 6,
   filter = "/wild/",
   level = 4,
   portrait = -1,
@@ -3695,7 +3550,6 @@ define('61', {
 })
 define('62', {
   item_type = 1,
-  dbmode16_dbspec5 = 3,
   filter = "/wild/",
   level = 10,
   portrait = -1,
@@ -3719,7 +3573,6 @@ define('62', {
 })
 define('63', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/undead/",
   level = 7,
   portrait = -1,
@@ -3743,7 +3596,6 @@ define('63', {
 })
 define('64', {
   item_type = 3,
-  dbmode16_dbspec5 = 2,
   filter = "/undead/",
   level = 3,
   portrait = -1,
@@ -3766,7 +3618,6 @@ define('64', {
 })
 define('312', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 8,
   portrait = -1,
@@ -3790,7 +3641,6 @@ define('312', {
 })
 define('313', {
   item_type = 3,
-  dbmode16_dbspec5 = 16,
   filter = "",
   level = 19,
   portrait = -1,
@@ -3815,7 +3665,6 @@ define('313', {
 })
 define('65', {
   item_type = 1,
-  dbmode16_dbspec5 = 5,
   filter = "",
   level = 12,
   portrait = -1,
@@ -3840,7 +3689,6 @@ define('65', {
 })
 define('66', {
   item_type = 1,
-  dbmode16_dbspec5 = 18,
   filter = "",
   level = 30,
   portrait = -1,
@@ -3865,7 +3713,6 @@ define('66', {
 })
 define('67', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 2,
   portrait = -1,
@@ -3891,7 +3738,6 @@ define('67', {
 })
 define('315', {
   item_type = 1,
-  dbmode16_dbspec5 = 8,
   filter = "",
   level = 14,
   portrait = -1,
@@ -3920,7 +3766,6 @@ define('315', {
 })
 define('316', {
   item_type = 1,
-  dbmode16_dbspec5 = 4,
   filter = "",
   level = 7,
   portrait = -1,
@@ -3949,7 +3794,6 @@ define('316', {
 })
 define('314', {
   item_type = 1,
-  dbmode16_dbspec5 = 3,
   filter = "",
   level = 29,
   portrait = -1,
@@ -3979,7 +3823,6 @@ define('314', {
 })
 define('68', {
   item_type = 4,
-  dbmode16_dbspec5 = 0,
   filter = "/dragon/",
   level = 20,
   portrait = -1,
@@ -4003,7 +3846,6 @@ define('68', {
 })
 define('78', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 15,
   portrait = -1,
@@ -4029,7 +3871,6 @@ define('78', {
 })
 define('81', {
   item_type = 2,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 5,
   portrait = -1,
@@ -4051,7 +3892,6 @@ define('81', {
 })
 define('82', {
   item_type = 2,
-  dbmode16_dbspec5 = 3,
   filter = "/fire/",
   level = 10,
   portrait = -1,
@@ -4074,7 +3914,6 @@ define('82', {
 })
 define('83', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 22,
   portrait = -1,
@@ -4096,7 +3935,6 @@ define('83', {
 })
 define('84', {
   item_type = 3,
-  dbmode16_dbspec5 = 16,
   filter = "",
   level = 40,
   portrait = -1,
@@ -4120,7 +3958,6 @@ define('84', {
 })
 define('85', {
   item_type = 3,
-  dbmode16_dbspec5 = 16,
   filter = "/fire/",
   level = 7,
   portrait = -1,
@@ -4146,7 +3983,6 @@ define('85', {
 })
 define('86', {
   item_type = 3,
-  dbmode16_dbspec5 = 4,
   filter = "/god/",
   level = 16,
   portrait = -1,
@@ -4171,7 +4007,6 @@ define('86', {
 })
 define('87', {
   item_type = 3,
-  dbmode16_dbspec5 = 18,
   filter = "",
   level = 27,
   portrait = -1,
@@ -4196,7 +4031,6 @@ define('87', {
 })
 define('88', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/undead/",
   level = 4,
   portrait = -1,
@@ -4220,7 +4054,6 @@ define('88', {
 })
 define('89', {
   item_type = 3,
-  dbmode16_dbspec5 = 18,
   filter = "/undead/",
   level = 11,
   portrait = -1,
@@ -4244,7 +4077,6 @@ define('89', {
 })
 define('90', {
   item_type = 3,
-  dbmode16_dbspec5 = 16,
   filter = "/undead/",
   level = 15,
   portrait = -1,
@@ -4270,7 +4102,6 @@ define('90', {
 })
 define('91', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/undead/",
   level = 5,
   portrait = -1,
@@ -4295,7 +4126,6 @@ define('91', {
 })
 define('92', {
   item_type = 3,
-  dbmode16_dbspec5 = 5,
   filter = "/undead/",
   level = 13,
   portrait = -1,
@@ -4323,7 +4153,6 @@ define('92', {
 })
 define('93', {
   item_type = 2,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 8,
   portrait = -1,
@@ -4346,7 +4175,6 @@ define('93', {
 })
 define('94', {
   item_type = 2,
-  dbmode16_dbspec5 = 10,
   filter = "",
   level = 19,
   portrait = -1,
@@ -4370,7 +4198,6 @@ define('94', {
 })
 define('95', {
   item_type = 1,
-  dbmode16_dbspec5 = 17,
   filter = "/wild/",
   level = 10,
   portrait = -1,
@@ -4393,7 +4220,6 @@ define('95', {
 })
 define('96', {
   item_type = 1,
-  dbmode16_dbspec5 = 16,
   filter = "/wild/",
   level = 18,
   portrait = -1,
@@ -4416,7 +4242,6 @@ define('96', {
 })
 define('97', {
   item_type = 4,
-  dbmode16_dbspec5 = 3,
   filter = "/fire/dragon/",
   level = 16,
   portrait = -1,
@@ -4440,7 +4265,6 @@ define('97', {
 })
 define('98', {
   item_type = 4,
-  dbmode16_dbspec5 = 0,
   filter = "/dragon/",
   level = 16,
   portrait = -1,
@@ -4463,7 +4287,6 @@ define('98', {
 })
 define('99', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/undead/",
   level = 7,
   portrait = -1,
@@ -4487,7 +4310,6 @@ define('99', {
 })
 define('100', {
   item_type = 3,
-  dbmode16_dbspec5 = 10,
   filter = "/undead/",
   level = 14,
   portrait = -1,
@@ -4513,7 +4335,6 @@ define('100', {
 })
 define('101', {
   item_type = 3,
-  dbmode16_dbspec5 = 5,
   filter = "/undead/",
   level = 22,
   portrait = -1,
@@ -4539,7 +4360,6 @@ define('101', {
 })
 define('257', {
   item_type = 3,
-  dbmode16_dbspec5 = 8,
   filter = "/undead/",
   level = 28,
   portrait = -1,
@@ -4566,7 +4386,6 @@ define('257', {
 })
 define('254', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/undead/",
   level = 19,
   portrait = -1,
@@ -4592,7 +4411,6 @@ define('254', {
 })
 define('102', {
   item_type = 3,
-  dbmode16_dbspec5 = 16,
   filter = "",
   level = 2,
   portrait = -1,
@@ -4614,7 +4432,6 @@ define('102', {
 })
 define('103', {
   item_type = 3,
-  dbmode16_dbspec5 = 5,
   filter = "",
   level = 6,
   portrait = -1,
@@ -4637,7 +4454,6 @@ define('103', {
 })
 define('104', {
   item_type = 3,
-  dbmode16_dbspec5 = 18,
   filter = "",
   level = 8,
   portrait = -1,
@@ -4664,7 +4480,6 @@ define('104', {
 })
 define('105', {
   item_type = 3,
-  dbmode16_dbspec5 = 4,
   filter = "",
   level = 10,
   portrait = -1,
@@ -4688,7 +4503,6 @@ define('105', {
 })
 define('106', {
   item_type = 3,
-  dbmode16_dbspec5 = 3,
   filter = "/undead/fire/",
   level = 12,
   portrait = -1,
@@ -4715,7 +4529,6 @@ define('106', {
 })
 define('107', {
   item_type = 3,
-  dbmode16_dbspec5 = 4,
   filter = "/undead/",
   level = 12,
   portrait = -1,
@@ -4742,7 +4555,6 @@ define('107', {
 })
 define('108', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/wild/",
   level = 4,
   portrait = -1,
@@ -4765,7 +4577,6 @@ define('108', {
 })
 define('109', {
   item_type = 1,
-  dbmode16_dbspec5 = 3,
   filter = "/wild/",
   level = 10,
   portrait = -1,
@@ -4787,7 +4598,6 @@ define('109', {
 })
 define('344', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/wild/",
   level = 28,
   portrait = -1,
@@ -4809,7 +4619,6 @@ define('344', {
 })
 define('110', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/undead/",
   level = 15,
   portrait = -1,
@@ -4831,7 +4640,6 @@ define('110', {
 })
 define('111', {
   item_type = 3,
-  dbmode16_dbspec5 = 17,
   filter = "/undead/",
   level = 25,
   portrait = -1,
@@ -4854,7 +4662,6 @@ define('111', {
 })
 define('112', {
   item_type = 3,
-  dbmode16_dbspec5 = 5,
   filter = "/undead/",
   level = 35,
   portrait = -1,
@@ -4877,7 +4684,6 @@ define('112', {
 })
 define('113', {
   item_type = 3,
-  dbmode16_dbspec5 = 16,
   filter = "",
   level = 45,
   portrait = -1,
@@ -4901,7 +4707,6 @@ define('113', {
 })
 define('114', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/god/",
   level = 22,
   portrait = -1,
@@ -4923,7 +4728,6 @@ define('114', {
 })
 define('115', {
   item_type = 3,
-  dbmode16_dbspec5 = 5,
   filter = "/god/",
   level = 33,
   portrait = -1,
@@ -4946,7 +4750,6 @@ define('115', {
 })
 define('116', {
   item_type = 3,
-  dbmode16_dbspec5 = 16,
   filter = "/god/",
   level = 44,
   portrait = -1,
@@ -4969,7 +4772,6 @@ define('116', {
 })
 define('117', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/god/",
   level = 8,
   portrait = -1,
@@ -4992,7 +4794,6 @@ define('117', {
 })
 define('118', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/undead/",
   level = 9,
   portrait = -1,
@@ -5015,7 +4816,6 @@ define('118', {
 })
 define('248', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/dragon/",
   level = 30,
   portrait = -1,
@@ -5037,7 +4837,6 @@ define('248', {
 })
 define('119', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 13,
   portrait = -1,
@@ -5058,7 +4857,6 @@ define('119', {
 })
 define('120', {
   item_type = 5,
-  dbmode16_dbspec5 = 19,
   filter = "/dragon/",
   level = 32,
   portrait = -1,
@@ -5082,7 +4880,6 @@ define('120', {
 })
 define('121', {
   item_type = 5,
-  dbmode16_dbspec5 = 3,
   filter = "/fire/dragon/",
   level = 40,
   portrait = -1,
@@ -5107,7 +4904,6 @@ define('121', {
 })
 define('122', {
   item_type = 5,
-  dbmode16_dbspec5 = 0,
   filter = "/dragon/",
   level = 40,
   portrait = -1,
@@ -5131,7 +4927,6 @@ define('122', {
 })
 define('123', {
   item_type = 5,
-  dbmode16_dbspec5 = 5,
   filter = "/dragon/",
   level = 40,
   portrait = -1,
@@ -5156,7 +4951,6 @@ define('123', {
 })
 define('124', {
   item_type = 5,
-  dbmode16_dbspec5 = 4,
   filter = "/undead/dragon/",
   level = 45,
   portrait = -1,
@@ -5181,7 +4975,6 @@ define('124', {
 })
 define('125', {
   item_type = 5,
-  dbmode16_dbspec5 = 18,
   filter = "/dragon/",
   level = 50,
   portrait = -1,
@@ -5206,7 +4999,6 @@ define('125', {
 })
 define('126', {
   item_type = 4,
-  dbmode16_dbspec5 = 0,
   filter = "/fire/",
   level = 23,
   portrait = -1,
@@ -5230,7 +5022,6 @@ define('126', {
 })
 define('255', {
   item_type = 2,
-  dbmode16_dbspec5 = 0,
   filter = "/wild/",
   level = 4,
   portrait = -1,
@@ -5254,7 +5045,6 @@ define('255', {
 })
 define('256', {
   item_type = 2,
-  dbmode16_dbspec5 = 3,
   filter = "/wild/",
   level = 24,
   portrait = -1,
@@ -5279,7 +5069,6 @@ define('256', {
 })
 define('127', {
   item_type = 2,
-  dbmode16_dbspec5 = 0,
   filter = "/wild/",
   level = 3,
   portrait = -1,
@@ -5303,7 +5092,6 @@ define('127', {
 })
 define('128', {
   item_type = 2,
-  dbmode16_dbspec5 = 19,
   filter = "/wild/",
   level = 11,
   portrait = -1,
@@ -5329,7 +5117,6 @@ define('128', {
 })
 define('129', {
   item_type = 2,
-  dbmode16_dbspec5 = 17,
   filter = "/wild/",
   level = 21,
   portrait = -1,
@@ -5355,7 +5142,6 @@ define('129', {
 })
 define('130', {
   item_type = 2,
-  dbmode16_dbspec5 = 5,
   filter = "/wild/",
   level = 15,
   portrait = -1,
@@ -5381,7 +5167,6 @@ define('130', {
 })
 define('131', {
   item_type = 2,
-  dbmode16_dbspec5 = 16,
   filter = "/undead/",
   level = 28,
   portrait = -1,
@@ -5407,7 +5192,6 @@ define('131', {
 })
 define('132', {
   item_type = 3,
-  dbmode16_dbspec5 = 6,
   filter = "",
   level = 13,
   portrait = -1,
@@ -5430,7 +5214,6 @@ define('132', {
 })
 define('133', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/fire/",
   level = 19,
   portrait = -1,
@@ -5452,7 +5235,6 @@ define('133', {
 })
 define('134', {
   item_type = 3,
-  dbmode16_dbspec5 = 15,
   filter = "/fire/",
   level = 25,
   portrait = -1,
@@ -5476,7 +5258,6 @@ define('134', {
 })
 define('135', {
   item_type = 3,
-  dbmode16_dbspec5 = 5,
   filter = "",
   level = 30,
   portrait = -1,
@@ -5500,7 +5281,6 @@ define('135', {
 })
 define('136', {
   item_type = 3,
-  dbmode16_dbspec5 = 17,
   filter = "",
   level = 35,
   portrait = -1,
@@ -5524,7 +5304,6 @@ define('136', {
 })
 define('137', {
   item_type = 3,
-  dbmode16_dbspec5 = 9,
   filter = "",
   level = 40,
   portrait = -1,
@@ -5548,7 +5327,6 @@ define('137', {
 })
 define('138', {
   item_type = 3,
-  dbmode16_dbspec5 = 2,
   filter = "",
   level = 50,
   portrait = -1,
@@ -5572,7 +5350,6 @@ define('138', {
 })
 define('147', {
   item_type = 2,
-  dbmode16_dbspec5 = 0,
   filter = "/fire/",
   level = 16,
   portrait = -1,
@@ -5595,7 +5372,6 @@ define('147', {
 })
 define('148', {
   item_type = 2,
-  dbmode16_dbspec5 = 0,
   filter = "/fire/",
   level = 18,
   portrait = -1,
@@ -5619,7 +5395,6 @@ define('148', {
 })
 define('149', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/fire/",
   level = 20,
   portrait = -1,
@@ -5646,7 +5421,6 @@ define('149', {
 })
 define('150', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/undead/",
   level = 12,
   portrait = -1,
@@ -5668,7 +5442,6 @@ define('150', {
 })
 define('151', {
   item_type = 3,
-  dbmode16_dbspec5 = 3,
   filter = "/undead/",
   level = 20,
   portrait = -1,
@@ -5692,7 +5465,6 @@ define('151', {
 })
 define('152', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 20,
   portrait = -1,
@@ -5717,7 +5489,6 @@ define('152', {
 })
 define('153', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/pawn/",
   level = 12,
   portrait = -1,
@@ -5739,7 +5510,6 @@ define('153', {
 })
 define('154', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/pawn/",
   level = 16,
   portrait = -1,
@@ -5762,7 +5532,6 @@ define('154', {
 })
 define('155', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/pawn/",
   level = 18,
   portrait = -1,
@@ -5788,7 +5557,6 @@ define('155', {
 })
 define('156', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/pawn/",
   level = 18,
   portrait = -1,
@@ -5812,7 +5580,6 @@ define('156', {
 })
 define('157', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 22,
   portrait = -1,
@@ -5838,7 +5605,6 @@ define('157', {
 })
 define('158', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 22,
   portrait = -1,
@@ -5862,7 +5628,6 @@ define('158', {
 })
 define('159', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/shopguard/",
   level = 20,
   portrait = -1,
@@ -5887,7 +5652,6 @@ define('159', {
 })
 define('160', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/shopguard/",
   level = 20,
   portrait = -1,
@@ -5912,7 +5676,6 @@ define('160', {
 })
 define('161', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/shopguard/",
   level = 20,
   portrait = -1,
@@ -5938,7 +5701,6 @@ define('161', {
 })
 define('302', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/rogue/",
   level = 12,
   portrait = -1,
@@ -5965,7 +5727,6 @@ define('302', {
 })
 define('303', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/rogue/",
   level = 10,
   portrait = -1,
@@ -5991,7 +5752,6 @@ define('303', {
 })
 define('304', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/rogue/",
   level = 10,
   portrait = -1,
@@ -6016,7 +5776,6 @@ define('304', {
 })
 define('305', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/rogue/",
   level = 10,
   portrait = -1,
@@ -6044,7 +5803,6 @@ define('305', {
 })
 define('162', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 5,
   portrait = -1,
@@ -6068,7 +5826,6 @@ define('162', {
 })
 define('234', {
   item_type = 3,
-  dbmode16_dbspec5 = 3,
   filter = "/man/",
   level = 22,
   portrait = -1,
@@ -6093,7 +5850,6 @@ define('234', {
 })
 define('231', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 45,
   portrait = 33,
@@ -6119,7 +5875,6 @@ define('231', {
 })
 define('232', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 17,
   portrait = -1,
@@ -6142,7 +5897,6 @@ define('232', {
 })
 define('233', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 7,
   portrait = -1,
@@ -6166,7 +5920,6 @@ define('233', {
 })
 define('235', {
   item_type = 3,
-  dbmode16_dbspec5 = 4,
   filter = "/man/",
   level = 15,
   portrait = -1,
@@ -6191,7 +5944,6 @@ define('235', {
 })
 define('163', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 9,
   portrait = -1,
@@ -6215,7 +5967,6 @@ define('163', {
 })
 define('164', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/wild/cat/",
   level = 4,
   portrait = -1,
@@ -6238,7 +5989,6 @@ define('164', {
 })
 define('246', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/wild/cat/",
   level = 3,
   portrait = -1,
@@ -6262,7 +6012,6 @@ define('246', {
 })
 define('332', {
   item_type = 1,
-  dbmode16_dbspec5 = 6,
   filter = "/wild/cat/",
   level = 9,
   portrait = -1,
@@ -6287,7 +6036,6 @@ define('332', {
 })
 define('229', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/wild/cat/",
   level = 18,
   portrait = -1,
@@ -6311,7 +6059,6 @@ define('229', {
 })
 define('230', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/wild/cat/",
   level = 25,
   portrait = -1,
@@ -6337,7 +6084,6 @@ define('230', {
 })
 define('228', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/wild/cat/",
   level = 20,
   portrait = -1,
@@ -6363,7 +6109,6 @@ define('228', {
 })
 define('165', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/wild/",
   level = 4,
   portrait = -1,
@@ -6386,7 +6131,6 @@ define('165', {
 })
 define('225', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/wild/",
   level = 1,
   portrait = -1,
@@ -6410,7 +6154,6 @@ define('225', {
 })
 define('226', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 4,
   portrait = 16,
@@ -6434,7 +6177,6 @@ define('226', {
 })
 define('227', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 5,
   portrait = 16,
@@ -6459,7 +6201,6 @@ define('227', {
 })
 define('166', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 4,
   portrait = -1,
@@ -6484,7 +6225,6 @@ define('166', {
 })
 define('167', {
   item_type = 1,
-  dbmode16_dbspec5 = 6,
   filter = "/wild/",
   level = 1,
   portrait = -1,
@@ -6507,7 +6247,6 @@ define('167', {
 })
 define('168', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/wild/",
   level = 1,
   portrait = -1,
@@ -6529,7 +6268,6 @@ define('168', {
 })
 define('170', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 1,
   portrait = -1,
@@ -6554,7 +6292,6 @@ define('170', {
 })
 define('175', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/god/",
   level = 80,
   portrait = -1,
@@ -6578,7 +6315,6 @@ define('175', {
 })
 define('176', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 1,
   portrait = -1,
@@ -6603,7 +6339,6 @@ define('176', {
 })
 define('249', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 50,
   portrait = -1,
@@ -6629,7 +6364,6 @@ define('249', {
 })
 define('210', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 1,
   portrait = -1,
@@ -6653,7 +6387,6 @@ define('210', {
 })
 define('211', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 1,
   portrait = -1,
@@ -6682,7 +6415,6 @@ define('211', {
 })
 define('177', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/god/",
   level = 80,
   portrait = -1,
@@ -6714,7 +6446,6 @@ define('177', {
 })
 define('178', {
   item_type = 6,
-  dbmode16_dbspec5 = 3,
   filter = "/undead/god/",
   level = 80,
   portrait = -1,
@@ -6746,7 +6477,6 @@ define('178', {
 })
 define('179', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 35,
   portrait = -1,
@@ -6769,7 +6499,6 @@ define('179', {
 })
 define('208', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 45,
   portrait = -1,
@@ -6795,7 +6524,6 @@ define('208', {
 })
 define('209', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 45,
   portrait = -1,
@@ -6821,7 +6549,6 @@ define('209', {
 })
 define('180', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 1,
   portrait = -1,
@@ -6844,7 +6571,6 @@ define('180', {
 })
 define('181', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/god/",
   level = 10,
   portrait = -1,
@@ -6867,7 +6593,6 @@ define('181', {
 })
 define('182', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 8,
   portrait = -1,
@@ -6892,7 +6617,6 @@ define('182', {
 })
 define('183', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 15,
   portrait = 0,
@@ -6917,7 +6641,6 @@ define('183', {
 })
 define('184', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 9,
   portrait = 0,
@@ -6942,7 +6665,6 @@ define('184', {
 })
 define('185', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 20,
   portrait = 0,
@@ -6968,7 +6690,6 @@ define('185', {
 })
 define('350', {
   item_type = 3,
-  dbmode16_dbspec5 = 1,
   filter = "/man/",
   level = 10,
   portrait = 0,
@@ -6995,7 +6716,6 @@ define('350', {
 })
 define('186', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 5,
   portrait = -1,
@@ -7017,7 +6737,6 @@ define('186', {
 })
 define('187', {
   item_type = 3,
-  dbmode16_dbspec5 = 17,
   filter = "",
   level = 13,
   portrait = -1,
@@ -7041,7 +6760,6 @@ define('187', {
 })
 define('188', {
   item_type = 3,
-  dbmode16_dbspec5 = 3,
   filter = "",
   level = 30,
   portrait = -1,
@@ -7065,7 +6783,6 @@ define('188', {
 })
 define('345', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 22,
   portrait = -1,
@@ -7090,7 +6807,6 @@ define('345', {
 })
 define('346', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 8,
   portrait = -1,
@@ -7114,7 +6830,6 @@ define('346', {
 })
 define('341', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 15,
   portrait = -1,
@@ -7139,7 +6854,6 @@ define('341', {
 })
 define('258', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 25,
   portrait = -1,
@@ -7163,7 +6877,6 @@ define('258', {
 })
 define('189', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/undead/",
   level = 8,
   portrait = -1,
@@ -7186,7 +6899,6 @@ define('189', {
 })
 define('190', {
   item_type = 3,
-  dbmode16_dbspec5 = 3,
   filter = "/undead/",
   level = 19,
   portrait = -1,
@@ -7210,7 +6922,6 @@ define('190', {
 })
 define('191', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/undead/ether/",
   level = 14,
   portrait = -1,
@@ -7235,7 +6946,6 @@ define('191', {
 })
 define('192', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/wild/",
   level = 5,
   portrait = -1,
@@ -7258,7 +6968,6 @@ define('192', {
 })
 define('193', {
   item_type = 1,
-  dbmode16_dbspec5 = 17,
   filter = "/wild/ether/",
   level = 15,
   portrait = -1,
@@ -7282,7 +6991,6 @@ define('193', {
 })
 define('195', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/wild/",
   level = 1,
   portrait = -1,
@@ -7304,7 +7012,6 @@ define('195', {
 })
 define('196', {
   item_type = 2,
-  dbmode16_dbspec5 = 0,
   filter = "/undead/",
   level = 7,
   portrait = -1,
@@ -7328,7 +7035,6 @@ define('196', {
 })
 define('201', {
   item_type = 2,
-  dbmode16_dbspec5 = 5,
   filter = "/undead/",
   level = 5,
   portrait = -1,
@@ -7353,7 +7059,6 @@ define('201', {
 })
 define('197', {
   item_type = 2,
-  dbmode16_dbspec5 = 4,
   filter = "/undead/",
   level = 18,
   portrait = -1,
@@ -7378,7 +7083,6 @@ define('197', {
 })
 define('198', {
   item_type = 2,
-  dbmode16_dbspec5 = 3,
   filter = "/undead/",
   level = 30,
   portrait = -1,
@@ -7403,7 +7107,6 @@ define('198', {
 })
 define('199', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/undead/",
   level = 12,
   portrait = -1,
@@ -7426,7 +7129,6 @@ define('199', {
 })
 define('200', {
   item_type = 3,
-  dbmode16_dbspec5 = 3,
   filter = "/undead/",
   level = 26,
   portrait = -1,
@@ -7450,7 +7152,6 @@ define('200', {
 })
 define('202', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 80,
   portrait = -1,
@@ -7477,7 +7178,6 @@ define('202', {
 })
 define('203', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 10,
   portrait = 0,
@@ -7502,7 +7202,6 @@ define('203', {
 })
 define('205', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 1,
   portrait = -1,
@@ -7528,7 +7227,6 @@ define('205', {
 })
 define('207', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/god/",
   level = 30,
   portrait = -1,
@@ -7555,7 +7253,6 @@ define('207', {
 })
 define('212', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 1,
   portrait = 54,
@@ -7581,7 +7278,6 @@ define('212', {
 })
 define('213', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 1,
   portrait = -1,
@@ -7607,7 +7303,6 @@ define('213', {
 })
 define('221', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 10,
   portrait = 15,
@@ -7633,7 +7328,6 @@ define('221', {
 })
 define('222', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 15,
   portrait = 13,
@@ -7659,7 +7353,6 @@ define('222', {
 })
 define('223', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 10,
   portrait = 14,
@@ -7685,7 +7378,6 @@ define('223', {
 })
 define('224', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 7,
   portrait = 18,
@@ -7711,7 +7403,6 @@ define('224', {
 })
 define('243', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 15,
   portrait = 36,
@@ -7737,7 +7428,6 @@ define('243', {
 })
 define('247', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 4,
   portrait = 34,
@@ -7762,7 +7452,6 @@ define('247', {
 })
 define('252', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 45,
   portrait = 5,
@@ -7791,7 +7480,6 @@ define('252', {
 })
 define('253', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 25,
   portrait = 1,
@@ -7818,7 +7506,6 @@ define('253', {
 })
 define('259', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 20,
   portrait = 15,
@@ -7845,7 +7532,6 @@ define('259', {
 })
 define('301', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 38,
   portrait = 39,
@@ -7872,7 +7558,6 @@ define('301', {
 })
 define('214', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 2,
   portrait = -1,
@@ -7896,7 +7581,6 @@ define('214', {
 })
 define('215', {
   item_type = 3,
-  dbmode16_dbspec5 = 3,
   filter = "/man/",
   level = 5,
   portrait = -1,
@@ -7922,7 +7606,6 @@ define('215', {
 })
 define('217', {
   item_type = 3,
-  dbmode16_dbspec5 = 4,
   filter = "/man/",
   level = 35,
   portrait = -1,
@@ -7948,7 +7631,6 @@ define('217', {
 })
 define('216', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 50,
   portrait = -1,
@@ -7973,7 +7655,6 @@ define('216', {
 })
 define('218', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 45,
   portrait = -1,
@@ -8001,7 +7682,6 @@ define('218', {
 })
 define('219', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 38,
   portrait = -1,
@@ -8025,7 +7705,6 @@ define('219', {
 })
 define('220', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/god/",
   level = 65,
   portrait = -1,
@@ -8053,7 +7732,6 @@ define('220', {
 })
 define('250', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 13,
   portrait = -1,
@@ -8077,7 +7755,6 @@ define('250', {
 })
 define('260', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/god/",
   level = 8,
   portrait = -1,
@@ -8106,7 +7783,6 @@ define('260', {
 })
 define('261', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/god/",
   level = 8,
   portrait = -1,
@@ -8135,7 +7811,6 @@ define('261', {
 })
 define('262', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/god/",
   level = 8,
   portrait = -1,
@@ -8161,7 +7836,6 @@ define('262', {
 })
 define('263', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/god/",
   level = 8,
   portrait = -1,
@@ -8194,7 +7868,6 @@ define('263', {
 })
 define('264', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/god/",
   level = 8,
   portrait = -1,
@@ -8221,7 +7894,6 @@ define('264', {
 })
 define('265', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/god/",
   level = 8,
   portrait = -1,
@@ -8250,7 +7922,6 @@ define('265', {
 })
 define('266', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/god/",
   level = 8,
   portrait = -1,
@@ -8279,7 +7950,6 @@ define('266', {
 })
 define('267', {
   item_type = 1,
-  dbmode16_dbspec5 = 17,
   filter = "/wild/horse/",
   level = 1,
   portrait = -1,
@@ -8303,7 +7973,6 @@ define('267', {
 })
 define('276', {
   item_type = 1,
-  dbmode16_dbspec5 = 6,
   filter = "/wild/horse/",
   level = 4,
   portrait = -1,
@@ -8328,7 +7997,6 @@ define('276', {
 })
 define('275', {
   item_type = 1,
-  dbmode16_dbspec5 = 15,
   filter = "/wild/horse/",
   level = 10,
   portrait = -1,
@@ -8353,7 +8021,6 @@ define('275', {
 })
 define('268', {
   item_type = 1,
-  dbmode16_dbspec5 = 16,
   filter = "/wild/horse/",
   level = 15,
   portrait = -1,
@@ -8378,7 +8045,6 @@ define('268', {
 })
 define('277', {
   item_type = 1,
-  dbmode16_dbspec5 = 10,
   filter = "/wild/horse/",
   level = 20,
   portrait = -1,
@@ -8403,7 +8069,6 @@ define('277', {
 })
 define('278', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 6,
   portrait = -1,
@@ -8427,7 +8092,6 @@ define('278', {
 })
 define('279', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 15,
   portrait = 17,
@@ -8453,7 +8117,6 @@ define('279', {
 })
 define('280', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 10,
   portrait = 30,
@@ -8478,7 +8141,6 @@ define('280', {
 })
 define('288', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 55,
   portrait = 13,
@@ -8506,7 +8168,6 @@ define('288', {
 })
 define('290', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 38,
   portrait = 5,
@@ -8534,7 +8195,6 @@ define('290', {
 })
 define('292', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 55,
   portrait = 6,
@@ -8559,7 +8219,6 @@ define('292', {
 })
 define('294', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 38,
   portrait = 5,
@@ -8585,7 +8244,6 @@ define('294', {
 })
 define('291', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 55,
   portrait = 17,
@@ -8610,7 +8268,6 @@ define('291', {
 })
 define('297', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 38,
   portrait = 5,
@@ -8636,7 +8293,6 @@ define('297', {
 })
 define('317', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 28,
   portrait = -1,
@@ -8665,7 +8321,6 @@ define('317', {
 })
 define('318', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 30,
   portrait = -1,
@@ -8695,7 +8350,6 @@ define('318', {
 })
 define('319', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 1,
   portrait = -1,
@@ -8721,7 +8375,6 @@ define('319', {
 })
 define('322', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 15,
   portrait = -1,
@@ -8747,7 +8400,6 @@ define('322', {
 })
 define('334', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/man/",
   level = 7,
   portrait = -1,
@@ -8773,7 +8425,6 @@ define('334', {
 })
 define('323', {
   item_type = 3,
-  dbmode16_dbspec5 = 0,
   filter = "/undead/",
   level = 12,
   portrait = -1,
@@ -8798,7 +8449,6 @@ define('323', {
 })
 define('324', {
   item_type = 3,
-  dbmode16_dbspec5 = 19,
   filter = "",
   level = 10,
   portrait = -1,
@@ -8820,7 +8470,6 @@ define('324', {
 })
 define('325', {
   item_type = 3,
-  dbmode16_dbspec5 = 5,
   filter = "",
   level = 17,
   portrait = -1,
@@ -8846,7 +8495,6 @@ define('325', {
 })
 define('328', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "",
   level = 3,
   portrait = -1,
@@ -8869,7 +8517,6 @@ define('328', {
 })
 define('329', {
   item_type = 1,
-  dbmode16_dbspec5 = 5,
   filter = "",
   level = 1,
   portrait = -1,
@@ -8893,7 +8540,6 @@ define('329', {
 })
 define('330', {
   item_type = 1,
-  dbmode16_dbspec5 = 17,
   filter = "/dragon/",
   level = 19,
   portrait = -1,
@@ -8923,7 +8569,6 @@ define('330', {
 -- For debug
 define('500', {
   item_type = 1,
-  dbmode16_dbspec5 = 0,
   filter = "/slime/",
   level = 1,
   portrait = -1,

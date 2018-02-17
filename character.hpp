@@ -39,7 +39,6 @@ struct character_data
     int cspecialeq;
     int damage_reaction_info;
     int item_type;
-    int dbmode16_dbspec5;
     int element_of_unarmed_attack;
     int eqammo_0;
     int eqammo_1;
