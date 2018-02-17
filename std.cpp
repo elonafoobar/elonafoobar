@@ -449,13 +449,6 @@ void cnvstow(std::string& out, const std::string& source)
 
 
 
-void color(int r, int g)
-{
-    color(r, g, 0);
-}
-
-
-
 void color(int r, int g, int b)
 {
     detail::current_tex_buffer().color = {
@@ -466,13 +459,6 @@ void color(int r, int g, int b)
     };
     snail::application::instance().get_renderer().set_draw_color(
         detail::current_tex_buffer().color);
-}
-
-
-
-void color(int v)
-{
-    color(v, 0, 0);
 }
 
 

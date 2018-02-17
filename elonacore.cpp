@@ -19101,13 +19101,13 @@ void render_hud()
     sx = windoww - 240;
     pos(sx, sy);
     gcopy(3, 0, 392, 24, 24);
-    color(0);
+    color(0, 0, 0);
     pos(sx + 28, sy + 2);
     bmes(""s + cdata[0].gold + u8" gp"s, 255, 255, 255);
     sx = windoww - 120;
     pos(sx, sy);
     gcopy(3, 24, 392, 24, 24);
-    color(0);
+    color(0, 0, 0);
     pos(sx + 28, sy + 2);
     bmes(""s + cdata[0].platinum_coin + u8" pp"s, 255, 255, 255);
     color(0, 0, 0);
@@ -19480,7 +19480,7 @@ void render_hud()
         mes(_burden(cdata[0].inventory_weight_type));
         sy -= 20;
     }
-    color(0);
+    color(0, 0, 0);
     pos(inf_clockx, inf_clocky);
     gcopy(3, 448, 408, inf_clockw, inf_clockh);
     pos(inf_clockx + 78, inf_clocky + 8);
@@ -19507,7 +19507,7 @@ void render_hud()
             sy -= 32;
         }
     }
-    color(0);
+    color(0, 0, 0);
     pos(inf_clockarrowx, inf_clockarrowy);
     gmode(2, 48, 48);
     grotate(3, 0, 288, 0.0174532925199433 * (gdata_hour * 30), 48, 48);
@@ -78354,7 +78354,6 @@ void conquer_lesimas()
     display_topic(lang(u8"制覇までの軌跡"s, u8"Trace"s), wx + 28, wy + 40);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     color(0, 0, 0);
-    color(0, 0);
     pos(wx + 40, wy + 76);
     mes(lang(
         ""s + 517 + u8"年"s + 8 + u8"月"s + 12

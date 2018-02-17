@@ -383,11 +383,8 @@ void clrobj(int);
 // Shift-JIS -> Unicode
 void cnvstow(std::string& out, const std::string& source);
 
-void color(int r, int g);
 
 void color(int r, int g, int b);
-
-void color(int v);
 
 
 
