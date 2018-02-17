@@ -66,7 +66,7 @@ int define(lua_State* state)
     FIELD_I(creaturepack, 0);
     FIELD_I(cspecialeq, 0);
     FIELD_I(damage_reaction_info, 0);
-    FIELD_I(dbmode16_dbspec3, 0);
+    FIELD_I(item_type, 0);
     FIELD_I(dbmode16_dbspec5, 0);
     FIELD_I(element_of_unarmed_attack, 0);
     FIELD_I(eqammo_0, 0);
@@ -138,7 +138,7 @@ int define(lua_State* state)
             creaturepack,
             cspecialeq,
             damage_reaction_info,
-            dbmode16_dbspec3,
+            item_type,
             dbmode16_dbspec5,
             element_of_unarmed_attack,
             eqammo_0,

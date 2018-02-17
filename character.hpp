@@ -38,7 +38,7 @@ struct character_data
     int creaturepack;
     int cspecialeq;
     int damage_reaction_info;
-    int dbmode16_dbspec3;
+    int item_type;
     int dbmode16_dbspec5;
     int element_of_unarmed_attack;
     int eqammo_0;
