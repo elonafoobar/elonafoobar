@@ -1072,6 +1072,8 @@ void play_animation_21()
 
 void play_animation_14_16(int animeid)
 {
+    sx = FIXME_dig_animation_x;
+    sy = FIXME_dig_animation_y;
     aniref = 4;
     ax = (sx - scx) * inf_tiles + inf_screenx;
     ay = (sy - scy) * inf_tiles + inf_screeny;
