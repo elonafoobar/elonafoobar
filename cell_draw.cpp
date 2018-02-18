@@ -1,4 +1,5 @@
 #include "character.hpp"
+#include "debug.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "item.hpp"
@@ -1053,7 +1054,8 @@ void cell_draw()
                             chipc(4, p_) -= 24;
                         }
                     }
-                    if (cbit(966, c_) == 1 || gdata(94) == c_)
+                    if (cbit(966, c_) == 1 || gdata(94) == c_
+                        || debug::voldemort)
                     {
                         draw_hp_bar(c_, dx_, dy_);
                     }
