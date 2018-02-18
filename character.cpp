@@ -180,7 +180,7 @@ namespace elona
 
 void character_db::initialize()
 {
-    cat::global.register_function("define_character", &define);
+    cat::global.register_function("Character", &define);
     storage_ptr = &storage;
     cat::global.load(fs::u8path(u8"../data/character.lua"));
     storage_ptr = nullptr;

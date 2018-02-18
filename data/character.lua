@@ -1,4 +1,4 @@
-define_character('0', {
+Character('0', {
   item_type = 3,
   filter = "",
   level = 1,
@@ -19,7 +19,7 @@ define_character('0', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('343', {
+Character('343', {
   item_type = 6,
   filter = "",
   level = 1,
@@ -43,7 +43,7 @@ define_character('343', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('1', {
+Character('1', {
   item_type = 3,
   filter = "/man/",
   level = 35,
@@ -68,7 +68,7 @@ define_character('1', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('353', {
+Character('353', {
   item_type = 3,
   filter = "/man/",
   level = 22,
@@ -91,7 +91,7 @@ define_character('353', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('70', {
+Character('70', {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -116,7 +116,7 @@ define_character('70', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('69', {
+Character('69', {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -141,7 +141,7 @@ define_character('69', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('73', {
+Character('73', {
   item_type = 3,
   filter = "/man/",
   level = 40,
@@ -166,7 +166,7 @@ define_character('73', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('74', {
+Character('74', {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -191,7 +191,7 @@ define_character('74', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('206', {
+Character('206', {
   item_type = 3,
   filter = "/man/",
   level = 50,
@@ -216,7 +216,7 @@ define_character('206', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('38', {
+Character('38', {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -241,7 +241,7 @@ define_character('38', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('40', {
+Character('40', {
   item_type = 3,
   filter = "/man/",
   level = 40,
@@ -266,7 +266,7 @@ define_character('40', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('333', {
+Character('333', {
   item_type = 3,
   filter = "/man/",
   level = 69,
@@ -291,7 +291,7 @@ define_character('333', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('76', {
+Character('76', {
   item_type = 3,
   filter = "/man/",
   level = 40,
@@ -315,7 +315,7 @@ define_character('76', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('77', {
+Character('77', {
   item_type = 3,
   filter = "/man/",
   level = 40,
@@ -339,7 +339,7 @@ define_character('77', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('204', {
+Character('204', {
   item_type = 3,
   filter = "/man/",
   level = 10,
@@ -366,7 +366,7 @@ define_character('204', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('2', {
+Character('2', {
   item_type = 3,
   filter = "/man/",
   level = 55,
@@ -396,7 +396,7 @@ define_character('2', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('37', {
+Character('37', {
   item_type = 3,
   filter = "/man/",
   level = 1,
@@ -420,7 +420,7 @@ define_character('37', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('23', {
+Character('23', {
   item_type = 3,
   filter = "/man/god/",
   level = 20,
@@ -446,7 +446,7 @@ define_character('23', {
   rarity = 1000,
   coefficient = 400,
 })
-define_character('26', {
+Character('26', {
   item_type = 3,
   filter = "/man/",
   level = 6,
@@ -470,7 +470,7 @@ define_character('26', {
   rarity = 1000,
   coefficient = 400,
 })
-define_character('27', {
+Character('27', {
   item_type = 3,
   filter = "/man/god/",
   level = 42,
@@ -494,7 +494,7 @@ define_character('27', {
   rarity = 1000,
   coefficient = 400,
 })
-define_character('28', {
+Character('28', {
   item_type = 3,
   filter = "/man/",
   level = 78,
@@ -520,7 +520,7 @@ define_character('28', {
   rarity = 1000,
   coefficient = 400,
 })
-define_character('29', {
+Character('29', {
   item_type = 3,
   filter = "/man/",
   level = 50,
@@ -545,7 +545,7 @@ define_character('29', {
   rarity = 1000,
   coefficient = 400,
 })
-define_character('140', {
+Character('140', {
   item_type = 5,
   filter = "/dragon/",
   level = 25,
@@ -570,7 +570,7 @@ define_character('140', {
   rarity = 1000,
   coefficient = 400,
 })
-define_character('30', {
+Character('30', {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -595,7 +595,7 @@ define_character('30', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('31', {
+Character('31', {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -620,7 +620,7 @@ define_character('31', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('351', {
+Character('351', {
   item_type = 3,
   filter = "/man/",
   level = 130,
@@ -648,7 +648,7 @@ define_character('351', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('352', {
+Character('352', {
   item_type = 3,
   filter = "/man/",
   level = 1,
@@ -673,7 +673,7 @@ define_character('352', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('32', {
+Character('32', {
   item_type = 3,
   filter = "",
   level = 20,
@@ -698,7 +698,7 @@ define_character('32', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('33', {
+Character('33', {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -725,7 +725,7 @@ define_character('33', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('34', {
+Character('34', {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -755,7 +755,7 @@ define_character('34', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('139', {
+Character('139', {
   item_type = 3,
   filter = "/man/",
   level = 10,
@@ -780,7 +780,7 @@ define_character('139', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('146', {
+Character('146', {
   item_type = 3,
   filter = "/man/",
   level = 10,
@@ -805,7 +805,7 @@ define_character('146', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('142', {
+Character('142', {
   item_type = 3,
   filter = "/man/",
   level = 10,
@@ -830,7 +830,7 @@ define_character('142', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('141', {
+Character('141', {
   item_type = 6,
   filter = "/undead/god/",
   level = 28,
@@ -859,7 +859,7 @@ define_character('141', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('143', {
+Character('143', {
   item_type = 3,
   filter = "",
   level = 25,
@@ -887,7 +887,7 @@ define_character('143', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('144', {
+Character('144', {
   item_type = 6,
   filter = "",
   level = 24,
@@ -916,7 +916,7 @@ define_character('144', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('145', {
+Character('145', {
   item_type = 5,
   filter = "",
   level = 16,
@@ -940,7 +940,7 @@ define_character('145', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('306', {
+Character('306', {
   item_type = 6,
   filter = "/god/",
   level = 350,
@@ -966,7 +966,7 @@ define_character('306', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('331', {
+Character('331', {
   item_type = 6,
   filter = "/god/",
   level = 350,
@@ -991,7 +991,7 @@ define_character('331', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('336', {
+Character('336', {
   item_type = 6,
   filter = "/god/",
   level = 1200,
@@ -1021,7 +1021,7 @@ define_character('336', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('338', {
+Character('338', {
   item_type = 6,
   filter = "/god/",
   level = 350,
@@ -1048,7 +1048,7 @@ define_character('338', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('339', {
+Character('339', {
   item_type = 6,
   filter = "/god/",
   level = 350,
@@ -1075,7 +1075,7 @@ define_character('339', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('342', {
+Character('342', {
   item_type = 6,
   filter = "/god/",
   level = 350,
@@ -1102,7 +1102,7 @@ define_character('342', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('340', {
+Character('340', {
   item_type = 6,
   filter = "",
   level = 1200,
@@ -1132,7 +1132,7 @@ define_character('340', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('3', {
+Character('3', {
   item_type = 1,
   filter = "/slime/",
   level = 1,
@@ -1155,7 +1155,7 @@ define_character('3', {
   rarity = 80000,
   coefficient = 400,
 })
-define_character('4', {
+Character('4', {
   item_type = 1,
   filter = "/fire/slime/",
   level = 4,
@@ -1178,7 +1178,7 @@ define_character('4', {
   rarity = 70000,
   coefficient = 400,
 })
-define_character('169', {
+Character('169', {
   item_type = 1,
   filter = "/slime/",
   level = 10,
@@ -1204,7 +1204,7 @@ define_character('169', {
   rarity = 70000,
   coefficient = 400,
 })
-define_character('194', {
+Character('194', {
   item_type = 1,
   filter = "/slime/",
   level = 16,
@@ -1232,7 +1232,7 @@ define_character('194', {
   rarity = 70000,
   coefficient = 400,
 })
-define_character('286', {
+Character('286', {
   item_type = 1,
   filter = "/slime/",
   level = 9,
@@ -1255,7 +1255,7 @@ define_character('286', {
   rarity = 25000,
   coefficient = 400,
 })
-define_character('285', {
+Character('285', {
   item_type = 1,
   filter = "/slime/",
   level = 22,
@@ -1279,7 +1279,7 @@ define_character('285', {
   rarity = 25000,
   coefficient = 400,
 })
-define_character('287', {
+Character('287', {
   item_type = 1,
   filter = "",
   level = 20,
@@ -1301,7 +1301,7 @@ define_character('287', {
   rarity = 25000,
   coefficient = 400,
 })
-define_character('327', {
+Character('327', {
   item_type = 1,
   filter = "",
   level = 52,
@@ -1323,7 +1323,7 @@ define_character('327', {
   rarity = 15000,
   coefficient = 400,
 })
-define_character('5', {
+Character('5', {
   item_type = 1,
   filter = "/wild/",
   level = 1,
@@ -1344,7 +1344,7 @@ define_character('5', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('6', {
+Character('6', {
   item_type = 1,
   filter = "/wild/",
   level = 1,
@@ -1366,7 +1366,7 @@ define_character('6', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('7', {
+Character('7', {
   item_type = 0,
   filter = "/man/",
   level = 3,
@@ -1389,7 +1389,7 @@ define_character('7', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('8', {
+Character('8', {
   item_type = 0,
   filter = "/man/",
   level = 4,
@@ -1413,7 +1413,7 @@ define_character('8', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('9', {
+Character('9', {
   item_type = 0,
   filter = "/man/",
   level = 2,
@@ -1438,7 +1438,7 @@ define_character('9', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('269', {
+Character('269', {
   item_type = 0,
   filter = "/man/",
   level = 5,
@@ -1463,7 +1463,7 @@ define_character('269', {
   rarity = 2000,
   coefficient = 400,
 })
-define_character('320', {
+Character('320', {
   item_type = 0,
   filter = "/man/",
   level = 32,
@@ -1489,7 +1489,7 @@ define_character('320', {
   rarity = 10000,
   coefficient = 100,
 })
-define_character('273', {
+Character('273', {
   item_type = 0,
   filter = "/man/",
   level = 5,
@@ -1514,7 +1514,7 @@ define_character('273', {
   rarity = 2000,
   coefficient = 400,
 })
-define_character('326', {
+Character('326', {
   item_type = 0,
   filter = "/man/",
   level = 16,
@@ -1538,7 +1538,7 @@ define_character('326', {
   rarity = 2000,
   coefficient = 400,
 })
-define_character('270', {
+Character('270', {
   item_type = 0,
   filter = "/man/",
   level = 5,
@@ -1563,7 +1563,7 @@ define_character('270', {
   rarity = 2000,
   coefficient = 400,
 })
-define_character('349', {
+Character('349', {
   item_type = 0,
   filter = "/man/god/",
   level = 12,
@@ -1586,7 +1586,7 @@ define_character('349', {
   rarity = 2000,
   coefficient = 400,
 })
-define_character('348', {
+Character('348', {
   item_type = 0,
   filter = "/man/",
   level = 35,
@@ -1610,7 +1610,7 @@ define_character('348', {
   rarity = 2000,
   coefficient = 400,
 })
-define_character('347', {
+Character('347', {
   item_type = 0,
   filter = "/man/",
   level = 5,
@@ -1636,7 +1636,7 @@ define_character('347', {
   rarity = 2000,
   coefficient = 400,
 })
-define_character('271', {
+Character('271', {
   item_type = 0,
   filter = "/man/",
   level = 8,
@@ -1662,7 +1662,7 @@ define_character('271', {
   rarity = 2000,
   coefficient = 400,
 })
-define_character('335', {
+Character('335', {
   item_type = 0,
   filter = "/man/",
   level = 8,
@@ -1687,7 +1687,7 @@ define_character('335', {
   rarity = 2000,
   coefficient = 400,
 })
-define_character('337', {
+Character('337', {
   item_type = 0,
   filter = "/man/",
   level = 3,
@@ -1712,7 +1712,7 @@ define_character('337', {
   rarity = 2000,
   coefficient = 400,
 })
-define_character('272', {
+Character('272', {
   item_type = 0,
   filter = "/man/",
   level = 6,
@@ -1737,7 +1737,7 @@ define_character('272', {
   rarity = 2000,
   coefficient = 400,
 })
-define_character('274', {
+Character('274', {
   item_type = 0,
   filter = "/man/",
   level = 10,
@@ -1762,7 +1762,7 @@ define_character('274', {
   rarity = 2000,
   coefficient = 400,
 })
-define_character('289', {
+Character('289', {
   item_type = 3,
   filter = "/man/",
   level = 26,
@@ -1790,7 +1790,7 @@ define_character('289', {
   rarity = 2000,
   coefficient = 400,
 })
-define_character('293', {
+Character('293', {
   item_type = 3,
   filter = "/man/",
   level = 26,
@@ -1815,7 +1815,7 @@ define_character('293', {
   rarity = 2000,
   coefficient = 400,
 })
-define_character('295', {
+Character('295', {
   item_type = 3,
   filter = "/man/",
   level = 26,
@@ -1840,7 +1840,7 @@ define_character('295', {
   rarity = 2000,
   coefficient = 400,
 })
-define_character('35', {
+Character('35', {
   item_type = 0,
   filter = "/man/",
   level = 1,
@@ -1865,7 +1865,7 @@ define_character('35', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('36', {
+Character('36', {
   item_type = 0,
   filter = "/man/",
   level = 1,
@@ -1890,7 +1890,7 @@ define_character('36', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('174', {
+Character('174', {
   item_type = 0,
   filter = "/man/sf/",
   level = 1,
@@ -1914,7 +1914,7 @@ define_character('174', {
   rarity = 60000,
   coefficient = 400,
 })
-define_character('10', {
+Character('10', {
   item_type = 1,
   filter = "/wild/",
   level = 1,
@@ -1935,7 +1935,7 @@ define_character('10', {
   rarity = 30000,
   coefficient = 400,
 })
-define_character('11', {
+Character('11', {
   item_type = 1,
   filter = "/wild/",
   level = 2,
@@ -1956,7 +1956,7 @@ define_character('11', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('12', {
+Character('12', {
   item_type = 3,
   filter = "/man/",
   level = 3,
@@ -1980,7 +1980,7 @@ define_character('12', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('13', {
+Character('13', {
   item_type = 3,
   filter = "",
   level = 3,
@@ -2001,7 +2001,7 @@ define_character('13', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('236', {
+Character('236', {
   item_type = 3,
   filter = "/yeek/",
   level = 2,
@@ -2021,7 +2021,7 @@ define_character('236', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('238', {
+Character('238', {
   item_type = 3,
   filter = "/yeek/",
   level = 6,
@@ -2042,7 +2042,7 @@ define_character('238', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('241', {
+Character('241', {
   item_type = 3,
   filter = "/yeek/",
   level = 4,
@@ -2064,7 +2064,7 @@ define_character('241', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('240', {
+Character('240', {
   item_type = 3,
   filter = "/yeek/",
   level = 9,
@@ -2089,7 +2089,7 @@ define_character('240', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('237', {
+Character('237', {
   item_type = 3,
   filter = "/yeek/",
   level = 6,
@@ -2110,7 +2110,7 @@ define_character('237', {
   rarity = 150000,
   coefficient = 400,
 })
-define_character('244', {
+Character('244', {
   item_type = 3,
   filter = "",
   level = 18,
@@ -2133,7 +2133,7 @@ define_character('244', {
   rarity = 25000,
   coefficient = 400,
 })
-define_character('245', {
+Character('245', {
   item_type = 1,
   filter = "",
   level = 25,
@@ -2156,7 +2156,7 @@ define_character('245', {
   rarity = 20000,
   coefficient = 400,
 })
-define_character('321', {
+Character('321', {
   item_type = 3,
   filter = "",
   level = 10,
@@ -2180,7 +2180,7 @@ define_character('321', {
   rarity = 15000,
   coefficient = 200,
 })
-define_character('242', {
+Character('242', {
   item_type = 3,
   filter = "/yeek/",
   level = 14,
@@ -2210,7 +2210,7 @@ define_character('242', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('239', {
+Character('239', {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2234,7 +2234,7 @@ define_character('239', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('14', {
+Character('14', {
   item_type = 2,
   filter = "",
   level = 4,
@@ -2254,7 +2254,7 @@ define_character('14', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('15', {
+Character('15', {
   item_type = 2,
   filter = "",
   level = 4,
@@ -2276,7 +2276,7 @@ define_character('15', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('283', {
+Character('283', {
   item_type = 2,
   filter = "",
   level = 8,
@@ -2299,7 +2299,7 @@ define_character('283', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('284', {
+Character('284', {
   item_type = 2,
   filter = "",
   level = 21,
@@ -2323,7 +2323,7 @@ define_character('284', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('16', {
+Character('16', {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2348,7 +2348,7 @@ define_character('16', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('39', {
+Character('39', {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2373,7 +2373,7 @@ define_character('39', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('171', {
+Character('171', {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2398,7 +2398,7 @@ define_character('171', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('172', {
+Character('172', {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2423,7 +2423,7 @@ define_character('172', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('173', {
+Character('173', {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -2448,7 +2448,7 @@ define_character('173', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('71', {
+Character('71', {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2473,7 +2473,7 @@ define_character('71', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('72', {
+Character('72', {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2498,7 +2498,7 @@ define_character('72', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('79', {
+Character('79', {
   item_type = 3,
   filter = "/man/",
   level = 25,
@@ -2523,7 +2523,7 @@ define_character('79', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('80', {
+Character('80', {
   item_type = 3,
   filter = "/man/",
   level = 35,
@@ -2548,7 +2548,7 @@ define_character('80', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('17', {
+Character('17', {
   item_type = 3,
   filter = "",
   level = 5,
@@ -2569,7 +2569,7 @@ define_character('17', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('281', {
+Character('281', {
   item_type = 3,
   filter = "/dragon/",
   level = 7,
@@ -2590,7 +2590,7 @@ define_character('281', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('282', {
+Character('282', {
   item_type = 3,
   filter = "/mino/",
   level = 18,
@@ -2611,7 +2611,7 @@ define_character('282', {
   rarity = 70000,
   coefficient = 400,
 })
-define_character('296', {
+Character('296', {
   item_type = 3,
   filter = "/mino/",
   level = 22,
@@ -2637,7 +2637,7 @@ define_character('296', {
   rarity = 70000,
   coefficient = 400,
 })
-define_character('298', {
+Character('298', {
   item_type = 3,
   filter = "/mino/",
   level = 23,
@@ -2659,7 +2659,7 @@ define_character('298', {
   rarity = 70000,
   coefficient = 400,
 })
-define_character('299', {
+Character('299', {
   item_type = 3,
   filter = "/mino/",
   level = 25,
@@ -2682,7 +2682,7 @@ define_character('299', {
   rarity = 40000,
   coefficient = 400,
 })
-define_character('300', {
+Character('300', {
   item_type = 3,
   filter = "/mino/",
   level = 31,
@@ -2708,7 +2708,7 @@ define_character('300', {
   rarity = 40000,
   coefficient = 400,
 })
-define_character('251', {
+Character('251', {
   item_type = 3,
   filter = "",
   level = 14,
@@ -2729,7 +2729,7 @@ define_character('251', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('18', {
+Character('18', {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2751,7 +2751,7 @@ define_character('18', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('24', {
+Character('24', {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2777,7 +2777,7 @@ define_character('24', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('309', {
+Character('309', {
   item_type = 3,
   filter = "/god/",
   level = 12,
@@ -2799,7 +2799,7 @@ define_character('309', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('310', {
+Character('310', {
   item_type = 3,
   filter = "/god/",
   level = 26,
@@ -2822,7 +2822,7 @@ define_character('310', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('311', {
+Character('311', {
   item_type = 3,
   filter = "/god/",
   level = 37,
@@ -2845,7 +2845,7 @@ define_character('311', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('41', {
+Character('41', {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2873,7 +2873,7 @@ define_character('41', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('75', {
+Character('75', {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2897,7 +2897,7 @@ define_character('75', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('19', {
+Character('19', {
   item_type = 2,
   filter = "",
   level = 5,
@@ -2917,7 +2917,7 @@ define_character('19', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('22', {
+Character('22', {
   item_type = 2,
   filter = "",
   level = 5,
@@ -2938,7 +2938,7 @@ define_character('22', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('20', {
+Character('20', {
   item_type = 3,
   filter = "",
   level = 10,
@@ -2959,7 +2959,7 @@ define_character('20', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('25', {
+Character('25', {
   item_type = 3,
   filter = "",
   level = 25,
@@ -2982,7 +2982,7 @@ define_character('25', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('21', {
+Character('21', {
   item_type = 3,
   filter = "/undead/",
   level = 8,
@@ -3003,7 +3003,7 @@ define_character('21', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('42', {
+Character('42', {
   item_type = 1,
   filter = "/wild/",
   level = 1,
@@ -3023,7 +3023,7 @@ define_character('42', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('43', {
+Character('43', {
   item_type = 1,
   filter = "/wild/",
   level = 10,
@@ -3047,7 +3047,7 @@ define_character('43', {
   rarity = 70000,
   coefficient = 400,
 })
-define_character('44', {
+Character('44', {
   item_type = 1,
   filter = "/wild/fire/dragon/",
   level = 30,
@@ -3069,7 +3069,7 @@ define_character('44', {
   rarity = 60000,
   coefficient = 400,
 })
-define_character('45', {
+Character('45', {
   item_type = 1,
   filter = "/fire/",
   level = 15,
@@ -3096,7 +3096,7 @@ define_character('45', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('46', {
+Character('46', {
   item_type = 1,
   filter = "",
   level = 15,
@@ -3123,7 +3123,7 @@ define_character('46', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('47', {
+Character('47', {
   item_type = 6,
   filter = "/undead/",
   level = 20,
@@ -3148,7 +3148,7 @@ define_character('47', {
   rarity = 60000,
   coefficient = 400,
 })
-define_character('48', {
+Character('48', {
   item_type = 6,
   filter = "/undead/",
   level = 30,
@@ -3175,7 +3175,7 @@ define_character('48', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('49', {
+Character('49', {
   item_type = 6,
   filter = "/undead/",
   level = 45,
@@ -3201,7 +3201,7 @@ define_character('49', {
   rarity = 40000,
   coefficient = 400,
 })
-define_character('307', {
+Character('307', {
   item_type = 6,
   filter = "/undead/",
   level = 18,
@@ -3229,7 +3229,7 @@ define_character('307', {
   rarity = 10000,
   coefficient = 400,
 })
-define_character('308', {
+Character('308', {
   item_type = 6,
   filter = "/undead/",
   level = 35,
@@ -3256,7 +3256,7 @@ define_character('308', {
   rarity = 10000,
   coefficient = 400,
 })
-define_character('50', {
+Character('50', {
   item_type = 1,
   filter = "/wild/",
   level = 5,
@@ -3279,7 +3279,7 @@ define_character('50', {
   rarity = 80000,
   coefficient = 400,
 })
-define_character('51', {
+Character('51', {
   item_type = 1,
   filter = "/wild/fire/",
   level = 10,
@@ -3306,7 +3306,7 @@ define_character('51', {
   rarity = 70000,
   coefficient = 400,
 })
-define_character('52', {
+Character('52', {
   item_type = 1,
   filter = "/wild/",
   level = 10,
@@ -3333,7 +3333,7 @@ define_character('52', {
   rarity = 70000,
   coefficient = 400,
 })
-define_character('53', {
+Character('53', {
   item_type = 1,
   filter = "/wild/",
   level = 12,
@@ -3357,7 +3357,7 @@ define_character('53', {
   rarity = 70000,
   coefficient = 400,
 })
-define_character('54', {
+Character('54', {
   item_type = 1,
   filter = "/wild/",
   level = 12,
@@ -3381,7 +3381,7 @@ define_character('54', {
   rarity = 70000,
   coefficient = 400,
 })
-define_character('55', {
+Character('55', {
   item_type = 1,
   filter = "/wild/",
   level = 18,
@@ -3405,7 +3405,7 @@ define_character('55', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('56', {
+Character('56', {
   item_type = 1,
   filter = "/wild/",
   level = 18,
@@ -3429,7 +3429,7 @@ define_character('56', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('57', {
+Character('57', {
   item_type = 1,
   filter = "/wild/",
   level = 15,
@@ -3453,7 +3453,7 @@ define_character('57', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('58', {
+Character('58', {
   item_type = 1,
   filter = "/wild/",
   level = 22,
@@ -3477,7 +3477,7 @@ define_character('58', {
   rarity = 40000,
   coefficient = 400,
 })
-define_character('59', {
+Character('59', {
   item_type = 1,
   filter = "/wild/",
   level = 25,
@@ -3501,7 +3501,7 @@ define_character('59', {
   rarity = 40000,
   coefficient = 400,
 })
-define_character('60', {
+Character('60', {
   item_type = 1,
   filter = "/wild/",
   level = 30,
@@ -3525,7 +3525,7 @@ define_character('60', {
   rarity = 40000,
   coefficient = 400,
 })
-define_character('61', {
+Character('61', {
   item_type = 1,
   filter = "/wild/",
   level = 4,
@@ -3548,7 +3548,7 @@ define_character('61', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('62', {
+Character('62', {
   item_type = 1,
   filter = "/wild/",
   level = 10,
@@ -3571,7 +3571,7 @@ define_character('62', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('63', {
+Character('63', {
   item_type = 3,
   filter = "/undead/",
   level = 7,
@@ -3594,7 +3594,7 @@ define_character('63', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('64', {
+Character('64', {
   item_type = 3,
   filter = "/undead/",
   level = 3,
@@ -3616,7 +3616,7 @@ define_character('64', {
   rarity = 70000,
   coefficient = 400,
 })
-define_character('312', {
+Character('312', {
   item_type = 3,
   filter = "",
   level = 8,
@@ -3639,7 +3639,7 @@ define_character('312', {
   rarity = 40000,
   coefficient = 400,
 })
-define_character('313', {
+Character('313', {
   item_type = 3,
   filter = "",
   level = 19,
@@ -3663,7 +3663,7 @@ define_character('313', {
   rarity = 40000,
   coefficient = 400,
 })
-define_character('65', {
+Character('65', {
   item_type = 1,
   filter = "",
   level = 12,
@@ -3687,7 +3687,7 @@ define_character('65', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('66', {
+Character('66', {
   item_type = 1,
   filter = "",
   level = 30,
@@ -3711,7 +3711,7 @@ define_character('66', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('67', {
+Character('67', {
   item_type = 1,
   filter = "",
   level = 2,
@@ -3736,7 +3736,7 @@ define_character('67', {
   rarity = 80000,
   coefficient = 400,
 })
-define_character('315', {
+Character('315', {
   item_type = 1,
   filter = "",
   level = 14,
@@ -3764,7 +3764,7 @@ define_character('315', {
   rarity = 60000,
   coefficient = 400,
 })
-define_character('316', {
+Character('316', {
   item_type = 1,
   filter = "",
   level = 7,
@@ -3792,7 +3792,7 @@ define_character('316', {
   rarity = 60000,
   coefficient = 400,
 })
-define_character('314', {
+Character('314', {
   item_type = 1,
   filter = "",
   level = 29,
@@ -3821,7 +3821,7 @@ define_character('314', {
   rarity = 60000,
   coefficient = 400,
 })
-define_character('68', {
+Character('68', {
   item_type = 4,
   filter = "/dragon/",
   level = 20,
@@ -3844,7 +3844,7 @@ define_character('68', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('78', {
+Character('78', {
   item_type = 3,
   filter = "",
   level = 15,
@@ -3869,7 +3869,7 @@ define_character('78', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('81', {
+Character('81', {
   item_type = 2,
   filter = "",
   level = 5,
@@ -3890,7 +3890,7 @@ define_character('81', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('82', {
+Character('82', {
   item_type = 2,
   filter = "/fire/",
   level = 10,
@@ -3912,7 +3912,7 @@ define_character('82', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('83', {
+Character('83', {
   item_type = 3,
   filter = "",
   level = 22,
@@ -3933,7 +3933,7 @@ define_character('83', {
   rarity = 60000,
   coefficient = 400,
 })
-define_character('84', {
+Character('84', {
   item_type = 3,
   filter = "",
   level = 40,
@@ -3956,7 +3956,7 @@ define_character('84', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('85', {
+Character('85', {
   item_type = 3,
   filter = "/fire/",
   level = 7,
@@ -3981,7 +3981,7 @@ define_character('85', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('86', {
+Character('86', {
   item_type = 3,
   filter = "/god/",
   level = 16,
@@ -4005,7 +4005,7 @@ define_character('86', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('87', {
+Character('87', {
   item_type = 3,
   filter = "",
   level = 27,
@@ -4029,7 +4029,7 @@ define_character('87', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('88', {
+Character('88', {
   item_type = 3,
   filter = "/undead/",
   level = 4,
@@ -4052,7 +4052,7 @@ define_character('88', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('89', {
+Character('89', {
   item_type = 3,
   filter = "/undead/",
   level = 11,
@@ -4075,7 +4075,7 @@ define_character('89', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('90', {
+Character('90', {
   item_type = 3,
   filter = "/undead/",
   level = 15,
@@ -4100,7 +4100,7 @@ define_character('90', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('91', {
+Character('91', {
   item_type = 3,
   filter = "/undead/",
   level = 5,
@@ -4124,7 +4124,7 @@ define_character('91', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('92', {
+Character('92', {
   item_type = 3,
   filter = "/undead/",
   level = 13,
@@ -4151,7 +4151,7 @@ define_character('92', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('93', {
+Character('93', {
   item_type = 2,
   filter = "",
   level = 8,
@@ -4173,7 +4173,7 @@ define_character('93', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('94', {
+Character('94', {
   item_type = 2,
   filter = "",
   level = 19,
@@ -4196,7 +4196,7 @@ define_character('94', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('95', {
+Character('95', {
   item_type = 1,
   filter = "/wild/",
   level = 10,
@@ -4218,7 +4218,7 @@ define_character('95', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('96', {
+Character('96', {
   item_type = 1,
   filter = "/wild/",
   level = 18,
@@ -4240,7 +4240,7 @@ define_character('96', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('97', {
+Character('97', {
   item_type = 4,
   filter = "/fire/dragon/",
   level = 16,
@@ -4263,7 +4263,7 @@ define_character('97', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('98', {
+Character('98', {
   item_type = 4,
   filter = "/dragon/",
   level = 16,
@@ -4285,7 +4285,7 @@ define_character('98', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('99', {
+Character('99', {
   item_type = 3,
   filter = "/undead/",
   level = 7,
@@ -4308,7 +4308,7 @@ define_character('99', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('100', {
+Character('100', {
   item_type = 3,
   filter = "/undead/",
   level = 14,
@@ -4333,7 +4333,7 @@ define_character('100', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('101', {
+Character('101', {
   item_type = 3,
   filter = "/undead/",
   level = 22,
@@ -4358,7 +4358,7 @@ define_character('101', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('257', {
+Character('257', {
   item_type = 3,
   filter = "/undead/",
   level = 28,
@@ -4384,7 +4384,7 @@ define_character('257', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('254', {
+Character('254', {
   item_type = 3,
   filter = "/undead/",
   level = 19,
@@ -4409,7 +4409,7 @@ define_character('254', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('102', {
+Character('102', {
   item_type = 3,
   filter = "",
   level = 2,
@@ -4430,7 +4430,7 @@ define_character('102', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('103', {
+Character('103', {
   item_type = 3,
   filter = "",
   level = 6,
@@ -4452,7 +4452,7 @@ define_character('103', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('104', {
+Character('104', {
   item_type = 3,
   filter = "",
   level = 8,
@@ -4478,7 +4478,7 @@ define_character('104', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('105', {
+Character('105', {
   item_type = 3,
   filter = "",
   level = 10,
@@ -4501,7 +4501,7 @@ define_character('105', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('106', {
+Character('106', {
   item_type = 3,
   filter = "/undead/fire/",
   level = 12,
@@ -4527,7 +4527,7 @@ define_character('106', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('107', {
+Character('107', {
   item_type = 3,
   filter = "/undead/",
   level = 12,
@@ -4553,7 +4553,7 @@ define_character('107', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('108', {
+Character('108', {
   item_type = 1,
   filter = "/wild/",
   level = 4,
@@ -4575,7 +4575,7 @@ define_character('108', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('109', {
+Character('109', {
   item_type = 1,
   filter = "/wild/",
   level = 10,
@@ -4596,7 +4596,7 @@ define_character('109', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('344', {
+Character('344', {
   item_type = 1,
   filter = "/wild/",
   level = 28,
@@ -4617,7 +4617,7 @@ define_character('344', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('110', {
+Character('110', {
   item_type = 3,
   filter = "/undead/",
   level = 15,
@@ -4638,7 +4638,7 @@ define_character('110', {
   rarity = 40000,
   coefficient = 400,
 })
-define_character('111', {
+Character('111', {
   item_type = 3,
   filter = "/undead/",
   level = 25,
@@ -4660,7 +4660,7 @@ define_character('111', {
   rarity = 30000,
   coefficient = 400,
 })
-define_character('112', {
+Character('112', {
   item_type = 3,
   filter = "/undead/",
   level = 35,
@@ -4682,7 +4682,7 @@ define_character('112', {
   rarity = 30000,
   coefficient = 400,
 })
-define_character('113', {
+Character('113', {
   item_type = 3,
   filter = "",
   level = 45,
@@ -4705,7 +4705,7 @@ define_character('113', {
   rarity = 30000,
   coefficient = 400,
 })
-define_character('114', {
+Character('114', {
   item_type = 3,
   filter = "/god/",
   level = 22,
@@ -4726,7 +4726,7 @@ define_character('114', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('115', {
+Character('115', {
   item_type = 3,
   filter = "/god/",
   level = 33,
@@ -4748,7 +4748,7 @@ define_character('115', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('116', {
+Character('116', {
   item_type = 3,
   filter = "/god/",
   level = 44,
@@ -4770,7 +4770,7 @@ define_character('116', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('117', {
+Character('117', {
   item_type = 3,
   filter = "/god/",
   level = 8,
@@ -4792,7 +4792,7 @@ define_character('117', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('118', {
+Character('118', {
   item_type = 3,
   filter = "/undead/",
   level = 9,
@@ -4814,7 +4814,7 @@ define_character('118', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('248', {
+Character('248', {
   item_type = 1,
   filter = "/dragon/",
   level = 30,
@@ -4835,7 +4835,7 @@ define_character('248', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('119', {
+Character('119', {
   item_type = 3,
   filter = "",
   level = 13,
@@ -4855,7 +4855,7 @@ define_character('119', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('120', {
+Character('120', {
   item_type = 5,
   filter = "/dragon/",
   level = 32,
@@ -4878,7 +4878,7 @@ define_character('120', {
   rarity = 30000,
   coefficient = 400,
 })
-define_character('121', {
+Character('121', {
   item_type = 5,
   filter = "/fire/dragon/",
   level = 40,
@@ -4902,7 +4902,7 @@ define_character('121', {
   rarity = 20000,
   coefficient = 400,
 })
-define_character('122', {
+Character('122', {
   item_type = 5,
   filter = "/dragon/",
   level = 40,
@@ -4925,7 +4925,7 @@ define_character('122', {
   rarity = 20000,
   coefficient = 400,
 })
-define_character('123', {
+Character('123', {
   item_type = 5,
   filter = "/dragon/",
   level = 40,
@@ -4949,7 +4949,7 @@ define_character('123', {
   rarity = 20000,
   coefficient = 400,
 })
-define_character('124', {
+Character('124', {
   item_type = 5,
   filter = "/undead/dragon/",
   level = 45,
@@ -4973,7 +4973,7 @@ define_character('124', {
   rarity = 10000,
   coefficient = 400,
 })
-define_character('125', {
+Character('125', {
   item_type = 5,
   filter = "/dragon/",
   level = 50,
@@ -4997,7 +4997,7 @@ define_character('125', {
   rarity = 10000,
   coefficient = 400,
 })
-define_character('126', {
+Character('126', {
   item_type = 4,
   filter = "/fire/",
   level = 23,
@@ -5020,7 +5020,7 @@ define_character('126', {
   rarity = 40000,
   coefficient = 400,
 })
-define_character('255', {
+Character('255', {
   item_type = 2,
   filter = "/wild/",
   level = 4,
@@ -5043,7 +5043,7 @@ define_character('255', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('256', {
+Character('256', {
   item_type = 2,
   filter = "/wild/",
   level = 24,
@@ -5067,7 +5067,7 @@ define_character('256', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('127', {
+Character('127', {
   item_type = 2,
   filter = "/wild/",
   level = 3,
@@ -5090,7 +5090,7 @@ define_character('127', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('128', {
+Character('128', {
   item_type = 2,
   filter = "/wild/",
   level = 11,
@@ -5115,7 +5115,7 @@ define_character('128', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('129', {
+Character('129', {
   item_type = 2,
   filter = "/wild/",
   level = 21,
@@ -5140,7 +5140,7 @@ define_character('129', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('130', {
+Character('130', {
   item_type = 2,
   filter = "/wild/",
   level = 15,
@@ -5165,7 +5165,7 @@ define_character('130', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('131', {
+Character('131', {
   item_type = 2,
   filter = "/undead/",
   level = 28,
@@ -5190,7 +5190,7 @@ define_character('131', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('132', {
+Character('132', {
   item_type = 3,
   filter = "",
   level = 13,
@@ -5212,7 +5212,7 @@ define_character('132', {
   rarity = 40000,
   coefficient = 400,
 })
-define_character('133', {
+Character('133', {
   item_type = 3,
   filter = "/fire/",
   level = 19,
@@ -5233,7 +5233,7 @@ define_character('133', {
   rarity = 40000,
   coefficient = 400,
 })
-define_character('134', {
+Character('134', {
   item_type = 3,
   filter = "/fire/",
   level = 25,
@@ -5256,7 +5256,7 @@ define_character('134', {
   rarity = 40000,
   coefficient = 400,
 })
-define_character('135', {
+Character('135', {
   item_type = 3,
   filter = "",
   level = 30,
@@ -5279,7 +5279,7 @@ define_character('135', {
   rarity = 30000,
   coefficient = 400,
 })
-define_character('136', {
+Character('136', {
   item_type = 3,
   filter = "",
   level = 35,
@@ -5302,7 +5302,7 @@ define_character('136', {
   rarity = 20000,
   coefficient = 400,
 })
-define_character('137', {
+Character('137', {
   item_type = 3,
   filter = "",
   level = 40,
@@ -5325,7 +5325,7 @@ define_character('137', {
   rarity = 15000,
   coefficient = 400,
 })
-define_character('138', {
+Character('138', {
   item_type = 3,
   filter = "",
   level = 50,
@@ -5348,7 +5348,7 @@ define_character('138', {
   rarity = 15000,
   coefficient = 400,
 })
-define_character('147', {
+Character('147', {
   item_type = 2,
   filter = "/fire/",
   level = 16,
@@ -5370,7 +5370,7 @@ define_character('147', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('148', {
+Character('148', {
   item_type = 2,
   filter = "/fire/",
   level = 18,
@@ -5393,7 +5393,7 @@ define_character('148', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('149', {
+Character('149', {
   item_type = 3,
   filter = "/fire/",
   level = 20,
@@ -5419,7 +5419,7 @@ define_character('149', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('150', {
+Character('150', {
   item_type = 3,
   filter = "/undead/",
   level = 12,
@@ -5440,7 +5440,7 @@ define_character('150', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('151', {
+Character('151', {
   item_type = 3,
   filter = "/undead/",
   level = 20,
@@ -5463,7 +5463,7 @@ define_character('151', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('152', {
+Character('152', {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -5487,7 +5487,7 @@ define_character('152', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('153', {
+Character('153', {
   item_type = 3,
   filter = "/pawn/",
   level = 12,
@@ -5508,7 +5508,7 @@ define_character('153', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('154', {
+Character('154', {
   item_type = 3,
   filter = "/pawn/",
   level = 16,
@@ -5530,7 +5530,7 @@ define_character('154', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('155', {
+Character('155', {
   item_type = 3,
   filter = "/pawn/",
   level = 18,
@@ -5555,7 +5555,7 @@ define_character('155', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('156', {
+Character('156', {
   item_type = 3,
   filter = "/pawn/",
   level = 18,
@@ -5578,7 +5578,7 @@ define_character('156', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('157', {
+Character('157', {
   item_type = 3,
   filter = "",
   level = 22,
@@ -5603,7 +5603,7 @@ define_character('157', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('158', {
+Character('158', {
   item_type = 3,
   filter = "",
   level = 22,
@@ -5626,7 +5626,7 @@ define_character('158', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('159', {
+Character('159', {
   item_type = 3,
   filter = "/man/shopguard/",
   level = 20,
@@ -5650,7 +5650,7 @@ define_character('159', {
   rarity = 25000,
   coefficient = 400,
 })
-define_character('160', {
+Character('160', {
   item_type = 3,
   filter = "/man/shopguard/",
   level = 20,
@@ -5674,7 +5674,7 @@ define_character('160', {
   rarity = 25000,
   coefficient = 400,
 })
-define_character('161', {
+Character('161', {
   item_type = 3,
   filter = "/man/shopguard/",
   level = 20,
@@ -5699,7 +5699,7 @@ define_character('161', {
   rarity = 25000,
   coefficient = 400,
 })
-define_character('302', {
+Character('302', {
   item_type = 3,
   filter = "/man/rogue/",
   level = 12,
@@ -5725,7 +5725,7 @@ define_character('302', {
   rarity = 25000,
   coefficient = 400,
 })
-define_character('303', {
+Character('303', {
   item_type = 3,
   filter = "/man/rogue/",
   level = 10,
@@ -5750,7 +5750,7 @@ define_character('303', {
   rarity = 25000,
   coefficient = 400,
 })
-define_character('304', {
+Character('304', {
   item_type = 3,
   filter = "/man/rogue/",
   level = 10,
@@ -5774,7 +5774,7 @@ define_character('304', {
   rarity = 25000,
   coefficient = 400,
 })
-define_character('305', {
+Character('305', {
   item_type = 3,
   filter = "/man/rogue/",
   level = 10,
@@ -5801,7 +5801,7 @@ define_character('305', {
   rarity = 25000,
   coefficient = 400,
 })
-define_character('162', {
+Character('162', {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -5824,7 +5824,7 @@ define_character('162', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('234', {
+Character('234', {
   item_type = 3,
   filter = "/man/",
   level = 22,
@@ -5848,7 +5848,7 @@ define_character('234', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('231', {
+Character('231', {
   item_type = 3,
   filter = "/man/",
   level = 45,
@@ -5873,7 +5873,7 @@ define_character('231', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('232', {
+Character('232', {
   item_type = 3,
   filter = "",
   level = 17,
@@ -5895,7 +5895,7 @@ define_character('232', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('233', {
+Character('233', {
   item_type = 3,
   filter = "/man/",
   level = 7,
@@ -5918,7 +5918,7 @@ define_character('233', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('235', {
+Character('235', {
   item_type = 3,
   filter = "/man/",
   level = 15,
@@ -5942,7 +5942,7 @@ define_character('235', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('163', {
+Character('163', {
   item_type = 3,
   filter = "/man/",
   level = 9,
@@ -5965,7 +5965,7 @@ define_character('163', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('164', {
+Character('164', {
   item_type = 1,
   filter = "/wild/cat/",
   level = 4,
@@ -5987,7 +5987,7 @@ define_character('164', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('246', {
+Character('246', {
   item_type = 1,
   filter = "/wild/cat/",
   level = 3,
@@ -6010,7 +6010,7 @@ define_character('246', {
   rarity = 1000,
   coefficient = 0,
 })
-define_character('332', {
+Character('332', {
   item_type = 1,
   filter = "/wild/cat/",
   level = 9,
@@ -6034,7 +6034,7 @@ define_character('332', {
   rarity = 10000,
   coefficient = 0,
 })
-define_character('229', {
+Character('229', {
   item_type = 1,
   filter = "/wild/cat/",
   level = 18,
@@ -6057,7 +6057,7 @@ define_character('229', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('230', {
+Character('230', {
   item_type = 1,
   filter = "/wild/cat/",
   level = 25,
@@ -6082,7 +6082,7 @@ define_character('230', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('228', {
+Character('228', {
   item_type = 1,
   filter = "/wild/cat/",
   level = 20,
@@ -6107,7 +6107,7 @@ define_character('228', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('165', {
+Character('165', {
   item_type = 1,
   filter = "/wild/",
   level = 4,
@@ -6129,7 +6129,7 @@ define_character('165', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('225', {
+Character('225', {
   item_type = 1,
   filter = "/wild/",
   level = 1,
@@ -6152,7 +6152,7 @@ define_character('225', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('226', {
+Character('226', {
   item_type = 3,
   filter = "/man/",
   level = 4,
@@ -6175,7 +6175,7 @@ define_character('226', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('227', {
+Character('227', {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -6199,7 +6199,7 @@ define_character('227', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('166', {
+Character('166', {
   item_type = 3,
   filter = "/man/",
   level = 4,
@@ -6223,7 +6223,7 @@ define_character('166', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('167', {
+Character('167', {
   item_type = 1,
   filter = "/wild/",
   level = 1,
@@ -6245,7 +6245,7 @@ define_character('167', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('168', {
+Character('168', {
   item_type = 1,
   filter = "/wild/",
   level = 1,
@@ -6266,7 +6266,7 @@ define_character('168', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('170', {
+Character('170', {
   item_type = 3,
   filter = "/man/",
   level = 1,
@@ -6290,7 +6290,7 @@ define_character('170', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('175', {
+Character('175', {
   item_type = 3,
   filter = "/god/",
   level = 80,
@@ -6313,7 +6313,7 @@ define_character('175', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('176', {
+Character('176', {
   item_type = 3,
   filter = "/man/",
   level = 1,
@@ -6337,7 +6337,7 @@ define_character('176', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('249', {
+Character('249', {
   item_type = 3,
   filter = "/man/",
   level = 50,
@@ -6362,7 +6362,7 @@ define_character('249', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('210', {
+Character('210', {
   item_type = 3,
   filter = "/man/",
   level = 1,
@@ -6385,7 +6385,7 @@ define_character('210', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('211', {
+Character('211', {
   item_type = 3,
   filter = "/man/",
   level = 1,
@@ -6413,7 +6413,7 @@ define_character('211', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('177', {
+Character('177', {
   item_type = 3,
   filter = "/god/",
   level = 80,
@@ -6444,7 +6444,7 @@ define_character('177', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('178', {
+Character('178', {
   item_type = 6,
   filter = "/undead/god/",
   level = 80,
@@ -6475,7 +6475,7 @@ define_character('178', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('179', {
+Character('179', {
   item_type = 3,
   filter = "/man/",
   level = 35,
@@ -6497,7 +6497,7 @@ define_character('179', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('208', {
+Character('208', {
   item_type = 3,
   filter = "/man/",
   level = 45,
@@ -6522,7 +6522,7 @@ define_character('208', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('209', {
+Character('209', {
   item_type = 3,
   filter = "/man/",
   level = 45,
@@ -6547,7 +6547,7 @@ define_character('209', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('180', {
+Character('180', {
   item_type = 1,
   filter = "",
   level = 1,
@@ -6569,7 +6569,7 @@ define_character('180', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('181', {
+Character('181', {
   item_type = 1,
   filter = "/god/",
   level = 10,
@@ -6591,7 +6591,7 @@ define_character('181', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('182', {
+Character('182', {
   item_type = 3,
   filter = "/man/",
   level = 8,
@@ -6615,7 +6615,7 @@ define_character('182', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('183', {
+Character('183', {
   item_type = 3,
   filter = "/man/",
   level = 15,
@@ -6639,7 +6639,7 @@ define_character('183', {
   rarity = 20000,
   coefficient = 400,
 })
-define_character('184', {
+Character('184', {
   item_type = 3,
   filter = "/man/",
   level = 9,
@@ -6663,7 +6663,7 @@ define_character('184', {
   rarity = 40000,
   coefficient = 400,
 })
-define_character('185', {
+Character('185', {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -6688,7 +6688,7 @@ define_character('185', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('350', {
+Character('350', {
   item_type = 3,
   filter = "/man/",
   level = 10,
@@ -6714,7 +6714,7 @@ define_character('350', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('186', {
+Character('186', {
   item_type = 3,
   filter = "",
   level = 5,
@@ -6735,7 +6735,7 @@ define_character('186', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('187', {
+Character('187', {
   item_type = 3,
   filter = "",
   level = 13,
@@ -6758,7 +6758,7 @@ define_character('187', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('188', {
+Character('188', {
   item_type = 3,
   filter = "",
   level = 30,
@@ -6781,7 +6781,7 @@ define_character('188', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('345', {
+Character('345', {
   item_type = 3,
   filter = "",
   level = 22,
@@ -6805,7 +6805,7 @@ define_character('345', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('346', {
+Character('346', {
   item_type = 3,
   filter = "",
   level = 8,
@@ -6828,7 +6828,7 @@ define_character('346', {
   rarity = 5000,
   coefficient = 400,
 })
-define_character('341', {
+Character('341', {
   item_type = 3,
   filter = "",
   level = 15,
@@ -6852,7 +6852,7 @@ define_character('341', {
   rarity = 25000,
   coefficient = 400,
 })
-define_character('258', {
+Character('258', {
   item_type = 3,
   filter = "",
   level = 25,
@@ -6875,7 +6875,7 @@ define_character('258', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('189', {
+Character('189', {
   item_type = 3,
   filter = "/undead/",
   level = 8,
@@ -6897,7 +6897,7 @@ define_character('189', {
   rarity = 60000,
   coefficient = 400,
 })
-define_character('190', {
+Character('190', {
   item_type = 3,
   filter = "/undead/",
   level = 19,
@@ -6920,7 +6920,7 @@ define_character('190', {
   rarity = 60000,
   coefficient = 400,
 })
-define_character('191', {
+Character('191', {
   item_type = 3,
   filter = "/undead/ether/",
   level = 14,
@@ -6944,7 +6944,7 @@ define_character('191', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('192', {
+Character('192', {
   item_type = 1,
   filter = "/wild/",
   level = 5,
@@ -6966,7 +6966,7 @@ define_character('192', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('193', {
+Character('193', {
   item_type = 1,
   filter = "/wild/ether/",
   level = 15,
@@ -6989,7 +6989,7 @@ define_character('193', {
   rarity = 70000,
   coefficient = 400,
 })
-define_character('195', {
+Character('195', {
   item_type = 1,
   filter = "/wild/",
   level = 1,
@@ -7010,7 +7010,7 @@ define_character('195', {
   rarity = 30000,
   coefficient = 400,
 })
-define_character('196', {
+Character('196', {
   item_type = 2,
   filter = "/undead/",
   level = 7,
@@ -7033,7 +7033,7 @@ define_character('196', {
   rarity = 60000,
   coefficient = 400,
 })
-define_character('201', {
+Character('201', {
   item_type = 2,
   filter = "/undead/",
   level = 5,
@@ -7057,7 +7057,7 @@ define_character('201', {
   rarity = 20000,
   coefficient = 400,
 })
-define_character('197', {
+Character('197', {
   item_type = 2,
   filter = "/undead/",
   level = 18,
@@ -7081,7 +7081,7 @@ define_character('197', {
   rarity = 60000,
   coefficient = 400,
 })
-define_character('198', {
+Character('198', {
   item_type = 2,
   filter = "/undead/",
   level = 30,
@@ -7105,7 +7105,7 @@ define_character('198', {
   rarity = 60000,
   coefficient = 400,
 })
-define_character('199', {
+Character('199', {
   item_type = 3,
   filter = "/undead/",
   level = 12,
@@ -7127,7 +7127,7 @@ define_character('199', {
   rarity = 30000,
   coefficient = 400,
 })
-define_character('200', {
+Character('200', {
   item_type = 3,
   filter = "/undead/",
   level = 26,
@@ -7150,7 +7150,7 @@ define_character('200', {
   rarity = 30000,
   coefficient = 400,
 })
-define_character('202', {
+Character('202', {
   item_type = 3,
   filter = "",
   level = 80,
@@ -7176,7 +7176,7 @@ define_character('202', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('203', {
+Character('203', {
   item_type = 3,
   filter = "/man/",
   level = 10,
@@ -7200,7 +7200,7 @@ define_character('203', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('205', {
+Character('205', {
   item_type = 3,
   filter = "/man/",
   level = 1,
@@ -7225,7 +7225,7 @@ define_character('205', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('207', {
+Character('207', {
   item_type = 3,
   filter = "/god/",
   level = 30,
@@ -7251,7 +7251,7 @@ define_character('207', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('212', {
+Character('212', {
   item_type = 3,
   filter = "",
   level = 1,
@@ -7276,7 +7276,7 @@ define_character('212', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('213', {
+Character('213', {
   item_type = 3,
   filter = "/man/",
   level = 1,
@@ -7301,7 +7301,7 @@ define_character('213', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('221', {
+Character('221', {
   item_type = 3,
   filter = "/man/",
   level = 10,
@@ -7326,7 +7326,7 @@ define_character('221', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('222', {
+Character('222', {
   item_type = 3,
   filter = "/man/",
   level = 15,
@@ -7351,7 +7351,7 @@ define_character('222', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('223', {
+Character('223', {
   item_type = 3,
   filter = "/man/",
   level = 10,
@@ -7376,7 +7376,7 @@ define_character('223', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('224', {
+Character('224', {
   item_type = 3,
   filter = "/man/",
   level = 7,
@@ -7401,7 +7401,7 @@ define_character('224', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('243', {
+Character('243', {
   item_type = 3,
   filter = "/man/",
   level = 15,
@@ -7426,7 +7426,7 @@ define_character('243', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('247', {
+Character('247', {
   item_type = 3,
   filter = "/man/",
   level = 4,
@@ -7450,7 +7450,7 @@ define_character('247', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('252', {
+Character('252', {
   item_type = 3,
   filter = "/man/",
   level = 45,
@@ -7478,7 +7478,7 @@ define_character('252', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('253', {
+Character('253', {
   item_type = 3,
   filter = "/man/",
   level = 25,
@@ -7504,7 +7504,7 @@ define_character('253', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('259', {
+Character('259', {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -7530,7 +7530,7 @@ define_character('259', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('301', {
+Character('301', {
   item_type = 3,
   filter = "/man/",
   level = 38,
@@ -7556,7 +7556,7 @@ define_character('301', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('214', {
+Character('214', {
   item_type = 3,
   filter = "/man/",
   level = 2,
@@ -7579,7 +7579,7 @@ define_character('214', {
   rarity = 30000,
   coefficient = 400,
 })
-define_character('215', {
+Character('215', {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -7604,7 +7604,7 @@ define_character('215', {
   rarity = 30000,
   coefficient = 400,
 })
-define_character('217', {
+Character('217', {
   item_type = 3,
   filter = "/man/",
   level = 35,
@@ -7629,7 +7629,7 @@ define_character('217', {
   rarity = 30000,
   coefficient = 400,
 })
-define_character('216', {
+Character('216', {
   item_type = 1,
   filter = "",
   level = 50,
@@ -7653,7 +7653,7 @@ define_character('216', {
   rarity = 20000,
   coefficient = 400,
 })
-define_character('218', {
+Character('218', {
   item_type = 1,
   filter = "",
   level = 45,
@@ -7680,7 +7680,7 @@ define_character('218', {
   rarity = 40000,
   coefficient = 400,
 })
-define_character('219', {
+Character('219', {
   item_type = 3,
   filter = "",
   level = 38,
@@ -7703,7 +7703,7 @@ define_character('219', {
   rarity = 80000,
   coefficient = 400,
 })
-define_character('220', {
+Character('220', {
   item_type = 3,
   filter = "/god/",
   level = 65,
@@ -7730,7 +7730,7 @@ define_character('220', {
   rarity = 30000,
   coefficient = 400,
 })
-define_character('250', {
+Character('250', {
   item_type = 3,
   filter = "",
   level = 13,
@@ -7753,7 +7753,7 @@ define_character('250', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('260', {
+Character('260', {
   item_type = 3,
   filter = "/god/",
   level = 8,
@@ -7781,7 +7781,7 @@ define_character('260', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('261', {
+Character('261', {
   item_type = 3,
   filter = "/god/",
   level = 8,
@@ -7809,7 +7809,7 @@ define_character('261', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('262', {
+Character('262', {
   item_type = 3,
   filter = "/god/",
   level = 8,
@@ -7834,7 +7834,7 @@ define_character('262', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('263', {
+Character('263', {
   item_type = 3,
   filter = "/god/",
   level = 8,
@@ -7866,7 +7866,7 @@ define_character('263', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('264', {
+Character('264', {
   item_type = 3,
   filter = "/god/",
   level = 8,
@@ -7892,7 +7892,7 @@ define_character('264', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('265', {
+Character('265', {
   item_type = 3,
   filter = "/god/",
   level = 8,
@@ -7920,7 +7920,7 @@ define_character('265', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('266', {
+Character('266', {
   item_type = 3,
   filter = "/god/",
   level = 8,
@@ -7948,7 +7948,7 @@ define_character('266', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('267', {
+Character('267', {
   item_type = 1,
   filter = "/wild/horse/",
   level = 1,
@@ -7971,7 +7971,7 @@ define_character('267', {
   rarity = 10000,
   coefficient = 400,
 })
-define_character('276', {
+Character('276', {
   item_type = 1,
   filter = "/wild/horse/",
   level = 4,
@@ -7995,7 +7995,7 @@ define_character('276', {
   rarity = 10000,
   coefficient = 400,
 })
-define_character('275', {
+Character('275', {
   item_type = 1,
   filter = "/wild/horse/",
   level = 10,
@@ -8019,7 +8019,7 @@ define_character('275', {
   rarity = 10000,
   coefficient = 400,
 })
-define_character('268', {
+Character('268', {
   item_type = 1,
   filter = "/wild/horse/",
   level = 15,
@@ -8043,7 +8043,7 @@ define_character('268', {
   rarity = 10000,
   coefficient = 400,
 })
-define_character('277', {
+Character('277', {
   item_type = 1,
   filter = "/wild/horse/",
   level = 20,
@@ -8067,7 +8067,7 @@ define_character('277', {
   rarity = 10000,
   coefficient = 400,
 })
-define_character('278', {
+Character('278', {
   item_type = 3,
   filter = "",
   level = 6,
@@ -8090,7 +8090,7 @@ define_character('278', {
   rarity = 70000,
   coefficient = 400,
 })
-define_character('279', {
+Character('279', {
   item_type = 3,
   filter = "/man/",
   level = 15,
@@ -8115,7 +8115,7 @@ define_character('279', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('280', {
+Character('280', {
   item_type = 3,
   filter = "/man/",
   level = 10,
@@ -8139,7 +8139,7 @@ define_character('280', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('288', {
+Character('288', {
   item_type = 3,
   filter = "/man/",
   level = 55,
@@ -8166,7 +8166,7 @@ define_character('288', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('290', {
+Character('290', {
   item_type = 3,
   filter = "/man/",
   level = 38,
@@ -8193,7 +8193,7 @@ define_character('290', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('292', {
+Character('292', {
   item_type = 3,
   filter = "/man/",
   level = 55,
@@ -8217,7 +8217,7 @@ define_character('292', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('294', {
+Character('294', {
   item_type = 3,
   filter = "/man/",
   level = 38,
@@ -8242,7 +8242,7 @@ define_character('294', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('291', {
+Character('291', {
   item_type = 3,
   filter = "/man/",
   level = 55,
@@ -8266,7 +8266,7 @@ define_character('291', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('297', {
+Character('297', {
   item_type = 3,
   filter = "/man/",
   level = 38,
@@ -8291,7 +8291,7 @@ define_character('297', {
   rarity = 100000,
   coefficient = 400,
 })
-define_character('317', {
+Character('317', {
   item_type = 3,
   filter = "",
   level = 28,
@@ -8319,7 +8319,7 @@ define_character('317', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('318', {
+Character('318', {
   item_type = 3,
   filter = "",
   level = 30,
@@ -8348,7 +8348,7 @@ define_character('318', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('319', {
+Character('319', {
   item_type = 3,
   filter = "",
   level = 1,
@@ -8373,7 +8373,7 @@ define_character('319', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('322', {
+Character('322', {
   item_type = 3,
   filter = "/man/",
   level = 15,
@@ -8398,7 +8398,7 @@ define_character('322', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('334', {
+Character('334', {
   item_type = 3,
   filter = "/man/",
   level = 7,
@@ -8423,7 +8423,7 @@ define_character('334', {
   rarity = 50000,
   coefficient = 400,
 })
-define_character('323', {
+Character('323', {
   item_type = 3,
   filter = "/undead/",
   level = 12,
@@ -8447,7 +8447,7 @@ define_character('323', {
   rarity = 10000,
   coefficient = 0,
 })
-define_character('324', {
+Character('324', {
   item_type = 3,
   filter = "",
   level = 10,
@@ -8468,7 +8468,7 @@ define_character('324', {
   rarity = 15000,
   coefficient = 400,
 })
-define_character('325', {
+Character('325', {
   item_type = 3,
   filter = "",
   level = 17,
@@ -8493,7 +8493,7 @@ define_character('325', {
   rarity = 15000,
   coefficient = 400,
 })
-define_character('328', {
+Character('328', {
   item_type = 1,
   filter = "",
   level = 3,
@@ -8515,7 +8515,7 @@ define_character('328', {
   rarity = 2000,
   coefficient = 0,
 })
-define_character('329', {
+Character('329', {
   item_type = 1,
   filter = "",
   level = 1,
@@ -8538,7 +8538,7 @@ define_character('329', {
   rarity = 5000,
   coefficient = 0,
 })
-define_character('330', {
+Character('330', {
   item_type = 1,
   filter = "/dragon/",
   level = 19,
@@ -8567,7 +8567,7 @@ define_character('330', {
 
 
 -- For debug
-define_character('500', {
+Character('500', {
   item_type = 1,
   filter = "/slime/",
   level = 1,

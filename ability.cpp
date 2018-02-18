@@ -63,7 +63,7 @@ namespace elona
 
 void ability_db::initialize()
 {
-    cat::global.register_function("define_ability", &define);
+    cat::global.register_function("Ability", &define);
     storage_ptr = &storage;
     cat::global.load(fs::u8path(u8"../data/ability.lua"));
     storage_ptr = nullptr;

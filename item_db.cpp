@@ -144,7 +144,7 @@ namespace elona
 
 void item_db::initialize()
 {
-    cat::global.register_function("define_item", &define);
+    cat::global.register_function("Item", &define);
     storage_ptr = &storage;
     cat::global.load(fs::u8path(u8"../data/item.lua"));
     storage_ptr = nullptr;

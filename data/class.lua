@@ -1,4 +1,4 @@
-define_class("warrior", {
+Class("warrior", {
   ordering = 10010,
   item_type = 1,
   is_extra = false,
@@ -28,7 +28,7 @@ define_class("warrior", {
     _168 = 5,
   },
 })
-define_class("thief", {
+Class("thief", {
   ordering = 10020,
   item_type = 7,
   is_extra = false,
@@ -55,7 +55,7 @@ define_class("thief", {
     _170 = 4,
   },
 })
-define_class("wizard", {
+Class("wizard", {
   ordering = 10030,
   item_type = 2,
   is_extra = false,
@@ -81,7 +81,7 @@ define_class("wizard", {
     _172 = 5,
   },
 })
-define_class("farmer", {
+Class("farmer", {
   ordering = 10040,
   item_type = 1,
   is_extra = false,
@@ -107,7 +107,7 @@ define_class("farmer", {
     _177 = 5,
   },
 })
-define_class("predator", {
+Class("predator", {
   ordering = 20010,
   item_type = 0,
   is_extra = true,
@@ -125,7 +125,7 @@ define_class("predator", {
     _152 = 4,
   },
 })
-define_class("archer", {
+Class("archer", {
   ordering = 10050,
   item_type = 3,
   is_extra = false,
@@ -152,7 +152,7 @@ define_class("archer", {
     _189 = 3,
   },
 })
-define_class("warmage", {
+Class("warmage", {
   ordering = 10060,
   item_type = 5,
   is_extra = false,
@@ -178,7 +178,7 @@ define_class("warmage", {
     _172 = 4,
   },
 })
-define_class("tourist", {
+Class("tourist", {
   ordering = 10070,
   item_type = 0,
   is_extra = false,
@@ -197,7 +197,7 @@ define_class("tourist", {
     _182 = 3,
   },
 })
-define_class("pianist", {
+Class("pianist", {
   ordering = 10080,
   item_type = 3,
   is_extra = false,
@@ -222,7 +222,7 @@ define_class("pianist", {
     _301 = 3,
   },
 })
-define_class("gunner", {
+Class("gunner", {
   ordering = 20020,
   item_type = 4,
   is_extra = true,
@@ -244,7 +244,7 @@ define_class("gunner", {
     _189 = 3,
   },
 })
-define_class("priest", {
+Class("priest", {
   ordering = 10090,
   item_type = 6,
   is_extra = false,
@@ -270,7 +270,7 @@ define_class("priest", {
     _172 = 5,
   },
 })
-define_class("claymore", {
+Class("claymore", {
   ordering = 10100,
   item_type = 8,
   is_extra = false,
@@ -298,7 +298,7 @@ define_class("claymore", {
 
 
 -- For debug
-define_class("debugger", {
+Class("debugger", {
   ordering = 0,
   item_type = 1,
   is_extra = true,

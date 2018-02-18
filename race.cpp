@@ -137,7 +137,7 @@ namespace elona
 
 void race_db::initialize()
 {
-    cat::global.register_function("define_race", &define);
+    cat::global.register_function("Race", &define);
     storage_ptr = &storage;
     cat::global.load(fs::u8path(u8"../data/race.lua"));
     storage_ptr = nullptr;

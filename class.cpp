@@ -137,7 +137,7 @@ int access_class_info(int dbmode, const std::string& dbidn)
 
 void class_db::initialize()
 {
-    cat::global.register_function("define_class", &define);
+    cat::global.register_function("Class", &define);
     storage_ptr = &storage;
     cat::global.load(fs::u8path(u8"../data/class.lua"));
     storage_ptr = nullptr;

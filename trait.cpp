@@ -63,7 +63,7 @@ namespace elona
 
 void trait_db::initialize()
 {
-    cat::global.register_function("define_trait", &define);
+    cat::global.register_function("Trait", &define);
     storage_ptr = &storage;
     cat::global.load(fs::u8path(u8"../data/trait.lua"));
     storage_ptr = nullptr;
