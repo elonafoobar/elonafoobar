@@ -51820,7 +51820,7 @@ void show_item_description()
     access_item_db(17);
     if (inv[ci].identification_state >= 3)
     {
-        buf = trimdesc(description(3), 1);
+        std::string buf = trimdesc(description(3), 1);
         if (buf != ""s)
         {
             list(0, p) = 7;
@@ -52023,7 +52023,7 @@ void show_item_description()
                     list(0, p) = 0;
                     listn(0, p) = "";
                     ++p;
-                    buf = trimdesc(description(cnt), 2);
+                    std::string buf = trimdesc(description(cnt), 2);
                     notesel(buf);
                     {
                         int cnt = 0;

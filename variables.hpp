@@ -581,7 +581,6 @@ inline int x_at_txtfunc;
 inline int y1;
 inline int y2;
 inline int y_at_txtfunc;
-inline std::string buf;
 inline std::string cardrefrace;
 inline std::string cfg_font1;
 inline std::string cfg_font2;
