@@ -935,8 +935,8 @@ label_2061_internal:
     {
         x = (windoww - 640) / 2 + inf_screenx + 455;
         y = winposy(432) - 32;
-        w = 200;
-        h = 102;
+        int w = 200;
+        int h = 102;
         window(x + 4, y + 4, w, h - h % 8, 0, -1);
         window(x, y, w, h - h % 8, 0, 0);
         font(lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0);

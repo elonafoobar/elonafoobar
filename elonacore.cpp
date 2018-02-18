@@ -19576,8 +19576,8 @@ void label_1423()
     }
     sx = windoww - 156;
     sy = inf_ver - 30;
-    w = 148;
-    h = 25;
+    int w = 148;
+    int h = 25;
     window2(sx, sy, w, h, 0, 5);
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
     pos(sx + 43, sy + 6);
@@ -30620,8 +30620,8 @@ int initialize_quest_map_crop()
         int cnt = 0;
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
         {
-            w = rnd(5) + 5;
-            h = rnd(4) + 4;
+            int w = rnd(5) + 5;
+            int h = rnd(4) + 4;
             dx = rnd(mdata(0));
             dy = rnd(mdata(1));
             if (rnd(2))
@@ -31546,7 +31546,7 @@ void initialize_random_nefia_rdtype8()
     mdata(1) = 60 + rnd(60);
     mdata(10) = mdata(0) * mdata(1) / 20;
     map_initialize();
-    w = 6;
+    int w = 6;
     dx = mdata(0) / 2 - w / 2;
     p = 0;
     {
@@ -31944,7 +31944,7 @@ void initialize_random_nefia_rdtype10()
                     {
                         continue;
                     }
-                    w = 10 + rnd(4);
+                    int w = 10 + rnd(4);
                     {
                         int cnt = 0;
                         for (int cnt_end = cnt + (w); cnt < cnt_end; ++cnt)
@@ -45938,7 +45938,7 @@ void show_quest_board()
     gsel(4);
     fillbg(3, 960, 96, 128, 128);
     ww = 560;
-    h = 140;
+    int h = 140;
     wh = h * 4;
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
