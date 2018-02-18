@@ -24757,7 +24757,10 @@ void label_1573()
         goto label_1574_internal;
     }
 label_1574_internal:
-    switch (refchara(cdata[rc].id, 3))
+    dbid = cdata[rc].id;
+    dbmode = 16;
+    dbspec = 3;
+    switch (access_character_info())
     {
     case 3:
         if (rnd(40) == 0)
@@ -78634,16 +78637,6 @@ void show_game_score_ranking()
     }
     color(0, 0, 0);
     return;
-}
-
-
-
-int refchara(int prm_258, int prm_259)
-{
-    dbmode = 16;
-    dbid = prm_258;
-    dbspec = prm_259;
-    return access_character_info();
 }
 
 
