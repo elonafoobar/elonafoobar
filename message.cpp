@@ -534,6 +534,7 @@ void bmes(const std::string& prm_301, int prm_302, int prm_303, int prm_304)
     color(mes_color_at_m21(0), mes_color_at_m21(1), mes_color_at_m21(2));
     pos(pos_x_at_m21, pos_y_at_m21);
     mes(prm_301);
+    color(0, 0, 0);
     return;
 }
 
@@ -579,6 +580,7 @@ void msg_write(std::string& prm_307)
         (inf_msgline - 1) * inf_msgspace + inf_msgy + 6);
     font(lang(cfg_font1, cfg_font2), inf_mesfont - en * 2, 0);
     mes(prm_307);
+    color(0, 0, 0);
     return;
 }
 

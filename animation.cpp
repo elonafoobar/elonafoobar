@@ -220,7 +220,6 @@ void play_animation_17_2(int animeid, int anicol, int anisound)
     gcopy(0, 0, 0, windoww, windowh);
     gmode(2);
     gsel(0);
-    color(0, 0, 0);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)

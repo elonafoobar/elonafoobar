@@ -87,7 +87,6 @@ private:
 
 void render_shadow_low(int light)
 {
-    color(0, 0, 0);
     gmode(6, inf_tiles, inf_tiles, light);
 
     for (const auto& [x, y] : loop_xy{inf_screenw, inf_screenh})
@@ -484,7 +483,6 @@ void cell_draw()
             }
             continue;
         }
-        color(0, 0, 0);
         for (int cnt = 0; cnt < repw; ++cnt, dx_ -= inf_tiles)
         {
             const int x_ = repw(1) + repw - 1 - cnt;
@@ -506,7 +504,6 @@ void cell_draw()
                     {
                         py_ -= syfix;
                     }
-                    color(0, 0, 0);
                     gmode(5, inf_tiles, inf_tiles, 50 + flick_);
                     pos(px_, py_);
                     gcopy(3, 800, 208, 144, 48);
@@ -525,7 +522,6 @@ void cell_draw()
                 {
                     py_ -= syfix;
                 }
-                color(0, 0, 0);
                 gmode(5, inf_tiles, inf_tiles, 50 + flick_);
                 pos(px_ - 48, py_ - 48);
                 gcopy(3, 800, 112, 144, 96);
@@ -542,7 +538,6 @@ void cell_draw()
                     if (mdata(6) == 1)
                     {
                         gmode(6, 32, 16, 85);
-                        color(0, 0, 0);
                         pos(px_ + 24, py_ + 27);
                         grotate(3, 240, 384, 0, 20, 10);
                         gmode(2, 32, 48);
@@ -552,7 +547,6 @@ void cell_draw()
                     else if (chipm(0, ground_) == 3)
                     {
                         gmode(4, 32, 20, 146);
-                        color(0, 0, 0);
                         pos(px_ + 24, py_ + 36);
                         grotate(
                             10, ani_, cdata[0].direction * 48 + 28, 0, 24, 16);
@@ -563,7 +557,6 @@ void cell_draw()
                     else
                     {
                         gmode(6, -1, -1, 110);
-                        color(0, 0, 0);
                         pos(px_ + 8, py_ + 20);
                         gcopy(3, 240, 384, 32, 16);
                         if (fishanime == 3)
@@ -583,7 +576,6 @@ void cell_draw()
                         grotate(10, ani_, cdata[0].direction * 48, 0, 24, 40);
                     }
                     gmode(2);
-                    color(0, 0, 0);
                 }
                 if (cdata[0].furious != 0)
                 {
@@ -918,7 +910,6 @@ void cell_draw()
                         if (mdata(6) == 1)
                         {
                             gmode(6, 32, 16, 85);
-                            color(0, 0, 0);
                             pos(dx_ + 24, dy_ + 27);
                             grotate(3, 240, 384, 0, 20, 10);
                             gmode(2, 32, 48);
@@ -934,7 +925,6 @@ void cell_draw()
                         else if (chipm(0, ground_) == 3)
                         {
                             gmode(4, 32, 20, 146);
-                            color(0, 0, 0);
                             pos(dx_ + 24, dy_ + 36);
                             grotate(
                                 10 + c_,
@@ -956,7 +946,6 @@ void cell_draw()
                         else
                         {
                             gmode(6, -1, -1, 110);
-                            color(0, 0, 0);
                             pos(dx_ + 8, dy_ + 20);
                             gcopy(3, 240, 384, 32, 16);
                             gmode(2, 32, 48);
@@ -970,7 +959,6 @@ void cell_draw()
                                 40);
                         }
                         gmode(2);
-                        color(0, 0, 0);
                         if (cdata[c_].furious != 0)
                         {
                             pos(dx_ + 12, dy_ - 28);
@@ -1009,7 +997,6 @@ void cell_draw()
                         if (mdata(6) == 1)
                         {
                             gmode(6, 32, 16, 85);
-                            color(0, 0, 0);
                             pos(dx_ + 24, dy_ + 32);
                             grotate(3, 240, 384, 0, 20, 10);
                             gmode(2, chipc(2, p_), chipc(3, p_));
@@ -1026,7 +1013,6 @@ void cell_draw()
                             if (chipm(0, ground_) == 3)
                             {
                                 gmode(4, inf_tiles, inf_tiles, 100);
-                                color(0, 0, 0);
                                 pos(dx_,
                                     dy_ + 16 - chipc(4, p_)
                                         - (chipm(0, ground_) == 3) * -16);
@@ -1042,7 +1028,6 @@ void cell_draw()
                             else
                             {
                                 gmode(6, -1, -1, 110);
-                                color(0, 0, 0);
                                 pos(dx_ + 8, dy_ + 20);
                                 gcopy(3, 240, 384, 32, 16);
                                 gmode(2, inf_tiles, inf_tiles);

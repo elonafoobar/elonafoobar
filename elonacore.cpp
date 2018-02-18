@@ -142,10 +142,12 @@ position_t gmes(
             color(180, 160, 140);
             elona::pos(x + 1, y + 1);
             mes(m_);
+            color(0, 0, 0);
         }
         color(text_color.r, text_color.g, text_color.b);
         elona::pos(x, y);
         mes(m_);
+        color(0, 0, 0);
         x += font_size / 2 * (byte == 1 ? 1 : 2);
     }
 
@@ -3277,7 +3279,6 @@ void load_pcc_part(int cc, int body_part, const char* body_part_str)
     picload(filepath, 1);
     boxf(256, 0, 384, 198);
     gmode(4, -1, -1, 256);
-    color(43, 133, 133);
     pget(128, 0);
     pos(256, 0);
     gcopy(10 + cc, 128, 0, 128, 198);
@@ -3288,7 +3289,6 @@ void load_pcc_part(int cc, int body_part, const char* body_part_str)
         c_col(1, pcc(body_part, cc) / 1000),
         c_col(2, pcc(body_part, cc) / 1000));
     gmode(2);
-    color(0, 0, 0);
     pos(0, 0);
     gcopy(10 + cc, 256, 0, 128, 198);
 }
@@ -4410,7 +4410,6 @@ void showcard2(int prm_425, int prm_426)
     std::string s_at_cardcontrol;
     int tx_at_cardcontrol = 0;
     font(lang(cfg_font1, cfg_font2), 43 - en * 2, 1);
-    color(0, 0, 0);
     gmode(2, 64, 96);
     pos(card_at_cardcontrol(3, prm_425), card_at_cardcontrol(4, prm_425));
     if (card_at_cardcontrol(2, prm_425) == 1)
@@ -4423,7 +4422,6 @@ void showcard2(int prm_425, int prm_426)
         if (prm_426 == 0)
         {
             gmode(4, inf_tiles, inf_tiles, 220);
-            color(0, 0, 0);
             if (card_at_cardcontrol(1, prm_425) == 0)
             {
                 pos(card_at_cardcontrol(3, prm_425) + 32,
@@ -4507,11 +4505,11 @@ void showcard2(int prm_425, int prm_426)
                 col_at_cardcontrol(0),
                 col_at_cardcontrol(1),
                 col_at_cardcontrol(2));
+            color(0, 0, 0);
         }
         else
         {
             font(lang(cfg_font1, cfg_font2), 12 - en * 2, 0);
-            color(0, 0, 0);
         }
     }
     return;
@@ -4549,6 +4547,7 @@ void showcardpile()
     color(10, 10, 10);
     pos(pilex_at_cardcontrol + 8, piley_at_cardcontrol + 70);
     bmes(u8"X "s + pilestack_at_cardcontrol, 240, 240, 240);
+    color(0, 0, 0);
     return;
 }
 
@@ -7904,20 +7903,22 @@ void equipinfo(int prm_529, int prm_530, int prm_531)
                     mes(u8"▼"s);
                 }
                 pos(prm_530 + (i_at_m66 - 50) * 20 + 5, prm_531 + 1);
-                color(0, 0, 0);
                 mes(s_at_m66);
                 pos(prm_530 + (i_at_m66 - 50) * 20 + 4, prm_531);
                 color(255, 255, 255);
                 mes(s_at_m66);
+                color(0, 0, 0);
             }
             else
             {
                 color(80, 60, 40);
                 pos(prm_530 + (i_at_m66 - 50) * 20 + 5, prm_531);
                 mes(""s + p_at_m66);
+                color(0, 0, 0);
                 colorres();
                 pos(prm_530 + (i_at_m66 - 50) * 20 + 4, prm_531);
                 mes(""s + p_at_m66);
+                color(0, 0, 0);
             }
         }
     }
@@ -8116,6 +8117,7 @@ void cs_list(
 
     pos(x + 4 + x_offset, y + 3);
     mes(text);
+    color(0, 0, 0);
 }
 
 
@@ -9739,6 +9741,7 @@ void display_customkey(const std::string& key, int x, int y)
     pos(629, 31);
     color(50, 60, 80);
     bmes(key, 250, 240, 230);
+    color(0, 0, 0);
     gmode(2, inf_tiles, inf_tiles);
     gsel(0);
     pos(x, y);
@@ -9885,7 +9888,6 @@ void window(
     if (prm_655 == -1)
     {
         gmode(6, -1, -1, 80);
-        color(0, 0, 0);
     }
     else
     {
@@ -10128,7 +10130,6 @@ void display_window2(
     pos(prm_662, prm_663);
     gcopy(prm_666, 0, 0, prm_664, prm_665);
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
-    color(0, 0, 0);
     if (s != ""s)
     {
         pos(prm_662 + prm_664 - strlen_u(s) * 7 - 140,
@@ -10227,12 +10228,10 @@ void display_note(const std::string& prm_674, int prm_675)
 void display_topic(const std::string& prm_676, int prm_677, int prm_678, int)
 {
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
-    color(0, 0, 0);
     pos(prm_677, prm_678 + 7);
     gcopy(3, 120, 360, 24, 16);
     pos(prm_677 + 26, prm_678 + 8);
     mes(prm_676);
-    color(0, 0, 0);
     line(
         prm_677 + 22,
         prm_678 + 21,
@@ -10743,6 +10742,7 @@ void windowanime(
                 ceny_at_m105 - y2_at_m105 / prm_730 * cnt - 1,
                 cenx_at_m105 + x2_at_m105 / prm_730 * cnt - 1,
                 ceny_at_m105 + y2_at_m105 / prm_730 * cnt - 1);
+            color(0, 0, 0);
             redraw(0);
             redraw(1);
             if (cnt != prm_730 - 1)
@@ -10797,6 +10797,7 @@ void windowanimecorner(
                 prm_733 + prm_735 - 1,
                 prm_732 + prm_734 - (prm_734 - prm_732) / prm_736 * cnt - 1,
                 prm_733 + prm_735 - (prm_735 - prm_733) / prm_736 * cnt - 1);
+            color(0, 0, 0);
             redraw(1);
             if (cnt != prm_736)
             {
@@ -10841,7 +10842,6 @@ void showtitle(const std::string&, const std::string& prm_739, int prm_740, int)
     gmode(2);
     pos(x_at_m106, y_at_m106 + (mode != 1));
     gcopy(3, 96, 360, 24, 16);
-    color(0, 0, 0);
     pos(x_at_m106 + 32, y_at_m106 + 1 + jp);
     bmes(prm_739, 250, 250, 250);
     return;
@@ -10929,7 +10929,6 @@ void drawmenu(int prm_742)
             }
             pos(x_at_m107 + cnt * 50 + 46 - strlen_u(s(cnt)) * 3,
                 y_at_m107 + 7);
-            color(0, 0, 0);
             if (curmenu == cnt)
             {
                 bmes(s(cnt), 255, 255, 255);
@@ -10940,7 +10939,6 @@ void drawmenu(int prm_742)
             }
         }
     }
-    color(0, 0, 0);
     pos(x_at_m107 + x_at_m107(1) - 150, y_at_m107 + 28);
     bmes(
         ""s + key_prev + u8","s + key_next + u8",Tab "s
@@ -18938,7 +18936,6 @@ void update_screen_hud()
         }
     }
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
-    color(0, 0, 0);
     pos(inf_raderw + 24, inf_bary + 3 + vfix - en);
     if (strlen_u(mdatan(0)) > size_t(16 - (maplevel() != ""s) * 4))
     {
@@ -19039,16 +19036,13 @@ void render_hud()
     }
     sx = inf_hpx + 16;
     sy = inf_hpy - 8;
-    color(0, 0, 0);
     pos(sx + 4, sy);
     bmes(""s + cdata[0].hp + u8"("s + cdata[0].max_hp + u8")"s, 255, 255, 255);
     sx = inf_mpx + 16;
     sy = inf_mpy - 8;
-    color(0, 0, 0);
     pos(sx + 4, sy);
     bmes(""s + cdata[0].mp + u8"("s + cdata[0].max_mp + u8")"s, 255, 255, 255);
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
-    color(0, 0, 0);
     sy = inf_bary + 2 + vfix;
     {
         int cnt = 0;
@@ -19068,6 +19062,7 @@ void render_hud()
                 pos(sx, sy);
                 gcopy(3, 0, 440, 24, 16);
                 mes(sdata(10 + cnt, 0));
+                color(0, 0, 0);
             }
             else if (cnt == 8)
             {
@@ -19086,10 +19081,10 @@ void render_hud()
                     color(0, 0, 0);
                 }
                 mes(""s + gspd);
+                color(0, 0, 0);
             }
             else
             {
-                color(0, 0, 0);
                 pos(sx + 14, sy);
                 gcopy(3, 0, 440, 64, 16);
                 mes(""s + cdata[0].dv + u8"/"s + cdata[0].pv);
@@ -19101,16 +19096,13 @@ void render_hud()
     sx = windoww - 240;
     pos(sx, sy);
     gcopy(3, 0, 392, 24, 24);
-    color(0, 0, 0);
     pos(sx + 28, sy + 2);
     bmes(""s + cdata[0].gold + u8" gp"s, 255, 255, 255);
     sx = windoww - 120;
     pos(sx, sy);
     gcopy(3, 24, 392, 24, 24);
-    color(0, 0, 0);
     pos(sx + 28, sy + 2);
     bmes(""s + cdata[0].platinum_coin + u8" pp"s, 255, 255, 255);
-    color(0, 0, 0);
     pos(4, inf_ver - 16);
     gcopy(3, 48, 392, 24, 24);
     pos(32, inf_ver - 14);
@@ -19137,7 +19129,6 @@ void render_hud()
     sy = inf_ver - 50;
     if (cdata[0].nutrition >= 12000)
     {
-        color(0, 0, 0);
         pos(sx, sy);
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
@@ -19150,10 +19141,6 @@ void render_hud()
         {
             color(200, 0, 0);
         }
-        else
-        {
-            color(0, 0, 0);
-        }
         if (_hunger(cdata[0].nutrition / 1000) != ""s)
         {
             pos(sx, sy);
@@ -19162,6 +19149,7 @@ void render_hud()
             mes(_hunger(cdata[0].nutrition / 1000));
             sy -= 20;
         }
+        color(0, 0, 0);
     }
     else
     {
@@ -19170,6 +19158,7 @@ void render_hud()
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
         mes(_hunger(0));
+        color(0, 0, 0);
         sy -= 20;
     }
     if (cdata[0].sick != 0)
@@ -19191,6 +19180,7 @@ void render_hud()
             mes(_consick);
             sy -= 20;
         }
+        color(0, 0, 0);
     }
     if (cdata[0].poisoned != 0)
     {
@@ -19211,6 +19201,7 @@ void render_hud()
             mes(_conpoison);
             sy -= 20;
         }
+        color(0, 0, 0);
     }
     if (cdata[0].sleep != 0)
     {
@@ -19231,6 +19222,7 @@ void render_hud()
             mes(_consleep);
             sy -= 20;
         }
+        color(0, 0, 0);
     }
     if (cdata[0].blind != 0)
     {
@@ -19239,6 +19231,7 @@ void render_hud()
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
         mes(_conblind);
+        color(0, 0, 0);
         sy -= 20;
     }
     if (cdata[0].paralyzed != 0)
@@ -19248,6 +19241,7 @@ void render_hud()
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
         mes(_conparalyze);
+        color(0, 0, 0);
         sy -= 20;
     }
     if (cdata[0].choked != 0)
@@ -19257,6 +19251,7 @@ void render_hud()
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
         mes(_conmochi);
+        color(0, 0, 0);
         sy -= 20;
     }
     if (cdata[0].confused != 0)
@@ -19266,6 +19261,7 @@ void render_hud()
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
         mes(_conconfuse);
+        color(0, 0, 0);
         sy -= 20;
     }
     if (cdata[0].fear != 0)
@@ -19275,6 +19271,7 @@ void render_hud()
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
         mes(_confear);
+        color(0, 0, 0);
         sy -= 20;
     }
     if (cdata[0].dimmed != 0)
@@ -19304,6 +19301,7 @@ void render_hud()
             mes(_condim);
             sy -= 20;
         }
+        color(0, 0, 0);
     }
     if (cdata[0].furious != 0)
     {
@@ -19324,6 +19322,7 @@ void render_hud()
             mes(_conangry);
             sy -= 20;
         }
+        color(0, 0, 0);
     }
     if (cdata[0].bleeding != 0)
     {
@@ -19352,6 +19351,7 @@ void render_hud()
             mes(_conbleed);
             sy -= 20;
         }
+        color(0, 0, 0);
     }
     if (cdata[0].insane != 0)
     {
@@ -19380,6 +19380,7 @@ void render_hud()
             mes(_coninsane);
             sy -= 20;
         }
+        color(0, 0, 0);
     }
     if (cdata[0].drunk != 0)
     {
@@ -19388,6 +19389,7 @@ void render_hud()
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
         mes(_condrunk);
+        color(0, 0, 0);
         sy -= 20;
     }
     if (cdata[0].wet != 0)
@@ -19397,6 +19399,7 @@ void render_hud()
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
         mes(_conwet);
+        color(0, 0, 0);
         sy -= 20;
     }
     if (cdata[0].gravity != 0)
@@ -19406,6 +19409,7 @@ void render_hud()
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
         mes(_congravity);
+        color(0, 0, 0);
         sy -= 20;
     }
     if (gdata_continuous_active_hours >= 15)
@@ -19437,6 +19441,7 @@ void render_hud()
             mes(_sleep);
             sy -= 20;
         }
+        color(0, 0, 0);
     }
     if (cdata[0].sp < 50)
     {
@@ -19467,6 +19472,7 @@ void render_hud()
             mes(_confatigue);
             sy -= 20;
         }
+        color(0, 0, 0);
     }
     if (cdata[0].inventory_weight_type != 0)
     {
@@ -19478,9 +19484,9 @@ void render_hud()
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
         mes(_burden(cdata[0].inventory_weight_type));
+        color(0, 0, 0);
         sy -= 20;
     }
-    color(0, 0, 0);
     pos(inf_clockx, inf_clocky);
     gcopy(3, 448, 408, inf_clockw, inf_clockh);
     pos(inf_clockx + 78, inf_clocky + 8);
@@ -19498,16 +19504,15 @@ void render_hud()
             }
             pos(sx, sy);
             gcopy(5, cdata[0].buffs[cnt].id * 32, 1120, 32, 32);
-            color(0, 0, 0);
             pos(sx + 3, sy + 19);
             mes(cdata[0].buffs[cnt].turns);
             color(255, 255, 255);
             pos(sx + 2, sy + 18);
             mes(cdata[0].buffs[cnt].turns);
+            color(0, 0, 0);
             sy -= 32;
         }
     }
-    color(0, 0, 0);
     pos(inf_clockarrowx, inf_clockarrowy);
     gmode(2, 48, 48);
     grotate(3, 0, 288, 0.0174532925199433 * (gdata_hour * 30), 48, 48);
@@ -19539,7 +19544,6 @@ void render_hud()
                 continue;
             }
             pos(16, inf_clocky + 155 - ap3 * 16);
-            color(0, 0, 0);
             bmes(
                 ""s
                     + strmid(
@@ -19550,7 +19554,6 @@ void render_hud()
                 255,
                 255);
             pos(66, inf_clocky + 155 - ap3 * 16);
-            color(0, 0, 0);
             bmes(
                 ""s + sdata.get(ap, ap2).original_level + u8"."s
                     + std::to_string(
@@ -19624,7 +19627,6 @@ void label_1423()
     window2(sx, sy, w, h, 0, 5);
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
     pos(sx + 43, sy + 6);
-    color(0, 0, 0);
     bmes(u8"AUTO TURN"s, 235, 235, 235);
     pos(sx + 18, sy + 12);
     gmode(2, 24, 24);
@@ -20017,7 +20019,6 @@ void label_1433()
                                     if (cnt == camera)
                                     {
                                         gmode(4, -1, -1, 120);
-                                        color(0, 0, 0);
                                         pos(sx + 36, sy + 32);
                                         gcopy(3, 240, 410, 24, 16);
                                         gmode(2);
@@ -20122,6 +20123,7 @@ void label_1434()
                 rainy(cnt) - cnt % 3 - 1,
                 rainx(cnt) - 39 + cnt % 2,
                 rainy(cnt));
+            color(0, 0, 0);
             if (rainx(cnt) == 0)
             {
                 rainx(cnt) = rnd(windoww) + 40;
@@ -20170,6 +20172,7 @@ void label_1435()
                 rainy(cnt) - cnt % 5 - 4,
                 rainx(cnt) - 39 + cnt % 2,
                 rainy(cnt));
+            color(0, 0, 0);
             if (rainx(cnt) == 0)
             {
                 rainx(cnt) = rnd(windoww) + 40;
@@ -20205,7 +20208,6 @@ void label_1436()
     {
         return;
     }
-    color(0, 0, 0);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (maxrain * 2); cnt < cnt_end; ++cnt)
@@ -20246,7 +20248,6 @@ void label_1437()
     {
         return;
     }
-    color(0, 0, 0);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (maxrain); cnt < cnt_end; ++cnt)
@@ -20428,7 +20429,6 @@ void fade_out()
             redraw(1);
         }
     }
-    color(500, 500, 500);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
@@ -32664,7 +32664,6 @@ void use_house_board()
                 x = wx + 45 + cnt / 2 * 190;
                 y = wy + 68 + cnt % 2 * 18;
                 font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
-                color(0, 0, 0);
                 pos(x, y);
                 mes(s(cnt));
                 font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
@@ -32674,7 +32673,6 @@ void use_house_board()
                          cnt < cnt_end;
                          ++cnt)
                     {
-                        color(0, 0, 0);
                         pos(x + 35 + cnt * 13 + en * 8, y - 2);
                         bmes(lang(u8"★"s, u8"*"s), 255, 255, 50);
                     }
@@ -32682,7 +32680,6 @@ void use_house_board()
             }
         }
         font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
-        color(0, 0, 0);
         listmax = 10;
         sort_list_by_column1();
         {
@@ -35008,7 +35005,6 @@ void label_1746()
     pos(0, 0);
     gfini(33 * inf_tiles, 25 * inf_tiles);
     gfdec2(p, p(1), p(2));
-    color(255, 255, 255);
     gmode(4, -1, -1, 30);
     if (mdata(2) == 0)
     {
@@ -37096,6 +37092,7 @@ label_1857_internal:
                     }
                     pos(wx + 37, wy + 288);
                     mes(s + u8" "s);
+                    color(0, 0, 0);
                 }
                 {
                     int cnt = 0;
@@ -37119,6 +37116,7 @@ label_1857_internal:
                         }
                         pos(wx + 37 + cnt % 3 * 192, wy + 334 + cnt / 3 * 16);
                         mes(s);
+                        color(0, 0, 0);
                     }
                 }
                 f = 1;
@@ -37605,6 +37603,7 @@ label_18671_internal:
             }
             pos(170, cnt * 20 + 120 + txtadvmsgfix);
             mes(s);
+            color(0, 0, 0);
         }
     }
     cs_bk = -1;
@@ -37754,7 +37753,6 @@ void label_1870()
             {
                 break;
             }
-            color(0, 0, 0);
             gmode(4, x(1), y(1), cnt * 25);
             pos(x + x(1) / 2 - 10 + cnt, y + y(1) / 2);
             grotate(2, 0, 0, 0, x(1), y(1));
@@ -37842,7 +37840,6 @@ void label_1871()
             gmode(0);
             pos(x - 50, y - 50);
             gcopy(2, x - 50, y - 50, 100 + x(1), y(1) + 100);
-            color(0, 0, 0);
             gmode(4, x(1), y(1), 250 - cnt * 25);
             pos(x + x(1) / 2 - 2 * cnt, y + y(1) / 2);
             grotate(2, 0, 0, 0, x(1), y(1));
@@ -37882,7 +37879,6 @@ void label_1872()
                 cnt);
             s = listn(0, p);
             gmode(2);
-            color(0, 0, 0);
             cs_list(
                 cs == cnt,
                 s,
@@ -38587,6 +38583,7 @@ void label_1879()
             mes(lang(u8"　親"s, u8"Dealer"s));
             pos(152, 270);
             mes(lang(u8"あなた"s, u8"   You"s));
+            color(0, 0, 0);
             showcardpile();
             showcardholder();
             showcard();
@@ -39373,9 +39370,7 @@ label_1887_internal:
     wx = (windoww - dx) / 2 + inf_screenx;
     wy = winposy(dy);
     font(lang(cfg_font1, cfg_font2), 18 - en * 2, 1);
-    color(30, 30, 30);
     pos(wx + 20, wy + 20);
-    color(0, 0, 0);
     bmes(
         lang(u8"《 "s, u8"< "s)
             + i18n::_(u8"god", core_god::int2godid(inv[ci].param1), u8"name")
@@ -40669,15 +40664,18 @@ label_1897_internal:
     gmode(2);
     color(240, 230, 220);
     boxl(wx + 12, wy + 6, wx + tx + 12, wy + ty + 6);
+    color(0, 0, 0);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     q = lang(u8"《 "s + s + u8" 》"s, u8" < "s + s + u8" > "s);
     pos(wx + 40, wy + 16);
     color(30, 20, 10);
     bmes(q, 245, 235, 225);
+    color(0, 0, 0);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     color(30, 30, 30);
     pos(wx + 24, wy + ty + 20);
     mes(buff);
+    color(0, 0, 0);
     keyrange = 0;
     {
         int cnt = 0;
@@ -41558,6 +41556,7 @@ void window_recipe2()
     pos(dx_at_m183 + 140, dy_at_m183);
     color(30, 30, 30);
     bmes(lang(u8"成功率: "s, u8"Success Rate: "s) + s_at_m183, 235, 235, 235);
+    color(0, 0, 0);
     p_at_m183 = rpdata(1, rpid);
     if (rpmode)
     {
@@ -41580,6 +41579,7 @@ void window_recipe2()
     pos(dx_at_m183 + 140, dy_at_m183 + 20);
     color(40, 40, 40);
     bmes(lang(u8"必要時間: "s, u8"Time: "s) + s_at_m183, 235, 235, 235);
+    color(0, 0, 0);
     return;
 }
 
@@ -41623,12 +41623,14 @@ void window_recipe_(
         prm_1052 + prm_1054 - 48 - prm_1054 % 8,
         prm_1051 + prm_1053 - 40,
         prm_1052 + prm_1054 - 48 - prm_1054 % 8);
+    color(0, 0, 0);
     color(234, 220, 188);
     line(
         prm_1051 + 50 + 0,
         prm_1052 + prm_1054 - 49 - prm_1054 % 8,
         prm_1051 + prm_1053 - 40,
         prm_1052 + prm_1054 - 49 - prm_1054 % 8);
+    color(0, 0, 0);
     s_at_m184(0) = u8"Page."s + (rppage + 1) + u8"/"s + (rppage(1) + 1);
     s_at_m184(1) = ""s + key_prev + u8","s + key_next + ""s
         + lang(u8"[ページ切替]  "s, u8"[Page]  "s);
@@ -41641,23 +41643,19 @@ void window_recipe_(
         s_at_m184(1) += strhint3b;
     }
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
-    color(0, 0, 0);
     pos(prm_1051 + 25 + 0, prm_1052 + prm_1054 - 43 - prm_1054 % 8);
     mes(s_at_m184(1));
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
-    color(0, 0, 0);
     pos(prm_1051 + prm_1053 - strlen_u(s_at_m184) * 7 - 40 - xfix2_at_m184,
         prm_1052 + prm_1054 - 65 - prm_1054 % 8);
     mes(s_at_m184);
     dx_at_m184 = prm_1051 + 35;
     dy_at_m184 = y + 48;
     font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
-    color(0, 0, 0);
     pos(dx_at_m184 - 10, dy_at_m184);
     mes(lang(u8"調合の手順"s, u8"Blending Procedure"s));
     dy_at_m184 = dy_at_m184 + 18;
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
-    color(0, 0, 0);
     i_at_m184 = 1;
     pos(dx_at_m184 - 10, dy_at_m184 - 2);
     gfini(prm_1053 - 60, 17);
@@ -41745,7 +41743,6 @@ void window_recipe_(
     if (rppage == 0)
     {
         font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
-        color(0, 0, 0);
         pos(dx_at_m184 - 10, dy_at_m184);
         mes(lang(
             rpname(rpid) + u8"のレシピ"s, u8"The recipe of "s + rpname(rpid)));
@@ -41754,7 +41751,6 @@ void window_recipe_(
         mes(lang(u8"必要なスキル:"s, u8"Required Skills:"s));
         dy_at_m184 = dy_at_m184 + 18;
         font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
-        color(0, 0, 0);
         {
             int cnt = 0;
             for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
@@ -41779,11 +41775,11 @@ void window_recipe_(
                         u8"name")
                     + u8"  "s + rpdata((11 + cnt * 2), rpid) + u8"("s
                     + sdata(rpdata((10 + cnt * 2), rpid), 0) + u8")"s);
+                color(0, 0, 0);
             }
         }
         dy_at_m184 += 50;
         font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
-        color(0, 0, 0);
         pos(dx_at_m184 - 10, dy_at_m184);
         mes(lang(u8"必要な機材:"s, u8"Required equipment:"s));
         return;
@@ -41793,12 +41789,10 @@ void window_recipe_(
         return;
     }
     font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
-    color(0, 0, 0);
     pos(dx_at_m184 - 10, dy_at_m184);
     mes(itemname(prm_1050));
     dy_at_m184 += 20;
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
-    color(0, 0, 0);
     if (inv[prm_1050].identification_state < 2)
     {
         pos(dx_at_m184, dy_at_m184);
@@ -41832,6 +41826,7 @@ void window_recipe_(
                 }
                 pos(dx_at_m184, dy_at_m184);
                 mes(cnven(s));
+                color(0, 0, 0);
                 dy_at_m184 += 16;
             }
         }
@@ -41843,7 +41838,6 @@ void window_recipe_(
         dy_at_m184 += 16;
         ++p_at_m184;
     }
-    color(0, 0, 0);
     return;
 }
 
@@ -42280,7 +42274,6 @@ label_1925_internal:
         }
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    color(0, 0, 0);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -42419,7 +42412,6 @@ label_1928_internal:
         }
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    color(0, 0, 0);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -43115,7 +43107,6 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
         {
             pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
             ++dy_at_m186;
-            color(0, 0, 0);
             bmes(
                 lang(u8"視界範囲外"s, u8"This location is out of sight."s),
                 255,
@@ -43132,11 +43123,9 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
         {
             tc = i_at_m186;
             s = txttargetlevel(cc, tc);
-            color(0, 0, 0);
             pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
             ++dy_at_m186;
             bmes(s, 255, 2552, 255);
-            color(0, 0, 0);
             pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
             ++dy_at_m186;
             bmes(
@@ -43155,7 +43144,6 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
     }
     if (map(prm_1057, prm_1058, 5) != 0)
     {
-        color(0, 0, 0);
         pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
         ++dy_at_m186;
         bmes(txtitemoncell(prm_1057, prm_1058), 255, 2552, 255);
@@ -43168,14 +43156,12 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
             {
                 p_at_m186 = map(prm_1057, prm_1058, 6) / 100000 % 100
                     + map(prm_1057, prm_1058, 6) / 10000000 * 100;
-                color(0, 0, 0);
                 pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
                 ++dy_at_m186;
                 bmes(mapname(p_at_m186, 1), 255, 2552, 255);
             }
             if (map(prm_1057, prm_1058, 6) / 1000 % 100 == 34)
             {
-                color(0, 0, 0);
                 pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
                 ++dy_at_m186;
                 bmes(
@@ -44009,7 +43995,6 @@ label_1953_internal:
         update_screen();
         keyrange = 0;
         font(lang(cfg_font1, cfg_font2), 20 - en * 2, 1);
-        color(255, 255, 255);
         {
             int cnt = 0;
             for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -44108,6 +44093,7 @@ label_1953_internal:
                     cnt);
             }
         }
+        color(0, 0, 0);
         txttargetnpc(
             cdata[list(0, i)].position.x, cdata[list(0, i)].position.y);
         cs_bk = cs;
@@ -44181,7 +44167,6 @@ void label_1955()
 label_1956_internal:
     redraw(0);
     gmode(0);
-    color(200, 200, 200);
     p = 0;
     {
         int cnt = 0;
@@ -44211,6 +44196,7 @@ label_1956_internal:
                                 wy + cnt2 * 24,
                                 wx + cnt * 24 + 24,
                                 wy + cnt2 * 24 + 24);
+                            color(0, 0, 0);
                         }
                     }
                     ++p;
@@ -45344,7 +45330,6 @@ label_1970_internal:
             i = list(0, p);
             if (i < 0)
             {
-                color(0, 0, 0);
                 cs_list(
                     cs == cnt,
                     listn(0, p),
@@ -45360,7 +45345,6 @@ label_1970_internal:
                 featrq = stat;
                 if (trait(i) == 0)
                 {
-                    color(0, 0, 0);
                 }
                 else if (trait(i) > 0)
                 {
@@ -45374,7 +45358,6 @@ label_1970_internal:
             else
             {
                 traitref = 5;
-                color(0, 0, 0);
             }
             if (list(1, p) < 10000)
             {
@@ -45394,6 +45377,7 @@ label_1970_internal:
                 pos(wx + 270, wy + 66 + cnt * 19 + 2);
                 mes(traitrefn(2));
             }
+            color(0, 0, 0);
         }
     }
     if (keyrange != 0)
@@ -45831,14 +45815,13 @@ label_1973_internal:
             else
             {
                 font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
-                color(0, 0, 0);
             }
             pos(x, y);
             mes(s);
+            color(0, 0, 0);
             if (p % 20 == 0)
             {
                 font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
-                color(0, 0, 0);
                 pos(x + 90, y + 330);
                 mes(u8"- "s + (p / 20 + 1) + u8" -"s);
                 if (p % 40 == 20)
@@ -46040,7 +46023,6 @@ label_1978_internal:
     gmode(2);
     font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
     pos(wx + ww + 20, wy);
-    color(0, 0, 0);
     bmes(u8"Page "s + (page + 1) + u8"/"s + (pagemax + 1), 255, 255, 255);
     keyrange = 0;
     {
@@ -46079,11 +46061,9 @@ label_1978_internal:
             font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
             cnt2 = cnt;
             cs_list(cs == cnt, s(3), wx + 96, y - 1, 19);
-            color(0, 0, 0);
             s(2) = u8"("s + nquestdate + u8")"s;
             pos(wx + 344, y + 2);
             mes(s(2));
-            color(0, 0, 0);
             s(4) = cdatan(0, tc);
             cutname(s(4), 20);
             pos(wx + 392, y + 2);
@@ -46135,8 +46115,8 @@ label_1978_internal:
                 pos(wx + 270, y + 2);
                 mes(lang(u8"★?"s, u8"$ x "s) + p);
             }
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
             color(0, 0, 0);
+            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
             pos(wx + 20, y + 20);
             mes(buff);
         }
@@ -46529,11 +46509,13 @@ label_1986_internal:
             {
                 color(120, 120, 120);
                 mes(lang(u8"入荷なし"s, u8"-"s));
+                color(0, 0, 0);
             }
             else
             {
                 color(55, 55, 255);
                 mes(lang(u8"入荷予定"s, u8"Reserved"s));
+                color(0, 0, 0);
             }
         }
     }
@@ -46807,7 +46789,6 @@ label_1994_internal:
             (windoww - 400) / 2 + inf_screenx, winposy(458), 400, 458);
         display_topic(lang(u8"異名の候補"s, u8"Alias List"s), wx + 28, wy + 30);
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        color(0, 0, 0);
         {
             int cnt = 0;
             for (int cnt_end = cnt + (17); cnt < cnt_end; ++cnt)
@@ -48633,7 +48614,6 @@ void label_2022()
     listmax = noteinfo(0);
     keyrange = 0;
     key_list(0) = key_enter;
-    color(0, 0, 0);
 label_2023_internal:
     redraw(0);
     cs_bk = -1;
@@ -49595,7 +49575,6 @@ label_2035_internal:
                 inf_tiles);
         }
         font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
-        color(20, 10, 0);
         s(0) = lang(u8"レベル"s, u8"Level"s);
         s(1) = lang(u8"経験"s, u8"EXP"s);
         s(2) = lang(u8"必要値"s, u8"Next Lv"s);
@@ -49606,7 +49585,9 @@ label_2035_internal:
             for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
             {
                 pos(wx + 355, wy + 46 + cnt * 15);
+                color(20, 10, 0);
                 mes(s(cnt));
+                color(0, 0, 0);
             }
         }
         s(0) = lang(u8"名前"s, u8"Name"s);
@@ -49622,7 +49603,9 @@ label_2035_internal:
             for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
             {
                 pos(wx + 30 + cnt / 4 * 190, wy + 61 + cnt % 4 * 15);
+                color(20, 10, 0);
                 mes(s(cnt));
+                color(0, 0, 0);
             }
         }
         {
@@ -49633,7 +49616,9 @@ label_2035_internal:
                 gmode(2, inf_tiles, inf_tiles);
                 grotate(1, cnt * inf_tiles, 672, 0, inf_tiles, inf_tiles);
                 pos(wx + 54, wy + 151 + cnt * 15);
+                color(20, 10, 0);
                 mes(_stats2(cnt));
+                color(0, 0, 0);
             }
         }
         s(0) = lang(u8"生命力"s, u8"Life"s);
@@ -49657,7 +49642,9 @@ label_2035_internal:
             for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
             {
                 pos(wx + 255, wy + 151 + cnt * 15);
+                color(20, 10, 0);
                 mes(s(cnt));
+                color(0, 0, 0);
             }
         }
         s(0) = lang(u8"ターン"s, u8"Turns"s);
@@ -49671,7 +49658,9 @@ label_2035_internal:
             for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
             {
                 pos(wx + 32, wy + 301 + cnt * 15);
+                color(20, 10, 0);
                 mes(s(cnt));
+                color(0, 0, 0);
             }
         }
         s(0) = lang(u8"荷車重量"s, u8"Cargo Wt"s);
@@ -49683,11 +49672,12 @@ label_2035_internal:
             for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
             {
                 pos(wx + 224, wy + 301 + cnt * 15);
+                color(20, 10, 0);
                 mes(s(cnt));
+                color(0, 0, 0);
             }
         }
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        color(0, 0, 0);
         s(0) = ""s + cdata[cc].level;
         s(1) = ""s + cdata[cc].experience;
         s(2) = ""s + cdata[cc].required_experience;
@@ -49698,7 +49688,9 @@ label_2035_internal:
             for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
             {
                 pos(wx + 410 + en * 5, wy + 45 + cnt * 15);
+                color(20, 10, 0);
                 mes(s(cnt));
+                color(0, 0, 0);
             }
         }
         s(0) = cdatan(0, cc);
@@ -49724,7 +49716,9 @@ label_2035_internal:
             {
                 pos(wx + 68 + cnt / 4 * 190 + en * ((cnt > 3) * 12),
                     wy + 60 + cnt % 4 * 15);
+                color(20, 10, 0);
                 mes(s(cnt));
+                color(0, 0, 0);
             }
         }
         {
@@ -49738,32 +49732,45 @@ label_2035_internal:
                     s += u8"*"s;
                 }
                 pos(wx + 92, wy + 151 + cnt * 15);
+                color(20, 10, 0);
                 mes(""s + sdata((10 + cnt), cc));
+                color(0, 0, 0);
                 pos(wx + 124, wy + 151 + cnt * 15);
+                color(20, 10, 0);
                 mes(s);
+                color(0, 0, 0);
                 p = sdata.get(10 + cnt, cc).potential;
                 pos(wx + 176, wy + 152 + cnt * 15);
                 if (p >= 200)
                 {
+                    color(20, 10, 0);
                     mes(u8"Superb"s);
+                    color(0, 0, 0);
                     continue;
                 }
                 if (p >= 150)
                 {
+                    color(20, 10, 0);
                     mes(u8"Great"s);
+                    color(0, 0, 0);
                     continue;
                 }
                 if (p >= 100)
                 {
+                    color(20, 10, 0);
                     mes(u8"Good"s);
+                    color(0, 0, 0);
                     continue;
                 }
                 if (p >= 50)
                 {
+                    color(20, 10, 0);
                     mes(u8"Bad"s);
+                    color(0, 0, 0);
                     continue;
                 }
                 mes(u8"Hopeless"s);
+                color(0, 0, 0);
             }
         }
         s(0) = ""s + sdata(2, cc) + u8"("s + sdata.get(2, cc).original_level
@@ -49782,8 +49789,10 @@ label_2035_internal:
             int cnt = 0;
             for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
             {
+                color(20, 10, 0);
                 pos(wx + 310, wy + 151 + cnt * 15);
                 mes(s(cnt));
+                color(0, 0, 0);
             }
         }
         val = 0;
@@ -49793,13 +49802,15 @@ label_2035_internal:
         color(20, 10, 0);
         pos(wx + 417, wy + 281 + p(2) * 16);
         mes(lang(u8"軽減"s, u8"Prot"s));
+        color(0, 0, 0);
+        color(20, 10, 0);
         pos(wx + 590 - en * 16, wy + 281 + p(2) * 16);
         mes(lang(u8"回避"s, u8"Evade"s));
+        color(0, 0, 0);
         attackskill = 106;
         int evade = calc_evasion(tc);
         prot = calcattackdmg(2);
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        color(0, 0, 0);
         pos(wx + 460 + en * 8, wy + 279 + p(2) * 16);
         mes(""s + (100 - 10000 / (prot + 100)) + u8"% + "s + protdice1 + u8"d"s
             + protdice2);
@@ -49892,6 +49903,7 @@ label_2035_internal:
         color(20, 10, 0);
         pos(wx + 70, wy + 369 - en * 3);
         mes(lang(u8"説明:"s, u8"Hint:"s));
+        color(0, 0, 0);
     }
     else
     {
@@ -50960,6 +50972,7 @@ void label_2048()
         pos(wx + 417, wy + 281 + p(2) * 16);
         mes(s(1));
     }
+    color(0, 0, 0);
     attackrange = 0;
     if (the_item_db[inv[cw].id]->category == 24000)
     {
@@ -50969,7 +50982,6 @@ void label_2048()
     int tohit = calc_accuracy(false);
     dmg = calcattackdmg(1);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    color(0, 0, 0);
     s(2) = ""s + dmgmulti;
     s = ""s + tohit + u8"%"s;
     if (val == 0)
@@ -51188,7 +51200,6 @@ label_2052_internal:
     if (showresist)
     {
         pos(wx + 320, wy + 40);
-        color(0, 0, 0);
         mes(lang(
             u8"火 冷 雷 闇 幻 毒 獄 音 神 沌 魔"s,
             u8"Fi Co Li Da Mi Po Nt So Nr Ch Ma"s));
@@ -51200,7 +51211,6 @@ label_2052_internal:
         + lang(u8" ダメージ修正:"s, u8" Damage Bonus:"s)
         + cdata[cc].damage_bonus + u8"  DV/PV:"s + cdata[cc].dv + u8"/"s
         + cdata[cc].pv);
-    color(0, 0, 0);
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
     gmode(2);
     keyrange = 0;
@@ -51234,7 +51244,6 @@ label_2052_internal:
         }
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    color(0, 0, 0);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -52195,6 +52204,7 @@ label_2070_internal:
                     wy + 68 + cnt * 18);
             }
             mes(listn(0, p));
+            color(0, 0, 0);
             if (list(0, p) > 0)
             {
                 pos(wx + 40, wy + 61 + cnt * 18);
@@ -54712,7 +54722,6 @@ label_2119_internal:
     if (save_data_count == 0)
     {
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        color(0, 0, 0);
         pos(wx + 140, wy + 120);
         mes(u8"No save files found"s);
     }
@@ -54895,7 +54904,6 @@ label_2122_internal:
     if (listmax == 0)
     {
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        color(0, 0, 0);
         pos(wx + 140, wy + 120);
         mes(u8"No gene files found"s);
     }
@@ -55035,6 +55043,7 @@ label_21261_internal:
                 pos(x + dx - 70 - strlen_u(inputlog2) * 8 + 8, y + 11);
                 color(255, 255, 255);
                 mes(inputlog2);
+                color(0, 0, 0);
                 redraw(1);
                 await(cfg_wait1);
                 key_check();
@@ -55197,13 +55206,13 @@ label_21261_internal:
                 }
                 gmode(4, -1, -1, p(1) / 2 + 50);
                 pos(x + 34 + p(4) * 8, y + 5);
-                color(0, 0, 0);
                 gcopy(3, 0, 336, 12, 24);
                 gmode(2);
                 color(255, 255, 255);
                 pos(x + 36, y + 9);
                 noteget(s, 0);
                 mes(s);
+                color(0, 0, 0);
             }
             if (strutil::contains(inputlog(0), u8"\n"))
             {
@@ -55270,7 +55279,6 @@ int ask_direction()
 label_2128_internal:
     ++t;
     gmode(4, 28, 28, 200 - t / 2 % 20 * (t / 2 % 20));
-    color(0, 0, 0);
     x = (cdata[0].position.x - scx) * inf_tiles + inf_screenx + 24;
     y = (cdata[0].position.y - scy) * inf_tiles + inf_screeny + 24;
     if (key_alt == 0)
@@ -55423,6 +55431,7 @@ int show_prompt()
             pos(cnt * 24 + 629, 31);
             color(50, 60, 80);
             bmes(promptl(1, cnt), 250, 240, 230);
+            color(0, 0, 0);
         }
     }
     gsel(0);
@@ -55464,12 +55473,12 @@ label_2132_internal:
         pos(dx(1) + sx + dx - 70 - strlen_u(inputlog2) * 8 + 8, dy + 11);
         color(255, 255, 255);
         mes(inputlog2);
+        color(0, 0, 0);
         inputlog = ""s + val(4);
     }
     window2(sx + 8, sy + 8, val(2) - 16, promptmax * 20 + 42 - 16, 0, 0);
     pos(sx - 16, sy);
     gcopy(3, 64, 288, 50, 32);
-    color(255, 255, 255);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     keyrange = 0;
     {
@@ -55487,7 +55496,6 @@ label_2132_internal:
     if (rpmode)
     {
         window_recipe2();
-        color(255, 255, 255);
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     }
     redraw(1);
@@ -68374,6 +68382,7 @@ label_2258_internal:
             y = wy + wh - 56 - keyrange * 19 + cnt * 19 + 2;
             display_key(x, y, cnt);
             cs_list(cs == cnt, listn(0, cnt), x + 30, y, 4, 0);
+            color(0, 0, 0);
         }
     }
     cs_bk = cs;
@@ -68509,11 +68518,9 @@ void show_talk_window()
         }
     }
     font(lang(cfg_font1, cfg_font2), 10 - en * 2, 0);
-    color(0, 0, 0);
     display_topic(lang(u8"友好"s, u8"Impress"s), wx + 28, wy + 170);
     display_topic(lang(u8"興味"s, u8"Attract"s), wx + 28, wy + 215);
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
-    color(20, 10, 5);
     if (cdatan(1, tc) == ""s)
     {
         s = cdatan(0, tc) + u8" "s;
@@ -68550,9 +68557,10 @@ void show_talk_window()
         s = actor(0, rc);
     }
     pos(wx + 120, wy + 16);
-    mes(s);
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
     color(20, 10, 5);
+    mes(s);
+    color(0, 0, 0);
+    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
     if (chatval(2) == 1)
     {
         s = _impression(implevel(cdata[tc].impression));
@@ -68565,7 +68573,9 @@ void show_talk_window()
             s(1) = u8"???"s;
         }
         pos(wx + 32, wy + 198);
+        color(20, 10, 5);
         mes(u8"("s + s(1) + u8")"s + s);
+        color(0, 0, 0);
         if (cdata[tc].interest >= 0)
         {
             {
@@ -68582,7 +68592,6 @@ void show_talk_window()
     }
     else
     {
-        color(0, 0, 0);
         pos(wx + 60, wy + 198);
         mes(u8"-"s);
         pos(wx + 60, wy + 245);
@@ -68603,6 +68612,7 @@ void show_talk_window()
             mes(s);
         }
     }
+    color(0, 0, 0);
     return;
 }
 
@@ -69666,7 +69676,6 @@ label_2272_internal:
     keyrange = 0;
     j = 0;
     n = 0;
-    color(0, 0, 0);
     if (adata(28, gdata_current_map) == 0 || gdata_current_dungeon_level != 1)
     {
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
@@ -69720,9 +69729,7 @@ label_2272_internal:
                 display_key(x - 30, y + 21, cnt);
                 font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
                 pos(x - 2, y + jp * 2);
-                color(0, 0, 0);
                 bmes(cnven(popostname(p)), 255, 255, 255);
-                color(0, 0, 0);
                 font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
                 if (podata(0 + cnt, city) == 0)
                 {
@@ -69837,7 +69844,6 @@ void showeconomy(
 {
     int p_at_m195 = 0;
     pos(prm_1086, prm_1087);
-    color(0, 0, 0);
     mes(prm_1088);
     pos(prm_1086 + 130, prm_1087);
     mes(""s + prm_1089);
@@ -69852,6 +69858,7 @@ void showeconomy(
     }
     pos(prm_1086 + 130 + ginfo(14) + 12, prm_1087);
     mes(u8"("s + p_at_m195 + u8")"s);
+    color(0, 0, 0);
     return;
 }
 
@@ -69899,7 +69906,6 @@ label_2278_internal:
     s = strhint2 + strhint3b;
     showscroll(s, wx, wy, ww, wh);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    color(0, 0, 0);
     if (adata(28, gdata_current_map) == 0 || gdata_current_dungeon_level != 1)
     {
         pos(wx + 40, wy + 60);
@@ -69916,7 +69922,6 @@ label_2278_internal:
             display_topic(
                 lang(u8"街の財政"s, u8"Town Finance"s), wx + 65, wy + 150);
             font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-            color(0, 0, 0);
             x = wx + 50;
             y = wy + 80;
             showeconomy(
@@ -69951,7 +69956,6 @@ label_2278_internal:
             display_topic(
                 lang(u8"収支の詳細"s, u8"Finance Detail"s), wx + 65, wy + 200);
             font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-            color(0, 0, 0);
         }
     }
     redraw(1);
@@ -70094,7 +70098,6 @@ label_2283_internal:
     showscroll(s, wx, wy, ww, wh);
     display_topic(lang(u8"法律"s, u8"Law"s), wx + 65, wy + 45);
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
-    color(0, 0, 0);
     pos(wx + 185, wy + 52);
     mes(lang(u8"国法"s, u8"Global"s));
     if (mdata(6) == 3)
@@ -70111,7 +70114,6 @@ label_2283_internal:
     gmode(2);
     gcopy(3, 288, 360, 24, 24);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    color(0, 0, 0);
     keyrange = 0;
     {
         int cnt = 0;
@@ -72240,7 +72242,6 @@ label_2684_internal:
             pos(windoww / 2, y + 4);
             gmode(6, 344, 72, 70);
             grotate(3, 456, 144, 0, dx, 72);
-            color(20, 20, 20);
         }
     }
     x = 40;
@@ -72254,10 +72255,10 @@ label_2684_internal:
             color(10, 10, 10);
             pos(x, y);
             bmes(s, 240, 240, 240);
+            color(0, 0, 0);
         }
     }
     gsel(0);
-    color(500, 500, 500);
     {
         int cnt = 1;
         for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
@@ -74347,7 +74348,6 @@ label_2699_internal:
             gmode(2);
             s = listn(0, p);
             pos(x(cnt) + tx + 25 - strlen_u(s) * 3, y(cnt) + ty + 19);
-            color(0, 0, 0);
             bmes(s, 255, 255, 255);
         }
     }
@@ -74521,10 +74521,10 @@ void show_ex_help()
                 255,
                 245,
                 235);
+            color(0, 0, 0);
             tx = wx + 120;
             ty = wy + 55;
             font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
-            color(30, 30, 30);
             {
                 int y = ty;
                 int cnt = 0;
@@ -74536,8 +74536,10 @@ void show_ex_help()
                     {
                         break;
                     }
+                    color(30, 30, 30);
                     const auto [_, ny] =
                         gmes(s, tx, y, 330, {30, 30, 30}, true);
+                    color(0, 0, 0);
                     y = ny;
                 }
             }
@@ -74709,7 +74711,6 @@ label_2705_internal:
             y + 256);
         display_topic(
             lang(u8"その他のキー"s, u8"Other Keys"s), x + 18, y + 328);
-        color(0, 0, 0);
         s(0) = u8"アイテムを取る(get)"s;
         s(1) = key_get;
         s(2) = u8"アイテムを置く(drop)"s;
@@ -74848,7 +74849,6 @@ label_2705_internal:
         s(1) = listn(0, pagesize * page_bk + cs_bk2);
         display_topic(s(1), wx + 206, wy + 36);
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        color(0, 0, 0);
         p = list(0, pagesize * page_bk + cs_bk2);
         {
             int y = wy + 60;
@@ -74986,7 +74986,6 @@ void label_2707()
         }
     }
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
-    color(30, 20, 10);
     i = 0;
     {
         int cnt = 0;
@@ -75011,7 +75010,9 @@ void label_2707()
             }
             i += talk_conv(s, (ww - 110 - en * 50) / 7);
             pos(wx + 48, (19 - i) * 16 + wy + 48);
+            color(30, 20, 10);
             mes(s);
+            color(0, 0, 0);
             ++i;
         }
     }
@@ -75474,7 +75475,6 @@ label_2729_internal:
     x = 240;
     y = 320;
     gmode(4, 180, 300, 100);
-    color(0, 0, 0);
     pos(wx + 190, wy + 220);
     grotate(7, 0, 0, 0, x, y);
     gmode(2);
@@ -75494,11 +75494,9 @@ label_2729_internal:
         }
     }
     font(lang(cfg_font1, cfg_font2), 12 - en * 2, 6);
-    color(0, 0, 0);
     pos(wx + 90, wy + 50);
     mes(u8"Elona - Scene playback"s);
     font(lang(cfg_font1, cfg_font2), 12 - en * 2, 0);
-    color(0, 0, 0);
     pos(wx + 390, wy + 50);
     mes(lang(
         u8"アンロックされたシーンを再生できます。\nシーンNoは連続していません。"s,
@@ -75522,7 +75520,6 @@ label_2729_internal:
         }
     }
     font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
-    color(0, 0, 0);
     pos(wx + 500, wy + 375);
     mes(u8"- "s + (page + 1) + u8" -"s);
     if (page < pagemax)
@@ -78353,7 +78350,6 @@ void conquer_lesimas()
     gmode(2);
     display_topic(lang(u8"制覇までの軌跡"s, u8"Trace"s), wx + 28, wy + 40);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    color(0, 0, 0);
     pos(wx + 40, wy + 76);
     mes(lang(
         ""s + 517 + u8"年"s + 8 + u8"月"s + 12
@@ -78614,7 +78610,6 @@ void show_game_score_ranking()
     x = 135;
     y = 134;
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    color(138, 131, 100);
     p = page - 4;
     if (p >= 80)
     {
@@ -78624,6 +78619,7 @@ void show_game_score_ranking()
     {
         p = 0;
     }
+    color(138, 131, 100);
     {
         int cnt = p;
         for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
@@ -78641,6 +78637,7 @@ void show_game_score_ranking()
             pos(x - 80, y + 10);
             color(10, 10, 10);
             mes(s);
+            color(0, 0, 0);
             bool no_entry = false;
             if (p >= noteinfo(0))
             {
@@ -78659,17 +78656,16 @@ void show_game_score_ranking()
             if (no_entry)
             {
                 mes(u8"no entry");
+                color(0, 0, 0);
                 continue;
             }
             mes(s);
             noteget(s, p + 2);
             pos(x, y + 20);
-            color(10, 10, 10);
             mes(s);
             noteget(s(10), p + 3);
             csvsort(s, s(10), 44);
             pos(x + 480, y + 20);
-            color(10, 10, 10);
             mes(""s + s + lang(u8"点"s, ""s));
             p = elona::stoi(s(1)) % 1000;
             chara_preparepic(p);
@@ -78682,8 +78678,10 @@ void show_game_score_ranking()
                 0,
                 chipc(2, p) / (1 + (chipc(3, p) > inf_tiles)),
                 inf_tiles);
+            color(0, 0, 0);
         }
     }
+    color(0, 0, 0);
     return;
 }
 

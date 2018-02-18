@@ -816,7 +816,6 @@ void proc_event()
         p(2) = 0;
         p(3) = 0;
         p(4) = 0;
-        color(0, 0, 0);
         {
             int cnt = 0;
             for (int cnt_end = cnt + (40); cnt < cnt_end; ++cnt)
@@ -826,7 +825,6 @@ void proc_event()
                     snd(108);
                 }
                 redraw(0);
-                color(0, 0, 0);
                 if (cnt < 16)
                 {
                     pos(0, 0);

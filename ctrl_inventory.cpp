@@ -842,7 +842,6 @@ label_2060_internal:
                     gmode(2);
                 }
                 pos(x + cnt * 44 + 46 - strlen_u(invtitle(p)) * 3, y + 7);
-                color(0, 0, 0);
                 if (invctrl == p)
                 {
                     bmes(invtitle(p), 255, 255, 255);
@@ -854,12 +853,10 @@ label_2060_internal:
                 if (invkey(p) != ""s)
                 {
                     pos(x + cnt * 44 + 46, y + 18);
-                    color(0, 0, 0);
                     bmes(u8"("s + invkey(p) + u8")"s, 235, 235, 235);
                 }
             }
         }
-        color(0, 0, 0);
         pos(x + 325, y + 32);
         bmes(
             ""s + key_prev + u8","s + key_next + u8",Tab "s
@@ -910,7 +907,6 @@ label_2061_internal:
     if (showresist)
     {
         pos(wx + 300, wy + 40);
-        color(0, 0, 0);
         mes(lang(
             u8"火 冷 雷 闇 幻 毒 獄 音 神 沌 魔"s,
             u8"Fi Co Li Da Mi Po Nt So Nr Ch Ma"s));
@@ -974,6 +970,7 @@ label_2061_internal:
                 }
                 pos(x, y);
                 mes(""s + bodyn(p / 10000));
+                color(0, 0, 0);
                 x += (std::size(bodyn(p / 10000)) + 1) * 6;
             }
         }
@@ -999,7 +996,6 @@ label_2061_internal:
         }
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    color(0, 0, 0);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -1087,7 +1083,6 @@ label_2061_internal:
             gmode(2);
             pos(wx + 340, wy + 32);
             gcopy(3, 0, 392, 24, 24);
-            color(0, 0, 0);
             pos(wx + 368, wy + 37 - en * 2);
             mes(""s + cdata[tc].gold + u8" gp"s);
         }

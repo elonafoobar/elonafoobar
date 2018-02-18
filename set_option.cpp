@@ -456,7 +456,6 @@ label_2725_internal:
                 gcopy(3, 336, 336, 24, 24);
             }
             pos(wx + 250, wy + 66 + cnt * 19);
-            color(0, 0, 0);
             if (submenu == 1)
             {
                 if (cnt == 0)
@@ -902,7 +901,6 @@ label_2725_internal:
         {
             pos(wx + 40, wy + wh - 70);
             font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
-            color(0, 0, 0);
             if (jp)
             {
                 mes(u8"* 印のついた項目は、ゲームの再起動後に適用されます"s);
@@ -917,7 +915,6 @@ label_2725_internal:
     {
         pos(wx + 40, wy + wh - 110);
         font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
-        color(0, 0, 0);
         if (jp)
         {
             mes(u8"ボタンを割り当てたい項目にカーソルをあわせて\nゲームパッドのボタンを押してください。(L),(R)の付いている\n項目は、メニュー画面でタブの移動に使われます。"s);
