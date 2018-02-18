@@ -625,7 +625,6 @@ inline std::string strspellbook;
 inline std::string strstaff;
 inline std::string strweight;
 inline std::string stryes;
-inline std::string tmp;
 inline std::string txtcopy;
 inline std::string userfile;
 inline std::string usermsg;
