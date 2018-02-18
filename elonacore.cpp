@@ -39955,8 +39955,8 @@ void label_1892()
 
 int proc_random_event()
 {
-    id(0) = 0;
-    id(1) = 0;
+    int id0 = 0;
+    int id1 = 0;
     if (gspd < 10)
     {
         return 0;
@@ -39975,70 +39975,70 @@ int proc_random_event()
         {
             if (rnd(12) == 0)
             {
-                id = 18;
+                id0 = 18;
             }
         }
         if (rnd(80) == 0)
         {
-            id(0) = 4;
-            id(1) = 120;
+            id0 = 4;
+            id1 = 120;
         }
         if (rnd(20) == 0)
         {
-            id = 3;
+            id0 = 3;
         }
         if (rnd(25) == 0)
         {
-            id = 2;
+            id0 = 2;
         }
         if (rnd(100) == 0)
         {
-            id(0) = 5;
-            id(1) = 65;
+            id0 = 5;
+            id1 = 65;
         }
         if (rnd(20) == 0)
         {
-            id = 6;
+            id0 = 6;
         }
         if (rnd(20) == 0)
         {
-            id = 7;
+            id0 = 7;
         }
         if (rnd(250) == 0)
         {
             if (inv_getfreeid(0) != -1)
             {
-                id = 19;
+                id0 = 19;
             }
         }
         if (rnd(10000) == 0)
         {
             if (inv_getfreeid(0) != -1)
             {
-                id = 21;
+                id0 = 21;
             }
         }
         if (rnd(70) == 0)
         {
-            id(0) = 8;
-            id(1) = 40;
+            id0 = 8;
+            id1 = 40;
         }
         if (rnd(200) == 0)
         {
-            id = 20;
+            id0 = 20;
         }
         if (rnd(50) == 0)
         {
-            id = 23;
+            id0 = 23;
         }
         if (rnd(300) == 0)
         {
-            id = 24;
+            id0 = 24;
         }
         if (rnd(90) == 0)
         {
-            id(0) = 22;
-            id(1) = 70;
+            id0 = 22;
+            id1 = 70;
         }
         goto label_1894_internal;
     }
@@ -40055,40 +40055,40 @@ int proc_random_event()
     }
     if (rnd(30) == 0)
     {
-        id = 17;
+        id0 = 17;
     }
     if (rnd(25) == 0)
     {
-        id = 16;
+        id0 = 16;
     }
     if (rnd(25) == 0)
     {
-        id = 12;
+        id0 = 12;
     }
     if (rnd(50) == 0)
     {
-        id = 9;
+        id0 = 9;
     }
     if (rnd(80) == 0)
     {
-        id = 14;
+        id0 = 14;
     }
     if (rnd(50) == 0)
     {
-        id(0) = 8;
-        id(1) = 40;
+        id0 = 8;
+        id1 = 40;
     }
     if (rnd(80) == 0)
     {
-        id(0) = 13;
-        id(1) = 45;
+        id0 = 13;
+        id1 = 45;
     }
     if (mdata(6) == 3)
     {
         if (rnd(25) == 0)
         {
-            id(0) = 15;
-            id(1) = 80;
+            id0 = 15;
+            id1 = 80;
         }
         goto label_1894_internal;
     }
@@ -40102,28 +40102,28 @@ int proc_random_event()
     }
     if (rnd(25) == 0)
     {
-        id = 10;
+        id0 = 10;
     }
     if (rnd(25) == 0)
     {
-        id = 11;
+        id0 = 11;
     }
 label_1894_internal:
-    if (id == 0)
+    if (id0 == 0)
     {
         return 0;
     }
     cc = 0;
     tc = 0;
     listmax = 0;
-    if (id(1) != 0)
+    if (id1 != 0)
     {
-        if (rnd(sdata(19, 0) + 1) > id(1))
+        if (rnd(sdata(19, 0) + 1) > id1)
         {
-            id = 1;
+            id0 = 1;
         }
     }
-    switch (id)
+    switch (id0)
     {
     case 15:
     {
@@ -54335,7 +54335,6 @@ void create_new_cnpc()
 void label_2108()
 {
     SDIM2(headtemp, 1024);
-    id = 0;
     lensum = 1024;
     SDIM2(filebuff, lensum);
     if (usertitle != ""s)
@@ -54385,7 +54384,6 @@ void label_2108()
 void label_2109()
 {
     SDIM2(headtemp, 1024);
-    id = 0;
     lensum = 1024;
     SDIM2(filebuff, lensum);
     headtemp = u8"【"s + gdatan(0) + u8"】("s + n + u8"体)  Lv"s + lv + u8"\n"s;

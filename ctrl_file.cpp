@@ -770,7 +770,7 @@ void fmode_20_19(bool read)
     folder = fs::u8path(u8"./user/");
 
     {
-        const auto filepath = folder + u8"m1_"s + id + u8".t"s;
+        const auto filepath = folder + u8"m1_0.t"s;
         if (read)
         {
             load_v1(filepath, mdata, 0, 100);
@@ -782,7 +782,7 @@ void fmode_20_19(bool read)
     }
 
     {
-        const auto filepath = folder + u8"m2_"s + id + u8".t"s;
+        const auto filepath = folder + u8"m2_0.t"s;
         if (read)
         {
             DIM4(map, mdata(0), mdata(1), 10);
@@ -797,7 +797,7 @@ void fmode_20_19(bool read)
     }
 
     {
-        const auto filepath = folder + u8"m3_"s + id + u8".t"s;
+        const auto filepath = folder + u8"m3_0.t"s;
         if (read)
         {
             load(filepath, inv, 1320, 5480);
@@ -809,19 +809,20 @@ void fmode_20_19(bool read)
     }
 
     elona_export = 1;
-    arrayfile(read, u8"mdatan", folder + u8"m4_"s + id + u8".t");
+    arrayfile(read, u8"mdatan", folder + u8"m4_0.t");
     if (!read)
     {
-        zipadd(u8"m1_"s + id + u8".t"s);
-        zipadd(u8"m2_"s + id + u8".t"s);
-        zipadd(u8"m3_"s + id + u8".t"s);
-        zipadd(u8"m4_"s + id + u8".t"s);
+        zipadd(u8"m1_0.t"s);
+        zipadd(u8"m2_0.t"s);
+        zipadd(u8"m3_0.t"s);
+        zipadd(u8"m4_0.t"s);
     }
 }
 
 
 void fmode_22_21(bool read)
 {
+    int id = 0;
     folder = fs::u8path(u8"./user/");
     if (read)
     {

@@ -30,7 +30,6 @@ inline elona_vector1<int> genetemp;
 inline elona_vector1<int> giftvalue;
 inline elona_vector1<int> i;
 inline elona_vector1<int> icolref;
-inline elona_vector1<int> id;
 inline elona_vector1<int> ilight;
 inline elona_vector1<int> invcontainer;
 inline elona_vector1<int> invctrl;
