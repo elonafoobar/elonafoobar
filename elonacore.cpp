@@ -78132,65 +78132,50 @@ label_2747:
 
 void check_angband()
 {
-    if (gdata_angband_flag != -1)
+    if (gdata_angband_flag == -1 || mdata(6) == 1)
+        return;
+
+    switch (gdata_angband_flag)
     {
-        if (mdata(6) != 1)
+    case 0:
+        if (key == u8"Q"s)
         {
-            if (gdata_angband_flag == 0)
-            {
-                if (key == u8"Q"s)
-                {
-                    txt(lang(u8"え…"s, u8"What..."s));
-                    ++gdata_angband_flag;
-                    update_screen();
-                    pc_turn(false);
-                }
-            }
-            else
-            {
-                if (gdata_angband_flag == 1)
-                {
-                    if (key == u8"y"s)
-                    {
-                        txt(lang(u8"まさか…"s, u8"No...no..."s));
-                        ++gdata_angband_flag;
-                        update_screen();
-                        pc_turn(false);
-                    }
-                }
-                else
-                {
-                    if (gdata_angband_flag == 2)
-                    {
-                        if (key == u8"@"s)
-                        {
-                            txt(lang(u8"うわぁぁぁ！！"s, u8"Ahhhhh!!"s));
-                            {
-                                int cnt = 0;
-                                for (int cnt_end = cnt + (10); cnt < cnt_end;
-                                     ++cnt)
-                                {
-                                    flt();
-                                    characreate(
-                                        -1,
-                                        37,
-                                        cdata[0].position.x,
-                                        cdata[0].position.y);
-                                }
-                            }
-                            gdata_angband_flag = -1;
-                            update_screen();
-                            turn_end();
-                            return;
-                        }
-                    }
-                    gdata_angband_flag = 0;
-                }
-                gdata_angband_flag = 0;
-            }
+            txt(lang(u8"え…", u8"What..."));
+            ++gdata_angband_flag;
+            update_screen();
+            pc_turn(false);
+            return;
         }
+        break;
+    case 1:
+        if (key == u8"y"s)
+        {
+            txt(lang(u8"まさか…", u8"No...no..."));
+            ++gdata_angband_flag;
+            update_screen();
+            pc_turn(false);
+            return;
+        }
+        break;
+    case 2:
+        if (key == u8"@"s)
+        {
+            txt(lang(u8"うわぁぁぁ！！", u8"Ahhhhh!!"));
+            for (int i = 0; i < 10; ++i)
+            {
+                flt();
+                characreate(-1, 37, cdata[0].position.x, cdata[0].position.y);
+            }
+            gdata_angband_flag = -1;
+            update_screen();
+            turn_end();
+            return;
+        }
+        break;
+    default: break;
     }
-    return;
+
+    gdata_angband_flag = 0;
 }
 
 
