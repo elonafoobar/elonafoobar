@@ -1,4 +1,4 @@
-define("warrior", {
+define_class("warrior", {
   ordering = 10010,
   item_type = 1,
   is_extra = false,
@@ -28,7 +28,7 @@ define("warrior", {
     _168 = 5,
   },
 })
-define("thief", {
+define_class("thief", {
   ordering = 10020,
   item_type = 7,
   is_extra = false,
@@ -55,7 +55,7 @@ define("thief", {
     _170 = 4,
   },
 })
-define("wizard", {
+define_class("wizard", {
   ordering = 10030,
   item_type = 2,
   is_extra = false,
@@ -81,7 +81,7 @@ define("wizard", {
     _172 = 5,
   },
 })
-define("farmer", {
+define_class("farmer", {
   ordering = 10040,
   item_type = 1,
   is_extra = false,
@@ -107,7 +107,7 @@ define("farmer", {
     _177 = 5,
   },
 })
-define("predator", {
+define_class("predator", {
   ordering = 20010,
   item_type = 0,
   is_extra = true,
@@ -125,7 +125,7 @@ define("predator", {
     _152 = 4,
   },
 })
-define("archer", {
+define_class("archer", {
   ordering = 10050,
   item_type = 3,
   is_extra = false,
@@ -152,7 +152,7 @@ define("archer", {
     _189 = 3,
   },
 })
-define("warmage", {
+define_class("warmage", {
   ordering = 10060,
   item_type = 5,
   is_extra = false,
@@ -178,7 +178,7 @@ define("warmage", {
     _172 = 4,
   },
 })
-define("tourist", {
+define_class("tourist", {
   ordering = 10070,
   item_type = 0,
   is_extra = false,
@@ -197,7 +197,7 @@ define("tourist", {
     _182 = 3,
   },
 })
-define("pianist", {
+define_class("pianist", {
   ordering = 10080,
   item_type = 3,
   is_extra = false,
@@ -222,7 +222,7 @@ define("pianist", {
     _301 = 3,
   },
 })
-define("gunner", {
+define_class("gunner", {
   ordering = 20020,
   item_type = 4,
   is_extra = true,
@@ -244,7 +244,7 @@ define("gunner", {
     _189 = 3,
   },
 })
-define("priest", {
+define_class("priest", {
   ordering = 10090,
   item_type = 6,
   is_extra = false,
@@ -270,7 +270,7 @@ define("priest", {
     _172 = 5,
   },
 })
-define("claymore", {
+define_class("claymore", {
   ordering = 10100,
   item_type = 8,
   is_extra = false,
@@ -298,7 +298,7 @@ define("claymore", {
 
 
 -- For debug
-define("debugger", {
+define_class("debugger", {
   ordering = 0,
   item_type = 1,
   is_extra = true,

@@ -142,15 +142,12 @@ namespace elona
 
 
 
-item_db::item_db()
+void item_db::initialize()
 {
-    lua_State* state = luaL_newstate();
-    luaL_openlibs(state);
-    cat::register_function(state, "define", &define);
+    cat::global.register_function("define_item", &define);
     storage_ptr = &storage;
-    cat::load(state, fs::u8path(u8"../data/item.lua"));
+    cat::global.load(fs::u8path(u8"../data/item.lua"));
     storage_ptr = nullptr;
-    lua_close(state);
 }
 
 

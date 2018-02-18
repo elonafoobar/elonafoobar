@@ -36,8 +36,9 @@ struct race_data
 class race_db
 {
 public:
-    race_db();
+    race_db() = default;
 
+    void initialize();
 
     optional_ref<race_data> operator[](const std::string& id) const;
 

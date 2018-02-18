@@ -100,7 +100,9 @@ public:
     };
 
 
-    character_db();
+    character_db() = default;
+
+    void initialize();
 
 
     optional_ref<character_data> operator[](int id) const;

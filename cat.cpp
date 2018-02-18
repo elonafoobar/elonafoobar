@@ -2,21 +2,30 @@
 #include <iostream>
 
 
-namespace cat
+namespace elona::cat
 {
 
 
-void register_function(lua_State* state, const char* name, lua_CFunction func)
+
+void engine::initialize()
 {
-    lua_pushcfunction(state, func);
-    lua_setglobal(state, name);
+    L.reset(luaL_newstate());
+    luaL_openlibs(ptr());
 }
 
 
-void load(lua_State* state, const fs::path& filepath)
+void engine::load(const fs::path& filepath)
 {
-    luaL_dofile(state, filepath.c_str());
+    luaL_dofile(ptr(), filepath.c_str());
 }
 
 
-} // namespace cat
+void engine::register_function(const char* name, lua_CFunction func)
+{
+    lua_pushcfunction(ptr(), func);
+    lua_setglobal(ptr(), name);
+}
+
+
+
+} // namespace elona::cat

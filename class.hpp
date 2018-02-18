@@ -25,8 +25,9 @@ struct class_data
 class class_db
 {
 public:
-    class_db();
+    class_db() = default;
 
+    void initialize();
 
     optional_ref<class_data> operator[](const std::string& id) const;
 

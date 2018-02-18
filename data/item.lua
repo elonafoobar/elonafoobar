@@ -1,4 +1,4 @@
-define(792, {
+define_item(792, {
   image = 695,
   value = 2000,
   weight = 200,
@@ -37,7 +37,7 @@ define(792, {
   filter = "",
   rffilter = "",
 })
-define(791, {
+define_item(791, {
   image = 697,
   value = 72000,
   weight = 22500,
@@ -76,7 +76,7 @@ define(791, {
   filter = "",
   rffilter = "",
 })
-define(790, {
+define_item(790, {
   image = 555,
   value = 1000,
   weight = 500,
@@ -115,7 +115,7 @@ define(790, {
   filter = "",
   rffilter = "",
 })
-define(789, {
+define_item(789, {
   image = 554,
   value = 1000,
   weight = 500,
@@ -154,7 +154,7 @@ define(789, {
   filter = "",
   rffilter = "",
 })
-define(788, {
+define_item(788, {
   image = 402,
   value = 2000,
   weight = 700,
@@ -193,7 +193,7 @@ define(788, {
   filter = "",
   rffilter = "",
 })
-define(787, {
+define_item(787, {
   image = 552,
   value = 350,
   weight = 350,
@@ -232,7 +232,7 @@ define(787, {
   filter = "",
   rffilter = "",
 })
-define(786, {
+define_item(786, {
   image = 551,
   value = 50,
   weight = 120,
@@ -271,7 +271,7 @@ define(786, {
   filter = "",
   rffilter = "/flavor/",
 })
-define(785, {
+define_item(785, {
   image = 553,
   value = 80,
   weight = 80,
@@ -310,7 +310,7 @@ define(785, {
   filter = "",
   rffilter = "/flavor/",
 })
-define(784, {
+define_item(784, {
   image = 549,
   value = 2500,
   weight = 550,
@@ -349,7 +349,7 @@ define(784, {
   filter = "",
   rffilter = "",
 })
-define(783, {
+define_item(783, {
   image = 550,
   value = 1000,
   weight = 50,
@@ -388,7 +388,7 @@ define(783, {
   filter = "",
   rffilter = "",
 })
-define(782, {
+define_item(782, {
   image = 360,
   value = 100,
   weight = 150,
@@ -427,7 +427,7 @@ define(782, {
   filter = "",
   rffilter = "",
 })
-define(781, {
+define_item(781, {
   image = 546,
   value = 2400,
   weight = 400,
@@ -466,7 +466,7 @@ define(781, {
   filter = "",
   rffilter = "",
 })
-define(780, {
+define_item(780, {
   image = 545,
   value = 23000,
   weight = 4200,
@@ -505,7 +505,7 @@ define(780, {
   filter = "",
   rffilter = "",
 })
-define(779, {
+define_item(779, {
   image = 544,
   value = 16000,
   weight = 1800,
@@ -544,7 +544,7 @@ define(779, {
   filter = "",
   rffilter = "",
 })
-define(778, {
+define_item(778, {
   image = 543,
   value = 4900,
   weight = 9000,
@@ -583,7 +583,7 @@ define(778, {
   filter = "",
   rffilter = "",
 })
-define(777, {
+define_item(777, {
   image = 682,
   value = 100000,
   weight = 15000,
@@ -622,7 +622,7 @@ define(777, {
   filter = "",
   rffilter = "",
 })
-define(776, {
+define_item(776, {
   image = 681,
   value = 100000,
   weight = 15000,
@@ -661,7 +661,7 @@ define(776, {
   filter = "",
   rffilter = "",
 })
-define(775, {
+define_item(775, {
   image = 542,
   value = 160,
   weight = 250,
@@ -700,7 +700,7 @@ define(775, {
   filter = "",
   rffilter = "",
 })
-define(774, {
+define_item(774, {
   image = 683,
   value = 7200,
   weight = 23800,
@@ -739,7 +739,7 @@ define(774, {
   filter = "",
   rffilter = "",
 })
-define(773, {
+define_item(773, {
   image = 541,
   value = 2400,
   weight = 15000,
@@ -778,7 +778,7 @@ define(773, {
   filter = "",
   rffilter = "",
 })
-define(772, {
+define_item(772, {
   image = 540,
   value = 90,
   weight = 330,
@@ -817,7 +817,7 @@ define(772, {
   filter = "",
   rffilter = "",
 })
-define(771, {
+define_item(771, {
   image = 679,
   value = 7500,
   weight = 100,
@@ -856,7 +856,7 @@ define(771, {
   filter = "",
   rffilter = "",
 })
-define(770, {
+define_item(770, {
   image = 678,
   value = 500,
   weight = 50,
@@ -895,7 +895,7 @@ define(770, {
   filter = "/fest/",
   rffilter = "",
 })
-define(769, {
+define_item(769, {
   image = 677,
   value = 1650,
   weight = 530,
@@ -934,7 +934,7 @@ define(769, {
   filter = "/fest/",
   rffilter = "",
 })
-define(768, {
+define_item(768, {
   image = 676,
   value = 400,
   weight = 150,
@@ -973,7 +973,7 @@ define(768, {
   filter = "/fest/",
   rffilter = "",
 })
-define(767, {
+define_item(767, {
   image = 675,
   value = 250,
   weight = 800,
@@ -1012,7 +1012,7 @@ define(767, {
   filter = "",
   rffilter = "",
 })
-define(766, {
+define_item(766, {
   image = 684,
   value = 3800,
   weight = 48500,
@@ -1051,7 +1051,7 @@ define(766, {
   filter = "",
   rffilter = "",
 })
-define(765, {
+define_item(765, {
   image = 685,
   value = 3800,
   weight = 48500,
@@ -1090,7 +1090,7 @@ define(765, {
   filter = "",
   rffilter = "",
 })
-define(764, {
+define_item(764, {
   image = 674,
   value = 1200,
   weight = 9900,
@@ -1129,7 +1129,7 @@ define(764, {
   filter = "",
   rffilter = "",
 })
-define(763, {
+define_item(763, {
   image = 673,
   value = 3600,
   weight = 85000,
@@ -1168,7 +1168,7 @@ define(763, {
   filter = "",
   rffilter = "",
 })
-define(762, {
+define_item(762, {
   image = 672,
   value = 760,
   weight = 280,
@@ -1207,7 +1207,7 @@ define(762, {
   filter = "/fest/",
   rffilter = "",
 })
-define(761, {
+define_item(761, {
   image = 76,
   value = 35000,
   weight = 45000,
@@ -1246,7 +1246,7 @@ define(761, {
   filter = "",
   rffilter = "",
 })
-define(760, {
+define_item(760, {
   image = 629,
   value = 75000,
   weight = 5000,
@@ -1285,7 +1285,7 @@ define(760, {
   filter = "",
   rffilter = "",
 })
-define(759, {
+define_item(759, {
   image = 671,
   value = 4800,
   weight = 600,
@@ -1324,7 +1324,7 @@ define(759, {
   filter = "",
   rffilter = "",
 })
-define(758, {
+define_item(758, {
   image = 419,
   value = 25000,
   weight = 950,
@@ -1363,7 +1363,7 @@ define(758, {
   filter = "/sf/",
   rffilter = "",
 })
-define(757, {
+define_item(757, {
   image = 480,
   value = 15000,
   weight = 2400,
@@ -1402,7 +1402,7 @@ define(757, {
   filter = "",
   rffilter = "",
 })
-define(756, {
+define_item(756, {
   image = 670,
   value = 800,
   weight = 350,
@@ -1441,7 +1441,7 @@ define(756, {
   filter = "/fest/",
   rffilter = "",
 })
-define(755, {
+define_item(755, {
   image = 669,
   value = 2500,
   weight = 800,
@@ -1480,7 +1480,7 @@ define(755, {
   filter = "",
   rffilter = "",
 })
-define(754, {
+define_item(754, {
   image = 668,
   value = 3200,
   weight = 720,
@@ -1519,7 +1519,7 @@ define(754, {
   filter = "",
   rffilter = "",
 })
-define(753, {
+define_item(753, {
   image = 667,
   value = 7800,
   weight = 9800,
@@ -1558,7 +1558,7 @@ define(753, {
   filter = "",
   rffilter = "",
 })
-define(752, {
+define_item(752, {
   image = 666,
   value = 1650,
   weight = 80,
@@ -1597,7 +1597,7 @@ define(752, {
   filter = "",
   rffilter = "",
 })
-define(751, {
+define_item(751, {
   image = 664,
   value = 150000,
   weight = 7500,
@@ -1636,7 +1636,7 @@ define(751, {
   filter = "",
   rffilter = "",
 })
-define(750, {
+define_item(750, {
   image = 665,
   value = 150000,
   weight = 7500,
@@ -1675,7 +1675,7 @@ define(750, {
   filter = "",
   rffilter = "",
 })
-define(749, {
+define_item(749, {
   image = 686,
   value = 50,
   weight = 15000,
@@ -1714,7 +1714,7 @@ define(749, {
   filter = "",
   rffilter = "",
 })
-define(748, {
+define_item(748, {
   image = 662,
   value = 4500,
   weight = 7500,
@@ -1753,7 +1753,7 @@ define(748, {
   filter = "",
   rffilter = "",
 })
-define(747, {
+define_item(747, {
   image = 333,
   value = 4000,
   weight = 80,
@@ -1792,7 +1792,7 @@ define(747, {
   filter = "/noshop/",
   rffilter = "",
 })
-define(746, {
+define_item(746, {
   image = 657,
   value = 50000,
   weight = 1200,
@@ -1831,7 +1831,7 @@ define(746, {
   filter = "",
   rffilter = "",
 })
-define(745, {
+define_item(745, {
   image = 657,
   value = 50000,
   weight = 1200,
@@ -1870,7 +1870,7 @@ define(745, {
   filter = "",
   rffilter = "",
 })
-define(744, {
+define_item(744, {
   image = 657,
   value = 50000,
   weight = 1200,
@@ -1909,7 +1909,7 @@ define(744, {
   filter = "",
   rffilter = "",
 })
-define(743, {
+define_item(743, {
   image = 657,
   value = 50000,
   weight = 1200,
@@ -1948,7 +1948,7 @@ define(743, {
   filter = "",
   rffilter = "",
 })
-define(742, {
+define_item(742, {
   image = 308,
   value = 15000,
   weight = 500,
@@ -1987,7 +1987,7 @@ define(742, {
   filter = "",
   rffilter = "",
 })
-define(741, {
+define_item(741, {
   image = 501,
   value = 40000,
   weight = 2500,
@@ -2026,7 +2026,7 @@ define(741, {
   filter = "",
   rffilter = "",
 })
-define(740, {
+define_item(740, {
   image = 488,
   value = 1200,
   weight = 150,
@@ -2065,7 +2065,7 @@ define(740, {
   filter = "",
   rffilter = "",
 })
-define(739, {
+define_item(739, {
   image = 425,
   value = 30000,
   weight = 376500,
@@ -2104,7 +2104,7 @@ define(739, {
   filter = "",
   rffilter = "",
 })
-define(738, {
+define_item(738, {
   image = 539,
   value = 250,
   weight = 50,
@@ -2143,7 +2143,7 @@ define(738, {
   filter = "/fest/",
   rffilter = "",
 })
-define(737, {
+define_item(737, {
   image = 470,
   value = 7500,
   weight = 20,
@@ -2182,7 +2182,7 @@ define(737, {
   filter = "/noshop/",
   rffilter = "",
 })
-define(736, {
+define_item(736, {
   image = 354,
   value = 1500,
   weight = 120,
@@ -2221,7 +2221,7 @@ define(736, {
   filter = "/nogive/",
   rffilter = "",
 })
-define(735, {
+define_item(735, {
   image = 421,
   value = 500,
   weight = 4000,
@@ -2260,7 +2260,7 @@ define(735, {
   filter = "",
   rffilter = "",
 })
-define(734, {
+define_item(734, {
   image = 220,
   value = 1200,
   weight = 3400,
@@ -2299,7 +2299,7 @@ define(734, {
   filter = "",
   rffilter = "",
 })
-define(733, {
+define_item(733, {
   image = 563,
   value = 4800,
   weight = 8500,
@@ -2338,7 +2338,7 @@ define(733, {
   filter = "",
   rffilter = "",
 })
-define(732, {
+define_item(732, {
   image = 429,
   value = 4000,
   weight = 380,
@@ -2377,7 +2377,7 @@ define(732, {
   filter = "",
   rffilter = "",
 })
-define(731, {
+define_item(731, {
   image = 429,
   value = 8500,
   weight = 380,
@@ -2416,7 +2416,7 @@ define(731, {
   filter = "",
   rffilter = "",
 })
-define(730, {
+define_item(730, {
   image = 538,
   value = 1,
   weight = 1,
@@ -2455,7 +2455,7 @@ define(730, {
   filter = "/noshop/",
   rffilter = "/ore/",
 })
-define(729, {
+define_item(729, {
   image = 391,
   value = 2500,
   weight = 1000,
@@ -2494,7 +2494,7 @@ define(729, {
   filter = "/spshop/",
   rffilter = "",
 })
-define(728, {
+define_item(728, {
   image = 474,
   value = 15000,
   weight = 1250,
@@ -2533,7 +2533,7 @@ define(728, {
   filter = "",
   rffilter = "",
 })
-define(727, {
+define_item(727, {
   image = 453,
   value = 17500,
   weight = 950,
@@ -2572,7 +2572,7 @@ define(727, {
   filter = "",
   rffilter = "",
 })
-define(726, {
+define_item(726, {
   image = 393,
   value = 7500,
   weight = 2850,
@@ -2611,7 +2611,7 @@ define(726, {
   filter = "",
   rffilter = "",
 })
-define(725, {
+define_item(725, {
   image = 76,
   value = 25000,
   weight = 75000,
@@ -2650,7 +2650,7 @@ define(725, {
   filter = "",
   rffilter = "",
 })
-define(724, {
+define_item(724, {
   image = 538,
   value = 1,
   weight = 1,
@@ -2689,7 +2689,7 @@ define(724, {
   filter = "/noshop/",
   rffilter = "/ore/",
 })
-define(723, {
+define_item(723, {
   image = 486,
   value = 9500,
   weight = 400,
@@ -2728,7 +2728,7 @@ define(723, {
   filter = "",
   rffilter = "",
 })
-define(722, {
+define_item(722, {
   image = 486,
   value = 9500,
   weight = 400,
@@ -2767,7 +2767,7 @@ define(722, {
   filter = "",
   rffilter = "",
 })
-define(721, {
+define_item(721, {
   image = 687,
   value = 100000,
   weight = 12000,
@@ -2806,7 +2806,7 @@ define(721, {
   filter = "",
   rffilter = "",
 })
-define(720, {
+define_item(720, {
   image = 649,
   value = 25000,
   weight = 31000,
@@ -2845,7 +2845,7 @@ define(720, {
   filter = "/noshop/",
   rffilter = "",
 })
-define(719, {
+define_item(719, {
   image = 698,
   value = 45000,
   weight = 6500,
@@ -2884,7 +2884,7 @@ define(719, {
   filter = "",
   rffilter = "",
 })
-define(718, {
+define_item(718, {
   image = 630,
   value = 94000,
   weight = 250,
@@ -2923,7 +2923,7 @@ define(718, {
   filter = "",
   rffilter = "",
 })
-define(717, {
+define_item(717, {
   image = 657,
   value = 6800,
   weight = 1200,
@@ -2962,7 +2962,7 @@ define(717, {
   filter = "",
   rffilter = "",
 })
-define(716, {
+define_item(716, {
   image = 424,
   value = 9500,
   weight = 7500,
@@ -3001,7 +3001,7 @@ define(716, {
   filter = "",
   rffilter = "",
 })
-define(715, {
+define_item(715, {
   image = 657,
   value = 6800,
   weight = 1200,
@@ -3040,7 +3040,7 @@ define(715, {
   filter = "/noshop/",
   rffilter = "",
 })
-define(714, {
+define_item(714, {
   image = 537,
   value = 550,
   weight = 850,
@@ -3079,7 +3079,7 @@ define(714, {
   filter = "",
   rffilter = "",
 })
-define(713, {
+define_item(713, {
   image = 536,
   value = 750,
   weight = 400,
@@ -3118,7 +3118,7 @@ define(713, {
   filter = "",
   rffilter = "",
 })
-define(712, {
+define_item(712, {
   image = 308,
   value = 500000,
   weight = 500,
@@ -3157,7 +3157,7 @@ define(712, {
   filter = "",
   rffilter = "",
 })
-define(711, {
+define_item(711, {
   image = 354,
   value = 12000,
   weight = 120,
@@ -3196,7 +3196,7 @@ define(711, {
   filter = "",
   rffilter = "",
 })
-define(710, {
+define_item(710, {
   image = 429,
   value = 8500,
   weight = 380,
@@ -3235,7 +3235,7 @@ define(710, {
   filter = "",
   rffilter = "",
 })
-define(709, {
+define_item(709, {
   image = 470,
   value = 3500,
   weight = 20,
@@ -3274,7 +3274,7 @@ define(709, {
   filter = "/noshop/",
   rffilter = "",
 })
-define(708, {
+define_item(708, {
   image = 429,
   value = 6000,
   weight = 380,
@@ -3313,7 +3313,7 @@ define(708, {
   filter = "/noshop/",
   rffilter = "",
 })
-define(707, {
+define_item(707, {
   image = 699,
   value = 35000,
   weight = 4500,
@@ -3352,7 +3352,7 @@ define(707, {
   filter = "",
   rffilter = "",
 })
-define(706, {
+define_item(706, {
   image = 354,
   value = 4500,
   weight = 120,
@@ -3391,7 +3391,7 @@ define(706, {
   filter = "",
   rffilter = "",
 })
-define(705, {
+define_item(705, {
   image = 486,
   value = 50,
   weight = 250,
@@ -3430,7 +3430,7 @@ define(705, {
   filter = "",
   rffilter = "",
 })
-define(704, {
+define_item(704, {
   image = 535,
   value = 400,
   weight = 100,
@@ -3469,7 +3469,7 @@ define(704, {
   filter = "",
   rffilter = "",
 })
-define(703, {
+define_item(703, {
   image = 534,
   value = 1400,
   weight = 20,
@@ -3508,7 +3508,7 @@ define(703, {
   filter = "",
   rffilter = "",
 })
-define(702, {
+define_item(702, {
   image = 301,
   value = 10000,
   weight = 150,
@@ -3547,7 +3547,7 @@ define(702, {
   filter = "",
   rffilter = "",
 })
-define(701, {
+define_item(701, {
   image = 533,
   value = 2200,
   weight = 20,
@@ -3586,7 +3586,7 @@ define(701, {
   filter = "",
   rffilter = "",
 })
-define(700, {
+define_item(700, {
   image = 532,
   value = 750,
   weight = 20,
@@ -3625,7 +3625,7 @@ define(700, {
   filter = "",
   rffilter = "",
 })
-define(699, {
+define_item(699, {
   image = 658,
   value = 10,
   weight = 3000,
@@ -3664,7 +3664,7 @@ define(699, {
   filter = "",
   rffilter = "",
 })
-define(698, {
+define_item(698, {
   image = 365,
   value = 10,
   weight = 50,
@@ -3703,7 +3703,7 @@ define(698, {
   filter = "",
   rffilter = "",
 })
-define(697, {
+define_item(697, {
   image = 429,
   value = 12500,
   weight = 380,
@@ -3742,7 +3742,7 @@ define(697, {
   filter = "",
   rffilter = "",
 })
-define(696, {
+define_item(696, {
   image = 429,
   value = 14200,
   weight = 380,
@@ -3781,7 +3781,7 @@ define(696, {
   filter = "",
   rffilter = "",
 })
-define(695, {
+define_item(695, {
   image = 399,
   value = 50000,
   weight = 14000,
@@ -3820,7 +3820,7 @@ define(695, {
   filter = "",
   rffilter = "",
 })
-define(694, {
+define_item(694, {
   image = 659,
   value = 2000,
   weight = 1200,
@@ -3859,7 +3859,7 @@ define(694, {
   filter = "",
   rffilter = "",
 })
-define(693, {
+define_item(693, {
   image = 395,
   value = 7500,
   weight = 30000,
@@ -3898,7 +3898,7 @@ define(693, {
   filter = "",
   rffilter = "",
 })
-define(692, {
+define_item(692, {
   image = 394,
   value = 1500,
   weight = 850,
@@ -3937,7 +3937,7 @@ define(692, {
   filter = "/fest/",
   rffilter = "",
 })
-define(691, {
+define_item(691, {
   image = 393,
   value = 3800,
   weight = 8500,
@@ -3976,7 +3976,7 @@ define(691, {
   filter = "/fest/",
   rffilter = "",
 })
-define(690, {
+define_item(690, {
   image = 392,
   value = 4500,
   weight = 18000,
@@ -4015,7 +4015,7 @@ define(690, {
   filter = "/fest/",
   rffilter = "",
 })
-define(689, {
+define_item(689, {
   image = 688,
   value = 5000,
   weight = 22000,
@@ -4054,7 +4054,7 @@ define(689, {
   filter = "",
   rffilter = "",
 })
-define(688, {
+define_item(688, {
   image = 689,
   value = 7500,
   weight = 26000,
@@ -4093,7 +4093,7 @@ define(688, {
   filter = "",
   rffilter = "",
 })
-define(687, {
+define_item(687, {
   image = 429,
   value = 2000,
   weight = 380,
@@ -4132,7 +4132,7 @@ define(687, {
   filter = "/noshop/",
   rffilter = "",
 })
-define(686, {
+define_item(686, {
   image = 690,
   value = 100000,
   weight = 12000,
@@ -4171,7 +4171,7 @@ define(686, {
   filter = "",
   rffilter = "",
 })
-define(685, {
+define_item(685, {
   image = 658,
   value = 4500,
   weight = 1400,
@@ -4210,7 +4210,7 @@ define(685, {
   filter = "",
   rffilter = "",
 })
-define(684, {
+define_item(684, {
   image = 691,
   value = 20000,
   weight = 25000,
@@ -4249,7 +4249,7 @@ define(684, {
   filter = "",
   rffilter = "",
 })
-define(683, {
+define_item(683, {
   image = 657,
   value = 50000,
   weight = 1200,
@@ -4288,7 +4288,7 @@ define(683, {
   filter = "",
   rffilter = "",
 })
-define(682, {
+define_item(682, {
   image = 657,
   value = 50000,
   weight = 1200,
@@ -4327,7 +4327,7 @@ define(682, {
   filter = "",
   rffilter = "",
 })
-define(681, {
+define_item(681, {
   image = 657,
   value = 50000,
   weight = 1200,
@@ -4366,7 +4366,7 @@ define(681, {
   filter = "",
   rffilter = "",
 })
-define(680, {
+define_item(680, {
   image = 657,
   value = 50000,
   weight = 1200,
@@ -4405,7 +4405,7 @@ define(680, {
   filter = "",
   rffilter = "",
 })
-define(679, {
+define_item(679, {
   image = 504,
   value = 35000,
   weight = 6500,
@@ -4444,7 +4444,7 @@ define(679, {
   filter = "",
   rffilter = "",
 })
-define(678, {
+define_item(678, {
   image = 400,
   value = 35000,
   weight = 400,
@@ -4483,7 +4483,7 @@ define(678, {
   filter = "",
   rffilter = "",
 })
-define(677, {
+define_item(677, {
   image = 415,
   value = 35000,
   weight = 4400,
@@ -4522,7 +4522,7 @@ define(677, {
   filter = "",
   rffilter = "",
 })
-define(676, {
+define_item(676, {
   image = 425,
   value = 35000,
   weight = 900,
@@ -4561,7 +4561,7 @@ define(676, {
   filter = "",
   rffilter = "",
 })
-define(675, {
+define_item(675, {
   image = 421,
   value = 35000,
   weight = 850,
@@ -4600,7 +4600,7 @@ define(675, {
   filter = "",
   rffilter = "",
 })
-define(674, {
+define_item(674, {
   image = 514,
   value = 35000,
   weight = 2800,
@@ -4639,7 +4639,7 @@ define(674, {
   filter = "",
   rffilter = "",
 })
-define(673, {
+define_item(673, {
   image = 404,
   value = 35000,
   weight = 800,
@@ -4678,7 +4678,7 @@ define(673, {
   filter = "",
   rffilter = "",
 })
-define(672, {
+define_item(672, {
   image = 656,
   value = 5000,
   weight = 1000,
@@ -4717,7 +4717,7 @@ define(672, {
   filter = "",
   rffilter = "",
 })
-define(671, {
+define_item(671, {
   image = 632,
   value = 10000,
   weight = 120000,
@@ -4756,7 +4756,7 @@ define(671, {
   filter = "",
   rffilter = "",
 })
-define(670, {
+define_item(670, {
   image = 132,
   value = 750,
   weight = -7000,
@@ -4795,7 +4795,7 @@ define(670, {
   filter = "",
   rffilter = "",
 })
-define(669, {
+define_item(669, {
   image = 92,
   value = 3800,
   weight = -35000,
@@ -4834,7 +4834,7 @@ define(669, {
   filter = "",
   rffilter = "",
 })
-define(668, {
+define_item(668, {
   image = 333,
   value = 4000,
   weight = 80,
@@ -4873,7 +4873,7 @@ define(668, {
   filter = "/noshop/",
   rffilter = "",
 })
-define(667, {
+define_item(667, {
   image = 391,
   value = 900,
   weight = 500,
@@ -4912,7 +4912,7 @@ define(667, {
   filter = "",
   rffilter = "",
 })
-define(666, {
+define_item(666, {
   image = 692,
   value = 100000,
   weight = 14000,
@@ -4951,7 +4951,7 @@ define(666, {
   filter = "",
   rffilter = "",
 })
-define(665, {
+define_item(665, {
   image = 680,
   value = 100000,
   weight = 15000,
@@ -4990,7 +4990,7 @@ define(665, {
   filter = "",
   rffilter = "",
 })
-define(664, {
+define_item(664, {
   image = 489,
   value = 50000,
   weight = 50,
@@ -5029,7 +5029,7 @@ define(664, {
   filter = "",
   rffilter = "",
 })
-define(663, {
+define_item(663, {
   image = 654,
   value = 25000,
   weight = 2500,
@@ -5068,7 +5068,7 @@ define(663, {
   filter = "",
   rffilter = "",
 })
-define(662, {
+define_item(662, {
   image = 189,
   value = 100000,
   weight = 440,
@@ -5107,7 +5107,7 @@ define(662, {
   filter = "",
   rffilter = "",
 })
-define(661, {
+define_item(661, {
   image = 459,
   value = 25000,
   weight = 650,
@@ -5146,7 +5146,7 @@ define(661, {
   filter = "",
   rffilter = "",
 })
-define(660, {
+define_item(660, {
   image = 429,
   value = 3500,
   weight = 380,
@@ -5185,7 +5185,7 @@ define(660, {
   filter = "",
   rffilter = "",
 })
-define(659, {
+define_item(659, {
   image = 653,
   value = 1000,
   weight = 1000,
@@ -5224,7 +5224,7 @@ define(659, {
   filter = "",
   rffilter = "",
 })
-define(658, {
+define_item(658, {
   image = 652,
   value = 2500,
   weight = 500,
@@ -5263,7 +5263,7 @@ define(658, {
   filter = "",
   rffilter = "",
 })
-define(657, {
+define_item(657, {
   image = 651,
   value = 3500,
   weight = 1200,
@@ -5302,7 +5302,7 @@ define(657, {
   filter = "",
   rffilter = "",
 })
-define(656, {
+define_item(656, {
   image = 650,
   value = 3000,
   weight = 7900,
@@ -5341,7 +5341,7 @@ define(656, {
   filter = "",
   rffilter = "",
 })
-define(655, {
+define_item(655, {
   image = 168,
   value = 100000,
   weight = 500,
@@ -5380,7 +5380,7 @@ define(655, {
   filter = "",
   rffilter = "",
 })
-define(654, {
+define_item(654, {
   image = 649,
   value = 7500,
   weight = 16000,
@@ -5419,7 +5419,7 @@ define(654, {
   filter = "",
   rffilter = "",
 })
-define(653, {
+define_item(653, {
   image = 648,
   value = 600,
   weight = 150000,
@@ -5458,7 +5458,7 @@ define(653, {
   filter = "",
   rffilter = "",
 })
-define(652, {
+define_item(652, {
   image = 647,
   value = 3500,
   weight = 15000,
@@ -5497,7 +5497,7 @@ define(652, {
   filter = "",
   rffilter = "",
 })
-define(651, {
+define_item(651, {
   image = 646,
   value = 4800,
   weight = 8400,
@@ -5536,7 +5536,7 @@ define(651, {
   filter = "",
   rffilter = "",
 })
-define(650, {
+define_item(650, {
   image = 645,
   value = 1000,
   weight = 12000,
@@ -5575,7 +5575,7 @@ define(650, {
   filter = "",
   rffilter = "",
 })
-define(649, {
+define_item(649, {
   image = 644,
   value = 1500,
   weight = 4000,
@@ -5614,7 +5614,7 @@ define(649, {
   filter = "",
   rffilter = "",
 })
-define(648, {
+define_item(648, {
   image = 643,
   value = 2500,
   weight = 5000,
@@ -5653,7 +5653,7 @@ define(648, {
   filter = "",
   rffilter = "",
 })
-define(647, {
+define_item(647, {
   image = 642,
   value = 5000,
   weight = 7800,
@@ -5692,7 +5692,7 @@ define(647, {
   filter = "",
   rffilter = "",
 })
-define(646, {
+define_item(646, {
   image = 641,
   value = 1800,
   weight = 4500,
@@ -5731,7 +5731,7 @@ define(646, {
   filter = "",
   rffilter = "",
 })
-define(645, {
+define_item(645, {
   image = 640,
   value = 9500,
   weight = 11000,
@@ -5770,7 +5770,7 @@ define(645, {
   filter = "",
   rffilter = "",
 })
-define(644, {
+define_item(644, {
   image = 639,
   value = 2400,
   weight = 2000,
@@ -5809,7 +5809,7 @@ define(644, {
   filter = "",
   rffilter = "",
 })
-define(643, {
+define_item(643, {
   image = 638,
   value = 2500,
   weight = 2000,
@@ -5848,7 +5848,7 @@ define(643, {
   filter = "",
   rffilter = "",
 })
-define(642, {
+define_item(642, {
   image = 637,
   value = 500,
   weight = 4800,
@@ -5887,7 +5887,7 @@ define(642, {
   filter = "",
   rffilter = "",
 })
-define(641, {
+define_item(641, {
   image = 636,
   value = 7500,
   weight = 2500,
@@ -5926,7 +5926,7 @@ define(641, {
   filter = "",
   rffilter = "",
 })
-define(640, {
+define_item(640, {
   image = 635,
   value = 8000,
   weight = 2000,
@@ -5965,7 +5965,7 @@ define(640, {
   filter = "/noshop/spshop/",
   rffilter = "",
 })
-define(639, {
+define_item(639, {
   image = 172,
   value = 100000,
   weight = 720,
@@ -6004,7 +6004,7 @@ define(639, {
   filter = "",
   rffilter = "",
 })
-define(638, {
+define_item(638, {
   image = 470,
   value = 450,
   weight = 20,
@@ -6043,7 +6043,7 @@ define(638, {
   filter = "",
   rffilter = "",
 })
-define(637, {
+define_item(637, {
   image = 633,
   value = 150000,
   weight = 400,
@@ -6082,7 +6082,7 @@ define(637, {
   filter = "",
   rffilter = "",
 })
-define(636, {
+define_item(636, {
   image = 634,
   value = 800,
   weight = 400,
@@ -6121,7 +6121,7 @@ define(636, {
   filter = "",
   rffilter = "",
 })
-define(635, {
+define_item(635, {
   image = 632,
   value = 7500,
   weight = 9800,
@@ -6160,7 +6160,7 @@ define(635, {
   filter = "/spshop/",
   rffilter = "",
 })
-define(634, {
+define_item(634, {
   image = 631,
   value = 1200,
   weight = 1200,
@@ -6199,7 +6199,7 @@ define(634, {
   filter = "",
   rffilter = "",
 })
-define(633, {
+define_item(633, {
   image = 630,
   value = 25000,
   weight = 500,
@@ -6238,7 +6238,7 @@ define(633, {
   filter = "",
   rffilter = "",
 })
-define(632, {
+define_item(632, {
   image = 470,
   value = 40000,
   weight = 5,
@@ -6277,7 +6277,7 @@ define(632, {
   filter = "",
   rffilter = "",
 })
-define(631, {
+define_item(631, {
   image = 566,
   value = 50,
   weight = 5000000,
@@ -6316,7 +6316,7 @@ define(631, {
   filter = "",
   rffilter = "",
 })
-define(630, {
+define_item(630, {
   image = 629,
   value = 2500,
   weight = 5000,
@@ -6355,7 +6355,7 @@ define(630, {
   filter = "/noshop/spshop/",
   rffilter = "",
 })
-define(629, {
+define_item(629, {
   image = 628,
   value = 7200,
   weight = 3500,
@@ -6394,7 +6394,7 @@ define(629, {
   filter = "",
   rffilter = "",
 })
-define(628, {
+define_item(628, {
   image = 429,
   value = 7000,
   weight = 380,
@@ -6433,7 +6433,7 @@ define(628, {
   filter = "",
   rffilter = "",
 })
-define(627, {
+define_item(627, {
   image = 480,
   value = 40000,
   weight = 1500,
@@ -6472,7 +6472,7 @@ define(627, {
   filter = "",
   rffilter = "",
 })
-define(626, {
+define_item(626, {
   image = 354,
   value = 50000,
   weight = 120,
@@ -6511,7 +6511,7 @@ define(626, {
   filter = "/spshop/",
   rffilter = "",
 })
-define(625, {
+define_item(625, {
   image = 627,
   value = 7500,
   weight = 8000,
@@ -6550,7 +6550,7 @@ define(625, {
   filter = "",
   rffilter = "",
 })
-define(624, {
+define_item(624, {
   image = 429,
   value = 10000,
   weight = 380,
@@ -6589,7 +6589,7 @@ define(624, {
   filter = "",
   rffilter = "",
 })
-define(623, {
+define_item(623, {
   image = 429,
   value = 15000,
   weight = 380,
@@ -6628,7 +6628,7 @@ define(623, {
   filter = "",
   rffilter = "",
 })
-define(622, {
+define_item(622, {
   image = 165,
   value = 1,
   weight = 1,
@@ -6667,7 +6667,7 @@ define(622, {
   filter = "/noshop/",
   rffilter = "/ore/",
 })
-define(621, {
+define_item(621, {
   image = 252,
   value = 10000,
   weight = 20,
@@ -6706,7 +6706,7 @@ define(621, {
   filter = "/noshop/spshop/",
   rffilter = "",
 })
-define(620, {
+define_item(620, {
   image = 354,
   value = 4500,
   weight = 50,
@@ -6745,7 +6745,7 @@ define(620, {
   filter = "/nogive/",
   rffilter = "",
 })
-define(619, {
+define_item(619, {
   image = 310,
   value = 1200,
   weight = 1250,
@@ -6784,7 +6784,7 @@ define(619, {
   filter = "",
   rffilter = "",
 })
-define(618, {
+define_item(618, {
   image = 310,
   value = 1200,
   weight = 1250,
@@ -6823,7 +6823,7 @@ define(618, {
   filter = "",
   rffilter = "/fish/",
 })
-define(617, {
+define_item(617, {
   image = 569,
   value = 1000,
   weight = 250,
@@ -6862,7 +6862,7 @@ define(617, {
   filter = "",
   rffilter = "",
 })
-define(616, {
+define_item(616, {
   image = 384,
   value = 14500,
   weight = 6500,
@@ -6901,7 +6901,7 @@ define(616, {
   filter = "",
   rffilter = "",
 })
-define(615, {
+define_item(615, {
   image = 383,
   value = 100,
   weight = 100,
@@ -6940,7 +6940,7 @@ define(615, {
   filter = "",
   rffilter = "",
 })
-define(614, {
+define_item(614, {
   image = 568,
   value = 2000,
   weight = 8000,
@@ -6979,7 +6979,7 @@ define(614, {
   filter = "",
   rffilter = "",
 })
-define(613, {
+define_item(613, {
   image = 569,
   value = 35000,
   weight = 24000,
@@ -7018,7 +7018,7 @@ define(613, {
   filter = "",
   rffilter = "",
 })
-define(612, {
+define_item(612, {
   image = 382,
   value = 1000,
   weight = 2000,
@@ -7057,7 +7057,7 @@ define(612, {
   filter = "",
   rffilter = "",
 })
-define(611, {
+define_item(611, {
   image = 107,
   value = 3500,
   weight = 1200,
@@ -7096,7 +7096,7 @@ define(611, {
   filter = "",
   rffilter = "",
 })
-define(610, {
+define_item(610, {
   image = 380,
   value = 1500,
   weight = 5600,
@@ -7135,7 +7135,7 @@ define(610, {
   filter = "",
   rffilter = "",
 })
-define(609, {
+define_item(609, {
   image = 379,
   value = 700,
   weight = 1600,
@@ -7174,7 +7174,7 @@ define(609, {
   filter = "",
   rffilter = "",
 })
-define(608, {
+define_item(608, {
   image = 378,
   value = 500,
   weight = 1500,
@@ -7213,7 +7213,7 @@ define(608, {
   filter = "",
   rffilter = "",
 })
-define(607, {
+define_item(607, {
   image = 377,
   value = 2600,
   weight = 4200,
@@ -7252,7 +7252,7 @@ define(607, {
   filter = "",
   rffilter = "",
 })
-define(606, {
+define_item(606, {
   image = 376,
   value = 9500,
   weight = 8250,
@@ -7291,7 +7291,7 @@ define(606, {
   filter = "",
   rffilter = "",
 })
-define(605, {
+define_item(605, {
   image = 375,
   value = 2200,
   weight = 1200,
@@ -7330,7 +7330,7 @@ define(605, {
   filter = "",
   rffilter = "",
 })
-define(604, {
+define_item(604, {
   image = 374,
   value = 400,
   weight = 800,
@@ -7369,7 +7369,7 @@ define(604, {
   filter = "",
   rffilter = "",
 })
-define(603, {
+define_item(603, {
   image = 373,
   value = 12000,
   weight = 2400,
@@ -7408,7 +7408,7 @@ define(603, {
   filter = "",
   rffilter = "",
 })
-define(602, {
+define_item(602, {
   image = 372,
   value = 185000,
   weight = 350000,
@@ -7447,7 +7447,7 @@ define(602, {
   filter = "",
   rffilter = "",
 })
-define(601, {
+define_item(601, {
   image = 371,
   value = 100,
   weight = 120,
@@ -7486,7 +7486,7 @@ define(601, {
   filter = "",
   rffilter = "",
 })
-define(600, {
+define_item(600, {
   image = 370,
   value = 1800,
   weight = 150000,
@@ -7525,7 +7525,7 @@ define(600, {
   filter = "",
   rffilter = "",
 })
-define(599, {
+define_item(599, {
   image = 570,
   value = 4800,
   weight = 35000,
@@ -7564,7 +7564,7 @@ define(599, {
   filter = "",
   rffilter = "",
 })
-define(598, {
+define_item(598, {
   image = 134,
   value = 1200,
   weight = -11000,
@@ -7603,7 +7603,7 @@ define(598, {
   filter = "",
   rffilter = "",
 })
-define(597, {
+define_item(597, {
   image = 570,
   value = 3500,
   weight = -60000,
@@ -7642,7 +7642,7 @@ define(597, {
   filter = "",
   rffilter = "",
 })
-define(596, {
+define_item(596, {
   image = 369,
   value = 1800,
   weight = 4800,
@@ -7681,7 +7681,7 @@ define(596, {
   filter = "",
   rffilter = "",
 })
-define(595, {
+define_item(595, {
   image = 571,
   value = 2500,
   weight = 16000,
@@ -7720,7 +7720,7 @@ define(595, {
   filter = "",
   rffilter = "",
 })
-define(594, {
+define_item(594, {
   image = 572,
   value = 18000,
   weight = 12000,
@@ -7759,7 +7759,7 @@ define(594, {
   filter = "",
   rffilter = "",
 })
-define(593, {
+define_item(593, {
   image = 573,
   value = 7200,
   weight = 250000,
@@ -7798,7 +7798,7 @@ define(593, {
   filter = "/sf/",
   rffilter = "",
 })
-define(592, {
+define_item(592, {
   image = 368,
   value = 180,
   weight = 3400,
@@ -7837,7 +7837,7 @@ define(592, {
   filter = "",
   rffilter = "",
 })
-define(591, {
+define_item(591, {
   image = 366,
   value = 400,
   weight = 8500,
@@ -7876,7 +7876,7 @@ define(591, {
   filter = "",
   rffilter = "",
 })
-define(590, {
+define_item(590, {
   image = 367,
   value = 10,
   weight = 4800,
@@ -7915,7 +7915,7 @@ define(590, {
   filter = "",
   rffilter = "",
 })
-define(589, {
+define_item(589, {
   image = 574,
   value = 1800,
   weight = 28000,
@@ -7954,7 +7954,7 @@ define(589, {
   filter = "",
   rffilter = "",
 })
-define(588, {
+define_item(588, {
   image = 575,
   value = 500,
   weight = 14000,
@@ -7993,7 +7993,7 @@ define(588, {
   filter = "",
   rffilter = "",
 })
-define(587, {
+define_item(587, {
   image = 365,
   value = 10,
   weight = 50,
@@ -8032,7 +8032,7 @@ define(587, {
   filter = "",
   rffilter = "",
 })
-define(586, {
+define_item(586, {
   image = 576,
   value = 7200,
   weight = 250000,
@@ -8071,7 +8071,7 @@ define(586, {
   filter = "/sf/",
   rffilter = "",
 })
-define(585, {
+define_item(585, {
   image = 364,
   value = 4500,
   weight = 1500,
@@ -8110,7 +8110,7 @@ define(585, {
   filter = "",
   rffilter = "",
 })
-define(584, {
+define_item(584, {
   image = 353,
   value = 1500,
   weight = 200,
@@ -8149,7 +8149,7 @@ define(584, {
   filter = "",
   rffilter = "",
 })
-define(583, {
+define_item(583, {
   image = 352,
   value = 200,
   weight = 150,
@@ -8188,7 +8188,7 @@ define(583, {
   filter = "",
   rffilter = "",
 })
-define(582, {
+define_item(582, {
   image = 429,
   value = 2000,
   weight = 380,
@@ -8227,7 +8227,7 @@ define(582, {
   filter = "",
   rffilter = "",
 })
-define(581, {
+define_item(581, {
   image = 471,
   value = 2000,
   weight = 800,
@@ -8266,7 +8266,7 @@ define(581, {
   filter = "",
   rffilter = "",
 })
-define(580, {
+define_item(580, {
   image = 236,
   value = 1600,
   weight = 10200,
@@ -8305,7 +8305,7 @@ define(580, {
   filter = "",
   rffilter = "",
 })
-define(579, {
+define_item(579, {
   image = 577,
   value = 3800,
   weight = 15000,
@@ -8344,7 +8344,7 @@ define(579, {
   filter = "",
   rffilter = "",
 })
-define(578, {
+define_item(578, {
   image = 348,
   value = 1400,
   weight = 500,
@@ -8383,7 +8383,7 @@ define(578, {
   filter = "",
   rffilter = "",
 })
-define(577, {
+define_item(577, {
   image = 223,
   value = 400,
   weight = 50,
@@ -8422,7 +8422,7 @@ define(577, {
   filter = "/nogive/",
   rffilter = "",
 })
-define(576, {
+define_item(576, {
   image = 516,
   value = 1000,
   weight = 500,
@@ -8461,7 +8461,7 @@ define(576, {
   filter = "/sf/",
   rffilter = "",
 })
-define(575, {
+define_item(575, {
   image = 340,
   value = 25,
   weight = 80,
@@ -8500,7 +8500,7 @@ define(575, {
   filter = "",
   rffilter = "",
 })
-define(574, {
+define_item(574, {
   image = 339,
   value = 1000,
   weight = 300,
@@ -8539,7 +8539,7 @@ define(574, {
   filter = "",
   rffilter = "",
 })
-define(573, {
+define_item(573, {
   image = 338,
   value = 500,
   weight = 300,
@@ -8578,7 +8578,7 @@ define(573, {
   filter = "",
   rffilter = "",
 })
-define(572, {
+define_item(572, {
   image = 308,
   value = 80000,
   weight = 500,
@@ -8617,7 +8617,7 @@ define(572, {
   filter = "",
   rffilter = "",
 })
-define(571, {
+define_item(571, {
   image = 337,
   value = 640,
   weight = 450,
@@ -8656,7 +8656,7 @@ define(571, {
   filter = "",
   rffilter = "",
 })
-define(570, {
+define_item(570, {
   image = 471,
   value = 3800,
   weight = 800,
@@ -8695,7 +8695,7 @@ define(570, {
   filter = "",
   rffilter = "",
 })
-define(569, {
+define_item(569, {
   image = 429,
   value = 5800,
   weight = 380,
@@ -8734,7 +8734,7 @@ define(569, {
   filter = "",
   rffilter = "",
 })
-define(568, {
+define_item(568, {
   image = 335,
   value = 2400,
   weight = 800,
@@ -8773,7 +8773,7 @@ define(568, {
   filter = "",
   rffilter = "",
 })
-define(567, {
+define_item(567, {
   image = 335,
   value = 2400,
   weight = 800,
@@ -8812,7 +8812,7 @@ define(567, {
   filter = "",
   rffilter = "",
 })
-define(566, {
+define_item(566, {
   image = 354,
   value = 1900,
   weight = 120,
@@ -8851,7 +8851,7 @@ define(566, {
   filter = "/nogive/",
   rffilter = "",
 })
-define(565, {
+define_item(565, {
   image = 471,
   value = 4400,
   weight = 800,
@@ -8890,7 +8890,7 @@ define(565, {
   filter = "",
   rffilter = "",
 })
-define(564, {
+define_item(564, {
   image = 429,
   value = 7500,
   weight = 380,
@@ -8929,7 +8929,7 @@ define(564, {
   filter = "",
   rffilter = "",
 })
-define(563, {
+define_item(563, {
   image = 334,
   value = 4800,
   weight = 80,
@@ -8968,7 +8968,7 @@ define(563, {
   filter = "",
   rffilter = "",
 })
-define(562, {
+define_item(562, {
   image = 332,
   value = 1500,
   weight = 20000,
@@ -9007,7 +9007,7 @@ define(562, {
   filter = "",
   rffilter = "",
 })
-define(561, {
+define_item(561, {
   image = 197,
   value = 7200,
   weight = 20000,
@@ -9046,7 +9046,7 @@ define(561, {
   filter = "",
   rffilter = "",
 })
-define(560, {
+define_item(560, {
   image = 331,
   value = 380,
   weight = 20000,
@@ -9085,7 +9085,7 @@ define(560, {
   filter = "",
   rffilter = "",
 })
-define(559, {
+define_item(559, {
   image = 354,
   value = 100000,
   weight = 120,
@@ -9124,7 +9124,7 @@ define(559, {
   filter = "",
   rffilter = "",
 })
-define(558, {
+define_item(558, {
   image = 489,
   value = 17000,
   weight = 50,
@@ -9163,7 +9163,7 @@ define(558, {
   filter = "",
   rffilter = "",
 })
-define(557, {
+define_item(557, {
   image = 422,
   value = 18000,
   weight = 400,
@@ -9202,7 +9202,7 @@ define(557, {
   filter = "",
   rffilter = "",
 })
-define(556, {
+define_item(556, {
   image = 460,
   value = 24000,
   weight = 300,
@@ -9241,7 +9241,7 @@ define(556, {
   filter = "",
   rffilter = "",
 })
-define(555, {
+define_item(555, {
   image = 330,
   value = 6500,
   weight = 12500,
@@ -9280,7 +9280,7 @@ define(555, {
   filter = "",
   rffilter = "",
 })
-define(554, {
+define_item(554, {
   image = 323,
   value = 3500,
   weight = 40,
@@ -9319,7 +9319,7 @@ define(554, {
   filter = "",
   rffilter = "",
 })
-define(553, {
+define_item(553, {
   image = 323,
   value = 4500,
   weight = 40,
@@ -9358,7 +9358,7 @@ define(553, {
   filter = "",
   rffilter = "",
 })
-define(552, {
+define_item(552, {
   image = 326,
   value = 18000,
   weight = 500,
@@ -9397,7 +9397,7 @@ define(552, {
   filter = "",
   rffilter = "",
 })
-define(551, {
+define_item(551, {
   image = 471,
   value = 5600,
   weight = 800,
@@ -9436,7 +9436,7 @@ define(551, {
   filter = "",
   rffilter = "",
 })
-define(550, {
+define_item(550, {
   image = 429,
   value = 5800,
   weight = 380,
@@ -9475,7 +9475,7 @@ define(550, {
   filter = "",
   rffilter = "",
 })
-define(549, {
+define_item(549, {
   image = 470,
   value = 3500,
   weight = 20,
@@ -9514,7 +9514,7 @@ define(549, {
   filter = "/noshop/",
   rffilter = "",
 })
-define(548, {
+define_item(548, {
   image = 429,
   value = 9500,
   weight = 380,
@@ -9553,7 +9553,7 @@ define(548, {
   filter = "",
   rffilter = "",
 })
-define(547, {
+define_item(547, {
   image = 325,
   value = 6400,
   weight = 20000,
@@ -9592,7 +9592,7 @@ define(547, {
   filter = "",
   rffilter = "",
 })
-define(546, {
+define_item(546, {
   image = 429,
   value = 6800,
   weight = 380,
@@ -9631,7 +9631,7 @@ define(546, {
   filter = "",
   rffilter = "",
 })
-define(545, {
+define_item(545, {
   image = 471,
   value = 4000,
   weight = 800,
@@ -9670,7 +9670,7 @@ define(545, {
   filter = "",
   rffilter = "",
 })
-define(544, {
+define_item(544, {
   image = 516,
   value = 1000,
   weight = 500,
@@ -9709,7 +9709,7 @@ define(544, {
   filter = "/sf/",
   rffilter = "",
 })
-define(543, {
+define_item(543, {
   image = 308,
   value = 10000,
   weight = 500,
@@ -9748,7 +9748,7 @@ define(543, {
   filter = "",
   rffilter = "",
 })
-define(542, {
+define_item(542, {
   image = 308,
   value = 45000,
   weight = 500,
@@ -9787,7 +9787,7 @@ define(542, {
   filter = "",
   rffilter = "",
 })
-define(541, {
+define_item(541, {
   image = 134,
   value = 200,
   weight = 8500,
@@ -9826,7 +9826,7 @@ define(541, {
   filter = "",
   rffilter = "",
 })
-define(540, {
+define_item(540, {
   image = 130,
   value = 7000,
   weight = 2500,
@@ -9865,7 +9865,7 @@ define(540, {
   filter = "",
   rffilter = "",
 })
-define(539, {
+define_item(539, {
   image = 578,
   value = 25000,
   weight = 48000,
@@ -9904,7 +9904,7 @@ define(539, {
   filter = "",
   rffilter = "",
 })
-define(538, {
+define_item(538, {
   image = 131,
   value = 12000,
   weight = 450,
@@ -9943,7 +9943,7 @@ define(538, {
   filter = "",
   rffilter = "",
 })
-define(537, {
+define_item(537, {
   image = 92,
   value = 8200,
   weight = 500,
@@ -9982,7 +9982,7 @@ define(537, {
   filter = "",
   rffilter = "",
 })
-define(536, {
+define_item(536, {
   image = 81,
   value = 8500,
   weight = 2000,
@@ -10021,7 +10021,7 @@ define(536, {
   filter = "",
   rffilter = "",
 })
-define(535, {
+define_item(535, {
   image = 83,
   value = 2400,
   weight = 5800,
@@ -10060,7 +10060,7 @@ define(535, {
   filter = "",
   rffilter = "",
 })
-define(534, {
+define_item(534, {
   image = 582,
   value = 4500,
   weight = 15000,
@@ -10099,7 +10099,7 @@ define(534, {
   filter = "",
   rffilter = "",
 })
-define(533, {
+define_item(533, {
   image = 581,
   value = 7500,
   weight = 85000,
@@ -10138,7 +10138,7 @@ define(533, {
   filter = "",
   rffilter = "",
 })
-define(532, {
+define_item(532, {
   image = 584,
   value = 9400,
   weight = 45000,
@@ -10177,7 +10177,7 @@ define(532, {
   filter = "",
   rffilter = "",
 })
-define(531, {
+define_item(531, {
   image = 583,
   value = 8500,
   weight = 68000,
@@ -10216,7 +10216,7 @@ define(531, {
   filter = "",
   rffilter = "",
 })
-define(530, {
+define_item(530, {
   image = 587,
   value = 900,
   weight = 28000,
@@ -10255,7 +10255,7 @@ define(530, {
   filter = "",
   rffilter = "",
 })
-define(529, {
+define_item(529, {
   image = 588,
   value = 1000,
   weight = 39000,
@@ -10294,7 +10294,7 @@ define(529, {
   filter = "",
   rffilter = "",
 })
-define(528, {
+define_item(528, {
   image = 589,
   value = 800,
   weight = 28000,
@@ -10333,7 +10333,7 @@ define(528, {
   filter = "",
   rffilter = "",
 })
-define(527, {
+define_item(527, {
   image = 590,
   value = 500,
   weight = 20000,
@@ -10372,7 +10372,7 @@ define(527, {
   filter = "",
   rffilter = "",
 })
-define(526, {
+define_item(526, {
   image = 591,
   value = 2000,
   weight = 42000,
@@ -10411,7 +10411,7 @@ define(526, {
   filter = "",
   rffilter = "",
 })
-define(525, {
+define_item(525, {
   image = 592,
   value = 500,
   weight = 35000,
@@ -10450,7 +10450,7 @@ define(525, {
   filter = "",
   rffilter = "",
 })
-define(524, {
+define_item(524, {
   image = 593,
   value = 500,
   weight = 38000,
@@ -10489,7 +10489,7 @@ define(524, {
   filter = "",
   rffilter = "",
 })
-define(523, {
+define_item(523, {
   image = 527,
   value = 700,
   weight = 45000,
@@ -10528,7 +10528,7 @@ define(523, {
   filter = "",
   rffilter = "",
 })
-define(522, {
+define_item(522, {
   image = 308,
   value = 200000,
   weight = 500,
@@ -10567,7 +10567,7 @@ define(522, {
   filter = "",
   rffilter = "",
 })
-define(521, {
+define_item(521, {
   image = 308,
   value = 140000,
   weight = 500,
@@ -10606,7 +10606,7 @@ define(521, {
   filter = "",
   rffilter = "",
 })
-define(520, {
+define_item(520, {
   image = 522,
   value = 4500,
   weight = 500,
@@ -10645,7 +10645,7 @@ define(520, {
   filter = "",
   rffilter = "",
 })
-define(519, {
+define_item(519, {
   image = 354,
   value = 500,
   weight = 120,
@@ -10684,7 +10684,7 @@ define(519, {
   filter = "/nogive/",
   rffilter = "",
 })
-define(518, {
+define_item(518, {
   image = 471,
   value = 6000,
   weight = 800,
@@ -10723,7 +10723,7 @@ define(518, {
   filter = "",
   rffilter = "",
 })
-define(517, {
+define_item(517, {
   image = 471,
   value = 4500,
   weight = 800,
@@ -10762,7 +10762,7 @@ define(517, {
   filter = "",
   rffilter = "",
 })
-define(516, {
+define_item(516, {
   image = 354,
   value = 280,
   weight = 50,
@@ -10801,7 +10801,7 @@ define(516, {
   filter = "",
   rffilter = "",
 })
-define(515, {
+define_item(515, {
   image = 470,
   value = 2500,
   weight = 20,
@@ -10840,7 +10840,7 @@ define(515, {
   filter = "",
   rffilter = "",
 })
-define(514, {
+define_item(514, {
   image = 520,
   value = 60000,
   weight = 8500,
@@ -10879,7 +10879,7 @@ define(514, {
   filter = "/sf/",
   rffilter = "",
 })
-define(513, {
+define_item(513, {
   image = 521,
   value = 150,
   weight = 800,
@@ -10918,7 +10918,7 @@ define(513, {
   filter = "/sf/",
   rffilter = "",
 })
-define(512, {
+define_item(512, {
   image = 520,
   value = 1500,
   weight = 1200,
@@ -10957,7 +10957,7 @@ define(512, {
   filter = "/sf/",
   rffilter = "",
 })
-define(511, {
+define_item(511, {
   image = 308,
   value = 10000,
   weight = 500,
@@ -10996,7 +10996,7 @@ define(511, {
   filter = "",
   rffilter = "",
 })
-define(510, {
+define_item(510, {
   image = 253,
   value = 4500,
   weight = 20000,
@@ -11035,7 +11035,7 @@ define(510, {
   filter = "",
   rffilter = "",
 })
-define(509, {
+define_item(509, {
   image = 470,
   value = 14000,
   weight = 20,
@@ -11074,7 +11074,7 @@ define(509, {
   filter = "",
   rffilter = "",
 })
-define(508, {
+define_item(508, {
   image = 470,
   value = 8000,
   weight = 20,
@@ -11113,7 +11113,7 @@ define(508, {
   filter = "",
   rffilter = "",
 })
-define(507, {
+define_item(507, {
   image = 470,
   value = 14000,
   weight = 20,
@@ -11152,7 +11152,7 @@ define(507, {
   filter = "",
   rffilter = "",
 })
-define(506, {
+define_item(506, {
   image = 470,
   value = 8000,
   weight = 20,
@@ -11191,7 +11191,7 @@ define(506, {
   filter = "",
   rffilter = "",
 })
-define(505, {
+define_item(505, {
   image = 429,
   value = 8000,
   weight = 380,
@@ -11230,7 +11230,7 @@ define(505, {
   filter = "",
   rffilter = "",
 })
-define(504, {
+define_item(504, {
   image = 528,
   value = 500,
   weight = 200,
@@ -11269,7 +11269,7 @@ define(504, {
   filter = "",
   rffilter = "",
 })
-define(503, {
+define_item(503, {
   image = 531,
   value = 1000,
   weight = 2500,
@@ -11308,7 +11308,7 @@ define(503, {
   filter = "",
   rffilter = "",
 })
-define(502, {
+define_item(502, {
   image = 470,
   value = 20000,
   weight = 20,
@@ -11347,7 +11347,7 @@ define(502, {
   filter = "/spshop/",
   rffilter = "",
 })
-define(501, {
+define_item(501, {
   image = 470,
   value = 5000,
   weight = 20,
@@ -11386,7 +11386,7 @@ define(501, {
   filter = "",
   rffilter = "",
 })
-define(500, {
+define_item(500, {
   image = 470,
   value = 600,
   weight = 20,
@@ -11425,7 +11425,7 @@ define(500, {
   filter = "/neg/",
   rffilter = "",
 })
-define(499, {
+define_item(499, {
   image = 519,
   value = 750,
   weight = 500,
@@ -11464,7 +11464,7 @@ define(499, {
   filter = "/sf/fest/",
   rffilter = "",
 })
-define(498, {
+define_item(498, {
   image = 518,
   value = 350,
   weight = 180,
@@ -11503,7 +11503,7 @@ define(498, {
   filter = "/sf/fest/",
   rffilter = "",
 })
-define(497, {
+define_item(497, {
   image = 517,
   value = 440,
   weight = 200,
@@ -11542,7 +11542,7 @@ define(497, {
   filter = "/sf/fest/",
   rffilter = "",
 })
-define(496, {
+define_item(496, {
   image = 514,
   value = 800,
   weight = 1500,
@@ -11581,7 +11581,7 @@ define(496, {
   filter = "/sf/",
   rffilter = "",
 })
-define(495, {
+define_item(495, {
   image = 516,
   value = 1000,
   weight = 500,
@@ -11620,7 +11620,7 @@ define(495, {
   filter = "/sf/",
   rffilter = "",
 })
-define(494, {
+define_item(494, {
   image = 515,
   value = 1200,
   weight = 800,
@@ -11659,7 +11659,7 @@ define(494, {
   filter = "/sf/",
   rffilter = "",
 })
-define(493, {
+define_item(493, {
   image = 513,
   value = 1000,
   weight = 8000,
@@ -11698,7 +11698,7 @@ define(493, {
   filter = "/sf/",
   rffilter = "",
 })
-define(492, {
+define_item(492, {
   image = 512,
   value = 3100,
   weight = 14000,
@@ -11737,7 +11737,7 @@ define(492, {
   filter = "/sf/",
   rffilter = "",
 })
-define(491, {
+define_item(491, {
   image = 511,
   value = 2400,
   weight = 95000,
@@ -11776,7 +11776,7 @@ define(491, {
   filter = "/sf/",
   rffilter = "",
 })
-define(490, {
+define_item(490, {
   image = 510,
   value = 3200,
   weight = 150000,
@@ -11815,7 +11815,7 @@ define(490, {
   filter = "/sf/",
   rffilter = "",
 })
-define(489, {
+define_item(489, {
   image = 509,
   value = 1600,
   weight = 1500,
@@ -11854,7 +11854,7 @@ define(489, {
   filter = "/sf/fest/",
   rffilter = "",
 })
-define(488, {
+define_item(488, {
   image = 506,
   value = 2400,
   weight = 120000,
@@ -11893,7 +11893,7 @@ define(488, {
   filter = "/sf/",
   rffilter = "",
 })
-define(487, {
+define_item(487, {
   image = 508,
   value = 4400,
   weight = 45000,
@@ -11932,7 +11932,7 @@ define(487, {
   filter = "/sf/",
   rffilter = "",
 })
-define(486, {
+define_item(486, {
   image = 507,
   value = 3600,
   weight = 150000,
@@ -11971,7 +11971,7 @@ define(486, {
   filter = "/sf/",
   rffilter = "",
 })
-define(485, {
+define_item(485, {
   image = 471,
   value = 3500,
   weight = 800,
@@ -12010,7 +12010,7 @@ define(485, {
   filter = "",
   rffilter = "",
 })
-define(484, {
+define_item(484, {
   image = 429,
   value = 4500,
   weight = 380,
@@ -12049,7 +12049,7 @@ define(484, {
   filter = "",
   rffilter = "",
 })
-define(483, {
+define_item(483, {
   image = 412,
   value = 150,
   weight = 3500,
@@ -12088,7 +12088,7 @@ define(483, {
   filter = "",
   rffilter = "",
 })
-define(482, {
+define_item(482, {
   image = 498,
   value = 500,
   weight = 2800,
@@ -12127,7 +12127,7 @@ define(482, {
   filter = "",
   rffilter = "",
 })
-define(481, {
+define_item(481, {
   image = 429,
   value = 28000,
   weight = 380,
@@ -12166,7 +12166,7 @@ define(481, {
   filter = "",
   rffilter = "",
 })
-define(480, {
+define_item(480, {
   image = 471,
   value = 16000,
   weight = 800,
@@ -12205,7 +12205,7 @@ define(480, {
   filter = "/noshop/",
   rffilter = "",
 })
-define(479, {
+define_item(479, {
   image = 470,
   value = 9000,
   weight = 20,
@@ -12244,7 +12244,7 @@ define(479, {
   filter = "",
   rffilter = "",
 })
-define(478, {
+define_item(478, {
   image = 493,
   value = 1200,
   weight = 250,
@@ -12283,7 +12283,7 @@ define(478, {
   filter = "",
   rffilter = "",
 })
-define(477, {
+define_item(477, {
   image = 489,
   value = 5200,
   weight = 50,
@@ -12322,7 +12322,7 @@ define(477, {
   filter = "",
   rffilter = "",
 })
-define(476, {
+define_item(476, {
   image = 490,
   value = 450,
   weight = 50,
@@ -12361,7 +12361,7 @@ define(476, {
   filter = "",
   rffilter = "",
 })
-define(475, {
+define_item(475, {
   image = 491,
   value = 450,
   weight = 50,
@@ -12400,7 +12400,7 @@ define(475, {
   filter = "",
   rffilter = "",
 })
-define(474, {
+define_item(474, {
   image = 492,
   value = 450,
   weight = 50,
@@ -12439,7 +12439,7 @@ define(474, {
   filter = "",
   rffilter = "",
 })
-define(473, {
+define_item(473, {
   image = 483,
   value = 5000,
   weight = 50,
@@ -12478,7 +12478,7 @@ define(473, {
   filter = "",
   rffilter = "",
 })
-define(472, {
+define_item(472, {
   image = 484,
   value = 1800,
   weight = 50,
@@ -12517,7 +12517,7 @@ define(472, {
   filter = "",
   rffilter = "",
 })
-define(471, {
+define_item(471, {
   image = 485,
   value = 2000,
   weight = 50,
@@ -12556,7 +12556,7 @@ define(471, {
   filter = "/fest/",
   rffilter = "",
 })
-define(470, {
+define_item(470, {
   image = 486,
   value = 2200,
   weight = 50,
@@ -12595,7 +12595,7 @@ define(470, {
   filter = "",
   rffilter = "",
 })
-define(469, {
+define_item(469, {
   image = 487,
   value = 4400,
   weight = 50,
@@ -12634,7 +12634,7 @@ define(469, {
   filter = "",
   rffilter = "",
 })
-define(468, {
+define_item(468, {
   image = 488,
   value = 4400,
   weight = 50,
@@ -12673,7 +12673,7 @@ define(468, {
   filter = "",
   rffilter = "",
 })
-define(467, {
+define_item(467, {
   image = 482,
   value = 9600,
   weight = 1800,
@@ -12712,7 +12712,7 @@ define(467, {
   filter = "",
   rffilter = "",
 })
-define(466, {
+define_item(466, {
   image = 479,
   value = 600,
   weight = 1600,
@@ -12751,7 +12751,7 @@ define(466, {
   filter = "",
   rffilter = "",
 })
-define(465, {
+define_item(465, {
   image = 480,
   value = 2200,
   weight = 2000,
@@ -12790,7 +12790,7 @@ define(465, {
   filter = "",
   rffilter = "",
 })
-define(464, {
+define_item(464, {
   image = 481,
   value = 4800,
   weight = 2400,
@@ -12829,7 +12829,7 @@ define(464, {
   filter = "",
   rffilter = "",
 })
-define(463, {
+define_item(463, {
   image = 413,
   value = 400,
   weight = 500,
@@ -12868,7 +12868,7 @@ define(463, {
   filter = "",
   rffilter = "",
 })
-define(462, {
+define_item(462, {
   image = 476,
   value = 3500,
   weight = 1500,
@@ -12907,7 +12907,7 @@ define(462, {
   filter = "",
   rffilter = "",
 })
-define(461, {
+define_item(461, {
   image = 475,
   value = 1400,
   weight = 1800,
@@ -12946,7 +12946,7 @@ define(461, {
   filter = "",
   rffilter = "",
 })
-define(460, {
+define_item(460, {
   image = 474,
   value = 3900,
   weight = 1400,
@@ -12985,7 +12985,7 @@ define(460, {
   filter = "",
   rffilter = "",
 })
-define(459, {
+define_item(459, {
   image = 474,
   value = 2400,
   weight = 650,
@@ -13024,7 +13024,7 @@ define(459, {
   filter = "",
   rffilter = "",
 })
-define(458, {
+define_item(458, {
   image = 461,
   value = 4800,
   weight = 1400,
@@ -13063,7 +13063,7 @@ define(458, {
   filter = "",
   rffilter = "",
 })
-define(457, {
+define_item(457, {
   image = 459,
   value = 3500,
   weight = 650,
@@ -13102,7 +13102,7 @@ define(457, {
   filter = "",
   rffilter = "",
 })
-define(456, {
+define_item(456, {
   image = 473,
   value = 1500,
   weight = 450,
@@ -13141,7 +13141,7 @@ define(456, {
   filter = "",
   rffilter = "",
 })
-define(455, {
+define_item(455, {
   image = 473,
   value = 260,
   weight = 250,
@@ -13180,7 +13180,7 @@ define(455, {
   filter = "",
   rffilter = "",
 })
-define(454, {
+define_item(454, {
   image = 458,
   value = 18000,
   weight = 2400,
@@ -13219,7 +13219,7 @@ define(454, {
   filter = "",
   rffilter = "",
 })
-define(453, {
+define_item(453, {
   image = 457,
   value = 10000,
   weight = 3500,
@@ -13258,7 +13258,7 @@ define(453, {
   filter = "",
   rffilter = "",
 })
-define(452, {
+define_item(452, {
   image = 456,
   value = 7500,
   weight = 1400,
@@ -13297,7 +13297,7 @@ define(452, {
   filter = "",
   rffilter = "",
 })
-define(451, {
+define_item(451, {
   image = 455,
   value = 2500,
   weight = 1000,
@@ -13336,7 +13336,7 @@ define(451, {
   filter = "",
   rffilter = "",
 })
-define(450, {
+define_item(450, {
   image = 454,
   value = 1200,
   weight = 1500,
@@ -13375,7 +13375,7 @@ define(450, {
   filter = "",
   rffilter = "",
 })
-define(449, {
+define_item(449, {
   image = 453,
   value = 500,
   weight = 1200,
@@ -13414,7 +13414,7 @@ define(449, {
   filter = "",
   rffilter = "",
 })
-define(448, {
+define_item(448, {
   image = 452,
   value = 950,
   weight = 1300,
@@ -13453,7 +13453,7 @@ define(448, {
   filter = "",
   rffilter = "",
 })
-define(447, {
+define_item(447, {
   image = 451,
   value = 280,
   weight = 200,
@@ -13492,7 +13492,7 @@ define(447, {
   filter = "",
   rffilter = "",
 })
-define(446, {
+define_item(446, {
   image = 414,
   value = 1800,
   weight = 1800,
@@ -13531,7 +13531,7 @@ define(446, {
   filter = "",
   rffilter = "",
 })
-define(445, {
+define_item(445, {
   image = 448,
   value = 800,
   weight = 450,
@@ -13570,7 +13570,7 @@ define(445, {
   filter = "",
   rffilter = "",
 })
-define(444, {
+define_item(444, {
   image = 447,
   value = 7200,
   weight = 1600,
@@ -13609,7 +13609,7 @@ define(444, {
   filter = "",
   rffilter = "",
 })
-define(443, {
+define_item(443, {
   image = 446,
   value = 5500,
   weight = 2800,
@@ -13648,7 +13648,7 @@ define(443, {
   filter = "",
   rffilter = "",
 })
-define(442, {
+define_item(442, {
   image = 445,
   value = 2000,
   weight = 1500,
@@ -13687,7 +13687,7 @@ define(442, {
   filter = "",
   rffilter = "",
 })
-define(441, {
+define_item(441, {
   image = 444,
   value = 1200,
   weight = 1800,
@@ -13726,7 +13726,7 @@ define(441, {
   filter = "",
   rffilter = "",
 })
-define(440, {
+define_item(440, {
   image = 443,
   value = 9500,
   weight = 1200,
@@ -13765,7 +13765,7 @@ define(440, {
   filter = "",
   rffilter = "",
 })
-define(439, {
+define_item(439, {
   image = 442,
   value = 8000,
   weight = 5200,
@@ -13804,7 +13804,7 @@ define(439, {
   filter = "",
   rffilter = "",
 })
-define(438, {
+define_item(438, {
   image = 441,
   value = 4500,
   weight = 5500,
@@ -13843,7 +13843,7 @@ define(438, {
   filter = "",
   rffilter = "",
 })
-define(437, {
+define_item(437, {
   image = 440,
   value = 2400,
   weight = 5000,
@@ -13882,7 +13882,7 @@ define(437, {
   filter = "",
   rffilter = "",
 })
-define(436, {
+define_item(436, {
   image = 410,
   value = 12500,
   weight = 7500,
@@ -13921,7 +13921,7 @@ define(436, {
   filter = "",
   rffilter = "",
 })
-define(435, {
+define_item(435, {
   image = 409,
   value = 1500,
   weight = 6500,
@@ -13960,7 +13960,7 @@ define(435, {
   filter = "",
   rffilter = "",
 })
-define(434, {
+define_item(434, {
   image = 429,
   value = 20000,
   weight = 380,
@@ -13999,7 +13999,7 @@ define(434, {
   filter = "",
   rffilter = "",
 })
-define(433, {
+define_item(433, {
   image = 354,
   value = 4000,
   weight = 120,
@@ -14038,7 +14038,7 @@ define(433, {
   filter = "",
   rffilter = "",
 })
-define(432, {
+define_item(432, {
   image = 354,
   value = 5000,
   weight = 120,
@@ -14077,7 +14077,7 @@ define(432, {
   filter = "/nogive/",
   rffilter = "",
 })
-define(431, {
+define_item(431, {
   image = 470,
   value = 12000,
   weight = 20,
@@ -14116,7 +14116,7 @@ define(431, {
   filter = "/noshop/",
   rffilter = "",
 })
-define(430, {
+define_item(430, {
   image = 470,
   value = 15000,
   weight = 20,
@@ -14155,7 +14155,7 @@ define(430, {
   filter = "/noshop/",
   rffilter = "",
 })
-define(429, {
+define_item(429, {
   image = 354,
   value = 150,
   weight = 120,
@@ -14194,7 +14194,7 @@ define(429, {
   filter = "/neg/",
   rffilter = "",
 })
-define(428, {
+define_item(428, {
   image = 324,
   value = 800,
   weight = 2400,
@@ -14233,7 +14233,7 @@ define(428, {
   filter = "",
   rffilter = "",
 })
-define(427, {
+define_item(427, {
   image = 170,
   value = 800,
   weight = 480,
@@ -14272,7 +14272,7 @@ define(427, {
   filter = "",
   rffilter = "",
 })
-define(426, {
+define_item(426, {
   image = 170,
   value = 1200,
   weight = 120,
@@ -14311,7 +14311,7 @@ define(426, {
   filter = "",
   rffilter = "",
 })
-define(425, {
+define_item(425, {
   image = 170,
   value = 680,
   weight = 260,
@@ -14350,7 +14350,7 @@ define(425, {
   filter = "",
   rffilter = "",
 })
-define(424, {
+define_item(424, {
   image = 170,
   value = 900,
   weight = 220,
@@ -14389,7 +14389,7 @@ define(424, {
   filter = "",
   rffilter = "",
 })
-define(423, {
+define_item(423, {
   image = 170,
   value = 800,
   weight = 210,
@@ -14428,7 +14428,7 @@ define(423, {
   filter = "",
   rffilter = "",
 })
-define(422, {
+define_item(422, {
   image = 170,
   value = 1050,
   weight = 250,
@@ -14467,7 +14467,7 @@ define(422, {
   filter = "",
   rffilter = "",
 })
-define(421, {
+define_item(421, {
   image = 323,
   value = 120000,
   weight = 40,
@@ -14506,7 +14506,7 @@ define(421, {
   filter = "/noshop/spshop/",
   rffilter = "",
 })
-define(420, {
+define_item(420, {
   image = 323,
   value = 2500,
   weight = 40,
@@ -14545,7 +14545,7 @@ define(420, {
   filter = "",
   rffilter = "",
 })
-define(419, {
+define_item(419, {
   image = 323,
   value = 1800,
   weight = 40,
@@ -14584,7 +14584,7 @@ define(419, {
   filter = "",
   rffilter = "",
 })
-define(418, {
+define_item(418, {
   image = 323,
   value = 280,
   weight = 40,
@@ -14623,7 +14623,7 @@ define(418, {
   filter = "",
   rffilter = "",
 })
-define(417, {
+define_item(417, {
   image = 323,
   value = 240,
   weight = 40,
@@ -14662,7 +14662,7 @@ define(417, {
   filter = "",
   rffilter = "",
 })
-define(416, {
+define_item(416, {
   image = 322,
   value = 12000,
   weight = 500,
@@ -14701,7 +14701,7 @@ define(416, {
   filter = "/spshop/",
   rffilter = "",
 })
-define(415, {
+define_item(415, {
   image = 322,
   value = 4000,
   weight = 500,
@@ -14740,7 +14740,7 @@ define(415, {
   filter = "",
   rffilter = "",
 })
-define(414, {
+define_item(414, {
   image = 321,
   value = 30000,
   weight = 140000,
@@ -14779,7 +14779,7 @@ define(414, {
   filter = "",
   rffilter = "",
 })
-define(413, {
+define_item(413, {
   image = 320,
   value = 15000,
   weight = 140000,
@@ -14818,7 +14818,7 @@ define(413, {
   filter = "",
   rffilter = "",
 })
-define(412, {
+define_item(412, {
   image = 471,
   value = 3800,
   weight = 800,
@@ -14857,7 +14857,7 @@ define(412, {
   filter = "",
   rffilter = "",
 })
-define(411, {
+define_item(411, {
   image = 470,
   value = 350,
   weight = 20,
@@ -14896,7 +14896,7 @@ define(411, {
   filter = "",
   rffilter = "",
 })
-define(410, {
+define_item(410, {
   image = 429,
   value = 4000,
   weight = 380,
@@ -14935,7 +14935,7 @@ define(410, {
   filter = "",
   rffilter = "",
 })
-define(409, {
+define_item(409, {
   image = 251,
   value = 340,
   weight = -1500,
@@ -14974,7 +14974,7 @@ define(409, {
   filter = "",
   rffilter = "",
 })
-define(408, {
+define_item(408, {
   image = 68,
   value = 1200,
   weight = -32000,
@@ -15013,7 +15013,7 @@ define(408, {
   filter = "",
   rffilter = "",
 })
-define(407, {
+define_item(407, {
   image = 208,
   value = 1400,
   weight = -16000,
@@ -15052,7 +15052,7 @@ define(407, {
   filter = "",
   rffilter = "",
 })
-define(406, {
+define_item(406, {
   image = 316,
   value = 350,
   weight = -7500,
@@ -15091,7 +15091,7 @@ define(406, {
   filter = "",
   rffilter = "",
 })
-define(405, {
+define_item(405, {
   image = 161,
   value = 2800,
   weight = -48000,
@@ -15130,7 +15130,7 @@ define(405, {
   filter = "",
   rffilter = "",
 })
-define(404, {
+define_item(404, {
   image = 312,
   value = 800,
   weight = -10000,
@@ -15169,7 +15169,7 @@ define(404, {
   filter = "",
   rffilter = "",
 })
-define(403, {
+define_item(403, {
   image = 269,
   value = 2200,
   weight = -12000,
@@ -15208,7 +15208,7 @@ define(403, {
   filter = "",
   rffilter = "",
 })
-define(402, {
+define_item(402, {
   image = 202,
   value = 550,
   weight = -4800,
@@ -15247,7 +15247,7 @@ define(402, {
   filter = "",
   rffilter = "",
 })
-define(401, {
+define_item(401, {
   image = 292,
   value = 4000,
   weight = -50000,
@@ -15286,7 +15286,7 @@ define(401, {
   filter = "",
   rffilter = "",
 })
-define(400, {
+define_item(400, {
   image = 72,
   value = 420,
   weight = -10000,
@@ -15325,7 +15325,7 @@ define(400, {
   filter = "",
   rffilter = "",
 })
-define(399, {
+define_item(399, {
   image = 67,
   value = 700,
   weight = -6500,
@@ -15364,7 +15364,7 @@ define(399, {
   filter = "",
   rffilter = "",
 })
-define(398, {
+define_item(398, {
   image = 470,
   value = 1800,
   weight = 20,
@@ -15403,7 +15403,7 @@ define(398, {
   filter = "",
   rffilter = "",
 })
-define(397, {
+define_item(397, {
   image = 429,
   value = 3800,
   weight = 380,
@@ -15442,7 +15442,7 @@ define(397, {
   filter = "",
   rffilter = "",
 })
-define(396, {
+define_item(396, {
   image = 429,
   value = 3400,
   weight = 380,
@@ -15481,7 +15481,7 @@ define(396, {
   filter = "",
   rffilter = "",
 })
-define(395, {
+define_item(395, {
   image = 470,
   value = 3800,
   weight = 20,
@@ -15520,7 +15520,7 @@ define(395, {
   filter = "",
   rffilter = "",
 })
-define(394, {
+define_item(394, {
   image = 438,
   value = 500,
   weight = 1200,
@@ -15559,7 +15559,7 @@ define(394, {
   filter = "",
   rffilter = "",
 })
-define(393, {
+define_item(393, {
   image = 319,
   value = 2000,
   weight = 500,
@@ -15598,7 +15598,7 @@ define(393, {
   filter = "",
   rffilter = "",
 })
-define(392, {
+define_item(392, {
   image = 223,
   value = 800,
   weight = 50,
@@ -15637,7 +15637,7 @@ define(392, {
   filter = "/nogive/",
   rffilter = "",
 })
-define(391, {
+define_item(391, {
   image = 471,
   value = 4100,
   weight = 800,
@@ -15676,7 +15676,7 @@ define(391, {
   filter = "",
   rffilter = "",
 })
-define(390, {
+define_item(390, {
   image = 470,
   value = 2400,
   weight = 20,
@@ -15715,7 +15715,7 @@ define(390, {
   filter = "",
   rffilter = "",
 })
-define(389, {
+define_item(389, {
   image = 470,
   value = 1400,
   weight = 20,
@@ -15754,7 +15754,7 @@ define(389, {
   filter = "",
   rffilter = "",
 })
-define(388, {
+define_item(388, {
   image = 470,
   value = 350,
   weight = 20,
@@ -15793,7 +15793,7 @@ define(388, {
   filter = "",
   rffilter = "",
 })
-define(387, {
+define_item(387, {
   image = 429,
   value = 9800,
   weight = 380,
@@ -15832,7 +15832,7 @@ define(387, {
   filter = "",
   rffilter = "",
 })
-define(386, {
+define_item(386, {
   image = 429,
   value = 3500,
   weight = 380,
@@ -15871,7 +15871,7 @@ define(386, {
   filter = "",
   rffilter = "",
 })
-define(385, {
+define_item(385, {
   image = 471,
   value = 3600,
   weight = 800,
@@ -15910,7 +15910,7 @@ define(385, {
   filter = "",
   rffilter = "",
 })
-define(384, {
+define_item(384, {
   image = 470,
   value = 1500,
   weight = 20,
@@ -15949,7 +15949,7 @@ define(384, {
   filter = "",
   rffilter = "",
 })
-define(383, {
+define_item(383, {
   image = 429,
   value = 11000,
   weight = 380,
@@ -15988,7 +15988,7 @@ define(383, {
   filter = "",
   rffilter = "",
 })
-define(382, {
+define_item(382, {
   image = 354,
   value = 30,
   weight = 120,
@@ -16027,7 +16027,7 @@ define(382, {
   filter = "/neg/",
   rffilter = "",
 })
-define(381, {
+define_item(381, {
   image = 429,
   value = 6400,
   weight = 380,
@@ -16066,7 +16066,7 @@ define(381, {
   filter = "",
   rffilter = "",
 })
-define(380, {
+define_item(380, {
   image = 429,
   value = 2500,
   weight = 380,
@@ -16105,7 +16105,7 @@ define(380, {
   filter = "",
   rffilter = "",
 })
-define(379, {
+define_item(379, {
   image = 354,
   value = 450,
   weight = 120,
@@ -16144,7 +16144,7 @@ define(379, {
   filter = "",
   rffilter = "",
 })
-define(378, {
+define_item(378, {
   image = 429,
   value = 2600,
   weight = 380,
@@ -16183,7 +16183,7 @@ define(378, {
   filter = "",
   rffilter = "",
 })
-define(377, {
+define_item(377, {
   image = 471,
   value = 4200,
   weight = 800,
@@ -16222,7 +16222,7 @@ define(377, {
   filter = "",
   rffilter = "",
 })
-define(376, {
+define_item(376, {
   image = 354,
   value = 30,
   weight = 120,
@@ -16261,7 +16261,7 @@ define(376, {
   filter = "/neg/",
   rffilter = "",
 })
-define(375, {
+define_item(375, {
   image = 354,
   value = 850,
   weight = 120,
@@ -16300,7 +16300,7 @@ define(375, {
   filter = "",
   rffilter = "",
 })
-define(374, {
+define_item(374, {
   image = 429,
   value = 4800,
   weight = 380,
@@ -16339,7 +16339,7 @@ define(374, {
   filter = "",
   rffilter = "",
 })
-define(373, {
+define_item(373, {
   image = 429,
   value = 12000,
   weight = 380,
@@ -16378,7 +16378,7 @@ define(373, {
   filter = "",
   rffilter = "",
 })
-define(372, {
+define_item(372, {
   image = 354,
   value = 700,
   weight = 120,
@@ -16417,7 +16417,7 @@ define(372, {
   filter = "",
   rffilter = "",
 })
-define(371, {
+define_item(371, {
   image = 429,
   value = 7500,
   weight = 380,
@@ -16456,7 +16456,7 @@ define(371, {
   filter = "",
   rffilter = "",
 })
-define(370, {
+define_item(370, {
   image = 354,
   value = 800,
   weight = 120,
@@ -16495,7 +16495,7 @@ define(370, {
   filter = "",
   rffilter = "",
 })
-define(369, {
+define_item(369, {
   image = 429,
   value = 4400,
   weight = 380,
@@ -16534,7 +16534,7 @@ define(369, {
   filter = "",
   rffilter = "",
 })
-define(368, {
+define_item(368, {
   image = 354,
   value = 40,
   weight = 120,
@@ -16573,7 +16573,7 @@ define(368, {
   filter = "/neg/",
   rffilter = "",
 })
-define(367, {
+define_item(367, {
   image = 429,
   value = 8400,
   weight = 380,
@@ -16612,7 +16612,7 @@ define(367, {
   filter = "",
   rffilter = "",
 })
-define(366, {
+define_item(366, {
   image = 471,
   value = 1080,
   weight = 800,
@@ -16651,7 +16651,7 @@ define(366, {
   filter = "",
   rffilter = "",
 })
-define(365, {
+define_item(365, {
   image = 429,
   value = 2800,
   weight = 380,
@@ -16690,7 +16690,7 @@ define(365, {
   filter = "",
   rffilter = "",
 })
-define(364, {
+define_item(364, {
   image = 354,
   value = 150,
   weight = 120,
@@ -16729,7 +16729,7 @@ define(364, {
   filter = "",
   rffilter = "",
 })
-define(363, {
+define_item(363, {
   image = 470,
   value = 4400,
   weight = 20,
@@ -16768,7 +16768,7 @@ define(363, {
   filter = "",
   rffilter = "",
 })
-define(362, {
+define_item(362, {
   image = 470,
   value = 3500,
   weight = 20,
@@ -16807,7 +16807,7 @@ define(362, {
   filter = "",
   rffilter = "",
 })
-define(361, {
+define_item(361, {
   image = 253,
   value = 380,
   weight = 1200,
@@ -16846,7 +16846,7 @@ define(361, {
   filter = "",
   rffilter = "",
 })
-define(360, {
+define_item(360, {
   image = 407,
   value = 30000,
   weight = 500,
@@ -16885,7 +16885,7 @@ define(360, {
   filter = "",
   rffilter = "",
 })
-define(359, {
+define_item(359, {
   image = 426,
   value = 30000,
   weight = 2000,
@@ -16924,7 +16924,7 @@ define(359, {
   filter = "",
   rffilter = "",
 })
-define(358, {
+define_item(358, {
   image = 425,
   value = 30000,
   weight = 2500,
@@ -16963,7 +16963,7 @@ define(358, {
   filter = "",
   rffilter = "",
 })
-define(357, {
+define_item(357, {
   image = 407,
   value = 30000,
   weight = 1200,
@@ -17002,7 +17002,7 @@ define(357, {
   filter = "",
   rffilter = "",
 })
-define(356, {
+define_item(356, {
   image = 427,
   value = 30000,
   weight = 1800,
@@ -17041,7 +17041,7 @@ define(356, {
   filter = "",
   rffilter = "",
 })
-define(355, {
+define_item(355, {
   image = 414,
   value = 40000,
   weight = 1200,
@@ -17080,7 +17080,7 @@ define(355, {
   filter = "",
   rffilter = "",
 })
-define(354, {
+define_item(354, {
   image = 318,
   value = 380,
   weight = 450,
@@ -17119,7 +17119,7 @@ define(354, {
   filter = "/fish/",
   rffilter = "/fish/",
 })
-define(353, {
+define_item(353, {
   image = 317,
   value = 620,
   weight = 600,
@@ -17158,7 +17158,7 @@ define(353, {
   filter = "/fish/",
   rffilter = "/fish/",
 })
-define(352, {
+define_item(352, {
   image = 316,
   value = 640,
   weight = 700,
@@ -17197,7 +17197,7 @@ define(352, {
   filter = "/fish/",
   rffilter = "/fish/",
 })
-define(351, {
+define_item(351, {
   image = 315,
   value = 320,
   weight = 550,
@@ -17236,7 +17236,7 @@ define(351, {
   filter = "/fish/",
   rffilter = "/fish/",
 })
-define(350, {
+define_item(350, {
   image = 314,
   value = 170,
   weight = 600,
@@ -17275,7 +17275,7 @@ define(350, {
   filter = "/fish/",
   rffilter = "/fish/",
 })
-define(349, {
+define_item(349, {
   image = 313,
   value = 150,
   weight = 800,
@@ -17314,7 +17314,7 @@ define(349, {
   filter = "/fish/",
   rffilter = "/fish/",
 })
-define(348, {
+define_item(348, {
   image = 312,
   value = 1500,
   weight = 2400,
@@ -17353,7 +17353,7 @@ define(348, {
   filter = "/fish/",
   rffilter = "/fish/",
 })
-define(347, {
+define_item(347, {
   image = 311,
   value = 700,
   weight = 900,
@@ -17392,7 +17392,7 @@ define(347, {
   filter = "/fish/",
   rffilter = "/fish/",
 })
-define(346, {
+define_item(346, {
   image = 310,
   value = 1200,
   weight = 1250,
@@ -17431,7 +17431,7 @@ define(346, {
   filter = "/fish/",
   rffilter = "/fish/",
 })
-define(345, {
+define_item(345, {
   image = 309,
   value = 900,
   weight = 800,
@@ -17470,7 +17470,7 @@ define(345, {
   filter = "/fish/",
   rffilter = "/fish/",
 })
-define(344, {
+define_item(344, {
   image = 308,
   value = 50000,
   weight = 500,
@@ -17509,7 +17509,7 @@ define(344, {
   filter = "",
   rffilter = "",
 })
-define(343, {
+define_item(343, {
   image = 307,
   value = 780,
   weight = 500,
@@ -17548,7 +17548,7 @@ define(343, {
   filter = "",
   rffilter = "",
 })
-define(342, {
+define_item(342, {
   image = 306,
   value = 1200,
   weight = 2400,
@@ -17587,7 +17587,7 @@ define(342, {
   filter = "",
   rffilter = "",
 })
-define(341, {
+define_item(341, {
   image = 305,
   value = 100,
   weight = 1500,
@@ -17626,7 +17626,7 @@ define(341, {
   filter = "",
   rffilter = "",
 })
-define(340, {
+define_item(340, {
   image = 304,
   value = 100,
   weight = 1500,
@@ -17665,7 +17665,7 @@ define(340, {
   filter = "",
   rffilter = "",
 })
-define(339, {
+define_item(339, {
   image = 303,
   value = 100,
   weight = 1500,
@@ -17704,7 +17704,7 @@ define(339, {
   filter = "",
   rffilter = "",
 })
-define(338, {
+define_item(338, {
   image = 302,
   value = 100,
   weight = 1500,
@@ -17743,7 +17743,7 @@ define(338, {
   filter = "",
   rffilter = "",
 })
-define(337, {
+define_item(337, {
   image = 301,
   value = 100,
   weight = 1500,
@@ -17782,7 +17782,7 @@ define(337, {
   filter = "",
   rffilter = "",
 })
-define(336, {
+define_item(336, {
   image = 300,
   value = 3200,
   weight = 21000,
@@ -17821,7 +17821,7 @@ define(336, {
   filter = "",
   rffilter = "",
 })
-define(335, {
+define_item(335, {
   image = 299,
   value = 1200,
   weight = 15000,
@@ -17860,7 +17860,7 @@ define(335, {
   filter = "",
   rffilter = "",
 })
-define(334, {
+define_item(334, {
   image = 579,
   value = 6800,
   weight = 35000,
@@ -17899,7 +17899,7 @@ define(334, {
   filter = "",
   rffilter = "",
 })
-define(333, {
+define_item(333, {
   image = 297,
   value = 40,
   weight = -2000,
@@ -17938,7 +17938,7 @@ define(333, {
   filter = "",
   rffilter = "",
 })
-define(332, {
+define_item(332, {
   image = 296,
   value = 1200,
   weight = 4900,
@@ -17977,7 +17977,7 @@ define(332, {
   filter = "",
   rffilter = "",
 })
-define(331, {
+define_item(331, {
   image = 295,
   value = 1440,
   weight = 1050,
@@ -18016,7 +18016,7 @@ define(331, {
   filter = "",
   rffilter = "",
 })
-define(330, {
+define_item(330, {
   image = 294,
   value = 250,
   weight = 3500,
@@ -18055,7 +18055,7 @@ define(330, {
   filter = "",
   rffilter = "",
 })
-define(329, {
+define_item(329, {
   image = 293,
   value = 1500,
   weight = 15600,
@@ -18094,7 +18094,7 @@ define(329, {
   filter = "",
   rffilter = "",
 })
-define(328, {
+define_item(328, {
   image = 292,
   value = 4600,
   weight = 29000,
@@ -18133,7 +18133,7 @@ define(328, {
   filter = "",
   rffilter = "",
 })
-define(327, {
+define_item(327, {
   image = 291,
   value = 600,
   weight = 6400,
@@ -18172,7 +18172,7 @@ define(327, {
   filter = "",
   rffilter = "",
 })
-define(326, {
+define_item(326, {
   image = 290,
   value = 1400,
   weight = 8900,
@@ -18211,7 +18211,7 @@ define(326, {
   filter = "",
   rffilter = "",
 })
-define(325, {
+define_item(325, {
   image = 289,
   value = 2800,
   weight = 10000,
@@ -18250,7 +18250,7 @@ define(325, {
   filter = "",
   rffilter = "",
 })
-define(324, {
+define_item(324, {
   image = 288,
   value = 1500,
   weight = 15000,
@@ -18289,7 +18289,7 @@ define(324, {
   filter = "",
   rffilter = "",
 })
-define(323, {
+define_item(323, {
   image = 586,
   value = 2800,
   weight = 8900,
@@ -18328,7 +18328,7 @@ define(323, {
   filter = "",
   rffilter = "",
 })
-define(322, {
+define_item(322, {
   image = 286,
   value = 2200,
   weight = 12000,
@@ -18367,7 +18367,7 @@ define(322, {
   filter = "",
   rffilter = "",
 })
-define(321, {
+define_item(321, {
   image = 285,
   value = 1480,
   weight = 8800,
@@ -18406,7 +18406,7 @@ define(321, {
   filter = "",
   rffilter = "",
 })
-define(320, {
+define_item(320, {
   image = 284,
   value = 900,
   weight = 6800,
@@ -18445,7 +18445,7 @@ define(320, {
   filter = "",
   rffilter = "",
 })
-define(319, {
+define_item(319, {
   image = 283,
   value = 880,
   weight = 2800,
@@ -18484,7 +18484,7 @@ define(319, {
   filter = "",
   rffilter = "",
 })
-define(318, {
+define_item(318, {
   image = 282,
   value = 1020,
   weight = 8900,
@@ -18523,7 +18523,7 @@ define(318, {
   filter = "",
   rffilter = "",
 })
-define(317, {
+define_item(317, {
   image = 281,
   value = 890,
   weight = 7600,
@@ -18562,7 +18562,7 @@ define(317, {
   filter = "",
   rffilter = "",
 })
-define(316, {
+define_item(316, {
   image = 280,
   value = 3200,
   weight = 1200,
@@ -18601,7 +18601,7 @@ define(316, {
   filter = "",
   rffilter = "",
 })
-define(315, {
+define_item(315, {
   image = 279,
   value = 1800,
   weight = 8900,
@@ -18640,7 +18640,7 @@ define(315, {
   filter = "",
   rffilter = "",
 })
-define(314, {
+define_item(314, {
   image = 278,
   value = 2000,
   weight = 12000,
@@ -18679,7 +18679,7 @@ define(314, {
   filter = "",
   rffilter = "",
 })
-define(313, {
+define_item(313, {
   image = 277,
   value = 2800,
   weight = 24000,
@@ -18718,7 +18718,7 @@ define(313, {
   filter = "",
   rffilter = "",
 })
-define(312, {
+define_item(312, {
   image = 276,
   value = 2800,
   weight = 14000,
@@ -18757,7 +18757,7 @@ define(312, {
   filter = "",
   rffilter = "",
 })
-define(311, {
+define_item(311, {
   image = 275,
   value = 4800,
   weight = 28000,
@@ -18796,7 +18796,7 @@ define(311, {
   filter = "",
   rffilter = "",
 })
-define(310, {
+define_item(310, {
   image = 274,
   value = 1500,
   weight = 9500,
@@ -18835,7 +18835,7 @@ define(310, {
   filter = "",
   rffilter = "",
 })
-define(309, {
+define_item(309, {
   image = 273,
   value = 2400,
   weight = 8000,
@@ -18874,7 +18874,7 @@ define(309, {
   filter = "",
   rffilter = "",
 })
-define(308, {
+define_item(308, {
   image = 272,
   value = 1200,
   weight = 9000,
@@ -18913,7 +18913,7 @@ define(308, {
   filter = "",
   rffilter = "",
 })
-define(307, {
+define_item(307, {
   image = 271,
   value = 2200,
   weight = 12000,
@@ -18952,7 +18952,7 @@ define(307, {
   filter = "",
   rffilter = "",
 })
-define(306, {
+define_item(306, {
   image = 270,
   value = 5200,
   weight = 34000,
@@ -18991,7 +18991,7 @@ define(306, {
   filter = "/sf/",
   rffilter = "",
 })
-define(305, {
+define_item(305, {
   image = 269,
   value = 2400,
   weight = 8900,
@@ -19030,7 +19030,7 @@ define(305, {
   filter = "",
   rffilter = "",
 })
-define(304, {
+define_item(304, {
   image = 268,
   value = 1200,
   weight = 13000,
@@ -19069,7 +19069,7 @@ define(304, {
   filter = "",
   rffilter = "",
 })
-define(303, {
+define_item(303, {
   image = 267,
   value = 3800,
   weight = 15000,
@@ -19108,7 +19108,7 @@ define(303, {
   filter = "",
   rffilter = "",
 })
-define(302, {
+define_item(302, {
   image = 266,
   value = 1500,
   weight = 6800,
@@ -19147,7 +19147,7 @@ define(302, {
   filter = "",
   rffilter = "",
 })
-define(301, {
+define_item(301, {
   image = 265,
   value = 240,
   weight = 1400,
@@ -19186,7 +19186,7 @@ define(301, {
   filter = "",
   rffilter = "",
 })
-define(300, {
+define_item(300, {
   image = 264,
   value = 1900,
   weight = 8500,
@@ -19225,7 +19225,7 @@ define(300, {
   filter = "",
   rffilter = "",
 })
-define(299, {
+define_item(299, {
   image = 263,
   value = 5500,
   weight = 9000,
@@ -19264,7 +19264,7 @@ define(299, {
   filter = "",
   rffilter = "",
 })
-define(298, {
+define_item(298, {
   image = 262,
   value = 2000,
   weight = 2400,
@@ -19303,7 +19303,7 @@ define(298, {
   filter = "",
   rffilter = "",
 })
-define(297, {
+define_item(297, {
   image = 261,
   value = 4500,
   weight = 17500,
@@ -19342,7 +19342,7 @@ define(297, {
   filter = "",
   rffilter = "",
 })
-define(296, {
+define_item(296, {
   image = 260,
   value = 2400,
   weight = 15000,
@@ -19381,7 +19381,7 @@ define(296, {
   filter = "",
   rffilter = "",
 })
-define(295, {
+define_item(295, {
   image = 259,
   value = 890,
   weight = 4500,
@@ -19420,7 +19420,7 @@ define(295, {
   filter = "",
   rffilter = "",
 })
-define(294, {
+define_item(294, {
   image = 258,
   value = 320,
   weight = 1080,
@@ -19459,7 +19459,7 @@ define(294, {
   filter = "/fest/",
   rffilter = "",
 })
-define(293, {
+define_item(293, {
   image = 257,
   value = 2000,
   weight = 7500,
@@ -19498,7 +19498,7 @@ define(293, {
   filter = "",
   rffilter = "",
 })
-define(292, {
+define_item(292, {
   image = 256,
   value = 1800,
   weight = 6800,
@@ -19537,7 +19537,7 @@ define(292, {
   filter = "",
   rffilter = "",
 })
-define(291, {
+define_item(291, {
   image = 255,
   value = 1500,
   weight = 12000,
@@ -19576,7 +19576,7 @@ define(291, {
   filter = "",
   rffilter = "",
 })
-define(290, {
+define_item(290, {
   image = 471,
   value = 300000,
   weight = 800,
@@ -19615,7 +19615,7 @@ define(290, {
   filter = "/noshop/",
   rffilter = "",
 })
-define(289, {
+define_item(289, {
   image = 429,
   value = 40000,
   weight = 380,
@@ -19654,7 +19654,7 @@ define(289, {
   filter = "",
   rffilter = "",
 })
-define(288, {
+define_item(288, {
   image = 470,
   value = 150,
   weight = 20,
@@ -19693,7 +19693,7 @@ define(288, {
   filter = "/neg/",
   rffilter = "",
 })
-define(287, {
+define_item(287, {
   image = 354,
   value = 50000,
   weight = 120,
@@ -19732,7 +19732,7 @@ define(287, {
   filter = "/spshop/",
   rffilter = "",
 })
-define(286, {
+define_item(286, {
   image = 354,
   value = 280,
   weight = 120,
@@ -19771,7 +19771,7 @@ define(286, {
   filter = "",
   rffilter = "",
 })
-define(285, {
+define_item(285, {
   image = 354,
   value = 280,
   weight = 120,
@@ -19810,7 +19810,7 @@ define(285, {
   filter = "",
   rffilter = "",
 })
-define(284, {
+define_item(284, {
   image = 254,
   value = 380,
   weight = 250,
@@ -19849,7 +19849,7 @@ define(284, {
   filter = "",
   rffilter = "",
 })
-define(283, {
+define_item(283, {
   image = 253,
   value = 380,
   weight = 1200,
@@ -19888,7 +19888,7 @@ define(283, {
   filter = "",
   rffilter = "",
 })
-define(282, {
+define_item(282, {
   image = 252,
   value = 380,
   weight = 180,
@@ -19927,7 +19927,7 @@ define(282, {
   filter = "",
   rffilter = "",
 })
-define(281, {
+define_item(281, {
   image = 251,
   value = 380,
   weight = 1500,
@@ -19966,7 +19966,7 @@ define(281, {
   filter = "/fish/",
   rffilter = "",
 })
-define(280, {
+define_item(280, {
   image = 250,
   value = 1800,
   weight = 9800,
@@ -20005,7 +20005,7 @@ define(280, {
   filter = "",
   rffilter = "",
 })
-define(279, {
+define_item(279, {
   image = 249,
   value = 380,
   weight = 300000,
@@ -20044,7 +20044,7 @@ define(279, {
   filter = "",
   rffilter = "",
 })
-define(278, {
+define_item(278, {
   image = 585,
   value = 1200,
   weight = 300000,
@@ -20083,7 +20083,7 @@ define(278, {
   filter = "/sf/",
   rffilter = "",
 })
-define(277, {
+define_item(277, {
   image = 82,
   value = 1300,
   weight = 300000,
@@ -20122,7 +20122,7 @@ define(277, {
   filter = "",
   rffilter = "",
 })
-define(276, {
+define_item(276, {
   image = 524,
   value = 2600,
   weight = 350000,
@@ -20161,7 +20161,7 @@ define(276, {
   filter = "",
   rffilter = "",
 })
-define(275, {
+define_item(275, {
   image = 248,
   value = 100,
   weight = 800,
@@ -20200,7 +20200,7 @@ define(275, {
   filter = "",
   rffilter = "",
 })
-define(274, {
+define_item(274, {
   image = 232,
   value = 10,
   weight = 4800,
@@ -20239,7 +20239,7 @@ define(274, {
   filter = "",
   rffilter = "",
 })
-define(273, {
+define_item(273, {
   image = 231,
   value = 10,
   weight = 1500,
@@ -20278,7 +20278,7 @@ define(273, {
   filter = "",
   rffilter = "",
 })
-define(272, {
+define_item(272, {
   image = 429,
   value = 12000,
   weight = 380,
@@ -20317,7 +20317,7 @@ define(272, {
   filter = "",
   rffilter = "",
 })
-define(271, {
+define_item(271, {
   image = 429,
   value = 8400,
   weight = 380,
@@ -20356,7 +20356,7 @@ define(271, {
   filter = "",
   rffilter = "",
 })
-define(270, {
+define_item(270, {
   image = 429,
   value = 5400,
   weight = 380,
@@ -20395,7 +20395,7 @@ define(270, {
   filter = "",
   rffilter = "",
 })
-define(269, {
+define_item(269, {
   image = 429,
   value = 5400,
   weight = 380,
@@ -20434,7 +20434,7 @@ define(269, {
   filter = "",
   rffilter = "",
 })
-define(268, {
+define_item(268, {
   image = 429,
   value = 5500,
   weight = 380,
@@ -20473,7 +20473,7 @@ define(268, {
   filter = "",
   rffilter = "",
 })
-define(267, {
+define_item(267, {
   image = 429,
   value = 4500,
   weight = 380,
@@ -20512,7 +20512,7 @@ define(267, {
   filter = "",
   rffilter = "",
 })
-define(266, {
+define_item(266, {
   image = 432,
   value = 500,
   weight = 700,
@@ -20551,7 +20551,7 @@ define(266, {
   filter = "",
   rffilter = "",
 })
-define(265, {
+define_item(265, {
   image = 429,
   value = 6400,
   weight = 380,
@@ -20590,7 +20590,7 @@ define(265, {
   filter = "",
   rffilter = "",
 })
-define(264, {
+define_item(264, {
   image = 429,
   value = 9600,
   weight = 380,
@@ -20629,7 +20629,7 @@ define(264, {
   filter = "",
   rffilter = "",
 })
-define(263, {
+define_item(263, {
   image = 429,
   value = 7200,
   weight = 380,
@@ -20668,7 +20668,7 @@ define(263, {
   filter = "",
   rffilter = "",
 })
-define(262, {
+define_item(262, {
   image = 354,
   value = 120,
   weight = 120,
@@ -20707,7 +20707,7 @@ define(262, {
   filter = "/nogive/",
   rffilter = "",
 })
-define(261, {
+define_item(261, {
   image = 201,
   value = 280,
   weight = 350,
@@ -20746,7 +20746,7 @@ define(261, {
   filter = "",
   rffilter = "",
 })
-define(260, {
+define_item(260, {
   image = 233,
   value = 280,
   weight = 800,
@@ -20785,7 +20785,7 @@ define(260, {
   filter = "",
   rffilter = "",
 })
-define(259, {
+define_item(259, {
   image = 233,
   value = 280,
   weight = 400,
@@ -20824,7 +20824,7 @@ define(259, {
   filter = "",
   rffilter = "",
 })
-define(258, {
+define_item(258, {
   image = 117,
   value = 280,
   weight = 350,
@@ -20863,7 +20863,7 @@ define(258, {
   filter = "",
   rffilter = "",
 })
-define(257, {
+define_item(257, {
   image = 429,
   value = 2500,
   weight = 380,
@@ -20902,7 +20902,7 @@ define(257, {
   filter = "",
   rffilter = "",
 })
-define(256, {
+define_item(256, {
   image = 226,
   value = 1860,
   weight = 1200,
@@ -20941,7 +20941,7 @@ define(256, {
   filter = "",
   rffilter = "",
 })
-define(255, {
+define_item(255, {
   image = 349,
   value = 1860,
   weight = 12000,
@@ -20980,7 +20980,7 @@ define(255, {
   filter = "",
   rffilter = "",
 })
-define(254, {
+define_item(254, {
   image = 224,
   value = 2500,
   weight = 6500,
@@ -21019,7 +21019,7 @@ define(254, {
   filter = "/fest/",
   rffilter = "",
 })
-define(253, {
+define_item(253, {
   image = 223,
   value = 280,
   weight = 50,
@@ -21058,7 +21058,7 @@ define(253, {
   filter = "",
   rffilter = "",
 })
-define(252, {
+define_item(252, {
   image = 429,
   value = 35000,
   weight = 380,
@@ -21097,7 +21097,7 @@ define(252, {
   filter = "",
   rffilter = "",
 })
-define(251, {
+define_item(251, {
   image = 429,
   value = 15000,
   weight = 380,
@@ -21136,7 +21136,7 @@ define(251, {
   filter = "",
   rffilter = "",
 })
-define(250, {
+define_item(250, {
   image = 429,
   value = 9000,
   weight = 380,
@@ -21175,7 +21175,7 @@ define(250, {
   filter = "",
   rffilter = "",
 })
-define(249, {
+define_item(249, {
   image = 429,
   value = 4500,
   weight = 380,
@@ -21214,7 +21214,7 @@ define(249, {
   filter = "",
   rffilter = "",
 })
-define(248, {
+define_item(248, {
   image = 429,
   value = 8900,
   weight = 380,
@@ -21253,7 +21253,7 @@ define(248, {
   filter = "",
   rffilter = "",
 })
-define(247, {
+define_item(247, {
   image = 429,
   value = 25000,
   weight = 380,
@@ -21292,7 +21292,7 @@ define(247, {
   filter = "",
   rffilter = "",
 })
-define(246, {
+define_item(246, {
   image = 429,
   value = 8500,
   weight = 380,
@@ -21331,7 +21331,7 @@ define(246, {
   filter = "",
   rffilter = "",
 })
-define(245, {
+define_item(245, {
   image = 470,
   value = 200,
   weight = 20,
@@ -21370,7 +21370,7 @@ define(245, {
   filter = "",
   rffilter = "",
 })
-define(244, {
+define_item(244, {
   image = 470,
   value = 8000,
   weight = 20,
@@ -21409,7 +21409,7 @@ define(244, {
   filter = "",
   rffilter = "",
 })
-define(243, {
+define_item(243, {
   image = 470,
   value = 240000,
   weight = 20,
@@ -21448,7 +21448,7 @@ define(243, {
   filter = "/noshop/",
   rffilter = "",
 })
-define(242, {
+define_item(242, {
   image = 470,
   value = 480,
   weight = 20,
@@ -21487,7 +21487,7 @@ define(242, {
   filter = "",
   rffilter = "",
 })
-define(241, {
+define_item(241, {
   image = 197,
   value = 1000,
   weight = 300000,
@@ -21526,7 +21526,7 @@ define(241, {
   filter = "",
   rffilter = "",
 })
-define(240, {
+define_item(240, {
   image = 220,
   value = 1200,
   weight = 300000,
@@ -21565,7 +21565,7 @@ define(240, {
   filter = "",
   rffilter = "",
 })
-define(239, {
+define_item(239, {
   image = 220,
   value = 3000,
   weight = 3000,
@@ -21604,7 +21604,7 @@ define(239, {
   filter = "",
   rffilter = "",
 })
-define(238, {
+define_item(238, {
   image = 221,
   value = 2000,
   weight = 240,
@@ -21643,7 +21643,7 @@ define(238, {
   filter = "",
   rffilter = "",
 })
-define(237, {
+define_item(237, {
   image = 222,
   value = 2000,
   weight = 240,
@@ -21682,7 +21682,7 @@ define(237, {
   filter = "",
   rffilter = "",
 })
-define(236, {
+define_item(236, {
   image = 470,
   value = 750,
   weight = 20,
@@ -21721,7 +21721,7 @@ define(236, {
   filter = "",
   rffilter = "",
 })
-define(235, {
+define_item(235, {
   image = 426,
   value = 500,
   weight = 3800,
@@ -21760,7 +21760,7 @@ define(235, {
   filter = "",
   rffilter = "",
 })
-define(234, {
+define_item(234, {
   image = 399,
   value = 500,
   weight = 3500,
@@ -21799,7 +21799,7 @@ define(234, {
   filter = "",
   rffilter = "",
 })
-define(233, {
+define_item(233, {
   image = 233,
   value = 280,
   weight = 400,
@@ -21838,7 +21838,7 @@ define(233, {
   filter = "",
   rffilter = "",
 })
-define(232, {
+define_item(232, {
   image = 503,
   value = 500,
   weight = 4000,
@@ -21877,7 +21877,7 @@ define(232, {
   filter = "",
   rffilter = "",
 })
-define(231, {
+define_item(231, {
   image = 547,
   value = 500,
   weight = 1800,
@@ -21916,7 +21916,7 @@ define(231, {
   filter = "/sf/",
   rffilter = "",
 })
-define(230, {
+define_item(230, {
   image = 404,
   value = 500,
   weight = 800,
@@ -21955,7 +21955,7 @@ define(230, {
   filter = "",
   rffilter = "",
 })
-define(229, {
+define_item(229, {
   image = 505,
   value = 500,
   weight = 800,
@@ -21994,7 +21994,7 @@ define(229, {
   filter = "",
   rffilter = "",
 })
-define(228, {
+define_item(228, {
   image = 494,
   value = 500,
   weight = 1800,
@@ -22033,7 +22033,7 @@ define(228, {
   filter = "",
   rffilter = "",
 })
-define(227, {
+define_item(227, {
   image = 504,
   value = 500,
   weight = 4200,
@@ -22072,7 +22072,7 @@ define(227, {
   filter = "",
   rffilter = "",
 })
-define(226, {
+define_item(226, {
   image = 500,
   value = 500,
   weight = 3700,
@@ -22111,7 +22111,7 @@ define(226, {
   filter = "",
   rffilter = "",
 })
-define(225, {
+define_item(225, {
   image = 502,
   value = 500,
   weight = 900,
@@ -22150,7 +22150,7 @@ define(225, {
   filter = "",
   rffilter = "",
 })
-define(224, {
+define_item(224, {
   image = 431,
   value = 500,
   weight = 1200,
@@ -22189,7 +22189,7 @@ define(224, {
   filter = "",
   rffilter = "",
 })
-define(223, {
+define_item(223, {
   image = 198,
   value = 150,
   weight = 15000,
@@ -22228,7 +22228,7 @@ define(223, {
   filter = "",
   rffilter = "",
 })
-define(222, {
+define_item(222, {
   image = 199,
   value = 8,
   weight = 40,
@@ -22267,7 +22267,7 @@ define(222, {
   filter = "",
   rffilter = "",
 })
-define(221, {
+define_item(221, {
   image = 200,
   value = 7,
   weight = 70,
@@ -22306,7 +22306,7 @@ define(221, {
   filter = "",
   rffilter = "",
 })
-define(220, {
+define_item(220, {
   image = 201,
   value = 4,
   weight = 50,
@@ -22345,7 +22345,7 @@ define(220, {
   filter = "/fish/",
   rffilter = "",
 })
-define(219, {
+define_item(219, {
   image = 202,
   value = 180,
   weight = 340,
@@ -22384,7 +22384,7 @@ define(219, {
   filter = "",
   rffilter = "",
 })
-define(218, {
+define_item(218, {
   image = 203,
   value = 30,
   weight = 80,
@@ -22423,7 +22423,7 @@ define(218, {
   filter = "",
   rffilter = "",
 })
-define(217, {
+define_item(217, {
   image = 206,
   value = 25,
   weight = 90,
@@ -22462,7 +22462,7 @@ define(217, {
   filter = "",
   rffilter = "",
 })
-define(216, {
+define_item(216, {
   image = 207,
   value = 40,
   weight = 80,
@@ -22501,7 +22501,7 @@ define(216, {
   filter = "/fest/",
   rffilter = "",
 })
-define(215, {
+define_item(215, {
   image = 208,
   value = 10,
   weight = 220,
@@ -22540,7 +22540,7 @@ define(215, {
   filter = "",
   rffilter = "",
 })
-define(214, {
+define_item(214, {
   image = 209,
   value = 180,
   weight = 12000,
@@ -22579,7 +22579,7 @@ define(214, {
   filter = "",
   rffilter = "",
 })
-define(213, {
+define_item(213, {
   image = 401,
   value = 500,
   weight = 2500,
@@ -22618,7 +22618,7 @@ define(213, {
   filter = "",
   rffilter = "",
 })
-define(212, {
+define_item(212, {
   image = 425,
   value = 500,
   weight = 900,
@@ -22657,7 +22657,7 @@ define(212, {
   filter = "",
   rffilter = "",
 })
-define(211, {
+define_item(211, {
   image = 421,
   value = 500,
   weight = 1400,
@@ -22696,7 +22696,7 @@ define(211, {
   filter = "",
   rffilter = "",
 })
-define(210, {
+define_item(210, {
   image = 424,
   value = 180,
   weight = 2000,
@@ -22735,7 +22735,7 @@ define(210, {
   filter = "",
   rffilter = "",
 })
-define(209, {
+define_item(209, {
   image = 470,
   value = 1050,
   weight = 20,
@@ -22774,7 +22774,7 @@ define(209, {
   filter = "",
   rffilter = "",
 })
-define(208, {
+define_item(208, {
   image = 33,
   value = 1,
   weight = 1,
@@ -22813,7 +22813,7 @@ define(208, {
   filter = "",
   rffilter = "/ore/",
 })
-define(207, {
+define_item(207, {
   image = 404,
   value = 60000,
   weight = 1200,
@@ -22852,7 +22852,7 @@ define(207, {
   filter = "",
   rffilter = "",
 })
-define(206, {
+define_item(206, {
   image = 400,
   value = 60000,
   weight = 600,
@@ -22891,7 +22891,7 @@ define(206, {
   filter = "",
   rffilter = "",
 })
-define(205, {
+define_item(205, {
   image = 210,
   value = 180,
   weight = 50,
@@ -22930,7 +22930,7 @@ define(205, {
   filter = "",
   rffilter = "",
 })
-define(204, {
+define_item(204, {
   image = 196,
   value = 80,
   weight = 2000,
@@ -22969,7 +22969,7 @@ define(204, {
   filter = "",
   rffilter = "",
 })
-define(203, {
+define_item(203, {
   image = 471,
   value = 2600,
   weight = 800,
@@ -23008,7 +23008,7 @@ define(203, {
   filter = "",
   rffilter = "",
 })
-define(202, {
+define_item(202, {
   image = 471,
   value = 3250,
   weight = 800,
@@ -23047,7 +23047,7 @@ define(202, {
   filter = "",
   rffilter = "",
 })
-define(201, {
+define_item(201, {
   image = 193,
   value = 70,
   weight = 550,
@@ -23086,7 +23086,7 @@ define(201, {
   filter = "",
   rffilter = "",
 })
-define(200, {
+define_item(200, {
   image = 192,
   value = 30,
   weight = 840,
@@ -23125,7 +23125,7 @@ define(200, {
   filter = "",
   rffilter = "",
 })
-define(199, {
+define_item(199, {
   image = 191,
   value = 80,
   weight = 970,
@@ -23164,7 +23164,7 @@ define(199, {
   filter = "",
   rffilter = "",
 })
-define(198, {
+define_item(198, {
   image = 164,
   value = 260,
   weight = 360,
@@ -23203,7 +23203,7 @@ define(198, {
   filter = "",
   rffilter = "",
 })
-define(197, {
+define_item(197, {
   image = 189,
   value = 240,
   weight = 440,
@@ -23242,7 +23242,7 @@ define(197, {
   filter = "",
   rffilter = "",
 })
-define(196, {
+define_item(196, {
   image = 188,
   value = 130,
   weight = 880,
@@ -23281,7 +23281,7 @@ define(196, {
   filter = "",
   rffilter = "",
 })
-define(195, {
+define_item(195, {
   image = 187,
   value = 100,
   weight = 560,
@@ -23320,7 +23320,7 @@ define(195, {
   filter = "",
   rffilter = "",
 })
-define(194, {
+define_item(194, {
   image = 186,
   value = 220,
   weight = 1070,
@@ -23359,7 +23359,7 @@ define(194, {
   filter = "",
   rffilter = "",
 })
-define(193, {
+define_item(193, {
   image = 185,
   value = 240,
   weight = 90,
@@ -23398,7 +23398,7 @@ define(193, {
   filter = "",
   rffilter = "",
 })
-define(192, {
+define_item(192, {
   image = 184,
   value = 260,
   weight = 720,
@@ -23437,7 +23437,7 @@ define(192, {
   filter = "",
   rffilter = "",
 })
-define(191, {
+define_item(191, {
   image = 183,
   value = 80,
   weight = 40,
@@ -23476,7 +23476,7 @@ define(191, {
   filter = "",
   rffilter = "",
 })
-define(190, {
+define_item(190, {
   image = 182,
   value = 70,
   weight = 650,
@@ -23515,7 +23515,7 @@ define(190, {
   filter = "",
   rffilter = "",
 })
-define(189, {
+define_item(189, {
   image = 181,
   value = 120,
   weight = 450,
@@ -23554,7 +23554,7 @@ define(189, {
   filter = "",
   rffilter = "",
 })
-define(188, {
+define_item(188, {
   image = 180,
   value = 50,
   weight = 650,
@@ -23593,7 +23593,7 @@ define(188, {
   filter = "",
   rffilter = "",
 })
-define(187, {
+define_item(187, {
   image = 179,
   value = 40,
   weight = 790,
@@ -23632,7 +23632,7 @@ define(187, {
   filter = "/fest/",
   rffilter = "",
 })
-define(186, {
+define_item(186, {
   image = 178,
   value = 50,
   weight = 950,
@@ -23671,7 +23671,7 @@ define(186, {
   filter = "",
   rffilter = "",
 })
-define(185, {
+define_item(185, {
   image = 177,
   value = 40,
   weight = 420,
@@ -23710,7 +23710,7 @@ define(185, {
   filter = "",
   rffilter = "",
 })
-define(184, {
+define_item(184, {
   image = 176,
   value = 80,
   weight = 620,
@@ -23749,7 +23749,7 @@ define(184, {
   filter = "",
   rffilter = "",
 })
-define(183, {
+define_item(183, {
   image = 175,
   value = 170,
   weight = 220,
@@ -23788,7 +23788,7 @@ define(183, {
   filter = "",
   rffilter = "",
 })
-define(182, {
+define_item(182, {
   image = 174,
   value = 190,
   weight = 440,
@@ -23827,7 +23827,7 @@ define(182, {
   filter = "",
   rffilter = "",
 })
-define(181, {
+define_item(181, {
   image = 173,
   value = 220,
   weight = 510,
@@ -23866,7 +23866,7 @@ define(181, {
   filter = "",
   rffilter = "",
 })
-define(180, {
+define_item(180, {
   image = 172,
   value = 180,
   weight = 720,
@@ -23905,7 +23905,7 @@ define(180, {
   filter = "",
   rffilter = "",
 })
-define(179, {
+define_item(179, {
   image = 171,
   value = 60,
   weight = 100,
@@ -23944,7 +23944,7 @@ define(179, {
   filter = "",
   rffilter = "",
 })
-define(178, {
+define_item(178, {
   image = 170,
   value = 70,
   weight = 170,
@@ -23983,7 +23983,7 @@ define(178, {
   filter = "",
   rffilter = "",
 })
-define(177, {
+define_item(177, {
   image = 169,
   value = 80,
   weight = 160,
@@ -24022,7 +24022,7 @@ define(177, {
   filter = "",
   rffilter = "",
 })
-define(176, {
+define_item(176, {
   image = 471,
   value = 1500,
   weight = 800,
@@ -24061,7 +24061,7 @@ define(176, {
   filter = "",
   rffilter = "",
 })
-define(175, {
+define_item(175, {
   image = 471,
   value = 1900,
   weight = 800,
@@ -24100,7 +24100,7 @@ define(175, {
   filter = "",
   rffilter = "",
 })
-define(174, {
+define_item(174, {
   image = 166,
   value = 2200,
   weight = 12400,
@@ -24139,7 +24139,7 @@ define(174, {
   filter = "",
   rffilter = "",
 })
-define(173, {
+define_item(173, {
   image = 355,
   value = 2400,
   weight = 600000,
@@ -24178,7 +24178,7 @@ define(173, {
   filter = "",
   rffilter = "",
 })
-define(172, {
+define_item(172, {
   image = 163,
   value = 1600,
   weight = 500000,
@@ -24217,7 +24217,7 @@ define(172, {
   filter = "",
   rffilter = "",
 })
-define(171, {
+define_item(171, {
   image = 163,
   value = 1500,
   weight = 500000,
@@ -24256,7 +24256,7 @@ define(171, {
   filter = "",
   rffilter = "",
 })
-define(170, {
+define_item(170, {
   image = 162,
   value = 2400,
   weight = 650000,
@@ -24295,7 +24295,7 @@ define(170, {
   filter = "",
   rffilter = "",
 })
-define(169, {
+define_item(169, {
   image = 161,
   value = 6500,
   weight = 650000,
@@ -24334,7 +24334,7 @@ define(169, {
   filter = "",
   rffilter = "",
 })
-define(168, {
+define_item(168, {
   image = 160,
   value = 4400,
   weight = 650000,
@@ -24373,7 +24373,7 @@ define(168, {
   filter = "",
   rffilter = "",
 })
-define(167, {
+define_item(167, {
   image = 159,
   value = 2500,
   weight = 650000,
@@ -24412,7 +24412,7 @@ define(167, {
   filter = "",
   rffilter = "",
 })
-define(166, {
+define_item(166, {
   image = 158,
   value = 3250,
   weight = 650000,
@@ -24451,7 +24451,7 @@ define(166, {
   filter = "",
   rffilter = "",
 })
-define(165, {
+define_item(165, {
   image = 157,
   value = 1700,
   weight = 400000,
@@ -24490,7 +24490,7 @@ define(165, {
   filter = "",
   rffilter = "",
 })
-define(164, {
+define_item(164, {
   image = 156,
   value = 1800,
   weight = 400000,
@@ -24529,7 +24529,7 @@ define(164, {
   filter = "",
   rffilter = "",
 })
-define(163, {
+define_item(163, {
   image = 155,
   value = 1400,
   weight = 340,
@@ -24568,7 +24568,7 @@ define(163, {
   filter = "",
   rffilter = "",
 })
-define(162, {
+define_item(162, {
   image = 154,
   value = 430,
   weight = 1200,
@@ -24607,7 +24607,7 @@ define(162, {
   filter = "",
   rffilter = "",
 })
-define(161, {
+define_item(161, {
   image = 153,
   value = 1250,
   weight = 500,
@@ -24646,7 +24646,7 @@ define(161, {
   filter = "",
   rffilter = "",
 })
-define(160, {
+define_item(160, {
   image = 152,
   value = 780,
   weight = 500,
@@ -24685,7 +24685,7 @@ define(160, {
   filter = "",
   rffilter = "",
 })
-define(159, {
+define_item(159, {
   image = 151,
   value = 1200,
   weight = 11000,
@@ -24724,7 +24724,7 @@ define(159, {
   filter = "",
   rffilter = "",
 })
-define(158, {
+define_item(158, {
   image = 150,
   value = 800,
   weight = 860,
@@ -24763,7 +24763,7 @@ define(158, {
   filter = "",
   rffilter = "",
 })
-define(157, {
+define_item(157, {
   image = 149,
   value = 3500,
   weight = 8600,
@@ -24802,7 +24802,7 @@ define(157, {
   filter = "",
   rffilter = "",
 })
-define(156, {
+define_item(156, {
   image = 148,
   value = 1200,
   weight = 9700,
@@ -24841,7 +24841,7 @@ define(156, {
   filter = "",
   rffilter = "",
 })
-define(155, {
+define_item(155, {
   image = 147,
   value = 1500,
   weight = 14000,
@@ -24880,7 +24880,7 @@ define(155, {
   filter = "",
   rffilter = "",
 })
-define(154, {
+define_item(154, {
   image = 146,
   value = 1100,
   weight = 15000,
@@ -24919,7 +24919,7 @@ define(154, {
   filter = "",
   rffilter = "",
 })
-define(153, {
+define_item(153, {
   image = 145,
   value = 1200,
   weight = 14000,
@@ -24958,7 +24958,7 @@ define(153, {
   filter = "",
   rffilter = "",
 })
-define(152, {
+define_item(152, {
   image = 144,
   value = 350,
   weight = 320,
@@ -24997,7 +24997,7 @@ define(152, {
   filter = "",
   rffilter = "",
 })
-define(151, {
+define_item(151, {
   image = 143,
   value = 4400,
   weight = 8600,
@@ -25036,7 +25036,7 @@ define(151, {
   filter = "",
   rffilter = "",
 })
-define(150, {
+define_item(150, {
   image = 142,
   value = 4500,
   weight = 8700,
@@ -25075,7 +25075,7 @@ define(150, {
   filter = "",
   rffilter = "",
 })
-define(149, {
+define_item(149, {
   image = 141,
   value = 320,
   weight = 940,
@@ -25114,7 +25114,7 @@ define(149, {
   filter = "",
   rffilter = "",
 })
-define(148, {
+define_item(148, {
   image = 140,
   value = 240,
   weight = 830,
@@ -25153,7 +25153,7 @@ define(148, {
   filter = "",
   rffilter = "",
 })
-define(147, {
+define_item(147, {
   image = 139,
   value = 3600,
   weight = 7500,
@@ -25192,7 +25192,7 @@ define(147, {
   filter = "",
   rffilter = "",
 })
-define(146, {
+define_item(146, {
   image = 138,
   value = 1900,
   weight = 4400,
@@ -25231,7 +25231,7 @@ define(146, {
   filter = "",
   rffilter = "",
 })
-define(145, {
+define_item(145, {
   image = 137,
   value = 1400,
   weight = 860,
@@ -25270,7 +25270,7 @@ define(145, {
   filter = "",
   rffilter = "",
 })
-define(144, {
+define_item(144, {
   image = 136,
   value = 940,
   weight = 2400,
@@ -25309,7 +25309,7 @@ define(144, {
   filter = "",
   rffilter = "",
 })
-define(143, {
+define_item(143, {
   image = 135,
   value = 240,
   weight = 1500,
@@ -25348,7 +25348,7 @@ define(143, {
   filter = "",
   rffilter = "",
 })
-define(142, {
+define_item(142, {
   image = 523,
   value = 7800,
   weight = 17400,
@@ -25387,7 +25387,7 @@ define(142, {
   filter = "",
   rffilter = "",
 })
-define(141, {
+define_item(141, {
   image = 133,
   value = 450,
   weight = 240,
@@ -25426,7 +25426,7 @@ define(141, {
   filter = "",
   rffilter = "",
 })
-define(140, {
+define_item(140, {
   image = 132,
   value = 830,
   weight = 1100,
@@ -25465,7 +25465,7 @@ define(140, {
   filter = "",
   rffilter = "",
 })
-define(139, {
+define_item(139, {
   image = 526,
   value = 3900,
   weight = 32000,
@@ -25504,7 +25504,7 @@ define(139, {
   filter = "",
   rffilter = "",
 })
-define(138, {
+define_item(138, {
   image = 525,
   value = 3400,
   weight = 32000,
@@ -25543,7 +25543,7 @@ define(138, {
   filter = "",
   rffilter = "",
 })
-define(137, {
+define_item(137, {
   image = 129,
   value = 780,
   weight = 250,
@@ -25582,7 +25582,7 @@ define(137, {
   filter = "",
   rffilter = "",
 })
-define(136, {
+define_item(136, {
   image = 128,
   value = 1500,
   weight = 240,
@@ -25621,7 +25621,7 @@ define(136, {
   filter = "",
   rffilter = "",
 })
-define(135, {
+define_item(135, {
   image = 127,
   value = 920,
   weight = 300,
@@ -25660,7 +25660,7 @@ define(135, {
   filter = "",
   rffilter = "",
 })
-define(134, {
+define_item(134, {
   image = 126,
   value = 880,
   weight = 400,
@@ -25699,7 +25699,7 @@ define(134, {
   filter = "",
   rffilter = "",
 })
-define(133, {
+define_item(133, {
   image = 125,
   value = 750,
   weight = 350,
@@ -25738,7 +25738,7 @@ define(133, {
   filter = "",
   rffilter = "",
 })
-define(132, {
+define_item(132, {
   image = 124,
   value = 650,
   weight = 320,
@@ -25777,7 +25777,7 @@ define(132, {
   filter = "",
   rffilter = "",
 })
-define(131, {
+define_item(131, {
   image = 123,
   value = 1800,
   weight = 380,
@@ -25816,7 +25816,7 @@ define(131, {
   filter = "",
   rffilter = "",
 })
-define(130, {
+define_item(130, {
   image = 122,
   value = 1050,
   weight = 400,
@@ -25855,7 +25855,7 @@ define(130, {
   filter = "",
   rffilter = "",
 })
-define(129, {
+define_item(129, {
   image = 121,
   value = 850,
   weight = 420,
@@ -25894,7 +25894,7 @@ define(129, {
   filter = "",
   rffilter = "",
 })
-define(128, {
+define_item(128, {
   image = 120,
   value = 3500,
   weight = 1840,
@@ -25933,7 +25933,7 @@ define(128, {
   filter = "",
   rffilter = "",
 })
-define(127, {
+define_item(127, {
   image = 119,
   value = 1960,
   weight = 900,
@@ -25972,7 +25972,7 @@ define(127, {
   filter = "",
   rffilter = "",
 })
-define(126, {
+define_item(126, {
   image = 118,
   value = 80,
   weight = 210,
@@ -26011,7 +26011,7 @@ define(126, {
   filter = "",
   rffilter = "",
 })
-define(125, {
+define_item(125, {
   image = 471,
   value = 4800,
   weight = 800,
@@ -26050,7 +26050,7 @@ define(125, {
   filter = "",
   rffilter = "",
 })
-define(124, {
+define_item(124, {
   image = 116,
   value = 1400,
   weight = 7800,
@@ -26089,7 +26089,7 @@ define(124, {
   filter = "",
   rffilter = "",
 })
-define(123, {
+define_item(123, {
   image = 471,
   value = 1600,
   weight = 800,
@@ -26128,7 +26128,7 @@ define(123, {
   filter = "",
   rffilter = "",
 })
-define(122, {
+define_item(122, {
   image = 471,
   value = 1460,
   weight = 800,
@@ -26167,7 +26167,7 @@ define(122, {
   filter = "",
   rffilter = "",
 })
-define(121, {
+define_item(121, {
   image = 471,
   value = 700,
   weight = 800,
@@ -26206,7 +26206,7 @@ define(121, {
   filter = "",
   rffilter = "",
 })
-define(120, {
+define_item(120, {
   image = 471,
   value = 800,
   weight = 800,
@@ -26245,7 +26245,7 @@ define(120, {
   filter = "",
   rffilter = "",
 })
-define(119, {
+define_item(119, {
   image = 471,
   value = 650,
   weight = 800,
@@ -26284,7 +26284,7 @@ define(119, {
   filter = "",
   rffilter = "",
 })
-define(118, {
+define_item(118, {
   image = 429,
   value = 6000,
   weight = 380,
@@ -26323,7 +26323,7 @@ define(118, {
   filter = "",
   rffilter = "",
 })
-define(117, {
+define_item(117, {
   image = 109,
   value = 20,
   weight = 80,
@@ -26362,7 +26362,7 @@ define(117, {
   filter = "/fish/",
   rffilter = "",
 })
-define(116, {
+define_item(116, {
   image = 429,
   value = 2400,
   weight = 380,
@@ -26401,7 +26401,7 @@ define(116, {
   filter = "",
   rffilter = "",
 })
-define(115, {
+define_item(115, {
   image = 381,
   value = 240,
   weight = 9500,
@@ -26440,7 +26440,7 @@ define(115, {
   filter = "",
   rffilter = "",
 })
-define(114, {
+define_item(114, {
   image = 106,
   value = 120,
   weight = 3500,
@@ -26479,7 +26479,7 @@ define(114, {
   filter = "",
   rffilter = "",
 })
-define(113, {
+define_item(113, {
   image = 105,
   value = 100,
   weight = 3200,
@@ -26518,7 +26518,7 @@ define(113, {
   filter = "",
   rffilter = "",
 })
-define(112, {
+define_item(112, {
   image = 104,
   value = 8500,
   weight = 14000,
@@ -26557,7 +26557,7 @@ define(112, {
   filter = "/sf/",
   rffilter = "",
 })
-define(111, {
+define_item(111, {
   image = 103,
   value = 4400,
   weight = 45800,
@@ -26596,7 +26596,7 @@ define(111, {
   filter = "",
   rffilter = "",
 })
-define(110, {
+define_item(110, {
   image = 102,
   value = 1800,
   weight = 950,
@@ -26635,7 +26635,7 @@ define(110, {
   filter = "",
   rffilter = "",
 })
-define(109, {
+define_item(109, {
   image = 101,
   value = 1800,
   weight = 350000,
@@ -26674,7 +26674,7 @@ define(109, {
   filter = "",
   rffilter = "",
 })
-define(108, {
+define_item(108, {
   image = 100,
   value = 1300,
   weight = 820,
@@ -26713,7 +26713,7 @@ define(108, {
   filter = "",
   rffilter = "",
 })
-define(107, {
+define_item(107, {
   image = 99,
   value = 1050,
   weight = 750,
@@ -26752,7 +26752,7 @@ define(107, {
   filter = "",
   rffilter = "",
 })
-define(106, {
+define_item(106, {
   image = 98,
   value = 1500,
   weight = 6800,
@@ -26791,7 +26791,7 @@ define(106, {
   filter = "",
   rffilter = "",
 })
-define(105, {
+define_item(105, {
   image = 97,
   value = 1800,
   weight = 7600,
@@ -26830,7 +26830,7 @@ define(105, {
   filter = "",
   rffilter = "",
 })
-define(104, {
+define_item(104, {
   image = 96,
   value = 750,
   weight = 8200,
@@ -26869,7 +26869,7 @@ define(104, {
   filter = "",
   rffilter = "",
 })
-define(103, {
+define_item(103, {
   image = 95,
   value = 2400,
   weight = 7300,
@@ -26908,7 +26908,7 @@ define(103, {
   filter = "",
   rffilter = "",
 })
-define(102, {
+define_item(102, {
   image = 94,
   value = 120,
   weight = 6800,
@@ -26947,7 +26947,7 @@ define(102, {
   filter = "",
   rffilter = "",
 })
-define(101, {
+define_item(101, {
   image = 93,
   value = 360,
   weight = 1200,
@@ -26986,7 +26986,7 @@ define(101, {
   filter = "",
   rffilter = "",
 })
-define(100, {
+define_item(100, {
   image = 580,
   value = 3800,
   weight = 80,
@@ -27025,7 +27025,7 @@ define(100, {
   filter = "",
   rffilter = "",
 })
-define(99, {
+define_item(99, {
   image = 91,
   value = 1050,
   weight = 4200,
@@ -27064,7 +27064,7 @@ define(99, {
   filter = "",
   rffilter = "",
 })
-define(98, {
+define_item(98, {
   image = 90,
   value = 120,
   weight = 540,
@@ -27103,7 +27103,7 @@ define(98, {
   filter = "",
   rffilter = "",
 })
-define(97, {
+define_item(97, {
   image = 89,
   value = 140,
   weight = 420,
@@ -27142,7 +27142,7 @@ define(97, {
   filter = "",
   rffilter = "",
 })
-define(96, {
+define_item(96, {
   image = 88,
   value = 3500,
   weight = 9500,
@@ -27181,7 +27181,7 @@ define(96, {
   filter = "",
   rffilter = "",
 })
-define(95, {
+define_item(95, {
   image = 87,
   value = 4200,
   weight = 3800,
@@ -27220,7 +27220,7 @@ define(95, {
   filter = "",
   rffilter = "",
 })
-define(94, {
+define_item(94, {
   image = 86,
   value = 120,
   weight = 400,
@@ -27259,7 +27259,7 @@ define(94, {
   filter = "",
   rffilter = "",
 })
-define(93, {
+define_item(93, {
   image = 85,
   value = 160,
   weight = 1200,
@@ -27298,7 +27298,7 @@ define(93, {
   filter = "",
   rffilter = "",
 })
-define(92, {
+define_item(92, {
   image = 84,
   value = 750,
   weight = 1100,
@@ -27337,7 +27337,7 @@ define(92, {
   filter = "/sf/",
   rffilter = "",
 })
-define(91, {
+define_item(91, {
   image = 72,
   value = 180,
   weight = 3400,
@@ -27376,7 +27376,7 @@ define(91, {
   filter = "",
   rffilter = "",
 })
-define(90, {
+define_item(90, {
   image = 80,
   value = 1200,
   weight = 7900,
@@ -27415,7 +27415,7 @@ define(90, {
   filter = "",
   rffilter = "",
 })
-define(89, {
+define_item(89, {
   image = 78,
   value = 1200,
   weight = 7900,
@@ -27454,7 +27454,7 @@ define(89, {
   filter = "",
   rffilter = "",
 })
-define(88, {
+define_item(88, {
   image = 76,
   value = 15000,
   weight = 45000,
@@ -27493,7 +27493,7 @@ define(88, {
   filter = "",
   rffilter = "",
 })
-define(87, {
+define_item(87, {
   image = 75,
   value = 720,
   weight = 750,
@@ -27532,7 +27532,7 @@ define(87, {
   filter = "",
   rffilter = "",
 })
-define(86, {
+define_item(86, {
   image = 74,
   value = 450,
   weight = 800,
@@ -27571,7 +27571,7 @@ define(86, {
   filter = "",
   rffilter = "",
 })
-define(85, {
+define_item(85, {
   image = 73,
   value = 1600,
   weight = 8400,
@@ -27610,7 +27610,7 @@ define(85, {
   filter = "",
   rffilter = "",
 })
-define(84, {
+define_item(84, {
   image = 70,
   value = 3800,
   weight = 7000,
@@ -27649,7 +27649,7 @@ define(84, {
   filter = "",
   rffilter = "",
 })
-define(83, {
+define_item(83, {
   image = 69,
   value = 2400,
   weight = 6800,
@@ -27688,7 +27688,7 @@ define(83, {
   filter = "",
   rffilter = "",
 })
-define(82, {
+define_item(82, {
   image = 68,
   value = 320,
   weight = 320,
@@ -27727,7 +27727,7 @@ define(82, {
   filter = "",
   rffilter = "",
 })
-define(81, {
+define_item(81, {
   image = 67,
   value = 240,
   weight = 350,
@@ -27766,7 +27766,7 @@ define(81, {
   filter = "/fest/",
   rffilter = "",
 })
-define(80, {
+define_item(80, {
   image = 66,
   value = 1400,
   weight = 15000,
@@ -27805,7 +27805,7 @@ define(80, {
   filter = "",
   rffilter = "",
 })
-define(79, {
+define_item(79, {
   image = 234,
   value = 6400,
   weight = 8900,
@@ -27844,7 +27844,7 @@ define(79, {
   filter = "",
   rffilter = "",
 })
-define(78, {
+define_item(78, {
   image = 235,
   value = 1800,
   weight = 10200,
@@ -27883,7 +27883,7 @@ define(78, {
   filter = "",
   rffilter = "",
 })
-define(77, {
+define_item(77, {
   image = 237,
   value = 80,
   weight = 900,
@@ -27922,7 +27922,7 @@ define(77, {
   filter = "",
   rffilter = "",
 })
-define(76, {
+define_item(76, {
   image = 354,
   value = 15000,
   weight = 120,
@@ -27961,7 +27961,7 @@ define(76, {
   filter = "",
   rffilter = "",
 })
-define(75, {
+define_item(75, {
   image = 354,
   value = 10000,
   weight = 120,
@@ -28000,7 +28000,7 @@ define(75, {
   filter = "",
   rffilter = "",
 })
-define(74, {
+define_item(74, {
   image = 354,
   value = 7500,
   weight = 120,
@@ -28039,7 +28039,7 @@ define(74, {
   filter = "",
   rffilter = "",
 })
-define(73, {
+define_item(73, {
   image = 405,
   value = 20000,
   weight = 4200,
@@ -28078,7 +28078,7 @@ define(73, {
   filter = "",
   rffilter = "",
 })
-define(72, {
+define_item(72, {
   image = 354,
   value = 5000,
   weight = 120,
@@ -28117,7 +28117,7 @@ define(72, {
   filter = "",
   rffilter = "",
 })
-define(71, {
+define_item(71, {
   image = 354,
   value = 3000,
   weight = 120,
@@ -28156,7 +28156,7 @@ define(71, {
   filter = "",
   rffilter = "",
 })
-define(70, {
+define_item(70, {
   image = 354,
   value = 1280,
   weight = 120,
@@ -28195,7 +28195,7 @@ define(70, {
   filter = "",
   rffilter = "",
 })
-define(69, {
+define_item(69, {
   image = 354,
   value = 300,
   weight = 120,
@@ -28234,7 +28234,7 @@ define(69, {
   filter = "",
   rffilter = "",
 })
-define(68, {
+define_item(68, {
   image = 354,
   value = 150,
   weight = 120,
@@ -28273,7 +28273,7 @@ define(68, {
   filter = "",
   rffilter = "",
 })
-define(67, {
+define_item(67, {
   image = 398,
   value = 200,
   weight = 50,
@@ -28312,7 +28312,7 @@ define(67, {
   filter = "",
   rffilter = "",
 })
-define(66, {
+define_item(66, {
   image = 423,
   value = 300,
   weight = 900,
@@ -28351,7 +28351,7 @@ define(66, {
   filter = "",
   rffilter = "",
 })
-define(65, {
+define_item(65, {
   image = 422,
   value = 250,
   weight = 700,
@@ -28390,7 +28390,7 @@ define(65, {
   filter = "",
   rffilter = "",
 })
-define(64, {
+define_item(64, {
   image = 405,
   value = 60000,
   weight = 4000,
@@ -28429,7 +28429,7 @@ define(64, {
   filter = "",
   rffilter = "",
 })
-define(63, {
+define_item(63, {
   image = 421,
   value = 50000,
   weight = 9000,
@@ -28468,7 +28468,7 @@ define(63, {
   filter = "",
   rffilter = "",
 })
-define(62, {
+define_item(62, {
   image = 420,
   value = 150,
   weight = 2400,
@@ -28507,7 +28507,7 @@ define(62, {
   filter = "/sf/",
   rffilter = "",
 })
-define(61, {
+define_item(61, {
   image = 412,
   value = 150,
   weight = 1200,
@@ -28546,7 +28546,7 @@ define(61, {
   filter = "",
   rffilter = "",
 })
-define(60, {
+define_item(60, {
   image = 419,
   value = 500,
   weight = 800,
@@ -28585,7 +28585,7 @@ define(60, {
   filter = "/sf/",
   rffilter = "",
 })
-define(59, {
+define_item(59, {
   image = 411,
   value = 4800,
   weight = 2200,
@@ -28624,7 +28624,7 @@ define(59, {
   filter = "",
   rffilter = "",
 })
-define(58, {
+define_item(58, {
   image = 404,
   value = 500,
   weight = 1200,
@@ -28663,7 +28663,7 @@ define(58, {
   filter = "",
   rffilter = "",
 })
-define(57, {
+define_item(57, {
   image = 501,
   value = 40000,
   weight = 1400,
@@ -28702,7 +28702,7 @@ define(57, {
   filter = "",
   rffilter = "",
 })
-define(56, {
+define_item(56, {
   image = 405,
   value = 40000,
   weight = 2200,
@@ -28741,7 +28741,7 @@ define(56, {
   filter = "",
   rffilter = "",
 })
-define(55, {
+define_item(55, {
   image = 437,
   value = 1,
   weight = 1,
@@ -28780,7 +28780,7 @@ define(55, {
   filter = "/noshop/",
   rffilter = "",
 })
-define(54, {
+define_item(54, {
   image = 433,
   value = 1,
   weight = 0,
@@ -28819,7 +28819,7 @@ define(54, {
   filter = "",
   rffilter = "",
 })
-define(53, {
+define_item(53, {
   image = 247,
   value = 10,
   weight = 12000,
@@ -28858,7 +28858,7 @@ define(53, {
   filter = "",
   rffilter = "",
 })
-define(52, {
+define_item(52, {
   image = 246,
   value = 10,
   weight = 80,
@@ -28897,7 +28897,7 @@ define(52, {
   filter = "",
   rffilter = "",
 })
-define(51, {
+define_item(51, {
   image = 245,
   value = 10,
   weight = 80,
@@ -28936,7 +28936,7 @@ define(51, {
   filter = "",
   rffilter = "",
 })
-define(50, {
+define_item(50, {
   image = 244,
   value = 10,
   weight = 1050,
@@ -28975,7 +28975,7 @@ define(50, {
   filter = "",
   rffilter = "",
 })
-define(49, {
+define_item(49, {
   image = 243,
   value = 130,
   weight = 1400,
@@ -29014,7 +29014,7 @@ define(49, {
   filter = "",
   rffilter = "",
 })
-define(48, {
+define_item(48, {
   image = 242,
   value = 170,
   weight = 3200,
@@ -29053,7 +29053,7 @@ define(48, {
   filter = "",
   rffilter = "",
 })
-define(47, {
+define_item(47, {
   image = 204,
   value = 140,
   weight = 250,
@@ -29092,7 +29092,7 @@ define(47, {
   filter = "",
   rffilter = "",
 })
-define(46, {
+define_item(46, {
   image = 241,
   value = 6,
   weight = 800,
@@ -29131,7 +29131,7 @@ define(46, {
   filter = "",
   rffilter = "",
 })
-define(45, {
+define_item(45, {
   image = 240,
   value = 8,
   weight = 80,
@@ -29170,7 +29170,7 @@ define(45, {
   filter = "/fish/",
   rffilter = "",
 })
-define(44, {
+define_item(44, {
   image = 238,
   value = 10,
   weight = 450,
@@ -29209,7 +29209,7 @@ define(44, {
   filter = "",
   rffilter = "/ore/",
 })
-define(43, {
+define_item(43, {
   image = 239,
   value = 10,
   weight = 120,
@@ -29248,7 +29248,7 @@ define(43, {
   filter = "/fish/",
   rffilter = "",
 })
-define(42, {
+define_item(42, {
   image = 213,
   value = 4200,
   weight = 320,
@@ -29287,7 +29287,7 @@ define(42, {
   filter = "",
   rffilter = "/ore/",
 })
-define(41, {
+define_item(41, {
   image = 213,
   value = 2450,
   weight = 380,
@@ -29326,7 +29326,7 @@ define(41, {
   filter = "",
   rffilter = "/ore/",
 })
-define(40, {
+define_item(40, {
   image = 212,
   value = 720,
   weight = 70,
@@ -29365,7 +29365,7 @@ define(40, {
   filter = "",
   rffilter = "/ore/",
 })
-define(39, {
+define_item(39, {
   image = 212,
   value = 1400,
   weight = 240,
@@ -29404,7 +29404,7 @@ define(39, {
   filter = "",
   rffilter = "/ore/",
 })
-define(38, {
+define_item(38, {
   image = 33,
   value = 2000,
   weight = 1100,
@@ -29443,7 +29443,7 @@ define(38, {
   filter = "",
   rffilter = "/ore/",
 })
-define(37, {
+define_item(37, {
   image = 211,
   value = 450,
   weight = 1200,
@@ -29482,7 +29482,7 @@ define(37, {
   filter = "",
   rffilter = "/ore/",
 })
-define(36, {
+define_item(36, {
   image = 211,
   value = 470,
   weight = 900,
@@ -29521,7 +29521,7 @@ define(36, {
   filter = "",
   rffilter = "/ore/",
 })
-define(35, {
+define_item(35, {
   image = 211,
   value = 450,
   weight = 1600,
@@ -29560,7 +29560,7 @@ define(35, {
   filter = "",
   rffilter = "/ore/",
 })
-define(34, {
+define_item(34, {
   image = 429,
   value = 3800,
   weight = 380,
@@ -29599,7 +29599,7 @@ define(34, {
   filter = "",
   rffilter = "",
 })
-define(33, {
+define_item(33, {
   image = 429,
   value = 3800,
   weight = 380,
@@ -29638,7 +29638,7 @@ define(33, {
   filter = "",
   rffilter = "",
 })
-define(32, {
+define_item(32, {
   image = 429,
   value = 3800,
   weight = 380,
@@ -29677,7 +29677,7 @@ define(32, {
   filter = "",
   rffilter = "",
 })
-define(31, {
+define_item(31, {
   image = 354,
   value = 280,
   weight = 50,
@@ -29716,7 +29716,7 @@ define(31, {
   filter = "",
   rffilter = "",
 })
-define(30, {
+define_item(30, {
   image = 354,
   value = 120,
   weight = 120,
@@ -29755,7 +29755,7 @@ define(30, {
   filter = "/nogive/",
   rffilter = "",
 })
-define(29, {
+define_item(29, {
   image = 354,
   value = 40,
   weight = 120,
@@ -29794,7 +29794,7 @@ define(29, {
   filter = "/neg/",
   rffilter = "",
 })
-define(28, {
+define_item(28, {
   image = 354,
   value = 30,
   weight = 120,
@@ -29833,7 +29833,7 @@ define(28, {
   filter = "/neg/",
   rffilter = "",
 })
-define(27, {
+define_item(27, {
   image = 354,
   value = 20,
   weight = 120,
@@ -29872,7 +29872,7 @@ define(27, {
   filter = "/neg/",
   rffilter = "",
 })
-define(26, {
+define_item(26, {
   image = 354,
   value = 100,
   weight = 120,
@@ -29911,7 +29911,7 @@ define(26, {
   filter = "",
   rffilter = "",
 })
-define(25, {
+define_item(25, {
   image = 333,
   value = 100,
   weight = 80,
@@ -29950,7 +29950,7 @@ define(25, {
   filter = "",
   rffilter = "",
 })
-define(24, {
+define_item(24, {
   image = 333,
   value = 500,
   weight = 80,
@@ -29989,7 +29989,7 @@ define(24, {
   filter = "",
   rffilter = "",
 })
-define(23, {
+define_item(23, {
   image = 333,
   value = 100,
   weight = 80,
@@ -30028,7 +30028,7 @@ define(23, {
   filter = "",
   rffilter = "",
 })
-define(22, {
+define_item(22, {
   image = 429,
   value = 6400,
   weight = 380,
@@ -30067,7 +30067,7 @@ define(22, {
   filter = "",
   rffilter = "",
 })
-define(21, {
+define_item(21, {
   image = 429,
   value = 5600,
   weight = 380,
@@ -30106,7 +30106,7 @@ define(21, {
   filter = "",
   rffilter = "",
 })
-define(20, {
+define_item(20, {
   image = 429,
   value = 3200,
   weight = 380,
@@ -30145,7 +30145,7 @@ define(20, {
   filter = "",
   rffilter = "",
 })
-define(19, {
+define_item(19, {
   image = 471,
   value = 840,
   weight = 800,
@@ -30184,7 +30184,7 @@ define(19, {
   filter = "",
   rffilter = "",
 })
-define(18, {
+define_item(18, {
   image = 471,
   value = 1080,
   weight = 800,
@@ -30223,7 +30223,7 @@ define(18, {
   filter = "",
   rffilter = "",
 })
-define(17, {
+define_item(17, {
   image = 470,
   value = 3500,
   weight = 20,
@@ -30262,7 +30262,7 @@ define(17, {
   filter = "",
   rffilter = "",
 })
-define(16, {
+define_item(16, {
   image = 470,
   value = 200,
   weight = 20,
@@ -30301,7 +30301,7 @@ define(16, {
   filter = "",
   rffilter = "",
 })
-define(15, {
+define_item(15, {
   image = 470,
   value = 12000,
   weight = 20,
@@ -30340,7 +30340,7 @@ define(15, {
   filter = "",
   rffilter = "",
 })
-define(14, {
+define_item(14, {
   image = 470,
   value = 480,
   weight = 20,
@@ -30379,7 +30379,7 @@ define(14, {
   filter = "",
   rffilter = "",
 })
-define(13, {
+define_item(13, {
   image = 407,
   value = 450,
   weight = 50,
@@ -30418,7 +30418,7 @@ define(13, {
   filter = "",
   rffilter = "",
 })
-define(12, {
+define_item(12, {
   image = 460,
   value = 2200,
   weight = 720,
@@ -30457,7 +30457,7 @@ define(12, {
   filter = "",
   rffilter = "",
 })
-define(11, {
+define_item(11, {
   image = 418,
   value = 480,
   weight = 950,
@@ -30496,7 +30496,7 @@ define(11, {
   filter = "",
   rffilter = "",
 })
-define(10, {
+define_item(10, {
   image = 450,
   value = 400,
   weight = 1100,
@@ -30535,7 +30535,7 @@ define(10, {
   filter = "",
   rffilter = "",
 })
-define(9, {
+define_item(9, {
   image = 449,
   value = 1400,
   weight = 700,
@@ -30574,7 +30574,7 @@ define(9, {
   filter = "",
   rffilter = "",
 })
-define(8, {
+define_item(8, {
   image = 408,
   value = 450,
   weight = 800,
@@ -30613,7 +30613,7 @@ define(8, {
   filter = "",
   rffilter = "",
 })
-define(7, {
+define_item(7, {
   image = 396,
   value = 600,
   weight = 4500,
@@ -30652,7 +30652,7 @@ define(7, {
   filter = "",
   rffilter = "",
 })
-define(6, {
+define_item(6, {
   image = 478,
   value = 7200,
   weight = 400,
@@ -30691,7 +30691,7 @@ define(6, {
   filter = "",
   rffilter = "",
 })
-define(5, {
+define_item(5, {
   image = 477,
   value = 1400,
   weight = 600,
@@ -30730,7 +30730,7 @@ define(5, {
   filter = "",
   rffilter = "",
 })
-define(4, {
+define_item(4, {
   image = 427,
   value = 500,
   weight = 1000,
@@ -30769,7 +30769,7 @@ define(4, {
   filter = "",
   rffilter = "",
 })
-define(3, {
+define_item(3, {
   image = 499,
   value = 500,
   weight = 900,
@@ -30808,7 +30808,7 @@ define(3, {
   filter = "",
   rffilter = "",
 })
-define(2, {
+define_item(2, {
   image = 400,
   value = 500,
   weight = 600,
@@ -30847,7 +30847,7 @@ define(2, {
   filter = "",
   rffilter = "",
 })
-define(1, {
+define_item(1, {
   image = 405,
   value = 500,
   weight = 1500,
@@ -30886,7 +30886,7 @@ define(1, {
   filter = "",
   rffilter = "",
 })
-define(0, {
+define_item(0, {
   image = 33,
   value = 1,
   weight = 1,

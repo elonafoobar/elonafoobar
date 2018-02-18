@@ -61,15 +61,12 @@ namespace elona
 
 
 
-ability_db::ability_db()
+void ability_db::initialize()
 {
-    lua_State* state = luaL_newstate();
-    luaL_openlibs(state);
-    cat::register_function(state, "define", &define);
+    cat::global.register_function("define_ability", &define);
     storage_ptr = &storage;
-    cat::load(state, fs::u8path(u8"../data/ability.lua"));
+    cat::global.load(fs::u8path(u8"../data/ability.lua"));
     storage_ptr = nullptr;
-    lua_close(state);
 
     storage[0] = {};
 }

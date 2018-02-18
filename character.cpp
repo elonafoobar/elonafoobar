@@ -178,15 +178,12 @@ namespace elona
 
 
 
-character_db::character_db()
+void character_db::initialize()
 {
-    lua_State* state = luaL_newstate();
-    luaL_openlibs(state);
-    cat::register_function(state, "define", &define);
+    cat::global.register_function("define_character", &define);
     storage_ptr = &storage;
-    cat::load(state, fs::u8path(u8"../data/character.lua"));
+    cat::global.load(fs::u8path(u8"../data/character.lua"));
     storage_ptr = nullptr;
-    lua_close(state);
 }
 
 

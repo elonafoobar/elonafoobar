@@ -1,404 +1,404 @@
-define('24', {
+define_trait('24', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 3,
 })
-define('3', {
+define_trait('3', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('40', {
+define_trait('40', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('13', {
+define_trait('13', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('14', {
+define_trait('14', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('22', {
+define_trait('22', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('23', {
+define_trait('23', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('21', {
+define_trait('21', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
 })
-define('5', {
+define_trait('5', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 3,
 })
-define('38', {
+define_trait('38', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
 })
-define('39', {
+define_trait('39', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
 })
-define('42', {
+define_trait('42', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('9', {
+define_trait('9', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 3,
 })
-define('20', {
+define_trait('20', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
 })
-define('12', {
+define_trait('12', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
 })
-define('43', {
+define_trait('43', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('44', {
+define_trait('44', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('19', {
+define_trait('19', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
 })
-define('15', {
+define_trait('15', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
 })
-define('18', {
+define_trait('18', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
 })
-define('16', {
+define_trait('16', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
 })
-define('17', {
+define_trait('17', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
 })
-define('1', {
+define_trait('1', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 3,
 })
-define('2', {
+define_trait('2', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 5,
 })
-define('11', {
+define_trait('11', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 5,
 })
-define('6', {
+define_trait('6', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
 })
-define('4', {
+define_trait('4', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
 })
-define('7', {
+define_trait('7', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 3,
 })
-define('8', {
+define_trait('8', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 3,
 })
-define('10', {
+define_trait('10', {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 3,
 })
-define('41', {
+define_trait('41', {
   traitref0 = 1,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('25', {
-  traitref0 = 1,
-  traitref1 = -3,
-  traitref2 = 3,
-})
-define('26', {
+define_trait('25', {
   traitref0 = 1,
   traitref1 = -3,
   traitref2 = 3,
 })
-define('27', {
-  traitref0 = 1,
-  traitref1 = -2,
-  traitref2 = 2,
-})
-define('28', {
+define_trait('26', {
   traitref0 = 1,
   traitref1 = -3,
   traitref2 = 3,
 })
-define('29', {
+define_trait('27', {
+  traitref0 = 1,
+  traitref1 = -2,
+  traitref2 = 2,
+})
+define_trait('28', {
   traitref0 = 1,
   traitref1 = -3,
   traitref2 = 3,
 })
-define('30', {
+define_trait('29', {
+  traitref0 = 1,
+  traitref1 = -3,
+  traitref2 = 3,
+})
+define_trait('30', {
   traitref0 = 1,
   traitref1 = -2,
   traitref2 = 2,
 })
-define('31', {
+define_trait('31', {
   traitref0 = 1,
   traitref1 = -2,
   traitref2 = 2,
 })
-define('32', {
-  traitref0 = 1,
-  traitref1 = -1,
-  traitref2 = 1,
-})
-define('33', {
-  traitref0 = 1,
-  traitref1 = -1,
-  traitref2 = 1,
-})
-define('34', {
+define_trait('32', {
   traitref0 = 1,
   traitref1 = -1,
   traitref2 = 1,
 })
-define('35', {
+define_trait('33', {
   traitref0 = 1,
   traitref1 = -1,
   traitref2 = 1,
 })
-define('36', {
+define_trait('34', {
   traitref0 = 1,
   traitref1 = -1,
   traitref2 = 1,
 })
-define('37', {
+define_trait('35', {
+  traitref0 = 1,
+  traitref1 = -1,
+  traitref2 = 1,
+})
+define_trait('36', {
+  traitref0 = 1,
+  traitref1 = -1,
+  traitref2 = 1,
+})
+define_trait('37', {
   traitref0 = 1,
   traitref1 = -2,
   traitref2 = 2,
 })
-define('150', {
+define_trait('150', {
   traitref0 = 2,
   traitref1 = -2,
   traitref2 = 2,
 })
-define('151', {
+define_trait('151', {
   traitref0 = 2,
   traitref1 = -2,
   traitref2 = 2,
 })
-define('152', {
+define_trait('152', {
   traitref0 = 2,
   traitref1 = -2,
   traitref2 = 2,
 })
-define('155', {
+define_trait('155', {
   traitref0 = 2,
   traitref1 = -2,
   traitref2 = 2,
 })
-define('156', {
+define_trait('156', {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('160', {
+define_trait('160', {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('161', {
+define_trait('161', {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('162', {
+define_trait('162', {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('169', {
+define_trait('169', {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('163', {
+define_trait('163', {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('164', {
+define_trait('164', {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('165', {
+define_trait('165', {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('166', {
+define_trait('166', {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('167', {
+define_trait('167', {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('157', {
+define_trait('157', {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('158', {
+define_trait('158', {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('159', {
+define_trait('159', {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('154', {
+define_trait('154', {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('153', {
+define_trait('153', {
   traitref0 = 2,
   traitref1 = -2,
   traitref2 = 2,
 })
-define('0', {
+define_trait('0', {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('168', {
+define_trait('168', {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
 })
-define('201', {
+define_trait('201', {
   traitref0 = 3,
   traitref1 = -3,
   traitref2 = 0,
 })
-define('202', {
+define_trait('202', {
   traitref0 = 3,
   traitref1 = -3,
   traitref2 = 0,
 })
-define('203', {
+define_trait('203', {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
 })
-define('204', {
+define_trait('204', {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
 })
-define('205', {
+define_trait('205', {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
 })
-define('206', {
+define_trait('206', {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
 })
-define('207', {
+define_trait('207', {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
 })
-define('208', {
+define_trait('208', {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
 })
-define('209', {
+define_trait('209', {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
 })
-define('210', {
+define_trait('210', {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
 })
-define('211', {
+define_trait('211', {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
 })
-define('212', {
+define_trait('212', {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
 })
-define('213', {
+define_trait('213', {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
 })
-define('214', {
+define_trait('214', {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
 })
-define('215', {
+define_trait('215', {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
 })
-define('216', {
+define_trait('216', {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
