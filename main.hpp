@@ -18,7 +18,6 @@ inline int prm_853;
 
 inline int tmp_at_m172;
 
-inline elona_vector2<std::string> invn;
 inline elona_vector1<int> inhlist_at_m184;
 inline elona_vector1<int> inhlist;
 

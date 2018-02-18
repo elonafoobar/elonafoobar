@@ -10426,32 +10426,6 @@ void arrayfile_read(std::string_view fmode_str, const fs::path& filepath)
             ++itr;
         }
     }
-    else if (fmode_str == u8"invn1"s)
-    {
-        lines.resize(1320 * 6);
-        auto itr = std::begin(lines);
-        for (int i = 0; i < 1320; ++i)
-        {
-            for (int j = 0; j < 6; ++j)
-            {
-                invn(j, i) = *itr;
-                ++itr;
-            }
-        }
-    }
-    else if (fmode_str == u8"invn2"s)
-    {
-        lines.resize(4160 * 6);
-        auto itr = std::begin(lines);
-        for (int i = 1320; i < 5480; ++i)
-        {
-            for (int j = 0; j < 6; ++j)
-            {
-                invn(j, i) = *itr;
-                ++itr;
-            }
-        }
-    }
 }
 
 
@@ -10510,26 +10484,6 @@ void arrayfile_write(std::string_view fmode_str, const fs::path& filepath)
         for (int j = 0; j < 10; ++j)
         {
             out << cdatan(j, tg) << std::endl;
-        }
-    }
-    else if (fmode_str == u8"invn1"s)
-    {
-        for (int i = 0; i < 1320; ++i)
-        {
-            for (int j = 0; j < 6; ++j)
-            {
-                out << invn(j, i) << std::endl;
-            }
-        }
-    }
-    else if (fmode_str == u8"invn2"s)
-    {
-        for (int i = 1320; i < 5480; ++i)
-        {
-            for (int j = 0; j < 6; ++j)
-            {
-                out << invn(j, i) << std::endl;
-            }
         }
     }
 
