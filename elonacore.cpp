@@ -52251,7 +52251,7 @@ int label_2072()
     {
         cdata[cc].enemy_id = 0;
     }
-    else if (is_in_fov(cc) == 0)
+    else if (is_in_fov(cdata[cc].enemy_id) == 0)
     {
         cdata[cc].enemy_id = 0;
     }
