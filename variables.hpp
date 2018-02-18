@@ -40,7 +40,6 @@ inline elona_vector1<int> iorgweight;
 inline elona_vector1<int> ipicref;
 inline elona_vector1<int> irandomname;
 inline elona_vector1<int> isetfruit;
-inline elona_vector1<int> j;
 inline elona_vector1<int> mainskill;
 inline elona_vector1<int> mat;
 inline elona_vector1<int> matneed;

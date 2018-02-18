@@ -37098,15 +37098,15 @@ label_1857_internal:
                     int cnt = 0;
                     for (int cnt_end = cnt + (6); cnt < cnt_end; ++cnt)
                     {
-                        j(0) = matneed(cnt * 2);
-                        j(1) = matneed(cnt * 2 + 1);
-                        if (j == -1)
+                        int j0 = matneed(cnt * 2);
+                        int j1 = matneed(cnt * 2 + 1);
+                        if (j0 == -1)
                         {
                             break;
                         }
-                        s = matname(j) + lang(u8" ? "s, u8" x "s) + j(1)
-                            + u8"("s + mat(j) + u8")"s;
-                        if (mat(j) >= j(1))
+                        s = matname(j0) + lang(u8" ? "s, u8" x "s) + j1 + u8"("s
+                            + mat(j0) + u8")"s;
+                        if (mat(j0) >= j1)
                         {
                             color(30, 30, 200);
                         }
@@ -37191,14 +37191,14 @@ label_1857_internal:
             int cnt = 0;
             for (int cnt_end = cnt + (6); cnt < cnt_end; ++cnt)
             {
-                j(0) = matneed(cnt * 2);
-                j(1) = matneed(cnt * 2 + 1);
-                if (j == -1)
+                int j0 = matneed(cnt * 2);
+                int j1 = matneed(cnt * 2 + 1);
+                if (j0 == -1)
                 {
                     break;
                 }
-                mat(j) -= j(1);
-                matuse += j(1);
+                mat(j0) -= j1;
+                matuse += j1;
             }
         }
         snd(58);
@@ -69674,7 +69674,7 @@ label_2272_internal:
     s(1) = strhint3b;
     display_window((windoww - 580) / 2 + inf_screenx, winposy(400), 580, 400);
     keyrange = 0;
-    j = 0;
+    int j0 = 0;
     n = 0;
     if (adata(28, gdata_current_map) == 0 || gdata_current_dungeon_level != 1)
     {
@@ -69696,13 +69696,13 @@ label_2272_internal:
             int cnt = 0;
             for (;; ++cnt)
             {
-                if (pochart(j, n, lv) == 0 || cnt == 0)
+                if (pochart(j0, n, lv) == 0 || cnt == 0)
                 {
                     if (cnt != 0)
                     {
                         ++n;
                     }
-                    j = 0;
+                    j0 = 0;
                     i = 0;
                     {
                         int cnt = 0;
@@ -69720,10 +69720,10 @@ label_2272_internal:
                     }
                     y = wy + 70 + n * 55;
                 }
-                x = wx + (ww - 70) / (i + 1) * (j + 1);
+                x = wx + (ww - 70) / (i + 1) * (j0 + 1);
                 pos(x - 26, y - 3);
                 gcopy(3, 960, 288, 144, 24);
-                p = pochart(j, n, lv);
+                p = pochart(j0, n, lv);
                 key_list(cnt) = key_select(cnt);
                 ++keyrange;
                 display_key(x - 30, y + 21, cnt);
@@ -69736,7 +69736,7 @@ label_2272_internal:
                     s = lang(u8"不在"s, u8"Empty"s);
                 }
                 cs_list(cs == cnt, s, x - 2, y + 20);
-                ++j;
+                ++j0;
             }
         }
         if (keyrange != 0)
