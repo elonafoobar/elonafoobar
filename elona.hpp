@@ -10,6 +10,7 @@
 #include <string>
 #include <unordered_map>
 #include "macro_gdata.hpp"
+#include "snail/color.hpp"
 #include "snail/input.hpp"
 #include "util.hpp"
 
@@ -362,9 +363,13 @@ void bcopy(const fs::path& from, const fs::path& to);
 void bgscr(int window_id, int width, int height, int, int);
 
 
-void boxf(int x1, int y1, int x2, int y2);
-
-void boxf();
+void boxf(
+    int x1,
+    int y1,
+    int x2,
+    int y2,
+    const snail::color& color = {0, 0, 0, 0});
+void boxf(const snail::color& color = {0, 0, 0, 0});
 
 
 void buffer(int window_id, int width = 0, int heihgt = 0);
@@ -378,11 +383,8 @@ void clrobj(int);
 // Shift-JIS -> Unicode
 void cnvstow(std::string& out, const std::string& source);
 
-void color(int r, int g);
 
 void color(int r, int g, int b);
-
-void color(int v);
 
 
 

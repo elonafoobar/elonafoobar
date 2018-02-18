@@ -140,7 +140,6 @@ void initialize_elona()
     }
     gsel(0);
     redraw(0);
-    color(0);
     boxf();
     redraw(1);
     buffer(3, 1440, 800);
@@ -326,7 +325,6 @@ void initialize_elona()
     gsel(3);
     gmode(0);
     redraw(0);
-    color(1, 1, 1);
     font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
     for (int i = 0; i < 18; ++i)
     {
@@ -335,6 +333,7 @@ void initialize_elona()
         pos(i * 24 + 77, 31);
         color(50, 60, 80);
         bmes(key_select(i), 250, 240, 230);
+        color(0, 0, 0);
     }
     gsel(0);
     gmode(2);
@@ -641,6 +640,7 @@ void main_title_menu()
     color(255, 255, 255);
     pos(20, 20);
     mes(u8"Elona version 1.22  Developed by Noa"s);
+    color(0, 0, 0);
     pos(20, 38);
     if (jp)
     {
@@ -880,7 +880,6 @@ void character_making_select_race()
     draw_caption();
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
     pos(20, windowh - 20);
-    color(0, 0, 0);
     mes(u8"Press F1 to show help."s);
     if (geneuse != ""s)
     {
@@ -944,7 +943,6 @@ label_1546_internal:
         display_topic(lang(u8"選択できる種族"s, u8"Race"s), wx + 28, wy + 30);
         display_topic(lang(u8"種族の説明"s, u8"Detail"s), wx + 188, wy + 30);
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        color(0, 0, 0);
         {
             int cnt = 0;
             for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
@@ -962,7 +960,6 @@ label_1546_internal:
             }
         }
         cs_bk = cs;
-        color(0, 0, 0);
         pos(wx + 200, wy + 66);
         del_chara(0);
         access_race_info(3, listn(1, page * pagesize + cs));
@@ -1049,7 +1046,6 @@ void character_making_select_sex(bool label_1548_flg)
     draw_caption();
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
     pos(20, windowh - 20);
-    color(0, 0, 0);
     mes(u8"Press F1 to show help."s);
     if (geneuse != ""s)
     {
@@ -1137,7 +1133,6 @@ void character_making_select_class(bool label_1551_flg)
     draw_caption();
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
     pos(20, windowh - 20);
-    color(0, 0, 0);
     mes(u8"Press F1 to show help."s);
     if (geneuse != ""s)
     {
@@ -1185,7 +1180,6 @@ label_1552_internal:
         display_topic(lang(u8"選択できる職業"s, u8"Class"s), wx + 28, wy + 30);
         display_topic(lang(u8"職業の説明"s, u8"Detail"s), wx + 188, wy + 30);
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        color(0, 0, 0);
         {
             int cnt = 0;
             for (int cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
@@ -1205,7 +1199,6 @@ label_1552_internal:
             }
         }
         cs_bk = cs;
-        color(0, 0, 0);
         pos(wx + 200, wy + 66);
         del_chara(0);
         access_class_info(3, listn(1, cs));
@@ -1276,7 +1269,6 @@ label_1554:
     draw_caption();
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
     pos(20, windowh - 20);
-    color(0, 0, 0);
     mes(u8"Press F1 to show help."s);
     if (geneuse != ""s)
     {
@@ -1333,7 +1325,6 @@ label_1555_internal:
     grotate(2, 0, 0, 0, x, y);
     gmode(2);
     display_topic(lang(u8"能力"s, u8"Attributes"s), wx + 28, wy + 30);
-    color(0, 0, 0);
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
     pos(wx + 175, wy + 52);
     mes(lang(
@@ -1353,7 +1344,6 @@ label_1555_internal:
             font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
             cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 23 - 1);
             font(lang(cfg_font1, cfg_font2), 15 - en * 2, 1);
-            color(0, 0, 0);
             if (cnt >= 2)
             {
                 pos(wx + 198, wy + 76 + cnt * 23);
@@ -1367,6 +1357,7 @@ label_1555_internal:
                     pos(wx + 240, wy + 66 + cnt * 23 + 2);
                     color(20, 20, 140);
                     mes(u8"Locked!"s);
+                    color(0, 0, 0);
                 }
             }
         }
@@ -1448,7 +1439,6 @@ void character_making_select_feats_and_alias(bool label_1558_flg)
         draw_caption();
         font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
         pos(20, windowh - 20);
-        color(0, 0, 0);
         mes(u8"Press F1 to show help."s);
         if (geneuse != ""s)
         {
@@ -1480,7 +1470,6 @@ void character_making_select_feats_and_alias(bool label_1558_flg)
     draw_caption();
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
     pos(20, windowh - 20);
-    color(0, 0, 0);
     mes(u8"Press F1 to show help."s);
     if (geneuse != ""s)
     {
@@ -1508,7 +1497,6 @@ label_1559_internal:
         gmode(2);
         display_topic(lang(u8"異名の候補"s, u8"Alias List"s), wx + 28, wy + 30);
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        color(0, 0, 0);
         {
             int cnt = 0;
             for (int cnt_end = cnt + (17); cnt < cnt_end; ++cnt)
@@ -1605,7 +1593,6 @@ label_1561_internal:
     draw_caption();
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
     pos(20, windowh - 20);
-    color(0, 0, 0);
     mes(u8"Press F1 to show help."s);
     if (geneuse != ""s)
     {
@@ -1798,15 +1785,12 @@ void show_race_or_class_info(int CNT)
         grotate(5, 0, 960, 0, chipc(2, ref1) * 2, chipc(3, ref1) * 2);
         gmode(2);
     }
-    color(0, 0, 0);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     tx = wx + 230;
     ty = wy + 62;
     talk_conv(buff, 60 + en * 2);
-    color(0, 0, 0);
     pos(tx - 20, ty);
     mes(buff);
-    color(0, 0, 0);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     tx = wx + 200;
     ty = wy + 166;
@@ -1917,6 +1901,7 @@ void show_race_or_class_info(int CNT)
                             0,
                             jp ? 6 : 3)
                         + u8": "s + s(p));
+                    color(0, 0, 0);
                 }
             }
             ty += 16;
@@ -1926,7 +1911,6 @@ void show_race_or_class_info(int CNT)
     display_topic(lang(u8"獲得技能"s, u8"Trained Skill"s), tx, ty);
     ty += 34;
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    color(0, 0, 0);
     r = 0;
     s = lang(u8"武器の専門  "s, u8"Proficient in "s);
     {

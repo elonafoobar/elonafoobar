@@ -34,6 +34,18 @@ struct color
 };
 
 
+inline bool operator==(const color& x, const color& y)
+{
+    return x.r == y.r && x.g == y.g && x.b == y.b && x.a == y.a;
+}
+
+
+inline bool operator!=(const color& x, const color& y)
+{
+    return !(x == y);
+}
+
+
 
 namespace palette
 {

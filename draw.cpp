@@ -15,7 +15,6 @@ void prepare_item_image(int id, int color_or_character_id)
     const auto h = chipi(3, id);
 
     gsel(1);
-    color(0);
     boxf(0, 960, w, h + 960);
 
     if (id == 528)
@@ -51,7 +50,6 @@ void prepare_item_image(int id, int color_or_character_id)
             chipc(2, character_id) - 16,
             chipc(3, character_id) - 8);
         gmode(4, -1, -1, 150);
-        color(0, 0, 0);
         pos(0, 960 + (chipc(3, character_id) == inf_tiles) * 48);
         gcopy(
             1,
