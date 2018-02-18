@@ -1,4 +1,5 @@
 #include "ability.hpp"
+#include "cat.hpp"
 #include "character.hpp"
 #include "class.hpp"
 #include "config.hpp"
@@ -7,9 +8,11 @@
 #include "filesystem.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "item_db.hpp"
 #include "main.hpp"
 #include "race.hpp"
 #include "range.hpp"
+#include "trait.hpp"
 #include "variables.hpp"
 
 using namespace elona;
@@ -587,6 +590,15 @@ namespace elona
 
 int main()
 {
+    cat::global.initialize();
+
+    the_ability_db.initialize();
+    the_character_db.initialize();
+    the_class_db.initialize();
+    the_item_db.initialize();
+    the_race_db.initialize();
+    the_trait_db.initialize();
+
     i18n::load();
 
     title(u8"Elona ver 1.22"s);

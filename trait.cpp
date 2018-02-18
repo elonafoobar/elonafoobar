@@ -61,15 +61,12 @@ namespace elona
 
 
 
-trait_db::trait_db()
+void trait_db::initialize()
 {
-    lua_State* state = luaL_newstate();
-    luaL_openlibs(state);
-    cat::register_function(state, "define", &define);
+    cat::global.register_function("Trait", &define);
     storage_ptr = &storage;
-    cat::load(state, fs::u8path(u8"../data/trait.lua"));
+    cat::global.load(fs::u8path(u8"../data/trait.lua"));
     storage_ptr = nullptr;
-    lua_close(state);
 }
 
 

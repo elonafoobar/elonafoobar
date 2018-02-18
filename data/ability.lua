@@ -1,1418 +1,1418 @@
-define('2', {
+Ability('2', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('3', {
+Ability('3', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('10', {
+Ability('10', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('11', {
+Ability('11', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('12', {
+Ability('12', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('13', {
+Ability('13', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('14', {
+Ability('14', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('15', {
+Ability('15', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('16', {
+Ability('16', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('17', {
+Ability('17', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('18', {
+Ability('18', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('19', {
+Ability('19', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('100', {
+Ability('100', {
   related_basic_attribute = 10,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('101', {
+Ability('101', {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('102', {
+Ability('102', {
   related_basic_attribute = 10,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('103', {
+Ability('103', {
   related_basic_attribute = 11,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('104', {
+Ability('104', {
   related_basic_attribute = 11,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('105', {
+Ability('105', {
   related_basic_attribute = 11,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('107', {
+Ability('107', {
   related_basic_attribute = 10,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('108', {
+Ability('108', {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('109', {
+Ability('109', {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('110', {
+Ability('110', {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('111', {
+Ability('111', {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('106', {
+Ability('106', {
   related_basic_attribute = 10,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('168', {
+Ability('168', {
   related_basic_attribute = 11,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('173', {
+Ability('173', {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('166', {
+Ability('166', {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('167', {
+Ability('167', {
   related_basic_attribute = 10,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('50', {
+Ability('50', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 1,
   sdataref4 = 0,
 })
-define('51', {
+Ability('51', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 1,
   sdataref4 = 0,
 })
-define('52', {
+Ability('52', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 1,
   sdataref4 = 0,
 })
-define('53', {
+Ability('53', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 2,
   sdataref4 = 0,
 })
-define('54', {
+Ability('54', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 2,
   sdataref4 = 0,
 })
-define('56', {
+Ability('56', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 4,
   sdataref4 = 0,
 })
-define('55', {
+Ability('55', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 3,
   sdataref4 = 0,
 })
-define('57', {
+Ability('57', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 3,
   sdataref4 = 0,
 })
-define('59', {
+Ability('59', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 4,
   sdataref4 = 0,
 })
-define('58', {
+Ability('58', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 3,
   sdataref4 = 0,
 })
-define('60', {
+Ability('60', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 5,
   sdataref4 = 0,
 })
-define('61', {
+Ability('61', {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('153', {
+Ability('153', {
   related_basic_attribute = 10,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('152', {
+Ability('152', {
   related_basic_attribute = 10,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('189', {
+Ability('189', {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('154', {
+Ability('154', {
   related_basic_attribute = 11,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('163', {
+Ability('163', {
   related_basic_attribute = 11,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('176', {
+Ability('176', {
   related_basic_attribute = 11,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('169', {
+Ability('169', {
   related_basic_attribute = 11,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('170', {
+Ability('170', {
   related_basic_attribute = 11,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('171', {
+Ability('171', {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('158', {
+Ability('158', {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('175', {
+Ability('175', {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('177', {
+Ability('177', {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('179', {
+Ability('179', {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('300', {
+Ability('300', {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 20,
   sdataref3 = 8000,
   sdataref4 = 0,
 })
-define('157', {
+Ability('157', {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('159', {
+Ability('159', {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('162', {
+Ability('162', {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('186', {
+Ability('186', {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('185', {
+Ability('185', {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 5,
   sdataref3 = 10000,
   sdataref4 = 0,
 })
-define('187', {
+Ability('187', {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('161', {
+Ability('161', {
   related_basic_attribute = 14,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('150', {
+Ability('150', {
   related_basic_attribute = 14,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('165', {
+Ability('165', {
   related_basic_attribute = 14,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('178', {
+Ability('178', {
   related_basic_attribute = 14,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('180', {
+Ability('180', {
   related_basic_attribute = 14,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('151', {
+Ability('151', {
   related_basic_attribute = 14,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('184', {
+Ability('184', {
   related_basic_attribute = 14,
   sdataref1 = 0,
   cost = 15,
   sdataref3 = 10000,
   sdataref4 = 0,
 })
-define('155', {
+Ability('155', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('174', {
+Ability('174', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('172', {
+Ability('172', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('188', {
+Ability('188', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('164', {
+Ability('164', {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('181', {
+Ability('181', {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('182', {
+Ability('182', {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('301', {
+Ability('301', {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 20,
   sdataref3 = 8000,
   sdataref4 = 0,
 })
-define('156', {
+Ability('156', {
   related_basic_attribute = 17,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('160', {
+Ability('160', {
   related_basic_attribute = 17,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
 })
-define('183', {
+Ability('183', {
   related_basic_attribute = 17,
   sdataref1 = 0,
   cost = 25,
   sdataref3 = 10000,
   sdataref4 = 0,
 })
-define('400', {
+Ability('400', {
   related_basic_attribute = 15,
   sdataref1 = 4,
   cost = 6,
   sdataref3 = 3000,
   sdataref4 = 80,
 })
-define('401', {
+Ability('401', {
   related_basic_attribute = 15,
   sdataref1 = 4,
   cost = 15,
   sdataref3 = 3000,
   sdataref4 = 350,
 })
-define('402', {
+Ability('402', {
   related_basic_attribute = 15,
   sdataref1 = 4,
   cost = 35,
   sdataref3 = 3000,
   sdataref4 = 800,
 })
-define('403', {
+Ability('403', {
   related_basic_attribute = 15,
   sdataref1 = 4,
   cost = 80,
   sdataref3 = 3000,
   sdataref4 = 1300,
 })
-define('405', {
+Ability('405', {
   related_basic_attribute = 15,
   sdataref1 = 4,
   cost = 20,
   sdataref3 = 8000,
   sdataref4 = 400,
 })
-define('406', {
+Ability('406', {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 15,
   sdataref3 = 3000,
   sdataref4 = 400,
 })
-define('407', {
+Ability('407', {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 35,
   sdataref3 = 3000,
   sdataref4 = 850,
 })
-define('409', {
+Ability('409', {
   related_basic_attribute = 16,
   sdataref1 = 5,
   cost = 10,
   sdataref3 = 5000,
   sdataref4 = 200,
 })
-define('408', {
+Ability('408', {
   related_basic_attribute = 16,
   sdataref1 = 5,
   cost = 10,
   sdataref3 = 10000,
   sdataref4 = 400,
 })
-define('410', {
+Ability('410', {
   related_basic_attribute = 16,
   sdataref1 = 5,
   cost = 8,
   sdataref3 = 10000,
   sdataref4 = 120,
 })
-define('411', {
+Ability('411', {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 28,
   sdataref3 = 10000,
   sdataref4 = 800,
 })
-define('412', {
+Ability('412', {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 35,
   sdataref3 = 3000,
   sdataref4 = 700,
 })
-define('413', {
+Ability('413', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 150,
   sdataref3 = 3000,
   sdataref4 = 1500,
 })
-define('414', {
+Ability('414', {
   related_basic_attribute = 16,
   sdataref1 = 2,
   cost = 5,
   sdataref3 = 2006,
   sdataref4 = 110,
 })
-define('415', {
+Ability('415', {
   related_basic_attribute = 16,
   sdataref1 = 2,
   cost = 8,
   sdataref3 = 2006,
   sdataref4 = 400,
 })
-define('417', {
+Ability('417', {
   related_basic_attribute = 16,
   sdataref1 = 2,
   cost = 10,
   sdataref3 = 2006,
   sdataref4 = 650,
 })
-define('416', {
+Ability('416', {
   related_basic_attribute = 16,
   sdataref1 = 2,
   cost = 10,
   sdataref3 = 2006,
   sdataref4 = 400,
 })
-define('418', {
+Ability('418', {
   related_basic_attribute = 16,
   sdataref1 = 2,
   cost = 10,
   sdataref3 = 2006,
   sdataref4 = 200,
 })
-define('459', {
+Ability('459', {
   related_basic_attribute = 16,
   sdataref1 = 2,
   cost = 24,
   sdataref3 = 2006,
   sdataref4 = 950,
 })
-define('419', {
+Ability('419', {
   related_basic_attribute = 16,
   sdataref1 = 1,
   cost = 10,
   sdataref3 = 9006,
   sdataref4 = 220,
 })
-define('420', {
+Ability('420', {
   related_basic_attribute = 16,
   sdataref1 = 1,
   cost = 10,
   sdataref3 = 9006,
   sdataref4 = 220,
 })
-define('421', {
+Ability('421', {
   related_basic_attribute = 16,
   sdataref1 = 1,
   cost = 10,
   sdataref3 = 9006,
   sdataref4 = 220,
 })
-define('422', {
+Ability('422', {
   related_basic_attribute = 16,
   sdataref1 = 1,
   cost = 12,
   sdataref3 = 9006,
   sdataref4 = 350,
 })
-define('423', {
+Ability('423', {
   related_basic_attribute = 16,
   sdataref1 = 1,
   cost = 12,
   sdataref3 = 9006,
   sdataref4 = 350,
 })
-define('644', {
+Ability('644', {
   related_basic_attribute = 11,
   sdataref1 = 3,
   cost = 16,
   sdataref3 = 8000,
   sdataref4 = 450,
 })
-define('431', {
+Ability('431', {
   related_basic_attribute = 16,
   sdataref1 = 3,
   cost = 16,
   sdataref3 = 3002,
   sdataref4 = 450,
 })
-define('432', {
+Ability('432', {
   related_basic_attribute = 16,
   sdataref1 = 3,
   cost = 16,
   sdataref3 = 3002,
   sdataref4 = 450,
 })
-define('433', {
+Ability('433', {
   related_basic_attribute = 16,
   sdataref1 = 3,
   cost = 20,
   sdataref3 = 3002,
   sdataref4 = 1000,
 })
-define('434', {
+Ability('434', {
   related_basic_attribute = 16,
   sdataref1 = 3,
   cost = 18,
   sdataref3 = 3002,
   sdataref4 = 700,
 })
-define('460', {
+Ability('460', {
   related_basic_attribute = 16,
   sdataref1 = 3,
   cost = 40,
   sdataref3 = 3002,
   sdataref4 = 1400,
 })
-define('404', {
+Ability('404', {
   related_basic_attribute = 15,
   sdataref1 = 3,
   cost = 38,
   sdataref3 = 3002,
   sdataref4 = 500,
 })
-define('637', {
+Ability('637', {
   related_basic_attribute = 15,
   sdataref1 = 3,
   cost = 50,
   sdataref3 = 3002,
   sdataref4 = 500,
 })
-define('466', {
+Ability('466', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 24,
   sdataref3 = 3002,
   sdataref4 = 750,
 })
-define('424', {
+Ability('424', {
   related_basic_attribute = 16,
   sdataref1 = 7,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 200,
 })
-define('425', {
+Ability('425', {
   related_basic_attribute = 16,
   sdataref1 = 7,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 200,
 })
-define('642', {
+Ability('642', {
   related_basic_attribute = 16,
   sdataref1 = 7,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 200,
 })
-define('641', {
+Ability('641', {
   related_basic_attribute = 16,
   sdataref1 = 7,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 200,
 })
-define('639', {
+Ability('639', {
   related_basic_attribute = 16,
   sdataref1 = 7,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 200,
 })
-define('640', {
+Ability('640', {
   related_basic_attribute = 16,
   sdataref1 = 7,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 200,
 })
-define('643', {
+Ability('643', {
   related_basic_attribute = 16,
   sdataref1 = 7,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 200,
 })
-define('435', {
+Ability('435', {
   related_basic_attribute = 17,
   sdataref1 = 0,
   cost = 125,
   sdataref3 = 2006,
   sdataref4 = 2000,
 })
-define('436', {
+Ability('436', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 7000,
   sdataref4 = 150,
 })
-define('437', {
+Ability('437', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 12,
   sdataref3 = 7000,
   sdataref4 = 320,
 })
-define('438', {
+Ability('438', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 20,
   sdataref3 = 7000,
   sdataref4 = 250,
 })
-define('457', {
+Ability('457', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 15,
   sdataref3 = 7000,
   sdataref4 = 200,
 })
-define('455', {
+Ability('455', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 18,
   sdataref3 = 7000,
   sdataref4 = 480,
 })
-define('634', {
+Ability('634', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 18,
   sdataref3 = 7000,
   sdataref4 = 480,
 })
-define('456', {
+Ability('456', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 24,
   sdataref3 = 7000,
   sdataref4 = 640,
 })
-define('645', {
+Ability('645', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 2004,
   sdataref4 = 100,
 })
-define('428', {
+Ability('428', {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 28,
   sdataref3 = 10000,
   sdataref4 = 550,
 })
-define('463', {
+Ability('463', {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 60,
   sdataref3 = 10000,
   sdataref4 = 750,
 })
-define('429', {
+Ability('429', {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 30,
   sdataref3 = 10000,
   sdataref4 = 450,
 })
-define('464', {
+Ability('464', {
   related_basic_attribute = 17,
   sdataref1 = 0,
   cost = 45,
   sdataref3 = 10000,
   sdataref4 = 350,
 })
-define('430', {
+Ability('430', {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 22,
   sdataref3 = 10000,
   sdataref4 = 250,
 })
-define('439', {
+Ability('439', {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 18,
   sdataref3 = 3000,
   sdataref4 = 250,
 })
-define('440', {
+Ability('440', {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 18,
   sdataref3 = 3000,
   sdataref4 = 250,
 })
-define('461', {
+Ability('461', {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 60,
   sdataref3 = 10000,
   sdataref4 = 1650,
 })
-define('441', {
+Ability('441', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 580,
   sdataref3 = 10000,
   sdataref4 = 5250,
 })
-define('465', {
+Ability('465', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 220,
   sdataref3 = 10000,
   sdataref4 = 1450,
 })
-define('454', {
+Ability('454', {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 70,
   sdataref3 = 3000,
   sdataref4 = 2250,
 })
-define('442', {
+Ability('442', {
   related_basic_attribute = 15,
   sdataref1 = 1001,
   cost = 8,
   sdataref3 = 3000,
   sdataref4 = 150,
 })
-define('443', {
+Ability('443', {
   related_basic_attribute = 13,
   sdataref1 = 1002,
   cost = 24,
   sdataref3 = 2006,
   sdataref4 = 620,
 })
-define('444', {
+Ability('444', {
   related_basic_attribute = 15,
   sdataref1 = 1003,
   cost = 16,
   sdataref3 = 3000,
   sdataref4 = 400,
 })
-define('445', {
+Ability('445', {
   related_basic_attribute = 15,
   sdataref1 = 1004,
   cost = 14,
   sdataref3 = 3000,
   sdataref4 = 350,
 })
-define('446', {
+Ability('446', {
   related_basic_attribute = 15,
   sdataref1 = 1005,
   cost = 28,
   sdataref3 = 3000,
   sdataref4 = 1050,
 })
-define('447', {
+Ability('447', {
   related_basic_attribute = 16,
   sdataref1 = 1006,
   cost = 10,
   sdataref3 = 2006,
   sdataref4 = 450,
 })
-define('448', {
+Ability('448', {
   related_basic_attribute = 15,
   sdataref1 = 1007,
   cost = 12,
   sdataref3 = 3000,
   sdataref4 = 80,
 })
-define('449', {
+Ability('449', {
   related_basic_attribute = 16,
   sdataref1 = 1008,
   cost = 8,
   sdataref3 = 2006,
   sdataref4 = 300,
 })
-define('450', {
+Ability('450', {
   related_basic_attribute = 16,
   sdataref1 = 1009,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 600,
 })
-define('451', {
+Ability('451', {
   related_basic_attribute = 15,
   sdataref1 = 1010,
   cost = 20,
   sdataref3 = 3000,
   sdataref4 = 900,
 })
-define('452', {
+Ability('452', {
   related_basic_attribute = 13,
   sdataref1 = 1011,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 500,
 })
-define('453', {
+Ability('453', {
   related_basic_attribute = 14,
   sdataref1 = 1012,
   cost = 22,
   sdataref3 = 10000,
   sdataref4 = 350,
 })
-define('458', {
+Ability('458', {
   related_basic_attribute = 13,
   sdataref1 = 1015,
   cost = 38,
   sdataref3 = 10000,
   sdataref4 = 250,
 })
-define('462', {
+Ability('462', {
   related_basic_attribute = 15,
   sdataref1 = 1018,
   cost = 25,
   sdataref3 = 3000,
   sdataref4 = 1250,
 })
-define('647', {
+Ability('647', {
   related_basic_attribute = 15,
   sdataref1 = 1017,
   cost = 50,
   sdataref3 = 10000,
   sdataref4 = 500,
 })
-define('646', {
+Ability('646', {
   related_basic_attribute = 15,
   sdataref1 = 1016,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 500,
 })
-define('622', {
+Ability('622', {
   related_basic_attribute = 15,
   sdataref1 = 1013,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 500,
 })
-define('625', {
+Ability('625', {
   related_basic_attribute = 12,
   sdataref1 = 1014,
   cost = 20,
   sdataref3 = 10000,
   sdataref4 = 500,
 })
-define('621', {
+Ability('621', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 3000,
   sdataref4 = 700,
 })
-define('601', {
+Ability('601', {
   related_basic_attribute = 12,
   sdataref1 = 6,
   cost = 7,
   sdataref3 = 2000,
   sdataref4 = 0,
 })
-define('612', {
+Ability('612', {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 10,
   sdataref3 = 9005,
   sdataref4 = 0,
 })
-define('602', {
+Ability('602', {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 12,
   sdataref3 = 9005,
   sdataref4 = 0,
 })
-define('603', {
+Ability('603', {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 10,
   sdataref3 = 9005,
   sdataref4 = 0,
 })
-define('604', {
+Ability('604', {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 10,
   sdataref3 = 9005,
   sdataref4 = 0,
 })
-define('606', {
+Ability('606', {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 10,
   sdataref3 = 9005,
   sdataref4 = 0,
 })
-define('610', {
+Ability('610', {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 10,
   sdataref3 = 9005,
   sdataref4 = 0,
 })
-define('608', {
+Ability('608', {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 10,
   sdataref3 = 9005,
   sdataref4 = 0,
 })
-define('607', {
+Ability('607', {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 10,
   sdataref3 = 9005,
   sdataref4 = 0,
 })
-define('605', {
+Ability('605', {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 10,
   sdataref3 = 9005,
   sdataref4 = 0,
 })
-define('611', {
+Ability('611', {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 10,
   sdataref3 = 9005,
   sdataref4 = 0,
 })
-define('609', {
+Ability('609', {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 10,
   sdataref3 = 9005,
   sdataref4 = 0,
 })
-define('619', {
+Ability('619', {
   related_basic_attribute = 15,
   sdataref1 = 5,
   cost = 10,
   sdataref3 = 6005,
   sdataref4 = 0,
 })
-define('627', {
+Ability('627', {
   related_basic_attribute = 15,
   sdataref1 = 5,
   cost = 15,
   sdataref3 = 10000,
   sdataref4 = 0,
 })
-define('620', {
+Ability('620', {
   related_basic_attribute = 15,
   sdataref1 = 5,
   cost = 10,
   sdataref3 = 6005,
   sdataref4 = 0,
 })
-define('623', {
+Ability('623', {
   related_basic_attribute = 15,
   sdataref1 = 4,
   cost = 30,
   sdataref3 = 3000,
   sdataref4 = 0,
 })
-define('624', {
+Ability('624', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 25,
   sdataref3 = 10000,
   sdataref4 = 0,
 })
-define('654', {
+Ability('654', {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 15,
   sdataref3 = 2001,
   sdataref4 = 0,
 })
-define('613', {
+Ability('613', {
   related_basic_attribute = 16,
   sdataref1 = 6,
   cost = 10,
   sdataref3 = 8000,
   sdataref4 = 0,
 })
-define('614', {
+Ability('614', {
   related_basic_attribute = 16,
   sdataref1 = 6,
   cost = 10,
   sdataref3 = 8000,
   sdataref4 = 0,
 })
-define('615', {
+Ability('615', {
   related_basic_attribute = 12,
   sdataref1 = 6,
   cost = 10,
   sdataref3 = 8000,
   sdataref4 = 0,
 })
-define('616', {
+Ability('616', {
   related_basic_attribute = 12,
   sdataref1 = 6,
   cost = 10,
   sdataref3 = 8000,
   sdataref4 = 0,
 })
-define('617', {
+Ability('617', {
   related_basic_attribute = 15,
   sdataref1 = 6,
   cost = 10,
   sdataref3 = 8000,
   sdataref4 = 0,
 })
-define('618', {
+Ability('618', {
   related_basic_attribute = 15,
   sdataref1 = 6,
   cost = 10,
   sdataref3 = 8000,
   sdataref4 = 0,
 })
-define('635', {
+Ability('635', {
   related_basic_attribute = 12,
   sdataref1 = 5,
   cost = 10,
   sdataref3 = 8000,
   sdataref4 = 0,
 })
-define('651', {
+Ability('651', {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 8000,
   sdataref4 = 0,
 })
-define('658', {
+Ability('658', {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 2001,
   sdataref4 = 0,
 })
-define('660', {
+Ability('660', {
   related_basic_attribute = 15,
   sdataref1 = 6,
   cost = 10,
   sdataref3 = 8000,
   sdataref4 = 0,
 })
-define('632', {
+Ability('632', {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 2002,
   sdataref4 = 0,
 })
-define('633', {
+Ability('633', {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 2002,
   sdataref4 = 0,
 })
-define('636', {
+Ability('636', {
   related_basic_attribute = 17,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 2002,
   sdataref4 = 0,
 })
-define('638', {
+Ability('638', {
   related_basic_attribute = 17,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 2002,
   sdataref4 = 0,
 })
-define('652', {
+Ability('652', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 2002,
   sdataref4 = 0,
 })
-define('648', {
+Ability('648', {
   related_basic_attribute = 17,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 2004,
   sdataref4 = 0,
 })
-define('653', {
+Ability('653', {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 10000,
   sdataref4 = 0,
 })
-define('649', {
+Ability('649', {
   related_basic_attribute = 10,
   sdataref1 = 10,
   cost = 10,
   sdataref3 = 2004,
   sdataref4 = 0,
 })
-define('650', {
+Ability('650', {
   related_basic_attribute = 10,
   sdataref1 = 10,
   cost = 10,
   sdataref3 = 2007,
   sdataref4 = 0,
 })
-define('628', {
+Ability('628', {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 2006,
   sdataref4 = 0,
 })
-define('629', {
+Ability('629', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 1,
   sdataref3 = 10000,
   sdataref4 = 0,
 })
-define('630', {
+Ability('630', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 10000,
   sdataref4 = 0,
 })
-define('631', {
+Ability('631', {
   related_basic_attribute = 10,
   sdataref1 = 0,
   cost = 5,
   sdataref3 = 10000,
   sdataref4 = 220,
 })
-define('656', {
+Ability('656', {
   related_basic_attribute = 17,
   sdataref1 = 0,
   cost = 28,
   sdataref3 = 3006,
   sdataref4 = 500,
 })
-define('657', {
+Ability('657', {
   related_basic_attribute = 19,
   sdataref1 = 0,
   cost = 1,
   sdataref3 = 3000,
   sdataref4 = 500,
 })
-define('626', {
+Ability('626', {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 30,
   sdataref3 = 10000,
   sdataref4 = 500,
 })
-define('655', {
+Ability('655', {
   related_basic_attribute = 16,
   sdataref1 = 3,
   cost = 18,
   sdataref3 = 3000,
   sdataref4 = 700,
 })
-define('659', {
+Ability('659', {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 15,

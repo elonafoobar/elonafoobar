@@ -26,8 +26,9 @@ struct ability_data
 class ability_db
 {
 public:
-    ability_db();
+    ability_db() = default;
 
+    void initialize();
 
     const ability_data& operator[](int id) const;
 

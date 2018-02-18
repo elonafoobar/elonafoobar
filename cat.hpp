@@ -1,15 +1,38 @@
 #pragma once
 
+#include <memory>
 #include <lua.hpp>
 #include "filesystem.hpp"
+#include "lib/noncopyable.hpp"
 
 
-namespace cat
+namespace elona::cat
 {
 
 
-void register_function(lua_State*, const char* name, lua_CFunction);
-void load(lua_State*, const fs::path& filepath);
+
+class engine : lib::noncopyable
+{
+public:
+    engine() = default;
+
+    void initialize();
+    void load(const fs::path& filepath);
+    void register_function(const char* name, lua_CFunction);
+
+    lua_State* ptr()
+    {
+        return L.get();
+    }
+
+private:
+    std::unique_ptr<lua_State, decltype(&lua_close)> L{nullptr, lua_close};
+};
 
 
-} // namespace cat
+
+inline engine global;
+
+
+
+} // namespace elona::cat

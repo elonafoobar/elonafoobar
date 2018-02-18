@@ -135,15 +135,12 @@ int access_class_info(int dbmode, const std::string& dbidn)
 
 
 
-class_db::class_db()
+void class_db::initialize()
 {
-    lua_State* state = luaL_newstate();
-    luaL_openlibs(state);
-    cat::register_function(state, "define", &define);
+    cat::global.register_function("Class", &define);
     storage_ptr = &storage;
-    cat::load(state, fs::u8path(u8"../data/class.lua"));
+    cat::global.load(fs::u8path(u8"../data/class.lua"));
     storage_ptr = nullptr;
-    lua_close(state);
 }
 
 

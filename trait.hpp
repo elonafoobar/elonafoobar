@@ -21,7 +21,9 @@ struct trait_data
 class trait_db
 {
 public:
-    trait_db();
+    trait_db() = default;
+
+    void initialize();
 
     optional_ref<trait_data> operator[](int id) const;
 

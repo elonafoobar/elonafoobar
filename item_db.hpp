@@ -82,7 +82,9 @@ public:
     };
 
 
-    item_db();
+    item_db() = default;
+
+    void initialize();
 
 
     optional_ref<item_data> operator[](int id) const;
