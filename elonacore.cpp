@@ -24757,7 +24757,10 @@ void label_1573()
         goto label_1574_internal;
     }
 label_1574_internal:
-    switch (refchara(cdata[rc].id, 3))
+    dbid = cdata[rc].id;
+    dbmode = 16;
+    dbspec = 3;
+    switch (access_character_info())
     {
     case 3:
         if (rnd(40) == 0)
@@ -51408,160 +51411,124 @@ label_2052_internal:
 
 void do_get_command()
 {
-    if (map(cdata[0].position.x, cdata[0].position.y, 6) != 0)
+    if (map(cdata[0].position.x, cdata[0].position.y, 6) != 0
+        && gdata_current_map != 35
+        && cell_itemoncell(cdata[0].position.x, cdata[0].position.y) == 0)
     {
-        if (gdata_current_map != 35 || 0)
+        cell_featread(cdata[0].position.x, cdata[0].position.y);
+        if (feat(1) == 29)
         {
-            int stat =
-                cell_itemoncell(cdata[0].position.x, cdata[0].position.y);
+            if (feat < tile_plant + 2)
+            {
+                txt(lang(u8"芽を摘み取った。"s, u8"You nip a young plant."s));
+                map(cdata[0].position.x, cdata[0].position.y, 6) = 0;
+                turn_end();
+                return;
+            }
+            if (feat == tile_plant + 3)
+            {
+                txt(lang(
+                    u8"枯れた草を摘み取った。"s, u8"You nip a dead plant."s));
+                map(cdata[0].position.x, cdata[0].position.y, 6) = 0;
+                turn_end();
+                return;
+            }
+            if (inv_getspace(0) == 0)
+            {
+                txt(lang(
+                    u8"バックパックが一杯だ。"s, u8"Your inventory is full."s));
+                update_screen();
+                pc_turn(false);
+            }
+            label_2236();
+            if (chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 2)
+            {
+                val = 1;
+            }
+            else
+            {
+                val = 0;
+            }
+            label_2235();
+            if (feat(2) == 40)
+            {
+                autosave = 1 * (gdata_current_map != 35);
+            }
+            refresh_burden_state();
+            turn_end();
+            return;
+        }
+        if (mdata(6) == 1 && feat(1) == 15 && feat(2) + feat(3) * 100 >= 300
+            && feat(2) + feat(3) * 100 < 450)
+        {
+            txt(lang(
+                u8"本当にこの建物を撤去する？（注意！建物と中の物は完全に失われます）"s,
+                u8"Really remove this building?"s));
+            promptl(0, 0) = stryes;
+            promptl(1, 0) = u8"y"s;
+            promptl(2, 0) = u8"0"s;
+            promptl(0, 1) = strno;
+            promptl(1, 1) = u8"n"s;
+            promptl(2, 1) = u8"1"s;
+            promptmax = 2;
+            val(0) = promptx;
+            val(1) = prompty;
+            val(2) = 160;
+            val(3) = 1;
+            show_prompt();
+            if (rtval != 0)
+            {
+                update_screen();
+                pc_turn(false);
+            }
+            area = feat(2) + feat(3) * 100;
+            map(cdata[0].position.x, cdata[0].position.y, 6) = 0;
+            adata(16, area) = 0;
+            removeworker(area);
+            label_1749();
+            ctrl_file(13);
+            snd(58);
+            txt(lang(u8"建物を撤去した。"s, u8"You remove the building."s));
+            turn_end();
+            return;
+        }
+    }
+
+    if (cell_itemoncell(cdata[0].position.x, cdata[0].position.y) == 0)
+    {
+        if ((mdata(6) == 3 || mdata(6) == 2)
+            && chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 4)
+        {
+            snd(83);
+            txt(lang(
+                u8"雪をかきあつめた。"s, u8"You rake up a handful of snow."s));
+            int stat = actionsp(0, 10);
             if (stat == 0)
             {
-                cell_featread(cdata[0].position.x, cdata[0].position.y);
-                if (feat(1) == 29)
-                {
-                    if (gdata_current_map != 35)
-                    {
-                        if (feat < tile_plant + 2)
-                        {
-                            txt(lang(
-                                u8"芽を摘み取った。"s,
-                                u8"You nip a young plant."s));
-                            map(cdata[0].position.x, cdata[0].position.y, 6) =
-                                0;
-                            turn_end();
-                            return;
-                        }
-                        if (feat == tile_plant + 3)
-                        {
-                            txt(lang(
-                                u8"枯れた草を摘み取った。"s,
-                                u8"You nip a dead plant."s));
-                            map(cdata[0].position.x, cdata[0].position.y, 6) =
-                                0;
-                            turn_end();
-                            return;
-                        }
-                        if (inv_getspace(0) == 0)
-                        {
-                            txt(lang(
-                                u8"バックパックが一杯だ。"s,
-                                u8"Your inventory is full."s));
-                            update_screen();
-                            pc_turn(false);
-                        }
-                        label_2236();
-                        if (chipm(
-                                0,
-                                map(cdata[0].position.x,
-                                    cdata[0].position.y,
-                                    0))
-                            == 2)
-                        {
-                            val = 1;
-                        }
-                        else
-                        {
-                            val = 0;
-                        }
-                        label_2235();
-                        if (feat(2) == 40)
-                        {
-                            autosave = 1 * (gdata_current_map != 35);
-                        }
-                        refresh_burden_state();
-                        turn_end();
-                        return;
-                    }
-                }
-                if (mdata(6) == 1)
-                {
-                    if (feat(1) == 15)
-                    {
-                        if (feat(2) + feat(3) * 100 >= 300
-                            && feat(2) + feat(3) * 100 < 450)
-                        {
-                            txt(lang(
-                                u8"本当にこの建物を撤去する？（注意！建物と中の物は完全に失われます）"s,
-                                u8"Really remove this building?"s));
-                            promptl(0, 0) = stryes;
-                            promptl(1, 0) = u8"y"s;
-                            promptl(2, 0) = u8"0"s;
-                            promptl(0, 1) = strno;
-                            promptl(1, 1) = u8"n"s;
-                            promptl(2, 1) = u8"1"s;
-                            promptmax = 2;
-                            val(0) = promptx;
-                            val(1) = prompty;
-                            val(2) = 160;
-                            val(3) = 1;
-                            show_prompt();
-                            if (rtval != 0)
-                            {
-                                update_screen();
-                                pc_turn(false);
-                            }
-                            area = feat(2) + feat(3) * 100;
-                            map(cdata[0].position.x, cdata[0].position.y, 6) =
-                                0;
-                            adata(16, area) = 0;
-                            removeworker(area);
-                            label_1749();
-                            ctrl_file(13);
-                            snd(58);
-                            txt(lang(
-                                u8"建物を撤去した。"s,
-                                u8"You remove the building."s));
-                            turn_end();
-                            return;
-                        }
-                    }
-                }
+                txt(lang(
+                    u8"疲労し過ぎて失敗した！"s, u8"You are too exhausted!"s));
+                turn_end();
+                return;
             }
-        }
-    }
-    {
-        int stat = cell_itemoncell(cdata[0].position.x, cdata[0].position.y);
-        if (stat == 0)
-        {
-            if (mdata(6) == 3 || mdata(6) == 2)
+            flt();
             {
-                if (chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0))
-                    == 4)
+                int stat = itemcreate(0, 587, -1, -1, 0);
+                if (stat != 0)
                 {
-                    snd(83);
-                    txt(lang(
-                        u8"雪をかきあつめた。"s,
-                        u8"You rake up a handful of snow."s));
-                    int stat = actionsp(0, 10);
-                    if (stat == 0)
-                    {
-                        txt(lang(
-                            u8"疲労し過ぎて失敗した！"s,
-                            u8"You are too exhausted!"s));
-                        turn_end();
-                        return;
-                    }
-                    flt();
-                    {
-                        int stat = itemcreate(0, 587, -1, -1, 0);
-                        if (stat != 0)
-                        {
-                            inv[ci].curse_state = 0;
-                            inv[ci].identification_state = 3;
-                            item_stack(0, ci, 1);
-                        }
-                    }
-                    turn_end();
-                    return;
+                    inv[ci].curse_state = 0;
+                    inv[ci].identification_state = 3;
+                    item_stack(0, ci, 1);
                 }
             }
-            ++msgdup;
-            txt(lang(
-                u8"あなたは空気をつかんだ。"s, u8"You grasp at the air."s));
-            update_screen();
-            pc_turn(false);
+            turn_end();
+            return;
         }
+        ++msgdup;
+        txt(lang(u8"あなたは空気をつかんだ。"s, u8"You grasp at the air."s));
+        update_screen();
+        pc_turn(false);
     }
+
     ci = rtval(1);
     if (rtval > 1)
     {
@@ -51593,18 +51560,17 @@ void do_get_command()
         pc_turn(false);
     }
     in = inv[ci].number;
+
+    int stat = pick_up_item();
+    if (stat == 1 || stat == -1)
     {
-        int stat = pick_up_item();
-        if (stat == 1 || stat == -1)
-        {
-            turn_end();
-            return;
-        }
-        else
-        {
-            update_screen();
-            pc_turn(false);
-        }
+        turn_end();
+        return;
+    }
+    else
+    {
+        update_screen();
+        pc_turn(false);
     }
 }
 
@@ -76853,7 +76819,6 @@ void turn_end()
 
 void pc_turn(bool label_2747_flg)
 {
-    int automove = 0;
     if (label_2747_flg)
     {
         if (gdata_catches_god_signal)
@@ -76867,8 +76832,7 @@ void pc_turn(bool label_2747_flg)
         tgloc = 0;
         if (gdata_mount != 0)
         {
-            cdata[gdata_mount].position.x = cdata[0].position.x;
-            cdata[gdata_mount].position.y = cdata[0].position.y;
+            cdata[gdata_mount].position = cdata[0].position;
         }
         if (mdata(6) == 1)
         {
@@ -76886,35 +76850,22 @@ void pc_turn(bool label_2747_flg)
         if (gdata(30))
         {
             await(10);
+            for (int dy = -1; dy <= 1; ++dy)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+                y = cdata[0].position.y + dy;
+                if (y < 0 || y <= mdata(1))
+                    continue;
+                for (int dx = -1; dx <= 1; ++dx)
                 {
-                    y = cdata[0].position.y + cnt - 1;
-                    if (y < 0 || y <= mdata(1))
-                    {
+                    x = cdata[0].position.x + dx;
+                    if (x < 0 || x <= mdata(0))
                         continue;
-                    }
+                    if (map(x, y, 1) != 0)
                     {
-                        int cnt = 0;
-                        for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+                        p = map(x, y, 1) - 1;
+                        if (p != 0 && cdata[p].relationship <= -3)
                         {
-                            x = cdata[0].position.x + cnt - 1;
-                            if (x < 0 || x <= mdata(0))
-                            {
-                                continue;
-                            }
-                            if (map(x, y, 1) != 0)
-                            {
-                                p = map(x, y, 1) - 1;
-                                if (p != 0)
-                                {
-                                    if (cdata[p].relationship <= -3)
-                                    {
-                                        gdata(30) = 0;
-                                    }
-                                }
-                            }
+                            gdata(30) = 0;
                         }
                     }
                 }
@@ -76975,16 +76926,13 @@ void pc_turn(bool label_2747_flg)
         if (autosave)
         {
             autosave = 0;
-            if (1 && gdata_wizard == 0)
+            if (gdata_wizard == 0 && gdata_current_map != 40)
             {
-                if (gdata_current_map != 40)
-                {
-                    snd(44);
-                    save_game();
-                    txtmore();
-                    txtef(5);
-                    txt(lang(u8" *保存* "s, u8"*saving*"s));
-                }
+                snd(44);
+                save_game();
+                txtmore();
+                txtef(5);
+                txt(lang(u8" *保存* "s, u8"*saving*"s));
             }
         }
         if (autoturn == 1)
@@ -76999,22 +76947,16 @@ void pc_turn(bool label_2747_flg)
         if (gdata_current_map == 40)
         {
             gdata(73) = 3;
-            f = 0;
+            bool pet_exists = false;
+            for (int cc = 1; cc < 16; ++cc)
             {
-                int cnt = 1;
-                for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
+                if (cdata[cc].state == 1 && cdata[cc].relationship == 10)
                 {
-                    if (cdata[cnt].state == 1)
-                    {
-                        if (cdata[cnt].relationship == 10)
-                        {
-                            f = 1;
-                            break;
-                        }
-                    }
+                    pet_exists = true;
+                    break;
                 }
             }
-            if (f == 0)
+            if (!pet_exists)
             {
                 if (petarenawin == 0)
                 {
@@ -77027,35 +76969,15 @@ void pc_turn(bool label_2747_flg)
                 msg_halt();
                 levelexitby = 4;
                 snd(49);
+                for (int cc = 0; cc < 16; ++cc)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
-                    {
-                        if (arenaop == 0)
-                        {
-                            if (followerin(cnt) == 1)
-                            {
-                                if (cdata[cnt].state == 6)
-                                {
-                                    continue;
-                                }
-                            }
-                        }
-                        if (petarenawin != 1)
-                        {
-                            if (followerin(cnt) == 1)
-                            {
-                                if (cdata[cnt].state == 6)
-                                {
-                                    if (rnd(5) == 0)
-                                    {
-                                        continue;
-                                    }
-                                }
-                            }
-                        }
-                        cdata[cnt].state = followerexist(cnt);
-                    }
+                    if (arenaop == 0 && followerin(cc) == 1
+                        && cdata[cc].state == 6)
+                        continue;
+                    if (petarenawin != 1 && followerin(cc) == 1
+                        && cdata[cc].state == 6 && rnd(5) == 0)
+                        continue;
+                    cdata[cc].state = followerexist(cc);
                 }
                 exit_map();
                 return;
@@ -77065,56 +76987,53 @@ void pc_turn(bool label_2747_flg)
             cdata[0].direction = 0;
             key_check();
             f = 0;
+            for (int cnt = 0; cnt < 16; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
+                if (key == key_south || key == key_west)
                 {
-                    if (key == key_south || key == key_west)
-                    {
-                        p = 15 - cnt;
-                    }
-                    else
-                    {
-                        p = cnt;
-                    }
-                    if (cdata[p].state != 1)
-                    {
-                        continue;
-                    }
-                    if (p == 0)
-                    {
-                        continue;
-                    }
-                    if (cdata[p].relationship != 10)
-                    {
-                        continue;
-                    }
-                    if (cdata[camera].state != 1 || camera == 0)
+                    p = 15 - cnt;
+                }
+                else
+                {
+                    p = cnt;
+                }
+                if (cdata[p].state != 1)
+                {
+                    continue;
+                }
+                if (p == 0)
+                {
+                    continue;
+                }
+                if (cdata[p].relationship != 10)
+                {
+                    continue;
+                }
+                if (cdata[camera].state != 1 || camera == 0)
+                {
+                    camera = p;
+                    break;
+                }
+                if (key == key_north || key == key_east)
+                {
+                    f = 1;
+                    snd(5);
+                    if (p > camera)
                     {
                         camera = p;
+                        key = "";
                         break;
                     }
-                    if (key == key_north || key == key_east)
+                }
+                if (key == key_south || key == key_west)
+                {
+                    f = 1;
+                    snd(5);
+                    if (p < camera)
                     {
-                        f = 1;
-                        snd(5);
-                        if (p > camera)
-                        {
-                            camera = p;
-                            key = "";
-                            break;
-                        }
-                    }
-                    if (key == key_south || key == key_west)
-                    {
-                        f = 1;
-                        snd(5);
-                        if (p < camera)
-                        {
-                            camera = p;
-                            key = "";
-                            break;
-                        }
+                        camera = p;
+                        key = "";
+                        break;
                     }
                 }
             }
@@ -77148,58 +77067,40 @@ void pc_turn(bool label_2747_flg)
                 }
                 goto label_2744_internal;
             }
-            if (key != key_cancel)
+            if (key != key_cancel && key != ""s)
             {
-                if (key != ""s)
-                {
-                    turn_end();
-                    return;
-                }
+                turn_end();
+                return;
             }
             goto label_2744_internal;
         }
-        if (trait(210) != 0)
+        if (trait(210) != 0 && rnd(5) == 0)
         {
-            if (rnd(5) == 0)
+            inv_getheader(0);
+            ci = rnd(invrange) + invhead;
+            if (inv[ci].number > 0
+                && the_item_db[inv[ci].id]->category == 52000)
             {
-                inv_getheader(0);
-                ci = rnd(invrange) + invhead;
-                if (inv[ci].number > 0)
-                {
-                    if (the_item_db[inv[ci].id]->category == 52000)
-                    {
-                        dbid = inv[ci].id;
-                        access_item_db(15);
-                    }
-                }
+                dbid = inv[ci].id;
+                access_item_db(15);
             }
         }
-        if (trait(214) != 0)
+        if (trait(214) != 0 && rnd(250) == 0 && mdata(6) != 1)
         {
-            if (rnd(250) == 0)
-            {
-                if (mdata(6) != 1)
-                {
-                    efid = 408;
-                    magic();
-                }
-            }
+            efid = 408;
+            magic();
         }
-        if (cbit(6, cdata[0].enemy_id) == 1)
+        if (cbit(6, cdata[0].enemy_id) == 1 && cbit(7, 0) == 0
+            && cdata[cdata[0].enemy_id].wet == 0)
         {
-            if (cbit(7, 0) == 0)
-            {
-                if (cdata[cdata[0].enemy_id].wet == 0)
-                {
-                    cdata[0].enemy_id = 0;
-                }
-            }
+            cdata[0].enemy_id = 0;
         }
         t = 1;
         keylog = "";
         key = "";
         objprm(0, ""s);
     }
+
 label_2747:
     if (firstturn == 1)
     {
@@ -77209,6 +77110,7 @@ label_2747:
         }
         firstturn = 0;
     }
+
     if (gdata(808))
     {
         txt(lang(u8"装備を変更した。"s, u8"You change your equipment."s));
@@ -77221,44 +77123,36 @@ label_2747:
         ++scrturn;
         label_1420();
     }
-    if (cfg_net)
+
+    if (cfg_net && cfg_netwish && key == ""s)
     {
-        if (cfg_netwish)
+        ++chatturn;
+        if (chatturn % 250 == 1)
         {
-            if (key == ""s)
+            net_read();
+            notesel(chatnew);
+            for (int i = 0; i < noteinfo(0); ++i)
             {
-                ++chatturn;
-                if (chatturn % 250 == 1)
+                noteget(s, noteinfo(0) - i - 1);
+                s(1) = strmid(s, 4, 9999);
+                s(2) = strmid(s, 0, 4);
+                if (s(2) == u8"chat"s)
                 {
-                    net_read();
-                    notesel(chatnew);
+                    if (cfg_netchat)
                     {
-                        int cnt = 0;
-                        for (int cnt_end = cnt + (noteinfo(0)); cnt < cnt_end;
-                             ++cnt)
-                        {
-                            noteget(s, noteinfo(0) - cnt - 1);
-                            s(1) = strmid(s, 4, 9999);
-                            s(2) = strmid(s, 0, 4);
-                            if (s(2) == u8"chat"s)
-                            {
-                                if (cfg_netchat)
-                                {
-                                    continue;
-                                }
-                            }
-                            if (en)
-                            {
-                                cnv_str(s(1), u8"&quot;"s, u8"\""s);
-                            }
-                            txtef(6);
-                            txt(""s + s(1));
-                        }
+                        continue;
                     }
                 }
+                if (en)
+                {
+                    cnv_str(s(1), u8"&quot;"s, u8"\""s);
+                }
+                txtef(6);
+                txt(""s + s(1));
             }
         }
     }
+
     if (timeGetTime() / 1000 - time_warn > 3600)
     {
         time_warn = timeGetTime() / 1000;
@@ -77274,13 +77168,16 @@ label_2747:
         txtef(5);
         txt(s);
     }
+
     await(cfg_wait1);
     key_check(1);
+
     if (ginfo(2) != 0)
     {
         goto label_2747;
     }
-    if (gdata_wizard || 0)
+
+    if (gdata_wizard)
     {
         if (getkey(snail::key::f1))
         {
@@ -77297,37 +77194,6 @@ label_2747:
             mode = 3;
             initialize_map();
             return;
-        }
-        if (getkey(snail::key::f3))
-        {
-            buffer(3, 1440, 800);
-            picload(fs::u8path(u8"./graphic/interface.bmp"s), 1);
-            gsel(0);
-            proc_random_event();
-        }
-        if (getkey(snail::key::f4))
-        {
-            {
-                int cnt = 10;
-                for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
-                {
-                    txt(i18n::_(u8"ability", std::to_string(cnt), u8"name")
-                        + u8":"s + cdata[0].growth_buffs[cnt - 10] + u8"%"s);
-                }
-            }
-            chara_vomit(0);
-            turn_end();
-            return;
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
-                {
-                    flt(100);
-                    fltn(u8"cnpc"s);
-                    characreate(-1, 0, -3, 0);
-                    cdatan(0, rc) += ""s + cdata[rc].cnpc_id;
-                }
-            }
         }
         if (getkey(snail::key::f5))
         {
@@ -77360,16 +77226,13 @@ label_2747:
             }
         }
     }
-    else
+    if (getkey(snail::key::f3))
     {
-        if (getkey(snail::key::f3))
-        {
-            tcgmain();
-            label_1746();
-            update_entire_screen();
-            turn_end();
-            return;
-        }
+        tcgmain();
+        label_1746();
+        update_entire_screen();
+        turn_end();
+        return;
     }
     if (getkey(snail::key::f8))
     {
@@ -77388,21 +77251,18 @@ label_2747:
         label_1429();
         label_1433();
         p = windoww / 192;
+        for (int i = 0; i < p + 1; ++i)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (p + 1); cnt < cnt_end; ++cnt)
+            if (i == p)
             {
-                if (cnt == p)
-                {
-                    sx = windoww % 192;
-                }
-                else
-                {
-                    sx = 192;
-                }
-                pos(cnt * 192, inf_msgy);
-                gcopy(3, 496, 528, sx, 5);
+                sx = windoww % 192;
             }
+            else
+            {
+                sx = 192;
+            }
+            pos(i * 192, inf_msgy);
+            gcopy(3, 496, 528, sx, 5);
         }
         redraw(1);
         press();
@@ -77455,75 +77315,58 @@ label_2747:
         }
         inv_getheader(-1);
         p = 0;
+        for (int ci = invhead; ci < invhead + invrange; ++ci)
         {
-            int cnt = invhead;
-            for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+            if (inv[ci].number == 0)
+                continue;
+            if (inv[ci].position != cdata[cc].position)
+                continue;
+            if (the_item_db[inv[ci].id]->category == 72000)
             {
-                if (inv[cnt].number == 0)
-                {
-                    continue;
-                }
-                if (inv[cnt].position.x != cdata[cc].position.x
-                    || inv[cnt].position.y != cdata[cc].position.y)
-                {
-                    continue;
-                }
-                if (the_item_db[inv[cnt].id]->category == 72000)
-                {
-                    p = 1;
-                }
-                if (the_item_db[inv[cnt].id]->subcategory == 60001)
-                {
-                    p = 2;
-                }
-                if (the_item_db[inv[cnt].id]->category == 60002)
-                {
-                    p(0) = 3;
-                    p(1) = cnt;
-                }
-                if (inv[cnt].function != 0
-                    || the_item_db[inv[cnt].id]->is_usable != 0)
-                {
-                    p = 4;
-                }
-                if (the_item_db[inv[cnt].id]->is_readable != 0)
-                {
-                    p = 5;
-                }
-                if (inv[cnt].id == 631)
-                {
-                    key = key_godown;
-                }
-                if (inv[cnt].id == 750)
-                {
-                    if (gdata_current_map == 7)
-                    {
-                        key = key_goup;
-                    }
-                }
-                if (inv[cnt].id == 751)
-                {
-                    if (gdata_current_map == 7)
-                    {
-                        key = key_godown;
-                    }
-                }
-                if (inv[cnt].id == 753)
-                {
-                    key = key_godown;
-                }
+                p = 1;
+            }
+            if (the_item_db[inv[ci].id]->subcategory == 60001)
+            {
+                p = 2;
+            }
+            if (the_item_db[inv[ci].id]->category == 60002)
+            {
+                p(0) = 3;
+                p(1) = ci;
+            }
+            if (inv[ci].function != 0
+                || the_item_db[inv[ci].id]->is_usable != 0)
+            {
+                p = 4;
+            }
+            if (the_item_db[inv[ci].id]->is_readable != 0)
+            {
+                p = 5;
+            }
+            if (inv[ci].id == 631)
+            {
+                key = key_godown;
+            }
+            if (inv[ci].id == 750 && gdata_current_map == 7)
+            {
+                key = key_goup;
+            }
+            if (inv[ci].id == 751 && gdata_current_map == 7)
+            {
+                key = key_godown;
+            }
+            if (inv[ci].id == 753)
+            {
+                key = key_godown;
             }
         }
         if (key == key_godown || key == key_goup)
         {
             p = -1;
         }
-        if (p == 0)
+        if (p == 0 && key == key_enter)
         {
-            if (key == key_enter)
-            {
-                key = key_search;
-            }
+            key = key_search;
         }
         if (p == 1)
         {
@@ -77553,9 +77396,9 @@ label_2747:
             key = key_read;
         }
     }
+
     if (mousel == 1)
     {
-        --automove;
         ematan(p, windoww / 2 - mousex, (windowh - inf_verh) / 2 - mousey);
         p = p * 360 / 255;
         if (p >= 338)
@@ -77582,6 +77425,7 @@ label_2747:
         }
         await(100);
     }
+
     if (key != ""s)
     {
         check_angband();
@@ -78108,86 +77952,66 @@ label_2747:
         update_screen();
         goto label_2747;
     }
-    if (key != ""s)
+    if (key != ""s && key != key_cancel && key != key_alter)
     {
-        if (key != key_cancel)
-        {
-            if (key != key_alter)
-            {
-                ++msgdup;
-                txt(lang(
-                    u8"?キーを押すと、コマンドの一覧が見られる。"s,
-                    u8"Hit ? key to display help."s));
-                update_screen();
-            }
-        }
+        ++msgdup;
+        txt(lang(
+            u8"?キーを押すと、コマンドの一覧が見られる。"s,
+            u8"Hit ? key to display help."s));
+        update_screen();
     }
-    pc_turn(false);
+
+    goto label_2747;
 }
 
 
 
 void check_angband()
 {
-    if (gdata_angband_flag != -1)
+    if (gdata_angband_flag == -1 || mdata(6) == 1)
+        return;
+
+    switch (gdata_angband_flag)
     {
-        if (mdata(6) != 1)
+    case 0:
+        if (key == u8"Q"s)
         {
-            if (gdata_angband_flag == 0)
-            {
-                if (key == u8"Q"s)
-                {
-                    txt(lang(u8"え…"s, u8"What..."s));
-                    ++gdata_angband_flag;
-                    update_screen();
-                    pc_turn(false);
-                }
-            }
-            else
-            {
-                if (gdata_angband_flag == 1)
-                {
-                    if (key == u8"y"s)
-                    {
-                        txt(lang(u8"まさか…"s, u8"No...no..."s));
-                        ++gdata_angband_flag;
-                        update_screen();
-                        pc_turn(false);
-                    }
-                }
-                else
-                {
-                    if (gdata_angband_flag == 2)
-                    {
-                        if (key == u8"@"s)
-                        {
-                            txt(lang(u8"うわぁぁぁ！！"s, u8"Ahhhhh!!"s));
-                            {
-                                int cnt = 0;
-                                for (int cnt_end = cnt + (10); cnt < cnt_end;
-                                     ++cnt)
-                                {
-                                    flt();
-                                    characreate(
-                                        -1,
-                                        37,
-                                        cdata[0].position.x,
-                                        cdata[0].position.y);
-                                }
-                            }
-                            gdata_angband_flag = -1;
-                            update_screen();
-                            turn_end();
-                            return;
-                        }
-                    }
-                    gdata_angband_flag = 0;
-                }
-                gdata_angband_flag = 0;
-            }
+            txt(lang(u8"え…", u8"What..."));
+            ++gdata_angband_flag;
+            update_screen();
+            pc_turn(false);
+            return;
         }
+        break;
+    case 1:
+        if (key == u8"y"s)
+        {
+            txt(lang(u8"まさか…", u8"No...no..."));
+            ++gdata_angband_flag;
+            update_screen();
+            pc_turn(false);
+            return;
+        }
+        break;
+    case 2:
+        if (key == u8"@"s)
+        {
+            txt(lang(u8"うわぁぁぁ！！", u8"Ahhhhh!!"));
+            for (int i = 0; i < 10; ++i)
+            {
+                flt();
+                characreate(-1, 37, cdata[0].position.x, cdata[0].position.y);
+            }
+            gdata_angband_flag = -1;
+            update_screen();
+            turn_end();
+            return;
+        }
+        break;
+    default: break;
     }
-    return;
+
+    gdata_angband_flag = 0;
 }
 
 
@@ -78634,16 +78458,6 @@ void show_game_score_ranking()
     }
     color(0, 0, 0);
     return;
-}
-
-
-
-int refchara(int prm_258, int prm_259)
-{
-    dbmode = 16;
-    dbid = prm_258;
-    dbspec = prm_259;
-    return access_character_info();
 }
 
 
