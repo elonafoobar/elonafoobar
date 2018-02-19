@@ -959,13 +959,14 @@ label_2725_internal:
     {
         if (cs > 0)
         {
-            DIGETJOYSTATE(j, 0);
+            int j0 = 0;
+            DIGETJOYSTATE(j0, 0);
             f = 0;
             {
                 int cnt = 0;
                 for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
                 {
-                    if (HMMBITCHECK(j, 4 + cnt))
+                    if (HMMBITCHECK(j0, 4 + cnt))
                     {
                         p = cnt;
                         valn = "";

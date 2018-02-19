@@ -227,7 +227,6 @@ label_1741_internal:
     }
     if (adata(16, gdata_current_map) == 35)
     {
-        id = 0;
         load_user_file(userfile);
         ctrl_file(19);
         {
@@ -956,7 +955,6 @@ label_1741_internal:
         petarenawin = 0;
         if (arenaimport == 1)
         {
-            id = 0;
             load_user_file(userfile);
             importmode = 1;
             ctrl_file(21);

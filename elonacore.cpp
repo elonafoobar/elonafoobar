@@ -10426,32 +10426,6 @@ void arrayfile_read(std::string_view fmode_str, const fs::path& filepath)
             ++itr;
         }
     }
-    else if (fmode_str == u8"invn1"s)
-    {
-        lines.resize(1320 * 6);
-        auto itr = std::begin(lines);
-        for (int i = 0; i < 1320; ++i)
-        {
-            for (int j = 0; j < 6; ++j)
-            {
-                invn(j, i) = *itr;
-                ++itr;
-            }
-        }
-    }
-    else if (fmode_str == u8"invn2"s)
-    {
-        lines.resize(4160 * 6);
-        auto itr = std::begin(lines);
-        for (int i = 1320; i < 5480; ++i)
-        {
-            for (int j = 0; j < 6; ++j)
-            {
-                invn(j, i) = *itr;
-                ++itr;
-            }
-        }
-    }
 }
 
 
@@ -10510,26 +10484,6 @@ void arrayfile_write(std::string_view fmode_str, const fs::path& filepath)
         for (int j = 0; j < 10; ++j)
         {
             out << cdatan(j, tg) << std::endl;
-        }
-    }
-    else if (fmode_str == u8"invn1"s)
-    {
-        for (int i = 0; i < 1320; ++i)
-        {
-            for (int j = 0; j < 6; ++j)
-            {
-                out << invn(j, i) << std::endl;
-            }
-        }
-    }
-    else if (fmode_str == u8"invn2"s)
-    {
-        for (int i = 1320; i < 5480; ++i)
-        {
-            for (int j = 0; j < 6; ++j)
-            {
-                out << invn(j, i) << std::endl;
-            }
         }
     }
 
@@ -19622,8 +19576,8 @@ void label_1423()
     }
     sx = windoww - 156;
     sy = inf_ver - 30;
-    w = 148;
-    h = 25;
+    int w = 148;
+    int h = 25;
     window2(sx, sy, w, h, 0, 5);
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
     pos(sx + 43, sy + 6);
@@ -30666,8 +30620,8 @@ int initialize_quest_map_crop()
         int cnt = 0;
         for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
         {
-            w = rnd(5) + 5;
-            h = rnd(4) + 4;
+            int w = rnd(5) + 5;
+            int h = rnd(4) + 4;
             dx = rnd(mdata(0));
             dy = rnd(mdata(1));
             if (rnd(2))
@@ -31218,7 +31172,7 @@ int initialize_quest_map_party()
             }
             if (p(0) == 1)
             {
-                n = rnd(5);
+                int n = rnd(5);
                 {
                     int cnt = 0;
                     for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
@@ -31592,7 +31546,7 @@ void initialize_random_nefia_rdtype8()
     mdata(1) = 60 + rnd(60);
     mdata(10) = mdata(0) * mdata(1) / 20;
     map_initialize();
-    w = 6;
+    int w = 6;
     dx = mdata(0) / 2 - w / 2;
     p = 0;
     {
@@ -31990,7 +31944,7 @@ void initialize_random_nefia_rdtype10()
                     {
                         continue;
                     }
-                    w = 10 + rnd(4);
+                    int w = 10 + rnd(4);
                     {
                         int cnt = 0;
                         for (int cnt_end = cnt + (w); cnt < cnt_end; ++cnt)
@@ -32581,7 +32535,6 @@ void use_house_board()
         cxbk = cdata[0].position.x;
         cybk = cdata[0].position.y;
         label_1723();
-        n = 0;
         txtnew();
         txt(lang(
             u8"マウスの左クリックでタイルの敷設、右クリックでタイルの取得、移動キーでスクリーン移動、決定キーでタイル一覧、キャンセルキーで終了。"s,
@@ -33604,6 +33557,7 @@ void label_1729()
             p /= 1000;
         }
     }
+    int n = 0;
     if (p > list(1, n))
     {
         list(0, n) = val;
@@ -33635,7 +33589,6 @@ void label_1730()
     rankcur = 0;
     gdata(77) = 0;
     gdata(78) = 0;
-    n = 0;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
@@ -37098,15 +37051,15 @@ label_1857_internal:
                     int cnt = 0;
                     for (int cnt_end = cnt + (6); cnt < cnt_end; ++cnt)
                     {
-                        j(0) = matneed(cnt * 2);
-                        j(1) = matneed(cnt * 2 + 1);
-                        if (j == -1)
+                        int j0 = matneed(cnt * 2);
+                        int j1 = matneed(cnt * 2 + 1);
+                        if (j0 == -1)
                         {
                             break;
                         }
-                        s = matname(j) + lang(u8" ? "s, u8" x "s) + j(1)
-                            + u8"("s + mat(j) + u8")"s;
-                        if (mat(j) >= j(1))
+                        s = matname(j0) + lang(u8" ? "s, u8" x "s) + j1 + u8"("s
+                            + mat(j0) + u8")"s;
+                        if (mat(j0) >= j1)
                         {
                             color(30, 30, 200);
                         }
@@ -37191,14 +37144,14 @@ label_1857_internal:
             int cnt = 0;
             for (int cnt_end = cnt + (6); cnt < cnt_end; ++cnt)
             {
-                j(0) = matneed(cnt * 2);
-                j(1) = matneed(cnt * 2 + 1);
-                if (j == -1)
+                int j0 = matneed(cnt * 2);
+                int j1 = matneed(cnt * 2 + 1);
+                if (j0 == -1)
                 {
                     break;
                 }
-                mat(j) -= j(1);
-                matuse += j(1);
+                mat(j0) -= j1;
+                matuse += j1;
             }
         }
         snd(58);
@@ -40001,8 +39954,8 @@ void label_1892()
 
 int proc_random_event()
 {
-    id(0) = 0;
-    id(1) = 0;
+    int id0 = 0;
+    int id1 = 0;
     if (gspd < 10)
     {
         return 0;
@@ -40021,70 +39974,70 @@ int proc_random_event()
         {
             if (rnd(12) == 0)
             {
-                id = 18;
+                id0 = 18;
             }
         }
         if (rnd(80) == 0)
         {
-            id(0) = 4;
-            id(1) = 120;
+            id0 = 4;
+            id1 = 120;
         }
         if (rnd(20) == 0)
         {
-            id = 3;
+            id0 = 3;
         }
         if (rnd(25) == 0)
         {
-            id = 2;
+            id0 = 2;
         }
         if (rnd(100) == 0)
         {
-            id(0) = 5;
-            id(1) = 65;
+            id0 = 5;
+            id1 = 65;
         }
         if (rnd(20) == 0)
         {
-            id = 6;
+            id0 = 6;
         }
         if (rnd(20) == 0)
         {
-            id = 7;
+            id0 = 7;
         }
         if (rnd(250) == 0)
         {
             if (inv_getfreeid(0) != -1)
             {
-                id = 19;
+                id0 = 19;
             }
         }
         if (rnd(10000) == 0)
         {
             if (inv_getfreeid(0) != -1)
             {
-                id = 21;
+                id0 = 21;
             }
         }
         if (rnd(70) == 0)
         {
-            id(0) = 8;
-            id(1) = 40;
+            id0 = 8;
+            id1 = 40;
         }
         if (rnd(200) == 0)
         {
-            id = 20;
+            id0 = 20;
         }
         if (rnd(50) == 0)
         {
-            id = 23;
+            id0 = 23;
         }
         if (rnd(300) == 0)
         {
-            id = 24;
+            id0 = 24;
         }
         if (rnd(90) == 0)
         {
-            id(0) = 22;
-            id(1) = 70;
+            id0 = 22;
+            id1 = 70;
         }
         goto label_1894_internal;
     }
@@ -40101,40 +40054,40 @@ int proc_random_event()
     }
     if (rnd(30) == 0)
     {
-        id = 17;
+        id0 = 17;
     }
     if (rnd(25) == 0)
     {
-        id = 16;
+        id0 = 16;
     }
     if (rnd(25) == 0)
     {
-        id = 12;
+        id0 = 12;
     }
     if (rnd(50) == 0)
     {
-        id = 9;
+        id0 = 9;
     }
     if (rnd(80) == 0)
     {
-        id = 14;
+        id0 = 14;
     }
     if (rnd(50) == 0)
     {
-        id(0) = 8;
-        id(1) = 40;
+        id0 = 8;
+        id1 = 40;
     }
     if (rnd(80) == 0)
     {
-        id(0) = 13;
-        id(1) = 45;
+        id0 = 13;
+        id1 = 45;
     }
     if (mdata(6) == 3)
     {
         if (rnd(25) == 0)
         {
-            id(0) = 15;
-            id(1) = 80;
+            id0 = 15;
+            id1 = 80;
         }
         goto label_1894_internal;
     }
@@ -40148,28 +40101,28 @@ int proc_random_event()
     }
     if (rnd(25) == 0)
     {
-        id = 10;
+        id0 = 10;
     }
     if (rnd(25) == 0)
     {
-        id = 11;
+        id0 = 11;
     }
 label_1894_internal:
-    if (id == 0)
+    if (id0 == 0)
     {
         return 0;
     }
     cc = 0;
     tc = 0;
     listmax = 0;
-    if (id(1) != 0)
+    if (id1 != 0)
     {
-        if (rnd(sdata(19, 0) + 1) > id(1))
+        if (rnd(sdata(19, 0) + 1) > id1)
         {
-            id = 1;
+            id0 = 1;
         }
     }
-    switch (id)
+    switch (id0)
     {
     case 15:
     {
@@ -44520,7 +44473,7 @@ label_1961_internal:
                         s += lang(u8" *出場* "s, u8" *In* "s);
                     }
                 }
-                n = 0;
+                int n = 0;
                 if (allyctrl == 5)
                 {
                     if (cdata[i].level > sdata(151, 0) + 5)
@@ -45984,7 +45937,7 @@ void show_quest_board()
     gsel(4);
     fillbg(3, 960, 96, 128, 128);
     ww = 560;
-    h = 140;
+    int h = 140;
     wh = h * 4;
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
@@ -51866,7 +51819,7 @@ void show_item_description()
     access_item_db(17);
     if (inv[ci].identification_state >= 3)
     {
-        buf = trimdesc(description(3), 1);
+        std::string buf = trimdesc(description(3), 1);
         if (buf != ""s)
         {
             list(0, p) = 7;
@@ -52069,7 +52022,7 @@ void show_item_description()
                     list(0, p) = 0;
                     listn(0, p) = "";
                     ++p;
-                    buf = trimdesc(description(cnt), 2);
+                    std::string buf = trimdesc(description(cnt), 2);
                     notesel(buf);
                     {
                         int cnt = 0;
@@ -53053,7 +53006,7 @@ void label_2084()
             }
         }
         lv = 0;
-        n = 0;
+        int n = 0;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
@@ -53095,7 +53048,7 @@ void label_2084()
             }
         }
         userfile = refstr;
-        label_2109();
+        label_2109(n);
         txtef(2);
         txt(lang(
             u8"ペットチームを"s + userfile + u8"に保存した。"s,
@@ -54381,7 +54334,6 @@ void create_new_cnpc()
 void label_2108()
 {
     SDIM2(headtemp, 1024);
-    id = 0;
     lensum = 1024;
     SDIM2(filebuff, lensum);
     if (usertitle != ""s)
@@ -54428,10 +54380,9 @@ void label_2108()
 
 
 
-void label_2109()
+void label_2109(int n)
 {
     SDIM2(headtemp, 1024);
-    id = 0;
     lensum = 1024;
     SDIM2(filebuff, lensum);
     headtemp = u8"【"s + gdatan(0) + u8"】("s + n + u8"体)  Lv"s + lv + u8"\n"s;
@@ -69674,8 +69625,8 @@ label_2272_internal:
     s(1) = strhint3b;
     display_window((windoww - 580) / 2 + inf_screenx, winposy(400), 580, 400);
     keyrange = 0;
-    j = 0;
-    n = 0;
+    int j0 = 0;
+    int n = 0;
     if (adata(28, gdata_current_map) == 0 || gdata_current_dungeon_level != 1)
     {
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
@@ -69696,13 +69647,13 @@ label_2272_internal:
             int cnt = 0;
             for (;; ++cnt)
             {
-                if (pochart(j, n, lv) == 0 || cnt == 0)
+                if (pochart(j0, n, lv) == 0 || cnt == 0)
                 {
                     if (cnt != 0)
                     {
                         ++n;
                     }
-                    j = 0;
+                    j0 = 0;
                     i = 0;
                     {
                         int cnt = 0;
@@ -69720,10 +69671,10 @@ label_2272_internal:
                     }
                     y = wy + 70 + n * 55;
                 }
-                x = wx + (ww - 70) / (i + 1) * (j + 1);
+                x = wx + (ww - 70) / (i + 1) * (j0 + 1);
                 pos(x - 26, y - 3);
                 gcopy(3, 960, 288, 144, 24);
-                p = pochart(j, n, lv);
+                p = pochart(j0, n, lv);
                 key_list(cnt) = key_select(cnt);
                 ++keyrange;
                 display_key(x - 30, y + 21, cnt);
@@ -69736,7 +69687,7 @@ label_2272_internal:
                     s = lang(u8"不在"s, u8"Empty"s);
                 }
                 cs_list(cs == cnt, s, x - 2, y + 20);
-                ++j;
+                ++j0;
             }
         }
         if (keyrange != 0)
@@ -71118,7 +71069,7 @@ int label_2672()
             int cnt = 0;
             for (int cnt_end = cnt + (300); cnt < cnt_end; ++cnt)
             {
-                n = rnd(188) + 57;
+                int n = rnd(188) + 57;
                 if (n == qdata(0, rq))
                 {
                     continue;
