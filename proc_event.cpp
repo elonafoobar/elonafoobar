@@ -751,9 +751,7 @@ void proc_event()
         break;
     case 21:
         if (mdata(6) == 1)
-        {
             break;
-        }
         txtef(3);
         txt(lang(u8" *ゴゴゴゴゴゴ* "s, u8"* RRROOM-KABOOOOM*"s));
         msg_halt();
@@ -774,101 +772,98 @@ void proc_event()
         p(2) = 0;
         p(3) = 0;
         p(4) = 0;
+        for (int i = 0; i < 40; ++i)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (40); cnt < cnt_end; ++cnt)
+            if (i == 14)
             {
-                if (cnt == 14)
-                {
-                    snd(108);
-                }
-                redraw(0);
-                if (cnt < 16)
-                {
-                    pos(0, 0);
-                }
-                else
-                {
-                    pos(5 - rnd(10), 5 - rnd(10));
-                }
-                gmode(0);
-                gcopy(4, 0, 0, windoww, windowh);
-                if (cnt > 8)
-                {
-                    --p;
-                }
-                else
-                {
-                    ++p;
-                }
-                gmode(4, 192, 48, 255 - p * 5);
-                pos(dx, dy);
-                grotate(
-                    7,
-                    cnt / 2 % 2 * 192,
-                    408,
-                    0,
-                    std::clamp(p * 32, 0, 192),
-                    std::clamp(p * 8, 0, 48));
-                if (cnt > 14)
-                {
-                    ++p(1);
-                }
-                else if (cnt < 12)
-                {
-                    p(1) = cnt / 2 % 2;
-                }
-                else if (cnt >= 12)
-                {
-                    p(1) = cnt % 3;
-                }
-                gmode(2, 96, 48);
-                pos(dx, dy - std::clamp(cnt * 3 / 2, 0, 18) - 16);
-                grotate(
-                    7,
-                    p(1) * 96,
-                    288,
-                    0,
-                    std::clamp(cnt * 12, 0, 144),
-                    std::clamp(cnt * 6, 0, 72));
-                if (cnt > 4)
-                {
-                    ++p(2);
-                    ++p(3);
-                }
-                gmode(4, 96, 96, std::clamp(p(2) * 6, 0, 100));
-                pos(dx, dy - std::clamp(p(2) * 2, 0, 40));
-                grotate(
-                    7,
-                    0,
-                    0,
-                    0,
-                    std::clamp(p(2) * 8, 0, 240),
-                    std::clamp(p(2) * 5, 0, 96));
-                gmode(4, 96, 96, p(3) * 10);
-                pos(dx, dy - std::clamp(p(3) * 2, 0, 160) - 6);
-                grotate(
-                    7,
-                    96,
-                    0,
-                    0,
-                    std::clamp(p(3) * 10, 0, 96),
-                    std::clamp(p(3) * 10, 0, 96));
-                gmode(4, 192, 80, std::clamp(p(3) * 5, 0, 100));
-                pos(dx, dy - 4);
-                grotate(
-                    7,
-                    cnt / 4 % 2 * 192,
-                    96,
-                    0,
-                    std::clamp(p(2) * 8, 0, 400),
-                    std::clamp(p(2), 0, 48));
-                gmode(4, 192, 96, p(3) * 10);
-                pos(dx, dy - 48 - std::clamp(p(3) * 2, 0, 148));
-                grotate(7, cnt / 3 % 2 * 192, 96, 0, 192, 96);
-                redraw(1);
-                await(cfg_animewait + 50);
+                snd(108);
             }
+            redraw(0);
+            if (i < 16)
+            {
+                pos(0, 0);
+            }
+            else
+            {
+                pos(5 - rnd(10), 5 - rnd(10));
+            }
+            gmode(0);
+            gcopy(4, 0, 0, windoww, windowh);
+            if (i > 8)
+            {
+                --p;
+            }
+            else
+            {
+                ++p;
+            }
+            gmode(4, 192, 48, 255 - p * 5);
+            pos(dx, dy);
+            grotate(
+                7,
+                i / 2 % 2 * 192,
+                408,
+                0,
+                std::clamp(p * 32, 0, 192),
+                std::clamp(p * 8, 0, 48));
+            if (i > 14)
+            {
+                ++p(1);
+            }
+            else if (i < 12)
+            {
+                p(1) = i / 2 % 2;
+            }
+            else if (i >= 12)
+            {
+                p(1) = i % 3;
+            }
+            gmode(2, 96, 48);
+            pos(dx, dy - std::clamp(i * 3 / 2, 0, 18) - 16);
+            grotate(
+                7,
+                p(1) * 96,
+                288,
+                0,
+                std::clamp(i * 12, 0, 144),
+                std::clamp(i * 6, 0, 72));
+            if (i > 4)
+            {
+                ++p(2);
+                ++p(3);
+            }
+            gmode(4, 96, 96, std::clamp(p(2) * 6, 0, 100));
+            pos(dx, dy - std::clamp(p(2) * 2, 0, 40));
+            grotate(
+                7,
+                0,
+                0,
+                0,
+                std::clamp(p(2) * 8, 0, 240),
+                std::clamp(p(2) * 5, 0, 96));
+            gmode(4, 96, 96, p(3) * 10);
+            pos(dx, dy - std::clamp(p(3) * 2, 0, 160) - 6);
+            grotate(
+                7,
+                96,
+                0,
+                0,
+                std::clamp(p(3) * 10, 0, 96),
+                std::clamp(p(3) * 10, 0, 96));
+            gmode(4, 192, 80, std::clamp(p(3) * 5, 0, 100));
+            pos(dx, dy - 4);
+            grotate(
+                7,
+                i / 4 % 2 * 192,
+                96,
+                0,
+                std::clamp(p(2) * 8, 0, 400),
+                std::clamp(p(2), 0, 48));
+            gmode(4, 192, 96, p(3) * 10);
+            pos(dx, dy - 48 - std::clamp(p(3) * 2, 0, 148));
+            grotate(7, i / 3 % 2 * 192, 96, 0, 192, 96);
+            redraw(1);
+            await(cfg_animewait + 50);
         }
         gmode(2);
         update_entire_screen();
@@ -881,70 +876,52 @@ void proc_event()
         aniy = tlocy;
         play_animation(17);
         update_screen();
+        for (int i = 0; i < range_ * 2 + 1; ++i)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (range_ * 2 + 1); cnt < cnt_end; ++cnt)
+            dy = tlocy - range_ + i;
+            if (dy < 0 || dy >= mdata(1))
+                continue;
             {
-                dy = tlocy - range_ + cnt;
-                if (dy < 0 || dy >= mdata(1))
+                for (int j = 0; j < range_ * 2 + 1; ++j)
                 {
-                    continue;
-                }
-                {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (range_ * 2 + 1); cnt < cnt_end;
-                         ++cnt)
+                    dx = tlocx - range_ + j;
+                    if (dx < 0 || dx >= mdata(0))
+                        continue;
+                    if (dist(tlocx, tlocy, dx, dy) > range_)
+                        continue;
+                    f = 0;
+                    if (chipm(7, map(dx, dy, 0)) & 4)
                     {
-                        dx = tlocx - range_ + cnt;
-                        if (dx < 0 || dx >= mdata(0))
-                        {
-                            continue;
-                        }
-                        if (dist(tlocx, tlocy, dx, dy) > range_)
-                        {
-                            continue;
-                        }
-                        f = 0;
-                        if (chipm(7, map(dx, dy, 0)) & 4)
-                        {
-                            f = 1;
-                        }
-                        if (rnd(4) || f == 1)
-                        {
-                            map(dx, dy, 0) = 37;
-                        }
-                        if (rnd(10) == 0 || f == 1)
-                        {
-                            addmef(dx, dy, 5, 24, rnd(15) + 20, 50);
-                        }
-                        if (map(dx, dy, 1) != 0)
-                        {
-                            tc = map(dx, dy, 1) - 1;
-                            dmg = 1000;
-                            dmghp(tc, dmg, -17);
-                        }
-                        mapitem_fire(dx, dy);
+                        f = 1;
                     }
+                    if (rnd(4) || f == 1)
+                    {
+                        map(dx, dy, 0) = 37;
+                    }
+                    if (rnd(10) == 0 || f == 1)
+                    {
+                        addmef(dx, dy, 5, 24, rnd(15) + 20, 50);
+                    }
+                    if (map(dx, dy, 1) != 0)
+                    {
+                        tc = map(dx, dy, 1) - 1;
+                        dmg = 1000;
+                        dmghp(tc, dmg, -17);
+                    }
+                    mapitem_fire(dx, dy);
                 }
             }
         }
-        if (evdata1(evnum - (evnum != 0) * 1) == 33)
+        if (evdata1(evnum - (evnum != 0) * 1) == 33
+            && evdata2(evnum - (evnum != 0) * 1) == 16
+            && gdata_current_map == 15 && gdata_red_blossom_in_palmia == 1)
         {
-            if (evdata2(evnum - (evnum != 0) * 1) == 16)
-            {
-                if (gdata_current_map == 15)
-                {
-                    if (gdata_red_blossom_in_palmia == 1)
-                    {
-                        gdata_red_blossom_in_palmia = 2;
-                        snd(44);
-                        txtef(2);
-                        txt(lang(
-                            u8"ジャーナルが更新された。"s,
-                            u8"Your journal has been updated."s));
-                    }
-                }
-            }
+            gdata_red_blossom_in_palmia = 2;
+            snd(44);
+            txtef(2);
+            txt(lang(
+                u8"ジャーナルが更新された。"s,
+                u8"Your journal has been updated."s));
         }
         if (mdata(6) == 3 || mdata(6) == 2)
         {
