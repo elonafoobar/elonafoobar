@@ -25808,10 +25808,10 @@ void label_1581()
 
 
 
-int do_create_item(int val0, int val1, int val2)
+int do_create_item(int slot, int x, int y)
 {
     int ii_p = 0;
-    if (val0 == 0 || val0 == -1)
+    if (slot == 0 || slot == -1)
     {
         if (sdata(19, 0) > rnd(5000))
         {
@@ -25821,20 +25821,20 @@ int do_create_item(int val0, int val1, int val2)
             }
         }
     }
-    ci = inv_getfreeid(val0);
+    ci = inv_getfreeid(slot);
     if (ci == -1)
     {
         return 0;
     }
     item_delete(ci);
-    if (val0 == -1 && mode != 6)
+    if (slot == -1 && mode != 6)
     {
         p = 0;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
             {
-                if (val1 == -1)
+                if (x == -1)
                 {
                     sx = rnd(mdata(0) - 2) + 2;
                     sy = rnd(mdata(1) - 2) + 2;
@@ -25847,13 +25847,13 @@ int do_create_item(int val0, int val1, int val2)
                 {
                     if (cnt == 0)
                     {
-                        sx = val1;
-                        sy = val2;
+                        sx = x;
+                        sy = y;
                     }
                     else
                     {
-                        sx = val1 + rnd((cnt + 1)) - rnd((cnt + 1));
-                        sy = val2 + rnd((cnt + 1)) - rnd((cnt + 1));
+                        sx = x + rnd((cnt + 1)) - rnd((cnt + 1));
+                        sy = y + rnd((cnt + 1)) - rnd((cnt + 1));
                     }
                     if (sx < 0 || sy < 0 || sx > mdata(0) - 1
                         || sy > mdata(1) - 1)
@@ -25861,7 +25861,7 @@ int do_create_item(int val0, int val1, int val2)
                         continue;
                     }
                 }
-                if (val1 != -1)
+                if (x != -1)
                 {
                     if (cnt == 0)
                     {
@@ -26033,7 +26033,7 @@ int do_create_item(int val0, int val1, int val2)
     }
     if (inv[ci].id == 54)
     {
-        inv[ci].number = calcinitgold(val0);
+        inv[ci].number = calcinitgold(slot);
         if (inv[ci].quality == 3)
         {
             inv[ci].number = inv[ci].number * 2;
@@ -26042,9 +26042,9 @@ int do_create_item(int val0, int val1, int val2)
         {
             inv[ci].number = inv[ci].number * 4;
         }
-        if (val0 >= 0)
+        if (slot >= 0)
         {
-            cdata[val0].gold += inv[ci].number;
+            cdata[slot].gold += inv[ci].number;
             inv[ci].number = 0;
             return 1;
         }
@@ -26207,14 +26207,14 @@ int do_create_item(int val0, int val1, int val2)
     }
     else
     {
-        int stat = item_stack(val0, ci);
+        int stat = item_stack(slot, ci);
         if (stat == 1)
         {
             ci = ti;
             return 1;
         }
     }
-    if (val0 == -1)
+    if (slot == -1)
     {
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
     }
