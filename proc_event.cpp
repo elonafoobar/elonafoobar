@@ -342,21 +342,12 @@ void proc_event()
     case 6:
         if (cdata[0].level > 5)
         {
+            for (int i = 10; i < 18; ++i)
             {
-                int cnt = 10;
-                for (int cnt_end = cnt + (40); cnt < cnt_end; ++cnt)
+                if (sdata(cnt, 0) != 0 && rnd(3) == 0)
                 {
-                    if (cnt <= 17)
-                    {
-                        if (sdata(cnt, 0) != 0)
-                        {
-                            if (rnd(3) == 0)
-                            {
-                                txtmore();
-                                skillexp(cnt, 0, -500);
-                            }
-                        }
-                    }
+                    txtmore();
+                    skillexp(cnt, 0, -500);
                 }
             }
             if (cdata[0].karma < -30)
