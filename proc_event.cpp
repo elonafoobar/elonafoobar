@@ -233,9 +233,7 @@ void proc_event()
                 + u8"."s));
         break;
     case 4:
-    {
-        int cnt = 0;
-        for (;; ++cnt)
+        while (1)
         {
             set_character_generation_filter();
             fixlv = 4;
@@ -251,7 +249,6 @@ void proc_event()
                 break;
             }
         }
-    }
         tc = rc;
         adata(20, gdata_current_map) = tc;
         cdatan(0, rc) += u8" Lv"s + cdata[rc].level;
