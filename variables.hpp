@@ -436,7 +436,6 @@ inline int invhead;
 inline int invrange;
 inline int invsc;
 inline int invsubroutine;
-inline int itemcreatehack;
 inline int jp;
 inline int key_escape;
 inline int key_shift;

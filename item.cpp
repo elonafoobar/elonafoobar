@@ -94,31 +94,15 @@ int a_at_m63 = 0;
 int skip_at_m63 = 0;
 
 
-int itemcreate(int prm_467, int prm_468, int prm_469, int prm_470, int prm_471)
+int itemcreate(int slot, int id, int x, int y, int number)
 {
-    itemcreatehack = -1;
     if (flttypeminor != 0)
     {
         flttypemajor = 0;
     }
-    if (prm_468 == 0)
-    {
-        dbid = -1;
-    }
-    else
-    {
-        dbid = prm_468;
-    }
-    if (prm_471 != 0)
-    {
-        initnum = prm_471;
-    }
-    else
-    {
-        initnum = 0;
-    }
-    itemcreatehack = 0;
-    return do_create_item(prm_467, prm_469, prm_470);
+    dbid = id == 0 ? -1 : id;
+    initnum = number;
+    return do_create_item(slot, x, y);
 }
 
 
