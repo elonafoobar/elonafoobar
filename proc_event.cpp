@@ -645,25 +645,17 @@ void proc_event()
         break;
     case 30:
         i = 0;
+        for (int cc = 0; cc < 16; ++cc)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
+            if (cdata[cc].state != 1)
+                continue;
+            if (cdata[cc].character_role != 13 && cdata[cc].character_role != 3)
             {
-                if (cdata[cnt].state != 1)
-                {
-                    continue;
-                }
-                if (cdata[cnt].character_role != 13)
-                {
-                    if (cdata[cnt].character_role != 3)
-                    {
-                        cdata[cnt].emotion_icon = 2010;
-                        txt(lang(
-                            name(cnt) + u8"「目が！目がー！！」"s,
-                            name(cnt) + u8" shout"s + _s(cnt) + u8" "s
-                                + cnvtalk(u8"Eyes! My eyes!"s)));
-                    }
-                }
+                cdata[cc].emotion_icon = 2010;
+                txt(lang(
+                    name(cc) + u8"「目が！目がー！！」"s,
+                    name(cc) + u8" shout"s + _s(cc) + u8" "s
+                        + cnvtalk(u8"Eyes! My eyes!"s)));
             }
         }
         break;
