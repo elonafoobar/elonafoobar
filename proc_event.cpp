@@ -193,14 +193,11 @@ void proc_event()
             u8"生涯をあなたに捧げる"s, u8"Without you, life has no meaning."s);
         ++listmax;
         show_random_event_window(u8"bg_re14");
+        for (int i = 0; i < 5; ++i)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
-            {
-                flt(calcobjlv(cdata[marry].level + 5), calcfixlv(3));
-                flttypemajor = fsetchest(rnd(length(fsetchest)));
-                itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
-            }
+            flt(calcobjlv(cdata[marry].level + 5), calcfixlv(3));
+            flttypemajor = fsetchest(rnd(length(fsetchest)));
+            itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
         }
         itemcreate(-1, 559, cdata[0].position.x, cdata[0].position.y, 0);
         flt();
