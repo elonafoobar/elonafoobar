@@ -669,78 +669,56 @@ void proc_event()
         break;
     case 17:
         i = 0;
+        for (int cc = 1; cc < 245; ++cc)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
+            if (cdata[cc].state != 1)
+                continue;
+            if (cdata[cc].character_role != 13 && cdata[cc].character_role != 3)
             {
-                if (cdata[cnt].state != 1)
+                if (cdata[cc].character_role != 0 || cdata[cc].relationship == 0
+                    || cdata[cc].current_map == gdata_current_map)
                 {
-                    continue;
-                }
-                if (cnt == 0)
-                {
-                    continue;
-                }
-                if (cdata[cnt].character_role != 13)
-                {
-                    if (cdata[cnt].character_role != 3)
+                    cdata[cc].emotion_icon = 2006;
+                    int stat = customtalk(cc, 104);
+                    if (stat == 0)
                     {
-                        if (cdata[cnt].character_role != 0
-                            || cdata[cnt].relationship == 0
-                            || cdata[cnt].current_map == gdata_current_map)
-                        {
-                            cdata[cnt].emotion_icon = 2006;
-                            int stat = customtalk(cnt, 104);
-                            if (stat == 0)
-                            {
-                                ++i;
-                            }
-                        }
+                        ++i;
                     }
                 }
             }
         }
+        for (int j = 0; j < std::clamp(i(0), 0, 3); ++j)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (std::clamp(i(0), 0, 3)); cnt < cnt_end;
-                 ++cnt)
+            txtef(9);
+            if (jp)
             {
-                txtef(9);
-                if (jp)
-                {
-                    txt(u8"「おかえり」"s,
-                        u8"「よう戻ったか」"s,
-                        u8"「無事で何よりです」"s,
-                        u8"「おかか♪」"s,
-                        u8"「待ってたよ」"s,
-                        u8"「おかえりなさい！」"s);
-                }
-                if (en)
-                {
-                    txt(cnvtalk(u8"Welcome home!"s),
-                        cnvtalk(u8"Hey, dear."s),
-                        cnvtalk(u8"You're back!"s),
-                        cnvtalk(u8"I was waiting for you."s),
-                        cnvtalk(u8"Nice to see you again."s));
-                }
+                txt(u8"「おかえり」"s,
+                    u8"「よう戻ったか」"s,
+                    u8"「無事で何よりです」"s,
+                    u8"「おかか♪」"s,
+                    u8"「待ってたよ」"s,
+                    u8"「おかえりなさい！」"s);
+            }
+            if (en)
+            {
+                txt(cnvtalk(u8"Welcome home!"s),
+                    cnvtalk(u8"Hey, dear."s),
+                    cnvtalk(u8"You're back!"s),
+                    cnvtalk(u8"I was waiting for you."s),
+                    cnvtalk(u8"Nice to see you again."s));
             }
         }
         if (gdata_number_of_waiting_guests != 0)
         {
             tc = 0;
+            for (int cc = 0; cc < 245; ++cc)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
+                if (cdata[cc].state != 1)
+                    continue;
+                if (cdata[cc].character_role == 18)
                 {
-                    if (cdata[cnt].state != 1)
-                    {
-                        continue;
-                    }
-                    if (cdata[cnt].character_role == 18)
-                    {
-                        tc = cnt;
-                        break;
-                    }
+                    tc = cc;
+                    break;
                 }
             }
             if (tc != 0)
