@@ -419,53 +419,95 @@ void proc_event()
                 u8"ゲストは行方不明になった。"s, u8"The guest lost his way."s));
             break;
         }
-        if (rnd(3) || 0)
+        if (rnd(3) == 0)
+        {
+            flt(0, 2);
+            for (int i = 0; i < 1; ++i)
+            {
+                if (gdata_last_month_when_trainer_visited != gdata_month
+                    || rnd(5) == 0)
+                {
+                    if (rnd(3))
+                    {
+                        characreate(-1, 333, -3, 0);
+                        cdata[rc].character_role = 2005;
+                        break;
+                    }
+                }
+                if (rnd(10) == 0)
+                {
+                    characreate(-1, 334, -3, 0);
+                    cdata[rc].character_role = 2006;
+                    break;
+                }
+                if (rnd(10) == 0)
+                {
+                    characreate(-1, 1, -3, 0);
+                    cdata[rc].character_role = 2003;
+                    cdata[rc].shop_rank =
+                        std::clamp(cdata[0].fame / 100, 20, 100);
+                    break;
+                }
+                if (rnd(4) == 0)
+                {
+                    characreate(-1, 9, -3, 0);
+                    cdata[rc].character_role = 2000;
+                    break;
+                }
+                if (rnd(4) == 0)
+                {
+                    characreate(-1, 174, -3, 0);
+                    cdata[rc].character_role = 2001;
+                    break;
+                }
+                characreate(-1, 16, -3, 0);
+                cdata[rc].character_role = 2002;
+                break;
+            }
+            tc = rc;
+            cdata[tc].relationship = 0;
+            cdata[tc].original_relationship = 0;
+            cbitmod(964, tc, 1);
+        }
+        else
         {
             p = 0;
             tc = 0;
+            for (int j = 0; j < 100; ++j)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
+                i = rnd(39) + 16;
+                if (cdata[i].state == 3 && cbit(969, i) == 0
+                    && cdata[i].current_map != gdata_current_map
+                    && cdata[i].relationship >= 0)
                 {
-                    i = rnd(39) + 16;
-                    if (cdata[i].state == 3)
+                    if (rnd(25) < p)
                     {
-                        if (cbit(969, i) == 0
-                            && cdata[i].current_map != gdata_current_map)
+                        break;
+                    }
+                    if (tc == 0)
+                    {
+                        tc = i;
+                        ++p;
+                        if (cdata[tc].impression < 25)
                         {
-                            if (cdata[i].relationship >= 0)
+                            if (rnd(12) == 0)
                             {
-                                if (rnd(25) < p)
-                                {
-                                    break;
-                                }
-                                if (tc == 0)
-                                {
-                                    tc = i;
-                                    ++p;
-                                    if (cdata[tc].impression < 25)
-                                    {
-                                        if (rnd(12) == 0)
-                                        {
-                                            break;
-                                        }
-                                    }
-                                    if (cdata[tc].impression < 0)
-                                    {
-                                        if (rnd(4))
-                                        {
-                                            break;
-                                        }
-                                    }
-                                    continue;
-                                }
-                                if (cdata[tc].impression < cdata[i].impression)
-                                {
-                                    tc = i;
-                                    ++p;
-                                }
+                                break;
                             }
                         }
+                        if (cdata[tc].impression < 0)
+                        {
+                            if (rnd(4))
+                            {
+                                break;
+                            }
+                        }
+                        continue;
+                    }
+                    if (cdata[tc].impression < cdata[i].impression)
+                    {
+                        tc = i;
+                        ++p;
                     }
                 }
             }
@@ -482,163 +524,93 @@ void proc_event()
             cyinit = cdata[0].position.y;
             place_character();
         }
-        else
-        {
-            flt(0, 2);
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
-                {
-                    if (gdata_last_month_when_trainer_visited != gdata_month
-                        || rnd(5) == 0)
-                    {
-                        if (rnd(3))
-                        {
-                            characreate(-1, 333, -3, 0);
-                            cdata[rc].character_role = 2005;
-                            break;
-                        }
-                    }
-                    if (rnd(10) == 0)
-                    {
-                        characreate(-1, 334, -3, 0);
-                        cdata[rc].character_role = 2006;
-                        break;
-                    }
-                    if (rnd(10) == 0)
-                    {
-                        characreate(-1, 1, -3, 0);
-                        cdata[rc].character_role = 2003;
-                        cdata[rc].shop_rank =
-                            std::clamp(cdata[0].fame / 100, 20, 100);
-                        break;
-                    }
-                    if (rnd(4) == 0)
-                    {
-                        characreate(-1, 9, -3, 0);
-                        cdata[rc].character_role = 2000;
-                        break;
-                    }
-                    if (rnd(4) == 0)
-                    {
-                        characreate(-1, 174, -3, 0);
-                        cdata[rc].character_role = 2001;
-                        break;
-                    }
-                    characreate(-1, 16, -3, 0);
-                    cdata[rc].character_role = 2002;
-                    break;
-                }
-            }
-            tc = rc;
-            cdata[tc].relationship = 0;
-            cdata[tc].original_relationship = 0;
-            cbitmod(964, tc, 1);
-        }
         cbitmod(982, tc, 1);
         i = 0;
+        for (int cnt = 0; cnt < 17; ++cnt) // 17?
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (17); cnt < cnt_end; ++cnt)
+            if (cnt == 0)
             {
-                if (cnt == 0)
-                {
-                    c = tc;
-                }
-                else
-                {
-                    c = cnt - 1;
-                }
-                if (cdata[c].state != 1)
+                c = tc;
+            }
+            else
+            {
+                c = cnt - 1;
+            }
+            if (cdata[c].state != 1)
+            {
+                continue;
+            }
+            if (gdata_mount != 0)
+            {
+                if (c == gdata_mount)
                 {
                     continue;
                 }
-                if (gdata_mount != 0)
+            }
+            inv_getheader(-1);
+            p(0) = 0;
+            p(1) = 6;
+            for (int ci = invhead; ci < invhead + invrange; ++ci)
+            {
+                if (inv[ci].number == 0)
+                    continue;
+                if (inv[ci].function != 44)
+                    continue;
+                if (c == tc)
                 {
-                    if (c == gdata_mount)
+                    if (inv[ci].param1 == 2)
+                    {
+                        cell_swap(
+                            c, -1, inv[ci].position.x, inv[ci].position.y);
+                        i = ci;
+                        p = ci;
+                        break;
+                    }
+                    else
                     {
                         continue;
                     }
                 }
-                inv_getheader(-1);
-                p(0) = 0;
-                p(1) = 6;
+                if (i == 0)
                 {
-                    int cnt = invhead;
-                    for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+                    break;
+                }
+                else if (ci == i)
+                {
+                    continue;
+                }
+                p(2) = dist(
+                    inv[ci].position.x,
+                    inv[ci].position.y,
+                    inv[i].position.x,
+                    inv[i].position.y);
+                if (p(2) < p(1))
+                {
+                    if (map(inv[ci].position.x, inv[ci].position.y, 1) == 0
+                        || c == 0 || c == tc)
                     {
-                        if (inv[cnt].number == 0)
-                        {
-                            continue;
-                        }
-                        if (inv[cnt].function != 44)
-                        {
-                            continue;
-                        }
-                        if (c == tc)
-                        {
-                            if (inv[cnt].param1 == 2)
-                            {
-                                cell_swap(
-                                    c,
-                                    -1,
-                                    inv[cnt].position.x,
-                                    inv[cnt].position.y);
-                                i = cnt;
-                                p = cnt;
-                                break;
-                            }
-                            else
-                            {
-                                continue;
-                            }
-                        }
-                        if (i == 0)
-                        {
-                            break;
-                        }
-                        else if (cnt == i)
-                        {
-                            continue;
-                        }
-                        p(2) = dist(
-                            inv[cnt].position.x,
-                            inv[cnt].position.y,
-                            inv[i].position.x,
-                            inv[i].position.y);
-                        if (p(2) < p(1))
-                        {
-                            if (map(inv[cnt].position.x, inv[cnt].position.y, 1)
-                                    == 0
-                                || c == 0 || c == tc)
-                            {
-                                p(0) = cnt;
-                                p(1) = p(2);
-                            }
-                        }
-                        if (c == 0)
-                        {
-                            if (inv[cnt].param1 == 1)
-                            {
-                                p = cnt;
-                                break;
-                            }
-                        }
+                        p(0) = ci;
+                        p(1) = p(2);
                     }
                 }
-                if (p != 0)
+                if (c == 0 && inv[ci].param1 == 1)
                 {
-                    cell_swap(c, -1, inv[p].position.x, inv[p].position.y);
+                    p = ci;
+                    break;
                 }
-                cdata[c].direction = direction(
-                    cdata[c].position.x,
-                    cdata[c].position.y,
-                    cdata[tc].position.x,
-                    cdata[tc].position.y);
-                if (c == 0)
-                {
-                    gdata(35) = cdata[c].direction;
-                }
+            }
+            if (p != 0)
+            {
+                cell_swap(c, -1, inv[p].position.x, inv[p].position.y);
+            }
+            cdata[c].direction = direction(
+                cdata[c].position.x,
+                cdata[c].position.y,
+                cdata[tc].position.x,
+                cdata[tc].position.y);
+            if (c == 0)
+            {
+                gdata(35) = cdata[c].direction;
             }
         }
         speak_to_npc();
