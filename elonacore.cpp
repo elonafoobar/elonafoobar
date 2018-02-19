@@ -51411,160 +51411,124 @@ label_2052_internal:
 
 void do_get_command()
 {
-    if (map(cdata[0].position.x, cdata[0].position.y, 6) != 0)
+    if (map(cdata[0].position.x, cdata[0].position.y, 6) != 0
+        && gdata_current_map != 35
+        && cell_itemoncell(cdata[0].position.x, cdata[0].position.y) == 0)
     {
-        if (gdata_current_map != 35 || 0)
+        cell_featread(cdata[0].position.x, cdata[0].position.y);
+        if (feat(1) == 29)
         {
-            int stat =
-                cell_itemoncell(cdata[0].position.x, cdata[0].position.y);
+            if (feat < tile_plant + 2)
+            {
+                txt(lang(u8"芽を摘み取った。"s, u8"You nip a young plant."s));
+                map(cdata[0].position.x, cdata[0].position.y, 6) = 0;
+                turn_end();
+                return;
+            }
+            if (feat == tile_plant + 3)
+            {
+                txt(lang(
+                    u8"枯れた草を摘み取った。"s, u8"You nip a dead plant."s));
+                map(cdata[0].position.x, cdata[0].position.y, 6) = 0;
+                turn_end();
+                return;
+            }
+            if (inv_getspace(0) == 0)
+            {
+                txt(lang(
+                    u8"バックパックが一杯だ。"s, u8"Your inventory is full."s));
+                update_screen();
+                pc_turn(false);
+            }
+            label_2236();
+            if (chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 2)
+            {
+                val = 1;
+            }
+            else
+            {
+                val = 0;
+            }
+            label_2235();
+            if (feat(2) == 40)
+            {
+                autosave = 1 * (gdata_current_map != 35);
+            }
+            refresh_burden_state();
+            turn_end();
+            return;
+        }
+        if (mdata(6) == 1 && feat(1) == 15 && feat(2) + feat(3) * 100 >= 300
+            && feat(2) + feat(3) * 100 < 450)
+        {
+            txt(lang(
+                u8"本当にこの建物を撤去する？（注意！建物と中の物は完全に失われます）"s,
+                u8"Really remove this building?"s));
+            promptl(0, 0) = stryes;
+            promptl(1, 0) = u8"y"s;
+            promptl(2, 0) = u8"0"s;
+            promptl(0, 1) = strno;
+            promptl(1, 1) = u8"n"s;
+            promptl(2, 1) = u8"1"s;
+            promptmax = 2;
+            val(0) = promptx;
+            val(1) = prompty;
+            val(2) = 160;
+            val(3) = 1;
+            show_prompt();
+            if (rtval != 0)
+            {
+                update_screen();
+                pc_turn(false);
+            }
+            area = feat(2) + feat(3) * 100;
+            map(cdata[0].position.x, cdata[0].position.y, 6) = 0;
+            adata(16, area) = 0;
+            removeworker(area);
+            label_1749();
+            ctrl_file(13);
+            snd(58);
+            txt(lang(u8"建物を撤去した。"s, u8"You remove the building."s));
+            turn_end();
+            return;
+        }
+    }
+
+    if (cell_itemoncell(cdata[0].position.x, cdata[0].position.y) == 0)
+    {
+        if ((mdata(6) == 3 || mdata(6) == 2)
+            && chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 4)
+        {
+            snd(83);
+            txt(lang(
+                u8"雪をかきあつめた。"s, u8"You rake up a handful of snow."s));
+            int stat = actionsp(0, 10);
             if (stat == 0)
             {
-                cell_featread(cdata[0].position.x, cdata[0].position.y);
-                if (feat(1) == 29)
-                {
-                    if (gdata_current_map != 35)
-                    {
-                        if (feat < tile_plant + 2)
-                        {
-                            txt(lang(
-                                u8"芽を摘み取った。"s,
-                                u8"You nip a young plant."s));
-                            map(cdata[0].position.x, cdata[0].position.y, 6) =
-                                0;
-                            turn_end();
-                            return;
-                        }
-                        if (feat == tile_plant + 3)
-                        {
-                            txt(lang(
-                                u8"枯れた草を摘み取った。"s,
-                                u8"You nip a dead plant."s));
-                            map(cdata[0].position.x, cdata[0].position.y, 6) =
-                                0;
-                            turn_end();
-                            return;
-                        }
-                        if (inv_getspace(0) == 0)
-                        {
-                            txt(lang(
-                                u8"バックパックが一杯だ。"s,
-                                u8"Your inventory is full."s));
-                            update_screen();
-                            pc_turn(false);
-                        }
-                        label_2236();
-                        if (chipm(
-                                0,
-                                map(cdata[0].position.x,
-                                    cdata[0].position.y,
-                                    0))
-                            == 2)
-                        {
-                            val = 1;
-                        }
-                        else
-                        {
-                            val = 0;
-                        }
-                        label_2235();
-                        if (feat(2) == 40)
-                        {
-                            autosave = 1 * (gdata_current_map != 35);
-                        }
-                        refresh_burden_state();
-                        turn_end();
-                        return;
-                    }
-                }
-                if (mdata(6) == 1)
-                {
-                    if (feat(1) == 15)
-                    {
-                        if (feat(2) + feat(3) * 100 >= 300
-                            && feat(2) + feat(3) * 100 < 450)
-                        {
-                            txt(lang(
-                                u8"本当にこの建物を撤去する？（注意！建物と中の物は完全に失われます）"s,
-                                u8"Really remove this building?"s));
-                            promptl(0, 0) = stryes;
-                            promptl(1, 0) = u8"y"s;
-                            promptl(2, 0) = u8"0"s;
-                            promptl(0, 1) = strno;
-                            promptl(1, 1) = u8"n"s;
-                            promptl(2, 1) = u8"1"s;
-                            promptmax = 2;
-                            val(0) = promptx;
-                            val(1) = prompty;
-                            val(2) = 160;
-                            val(3) = 1;
-                            show_prompt();
-                            if (rtval != 0)
-                            {
-                                update_screen();
-                                pc_turn(false);
-                            }
-                            area = feat(2) + feat(3) * 100;
-                            map(cdata[0].position.x, cdata[0].position.y, 6) =
-                                0;
-                            adata(16, area) = 0;
-                            removeworker(area);
-                            label_1749();
-                            ctrl_file(13);
-                            snd(58);
-                            txt(lang(
-                                u8"建物を撤去した。"s,
-                                u8"You remove the building."s));
-                            turn_end();
-                            return;
-                        }
-                    }
-                }
+                txt(lang(
+                    u8"疲労し過ぎて失敗した！"s, u8"You are too exhausted!"s));
+                turn_end();
+                return;
             }
-        }
-    }
-    {
-        int stat = cell_itemoncell(cdata[0].position.x, cdata[0].position.y);
-        if (stat == 0)
-        {
-            if (mdata(6) == 3 || mdata(6) == 2)
+            flt();
             {
-                if (chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0))
-                    == 4)
+                int stat = itemcreate(0, 587, -1, -1, 0);
+                if (stat != 0)
                 {
-                    snd(83);
-                    txt(lang(
-                        u8"雪をかきあつめた。"s,
-                        u8"You rake up a handful of snow."s));
-                    int stat = actionsp(0, 10);
-                    if (stat == 0)
-                    {
-                        txt(lang(
-                            u8"疲労し過ぎて失敗した！"s,
-                            u8"You are too exhausted!"s));
-                        turn_end();
-                        return;
-                    }
-                    flt();
-                    {
-                        int stat = itemcreate(0, 587, -1, -1, 0);
-                        if (stat != 0)
-                        {
-                            inv[ci].curse_state = 0;
-                            inv[ci].identification_state = 3;
-                            item_stack(0, ci, 1);
-                        }
-                    }
-                    turn_end();
-                    return;
+                    inv[ci].curse_state = 0;
+                    inv[ci].identification_state = 3;
+                    item_stack(0, ci, 1);
                 }
             }
-            ++msgdup;
-            txt(lang(
-                u8"あなたは空気をつかんだ。"s, u8"You grasp at the air."s));
-            update_screen();
-            pc_turn(false);
+            turn_end();
+            return;
         }
+        ++msgdup;
+        txt(lang(u8"あなたは空気をつかんだ。"s, u8"You grasp at the air."s));
+        update_screen();
+        pc_turn(false);
     }
+
     ci = rtval(1);
     if (rtval > 1)
     {
@@ -51596,18 +51560,17 @@ void do_get_command()
         pc_turn(false);
     }
     in = inv[ci].number;
+
+    int stat = pick_up_item();
+    if (stat == 1 || stat == -1)
     {
-        int stat = pick_up_item();
-        if (stat == 1 || stat == -1)
-        {
-            turn_end();
-            return;
-        }
-        else
-        {
-            update_screen();
-            pc_turn(false);
-        }
+        turn_end();
+        return;
+    }
+    else
+    {
+        update_screen();
+        pc_turn(false);
     }
 }
 
