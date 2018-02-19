@@ -25810,109 +25810,95 @@ void label_1581()
 
 int do_create_item(int slot, int x, int y)
 {
-    int ii_p = 0;
-    if (slot == 0 || slot == -1)
+    if ((slot == 0 || slot == -1) && fixlv < 5)
     {
         if (sdata(19, 0) > rnd(5000))
         {
-            if (fixlv < 5)
-            {
-                ++fixlv;
-            }
+            ++fixlv;
         }
     }
+
     ci = inv_getfreeid(slot);
     if (ci == -1)
-    {
         return 0;
-    }
+
     item_delete(ci);
+
     if (slot == -1 && mode != 6)
     {
-        p = 0;
+        bool ok = false;
+        for (int i = 0; i < 100; ++i)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
+            if (x == -1)
             {
-                if (x == -1)
+                sx = rnd(mdata(0) - 2) + 2;
+                sy = rnd(mdata(1) - 2) + 2;
+                if (map(sx, sy, 4) != 0)
                 {
-                    sx = rnd(mdata(0) - 2) + 2;
-                    sy = rnd(mdata(1) - 2) + 2;
-                    if (map(sx, sy, 4) != 0)
-                    {
-                        continue;
-                    }
+                    continue;
+                }
+            }
+            else
+            {
+                if (i == 0)
+                {
+                    sx = x;
+                    sy = y;
                 }
                 else
                 {
-                    if (cnt == 0)
-                    {
-                        sx = x;
-                        sy = y;
-                    }
-                    else
-                    {
-                        sx = x + rnd((cnt + 1)) - rnd((cnt + 1));
-                        sy = y + rnd((cnt + 1)) - rnd((cnt + 1));
-                    }
-                    if (sx < 0 || sy < 0 || sx > mdata(0) - 1
-                        || sy > mdata(1) - 1)
-                    {
-                        continue;
-                    }
+                    sx = x + rnd(i + 1) - rnd(i + 1);
+                    sy = y + rnd(i + 1) - rnd(i + 1);
                 }
-                if (x != -1)
+                if (sx < 0 || sy < 0 || sx > mdata(0) - 1 || sy > mdata(1) - 1)
                 {
-                    if (cnt == 0)
-                    {
-                        p = 1;
-                        inv[ci].position.x = sx;
-                        inv[ci].position.y = sy;
-                        break;
-                    }
-                }
-                if (map(sx, sy, 6) != 0)
-                {
-                    if (map(sx, sy, 6) / 1000 % 100 == 22
-                        || map(sx, sy, 6) / 1000 % 100 == 20
-                        || map(sx, sy, 6) / 1000 % 100 == 21)
-                    {
-                        continue;
-                    }
-                }
-                if ((chipm(7, map(sx, sy, 0)) & 4) == 0)
-                {
-                    p = 1;
-                    inv[ci].position.x = sx;
-                    inv[ci].position.y = sy;
-                    break;
+                    continue;
                 }
             }
+            if (x != -1 && i == 0)
+            {
+                ok = true;
+                inv[ci].position.x = sx;
+                inv[ci].position.y = sy;
+                break;
+            }
+            if (map(sx, sy, 6) != 0)
+            {
+                if (map(sx, sy, 6) / 1000 % 100 == 22
+                    || map(sx, sy, 6) / 1000 % 100 == 20
+                    || map(sx, sy, 6) / 1000 % 100 == 21)
+                {
+                    continue;
+                }
+            }
+            if ((chipm(7, map(sx, sy, 0)) & 4) == 0)
+            {
+                ok = true;
+                inv[ci].position.x = sx;
+                inv[ci].position.y = sy;
+                break;
+            }
         }
-        if (p == 0)
-        {
+        if (!ok)
             return 0;
-        }
     }
+
     if (dbid == -1)
     {
-        if (fltselect == 0)
+        if (fltselect == 0 && mode != 6)
         {
-            if (mode != 6)
+            if (fixlv == 3)
             {
-                if (fixlv == 3)
+                if (rnd(1000) == 0)
                 {
-                    if (rnd(1000) == 0)
-                    {
-                        fltselect = 2;
-                    }
+                    fltselect = 2;
                 }
-                if (fixlv == 4)
+            }
+            if (fixlv == 4)
+            {
+                if (rnd(100) == 0)
                 {
-                    if (rnd(100) == 0)
-                    {
-                        fltselect = 2;
-                    }
+                    fltselect = 2;
                 }
             }
         }
@@ -25930,15 +25916,15 @@ int do_create_item(int slot, int x, int y)
             get_random_item_id();
         }
     }
-    if (dbid == 25)
+
+    if (dbid == 25 && flttypemajor == 60002)
     {
-        if (flttypemajor == 60002)
-        {
-            dbid = 501;
-        }
+        dbid = 501;
     }
+
     access_item_db(3);
     access_item_db(2);
+
     inv[ci].color = icolref(inv[ci].id);
     if (inv[ci].color == 1)
     {
@@ -25948,73 +25934,64 @@ int do_create_item(int slot, int x, int y)
     {
         inv[ci].color = rnd(21);
     }
-    if (inv[ci].id == 24)
+    if (inv[ci].id == 24 && inv[ci].param1 == 0)
     {
-        if (inv[ci].param1 == 0)
-        {
-            inv[ci].param1 = isetbook(rnd(length(isetbook)));
-        }
+        inv[ci].param1 = isetbook(rnd(length(isetbook)));
     }
-    if (inv[ci].id == 563)
+    if (inv[ci].id == 563 && inv[ci].param1 == 0)
     {
-        if (inv[ci].param1 == 0)
-        {
-            inv[ci].param1 = randskill();
-        }
+        inv[ci].param1 = randskill();
     }
     if (inv[ci].id == 783)
     {
         inv[ci].subname = rpsourcelist(rnd(length(rpsourcelist)));
         inv[ci].param1 = 1;
     }
+
     ++itemmemory(1, dbid);
+
     inv[ci].quality = fixlv;
-    if (fixlv == 6)
+    if (fixlv == 6 && mode != 6 && nooracle == 0)
     {
-        if (mode != 6)
+        int owner = inv_getowner(ci);
+        if (owner != -1)
         {
-            if (nooracle == 0)
+            if (cdata[owner].character_role == 13)
             {
-                ii_p = inv_getowner(ci);
-                if (ii_p != -1)
-                {
-                    if (cdata[ii_p].character_role == 13)
-                    {
-                        artifactlocation.push_back(lang(
-                            iknownnameref(inv[ci].id) + u8"は"s + gdata_year
-                                + u8"年"s + gdata_month + u8"月に"s
-                                + mapname(cdata[ii_p].current_map) + u8"の"s
-                                + cdatan(0, ii_p) + u8"の手に渡った。"s,
-                            cnven(iknownnameref(inv[ci].id))
-                                + u8" was held by "s + cdatan(0, ii_p)
-                                + u8" at "s + mapname(cdata[ii_p].current_map)
-                                + u8" in "s + gdata_day + u8"/"s + gdata_month
-                                + u8", "s + gdata_year + u8". "s));
-                    }
-                    else
-                    {
-                        ii_p = -1;
-                    }
-                }
-                if (ii_p == -1)
-                {
-                    artifactlocation.push_back(lang(
-                        iknownnameref(inv[ci].id) + u8"は"s + gdata_year
-                            + u8"年"s + gdata_month + u8"月に"s + mdatan(0)
-                            + u8"で生成された。"s,
-                        cnven(iknownnameref(inv[ci].id)) + u8" was created at "s
-                            + mdatan(0) + u8" in "s + gdata_day + u8"/"s
-                            + gdata_month + u8", "s + gdata_year + u8". "s));
-                }
+                artifactlocation.push_back(lang(
+                    iknownnameref(inv[ci].id) + u8"は"s + gdata_year + u8"年"s
+                        + gdata_month + u8"月に"s
+                        + mapname(cdata[owner].current_map) + u8"の"s
+                        + cdatan(0, owner) + u8"の手に渡った。"s,
+                    cnven(iknownnameref(inv[ci].id)) + u8" was held by "s
+                        + cdatan(0, owner) + u8" at "s
+                        + mapname(cdata[owner].current_map) + u8" in "s
+                        + gdata_day + u8"/"s + gdata_month + u8", "s
+                        + gdata_year + u8". "s));
+            }
+            else
+            {
+                owner = -1;
             }
         }
+        if (owner == -1)
+        {
+            artifactlocation.push_back(lang(
+                iknownnameref(inv[ci].id) + u8"は"s + gdata_year + u8"年"s
+                    + gdata_month + u8"月に"s + mdatan(0) + u8"で生成された。"s,
+                cnven(iknownnameref(inv[ci].id)) + u8" was created at "s
+                    + mdatan(0) + u8" in "s + gdata_day + u8"/"s + gdata_month
+                    + u8", "s + gdata_year + u8". "s));
+        }
     }
+
     if (inv[ci].id == 617)
     {
         inv[ci].param1 = rnd(6);
         inv[ci].image = 385 + inv[ci].param1;
         inv[ci].value = inv[ci].param1 * inv[ci].param1 * 500 + 200;
     }
+
     if (inv[ci].id == 344)
     {
         inv[ci].param1 = rnd(5) + 1;
@@ -26031,6 +26008,7 @@ int do_create_item(int slot, int x, int y)
             inv[ci].value *= 2;
         }
     }
+
     if (inv[ci].id == 54)
     {
         inv[ci].number = calcinitgold(slot);
@@ -26049,57 +26027,69 @@ int do_create_item(int slot, int x, int y)
             return 1;
         }
     }
+
     if (inv[ci].id == 729)
     {
         inv[ci].param4 = rnd(rnd(rnd(length(giftvalue)) + 1) + 1);
         inv[ci].value = inv[ci].param4 * 2500 + 500;
     }
+
     if (inv[ci].id == 578)
     {
         inv[ci].param2 = rnd(rnd(length(moneybox)) + 1);
         inv[ci].value =
             inv[ci].param2 * inv[ci].param2 * inv[ci].param2 * 1000 + 1000;
     }
+
     if (inv[ci].id == 685)
     {
         inv[ci].param2 = rnd(objlv + 1) + 1;
         inv[ci].value =
             2000 + inv[ci].param2 * inv[ci].param2 + inv[ci].param2 * 100;
     }
+
     if (inv[ci].id == 630)
     {
         determine_item_material();
         apply_item_material();
     }
+
     if (inv[ci].id == 687)
     {
         inv[ci].param1 = rnd(rnd(std::clamp(objlv / 2, 1, 15)) + 1);
     }
+
     if (inv[ci].id == 667)
     {
         ibitmod(17, ci, 1);
     }
+
     if (inv[ci].id == 641)
     {
         ++gdata_next_inventory_serial_id;
         inv[ci].count = gdata_next_inventory_serial_id;
     }
+
     if (inv[ci].id == 510)
     {
         inv[ci].count = 3;
     }
+
     if (inv[ci].id == 561)
     {
         inv[ci].count = 5;
     }
+
     if (inv[ci].id == 547)
     {
         inv[ci].count = 4;
     }
+
     if (inv[ci].id == 579)
     {
         inv[ci].count = 6;
     }
+
     if (reftype == 72000)
     {
         inv[ci].param1 =
@@ -26127,32 +26117,31 @@ int do_create_item(int slot, int x, int y)
             initnum = rnd(8);
         }
     }
-    if (reftype == 57000)
+
+    if (reftype == 57000 && inv[ci].param1 != 0)
     {
-        if (inv[ci].param1 != 0)
+        if (mode == 6)
         {
-            if (mode == 6)
+            if (rnd(2) == 0)
             {
-                if (rnd(2) == 0)
-                {
-                    inv[ci].param2 = 0;
-                }
-                else
-                {
-                    inv[ci].param2 = 3 + rnd(3);
-                }
+                inv[ci].param2 = 0;
             }
-            if (inv[ci].param2 != 0)
+            else
             {
-                inv[ci].image = picfood(inv[ci].param2, inv[ci].param1 / 1000);
-            }
-            if (inv[ci].material == 35)
-            {
-                inv[ci].param3 += gdata_hour + gdata_day * 24
-                    + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12;
+                inv[ci].param2 = 3 + rnd(3);
             }
         }
+        if (inv[ci].param2 != 0)
+        {
+            inv[ci].image = picfood(inv[ci].param2, inv[ci].param1 / 1000);
+        }
+        if (inv[ci].material == 35)
+        {
+            inv[ci].param3 += gdata_hour + gdata_day * 24
+                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12;
+        }
     }
+
     label_1581();
     if (reftype == 60000)
     {
@@ -26165,6 +26154,7 @@ int do_create_item(int slot, int x, int y)
             inv[ci].subname = 0;
         }
     }
+
     if (mode == 6)
     {
         inv[ci].identification_state = 3;
@@ -26195,12 +26185,16 @@ int do_create_item(int slot, int x, int y)
             }
         }
     }
+
     label_1583();
+
     itemturn(ci);
+
     if (initnum != 0)
     {
         inv[ci].number = initnum;
     }
+
     if (nostack == 1)
     {
         nostack = 0;
@@ -26214,6 +26208,7 @@ int do_create_item(int slot, int x, int y)
             return 1;
         }
     }
+
     if (slot == -1)
     {
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
