@@ -1173,13 +1173,9 @@ label_2061_internal:
                         + inv[ci].number + u8") "s,
                     u8"How many? (1 to "s + inv[ci].number + u8")"s));
                 display_msg(screenmsgy, 1);
-                val(0) = (windoww - 200) / 2 + inf_screenx;
-                val(1) = winposy(60);
-                val(2) = 8;
-                val(3) = 1;
-                val(4) = inv[ci].number;
                 inputlog = ""s + inv[ci].number;
-                show_number_of_text_prompt();
+                show_number_of_text_prompt(
+                    (windoww - 200) / 2 + inf_screenx, winposy(60), 8, 1);
                 in = elona::stoi(inputlog(0));
                 if (in > inv[ci].number)
                 {
@@ -1330,13 +1326,9 @@ label_2061_internal:
                         u8"How many? (1 to "s + inv[ci].number + u8")"s));
                 }
                 display_msg(screenmsgy, 2);
-                val(0) = (windoww - 200) / 2 + inf_screenx;
-                val(1) = winposy(60);
-                val(2) = 8;
-                val(3) = 1;
-                val(4) = inv[ci].number;
                 inputlog = ""s + inv[ci].number;
-                show_number_of_text_prompt();
+                show_number_of_text_prompt(
+                    (windoww - 200) / 2 + inf_screenx, winposy(60), 8, 1);
                 in = elona::stoi(inputlog(0));
                 if (in > inv[ci].number)
                 {
@@ -1381,11 +1373,7 @@ label_2061_internal:
                 promptl(1, 1) = u8"n"s;
                 promptl(2, 1) = u8"1"s;
                 promptmax = 2;
-                val(0) = promptx;
-                val(1) = prompty;
-                val(2) = 160;
-                val(3) = 1;
-                show_prompt();
+                show_prompt(promptx, prompty, 160);
                 if (rtval != 0)
                 {
                     screenupdate = -1;
@@ -2345,11 +2333,7 @@ label_2061_internal:
                     promptl(1, 1) = u8"n"s;
                     promptl(2, 1) = u8"1"s;
                     promptmax = 2;
-                    val(0) = promptx;
-                    val(1) = prompty;
-                    val(2) = 160;
-                    val(3) = 1;
-                    show_prompt();
+                    show_prompt(promptx, prompty, 160);
                     if (rtval != 0)
                     {
                         goto label_2060_internal;

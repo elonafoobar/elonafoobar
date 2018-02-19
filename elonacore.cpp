@@ -185,7 +185,6 @@ int ask_direction_to_close()
 
     txt(lang(u8"何を閉める？"s, u8"Which door do you want to close? "s));
     update_screen();
-    val = 0;
     return ask_direction();
 }
 
@@ -2737,7 +2736,7 @@ void initialize_picfood()
 
 
 
-void set_quest_data()
+void set_quest_data(int val0)
 {
     randomize(qdata(0, rq) + 1);
     s(6) = "";
@@ -2766,7 +2765,7 @@ void set_quest_data()
     if (qdata(3, rq) == 1006)
     {
         s = u8"%HARVEST"s;
-        parse_quest_board_text();
+        parse_quest_board_text(val0);
         s(10) = ""s + cnvweight(qdata(12, rq));
         s(11) = mapname(qdata(1, rq));
         s(4) = lang(
@@ -2782,7 +2781,7 @@ void set_quest_data()
     if (qdata(3, rq) == 1009)
     {
         s = u8"%PARTY"s;
-        parse_quest_board_text();
+        parse_quest_board_text(val0);
         s(10) = ""s + qdata(12, rq) + lang(u8"ポイント"s, u8" points"s);
         s(11) = mapname(qdata(1, rq));
         s(4) = lang(""s + s(10) + u8"の獲得"s, u8"Gather "s + s(10) + u8"."s);
@@ -2795,7 +2794,7 @@ void set_quest_data()
     if (qdata(3, rq) == 1007)
     {
         s = u8"%ESCORT,"s + qdata(4, rq);
-        parse_quest_board_text();
+        parse_quest_board_text(val0);
         s(11) = ""s + mapname(qdata(12, rq));
         s(4) = lang(
             u8"クライアントを"s + s(11),
@@ -2805,14 +2804,14 @@ void set_quest_data()
     if (qdata(3, rq) == 1001)
     {
         s = u8"%HUNT"s;
-        parse_quest_board_text();
+        parse_quest_board_text(val0);
         s(4) = lang(u8"全ての敵の殲滅"s, u8"Eliminate monsters."s);
         s(6) = s(4);
     }
     if (qdata(3, rq) == 1004)
     {
         s = u8"%SUPPLY"s;
-        parse_quest_board_text();
+        parse_quest_board_text(val0);
         s(4) = cnvarticle(cnvitemname(qdata(11, rq)));
         s(6) =
             lang(s(4) + u8"の納入"s, u8"Give "s + s(4) + u8" to the client."s);
@@ -2820,7 +2819,7 @@ void set_quest_data()
     if (qdata(3, rq) == 1002)
     {
         s = u8"%DELIVER,"s + qdata(12, rq);
-        parse_quest_board_text();
+        parse_quest_board_text(val0);
         s(10) = cnvarticle(cnvitemname(qdata(11, rq)));
         s(11) = ""s + mapname(qdata(1, qdata(10, rq)));
         s(12) = ""s + qname(qdata(10, rq));
@@ -2841,7 +2840,7 @@ void set_quest_data()
         {
             s = u8"%COOK,GENERAL"s;
         }
-        parse_quest_board_text();
+        parse_quest_board_text(val0);
         s(4) = cnvarticle(foodname(qdata(12, rq), ""s, qdata(13, rq)));
         s(6) =
             lang(s(4) + u8"の納入"s, u8"Give "s + s(4) + u8" to the client."s);
@@ -2849,7 +2848,7 @@ void set_quest_data()
     if (qdata(3, rq) == 1008)
     {
         s = u8"%CONQUER"s;
-        parse_quest_board_text();
+        parse_quest_board_text(val0);
         s(4) = refchara_str(qdata(12, rq), 2);
         if (qdata(12, rq) == 343)
         {
@@ -2861,7 +2860,7 @@ void set_quest_data()
     if (qdata(3, rq) == 1010)
     {
         s = u8"%HUNTEX"s;
-        parse_quest_board_text();
+        parse_quest_board_text(val0);
         s(4) = refchara_str(qdata(12, rq), 2);
         s(10) = ""s + qdata(5, rq) * 3 / 2;
         s(6) = lang(u8"全ての敵の殲滅"s, u8"Eliminate monsters"s);
@@ -2869,7 +2868,7 @@ void set_quest_data()
     if (qdata(3, rq) == 1011)
     {
         s = u8"%COLLECT"s;
-        parse_quest_board_text();
+        parse_quest_board_text(val0);
         s(10) = cnvarticle(cnvitemname(qdata(11, rq)));
         s(11) = ""s + mapname(qdata(1, rq));
         if (gdata_current_map == qdata(1, rq)
@@ -2892,7 +2891,7 @@ void set_quest_data()
         s(6) = s(4) + lang(u8"を調達"s, ""s);
     }
     replace_tags_in_quest_text();
-    if (val == 1)
+    if (val0 == 1)
     {
         buff = lang(_kimi(3) + u8"に頼みたいことがある"s + _nda(), ""s) + buff;
         if (qdata(9, rq) != -1)
@@ -2904,7 +2903,7 @@ void set_quest_data()
         }
         buff += lang(u8"依頼を受けてくれるの"s + _kana(1), u8"How about it?"s);
     }
-    if (val == 2)
+    if (val0 == 2)
     {
         if (qdata(8, rq) == 3)
         {
@@ -2941,7 +2940,7 @@ void set_quest_data()
         talk_conv(s(4), 40 - en * 10);
         buff += s(4) + u8"\n"s;
     }
-    if (val == 3)
+    if (val0 == 3)
     {
         buff = lang(
             u8"依頼を無事終わらせたよう"s + _dana() + _thanks(2),
@@ -3164,7 +3163,7 @@ void addnewstopic(const std::string& prm_403, const std::string& prm_404)
 
 
 
-void addnews(int prm_405, int prm_406)
+void addnews(int prm_405, int prm_406, int val0)
 {
     if (prm_405 == 0)
     {
@@ -3211,10 +3210,10 @@ void addnews(int prm_405, int prm_406)
         addnewstopic(u8"@03"s, lang(u8"クエストの達成"s, u8"Accomplishment"s));
         addnews2(
             lang(
-                cdatan(1, prm_406) + u8"はクエストを達成し、"s + val
+                cdatan(1, prm_406) + u8"はクエストを達成し、"s + val0
                     + u8"の名声を手にした。"s,
                 cdatan(1, prm_406) + u8" has finished a quest and gained "s
-                    + val + u8" fame."s),
+                    + val0 + u8" fame."s),
             1);
     }
     if (prm_405 == 5)
@@ -18441,13 +18440,8 @@ void label_1399()
     {
         imeset(1);
     }
-    val(0) = 80;
-    val(1) = windowh - inf_verh - 70;
-    val(2) = 38;
-    val(3) = 1;
-    val(4) = 0;
     inputlog = "";
-    show_number_of_text_prompt();
+    show_number_of_text_prompt(80, windowh - inf_verh - 70, 38, 1);
     imeset(0);
     if (inputlog == ""s)
     {
@@ -18668,11 +18662,7 @@ label_1402_internal:
             promptl(1, 0) = u8"y"s;
             promptl(2, 0) = u8"0"s;
             promptmax = 1;
-            val(0) = promptx;
-            val(1) = prompty;
-            val(2) = 200;
-            val(3) = 1;
-            show_prompt();
+            show_prompt(promptx, prompty, 200);
             goto label_14001_internal;
         }
         if (gdata_next_voting_time > gdata_hour + gdata_day * 24
@@ -18697,11 +18687,7 @@ label_1402_internal:
         promptl(1, 0) = u8"y"s;
         promptl(2, 0) = u8"0"s;
         promptmax = 1;
-        val(0) = promptx;
-        val(1) = prompty;
-        val(2) = 200;
-        val(3) = 1;
-        show_prompt();
+        show_prompt(promptx, prompty, 200);
         goto label_14001_internal;
     }
     if (key == key_pageup)
@@ -25822,10 +25808,10 @@ void label_1581()
 
 
 
-int do_create_item()
+int do_create_item(int val0, int val1, int val2)
 {
     int ii_p = 0;
-    if (val == 0 || val == -1)
+    if (val0 == 0 || val0 == -1)
     {
         if (sdata(19, 0) > rnd(5000))
         {
@@ -25835,20 +25821,20 @@ int do_create_item()
             }
         }
     }
-    ci = inv_getfreeid(val);
+    ci = inv_getfreeid(val0);
     if (ci == -1)
     {
         return 0;
     }
     item_delete(ci);
-    if (val == -1 && mode != 6)
+    if (val0 == -1 && mode != 6)
     {
         p = 0;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
             {
-                if (val(1) == -1)
+                if (val1 == -1)
                 {
                     sx = rnd(mdata(0) - 2) + 2;
                     sy = rnd(mdata(1) - 2) + 2;
@@ -25861,13 +25847,13 @@ int do_create_item()
                 {
                     if (cnt == 0)
                     {
-                        sx = val(1);
-                        sy = val(2);
+                        sx = val1;
+                        sy = val2;
                     }
                     else
                     {
-                        sx = val(1) + rnd((cnt + 1)) - rnd((cnt + 1));
-                        sy = val(2) + rnd((cnt + 1)) - rnd((cnt + 1));
+                        sx = val1 + rnd((cnt + 1)) - rnd((cnt + 1));
+                        sy = val2 + rnd((cnt + 1)) - rnd((cnt + 1));
                     }
                     if (sx < 0 || sy < 0 || sx > mdata(0) - 1
                         || sy > mdata(1) - 1)
@@ -25875,7 +25861,7 @@ int do_create_item()
                         continue;
                     }
                 }
-                if (val(1) != -1)
+                if (val1 != -1)
                 {
                     if (cnt == 0)
                     {
@@ -26048,7 +26034,7 @@ int do_create_item()
     }
     if (inv[ci].id == 54)
     {
-        inv[ci].number = calcinitgold(val);
+        inv[ci].number = calcinitgold(val0);
         if (inv[ci].quality == 3)
         {
             inv[ci].number = inv[ci].number * 2;
@@ -26057,9 +26043,9 @@ int do_create_item()
         {
             inv[ci].number = inv[ci].number * 4;
         }
-        if (val >= 0)
+        if (val0 >= 0)
         {
-            cdata[val].gold += inv[ci].number;
+            cdata[val0].gold += inv[ci].number;
             inv[ci].number = 0;
             return 1;
         }
@@ -26222,14 +26208,14 @@ int do_create_item()
     }
     else
     {
-        int stat = item_stack(val, ci);
+        int stat = item_stack(val0, ci);
         if (stat == 1)
         {
             ci = ti;
             return 1;
         }
     }
-    if (val == -1)
+    if (val0 == -1)
     {
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
     }
@@ -32230,11 +32216,7 @@ void build_new_building()
     promptl(1, 1) = u8"n"s;
     promptl(2, 1) = u8"1"s;
     promptmax = 2;
-    val(0) = promptx;
-    val(1) = prompty;
-    val(2) = 160;
-    val(3) = 1;
-    show_prompt();
+    show_prompt(promptx, prompty, 160);
     if (rtval != 0)
     {
         update_screen();
@@ -32521,11 +32503,7 @@ void use_house_board()
         promptl(2, promptmax) = ""s + 3;
         ++promptmax;
     }
-    val(0) = promptx;
-    val(1) = prompty;
-    val(2) = 240;
-    val(3) = 1;
-    int stat = show_prompt();
+    int stat = show_prompt(promptx, prompty, 240, 1);
     if (stat == 0)
     {
         update_screen();
@@ -33193,13 +33171,13 @@ void show_shop_log()
             p = rnd(dblistmax);
             ci = dblist(0, p);
             a = dblist(1, p);
-            val = calcitemvalue(ci, 2);
-            val = val * int((10 + std::sqrt(sdata(156, worker) * 200))) / 100;
-            if (val <= 1)
+            int val0 = calcitemvalue(ci, 2);
+            val0 = val0 * int((10 + std::sqrt(sdata(156, worker) * 200))) / 100;
+            if (val0 <= 1)
             {
                 continue;
             }
-            if (rnd(val) > shoplv * 100 + 500)
+            if (rnd(val0) > shoplv * 100 + 500)
             {
                 continue;
             }
@@ -33214,18 +33192,18 @@ void show_shop_log()
             in = rnd(inv[ci].number) + 1;
             inv[ci].number -= in;
             sold += in;
-            val = val * in;
+            val0 = val0 * in;
             if (rnd(4) == 0)
             {
                 list(0, listmax) = the_item_db[inv[ci].id]->level;
                 list(1, listmax) = inv[ci].quality;
                 listn(0, listmax) = std::to_string(a);
-                listn(1, listmax) = std::to_string(val);
+                listn(1, listmax) = std::to_string(val0);
                 ++listmax;
             }
             else
             {
-                income += val;
+                income += val0;
             }
             if (area == gdata_current_map)
             {
@@ -33419,13 +33397,13 @@ void label_1726()
 
 
 
-void label_1727()
+void label_1727(bool val0)
 {
     rc = 56;
     fixlv = 2;
     dbmode = 3;
     access_character_info();
-    ++dblist(val, cdata[56].id);
+    ++dblist(val0 ? 1 : 0, cdata[56].id);
     if (fixlv == 6)
     {
         rtval = 70 + cdata[56].level;
@@ -33443,7 +33421,7 @@ void label_1727()
             rtval = rtval + 80 - p;
         }
     }
-    if (dblist(val, cdata[56].id) > 1)
+    if (dblist(val0 ? 1 : 0, cdata[56].id) > 1)
     {
         rtval /= 3;
         if (rtval > 15)
@@ -33479,16 +33457,8 @@ void label_1728()
             {
                 continue;
             }
-            if (inv[cnt].id == 503)
-            {
-                val = 0;
-            }
-            else
-            {
-                val = 1;
-            }
             dbid = inv[cnt].subname;
-            label_1727();
+            label_1727(inv[cnt].id != 503);
             if (inv[cnt].id == 503)
             {
                 rankcur += rtval;
@@ -33530,14 +33500,14 @@ void label_1728()
 
 
 
-void label_1729()
+void label_1729(int val0)
 {
-    a = the_item_db[inv[val].id]->category;
+    a = the_item_db[inv[val0].id]->category;
     if (a == 60000)
     {
-        gdata(77) += std::clamp(inv[val].value / 50, 50, 500);
+        gdata(77) += std::clamp(inv[val0].value / 50, 50, 500);
     }
-    p = inv[val].value;
+    p = inv[val0].value;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
@@ -33563,7 +33533,7 @@ void label_1729()
     int n = 0;
     if (p > list(1, n))
     {
-        list(0, n) = val;
+        list(0, n) = val0;
         list(1, n) = p;
         {
             int cnt = 0;
@@ -33613,8 +33583,7 @@ void label_1730()
             {
                 continue;
             }
-            val = cnt;
-            label_1729();
+            label_1729(cnt);
         }
     }
     {
@@ -34769,15 +34738,10 @@ void label_1745()
                                             {
                                                 break;
                                             }
-                                            if (chipm(0, map(x, y, 0)) == 2)
-                                            {
-                                                val = 1;
-                                            }
-                                            else
-                                            {
-                                                val = 0;
-                                            }
-                                            label_2233();
+                                            label_2233(
+                                                chipm(0, map(x, y, 0)) == 2
+                                                    ? 1
+                                                    : 0);
                                         }
                                     }
                                     cell_featset(
@@ -39491,11 +39455,7 @@ void pray()
     promptl(1, 1) = u8"n"s;
     promptl(2, 1) = u8"1"s;
     promptmax = 2;
-    val(0) = promptx;
-    val(1) = prompty;
-    val(2) = 160;
-    val(3) = 1;
-    show_prompt();
+    show_prompt(promptx, prompty, 160);
     if (rtval != 0)
     {
         update_screen();
@@ -39580,11 +39540,7 @@ void pray()
                 promptl(1, 1) = u8"n"s;
                 promptl(2, 1) = u8"1"s;
                 promptmax = 2;
-                val(0) = promptx;
-                val(1) = prompty;
-                val(2) = 160;
-                val(3) = 1;
-                show_prompt();
+                show_prompt(promptx, prompty, 160);
                 if (rtval == 0)
                 {
                     ++gdata_god_rank;
@@ -41492,7 +41448,7 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
 
 
 
-void window_recipe2()
+void window_recipe2(int val0)
 {
     int x_at_m183 = 0;
     int w_at_m183 = 0;
@@ -41518,13 +41474,13 @@ void window_recipe2()
     {
         if (p_at_m183 < 10000)
         {
-            p_at_m183 = p_at_m183 * val;
+            p_at_m183 = p_at_m183 * val0;
         }
         else
         {
             p_at_m183 = p_at_m183 % 10000;
         }
-        p_at_m183 += rpdata(1, rpid) / 10000 * val * 10000;
+        p_at_m183 += rpdata(1, rpid) / 10000 * val0 * 10000;
     }
     s_at_m183 = ""s + p_at_m183 % 10000 + lang(u8"ターン"s, u8" turns"s);
     if (p_at_m183 >= 10000)
@@ -41770,11 +41726,11 @@ void window_recipe_(
                 {
                     break;
                 }
-                val(0) = inv[prm_1050].enchantments[cnt2_at_m184].id;
-                val(1) = inv[prm_1050].enchantments[cnt2_at_m184].power;
-                val(2) = 0;
-                val(3) = the_item_db[inv[prm_1050].id]->category;
-                get_enchantment_description();
+                get_enchantment_description(
+                    inv[prm_1050].enchantments[cnt2_at_m184].id,
+                    inv[prm_1050].enchantments[cnt2_at_m184].power,
+                    0,
+                    the_item_db[inv[prm_1050].id]->category);
                 color(0, 0, 100);
                 if (inv[prm_1050].enchantments[cnt2_at_m184].power < 0)
                 {
@@ -42085,17 +42041,12 @@ label_1923:
                     }
                 }
             }
-            val(0) = promptx;
-            val(1) = prompty;
-            val(2) = 220;
-            val(3) = 2;
-            val(4) = p;
             rpmode = 1;
-            show_prompt();
+            show_prompt(promptx, prompty, 220, 2, p);
             rpmode = 0;
             if (rtval == 0)
             {
-                rpref(1) = val;
+                rpref(1) = TODO_show_prompt_val;
                 rpref(2) = rpdata(1, rpid);
                 rpref(3) = rpdiff(rpid, step, -1);
                 label_19342();
@@ -43503,11 +43454,7 @@ label_1945_internal:
                 promptl(1, 1) = u8"n"s;
                 promptl(2, 1) = u8"1"s;
                 promptmax = 2;
-                val(0) = promptx;
-                val(1) = prompty;
-                val(2) = 160;
-                val(3) = 1;
-                show_prompt();
+                show_prompt(promptx, prompty, 160);
                 if (rtval == 0)
                 {
                     elona_delete(fs::u8path(u8"./user/"s + userfile));
@@ -45107,11 +45054,11 @@ label_196901_internal:
                 {
                     break;
                 }
-                val(0) = inv[ci].enchantments[cnt].id;
-                val(1) = inv[ci].enchantments[cnt].power;
-                val(2) = 1;
-                val(3) = 0;
-                get_enchantment_description();
+                get_enchantment_description(
+                    inv[ci].enchantments[cnt].id,
+                    inv[ci].enchantments[cnt].power,
+                    1,
+                    0);
                 if (s == ""s)
                 {
                     continue;
@@ -45577,12 +45524,10 @@ void update_journal()
                 continue;
             }
             rq = cnt;
-            val = 2;
-            set_quest_data();
+            set_quest_data(2);
         }
     }
-    val = 0;
-    append_subquest_journal();
+    append_subquest_journal(0);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize / 2 - noteinfo(0) % (pagesize / 2));
@@ -45699,8 +45644,7 @@ void update_journal()
     }
     noteadd(u8" - Completed Quests - "s);
     noteadd(""s);
-    val = 1;
-    append_subquest_journal();
+    append_subquest_journal(1);
     listmax = noteinfo(0);
     redraw(0);
     showtitle(lang(u8"ジャーナル"s, u8"Journal"s), strhint2 + strhint3, 236, 1);
@@ -46011,8 +45955,7 @@ label_1978_internal:
             }
             rq = list(0, p);
             tc = qdata(0, rq);
-            val = 0;
-            set_quest_data();
+            set_quest_data(0);
             p = pagesize * page + cnt;
             font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
             cnt2 = cnt;
@@ -46108,11 +46051,7 @@ label_1978_internal:
         promptl(1, 1) = u8"n"s;
         promptl(2, 1) = u8"1"s;
         promptmax = 2;
-        val(0) = promptx;
-        val(1) = prompty;
-        val(2) = 160;
-        val(3) = 1;
-        show_prompt();
+        show_prompt(promptx, prompty, 160);
         if (rtval != 0)
         {
             goto label_1977_internal;
@@ -46727,7 +46666,7 @@ void fix_wish()
 
 
 
-int select_alias()
+int select_alias(int val0)
 {
     redraw(0);
     cs = 0;
@@ -46751,13 +46690,13 @@ label_1994_internal:
             {
                 key_list(cnt) = key_select(cnt);
                 keyrange = cnt + 1;
-                if (val == 3)
+                if (val0 == 3)
                 {
                     randomize(i + cnt);
                 }
                 if (list(0, 0) == -1)
                 {
-                    listn(0, cnt) = random_title(val);
+                    listn(0, cnt) = random_title(val0);
                     list(1, cnt) = i + cnt;
                 }
                 if (cnt == 0)
@@ -46803,7 +46742,7 @@ label_1994_internal:
         }
         else
         {
-            if (val == 3)
+            if (val0 == 3)
             {
                 return p;
             }
@@ -46847,13 +46786,9 @@ void what_do_you_wish_for()
     txtcopy = "";
     txtef(5);
     txt(lang(u8"何を望む？"s, u8"What do you wish for? "s));
-    val(0) = (windoww - 290) / 2 + inf_screenx;
-    val(1) = winposy(90);
-    val(2) = 16;
-    val(3) = 0;
-    val(4) = 0;
     inputlog = "";
-    show_number_of_text_prompt();
+    show_number_of_text_prompt(
+        (windoww - 290) / 2 + inf_screenx, winposy(90), 16, 0);
     txtmore();
     txt(lang(u8"「"s + inputlog + u8"！！」"s, cnvtalk(inputlog + u8"!!"s)));
     msgtemp = "";
@@ -46951,8 +46886,7 @@ void what_do_you_wish_for()
             return;
         }
         txt(lang(u8"新しい異名は？"s, u8"What's your new alias?"s));
-        val = 0;
-        int stat = select_alias();
+        int stat = select_alias(0);
         if (stat == 1)
         {
             txt(lang(
@@ -47551,7 +47485,6 @@ void do_dig_command()
 {
     txt(lang(
         u8"どの方向を掘る？ "s, u8"Which direction do you want to dig? "s));
-    val = 0;
     int stat = ask_direction();
     if (stat == 0)
     {
@@ -47593,7 +47526,6 @@ void label_2005()
     txt(lang(
         u8"どの方向に体当たりする？ "s,
         u8"Which direction do you want to bash? "s));
-    val = 0;
     int stat = ask_direction();
     if (stat == 0)
     {
@@ -47887,7 +47819,6 @@ void do_give_command()
 {
     txt(lang(u8"どの方向に？ "s, u8"Which direction? "s));
     update_screen();
-    val = 0;
     int stat = ask_direction();
     if (stat == 0)
     {
@@ -47937,7 +47868,6 @@ void do_interact_command()
 {
     txt(lang(
         u8"操作する対象の方向は？"s, u8"Choose the direction of the target."s));
-    val = 0;
     int stat = ask_direction();
     if (stat == 0)
     {
@@ -48035,12 +47965,8 @@ void do_interact_command()
         promptl(2, promptmax) = ""s + 6;
         ++promptmax;
     }
-    val(0) = promptx;
-    val(1) = prompty;
-    val(2) = 200;
-    val(3) = 1;
     {
-        int stat = show_prompt();
+        int stat = show_prompt(promptx, prompty, 200, 1);
         if (stat == 0)
         {
             update_screen();
@@ -48113,13 +48039,9 @@ void do_interact_command()
         txt(lang(
             u8"どんな言葉を教えようか。"s,
             u8"What sentence should "s + name(tc) + u8" learn? "s));
-        val(0) = (windoww - 360) / 2 + inf_screenx;
-        val(1) = winposy(90);
-        val(2) = 20;
-        val(3) = 1;
-        val(4) = 0;
         inputlog = "";
-        show_number_of_text_prompt();
+        show_number_of_text_prompt(
+            (windoww - 360) / 2 + inf_screenx, winposy(90), 20, 1);
         cbitmod(989, tc, 0);
         if (inputlog == ""s)
         {
@@ -48172,14 +48094,10 @@ void call_npc()
     txt(lang(
         name(tc) + u8"を何と呼ぶ？ "s,
         u8"What do you want to call "s + him(tc) + u8"? "s));
-    val(0) = (windoww - 220) / 2 + inf_screenx;
-    val(1) = winposy(90);
-    val(2) = 12;
-    val(3) = 1;
-    val(4) = 0;
     inputlog = "";
     input_mode = 1;
-    show_number_of_text_prompt();
+    show_number_of_text_prompt(
+        (windoww - 220) / 2 + inf_screenx, winposy(90), 12, 1);
     if (inputlog == ""s)
     {
         txt(lang(u8"名前をつけるのはやめた。"s, u8"You changed your mind."s));
@@ -49751,8 +49669,7 @@ label_2035_internal:
                 color(0, 0, 0);
             }
         }
-        val = 0;
-        label_2047();
+        label_2047(0);
         tc = cc;
         font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
         color(20, 10, 0);
@@ -50233,68 +50150,68 @@ label_2035_internal:
 
 
 
-void label_2038()
+void label_2038(int val0)
 {
     rtval = -2;
     if (page == 0)
     {
-        if (val == 0)
+        if (val0 == 0)
         {
             rtval = -2;
         }
-        if (val == 1)
+        if (val0 == 1)
         {
             rtval(0) = 100;
             rtval(1) = 0;
             rtval(2) = cdata[cc].portrait;
         }
-        if (val == 2)
+        if (val0 == 2)
         {
             rtval(0) = 1;
             rtval(1) = 0;
             rtval(2) = pcc(1, cc) % 1000;
             rtvaln = u8"hair"s;
         }
-        if (val == 3)
+        if (val0 == 3)
         {
             rtval(0) = 10;
             rtval(1) = 0;
             rtval(2) = pcc(10, cc) % 1000;
             rtvaln = u8"subhair"s;
         }
-        if (val == 4)
+        if (val0 == 4)
         {
             rtval(0) = 1;
             rtval(1) = 1;
             rtval(2) = pcc(1, cc) / 1000;
         }
-        if (val == 5)
+        if (val0 == 5)
         {
             rtval(0) = 15;
             rtval(1) = 0;
             rtval(2) = pcc(15, cc) % 1000;
             rtvaln = u8"body"s;
         }
-        if (val == 6)
+        if (val0 == 6)
         {
             rtval(0) = 9;
             rtval(1) = 0;
             rtval(2) = pcc(9, cc) % 1000;
             rtvaln = u8"cloth"s;
         }
-        if (val == 7)
+        if (val0 == 7)
         {
             rtval(0) = 7;
             rtval(1) = 0;
             rtval(2) = pcc(7, cc) % 1000;
             rtvaln = u8"pants"s;
         }
-        if (val == 8)
+        if (val0 == 8)
         {
             rtval = -1;
             rtvaln = "";
         }
-        if (val == 9)
+        if (val0 == 9)
         {
             if (cc != 0)
             {
@@ -50313,53 +50230,53 @@ void label_2038()
     }
     else
     {
-        if (val == 0)
+        if (val0 == 0)
         {
             rtval(0) = 15;
             rtval(1) = 1;
             rtval(2) = pcc(15, cc) / 1000;
         }
-        if (val == 1)
+        if (val0 == 1)
         {
             rtval(0) = 9;
             rtval(1) = 1;
             rtval(2) = pcc(9, cc) / 1000;
         }
-        if (val == 2)
+        if (val0 == 2)
         {
             rtval(0) = 7;
             rtval(1) = 1;
             rtval(2) = pcc(7, cc) / 1000;
         }
-        if (val == 3)
+        if (val0 == 3)
         {
             rtval(0) = 11;
             rtval(1) = 0;
             rtval(2) = pcc(11, cc) % 1000;
             rtvaln = u8"etc"s;
         }
-        if (val == 4)
+        if (val0 == 4)
         {
             rtval(0) = 12;
             rtval(1) = 0;
             rtval(2) = pcc(12, cc) % 1000;
             rtvaln = u8"etc"s;
         }
-        if (val == 5)
+        if (val0 == 5)
         {
             rtval(0) = 13;
             rtval(1) = 0;
             rtval(2) = pcc(13, cc) % 1000;
             rtvaln = u8"etc"s;
         }
-        if (val == 6)
+        if (val0 == 6)
         {
             rtval(0) = 14;
             rtval(1) = 0;
             rtval(2) = pcc(14, cc) % 1000;
             rtvaln = u8"eye"s;
         }
-        if (val == 7)
+        if (val0 == 7)
         {
             rtval = -1;
             rtvaln = "";
@@ -50561,9 +50478,7 @@ label_2041_internal:
             {
                 break;
             }
-            val(0) = cnt;
-            val(1) = 0;
-            label_2038();
+            label_2038(cnt);
             s = listn(0, p);
             if (rtval >= 0)
             {
@@ -50598,9 +50513,7 @@ label_2041_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    val(0) = cs;
-    val(1) = 0;
-    label_2038();
+    label_2038(cs);
     p = 0;
     if (rtval == -2)
     {
@@ -50864,7 +50777,7 @@ label_2045_internal:
 
 
 
-void label_2047()
+void label_2047(int val0)
 {
     p(1) = 0;
     p(2) = 0;
@@ -50895,33 +50808,33 @@ void label_2047()
                 ++p(1);
                 s(1) = lang(u8"武器"s, u8"Melee"s) + p(1);
                 ++attacknum;
-                label_2048();
+                label_2048(val0);
             }
         }
     }
     if (attackskill == 106)
     {
         s(1) = lang(u8"格闘"s, u8"Unarmed"s);
-        label_2048();
+        label_2048(val0);
     }
     attacknum = 0;
     int stat = can_do_ranged_attack();
     if (stat == 1)
     {
         s(1) = lang(u8"射撃"s, u8"Dist"s);
-        label_2048();
+        label_2048(val0);
     }
     return;
 }
 
 
 
-void label_2048()
+void label_2048(int val0)
 {
     tc = cc;
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
     color(20, 10, 0);
-    if (val == 0)
+    if (val0 == 0)
     {
         pos(wx + 590, wy + 281 + p(2) * 16);
         mes(lang(u8"命中"s, u8"Hit"s));
@@ -50940,7 +50853,7 @@ void label_2048()
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     s(2) = ""s + dmgmulti;
     s = ""s + tohit + u8"%"s;
-    if (val == 0)
+    if (val0 == 0)
     {
         pos(wx + 625 - en * 8, wy + 279 + p(2) * 16);
         mes(s);
@@ -50954,14 +50867,14 @@ void label_2048()
               s(2),
               0,
               3 + (elona::stoi(s(2)) >= 10) + (elona::stoi(s(2)) >= 100));
-    if (val == 0)
+    if (val0 == 0)
     {
         pos(wx + 460 + en * 8, wy + 279 + p(2) * 16);
         mes(s);
     }
     else
     {
-        noteadd(s(1) + u8"   : "s + fixtxt(s(3), 12) + u8" "s + fixtxt(s, 20));
+        noteadd(s(1) + "   : " + fixtxt(s(3), 12) + " " + fixtxt(s, 20));
     }
     ++p(2);
     return;
@@ -51441,15 +51354,10 @@ void do_get_command()
                 pc_turn(false);
             }
             label_2236();
-            if (chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 2)
-            {
-                val = 1;
-            }
-            else
-            {
-                val = 0;
-            }
-            label_2235();
+            label_2235(
+                chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 2
+                    ? 1
+                    : 0);
             if (feat(2) == 40)
             {
                 autosave = 1 * (gdata_current_map != 35);
@@ -51471,11 +51379,7 @@ void do_get_command()
             promptl(1, 1) = u8"n"s;
             promptl(2, 1) = u8"1"s;
             promptmax = 2;
-            val(0) = promptx;
-            val(1) = prompty;
-            val(2) = 160;
-            val(3) = 1;
-            show_prompt();
+            show_prompt(promptx, prompty, 160);
             if (rtval != 0)
             {
                 update_screen();
@@ -51943,11 +51847,11 @@ void show_item_description()
                 {
                     break;
                 }
-                val(0) = inv[ci].enchantments[cnt].id;
-                val(1) = inv[ci].enchantments[cnt].power;
-                val(2) = 0;
-                val(3) = reftype;
-                get_enchantment_description();
+                get_enchantment_description(
+                    inv[ci].enchantments[cnt].id,
+                    inv[ci].enchantments[cnt].power,
+                    0,
+                    reftype);
                 listn(0, p) = lang(u8"それは"s, u8"It "s) + s;
                 list(0, p) = rtval;
                 list(1, p) = rtval(1);
@@ -52256,11 +52160,7 @@ int label_2073()
     promptl(1, 1) = u8"n"s;
     promptl(2, 1) = u8"1"s;
     promptmax = 2;
-    val(0) = promptx;
-    val(1) = prompty;
-    val(2) = 160;
-    val(3) = 1;
-    show_prompt();
+    show_prompt(promptx, prompty, 160);
     if (rtval == 0)
     {
         update_screen();
@@ -52519,11 +52419,7 @@ void label_2078()
     promptl(1, 1) = u8"n"s;
     promptl(2, 1) = u8"1"s;
     promptmax = 2;
-    val(0) = promptx;
-    val(1) = prompty;
-    val(2) = 160;
-    val(3) = 1;
-    show_prompt();
+    show_prompt(promptx, prompty, 160);
     return;
 }
 
@@ -52557,11 +52453,7 @@ void label_2079()
     promptl(1, promptmax) = u8"c"s;
     promptl(2, promptmax) = ""s + promptmax;
     ++promptmax;
-    val(0) = promptx;
-    val(1) = prompty;
-    val(2) = 190;
-    val(3) = 1;
-    show_prompt();
+    show_prompt(promptx, prompty, 190);
     if (rtval == 0)
     {
         if (gdata_current_map != 35)
@@ -52632,11 +52524,7 @@ void label_2081()
         promptl(1, 1) = u8"n"s;
         promptl(2, 1) = u8"1"s;
         promptmax = 2;
-        val(0) = promptx;
-        val(1) = prompty;
-        val(2) = 160;
-        val(3) = 1;
-        show_prompt();
+        show_prompt(promptx, prompty, 160);
         if (rtval != 0)
         {
             update_screen();
@@ -52714,11 +52602,7 @@ void label_2081()
     }
     txt(lang(u8"どの場所に帰還する？"s, u8"Where do you want to go?"s));
     display_msg(inf_screeny + inf_tiles);
-    val(0) = promptx;
-    val(1) = prompty;
-    val(2) = 240;
-    val(3) = 1;
-    show_prompt();
+    show_prompt(promptx, prompty, 240);
     update_screen();
     if (rtval >= 0)
     {
@@ -52770,11 +52654,7 @@ void label_2082()
     promptl(1, 1) = u8"n"s;
     promptl(2, 1) = u8"1"s;
     promptmax = 2;
-    val(0) = promptx;
-    val(1) = prompty;
-    val(2) = 160;
-    val(3) = 1;
-    show_prompt();
+    show_prompt(promptx, prompty, 160);
     if (rtval == 0)
     {
         if (mat(tmat) > 0)
@@ -52828,11 +52708,7 @@ int label_2083()
             promptl(1, 1) = u8"n"s;
             promptl(2, 1) = u8"1"s;
             promptmax = 2;
-            val(0) = promptx;
-            val(1) = prompty;
-            val(2) = 160;
-            val(3) = 1;
-            show_prompt();
+            show_prompt(promptx, prompty, 160);
             if (rtval != 0)
             {
                 return 0;
@@ -52912,11 +52788,7 @@ void label_2084()
         promptl(2, promptmax) = ""s + promptmax;
         ++promptmax;
     }
-    val(0) = promptx;
-    val(1) = prompty;
-    val(2) = 240;
-    val(3) = 1;
-    show_prompt();
+    show_prompt(promptx, prompty, 240);
     update_screen();
     label_2719();
     if (rtval == 0)
@@ -53023,8 +52895,7 @@ void label_2084()
     }
     if (rtval == 2)
     {
-        val = 2;
-        int stat = select_alias();
+        int stat = select_alias(2);
         if (stat == 0)
         {
             return;
@@ -53173,8 +53044,7 @@ void label_2085()
         }
     }
     noteadd(""s);
-    val = 1;
-    label_2047();
+    label_2047(1);
     tc = 0;
     attackskill = 106;
     int evade = calc_evasion(tc);
@@ -54692,11 +54562,7 @@ label_2119_internal:
                 promptl(1, 1) = u8"n"s;
                 promptl(2, 1) = u8"1"s;
                 promptmax = 2;
-                val(0) = promptx;
-                val(1) = prompty;
-                val(2) = 200;
-                val(3) = 1;
-                show_prompt();
+                show_prompt(promptx, prompty, 200);
                 if (rtval != 0)
                 {
                     main_menu_continue();
@@ -54720,11 +54586,7 @@ label_2119_internal:
                 promptl(1, 1) = u8"n"s;
                 promptl(2, 1) = u8"1"s;
                 promptmax = 2;
-                val(0) = promptx;
-                val(1) = prompty;
-                val(2) = 200;
-                val(3) = 1;
-                show_prompt();
+                show_prompt(promptx, prompty, 200);
                 if (rtval == 0)
                 {
                     snd(20);
@@ -54920,24 +54782,30 @@ void initialize_fovmap_and_fovlist()
 
 
 
-void show_number_of_text_prompt()
+void show_number_of_text_prompt(
+    int val0,
+    int val1,
+    int val2,
+    int val3,
+    int val4)
 {
+    int val5{};
     int inputfail = 0;
     int ime_esc = 0;
 label_21261_internal:
     snd(26);
-    x = val;
-    y = val(1);
-    dx = val(2) * 16 + 60;
+    x = val0;
+    y = val1;
+    dx = val2 * 16 + 60;
     font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
     inputfail = 0;
     SDIM1(inputlog2);
-    if (val(4) != 0)
+    if (val4 != 0)
     {
-        val(5) = val(4);
-        if (strlen_u(std::to_string(val(5))) >= 3)
+        val5 = val4;
+        if (strlen_u(std::to_string(val5)) >= 3)
         {
-            dx += std::size(std::to_string(val(5))) * 8;
+            dx += std::size(std::to_string(val5)) * 8;
         }
         redraw(0);
         pos(x + 24, y + 4);
@@ -54956,7 +54824,7 @@ label_21261_internal:
                 pos(x + dx - 51, y + 4);
                 gcopy(3, 336, 336, 24, 24);
                 inputlog2 =
-                    ""s + elona::stoi(inputlog(0)) + u8"("s + val(5) + u8")"s;
+                    ""s + elona::stoi(inputlog(0)) + u8"("s + val5 + u8")"s;
                 pos(x + dx - 70 - strlen_u(inputlog2) * 8 + 8, y + 11);
                 color(255, 255, 255);
                 mes(inputlog2);
@@ -54971,7 +54839,7 @@ label_21261_internal:
                 }
                 if (key == key_cancel)
                 {
-                    if (val(3) == 1)
+                    if (val3 == 1)
                     {
                         f = -1;
                         break;
@@ -54980,32 +54848,32 @@ label_21261_internal:
                 if (key == key_west)
                 {
                     snd(5);
-                    --val(4);
-                    if (val(4) < 1)
+                    --val4;
+                    if (val4 < 1)
                     {
-                        val(4) = val(5);
+                        val4 = val5;
                     }
                 }
                 if (key == key_east)
                 {
                     snd(5);
-                    ++val(4);
-                    if (val(4) > val(5))
+                    ++val4;
+                    if (val4 > val5)
                     {
-                        val(4) = 1;
+                        val4 = 1;
                     }
                 }
                 if (key == key_south)
                 {
                     snd(5);
-                    val(4) = 1;
+                    val4 = 1;
                 }
                 if (key == key_north)
                 {
                     snd(5);
-                    val(4) = val(5);
+                    val4 = val5;
                 }
-                inputlog = ""s + val(4);
+                inputlog = ""s + val4;
             }
         }
         if (f == -1)
@@ -55023,12 +54891,12 @@ label_21261_internal:
     if (cfg_msg_box == 0)
     {
         pos(x + 4, y + 4);
-        mesbox(inputlog, dx - 8, 26, 1, val(2) * (1 + en));
+        mesbox(inputlog, dx - 8, 26, 1, val2 * (1 + en));
     }
     else
     {
         pos(x, y);
-        mesbox(inputlog, 600, 0, 5, val(2) * (1 + en));
+        mesbox(inputlog, 600, 0, 5, val2 * (1 + en));
         pos(x + 4, y + 4);
         gfini(dx - 1, 35);
         gfdec(60, 60, 60);
@@ -55090,7 +54958,7 @@ label_21261_internal:
                     gcopy(3, 24, 336, 24, 24);
                 }
                 apledit(p(2), 2, 0);
-                if (p(2) > val(2) * (1 + en) - 2)
+                if (p(2) > val2 * (1 + en) - 2)
                 {
                     pos(x + 8, y + 4);
                     gcopy(3, 72, 336, 24, 24);
@@ -55140,13 +55008,13 @@ label_21261_internal:
             {
                 objprm(1, ""s);
                 inputlog = "";
-                if (val(3) == 1)
+                if (val3 == 1)
                 {
                     ime_esc = 1;
                 }
             }
             redraw(1);
-            if (val(3) == 1)
+            if (val3 == 1)
             {
                 if (ime_esc == 1)
                 {
@@ -55325,8 +55193,9 @@ label_2128_internal:
 
 
 
-int show_prompt()
+int show_prompt(int val0, int val1, int val2, int val3, int val4)
 {
+    int val5{};
     snd(26);
     csprev = cs;
     cs = 0;
@@ -55352,23 +55221,23 @@ int show_prompt()
         }
     }
     gsel(0);
-    sx = val - val(2) / 2;
-    sy = val(1) - promptmax * 10;
+    sx = val0 - val2 / 2;
+    sy = val1 - promptmax * 10;
     pos(sx + 12, sy + 12);
-    gfini(val(2) - 17, promptmax * 20 + 43 - 18);
+    gfini(val2 - 17, promptmax * 20 + 43 - 18);
     gfdec(60, 60, 60);
     keyhalt = 1;
-    if (val(3) == 2)
+    if (val3 == 2)
     {
         dx(0) = 200;
         dx(1) = 10;
         dy = sy + 140;
-        val(5) = val(4);
-        val(4) = 1;
-        val = 1;
-        if (strlen_u(std::to_string(val(5))) >= 3)
+        val5 = val4;
+        val4 = 1;
+        TODO_show_prompt_val = 1;
+        if (strlen_u(std::to_string(val5)) >= 3)
         {
-            dx += std::size(std::to_string(val(5))) * 8;
+            dx += std::size(std::to_string(val5)) * 8;
         }
         pos(dx(1) + sx + 24, dy + 4);
         gfini(dx - 42, 35);
@@ -55377,7 +55246,7 @@ int show_prompt()
 label_2132_internal:
     redraw(0);
     gmode(2);
-    if (val(3) == 2)
+    if (val3 == 2)
     {
         window2(dx(1) + sx + 20, dy, dx - 40, 36, 0, 2);
         pos(dx(1) + sx + dx / 2 - 56, dy - 32);
@@ -55386,14 +55255,14 @@ label_2132_internal:
         gcopy(3, 312, 336, 24, 24);
         pos(dx(1) + sx + dx - 51, dy + 4);
         gcopy(3, 336, 336, 24, 24);
-        inputlog2 = ""s + elona::stoi(inputlog(0)) + u8"("s + val(5) + u8")"s;
+        inputlog2 = ""s + elona::stoi(inputlog(0)) + u8"("s + val5 + u8")"s;
         pos(dx(1) + sx + dx - 70 - strlen_u(inputlog2) * 8 + 8, dy + 11);
         color(255, 255, 255);
         mes(inputlog2);
         color(0, 0, 0);
-        inputlog = ""s + val(4);
+        inputlog = ""s + val4;
     }
-    window2(sx + 8, sy + 8, val(2) - 16, promptmax * 20 + 42 - 16, 0, 0);
+    window2(sx + 8, sy + 8, val2 - 16, promptmax * 20 + 42 - 16, 0, 0);
     pos(sx - 16, sy);
     gcopy(3, 64, 288, 50, 32);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
@@ -55412,7 +55281,7 @@ label_2132_internal:
     cs_bk = cs;
     if (rpmode)
     {
-        window_recipe2();
+        window_recipe2(TODO_show_prompt_val);
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     }
     redraw(1);
@@ -55431,25 +55300,25 @@ label_2132_internal:
             }
         }
     }
-    if (val(3) == 2)
+    if (val3 == 2)
     {
-        val = elona::stoi(inputlog(0));
+        TODO_show_prompt_val = elona::stoi(inputlog(0));
         if (key == key_west || key == key_pagedown)
         {
             snd(5);
-            --val(4);
-            if (val(4) < 1)
+            --val4;
+            if (val4 < 1)
             {
-                val(4) = val(5);
+                val4 = val5;
             }
         }
         if (key == key_east || key == key_pageup)
         {
             snd(5);
-            ++val(4);
-            if (val(4) > val(5))
+            ++val4;
+            if (val4 > val5)
             {
-                val(4) = 1;
+                val4 = 1;
             }
         }
     }
@@ -55459,7 +55328,7 @@ label_2132_internal:
         cs = csprev;
         return 1;
     }
-    if (val(3) != 0)
+    if (val3 != 0)
     {
         if (key == key_cancel)
         {
@@ -58724,11 +58593,7 @@ int label_2168()
             promptl(1, 1) = u8"n"s;
             promptl(2, 1) = u8"1"s;
             promptmax = 2;
-            val(0) = promptx;
-            val(1) = prompty;
-            val(2) = 160;
-            val(3) = 1;
-            show_prompt();
+            show_prompt(promptx, prompty, 160);
             if (rtval != 0)
             {
                 update_screen();
@@ -59685,7 +59550,6 @@ int label_2175()
                     u8"Which direction do you want to zap the wand? "s));
             }
             update_screen();
-            val = 0;
             int stat = ask_direction();
             if (stat == 0)
             {
@@ -60186,11 +60050,7 @@ int pick_up_item()
             promptl(1, 1) = u8"n"s;
             promptl(2, 1) = u8"1"s;
             promptmax = 2;
-            val(0) = promptx;
-            val(1) = prompty;
-            val(2) = 160;
-            val(3) = 1;
-            show_prompt();
+            show_prompt(promptx, prompty, 160);
             if (rtval == 0)
             {
                 snd(58);
@@ -61173,11 +61033,7 @@ void label_2203()
                 promptl(1, 1) = u8"n"s;
                 promptl(2, 1) = u8"1"s;
                 promptmax = 2;
-                val(0) = promptx;
-                val(1) = prompty;
-                val(2) = 160;
-                val(3) = 1;
-                show_prompt();
+                show_prompt(promptx, prompty, 160);
                 update_screen();
                 if (rtval == 0)
                 {
@@ -61764,7 +61620,7 @@ void label_2206()
 
 
 
-void label_2207()
+void label_2207(int val0)
 {
     int movelevelbystairs = 0;
     if (dbg_freemove)
@@ -61786,7 +61642,7 @@ void label_2207()
     }
     cell_featread(cdata[cc].position.x, cdata[cc].position.y);
     movelevelbystairs = 0;
-    if (val == 1)
+    if (val0 == 1)
     {
         if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 753) != -1)
         {
@@ -61800,11 +61656,7 @@ void label_2207()
             promptl(1, 1) = u8"n"s;
             promptl(2, 1) = u8"1"s;
             promptmax = 2;
-            val(0) = promptx;
-            val(1) = prompty;
-            val(2) = 160;
-            val(3) = 1;
-            show_prompt();
+            show_prompt(promptx, prompty, 160);
             if (rtval != 0)
             {
                 update_screen();
@@ -61818,7 +61670,7 @@ void label_2207()
     }
     if (gdata_current_map == 7)
     {
-        if (val == 1)
+        if (val0 == 1)
         {
             if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 751)
                 != -1)
@@ -61836,7 +61688,7 @@ void label_2207()
                 }
             }
         }
-        if (val == 2)
+        if (val0 == 2)
         {
             if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 750)
                 != -1)
@@ -61859,7 +61711,7 @@ void label_2207()
     {
         if (mdata(6) != 1)
         {
-            if (val == 1)
+            if (val0 == 1)
             {
                 if (feat(1) != 11)
                 {
@@ -61882,7 +61734,7 @@ void label_2207()
                     }
                 }
             }
-            if (val == 2)
+            if (val0 == 2)
             {
                 if (feat(1) != 10)
                 {
@@ -61974,11 +61826,7 @@ void label_2207()
                 promptl(1, 1) = u8"n"s;
                 promptl(2, 1) = u8"1"s;
                 promptmax = 2;
-                val(0) = promptx;
-                val(1) = prompty;
-                val(2) = 160;
-                val(3) = 1;
-                show_prompt();
+                show_prompt(promptx, prompty, 160);
                 if (rtval != 0)
                 {
                     update_screen();
@@ -62110,11 +61958,7 @@ int unlock_box(int difficulty)
         promptl(1, 1) = u8"n"s;
         promptl(2, 1) = u8"1"s;
         promptmax = 2;
-        val(0) = promptx;
-        val(1) = prompty;
-        val(2) = 160;
-        val(3) = 1;
-        show_prompt();
+        show_prompt(promptx, prompty, 160);
         if (rtval == 0)
         {
             unlock_box(difficulty);
@@ -64530,10 +64374,8 @@ void do_use_command()
                         }
                         list(0, listmax) = rtval;
                         list(1, listmax) = rtval(1);
-                        val(0) = list(0, listmax);
-                        val(1) = list(1, listmax);
-                        val(2) = 0;
-                        get_enchantment_description();
+                        get_enchantment_description(
+                            list(0, listmax), list(1, listmax), 0, 0);
                         promptl(0, promptmax) = s;
                         promptl(1, promptmax) = u8"null"s;
                         promptl(2, promptmax) = ""s + promptmax;
@@ -64549,11 +64391,7 @@ void do_use_command()
             promptl(1, promptmax) = u8"null"s;
             promptl(2, promptmax) = ""s + promptmax;
             ++promptmax;
-            val(0) = promptx;
-            val(1) = prompty;
-            val(2) = 400;
-            val(3) = 1;
-            show_prompt();
+            show_prompt(promptx, prompty, 400);
             txtnew();
             if (rtval == -1)
             {
@@ -64664,12 +64502,8 @@ void do_use_command()
             promptl(2, promptmax) = ""s + 3;
             ++promptmax;
         }
-        val(0) = promptx;
-        val(1) = prompty;
-        val(2) = 260;
-        val(3) = 1;
         {
-            int stat = show_prompt();
+            int stat = show_prompt(promptx, prompty, 260, 1);
             if (stat == 0)
             {
                 goto label_2229_internal;
@@ -64721,7 +64555,6 @@ void do_use_command()
         return;
     case 19:
         txt(lang(u8"誰を対象にする？"s, u8"Make up who?"s));
-        val = 0;
         {
             int stat = ask_direction();
             f = 0;
@@ -64816,7 +64649,6 @@ void do_use_command()
     case 5:
         txt(lang(u8"何に聴診器を当てる？"s, u8"Auscultate who?"s));
         update_screen();
-        val = 0;
         {
             int stat = ask_direction();
             if (stat == 0)
@@ -64874,7 +64706,6 @@ void do_use_command()
     case 23:
         txt(lang(u8"誰を紐で結ぶ？"s, u8"Leash who?"s));
         update_screen();
-        val = 0;
         {
             int stat = ask_direction();
             f = 0;
@@ -64952,7 +64783,6 @@ void do_use_command()
         }
         txt(lang(u8"誰を吊るす？"s, u8"Hang who?"s));
         update_screen();
-        val = 0;
         {
             int stat = ask_direction();
             f = 0;
@@ -65075,11 +64905,7 @@ void do_use_command()
                     promptl(1, 1) = u8"n"s;
                     promptl(2, 1) = u8"1"s;
                     promptmax = 2;
-                    val(0) = promptx;
-                    val(1) = prompty;
-                    val(2) = 160;
-                    val(3) = 1;
-                    show_prompt();
+                    show_prompt(promptx, prompty, 160);
                     if (rtval != 0)
                     {
                         update_screen();
@@ -65305,11 +65131,7 @@ void do_use_command()
                 promptl(1, 1) = u8"n"s;
                 promptl(2, 1) = u8"1"s;
                 promptmax = 2;
-                val(0) = promptx;
-                val(1) = prompty;
-                val(2) = 160;
-                val(3) = 1;
-                show_prompt();
+                show_prompt(promptx, prompty, 160);
                 if (rtval != 0)
                 {
                     update_screen();
@@ -65409,11 +65231,7 @@ void do_use_command()
         promptl(1, 1) = u8"n"s;
         promptl(2, 1) = u8"1"s;
         promptmax = 2;
-        val(0) = promptx;
-        val(1) = prompty;
-        val(2) = 160;
-        val(3) = 1;
-        show_prompt();
+        show_prompt(promptx, prompty, 160);
         if (rtval != 0)
         {
             turn_end();
@@ -65523,11 +65341,7 @@ void do_use_command()
         promptl(1, 1) = u8"n"s;
         promptl(2, 1) = u8"1"s;
         promptmax = 2;
-        val(0) = promptx;
-        val(1) = prompty;
-        val(2) = 160;
-        val(3) = 1;
-        show_prompt();
+        show_prompt(promptx, prompty, 160);
         if (rtval != 0)
         {
             turn_end();
@@ -65895,19 +65709,20 @@ void label_2232()
         update_screen();
         pc_turn(false);
     }
+    int val0;
     if (chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 2)
     {
-        val = 1;
+        val0 = 1;
     }
     else
     {
-        val = 0;
+        val0 = 0;
     }
     feat(0) = tile_plant;
     feat(1) = 29;
     feat(2) = inv[ci].material;
-    label_2234();
-    if (val)
+    label_2234(val0);
+    if (val0)
     {
         s = u8"畑に"s;
     }
@@ -65935,7 +65750,7 @@ void label_2232()
 
 
 
-void label_2233()
+void label_2233(int val0)
 {
     --feat(3);
     if (feat(3) % 50 == 0)
@@ -65947,7 +65762,7 @@ void label_2233()
         else
         {
             ++feat;
-            label_2234();
+            label_2234(val0);
         }
     }
     return;
@@ -65955,7 +65770,7 @@ void label_2233()
 
 
 
-void label_2234()
+void label_2234(int val0)
 {
     feat(3) = 4 + rnd(5);
     p = 10;
@@ -65979,7 +65794,7 @@ void label_2234()
     {
         p = 40;
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         p = p * 3 / 2;
     }
@@ -65999,7 +65814,7 @@ void label_2234()
 
 
 
-void label_2235()
+void label_2235(int val)
 {
     p = 15;
     if (feat(2) == 41)
@@ -67860,8 +67675,7 @@ void label_2252()
         talk_npc();
         return;
     }
-    val = 1;
-    set_quest_data();
+    set_quest_data(1);
     listmax = 0;
     list(0, listmax) = 1;
     listn(0, listmax) = lang(u8"受諾する"s, u8"I will take the job."s);
@@ -70519,9 +70333,10 @@ void label_2662()
             {
                 cdata[rc].experience +=
                     cdata[rc].level * cdata[rc].level * cdata[rc].level * 5;
-                val = rnd(cdata[rc].level * cdata[rc].level / 20 + 10) + 10;
-                cdata[rc].fame += val;
-                addnews(4, rc);
+                int fame =
+                    rnd(cdata[rc].level * cdata[rc].level / 20 + 10) + 10;
+                cdata[rc].fame += fame;
+                addnews(4, rc, fame);
                 label_2664();
             }
             if (cdata[rc].experience >= cdata[rc].required_experience)
@@ -71456,8 +71271,7 @@ void label_2673()
             --qdata(9, rq);
             if (qdata(9, rq) == 0)
             {
-                val = qdata(3, rq);
-                failed_quest();
+                failed_quest(qdata(3, rq));
             }
         }
     }
@@ -71507,8 +71321,7 @@ void label_2674()
                     u8"You left your client."s));
             }
         }
-        val = gdata_executing_immediate_quest_type;
-        failed_quest();
+        failed_quest(gdata_executing_immediate_quest_type);
         msg_halt();
     }
     gdata_executing_immediate_quest_type = 0;
@@ -71534,15 +71347,15 @@ void label_2675()
 
 
 
-void failed_quest()
+void failed_quest(int val0)
 {
-    if (val == 1)
+    if (val0 == 1)
     {
         adata(22, gdata_previous_map2) = 0;
         txt(lang(u8"あなたは敗北した。"s, u8"You were defeated."s));
         modrank(0, -100);
     }
-    if (val >= 1000)
+    if (val0 >= 1000)
     {
         txt(lang(
             qname(rq) + u8"から受けた依頼は失敗に終わった。"s,
@@ -71907,6 +71720,7 @@ void do_play_scene()
 {
     int scidx = 0;
     int scidxtop = 0;
+    int val0{};
     if (gdata_played_scene < sceneid)
     {
         gdata_played_scene = sceneid;
@@ -71966,7 +71780,7 @@ label_2681:
     key_list = key_enter;
     scidxtop = scidx;
     scidxtop = 0;
-    val = 0;
+    val0 = 0;
 label_2682_internal:
     p(1) = instr(buff, scidx, u8"{"s) + scidx;
     if (p(1) == -1)
@@ -71991,14 +71805,14 @@ label_2682_internal:
     if (s == u8"{txt}"s)
     {
         scidxtop = scidx;
-        val = 0;
+        val0 = 0;
         goto label_2682_internal;
     }
     if (strutil::contains(s(0), u8"{chat_"))
     {
         rc = elona::stoi(strmid(s, 6, 1));
         scidxtop = scidx;
-        val = 1;
+        val0 = 1;
         goto label_2682_internal;
     }
     if (s == u8"{fade}"s)
@@ -72029,7 +71843,7 @@ label_2682_internal:
     if (s == u8"{wait}"s)
     {
         scidxtop = scidx;
-        val = 2;
+        val0 = 2;
         goto label_2682_internal;
     }
     if (s == u8"{end}"s)
@@ -72118,7 +71932,7 @@ label_2684_internal:
     gmode(2);
     boxf(0, 0, windoww, y1, {5, 5, 5});
     boxf(0, y2, windoww, windowh, {5, 5, 5});
-    if (val == 1)
+    if (val0 == 1)
     {
         gsel(0);
         redraw(0);
@@ -72130,7 +71944,7 @@ label_2684_internal:
         speak_to_npc();
         goto label_2681;
     }
-    if (val == 2)
+    if (val0 == 2)
     {
         gsel(0);
         redraw(0);
@@ -77054,11 +76868,7 @@ void pc_turn(bool label_2747_flg)
                 promptl(1, 1) = u8"n"s;
                 promptl(2, 1) = u8"1"s;
                 promptmax = 2;
-                val(0) = promptx;
-                val(1) = prompty;
-                val(2) = 160;
-                val(3) = 1;
-                show_prompt();
+                show_prompt(promptx, prompty, 160);
                 if (rtval == 0)
                 {
                     petarenawin = 2;
@@ -77932,14 +77742,12 @@ label_2747:
     }
     if (key == key_godown)
     {
-        val = 1;
-        label_2207();
+        label_2207(1);
         return;
     }
     if (key == key_goup)
     {
-        val = 2;
-        label_2207();
+        label_2207(2);
         return;
     }
     if (key == key_wait)
@@ -78037,11 +77845,7 @@ void conquer_lesimas()
             ++promptmax;
         }
     }
-    val(0) = promptx;
-    val(1) = prompty;
-    val(2) = 310;
-    val(3) = 0;
-    show_prompt();
+    show_prompt(promptx, prompty, 310);
     wincomment = ""s + promptl(0, rtval);
     mode = 7;
     screenupdate = -1;
@@ -78183,11 +77987,7 @@ void play_the_last_scene_again()
     promptl(1, 1) = u8"n"s;
     promptl(2, 1) = u8"1"s;
     promptmax = 2;
-    val(0) = promptx;
-    val(1) = prompty;
-    val(2) = 160;
-    val(3) = 1;
-    show_prompt();
+    show_prompt(promptx, prompty, 160);
     if (rtval == 0)
     {
         conquer_lesimas();
@@ -78214,13 +78014,9 @@ void pc_died()
     txt(lang(u8"さようなら… "s, u8"Good bye... "s));
     txtmore();
     txt(lang(u8"遺言は？"s, u8"You leave a dying message."s));
-    val(0) = (windoww - 310) / 2 + inf_screenx;
-    val(1) = winposy(90);
-    val(2) = 16;
-    val(3) = 1;
-    val(4) = 0;
     inputlog = "";
-    show_number_of_text_prompt();
+    show_number_of_text_prompt(
+        (windoww - 310) / 2 + inf_screenx, winposy(90), 16, 1);
     if (inputlog == ""s)
     {
         txtsetlastword();
@@ -78338,11 +78134,7 @@ void pc_died()
     promptl(1, promptmax) = u8"b"s;
     promptl(2, promptmax) = ""s + promptmax;
     ++promptmax;
-    val(0) = promptx;
-    val(1) = 100;
-    val(2) = 240;
-    val(3) = 1;
-    show_prompt();
+    show_prompt(promptx, 100, 240);
     if (rtval == 1)
     {
         show_game_score_ranking();

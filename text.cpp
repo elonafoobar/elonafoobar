@@ -3277,9 +3277,9 @@ void update_main_quest_journal()
 
 
 
-void append_subquest_journal()
+void append_subquest_journal(int val0)
 {
-    if (val == 0)
+    if (val0 == 0)
     {
         noteadd(""s);
         noteadd(lang(u8"@QM[サブクエスト]"s, u8"@QM[Sub Quest]"s));
@@ -3289,7 +3289,7 @@ void append_subquest_journal()
     {
         s = lang(u8"ぬいぐるみを守れ！ Lv6相当"s, u8"Putit attacks Lv6"s);
         p = gdata_putit_attacks;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -3297,7 +3297,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -3309,7 +3309,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 2)
         {
@@ -3326,7 +3326,7 @@ void append_subquest_journal()
     {
         s = lang(u8"お酒泥棒 Lv2相当"s, u8"Thieves' hideout Lv2"s);
         p = gdata_thieves_hideout;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -3334,7 +3334,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -3346,7 +3346,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 2)
         {
@@ -3363,7 +3363,7 @@ void append_subquest_journal()
     {
         s = lang(u8"迷子の子犬 Lv4相当"s, u8"Puppy's cave Lv4"s);
         p = gdata_puppys_cave;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -3371,7 +3371,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -3388,7 +3388,7 @@ void append_subquest_journal()
     {
         s = lang(u8"実験場のナイトメア Lv50相当"s, u8"Nightmare Lv50"s);
         p = gdata_nightmare;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -3396,7 +3396,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -3408,7 +3408,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 2)
         {
@@ -3420,7 +3420,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 3)
         {
@@ -3437,7 +3437,7 @@ void append_subquest_journal()
     {
         s = lang(u8"エーテル病を治せ Lv20相当"s, u8"Pael and her mom Lv20"s);
         p = gdata_pael_and_her_mom;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -3445,7 +3445,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -3457,7 +3457,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 2)
         {
@@ -3469,7 +3469,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 3)
         {
@@ -3481,7 +3481,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 4)
         {
@@ -3493,7 +3493,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 5)
         {
@@ -3505,7 +3505,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 6)
         {
@@ -3517,7 +3517,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 7)
         {
@@ -3529,7 +3529,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 8)
         {
@@ -3541,7 +3541,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 9)
         {
@@ -3553,7 +3553,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 10)
         {
@@ -3570,7 +3570,7 @@ void append_subquest_journal()
     {
         s = lang(u8"嫁泥棒 Lv3相当"s, u8"Wife collector LV3"s);
         p = gdata_wife_collector;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -3578,7 +3578,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -3595,7 +3595,7 @@ void append_subquest_journal()
     {
         s = lang(u8"猫退治 Lv25相当"s, u8"Cat house Lv25"s);
         p = gdata_cat_house;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -3603,7 +3603,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -3615,7 +3615,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 2)
         {
@@ -3632,7 +3632,7 @@ void append_subquest_journal()
     {
         s = lang(u8"防衛戦線の死闘 Lv17相当"s, u8"Defense line Lv17"s);
         p = gdata_defense_line;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -3640,7 +3640,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -3652,7 +3652,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 2)
         {
@@ -3664,7 +3664,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 3)
         {
@@ -3681,7 +3681,7 @@ void append_subquest_journal()
     {
         s = lang(u8"騎士昇格試験の手伝い Lv8相当"s, u8"Novice knightLv8"s);
         p = gdata_novice_knight;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -3689,7 +3689,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -3701,7 +3701,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 2)
         {
@@ -3718,7 +3718,7 @@ void append_subquest_journal()
     {
         s = lang(u8"カミカゼ特攻隊 Lv14相当"s, u8"Kamikaze attack Lv14"s);
         p = gdata_kamikaze_attack;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -3726,7 +3726,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -3738,7 +3738,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 2)
         {
@@ -3750,7 +3750,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 3)
         {
@@ -3767,7 +3767,7 @@ void append_subquest_journal()
     {
         s = lang(u8"ミーアの夢 Lv1相当"s, u8"Mia's dream Lv1"s);
         p = gdata_mias_dream;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -3775,7 +3775,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -3792,7 +3792,7 @@ void append_subquest_journal()
     {
         s = lang(u8"幻の絵本 Lv12相当"s, u8"Rare books Lv12"s);
         p = gdata_rare_books;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -3800,7 +3800,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -3817,7 +3817,7 @@ void append_subquest_journal()
     {
         s = lang(u8"ピラミッドからの挑戦状 Lv16相当"s, u8"Pyramid trial Lv16"s);
         p = gdata_pyramid_trial;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -3825,7 +3825,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -3843,7 +3843,7 @@ void append_subquest_journal()
         s = lang(
             u8"パルミアに赤い花を Lv14相当"s, u8"Red blossom in Palmia Lv14"s);
         p = gdata_red_blossom_in_palmia;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -3851,7 +3851,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -3863,7 +3863,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 2)
         {
@@ -3880,7 +3880,7 @@ void append_subquest_journal()
     {
         s = lang(u8"生化学者の野望 Lv5相当"s, u8"Ambitious scientist Lv5"s);
         p = gdata_ambitious_scientist;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -3888,7 +3888,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p
             == gdata_ambitious_scientist * (gdata_ambitious_scientist < 6)
@@ -3910,7 +3910,7 @@ void append_subquest_journal()
     {
         s = lang(u8"下水道大作戦 Lv23相当"s, u8"Sewer sweeping Lv23"s);
         p = gdata_sewer_sweeping;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -3918,7 +3918,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -3930,7 +3930,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 2)
         {
@@ -3947,7 +3947,7 @@ void append_subquest_journal()
     {
         s = lang(u8"魔術士ギルド審査"s, u8"Joining the Mages Guild"s);
         p = gdata_joining_mages_guild;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -3955,7 +3955,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -3974,7 +3974,7 @@ void append_subquest_journal()
     {
         s = lang(u8"盗賊ギルド審査"s, u8"Joining the Thieves Guild"s);
         p = gdata_joining_thieves_guild;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -3982,7 +3982,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -3999,7 +3999,7 @@ void append_subquest_journal()
     {
         s = lang(u8"戦士ギルド審査"s, u8"Joining the Fighters Guild"s);
         p = gdata_joining_fighters_guild;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -4007,7 +4007,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -4027,7 +4027,7 @@ void append_subquest_journal()
     {
         s = lang(u8"魔術士ギルドノルマ"s, u8"The Mages Guild quota"s);
         p = gdata_mages_guild_quota2;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -4035,7 +4035,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -4055,7 +4055,7 @@ void append_subquest_journal()
     {
         s = lang(u8"戦士ギルドノルマ"s, u8"The Fighters Guild quota"s);
         p = gdata_fighters_guild_quota2;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -4063,7 +4063,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -4083,7 +4083,7 @@ void append_subquest_journal()
     {
         s = lang(u8"盗賊ギルドノルマ"s, u8"The Thieves Guild quota"s);
         p = gdata_thieves_guild_quota2;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -4091,7 +4091,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -4111,7 +4111,7 @@ void append_subquest_journal()
     {
         s = lang(u8"ミノタウロスの王 Lv24相当"s, u8"Minotaur king Lv24"s);
         p = gdata_minotaur_king;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -4119,7 +4119,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -4131,7 +4131,7 @@ void append_subquest_journal()
             noteadd(""s);
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 2)
         {
@@ -4148,7 +4148,7 @@ void append_subquest_journal()
     {
         s = lang(u8"リトルシスター Lv30相当"s, u8"Little sister Lv30"s);
         p = gdata_little_sister;
-        if (val == 1)
+        if (val0 == 1)
         {
             if (p >= 1000)
             {
@@ -4156,7 +4156,7 @@ void append_subquest_journal()
             }
         }
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         if (p == 1)
         {
@@ -4197,7 +4197,7 @@ void append_quest_item_journal()
 
 
 
-void parse_quest_board_text()
+void parse_quest_board_text(int val0)
 {
     elona_vector1<std::string> buff2;
     notesel(buffboard);
@@ -4214,13 +4214,13 @@ void parse_quest_board_text()
     noteget(buff2, p);
     p = instr(buff2, 0, u8":"s);
     s(3) = strmid(buff2, 0, p);
-    if (val == 2)
+    if (val0 == 2)
     {
         notesel(buff);
         return;
     }
     buff2 = strmid(buff2, p + 1, std::size(buff2(0)) - p - 1);
-    if (val != 2)
+    if (val0 != 2)
     {
         buff = buff2;
     }
@@ -4568,34 +4568,34 @@ void cheer_up_message()
 
 
 
-void get_enchantment_description()
+void get_enchantment_description(int val0, int val1, int val2, int val3)
 {
     int sid = 0;
     rtval(0) = 4;
     rtval(1) = 0;
-    s = u8"error:"s + val + u8"/"s + val(1);
-    val(10) = val / 10000;
-    if (val(10) != 0)
+    s = u8"error:"s + val0 + u8"/"s + val1;
+    int val10 = val0 / 10000;
+    if (val10 != 0)
     {
-        if (val(2) == 1)
+        if (val2 == 1)
         {
             s = "";
             return;
         }
-        sid = val % 10000;
-        if (val(10) == 1)
+        sid = val0 % 10000;
+        if (val10 == 1)
         {
             rtval = 2;
-            if (val(1) / 50 + 1 < 0)
+            if (val1 / 50 + 1 < 0)
             {
                 rtval = 9;
                 s = lang(
                     ""s + i18n::_(u8"ability", std::to_string(sid), u8"name")
-                        + u8"を"s + std::abs((val(1) / 50 + 1)) + u8"下げる"s,
+                        + u8"を"s + std::abs((val1 / 50 + 1)) + u8"下げる"s,
                     u8"decreases your "s
                         + i18n::_(u8"ability", std::to_string(sid), u8"name")
-                        + u8" by "s + std::abs((val(1) / 50 + 1)) + u8"."s);
-                if (val(3) == 57000)
+                        + u8" by "s + std::abs((val1 / 50 + 1)) + u8"."s);
+                if (val3 == 57000)
                 {
                     s = lang(
                             ""s
@@ -4611,7 +4611,7 @@ void get_enchantment_description()
                                       u8"name")
                                 + u8"."s)
                         + u8" ["s;
-                    putenclv(val(1) / 50);
+                    putenclv(val1 / 50);
                     s += u8"]"s;
                 }
             }
@@ -4619,11 +4619,11 @@ void get_enchantment_description()
             {
                 s = lang(
                     ""s + i18n::_(u8"ability", std::to_string(sid), u8"name")
-                        + u8"を"s + std::abs((val(1) / 50 + 1)) + u8"上げる"s,
+                        + u8"を"s + std::abs((val1 / 50 + 1)) + u8"上げる"s,
                     u8"increases your "s
                         + i18n::_(u8"ability", std::to_string(sid), u8"name")
-                        + u8" by "s + std::abs((val(1) / 50 + 1)) + u8"."s);
-                if (val(3) == 57000)
+                        + u8" by "s + std::abs((val1 / 50 + 1)) + u8"."s);
+                if (val3 == 57000)
                 {
                     s = lang(
                             ""s
@@ -4639,16 +4639,16 @@ void get_enchantment_description()
                                       u8"name")
                                 + u8"."s)
                         + u8" ["s;
-                    putenclv(val(1) / 50);
+                    putenclv(val1 / 50);
                     s += u8"]"s;
                 }
             }
         }
-        if (val(10) == 2)
+        if (val10 == 2)
         {
             rtval = 3;
-            i = val(1) / 2 / 50;
-            if (val(1) / 2 < 0)
+            i = val1 / 2 / 50;
+            if (val1 / 2 < 0)
             {
                 rtval = 9;
                 s = lang(
@@ -4681,11 +4681,11 @@ void get_enchantment_description()
             putenclv(i);
             s += u8"]"s;
         }
-        if (val(10) == 3)
+        if (val10 == 3)
         {
             rtval = 1;
-            i = val(1) / 50 + 1;
-            if (val(1) / 50 + 1 < 0)
+            i = val1 / 50 + 1;
+            if (val1 / 50 + 1 < 0)
             {
                 rtval = 9;
                 s = lang(
@@ -4718,7 +4718,7 @@ void get_enchantment_description()
             putenclv(i / 5);
             s += u8"]"s;
         }
-        if (val(10) == 6)
+        if (val10 == 6)
         {
             rtval = 8;
             s = lang(
@@ -4727,7 +4727,7 @@ void get_enchantment_description()
                 u8"maintains "s
                     + i18n::_(u8"ability", std::to_string(sid), u8"name")
                     + u8"."s);
-            if (val(3) == 57000)
+            if (val3 == 57000)
             {
                 s = lang(
                         ""s
@@ -4739,14 +4739,14 @@ void get_enchantment_description()
                                   u8"ability", std::to_string(sid), u8"name")
                             + u8" faster."s)
                     + u8" ["s;
-                putenclv(val(1) / 50);
+                putenclv(val1 / 50);
                 s += u8"]"s;
             }
         }
-        if (val(10) == 7)
+        if (val10 == 7)
         {
             rtval = 4;
-            i = val(1) / 2 / 50;
+            i = val1 / 2 / 50;
             s = i18n::_(
                 u8"ability", std::to_string(sid), u8"enchantment_description");
             if (s == ""s)
@@ -4762,10 +4762,10 @@ void get_enchantment_description()
             putenclv(i);
             s += u8"]"s;
         }
-        if (val(10) == 8)
+        if (val10 == 8)
         {
             rtval = 4;
-            i = val(1) / 50;
+            i = val1 / 50;
             sid = encprocref(0, sid);
             s = lang(
                 ""s + i18n::_(u8"ability", std::to_string(sid), u8"name")
@@ -4777,108 +4777,108 @@ void get_enchantment_description()
             putenclv(i);
             s += u8"]"s;
         }
-        if (val(10) == 9)
+        if (val10 == 9)
         {
             rtval = 4;
             s = lang(
                 ""s + ammoname(sid) + u8"を装填できる"s,
                 u8"can be loaded with "s + ammoname(sid) + u8"."s);
-            s += lang(u8" [最大"s, u8" [Max "s) + val(1) / 1000
+            s += lang(u8" [最大"s, u8" [Max "s) + val1 / 1000
                 + lang(u8"発]"s, u8"]"s);
         }
         return;
     }
-    if (val == 0)
+    if (val0 == 0)
     {
         s = u8"?????"s;
     }
-    if (val == 21)
+    if (val0 == 21)
     {
         rtval = 9;
         s = lang(
             u8"ランダムなテレポートを引き起こす"s,
             u8"causes random teleport."s);
-        if (val(1) / 50 == -1)
+        if (val1 / 50 == -1)
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
-            putenclv(val(1) / 50);
+            putenclv(val1 / 50);
             s += u8"]"s;
             return;
         }
         else
         {
-            rtval(1) = val(1) / 50;
+            rtval(1) = val1 / 50;
             return;
         }
     }
-    if (val == 45)
+    if (val0 == 45)
     {
         rtval = 9;
         s = lang(u8"使用者の生き血を吸う"s, u8"sucks blood of the wielder."s);
-        if (val(1) / 50 == -1)
+        if (val1 / 50 == -1)
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
-            putenclv(val(1) / 50);
+            putenclv(val1 / 50);
             s += u8"]"s;
             return;
         }
         else
         {
-            rtval(1) = val(1) / 50;
+            rtval(1) = val1 / 50;
             return;
         }
     }
-    if (val == 46)
+    if (val0 == 46)
     {
         rtval = 9;
         s = lang(u8"あなたの成長を妨げる"s, u8"disturbs your growth."s);
-        if (val(1) / 50 == -1)
+        if (val1 / 50 == -1)
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
-            putenclv(val(1) / 50);
+            putenclv(val1 / 50);
             s += u8"]"s;
             return;
         }
         else
         {
-            rtval(1) = val(1) / 50;
+            rtval(1) = val1 / 50;
             return;
         }
     }
-    if (val == 47)
+    if (val0 == 47)
     {
         rtval = 9;
         s = lang(u8"魔物を呼び寄せる"s, u8"attracts monsters."s);
-        if (val(1) / 50 == -1)
+        if (val1 / 50 == -1)
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
-            putenclv(val(1) / 50);
+            putenclv(val1 / 50);
             s += u8"]"s;
             return;
         }
         else
         {
-            rtval(1) = val(1) / 50;
+            rtval(1) = val1 / 50;
             return;
         }
     }
-    if (val == 22)
+    if (val0 == 22)
     {
         rtval = 4;
         s = lang(
@@ -4887,7 +4887,7 @@ void get_enchantment_description()
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
             putenclv(-1);
@@ -4900,7 +4900,7 @@ void get_enchantment_description()
             return;
         }
     }
-    if (val == 23)
+    if (val0 == 23)
     {
         rtval = 4;
         s = lang(u8"盲目を無効にする"s, u8"negates the effect of blindness."s);
@@ -4908,7 +4908,7 @@ void get_enchantment_description()
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
             putenclv(-1);
@@ -4921,7 +4921,7 @@ void get_enchantment_description()
             return;
         }
     }
-    if (val == 24)
+    if (val0 == 24)
     {
         rtval = 4;
         s = lang(u8"麻痺を無効にする"s, u8"negates the effect of paralysis."s);
@@ -4929,7 +4929,7 @@ void get_enchantment_description()
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
             putenclv(-1);
@@ -4942,7 +4942,7 @@ void get_enchantment_description()
             return;
         }
     }
-    if (val == 25)
+    if (val0 == 25)
     {
         rtval = 4;
         s = lang(u8"混乱を無効にする"s, u8"negates the effect of confusion."s);
@@ -4950,7 +4950,7 @@ void get_enchantment_description()
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
             putenclv(-1);
@@ -4963,7 +4963,7 @@ void get_enchantment_description()
             return;
         }
     }
-    if (val == 26)
+    if (val0 == 26)
     {
         rtval = 4;
         s = lang(u8"恐怖を無効にする"s, u8"negates the effect of fear."s);
@@ -4971,7 +4971,7 @@ void get_enchantment_description()
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
             putenclv(-1);
@@ -4984,7 +4984,7 @@ void get_enchantment_description()
             return;
         }
     }
-    if (val == 27)
+    if (val0 == 27)
     {
         rtval = 4;
         s = lang(u8"睡眠を無効にする"s, u8"negates the effect of sleep."s);
@@ -4992,7 +4992,7 @@ void get_enchantment_description()
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
             putenclv(-1);
@@ -5005,7 +5005,7 @@ void get_enchantment_description()
             return;
         }
     }
-    if (val == 28)
+    if (val0 == 28)
     {
         rtval = 4;
         s = lang(u8"毒を無効にする"s, u8"negates the effect of poison."s);
@@ -5013,7 +5013,7 @@ void get_enchantment_description()
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
             putenclv(-1);
@@ -5026,7 +5026,7 @@ void get_enchantment_description()
             return;
         }
     }
-    if (val == 41)
+    if (val0 == 41)
     {
         rtval = 4;
         s = lang(
@@ -5035,7 +5035,7 @@ void get_enchantment_description()
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
             putenclv(-1);
@@ -5048,7 +5048,7 @@ void get_enchantment_description()
             return;
         }
     }
-    if (val == 42)
+    if (val0 == 42)
     {
         rtval = 4;
         s = lang(
@@ -5058,7 +5058,7 @@ void get_enchantment_description()
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
             putenclv(-1);
@@ -5071,30 +5071,30 @@ void get_enchantment_description()
             return;
         }
     }
-    if (val == 29)
+    if (val0 == 29)
     {
         rtval = 4;
         s = lang(
             u8"速度を上げ、ワールドマップでの移動時間を短くする"s,
             u8"speeds up your travel progress."s);
-        if (val(1) / 100 == -1)
+        if (val1 / 100 == -1)
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
-            putenclv(val(1) / 100);
+            putenclv(val1 / 100);
             s += u8"]"s;
             return;
         }
         else
         {
-            rtval(1) = val(1) / 100;
+            rtval(1) = val1 / 100;
             return;
         }
     }
-    if (val == 30)
+    if (val0 == 30)
     {
         rtval = 4;
         s = lang(
@@ -5104,7 +5104,7 @@ void get_enchantment_description()
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
             putenclv(-1);
@@ -5117,7 +5117,7 @@ void get_enchantment_description()
             return;
         }
     }
-    if (val == 31)
+    if (val0 == 31)
     {
         rtval = 4;
         s = lang(
@@ -5127,7 +5127,7 @@ void get_enchantment_description()
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
             putenclv(-1);
@@ -5140,7 +5140,7 @@ void get_enchantment_description()
             return;
         }
     }
-    if (val == 48)
+    if (val0 == 48)
     {
         rtval = 4;
         s = lang(
@@ -5150,7 +5150,7 @@ void get_enchantment_description()
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
             putenclv(-1);
@@ -5163,7 +5163,7 @@ void get_enchantment_description()
             return;
         }
     }
-    if (val == 32)
+    if (val0 == 32)
     {
         rtval = 4;
         s = lang(u8"あなたを浮遊させる"s, u8"floats you."s);
@@ -5171,7 +5171,7 @@ void get_enchantment_description()
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
             putenclv(-1);
@@ -5184,7 +5184,7 @@ void get_enchantment_description()
             return;
         }
     }
-    if (val == 33)
+    if (val0 == 33)
     {
         rtval = 4;
         s = lang(
@@ -5193,7 +5193,7 @@ void get_enchantment_description()
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
             putenclv(-1);
@@ -5206,28 +5206,28 @@ void get_enchantment_description()
             return;
         }
     }
-    if (val == 34)
+    if (val0 == 34)
     {
         rtval = 4;
         s = lang(u8"魔法の威力を高める"s, u8"enchances your spells."s);
-        if (val(1) / 50 == -1)
+        if (val1 / 50 == -1)
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
-            putenclv(val(1) / 50);
+            putenclv(val1 / 50);
             s += u8"]"s;
             return;
         }
         else
         {
-            rtval(1) = val(1) / 50;
+            rtval(1) = val1 / 50;
             return;
         }
     }
-    if (val == 35)
+    if (val0 == 35)
     {
         rtval = 4;
         s = lang(
@@ -5237,7 +5237,7 @@ void get_enchantment_description()
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
             putenclv(-1);
@@ -5250,30 +5250,30 @@ void get_enchantment_description()
             return;
         }
     }
-    if (val == 36)
+    if (val0 == 36)
     {
         rtval = 4;
         s = lang(
             u8"攻撃対象からスタミナを吸収する"s,
             u8"absorbs stamina from an enemy."s);
-        if (val(1) / 50 == -1)
+        if (val1 / 50 == -1)
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
-            putenclv(val(1) / 50);
+            putenclv(val1 / 50);
             s += u8"]"s;
             return;
         }
         else
         {
-            rtval(1) = val(1) / 50;
+            rtval(1) = val1 / 50;
             return;
         }
     }
-    if (val == 37)
+    if (val0 == 37)
     {
         rtval = 4;
         s = lang(u8"全てを終結させる"s, u8"brings an end."s);
@@ -5281,7 +5281,7 @@ void get_enchantment_description()
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
             putenclv(-1);
@@ -5294,164 +5294,164 @@ void get_enchantment_description()
             return;
         }
     }
-    if (val == 38)
+    if (val0 == 38)
     {
         rtval = 4;
         s = lang(
             u8"攻撃対象からマナを吸収する"s, u8"absorbs MP from an enemy."s);
-        if (val(1) / 50 == -1)
+        if (val1 / 50 == -1)
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
-            putenclv(val(1) / 50);
+            putenclv(val1 / 50);
             s += u8"]"s;
             return;
         }
         else
         {
-            rtval(1) = val(1) / 50;
+            rtval(1) = val1 / 50;
             return;
         }
     }
-    if (val == 39)
+    if (val0 == 39)
     {
         rtval = 4;
         s = lang(
             u8"完全貫通攻撃発動の機会を増やす"s,
             u8"gives you a chance to throw an absolute piercing attak."s);
-        if (val(1) / 50 == -1)
+        if (val1 / 50 == -1)
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
-            putenclv(val(1) / 50);
+            putenclv(val1 / 50);
             s += u8"]"s;
             return;
         }
         else
         {
-            rtval(1) = val(1) / 50;
+            rtval(1) = val1 / 50;
             return;
         }
     }
-    if (val == 44)
+    if (val0 == 44)
     {
         rtval = 4;
         s = lang(
             u8"クリティカルヒットの機会を増やす"s,
             u8"increases your chance to deliver critical hits."s);
-        if (val(1) / 50 == -1)
+        if (val1 / 50 == -1)
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
-            putenclv(val(1) / 50);
+            putenclv(val1 / 50);
             s += u8"]"s;
             return;
         }
         else
         {
-            rtval(1) = val(1) / 50;
+            rtval(1) = val1 / 50;
             return;
         }
     }
-    if (val == 50)
+    if (val0 == 50)
     {
         rtval = 4;
         s = lang(
             u8"追加打撃の機会を増やす"s,
             u8"increases the chance of extra melee attack."s);
-        if (val(1) / 50 == -1)
+        if (val1 / 50 == -1)
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
-            putenclv(val(1) / 50);
+            putenclv(val1 / 50);
             s += u8"]"s;
             return;
         }
         else
         {
-            rtval(1) = val(1) / 50;
+            rtval(1) = val1 / 50;
             return;
         }
     }
-    if (val == 51)
+    if (val0 == 51)
     {
         rtval = 4;
         s = lang(
             u8"追加射撃の機会を増やす"s,
             u8"increases the chance of extra ranged attack."s);
-        if (val(1) / 50 == -1)
+        if (val1 / 50 == -1)
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
-            putenclv(val(1) / 50);
+            putenclv(val1 / 50);
             s += u8"]"s;
             return;
         }
         else
         {
-            rtval(1) = val(1) / 50;
+            rtval(1) = val1 / 50;
             return;
         }
     }
-    if (val == 40)
+    if (val0 == 40)
     {
         rtval = 4;
         s = lang(u8"稀に時を止める"s, u8"occasionally stops time."s);
-        if (val(1) == -1)
+        if (val1 == -1)
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
-            putenclv(val(1) / 100);
+            putenclv(val1 / 100);
             s += u8"]"s;
             return;
         }
         else
         {
-            rtval(1) = val(1) / 100;
+            rtval(1) = val1 / 100;
             return;
         }
     }
-    if (val == 43)
+    if (val0 == 43)
     {
         rtval = 4;
         s = lang(
             u8"呪いの言葉から保護する"s, u8"protects you from cursing words."s);
-        if (val(1) / 50 == -1)
+        if (val1 / 50 == -1)
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
-            putenclv(val(1) / 50);
+            putenclv(val1 / 50);
             s += u8"]"s;
             return;
         }
         else
         {
-            rtval(1) = val(1) / 50;
+            rtval(1) = val1 / 50;
             return;
         }
     }
-    if (val == 49)
+    if (val0 == 49)
     {
         rtval = 4;
         s = lang(
@@ -5461,7 +5461,7 @@ void get_enchantment_description()
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
             putenclv(-1);
@@ -5474,76 +5474,76 @@ void get_enchantment_description()
             return;
         }
     }
-    if (val == 52)
+    if (val0 == 52)
     {
         rtval = 4;
         s = lang(
             u8"被る物理ダメージを軽減する"s,
             u8"decreases physical damage you take."s);
-        if (val(1) / 50 == -1)
+        if (val1 / 50 == -1)
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
-            putenclv(val(1) / 50);
+            putenclv(val1 / 50);
             s += u8"]"s;
             return;
         }
         else
         {
-            rtval(1) = val(1) / 50;
+            rtval(1) = val1 / 50;
             return;
         }
     }
-    if (val == 53)
+    if (val0 == 53)
     {
         rtval = 4;
         s = lang(
             u8"被るダメージを稀に無効にする"s,
             u8"sometimes nullifies damage you take."s);
-        if (val(1) / 50 == -1)
+        if (val1 / 50 == -1)
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
-            putenclv(val(1) / 50);
+            putenclv(val1 / 50);
             s += u8"]"s;
             return;
         }
         else
         {
-            rtval(1) = val(1) / 50;
+            rtval(1) = val1 / 50;
             return;
         }
     }
-    if (val == 54)
+    if (val0 == 54)
     {
         rtval = 4;
         s = lang(
             u8"攻撃された時、相手に切り傷のダメージを与える"s,
             u8"deals cut damage to the attacker."s);
-        if (val(1) / 50 == -1)
+        if (val1 / 50 == -1)
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
-            putenclv(val(1) / 50);
+            putenclv(val1 / 50);
             s += u8"]"s;
             return;
         }
         else
         {
-            rtval(1) = val(1) / 50;
+            rtval(1) = val1 / 50;
             return;
         }
     }
-    if (val == 55)
+    if (val0 == 55)
     {
         rtval = 4;
         s = lang(u8"出血を抑える"s, u8"diminishs bleeding."s);
@@ -5551,7 +5551,7 @@ void get_enchantment_description()
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
             putenclv(-1);
@@ -5564,7 +5564,7 @@ void get_enchantment_description()
             return;
         }
     }
-    if (val == 56)
+    if (val0 == 56)
     {
         rtval = 4;
         s = lang(
@@ -5573,7 +5573,7 @@ void get_enchantment_description()
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
             putenclv(-1);
@@ -5586,53 +5586,53 @@ void get_enchantment_description()
             return;
         }
     }
-    if (val == 57)
+    if (val0 == 57)
     {
         rtval = 4;
         s = lang(
             u8"竜族に対して強力な威力を発揮する"s,
             u8"inflicts massive damage to dragons."s);
-        if (val(1) / 50 == -1)
+        if (val1 / 50 == -1)
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
-            putenclv(val(1) / 50);
+            putenclv(val1 / 50);
             s += u8"]"s;
             return;
         }
         else
         {
-            rtval(1) = val(1) / 50;
+            rtval(1) = val1 / 50;
             return;
         }
     }
-    if (val == 58)
+    if (val0 == 58)
     {
         rtval = 4;
         s = lang(
             u8"不死者に対して強力な威力を発揮する"s,
             u8"inflicts massive damage to undeads."s);
-        if (val(1) / 50 == -1)
+        if (val1 / 50 == -1)
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
-            putenclv(val(1) / 50);
+            putenclv(val1 / 50);
             s += u8"]"s;
             return;
         }
         else
         {
-            rtval(1) = val(1) / 50;
+            rtval(1) = val1 / 50;
             return;
         }
     }
-    if (val == 59)
+    if (val0 == 59)
     {
         rtval = 4;
         s = lang(u8"他者の信仰を明らかにする"s, u8"reveals religion."s);
@@ -5640,7 +5640,7 @@ void get_enchantment_description()
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
             putenclv(-1);
@@ -5653,7 +5653,7 @@ void get_enchantment_description()
             return;
         }
     }
-    if (val == 60)
+    if (val0 == 60)
     {
         rtval = 4;
         s = lang(
@@ -5663,7 +5663,7 @@ void get_enchantment_description()
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
             putenclv(-1);
@@ -5676,26 +5676,26 @@ void get_enchantment_description()
             return;
         }
     }
-    if (val == 61)
+    if (val0 == 61)
     {
         rtval = 4;
         s = lang(
             u8"神に対して強力な威力を発揮する"s,
             u8"inflicts massive damage to Gods."s);
-        if (val(1) / 50 == -1)
+        if (val1 / 50 == -1)
         {
             return;
         }
-        else if (val(2) == 0)
+        else if (val2 == 0)
         {
             s += u8" ["s;
-            putenclv(val(1) / 50);
+            putenclv(val1 / 50);
             s += u8"]"s;
             return;
         }
         else
         {
-            rtval(1) = val(1) / 50;
+            rtval(1) = val1 / 50;
             return;
         }
     }

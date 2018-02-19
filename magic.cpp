@@ -3125,11 +3125,7 @@ label_2181_internal:
                 promptl(1, 1) = u8"n"s;
                 promptl(2, 1) = u8"1"s;
                 promptmax = 2;
-                val(0) = promptx;
-                val(1) = prompty;
-                val(2) = 160;
-                val(3) = 1;
-                show_prompt();
+                show_prompt(promptx, prompty, 160);
                 if (rtval != 0)
                 {
                     break;
@@ -3619,9 +3615,8 @@ label_2181_internal:
         txt(lang(
             u8"アーティファクトの新しい銘は？"s,
             u8"What do you want to name this artifact?"s));
-        val = 3;
         {
-            int stat = select_alias();
+            int stat = select_alias(3);
             if (stat == 0)
             {
                 obvious = 0;
