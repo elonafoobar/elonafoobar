@@ -19,8 +19,9 @@ void proc_event()
     {
     case 8: hunt_all_targets(); break;
     case 14:
-        if (gdata_executing_immediate_quest_type == 1009)
+        switch (gdata_executing_immediate_quest_type)
         {
+        case 1009:
             txt(lang(u8"パーティーは終了した。"s, u8"The party is over."s));
             calcpartyscore();
             calcpartyscore2();
@@ -48,9 +49,8 @@ void proc_event()
                     u8"パーティーはぐだぐだになった…"s,
                     u8"The party turned out to be a big flop..."s));
             }
-        }
-        if (gdata_executing_immediate_quest_type == 1006)
-        {
+            break;
+        case 1006:
             if (qdata(12, gdata_executing_immediate_quest)
                 < qdata(13, gdata_executing_immediate_quest))
             {
@@ -68,17 +68,17 @@ void proc_event()
                     u8"納入は間に合わなかった…"s,
                     u8"You fail to fulfill your task..."s));
             }
-        }
-        if (gdata_executing_immediate_quest_type == 1008)
-        {
+            break;
+        case 1008:
             txtef(8);
             txt(lang(
                 u8"討伐に失敗した…"s, u8"You failed to slay the target..."s));
+            break;
         }
         levelexitby = 4;
         snd(49);
         chatteleport = 1;
-        return;
+        break;
     case 1:
         conquer_lesimas();
         flt();
