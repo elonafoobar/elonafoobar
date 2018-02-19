@@ -327,27 +327,17 @@ void proc_event()
         chara_vanquish(evdata2(evnum - (evnum != 0) * 1));
         break;
     case 15:
-    {
-        int cnt = 0;
-        for (int cnt_end = cnt + (gdata_number_of_existing_quests);
-             cnt < cnt_end;
-             ++cnt)
+        for (int i = 0; i < gdata_number_of_existing_quests; ++i)
         {
-            if (qdata(3, cnt) == 1007)
+            if (qdata(3, i) == 1007 && qdata(8, i) == 1
+                && qdata(13, i) == evdata1(evnum - (evnum != 0) * 1))
             {
-                if (qdata(8, cnt) == 1)
-                {
-                    if (qdata(13, cnt) == evdata1(evnum - (evnum != 0) * 1))
-                    {
-                        rq = cnt;
-                        val = qdata(3, rq);
-                        failed_quest();
-                        break;
-                    }
-                }
+                rq = i;
+                val = qdata(3, rq);
+                failed_quest();
+                break;
             }
         }
-    }
         break;
     case 6:
         if (cdata[0].level > 5)
