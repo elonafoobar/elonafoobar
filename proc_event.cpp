@@ -14,9 +14,10 @@ namespace elona
 void proc_event()
 {
     elona_vector1<int> voidboss;
+
     switch (evid())
     {
-    case 8: hunt_all_targets(); goto label_2755_internal;
+    case 8: hunt_all_targets(); break;
     case 14:
         if (gdata_executing_immediate_quest_type == 1009)
         {
@@ -82,11 +83,11 @@ void proc_event()
         conquer_lesimas();
         flt();
         characreate(-1, 23, cdata[0].position.x, cdata[0].position.y);
-        goto label_2755_internal;
+        break;
     case 27:
         if (gdata_current_map == 35)
         {
-            goto label_2755_internal;
+            break;
         }
         flt();
         characreate(
@@ -99,7 +100,7 @@ void proc_event()
             u8"ビッグダディの肩から、リトルシスターが滑り落ちた。「Mr Bubbles！！」"s,
             u8"The little sister slips from Big Daddy's shoulder, "s
                 + cnvtalk(u8"Mr.Bubbles!"s)));
-        goto label_2755_internal;
+        break;
     case 28:
         txtef(5);
         txt(lang(
@@ -113,28 +114,28 @@ void proc_event()
             336,
             evdata1(evnum - (evnum != 0) * 1),
             evdata2(evnum - (evnum != 0) * 1));
-        goto label_2755_internal;
+        break;
     case 2:
         tc = findchara(34);
         speak_to_npc();
-        goto label_2755_internal;
+        break;
     case 24:
         initeco = 1;
         initialize_economy();
-        goto label_2755_internal;
+        break;
     case 3:
         tc = findchara(2);
         speak_to_npc();
-        goto label_2755_internal;
+        break;
     case 11:
         tc = findchara(1);
         speak_to_npc();
-        goto label_2755_internal;
+        break;
     case 23:
         tc = findchara(302);
         speak_to_npc();
         gdata(171) = 23;
-        goto label_2755_internal;
+        break;
     case 12:
         update_screen();
         s = lang(u8"ペットとの再会"s, u8"Reunion with your pet"s);
@@ -177,7 +178,7 @@ void proc_event()
         novoidlv = 1;
         characreate(-1, p, cdata[cc].position.x, cdata[cc].position.y);
         new_ally_joins();
-        goto label_2755_internal;
+        break;
     case 13:
         music = 80;
         play_music();
@@ -209,7 +210,7 @@ void proc_event()
             u8"何かが足元に転がってきた。"s,
             u8"Something is put on the ground."s));
         autosave = 1 * (gdata_current_map != 35);
-        goto label_2755_internal;
+        break;
     case 29:
         voidboss(0) = 300;
         voidboss(1) = 26;
@@ -251,7 +252,7 @@ void proc_event()
             u8"Be aware! This level is guarded by the lord of "s
                 + mapname(gdata_current_map) + u8", "s + cdatan(0, tc)
                 + u8"."s));
-        goto label_2755_internal;
+        break;
     case 4:
     {
         int cnt = 0;
@@ -286,7 +287,7 @@ void proc_event()
             u8"Be aware! This level is guarded by the lord of "s
                 + mapname(gdata_current_map) + u8", "s + cdatan(0, tc)
                 + u8"."s));
-        goto label_2755_internal;
+        break;
     case 5:
         music = 64;
         play_music();
@@ -338,7 +339,7 @@ void proc_event()
         {
             adata(20, gdata_current_map) = -1;
         }
-        goto label_2755_internal;
+        break;
     case 16:
         txt(lang(
             u8"あなたは無事に護衛の任務を終えた。"s,
@@ -348,7 +349,7 @@ void proc_event()
         rq = evdata1(evnum - (evnum != 0) * 1);
         complete_quest();
         chara_vanquish(evdata2(evnum - (evnum != 0) * 1));
-        goto label_2755_internal;
+        break;
     case 15:
     {
         int cnt = 0;
@@ -371,7 +372,7 @@ void proc_event()
             }
         }
     }
-        goto label_2755_internal;
+        break;
     case 6:
         if (cdata[0].level > 5)
         {
@@ -414,7 +415,7 @@ void proc_event()
         r1 = 0;
         refresh_character();
         autosave = 1 * (gdata_current_map != 35);
-        goto label_2755_internal;
+        break;
     case 20:
         dmghp(evdata1(evnum - (evnum != 0) * 1), 9999, -11);
         cdata[evdata1(evnum - (evnum != 0) * 1)].character_role = 0;
@@ -441,25 +442,25 @@ void proc_event()
                 cdata[tc].enemy_id = 0;
             }
         }
-        goto label_2755_internal;
+        break;
     case 7:
         label_1444();
         press();
         screenupdate = -1;
         update_entire_screen();
-        goto label_2755_internal;
-    case 10: label_2673(); goto label_2755_internal;
+        break;
+    case 10: label_2673(); break;
     case 19:
         txtef(6);
         txt(""s + usermsg);
-        goto label_2755_internal;
+        break;
     case 25:
         --gdata_number_of_waiting_guests;
         if (get_freechara() == -1)
         {
             txt(lang(
                 u8"ゲストは行方不明になった。"s, u8"The guest lost his way."s));
-            goto label_2755_internal;
+            break;
         }
         if (rnd(3) || 0)
         {
@@ -516,7 +517,7 @@ void proc_event()
                 txt(lang(
                     u8"ゲストはすでに居なくなっていた。"s,
                     u8"It seems the guest has already left your house."s));
-                goto label_2755_internal;
+                break;
             }
             cdata[tc].state = 1;
             rc = tc;
@@ -684,7 +685,7 @@ void proc_event()
             }
         }
         speak_to_npc();
-        goto label_2755_internal;
+        break;
     case 30:
         i = 0;
         {
@@ -708,7 +709,7 @@ void proc_event()
                 }
             }
         }
-        goto label_2755_internal;
+        break;
     case 17:
         i = 0;
         {
@@ -790,11 +791,11 @@ void proc_event()
                 speak_to_npc();
             }
         }
-        goto label_2755_internal;
+        break;
     case 21:
         if (mdata(6) == 1)
         {
-            goto label_2755_internal;
+            break;
         }
         txtef(3);
         txt(lang(u8" *ゴゴゴゴゴゴ* "s, u8"* RRROOM-KABOOOOM*"s));
@@ -996,11 +997,11 @@ void proc_event()
         {
             modify_karma(0, -10);
         }
-        goto label_2755_internal;
+        break;
     case 18:
         if (mdata(6) == 1)
         {
-            goto label_2755_internal;
+            break;
         }
         gdata_weather = 1;
         envonly = 1;
@@ -1070,7 +1071,7 @@ void proc_event()
                 }
             }
         }
-        goto label_2755_internal;
+        break;
     case 22:
         if (evdata1(evnum - (evnum != 0) * 1) == 0)
         {
@@ -1091,7 +1092,7 @@ void proc_event()
                 }
             }
         }
-        goto label_2755_internal;
+        break;
     case 26:
         if (mdata(6) != 1)
         {
@@ -1108,10 +1109,8 @@ void proc_event()
                 }
             }
         }
-        goto label_2755_internal;
+        break;
     }
-label_2755_internal:
-    return;
 }
 
 
