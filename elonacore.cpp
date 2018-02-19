@@ -31172,7 +31172,7 @@ int initialize_quest_map_party()
             }
             if (p(0) == 1)
             {
-                n = rnd(5);
+                int n = rnd(5);
                 {
                     int cnt = 0;
                     for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
@@ -32535,7 +32535,6 @@ void use_house_board()
         cxbk = cdata[0].position.x;
         cybk = cdata[0].position.y;
         label_1723();
-        n = 0;
         txtnew();
         txt(lang(
             u8"マウスの左クリックでタイルの敷設、右クリックでタイルの取得、移動キーでスクリーン移動、決定キーでタイル一覧、キャンセルキーで終了。"s,
@@ -33558,6 +33557,7 @@ void label_1729()
             p /= 1000;
         }
     }
+    int n = 0;
     if (p > list(1, n))
     {
         list(0, n) = val;
@@ -33589,7 +33589,6 @@ void label_1730()
     rankcur = 0;
     gdata(77) = 0;
     gdata(78) = 0;
-    n = 0;
     {
         int cnt = 0;
         for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
@@ -44474,7 +44473,7 @@ label_1961_internal:
                         s += lang(u8" *出場* "s, u8" *In* "s);
                     }
                 }
-                n = 0;
+                int n = 0;
                 if (allyctrl == 5)
                 {
                     if (cdata[i].level > sdata(151, 0) + 5)
@@ -53007,7 +53006,7 @@ void label_2084()
             }
         }
         lv = 0;
-        n = 0;
+        int n = 0;
         {
             int cnt = 0;
             for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
@@ -53049,7 +53048,7 @@ void label_2084()
             }
         }
         userfile = refstr;
-        label_2109();
+        label_2109(n);
         txtef(2);
         txt(lang(
             u8"ペットチームを"s + userfile + u8"に保存した。"s,
@@ -54381,7 +54380,7 @@ void label_2108()
 
 
 
-void label_2109()
+void label_2109(int n)
 {
     SDIM2(headtemp, 1024);
     lensum = 1024;
@@ -69627,7 +69626,7 @@ label_2272_internal:
     display_window((windoww - 580) / 2 + inf_screenx, winposy(400), 580, 400);
     keyrange = 0;
     int j0 = 0;
-    n = 0;
+    int n = 0;
     if (adata(28, gdata_current_map) == 0 || gdata_current_dungeon_level != 1)
     {
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
@@ -71070,7 +71069,7 @@ int label_2672()
             int cnt = 0;
             for (int cnt_end = cnt + (300); cnt < cnt_end; ++cnt)
             {
-                n = rnd(188) + 57;
+                int n = rnd(188) + 57;
                 if (n == qdata(0, rq))
                 {
                     continue;

@@ -1327,7 +1327,7 @@ void create_cnpc();
 void load_cnpc_data();
 void create_new_cnpc();
 void label_2108();
-void label_2109();
+void label_2109(int);
 void delete_temporary_npc_files();
 void delete_temporary_user_files();
 void load_save_data();
