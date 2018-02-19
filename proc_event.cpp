@@ -4,6 +4,7 @@
 #include "character.hpp"
 #include "elona.hpp"
 #include "item.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 
@@ -13,8 +14,6 @@ namespace elona
 
 void proc_event()
 {
-    elona_vector1<int> voidboss;
-
     switch (evid())
     {
     case 8: hunt_all_targets(); break;
@@ -209,28 +208,11 @@ void proc_event()
         autosave = 1 * (gdata_current_map != 35);
         break;
     case 29:
-        voidboss(0) = 300;
-        voidboss(1) = 26;
-        voidboss(2) = 27;
-        voidboss(3) = 28;
-        voidboss(4) = 29;
-        voidboss(5) = 140;
-        voidboss(6) = 34;
-        voidboss(7) = 141;
-        voidboss(8) = 143;
-        voidboss(9) = 144;
-        voidboss(10) = 145;
-        voidboss(11) = 242;
-        voidboss(12) = 25;
-        voidboss(13) = 257;
-        voidboss(14) = 230;
-        voidboss(15) = 202;
-        voidboss(16) = 37;
-        voidboss(17) = 33;
-        voidboss(18) = 80;
-        voidboss(19) = 332;
         randomize(gdata_year + gdata_current_dungeon_level);
-        c = voidboss(rnd(length(voidboss)));
+        c = choice(std::initializer_list<int>{
+            300, 26,  27, 28,  29,  140, 34, 141, 143, 144,
+            145, 242, 25, 257, 230, 202, 37, 33,  80,  332,
+        });
         randomize();
         flt();
         fixlv = 4;
