@@ -1051,20 +1051,14 @@ void proc_event()
         }
         break;
     case 26:
-        if (mdata(6) != 1)
+        if (mdata(6) == 1)
+            break;
+        txt(lang(u8"強盗があなたに目をつけた！"s, u8"Blaggers pick on you!"s));
+        for (int i = 0; i < 3; ++i)
         {
-            txt(lang(
-                u8"強盗があなたに目をつけた！"s, u8"Blaggers pick on you!"s));
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
-                {
-                    flt();
-                    initlv = cdata[0].level;
-                    characreate(
-                        -1, 215, cdata[0].position.x, cdata[0].position.y);
-                }
-            }
+            flt();
+            initlv = cdata[0].level;
+            characreate(-1, 215, cdata[0].position.x, cdata[0].position.y);
         }
         break;
     }
