@@ -957,75 +957,66 @@ void proc_event()
         break;
     case 18:
         if (mdata(6) == 1)
-        {
             break;
-        }
         gdata_weather = 1;
         envonly = 1;
         play_music();
         txt(lang(u8"終末の日が訪れた。"s, u8"Let's Ragnarok!"s));
         msg_halt();
         play_animation(21);
+        for (int i = 0; i < 200; ++i)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (200); cnt < cnt_end; ++cnt)
+            for (int j = 0; j < 2; ++j)
             {
+                x = rnd(mdata(0));
+                y = rnd(mdata(1));
+                map(x, y, 0) = 37;
+            }
+            x = rnd(inf_screenw) + scx;
+            y = rnd(inf_screenh) + scy;
+            if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1) || rnd(5) == 0)
+            {
+                x = rnd(mdata(0));
+                y = rnd(mdata(1));
+            }
+            addmef(
+                x,
+                y,
+                5,
+                24,
+                rnd(15) + 20,
+                50,
+                evdata1(evnum - (evnum != 0) * 1));
+            mapitem_fire(x, y);
+            if (i % 4 == 0)
+            {
+                flt(100, calcfixlv(3));
+                if (rnd(4))
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
-                    {
-                        x = rnd(mdata(0));
-                        y = rnd(mdata(1));
-                        map(x, y, 0) = 37;
-                    }
+                    fltnrace = u8"dragon"s;
                 }
-                x = rnd(inf_screenw) + scx;
-                y = rnd(inf_screenh) + scy;
-                if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1)
-                    || rnd(5) == 0)
+                else
                 {
-                    x = rnd(mdata(0));
-                    y = rnd(mdata(1));
+                    fltnrace = u8"giant"s;
                 }
-                addmef(
-                    x,
-                    y,
-                    5,
-                    24,
-                    rnd(15) + 20,
-                    50,
-                    evdata1(evnum - (evnum != 0) * 1));
-                mapitem_fire(x, y);
-                if (cnt % 4 == 0)
+                int stat = characreate(-1, 0, x, y);
+                if (stat != 0)
                 {
-                    flt(100, calcfixlv(3));
-                    if (rnd(4))
-                    {
-                        fltnrace = u8"dragon"s;
-                    }
-                    else
-                    {
-                        fltnrace = u8"giant"s;
-                    }
-                    int stat = characreate(-1, 0, x, y);
-                    if (stat != 0)
-                    {
-                        cbitmod(964, rc, 1);
-                    }
+                    cbitmod(964, rc, 1);
                 }
-                if (cnt % 7 == 0)
+            }
+            if (i % 7 == 0)
+            {
+                update_screen();
+                if (rnd(7))
                 {
-                    update_screen();
-                    if (rnd(7))
-                    {
-                        snd(6);
-                    }
-                    else
-                    {
-                        snd(45);
-                    }
-                    await(25);
+                    snd(6);
                 }
+                else
+                {
+                    snd(45);
+                }
+                await(25);
             }
         }
         break;
