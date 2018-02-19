@@ -41770,11 +41770,11 @@ void window_recipe_(
                 {
                     break;
                 }
-                val(0) = inv[prm_1050].enchantments[cnt2_at_m184].id;
-                val(1) = inv[prm_1050].enchantments[cnt2_at_m184].power;
-                val(2) = 0;
-                val(3) = the_item_db[inv[prm_1050].id]->category;
-                get_enchantment_description();
+                get_enchantment_description(
+                    inv[prm_1050].enchantments[cnt2_at_m184].id,
+                    inv[prm_1050].enchantments[cnt2_at_m184].power,
+                    0,
+                    the_item_db[inv[prm_1050].id]->category);
                 color(0, 0, 100);
                 if (inv[prm_1050].enchantments[cnt2_at_m184].power < 0)
                 {
@@ -45107,11 +45107,11 @@ label_196901_internal:
                 {
                     break;
                 }
-                val(0) = inv[ci].enchantments[cnt].id;
-                val(1) = inv[ci].enchantments[cnt].power;
-                val(2) = 1;
-                val(3) = 0;
-                get_enchantment_description();
+                get_enchantment_description(
+                    inv[ci].enchantments[cnt].id,
+                    inv[ci].enchantments[cnt].power,
+                    1,
+                    0);
                 if (s == ""s)
                 {
                     continue;
@@ -45581,8 +45581,7 @@ void update_journal()
             set_quest_data();
         }
     }
-    val = 0;
-    append_subquest_journal();
+    append_subquest_journal(0);
     {
         int cnt = 0;
         for (int cnt_end = cnt + (pagesize / 2 - noteinfo(0) % (pagesize / 2));
@@ -45699,8 +45698,7 @@ void update_journal()
     }
     noteadd(u8" - Completed Quests - "s);
     noteadd(""s);
-    val = 1;
-    append_subquest_journal();
+    append_subquest_journal(1);
     listmax = noteinfo(0);
     redraw(0);
     showtitle(lang(u8"ジャーナル"s, u8"Journal"s), strhint2 + strhint3, 236, 1);
@@ -51943,11 +51941,11 @@ void show_item_description()
                 {
                     break;
                 }
-                val(0) = inv[ci].enchantments[cnt].id;
-                val(1) = inv[ci].enchantments[cnt].power;
-                val(2) = 0;
-                val(3) = reftype;
-                get_enchantment_description();
+                get_enchantment_description(
+                    inv[ci].enchantments[cnt].id,
+                    inv[ci].enchantments[cnt].power,
+                    0,
+                    reftype);
                 listn(0, p) = lang(u8"それは"s, u8"It "s) + s;
                 list(0, p) = rtval;
                 list(1, p) = rtval(1);
@@ -64530,10 +64528,8 @@ void do_use_command()
                         }
                         list(0, listmax) = rtval;
                         list(1, listmax) = rtval(1);
-                        val(0) = list(0, listmax);
-                        val(1) = list(1, listmax);
-                        val(2) = 0;
-                        get_enchantment_description();
+                        get_enchantment_description(
+                            list(0, listmax), list(1, listmax), 0, 0);
                         promptl(0, promptmax) = s;
                         promptl(1, promptmax) = u8"null"s;
                         promptl(2, promptmax) = ""s + promptmax;
