@@ -207,7 +207,6 @@ void initialize_elona()
     DIM2(invmark, 35);
     DIM2(commark, 3);
     DIM2(feat, 5);
-    DIM2(val, 10);
     SDIM3(valn, 50, 10);
     DIM3(dirchk, 3, 2);
 
@@ -976,8 +975,7 @@ label_1546_internal:
         del_chara(0);
         access_race_info(3, listn(1, page * pagesize + cs));
         access_race_info(11, listn(1, page * pagesize + cs));
-        val = 0;
-        show_race_or_class_info(cnt);
+        show_race_or_class_info(cnt, 0);
     }
     redraw(1);
     await(cfg_wait1);
@@ -1215,8 +1213,7 @@ label_1552_internal:
         del_chara(0);
         access_class_info(3, listn(1, cs));
         access_class_info(11, listn(1, cs));
-        val = 1;
-        show_race_or_class_info(cnt);
+        show_race_or_class_info(cnt, 1);
         redraw(1);
     }
     await(cfg_wait1);
@@ -1693,11 +1690,7 @@ label_1563_internal:
     promptl(1, promptmax) = u8"c"s;
     promptl(2, promptmax) = ""s + promptmax;
     ++promptmax;
-    val(0) = promptx;
-    val(1) = 240;
-    val(2) = 160;
-    val(3) = 1;
-    show_prompt();
+    show_prompt(promptx, 240, 160);
     snd(20);
     if (rtval == 1 || rtval == -1)
     {
@@ -1718,14 +1711,10 @@ label_1563_internal:
         u8"最後の質問だ。君の名前は？"s, u8"Last question. What's your name?"s);
     draw_caption();
 label_1565_internal:
-    val(0) = (windoww - 230) / 2 + inf_screenx;
-    val(1) = winposy(120);
-    val(2) = 10;
-    val(3) = 0;
-    val(4) = 0;
     inputlog = "";
     input_mode = 1;
-    show_number_of_text_prompt();
+    show_number_of_text_prompt(
+        (windoww - 230) / 2 + inf_screenx, winposy(120), 10, 0);
     cmname = ""s + inputlog;
     if (cmname == ""s || cmname == u8" "s)
     {
@@ -1773,9 +1762,9 @@ label_1565_internal:
 
 
 
-void show_race_or_class_info(int CNT)
+void show_race_or_class_info(int CNT, int val0)
 {
-    if (val == 1)
+    if (val0 == 1)
     {
         chara_preparepic(ref1, CNT);
         pos(wx + 380, wy - chipc(3, ref1) + 60);

@@ -458,8 +458,7 @@ void talk_npc()
         }
         if (qdata(8, rq) == 3)
         {
-            val = 3;
-            set_quest_data();
+            set_quest_data(3);
             complete_quest();
         }
         else if (qdata(14, rq) == 3 && qdata(8, rq) == 1)
@@ -1145,8 +1144,7 @@ void talk_npc()
         txt(lang(
             itemname(deliver(1), 1) + u8"を手渡した。"s,
             u8"You hand over "s + itemname(deliver(1), 1) + u8"."s));
-        val = 3;
-        set_quest_data();
+        set_quest_data(3);
         complete_quest();
         refresh_burden_state();
         talk_npc();
@@ -1166,8 +1164,7 @@ void talk_npc()
         txt(lang(
             itemname(supply, 1) + u8"を手渡した。"s,
             u8"You hand over "s + itemname(supply, 1) + u8"."s));
-        val = 3;
-        set_quest_data();
+        set_quest_data(3);
         complete_quest();
         refresh_burden_state();
         talk_npc();

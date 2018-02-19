@@ -117,11 +117,8 @@ int itemcreate(int prm_467, int prm_468, int prm_469, int prm_470, int prm_471)
     {
         initnum = 0;
     }
-    val(0) = prm_467;
-    val(1) = prm_469;
-    val(2) = prm_470;
     itemcreatehack = 0;
-    return do_create_item();
+    return do_create_item(prm_467, prm_469, prm_470);
 }
 
 

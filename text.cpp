@@ -4197,7 +4197,7 @@ void append_quest_item_journal()
 
 
 
-void parse_quest_board_text()
+void parse_quest_board_text(int val0)
 {
     elona_vector1<std::string> buff2;
     notesel(buffboard);
@@ -4214,13 +4214,13 @@ void parse_quest_board_text()
     noteget(buff2, p);
     p = instr(buff2, 0, u8":"s);
     s(3) = strmid(buff2, 0, p);
-    if (val == 2)
+    if (val0 == 2)
     {
         notesel(buff);
         return;
     }
     buff2 = strmid(buff2, p + 1, std::size(buff2(0)) - p - 1);
-    if (val != 2)
+    if (val0 != 2)
     {
         buff = buff2;
     }

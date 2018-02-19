@@ -333,8 +333,7 @@ void proc_event()
                 && qdata(13, i) == evdata1(evnum - (evnum != 0) * 1))
             {
                 rq = i;
-                val = qdata(3, rq);
-                failed_quest();
+                failed_quest(qdata(3, rq));
                 break;
             }
         }

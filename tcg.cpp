@@ -1896,11 +1896,7 @@ label_1812_internal:
             ++promptmax;
         }
     }
-    val(0) = basex_at_tcg + 400;
-    val(1) = basey_at_tcg + 230;
-    val(2) = 300;
-    val(3) = 1;
-    show_prompt();
+    show_prompt(basex_at_tcg + 400, basey_at_tcg + 230, 300);
     if (rtval != -1)
     {
         DIM2(deck, 1000);
@@ -1916,11 +1912,7 @@ label_1812_internal:
             promptl(1, promptmax) = u8"null"s;
             promptl(2, promptmax) = ""s + promptmax;
             ++promptmax;
-            val(0) = 400;
-            val(1) = basey_at_tcg + 230;
-            val(2) = 240;
-            val(3) = 1;
-            show_prompt();
+            show_prompt(400, basey_at_tcg + 230, 240);
             if (rtval == -1)
             {
                 goto label_1812_internal;
@@ -2894,11 +2886,7 @@ label_1830_internal:
             promptl(1, promptmax) = u8"null"s;
             promptl(2, promptmax) = ""s + promptmax;
             ++promptmax;
-            val(0) = basex_at_tcg + 420;
-            val(1) = basey_at_tcg + 230;
-            val(2) = 240;
-            val(3) = 1;
-            show_prompt();
+            show_prompt(basex_at_tcg + 420, basey_at_tcg + 230, 240);
             if (rtval == 0)
             {
                 ctrl_file(23, fs::u8path(u8"./tmp/deck_"s + curdeck + u8".s2"));
@@ -3219,11 +3207,7 @@ label_1837_internal:
         promptl(1, promptmax) = u8"null"s;
         promptl(2, promptmax) = ""s + promptmax;
         ++promptmax;
-        val(0) = basex_at_tcg + 420;
-        val(1) = basey_at_tcg + 230;
-        val(2) = 200;
-        val(3) = 1;
-        show_prompt();
+        show_prompt(basex_at_tcg + 420, basey_at_tcg + 230, 200);
         if (rtval == 0)
         {
             cpdata_at_tcg(4, 0) = 0;

@@ -9,7 +9,7 @@ namespace elona
 
 
 void update_screen();
-void show_race_or_class_info(int);
+void show_race_or_class_info(int, int);
 
 inline int prm_518;
 inline int prm_818;
