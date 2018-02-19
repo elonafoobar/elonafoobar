@@ -25937,7 +25937,6 @@ int do_create_item(int val0, int val1, int val2)
             dbid = 501;
         }
     }
-    itemcreatehack = dbid + 1;
     access_item_db(3);
     access_item_db(2);
     inv[ci].color = icolref(inv[ci].id);

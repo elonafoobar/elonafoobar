@@ -96,7 +96,6 @@ int skip_at_m63 = 0;
 
 int itemcreate(int prm_467, int prm_468, int prm_469, int prm_470, int prm_471)
 {
-    itemcreatehack = -1;
     if (flttypeminor != 0)
     {
         flttypemajor = 0;
@@ -117,7 +116,6 @@ int itemcreate(int prm_467, int prm_468, int prm_469, int prm_470, int prm_471)
     {
         initnum = 0;
     }
-    itemcreatehack = 0;
     return do_create_item(prm_467, prm_469, prm_470);
 }
 
