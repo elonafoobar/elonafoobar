@@ -1030,23 +1030,19 @@ void proc_event()
         }
         break;
     case 22:
-        if (evdata1(evnum - (evnum != 0) * 1) == 0)
+        if (evdata1(evnum - (evnum != 0) * 1) != 0)
+            break;
+        txtef(3);
+        txt(lang(
+            u8"けたたましい警報が鳴り響いた！"s,
+            u8"*beeeeeep!* An alarm sounds loudly!"s));
+        for (int cc = 57; cc < 245; ++cc)
         {
-            txtef(3);
-            txt(lang(
-                u8"けたたましい警報が鳴り響いた！"s,
-                u8"*beeeeeep!* An alarm sounds loudly!"s));
+            if (cdata[cc].state == 1)
             {
-                int cnt = 57;
-                for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
-                {
-                    if (cdata[cnt].state == 1)
-                    {
-                        cdata[cnt].relationship = -3;
-                        cdata[cnt].enemy_id = 0;
-                        cdata[cnt].hate = 250;
-                    }
-                }
+                cdata[cc].relationship = -3;
+                cdata[cc].enemy_id = 0;
+                cdata[cc].hate = 250;
             }
         }
         break;
