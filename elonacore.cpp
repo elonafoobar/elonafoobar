@@ -11823,16 +11823,17 @@ int characreate(int prm_756, int prm_757, int prm_758, int prm_759)
 
 
 
-int relationbetween(int prm_760, int)
+int relationbetween(int c1, int c2)
 {
-    if (cdata[prm_760].relationship >= -2)
+    (void)c2;
+    if (cdata[c1].relationship >= -2)
     {
-        if (cdata[prm_760].relationship <= -3)
+        if (cdata[c1].relationship <= -3)
         {
             return -3;
         }
     }
-    else if (cdata[prm_760].relationship >= -2)
+    else if (cdata[c1].relationship >= -2)
     {
         return -3;
     }

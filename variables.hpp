@@ -814,7 +814,7 @@ int randomenc(int = 0);
 int randomenclv(int = 0);
 int randomencp(int = 0);
 int randskill();
-int relationbetween(int = 0, int = 0);
+int relationbetween(int, int);
 int relocate_chara(int = 0, int = 0, int = 0);
 int roll(int, int, int);
 int roll_max(int, int, int);
