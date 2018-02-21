@@ -19840,13 +19840,13 @@ void label_1446()
 
 
 
-int carmor(int prm_890)
+int carmor(int cc)
 {
-    if (cdata[prm_890].sum_of_equipment_weight >= 35000)
+    if (cdata[cc].sum_of_equipment_weight >= 35000)
     {
         return 169;
     }
-    else if (cdata[prm_890].sum_of_equipment_weight >= 15000)
+    else if (cdata[cc].sum_of_equipment_weight >= 15000)
     {
         return 170;
     }
@@ -19858,13 +19858,14 @@ int carmor(int prm_890)
 
 
 
-std::string cnveqweight(int prm_891)
+std::string cnveqweight(int cc)
 {
-    if (cdata[prm_891].sum_of_equipment_weight >= 35000)
+    int id = carmor(cc);
+    if (id == 169)
     {
         return lang(u8"(重装備)"s, u8"(Heavy)"s);
     }
-    else if (cdata[prm_891].sum_of_equipment_weight >= 15000)
+    else if (id == 170)
     {
         return lang(u8"(中装備)"s, u8"(Medium)"s);
     }
