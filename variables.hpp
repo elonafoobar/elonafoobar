@@ -667,7 +667,7 @@ int dist_town();
 int dmgcon(int = 0, int = 0, int = 0);
 int dmghp(int = 0, int = 0, int = 0, int = 0, int = 0);
 void dmgmp(int, int);
-int dmgsan(int = 0, int = 0);
+void damage_insanity(int, int);
 void dmgsp(int, int);
 int efstatusfix(int = 0, int = 0, int = 0, int = 0);
 int eleinfo(int = 0, int = 0);

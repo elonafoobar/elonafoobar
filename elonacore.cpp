@@ -16960,45 +16960,30 @@ void healsan(int prm_862, int prm_863)
 
 
 
-int dmgsan(int prm_864, int prm_865)
+void damage_insanity(int cc, int delta)
 {
-    int r_at_m143 = 0;
-    int dmg_at_m143 = 0;
-    if (cdata[prm_864].quality >= 4)
-    {
-        return 0;
-    }
-    r_at_m143 = sdata(54, prm_864) / 50;
-    if (r_at_m143 <= 0)
-    {
-        r_at_m143 = 1;
-    }
-    if (r_at_m143 > 10)
-    {
-        return 0;
-    }
-    dmg_at_m143 = prm_865 / r_at_m143;
-    if (prm_864 < 16)
+    if (cdata[cc].quality >= 4)
+        return;
+
+    int resistance = std::max(sdata(54, cc) / 50, 1);
+    if (resistance > 10)
+        return;
+
+    delta /= resistance;
+    if (cc < 16)
     {
         if (trait(166))
         {
-            dmg_at_m143 = dmg_at_m143 - rnd(4);
+            delta -= rnd(4);
         }
     }
-    if (dmg_at_m143 > 0)
+    delta = std::max(delta, 0);
+    cdata[cc].insanity += delta;
+    if (rnd(10) == 0 || rnd(delta + 1) > 5
+        || rnd(cdata[cc].insanity + 1) > 50)
     {
-        cdata[prm_864].insanity += dmg_at_m143;
+        dmgcon(cc, 11, 100);
     }
-    else
-    {
-        dmg_at_m143 = 0;
-    }
-    if (rnd(10) == 0 || rnd(dmg_at_m143 + 1) > 5
-        || rnd(cdata[prm_864].insanity + 1) > 50)
-    {
-        dmgcon(prm_864, 11, 100);
-    }
-    return 1;
 }
 
 
@@ -26249,7 +26234,7 @@ void apply_general_eating_effect()
                         u8"これは人肉だ…うぇぇ！"s,
                         u8"Eeeek! It's human flesh!"s));
                     txtmore();
-                    dmgsan(cc, 15);
+                    damage_insanity(cc, 15);
                     dmgcon(cc, 11, 150);
                     if (trait(41) == 0)
                     {
@@ -26610,7 +26595,7 @@ void eating_effect_insanity()
             u8"気が変になりそうな味だ。"s,
             u8"It tastes really, really strange."s));
     }
-    dmgsan(cc, 25);
+    damage_insanity(cc, 25);
     dmgcon(cc, 11, 500);
     return;
 }
@@ -26703,7 +26688,7 @@ void eating_effect_insanity2()
             name(cc) + u8"の胃は狂気で満たされた。"s, u8"Sheer madness!"s));
     }
     resistmod(cc, 54, 50);
-    dmgsan(cc, 200);
+    damage_insanity(cc, 200);
     dmgcon(cc, 11, 1000);
     return;
 }
@@ -26850,7 +26835,7 @@ void eating_effect_insanity4()
         txt(lang(
             name(cc) + u8"の胃は狂気で満たされた。"s, u8"Sheer madness!"s));
     }
-    dmgsan(cc, 50);
+    damage_insanity(cc, 50);
     if (rnd(5) == 0)
     {
         resistmod(cc, 54, 50);
