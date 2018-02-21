@@ -1651,27 +1651,26 @@ int roundmargin(int x, int y)
 
 
 
-void at(int prm_347)
+void auto_turn(int delay)
 {
-    if (cc == 0)
+    if (cc != 0)
+        return;
+
+    autoturn = 1;
+    if (cfg_autoturn == 0)
     {
-        autoturn = 1;
-        if (cfg_autoturn == 0)
-        {
-            await(prm_347);
-            ++scrturn;
-        }
-        if (cfg_autoturn != 2 || firstautoturn == 1)
-        {
-            screenupdate = -1;
-            update_screen();
-        }
-        if (cfg_autoturn == 0)
-        {
-            redraw(1);
-        }
+        await(delay);
+        ++scrturn;
     }
-    return;
+    if (cfg_autoturn != 2 || firstautoturn == 1)
+    {
+        screenupdate = -1;
+        update_screen();
+    }
+    if (cfg_autoturn == 0)
+    {
+        redraw(1);
+    }
 }
 
 
@@ -73645,74 +73644,74 @@ void pass_one_turn(bool label_2738_flg)
         --cdata[cc].continuous_action_turn;
         if (cdata[cc].continuous_action_id == 7)
         {
-            at(40);
+            auto_turn(40);
             label_2156();
         }
         if (cdata[cc].continuous_action_id == 5)
         {
-            at(15);
+            auto_turn(15);
             label_2159();
         }
         if (cdata[cc].continuous_action_id == 8)
         {
-            at(15);
+            auto_turn(15);
             label_2157();
         }
         if (cdata[cc].continuous_action_id == 9)
         {
-            at(15);
+            auto_turn(15);
             label_2158();
         }
         if (cdata[cc].continuous_action_id == 4)
         {
-            at(5);
+            auto_turn(5);
             label_2152();
         }
         if (cdata[cc].continuous_action_id == 1)
         {
-            at(100);
+            auto_turn(100);
             do_eat_command();
             return;
         }
         if (cdata[cc].continuous_action_id == 2)
         {
-            at(25);
+            auto_turn(25);
             do_read_commad();
             return;
         }
         if (cdata[cc].continuous_action_id == 11)
         {
-            at(50);
+            auto_turn(50);
             label_2147();
         }
         if (cdata[cc].continuous_action_id == 10)
         {
             if (gdata(91) == 103)
             {
-                at(40);
+                auto_turn(40);
             }
             else if (gdata(91) == 104)
             {
-                at(40);
+                auto_turn(40);
             }
             else if (gdata(91) == 105)
             {
-                at(50);
+                auto_turn(50);
             }
             else
             {
-                at(20);
+                auto_turn(20);
             }
             continuous_action_others();
         }
         if (cdata[cc].continuous_action_id == 12)
         {
-            at(20);
+            auto_turn(20);
             label_19342();
         }
         if (cdata[cc].continuous_action_id == 6)
         {
-            at(40);
+            auto_turn(40);
             label_2146();
         }
         if (cdata[cc].continuous_action_id == 3)

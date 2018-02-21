@@ -921,7 +921,7 @@ void anime_halt();
 void animeblood(int = 0, int = 0, int = 0);
 void animeload(int = 0, int = 0);
 void arrayfile(bool, std::string_view, const fs::path&);
-void at(int = 0);
+void auto_turn(int = 0);
 void atxinit();
 void begintempinv();
 void bmes(const std::string&, int = 0, int = 0, int = 0);
