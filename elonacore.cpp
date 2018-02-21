@@ -12884,10 +12884,9 @@ void cell_setchara(int cc, int x, int y)
 
 
 
-void cell_removechara(int prm_794, int prm_795)
+void cell_removechara(int x, int y)
 {
-    map(prm_794, prm_795, 1) = 0;
-    return;
+    map(x, y, 1) = 0;
 }
 
 
