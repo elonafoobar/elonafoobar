@@ -3135,72 +3135,66 @@ void addnewstopic(const std::string& prm_403, const std::string& prm_404)
 
 
 
-void addnews(int prm_405, int prm_406, int val0)
+void addnews(int news_type, int adventurer, int fame)
 {
-    if (prm_405 == 0)
+    switch (news_type)
     {
+    case 0:
         addnews2(valn);
-        newsbuff += u8"\n"s;
-        return;
-    }
-    if (prm_405 == 1)
-    {
+        break;
+    case 1:
         addnewstopic(u8"@01"s, lang(u8"アイテム発見"s, u8"Discovery"s));
         addnews2(
             lang(
-                cdatan(1, prm_406) + u8"は"s
-                    + mapname(cdata[prm_406].current_map) + u8"にて"s + valn
+                cdatan(1, adventurer) + u8"は"s
+                    + mapname(cdata[adventurer].current_map) + u8"にて"s + valn
                     + u8"を入手した。"s,
-                cdatan(1, prm_406) + u8" has discovered "s + valn + u8" in "s
-                    + mapname(cdata[prm_406].current_map) + u8"."s),
+                cdatan(1, adventurer) + u8" has discovered "s + valn + u8" in "s
+                    + mapname(cdata[adventurer].current_map) + u8"."s),
             1);
-    }
-    if (prm_405 == 2)
-    {
+        break;
+    case 2:
         addnewstopic(u8"@02"s, lang(u8"新たなる力"s, u8"Growth"s));
         addnews2(
             lang(
-                cdatan(1, prm_406) + u8"は経験をつみ、レベル"s
-                    + cdata[prm_406].level + u8"になった。"s,
-                cdatan(1, prm_406)
+                cdatan(1, adventurer) + u8"は経験をつみ、レベル"s
+                    + cdata[adventurer].level + u8"になった。"s,
+                cdatan(1, adventurer)
                     + u8" has gained experience and achieved level "s
-                    + cdata[prm_406].level + u8"."s),
+                    + cdata[adventurer].level + u8"."s),
             1);
-    }
-    if (prm_405 == 3)
-    {
+        break;
+    case 3:
         addnewstopic(
             u8"@02"s, lang(u8"怪我からの復帰"s, u8"Recovery from injury"s));
         addnews2(
             lang(
-                cdatan(1, prm_406) + u8"は怪我から回復した。"s,
-                cdatan(1, prm_406) + u8" has fully recovered from injury."s),
+                cdatan(1, adventurer) + u8"は怪我から回復した。"s,
+                cdatan(1, adventurer) + u8" has fully recovered from injury."s),
             1);
-    }
-    if (prm_405 == 4)
-    {
+        break;
+    case 4:
         addnewstopic(u8"@03"s, lang(u8"クエストの達成"s, u8"Accomplishment"s));
         addnews2(
             lang(
-                cdatan(1, prm_406) + u8"はクエストを達成し、"s + val0
+                cdatan(1, adventurer) + u8"はクエストを達成し、"s + fame
                     + u8"の名声を手にした。"s,
-                cdatan(1, prm_406) + u8" has finished a quest and gained "s
-                    + val0 + u8" fame."s),
+                cdatan(1, adventurer) + u8" has finished a quest and gained "s
+                    + fame + u8" fame."s),
             1);
-    }
-    if (prm_405 == 5)
-    {
+        break;
+    case 5:
         addnewstopic(u8"@04"s, lang(u8"引退"s, u8"Retirement"s));
         addnews2(
             lang(
-                cdatan(1, prm_406)
+                cdatan(1, adventurer)
                     + u8"は自分の力の限界を悟り、ノースティリスから去っていった。"s,
-                cdatan(1, prm_406)
+                cdatan(1, adventurer)
                     + u8" realizes the limitations and leaves North Tyris."s),
             1);
+        break;
     }
     newsbuff += u8"\n"s;
-    return;
 }
 
 
