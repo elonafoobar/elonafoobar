@@ -55407,7 +55407,7 @@ int label_2143()
     {
         return 0;
     }
-    if (feat(1) >= 24 && feat(1) <= 28)
+    if (feat(1) < 24 || 28 < feat(1))
     {
         return 0;
     }
