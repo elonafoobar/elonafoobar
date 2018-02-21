@@ -13696,26 +13696,25 @@ void modcorrupt(int prm_815)
 
 
 
-void wet(int prm_816, int prm_817)
+void wet(int cc, int turns)
 {
-    cdata[prm_816].wet += prm_817;
-    if (is_in_fov(prm_816))
+    cdata[cc].wet += turns;
+    if (is_in_fov(cc))
     {
         txtmore();
         txt(lang(
-            name(prm_816) + u8"は濡れた。"s,
-            name(prm_816) + u8" get"s + _s(prm_816) + u8" wet."s));
-        if (cbit(6, prm_816) == 1)
+            name(cc) + u8"は濡れた。"s,
+            name(cc) + u8" get"s + _s(cc) + u8" wet."s));
+        if (cbit(6, cc))
         {
             txtmore();
             txt(lang(
-                name(prm_816) + u8"の姿があらわになった。"s,
-                name(prm_816) + u8" "s + is(prm_816) + u8" revealed "s
-                    + his(prm_816) + u8" shape."s));
+                name(cc) + u8"の姿があらわになった。"s,
+                name(cc) + u8" "s + is(cc) + u8" revealed "s
+                    + his(cc) + u8" shape."s));
             txtmore();
         }
     }
-    return;
 }
 
 
