@@ -1217,8 +1217,7 @@ label_2061_internal:
                 }
                 if (invctrl(1) == 5)
                 {
-                    int stat = actionsp(0, 10);
-                    if (stat == 0)
+                    if (!actionsp(0, 10))
                     {
                         txt(lang(
                             u8"疲労し過ぎて失敗した！"s,
@@ -1241,8 +1240,7 @@ label_2061_internal:
                 }
                 if (invctrl(1) == 5)
                 {
-                    int stat = actionsp(0, 10);
-                    if (stat == 0)
+                    if (!actionsp(0, 10))
                     {
                         txt(lang(
                             u8"疲労し過ぎて失敗した！"s,

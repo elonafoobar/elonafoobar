@@ -16988,22 +16988,18 @@ void damage_insanity(int cc, int delta)
 
 
 
-int actionsp(int prm_866, int prm_867)
+bool actionsp(int cc, int sp)
 {
-    if (prm_866 != 0)
+    if (cc != 0 || debug::voldemort)
+        return true;
+
+    if (cdata[cc].sp < 50 && cdata[cc].sp < rnd(75))
     {
-        return 1;
+        dmgsp(cc, sp);
+        return false;
     }
-    if (cdata[prm_866].sp < 50)
-    {
-        if (cdata[prm_866].sp < rnd(75))
-        {
-            dmgsp(prm_866, prm_867);
-            return 0;
-        }
-    }
-    dmgsp(prm_866, prm_867);
-    return 1;
+    dmgsp(cc, sp);
+    return true;
 }
 
 
@@ -49257,8 +49253,7 @@ void do_get_command()
             snd(83);
             txt(lang(
                 u8"雪をかきあつめた。"s, u8"You rake up a handful of snow."s));
-            int stat = actionsp(0, 10);
-            if (stat == 0)
+            if (!actionsp(0, 10))
             {
                 txt(lang(
                     u8"疲労し過ぎて失敗した！"s, u8"You are too exhausted!"s));
@@ -53963,8 +53958,7 @@ void label_2147()
     }
     if (cc == 0)
     {
-        int stat = actionsp(0, 1 + rnd(2));
-        if (stat == 0)
+        if (!actionsp(0, 1 + rnd(2)))
         {
             txt(lang(u8"疲労し過ぎて失敗した！"s, u8"You are too exhausted!"s));
             rowactend(cc);
@@ -59364,10 +59358,10 @@ void label_2207(int val0)
     }
     if (movelevelbystairs == 1)
     {
-        int stat = actionsp(0, 15);
-        if (stat == 0 || cdata[0].inventory_weight_type >= 3)
+        bool ok = actionsp(0, 15);
+        if (!ok || cdata[0].inventory_weight_type >= 3)
         {
-            if (stat == 0 || rnd(5 - cdata[0].inventory_weight_type) == 0)
+            if (!ok || rnd(5 - cdata[0].inventory_weight_type) == 0)
             {
                 txt(lang(
                     u8"うわああ！"s + name(0) + u8"は階段から足を踏み外した。"s,

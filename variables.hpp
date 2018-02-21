@@ -624,7 +624,7 @@ inline std::string stryes;
 inline std::string txtcopy;
 inline std::string userfile;
 inline std::string usermsg;
-int actionsp(int = 0, int = 0);
+bool actionsp(int, int);
 int addbuff(int = 0, int = 0, int = 0, int = 0);
 int advfavoriteskill(int = 0);
 int advfavoritestat(int = 0);
