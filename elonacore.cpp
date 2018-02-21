@@ -12395,16 +12395,15 @@ void chara_vanquish(int cc)
 
 
 
-void turn_aggro(int prm_774, int prm_775, int prm_776)
+void turn_aggro(int cc, int tc, int hate)
 {
-    if (prm_775 < 16)
+    if (tc < 16)
     {
-        cdata[prm_774].relationship = -3;
+        cdata[cc].relationship = -3;
     }
-    cdata[prm_774].hate = prm_776;
-    cdata[prm_774].emotion_icon = 218;
-    cdata[prm_774].enemy_id = prm_775;
-    return;
+    cdata[cc].hate = hate;
+    cdata[cc].emotion_icon = 218;
+    cdata[cc].enemy_id = tc;
 }
 
 
