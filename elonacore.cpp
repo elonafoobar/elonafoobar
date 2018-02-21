@@ -12018,52 +12018,47 @@ int implevel(int impression)
 
 
 
-void modimp(int prm_769, int prm_770)
+void modimp(int cc, int delta)
 {
-    elona_vector1<int> p_at_m118;
-    int i_at_m118 = 0;
-    p_at_m118 = implevel(cdata[prm_769].impression);
-    if (prm_770 < 0)
+    int level1 = implevel(cdata[cc].impression);
+    if (delta < 0)
     {
-        i_at_m118 = prm_770;
+        delta = delta;
     }
     else
     {
-        i_at_m118 = prm_770 * 100 / (50 + p_at_m118 * p_at_m118 * p_at_m118);
-        if (i_at_m118 == 0)
+        delta = delta * 100 / (50 + level1 * level1 * level1);
+        if (delta == 0)
         {
-            if (p_at_m118 < rnd(10))
+            if (level1 < rnd(10))
             {
-                i_at_m118 = 1;
+                delta = 1;
             }
         }
     }
-    cdata[prm_769].impression += i_at_m118;
-    p_at_m118(1) = implevel(cdata[prm_769].impression);
-    if (p_at_m118 > p_at_m118(1))
+    cdata[cc].impression += delta;
+    int level2 = implevel(cdata[cc].impression);
+    if (level1 > level2)
     {
         txtef(8);
         txt(lang(
-            cdatan(0, prm_769) + u8"との関係が<"s + _impression(p_at_m118(1))
+            cdatan(0, cc) + u8"との関係が<"s + _impression(level2)
                 + u8">になった…"s,
-            u8"Your relation with "s + cdatan(0, prm_769) + u8" becomes <"s
-                + _impression(p_at_m118(1)) + u8">..."s));
-        return;
+            u8"Your relation with "s + cdatan(0, cc) + u8" becomes <"s
+                + _impression(level2) + u8">..."s));
     }
-    if (p_at_m118(1) > p_at_m118)
+    else if (level2 > level1)
     {
-        if (cdata[prm_769].relationship != -3)
+        if (cdata[cc].relationship != -3)
         {
             txtef(2);
             txt(lang(
-                cdatan(0, prm_769) + u8"との関係が<"s
-                    + _impression(p_at_m118(1)) + u8">になった！"s,
-                u8"Your relation with "s + cdatan(0, prm_769) + u8" becomes <"s
-                    + _impression(p_at_m118(1)) + u8">!"s));
+                cdatan(0, cc) + u8"との関係が<"s
+                    + _impression(level2) + u8">になった！"s,
+                u8"Your relation with "s + cdatan(0, cc) + u8" becomes <"s
+                    + _impression(level2) + u8">!"s));
         }
-        return;
     }
-    return;
 }
 
 
