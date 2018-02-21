@@ -1531,6 +1531,22 @@ void map(F f)
 
 } // namespace gf_detail
 
+
+
+void set_color_mod(int r, int g, int b)
+{
+    r = std::clamp(r, 0, 255);
+    g = std::clamp(g, 0, 255);
+    b = std::clamp(b, 0, 255);
+    snail::detail::enforce_sdl(::SDL_SetTextureColorMod(
+        detail::current_tex_buffer().texture,
+        uint8_t(r),
+        uint8_t(g),
+        uint8_t(b)));
+}
+
+
+
 void gfini(int width, int height)
 {
     (void)width;

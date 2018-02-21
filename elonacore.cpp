@@ -9043,12 +9043,17 @@ void chara_preparepic(int prm_618, int prm_619)
     gsel(5);
     boxf(0, 960, chipc(2, prm_618), chipc(3, prm_618) + 960);
     pos(0, 960);
+    set_color_mod(
+        255 - c_col(0, p_at_m83),
+        255 - c_col(1, p_at_m83),
+        255 - c_col(2, p_at_m83));
     gcopy(
         5,
         chipc(0, prm_618),
         chipc(1, prm_618),
         chipc(2, prm_618),
         chipc(3, prm_618));
+    set_color_mod(255, 255, 255);
     gfini(chipc(2, prm_618), chipc(3, prm_618));
     gfdec2(c_col(0, p_at_m83), c_col(1, p_at_m83), c_col(2, p_at_m83));
     gsel(0);

@@ -64,7 +64,12 @@ void prepare_item_image(int id, int color_or_character_id)
     {
         const auto color = color_or_character_id;
         pos(0, 960);
+        set_color_mod(
+            255 - c_col(0, color),
+            255 - c_col(1, color),
+            255 - c_col(2, color));
         gcopy(1, x, y, w, h);
+        set_color_mod(255, 255, 255);
         gfini(w, h);
         gfdec2(c_col(0, color), c_col(1, color), c_col(2, color));
         gsel(0);
