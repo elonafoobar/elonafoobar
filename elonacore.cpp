@@ -12337,32 +12337,31 @@ void refreshspeed(int cc)
 
 
 
-void ride_begin(int prm_772)
+void ride_begin(int mount)
 {
     txt(lang(
-        name(prm_772) + u8"に騎乗した("s + name(prm_772) + u8"の速度: "s
-            + cdata[prm_772].current_speed + u8"→"s,
-        u8"You ride "s + name(prm_772) + u8". ("s + name(prm_772)
-            + u8"'s speed: "s + cdata[prm_772].current_speed + u8"->"s));
-    cbitmod(975, prm_772, 1);
-    map(cdata[prm_772].position.x, cdata[prm_772].position.y, 1) = 0;
-    gdata_mount = prm_772;
+        name(mount) + u8"に騎乗した("s + name(mount) + u8"の速度: "s
+            + cdata[mount].current_speed + u8"→"s,
+        u8"You ride "s + name(mount) + u8". ("s + name(mount)
+            + u8"'s speed: "s + cdata[mount].current_speed + u8"->"s));
+    cbitmod(975, mount, 1);
+    map(cdata[mount].position.x, cdata[mount].position.y, 1) = 0;
+    gdata_mount = mount;
     create_pcpic(0, true);
     rowactend(gdata_mount);
     refreshspeed(gdata_mount);
-    txt(""s + cdata[prm_772].current_speed + u8") "s);
+    txt(""s + cdata[mount].current_speed + u8") "s);
     if (cbit(22, gdata_mount))
     {
         txt(lang(
             u8"この生物は乗馬用にちょうどいい！"s, u8"You feel comfortable."s));
     }
-    if (cbit(25, gdata_mount))
+    else if (cbit(25, gdata_mount))
     {
         txt(lang(
             u8"この生物はあなたを乗せるには非力すぎる。"s,
             u8"This creature is too weak to carry you."s));
     }
-    return;
 }
 
 
