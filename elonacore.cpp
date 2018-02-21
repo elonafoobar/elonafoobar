@@ -17082,30 +17082,29 @@ void modweight(int cc, int delta, bool force)
 
 
 
-void modheight(int prm_873, int prm_874)
+void modheight(int cc, int delta)
 {
-    cdata[prm_873].height = cdata[prm_873].height * (100 + prm_874) / 100
-        + (prm_874 > 0) - (prm_874 < 0);
-    if (cdata[prm_873].height <= 1)
+    cdata[cc].height = cdata[cc].height * (100 + delta) / 100
+        + (delta > 0) - (delta < 0);
+    if (cdata[cc].height <= 1)
     {
-        cdata[prm_873].height = 1;
+        cdata[cc].height = 1;
     }
-    if (is_in_fov(prm_873))
+    if (is_in_fov(cc))
     {
-        if (prm_874 > 0)
+        if (delta > 0)
         {
             txt(lang(
-                name(prm_873) + u8"の身長は少し伸びた。"s,
-                name(prm_873) + u8" grow"s + _s(prm_873) + u8" taller."s));
+                name(cc) + u8"の身長は少し伸びた。"s,
+                name(cc) + u8" grow"s + _s(cc) + u8" taller."s));
         }
-        if (prm_874 < 0)
+        if (delta < 0)
         {
             txt(lang(
-                name(prm_873) + u8"の身長は少し縮んだ。"s,
-                name(prm_873) + u8" grow"s + _s(prm_873) + u8" smaller."s));
+                name(cc) + u8"の身長は少し縮んだ。"s,
+                name(cc) + u8" grow"s + _s(cc) + u8" smaller."s));
         }
     }
-    return;
 }
 
 
