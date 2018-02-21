@@ -986,12 +986,17 @@ void cell_draw()
                         gsel(5);
                         boxf(0, 960, chipc(2, p_), chipc(3, p_) + 960);
                         pos(0, 960);
+                        set_color_mod(
+                            255 - c_col(0, col_),
+                            255 - c_col(1, col_),
+                            255 - c_col(2, col_));
                         gcopy(
                             5,
                             chipc(0, p_),
                             chipc(1, p_),
                             chipc(2, p_),
                             chipc(3, p_));
+                        set_color_mod(255, 255, 255);
                         gfini(chipc(2, p_), chipc(3, p_));
                         gfdec2(c_col(0, col_), c_col(1, col_), c_col(2, col_));
                         gsel(0);
