@@ -8557,27 +8557,22 @@ void cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
 
 
 
-void cell_movechara(int prm_609, int prm_610, int prm_611)
+void cell_movechara(int cc, int x, int y)
 {
-    int rc_at_m81 = 0;
-    if (map(prm_610, prm_611, 1) != 0)
+    if (map(x, y, 1) != 0)
     {
-        rc_at_m81 = map(prm_610, prm_611, 1) - 1;
-        if (rc_at_m81 == prm_609)
+        if (map(x, y, 1) - 1 == cc)
         {
             return;
         }
-        cell_swap(prm_609, tc_at_m81);
+        cell_swap(cc, tc_at_m81);
     }
     else
     {
-        map(cdata[prm_609].position.x, cdata[prm_609].position.y, 1) = 0;
-        cdata[prm_609].position.x = prm_610;
-        cdata[prm_609].position.y = prm_611;
-        map(cdata[prm_609].position.x, cdata[prm_609].position.y, 1) =
-            prm_609 + 1;
+        map(cdata[cc].position.x, cdata[cc].position.y, 1) = 0;
+        cdata[cc].position = {x, y};
+        map(x, y, 1) = cc + 1;
     }
-    return;
 }
 
 
