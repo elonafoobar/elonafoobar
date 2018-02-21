@@ -668,7 +668,7 @@ int dmgcon(int = 0, int = 0, int = 0);
 int dmghp(int = 0, int = 0, int = 0, int = 0, int = 0);
 void dmgmp(int, int);
 int dmgsan(int = 0, int = 0);
-int dmgsp(int = 0, int = 0);
+void dmgsp(int, int);
 int efstatusfix(int = 0, int = 0, int = 0, int = 0);
 int eleinfo(int = 0, int = 0);
 int encadd(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);

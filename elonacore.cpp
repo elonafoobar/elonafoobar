@@ -16935,17 +16935,15 @@ void dmgmp(int cc, int delta)
 
 
 
-int dmgsp(int prm_860, int prm_861)
+void dmgsp(int cc, int delta)
 {
-    if (prm_860 != 0)
+    if (cc != 0 || debug::voldemort)
+        return;
+
+    if (cdata[cc].sp >= -100)
     {
-        return 0;
+        cdata[cc].sp -= delta;
     }
-    if (cdata[prm_860].sp >= -100)
-    {
-        cdata[prm_860].sp -= prm_861;
-    }
-    return 1;
 }
 
 
