@@ -1639,17 +1639,14 @@ void play_music()
 
 
 
-int roundmargin(int prm_345, int prm_346)
+int roundmargin(int x, int y)
 {
-    if (prm_345 > prm_346)
-    {
-        return prm_345 - rnd((prm_345 - prm_346));
-    }
-    if (prm_345 < prm_346)
-    {
-        return prm_345 + rnd((prm_346 - prm_345));
-    }
-    return prm_345;
+    if (x > y)
+        return x - rnd(x - y);
+    else if (x < y)
+        return x + rnd(y - x);
+    else
+        return x;
 }
 
 
