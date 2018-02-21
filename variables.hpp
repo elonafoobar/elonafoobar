@@ -666,7 +666,7 @@ int dist(int = 0, int = 0, int = 0, int = 0);
 int dist_town();
 int dmgcon(int = 0, int = 0, int = 0);
 int dmghp(int = 0, int = 0, int = 0, int = 0, int = 0);
-int dmgmp(int = 0, int = 0);
+void dmgmp(int, int);
 int dmgsan(int = 0, int = 0);
 int dmgsp(int = 0, int = 0);
 int efstatusfix(int = 0, int = 0, int = 0, int = 0);

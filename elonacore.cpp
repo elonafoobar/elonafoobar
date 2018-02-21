@@ -16901,40 +16901,36 @@ void end_dmghp()
 
 
 
-int dmgmp(int prm_858, int prm_859)
+void dmgmp(int cc, int delta)
 {
-    int d_at_m142 = 0;
-    cdata[prm_858].mp -= prm_859;
-    if (cdata[prm_858].mp < -999999)
+    cdata[cc].mp -= delta;
+    if (cdata[cc].mp < -999999)
     {
-        cdata[prm_858].mp = -999999;
+        cdata[cc].mp = -999999;
     }
-    if (cdata[prm_858].mp < 0)
+    if (cdata[cc].mp < 0)
     {
-        r1 = prm_858;
+        r1 = cc;
         gain_skill_experience_mana_capacity();
-        d_at_m142 = -cdata[prm_858].mp * 400 / (100 + sdata(164, prm_858) * 10);
-        if (prm_858 == 0)
+        int damage = -cdata[cc].mp * 400 / (100 + sdata(164, cc) * 10);
+        if (cc == 0)
         {
             if (trait(156) == 1)
             {
-                d_at_m142 = d_at_m142 / 2;
+                damage /= 2;
             }
         }
         else
         {
-            d_at_m142 = d_at_m142 / 5;
-            if (d_at_m142 < 10)
-            {
-                return 1;
-            }
+            damage /= 5;
+            if (damage < 10)
+                return;
         }
         txt(lang(
-            u8"マナの反動が"s + name(prm_858) + u8"の精神を蝕んだ！"s,
-            u8"Magic reaction hurts "s + name(prm_858) + u8"!"s));
-        dmghp(prm_858, d_at_m142, -2);
+            u8"マナの反動が"s + name(cc) + u8"の精神を蝕んだ！"s,
+            u8"Magic reaction hurts "s + name(cc) + u8"!"s));
+        dmghp(cc, damage, -2);
     }
-    return 1;
 }
 
 
