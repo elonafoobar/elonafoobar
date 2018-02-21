@@ -14162,14 +14162,13 @@ void label_1346()
 
 
 
-void healhp(int prm_821, int prm_822)
+void healhp(int cc, int delta)
 {
-    cdata[prm_821].hp += prm_822;
-    if (cdata[prm_821].hp > cdata[prm_821].max_hp)
+    cdata[cc].hp += delta;
+    if (cdata[cc].hp > cdata[cc].max_hp)
     {
-        cdata[prm_821].hp = cdata[prm_821].max_hp;
+        cdata[cc].hp = cdata[cc].max_hp;
     }
-    return;
 }
 
 
