@@ -19877,26 +19877,25 @@ std::string cnveqweight(int cc)
 
 
 
-void refresh_speed_correction_value()
+void refresh_speed_correction_value(int cc)
 {
-    cdata[r1].speed_correction_value = 0;
+    int number_of_body_parts = 0;
     for (int i = 0; i < 30; ++i)
     {
-        if (cdata_body_part(r1, i) != 0)
+        if (cdata_body_part(cc, i) != 0)
         {
-            ++cdata[r1].speed_correction_value;
+            ++number_of_body_parts;
         }
     }
-    if (cdata[r1].speed_correction_value > 13)
+    if (number_of_body_parts > 13)
     {
-        cdata[r1].speed_correction_value =
-            (cdata[r1].speed_correction_value - 13) * 5;
+        cdata[cc].speed_correction_value =
+            (number_of_body_parts - 13) * 5;
     }
     else
     {
-        cdata[r1].speed_correction_value = 0;
+        cdata[cc].speed_correction_value = 0;
     }
-    return;
 }
 
 
@@ -20047,7 +20046,7 @@ void gain_new_body_part()
         }
         break;
     }
-    refresh_speed_correction_value();
+    refresh_speed_correction_value(r1);
     return;
 }
 
@@ -62835,7 +62834,7 @@ void do_use_command()
                         + u8"を得た！"s,
                     cdatan(0, rc) + u8" gains new "s + bodyn(rtval) + u8"!"s));
                 r1 = rc;
-                refresh_speed_correction_value();
+                refresh_speed_correction_value(r1);
             }
         }
         {
