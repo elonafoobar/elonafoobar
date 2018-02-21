@@ -37250,7 +37250,7 @@ label_1861_internal:
                 break;
             }
             i = list(0, p);
-            s = ""s + matname(i) + lang(u8" ? "s, u8" x "s) + mat(i);
+            s = ""s + matname(i) + lang(u8" × "s, u8" x "s) + mat(i);
             cs_list(cs == cnt, s, wx + 96, wy + 66 + cnt * 19 - 1, 0, 0);
             s = matdesc(i);
             pos(wx + 308, wy + 66 + cnt * 19 + 2);
