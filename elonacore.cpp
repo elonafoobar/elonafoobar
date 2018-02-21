@@ -17109,22 +17109,20 @@ void modheight(int cc, int delta)
 
 
 
-void cure_anorexia(int prm_875)
+void cure_anorexia(int cc)
 {
-    if (cbit(986, prm_875) == 0)
-    {
+    if (cbit(986, cc) == 0)
         return;
-    }
-    cbitmod(986, prm_875, 0);
-    if (is_in_fov(prm_875) || prm_875 < 16)
+
+    cbitmod(986, cc, 0);
+    if (is_in_fov(cc) || cc < 16)
     {
         txt(lang(
-            name(prm_875) + u8"の拒食症は治った。"s,
-            name(prm_875) + u8" manage"s + _s(prm_875)
+            name(cc) + u8"の拒食症は治った。"s,
+            name(cc) + u8" manage"s + _s(cc)
                 + u8" to recover from anorexia."s));
         snd(65);
     }
-    return;
 }
 
 
