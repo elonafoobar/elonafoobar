@@ -11994,41 +11994,26 @@ int findally(int prm_767)
 
 
 
-int implevel(int prm_768)
+int implevel(int impression)
 {
-    if (prm_768 < 10)
-    {
+    if (impression < 10)
         return 0;
-    }
-    if (prm_768 < 25)
-    {
+    if (impression < 25)
         return 1;
-    }
-    if (prm_768 < 40)
-    {
+    if (impression < 40)
         return 2;
-    }
-    if (prm_768 < 75)
-    {
+    if (impression < 75)
         return 3;
-    }
-    if (prm_768 < 100)
-    {
+    if (impression < 100)
         return 4;
-    }
-    if (prm_768 < 150)
-    {
+    if (impression < 150)
         return 5;
-    }
-    if (prm_768 < 200)
-    {
+    if (impression < 200)
         return 6;
-    }
-    if (prm_768 < 300)
-    {
+    if (impression < 300)
         return 7;
-    }
-    return 8;
+    else
+        return 8;
 }
 
 
