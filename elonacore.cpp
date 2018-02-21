@@ -12876,12 +12876,10 @@ void incognitoend()
 
 
 
-void cell_setchara(int prm_791, int prm_792, int prm_793)
+void cell_setchara(int cc, int x, int y)
 {
-    map(prm_792, prm_793, 1) = prm_791 + 1;
-    cdata[prm_791].position.x = prm_792;
-    cdata[prm_791].position.y = prm_793;
-    return;
+    map(x, y, 1) = cc + 1;
+    cdata[cc].position = position_t{x, y};
 }
 
 
