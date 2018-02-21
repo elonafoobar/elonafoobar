@@ -15190,358 +15190,338 @@ int copy_chara(int prm_848)
 
 
 
-void txteledmg(int prm_849, int prm_850, int prm_851, int prm_852)
+void txteledmg(int type, int attacker, int target, int element)
 {
-    if (prm_852 == 50)
+    switch (element)
     {
-        if (prm_849 == 0)
+    case 50:
+        if (type == 0)
         {
-            if (is_in_fov(prm_851))
+            if (is_in_fov(target))
             {
                 txt(lang(
-                    name(prm_851) + u8"は燃え上がった。"s,
-                    name(prm_851) + u8" "s + is(prm_851) + u8" burnt."s));
+                    name(target) + u8"は燃え上がった。"s,
+                    name(target) + u8" "s + is(target) + u8" burnt."s));
             }
         }
-        if (prm_849 == 1)
+        else if (type == 1)
         {
             txt(lang(
                 u8"燃やし尽くした。"s,
-                u8"burn"s + _s(prm_850) + u8" "s + him(prm_851)
+                u8"burn"s + _s(attacker) + u8" "s + him(target)
                     + u8" to death."s));
         }
-        if (prm_849 == 2)
+        else if (type == 2)
         {
             txt(lang(
-                name(prm_851) + u8"は燃え尽きて灰になった。"s,
-                name(prm_851) + u8" "s + is(prm_851) + u8" burnt to ashes."s));
+                name(target) + u8"は燃え尽きて灰になった。"s,
+                name(target) + u8" "s + is(target) + u8" burnt to ashes."s));
         }
-        return;
-    }
-    if (prm_852 == 51)
-    {
-        if (prm_849 == 0)
+        break;
+    case 51:
+        if (type == 0)
         {
-            if (is_in_fov(prm_851))
+            if (is_in_fov(target))
             {
                 txt(lang(
-                    name(prm_851) + u8"は凍えた。"s,
-                    name(prm_851) + u8" "s + is(prm_851) + u8" frozen."s));
+                    name(target) + u8"は凍えた。"s,
+                    name(target) + u8" "s + is(target) + u8" frozen."s));
             }
         }
-        if (prm_849 == 1)
+        else if (type == 1)
         {
             txt(lang(
                 u8"氷の塊に変えた。"s,
-                u8"transform"s + _s(prm_850) + u8" "s + him(prm_851)
+                u8"transform"s + _s(attacker) + u8" "s + him(target)
                     + u8" to an ice sculpture."s));
         }
-        if (prm_849 == 2)
+        else if (type == 2)
         {
             txt(lang(
-                name(prm_851) + u8"は氷の彫像になった。"s,
-                name(prm_851) + u8" "s + is(prm_851) + u8" frozen and turn"s
-                    + _s(prm_851) + u8" into an ice sculpture."s));
+                name(target) + u8"は氷の彫像になった。"s,
+                name(target) + u8" "s + is(target) + u8" frozen and turn"s
+                    + _s(target) + u8" into an ice sculpture."s));
         }
-        return;
-    }
-    if (prm_852 == 52)
-    {
-        if (prm_849 == 0)
+        break;
+    case 52:
+        if (type == 0)
         {
-            if (is_in_fov(prm_851))
+            if (is_in_fov(target))
             {
                 txt(lang(
-                    name(prm_851) + u8"に電流が走った。"s,
-                    name(prm_851) + u8" "s + is(prm_851) + u8" shocked."s));
+                    name(target) + u8"に電流が走った。"s,
+                    name(target) + u8" "s + is(target) + u8" shocked."s));
             }
         }
-        if (prm_849 == 1)
+        else if (type == 1)
         {
             txt(lang(
                 u8"焦げカスにした。"s,
-                u8"electrocute"s + _s(prm_850) + u8" "s + him(prm_851)
+                u8"electrocute"s + _s(attacker) + u8" "s + him(target)
                     + u8" to death."s));
         }
-        if (prm_849 == 2)
+        else if (type == 2)
         {
             txt(lang(
-                name(prm_851) + u8"は雷に打たれ死んだ。"s,
-                name(prm_851) + u8" "s + is(prm_851)
-                    + u8" struck by lightning and die"s + _s(prm_851)
+                name(target) + u8"は雷に打たれ死んだ。"s,
+                name(target) + u8" "s + is(target)
+                    + u8" struck by lightning and die"s + _s(target)
                     + u8"."s));
         }
-        return;
-    }
-    if (prm_852 == 53)
-    {
-        if (prm_849 == 0)
+        break;
+    case 53:
+        if (type == 0)
         {
-            if (is_in_fov(prm_851))
+            if (is_in_fov(target))
             {
                 txt(lang(
-                    name(prm_851) + u8"は闇の力で傷ついた。"s,
-                    name(prm_851) + u8" "s + is(prm_851)
+                    name(target) + u8"は闇の力で傷ついた。"s,
+                    name(target) + u8" "s + is(target)
                         + u8" struck by dark force."s));
             }
         }
-        if (prm_849 == 1)
+        else if (type == 1)
         {
             txt(lang(
                 u8"闇に飲み込んだ。"s,
-                u8"let"s + _s(prm_850) + u8" the depths swallow "s
-                    + him(prm_851) + u8"."s));
+                u8"let"s + _s(attacker) + u8" the depths swallow "s
+                    + him(target) + u8"."s));
         }
-        if (prm_849 == 2)
+        else if (type == 2)
         {
             txt(lang(
-                name(prm_851) + u8"は闇に蝕まれて死んだ。"s,
-                name(prm_851) + u8" "s + is(prm_851)
+                name(target) + u8"は闇に蝕まれて死んだ。"s,
+                name(target) + u8" "s + is(target)
                     + u8" consumed by darkness."s));
         }
-        return;
-    }
-    if (prm_852 == 58)
-    {
-        if (prm_849 == 0)
+        break;
+    case 58:
+        if (type == 0)
         {
-            if (is_in_fov(prm_851))
+            if (is_in_fov(target))
             {
                 txt(lang(
-                    name(prm_851) + u8"の神経は傷ついた。"s,
-                    name(prm_851) + your(prm_851) + u8" nerves are hurt."s));
+                    name(target) + u8"の神経は傷ついた。"s,
+                    name(target) + your(target) + u8" nerves are hurt."s));
             }
         }
-        if (prm_849 == 1)
+        else if (type == 1)
         {
             txt(lang(
                 u8"神経を破壊した。"s,
-                u8"destroy"s + _s(prm_850) + u8" "s + his(prm_851)
+                u8"destroy"s + _s(attacker) + u8" "s + his(target)
                     + u8" nerves."s));
         }
-        if (prm_849 == 2)
+        else if (type == 2)
         {
             txt(lang(
-                name(prm_851) + u8"は神経を蝕まれて死んだ。"s,
-                name(prm_851) + u8" die"s + _s(prm_851)
+                name(target) + u8"は神経を蝕まれて死んだ。"s,
+                name(target) + u8" die"s + _s(target)
                     + u8" from neurofibroma."s));
         }
-        return;
-    }
-    if (prm_852 == 54)
-    {
-        if (prm_849 == 0)
+        break;
+    case 54:
+        if (type == 0)
         {
-            if (is_in_fov(prm_851))
+            if (is_in_fov(target))
             {
                 txt(lang(
-                    name(prm_851) + u8"は狂気に襲われた。"s,
-                    name(prm_851) + u8" suffer"s + _s(prm_851)
+                    name(target) + u8"は狂気に襲われた。"s,
+                    name(target) + u8" suffer"s + _s(target)
                         + u8" a splitting headache."s));
             }
         }
-        if (prm_849 == 1)
+        else if (type == 1)
         {
             txt(lang(
                 u8"再起不能にした。"s,
-                u8"completely disable"s + _s(prm_850) + u8" "s + him(prm_851)
+                u8"completely disable"s + _s(attacker) + u8" "s + him(target)
                     + u8"."s));
         }
-        if (prm_849 == 2)
+        else if (type == 2)
         {
             txt(lang(
-                name(prm_851) + u8"は発狂して死んだ。"s,
-                name(prm_851) + u8" lose"s + _s(prm_851) + u8" "s + his(prm_851)
-                    + u8" mind and commit"s + _s(prm_851) + u8" a suicde."s));
+                name(target) + u8"は発狂して死んだ。"s,
+                name(target) + u8" lose"s + _s(target) + u8" "s + his(target)
+                    + u8" mind and commit"s + _s(target) + u8" a suicde."s));
         }
-        return;
-    }
-    if (prm_852 == 59)
-    {
-        if (prm_849 == 0)
+        break;
+    case 59:
+        if (type == 0)
         {
-            if (is_in_fov(prm_851))
+            if (is_in_fov(target))
             {
                 txt(lang(
-                    name(prm_851) + u8"は混沌の渦で傷ついた。"s,
-                    name(prm_851) + u8" "s + is(prm_851)
+                    name(target) + u8"は混沌の渦で傷ついた。"s,
+                    name(target) + u8" "s + is(target)
                         + u8" hurt by chaotic force."s));
             }
         }
-        if (prm_849 == 1)
+        else if (type == 1)
         {
             txt(lang(
                 u8"混沌の渦に吸い込んだ。"s,
-                u8"let"s + _s(prm_850) + u8" the chaos consume "s + him(prm_851)
+                u8"let"s + _s(attacker) + u8" the chaos consume "s + him(target)
                     + u8"."s));
         }
-        if (prm_849 == 2)
+        else if (type == 2)
         {
             txt(lang(
-                name(prm_851) + u8"は混沌の渦に吸収された。"s,
-                name(prm_851) + u8" "s + is(prm_851)
+                name(target) + u8"は混沌の渦に吸収された。"s,
+                name(target) + u8" "s + is(target)
                     + u8" drawn into a chaotic vortex."s));
         }
-        return;
-    }
-    if (prm_852 == 56)
-    {
-        if (prm_849 == 0)
+        break;
+    case 56:
+        if (type == 0)
         {
-            if (is_in_fov(prm_851))
+            if (is_in_fov(target))
             {
                 txt(lang(
-                    name(prm_851) + u8"は冥界の冷気で傷ついた。"s,
-                    name(prm_851) + u8" "s + is(prm_851)
+                    name(target) + u8"は冥界の冷気で傷ついた。"s,
+                    name(target) + u8" "s + is(target)
                         + u8" chilled by infernal squall."s));
             }
         }
-        if (prm_849 == 1)
+        else if (type == 1)
         {
             txt(lang(
                 u8"冥界に墜とした。"s,
-                u8"entrap"s + _s(prm_850) + u8" "s + him(prm_851)
+                u8"entrap"s + _s(attacker) + u8" "s + him(target)
                     + u8" into the inferno."s));
         }
-        if (prm_849 == 2)
+        else if (type == 2)
         {
             txt(lang(
-                name(prm_851) + u8"は冥界に墜ちた。"s,
-                name(prm_851) + u8" go"s + _s(prm_851, 1) + u8" to hell."s));
+                name(target) + u8"は冥界に墜ちた。"s,
+                name(target) + u8" go"s + _s(target, 1) + u8" to hell."s));
         }
-        return;
-    }
-    if (prm_852 == 55)
-    {
-        if (prm_849 == 0)
+        break;
+    case 55:
+        if (type == 0)
         {
-            if (is_in_fov(prm_851))
+            if (is_in_fov(target))
             {
                 txt(lang(
-                    name(prm_851) + u8"は吐き気を催した。"s,
-                    name(prm_851) + u8" suffer"s + _s(prm_851)
+                    name(target) + u8"は吐き気を催した。"s,
+                    name(target) + u8" suffer"s + _s(target)
                         + u8" from venom."s));
             }
         }
-        if (prm_849 == 1)
+        else if (type == 1)
         {
             txt(lang(
                 u8"毒殺した。"s,
-                u8"kill"s + _s(prm_850) + u8" "s + him(prm_851)
+                u8"kill"s + _s(attacker) + u8" "s + him(target)
                     + u8" with poison."s));
         }
-        if (prm_849 == 2)
+        else if (type == 2)
         {
             txt(lang(
-                name(prm_851) + u8"は毒に蝕まれて死んだ。"s,
-                name(prm_851) + u8" "s + is(prm_851)
+                name(target) + u8"は毒に蝕まれて死んだ。"s,
+                name(target) + u8" "s + is(target)
                     + u8" poisoned to death."s));
         }
-        return;
-    }
-    if (prm_852 == 57)
-    {
-        if (prm_849 == 0)
+        break;
+    case 57:
+        if (type == 0)
         {
-            if (is_in_fov(prm_851))
+            if (is_in_fov(target))
             {
                 txt(lang(
-                    name(prm_851) + u8"は轟音の衝撃を受けた。"s,
-                    name(prm_851) + u8" "s + is(prm_851)
+                    name(target) + u8"は轟音の衝撃を受けた。"s,
+                    name(target) + u8" "s + is(target)
                         + u8" shocked by a shrill sound"s));
             }
         }
-        if (prm_849 == 1)
+        else if (type == 1)
         {
             txt(lang(
                 u8"聴覚を破壊し殺した。"s,
-                u8"shatter"s + _s(prm_850) + u8" "s + him(prm_851)
+                u8"shatter"s + _s(attacker) + u8" "s + him(target)
                     + u8" to atoms."s));
         }
-        if (prm_849 == 2)
+        else if (type == 2)
         {
             txt(lang(
-                name(prm_851) + u8"は朦朧となって死んだ。"s,
-                name(prm_851) + u8" resonate"s + _s(prm_851)
+                name(target) + u8"は朦朧となって死んだ。"s,
+                name(target) + u8" resonate"s + _s(target)
                     + u8" and break up."s));
         }
-        return;
-    }
-    if (prm_852 == 63)
-    {
-        if (prm_849 == 0)
+        break;
+    case 63:
+        if (type == 0)
         {
-            if (is_in_fov(prm_851))
+            if (is_in_fov(target))
             {
                 txt(lang(
-                    name(prm_851) + u8"は酸に焼かれた。"s,
-                    name(prm_851) + u8" "s + is(prm_851)
+                    name(target) + u8"は酸に焼かれた。"s,
+                    name(target) + u8" "s + is(target)
                         + u8" burnt by acid."s));
             }
         }
-        if (prm_849 == 1)
+        else if (type == 1)
         {
             txt(lang(
                 u8"ドロドロに溶かした。"s,
-                u8"melt"s + _s(prm_850) + u8" "s + him(prm_851) + u8" away."s));
+                u8"melt"s + _s(attacker) + u8" "s + him(target) + u8" away."s));
         }
-        if (prm_849 == 2)
+        else if (type == 2)
         {
             txt(lang(
-                name(prm_851) + u8"は酸に焼かれ溶けた。"s,
-                name(prm_851) + u8" melt"s + _s(prm_851) + u8"."s));
+                name(target) + u8"は酸に焼かれ溶けた。"s,
+                name(target) + u8" melt"s + _s(target) + u8"."s));
         }
-        return;
-    }
-    if (prm_852 == 61)
-    {
-        if (prm_849 == 0)
+        break;
+    case 61:
+        if (type == 0)
         {
-            if (is_in_fov(prm_851))
+            if (is_in_fov(target))
             {
                 txt(lang(
-                    name(prm_851) + u8"は切り傷を負った。"s,
-                    name(prm_851) + u8" get"s + _s(prm_851) + u8" a cut."s));
+                    name(target) + u8"は切り傷を負った。"s,
+                    name(target) + u8" get"s + _s(target) + u8" a cut."s));
             }
         }
-        if (prm_849 == 1)
+        else if (type == 1)
         {
             txt(lang(
                 u8"千切りにした。"s,
-                u8"cut"s + _s(prm_850) + u8" "s + him(prm_851)
+                u8"cut"s + _s(attacker) + u8" "s + him(target)
                     + u8" into thin strips."s));
         }
-        if (prm_849 == 2)
+        else if (type == 2)
         {
             txt(lang(
-                name(prm_851) + u8"は千切りになった。"s,
-                name(prm_851) + u8" "s + is(prm_851)
+                name(target) + u8"は千切りになった。"s,
+                name(target) + u8" "s + is(target)
                     + u8" cut into thin strips."s));
         }
-        return;
-    }
-    if (prm_849 == 0)
-    {
-        if (is_in_fov(prm_851))
+        break;
+    default:
+        if (type == 0)
+        {
+            if (is_in_fov(target))
+            {
+                txt(lang(
+                    name(target) + u8"は傷ついた。"s,
+                    name(target) + u8" "s + is(target) + u8" wounded."s));
+            }
+        }
+        else if (type == 1)
         {
             txt(lang(
-                name(prm_851) + u8"は傷ついた。"s,
-                name(prm_851) + u8" "s + is(prm_851) + u8" wounded."s));
+                u8"殺した。"s,
+                u8"kill"s + _s(attacker) + u8" "s + him(target) + u8"."s));
         }
+        else if (type == 2)
+        {
+            txt(lang(
+                name(target) + u8"は死んだ。"s,
+                name(target) + u8" "s + is(target) + u8" killed."s));
+        }
+        break;
     }
-    if (prm_849 == 1)
-    {
-        txt(lang(
-            u8"殺した。"s,
-            u8"kill"s + _s(prm_850) + u8" "s + him(prm_851) + u8"."s));
-    }
-    if (prm_849 == 2)
-    {
-        txt(lang(
-            name(prm_851) + u8"は死んだ。"s,
-            name(prm_851) + u8" "s + is(prm_851) + u8" killed."s));
-    }
-    return;
 }
 
 
