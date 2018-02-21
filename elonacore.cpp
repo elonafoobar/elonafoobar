@@ -10271,14 +10271,13 @@ int imeget()
 
 
 
-void boxl(int prm_716, int prm_717, int prm_718, int prm_719)
+void boxl(int x1, int y1, int x2, int y2)
 {
-    pos(prm_716, prm_719);
-    line(prm_716, prm_717);
-    line(prm_718, prm_717);
-    line(prm_718, prm_719);
-    line(prm_716, prm_719);
-    return;
+    pos(x1, y2);
+    line(x1, y1);
+    line(x2, y1);
+    line(x2, y2);
+    line(x1, y2);
 }
 
 
