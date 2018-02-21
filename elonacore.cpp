@@ -12241,31 +12241,27 @@ void check_quest()
 
 
 
-void refreshspeed(int prm_771)
+void refreshspeed(int cc)
 {
-    int r_at_m120 = 0;
-    if (cdata[prm_771].speed_correction_value == 0)
+    if (cdata[cc].speed_correction_value == 0)
     {
-        cdata[prm_771].current_speed = sdata(18, prm_771);
+        cdata[cc].current_speed = sdata(18, cc);
     }
     else
     {
-        cdata[prm_771].current_speed = sdata(18, prm_771)
-            * std::clamp((100 - cdata[prm_771].speed_correction_value), 0, 100)
+        cdata[cc].current_speed = sdata(18, cc)
+            * std::clamp((100 - cdata[cc].speed_correction_value), 0, 100)
             / 100;
     }
-    if (cdata[prm_771].current_speed < 10)
+    if (cdata[cc].current_speed < 10)
     {
-        cdata[prm_771].current_speed = 10;
+        cdata[cc].current_speed = 10;
     }
-    cdata[prm_771].speed_percentage_in_next_turn = 0;
-    if (prm_771 != 0)
-    {
-        if (gdata_mount != prm_771)
-        {
-            return;
-        }
-    }
+    cdata[cc].speed_percentage_in_next_turn = 0;
+
+    if (cc != 0 && gdata_mount != cc)
+        return;
+
     if (gdata_mount != 0)
     {
         cdata[0].current_speed = sdata(18, gdata_mount) * 100
@@ -12278,22 +12274,24 @@ void refreshspeed(int prm_771)
         {
             cdata[0].current_speed /= 10;
         }
-        if (gdata_mount == prm_771)
+        if (gdata_mount == cc)
         {
-            cdata[prm_771].current_speed = std::clamp(
-                sdata(10, prm_771) + sdata(301, 0), 10, sdata(18, prm_771));
+            cdata[cc].current_speed = std::clamp(
+                sdata(10, cc) + sdata(301, 0), 10, sdata(18, cc));
             return;
         }
     }
+
     gspdorg = sdata.get(18, 0).original_level;
+
     if (gdata_mount == 0)
     {
-        r_at_m120 = cdata[0].nutrition / 1000 * 1000;
-        if (r_at_m120 < 1000)
+        int n = cdata[0].nutrition / 1000 * 1000;
+        if (n < 1000)
         {
             cdata[0].speed_percentage_in_next_turn -= 30;
         }
-        if (r_at_m120 < 2000)
+        if (n < 2000)
         {
             cdata[0].speed_percentage_in_next_turn -= 10;
         }
@@ -12335,7 +12333,6 @@ void refreshspeed(int prm_771)
     {
         gspd = 10;
     }
-    return;
 }
 
 
