@@ -14173,14 +14173,13 @@ void healhp(int cc, int delta)
 
 
 
-void healmp(int prm_823, int prm_824)
+void healmp(int cc, int delta)
 {
-    cdata[prm_823].mp += prm_824;
-    if (cdata[prm_823].mp > cdata[prm_823].max_mp)
+    cdata[cc].mp += delta;
+    if (cdata[cc].mp > cdata[cc].max_mp)
     {
-        cdata[prm_823].mp = cdata[prm_823].max_mp;
+        cdata[cc].mp = cdata[cc].max_mp;
     }
-    return;
 }
 
 
