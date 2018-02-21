@@ -12368,14 +12368,12 @@ void ride_begin(int mount)
 
 void ride_end()
 {
-    int p_at_m121 = 0;
-    cbitmod(975, gdata_mount, 0);
-    rowactend(gdata_mount);
-    p_at_m121 = gdata_mount;
+    int mount = gdata_mount;
+    cbitmod(975, mount, 0);
+    rowactend(mount);
     gdata_mount = 0;
     create_pcpic(0, true);
-    refreshspeed(p_at_m121);
-    return;
+    refreshspeed(mount);
 }
 
 
