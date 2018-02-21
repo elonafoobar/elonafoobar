@@ -1506,7 +1506,7 @@ void modheight(int = 0, int = 0);
 void modimp(int = 0, int = 0);
 void modify_karma(int, int);
 void modrank(int = 0, int = 0, int = 0);
-void modweight(int = 0, int = 0, int = 0);
+void modweight(int, int, bool = false);
 void msg_clear();
 void msg_halt();
 void msg_newline();

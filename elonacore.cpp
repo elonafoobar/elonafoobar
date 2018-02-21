@@ -17038,46 +17038,46 @@ int advfavoritestat(int prm_869)
 
 
 
-void modweight(int prm_870, int prm_871, int prm_872)
+void modweight(int cc, int delta, bool force)
 {
-    int mini_at_m146 = 0;
-    int max_at_m146 = 0;
-    mini_at_m146 = cdata[prm_870].height * cdata[prm_870].height * 18 / 25000;
-    max_at_m146 = cdata[prm_870].height * cdata[prm_870].height * 24 / 10000;
-    if (cdata[prm_870].weight < mini_at_m146)
+    int min = cdata[cc].height * cdata[cc].height * 18 / 25000;
+    int max = cdata[cc].height * cdata[cc].height * 24 / 10000;
+
+    if (cdata[cc].weight < min)
     {
-        cdata[prm_870].weight = mini_at_m146;
+        cdata[cc].weight = min;
         return;
     }
-    if (prm_872 == 0 && prm_871 > 0)
+    if (!force && delta > 0)
     {
-        if (cdata[prm_870].weight > max_at_m146)
+        if (cdata[cc].weight > max)
         {
             return;
         }
     }
-    cdata[prm_870].weight = cdata[prm_870].weight * (100 + prm_871) / 100
-        + (prm_871 > 0) - (prm_871 < 0);
-    if (cdata[prm_870].weight <= 0)
+
+    cdata[cc].weight = cdata[cc].weight * (100 + delta) / 100
+        + (delta > 0) - (delta < 0);
+
+    if (cdata[cc].weight <= 0)
     {
-        cdata[prm_870].weight = 1;
+        cdata[cc].weight = 1;
     }
-    if (is_in_fov(prm_870))
+    if (is_in_fov(cc))
     {
-        if (prm_871 > 2)
+        if (delta >= 3)
         {
             txt(lang(
-                name(prm_870) + u8"は太った。"s,
-                name(prm_870) + u8" gain"s + _s(prm_870) + u8" weight."s));
+                name(cc) + u8"は太った。"s,
+                name(cc) + u8" gain"s + _s(cc) + u8" weight."s));
         }
-        if (prm_871 < -2)
+        if (delta <= -3)
         {
             txt(lang(
-                name(prm_870) + u8"は痩せた。"s,
-                name(prm_870) + u8" lose"s + _s(prm_870) + u8" weight."s));
+                name(cc) + u8"は痩せた。"s,
+                name(cc) + u8" lose"s + _s(cc) + u8" weight."s));
         }
     }
-    return;
 }
 
 
@@ -17228,7 +17228,7 @@ void chara_vomit(int prm_876)
         skillmod(17, prm_876, -100);
     }
     dmgcon(prm_876, 7, 100);
-    modweight(prm_876, (1 + rnd(5)) * -1);
+    modweight(prm_876, -(1 + rnd(5)));
     if (cdata[prm_876].nutrition <= 0)
     {
         dmghp(prm_876, 9999, -3);
