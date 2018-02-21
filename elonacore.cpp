@@ -4850,30 +4850,15 @@ void getinheritance(int prm_440, elona_vector1<int>& prm_441, int& prm_442)
 
 
 
-void flt(int prm_445, int prm_446)
+void flt(int level, int quality)
 {
     filtermax = 0;
     fltselect = 0;
     flttypemajor = 0;
     flttypeminor = 0;
     fltnrace = "";
-    if (prm_445 == 0)
-    {
-        objlv = calcobjlv(gdata_current_dungeon_level);
-    }
-    else
-    {
-        objlv = prm_445;
-    }
-    if (prm_446 == 0)
-    {
-        fixlv = calcfixlv(2);
-    }
-    else
-    {
-        fixlv = prm_446;
-    }
-    return;
+    objlv = level == 0 ? calcobjlv(gdata_current_dungeon_level) : level;
+    fixlv = quality == 0 ? calcfixlv(2) : quality;
 }
 
 
