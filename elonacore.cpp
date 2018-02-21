@@ -20832,59 +20832,60 @@ void refresh_character()
 
 
 
-void skillinit(int prm_926, int prm_927, int prm_928)
+void skillinit(int id, int cc, int initial_level)
 {
-    elona_vector1<int> p_at_m161;
-    int original_level = sdata.get(prm_926, prm_927).original_level;
-    if (prm_926 >= 100)
+    int potential = 0;
+    int original_level = sdata.get(id, cc).original_level;
+    if (id >= 100)
     {
-        p_at_m161 = prm_928 * 5;
+        potential = initial_level * 5;
         if (original_level == 0)
         {
-            p_at_m161 += 100;
+            potential += 100;
         }
         else
         {
-            p_at_m161 += 50;
+            potential += 50;
         }
     }
     else
     {
-        p_at_m161 = prm_928 * 20;
-        if (p_at_m161 > 400)
+        potential = initial_level * 20;
+        if (potential > 400)
         {
-            p_at_m161 = 400;
+            potential = 400;
         }
     }
-    if (prm_926 == 18)
+    int level = 0;
+    if (id == 18)
     {
-        p_at_m161(1) = prm_928 * (100 + cdata[prm_927].level * 2) / 100;
+        level = initial_level * (100 + cdata[cc].level * 2) / 100;
     }
     else
     {
-        p_at_m161(1) = p_at_m161 * p_at_m161 * cdata[prm_927].level / 45000
-            + prm_928 + cdata[prm_927].level / 3;
+        level = potential * potential * cdata[cc].level / 45000
+            + initial_level + cdata[cc].level / 3;
     }
-    if (cdata[prm_927].level > 1)
+    if (cdata[cc].level > 1)
     {
-        p_at_m161 = std::exp(std::log(0.9) * cdata[prm_927].level) * p_at_m161;
+        potential = std::exp(std::log(0.9) * cdata[cc].level) * potential;
     }
-    if (p_at_m161 < 1)
+    if (potential < 1)
     {
-        p_at_m161 = 1;
+        potential = 1;
     }
-    if (prm_926 == 2 || prm_926 == 19 || prm_926 == 3)
+    if (id == 2 || id == 19 || id == 3)
     {
-        p_at_m161(1) = prm_928;
-        p_at_m161 = 100;
+        level = initial_level;
+        potential = 100;
     }
-    if (original_level + p_at_m161(1) > 2000)
+    if (original_level + level > 2000)
     {
-        p_at_m161(1) = 2000 - original_level;
+        level = 2000 - original_level;
     }
-    sdata.get(prm_926, prm_927).original_level +=
-        std::clamp(p_at_m161(1), 0, 2000);
-    sdata.get(prm_926, prm_927).potential += p_at_m161;
+    sdata.get(id, cc).original_level +=
+        std::clamp(level, 0, 2000);
+    sdata.get(id, cc).potential += potential;
 }
 
 
