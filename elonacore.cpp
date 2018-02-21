@@ -10201,55 +10201,51 @@ std::string cnv_str(
 
 
 
-void fix_wish(std::string& prm_699)
+void fix_wish(std::string& str)
 {
-    cnv_str(prm_699, u8"の剥製"s, ""s);
-    cnv_str(prm_699, u8"剥製"s, ""s);
-    cnv_str(prm_699, u8"のはく製"s, ""s);
-    cnv_str(prm_699, u8"はく製"s, ""s);
-    cnv_str(prm_699, u8"のカード"s, ""s);
-    cnv_str(prm_699, u8"カード"s, ""s);
-    cnv_str(prm_699, u8"card "s, ""s);
-    cnv_str(prm_699, u8"figure "s, ""s);
-    cnv_str(prm_699, u8"card"s, ""s);
-    cnv_str(prm_699, u8"figure"s, ""s);
-    return;
+    str = strutil::remove_str(str, u8"の剥製");
+    str = strutil::remove_str(str, u8"剥製");
+    str = strutil::remove_str(str, u8"のはく製");
+    str = strutil::remove_str(str, u8"はく製");
+    str = strutil::remove_str(str, u8"のカード");
+    str = strutil::remove_str(str, u8"カード");
+    str = strutil::remove_str(str, u8"card ");
+    str = strutil::remove_str(str, u8"figure ");
+    str = strutil::remove_str(str, u8"card");
+    str = strutil::remove_str(str, u8"figure");
 }
 
 
 
-void fix_input_chat(std::string& prm_700)
+void fix_input_chat(std::string& str)
 {
-    cnv_str(prm_700, u8" "s, u8"+"s);
-    cnv_str(prm_700, u8"%"s, u8"per"s);
-    cnv_str(prm_700, u8"&"s, u8"and"s);
-    cnv_str(prm_700, u8"<"s, ""s);
-    cnv_str(prm_700, u8">"s, ""s);
-    return;
+    cnv_str(str, u8" "s, u8"+"s);
+    cnv_str(str, u8"%"s, u8"per"s);
+    cnv_str(str, u8"&"s, u8"and"s);
+    str = strutil::remove_str(str, u8"<");
+    str = strutil::remove_str(str, u8">");
 }
 
 
 
-void fix_input_chat2(std::string& prm_701)
+void fix_input_chat2(std::string& str)
 {
-    cnv_str(prm_701, u8"fucking"s, u8"nyoro~n"s);
-    cnv_str(prm_701, u8"fuck"s, u8"nyou talk funny"s);
-    return;
+    cnv_str(str, u8"fucking"s, u8"nyoro~n"s);
+    cnv_str(str, u8"fuck"s, u8"nyou talk funny"s);
 }
 
 
 
-void cnv_filestr(std::string& prm_702)
+void cnv_filestr(std::string& str)
 {
-    cnv_str(prm_702, u8"\""s, u8"_"s);
-    cnv_str(prm_702, u8"\\"s, u8"_"s);
-    cnv_str(prm_702, u8"<"s, u8"_"s);
-    cnv_str(prm_702, u8">"s, u8"_"s);
-    cnv_str(prm_702, u8"/"s, u8"_"s);
-    cnv_str(prm_702, u8"?"s, u8"_"s);
-    cnv_str(prm_702, u8"|"s, u8"_"s);
-    cnv_str(prm_702, u8"*"s, u8"_"s);
-    return;
+    cnv_str(str, u8"\""s, u8"_"s);
+    cnv_str(str, u8"\\"s, u8"_"s);
+    cnv_str(str, u8"<"s, u8"_"s);
+    cnv_str(str, u8">"s, u8"_"s);
+    cnv_str(str, u8"/"s, u8"_"s);
+    cnv_str(str, u8"?"s, u8"_"s);
+    cnv_str(str, u8"|"s, u8"_"s);
+    cnv_str(str, u8"*"s, u8"_"s);
 }
 
 
