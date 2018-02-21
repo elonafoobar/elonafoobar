@@ -7736,12 +7736,11 @@ void rndshuffle(elona_vector1<int>& prm_534)
 
 
 
-int dist(int prm_535, int prm_536, int prm_537, int prm_538)
+int dist(int x1, int y1, int x2, int y2)
 {
-    int d_at_m69 = 0;
-    d_at_m69 = (prm_535 - prm_537) * (prm_535 - prm_537)
-        + (prm_536 - prm_538) * (prm_536 - prm_538);
-    return int(std::sqrt(d_at_m69));
+    const auto dx = x1 - x2;
+    const auto dy = y1 - y2;
+    return int(std::sqrt(dx * dx + dy * dy));
 }
 
 
