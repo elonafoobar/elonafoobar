@@ -3383,18 +3383,17 @@ void create_pcpic(int cc, bool prm_410)
 
 
 void addefmap(
-    int prm_411,
-    int prm_412,
-    int prm_413,
-    int prm_414,
-    int prm_415,
-    int prm_416)
+    int x,
+    int y,
+    int efmap0,
+    int efmap1,
+    int efmap2,
+    int efmap3)
 {
-    efmap(0, prm_411, prm_412) = prm_413;
-    efmap(1, prm_411, prm_412) = prm_414;
-    efmap(2, prm_411, prm_412) = prm_415;
-    efmap(3, prm_411, prm_412) = prm_416;
-    return;
+    efmap(0, x, y) = efmap0;
+    efmap(1, x, y) = efmap1;
+    efmap(2, x, y) = efmap2;
+    efmap(3, x, y) = efmap3;
 }
 
 
