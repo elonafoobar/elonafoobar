@@ -1118,7 +1118,7 @@ void label_1472();
 void refresh_character();
 void label_1512();
 void gain_disarm_trap_experience();
-void get_hungry();
+void get_hungry(int);
 void label_1520();
 void refresh_burden_state();
 void gain_special_action();

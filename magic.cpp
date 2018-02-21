@@ -692,7 +692,7 @@ int magic()
                                 + u8" hungry."s));
                     }
                     r1 = tc;
-                    get_hungry();
+                    get_hungry(r1);
                 }
                 if (efid == 613)
                 {

@@ -21173,18 +21173,14 @@ int try_to_perceive_npc()
 
 
 
-void get_hungry()
+void get_hungry(int cc)
 {
-    if (trait(158))
-    {
-        if (rnd(3) == 0)
-        {
-            return;
-        }
-    }
-    p = cdata[r1].nutrition / 1000;
-    cdata[r1].nutrition -= 8;
-    if (cdata[r1].nutrition / 1000 != p)
+    if ((trait(158) && rnd(3) == 0) || debug::voldemort)
+        return;
+
+    int p = cdata[cc].nutrition / 1000;
+    cdata[cc].nutrition -= 8;
+    if (cdata[cc].nutrition / 1000 != p)
     {
         if (p == 1)
         {
@@ -21194,7 +21190,7 @@ void get_hungry()
                     u8"腹が減ってほとんど死にかけている。"s,
                     u8"You are almost dead from hunger."s));
         }
-        if (p == 2)
+        else if (p == 2)
         {
             msgalert = 1;
             txt(lang(
@@ -21204,16 +21200,15 @@ void get_hungry()
                     u8"すぐに何かを食べなくては…"s,
                     u8"You have to eat something NOW."s));
         }
-        if (p == 5)
+        else if (p == 5)
         {
             msgalert = 1;
             txt(lang(u8"腹がすいてきた。"s, u8"You are getting hungry."s),
                 lang(u8"空腹になった。"s, u8"You feel hungry."s),
                 lang(u8"さて何を食べようか。"s, u8"Now what shall I eat?"s));
         }
-        refreshspeed(r1);
+        refreshspeed(cc);
     }
-    return;
 }
 
 
@@ -73678,7 +73673,7 @@ void turn_end()
                     -6);
             }
         }
-        get_hungry();
+        get_hungry(r1);
         refreshspeed(cc);
     }
     else if (mdata(6) != 1)
