@@ -11842,12 +11842,11 @@ int relationbetween(int c1, int c2)
 
 
 
-void rowactend(int prm_763)
+void rowactend(int cc)
 {
-    cdata[prm_763].continuous_action_id = 0;
-    cdata[prm_763].continuous_action_turn = 0;
-    cdata[prm_763].continuous_action_item = 0;
-    return;
+    cdata[cc].continuous_action_id = 0;
+    cdata[cc].continuous_action_turn = 0;
+    cdata[cc].continuous_action_item = 0;
 }
 
 
