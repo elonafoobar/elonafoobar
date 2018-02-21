@@ -10571,26 +10571,15 @@ void fillbg(int prm_743, int prm_744, int prm_745, int prm_746, int prm_747)
 
 
 
-int direction(int prm_748, int prm_749, int prm_750, int prm_751)
+int direction(int x1, int y1, int x2, int y2)
 {
-    if (std::abs(prm_748 - prm_750) > std::abs(prm_749 - prm_751))
+    if (std::abs(x1 - x2) > std::abs(y1 - y2))
     {
-        if (prm_748 > prm_750)
-        {
-            return 1;
-        }
-        else
-        {
-            return 2;
-        }
-    }
-    else if (prm_749 > prm_751)
-    {
-        return 3;
+        return x1 > x2 ? 1 : 2;
     }
     else
     {
-        return 0;
+        return y1 > y2 ? 3 : 0;
     }
 }
 
