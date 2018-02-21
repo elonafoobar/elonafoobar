@@ -13374,179 +13374,155 @@ void animeblood(int prm_809, int prm_810, int prm_811)
 
 
 
-void resistmod(int prm_812, int prm_813, int prm_814)
+void resistmod(int cc, int element, int delta)
 {
-    int lv_at_m134 = 0;
-    lv_at_m134 = sdata.get(prm_813, prm_812).original_level + prm_814;
-    if (lv_at_m134 < 50)
-    {
-        lv_at_m134 = 50;
-    }
-    if (lv_at_m134 > 200)
-    {
-        lv_at_m134 = 200;
-    }
-    if (prm_814 >= 50)
+    if (delta >= 50)
     {
         txtef(2);
-        if (prm_813 == 50)
+        switch (element)
         {
+        case 50:
             txt(lang(
-                name(prm_812) + u8"の身体は急に火照りだした。"s,
-                u8"Suddenly, "s + name(prm_812) + u8" feel"s + _s(prm_812)
+                name(cc) + u8"の身体は急に火照りだした。"s,
+                u8"Suddenly, "s + name(cc) + u8" feel"s + _s(cc)
                     + u8" very hot."s));
-        }
-        if (prm_813 == 51)
-        {
+            break;
+        case 51:
             txt(lang(
-                name(prm_812) + u8"の身体は急に冷たくなった。"s,
-                u8"Suddenly, "s + name(prm_812) + u8" feel"s + _s(prm_812)
+                name(cc) + u8"の身体は急に冷たくなった。"s,
+                u8"Suddenly, "s + name(cc) + u8" feel"s + _s(cc)
                     + u8" cool."s));
-        }
-        if (prm_813 == 52)
-        {
+            break;
+        case 52:
             txt(lang(
-                name(prm_812) + u8"の身体に電気が走った。"s,
-                name(prm_812) + u8" "s + is(prm_812)
+                name(cc) + u8"の身体に電気が走った。"s,
+                name(cc) + u8" "s + is(cc)
                     + u8" struck by an electoric shock."s));
-        }
-        if (prm_813 == 54)
-        {
+            break;
+        case 54:
             txt(lang(
-                name(prm_812) + u8"は急に明晰になった。"s,
-                u8"Suddenly, "s + name(prm_812) + your(prm_812)
+                name(cc) + u8"は急に明晰になった。"s,
+                u8"Suddenly, "s + name(cc) + your(cc)
                     + u8" mind becomes very clear."s));
-        }
-        if (prm_813 == 58)
-        {
+            break;
+        case 58:
             txt(lang(
-                name(prm_812) + u8"は急に神経が図太くなった。"s,
-                name(prm_812) + your(prm_812) + u8" nerve is sharpened."s));
-        }
-        if (prm_813 == 53)
-        {
+                name(cc) + u8"は急に神経が図太くなった。"s,
+                name(cc) + your(cc) + u8" nerve is sharpened."s));
+            break;
+        case 53:
             txt(lang(
-                name(prm_812) + u8"は急に暗闇が怖くなくなった。"s,
-                name(prm_812) + u8" no longer fear"s + _s(prm_812)
+                name(cc) + u8"は急に暗闇が怖くなくなった。"s,
+                name(cc) + u8" no longer fear"s + _s(cc)
                     + u8" darkness."s));
-        }
-        if (prm_813 == 57)
-        {
+            break;
+        case 57:
             txt(lang(
-                name(prm_812) + u8"は騒音を気にしなくなった。"s,
-                name(prm_812) + your(prm_812) + u8" eardrums get thick."s));
-        }
-        if (prm_813 == 59)
-        {
+                name(cc) + u8"は騒音を気にしなくなった。"s,
+                name(cc) + your(cc) + u8" eardrums get thick."s));
+            break;
+        case 59:
             txt(lang(
-                name(prm_812) + u8"は急にカオスを理解した。"s,
-                u8"Suddenly, "s + name(prm_812) + u8" understand"s + _s(prm_812)
+                name(cc) + u8"は急にカオスを理解した。"s,
+                u8"Suddenly, "s + name(cc) + u8" understand"s + _s(cc)
                     + u8" chaos."s));
-        }
-        if (prm_813 == 55)
-        {
+            break;
+        case 55:
             txt(lang(
-                name(prm_812) + u8"の毒への耐性は強くなった。"s,
-                name(prm_812) + u8" now "s + have(prm_812)
+                name(cc) + u8"の毒への耐性は強くなった。"s,
+                name(cc) + u8" now "s + have(cc)
                     + u8" antibodies to poisons."s));
-        }
-        if (prm_813 == 56)
-        {
+            break;
+        case 56:
             txt(lang(
-                name(prm_812) + u8"の魂は地獄に近づいた。"s,
-                name(prm_812) + u8" "s + is(prm_812) + u8" no longer afraid"s
-                    + _s(prm_812) + u8" of hell."s));
-        }
-        if (prm_813 == 60)
-        {
+                name(cc) + u8"の魂は地獄に近づいた。"s,
+                name(cc) + u8" "s + is(cc) + u8" no longer afraid"s
+                    + _s(cc) + u8" of hell."s));
+            break;
+        case 60:
             txt(lang(
-                name(prm_812) + u8"の皮膚は魔力のオーラに包まれた。"s,
-                name(prm_812) + your(prm_812)
+                name(cc) + u8"の皮膚は魔力のオーラに包まれた。"s,
+                name(cc) + your(cc)
                     + u8" body is covered by a magical aura."s));
+            break;
+        default: assert(0);
         }
     }
-    if (prm_814 <= 50 * -1)
+    else if (delta <= 50 * -1)
     {
         txtef(8);
-        if (prm_813 == 50)
+        switch (element)
         {
+        case 50:
             txt(lang(
-                name(prm_812) + u8"は急に汗をかきだした。"s,
-                name(prm_812) + u8" sweat"s + _s(prm_812) + u8"."s));
-        }
-        if (prm_813 == 51)
-        {
+                name(cc) + u8"は急に汗をかきだした。"s,
+                name(cc) + u8" sweat"s + _s(cc) + u8"."s));
+            break;
+        case 51:
             txt(lang(
-                name(prm_812) + u8"は急に寒気を感じた。"s,
-                name(prm_812) + u8" shivers"s + _s(prm_812) + u8"."s));
-        }
-        if (prm_813 == 52)
-        {
+                name(cc) + u8"は急に寒気を感じた。"s,
+                name(cc) + u8" shivers"s + _s(cc) + u8"."s));
+            break;
+        case 52:
             txt(lang(
-                name(prm_812) + u8"は急に電気に敏感になった。"s,
-                name(prm_812) + u8" "s + is(prm_812) + u8" shocked."s));
-        }
-        if (prm_813 == 54)
-        {
+                name(cc) + u8"は急に電気に敏感になった。"s,
+                name(cc) + u8" "s + is(cc) + u8" shocked."s));
+            break;
+        case 54:
             txt(lang(
-                name(prm_812) + u8"は以前ほど明晰ではなくなった。"s,
-                name(prm_812) + your(prm_812) + u8" mind becomes slippery."s));
-        }
-        if (prm_813 == 58)
-        {
+                name(cc) + u8"は以前ほど明晰ではなくなった。"s,
+                name(cc) + your(cc) + u8" mind becomes slippery."s));
+            break;
+        case 58:
             txt(lang(
-                name(prm_812) + u8"の神経は急に萎縮した。"s,
-                name(prm_812) + u8" become"s + _s(prm_812) + u8" dull."s));
-        }
-        if (prm_813 == 53)
-        {
+                name(cc) + u8"の神経は急に萎縮した。"s,
+                name(cc) + u8" become"s + _s(cc) + u8" dull."s));
+            break;
+        case 53:
             txt(lang(
-                name(prm_812) + u8"は急に暗闇が怖くなった。"s,
-                u8"Suddenly, "s + name(prm_812) + u8" fear"s + _s(prm_812)
+                name(cc) + u8"は急に暗闇が怖くなった。"s,
+                u8"Suddenly, "s + name(cc) + u8" fear"s + _s(cc)
                     + u8" darkness."s));
-        }
-        if (prm_813 == 57)
-        {
+            break;
+        case 57:
             txt(lang(
-                name(prm_812) + u8"は急に辺りをうるさく感じた。"s,
-                name(prm_812) + u8" become"s + _s(prm_812)
+                name(cc) + u8"は急に辺りをうるさく感じた。"s,
+                name(cc) + u8" become"s + _s(cc)
                     + u8" very sensitive to noises."s));
-        }
-        if (prm_813 == 59)
-        {
+            break;
+        case 59:
             txt(lang(
-                name(prm_812) + u8"はカオスへの理解を失った。"s,
-                name(prm_812) + u8" no longer understand"s + _s(prm_812)
+                name(cc) + u8"はカオスへの理解を失った。"s,
+                name(cc) + u8" no longer understand"s + _s(cc)
                     + u8" chaos."s));
-        }
-        if (prm_813 == 55)
-        {
+            break;
+        case 55:
             txt(lang(
-                name(prm_812) + u8"の毒への耐性は薄れた。"s,
-                name(prm_812) + u8" lose"s + _s(prm_812, 1)
+                name(cc) + u8"の毒への耐性は薄れた。"s,
+                name(cc) + u8" lose"s + _s(cc, 1)
                     + u8" antibodies to poisons."s));
-        }
-        if (prm_813 == 56)
-        {
+            break;
+        case 56:
             txt(lang(
-                name(prm_812) + u8"の魂は地獄から遠ざかった。"s,
-                name(prm_812) + u8" "s + is(prm_812) + u8" afraid of hell."s));
-        }
-        if (prm_813 == 60)
-        {
+                name(cc) + u8"の魂は地獄から遠ざかった。"s,
+                name(cc) + u8" "s + is(cc) + u8" afraid of hell."s));
+            break;
+        case 60:
             txt(lang(
-                name(prm_812) + u8"の皮膚から魔力のオーラが消えた。"s,
-                u8"The magical aura disappears from "s + name(prm_812)
-                    + your(prm_812) + u8" body."s));
+                name(cc) + u8"の皮膚から魔力のオーラが消えた。"s,
+                u8"The magical aura disappears from "s + name(cc)
+                    + your(cc) + u8" body."s));
+            break;
         }
     }
-    sdata.get(prm_813, prm_812).original_level =
-        std::clamp(lv_at_m134, 0, 2000);
+
+    sdata.get(element, cc).original_level =
+        std::clamp(sdata.get(element, cc).original_level + delta, 50, 200);
     snd(107);
-    animeload(15, prm_812);
-    r1 = prm_812;
+    animeload(15, cc);
+
+    r1 = cc;
     refresh_character();
-    return;
 }
 
 
