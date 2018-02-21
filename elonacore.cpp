@@ -12378,20 +12378,19 @@ void ride_end()
 
 
 
-void chara_vanquish(int prm_773)
+void chara_vanquish(int cc)
 {
-    if (prm_773 == gdata_mount)
+    if (cc == gdata_mount)
     {
         ride_end();
     }
-    else if (cdata[prm_773].state == 1 || cdata[prm_773].state == 10)
+    else if (cdata[cc].state == 1 || cdata[cc].state == 10)
     {
-        map(cdata[prm_773].position.x, cdata[prm_773].position.y, 1) = 0;
+        map(cdata[cc].position.x, cdata[cc].position.y, 1) = 0;
     }
-    cdata[prm_773].state = 0;
-    cdata[prm_773].character_role = 0;
+    cdata[cc].state = 0;
+    cdata[cc].character_role = 0;
     check_quest();
-    return;
 }
 
 
