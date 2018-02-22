@@ -797,95 +797,90 @@ void play_animation_19()
             ++am;
         }
     }
+    for (int cnt = 0;; ++cnt)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        redraw(0);
+        pos(0, 0);
+        gmode(0);
+        gcopy(4, 0, 0, windoww, windowh);
+        int af = 0;
         {
-            redraw(0);
-            pos(0, 0);
-            gmode(0);
-            gcopy(4, 0, 0, windoww, windowh);
-            int af = 0;
+            int cnt = 0;
+            for (int cnt_end = cnt + (am); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (am); cnt < cnt_end; ++cnt)
+                if (ap(cnt) <= 0)
                 {
-                    if (ap(cnt) <= 0)
+                    continue;
+                }
+                af = 1;
+                cnt2 = cnt;
+                int anidy = ay(cnt) * std::clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
+                gmode(2, 96, 96);
+                pos(ax(cnt), anidy);
+                gcopy(
+                    7,
+                    std::clamp((8 - ap(cnt)), 0, 8) * 96 + 96 * (ap(cnt) < 15),
+                    0,
+                    96,
+                    96);
+                if (ap(cnt) <= 14)
+                {
+                    if (ap(cnt) >= 6)
                     {
-                        continue;
-                    }
-                    af = 1;
-                    cnt2 = cnt;
-                    int anidy =
-                        ay(cnt) * std::clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
-                    gmode(2, 96, 96);
-                    pos(ax(cnt), anidy);
-                    gcopy(
-                        7,
-                        std::clamp((8 - ap(cnt)), 0, 8) * 96
-                            + 96 * (ap(cnt) < 15),
-                        0,
-                        96,
-                        96);
-                    if (ap(cnt) <= 14)
-                    {
-                        if (ap(cnt) >= 6)
-                        {
-                            pos(ax(cnt), anidy + 16);
-                            gcopy(7, (14 - ap(cnt)) / 2 * 96, 96, 96, 96);
-                        }
-                    }
-                    int anidx = std::clamp(
-                        anidy / 55 + 1,
-                        0,
-                        7 - std::clamp((11 - ap(cnt)) * 2, 0, 7));
-                    {
-                        int cnt = 1;
-                        for (int cnt_end = cnt + (anidx); cnt < cnt_end; ++cnt)
-                        {
-                            pos(ax(cnt2), anidy - cnt * 55);
-                            gcopy(7, 96 * (ap(cnt2) < 15), 0, 96, 55);
-                            if (cnt == anidx)
-                            {
-                                pos(ax(cnt2), anidy - cnt * 55 - 40);
-                                gcopy(7, 288, 0, 96, 40);
-                            }
-                        }
-                    }
-                    if (ap(cnt) >= 20)
-                    {
-                        ap(cnt) -= rnd(2);
-                    }
-                    else
-                    {
-                        --ap(cnt);
+                        pos(ax(cnt), anidy + 16);
+                        gcopy(7, (14 - ap(cnt)) / 2 * 96, 96, 96, 96);
                     }
                 }
-            }
-            if (cnt % 2 == 0)
-            {
-                if (cnt < 30)
+                int anidx = std::clamp(
+                    anidy / 55 + 1,
+                    0,
+                    7 - std::clamp((11 - ap(cnt)) * 2, 0, 7));
                 {
-                    if (cnt / 3 < am)
+                    int cnt = 1;
+                    for (int cnt_end = cnt + (anidx); cnt < cnt_end; ++cnt)
                     {
-                        if (animode == 0)
+                        pos(ax(cnt2), anidy - cnt * 55);
+                        gcopy(7, 96 * (ap(cnt2) < 15), 0, 96, 55);
+                        if (cnt == anidx)
                         {
-                            snd(37);
-                        }
-                        if (animode >= 100)
-                        {
-                            snd(33);
+                            pos(ax(cnt2), anidy - cnt * 55 - 40);
+                            gcopy(7, 288, 0, 96, 40);
                         }
                     }
                 }
+                if (ap(cnt) >= 20)
+                {
+                    ap(cnt) -= rnd(2);
+                }
+                else
+                {
+                    --ap(cnt);
+                }
             }
-            if (af == 0)
-            {
-                break;
-            }
-            await(cfg_animewait + 25);
-            redraw(1);
         }
+        if (cnt % 2 == 0)
+        {
+            if (cnt < 30)
+            {
+                if (cnt / 3 < am)
+                {
+                    if (animode == 0)
+                    {
+                        snd(37);
+                    }
+                    if (animode >= 100)
+                    {
+                        snd(33);
+                    }
+                }
+            }
+        }
+        if (af == 0)
+        {
+            break;
+        }
+        await(cfg_animewait + 25);
+        redraw(1);
     }
 }
 
@@ -910,68 +905,64 @@ void play_animation_22()
             ++am;
         }
     }
+    for (int cnt = 0;; ++cnt)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        redraw(0);
+        if (cnt < 4)
         {
-            redraw(0);
-            if (cnt < 4)
-            {
-                pos(0, 0);
-            }
-            else
-            {
-                pos(5 - rnd(10), 5 - rnd(10));
-            }
-            gmode(0);
-            gcopy(4, 0, 0, windoww, windowh);
-            int af = 0;
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (am); cnt < cnt_end; ++cnt)
-                {
-                    if (ap(cnt) >= 16)
-                    {
-                        continue;
-                    }
-                    af = 1;
-                    gmode(2, 96, 96);
-                    if (ap(cnt) < 9)
-                    {
-                        ax(cnt) -= 16 + cnt % (windoww / 30);
-                        ay(cnt) += 24 + cnt % (windowh / 10);
-                    }
-                    if (ap(cnt) >= 10)
-                    {
-                        pos(ax(cnt) - 48, ay(cnt));
-                        gcopy(7, (ap(cnt) - 10) * 192, 96, 192, 96);
-                    }
-                    if (ap(cnt) < 16)
-                    {
-                        pos(ax(cnt), ay(cnt));
-                        gcopy(
-                            7, std::clamp((ap(cnt) - 8), 0, 8) * 96, 0, 96, 96);
-                    }
-                    ++ap(cnt);
-                }
-            }
-            if (cnt % 2 == 0)
-            {
-                if (cnt < 8)
-                {
-                    if (cnt / 3 < am)
-                    {
-                        snd(108);
-                    }
-                }
-            }
-            if (af == 0)
-            {
-                break;
-            }
-            await(cfg_animewait + 40);
-            redraw(1);
+            pos(0, 0);
         }
+        else
+        {
+            pos(5 - rnd(10), 5 - rnd(10));
+        }
+        gmode(0);
+        gcopy(4, 0, 0, windoww, windowh);
+        int af = 0;
+        {
+            int cnt = 0;
+            for (int cnt_end = cnt + (am); cnt < cnt_end; ++cnt)
+            {
+                if (ap(cnt) >= 16)
+                {
+                    continue;
+                }
+                af = 1;
+                gmode(2, 96, 96);
+                if (ap(cnt) < 9)
+                {
+                    ax(cnt) -= 16 + cnt % (windoww / 30);
+                    ay(cnt) += 24 + cnt % (windowh / 10);
+                }
+                if (ap(cnt) >= 10)
+                {
+                    pos(ax(cnt) - 48, ay(cnt));
+                    gcopy(7, (ap(cnt) - 10) * 192, 96, 192, 96);
+                }
+                if (ap(cnt) < 16)
+                {
+                    pos(ax(cnt), ay(cnt));
+                    gcopy(7, std::clamp((ap(cnt) - 8), 0, 8) * 96, 0, 96, 96);
+                }
+                ++ap(cnt);
+            }
+        }
+        if (cnt % 2 == 0)
+        {
+            if (cnt < 8)
+            {
+                if (cnt / 3 < am)
+                {
+                    snd(108);
+                }
+            }
+        }
+        if (af == 0)
+        {
+            break;
+        }
+        await(cfg_animewait + 40);
+        redraw(1);
     }
     await(cfg_animewait);
     redraw(0);
@@ -1003,60 +994,57 @@ void play_animation_21()
             ++am;
         }
     }
+    for (int cnt = 0;; ++cnt)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        redraw(0);
+        pos(5 - rnd(10), 5 - rnd(10));
+        gmode(0);
+        gcopy(4, 0, 0, windoww, windowh);
+        int af = 0;
         {
-            redraw(0);
-            pos(5 - rnd(10), 5 - rnd(10));
-            gmode(0);
-            gcopy(4, 0, 0, windoww, windowh);
-            int af = 0;
+            int cnt = 0;
+            for (int cnt_end = cnt + (am); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (am); cnt < cnt_end; ++cnt)
+                if (ap(cnt) >= 10)
                 {
-                    if (ap(cnt) >= 10)
-                    {
-                        continue;
-                    }
-                    af = 1;
-                    cnt2 = cnt;
-                    gmode(2, 96, 96);
-                    if (ap(cnt) < 10)
-                    {
-                        pos(ax(cnt), ay(cnt));
-                        gcopy(7, ap(cnt) * 96, 96, 96, 96);
-                        pos(ax(cnt), ay(cnt) - 96);
-                        gcopy(7, ap(cnt) * 96, 0, 96, 96);
-                    }
-                    if (ap(cnt) < 0)
-                    {
-                        ap(cnt) += rnd(2);
-                    }
-                    else
-                    {
-                        ++ap(cnt);
-                    }
+                    continue;
+                }
+                af = 1;
+                cnt2 = cnt;
+                gmode(2, 96, 96);
+                if (ap(cnt) < 10)
+                {
+                    pos(ax(cnt), ay(cnt));
+                    gcopy(7, ap(cnt) * 96, 96, 96, 96);
+                    pos(ax(cnt), ay(cnt) - 96);
+                    gcopy(7, ap(cnt) * 96, 0, 96, 96);
+                }
+                if (ap(cnt) < 0)
+                {
+                    ap(cnt) += rnd(2);
+                }
+                else
+                {
+                    ++ap(cnt);
                 }
             }
-            if (cnt % 2 == 0)
-            {
-                if (cnt < 8)
-                {
-                    if (cnt / 3 < am)
-                    {
-                        snd(108);
-                    }
-                }
-            }
-            if (af == 0)
-            {
-                break;
-            }
-            await(cfg_animewait + 40);
-            redraw(1);
         }
+        if (cnt % 2 == 0)
+        {
+            if (cnt < 8)
+            {
+                if (cnt / 3 < am)
+                {
+                    snd(108);
+                }
+            }
+        }
+        if (af == 0)
+        {
+            break;
+        }
+        await(cfg_animewait + 40);
+        redraw(1);
     }
     await(cfg_animewait);
     redraw(0);

@@ -2593,9 +2593,7 @@ label_2181_internal:
         refresh_character();
         break;
     case 1105:
-    {
-        int cnt = 0;
-        for (;; ++cnt)
+        for (int cnt = 0;; ++cnt)
         {
             await();
             p = rnd(300) + 100;
@@ -2643,7 +2641,6 @@ label_2181_internal:
                 }
             }
         }
-    }
         r1 = tc;
         refresh_character();
         autosave = 1 * (gdata_current_map != 35);
@@ -2707,71 +2704,64 @@ label_2181_internal:
         for (int cnt_end = cnt + (1 + (efstatus >= 1)); cnt < cnt_end; ++cnt)
         {
             cnt2 = cnt;
+            while (1)
             {
-                int cnt = 0;
-                for (;; ++cnt)
+                await();
+                p = rnd(300) + 100;
+                if (the_ability_db[p].related_basic_attribute != 0)
                 {
-                    await();
-                    p = rnd(300) + 100;
-                    if (the_ability_db[p].related_basic_attribute != 0)
+                    if (sdata.get(p, tc).original_level == 0)
                     {
-                        if (sdata.get(p, tc).original_level == 0)
+                        continue;
+                    }
+                    modify_potential(
+                        tc, p, efp * efstatusfix(-4, -2, 5, 5) / 100);
+                    if (cnt2 == 0)
+                    {
+                        s = lang(""s, u8"The "s);
+                    }
+                    else
+                    {
+                        s = lang(u8"さらに"s, u8"Furthermore, the "s);
+                    }
+                    if (efstatus >= 0)
+                    {
+                        if (is_in_fov(tc))
                         {
-                            continue;
-                        }
-                        modify_potential(
-                            tc, p, efp * efstatusfix(-4, -2, 5, 5) / 100);
-                        if (cnt2 == 0)
-                        {
-                            s = lang(""s, u8"The "s);
-                        }
-                        else
-                        {
-                            s = lang(u8"さらに"s, u8"Furthermore, the "s);
-                        }
-                        if (efstatus >= 0)
-                        {
-                            if (is_in_fov(tc))
-                            {
-                                snd(24);
-                                txtef(2);
-                                txt(lang(
-                                    s + ""s + name(tc) + u8"の"s
-                                        + i18n::_(
-                                              u8"ability",
-                                              std::to_string(p),
-                                              u8"name")
-                                        + u8"の技術の潜在能力が上昇した。"s,
-                                    s + u8"potential of "s + name(tc) + your(tc)
-                                        + u8" "s
-                                        + i18n::_(
-                                              u8"ability",
-                                              std::to_string(p),
-                                              u8"name")
-                                        + u8" skill increases."s));
-                            }
-                        }
-                        else if (is_in_fov(tc))
-                        {
-                            snd(117);
-                            txtef(3);
+                            snd(24);
+                            txtef(2);
                             txt(lang(
-                                ""s + name(tc) + u8"の"s
+                                s + ""s + name(tc) + u8"の"s
                                     + i18n::_(
                                           u8"ability",
                                           std::to_string(p),
                                           u8"name")
-                                    + u8"の技術の潜在能力が減少した。"s,
-                                u8"The potential of "s + name(tc) + your(tc)
+                                    + u8"の技術の潜在能力が上昇した。"s,
+                                s + u8"potential of "s + name(tc) + your(tc)
                                     + u8" "s
                                     + i18n::_(
                                           u8"ability",
                                           std::to_string(p),
                                           u8"name")
-                                    + u8" skill decreases."s));
+                                    + u8" skill increases."s));
                         }
-                        break;
                     }
+                    else if (is_in_fov(tc))
+                    {
+                        snd(117);
+                        txtef(3);
+                        txt(lang(
+                            ""s + name(tc) + u8"の"s
+                                + i18n::_(
+                                      u8"ability", std::to_string(p), u8"name")
+                                + u8"の技術の潜在能力が減少した。"s,
+                            u8"The potential of "s + name(tc) + your(tc)
+                                + u8" "s
+                                + i18n::_(
+                                      u8"ability", std::to_string(p), u8"name")
+                                + u8" skill decreases."s));
+                    }
+                    break;
                 }
             }
         }
@@ -3058,34 +3048,30 @@ label_2181_internal:
             p(4) = 19;
             p(5) = -1;
         }
+        for (int cnt = 0;; ++cnt)
         {
-            int cnt = 0;
-            for (;; ++cnt)
+            if (p(cnt) == -1)
             {
-                if (p(cnt) == -1)
+                break;
+            }
+            i = p(cnt) + 240 - 10;
+            if (efstatus <= -1)
+            {
+                if (cdata[tc].quality <= 3)
                 {
-                    break;
+                    cdata[tc].attr_adjs[i] -=
+                        rnd(sdata.get(p(cnt), tc).original_level) / 5 + rnd(5);
+                    continue;
                 }
-                i = p(cnt) + 240 - 10;
-                if (efstatus <= -1)
-                {
-                    if (cdata[tc].quality <= 3)
-                    {
-                        cdata[tc].attr_adjs[i] -=
-                            rnd(sdata.get(p(cnt), tc).original_level) / 5
-                            + rnd(5);
-                        continue;
-                    }
-                }
-                if (cdata[tc].attr_adjs[i] < 0)
-                {
-                    cdata[tc].attr_adjs[i] = 0;
-                }
-                if (efstatus >= 1)
-                {
-                    cdata[tc].attr_adjs[i] =
-                        sdata.get(p(cnt), tc).original_level / 10 + 5;
-                }
+            }
+            if (cdata[tc].attr_adjs[i] < 0)
+            {
+                cdata[tc].attr_adjs[i] = 0;
+            }
+            if (efstatus >= 1)
+            {
+                cdata[tc].attr_adjs[i] =
+                    sdata.get(p(cnt), tc).original_level / 10 + 5;
             }
         }
         r1 = tc;
@@ -4162,30 +4148,27 @@ label_2181_internal:
             fltbk = the_item_db[inv[ci].id]->category;
             valuebk = calcitemvalue(ci, 0);
             inv[ci].number = 0;
+            for (int cnt = 0;; ++cnt)
             {
-                int cnt = 0;
-                for (;; ++cnt)
+                await();
+                flt(calcobjlv(efp / 10) + 5, calcfixlv(3));
+                if (cnt < 10)
                 {
-                    await();
-                    flt(calcobjlv(efp / 10) + 5, calcfixlv(3));
-                    if (cnt < 10)
-                    {
-                        flttypemajor = fltbk;
-                    }
-                    int stat = itemcreate(0, 0, -1, -1, 0);
-                    if (stat == 0)
-                    {
-                        continue;
-                    }
-                    if (inv[ci].value > valuebk * 3 / 2 + 1000)
-                    {
-                        inv[ci].number = 0;
-                        continue;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    flttypemajor = fltbk;
+                }
+                int stat = itemcreate(0, 0, -1, -1, 0);
+                if (stat == 0)
+                {
+                    continue;
+                }
+                if (inv[ci].value > valuebk * 3 / 2 + 1000)
+                {
+                    inv[ci].number = 0;
+                    continue;
+                }
+                else
+                {
+                    break;
                 }
             }
             txt(lang(

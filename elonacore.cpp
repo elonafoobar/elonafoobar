@@ -636,17 +636,14 @@ void netload(const std::string& prm_194)
     int res_at_m0 = 0;
     std::string estr_at_m0;
     netrequest(prm_194);
+    while (1)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        netexec(res_at_m0);
+        if (res_at_m0)
         {
-            netexec(res_at_m0);
-            if (res_at_m0)
-            {
-                break;
-            }
-            await(50);
+            break;
         }
+        await(50);
     }
     if (res_at_m0 > 0)
     {
@@ -5682,36 +5679,32 @@ void sortenc(int prm_454)
 {
     int f_at_m47 = 0;
     int cnt2_at_m47 = 0;
+    while (1)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        f_at_m47 = 0;
         {
-            f_at_m47 = 0;
+            int cnt = 0;
+            for (int cnt_end = cnt + (14); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (14); cnt < cnt_end; ++cnt)
+                cnt2_at_m47 = cnt + 1;
+                if (inv[prm_454].enchantments[cnt].id
+                    < inv[prm_454].enchantments[cnt2_at_m47].id)
                 {
-                    cnt2_at_m47 = cnt + 1;
-                    if (inv[prm_454].enchantments[cnt].id
-                        < inv[prm_454].enchantments[cnt2_at_m47].id)
-                    {
-                        p_at_m47(0) = inv[prm_454].enchantments[cnt].id;
-                        p_at_m47(1) = inv[prm_454].enchantments[cnt].power;
-                        inv[prm_454].enchantments[cnt].id =
-                            inv[prm_454].enchantments[cnt2_at_m47].id;
-                        inv[prm_454].enchantments[cnt2_at_m47].id = p_at_m47;
-                        inv[prm_454].enchantments[cnt].power =
-                            inv[prm_454].enchantments[cnt2_at_m47].power;
-                        inv[prm_454].enchantments[cnt2_at_m47].power =
-                            p_at_m47(1);
-                        f_at_m47 = 1;
-                    }
+                    p_at_m47(0) = inv[prm_454].enchantments[cnt].id;
+                    p_at_m47(1) = inv[prm_454].enchantments[cnt].power;
+                    inv[prm_454].enchantments[cnt].id =
+                        inv[prm_454].enchantments[cnt2_at_m47].id;
+                    inv[prm_454].enchantments[cnt2_at_m47].id = p_at_m47;
+                    inv[prm_454].enchantments[cnt].power =
+                        inv[prm_454].enchantments[cnt2_at_m47].power;
+                    inv[prm_454].enchantments[cnt2_at_m47].power = p_at_m47(1);
+                    f_at_m47 = 1;
                 }
             }
-            if (f_at_m47 == 0)
-            {
-                break;
-            }
+        }
+        if (f_at_m47 == 0)
+        {
+            break;
         }
     }
     return;
@@ -8035,26 +8028,23 @@ void cutname(std::string& prm_541, int prm_542)
         if (strlen_u(prm_541) > size_t(prm_542))
         {
             len_at_m71 = 0;
+            while (1)
             {
-                int cnt = 0;
-                for (;; ++cnt)
+                if (len_at_m71 >= prm_542)
                 {
-                    if (len_at_m71 >= prm_542)
-                    {
-                        break;
-                    }
-                    p_at_m71 = prm_541[len_at_m71];
-                    if ((p_at_m71 >= 129 && p_at_m71 <= 159)
-                        || (p_at_m71 >= 224 && p_at_m71 <= 252))
-                    {
-                        p_at_m71 = 2;
-                    }
-                    else
-                    {
-                        p_at_m71 = 1;
-                    }
-                    len_at_m71 += p_at_m71;
+                    break;
                 }
+                p_at_m71 = prm_541[len_at_m71];
+                if ((p_at_m71 >= 129 && p_at_m71 <= 159)
+                    || (p_at_m71 >= 224 && p_at_m71 <= 252))
+                {
+                    p_at_m71 = 2;
+                }
+                else
+                {
+                    p_at_m71 = 1;
+                }
+                len_at_m71 += p_at_m71;
             }
             prm_541 = strmid(prm_541, 0, len_at_m71) + u8".."s;
         }
@@ -10522,19 +10512,16 @@ std::string cnv_str(
 {
     std::string s3_at_m100;
     int p_at_m100 = 0;
+    while (1)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        s3_at_m100 = strutil::to_lower(prm_696);
+        p_at_m100 = instr(s3_at_m100, 0, prm_697);
+        if (p_at_m100 == -1)
         {
-            s3_at_m100 = strutil::to_lower(prm_696);
-            p_at_m100 = instr(s3_at_m100, 0, prm_697);
-            if (p_at_m100 == -1)
-            {
-                break;
-            }
-            prm_696 = strmid(prm_696, 0, p_at_m100) + lang(prm_698, prm_698)
-                + strmid(prm_696, (p_at_m100 + std::size(prm_697)), 300);
+            break;
         }
+        prm_696 = strmid(prm_696, 0, p_at_m100) + lang(prm_698, prm_698)
+            + strmid(prm_696, (p_at_m100 + std::size(prm_697)), 300);
     }
     return prm_696;
 }
@@ -10633,16 +10620,13 @@ std::string fixtxt(const std::string& prm_724, int prm_725)
     m_at_m104 = ""s + prm_724;
     if (strlen_u(prm_724) < size_t(prm_725))
     {
+        while (1)
         {
-            int cnt = 0;
-            for (;; ++cnt)
+            if (strlen_u(m_at_m104) >= size_t(prm_725))
             {
-                if (strlen_u(m_at_m104) >= size_t(prm_725))
-                {
-                    break;
-                }
-                m_at_m104 += u8" "s;
+                break;
             }
+            m_at_m104 += u8" "s;
         }
     }
     else
@@ -13000,17 +12984,14 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
         }
         if (f_at_m125 == 0)
         {
+            for (int cnt = 0;; ++cnt)
             {
-                int cnt = 0;
-                for (;; ++cnt)
+                tc_at_m125 = 57 + rnd(188);
+                if (cdata[cnt].state == 1)
                 {
-                    tc_at_m125 = 57 + rnd(188);
-                    if (cdata[cnt].state == 1)
+                    if (cdata[cnt].character_role == 0)
                     {
-                        if (cdata[cnt].character_role == 0)
-                        {
-                            break;
-                        }
+                        break;
                     }
                 }
             }
@@ -17646,20 +17627,17 @@ int advfavoriteskill(int prm_868)
     randomize(prm_868);
     rtval = 0;
     i_at_m145 = 0;
+    while (1)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        rtval(i_at_m145) = rnd(300) + 100;
+        if (the_ability_db[rtval(i_at_m145)].related_basic_attribute == 0)
         {
-            rtval(i_at_m145) = rnd(300) + 100;
-            if (the_ability_db[rtval(i_at_m145)].related_basic_attribute == 0)
-            {
-                continue;
-            }
-            ++i_at_m145;
-            if (i_at_m145 >= 2)
-            {
-                break;
-            }
+            continue;
+        }
+        ++i_at_m145;
+        if (i_at_m145 >= 2)
+        {
+            break;
         }
     }
     randomize();
@@ -18133,111 +18111,106 @@ label_1394_internal:
     {
         header_at_m147 = instr(netbuf, 0, u8"<!--START-->"s) + 13;
     }
+    for (int cnt = 0;; ++cnt)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        if (prm_885 == 4)
         {
-            if (prm_885 == 4)
+            netbuf = strmid(netbuf, header_at_m147, 2000);
+            break;
+        }
+        if (prm_885 == 5)
+        {
+            tail_at_m147 = instr(netbuf, header_at_m147, u8"%"s);
+            if (tail_at_m147 == -1)
             {
-                netbuf = strmid(netbuf, header_at_m147, 2000);
                 break;
             }
-            if (prm_885 == 5)
+            listn(0, listmax) = strmid(netbuf, header_at_m147, tail_at_m147);
+            header_at_m147 += tail_at_m147 + 1;
+            ++listmax;
+        }
+        if (prm_885 == 1)
+        {
+            tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
+            if (tail_at_m147 == -1)
             {
-                tail_at_m147 = instr(netbuf, header_at_m147, u8"%"s);
-                if (tail_at_m147 == -1)
-                {
-                    break;
-                }
-                listn(0, listmax) =
-                    strmid(netbuf, header_at_m147, tail_at_m147);
-                header_at_m147 += tail_at_m147 + 1;
-                ++listmax;
-            }
-            if (prm_885 == 1)
-            {
-                tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
-                if (tail_at_m147 == -1)
-                {
-                    break;
-                }
-                if (listmax > 100)
-                {
-                    break;
-                }
-                list(0, listmax) =
-                    elona::stoi(strmid(netbuf, header_at_m147, tail_at_m147));
-                header_at_m147 += tail_at_m147 + 2;
-                tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
-                listn(0, listmax) =
-                    ""s + strmid(netbuf, header_at_m147, tail_at_m147);
-                header_at_m147 += tail_at_m147 + 2;
-                tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
-                list(1, listmax) =
-                    elona::stoi(strmid(netbuf, header_at_m147, tail_at_m147));
-                header_at_m147 += tail_at_m147 + 2;
-                listn(1, listmax) = ""s + list(1, listmax);
-                tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
-                header_at_m147 += tail_at_m147 + 2;
-                tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
-                header_at_m147 += tail_at_m147 + 3;
-                ++listmax;
-            }
-            if (prm_885 == 0)
-            {
-                tail_at_m147 = instr(netbuf, header_at_m147, u8"%"s);
-                if (tail_at_m147 == -1)
-                {
-                    break;
-                }
-                chat_count_at_m147 =
-                    elona::stoi(strmid(netbuf, header_at_m147, tail_at_m147));
-                header_at_m147 += tail_at_m147 + 1;
-                if (cnt == 0)
-                {
-                    if (chat_count_at_m147 > count_latest_at_m147)
-                    {
-                        count_latest_at_m147 = chat_count_at_m147;
-                    }
-                }
-                if (cnt == 1)
-                {
-                    if (lastchat == 0)
-                    {
-                        break;
-                    }
-                }
-                if (chat_count_at_m147 <= lastchat)
-                {
-                    break;
-                }
-                tail_at_m147 = instr(netbuf, header_at_m147, u8"%"s);
-                chat_date_at_m147 =
-                    strmid(netbuf, header_at_m147, tail_at_m147);
-                header_at_m147 += tail_at_m147 + 1;
-                tail_at_m147 = instr(netbuf, header_at_m147, u8"%"s);
-                chat_msg_at_m147 = strmid(netbuf, header_at_m147, tail_at_m147);
-                header_at_m147 += tail_at_m147 + 1;
-                tail_at_m147 = instr(netbuf, header_at_m147, u8"%"s);
-                chat_ip_at_m147 = strmid(netbuf, header_at_m147, tail_at_m147);
-                header_at_m147 += tail_at_m147 + 2;
-                chatnew += ""s + chat_msg_at_m147 + u8"\n"s;
-            }
-            if (prm_885 == 3)
-            {
-                tail_at_m147 = instr(netbuf, header_at_m147, u8"%"s);
-                if (tail_at_m147 == -1)
-                {
-                    break;
-                }
-                tail_at_m147 = instr(netbuf, header_at_m147, u8"%"s);
-                s = strmid(netbuf, header_at_m147, tail_at_m147);
-                header_at_m147 += tail_at_m147 + 1;
-                tail_at_m147 = instr(netbuf, header_at_m147, u8"%"s);
-                s(1) = strmid(netbuf, header_at_m147, tail_at_m147);
-                header_at_m147 += tail_at_m147 + 1;
                 break;
             }
+            if (listmax > 100)
+            {
+                break;
+            }
+            list(0, listmax) =
+                elona::stoi(strmid(netbuf, header_at_m147, tail_at_m147));
+            header_at_m147 += tail_at_m147 + 2;
+            tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
+            listn(0, listmax) =
+                ""s + strmid(netbuf, header_at_m147, tail_at_m147);
+            header_at_m147 += tail_at_m147 + 2;
+            tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
+            list(1, listmax) =
+                elona::stoi(strmid(netbuf, header_at_m147, tail_at_m147));
+            header_at_m147 += tail_at_m147 + 2;
+            listn(1, listmax) = ""s + list(1, listmax);
+            tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
+            header_at_m147 += tail_at_m147 + 2;
+            tail_at_m147 = instr(netbuf, header_at_m147, u8"<>"s);
+            header_at_m147 += tail_at_m147 + 3;
+            ++listmax;
+        }
+        if (prm_885 == 0)
+        {
+            tail_at_m147 = instr(netbuf, header_at_m147, u8"%"s);
+            if (tail_at_m147 == -1)
+            {
+                break;
+            }
+            chat_count_at_m147 =
+                elona::stoi(strmid(netbuf, header_at_m147, tail_at_m147));
+            header_at_m147 += tail_at_m147 + 1;
+            if (cnt == 0)
+            {
+                if (chat_count_at_m147 > count_latest_at_m147)
+                {
+                    count_latest_at_m147 = chat_count_at_m147;
+                }
+            }
+            if (cnt == 1)
+            {
+                if (lastchat == 0)
+                {
+                    break;
+                }
+            }
+            if (chat_count_at_m147 <= lastchat)
+            {
+                break;
+            }
+            tail_at_m147 = instr(netbuf, header_at_m147, u8"%"s);
+            chat_date_at_m147 = strmid(netbuf, header_at_m147, tail_at_m147);
+            header_at_m147 += tail_at_m147 + 1;
+            tail_at_m147 = instr(netbuf, header_at_m147, u8"%"s);
+            chat_msg_at_m147 = strmid(netbuf, header_at_m147, tail_at_m147);
+            header_at_m147 += tail_at_m147 + 1;
+            tail_at_m147 = instr(netbuf, header_at_m147, u8"%"s);
+            chat_ip_at_m147 = strmid(netbuf, header_at_m147, tail_at_m147);
+            header_at_m147 += tail_at_m147 + 2;
+            chatnew += ""s + chat_msg_at_m147 + u8"\n"s;
+        }
+        if (prm_885 == 3)
+        {
+            tail_at_m147 = instr(netbuf, header_at_m147, u8"%"s);
+            if (tail_at_m147 == -1)
+            {
+                break;
+            }
+            tail_at_m147 = instr(netbuf, header_at_m147, u8"%"s);
+            s = strmid(netbuf, header_at_m147, tail_at_m147);
+            header_at_m147 += tail_at_m147 + 1;
+            tail_at_m147 = instr(netbuf, header_at_m147, u8"%"s);
+            s(1) = strmid(netbuf, header_at_m147, tail_at_m147);
+            header_at_m147 += tail_at_m147 + 1;
+            break;
         }
     }
     if (prm_885 == 0)
@@ -23392,127 +23365,124 @@ void place_character()
             return;
         }
     }
+    for (int cnt = 0;; ++cnt)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        if (cnt == 99)
         {
-            if (cnt == 99)
+            if (rc >= 57)
             {
-                if (rc >= 57)
-                {
-                    placefail = 1;
-                    break;
-                }
+                placefail = 1;
+                break;
             }
-            if (cnt > 99)
-            {
-                if (mdata(0) == 0)
-                {
-                    placefail = 1;
-                    break;
-                }
-                y = (cnt - 100) / mdata(0);
-                x = (cnt - 100) % mdata(0);
-                if (y >= mdata(1))
-                {
-                    if (rc != 0)
-                    {
-                        placefail = 1;
-                        break;
-                    }
-                    else
-                    {
-                        x = rnd(mdata(0));
-                        y = rnd(mdata(1));
-                        if (map(x, y, 1) != 0)
-                        {
-                            map(x, y, 1) = 0;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                x = rnd(mdata(0) - 4) + 2;
-                y = rnd(mdata(1) - 4) + 2;
-                if (cxinit >= 0)
-                {
-                    if (cnt == 0)
-                    {
-                        x = cxinit;
-                        y = cyinit;
-                    }
-                    else
-                    {
-                        x = cxinit + rnd((cnt + 1)) - rnd((cnt + 1));
-                        y = cyinit + rnd((cnt + 1)) - rnd((cnt + 1));
-                    }
-                }
-                if (cnt < 20)
-                {
-                    if (cxinit == -2)
-                    {
-                        p = cdata[0].vision_distance / 2;
-                        if (x >= cdata[0].position.x - p
-                            && x <= cdata[0].position.x + p)
-                        {
-                            if (y >= cdata[0].position.y - p
-                                && y <= cdata[0].position.y + p)
-                            {
-                                continue;
-                            }
-                        }
-                    }
-                }
-            }
-            if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
-            {
-                continue;
-            }
-            if (chipm(7, map(x, y, 0)) & 4)
-            {
-                continue;
-            }
-            if (map(x, y, 1) != 0)
-            {
-                continue;
-            }
-            if (map(x, y, 6) != 0)
-            {
-                if (chipm(7, map(x, y, 6) % 1000) & 4)
-                {
-                    continue;
-                }
-                cell_featread(x, y);
-                if (feat(1) == 11)
-                {
-                    if (rc != 0)
-                    {
-                        if (cxinit < 0)
-                        {
-                            continue;
-                        }
-                    }
-                }
-                if (feat(1) == 10)
-                {
-                    if (rc != 0)
-                    {
-                        if (cxinit < 0)
-                        {
-                            continue;
-                        }
-                    }
-                }
-            }
-            cdata[rc].initial_position.x = x;
-            cdata[rc].initial_position.y = y;
-            map(x, y, 1) = rc + 1;
-            cdata[rc].position.x = x;
-            cdata[rc].position.y = y;
-            p = 1;
-            break;
         }
+        if (cnt > 99)
+        {
+            if (mdata(0) == 0)
+            {
+                placefail = 1;
+                break;
+            }
+            y = (cnt - 100) / mdata(0);
+            x = (cnt - 100) % mdata(0);
+            if (y >= mdata(1))
+            {
+                if (rc != 0)
+                {
+                    placefail = 1;
+                    break;
+                }
+                else
+                {
+                    x = rnd(mdata(0));
+                    y = rnd(mdata(1));
+                    if (map(x, y, 1) != 0)
+                    {
+                        map(x, y, 1) = 0;
+                    }
+                }
+            }
+        }
+        else
+        {
+            x = rnd(mdata(0) - 4) + 2;
+            y = rnd(mdata(1) - 4) + 2;
+            if (cxinit >= 0)
+            {
+                if (cnt == 0)
+                {
+                    x = cxinit;
+                    y = cyinit;
+                }
+                else
+                {
+                    x = cxinit + rnd((cnt + 1)) - rnd((cnt + 1));
+                    y = cyinit + rnd((cnt + 1)) - rnd((cnt + 1));
+                }
+            }
+            if (cnt < 20)
+            {
+                if (cxinit == -2)
+                {
+                    p = cdata[0].vision_distance / 2;
+                    if (x >= cdata[0].position.x - p
+                        && x <= cdata[0].position.x + p)
+                    {
+                        if (y >= cdata[0].position.y - p
+                            && y <= cdata[0].position.y + p)
+                        {
+                            continue;
+                        }
+                    }
+                }
+            }
+        }
+        if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
+        {
+            continue;
+        }
+        if (chipm(7, map(x, y, 0)) & 4)
+        {
+            continue;
+        }
+        if (map(x, y, 1) != 0)
+        {
+            continue;
+        }
+        if (map(x, y, 6) != 0)
+        {
+            if (chipm(7, map(x, y, 6) % 1000) & 4)
+            {
+                continue;
+            }
+            cell_featread(x, y);
+            if (feat(1) == 11)
+            {
+                if (rc != 0)
+                {
+                    if (cxinit < 0)
+                    {
+                        continue;
+                    }
+                }
+            }
+            if (feat(1) == 10)
+            {
+                if (rc != 0)
+                {
+                    if (cxinit < 0)
+                    {
+                        continue;
+                    }
+                }
+            }
+        }
+        cdata[rc].initial_position.x = x;
+        cdata[rc].initial_position.y = y;
+        map(x, y, 1) = rc + 1;
+        cdata[rc].position.x = x;
+        cdata[rc].position.y = y;
+        p = 1;
+        break;
     }
     if (placefail == 1)
     {
@@ -28625,40 +28595,36 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
 
 void map_placearena(int prm_939, int prm_940)
 {
+    while (1)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        await();
+        x = rnd(7) + 5;
+        y = rnd(6) + 6;
+        if (prm_940 == 0)
         {
-            await();
-            x = rnd(7) + 5;
-            y = rnd(6) + 6;
-            if (prm_940 == 0)
-            {
-                x += 8;
-            }
-            cxinit = x;
-            cyinit = y;
-            rc = prm_939;
-            place_character();
-            if (prm_940 == 0)
-            {
-                if (cdata[prm_939].position.x >= 13
-                    && cdata[prm_939].position.y >= 6
-                    && cdata[prm_939].position.x < 20
-                    && cdata[prm_939].position.y < 12)
-                {
-                    break;
-                }
-            }
-            else if (
-                cdata[prm_939].position.x >= 5 && cdata[prm_939].position.y >= 6
-                && cdata[prm_939].position.x < 12
+            x += 8;
+        }
+        cxinit = x;
+        cyinit = y;
+        rc = prm_939;
+        place_character();
+        if (prm_940 == 0)
+        {
+            if (cdata[prm_939].position.x >= 13
+                && cdata[prm_939].position.y >= 6
+                && cdata[prm_939].position.x < 20
                 && cdata[prm_939].position.y < 12)
             {
                 break;
             }
-            map(cdata[prm_939].position.x, cdata[prm_939].position.y, 1) = 0;
         }
+        else if (
+            cdata[prm_939].position.x >= 5 && cdata[prm_939].position.y >= 6
+            && cdata[prm_939].position.x < 12 && cdata[prm_939].position.y < 12)
+        {
+            break;
+        }
+        map(cdata[prm_939].position.x, cdata[prm_939].position.y, 1) = 0;
     }
     return;
 }
@@ -31597,30 +31563,24 @@ void initialize_random_nefia_rdtype8()
             }
         }
     }
+    while (1)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        x = rnd(mdata(0));
+        y = rnd(15);
+        if (map(x, y, 0) == 100)
         {
-            x = rnd(mdata(0));
-            y = rnd(15);
-            if (map(x, y, 0) == 100)
-            {
-                map_placeupstairs(x, y);
-                break;
-            }
+            map_placeupstairs(x, y);
+            break;
         }
     }
+    while (1)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        x = rnd(mdata(0));
+        y = mdata(1) - rnd(15) - 1;
+        if (map(x, y, 0) == 100)
         {
-            x = rnd(mdata(0));
-            y = mdata(1) - rnd(15) - 1;
-            if (map(x, y, 0) == 100)
-            {
-                map_placedownstairs(x, y);
-                break;
-            }
+            map_placedownstairs(x, y);
+            break;
         }
     }
     return;
@@ -31687,222 +31647,215 @@ void label_1709()
         }
     }
     i = 0;
+    while (1)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        dimmix(way);
+        digno = 0;
         {
-            dimmix(way);
-            digno = 0;
+            int cnt = 0;
+            for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
+                pmdig = mdig;
+                if (way(cnt) == 0)
                 {
-                    pmdig = mdig;
-                    if (way(cnt) == 0)
+                    if (pmdig / _mclass == 0)
                     {
-                        if (pmdig / _mclass == 0)
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            mdig -= _mclass;
-                        }
-                    }
-                    if (way(cnt) == 1)
-                    {
-                        if (pmdig % _mclass == _mclass - 1)
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            ++mdig;
-                        }
-                    }
-                    if (way(cnt) == 2)
-                    {
-                        if (pmdig / _mclass == _mclass - 1)
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            mdig += _mclass;
-                        }
-                    }
-                    if (way(cnt) == 3)
-                    {
-                        if (pmdig % _mclass == 0)
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            --mdig;
-                        }
-                    }
-                    if (maze(mdig) != _hole)
-                    {
-                        mdig = pmdig;
                         continue;
                     }
-                    ++i;
-                    sdigx = pmdig % _mclass * _bold * 2 + _bold;
-                    sdigy = pmdig / _mclass * _bold * 2 + _bold;
-                    if (way(cnt) == 0)
+                    else
                     {
-                        maze(mdig) = 3;
-                        {
-                            int cnt = 0;
-                            for (int cnt_end = cnt + (_bold * 2); cnt < cnt_end;
-                                 ++cnt)
-                            {
-                                y = sdigy - _bold * 2 + cnt - _bold + 4;
-                                {
-                                    int cnt = 0;
-                                    for (int cnt_end = cnt + (_bold - 1);
-                                         cnt < cnt_end;
-                                         ++cnt)
-                                    {
-                                        x = sdigx + cnt - _bold + 4;
-                                        map(x, y, 0) = 100;
-                                    }
-                                }
-                            }
-                        }
+                        mdig -= _mclass;
                     }
-                    if (way(cnt) == 1)
-                    {
-                        maze(mdig) = 4;
-                        {
-                            int cnt = 0;
-                            for (int cnt_end = cnt + (_bold - 1); cnt < cnt_end;
-                                 ++cnt)
-                            {
-                                y = sdigy + cnt - _bold + 4;
-                                {
-                                    int cnt = 0;
-                                    for (int cnt_end = cnt + (_bold * 3 - 1);
-                                         cnt < cnt_end;
-                                         ++cnt)
-                                    {
-                                        x = sdigx + cnt - _bold + 4;
-                                        map(x, y, 0) = 100;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    if (way(cnt) == 2)
-                    {
-                        maze(mdig) = 1;
-                        {
-                            int cnt = 0;
-                            for (int cnt_end = cnt + (_bold * 3 - 1);
-                                 cnt < cnt_end;
-                                 ++cnt)
-                            {
-                                y = sdigy + cnt - _bold + 4;
-                                {
-                                    int cnt = 0;
-                                    for (int cnt_end = cnt + (_bold - 1);
-                                         cnt < cnt_end;
-                                         ++cnt)
-                                    {
-                                        x = sdigx + cnt - _bold + 4;
-                                        map(x, y, 0) = 100;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    if (way(cnt) == 3)
-                    {
-                        maze(mdig) = 2;
-                        {
-                            int cnt = 0;
-                            for (int cnt_end = cnt + (_bold - 1); cnt < cnt_end;
-                                 ++cnt)
-                            {
-                                y = sdigy + cnt - _bold + 4;
-                                {
-                                    int cnt = 0;
-                                    for (int cnt_end = cnt + (_bold * 2);
-                                         cnt < cnt_end;
-                                         ++cnt)
-                                    {
-                                        x = sdigx + cnt - _bold * 2 - _bold + 4;
-                                        map(x, y, 0) = 100;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    digno = 1;
-                    break;
                 }
-            }
-            if (digno == 1)
-            {
-                continue;
-            }
-            if (maze(mdig) == 7)
-            {
+                if (way(cnt) == 1)
+                {
+                    if (pmdig % _mclass == _mclass - 1)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        ++mdig;
+                    }
+                }
+                if (way(cnt) == 2)
+                {
+                    if (pmdig / _mclass == _mclass - 1)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        mdig += _mclass;
+                    }
+                }
+                if (way(cnt) == 3)
+                {
+                    if (pmdig % _mclass == 0)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        --mdig;
+                    }
+                }
+                if (maze(mdig) != _hole)
+                {
+                    mdig = pmdig;
+                    continue;
+                }
+                ++i;
+                sdigx = pmdig % _mclass * _bold * 2 + _bold;
+                sdigy = pmdig / _mclass * _bold * 2 + _bold;
+                if (way(cnt) == 0)
+                {
+                    maze(mdig) = 3;
+                    {
+                        int cnt = 0;
+                        for (int cnt_end = cnt + (_bold * 2); cnt < cnt_end;
+                             ++cnt)
+                        {
+                            y = sdigy - _bold * 2 + cnt - _bold + 4;
+                            {
+                                int cnt = 0;
+                                for (int cnt_end = cnt + (_bold - 1);
+                                     cnt < cnt_end;
+                                     ++cnt)
+                                {
+                                    x = sdigx + cnt - _bold + 4;
+                                    map(x, y, 0) = 100;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (way(cnt) == 1)
+                {
+                    maze(mdig) = 4;
+                    {
+                        int cnt = 0;
+                        for (int cnt_end = cnt + (_bold - 1); cnt < cnt_end;
+                             ++cnt)
+                        {
+                            y = sdigy + cnt - _bold + 4;
+                            {
+                                int cnt = 0;
+                                for (int cnt_end = cnt + (_bold * 3 - 1);
+                                     cnt < cnt_end;
+                                     ++cnt)
+                                {
+                                    x = sdigx + cnt - _bold + 4;
+                                    map(x, y, 0) = 100;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (way(cnt) == 2)
+                {
+                    maze(mdig) = 1;
+                    {
+                        int cnt = 0;
+                        for (int cnt_end = cnt + (_bold * 3 - 1); cnt < cnt_end;
+                             ++cnt)
+                        {
+                            y = sdigy + cnt - _bold + 4;
+                            {
+                                int cnt = 0;
+                                for (int cnt_end = cnt + (_bold - 1);
+                                     cnt < cnt_end;
+                                     ++cnt)
+                                {
+                                    x = sdigx + cnt - _bold + 4;
+                                    map(x, y, 0) = 100;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (way(cnt) == 3)
+                {
+                    maze(mdig) = 2;
+                    {
+                        int cnt = 0;
+                        for (int cnt_end = cnt + (_bold - 1); cnt < cnt_end;
+                             ++cnt)
+                        {
+                            y = sdigy + cnt - _bold + 4;
+                            {
+                                int cnt = 0;
+                                for (int cnt_end = cnt + (_bold * 2);
+                                     cnt < cnt_end;
+                                     ++cnt)
+                                {
+                                    x = sdigx + cnt - _bold * 2 - _bold + 4;
+                                    map(x, y, 0) = 100;
+                                }
+                            }
+                        }
+                    }
+                }
+                digno = 1;
                 break;
             }
-            if (maze(mdig) == 1)
-            {
-                mdig -= _mclass;
-                continue;
-            }
-            if (maze(mdig) == 2)
-            {
-                ++mdig;
-                continue;
-            }
-            if (maze(mdig) == 3)
-            {
-                mdig += _mclass;
-                continue;
-            }
-            if (maze(mdig) == 4)
-            {
-                --mdig;
-            }
+        }
+        if (digno == 1)
+        {
+            continue;
+        }
+        if (maze(mdig) == 7)
+        {
+            break;
+        }
+        if (maze(mdig) == 1)
+        {
+            mdig -= _mclass;
+            continue;
+        }
+        if (maze(mdig) == 2)
+        {
+            ++mdig;
+            continue;
+        }
+        if (maze(mdig) == 3)
+        {
+            mdig += _mclass;
+            continue;
+        }
+        if (maze(mdig) == 4)
+        {
+            --mdig;
         }
     }
     if (rdsecond)
     {
         return;
     }
+    for (int cnt = 0;; ++cnt)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        x = rnd(mdata(0));
+        y = rnd(mdata(1));
+        if (map(x, y, 0) != 100)
         {
-            x = rnd(mdata(0));
-            y = rnd(mdata(1));
-            if (map(x, y, 0) != 100)
-            {
-                continue;
-            }
-            dx = rnd(mdata(0));
-            dy = rnd(mdata(1));
-            if (map(dx, dy, 0) != 100)
-            {
-                continue;
-            }
-            if (dist(x, y, dx, dy) < 10)
-            {
-                if (cnt < 1000)
-                {
-                    continue;
-                }
-            }
-            map_placeupstairs(x, y);
-            map_placedownstairs(dx, dy);
-            break;
+            continue;
         }
+        dx = rnd(mdata(0));
+        dy = rnd(mdata(1));
+        if (map(dx, dy, 0) != 100)
+        {
+            continue;
+        }
+        if (dist(x, y, dx, dy) < 10)
+        {
+            if (cnt < 1000)
+            {
+                continue;
+            }
+        }
+        map_placeupstairs(x, y);
+        map_placedownstairs(dx, dy);
+        break;
     }
     return;
 }
@@ -31922,140 +31875,136 @@ void initialize_random_nefia_rdtype10()
         {
             cnt2 = cnt;
             t = 100 + cnt2 + 1;
+            while (1)
             {
-                int cnt = 0;
-                for (;; ++cnt)
+                x = rnd(mdata(0));
+                y = rnd(mdata(1));
+                if (map(x, y, 0) != 100)
                 {
-                    x = rnd(mdata(0));
-                    y = rnd(mdata(1));
-                    if (map(x, y, 0) != 100)
+                    continue;
+                }
+                int w = 10 + rnd(4);
+                {
+                    int cnt = 0;
+                    for (int cnt_end = cnt + (w); cnt < cnt_end; ++cnt)
                     {
-                        continue;
-                    }
-                    int w = 10 + rnd(4);
-                    {
-                        int cnt = 0;
-                        for (int cnt_end = cnt + (w); cnt < cnt_end; ++cnt)
+                        dy = cnt + y - w / 2;
                         {
-                            dy = cnt + y - w / 2;
+                            int cnt = 0;
+                            for (int cnt_end = cnt + (w); cnt < cnt_end; ++cnt)
                             {
-                                int cnt = 0;
-                                for (int cnt_end = cnt + (w); cnt < cnt_end;
-                                     ++cnt)
+                                dx = cnt + x - w / 2;
+                                if (dx < 1 || dy < 1 || dx >= mdata(0) - 1
+                                    || dy >= mdata(1) - 1)
                                 {
-                                    dx = cnt + x - w / 2;
-                                    if (dx < 1 || dy < 1 || dx >= mdata(0) - 1
-                                        || dy >= mdata(1) - 1)
-                                    {
-                                        continue;
-                                    }
-                                    if (dist(x, y, dx, dy) >= w / 2)
-                                    {
-                                        continue;
-                                    }
-                                    tx = dx - 1;
-                                    ty = dy;
-                                    if (map(tx, ty, 0) != t)
-                                    {
-                                        if (map(tx, ty, 0) != 0)
-                                        {
-                                            if (map(tx, ty, 0) != 100)
-                                            {
-                                                continue;
-                                            }
-                                        }
-                                    }
-                                    tx = dx + 1;
-                                    ty = dy;
-                                    if (map(tx, ty, 0) != t)
-                                    {
-                                        if (map(tx, ty, 0) != 0)
-                                        {
-                                            if (map(tx, ty, 0) != 100)
-                                            {
-                                                continue;
-                                            }
-                                        }
-                                    }
-                                    tx = dx;
-                                    ty = dy - 1;
-                                    if (map(tx, ty, 0) != t)
-                                    {
-                                        if (map(tx, ty, 0) != 0)
-                                        {
-                                            if (map(tx, ty, 0) != 100)
-                                            {
-                                                continue;
-                                            }
-                                        }
-                                    }
-                                    tx = dx;
-                                    ty = dy + 1;
-                                    if (map(tx, ty, 0) != t)
-                                    {
-                                        if (map(tx, ty, 0) != 0)
-                                        {
-                                            if (map(tx, ty, 0) != 100)
-                                            {
-                                                continue;
-                                            }
-                                        }
-                                    }
-                                    tx = dx - 1;
-                                    ty = dy - 1;
-                                    if (map(tx, ty, 0) != t)
-                                    {
-                                        if (map(tx, ty, 0) != 0)
-                                        {
-                                            if (map(tx, ty, 0) != 100)
-                                            {
-                                                continue;
-                                            }
-                                        }
-                                    }
-                                    tx = dx + 1;
-                                    ty = dy - 1;
-                                    if (map(tx, ty, 0) != t)
-                                    {
-                                        if (map(tx, ty, 0) != 0)
-                                        {
-                                            if (map(tx, ty, 0) != 100)
-                                            {
-                                                continue;
-                                            }
-                                        }
-                                    }
-                                    tx = dx - 1;
-                                    ty = dy + 1;
-                                    if (map(tx, ty, 0) != t)
-                                    {
-                                        if (map(tx, ty, 0) != 0)
-                                        {
-                                            if (map(tx, ty, 0) != 100)
-                                            {
-                                                continue;
-                                            }
-                                        }
-                                    }
-                                    tx = dx + 1;
-                                    ty = dy + 1;
-                                    if (map(tx, ty, 0) != t)
-                                    {
-                                        if (map(tx, ty, 0) != 0)
-                                        {
-                                            if (map(tx, ty, 0) != 100)
-                                            {
-                                                continue;
-                                            }
-                                        }
-                                    }
-                                    map(dx, dy, 0) = t;
+                                    continue;
                                 }
+                                if (dist(x, y, dx, dy) >= w / 2)
+                                {
+                                    continue;
+                                }
+                                tx = dx - 1;
+                                ty = dy;
+                                if (map(tx, ty, 0) != t)
+                                {
+                                    if (map(tx, ty, 0) != 0)
+                                    {
+                                        if (map(tx, ty, 0) != 100)
+                                        {
+                                            continue;
+                                        }
+                                    }
+                                }
+                                tx = dx + 1;
+                                ty = dy;
+                                if (map(tx, ty, 0) != t)
+                                {
+                                    if (map(tx, ty, 0) != 0)
+                                    {
+                                        if (map(tx, ty, 0) != 100)
+                                        {
+                                            continue;
+                                        }
+                                    }
+                                }
+                                tx = dx;
+                                ty = dy - 1;
+                                if (map(tx, ty, 0) != t)
+                                {
+                                    if (map(tx, ty, 0) != 0)
+                                    {
+                                        if (map(tx, ty, 0) != 100)
+                                        {
+                                            continue;
+                                        }
+                                    }
+                                }
+                                tx = dx;
+                                ty = dy + 1;
+                                if (map(tx, ty, 0) != t)
+                                {
+                                    if (map(tx, ty, 0) != 0)
+                                    {
+                                        if (map(tx, ty, 0) != 100)
+                                        {
+                                            continue;
+                                        }
+                                    }
+                                }
+                                tx = dx - 1;
+                                ty = dy - 1;
+                                if (map(tx, ty, 0) != t)
+                                {
+                                    if (map(tx, ty, 0) != 0)
+                                    {
+                                        if (map(tx, ty, 0) != 100)
+                                        {
+                                            continue;
+                                        }
+                                    }
+                                }
+                                tx = dx + 1;
+                                ty = dy - 1;
+                                if (map(tx, ty, 0) != t)
+                                {
+                                    if (map(tx, ty, 0) != 0)
+                                    {
+                                        if (map(tx, ty, 0) != 100)
+                                        {
+                                            continue;
+                                        }
+                                    }
+                                }
+                                tx = dx - 1;
+                                ty = dy + 1;
+                                if (map(tx, ty, 0) != t)
+                                {
+                                    if (map(tx, ty, 0) != 0)
+                                    {
+                                        if (map(tx, ty, 0) != 100)
+                                        {
+                                            continue;
+                                        }
+                                    }
+                                }
+                                tx = dx + 1;
+                                ty = dy + 1;
+                                if (map(tx, ty, 0) != t)
+                                {
+                                    if (map(tx, ty, 0) != 0)
+                                    {
+                                        if (map(tx, ty, 0) != 100)
+                                        {
+                                            continue;
+                                        }
+                                    }
+                                }
+                                map(dx, dy, 0) = t;
                             }
                         }
                     }
-                    break;
                 }
+                break;
             }
         }
     }
@@ -32522,29 +32471,26 @@ void use_house_board()
         tlocinitx = cdata[0].position.x;
         tlocinity = cdata[0].position.y;
         tile = 0;
+        while (1)
         {
-            int cnt = 0;
-            for (;; ++cnt)
+            await();
+            int stat = target_position();
+            if (stat == -1)
             {
-                await();
-                int stat = target_position();
-                if (stat == -1)
-                {
-                    break;
-                }
-                if ((chipm(7, tile) & 4) == 0)
-                {
-                    map(tlocx, tlocy, 0) = tile;
-                    map(tlocx, tlocy, 2) = tile;
-                }
-                else
-                {
-                    efid = 438;
-                    magic();
-                }
-                tlocinitx = tlocx;
-                tlocinity = tlocy;
+                break;
             }
+            if ((chipm(7, tile) & 4) == 0)
+            {
+                map(tlocx, tlocy, 0) = tile;
+                map(tlocx, tlocy, 2) = tile;
+            }
+            else
+            {
+                efid = 438;
+                magic();
+            }
+            tlocinitx = tlocx;
+            tlocinity = tlocy;
         }
         homemapmode = 0;
         cdata[0].position.x = cxbk;
@@ -35116,36 +35062,33 @@ void label_1750()
             if (chipm(7, map(adata(1, cnt), adata(2, cnt), 0)) & 4
                 || map(adata(1, cnt), adata(2, cnt), 6) != 0)
             {
+                for (int cnt = 0;; ++cnt)
                 {
-                    int cnt = 0;
-                    for (;; ++cnt)
+                    await();
+                    dx = std::clamp(rnd(cnt / 4 + 1) + 1, 1, mdata(0));
+                    dy = std::clamp(rnd(cnt / 4 + 1) + 1, 1, mdata(1));
+                    x = adata(1, p) + rnd(dx) - rnd(dx);
+                    y = adata(2, p) + rnd(dy) - rnd(dy);
+                    if (x <= 0 || y <= 0 || x >= mdata(0) - 1
+                        || y >= mdata(1) - 1)
                     {
-                        await();
-                        dx = std::clamp(rnd(cnt / 4 + 1) + 1, 1, mdata(0));
-                        dy = std::clamp(rnd(cnt / 4 + 1) + 1, 1, mdata(1));
-                        x = adata(1, p) + rnd(dx) - rnd(dx);
-                        y = adata(2, p) + rnd(dy) - rnd(dy);
-                        if (x <= 0 || y <= 0 || x >= mdata(0) - 1
-                            || y >= mdata(1) - 1)
-                        {
-                            continue;
-                        }
-                        if (33 <= map(x, y, 0) && map(x, y, 0) < 66)
-                        {
-                            continue;
-                        }
-                        if (chipm(7, map(x, y, 0)) & 4)
-                        {
-                            continue;
-                        }
-                        if (map(x, y, 6) != 0)
-                        {
-                            continue;
-                        }
-                        adata(1, p) = x;
-                        adata(2, p) = y;
-                        break;
+                        continue;
                     }
+                    if (33 <= map(x, y, 0) && map(x, y, 0) < 66)
+                    {
+                        continue;
+                    }
+                    if (chipm(7, map(x, y, 0)) & 4)
+                    {
+                        continue;
+                    }
+                    if (map(x, y, 6) != 0)
+                    {
+                        continue;
+                    }
+                    adata(1, p) = x;
+                    adata(2, p) = y;
+                    break;
                 }
             }
             if ((33 > map(adata(1, cnt), adata(2, cnt), 0)
@@ -38472,244 +38415,239 @@ void label_1879()
     winrow = 0;
     cardround = 0;
     autosave = 1 * (gdata_current_map != 35);
+    for (int cnt = 0;; ++cnt)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        screenupdate = -1;
+        update_screen();
+        atxinit();
+        if (cnt == 0)
         {
-            screenupdate = -1;
-            update_screen();
-            atxinit();
-            if (cnt == 0)
-            {
-                mat(1) -= stake;
-                noteadd(lang(
-                    matname(1) + u8"を"s + stake + u8"個失った(残り:"s + mat(1)
-                        + u8"個)"s,
-                    u8"You lose "s + stake + u8" "s + matname(1)
-                        + u8"(s). (Total:"s + mat(1) + u8")"s));
-            }
-            if (cardround == 0)
-            {
-                nojoker = 1;
-                initcard(60, 160);
-                cardplayerinit(2, 5);
-                cardplayeradd(0, 220, 124);
-                cardplayeradd(1, 220, 240);
-            }
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 1);
-            color(255, 255, 255);
-            pos(152, 154);
-            mes(lang(u8"　親"s, u8"Dealer"s));
-            pos(152, 270);
-            mes(lang(u8"あなた"s, u8"   You"s));
-            color(0, 0, 0);
-            showcardpile();
-            showcardholder();
-            showcard();
-            if (cardround == 0)
-            {
-                {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
-                    {
-                        int stat = servecard(cnt % 2);
-                        if (cnt != 2)
-                        {
-                            opencard2(stat);
-                        }
-                    }
-                }
-                {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
-                    {
-                        if (cpcardnum(0) >= 5)
-                        {
-                            break;
-                        }
-                        if (cpscore(0) < cpscore(1)
-                            || cpscore(0) - rnd(5) <= 11)
-                        {
-                            int stat = servecard(0);
-                            opencard2(stat);
-                            --cnt;
-                            continue;
-                        }
-                    }
-                }
-            }
+            mat(1) -= stake;
             noteadd(lang(
-                u8"あなたの合計は"s + cpscore(1) + u8"です。"s,
-                u8"Your hand is "s + cpscore(1) + u8"."s));
-            if (cardround == -1)
+                matname(1) + u8"を"s + stake + u8"個失った(残り:"s + mat(1)
+                    + u8"個)"s,
+                u8"You lose "s + stake + u8" "s + matname(1) + u8"(s). (Total:"s
+                    + mat(1) + u8")"s));
+        }
+        if (cardround == 0)
+        {
+            nojoker = 1;
+            initcard(60, 160);
+            cardplayerinit(2, 5);
+            cardplayeradd(0, 220, 124);
+            cardplayeradd(1, 220, 240);
+        }
+        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 1);
+        color(255, 255, 255);
+        pos(152, 154);
+        mes(lang(u8"　親"s, u8"Dealer"s));
+        pos(152, 270);
+        mes(lang(u8"あなた"s, u8"   You"s));
+        color(0, 0, 0);
+        showcardpile();
+        showcardholder();
+        showcard();
+        if (cardround == 0)
+        {
+            {
+                int cnt = 0;
+                for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
+                {
+                    int stat = servecard(cnt % 2);
+                    if (cnt != 2)
+                    {
+                        opencard2(stat);
+                    }
+                }
+            }
+            {
+                int cnt = 0;
+                for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
+                {
+                    if (cpcardnum(0) >= 5)
+                    {
+                        break;
+                    }
+                    if (cpscore(0) < cpscore(1) || cpscore(0) - rnd(5) <= 11)
+                    {
+                        int stat = servecard(0);
+                        opencard2(stat);
+                        --cnt;
+                        continue;
+                    }
+                }
+            }
+        }
+        noteadd(lang(
+            u8"あなたの合計は"s + cpscore(1) + u8"です。"s,
+            u8"Your hand is "s + cpscore(1) + u8"."s));
+        if (cardround == -1)
+        {
+            noteadd(lang(
+                u8"親の合計は"s + cpscore(0) + u8"です。"s,
+                u8"The dealer's hand is "s + cpscore(0) + u8"."s));
+            winner = -1;
+            if (cpscore(0) <= 21)
+            {
+                if (cpscore(1) > 21 || cpscore(0) > cpscore(1))
+                {
+                    winner = 0;
+                }
+            }
+            if (cpscore(1) <= 21)
+            {
+                if (cpscore(0) > 21 || cpscore(1) > cpscore(0))
+                {
+                    winner = 1;
+                }
+            }
+            if (winner == -1)
+            {
+                noteadd(
+                    lang(u8"勝負は引き分けです。"s, u8"The match is a draw."s));
+            }
+            if (winner == 0)
+            {
+                noteadd(lang(u8"あなたの負けです。"s, u8"You lose."s));
+            }
+            if (winner == 1)
             {
                 noteadd(lang(
-                    u8"親の合計は"s + cpscore(0) + u8"です。"s,
-                    u8"The dealer's hand is "s + cpscore(0) + u8"."s));
-                winner = -1;
-                if (cpscore(0) <= 21)
-                {
-                    if (cpscore(1) > 21 || cpscore(0) > cpscore(1))
-                    {
-                        winner = 0;
-                    }
-                }
-                if (cpscore(1) <= 21)
-                {
-                    if (cpscore(0) > 21 || cpscore(1) > cpscore(0))
-                    {
-                        winner = 1;
-                    }
-                }
-                if (winner == -1)
-                {
-                    noteadd(lang(
-                        u8"勝負は引き分けです。"s, u8"The match is a draw."s));
-                }
-                if (winner == 0)
-                {
-                    noteadd(lang(u8"あなたの負けです。"s, u8"You lose."s));
-                }
-                if (winner == 1)
-                {
-                    noteadd(lang(
-                        u8"おめでとうございます。あなたの勝ちです。"s,
-                        u8"Congratulations, you win."s));
-                }
+                    u8"おめでとうございます。あなたの勝ちです。"s,
+                    u8"Congratulations, you win."s));
             }
-            atxinfon(1) = lang(
-                u8"カジノチップ残り "s + mat(1) + u8"枚\n"s,
-                u8"Casino chips left: "s + mat(1) + u8"\n"s);
-            atxinfon(2) = lang(
-                u8"賭けチップ "s + stake + u8"枚 現在"s + winrow + u8"連勝中"s,
-                u8"Bets: "s + stake + u8" Wins: "s + winrow + ""s);
-            if (cardround == -1)
+        }
+        atxinfon(1) = lang(
+            u8"カジノチップ残り "s + mat(1) + u8"枚\n"s,
+            u8"Casino chips left: "s + mat(1) + u8"\n"s);
+        atxinfon(2) = lang(
+            u8"賭けチップ "s + stake + u8"枚 現在"s + winrow + u8"連勝中"s,
+            u8"Bets: "s + stake + u8" Wins: "s + winrow + ""s);
+        if (cardround == -1)
+        {
+            if (winner == 1)
             {
-                if (winner == 1)
-                {
-                    ++winrow;
-                }
-                if (winner != 0)
-                {
-                    list(0, listmax) = 0;
-                    listn(0, listmax) =
-                        lang(u8"次の勝負へ"s, u8"To the next round."s);
-                    ++listmax;
-                }
-                if (winner == 0)
-                {
-                    list(0, listmax) = 0;
-                    listn(0, listmax) = lang(u8"戻る"s, u8"Bah...!"s);
-                    ++listmax;
-                }
-                chatesc = -1;
-                txtadvmsgfix = 240;
-                txtadvscreenupdate = 0;
-                label_18672();
-                if (winner == 0)
-                {
-                    break;
-                }
-                cardround = 0;
-                continue;
+                ++winrow;
             }
-            list(0, listmax) = 0;
-            listn(0, listmax) = lang(u8"これに決める"s, u8"Stay."s);
-            ++listmax;
-            if (pileremain() > 10)
+            if (winner != 0)
             {
-                if (cpcardnum(1) < 5)
-                {
-                    list(0, listmax) = 1;
-                    listn(0, listmax) =
-                        lang(u8"もう一枚引く(運)"s, u8"Hit me. (Luck)"s);
-                    ++listmax;
-                }
-                list(0, listmax) = 2;
-                listn(0, listmax) = lang(u8"イカサマ(器用"s, u8"Cheat. (Dex:"s)
-                    + sdata(12, 0) + u8")"s;
+                list(0, listmax) = 0;
+                listn(0, listmax) =
+                    lang(u8"次の勝負へ"s, u8"To the next round."s);
+                ++listmax;
+            }
+            if (winner == 0)
+            {
+                list(0, listmax) = 0;
+                listn(0, listmax) = lang(u8"戻る"s, u8"Bah...!"s);
                 ++listmax;
             }
             chatesc = -1;
             txtadvmsgfix = 240;
             txtadvscreenupdate = 0;
             label_18672();
-            if (rtval == 0)
+            if (winner == 0)
             {
-                opencard2(cpblackcard(0));
-                cardround = -1;
-                continue;
+                break;
             }
-            if (rtval == 1)
+            cardround = 0;
+            continue;
+        }
+        list(0, listmax) = 0;
+        listn(0, listmax) = lang(u8"これに決める"s, u8"Stay."s);
+        ++listmax;
+        if (pileremain() > 10)
+        {
+            if (cpcardnum(1) < 5)
             {
-                int stat = servecard(1);
-                p = stat;
+                list(0, listmax) = 1;
+                listn(0, listmax) =
+                    lang(u8"もう一枚引く(運)"s, u8"Hit me. (Luck)"s);
+                ++listmax;
+            }
+            list(0, listmax) = 2;
+            listn(0, listmax) = lang(u8"イカサマ(器用"s, u8"Cheat. (Dex:"s)
+                + sdata(12, 0) + u8")"s;
+            ++listmax;
+        }
+        chatesc = -1;
+        txtadvmsgfix = 240;
+        txtadvscreenupdate = 0;
+        label_18672();
+        if (rtval == 0)
+        {
+            opencard2(cpblackcard(0));
+            cardround = -1;
+            continue;
+        }
+        if (rtval == 1)
+        {
+            int stat = servecard(1);
+            p = stat;
+            {
+                int cnt = 0;
+                for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+                    if (cpscore(1) >= 22)
                     {
-                        if (cpscore(1) >= 22)
+                        if (pileremain() > 10)
                         {
-                            if (pileremain() > 10)
+                            if (rnd(sdata(19, 0)) > 40)
                             {
-                                if (rnd(sdata(19, 0)) > 40)
-                                {
-                                    txt(lang(
-                                        u8"このカードは悪い予感がする…"s,
-                                        u8"I have a bad feeling about this card..."s));
-                                    trashcard(p);
-                                    int stat = servecard(1);
-                                    p = stat;
-                                }
+                                txt(lang(
+                                    u8"このカードは悪い予感がする…"s,
+                                    u8"I have a bad feeling about this card..."s));
+                                trashcard(p);
+                                int stat = servecard(1);
+                                p = stat;
                             }
                         }
                     }
                 }
-                opencard2(p);
             }
-            if (rtval == 2)
-            {
-                trashcard(lastcard(1));
-                int stat = servecard(1);
-                opencard2(stat);
-                p = 20;
-                if (stake == 5)
-                {
-                    p = 40;
-                }
-                if (stake == 20)
-                {
-                    p = 60;
-                }
-                if (rnd(sdata(12, 0)) < rnd(p))
-                {
-                    atxinit();
-                    noteadd(lang(u8"イカサマだ！"s, u8"Cheater!"s));
-                    atxinfon(1) = lang(
-                        u8"カジノチップ残り "s + mat(1) + u8"枚\n"s,
-                        u8"Casino chips left: "s + mat(1) + u8"\n"s);
-                    atxinfon(2) = lang(
-                        u8"賭けチップ "s + stake + u8"枚 現在"s + winrow
-                            + u8"連勝中"s,
-                        u8"Bets: "s + stake + u8" Wins: "s + winrow + ""s);
-                    winrow = 0;
-                    txt(lang(
-                        u8"イカサマが見つかってしまった…"s,
-                        u8"You are caught in cheating..."s));
-                    modify_karma(0, -5);
-                    list(0, listmax) = 0;
-                    listn(0, listmax) =
-                        lang(u8"濡れ衣だ！"s, u8"I didn't do it!"s);
-                    ++listmax;
-                    chatesc = -1;
-                    txtadvmsgfix = 0;
-                    txtadvscreenupdate = 1;
-                    label_18672();
-                    break;
-                }
-            }
-            ++cardround;
+            opencard2(p);
         }
+        if (rtval == 2)
+        {
+            trashcard(lastcard(1));
+            int stat = servecard(1);
+            opencard2(stat);
+            p = 20;
+            if (stake == 5)
+            {
+                p = 40;
+            }
+            if (stake == 20)
+            {
+                p = 60;
+            }
+            if (rnd(sdata(12, 0)) < rnd(p))
+            {
+                atxinit();
+                noteadd(lang(u8"イカサマだ！"s, u8"Cheater!"s));
+                atxinfon(1) = lang(
+                    u8"カジノチップ残り "s + mat(1) + u8"枚\n"s,
+                    u8"Casino chips left: "s + mat(1) + u8"\n"s);
+                atxinfon(2) = lang(
+                    u8"賭けチップ "s + stake + u8"枚 現在"s + winrow
+                        + u8"連勝中"s,
+                    u8"Bets: "s + stake + u8" Wins: "s + winrow + ""s);
+                winrow = 0;
+                txt(lang(
+                    u8"イカサマが見つかってしまった…"s,
+                    u8"You are caught in cheating..."s));
+                modify_karma(0, -5);
+                list(0, listmax) = 0;
+                listn(0, listmax) = lang(u8"濡れ衣だ！"s, u8"I didn't do it!"s);
+                ++listmax;
+                chatesc = -1;
+                txtadvmsgfix = 0;
+                txtadvscreenupdate = 1;
+                label_18672();
+                break;
+            }
+        }
+        ++cardround;
     }
     if (winrow > 0)
     {
@@ -41050,28 +40988,25 @@ int rpdiff(int, int prm_1042, int prm_1043)
                 f_at_m180 += f2_at_m180;
                 if (prm_1043 == cnt)
                 {
+                    while (1)
                     {
-                        int cnt = 0;
-                        for (;; ++cnt)
+                        if (f2_at_m180 < 0)
                         {
-                            if (f2_at_m180 < 0)
-                            {
-                                txtef(2);
-                                txt(lang(
-                                    u8"調合の成功率が上がった。"s,
-                                    u8"The success rate goes up."s));
-                                break;
-                            }
-                            if (f2_at_m180 > 0)
-                            {
-                                txtef(3);
-                                txt(lang(
-                                    u8"調合の成功率が下がった。"s,
-                                    u8"The success rate goes down."s));
-                                break;
-                            }
+                            txtef(2);
+                            txt(lang(
+                                u8"調合の成功率が上がった。"s,
+                                u8"The success rate goes up."s));
                             break;
                         }
+                        if (f2_at_m180 > 0)
+                        {
+                            txtef(3);
+                            txt(lang(
+                                u8"調合の成功率が下がった。"s,
+                                u8"The success rate goes down."s));
+                            break;
+                        }
+                        break;
                     }
                 }
             }
@@ -42548,21 +42483,18 @@ void label_1933()
                 0);
             if (stat != 0)
             {
+                for (int cnt = 0;; ++cnt)
                 {
-                    int cnt = 0;
-                    for (;; ++cnt)
+                    if (rpdata(50 + cnt * 2, rpid) == 0)
                     {
-                        if (rpdata(50 + cnt * 2, rpid) == 0)
-                        {
-                            break;
-                        }
-                        encadd(
-                            ci,
-                            rpdata(50 + cnt * 2, rpid),
-                            rpdata(51 + cnt * 2, rpid),
-                            0,
-                            1);
+                        break;
                     }
+                    encadd(
+                        ci,
+                        rpdata(50 + cnt * 2, rpid),
+                        rpdata(51 + cnt * 2, rpid),
+                        0,
+                        1);
                 }
             }
             txtef(2);
@@ -42628,54 +42560,51 @@ label_19341_internal:
     if (rpref(2) >= 10000)
     {
         cdata[cc].continuous_action_turn = rpref(2) / 10000;
+        for (int cnt = 0;; ++cnt)
         {
-            int cnt = 0;
-            for (;; ++cnt)
+            mode = 12;
+            ++gdata_hour;
+            label_2736();
+            redraw(0);
+            render_hud();
+            if (cnt % 5 == 0)
             {
-                mode = 12;
-                ++gdata_hour;
-                label_2736();
-                redraw(0);
-                render_hud();
-                if (cnt % 5 == 0)
+                txtef(4);
+                txt(lang(u8" *こねこね* "s, u8"*pug*"s),
+                    lang(u8" *トントン* "s, u8"*clank*"s));
+            }
+            {
+                int cnt = 0;
+                for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
                 {
-                    txtef(4);
-                    txt(lang(u8" *こねこね* "s, u8"*pug*"s),
-                        lang(u8" *トントン* "s, u8"*clank*"s));
+                    redraw(0);
+                    redraw(1);
+                    await(30);
                 }
+            }
+            gdata_minute = 0;
+            cc = 0;
+            --cdata[cc].continuous_action_turn;
+            if (cdata[cc].continuous_action_turn <= 0)
+            {
+                int stat = label_1931();
+                if (stat == 0)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
-                    {
-                        redraw(0);
-                        redraw(1);
-                        await(30);
-                    }
+                    txt(lang(
+                        u8"調合に必要な材料が見つからない。"s,
+                        u8"A requied material cannot be found."s));
+                    break;
                 }
-                gdata_minute = 0;
-                cc = 0;
-                --cdata[cc].continuous_action_turn;
-                if (cdata[cc].continuous_action_turn <= 0)
+                label_1933();
+                if (rpref(1) > 0)
                 {
-                    int stat = label_1931();
-                    if (stat == 0)
-                    {
-                        txt(lang(
-                            u8"調合に必要な材料が見つからない。"s,
-                            u8"A requied material cannot be found."s));
-                        break;
-                    }
-                    label_1933();
-                    if (rpref(1) > 0)
-                    {
-                        cdata[cc].continuous_action_turn = rpref(2) / 10000;
-                        cnt = 0 - 1;
-                        continue;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    cdata[cc].continuous_action_turn = rpref(2) / 10000;
+                    cnt = 0 - 1;
+                    continue;
+                }
+                else
+                {
+                    break;
                 }
             }
         }
@@ -47078,122 +47007,117 @@ label_1998_internal:
     }
     if (i != 0)
     {
+        while (1)
         {
-            int cnt = 0;
-            for (;; ++cnt)
+            p(0) = 0;
+            p(1) = 0;
             {
-                p(0) = 0;
-                p(1) = 0;
+                int cnt = 0;
+                for (int cnt_end = cnt + (i); cnt < cnt_end; ++cnt)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (i); cnt < cnt_end; ++cnt)
+                    if (dblist(1, cnt) > p(1))
                     {
-                        if (dblist(1, cnt) > p(1))
-                        {
-                            p(0) = dblist(0, cnt);
-                            p(1) = dblist(1, cnt);
-                            wishid = cnt;
-                        }
+                        p(0) = dblist(0, cnt);
+                        p(1) = dblist(1, cnt);
+                        wishid = cnt;
                     }
                 }
-                if (p == 0)
-                {
-                    f = 0;
-                    break;
-                }
-                flt(cdata[0].level + 10, 4);
-                if (p == 558 || p == 556 || p == 557 || p == 664)
-                {
-                    fixlv = calcobjlv(3);
-                }
-                if (p == 630)
-                {
-                    objfix = 2;
-                }
-                nostack = 1;
-                nooracle = 1;
-                itemcreate(
-                    -1, p, cdata[cc].position.x, cdata[cc].position.y, 0);
-                nooracle = 0;
-                if (ibit(5, ci) == 1 || inv[ci].quality == 6)
-                {
-                    if (gdata_wizard == 0)
-                    {
-                        dblist(1, wishid) = 0;
-                        inv[ci].number = 0;
-                        --itemmemory(1, inv[ci].id);
-                        cell_refresh(inv[ci].position.x, inv[ci].position.y);
-                        continue;
-                    }
-                }
-                if (inv[ci].id == 54)
-                {
-                    inv[ci].number =
-                        cdata[0].level * cdata[0].level * 50 + 20000;
-                }
-                if (inv[ci].id == 55)
-                {
-                    inv[ci].number = 8 + rnd(5);
-                }
-                if (inv[ci].id == 602)
-                {
-                    inv[ci].number = 0;
-                    flt();
-                    itemcreate(
-                        -1, 516, cdata[cc].position.x, cdata[cc].position.y, 3);
-                    inv[ci].curse_state = 1;
-                    txt(lang(u8"あ、それ在庫切れ。"s, u8"It's sold out."s));
-                    txtmore();
-                }
-                if (the_item_db[inv[ci].id]->category == 52000
-                    || the_item_db[inv[ci].id]->category == 53000)
-                {
-                    inv[ci].number = 3 + rnd(2);
-                    if (inv[ci].id == 559)
-                    {
-                        inv[ci].number = 2 + rnd(2);
-                    }
-                    if (inv[ci].id == 502)
-                    {
-                        inv[ci].number = 2;
-                    }
-                    if (inv[ci].id == 243)
-                    {
-                        inv[ci].number = 1;
-                    }
-                    if (inv[ci].id == 621)
-                    {
-                        inv[ci].number = 1;
-                    }
-                    if (inv[ci].id == 706)
-                    {
-                        inv[ci].number = 1;
-                    }
-                    if (inv[ci].value >= 5000)
-                    {
-                        inv[ci].number = 3;
-                    }
-                    if (inv[ci].value >= 10000)
-                    {
-                        inv[ci].number = 2;
-                    }
-                    if (inv[ci].value >= 20000)
-                    {
-                        inv[ci].number = 1;
-                    }
-                }
-                if (debug::voldemort && number_of_items != 0)
-                {
-                    inv[ci].number = number_of_items;
-                }
-                item_identify(ci, 3);
-                txt(lang(
-                    u8"足元に"s + itemname(ci) + u8"が転がってきた。"s,
-                    ""s + itemname(ci) + u8" appear"s + _s2(inv[ci].number)
-                        + u8"."s));
-                f = 1;
+            }
+            if (p == 0)
+            {
+                f = 0;
                 break;
             }
+            flt(cdata[0].level + 10, 4);
+            if (p == 558 || p == 556 || p == 557 || p == 664)
+            {
+                fixlv = calcobjlv(3);
+            }
+            if (p == 630)
+            {
+                objfix = 2;
+            }
+            nostack = 1;
+            nooracle = 1;
+            itemcreate(-1, p, cdata[cc].position.x, cdata[cc].position.y, 0);
+            nooracle = 0;
+            if (ibit(5, ci) == 1 || inv[ci].quality == 6)
+            {
+                if (gdata_wizard == 0)
+                {
+                    dblist(1, wishid) = 0;
+                    inv[ci].number = 0;
+                    --itemmemory(1, inv[ci].id);
+                    cell_refresh(inv[ci].position.x, inv[ci].position.y);
+                    continue;
+                }
+            }
+            if (inv[ci].id == 54)
+            {
+                inv[ci].number = cdata[0].level * cdata[0].level * 50 + 20000;
+            }
+            if (inv[ci].id == 55)
+            {
+                inv[ci].number = 8 + rnd(5);
+            }
+            if (inv[ci].id == 602)
+            {
+                inv[ci].number = 0;
+                flt();
+                itemcreate(
+                    -1, 516, cdata[cc].position.x, cdata[cc].position.y, 3);
+                inv[ci].curse_state = 1;
+                txt(lang(u8"あ、それ在庫切れ。"s, u8"It's sold out."s));
+                txtmore();
+            }
+            if (the_item_db[inv[ci].id]->category == 52000
+                || the_item_db[inv[ci].id]->category == 53000)
+            {
+                inv[ci].number = 3 + rnd(2);
+                if (inv[ci].id == 559)
+                {
+                    inv[ci].number = 2 + rnd(2);
+                }
+                if (inv[ci].id == 502)
+                {
+                    inv[ci].number = 2;
+                }
+                if (inv[ci].id == 243)
+                {
+                    inv[ci].number = 1;
+                }
+                if (inv[ci].id == 621)
+                {
+                    inv[ci].number = 1;
+                }
+                if (inv[ci].id == 706)
+                {
+                    inv[ci].number = 1;
+                }
+                if (inv[ci].value >= 5000)
+                {
+                    inv[ci].number = 3;
+                }
+                if (inv[ci].value >= 10000)
+                {
+                    inv[ci].number = 2;
+                }
+                if (inv[ci].value >= 20000)
+                {
+                    inv[ci].number = 1;
+                }
+            }
+            if (debug::voldemort && number_of_items != 0)
+            {
+                inv[ci].number = number_of_items;
+            }
+            item_identify(ci, 3);
+            txt(lang(
+                u8"足元に"s + itemname(ci) + u8"が転がってきた。"s,
+                ""s + itemname(ci) + u8" appear"s + _s2(inv[ci].number)
+                    + u8"."s));
+            f = 1;
+            break;
         }
         if (f)
         {
@@ -51505,31 +51429,28 @@ void sort_list_by_column1()
     {
         return;
     }
+    while (1)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        p = 0;
         {
-            p = 0;
+            int cnt = 0;
+            for (int cnt_end = cnt + (listmax - 1); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (listmax - 1); cnt < cnt_end; ++cnt)
+                if (list(1, cnt) > list(1, cnt + 1))
                 {
-                    if (list(1, cnt) > list(1, cnt + 1))
-                    {
-                        p(0) = list(0, cnt);
-                        p(1) = list(1, cnt);
-                        list(0, cnt) = list(0, cnt + 1);
-                        list(1, cnt) = list(1, cnt + 1);
-                        list(0, cnt + 1) = p;
-                        list(1, cnt + 1) = p(1);
-                        p = 1;
-                    }
+                    p(0) = list(0, cnt);
+                    p(1) = list(1, cnt);
+                    list(0, cnt) = list(0, cnt + 1);
+                    list(1, cnt) = list(1, cnt + 1);
+                    list(0, cnt + 1) = p;
+                    list(1, cnt + 1) = p(1);
+                    p = 1;
                 }
             }
-            if (p == 0)
-            {
-                break;
-            }
+        }
+        if (p == 0)
+        {
+            break;
         }
     }
     return;
@@ -51543,37 +51464,34 @@ void label_2057()
     {
         return;
     }
+    while (1)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        p = 0;
         {
-            p = 0;
+            int cnt = 0;
+            for (int cnt_end = cnt + (listmax - 1); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (listmax - 1); cnt < cnt_end; ++cnt)
+                if (list(1, cnt) > list(1, cnt + 1))
                 {
-                    if (list(1, cnt) > list(1, cnt + 1))
-                    {
-                        p(0) = list(0, cnt);
-                        p(1) = list(1, cnt);
-                        list(0, cnt) = list(0, cnt + 1);
-                        list(1, cnt) = list(1, cnt + 1);
-                        list(0, cnt + 1) = p;
-                        list(1, cnt + 1) = p(1);
-                        s(0) = listn(0, cnt);
-                        s(1) = listn(1, cnt);
-                        listn(0, cnt) = listn(0, cnt + 1);
-                        listn(1, cnt) = listn(1, cnt + 1);
-                        listn(0, cnt + 1) = s;
-                        listn(1, cnt + 1) = s(1);
-                        p = 1;
-                    }
+                    p(0) = list(0, cnt);
+                    p(1) = list(1, cnt);
+                    list(0, cnt) = list(0, cnt + 1);
+                    list(1, cnt) = list(1, cnt + 1);
+                    list(0, cnt + 1) = p;
+                    list(1, cnt + 1) = p(1);
+                    s(0) = listn(0, cnt);
+                    s(1) = listn(1, cnt);
+                    listn(0, cnt) = listn(0, cnt + 1);
+                    listn(1, cnt) = listn(1, cnt + 1);
+                    listn(0, cnt + 1) = s;
+                    listn(1, cnt + 1) = s(1);
+                    p = 1;
                 }
             }
-            if (p == 0)
-            {
-                break;
-            }
+        }
+        if (p == 0)
+        {
+            break;
         }
     }
     return;
@@ -51601,64 +51519,59 @@ std::string trimdesc(const std::string& prm_1060, int prm_1061)
     std::string q_at_m187;
     int p_at_m187 = 0;
     q_at_m187 = prm_1060;
+    while (1)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        await();
+        p_at_m187 = instr(q_at_m187, 0, u8"\t"s);
+        if (p_at_m187 != -1)
         {
-            await();
-            p_at_m187 = instr(q_at_m187, 0, u8"\t"s);
+            q_at_m187 = strmid(q_at_m187, 0, p_at_m187)
+                + strmid(q_at_m187, (p_at_m187 + 1), 999);
+            continue;
+        }
+        if (prm_1061 == 1)
+        {
+            p_at_m187 = instr(q_at_m187, 0, u8"\n"s);
             if (p_at_m187 != -1)
             {
                 q_at_m187 = strmid(q_at_m187, 0, p_at_m187)
                     + strmid(q_at_m187, (p_at_m187 + 1), 999);
                 continue;
             }
-            if (prm_1061 == 1)
+            p_at_m187 = instr(q_at_m187, 0, u8"#"s);
+            if (p_at_m187 != -1)
             {
-                p_at_m187 = instr(q_at_m187, 0, u8"\n"s);
-                if (p_at_m187 != -1)
+                q_at_m187 = strmid(q_at_m187, 0, p_at_m187);
+            }
+            if (jp)
+            {
+                if (strmid(q_at_m187, std::size(q_at_m187) - 3, 2) == u8"。"s)
                 {
-                    q_at_m187 = strmid(q_at_m187, 0, p_at_m187)
-                        + strmid(q_at_m187, (p_at_m187 + 1), 999);
-                    continue;
-                }
-                p_at_m187 = instr(q_at_m187, 0, u8"#"s);
-                if (p_at_m187 != -1)
-                {
-                    q_at_m187 = strmid(q_at_m187, 0, p_at_m187);
-                }
-                if (jp)
-                {
-                    if (strmid(q_at_m187, std::size(q_at_m187) - 3, 2)
-                        == u8"。"s)
-                    {
-                        q_at_m187 =
-                            strmid(q_at_m187, 0, std::size(q_at_m187) - 3);
-                    }
-                }
-                else
-                {
-                    p_at_m187 = instr(q_at_m187, 0, u8","s);
-                    if (p_at_m187 != -1)
-                    {
-                        q_at_m187 = strmid(q_at_m187, 0, p_at_m187) + u8"."s
-                            + strmid(q_at_m187, (p_at_m187 + 1), 999);
-                        continue;
-                    }
+                    q_at_m187 = strmid(q_at_m187, 0, std::size(q_at_m187) - 3);
                 }
             }
-            if (prm_1061 == 2)
+            else
             {
-                p_at_m187 = instr(q_at_m187, 0, u8"#"s);
+                p_at_m187 = instr(q_at_m187, 0, u8","s);
                 if (p_at_m187 != -1)
                 {
-                    q_at_m187 = strmid(q_at_m187, 0, p_at_m187)
+                    q_at_m187 = strmid(q_at_m187, 0, p_at_m187) + u8"."s
                         + strmid(q_at_m187, (p_at_m187 + 1), 999);
                     continue;
                 }
             }
-            break;
         }
+        if (prm_1061 == 2)
+        {
+            p_at_m187 = instr(q_at_m187, 0, u8"#"s);
+            if (p_at_m187 != -1)
+            {
+                q_at_m187 = strmid(q_at_m187, 0, p_at_m187)
+                    + strmid(q_at_m187, (p_at_m187 + 1), 999);
+                continue;
+            }
+        }
+        break;
     }
     return q_at_m187;
 }
@@ -52344,49 +52257,46 @@ void label_2076()
             }
         }
     }
+    while (1)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        if (listmax < 2)
         {
-            if (listmax < 2)
+            break;
+        }
+        i = 1;
+        {
+            int cnt = 0;
+            for (int cnt_end = cnt + (listmax - 1); cnt < cnt_end; ++cnt)
             {
-                break;
-            }
-            i = 1;
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (listmax - 1); cnt < cnt_end; ++cnt)
+                p = dist(
+                    cdata[cc].position.x,
+                    cdata[cc].position.y,
+                    list(1, cnt),
+                    list(2, cnt));
+                p(1) = dist(
+                    cdata[cc].position.x,
+                    cdata[cc].position.y,
+                    list(1, cnt + 1),
+                    list(2, cnt + 1));
+                if (p(1) < p)
                 {
-                    p = dist(
-                        cdata[cc].position.x,
-                        cdata[cc].position.y,
-                        list(1, cnt),
-                        list(2, cnt));
-                    p(1) = dist(
-                        cdata[cc].position.x,
-                        cdata[cc].position.y,
-                        list(1, cnt + 1),
-                        list(2, cnt + 1));
-                    if (p(1) < p)
-                    {
-                        p(0) = list(0, cnt);
-                        p(1) = list(1, cnt);
-                        p(2) = list(2, cnt);
-                        list(0, cnt) = list(0, cnt + 1);
-                        list(1, cnt) = list(1, cnt + 1);
-                        list(2, cnt) = list(2, cnt + 1);
-                        list(0, cnt + 1) = p;
-                        list(1, cnt + 1) = p(1);
-                        list(2, cnt + 1) = p(2);
-                        i = 0;
-                        break;
-                    }
+                    p(0) = list(0, cnt);
+                    p(1) = list(1, cnt);
+                    p(2) = list(2, cnt);
+                    list(0, cnt) = list(0, cnt + 1);
+                    list(1, cnt) = list(1, cnt + 1);
+                    list(2, cnt) = list(2, cnt + 1);
+                    list(0, cnt + 1) = p;
+                    list(1, cnt + 1) = p(1);
+                    list(2, cnt + 1) = p(2);
+                    i = 0;
+                    break;
                 }
             }
-            if (i == 1)
-            {
-                break;
-            }
+        }
+        if (i == 1)
+        {
+            break;
         }
     }
     return;
@@ -53857,17 +53767,14 @@ void create_cnpc()
     {
         SDIM3(unres, 6, 32);
         csvstr2(unres, userdatan(5, cun));
+        for (int cnt = 0;; ++cnt)
         {
-            int cnt = 0;
-            for (;; ++cnt)
+            if (cnt > 15 || unres(cnt) == ""s)
             {
-                if (cnt > 15 || unres(cnt) == ""s)
-                {
-                    break;
-                }
-                sdata(elona::stoi(unres(cnt * 2)), rc) +=
-                    elona::stoi(unres((cnt * 2 + 1))) * 50;
+                break;
             }
+            sdata(elona::stoi(unres(cnt * 2)), rc) +=
+                elona::stoi(unres((cnt * 2 + 1))) * 50;
         }
     }
     cdata[rc].can_talk = 1;
@@ -53978,17 +53885,14 @@ void load_cnpc_data()
             userdata(11, tg) = elona::stoi(s(0)) * 100000 + elona::stoi(s(1));
             s = getnpctxt(u8"bitOn."s, u8"0,0"s);
             csvstr2(s, s);
+            for (int cnt = 0;; ++cnt)
             {
-                int cnt = 0;
-                for (;; ++cnt)
+                p = elona::stoi(s(cnt));
+                if (cnt > 20 || p == 0)
                 {
-                    p = elona::stoi(s(cnt));
-                    if (cnt > 20 || p == 0)
-                    {
-                        break;
-                    }
-                    HMMBITON(userdata(40 + p / 32, cnt2), p % 32);
+                    break;
                 }
+                HMMBITON(userdata(40 + p / 32, cnt2), p % 32);
             }
             s = getnpctxt(u8"aiAct."s, u8"0,0,0,0,0"s);
             csvstr2(s, s);
@@ -54810,70 +54714,66 @@ label_21261_internal:
         pos(x + 24, y + 4);
         gfini(dx - 42, 35);
         gfdec(60, 60, 60);
+        while (1)
         {
-            int cnt = 0;
-            for (;; ++cnt)
+            redraw(0);
+            window2(x + 20, y, dx - 40, 36, 0, 2);
+            pos(x + dx / 2 - 56, y - 32);
+            gcopy(3, 128, 288, 128, 32);
+            pos(x + 28, y + 4);
+            gcopy(3, 312, 336, 24, 24);
+            pos(x + dx - 51, y + 4);
+            gcopy(3, 336, 336, 24, 24);
+            inputlog2 = ""s + elona::stoi(inputlog(0)) + u8"("s + val5 + u8")"s;
+            pos(x + dx - 70 - strlen_u(inputlog2) * 8 + 8, y + 11);
+            color(255, 255, 255);
+            mes(inputlog2);
+            color(0, 0, 0);
+            redraw(1);
+            await(cfg_wait1);
+            key_check();
+            if (key == key_enter)
             {
-                redraw(0);
-                window2(x + 20, y, dx - 40, 36, 0, 2);
-                pos(x + dx / 2 - 56, y - 32);
-                gcopy(3, 128, 288, 128, 32);
-                pos(x + 28, y + 4);
-                gcopy(3, 312, 336, 24, 24);
-                pos(x + dx - 51, y + 4);
-                gcopy(3, 336, 336, 24, 24);
-                inputlog2 =
-                    ""s + elona::stoi(inputlog(0)) + u8"("s + val5 + u8")"s;
-                pos(x + dx - 70 - strlen_u(inputlog2) * 8 + 8, y + 11);
-                color(255, 255, 255);
-                mes(inputlog2);
-                color(0, 0, 0);
-                redraw(1);
-                await(cfg_wait1);
-                key_check();
-                if (key == key_enter)
+                f = 1;
+                break;
+            }
+            if (key == key_cancel)
+            {
+                if (val3 == 1)
                 {
-                    f = 1;
+                    f = -1;
                     break;
                 }
-                if (key == key_cancel)
+            }
+            if (key == key_west)
+            {
+                snd(5);
+                --val4;
+                if (val4 < 1)
                 {
-                    if (val3 == 1)
-                    {
-                        f = -1;
-                        break;
-                    }
-                }
-                if (key == key_west)
-                {
-                    snd(5);
-                    --val4;
-                    if (val4 < 1)
-                    {
-                        val4 = val5;
-                    }
-                }
-                if (key == key_east)
-                {
-                    snd(5);
-                    ++val4;
-                    if (val4 > val5)
-                    {
-                        val4 = 1;
-                    }
-                }
-                if (key == key_south)
-                {
-                    snd(5);
-                    val4 = 1;
-                }
-                if (key == key_north)
-                {
-                    snd(5);
                     val4 = val5;
                 }
-                inputlog = ""s + val4;
             }
+            if (key == key_east)
+            {
+                snd(5);
+                ++val4;
+                if (val4 > val5)
+                {
+                    val4 = 1;
+                }
+            }
+            if (key == key_south)
+            {
+                snd(5);
+                val4 = 1;
+            }
+            if (key == key_north)
+            {
+                snd(5);
+                val4 = val5;
+            }
+            inputlog = ""s + val4;
         }
         if (f == -1)
         {
@@ -54924,104 +54824,101 @@ label_21261_internal:
     p(1) = 2;
     ime_esc = 0;
     onkey_1();
+    for (int cnt = 0;; ++cnt)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        if (ginfo(2) == 0)
         {
-            if (ginfo(2) == 0)
+            objsel(1);
+        }
+        else
+        {
+            objprm(1, ""s);
+            inputlog = "";
+            await(100);
+            --cnt;
+            continue;
+        }
+        redraw(0);
+        await(40);
+        window2(x, y, dx, 36, 0, 2);
+        pos(x + dx / 2 - 60, y - 32);
+        gcopy(3, 128, 288, 128, 32);
+        if (cfg_msg_box == 1)
+        {
+            pos(x + 8, y + 4);
+            if (imeget() != 0)
             {
-                objsel(1);
+                gcopy(3, 48, 336, 24, 24);
             }
             else
             {
-                objprm(1, ""s);
-                inputlog = "";
-                await(100);
-                --cnt;
-                continue;
+                gcopy(3, 24, 336, 24, 24);
             }
-            redraw(0);
-            await(40);
-            window2(x, y, dx, 36, 0, 2);
-            pos(x + dx / 2 - 60, y - 32);
-            gcopy(3, 128, 288, 128, 32);
-            if (cfg_msg_box == 1)
+            apledit(p(2), 2, 0);
+            if (p(2) > val2 * (1 + en) - 2)
             {
                 pos(x + 8, y + 4);
-                if (imeget() != 0)
+                gcopy(3, 72, 336, 24, 24);
+            }
+            if (cnt % 20 < 10)
+            {
+                p(1) = p(1) * 2;
+            }
+            else
+            {
+                p(1) = p(1) / 2;
+            }
+            apledit(p(2), 0);
+            p(4) = 0;
+            {
+                int cnt = 0;
+                for (int cnt_end = cnt + (p(2)); cnt < cnt_end; ++cnt)
                 {
-                    gcopy(3, 48, 336, 24, 24);
-                }
-                else
-                {
-                    gcopy(3, 24, 336, 24, 24);
-                }
-                apledit(p(2), 2, 0);
-                if (p(2) > val2 * (1 + en) - 2)
-                {
-                    pos(x + 8, y + 4);
-                    gcopy(3, 72, 336, 24, 24);
-                }
-                if (cnt % 20 < 10)
-                {
-                    p(1) = p(1) * 2;
-                }
-                else
-                {
-                    p(1) = p(1) / 2;
-                }
-                apledit(p(2), 0);
-                p(4) = 0;
-                {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (p(2)); cnt < cnt_end; ++cnt)
+                    p(3) = inputlog(0)[p(4)];
+                    if ((p(3) >= 129 && p(3) <= 159)
+                        || (p(3) >= 224 && p(3) <= 252))
                     {
-                        p(3) = inputlog(0)[p(4)];
-                        if ((p(3) >= 129 && p(3) <= 159)
-                            || (p(3) >= 224 && p(3) <= 252))
-                        {
-                            p(4) += 2;
-                        }
-                        else
-                        {
-                            p(4) += 1;
-                        }
+                        p(4) += 2;
+                    }
+                    else
+                    {
+                        p(4) += 1;
                     }
                 }
-                gmode(4, -1, -1, p(1) / 2 + 50);
-                pos(x + 34 + p(4) * 8, y + 5);
-                gcopy(3, 0, 336, 12, 24);
-                gmode(2);
-                color(255, 255, 255);
-                pos(x + 36, y + 9);
-                noteget(s, 0);
-                mes(s);
-                color(0, 0, 0);
             }
-            if (strutil::contains(inputlog(0), u8"\n"))
-            {
-                rtval = 0;
-                break;
-            }
-            if (strutil::contains(inputlog(0), u8"\t"))
-            {
-                objprm(1, ""s);
-                inputlog = "";
-                if (val3 == 1)
-                {
-                    ime_esc = 1;
-                }
-            }
-            redraw(1);
+            gmode(4, -1, -1, p(1) / 2 + 50);
+            pos(x + 34 + p(4) * 8, y + 5);
+            gcopy(3, 0, 336, 12, 24);
+            gmode(2);
+            color(255, 255, 255);
+            pos(x + 36, y + 9);
+            noteget(s, 0);
+            mes(s);
+            color(0, 0, 0);
+        }
+        if (strutil::contains(inputlog(0), u8"\n"))
+        {
+            rtval = 0;
+            break;
+        }
+        if (strutil::contains(inputlog(0), u8"\t"))
+        {
+            objprm(1, ""s);
+            inputlog = "";
             if (val3 == 1)
             {
-                if (ime_esc == 1)
-                {
-                    inputlog = "";
-                    keywait = 1;
-                    key = "";
-                    break;
-                }
+                ime_esc = 1;
+            }
+        }
+        redraw(1);
+        if (val3 == 1)
+        {
+            if (ime_esc == 1)
+            {
+                inputlog = "";
+                keywait = 1;
+                key = "";
+                break;
             }
         }
     }
@@ -57267,27 +57164,24 @@ void label_2151()
         exp = i * i * i / 10;
         gdata_sleep_experience = gdata_sleep_experience * inv[ci].param1 / 100;
         grown = 0;
+        for (int cnt = 0;; ++cnt)
         {
-            int cnt = 0;
-            for (;; ++cnt)
+            if (gdata_sleep_experience >= exp)
             {
-                if (gdata_sleep_experience >= exp)
+                gdata_sleep_experience -= exp;
+            }
+            else if (cnt != 0)
+            {
+                break;
+            }
+            modify_potential(0, 10 + rnd(8), 1);
+            ++grown;
+            if (cnt > 6)
+            {
+                if (rnd(5) == 0)
                 {
-                    gdata_sleep_experience -= exp;
-                }
-                else if (cnt != 0)
-                {
+                    gdata_sleep_experience = 0;
                     break;
-                }
-                modify_potential(0, 10 + rnd(8), 1);
-                ++grown;
-                if (cnt > 6)
-                {
-                    if (rnd(5) == 0)
-                    {
-                        gdata_sleep_experience = 0;
-                        break;
-                    }
                 }
             }
         }
@@ -63718,35 +63612,32 @@ void label_2221()
         }
         if (p != 9999)
         {
+            while (1)
             {
-                int cnt = 0;
-                for (;; ++cnt)
+                if (p <= 3)
                 {
-                    if (p <= 3)
-                    {
-                        txt(lang(
-                            u8"辺りの空気は息苦しいほどの緊張に包まれている。"s,
-                            u8"The air around you is filled with strained silence."s));
-                    }
-                    if (p <= 9)
-                    {
-                        txt(lang(
-                            u8"微かだが、あなたの心臓はトクンと脈打った。"s,
-                            u8"Your heart starts beating in your chest."s));
-                        break;
-                    }
-                    if (p <= 16)
-                    {
-                        txt(lang(
-                            u8"まだだ、まだ遠い…"s,
-                            u8"Stll, still lying far ahead."s));
-                        break;
-                    }
                     txt(lang(
-                        u8"あなたは青い水晶の存在を感じた。"s,
-                        u8"You sense a blue crystal lying somewhere in this area."s));
+                        u8"辺りの空気は息苦しいほどの緊張に包まれている。"s,
+                        u8"The air around you is filled with strained silence."s));
+                }
+                if (p <= 9)
+                {
+                    txt(lang(
+                        u8"微かだが、あなたの心臓はトクンと脈打った。"s,
+                        u8"Your heart starts beating in your chest."s));
                     break;
                 }
+                if (p <= 16)
+                {
+                    txt(lang(
+                        u8"まだだ、まだ遠い…"s,
+                        u8"Stll, still lying far ahead."s));
+                    break;
+                }
+                txt(lang(
+                    u8"あなたは青い水晶の存在を感じた。"s,
+                    u8"You sense a blue crystal lying somewhere in this area."s));
+                break;
             }
         }
     }
@@ -65073,30 +64964,27 @@ void do_use_command()
             goto label_2229_internal;
         }
         p = gdata_weather;
+        while (1)
         {
-            int cnt = 0;
-            for (;; ++cnt)
+            if (rnd(10) == 0)
             {
-                if (rnd(10) == 0)
-                {
-                    gdata_weather = 0;
-                }
-                if (rnd(10) == 0)
-                {
-                    gdata_weather = 3;
-                }
-                if (rnd(15) == 0)
-                {
-                    gdata_weather = 4;
-                }
-                if (rnd(20) == 0)
-                {
-                    gdata_weather = 2;
-                }
-                if (gdata_weather != p)
-                {
-                    break;
-                }
+                gdata_weather = 0;
+            }
+            if (rnd(10) == 0)
+            {
+                gdata_weather = 3;
+            }
+            if (rnd(15) == 0)
+            {
+                gdata_weather = 4;
+            }
+            if (rnd(20) == 0)
+            {
+                gdata_weather = 2;
+            }
+            if (gdata_weather != p)
+            {
+                break;
             }
         }
         txt(lang(
@@ -67759,47 +67647,44 @@ void label_2252()
                 talk_npc();
                 return;
             }
+            for (int cnt = 0;; ++cnt)
             {
-                int cnt = 0;
-                for (;; ++cnt)
+                if (cnt == 99)
                 {
-                    if (cnt == 99)
+                    dbid = 35;
+                }
+                else
+                {
+                    dbid = 0;
+                }
+                flt(qdata(5, rq) + cnt, 1);
+                fltn(u8"man"s);
+                int stat = characreate(56, dbid, -3, 0);
+                f = stat;
+                if (f == 1)
+                {
                     {
-                        dbid = 35;
-                    }
-                    else
-                    {
-                        dbid = 0;
-                    }
-                    flt(qdata(5, rq) + cnt, 1);
-                    fltn(u8"man"s);
-                    int stat = characreate(56, dbid, -3, 0);
-                    f = stat;
-                    if (f == 1)
-                    {
+                        int cnt = 0;
+                        for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
                         {
-                            int cnt = 0;
-                            for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
+                            if (cdata[cnt].state == 0)
                             {
-                                if (cdata[cnt].state == 0)
+                                continue;
+                            }
+                            if (cdata[cnt].id == cdata[rc].id)
+                            {
+                                if (cbit(963, cnt) == 1)
                                 {
-                                    continue;
-                                }
-                                if (cdata[cnt].id == cdata[rc].id)
-                                {
-                                    if (cbit(963, cnt) == 1)
-                                    {
-                                        f = 0;
-                                        break;
-                                    }
+                                    f = 0;
+                                    break;
                                 }
                             }
                         }
                     }
-                    if (f == 1)
-                    {
-                        break;
-                    }
+                }
+                if (f == 1)
+                {
+                    break;
                 }
             }
             rc = 56;
@@ -69422,52 +69307,49 @@ label_2272_internal:
                 ""s + mapname(adata(16, gdata_current_map)) + u8" City Chart"s),
             wx + 40,
             wy + 34);
+        for (int cnt = 0;; ++cnt)
         {
-            int cnt = 0;
-            for (;; ++cnt)
+            if (pochart(j0, n, lv) == 0 || cnt == 0)
             {
-                if (pochart(j0, n, lv) == 0 || cnt == 0)
+                if (cnt != 0)
                 {
-                    if (cnt != 0)
+                    ++n;
+                }
+                j0 = 0;
+                i = 0;
+                {
+                    int cnt = 0;
+                    for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
                     {
-                        ++n;
-                    }
-                    j0 = 0;
-                    i = 0;
-                    {
-                        int cnt = 0;
-                        for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
+                        if (pochart(cnt, n, lv) != 0)
                         {
-                            if (pochart(cnt, n, lv) != 0)
-                            {
-                                ++i;
-                            }
+                            ++i;
                         }
                     }
-                    if (i == 0)
-                    {
-                        break;
-                    }
-                    y = wy + 70 + n * 55;
                 }
-                x = wx + (ww - 70) / (i + 1) * (j0 + 1);
-                pos(x - 26, y - 3);
-                gcopy(3, 960, 288, 144, 24);
-                p = pochart(j0, n, lv);
-                key_list(cnt) = key_select(cnt);
-                ++keyrange;
-                display_key(x - 30, y + 21, cnt);
-                font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
-                pos(x - 2, y + jp * 2);
-                bmes(cnven(popostname(p)), 255, 255, 255);
-                font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-                if (podata(0 + cnt, city) == 0)
+                if (i == 0)
                 {
-                    s = lang(u8"不在"s, u8"Empty"s);
+                    break;
                 }
-                cs_list(cs == cnt, s, x - 2, y + 20);
-                ++j0;
+                y = wy + 70 + n * 55;
             }
+            x = wx + (ww - 70) / (i + 1) * (j0 + 1);
+            pos(x - 26, y - 3);
+            gcopy(3, 960, 288, 144, 24);
+            p = pochart(j0, n, lv);
+            key_list(cnt) = key_select(cnt);
+            ++keyrange;
+            display_key(x - 30, y + 21, cnt);
+            font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+            pos(x - 2, y + jp * 2);
+            bmes(cnven(popostname(p)), 255, 255, 255);
+            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            if (podata(0 + cnt, city) == 0)
+            {
+                s = lang(u8"不在"s, u8"Empty"s);
+            }
+            cs_list(cs == cnt, s, x - 2, y + 20);
+            ++j0;
         }
         if (keyrange != 0)
         {
@@ -70985,15 +70867,12 @@ int label_2672()
         qdata(4, rq) = rnd(3);
         qdata(10, rq) = 0;
         qdata(7, rq) = 5;
+        while (1)
         {
-            int cnt = 0;
-            for (;; ++cnt)
+            qdata(12, rq) = asettown(rnd(length(asettown)));
+            if (qdata(12, rq) != gdata_current_map)
             {
-                qdata(12, rq) = asettown(rnd(length(asettown)));
-                if (qdata(12, rq) != gdata_current_map)
-                {
-                    break;
-                }
+                break;
             }
         }
         p = qdata(1, qdata(12, rq));
@@ -73309,25 +73188,22 @@ void label_2693()
                         int cnt = 0;
                         for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
                         {
+                            while (1)
                             {
-                                int cnt = 0;
-                                for (;; ++cnt)
+                                if (rnd(4) == 0)
                                 {
-                                    if (rnd(4) == 0)
-                                    {
-                                        p = rnd(8) + 10;
-                                    }
-                                    else
-                                    {
-                                        p = rnd(300) + 100;
-                                    }
-                                    if (sdata.get(p, cc).original_level == 0)
-                                    {
-                                        continue;
-                                    }
-                                    modify_potential(cc, p, 4);
-                                    break;
+                                    p = rnd(8) + 10;
                                 }
+                                else
+                                {
+                                    p = rnd(300) + 100;
+                                }
+                                if (sdata.get(p, cc).original_level == 0)
+                                {
+                                    continue;
+                                }
+                                modify_potential(cc, p, 4);
+                                break;
                             }
                         }
                     }
@@ -74217,69 +74093,58 @@ void show_ex_help()
         return;
     }
     snd(53);
+    while (1)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        redraw(0);
+        gmode(2);
+        dx = 480;
+        dy = 175;
+        window2((windoww - dx) / 2 + inf_screenx, winposy(dy), dx, dy, 4, 0);
+        wx = (windoww - dx) / 2 + inf_screenx;
+        wy = winposy(dy);
+        window2(
+            (windoww - 325) / 2 + inf_screenx, winposy(dy) + 6, 325, 32, 0, 1);
+        pos(wx + 5, wy + 4);
+        gcopy(3, 960, 96, 48, 48);
+        pos(wx + dx - 55, wy + 4);
+        gcopy(3, 960, 96, 48, 48);
+        pos(wx + 10, wy + 42);
+        gcopy(3, 960, 144, 96, 120);
+        font(lang(cfg_font1, cfg_font2), 16 - en * 2, 1);
+        pos(wx + 142, wy + 13);
+        color(80, 60, 50);
+        bmes(
+            lang(u8"- ノルンの冒険ガイド -"s, u8"- Norne's travel guide -"s),
+            255,
+            245,
+            235);
+        color(0, 0, 0);
+        tx = wx + 120;
+        ty = wy + 55;
+        font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
         {
-            redraw(0);
-            gmode(2);
-            dx = 480;
-            dy = 175;
-            window2(
-                (windoww - dx) / 2 + inf_screenx, winposy(dy), dx, dy, 4, 0);
-            wx = (windoww - dx) / 2 + inf_screenx;
-            wy = winposy(dy);
-            window2(
-                (windoww - 325) / 2 + inf_screenx,
-                winposy(dy) + 6,
-                325,
-                32,
-                0,
-                1);
-            pos(wx + 5, wy + 4);
-            gcopy(3, 960, 96, 48, 48);
-            pos(wx + dx - 55, wy + 4);
-            gcopy(3, 960, 96, 48, 48);
-            pos(wx + 10, wy + 42);
-            gcopy(3, 960, 144, 96, 120);
-            font(lang(cfg_font1, cfg_font2), 16 - en * 2, 1);
-            pos(wx + 142, wy + 13);
-            color(80, 60, 50);
-            bmes(
-                lang(
-                    u8"- ノルンの冒険ガイド -"s, u8"- Norne's travel guide -"s),
-                255,
-                245,
-                235);
-            color(0, 0, 0);
-            tx = wx + 120;
-            ty = wy + 55;
-            font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
+            int y = ty;
+            int cnt = 0;
+            for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
             {
-                int y = ty;
-                int cnt = 0;
-                for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
+                noteget(s, page);
+                ++page;
+                if (page > noteinfo(0) || s == ""s)
                 {
-                    noteget(s, page);
-                    ++page;
-                    if (page > noteinfo(0) || s == ""s)
-                    {
-                        break;
-                    }
-                    color(30, 30, 30);
-                    const auto [_, ny] =
-                        gmes(s, tx, y, 330, {30, 30, 30}, true);
-                    color(0, 0, 0);
-                    y = ny;
+                    break;
                 }
+                color(30, 30, 30);
+                const auto [_, ny] = gmes(s, tx, y, 330, {30, 30, 30}, true);
+                color(0, 0, 0);
+                y = ny;
             }
-            gmode(2);
-            redraw(1);
-            help_halt();
-            if (page >= noteinfo(0))
-            {
-                break;
-            }
+        }
+        gmode(2);
+        redraw(1);
+        help_halt();
+        if (page >= noteinfo(0))
+        {
+            break;
         }
     }
     return;
@@ -74692,28 +74557,25 @@ void label_2707()
     buff = "";
     notesel(buff);
     header = instr(netbuf, 0, u8"<!--START-->"s) + 13;
+    while (1)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        s = "";
+        tail = instr(netbuf, header, u8"%"s);
+        if (tail == -1)
         {
-            s = "";
-            tail = instr(netbuf, header, u8"%"s);
-            if (tail == -1)
-            {
-                break;
-            }
-            header += tail + 1;
-            tail = instr(netbuf, header, u8"%"s);
-            s += strmid(netbuf, header, tail) + u8"  "s;
-            header += tail + 1;
-            tail = instr(netbuf, header, u8"%"s);
-            s += strmid(netbuf, header + 4, tail - 4);
-            header += tail + 1;
-            tail = instr(netbuf, header, u8"%"s);
-            header += tail + 2;
-            s += u8"\n"s;
-            buff += ""s + s;
+            break;
         }
+        header += tail + 1;
+        tail = instr(netbuf, header, u8"%"s);
+        s += strmid(netbuf, header, tail) + u8"  "s;
+        header += tail + 1;
+        tail = instr(netbuf, header, u8"%"s);
+        s += strmid(netbuf, header + 4, tail - 4);
+        header += tail + 1;
+        tail = instr(netbuf, header, u8"%"s);
+        header += tail + 2;
+        s += u8"\n"s;
+        buff += ""s + s;
     }
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
     i = 0;
@@ -74993,25 +74855,22 @@ void label_2719()
             {
                 i = 0;
                 p = 0;
+                while (1)
                 {
-                    int cnt = 0;
-                    for (;; ++cnt)
+                    p(2) = instr(s, p, u8"\""s);
+                    if (p(2) == -1)
                     {
-                        p(2) = instr(s, p, u8"\""s);
-                        if (p(2) == -1)
-                        {
-                            break;
-                        }
-                        p += p(2);
-                        p(1) = instr(s, p + 1, u8"\""s);
-                        if (p(1) == -1)
-                        {
-                            break;
-                        }
-                        rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += std::size(rtvaln(i)) + 2;
-                        ++i;
+                        break;
                     }
+                    p += p(2);
+                    p(1) = instr(s, p + 1, u8"\""s);
+                    if (p(1) == -1)
+                    {
+                        break;
+                    }
+                    rtvaln(i) = strmid(s, p + 1, p(1));
+                    p += std::size(rtvaln(i)) + 2;
+                    ++i;
                 }
                 usertitle = rtvaln;
                 continue;
@@ -75020,25 +74879,22 @@ void label_2719()
             {
                 i = 0;
                 p = 0;
+                while (1)
                 {
-                    int cnt = 0;
-                    for (;; ++cnt)
+                    p(2) = instr(s, p, u8"\""s);
+                    if (p(2) == -1)
                     {
-                        p(2) = instr(s, p, u8"\""s);
-                        if (p(2) == -1)
-                        {
-                            break;
-                        }
-                        p += p(2);
-                        p(1) = instr(s, p + 1, u8"\""s);
-                        if (p(1) == -1)
-                        {
-                            break;
-                        }
-                        rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += std::size(rtvaln(i)) + 2;
-                        ++i;
+                        break;
                     }
+                    p += p(2);
+                    p(1) = instr(s, p + 1, u8"\""s);
+                    if (p(1) == -1)
+                    {
+                        break;
+                    }
+                    rtvaln(i) = strmid(s, p + 1, p(1));
+                    p += std::size(rtvaln(i)) + 2;
+                    ++i;
                 }
                 usermsg = rtvaln;
                 continue;
@@ -75047,25 +74903,22 @@ void label_2719()
             {
                 i = 0;
                 p = 0;
+                while (1)
                 {
-                    int cnt = 0;
-                    for (;; ++cnt)
+                    p(2) = instr(s, p, u8"\""s);
+                    if (p(2) == -1)
                     {
-                        p(2) = instr(s, p, u8"\""s);
-                        if (p(2) == -1)
-                        {
-                            break;
-                        }
-                        p += p(2);
-                        p(1) = instr(s, p + 1, u8"\""s);
-                        if (p(1) == -1)
-                        {
-                            break;
-                        }
-                        rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += std::size(rtvaln(i)) + 2;
-                        ++i;
+                        break;
                     }
+                    p += p(2);
+                    p(1) = instr(s, p + 1, u8"\""s);
+                    if (p(1) == -1)
+                    {
+                        break;
+                    }
+                    rtvaln(i) = strmid(s, p + 1, p(1));
+                    p += std::size(rtvaln(i)) + 2;
+                    ++i;
                 }
                 userrelation = elona::stoi(rtvaln(0));
                 continue;
@@ -75074,25 +74927,22 @@ void label_2719()
             {
                 i = 0;
                 p = 0;
+                while (1)
                 {
-                    int cnt = 0;
-                    for (;; ++cnt)
+                    p(2) = instr(s, p, u8"\""s);
+                    if (p(2) == -1)
                     {
-                        p(2) = instr(s, p, u8"\""s);
-                        if (p(2) == -1)
-                        {
-                            break;
-                        }
-                        p += p(2);
-                        p(1) = instr(s, p + 1, u8"\""s);
-                        if (p(1) == -1)
-                        {
-                            break;
-                        }
-                        rtvaln(i) = strmid(s, p + 1, p(1));
-                        p += std::size(rtvaln(i)) + 2;
-                        ++i;
+                        break;
                     }
+                    p += p(2);
+                    p(1) = instr(s, p + 1, u8"\""s);
+                    if (p(1) == -1)
+                    {
+                        break;
+                    }
+                    rtvaln(i) = strmid(s, p + 1, p(1));
+                    p += std::size(rtvaln(i)) + 2;
+                    ++i;
                 }
                 userpassword = rtvaln;
                 continue;
@@ -78059,50 +77909,47 @@ void pc_died()
         }
     }
     page = 0;
+    while (1)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        p(1) = 0;
         {
-            p(1) = 0;
+            int cnt = 0;
+            for (int cnt_end = cnt + (79); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (79); cnt < cnt_end; ++cnt)
+                p = cnt * 4;
+                noteget(s(10), p + 3);
+                csvsort(s, s(10), 44);
+                p(2) = elona::stoi(s(0));
+                noteget(s(10), p + 7);
+                csvsort(s, s(10), 44);
+                p(3) = elona::stoi(s(0));
+                if (p(3) > p(2))
                 {
-                    p = cnt * 4;
-                    noteget(s(10), p + 3);
-                    csvsort(s, s(10), 44);
-                    p(2) = elona::stoi(s(0));
-                    noteget(s(10), p + 7);
-                    csvsort(s, s(10), 44);
-                    p(3) = elona::stoi(s(0));
-                    if (p(3) > p(2))
+                    if (cnt == page)
                     {
-                        if (cnt == page)
-                        {
-                            page = cnt + 1;
-                        }
-                        else if (cnt + 1 == page)
-                        {
-                            page = cnt;
-                        }
-                        {
-                            int cnt = 1;
-                            for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
-                            {
-                                noteget(s, p + cnt);
-                                noteget(s(1), p + 4 + cnt);
-                                noteadd(s, p + 4 + cnt, 1);
-                                noteadd(s(1), p + cnt, 1);
-                            }
-                        }
-                        p(1) = 1;
+                        page = cnt + 1;
                     }
+                    else if (cnt + 1 == page)
+                    {
+                        page = cnt;
+                    }
+                    {
+                        int cnt = 1;
+                        for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+                        {
+                            noteget(s, p + cnt);
+                            noteget(s(1), p + 4 + cnt);
+                            noteadd(s, p + 4 + cnt, 1);
+                            noteadd(s(1), p + cnt, 1);
+                        }
+                    }
+                    p(1) = 1;
                 }
             }
-            if (p(1) == 0)
-            {
-                break;
-            }
+        }
+        if (p(1) == 0)
+        {
+            break;
         }
     }
     {

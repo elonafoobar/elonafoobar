@@ -4425,27 +4425,23 @@ void talk_unique()
                     txt(lang(
                         u8"ジャーナルが更新された。"s,
                         u8"Your journal has been updated."s));
+                    while (1)
                     {
-                        int cnt = 0;
-                        for (;; ++cnt)
+                        flt(10);
+                        characreate(56, 0, -3, 0);
+                        if (the_character_db[cdata[56].id]->rarity / 1000 < 70)
                         {
-                            flt(10);
-                            characreate(56, 0, -3, 0);
-                            if (the_character_db[cdata[56].id]->rarity / 1000
-                                < 70)
-                            {
-                                continue;
-                            }
-                            if (cdata[56].relationship != -3)
-                            {
-                                continue;
-                            }
-                            if (cdata[56].quality >= 4)
-                            {
-                                continue;
-                            }
-                            break;
+                            continue;
                         }
+                        if (cdata[56].relationship != -3)
+                        {
+                            continue;
+                        }
+                        if (cdata[56].quality >= 4)
+                        {
+                            continue;
+                        }
+                        break;
                     }
                     gdata_fighters_guild_quota = 15;
                     gdata_fighters_guild_target = cdata[56].id;
@@ -4559,26 +4555,23 @@ void talk_unique()
         talk_window();
         if (chatval == 1)
         {
+            while (1)
             {
-                int cnt = 0;
-                for (;; ++cnt)
+                flt(cdata[0].level + 10);
+                characreate(56, 0, -3, 0);
+                if (the_character_db[cdata[56].id]->rarity / 1000 < 70)
                 {
-                    flt(cdata[0].level + 10);
-                    characreate(56, 0, -3, 0);
-                    if (the_character_db[cdata[56].id]->rarity / 1000 < 70)
-                    {
-                        continue;
-                    }
-                    if (cdata[56].relationship != -3)
-                    {
-                        continue;
-                    }
-                    if (cdata[56].quality >= 4)
-                    {
-                        continue;
-                    }
-                    break;
+                    continue;
                 }
+                if (cdata[56].relationship != -3)
+                {
+                    continue;
+                }
+                if (cdata[56].quality >= 4)
+                {
+                    continue;
+                }
+                break;
             }
             gdata_fighters_guild_quota = 2 + rnd(3);
             gdata_fighters_guild_target = cdata[56].id;

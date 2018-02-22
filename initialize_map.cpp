@@ -2872,82 +2872,72 @@ label_1741_internal:
                             {
                                 if (adata(2, p) == adata(2, cnt))
                                 {
+                                    for (int cnt = 0;; ++cnt)
                                     {
-                                        int cnt = 0;
-                                        for (;; ++cnt)
+                                        await();
+                                        dx = std::clamp(
+                                            rnd(cnt / 4 + 1) + 1, 1, mdata(0));
+                                        dy = std::clamp(
+                                            rnd(cnt / 4 + 1) + 1, 1, mdata(1));
+                                        x = adata(1, p) + rnd(dx) - rnd(dx);
+                                        y = adata(2, p) + rnd(dy) - rnd(dy);
+                                        if (x < 0 || y < 0 || x >= mdata(0)
+                                            || y >= mdata(1))
                                         {
-                                            await();
-                                            dx = std::clamp(
-                                                rnd(cnt / 4 + 1) + 1,
-                                                1,
-                                                mdata(0));
-                                            dy = std::clamp(
-                                                rnd(cnt / 4 + 1) + 1,
-                                                1,
-                                                mdata(1));
-                                            x = adata(1, p) + rnd(dx) - rnd(dx);
-                                            y = adata(2, p) + rnd(dy) - rnd(dy);
-                                            if (x < 0 || y < 0 || x >= mdata(0)
-                                                || y >= mdata(1))
+                                            continue;
+                                        }
+                                        if (33 <= map(x, y, 0)
+                                            && map(x, y, 0) < 66)
+                                        {
+                                            continue;
+                                        }
+                                        if (map(x, y, 0) > 19)
+                                        {
+                                            continue;
+                                        }
+                                        i = 1;
+                                        {
+                                            int cnt = 0;
+                                            for (int cnt_end = cnt + (300);
+                                                 cnt < cnt_end;
+                                                 ++cnt)
                                             {
-                                                continue;
-                                            }
-                                            if (33 <= map(x, y, 0)
-                                                && map(x, y, 0) < 66)
-                                            {
-                                                continue;
-                                            }
-                                            if (map(x, y, 0) > 19)
-                                            {
-                                                continue;
-                                            }
-                                            i = 1;
-                                            {
-                                                int cnt = 0;
-                                                for (int cnt_end = cnt + (300);
-                                                     cnt < cnt_end;
-                                                     ++cnt)
+                                                if (adata(1, cnt) == 0
+                                                    || adata(2, cnt) == 0
+                                                    || adata(16, cnt) == 0)
                                                 {
-                                                    if (adata(1, cnt) == 0
-                                                        || adata(2, cnt) == 0
-                                                        || adata(16, cnt) == 0)
+                                                    continue;
+                                                }
+                                                if (x == adata(1, cnt))
+                                                {
+                                                    if (y == adata(2, cnt))
                                                     {
-                                                        continue;
-                                                    }
-                                                    if (x == adata(1, cnt))
-                                                    {
-                                                        if (y == adata(2, cnt))
-                                                        {
-                                                            i = 0;
-                                                            break;
-                                                        }
+                                                        i = 0;
+                                                        break;
                                                     }
                                                 }
                                             }
-                                            if (i == 0)
-                                            {
-                                                continue;
-                                            }
-                                            dialog(lang(
-                                                u8"エリアが再配置されます。"s
-                                                    + mapname(p)
-                                                    + u8"の位置は、x"s
-                                                    + adata(1, p) + u8":y"s
-                                                    + adata(2, p) + u8"からx"s
-                                                    + x + u8":y"s + y
-                                                    + u8"に変更されます。"s,
-                                                u8"The location of "s
-                                                    + mapname(p)
-                                                    + u8" has been changed from x"s
-                                                    + adata(1, p) + u8":y"s
-                                                    + adata(2, p) + u8" to x"s
-                                                    + x + u8":y"s + y
-                                                    + u8"."s));
-                                            adata(1, p) = x;
-                                            adata(2, p) = y;
-                                            ++f;
-                                            break;
                                         }
+                                        if (i == 0)
+                                        {
+                                            continue;
+                                        }
+                                        dialog(lang(
+                                            u8"エリアが再配置されます。"s
+                                                + mapname(p) + u8"の位置は、x"s
+                                                + adata(1, p) + u8":y"s
+                                                + adata(2, p) + u8"からx"s + x
+                                                + u8":y"s + y
+                                                + u8"に変更されます。"s,
+                                            u8"The location of "s + mapname(p)
+                                                + u8" has been changed from x"s
+                                                + adata(1, p) + u8":y"s
+                                                + adata(2, p) + u8" to x"s + x
+                                                + u8":y"s + y + u8"."s));
+                                        adata(1, p) = x;
+                                        adata(2, p) = y;
+                                        ++f;
+                                        break;
                                     }
                                 }
                             }
@@ -3228,30 +3218,27 @@ label_1742_internal:
                     if (map(cdata[rc].position.x, cdata[rc].position.y, 1) != 0
                         || cellaccess != 1)
                     {
+                        for (int cnt = 0;; ++cnt)
                         {
-                            int cnt = 0;
-                            for (;; ++cnt)
+                            x = cdata[rc].position.x + rnd((cnt / 2 + 2))
+                                - rnd((cnt / 2 + 2));
+                            y = cdata[rc].position.y + rnd((cnt / 2 + 2))
+                                - rnd((cnt / 2 + 2));
+                            if (cnt > 100)
                             {
-                                x = cdata[rc].position.x + rnd((cnt / 2 + 2))
-                                    - rnd((cnt / 2 + 2));
-                                y = cdata[rc].position.y + rnd((cnt / 2 + 2))
-                                    - rnd((cnt / 2 + 2));
-                                if (cnt > 100)
-                                {
-                                    x = rnd(mdata(0));
-                                    y = rnd(mdata(1));
-                                }
-                                if (cnt > 1000)
-                                {
-                                    break;
-                                }
-                                cell_check(x, y);
-                                if (cellaccess == 1)
-                                {
-                                    cdata[rc].position.x = x;
-                                    cdata[rc].position.y = y;
-                                    break;
-                                }
+                                x = rnd(mdata(0));
+                                y = rnd(mdata(1));
+                            }
+                            if (cnt > 1000)
+                            {
+                                break;
+                            }
+                            cell_check(x, y);
+                            if (cellaccess == 1)
+                            {
+                                cdata[rc].position.x = x;
+                                cdata[rc].position.y = y;
+                                break;
                             }
                         }
                     }

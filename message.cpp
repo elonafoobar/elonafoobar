@@ -454,19 +454,16 @@ void key_check(int prm_299)
 void keyrelease()
 {
     int a_at_m20 = 0;
+    while (1)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        await(30);
+        stick(a_at_m20, 768);
+        if (a_at_m20 == 0)
         {
-            await(30);
-            stick(a_at_m20, 768);
-            if (a_at_m20 == 0)
+            key_check();
+            if (key == ""s)
             {
-                key_check();
-                if (key == ""s)
-                {
-                    break;
-                }
+                break;
             }
         }
     }
@@ -477,25 +474,22 @@ void keyrelease()
 
 void press(int prm_300)
 {
+    while (1)
     {
-        int cnt = 0;
-        for (;; ++cnt)
+        await(20);
+        key_check();
+        if (prm_300 == 0)
         {
-            await(20);
-            key_check();
-            if (prm_300 == 0)
+            if (key != ""s)
             {
-                if (key != ""s)
-                {
-                    break;
-                }
+                break;
             }
-            if (prm_300 == 1)
+        }
+        if (prm_300 == 1)
+        {
+            if (key == key_enter || key == key_cancel)
             {
-                if (key == key_enter || key == key_cancel)
-                {
-                    break;
-                }
+                break;
             }
         }
     }

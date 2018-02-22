@@ -709,28 +709,24 @@ void item_compress(int)
     }
     if (p_at_m57 == -1)
     {
+        for (int cnt = 0;; ++cnt)
         {
-            int cnt = 0;
-            for (;; ++cnt)
+            p_at_m57 = invhead + rnd(invrange);
+            if (ibit(5, cnt) == 0)
             {
-                p_at_m57 = invhead + rnd(invrange);
-                if (ibit(5, cnt) == 0)
+                inv[p_at_m57].number = 0;
+                if (mode != 6)
                 {
-                    inv[p_at_m57].number = 0;
-                    if (mode != 6)
+                    if (inv[p_at_m57].position.x >= 0
+                        && inv[p_at_m57].position.x < mdata(0)
+                        && inv[p_at_m57].position.y >= 0
+                        && inv[p_at_m57].position.y < mdata(1))
                     {
-                        if (inv[p_at_m57].position.x >= 0
-                            && inv[p_at_m57].position.x < mdata(0)
-                            && inv[p_at_m57].position.y >= 0
-                            && inv[p_at_m57].position.y < mdata(1))
-                        {
-                            cell_refresh(
-                                inv[p_at_m57].position.x,
-                                inv[p_at_m57].position.y);
-                        }
+                        cell_refresh(
+                            inv[p_at_m57].position.x, inv[p_at_m57].position.y);
                     }
-                    break;
                 }
+                break;
             }
         }
     }
