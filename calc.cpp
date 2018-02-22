@@ -1342,20 +1342,17 @@ void generatemoney(int prm_904)
 void calccosthire()
 {
     cost_at_m153 = 0;
+    for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
     {
-        int cnt = 57;
-        for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+        if (cdata[cnt].character_role == 0)
         {
-            if (cdata[cnt].character_role == 0)
-            {
-                continue;
-            }
-            if (cdata[cnt].state != 1)
-            {
-                continue;
-            }
-            cost_at_m153 += calchirecost(cnt);
+            continue;
         }
+        if (cdata[cnt].state != 1)
+        {
+            continue;
+        }
+        cost_at_m153 += calchirecost(cnt);
     }
     cost_at_m153 = cost_at_m153
         * std::clamp((100 - std::clamp(cdata[0].karma / 2, 0, 50)
@@ -1373,30 +1370,27 @@ int calccostbuilding()
 {
     cost_at_m153 = 0;
     cost_at_m153 += gdata_home_scale * gdata_home_scale * 200;
+    for (int cnt = 300, cnt_end = cnt + (150); cnt < cnt_end; ++cnt)
     {
-        int cnt = 300;
-        for (int cnt_end = cnt + (150); cnt < cnt_end; ++cnt)
+        if (adata(16, cnt) == 101)
         {
-            if (adata(16, cnt) == 101)
-            {
-                cost_at_m153 += 1500;
-            }
-            if (adata(16, cnt) == 31)
-            {
-                cost_at_m153 += 1000;
-            }
-            if (adata(16, cnt) == 103)
-            {
-                cost_at_m153 += 750;
-            }
-            if (adata(16, cnt) == 102)
-            {
-                cost_at_m153 += 5000;
-            }
-            if (adata(16, cnt) == 104)
-            {
-                cost_at_m153 += 750;
-            }
+            cost_at_m153 += 1500;
+        }
+        if (adata(16, cnt) == 31)
+        {
+            cost_at_m153 += 1000;
+        }
+        if (adata(16, cnt) == 103)
+        {
+            cost_at_m153 += 750;
+        }
+        if (adata(16, cnt) == 102)
+        {
+            cost_at_m153 += 5000;
+        }
+        if (adata(16, cnt) == 104)
+        {
+            cost_at_m153 += 750;
         }
     }
     cost_at_m153 = cost_at_m153
@@ -1442,46 +1436,40 @@ int calccostreload(int prm_905, int prm_906)
     elona_vector1<int> i_at_m153;
     cost_at_m153 = 0;
     inv_getheader(prm_905);
+    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
     {
-        int cnt = invhead;
-        for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+        if (inv[cnt].number == 0)
         {
-            if (inv[cnt].number == 0)
+            continue;
+        }
+        if (the_item_db[inv[cnt].id]->category != 25000)
+        {
+            continue;
+        }
+        ci_at_m153 = cnt;
+        for (int cnt = 0, cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
+        {
+            if (inv[ci_at_m153].enchantments[cnt].id == 0)
             {
-                continue;
+                break;
             }
-            if (the_item_db[inv[cnt].id]->category != 25000)
+            enc_at_m153 = inv[ci_at_m153].enchantments[cnt].id;
+            i_at_m153 = enc_at_m153 / 10000;
+            if (i_at_m153 != 0)
             {
-                continue;
-            }
-            ci_at_m153 = cnt;
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
+                enc_at_m153 = enc_at_m153 % 10000;
+                if (i_at_m153 == 9)
                 {
-                    if (inv[ci_at_m153].enchantments[cnt].id == 0)
+                    i_at_m153(0) =
+                        inv[ci_at_m153].enchantments[cnt].power % 1000;
+                    i_at_m153(1) =
+                        inv[ci_at_m153].enchantments[cnt].power / 1000;
+                    cost_at_m153 += (i_at_m153(1) - i_at_m153)
+                        * (50 + enc_at_m153 * enc_at_m153 * 10);
+                    if (prm_906 == 1)
                     {
-                        break;
-                    }
-                    enc_at_m153 = inv[ci_at_m153].enchantments[cnt].id;
-                    i_at_m153 = enc_at_m153 / 10000;
-                    if (i_at_m153 != 0)
-                    {
-                        enc_at_m153 = enc_at_m153 % 10000;
-                        if (i_at_m153 == 9)
-                        {
-                            i_at_m153(0) =
-                                inv[ci_at_m153].enchantments[cnt].power % 1000;
-                            i_at_m153(1) =
-                                inv[ci_at_m153].enchantments[cnt].power / 1000;
-                            cost_at_m153 += (i_at_m153(1) - i_at_m153)
-                                * (50 + enc_at_m153 * enc_at_m153 * 10);
-                            if (prm_906 == 1)
-                            {
-                                inv[ci_at_m153].enchantments[cnt].power =
-                                    i_at_m153(1) * 1000 + i_at_m153(1);
-                            }
-                        }
+                        inv[ci_at_m153].enchantments[cnt].power =
+                            i_at_m153(1) * 1000 + i_at_m153(1);
                     }
                 }
             }
@@ -1517,18 +1505,16 @@ int calcidentifyvalue(int prm_907)
     {
         inv_getheader(0);
         p_at_m153 = 0;
+        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
+             ++cnt)
         {
-            int cnt = invhead;
-            for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+            if (inv[cnt].number == 0)
             {
-                if (inv[cnt].number == 0)
-                {
-                    continue;
-                }
-                if (inv[cnt].identification_state < 3)
-                {
-                    ++p_at_m153;
-                }
+                continue;
+            }
+            if (inv[cnt].identification_state < 3)
+            {
+                ++p_at_m153;
             }
         }
         if (p_at_m153 >= 2)
@@ -1827,22 +1813,19 @@ int calcscore()
 void calcpartyscore()
 {
     p = 0;
+    for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
     {
-        int cnt = 57;
-        for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+        if (cdata[cnt].state != 1)
         {
-            if (cdata[cnt].state != 1)
-            {
-                continue;
-            }
-            if (cdata[cnt].impression >= 53)
-            {
-                p += cdata[cnt].level + 5;
-            }
-            if (cdata[cnt].impression < 50)
-            {
-                p -= 20;
-            }
+            continue;
+        }
+        if (cdata[cnt].impression >= 53)
+        {
+            p += cdata[cnt].level + 5;
+        }
+        if (cdata[cnt].impression < 50)
+        {
+            p -= 20;
         }
     }
     if (p > qdata(13, gdata_executing_immediate_quest))
@@ -1866,23 +1849,20 @@ void calcpartyscore()
 void calcpartyscore2()
 {
     p = 0;
+    for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
     {
-        int cnt = 57;
-        for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+        if (cdata[cnt].state != 1)
         {
-            if (cdata[cnt].state != 1)
+            continue;
+        }
+        if (cdata[cnt].impression >= 53)
+        {
+            if (cdata[cnt].quality >= 4)
             {
-                continue;
-            }
-            if (cdata[cnt].impression >= 53)
-            {
-                if (cdata[cnt].quality >= 4)
-                {
-                    p += 20 + cdata[cnt].level / 2;
-                    txt(lang(
-                        cdatan(0, cnt) + u8"は満足した。"s,
-                        cdatan(0, cnt) + u8" "s + is(cnt) + u8" satisfied."s));
-                }
+                p += 20 + cdata[cnt].level / 2;
+                txt(lang(
+                    cdatan(0, cnt) + u8"は満足した。"s,
+                    cdatan(0, cnt) + u8" "s + is(cnt) + u8" satisfied."s));
             }
         }
     }

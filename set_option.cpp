@@ -44,13 +44,10 @@ void set_option()
         sel = 4;
     }
     gsel(sel);
+    for (int cnt = 0, cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
-        {
-            pos(cnt % 4 * 180, cnt / 4 * 300);
-            picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
-        }
+        pos(cnt % 4 * 180, cnt / 4 * 300);
+        picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(0);
     redraw(0);
@@ -294,18 +291,15 @@ void set_option()
         dx = 440;
         dy = 300;
     }
+    for (int cnt = 0, cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
+        if (s(cnt) == ""s)
         {
-            if (s(cnt) == ""s)
-            {
-                break;
-            }
-            list(0, listmax) = cnt;
-            listn(0, listmax) = s(cnt);
-            ++listmax;
+            break;
         }
+        list(0, listmax) = cnt;
+        listn(0, listmax) = s(cnt);
+        ++listmax;
     }
     windowshadow = 1;
 label_2724_internal:
@@ -372,26 +366,23 @@ label_2725_internal:
     grotate(p, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
     gmode(2);
     keyrange = 0;
+    for (int cnt = 0, cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
+        p = pagesize * page + cnt;
+        if (p >= listmax)
         {
-            p = pagesize * page + cnt;
-            if (p >= listmax)
-            {
-                break;
-            }
-            if (submenu == 0)
-            {
-                key_list(cnt) = key_select(cnt);
-                ++keyrange;
-                display_key(wx + 32, wy + 66 + cnt * 19 - 2, cnt);
-            }
-            else
-            {
-                key_list(cnt) = key_cancel;
-                ++keyrange;
-            }
+            break;
+        }
+        if (submenu == 0)
+        {
+            key_list(cnt) = key_select(cnt);
+            ++keyrange;
+            display_key(wx + 32, wy + 66 + cnt * 19 - 2, cnt);
+        }
+        else
+        {
+            key_list(cnt) = key_cancel;
+            ++keyrange;
         }
     }
     if (submenu == 5)
@@ -409,489 +400,483 @@ label_2725_internal:
         p(10) = cnvjkey(key_help);
         p(11) = cnvjkey(key_charainfo);
         p(12) = cnvjkey(key_ammo);
+        for (int cnt = 1, cnt_end = cnt + (19); cnt < cnt_end; ++cnt)
         {
-            int cnt = 1;
-            for (int cnt_end = cnt + (19); cnt < cnt_end; ++cnt)
-            {
-                list(1, cnt) = p(cnt);
-            }
+            list(1, cnt) = p(cnt);
         }
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    for (int cnt = 0, cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
+        p = pagesize * page + cnt;
+        if (p >= listmax)
         {
-            p = pagesize * page + cnt;
-            if (p >= listmax)
+            break;
+        }
+        i = list(0, p);
+        s = listn(0, p);
+        if (submenu == 0)
+        {
+            x = 8;
+        }
+        else
+        {
+            x = 0;
+        }
+        if (submenu == 3)
+        {
+            if (cfg_net == 0)
             {
-                break;
-            }
-            i = list(0, p);
-            s = listn(0, p);
-            if (submenu == 0)
-            {
-                x = 8;
-            }
-            else
-            {
-                x = 0;
-            }
-            if (submenu == 3)
-            {
-                if (cfg_net == 0)
+                if (cnt >= 1)
                 {
-                    if (cnt >= 1)
-                    {
-                        continue;
-                    }
+                    continue;
                 }
             }
-            cs_list(cs == cnt, s, wx + 56 + x, wy + 66 + cnt * 19 - 1, 0);
-            if ((submenu != 5 || cnt <= 0) && submenu != 0)
+        }
+        cs_list(cs == cnt, s, wx + 56 + x, wy + 66 + cnt * 19 - 1, 0);
+        if ((submenu != 5 || cnt <= 0) && submenu != 0)
+        {
+            pos(wx + 220, wy + 66 + cnt * 19 - 5);
+            gcopy(3, 312, 336, 24, 24);
+            pos(wx + 358, wy + 66 + cnt * 19 - 5);
+            gcopy(3, 336, 336, 24, 24);
+        }
+        pos(wx + 250, wy + 66 + cnt * 19);
+        if (submenu == 1)
+        {
+            if (cnt == 0)
             {
-                pos(wx + 220, wy + 66 + cnt * 19 - 5);
-                gcopy(3, 312, 336, 24, 24);
-                pos(wx + 358, wy + 66 + cnt * 19 - 5);
-                gcopy(3, 336, 336, 24, 24);
-            }
-            pos(wx + 250, wy + 66 + cnt * 19);
-            if (submenu == 1)
-            {
-                if (cnt == 0)
+                if (jp)
                 {
-                    if (jp)
-                    {
-                        s(0) = u8"なし"s;
-                        s(1) = u8"あり"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Don't show"s;
-                        s(1) = u8"Show"s;
-                    }
-                    mes(s(cfg_extrahelp));
-                }
-                if (cnt == 1)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Attack"s;
-                        s(1) = u8"Ignore"s;
-                    }
-                    mes(s(cfg_ignoredislike));
-                }
-                if (cnt == 2)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"ｸｨｯｸﾒﾆｭｰ"s;
-                        s(1) = u8"道具を振る"s;
-                        s(2) = u8"割当なし"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Quick menu"s;
-                        s(1) = u8"Zap"s;
-                        s(2) = u8"Don't assign"s;
-                    }
-                    mes(s(cfg_zkey));
-                }
-                if (cnt == 3)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"ｸｲｯｸｲﾝﾍﾞﾝﾄﾘ"s;
-                        s(1) = u8"道具を調べる"s;
-                        s(2) = u8"割当なし"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Quick Inv"s;
-                        s(1) = u8"Identify"s;
-                        s(2) = u8"Don't assign"s;
-                    }
-                    mes(s(cfg_xkey));
-                }
-                if (cnt == 4)
-                {
-                    if (cfg_startrun >= 20)
-                    {
-                        if (jp)
-                        {
-                            mes(u8"走らない"s);
-                        }
-                        else
-                        {
-                            mes(u8"Dont't run"s);
-                        }
-                    }
-                    else if (jp)
-                    {
-                        mes(""s + (cfg_startrun + 1) + u8"歩目から"s);
-                    }
-                    else
-                    {
-                        mes(u8"After "s + (cfg_startrun + 1) + u8" steps"s);
-                    }
-                }
-                if (cnt == 5)
-                {
-                    mes(""s + cfg_walkwait + u8" wait"s);
-                }
-                if (cnt == 6)
-                {
-                    mes(""s + cfg_attackwait + u8" wait"s);
-                }
-            }
-            if (submenu == 2)
-            {
-                if (cnt == 0)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"なし"s;
-                        s(1) = u8"direct sound"s;
-                        s(2) = u8"MCI"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"None"s;
-                        s(1) = u8"Direct sound"s;
-                        s(2) = u8"MCI"s;
-                    }
-                    mes(s(cfg_sound2));
-                }
-                if (cnt == 1)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"なし"s;
-                        s(1) = u8"direct music"s;
-                        s(2) = u8"MCI"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"None"s;
-                        s(1) = u8"Direct music"s;
-                        s(2) = u8"MCI"s;
-                    }
-                    mes(s(cfg_music2));
-                }
-                if (cnt == 2)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"ウィンドウ"s;
-                        s(1) = u8"フルスクリーン"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Window mode"s;
-                        s(1) = u8"Full screen"s;
-                    }
-                    mes(s(cfg_fullscreen2));
-                }
-                if (cnt == 3)
-                {
-                    mes(""s + windoww2 + u8" * "s + windowh2);
-                }
-                if (cnt == 4)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_scroll));
-                }
-                if (cnt == 5)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_alwayscenter));
-                }
-                if (cnt == 6)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"再生しない"s;
-                        s(1) = u8"再生する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Don't play"s;
-                        s(1) = u8"Play"s;
-                    }
-                    mes(s(cfg_heart));
-                }
-                if (cnt == 7)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"アニメなし"s;
-                        s(1) = u8"アニメあり"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_attackanime));
-                }
-                if (cnt == 8)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"アニメなし"s;
-                        s(1) = u8"アニメあり"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No animation"s;
-                        s(1) = u8"Always"s;
-                    }
-                    mes(s(cfg_env));
-                }
-                if (cnt == 9)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"高画質"s;
-                        s(1) = u8"低画質"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"High"s;
-                        s(1) = u8"Low"s;
-                    }
-                    mes(s(cfg_shadow));
-                }
-                if (cnt == 10)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"なし（高速）"s;
-                        s(1) = u8"あり（低速）"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No(Slow)"s;
-                        s(1) = u8"Yes(Fast)"s;
-                    }
-                    mes(s(cfg_objectshadow));
-                }
-            }
-            if (submenu == 3)
-            {
-                if (cnt == 0)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_net));
-                }
-                if (cnt == 1)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_netwish));
-                }
-                if (cnt == 2)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_netchat));
-                }
-            }
-            if (submenu == 4)
-            {
-                if (cnt == 0)
-                {
-                    mes(""s + cfg_runwait + u8" wait"s);
-                }
-                if (cnt == 1)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_autonumlock));
-                }
-                if (cnt == 2)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"オフ(オンには出来ません)"s;
-                        s(1) = u8"オフ(オンには出来ません)"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No(unsupported)"s;
-                        s(1) = u8"No(unsupported)"s;
-                    }
-                    mes(s(0));
-                }
-                if (cnt == 3)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"オフ"s;
-                        s(1) = u8"オン"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(""s + cfg_scrsync + u8" wait"s);
-                }
-                if (cnt == 4)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_runscroll));
-                }
-                if (cnt == 5)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"普通"s;
-                        s(1) = u8"速め"s;
-                        s(2) = u8"省略"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Normal"s;
-                        s(1) = u8"High"s;
-                        s(2) = u8"Highest"s;
-                    }
-                    mes(s(cfg_autoturn));
-                }
-                if (cnt == 6)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_skiprandevents));
-                }
-            }
-            if (submenu == 5)
-            {
-                if (cnt == 0)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"使用しない"s;
-                        s(1) = u8"使用する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Don't use"s;
-                        s(1) = u8"Use"s;
-                    }
-                    mes(s(cfg_joypad));
-                }
-                else if (list(1, cnt) == -1)
-                {
-                    mes(lang(u8"未設定"s, u8"Unassigned"s));
+                    s(0) = u8"なし"s;
+                    s(1) = u8"あり"s;
                 }
                 else
                 {
-                    mes(lang(u8"ボタン"s, u8"Button"s) + list(1, cnt));
+                    s(0) = u8"Don't show"s;
+                    s(1) = u8"Show"s;
                 }
+                mes(s(cfg_extrahelp));
             }
-            if (submenu == 6)
+            if (cnt == 1)
             {
-                if (cnt == 0)
+                if (jp)
+                {
+                    s(0) = u8"しない"s;
+                    s(1) = u8"する"s;
+                }
+                else
+                {
+                    s(0) = u8"Attack"s;
+                    s(1) = u8"Ignore"s;
+                }
+                mes(s(cfg_ignoredislike));
+            }
+            if (cnt == 2)
+            {
+                if (jp)
+                {
+                    s(0) = u8"ｸｨｯｸﾒﾆｭｰ"s;
+                    s(1) = u8"道具を振る"s;
+                    s(2) = u8"割当なし"s;
+                }
+                else
+                {
+                    s(0) = u8"Quick menu"s;
+                    s(1) = u8"Zap"s;
+                    s(2) = u8"Don't assign"s;
+                }
+                mes(s(cfg_zkey));
+            }
+            if (cnt == 3)
+            {
+                if (jp)
+                {
+                    s(0) = u8"ｸｲｯｸｲﾝﾍﾞﾝﾄﾘ"s;
+                    s(1) = u8"道具を調べる"s;
+                    s(2) = u8"割当なし"s;
+                }
+                else
+                {
+                    s(0) = u8"Quick Inv"s;
+                    s(1) = u8"Identify"s;
+                    s(2) = u8"Don't assign"s;
+                }
+                mes(s(cfg_xkey));
+            }
+            if (cnt == 4)
+            {
+                if (cfg_startrun >= 20)
                 {
                     if (jp)
                     {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
+                        mes(u8"走らない"s);
                     }
                     else
                     {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
+                        mes(u8"Dont't run"s);
                     }
-                    mes(s(cfg_msgaddtime));
                 }
-                if (cnt == 1)
+                else if (jp)
                 {
-                    mes(""s + cfg_msgtrans * 10 + u8" %"s);
+                    mes(""s + (cfg_startrun + 1) + u8"歩目から"s);
+                }
+                else
+                {
+                    mes(u8"After "s + (cfg_startrun + 1) + u8" steps"s);
                 }
             }
-            if (submenu == 7)
+            if (cnt == 5)
             {
-                if (cnt == 0)
+                mes(""s + cfg_walkwait + u8" wait"s);
+            }
+            if (cnt == 6)
+            {
+                mes(""s + cfg_attackwait + u8" wait"s);
+            }
+        }
+        if (submenu == 2)
+        {
+            if (cnt == 0)
+            {
+                if (jp)
                 {
-                    s(0) = u8"Japanese"s;
-                    s(1) = u8"English"s;
-                    mes(s(cfg_language));
+                    s(0) = u8"なし"s;
+                    s(1) = u8"direct sound"s;
+                    s(2) = u8"MCI"s;
                 }
+                else
+                {
+                    s(0) = u8"None"s;
+                    s(1) = u8"Direct sound"s;
+                    s(2) = u8"MCI"s;
+                }
+                mes(s(cfg_sound2));
+            }
+            if (cnt == 1)
+            {
+                if (jp)
+                {
+                    s(0) = u8"なし"s;
+                    s(1) = u8"direct music"s;
+                    s(2) = u8"MCI"s;
+                }
+                else
+                {
+                    s(0) = u8"None"s;
+                    s(1) = u8"Direct music"s;
+                    s(2) = u8"MCI"s;
+                }
+                mes(s(cfg_music2));
+            }
+            if (cnt == 2)
+            {
+                if (jp)
+                {
+                    s(0) = u8"ウィンドウ"s;
+                    s(1) = u8"フルスクリーン"s;
+                }
+                else
+                {
+                    s(0) = u8"Window mode"s;
+                    s(1) = u8"Full screen"s;
+                }
+                mes(s(cfg_fullscreen2));
+            }
+            if (cnt == 3)
+            {
+                mes(""s + windoww2 + u8" * "s + windowh2);
+            }
+            if (cnt == 4)
+            {
+                if (jp)
+                {
+                    s(0) = u8"しない"s;
+                    s(1) = u8"する"s;
+                }
+                else
+                {
+                    s(0) = u8"No"s;
+                    s(1) = u8"Yes"s;
+                }
+                mes(s(cfg_scroll));
+            }
+            if (cnt == 5)
+            {
+                if (jp)
+                {
+                    s(0) = u8"しない"s;
+                    s(1) = u8"する"s;
+                }
+                else
+                {
+                    s(0) = u8"No"s;
+                    s(1) = u8"Yes"s;
+                }
+                mes(s(cfg_alwayscenter));
+            }
+            if (cnt == 6)
+            {
+                if (jp)
+                {
+                    s(0) = u8"再生しない"s;
+                    s(1) = u8"再生する"s;
+                }
+                else
+                {
+                    s(0) = u8"Don't play"s;
+                    s(1) = u8"Play"s;
+                }
+                mes(s(cfg_heart));
+            }
+            if (cnt == 7)
+            {
+                if (jp)
+                {
+                    s(0) = u8"アニメなし"s;
+                    s(1) = u8"アニメあり"s;
+                }
+                else
+                {
+                    s(0) = u8"No"s;
+                    s(1) = u8"Yes"s;
+                }
+                mes(s(cfg_attackanime));
+            }
+            if (cnt == 8)
+            {
+                if (jp)
+                {
+                    s(0) = u8"アニメなし"s;
+                    s(1) = u8"アニメあり"s;
+                }
+                else
+                {
+                    s(0) = u8"No animation"s;
+                    s(1) = u8"Always"s;
+                }
+                mes(s(cfg_env));
+            }
+            if (cnt == 9)
+            {
+                if (jp)
+                {
+                    s(0) = u8"高画質"s;
+                    s(1) = u8"低画質"s;
+                }
+                else
+                {
+                    s(0) = u8"High"s;
+                    s(1) = u8"Low"s;
+                }
+                mes(s(cfg_shadow));
+            }
+            if (cnt == 10)
+            {
+                if (jp)
+                {
+                    s(0) = u8"なし（高速）"s;
+                    s(1) = u8"あり（低速）"s;
+                }
+                else
+                {
+                    s(0) = u8"No(Slow)"s;
+                    s(1) = u8"Yes(Fast)"s;
+                }
+                mes(s(cfg_objectshadow));
+            }
+        }
+        if (submenu == 3)
+        {
+            if (cnt == 0)
+            {
+                if (jp)
+                {
+                    s(0) = u8"しない"s;
+                    s(1) = u8"する"s;
+                }
+                else
+                {
+                    s(0) = u8"No"s;
+                    s(1) = u8"Yes"s;
+                }
+                mes(s(cfg_net));
+            }
+            if (cnt == 1)
+            {
+                if (jp)
+                {
+                    s(0) = u8"しない"s;
+                    s(1) = u8"する"s;
+                }
+                else
+                {
+                    s(0) = u8"No"s;
+                    s(1) = u8"Yes"s;
+                }
+                mes(s(cfg_netwish));
+            }
+            if (cnt == 2)
+            {
+                if (jp)
+                {
+                    s(0) = u8"しない"s;
+                    s(1) = u8"する"s;
+                }
+                else
+                {
+                    s(0) = u8"No"s;
+                    s(1) = u8"Yes"s;
+                }
+                mes(s(cfg_netchat));
+            }
+        }
+        if (submenu == 4)
+        {
+            if (cnt == 0)
+            {
+                mes(""s + cfg_runwait + u8" wait"s);
+            }
+            if (cnt == 1)
+            {
+                if (jp)
+                {
+                    s(0) = u8"しない"s;
+                    s(1) = u8"する"s;
+                }
+                else
+                {
+                    s(0) = u8"No"s;
+                    s(1) = u8"Yes"s;
+                }
+                mes(s(cfg_autonumlock));
+            }
+            if (cnt == 2)
+            {
+                if (jp)
+                {
+                    s(0) = u8"オフ(オンには出来ません)"s;
+                    s(1) = u8"オフ(オンには出来ません)"s;
+                }
+                else
+                {
+                    s(0) = u8"No(unsupported)"s;
+                    s(1) = u8"No(unsupported)"s;
+                }
+                mes(s(0));
+            }
+            if (cnt == 3)
+            {
+                if (jp)
+                {
+                    s(0) = u8"オフ"s;
+                    s(1) = u8"オン"s;
+                }
+                else
+                {
+                    s(0) = u8"No"s;
+                    s(1) = u8"Yes"s;
+                }
+                mes(""s + cfg_scrsync + u8" wait"s);
+            }
+            if (cnt == 4)
+            {
+                if (jp)
+                {
+                    s(0) = u8"しない"s;
+                    s(1) = u8"する"s;
+                }
+                else
+                {
+                    s(0) = u8"No"s;
+                    s(1) = u8"Yes"s;
+                }
+                mes(s(cfg_runscroll));
+            }
+            if (cnt == 5)
+            {
+                if (jp)
+                {
+                    s(0) = u8"普通"s;
+                    s(1) = u8"速め"s;
+                    s(2) = u8"省略"s;
+                }
+                else
+                {
+                    s(0) = u8"Normal"s;
+                    s(1) = u8"High"s;
+                    s(2) = u8"Highest"s;
+                }
+                mes(s(cfg_autoturn));
+            }
+            if (cnt == 6)
+            {
+                if (jp)
+                {
+                    s(0) = u8"しない"s;
+                    s(1) = u8"する"s;
+                }
+                else
+                {
+                    s(0) = u8"No"s;
+                    s(1) = u8"Yes"s;
+                }
+                mes(s(cfg_skiprandevents));
+            }
+        }
+        if (submenu == 5)
+        {
+            if (cnt == 0)
+            {
+                if (jp)
+                {
+                    s(0) = u8"使用しない"s;
+                    s(1) = u8"使用する"s;
+                }
+                else
+                {
+                    s(0) = u8"Don't use"s;
+                    s(1) = u8"Use"s;
+                }
+                mes(s(cfg_joypad));
+            }
+            else if (list(1, cnt) == -1)
+            {
+                mes(lang(u8"未設定"s, u8"Unassigned"s));
+            }
+            else
+            {
+                mes(lang(u8"ボタン"s, u8"Button"s) + list(1, cnt));
+            }
+        }
+        if (submenu == 6)
+        {
+            if (cnt == 0)
+            {
+                if (jp)
+                {
+                    s(0) = u8"しない"s;
+                    s(1) = u8"する"s;
+                }
+                else
+                {
+                    s(0) = u8"No"s;
+                    s(1) = u8"Yes"s;
+                }
+                mes(s(cfg_msgaddtime));
+            }
+            if (cnt == 1)
+            {
+                mes(""s + cfg_msgtrans * 10 + u8" %"s);
+            }
+        }
+        if (submenu == 7)
+        {
+            if (cnt == 0)
+            {
+                s(0) = u8"Japanese"s;
+                s(1) = u8"English"s;
+                mes(s(cfg_language));
             }
         }
     }
@@ -933,16 +918,13 @@ label_2725_internal:
     key_check();
     cursor_check();
     p = -1;
+    for (int cnt = 0, cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
+        if (key == key_select(cnt))
         {
-            if (key == key_select(cnt))
-            {
-                p = list(0, pagesize * page + cnt);
-                cs = cnt;
-                break;
-            }
+            p = list(0, pagesize * page + cnt);
+            cs = cnt;
+            break;
         }
     }
     if (p != -1)
@@ -962,72 +944,63 @@ label_2725_internal:
             int j0 = 0;
             DIGETJOYSTATE(j0, 0);
             f = 0;
+            for (int cnt = 0, cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
+                if (HMMBITCHECK(j0, 4 + cnt))
                 {
-                    if (HMMBITCHECK(j0, 4 + cnt))
+                    p = cnt;
+                    valn = "";
+                    for (int cnt = 0, cnt_end = cnt + (12); cnt < cnt_end;
+                         ++cnt)
                     {
-                        p = cnt;
-                        valn = "";
-                        {
-                            int cnt = 0;
-                            for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
-                            {
-                                jkey(cnt) = "";
-                            }
-                        }
-                        list(1, cs) = p;
-                        {
-                            int cnt = 1;
-                            for (int cnt_end = cnt + (19); cnt < cnt_end; ++cnt)
-                            {
-                                if (cs == cnt)
-                                {
-                                    continue;
-                                }
-                                --list(1, cnt);
-                                if (list(1, cnt) == p || list(1, cnt) <= -1)
-                                {
-                                    list(1, cnt) = 12;
-                                }
-                            }
-                        }
-                        set_config(u8"enter", key_enter, list(1, 1));
-                        set_config(u8"cancel", key_cancel, list(1, 2));
-                        set_config(u8"quickinv", key_quickinv, list(1, 3));
-                        set_config(u8"quick", key_quick, list(1, 4));
-                        set_config(u8"alter", key_alter, list(1, 5));
-                        set_config(u8"get", key_get, list(1, 6));
-                        set_config(u8"fire", key_fire, list(1, 7));
-                        set_config(u8"target", key_target, list(1, 8));
-                        set_config(u8"esc", key_esc, list(1, 9));
-                        set_config(u8"help", key_help, list(1, 10));
-                        set_config(u8"charainfo", key_charainfo, list(1, 11));
-                        set_config(u8"ammo", key_ammo, list(1, 12));
-                        p(0) = 0;
-                        p(1) = cnvjkey(key_enter);
-                        p(2) = cnvjkey(key_cancel);
-                        p(3) = cnvjkey(key_quickinv);
-                        p(4) = cnvjkey(key_quick);
-                        p(5) = cnvjkey(key_alter);
-                        p(6) = cnvjkey(key_get);
-                        p(7) = cnvjkey(key_fire);
-                        p(8) = cnvjkey(key_target);
-                        p(9) = cnvjkey(key_esc);
-                        p(10) = cnvjkey(key_help);
-                        p(11) = cnvjkey(key_charainfo);
-                        p(12) = cnvjkey(key_ammo);
-                        {
-                            int cnt = 1;
-                            for (int cnt_end = cnt + (19); cnt < cnt_end; ++cnt)
-                            {
-                                list(1, cnt) = p(cnt);
-                            }
-                        }
-                        f = 1;
-                        break;
+                        jkey(cnt) = "";
                     }
+                    list(1, cs) = p;
+                    for (int cnt = 1, cnt_end = cnt + (19); cnt < cnt_end;
+                         ++cnt)
+                    {
+                        if (cs == cnt)
+                        {
+                            continue;
+                        }
+                        --list(1, cnt);
+                        if (list(1, cnt) == p || list(1, cnt) <= -1)
+                        {
+                            list(1, cnt) = 12;
+                        }
+                    }
+                    set_config(u8"enter", key_enter, list(1, 1));
+                    set_config(u8"cancel", key_cancel, list(1, 2));
+                    set_config(u8"quickinv", key_quickinv, list(1, 3));
+                    set_config(u8"quick", key_quick, list(1, 4));
+                    set_config(u8"alter", key_alter, list(1, 5));
+                    set_config(u8"get", key_get, list(1, 6));
+                    set_config(u8"fire", key_fire, list(1, 7));
+                    set_config(u8"target", key_target, list(1, 8));
+                    set_config(u8"esc", key_esc, list(1, 9));
+                    set_config(u8"help", key_help, list(1, 10));
+                    set_config(u8"charainfo", key_charainfo, list(1, 11));
+                    set_config(u8"ammo", key_ammo, list(1, 12));
+                    p(0) = 0;
+                    p(1) = cnvjkey(key_enter);
+                    p(2) = cnvjkey(key_cancel);
+                    p(3) = cnvjkey(key_quickinv);
+                    p(4) = cnvjkey(key_quick);
+                    p(5) = cnvjkey(key_alter);
+                    p(6) = cnvjkey(key_get);
+                    p(7) = cnvjkey(key_fire);
+                    p(8) = cnvjkey(key_target);
+                    p(9) = cnvjkey(key_esc);
+                    p(10) = cnvjkey(key_help);
+                    p(11) = cnvjkey(key_charainfo);
+                    p(12) = cnvjkey(key_ammo);
+                    for (int cnt = 1, cnt_end = cnt + (19); cnt < cnt_end;
+                         ++cnt)
+                    {
+                        list(1, cnt) = p(cnt);
+                    }
+                    f = 1;
+                    break;
                 }
             }
             if (f)
@@ -1323,17 +1296,14 @@ label_2725_internal:
                 y(4) = 768;
                 y(5) = 1024;
                 i = 0;
+                for (int cnt = 0, cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+                    if (windoww2 == x(cnt))
                     {
-                        if (windoww2 == x(cnt))
+                        if (windowh2 == y(cnt))
                         {
-                            if (windowh2 == y(cnt))
-                            {
-                                i = cnt;
-                                break;
-                            }
+                            i = cnt;
+                            break;
                         }
                     }
                 }

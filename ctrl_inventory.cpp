@@ -35,19 +35,16 @@ label_20591:
         if (mdata(6) == 1)
         {
             p = 0;
+            for (int cnt = 0, cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
+                if (cycle(cnt, 1) == -1)
                 {
-                    if (cycle(cnt, 1) == -1)
-                    {
-                        break;
-                    }
-                    if (cycle(cnt, 1) == invctrl)
-                    {
-                        p = 1;
-                        break;
-                    }
+                    break;
+                }
+                if (cycle(cnt, 1) == invctrl)
+                {
+                    p = 1;
+                    break;
                 }
             }
             if (p == 0)
@@ -67,474 +64,463 @@ label_20591:
     cc = 0;
     page_load();
     mainweapon = -1;
+    for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+        if (cnt == 0)
         {
-            if (cnt == 0)
+            p = -1;
+            if (invctrl == 2 || invctrl == 6 || invctrl == 10 || invctrl == 12
+                || invctrl == 16 || invctrl == 20 || invctrl == 21
+                || invctrl == 23 || invctrl == 24 || invctrl == 25)
             {
-                p = -1;
-                if (invctrl == 2 || invctrl == 6 || invctrl == 10
-                    || invctrl == 12 || invctrl == 16 || invctrl == 20
-                    || invctrl == 21 || invctrl == 23 || invctrl == 24
-                    || invctrl == 25)
+                continue;
+            }
+        }
+        if (cnt == 1)
+        {
+            p = cc;
+            if (invctrl == 20 || invctrl == 25)
+            {
+                p = tc;
+            }
+            if (invctrl == 27)
+            {
+                p = map(tlocx, tlocy, 1) - 1;
+                if (p == 0 || p == -1)
                 {
                     continue;
                 }
             }
-            if (cnt == 1)
+            if (invctrl == 3 || invctrl == 11 || invctrl == 22 || invctrl == 28)
             {
-                p = cc;
-                if (invctrl == 20 || invctrl == 25)
+                break;
+            }
+        }
+        inv_getheader(p);
+        cnt2 = cnt;
+        if (invctrl != 1 && invctrl != 5 && invctrl != 13 && invctrl != 14
+            && invctrl != 18 && invctrl != 20 && invctrl != 23 && invctrl != 25
+            && invctrl != 27)
+        {
+            countequip = 0;
+        }
+        else
+        {
+            countequip = 1;
+        }
+        if (invctrl == 11 || invctrl == 12 || invctrl == 25 || invctrl == 27)
+        {
+            showmoney = 1;
+        }
+        else
+        {
+            showmoney = 0;
+        }
+        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
+             ++cnt)
+        {
+            if (inv[cnt].number <= 0)
+            {
+                inv[cnt].number = 0;
+                continue;
+            }
+            if (inv[cnt].id == 488)
+            {
+                inv[cnt].function = 9;
+            }
+            if (inv[cnt].id == 504)
+            {
+                inv[cnt].function = 38;
+            }
+            if (inv[cnt].id >= 800 || inv[cnt].id < 0)
+            {
+                dialog(
+                    u8"Invalid Item Id found. Item No:"s + cnt + u8", Id:"s
+                    + inv[cnt].id
+                    + u8" has been removed from your inventory."s);
+                inv[cnt].number = 0;
+                inv[cnt].id = 0;
+                continue;
+            }
+            if (mdata(6) == 1)
+            {
+                if (invctrl == 7)
                 {
-                    p = tc;
+                    if (the_item_db[inv[cnt].id]->subcategory != 53100
+                        && inv[cnt].id != 621)
+                    {
+                        continue;
+                    }
                 }
+            }
+            if (cnt2 == 0)
+            {
                 if (invctrl == 27)
                 {
-                    p = map(tlocx, tlocy, 1) - 1;
-                    if (p == 0 || p == -1)
+                    if (inv[cnt].position.x != tlocx
+                        || inv[cnt].position.y != tlocy)
                     {
                         continue;
                     }
                 }
-                if (invctrl == 3 || invctrl == 11 || invctrl == 22
-                    || invctrl == 28)
+                else if (invctrl != 11 && invctrl != 22 && invctrl != 28)
                 {
-                    break;
+                    if (inv[cnt].position.x != cdata[cc].position.x
+                        || inv[cnt].position.y != cdata[cc].position.y)
+                    {
+                        continue;
+                    }
                 }
             }
-            inv_getheader(p);
-            cnt2 = cnt;
-            if (invctrl != 1 && invctrl != 5 && invctrl != 13 && invctrl != 14
-                && invctrl != 18 && invctrl != 20 && invctrl != 23
-                && invctrl != 25 && invctrl != 27)
+            item_checkknown(cnt);
+            reftype = the_item_db[inv[cnt].id]->category;
+            if (inv[cnt].own_state == 5)
             {
-                countequip = 0;
-            }
-            else
-            {
-                countequip = 1;
-            }
-            if (invctrl == 11 || invctrl == 12 || invctrl == 25
-                || invctrl == 27)
-            {
-                showmoney = 1;
-            }
-            else
-            {
-                showmoney = 0;
-            }
-            {
-                int cnt = invhead;
-                for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+                if (ibit(16, cnt) == 0 || invctrl != 14)
                 {
-                    if (inv[cnt].number <= 0)
+                    if (invctrl != 1)
                     {
-                        inv[cnt].number = 0;
                         continue;
                     }
-                    if (inv[cnt].id == 488)
+                }
+            }
+            if (countequip == 0)
+            {
+                if (inv[cnt].body_part != 0)
+                {
+                    continue;
+                }
+            }
+            if (inv[cnt].body_part != 0)
+            {
+                if (mainweapon == -1)
+                {
+                    if (reftype == 10000)
                     {
-                        inv[cnt].function = 9;
+                        mainweapon = cnt;
                     }
-                    if (inv[cnt].id == 504)
+                }
+            }
+            if (invctrl == 5)
+            {
+                if (reftype != 57000 && reftype != 91000
+                    && inv[cnt].material != 35)
+                {
+                    continue;
+                }
+            }
+            if (invctrl == 6)
+            {
+                if (iequiploc(cnt) != cdata_body_part(cc, body) / 10000)
+                {
+                    continue;
+                }
+            }
+            if (invctrl == 7)
+            {
+                if (the_item_db[inv[cnt].id]->is_readable == 0)
+                {
+                    continue;
+                }
+            }
+            if (invctrl == 8)
+            {
+                if (the_item_db[inv[cnt].id]->is_drinkable == 0)
+                {
+                    continue;
+                }
+            }
+            if (invctrl == 9)
+            {
+                if (the_item_db[inv[cnt].id]->is_zappable == 0)
+                {
+                    continue;
+                }
+            }
+            if (invctrl == 11)
+            {
+                if (inv[cnt].id == 54 || inv[cnt].id == 55)
+                {
+                    continue;
+                }
+            }
+            if (invctrl == 11 || invctrl == 12)
+            {
+                if (shoptrade)
+                {
+                    if (inv[cnt].weight >= 0)
                     {
-                        inv[cnt].function = 38;
-                    }
-                    if (inv[cnt].id >= 800 || inv[cnt].id < 0)
-                    {
-                        dialog(
-                            u8"Invalid Item Id found. Item No:"s + cnt
-                            + u8", Id:"s + inv[cnt].id
-                            + u8" has been removed from your inventory."s);
-                        inv[cnt].number = 0;
-                        inv[cnt].id = 0;
                         continue;
                     }
-                    if (mdata(6) == 1)
+                    else if (reftype != 92000)
                     {
-                        if (invctrl == 7)
-                        {
-                            if (the_item_db[inv[cnt].id]->subcategory != 53100
-                                && inv[cnt].id != 621)
-                            {
-                                continue;
-                            }
-                        }
+                        continue;
                     }
-                    if (cnt2 == 0)
+                }
+                else if (inv[cnt].weight < 0)
+                {
+                    if (reftype == 92000)
                     {
-                        if (invctrl == 27)
-                        {
-                            if (inv[cnt].position.x != tlocx
-                                || inv[cnt].position.y != tlocy)
-                            {
-                                continue;
-                            }
-                        }
-                        else if (
-                            invctrl != 11 && invctrl != 22 && invctrl != 28)
-                        {
-                            if (inv[cnt].position.x != cdata[cc].position.x
-                                || inv[cnt].position.y != cdata[cc].position.y)
-                            {
-                                continue;
-                            }
-                        }
+                        continue;
                     }
-                    item_checkknown(cnt);
-                    reftype = the_item_db[inv[cnt].id]->category;
-                    if (inv[cnt].own_state == 5)
+                }
+                if (inv[cnt].value <= 1)
+                {
+                    continue;
+                }
+                if (ibit(5, cnt) == 1)
+                {
+                    continue;
+                }
+                if (inv[cnt].param3 < 0)
+                {
+                    continue;
+                }
+                if (inv[cnt].quality == 6)
+                {
+                    continue;
+                }
+            }
+            if (invctrl == 13)
+            {
+                if (inv[cnt].identification_state >= 3)
+                {
+                    continue;
+                }
+            }
+            if (invctrl == 14)
+            {
+                if (inv[cnt].function == 0
+                    && the_item_db[inv[cnt].id]->is_usable == 0
+                    && ibit(10, cnt) == 0)
+                {
+                    continue;
+                }
+            }
+            if (invctrl == 15)
+            {
+                if (reftype != 72000)
+                {
+                    continue;
+                }
+            }
+            if (invctrl == 16)
+            {
+                if (reftype != 57000)
+                {
+                    continue;
+                }
+                else if (inv[cnt].param2 != 0)
+                {
+                    continue;
+                }
+            }
+            if (invctrl == 17)
+            {
+                if (reftype != 52000 && inv[cnt].id != 617)
+                {
+                    continue;
+                }
+            }
+            if (invctrl == 18)
+            {
+                if (inv[cidip].id == 617)
+                {
+                    if (inv[cnt].id != 342)
                     {
-                        if (ibit(16, cnt) == 0 || invctrl != 14)
-                        {
-                            if (invctrl != 1)
-                            {
-                                continue;
-                            }
-                        }
+                        continue;
                     }
-                    if (countequip == 0)
+                }
+                if (cidip == cnt || inv[cnt].id == 516)
+                {
+                    continue;
+                }
+            }
+            if (invctrl == 19)
+            {
+                dbid = inv[cnt].id;
+                dbspec = 12;
+                int is_offerable = access_item_db(16);
+                if (is_offerable == 0)
+                {
+                    continue;
+                }
+            }
+            if (invctrl == 20)
+            {
+                if (inv[cnt].id == 54 || inv[cnt].id == 55)
+                {
+                    continue;
+                }
+            }
+            if (invctrl == 21)
+            {
+                if (calcitemvalue(cnt, 0) * inv[cnt].number
+                    < calcitemvalue(citrade, 0) * inv[citrade].number / 2 * 3)
+                {
+                    continue;
+                }
+                if (ibit(9, cnt))
+                {
+                    continue;
+                }
+            }
+            if (invctrl == 23)
+            {
+                if (invctrl(1) == 0)
+                {
+                    if (reftype >= 50000 && reftype != 60000)
                     {
-                        if (inv[cnt].body_part != 0)
+                        continue;
+                    }
+                }
+                if (invctrl(1) == 1)
+                {
+                    if (reftype != 10000 && reftype != 24000)
+                    {
+                        continue;
+                    }
+                }
+                if (invctrl(1) == 2)
+                {
+                    if (reftype < 12000 || reftype >= 24000)
+                    {
+                        if (reftype < 30000 || reftype >= 50000)
                         {
                             continue;
                         }
                     }
+                }
+                if (invctrl(1) == 3)
+                {
+                    if (ibit(4, cnt) == 0)
+                    {
+                        continue;
+                    }
+                }
+                if (invctrl(1) == 4)
+                {
                     if (inv[cnt].body_part != 0)
                     {
-                        if (mainweapon == -1)
-                        {
-                            if (reftype == 10000)
-                            {
-                                mainweapon = cnt;
-                            }
-                        }
+                        continue;
                     }
-                    if (invctrl == 5)
+                }
+                if (invctrl(1) == 5)
+                {
+                    if (reftype != 56000)
                     {
-                        if (reftype != 57000 && reftype != 91000
-                            && inv[cnt].material != 35)
-                        {
-                            continue;
-                        }
+                        continue;
                     }
-                    if (invctrl == 6)
+                }
+                if (invctrl(1) == 6)
+                {
+                    if (inv[cnt].weight <= 0 || inv[cnt].id == 641)
                     {
-                        if (iequiploc(cnt) != cdata_body_part(cc, body) / 10000)
-                        {
-                            continue;
-                        }
+                        continue;
                     }
-                    if (invctrl == 7)
+                }
+                if (invctrl(1) == 7)
+                {
+                    if (inv[cnt].quality >= 4 || reftype >= 50000)
                     {
-                        if (the_item_db[inv[cnt].id]->is_readable == 0)
-                        {
-                            continue;
-                        }
+                        continue;
                     }
-                    if (invctrl == 8)
-                    {
-                        if (the_item_db[inv[cnt].id]->is_drinkable == 0)
-                        {
-                            continue;
-                        }
-                    }
-                    if (invctrl == 9)
-                    {
-                        if (the_item_db[inv[cnt].id]->is_zappable == 0)
-                        {
-                            continue;
-                        }
-                    }
-                    if (invctrl == 11)
-                    {
-                        if (inv[cnt].id == 54 || inv[cnt].id == 55)
-                        {
-                            continue;
-                        }
-                    }
-                    if (invctrl == 11 || invctrl == 12)
-                    {
-                        if (shoptrade)
-                        {
-                            if (inv[cnt].weight >= 0)
-                            {
-                                continue;
-                            }
-                            else if (reftype != 92000)
-                            {
-                                continue;
-                            }
-                        }
-                        else if (inv[cnt].weight < 0)
-                        {
-                            if (reftype == 92000)
-                            {
-                                continue;
-                            }
-                        }
-                        if (inv[cnt].value <= 1)
-                        {
-                            continue;
-                        }
-                        if (ibit(5, cnt) == 1)
-                        {
-                            continue;
-                        }
-                        if (inv[cnt].param3 < 0)
-                        {
-                            continue;
-                        }
-                        if (inv[cnt].quality == 6)
-                        {
-                            continue;
-                        }
-                    }
-                    if (invctrl == 13)
-                    {
-                        if (inv[cnt].identification_state >= 3)
-                        {
-                            continue;
-                        }
-                    }
-                    if (invctrl == 14)
-                    {
-                        if (inv[cnt].function == 0
-                            && the_item_db[inv[cnt].id]->is_usable == 0
-                            && ibit(10, cnt) == 0)
-                        {
-                            continue;
-                        }
-                    }
-                    if (invctrl == 15)
-                    {
-                        if (reftype != 72000)
-                        {
-                            continue;
-                        }
-                    }
-                    if (invctrl == 16)
-                    {
-                        if (reftype != 57000)
-                        {
-                            continue;
-                        }
-                        else if (inv[cnt].param2 != 0)
-                        {
-                            continue;
-                        }
-                    }
-                    if (invctrl == 17)
-                    {
-                        if (reftype != 52000 && inv[cnt].id != 617)
-                        {
-                            continue;
-                        }
-                    }
-                    if (invctrl == 18)
-                    {
-                        if (inv[cidip].id == 617)
-                        {
-                            if (inv[cnt].id != 342)
-                            {
-                                continue;
-                            }
-                        }
-                        if (cidip == cnt || inv[cnt].id == 516)
-                        {
-                            continue;
-                        }
-                    }
-                    if (invctrl == 19)
-                    {
-                        dbid = inv[cnt].id;
-                        dbspec = 12;
-                        int is_offerable = access_item_db(16);
-                        if (is_offerable == 0)
-                        {
-                            continue;
-                        }
-                    }
-                    if (invctrl == 20)
-                    {
-                        if (inv[cnt].id == 54 || inv[cnt].id == 55)
-                        {
-                            continue;
-                        }
-                    }
-                    if (invctrl == 21)
-                    {
-                        if (calcitemvalue(cnt, 0) * inv[cnt].number
-                            < calcitemvalue(citrade, 0) * inv[citrade].number
-                                / 2 * 3)
-                        {
-                            continue;
-                        }
-                        if (ibit(9, cnt))
-                        {
-                            continue;
-                        }
-                    }
-                    if (invctrl == 23)
-                    {
-                        if (invctrl(1) == 0)
-                        {
-                            if (reftype >= 50000 && reftype != 60000)
-                            {
-                                continue;
-                            }
-                        }
-                        if (invctrl(1) == 1)
-                        {
-                            if (reftype != 10000 && reftype != 24000)
-                            {
-                                continue;
-                            }
-                        }
-                        if (invctrl(1) == 2)
-                        {
-                            if (reftype < 12000 || reftype >= 24000)
-                            {
-                                if (reftype < 30000 || reftype >= 50000)
-                                {
-                                    continue;
-                                }
-                            }
-                        }
-                        if (invctrl(1) == 3)
-                        {
-                            if (ibit(4, cnt) == 0)
-                            {
-                                continue;
-                            }
-                        }
-                        if (invctrl(1) == 4)
-                        {
-                            if (inv[cnt].body_part != 0)
-                            {
-                                continue;
-                            }
-                        }
-                        if (invctrl(1) == 5)
-                        {
-                            if (reftype != 56000)
-                            {
-                                continue;
-                            }
-                        }
-                        if (invctrl(1) == 6)
-                        {
-                            if (inv[cnt].weight <= 0 || inv[cnt].id == 641)
-                            {
-                                continue;
-                            }
-                        }
-                        if (invctrl(1) == 7)
-                        {
-                            if (inv[cnt].quality >= 4 || reftype >= 50000)
-                            {
-                                continue;
-                            }
-                        }
-                    }
-                    if (invctrl == 24)
-                    {
-                        if (invctrl(1) == 0)
-                        {
-                            if (gdata_current_map == 36)
-                            {
-                                if (inv[cnt].id != 687 || inv[cnt].param2 == 0)
-                                {
-                                    continue;
-                                }
-                            }
-                            else if (inv[cnt].own_state != 4)
-                            {
-                                continue;
-                            }
-                        }
-                        else if (inv[cnt].own_state == 4)
-                        {
-                            continue;
-                        }
-                        if (invctrl(1) == 2)
-                        {
-                            if (inv[cnt].id != 615)
-                            {
-                                continue;
-                            }
-                        }
-                        if (reftype == 72000)
-                        {
-                            continue;
-                        }
-                        if (invctrl(1) == 3)
-                        {
-                            if (reftype != 57000)
-                            {
-                                continue;
-                            }
-                        }
-                    }
-                    else if (inv[cnt].own_state == 4)
-                    {
-                        if (invctrl != 1 && invctrl != 2 && invctrl != 3
-                            && invctrl != 5)
-                        {
-                            continue;
-                        }
-                    }
-                    if (invctrl == 26)
-                    {
-                        if (reftype != 52000 && inv[cnt].id != 578
-                            && inv[cnt].id != 685 && inv[cnt].id != 699
-                            && inv[cnt].id != 772)
-                        {
-                            continue;
-                        }
-                        if (inv[cnt].id == 685)
-                        {
-                            if (inv[cnt].subname != 0)
-                            {
-                                continue;
-                            }
-                        }
-                    }
-                    if (invctrl == 27)
-                    {
-                        if (cnt2 == 0)
-                        {
-                            if (inv[cnt].own_state != 1)
-                            {
-                                continue;
-                            }
-                        }
-                    }
-                    list(0, listmax) = cnt;
-                    list(1, listmax) = reftype * 1000 + inv[cnt].id;
-                    if (inv[cnt].id == 544)
-                    {
-                        list(1, listmax) += inv[cnt].param1 + 900;
-                    }
-                    if (invctrl == 1 || invctrl == 13)
-                    {
-                        if (inv[cnt].body_part != 0)
-                        {
-                            list(1, listmax) -= 99999000;
-                        }
-                    }
-                    if (cnt2 == 0)
-                    {
-                        list(1, listmax) -= 199998000;
-                    }
-                    if (invctrl == 28)
-                    {
-                        list(1, listmax) = calcmedalvalue(cnt);
-                    }
-                    ++listmax;
                 }
             }
+            if (invctrl == 24)
+            {
+                if (invctrl(1) == 0)
+                {
+                    if (gdata_current_map == 36)
+                    {
+                        if (inv[cnt].id != 687 || inv[cnt].param2 == 0)
+                        {
+                            continue;
+                        }
+                    }
+                    else if (inv[cnt].own_state != 4)
+                    {
+                        continue;
+                    }
+                }
+                else if (inv[cnt].own_state == 4)
+                {
+                    continue;
+                }
+                if (invctrl(1) == 2)
+                {
+                    if (inv[cnt].id != 615)
+                    {
+                        continue;
+                    }
+                }
+                if (reftype == 72000)
+                {
+                    continue;
+                }
+                if (invctrl(1) == 3)
+                {
+                    if (reftype != 57000)
+                    {
+                        continue;
+                    }
+                }
+            }
+            else if (inv[cnt].own_state == 4)
+            {
+                if (invctrl != 1 && invctrl != 2 && invctrl != 3
+                    && invctrl != 5)
+                {
+                    continue;
+                }
+            }
+            if (invctrl == 26)
+            {
+                if (reftype != 52000 && inv[cnt].id != 578 && inv[cnt].id != 685
+                    && inv[cnt].id != 699 && inv[cnt].id != 772)
+                {
+                    continue;
+                }
+                if (inv[cnt].id == 685)
+                {
+                    if (inv[cnt].subname != 0)
+                    {
+                        continue;
+                    }
+                }
+            }
+            if (invctrl == 27)
+            {
+                if (cnt2 == 0)
+                {
+                    if (inv[cnt].own_state != 1)
+                    {
+                        continue;
+                    }
+                }
+            }
+            list(0, listmax) = cnt;
+            list(1, listmax) = reftype * 1000 + inv[cnt].id;
+            if (inv[cnt].id == 544)
+            {
+                list(1, listmax) += inv[cnt].param1 + 900;
+            }
+            if (invctrl == 1 || invctrl == 13)
+            {
+                if (inv[cnt].body_part != 0)
+                {
+                    list(1, listmax) -= 99999000;
+                }
+            }
+            if (cnt2 == 0)
+            {
+                list(1, listmax) -= 199998000;
+            }
+            if (invctrl == 28)
+            {
+                list(1, listmax) = calcmedalvalue(cnt);
+            }
+            ++listmax;
         }
     }
     f = 0;
@@ -728,24 +714,21 @@ label_2060_internal:
     if (invsc != 0)
     {
         f = 0;
+        for (int cnt = 0, cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
+            p = list(0, cnt);
+            if (inv[p].id == invsc)
             {
-                p = list(0, cnt);
-                if (inv[p].id == invsc)
+                ci = p;
+                f = 1;
+                if (ibit(4, ci))
                 {
-                    ci = p;
-                    f = 1;
-                    if (ibit(4, ci))
+                    if (inv[ci].count <= 0)
                     {
-                        if (inv[ci].count <= 0)
-                        {
-                            continue;
-                        }
+                        continue;
                     }
-                    break;
                 }
+                break;
             }
         }
         cc = 0;
@@ -823,38 +806,35 @@ label_2060_internal:
         {
             i = 0;
         }
+        for (int cnt = 0, cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
+            if (cycle(cnt, i) == -1)
             {
-                if (cycle(cnt, i) == -1)
-                {
-                    break;
-                }
-                p = cycle(cnt, i);
+                break;
+            }
+            p = cycle(cnt, i);
+            pos(x + cnt * 44 + 20, y - 24);
+            gcopy(3, 288 + invicon(p) * 48, 48, 48, 48);
+            if (invctrl == p)
+            {
+                gmode(5, -1, -1, 70);
                 pos(x + cnt * 44 + 20, y - 24);
                 gcopy(3, 288 + invicon(p) * 48, 48, 48, 48);
-                if (invctrl == p)
-                {
-                    gmode(5, -1, -1, 70);
-                    pos(x + cnt * 44 + 20, y - 24);
-                    gcopy(3, 288 + invicon(p) * 48, 48, 48, 48);
-                    gmode(2);
-                }
-                pos(x + cnt * 44 + 46 - strlen_u(invtitle(p)) * 3, y + 7);
-                if (invctrl == p)
-                {
-                    bmes(invtitle(p), 255, 255, 255);
-                }
-                else
-                {
-                    bmes(invtitle(p), 165, 165, 165);
-                }
-                if (invkey(p) != ""s)
-                {
-                    pos(x + cnt * 44 + 46, y + 18);
-                    bmes(u8"("s + invkey(p) + u8")"s, 235, 235, 235);
-                }
+                gmode(2);
+            }
+            pos(x + cnt * 44 + 46 - strlen_u(invtitle(p)) * 3, y + 7);
+            if (invctrl == p)
+            {
+                bmes(invtitle(p), 255, 255, 255);
+            }
+            else
+            {
+                bmes(invtitle(p), 165, 165, 165);
+            }
+            if (invkey(p) != ""s)
+            {
+                pos(x + cnt * 44 + 46, y + 18);
+                bmes(u8"("s + invkey(p) + u8")"s, 235, 235, 235);
             }
         }
         pos(x + 325, y + 32);
@@ -951,125 +931,113 @@ label_2061_internal:
         pos(x, y);
         mes(lang(u8"装備箇所:"s, u8"Equip:"s));
         x += 60;
+        for (int cnt = 100, cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
         {
-            int cnt = 100;
-            for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+            if (cdata_body_part(tc, cnt) == 0)
             {
-                if (cdata_body_part(tc, cnt) == 0)
-                {
-                    continue;
-                }
-                p = cdata_body_part(tc, cnt);
-                if (p % 10000 != 0)
-                {
-                    color(50, 50, 200);
-                }
-                else
-                {
-                    color(100, 100, 100);
-                }
-                pos(x, y);
-                mes(""s + bodyn(p / 10000));
-                color(0, 0, 0);
-                x += (std::size(bodyn(p / 10000)) + 1) * 6;
+                continue;
             }
+            p = cdata_body_part(tc, cnt);
+            if (p % 10000 != 0)
+            {
+                color(50, 50, 200);
+            }
+            else
+            {
+                color(100, 100, 100);
+            }
+            pos(x, y);
+            mes(""s + bodyn(p / 10000));
+            color(0, 0, 0);
+            x += (std::size(bodyn(p / 10000)) + 1) * 6;
         }
     }
     keyrange = 0;
+    for (int cnt = 0, cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
+        p = pagesize * page + cnt;
+        if (p >= listmax)
         {
-            p = pagesize * page + cnt;
-            if (p >= listmax)
-            {
-                break;
-            }
-            key_list(cnt) = key_select(cnt);
-            ++keyrange;
-            if (cnt % 2 == 0)
-            {
-                pos(wx + 70, wy + 60 + cnt * 19);
-                gfini(540, 18);
-                gfdec2(12, 14, 16);
-            }
+            break;
+        }
+        key_list(cnt) = key_select(cnt);
+        ++keyrange;
+        if (cnt % 2 == 0)
+        {
+            pos(wx + 70, wy + 60 + cnt * 19);
+            gfini(540, 18);
+            gfdec2(12, 14, 16);
         }
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    for (int cnt = 0, cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
+        p = pagesize * page + cnt;
+        if (p >= listmax)
         {
-            p = pagesize * page + cnt;
-            if (p >= listmax)
-            {
-                break;
-            }
-            p = list(0, p);
-            s(0) = itemname(p, inv[p].number);
-            s(1) = cnvweight(inv[p].weight * inv[p].number);
-            if (invctrl == 11)
-            {
-                s += u8" "s + cnvweight(inv[p].weight);
-                s(1) = ""s + calcitemvalue(p, 0) + u8" gp"s;
-            }
-            if (invctrl == 12)
-            {
-                s += u8" "s + cnvweight(inv[p].weight);
-                s(1) = ""s + calcitemvalue(p, 1) + u8" gp"s;
-            }
-            if (invctrl == 28)
-            {
-                s(1) = ""s + calcmedalvalue(p) + lang(u8" 枚"s, u8" Coins"s);
-            }
-            if (invctrl != 3 && invctrl != 11 && invctrl != 22 && invctrl != 27
-                && invctrl != 28)
-            {
-                if (p >= 5080)
-                {
-                    s += lang(u8"(足元)"s, u8" (Ground)"s);
-                }
-            }
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
-                {
-                    if (gdata(40 + cnt) == inv[p].id + invctrl * 10000)
-                    {
-                        s += u8"{"s + cnt + u8"}"s;
-                    }
-                }
-            }
-            display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
-            p(1) = inv[p].image % 1000;
-            prepare_item_image(p(1), inv[p].color);
-            pos(wx + 37, wy + 69 + cnt * 19);
-            gmode(2, chipi(2, p(1)), chipi(3, p(1)));
-            grotate(
-                1,
-                0,
-                960,
-                0,
-                chipi(2, p(1)) * inf_tiles / chipi(3, p(1)),
-                inf_tiles);
-            if (inv[p].body_part != 0)
-            {
-                pos(wx + 46, wy + 72 + cnt * 18 - 3);
-                gcopy(3, 12, 348, 12, 12);
-                if (p == mainweapon)
-                {
-                    s += lang(u8"(利腕)"s, u8" (Main hand)"s);
-                }
-            }
-            if (showresist)
-            {
-                equipinfo(p, wx + 300, wy + 60 + cnt * 19 + 2);
-                s = strmid(s, 0, 24);
-            }
-            cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, 1, p);
-            pos(wx + 600 - strlen_u(s(1)) * 7, wy + 60 + cnt * 19 + 2);
-            mes(s(1));
+            break;
         }
+        p = list(0, p);
+        s(0) = itemname(p, inv[p].number);
+        s(1) = cnvweight(inv[p].weight * inv[p].number);
+        if (invctrl == 11)
+        {
+            s += u8" "s + cnvweight(inv[p].weight);
+            s(1) = ""s + calcitemvalue(p, 0) + u8" gp"s;
+        }
+        if (invctrl == 12)
+        {
+            s += u8" "s + cnvweight(inv[p].weight);
+            s(1) = ""s + calcitemvalue(p, 1) + u8" gp"s;
+        }
+        if (invctrl == 28)
+        {
+            s(1) = ""s + calcmedalvalue(p) + lang(u8" 枚"s, u8" Coins"s);
+        }
+        if (invctrl != 3 && invctrl != 11 && invctrl != 22 && invctrl != 27
+            && invctrl != 28)
+        {
+            if (p >= 5080)
+            {
+                s += lang(u8"(足元)"s, u8" (Ground)"s);
+            }
+        }
+        for (int cnt = 0, cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
+        {
+            if (gdata(40 + cnt) == inv[p].id + invctrl * 10000)
+            {
+                s += u8"{"s + cnt + u8"}"s;
+            }
+        }
+        display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
+        p(1) = inv[p].image % 1000;
+        prepare_item_image(p(1), inv[p].color);
+        pos(wx + 37, wy + 69 + cnt * 19);
+        gmode(2, chipi(2, p(1)), chipi(3, p(1)));
+        grotate(
+            1,
+            0,
+            960,
+            0,
+            chipi(2, p(1)) * inf_tiles / chipi(3, p(1)),
+            inf_tiles);
+        if (inv[p].body_part != 0)
+        {
+            pos(wx + 46, wy + 72 + cnt * 18 - 3);
+            gcopy(3, 12, 348, 12, 12);
+            if (p == mainweapon)
+            {
+                s += lang(u8"(利腕)"s, u8" (Main hand)"s);
+            }
+        }
+        if (showresist)
+        {
+            equipinfo(p, wx + 300, wy + 60 + cnt * 19 + 2);
+            s = strmid(s, 0, 24);
+        }
+        cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, 1, p);
+        pos(wx + 600 - strlen_u(s(1)) * 7, wy + 60 + cnt * 19 + 2);
+        mes(s(1));
     }
     if (keyrange != 0)
     {
@@ -1093,15 +1061,12 @@ label_2061_internal:
     cursor_check();
     p = -1;
     invmark(invctrl) = page * 1000 + cs;
+    for (int cnt = 0, cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
+        if (key == key_select(cnt))
         {
-            if (key == key_select(cnt))
-            {
-                p = list(0, pagesize * page + cnt);
-                break;
-            }
+            p = list(0, pagesize * page + cnt);
+            break;
         }
     }
     if (mode == 9)
@@ -2225,15 +2190,12 @@ label_2061_internal:
                 i = 0;
             }
             p = -1;
+            for (int cnt = 0, cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
+                if (invctrl == cycle(cnt, i))
                 {
-                    if (invctrl == cycle(cnt, i))
-                    {
-                        p = cnt;
-                        break;
-                    }
+                    p = cnt;
+                    break;
                 }
             }
             if (p != -1)
@@ -2396,14 +2358,11 @@ label_2061_internal:
                 gdata(40 + sc) = 0;
                 goto label_2060_internal;
             }
+            for (int cnt = 0, cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
+                if (gdata(40 + cnt) == p)
                 {
-                    if (gdata(40 + cnt) == p)
-                    {
-                        gdata(40 + cnt) = 0;
-                    }
+                    gdata(40 + cnt) = 0;
                 }
             }
             gdata(40 + sc) = p;

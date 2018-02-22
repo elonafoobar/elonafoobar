@@ -288,44 +288,37 @@ void txtsetlastword()
 
 void txtsetwinword(int prm_361)
 {
+    for (int cnt = 0, cnt_end = cnt + (6); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (6); cnt < cnt_end; ++cnt)
-        {
-            i = rnd(cnt + 1);
-            p(cnt) = p(i);
-            p(i) = cnt;
-        }
+        i = rnd(cnt + 1);
+        p(cnt) = p(i);
+        p(i) = cnt;
     }
+    for (int cnt = 0, cnt_end = cnt + (prm_361); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (prm_361); cnt < cnt_end; ++cnt)
+        if (p(cnt) == 0)
         {
-            if (p(cnt) == 0)
-            {
-                s(cnt) = lang(u8"遂に…！"s, u8"Finally!"s);
-            }
-            if (p(cnt) == 1)
-            {
-                s(cnt) = lang(u8"当然の結果だ"s, u8"It's a matter of course."s);
-            }
-            if (p(cnt) == 2)
-            {
-                s(cnt) = lang(u8"おぉぉぉぉ！"s, u8"Woooooo!"s);
-            }
-            if (p(cnt) == 3)
-            {
-                s(cnt) = lang(u8"ふっ"s, u8"Heh."s);
-            }
-            if (p(cnt) == 4)
-            {
-                s(cnt) =
-                    lang(u8"今日は眠れないな"s, u8"I can't sleep tonight."s);
-            }
-            if (p(cnt) == 5)
-            {
-                s(cnt) = lang(u8"またそんな冗談を"s, u8"You're kidding."s);
-            }
+            s(cnt) = lang(u8"遂に…！"s, u8"Finally!"s);
+        }
+        if (p(cnt) == 1)
+        {
+            s(cnt) = lang(u8"当然の結果だ"s, u8"It's a matter of course."s);
+        }
+        if (p(cnt) == 2)
+        {
+            s(cnt) = lang(u8"おぉぉぉぉ！"s, u8"Woooooo!"s);
+        }
+        if (p(cnt) == 3)
+        {
+            s(cnt) = lang(u8"ふっ"s, u8"Heh."s);
+        }
+        if (p(cnt) == 4)
+        {
+            s(cnt) = lang(u8"今日は眠れないな"s, u8"I can't sleep tonight."s);
+        }
+        if (p(cnt) == 5)
+        {
+            s(cnt) = lang(u8"またそんな冗談を"s, u8"You're kidding."s);
         }
     }
     return;
@@ -2875,127 +2868,120 @@ std::string _ta(int mark)
 
 void replace_tags_in_quest_board()
 {
+    for (int cnt = 0, cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
+        await();
+        p(0) = instr(buff, 0, u8"{"s);
+        p(1) = instr(buff, p, u8"}"s);
+        p(2) = std::size(buff(0));
+        if (p == -1)
         {
-            await();
-            p(0) = instr(buff, 0, u8"{"s);
-            p(1) = instr(buff, p, u8"}"s);
-            p(2) = std::size(buff(0));
-            if (p == -1)
+            break;
+        }
+        s(0) = strmid(buff, p + 1, p(1) - 1);
+        s(1) = strmid(buff, 0, p);
+        s(2) = strmid(buff, p + p(1) + 1, p(2) - p(1) - p);
+        for (int cnt = 0, cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
+        {
+            if (s == u8"ref"s)
             {
-                break;
-            }
-            s(0) = strmid(buff, p + 1, p(1) - 1);
-            s(1) = strmid(buff, 0, p);
-            s(2) = strmid(buff, p + p(1) + 1, p(2) - p(1) - p);
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
+                if (talkref == 1)
                 {
-                    if (s == u8"ref"s)
-                    {
-                        if (talkref == 1)
-                        {
-                            s = lang(
-                                ""s + gdata_number_of_waiting_guests,
-                                ""s + gdata_number_of_waiting_guests
-                                    + u8" guest"s
-                                    + _s2(gdata_number_of_waiting_guests));
-                            break;
-                        }
-                    }
-                    if (s == u8"you"s)
-                    {
-                        s = _kimi(3);
-                        break;
-                    }
-                    if (s == u8"sex"s)
-                    {
-                        s = _sex2(0);
-                        break;
-                    }
-                    if (s == u8"player"s)
-                    {
-                        s = cdatan(0, 0);
-                        break;
-                    }
-                    if (s == u8"aka"s)
-                    {
-                        s = cdatan(1, 0);
-                        break;
-                    }
-                    if (s == u8"npc"s)
-                    {
-                        s = cdatan(0, tc);
-                        break;
-                    }
-                    if (s == u8"ある"s)
-                    {
-                        s = _aru(3);
-                        break;
-                    }
-                    if (s == u8"が"s)
-                    {
-                        s = _ga(3);
-                        break;
-                    }
-                    if (s == u8"か"s)
-                    {
-                        s = _ka(3);
-                        break;
-                    }
-                    if (s == u8"かな"s)
-                    {
-                        s = _kana(3);
-                        break;
-                    }
-                    if (s == u8"だ"s)
-                    {
-                        s = _da(3);
-                        break;
-                    }
-                    if (s == u8"よ"s)
-                    {
-                        s = _yo(3);
-                        break;
-                    }
-                    if (s == u8"だな"s)
-                    {
-                        s = _dana(3);
-                        break;
-                    }
-                    if (s == u8"だろ"s)
-                    {
-                        s = _daro(3);
-                        break;
-                    }
-                    if (s == u8"る"s)
-                    {
-                        s = _ru(3);
-                        break;
-                    }
-                    if (s == u8"のだ"s)
-                    {
-                        s = _nda(3);
-                        break;
-                    }
-                    if (s == u8"な"s)
-                    {
-                        s = _na(3);
-                        break;
-                    }
-                    if (s == u8"くれ"s)
-                    {
-                        s = _kure(3);
-                        break;
-                    }
-                    s = u8"Unknown Code"s;
+                    s = lang(
+                        ""s + gdata_number_of_waiting_guests,
+                        ""s + gdata_number_of_waiting_guests + u8" guest"s
+                            + _s2(gdata_number_of_waiting_guests));
+                    break;
                 }
             }
-            buff = s(1) + s + s(2);
+            if (s == u8"you"s)
+            {
+                s = _kimi(3);
+                break;
+            }
+            if (s == u8"sex"s)
+            {
+                s = _sex2(0);
+                break;
+            }
+            if (s == u8"player"s)
+            {
+                s = cdatan(0, 0);
+                break;
+            }
+            if (s == u8"aka"s)
+            {
+                s = cdatan(1, 0);
+                break;
+            }
+            if (s == u8"npc"s)
+            {
+                s = cdatan(0, tc);
+                break;
+            }
+            if (s == u8"ある"s)
+            {
+                s = _aru(3);
+                break;
+            }
+            if (s == u8"が"s)
+            {
+                s = _ga(3);
+                break;
+            }
+            if (s == u8"か"s)
+            {
+                s = _ka(3);
+                break;
+            }
+            if (s == u8"かな"s)
+            {
+                s = _kana(3);
+                break;
+            }
+            if (s == u8"だ"s)
+            {
+                s = _da(3);
+                break;
+            }
+            if (s == u8"よ"s)
+            {
+                s = _yo(3);
+                break;
+            }
+            if (s == u8"だな"s)
+            {
+                s = _dana(3);
+                break;
+            }
+            if (s == u8"だろ"s)
+            {
+                s = _daro(3);
+                break;
+            }
+            if (s == u8"る"s)
+            {
+                s = _ru(3);
+                break;
+            }
+            if (s == u8"のだ"s)
+            {
+                s = _nda(3);
+                break;
+            }
+            if (s == u8"な"s)
+            {
+                s = _na(3);
+                break;
+            }
+            if (s == u8"くれ"s)
+            {
+                s = _kure(3);
+                break;
+            }
+            s = u8"Unknown Code"s;
         }
+        buff = s(1) + s + s(2);
     }
     return;
 }
@@ -3061,98 +3047,92 @@ void get_npc_talk()
         }
     }
     p = -1;
+    for (int cnt = 0, cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
+        if (cdata[tc].character_role == 18)
         {
-            if (cdata[tc].character_role == 18)
+            if (gdata_number_of_waiting_guests > 0)
             {
-                if (gdata_number_of_waiting_guests > 0)
-                {
-                    talkref = 1;
-                    p = instr(buff, 0, u8"%MAID,"s + lang(u8"JP"s, u8"EN"s));
-                    break;
-                }
-            }
-            if (cdata[tc].interest <= 0)
-            {
-                p = instr(buff, 0, u8"%BORED,"s + lang(u8"JP"s, u8"EN"s));
+                talkref = 1;
+                p = instr(buff, 0, u8"%MAID,"s + lang(u8"JP"s, u8"EN"s));
                 break;
             }
-            if (tc < 16)
+        }
+        if (cdata[tc].interest <= 0)
+        {
+            p = instr(buff, 0, u8"%BORED,"s + lang(u8"JP"s, u8"EN"s));
+            break;
+        }
+        if (tc < 16)
+        {
+            p = instr(buff, 0, u8"%ALLY_DEFAULT,"s + lang(u8"JP"s, u8"EN"s));
+            break;
+        }
+        if (cdata[tc].id == 335)
+        {
+            p = instr(buff, 0, u8"%BITCH,"s + lang(u8"JP"s, u8"EN"s));
+            break;
+        }
+        if (cdata[tc].character_role == 1015)
+        {
+            p = instr(buff, 0, u8"%MOYER,"s + lang(u8"JP"s, u8"EN"s));
+            break;
+        }
+        if (cdata[tc].character_role == 17)
+        {
+            p = instr(buff, 0, u8"%SLAVEKEEPER,"s + lang(u8"JP"s, u8"EN"s));
+            break;
+        }
+        if ((cdata[tc].character_role >= 1000
+             && cdata[tc].character_role < 2000)
+            || cdata[tc].character_role == 2003)
+        {
+            if (rnd(3))
             {
-                p = instr(
-                    buff, 0, u8"%ALLY_DEFAULT,"s + lang(u8"JP"s, u8"EN"s));
+                p = instr(buff, 0, u8"%SHOPKEEPER,"s + lang(u8"JP"s, u8"EN"s));
                 break;
             }
-            if (cdata[tc].id == 335)
+        }
+        if (cdata[tc].impression >= 100)
+        {
+            if (rnd(3) == 0)
             {
-                p = instr(buff, 0, u8"%BITCH,"s + lang(u8"JP"s, u8"EN"s));
+                p = instr(buff, 0, u8"%RUMOR,LOOT,"s + lang(u8"JP"s, u8"EN"s));
                 break;
             }
-            if (cdata[tc].character_role == 1015)
-            {
-                p = instr(buff, 0, u8"%MOYER,"s + lang(u8"JP"s, u8"EN"s));
-                break;
-            }
-            if (cdata[tc].character_role == 17)
-            {
-                p = instr(buff, 0, u8"%SLAVEKEEPER,"s + lang(u8"JP"s, u8"EN"s));
-                break;
-            }
-            if ((cdata[tc].character_role >= 1000
-                 && cdata[tc].character_role < 2000)
-                || cdata[tc].character_role == 2003)
+        }
+        if (adata(29, gdata_current_map))
+        {
+            if (gdata_current_map == 33)
             {
                 if (rnd(3))
                 {
                     p = instr(
-                        buff, 0, u8"%SHOPKEEPER,"s + lang(u8"JP"s, u8"EN"s));
+                        buff,
+                        0,
+                        u8"%FEST,"s + gdata_current_map + u8","s
+                            + lang(u8"JP"s, u8"EN"s));
                     break;
                 }
             }
-            if (cdata[tc].impression >= 100)
-            {
-                if (rnd(3) == 0)
-                {
-                    p = instr(
-                        buff, 0, u8"%RUMOR,LOOT,"s + lang(u8"JP"s, u8"EN"s));
-                    break;
-                }
-            }
-            if (adata(29, gdata_current_map))
-            {
-                if (gdata_current_map == 33)
-                {
-                    if (rnd(3))
-                    {
-                        p = instr(
-                            buff,
-                            0,
-                            u8"%FEST,"s + gdata_current_map + u8","s
-                                + lang(u8"JP"s, u8"EN"s));
-                        break;
-                    }
-                }
-            }
-            if (rnd(2))
-            {
-                p = instr(
-                    buff,
-                    0,
-                    u8"%PERSONALITY,"s + cdata[tc].personality + u8","s
-                        + lang(u8"JP"s, u8"EN"s));
-                break;
-            }
-            if (rnd(3))
-            {
-                p = instr(
-                    buff,
-                    0,
-                    u8"%AREA,"s + gdata_current_map + u8","s
-                        + lang(u8"JP"s, u8"EN"s));
-                break;
-            }
+        }
+        if (rnd(2))
+        {
+            p = instr(
+                buff,
+                0,
+                u8"%PERSONALITY,"s + cdata[tc].personality + u8","s
+                    + lang(u8"JP"s, u8"EN"s));
+            break;
+        }
+        if (rnd(3))
+        {
+            p = instr(
+                buff,
+                0,
+                u8"%AREA,"s + gdata_current_map + u8","s
+                    + lang(u8"JP"s, u8"EN"s));
+            break;
         }
     }
     if (p == -1)
@@ -4293,20 +4273,17 @@ std::string random_title(int prm_439)
     elona_vector1<std::string> randn2_at_m41;
     int rtval_at_m41 = 0;
     elona_vector1<std::string> s2_at_m41;
-    // clang-format off
 redo:
+    for (int cnt = 0, cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt) {
-            p_at_m41(2) = rnd(length2(rnlist));
-            p_at_m41(1) = rnd(14);
-            if (rnlist(p_at_m41(1), p_at_m41(2)) == ""s) {
-                --cnt;
-                continue;
-            }
+        p_at_m41(2) = rnd(length2(rnlist));
+        p_at_m41(1) = rnd(14);
+        if (rnlist(p_at_m41(1), p_at_m41(2)) == ""s)
+        {
+            --cnt;
+            continue;
         }
     }
-    // clang-format on
 
     if (prm_439 == 1 || prm_439 == 3)
     {
@@ -4320,8 +4297,7 @@ redo:
     rtval_at_m41 = -1;
     if (jp)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
         {
             if (p_at_m41(1) == 10 || p_at_m41(1) == 11)
             {
@@ -4364,8 +4340,7 @@ redo:
     }
     else
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
         {
             if (p_at_m41(1) == 0 || p_at_m41(1) == 1)
             {
@@ -4393,41 +4368,38 @@ redo:
 
     rtval_at_m41 = -1;
 
+    for (int cnt = 0, cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
+        p_at_m41(4) = rnd(length2(rnlist));
+        if (p_at_m41(4) == p_at_m41(2))
         {
-            p_at_m41(4) = rnd(length2(rnlist));
-            if (p_at_m41(4) == p_at_m41(2))
+            continue;
+        }
+        if (rnlist(14, p_at_m41(4)) == randn2_at_m41(1))
+        {
+            if (rnlist(14, p_at_m41(4)) != u8"万能"s)
             {
-                continue;
-            }
-            if (rnlist(14, p_at_m41(4)) == randn2_at_m41(1))
-            {
-                if (rnlist(14, p_at_m41(4)) != u8"万能"s)
+                if (randn2_at_m41(1) != u8"万能"s)
                 {
-                    if (randn2_at_m41(1) != u8"万能"s)
-                    {
-                        continue;
-                    }
+                    continue;
                 }
             }
-            if (p_at_m41(1) < 10)
-            {
-                p_at_m41(1) = rnd(2);
-            }
-            else
-            {
-                p_at_m41(1) = rnd(2);
-                p_at_m41(1) += 10;
-            }
-            if (rnlist(p_at_m41(1), p_at_m41(4)) == ""s)
-            {
-                continue;
-            }
-            rtval_at_m41 = 1;
-            break;
         }
+        if (p_at_m41(1) < 10)
+        {
+            p_at_m41(1) = rnd(2);
+        }
+        else
+        {
+            p_at_m41(1) = rnd(2);
+            p_at_m41(1) += 10;
+        }
+        if (rnlist(p_at_m41(1), p_at_m41(4)) == ""s)
+        {
+            continue;
+        }
+        rtval_at_m41 = 1;
+        break;
     }
     if (rtval_at_m41 == -1)
     {
