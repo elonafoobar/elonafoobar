@@ -75139,10 +75139,6 @@ void conquer_lesimas()
     picload(fs::u8path(u8"./graphic/void.bmp"), 1);
     pos(0, 0);
     gzoom(windoww, windowh, 4, 0, 0, 640, 480);
-    ww = 680;
-    wh = 488;
-    pagesize = 0;
-    display_window(windoww / 2 - ww / 2, windowh / 2 - wh / 2, ww, wh);
     gsel(0);
     label_1443();
     pos(0, 0);
@@ -75160,7 +75156,10 @@ void conquer_lesimas()
     s(0) = lang(u8"*勝利*"s, u8"*Win*"s);
     s(1) = ""s + strhint3;
     windowshadow = 1;
-    display_window(60, 70, 680, 488);
+    ww = 680;
+    wh = 488;
+    pagesize = 0;
+    display_window(windoww / 2 - ww / 2, windowh / 2 - wh / 2, ww, wh);
     cmbg = 0;
     x = ww / 3 - 20;
     y = wh - 140;
@@ -75176,26 +75175,28 @@ void conquer_lesimas()
             + u8"日に、あなたはノースティリスに到着した。"s,
         u8"In the year "s + 517 + u8", "s + 12 + u8"/"s + 8
             + u8", you arrived at North Tyris."s));
-    mes(""s);
+    pos(wx + 40, wy + 116);
     mes(lang(
         u8"最深で"s + gdata_deepest_dungeon_level + u8"階相当まで到達し、"s
             + gdata_kill_count + u8"匹の敵を殺して、"s,
         u8"You've killed "s + gdata_kill_count
             + u8" creatures and reached\nmaximum of "s
             + cnvrank(gdata_deepest_dungeon_level) + u8" level of dungeons."s));
+    pos(wx + 40, wy + 146);
     mes(lang(
         u8"現在"s + calcscore() + u8"点のスコアを叩き出している。"s,
         u8"Your score is "s + calcscore() + u8" points now."s));
-    mes(""s);
+    pos(wx + 40, wy + 186);
     mes(lang(
         ""s + gdata_year + u8"年"s + gdata_month + u8"月"s + gdata_day
             + u8"日にレシマスを制覇して、"s,
         u8"In the year "s + gdata_year + u8", "s + gdata_day + u8"/"s
             + gdata_month + u8", you conquered Lesimas."s));
+    pos(wx + 40, wy + 206);
     mes(lang(
         u8"あなたは「"s + wincomment + u8"」とコメントした。"s,
         u8"Upon killing Zeome, you said, "s + cnvtalk((""s + wincomment))));
-    mes(""s);
+    pos(wx + 40, wy + 246);
     mes(lang(
         u8"…あなたの旅はまだ終わらない。"s, u8"Your journey continues..."s));
     redraw(1);
