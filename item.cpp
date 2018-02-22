@@ -148,19 +148,16 @@ int inv_find(int prm_474, int prm_475)
     int f_at_m52 = 0;
     f_at_m52 = -1;
     inv_getheader(prm_475);
+    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
     {
-        int cnt = invhead;
-        for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+        if (inv[cnt].number == 0)
         {
-            if (inv[cnt].number == 0)
-            {
-                continue;
-            }
-            if (inv[cnt].id == prm_474)
-            {
-                f_at_m52 = cnt;
-                break;
-            }
+            continue;
+        }
+        if (inv[cnt].id == prm_474)
+        {
+            f_at_m52 = cnt;
+            break;
         }
     }
     return f_at_m52;
@@ -173,75 +170,70 @@ int item_find(int prm_476, int prm_477, int prm_478)
     elona_vector1<int> p_at_m52;
     p_at_m52(0) = -1;
     p_at_m52(1) = -1;
+    for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+        if (cnt == 0)
         {
-            if (cnt == 0)
+            if (prm_478 > 0)
             {
-                if (prm_478 > 0)
+                continue;
+            }
+            inv_getheader(-1);
+        }
+        else
+        {
+            if (prm_478 < 0)
+            {
+                continue;
+            }
+            inv_getheader(0);
+        }
+        p_at_m52(2) = cnt;
+        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
+             ++cnt)
+        {
+            if (inv[cnt].number == 0)
+            {
+                continue;
+            }
+            if (p_at_m52(2) == 0)
+            {
+                if (inv[cnt].position.x != cdata[0].position.x
+                    || inv[cnt].position.y != cdata[0].position.y)
                 {
                     continue;
                 }
-                inv_getheader(-1);
             }
-            else
+            if (prm_477 == 0)
             {
-                if (prm_478 < 0)
+                if (the_item_db[inv[cnt].id]->category == prm_476)
                 {
-                    continue;
+                    p_at_m52 = cnt;
                 }
-                inv_getheader(0);
             }
-            p_at_m52(2) = cnt;
+            if (prm_477 == 1)
             {
-                int cnt = invhead;
-                for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+                if (inv[cnt].skill == prm_476)
                 {
-                    if (inv[cnt].number == 0)
+                    if (p_at_m52(1) < inv[cnt].param1)
                     {
-                        continue;
+                        p_at_m52(0) = cnt;
+                        p_at_m52(1) = inv[cnt].param1;
                     }
-                    if (p_at_m52(2) == 0)
-                    {
-                        if (inv[cnt].position.x != cdata[0].position.x
-                            || inv[cnt].position.y != cdata[0].position.y)
-                        {
-                            continue;
-                        }
-                    }
-                    if (prm_477 == 0)
-                    {
-                        if (the_item_db[inv[cnt].id]->category == prm_476)
-                        {
-                            p_at_m52 = cnt;
-                        }
-                    }
-                    if (prm_477 == 1)
-                    {
-                        if (inv[cnt].skill == prm_476)
-                        {
-                            if (p_at_m52(1) < inv[cnt].param1)
-                            {
-                                p_at_m52(0) = cnt;
-                                p_at_m52(1) = inv[cnt].param1;
-                            }
-                        }
-                    }
-                    if (prm_477 == 2)
-                    {
-                        if (the_item_db[inv[cnt].id]->subcategory == prm_476)
-                        {
-                            p_at_m52 = cnt;
-                        }
-                    }
-                    if (prm_477 == 3)
-                    {
-                        if (inv[cnt].id == prm_476)
-                        {
-                            p_at_m52 = cnt;
-                        }
-                    }
+                }
+            }
+            if (prm_477 == 2)
+            {
+                if (the_item_db[inv[cnt].id]->subcategory == prm_476)
+                {
+                    p_at_m52 = cnt;
+                }
+            }
+            if (prm_477 == 3)
+            {
+                if (inv[cnt].id == prm_476)
+                {
+                    p_at_m52 = cnt;
                 }
             }
         }
@@ -255,31 +247,25 @@ int encfind(int prm_479, int prm_480)
 {
     int i_at_m53 = 0;
     f_at_m53 = -1;
+    for (int cnt = 100, cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
     {
-        int cnt = 100;
-        for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+        if (cdata_body_part(prm_479, cnt) % 10000 == 0)
         {
-            if (cdata_body_part(prm_479, cnt) % 10000 == 0)
+            continue;
+        }
+        i_at_m53 = cdata_body_part(prm_479, cnt) % 10000 - 1;
+        for (int cnt = 0, cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
+        {
+            if (inv[i_at_m53].enchantments[cnt].id == 0)
             {
-                continue;
+                break;
             }
-            i_at_m53 = cdata_body_part(prm_479, cnt) % 10000 - 1;
+            if (inv[i_at_m53].enchantments[cnt].id == prm_480)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
+                if (inv[i_at_m53].enchantments[cnt].power > f_at_m53)
                 {
-                    if (inv[i_at_m53].enchantments[cnt].id == 0)
-                    {
-                        break;
-                    }
-                    if (inv[i_at_m53].enchantments[cnt].id == prm_480)
-                    {
-                        if (inv[i_at_m53].enchantments[cnt].power > f_at_m53)
-                        {
-                            f_at_m53 = inv[i_at_m53].enchantments[cnt].power;
-                            break;
-                        }
-                    }
+                    f_at_m53 = inv[i_at_m53].enchantments[cnt].power;
+                    break;
                 }
             }
         }
@@ -292,19 +278,16 @@ int encfind(int prm_479, int prm_480)
 int encfindspec(int prm_481, int prm_482)
 {
     f_at_m53 = -1;
+    for (int cnt = 0, cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
+        if (inv[prm_481].enchantments[cnt].id == 0)
         {
-            if (inv[prm_481].enchantments[cnt].id == 0)
-            {
-                break;
-            }
-            if (inv[prm_481].enchantments[cnt].id == prm_482)
-            {
-                f_at_m53 = 1;
-                break;
-            }
+            break;
+        }
+        if (inv[prm_481].enchantments[cnt].id == prm_482)
+        {
+            f_at_m53 = 1;
+            break;
         }
     }
     return f_at_m53;
@@ -316,19 +299,16 @@ void itemlist(int prm_483, int prm_484)
 {
     inv_getheader(prm_483);
     listmax = 0;
+    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
     {
-        int cnt = invhead;
-        for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+        if (inv[cnt].number == 0)
         {
-            if (inv[cnt].number == 0)
-            {
-                continue;
-            }
-            if (inv[cnt].id == prm_484)
-            {
-                list(0, listmax) = cnt;
-                ++listmax;
-            }
+            continue;
+        }
+        if (inv[cnt].id == prm_484)
+        {
+            list(0, listmax) = cnt;
+            ++listmax;
         }
     }
     return;
@@ -339,26 +319,23 @@ void itemlist(int prm_483, int prm_484)
 int itemusingfind(int prm_485, int prm_486)
 {
     f_at_m54 = -1;
+    for (int cnt = 0, cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
+        if (cdata[cnt].state != 1)
         {
-            if (cdata[cnt].state != 1)
+            continue;
+        }
+        if (cdata[cnt].continuous_action_id != 0
+            && cdata[cnt].continuous_action_id != 11)
+        {
+            if (cdata[cnt].continuous_action_turn > 0)
             {
-                continue;
-            }
-            if (cdata[cnt].continuous_action_id != 0
-                && cdata[cnt].continuous_action_id != 11)
-            {
-                if (cdata[cnt].continuous_action_turn > 0)
+                if (cdata[cnt].continuous_action_item == prm_485)
                 {
-                    if (cdata[cnt].continuous_action_item == prm_485)
+                    if (prm_486 == 0 || (prm_486 == 1 && cnt != 0))
                     {
-                        if (prm_486 == 0 || (prm_486 == 1 && cnt != 0))
-                        {
-                            f_at_m54 = cnt;
-                            break;
-                        }
+                        f_at_m54 = cnt;
+                        break;
                     }
                 }
             }
@@ -375,38 +352,34 @@ int itemfind(int prm_487, int prm_488, int prm_489)
     f_at_m54 = -1;
     if (prm_489 == 0)
     {
+        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
+             ++cnt)
         {
-            int cnt = invhead;
-            for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+            if (inv[cnt].number == 0)
             {
-                if (inv[cnt].number == 0)
-                {
-                    continue;
-                }
-                if (inv[cnt].id == prm_488)
-                {
-                    f_at_m54 = cnt;
-                    break;
-                }
+                continue;
+            }
+            if (inv[cnt].id == prm_488)
+            {
+                f_at_m54 = cnt;
+                break;
             }
         }
         return f_at_m54;
     }
     else
     {
+        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
+             ++cnt)
         {
-            int cnt = invhead;
-            for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+            if (inv[cnt].number == 0)
             {
-                if (inv[cnt].number == 0)
-                {
-                    continue;
-                }
-                if (the_item_db[inv[cnt].id]->subcategory == prm_488)
-                {
-                    f_at_m54 = cnt;
-                    break;
-                }
+                continue;
+            }
+            if (the_item_db[inv[cnt].id]->subcategory == prm_488)
+            {
+                f_at_m54 = cnt;
+                break;
             }
         }
         return f_at_m54;
@@ -419,23 +392,20 @@ int mapitemfind(int prm_490, int prm_491, int prm_492)
 {
     inv_getheader(-1);
     f_at_m54 = -1;
+    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
     {
-        int cnt = invhead;
-        for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+        if (inv[cnt].number == 0)
         {
-            if (inv[cnt].number == 0)
+            continue;
+        }
+        if (inv[cnt].id == prm_492)
+        {
+            if (inv[cnt].position.x == prm_490)
             {
-                continue;
-            }
-            if (inv[cnt].id == prm_492)
-            {
-                if (inv[cnt].position.x == prm_490)
+                if (inv[cnt].position.y == prm_491)
                 {
-                    if (inv[cnt].position.y == prm_491)
-                    {
-                        f_at_m54 = cnt;
-                        break;
-                    }
+                    f_at_m54 = cnt;
+                    break;
                 }
             }
         }
@@ -464,23 +434,20 @@ void cell_refresh(int prm_493, int prm_494)
     map(prm_493, prm_494, 4) = 0;
     map(prm_493, prm_494, 9) = 0;
     inv_getheader(-1);
+    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
     {
-        int cnt = invhead;
-        for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+        if (inv[cnt].number > 0)
         {
-            if (inv[cnt].number > 0)
+            if (inv[cnt].position.x == prm_493
+                && inv[cnt].position.y == prm_494)
             {
-                if (inv[cnt].position.x == prm_493
-                    && inv[cnt].position.y == prm_494)
+                floorstack(p_at_m55) = cnt;
+                ++p_at_m55;
+                wpoke(map(prm_493, prm_494, 4), 0, inv[cnt].image);
+                wpoke(map(prm_493, prm_494, 4), 2, inv[cnt].color);
+                if (ilight(inv[cnt].id) != 0)
                 {
-                    floorstack(p_at_m55) = cnt;
-                    ++p_at_m55;
-                    wpoke(map(prm_493, prm_494, 4), 0, inv[cnt].image);
-                    wpoke(map(prm_493, prm_494, 4), 2, inv[cnt].color);
-                    if (ilight(inv[cnt].id) != 0)
-                    {
-                        map(prm_493, prm_494, 9) = ilight(inv[cnt].id);
-                    }
+                    map(prm_493, prm_494, 9) = ilight(inv[cnt].id);
                 }
             }
         }
@@ -493,36 +460,30 @@ void cell_refresh(int prm_493, int prm_494)
     else if (p_at_m55 > 1)
     {
         n_at_m55(2) = 0;
+        for (int cnt = 0, cnt_end = cnt + (p_at_m55); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (p_at_m55); cnt < cnt_end; ++cnt)
+            cnt2_at_m55 = cnt;
+            i_at_m55 = -1;
+            for (int cnt = 0, cnt_end = cnt + (p_at_m55); cnt < cnt_end; ++cnt)
             {
-                cnt2_at_m55 = cnt;
-                i_at_m55 = -1;
+                if (cnt2_at_m55 == 1)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (p_at_m55); cnt < cnt_end; ++cnt)
+                    if (cnt == n_at_m55(0))
                     {
-                        if (cnt2_at_m55 == 1)
-                        {
-                            if (cnt == n_at_m55(0))
-                            {
-                                continue;
-                            }
-                        }
-                        if (cnt2_at_m55 == 2)
-                        {
-                            if (cnt == n_at_m55(0) || cnt == n_at_m55(1))
-                            {
-                                continue;
-                            }
-                        }
-                        if (inv[floorstack(cnt)].turn > i_at_m55)
-                        {
-                            n_at_m55(cnt2_at_m55) = cnt;
-                            i_at_m55 = inv[floorstack(cnt)].turn;
-                        }
+                        continue;
                     }
+                }
+                if (cnt2_at_m55 == 2)
+                {
+                    if (cnt == n_at_m55(0) || cnt == n_at_m55(1))
+                    {
+                        continue;
+                    }
+                }
+                if (inv[floorstack(cnt)].turn > i_at_m55)
+                {
+                    n_at_m55(cnt2_at_m55) = cnt;
+                    i_at_m55 = inv[floorstack(cnt)].turn;
                 }
             }
         }
@@ -616,15 +577,12 @@ int inv_getspace(int prm_503)
 {
     inv_getheader(prm_503);
     p_at_m57 = 0;
+    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
     {
-        int cnt = invhead;
-        for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+        if (inv[cnt].number == 0)
         {
-            if (inv[cnt].number == 0)
-            {
-                ++p_at_m57;
-                break;
-            }
+            ++p_at_m57;
+            break;
         }
     }
     return p_at_m57;
@@ -636,14 +594,11 @@ int inv_sum(int prm_504)
 {
     inv_getheader(prm_504);
     p_at_m57 = 0;
+    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
     {
-        int cnt = invhead;
-        for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+        if (inv[cnt].number != 0)
         {
-            if (inv[cnt].number != 0)
-            {
-                ++p_at_m57;
-            }
+            ++p_at_m57;
         }
     }
     return p_at_m57;
@@ -654,38 +609,28 @@ int inv_sum(int prm_504)
 void item_compress(int)
 {
     p_at_m57 = 0;
+    for (int cnt = 0, cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
+        p_at_m57(1) = 200 * (cnt * cnt + 1);
+        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
+             ++cnt)
         {
-            p_at_m57(1) = 200 * (cnt * cnt + 1);
+            if (inv[cnt].number != 0)
             {
-                int cnt = invhead;
-                for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+                if (ibit(5, cnt) == 0)
                 {
-                    if (inv[cnt].number != 0)
+                    if (inv[cnt].value < p_at_m57(1))
                     {
-                        if (ibit(5, cnt) == 0)
+                        inv[cnt].number = 0;
+                        ++p_at_m57;
+                        if (inv[cnt].position.x >= 0
+                            && inv[cnt].position.x < mdata(0)
+                            && inv[cnt].position.y >= 0
+                            && inv[cnt].position.y < mdata(1))
                         {
-                            if (inv[cnt].value < p_at_m57(1))
-                            {
-                                inv[cnt].number = 0;
-                                ++p_at_m57;
-                                if (inv[cnt].position.x >= 0
-                                    && inv[cnt].position.x < mdata(0)
-                                    && inv[cnt].position.y >= 0
-                                    && inv[cnt].position.y < mdata(1))
-                                {
-                                    cell_refresh(
-                                        inv[cnt].position.x,
-                                        inv[cnt].position.y);
-                                }
-                            }
+                            cell_refresh(
+                                inv[cnt].position.x, inv[cnt].position.y);
                         }
-                    }
-                    if (p_at_m57 > 10)
-                    {
-                        break;
                     }
                 }
             }
@@ -694,17 +639,18 @@ void item_compress(int)
                 break;
             }
         }
+        if (p_at_m57 > 10)
+        {
+            break;
+        }
     }
     p_at_m57 = -1;
+    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
     {
-        int cnt = invhead;
-        for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+        if (inv[cnt].number == 0)
         {
-            if (inv[cnt].number == 0)
-            {
-                p_at_m57 = cnt;
-                break;
-            }
+            p_at_m57 = cnt;
+            break;
         }
     }
     if (p_at_m57 == -1)
@@ -739,15 +685,12 @@ int inv_getfreeid(int prm_506)
 {
     inv_getheader(prm_506);
     p_at_m57 = -1;
+    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
     {
-        int cnt = invhead;
-        for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+        if (inv[cnt].number == 0)
         {
-            if (inv[cnt].number == 0)
-            {
-                p_at_m57 = cnt;
-                break;
-            }
+            p_at_m57 = cnt;
+            break;
         }
     }
     if (p_at_m57 == -1)
@@ -776,21 +719,17 @@ int inv_weight(int prm_507)
     {
         gdata_cargo_weight = 0;
     }
+    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
     {
-        int cnt = invhead;
-        for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+        if (inv[cnt].number != 0)
         {
-            if (inv[cnt].number != 0)
+            if (inv[cnt].weight >= 0)
             {
-                if (inv[cnt].weight >= 0)
-                {
-                    p_at_m57 += inv[cnt].weight * inv[cnt].number;
-                }
-                else if (prm_507 == 0)
-                {
-                    gdata_cargo_weight +=
-                        inv[cnt].weight * inv[cnt].number * -1;
-                }
+                p_at_m57 += inv[cnt].weight * inv[cnt].number;
+            }
+            else if (prm_507 == 0)
+            {
+                gdata_cargo_weight += inv[cnt].weight * inv[cnt].number * -1;
             }
         }
     }

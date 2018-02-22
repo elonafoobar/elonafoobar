@@ -633,13 +633,10 @@ void main_title_menu()
     pagesize = 0;
     redraw(0);
     gsel(2);
+    for (int cnt = 0, cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
-        {
-            pos(cnt % 4 * 180, cnt / 4 * 300);
-            picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
-        }
+        pos(cnt % 4 * 180, cnt / 4 * 300);
+        picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(4);
     gmode(0);
@@ -740,26 +737,23 @@ label_2116_internal:
             f = 2;
         }
     }
+    for (int cnt = 0, cnt_end = cnt + (6); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (6); cnt < cnt_end; ++cnt)
+        x = wx + 40;
+        y = cnt * 35 + wy + 50;
+        display_customkey(key_list(cnt), x, y);
+        if (jp)
         {
-            x = wx + 40;
-            y = cnt * 35 + wy + 50;
-            display_customkey(key_list(cnt), x, y);
-            if (jp)
-            {
-                font(lang(cfg_font1, cfg_font2), 11 - en * 2, 0);
-                pos(x + 40, y - 4);
-                mes(s(cnt * 2));
-                font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
-                cs_list(cs == cnt, s(cnt * 2 + 1), x + 40, y + 8);
-            }
-            else
-            {
-                font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-                cs_list(cs == cnt, s(cnt), x + 40, y + 1);
-            }
+            font(lang(cfg_font1, cfg_font2), 11 - en * 2, 0);
+            pos(x + 40, y - 4);
+            mes(s(cnt * 2));
+            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+            cs_list(cs == cnt, s(cnt * 2 + 1), x + 40, y + 8);
+        }
+        else
+        {
+            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            cs_list(cs == cnt, s(cnt), x + 40, y + 1);
         }
     }
     cs_bk = cs;
@@ -828,13 +822,10 @@ void main_menu_new_game()
     picload(fs::u8path(u8"./graphic/void.bmp"), 1);
     gzoom(windoww, windowh, 4, 0, 0, 800, 600);
     gsel(2);
+    for (int cnt = 0, cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
-        {
-            pos(cnt % 4 * 180, cnt / 4 * 300);
-            picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
-        }
+        pos(cnt % 4 * 180, cnt / 4 * 300);
+        picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(3);
     pos(960, 96);
@@ -913,15 +904,12 @@ void character_making_select_race()
             ++listmax;
         }
     }
+    for (int cnt = 0, cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
+        listn(0, cnt) = i18n::_(u8"race", listn(1, cnt), u8"name");
+        if (list(0, cnt) == 1)
         {
-            listn(0, cnt) = i18n::_(u8"race", listn(1, cnt), u8"name");
-            if (list(0, cnt) == 1)
-            {
-                listn(0, cnt) = u8"(extra)"s + listn(0, cnt);
-            }
+            listn(0, cnt) = u8"(extra)"s + listn(0, cnt);
         }
     }
     windowshadow = 1;
@@ -954,21 +942,17 @@ label_1546_internal:
         display_topic(lang(u8"選択できる種族"s, u8"Race"s), wx + 28, wy + 30);
         display_topic(lang(u8"種族の説明"s, u8"Detail"s), wx + 188, wy + 30);
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        for (int cnt = 0, cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
+            p = page * pagesize + cnt;
+            if (p >= listmax)
             {
-                p = page * pagesize + cnt;
-                if (p >= listmax)
-                {
-                    break;
-                }
-                key_list(cnt) = key_select(cnt);
-                keyrange = cnt + 1;
-                display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
-                cs_list(
-                    cs == cnt, listn(0, p), wx + 64, wy + 66 + cnt * 19 - 1);
+                break;
             }
+            key_list(cnt) = key_select(cnt);
+            keyrange = cnt + 1;
+            display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
+            cs_list(cs == cnt, listn(0, p), wx + 64, wy + 66 + cnt * 19 - 1);
         }
         cs_bk = cs;
         pos(wx + 200, wy + 66);
@@ -981,19 +965,16 @@ label_1546_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
+    for (int cnt = 0, cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
+        if (key == key_select(cnt))
         {
-            if (key == key_select(cnt))
-            {
-                p = page * pagesize + cnt;
-                break;
-            }
-            else
-            {
-                p = -1;
-            }
+            p = page * pagesize + cnt;
+            break;
+        }
+        else
+        {
+            p = -1;
         }
     }
     if (p != -1)
@@ -1079,16 +1060,13 @@ label_1549_internal:
     listn(0, 0) = cnven(strmale);
     listn(0, 1) = cnven(strfemale);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
-        {
-            key_list(cnt) = key_select(cnt);
-            keyrange = cnt + 1;
-            pos(wx + 38, wy + 66 + cnt * 19 - 2);
-            gcopy(3, cnt * 24 + 72, 30, 24, 18);
-            cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
-        }
+        key_list(cnt) = key_select(cnt);
+        keyrange = cnt + 1;
+        pos(wx + 38, wy + 66 + cnt * 19 - 2);
+        gcopy(3, cnt * 24 + 72, 30, 24, 18);
+        cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
     }
     cs_bk = cs;
     redraw(1);
@@ -1163,13 +1141,10 @@ void character_making_select_class(bool label_1551_flg)
             ++listmax;
         }
     }
+    for (int cnt = 0, cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
-        {
-            access_class_info(2, listn(1, cnt));
-            listn(0, cnt) = classname;
-        }
+        access_class_info(2, listn(1, cnt));
+        listn(0, cnt) = classname;
     }
     windowshadow = 1;
 label_1552_internal:
@@ -1190,23 +1165,20 @@ label_1552_internal:
         display_topic(lang(u8"選択できる職業"s, u8"Class"s), wx + 28, wy + 30);
         display_topic(lang(u8"職業の説明"s, u8"Detail"s), wx + 188, wy + 30);
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        for (int cnt = 0, cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
+            key_list(cnt) = key_select(cnt);
+            keyrange = cnt + 1;
+            display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
+            if (jp)
             {
-                key_list(cnt) = key_select(cnt);
-                keyrange = cnt + 1;
-                display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
-                if (jp)
-                {
-                    s = listn(0, cnt);
-                }
-                else
-                {
-                    s = cnven(listn(1, cnt));
-                }
-                cs_list(cs == cnt, s, wx + 64, wy + 66 + cnt * 19 - 1);
+                s = listn(0, cnt);
             }
+            else
+            {
+                s = cnven(listn(1, cnt));
+            }
+            cs_list(cs == cnt, s, wx + 64, wy + 66 + cnt * 19 - 1);
         }
         cs_bk = cs;
         pos(wx + 200, wy + 66);
@@ -1219,19 +1191,16 @@ label_1552_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
+    for (int cnt = 0, cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
+        if (key == key_select(cnt))
         {
-            if (key == key_select(cnt))
-            {
-                p = page * pagesize + cnt;
-                break;
-            }
-            else
-            {
-                p = -1;
-            }
+            p = page * pagesize + cnt;
+            break;
+        }
+        else
+        {
+            p = -1;
         }
     }
     if (p != -1)
@@ -1288,19 +1257,15 @@ label_1554:
     access_race_info(3, cmrace);
     access_class_info(3, cmclass);
     cdata[rc].level = 1;
+    for (int cnt = 10, cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
     {
-        int cnt = 10;
-        for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
+        if (cmlock(cnt - 10) == 0)
         {
-            if (cmlock(cnt - 10) == 0)
-            {
-                sdata.get(cnt, rc).original_level -=
-                    rnd(sdata.get(cnt, rc).original_level / 2 + 1);
-                cmstats(cnt - 10) =
-                    sdata.get(cnt, rc).original_level * 1'000'000
-                    + sdata.get(cnt, rc).experience * 1'000
-                    + sdata.get(cnt, rc).potential;
-            }
+            sdata.get(cnt, rc).original_level -=
+                rnd(sdata.get(cnt, rc).original_level / 2 + 1);
+            cmstats(cnt - 10) = sdata.get(cnt, rc).original_level * 1'000'000
+                + sdata.get(cnt, rc).experience * 1'000
+                + sdata.get(cnt, rc).potential;
         }
     }
     listmax = 0;
@@ -1310,15 +1275,11 @@ label_1554:
     list(0, 1) = 0;
     listn(0, 1) = lang(u8"決定"s, u8"Proceed"s);
     ++listmax;
+    for (int cnt = 10, cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
     {
-        int cnt = 10;
-        for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
-        {
-            list(0, listmax) = cmstats(cnt - 10);
-            listn(0, listmax) =
-                i18n::_(u8"ability", std::to_string(cnt), u8"name");
-            ++listmax;
-        }
+        list(0, listmax) = cmstats(cnt - 10);
+        listn(0, listmax) = i18n::_(u8"ability", std::to_string(cnt), u8"name");
+        ++listmax;
     }
     windowshadow = 1;
 label_1555_internal:
@@ -1342,32 +1303,29 @@ label_1555_internal:
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
     pos(wx + 180, wy + 84);
     mes(lang(u8"残りロック: "s, u8"Locks left: "s) + cmlock(8));
+    for (int cnt = 0, cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
+        key_list(cnt) = key_select(cnt);
+        keyrange = cnt + 1;
+        pos(wx + 38, wy + 66 + cnt * 23 - 2);
+        gcopy(3, cnt * 24 + 72, 30, 24, 18);
+        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 23 - 1);
+        font(lang(cfg_font1, cfg_font2), 15 - en * 2, 1);
+        if (cnt >= 2)
         {
-            key_list(cnt) = key_select(cnt);
-            keyrange = cnt + 1;
-            pos(wx + 38, wy + 66 + cnt * 23 - 2);
-            gcopy(3, cnt * 24 + 72, 30, 24, 18);
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-            cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 23 - 1);
-            font(lang(cfg_font1, cfg_font2), 15 - en * 2, 1);
-            if (cnt >= 2)
+            pos(wx + 198, wy + 76 + cnt * 23);
+            gmode(2, inf_tiles, inf_tiles);
+            grotate(1, (cnt - 2) * inf_tiles, 672, 0, inf_tiles, inf_tiles);
+            pos(wx + 210, wy + 66 + cnt * 23);
+            mes(""s + list(0, cnt) / 1000000);
+            if (cmlock(cnt - 2) == 1)
             {
-                pos(wx + 198, wy + 76 + cnt * 23);
-                gmode(2, inf_tiles, inf_tiles);
-                grotate(1, (cnt - 2) * inf_tiles, 672, 0, inf_tiles, inf_tiles);
-                pos(wx + 210, wy + 66 + cnt * 23);
-                mes(""s + list(0, cnt) / 1000000);
-                if (cmlock(cnt - 2) == 1)
-                {
-                    font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
-                    pos(wx + 240, wy + 66 + cnt * 23 + 2);
-                    color(20, 20, 140);
-                    mes(u8"Locked!"s);
-                    color(0, 0, 0);
-                }
+                font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
+                pos(wx + 240, wy + 66 + cnt * 23 + 2);
+                color(20, 20, 140);
+                mes(u8"Locked!"s);
+                color(0, 0, 0);
             }
         }
     }
@@ -1376,19 +1334,16 @@ label_1555_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
+    for (int cnt = 0, cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
+        if (key == key_select(cnt))
         {
-            if (key == key_select(cnt))
-            {
-                p = cnt;
-                break;
-            }
-            else
-            {
-                p = -1;
-            }
+            p = cnt;
+            break;
+        }
+        else
+        {
+            p = -1;
         }
     }
     if (p != -1)
@@ -1506,32 +1461,28 @@ label_1559_internal:
         gmode(2);
         display_topic(lang(u8"異名の候補"s, u8"Alias List"s), wx + 28, wy + 30);
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        for (int cnt = 0, cnt_end = cnt + (17); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (17); cnt < cnt_end; ++cnt)
+            key_list(cnt) = key_select(cnt);
+            keyrange = cnt + 1;
+            if (list(0, 0) == -1)
             {
-                key_list(cnt) = key_select(cnt);
-                keyrange = cnt + 1;
-                if (list(0, 0) == -1)
+                if (gdata_wizard == 1)
                 {
-                    if (gdata_wizard == 1)
-                    {
-                        listn(0, cnt) = u8"*Debug*"s;
-                    }
-                    else
-                    {
-                        listn(0, cnt) = random_title();
-                    }
+                    listn(0, cnt) = u8"*Debug*"s;
                 }
-                if (cnt == 0)
+                else
                 {
-                    listn(0, cnt) = lang(u8"リロール"s, u8"Reroll"s);
+                    listn(0, cnt) = random_title();
                 }
-                pos(wx + 38, wy + 66 + cnt * 19 - 2);
-                gcopy(3, cnt * 24 + 72, 30, 24, 18);
-                cs_list(
-                    cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
             }
+            if (cnt == 0)
+            {
+                listn(0, cnt) = lang(u8"リロール"s, u8"Reroll"s);
+            }
+            pos(wx + 38, wy + 66 + cnt * 19 - 2);
+            gcopy(3, cnt * 24 + 72, 30, 24, 18);
+            cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
         }
         cs_bk = cs;
         list(0, 0) = 0;
@@ -1540,19 +1491,16 @@ label_1559_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
+    for (int cnt = 0, cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
+        if (key == key_select(cnt))
         {
-            if (key == key_select(cnt))
-            {
-                p = cnt;
-                break;
-            }
-            else
-            {
-                p = -1;
-            }
+            p = cnt;
+            break;
+        }
+        else
+        {
+            p = -1;
         }
     }
     if (p != -1)
@@ -1643,15 +1591,11 @@ label_1563_internal:
     cdatan(0, rc) = u8"????"s;
     cdatan(1, rc) = cmaka;
     cdata[rc].level = 1;
+    for (int cnt = 10, cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
     {
-        int cnt = 10;
-        for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
-        {
-            sdata.get(cnt, rc).original_level = cmstats(cnt - 10) / 1'000'000;
-            sdata.get(cnt, rc).experience =
-                cmstats(cnt - 10) % 1'000'000 / 1'000;
-            sdata.get(cnt, rc).potential = cmstats(cnt - 10) % 1'000;
-        }
+        sdata.get(cnt, rc).original_level = cmstats(cnt - 10) / 1'000'000;
+        sdata.get(cnt, rc).experience = cmstats(cnt - 10) % 1'000'000 / 1'000;
+        sdata.get(cnt, rc).potential = cmstats(cnt - 10) % 1'000;
     }
     initialize_character();
     initialize_pc_character();
@@ -1820,93 +1764,79 @@ void show_race_or_class_info(int CNT, int val0)
         s(6) = u8"Little"s;
         s(7) = u8"Slight"s;
     }
+    for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+        cnt2 = cnt;
+        for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
         {
-            cnt2 = cnt;
+            if (cnt2 == 2)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+                if (cnt == 2)
                 {
-                    if (cnt2 == 2)
-                    {
-                        if (cnt == 2)
-                        {
-                            break;
-                        }
-                    }
-                    r = cnt2 * 3 + cnt + 10;
-                    p = 0;
-                    {
-                        int cnt = 0;
-                        for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
-                        {
-                            if (sdata.get(r, 0).original_level > 13)
-                            {
-                                p = 1;
-                                color(0, 0, 200);
-                                break;
-                            }
-                            if (sdata.get(r, 0).original_level > 11)
-                            {
-                                p = 2;
-                                color(0, 0, 200);
-                                break;
-                            }
-                            if (sdata.get(r, 0).original_level > 9)
-                            {
-                                p = 3;
-                                color(0, 0, 150);
-                                break;
-                            }
-                            if (sdata.get(r, 0).original_level > 7)
-                            {
-                                p = 4;
-                                color(0, 0, 150);
-                                break;
-                            }
-                            if (sdata.get(r, 0).original_level > 5)
-                            {
-                                p = 5;
-                                color(0, 0, 0);
-                                break;
-                            }
-                            if (sdata.get(r, 0).original_level > 3)
-                            {
-                                p = 6;
-                                color(150, 0, 0);
-                                break;
-                            }
-                            if (sdata.get(r, 0).original_level > 0)
-                            {
-                                p = 7;
-                                color(200, 0, 0);
-                                break;
-                            }
-                            color(120, 120, 120);
-                        }
-                    }
-                    pos(cnt * 150 + tx + 13, ty + 7);
-                    gmode(2, inf_tiles, inf_tiles);
-                    grotate(
-                        1,
-                        (cnt2 * 3 + cnt) * inf_tiles,
-                        672,
-                        0,
-                        inf_tiles,
-                        inf_tiles);
-                    pos(cnt * 150 + tx + 32, ty);
-                    mes(strmid(
-                            i18n::_(u8"ability", std::to_string(r), u8"name"),
-                            0,
-                            jp ? 6 : 3)
-                        + u8": "s + s(p));
-                    color(0, 0, 0);
+                    break;
                 }
             }
-            ty += 16;
+            r = cnt2 * 3 + cnt + 10;
+            p = 0;
+            for (int cnt = 0, cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
+            {
+                if (sdata.get(r, 0).original_level > 13)
+                {
+                    p = 1;
+                    color(0, 0, 200);
+                    break;
+                }
+                if (sdata.get(r, 0).original_level > 11)
+                {
+                    p = 2;
+                    color(0, 0, 200);
+                    break;
+                }
+                if (sdata.get(r, 0).original_level > 9)
+                {
+                    p = 3;
+                    color(0, 0, 150);
+                    break;
+                }
+                if (sdata.get(r, 0).original_level > 7)
+                {
+                    p = 4;
+                    color(0, 0, 150);
+                    break;
+                }
+                if (sdata.get(r, 0).original_level > 5)
+                {
+                    p = 5;
+                    color(0, 0, 0);
+                    break;
+                }
+                if (sdata.get(r, 0).original_level > 3)
+                {
+                    p = 6;
+                    color(150, 0, 0);
+                    break;
+                }
+                if (sdata.get(r, 0).original_level > 0)
+                {
+                    p = 7;
+                    color(200, 0, 0);
+                    break;
+                }
+                color(120, 120, 120);
+            }
+            pos(cnt * 150 + tx + 13, ty + 7);
+            gmode(2, inf_tiles, inf_tiles);
+            grotate(
+                1, (cnt2 * 3 + cnt) * inf_tiles, 672, 0, inf_tiles, inf_tiles);
+            pos(cnt * 150 + tx + 32, ty);
+            mes(strmid(
+                    i18n::_(u8"ability", std::to_string(r), u8"name"),
+                    0,
+                    jp ? 6 : 3)
+                + u8": "s + s(p));
+            color(0, 0, 0);
         }
+        ty += 16;
     }
     ty = wy + 260;
     display_topic(lang(u8"獲得技能"s, u8"Trained Skill"s), tx, ty);
@@ -1914,19 +1844,16 @@ void show_race_or_class_info(int CNT, int val0)
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     r = 0;
     s = lang(u8"武器の専門  "s, u8"Proficient in "s);
+    for (int cnt = 100, cnt_end = cnt + (50); cnt < cnt_end; ++cnt)
     {
-        int cnt = 100;
-        for (int cnt_end = cnt + (50); cnt < cnt_end; ++cnt)
+        if (sdata.get(cnt, 0).original_level != 0)
         {
-            if (sdata.get(cnt, 0).original_level != 0)
+            if (r != 0)
             {
-                if (r != 0)
-                {
-                    s += u8","s;
-                }
-                s += i18n::_(u8"ability", std::to_string(cnt), u8"name");
-                ++r;
+                s += u8","s;
             }
+            s += i18n::_(u8"ability", std::to_string(cnt), u8"name");
+            ++r;
         }
     }
     if (r != 0)
@@ -1938,44 +1865,39 @@ void show_race_or_class_info(int CNT, int val0)
         mes(s);
         ty += 14;
     }
+    for (int cnt = 150, cnt_end = cnt + (450); cnt < cnt_end; ++cnt)
     {
-        int cnt = 150;
-        for (int cnt_end = cnt + (450); cnt < cnt_end; ++cnt)
+        if (sdata.get(cnt, 0).original_level != 0)
         {
-            if (sdata.get(cnt, 0).original_level != 0)
+            s = i18n::_(u8"ability", std::to_string(cnt), u8"name");
+            if (jp)
             {
-                s = i18n::_(u8"ability", std::to_string(cnt), u8"name");
-                if (jp)
-                {
-                    lenfix(s, 12);
-                }
-                else
-                {
-                    lenfix(s, 16);
-                }
-                pos(tx + 13, ty + 6);
-                gmode(2, inf_tiles, inf_tiles);
-                grotate(
-                    1,
-                    (the_ability_db[cnt].related_basic_attribute - 10)
-                        * inf_tiles,
-                    672,
-                    0,
-                    inf_tiles,
-                    inf_tiles);
-                s(1) =
-                    i18n::_(u8"ability", std::to_string(cnt), u8"description");
-                if (en)
-                {
-                    if (strlen_u(s(1)) > 45)
-                    {
-                        s(1) = strmid(s(1), 0, 42) + u8"..."s;
-                    }
-                }
-                pos(tx + 32, ty);
-                mes(s + s(1));
-                ty += 14;
+                lenfix(s, 12);
             }
+            else
+            {
+                lenfix(s, 16);
+            }
+            pos(tx + 13, ty + 6);
+            gmode(2, inf_tiles, inf_tiles);
+            grotate(
+                1,
+                (the_ability_db[cnt].related_basic_attribute - 10) * inf_tiles,
+                672,
+                0,
+                inf_tiles,
+                inf_tiles);
+            s(1) = i18n::_(u8"ability", std::to_string(cnt), u8"description");
+            if (en)
+            {
+                if (strlen_u(s(1)) > 45)
+                {
+                    s(1) = strmid(s(1), 0, 42) + u8"..."s;
+                }
+            }
+            pos(tx + 32, ty);
+            mes(s + s(1));
+            ty += 14;
         }
     }
     return;
@@ -1994,12 +1916,9 @@ void initialize_game()
     }
     if (mode == 4)
     {
+        for (int cnt = 0, cnt_end = cnt + (9); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (9); cnt < cnt_end; ++cnt)
-            {
-                gdata(120 + cnt) = 5000;
-            }
+            gdata(120 + cnt) = 5000;
         }
         gdata_version = 1220;
         gdata(41) = 424;
@@ -2187,12 +2106,9 @@ void initialize_game()
         inv[ci].number = 100;
         gdata(41) = 140789;
         gdata(42) = 140790;
+        for (int cnt = 0, cnt_end = cnt + (1200); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (1200); cnt < cnt_end; ++cnt)
-            {
-                recipememory(cnt) = 1;
-            }
+            recipememory(cnt) = 1;
         }
         flt();
         itemcreate(0, 783, -1, -1, 0);
@@ -2273,30 +2189,24 @@ void initialize_game()
                 inv[ci].number = 50;
             }
         }
+        for (int cnt = 0, cnt_end = cnt + (40); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (40); cnt < cnt_end; ++cnt)
-            {
-                flt(50, 5);
-                flttypemajor = 56000;
-                itemcreate(0, -1, -1, -1, 0);
-                flt(50, 5);
-                flttypemajor = 34000;
-                itemcreate(0, -1, -1, -1, 0);
-                flt(50, 5);
-                flttypemajor = 32000;
-                itemcreate(0, -1, -1, -1, 0);
-            }
+            flt(50, 5);
+            flttypemajor = 56000;
+            itemcreate(0, -1, -1, -1, 0);
+            flt(50, 5);
+            flttypemajor = 34000;
+            itemcreate(0, -1, -1, -1, 0);
+            flt(50, 5);
+            flttypemajor = 32000;
+            itemcreate(0, -1, -1, -1, 0);
         }
         cbitmod(20, 0, 1);
         mode = 0;
         refresh_burden_state();
+        for (int cnt = 0, cnt_end = cnt + (55); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (55); cnt < cnt_end; ++cnt)
-            {
-                mat(cnt) = 200;
-            }
+            mat(cnt) = 200;
         }
         create_all_adventurers();
         create_pcpic(0, true);
@@ -2322,12 +2232,9 @@ void initialize_game()
         gdata_version = 1220;
         gdata_weather = 3;
         gdata_hours_until_weather_changes = 6;
+        for (int cnt = 0, cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
-            {
-                gdata(120 + cnt) = 10000;
-            }
+            gdata(120 + cnt) = 10000;
         }
         create_all_adventurers();
         mode = 2;

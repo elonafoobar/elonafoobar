@@ -202,14 +202,11 @@ void cpisenemy()
 std::string cnvrare(int prm_990)
 {
     s_at_tcg = "";
+    for (int cnt = 0, cnt_end = cnt + (std::clamp(5 - prm_990 / 20, 1, 5));
+         cnt < cnt_end;
+         ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (std::clamp(5 - prm_990 / 20, 1, 5));
-             cnt < cnt_end;
-             ++cnt)
-        {
-            s_at_tcg += u8"*"s;
-        }
+        s_at_tcg += u8"*"s;
     }
     return s_at_tcg;
 }
@@ -275,103 +272,89 @@ void makecardlist()
     int c2_at_tcg = 0;
     DIM3(clist_at_tcg, 10, 4);
     DIM2(clistmax_at_tcg, 4);
+    for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+        cnt2_at_tcg = cnt;
+        lmax_at_tcg = 0;
+        if (cnt == 0)
         {
-            cnt2_at_tcg = cnt;
-            lmax_at_tcg = 0;
-            if (cnt == 0)
-            {
-                p_at_tcg = 0;
-            }
-            else
-            {
-                p_at_tcg = 3;
-            }
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
-                {
-                    if (card_at_tcg(1, cnt) != cnt2_at_tcg)
-                    {
-                        continue;
-                    }
-                    if (card_at_tcg(0, cnt) != 2)
-                    {
-                        continue;
-                    }
-                    clist_at_tcg(lmax_at_tcg, p_at_tcg) = cnt;
-                    ++lmax_at_tcg;
-                }
-            }
-            clist_at_tcg(lmax_at_tcg, p_at_tcg) = -1;
-            clistmax_at_tcg(p_at_tcg) = lmax_at_tcg;
-            lmax_at_tcg = 0;
-            if (cnt == 0)
-            {
-                p_at_tcg = 1;
-            }
-            else
-            {
-                p_at_tcg = 2;
-            }
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
-                {
-                    if (card_at_tcg(1, cnt) != cnt2_at_tcg)
-                    {
-                        continue;
-                    }
-                    if (card_at_tcg(0, cnt) != 1)
-                    {
-                        continue;
-                    }
-                    clist_at_tcg(lmax_at_tcg, p_at_tcg) = cnt;
-                    ++lmax_at_tcg;
-                }
-            }
-            clist_at_tcg(lmax_at_tcg, p_at_tcg) = -1;
-            clistmax_at_tcg(p_at_tcg) = lmax_at_tcg;
+            p_at_tcg = 0;
         }
-    }
-    {
-        int cnt = 0;
-        for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
+        else
         {
-            p_at_tcg = cnt;
-            while (1)
+            p_at_tcg = 3;
+        }
+        for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end;
+             ++cnt)
+        {
+            if (card_at_tcg(1, cnt) != cnt2_at_tcg)
             {
-                f_at_tcg = 0;
+                continue;
+            }
+            if (card_at_tcg(0, cnt) != 2)
+            {
+                continue;
+            }
+            clist_at_tcg(lmax_at_tcg, p_at_tcg) = cnt;
+            ++lmax_at_tcg;
+        }
+        clist_at_tcg(lmax_at_tcg, p_at_tcg) = -1;
+        clistmax_at_tcg(p_at_tcg) = lmax_at_tcg;
+        lmax_at_tcg = 0;
+        if (cnt == 0)
+        {
+            p_at_tcg = 1;
+        }
+        else
+        {
+            p_at_tcg = 2;
+        }
+        for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end;
+             ++cnt)
+        {
+            if (card_at_tcg(1, cnt) != cnt2_at_tcg)
+            {
+                continue;
+            }
+            if (card_at_tcg(0, cnt) != 1)
+            {
+                continue;
+            }
+            clist_at_tcg(lmax_at_tcg, p_at_tcg) = cnt;
+            ++lmax_at_tcg;
+        }
+        clist_at_tcg(lmax_at_tcg, p_at_tcg) = -1;
+        clistmax_at_tcg(p_at_tcg) = lmax_at_tcg;
+    }
+    for (int cnt = 0, cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
+    {
+        p_at_tcg = cnt;
+        while (1)
+        {
+            f_at_tcg = 0;
+            for (int cnt = 0, cnt_end = cnt + (clistmax_at_tcg(p_at_tcg));
+                 cnt < cnt_end;
+                 ++cnt)
+            {
+                c1_at_tcg = clist_at_tcg(cnt, p_at_tcg);
+                c2_at_tcg = clist_at_tcg(cnt + 1, p_at_tcg);
+                if (c2_at_tcg == -1)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (clistmax_at_tcg(p_at_tcg));
-                         cnt < cnt_end;
-                         ++cnt)
-                    {
-                        c1_at_tcg = clist_at_tcg(cnt, p_at_tcg);
-                        c2_at_tcg = clist_at_tcg(cnt + 1, p_at_tcg);
-                        if (c2_at_tcg == -1)
-                        {
-                            continue;
-                        }
-                        if (card_at_tcg(4, c2_at_tcg)
-                            < card_at_tcg(4, c1_at_tcg))
-                        {
-                            i_at_tcg = clist_at_tcg(cnt, p_at_tcg);
-                            clist_at_tcg(cnt, p_at_tcg) =
-                                clist_at_tcg(cnt + 1, p_at_tcg);
-                            clist_at_tcg(cnt + 1, p_at_tcg) = i_at_tcg;
-                            f_at_tcg = 1;
-                            break;
-                        }
-                    }
+                    continue;
                 }
-                if (f_at_tcg == 0)
+                if (card_at_tcg(4, c2_at_tcg) < card_at_tcg(4, c1_at_tcg))
                 {
+                    i_at_tcg = clist_at_tcg(cnt, p_at_tcg);
+                    clist_at_tcg(cnt, p_at_tcg) =
+                        clist_at_tcg(cnt + 1, p_at_tcg);
+                    clist_at_tcg(cnt + 1, p_at_tcg) = i_at_tcg;
+                    f_at_tcg = 1;
                     break;
                 }
+            }
+            if (f_at_tcg == 0)
+            {
+                break;
             }
         }
     }
@@ -443,113 +426,111 @@ void tcgdrawcard(int prm_994, int prm_995)
             cardhelp(""s);
         }
     }
+    for (int cnt = 0, cnt_end = cnt + (1 + (selected_at_tcg == 1));
+         cnt < cnt_end;
+         ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (1 + (selected_at_tcg == 1)); cnt < cnt_end;
-             ++cnt)
+        x_at_tcg = card_at_tcg(2, prm_994);
+        y_at_tcg = card_at_tcg(3, prm_994);
+        if (cnt == 1)
         {
-            x_at_tcg = card_at_tcg(2, prm_994);
-            y_at_tcg = card_at_tcg(3, prm_994);
-            if (cnt == 1)
+            if (card_at_tcg(6, prm_994) != 0)
             {
-                if (card_at_tcg(6, prm_994) != 0)
-                {
-                    break;
-                }
-                x_at_tcg = basex_at_tcg + 20;
-                y_at_tcg = basey_at_tcg + 490;
-                gmode(6, -1, -1, 140);
-                pos(x_at_tcg - 6, y_at_tcg - 6);
-                gcopy(7, 168, 144, 82, 106);
+                break;
             }
-            gmode(2);
-            if (card_at_tcg(6, prm_994) == 2)
+            x_at_tcg = basex_at_tcg + 20;
+            y_at_tcg = basey_at_tcg + 490;
+            gmode(6, -1, -1, 140);
+            pos(x_at_tcg - 6, y_at_tcg - 6);
+            gcopy(7, 168, 144, 82, 106);
+        }
+        gmode(2);
+        if (card_at_tcg(6, prm_994) == 2)
+        {
+            gmode(4, -1, -1, card_at_tcg(7, prm_994) * 15);
+        }
+        pos(x_at_tcg, y_at_tcg);
+        if (cdbit(1, prm_994) == 1
+            || (card_at_tcg(1, prm_994) == 0 && cnt == 1))
+        {
+            if (card_at_tcg(17, prm_994) > 0)
             {
-                gmode(4, -1, -1, card_at_tcg(7, prm_994) * 15);
-            }
-            pos(x_at_tcg, y_at_tcg);
-            if (cdbit(1, prm_994) == 1
-                || (card_at_tcg(1, prm_994) == 0 && cnt == 1))
-            {
-                if (card_at_tcg(17, prm_994) > 0)
-                {
-                    gcopy(7, 72 + card_at_tcg(19, prm_994) * 72, 0, 72, 96);
-                    p_at_tcg = card_at_tcg(17, prm_994) % 1000;
-                    chara_preparepic(p_at_tcg, card_at_tcg(17, prm_994) / 1000);
-                    pos(x_at_tcg + 13,
-                        y_at_tcg + 32 - chipc(4, p_at_tcg)
-                            + chipc(3, p_at_tcg) / 6);
-                    gcopy(5, 0, 960, chipc(2, p_at_tcg), chipc(3, p_at_tcg));
-                }
-                else
-                {
-                    p_at_tcg = std::abs(card_at_tcg(17, prm_994));
-                    pos(x_at_tcg, y_at_tcg);
-                    gcopy(2, p_at_tcg % 22 * 72, p_at_tcg / 22 * 96, 72, 96);
-                }
-                color(255, 255, 255);
-                if (card_at_tcg(9, prm_994) == 10)
-                {
-                    pos(x_at_tcg + 39, y_at_tcg - 8);
-                    gcopy(7, 48, 96, 36, 26);
-                    pos(x_at_tcg + 56 - (card_at_tcg(12, prm_994) > 9) * 4 - en,
-                        y_at_tcg - 1 - en);
-                    mes(card_at_tcg(12, prm_994));
-                    pos(x_at_tcg - 3, y_at_tcg - 8);
-                    gcopy(7, 0, 96, 36, 26);
-                    pos(x_at_tcg + 11 - (card_at_tcg(11, prm_994) > 9) * 4 - en,
-                        y_at_tcg - 1 - en);
-                    mes(card_at_tcg(11, prm_994));
-                    if (card_at_tcg(13, prm_994) != 0)
-                    {
-                        pos(x_at_tcg + 39, y_at_tcg + 78 - en);
-                        gcopy(7, 144, 96, 36, 26);
-                        pos(x_at_tcg + 56 - en, y_at_tcg + 86 - en);
-                        mes(card_at_tcg(20, prm_994));
-                    }
-                }
-                if (card_at_tcg(10, prm_994) != 0)
-                {
-                    pos(x_at_tcg - 3, y_at_tcg + 78);
-                    gcopy(7, 96, 96, 36, 26);
-                    pos(x_at_tcg + 11 - (card_at_tcg(10, prm_994) > 9) * 4 - en,
-                        y_at_tcg + 86 - en);
-                    mes(card_at_tcg(10, prm_994));
-                }
-                color(0, 0, 0);
+                gcopy(7, 72 + card_at_tcg(19, prm_994) * 72, 0, 72, 96);
+                p_at_tcg = card_at_tcg(17, prm_994) % 1000;
+                chara_preparepic(p_at_tcg, card_at_tcg(17, prm_994) / 1000);
+                pos(x_at_tcg + 13,
+                    y_at_tcg + 32 - chipc(4, p_at_tcg)
+                        + chipc(3, p_at_tcg) / 6);
+                gcopy(5, 0, 960, chipc(2, p_at_tcg), chipc(3, p_at_tcg));
             }
             else
             {
-                gcopy(7, 0, 0, 72, 96);
+                p_at_tcg = std::abs(card_at_tcg(17, prm_994));
+                pos(x_at_tcg, y_at_tcg);
+                gcopy(2, p_at_tcg % 22 * 72, p_at_tcg / 22 * 96, 72, 96);
             }
-            if (cnt == 0)
+            color(255, 255, 255);
+            if (card_at_tcg(9, prm_994) == 10)
             {
-                if (card_at_tcg(0, prm_994) == 1)
+                pos(x_at_tcg + 39, y_at_tcg - 8);
+                gcopy(7, 48, 96, 36, 26);
+                pos(x_at_tcg + 56 - (card_at_tcg(12, prm_994) > 9) * 4 - en,
+                    y_at_tcg - 1 - en);
+                mes(card_at_tcg(12, prm_994));
+                pos(x_at_tcg - 3, y_at_tcg - 8);
+                gcopy(7, 0, 96, 36, 26);
+                pos(x_at_tcg + 11 - (card_at_tcg(11, prm_994) > 9) * 4 - en,
+                    y_at_tcg - 1 - en);
+                mes(card_at_tcg(11, prm_994));
+                if (card_at_tcg(13, prm_994) != 0)
                 {
-                    if (cdbit(1, prm_994))
+                    pos(x_at_tcg + 39, y_at_tcg + 78 - en);
+                    gcopy(7, 144, 96, 36, 26);
+                    pos(x_at_tcg + 56 - en, y_at_tcg + 86 - en);
+                    mes(card_at_tcg(20, prm_994));
+                }
+            }
+            if (card_at_tcg(10, prm_994) != 0)
+            {
+                pos(x_at_tcg - 3, y_at_tcg + 78);
+                gcopy(7, 96, 96, 36, 26);
+                pos(x_at_tcg + 11 - (card_at_tcg(10, prm_994) > 9) * 4 - en,
+                    y_at_tcg + 86 - en);
+                mes(card_at_tcg(10, prm_994));
+            }
+            color(0, 0, 0);
+        }
+        else
+        {
+            gcopy(7, 0, 0, 72, 96);
+        }
+        if (cnt == 0)
+        {
+            if (card_at_tcg(0, prm_994) == 1)
+            {
+                if (cdbit(1, prm_994))
+                {
+                    if (card_at_tcg(9, prm_994) == 10)
                     {
-                        if (card_at_tcg(9, prm_994) == 10)
+                        if (card_at_tcg(14, prm_994) == -1)
                         {
-                            if (card_at_tcg(14, prm_994) == -1)
-                            {
-                                pos(x_at_tcg, y_at_tcg + 18);
-                                gcopy(7, 288, 120, 24, 24);
-                            }
-                            if (card_at_tcg(14, prm_994) == -2)
-                            {
-                                pos(x_at_tcg, y_at_tcg + 18);
-                                gcopy(7, 312, 120, 24, 24);
-                            }
-                            if (card_at_tcg(14, prm_994) == -3)
-                            {
-                                pos(x_at_tcg, y_at_tcg + 18);
-                                gcopy(7, 264, 120, 24, 24);
-                            }
-                            if (card_at_tcg(14, prm_994) == -4)
-                            {
-                                pos(x_at_tcg, y_at_tcg + 18);
-                                gcopy(7, 240, 120, 24, 24);
-                            }
+                            pos(x_at_tcg, y_at_tcg + 18);
+                            gcopy(7, 288, 120, 24, 24);
+                        }
+                        if (card_at_tcg(14, prm_994) == -2)
+                        {
+                            pos(x_at_tcg, y_at_tcg + 18);
+                            gcopy(7, 312, 120, 24, 24);
+                        }
+                        if (card_at_tcg(14, prm_994) == -3)
+                        {
+                            pos(x_at_tcg, y_at_tcg + 18);
+                            gcopy(7, 264, 120, 24, 24);
+                        }
+                        if (card_at_tcg(14, prm_994) == -4)
+                        {
+                            pos(x_at_tcg, y_at_tcg + 18);
+                            gcopy(7, 240, 120, 24, 24);
                         }
                     }
                 }
@@ -576,91 +557,83 @@ label_1772_internal:
     font(lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0);
     color(255, 255, 255);
     gmode(2);
+    for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
-        {
-            x_at_tcg = holderix_at_tcg(cnt) - holderspace_at_tcg;
-            y_at_tcg = holderiy_at_tcg(cnt);
-            pos(x_at_tcg, y_at_tcg);
-            gcopy(7, 96, 144, 72, 96);
-            pos(x_at_tcg + 14, y_at_tcg + 75);
-            mes(""s + cpdata_at_tcg(7, cnt) + u8"/"s + cpdata_at_tcg(8, cnt));
-        }
+        x_at_tcg = holderix_at_tcg(cnt) - holderspace_at_tcg;
+        y_at_tcg = holderiy_at_tcg(cnt);
+        pos(x_at_tcg, y_at_tcg);
+        gcopy(7, 96, 144, 72, 96);
+        pos(x_at_tcg + 14, y_at_tcg + 75);
+        mes(""s + cpdata_at_tcg(7, cnt) + u8"/"s + cpdata_at_tcg(8, cnt));
     }
     color(0, 0, 0);
     font(lang(cfg_font1, cfg_font2), 13 + en - en * 2, 0);
+    for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+        c_at_tcg = maxcard_at_tcg - cnt - 1;
+        if (cc_at_tcg != 0)
         {
-            c_at_tcg = maxcard_at_tcg - cnt - 1;
-            if (cc_at_tcg != 0)
+            if (c_at_tcg == 0)
             {
-                if (c_at_tcg == 0)
-                {
-                    c_at_tcg = cc_at_tcg;
-                }
-                else if (c_at_tcg == cc_at_tcg)
-                {
-                    c_at_tcg = 0;
-                }
+                c_at_tcg = cc_at_tcg;
             }
-            if (card_at_tcg(0, c_at_tcg) <= 0)
+            else if (c_at_tcg == cc_at_tcg)
             {
-                if (card_at_tcg(7, c_at_tcg) == 0)
-                {
-                    continue;
-                }
+                c_at_tcg = 0;
             }
-            if (card_at_tcg(0, c_at_tcg) == 4)
+        }
+        if (card_at_tcg(0, c_at_tcg) <= 0)
+        {
+            if (card_at_tcg(7, c_at_tcg) == 0)
             {
                 continue;
             }
-            if (card_at_tcg(2, c_at_tcg) != card_at_tcg(4, c_at_tcg)
-                || card_at_tcg(3, c_at_tcg) != card_at_tcg(5, c_at_tcg)
-                || card_at_tcg(7, c_at_tcg) > 0)
+        }
+        if (card_at_tcg(0, c_at_tcg) == 4)
+        {
+            continue;
+        }
+        if (card_at_tcg(2, c_at_tcg) != card_at_tcg(4, c_at_tcg)
+            || card_at_tcg(3, c_at_tcg) != card_at_tcg(5, c_at_tcg)
+            || card_at_tcg(7, c_at_tcg) > 0)
+        {
+            anime_at_tcg = 1;
+            p_at_tcg = 0;
+            if (card_at_tcg(2, c_at_tcg) != card_at_tcg(4, c_at_tcg))
             {
-                anime_at_tcg = 1;
-                p_at_tcg = 0;
-                if (card_at_tcg(2, c_at_tcg) != card_at_tcg(4, c_at_tcg))
+                p_at_tcg =
+                    (card_at_tcg(4, c_at_tcg) - card_at_tcg(2, c_at_tcg)) / 6;
+                if (card_at_tcg(2, c_at_tcg) > card_at_tcg(4, c_at_tcg))
                 {
-                    p_at_tcg =
-                        (card_at_tcg(4, c_at_tcg) - card_at_tcg(2, c_at_tcg))
-                        / 6;
-                    if (card_at_tcg(2, c_at_tcg) > card_at_tcg(4, c_at_tcg))
-                    {
-                        --p_at_tcg;
-                    }
-                    else
-                    {
-                        ++p_at_tcg;
-                    }
+                    --p_at_tcg;
                 }
-                card_at_tcg(2, c_at_tcg) += p_at_tcg;
-                p_at_tcg = 0;
-                if (card_at_tcg(3, c_at_tcg) != card_at_tcg(5, c_at_tcg))
+                else
                 {
-                    p_at_tcg =
-                        (card_at_tcg(5, c_at_tcg) - card_at_tcg(3, c_at_tcg))
-                        / 6;
-                    if (card_at_tcg(3, c_at_tcg) > card_at_tcg(5, c_at_tcg))
-                    {
-                        --p_at_tcg;
-                    }
-                    else
-                    {
-                        ++p_at_tcg;
-                    }
-                }
-                card_at_tcg(3, c_at_tcg) += p_at_tcg;
-                if (card_at_tcg(7, c_at_tcg) > 0)
-                {
-                    --card_at_tcg(7, c_at_tcg);
+                    ++p_at_tcg;
                 }
             }
-            tcgdrawcard(c_at_tcg);
+            card_at_tcg(2, c_at_tcg) += p_at_tcg;
+            p_at_tcg = 0;
+            if (card_at_tcg(3, c_at_tcg) != card_at_tcg(5, c_at_tcg))
+            {
+                p_at_tcg =
+                    (card_at_tcg(5, c_at_tcg) - card_at_tcg(3, c_at_tcg)) / 6;
+                if (card_at_tcg(3, c_at_tcg) > card_at_tcg(5, c_at_tcg))
+                {
+                    --p_at_tcg;
+                }
+                else
+                {
+                    ++p_at_tcg;
+                }
+            }
+            card_at_tcg(3, c_at_tcg) += p_at_tcg;
+            if (card_at_tcg(7, c_at_tcg) > 0)
+            {
+                --card_at_tcg(7, c_at_tcg);
+            }
         }
+        tcgdrawcard(c_at_tcg);
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     color(255, 255, 255);
@@ -692,114 +665,96 @@ label_1772_internal:
         if (chaintime_at_tcg == cfg_chaintime)
         {
             DIM3(star_at_tcg, 2, 10);
+            for (int cnt = 0, cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
-                {
-                    star_at_tcg(0, cnt) = rnd(72) - 32;
-                    star_at_tcg(1, cnt) = rnd(40) - 32;
-                }
+                star_at_tcg(0, cnt) = rnd(72) - 32;
+                star_at_tcg(1, cnt) = rnd(40) - 32;
             }
         }
         if (chaintime_at_tcg > 5)
         {
             gmode(5, -1, -1, std::clamp(chaintime_at_tcg * 3 - 40, 0, 255));
             cnt2_at_tcg = 0;
+            for (int cnt = 0, cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
-                {
-                    pos(chainx_at_tcg + star_at_tcg(0, cnt),
-                        chainy_at_tcg + star_at_tcg(1, cnt));
-                    gcopy(
-                        7,
-                        64 * std::clamp((17 - chaintime_at_tcg / 3), 0, 8),
-                        416,
-                        64,
-                        64);
-                    star_at_tcg(1, cnt) += 2;
-                }
+                pos(chainx_at_tcg + star_at_tcg(0, cnt),
+                    chainy_at_tcg + star_at_tcg(1, cnt));
+                gcopy(
+                    7,
+                    64 * std::clamp((17 - chaintime_at_tcg / 3), 0, 8),
+                    416,
+                    64,
+                    64);
+                star_at_tcg(1, cnt) += 2;
             }
         }
+        for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
-            {
-                p_at_tcg = (t_at_tcg / 4 + cnt) % 7;
-                color(p_at_tcg * 20, 25 + p_at_tcg * 20, 60 + p_at_tcg * 20);
-                boxl(
-                    chainx_at_tcg - p_at_tcg,
-                    chainy_at_tcg - p_at_tcg,
-                    chainx_at_tcg + 72 + p_at_tcg,
-                    chainy_at_tcg + 96 + p_at_tcg);
-                color(0, 0, 0);
-            }
+            p_at_tcg = (t_at_tcg / 4 + cnt) % 7;
+            color(p_at_tcg * 20, 25 + p_at_tcg * 20, 60 + p_at_tcg * 20);
+            boxl(
+                chainx_at_tcg - p_at_tcg,
+                chainy_at_tcg - p_at_tcg,
+                chainx_at_tcg + 72 + p_at_tcg,
+                chainy_at_tcg + 96 + p_at_tcg);
+            color(0, 0, 0);
         }
     }
+    for (int cnt = 0, cnt_end = cnt + (efllistmax_at_tcg); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (efllistmax_at_tcg); cnt < cnt_end; ++cnt)
+        if (efllist_at_tcg(4, cnt) <= 0)
         {
-            if (efllist_at_tcg(4, cnt) <= 0)
-            {
-                continue;
-            }
-            --efllist_at_tcg(4, cnt);
-            if (efllist_at_tcg(0, cnt) == 1)
-            {
-                font(lang(cfg_font1, cfg_font2), 20 - en * 2, 1);
-                pos(efllist_at_tcg(5, cnt) + 11,
-                    efllist_at_tcg(6, cnt) + efllist_at_tcg(4, cnt) / 3 + 21);
-                mes(std::abs(efllist_at_tcg(1, cnt)));
-                color(255, 100, 100);
-                pos(efllist_at_tcg(5, cnt) + 10,
-                    efllist_at_tcg(6, cnt) + efllist_at_tcg(4, cnt) / 3 + 20);
-                mes(std::abs(efllist_at_tcg(1, cnt)));
-                color(0, 0, 0);
-                font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
-                gmode(5, -1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
-                pos(efllist_at_tcg(5, cnt) - 12, efllist_at_tcg(6, cnt) + 10);
-                gcopy(
-                    7,
-                    64
-                        * std::clamp(
-                              (10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
-                    360,
-                    48,
-                    64);
-            }
-            if (efllist_at_tcg(0, cnt) == 2)
-            {
-                font(lang(cfg_font1, cfg_font2), 20 - en * 2, 1);
-                pos(efllist_at_tcg(2, cnt) + 31,
-                    efllist_at_tcg(3, cnt) + efllist_at_tcg(4, cnt) / 3 + 26);
-                mes(std::abs(efllist_at_tcg(1, cnt)));
-                color(100, 100, 255);
-                pos(efllist_at_tcg(2, cnt) + 30,
-                    efllist_at_tcg(3, cnt) + efllist_at_tcg(4, cnt) / 3 + 25);
-                mes(std::abs(efllist_at_tcg(1, cnt)));
-                color(0, 0, 0);
-                font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
-                gmode(5, -1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
-                pos(efllist_at_tcg(5, cnt), efllist_at_tcg(6, cnt) + 24);
-                gcopy(
-                    7,
-                    64
-                        * std::clamp(
-                              (10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
-                    416,
-                    64,
-                    64);
-                pos(efllist_at_tcg(2, cnt), efllist_at_tcg(3, cnt) + 24);
-                gcopy(
-                    7,
-                    64
-                        * std::clamp(
-                              (10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
-                    416,
-                    64,
-                    64);
-            }
+            continue;
+        }
+        --efllist_at_tcg(4, cnt);
+        if (efllist_at_tcg(0, cnt) == 1)
+        {
+            font(lang(cfg_font1, cfg_font2), 20 - en * 2, 1);
+            pos(efllist_at_tcg(5, cnt) + 11,
+                efllist_at_tcg(6, cnt) + efllist_at_tcg(4, cnt) / 3 + 21);
+            mes(std::abs(efllist_at_tcg(1, cnt)));
+            color(255, 100, 100);
+            pos(efllist_at_tcg(5, cnt) + 10,
+                efllist_at_tcg(6, cnt) + efllist_at_tcg(4, cnt) / 3 + 20);
+            mes(std::abs(efllist_at_tcg(1, cnt)));
+            color(0, 0, 0);
+            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+            gmode(5, -1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
+            pos(efllist_at_tcg(5, cnt) - 12, efllist_at_tcg(6, cnt) + 10);
+            gcopy(
+                7,
+                64 * std::clamp((10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
+                360,
+                48,
+                64);
+        }
+        if (efllist_at_tcg(0, cnt) == 2)
+        {
+            font(lang(cfg_font1, cfg_font2), 20 - en * 2, 1);
+            pos(efllist_at_tcg(2, cnt) + 31,
+                efllist_at_tcg(3, cnt) + efllist_at_tcg(4, cnt) / 3 + 26);
+            mes(std::abs(efllist_at_tcg(1, cnt)));
+            color(100, 100, 255);
+            pos(efllist_at_tcg(2, cnt) + 30,
+                efllist_at_tcg(3, cnt) + efllist_at_tcg(4, cnt) / 3 + 25);
+            mes(std::abs(efllist_at_tcg(1, cnt)));
+            color(0, 0, 0);
+            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+            gmode(5, -1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
+            pos(efllist_at_tcg(5, cnt), efllist_at_tcg(6, cnt) + 24);
+            gcopy(
+                7,
+                64 * std::clamp((10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
+                416,
+                64,
+                64);
+            pos(efllist_at_tcg(2, cnt), efllist_at_tcg(3, cnt) + 24);
+            gcopy(
+                7,
+                64 * std::clamp((10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
+                416,
+                64,
+                64);
         }
     }
     gmode(2);
@@ -839,30 +794,27 @@ void efllistadd(
     int prm_1000,
     int prm_1001)
 {
+    for (int cnt = 0, cnt_end = cnt + (efllistmax_at_tcg); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (efllistmax_at_tcg); cnt < cnt_end; ++cnt)
+        if (efllist_at_tcg(4, cnt) <= 0)
         {
-            if (efllist_at_tcg(4, cnt) <= 0)
+            efllist_at_tcg(0, cnt) = prm_996;
+            efllist_at_tcg(1, cnt) = prm_997;
+            if (prm_996 == 1)
             {
-                efllist_at_tcg(0, cnt) = prm_996;
-                efllist_at_tcg(1, cnt) = prm_997;
-                if (prm_996 == 1)
-                {
-                    efllist_at_tcg(4, cnt) = 60;
-                    efllist_at_tcg(5, cnt) = prm_998 + rnd(30);
-                    efllist_at_tcg(6, cnt) = prm_999 + rnd(20);
-                }
-                if (prm_996 == 2)
-                {
-                    efllist_at_tcg(4, cnt) = 60;
-                    efllist_at_tcg(5, cnt) = prm_998;
-                    efllist_at_tcg(6, cnt) = prm_999;
-                    efllist_at_tcg(2, cnt) = prm_1000;
-                    efllist_at_tcg(3, cnt) = prm_1001;
-                }
-                break;
+                efllist_at_tcg(4, cnt) = 60;
+                efllist_at_tcg(5, cnt) = prm_998 + rnd(30);
+                efllist_at_tcg(6, cnt) = prm_999 + rnd(20);
             }
+            if (prm_996 == 2)
+            {
+                efllist_at_tcg(4, cnt) = 60;
+                efllist_at_tcg(5, cnt) = prm_998;
+                efllist_at_tcg(6, cnt) = prm_999;
+                efllist_at_tcg(2, cnt) = prm_1000;
+                efllist_at_tcg(3, cnt) = prm_1001;
+            }
+            break;
         }
     }
     return;
@@ -906,17 +858,15 @@ void cardpos(int prm_1004, int prm_1005)
     }
     p_at_tcg = -1;
     spotlistmax_at_tcg = clistmax_at_tcg(l_at_tcg);
+    for (int cnt = 0, cnt_end = cnt + (spotlistmax_at_tcg); cnt < cnt_end;
+         ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (spotlistmax_at_tcg); cnt < cnt_end; ++cnt)
+        spotlist_at_tcg(cnt) = clist_at_tcg(cnt, l_at_tcg);
+        if (p_at_tcg == -1)
         {
-            spotlist_at_tcg(cnt) = clist_at_tcg(cnt, l_at_tcg);
-            if (p_at_tcg == -1)
+            if (card_at_tcg(9, clist_at_tcg(cnt, l_at_tcg)) != 10)
             {
-                if (card_at_tcg(9, clist_at_tcg(cnt, l_at_tcg)) != 10)
-                {
-                    p_at_tcg = cnt;
-                }
+                p_at_tcg = cnt;
             }
         }
     }
@@ -924,15 +874,12 @@ void cardpos(int prm_1004, int prm_1005)
     {
         if (p_at_tcg != -1)
         {
+            for (int cnt = 0, cnt_end = cnt + (spotlistmax_at_tcg - p_at_tcg);
+                 cnt < cnt_end;
+                 ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (spotlistmax_at_tcg - p_at_tcg);
-                     cnt < cnt_end;
-                     ++cnt)
-                {
-                    spotlist_at_tcg(spotlistmax_at_tcg - cnt) =
-                        spotlist_at_tcg(spotlistmax_at_tcg - cnt - 1);
-                }
+                spotlist_at_tcg(spotlistmax_at_tcg - cnt) =
+                    spotlist_at_tcg(spotlistmax_at_tcg - cnt - 1);
             }
             spotlist_at_tcg(p_at_tcg) = prm_1005;
         }
@@ -944,14 +891,12 @@ void cardpos(int prm_1004, int prm_1005)
     }
     x2_at_tcg = spotspace_at_tcg;
     x_at_tcg = basex_at_tcg + 466 - spotlistmax_at_tcg * x2_at_tcg / 2;
+    for (int cnt = 0, cnt_end = cnt + (spotlistmax_at_tcg); cnt < cnt_end;
+         ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (spotlistmax_at_tcg); cnt < cnt_end; ++cnt)
-        {
-            p_at_tcg = spotlist_at_tcg(cnt);
-            card_at_tcg(4, p_at_tcg) = x_at_tcg + cnt * x2_at_tcg;
-            card_at_tcg(5, p_at_tcg) = spotiy_at_tcg(prm_1004);
-        }
+        p_at_tcg = spotlist_at_tcg(cnt);
+        card_at_tcg(4, p_at_tcg) = x_at_tcg + cnt * x2_at_tcg;
+        card_at_tcg(5, p_at_tcg) = spotiy_at_tcg(prm_1004);
     }
     return;
 }
@@ -962,22 +907,20 @@ void gravecard(int prm_1006)
 {
     if (card_at_tcg(0, prm_1006) == 1)
     {
+        for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end;
+             ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+            if (card_at_tcg(0, cnt) != 1)
             {
-                if (card_at_tcg(0, cnt) != 1)
-                {
-                    continue;
-                }
-                if (card_at_tcg(1, cnt) != card_at_tcg(1, prm_1006))
-                {
-                    continue;
-                }
-                if (card_at_tcg(2, cnt) > card_at_tcg(2, prm_1006))
-                {
-                    card_at_tcg(4, cnt) -= spotspace_at_tcg;
-                }
+                continue;
+            }
+            if (card_at_tcg(1, cnt) != card_at_tcg(1, prm_1006))
+            {
+                continue;
+            }
+            if (card_at_tcg(2, cnt) > card_at_tcg(2, prm_1006))
+            {
+                card_at_tcg(4, cnt) -= spotspace_at_tcg;
             }
         }
     }
@@ -986,13 +929,10 @@ void gravecard(int prm_1006)
     n_at_tcg = card_at_tcg(1, prm_1006);
     if (gravesum_at_tcg(n_at_tcg) > 2)
     {
+        for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
-            {
-                gravelist_at_tcg(cnt, n_at_tcg) =
-                    gravelist_at_tcg(cnt + 1, n_at_tcg);
-            }
+            gravelist_at_tcg(cnt, n_at_tcg) =
+                gravelist_at_tcg(cnt + 1, n_at_tcg);
         }
         gravelist_at_tcg(2, n_at_tcg) = prm_1006;
     }
@@ -1054,23 +994,20 @@ void dmgplayer(int prm_1009, int prm_1010)
 void delbottomcard(int prm_1011)
 {
     int delcard_at_tcg = 0;
+    for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+        if (card_at_tcg(1, cnt) != prm_1011)
         {
-            if (card_at_tcg(1, cnt) != prm_1011)
+            continue;
+        }
+        if (card_at_tcg(0, cnt) == 2)
+        {
+            card_at_tcg(4, cnt) -= holderspace_at_tcg;
+            if (card_at_tcg(4, cnt) < holderix_at_tcg(prm_1011))
             {
-                continue;
-            }
-            if (card_at_tcg(0, cnt) == 2)
-            {
-                card_at_tcg(4, cnt) -= holderspace_at_tcg;
-                if (card_at_tcg(4, cnt) < holderix_at_tcg(prm_1011))
-                {
-                    card_at_tcg(6, cnt) = 2;
-                    card_at_tcg(7, cnt) = 18;
-                    delcard_at_tcg = cnt;
-                }
+                card_at_tcg(6, cnt) = 2;
+                card_at_tcg(7, cnt) = 18;
+                delcard_at_tcg = cnt;
             }
         }
     }
@@ -1099,18 +1036,15 @@ int gameover()
 int getholdersum(int prm_1012)
 {
     p_at_tcg = 0;
+    for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+        if (card_at_tcg(1, cnt) != prm_1012)
         {
-            if (card_at_tcg(1, cnt) != prm_1012)
-            {
-                continue;
-            }
-            if (card_at_tcg(0, cnt) == 2)
-            {
-                ++p_at_tcg;
-            }
+            continue;
+        }
+        if (card_at_tcg(0, cnt) == 2)
+        {
+            ++p_at_tcg;
         }
     }
     return p_at_tcg;
@@ -1121,18 +1055,15 @@ int getholdersum(int prm_1012)
 int getspotsum(int prm_1013)
 {
     p_at_tcg = 0;
+    for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+        if (card_at_tcg(1, cnt) != prm_1013)
         {
-            if (card_at_tcg(1, cnt) != prm_1013)
-            {
-                continue;
-            }
-            if (card_at_tcg(0, cnt) == 1)
-            {
-                ++p_at_tcg;
-            }
+            continue;
+        }
+        if (card_at_tcg(0, cnt) == 1)
+        {
+            ++p_at_tcg;
         }
     }
     return p_at_tcg;
@@ -1143,18 +1074,15 @@ int getspotsum(int prm_1013)
 int getdecksum(int prm_1014)
 {
     p_at_tcg = 0;
+    for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+        if (card_at_tcg(1, cnt) != prm_1014)
         {
-            if (card_at_tcg(1, cnt) != prm_1014)
-            {
-                continue;
-            }
-            if (card_at_tcg(0, cnt) == -1)
-            {
-                ++p_at_tcg;
-            }
+            continue;
+        }
+        if (card_at_tcg(0, cnt) == -1)
+        {
+            ++p_at_tcg;
         }
     }
     return p_at_tcg;
@@ -1295,24 +1223,21 @@ void saccard(int prm_1019, int prm_1020)
                 u8"The opponent sacrifices the card."s),
             40);
     }
+    for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+        if (card_at_tcg(1, cnt) != prm_1020)
         {
-            if (card_at_tcg(1, cnt) != prm_1020)
-            {
-                continue;
-            }
-            if (card_at_tcg(0, cnt) != 2)
-            {
-                continue;
-            }
-            if (card_at_tcg(2, cnt) <= card_at_tcg(2, prm_1019))
-            {
-                continue;
-            }
-            card_at_tcg(4, cnt) -= holderspace_at_tcg;
+            continue;
         }
+        if (card_at_tcg(0, cnt) != 2)
+        {
+            continue;
+        }
+        if (card_at_tcg(2, cnt) <= card_at_tcg(2, prm_1019))
+        {
+            continue;
+        }
+        card_at_tcg(4, cnt) -= holderspace_at_tcg;
     }
     ++cpdata_at_tcg(6, prm_1020);
     ++cpdata_at_tcg(5, prm_1020);
@@ -1405,20 +1330,18 @@ label_1799_internal:
                 if (cp_at_tcg == player_at_tcg)
                 {
                     cs_at_tcg = -1;
+                    for (int cnt = 0,
+                             cnt_end = cnt + (clistmax_at_tcg(cl_at_tcg));
+                         cnt < cnt_end;
+                         ++cnt)
                     {
-                        int cnt = 0;
-                        for (int cnt_end = cnt + (clistmax_at_tcg(cl_at_tcg));
-                             cnt < cnt_end;
-                             ++cnt)
+                        c_at_tcg = clist_at_tcg(cnt, cl_at_tcg);
+                        if (cdbit(0, c_at_tcg) == 0
+                            || card_at_tcg(14, c_at_tcg) == -4)
                         {
-                            c_at_tcg = clist_at_tcg(cnt, cl_at_tcg);
-                            if (cdbit(0, c_at_tcg) == 0
-                                || card_at_tcg(14, c_at_tcg) == -4)
-                            {
-                                cs_at_tcg = cnt;
-                                csline_at_tcg = cl_at_tcg;
-                                break;
-                            }
+                            cs_at_tcg = cnt;
+                            csline_at_tcg = cl_at_tcg;
+                            break;
                         }
                     }
                     selectmode_at_tcg = 1;
@@ -1574,24 +1497,21 @@ int putcard(int prm_1024, int prm_1025)
         card_at_tcg(5, prm_1024) += 25;
     }
     tcgdraw();
+    for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+        if (card_at_tcg(1, cnt) != prm_1025)
         {
-            if (card_at_tcg(1, cnt) != prm_1025)
-            {
-                continue;
-            }
-            if (card_at_tcg(0, cnt) != 2)
-            {
-                continue;
-            }
-            if (card_at_tcg(2, cnt) <= card_at_tcg(2, prm_1024))
-            {
-                continue;
-            }
-            card_at_tcg(4, cnt) -= holderspace_at_tcg;
+            continue;
         }
+        if (card_at_tcg(0, cnt) != 2)
+        {
+            continue;
+        }
+        if (card_at_tcg(2, cnt) <= card_at_tcg(2, prm_1024))
+        {
+            continue;
+        }
+        card_at_tcg(4, cnt) -= holderspace_at_tcg;
     }
     if (card_at_tcg(9, prm_1024) == 30)
     {
@@ -1637,22 +1557,17 @@ void tcgdrawbg()
     w_at_tcg = 128;
     h_at_tcg = 128;
     gmode(0);
+    for (int cnt = 0, cnt_end = cnt + (windowh / h_at_tcg + 1); cnt < cnt_end;
+         ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (windowh / h_at_tcg + 1); cnt < cnt_end; ++cnt)
+        cnt2_at_tcg = cnt;
+        for (int cnt = 0, cnt_end = cnt + (windoww / w_at_tcg + 1);
+             cnt < cnt_end;
+             ++cnt)
         {
-            cnt2_at_tcg = cnt;
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (windoww / w_at_tcg + 1);
-                     cnt < cnt_end;
-                     ++cnt)
-                {
-                    pos(windoww - (cnt + 1) * w_at_tcg,
-                        windowh - (cnt2_at_tcg + 1) * h_at_tcg);
-                    gcopy(3, x_at_tcg, y_at_tcg, w_at_tcg, h_at_tcg);
-                }
-            }
+            pos(windoww - (cnt + 1) * w_at_tcg,
+                windowh - (cnt2_at_tcg + 1) * h_at_tcg);
+            gcopy(3, x_at_tcg, y_at_tcg, w_at_tcg, h_at_tcg);
         }
     }
     gmode(2);
@@ -1762,39 +1677,31 @@ void calcstartattb(int prm_1027)
 
 void calcdomain()
 {
+    for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+        DIM2(domain_at_tcg, 5);
+        p_at_tcg = cnt;
+        cpdata_at_tcg(9, p_at_tcg) = 0;
+        for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end;
+             ++cnt)
         {
-            DIM2(domain_at_tcg, 5);
-            p_at_tcg = cnt;
-            cpdata_at_tcg(9, p_at_tcg) = 0;
+            if (card_at_tcg(1, cnt) != p_at_tcg)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
-                {
-                    if (card_at_tcg(1, cnt) != p_at_tcg)
-                    {
-                        continue;
-                    }
-                    if (domain_at_tcg(card_at_tcg(23, cnt)) == 0)
-                    {
-                        domain_at_tcg(card_at_tcg(23, cnt)) = 1;
-                    }
-                }
+                continue;
             }
+            if (domain_at_tcg(card_at_tcg(23, cnt)) == 0)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
-                {
-                    if (domain_at_tcg(cnt))
-                    {
-                        ++cpdata_at_tcg(9, p_at_tcg);
-                    }
-                }
+                domain_at_tcg(card_at_tcg(23, cnt)) = 1;
             }
-            calcstartattb(p_at_tcg);
         }
+        for (int cnt = 0, cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+        {
+            if (domain_at_tcg(cnt))
+            {
+                ++cpdata_at_tcg(9, p_at_tcg);
+            }
+        }
+        calcstartattb(p_at_tcg);
     }
     return;
 }
@@ -1808,27 +1715,21 @@ void calcdecksize()
     cardsize_at_tcg = 0;
     cpdata_at_tcg(9, 0) = 0;
     DIM2(domain_at_tcg, 5);
+    for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+        cardsize_at_tcg += card(0, cnt);
+        if (deck(card_at_tcg(18, cnt)) == 0)
         {
-            cardsize_at_tcg += card(0, cnt);
-            if (deck(card_at_tcg(18, cnt)) == 0)
-            {
-                continue;
-            }
-            gdata(830 + curdeck) += deck(card_at_tcg(18, cnt));
-            domain_at_tcg(card_at_tcg(23, cnt)) = 1;
+            continue;
         }
+        gdata(830 + curdeck) += deck(card_at_tcg(18, cnt));
+        domain_at_tcg(card_at_tcg(23, cnt)) = 1;
     }
+    for (int cnt = 0, cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+        if (domain_at_tcg(cnt))
         {
-            if (domain_at_tcg(cnt))
-            {
-                ++cpdata_at_tcg(9, 0);
-            }
+            ++cpdata_at_tcg(9, 0);
         }
     }
     calcstartattb(0);
@@ -1844,19 +1745,16 @@ void tcgdeck()
     tcginit();
     cardmode_at_tcg = 1;
     i_at_tcg = 0;
+    for (int cnt = 0, cnt_end = cnt + (1000); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (1000); cnt < cnt_end; ++cnt)
+        if (card(0, cnt) == 0)
         {
-            if (card(0, cnt) == 0)
-            {
-                continue;
-            }
-            create_card(i_at_tcg, cnt);
-            card_at_tcg(0, i_at_tcg) = -1;
-            card_at_tcg(1, i_at_tcg) = 0;
-            ++i_at_tcg;
+            continue;
         }
+        create_card(i_at_tcg, cnt);
+        card_at_tcg(0, i_at_tcg) = -1;
+        card_at_tcg(1, i_at_tcg) = 0;
+        ++i_at_tcg;
     }
 label_1812_internal:
     tcgdrawbg();
@@ -1865,33 +1763,30 @@ label_1812_internal:
     s_at_tcg(2) = lang(u8"銀"s, u8"Silver"s);
     s_at_tcg(3) = lang(u8"赤"s, u8"Red"s);
     s_at_tcg(4) = lang(u8"黒"s, u8"Black"s);
+    for (int cnt = 0, cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+        s_at_tcg(cnt) += lang(u8"のデッキ"s, u8" Deck"s);
+        file_at_tcg = fs::u8path(u8"./tmp/deck_"s) + cnt + u8".s2"s;
+        if (!fs::exists(file_at_tcg))
         {
-            s_at_tcg(cnt) += lang(u8"のデッキ"s, u8" Deck"s);
-            file_at_tcg = fs::u8path(u8"./tmp/deck_"s) + cnt + u8".s2"s;
-            if (!fs::exists(file_at_tcg))
-            {
-                s_at_tcg(cnt) += lang(u8" (新規作成)"s, u8" (New)"s);
-            }
-            else
-            {
-                if (gdata(830 + cnt) != 30)
-                {
-                    s_at_tcg(cnt) +=
-                        u8" (NG "s + gdata((830 + cnt)) + u8"/"s + 30 + u8")"s;
-                }
-                if (gdata(813) == cnt)
-                {
-                    s_at_tcg(cnt) += u8" [Use]"s;
-                }
-            }
-            promptl(0, promptmax) = s_at_tcg(cnt);
-            promptl(1, promptmax) = u8"null"s;
-            promptl(2, promptmax) = ""s + promptmax;
-            ++promptmax;
+            s_at_tcg(cnt) += lang(u8" (新規作成)"s, u8" (New)"s);
         }
+        else
+        {
+            if (gdata(830 + cnt) != 30)
+            {
+                s_at_tcg(cnt) +=
+                    u8" (NG "s + gdata((830 + cnt)) + u8"/"s + 30 + u8")"s;
+            }
+            if (gdata(813) == cnt)
+            {
+                s_at_tcg(cnt) += u8" [Use]"s;
+            }
+        }
+        promptl(0, promptmax) = s_at_tcg(cnt);
+        promptl(1, promptmax) = u8"null"s;
+        promptl(2, promptmax) = ""s + promptmax;
+        ++promptmax;
     }
     show_prompt(basex_at_tcg + 400, basey_at_tcg + 230, 300);
     if (rtval != -1)
@@ -1942,48 +1837,36 @@ void tcgmain()
     int rp_at_tcg = 0;
     maxcard_at_tcg = 80;
     tcginit();
+    for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+        rp_at_tcg = cnt;
+        cpx_at_tcg(cnt) = basex_at_tcg + 23;
+        cpy_at_tcg(cnt) = basey_at_tcg + 236 - cnt * 120;
+        cpdata_at_tcg(4, cnt) = 30;
+        cpdata_at_tcg(8, cnt) = 0;
+        cpdata_at_tcg(7, cnt) = 30;
+        for (int cnt = 0, cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
         {
-            rp_at_tcg = cnt;
-            cpx_at_tcg(cnt) = basex_at_tcg + 23;
-            cpy_at_tcg(cnt) = basey_at_tcg + 236 - cnt * 120;
-            cpdata_at_tcg(4, cnt) = 30;
-            cpdata_at_tcg(8, cnt) = 0;
-            cpdata_at_tcg(7, cnt) = 30;
+            cc_at_tcg = rp_at_tcg * 40 + cnt;
+            int stat = card_ref(rnd(1000));
+            if (cardrefcost == 0)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
-                {
-                    cc_at_tcg = rp_at_tcg * 40 + cnt;
-                    int stat = card_ref(rnd(1000));
-                    if (cardrefcost == 0)
-                    {
-                        --cnt;
-                        continue;
-                    }
-                    create_card(cc_at_tcg, stat);
-                    card_at_tcg(0, cc_at_tcg) = -1;
-                    card_at_tcg(1, cc_at_tcg) = rp_at_tcg;
-                }
+                --cnt;
+                continue;
             }
+            create_card(cc_at_tcg, stat);
+            card_at_tcg(0, cc_at_tcg) = -1;
+            card_at_tcg(1, cc_at_tcg) = rp_at_tcg;
         }
     }
     calcdomain();
+    for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+        cp_at_tcg = cnt;
+        for (int cnt = 0, cnt_end = cnt + (calcstartcard(cnt)); cnt < cnt_end;
+             ++cnt)
         {
-            cp_at_tcg = cnt;
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (calcstartcard(cnt)); cnt < cnt_end;
-                     ++cnt)
-                {
-                    getrandomcard(cp_at_tcg);
-                }
-            }
+            getrandomcard(cp_at_tcg);
         }
     }
     ct_at_tcg = 0;
@@ -2037,23 +1920,20 @@ void label_1816()
     await(50);
     sac_at_tcg = 0;
     cpdata_at_tcg(5, cp_at_tcg) = cpdata_at_tcg(6, cp_at_tcg);
+    for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+        if (card_at_tcg(0, cnt) != 1)
         {
-            if (card_at_tcg(0, cnt) != 1)
-            {
-                continue;
-            }
-            if (card_at_tcg(1, cnt) != cp_at_tcg)
-            {
-                continue;
-            }
-            ++card_at_tcg(22, cnt);
-            card_at_tcg(14, cnt) = 0;
-            card_at_tcg(12, cnt) = card_at_tcg(16, cnt);
-            cdbitmod(0, cnt, 0);
+            continue;
         }
+        if (card_at_tcg(1, cnt) != cp_at_tcg)
+        {
+            continue;
+        }
+        ++card_at_tcg(22, cnt);
+        card_at_tcg(14, cnt) = 0;
+        card_at_tcg(12, cnt) = card_at_tcg(16, cnt);
+        cdbitmod(0, cnt, 0);
     }
     return;
 }
@@ -2103,12 +1983,9 @@ void label_1819()
     {
         selectmode_at_tcg = -1;
     }
+    for (int cnt = 0, cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
-        {
-            tcgdraw();
-        }
+        tcgdraw();
     }
     return;
 }
@@ -2238,93 +2115,75 @@ void label_1823()
     gmode(2);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     color(255, 255, 255);
+    for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+        gmode(0);
+        cnt2_at_tcg = cnt;
+        DIM2(mana_at_tcg, 10);
+        for (int cnt = 0, cnt_end = cnt + (landsum_at_tcg(cnt2_at_tcg));
+             cnt < cnt_end;
+             ++cnt)
         {
-            gmode(0);
-            cnt2_at_tcg = cnt;
-            DIM2(mana_at_tcg, 10);
+            x_at_tcg = landix_at_tcg(cnt2_at_tcg)
+                + cnt
+                    * std::clamp(
+                          (landspace_at_tcg - landsum_at_tcg(cnt2_at_tcg) / 2),
+                          4,
+                          landspace_at_tcg);
+            y_at_tcg = landiy_at_tcg(cnt2_at_tcg);
+            m_at_tcg = landlist_at_tcg(cnt, cnt2_at_tcg);
+            n_at_tcg = std::abs(card_at_tcg(17, m_at_tcg));
+            ++mana_at_tcg(card_at_tcg(23, m_at_tcg));
+            pos(x_at_tcg, y_at_tcg);
+            gcopy(2, n_at_tcg % 22 * 72, n_at_tcg / 22 * 96, 72, 96);
+        }
+        y_at_tcg = landiy_at_tcg(cnt2_at_tcg) + (cnt == 0) * 80;
+        x_at_tcg = landix_at_tcg(cnt2_at_tcg) - 16;
+        for (int cnt = 0, cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
+        {
+            if (mana_at_tcg(cnt) == 0)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (landsum_at_tcg(cnt2_at_tcg));
-                     cnt < cnt_end;
-                     ++cnt)
-                {
-                    x_at_tcg = landix_at_tcg(cnt2_at_tcg)
-                        + cnt
-                            * std::clamp(
-                                  (landspace_at_tcg
-                                   - landsum_at_tcg(cnt2_at_tcg) / 2),
-                                  4,
-                                  landspace_at_tcg);
-                    y_at_tcg = landiy_at_tcg(cnt2_at_tcg);
-                    m_at_tcg = landlist_at_tcg(cnt, cnt2_at_tcg);
-                    n_at_tcg = std::abs(card_at_tcg(17, m_at_tcg));
-                    ++mana_at_tcg(card_at_tcg(23, m_at_tcg));
-                    pos(x_at_tcg, y_at_tcg);
-                    gcopy(2, n_at_tcg % 22 * 72, n_at_tcg / 22 * 96, 72, 96);
-                }
+                continue;
             }
-            y_at_tcg = landiy_at_tcg(cnt2_at_tcg) + (cnt == 0) * 80;
-            x_at_tcg = landix_at_tcg(cnt2_at_tcg) - 16;
+            pos(x_at_tcg - 15, y_at_tcg - 2);
+            gcopy(7, cnt * 12, 126, 12, 18);
+            pos(x_at_tcg, y_at_tcg);
+            mes(mana_at_tcg(cnt));
+            if (cnt2_at_tcg == 0)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
-                {
-                    if (mana_at_tcg(cnt) == 0)
-                    {
-                        continue;
-                    }
-                    pos(x_at_tcg - 15, y_at_tcg - 2);
-                    gcopy(7, cnt * 12, 126, 12, 18);
-                    pos(x_at_tcg, y_at_tcg);
-                    mes(mana_at_tcg(cnt));
-                    if (cnt2_at_tcg == 0)
-                    {
-                        y_at_tcg -= 20;
-                    }
-                    else
-                    {
-                        y_at_tcg += 20;
-                    }
-                }
+                y_at_tcg -= 20;
             }
+            else
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (gravesum_at_tcg(cnt2_at_tcg));
-                     cnt < cnt_end;
-                     ++cnt)
-                {
-                    x_at_tcg =
-                        graveix_at_tcg(cnt2_at_tcg) + cnt * gravespace_at_tcg;
-                    y_at_tcg = graveiy_at_tcg(cnt2_at_tcg);
-                    m_at_tcg = gravelist_at_tcg(cnt, cnt2_at_tcg);
-                    if (card_at_tcg(17, m_at_tcg) > 0)
-                    {
-                        gmode(2);
-                        pos(x_at_tcg, y_at_tcg);
-                        gcopy(
-                            7, 72 + card_at_tcg(19, m_at_tcg) * 72, 0, 72, 96);
-                        n_at_tcg = card_at_tcg(17, m_at_tcg) % 1000;
-                        chara_preparepic(
-                            n_at_tcg, card_at_tcg(17, m_at_tcg) / 1000);
-                        gsel(4);
-                        pos(x_at_tcg + 13,
-                            y_at_tcg + 32 - chipc(4, n_at_tcg)
-                                + chipc(3, n_at_tcg) / 6);
-                        gcopy(
-                            5, 0, 960, chipc(2, n_at_tcg), chipc(3, n_at_tcg));
-                    }
-                    else
-                    {
-                        gmode(0);
-                        n_at_tcg = std::abs(card_at_tcg(17, m_at_tcg));
-                        pos(x_at_tcg, y_at_tcg);
-                        gcopy(
-                            2, n_at_tcg % 22 * 72, n_at_tcg / 22 * 96, 72, 96);
-                    }
-                }
+                y_at_tcg += 20;
+            }
+        }
+        for (int cnt = 0, cnt_end = cnt + (gravesum_at_tcg(cnt2_at_tcg));
+             cnt < cnt_end;
+             ++cnt)
+        {
+            x_at_tcg = graveix_at_tcg(cnt2_at_tcg) + cnt * gravespace_at_tcg;
+            y_at_tcg = graveiy_at_tcg(cnt2_at_tcg);
+            m_at_tcg = gravelist_at_tcg(cnt, cnt2_at_tcg);
+            if (card_at_tcg(17, m_at_tcg) > 0)
+            {
+                gmode(2);
+                pos(x_at_tcg, y_at_tcg);
+                gcopy(7, 72 + card_at_tcg(19, m_at_tcg) * 72, 0, 72, 96);
+                n_at_tcg = card_at_tcg(17, m_at_tcg) % 1000;
+                chara_preparepic(n_at_tcg, card_at_tcg(17, m_at_tcg) / 1000);
+                gsel(4);
+                pos(x_at_tcg + 13,
+                    y_at_tcg + 32 - chipc(4, n_at_tcg)
+                        + chipc(3, n_at_tcg) / 6);
+                gcopy(5, 0, 960, chipc(2, n_at_tcg), chipc(3, n_at_tcg));
+            }
+            else
+            {
+                gmode(0);
+                n_at_tcg = std::abs(card_at_tcg(17, m_at_tcg));
+                pos(x_at_tcg, y_at_tcg);
+                gcopy(2, n_at_tcg % 22 * 72, n_at_tcg / 22 * 96, 72, 96);
             }
         }
     }
@@ -2339,80 +2198,74 @@ void label_1824()
 {
     font(lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0);
     gmode(2);
+    for (int cnt = 0, cnt_end = cnt + (cfmax_at_tcg); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (cfmax_at_tcg); cnt < cnt_end; ++cnt)
+        x_at_tcg = basex_at_tcg + 180 + cnt * 80;
+        y_at_tcg = basey_at_tcg + 26 + (ccf_at_tcg == cnt) * 3;
+        p_at_tcg = cflist_at_tcg(cnt);
+        color(0, 0, 0);
+        if (ccf_at_tcg == cnt)
         {
-            x_at_tcg = basex_at_tcg + 180 + cnt * 80;
-            y_at_tcg = basey_at_tcg + 26 + (ccf_at_tcg == cnt) * 3;
-            p_at_tcg = cflist_at_tcg(cnt);
-            color(0, 0, 0);
-            if (ccf_at_tcg == cnt)
-            {
-                gmode(4, -1, -1, 255);
-                color(255, 255, 255);
-            }
-            else
-            {
-                gmode(4, -1, -1, 120);
-                color(200, 200, 200);
-            }
-            pos(x_at_tcg, y_at_tcg);
-            gcopy(7, 360, 96, 79, 20);
-            gmode(2);
-            pos(x_at_tcg + 10, y_at_tcg + 4);
-            mes(cfname_at_tcg(p_at_tcg));
-            color(0, 0, 0);
-            if (ccf_at_tcg == cnt)
-            {
-                pos(x_at_tcg + 65, y_at_tcg - 5);
-                gcopy(7, 288, 96, 24, 24);
-            }
+            gmode(4, -1, -1, 255);
+            color(255, 255, 255);
+        }
+        else
+        {
+            gmode(4, -1, -1, 120);
+            color(200, 200, 200);
+        }
+        pos(x_at_tcg, y_at_tcg);
+        gcopy(7, 360, 96, 79, 20);
+        gmode(2);
+        pos(x_at_tcg + 10, y_at_tcg + 4);
+        mes(cfname_at_tcg(p_at_tcg));
+        color(0, 0, 0);
+        if (ccf_at_tcg == cnt)
+        {
+            pos(x_at_tcg + 65, y_at_tcg - 5);
+            gcopy(7, 288, 96, 24, 24);
         }
     }
     font(lang(cfg_font1, cfg_font2), 13 + en - en * 2, 0);
+    for (int cnt = 0, cnt_end = cnt + (24); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (24); cnt < cnt_end; ++cnt)
+        p_at_tcg = page_at_tcg * 8 + cnt;
+        if (p_at_tcg >= dlistmax_at_tcg)
         {
-            p_at_tcg = page_at_tcg * 8 + cnt;
-            if (p_at_tcg >= dlistmax_at_tcg)
-            {
-                break;
-            }
-            c_at_tcg = dlist_at_tcg(0, p_at_tcg);
-            i_at_tcg = card_at_tcg(18, c_at_tcg);
-            x_at_tcg = basex_at_tcg + 144 + cnt % 8 * 80;
-            y_at_tcg = basey_at_tcg + 70 + cnt / 8 * 150;
-            if (deckmode_at_tcg == 0)
-            {
-                if (deck(i_at_tcg) != 0)
-                {
-                    s_at_tcg = ""s + deck(i_at_tcg);
-                }
-                else
-                {
-                    s_at_tcg = "";
-                }
-                s_at_tcg += u8"("s + card(0, i_at_tcg) + u8")"s;
-                pos(x_at_tcg + 1, y_at_tcg + 111);
-                mes(s_at_tcg);
-                if (deck(i_at_tcg) != 0)
-                {
-                    color(150, 255, 150);
-                }
-                else
-                {
-                    color(200, 200, 200);
-                }
-                pos(x_at_tcg, y_at_tcg + 110);
-                mes(s_at_tcg);
-                color(0, 0, 0);
-            }
-            card_at_tcg(2, c_at_tcg) = x_at_tcg;
-            card_at_tcg(3, c_at_tcg) = y_at_tcg;
-            tcgdrawcard(c_at_tcg, 1);
+            break;
         }
+        c_at_tcg = dlist_at_tcg(0, p_at_tcg);
+        i_at_tcg = card_at_tcg(18, c_at_tcg);
+        x_at_tcg = basex_at_tcg + 144 + cnt % 8 * 80;
+        y_at_tcg = basey_at_tcg + 70 + cnt / 8 * 150;
+        if (deckmode_at_tcg == 0)
+        {
+            if (deck(i_at_tcg) != 0)
+            {
+                s_at_tcg = ""s + deck(i_at_tcg);
+            }
+            else
+            {
+                s_at_tcg = "";
+            }
+            s_at_tcg += u8"("s + card(0, i_at_tcg) + u8")"s;
+            pos(x_at_tcg + 1, y_at_tcg + 111);
+            mes(s_at_tcg);
+            if (deck(i_at_tcg) != 0)
+            {
+                color(150, 255, 150);
+            }
+            else
+            {
+                color(200, 200, 200);
+            }
+            pos(x_at_tcg, y_at_tcg + 110);
+            mes(s_at_tcg);
+            color(0, 0, 0);
+        }
+        card_at_tcg(2, c_at_tcg) = x_at_tcg;
+        card_at_tcg(3, c_at_tcg) = y_at_tcg;
+        tcgdrawcard(c_at_tcg, 1);
     }
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
     color(255, 255, 255);
@@ -2455,61 +2308,55 @@ void label_1825()
         pos(basex_at_tcg + 38, basey_at_tcg + 57);
         mes(u8"Turn "s + turn_at_tcg);
         color(0, 0, 0);
+        for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+            x_at_tcg = cpx_at_tcg(cnt);
+            y_at_tcg = cpy_at_tcg(cnt);
+            pos(x_at_tcg, y_at_tcg);
+            gcopy(7, 264, 144, 72, 120);
+            s_at_tcg = ""s + cpdata_at_tcg(4, cnt);
+            pos(x_at_tcg + 36 - strlen_u(s_at_tcg) * 3, y_at_tcg + 9 - en);
+            mes(s_at_tcg);
+            if (cnt != player_at_tcg)
             {
-                x_at_tcg = cpx_at_tcg(cnt);
-                y_at_tcg = cpy_at_tcg(cnt);
-                pos(x_at_tcg, y_at_tcg);
-                gcopy(7, 264, 144, 72, 120);
-                s_at_tcg = ""s + cpdata_at_tcg(4, cnt);
-                pos(x_at_tcg + 36 - strlen_u(s_at_tcg) * 3, y_at_tcg + 9 - en);
-                mes(s_at_tcg);
-                if (cnt != player_at_tcg)
-                {
-                    s_at_tcg = u8"?/"s + cpdata_at_tcg(6, cnt);
-                }
-                else
-                {
-                    s_at_tcg = ""s + cpdata_at_tcg(5, cnt) + u8"/"s
-                        + cpdata_at_tcg(6, cnt);
-                }
-                pos(x_at_tcg + 36 - strlen_u(s_at_tcg) * 3, y_at_tcg + 95 - en);
-                mes(s_at_tcg);
+                s_at_tcg = u8"?/"s + cpdata_at_tcg(6, cnt);
             }
-        }
-        {
-            int cnt = 0;
-            for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+            else
             {
-                if (cnt - 1 == phase_at_tcg)
+                s_at_tcg = ""s + cpdata_at_tcg(5, cnt) + u8"/"s
+                    + cpdata_at_tcg(6, cnt);
+            }
+            pos(x_at_tcg + 36 - strlen_u(s_at_tcg) * 3, y_at_tcg + 95 - en);
+            mes(s_at_tcg);
+        }
+        for (int cnt = 0, cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+        {
+            if (cnt - 1 == phase_at_tcg)
+            {
+                pos(basex_at_tcg + 4, basey_at_tcg + 370 + cnt * 20);
+                gcopy(7, 360, 216, 106, 18);
+            }
+            pos(basex_at_tcg + 36, basey_at_tcg + 373 + cnt * 20);
+            if (cnt == 0)
+            {
+                if (ct_at_tcg == player_at_tcg)
                 {
-                    pos(basex_at_tcg + 4, basey_at_tcg + 370 + cnt * 20);
-                    gcopy(7, 360, 216, 106, 18);
-                }
-                pos(basex_at_tcg + 36, basey_at_tcg + 373 + cnt * 20);
-                if (cnt == 0)
-                {
-                    if (ct_at_tcg == player_at_tcg)
-                    {
-                        color(150, 150, 255);
-                        mes(u8"Player"s);
-                        color(0, 0, 0);
-                    }
-                    else
-                    {
-                        color(255, 150, 150);
-                        mes(u8"Opponent"s);
-                        color(0, 0, 0);
-                    }
-                }
-                else
-                {
-                    color(215, 215, 215);
-                    mes(phasen_at_tcg(cnt - 1));
+                    color(150, 150, 255);
+                    mes(u8"Player"s);
                     color(0, 0, 0);
                 }
+                else
+                {
+                    color(255, 150, 150);
+                    mes(u8"Opponent"s);
+                    color(0, 0, 0);
+                }
+            }
+            else
+            {
+                color(215, 215, 215);
+                mes(phasen_at_tcg(cnt - 1));
+                color(0, 0, 0);
             }
         }
     }
@@ -2543,14 +2390,11 @@ void label_1825()
         mes(u8"Domain * "s + cpdata_at_tcg(9, 0));
         color(0, 0, 0);
         s_at_tcg = "";
+        for (int cnt = 0, cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+            if (domain_at_tcg(cnt))
             {
-                if (domain_at_tcg(cnt))
-                {
-                    s_at_tcg += ""s + domname_at_tcg(cnt) + u8"\n"s;
-                }
+                s_at_tcg += ""s + domname_at_tcg(cnt) + u8"\n"s;
             }
         }
         pos(basex_at_tcg + 24, basey_at_tcg + 240);
@@ -2568,12 +2412,9 @@ void label_1826()
 {
     gmode(4, -1, -1, 180);
     redraw(0);
+    for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
-        {
-            cnt2_at_tcg = cnt;
-        }
+        cnt2_at_tcg = cnt;
     }
     gsel(0);
     return;
@@ -2637,69 +2478,62 @@ void label_1828()
 label_1829_internal:
     dlistmax_at_tcg = 0;
     dsc_at_tcg = 0;
+    for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+        if (card_at_tcg(0, cnt) != -1)
         {
-            if (card_at_tcg(0, cnt) != -1)
-            {
-                continue;
-            }
-            if (card_at_tcg(1, cnt) != cp_at_tcg)
-            {
-                continue;
-            }
-            if (cflist_at_tcg(ccf_at_tcg) == 1)
-            {
-                if (deck(card_at_tcg(18, cnt)) == 0)
-                {
-                    continue;
-                }
-            }
-            if (cflist_at_tcg(ccf_at_tcg) >= 2)
-            {
-                if (cflist_at_tcg(ccf_at_tcg) <= 6)
-                {
-                    if (card_at_tcg(23, cnt) != cflist_at_tcg(ccf_at_tcg) - 2)
-                    {
-                        continue;
-                    }
-                }
-            }
-            if (deckmode_at_tcg == 1)
-            {
-                if (cardn_at_tcg(0, cnt) != deckrefn_at_tcg)
-                {
-                    continue;
-                }
-            }
-            if (deckmode_at_tcg == 1 || deckmode_at_tcg == 2)
-            {
-                f_at_tcg = 0;
-                cnt2_at_tcg = cnt;
-                {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (dlistmax_at_tcg); cnt < cnt_end;
-                         ++cnt)
-                    {
-                        c_at_tcg = dlist_at_tcg(0, cnt);
-                        if (card_at_tcg(18, c_at_tcg)
-                            == card_at_tcg(18, cnt2_at_tcg))
-                        {
-                            f_at_tcg = 1;
-                            break;
-                        }
-                    }
-                }
-                if (f_at_tcg)
-                {
-                    continue;
-                }
-            }
-            cdbitmod(1, cnt, 1);
-            dlist_at_tcg(0, dlistmax_at_tcg) = cnt;
-            ++dlistmax_at_tcg;
+            continue;
         }
+        if (card_at_tcg(1, cnt) != cp_at_tcg)
+        {
+            continue;
+        }
+        if (cflist_at_tcg(ccf_at_tcg) == 1)
+        {
+            if (deck(card_at_tcg(18, cnt)) == 0)
+            {
+                continue;
+            }
+        }
+        if (cflist_at_tcg(ccf_at_tcg) >= 2)
+        {
+            if (cflist_at_tcg(ccf_at_tcg) <= 6)
+            {
+                if (card_at_tcg(23, cnt) != cflist_at_tcg(ccf_at_tcg) - 2)
+                {
+                    continue;
+                }
+            }
+        }
+        if (deckmode_at_tcg == 1)
+        {
+            if (cardn_at_tcg(0, cnt) != deckrefn_at_tcg)
+            {
+                continue;
+            }
+        }
+        if (deckmode_at_tcg == 1 || deckmode_at_tcg == 2)
+        {
+            f_at_tcg = 0;
+            cnt2_at_tcg = cnt;
+            for (int cnt = 0, cnt_end = cnt + (dlistmax_at_tcg); cnt < cnt_end;
+                 ++cnt)
+            {
+                c_at_tcg = dlist_at_tcg(0, cnt);
+                if (card_at_tcg(18, c_at_tcg) == card_at_tcg(18, cnt2_at_tcg))
+                {
+                    f_at_tcg = 1;
+                    break;
+                }
+            }
+            if (f_at_tcg)
+            {
+                continue;
+            }
+        }
+        cdbitmod(1, cnt, 1);
+        dlist_at_tcg(0, dlistmax_at_tcg) = cnt;
+        ++dlistmax_at_tcg;
     }
     while (1)
     {
@@ -2708,26 +2542,22 @@ label_1829_internal:
         {
             break;
         }
+        for (int cnt = 0, cnt_end = cnt + (dlistmax_at_tcg - 1); cnt < cnt_end;
+             ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (dlistmax_at_tcg - 1); cnt < cnt_end;
-                 ++cnt)
+            p_at_tcg(0) = card_at_tcg(10, dlist_at_tcg(0, cnt)) * 10000
+                + card_at_tcg(18, dlist_at_tcg(0, cnt));
+            p_at_tcg(1) = card_at_tcg(10, dlist_at_tcg(0, (cnt + 1))) * 10000
+                + card_at_tcg(18, dlist_at_tcg(0, (cnt + 1)));
+            if (p_at_tcg > p_at_tcg(1))
             {
-                p_at_tcg(0) = card_at_tcg(10, dlist_at_tcg(0, cnt)) * 10000
-                    + card_at_tcg(18, dlist_at_tcg(0, cnt));
-                p_at_tcg(1) =
-                    card_at_tcg(10, dlist_at_tcg(0, (cnt + 1))) * 10000
-                    + card_at_tcg(18, dlist_at_tcg(0, (cnt + 1)));
-                if (p_at_tcg > p_at_tcg(1))
-                {
-                    f_at_tcg = 1;
-                    p_at_tcg(0) = dlist_at_tcg(0, cnt);
-                    p_at_tcg(1) = dlist_at_tcg(1, cnt);
-                    dlist_at_tcg(0, cnt) = dlist_at_tcg(0, cnt + 1);
-                    dlist_at_tcg(1, cnt) = dlist_at_tcg(1, cnt + 1);
-                    dlist_at_tcg(0, cnt + 1) = p_at_tcg;
-                    dlist_at_tcg(1, cnt + 1) = p_at_tcg(1);
-                }
+                f_at_tcg = 1;
+                p_at_tcg(0) = dlist_at_tcg(0, cnt);
+                p_at_tcg(1) = dlist_at_tcg(1, cnt);
+                dlist_at_tcg(0, cnt) = dlist_at_tcg(0, cnt + 1);
+                dlist_at_tcg(1, cnt) = dlist_at_tcg(1, cnt + 1);
+                dlist_at_tcg(0, cnt + 1) = p_at_tcg;
+                dlist_at_tcg(1, cnt + 1) = p_at_tcg(1);
             }
         }
         if (f_at_tcg == 0)
@@ -3044,15 +2874,12 @@ label_1837_internal:
             }
         }
         f_at_tcg = 0;
+        for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+            if (act_at_tcg(cnt) != 0)
             {
-                if (act_at_tcg(cnt) != 0)
-                {
-                    f_at_tcg = 1;
-                    break;
-                }
+                f_at_tcg = 1;
+                break;
             }
         }
         if (f_at_tcg == 0)
@@ -3233,56 +3060,50 @@ label_1841_internal:
     {
         f_at_tcg = 1;
     }
+    for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+        x_at_tcg(cnt) = card_at_tcg(2, cc_at_tcg) + 20;
+        if (cnt == 0)
         {
-            x_at_tcg(cnt) = card_at_tcg(2, cc_at_tcg) + 20;
-            if (cnt == 0)
-            {
-                y_at_tcg(cnt) =
-                    card_at_tcg(3, cc_at_tcg) - std::clamp(p_at_tcg * 3, 0, 16);
-            }
-            if (cnt == 1)
-            {
-                y_at_tcg(cnt) = card_at_tcg(3, cc_at_tcg) + 60
-                    + std::clamp(p_at_tcg * 3, 0, 16);
-            }
-            if (cnt == 2)
-            {
-                y_at_tcg(cnt) = card_at_tcg(3, cc_at_tcg) + 30;
-            }
-            gmode(0);
-            gsel(7);
-            pos(cnt * 48, 264);
-            gcopy(0, x_at_tcg(cnt), y_at_tcg(cnt), 36, 36);
-            gsel(0);
-            if (act_at_tcg(cnt) == 0)
-            {
-                continue;
-            }
-            gmode(4, 0, 0, std::clamp(p_at_tcg * 30 + 20, 0, 255));
-            pos(x_at_tcg(cnt), y_at_tcg(cnt));
-            gcopy(7, 192, 96, 36, 36);
-            gmode(4, 0, 0, 50 + i_at_tcg * 2);
-            pos(x_at_tcg(cnt) + 13, y_at_tcg(cnt) + 11);
-            gcopy(7, 336 + (cnt == 2) * 12, 96 + cnt % 2 * 24, 12, 12);
+            y_at_tcg(cnt) =
+                card_at_tcg(3, cc_at_tcg) - std::clamp(p_at_tcg * 3, 0, 16);
         }
+        if (cnt == 1)
+        {
+            y_at_tcg(cnt) = card_at_tcg(3, cc_at_tcg) + 60
+                + std::clamp(p_at_tcg * 3, 0, 16);
+        }
+        if (cnt == 2)
+        {
+            y_at_tcg(cnt) = card_at_tcg(3, cc_at_tcg) + 30;
+        }
+        gmode(0);
+        gsel(7);
+        pos(cnt * 48, 264);
+        gcopy(0, x_at_tcg(cnt), y_at_tcg(cnt), 36, 36);
+        gsel(0);
+        if (act_at_tcg(cnt) == 0)
+        {
+            continue;
+        }
+        gmode(4, 0, 0, std::clamp(p_at_tcg * 30 + 20, 0, 255));
+        pos(x_at_tcg(cnt), y_at_tcg(cnt));
+        gcopy(7, 192, 96, 36, 36);
+        gmode(4, 0, 0, 50 + i_at_tcg * 2);
+        pos(x_at_tcg(cnt) + 13, y_at_tcg(cnt) + 11);
+        gcopy(7, 336 + (cnt == 2) * 12, 96 + cnt % 2 * 24, 12, 12);
     }
     redraw(1);
     redraw(0);
     gmode(0);
+    for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+        if (act_at_tcg(cnt) == 0)
         {
-            if (act_at_tcg(cnt) == 0)
-            {
-                continue;
-            }
-            pos(x_at_tcg(cnt), y_at_tcg(cnt));
-            gcopy(7, cnt * 48, 264, 36, 36);
+            continue;
         }
+        pos(x_at_tcg(cnt), y_at_tcg(cnt));
+        gcopy(7, cnt * 48, 264, 36, 36);
     }
     await(15);
     key_check();
@@ -3325,72 +3146,64 @@ void label_1842()
 void label_1844()
 {
     emax_at_tcg = 0;
+    for (int cnt = 0, cnt_end = cnt + (clistmax_at_tcg(ch_at_tcg));
+         cnt < cnt_end;
+         ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (clistmax_at_tcg(ch_at_tcg)); cnt < cnt_end;
-             ++cnt)
+        if (aiblock_at_tcg)
         {
-            if (aiblock_at_tcg)
-            {
-                break;
-            }
-            c_at_tcg = clist_at_tcg(cnt, ch_at_tcg);
-            p_at_tcg = 10;
-            if (card_at_tcg(9, c_at_tcg) == 10)
-            {
-                p_at_tcg = 20;
-                p_at_tcg -= std::abs(
-                    cpdata_at_tcg(6, cp_at_tcg) - card_at_tcg(10, c_at_tcg));
-            }
-            if (card_at_tcg(13, c_at_tcg) == 2)
-            {
-                p_at_tcg = (5 - getholdersum(cp_at_tcg)) * 20;
-            }
-            elist_at_tcg(0, emax_at_tcg) = p_at_tcg;
-            elist_at_tcg(1, emax_at_tcg) = c_at_tcg;
-            elist_at_tcg(2, emax_at_tcg) = -5;
-            ++emax_at_tcg;
+            break;
         }
+        c_at_tcg = clist_at_tcg(cnt, ch_at_tcg);
+        p_at_tcg = 10;
+        if (card_at_tcg(9, c_at_tcg) == 10)
+        {
+            p_at_tcg = 20;
+            p_at_tcg -= std::abs(
+                cpdata_at_tcg(6, cp_at_tcg) - card_at_tcg(10, c_at_tcg));
+        }
+        if (card_at_tcg(13, c_at_tcg) == 2)
+        {
+            p_at_tcg = (5 - getholdersum(cp_at_tcg)) * 20;
+        }
+        elist_at_tcg(0, emax_at_tcg) = p_at_tcg;
+        elist_at_tcg(1, emax_at_tcg) = c_at_tcg;
+        elist_at_tcg(2, emax_at_tcg) = -5;
+        ++emax_at_tcg;
     }
     if (aiblock_at_tcg == 0)
     {
+        for (int cnt = 0, cnt_end = cnt + (clistmax_at_tcg(cl_at_tcg));
+             cnt < cnt_end;
+             ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (clistmax_at_tcg(cl_at_tcg));
-                 cnt < cnt_end;
-                 ++cnt)
+            c_at_tcg = clist_at_tcg(cnt, cl_at_tcg);
+            p_at_tcg = 0;
+            p_at_tcg = rnd(40);
+            if (cardcandeclareattack(c_at_tcg))
             {
-                c_at_tcg = clist_at_tcg(cnt, cl_at_tcg);
-                p_at_tcg = 0;
-                p_at_tcg = rnd(40);
-                if (cardcandeclareattack(c_at_tcg))
-                {
-                    elist_at_tcg(0, emax_at_tcg) = p_at_tcg;
-                    elist_at_tcg(1, emax_at_tcg) = c_at_tcg;
-                    elist_at_tcg(2, emax_at_tcg) = -1;
-                    ++emax_at_tcg;
-                }
+                elist_at_tcg(0, emax_at_tcg) = p_at_tcg;
+                elist_at_tcg(1, emax_at_tcg) = c_at_tcg;
+                elist_at_tcg(2, emax_at_tcg) = -1;
+                ++emax_at_tcg;
             }
         }
     }
     else
     {
+        for (int cnt = 0, cnt_end = cnt + (clistmax_at_tcg(cl_at_tcg));
+             cnt < cnt_end;
+             ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (clistmax_at_tcg(cl_at_tcg));
-                 cnt < cnt_end;
-                 ++cnt)
+            c_at_tcg = clist_at_tcg(cnt, cl_at_tcg);
+            p_at_tcg = 0;
+            p_at_tcg = rnd(40);
+            if (cardcanblock(c_at_tcg))
             {
-                c_at_tcg = clist_at_tcg(cnt, cl_at_tcg);
-                p_at_tcg = 0;
-                p_at_tcg = rnd(40);
-                if (cardcanblock(c_at_tcg))
-                {
-                    elist_at_tcg(0, emax_at_tcg) = p_at_tcg;
-                    elist_at_tcg(1, emax_at_tcg) = c_at_tcg;
-                    elist_at_tcg(2, emax_at_tcg) = -2;
-                    ++emax_at_tcg;
-                }
+                elist_at_tcg(0, emax_at_tcg) = p_at_tcg;
+                elist_at_tcg(1, emax_at_tcg) = c_at_tcg;
+                elist_at_tcg(2, emax_at_tcg) = -2;
+                ++emax_at_tcg;
             }
         }
     }
@@ -3401,26 +3214,21 @@ void label_1844()
     while (1)
     {
         f_at_tcg = 0;
+        for (int cnt = 0, cnt_end = cnt + (emax_at_tcg - 1); cnt < cnt_end;
+             ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (emax_at_tcg - 1); cnt < cnt_end; ++cnt)
+            if (elist_at_tcg(0, cnt) < elist_at_tcg(0, cnt + 1))
             {
-                if (elist_at_tcg(0, cnt) < elist_at_tcg(0, cnt + 1))
+                cnt2_at_tcg = cnt;
+                for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
                 {
-                    cnt2_at_tcg = cnt;
-                    {
-                        int cnt = 0;
-                        for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
-                        {
-                            p_at_tcg(cnt) = elist_at_tcg(cnt, cnt2_at_tcg + 1);
-                            elist_at_tcg(cnt, cnt2_at_tcg + 1) =
-                                elist_at_tcg(cnt, cnt2_at_tcg);
-                            elist_at_tcg(cnt, cnt2_at_tcg) = p_at_tcg(cnt);
-                        }
-                    }
-                    f_at_tcg = 1;
-                    break;
+                    p_at_tcg(cnt) = elist_at_tcg(cnt, cnt2_at_tcg + 1);
+                    elist_at_tcg(cnt, cnt2_at_tcg + 1) =
+                        elist_at_tcg(cnt, cnt2_at_tcg);
+                    elist_at_tcg(cnt, cnt2_at_tcg) = p_at_tcg(cnt);
                 }
+                f_at_tcg = 1;
+                break;
             }
         }
         if (f_at_tcg == 0)
@@ -3448,26 +3256,23 @@ int label_1845()
     }
     f_at_tcg = 0;
     p_at_tcg(1) = 50;
+    for (int cnt = 0, cnt_end = cnt + (emax_at_tcg); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (emax_at_tcg); cnt < cnt_end; ++cnt)
+        c_at_tcg = elist_at_tcg(1, cnt);
+        p_at_tcg = elist_at_tcg(0, cnt);
+        if (card_at_tcg(0, c_at_tcg) != 2)
         {
-            c_at_tcg = elist_at_tcg(1, cnt);
-            p_at_tcg = elist_at_tcg(0, cnt);
-            if (card_at_tcg(0, c_at_tcg) != 2)
-            {
-                continue;
-            }
-            if (card_at_tcg(13, c_at_tcg) == 2)
-            {
-                p_at_tcg = 40;
-            }
-            if (p_at_tcg < p_at_tcg(1))
-            {
-                p_at_tcg(1) = p_at_tcg;
-                cc_at_tcg = c_at_tcg;
-                f_at_tcg = 1;
-            }
+            continue;
+        }
+        if (card_at_tcg(13, c_at_tcg) == 2)
+        {
+            p_at_tcg = 40;
+        }
+        if (p_at_tcg < p_at_tcg(1))
+        {
+            p_at_tcg(1) = p_at_tcg;
+            cc_at_tcg = c_at_tcg;
+            f_at_tcg = 1;
         }
     }
     if (f_at_tcg)

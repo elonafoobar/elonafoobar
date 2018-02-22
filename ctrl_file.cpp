@@ -835,187 +835,174 @@ void fmode_22_21(bool read)
     enemyteam = -1;
     gdata(86) = 0;
     SDIM1(untaglist);
+    for (int cnt = 0, cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
+        if (!read)
         {
-            if (!read)
+            if (list(0, cnt) == 0)
             {
-                if (list(0, cnt) == 0)
+                continue;
+            }
+            tg = cnt;
+        }
+        else
+        {
+            if (!fs::exists(folder + u8"c1_"s + id + u8".t"s))
+            {
+                break;
+            }
+            tg = 0;
+            for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+            {
+                if (cdata[cnt].state == 0)
                 {
-                    continue;
+                    tg = cnt;
+                    break;
                 }
-                tg = cnt;
+            }
+            if (tg == 0)
+            {
+                break;
+            }
+        }
+        {
+            const auto filepath = folder + u8"c1_"s + id + u8".t"s;
+            if (read)
+            {
+                load(filepath, cdata, tg, tg + 1);
             }
             else
             {
-                if (!fs::exists(folder + u8"c1_"s + id + u8".t"s))
+                save(filepath, cdata, tg, tg + 1);
+            }
+            continue;
+        }
+        {
+            const auto filepath = folder + u8"c2_"s + id + u8".t"s;
+            if (read)
+            {
+                std::ifstream in{filepath};
+                putit::binary_iarchive ar{in};
+                for (int i = 0; i < 600; ++i)
                 {
-                    break;
+                    ar.load(sdata.get(i, tg));
                 }
-                tg = 0;
+            }
+            else
+            {
+                std::ofstream out{filepath};
+                putit::binary_oarchive ar{out};
+                for (int i = 0; i < 600; ++i)
                 {
-                    int cnt = 57;
-                    for (int cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+                    ar.save(sdata.get(i, tg));
+                }
+            }
+        }
+        {
+            const auto filepath = folder + u8"c3_"s + id + u8".t"s;
+            inv_getheader(tg);
+            if (read)
+            {
+                load(filepath, inv, invhead, invhead + invrange);
+            }
+            else
+            {
+                save(filepath, inv, invhead, invhead + invrange);
+            }
+        }
+        elona_export = 1;
+        arrayfile(read, u8"cdatan3", folder + u8"c4_"s + id + u8".t");
+        if (!read)
+        {
+            zipadd(u8"c1_"s + id + u8".t"s);
+            zipadd(u8"c2_"s + id + u8".t"s);
+            zipadd(u8"c3_"s + id + u8".t"s);
+            zipadd(u8"c4_"s + id + u8".t"s);
+            if (cdata[tg].id == 343)
+            {
+                if (fs::exists(folder + userdatan(6, cdata[tg].cnpc_id)))
+                {
+                    if (cdata[tg].cnpc_id != usernpcmax)
                     {
-                        if (cdata[cnt].state == 0)
+                        if (instr(
+                                untaglist,
+                                0,
+                                u8"/"s + userdatan(0, cdata[tg].cnpc_id)
+                                    + u8"/"s)
+                            == -1)
                         {
-                            tg = cnt;
-                            break;
-                        }
-                    }
-                }
-                if (tg == 0)
-                {
-                    break;
-                }
-            }
-            {
-                const auto filepath = folder + u8"c1_"s + id + u8".t"s;
-                if (read)
-                {
-                    load(filepath, cdata, tg, tg + 1);
-                }
-                else
-                {
-                    save(filepath, cdata, tg, tg + 1);
-                }
-                continue;
-            }
-            {
-                const auto filepath = folder + u8"c2_"s + id + u8".t"s;
-                if (read)
-                {
-                    std::ifstream in{filepath};
-                    putit::binary_iarchive ar{in};
-                    for (int i = 0; i < 600; ++i)
-                    {
-                        ar.load(sdata.get(i, tg));
-                    }
-                }
-                else
-                {
-                    std::ofstream out{filepath};
-                    putit::binary_oarchive ar{out};
-                    for (int i = 0; i < 600; ++i)
-                    {
-                        ar.save(sdata.get(i, tg));
-                    }
-                }
-            }
-            {
-                const auto filepath = folder + u8"c3_"s + id + u8".t"s;
-                inv_getheader(tg);
-                if (read)
-                {
-                    load(filepath, inv, invhead, invhead + invrange);
-                }
-                else
-                {
-                    save(filepath, inv, invhead, invhead + invrange);
-                }
-            }
-            elona_export = 1;
-            arrayfile(read, u8"cdatan3", folder + u8"c4_"s + id + u8".t");
-            if (!read)
-            {
-                zipadd(u8"c1_"s + id + u8".t"s);
-                zipadd(u8"c2_"s + id + u8".t"s);
-                zipadd(u8"c3_"s + id + u8".t"s);
-                zipadd(u8"c4_"s + id + u8".t"s);
-                if (cdata[tg].id == 343)
-                {
-                    if (fs::exists(folder + userdatan(6, cdata[tg].cnpc_id)))
-                    {
-                        if (cdata[tg].cnpc_id != usernpcmax)
-                        {
-                            if (instr(
-                                    untaglist,
-                                    0,
-                                    u8"/"s + userdatan(0, cdata[tg].cnpc_id)
-                                        + u8"/"s)
-                                == -1)
+                            if (gdata(86) < 10)
                             {
-                                if (gdata(86) < 10)
-                                {
-                                    bcopy(
-                                        folder
-                                            + userdatan(6, cdata[tg].cnpc_id),
-                                        folder + u8"_tmp_"s + gdata(86)
-                                            + u8".npc"s);
-                                    zipadd(u8"_tmp_"s + gdata(86) + u8".npc"s);
-                                    untaglist += u8"/"s
-                                        + userdatan(0, cdata[tg].cnpc_id)
-                                        + u8"/"s;
-                                    ++gdata(86);
-                                }
+                                bcopy(
+                                    folder + userdatan(6, cdata[tg].cnpc_id),
+                                    folder + u8"_tmp_"s + gdata(86)
+                                        + u8".npc"s);
+                                zipadd(u8"_tmp_"s + gdata(86) + u8".npc"s);
+                                untaglist += u8"/"s
+                                    + userdatan(0, cdata[tg].cnpc_id) + u8"/"s;
+                                ++gdata(86);
                             }
                         }
                     }
                 }
             }
-            else
-            {
-                inv_getheader(tg);
-                {
-                    int cnt = invhead;
-                    for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
-                    {
-                        inv[cnt].body_part = 0;
-                    }
-                }
-                {
-                    int cnt = 100;
-                    for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
-                    {
-                        cdata_body_part(tg, cnt) =
-                            cdata_body_part(tg, cnt) / 10000 * 10000;
-                    }
-                }
-                rc = tg;
-                wear_most_valuable_equipment_for_all_body_parts();
-                cdata[rc].item_which_will_be_used = 0;
-                rowactend(rc);
-                cbitmod(967, rc, 0);
-                cbitmod(968, rc, 0);
-                cdata[rc].hp = cdata[rc].max_hp;
-                cdata[rc].mp = cdata[rc].max_mp;
-                cbitmod(960, rc, 0);
-                cbitmod(989, tc, 0);
-                if (importmode == 0)
-                {
-                    cdata[tg].character_role = 20;
-                    cdata[tg].gold = 0;
-                    if (cdata[tg].relationship >= 10)
-                    {
-                        if (userrelation == 0)
-                        {
-                            cdata[tg].relationship = 0;
-                            cdata[tg].original_relationship = 0;
-                        }
-                        else
-                        {
-                            cdata[tg].relationship = -3;
-                            cdata[tg].original_relationship = -3;
-                        }
-                    }
-                    cxinit = cdata[tg].position.x;
-                    cyinit = cdata[tg].position.y;
-                    place_character();
-                }
-                if (importmode == 1)
-                {
-                    if (enemyteam == -1)
-                    {
-                        enemyteam = rc;
-                    }
-                    cdata[rc].relationship = -3;
-                    cdata[rc].original_relationship = -3;
-                    map_placearena(rc, 1);
-                }
-            }
-            ++id;
         }
+        else
+        {
+            inv_getheader(tg);
+            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
+                 ++cnt)
+            {
+                inv[cnt].body_part = 0;
+            }
+            for (int cnt = 100, cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+            {
+                cdata_body_part(tg, cnt) =
+                    cdata_body_part(tg, cnt) / 10000 * 10000;
+            }
+            rc = tg;
+            wear_most_valuable_equipment_for_all_body_parts();
+            cdata[rc].item_which_will_be_used = 0;
+            rowactend(rc);
+            cbitmod(967, rc, 0);
+            cbitmod(968, rc, 0);
+            cdata[rc].hp = cdata[rc].max_hp;
+            cdata[rc].mp = cdata[rc].max_mp;
+            cbitmod(960, rc, 0);
+            cbitmod(989, tc, 0);
+            if (importmode == 0)
+            {
+                cdata[tg].character_role = 20;
+                cdata[tg].gold = 0;
+                if (cdata[tg].relationship >= 10)
+                {
+                    if (userrelation == 0)
+                    {
+                        cdata[tg].relationship = 0;
+                        cdata[tg].original_relationship = 0;
+                    }
+                    else
+                    {
+                        cdata[tg].relationship = -3;
+                        cdata[tg].original_relationship = -3;
+                    }
+                }
+                cxinit = cdata[tg].position.x;
+                cyinit = cdata[tg].position.y;
+                place_character();
+            }
+            if (importmode == 1)
+            {
+                if (enemyteam == -1)
+                {
+                    enemyteam = rc;
+                }
+                cdata[rc].relationship = -3;
+                cdata[rc].original_relationship = -3;
+                map_placearena(rc, 1);
+            }
+        }
+        ++id;
     }
 }
 

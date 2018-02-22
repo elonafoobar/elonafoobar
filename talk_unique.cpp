@@ -961,15 +961,11 @@ void talk_unique()
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
+            for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
-                {
-                    flt();
-                    flttypemajor = 60000;
-                    itemcreate(
-                        -1, 0, cdata[0].position.x, cdata[0].position.y, 0);
-                }
+                flt();
+                flttypemajor = 60000;
+                itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
         }
         if (chatval == 3)
@@ -1068,15 +1064,11 @@ void talk_unique()
             txt(lang(
                 u8"ロミアスは隠し持っていたプチを放った。"s,
                 u8"Lomias releases tiny cute creatures."s));
+            for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
-                {
-                    flt();
-                    characreate(
-                        -1, 3, cdata[0].position.x, cdata[0].position.y);
-                    cbitmod(979, rc, 1);
-                }
+                flt();
+                characreate(-1, 3, cdata[0].position.x, cdata[0].position.y);
+                cbitmod(979, rc, 1);
             }
             flt();
             itemcreate(-1, 68, cdata[0].position.x, cdata[0].position.y, 0);
@@ -1231,15 +1223,12 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
+            for (int cnt = 0, cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
-                {
-                    flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
-                    flttypemajor = fltsetdungeon();
-                    itemcreate(
-                        -1, 0, cdata[tc].position.x, cdata[tc].position.y, 0);
-                }
+                flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+                flttypemajor = fltsetdungeon();
+                itemcreate(
+                    -1, 0, cdata[tc].position.x, cdata[tc].position.y, 0);
             }
             flt();
             itemcreate(
@@ -1758,15 +1747,12 @@ void talk_unique()
             RESPONSE(0, strbye);
             chatesc = 1;
             SCENE_CUT();
+            for (int cnt = 0, cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
-                {
-                    flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
-                    flttypemajor = fltsetdungeon();
-                    itemcreate(
-                        -1, 0, cdata[tc].position.x, cdata[tc].position.y, 0);
-                }
+                flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+                flttypemajor = fltsetdungeon();
+                itemcreate(
+                    -1, 0, cdata[tc].position.x, cdata[tc].position.y, 0);
             }
             flt();
             itemcreate(
@@ -3291,26 +3277,21 @@ void talk_unique()
             p(4) = 0;
             p(5) = 0;
             inv_getheader(0);
+            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
+                 ++cnt)
             {
-                int cnt = invhead;
-                for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+                if (inv[cnt].number == 0)
                 {
-                    if (inv[cnt].number == 0)
-                    {
-                        continue;
-                    }
-                    if (inv[cnt].id == 668)
-                    {
-                        p(inv[cnt].param2) = 1;
-                    }
+                    continue;
+                }
+                if (inv[cnt].id == 668)
+                {
+                    p(inv[cnt].param2) = 1;
                 }
             }
+            for (int cnt = 1, cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
             {
-                int cnt = 1;
-                for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
-                {
-                    p += p(cnt);
-                }
+                p += p(cnt);
             }
             if (p != 0)
             {
@@ -3335,21 +3316,20 @@ void talk_unique()
                 p(4) = 0;
                 p(5) = 0;
                 inv_getheader(0);
+                for (int cnt = invhead, cnt_end = cnt + (invrange);
+                     cnt < cnt_end;
+                     ++cnt)
                 {
-                    int cnt = invhead;
-                    for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+                    if (inv[cnt].number == 0)
                     {
-                        if (inv[cnt].number == 0)
+                        continue;
+                    }
+                    if (inv[cnt].id == 668)
+                    {
+                        if (p(inv[cnt].param2) == 0)
                         {
-                            continue;
-                        }
-                        if (inv[cnt].id == 668)
-                        {
-                            if (p(inv[cnt].param2) == 0)
-                            {
-                                --inv[cnt].number;
-                                p(inv[cnt].param2) = 1;
-                            }
+                            --inv[cnt].number;
+                            p(inv[cnt].param2) = 1;
                         }
                     }
                 }
@@ -3722,27 +3702,25 @@ void talk_unique()
         {
             inv_getheader(0);
             f = 0;
+            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
+                 ++cnt)
             {
-                int cnt = invhead;
-                for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+                if (gdata_ambitious_scientist >= 6)
                 {
-                    if (gdata_ambitious_scientist >= 6)
+                    break;
+                }
+                if (inv[cnt].number > 0)
+                {
+                    if (inv[cnt].id == 685)
                     {
-                        break;
-                    }
-                    if (inv[cnt].number > 0)
-                    {
-                        if (inv[cnt].id == 685)
+                        if (inv[cnt].subname != 0)
                         {
-                            if (inv[cnt].subname != 0)
-                            {
-                                --inv[cnt].number;
-                                ++gdata_ambitious_scientist;
-                                f = 1;
-                                txt(itemname(cnt, 1) + u8"を納入した。"s);
-                                --cnt;
-                                continue;
-                            }
+                            --inv[cnt].number;
+                            ++gdata_ambitious_scientist;
+                            f = 1;
+                            txt(itemname(cnt, 1) + u8"を納入した。"s);
+                            --cnt;
+                            continue;
                         }
                     }
                 }
@@ -4791,20 +4769,18 @@ void talk_unique()
             snd(12);
             cdata[0].gold -= cdata[0].gold / 5;
             inv_getheader(0);
+            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
+                 ++cnt)
             {
-                int cnt = invhead;
-                for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+                if (inv[cnt].number > 0)
                 {
-                    if (inv[cnt].number > 0)
+                    if (the_item_db[inv[cnt].id]->is_cargo == 1)
                     {
-                        if (the_item_db[inv[cnt].id]->is_cargo == 1)
-                        {
-                            txtmore();
-                            txt(lang(
-                                itemname(cnt) + u8"を渡した。"s,
-                                u8"You hand over "s + itemname(cnt) + u8"."s));
-                            inv[cnt].number = 0;
-                        }
+                        txtmore();
+                        txt(lang(
+                            itemname(cnt) + u8"を渡した。"s,
+                            u8"You hand over "s + itemname(cnt) + u8"."s));
+                        inv[cnt].number = 0;
                     }
                 }
             }
@@ -4886,15 +4862,13 @@ void talk_unique()
             if (chatval == 1)
             {
                 p = gdata_kill_count_of_little_sister;
-                {
-                    int cnt = 1;
-                    for (int cnt_end =
+                for (int cnt = 1,
+                         cnt_end =
                              cnt + (gdata_gift_count_of_little_sister + 1);
-                         cnt < cnt_end;
-                         ++cnt)
-                    {
-                        p += cnt;
-                    }
+                     cnt < cnt_end;
+                     ++cnt)
+                {
+                    p += cnt;
                 }
                 if (gdata_save_count_of_little_sister >= p || 0)
                 {
@@ -4912,55 +4886,53 @@ void talk_unique()
                     itemcreate(-1, 283, -1, -1, 0);
                     flt();
                     itemcreate(-1, 284, -1, -1, 0);
+                    for (int cnt = 0, cnt_end = cnt + (800); cnt < cnt_end;
+                         ++cnt)
                     {
-                        int cnt = 0;
-                        for (int cnt_end = cnt + (800); cnt < cnt_end; ++cnt)
+                        if (cnt == 672)
                         {
-                            if (cnt == 672)
-                            {
-                                continue;
-                            }
-                            randomize(gdata_day + cnt);
-                            f = 0;
-                            if (itemmemory(0, cnt))
+                            continue;
+                        }
+                        randomize(gdata_day + cnt);
+                        f = 0;
+                        if (itemmemory(0, cnt))
+                        {
+                            f = 1;
+                        }
+                        if (cnt == 662)
+                        {
+                            if (gdata_kamikaze_attack >= 1000)
                             {
                                 f = 1;
                             }
-                            if (cnt == 662)
-                            {
-                                if (gdata_kamikaze_attack >= 1000)
-                                {
-                                    f = 1;
-                                }
-                            }
-                            if (cnt == 655)
-                            {
-                                if (gdata_rare_books >= 1000)
-                                {
-                                    f = 1;
-                                }
-                            }
-                            if (cnt == 639)
-                            {
-                                if (gdata_pael_and_her_mom >= 1000)
-                                {
-                                    f = 1;
-                                }
-                            }
-                            if (f)
-                            {
-                                flt(cdata[0].level * 3 / 2, calcfixlv(3));
-                                int stat = itemcreate(-1, cnt, -1, -1, 0);
-                                if (stat == 1)
-                                {
-                                    if (inv[ci].quality < 4)
-                                    {
-                                        inv[ci].number = 0;
-                                    }
-                                }
-                            }
-                            randomize();
                         }
+                        if (cnt == 655)
+                        {
+                            if (gdata_rare_books >= 1000)
+                            {
+                                f = 1;
+                            }
+                        }
+                        if (cnt == 639)
+                        {
+                            if (gdata_pael_and_her_mom >= 1000)
+                            {
+                                f = 1;
+                            }
+                        }
+                        if (f)
+                        {
+                            flt(cdata[0].level * 3 / 2, calcfixlv(3));
+                            int stat = itemcreate(-1, cnt, -1, -1, 0);
+                            if (stat == 1)
+                            {
+                                if (inv[ci].quality < 4)
+                                {
+                                    inv[ci].number = 0;
+                                }
+                            }
+                        }
+                        randomize();
                     }
                     txt(lang(
                         u8"落し物をひとつ貰える。"s,

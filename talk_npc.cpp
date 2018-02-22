@@ -314,16 +314,13 @@ void talk_npc()
         int stat = clientguide();
         if (stat != 0)
         {
+            for (int cnt = 0, cnt_end = cnt + (stat); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (stat); cnt < cnt_end; ++cnt)
-                {
-                    list(0, listmax) = 10000 + cnt;
-                    listn(0, listmax) = lang(
-                        cdatan(0, rtval(cnt)) + u8"の居場所を聞く"s,
-                        u8"Where is "s + cdatan(0, rtval(cnt)) + u8"?"s);
-                    ++listmax;
-                }
+                list(0, listmax) = 10000 + cnt;
+                listn(0, listmax) = lang(
+                    cdatan(0, rtval(cnt)) + u8"の居場所を聞く"s,
+                    u8"Where is "s + cdatan(0, rtval(cnt)) + u8"?"s);
+                ++listmax;
             }
         }
         if (itemfind(0, 284) != -1)
@@ -395,62 +392,54 @@ void talk_npc()
     deliver(1) = -1;
     if (gdata_current_dungeon_level == 1)
     {
+        for (int cnt = 0, cnt_end = cnt + (gdata_number_of_existing_quests);
+             cnt < cnt_end;
+             ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (gdata_number_of_existing_quests);
-                 cnt < cnt_end;
-                 ++cnt)
+            if (qdata(1, cnt) == gdata_current_map)
             {
-                if (qdata(1, cnt) == gdata_current_map)
+                if (qdata(0, cnt) == tc)
                 {
-                    if (qdata(0, cnt) == tc)
-                    {
-                        rq = cnt;
-                        f = 1;
-                        break;
-                    }
+                    rq = cnt;
+                    f = 1;
+                    break;
                 }
             }
         }
     }
     if (f == 1)
     {
+        for (int cnt = 0, cnt_end = cnt + (gdata_number_of_existing_quests);
+             cnt < cnt_end;
+             ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (gdata_number_of_existing_quests);
-                 cnt < cnt_end;
-                 ++cnt)
+            if (qdata(3, cnt) == 0)
             {
-                if (qdata(3, cnt) == 0)
+                continue;
+            }
+            if (qdata(8, cnt) != 1)
+            {
+                continue;
+            }
+            if (qdata(14, cnt) == 2)
+            {
+                if (qdata(10, cnt) == rq)
                 {
-                    continue;
-                }
-                if (qdata(8, cnt) != 1)
-                {
-                    continue;
-                }
-                if (qdata(14, cnt) == 2)
-                {
-                    if (qdata(10, cnt) == rq)
+                    inv_getheader(0);
+                    p = qdata(11, cnt);
+                    deliver = cnt;
+                    for (int cnt = invhead, cnt_end = cnt + (invrange);
+                         cnt < cnt_end;
+                         ++cnt)
                     {
-                        inv_getheader(0);
-                        p = qdata(11, cnt);
-                        deliver = cnt;
+                        if (inv[cnt].number == 0)
                         {
-                            int cnt = invhead;
-                            for (int cnt_end = cnt + (invrange); cnt < cnt_end;
-                                 ++cnt)
-                            {
-                                if (inv[cnt].number == 0)
-                                {
-                                    continue;
-                                }
-                                if (inv[cnt].id == p)
-                                {
-                                    deliver(1) = cnt;
-                                    break;
-                                }
-                            }
+                            continue;
+                        }
+                        if (inv[cnt].id == p)
+                        {
+                            deliver(1) = cnt;
+                            break;
                         }
                     }
                 }
@@ -465,39 +454,37 @@ void talk_npc()
         {
             supply = -1;
             inv_getheader(0);
+            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
+                 ++cnt)
             {
-                int cnt = invhead;
-                for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+                if (inv[cnt].number == 0)
                 {
-                    if (inv[cnt].number == 0)
+                    continue;
+                }
+                if (ibit(13, cnt))
+                {
+                    continue;
+                }
+                if (qdata(3, rq) == 1003)
+                {
+                    if (the_item_db[inv[cnt].id]->category == 57000)
                     {
-                        continue;
-                    }
-                    if (ibit(13, cnt))
-                    {
-                        continue;
-                    }
-                    if (qdata(3, rq) == 1003)
-                    {
-                        if (the_item_db[inv[cnt].id]->category == 57000)
+                        if (inv[cnt].param1 / 1000 == qdata(12, rq))
                         {
-                            if (inv[cnt].param1 / 1000 == qdata(12, rq))
+                            if (inv[cnt].param2 == qdata(13, rq))
                             {
-                                if (inv[cnt].param2 == qdata(13, rq))
-                                {
-                                    supply = cnt;
-                                    break;
-                                }
+                                supply = cnt;
+                                break;
                             }
                         }
                     }
-                    if (qdata(3, rq) == 1004 || qdata(3, rq) == 1011)
+                }
+                if (qdata(3, rq) == 1004 || qdata(3, rq) == 1011)
+                {
+                    if (inv[cnt].id == qdata(11, rq))
                     {
-                        if (inv[cnt].id == qdata(11, rq))
-                        {
-                            supply = cnt;
-                            break;
-                        }
+                        supply = cnt;
+                        break;
                     }
                 }
             }
@@ -685,18 +672,16 @@ void talk_npc()
         }
         inv_getheader(0);
         p = 0;
+        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
+             ++cnt)
         {
-            int cnt = invhead;
-            for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+            if (inv[cnt].number == 0)
             {
-                if (inv[cnt].number == 0)
-                {
-                    continue;
-                }
-                if (inv[cnt].identification_state < 3)
-                {
-                    ++p;
-                }
+                continue;
+            }
+            if (inv[cnt].identification_state < 3)
+            {
+                ++p;
             }
         }
         if (p == 0)
@@ -715,23 +700,21 @@ void talk_npc()
             p(1) = 0;
             p(0) = 0;
             p(1) = 0;
+            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
+                 ++cnt)
             {
-                int cnt = invhead;
-                for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+                if (inv[cnt].number == 0)
                 {
-                    if (inv[cnt].number == 0)
+                    continue;
+                }
+                if (inv[cnt].identification_state < 3)
+                {
+                    item_identify(cnt, -1, 250);
+                    item_stack(0, cnt, 1);
+                    ++p(1);
+                    if (idtresult >= 3)
                     {
-                        continue;
-                    }
-                    if (inv[cnt].identification_state < 3)
-                    {
-                        item_identify(cnt, -1, 250);
-                        item_stack(0, cnt, 1);
-                        ++p(1);
-                        if (idtresult >= 3)
-                        {
-                            ++p;
-                        }
+                        ++p;
                     }
                 }
             }
@@ -804,23 +787,20 @@ void talk_npc()
         snd(12);
         cdata[0].gold -= calcrestorecost();
         tcbk = tc;
+        for (int cnt = 0, cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
+            if (cdata[cnt].state != 1)
             {
-                if (cdata[cnt].state != 1)
-                {
-                    continue;
-                }
-                tc = cnt;
-                efid = 439;
-                efp = 100;
-                magic();
-                txtmore();
-                efid = 440;
-                efp = 100;
-                magic();
+                continue;
             }
+            tc = cnt;
+            efid = 439;
+            efp = 100;
+            magic();
+            txtmore();
+            efid = 440;
+            efp = 100;
+            magic();
         }
         tc = tcbk;
         label_2241();
@@ -832,14 +812,12 @@ void talk_npc()
     {
         invsubroutine = 1;
         inv_getheader(tc);
+        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
+             ++cnt)
         {
-            int cnt = invhead;
-            for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+            if (inv[cnt].number != 0)
             {
-                if (inv[cnt].number != 0)
-                {
-                    inv[cnt].identification_state = 3;
-                }
+                inv[cnt].identification_state = 3;
             }
         }
         invctrl(0) = 20;
@@ -896,39 +874,36 @@ void talk_npc()
             }
             randomize(adata(24, gdata_current_map));
             exrand_randomize(adata(24, gdata_current_map));
+            for (int cnt = 0, cnt_end = cnt + (50); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (50); cnt < cnt_end; ++cnt)
+                arenaop(0) = 0;
+                arenaop(1) = (100 - gdata(120) / 100) / 3 + 1;
+                arenaop(2) = 3;
+                if (gdata(120) / 100 < 30)
                 {
-                    arenaop(0) = 0;
-                    arenaop(1) = (100 - gdata(120) / 100) / 3 + 1;
-                    arenaop(2) = 3;
-                    if (gdata(120) / 100 < 30)
-                    {
-                        arenaop(2) = 4;
-                    }
-                    if (gdata(120) / 100 < 10)
-                    {
-                        arenaop(2) = 5;
-                    }
-                    minlevel = arenaop(1) / 3 * 2;
-                    flt(arenaop(1));
-                    fixlv = arenaop(2);
-                    characreate(56, 0, -3, 0);
-                    if (cmshade)
-                    {
-                        continue;
-                    }
-                    if (cdata[rc].level < minlevel)
-                    {
-                        continue;
-                    }
-                    if (cdata[rc].original_relationship != -3)
-                    {
-                        continue;
-                    }
-                    break;
+                    arenaop(2) = 4;
                 }
+                if (gdata(120) / 100 < 10)
+                {
+                    arenaop(2) = 5;
+                }
+                minlevel = arenaop(1) / 3 * 2;
+                flt(arenaop(1));
+                fixlv = arenaop(2);
+                characreate(56, 0, -3, 0);
+                if (cmshade)
+                {
+                    continue;
+                }
+                if (cdata[rc].level < minlevel)
+                {
+                    continue;
+                }
+                if (cdata[rc].original_relationship != -3)
+                {
+                    continue;
+                }
+                break;
             }
             arenaop(1) = cdata[rc].id;
             buff = lang(
@@ -1075,12 +1050,9 @@ void talk_npc()
             return;
         }
         DIM2(followerexist, 16);
+        for (int cnt = 0, cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
-            {
-                followerexist(cnt) = cdata[cnt].state;
-            }
+            followerexist(cnt) = cdata[cnt].state;
         }
         allyctrl = 2;
         int stat = ctrl_ally();
@@ -1382,28 +1354,25 @@ void talk_npc()
     }
     if (chatval == 36 || chatval == 57)
     {
+        for (int cnt = 0, cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
+            flt(cdata[0].level / 2 + 5);
+            fixlv = 2;
+            if (chatval == 36)
             {
-                flt(cdata[0].level / 2 + 5);
-                fixlv = 2;
-                if (chatval == 36)
-                {
-                    fltn(u8"man"s);
-                }
-                else
-                {
-                    fltn(u8"horse"s);
-                }
-                characreate(56, 0, -3, 0);
-                if (cdata[56].level == 0)
-                {
-                    chara_vanquish(56);
-                    continue;
-                }
-                break;
+                fltn(u8"man"s);
             }
+            else
+            {
+                fltn(u8"horse"s);
+            }
+            characreate(56, 0, -3, 0);
+            if (cdata[56].level == 0)
+            {
+                chara_vanquish(56);
+                continue;
+            }
+            break;
         }
         listmax = 0;
         buff = lang(
@@ -2144,21 +2113,18 @@ void talk_npc()
             p(1) = 45;
             p(2) = 0;
         }
+        for (int cnt = 0, cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
+            if (p(cnt) == 0)
             {
-                if (p(cnt) == 0)
-                {
-                    list(0, listmax) = 0;
-                    listn(0, listmax) = lang(u8"やめる"s, u8"Never mind!"s);
-                    ++listmax;
-                    break;
-                }
-                list(0, listmax) = p(cnt);
-                listn(0, listmax) = mapname(p(cnt));
+                list(0, listmax) = 0;
+                listn(0, listmax) = lang(u8"やめる"s, u8"Never mind!"s);
                 ++listmax;
+                break;
             }
+            list(0, listmax) = p(cnt);
+            listn(0, listmax) = mapname(p(cnt));
+            ++listmax;
         }
         buff = lang(u8"つぇｔ"s, u8"tset"s);
         talk_window();
@@ -2210,65 +2176,61 @@ void talk_npc()
             cdata[0].position.y,
             cdata[rc].position.x,
             cdata[rc].position.y);
+        for (int cnt = 0, cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
+            if (rc == tc)
             {
-                if (rc == tc)
-                {
-                    s = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
-                    break;
-                }
-                if (cdata[rc].state != 1)
-                {
-                    s = lang(
-                        u8"奴なら今は死んでいる"s + _yo(2),
-                        u8"Oh forget it, dead for now."s);
-                    break;
-                }
-                if (p < 6)
-                {
-                    s = lang(
-                        cdatan(0, rc) + u8"ならすぐ近くにいる"s + _yo() + s
-                            + u8"の方を向いてごらん。"s,
-                        u8"Oh look carefully before asking, just turn "s + s
-                            + u8"."s);
-                    break;
-                }
-                if (p < 12)
-                {
-                    s = lang(
-                        u8"ちょっと前に"s + s + u8"の方で見かけた"s + _yo(),
-                        u8"I saw "s + cdatan(0, rc)
-                            + u8" just a minute ago. Try "s + s + u8"."s);
-                    break;
-                }
-                if (p < 20)
-                {
-                    s = lang(
-                        cdatan(0, rc) + u8"なら"s + s
-                            + u8"の方角を探してごらん。"s,
-                        u8"Walk to "s + s + u8" for a while, you'll find "s
-                            + cdatan(0, rc) + u8"."s);
-                    break;
-                }
-                if (p < 35)
-                {
-                    s = lang(
-                        cdatan(0, rc) + u8"に会いたいのなら、"s + s
-                            + u8"にかなり歩く必要があ"s + _ru(),
-                        u8"If you want to meet "s + cdatan(0, rc)
-                            + u8", you have to considerably walk to "s + s
-                            + u8"."s);
-                    break;
-                }
+                s = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
+                break;
+            }
+            if (cdata[rc].state != 1)
+            {
                 s = lang(
-                    cdatan(0, rc) + _ka(3) + u8"、ここから"s + s
-                        + u8"の物凄く離れた場所にいるはず"s + _da(),
-                    u8"You need to walk long way to "s + s + u8" to meet "s
+                    u8"奴なら今は死んでいる"s + _yo(2),
+                    u8"Oh forget it, dead for now."s);
+                break;
+            }
+            if (p < 6)
+            {
+                s = lang(
+                    cdatan(0, rc) + u8"ならすぐ近くにいる"s + _yo() + s
+                        + u8"の方を向いてごらん。"s,
+                    u8"Oh look carefully before asking, just turn "s + s
+                        + u8"."s);
+                break;
+            }
+            if (p < 12)
+            {
+                s = lang(
+                    u8"ちょっと前に"s + s + u8"の方で見かけた"s + _yo(),
+                    u8"I saw "s + cdatan(0, rc) + u8" just a minute ago. Try "s
+                        + s + u8"."s);
+                break;
+            }
+            if (p < 20)
+            {
+                s = lang(
+                    cdatan(0, rc) + u8"なら"s + s + u8"の方角を探してごらん。"s,
+                    u8"Walk to "s + s + u8" for a while, you'll find "s
                         + cdatan(0, rc) + u8"."s);
                 break;
             }
+            if (p < 35)
+            {
+                s = lang(
+                    cdatan(0, rc) + u8"に会いたいのなら、"s + s
+                        + u8"にかなり歩く必要があ"s + _ru(),
+                    u8"If you want to meet "s + cdatan(0, rc)
+                        + u8", you have to considerably walk to "s + s
+                        + u8"."s);
+                break;
+            }
+            s = lang(
+                cdatan(0, rc) + _ka(3) + u8"、ここから"s + s
+                    + u8"の物凄く離れた場所にいるはず"s + _da(),
+                u8"You need to walk long way to "s + s + u8" to meet "s
+                    + cdatan(0, rc) + u8"."s);
+            break;
         }
         buff = s;
         talk_npc();

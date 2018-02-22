@@ -189,86 +189,79 @@ int magic()
                 play_animation(0);
                 dx = cdata[cc].position.x;
                 dy = cdata[cc].position.y;
+                for (int cnt = 0, cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
+                    int stat = route_info(dx, dy, cnt);
+                    if (stat == 0)
                     {
-                        int stat = route_info(dx, dy, cnt);
-                        if (stat == 0)
+                        break;
+                    }
+                    else if (stat == -1)
+                    {
+                        continue;
+                    }
+                    if (dist(dx, dy, cdata[cc].position.x, cdata[cc].position.y)
+                        > the_ability_db[efid].sdataref3 % 1000 + 1)
+                    {
+                        break;
+                    }
+                    if (dx == cdata[cc].position.x
+                        && dy == cdata[cc].position.y)
+                    {
+                        continue;
+                    }
+                    if (ele == 50)
+                    {
+                        mapitem_fire(dx, dy);
+                    }
+                    if (ele == 51)
+                    {
+                        mapitem_cold(dx, dy);
+                    }
+                    if (map(dx, dy, 1) != 0)
+                    {
+                        tc = map(dx, dy, 1) - 1;
+                        if (cc != tc)
                         {
-                            break;
-                        }
-                        else if (stat == -1)
-                        {
-                            continue;
-                        }
-                        if (dist(
-                                dx,
-                                dy,
-                                cdata[cc].position.x,
-                                cdata[cc].position.y)
-                            > the_ability_db[efid].sdataref3 % 1000 + 1)
-                        {
-                            break;
-                        }
-                        if (dx == cdata[cc].position.x
-                            && dy == cdata[cc].position.y)
-                        {
-                            continue;
-                        }
-                        if (ele == 50)
-                        {
-                            mapitem_fire(dx, dy);
-                        }
-                        if (ele == 51)
-                        {
-                            mapitem_cold(dx, dy);
-                        }
-                        if (map(dx, dy, 1) != 0)
-                        {
-                            tc = map(dx, dy, 1) - 1;
-                            if (cc != tc)
+                            if (gdata_mount != 0)
                             {
-                                if (gdata_mount != 0)
+                                if (gdata_mount == cc)
                                 {
-                                    if (gdata_mount == cc)
+                                    if (tc == 0)
                                     {
-                                        if (tc == 0)
-                                        {
-                                            continue;
-                                        }
+                                        continue;
                                     }
                                 }
-                                dmg = roll(dice1, dice2, bonus);
-                                int stat = calcmagiccontrol(cc, tc);
-                                if (stat == 1)
-                                {
-                                    continue;
-                                }
-                                if (is_in_fov(tc))
-                                {
-                                    txtmore();
-                                    if (tc >= 16)
-                                    {
-                                        gdata(809) = 2;
-                                        txt3rd = 1;
-                                        txt(lang(
-                                            u8"ボルトは"s + name(tc)
-                                                + u8"に命中し"s,
-                                            u8"The bolt hits "s + name(tc)
-                                                + u8" and"s));
-                                    }
-                                    else
-                                    {
-                                        txt(lang(
-                                            u8"ボルトが"s + name(tc)
-                                                + u8"に命中した。"s,
-                                            u8"The bolt hits "s + name(tc)
-                                                + u8"."s));
-                                    }
-                                }
-                                dmghp(tc, dmg, cc, ele, elep);
                             }
+                            dmg = roll(dice1, dice2, bonus);
+                            int stat = calcmagiccontrol(cc, tc);
+                            if (stat == 1)
+                            {
+                                continue;
+                            }
+                            if (is_in_fov(tc))
+                            {
+                                txtmore();
+                                if (tc >= 16)
+                                {
+                                    gdata(809) = 2;
+                                    txt3rd = 1;
+                                    txt(lang(
+                                        u8"ボルトは"s + name(tc)
+                                            + u8"に命中し"s,
+                                        u8"The bolt hits "s + name(tc)
+                                            + u8" and"s));
+                                }
+                                else
+                                {
+                                    txt(lang(
+                                        u8"ボルトが"s + name(tc)
+                                            + u8"に命中した。"s,
+                                        u8"The bolt hits "s + name(tc)
+                                            + u8"."s));
+                                }
+                            }
+                            dmghp(tc, dmg, cc, ele, elep);
                         }
                     }
                 }
@@ -302,186 +295,178 @@ int magic()
                     aniy = tlocy;
                     play_animation(2);
                 }
+                for (int cnt = 0, cnt_end = cnt + (range_ * 2 + 1);
+                     cnt < cnt_end;
+                     ++cnt)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (range_ * 2 + 1); cnt < cnt_end;
+                    dy = tlocy - range_ + cnt;
+                    if (dy < 0 || dy >= mdata(1))
+                    {
+                        continue;
+                    }
+                    for (int cnt = 0, cnt_end = cnt + (range_ * 2 + 1);
+                         cnt < cnt_end;
                          ++cnt)
                     {
-                        dy = tlocy - range_ + cnt;
-                        if (dy < 0 || dy >= mdata(1))
+                        dx = tlocx - range_ + cnt;
+                        if (dx < 0 || dx >= mdata(0))
                         {
                             continue;
                         }
+                        if (dist(tlocx, tlocy, dx, dy) > range_)
                         {
-                            int cnt = 0;
-                            for (int cnt_end = cnt + (range_ * 2 + 1);
-                                 cnt < cnt_end;
-                                 ++cnt)
+                            continue;
+                        }
+                        if (fov_los(tlocx, tlocy, dx, dy) == 0)
+                        {
+                            continue;
+                        }
+                        if (map(dx, dy, 1) == 0)
+                        {
+                            continue;
+                        }
+                        tc = map(dx, dy, 1) - 1;
+                        if (efid == 404)
+                        {
+                            f = 0;
+                            if (cc == 0 || cdata[cc].relationship >= 0)
                             {
-                                dx = tlocx - range_ + cnt;
-                                if (dx < 0 || dx >= mdata(0))
+                                if (cdata[tc].relationship >= 0)
                                 {
-                                    continue;
-                                }
-                                if (dist(tlocx, tlocy, dx, dy) > range_)
-                                {
-                                    continue;
-                                }
-                                if (fov_los(tlocx, tlocy, dx, dy) == 0)
-                                {
-                                    continue;
-                                }
-                                if (map(dx, dy, 1) == 0)
-                                {
-                                    continue;
-                                }
-                                tc = map(dx, dy, 1) - 1;
-                                if (efid == 404)
-                                {
-                                    f = 0;
-                                    if (cc == 0 || cdata[cc].relationship >= 0)
-                                    {
-                                        if (cdata[tc].relationship >= 0)
-                                        {
-                                            f = 1;
-                                        }
-                                    }
-                                    else if (cdata[tc].relationship <= -1)
-                                    {
-                                        f = 1;
-                                    }
-                                    if (f == 1)
-                                    {
-                                        play_animation(11);
-                                        if (is_in_fov(tc))
-                                        {
-                                            txt(lang(
-                                                name(tc) + u8"は回復した。"s,
-                                                name(tc) + u8" "s + is(tc)
-                                                    + u8" healed."s));
-                                        }
-                                        label_2187();
-                                    }
-                                    continue;
-                                }
-                                if (efid == 637)
-                                {
-                                    f = 0;
-                                    if (cc == 0 || cdata[cc].relationship >= 0)
-                                    {
-                                        if (cdata[tc].relationship >= 0)
-                                        {
-                                            f = 1;
-                                        }
-                                    }
-                                    else if (cdata[tc].relationship <= -1)
-                                    {
-                                        f = 1;
-                                    }
-                                    if (f == 1)
-                                    {
-                                        play_animation(11);
-                                        txt(lang(
-                                            name(tc)
-                                                + u8"の狂気は消え去った。"s,
-                                            name(tc) + u8" "s + is(tc)
-                                                + u8" completely sane again."s));
-                                        healsan(tc, efp / 10);
-                                        healcon(tc, 11, 9999);
-                                    }
-                                    continue;
-                                }
-                                if (dx == cdata[cc].position.x
-                                    && dy == cdata[cc].position.y)
-                                {
-                                    continue;
-                                }
-                                if (gdata_mount != 0)
-                                {
-                                    if (gdata_mount == cc)
-                                    {
-                                        if (tc == 0)
-                                        {
-                                            continue;
-                                        }
-                                    }
-                                }
-                                if (ele == 50)
-                                {
-                                    mapitem_fire(dx, dy);
-                                }
-                                if (ele == 51)
-                                {
-                                    mapitem_cold(dx, dy);
-                                }
-                                if (cc != tc)
-                                {
-                                    dmg = roll(dice1, dice2, bonus) * 100
-                                        / (75
-                                           + dist(tlocx, tlocy, dx, dy) * 25);
-                                    txtmore();
-                                    int stat = calcmagiccontrol(cc, tc);
-                                    if (stat == 1)
-                                    {
-                                        continue;
-                                    }
-                                    if (efid == 644)
-                                    {
-                                        if (is_in_fov(tc))
-                                        {
-                                            txtmore();
-                                            if (tc >= 16)
-                                            {
-                                                gdata(809) = 2;
-                                                txt3rd = 1;
-                                                txt(lang(
-                                                    u8"爆風は"s + name(tc)
-                                                        + u8"に命中し"s,
-                                                    u8"The explosion hits "s
-                                                        + name(tc)
-                                                        + u8" and"s));
-                                            }
-                                            else
-                                            {
-                                                txt(lang(
-                                                    u8"爆風が"s + name(tc)
-                                                        + u8"に命中した。"s,
-                                                    u8"The explosion hits "s
-                                                        + name(tc) + u8"."s));
-                                            }
-                                        }
-                                        if (cbit(18, tc))
-                                        {
-                                            chainbomblist(chainbomb) = tc;
-                                            ++chainbomb;
-                                            continue;
-                                        }
-                                    }
-                                    else if (is_in_fov(tc))
-                                    {
-                                        txtmore();
-                                        if (tc >= 16)
-                                        {
-                                            gdata(809) = 2;
-                                            txt3rd = 1;
-                                            txt(lang(
-                                                u8"ボールは"s + name(tc)
-                                                    + u8"に命中し"s,
-                                                u8"The ball hits "s + name(tc)
-                                                    + u8" and"s));
-                                        }
-                                        else
-                                        {
-                                            txt(lang(
-                                                u8"ボールが"s + name(tc)
-                                                    + u8"に命中した。"s,
-                                                u8"The Ball hits "s + name(tc)
-                                                    + u8"."s));
-                                        }
-                                    }
-                                    dmghp(tc, dmg, cc, ele, elep);
+                                    f = 1;
                                 }
                             }
+                            else if (cdata[tc].relationship <= -1)
+                            {
+                                f = 1;
+                            }
+                            if (f == 1)
+                            {
+                                play_animation(11);
+                                if (is_in_fov(tc))
+                                {
+                                    txt(lang(
+                                        name(tc) + u8"は回復した。"s,
+                                        name(tc) + u8" "s + is(tc)
+                                            + u8" healed."s));
+                                }
+                                label_2187();
+                            }
+                            continue;
+                        }
+                        if (efid == 637)
+                        {
+                            f = 0;
+                            if (cc == 0 || cdata[cc].relationship >= 0)
+                            {
+                                if (cdata[tc].relationship >= 0)
+                                {
+                                    f = 1;
+                                }
+                            }
+                            else if (cdata[tc].relationship <= -1)
+                            {
+                                f = 1;
+                            }
+                            if (f == 1)
+                            {
+                                play_animation(11);
+                                txt(lang(
+                                    name(tc) + u8"の狂気は消え去った。"s,
+                                    name(tc) + u8" "s + is(tc)
+                                        + u8" completely sane again."s));
+                                healsan(tc, efp / 10);
+                                healcon(tc, 11, 9999);
+                            }
+                            continue;
+                        }
+                        if (dx == cdata[cc].position.x
+                            && dy == cdata[cc].position.y)
+                        {
+                            continue;
+                        }
+                        if (gdata_mount != 0)
+                        {
+                            if (gdata_mount == cc)
+                            {
+                                if (tc == 0)
+                                {
+                                    continue;
+                                }
+                            }
+                        }
+                        if (ele == 50)
+                        {
+                            mapitem_fire(dx, dy);
+                        }
+                        if (ele == 51)
+                        {
+                            mapitem_cold(dx, dy);
+                        }
+                        if (cc != tc)
+                        {
+                            dmg = roll(dice1, dice2, bonus) * 100
+                                / (75 + dist(tlocx, tlocy, dx, dy) * 25);
+                            txtmore();
+                            int stat = calcmagiccontrol(cc, tc);
+                            if (stat == 1)
+                            {
+                                continue;
+                            }
+                            if (efid == 644)
+                            {
+                                if (is_in_fov(tc))
+                                {
+                                    txtmore();
+                                    if (tc >= 16)
+                                    {
+                                        gdata(809) = 2;
+                                        txt3rd = 1;
+                                        txt(lang(
+                                            u8"爆風は"s + name(tc)
+                                                + u8"に命中し"s,
+                                            u8"The explosion hits "s + name(tc)
+                                                + u8" and"s));
+                                    }
+                                    else
+                                    {
+                                        txt(lang(
+                                            u8"爆風が"s + name(tc)
+                                                + u8"に命中した。"s,
+                                            u8"The explosion hits "s + name(tc)
+                                                + u8"."s));
+                                    }
+                                }
+                                if (cbit(18, tc))
+                                {
+                                    chainbomblist(chainbomb) = tc;
+                                    ++chainbomb;
+                                    continue;
+                                }
+                            }
+                            else if (is_in_fov(tc))
+                            {
+                                txtmore();
+                                if (tc >= 16)
+                                {
+                                    gdata(809) = 2;
+                                    txt3rd = 1;
+                                    txt(lang(
+                                        u8"ボールは"s + name(tc)
+                                            + u8"に命中し"s,
+                                        u8"The ball hits "s + name(tc)
+                                            + u8" and"s));
+                                }
+                                else
+                                {
+                                    txt(lang(
+                                        u8"ボールが"s + name(tc)
+                                            + u8"に命中した。"s,
+                                        u8"The Ball hits "s + name(tc)
+                                            + u8"."s));
+                                }
+                            }
+                            dmghp(tc, dmg, cc, ele, elep);
                         }
                     }
                 }
@@ -775,49 +760,44 @@ int magic()
                 {
                     p = 10;
                 }
+                for (int cnt = 0, cnt_end = cnt + (1 + rnd(p)); cnt < cnt_end;
+                     ++cnt)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (1 + rnd(p)); cnt < cnt_end; ++cnt)
+                    flt(calcobjlv(efp), 2);
+                    dbid = 0;
+                    if (efid == 425)
                     {
-                        flt(calcobjlv(efp), 2);
-                        dbid = 0;
-                        if (efid == 425)
+                        fltn(u8"wild"s);
+                    }
+                    if (efid == 642)
+                    {
+                        fltn(u8"fire"s);
+                    }
+                    if (efid == 641)
+                    {
+                        fltn(u8"pawn"s);
+                    }
+                    if (efid == 639)
+                    {
+                        fltn(u8"cat"s);
+                    }
+                    if (efid == 640)
+                    {
+                        fltn(u8"yeek"s);
+                    }
+                    if (efid == 643)
+                    {
+                        dbid = 176;
+                    }
+                    characreate(
+                        -1, dbid, cdata[tc].position.x, cdata[tc].position.y);
+                    if (efid != 643)
+                    {
+                        if (cdata[rc].id == cdata[cc].id)
                         {
-                            fltn(u8"wild"s);
-                        }
-                        if (efid == 642)
-                        {
-                            fltn(u8"fire"s);
-                        }
-                        if (efid == 641)
-                        {
-                            fltn(u8"pawn"s);
-                        }
-                        if (efid == 639)
-                        {
-                            fltn(u8"cat"s);
-                        }
-                        if (efid == 640)
-                        {
-                            fltn(u8"yeek"s);
-                        }
-                        if (efid == 643)
-                        {
-                            dbid = 176;
-                        }
-                        characreate(
-                            -1,
-                            dbid,
-                            cdata[tc].position.x,
-                            cdata[tc].position.y);
-                        if (efid != 643)
-                        {
-                            if (cdata[rc].id == cdata[cc].id)
-                            {
-                                chara_vanquish(rc);
-                                --cnt;
-                                continue;
-                            }
+                            chara_vanquish(rc);
+                            --cnt;
+                            continue;
                         }
                     }
                 }
@@ -932,95 +912,89 @@ int magic()
                 tx = cdata[tc].position.x;
                 ty = cdata[tc].position.y;
                 efidprev = efid;
+                for (int cnt = 0, cnt_end = cnt + (200); cnt < cnt_end; ++cnt)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (200); cnt < cnt_end; ++cnt)
+                    if (efidprev == 410 || efidprev == 627)
                     {
-                        if (efidprev == 410 || efidprev == 627)
+                        p(0) = -1;
+                        p(1) = 1;
+                        cdata[tc].next_position.x = cdata[tc].position.x
+                            + (3 - cnt / 70 + rnd(5)) * p(rnd(2));
+                        cdata[tc].next_position.y = cdata[tc].position.y
+                            + (3 - cnt / 70 + rnd(5)) * p(rnd(2));
+                    }
+                    else if (efidprev == 619)
+                    {
+                        cdata[tc].next_position.x =
+                            telex + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
+                        cdata[tc].next_position.y =
+                            teley + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
+                    }
+                    else if (efidprev == 620)
+                    {
+                        cdata[tc].next_position.x =
+                            telex + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
+                        cdata[tc].next_position.y =
+                            teley + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
+                    }
+                    else
+                    {
+                        cdata[tc].next_position.x = rnd(mdata(0) - 2) + 1;
+                        cdata[tc].next_position.y = rnd(mdata(1) - 2) + 1;
+                    }
+                    cell_check(
+                        cdata[tc].next_position.x, cdata[tc].next_position.y);
+                    if (cellaccess == 1)
+                    {
+                        if (efidprev == 619)
                         {
-                            p(0) = -1;
-                            p(1) = 1;
-                            cdata[tc].next_position.x = cdata[tc].position.x
-                                + (3 - cnt / 70 + rnd(5)) * p(rnd(2));
-                            cdata[tc].next_position.y = cdata[tc].position.y
-                                + (3 - cnt / 70 + rnd(5)) * p(rnd(2));
-                        }
-                        else if (efidprev == 619)
-                        {
-                            cdata[tc].next_position.x =
-                                telex + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
-                            cdata[tc].next_position.y =
-                                teley + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
+                            if (is_in_fov(cc))
+                            {
+                                txt(lang(
+                                    name(cc) + u8"は"s + cdatan(0, tcprev)
+                                        + u8"の元に移動した。"s,
+                                    name(cc) + u8" teleport"s + _s(cc)
+                                        + u8" toward "s + cdatan(0, tcprev)
+                                        + u8"."s));
+                            }
                         }
                         else if (efidprev == 620)
                         {
-                            cdata[tc].next_position.x =
-                                telex + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
-                            cdata[tc].next_position.y =
-                                teley + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
+                            if (is_in_fov(cc))
+                            {
+                                txtmore();
+                                txt(lang(
+                                    name(tc) + u8"は引き寄せられた。"s,
+                                    name(tc) + u8" "s + is(tc) + u8" drawn."s));
+                            }
                         }
-                        else
+                        else if (is_in_fov(cc))
                         {
-                            cdata[tc].next_position.x = rnd(mdata(0) - 2) + 1;
-                            cdata[tc].next_position.y = rnd(mdata(1) - 2) + 1;
+                            if (efidprev == 635)
+                            {
+                                txtmore();
+                                txt(lang(
+                                    u8"泥棒は笑って逃げた。"s,
+                                    u8"A thief escapes laughing."s));
+                            }
+                            else
+                            {
+                                txt(lang(
+                                    name(tc) + u8"は突然消えた。"s,
+                                    u8"Suddenly, "s + name(tc) + u8" disappear"s
+                                        + _s(tc) + u8"."s));
+                            }
                         }
-                        cell_check(
-                            cdata[tc].next_position.x,
-                            cdata[tc].next_position.y);
-                        if (cellaccess == 1)
+                        rowactend(cc);
+                        ccprev = cc;
+                        cc = tc;
+                        label_21452();
+                        cc = ccprev;
+                        if (tc == 0)
                         {
-                            if (efidprev == 619)
-                            {
-                                if (is_in_fov(cc))
-                                {
-                                    txt(lang(
-                                        name(cc) + u8"は"s + cdatan(0, tcprev)
-                                            + u8"の元に移動した。"s,
-                                        name(cc) + u8" teleport"s + _s(cc)
-                                            + u8" toward "s + cdatan(0, tcprev)
-                                            + u8"."s));
-                                }
-                            }
-                            else if (efidprev == 620)
-                            {
-                                if (is_in_fov(cc))
-                                {
-                                    txtmore();
-                                    txt(lang(
-                                        name(tc) + u8"は引き寄せられた。"s,
-                                        name(tc) + u8" "s + is(tc)
-                                            + u8" drawn."s));
-                                }
-                            }
-                            else if (is_in_fov(cc))
-                            {
-                                if (efidprev == 635)
-                                {
-                                    txtmore();
-                                    txt(lang(
-                                        u8"泥棒は笑って逃げた。"s,
-                                        u8"A thief escapes laughing."s));
-                                }
-                                else
-                                {
-                                    txt(lang(
-                                        name(tc) + u8"は突然消えた。"s,
-                                        u8"Suddenly, "s + name(tc)
-                                            + u8" disappear"s + _s(tc)
-                                            + u8"."s));
-                                }
-                            }
-                            rowactend(cc);
-                            ccprev = cc;
-                            cc = tc;
-                            label_21452();
-                            cc = ccprev;
-                            if (tc == 0)
-                            {
-                                update_screen();
-                            }
-                            break;
+                            update_screen();
                         }
+                        break;
                     }
                 }
                 tc = tcprev;
@@ -1052,74 +1026,69 @@ int magic()
                 dy = cdata[cc].position.y;
                 breath_list();
                 play_animation(3);
+                for (int cnt = 0, cnt_end = cnt + (maxbreath); cnt < cnt_end;
+                     ++cnt)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (maxbreath); cnt < cnt_end; ++cnt)
+                    dx = breathlist(0, cnt);
+                    dy = breathlist(1, cnt);
+                    if (fov_los(
+                            cdata[cc].position.x, cdata[cc].position.y, dx, dy)
+                        == 0)
                     {
-                        dx = breathlist(0, cnt);
-                        dy = breathlist(1, cnt);
-                        if (fov_los(
-                                cdata[cc].position.x,
-                                cdata[cc].position.y,
-                                dx,
-                                dy)
-                            == 0)
+                        continue;
+                    }
+                    if (dx == cdata[cc].position.x
+                        && dy == cdata[cc].position.y)
+                    {
+                        continue;
+                    }
+                    if (gdata_mount != 0)
+                    {
+                        if (gdata_mount == cc)
                         {
-                            continue;
-                        }
-                        if (dx == cdata[cc].position.x
-                            && dy == cdata[cc].position.y)
-                        {
-                            continue;
-                        }
-                        if (gdata_mount != 0)
-                        {
-                            if (gdata_mount == cc)
+                            if (tc == 0)
                             {
-                                if (tc == 0)
-                                {
-                                    continue;
-                                }
+                                continue;
                             }
                         }
-                        if (ele == 50)
+                    }
+                    if (ele == 50)
+                    {
+                        mapitem_fire(dx, dy);
+                    }
+                    if (ele == 51)
+                    {
+                        mapitem_cold(dx, dy);
+                    }
+                    if (map(dx, dy, 1) != 0)
+                    {
+                        tc = map(dx, dy, 1) - 1;
+                        if (cc != tc)
                         {
-                            mapitem_fire(dx, dy);
-                        }
-                        if (ele == 51)
-                        {
-                            mapitem_cold(dx, dy);
-                        }
-                        if (map(dx, dy, 1) != 0)
-                        {
-                            tc = map(dx, dy, 1) - 1;
-                            if (cc != tc)
+                            dmg = roll(dice1, dice2, bonus);
+                            if (is_in_fov(tc))
                             {
-                                dmg = roll(dice1, dice2, bonus);
-                                if (is_in_fov(tc))
+                                txtmore();
+                                if (tc >= 16)
                                 {
-                                    txtmore();
-                                    if (tc >= 16)
-                                    {
-                                        gdata(809) = 2;
-                                        txt3rd = 1;
-                                        txt(lang(
-                                            u8"ブレスは"s + name(tc)
-                                                + u8"に命中し"s,
-                                            u8"The breath hits "s + name(tc)
-                                                + u8" and"s));
-                                    }
-                                    else
-                                    {
-                                        txt(lang(
-                                            u8"ブレスは"s + name(tc)
-                                                + u8"に命中した。"s,
-                                            u8"The breath hits "s + name(tc)
-                                                + u8"."s));
-                                    }
+                                    gdata(809) = 2;
+                                    txt3rd = 1;
+                                    txt(lang(
+                                        u8"ブレスは"s + name(tc)
+                                            + u8"に命中し"s,
+                                        u8"The breath hits "s + name(tc)
+                                            + u8" and"s));
                                 }
-                                dmghp(tc, dmg, cc, ele, elep);
+                                else
+                                {
+                                    txt(lang(
+                                        u8"ブレスは"s + name(tc)
+                                            + u8"に命中した。"s,
+                                        u8"The breath hits "s + name(tc)
+                                            + u8"."s));
+                                }
                             }
+                            dmghp(tc, dmg, cc, ele, elep);
                         }
                     }
                 }
@@ -1196,57 +1165,43 @@ label_2181_internal:
         if (inv[ci].param1 == 0)
         {
             item_separate(ci);
+            for (int cnt = 0, cnt_end = cnt + (1000); cnt < cnt_end; ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (1000); cnt < cnt_end; ++cnt)
+                dx = 4 + rnd((mdata(0) - 8));
+                dy = 3 + rnd((mdata(1) - 6));
+                if (dx >= 50 && dy >= 39 && dx <= 73 && dy <= 54)
                 {
-                    dx = 4 + rnd((mdata(0) - 8));
-                    dy = 3 + rnd((mdata(1) - 6));
-                    if (dx >= 50 && dy >= 39 && dx <= 73 && dy <= 54)
+                    continue;
+                }
+                x(0) = 1;
+                x(1) = -1;
+                x(2) = 0;
+                x(3) = 0;
+                y(0) = 0;
+                y(1) = 0;
+                y(2) = 1;
+                y(3) = -1;
+                for (int cnt = 0, cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
+                {
+                    f = 1;
+                    cnt2 = cnt;
+                    for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
                     {
-                        continue;
-                    }
-                    x(0) = 1;
-                    x(1) = -1;
-                    x(2) = 0;
-                    x(3) = 0;
-                    y(0) = 0;
-                    y(1) = 0;
-                    y(2) = 1;
-                    y(3) = -1;
-                    {
-                        int cnt = 0;
-                        for (int cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
+                        p = map(dx + x(cnt2) * cnt, dy + y(cnt2) * cnt, 0);
+                        if ((264 <= p && p < 363) || chipm(7, p) & 4)
                         {
-                            f = 1;
-                            cnt2 = cnt;
-                            {
-                                int cnt = 0;
-                                for (int cnt_end = cnt + (3); cnt < cnt_end;
-                                     ++cnt)
-                                {
-                                    p =
-                                        map(dx + x(cnt2) * cnt,
-                                            dy + y(cnt2) * cnt,
-                                            0);
-                                    if ((264 <= p && p < 363)
-                                        || chipm(7, p) & 4)
-                                    {
-                                        f = 0;
-                                        break;
-                                    }
-                                }
-                            }
-                            if (f == 1)
-                            {
-                                break;
-                            }
+                            f = 0;
+                            break;
                         }
                     }
                     if (f == 1)
                     {
                         break;
                     }
+                }
+                if (f == 1)
+                {
+                    break;
                 }
             }
             inv[ci].param1 = dx;
@@ -1269,33 +1224,26 @@ label_2181_internal:
         pos(wx, wy);
         gcopy(4, 0, 0, ww, wh);
         gmode(1, inf_tiles, inf_tiles);
+        for (int cnt = 0, cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+            y = cnt + inv[ci].param2 - 2;
+            sy = cnt * inf_tiles + wy + 26;
+            for (int cnt = 0, cnt_end = cnt + (7); cnt < cnt_end; ++cnt)
             {
-                y = cnt + inv[ci].param2 - 2;
-                sy = cnt * inf_tiles + wy + 26;
+                x = cnt + inv[ci].param1 - 3;
+                sx = cnt * inf_tiles + wx + 46;
+                p = map(x, y, 0);
+                pos(sx + 1, sy + 1);
+                gcopy(2, p % 33 * inf_tiles, p / 33 * inf_tiles);
+                if (x == inv[ci].param1)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (7); cnt < cnt_end; ++cnt)
+                    if (y == inv[ci].param2)
                     {
-                        x = cnt + inv[ci].param1 - 3;
-                        sx = cnt * inf_tiles + wx + 46;
-                        p = map(x, y, 0);
-                        pos(sx + 1, sy + 1);
-                        gcopy(2, p % 33 * inf_tiles, p / 33 * inf_tiles);
-                        if (x == inv[ci].param1)
-                        {
-                            if (y == inv[ci].param2)
-                            {
-                                pos(sx, sy);
-                                font(
-                                    lang(cfg_font1, cfg_font2), 40 - en * 2, 2);
-                                color(255, 20, 20);
-                                mes(lang(u8"○"s, u8"O"s));
-                                color(0, 0, 0);
-                            }
-                        }
+                        pos(sx, sy);
+                        font(lang(cfg_font1, cfg_font2), 40 - en * 2, 2);
+                        color(255, 20, 20);
+                        mes(lang(u8"○"s, u8"O"s));
+                        color(0, 0, 0);
                     }
                 }
             }
@@ -1708,20 +1656,18 @@ label_2181_internal:
         {
             f = 0;
             inv_getheader(cc);
+            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
+                 ++cnt)
             {
-                int cnt = invhead;
-                for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+                if (inv[cnt].number == 0)
                 {
-                    if (inv[cnt].number == 0)
-                    {
-                        continue;
-                    }
-                    if (inv[cnt].skill == 183)
-                    {
-                        ci = cnt;
-                        f = 1;
-                        break;
-                    }
+                    continue;
+                }
+                if (inv[cnt].skill == 183)
+                {
+                    ci = cnt;
+                    f = 1;
+                    break;
                 }
             }
             if (f == 0)
@@ -1819,12 +1765,26 @@ label_2181_internal:
             return 0;
         }
         f = 0;
+        for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+            y = cdata[cc].position.y + cnt - 1;
+            x = cdata[cc].position.x;
+            if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
             {
-                y = cdata[cc].position.y + cnt - 1;
-                x = cdata[cc].position.x;
+                continue;
+            }
+            if (chipm(0, map(x, y, 0)) == 3)
+            {
+                f = 1;
+                break;
+            }
+        }
+        if (f == 0)
+        {
+            for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+            {
+                y = cdata[cc].position.y;
+                x = cdata[cc].position.x + cnt - 1;
                 if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
                 {
                     continue;
@@ -1833,26 +1793,6 @@ label_2181_internal:
                 {
                     f = 1;
                     break;
-                }
-            }
-        }
-        if (f == 0)
-        {
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
-                {
-                    y = cdata[cc].position.y;
-                    x = cdata[cc].position.x + cnt - 1;
-                    if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
-                    {
-                        continue;
-                    }
-                    if (chipm(0, map(x, y, 0)) == 3)
-                    {
-                        f = 1;
-                        break;
-                    }
                 }
             }
         }
@@ -1929,38 +1869,35 @@ label_2181_internal:
             goto label_2183_internal;
         }
         p = 0;
+        for (int cnt = 0, cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
+            i = 16 - cnt - 1;
+            if (efid == 406)
             {
-                i = 16 - cnt - 1;
-                if (efid == 406)
+                if (p >= 1)
                 {
-                    if (p >= 1)
-                    {
-                        break;
-                    }
+                    break;
                 }
-                if (the_buff_db[cdata[tc].buffs[i].id].type
-                    != buff_data::type_t::hex)
-                {
-                    continue;
-                }
-                if (cdata[tc].buffs[i].id == 13)
-                {
-                    continue;
-                }
-                if (cdata[tc].buffs[i].id == 0)
-                {
-                    continue;
-                }
-                if (rnd(efp * 2 + 1) > rnd(cdata[tc].buffs[i].power + 1))
-                {
-                    delbuff(tc, i);
-                    ++p;
-                    --cnt;
-                    continue;
-                }
+            }
+            if (the_buff_db[cdata[tc].buffs[i].id].type
+                != buff_data::type_t::hex)
+            {
+                continue;
+            }
+            if (cdata[tc].buffs[i].id == 13)
+            {
+                continue;
+            }
+            if (cdata[tc].buffs[i].id == 0)
+            {
+                continue;
+            }
+            if (rnd(efp * 2 + 1) > rnd(cdata[tc].buffs[i].power + 1))
+            {
+                delbuff(tc, i);
+                ++p;
+                --cnt;
+                continue;
             }
         }
         addbuff(tc, 10, efp, 5 + efp / 30);
@@ -1994,24 +1931,21 @@ label_2181_internal:
             u8"たくさんの"s + s + u8"が降ってきた！"s,
             u8"Some "s + s + u8" fall from above!"s));
         autosave = 1 * (gdata_current_map != 35);
+        for (int cnt = 0, cnt_end = cnt + (rnd(3) + 3 + (efstatus >= 1) * 6);
+             cnt < cnt_end;
+             ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (rnd(3) + 3 + (efstatus >= 1) * 6);
-                 cnt < cnt_end;
-                 ++cnt)
+            txtmore();
+            atxspot = 19;
+            if (efstatus >= 0)
             {
-                txtmore();
-                atxspot = 19;
-                if (efstatus >= 0)
-                {
-                    p = random_material(efp / 10, efp / 50);
-                }
-                else
-                {
-                    p = 0;
-                }
-                matgetmain(p, 1);
+                p = random_material(efp / 10, efp / 50);
             }
+            else
+            {
+                p = 0;
+            }
+            matgetmain(p, 1);
         }
         break;
     case 632:
@@ -2058,74 +1992,68 @@ label_2181_internal:
         {
             p = 2 + rnd(3);
         }
+        for (int cnt = 0, cnt_end = cnt + (p); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (p); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
             {
+                int tid = rnd(45);
+                int stat = get_trait_info(0, tid);
+                if (stat == 0 || traitref != 1)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
+                    continue;
+                }
+                if (rnd(2))
+                {
+                    p = 1;
+                }
+                else
+                {
+                    p = -1;
+                }
+                if (trait(tid) >= traitref(2))
+                {
+                    p = -1;
+                }
+                if (trait(tid) <= traitref(1))
+                {
+                    p = 1;
+                }
+                if (efstatus <= -1)
+                {
+                    if (p == 1)
                     {
-                        int tid = rnd(45);
-                        int stat = get_trait_info(0, tid);
-                        if (stat == 0 || traitref != 1)
+                        continue;
+                    }
+                }
+                else if (p == -1)
+                {
+                    if (efstatus >= 1)
+                    {
+                        if (rnd(3) == 0)
                         {
                             continue;
                         }
-                        if (rnd(2))
-                        {
-                            p = 1;
-                        }
-                        else
-                        {
-                            p = -1;
-                        }
-                        if (trait(tid) >= traitref(2))
-                        {
-                            p = -1;
-                        }
-                        if (trait(tid) <= traitref(1))
-                        {
-                            p = 1;
-                        }
-                        if (efstatus <= -1)
-                        {
-                            if (p == 1)
-                            {
-                                continue;
-                            }
-                        }
-                        else if (p == -1)
-                        {
-                            if (efstatus >= 1)
-                            {
-                                if (rnd(3) == 0)
-                                {
-                                    continue;
-                                }
-                            }
-                            if (efid == 1144)
-                            {
-                                continue;
-                            }
-                        }
-                        trait(tid) += p;
-                        txt(lang(u8"あなたは変容した！ "s, u8"You mutate."s));
-                        if (p > 0)
-                        {
-                            txtef(2);
-                            txt(traitrefn(0));
-                        }
-                        else
-                        {
-                            txtef(3);
-                            txt(traitrefn(1));
-                        }
-                        animeload(8, 0);
-                        f = 1;
-                        break;
+                    }
+                    if (efid == 1144)
+                    {
+                        continue;
                     }
                 }
+                trait(tid) += p;
+                txt(lang(u8"あなたは変容した！ "s, u8"You mutate."s));
+                if (p > 0)
+                {
+                    txtef(2);
+                    txt(traitrefn(0));
+                }
+                else
+                {
+                    txtef(3);
+                    txt(traitrefn(1));
+                }
+                animeload(8, 0);
+                f = 1;
+                break;
             }
         }
         if (f == 0)
@@ -2151,53 +2079,48 @@ label_2181_internal:
             goto label_2182_internal;
         }
         f = 0;
-        {
-            int cnt = 0;
-            for (int cnt_end =
+        for (int cnt = 0,
+                 cnt_end =
                      cnt + (1 + (efstatus >= 1) + (efstatus >= 0) + rnd(2));
-                 cnt < cnt_end;
-                 ++cnt)
+             cnt < cnt_end;
+             ++cnt)
+        {
+            for (int cnt = 0, cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
             {
+                int tid = rnd(217);
+                int stat = get_trait_info(0, tid);
+                if (stat == 0 || traitref != 1)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
-                    {
-                        int tid = rnd(217);
-                        int stat = get_trait_info(0, tid);
-                        if (stat == 0 || traitref != 1)
-                        {
-                            continue;
-                        }
-                        if (trait(tid) == 0)
-                        {
-                            continue;
-                        }
-                        if (trait(tid) > 0)
-                        {
-                            p = -1;
-                        }
-                        if (trait(tid) < 0)
-                        {
-                            p = 1;
-                        }
-                        trait(tid) = 0;
-                        txt(lang(
-                            u8"あなたは元の自分に近づいた気がした。"s,
-                            u8"You are now one step closer to yourself."s));
-                        if (p > 0)
-                        {
-                            txtef(2);
-                            txt(traitrefn(0));
-                        }
-                        else
-                        {
-                            txtef(3);
-                            txt(traitrefn(1));
-                        }
-                        f = 1;
-                        break;
-                    }
+                    continue;
                 }
+                if (trait(tid) == 0)
+                {
+                    continue;
+                }
+                if (trait(tid) > 0)
+                {
+                    p = -1;
+                }
+                if (trait(tid) < 0)
+                {
+                    p = 1;
+                }
+                trait(tid) = 0;
+                txt(lang(
+                    u8"あなたは元の自分に近づいた気がした。"s,
+                    u8"You are now one step closer to yourself."s));
+                if (p > 0)
+                {
+                    txtef(2);
+                    txt(traitrefn(0));
+                }
+                else
+                {
+                    txtef(3);
+                    txt(traitrefn(1));
+                }
+                f = 1;
+                break;
             }
         }
         if (f == 0)
@@ -2232,15 +2155,12 @@ label_2181_internal:
             txt(lang(
                 u8"冥界から死霊が呼び出された！"s,
                 u8"Hoards of undead raise from the hell!"s));
+            for (int cnt = 0, cnt_end = cnt + (4 + rnd(4)); cnt < cnt_end;
+                 ++cnt)
             {
-                int cnt = 0;
-                for (int cnt_end = cnt + (4 + rnd(4)); cnt < cnt_end; ++cnt)
-                {
-                    flt(calcobjlv(cdata[0].level), calcfixlv(3));
-                    fltn(u8"undead"s);
-                    characreate(
-                        -1, 0, cdata[0].position.x, cdata[0].position.y);
-                }
+                flt(calcobjlv(cdata[0].level), calcfixlv(3));
+                fltn(u8"undead"s);
+                characreate(-1, 0, cdata[0].position.x, cdata[0].position.y);
             }
             obvious = 0;
             break;
@@ -2325,48 +2245,46 @@ label_2181_internal:
         inv_getheader(tc);
         p(1) = 0;
         p(2) = 0;
+        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
+             ++cnt)
         {
-            int cnt = invhead;
-            for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+            if (inv[cnt].number == 0)
             {
-                if (inv[cnt].number == 0)
+                continue;
+            }
+            if (inv[cnt].curse_state >= 0)
+            {
+                continue;
+            }
+            ci = cnt;
+            p = 0;
+            if (inv[ci].curse_state == -1)
+            {
+                p = rnd(200) + 1;
+            }
+            if (inv[ci].curse_state == -2)
+            {
+                p = rnd(1000) + 1;
+            }
+            if (efstatus >= 1)
+            {
+                p = p / 2 + 1;
+            }
+            else if (inv[ci].body_part == 0)
+            {
+                continue;
+            }
+            if (p != 0)
+            {
+                if (efp >= p)
                 {
-                    continue;
+                    ++p(1);
+                    inv[ci].curse_state = 0;
+                    item_stack(tc, ci, 1);
                 }
-                if (inv[cnt].curse_state >= 0)
+                else
                 {
-                    continue;
-                }
-                ci = cnt;
-                p = 0;
-                if (inv[ci].curse_state == -1)
-                {
-                    p = rnd(200) + 1;
-                }
-                if (inv[ci].curse_state == -2)
-                {
-                    p = rnd(1000) + 1;
-                }
-                if (efstatus >= 1)
-                {
-                    p = p / 2 + 1;
-                }
-                else if (inv[ci].body_part == 0)
-                {
-                    continue;
-                }
-                if (p != 0)
-                {
-                    if (efp >= p)
-                    {
-                        ++p(1);
-                        inv[ci].curse_state = 0;
-                        item_stack(tc, ci, 1);
-                    }
-                    else
-                    {
-                        ++p(2);
-                    }
+                    ++p(2);
                 }
             }
         }
@@ -2448,86 +2366,74 @@ label_2181_internal:
             break;
         }
         f = 0;
+        for (int cnt = 0, cnt_end = cnt + (1 + (efstatus >= 1)); cnt < cnt_end;
+             ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (1 + (efstatus >= 1)); cnt < cnt_end;
-                 ++cnt)
+            cnt2 = cnt;
+            for (int cnt = 0, cnt_end = cnt + (2000); cnt < cnt_end; ++cnt)
             {
-                cnt2 = cnt;
+                await();
+                p = rnd(67) + 400;
+                if (p == 441)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (2000); cnt < cnt_end; ++cnt)
+                    if (rnd(10))
                     {
-                        await();
-                        p = rnd(67) + 400;
-                        if (p == 441)
+                        continue;
+                    }
+                }
+                if (efstatus >= 0)
+                {
+                    if (the_ability_db[p].related_basic_attribute != 0)
+                    {
+                        if (cnt2 == 0)
                         {
-                            if (rnd(10))
-                            {
-                                continue;
-                            }
-                        }
-                        if (efstatus >= 0)
-                        {
-                            if (the_ability_db[p].related_basic_attribute != 0)
-                            {
-                                if (cnt2 == 0)
-                                {
-                                    s = lang(u8"突然、"s, u8"Suddenly, "s);
-                                }
-                                else
-                                {
-                                    s = lang(u8"さらに、"s, u8"Futhermore, "s);
-                                }
-                                skillgain(0, p, 1, 200);
-                                txtef(2);
-                                txt(lang(
-                                    s + name(0) + u8"は"s
-                                        + i18n::_(
-                                              u8"ability",
-                                              std::to_string(p),
-                                              u8"name")
-                                        + u8"の魔法の知識を得た。"s,
-                                    s + u8"you gain knowledge of a spell, "s
-                                        + i18n::_(
-                                              u8"ability",
-                                              std::to_string(p),
-                                              u8"name")
-                                        + u8"."s));
-                                snd(24);
-                                f = 1;
-                                break;
-                            }
+                            s = lang(u8"突然、"s, u8"Suddenly, "s);
                         }
                         else
                         {
-                            p = p - 400;
-                            if (spell(p) > 0)
-                            {
-                                spell(p) = 0;
-                                txt(lang(
-                                    u8"これは呪われている！"s,
-                                    u8"It's cursed!"s));
-                                txtef(3);
-                                txt(lang(
-                                    u8"突然、"s + name(0) + u8"は"s
-                                        + i18n::_(
-                                              u8"ability",
-                                              std::to_string(p + 400),
-                                              u8"name")
-                                        + u8"の魔法の知識を失った。"s,
-                                    u8"Suddenly, you lose knowledge of a spell, "s
-                                        + i18n::_(
-                                              u8"ability",
-                                              std::to_string(p + 400),
-                                              u8"name")
-                                        + u8"."s));
-                                snd(117);
-                                animeload(14, 0);
-                                f = 1;
-                                break;
-                            }
+                            s = lang(u8"さらに、"s, u8"Futhermore, "s);
                         }
+                        skillgain(0, p, 1, 200);
+                        txtef(2);
+                        txt(lang(
+                            s + name(0) + u8"は"s
+                                + i18n::_(
+                                      u8"ability", std::to_string(p), u8"name")
+                                + u8"の魔法の知識を得た。"s,
+                            s + u8"you gain knowledge of a spell, "s
+                                + i18n::_(
+                                      u8"ability", std::to_string(p), u8"name")
+                                + u8"."s));
+                        snd(24);
+                        f = 1;
+                        break;
+                    }
+                }
+                else
+                {
+                    p = p - 400;
+                    if (spell(p) > 0)
+                    {
+                        spell(p) = 0;
+                        txt(lang(u8"これは呪われている！"s, u8"It's cursed!"s));
+                        txtef(3);
+                        txt(lang(
+                            u8"突然、"s + name(0) + u8"は"s
+                                + i18n::_(
+                                      u8"ability",
+                                      std::to_string(p + 400),
+                                      u8"name")
+                                + u8"の魔法の知識を失った。"s,
+                            u8"Suddenly, you lose knowledge of a spell, "s
+                                + i18n::_(
+                                      u8"ability",
+                                      std::to_string(p + 400),
+                                      u8"name")
+                                + u8"."s));
+                        snd(117);
+                        animeload(14, 0);
+                        f = 1;
+                        break;
                     }
                 }
             }
@@ -2572,18 +2478,15 @@ label_2181_internal:
         if (efstatus <= -1)
         {
             txt(lang(u8"これは呪われている！"s, u8"It's cursed!"s));
+            for (int cnt = 10, cnt_end = cnt + (40); cnt < cnt_end; ++cnt)
             {
-                int cnt = 10;
-                for (int cnt_end = cnt + (40); cnt < cnt_end; ++cnt)
+                if (rnd(3) == 0)
                 {
-                    if (rnd(3) == 0)
+                    if (cnt <= 17)
                     {
-                        if (cnt <= 17)
+                        if (sdata(cnt, tc) != 0)
                         {
-                            if (sdata(cnt, tc) != 0)
-                            {
-                                skillexp(cnt, tc, -1000);
-                            }
+                            skillexp(cnt, tc, -1000);
                         }
                     }
                 }
@@ -2699,9 +2602,8 @@ label_2181_internal:
         refresh_character();
         break;
     case 1119:
-    {
-        int cnt = 0;
-        for (int cnt_end = cnt + (1 + (efstatus >= 1)); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = cnt + (1 + (efstatus >= 1)); cnt < cnt_end;
+             ++cnt)
         {
             cnt2 = cnt;
             while (1)
@@ -2765,7 +2667,6 @@ label_2181_internal:
                 }
             }
         }
-    }
         r1 = tc;
         refresh_character();
         autosave = 1 * (gdata_current_map != 35);
@@ -2795,15 +2696,10 @@ label_2181_internal:
     case 1113:
         if (efstatus >= 1)
         {
+            for (int cnt = 10, cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
             {
-                int cnt = 10;
-                for (int cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
-                {
-                    modify_potential(
-                        tc,
-                        cnt,
-                        rnd(sdata.get(cnt, tc).potential / 20 + 3) + 1);
-                }
+                modify_potential(
+                    tc, cnt, rnd(sdata.get(cnt, tc).potential / 20 + 3) + 1);
             }
             txt(lang(
                 name(tc) + u8"の全ての能力の潜在能力が上昇した。"s,
@@ -2869,54 +2765,39 @@ label_2181_internal:
         {
             p = 2;
         }
+        for (int cnt = 0, cnt_end = cnt + (p); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (p); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = cnt + (mdata(1)); cnt < cnt_end; ++cnt)
             {
+                y = cnt;
+                for (int cnt = 0, cnt_end = cnt + (mdata(0)); cnt < cnt_end;
+                     ++cnt)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (mdata(1)); cnt < cnt_end; ++cnt)
+                    x = cnt;
+                    p = dist(cdata[tc].position.x, cdata[tc].position.y, x, y);
+                    if (efstatus <= -1)
                     {
-                        y = cnt;
+                        if (efid == 429)
                         {
-                            int cnt = 0;
-                            for (int cnt_end = cnt + (mdata(0)); cnt < cnt_end;
-                                 ++cnt)
+                            map(x, y, 2) = tile_default;
+                        }
+                        if (efid == 430)
+                        {
+                            map(x, y, 5) = 0;
+                        }
+                        continue;
+                    }
+                    if (p < 7 || rnd(efp + 1) > rnd(p * 8 + 1) || efstatus >= 1)
+                    {
+                        if (efid == 429)
+                        {
+                            map(x, y, 2) = map(x, y, 0);
+                        }
+                        if (efid == 430)
+                        {
+                            if (map(x, y, 6) != 0 || map(x, y, 5) != 0)
                             {
-                                x = cnt;
-                                p = dist(
-                                    cdata[tc].position.x,
-                                    cdata[tc].position.y,
-                                    x,
-                                    y);
-                                if (efstatus <= -1)
-                                {
-                                    if (efid == 429)
-                                    {
-                                        map(x, y, 2) = tile_default;
-                                    }
-                                    if (efid == 430)
-                                    {
-                                        map(x, y, 5) = 0;
-                                    }
-                                    continue;
-                                }
-                                if (p < 7 || rnd(efp + 1) > rnd(p * 8 + 1)
-                                    || efstatus >= 1)
-                                {
-                                    if (efid == 429)
-                                    {
-                                        map(x, y, 2) = map(x, y, 0);
-                                    }
-                                    if (efid == 430)
-                                    {
-                                        if (map(x, y, 6) != 0
-                                            || map(x, y, 5) != 0)
-                                        {
-                                            map(x, y, 2) = map(x, y, 0);
-                                        }
-                                    }
-                                }
+                                map(x, y, 2) = map(x, y, 0);
                             }
                         }
                     }
@@ -3286,47 +3167,41 @@ label_2181_internal:
             }
         }
         i = 0;
+        for (int cnt = 100, cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
         {
-            int cnt = 100;
-            for (int cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+            if (cdata_body_part(tc, cnt) % 10000 == 0)
             {
-                if (cdata_body_part(tc, cnt) % 10000 == 0)
+                continue;
+            }
+            p(i) = cdata_body_part(tc, cnt) % 10000 - 1;
+            if (inv[p(i)].curse_state == 1)
+            {
+                if (rnd(10))
                 {
                     continue;
                 }
-                p(i) = cdata_body_part(tc, cnt) % 10000 - 1;
-                if (inv[p(i)].curse_state == 1)
+            }
+            ++i;
+        }
+        if (i == 0)
+        {
+            inv_getheader(tc);
+            for (int cnt = 0, cnt_end = cnt + (200); cnt < cnt_end; ++cnt)
+            {
+                p = invhead + rnd(invrange);
+                if (inv[p].number == 0)
+                {
+                    continue;
+                }
+                if (inv[p].curse_state == 1)
                 {
                     if (rnd(10))
                     {
                         continue;
                     }
                 }
-                ++i;
-            }
-        }
-        if (i == 0)
-        {
-            inv_getheader(tc);
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (200); cnt < cnt_end; ++cnt)
-                {
-                    p = invhead + rnd(invrange);
-                    if (inv[p].number == 0)
-                    {
-                        continue;
-                    }
-                    if (inv[p].curse_state == 1)
-                    {
-                        if (rnd(10))
-                        {
-                            continue;
-                        }
-                    }
-                    i = 1;
-                    break;
-                }
+                i = 1;
+                break;
             }
         }
         if (i > 0)
@@ -3361,19 +3236,16 @@ label_2181_internal:
         break;
     case 1118:
         f = 0;
+        for (int cnt = 0, cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
+            p = rnd(11) + 50;
+            if (sdata.get(p, tc).original_level >= 150)
             {
-                p = rnd(11) + 50;
-                if (sdata.get(p, tc).original_level >= 150)
+                ++f;
+                resistmod(tc, p, 50 * -1);
+                if (f >= efp / 100)
                 {
-                    ++f;
-                    resistmod(tc, p, 50 * -1);
-                    if (f >= efp / 100)
-                    {
-                        break;
-                    }
+                    break;
                 }
             }
         }
@@ -3525,58 +3397,55 @@ label_2181_internal:
             p(1) = 1 + rnd((efp / 100 + 2));
         }
         snd(68);
+        for (int cnt = 0, cnt_end = cnt + (p(1)); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (p(1)); cnt < cnt_end; ++cnt)
+            x = rnd(p) + tlocx - rnd(p);
+            y = rnd(p) + tlocy - rnd(p);
+            f = 1;
+            if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
             {
-                x = rnd(p) + tlocx - rnd(p);
-                y = rnd(p) + tlocy - rnd(p);
-                f = 1;
-                if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
+                f = 0;
+            }
+            else if (chipm(7, map(x, y, 0)) & 4)
+            {
+                f = 0;
+            }
+            if (dist(tlocx, tlocy, x, y) >= p)
+            {
+                f = 0;
+            }
+            if (f == 0)
+            {
+                if (rnd(2) == 0)
                 {
-                    f = 0;
+                    continue;
                 }
-                else if (chipm(7, map(x, y, 0)) & 4)
+                else
                 {
-                    f = 0;
+                    --cnt;
+                    continue;
                 }
-                if (dist(tlocx, tlocy, x, y) >= p)
-                {
-                    f = 0;
-                }
-                if (f == 0)
-                {
-                    if (rnd(2) == 0)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        --cnt;
-                        continue;
-                    }
-                }
-                if (efid == 634)
-                {
-                    addmef(x, y, 4, 20, rnd(4) + 2, efp, cc);
-                }
-                if (efid == 455)
-                {
-                    addmef(x, y, 3, 19, rnd(10) + 5, efp, cc);
-                }
-                if (efid == 456)
-                {
-                    addmef(x, y, 5, 24, rnd(10) + 5, efp, cc);
-                    mapitem_fire(x, y);
-                }
-                if (efid == 436)
-                {
-                    addmef(x, y, 1, 11, -1, efp * 2);
-                }
-                if (efid == 437)
-                {
-                    addmef(x, y, 2, 30, 8 + rnd((15 + efp / 25)), efp);
-                }
+            }
+            if (efid == 634)
+            {
+                addmef(x, y, 4, 20, rnd(4) + 2, efp, cc);
+            }
+            if (efid == 455)
+            {
+                addmef(x, y, 3, 19, rnd(10) + 5, efp, cc);
+            }
+            if (efid == 456)
+            {
+                addmef(x, y, 5, 24, rnd(10) + 5, efp, cc);
+                mapitem_fire(x, y);
+            }
+            if (efid == 436)
+            {
+                addmef(x, y, 1, 11, -1, efp * 2);
+            }
+            if (efid == 437)
+            {
+                addmef(x, y, 2, 30, 8 + rnd((15 + efp / 25)), efp);
             }
         }
         break;
@@ -3651,18 +3520,14 @@ label_2181_internal:
         inv[ci].subname = 40000 + rnd(30000);
         p = rnd(rnd(rnd(10) + 1) + 3) + 3;
         egolv = rnd(std::clamp(rnd(6), 0, 4) + 1);
+        for (int cnt = 0, cnt_end = cnt + (p); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (p); cnt < cnt_end; ++cnt)
-            {
-                randomize(inv[efcibk].param1);
-                encadd(
-                    ci,
-                    randomenc(randomenclv(egolv)),
-                    randomencp() + (fixlv == 5) * 100
-                        + (ibit(15, ci) == 1) * 100,
-                    20 - (fixlv == 5) * 10 - (ibit(15, ci) == 1) * 20);
-            }
+            randomize(inv[efcibk].param1);
+            encadd(
+                ci,
+                randomenc(randomenclv(egolv)),
+                randomencp() + (fixlv == 5) * 100 + (ibit(15, ci) == 1) * 100,
+                20 - (fixlv == 5) * 10 - (ibit(15, ci) == 1) * 20);
         }
         randomize();
         txt(lang(
@@ -3962,32 +3827,29 @@ label_2181_internal:
             {
                 dbid = inv[ci].id;
                 access_item_db(2);
+                for (int cnt = 0, cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
+                    if (ichargelevel == 1)
                     {
-                        if (ichargelevel == 1)
-                        {
-                            p = 100;
-                            break;
-                        }
-                        if (ichargelevel == 2)
-                        {
-                            p = 25;
-                            break;
-                        }
-                        if (ichargelevel <= 4)
-                        {
-                            p = 5;
-                            break;
-                        }
-                        if (ichargelevel <= 6)
-                        {
-                            p = 3;
-                            break;
-                        }
-                        p = 1;
+                        p = 100;
+                        break;
                     }
+                    if (ichargelevel == 2)
+                    {
+                        p = 25;
+                        break;
+                    }
+                    if (ichargelevel <= 4)
+                    {
+                        p = 5;
+                        break;
+                    }
+                    if (ichargelevel <= 6)
+                    {
+                        p = 3;
+                        break;
+                    }
+                    p = 1;
                 }
                 animeload(8, cc);
                 p = p * inv[ci].count;
@@ -4263,42 +4125,39 @@ label_2181_internal:
     case 631:
         txtef(4);
         txt(lang(u8"スウォーム！"s, u8"Swarm!"s));
+        for (int cnt = 0, cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
+            if (cdata[cc].state != 1)
             {
-                if (cdata[cc].state != 1)
-                {
-                    continue;
-                }
-                if (cdata[cnt].state != 1)
-                {
-                    continue;
-                }
-                if (cc == cnt)
-                {
-                    continue;
-                }
-                if (cnt <= 16)
-                {
-                    continue;
-                }
-                tc = cnt;
-                dx = cdata[tc].position.x;
-                dy = cdata[tc].position.y;
-                if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy)
-                    > the_ability_db[631].sdataref3 % 1000 + 1)
-                {
-                    continue;
-                }
-                if (fov_los(cdata[cc].position.x, cdata[cc].position.y, dx, dy)
-                    == 0)
-                {
-                    continue;
-                }
-                play_animation(9);
-                try_to_melee_attack();
+                continue;
             }
+            if (cdata[cnt].state != 1)
+            {
+                continue;
+            }
+            if (cc == cnt)
+            {
+                continue;
+            }
+            if (cnt <= 16)
+            {
+                continue;
+            }
+            tc = cnt;
+            dx = cdata[tc].position.x;
+            dy = cdata[tc].position.y;
+            if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy)
+                > the_ability_db[631].sdataref3 % 1000 + 1)
+            {
+                continue;
+            }
+            if (fov_los(cdata[cc].position.x, cdata[cc].position.y, dx, dy)
+                == 0)
+            {
+                continue;
+            }
+            play_animation(9);
+            try_to_melee_attack();
         }
         break;
     case 659:
@@ -4320,9 +4179,7 @@ label_2181_internal:
         }
         break;
     case 466:
-    {
-        int cnt = 0;
-        for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
         {
             if (cdata[cnt].state != 1)
             {
@@ -4351,32 +4208,28 @@ label_2181_internal:
             }
             cdata[tc].gravity += 100 + rnd(100);
         }
-    }
-    break;
+        break;
     case 657:
         txtef(4);
         txt(lang(u8"うみみゃぁ！"s, u8"Mewmewmew!"s));
         animode = 0;
         play_animation(19);
+        for (int cnt = 0, cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
+            if (cdata[cc].state != 1)
             {
-                if (cdata[cc].state != 1)
-                {
-                    continue;
-                }
-                if (cdata[cnt].state != 1)
-                {
-                    continue;
-                }
-                if (cc == cnt)
-                {
-                    continue;
-                }
-                tc = cnt;
-                dmghp(tc, 9999999, cc);
+                continue;
             }
+            if (cdata[cnt].state != 1)
+            {
+                continue;
+            }
+            if (cc == cnt)
+            {
+                continue;
+            }
+            tc = cnt;
+            dmghp(tc, 9999999, cc);
         }
         break;
     case 465:
@@ -4385,31 +4238,25 @@ label_2181_internal:
             u8"隕石が落ちてきた！"s,
             u8"Innumerable meteorites fall all over the area!"s));
         play_animation(22);
+        for (int cnt = 0, cnt_end = cnt + (mdata(1)); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (mdata(1)); cnt < cnt_end; ++cnt)
+            dy = cnt;
+            for (int cnt = 0, cnt_end = cnt + (mdata(0)); cnt < cnt_end; ++cnt)
             {
-                dy = cnt;
+                dx = cnt;
+                if (rnd(3) == 0)
                 {
-                    int cnt = 0;
-                    for (int cnt_end = cnt + (mdata(0)); cnt < cnt_end; ++cnt)
-                    {
-                        dx = cnt;
-                        if (rnd(3) == 0)
-                        {
-                            map(dx, dy, 0) = 12 + rnd(2);
-                        }
-                        if (rnd(40) == 0)
-                        {
-                            addmef(dx, dy, 5, 24, rnd(4) + 3, 50);
-                        }
-                        if (map(dx, dy, 1) != 0)
-                        {
-                            tc = map(dx, dy, 1) - 1;
-                            dmg = sdata(16, cc) * efp / 10;
-                            dmghp(tc, dmg, cc, 50, 1000);
-                        }
-                    }
+                    map(dx, dy, 0) = 12 + rnd(2);
+                }
+                if (rnd(40) == 0)
+                {
+                    addmef(dx, dy, 5, 24, rnd(4) + 3, 50);
+                }
+                if (map(dx, dy, 1) != 0)
+                {
+                    tc = map(dx, dy, 1) - 1;
+                    dmg = sdata(16, cc) * efp / 10;
+                    dmghp(tc, dmg, cc, 50, 1000);
                 }
             }
         }
@@ -4421,53 +4268,50 @@ label_2181_internal:
                 name(cc) + u8"は仲間を鼓舞した。"s,
                 name(cc) + u8" cheer"s + _s(cc) + u8"."s));
         }
+        for (int cnt = 0, cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
+            if (cdata[cnt].state != 1)
             {
-                if (cdata[cnt].state != 1)
-                {
-                    continue;
-                }
-                if (cc == cnt)
-                {
-                    continue;
-                }
-                if (cc < 16)
-                {
-                    if (cnt >= 16)
-                    {
-                        continue;
-                    }
-                    else if (cdata[cc].relationship != cdata[tc].relationship)
-                    {
-                        continue;
-                    }
-                }
-                tc = cnt;
-                dx = cdata[tc].position.x;
-                dy = cdata[tc].position.y;
-                if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy)
-                    > the_ability_db[656].sdataref3 % 1000 + 1)
-                {
-                    continue;
-                }
-                if (fov_los(cdata[cc].position.x, cdata[cc].position.y, dx, dy)
-                    == 0)
-                {
-                    continue;
-                }
-                if (is_in_fov(tc))
-                {
-                    txtef(4);
-                    txt(lang(
-                        name(tc) + u8"は興奮した！"s,
-                        name(tc) + u8" "s + is(tc) + u8" excited!"s));
-                }
-                addbuff(tc, 5, sdata(17, cc) * 5 + 50, 15);
-                addbuff(tc, 7, sdata(17, cc) * 5 + 100, 60);
-                addbuff(tc, 18, 1500, 30);
+                continue;
             }
+            if (cc == cnt)
+            {
+                continue;
+            }
+            if (cc < 16)
+            {
+                if (cnt >= 16)
+                {
+                    continue;
+                }
+                else if (cdata[cc].relationship != cdata[tc].relationship)
+                {
+                    continue;
+                }
+            }
+            tc = cnt;
+            dx = cdata[tc].position.x;
+            dy = cdata[tc].position.y;
+            if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy)
+                > the_ability_db[656].sdataref3 % 1000 + 1)
+            {
+                continue;
+            }
+            if (fov_los(cdata[cc].position.x, cdata[cc].position.y, dx, dy)
+                == 0)
+            {
+                continue;
+            }
+            if (is_in_fov(tc))
+            {
+                txtef(4);
+                txt(lang(
+                    name(tc) + u8"は興奮した！"s,
+                    name(tc) + u8" "s + is(tc) + u8" excited!"s));
+            }
+            addbuff(tc, 5, sdata(17, cc) * 5 + 50, 15);
+            addbuff(tc, 7, sdata(17, cc) * 5 + 100, 60);
+            addbuff(tc, 18, 1500, 30);
         }
         break;
     case 1131:
@@ -4605,43 +4449,39 @@ label_2181_internal:
         }
         p = -1;
         inv_getheader(tc);
+        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
+             ++cnt)
         {
-            int cnt = invhead;
-            for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+            if (inv[cnt].number == 0)
             {
-                if (inv[cnt].number == 0)
-                {
-                    continue;
-                }
-                if (inv[cnt].id == 618)
-                {
-                    p = cnt;
-                    break;
-                }
+                continue;
+            }
+            if (inv[cnt].id == 618)
+            {
+                p = cnt;
+                break;
             }
         }
         if (p == -1)
         {
             inv_getheader(tc);
+            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
+                 ++cnt)
             {
-                int cnt = invhead;
-                for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+                if (inv[cnt].number == 0)
                 {
-                    if (inv[cnt].number == 0)
-                    {
-                        continue;
-                    }
-                    if (ibit(5, cnt))
-                    {
-                        continue;
-                    }
-                    if (the_item_db[inv[cnt].id]->category != 57000)
-                    {
-                        continue;
-                    }
-                    p = cnt;
-                    break;
+                    continue;
                 }
+                if (ibit(5, cnt))
+                {
+                    continue;
+                }
+                if (the_item_db[inv[cnt].id]->category != 57000)
+                {
+                    continue;
+                }
+                p = cnt;
+                break;
             }
         }
         if (p == -1)
@@ -4677,43 +4517,38 @@ label_2181_internal:
         break;
     case 464:
         animeload(10, tc);
+        for (int cnt = 0,
+                 cnt_end = cnt + (std::clamp(4 + rnd((efp / 50 + 1)), 1, 15));
+             cnt < cnt_end;
+             ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end =
-                     cnt + (std::clamp(4 + rnd((efp / 50 + 1)), 1, 15));
-                 cnt < cnt_end;
-                 ++cnt)
+            snd(64);
+            flt(calcobjlv(efp / 10), calcfixlv(3));
+            dbid = 0;
+            dbid = 54;
+            p = 400 + rnd(efp);
+            if (rnd(30) == 0)
             {
-                snd(64);
-                flt(calcobjlv(efp / 10), calcfixlv(3));
-                dbid = 0;
-                dbid = 54;
-                p = 400 + rnd(efp);
-                if (rnd(30) == 0)
-                {
-                    dbid = 55;
-                    p = 1;
-                }
-                if (rnd(80) == 0)
-                {
-                    dbid = 622;
-                    p = 1;
-                }
-                if (rnd(2000) == 0)
-                {
-                    dbid = 290;
-                    p = 1;
-                }
-                nostack = 1;
-                itemcreate(
-                    -1, dbid, cdata[cc].position.x, cdata[cc].position.y, p);
-                txt(lang(
-                    itemname(ci) + u8"が降ってきた！"s,
-                    itemname(ci) + u8" fall"s + _s2(inv[ci].number)
-                        + u8" down!"s));
-                await(100);
-                redraw(1);
+                dbid = 55;
+                p = 1;
             }
+            if (rnd(80) == 0)
+            {
+                dbid = 622;
+                p = 1;
+            }
+            if (rnd(2000) == 0)
+            {
+                dbid = 290;
+                p = 1;
+            }
+            nostack = 1;
+            itemcreate(-1, dbid, cdata[cc].position.x, cdata[cc].position.y, p);
+            txt(lang(
+                itemname(ci) + u8"が降ってきた！"s,
+                itemname(ci) + u8" fall"s + _s2(inv[ci].number) + u8" down!"s));
+            await(100);
+            redraw(1);
         }
         break;
     case 463:
@@ -4730,12 +4565,10 @@ label_2181_internal:
         else
         {
             inv_getheader(-1);
+            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
+                 ++cnt)
             {
-                int cnt = invhead;
-                for (int cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
-                {
-                    inv[cnt].number = 0;
-                }
+                inv[cnt].number = 0;
             }
         }
         shoptrade = 0;

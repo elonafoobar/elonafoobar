@@ -184,62 +184,59 @@ void key_check(int prm_299)
             p_at_m19 += 4;
         }
         a_at_m19 = 0;
+        for (int cnt = 0, cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
         {
-            int cnt = 0;
-            for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
+            if (HMMBITCHECK(j_at_m19, 4 + cnt))
             {
-                if (HMMBITCHECK(j_at_m19, 4 + cnt))
+                a_at_m19 = 1;
+                if (jkey(cnt) == key_alter)
                 {
-                    a_at_m19 = 1;
-                    if (jkey(cnt) == key_alter)
+                    key_alt = 1;
+                }
+                if (jkey(cnt) == key_cancel)
+                {
+                    key_shift = 1;
+                    if (p_at_m19 != 0)
                     {
-                        key_alt = 1;
+                        keybd_wait = 100000;
                     }
-                    if (jkey(cnt) == key_cancel)
+                }
+                if (prevjoy_at_m19 != cnt)
+                {
+                    key = jkey(cnt);
+                    prevjoy_at_m19 = cnt;
+                    if (key == key_esc)
                     {
-                        key_shift = 1;
-                        if (p_at_m19 != 0)
-                        {
-                            keybd_wait = 100000;
-                        }
+                        key = key_cancel;
+                        key_escape = 1;
                     }
-                    if (prevjoy_at_m19 != cnt)
+                    if (prm_299 == 0)
                     {
-                        key = jkey(cnt);
-                        prevjoy_at_m19 = cnt;
-                        if (key == key_esc)
+                        b_at_m19 = 0;
+                        if (key == key_fire)
                         {
-                            key = key_cancel;
-                            key_escape = 1;
+                            key = key_northeast;
+                            b_at_m19 = 1;
                         }
-                        if (prm_299 == 0)
+                        if (key == key_target)
                         {
-                            b_at_m19 = 0;
-                            if (key == key_fire)
-                            {
-                                key = key_northeast;
-                                b_at_m19 = 1;
-                            }
-                            if (key == key_target)
-                            {
-                                key = key_northwest;
-                                b_at_m19 = 1;
-                            }
-                            if (key == key_get)
-                            {
-                                key = key_northeast;
-                                b_at_m19 = 1;
-                            }
-                            if (key == key_alter)
-                            {
-                                key = key_northwest;
-                                b_at_m19 = 1;
-                            }
-                            if (b_at_m19 == 0 && key != key_enter
-                                && key != key_cancel && key != key_esc)
-                            {
-                                key = key_identify;
-                            }
+                            key = key_northwest;
+                            b_at_m19 = 1;
+                        }
+                        if (key == key_get)
+                        {
+                            key = key_northeast;
+                            b_at_m19 = 1;
+                        }
+                        if (key == key_alter)
+                        {
+                            key = key_northwest;
+                            b_at_m19 = 1;
+                        }
+                        if (b_at_m19 == 0 && key != key_enter
+                            && key != key_cancel && key != key_esc)
+                        {
+                            key = key_identify;
                         }
                     }
                 }
@@ -510,19 +507,13 @@ void bmes(const std::string& prm_301, int prm_302, int prm_303, int prm_304)
     mes_color_at_m21(0) = prm_302;
     mes_color_at_m21(1) = prm_303;
     mes_color_at_m21(2) = prm_304;
+    for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+        mes_y_at_m21 = cnt + pos_y_at_m21 - 1;
+        for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
         {
-            mes_y_at_m21 = cnt + pos_y_at_m21 - 1;
-            {
-                int cnt = 0;
-                for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
-                {
-                    pos(pos_x_at_m21 - 1 + cnt, mes_y_at_m21);
-                    mes(prm_301);
-                }
-            }
+            pos(pos_x_at_m21 - 1 + cnt, mes_y_at_m21);
+            mes(prm_301);
         }
     }
     color(mes_color_at_m21(0), mes_color_at_m21(1), mes_color_at_m21(2));
@@ -539,34 +530,31 @@ void msg_write(std::string& prm_307)
     int msglen_ = jp ? msglen / 1.5 : msglen;
     int mp_at_txtfunc = 0;
     int mark_at_txtfunc = 0;
+    for (int cnt = 0, cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
+        mp_at_txtfunc = instr(prm_307, 0, u8"♪"s);
+        if (mp_at_txtfunc != -1)
         {
-            mp_at_txtfunc = instr(prm_307, 0, u8"♪"s);
-            if (mp_at_txtfunc != -1)
+            mark_at_txtfunc =
+                elona::stoi(strmid(prm_307, mp_at_txtfunc + 2, 1));
+            if (jp)
             {
-                mark_at_txtfunc =
-                    elona::stoi(strmid(prm_307, mp_at_txtfunc + 2, 1));
-                if (jp)
+                if (mark_at_txtfunc == 0)
                 {
-                    if (mark_at_txtfunc == 0)
-                    {
-                        break;
-                    }
+                    break;
                 }
-                prm_307 = strmid(prm_307, 0, mp_at_txtfunc) + u8"  "s
-                    + strmid(prm_307,
-                             (mp_at_txtfunc + 2 + (mark_at_txtfunc != 0)),
-                             9999);
-                pos((msglen_ + mp_at_txtfunc) * inf_mesfont / 2 + inf_msgx + 7
-                        + en * 3,
-                    (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
-                gmode(2);
-                gcopy(3, 600 + mark_at_txtfunc * 24, 360, 16, 16);
-                --cnt;
-                continue;
             }
+            prm_307 = strmid(prm_307, 0, mp_at_txtfunc) + u8"  "s
+                + strmid(prm_307,
+                         (mp_at_txtfunc + 2 + (mark_at_txtfunc != 0)),
+                         9999);
+            pos((msglen_ + mp_at_txtfunc) * inf_mesfont / 2 + inf_msgx + 7
+                    + en * 3,
+                (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
+            gmode(2);
+            gcopy(3, 600 + mark_at_txtfunc * 24, 360, 16, 16);
+            --cnt;
+            continue;
         }
     }
     color(tcol_at_txtfunc(0), tcol_at_txtfunc(1), tcol_at_txtfunc(2));
@@ -606,34 +594,28 @@ void anime_halt()
     pos(672, 504);
     gcopy(0, x_at_txtfunc, y_at_txtfunc, 120, 24);
     gsel(0);
+    for (int cnt = 0, cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
-        {
-            redraw(0);
-            await(10);
-            pos(x_at_txtfunc, y_at_txtfunc + 12 - cnt);
-            gzoom(120, cnt * 2 + 1, 3, 552, 504, 120, 22);
-            redraw(1);
-        }
+        redraw(0);
+        await(10);
+        pos(x_at_txtfunc, y_at_txtfunc + 12 - cnt);
+        gzoom(120, cnt * 2 + 1, 3, 552, 504, 120, 22);
+        redraw(1);
     }
     press(1);
     snd(20);
+    for (int cnt = 0, cnt_end = cnt + (7); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (7); cnt < cnt_end; ++cnt)
+        redraw(0);
+        await(10);
+        pos(x_at_txtfunc, y_at_txtfunc);
+        gcopy(3, 672, 504, 120, 24);
+        if (cnt != 6)
         {
-            redraw(0);
-            await(10);
-            pos(x_at_txtfunc, y_at_txtfunc);
-            gcopy(3, 672, 504, 120, 24);
-            if (cnt != 6)
-            {
-                pos(x_at_txtfunc, y_at_txtfunc + cnt * 2);
-                gzoom(120, 22 - cnt * 4, 3, 552, 504, 120, 22);
-            }
-            redraw(1);
+            pos(x_at_txtfunc, y_at_txtfunc + cnt * 2);
+            gzoom(120, 22 - cnt * 4, 3, 552, 504, 120, 22);
         }
+        redraw(1);
     }
     redraw(0);
     gmode(2);
@@ -719,26 +701,23 @@ void msg_newline()
         inf_msgy + 5 + inf_msgspace,
         windoww - inf_msgx,
         inf_msgspace * 3 + en * 3);
+    for (int cnt = 0, cnt_end = cnt + (p_at_txtfunc + 1); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (p_at_txtfunc + 1); cnt < cnt_end; ++cnt)
+        if (cnt == p_at_txtfunc)
         {
-            if (cnt == p_at_txtfunc)
-            {
-                x_at_txtfunc = (windoww - inf_msgx) % 192;
-            }
-            else
-            {
-                x_at_txtfunc = 192;
-            }
-            pos(cnt * 192 + inf_msgx, inf_msgy + 5 + inf_msgspace * 3 + en * 2);
-            gcopy(
-                3,
-                496,
-                536 + msgline % 4 * inf_msgspace,
-                x_at_txtfunc,
-                inf_msgspace);
+            x_at_txtfunc = (windoww - inf_msgx) % 192;
         }
+        else
+        {
+            x_at_txtfunc = 192;
+        }
+        pos(cnt * 192 + inf_msgx, inf_msgy + 5 + inf_msgspace * 3 + en * 2);
+        gcopy(
+            3,
+            496,
+            536 + msgline % 4 * inf_msgspace,
+            x_at_txtfunc,
+            inf_msgspace);
     }
     gmode(2);
     msgtempprev = "";
@@ -765,12 +744,9 @@ void txtnew()
 void msg_clear()
 {
     msgtemp = "";
+    for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
     {
-        int cnt = 0;
-        for (int cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
-        {
-            msg_newline();
-        }
+        msg_newline();
     }
     return;
 }
