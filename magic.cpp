@@ -692,7 +692,7 @@ int magic()
                                 + u8" hungry."s));
                     }
                     r1 = tc;
-                    get_hungry();
+                    get_hungry(r1);
                 }
                 if (efid == 613)
                 {
@@ -1137,7 +1137,7 @@ label_2181_internal:
                     + u8" sick at entrails caught in "s + name(cc) + your(cc)
                     + u8" tentacles."s);
         }
-        dmgsan(tc, rnd(roll(dice1, dice2, bonus) + 1));
+        damage_insanity(tc, rnd(roll(dice1, dice2, bonus) + 1));
         break;
     case 1136:
         if (mdata(6) != 1)
