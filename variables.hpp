@@ -98,7 +98,6 @@ inline elona_vector1<std::string> booktitle;
 inline elona_vector1<std::string> buff;
 inline elona_vector1<std::string> buffboard;
 inline elona_vector1<std::string> cardrefn;
-inline elona_vector1<std::string> csv;
 inline elona_vector1<std::string> description;
 inline elona_vector1<std::string> egominorn;
 inline elona_vector1<std::string> egoname;
