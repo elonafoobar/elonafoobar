@@ -70,7 +70,6 @@ inline elona_vector1<int> trait;
 inline elona_vector1<int> traitref;
 inline elona_vector1<int> trate;
 inline int TODO_show_prompt_val = 0;
-inline elona_vector1<int> way;
 inline elona_vector1<int> wh;
 inline elona_vector1<int> windowshadow;
 inline elona_vector1<int> x;

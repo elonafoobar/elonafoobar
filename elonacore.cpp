@@ -30428,6 +30428,7 @@ void label_1709()
     sdigx = _bold;
     sdigy = _bold;
     maze(mdig) = 7;
+    elona_vector1<int> way;
     DIM2(way, 4);
     for (int cnt = 0, cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
     {
