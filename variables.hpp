@@ -198,7 +198,6 @@ inline elona_vector1<std::string> rn2;
 inline elona_vector1<std::string> rtvaln;
 inline elona_vector1<std::string> s1;
 inline elona_vector1<std::string> s;
-inline elona_vector1<std::string> select;
 inline elona_vector1<std::string> soundfile;
 inline elona_vector1<std::string> traitrefn2;
 inline elona_vector1<std::string> traitrefn;

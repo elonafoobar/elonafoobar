@@ -174,7 +174,6 @@ void initialize_elona()
     SDIM3(msg, 120, inf_maxlog);
     SDIM2(msgtemp, 1000);
     SDIM3(randn1, 30, 20);
-    SDIM2(select, 200);
     DIM2(n, 40);
     DIM2(rtval, 10);
     DIM3(list, 3, 500);
