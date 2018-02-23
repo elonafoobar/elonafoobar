@@ -3490,7 +3490,7 @@ void initialize_map_chip()
     {
         for (int cnt = 0, cnt_end = cnt + (11); cnt < cnt_end; ++cnt)
         {
-            cnt2 = cnt;
+            int cnt2 = cnt;
             for (int cnt = 0, cnt_end = cnt + (13); cnt < cnt_end; ++cnt)
             {
                 chipm(0, cnt2 * 33 + cnt + 20) = 4;
@@ -28406,7 +28406,7 @@ int map_createroom(int prm_966)
     for (int cnt = 0, cnt_end = cnt + (roomheight(cr)); cnt < cnt_end; ++cnt)
     {
         y = roomy(cr) + cnt;
-        cnt2 = cnt;
+        int cnt2 = cnt;
         for (int cnt = 0, cnt_end = cnt + (roomwidth(cr)); cnt < cnt_end; ++cnt)
         {
             x = roomx(cr) + cnt;
@@ -29961,7 +29961,7 @@ int initialize_quest_map_party()
             for (int cnt = 0, cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
             {
                 y = dy + cnt;
-                cnt2 = cnt;
+                int cnt2 = cnt;
                 for (int cnt = 0, cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
                 {
                     x = dx + cnt;
@@ -30633,7 +30633,7 @@ void initialize_random_nefia_rdtype10()
     label_1709();
     for (int cnt = 0, cnt_end = cnt + (50); cnt < cnt_end; ++cnt)
     {
-        cnt2 = cnt;
+        int cnt2 = cnt;
         t = 100 + cnt2 + 1;
         while (1)
         {
@@ -31549,7 +31549,6 @@ void use_house_board()
                 randomize();
                 cdata[rc].shop_rank = rnd(15) + 1;
             }
-            cnt2 = cnt;
             for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
             {
                 if (cnt == rc)
@@ -31899,7 +31898,7 @@ void show_shop_log()
     }
     for (int cnt = 0, cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
     {
-        cnt2 = cnt;
+        int cnt2 = cnt;
         for (int cnt = 0, cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
         {
             flt(list(0, cnt2), list(1, cnt2));
@@ -33582,7 +33581,7 @@ void label_1750()
     initialize_map_chip();
     for (int cnt = 0, cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
     {
-        cnt2 = cnt;
+        int cnt2 = cnt;
         if (gdata(850) != 4)
         {
             break;
@@ -36111,7 +36110,7 @@ void label_1870()
         }
         if (mattile != -1)
         {
-            cnt2 = cnt;
+            int cnt2 = cnt;
             for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
             {
                 x(0) = cnt * 250 + 170;
@@ -39075,7 +39074,7 @@ void label_1901()
             continue;
         }
         p = rnd(rnd(3) + 1) + 1;
-        cnt2 = cnt;
+        int cnt2 = cnt;
         for (int cnt = 0, cnt_end = cnt + (p); cnt < cnt_end; ++cnt)
         {
             dbid = 0;
@@ -42246,7 +42245,7 @@ label_1956_internal:
     p = 0;
     for (int cnt = 0, cnt_end = cnt + (wh); cnt < cnt_end; ++cnt)
     {
-        cnt2 = cnt;
+        int cnt2 = cnt;
         for (int cnt = 0, cnt_end = cnt + (ww); cnt < cnt_end; ++cnt)
         {
             if (p < listmax)
@@ -44035,7 +44034,6 @@ label_1978_internal:
         set_quest_data(0);
         p = pagesize * page + cnt;
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        cnt2 = cnt;
         cs_list(cs == cnt, s(3), wx + 96, y - 1, 19);
         s(2) = u8"("s + nquestdate + u8")"s;
         pos(wx + 344, y + 2);
@@ -45067,7 +45065,7 @@ label_1998_internal:
             continue;
         }
         p = 0;
-        cnt2 = cnt;
+        int cnt2 = cnt;
         if (ioriginalnameref(cnt) == inputlog)
         {
             p = 10000;
@@ -45229,7 +45227,7 @@ label_1999_internal:
             continue;
         }
         p = 0;
-        cnt2 = cnt;
+        int cnt2 = cnt;
         if (i18n::_(u8"ability", std::to_string(cnt), u8"name") == inputlog)
         {
             p = 10000;
@@ -47479,7 +47477,6 @@ label_2035_internal:
         }
         for (int cnt = 0, cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
         {
-            cnt2 = cnt;
             s = u8"("s + sdata.get(10 + cnt, cc).original_level + u8")"s;
             if (encfind(cc, 60010 + cnt) != -1)
             {
@@ -49646,7 +49643,7 @@ void show_item_description()
             list(1, p) = rtval(1);
             if (inhmax > 0)
             {
-                cnt2 = cnt;
+                int cnt2 = cnt;
                 for (int cnt = 0, cnt_end = cnt + (inhmax); cnt < cnt_end;
                      ++cnt)
                 {
@@ -49874,7 +49871,7 @@ int label_2072()
             }
             for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
             {
-                cnt2 = cnt;
+                int cnt2 = cnt;
                 for (int cnt = 0, cnt_end = cnt + (listmax); cnt < cnt_end;
                      ++cnt)
                 {
@@ -51600,7 +51597,7 @@ void load_cnpc_data()
     {
         // TODO: Delete
         noteget(s, cnt);
-        cnt2 = tg;
+        int cnt2 = tg;
         unzip2(fs::u8path(u8"./user/"), s);
         DIM2(bmpbuff, userdata(0, tg));
         SDIM2(txtbuff, userdata(1, tg));
@@ -68004,7 +68001,7 @@ void label_2669()
                 break;
             }
         }
-        cnt2 = cnt;
+        int cnt2 = cnt;
         for (int cnt = 0, cnt_end = cnt + (500); cnt < cnt_end; ++cnt)
         {
             if (qdata(0, cnt) == cnt2)
@@ -71963,7 +71960,7 @@ void label_2710()
     window2(wx, wy, ww, wh, 1, -1);
     for (int cnt = 0, cnt_end = cnt + (inf_maxlog - 3); cnt < cnt_end; ++cnt)
     {
-        cnt2 = cnt;
+        int cnt2 = cnt;
         pos(cnt);
         for (int cnt = 0, cnt_end = cnt + (p + 1); cnt < cnt_end; ++cnt)
         {

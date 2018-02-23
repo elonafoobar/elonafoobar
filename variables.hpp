@@ -326,7 +326,6 @@ inline int cm;
 inline int cmbg;
 inline int cmsex;
 inline int cmshade;
-inline int cnt2;
 inline int comctrl;
 inline int cooktool;
 inline int creaturepack;

@@ -98,7 +98,7 @@ label_20591:
             }
         }
         inv_getheader(p);
-        cnt2 = cnt;
+        int cnt2 = cnt;
         if (invctrl != 1 && invctrl != 5 && invctrl != 13 && invctrl != 14
             && invctrl != 18 && invctrl != 20 && invctrl != 23 && invctrl != 25
             && invctrl != 27)

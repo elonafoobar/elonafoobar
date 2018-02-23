@@ -1185,7 +1185,7 @@ label_2181_internal:
                 for (int cnt = 0, cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
                 {
                     f = 1;
-                    cnt2 = cnt;
+                    int cnt2 = cnt;
                     for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
                     {
                         p = map(dx + x(cnt2) * cnt, dy + y(cnt2) * cnt, 0);
@@ -2370,7 +2370,7 @@ label_2181_internal:
         for (int cnt = 0, cnt_end = cnt + (1 + (efstatus >= 1)); cnt < cnt_end;
              ++cnt)
         {
-            cnt2 = cnt;
+            int cnt2 = cnt;
             for (int cnt = 0, cnt_end = cnt + (2000); cnt < cnt_end; ++cnt)
             {
                 await();
@@ -2606,7 +2606,7 @@ label_2181_internal:
         for (int cnt = 0, cnt_end = cnt + (1 + (efstatus >= 1)); cnt < cnt_end;
              ++cnt)
         {
-            cnt2 = cnt;
+            int cnt2 = cnt;
             while (1)
             {
                 await();

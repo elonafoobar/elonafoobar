@@ -1763,7 +1763,7 @@ void show_race_or_class_info(int CNT, int val0)
     }
     for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
     {
-        cnt2 = cnt;
+        int cnt2 = cnt;
         for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
         {
             if (cnt2 == 2)
