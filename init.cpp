@@ -956,7 +956,7 @@ label_1546_internal:
         del_chara(0);
         access_race_info(3, listn(1, page * pagesize + cs));
         access_race_info(11, listn(1, page * pagesize + cs));
-        show_race_or_class_info(cnt, 0);
+        show_race_or_class_info(0, 0);
     }
     redraw(1);
     await(cfg_wait1);
@@ -1182,7 +1182,7 @@ label_1552_internal:
         del_chara(0);
         access_class_info(3, listn(1, cs));
         access_class_info(11, listn(1, cs));
-        show_race_or_class_info(cnt, 1);
+        show_race_or_class_info(0, 1);
         redraw(1);
     }
     await(cfg_wait1);

@@ -343,10 +343,10 @@ void proc_event()
         {
             for (int i = 10; i < 18; ++i)
             {
-                if (sdata(cnt, 0) != 0 && rnd(3) == 0)
+                if (sdata(i, 0) != 0 && rnd(3) == 0)
                 {
                     txtmore();
-                    skillexp(cnt, 0, -500);
+                    skillexp(i, 0, -500);
                 }
             }
             if (cdata[0].karma < -30)
