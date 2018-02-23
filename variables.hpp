@@ -206,7 +206,6 @@ inline elona_vector1<std::string> soundfile;
 inline elona_vector1<std::string> traitrefn2;
 inline elona_vector1<std::string> traitrefn;
 inline elona_vector1<std::string> untaglist;
-inline elona_vector1<std::string> valn;
 inline elona_vector2<int> adata;
 inline elona_vector2<int> breathlist;
 inline elona_vector2<int> c_col;
@@ -914,7 +913,7 @@ void addmef(
     int = 0,
     int = 0,
     int = 0);
-void addnews(int = 0, int = 0, int = 0);
+void addnews(int = 0, int = 0, int = 0, const std::string& = "");
 void addnews2(const std::string&, int = 0);
 void addnewstopic(const std::string&, const std::string&);
 void anime_halt();
@@ -1031,7 +1030,7 @@ void initialize_nefia_names();
 void initialize_picfood();
 void replace_tags_in_quest_board();
 void parse_talk_file();
-void read_talk_file();
+void read_talk_file(const std::string&);
 void get_npc_talk();
 void update_main_quest_journal();
 void append_subquest_journal(int);

@@ -3135,13 +3135,11 @@ void addnewstopic(const std::string& prm_403, const std::string& prm_404)
 
 
 
-void addnews(int news_type, int adventurer, int fame)
+void addnews(int news_type, int adventurer, int fame, const std::string& valn)
 {
     switch (news_type)
     {
-    case 0:
-        addnews2(valn);
-        break;
+    case 0: addnews2(valn); break;
     case 1:
         addnewstopic(u8"@01"s, lang(u8"アイテム発見"s, u8"Discovery"s));
         addnews2(
@@ -3382,13 +3380,7 @@ void create_pcpic(int cc, bool prm_410)
 
 
 
-void addefmap(
-    int x,
-    int y,
-    int efmap0,
-    int efmap1,
-    int efmap2,
-    int efmap3)
+void addefmap(int x, int y, int efmap0, int efmap1, int efmap2, int efmap3)
 {
     efmap(0, x, y) = efmap0;
     efmap(1, x, y) = efmap1;
@@ -12053,8 +12045,8 @@ void modimp(int cc, int delta)
         {
             txtef(2);
             txt(lang(
-                cdatan(0, cc) + u8"との関係が<"s
-                    + _impression(level2) + u8">になった！"s,
+                cdatan(0, cc) + u8"との関係が<"s + _impression(level2)
+                    + u8">になった！"s,
                 u8"Your relation with "s + cdatan(0, cc) + u8" becomes <"s
                     + _impression(level2) + u8">!"s));
         }
@@ -12276,8 +12268,8 @@ void refreshspeed(int cc)
         }
         if (gdata_mount == cc)
         {
-            cdata[cc].current_speed = std::clamp(
-                sdata(10, cc) + sdata(301, 0), 10, sdata(18, cc));
+            cdata[cc].current_speed =
+                std::clamp(sdata(10, cc) + sdata(301, 0), 10, sdata(18, cc));
             return;
         }
     }
@@ -12342,8 +12334,8 @@ void ride_begin(int mount)
     txt(lang(
         name(mount) + u8"に騎乗した("s + name(mount) + u8"の速度: "s
             + cdata[mount].current_speed + u8"→"s,
-        u8"You ride "s + name(mount) + u8". ("s + name(mount)
-            + u8"'s speed: "s + cdata[mount].current_speed + u8"->"s));
+        u8"You ride "s + name(mount) + u8". ("s + name(mount) + u8"'s speed: "s
+            + cdata[mount].current_speed + u8"->"s));
     cbitmod(975, mount, 1);
     map(cdata[mount].position.x, cdata[mount].position.y, 1) = 0;
     gdata_mount = mount;
@@ -13413,8 +13405,7 @@ void resistmod(int cc, int element, int delta)
         case 53:
             txt(lang(
                 name(cc) + u8"は急に暗闇が怖くなくなった。"s,
-                name(cc) + u8" no longer fear"s + _s(cc)
-                    + u8" darkness."s));
+                name(cc) + u8" no longer fear"s + _s(cc) + u8" darkness."s));
             break;
         case 57:
             txt(lang(
@@ -13436,8 +13427,8 @@ void resistmod(int cc, int element, int delta)
         case 56:
             txt(lang(
                 name(cc) + u8"の魂は地獄に近づいた。"s,
-                name(cc) + u8" "s + is(cc) + u8" no longer afraid"s
-                    + _s(cc) + u8" of hell."s));
+                name(cc) + u8" "s + is(cc) + u8" no longer afraid"s + _s(cc)
+                    + u8" of hell."s));
             break;
         case 60:
             txt(lang(
@@ -13493,8 +13484,7 @@ void resistmod(int cc, int element, int delta)
         case 59:
             txt(lang(
                 name(cc) + u8"はカオスへの理解を失った。"s,
-                name(cc) + u8" no longer understand"s + _s(cc)
-                    + u8" chaos."s));
+                name(cc) + u8" no longer understand"s + _s(cc) + u8" chaos."s));
             break;
         case 55:
             txt(lang(
@@ -13510,8 +13500,8 @@ void resistmod(int cc, int element, int delta)
         case 60:
             txt(lang(
                 name(cc) + u8"の皮膚から魔力のオーラが消えた。"s,
-                u8"The magical aura disappears from "s + name(cc)
-                    + your(cc) + u8" body."s));
+                u8"The magical aura disappears from "s + name(cc) + your(cc)
+                    + u8" body."s));
             break;
         }
     }
@@ -13710,8 +13700,8 @@ void wet(int cc, int turns)
             txtmore();
             txt(lang(
                 name(cc) + u8"の姿があらわになった。"s,
-                name(cc) + u8" "s + is(cc) + u8" revealed "s
-                    + his(cc) + u8" shape."s));
+                name(cc) + u8" "s + is(cc) + u8" revealed "s + his(cc)
+                    + u8" shape."s));
             txtmore();
         }
     }
@@ -15265,8 +15255,7 @@ void txteledmg(int type, int attacker, int target, int element)
             txt(lang(
                 name(target) + u8"は雷に打たれ死んだ。"s,
                 name(target) + u8" "s + is(target)
-                    + u8" struck by lightning and die"s + _s(target)
-                    + u8"."s));
+                    + u8" struck by lightning and die"s + _s(target) + u8"."s));
         }
         break;
     case 53:
@@ -15419,8 +15408,7 @@ void txteledmg(int type, int attacker, int target, int element)
         {
             txt(lang(
                 name(target) + u8"は毒に蝕まれて死んだ。"s,
-                name(target) + u8" "s + is(target)
-                    + u8" poisoned to death."s));
+                name(target) + u8" "s + is(target) + u8" poisoned to death."s));
         }
         break;
     case 57:
@@ -15456,8 +15444,7 @@ void txteledmg(int type, int attacker, int target, int element)
             {
                 txt(lang(
                     name(target) + u8"は酸に焼かれた。"s,
-                    name(target) + u8" "s + is(target)
-                        + u8" burnt by acid."s));
+                    name(target) + u8" "s + is(target) + u8" burnt by acid."s));
             }
         }
         else if (type == 1)
@@ -16979,8 +16966,7 @@ void damage_insanity(int cc, int delta)
     }
     delta = std::max(delta, 0);
     cdata[cc].insanity += delta;
-    if (rnd(10) == 0 || rnd(delta + 1) > 5
-        || rnd(cdata[cc].insanity + 1) > 50)
+    if (rnd(10) == 0 || rnd(delta + 1) > 5 || rnd(cdata[cc].insanity + 1) > 50)
     {
         dmgcon(cc, 11, 100);
     }
@@ -17056,8 +17042,8 @@ void modweight(int cc, int delta, bool force)
         }
     }
 
-    cdata[cc].weight = cdata[cc].weight * (100 + delta) / 100
-        + (delta > 0) - (delta < 0);
+    cdata[cc].weight =
+        cdata[cc].weight * (100 + delta) / 100 + (delta > 0) - (delta < 0);
 
     if (cdata[cc].weight <= 0)
     {
@@ -17084,8 +17070,8 @@ void modweight(int cc, int delta, bool force)
 
 void modheight(int cc, int delta)
 {
-    cdata[cc].height = cdata[cc].height * (100 + delta) / 100
-        + (delta > 0) - (delta < 0);
+    cdata[cc].height =
+        cdata[cc].height * (100 + delta) / 100 + (delta > 0) - (delta < 0);
     if (cdata[cc].height <= 1)
     {
         cdata[cc].height = 1;
@@ -19889,8 +19875,7 @@ void refresh_speed_correction_value(int cc)
     }
     if (number_of_body_parts > 13)
     {
-        cdata[cc].speed_correction_value =
-            (number_of_body_parts - 13) * 5;
+        cdata[cc].speed_correction_value = (number_of_body_parts - 13) * 5;
     }
     else
     {
@@ -20863,8 +20848,8 @@ void skillinit(int id, int cc, int initial_level)
     }
     else
     {
-        level = potential * potential * cdata[cc].level / 45000
-            + initial_level + cdata[cc].level / 3;
+        level = potential * potential * cdata[cc].level / 45000 + initial_level
+            + cdata[cc].level / 3;
     }
     if (cdata[cc].level > 1)
     {
@@ -20883,8 +20868,7 @@ void skillinit(int id, int cc, int initial_level)
     {
         level = 2000 - original_level;
     }
-    sdata.get(id, cc).original_level +=
-        std::clamp(level, 0, 2000);
+    sdata.get(id, cc).original_level += std::clamp(level, 0, 2000);
     sdata.get(id, cc).potential += potential;
 }
 
@@ -26372,13 +26356,11 @@ void apply_general_eating_effect()
             txt(lang(
                 name(cc) + u8"はクッキーの中のおみくじを読んだ。"s,
                 name(cc) + u8" read"s + _s(cc) + u8" the paper fortune."s));
-            valn = u8"%COOKIE2"s;
-            read_talk_file();
+            read_talk_file(u8"%COOKIE2");
             if (inv[ci].curse_state >= 1
                 || (inv[ci].curse_state == 0 && rnd(2)))
             {
-                valn = u8"%COOKIE1"s;
-                read_talk_file();
+                read_talk_file(u8"%COOKIE1");
             }
             txtef(5);
             txt(""s + buff);
@@ -41128,7 +41110,7 @@ void label_1935()
         if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
             || (inv[ci].id == 602 && gdata_holy_well_count <= 0))
         {
-            valn = itemname(ci);
+            const auto valn = itemname(ci);
             txt(lang(valn + u8"は涸れている。"s, valn + u8" is dry."s));
             txtmore();
             txt(lang(
@@ -56381,12 +56363,12 @@ int drink_well()
     if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
         || (inv[ci].id == 602 && gdata_holy_well_count <= 0))
     {
-        valn = itemname(ci);
+        const auto valn = itemname(ci);
         txt(lang(valn + u8"は涸れている。"s, valn + u8" is dry."s));
         return 1;
     }
     snd(17);
-    valn = itemname(ci);
+    const auto valn = itemname(ci);
     txt(lang(
         name(cc) + u8"は"s + valn + u8"の水をすくって飲んだ。"s,
         name(cc) + u8" draw"s + _s(cc) + u8" water from "s + valn + u8"."s));
@@ -58855,7 +58837,7 @@ void label_2205()
                 {
                     encounterlv = 1;
                 }
-                valn = lang(
+                auto valn = lang(
                     u8" (最も近い街までの距離:"s + p + u8" 敵勢力:"s,
                     u8" (Distance from nearest town:"s + p
                         + u8" Enemy strength:"s);
@@ -61512,7 +61494,7 @@ void do_dip_command()
                 if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
                     || (inv[ci].id == 602 && gdata_holy_well_count <= 0))
                 {
-                    valn = itemname(ci);
+                    const auto valn = itemname(ci);
                     txt(lang(valn + u8"は涸れている。"s, valn + u8" is dry."s));
                     txtmore();
                     txt(lang(
@@ -67751,8 +67733,7 @@ int label_2664()
     {
         if (the_item_db[inv[ci].id]->category < 50000)
         {
-            valn = itemname(ci);
-            addnews(1, rc);
+            addnews(1, rc, 0, itemname(ci));
         }
     }
     wear_most_valuable_equipment();
@@ -67987,8 +67968,7 @@ void supply_new_equipment()
             {
                 if (cdata[rc].character_role == 13)
                 {
-                    valn = itemname(ci);
-                    addnews(1, rc);
+                    addnews(1, rc, 0, itemname(ci));
                 }
             }
         }

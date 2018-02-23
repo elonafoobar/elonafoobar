@@ -1006,6 +1006,7 @@ int magic()
                 {
                     goto the_end;
                 }
+                std::string valn;
                 if (ele)
                 {
                     valn = i18n::_(u8"ability", std::to_string(ele), u8"name")
@@ -2712,7 +2713,7 @@ label_2181_internal:
         else
         {
             i = rnd(8) + 10;
-            valn = i18n::_(u8"ability", std::to_string(i), u8"name");
+            const auto valn = i18n::_(u8"ability", std::to_string(i), u8"name");
             if (efstatus == 0)
             {
                 txt(lang(
@@ -3207,7 +3208,7 @@ label_2181_internal:
         if (i > 0)
         {
             i = p(rnd(i));
-            valn = itemname(i, 1, 1);
+            const auto valn = itemname(i, 1, 1);
             if (inv[i].curse_state == -1)
             {
                 inv[i].curse_state = -2;

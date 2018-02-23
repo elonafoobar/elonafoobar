@@ -207,7 +207,6 @@ void initialize_elona()
     DIM2(invmark, 35);
     DIM2(commark, 3);
     DIM2(feat, 5);
-    SDIM3(valn, 50, 10);
     DIM3(dirchk, 3, 2);
 
     dirchk(0, 0) = -1;

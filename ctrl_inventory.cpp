@@ -612,6 +612,7 @@ label_20591:
     }
     if (returnfromidentify == 0)
     {
+        std::string valn;
         if (invctrl == 18)
         {
             valn = itemname(cidip, 1);

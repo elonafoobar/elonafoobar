@@ -949,7 +949,6 @@ label_2725_internal:
                 if (HMMBITCHECK(j0, 4 + cnt))
                 {
                     p = cnt;
-                    valn = "";
                     for (int cnt = 0, cnt_end = cnt + (12); cnt < cnt_end;
                          ++cnt)
                     {

@@ -3013,7 +3013,7 @@ void parse_talk_file()
 
 
 
-void read_talk_file()
+void read_talk_file(const std::string& valn)
 {
     buff = "";
     notesel(buff);
