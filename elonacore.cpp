@@ -35794,11 +35794,6 @@ label_1861_internal:
 
 void atxinit()
 {
-    if (atxthrough == 0)
-    {
-        notesel(atbuff);
-        atbuff = "";
-    }
     atxthrough = 0;
     listmax = 0;
     cs = 0;

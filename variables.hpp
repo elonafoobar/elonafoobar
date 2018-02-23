@@ -118,7 +118,6 @@ inline elona_vector1<std::string> ioriginalnameref2;
 inline elona_vector1<std::string> ioriginalnameref;
 inline elona_vector1<std::string> jkey;
 inline elona_vector1<std::string> key;
-inline std::string atbuff;
 inline std::string key_identify;
 inline std::string key_pageup;
 inline std::string key_pagedown;
