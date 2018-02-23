@@ -1194,15 +1194,15 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
         {
             if (inv[prm_518].curse_state == 1)
             {
-                s_at_m63 += strblessed;
+                s_at_m63 += i18n::_(u8"ui", u8"blessed");
             }
             if (inv[prm_518].curse_state == -1)
             {
-                s_at_m63 += strcursed;
+                s_at_m63 += i18n::_(u8"ui", u8"cursed");
             }
             if (inv[prm_518].curse_state == -2)
             {
-                s_at_m63 += strdoomed;
+                s_at_m63 += i18n::_(u8"ui", u8"doomed");
             }
         }
     }
@@ -1213,15 +1213,15 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
         {
             if (inv[prm_518].curse_state == 1)
             {
-                s_at_m63 = strblessed + u8" "s;
+                s_at_m63 = i18n::_(u8"ui", u8"blessed") + u8" "s;
             }
             if (inv[prm_518].curse_state == -1)
             {
-                s_at_m63 = strcursed + u8" "s;
+                s_at_m63 = i18n::_(u8"ui", u8"cursed") + u8" "s;
             }
             if (inv[prm_518].curse_state == -2)
             {
-                s_at_m63 = strdoomed + u8" "s;
+                s_at_m63 = i18n::_(u8"ui", u8"doomed") + u8" "s;
             }
         }
         if (irandomname(inv[prm_518].id) == 1

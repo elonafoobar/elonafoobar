@@ -1,4 +1,5 @@
 #include "elona.hpp"
+#include "i18n.hpp"
 #include "item_db.hpp"
 #include "variables.hpp"
 
@@ -237,10 +238,12 @@ void set_item_info()
     iknownnameref(738) = ioriginalnameref(738);
     icolref(738) = 0;
     p = (737 + gdata_random_seed) % 6;
-    iknownnameref(737) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(737) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(737) = _randcolor(p);
     p = (736 + gdata_random_seed) % 6;
-    iknownnameref(736) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(736) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(736) = _randcolor(p);
     iknownnameref(735) = ioriginalnameref(735);
     icolref(735) = 0;
@@ -249,10 +252,12 @@ void set_item_info()
     iknownnameref(733) = ioriginalnameref(733);
     icolref(733) = 0;
     p = (732 + gdata_random_seed) % 6;
-    iknownnameref(732) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(732) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(732) = _randcolor(p);
     p = (731 + gdata_random_seed) % 6;
-    iknownnameref(731) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(731) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(731) = _randcolor(p);
     if (jp)
     {
@@ -391,16 +396,20 @@ void set_item_info()
     iknownnameref(712) = ioriginalnameref(712);
     icolref(712) = 4;
     p = (711 + gdata_random_seed) % 6;
-    iknownnameref(711) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(711) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(711) = _randcolor(p);
     p = (710 + gdata_random_seed) % 6;
-    iknownnameref(710) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(710) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(710) = _randcolor(p);
     p = (709 + gdata_random_seed) % 6;
-    iknownnameref(709) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(709) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(709) = _randcolor(p);
     p = (708 + gdata_random_seed) % 6;
-    iknownnameref(708) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(708) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(708) = _randcolor(p);
     if (jp)
     {
@@ -412,7 +421,8 @@ void set_item_info()
     }
     icolref(707) = 0;
     p = (706 + gdata_random_seed) % 6;
-    iknownnameref(706) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(706) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(706) = _randcolor(p);
     if (jp)
     {
@@ -452,10 +462,12 @@ void set_item_info()
     iknownnameref(698) = ioriginalnameref(698);
     icolref(698) = 0;
     p = (697 + gdata_random_seed) % 6;
-    iknownnameref(697) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(697) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(697) = _randcolor(p);
     p = (696 + gdata_random_seed) % 6;
-    iknownnameref(696) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(696) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(696) = _randcolor(p);
     if (jp)
     {
@@ -646,7 +658,7 @@ void set_item_info()
     }
     icolref(665) = 0;
     p = (664 + gdata_random_seed) % 6;
-    iknownnameref(664) = _namering(p) + strblank + strring;
+    iknownnameref(664) = _namering(p) + strblank + i18n::_(u8"ui", u8"ring");
     icolref(664) = 0;
     if (jp)
     {
@@ -676,7 +688,8 @@ void set_item_info()
     }
     icolref(661) = 3;
     p = (660 + gdata_random_seed) % 6;
-    iknownnameref(660) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(660) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(660) = _randcolor(p);
     iknownnameref(659) = ioriginalnameref(659);
     icolref(659) = 1;
@@ -742,7 +755,8 @@ void set_item_info()
     }
     icolref(639) = 17;
     p = (638 + gdata_random_seed) % 6;
-    iknownnameref(638) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(638) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(638) = _randcolor(p);
     if (jp)
     {
@@ -762,7 +776,8 @@ void set_item_info()
     iknownnameref(633) = ioriginalnameref(633);
     icolref(633) = 0;
     p = (632 + gdata_random_seed) % 6;
-    iknownnameref(632) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(632) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(632) = _randcolor(p);
     iknownnameref(631) = ioriginalnameref(631);
     icolref(631) = 0;
@@ -771,7 +786,8 @@ void set_item_info()
     iknownnameref(629) = ioriginalnameref(629);
     icolref(629) = 0;
     p = (628 + gdata_random_seed) % 6;
-    iknownnameref(628) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(628) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(628) = _randcolor(p);
     if (jp)
     {
@@ -783,7 +799,8 @@ void set_item_info()
     }
     icolref(627) = 5;
     p = (626 + gdata_random_seed) % 6;
-    iknownnameref(626) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(626) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(626) = _randcolor(p);
     if (jp)
     {
@@ -795,10 +812,12 @@ void set_item_info()
     }
     icolref(625) = 0;
     p = (624 + gdata_random_seed) % 6;
-    iknownnameref(624) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(624) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(624) = _randcolor(p);
     p = (623 + gdata_random_seed) % 6;
-    iknownnameref(623) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(623) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(623) = _randcolor(p);
     if (jp)
     {
@@ -937,10 +956,11 @@ void set_item_info()
     iknownnameref(583) = ioriginalnameref(583);
     icolref(583) = 0;
     p = (582 + gdata_random_seed) % 6;
-    iknownnameref(582) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(582) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(582) = _randcolor(p);
     p = (581 + gdata_random_seed) % 6;
-    iknownnameref(581) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(581) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(581) = _randcolor(p);
     iknownnameref(580) = ioriginalnameref(580);
     icolref(580) = 0;
@@ -949,7 +969,8 @@ void set_item_info()
     iknownnameref(578) = ioriginalnameref(578);
     icolref(578) = 0;
     p = (577 + gdata_random_seed) % 6;
-    iknownnameref(577) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(577) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(577) = _randcolor(p);
     iknownnameref(576) = ioriginalnameref(576);
     icolref(576) = 3;
@@ -964,23 +985,26 @@ void set_item_info()
     iknownnameref(571) = ioriginalnameref(571);
     icolref(571) = 0;
     p = (570 + gdata_random_seed) % 6;
-    iknownnameref(570) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(570) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(570) = _randcolor(p);
     p = (569 + gdata_random_seed) % 6;
-    iknownnameref(569) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(569) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(569) = _randcolor(p);
     iknownnameref(568) = ioriginalnameref(568);
     icolref(568) = 4;
     iknownnameref(567) = ioriginalnameref(567);
     icolref(567) = 3;
     p = (566 + gdata_random_seed) % 6;
-    iknownnameref(566) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(566) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(566) = _randcolor(p);
     p = (565 + gdata_random_seed) % 6;
-    iknownnameref(565) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(565) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(565) = _randcolor(p);
     p = (564 + gdata_random_seed) % 6;
-    iknownnameref(564) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(564) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(564) = _randcolor(p);
     if (jp)
     {
@@ -1005,10 +1029,11 @@ void set_item_info()
     }
     icolref(560) = 0;
     p = (559 + gdata_random_seed) % 6;
-    iknownnameref(559) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(559) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(559) = _randcolor(p);
     p = (558 + gdata_random_seed) % 6;
-    iknownnameref(558) = _namering(p) + strblank + strring;
+    iknownnameref(558) = _namering(p) + strblank + i18n::_(u8"ui", u8"ring");
     icolref(558) = 0;
     iknownnameref(557) = ioriginalnameref(557);
     icolref(557) = 0;
@@ -1023,24 +1048,28 @@ void set_item_info()
     iknownnameref(552) = ioriginalnameref(552);
     icolref(552) = 0;
     p = (551 + gdata_random_seed) % 6;
-    iknownnameref(551) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(551) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(551) = _randcolor(p);
     p = (550 + gdata_random_seed) % 6;
-    iknownnameref(550) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(550) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(550) = _randcolor(p);
     p = (549 + gdata_random_seed) % 6;
-    iknownnameref(549) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(549) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(549) = _randcolor(p);
     p = (548 + gdata_random_seed) % 6;
-    iknownnameref(548) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(548) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(548) = _randcolor(p);
     iknownnameref(547) = ioriginalnameref(547);
     icolref(547) = 0;
     p = (546 + gdata_random_seed) % 6;
-    iknownnameref(546) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(546) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(546) = _randcolor(p);
     p = (545 + gdata_random_seed) % 6;
-    iknownnameref(545) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(545) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(545) = _randcolor(p);
     iknownnameref(544) = ioriginalnameref(544);
     icolref(544) = 1;
@@ -1093,13 +1122,14 @@ void set_item_info()
     iknownnameref(520) = ioriginalnameref(520);
     icolref(520) = 0;
     p = (519 + gdata_random_seed) % 6;
-    iknownnameref(519) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(519) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(519) = _randcolor(p);
     p = (518 + gdata_random_seed) % 6;
-    iknownnameref(518) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(518) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(518) = _randcolor(p);
     p = (517 + gdata_random_seed) % 6;
-    iknownnameref(517) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(517) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(517) = _randcolor(p);
     if (jp)
     {
@@ -1111,7 +1141,8 @@ void set_item_info()
     }
     icolref(516) = 0;
     p = (515 + gdata_random_seed) % 6;
-    iknownnameref(515) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(515) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(515) = _randcolor(p);
     if (jp)
     {
@@ -1131,32 +1162,40 @@ void set_item_info()
     iknownnameref(510) = ioriginalnameref(510);
     icolref(510) = 0;
     p = (509 + gdata_random_seed) % 6;
-    iknownnameref(509) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(509) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(509) = _randcolor(p);
     p = (508 + gdata_random_seed) % 6;
-    iknownnameref(508) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(508) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(508) = _randcolor(p);
     p = (507 + gdata_random_seed) % 6;
-    iknownnameref(507) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(507) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(507) = _randcolor(p);
     p = (506 + gdata_random_seed) % 6;
-    iknownnameref(506) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(506) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(506) = _randcolor(p);
     p = (505 + gdata_random_seed) % 6;
-    iknownnameref(505) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(505) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(505) = _randcolor(p);
     iknownnameref(504) = ioriginalnameref(504);
     icolref(504) = 0;
     iknownnameref(503) = ioriginalnameref(503);
     icolref(503) = 0;
     p = (502 + gdata_random_seed) % 6;
-    iknownnameref(502) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(502) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(502) = _randcolor(p);
     p = (501 + gdata_random_seed) % 6;
-    iknownnameref(501) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(501) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(501) = _randcolor(p);
     p = (500 + gdata_random_seed) % 6;
-    iknownnameref(500) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(500) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(500) = _randcolor(p);
     iknownnameref(499) = ioriginalnameref(499);
     icolref(499) = 0;
@@ -1187,55 +1226,58 @@ void set_item_info()
     iknownnameref(486) = ioriginalnameref(486);
     icolref(486) = 0;
     p = (485 + gdata_random_seed) % 6;
-    iknownnameref(485) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(485) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(485) = _randcolor(p);
     p = (484 + gdata_random_seed) % 6;
-    iknownnameref(484) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(484) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(484) = _randcolor(p);
     iknownnameref(483) = ioriginalnameref(483);
     icolref(483) = 0;
     iknownnameref(482) = ioriginalnameref(482);
     icolref(482) = 0;
     p = (481 + gdata_random_seed) % 6;
-    iknownnameref(481) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(481) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(481) = _randcolor(p);
     p = (480 + gdata_random_seed) % 6;
-    iknownnameref(480) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(480) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(480) = _randcolor(p);
     p = (479 + gdata_random_seed) % 6;
-    iknownnameref(479) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(479) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(479) = _randcolor(p);
     iknownnameref(478) = ioriginalnameref(478);
     icolref(478) = 0;
     p = (477 + gdata_random_seed) % 6;
-    iknownnameref(477) = _namering(p) + strblank + strring;
+    iknownnameref(477) = _namering(p) + strblank + i18n::_(u8"ui", u8"ring");
     icolref(477) = 0;
     p = (476 + gdata_random_seed) % 6;
-    iknownnameref(476) = _namering(p) + strblank + strring;
+    iknownnameref(476) = _namering(p) + strblank + i18n::_(u8"ui", u8"ring");
     icolref(476) = 0;
     p = (475 + gdata_random_seed) % 6;
-    iknownnameref(475) = _namering(p) + strblank + strring;
+    iknownnameref(475) = _namering(p) + strblank + i18n::_(u8"ui", u8"ring");
     icolref(475) = 0;
     p = (474 + gdata_random_seed) % 6;
-    iknownnameref(474) = _namering(p) + strblank + strring;
+    iknownnameref(474) = _namering(p) + strblank + i18n::_(u8"ui", u8"ring");
     icolref(474) = 0;
     p = (473 + gdata_random_seed) % 6;
-    iknownnameref(473) = _namering(p) + strblank + stramulet;
+    iknownnameref(473) = _namering(p) + strblank + i18n::_(u8"ui", u8"amulet");
     icolref(473) = 0;
     p = (472 + gdata_random_seed) % 6;
-    iknownnameref(472) = _namering(p) + strblank + stramulet;
+    iknownnameref(472) = _namering(p) + strblank + i18n::_(u8"ui", u8"amulet");
     icolref(472) = 0;
     p = (471 + gdata_random_seed) % 6;
-    iknownnameref(471) = _namering(p) + strblank + stramulet;
+    iknownnameref(471) = _namering(p) + strblank + i18n::_(u8"ui", u8"amulet");
     icolref(471) = 0;
     p = (470 + gdata_random_seed) % 6;
-    iknownnameref(470) = _namering(p) + strblank + stramulet;
+    iknownnameref(470) = _namering(p) + strblank + i18n::_(u8"ui", u8"amulet");
     icolref(470) = 0;
     p = (469 + gdata_random_seed) % 6;
-    iknownnameref(469) = _namering(p) + strblank + stramulet;
+    iknownnameref(469) = _namering(p) + strblank + i18n::_(u8"ui", u8"amulet");
     icolref(469) = 0;
     p = (468 + gdata_random_seed) % 6;
-    iknownnameref(468) = _namering(p) + strblank + stramulet;
+    iknownnameref(468) = _namering(p) + strblank + i18n::_(u8"ui", u8"amulet");
     icolref(468) = 0;
     iknownnameref(467) = ioriginalnameref(467);
     icolref(467) = 0;
@@ -1304,22 +1346,28 @@ void set_item_info()
     iknownnameref(435) = ioriginalnameref(435);
     icolref(435) = 0;
     p = (434 + gdata_random_seed) % 6;
-    iknownnameref(434) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(434) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(434) = _randcolor(p);
     p = (433 + gdata_random_seed) % 6;
-    iknownnameref(433) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(433) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(433) = _randcolor(p);
     p = (432 + gdata_random_seed) % 6;
-    iknownnameref(432) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(432) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(432) = _randcolor(p);
     p = (431 + gdata_random_seed) % 6;
-    iknownnameref(431) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(431) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(431) = _randcolor(p);
     p = (430 + gdata_random_seed) % 6;
-    iknownnameref(430) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(430) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(430) = _randcolor(p);
     p = (429 + gdata_random_seed) % 6;
-    iknownnameref(429) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(429) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(429) = _randcolor(p);
     iknownnameref(428) = ioriginalnameref(428);
     icolref(428) = 0;
@@ -1354,13 +1402,15 @@ void set_item_info()
     iknownnameref(413) = ioriginalnameref(413);
     icolref(413) = 0;
     p = (412 + gdata_random_seed) % 6;
-    iknownnameref(412) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(412) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(412) = _randcolor(p);
     p = (411 + gdata_random_seed) % 6;
-    iknownnameref(411) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(411) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(411) = _randcolor(p);
     p = (410 + gdata_random_seed) % 6;
-    iknownnameref(410) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(410) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(410) = _randcolor(p);
     iknownnameref(409) = ioriginalnameref(409);
     icolref(409) = 0;
@@ -1385,16 +1435,20 @@ void set_item_info()
     iknownnameref(399) = ioriginalnameref(399);
     icolref(399) = 0;
     p = (398 + gdata_random_seed) % 6;
-    iknownnameref(398) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(398) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(398) = _randcolor(p);
     p = (397 + gdata_random_seed) % 6;
-    iknownnameref(397) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(397) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(397) = _randcolor(p);
     p = (396 + gdata_random_seed) % 6;
-    iknownnameref(396) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(396) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(396) = _randcolor(p);
     p = (395 + gdata_random_seed) % 6;
-    iknownnameref(395) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(395) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(395) = _randcolor(p);
     iknownnameref(394) = ioriginalnameref(394);
     icolref(394) = 0;
@@ -1410,94 +1464,120 @@ void set_item_info()
     }
     icolref(392) = 0;
     p = (391 + gdata_random_seed) % 6;
-    iknownnameref(391) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(391) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(391) = _randcolor(p);
     p = (390 + gdata_random_seed) % 6;
-    iknownnameref(390) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(390) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(390) = _randcolor(p);
     p = (389 + gdata_random_seed) % 6;
-    iknownnameref(389) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(389) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(389) = _randcolor(p);
     p = (388 + gdata_random_seed) % 6;
-    iknownnameref(388) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(388) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(388) = _randcolor(p);
     p = (387 + gdata_random_seed) % 6;
-    iknownnameref(387) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(387) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(387) = _randcolor(p);
     p = (386 + gdata_random_seed) % 6;
-    iknownnameref(386) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(386) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(386) = _randcolor(p);
     p = (385 + gdata_random_seed) % 6;
-    iknownnameref(385) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(385) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(385) = _randcolor(p);
     p = (384 + gdata_random_seed) % 6;
-    iknownnameref(384) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(384) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(384) = _randcolor(p);
     p = (383 + gdata_random_seed) % 6;
-    iknownnameref(383) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(383) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(383) = _randcolor(p);
     p = (382 + gdata_random_seed) % 6;
-    iknownnameref(382) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(382) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(382) = _randcolor(p);
     p = (381 + gdata_random_seed) % 6;
-    iknownnameref(381) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(381) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(381) = _randcolor(p);
     p = (380 + gdata_random_seed) % 6;
-    iknownnameref(380) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(380) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(380) = _randcolor(p);
     p = (379 + gdata_random_seed) % 6;
-    iknownnameref(379) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(379) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(379) = _randcolor(p);
     p = (378 + gdata_random_seed) % 6;
-    iknownnameref(378) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(378) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(378) = _randcolor(p);
     p = (377 + gdata_random_seed) % 6;
-    iknownnameref(377) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(377) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(377) = _randcolor(p);
     p = (376 + gdata_random_seed) % 6;
-    iknownnameref(376) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(376) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(376) = _randcolor(p);
     p = (375 + gdata_random_seed) % 6;
-    iknownnameref(375) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(375) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(375) = _randcolor(p);
     p = (374 + gdata_random_seed) % 6;
-    iknownnameref(374) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(374) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(374) = _randcolor(p);
     p = (373 + gdata_random_seed) % 6;
-    iknownnameref(373) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(373) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(373) = _randcolor(p);
     p = (372 + gdata_random_seed) % 6;
-    iknownnameref(372) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(372) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(372) = _randcolor(p);
     p = (371 + gdata_random_seed) % 6;
-    iknownnameref(371) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(371) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(371) = _randcolor(p);
     p = (370 + gdata_random_seed) % 6;
-    iknownnameref(370) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(370) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(370) = _randcolor(p);
     p = (369 + gdata_random_seed) % 6;
-    iknownnameref(369) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(369) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(369) = _randcolor(p);
     p = (368 + gdata_random_seed) % 6;
-    iknownnameref(368) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(368) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(368) = _randcolor(p);
     p = (367 + gdata_random_seed) % 6;
-    iknownnameref(367) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(367) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(367) = _randcolor(p);
     p = (366 + gdata_random_seed) % 6;
-    iknownnameref(366) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(366) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(366) = _randcolor(p);
     p = (365 + gdata_random_seed) % 6;
-    iknownnameref(365) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(365) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(365) = _randcolor(p);
     p = (364 + gdata_random_seed) % 6;
-    iknownnameref(364) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(364) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(364) = _randcolor(p);
     p = (363 + gdata_random_seed) % 6;
-    iknownnameref(363) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(363) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(363) = _randcolor(p);
     p = (362 + gdata_random_seed) % 6;
-    iknownnameref(362) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(362) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(362) = _randcolor(p);
     iknownnameref(361) = ioriginalnameref(361);
     icolref(361) = 0;
@@ -1684,22 +1764,27 @@ void set_item_info()
     iknownnameref(291) = ioriginalnameref(291);
     icolref(291) = 0;
     p = (290 + gdata_random_seed) % 6;
-    iknownnameref(290) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(290) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(290) = _randcolor(p);
     p = (289 + gdata_random_seed) % 6;
-    iknownnameref(289) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(289) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(289) = _randcolor(p);
     p = (288 + gdata_random_seed) % 6;
-    iknownnameref(288) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(288) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(288) = _randcolor(p);
     p = (287 + gdata_random_seed) % 6;
-    iknownnameref(287) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(287) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(287) = _randcolor(p);
     p = (286 + gdata_random_seed) % 6;
-    iknownnameref(286) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(286) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(286) = _randcolor(p);
     p = (285 + gdata_random_seed) % 6;
-    iknownnameref(285) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(285) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(285) = _randcolor(p);
     iknownnameref(284) = ioriginalnameref(284);
     icolref(284) = 0;
@@ -1726,36 +1811,46 @@ void set_item_info()
     iknownnameref(273) = ioriginalnameref(273);
     icolref(273) = 1;
     p = (272 + gdata_random_seed) % 6;
-    iknownnameref(272) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(272) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(272) = _randcolor(p);
     p = (271 + gdata_random_seed) % 6;
-    iknownnameref(271) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(271) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(271) = _randcolor(p);
     p = (270 + gdata_random_seed) % 6;
-    iknownnameref(270) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(270) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(270) = _randcolor(p);
     p = (269 + gdata_random_seed) % 6;
-    iknownnameref(269) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(269) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(269) = _randcolor(p);
     p = (268 + gdata_random_seed) % 6;
-    iknownnameref(268) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(268) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(268) = _randcolor(p);
     p = (267 + gdata_random_seed) % 6;
-    iknownnameref(267) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(267) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(267) = _randcolor(p);
     iknownnameref(266) = ioriginalnameref(266);
     icolref(266) = 0;
     p = (265 + gdata_random_seed) % 6;
-    iknownnameref(265) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(265) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(265) = _randcolor(p);
     p = (264 + gdata_random_seed) % 6;
-    iknownnameref(264) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(264) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(264) = _randcolor(p);
     p = (263 + gdata_random_seed) % 6;
-    iknownnameref(263) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(263) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(263) = _randcolor(p);
     p = (262 + gdata_random_seed) % 6;
-    iknownnameref(262) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(262) =
+        _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(262) = _randcolor(p);
     iknownnameref(261) = ioriginalnameref(261);
     icolref(261) = 0;
@@ -1766,7 +1861,8 @@ void set_item_info()
     iknownnameref(258) = ioriginalnameref(258);
     icolref(258) = 0;
     p = (257 + gdata_random_seed) % 6;
-    iknownnameref(257) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(257) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(257) = _randcolor(p);
     iknownnameref(256) = ioriginalnameref(256);
     icolref(256) = 0;
@@ -1784,37 +1880,48 @@ void set_item_info()
     }
     icolref(253) = 0;
     p = (252 + gdata_random_seed) % 6;
-    iknownnameref(252) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(252) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(252) = _randcolor(p);
     p = (251 + gdata_random_seed) % 6;
-    iknownnameref(251) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(251) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(251) = _randcolor(p);
     p = (250 + gdata_random_seed) % 6;
-    iknownnameref(250) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(250) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(250) = _randcolor(p);
     p = (249 + gdata_random_seed) % 6;
-    iknownnameref(249) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(249) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(249) = _randcolor(p);
     p = (248 + gdata_random_seed) % 6;
-    iknownnameref(248) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(248) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(248) = _randcolor(p);
     p = (247 + gdata_random_seed) % 6;
-    iknownnameref(247) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(247) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(247) = _randcolor(p);
     p = (246 + gdata_random_seed) % 6;
-    iknownnameref(246) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(246) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(246) = _randcolor(p);
     p = (245 + gdata_random_seed) % 6;
-    iknownnameref(245) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(245) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(245) = _randcolor(p);
     p = (244 + gdata_random_seed) % 6;
-    iknownnameref(244) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(244) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(244) = _randcolor(p);
     p = (243 + gdata_random_seed) % 6;
-    iknownnameref(243) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(243) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(243) = _randcolor(p);
     p = (242 + gdata_random_seed) % 6;
-    iknownnameref(242) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(242) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(242) = _randcolor(p);
     iknownnameref(241) = ioriginalnameref(241);
     icolref(241) = 1;
@@ -1827,7 +1934,8 @@ void set_item_info()
     iknownnameref(237) = ioriginalnameref(237);
     icolref(237) = 1;
     p = (236 + gdata_random_seed) % 6;
-    iknownnameref(236) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(236) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(236) = _randcolor(p);
     iknownnameref(235) = ioriginalnameref(235);
     icolref(235) = 0;
@@ -1882,7 +1990,8 @@ void set_item_info()
     iknownnameref(210) = ioriginalnameref(210);
     icolref(210) = 0;
     p = (209 + gdata_random_seed) % 6;
-    iknownnameref(209) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(209) =
+        _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(209) = _randcolor(p);
     if (jp)
     {
@@ -1923,10 +2032,10 @@ void set_item_info()
     iknownnameref(204) = ioriginalnameref(204);
     icolref(204) = 0;
     p = (203 + gdata_random_seed) % 6;
-    iknownnameref(203) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(203) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(203) = _randcolor(p);
     p = (202 + gdata_random_seed) % 6;
-    iknownnameref(202) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(202) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(202) = _randcolor(p);
     iknownnameref(201) = ioriginalnameref(201);
     icolref(201) = 0;
@@ -1979,10 +2088,10 @@ void set_item_info()
     iknownnameref(177) = ioriginalnameref(177);
     icolref(177) = 0;
     p = (176 + gdata_random_seed) % 6;
-    iknownnameref(176) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(176) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(176) = _randcolor(p);
     p = (175 + gdata_random_seed) % 6;
-    iknownnameref(175) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(175) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(175) = _randcolor(p);
     iknownnameref(174) = ioriginalnameref(174);
     icolref(174) = 0;
@@ -2083,32 +2192,34 @@ void set_item_info()
     iknownnameref(126) = ioriginalnameref(126);
     icolref(126) = 1;
     p = (125 + gdata_random_seed) % 6;
-    iknownnameref(125) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(125) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(125) = _randcolor(p);
     iknownnameref(124) = ioriginalnameref(124);
     icolref(124) = 0;
     p = (123 + gdata_random_seed) % 6;
-    iknownnameref(123) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(123) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(123) = _randcolor(p);
     p = (122 + gdata_random_seed) % 6;
-    iknownnameref(122) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(122) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(122) = _randcolor(p);
     p = (121 + gdata_random_seed) % 6;
-    iknownnameref(121) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(121) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(121) = _randcolor(p);
     p = (120 + gdata_random_seed) % 6;
-    iknownnameref(120) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(120) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(120) = _randcolor(p);
     p = (119 + gdata_random_seed) % 6;
-    iknownnameref(119) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(119) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(119) = _randcolor(p);
     p = (118 + gdata_random_seed) % 6;
-    iknownnameref(118) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(118) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(118) = _randcolor(p);
     iknownnameref(117) = ioriginalnameref(117);
     icolref(117) = 1;
     p = (116 + gdata_random_seed) % 6;
-    iknownnameref(116) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(116) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(116) = _randcolor(p);
     iknownnameref(115) = ioriginalnameref(115);
     icolref(115) = 0;
@@ -2189,13 +2300,13 @@ void set_item_info()
     iknownnameref(77) = ioriginalnameref(77);
     icolref(77) = 0;
     p = (76 + gdata_random_seed) % 6;
-    iknownnameref(76) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(76) = _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(76) = _randcolor(p);
     p = (75 + gdata_random_seed) % 6;
-    iknownnameref(75) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(75) = _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(75) = _randcolor(p);
     p = (74 + gdata_random_seed) % 6;
-    iknownnameref(74) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(74) = _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(74) = _randcolor(p);
     if (jp)
     {
@@ -2207,22 +2318,22 @@ void set_item_info()
     }
     icolref(73) = 7;
     p = (72 + gdata_random_seed) % 6;
-    iknownnameref(72) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(72) = _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(72) = _randcolor(p);
     p = (71 + gdata_random_seed) % 6;
-    iknownnameref(71) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(71) = _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(71) = _randcolor(p);
     p = (70 + gdata_random_seed) % 6;
-    iknownnameref(70) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(70) = _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(70) = _randcolor(p);
     p = (69 + gdata_random_seed) % 6;
-    iknownnameref(69) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(69) = _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(69) = _randcolor(p);
     p = (68 + gdata_random_seed) % 6;
-    iknownnameref(68) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(68) = _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(68) = _randcolor(p);
     p = (67 + gdata_random_seed) % 6;
-    iknownnameref(67) = _namering(p) + strblank + stramulet;
+    iknownnameref(67) = _namering(p) + strblank + i18n::_(u8"ui", u8"amulet");
     icolref(67) = 0;
     iknownnameref(66) = ioriginalnameref(66);
     icolref(66) = 0;
@@ -2317,13 +2428,16 @@ void set_item_info()
     iknownnameref(35) = ioriginalnameref(35);
     icolref(35) = 6;
     p = (34 + gdata_random_seed) % 6;
-    iknownnameref(34) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(34) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(34) = _randcolor(p);
     p = (33 + gdata_random_seed) % 6;
-    iknownnameref(33) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(33) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(33) = _randcolor(p);
     p = (32 + gdata_random_seed) % 6;
-    iknownnameref(32) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(32) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(32) = _randcolor(p);
     if (jp)
     {
@@ -2335,16 +2449,16 @@ void set_item_info()
     }
     icolref(31) = 0;
     p = (30 + gdata_random_seed) % 6;
-    iknownnameref(30) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(30) = _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(30) = _randcolor(p);
     p = (29 + gdata_random_seed) % 6;
-    iknownnameref(29) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(29) = _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(29) = _randcolor(p);
     p = (28 + gdata_random_seed) % 6;
-    iknownnameref(28) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(28) = _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(28) = _randcolor(p);
     p = (27 + gdata_random_seed) % 6;
-    iknownnameref(27) = _namepotion(p) + strblank + strpotion;
+    iknownnameref(27) = _namepotion(p) + strblank + i18n::_(u8"ui", u8"potion");
     icolref(27) = _randcolor(p);
     if (jp)
     {
@@ -2383,34 +2497,37 @@ void set_item_info()
     }
     icolref(23) = 0;
     p = (22 + gdata_random_seed) % 6;
-    iknownnameref(22) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(22) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(22) = _randcolor(p);
     p = (21 + gdata_random_seed) % 6;
-    iknownnameref(21) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(21) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(21) = _randcolor(p);
     p = (20 + gdata_random_seed) % 6;
-    iknownnameref(20) = _namespellbook(p) + strblank + strspellbook;
+    iknownnameref(20) =
+        _namespellbook(p) + strblank + i18n::_(u8"ui", u8"spellbook");
     icolref(20) = _randcolor(p);
     p = (19 + gdata_random_seed) % 6;
-    iknownnameref(19) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(19) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(19) = _randcolor(p);
     p = (18 + gdata_random_seed) % 6;
-    iknownnameref(18) = _namestaff(p) + strblank + strstaff;
+    iknownnameref(18) = _namestaff(p) + strblank + i18n::_(u8"ui", u8"rod");
     icolref(18) = _randcolor(p);
     p = (17 + gdata_random_seed) % 6;
-    iknownnameref(17) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(17) = _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(17) = _randcolor(p);
     p = (16 + gdata_random_seed) % 6;
-    iknownnameref(16) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(16) = _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(16) = _randcolor(p);
     p = (15 + gdata_random_seed) % 6;
-    iknownnameref(15) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(15) = _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(15) = _randcolor(p);
     p = (14 + gdata_random_seed) % 6;
-    iknownnameref(14) = _namescroll(p) + strblank + strscroll;
+    iknownnameref(14) = _namescroll(p) + strblank + i18n::_(u8"ui", u8"scroll");
     icolref(14) = _randcolor(p);
     p = (13 + gdata_random_seed) % 6;
-    iknownnameref(13) = _namering(p) + strblank + strring;
+    iknownnameref(13) = _namering(p) + strblank + i18n::_(u8"ui", u8"ring");
     icolref(13) = 0;
     iknownnameref(12) = ioriginalnameref(12);
     icolref(12) = 0;

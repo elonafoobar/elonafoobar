@@ -2,6 +2,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "elona.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "variables.hpp"
@@ -183,7 +184,7 @@ void talk_npc()
         list(0, listmax) = 13;
         listn(0, listmax) =
             lang(u8"食事をとる"s, u8"Bring me something to eat."s) + u8" ("s
-            + calcmealvalue() + strgold + u8")"s;
+            + calcmealvalue() + i18n::_(u8"ui", u8"gold") + u8")"s;
         ++listmax;
         if (gdata_weather == 1 || gdata_weather == 4 || gdata_weather == 2)
         {
@@ -198,16 +199,19 @@ void talk_npc()
         list(0, listmax) = 14;
         listn(0, listmax) =
             lang(u8"鑑定したい"s, u8"I need you to identify an item."s)
-            + u8" ("s + calcidentifyvalue(0) + strgold + u8")"s;
+            + u8" ("s + calcidentifyvalue(0) + i18n::_(u8"ui", u8"gold")
+            + u8")"s;
         ++listmax;
         list(0, listmax) = 15;
         listn(0, listmax) =
             lang(u8"全て鑑定してほしい"s, u8"Identify all of my stuff."s)
-            + u8" ("s + calcidentifyvalue(1) + strgold + u8")"s;
+            + u8" ("s + calcidentifyvalue(1) + i18n::_(u8"ui", u8"gold")
+            + u8")"s;
         ++listmax;
         list(0, listmax) = 16;
         listn(0, listmax) = lang(u8"調査したい"s, u8"Investigate an item."s)
-            + u8" ("s + calcidentifyvalue(2) + strgold + u8")"s;
+            + u8" ("s + calcidentifyvalue(2) + i18n::_(u8"ui", u8"gold")
+            + u8")"s;
         ++listmax;
     }
     if (cdata[tc].character_role == 7)
@@ -235,7 +239,7 @@ void talk_npc()
     {
         list(0, listmax) = 19;
         listn(0, listmax) = lang(u8"能力の復元"s, u8"Restore my attributes."s)
-            + u8"("s + calcrestorecost() + strgold + u8")"s;
+            + u8"("s + calcrestorecost() + i18n::_(u8"ui", u8"gold") + u8")"s;
         ++listmax;
     }
     if (cdata[tc].character_role == 13)
@@ -1258,8 +1262,8 @@ void talk_npc()
             }
             listmax = 0;
             buff = lang(
-                u8"そいつを呼び戻すには、"s + calcresurrectvalue(rc) + strgold
-                    + u8"必要"s + _da(),
+                u8"そいつを呼び戻すには、"s + calcresurrectvalue(rc)
+                    + i18n::_(u8"ui", u8"gold") + u8"必要"s + _da(),
                 u8"Alright. We had taken good care of your pet. It will cost you "s
                     + calcresurrectvalue(rc) + u8" gold pieces."s);
             if (cdata[0].gold >= calcresurrectvalue(rc))
@@ -1377,7 +1381,8 @@ void talk_npc()
         listmax = 0;
         buff = lang(
             u8"そう"s + _dana() + ""s + cdatan(0, 56) + u8"を"s
-                + calcslavevalue(56) + strgold + u8"でどう"s + _da(1),
+                + calcslavevalue(56) + i18n::_(u8"ui", u8"gold") + u8"でどう"s
+                + _da(1),
             u8"Okay. Let me check the stable....How about "s
                 + cnven(cdatan(0, 56)) + u8" for "s + calcslavevalue(56)
                 + u8" gold pieces. I'd say it's quite a bargain!"s);
@@ -1420,7 +1425,7 @@ void talk_npc()
             listmax = 0;
             buff = lang(
                 u8"なかなかの身体つき"s + _dana() + calcslavevalue(rc) * 2 / 3
-                    + strgold + u8"でどう"s + _da(1),
+                    + i18n::_(u8"ui", u8"gold") + u8"でどう"s + _da(1),
                 u8"Let me see....Hmmm, this one got a nice figure. I'll give you "s
                     + calcslavevalue(rc) * 2 / 3 + u8" gold pieces."s);
             list(0, listmax) = 1;
@@ -1664,8 +1669,8 @@ void talk_npc()
         }
         listmax = 0;
         buff = lang(
-            u8"免罪符を希望する"s + _noka(1) + calcguiltvalue() + strgold
-                + u8"かかるけどいいの"s + _kana(1),
+            u8"免罪符を希望する"s + _noka(1) + calcguiltvalue()
+                + i18n::_(u8"ui", u8"gold") + u8"かかるけどいいの"s + _kana(1),
             u8"In the authority of all the saints, I will grant you an indulgence, for money of course. The price is "s
                 + calcguiltvalue() + u8" gold pieces."s);
         if (cdata[0].gold >= calcguiltvalue())
@@ -1767,7 +1772,7 @@ void talk_npc()
     {
         buff = lang(
             _ore(3) + u8"の剣が必要な"s + _noka(1) + u8"そう"s + _dana(3)
-                + u8"、"s + calchireadv(tc) + strgold
+                + u8"、"s + calchireadv(tc) + i18n::_(u8"ui", u8"gold")
                 + u8"払うならば、7日間護衛を引き受け"s + _ru(),
             u8"I will take the job for "s + calchireadv(tc)
                 + u8" gold pieces, for seven day."s);
@@ -1935,7 +1940,7 @@ void talk_npc()
         }
         buff = lang(
             u8"そう"s + _dana(3) + u8"、全ての矢弾を補充すると"s
-                + calccostreload(0) + strgold + _da(),
+                + calccostreload(0) + i18n::_(u8"ui", u8"gold") + _da(),
             u8"Sure, let me check what type of ammos you need....Okay, reloading all of your ammos will cost "s
                 + calccostreload(0) + u8" gold pieces."s);
         if (cdata[0].gold >= calccostreload(0))

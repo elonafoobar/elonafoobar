@@ -301,9 +301,9 @@ std::string strhint6;
 std::string strinteractfail;
 elona_vector1<std::string> actlistn;
 elona_vector1<int> randcolor;
-std::string strbracketleft;
-std::string strbracketright;
-std::string strplat;
+
+
+
 int plat = 0;
 std::string nquestdate;
 elona_vector1<std::string> tname;
@@ -2426,22 +2426,6 @@ void text_set()
     homepage = lang(
         u8"http://homepage3.nifty.com/rfish/index.html"s,
         u8"http://homepage3.nifty.com/rfish/index_e.html"s);
-    strcursed = lang(u8"呪われた"s, u8"cursed"s);
-    strblessed = lang(u8"祝福された"s, u8"blessed"s);
-    stramulet = lang(u8"首飾り"s, u8"amulet"s);
-    strring = lang(u8"指輪"s, u8"ring"s);
-    strpotion = lang(u8"ポーション"s, u8"potion"s);
-    strspellbook = lang(u8"魔法書"s, u8"spellbook"s);
-    strscroll = lang(u8"巻物"s, u8"scroll"s);
-    strstaff = lang(u8"魔法棒"s, u8"rod"s);
-    strbracketleft = lang(u8"『"s, u8"<"s);
-    strbracketright = lang(u8"』"s, u8">"s);
-    strdoomed = lang(u8"堕落した"s, u8"doomed"s);
-    strgold = lang(u8" gold"s, u8" gold pieces"s);
-    strplat = lang(u8" plat"s, u8" platinum pieces"s);
-    strweight = lang(u8"s"s, u8"s"s);
-    stryes = lang(u8"ああ"s, u8"Yes"s);
-    strno = lang(u8"いや…"s, u8"No.."s);
     strblank = lang("", u8" "s);
 }
 
@@ -22826,7 +22810,8 @@ void add_quality_parentheses()
 {
     if (fixlv == 4)
     {
-        cdatan(0, rc) = strbracketleft + cdatan(0, rc) + strbracketright;
+        cdatan(0, rc) = i18n::_(u8"ui", u8"bracket_left") + cdatan(0, rc)
+            + i18n::_(u8"ui", u8"bracket_right");
         cdata[rc].level = cdata[rc].level * 10 / 8;
     }
     if (fixlv == 5)
@@ -30913,10 +30898,10 @@ void build_new_building()
         pc_turn(false);
     }
     txt(lang(u8"本当にこの場所に建設する？ "s, u8"Really build it here? "s));
-    promptl(0, 0) = stryes;
+    promptl(0, 0) = i18n::_(u8"ui", u8"yes");
     promptl(1, 0) = u8"y"s;
     promptl(2, 0) = u8"0"s;
-    promptl(0, 1) = strno;
+    promptl(0, 1) = i18n::_(u8"ui", u8"no");
     promptl(1, 1) = u8"n"s;
     promptl(2, 1) = u8"1"s;
     promptmax = 2;
@@ -37821,10 +37806,10 @@ void pray()
     }
     txtnew();
     txt(lang(u8"あなたの神に祈りを乞う？"s, u8"Really pray to your God?"s));
-    promptl(0, 0) = stryes;
+    promptl(0, 0) = i18n::_(u8"ui", u8"yes");
     promptl(1, 0) = u8"y"s;
     promptl(2, 0) = u8"0"s;
-    promptl(0, 1) = strno;
+    promptl(0, 1) = i18n::_(u8"ui", u8"no");
     promptl(1, 1) = u8"n"s;
     promptl(2, 1) = u8"1"s;
     promptmax = 2;
@@ -37903,10 +37888,10 @@ void pray()
                 txt(lang(
                     u8"この贈り物を諦める？"s,
                     u8"Do you want to decline this gift?"s));
-                promptl(0, 0) = stryes;
+                promptl(0, 0) = i18n::_(u8"ui", u8"yes");
                 promptl(1, 0) = u8"y"s;
                 promptl(2, 0) = u8"0"s;
-                promptl(0, 1) = strno;
+                promptl(0, 1) = i18n::_(u8"ui", u8"no");
                 promptl(1, 1) = u8"n"s;
                 promptl(2, 1) = u8"1"s;
                 promptmax = 2;
@@ -41670,10 +41655,10 @@ label_1945_internal:
                 txt(lang(
                     u8"本当に"s + userfile + u8"を削除する？ "s,
                     u8"Do you really want to delete "s + userfile + u8"? "s));
-                promptl(0, 0) = stryes;
+                promptl(0, 0) = i18n::_(u8"ui", u8"yes");
                 promptl(1, 0) = u8"y"s;
                 promptl(2, 0) = u8"0"s;
-                promptl(0, 1) = strno;
+                promptl(0, 1) = i18n::_(u8"ui", u8"no");
                 promptl(1, 1) = u8"n"s;
                 promptl(2, 1) = u8"1"s;
                 promptmax = 2;
@@ -42697,7 +42682,7 @@ label_1961_internal:
             s = ""s + cdatan(1, i) + u8" "s + cdatan(0, i);
             s += u8" Lv."s + cdata[i].level;
             cs_list(cs == cnt, s, wx + 84, wy + 66 + cnt * 19 - 1);
-            s = ""s + calcslavevalue(i) * 2 / 3 + strgold;
+            s = ""s + calcslavevalue(i) * 2 / 3 + i18n::_(u8"ui", u8"gold");
             pos(wx + 390, wy + 66 + cnt * 19 + 2);
             mes(s);
         }
@@ -43710,16 +43695,22 @@ void update_journal()
     if (jp)
     {
         noteadd(u8"◆ 給料(毎月1日と15日に支給)"s);
-        noteadd(u8"@BL　合計　　 : 約 "s + gold + strgold);
+        noteadd(u8"@BL　合計　　 : 約 "s + gold + i18n::_(u8"ui", u8"gold"));
         noteadd(""s);
         noteadd(u8"◆ 請求書内訳(毎月1日に発行)"s);
-        noteadd(u8"@RE　人件費  : 約 "s + gdata_cost_to_hire + strgold);
-        noteadd(u8"@RE　運営費  : 約 "s + calccostbuilding() + strgold);
-        noteadd(u8"@RE　税金    : 約 "s + calccosttax() + strgold);
+        noteadd(
+            u8"@RE　人件費  : 約 "s + gdata_cost_to_hire
+            + i18n::_(u8"ui", u8"gold"));
+        noteadd(
+            u8"@RE　運営費  : 約 "s + calccostbuilding()
+            + i18n::_(u8"ui", u8"gold"));
+        noteadd(
+            u8"@RE　税金    : 約 "s + calccosttax()
+            + i18n::_(u8"ui", u8"gold"));
         noteadd(
             u8"@RE　合計　  : 約 "s
             + (gdata_cost_to_hire + calccostbuilding() + calccosttax())
-            + strgold);
+            + i18n::_(u8"ui", u8"gold"));
         noteadd(""s);
         noteadd(u8"現在未払いの請求書は"s + gdata_left_bill + u8"枚"s);
     }
@@ -44124,10 +44115,10 @@ label_1978_internal:
     {
         txtnew();
         txt(lang(u8"依頼主に会う？"s, u8"Do you want to meet the client?"s));
-        promptl(0, 0) = stryes;
+        promptl(0, 0) = i18n::_(u8"ui", u8"yes");
         promptl(1, 0) = u8"y"s;
         promptl(2, 0) = u8"0"s;
-        promptl(0, 1) = strno;
+        promptl(0, 1) = i18n::_(u8"ui", u8"no");
         promptl(1, 1) = u8"n"s;
         promptl(2, 1) = u8"1"s;
         promptmax = 2;
@@ -49194,10 +49185,10 @@ void do_get_command()
             txt(lang(
                 u8"本当にこの建物を撤去する？（注意！建物と中の物は完全に失われます）"s,
                 u8"Really remove this building?"s));
-            promptl(0, 0) = stryes;
+            promptl(0, 0) = i18n::_(u8"ui", u8"yes");
             promptl(1, 0) = u8"y"s;
             promptl(2, 0) = u8"0"s;
-            promptl(0, 1) = strno;
+            promptl(0, 1) = i18n::_(u8"ui", u8"no");
             promptl(1, 1) = u8"n"s;
             promptl(2, 1) = u8"1"s;
             promptmax = 2;
@@ -49932,10 +49923,10 @@ int label_2073()
     txt(lang(
         u8"本当に"s + name(tc) + u8"を攻撃する？ "s,
         u8"Really attack "s + name(tc) + u8"? "s));
-    promptl(0, 0) = stryes;
+    promptl(0, 0) = i18n::_(u8"ui", u8"yes");
     promptl(1, 0) = u8"y"s;
     promptl(2, 0) = u8"0"s;
-    promptl(0, 1) = strno;
+    promptl(0, 1) = i18n::_(u8"ui", u8"no");
     promptl(1, 1) = u8"n"s;
     promptl(2, 1) = u8"1"s;
     promptmax = 2;
@@ -50174,10 +50165,10 @@ void label_2078()
             + u8"を中断したほうがいいだろうか？ "s,
         u8"Do you want to cancel "s + actlistn(cdata[cc].continuous_action_id)
             + u8"? "s));
-    promptl(0, 0) = stryes;
+    promptl(0, 0) = i18n::_(u8"ui", u8"yes");
     promptl(1, 0) = u8"y"s;
     promptl(2, 0) = u8"0"s;
-    promptl(0, 1) = strno;
+    promptl(0, 1) = i18n::_(u8"ui", u8"no");
     promptl(1, 1) = u8"n"s;
     promptl(2, 1) = u8"1"s;
     promptmax = 2;
@@ -50276,10 +50267,10 @@ void label_2081()
         txt(lang(
             u8"依頼請負中の帰還は法律で禁止されている。それでも帰還する？"s,
             u8"Returning while taking a quest if forbidden. Are you sure you want to return?"s));
-        promptl(0, 0) = stryes;
+        promptl(0, 0) = i18n::_(u8"ui", u8"yes");
         promptl(1, 0) = u8"y"s;
         promptl(2, 0) = u8"0"s;
-        promptl(0, 1) = strno;
+        promptl(0, 1) = i18n::_(u8"ui", u8"no");
         promptl(1, 1) = u8"n"s;
         promptl(2, 1) = u8"1"s;
         promptmax = 2;
@@ -50403,10 +50394,10 @@ void label_2082()
     txt(lang(
         ""s + matname(tmat) + u8"を使ってガシャガシャする？"s,
         u8"Pay "s + matname(tmat) + u8" to gasha-gasha?"s));
-    promptl(0, 0) = stryes;
+    promptl(0, 0) = i18n::_(u8"ui", u8"yes");
     promptl(1, 0) = u8"y"s;
     promptl(2, 0) = u8"0"s;
-    promptl(0, 1) = strno;
+    promptl(0, 1) = i18n::_(u8"ui", u8"no");
     promptl(1, 1) = u8"n"s;
     promptl(2, 1) = u8"1"s;
     promptmax = 2;
@@ -50457,10 +50448,10 @@ int label_2083()
             txt(lang(
                 u8"この本の内容には興味がない。それでも読む？ "s,
                 u8"You are not interested in this book. Do you want to read it anyway? "s));
-            promptl(0, 0) = stryes;
+            promptl(0, 0) = i18n::_(u8"ui", u8"yes");
             promptl(1, 0) = u8"y"s;
             promptl(2, 0) = u8"0"s;
-            promptl(0, 1) = strno;
+            promptl(0, 1) = i18n::_(u8"ui", u8"no");
             promptl(1, 1) = u8"n"s;
             promptl(2, 1) = u8"1"s;
             promptmax = 2;
@@ -52193,10 +52184,10 @@ label_2119_internal:
                     s = u8"Do you really want to delete "s + playerid + u8" ?"s;
                 }
                 draw_caption();
-                promptl(0, 0) = stryes;
+                promptl(0, 0) = i18n::_(u8"ui", u8"yes");
                 promptl(1, 0) = u8"y"s;
                 promptl(2, 0) = u8"0"s;
-                promptl(0, 1) = strno;
+                promptl(0, 1) = i18n::_(u8"ui", u8"no");
                 promptl(1, 1) = u8"n"s;
                 promptl(2, 1) = u8"1"s;
                 promptmax = 2;
@@ -52217,10 +52208,10 @@ label_2119_internal:
                         + u8" ?"s;
                 }
                 draw_caption();
-                promptl(0, 0) = stryes;
+                promptl(0, 0) = i18n::_(u8"ui", u8"yes");
                 promptl(1, 0) = u8"y"s;
                 promptl(2, 0) = u8"0"s;
-                promptl(0, 1) = strno;
+                promptl(0, 1) = i18n::_(u8"ui", u8"no");
                 promptl(1, 1) = u8"n"s;
                 promptl(2, 1) = u8"1"s;
                 promptmax = 2;
@@ -53873,8 +53864,8 @@ void label_2146()
         if (is_in_fov(cc))
         {
             txt(lang(
-                name(cc) + u8"は合計 "s + cdata[cc].tip_gold + strgold
-                    + u8"のおひねりを貰った。"s,
+                name(cc) + u8"は合計 "s + cdata[cc].tip_gold
+                    + i18n::_(u8"ui", u8"gold") + u8"のおひねりを貰った。"s,
                 u8"The audience gives "s + name(cc) + u8" total of "s
                     + cdata[cc].tip_gold + u8" gold pieces."s));
         }
@@ -56117,10 +56108,10 @@ int label_2168()
             txt(lang(
                 u8"マナが足りないが、それでも詠唱を試みる？"s,
                 u8"You are going to over-cast the spell. Are you sure?"s));
-            promptl(0, 0) = stryes;
+            promptl(0, 0) = i18n::_(u8"ui", u8"yes");
             promptl(1, 0) = u8"y"s;
             promptl(2, 0) = u8"0"s;
-            promptl(0, 1) = strno;
+            promptl(0, 1) = i18n::_(u8"ui", u8"no");
             promptl(1, 1) = u8"n"s;
             promptl(2, 1) = u8"1"s;
             promptmax = 2;
@@ -57551,10 +57542,10 @@ int pick_up_item()
             txt(lang(
                 itemname(ci) + u8"を撤去する？ "s,
                 u8"Do you want to remove "s + itemname(ci) + u8"? "s));
-            promptl(0, 0) = stryes;
+            promptl(0, 0) = i18n::_(u8"ui", u8"yes");
             promptl(1, 0) = u8"y"s;
             promptl(2, 0) = u8"0"s;
-            promptl(0, 1) = strno;
+            promptl(0, 1) = i18n::_(u8"ui", u8"no");
             promptl(1, 1) = u8"n"s;
             promptl(2, 1) = u8"1"s;
             promptmax = 2;
@@ -58529,10 +58520,10 @@ void label_2203()
                             u8"Warning! You are going to abandon your current quest."s));
                     }
                 }
-                promptl(0, 0) = stryes;
+                promptl(0, 0) = i18n::_(u8"ui", u8"yes");
                 promptl(1, 0) = u8"y"s;
                 promptl(2, 0) = u8"0"s;
-                promptl(0, 1) = strno;
+                promptl(0, 1) = i18n::_(u8"ui", u8"no");
                 promptl(1, 1) = u8"n"s;
                 promptl(2, 1) = u8"1"s;
                 promptmax = 2;
@@ -59145,10 +59136,10 @@ void label_2207(int val0)
             txt(lang(
                 u8"本当にこたつの中に入る？"s,
                 u8"Really get into the Kotatsu?"s));
-            promptl(0, 0) = stryes;
+            promptl(0, 0) = i18n::_(u8"ui", u8"yes");
             promptl(1, 0) = u8"y"s;
             promptl(2, 0) = u8"0"s;
-            promptl(0, 1) = strno;
+            promptl(0, 1) = i18n::_(u8"ui", u8"no");
             promptl(1, 1) = u8"n"s;
             promptl(2, 1) = u8"1"s;
             promptmax = 2;
@@ -59315,10 +59306,10 @@ void label_2207(int val0)
                 txt(lang(
                     u8"クエストを放棄して階を移動する？"s,
                     u8"Really give up the quest and move over?"s));
-                promptl(0, 0) = stryes;
+                promptl(0, 0) = i18n::_(u8"ui", u8"yes");
                 promptl(1, 0) = u8"y"s;
                 promptl(2, 0) = u8"0"s;
-                promptl(0, 1) = strno;
+                promptl(0, 1) = i18n::_(u8"ui", u8"no");
                 promptl(1, 1) = u8"n"s;
                 promptl(2, 1) = u8"1"s;
                 promptmax = 2;
@@ -59447,10 +59438,10 @@ int unlock_box(int difficulty)
         }
         txtnew();
         txt(lang(u8"もう一度試みる？"s, u8"Try again?"s));
-        promptl(0, 0) = stryes;
+        promptl(0, 0) = i18n::_(u8"ui", u8"yes");
         promptl(1, 0) = u8"y"s;
         promptl(2, 0) = u8"0"s;
-        promptl(0, 1) = strno;
+        promptl(0, 1) = i18n::_(u8"ui", u8"no");
         promptl(1, 1) = u8"n"s;
         promptl(2, 1) = u8"1"s;
         promptmax = 2;
@@ -62346,10 +62337,10 @@ void do_use_command()
                     txt(lang(
                         u8"クエストを放棄してシェルターに非難する？"s,
                         u8"Really give up the quest and evacuate to the shelter?"s));
-                    promptl(0, 0) = stryes;
+                    promptl(0, 0) = i18n::_(u8"ui", u8"yes");
                     promptl(1, 0) = u8"y"s;
                     promptl(2, 0) = u8"0"s;
-                    promptl(0, 1) = strno;
+                    promptl(0, 1) = i18n::_(u8"ui", u8"no");
                     promptl(1, 1) = u8"n"s;
                     promptl(2, 1) = u8"1"s;
                     promptmax = 2;
@@ -62569,10 +62560,10 @@ void do_use_command()
                 txt(lang(
                     u8"ここはクエストの目標位置ではない。本当にここに設置する？"s,
                     u8"This location is not your quest goal. Really place it here?"s));
-                promptl(0, 0) = stryes;
+                promptl(0, 0) = i18n::_(u8"ui", u8"yes");
                 promptl(1, 0) = u8"y"s;
                 promptl(2, 0) = u8"0"s;
-                promptl(0, 1) = strno;
+                promptl(0, 1) = i18n::_(u8"ui", u8"no");
                 promptl(1, 1) = u8"n"s;
                 promptl(2, 1) = u8"1"s;
                 promptmax = 2;
@@ -62669,10 +62660,10 @@ void do_use_command()
     case 46:
         txtnew();
         txt(lang(u8"本当に首を吊る？"s, u8"Really hang yourself?"s));
-        promptl(0, 0) = stryes;
+        promptl(0, 0) = i18n::_(u8"ui", u8"yes");
         promptl(1, 0) = u8"y"s;
         promptl(2, 0) = u8"0"s;
-        promptl(0, 1) = strno;
+        promptl(0, 1) = i18n::_(u8"ui", u8"no");
         promptl(1, 1) = u8"n"s;
         promptl(2, 1) = u8"1"s;
         promptmax = 2;
@@ -62779,10 +62770,10 @@ void do_use_command()
                 + u8"の遺伝子を組み込む？"s,
             u8"Really add "s + cdatan(0, tc) + u8"'s gene to "s + cdatan(0, rc)
                 + u8"?"s));
-        promptl(0, 0) = stryes;
+        promptl(0, 0) = i18n::_(u8"ui", u8"yes");
         promptl(1, 0) = u8"y"s;
         promptl(2, 0) = u8"0"s;
-        promptl(0, 1) = strno;
+        promptl(0, 1) = i18n::_(u8"ui", u8"no");
         promptl(1, 1) = u8"n"s;
         promptl(2, 1) = u8"1"s;
         promptmax = 2;
@@ -63824,7 +63815,7 @@ void label_2244()
                 {
                     buff = lang(i18n::_(u8"ability", std::to_string(csskill), u8"name") +
                             u8"のスキルを、友達価格の"s +
-                            calclearncost(csskill, cc, 1) + strplat +
+                            calclearncost(csskill, cc, 1) + i18n::_(u8"ui", u8"platinum") +
                             u8"で教えてあげてもいい"s + _ga(3) + u8"どう"s +
                             _kana(1),
                         u8"I can teach you the art of "s + i18n::_(u8"ability", std::to_string(csskill), u8"name") +
@@ -63843,7 +63834,7 @@ void label_2244()
                 {
                     buff = lang(i18n::_(u8"ability", std::to_string(csskill), u8"name") +
                             u8"のスキルを、友達価格の"s +
-                            calctraincost(csskill, cc, 1) + strplat +
+                            calctraincost(csskill, cc, 1) + i18n::_(u8"ui", u8"platinum") +
                             u8"で訓練してもいい"s + _ga(3) + u8"どう"s +
                             _kana(1),
                         u8"I can train your "s + i18n::_(u8"ability", std::to_string(csskill), u8"name") +
@@ -65329,7 +65320,8 @@ void label_2254()
         buff = lang(
             i18n::_(u8"ability", std::to_string(csskill), u8"name")
                 + u8"の能力を訓練するには"s + calctraincost(csskill, cc)
-                + strplat + u8"かかるけどいい"s + _kana(1),
+                + i18n::_(u8"ui", u8"platinum") + u8"かかるけどいい"s
+                + _kana(1),
             u8"Training "s
                 + i18n::_(u8"ability", std::to_string(csskill), u8"name")
                 + u8" will cost you "s + calctraincost(csskill, cc)
@@ -65346,7 +65338,8 @@ void label_2254()
         buff = lang(
             i18n::_(u8"ability", std::to_string(csskill), u8"name")
                 + u8"の能力を習得するには"s + calclearncost(csskill, cc)
-                + strplat + u8"かかるけどいい"s + _kana(1),
+                + i18n::_(u8"ui", u8"platinum") + u8"かかるけどいい"s
+                + _kana(1),
             u8"Learning "s
                 + i18n::_(u8"ability", std::to_string(csskill), u8"name")
                 + u8" will cost you "s + calclearncost(csskill, cc)
@@ -65406,8 +65399,8 @@ void label_2255()
 {
     listmax = 0;
     buff = lang(
-        u8"投資をしてくれる"s + _noka(1) + calcinvestvalue() + strgold
-            + u8"かかるけどいいの"s + _kana(1),
+        u8"投資をしてくれる"s + _noka(1) + calcinvestvalue()
+            + i18n::_(u8"ui", u8"gold") + u8"かかるけどいいの"s + _kana(1),
         u8"Oh, do you want to invest in my shop? It will cost you "s
             + calcinvestvalue() + u8" golds. I hope you got the money."s);
     if (cdata[0].gold >= calcinvestvalue())
@@ -73924,10 +73917,10 @@ void pc_turn(bool label_2747_flg)
                 txt(lang(
                     u8"試合を放棄する？"s,
                     u8"Do you want to give up the game?"s));
-                promptl(0, 0) = stryes;
+                promptl(0, 0) = i18n::_(u8"ui", u8"yes");
                 promptl(1, 0) = u8"y"s;
                 promptl(2, 0) = u8"0"s;
-                promptl(0, 1) = strno;
+                promptl(0, 1) = i18n::_(u8"ui", u8"no");
                 promptl(1, 1) = u8"n"s;
                 promptl(2, 1) = u8"1"s;
                 promptmax = 2;
@@ -75038,10 +75031,10 @@ void play_the_last_scene_again()
     txt(lang(
         u8"達成のシーンをもう一度再現する？"s,
         u8"You want to watch this event again?"s));
-    promptl(0, 0) = stryes;
+    promptl(0, 0) = i18n::_(u8"ui", u8"yes");
     promptl(1, 0) = u8"y"s;
     promptl(2, 0) = u8"0"s;
-    promptl(0, 1) = strno;
+    promptl(0, 1) = i18n::_(u8"ui", u8"no");
     promptl(1, 1) = u8"n"s;
     promptl(2, 1) = u8"1"s;
     promptmax = 2;
