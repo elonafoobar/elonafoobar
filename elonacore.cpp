@@ -70822,7 +70822,7 @@ void label_2696()
     {
         pcattacker = cc;
     }
-    act = cdata[cc].act[rnd(cdata[cc].ai_act_num % 10)];
+    int act = cdata[cc].act[rnd(cdata[cc].ai_act_num % 10)];
     if (cdata[cc].ai_act_sub_freq != 0)
     {
         if (cdata[cc].ai_act_sub_freq > rnd(100))
