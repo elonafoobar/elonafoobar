@@ -244,7 +244,6 @@ inline elona_vector2<std::string> userdatan;
 inline elona_vector3<int> bddata;
 inline elona_vector3<int> efmap;
 inline elona_vector3<int> map;
-inline int a;
 inline int allyctrl;
 inline int am;
 inline int ammo;

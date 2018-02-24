@@ -31796,13 +31796,13 @@ void show_shop_log()
         {
             continue;
         }
-        a = the_item_db[inv[cnt].id]->category;
-        if (a == 60000)
+        int category = the_item_db[inv[cnt].id]->category;
+        if (category == 60000)
         {
             continue;
         }
         dblist(0, dblistmax) = cnt;
-        dblist(1, dblistmax) = a;
+        dblist(1, dblistmax) = category;
         ++dblistmax;
     }
     for (int cnt = 0, cnt_end = cnt + (customer); cnt < cnt_end; ++cnt)
@@ -31813,7 +31813,7 @@ void show_shop_log()
         }
         p = rnd(dblistmax);
         ci = dblist(0, p);
-        a = dblist(1, p);
+        int category = dblist(1, p);
         int val0 = calcitemvalue(ci, 2);
         val0 = val0 * int((10 + std::sqrt(sdata(156, worker) * 200))) / 100;
         if (val0 <= 1)
@@ -31840,7 +31840,7 @@ void show_shop_log()
         {
             list(0, listmax) = the_item_db[inv[ci].id]->level;
             list(1, listmax) = inv[ci].quality;
-            listn(0, listmax) = std::to_string(a);
+            listn(0, listmax) = std::to_string(category);
             listn(1, listmax) = std::to_string(val0);
             ++listmax;
         }
@@ -32121,25 +32121,25 @@ void label_1728()
 
 void label_1729(int val0)
 {
-    a = the_item_db[inv[val0].id]->category;
-    if (a == 60000)
+    int category = the_item_db[inv[val0].id]->category;
+    if (category == 60000)
     {
         gdata(77) += std::clamp(inv[val0].value / 50, 50, 500);
     }
     p = inv[val0].value;
     for (int cnt = 0, cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
     {
-        if (a == 60000)
+        if (category == 60000)
         {
             p /= 20;
             break;
         }
-        if (a == 80000)
+        if (category == 80000)
         {
             p /= 10;
             break;
         }
-        if (a == 77000)
+        if (category == 77000)
         {
             p /= 10;
             break;
@@ -41855,6 +41855,7 @@ label_1948_internal:
             keyrelease();
             goto label_1948_internal;
         }
+        int a{};
         stick(a, 768);
         if (a == 256)
         {
@@ -42276,6 +42277,7 @@ label_1956_internal:
     gmode(2);
     redraw(1);
     await(cfg_wait1);
+    int a{};
     stick(a);
     if (a == 256)
     {
@@ -52946,6 +52948,7 @@ void label_2134()
     objsel(2);
 label_2135_internal:
     await(20);
+    int a{};
     stick(a);
     if (a == 128)
     {
@@ -65481,6 +65484,7 @@ label_2258_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
+    int a{};
     stick(a, 128);
     if (a == 128)
     {
@@ -67659,8 +67663,8 @@ void label_2662()
 
 void set_item_which_will_be_used()
 {
-    a = the_item_db[inv[ci].id]->category;
-    if (a == 57000 || a == 52000 || a == 53000)
+    int category = the_item_db[inv[ci].id]->category;
+    if (category == 57000 || category == 52000 || category == 53000)
     {
         cdata[rc].item_which_will_be_used = ci;
     }
@@ -68980,6 +68984,7 @@ void do_play_scene()
     scidx += std::size(s(0));
 label_2681:
     await();
+    int a{};
     stick(a, 128);
     if (a == 128)
     {
@@ -69702,28 +69707,30 @@ void label_2687()
         cdata[cc].item_which_will_be_used = 0;
         goto label_2689_internal;
     }
-    a = the_item_db[inv[ci].id]->category;
     if (cdata[cc].relationship != 0)
     {
         cdata[cc].item_which_will_be_used = 0;
     }
-    if (a == 57000)
     {
-        if (cdata[cc].relationship != 10 || cdata[cc].nutrition <= 6000)
+        int category = the_item_db[inv[ci].id]->category;
+        if (category == 57000)
         {
-            do_eat_command();
+            if (cdata[cc].relationship != 10 || cdata[cc].nutrition <= 6000)
+            {
+                do_eat_command();
+                return;
+            }
+        }
+        if (category == 52000)
+        {
+            do_drink_command();
             return;
         }
-    }
-    if (a == 52000)
-    {
-        do_drink_command();
-        return;
-    }
-    if (a == 53000)
-    {
-        do_read_commad();
-        return;
+        if (category == 53000)
+        {
+            do_read_commad();
+            return;
+        }
     }
     cdata[cc].item_which_will_be_used = 0;
 label_2689_internal:
@@ -70457,8 +70464,8 @@ void label_2693()
                     {
                         continue;
                     }
-                    a = the_item_db[inv[cnt].id]->category;
-                    if (a == 77000)
+                    int category = the_item_db[inv[cnt].id]->category;
+                    if (category == 77000)
                     {
                         p = inv[cnt].value * inv[cnt].number;
                         sell += inv[cnt].number;
