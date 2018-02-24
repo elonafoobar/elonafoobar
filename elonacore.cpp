@@ -69133,7 +69133,6 @@ label_2689_internal:
                 }
                 if (distance > 2 || rnd(3))
                 {
-                    retreat = 0;
                     label_2693();
                     return;
                 }
@@ -69146,13 +69145,8 @@ label_2689_internal:
         }
         if (cdata[cc].fear != 0)
         {
-            retreat = 1;
-            label_2693();
+            label_2693(true);
             return;
-        }
-        else
-        {
-            retreat = 0;
         }
         if (cdata[cc].blind != 0)
         {
@@ -69745,7 +69739,7 @@ label_2692_internal:
 
 
 
-void label_2693()
+void label_2693(bool retreat)
 {
     if (mdata(6) == 3)
     {
