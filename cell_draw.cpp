@@ -790,7 +790,7 @@ void cell_draw()
                         }
                         p_ = inv[flooritem_(i)].image;
                         i_ = inv[flooritem_(i)].color;
-                        prepare_item_image(p_, i_);
+                        prepare_item_image(p_, i_, inv[flooritem_(i)].param1);
                         if (mdata(6) == 1)
                         {
                             gmode(2, chipi(2, p_), chipi(3, p_));
@@ -862,7 +862,15 @@ void cell_draw()
                 }
                 else
                 {
-                    prepare_item_image(p_, i_);
+                    if (p_ == 528 || p_ == 531)
+                    {
+                        cell_itemoncell(x_, y);
+                        prepare_item_image(p_, i_, inv[rtval(1)].param1);
+                    }
+                    else
+                    {
+                        prepare_item_image(p_, i_);
+                    }
                     if (mdata(6) == 1)
                     {
                         gmode(2, chipi(2, p_), chipi(3, p_));
