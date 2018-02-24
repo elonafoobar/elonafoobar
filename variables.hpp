@@ -220,7 +220,6 @@ inline elona_vector1<int> eqrange;
 inline elona_vector1<int> eqammo;
 inline elona_vector1<int> eqring1;
 inline elona_vector2<int> itemmemory;
-inline elona_vector2<int> lightdata;
 inline elona_vector2<int> list;
 inline elona_vector2<int> mapsync;
 inline elona_vector2<int> mef;
