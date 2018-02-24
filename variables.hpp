@@ -44,7 +44,6 @@ inline elona_vector1<int> mat;
 inline elona_vector1<int> matneed;
 inline elona_vector1<int> mdata;
 inline elona_vector1<int> mdatatmp;
-inline elona_vector1<int> n;
 inline elona_vector1<int> p;
 inline elona_vector1<int> rainx;
 inline elona_vector1<int> rainy;

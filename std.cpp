@@ -2052,6 +2052,7 @@ int talk_conv_jp(std::string& text, int max_line_length)
 
     std::string rest{text};
     text.clear();
+    int n{};
 
     while (1)
     {
