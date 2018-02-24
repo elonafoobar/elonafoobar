@@ -44274,6 +44274,14 @@ void what_do_you_wish_for()
         wish_end();
         return;
     }
+    if (inputlog == u8"名声"s || inputlog == u8"fame"s)
+    {
+        txtef(5);
+        txt(u8"fame +1,000,000");
+        cdata[0].fame += 1'000'000;
+        wish_end();
+        return;
+    }
     if (strutil::contains(inputlog(0), lang(u8"スキル"s, u8"skill"s)))
     {
         goto label_1999_internal;
