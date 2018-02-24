@@ -1003,7 +1003,8 @@ void itemname_additional_info()
         }
         if (inv[prm_518].own_state == 4)
         {
-            s_at_m63 += lang(""s, u8" grown "s) + _weight(inv[prm_518].subname)
+            s_at_m63 += lang(""s, u8" grown "s)
+                + i18n::_(u8"ui", u8"weight", u8"_"s + inv[prm_518].subname)
                 + lang(u8"育った"s, ""s);
         }
     }
@@ -1048,13 +1049,15 @@ void itemname_additional_info()
                 }
                 else
                 {
-                    s_at_m63 += _furniture(inv[prm_518].subname);
+                    s_at_m63 += i18n::_(
+                        u8"ui", u8"furniture", u8"_"s + inv[prm_518].subname);
                 }
             }
         }
         if (inv[prm_518].id == 344)
         {
-            s_at_m63 += lang(""s, u8" of "s) + _homename(inv[prm_518].param1)
+            s_at_m63 += lang(""s, u8" of "s)
+                + i18n::_(u8"ui", u8"home", u8"_"s + inv[prm_518].param1)
                 + lang(u8"の"s, ""s);
         }
         if (inv[prm_518].id == 615)
@@ -1318,7 +1321,11 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
                 }
                 else
                 {
-                    s_at_m63 += _furniture(inv[prm_518].subname) + u8" "s;
+                    s_at_m63 += i18n::_(
+                                    u8"ui",
+                                    u8"furniture",
+                                    u8"_"s + inv[prm_518].subname)
+                        + u8" "s;
                 }
             }
         }
@@ -1621,8 +1628,10 @@ label_0313_internal:
     {
         if (a_at_m63 < 50000)
         {
-            s_at_m63 +=
-                u8" ("s + cnven(_quality(inv[prm_518].quality)) + u8")"s;
+            s_at_m63 += u8" ("s
+                + cnven(i18n::_(
+                      u8"ui", u8"quality", u8"_"s + inv[prm_518].quality))
+                + u8")"s;
             if (jp)
             {
                 s_at_m63 +=

@@ -557,7 +557,7 @@ void talk_npc()
         }
     }
     list(0, listmax) = 0;
-    listn(0, listmax) = strbye;
+    listn(0, listmax) = i18n::_(u8"ui", u8"bye");
     ++listmax;
     chatesc = 1;
     talk_window();
@@ -581,7 +581,7 @@ void talk_npc()
                                 u8"I don't have business with criminals."s);
                             tc = tc * 1 + 0;
                             list(0, listmax) = 0;
-                            listn(0, listmax) = strmore;
+                            listn(0, listmax) = i18n::_(u8"ui", u8"more");
                             ++listmax;
                             chatesc = 1;
                             talk_window();
@@ -641,7 +641,7 @@ void talk_npc()
     {
         if (cdata[0].gold < calcmealvalue())
         {
-            buff = strnogold;
+            buff = i18n::_(u8"ui", u8"no_gold");
             talk_npc();
             return;
         }
@@ -670,7 +670,7 @@ void talk_npc()
     {
         if (cdata[0].gold < calcidentifyvalue(chatval - 14))
         {
-            buff = strnogold;
+            buff = i18n::_(u8"ui", u8"no_gold");
             talk_npc();
             return;
         }
@@ -784,7 +784,7 @@ void talk_npc()
     {
         if (cdata[0].gold < calcrestorecost())
         {
-            buff = strnogold;
+            buff = i18n::_(u8"ui", u8"no_gold");
             talk_npc();
             return;
         }
@@ -1218,7 +1218,7 @@ void talk_npc()
                     u8"Oh, it's you again? How come you find the wallets so often?"s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
-                listn(0, listmax) = strmore;
+                listn(0, listmax) = i18n::_(u8"ui", u8"more");
                 ++listmax;
                 chatesc = 1;
                 talk_window();
@@ -1308,7 +1308,7 @@ void talk_npc()
             u8"(You order "s + name(tc) + u8" to wait at the town.)"s);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -1481,7 +1481,7 @@ void talk_npc()
         buff = lang(u8"はい…喜んで。"s, u8"With preasure."s);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -1506,7 +1506,7 @@ void talk_npc()
             buff = lang(u8"こんな場所では嫌よ"s, u8"Not here!"s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
-            listn(0, listmax) = strmore;
+            listn(0, listmax) = i18n::_(u8"ui", u8"more");
             ++listmax;
             chatesc = 1;
             talk_window();
@@ -1525,7 +1525,7 @@ void talk_npc()
         buff = lang(u8"いやん、あなたったら…"s, u8"*blush*"s);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -1554,7 +1554,7 @@ void talk_npc()
             u8"The shelter is free to use for anyone. Here, come in."s);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -1829,7 +1829,7 @@ void talk_npc()
                 u8"Sure, I guess you and I can make a good team."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
-            listn(0, listmax) = strmore;
+            listn(0, listmax) = i18n::_(u8"ui", u8"more");
             ++listmax;
             chatesc = 1;
             talk_window();
@@ -1912,7 +1912,7 @@ void talk_npc()
             u8"I'm practicing a spell of return. Would you like to take my service?"s);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -2032,7 +2032,7 @@ void talk_npc()
         buff = lang(u8"追い返す"s + _yo(), u8"Alright."s);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();

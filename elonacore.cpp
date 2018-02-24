@@ -271,39 +271,9 @@ int enc2 = 0;
 int musicloop = 0;
 int autoturn = 0;
 int firstautoturn = 0;
-elona_vector1<std::string> _impression;
-elona_vector1<std::string> _weather;
-elona_vector1<std::string> _reward;
-elona_vector1<std::string> _time;
-elona_vector1<std::string> _stats2;
-elona_vector1<std::string> _hunger;
-elona_vector1<std::string> _burden;
-elona_vector1<std::string> _sleep;
-elona_vector1<std::string> _consick;
-elona_vector1<std::string> _conpoison;
-elona_vector1<std::string> _condim;
-elona_vector1<std::string> _conangry;
-elona_vector1<std::string> _conbleed;
-elona_vector1<std::string> _coninsane;
-std::string _condrunk;
-std::string _conwet;
-std::string _congravity;
-elona_vector1<std::string> _consleep;
-std::string _conblind;
-std::string _conparalyze;
-std::string _conmochi;
-std::string _conconfuse;
-std::string _confear;
-elona_vector1<std::string> _confatigue;
-elona_vector1<std::string> _resist;
 std::string strhint4;
 std::string strhint6;
-std::string strinteractfail;
-elona_vector1<std::string> actlistn;
 elona_vector1<int> randcolor;
-
-
-
 int plat = 0;
 std::string nquestdate;
 elona_vector1<std::string> tname;
@@ -1677,409 +1647,6 @@ void auto_turn(int delay)
 
 void text_set()
 {
-    SDIM3(bodyn, 4, 15);
-    bodyn(0) = "";
-    bodyn(1) = u8"頭"s;
-    bodyn(2) = u8"首"s;
-    bodyn(3) = u8"背中"s;
-    bodyn(4) = u8"胴体"s;
-    bodyn(5) = u8"手"s;
-    bodyn(6) = u8"指"s;
-    bodyn(7) = u8"腕"s;
-    bodyn(8) = u8"腰"s;
-    bodyn(9) = u8"足"s;
-    bodyn(10) = u8"遠隔"s;
-    bodyn(11) = u8"矢弾"s;
-    _impression(0) = lang(u8"天敵"s, u8"Foe"s);
-    _impression(1) = lang(u8"嫌い"s, u8"Hate"s);
-    _impression(2) = lang(u8"うざい"s, u8"Annoying"s);
-    _impression(3) = lang(u8"普通"s, u8"Normal"s);
-    _impression(4) = lang(u8"好意的"s, u8"Amiable"s);
-    _impression(5) = lang(u8"友達"s, u8"Friend"s);
-    _impression(6) = lang(u8"親友"s, u8"Fellow"s);
-    _impression(7) = lang(u8"魂の友"s, u8"Soul Mate"s);
-    _impression(8) = lang(u8" *Love*"s, u8" *Love*"s);
-    if (jp)
-    {
-        _weather(0) = "";
-        _weather(1) = u8"*エーテル*"s;
-        _weather(2) = u8"雪"s;
-        _weather(3) = u8"雨"s;
-        _weather(4) = u8"雷雨"s;
-    }
-    else
-    {
-        _weather(0) = "";
-        _weather(1) = u8"Etherwind"s;
-        _weather(2) = u8"Snow"s;
-        _weather(3) = u8"Rain"s;
-        _weather(4) = u8"Hard rain"s;
-    }
-    if (jp)
-    {
-        _homename(0) = u8"洞窟"s;
-        _homename(1) = u8"森のほったて小屋"s;
-        _homename(2) = u8"住み心地のいい家"s;
-        _homename(3) = u8"セレブ邸"s;
-        _homename(4) = u8"サイバーハウス"s;
-        _homename(5) = u8"小城"s;
-        _furniture(0) = "";
-        _furniture(1) = u8"みすぼらしい"s;
-        _furniture(2) = u8"気になる"s;
-        _furniture(3) = u8"いい感じの"s;
-        _furniture(4) = u8"マダム殺しの"s;
-        _furniture(5) = u8"思わず見入りそうな"s;
-        _furniture(6) = u8"マニア向けの"s;
-        _furniture(7) = u8"凄く華麗な"s;
-        _furniture(8) = u8"王家御用達の"s;
-        _furniture(9) = u8"芸術的な"s;
-        _furniture(10) = u8"神々しい"s;
-        _furniture(11) = u8"世界最高の"s;
-        _weight(0) = u8"超ミニに"s;
-        _weight(1) = u8"小振りに"s;
-        _weight(2) = u8"手ごろに"s;
-        _weight(3) = u8"やや大きく"s;
-        _weight(4) = u8"どでかく"s;
-        _weight(5) = u8"かなり巨大に"s;
-        _weight(6) = u8"化け物サイズに"s;
-        _weight(7) = u8"人より大きく"s;
-        _weight(8) = u8"伝説的サイズに"s;
-        _weight(9) = u8"象より重く"s;
-    }
-    else
-    {
-        _homename(0) = u8"cave"s;
-        _homename(1) = u8"shack"s;
-        _homename(2) = u8"cozy house"s;
-        _homename(3) = u8"estate"s;
-        _homename(4) = u8"cyber house"s;
-        _homename(5) = u8"small castle"s;
-        _furniture(0) = "";
-        _furniture(1) = u8"stupid"s;
-        _furniture(2) = u8"lame"s;
-        _furniture(3) = u8"cool"s;
-        _furniture(4) = u8"madam's favorite"s;
-        _furniture(5) = u8"bewitched"s;
-        _furniture(6) = u8"maniac"s;
-        _furniture(7) = u8"magnificent"s;
-        _furniture(8) = u8"royal"s;
-        _furniture(9) = u8"masterpiece"s;
-        _furniture(10) = u8"heavenly"s;
-        _furniture(11) = u8"godly"s;
-        _weight(0) = u8"extremely mini"s;
-        _weight(1) = u8"small"s;
-        _weight(2) = u8"handy"s;
-        _weight(3) = u8"rather big"s;
-        _weight(4) = u8"huge"s;
-        _weight(5) = u8"pretty huge"s;
-        _weight(6) = u8"monstrous-size"s;
-        _weight(7) = u8"bigger than a man"s;
-        _weight(8) = u8"legendary-size"s;
-        _weight(9) = u8"heavier than an elephant"s;
-    }
-    if (jp)
-    {
-        _reward(0) = "";
-        _reward(1) = u8"装備品"s;
-        _reward(2) = u8"魔道具"s;
-        _reward(3) = u8"防具"s;
-        _reward(4) = u8"武器"s;
-        _reward(5) = u8"補給品"s;
-    }
-    else
-    {
-        _reward(0) = "";
-        _reward(1) = u8"equipment"s;
-        _reward(2) = u8"magical goods"s;
-        _reward(3) = u8"armor"s;
-        _reward(4) = u8"weapons"s;
-        _reward(5) = u8"ores"s;
-        _reward(6) = u8"furnitures"s;
-    }
-    if (jp)
-    {
-        _time(0) = u8"深夜"s;
-        _time(1) = u8"夜明け"s;
-        _time(2) = u8"朝"s;
-        _time(3) = u8"昼"s;
-        _time(4) = u8"宵"s;
-        _time(5) = u8"夜"s;
-        _time(6) = "";
-        _time(7) = "";
-    }
-    else
-    {
-        _time(0) = u8"Midnight"s;
-        _time(1) = u8"Dawn"s;
-        _time(2) = u8"Morning"s;
-        _time(3) = u8"Noon"s;
-        _time(4) = u8"Dusk"s;
-        _time(5) = u8"Night"s;
-        _time(6) = "";
-        _time(7) = "";
-    }
-    if (jp)
-    {
-        _stats2(0) = u8"筋力"s;
-        _stats2(1) = u8"耐久"s;
-        _stats2(2) = u8"器用"s;
-        _stats2(3) = u8"感覚"s;
-        _stats2(4) = u8"習得"s;
-        _stats2(5) = u8"意思"s;
-        _stats2(6) = u8"魔力"s;
-        _stats2(7) = u8"魅力"s;
-    }
-    else
-    {
-        _stats2(0) = u8" STR"s;
-        _stats2(1) = u8" CON"s;
-        _stats2(2) = u8" DEX"s;
-        _stats2(3) = u8" PER"s;
-        _stats2(4) = u8" LER"s;
-        _stats2(5) = u8" WIL"s;
-        _stats2(6) = u8" MAG"s;
-        _stats2(7) = u8" CHR"s;
-    }
-    if (jp)
-    {
-        _hunger(0) = u8"餓死中"s;
-        _hunger(1) = u8"飢餓"s;
-        _hunger(2) = u8"空腹"s;
-        _hunger(3) = u8"空腹"s;
-        _hunger(4) = u8"空腹"s;
-        _hunger(5) = "";
-        _hunger(6) = "";
-        _hunger(7) = "";
-        _hunger(8) = "";
-        _hunger(9) = "";
-        _hunger(10) = u8"満腹"s;
-        _hunger(11) = u8"満腹"s;
-        _hunger(12) = u8"食過ぎ"s;
-    }
-    else
-    {
-        _hunger(0) = u8"Starving!"s;
-        _hunger(1) = u8"Starving"s;
-        _hunger(2) = u8"Hungry!"s;
-        _hunger(3) = u8"Hungry"s;
-        _hunger(4) = u8"Hungry"s;
-        _hunger(5) = "";
-        _hunger(6) = "";
-        _hunger(7) = "";
-        _hunger(8) = "";
-        _hunger(9) = "";
-        _hunger(10) = u8"Satisfied"s;
-        _hunger(11) = u8"Satisfied!"s;
-        _hunger(12) = u8"Bloated"s;
-    }
-    if (jp)
-    {
-        _burden(0) = "";
-        _burden(1) = u8"重荷"s;
-        _burden(2) = u8"圧迫"s;
-        _burden(3) = u8"超過"s;
-        _burden(4) = u8"潰れ中"s;
-    }
-    else
-    {
-        _burden(0) = "";
-        _burden(1) = u8"Burden"s;
-        _burden(2) = u8"Burden!"s;
-        _burden(3) = u8"Overweight"s;
-        _burden(4) = u8"Overweight!"s;
-    }
-    if (jp)
-    {
-        _sleep(0) = u8"睡眠可"s;
-        _sleep(1) = u8"要睡眠"s;
-        _sleep(2) = u8"要睡眠"s;
-    }
-    else
-    {
-        _sleep(0) = u8"Sleepy"s;
-        _sleep(1) = u8"Need Sleep"s;
-        _sleep(2) = u8"Need Sleep!"s;
-    }
-    if (jp)
-    {
-        _consick(0) = u8"病気"s;
-        _consick(1) = u8"重病"s;
-    }
-    else
-    {
-        _consick(0) = u8"Sick"s;
-        _consick(1) = u8"Very Sick"s;
-    }
-    if (jp)
-    {
-        _conpoison(0) = u8"毒"s;
-        _conpoison(1) = u8"猛毒"s;
-    }
-    else
-    {
-        _conpoison(0) = u8"Poisoned"s;
-        _conpoison(1) = u8"Poisoned Bad!"s;
-    }
-    if (jp)
-    {
-        _condim(0) = u8"朦朧"s;
-        _condim(1) = u8"混濁"s;
-        _condim(2) = u8"気絶"s;
-    }
-    else
-    {
-        _condim(0) = u8"Dim"s;
-        _condim(1) = u8"Muddled"s;
-        _condim(2) = u8"Unconscious"s;
-    }
-    if (jp)
-    {
-        _conangry(0) = u8"激怒"s;
-        _conangry(1) = u8"狂乱"s;
-    }
-    else
-    {
-        _conangry(0) = u8"Fury"s;
-        _conangry(1) = u8"Berserk"s;
-    }
-    if (jp)
-    {
-        _conbleed(0) = u8"切り傷"s;
-        _conbleed(1) = u8"出血"s;
-        _conbleed(2) = u8"大出血"s;
-    }
-    else
-    {
-        _conbleed(0) = u8"Bleeding"s;
-        _conbleed(1) = u8"Bleeding!"s;
-        _conbleed(2) = u8"Hemorrhage"s;
-    }
-    if (jp)
-    {
-        _coninsane(0) = u8"不安定"s;
-        _coninsane(1) = u8"狂気"s;
-        _coninsane(2) = u8"崩壊"s;
-    }
-    else
-    {
-        _coninsane(0) = u8"Unsteady"s;
-        _coninsane(1) = u8"Insane"s;
-        _coninsane(2) = u8"Paranoia"s;
-    }
-    _condrunk = lang(u8"酔払い"s, u8"Drunk"s);
-    _conwet = lang(u8"濡れ"s, u8"Wet"s);
-    _congravity = lang(u8"重力"s, u8"Gravity"s);
-    if (jp)
-    {
-        _consleep(0) = u8"睡眠"s;
-        _consleep(1) = u8"爆睡"s;
-    }
-    else
-    {
-        _consleep(0) = u8"Sleep"s;
-        _consleep(1) = u8"Deep Sleep"s;
-    }
-    _conblind = lang(u8"盲目"s, u8"Blinded"s);
-    _conparalyze = lang(u8"麻痺"s, u8"Paralyzed"s);
-    _conmochi = lang(u8"窒息"s, u8"Choked"s);
-    _conconfuse = lang(u8"混乱"s, u8"Confused"s);
-    _confear = lang(u8"恐怖"s, u8"Fear"s);
-    if (jp)
-    {
-        _confatigue(0) = u8"軽疲労"s;
-        _confatigue(1) = u8"疲労"s;
-        _confatigue(2) = u8"過労"s;
-    }
-    else
-    {
-        _confatigue(0) = u8"Tired"s;
-        _confatigue(1) = u8"Very tired"s;
-        _confatigue(2) = u8"VERY tired"s;
-    }
-    if (jp)
-    {
-        _quality(0) = "";
-        _quality(1) = u8"粗悪"s;
-        _quality(2) = u8"良質"s;
-        _quality(3) = u8"高品質"s;
-        _quality(4) = u8"奇跡"s;
-        _quality(5) = u8"神器"s;
-        _quality(6) = u8"特別"s;
-    }
-    else
-    {
-        _quality(0) = "";
-        _quality(1) = u8"bad"s;
-        _quality(2) = u8"good"s;
-        _quality(3) = u8"great"s;
-        _quality(4) = u8"miracle"s;
-        _quality(5) = u8"godly"s;
-        _quality(6) = u8"special"s;
-    }
-    if (jp)
-    {
-        _resist(0) = u8"致命的な弱点"s;
-        _resist(1) = u8"弱点"s;
-        _resist(2) = u8"耐性なし"s;
-        _resist(3) = u8"弱い耐性"s;
-        _resist(4) = u8"普通の耐性"s;
-        _resist(5) = u8"強い耐性"s;
-        _resist(6) = u8"素晴らしい耐性"s;
-    }
-    else
-    {
-        _resist(0) = u8"Criticaly Weak"s;
-        _resist(1) = u8"Weak"s;
-        _resist(2) = u8"No Resist"s;
-        _resist(3) = u8"Little"s;
-        _resist(4) = u8"Normal"s;
-        _resist(5) = u8"Strong"s;
-        _resist(6) = u8"Superb"s;
-    }
-    if (jp)
-    {
-        _mark(0) = u8"。"s;
-        _mark(1) = u8"？"s;
-        _mark(2) = u8"！"s;
-        _mark(3) = "";
-    }
-    else
-    {
-        _mark(0) = u8"."s;
-        _mark(1) = u8"?"s;
-        _mark(2) = u8"!"s;
-        _mark(3) = "";
-    }
-    if (jp)
-    {
-        _sex(0) = u8"男"s;
-        _sex(1) = u8"女"s;
-    }
-    else
-    {
-        _sex(0) = u8"Male"s;
-        _sex(1) = u8"Female"s;
-    }
-    if (jp)
-    {
-        _sex2(0) = u8"男"s;
-        _sex2(1) = u8"女"s;
-    }
-    else
-    {
-        _sex2(0) = u8"boy"s;
-        _sex2(1) = u8"girl"s;
-    }
-    if (jp)
-    {
-        _onii(0) = u8"お兄"s;
-        _onii(1) = u8"お姉"s;
-    }
-    if (jp)
-    {
-        _syujin(0) = u8"ご主人様"s;
-        _syujin(1) = u8"お嬢様"s;
-    }
     if (jp)
     {
         strhint1 = u8"ｶｰｿﾙ [選択]  "s;
@@ -2092,68 +1659,6 @@ void text_set()
         strhint5b = ""s + key_mode + u8" [情報切替]  "s;
         strhint6 = u8"p [ポートレイト変更]  "s;
         strhint7 = u8"0〜9 [ショートカット]  "s;
-        strmale = u8"男性"s;
-        strfemale = u8"女性"s;
-        strbye = u8"さようなら"s;
-        strmore = u8"(続く)"s;
-        strnogold = u8"(所持金が足りない！)"s;
-        strinteractfail = u8"その方向には、操作できる対象はない。"s;
-        invtitle(0) = "";
-        invtitle(1) = u8"調べる"s;
-        invtitle(2) = u8"置く"s;
-        invtitle(3) = u8"拾う"s;
-        invtitle(4) = "";
-        invtitle(5) = u8"食べる"s;
-        invtitle(6) = u8"装備する"s;
-        invtitle(7) = u8"読む"s;
-        invtitle(8) = u8"飲む"s;
-        invtitle(9) = u8"振る"s;
-        invtitle(10) = u8"渡す"s;
-        invtitle(11) = u8"購入する"s;
-        invtitle(12) = u8"売却する"s;
-        invtitle(13) = u8"鑑定する"s;
-        invtitle(14) = u8"使う"s;
-        invtitle(15) = u8"開く"s;
-        invtitle(16) = u8"料理する"s;
-        invtitle(17) = u8"調合"s;
-        invtitle(18) = u8"混ぜる対象"s;
-        invtitle(19) = u8"捧げる"s;
-        invtitle(20) = u8"交換する"s;
-        invtitle(21) = u8"提示する"s;
-        invtitle(22) = u8"取る"s;
-        invtitle(23) = u8"対象の"s;
-        invtitle(24) = u8"入れる"s;
-        invtitle(25) = u8"もらう"s;
-        invtitle(26) = u8"投げる"s;
-        invtitle(27) = u8"盗む"s;
-        invtitle(28) = u8"交換する"s;
-        invtitle(29) = u8"予約する"s;
-        bodyn(0) = "";
-        bodyn(1) = u8"頭"s;
-        bodyn(2) = u8"首"s;
-        bodyn(3) = u8"背中"s;
-        bodyn(4) = u8"胴体"s;
-        bodyn(5) = u8"手"s;
-        bodyn(6) = u8"指"s;
-        bodyn(7) = u8"腕"s;
-        bodyn(8) = u8"腰"s;
-        bodyn(9) = u8"足"s;
-        bodyn(10) = u8"遠隔"s;
-        bodyn(11) = u8"矢弾"s;
-        actlistn(0) = u8"行動"s;
-        actlistn(1) = u8"食事"s;
-        actlistn(2) = u8"読書"s;
-        actlistn(3) = u8"移動"s;
-        actlistn(4) = u8"休息"s;
-        actlistn(5) = u8"採掘"s;
-        actlistn(6) = u8"演奏"s;
-        actlistn(7) = u8"釣り"s;
-        actlistn(8) = u8"採取"s;
-        actlistn(9) = u8"探索"s;
-        actlistn(10) = u8"行動"s;
-        actlistn(11) = u8"行動"s;
-        actlistn(12) = u8"行動"s;
-        actlistn(13) = u8"行動"s;
     }
     else
     {
@@ -2166,77 +1671,7 @@ void text_set()
         strhint5b = ""s + key_mode + u8" [Mode]  "s;
         strhint6 = u8"p [Portrait]  "s;
         strhint7 = u8"0~9 [Shortcut]  "s;
-        strmale = u8"male"s;
-        strfemale = u8"female"s;
-        strbye = u8"Bye bye."s;
-        strmore = u8"(More)"s;
-        strnogold = u8"(You don't have enough money!)"s;
-        strinteractfail = u8"There's no valid target in that direction."s;
-        invtitle(0) = "";
-        invtitle(1) = u8"Examine"s;
-        invtitle(2) = u8"Drop"s;
-        invtitle(3) = u8"Pick Up"s;
-        invtitle(4) = "";
-        invtitle(5) = u8"Eat"s;
-        invtitle(6) = u8"Wear"s;
-        invtitle(7) = u8"Read"s;
-        invtitle(8) = u8"Drink"s;
-        invtitle(9) = u8"Zap"s;
-        invtitle(10) = u8"Give"s;
-        invtitle(11) = u8"Buy"s;
-        invtitle(12) = u8"Sell"s;
-        invtitle(13) = u8"Identify"s;
-        invtitle(14) = u8"Use"s;
-        invtitle(15) = u8"Open"s;
-        invtitle(16) = u8"Cook"s;
-        invtitle(17) = u8"Mix"s;
-        invtitle(18) = u8"Mix Target"s;
-        invtitle(19) = u8"Offer"s;
-        invtitle(20) = u8"Trade"s;
-        invtitle(21) = u8"Present"s;
-        invtitle(22) = u8"Take"s;
-        invtitle(23) = u8"Target"s;
-        invtitle(24) = u8"Put"s;
-        invtitle(25) = u8"Take"s;
-        invtitle(26) = u8"Throw"s;
-        invtitle(27) = u8"Pickpocket"s;
-        invtitle(28) = u8"Trade"s;
-        invtitle(29) = u8"Reserve"s;
-        bodyn(0) = "";
-        bodyn(1) = u8"Head"s;
-        bodyn(2) = u8"Neck"s;
-        bodyn(3) = u8"Back"s;
-        bodyn(4) = u8"Body"s;
-        bodyn(5) = u8"Hand"s;
-        bodyn(6) = u8"Ring"s;
-        bodyn(7) = u8"Arm"s;
-        bodyn(8) = u8"Waist"s;
-        bodyn(9) = u8"Leg"s;
-        bodyn(10) = u8"Shoot"s;
-        bodyn(11) = u8"Ammo"s;
-        actlistn(0) = u8"current action"s;
-        actlistn(1) = u8"eating"s;
-        actlistn(2) = u8"reading"s;
-        actlistn(3) = u8"moving"s;
-        actlistn(4) = u8"resting"s;
-        actlistn(5) = u8"mining"s;
-        actlistn(6) = u8"playing"s;
-        actlistn(7) = u8"fishing"s;
-        actlistn(8) = u8"collecting materials"s;
-        actlistn(9) = u8"searching"s;
-        actlistn(10) = u8"current action"s;
-        actlistn(11) = u8"current action"s;
-        actlistn(12) = u8"current action"s;
-        actlistn(13) = u8"current action"s;
     }
-    SDIM3(_cast, 30, 7);
-    _cast(0) = lang(u8"魔法を詠唱した。"s, u8" casts a spell."s);
-    _cast(1) = lang(u8"糸を吐いた。"s, u8" splits cobweb."s);
-    _cast(2) = lang(u8"体液をまき散らした。"s, u8" spreads body fluid."s);
-    _cast(3) = lang(u8"触手を伸ばした。"s, u8" puts out a tentacle."s);
-    _cast(4) = lang(u8"鋭く睨んだ。"s, u8" gazes."s);
-    _cast(5) = lang(u8"胞子を飛ばした。"s, u8" scatters spores."s);
-    _cast(6) = lang(u8"細かく振動した。"s, u8" vibrates."s);
     SDIM4(_melee, 20, 3, 8);
     if (jp)
     {
@@ -2333,96 +1768,6 @@ void text_set()
     _randcolor(3) = 5;
     _randcolor(4) = 6;
     _randcolor(5) = 3;
-    if (jp)
-    {
-        _namepotion(0) = u8"透明な"s;
-        _namepotion(1) = u8"緑色の"s;
-        _namepotion(2) = u8"青い"s;
-        _namepotion(3) = u8"金色の"s;
-        _namepotion(4) = u8"茶色い"s;
-        _namepotion(5) = u8"赤い"s;
-    }
-    else
-    {
-        _namepotion(0) = u8"clear"s;
-        _namepotion(1) = u8"green"s;
-        _namepotion(2) = u8"blue"s;
-        _namepotion(3) = u8"gold"s;
-        _namepotion(4) = u8"brown"s;
-        _namepotion(5) = u8"red"s;
-    }
-    if (jp)
-    {
-        _namespellbook(0) = u8"分厚い"s;
-        _namespellbook(1) = u8"苔むした"s;
-        _namespellbook(2) = u8"真新しい"s;
-        _namespellbook(3) = u8"豪華な"s;
-        _namespellbook(4) = u8"古びた"s;
-        _namespellbook(5) = u8"血の滴る"s;
-    }
-    else
-    {
-        _namespellbook(0) = u8"thick"s;
-        _namespellbook(1) = u8"mossy"s;
-        _namespellbook(2) = u8"clear"s;
-        _namespellbook(3) = u8"luxurious"s;
-        _namespellbook(4) = u8"old"s;
-        _namespellbook(5) = u8"bloody"s;
-    }
-    if (jp)
-    {
-        _namescroll(0) = u8"かすれた"s;
-        _namescroll(1) = u8"苔むした"s;
-        _namescroll(2) = u8"ぼろぼろの"s;
-        _namescroll(3) = u8"難しそうな"s;
-        _namescroll(4) = u8"古びた"s;
-        _namescroll(5) = u8"血文字の"s;
-    }
-    else
-    {
-        _namescroll(0) = u8"blurred"s;
-        _namescroll(1) = u8"mossy"s;
-        _namescroll(2) = u8"ragged"s;
-        _namescroll(3) = u8"boring"s;
-        _namescroll(4) = u8"old"s;
-        _namescroll(5) = u8"bloody"s;
-    }
-    if (jp)
-    {
-        _namestaff(0) = u8"鉄の"s;
-        _namestaff(1) = u8"つたの"s;
-        _namestaff(2) = u8"サファイアの"s;
-        _namestaff(3) = u8"金の"s;
-        _namestaff(4) = u8"木の"s;
-        _namestaff(5) = u8"錆の"s;
-    }
-    else
-    {
-        _namestaff(0) = u8"iron"s;
-        _namestaff(1) = u8"ivy"s;
-        _namestaff(2) = u8"sapphire"s;
-        _namestaff(3) = u8"golden"s;
-        _namestaff(4) = u8"wooden"s;
-        _namestaff(5) = u8"rusty"s;
-    }
-    if (jp)
-    {
-        _namering(0) = u8"鉄の"s;
-        _namering(1) = u8"緑の"s;
-        _namering(2) = u8"サファイアの"s;
-        _namering(3) = u8"金の"s;
-        _namering(4) = u8"木の"s;
-        _namering(5) = u8"錆びた"s;
-    }
-    else
-    {
-        _namering(0) = u8"iron"s;
-        _namering(1) = u8"green"s;
-        _namering(2) = u8"sapphire"s;
-        _namering(3) = u8"golden"s;
-        _namering(4) = u8"wooden"s;
-        _namering(5) = u8"rusty"s;
-    }
     homepage = lang(
         u8"http://homepage3.nifty.com/rfish/index.html"s,
         u8"http://homepage3.nifty.com/rfish/index_e.html"s);
@@ -2709,7 +2054,8 @@ void set_quest_data(int val0)
     {
         if (qdata(7, rq) < 10000)
         {
-            s(5) += lang(u8"と"s, u8" and "s) + _reward(qdata(7, rq));
+            s(5) += lang(u8"と"s, u8" and "s)
+                + i18n::_(u8"ui", u8"reward", u8"_"s + qdata(7, rq));
         }
         else
         {
@@ -11892,10 +11238,12 @@ void modimp(int cc, int delta)
     {
         txtef(8);
         txt(lang(
-            cdatan(0, cc) + u8"との関係が<"s + _impression(level2)
+            cdatan(0, cc) + u8"との関係が<"s
+                + i18n::_(u8"ui", u8"impression", u8"_"s + level2)
                 + u8">になった…"s,
             u8"Your relation with "s + cdatan(0, cc) + u8" becomes <"s
-                + _impression(level2) + u8">..."s));
+                + i18n::_(u8"ui", u8"impression", u8"_"s + level2)
+                + u8">..."s));
     }
     else if (level2 > level1)
     {
@@ -11903,10 +11251,12 @@ void modimp(int cc, int delta)
         {
             txtef(2);
             txt(lang(
-                cdatan(0, cc) + u8"との関係が<"s + _impression(level2)
+                cdatan(0, cc) + u8"との関係が<"s
+                    + i18n::_(u8"ui", u8"impression", u8"_"s + level2)
                     + u8">になった！"s,
                 u8"Your relation with "s + cdatan(0, cc) + u8" becomes <"s
-                    + _impression(level2) + u8">!"s));
+                    + i18n::_(u8"ui", u8"impression", u8"_"s + level2)
+                    + u8">!"s));
         }
     }
 }
@@ -18226,7 +17576,7 @@ void render_hud()
         pos(sx, sy);
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
-        mes(_hunger(12));
+        mes(i18n::_(u8"ui", u8"hunger", u8"_12"));
         sy -= 20;
     }
     else if (cdata[0].nutrition >= 1000)
@@ -18235,12 +17585,14 @@ void render_hud()
         {
             color(200, 0, 0);
         }
-        if (_hunger(cdata[0].nutrition / 1000) != ""s)
+        if (i18n::_(u8"ui", u8"hunger", u8"_"s + (cdata[0].nutrition / 1000))
+            != ""s)
         {
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_hunger(cdata[0].nutrition / 1000));
+            mes(i18n::_(
+                u8"ui", u8"hunger", u8"_"s + (cdata[0].nutrition / 1000)));
             sy -= 20;
         }
         color(0, 0, 0);
@@ -18251,7 +17603,7 @@ void render_hud()
         pos(sx, sy);
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
-        mes(_hunger(0));
+        mes(i18n::_(u8"ui", u8"hunger", u8"_0"));
         color(0, 0, 0);
         sy -= 20;
     }
@@ -18263,7 +17615,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_consick(1));
+            mes(i18n::_(u8"ui", u8"sick", u8"_1"));
             sy -= 20;
         }
         else
@@ -18271,7 +17623,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_consick);
+            mes(i18n::_(u8"ui", u8"sick", u8"_0"));
             sy -= 20;
         }
         color(0, 0, 0);
@@ -18284,7 +17636,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_conpoison(1));
+            mes(i18n::_(u8"ui", u8"poison", u8"_1"));
             sy -= 20;
         }
         else
@@ -18292,7 +17644,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_conpoison);
+            mes(i18n::_(u8"ui", u8"poison", u8"_0"));
             sy -= 20;
         }
         color(0, 0, 0);
@@ -18305,7 +17657,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_consleep(1));
+            mes(i18n::_(u8"ui", u8"sleep", u8"_1"));
             sy -= 20;
         }
         else
@@ -18313,7 +17665,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_consleep);
+            mes(i18n::_(u8"ui", u8"sleep", u8"_0"));
             sy -= 20;
         }
         color(0, 0, 0);
@@ -18324,7 +17676,7 @@ void render_hud()
         pos(sx, sy);
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
-        mes(_conblind);
+        mes(i18n::_(u8"ui", u8"blind"));
         color(0, 0, 0);
         sy -= 20;
     }
@@ -18334,7 +17686,7 @@ void render_hud()
         pos(sx, sy);
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
-        mes(_conparalyze);
+        mes(i18n::_(u8"ui", u8"paralyzed"));
         color(0, 0, 0);
         sy -= 20;
     }
@@ -18344,7 +17696,7 @@ void render_hud()
         pos(sx, sy);
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
-        mes(_conmochi);
+        mes(i18n::_(u8"ui", u8"chocked"));
         color(0, 0, 0);
         sy -= 20;
     }
@@ -18354,7 +17706,7 @@ void render_hud()
         pos(sx, sy);
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
-        mes(_conconfuse);
+        mes(i18n::_(u8"ui", u8"confused"));
         color(0, 0, 0);
         sy -= 20;
     }
@@ -18364,7 +17716,7 @@ void render_hud()
         pos(sx, sy);
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
-        mes(_confear);
+        mes(i18n::_(u8"ui", u8"fear"));
         color(0, 0, 0);
         sy -= 20;
     }
@@ -18376,7 +17728,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_condim(2));
+            mes(i18n::_(u8"ui", u8"dimmed", u8"_2"));
             sy -= 20;
         }
         else if (cdata[0].dimmed >= 30)
@@ -18384,7 +17736,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_condim(1));
+            mes(i18n::_(u8"ui", u8"dimmed", u8"_1"));
             sy -= 20;
         }
         else
@@ -18392,7 +17744,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_condim);
+            mes(i18n::_(u8"ui", u8"dimmed", u8"_0"));
             sy -= 20;
         }
         color(0, 0, 0);
@@ -18405,7 +17757,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_conangry(1));
+            mes(i18n::_(u8"ui", u8"angry", u8"_1"));
             sy -= 20;
         }
         else
@@ -18413,7 +17765,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_conangry);
+            mes(i18n::_(u8"ui", u8"angry", u8"_0"));
             sy -= 20;
         }
         color(0, 0, 0);
@@ -18426,7 +17778,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_conbleed(2));
+            mes(i18n::_(u8"ui", u8"bleeding", u8"_2"));
             sy -= 20;
         }
         else if (cdata[0].bleeding >= 10)
@@ -18434,7 +17786,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_conbleed(1));
+            mes(i18n::_(u8"ui", u8"bleeding", u8"_1"));
             sy -= 20;
         }
         else
@@ -18442,7 +17794,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_conbleed);
+            mes(i18n::_(u8"ui", u8"bleeding", u8"_0"));
             sy -= 20;
         }
         color(0, 0, 0);
@@ -18455,7 +17807,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_coninsane(2));
+            mes(i18n::_(u8"ui", u8"insane", u8"_2"));
             sy -= 20;
         }
         else if (cdata[0].insane >= 25)
@@ -18463,7 +17815,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_coninsane(1));
+            mes(i18n::_(u8"ui", u8"insane", u8"_1"));
             sy -= 20;
         }
         else
@@ -18471,7 +17823,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_coninsane);
+            mes(i18n::_(u8"ui", u8"insane", u8"_0"));
             sy -= 20;
         }
         color(0, 0, 0);
@@ -18482,7 +17834,7 @@ void render_hud()
         pos(sx, sy);
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
-        mes(_condrunk);
+        mes(i18n::_(u8"ui", u8"drunk"));
         color(0, 0, 0);
         sy -= 20;
     }
@@ -18492,7 +17844,7 @@ void render_hud()
         pos(sx, sy);
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
-        mes(_conwet);
+        mes(i18n::_(u8"ui", u8"wet"));
         color(0, 0, 0);
         sy -= 20;
     }
@@ -18502,7 +17854,7 @@ void render_hud()
         pos(sx, sy);
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
-        mes(_congravity);
+        mes(i18n::_(u8"ui", u8"gravity"));
         color(0, 0, 0);
         sy -= 20;
     }
@@ -18514,7 +17866,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_sleep(2));
+            mes(i18n::_(u8"ui", u8"sleepy", u8"_2"));
             sy -= 20;
         }
         else if (gdata_continuous_active_hours >= 30)
@@ -18523,7 +17875,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_sleep(1));
+            mes(i18n::_(u8"ui", u8"sleepy", u8"_1"));
             sy -= 20;
         }
         else
@@ -18532,7 +17884,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_sleep);
+            mes(i18n::_(u8"ui", u8"sleepy", u8"_0"));
             sy -= 20;
         }
         color(0, 0, 0);
@@ -18545,7 +17897,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_confatigue(2));
+            mes(i18n::_(u8"ui", u8"tired", u8"_2"));
             sy -= 20;
         }
         else if (cdata[0].sp < 25)
@@ -18554,7 +17906,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_confatigue(1));
+            mes(i18n::_(u8"ui", u8"tired", u8"_1"));
             sy -= 20;
         }
         else
@@ -18563,7 +17915,7 @@ void render_hud()
             pos(sx, sy);
             gcopy(3, 0, 416, 50 + en * 30, 15);
             pos(sx + 6, sy + 1);
-            mes(_confatigue);
+            mes(i18n::_(u8"ui", u8"tired", u8"_0"));
             sy -= 20;
         }
         color(0, 0, 0);
@@ -18577,7 +17929,8 @@ void render_hud()
         pos(sx, sy);
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
-        mes(_burden(cdata[0].inventory_weight_type));
+        mes(i18n::_(
+            u8"ui", u8"body_part", u8"_"s + cdata[0].inventory_weight_type));
         color(0, 0, 0);
         sy -= 20;
     }
@@ -18611,7 +17964,8 @@ void render_hud()
     mes(""s + gdata_year + u8"/"s + gdata_month + u8"/"s + gdata_day);
     pos(inf_clockw + 6, inf_clocky + 35);
     bmes(
-        _time(gdata_hour / 4) + u8" "s + _weather(gdata_weather),
+        i18n::_(u8"ui", u8"time", u8"_"s + gdata_hour / 4) + u8" "s
+            + i18n::_(u8"ui", u8"weather", u8"_"s + gdata_weather),
         255,
         255,
         255);
@@ -19761,10 +19115,11 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s + bodyn(2)
+                    name(r1) + u8"の身体から新たな"s
+                        + i18n::_(u8"ui", u8"body_part", u8"_2")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(2)
-                        + u8"!"s));
+                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                        + i18n::_(u8"ui", u8"body_part", u8"_2") + u8"!"s));
                 break;
             }
         }
@@ -19778,10 +19133,11 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s + bodyn(3)
+                    name(r1) + u8"の身体から新たな"s
+                        + i18n::_(u8"ui", u8"body_part", u8"_3")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(3)
-                        + u8"!"s));
+                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                        + i18n::_(u8"ui", u8"body_part", u8"_3") + u8"!"s));
                 break;
             }
         }
@@ -19795,10 +19151,11 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s + bodyn(5)
+                    name(r1) + u8"の身体から新たな"s
+                        + i18n::_(u8"ui", u8"body_part", u8"_5")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(5)
-                        + u8"!"s));
+                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                        + i18n::_(u8"ui", u8"body_part", u8"_5") + u8"!"s));
                 break;
             }
         }
@@ -19812,10 +19169,11 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s + bodyn(6)
+                    name(r1) + u8"の身体から新たな"s
+                        + i18n::_(u8"ui", u8"body_part", u8"_6")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(6)
-                        + u8"!"s));
+                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                        + i18n::_(u8"ui", u8"body_part", u8"_6") + u8"!"s));
                 break;
             }
         }
@@ -19829,10 +19187,11 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s + bodyn(7)
+                    name(r1) + u8"の身体から新たな"s
+                        + i18n::_(u8"ui", u8"body_part", u8"_7")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(7)
-                        + u8"!"s));
+                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                        + i18n::_(u8"ui", u8"body_part", u8"_7") + u8"!"s));
                 break;
             }
         }
@@ -19846,10 +19205,11 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s + bodyn(8)
+                    name(r1) + u8"の身体から新たな"s
+                        + i18n::_(u8"ui", u8"body_part", u8"_8")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(8)
-                        + u8"!"s));
+                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                        + i18n::_(u8"ui", u8"body_part", u8"_8") + u8"!"s));
                 break;
             }
         }
@@ -19863,10 +19223,11 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s + bodyn(9)
+                    name(r1) + u8"の身体から新たな"s
+                        + i18n::_(u8"ui", u8"body_part", u8"_9")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(9)
-                        + u8"!"s));
+                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                        + i18n::_(u8"ui", u8"body_part", u8"_9") + u8"!"s));
                 break;
             }
         }
@@ -19880,10 +19241,11 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s + bodyn(1)
+                    name(r1) + u8"の身体から新たな"s
+                        + i18n::_(u8"ui", u8"body_part", u8"_1")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s + bodyn(1)
-                        + u8"!"s));
+                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                        + i18n::_(u8"ui", u8"body_part", u8"_1") + u8"!"s));
                 break;
             }
         }
@@ -24680,10 +24042,14 @@ void label_1580()
                 {
                     txt(lang(
                         u8"バックパックの中の"s + itemname(ci) + u8"は"s
-                            + _quality(inv[ci].quality)
+                            + i18n::_(
+                                  u8"ui", u8"quality", u8"_"s + inv[ci].quality)
                             + u8"だという感じがする。"s,
                         u8"You sense the quality of "s + itemname(ci)
-                            + u8" is "s + _quality(inv[ci].quality) + u8"."s));
+                            + u8" is "s
+                            + i18n::_(
+                                  u8"ui", u8"quality", u8"_"s + inv[ci].quality)
+                            + u8"."s));
                 }
                 item_identify(ci, 2);
                 skillexp(162, 0, 50);
@@ -42516,7 +41882,7 @@ label_1961_internal:
                         }
                         else
                         {
-                            s = bodyn(rtval);
+                            s = i18n::_(u8"ui", u8"body_part", u8"_"s + rtval);
                         }
                     }
                     s += u8"/"s;
@@ -44174,11 +43540,11 @@ label_1982_internal:
         s = u8"Lv."s + cdata[i].level + u8" "s;
         if (cdata[i].sex == 0)
         {
-            s += cnven(strmale);
+            s += cnven(i18n::_(u8"ui", u8"male"));
         }
         else
         {
-            s += cnven(strfemale);
+            s += cnven(i18n::_(u8"ui", u8"female"));
         }
         s += lang(u8" "s, u8"("s) + calcage(i) + ""s + lang(u8"歳"s, u8")"s);
         pos(wx + 372, wy + 66 + cnt * 19 + 2);
@@ -44815,9 +44181,10 @@ void what_do_you_wish_for()
             cdata[0].sex = 0;
         }
         txt(lang(
-            name(0) + u8"は"s + _sex(cdata[0].sex)
+            name(0) + u8"は"s + i18n::_(u8"ui", u8"sex", u8"_"s + cdata[0].sex)
                 + u8"になった！ …もう後戻りはできないわよ。"s,
-            name(0) + u8" become "s + _sex(cdata[0].sex) + u8"!"s));
+            name(0) + u8" become "s
+                + i18n::_(u8"ui", u8"sex", u8"_"s + cdata[0].sex) + u8"!"s));
         wish_end();
         return;
     }
@@ -45666,14 +45033,14 @@ void do_give_command()
     int stat = ask_direction();
     if (stat == 0)
     {
-        txt(strinteractfail);
+        txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
         pc_turn(false);
     }
     tc = map(x, y, 1);
     if (tc == 0)
     {
-        txt(strinteractfail);
+        txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
         pc_turn(false);
     }
@@ -45701,7 +45068,7 @@ void do_give_command()
         ctrl_inventory();
         return;
     }
-    txt(strinteractfail);
+    txt(i18n::_(u8"ui", u8"invalid_target"));
     update_screen();
     pc_turn(false);
 }
@@ -45715,14 +45082,14 @@ void do_interact_command()
     int stat = ask_direction();
     if (stat == 0)
     {
-        txt(strinteractfail);
+        txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
         pc_turn(false);
     }
     tc = map(x, y, 1);
     if (tc == 0)
     {
-        txt(strinteractfail);
+        txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
         pc_turn(false);
     }
@@ -47263,7 +46630,7 @@ label_2035_internal:
             grotate(1, cnt * inf_tiles, 672, 0, inf_tiles, inf_tiles);
             pos(wx + 54, wy + 151 + cnt * 15);
             color(20, 10, 0);
-            mes(_stats2(cnt));
+            mes(i18n::_(u8"ui", u8"attribute", u8"_"s + cnt));
             color(0, 0, 0);
         }
         s(0) = lang(u8"生命力"s, u8"Life"s);
@@ -47334,11 +46701,11 @@ label_2035_internal:
         s(4) = cnven(lang(""s + classname, cdatan(3, cc)));
         if (cdata[cc].sex == 0)
         {
-            s(3) = cnven(strmale);
+            s(3) = cnven(i18n::_(u8"ui", u8"male"));
         }
         else
         {
-            s(3) = cnven(strfemale);
+            s(3) = cnven(i18n::_(u8"ui", u8"female"));
         }
         s(5) = ""s + calcage(cc) + u8" "s + lang(u8"歳"s, ""s);
         s(6) = ""s + cdata[cc].height + u8" cm"s;
@@ -47607,7 +46974,7 @@ label_2035_internal:
                 if (list(0, p) >= 50 && list(0, p) < 100)
                 {
                     p(1) = std::clamp(sdata(list(0, p), cc) / 50, 0, 6);
-                    s = _resist(p(1));
+                    s = i18n::_(u8"ui", u8"resistance", u8"_"s + p(1));
                 }
                 else
                 {
@@ -48790,7 +48157,7 @@ label_2052_internal:
             gfini(558, 18);
             gfdec(12, 14, 16);
         }
-        q = bodyn(list(1, p));
+        q = i18n::_(u8"ui", u8"body_part", u8"_"s + list(1, p));
         if (list(0, p) == mainhand)
         {
             q = lang(u8"利手"s, u8"Hand*"s);
@@ -50030,9 +49397,11 @@ void label_2077()
 void label_2078()
 {
     txt(lang(
-        actlistn(cdata[cc].continuous_action_id)
+        i18n::_(u8"ui", u8"action", u8"_"s + cdata[cc].continuous_action_id)
             + u8"を中断したほうがいいだろうか？ "s,
-        u8"Do you want to cancel "s + actlistn(cdata[cc].continuous_action_id)
+        u8"Do you want to cancel "s
+            + i18n::_(
+                  u8"ui", u8"action", u8"_"s + cdata[cc].continuous_action_id)
             + u8"? "s));
     promptl(0, 0) = i18n::_(u8"ui", u8"yes");
     promptl(1, 0) = u8"y"s;
@@ -50575,8 +49944,9 @@ void label_2085()
     noteadd(""s);
     noteadd(
         u8"  "s + fixtxt((""s + cdatan(1, 0) + cdatan(0, 0)), 34)
-        + _sex(cdata[0].sex) + u8" "s + calcage(0) + u8"歳"s + u8"  "s
-        + cdata[0].height + u8"cm"s + u8" "s + cdata[0].weight + u8"kg"s);
+        + i18n::_(u8"ui", u8"sex", u8"_"s + cdata[0].sex) + u8" "s + calcage(0)
+        + u8"歳"s + u8"  "s + cdata[0].height + u8"cm"s + u8" "s
+        + cdata[0].weight + u8"kg"s);
     noteadd(""s);
     noteadd(
         fixtxt(
@@ -50644,7 +50014,8 @@ void label_2085()
         }
         s = fixtxt(s, 15);
         s = fixtxt(
-                _stats2(cnt) + u8"    : "s + sdata((10 + cnt), 0) + u8"("s
+                i18n::_(u8"ui", u8"attribute", u8"_"s + cnt) + u8"    : "s
+                    + sdata((10 + cnt), 0) + u8"("s
                     + sdata.get(10 + cnt, 0).original_level + u8")"s,
                 24)
             + s;
@@ -50708,7 +50079,10 @@ void label_2085()
             {
                 listmax = 0;
             }
-            s = bodyn(cdata_body_part(cc, cnt) / 10000);
+            s = i18n::_(
+                u8"ui",
+                u8"body_part",
+                u8"_"s + (cdata_body_part(cc, cnt) / 10000));
             if (strmid(s, 0, 2) == u8"　"s)
             {
                 s = strmid(s, 2, 2);
@@ -50756,9 +50130,9 @@ void label_2085()
         noteadd(
             cdatan(0, cnt) + u8" "s
             + i18n::_(u8"race", cdatan(2, cnt), u8"name") + u8"の"s + classname
-            + u8" "s + _sex(cdata[cnt].sex) + u8" "s + calcage(cnt) + u8"歳"s
-            + u8"  "s + cdata[cnt].height + u8"cm"s + u8" "s + cdata[cnt].weight
-            + u8"kg"s);
+            + u8" "s + i18n::_(u8"ui", u8"sex", u8"_"s + cdata[cnt].sex)
+            + u8" "s + calcage(cnt) + u8"歳"s + u8"  "s + cdata[cnt].height
+            + u8"cm"s + u8" "s + cdata[cnt].weight + u8"kg"s);
         s = u8"レベル "s + cdata[cnt].level + u8" "s;
         if (cbit(961, cnt) == 1)
         {
@@ -53783,9 +53157,12 @@ void label_2147()
         if (is_in_fov(cc))
         {
             txt(lang(
-                u8"「そ、その"s + _sex2(cdata[tc].sex) + u8"とは体だけの関係"s
-                    + _da() + _ore(3) + u8"は何も知らないから、命だけは…！」"s,
-                u8"\"I-I don't really know that "s + _sex2(cdata[tc].sex)
+                u8"「そ、その"s
+                    + i18n::_(u8"ui", u8"sex2", u8"_"s + cdata[tc].sex)
+                    + u8"とは体だけの関係"s + _da() + _ore(3)
+                    + u8"は何も知らないから、命だけは…！」"s,
+                u8"\"I-I don't really know that "s
+                    + i18n::_(u8"ui", u8"sex2", u8"_"s + cdata[tc].sex)
                     + u8". Please spare my life!\""s));
         }
         rowactend(cc);
@@ -56068,7 +55445,11 @@ int label_2168()
             txt(lang(
                 name(cc) + u8"は"s
                     + i18n::_(u8"ability", std::to_string(efid), u8"name")
-                    + u8"の"s + _cast(cdata[cc].special_attack_type),
+                    + u8"の"s
+                    + i18n::_(
+                          u8"ui",
+                          u8"cast_style",
+                          u8"_"s + cdata[cc].special_attack_type),
                 name(cc) + u8" cast "s
                     + i18n::_(u8"ability", std::to_string(efid), u8"name")
                     + u8"."s));
@@ -56077,8 +55458,16 @@ int label_2168()
         else
         {
             txt(lang(
-                name(cc) + u8"は"s + _cast(cdata[cc].special_attack_type),
-                name(cc) + ""s + _cast(cdata[cc].special_attack_type)));
+                name(cc) + u8"は"s
+                    + i18n::_(
+                          u8"ui",
+                          u8"cast_style",
+                          u8"_"s + cdata[cc].special_attack_type),
+                name(cc) + ""s
+                    + i18n::_(
+                          u8"ui",
+                          u8"cast_style",
+                          u8"_"s + cdata[cc].special_attack_type)));
             txtmore();
         }
     }
@@ -62670,9 +62059,12 @@ void do_use_command()
                 cdata_body_part(rc, stat) = rtval * 10000;
                 txtef(2);
                 txt(lang(
-                    cdatan(0, rc) + u8"は新しい"s + bodyn(rtval)
+                    cdatan(0, rc) + u8"は新しい"s
+                        + i18n::_(u8"ui", u8"body_part", u8"_"s + rtval)
                         + u8"を得た！"s,
-                    cdatan(0, rc) + u8" gains new "s + bodyn(rtval) + u8"!"s));
+                    cdatan(0, rc) + u8" gains new "s
+                        + i18n::_(u8"ui", u8"body_part", u8"_"s + rtval)
+                        + u8"!"s));
                 r1 = rc;
                 refresh_speed_correction_value(r1);
             }
@@ -63397,7 +62789,7 @@ void speak_to_npc()
             + lang(u8"はぐっすり眠っている…"s, u8" is sleeping."s) + u8")"s;
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strbye;
+        listn(0, listmax) = i18n::_(u8"ui", u8"bye");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -63420,7 +62812,7 @@ void speak_to_npc()
             + u8")"s;
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strbye;
+        listn(0, listmax) = i18n::_(u8"ui", u8"bye");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -63476,7 +62868,7 @@ void label_2243()
     buff = buff;
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = strmore;
+    listn(0, listmax) = i18n::_(u8"ui", u8"more");
     ++listmax;
     chatesc = 1;
     talk_window();
@@ -63508,7 +62900,7 @@ void label_2244()
                 lang(u8"明けましておめでとう"s + _da(2), u8"Happy new year!"s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
-            listn(0, listmax) = strmore;
+            listn(0, listmax) = i18n::_(u8"ui", u8"more");
             ++listmax;
             chatesc = 1;
             talk_window();
@@ -63526,7 +62918,7 @@ void label_2244()
                 u8"I've brought you a gift today, here."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
-            listn(0, listmax) = strmore;
+            listn(0, listmax) = i18n::_(u8"ui", u8"more");
             ++listmax;
             chatesc = 1;
             talk_window();
@@ -63559,7 +62951,7 @@ void label_2244()
                 u8"You scum! You won't get away from me now!"s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
-            listn(0, listmax) = strmore;
+            listn(0, listmax) = i18n::_(u8"ui", u8"more");
             ++listmax;
             chatesc = 1;
             talk_window();
@@ -63636,7 +63028,7 @@ void label_2244()
                         lang(u8"これ、あげ"s + _ru(2), u8"Here, take this!"s);
                     tc = tc * 1 + 0;
                     list(0, listmax) = 0;
-                    listn(0, listmax) = strmore;
+                    listn(0, listmax) = i18n::_(u8"ui", u8"more");
                     ++listmax;
                     chatesc = 1;
                     talk_window();
@@ -63730,7 +63122,7 @@ void label_2244()
                         u8"I see. I'll ask you again at some time in the future."s);
                     tc = tc * 1 + 0;
                     list(0, listmax) = 0;
-                    listn(0, listmax) = strmore;
+                    listn(0, listmax) = i18n::_(u8"ui", u8"more");
                     ++listmax;
                     chatesc = 1;
                     talk_window();
@@ -63758,7 +63150,7 @@ void label_2244()
                         u8"Fantastic! You've learned the skill in no time. I'm glad I could help."s);
                     tc = tc * 1 + 0;
                     list(0, listmax) = 0;
-                    listn(0, listmax) = strmore;
+                    listn(0, listmax) = i18n::_(u8"ui", u8"more");
                     ++listmax;
                     chatesc = 1;
                     talk_window();
@@ -63788,7 +63180,7 @@ void label_2244()
                         u8"Marverous! The traing is now complete. I think you've improved some potential."s);
                     tc = tc * 1 + 0;
                     list(0, listmax) = 0;
-                    listn(0, listmax) = strmore;
+                    listn(0, listmax) = i18n::_(u8"ui", u8"more");
                     ++listmax;
                     chatesc = 1;
                     talk_window();
@@ -63816,7 +63208,7 @@ void label_2244()
                     u8"As a pledge of friendship, here's something for you!"s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
-                listn(0, listmax) = strmore;
+                listn(0, listmax) = i18n::_(u8"ui", u8"more");
                 ++listmax;
                 chatesc = 1;
                 talk_window();
@@ -63868,7 +63260,7 @@ void label_2244()
                     u8"I just stopped by to see you. Oh, I happen to have a gift for you too."s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
-                listn(0, listmax) = strmore;
+                listn(0, listmax) = i18n::_(u8"ui", u8"more");
                 ++listmax;
                 chatesc = 1;
                 talk_window();
@@ -63910,7 +63302,7 @@ void label_2244()
                     u8"I found these during my journey. Thought you could find them useful."s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
-                listn(0, listmax) = strmore;
+                listn(0, listmax) = i18n::_(u8"ui", u8"more");
                 ++listmax;
                 chatesc = 1;
                 talk_window();
@@ -63946,7 +63338,7 @@ void label_2244()
                     + u8" is one of my favorite skills."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
-            listn(0, listmax) = strmore;
+            listn(0, listmax) = i18n::_(u8"ui", u8"more");
             ++listmax;
             chatesc = 1;
             talk_window();
@@ -63975,7 +63367,7 @@ void label_2244()
                     + u8"."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
-            listn(0, listmax) = strmore;
+            listn(0, listmax) = i18n::_(u8"ui", u8"more");
             ++listmax;
             chatesc = 1;
             talk_window();
@@ -64003,7 +63395,7 @@ void label_2244()
                         u8", how's your journey? I was bored to death so I decided to make a visit to you!"s);
                 tc = tc * 1 + 0;
                 list(0, listmax) = 0;
-                listn(0, listmax) = strmore;
+                listn(0, listmax) = i18n::_(u8"ui", u8"more");
                 ++listmax;
                 chatesc = 1;
                 talk_window();
@@ -64032,7 +63424,7 @@ void label_2244()
                 u8"Let's have a drink and deepen our friendship!"s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
-            listn(0, listmax) = strmore;
+            listn(0, listmax) = i18n::_(u8"ui", u8"more");
             ++listmax;
             chatesc = 1;
             talk_window();
@@ -64069,7 +63461,7 @@ void label_2244()
             u8"I just wanted to say hi."s);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64092,7 +63484,7 @@ void label_2244()
                 u8"No more training in this month."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
-            listn(0, listmax) = strmore;
+            listn(0, listmax) = i18n::_(u8"ui", u8"more");
             ++listmax;
             chatesc = 1;
             talk_window();
@@ -64186,7 +63578,7 @@ void label_2244()
             buff = lang(u8"後悔する"s + _yo(2), u8"You'll regret this!"s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
-            listn(0, listmax) = strmore;
+            listn(0, listmax) = i18n::_(u8"ui", u8"more");
             ++listmax;
             chatesc = 1;
             talk_window();
@@ -64218,7 +63610,7 @@ void label_2244()
             u8"Good. You show a lot of potential."s);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64239,7 +63631,7 @@ void label_2244()
             u8"I just wanted to say hi."s);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64284,7 +63676,7 @@ void label_2244()
                 u8"Thanks! I'll never forget this."s);
             tc = tc * 1 + 0;
             list(0, listmax) = 0;
-            listn(0, listmax) = strmore;
+            listn(0, listmax) = i18n::_(u8"ui", u8"more");
             ++listmax;
             chatesc = 1;
             talk_window();
@@ -64303,7 +63695,7 @@ void label_2244()
         buff = lang(u8"ケチ！"s, u8"You're so cheap!"s);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64354,7 +63746,7 @@ void label_2244()
         buff = lang(u8"ふん！"s, u8"Hump!"s);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64405,7 +63797,7 @@ void label_2244()
         buff = lang(u8"ふん！"s, u8"Hump!"s);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64467,7 +63859,7 @@ void label_2244()
             u8"I hope you won't regret it later."s);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64497,7 +63889,7 @@ int give_potion_of_cure_corruption()
         u8"(Hand her a potion of cure corruption.)"s);
     ++listmax;
     list(0, listmax) = 0;
-    listn(0, listmax) = strbye;
+    listn(0, listmax) = i18n::_(u8"ui", u8"bye");
     ++listmax;
     talk_window();
     if (chatval != 1)
@@ -64511,7 +63903,7 @@ int give_potion_of_cure_corruption()
         buff = lang(u8"うそつき！"s, u8"Lier!"s);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64535,7 +63927,7 @@ int give_potion_of_cure_corruption()
             + u8" gave us a cure! Are you gonna be ok now?"s);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = strmore;
+    listn(0, listmax) = i18n::_(u8"ui", u8"more");
     ++listmax;
     chatesc = 1;
     talk_window();
@@ -64563,7 +63955,7 @@ void label_2249()
             u8"This cave...it's a good place to keep out the rain. Lomias, check the inner chamber to be sure there is no danger lurking here."s);
         tc = tc * (findchara(33) == 0) + (findchara(33) != 0) * findchara(33);
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64579,7 +63971,7 @@ void label_2249()
         buff = lang(u8"わかった。ここで待っていろ"s, u8"Okay. Wait here."s);
         tc = tc * (findchara(34) == 0) + (findchara(34) != 0) * findchara(34);
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64610,7 +64002,7 @@ void label_2249()
             u8"...what was that sound? ...Lomias, are you alright?"s);
         tc = tc * (findchara(33) == 0) + (findchara(33) != 0) * findchara(33);
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64628,7 +64020,7 @@ void label_2249()
             u8"It's nothing. Looks like this cave is long abandoned. It's a good place to stay."s);
         tc = tc * (findchara(34) == 0) + (findchara(34) != 0) * findchara(34);
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64646,7 +64038,7 @@ void label_2249()
             u8"I see, that's convenient for us...wait Lomias, what arey you carrying?...Argh! Putits!"s);
         tc = tc * (findchara(33) == 0) + (findchara(33) != 0) * findchara(33);
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64664,7 +64056,7 @@ void label_2249()
             u8"Don't worry. It appears these putits had been kept as pets by someone. They are kind of...cute."s);
         tc = tc * (findchara(34) == 0) + (findchara(34) != 0) * findchara(34);
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64682,7 +64074,7 @@ void label_2249()
             u8"Huh, sounds like even you have a soft spot...Come here, the injured is about to wake up."s);
         tc = tc * (findchara(33) == 0) + (findchara(33) != 0) * findchara(33);
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64718,7 +64110,7 @@ void label_2249()
             u8"…意識が…もう戻ったのか？ 驚いたな。君の回復を待つために、我々の急を要する旅がいつまで中断されるのか、気を揉んでいたのだが。"s;
         tc = tc * (findchara(34) == 0) + (findchara(34) != 0) * findchara(34);
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64735,7 +64127,7 @@ void label_2249()
             u8"君は重傷を負い川辺に倒れていた。宵闇が辺りを覆う前に、癒し手の力を持つ我々に発見されたのは、全くよくできた偶然だ。"s;
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64752,7 +64144,7 @@ void label_2249()
             u8" …そんな物珍しげな顔をするな。君の察する通り、我々は異形の森の民だ。エレアは…シエラ・テールの高潔なる異端者は、他種族の詮索に付き合う無駄な時間をあいにく持ち合わせていないが、君は、我々に拾われた幸運をもっと素直に喜ぶべきだな。瀕死の君を回復させることは、ここにいるラーネイレ以外の何者にも不可能だっただろう。なにせ彼女はエレアの…"s;
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64769,7 +64161,7 @@ void label_2249()
             u8"ロミアス、喋りすぎよ。たとえ意識の朦朧とした怪我人が相手だとしても。"s;
         tc = tc * (findchara(33) == 0) + (findchara(33) != 0) * findchara(33);
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64786,7 +64178,7 @@ void label_2249()
             + cdatan(0, 0) + u8"といったな、"s;
         tc = tc * (findchara(34) == 0) + (findchara(34) != 0) * findchara(34);
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64806,7 +64198,7 @@ void label_2249()
             u8"...you...you're awake already? Remarkable. I was beginning to worry that nursing a lowly adventurer would bring our urgent travel to a halt."s;
         tc = tc * (findchara(34) == 0) + (findchara(34) != 0) * findchara(34);
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64823,7 +64215,7 @@ void label_2249()
             u8"You were badly wounded, passing out on the bank of a river. It was fortunate that we found you before the dark mantle of night enveloped this whole valley, almost as if Ehekatl, the goddess of luck herself had her eyes upon you."s;
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64840,7 +64232,7 @@ void label_2249()
             u8"...stop your curious eyes. Yes, we are sons of Vindale whom they call the irreverent forest. Though we Eleas, noble but blameless \"heretics\", aren't keen to spend idle time responding to every senseless question about our race, you should be more thankful for your fate. If it weren't the lady Larnneire who cured your mortal wound, you wouldn't be hearing my tirade. For the lady is no ordinary Elea and only she can..."s;
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64857,7 +64249,7 @@ void label_2249()
             u8"You talk too much Lomias, even though the one injured before you is still dazed."s;
         tc = tc * (findchara(33) == 0) + (findchara(33) != 0) * findchara(33);
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64874,7 +64266,7 @@ void label_2249()
             + u8"..."s;
         tc = tc * (findchara(34) == 0) + (findchara(34) != 0) * findchara(34);
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -64903,7 +64295,7 @@ void label_2250()
         u8"We made it! Thank you!"s);
     tc = tc * 1 + 0;
     list(0, listmax) = 0;
-    listn(0, listmax) = strmore;
+    listn(0, listmax) = i18n::_(u8"ui", u8"more");
     ++listmax;
     chatesc = 1;
     talk_window();
@@ -65097,7 +64489,7 @@ void label_2253()
             u8"Great! I'll guide you to the place, kill them all!"s);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -65119,7 +64511,7 @@ void label_2253()
             u8"Fine. I'll take you to my farm."s);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -65140,7 +64532,7 @@ void label_2253()
             u8"Alright, I'll take you to the party now."s);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
-        listn(0, listmax) = strmore;
+        listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
         chatesc = 1;
         talk_window();
@@ -65500,11 +64892,11 @@ void show_talk_window()
     }
     if (cdata[tc].sex == 0)
     {
-        s += cnven(strmale);
+        s += cnven(i18n::_(u8"ui", u8"male"));
     }
     else
     {
-        s += cnven(strfemale);
+        s += cnven(i18n::_(u8"ui", u8"female"));
     }
     if (cdatan(1, tc) != ""s)
     {
@@ -65530,7 +64922,8 @@ void show_talk_window()
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
     if (chatval(2) == 1)
     {
-        s = _impression(implevel(cdata[tc].impression));
+        s = i18n::_(
+            u8"ui", u8"impression", u8"_"s + implevel(cdata[tc].impression));
         if (cdata[tc].impression < 150)
         {
             s(1) = ""s + cdata[tc].impression;
@@ -73301,10 +72694,17 @@ void pass_one_turn(bool label_2738_flg)
             {
                 txt(lang(
                     name(cc) + u8"は"s
-                        + actlistn(cdata[cc].continuous_action_id)
+                        + i18n::_(
+                              u8"ui",
+                              u8"action",
+                              u8"_"s + cdata[cc].continuous_action_id)
                         + u8"を中断した。"s,
                     name(cc) + u8" stop"s + _s(cc) + u8" "s
-                        + actlistn(cdata[cc].continuous_action_id) + u8"."s));
+                        + i18n::_(
+                              u8"ui",
+                              u8"action",
+                              u8"_"s + cdata[cc].continuous_action_id)
+                        + u8"."s));
             }
             rowactend(cc);
         }

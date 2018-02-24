@@ -1053,8 +1053,8 @@ label_1549_internal:
     grotate(2, 0, 0, 0, x, y);
     gmode(2);
     display_topic(lang(u8"性別の候補"s, u8"Gender"s), wx + 28, wy + 30);
-    listn(0, 0) = cnven(strmale);
-    listn(0, 1) = cnven(strfemale);
+    listn(0, 0) = cnven(i18n::_(u8"ui", u8"male"));
+    listn(0, 1) = cnven(i18n::_(u8"ui", u8"female"));
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
     {
