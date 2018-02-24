@@ -17696,7 +17696,7 @@ void render_hud()
         pos(sx, sy);
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
-        mes(i18n::_(u8"ui", u8"chocked"));
+        mes(i18n::_(u8"ui", u8"choked"));
         color(0, 0, 0);
         sy -= 20;
     }
