@@ -31264,7 +31264,7 @@ void use_house_board()
             int stat = ctrl_ally();
             if (stat != -1)
             {
-                c = stat;
+                int c = stat;
                 snd(20);
                 txtnew();
                 if (getworker(gdata_current_map, c) == c)
@@ -53840,6 +53840,7 @@ void label_2147()
     }
     for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
     {
+        int c{};
         if (cnt == 0)
         {
             c = cc;
@@ -69759,6 +69760,7 @@ label_2689_internal:
             {
                 continue;
             }
+            int c{};
             for (int cnt = 0, cnt_end = cnt + (searchfov); cnt < cnt_end; ++cnt)
             {
                 x = cdata[cc].position.x - 2 + cnt;

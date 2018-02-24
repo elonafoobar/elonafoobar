@@ -257,7 +257,6 @@ inline int atxspot;
 inline int autosave;
 inline int body;
 inline int bonus;
-inline int c;
 inline int camera;
 inline int cardrefattack;
 inline int cardrefcost;
