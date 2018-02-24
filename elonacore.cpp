@@ -57413,6 +57413,7 @@ void label_2201()
             txt(lang(
                 itemname(ci, 1) + u8"が降ってきた。"s,
                 itemname(ci, 1) + u8" falls down from the tree."s));
+            item_stack(-1, ci);
             turn_end();
             return;
         }
