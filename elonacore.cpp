@@ -44043,6 +44043,20 @@ void wish_end()
 
 
 
+void wish_for_character()
+{
+    inputlog = strutil::remove_str(inputlog(0), u8"summon");
+    select_wished_character();
+    flt();
+    characreate(-1, dbid, cdata[0].position.x, cdata[0].position.y);
+    cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
+    txt(cdatan(0, rc) + " is summoned.");
+    wish_end();
+    return;
+}
+
+
+
 void what_do_you_wish_for()
 {
     int wishid = 0;
@@ -44272,6 +44286,14 @@ void what_do_you_wish_for()
     {
         wish_for_card();
         return;
+    }
+    if (debug::voldemort)
+    {
+        if (strutil::contains(inputlog(0), u8"summon"))
+        {
+            wish_for_character();
+            return;
+        }
     }
     if (strutil::contains(inputlog(0), lang(u8"剥製"s, u8"figure"s))
         || strutil::contains(inputlog(0), u8"はく製"s))
