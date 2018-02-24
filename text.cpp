@@ -3013,7 +3013,7 @@ void parse_talk_file()
 
 
 
-void read_talk_file()
+void read_talk_file(const std::string& valn)
 {
     buff = "";
     notesel(buff);
@@ -3149,7 +3149,7 @@ std::string cnvweight(int prm_399)
 {
     std::string s_at_m35;
     s_at_m35 = ""s + std::abs(prm_399) / 1000 + u8"."s
-        + std::abs(prm_399) % 1000 / 100 + ""s + strweight;
+        + std::abs(prm_399) % 1000 / 100 + ""s + i18n::_(u8"ui", u8"weight");
     return s_at_m35;
 }
 

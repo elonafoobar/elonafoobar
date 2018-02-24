@@ -208,8 +208,9 @@ void proc_event()
         autosave = 1 * (gdata_current_map != 35);
         break;
     case 29:
+    {
         randomize(gdata_year + gdata_current_dungeon_level);
-        c = choice(std::initializer_list<int>{
+        int c = choice(std::initializer_list<int>{
             300, 26,  27, 28,  29,  140, 34, 141, 143, 144,
             145, 242, 25, 257, 230, 202, 37, 33,  80,  332,
         });
@@ -231,7 +232,8 @@ void proc_event()
             u8"Be aware! This level is guarded by the lord of "s
                 + mapname(gdata_current_map) + u8", "s + cdatan(0, tc)
                 + u8"."s));
-        break;
+    }
+    break;
     case 4:
         while (1)
         {
@@ -343,10 +345,10 @@ void proc_event()
         {
             for (int i = 10; i < 18; ++i)
             {
-                if (sdata(cnt, 0) != 0 && rnd(3) == 0)
+                if (sdata(i, 0) != 0 && rnd(3) == 0)
                 {
                     txtmore();
-                    skillexp(cnt, 0, -500);
+                    skillexp(i, 0, -500);
                 }
             }
             if (cdata[0].karma < -30)
@@ -527,6 +529,7 @@ void proc_event()
         i = 0;
         for (int cnt = 0; cnt < 17; ++cnt) // 17?
         {
+            int c{};
             if (cnt == 0)
             {
                 c = tc;

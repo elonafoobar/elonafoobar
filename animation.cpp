@@ -146,7 +146,7 @@ void play_animation_3(int anicol, int anisound)
     gsel(0);
     for (int cnt = 0, cnt_end = cnt + (6); cnt < cnt_end; ++cnt)
     {
-        cnt2 = cnt;
+        int cnt2 = cnt;
         redraw(0);
         pos(0, 0);
         gmode(0);
@@ -339,7 +339,7 @@ void play_animation_0(int anicol, int anisound)
         pos(0, 0);
         gmode(0);
         gcopy(4, 0, 0, windoww, windowh);
-        cnt2 = cnt;
+        int cnt2 = cnt;
         for (int cnt = 0, cnt_end = cnt + (cnt2 + 1); cnt < cnt_end; ++cnt)
         {
             if (ap(cnt) == -1)
@@ -605,7 +605,7 @@ void play_animation_12()
     {
         redraw(0);
         gmode(2);
-        cnt2 = cnt * 2;
+        int cnt2 = cnt * 2;
         gmode(2, inf_tiles, inf_tiles);
         if (critical)
         {
@@ -674,7 +674,7 @@ void play_animation_20()
         pos(0, 0);
         gmode(0);
         gcopy(4, 0, 0, windoww, windowh);
-        cnt2 = cnt;
+        int cnt2 = cnt;
         gmode(2);
         for (int cnt = 0, cnt_end = cnt + (anidy / 96 + 2); cnt < cnt_end;
              ++cnt)
@@ -749,7 +749,7 @@ void play_animation_19()
                 continue;
             }
             af = 1;
-            cnt2 = cnt;
+            int cnt2 = cnt;
             int anidy = ay(cnt) * std::clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
             gmode(2, 96, 96);
             pos(ax(cnt), anidy);
@@ -929,7 +929,6 @@ void play_animation_21()
                 continue;
             }
             af = 1;
-            cnt2 = cnt;
             gmode(2, 96, 96);
             if (ap(cnt) < 10)
             {
@@ -1001,7 +1000,7 @@ void play_animation_14_16(int animeid)
     {
         redraw(0);
         gmode(2);
-        cnt2 = cnt * 2;
+        int cnt2 = cnt * 2;
         gmode(2, inf_tiles, inf_tiles);
         for (int cnt = 0, cnt_end = cnt + (aniref); cnt < cnt_end; ++cnt)
         {

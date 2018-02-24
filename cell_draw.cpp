@@ -394,6 +394,33 @@ void draw_hp_bar(int cc, int x, int y)
 
 
 
+struct lightdata_t
+{
+    int _0;
+    int _1;
+    int _2;
+    int _3;
+    int _4;
+    int _5;
+    bool _6;
+};
+
+
+lightdata_t lightdata[] = {
+    {0, 0, 0, 0, 0, 0, false},      {1, 1, 50, 8, 8, 50, true},
+    {1, 1, 70, 28, 8, 70, true},    {3, 0, 100, 30, 8, 20, false},
+    {3, 0, 80, 0, 6, 40, false},    {11, 0, 140, 48, 10, 20, false},
+    {5, 1, 170, 4, 2, 80, true},    {9, 1, 30, 8, 2, 80, true},
+    {9, 1, 30, 24, 2, 80, true},    {7, 0, 35, 4, 1, 40, true},
+    {7, 0, 35, 24, 1, 40, true},    {8, 0, 120, 0, 15, 15, false},
+    {4, 0, 50, 48, 5, 70, true},    {4, 0, 50, 16, 5, 70, true},
+    {0, 0, 140, 62, 10, 20, false}, {11, 0, 100, 72, 10, 20, false},
+    {9, 1, 30, 50, 5, 80, true},    {12, 0, 100, 24, 3, 10, false},
+    {12, 0, 20, 32, 2, 30, true},   {13, 0, 70, 35, 3, 10, false},
+};
+
+
+
 } // namespace
 
 
@@ -1069,7 +1096,7 @@ void cell_draw()
             if (map(x_, y, 9) != 0)
             {
                 p_ = map(x_, y, 9);
-                if ((gdata_hour > 17 || gdata_hour < 6 || lightdata(6, p_))
+                if ((gdata_hour > 17 || gdata_hour < 6 || lightdata[p_]._6)
                     && mapsync(x_, y) == msync)
                 {
                     light_ -= (6
@@ -1081,17 +1108,17 @@ void cell_draw()
                                          y),
                                      0,
                                      6))
-                        * lightdata(4, p_);
-                    pos(dx_, dy_ - lightdata(3, p_));
+                        * lightdata[p_]._4;
+                    pos(dx_, dy_ - lightdata[p_]._3);
                     gmode(
                         5,
                         inf_tiles,
                         inf_tiles,
-                        lightdata(2, p_) + rnd((lightdata(5, p_) + 1)));
+                        lightdata[p_]._2 + rnd((lightdata[p_]._5 + 1)));
                     gcopy(
                         3,
-                        192 + lightdata(0, p_) * 48
-                            + rnd((lightdata(1, p_) + 1)) * inf_tiles,
+                        192 + lightdata[p_]._0 * 48
+                            + rnd(lightdata[p_]._1 + 1) * inf_tiles,
                         704);
                 }
             }

@@ -167,7 +167,6 @@ void initialize_elona()
     DIM2(fixeditemenc, 20);
     DIM2(dir, 5);
     DIM3(dblist, 2, 800);
-    SDIM3(csv, 1000, 40);
     SDIM1(filemod);
     SDIM2(inputlog, 100);
     SDIM2(key, 20);
@@ -175,8 +174,6 @@ void initialize_elona()
     SDIM3(msg, 120, inf_maxlog);
     SDIM2(msgtemp, 1000);
     SDIM3(randn1, 30, 20);
-    SDIM2(select, 200);
-    DIM2(n, 40);
     DIM2(rtval, 10);
     DIM3(list, 3, 500);
     SDIM4(listn, 40, 2, 500);
@@ -207,7 +204,6 @@ void initialize_elona()
     DIM2(invmark, 35);
     DIM2(commark, 3);
     DIM2(feat, 5);
-    SDIM3(valn, 50, 10);
     DIM3(dirchk, 3, 2);
 
     dirchk(0, 0) = -1;
@@ -959,7 +955,7 @@ label_1546_internal:
         del_chara(0);
         access_race_info(3, listn(1, page * pagesize + cs));
         access_race_info(11, listn(1, page * pagesize + cs));
-        show_race_or_class_info(cnt, 0);
+        show_race_or_class_info(0, 0);
     }
     redraw(1);
     await(cfg_wait1);
@@ -1185,7 +1181,7 @@ label_1552_internal:
         del_chara(0);
         access_class_info(3, listn(1, cs));
         access_class_info(11, listn(1, cs));
-        show_race_or_class_info(cnt, 1);
+        show_race_or_class_info(0, 1);
         redraw(1);
     }
     await(cfg_wait1);
@@ -1766,7 +1762,7 @@ void show_race_or_class_info(int CNT, int val0)
     }
     for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
     {
-        cnt2 = cnt;
+        int cnt2 = cnt;
         for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
         {
             if (cnt2 == 2)

@@ -1006,6 +1006,7 @@ int magic()
                 {
                     goto the_end;
                 }
+                std::string valn;
                 if (ele)
                 {
                     valn = i18n::_(u8"ability", std::to_string(ele), u8"name")
@@ -1184,7 +1185,7 @@ label_2181_internal:
                 for (int cnt = 0, cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
                 {
                     f = 1;
-                    cnt2 = cnt;
+                    int cnt2 = cnt;
                     for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
                     {
                         p = map(dx + x(cnt2) * cnt, dy + y(cnt2) * cnt, 0);
@@ -2369,7 +2370,7 @@ label_2181_internal:
         for (int cnt = 0, cnt_end = cnt + (1 + (efstatus >= 1)); cnt < cnt_end;
              ++cnt)
         {
-            cnt2 = cnt;
+            int cnt2 = cnt;
             for (int cnt = 0, cnt_end = cnt + (2000); cnt < cnt_end; ++cnt)
             {
                 await();
@@ -2605,7 +2606,7 @@ label_2181_internal:
         for (int cnt = 0, cnt_end = cnt + (1 + (efstatus >= 1)); cnt < cnt_end;
              ++cnt)
         {
-            cnt2 = cnt;
+            int cnt2 = cnt;
             while (1)
             {
                 await();
@@ -2712,7 +2713,7 @@ label_2181_internal:
         else
         {
             i = rnd(8) + 10;
-            valn = i18n::_(u8"ability", std::to_string(i), u8"name");
+            const auto valn = i18n::_(u8"ability", std::to_string(i), u8"name");
             if (efstatus == 0)
             {
                 txt(lang(
@@ -2985,10 +2986,10 @@ label_2181_internal:
                 txt(lang(
                     u8"依頼請負中の帰還は法律で禁止されている。それでも帰還する？"s,
                     u8"Returning while taking a quest if forbidden. Are you sure you want to return?"s));
-                promptl(0, 0) = stryes;
+                promptl(0, 0) = i18n::_(u8"ui", u8"yes");
                 promptl(1, 0) = u8"y"s;
                 promptl(2, 0) = u8"0"s;
-                promptl(0, 1) = strno;
+                promptl(0, 1) = i18n::_(u8"ui", u8"no");
                 promptl(1, 1) = u8"n"s;
                 promptl(2, 1) = u8"1"s;
                 promptmax = 2;
@@ -3207,7 +3208,7 @@ label_2181_internal:
         if (i > 0)
         {
             i = p(rnd(i));
-            valn = itemname(i, 1, 1);
+            const auto valn = itemname(i, 1, 1);
             if (inv[i].curse_state == -1)
             {
                 inv[i].curse_state = -2;

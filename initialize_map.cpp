@@ -2695,7 +2695,7 @@ label_1741_internal:
                  && cdata[cnt].character_role < 2000)
                 || cdata[cnt].character_role == 2003)
             {
-                cnt2 = cnt;
+                int cnt2 = cnt;
                 for (int cnt = 0, cnt_end = cnt + (maxnpcbk); cnt < cnt_end;
                      ++cnt)
                 {
@@ -3350,7 +3350,7 @@ label_1744_internal:
             {
                 if (qdata(8, cnt) == 1)
                 {
-                    cnt2 = cnt;
+                    int cnt2 = cnt;
                     for (int cnt = 0, cnt_end = cnt + (16); cnt < cnt_end;
                          ++cnt)
                     {
