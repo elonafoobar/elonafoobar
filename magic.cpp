@@ -2949,23 +2949,23 @@ label_2181_internal:
             {
                 break;
             }
-            i = p(cnt) + 240 - 10;
+            const auto attr = p(cnt) - 10;
             if (efstatus <= -1)
             {
                 if (cdata[tc].quality <= 3)
                 {
-                    cdata[tc].attr_adjs[i] -=
+                    cdata[tc].attr_adjs[attr] -=
                         rnd(sdata.get(p(cnt), tc).original_level) / 5 + rnd(5);
                     continue;
                 }
             }
-            if (cdata[tc].attr_adjs[i] < 0)
+            if (cdata[tc].attr_adjs[attr] < 0)
             {
-                cdata[tc].attr_adjs[i] = 0;
+                cdata[tc].attr_adjs[attr] = 0;
             }
             if (efstatus >= 1)
             {
-                cdata[tc].attr_adjs[i] =
+                cdata[tc].attr_adjs[attr] =
                     sdata.get(p(cnt), tc).original_level / 10 + 5;
             }
         }
