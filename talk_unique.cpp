@@ -1,6 +1,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "elona.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "variables.hpp"
@@ -47,7 +48,7 @@ void talk_unique()
             u8"ここまで辿り着くとはな…どうやら《混沌》は、自ら創りしネフィアの安定さえも望まぬらしい。しかし、私とてここで死ぬつもりなどないのだ。"s,
             u8"So you've made it this far. Evidently, <Chaos> wants no poise even within their own creation...Nefia. Well, it seems they have left me no choice but to whip you!"s);
         tc = tc * 1 + 0;
-        RESPONSE(0, strmore);
+        RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         SCENE_CUT();
         gdata_main_quest_flag = 170;
@@ -61,45 +62,45 @@ void talk_unique()
                 listmax = 0;
                 buff =
                     u8"ああ、聡明なるレシマスの常闇の眼よ！ 新しい主は、どうやらお前の本当の価値を知らないようだぞ。…だが、心配しなくてもいい。この"s +
-                    _sex(cdata[0].sex) +
+                    i18n::_(u8"ui", u8"sex", u8"_"s + cdata[0].sex) +
                     u8"は、そこで死んでいる老人のように、たまに本を開いては下界の嘘に満ちた歴史を嘲笑い、自己満足にふける以外の使い方を、きっと見つけてくれるだろう。"s;
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
                 buff =
                     u8"(青年は見下したような笑い声をあげ、あなたに向き直った) さあ、これ以上愚かな詮索の表情を続けて私を落胆させないでくれ。お前が眺めている本には、真実の歴史を刻み、過去の文明の歩みを記録する魔力が秘められていると知ったのなら。"s;
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
                 buff =
                     u8"そう。この本に書かれていることは、全て偽りなき歴史。シエラ・テールの、そして過去の偉大なる文明の栄光と衰退の軌跡が記されている。その価値を、わざわざ説明する必要もあるまい？"s;
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
                 buff =
                     u8"ひとつ警告しよう。台座から離れた時、それは魔力を失い、変哲の無い一冊の本と化すのだ。新たな歴史が刻まれることはなく、正当性を証明するすべもなくなるだろう。"s;
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
                 buff =
                     u8"本を所有する者はまた、偽りの歴史を動かす勢力から、自らの命を守る必要にも迫られるだろう。このアーティファクトには、それだけの価値があるということだ。そしてお前には…エレアの風を聴く者と出会い、言葉を交じあわせたお前には…それがどれほどの意味を持つことか、理解していなくてもだ…そうだな、少なくとも我々を楽しませてくれるような使い方を期待しているよ。"s;
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
                 buff =
                     u8"もちろん、本を下界に持ち出すかどうかはお前次第だ…少なくとも、選択という行為に、私が予期できない偶然がある可能性を、お前が信じるのなら。"s;
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
             }
@@ -108,7 +109,7 @@ void talk_unique()
                 listmax = 0;
                 buff = u8"Most impressive."s;
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
             }
@@ -120,7 +121,7 @@ void talk_unique()
         listmax = 0;
         buff = lang(u8"よそへいってくれ…"s, u8"Leave me alone."s);
         tc = tc * 1 + 0;
-        RESPONSE(0, strbye);
+        RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         SCENE_CUT();
         talk_end();
@@ -132,7 +133,7 @@ void talk_unique()
             buff =
                 lang(u8"邪魔だ。話しかけるな。"s, u8"Who the hell are you?"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -145,7 +146,7 @@ void talk_unique()
                 u8"気安く声をかけるな。"s,
                 u8"You have the money, now get lost."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -161,7 +162,7 @@ void talk_unique()
                     cdatan(1, 0) +
                     u8"... Ah yes... I remember now. You've been making quite a name for yourself throughout Tyris, haven't you?"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             RESPONSE(1, lang(u8"話を聞こう"s, u8"Fine, let's do it."s));
@@ -180,7 +181,7 @@ void talk_unique()
                     u8"骨のないやつだ。うせろ。"s,
                     u8"Fine then, piss off you spineless coward."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -196,7 +197,7 @@ void talk_unique()
                 u8"いいだろう。死ぬ準備ができたら、声をかけろ。実験場まで案内してやろう。"s,
                 u8"Excellent. Let me know when you've finished your preparations for death and I'll take you to the testing grounds."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_nightmare = 1;
@@ -216,7 +217,7 @@ void talk_unique()
                 listmax = 0;
                 buff = lang(u8"早くしろ。"s, u8"Be quick."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -230,7 +231,7 @@ void talk_unique()
             listmax = 0;
             buff = lang(u8"よし…付いて来い。"s, u8"Follow me."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_nightmare = 2;
@@ -271,7 +272,7 @@ void talk_unique()
                 u8"驚いた。この実験から生きて帰って来た冒険者は、貴様がはじめてだ。これで、ザナンの上層部が、研究を見直してくれるといいが。あんな不細工な化け物を率いて戦場を駆け回るのは、御免だからな。"s,
                 u8"You came back alive... astonishing. You're the first and I swear you'll be the last. Zanan's senior commanders should find this data most intriguing. I do not want such a clumsy beast watching my back on the battlefield."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_nightmare = 1000;
@@ -288,7 +289,7 @@ void talk_unique()
                 u8"あら、冒険者さん♪ お茶でもいかが？"s,
                 u8"Hi there adventurer! Would you like some tea?"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -301,7 +302,7 @@ void talk_unique()
                 u8"あら、冒険者さん。ちょうどいいところに来てくれたわ。"s,
                 u8"Ah, you... adventurer, you've definitely come to the right place."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             RESPONSE(1, lang(u8"引き受ける"s, u8"Sure thing."s));
@@ -317,7 +318,7 @@ void talk_unique()
                     u8"気が変わったら、また来てね。"s,
                     u8"Okay... but... if you change your mind please come back."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -333,7 +334,7 @@ void talk_unique()
                 u8"頼もしいよ。問題の家は、すぐ南に隣接しているわ。頑張ってね！"s,
                 u8"Fabulous! The trouble is all in the house just south of here."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_putit_attacks = 1;
@@ -347,7 +348,7 @@ void talk_unique()
                 u8"やだ！このぬいぐるみもプチに食べられてる。冒険者さん、はやく退治お願いね。"s,
                 u8"Aggh! My stuffed toys are ruined! Hurry up and kill the Putits!"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -380,7 +381,7 @@ void talk_unique()
                 u8"え、スライムを退治してくれたの？ありがとうございます♪あたしのぬいぐるみたちも喜んでるわ。これ、役に立つかわからないけど、とっておいてね。"s,
                 u8"Eh? You wiped out the slimes? Thanks so much. My stuffed animals are delighted too. Here, you might find this useful."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_putit_attacks = 1000;
@@ -396,7 +397,7 @@ void talk_unique()
                 u8"いらっしゃいませ〜♪その節はどうもです。"s,
                 u8"Oh it's you, our hero."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -409,7 +410,7 @@ void talk_unique()
                 listmax = 0;
                 buff = u8"いらっしゃいませ〜♪"s;
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
             }
@@ -429,7 +430,7 @@ void talk_unique()
                     u8"そうですか…残念です。"s,
                     u8"Alright, but please... think about it."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -445,7 +446,7 @@ void talk_unique()
                 u8"あ…ありがとうございます！よろしくお願いしますね！"s,
                 u8"Really? Thanks, we really appreciate it."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_thieves_hideout = 1;
@@ -460,7 +461,7 @@ void talk_unique()
                 u8"いらっしゃいませ〜♪盗賊団の拠点はみつかりましたか？墓の近くにあるみたいですよ。"s,
                 u8"Welcome! Welcome! Have you found the bandit's lair yet? It should be near the graveyard."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -496,7 +497,7 @@ void talk_unique()
                 u8"ええ、噂はもう届いています。あのごろつき団がいなくなって、私達ほんと安心しました。ありがとうございます。少ないですが、店長がお礼にとこれを♪"s,
                 u8"Yes, I've already gotten wind of your deeds. It's a big relief to be rid of those miscreants. I can't thank you enough. I know it isn't much, but please take this as a token of our thanks."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_thieves_hideout = 1000;
@@ -514,7 +515,7 @@ void talk_unique()
         listn(0, listmax) = lang(
             u8"獣に変えられた王子の童話"s, u8"You mentioned a fairy tale."s);
         ++listmax;
-        RESPONSE(0, strbye);
+        RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         buff = lang(
             u8"無事に意識が戻ってよかったわ。あなたを最初に見たときは、もう手遅れかと思ったほどだもの。"s,
             u8"I'm glad you got well again. I thought you were a goner until just a few minutes ago."s);
@@ -526,7 +527,7 @@ void talk_unique()
                 u8"あなたは、こんな話を聞いたことがあるかしら。"s,
                 u8"You may have heard of this story before..."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -534,7 +535,7 @@ void talk_unique()
                 u8"あるところに、魔法によって醜い獣のような姿に変えられた 王子がいた…彼は自分の姿に絶望し、国を捨て森の中の小屋で暮らしたの。"s,
                 u8"There was once a prince who had his shape changed into that of an ugly beast by a witch. Desparing of his bloodcurdling appearince, he hid himself in a forest far from his kingdom."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -542,7 +543,7 @@ void talk_unique()
                 u8"ある日、狼に襲われ傷ついた女が、小屋に駆け込み倒れこんだ。王子は迷いながらも女を介抱した。彼女はもちろん男の姿におびえて泣いたわ。"s,
                 u8"One day a woman rushed into his hut and passed out, having been badly wounded by a pack of wolves. He treated her with the knowledge and fear that his ugly body might scare her. This fear turned into reality soon enough for she cried out as she woke up."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -550,7 +551,7 @@ void talk_unique()
                 u8"でも、何日もたち彼女は男の優しさに気付いた。彼の誠実さに、抱える葛藤に、心を打たれたの。怪我の癒えた女は、男のささえとなり共に暮らすことを決心した…"s,
                 u8"However, as days passed by and she regained her health, the woman had come to recognize the kindness and generosity that was within the heart of this beast. She decided to live with him."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -558,7 +559,7 @@ void talk_unique()
                 u8"二人は様々な困難を力を合わせ乗り越えて、最後には王子にかけられた呪いがとけ、二人が結婚して幸せな結末を迎えるの。どこにでもある物語ね。"s,
                 u8"They surmounted various difficulties throughout their lives and the story comes to an end when the curse set upon the prince finally breaks and the beast returned to his former shape, that of a flawlessly handsome prince. The two of them got along very well from that time on. A happy ending... although just an ordinary story, don't you agree?"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -566,7 +567,7 @@ void talk_unique()
                 u8"わたしは、小さい頃聞かされたこのおとぎ話が、どうしても好きになれなかった。きっと、醜い姿の男に対する愛が、どこかに置き去りにされた気がしたのね。"s,
                 u8"The elders of Vindale used to tell me this kind of story. But I never liked this one. Perhaps it is because I felt like the beast that she loved despite the fact that his ugliness had been left behind somewhere."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             talk_unique();
@@ -579,7 +580,7 @@ void talk_unique()
                 u8"アセリア大陸から大洋を隔たち、ティリス大陸の北に位置するのがノースティリスよ。自由と平和の国パルミアの統治の下、古代の遺跡群ネフィアを巡り、多くの旅人や商人がこの地を訪れるの。あなたも、そんな旅人の一人かしら？"s,
                 u8"North Tyris is a continent in the western hemisphere of Irva. Lots of merchants and travelers set foot on North Tyris' soil with the dream of making a fortune in the ancient ruins of Nefia."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -587,7 +588,7 @@ void talk_unique()
                 u8"目的が決まっていないのなら、南の炭鉱街ヴェルニースに行くといいわ。あなたの探しているものが、見つかるかもしれない。"s,
                 u8"If you haven't set your destination yet, you might want to visit Vernis. It's a mining town located south of here."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             talk_unique();
@@ -600,7 +601,7 @@ void talk_unique()
                 u8"私達はヴィンデールの森からの使者。公正なるジャビ王と会見し、森とエレアの民に降りかかる嫌疑を晴らすために、王都パルミアに向かっているの。"s,
                 u8"We are messengers from Vindale. Our journey ends here in North Tyris at the great city of Palmia where we're supposed to have a talk with King Xabi, a man of fairness and compassion."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             talk_unique();
@@ -633,7 +634,7 @@ void talk_unique()
                     u8"移動方法はもうわかっているだろうが、もしカーソルキーを使っているのならば、できるだけテンキーでの移動に変えたほうがいいだろう。テンキーの周りには、床のアイテムを取得する0キー、その場で足踏みする5キー、そして射撃などのターゲットを指定できる*キーがあるからな。"s,
                     u8"Pray tell me at least you know how to move. Sure, pressing cursor keys will do. But it's better to use a key pad if you have one. By using a key pad, you can easily acceess keys which are used frequently. Like [0] for picking up stuff, [5] for passing a turn and [*] for targeting."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
@@ -641,7 +642,7 @@ void talk_unique()
                     u8"全ての行動はz,x,cの三つのキーから選択できる。zキーでは主に魔法やスキルなどの動作、xキーではアイテムの操作、cキーでは能力の確認や装備の変更ができるぞ。"s,
                     u8"Although there're many actions you can perform, basically you can access them by using only 3 keys, [z],[x] and [c]."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
@@ -649,7 +650,7 @@ void talk_unique()
                     u8"まずはxキーを使って、最も基本的で重要な行動である食事をしてみよう。注意しておけ、空腹になると体力の回復速度が下がり、餓死寸前になると当然体力は減って行くからな。食料は店で買ったり、栽培したり、たまに敵が残す死体を食べることもできる。"s,
                     u8"Let's try them now. First, you need food to live. If your stomach is empty, you will lose Hp and your action speed slows down. Make sure you always have enough food in your inventory."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 buff = lang(
@@ -665,7 +666,7 @@ void talk_unique()
                     u8"zキーでは、魔法やスキルを使用したり、体当たりや採掘など、やや特殊な行動を行うことができる。体当たりは、鍵のかかったドアを壊したり、果実を木から落としたい時に実行するといい。"s,
                     u8"You can perform skills or other actions including bashing and digging by pressing [z]. Here's a tip. You can bash doors to break locks and trees to get some fruits. It can be used to wake someone, but surely they won't be happy."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
@@ -673,7 +674,7 @@ void talk_unique()
                     u8"zキーの他にも、スペースキーの活用法を覚えておこう。スペースキーは、足元にあるものに応じて自動的に行動を選択してくれるキーだ。例えば足元に階段があれば昇り降りを、宝箱があれば「開く」を、祭壇があれば「捧げる」をなど、自動的に選択してくれる便利なキーだ。"s,
                     u8"Also, remember that [space] key is a very useful key. When there's an object under your foot, it automatically chooses a suitable action for you."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 buff = lang(
@@ -694,7 +695,7 @@ void talk_unique()
                     u8"どうやら何かを掘り当てたようだな。"s,
                     u8"Looks like you found something."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 gdata_tutorial_flag = 4;
@@ -706,7 +707,7 @@ void talk_unique()
                     u8"多くのアイテムは、その本当の価値を知るためには「鑑定」をする必要がある。街にいる鑑定者に頼んだり、鑑定の巻物や、魔法を唱えることで鑑定はできる。未鑑定の品は店での売価が低くなり、中には呪われた装備、危険な効果のポーションや巻物もあるので注意が必要だ。"s,
                     u8"Many items need to be identified before you can know what exactly they are. You can identify items by reading some scrolls or asking a wizard in a town. Remember that using unidentified potions or scrolls is very dangerous. "s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
@@ -714,7 +715,7 @@ void talk_unique()
                     u8"武器や防具は、長い間所持していると簡単な鑑定がされるが、 装備の持つ魔力や本当の性能を知るためには、やはり鑑定が必要だ。強力な力を秘めたアイテムの中には、上位の鑑定を必要とするものもあるので、未判明のまま店に売ってしまうことは賢明ではないだろう。"s,
                     u8"Weapons and armor also need to be identified. If you carry them long enough, you will get a hunch as to how good they are. But to gain full knowledge of the items, you need to identify them."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 buff = lang(
@@ -748,7 +749,7 @@ void talk_unique()
                         u8"どうした？ まだ全てのプチを倒していないぞ。"s,
                         u8"Kill them all."s);
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strbye);
+                    RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                     chatesc = 1;
                     SCENE_CUT();
                     talk_end();
@@ -757,7 +758,7 @@ void talk_unique()
                 listmax = 0;
                 buff = lang(u8"上出来だ。"s, u8"Well done."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 gdata_tutorial_flag = 7;
@@ -769,7 +770,7 @@ void talk_unique()
                     u8"ノースティリスの地理について少し説明しよう。シエラ・テールには幾多の国が存在するが、ノースティリスはどの国の支配も受けておらず、《ネフィア》と呼ばれる迷宮群が存在する特殊な場所だ。この地では、地殻変動とともに新しい迷宮がしばしば生成される。"s,
                     u8"Let's learn a little history of North Tyris. This sacred land governed by Palmia is known for ancient ruins <<Nefia>>. Occasionally new ruins are found and lost by erratic movements of the earths crust."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
@@ -777,7 +778,7 @@ void talk_unique()
                     u8"迷宮の主を倒すと貴重な物資や財宝が手に入るため、冒険者にとっては格好の収入源になるわけだ。迷宮に辿り着くと、その場所の危険度が表示される。危険度が自分のレベルより高い場所を探索することは、まず避けたほうがいいだろう。"s,
                     u8"A lord lives at the lowest layer of these ruins, protecting great treasures and therefore attracts numerous adventurers. However, avoid those ruins which exceed your current level. You may gain a lot, but you may lose your life."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 flt();
@@ -810,7 +811,7 @@ void talk_unique()
                     u8"鍵が掛かっているだろう？宝箱の鍵は、ロックピックを所持していて、鍵開けの技術が開錠に必要な値に達していないと、解除することはできない。君の技量では、おそらくその宝箱を開けることはできないな。宝箱はダンジョンに落ちていることもあるが、生憎と重い代物なので、開けられない時は諦めるしかないだろう。気をつけろ…宝箱に押しつぶされて無様な死をさらした冒険者を、私は何度となく見てきている。"s,
                     u8"Notice the chest has a lock? Locked chests require sufficient lockpick skill and lockpicks to open. You need to practice to open that chest. Be aware, those chests are heavy and trust me, give up if you can't open them when you're in dungeons. I saw a fool running around with a chest on his back and he got killed."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
@@ -818,7 +819,7 @@ void talk_unique()
                     u8"宝箱に限らず、荷物を持ちすぎると速度にペナルティが課せられるため注意が必要だな。必要のないアイテムは、家に保管しておくといい。"s,
                     u8"As you explore dungeons, your backpack may get heavier. Remember to leave stuff you don't need in your house. Overweight will slow your movement."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
@@ -826,7 +827,7 @@ void talk_unique()
                     u8"最後に、家について説明しておこう。家はアイテムを保管したり、安全に魔法を学んだり、また単に装飾して楽しむために利用できる。家の権利書を購入できるようになれば、ノースティリスの好きな場所に家を建てることができるだろう。ただし、家は一つしか持てない。"s,
                     u8"Finally, I'm going to explain a bit about your house. As you already know, you can safely store items in your house. And the salary chest periodically gets filled with some gold and items. Eventually you might be able to buy a new house."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
@@ -834,7 +835,7 @@ void talk_unique()
                     u8"家の中にあるハウスボードを使うことで、壁を作ったり、床の模様を変えたり、滞在者を募ったりできるぞ。後で試してみるといい。"s,
                     u8"You can do several things by using a house board in your house. Try it later."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 gdata_tutorial_flag = 99;
@@ -846,7 +847,7 @@ void talk_unique()
                     u8"よくやった。これでノースティリスで生活するための、基本的な知識は身に付いたわけだ。自分の状態を把握し、慎重に行動すれば、瀕死の状態を高慢なエレアに拾われ、講釈をたれられることも、もうないだろう（ロミアスはニヤリと笑った）。"s,
                     u8"Alright, we're finished. You should already know how to survive in North Tyris by now."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
@@ -854,7 +855,7 @@ void talk_unique()
                     u8"まだ目的が定まっていないのなら、南のヴェルニースを訪れるといい。ネフィアの迷宮群を巡るのも、貴重な経験になるだろう。この世界で何を見て、如何な足跡を残すか決めるのは、君自身だ。"s,
                     u8"(You've finished the tutorial!)"s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 gdata_tutorial_flag = -1;
@@ -882,7 +883,7 @@ void talk_unique()
                 u8"賢明な判断だな。まずは最も基本的な動作から教えよう。"s,
                 u8"A wise choice. I will start from the beginning."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             flt();
@@ -907,7 +908,7 @@ void talk_unique()
                     u8"ラーネイレ…？ どこにいったんだ？ まさか貴様！"s,
                     u8"You...you scum!"s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 talk_window();
                 if (scenemode)
@@ -928,7 +929,7 @@ void talk_unique()
                 ""s + cdatan(0, 0) +
                     u8" is right. The time left for us is scarce. We need to depart, Lomias."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -937,7 +938,7 @@ void talk_unique()
                 u8"Yes. Palmia is still far away. Perhaps, It was fortunate that we could have a little rest before everything begins."s);
             tc = tc * (findchara(34) == 0)
                 + (findchara(34) != 0) * findchara(34);
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -947,7 +948,7 @@ void talk_unique()
                 u8"Farewell..until we meet again. May the blessing of Lulwy be with you."s);
             tc = tc * (findchara(33) == 0)
                 + (findchara(33) != 0) * findchara(33);
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             chara_vanquish(findchara(33));
@@ -983,7 +984,7 @@ void talk_unique()
                 u8"食料以外のアイテムも、同様にxキーで操作することになる。例えば巻物や魔法書は「読む」のメニューから、杖は「振る」のメニューから使用できる。"s,
                 u8"You can also use other items by pressing [x]. For example, if you want to read a book, press [x], hit [9] a few times to select the <Read> menu, then choose a book you want to read."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             if (jp)
@@ -991,7 +992,7 @@ void talk_unique()
                 listmax = 0;
                 buff = lang(u8"次はzキーでの行動について説明しよう。"s, ""s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
             }
@@ -1006,7 +1007,7 @@ void talk_unique()
                 u8"（ロミアスはにやりと笑った。どうやら、この偽物の金塊は彼がいつの間にか埋めたらしい…）"s,
                 u8"(Lomias grins. Looks like he buried it unnoticed.)"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -1014,7 +1015,7 @@ void talk_unique()
                 u8"次は戦闘について教えるが、戦う前にまずアイテムを装備し、準備を整えなければならない。使い古しだが、君のために弓と矢を用意した。射撃武器のほとんどは、例えば銃なら弾丸のように、対応した矢・弾を装備する必要がある。"s,
                 u8"Okay, I will now tell you how to fight. Before the combat starts, you need to equip weapons. Take my old bow and arrows and equip them."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             flt();
@@ -1041,7 +1042,7 @@ void talk_unique()
                 u8"…よし、いよいよ戦闘の説明だ。"s,
                 u8"Good. Now listen carefully."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -1049,7 +1050,7 @@ void talk_unique()
                 u8"相手を打撃で攻撃するには、単に相手の方向のキーを押すだけだ。射撃も、zキーから射撃を選択するだけで、一番近くの敵を自動的に攻撃する。攻撃する敵を予め指定したいときは*キーを押せばいい。"s,
                 u8"By moving towards a target, you automatically attack it with your close range weapon. To use your long range weapon, you can either press [z] and choose [Shoot] or simply press [f] (Fire). You will shoot a nearby enemy. If you want to change your target, press [*]."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -1057,7 +1058,7 @@ void talk_unique()
                 u8"では、訓練用のモンスターを召喚するぞ。可能なら、使い勝手を知るために射撃で倒してみてくれ。ただし、弓は近接して打っても威力が低いので注意が必要だ。危なくなった時のために、治療薬を足元に置いておこう…必要ないとは思うが。ポーションの飲み方はわかるな？…そう、xキーだ。"s,
                 u8"Get ready. I will summon some weak monsters. Kill them with your bow if possible. Try to stay away from the enemies as bows aren't effective in close range. I've dropped a few potions in case you get hurt. You know how to use them right? Yes, use [x] key."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             txtef(9);
@@ -1088,7 +1089,7 @@ void talk_unique()
                 u8"王の死に続き、世界の崩壊の始まり…パルミアは…シエラ・テールは困難な時代にいます。このまま、イルヴァは最後を迎えてしまうのでしょうか。"s,
                 u8"The tragedy of our king, and the collapse of our world, Palmia is...Sierre Terre is in difficult times."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -1101,7 +1102,7 @@ void talk_unique()
                 u8"パルミアは歴史ある自由と文化の国。大アセリア大陸の戦乱から離れ、静かに育ってきた国です。王制政治が廃止された今でも、この平和を培った代々の王と夫であるジャビ王に、民は忠誠を尽くしてくれています。"s,
                 u8"Palmia is an old and historical kingdom which respects peace and freedom. The royalism has been obsoleted long time ago, but people still carry loyalty to the old kings and my husband, King Xabi."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
         }
@@ -1112,7 +1113,7 @@ void talk_unique()
                 u8"王の悲報にパルミアは衝撃を受けています。あの方のいない王座は、なんと冷たく感じられることでしょう…"s,
                 u8"The whole kingdom is devastated to hear the tragic news of our king. This throne... it feels very cold without him."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
         }
@@ -1126,7 +1127,7 @@ void talk_unique()
                 u8"汝の活躍を楽しみにしておるぞ。"s,
                 u8"Any assistance you provide to us will be most welcome."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -1139,7 +1140,7 @@ void talk_unique()
                 u8"今の時勢、信頼に足る者の剣を遊ばせておくのは惜しい。もしパルミアの元で働く意志があるのなら、城の図書室にいるエリステアを訪ねるがよい。十分な報酬と名誉を約束しよう。"s,
                 u8"In times like these, we can't afford to let those we can trust sit idly on their swords. If you're willing to serve Palmia, then you should pay a visit to Erystia in the library. We will be sure to reward you with honor and riches commiserate with your sacrifice."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -1153,7 +1154,7 @@ void talk_unique()
                 u8"斥候からの知らせを預かっていると？…よかろう、その者の書簡をわしの手元へ。"s,
                 u8"What's that you say? You have a message from one of our scouts? ...Very well then, let me see it."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             redraw(0);
@@ -1172,7 +1173,7 @@ void talk_unique()
                     cdatan(0, 0) +
                     u8". Give me a moment to prepare appropriate compensation for your efforts today."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             flt();
@@ -1204,7 +1205,7 @@ void talk_unique()
                 u8"…そこの御人…頼みが…頼みがある…私はパルミアの斥候…王の命令でレシマスに潜んでいた者だ…"s,
                 u8"You...you there, listen to me. *cough* *cough* I-I'm a scout of Palmia...I've been investigating on Zanan's strange activities in Lesimas.... *cough* I have a favor to ask..."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -1212,7 +1213,7 @@ void talk_unique()
                 u8"詳しく説明する体力は…私には…もう残っていない…ジャビ王にこの書簡を…届けて頂きたい…二つの大国の衝突を…シエラ・テールの…危機を…防ぐために…"s,
                 u8"T-There's no time left for me to explain all....my wounds are... *cough* Listen, Sierre Terre is in danger...this letter..this letter...this is our only hope...."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -1220,7 +1221,7 @@ void talk_unique()
                 u8"…う、うぅ…貴方を…信じる以外にもう希望はない…私の所持品は…自由にして構わない…どうか、この知らせを…パルミアに…"s,
                 u8"I have no choice but to trust you.... *cough* bring the letter to Palmia.... I-I beg you...You can take everything I have on me...so... plea..s.."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             for (int cnt = 0, cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
@@ -1264,14 +1265,14 @@ void talk_unique()
                 buff =
                     u8"私達は…失敗してしまったのですね、サイモアの陰謀を止めることに。あなたが《常闇の眼》を入手するために冒した危険も、カラムの命も、今となっては何の意味があったのでしょう。"s;
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
                 buff =
                     u8"ゆっくりと死に行く世界の中で、私達は無力感と罪を抱えて生きています。森を忌み嫌い、あるいは迫害を見ぬふりをしてきた私達が、サイモアだけを責めることなどできません。いっそのこと、あの時森とともに…"s;
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
@@ -1280,7 +1281,7 @@ void talk_unique()
                     + cdatan(1, 0) + cdatan(0, 0)
                     + u8"、あなたはその運命の先に何を見ているの？"s;
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
             }
@@ -1289,7 +1290,7 @@ void talk_unique()
                 listmax = 0;
                 buff = u8"You've done well."s;
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
             }
@@ -1305,7 +1306,7 @@ void talk_unique()
                     cdatan(0, 0) +
                     u8". According to the information we've learned during the excavation, these stones are the key that will unlock the deepest reaches of Lesimas. However, be aware that terrifying monsters lurk in the abyss of Lesimas, and we have no idea how deep those caverns go."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -1313,7 +1314,7 @@ void talk_unique()
                 u8"あなたの任務…おそらくは最後の任務は、決して易しいものではなく、失敗も許されません。レシマスの探索を進め、秘宝の間を見つけてください。そして、《常闇の眼》を地上に持ち帰り、ザナンの陰謀を阻止するのです。"s,
                 u8"This will be your last mission. This will be no easy task, but failure is not an option. It's up to you to complete the excavation of Lesimas and find the room where the codex is kept. If you can't retrieve the <Origin of Vice> we will never be able to uncover the conspiracy Zanan has set into motion."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -1321,7 +1322,7 @@ void talk_unique()
                 u8"カラムの言葉が正しければ、秘宝を守るのは今は亡きザシム王の従弟ゼーム。ゼームは名うての魔術師としても知られていました。彼が生きながらえているのも何らかの魔力によるものでしょう。心して望んでください。"s,
                 u8"If what Karam told us is true, the codex will be guarded by the late king Zashim's cousin, Zeome. Zeome was known to have been a very powerful warlock. In his day, he was by far the most powerful sorcerer alive. I wouldn't dare confront him unless you are extremely well prepared."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -1330,7 +1331,7 @@ void talk_unique()
                 u8": Words alone are not enough to express our gratitude for all that you have done. This ring is a gift from Queen Stersha. We are praying for your success, "s
                     + cdatan(0, 0) + u8"."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             snd(44);
@@ -1355,7 +1356,7 @@ void talk_unique()
                 u8"I've been waiting for you to return, "s + cdatan(0, 0) +
                     u8". I hope that Karam is... no, I can tell just by looking at you. Then our rescue attempt was too little too late."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             redraw(0);
@@ -1370,7 +1371,7 @@ void talk_unique()
                 u8"…カラムの言葉、確かに受け取りました。《常闇の眼》という古宝の伝承は、私も本で読んだことがあります。それは、イルヴァの大地の上に築かれた全ての歴史の真相を網羅していると伝えられています。もしカラムが危惧していたように、ザナンのサイモアが自らの説の誤りを葬らんとするためレシマスの秘宝を狙っているとしたら、私達はそれを阻止しなければなりません。"s,
                 u8"Well take Karam's message to heart then... I remember reading about the <Origin of Vice> in one of these books. I believe it referred to the codex as an exhaustive account of the history of all things in Irva. If, as Karam suspected, Saimore is trying to acquire the codex in order cover up gaps in his story we can't allow him to succeed."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -1378,7 +1379,7 @@ void talk_unique()
                 u8"…王の悲報はもう耳にしているでしょう。都の土は涙で濡れていようとも、今の私達に喪に服している時間はありません。カラムと、そして王の意思を継ぐためにも。"s,
                 u8"I'm sure you've already heard the tragic news about the king. All of Palmia is heartbroken by the king's demise, but we can't afford to spend our time mourning right now. We have to push on, for Karam... and for the king's sake."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -1386,7 +1387,7 @@ void talk_unique()
                 u8"あなたの次の任務は、三つの魔石の入手です。魔石には、レシマスの秘密を解く何らかの力が秘められていると伝えられています。魔石の所在は判明していますが、どこも危険な場所ばかり。まずは、各地を探索し、経験を積んでから臨んだほうがいいでしょう。"s,
                 u8"Your next task is to retrieve the three magic stones. It's written in several of our historical accounts that the stones are the key to unlocking the secrets of Lesimas. We already know where the stones are located, but actually getting the stones is definitely easier said than done. First, you should scout the areas, gather info, and build your strength."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -1394,7 +1395,7 @@ void talk_unique()
                 u8"探索に必要な情報がある時は、いつでも私に話しかけてくださいね。帰還したばかりなのに酷ですが、あなたに期待しています。"s,
                 u8"Please come see me anytime you get information that would be useful to the expedition. I know you've just returned and we're asking an awful lot of you, but I don't have any other choice."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             snd(44);
@@ -1437,7 +1438,7 @@ void talk_unique()
                     u8"Tell me about the crypt of the damned."s);
                 ++listmax;
             }
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             talk_window();
             if (chatval == 6)
@@ -1447,7 +1448,7 @@ void talk_unique()
                     u8"ネフィアの迷宮群の一つレシマスは、パルミアの歴史と大きな関わりがあります。エウダーナがネフィアの秘宝の一つにより繁栄を約束されたように、第三代の王ザシムと従弟ゼームもレシマスの秘宝を求め、調査隊を繰り出していました。"s,
                     u8"Lesimas is one of the numerous ruins of Nefia. It is a significant part of the history of Palmia. The Eulderna sought to bring themselves prosperity using one of the treasures of Nefia, so the third king, Zashim and his cousin Zeome organized an excavation of Lesimas."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
@@ -1455,7 +1456,7 @@ void talk_unique()
                     u8"そしてある日、ついに調査隊の朗報を受けた王と従弟は、レシマスの最下層に赴き、秘宝の眠る部屋へと足を踏み入れたのです…しかし数刻の後、部屋から出てきたのはザシム王一人だけでした。ザシム王は側近にこう言ったと伝えられています。"s,
                     u8"Eventually the king and his cousin received word that the excavation had been completed, so they descended to the deepest reaches of Lesimas. Together they set foot into the darkened room where the codex was said to reside, yet after some number of hours, King Zashim emerged from the chamber alone. As the legend goes, King Zashim said the following words to his aides."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
@@ -1463,7 +1464,7 @@ void talk_unique()
                     u8"「それは強き者の手の内では決して輝くことはない。弱き者の手の内では黄金のごとくまばゆいが、その輝きを他の者に見せることはできない。この秘宝は、常闇の中で永遠に眠っているべきものなのだ。直ちに部屋を封印するがよい。従弟はもはや帰っては来るまい」"s,
                     u8"\"In the hands of the mighty it was dull and lifeless, devoid of magic... yet... in the hands of the meek it shone with a brilliant golden light that defies description. But no matter how I tried, I could not show that light to anyone else. The codex was meant to remain in these depths for all of eternity. We should seal this place off. My cousin will never return from these caves.\""s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
@@ -1471,7 +1472,7 @@ void talk_unique()
                     u8"秘宝が眠る部屋は魔術により封印され、封印の鍵となる三つの魔石は、それぞれ最も強大で邪悪な存在の元に送られたといいます。魔石の真の価値は知らさずに。"s,
                     u8"And so, they sealed the cavern with powerful magic and bound that seal to three magic stones. They gave each stone to a powerful guardian and sent them to three separate strongholds to watch over the stones. I don't believe the guardians knew the true value or purpose of the stones. "s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
@@ -1479,7 +1480,7 @@ void talk_unique()
                     u8"以来、パルミアの代々の王家は、ザシム王の意思を引き継ぎ、洞窟にはもう何もないかのように、他の国々の目を欺いてきたのです。"s,
                     u8"Since that day, the passing generations of Palmia's royal family have preserved King Zashim's mandate and we've always deceived the other nations into believing there was nothing of value in Lesimas."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_unique();
@@ -1494,7 +1495,7 @@ void talk_unique()
                         u8"レシマスの探索を進め、秘宝の間を見つけてください。あなたの任務は、《常闇の眼》を地上に持ち帰ることです。"s,
                         u8"Complete the excavation of Lesimas and find the room where the codex is kept. And retrieve the <Origin of Vice>."s);
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strmore);
+                    RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     SCENE_CUT();
                     listmax = 0;
@@ -1502,7 +1503,7 @@ void talk_unique()
                         u8"カラムの言葉が正しければ、秘宝を守るのは今は亡きザシム王の従弟ゼーム。ゼームは名うての魔術師としても知られていました。彼が生きながらえているのも何らかの魔力によるものでしょう。心して臨んでください。"s,
                         u8"If what Karam told us is true, the codex will be guarded by the late king Zashim's cousin, Zeome. Zeome was known to have been a very powerful warlock. In his day, he was by far the most powerful sorcerer alive. I wouldn't dare confront him unless you are extremely well prepared."s);
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strmore);
+                    RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     SCENE_CUT();
                     talk_unique();
@@ -1515,7 +1516,7 @@ void talk_unique()
                         u8"あなたの任務は、三つの魔石の入手です。魔石には、レシマスの秘密を解く何らかの力が秘められていると伝えられています。魔石の所在は判明していますが、どこも危険な場所ばかり。まずは、各地を探索し、経験を積んでから臨んだほうがいいでしょう。"s,
                         u8"Your next task is to retrieve the three magic stones. It's said that the stones are the key to unlocking the secrets of Lesimas. We already know where the stones are located, but all three locations are extremely dangerous. First, you should scout the areas, gather info, and build your strength."s);
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strmore);
+                    RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     SCENE_CUT();
                     talk_unique();
@@ -1528,7 +1529,7 @@ void talk_unique()
                         + cdatan(0, 0)
                         + u8", find out what happened to <Karam>."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_unique();
@@ -1541,7 +1542,7 @@ void talk_unique()
                     u8"古城の宝物庫には、数々の財宝とともに《覇者の魔石》が眠っていると伝えられています。ヴェルニースを南に下った閑静な森の中に佇むこの城は、古の王族により建てられました。しかし王都がパルミアに移り、廃墟となった城は、長らくならず者の拠点として使われるように…"s,
                     u8"The <King's Magic Stone>, along with numerous other treasures, sleeps deep in the recesses of the vaults of the Ancient Castle, which was built by a long forgotten generation of the royal family. However, the royal family eventually relocated to Palmia and the former throne of the kingdom fell into disrepair and decay. It has been ages since anyone even set foot in the old castle..."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
@@ -1549,7 +1550,7 @@ void talk_unique()
                     u8"一世紀前に《古城の主ワイナン》が占拠してからは、ダルフィの悪漢でさえ近づかない恐ろしい場所として知られるようになりました。危険度はレシマスの１７階相当です。"s,
                     u8"After <Lord Wynan> took charge of the castle in the first century, even the thugs of Derphy became too scared to approach the castle. The danger level in the castle is roughly equivalent to the 17th floor of Lesimas."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
@@ -1557,7 +1558,7 @@ void talk_unique()
                     u8"噂では、《ワイナン》がまだ生きて王座に君臨しているとか…彼は生粋の戦士で、その手に持つ槍斧《ランキス》は相対するものの生命を吸い取ると怖れられています。地獄への耐性か、間合いをとる手段なくして彼と対するのは賢明とはいえませんね。"s,
                     u8"It is rumored that <Wynan> still rules the throne along with his personally trained army. Legends tell that the deadly halberd he carries, <Rankis>, can drain the life from his enemies with the greatest of ease. It would be wise to boost your resistance to nether... oh, and bear in mind that unless you can time your actions wisely he'll devour you like a dog."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_unique();
@@ -1570,7 +1571,7 @@ void talk_unique()
                     u8"パルミアを出て北の未開の地を越えていくと、真紅に燃え盛る灼熱の塔が見えます。この塔の守護者、《赤き義眼のクルイツゥア》と呼ばれる魔女が、《賢者の魔石》を所持しているはずです。"s,
                     u8"If you head north from Palmia, through the untamed lands, you will eventually see a tower blazing with an aura of flames. The guardian of the tower, a powerful witch named <Quruiza the Red-eyed Deceiver>, watches over the <Sage's magic stone>. "s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
@@ -1578,7 +1579,7 @@ void talk_unique()
                     u8"《クルイツゥア》の強力な魔法だけでなく、彼女の僕であり夫である《鋼鉄竜コルゴン》の力も恐るべきものです。"s,
                     u8"Quruiza's magic is not the only thing you have to fear either, her husband, the <Steel Dragon Corgon> has pledged his strength to her defense. No doubt you'll have to face him as well."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
@@ -1586,7 +1587,7 @@ void talk_unique()
                     u8"言うまでもないですが、この塔を探索するには、何らかの手段で火への耐性を得る必要があるでしょう。もし体力を失っていくようであれば、耐性を高めてから挑戦したほうが無難です。危険度はレシマスの１５階相当です。"s,
                     u8"I probably don't need to tell you this, but if you plan to brave the tower, you'll need some sort of powerful resistance to heat and flames. If you find you can't hack it inside, I'd suggest you find some way to protect yourself from the heat before venturing back inside. The danger level in the tower is roughly equivalent to the 15th floor of Lesimas. "s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_unique();
@@ -1599,7 +1600,7 @@ void talk_unique()
                     u8"《愚者の魔石》が眠っているとされる死者の洞窟は、最も危険な場所です。多くの名のある冒険者が命を落とし、不死者となりこの洞窟の中をさ迷っています。"s,
                     u8"The <Crypt of the Damned> is an ancient cave where the walking dead have amassed in droves. It is the most dangerous of the three strongholds. Countless famous adventurers have lost their lives in the crypt, doomed to wander its halls for all eternity as undead."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
@@ -1607,7 +1608,7 @@ void talk_unique()
                     u8"魔石はこの洞窟を支配する《闇の奇形イスシズル》が身に着けているはずです。死霊術使い達に崇められ、その名は大陸中で畏怖されていますが、《イスシズル》の姿や力は、全くの謎に包まれています…"s,
                     u8"I believe that the <Dark Abomination Issizzle> rules the hallowed crypts. He is a powerful necromancer and his name is feared all across the continent. Issizzle is shrouded in mystery so I'm afraid I can't tell you much more."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 listmax = 0;
@@ -1615,7 +1616,7 @@ void talk_unique()
                     u8"死者の洞窟はヴェルニースとパルミアを結ぶ街道の中ほどにあり、危険度はレシマスの２５階相当です。万全に準備を整えていく必要があるでしょう。"s,
                     u8"The crypt of the damned is along the road that runs between Vernis and Palmia. The danger level of the crypt is roughly equivalent to the 25th floor of Lesimas. You will need to be well prepared before venturing into the crypts."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_unique();
@@ -1646,7 +1647,7 @@ void talk_unique()
                     u8"わかりました。考えが変わったら、また声をかけてください。"s,
                     u8"Fair enough... but should you change your mind feel free to come back."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -1657,7 +1658,7 @@ void talk_unique()
                 u8"よかった。こんなことを言っては悪いけれど、城の兵士達は機転に欠けていて、調査にはあまり役に立ってくれなかったの。"s,
                 u8"Fantastic. I hate to admit it, but the castle's regular soldiers have been virtually useless so far..."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -1665,7 +1666,7 @@ void talk_unique()
                 u8"私達の目的は、レシマスを探索し、最下層にあるといわれる《秘宝》を持ち帰ることです。《秘宝》の正体とレシマスについての研究はある程度進んでいます。一度に言っても覚えられないでしょうから、必要があればその度に聞いてください。"s,
                 u8"Our objective is to penetrate to the deepest reaches of Lesimas and retrieve the <codex> hidden there. Once we know the true nature of the <codex>, we can complete our research on the ancient dungeon. You probably won't remember all this after hearing it only once, so feel free to ask me about it again."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -1673,7 +1674,7 @@ void talk_unique()
                 u8"最初の仕事として、あなたにはある人物の探索をお願いします。男の名は《カラム》。あなたと同じように、彼もレシマス探索の協力を買って出た屈指の冒険者です。調査隊の情報源として少なからぬ貢献をしていました。しかし、彼からの音沙汰がここ数週間まったくないのです。"s,
                 u8"Now, on to the first order of business. We need you to investigate the fate of one of our agents. His name is <Karam>. Like you, he is one of the foremost adventurers in the land. He agreed to assist with the expedition into Lesimas. He had been contributing information to the expedition's limited intelligence on the caverns. However... we haven't heard anything from him in some number of weeks."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -1682,7 +1683,7 @@ void talk_unique()
                 u8"Your duty will be to penetrate into Lesimas and make contact with <Karam>. In the last report we received from him, he told us he was on the 16th floor. If you can find him, perhaps we can get this excavation back on track. Godspeed, "s
                     + cdatan(0, 0) + u8", find out what happened to <Karam>."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             snd(44);
@@ -1704,7 +1705,7 @@ void talk_unique()
                 u8"…貴公は？そうか、エリステアが私を探すために…見ての通り私は傷を負い、もう動くことすらできぬ。しかし、貴公のおかげで、今まで生きながらえたことに意味を見出せるようだ。"s,
                 u8"Who's there? So... Erystia sent you to find me... as you can see I'm badly wounded. I'm pretty much screwed aren't I? But then... now that you're here maybe I won't have to die in vain after all."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -1712,7 +1713,7 @@ void talk_unique()
                 u8"貴公にお願いする。エリステアに、私の言葉を伝えてもらいたい。信じがたいことだが、レシマスの奥深くに眠る秘宝を守護しているのは、今は亡きザシム王の従弟ゼームだ。秘宝の、いやレシマスの魔に操られているのだろうか。もはや生身の人間ではあるまい。"s,
                 u8"I have something to ask of you. Relay this message to Erystia for me... Tell her that she must believe me when I say that the one guarding the codex in the depths of Lesimas is none other than former King Zashim's brother, Zeome. He's the one controlling the magic of the codex... or... no, not just the codex, but the whole of Lesimas. He's no longer human... he's something... more."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -1720,7 +1721,7 @@ void talk_unique()
                 u8"それだけではない。ザナンのサイモアが秘宝を狙っていることは知っておろう。しかし、その理由は？"s,
                 u8"But it doesn't end there... You need to know that Saimore from Zanan is also after the codex. But... why?"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -1728,7 +1729,7 @@ void talk_unique()
                 u8"ゼームが持つ秘宝の名は《常闇の眼》。世界の真実を映すといわれている。レム・イドの終焉とシエラ・テールの始まりを説き、自身の説に莫大な支持を得ているサイモアが、今更秘宝を求めるのは何故だ？"s,
                 u8"The codex Zeome possesses... it's called the <Origin of Vice>. They say it describes the darkness inherent in the world. But if Saimore's widely accepted story about the end of Rehm-Ido and the beginning of the era of Sierre Terre is true, then why would he be after the relic?"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -1736,7 +1737,7 @@ void talk_unique()
                 u8"サイモアの後押しにより、エレアとの戦が始まろうとしている。異形の森がレム・イドの災厄《メシェーラ》であるというのは、果たして確かなのだろうか。そして、もしサイモアの説が偽りであるとすれば、かの者の本当の目的は？…私には悪い予感がする。"s,
                 u8"aimore has been pushing for war against the Eleas. The truth is that Saimore's claim that the irreverent forest destroyed the world of the era of Rehm-Ido is a carefully constructed lie and that the <Meshella> are real. But then, if Saimore's theory was just a deception meant to incite a war, then what is he really after? I have a bad feeling about all of this..."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -1744,7 +1745,7 @@ void talk_unique()
                 u8"私の役目はこれまでだ。この傷ではどうせ地上まで辿りつけまい。この報せを早く都に…貴公に運命の神の加護のあらんことを！"s,
                 u8"My role in this saga is at an end... I'll never make it out with these injuries... Deliver my message to the capital quickly... and may the gods of fate watch over you..."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             for (int cnt = 0, cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
@@ -1780,7 +1781,7 @@ void talk_unique()
         }
         goto label_2247_internal;
     case 208:
-        RESPONSE(0, strbye);
+        RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         buff = lang(
             u8"見て分からんか、わしゃ忙しいんじゃ。用があるなら手短にな。"s,
             u8"Don't you see I'm busy!"s);
@@ -1804,7 +1805,7 @@ void talk_unique()
         listn(0, listmax) =
             lang(u8"荷車の改造"s, u8"Can you upgrade my cart?"s);
         ++listmax;
-        RESPONSE(0, strbye);
+        RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         buff = lang(
             u8"ほほう、客人とはこれまた珍しい。暖かい飯でも馳走してさしあげたいが、あいにくと今日の飯番はガロクでの。あやつの作る料理は自らの作品に似て、なんとも無骨で味気ない。とても客人に楽しんでもらえる代物じゃないのう。まぁ、せっかくこんな辺境の地にまで、やって来なさったんだ。何か用件があれば、話だけは聞こうじゃないか。"s,
             u8"Oh oh, what we got, talk about rare! A traveler? I would have given you a feast if it were not Garok that handles today's dinner. You know, his cooking is as loutish as his creations. Oh well, you've come all the way here, what can I do for you?"s);
@@ -1816,7 +1817,7 @@ void talk_unique()
                 u8"おお、小さなメダルを持っておるのか？メダルの収集は、わしの生きがいなんじゃよ！これまでに生産してきた自慢の品の数々と交換せぬか？"s,
                 u8"Ho ho ho! You got small medals! Let me see, let me see! Would you like to trade them for one of my proud works?"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             invctrl = 28;
@@ -1858,7 +1859,7 @@ void talk_unique()
                 listmax = 0;
                 buff = lang(u8"ふぅん。"s, u8"Huh."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_unique();
@@ -1877,7 +1878,7 @@ void talk_unique()
             listmax = 0;
             buff = lang(u8"ほい。"s, u8"Here you are."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             talk_unique();
@@ -1895,7 +1896,7 @@ void talk_unique()
                     u8"おかあさん、なんだか今日はいつもより元気そう！お祭りは人がたくさん来るから嫌いだけど、おかあさんにもジュア様の加護があるといいな。"s,
                     u8"Mommy looks to be in a good condition today. I hate the festival because there are so many people out there but I hope St.Jure will watch over her!"s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -1906,7 +1907,7 @@ void talk_unique()
                 u8"どうして、おかあさんはあんなに悲しそうなの？顔はかわっても、あたしのおかあさんだよ。お友達もきっとわかってくれる…わかってくれないんなら…お友達なんていらない！…あたしはお母さんとずっといっしょにいるんだもん。"s,
                 u8"Why does mommy look so sad? Her face has changed but she's still my mommy. I know my friends will understand too... and if they don't then they're no friends of mine! I'll always be by her side. Always."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -1919,7 +1920,7 @@ void talk_unique()
                 u8"消えて！二度と顔をみせないで！！ばかぁ！"s,
                 u8"Go away! Never come back again! Bastard!"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -1932,7 +1933,7 @@ void talk_unique()
                 u8"おかあさん…どこにいっちゃったのぉ…"s,
                 u8"Mommy... where have you gone mommy?"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -1965,7 +1966,7 @@ void talk_unique()
                 u8"おかあさん、はやく良くなるといいな♪"s,
                 u8"I hope mommy gets better soon!"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -1979,7 +1980,7 @@ void talk_unique()
                 u8"Thanks "s + cdatan(0, 0) +
                     u8", you're the best! Mommy's getting better and better."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -2054,7 +2055,7 @@ void talk_unique()
                 u8"おかあさん…大丈夫？…大丈夫？…あぁぁ…"s,
                 u8"Mommy! Mommy are you okay? Mommy?"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -2067,7 +2068,7 @@ void talk_unique()
                 u8"おかあさんが…"s + cdatan(0, 0) + u8"さんにお話があるって…"s,
                 ""s + cdatan(0, 0) + u8", mommy has something to say to you."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -2080,7 +2081,7 @@ void talk_unique()
             listmax = 0;
             buff = lang(u8"ひどいわ。"s, u8"You are cruel."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -2094,7 +2095,7 @@ void talk_unique()
                 ""s + cdatan(0, 0) +
                     u8", I'm sorry you have to see me this way... please don't turn away... don't run. It seems my disease has already progressed too far... my twisted and hideous body... I can never return to normal... the disease is too advanced now."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -2102,7 +2103,7 @@ void talk_unique()
                 u8"病気は治りませんでしたが、あなたがして下さった全ての事に感謝します。ええ、無駄ではなかったの。だって、おかげでパエルに、あんないいお友達がたくさんできたんだもの。"s,
                 u8"Even though you couldn't cure me, you have my thanks for all that you've done. It was... your efforts were not in vain. You helped Pael make a lot of friends... surely that counts for something."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             flt();
@@ -2129,7 +2130,7 @@ void talk_unique()
                 u8"これは少ないですが、私の感謝の気持ちです。受け取ってくださいな。"s,
                 u8"This isn't much, I know, but it's the least I can do. Please accept these gifts."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             gdata_pael_and_her_mom = 1000;
@@ -2168,7 +2169,7 @@ void talk_unique()
                         u8"ありがとうございます。あなたは本当に優しい心の持ち主ね。ジュア様のご加護があるのかしら、なんだか聖夜祭の間はお薬がよく効く気がするわ。"s,
                         u8"Oh, thank you. You have a very kind heart, you know. The potion, I feel like the medicine is working better during the festival. Maybe it's the blessing of St.Jure?"s);
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strbye);
+                    RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                     chatesc = 1;
                     SCENE_CUT();
                     talk_end();
@@ -2179,7 +2180,7 @@ void talk_unique()
                     u8"いつもお見舞いに来てくれてありがとう…どうぞ、聖夜祭を楽しんで行ってください。"s,
                     u8"Thanks for coming to see me. Please enjoy yourself at the festival during your stay."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -2194,7 +2195,7 @@ void talk_unique()
                 ""s + cdatan(0, 0) +
                     u8", I have... I have one final request. Take this knife and... *weep*. If Pael's friends saw me like this, they'd run in fear and treat her with fear and suspicion. As long as she can be happy, I..."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             buff = lang(
@@ -2223,7 +2224,7 @@ void talk_unique()
                     u8"あぁ…ありがとう。ありがとう…"s,
                     u8"Th-thank you... thank..."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 evadd(20, tc);
@@ -2244,7 +2245,7 @@ void talk_unique()
                     u8"そんなものいくら飲んでも、元には戻らないのに…そんなもの…ありがとう…"s,
                     u8"No matter how many I drink, my body won't return to normal... thank you though..."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -2255,7 +2256,7 @@ void talk_unique()
                 u8"あ、あなたは、私にこんな姿で生き続けろというの？世の中には、希望なんて便利な言葉で片付けられない苦しみがたくさんあることを、あなたはわかっているのかしら。…ごめんなさい、きついことをいって。あなたの考えが変わるのをまっているわ。"s,
                 u8"You... you would force me to keep living like this? You'll find there's much suffering and pain in this world that you can't heal with such optimistic words. I'm sorry... I'm sure you know that well, but... I'll be waiting for you to change your mind."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -2268,7 +2269,7 @@ void talk_unique()
                 u8"う…けほっ、けほっ。ごめん…なさい…気分が悪いの…はぁ…はぁ…"s,
                 u8"*cough* *cough* I'm... sorry... I don't... feel well... *huff* *huff*"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -2282,7 +2283,7 @@ void talk_unique()
                 u8"It's good to see you, "s + cdatan(0, 0) +
                     u8". Hmm? You say I look happy? Hehe, just before you arrived Pael made a snowman outside. She said she made it with her friends. I haven't seen her smile like that since her father died. When I see that snowman through the window, I feel a joy I cannot describe to you."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -2295,7 +2296,7 @@ void talk_unique()
                 u8"いつもありがとうございます。薬のおかげで、だいぶ痛みも引いてきました。身体が元気になったら、あの子と思う存分遊んであげたいわ…そうそう、最近では、近所の子供達が何人か見舞いに来てくれるの。パエルも、最初は恥ずかしがっていたけど、だんだんと話をするようになって。パエル、いいお友達ができるといいわね。"s,
                 u8"Thanks for everything you've done for us. The medicine has mostly stopped the pain. If I can get better I promise to play with my daughter to her heart's content... thankfully the other kids in the neighborhood have been coming to visit these past few days. Pael seems quite shy, but even still she's started to talk to them little by little. I hope Pael can make a lot of friends."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -2306,7 +2307,7 @@ void talk_unique()
             u8"あら…こんな姿でごめんなさいね。パエルの父親は、パエルが5歳の時にプチに食べられてしまったの…そのせいで、あの子は家にこもりがち、いつも、ほかの子供が外で遊ぶのを眩しそうに眺めているわ。きっと、外の世界と自分との間に、見えない線を引いてしまっているのね。小さな胸の奥には、とても、とても優しい心をもった子なのに。ちょっとだけ甘えん坊さんだけどね、うふふ。"s,
             u8"Oh... I'm sorry you have to see me like this. Pael's father died when she was five... he was eaten by a swarm of putits. Ever since then, she just sits around the house. She's always watching the other kids play from the window, staring longingly like she'd love to join them. I can tell she's torn between watching over me and joining the outside world. She has a kind heart beating in that little chest of hers. She's a bit spoiled, but she's a good kid, he he."s);
         tc = tc * 1 + 0;
-        RESPONSE(0, strmore);
+        RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         SCENE_CUT();
         talk_end();
@@ -2330,7 +2331,7 @@ void talk_unique()
                     u8"まあ、そんな上手い話はないよな。"s,
                     u8"Pah, it's not that important anyhow."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -2346,7 +2347,7 @@ void talk_unique()
                 u8"よしきた。じゃあ、お前さんのとびきりの嫁を連れてきてくれ！"s,
                 u8"Great. Bring me a fine young girl!"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_wife_collector = 1;
@@ -2366,7 +2367,7 @@ void talk_unique()
                 listmax = 0;
                 buff = lang(u8"はやくしてくれよ。"s, u8"Bring me your wife!"s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -2379,7 +2380,7 @@ void talk_unique()
                 listmax = 0;
                 buff = lang(u8"じらすなよ。"s, u8"Huh?"s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -2393,7 +2394,7 @@ void talk_unique()
                     u8"嫁だ。嫁じゃなきゃだめだ！"s,
                     u8"I want your wife, it's pointless if you aren't married!"s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -2406,7 +2407,7 @@ void talk_unique()
                 u8"So... this is your wife eh? "s + cdatan(0, rc)
                     + u8" is her name? Don't be embarassed, come along!"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             tcbk = tc;
@@ -2428,7 +2429,7 @@ void talk_unique()
                 u8"いやん、おじさまったら♪"s,
                 u8"Ick, you're leaving me with him!?"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             tc = tcbk;
@@ -2439,7 +2440,7 @@ void talk_unique()
                     u8"な、おま…ぎぎ…の嫁さ…ぎぎ…は人間じゃ…ぎぎ"s,
                     u8"She's...she's not--hiii--She's not even hu--huuuuu--human.."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
             }
@@ -2474,7 +2475,7 @@ void talk_unique()
                 u8"これは…すごい嫁だ…！お前さんとは女の趣味が合いそうだな。また嫁を連れてきてくれれば、いいものを渡すぜ。"s,
                 u8"She's a work of art! Looks like we have the same taste in women. Hey, if you bring me another one as good as this one, I will give you something incredible. "s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -2490,7 +2491,7 @@ void talk_unique()
                     + u8"さん、その節はお世話になりました。"s,
                 u8"Yeeeeck! Yeee-eeeck! Oh, it's you again."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -2499,7 +2500,7 @@ void talk_unique()
         if (gdata_novice_knight == 0)
         {
             RESPONSE(1, lang(u8"まかせて"s, u8"I'll do it for you."s));
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             buff = lang(
                 u8"イィッック！やめて！くるなぁー！イィーック！ハ…失礼しました。あなた…見たところ強そうですね。私に力を貸してくれませんか？騎士昇格のための試験で、イークの首領を討伐しなければならないんです。私には、荷が重い使命ですよ…イーク…うわあああ…ダメだ…思い出しただけでも膝が震える…お願いです。私の代わりに倒してきてください。"s,
                 u8"Yeeeck! Nooo! Don't!! Get away from me!! Yeeeee-eeeck! Hump, oh....excuse me. You...you look like a skilled adventurer. Could you give me your hand? I need to slay the head of Yeek to be promoted to the rank of knight. The duty is too heavy for me....yeeee-eeck! No...! Hump...I don't want to recall anything anymore. Please do this duty for me."s);
@@ -2509,7 +2510,7 @@ void talk_unique()
                 listmax = 0;
                 buff = lang(u8"イィッック！"s, u8"Yeeeeck!"s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -2525,7 +2526,7 @@ void talk_unique()
                 u8"助かります。こんな試験、私にはできっこないんです。奴らの住処は、この村を出てすぐ西の洞窟。頼みますよ。"s,
                 u8"Fantastic! This duty...it's impossible for me. Yeeks live in a dungeon west from here. I'm counting on you."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_novice_knight = 1;
@@ -2539,7 +2540,7 @@ void talk_unique()
                 u8"イィッック！やめて！くるなぁー！イィーック！ハ…あなたでしたか…"s,
                 u8"Yeeeeck! Noo...! Don't..! That's my nose..! Yeee-eeeck! Hmup, oh, it's you..."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -2552,7 +2553,7 @@ void talk_unique()
                 u8"おお、無事にイークの首領を討伐してくれたのですね。これで晴れて立派な騎士になれます。本当にありがとうございました。"s,
                 u8"Oh, you've brought me the head! I can pass the test now. Thank you very much."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             flt();
@@ -2584,7 +2585,7 @@ void talk_unique()
             listmax = 0;
             buff = lang(u8"くぅぅぅぅん！"s, u8"Ruff-ruff!"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -2594,7 +2595,7 @@ void talk_unique()
         {
             RESPONSE(1, lang(u8"連れて行く"s, u8"I'll take you"s));
         }
-        RESPONSE(0, strbye);
+        RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         buff = lang(u8"くぅうううん。"s, u8"Woof!"s);
         talk_window();
         if (chatval == 1)
@@ -2623,7 +2624,7 @@ void talk_unique()
             buff = lang(
                 u8"あ、冒険者さんだ〜。こんにちわん！"s, u8"Hello there!"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -2632,7 +2633,7 @@ void talk_unique()
         if (gdata_puppys_cave == 0)
         {
             RESPONSE(1, lang(u8"まかせて"s, u8"I'll get your puppy."s));
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             buff = lang(
                 u8"はうっ。ポピーがいなくなっちゃった…また、あの洞窟に迷い込んじゃったのかな？どうしよう、お父さんは今いそがしくて相手にしてもらえないし…あ、冒険者さん、ポピーを探してきてよ〜。ポピー？ポピーは子犬だよ。私の一番のお友達なの。"s,
                 u8"Oh no, Poppy has disappeared again... He probably got lost in that cave again. Now what do I do, Papa is too busy to deal with this... Oh, Adventurer, go and find Poppy for me. Poppy? He's my puppy, and my best friend."s);
@@ -2642,7 +2643,7 @@ void talk_unique()
                 listmax = 0;
                 buff = lang(u8"ポピー…。"s, u8"Poppy..."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -2658,7 +2659,7 @@ void talk_unique()
                 u8"よかったぁ！ポピーは、きっといつもの洞窟で迷っちゃったの。この街を出て、すぐ東にある洞窟だよ。冒険者さん、よろしくね。"s,
                 u8"Great! I'm sure he's lost in that cave he always plays in. The cave is just outside the east side of town. Thanks in advance."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_puppys_cave = 1;
@@ -2672,7 +2673,7 @@ void talk_unique()
                 listmax = 0;
                 buff = lang(u8"ポピーまだ〜？"s, u8"Where's poppy?"s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -2683,7 +2684,7 @@ void talk_unique()
                 u8"ポピー！！無事だったのね！冒険者さん、ありがとう。これ、あげる〜。"s,
                 u8"Poppy you're safe！ Thank you adventurer, you can have this..."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             flt();
@@ -2721,7 +2722,7 @@ void talk_unique()
                 u8"いや〜。おかげさまで家は猫から解放されたんですが、宿屋のほうが快適でね。つい、こっちで寝泊りしてしまいますよ。ははは。"s,
                 u8"Well...actually...I found this inn more comfortable than my house."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -2740,7 +2741,7 @@ void talk_unique()
                 listmax = 0;
                 buff = lang(u8"そうですか…残念です。"s, u8"Uh...fine..."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -2756,7 +2757,7 @@ void talk_unique()
                 u8"おお、ありがたい。家は南の畑の近くにあります。中にどんな猫がいるのかわからないので、十分気をつけてください。"s,
                 u8"Thank God. My house is south from hear. Be careful, for it is unknown what inhabits my home."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_cat_house = 1;
@@ -2771,7 +2772,7 @@ void talk_unique()
                 u8"どうです？猫はもういなくなりましたか？"s,
                 u8"Is my home safe from the cats?"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -2805,7 +2806,7 @@ void talk_unique()
                 u8"なんと、猫使いなる魔物が住み着いていたのですか。いやぁ、猫退治なんて軽い依頼ではなかったですね。ははは。私の家で亡くなった冒険者さん達も、あなたのおかげで浮かばれるでしょう。どうぞ、お礼を受け取ってください。"s,
                 u8"What? An evil cat tamer? My God...I have no idea why such a creature took over my home. But uh...thanks anyway."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_cat_house = 1000;
@@ -2821,7 +2822,7 @@ void talk_unique()
                 u8"おお、勇者よ！酒でも飲み交わさぬか？フハハハア！"s,
                 u8"Ah, the bravest of the brave. Care for a drink? Muwahaha!"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -2834,7 +2835,7 @@ void talk_unique()
                 u8"なんだ、ぬしは。私は弱いものには興味がないのだ。フハハハハ！"s,
                 u8"Be gone. I have no interest in weak soldiers. Muwahahaha!"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -2849,7 +2850,7 @@ void talk_unique()
                 u8"By Opatos! You are the famous "s + cdatan(1, 0) +
                     u8", are you not? I have a favor I'd like to ask of someone like you. "s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             RESPONSE(1, lang(u8"話を聞こう"s, u8"(Hear him out.)"s));
@@ -2868,7 +2869,7 @@ void talk_unique()
                     u8"フハハハハッ。腰抜けめ。"s,
                     u8"Mwahahaha! You damn coward!"s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -2884,7 +2885,7 @@ void talk_unique()
                 u8"フハハハァッ。そうこなくてはならぬ。貴殿の力、頼りにしておる。戦の準備ができ次第、声をかけてくれ。"s,
                 u8"Mwahahaha! Good, good. We'll be counting on you. Once you've prepared, come speak to me again."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_defense_line = 1;
@@ -2904,7 +2905,7 @@ void talk_unique()
                 listmax = 0;
                 buff = lang(u8"待っておるぞ。"s, u8"We're waiting on you."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -2920,7 +2921,7 @@ void talk_unique()
                 u8"フハァ。貴殿にオパートスの加護のあらんことを祈っておるぞ！"s,
                 u8"Hahaha! I pray Opatos' favor be with you!"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_defense_line = 2;
@@ -2957,7 +2958,7 @@ void talk_unique()
                 u8"フアハァァァァハハハ。フハー！ファハハハ、フ、フハッ、ブ、ブバァッ…ゲホッ…ゲホ…す…すまん。震えるほど興奮したぞ、ぬしの雄姿に。解放軍も、これで無事にパルミアの国境を越えることができる。どうか、この感謝の気持ちを受け取ってくれ。"s,
                 u8"Muwahahahah! Muwahahahahaha! Mu-mu...wa..! *cough* *cough* My...My apologies. Your heroic figure striding the battlefield was so amazing that even I was shaken. With this, the Liberation Army can pass the borders of Palmia. Please, accept this reward as my thanks."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_defense_line = 1000;
@@ -2976,7 +2977,7 @@ void talk_unique()
                 u8"I hope we can talk again sometime, "s + cdatan(0, 0)
                     + u8"!"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -2998,7 +2999,7 @@ void talk_unique()
                 listmax = 0;
                 buff = lang(u8"無念です！"s, u8"I'm sorry to hear that."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -3014,7 +3015,7 @@ void talk_unique()
                 u8"助かります。準備ができ次第、声をかけてください。必ず遠隔武器を持参してください！"s,
                 u8"Thank the gods. Call me when you're prepared. Be sure to bring a ranged weapon!"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_kamikaze_attack = 1;
@@ -3034,7 +3035,7 @@ void talk_unique()
                 listmax = 0;
                 buff = lang(u8"早くしてください！"s, u8"Hurry up!"s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -3050,7 +3051,7 @@ void talk_unique()
                 u8"伝令に現地まで案内させます。くれぐれも、奴らの接近を許さないように！パルミア軍の撤退が完了次第、連絡を入れます。"s,
                 u8"I'll guide you to the battlefield then. Whatever you do, don't let them get close! I'll tell the Palmian army to begin a steady retreat."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_kamikaze_attack = 2;
@@ -3087,7 +3088,7 @@ void talk_unique()
                 u8"お疲れ様であります。まさか、あの死地から戻って来ることができるなんて！戦友の無事も確認し、感謝の言葉もありません。どうかこの報酬を受け取ってください。"s,
                 u8"Well done. I cannot believe you made it back alive! I've heard my comrades are safe. I can find no words to express my gratitude. Please take this reward."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_kamikaze_attack = 1000;
@@ -3104,7 +3105,7 @@ void talk_unique()
                 u8"あ、冒険者さん！お仕事お疲れでありますぅ♪"s,
                 u8"Mia's happy happy nyah!"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -3128,7 +3129,7 @@ void talk_unique()
                     u8"はーい♪さよ〜なら〜♪"s,
                     u8"Nyo? Mia can wait nyou. Mia have goood mannyah!"s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -3144,7 +3145,7 @@ void talk_unique()
                 u8"はわぁ。ほんとですか〜！楽しみにしてますぅ♪う〜。ねっこねっここっねこ♪は〜やくこないかな♪るんるんるん♪"s,
                 u8"Nyowl! Mia trust nyou. Nyo hurting cats!"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_mias_dream = 1;
@@ -3160,7 +3161,7 @@ void talk_unique()
                     u8"ふ〜んふ〜ん♪ねっこねっこ〜ま〜だかな〜♪にししし！"s,
                     u8"Nyoroon nyoroon. Nyou still look for Mia's cat?"s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -3172,7 +3173,7 @@ void talk_unique()
                 buff =
                     u8"はわわ？それはっ！シルバーキャット！お〜♪ミーアうれしぃであります！こっちにおいで〜だっこだっこっ♪にしし！"s;
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
             }
@@ -3181,7 +3182,7 @@ void talk_unique()
                 u8"そうだ、お礼にこれあげますっ！モンスターハートっていって、所持しているだけで、支配の確率を高めてくれるアーティファクトなんですよ♪"s,
                 u8"Nyanya! Nyou bring Mia silver cat! Come come, I nyo hurt nyou, nyo hurt nyou. Mia thank you very much. Nyou can have Mia's precious!"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             flt();
@@ -3219,7 +3220,7 @@ void talk_unique()
                 u8"私は…生きている価値があるのかな？"s,
                 u8"I wonder... does my life really have any value?"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -3232,7 +3233,7 @@ void talk_unique()
                 u8"才能のある者の努力とない者の努力は、果たして同じなのだろうか？私の妹は、このルミエストの都で絵描きを目指していた。彼女は美しいものを愛したが、画家としての才能には恵まれてなかった。自分の限界に気付いた彼女は精神を病み、周りの者に当たり散らかした。罵られ、蔑まれ、誰からも理解されないまま、冬のある日、湖に身を投げて死んでしまった。"s,
                 u8"Talent or no talent... if you're a success it doesn't really matter now does it? My sister came here to Lumiest hoping to make it as an artist. She dearly loved the beauty of all things, but she had no artistic ability. She tried so hard and she pushed her limits to succeed, but in the end she was rejected and it drained all the life out of her. The people here mocked and insulted her; nobody understood her. Then, one winter day, despondent, she jumped into the lake and drowned herself. "s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -3240,7 +3241,7 @@ void talk_unique()
                 u8"私は知っていたよ…身体を壊すほどに、妹が絵の勉強に励んでいたこと。常人離れした情熱と、名声への憧れ。だが、妹が死んで間も無く、一人の天才がこの都にやって来て、何の努力もなしに彼女が望んでいた全てを手に入れてしまった。名声、幸福、富…"s,
                 u8"I was sure... her obsession with painting had wrecked her health. Her devotion and desire for fame alienated her from ordinary people. But, not long after my sister died, a prodigal artist came here to Lumiest. With hardly any effort, all the things she wanted came to her. Fame, happiness, fortune... "s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -3248,7 +3249,7 @@ void talk_unique()
                 u8"恵まれたもの、恵まれないもの、全ては運命の偶然に過ぎない…何がいいたいかよくわからない？そうだな、私自身、この感情をうまく説明できないんだ。ただ、私には人生の意味が分からなくなった…ただそれだけだ。"s,
                 u8"To be privileged, or to be poor, it's all just a matter of fate and inescapable coincidence... Do you understand what it is I'm trying to say? That's right, it's tough for me to explain exactly how I feel. It's just that... I guess I no longer understand the meaning of life... that's all. "s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             listmax = 0;
@@ -3256,7 +3257,7 @@ void talk_unique()
                 u8"…レイチェルという童話作家が描いた絵本を、妹は愛読していた。もうすでに遺品は処理してしまったが、一度読んでみたいものだ。今ならば、あいつの気持ちを、少しはわかってやれそうな気がするよ。"s,
                 u8"I remember my sister really loved a series of children's books illustrated by a woman named Rachel. I'm sure they're really rare, or even impossible to find, but... I'd like to read them just once. I feel that perhaps you can understand how I feel... "s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             if (gdata_rare_books == 0)
@@ -3303,7 +3304,7 @@ void talk_unique()
                         u8"You've brought "s + p + u8" book"s + _s2(p) +
                             u8", just for my sake? You have my thanks. If I recall correctly, there are four volumes in the series. If you can find all four for me I'll find some way to thank you. "s);
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strbye);
+                    RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                     chatesc = 1;
                     SCENE_CUT();
                     talk_end();
@@ -3338,7 +3339,7 @@ void talk_unique()
                     u8"おお…これがレイチェルの絵本か。本を読んでみたいと思う気になったのは、久しぶりだよ。さっそく読ませてもらおう。"s,
                     u8"Oh! So these are Rachel's storybooks? I feel like I should read them soon... it's been such a long time. Give me a moment to look at them will you. These... these are! And this! And... *Renton bubbles at the mouth* "s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 if (jp)
@@ -3346,19 +3347,19 @@ void talk_unique()
                     listmax = 0;
                     buff = u8"…"s;
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strmore);
+                    RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     SCENE_CUT();
                     listmax = 0;
                     buff = u8"… …"s;
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strmore);
+                    RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     SCENE_CUT();
                     listmax = 0;
                     buff = u8"… … …"s;
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strmore);
+                    RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     SCENE_CUT();
                 }
@@ -3367,7 +3368,7 @@ void talk_unique()
                     u8"ビーーー！バリリ！！ビリリ！バリリリリリ！！！こんなモノ！こんなモノ！こんなモノ…ビリビリビリビリ！ふう、ふう、はあ、はあ…。"s,
                     u8"And this... *huff* *huff* "s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 txtef(5);
@@ -3377,7 +3378,7 @@ void talk_unique()
                     u8"…こんな絵は天才にしか描けない。努力じゃダメだ。妹には…どう頑張っても、描けなかっただろう。幸運の女神というものがいるのなら、私は彼女を恨もう。…すまない、報酬だ。しばらく一人にしておくれ。"s,
                     u8"*A crazed look wells up in Renton's eyes* These books... only a true artistic genius could've painted like this. Effort alone is simply not enough... my sister... no matter how long or hard she tried, she never could've painted such beauty. If the goddess of luck truly exists, I should devote myself to her. I'm sorry... you do deserve a reward. I'd like to be alone for a while... if you don't mind. "s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 flt();
@@ -3418,7 +3419,7 @@ void talk_unique()
                 u8"フッ。安心してください。あなたの家に侵入したりはしませんよ。"s,
                 u8"Heh, don't worry, I won't break in your house."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -3431,7 +3432,7 @@ void talk_unique()
                 u8"私に気安く話しかけないでもらえますか？"s,
                 u8"Leave me alone, please."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -3445,7 +3446,7 @@ void talk_unique()
                 u8"Ah, you're the famous "s + cdatan(1, 0) +
                     u8", aren't you? You came at a fine time. North of Kapul lies an enigmatic pyramid; you may have heard of it. The pyramid has existed since Nefia was a barren desert where even grass wouldn't grow and it's said that ancient treasure is buried within. However, it's sealed by some bizarre enchantments and is impenetrable... well, it WAS impenetrable."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             if (cdata[0].gold >= 20000)
@@ -3455,7 +3456,7 @@ void talk_unique()
                     lang(u8"購入する"s, u8"Alright, I'll pay."s);
                 ++listmax;
             }
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             buff = lang(
                 u8"私宛にね、面白い手紙が届いたんですよ。送り主はピラミッドの主『ツェン』。そして、内容は私にピラミッドへの挑戦権を与えると。…しかし、私は危険な罠に自ら陥るほど愚かではない。あなたにこの挑戦状を譲りましょう。むろん、タダではない。金貨20000枚でいかがですか？"s,
                 u8"I have received a very strange letter. The sender calls himself Tsen, lord of the Pyramid. He has sent me an invitation to enter his pyramid... However, I am not foolish enough to barge into such a trap. I'll turn this invitation over to you. Of course, I won't let you have it for nothing. 20,000 gold and it's yours."s);
@@ -3467,7 +3468,7 @@ void talk_unique()
                     u8"フッ。お金が用意できたら、いつでも取引に応じますよ。"s,
                     u8"Heh, talk to me again when you have money."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -3492,7 +3493,7 @@ void talk_unique()
                 u8"ホホホッ。取引成立ですね。では、この招待状をあなたに渡しましょう。"s,
                 u8"Deal then. You can keep this invitation."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_pyramid_trial = 1;
@@ -3508,7 +3509,7 @@ void talk_unique()
                 u8"あなた、生きてたのね。ヒトゴロシくん。"s,
                 u8"You're still alive I see. Good luck glorious murderer."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
         }
@@ -3519,7 +3520,7 @@ void talk_unique()
                 u8"パルミアの街に、真っ赤な花が咲くのを楽しみにしているわ。"s,
                 u8"Go, make the brilliant blood red roses bloom."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
         }
@@ -3549,7 +3550,7 @@ void talk_unique()
                 u8"感じるわ、大勢の人の苦しみ…悲しみ…。あなたはたくさん殺したのね。小さな子供…女性…老人…生まれて間もない赤ん坊…あたし、今日は身体が火照って眠れそうにないわ。ありがとう。報酬を受け取りなさい。"s,
                 u8"I can feel it already... the suffering... the misery... the pain... You've killed many people this day, you should be proud. Little kids, girls, women, old men, the sick, the feeble, even those neither born nor conceived yet. My body's hot, excited, I can hardly breathe... I won't be able to sleep tonight. My thanks, these are for you. "s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
         }
@@ -3560,11 +3561,11 @@ void talk_unique()
                 u8"ねえ、あなたはこの街の人じゃないでしょ？匂いで分かるのよ、外の人間は。外の…世界があたしに教えてくれたのは、力のない生物はただ利用され、弄ばれ、最後には食べられてしまうっていうことだけ。同情や慈悲さえ勝ち取れない人間が、この街には大勢いる。そんな者達がどうやって生活しているか、あなたは知りたいと思うわない？"s,
                 u8"Hey, you're not from around here are you? I can tell just by your smell. The world out there... it's taught me that the meek are inevitably used, abused, and then chewed up and swallowed kicking and screaming. The people here are a rank lot, you won't win them over with sympathy and compassion. Don't you ever wonder how people like that can survive? Don't you want to know? "s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             RESPONSE(1, lang(u8"もちろん"s, u8"Of course I will."s));
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             buff = lang(
                 u8"あたし達は他人の血を吸って生きるのよ。憎しみや妬み、執着、悪意が、この街では力になる。外の世界では疎まれ軽蔑される弱き者達が、自分に与えられた能力をはじめて認めてもらえる、ダルフィはそんな街。ねえ、あなたもこっちの世界に来る気はない？"s,
                 u8"It's so simple, we live by feeding off of others. Spite, hatred, wickedness, and unrelenting cutthroat vigor are the only strengths you can rely on in this town. The outside world looks down on our lot, so we will make the outside world recognize our might. Say, stranger, why don't you join me in my world?"s);
@@ -3576,7 +3577,7 @@ void talk_unique()
                     u8"どっかにいきなさい、イクジナシくん。"s,
                     u8"Then find somewhere else to stand, coward."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -3593,7 +3594,7 @@ void talk_unique()
                 u8"そう、あなたもこちらの人間だったのね。歓迎の宴の代わりに、美味しい話をあげるわ。あたしね、たくさんの人が苦しむ姿を想像すると、とても興奮するの。パルミアの宿屋にぬいぐるみが置かれている部屋がある。そのぬいぐるみに、爆弾をしかけなさい。あのすました街を血で溢れさせてくれたら、ご褒美をあげる。"s,
                 u8"Looks like you're one of us after all. I can't give you a welcome feast, but I can tell you a delicious little story. When I imagine others suffering, whimpering in pain and misery, I get goose bumps. How divine! At the inn in Palmia, there's a stuffed toy laying on the floor of the private room. Stick this bomb inside that toy for me. If you can drown those mindless ants in blood for me, I'll reward you well "s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
         }
@@ -3601,7 +3602,7 @@ void talk_unique()
         {
             RESPONSE(1, lang(u8"購入する"s, u8"I'll buy."s));
         }
-        RESPONSE(0, strbye);
+        RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         buff = lang(
             u8"ねえ、核爆弾買う？金貨12000枚よ。"s,
             u8"Here, you need a nuke. Only 12000 gold pices."s);
@@ -3611,7 +3612,7 @@ void talk_unique()
             listmax = 0;
             buff = lang(u8"あら、そう。"s, u8"Then go away."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -3630,7 +3631,7 @@ void talk_unique()
             u8"さあ、真っ赤な花を咲かせなさい。"s,
             u8"Go, make the brilliant blood red roses bloom."s);
         tc = tc * 1 + 0;
-        RESPONSE(0, strbye);
+        RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         SCENE_CUT();
         talk_end();
@@ -3643,7 +3644,7 @@ void talk_unique()
                 u8"なんじゃ、話しかけるでにゃー。実験で忙しいのじゃ！"s,
                 u8"I don't have time to talk, I'm busy conducting experiments. Out of the way!"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -3655,7 +3656,7 @@ void talk_unique()
             listn(0, listmax) =
                 lang(u8"手伝う"s, u8"Alright, I'll see what I can do."s);
             ++listmax;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             buff = lang(
                 u8"おうおう、良いところに来た。猫の手も借りたいほど忙しいのじゃ。今わしは遺伝子操作の研究をしておってな、成功すればなんと、二体の生物を合成させて、より強力な種を造りだすことができるのじゃ！最後の段階として、5体の実験体が必要じゃが、ちょっと取ってきてはくれまいか？報酬として、今使っている試作機をくれてやってもよいぞ。"s,
                 u8"Oh oh oh! You've come at *just* the right time. I'm so busy I'd take help from a cat if I had to. I'm doing research in the most remarkable field of genetic engineering. You see, I can take two living creatures and combine them to produce an even stronger creature! Is that not the most amazing thing you've ever heard? I need five test subjects for the final stage of the experiment. Won't you go get some for me? I'll reward you with the gene splicing machine I'm building."s);
@@ -3667,7 +3668,7 @@ void talk_unique()
                     u8"とんだ愚か者じゃ！"s,
                     u8"Then get out of my way you fool!"s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -3691,7 +3692,7 @@ void talk_unique()
                 u8"よしよし…このモンスターボールを持っていくがいい。使い方はわかっておるな？そう、瀕死のモンスターに投げつけるだけでよい。ボールのLVより上の相手には効かないから、気をつけるのじゃ。5個のボールにモンスターを捕獲して持ってきてくれ。いいか、「ボールに入れたまま」持ってくるのじゃぞ！"s,
                 u8"Good good! Take these monster balls with you. Do you know how to use them? Yes yes, throw them at a monster when it is near death. The ball won't work if the monster is too high in level, so be careful. Please bring me five captured monsters. Oh... and... *please* bring them back to me IN the balls!"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_ambitious_scientist = 1;
@@ -3732,7 +3733,7 @@ void talk_unique()
                     u8"おうおう、例の品を持ってきてくれたか。これで実験が進むわい。"s,
                     u8"Oh oh! What a fine batch of samples you've brought me. I can finally proceed with the final stage."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
             }
@@ -3743,7 +3744,7 @@ void talk_unique()
                     u8"さあ、実験体を集めてくるのじゃ。"s,
                     u8"Let's go over this one last time... I need five samples to proceed. FIVE."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
             }
@@ -3756,7 +3757,7 @@ void talk_unique()
                 u8"成功じゃ！実験は大成功じゃ！おぬしの働きに感謝して、記念すべき遺伝子複合機第一号をくれてやろう。大事に使うのじゃぞ！"s,
                 u8"Success! The experiment is a huge success! You've done a great job! To express my thanks I'll let you use my gene splicing machine. Please take good care of it."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             flt();
@@ -3789,7 +3790,7 @@ void talk_unique()
                 u8"ルミエストの街道は今日も清潔だぞ！"s,
                 u8"Clean! The roads are clean in Lumiest today!"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -3800,7 +3801,7 @@ void talk_unique()
             listmax = 0;
             buff = lang(u8"待て待て待てーい！"s, u8"Wait there! Wait!"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             RESPONSE(1, lang(u8"いいだろう"s, u8"Alright."s));
@@ -3814,7 +3815,7 @@ void talk_unique()
                 listmax = 0;
                 buff = lang(u8"そうか…冷たい奴だな…"s, u8"Ok. You are cruel."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -3830,7 +3831,7 @@ void talk_unique()
                 u8"その言葉、待っていたぜ！下水道は宿屋の近くにある。気をつけろ、奴らは手強いぞ！"s,
                 u8"That's the word I wanted to hear! You'll find the sewer entrance near the inn. Be aware, they are pretty tough."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_sewer_sweeping = 1;
@@ -3845,7 +3846,7 @@ void talk_unique()
                 u8"おう、お前か。下水道の掃除は進んでいるか？"s,
                 u8"Oh, it's you. What about the task I asked you?"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -3880,7 +3881,7 @@ void talk_unique()
                 u8"なんだってー！あの下水道をほんとに浄化したというのか？さすがに、お前を選んだ俺の目は確かだったということか…ともかく礼をいうぞ！この報酬を受け取ってくれ。"s,
                 u8"Whaaat! You've really done it? Amazing! Here, take it, you deserve this."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_sewer_sweeping = 1000;
@@ -3900,7 +3901,7 @@ void talk_unique()
                 u8"魔術士ギルドに加入したい"s,
                 u8"I want to join the Mages Guild."s);
             ++listmax;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             buff = lang(
                 u8"止まれ…この階段の先は魔術士ギルドの管轄だ。ギルドメンバー以外の者が入ることはできない…"s,
                 u8"Halt...the stairs lead to the Mages Guild office. Only the members of the guild are allowed to enter."s);
@@ -3912,7 +3913,7 @@ void talk_unique()
                     u8"魔術士ギルドは、各地の魔術士を管轄する組合だ。組合員には規律の厳守と一定のノルマを求める代わりに、援助を施し特定の仕事を斡旋している。魔術士ギルドのメンバーには、魔法書の予約、全店舗での魔法書の割引、魔術スキルの習得と訓練などの特典がある。ギルドに加入するには、厳しい審査を通らなければならない。"s,
                     u8"The Mages Guild is made up by experienced and confirmed experts in their field of magic. We offer a variety of services such as discounted spellbook prices, reservation of spellbooks, and training related skills. But joining the Mages Guild requires you to pass a difficult test that most common mages will fail."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_unique();
@@ -3927,7 +3928,7 @@ void talk_unique()
                         u8"ギルドに加入したいというのか…我々が求めているのは有能な魔術士だ。お前がギルドのメンバーにふさわしいか試させてもらおう。"s,
                         u8"So you are interested in joining our guild and we only need elite mages. Let's see if you are worthy of becoming one of us."s);
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strmore);
+                    RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     SCENE_CUT();
                     listmax = 0;
@@ -3935,7 +3936,7 @@ void talk_unique()
                         u8"この世界には、特殊な古代文字で書かれた古書物が散らばっている。これらを収集し、解読した後に、私の横にある納入箱に収めたまえ。古書物の価値に応じてギルドポイントを与えよう。30ギルドポイント、これがお前に課せられた試験のノルマだ…"s,
                         u8"In north Tyris, there are several ancient books encrypted with an unique rune language. Should you want to join the guild, put them into the delivery chest after you have decrypted them and we shall reward you with guild points."s);
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strmore);
+                    RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     SCENE_CUT();
                     gdata_joining_mages_guild = 1;
@@ -3950,7 +3951,7 @@ void talk_unique()
                         u8"ギルドポイントを規定の値まで集めたら、また私に話しかけてくれ。"s,
                         u8"You will need to gather 30 guild points in order to enter the Mages Guild. Until then, we have no more to speak."s);
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strmore);
+                    RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     SCENE_CUT();
                     talk_unique();
@@ -3963,7 +3964,7 @@ void talk_unique()
                         u8"まだノルマが残っているじゃないか…ギルドに加入するには、審査を通らなければならないぞ。"s,
                         u8"To pass the test, you need to gather 30 guild points."s);
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strmore);
+                    RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     SCENE_CUT();
                     talk_unique();
@@ -3974,7 +3975,7 @@ void talk_unique()
                     u8"ほう…どうやらノルマを見事に達成したようだな。"s,
                     u8"Quite impressive...you have accomplished the task."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 gdata(128) = 10000;
@@ -4009,7 +4010,7 @@ void talk_unique()
                     u8"おめでとう…合格だ。今日からお前は魔術士ギルドの一員となった。以後はギルドの規約を守り、ノルマをしっかりこなすように。"s,
                     u8"Congratulations. You are a formal member of the Mages Guild now. You can now use this stairs to enter the office. Always conform to the guild's rule and perform your tasks."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 cell_movechara(tc, 4, 20);
@@ -4036,7 +4037,7 @@ void talk_unique()
                 lang(u8"ノルマを報告する"s, u8"About my task."s);
             ++listmax;
         }
-        RESPONSE(0, strbye);
+        RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         buff = lang(
             u8"ようこそ魔術士ギルドへ、"s + ranktitle(8) + u8"の"s
                 + cdatan(0, 0) + u8"…どうぞ中にお入り下さい。"s,
@@ -4061,7 +4062,7 @@ void talk_unique()
                     gdata_mages_guild_quota +
                     u8" guild points, we will think about your promotion."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             talk_unique();
@@ -4076,7 +4077,7 @@ void talk_unique()
                     u8"どうしました？まだノルマが残っていますよ。"s,
                     u8"You have your task to complete."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_unique();
@@ -4118,7 +4119,7 @@ void talk_unique()
                 u8"確かにノルマの達成を確認しました。早速審査会を開いてあなたの功績を報告しましょう。"s,
                 u8"You've done very well. I will give a report of your achievement to the council."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -4138,7 +4139,7 @@ void talk_unique()
                 u8"盗賊ギルドに加入したい"s,
                 u8"I want to join the Thieves Guild."s);
             ++listmax;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             buff = lang(
                 u8"止まれ…この階段の先は盗賊ギルドの管轄だ。ギルドメンバー以外の者が入ることはできない…"s,
                 u8"Halt...the stairs lead to the Thieves Guild office. Only the members of the guild are allowed to enter."s);
@@ -4150,7 +4151,7 @@ void talk_unique()
                     u8"盗賊ギルドは、各地の盗賊を管轄する組合だ。組合員には規律の厳守と一定のノルマを求める代わりに、援助を施し特定の仕事を斡旋している。盗賊ギルドのメンバーには、盗品の高値での売却、ブラックマーケットでの割引、盗賊スキルの習得と訓練などの特典がある。ギルドに加入するには、厳しい審査を通らなければならない。"s,
                     u8"The Thieves Guild is made up by experienced and confirmed experts in their field of the shadow arts. We offer a variety of services such as buying stolen goods, discount at black markets, and training related skills. But joining the Thieves Guild requires you to pass a difficult test that most common thieves will fail."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_unique();
@@ -4165,7 +4166,7 @@ void talk_unique()
                         u8"盗賊ギルドに加入したいというのか…我々は知ってのとおり闇の世界に身を置いている。まずは、お前が信頼に足る者かどうか試させてもらおう。"s,
                         u8"So...you're interested in our guild? We hide in the shadows of the society. You must win our trust to enter the guild."s);
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strmore);
+                    RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     SCENE_CUT();
                     gdata_joining_thieves_guild = 1;
@@ -4179,7 +4180,7 @@ void talk_unique()
                         u8"なに、簡単な試験だ。一定のレベルを越えた冒険者には、税金が毎月徴収されるのは知っているな？その税金を4ヶ月滞納するだけだ。無論、お前は犯罪者となり、国の犬に追われる事になるだろう。その覚悟がないならば、盗賊ギルドに入るなど諦めることだ。"s,
                         u8"It is a simple task. We require you to not pay tax for 4 months. Take it granted the guards will try to hunt you down. If you aren't ready to face it, just forget it."s);
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strmore);
+                    RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     SCENE_CUT();
                     talk_unique();
@@ -4192,7 +4193,7 @@ void talk_unique()
                         u8"どうした？試験の内容は伝えたはずだ。税金を4ヶ月以上滞納してからまた来るがいい。"s,
                         u8"I've already told you what you must do. Don't pay tax for 4 months."s);
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strmore);
+                    RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     SCENE_CUT();
                     talk_unique();
@@ -4203,7 +4204,7 @@ void talk_unique()
                     u8"ほう…どうやらノルマを見事に達成したようだな。"s,
                     u8"Quite impressive...you have accomplished the task."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 gdata(128) = 10000;
@@ -4238,7 +4239,7 @@ void talk_unique()
                     u8"おめでとう…合格だ。今日からお前は盗賊ギルドの一員となった。以後はギルドの規約を守り、ノルマをしっかりこなすように。"s,
                     u8"Congratulations. You are a formal member of the Thieves Guild now. You can now use this stairs to enter the office. Always conform to the guild's rule and perform your tasks."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 cell_movechara(tc, 17, 17);
@@ -4265,7 +4266,7 @@ void talk_unique()
                 lang(u8"ノルマを報告する"s, u8"About my task."s);
             ++listmax;
         }
-        RESPONSE(0, strbye);
+        RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         buff = lang(
             u8"ようこそ盗賊ギルドへ、"s + ranktitle(8) + u8"の"s + cdatan(0, 0)
                 + u8"…どうぞ中にお入り下さい。"s,
@@ -4290,7 +4291,7 @@ void talk_unique()
                     gdata_thieves_guild_quota +
                     u8" gold pieces, we will think about your promotion."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             talk_unique();
@@ -4305,7 +4306,7 @@ void talk_unique()
                     u8"どうしました？まだノルマが残っていますよ。"s,
                     u8"You have your task to complete."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_unique();
@@ -4347,7 +4348,7 @@ void talk_unique()
                 u8"確かにノルマの達成を確認しました。早速審査会を開いてあなたの功績を報告しましょう。"s,
                 u8"You've done very well. I will give a report of your achievement to the council."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -4367,7 +4368,7 @@ void talk_unique()
                 u8"戦士ギルドに加入したい"s,
                 u8"I want to join the Fighters Guild."s);
             ++listmax;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             buff = lang(
                 u8"止まれ…この階段の先は戦士ギルドの管轄だ。ギルドメンバー以外の者が入ることはできない…"s,
                 u8"Halt...the stairs lead to the Fighters Guild office. Only the members of the guild are allowed to enter."s);
@@ -4379,7 +4380,7 @@ void talk_unique()
                     u8"戦士ギルドは、各地の戦士を管轄する組合だ。組合員には規律の厳守と一定のノルマを求める代わりに、援助を施し特定の仕事を斡旋している。戦士ギルドのメンバーには、能力復元価格の割引、鑑定価格の割引、戦士スキルの習得と訓練などの特典がある。ギルドに加入するには、厳しい審査を通らなければならない。"s,
                     u8"The Fighters Guild is made up by experienced and confirmed experts in their field of the fighting. We offer a variety of services such as reduced prices of identification and restoring, and training related skills. But joining the Fighters Guild requires you to pass a difficult test that most common fighters will fail."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_unique();
@@ -4394,7 +4395,7 @@ void talk_unique()
                         u8"戦士ギルドに加入したいというのか…我々が求めているのは、どんな強敵にも怯まず、与えられた指令を確実にこなす真のハンターだ。いる。お前が信頼に足る者かどうか試させてもらおう。"s,
                         u8"To join the Fighters Guild, you must first face a test to earn our trust. We only need skilled hunters who will obey our law and remain undaunted even in a desperate battle."s);
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strmore);
+                    RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     SCENE_CUT();
                     gdata_joining_fighters_guild = 1;
@@ -4432,7 +4433,7 @@ void talk_unique()
                             gdata_fighters_guild_quota + u8" "s + refchara_str(gdata_fighters_guild_target, 2) +
                             u8". When you complete this, talk to me again"s);
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strmore);
+                    RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     SCENE_CUT();
                     talk_unique();
@@ -4451,7 +4452,7 @@ void talk_unique()
                             + refchara_str(gdata_fighters_guild_target, 2)
                             + u8"."s);
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strmore);
+                    RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     SCENE_CUT();
                     talk_unique();
@@ -4462,7 +4463,7 @@ void talk_unique()
                     u8"ほう…どうやらノルマを見事に達成したようだな。"s,
                     u8"Quite impressive...you have accomplished the task."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 gdata(128) = 10000;
@@ -4497,7 +4498,7 @@ void talk_unique()
                     u8"おめでとう…合格だ。今日からお前は戦士ギルドの一員となった。以後はギルドの規約を守り、ノルマをしっかりこなすように。"s,
                     u8"Congratulations. You are a formal member of the Fighters Guild now. You can now use this stairs to enter the office. Always conform to the guild's rule and perform your tasks."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 cell_movechara(tc, 29, 2);
@@ -4524,7 +4525,7 @@ void talk_unique()
                 lang(u8"ノルマを報告する"s, u8"About my task."s);
             ++listmax;
         }
-        RESPONSE(0, strbye);
+        RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         buff = lang(
             u8"ようこそ戦士ギルドへ、"s + ranktitle(8) + u8"の"s + cdatan(0, 0)
                 + u8"…どうぞ中にお入り下さい。"s,
@@ -4569,7 +4570,7 @@ void talk_unique()
                     u8" "s + refchara_str(gdata_fighters_guild_target, 2) +
                     u8". Then we will think about your promotion."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_unique();
@@ -4584,7 +4585,7 @@ void talk_unique()
                     u8"どうしました？まだノルマが残っていますよ。"s,
                     u8"You have your task to complete."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_unique();
@@ -4626,7 +4627,7 @@ void talk_unique()
                 u8"確かにノルマの達成を確認しました。早速審査会を開いてあなたの功績を報告しましょう。"s,
                 u8"You've done very well. I will give a report of your achievement to the council."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -4642,7 +4643,7 @@ void talk_unique()
                 u8"おお、おぬしか。先の依頼の件、恩に着るぞ。どうだ、わしの部下になる気はないか？"s,
                 u8"Ahh it's you. I owe you for what you've done for me. What do you say? Why don't you join my unit?"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -4651,7 +4652,7 @@ void talk_unique()
         if (gdata_minotaur_king == 0)
         {
             RESPONSE(1, lang(u8"まかせて"s, u8"Leave it to me!"s));
-            RESPONSE(0, lang(strbye, u8"No way."s));
+            RESPONSE(0, lang(i18n::_(u8"ui", u8"bye"), u8"No way."s));
             buff = lang(
                 u8"困った…困ったぞ。そこのおぬし、良いところに来た。実はヨウィンがミノタウロスの軍による侵攻の危機にさらされておるのだ。ヨウィンの村長とは親しくしておって、一軍を討伐に向かわせたいのだが、今は何やら不穏な空気がパルミアを包んでいる。城から離れるわけにはいかないのだ。そこで、冒険者のおぬしに依頼したい。ミノタウロスを退治してきてはくれぬか？報酬はもちろん用意しよう。"s,
                 u8"What do I do about this... You, over there... You couldn't have gotten here a moment too soon. Yowyn is in great danger of being destroyed by the minotaur legion. The mayor of Yowyn is a close friend of mine and I don't want to leave him out in the cold. I want to send a detachment to reinforce him but I can't. The current political climate in Palmia is too volatile and the troops must remain in the castle. That's why I'm asking an adventurer like you. Will you attack the minotaur's camp for me? I will reward you handsomely if you do this."s);
@@ -4663,7 +4664,7 @@ void talk_unique()
                     u8"やはり、おぬしには無理か…"s,
                     u8"I knew you'd refuse... and after all, why wouldn't you?"s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 talk_end();
@@ -4680,7 +4681,7 @@ void talk_unique()
                 u8"What? You will? Great... Head to the Minotaur's Nest south of Yowyn and take the head of the minotaurs' king. Godspeed, "s
                     + cdatan(0, 0) + u8"."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             gdata_minotaur_king = 1;
@@ -4694,7 +4695,7 @@ void talk_unique()
                 u8"どうした？おぬしが早くせんと、ヨウィンが危ないのだ。頼むぞ。"s,
                 u8"What's wrong? You must make haste. Yowyn is in grave danger."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -4707,7 +4708,7 @@ void talk_unique()
                 u8"おぬしか、待っておったぞ。報告はいい。すでに、ミノタウロスの王を倒した英雄のことは、この耳に伝わっておるわい。わしの感謝の印だ、受け取ってくれ。"s,
                 u8"You've returned. I've been waiting for you. I've already heard the good word about the hero who crushed the minotaur king. Take this as a sign of my eternal gratitude."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             flt();
@@ -4745,7 +4746,7 @@ void talk_unique()
                     + _na(),
                 u8"Bah, a begger without a penny. What a waste of time! Just go away!"s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -4788,7 +4789,7 @@ void talk_unique()
             listmax = 0;
             buff = lang(u8"なかなか賢明な判断"s + _da(), u8"A wise choice."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             levelexitby = 4;
@@ -4803,7 +4804,7 @@ void talk_unique()
                 + u8"ここがおまえさんの墓場"s + _da(2),
             u8"You've got some guts. But your decision sure ain't a wise one. This will be your grave, kid."s);
         tc = tc * 1 + 0;
-        RESPONSE(0, strbye);
+        RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         SCENE_CUT();
         talk_end();
@@ -4816,7 +4817,7 @@ void talk_unique()
                 u8"よく聞きなさい。もしあなたがいつかリトルシスターに出会ったら、あの子達に救いの手を差し伸べてあげて。見た目こそ化け物のように映るかもしれないけど、彼女たちがまた元の可愛らしい笑顔を取り戻せるように、私は研究を続けている。だから、お願い。この道具を使ってリトルたちを私の元に運んで。あなたへのお礼は、いつか必ず。"s,
                 u8"Please, hear me out. If you should happen to run into any little sisters during your travels, please help them out. They seem to be monsters at first glance, but I'm doing important research that will return these girls to their gentle smiling nature. Please I beg of you... use these balls to bring the little sisters to me. I'd be very grateful, perhaps I'd even reward you."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strmore);
+            RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
             gdata_little_sister = 0;
@@ -4854,7 +4855,7 @@ void talk_unique()
                     u8"(Turn over the little sister.)"s);
                 ++listmax;
             }
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             buff = lang(
                 u8"リトルたちを、終わりのない苦痛から解放するべきだという人もいる。でも、大抵の人間はあの子達の力が欲しくて殺すのよ。そう、確かにリトルの肉は人の肉体を進化させる。それでも、私はあの子たちを救う別の道があることを信じているの。…そして覚えておいて。もしあなたがリトルの命を奪うようなことがあれば、いつかその酬いを受ける時がくるから。"s,
                 u8"Many people feel we need to free these girls from their never-ending oppression, but there are also scumbags that would murder them for their own personal gain. That's right; they say eating the girls' flesh will evolve the human body. I know there must be a better way to help them... don't forget that. Remember that if you take their lives, you will eventually get what's coming to you. "s);
@@ -4877,7 +4878,7 @@ void talk_unique()
                         u8"報酬、そうね。リトルたちが、あなたのために街で落し物を集めてきたのよ。好きなものを選んでちょうだい。あなたが貴重なものを無くした時のために、保留しておいてもいいわ。"s,
                         u8"That's right...your reward. The little sisters have been picking things up for you that people have lost in town. Please, take whatever you like. If you like, you can wait until you've lost something valuable."s);
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strmore);
+                    RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     SCENE_CUT();
                     begintempinv();
@@ -4948,7 +4949,7 @@ void talk_unique()
                         u8"お目当てのものはあったかしら？"s,
                         u8"Did you find what you were looking for?"s);
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strbye);
+                    RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                     chatesc = 1;
                     SCENE_CUT();
                 }
@@ -4959,7 +4960,7 @@ void talk_unique()
                         u8"あなたにまだその資格はない。リトルたちを連れてきて。報酬はそのあと考えるわ。"s,
                         u8"You haven't brought me enough sisters yet. Bring me a few more and then we'll discuss your reward."s);
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strbye);
+                    RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                     chatesc = 1;
                     SCENE_CUT();
                 }
@@ -4973,7 +4974,7 @@ void talk_unique()
                     u8"さあ、これを持っていきなさい。重いから注意して。"s,
                     u8"Well then, take this with you. Be careful though, it's heavy."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 flt();
@@ -5007,7 +5008,7 @@ void talk_unique()
                     u8"ありがとう。あなたの行いに感謝するわ。あなたへのお礼は近いうちに必ず。"s,
                     u8"Thanks, I appreciate what you've done. It won't be long before I can reward you"s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strmore);
+                RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 SCENE_CUT();
             }
@@ -5035,14 +5036,14 @@ void talk_unique()
                         u8"おっと、これ以上仲間を連れて行けないようだぜ。"s,
                         u8"Oops, it seems your party is already full."s);
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strbye);
+                    RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                     chatesc = 1;
                     SCENE_CUT();
                 }
                 listmax = 0;
                 buff = lang(u8"そうこなくっちゃ！"s, u8"That's the spirit!"s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 rc = tc;
@@ -5054,7 +5055,7 @@ void talk_unique()
             listmax = 0;
             buff = lang(u8"まあ、いいさ。"s, u8"If you say so."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -5082,7 +5083,7 @@ void talk_unique()
                     listmax = 0;
                     buff = lang(u8"いいねえ。"s, u8"Great, you are great."s);
                     tc = tc * 1 + 0;
-                    RESPONSE(0, strbye);
+                    RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                     chatesc = 1;
                     SCENE_CUT();
                     ++gdata_blue_capsule_drug;
@@ -5095,7 +5096,7 @@ void talk_unique()
         buff =
             lang(u8"気安く話しかけんな。"s, u8"Stay away from me, will ya?"s);
         tc = tc * 1 + 0;
-        RESPONSE(0, strbye);
+        RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         SCENE_CUT();
         talk_end();
@@ -5112,7 +5113,7 @@ void talk_unique()
                 u8"ああ、あなた既に信者さんでしょ？悪いけど、新規契約しか受け付けてないからさ。"s,
                 u8"Ah, you already believe in Jure right? Sorry bro, but we are only looking for new contracts."s);
             tc = tc * 1 + 0;
-            RESPONSE(0, strbye);
+            RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
             talk_end();
@@ -5145,7 +5146,7 @@ void talk_unique()
                     u8"あざーっす！やっと今日のノルマが達成できたよ。"s,
                     u8"Thanks, bro! I just filled my daily quota."s);
                 tc = tc * 1 + 0;
-                RESPONSE(0, strbye);
+                RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 SCENE_CUT();
                 txt(lang(
@@ -5163,7 +5164,7 @@ void talk_unique()
         listmax = 0;
         buff = lang(u8"ちっ！"s, u8"Shit!"s);
         tc = tc * 1 + 0;
-        RESPONSE(0, strbye);
+        RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         SCENE_CUT();
         talk_end();
@@ -5174,7 +5175,7 @@ label_2247_internal:
     buff = lang(
         u8"…(あなたを無視している)"s, u8"("s + he(tc) + u8" ignores you...)"s);
     tc = tc * 1 + 0;
-    RESPONSE(0, strbye);
+    RESPONSE(0, i18n::_(u8"ui", u8"bye"));
     chatesc = 1;
     SCENE_CUT();
     talk_end();

@@ -2507,7 +2507,8 @@ std::string _yoro(int mark)
          {u8"よろしくでござりまする", u8"どうぞよしなに"}},
         {{u8"よろしくッス"}, {u8"よろしくにゃの"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2527,7 +2528,8 @@ std::string _dozo(int mark)
          {u8"お待たせ致しました", u8"ささ、どうぞ"}},
         {{u8"お待たせッス"}, {u8"お待たせにゃん"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2546,7 +2548,8 @@ std::string _thanks(int mark)
          {u8"ありがたや", u8"お礼申し上げます"}},
         {{u8"アザーッス"}, {u8"にゃりーん"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2572,7 +2575,8 @@ std::string _rob(int mark)
          {u8"ご無体な", u8"まあ、お戯れが過ぎますわ"}},
         {{u8"見損なったッス"}, {u8"にゃりーん"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2588,7 +2592,8 @@ std::string _ka(int mark)
         {{u8"でござるか"}, {u8"でござりまするか"}},
         {{u8"ッスか"}, {u8"かにゃ", u8"かニャン"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2604,7 +2609,8 @@ std::string _da(int mark)
         {{u8"でござる", u8"でござるよ"}, {u8"でござりまする"}},
         {{u8"ッス"}, {u8"みゃん", u8"ミャ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2620,7 +2626,8 @@ std::string _nda(int mark)
         {{u8"のでござる"}, {u8"のでございます"}},
         {{u8"んだッス"}, {u8"のニャ", u8"のにゃん"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2636,7 +2643,8 @@ std::string _noka(int mark)
         {{u8"のでござるか"}, {u8"のでございます"}},
         {{u8"のッスか"}, {u8"にゃんか", u8"ニャン"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2652,7 +2660,8 @@ std::string _kana(int mark)
         {{u8"でござるか"}, {u8"でございますか"}},
         {{u8"ッスか"}, {u8"かにゃん", u8"かニャ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2668,7 +2677,8 @@ std::string _kimi(int mark)
         {{u8"そこもと"}, {u8"そなた様"}},
         {{u8"アンタ"}, {u8"あにゃた"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2684,7 +2694,8 @@ std::string _ru(int mark)
         {{u8"るでござる", u8"るでござるよ"}, {u8"るのでございます"}},
         {{u8"るッス"}, {u8"るのニャ", u8"るにゃん"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2701,7 +2712,8 @@ std::string _tanomu(int mark)
         {{u8"頼み申す", u8"頼むでござる"}, {u8"お頼み申し上げます"}},
         {{u8"頼むッス"}, {u8"おねがいにゃ", u8"おねがいニャン"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2717,7 +2729,8 @@ std::string _ore(int mark)
         {{u8"拙者"}, {u8"手前"}},
         {{u8"あっし"}, {u8"みゅー"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2733,7 +2746,8 @@ std::string _ga(int mark)
         {{u8"でござるが"}, {u8"でございますが"}},
         {{u8"ッスけど", u8"ッスが"}, {u8"ニャけど", u8"にゃが"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2749,7 +2763,8 @@ std::string _dana(int mark)
         {{u8"でござるな"}, {u8"でございますね"}},
         {{u8"ッスね"}, {u8"にゃ", u8"みゃ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2765,7 +2780,8 @@ std::string _kure(int mark)
         {{u8"頂きたいでござる"}, {u8"くださいませ"}},
         {{u8"くれッス"}, {u8"にゃ", u8"みゃ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2781,7 +2797,8 @@ std::string _daro(int mark)
         {{u8"でござろうな"}, {u8"でございましょう"}},
         {{u8"ッスね"}, {u8"にゃ", u8"みゃ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2797,7 +2814,8 @@ std::string _yo(int mark)
         {{u8"でござろう"}, {u8"でございますわ"}},
         {{u8"ッスよ", u8"ッス"}, {u8"にゃぁ", u8"みゃぁ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2813,7 +2831,8 @@ std::string _aru(int mark)
         {{u8"あるでござる", u8"あるでござるな"}, {u8"ござます"}},
         {{u8"あるッスよ", u8"あるッス"}, {u8"あにゅ", u8"あみぅ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2829,7 +2848,8 @@ std::string _u(int mark)
         {{u8"うでござる", u8"うでござるよ"}, {u8"うでございます"}},
         {{u8"うッスよ", u8"うッス"}, {u8"うにぁ", u8"うみぁ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2845,7 +2865,8 @@ std::string _na(int mark)
         {{u8"でござるな"}, {u8"でございますわ"}},
         {{u8"ッスね", u8"ッス"}, {u8"ニァ", u8"ミァ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2861,7 +2882,8 @@ std::string _ta(int mark)
         {{u8"たでござる"}, {u8"ましてございます"}},
         {{u8"たッスよ", u8"たッス"}, {u8"たにゃぁ", u8"たみゃぁ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) + _mark(mark);
+    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex])
+        + i18n::_(u8"ui", u8"mark", u8"_"s + mark);
 }
 
 
@@ -2901,7 +2923,7 @@ void replace_tags_in_quest_board()
             }
             if (s == u8"sex"s)
             {
-                s = _sex2(0);
+                s = i18n::_(u8"ui", u8"sex2", u8"_0");
                 break;
             }
             if (s == u8"player"s)

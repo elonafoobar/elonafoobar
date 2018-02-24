@@ -824,14 +824,26 @@ label_2060_internal:
                 gcopy(3, 288 + invicon(p) * 48, 48, 48, 48);
                 gmode(2);
             }
-            pos(x + cnt * 44 + 46 - strlen_u(invtitle(p)) * 3, y + 7);
+            pos(x + cnt * 44 + 46
+                    - strlen_u(
+                          i18n::_(u8"ui", u8"inventory_command", u8"_"s + p))
+                        * 3,
+                y + 7);
             if (invctrl == p)
             {
-                bmes(invtitle(p), 255, 255, 255);
+                bmes(
+                    i18n::_(u8"ui", u8"inventory_command", u8"_"s + p),
+                    255,
+                    255,
+                    255);
             }
             else
             {
-                bmes(invtitle(p), 165, 165, 165);
+                bmes(
+                    i18n::_(u8"ui", u8"inventory_command", u8"_"s + p),
+                    165,
+                    165,
+                    165);
             }
             if (invkey(p) != ""s)
             {
@@ -849,7 +861,10 @@ label_2060_internal:
     }
 label_2061_internal:
     redraw(0);
-    s = lang(invtitle(invctrl) + u8"アイテムの選択"s, invtitle(invctrl));
+    s = lang(
+        i18n::_(u8"ui", u8"inventory_command", u8"_"s + invctrl)
+            + u8"アイテムの選択"s,
+        i18n::_(u8"ui", u8"inventory_command", u8"_"s + invctrl));
     s(1) = strhint2 + strhint5 + strhint5b + strhint3;
     if (invctrl == 5 || invctrl == 7 || invctrl == 8 || invctrl == 9
         || invctrl == 14 || invctrl == 15 || invctrl == 26)
@@ -949,9 +964,12 @@ label_2061_internal:
                 color(100, 100, 100);
             }
             pos(x, y);
-            mes(""s + bodyn(p / 10000));
+            mes(""s + i18n::_(u8"ui", u8"body_part", u8"_"s + (p / 10000)));
             color(0, 0, 0);
-            x += (std::size(bodyn(p / 10000)) + 1) * 6;
+            x +=
+                (std::size(i18n::_(u8"ui", u8"body_part", u8"_"s + (p / 10000)))
+                 + 1)
+                * 6;
         }
     }
     keyrange = 0;

@@ -136,13 +136,27 @@ int access_character_info()
                 {
                     txtmore();
                     txtef(9);
-                    txt(u8"「" + _onii(cdata[0].sex) + u8"ちゃんー」",
-                        u8"「" + _onii(cdata[0].sex) + u8"ちゃん！」",
-                        u8"「" + _onii(cdata[0].sex) + u8"ちゃ〜ん」",
-                        u8"「" + _onii(cdata[0].sex) + u8"ちゃんっ」",
-                        u8"「" + _onii(cdata[0].sex) + u8"ちゃん？」",
-                        u8"「" + _onii(cdata[0].sex) + u8"〜ちゃん」",
-                        u8"「" + _onii(cdata[0].sex) + u8"ちゃん♪」");
+                    txt(u8"「"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"ちゃんー」",
+                        u8"「"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"ちゃん！」",
+                        u8"「"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"ちゃ〜ん」",
+                        u8"「"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"ちゃんっ」",
+                        u8"「"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"ちゃん？」",
+                        u8"「"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"〜ちゃん」",
+                        u8"「"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"ちゃん♪」");
                     return 1;
                 }
             }
@@ -152,10 +166,14 @@ int access_character_info()
                 {
                     txtmore();
                     txtef(9);
-                    txt(u8"「おかえり、" + _onii(cdata[0].sex) + u8"ちゃん！」",
-                        u8"「おかえりなさーい、" + _onii(cdata[0].sex)
+                    txt(u8"「おかえり、"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"ちゃん！」",
+                        u8"「おかえりなさーい、"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
                             + u8"ちゃん♪」",
-                        u8"「待ってたよ、" + _onii(cdata[0].sex)
+                        u8"「待ってたよ、"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
                             + u8"ちゃん」");
                     return 1;
                 }
@@ -169,13 +187,27 @@ int access_character_info()
                 {
                     txtmore();
                     txtef(9);
-                    txt(u8"「" + _onii(cdata[0].sex) + u8"ちゃんー」",
-                        u8"「" + _onii(cdata[0].sex) + u8"ちゃん！」",
-                        u8"「" + _onii(cdata[0].sex) + u8"ちゃ〜ん」",
-                        u8"「" + _onii(cdata[0].sex) + u8"ちゃんっ」",
-                        u8"「" + _onii(cdata[0].sex) + u8"ちゃん？」",
-                        u8"「" + _onii(cdata[0].sex) + u8"〜ちゃん」",
-                        u8"「" + _onii(cdata[0].sex) + u8"ちゃん♪」");
+                    txt(u8"「"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"ちゃんー」",
+                        u8"「"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"ちゃん！」",
+                        u8"「"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"ちゃ〜ん」",
+                        u8"「"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"ちゃんっ」",
+                        u8"「"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"ちゃん？」",
+                        u8"「"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"〜ちゃん」",
+                        u8"「"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"ちゃん♪」");
                     return 1;
                 }
             }
@@ -185,10 +217,14 @@ int access_character_info()
                 {
                     txtmore();
                     txtef(9);
-                    txt(u8"「おかえり、" + _onii(cdata[0].sex) + u8"ちゃん！」",
-                        u8"「おかえりなさーい、" + _onii(cdata[0].sex)
+                    txt(u8"「おかえり、"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"ちゃん！」",
+                        u8"「おかえりなさーい、"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
                             + u8"ちゃん♪」",
-                        u8"「待ってたよ、" + _onii(cdata[0].sex)
+                        u8"「待ってたよ、"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
                             + u8"ちゃん」");
                     return 1;
                 }
@@ -202,13 +238,27 @@ int access_character_info()
                 {
                     txtmore();
                     txtef(9);
-                    txt(u8"「" + _onii(cdata[0].sex) + u8"ちゃんー」",
-                        u8"「" + _onii(cdata[0].sex) + u8"ちゃん！」",
-                        u8"「" + _onii(cdata[0].sex) + u8"ちゃ〜ん」",
-                        u8"「" + _onii(cdata[0].sex) + u8"ちゃんっ」",
-                        u8"「" + _onii(cdata[0].sex) + u8"ちゃん？」",
-                        u8"「" + _onii(cdata[0].sex) + u8"〜ちゃん」",
-                        u8"「" + _onii(cdata[0].sex) + u8"ちゃん♪」");
+                    txt(u8"「"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"ちゃんー」",
+                        u8"「"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"ちゃん！」",
+                        u8"「"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"ちゃ〜ん」",
+                        u8"「"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"ちゃんっ」",
+                        u8"「"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"ちゃん？」",
+                        u8"「"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"〜ちゃん」",
+                        u8"「"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
+                            + u8"ちゃん♪」");
                     return 1;
                 }
             }
@@ -218,11 +268,14 @@ int access_character_info()
                 {
                     txtmore();
                     txtef(9);
-                    txt(u8"「おかえりにゃ、" + _onii(cdata[0].sex)
+                    txt(u8"「おかえりにゃ、"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
                             + u8"ちゃん！」",
-                        u8"「おかえりなさいにゃー、" + _onii(cdata[0].sex)
+                        u8"「おかえりなさいにゃー、"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
                             + u8"ちゃん♪」",
-                        u8"「待ってたにゃ、" + _onii(cdata[0].sex)
+                        u8"「待ってたにゃ、"
+                            + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
                             + u8"ちゃん」");
                     return 1;
                 }
@@ -236,8 +289,11 @@ int access_character_info()
                 txtef(9);
                 if (jp)
                 {
-                    txt(u8"「" + _syujin(cdata[0].sex) + u8"〜」",
-                        _syujin(cdata[0].sex) + u8"〜",
+                    txt(u8"「"
+                            + i18n::_(u8"ui", u8"syujin", u8"_"s + cdata[0].sex)
+                            + u8"〜」",
+                        i18n::_(u8"ui", u8"syujin", u8"_"s + cdata[0].sex)
+                            + u8"〜",
                         u8"「用事はありませんか♪」",
                         u8"メイドの熱い視線を感じる…");
                     return 1;
@@ -250,7 +306,9 @@ int access_character_info()
                     txtmore();
                     txtef(9);
                     txt(u8"「ダメぇ！」",
-                        u8"「" + _syujin(cdata[0].sex) + u8"ー！」");
+                        u8"「"
+                            + i18n::_(u8"ui", u8"syujin", u8"_"s + cdata[0].sex)
+                            + u8"ー！」");
                     return 1;
                 }
             }
@@ -260,7 +318,8 @@ int access_character_info()
                 {
                     txtmore();
                     txtef(9);
-                    txt(u8"「おかえりなさいませ、" + _syujin(cdata[0].sex)
+                    txt(u8"「おかえりなさいませ、"
+                            + i18n::_(u8"ui", u8"syujin", u8"_"s + cdata[0].sex)
                             + u8"〜」",
                         u8"「おかえりなさいまし〜」");
                     return 1;

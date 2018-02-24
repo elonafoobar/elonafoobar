@@ -590,7 +590,11 @@ int magic()
                                           std::to_string(efid),
                                           u8"name")
                                     + u8"の"s
-                                    + _cast(cdata[cc].special_attack_type),
+                                    + i18n::_(
+                                          u8"ui",
+                                          u8"cast_style",
+                                          u8"_"s
+                                              + cdata[cc].special_attack_type),
                                 name(cc) + u8" cast "s
                                     + i18n::_(
                                           u8"ability",
@@ -603,9 +607,18 @@ int magic()
                         {
                             txt(lang(
                                 name(cc) + u8"は"s
-                                    + _cast(cdata[cc].special_attack_type),
+                                    + i18n::_(
+                                          u8"ui",
+                                          u8"cast_style",
+                                          u8"_"s
+                                              + cdata[cc].special_attack_type),
                                 name(cc) + ""s
-                                    + _cast(cdata[cc].special_attack_type)));
+                                    + i18n::_(
+                                          u8"ui",
+                                          u8"cast_style",
+                                          u8"_"s
+                                              + cdata[cc]
+                                                    .special_attack_type)));
                             txtmore();
                         }
                     }
