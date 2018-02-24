@@ -1031,7 +1031,7 @@ label_2061_internal:
         }
         display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
         p(1) = inv[p].image % 1000;
-        prepare_item_image(p(1), inv[p].color);
+        prepare_item_image(p(1), inv[p].color, inv[p].param1);
         pos(wx + 37, wy + 69 + cnt * 19);
         gmode(2, chipi(2, p(1)), chipi(3, p(1)));
         grotate(

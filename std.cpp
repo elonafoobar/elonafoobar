@@ -560,14 +560,7 @@ void gcopy(int window_id, int src_x, int src_y, int src_width, int src_height)
             src_height == 0 ? detail::current_tex_buffer().height : src_height,
         snail::application::instance().get_renderer().set_render_target(
             detail::tmp_buffer);
-        if (window_id < 10)
-        {
-            snail::application::instance().get_renderer().set_blend_mode(
-                snail::blend_mode_t::none);
-            snail::application::instance().get_renderer().set_draw_color(
-                {0, 0, 0, 0});
-        }
-        else
+        if (window_id >= 10)
         {
             const auto save =
                 snail::application::instance().get_renderer().blend_mode();
@@ -1533,13 +1526,14 @@ void map(F f)
 
 
 
-void set_color_mod(int r, int g, int b)
+void set_color_mod(int r, int g, int b, int window_id)
 {
+    window_id = window_id == -1 ? detail::current_buffer : window_id;
     r = std::clamp(r, 0, 255);
     g = std::clamp(g, 0, 255);
     b = std::clamp(b, 0, 255);
     snail::detail::enforce_sdl(::SDL_SetTextureColorMod(
-        detail::current_tex_buffer().texture,
+        detail::tex_buffers[window_id].texture,
         uint8_t(r),
         uint8_t(g),
         uint8_t(b)));

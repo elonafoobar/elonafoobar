@@ -23361,7 +23361,7 @@ label_1575_internal:
         {
             flt();
             itemcreate(-1, 504, cdata[rc].position.x, cdata[rc].position.y, 0);
-            inv[ci].color = cdata[rc].image % 1000;
+            inv[ci].param1 = cdata[rc].image;
             inv[ci].subname = cdata[rc].id;
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
         }
@@ -23371,7 +23371,7 @@ label_1575_internal:
         {
             flt();
             itemcreate(-1, 503, cdata[rc].position.x, cdata[rc].position.y, 0);
-            inv[ci].color = cdata[rc].image % 1000;
+            inv[ci].param1 = cdata[rc].image;
             inv[ci].subname = cdata[rc].id;
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
         }
@@ -30537,7 +30537,7 @@ void use_house_board()
                 continue;
             }
             p(1) = inv[p].image % 1000;
-            prepare_item_image(p(1), inv[p].color);
+            prepare_item_image(p(1), inv[p].color, inv[p].param1);
             pos(wx + 37, cnt * 16 + wy + 138);
             gmode(2, chipi(2, p(1)), chipi(3, p(1)));
             grotate(
@@ -39815,7 +39815,7 @@ label_1928_internal:
         }
         display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
         p(1) = inv[p].image % 1000;
-        prepare_item_image(p(1), inv[p].color);
+        prepare_item_image(p(1), inv[p].color, inv[p].param1);
         pos(wx + 37, wy + 69 + cnt * 19);
         gmode(2, chipi(2, p(1)), chipi(3, p(1)));
         grotate(
@@ -44585,7 +44585,7 @@ void wish_for_card()
     flt();
     itemcreate(-1, 504, cdata[0].position.x, cdata[0].position.y, 0);
     inv[ci].subname = cdata[56].id;
-    inv[ci].color = cdata[56].image % 1000;
+    inv[ci].param1 = cdata[56].image;
     chara_vanquish(56);
     cell_refresh(cdata[0].position.x, cdata[0].position.y);
     txt(lang(
@@ -44606,7 +44606,7 @@ void wish_for_figure()
     flt();
     itemcreate(-1, 503, cdata[0].position.x, cdata[0].position.y, 0);
     inv[ci].subname = cdata[56].id;
-    inv[ci].color = cdata[56].image % 1000;
+    inv[ci].param1 = cdata[56].image;
     chara_vanquish(56);
     cell_refresh(cdata[0].position.x, cdata[0].position.y);
     txt(lang(
@@ -48215,7 +48215,7 @@ label_2052_internal:
             s(0) = itemname(p(1));
             s(1) = cnvweight(inv[p(1)].weight);
             p(2) = inv[p(1)].image;
-            prepare_item_image(p(2), inv[p(1)].color);
+            prepare_item_image(p(2), inv[p(1)].color, inv[p(1)].param1);
             pos(wx + 126, wy + 70 + cnt * 19);
             gmode(2, inf_tiles, inf_tiles);
             grotate(1, 0, 960, 0, chipi(2, p(2)), chipi(3, p(2)));
@@ -57413,6 +57413,7 @@ void label_2201()
             txt(lang(
                 itemname(ci, 1) + u8"が降ってきた。"s,
                 itemname(ci, 1) + u8" falls down from the tree."s));
+            item_stack(-1, ci);
             turn_end();
             return;
         }
@@ -69132,7 +69133,6 @@ label_2689_internal:
                 }
                 if (distance > 2 || rnd(3))
                 {
-                    retreat = 0;
                     label_2693();
                     return;
                 }
@@ -69145,13 +69145,8 @@ label_2689_internal:
         }
         if (cdata[cc].fear != 0)
         {
-            retreat = 1;
-            label_2693();
+            label_2693(true);
             return;
-        }
-        else
-        {
-            retreat = 0;
         }
         if (cdata[cc].blind != 0)
         {
@@ -69744,7 +69739,7 @@ label_2692_internal:
 
 
 
-void label_2693()
+void label_2693(bool retreat)
 {
     if (mdata(6) == 3)
     {
