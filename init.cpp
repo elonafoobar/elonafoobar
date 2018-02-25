@@ -1253,7 +1253,7 @@ label_1554:
     access_race_info(3, cmrace);
     access_class_info(3, cmclass);
     cdata[rc].level = 1;
-    for (int cnt = 10, cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
+    for (int cnt = 10; cnt < 18; ++cnt)
     {
         if (cmlock(cnt - 10) == 0)
         {
@@ -1271,7 +1271,7 @@ label_1554:
     list(0, 1) = 0;
     listn(0, 1) = lang(u8"決定"s, u8"Proceed"s);
     ++listmax;
-    for (int cnt = 10, cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
+    for (int cnt = 10; cnt < 18; ++cnt)
     {
         list(0, listmax) = cmstats(cnt - 10);
         listn(0, listmax) = i18n::_(u8"ability", std::to_string(cnt), u8"name");
@@ -1587,7 +1587,7 @@ label_1563_internal:
     cdatan(0, rc) = u8"????"s;
     cdatan(1, rc) = cmaka;
     cdata[rc].level = 1;
-    for (int cnt = 10, cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
+    for (int cnt = 10; cnt < 18; ++cnt)
     {
         sdata.get(cnt, rc).original_level = cmstats(cnt - 10) / 1'000'000;
         sdata.get(cnt, rc).experience = cmstats(cnt - 10) % 1'000'000 / 1'000;
@@ -1840,7 +1840,7 @@ void show_race_or_class_info(int CNT, int val0)
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     r = 0;
     s = lang(u8"武器の専門  "s, u8"Proficient in "s);
-    for (int cnt = 100, cnt_end = cnt + (50); cnt < cnt_end; ++cnt)
+    for (int cnt = 100; cnt < 150; ++cnt)
     {
         if (sdata.get(cnt, 0).original_level != 0)
         {
@@ -1861,7 +1861,7 @@ void show_race_or_class_info(int CNT, int val0)
         mes(s);
         ty += 14;
     }
-    for (int cnt = 150, cnt_end = cnt + (450); cnt < cnt_end; ++cnt)
+    for (int cnt = 150; cnt < 600; ++cnt)
     {
         if (sdata.get(cnt, 0).original_level != 0)
         {

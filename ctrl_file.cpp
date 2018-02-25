@@ -852,7 +852,7 @@ void fmode_22_21(bool read)
                 break;
             }
             tg = 0;
-            for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+            for (int cnt = 57; cnt < 245; ++cnt)
             {
                 if (cdata[cnt].state == 0)
                 {
@@ -955,7 +955,7 @@ void fmode_22_21(bool read)
             {
                 inv[cnt].body_part = 0;
             }
-            for (int cnt = 100, cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+            for (int cnt = 100; cnt < 130; ++cnt)
             {
                 cdata_body_part(tg, cnt) =
                     cdata_body_part(tg, cnt) / 10000 * 10000;

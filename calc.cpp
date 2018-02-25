@@ -1342,7 +1342,7 @@ void generatemoney(int prm_904)
 void calccosthire()
 {
     cost_at_m153 = 0;
-    for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+    for (int cnt = 57; cnt < 245; ++cnt)
     {
         if (cdata[cnt].character_role == 0)
         {
@@ -1370,7 +1370,7 @@ int calccostbuilding()
 {
     cost_at_m153 = 0;
     cost_at_m153 += gdata_home_scale * gdata_home_scale * 200;
-    for (int cnt = 300, cnt_end = cnt + (150); cnt < cnt_end; ++cnt)
+    for (int cnt = 300; cnt < 450; ++cnt)
     {
         if (adata(16, cnt) == 101)
         {
@@ -1813,7 +1813,7 @@ int calcscore()
 void calcpartyscore()
 {
     p = 0;
-    for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+    for (int cnt = 57; cnt < 245; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {
@@ -1849,7 +1849,7 @@ void calcpartyscore()
 void calcpartyscore2()
 {
     p = 0;
-    for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+    for (int cnt = 57; cnt < 245; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {

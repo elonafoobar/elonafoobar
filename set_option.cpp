@@ -400,7 +400,7 @@ label_2725_internal:
         p(10) = cnvjkey(key_help);
         p(11) = cnvjkey(key_charainfo);
         p(12) = cnvjkey(key_ammo);
-        for (int cnt = 1, cnt_end = cnt + (19); cnt < cnt_end; ++cnt)
+        for (int cnt = 1; cnt < 20; ++cnt)
         {
             list(1, cnt) = p(cnt);
         }
@@ -954,8 +954,7 @@ label_2725_internal:
                         jkey(cnt) = "";
                     }
                     list(1, cs) = p;
-                    for (int cnt = 1, cnt_end = cnt + (19); cnt < cnt_end;
-                         ++cnt)
+                    for (int cnt = 1; cnt < 20; ++cnt)
                     {
                         if (cs == cnt)
                         {
@@ -992,8 +991,7 @@ label_2725_internal:
                     p(10) = cnvjkey(key_help);
                     p(11) = cnvjkey(key_charainfo);
                     p(12) = cnvjkey(key_ammo);
-                    for (int cnt = 1, cnt_end = cnt + (19); cnt < cnt_end;
-                         ++cnt)
+                    for (int cnt = 1; cnt < 20; ++cnt)
                     {
                         list(1, cnt) = p(cnt);
                     }

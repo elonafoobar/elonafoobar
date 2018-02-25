@@ -3290,7 +3290,7 @@ void talk_unique()
                     p(inv[cnt].param2) = 1;
                 }
             }
-            for (int cnt = 1, cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
+            for (int cnt = 1; cnt < 5; ++cnt)
             {
                 p += p(cnt);
             }

@@ -247,7 +247,7 @@ int encfind(int prm_479, int prm_480)
 {
     int i_at_m53 = 0;
     f_at_m53 = -1;
-    for (int cnt = 100, cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+    for (int cnt = 100; cnt < 130; ++cnt)
     {
         if (cdata_body_part(prm_479, cnt) % 10000 == 0)
         {

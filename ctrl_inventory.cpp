@@ -948,7 +948,7 @@ label_2061_internal:
         pos(x, y);
         mes(lang(u8"装備箇所:"s, u8"Equip:"s));
         x += 60;
-        for (int cnt = 100, cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+        for (int cnt = 100; cnt < 130; ++cnt)
         {
             if (cdata_body_part(tc, cnt) == 0)
             {

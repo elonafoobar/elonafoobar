@@ -2486,7 +2486,7 @@ label_2181_internal:
         if (efstatus <= -1)
         {
             txt(lang(u8"これは呪われている！"s, u8"It's cursed!"s));
-            for (int cnt = 10, cnt_end = cnt + (40); cnt < cnt_end; ++cnt)
+            for (int cnt = 10; cnt < 50; ++cnt)
             {
                 if (rnd(3) == 0)
                 {
@@ -2703,7 +2703,7 @@ label_2181_internal:
     case 1113:
         if (efstatus >= 1)
         {
-            for (int cnt = 10, cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
+            for (int cnt = 10; cnt < 18; ++cnt)
             {
                 modify_potential(
                     tc, cnt, rnd(sdata.get(cnt, tc).potential / 20 + 3) + 1);
@@ -3173,7 +3173,7 @@ label_2181_internal:
             }
         }
         i = 0;
-        for (int cnt = 100, cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+        for (int cnt = 100; cnt < 130; ++cnt)
         {
             if (cdata_body_part(tc, cnt) % 10000 == 0)
             {

@@ -1190,7 +1190,7 @@ void snd(int prm_296, int prm_297, int prm_298)
             f_at_m18 = 0;
             if (prm_298)
             {
-                for (int cnt = 7, cnt_end = cnt + (6); cnt < cnt_end; ++cnt)
+                for (int cnt = 7; cnt < 13; ++cnt)
                 {
                     if (CHECKPLAY(cnt))
                     {
@@ -1205,7 +1205,7 @@ void snd(int prm_296, int prm_297, int prm_298)
             }
             if (f_at_m18 == 0)
             {
-                for (int cnt = 7, cnt_end = cnt + (6); cnt < cnt_end; ++cnt)
+                for (int cnt = 7; cnt < 13; ++cnt)
                 {
                     if (CHECKPLAY(cnt) == 0)
                     {
@@ -2727,56 +2727,56 @@ void initialize_map_chip()
     {
         chipm(5, 233) = 0;
         chipm(6, 233) = 0;
-        for (int cnt = 26, cnt_end = cnt + (7); cnt < cnt_end; ++cnt)
+        for (int cnt = 26; cnt < 33; ++cnt)
         {
             chipm(0, cnt) = 4;
         }
         chipm(0, 568) = 4;
         chipm(0, 569) = 4;
         chipm(0, 570) = 4;
-        for (int cnt = 99, cnt_end = cnt + (33); cnt < cnt_end; ++cnt)
+        for (int cnt = 99; cnt < 132; ++cnt)
         {
             chipm(0, cnt) = 7;
         }
-        for (int cnt = 165, cnt_end = cnt + (33); cnt < cnt_end; ++cnt)
+        for (int cnt = 165; cnt < 198; ++cnt)
         {
             chipm(0, cnt) = 8;
         }
-        for (int cnt = 198, cnt_end = cnt + (33); cnt < cnt_end; ++cnt)
+        for (int cnt = 198; cnt < 231; ++cnt)
         {
             chipm(0, cnt) = 4;
         }
-        for (int cnt = 594, cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+        for (int cnt = 594; cnt < 599; ++cnt)
         {
             chipm(0, cnt) = 7;
         }
-        for (int cnt = 599, cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+        for (int cnt = 599; cnt < 604; ++cnt)
         {
             chipm(0, cnt) = 8;
         }
-        for (int cnt = 107, cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
+        for (int cnt = 107; cnt < 119; ++cnt)
         {
             chipm(1, cnt) = 9;
         }
-        for (int cnt = 173, cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
+        for (int cnt = 173; cnt < 185; ++cnt)
         {
             chipm(1, cnt) = 9;
         }
-        for (int cnt = 206, cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
+        for (int cnt = 206; cnt < 218; ++cnt)
         {
             chipm(1, cnt) = 9;
         }
         chipm(0, 604) = 10;
-        for (int cnt = 605, cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
+        for (int cnt = 605; cnt < 617; ++cnt)
         {
             chipm(0, cnt) = 10;
             chipm(1, cnt) = 9;
         }
-        for (int cnt = 396, cnt_end = cnt + (429); cnt < cnt_end; ++cnt)
+        for (int cnt = 396; cnt < 825; ++cnt)
         {
             chipm(7, cnt) = 5;
         }
-        for (int cnt = 264, cnt_end = cnt + (33); cnt < cnt_end; ++cnt)
+        for (int cnt = 264; cnt < 297; ++cnt)
         {
             chipm(7, cnt) = 4;
         }
@@ -2788,7 +2788,7 @@ void initialize_map_chip()
     }
     if (mdata(2) == 1)
     {
-        for (int cnt = 396, cnt_end = cnt + (429); cnt < cnt_end; ++cnt)
+        for (int cnt = 396; cnt < 825; ++cnt)
         {
             chipm(7, cnt) = 5;
         }
@@ -2799,19 +2799,19 @@ void initialize_map_chip()
         chipm(7, 637) = 4;
         chipm(7, 641) = 4;
         chipm(7, 733) = 4;
-        for (int cnt = 45, cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
+        for (int cnt = 45; cnt < 61; ++cnt)
         {
             chipm(0, cnt) = 4;
         }
         chipm(0, 82) = 4;
         chipm(0, 83) = 4;
         chipm(0, 84) = 4;
-        for (int cnt = 462, cnt_end = cnt + (66); cnt < cnt_end; ++cnt)
+        for (int cnt = 462; cnt < 528; ++cnt)
         {
             chipm(2, cnt) = 1;
             chipm(2, cnt - 66) = 1;
         }
-        for (int cnt = 462, cnt_end = cnt + (33); cnt < cnt_end; ++cnt)
+        for (int cnt = 462; cnt < 495; ++cnt)
         {
             chipm(2, cnt) = 2;
             chipm(2, cnt - 66) = 2;
@@ -2842,23 +2842,23 @@ void initialize_map_chip()
                 chipm(0, cnt2 * 33 + cnt + 20) = 4;
             }
         }
-        for (int cnt = 33, cnt_end = cnt + (33); cnt < cnt_end; ++cnt)
+        for (int cnt = 33; cnt < 66; ++cnt)
         {
             chipm(0, cnt) = 4;
         }
-        for (int cnt = 396, cnt_end = cnt + (429); cnt < cnt_end; ++cnt)
+        for (int cnt = 396; cnt < 825; ++cnt)
         {
             chipm(7, cnt) = 5;
         }
         chipm(5, 233) = 56;
         chipm(6, 233) = 48;
         chipm(7, 594) = 4;
-        for (int cnt = 462, cnt_end = cnt + (66); cnt < cnt_end; ++cnt)
+        for (int cnt = 462; cnt < 528; ++cnt)
         {
             chipm(2, cnt) = 1;
             chipm(2, cnt - 66) = 1;
         }
-        for (int cnt = 462, cnt_end = cnt + (33); cnt < cnt_end; ++cnt)
+        for (int cnt = 462; cnt < 495; ++cnt)
         {
             chipm(2, cnt) = 2;
             chipm(2, cnt - 66) = 2;
@@ -2917,7 +2917,7 @@ void initialize_item_chip()
         chipi(5, cnt) = 8;
         chipi(6, cnt) = 40;
     }
-    for (int cnt = 825, cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
+    for (int cnt = 825; cnt < 925; ++cnt)
     {
         chipc(0, cnt) = cnt % 33 * inf_tiles;
         chipc(1, cnt) = cnt / 33 * inf_tiles;
@@ -11127,7 +11127,7 @@ int customtalk(int cc, int talk_type)
 int findchara(int prm_766)
 {
     p_at_m117 = 0;
-    for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+    for (int cnt = 57; cnt < 245; ++cnt)
     {
         if (cdata[cnt].state != 2)
         {
@@ -11242,7 +11242,7 @@ void modimp(int cc, int delta)
 
 void put_questtarget()
 {
-    for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+    for (int cnt = 57; cnt < 245; ++cnt)
     {
         if (cdata[cnt].state == 1)
         {
@@ -11259,7 +11259,7 @@ int exist_questtarget()
 {
     int f_at_m119 = 0;
     f_at_m119 = 0;
-    for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+    for (int cnt = 57; cnt < 245; ++cnt)
     {
         if (cdata[cnt].state == 1)
         {
@@ -11385,7 +11385,7 @@ void check_quest()
         if (gdata(71) == 1)
         {
             p_at_m119 = 0;
-            for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+            for (int cnt = 57; cnt < 245; ++cnt)
             {
                 if (cdata[cnt].state == 1)
                 {
@@ -11593,7 +11593,7 @@ void make_sound(
     int prm_781,
     int prm_782)
 {
-    for (int cnt = 1, cnt_end = cnt + (244); cnt < cnt_end; ++cnt)
+    for (int cnt = 1; cnt < 245; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {
@@ -11646,7 +11646,7 @@ void make_sound(
 int get_freechara()
 {
     f_at_m125 = -1;
-    for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+    for (int cnt = 57; cnt < 245; ++cnt)
     {
         if (cdata[cnt].state == 0)
         {
@@ -11718,7 +11718,7 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
     if (tc_at_m125 == -1)
     {
         f_at_m125 = 0;
-        for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+        for (int cnt = 57; cnt < 245; ++cnt)
         {
             if (cdata[cnt].state == 0)
             {
@@ -11825,7 +11825,7 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
     }
     if (tc_at_m125 < 16)
     {
-        for (int cnt = 50, cnt_end = cnt + (11); cnt < cnt_end; ++cnt)
+        for (int cnt = 50; cnt < 61; ++cnt)
         {
             p_at_m125 = 100;
             if (sdata.get(cnt, tc_at_m125).original_level >= 500
@@ -11983,7 +11983,7 @@ void wake_up()
 {
     if (gdata_hour >= 7 && gdata_hour <= 22)
     {
-        for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+        for (int cnt = 57; cnt < 245; ++cnt)
         {
             if (cdata[cnt].sleep > 0)
             {
@@ -12001,7 +12001,7 @@ void wake_up()
 
 void incognitobegin()
 {
-    for (int cnt = 16, cnt_end = cnt + (229); cnt < cnt_end; ++cnt)
+    for (int cnt = 16; cnt < 245; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {
@@ -12032,7 +12032,7 @@ void incognitobegin()
 
 void incognitoend()
 {
-    for (int cnt = 16, cnt_end = cnt + (229); cnt < cnt_end; ++cnt)
+    for (int cnt = 16; cnt < 245; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {
@@ -14295,7 +14295,7 @@ int copy_chara(int prm_848)
     int y_at_m139 = 0;
     int x_at_m139 = 0;
     c_at_m139 = 0;
-    for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+    for (int cnt = 57; cnt < 245; ++cnt)
     {
         if (cdata[cnt].state == 0)
         {
@@ -19315,7 +19315,7 @@ void gain_level()
 
 void label_1455()
 {
-    for (int cnt = 10, cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 10; cnt < 20; ++cnt)
     {
         sdata.get(cnt, r1).original_level += rnd(3);
         if (sdata.get(cnt, r1).original_level > 2000)
@@ -19623,7 +19623,7 @@ void refresh_character()
             cdata(r1).flags[i] = cbitorg(i, cdata[r1].id);
         }
     }
-    for (int cnt = 10, cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 10; cnt < 20; ++cnt)
     {
         cdata[r1].growth_buffs[cnt - 10] = 0;
     }
@@ -20072,7 +20072,7 @@ void skillinit(int id, int cc, int initial_level)
 
 void label_1512()
 {
-    for (int cnt = 50, cnt_end = cnt + (11); cnt < cnt_end; ++cnt)
+    for (int cnt = 50; cnt < 61; ++cnt)
     {
         p = cdata[r1].level * 4 + 96;
         if (p > 300)
@@ -21904,7 +21904,7 @@ int do_create_character()
 {
     if (rc == -1)
     {
-        for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+        for (int cnt = 57; cnt < 245; ++cnt)
         {
             if (cdata[cnt].state == 0)
             {
@@ -25516,7 +25516,7 @@ void apply_general_eating_effect()
             {
                 skillmod(3, cc, 1000);
             }
-            for (int cnt = 100, cnt_end = cnt + (300); cnt < cnt_end; ++cnt)
+            for (int cnt = 100; cnt < 400; ++cnt)
             {
                 if (the_ability_db[cnt].related_basic_attribute == 0
                     || sdata.get(cnt, cc).original_level == 0)
@@ -30079,7 +30079,7 @@ void build_new_building()
         pc_turn(false);
     }
     area = -1;
-    for (int cnt = 300, cnt_end = cnt + (150); cnt < cnt_end; ++cnt)
+    for (int cnt = 300; cnt < 450; ++cnt)
     {
         if (adata(16, cnt) == 0)
         {
@@ -30313,7 +30313,7 @@ void use_house_board()
     if (gdata_current_map == 7)
     {
         p = 0;
-        for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+        for (int cnt = 57; cnt < 245; ++cnt)
         {
             if (cdata[cnt].state == 1 || cdata[cnt].state == 2)
             {
@@ -30656,7 +30656,7 @@ void use_house_board()
     case 6:
         txtnew();
         p = 0;
-        for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+        for (int cnt = 57; cnt < 245; ++cnt)
         {
             if (cdata[cnt].state == 1 || cdata[cnt].state == 2)
             {
@@ -30746,7 +30746,7 @@ void use_house_board()
                 randomize();
                 cdata[rc].shop_rank = rnd(15) + 1;
             }
-            for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+            for (int cnt = 57; cnt < 245; ++cnt)
             {
                 if (cnt == rc)
                 {
@@ -30896,7 +30896,7 @@ void label_1724()
 {
     area = -1;
     midbk = mid;
-    for (int cnt = 300, cnt_end = cnt + (150); cnt < cnt_end; ++cnt)
+    for (int cnt = 300; cnt < 450; ++cnt)
     {
         if (adata(16, cnt) == 102)
         {
@@ -32270,7 +32270,7 @@ void exit_map()
         {
             ctrl_file(11);
         }
-        for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+        for (int cnt = 57; cnt < 245; ++cnt)
         {
             if (cdata[cnt].state != 0)
             {
@@ -32292,7 +32292,7 @@ void label_1738()
         rowactend(cnt);
         cdata[cnt].item_which_will_be_used = 0;
     }
-    for (int cnt = 16, cnt_end = cnt + (39); cnt < cnt_end; ++cnt)
+    for (int cnt = 16; cnt < 55; ++cnt)
     {
         if (cdata[cnt].state == 1)
         {
@@ -32391,7 +32391,7 @@ void label_1745()
                     }
                 }
             }
-            for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+            for (int cnt = 57; cnt < 245; ++cnt)
             {
                 rc = cnt;
                 label_1539();
@@ -32451,7 +32451,7 @@ void label_1745()
         }
         if (adata(16, gdata_current_map) == 7)
         {
-            for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+            for (int cnt = 57; cnt < 245; ++cnt)
             {
                 if (cdata[cnt].state != 1)
                 {
@@ -32495,7 +32495,7 @@ void label_1745()
             }
             if (mdata(6) == 3 || mdata(6) == 2 || gdata_current_map == 7)
             {
-                for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+                for (int cnt = 57; cnt < 245; ++cnt)
                 {
                     if (cdata[cnt].state != 1)
                     {
@@ -32684,7 +32684,7 @@ void label_1746()
 int initialize_world_map()
 {
     p = 0;
-    for (int cnt = 450, cnt_end = cnt + (50); cnt < cnt_end; ++cnt)
+    for (int cnt = 450; cnt < 500; ++cnt)
     {
         if (adata(16, cnt) == 8)
         {
@@ -32717,13 +32717,13 @@ void label_1748()
     {
         initialize_adata();
         label_1749();
-        for (int cnt = 450, cnt_end = cnt + (50); cnt < cnt_end; ++cnt)
+        for (int cnt = 450; cnt < 500; ++cnt)
         {
             adata(16, cnt) = 0;
         }
     }
     p = 0;
-    for (int cnt = 450, cnt_end = cnt + (50); cnt < cnt_end; ++cnt)
+    for (int cnt = 450; cnt < 500; ++cnt)
     {
         if (adata(16, cnt) == 0)
         {
@@ -32743,7 +32743,7 @@ void label_1748()
         msgtemp += lang(
             u8"この大陸に大きな地殻変動が起こった。"s,
             u8"A sudden diastrophism hits the continent."s);
-        for (int cnt = 450, cnt_end = cnt + (50); cnt < cnt_end; ++cnt)
+        for (int cnt = 450; cnt < 500; ++cnt)
         {
             if (adata(16, cnt) == 8)
             {
@@ -33622,7 +33622,7 @@ void initialize_adata()
 
 int label_1753()
 {
-    for (int cnt = 450, cnt_end = cnt + (50); cnt < cnt_end; ++cnt)
+    for (int cnt = 450; cnt < 500; ++cnt)
     {
         if (adata(16, cnt) != 0)
         {
@@ -34366,7 +34366,7 @@ void label_1755()
     }
     else
     {
-        for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+        for (int cnt = 57; cnt < 245; ++cnt)
         {
             if (cbit(991, cnt) == 1)
             {
@@ -37044,7 +37044,7 @@ void pray()
         {
             f = 0;
             p = 0;
-            for (int cnt = 1, cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
+            for (int cnt = 1; cnt < 16; ++cnt)
             {
                 if (cdata[cnt].state != 0)
                 {
@@ -44778,7 +44778,7 @@ void label_2007()
     cs = commark(0) % 1000;
     page = commark(0) / 1000;
     curmenu = 1;
-    for (int cnt = 300, cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
+    for (int cnt = 300; cnt < 400; ++cnt)
     {
         if (sdata(cnt, cc) > 0)
         {
@@ -46297,7 +46297,7 @@ label_20331:
     }
     else
     {
-        for (int cnt = 150, cnt_end = cnt + (250); cnt < cnt_end; ++cnt)
+        for (int cnt = 150; cnt < 400; ++cnt)
         {
             f = 0;
             if (sdata(cnt, cc) != 0)
@@ -46324,7 +46324,7 @@ label_20331:
     list(1, listmax) = 30000;
     listn(0, listmax) = lang(u8"◆ 武器の専門"s, u8"Weapon Proficiency"s);
     ++listmax;
-    for (int cnt = 100, cnt_end = cnt + (50); cnt < cnt_end; ++cnt)
+    for (int cnt = 100; cnt < 150; ++cnt)
     {
         f = 0;
         if (csctrl != 3)
@@ -46355,7 +46355,7 @@ label_20331:
         list(1, listmax) = 40000;
         listn(0, listmax) = lang(u8"◆ 耐性と抵抗力"s, u8"Resistance"s);
         ++listmax;
-        for (int cnt = 50, cnt_end = cnt + (50); cnt < cnt_end; ++cnt)
+        for (int cnt = 50; cnt < 100; ++cnt)
         {
             if (sdata(cnt, cc) != 0)
             {
@@ -47063,7 +47063,7 @@ label_2035_internal:
             if (i != -1)
             {
                 p = 750;
-                for (int cnt = 750, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+                for (int cnt = 750; cnt < 753; ++cnt)
                 {
                     if (gdata(cnt) % 10000 == 0)
                     {
@@ -50016,7 +50016,7 @@ void label_2085()
         + cnveqweight(cc));
     noteadd(""s);
     listmax = 0;
-    for (int cnt = 100, cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+    for (int cnt = 100; cnt < 130; ++cnt)
     {
         if (cdata_body_part(cc, cnt) != 0)
         {
@@ -50348,7 +50348,7 @@ void migrate_save_data()
             u8"The next updating process may take a while to complete."s));
         memcpy(adata, 0, 300, adata, 0, 100, 8000);
         memcpy(adata, 0, 450, adata, 0, 150, 8000);
-        for (int cnt = 100, cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
+        for (int cnt = 100; cnt < 200; ++cnt)
         {
             p = cnt;
             SDIM1(file_cnv);
@@ -53551,7 +53551,7 @@ void continuous_action_others()
                 i = i * 5 / 10;
             }
             make_sound(cdata[0].position.x, cdata[0].position.y, 5, 8);
-            for (int cnt = 16, cnt_end = cnt + (229); cnt < cnt_end; ++cnt)
+            for (int cnt = 16; cnt < 245; ++cnt)
             {
                 if (cdata[cnt].state != 1)
                 {
@@ -53974,7 +53974,7 @@ void label_2151()
     if (gdata(98) != 0)
     {
         tc = -1;
-        for (int cnt = 1, cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
+        for (int cnt = 1; cnt < 16; ++cnt)
         {
             if (cbit(962, cnt) == 1)
             {
@@ -54032,7 +54032,7 @@ void label_2151()
     else
     {
         i = 0;
-        for (int cnt = 10, cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
+        for (int cnt = 10; cnt < 18; ++cnt)
         {
             i += sdata.get(cnt, 0).original_level;
         }
@@ -57202,7 +57202,7 @@ void unequip_item()
 
 void label_2196()
 {
-    for (int cnt = 100, cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+    for (int cnt = 100; cnt < 130; ++cnt)
     {
         if (cdata_body_part(r1, cnt) / 10000 == body)
         {
@@ -62084,7 +62084,7 @@ void do_use_command()
                 cdatan(0, rc) + u8" is now level "s + cdata[rc].level
                     + u8"!"s));
             listmax = 0;
-            for (int cnt = 10, cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
+            for (int cnt = 10; cnt < 18; ++cnt)
             {
                 list(0, listmax) = cnt;
                 list(1, listmax) = sdata.get(cnt, tc).original_level;
@@ -62254,7 +62254,7 @@ int label_2231()
     {
         return -1;
     }
-    for (int cnt = 100, cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+    for (int cnt = 100; cnt < 130; ++cnt)
     {
         f = cdata_body_part(tc, cnt) / 10000;
         if (f == 11 || f == 10 || f == 4)
@@ -66721,7 +66721,7 @@ int new_ally_joins()
 
 void create_all_adventurers()
 {
-    for (int cnt = 16, cnt_end = cnt + (39); cnt < cnt_end; ++cnt)
+    for (int cnt = 16; cnt < 55; ++cnt)
     {
         rc = cnt;
         create_adventurer();
@@ -66776,7 +66776,7 @@ void create_adventurer()
 
 void label_2662()
 {
-    for (int cnt = 16, cnt_end = cnt + (39); cnt < cnt_end; ++cnt)
+    for (int cnt = 16; cnt < 55; ++cnt)
     {
         rc = cnt;
         cc = rc;
@@ -67119,7 +67119,7 @@ void supply_new_equipment()
             flt(cdata[rc].level, calcfixlv(2));
         }
         mustequip = 0;
-        for (int cnt = 100, cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+        for (int cnt = 100; cnt < 130; ++cnt)
         {
             p = cdata_body_part(rc, cnt) / 10000;
             if (p == 0)
@@ -67213,7 +67213,7 @@ void supply_new_equipment()
 
 void label_2669()
 {
-    for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+    for (int cnt = 57; cnt < 245; ++cnt)
     {
         if (cdata[cnt].state == 0)
         {
@@ -68442,7 +68442,7 @@ label_2684_internal:
         color(0, 0, 0);
     }
     gsel(0);
-    for (int cnt = 1, cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
+    for (int cnt = 1; cnt < 16; ++cnt)
     {
         redraw(0);
         await(30);
@@ -69562,7 +69562,7 @@ label_2692_internal:
         {
             if (rnd(10) == 0)
             {
-                for (int cnt = 57, cnt_end = cnt + (40); cnt < cnt_end; ++cnt)
+                for (int cnt = 57; cnt < 97; ++cnt)
                 {
                     if (cdata[cnt].state != 1)
                     {
@@ -72311,7 +72311,7 @@ void pass_one_turn(bool label_2738_flg)
             if (gdata_is_returning_or_escaping <= 0 && evnum == 0)
             {
                 f = 0;
-                for (int cnt = 1, cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
+                for (int cnt = 1; cnt < 16; ++cnt)
                 {
                     if (cdata[cnt].state != 1)
                     {
@@ -74368,7 +74368,7 @@ void pc_died()
                 {
                     page = cnt;
                 }
-                for (int cnt = 1, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+                for (int cnt = 1; cnt < 4; ++cnt)
                 {
                     noteget(s, p + cnt);
                     noteget(s(1), p + 4 + cnt);

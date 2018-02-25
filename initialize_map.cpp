@@ -146,11 +146,11 @@ label_1741_internal:
         }
     }
     mdata(3) = 0;
-    for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+    for (int cnt = 57; cnt < 245; ++cnt)
     {
         cdata[cnt].state = 0;
     }
-    for (int cnt = 1320, cnt_end = cnt + (4160); cnt < cnt_end; ++cnt)
+    for (int cnt = 1320; cnt < 5480; ++cnt)
     {
         inv[cnt].number = 0;
     }
@@ -894,7 +894,7 @@ label_1741_internal:
                 }
             }
         }
-        for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+        for (int cnt = 57; cnt < 245; ++cnt)
         {
             if (cdata[cnt].relationship == -3)
             {
@@ -978,7 +978,7 @@ label_1741_internal:
                     cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
                 }
                 ctrl_file(17);
-                for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+                for (int cnt = 57; cnt < 245; ++cnt)
                 {
                     cdata[cnt].position.x = mdata(0) / 2;
                     cdata[cnt].position.y = mdata(1) / 2;
@@ -1641,7 +1641,7 @@ label_1741_internal:
             gdata_entrance_type = 8;
             map_placeplayer();
             listmax = 0;
-            for (int cnt = 57, cnt_end = cnt + (188); cnt < cnt_end; ++cnt)
+            for (int cnt = 57; cnt < 245; ++cnt)
             {
                 if (cdata[cnt].state == 1)
                 {
@@ -2586,7 +2586,7 @@ label_1741_internal:
         {
             f = 0;
             i = 0;
-            for (int cnt = 300, cnt_end = cnt + (200); cnt < cnt_end; ++cnt)
+            for (int cnt = 300; cnt < 500; ++cnt)
             {
                 p = cnt;
                 if (adata(1, cnt) == 0 || adata(2, cnt) == 0
@@ -2718,7 +2718,7 @@ label_1742_internal:
                 u8"  Three years elapsed and you set foot on cool soil of North Tyris's again."s);
         }
     }
-    for (int cnt = 16, cnt_end = cnt + (39); cnt < cnt_end; ++cnt)
+    for (int cnt = 16; cnt < 55; ++cnt)
     {
         if (cdata[cnt].state != 3)
         {
