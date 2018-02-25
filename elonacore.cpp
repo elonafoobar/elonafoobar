@@ -7222,11 +7222,11 @@ void skillgain(int cc, int id, int initial_level, int stock)
 
 
 
-int skillmod(int cc, int id, int experience)
+int skillmod(int id, int cc, int experience)
 {
-    lv_at_m77 = sdata.get(cc, id).original_level;
-    exp_at_m77 = sdata.get(cc, id).experience + experience;
-    growth_at_m77 = sdata.get(cc, id).potential;
+    lv_at_m77 = sdata.get(id, cc).original_level;
+    exp_at_m77 = sdata.get(id, cc).experience + experience;
+    growth_at_m77 = sdata.get(id, cc).potential;
     if (growth_at_m77 == 0)
     {
         return 0;
@@ -7244,19 +7244,19 @@ int skillmod(int cc, int id, int experience)
                 growth_at_m77 = 1;
             }
         }
-        sdata.get(cc, id).original_level = std::clamp(lv_at_m77, 0, 2000);
-        sdata.get(cc, id).experience = exp_at_m77;
-        sdata.get(cc, id).potential = growth_at_m77;
-        if (is_in_fov(id))
+        sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
+        sdata.get(id, cc).experience = exp_at_m77;
+        sdata.get(id, cc).potential = growth_at_m77;
+        if (is_in_fov(cc))
         {
-            if (id == 0 || id < 16)
+            if (cc == 0 || cc < 16)
             {
                 snd(61);
                 txtef(2);
             }
-            txt(txtskillchange(cc, id, true));
+            txt(txtskillchange(id, cc, true));
         }
-        r1 = id;
+        r1 = cc;
         refresh_character();
         return 1;
     }
@@ -7284,36 +7284,36 @@ int skillmod(int cc, int id, int experience)
                 growth_at_m77 = 400;
             }
         }
-        sdata.get(cc, id).original_level = std::clamp(lv_at_m77, 0, 2000);
-        sdata.get(cc, id).experience = exp_at_m77;
-        sdata.get(cc, id).potential = growth_at_m77;
-        if (id == 0 || id < 16)
+        sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
+        sdata.get(id, cc).experience = exp_at_m77;
+        sdata.get(id, cc).potential = growth_at_m77;
+        if (cc == 0 || cc < 16)
         {
-            if (is_in_fov(id))
+            if (is_in_fov(cc))
             {
                 if (lvchange_at_m77 != 0)
                 {
                     txtef(3);
-                    txt(txtskillchange(cc, id, false));
+                    txt(txtskillchange(id, cc, false));
                 }
             }
         }
-        r1 = id;
+        r1 = cc;
         refresh_character();
         return 1;
     }
-    sdata.get(cc, id).original_level = std::clamp(lv_at_m77, 0, 2000);
-    sdata.get(cc, id).experience = exp_at_m77;
-    sdata.get(cc, id).potential = growth_at_m77;
+    sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
+    sdata.get(id, cc).experience = exp_at_m77;
+    sdata.get(id, cc).potential = growth_at_m77;
     return 0;
 }
 
 
 
-int skillexp(int cc, int id, int experience, int prm_572, int prm_573)
+int skillexp(int id, int cc, int experience, int prm_572, int prm_573)
 {
     int exp2_at_m77 = 0;
-    if (sdata.get(cc, id).original_level == 0)
+    if (sdata.get(id, cc).original_level == 0)
     {
         return 0;
     }
@@ -7321,15 +7321,15 @@ int skillexp(int cc, int id, int experience, int prm_572, int prm_573)
     {
         return 0;
     }
-    if (the_ability_db[cc].related_basic_attribute != 0)
+    if (the_ability_db[id].related_basic_attribute != 0)
     {
         skillexp(
-            the_ability_db[cc].related_basic_attribute,
-            id,
+            the_ability_db[id].related_basic_attribute,
+            cc,
             experience / (2 + prm_572));
     }
-    lv_at_m77 = sdata.get(cc, id).original_level;
-    growth_at_m77 = sdata.get(cc, id).potential;
+    lv_at_m77 = sdata.get(id, cc).original_level;
+    growth_at_m77 = sdata.get(id, cc).potential;
     if (growth_at_m77 == 0)
     {
         return 0;
@@ -7337,14 +7337,14 @@ int skillexp(int cc, int id, int experience, int prm_572, int prm_573)
     if (experience > 0)
     {
         exp_at_m77 = experience * growth_at_m77 / (100 + lv_at_m77 * 15);
-        if (cc >= 10)
+        if (id >= 10)
         {
-            if (cc <= 19)
+            if (id <= 19)
             {
-                if (cdata[id].growth_buffs[cc - 10] > 0)
+                if (cdata[cc].growth_buffs[id - 10] > 0)
                 {
                     exp_at_m77 = exp_at_m77
-                        * (100 + cdata[id].growth_buffs[cc - 10]) / 100;
+                        * (100 + cdata[cc].growth_buffs[id - 10]) / 100;
                 }
             }
         }
@@ -7370,23 +7370,23 @@ int skillexp(int cc, int id, int experience, int prm_572, int prm_573)
     }
     if (exp_at_m77 > 0)
     {
-        if (cc >= 100)
+        if (id >= 100)
         {
             if (prm_573 != 1000)
             {
-                exp2_at_m77 = rnd(cdata[id].required_experience * exp_at_m77
-                                      / 1000 / (cdata[id].level + prm_573)
+                exp2_at_m77 = rnd(cdata[cc].required_experience * exp_at_m77
+                                      / 1000 / (cdata[cc].level + prm_573)
                                   + 1)
                     + rnd(2);
-                cdata[id].experience += exp2_at_m77;
-                if (id == 0)
+                cdata[cc].experience += exp2_at_m77;
+                if (cc == 0)
                 {
                     gdata_sleep_experience += exp2_at_m77;
                 }
             }
         }
     }
-    exp_at_m77 += sdata.get(cc, id).experience;
+    exp_at_m77 += sdata.get(id, cc).experience;
     if (exp_at_m77 >= 1000)
     {
         lvchange_at_m77 = exp_at_m77 / 1000;
@@ -7400,20 +7400,20 @@ int skillexp(int cc, int id, int experience, int prm_572, int prm_573)
                 growth_at_m77 = 1;
             }
         }
-        sdata.get(cc, id).original_level = std::clamp(lv_at_m77, 0, 2000);
-        sdata.get(cc, id).experience = exp_at_m77;
-        sdata.get(cc, id).potential = growth_at_m77;
-        if (is_in_fov(id))
+        sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
+        sdata.get(id, cc).experience = exp_at_m77;
+        sdata.get(id, cc).potential = growth_at_m77;
+        if (is_in_fov(cc))
         {
-            if (id == 0 || id < 16)
+            if (cc == 0 || cc < 16)
             {
                 snd(61);
                 txtef(2);
                 msgalert = 1;
             }
-            txt(txtskillchange(cc, id, true));
+            txt(txtskillchange(id, cc, true));
         }
-        r1 = id;
+        r1 = cc;
         refresh_character();
         return 1;
     }
@@ -7441,28 +7441,28 @@ int skillexp(int cc, int id, int experience, int prm_572, int prm_573)
                 growth_at_m77 = 400;
             }
         }
-        sdata.get(cc, id).original_level = std::clamp(lv_at_m77, 0, 2000);
-        sdata.get(cc, id).experience = exp_at_m77;
-        sdata.get(cc, id).potential = growth_at_m77;
-        if (is_in_fov(id))
+        sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
+        sdata.get(id, cc).experience = exp_at_m77;
+        sdata.get(id, cc).potential = growth_at_m77;
+        if (is_in_fov(cc))
         {
-            if (id == 0 || id < 16)
+            if (cc == 0 || cc < 16)
             {
                 if (lvchange_at_m77 != 0)
                 {
                     msgalert = 1;
                     txtef(3);
-                    txt(txtskillchange(cc, id, false));
+                    txt(txtskillchange(id, cc, false));
                 }
             }
         }
-        r1 = id;
+        r1 = cc;
         refresh_character();
         return 1;
     }
-    sdata.get(cc, id).original_level = std::clamp(lv_at_m77, 0, 2000);
-    sdata.get(cc, id).experience = exp_at_m77;
-    sdata.get(cc, id).potential = growth_at_m77;
+    sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
+    sdata.get(id, cc).experience = exp_at_m77;
+    sdata.get(id, cc).potential = growth_at_m77;
     return 0;
 }
 
