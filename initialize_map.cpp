@@ -1109,7 +1109,7 @@ label_1741_internal:
             flt();
             characreate(-1, 40, 13, 18);
             cdata[rc].character_role = 7;
-            sntrainer(cdatan(0, rc));
+            cdatan(0, rc) = sntrainer(cdatan(0, rc));
             flt();
             characreate(-1, 41, 5, 26);
             cdata[rc].character_role = 5;
@@ -1150,7 +1150,7 @@ label_1741_internal:
             flt();
             characreate(-1, 40, 3, 6);
             cdata[rc].character_role = 7;
-            sntrainer(cdatan(0, rc));
+            cdatan(0, rc) = sntrainer(cdatan(0, rc));
             flt();
             characreate(-1, 41, 3, 12);
             cdata[rc].character_role = 5;
@@ -1270,7 +1270,7 @@ label_1741_internal:
         flt();
         characreate(-1, 40, 30, 27);
         cdata[rc].character_role = 7;
-        sntrainer(cdatan(0, rc));
+        cdatan(0, rc) = sntrainer(cdatan(0, rc));
         flt();
         characreate(-1, 41, 32, 27);
         cdata[rc].character_role = 5;
@@ -1426,7 +1426,7 @@ label_1741_internal:
             flt();
             characreate(-1, 40, 21, 28);
             cdata[rc].character_role = 7;
-            sntrainer(cdatan(0, rc));
+            cdatan(0, rc) = sntrainer(cdatan(0, rc));
             flt();
             characreate(-1, 41, 21, 30);
             cdata[rc].character_role = 5;
@@ -1487,7 +1487,7 @@ label_1741_internal:
             flt();
             characreate(-1, 40, 12, 6);
             cdata[rc].character_role = 7;
-            sntrainer(cdatan(0, rc));
+            cdatan(0, rc) = sntrainer(cdatan(0, rc));
             flt();
             characreate(-1, 41, 3, 3);
             cdata[rc].character_role = 5;
@@ -1580,7 +1580,7 @@ label_1741_internal:
             flt();
             characreate(-1, 40, 20, 14);
             cdata[rc].character_role = 7;
-            sntrainer(cdatan(0, rc));
+            cdatan(0, rc) = sntrainer(cdatan(0, rc));
             flt();
             characreate(-1, 41, 24, 16);
             cdata[rc].character_role = 5;
@@ -1749,7 +1749,7 @@ label_1741_internal:
         flt();
         characreate(-1, 40, 18, 20);
         cdata[rc].character_role = 7;
-        sntrainer(cdatan(0, rc));
+        cdatan(0, rc) = sntrainer(cdatan(0, rc));
         flt();
         characreate(-1, 41, 4, 33);
         cdata[rc].character_role = 5;
@@ -1875,7 +1875,7 @@ label_1741_internal:
             flt();
             characreate(-1, 40, 16, 4);
             cdata[rc].character_role = 7;
-            sntrainer(cdatan(0, rc));
+            cdatan(0, rc) = sntrainer(cdatan(0, rc));
             flt();
             characreate(-1, 41, 14, 4);
             cdata[rc].character_role = 5;
@@ -1936,7 +1936,7 @@ label_1741_internal:
             flt();
             characreate(-1, 40, 15, 10);
             cdata[rc].character_role = 7;
-            sntrainer(cdatan(0, rc));
+            cdatan(0, rc) = sntrainer(cdatan(0, rc));
             flt();
             characreate(-1, 41, 14, 18);
             cdata[rc].character_role = 5;
@@ -2067,7 +2067,7 @@ label_1741_internal:
             flt();
             characreate(-1, 40, 27, 16);
             cdata[rc].character_role = 7;
-            sntrainer(cdatan(0, rc));
+            cdatan(0, rc) = sntrainer(cdatan(0, rc));
             flt();
             characreate(-1, 69, 25, 16);
             cdata[rc].character_role = 8;

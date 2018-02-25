@@ -196,10 +196,9 @@ std::string snarmor(const std::string& name)
 
 
 
-void sntrainer(std::string& prm_357)
+std::string sntrainer(const std::string& name)
 {
-    prm_357 = lang(u8"ギルドの"s + prm_357, sncnv(prm_357) + u8"the trainer"s);
-    return;
+    return lang(u8"ギルドの"s + name, sncnv(name) + u8"the trainer"s);
 }
 
 
