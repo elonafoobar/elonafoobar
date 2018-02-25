@@ -14,34 +14,19 @@ int talkref = 0;
 elona_vector1<int> p_at_m41;
 
 
-std::string cnvrank(int prm_248)
+std::string cnvrank(int n)
 {
     if (jp)
-    {
-        return ""s + prm_248;
-    }
-    if (prm_248 % 10 == 1)
-    {
-        if (prm_248 != 11)
-        {
-            return ""s + prm_248 + u8"st"s;
-        }
-    }
-    if (prm_248 % 10 == 2)
-    {
-        if (prm_248 != 12)
-        {
-            return ""s + prm_248 + u8"nd"s;
-        }
-    }
-    if (prm_248 % 10 == 3)
-    {
-        if (prm_248 != 13)
-        {
-            return ""s + prm_248 + u8"rd"s;
-        }
-    }
-    return ""s + prm_248 + u8"th"s;
+        return std::to_string(n);
+
+    if (n % 10 == 1 && n != 11)
+        return std::to_string(n) + u8"st";
+    else if (n % 10 == 2 && n != 12)
+        return std::to_string(n) + u8"nd";
+    else if (n % 10 == 3 && n != 13)
+        return std::to_string(n) + u8"rd";
+    else
+        return std::to_string(n) + u8"th";
 }
 
 
