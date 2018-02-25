@@ -168,11 +168,9 @@ std::string sntrade(const std::string& name)
 
 
 
-void sngoods(std::string& prm_353)
+std::string sngoods(const std::string& name)
 {
-    prm_353 =
-        lang(u8"何でも屋の"s + prm_353, sncnv(prm_353) + u8"the goods vendor"s);
-    return;
+    return lang(u8"何でも屋の"s + name, sncnv(name) + u8"the goods vendor"s);
 }
 
 
