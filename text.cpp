@@ -31,13 +31,9 @@ std::string cnvrank(int n)
 
 
 
-std::string cnvarticle(const std::string& prm_250)
+std::string cnvarticle(const std::string& str)
 {
-    if (jp)
-    {
-        return prm_250;
-    }
-    return u8"["s + prm_250 + u8"]"s;
+    return lang(str, u8'[' + str + u8']');
 }
 
 
