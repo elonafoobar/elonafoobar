@@ -126,10 +126,14 @@ std::string cnvdate(int datetime_id, bool show_hour)
 
 
 
-std::string cnvplaytime(int prm_344)
+std::string cnvplaytime(int datetime_id)
 {
-    return ""s + prm_344 / 60 / 60 + lang(u8"時間"s, u8":"s) + prm_344 / 60 % 60
-        + lang(u8"分"s, u8":"s) + prm_344 % 60 + lang(u8"秒"s, u8" Sec"s);
+    const int h = datetime_id / 60 / 60;
+    const int m = datetime_id / 60 % 60;
+    const int s = datetime_id % 60;
+    return lang(
+        std::to_string(h) + u8"時間" + m + u8"分" + s + u8"秒",
+        std::to_string(h) + u8":" + m + u8":" + s + u8" Sec");
 }
 
 
