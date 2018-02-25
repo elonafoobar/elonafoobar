@@ -38,17 +38,16 @@ std::string cnvarticle(const std::string& str)
 
 
 
-std::string cnvitemname(int prm_251)
+std::string cnvitemname(int id)
 {
     if (jp)
+        return ioriginalnameref(id);
+    
+    if (ioriginalnameref2(id) == ""s)
     {
-        return ioriginalnameref(prm_251);
+        return ioriginalnameref(id);
     }
-    if (ioriginalnameref2(prm_251) == ""s)
-    {
-        return ioriginalnameref(prm_251);
-    }
-    return ioriginalnameref2(prm_251) + u8" of "s + ioriginalnameref(prm_251);
+    return ioriginalnameref2(id) + u8" of "s + ioriginalnameref(id);
 }
 
 
