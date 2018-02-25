@@ -34248,7 +34248,7 @@ void label_1755()
                 cdata[rc].ai_calm = 3;
                 cdata[rc].character_role = 1007;
                 cdata[rc].shop_rank = 10;
-                snblack(cdatan(0, rc));
+                cdatan(0, rc) = snblack(cdatan(0, rc));
                 cbitmod(991, rc, 1);
             }
         }

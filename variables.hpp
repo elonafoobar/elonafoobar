@@ -1496,7 +1496,7 @@ void skillgain(int = 0, int = 0, int = 0, int = 0);
 void skillinit(int = 0, int = 0, int = 0);
 std::string snarmor(const std::string&);
 std::string snbakery(const std::string&);
-void snblack(std::string&);
+std::string snblack(const std::string&);
 void snd(int = 0, int = 0, int = 0);
 void sndload(const std::string&, int = 0);
 std::string snfish(const std::string&);

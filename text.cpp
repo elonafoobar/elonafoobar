@@ -210,12 +210,11 @@ std::string snfish(const std::string& name)
 
 
 
-void snblack(std::string& prm_359)
+std::string snblack(const std::string& name)
 {
-    prm_359 = lang(
-        u8"ブラックマーケットの"s + prm_359,
-        sncnv(prm_359) + u8"the blackmarket vendor"s);
-    return;
+    return lang(
+        u8"ブラックマーケットの"s + name,
+        sncnv(name) + u8"the blackmarket vendor"s);
 }
 
 
