@@ -203,10 +203,9 @@ std::string sntrainer(const std::string& name)
 
 
 
-void snfish(std::string& prm_358)
+std::string snfish(const std::string& name)
 {
-    prm_358 = lang(u8"釣具店の"s + prm_358, sncnv(prm_358) + u8"the fisher"s);
-    return;
+    return lang(u8"釣具店の"s + name, sncnv(name) + u8"the fisher"s);
 }
 
 

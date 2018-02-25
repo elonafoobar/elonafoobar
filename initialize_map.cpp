@@ -1416,7 +1416,7 @@ label_1741_internal:
             characreate(-1, 1, 47, 12);
             cdata[rc].character_role = 1014;
             cdata[rc].shop_rank = 5;
-            snfish(cdatan(0, rc));
+            cdatan(0, rc) = snfish(cdatan(0, rc));
             flt();
             characreate(-1, 38, 3, 38);
             cdata[rc].character_role = 6;
@@ -2017,7 +2017,7 @@ label_1741_internal:
             characreate(-1, 1, 47, 9);
             cdata[rc].character_role = 1014;
             cdata[rc].shop_rank = 5;
-            snfish(cdatan(0, rc));
+            cdatan(0, rc) = snfish(cdatan(0, rc));
             flt();
             characreate(-1, 1, 14, 12);
             cdata[rc].character_role = 1001;
