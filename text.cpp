@@ -42,7 +42,7 @@ std::string cnvitemname(int id)
 {
     if (jp)
         return ioriginalnameref(id);
-    
+
     if (ioriginalnameref2(id) == ""s)
     {
         return ioriginalnameref(id);
@@ -240,42 +240,21 @@ void txtsetlastword()
 
 
 
-void txtsetwinword(int prm_361)
+std::vector<std::string> txtsetwinword(int n)
 {
-    for (int cnt = 0; cnt < 6; ++cnt)
-    {
-        i = rnd(cnt + 1);
-        p(cnt) = p(i);
-        p(i) = cnt;
-    }
-    for (int cnt = 0, cnt_end = (prm_361); cnt < cnt_end; ++cnt)
-    {
-        if (p(cnt) == 0)
-        {
-            s(cnt) = lang(u8"遂に…！"s, u8"Finally!"s);
-        }
-        if (p(cnt) == 1)
-        {
-            s(cnt) = lang(u8"当然の結果だ"s, u8"It's a matter of course."s);
-        }
-        if (p(cnt) == 2)
-        {
-            s(cnt) = lang(u8"おぉぉぉぉ！"s, u8"Woooooo!"s);
-        }
-        if (p(cnt) == 3)
-        {
-            s(cnt) = lang(u8"ふっ"s, u8"Heh."s);
-        }
-        if (p(cnt) == 4)
-        {
-            s(cnt) = lang(u8"今日は眠れないな"s, u8"I can't sleep tonight."s);
-        }
-        if (p(cnt) == 5)
-        {
-            s(cnt) = lang(u8"またそんな冗談を"s, u8"You're kidding."s);
-        }
-    }
-    return;
+    std::vector<std::string> ret;
+    sample(
+        std::initializer_list<std::string>{
+            lang(u8"遂に…！", u8"Finally!"),
+            lang(u8"当然の結果だ", u8"It's a matter of course."),
+            lang(u8"おぉぉぉぉ！", u8"Woooooo!"),
+            lang(u8"ふっ", u8"Heh."),
+            lang(u8"今日は眠れないな", u8"I can't sleep tonight."),
+            lang(u8"またそんな冗談を", u8"You're kidding."),
+        },
+        std::back_inserter(ret),
+        n);
+    return ret;
 }
 
 

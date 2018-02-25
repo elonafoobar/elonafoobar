@@ -1527,7 +1527,7 @@ void txteledmg(int = 0, int = 0, int = 0, int = 0);
 void txtmore();
 void txtnew();
 void txtsetlastword();
-void txtsetwinword(int = 0);
+std::vector<std::string> txtsetwinword(int);
 std::string txttargetlevel(int, int);
 void txttargetnpc(int = 0, int = 0, int = 0);
 void unzip2(const std::string&, const std::string&);

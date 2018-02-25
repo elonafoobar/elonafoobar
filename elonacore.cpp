@@ -74113,10 +74113,10 @@ void conquer_lesimas()
         u8"信じられない！あなたはネフィアの迷宮「レシマス」を制覇した！"s,
         u8"Unbelievable! You conquered Lesimas!"s));
     update_screen();
-    txtsetwinword(3);
+    const auto win_words = txtsetwinword(3);
     for (int cnt = 0; cnt < 3; ++cnt)
     {
-        promptl(0, promptmax) = s(cnt);
+        promptl(0, promptmax) = win_words[cnt];
         promptl(1, promptmax) = key_select(cnt);
         promptl(2, promptmax) = ""s + promptmax;
         ++promptmax;
