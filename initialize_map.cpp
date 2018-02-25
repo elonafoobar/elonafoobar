@@ -3457,7 +3457,7 @@ label_1744_internal:
                 + gdata_year * 24 * 30 * 12 - gdata_departure_date;
             txtmore();
             txt(lang(
-                cnvdate(gdata_departure_date) + u8"に"s
+                cnvdate(gdata_departure_date, false) + u8"に"s
                     + mapname(gdata_left_town_map) + u8"を発ってから、"s
                     + p / 24 + u8"日と"s + p % 24 + u8"時間の旅を終えた。"s,
                 ""s + p / 24 + u8" days and "s + p % 24

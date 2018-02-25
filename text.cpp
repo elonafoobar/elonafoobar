@@ -84,48 +84,44 @@ std::string cnvfix(int n)
 
 
 
-std::string cnvdate(int prm_342, int prm_343)
+std::string cnvdate(int datetime_id, bool show_hour)
 {
-    int p_at_m27 = 0;
-    int hour_at_m27 = 0;
-    int day_at_m27 = 0;
-    int month_at_m27 = 0;
-    int year_at_m27 = 0;
-    std::string s_at_m27;
-    p_at_m27 = prm_342;
-    hour_at_m27 = prm_342 % 24;
-    day_at_m27 = prm_342 / 24 % 30;
-    if (day_at_m27 == 0)
+    std::string ret;
+
+    int hour = datetime_id % 24;
+    int day = datetime_id / 24 % 30;
+    if (day == 0)
     {
-        day_at_m27 = 30;
-        p_at_m27 -= 720;
+        day = 30;
+        datetime_id -= 720;
     }
-    month_at_m27 = p_at_m27 / 24 / 30 % 12;
-    if (month_at_m27 == 0)
+    int month = datetime_id / 24 / 30 % 12;
+    if (month == 0)
     {
-        month_at_m27 = 12;
-        p_at_m27 -= 8640;
+        month = 12;
+        datetime_id -= 8640;
     }
-    year_at_m27 = p_at_m27 / 24 / 30 / 12;
+    int year = datetime_id / 24 / 30 / 12;
     if (jp)
     {
-        s_at_m27 = ""s + year_at_m27 + u8"年"s + month_at_m27 + u8"月"s
-            + day_at_m27 + u8"日"s;
-        if (prm_343 == 1)
+        ret = ""s + year + u8"年"s + month + u8"月"s
+            + day + u8"日"s;
+        if (show_hour)
         {
-            s_at_m27 += ""s + hour_at_m27 + u8"時"s;
+            ret += std::to_string(hour) + u8"時";
         }
     }
     else
     {
-        s_at_m27 = ""s + year_at_m27 + u8" "s + month_at_m27 + u8"/"s
-            + day_at_m27 + u8" "s;
-        if (prm_343 == 1)
+        ret = ""s + year + u8" "s + month + u8"/"s
+            + day + u8" "s;
+        if (show_hour)
         {
-            s_at_m27 += ""s + hour_at_m27 + u8"h"s;
+            ret += std::to_string(hour) + u8"h";
         }
     }
-    return s_at_m27;
+
+    return ret;
 }
 
 

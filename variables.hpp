@@ -808,7 +808,7 @@ std::string _yoro(int = 0);
 std::string aln(int = 0);
 std::string cnv_str(std::string&, const std::string&, const std::string&);
 std::string cnvarticle(const std::string&);
-std::string cnvdate(int = 0, int = 0);
+std::string cnvdate(int, bool = true);
 std::string cnven(const std::string&);
 std::string cnveqweight(int = 0);
 std::string cnvfix(int = 0);

@@ -17019,8 +17019,8 @@ label_14001_internal:
         comctrl = 0;
         txt(lang(
             u8"あなたの投票権はまだ復活していない("s
-                + cnvdate(gdata_next_voting_time, 1) + u8"まで)"s,
-            u8"You can't vote until "s + cnvdate(gdata_next_voting_time, 1)
+                + cnvdate(gdata_next_voting_time) + u8"まで)"s,
+            u8"You can't vote until "s + cnvdate(gdata_next_voting_time)
                 + u8"."s));
         for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
         {
@@ -49890,10 +49890,10 @@ void label_2084()
             snd(27);
             txt(lang(
                 u8"まだ次のアップロードはできない("s
-                    + cnvdate(gdata_time_when_uploding_becomes_available, 1)
+                    + cnvdate(gdata_time_when_uploding_becomes_available)
                     + u8"まで)"s,
                 u8"You can't do this till "s
-                    + cnvdate(gdata_time_when_uploding_becomes_available, 1)
+                    + cnvdate(gdata_time_when_uploding_becomes_available)
                     + u8"."s));
             return;
         }
@@ -60934,9 +60934,9 @@ void do_use_command()
         {
             txt(lang(
                 u8"そのアイテムが次に使用できるのは"s
-                    + cnvdate(inv[ci].count, 1) + u8"だ。"s,
+                    + cnvdate(inv[ci].count) + u8"だ。"s,
                 u8"This item will be useable again at "s
-                    + cnvdate(inv[ci].count, 1) + u8"."s));
+                    + cnvdate(inv[ci].count) + u8"."s));
             update_screen();
             pc_turn(false);
         }
