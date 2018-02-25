@@ -1505,7 +1505,7 @@ std::string sngeneral(const std::string&);
 void sngoods(std::string&);
 std::string sninn(const std::string&);
 void snmagic(std::string&);
-void sntrade(std::string&);
+std::string sntrade(const std::string&);
 void sntrainer(std::string&);
 void sortenc(int = 0);
 void spillblood(int = 0, int = 0, int = 0);

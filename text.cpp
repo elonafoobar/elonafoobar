@@ -161,10 +161,9 @@ std::string sninn(const std::string& name)
 
 
 
-void sntrade(std::string& prm_352)
+std::string sntrade(const std::string& name)
 {
-    prm_352 = lang(u8"交易店の"s + prm_352, sncnv(prm_352) + u8"the trader"s);
-    return;
+    return lang(u8"交易店の"s + name, sncnv(name) + u8"the trader"s);
 }
 
 
