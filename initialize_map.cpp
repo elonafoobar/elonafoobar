@@ -1241,7 +1241,7 @@ label_1741_internal:
         characreate(-1, 1, 11, 14);
         cdata[rc].character_role = 1003;
         cdata[rc].shop_rank = 9;
-        snbakery(cdatan(0, rc));
+        cdatan(0, rc) = snbakery(cdatan(0, rc));
         cdata[rc].image = 138;
         flt();
         characreate(-1, 41, 41, 3);
@@ -1400,7 +1400,7 @@ label_1741_internal:
             characreate(-1, 1, 37, 12);
             cdata[rc].character_role = 1003;
             cdata[rc].shop_rank = 9;
-            snbakery(cdatan(0, rc));
+            cdatan(0, rc) = snbakery(cdatan(0, rc));
             cdata[rc].image = 138;
             flt();
             characreate(-1, 41, 6, 15);
@@ -1729,7 +1729,7 @@ label_1741_internal:
         characreate(-1, 1, 5, 27);
         cdata[rc].character_role = 1003;
         cdata[rc].shop_rank = 9;
-        snbakery(cdatan(0, rc));
+        cdatan(0, rc) = snbakery(cdatan(0, rc));
         cdata[rc].image = 138;
         flt();
         characreate(-1, 41, 56, 5);
@@ -2047,7 +2047,7 @@ label_1741_internal:
             characreate(-1, 1, 22, 26);
             cdata[rc].character_role = 1003;
             cdata[rc].shop_rank = 9;
-            snbakery(cdatan(0, rc));
+            cdatan(0, rc) = snbakery(cdatan(0, rc));
             cdata[rc].image = 138;
             flt();
             characreate(-1, 41, 28, 16);

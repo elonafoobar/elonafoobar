@@ -175,10 +175,9 @@ std::string sngoods(const std::string& name)
 
 
 
-void snbakery(std::string& prm_354)
+std::string snbakery(const std::string& name)
 {
-    prm_354 = lang(u8"パン屋の"s + prm_354, sncnv(prm_354) + u8"the baker"s);
-    return;
+    return lang(u8"パン屋の"s + name, sncnv(name) + u8"the baker"s);
 }
 
 

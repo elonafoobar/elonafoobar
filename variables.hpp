@@ -1495,7 +1495,7 @@ void sickifcursed(int = 0, int = 0, int = 0);
 void skillgain(int = 0, int = 0, int = 0, int = 0);
 void skillinit(int = 0, int = 0, int = 0);
 void snarmor(std::string&);
-void snbakery(std::string&);
+std::string snbakery(const std::string&);
 void snblack(std::string&);
 void snd(int = 0, int = 0, int = 0);
 void sndload(const std::string&, int = 0);
