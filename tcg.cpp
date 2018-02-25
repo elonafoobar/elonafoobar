@@ -202,7 +202,7 @@ void cpisenemy()
 std::string cnvrare(int prm_990)
 {
     s_at_tcg = "";
-    for (int cnt = 0, cnt_end = cnt + (std::clamp(5 - prm_990 / 20, 1, 5));
+    for (int cnt = 0, cnt_end = (std::clamp(5 - prm_990 / 20, 1, 5));
          cnt < cnt_end;
          ++cnt)
     {
@@ -272,7 +272,7 @@ void makecardlist()
     int c2_at_tcg = 0;
     DIM3(clist_at_tcg, 10, 4);
     DIM2(clistmax_at_tcg, 4);
-    for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 2; ++cnt)
     {
         cnt2_at_tcg = cnt;
         lmax_at_tcg = 0;
@@ -284,8 +284,7 @@ void makecardlist()
         {
             p_at_tcg = 3;
         }
-        for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end;
-             ++cnt)
+        for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
         {
             if (card_at_tcg(1, cnt) != cnt2_at_tcg)
             {
@@ -309,8 +308,7 @@ void makecardlist()
         {
             p_at_tcg = 2;
         }
-        for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end;
-             ++cnt)
+        for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
         {
             if (card_at_tcg(1, cnt) != cnt2_at_tcg)
             {
@@ -326,13 +324,13 @@ void makecardlist()
         clist_at_tcg(lmax_at_tcg, p_at_tcg) = -1;
         clistmax_at_tcg(p_at_tcg) = lmax_at_tcg;
     }
-    for (int cnt = 0, cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 4; ++cnt)
     {
         p_at_tcg = cnt;
         while (1)
         {
             f_at_tcg = 0;
-            for (int cnt = 0, cnt_end = cnt + (clistmax_at_tcg(p_at_tcg));
+            for (int cnt = 0, cnt_end = (clistmax_at_tcg(p_at_tcg));
                  cnt < cnt_end;
                  ++cnt)
             {
@@ -426,8 +424,7 @@ void tcgdrawcard(int prm_994, int prm_995)
             cardhelp(""s);
         }
     }
-    for (int cnt = 0, cnt_end = cnt + (1 + (selected_at_tcg == 1));
-         cnt < cnt_end;
+    for (int cnt = 0, cnt_end = (1 + (selected_at_tcg == 1)); cnt < cnt_end;
          ++cnt)
     {
         x_at_tcg = card_at_tcg(2, prm_994);
@@ -557,7 +554,7 @@ label_1772_internal:
     font(lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0);
     color(255, 255, 255);
     gmode(2);
-    for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 2; ++cnt)
     {
         x_at_tcg = holderix_at_tcg(cnt) - holderspace_at_tcg;
         y_at_tcg = holderiy_at_tcg(cnt);
@@ -568,7 +565,7 @@ label_1772_internal:
     }
     color(0, 0, 0);
     font(lang(cfg_font1, cfg_font2), 13 + en - en * 2, 0);
-    for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
         c_at_tcg = maxcard_at_tcg - cnt - 1;
         if (cc_at_tcg != 0)
@@ -665,7 +662,7 @@ label_1772_internal:
         if (chaintime_at_tcg == cfg_chaintime)
         {
             DIM3(star_at_tcg, 2, 10);
-            for (int cnt = 0, cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 10; ++cnt)
             {
                 star_at_tcg(0, cnt) = rnd(72) - 32;
                 star_at_tcg(1, cnt) = rnd(40) - 32;
@@ -675,7 +672,7 @@ label_1772_internal:
         {
             gmode(5, -1, -1, std::clamp(chaintime_at_tcg * 3 - 40, 0, 255));
             cnt2_at_tcg = 0;
-            for (int cnt = 0, cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 10; ++cnt)
             {
                 pos(chainx_at_tcg + star_at_tcg(0, cnt),
                     chainy_at_tcg + star_at_tcg(1, cnt));
@@ -688,7 +685,7 @@ label_1772_internal:
                 star_at_tcg(1, cnt) += 2;
             }
         }
-        for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 3; ++cnt)
         {
             p_at_tcg = (t_at_tcg / 4 + cnt) % 7;
             color(p_at_tcg * 20, 25 + p_at_tcg * 20, 60 + p_at_tcg * 20);
@@ -700,7 +697,7 @@ label_1772_internal:
             color(0, 0, 0);
         }
     }
-    for (int cnt = 0, cnt_end = cnt + (efllistmax_at_tcg); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (efllistmax_at_tcg); cnt < cnt_end; ++cnt)
     {
         if (efllist_at_tcg(4, cnt) <= 0)
         {
@@ -794,7 +791,7 @@ void efllistadd(
     int prm_1000,
     int prm_1001)
 {
-    for (int cnt = 0, cnt_end = cnt + (efllistmax_at_tcg); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (efllistmax_at_tcg); cnt < cnt_end; ++cnt)
     {
         if (efllist_at_tcg(4, cnt) <= 0)
         {
@@ -858,8 +855,7 @@ void cardpos(int prm_1004, int prm_1005)
     }
     p_at_tcg = -1;
     spotlistmax_at_tcg = clistmax_at_tcg(l_at_tcg);
-    for (int cnt = 0, cnt_end = cnt + (spotlistmax_at_tcg); cnt < cnt_end;
-         ++cnt)
+    for (int cnt = 0, cnt_end = (spotlistmax_at_tcg); cnt < cnt_end; ++cnt)
     {
         spotlist_at_tcg(cnt) = clist_at_tcg(cnt, l_at_tcg);
         if (p_at_tcg == -1)
@@ -874,7 +870,7 @@ void cardpos(int prm_1004, int prm_1005)
     {
         if (p_at_tcg != -1)
         {
-            for (int cnt = 0, cnt_end = cnt + (spotlistmax_at_tcg - p_at_tcg);
+            for (int cnt = 0, cnt_end = (spotlistmax_at_tcg - p_at_tcg);
                  cnt < cnt_end;
                  ++cnt)
             {
@@ -891,8 +887,7 @@ void cardpos(int prm_1004, int prm_1005)
     }
     x2_at_tcg = spotspace_at_tcg;
     x_at_tcg = basex_at_tcg + 466 - spotlistmax_at_tcg * x2_at_tcg / 2;
-    for (int cnt = 0, cnt_end = cnt + (spotlistmax_at_tcg); cnt < cnt_end;
-         ++cnt)
+    for (int cnt = 0, cnt_end = (spotlistmax_at_tcg); cnt < cnt_end; ++cnt)
     {
         p_at_tcg = spotlist_at_tcg(cnt);
         card_at_tcg(4, p_at_tcg) = x_at_tcg + cnt * x2_at_tcg;
@@ -907,8 +902,7 @@ void gravecard(int prm_1006)
 {
     if (card_at_tcg(0, prm_1006) == 1)
     {
-        for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end;
-             ++cnt)
+        for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
         {
             if (card_at_tcg(0, cnt) != 1)
             {
@@ -929,7 +923,7 @@ void gravecard(int prm_1006)
     n_at_tcg = card_at_tcg(1, prm_1006);
     if (gravesum_at_tcg(n_at_tcg) > 2)
     {
-        for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 2; ++cnt)
         {
             gravelist_at_tcg(cnt, n_at_tcg) =
                 gravelist_at_tcg(cnt + 1, n_at_tcg);
@@ -994,7 +988,7 @@ void dmgplayer(int prm_1009, int prm_1010)
 void delbottomcard(int prm_1011)
 {
     int delcard_at_tcg = 0;
-    for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
         if (card_at_tcg(1, cnt) != prm_1011)
         {
@@ -1036,7 +1030,7 @@ int gameover()
 int getholdersum(int prm_1012)
 {
     p_at_tcg = 0;
-    for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
         if (card_at_tcg(1, cnt) != prm_1012)
         {
@@ -1055,7 +1049,7 @@ int getholdersum(int prm_1012)
 int getspotsum(int prm_1013)
 {
     p_at_tcg = 0;
-    for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
         if (card_at_tcg(1, cnt) != prm_1013)
         {
@@ -1074,7 +1068,7 @@ int getspotsum(int prm_1013)
 int getdecksum(int prm_1014)
 {
     p_at_tcg = 0;
-    for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
         if (card_at_tcg(1, cnt) != prm_1014)
         {
@@ -1223,7 +1217,7 @@ void saccard(int prm_1019, int prm_1020)
                 u8"The opponent sacrifices the card."s),
             40);
     }
-    for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
         if (card_at_tcg(1, cnt) != prm_1020)
         {
@@ -1497,7 +1491,7 @@ int putcard(int prm_1024, int prm_1025)
         card_at_tcg(5, prm_1024) += 25;
     }
     tcgdraw();
-    for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
         if (card_at_tcg(1, cnt) != prm_1025)
         {
@@ -1557,12 +1551,10 @@ void tcgdrawbg()
     w_at_tcg = 128;
     h_at_tcg = 128;
     gmode(0);
-    for (int cnt = 0, cnt_end = cnt + (windowh / h_at_tcg + 1); cnt < cnt_end;
-         ++cnt)
+    for (int cnt = 0, cnt_end = (windowh / h_at_tcg + 1); cnt < cnt_end; ++cnt)
     {
         cnt2_at_tcg = cnt;
-        for (int cnt = 0, cnt_end = cnt + (windoww / w_at_tcg + 1);
-             cnt < cnt_end;
+        for (int cnt = 0, cnt_end = (windoww / w_at_tcg + 1); cnt < cnt_end;
              ++cnt)
         {
             pos(windoww - (cnt + 1) * w_at_tcg,
@@ -1677,13 +1669,12 @@ void calcstartattb(int prm_1027)
 
 void calcdomain()
 {
-    for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 2; ++cnt)
     {
         DIM2(domain_at_tcg, 5);
         p_at_tcg = cnt;
         cpdata_at_tcg(9, p_at_tcg) = 0;
-        for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end;
-             ++cnt)
+        for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
         {
             if (card_at_tcg(1, cnt) != p_at_tcg)
             {
@@ -1694,7 +1685,7 @@ void calcdomain()
                 domain_at_tcg(card_at_tcg(23, cnt)) = 1;
             }
         }
-        for (int cnt = 0, cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 5; ++cnt)
         {
             if (domain_at_tcg(cnt))
             {
@@ -1715,7 +1706,7 @@ void calcdecksize()
     cardsize_at_tcg = 0;
     cpdata_at_tcg(9, 0) = 0;
     DIM2(domain_at_tcg, 5);
-    for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
         cardsize_at_tcg += card(0, cnt);
         if (deck(card_at_tcg(18, cnt)) == 0)
@@ -1725,7 +1716,7 @@ void calcdecksize()
         gdata(830 + curdeck) += deck(card_at_tcg(18, cnt));
         domain_at_tcg(card_at_tcg(23, cnt)) = 1;
     }
-    for (int cnt = 0, cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 5; ++cnt)
     {
         if (domain_at_tcg(cnt))
         {
@@ -1745,7 +1736,7 @@ void tcgdeck()
     tcginit();
     cardmode_at_tcg = 1;
     i_at_tcg = 0;
-    for (int cnt = 0, cnt_end = cnt + (1000); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 1000; ++cnt)
     {
         if (card(0, cnt) == 0)
         {
@@ -1763,7 +1754,7 @@ label_1812_internal:
     s_at_tcg(2) = lang(u8"銀"s, u8"Silver"s);
     s_at_tcg(3) = lang(u8"赤"s, u8"Red"s);
     s_at_tcg(4) = lang(u8"黒"s, u8"Black"s);
-    for (int cnt = 0, cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 5; ++cnt)
     {
         s_at_tcg(cnt) += lang(u8"のデッキ"s, u8" Deck"s);
         file_at_tcg = fs::u8path(u8"./tmp/deck_"s) + cnt + u8".s2"s;
@@ -1837,7 +1828,7 @@ void tcgmain()
     int rp_at_tcg = 0;
     maxcard_at_tcg = 80;
     tcginit();
-    for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 2; ++cnt)
     {
         rp_at_tcg = cnt;
         cpx_at_tcg(cnt) = basex_at_tcg + 23;
@@ -1845,7 +1836,7 @@ void tcgmain()
         cpdata_at_tcg(4, cnt) = 30;
         cpdata_at_tcg(8, cnt) = 0;
         cpdata_at_tcg(7, cnt) = 30;
-        for (int cnt = 0, cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 30; ++cnt)
         {
             cc_at_tcg = rp_at_tcg * 40 + cnt;
             int stat = card_ref(rnd(1000));
@@ -1860,11 +1851,10 @@ void tcgmain()
         }
     }
     calcdomain();
-    for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 2; ++cnt)
     {
         cp_at_tcg = cnt;
-        for (int cnt = 0, cnt_end = cnt + (calcstartcard(cnt)); cnt < cnt_end;
-             ++cnt)
+        for (int cnt = 0, cnt_end = (calcstartcard(cnt)); cnt < cnt_end; ++cnt)
         {
             getrandomcard(cp_at_tcg);
         }
@@ -1920,7 +1910,7 @@ void label_1816()
     await(50);
     sac_at_tcg = 0;
     cpdata_at_tcg(5, cp_at_tcg) = cpdata_at_tcg(6, cp_at_tcg);
-    for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
         if (card_at_tcg(0, cnt) != 1)
         {
@@ -1983,7 +1973,7 @@ void label_1819()
     {
         selectmode_at_tcg = -1;
     }
-    for (int cnt = 0, cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 5; ++cnt)
     {
         tcgdraw();
     }
@@ -2115,12 +2105,12 @@ void label_1823()
     gmode(2);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     color(255, 255, 255);
-    for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 2; ++cnt)
     {
         gmode(0);
         cnt2_at_tcg = cnt;
         DIM2(mana_at_tcg, 10);
-        for (int cnt = 0, cnt_end = cnt + (landsum_at_tcg(cnt2_at_tcg));
+        for (int cnt = 0, cnt_end = (landsum_at_tcg(cnt2_at_tcg));
              cnt < cnt_end;
              ++cnt)
         {
@@ -2139,7 +2129,7 @@ void label_1823()
         }
         y_at_tcg = landiy_at_tcg(cnt2_at_tcg) + (cnt == 0) * 80;
         x_at_tcg = landix_at_tcg(cnt2_at_tcg) - 16;
-        for (int cnt = 0, cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 10; ++cnt)
         {
             if (mana_at_tcg(cnt) == 0)
             {
@@ -2158,7 +2148,7 @@ void label_1823()
                 y_at_tcg += 20;
             }
         }
-        for (int cnt = 0, cnt_end = cnt + (gravesum_at_tcg(cnt2_at_tcg));
+        for (int cnt = 0, cnt_end = (gravesum_at_tcg(cnt2_at_tcg));
              cnt < cnt_end;
              ++cnt)
         {
@@ -2198,7 +2188,7 @@ void label_1824()
 {
     font(lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0);
     gmode(2);
-    for (int cnt = 0, cnt_end = cnt + (cfmax_at_tcg); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (cfmax_at_tcg); cnt < cnt_end; ++cnt)
     {
         x_at_tcg = basex_at_tcg + 180 + cnt * 80;
         y_at_tcg = basey_at_tcg + 26 + (ccf_at_tcg == cnt) * 3;
@@ -2227,7 +2217,7 @@ void label_1824()
         }
     }
     font(lang(cfg_font1, cfg_font2), 13 + en - en * 2, 0);
-    for (int cnt = 0, cnt_end = cnt + (24); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 24; ++cnt)
     {
         p_at_tcg = page_at_tcg * 8 + cnt;
         if (p_at_tcg >= dlistmax_at_tcg)
@@ -2308,7 +2298,7 @@ void label_1825()
         pos(basex_at_tcg + 38, basey_at_tcg + 57);
         mes(u8"Turn "s + turn_at_tcg);
         color(0, 0, 0);
-        for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 2; ++cnt)
         {
             x_at_tcg = cpx_at_tcg(cnt);
             y_at_tcg = cpy_at_tcg(cnt);
@@ -2329,7 +2319,7 @@ void label_1825()
             pos(x_at_tcg + 36 - strlen_u(s_at_tcg) * 3, y_at_tcg + 95 - en);
             mes(s_at_tcg);
         }
-        for (int cnt = 0, cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 5; ++cnt)
         {
             if (cnt - 1 == phase_at_tcg)
             {
@@ -2390,7 +2380,7 @@ void label_1825()
         mes(u8"Domain * "s + cpdata_at_tcg(9, 0));
         color(0, 0, 0);
         s_at_tcg = "";
-        for (int cnt = 0, cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 5; ++cnt)
         {
             if (domain_at_tcg(cnt))
             {
@@ -2412,7 +2402,7 @@ void label_1826()
 {
     gmode(4, -1, -1, 180);
     redraw(0);
-    for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 2; ++cnt)
     {
         cnt2_at_tcg = cnt;
     }
@@ -2478,7 +2468,7 @@ void label_1828()
 label_1829_internal:
     dlistmax_at_tcg = 0;
     dsc_at_tcg = 0;
-    for (int cnt = 0, cnt_end = cnt + (maxcard_at_tcg); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
     {
         if (card_at_tcg(0, cnt) != -1)
         {
@@ -2516,8 +2506,7 @@ label_1829_internal:
         {
             f_at_tcg = 0;
             cnt2_at_tcg = cnt;
-            for (int cnt = 0, cnt_end = cnt + (dlistmax_at_tcg); cnt < cnt_end;
-                 ++cnt)
+            for (int cnt = 0, cnt_end = (dlistmax_at_tcg); cnt < cnt_end; ++cnt)
             {
                 c_at_tcg = dlist_at_tcg(0, cnt);
                 if (card_at_tcg(18, c_at_tcg) == card_at_tcg(18, cnt2_at_tcg))
@@ -2542,8 +2531,7 @@ label_1829_internal:
         {
             break;
         }
-        for (int cnt = 0, cnt_end = cnt + (dlistmax_at_tcg - 1); cnt < cnt_end;
-             ++cnt)
+        for (int cnt = 0, cnt_end = (dlistmax_at_tcg - 1); cnt < cnt_end; ++cnt)
         {
             p_at_tcg(0) = card_at_tcg(10, dlist_at_tcg(0, cnt)) * 10000
                 + card_at_tcg(18, dlist_at_tcg(0, cnt));
@@ -2874,7 +2862,7 @@ label_1837_internal:
             }
         }
         f_at_tcg = 0;
-        for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 3; ++cnt)
         {
             if (act_at_tcg(cnt) != 0)
             {
@@ -3060,7 +3048,7 @@ label_1841_internal:
     {
         f_at_tcg = 1;
     }
-    for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 3; ++cnt)
     {
         x_at_tcg(cnt) = card_at_tcg(2, cc_at_tcg) + 20;
         if (cnt == 0)
@@ -3096,7 +3084,7 @@ label_1841_internal:
     redraw(1);
     redraw(0);
     gmode(0);
-    for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 3; ++cnt)
     {
         if (act_at_tcg(cnt) == 0)
         {
@@ -3146,8 +3134,7 @@ void label_1842()
 void label_1844()
 {
     emax_at_tcg = 0;
-    for (int cnt = 0, cnt_end = cnt + (clistmax_at_tcg(ch_at_tcg));
-         cnt < cnt_end;
+    for (int cnt = 0, cnt_end = (clistmax_at_tcg(ch_at_tcg)); cnt < cnt_end;
          ++cnt)
     {
         if (aiblock_at_tcg)
@@ -3173,8 +3160,7 @@ void label_1844()
     }
     if (aiblock_at_tcg == 0)
     {
-        for (int cnt = 0, cnt_end = cnt + (clistmax_at_tcg(cl_at_tcg));
-             cnt < cnt_end;
+        for (int cnt = 0, cnt_end = (clistmax_at_tcg(cl_at_tcg)); cnt < cnt_end;
              ++cnt)
         {
             c_at_tcg = clist_at_tcg(cnt, cl_at_tcg);
@@ -3191,8 +3177,7 @@ void label_1844()
     }
     else
     {
-        for (int cnt = 0, cnt_end = cnt + (clistmax_at_tcg(cl_at_tcg));
-             cnt < cnt_end;
+        for (int cnt = 0, cnt_end = (clistmax_at_tcg(cl_at_tcg)); cnt < cnt_end;
              ++cnt)
         {
             c_at_tcg = clist_at_tcg(cnt, cl_at_tcg);
@@ -3214,13 +3199,12 @@ void label_1844()
     while (1)
     {
         f_at_tcg = 0;
-        for (int cnt = 0, cnt_end = cnt + (emax_at_tcg - 1); cnt < cnt_end;
-             ++cnt)
+        for (int cnt = 0, cnt_end = (emax_at_tcg - 1); cnt < cnt_end; ++cnt)
         {
             if (elist_at_tcg(0, cnt) < elist_at_tcg(0, cnt + 1))
             {
                 cnt2_at_tcg = cnt;
-                for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 3; ++cnt)
                 {
                     p_at_tcg(cnt) = elist_at_tcg(cnt, cnt2_at_tcg + 1);
                     elist_at_tcg(cnt, cnt2_at_tcg + 1) =
@@ -3256,7 +3240,7 @@ int label_1845()
     }
     f_at_tcg = 0;
     p_at_tcg(1) = 50;
-    for (int cnt = 0, cnt_end = cnt + (emax_at_tcg); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (emax_at_tcg); cnt < cnt_end; ++cnt)
     {
         c_at_tcg = elist_at_tcg(1, cnt);
         p_at_tcg = elist_at_tcg(0, cnt);

@@ -144,14 +144,14 @@ void play_animation_3(int anicol, int anisound)
     gmode(0);
     gcopy(0, 0, 0, windoww, windowh);
     gsel(0);
-    for (int cnt = 0, cnt_end = cnt + (6); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 6; ++cnt)
     {
         int cnt2 = cnt;
         redraw(0);
         pos(0, 0);
         gmode(0);
         gcopy(4, 0, 0, windoww, windowh);
-        for (int cnt = 0, cnt_end = cnt + (maxbreath); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (maxbreath); cnt < cnt_end; ++cnt)
         {
             int anidx = breathlist(0, cnt);
             int anidy = breathlist(1, cnt);
@@ -209,12 +209,11 @@ void play_animation_17_2(int animeid, int anicol, int anisound)
     gcopy(0, 0, 0, windoww, windowh);
     gmode(2);
     gsel(0);
-    for (int cnt = 0, cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         int anip = cnt;
         int anip1 = 0;
-        for (int cnt = 0, cnt_end = cnt + (aniref * 2 + 1); cnt < cnt_end;
-             ++cnt)
+        for (int cnt = 0, cnt_end = (aniref * 2 + 1); cnt < cnt_end; ++cnt)
         {
             anidy = aniy - aniref + cnt;
             sy = anidy - scy;
@@ -222,8 +221,7 @@ void play_animation_17_2(int animeid, int anicol, int anisound)
             {
                 continue;
             }
-            for (int cnt = 0, cnt_end = cnt + (aniref * 2 + 1); cnt < cnt_end;
-                 ++cnt)
+            for (int cnt = 0, cnt_end = (aniref * 2 + 1); cnt < cnt_end; ++cnt)
             {
                 anidx = anix - aniref + cnt;
                 sx = anidx - scx;
@@ -300,7 +298,7 @@ void play_animation_0(int anicol, int anisound)
     gcopy(0, 0, 0, windoww, windowh);
     gsel(0);
     ap(20) = -1;
-    for (int cnt = 0, cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 20; ++cnt)
     {
         if (ap(20) == -1)
         {
@@ -340,7 +338,7 @@ void play_animation_0(int anicol, int anisound)
         gmode(0);
         gcopy(4, 0, 0, windoww, windowh);
         int cnt2 = cnt;
-        for (int cnt = 0, cnt_end = cnt + (cnt2 + 1); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (cnt2 + 1); cnt < cnt_end; ++cnt)
         {
             if (ap(cnt) == -1)
             {
@@ -394,7 +392,7 @@ void play_animation_15()
     ax = (cdata[cc].position.x - scx) * inf_tiles;
     ay = (cdata[cc].position.y - scy) * inf_tiles;
     ap = dist(cdata[cc].position.x, cdata[cc].position.y, anix, aniy) / 2 + 1;
-    for (int cnt = 0, cnt_end = cnt + (ap); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (ap); cnt < cnt_end; ++cnt)
     {
         ax -= (cdata[cc].position.x - anix) * inf_tiles / ap;
         ay -= (cdata[cc].position.y - aniy) * inf_tiles / ap;
@@ -486,7 +484,7 @@ void play_animation_ranged_attack(int animeid, int anicol, int anisound)
              cdata[tc].position.y)
             / 2
         + 1;
-    for (int cnt = 0, cnt_end = cnt + (ap); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (ap); cnt < cnt_end; ++cnt)
     {
         ax -= (cdata[cc].position.x - cdata[tc].position.x) * inf_tiles / ap;
         ay -= (cdata[cc].position.y - cdata[tc].position.y) * inf_tiles / ap;
@@ -535,7 +533,7 @@ void play_animation_9()
     gcopy(0, anidx - 16, anidy - 16, 64, 64);
     gmode(2);
     gsel(0);
-    for (int cnt = 0, cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 4; ++cnt)
     {
         redraw(0);
         pos(anidx - 16, anidy - 16);
@@ -582,7 +580,7 @@ void play_animation_12()
     {
         prepare_item_image(17, 0);
     }
-    for (int cnt = 0, cnt_end = cnt + (aniref); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (aniref); cnt < cnt_end; ++cnt)
     {
         sx(cnt) = rnd(24) - 12;
         sy(cnt) = rnd(8);
@@ -600,8 +598,7 @@ void play_animation_12()
     }
     gmode(2);
     gsel(0);
-    for (int cnt = 0, cnt_end = cnt + (4 + (critical != 0)); cnt < cnt_end;
-         ++cnt)
+    for (int cnt = 0, cnt_end = (4 + (critical != 0)); cnt < cnt_end; ++cnt)
     {
         redraw(0);
         gmode(2);
@@ -612,7 +609,7 @@ void play_animation_12()
             pos(anidx - 24, anidy - 32);
             gcopy(7, cnt * 96, 0, 96, 96);
         }
-        for (int cnt = 0, cnt_end = cnt + (aniref); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (aniref); cnt < cnt_end; ++cnt)
         {
             pos(anidx + 24 + sx(cnt)
                     + (sx(cnt) < 4) * ((1 + (cnt % 2 == 0)) * -1) * cnt2
@@ -668,7 +665,7 @@ void play_animation_20()
     gsel(0);
     int anidx = (cdata[anic].position.x - scx) * inf_tiles + inf_screenx - 24;
     int anidy = (cdata[anic].position.y - scy) * inf_tiles + inf_screeny - 60;
-    for (int cnt = 0, cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         redraw(0);
         pos(0, 0);
@@ -676,8 +673,7 @@ void play_animation_20()
         gcopy(4, 0, 0, windoww, windowh);
         int cnt2 = cnt;
         gmode(2);
-        for (int cnt = 0, cnt_end = cnt + (anidy / 96 + 2); cnt < cnt_end;
-             ++cnt)
+        for (int cnt = 0, cnt_end = (anidy / 96 + 2); cnt < cnt_end; ++cnt)
         {
             pos(anidx, anidy - cnt * 96);
             gcopy(7, cnt2 / 2 * 96, (cnt == 0) * 96, 96, 96);
@@ -698,7 +694,7 @@ void play_animation_19()
     gcopy(0, 0, 0, windoww, windowh);
     gsel(0);
     am = 0;
-    for (int cnt = 0, cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 245; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {
@@ -742,7 +738,7 @@ void play_animation_19()
         gmode(0);
         gcopy(4, 0, 0, windoww, windowh);
         int af = 0;
-        for (int cnt = 0, cnt_end = cnt + (am); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (am); cnt < cnt_end; ++cnt)
         {
             if (ap(cnt) <= 0)
             {
@@ -825,7 +821,7 @@ void play_animation_22()
     gcopy(0, 0, 0, windoww, windowh);
     gsel(0);
     am = 0;
-    for (int cnt = 0, cnt_end = cnt + (75); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 75; ++cnt)
     {
         ax(am) = 240 + rnd(windoww);
         ay(am) = -96;
@@ -846,7 +842,7 @@ void play_animation_22()
         gmode(0);
         gcopy(4, 0, 0, windoww, windowh);
         int af = 0;
-        for (int cnt = 0, cnt_end = cnt + (am); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (am); cnt < cnt_end; ++cnt)
         {
             if (ap(cnt) >= 16)
             {
@@ -908,7 +904,7 @@ void play_animation_21()
     gcopy(0, 0, 0, windoww, windowh);
     gsel(0);
     am = 0;
-    for (int cnt = 0, cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 100; ++cnt)
     {
         ax(am) = rnd(windoww);
         ay(am) = rnd(inf_screenh * inf_tiles) - 96 - 24;
@@ -922,7 +918,7 @@ void play_animation_21()
         gmode(0);
         gcopy(4, 0, 0, windoww, windowh);
         int af = 0;
-        for (int cnt = 0, cnt_end = cnt + (am); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (am); cnt < cnt_end; ++cnt)
         {
             if (ap(cnt) >= 10)
             {
@@ -985,7 +981,7 @@ void play_animation_14_16(int animeid)
     {
         prepare_item_image(17, 0);
     }
-    for (int cnt = 0, cnt_end = cnt + (aniref); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (aniref); cnt < cnt_end; ++cnt)
     {
         sx(cnt) = rnd(24) - 12;
         sy(cnt) = rnd(8);
@@ -996,13 +992,13 @@ void play_animation_14_16(int animeid)
     gcopy(0, ax - 16, ay - 16, 64, 64);
     gmode(2);
     gsel(0);
-    for (int cnt = 0, cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 5; ++cnt)
     {
         redraw(0);
         gmode(2);
         int cnt2 = cnt * 2;
         gmode(2, inf_tiles, inf_tiles);
-        for (int cnt = 0, cnt_end = cnt + (aniref); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (aniref); cnt < cnt_end; ++cnt)
         {
             pos(ax + 24 + sx(cnt)
                     + (sx(cnt) < 4) * ((1 + (cnt % 2 == 0)) * -1) * cnt2

@@ -189,7 +189,7 @@ int magic()
                 play_animation(0);
                 dx = cdata[cc].position.x;
                 dy = cdata[cc].position.y;
-                for (int cnt = 0, cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 20; ++cnt)
                 {
                     int stat = route_info(dx, dy, cnt);
                     if (stat == 0)
@@ -295,8 +295,7 @@ int magic()
                     aniy = tlocy;
                     play_animation(2);
                 }
-                for (int cnt = 0, cnt_end = cnt + (range_ * 2 + 1);
-                     cnt < cnt_end;
+                for (int cnt = 0, cnt_end = (range_ * 2 + 1); cnt < cnt_end;
                      ++cnt)
                 {
                     dy = tlocy - range_ + cnt;
@@ -304,8 +303,7 @@ int magic()
                     {
                         continue;
                     }
-                    for (int cnt = 0, cnt_end = cnt + (range_ * 2 + 1);
-                         cnt < cnt_end;
+                    for (int cnt = 0, cnt_end = (range_ * 2 + 1); cnt < cnt_end;
                          ++cnt)
                     {
                         dx = tlocx - range_ + cnt;
@@ -773,8 +771,7 @@ int magic()
                 {
                     p = 10;
                 }
-                for (int cnt = 0, cnt_end = cnt + (1 + rnd(p)); cnt < cnt_end;
-                     ++cnt)
+                for (int cnt = 0, cnt_end = (1 + rnd(p)); cnt < cnt_end; ++cnt)
                 {
                     flt(calcobjlv(efp), 2);
                     dbid = 0;
@@ -925,7 +922,7 @@ int magic()
                 tx = cdata[tc].position.x;
                 ty = cdata[tc].position.y;
                 efidprev = efid;
-                for (int cnt = 0, cnt_end = cnt + (200); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 200; ++cnt)
                 {
                     if (efidprev == 410 || efidprev == 627)
                     {
@@ -1040,8 +1037,7 @@ int magic()
                 dy = cdata[cc].position.y;
                 breath_list();
                 play_animation(3);
-                for (int cnt = 0, cnt_end = cnt + (maxbreath); cnt < cnt_end;
-                     ++cnt)
+                for (int cnt = 0, cnt_end = (maxbreath); cnt < cnt_end; ++cnt)
                 {
                     dx = breathlist(0, cnt);
                     dy = breathlist(1, cnt);
@@ -1179,7 +1175,7 @@ label_2181_internal:
         if (inv[ci].param1 == 0)
         {
             item_separate(ci);
-            for (int cnt = 0, cnt_end = cnt + (1000); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 1000; ++cnt)
             {
                 dx = 4 + rnd((mdata(0) - 8));
                 dy = 3 + rnd((mdata(1) - 6));
@@ -1195,11 +1191,11 @@ label_2181_internal:
                 y(1) = 0;
                 y(2) = 1;
                 y(3) = -1;
-                for (int cnt = 0, cnt_end = cnt + (4); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 4; ++cnt)
                 {
                     f = 1;
                     int cnt2 = cnt;
-                    for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+                    for (int cnt = 0; cnt < 3; ++cnt)
                     {
                         p = map(dx + x(cnt2) * cnt, dy + y(cnt2) * cnt, 0);
                         if ((264 <= p && p < 363) || chipm(7, p) & 4)
@@ -1238,11 +1234,11 @@ label_2181_internal:
         pos(wx, wy);
         gcopy(4, 0, 0, ww, wh);
         gmode(1, inf_tiles, inf_tiles);
-        for (int cnt = 0, cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 5; ++cnt)
         {
             y = cnt + inv[ci].param2 - 2;
             sy = cnt * inf_tiles + wy + 26;
-            for (int cnt = 0, cnt_end = cnt + (7); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 7; ++cnt)
             {
                 x = cnt + inv[ci].param1 - 3;
                 sx = cnt * inf_tiles + wx + 46;
@@ -1779,7 +1775,7 @@ label_2181_internal:
             return 0;
         }
         f = 0;
-        for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 3; ++cnt)
         {
             y = cdata[cc].position.y + cnt - 1;
             x = cdata[cc].position.x;
@@ -1795,7 +1791,7 @@ label_2181_internal:
         }
         if (f == 0)
         {
-            for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 3; ++cnt)
             {
                 y = cdata[cc].position.y;
                 x = cdata[cc].position.x + cnt - 1;
@@ -1883,7 +1879,7 @@ label_2181_internal:
             goto label_2183_internal;
         }
         p = 0;
-        for (int cnt = 0, cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 16; ++cnt)
         {
             i = 16 - cnt - 1;
             if (efid == 406)
@@ -1945,7 +1941,7 @@ label_2181_internal:
             u8"たくさんの"s + s + u8"が降ってきた！"s,
             u8"Some "s + s + u8" fall from above!"s));
         autosave = 1 * (gdata_current_map != 35);
-        for (int cnt = 0, cnt_end = cnt + (rnd(3) + 3 + (efstatus >= 1) * 6);
+        for (int cnt = 0, cnt_end = (rnd(3) + 3 + (efstatus >= 1) * 6);
              cnt < cnt_end;
              ++cnt)
         {
@@ -2006,9 +2002,9 @@ label_2181_internal:
         {
             p = 2 + rnd(3);
         }
-        for (int cnt = 0, cnt_end = cnt + (p); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
-            for (int cnt = 0, cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 100; ++cnt)
             {
                 int tid = rnd(45);
                 int stat = get_trait_info(0, tid);
@@ -2099,7 +2095,7 @@ label_2181_internal:
              cnt < cnt_end;
              ++cnt)
         {
-            for (int cnt = 0, cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 100; ++cnt)
             {
                 int tid = rnd(217);
                 int stat = get_trait_info(0, tid);
@@ -2169,8 +2165,7 @@ label_2181_internal:
             txt(lang(
                 u8"冥界から死霊が呼び出された！"s,
                 u8"Hoards of undead raise from the hell!"s));
-            for (int cnt = 0, cnt_end = cnt + (4 + rnd(4)); cnt < cnt_end;
-                 ++cnt)
+            for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end; ++cnt)
             {
                 flt(calcobjlv(cdata[0].level), calcfixlv(3));
                 fltn(u8"undead"s);
@@ -2380,11 +2375,10 @@ label_2181_internal:
             break;
         }
         f = 0;
-        for (int cnt = 0, cnt_end = cnt + (1 + (efstatus >= 1)); cnt < cnt_end;
-             ++cnt)
+        for (int cnt = 0, cnt_end = (1 + (efstatus >= 1)); cnt < cnt_end; ++cnt)
         {
             int cnt2 = cnt;
-            for (int cnt = 0, cnt_end = cnt + (2000); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 2000; ++cnt)
             {
                 await();
                 p = rnd(67) + 400;
@@ -2492,7 +2486,7 @@ label_2181_internal:
         if (efstatus <= -1)
         {
             txt(lang(u8"これは呪われている！"s, u8"It's cursed!"s));
-            for (int cnt = 10, cnt_end = cnt + (40); cnt < cnt_end; ++cnt)
+            for (int cnt = 10; cnt < 50; ++cnt)
             {
                 if (rnd(3) == 0)
                 {
@@ -2616,8 +2610,7 @@ label_2181_internal:
         refresh_character();
         break;
     case 1119:
-        for (int cnt = 0, cnt_end = cnt + (1 + (efstatus >= 1)); cnt < cnt_end;
-             ++cnt)
+        for (int cnt = 0, cnt_end = (1 + (efstatus >= 1)); cnt < cnt_end; ++cnt)
         {
             int cnt2 = cnt;
             while (1)
@@ -2710,7 +2703,7 @@ label_2181_internal:
     case 1113:
         if (efstatus >= 1)
         {
-            for (int cnt = 10, cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
+            for (int cnt = 10; cnt < 18; ++cnt)
             {
                 modify_potential(
                     tc, cnt, rnd(sdata.get(cnt, tc).potential / 20 + 3) + 1);
@@ -2779,13 +2772,12 @@ label_2181_internal:
         {
             p = 2;
         }
-        for (int cnt = 0, cnt_end = cnt + (p); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
-            for (int cnt = 0, cnt_end = cnt + (mdata(1)); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
             {
                 y = cnt;
-                for (int cnt = 0, cnt_end = cnt + (mdata(0)); cnt < cnt_end;
-                     ++cnt)
+                for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
                 {
                     x = cnt;
                     p = dist(cdata[tc].position.x, cdata[tc].position.y, x, y);
@@ -3181,7 +3173,7 @@ label_2181_internal:
             }
         }
         i = 0;
-        for (int cnt = 100, cnt_end = cnt + (30); cnt < cnt_end; ++cnt)
+        for (int cnt = 100; cnt < 130; ++cnt)
         {
             if (cdata_body_part(tc, cnt) % 10000 == 0)
             {
@@ -3200,7 +3192,7 @@ label_2181_internal:
         if (i == 0)
         {
             inv_getheader(tc);
-            for (int cnt = 0, cnt_end = cnt + (200); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 200; ++cnt)
             {
                 p = invhead + rnd(invrange);
                 if (inv[p].number == 0)
@@ -3250,7 +3242,7 @@ label_2181_internal:
         break;
     case 1118:
         f = 0;
-        for (int cnt = 0, cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 10; ++cnt)
         {
             p = rnd(11) + 50;
             if (sdata.get(p, tc).original_level >= 150)
@@ -3411,7 +3403,7 @@ label_2181_internal:
             p(1) = 1 + rnd((efp / 100 + 2));
         }
         snd(68);
-        for (int cnt = 0, cnt_end = cnt + (p(1)); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (p(1)); cnt < cnt_end; ++cnt)
         {
             x = rnd(p) + tlocx - rnd(p);
             y = rnd(p) + tlocy - rnd(p);
@@ -3534,7 +3526,7 @@ label_2181_internal:
         inv[ci].subname = 40000 + rnd(30000);
         p = rnd(rnd(rnd(10) + 1) + 3) + 3;
         egolv = rnd(std::clamp(rnd(6), 0, 4) + 1);
-        for (int cnt = 0, cnt_end = cnt + (p); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
             randomize(inv[efcibk].param1);
             encadd(
@@ -3841,7 +3833,7 @@ label_2181_internal:
             {
                 dbid = inv[ci].id;
                 access_item_db(2);
-                for (int cnt = 0, cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 1; ++cnt)
                 {
                     if (ichargelevel == 1)
                     {
@@ -4139,7 +4131,7 @@ label_2181_internal:
     case 631:
         txtef(4);
         txt(lang(u8"スウォーム！"s, u8"Swarm!"s));
-        for (int cnt = 0, cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 245; ++cnt)
         {
             if (cdata[cc].state != 1)
             {
@@ -4193,7 +4185,7 @@ label_2181_internal:
         }
         break;
     case 466:
-        for (int cnt = 0, cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 245; ++cnt)
         {
             if (cdata[cnt].state != 1)
             {
@@ -4228,7 +4220,7 @@ label_2181_internal:
         txt(lang(u8"うみみゃぁ！"s, u8"Mewmewmew!"s));
         animode = 0;
         play_animation(19);
-        for (int cnt = 0, cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 245; ++cnt)
         {
             if (cdata[cc].state != 1)
             {
@@ -4252,10 +4244,10 @@ label_2181_internal:
             u8"隕石が落ちてきた！"s,
             u8"Innumerable meteorites fall all over the area!"s));
         play_animation(22);
-        for (int cnt = 0, cnt_end = cnt + (mdata(1)); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
         {
             dy = cnt;
-            for (int cnt = 0, cnt_end = cnt + (mdata(0)); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
             {
                 dx = cnt;
                 if (rnd(3) == 0)
@@ -4282,7 +4274,7 @@ label_2181_internal:
                 name(cc) + u8"は仲間を鼓舞した。"s,
                 name(cc) + u8" cheer"s + _s(cc) + u8"."s));
         }
-        for (int cnt = 0, cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 245; ++cnt)
         {
             if (cdata[cnt].state != 1)
             {
