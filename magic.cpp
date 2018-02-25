@@ -189,7 +189,7 @@ int magic()
                 play_animation(0);
                 dx = cdata[cc].position.x;
                 dy = cdata[cc].position.y;
-                for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 20; ++cnt)
                 {
                     int stat = route_info(dx, dy, cnt);
                     if (stat == 0)
@@ -922,7 +922,7 @@ int magic()
                 tx = cdata[tc].position.x;
                 ty = cdata[tc].position.y;
                 efidprev = efid;
-                for (int cnt = 0, cnt_end = (200); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 200; ++cnt)
                 {
                     if (efidprev == 410 || efidprev == 627)
                     {
@@ -1175,7 +1175,7 @@ label_2181_internal:
         if (inv[ci].param1 == 0)
         {
             item_separate(ci);
-            for (int cnt = 0, cnt_end = (1000); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 1000; ++cnt)
             {
                 dx = 4 + rnd((mdata(0) - 8));
                 dy = 3 + rnd((mdata(1) - 6));
@@ -1191,11 +1191,11 @@ label_2181_internal:
                 y(1) = 0;
                 y(2) = 1;
                 y(3) = -1;
-                for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 4; ++cnt)
                 {
                     f = 1;
                     int cnt2 = cnt;
-                    for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+                    for (int cnt = 0; cnt < 3; ++cnt)
                     {
                         p = map(dx + x(cnt2) * cnt, dy + y(cnt2) * cnt, 0);
                         if ((264 <= p && p < 363) || chipm(7, p) & 4)
@@ -1234,11 +1234,11 @@ label_2181_internal:
         pos(wx, wy);
         gcopy(4, 0, 0, ww, wh);
         gmode(1, inf_tiles, inf_tiles);
-        for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 5; ++cnt)
         {
             y = cnt + inv[ci].param2 - 2;
             sy = cnt * inf_tiles + wy + 26;
-            for (int cnt = 0, cnt_end = (7); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 7; ++cnt)
             {
                 x = cnt + inv[ci].param1 - 3;
                 sx = cnt * inf_tiles + wx + 46;
@@ -1775,7 +1775,7 @@ label_2181_internal:
             return 0;
         }
         f = 0;
-        for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 3; ++cnt)
         {
             y = cdata[cc].position.y + cnt - 1;
             x = cdata[cc].position.x;
@@ -1791,7 +1791,7 @@ label_2181_internal:
         }
         if (f == 0)
         {
-            for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 3; ++cnt)
             {
                 y = cdata[cc].position.y;
                 x = cdata[cc].position.x + cnt - 1;
@@ -1879,7 +1879,7 @@ label_2181_internal:
             goto label_2183_internal;
         }
         p = 0;
-        for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 16; ++cnt)
         {
             i = 16 - cnt - 1;
             if (efid == 406)
@@ -2004,7 +2004,7 @@ label_2181_internal:
         }
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
-            for (int cnt = 0, cnt_end = (100); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 100; ++cnt)
             {
                 int tid = rnd(45);
                 int stat = get_trait_info(0, tid);
@@ -2095,7 +2095,7 @@ label_2181_internal:
              cnt < cnt_end;
              ++cnt)
         {
-            for (int cnt = 0, cnt_end = (100); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 100; ++cnt)
             {
                 int tid = rnd(217);
                 int stat = get_trait_info(0, tid);
@@ -2378,7 +2378,7 @@ label_2181_internal:
         for (int cnt = 0, cnt_end = (1 + (efstatus >= 1)); cnt < cnt_end; ++cnt)
         {
             int cnt2 = cnt;
-            for (int cnt = 0, cnt_end = (2000); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 2000; ++cnt)
             {
                 await();
                 p = rnd(67) + 400;
@@ -3192,7 +3192,7 @@ label_2181_internal:
         if (i == 0)
         {
             inv_getheader(tc);
-            for (int cnt = 0, cnt_end = (200); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 200; ++cnt)
             {
                 p = invhead + rnd(invrange);
                 if (inv[p].number == 0)
@@ -3242,7 +3242,7 @@ label_2181_internal:
         break;
     case 1118:
         f = 0;
-        for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 10; ++cnt)
         {
             p = rnd(11) + 50;
             if (sdata.get(p, tc).original_level >= 150)
@@ -3833,7 +3833,7 @@ label_2181_internal:
             {
                 dbid = inv[ci].id;
                 access_item_db(2);
-                for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 1; ++cnt)
                 {
                     if (ichargelevel == 1)
                     {
@@ -4131,7 +4131,7 @@ label_2181_internal:
     case 631:
         txtef(4);
         txt(lang(u8"スウォーム！"s, u8"Swarm!"s));
-        for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 245; ++cnt)
         {
             if (cdata[cc].state != 1)
             {
@@ -4185,7 +4185,7 @@ label_2181_internal:
         }
         break;
     case 466:
-        for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 245; ++cnt)
         {
             if (cdata[cnt].state != 1)
             {
@@ -4220,7 +4220,7 @@ label_2181_internal:
         txt(lang(u8"うみみゃぁ！"s, u8"Mewmewmew!"s));
         animode = 0;
         play_animation(19);
-        for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 245; ++cnt)
         {
             if (cdata[cc].state != 1)
             {
@@ -4274,7 +4274,7 @@ label_2181_internal:
                 name(cc) + u8"は仲間を鼓舞した。"s,
                 name(cc) + u8" cheer"s + _s(cc) + u8"."s));
         }
-        for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 245; ++cnt)
         {
             if (cdata[cnt].state != 1)
             {

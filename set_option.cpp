@@ -44,7 +44,7 @@ void set_option()
         sel = 4;
     }
     gsel(sel);
-    for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
         picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
@@ -291,7 +291,7 @@ void set_option()
         dx = 440;
         dy = 300;
     }
-    for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 20; ++cnt)
     {
         if (s(cnt) == ""s)
         {
@@ -944,12 +944,12 @@ label_2725_internal:
             int j0 = 0;
             DIGETJOYSTATE(j0, 0);
             f = 0;
-            for (int cnt = 0, cnt_end = (12); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 12; ++cnt)
             {
                 if (HMMBITCHECK(j0, 4 + cnt))
                 {
                     p = cnt;
-                    for (int cnt = 0, cnt_end = (12); cnt < cnt_end; ++cnt)
+                    for (int cnt = 0; cnt < 12; ++cnt)
                     {
                         jkey(cnt) = "";
                     }
@@ -1294,7 +1294,7 @@ label_2725_internal:
                 y(4) = 768;
                 y(5) = 1024;
                 i = 0;
-                for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 5; ++cnt)
                 {
                     if (windoww2 == x(cnt))
                     {

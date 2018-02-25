@@ -288,7 +288,7 @@ void txtsetlastword()
 
 void txtsetwinword(int prm_361)
 {
-    for (int cnt = 0, cnt_end = (6); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 6; ++cnt)
     {
         i = rnd(cnt + 1);
         p(cnt) = p(i);
@@ -2890,7 +2890,7 @@ std::string _ta(int mark)
 
 void replace_tags_in_quest_board()
 {
-    for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 20; ++cnt)
     {
         await();
         p(0) = instr(buff, 0, u8"{"s);
@@ -2903,7 +2903,7 @@ void replace_tags_in_quest_board()
         s(0) = strmid(buff, p + 1, p(1) - 1);
         s(1) = strmid(buff, 0, p);
         s(2) = strmid(buff, p + p(1) + 1, p(2) - p(1) - p);
-        for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 1; ++cnt)
         {
             if (s == u8"ref"s)
             {
@@ -3069,7 +3069,7 @@ void get_npc_talk()
         }
     }
     p = -1;
-    for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 1; ++cnt)
     {
         if (cdata[tc].character_role == 18)
         {
@@ -4296,7 +4296,7 @@ std::string random_title(int prm_439)
     int rtval_at_m41 = 0;
     elona_vector1<std::string> s2_at_m41;
 redo:
-    for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 1; ++cnt)
     {
         p_at_m41(2) = rnd(length2(rnlist));
         p_at_m41(1) = rnd(14);
@@ -4319,7 +4319,7 @@ redo:
     rtval_at_m41 = -1;
     if (jp)
     {
-        for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 1; ++cnt)
         {
             if (p_at_m41(1) == 10 || p_at_m41(1) == 11)
             {
@@ -4362,7 +4362,7 @@ redo:
     }
     else
     {
-        for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 1; ++cnt)
         {
             if (p_at_m41(1) == 0 || p_at_m41(1) == 1)
             {
@@ -4390,7 +4390,7 @@ redo:
 
     rtval_at_m41 = -1;
 
-    for (int cnt = 0, cnt_end = (100); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 100; ++cnt)
     {
         p_at_m41(4) = rnd(length2(rnlist));
         if (p_at_m41(4) == p_at_m41(2))

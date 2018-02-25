@@ -2285,7 +2285,7 @@ void set_quest_data(int val0)
 
 void replace_tags_in_quest_text()
 {
-    for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 20; ++cnt)
     {
         await();
         p(0) = instr(buff, 0, u8"{"s);
@@ -2298,7 +2298,7 @@ void replace_tags_in_quest_text()
         s(0) = strmid(buff, p + 1, p(1) - 1);
         s(1) = strmid(buff, 0, p);
         s(2) = strmid(buff, p + p(1) + 1, p(2) - p(1) - p);
-        for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 1; ++cnt)
         {
             if (s == u8"client"s)
             {
@@ -2834,10 +2834,10 @@ void initialize_map_chip()
     }
     if (mdata(2) == 2)
     {
-        for (int cnt = 0, cnt_end = (11); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 11; ++cnt)
         {
             int cnt2 = cnt;
-            for (int cnt = 0, cnt_end = (13); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 13; ++cnt)
             {
                 chipm(0, cnt2 * 33 + cnt + 20) = 4;
             }
@@ -2902,7 +2902,7 @@ void initialize_item_chip()
     tname(2) = lang(u8"畑"s, u8"a field"s);
     DIM3(chipc, 6, 925);
     DIM3(chipi, 8, 825);
-    for (int cnt = 0, cnt_end = (825); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 825; ++cnt)
     {
         chipc(0, cnt) = cnt % 33 * inf_tiles;
         chipc(1, cnt) = cnt / 33 * inf_tiles;
@@ -3308,7 +3308,7 @@ void initialize_item_chip()
     chipc(3, 447) = inf_tiles * 2;
     chipc(4, 447) = inf_tiles + 16;
     DIM3(deco, 3, 300);
-    for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 16; ++cnt)
     {
         deco(0, 1 + cnt * 16) = 0;
         deco(1, 1 + cnt * 16) = 1;
@@ -3432,7 +3432,7 @@ void cardplayeradd(int prm_419, int prm_420, int prm_421)
 {
     cardplayer_at_cardcontrol(1, prm_419) = prm_420;
     cardplayer_at_cardcontrol(2, prm_419) = prm_421;
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         cardplayer_at_cardcontrol(10 + cnt, prm_419) = -1;
     }
@@ -3462,7 +3462,7 @@ void initcard(int prm_422, int prm_423, int)
         }
         card_at_cardcontrol(5, cnt) = -1;
     }
-    for (int cnt = 0, cnt_end = (200); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 200; ++cnt)
     {
         i_at_cardcontrol(0) = rnd(cardmax_at_cardcontrol);
         i_at_cardcontrol(1) = rnd(cardmax_at_cardcontrol);
@@ -3660,7 +3660,7 @@ int servecard(int prm_427)
     {
         return 0;
     }
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         if (cardplayer_at_cardcontrol(10 + cnt, prm_427) == -1)
         {
@@ -3675,7 +3675,7 @@ int servecard(int prm_427)
     card_at_cardcontrol(5, cardid_at_cardcontrol) = prm_427;
     cardplayer_at_cardcontrol(10 + p_at_cardcontrol, prm_427) =
         cardid_at_cardcontrol;
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         redraw(0);
         if (cnt != 0)
@@ -3752,7 +3752,7 @@ int opencard2(int prm_428, int prm_429)
         }
     }
     snd(71);
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         redraw(0);
         if (prm_429 == 0)
@@ -3790,7 +3790,7 @@ int opencard2(int prm_428, int prm_429)
 
 int trashcard(int prm_430)
 {
-    for (int cnt = 0, cnt_end = (21); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 21; ++cnt)
     {
         redraw(0);
         pos(card_at_cardcontrol(3, prm_430) - 8,
@@ -3937,7 +3937,7 @@ void csvsort(
 {
     elona_vector1<int> p_at_m40;
     p_at_m40(0) = 0;
-    for (int cnt = 0, cnt_end = (40); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 40; ++cnt)
     {
         prm_435(cnt) = "";
         getstr(prm_435(cnt), prm_436, p_at_m40(0), prm_437);
@@ -4002,7 +4002,7 @@ void getinheritance(int prm_440, elona_vector1<int>& prm_441, int& prm_442)
     randomize(inv[prm_440].turn + 1);
     DIM2(prm_441, 15);
     prm_442 = 0;
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         p_at_m42 = rnd(15);
         if (inv[prm_440].enchantments[p_at_m42].id == 0)
@@ -4053,7 +4053,7 @@ void fltn(const std::string& prm_447)
     int p_at_m44 = 0;
     s2_at_m44 = prm_447;
     p_at_m44 = 0;
-    for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 5; ++cnt)
     {
         getstr(filtern(cnt), s2_at_m44, p_at_m44, 47);
         if (strsize == 0)
@@ -4587,7 +4587,7 @@ int randomenc(int prm_451)
     int i_at_m47 = 0;
     sum_at_m47 = 0;
     max_at_m47 = 0;
-    for (int cnt = 0, cnt_end = (62); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 62; ++cnt)
     {
         if (encref(0, cnt) > prm_451)
         {
@@ -4668,7 +4668,7 @@ void sortenc(int prm_454)
     while (1)
     {
         f_at_m47 = 0;
-        for (int cnt = 0, cnt_end = (14); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 14; ++cnt)
         {
             cnt2_at_m47 = cnt + 1;
             if (inv[prm_454].enchantments[cnt].id
@@ -4711,7 +4711,7 @@ void encremove(int prm_455, int prm_456, int prm_457)
     }
     enc_at_m48 = prm_456;
     encp_at_m48 = prm_457;
-    for (int cnt = 0, cnt_end = (15); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 15; ++cnt)
     {
         if (inv[prm_455].enchantments[cnt].id == enc_at_m48)
         {
@@ -4840,7 +4840,7 @@ int encadd(
         {
             sum_at_m48 = 0;
             max_at_m48 = 0;
-            for (int cnt = 0, cnt_end = (26); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 26; ++cnt)
             {
                 if (encprocref(3, cnt) != 0)
                 {
@@ -4888,7 +4888,7 @@ int encadd(
         }
     }
     i_at_m48 = -1;
-    for (int cnt = 0, cnt_end = (15); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 15; ++cnt)
     {
         if (inv[prm_458].enchantments[cnt].id == enc_at_m48)
         {
@@ -4950,7 +4950,7 @@ int encadd(
 
 void egoadd(int prm_465, int prm_466)
 {
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         if (egoenc(cnt * 2, prm_466) == 0)
         {
@@ -5081,7 +5081,7 @@ void add_enchantments_depending_on_ego()
 void add_enchantment_by_fixed_ego()
 {
     p = 0;
-    for (int cnt = 0, cnt_end = (11); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 11; ++cnt)
     {
         if (egoref(0, cnt) != egolv)
         {
@@ -5140,7 +5140,7 @@ void add_enchantments()
     }
     if (reftypeminor == 10006)
     {
-        for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 1; ++cnt)
         {
             if (rnd(10) == 0)
             {
@@ -6136,7 +6136,7 @@ void determine_item_material()
         }
     }
     p = rnd(100);
-    for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 1; ++cnt)
     {
         if (p < 5)
         {
@@ -6215,7 +6215,7 @@ void change_item_material()
     p = inv[ci].material;
     reftype = the_item_db[inv[ci].id]->category;
     fixlv = inv[ci].quality;
-    for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 8; ++cnt)
     {
         if (mtenc(cnt * 2, p) == 0)
         {
@@ -6317,7 +6317,7 @@ void apply_item_material()
 void set_material_specific_attributes()
 {
     p = inv[ci].material;
-    for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 8; ++cnt)
     {
         if (mtenc(cnt * 2, p) == 0)
         {
@@ -6325,7 +6325,7 @@ void set_material_specific_attributes()
         }
         encadd(ci, mtenc(cnt * 2, p), mtenc(cnt * 2 + 1, p), 0, 1);
     }
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         if (mtbit(cnt, p) == 0)
         {
@@ -6793,7 +6793,7 @@ void equipinfo(int prm_529, int prm_530, int prm_531)
     {
         return;
     }
-    for (int cnt = 0, cnt_end = (15); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 15; ++cnt)
     {
         p_at_m66 = inv[prm_529].enchantments[cnt].id;
         if (p_at_m66 == 0)
@@ -6859,7 +6859,7 @@ void csvstr2(elona_vector1<std::string>& prm_532, const std::string& prm_533)
     word_at_m67 = prm_533;
     p_at_m67 = 0;
     i_at_m67 = std::size(word_at_m67);
-    for (int cnt = 0, cnt_end = (40); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 40; ++cnt)
     {
         prm_532(cnt) = "";
         getstr(
@@ -7512,7 +7512,7 @@ void delmef(int prm_581)
     {
         if (mef(0, i_at_m79) != 0)
         {
-            for (int cnt = 0, cnt_end = (9); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 9; ++cnt)
             {
                 mef(cnt, prm_581) = mef(cnt, i_at_m79);
             }
@@ -7555,7 +7555,7 @@ void addmef(
     else
     {
         i_at_m79 = -1;
-        for (int cnt = 0, cnt_end = (200); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 200; ++cnt)
         {
             if (mef(0, cnt) == 0)
             {
@@ -9686,7 +9686,7 @@ void drawmenu(int prm_742)
     window2(x_at_m107, y_at_m107, x_at_m107(1), 22, 5, 5);
     pos(x_at_m107 - 28, y_at_m107 - 8);
     gcopy(3, 64, 288, 50, 32);
-    for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 8; ++cnt)
     {
         if (s(cnt) == ""s)
         {
@@ -10169,7 +10169,7 @@ int prodcheck()
     {
         f_at_m110 = -1;
     }
-    for (int cnt = 0, cnt_end = (6); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 6; ++cnt)
     {
         j_at_m110(0) = matneed(cnt * 2);
         j_at_m110(1) = matneed(cnt * 2 + 1);
@@ -10796,7 +10796,7 @@ int get_required_craft_materials()
 void fixaiact(int prm_753)
 {
     int i_at_m112 = 0;
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         i_at_m112 = cdata[prm_753].act[cnt];
         if (i_at_m112 == 464 || i_at_m112 == 441 || i_at_m112 == 660
@@ -11150,7 +11150,7 @@ int findchara(int prm_766)
 int findally(int prm_767)
 {
     p_at_m117 = -1;
-    for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 16; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {
@@ -11685,7 +11685,7 @@ void del_chara(int prm_783)
     {
         inv[cnt].number = 0;
     }
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         cdatan(cnt, prm_783) = "";
     }
@@ -11781,7 +11781,7 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
     sdata.clear(prm_784);
     cdata(tc_at_m125) = cdata(prm_784);
     cdata(prm_784).clear();
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         cdatan(cnt, tc_at_m125) = cdatan(cnt, prm_784);
         cdatan(cnt, prm_784) = "";
@@ -11918,7 +11918,7 @@ void hostileaction(int prm_787, int prm_788)
         {
             txtef(3);
             txt(lang(u8"家畜は興奮した！"s, u8"Animals get excited!"s));
-            for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 245; ++cnt)
             {
                 if (cbit(960, cnt) == 1)
                 {
@@ -11951,7 +11951,7 @@ void rowact_check(int prm_789)
 
 void rowact_item(int prm_790)
 {
-    for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 245; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {
@@ -12118,7 +12118,7 @@ int findbuff(int prm_799, int prm_800)
 {
     int f_at_m131 = 0;
     f_at_m131 = -1;
-    for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 16; ++cnt)
     {
         if (cdata[prm_799].buffs[cnt].id == 0)
         {
@@ -12145,7 +12145,7 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
         return 0;
     }
     p_at_m132 = -1;
-    for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 16; ++cnt)
     {
         if (cdata[prm_801].buffs[cnt].id == prm_802)
         {
@@ -12506,12 +12506,12 @@ void animeblood(int prm_809, int prm_810, int prm_811)
     }
     gmode(2);
     gsel(0);
-    for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 20; ++cnt)
     {
         x_at_m133(cnt) = rnd(48) - 24;
         y_at_m133(cnt) = rnd(16);
     }
-    for (int cnt = 0, cnt_end = (6); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 6; ++cnt)
     {
         cnt2_at_m133 = cnt * 2;
         gmode(2, inf_tiles, inf_tiles);
@@ -12520,7 +12520,7 @@ void animeblood(int prm_809, int prm_810, int prm_811)
             pos(dx_at_m133 - 24, dy_at_m133 - 32 + dy_at_m133(1));
             gcopy(7, cnt * 96, 0, 96, 96);
         }
-        for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 20; ++cnt)
         {
             pos(dx_at_m133 + 24 + x_at_m133(cnt)
                     + (x_at_m133(cnt) < 3) * ((1 + (cnt % 2 == 0)) * -1)
@@ -12762,7 +12762,7 @@ void modcorrupt(int prm_815)
             {
                 break;
             }
-            for (int cnt = 0, cnt_end = (100000); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 100000; ++cnt)
             {
                 await();
                 int tid = rnd(17) + 200;
@@ -12828,7 +12828,7 @@ void modcorrupt(int prm_815)
         for (int cnt = 0, cnt_end = (p_at_m134); cnt < cnt_end; ++cnt)
         {
             cnt2_at_m134 = cnt;
-            for (int cnt = 0, cnt_end = (100000); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 100000; ++cnt)
             {
                 await();
                 int tid = rnd(17) + 200;
@@ -13910,7 +13910,7 @@ int item_fire(int prm_840, int prm_841)
         return 0;
     }
     f_at_m138 = 0;
-    for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 3; ++cnt)
     {
         ci_at_m138 = list_at_m138(rnd(max_at_m138));
         if (inv[ci_at_m138].number <= 0)
@@ -14177,7 +14177,7 @@ int item_cold(int prm_844, int prm_845)
         return 0;
     }
     f_at_m138 = 0;
-    for (int cnt = 0, cnt_end = (2); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 2; ++cnt)
     {
         ci_at_m138 = list_at_m138(rnd(max_at_m138));
         if (inv[ci_at_m138].number <= 0)
@@ -14308,7 +14308,7 @@ int copy_chara(int prm_848)
         return 0;
     }
     f_at_m139 = 0;
-    for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 8; ++cnt)
     {
         y_at_m139 =
             cdata[prm_848].position.y - rnd((cnt / 4 + 1)) + rnd((cnt / 4 + 1));
@@ -14338,7 +14338,7 @@ int copy_chara(int prm_848)
     del_chara(c_at_m139);
     sdata.copy(c_at_m139, prm_848);
     cdata(c_at_m139) = cdata(prm_848);
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         cdatan(cnt, c_at_m139) = cdatan(cnt, prm_848);
     }
@@ -14867,7 +14867,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
     {
         if (prm_853 < 16)
         {
-            for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 16; ++cnt)
             {
                 if (prm_853 == cnt)
                 {
@@ -16004,14 +16004,14 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             txtmore();
             txt(lang(
                 u8"死の宣告は無効になった。"s, u8"The death word breaks."s));
-            for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 245; ++cnt)
             {
                 if (cdata[cnt].state != 1)
                 {
                     continue;
                 }
                 p_at_m141 = cnt;
-                for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 16; ++cnt)
                 {
                     if (cdata[p_at_m141].buffs[cnt].id == 0)
                     {
@@ -16321,7 +16321,7 @@ void chara_vomit(int prm_876)
     }
     if (cdata[prm_876].buffs[0].id != 0)
     {
-        for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 16; ++cnt)
         {
             if (cdata[prm_876].buffs[cnt].id == 0)
             {
@@ -16799,7 +16799,7 @@ int net_dllist(const std::string& prm_886, int prm_887)
     }
     size_at_m147 = fs::file_size(file_at_m147);
     p_at_m147 = 0;
-    for (int cnt = 0, cnt_end = (10000); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10000; ++cnt)
     {
         if (!strutil::contains(netbuf(0), u8"<", p_at_m147)
             || p_at_m147 + 1 >= size_at_m147)
@@ -16807,7 +16807,7 @@ int net_dllist(const std::string& prm_886, int prm_887)
             break;
         }
         f_at_m147 = 0;
-        for (int cnt = 0, cnt_end = (14); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 14; ++cnt)
         {
             nxt_at_m147 = instr(netbuf, p_at_m147, u8"<"s);
             if (nxt_at_m147 == -1)
@@ -16987,7 +16987,7 @@ int voting_box()
 {
 label_14001_internal:
     gsel(4);
-    for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
         picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
@@ -16999,7 +16999,7 @@ label_14001_internal:
     cs = 0;
     cc = 0;
     cs_bk = -1;
-    for (int cnt = 0, cnt_end = (6); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 6; ++cnt)
     {
         listn(0, cnt) = u8"Could not connect to the server."s;
     }
@@ -17350,7 +17350,7 @@ void update_screen_hud()
     gcopy(3, 120, 504, inf_msgx, inf_verh);
     pos(inf_raderw + 6, inf_bary);
     gcopy(3, 208, 376, 16, 16);
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         sx = 0;
         if (cnt == 8)
@@ -17467,7 +17467,7 @@ void render_hud()
     bmes(""s + cdata[0].mp + u8"("s + cdata[0].max_mp + u8")"s, 255, 255, 255);
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
     sy = inf_bary + 2 + vfix;
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         sx = inf_raderw + cnt * 47 + 168;
         if (cnt < 8)
@@ -17917,7 +17917,7 @@ void render_hud()
     gmode(4, -1, -1, 180);
     sx = windoww - 40;
     sy = inf_ver - 40;
-    for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 16; ++cnt)
     {
         if (cdata[0].buffs[cnt].id == 0)
         {
@@ -17946,7 +17946,7 @@ void render_hud()
         255,
         255);
     ap3 = 0;
-    for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 3; ++cnt)
     {
         ap = gdata((750 + cnt)) % 10000;
         if (ap == 0)
@@ -18053,7 +18053,7 @@ void label_1423()
         window2(sx, sy - 104, 148, 101, 0, 5);
         if (racount % 15 == 0)
         {
-            for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 10; ++cnt)
             {
                 redraw(0);
                 gmode(0);
@@ -18371,7 +18371,7 @@ void label_1433()
     screendrawhack = 3;
     if (gdata_current_map == 40)
     {
-        for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 245; ++cnt)
         {
             if (cdata[cnt].state != 1)
             {
@@ -18790,7 +18790,7 @@ void fade_out()
     gcopy(0, 0, 0, windoww, windowh);
     gsel(0);
     gmode(0);
-    for (int cnt = 0, cnt_end = (50); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 50; ++cnt)
     {
         await(20);
         redraw(0);
@@ -18799,7 +18799,7 @@ void fade_out()
         gfdec2(5, 5, 5);
         redraw(1);
     }
-    for (int cnt = 0, cnt_end = (30); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 30; ++cnt)
     {
         gmode(4, 0, 0, 10 + cnt * 5);
         await(20);
@@ -18817,7 +18817,7 @@ void fade_out()
 
 void label_1442()
 {
-    for (int cnt = 0, cnt_end = (50); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 50; ++cnt)
     {
         await(20);
         redraw(0);
@@ -18834,7 +18834,7 @@ void label_1442()
 
 void label_1443()
 {
-    for (int cnt = 0, cnt_end = (30); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 30; ++cnt)
     {
         gmode(4, 0, 0, 10 + cnt * 5);
         await(20);
@@ -19584,7 +19584,7 @@ void refresh_character()
         gdata_catches_god_signal = 0;
         gdata_reveals_religion = 0;
     }
-    for (int cnt = 0, cnt_end = (600); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 600; ++cnt)
     {
         sdata(cnt, r1) = sdata.get(cnt, r1).original_level;
     }
@@ -19692,7 +19692,7 @@ void refresh_character()
                 gdata_ether_disease_speed += 5;
             }
         }
-        for (int cnt = 0, cnt_end = (15); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 15; ++cnt)
         {
             if (inv[rp].enchantments[cnt].id == 0)
             {
@@ -19881,7 +19881,7 @@ void refresh_character()
     {
         buff += u8"\n"s;
         buff += u8"<title1>◆ 装備による能力の修正<def>\n"s;
-        for (int cnt = 0, cnt_end = (600); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 600; ++cnt)
         {
             sdata(cnt, 56) = sdata.get(cnt, r1).original_level;
             if (sdata(cnt, 56) != sdata(cnt, r1))
@@ -19891,7 +19891,7 @@ void refresh_character()
             }
         }
     }
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         if (cdata[r1].attr_adjs[cnt] != 0)
         {
@@ -19914,7 +19914,7 @@ void refresh_character()
     if (r1 == 0)
     {
         apply_god_blessing();
-        for (int cnt = 0, cnt_end = (217); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 217; ++cnt)
         {
             if (trait(cnt) != 0)
             {
@@ -19987,7 +19987,7 @@ void refresh_character()
     {
         cdata[r1].max_hp += 10;
     }
-    for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 16; ++cnt)
     {
         rp = cdata[r1].buffs[cnt].id;
         if (rp == 0)
@@ -20743,7 +20743,7 @@ void refresh_burden_state()
         * (100 - trait(201) * 10 + trait(205) * 20) / 100;
     cdata[0].max_inventory_weight =
         sdata(10, 0) * 500 + sdata(11, 0) * 250 + sdata(153, 0) * 2000 + 45000;
-    for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 1; ++cnt)
     {
         if (cdata[0].inventory_weight > cdata[0].max_inventory_weight * 2)
         {
@@ -21166,7 +21166,7 @@ void label_1530()
     }
     if (cdata[rc].quality >= 4)
     {
-        for (int cnt = 0, cnt_end = (2); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 2; ++cnt)
         {
             if (rnd(2) == 0)
             {
@@ -21507,7 +21507,7 @@ void label_1530()
         {
             if (eqmultiweapon)
             {
-                for (int cnt = 0, cnt_end = (15); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 15; ++cnt)
                 {
                     flt(calcobjlv(cdata[rc].level), calcfixlv(2 + fixeq));
                     itemcreate(rc, eqmultiweapon, -1, -1, 0);
@@ -21531,7 +21531,7 @@ void label_1530()
             {
                 if (eqweapon1 >= 10000)
                 {
-                    for (int cnt = 0, cnt_end = (15); cnt < cnt_end; ++cnt)
+                    for (int cnt = 0; cnt < 15; ++cnt)
                     {
                         flt(calcobjlv(cdata[rc].level),
                             calcfixlv(fixeq + eqweapon1(1)));
@@ -21579,7 +21579,7 @@ void label_1530()
             {
                 if (eqweapon2 >= 10000)
                 {
-                    for (int cnt = 0, cnt_end = (15); cnt < cnt_end; ++cnt)
+                    for (int cnt = 0; cnt < 15; ++cnt)
                     {
                         flt(calcobjlv(cdata[rc].level),
                             calcfixlv(fixeq + eqweapon2(1)));
@@ -21702,7 +21702,7 @@ void label_1530()
     }
     if (cdata[rc].id == 351 || cdata[rc].id == 352)
     {
-        for (int cnt = 0, cnt_end = (6); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 6; ++cnt)
         {
             flt();
             nostack = 1;
@@ -22235,13 +22235,13 @@ void label_15390()
     cdata[rc].enemy_id = 0;
     cdata[rc].sick = 0;
     cdata[rc].emotion_icon = 0;
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         cdata[rc].attr_adjs[cnt] = 0;
     }
     if (cdata[rc].buffs[0].id != 0)
     {
-        for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 16; ++cnt)
         {
             if (cdata[rc].buffs[cnt].id == 0)
             {
@@ -22335,7 +22335,7 @@ int convertartifact(int prm_930, int prm_931)
         return prm_930;
     }
     f_at_m163 = 0;
-    for (int cnt = 0, cnt_end = (5480); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 5480; ++cnt)
     {
         if (prm_931)
         {
@@ -23447,7 +23447,7 @@ label_1575_internal:
             drop(6) = -1;
         }
     }
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         if (drop(cnt) == -1)
         {
@@ -23602,7 +23602,7 @@ label_1575_internal:
     }
     if (cdata[rc].id == 351 || cdata[rc].id == 352)
     {
-        for (int cnt = 0, cnt_end = (12); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 12; ++cnt)
         {
             flt();
             nostack = 1;
@@ -23632,7 +23632,7 @@ void label_1576()
 {
     i = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
         + gdata_year * 24 * 30 * 12;
-    for (int cnt = 0, cnt_end = (246); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 246; ++cnt)
     {
         if (cnt == 245)
         {
@@ -23861,7 +23861,7 @@ void label_1579()
             continue;
         }
         ci = cdata_body_part(cc, i) % 10000 - 1;
-        for (int cnt = 0, cnt_end = (15); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 15; ++cnt)
         {
             if (inv[ci].enchantments[cnt].id == 0)
             {
@@ -24072,7 +24072,7 @@ void label_1581()
     }
     if (fixeditemenc != 0)
     {
-        for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 10; ++cnt)
         {
             if (fixeditemenc(cnt * 2) == 0)
             {
@@ -24909,7 +24909,7 @@ void apply_general_eating_effect()
     if (cc == 0)
     {
         p = inv[ci].param1 / 1000;
-        for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 1; ++cnt)
         {
             if (cc == 0)
             {
@@ -25625,7 +25625,7 @@ void apply_general_eating_effect()
         dmgcon(cc, 7, 500);
         cdata[cc].emotion_icon = 317;
     }
-    for (int cnt = 0, cnt_end = (15); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 15; ++cnt)
     {
         if (inv[ci].enchantments[cnt].id == 0)
         {
@@ -26573,7 +26573,7 @@ void map_initcustom(const std::string& prm_934)
     ctrl_file(5);
     map_tileset(mdata(12));
     nooracle = 1;
-    for (int cnt = 0, cnt_end = (400); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 400; ++cnt)
     {
         if (cmapdata(0, cnt) == 0)
         {
@@ -26643,7 +26643,7 @@ void map_reload(const std::string& prm_935)
             map(cnt, y_at_m166, 9) = 0;
         }
     }
-    for (int cnt = 0, cnt_end = (200); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 200; ++cnt)
     {
         mef(0, cnt) = 0;
     }
@@ -26662,7 +26662,7 @@ void map_reload(const std::string& prm_935)
             }
         }
     }
-    for (int cnt = 0, cnt_end = (400); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 400; ++cnt)
     {
         if (cmapdata(0, cnt) == 0)
         {
@@ -26696,7 +26696,7 @@ void map_initialize()
     {
         rdroomnum = 30;
     }
-    for (int cnt = 0, cnt_end = (30); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 30; ++cnt)
     {
         roomexist(cnt) = 0;
     }
@@ -26891,7 +26891,7 @@ void map_placeplayer()
         return;
     }
     camera = 0;
-    for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 16; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {
@@ -27209,7 +27209,7 @@ int map_digtoentrance1(
         dir2_at_m168 = -1;
         map_nextdir1(prm_961, prm_962);
     }
-    for (int cnt = 0, cnt_end = (2000); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 2000; ++cnt)
     {
         if (tx_at_m168 == prm_961)
         {
@@ -27394,7 +27394,7 @@ void map_createroomdoor()
             p(3) = 0;
         }
         f = 1;
-        for (int cnt = 0, cnt_end = (2); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 2; ++cnt)
         {
             dx = x + p(cnt);
             dy = y + p((cnt + 2));
@@ -27469,7 +27469,7 @@ int map_createroom(int prm_966)
     }
     cr = roomsum;
     f = 0;
-    for (int cnt = 0, cnt_end = (100); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 100; ++cnt)
     {
         if (roompos == 0)
         {
@@ -27712,7 +27712,7 @@ int map_createroom(int prm_966)
     }
     if (roomdoor == 2 || roomdoor == 3)
     {
-        for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 4; ++cnt)
         {
             rdpos = cnt;
             map_createroomdoor();
@@ -27771,7 +27771,7 @@ void map_randsite(int prm_971, int prm_972)
 {
     int f_at_m169 = 0;
     f_at_m169 = 0;
-    for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 20; ++cnt)
     {
         if (prm_971 == 0)
         {
@@ -28297,7 +28297,7 @@ label_16951_internal:
             mdata(12) = 0;
         }
         rdtype = 1;
-        for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 1; ++cnt)
         {
             if (gdata_current_dungeon_level == 1)
             {
@@ -28709,7 +28709,7 @@ int initialize_quest_map_crop()
     map_randomtile(3, 2);
     map_randomtile(4, 2);
     map_randomtile(5, 2);
-    for (int cnt = 0, cnt_end = (30); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 30; ++cnt)
     {
         int w = rnd(5) + 5;
         int h = rnd(4) + 4;
@@ -28791,7 +28791,7 @@ int initialize_quest_map_crop()
         }
     }
     mdata(10) = 15;
-    for (int cnt = 0, cnt_end = (30); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 30; ++cnt)
     {
         set_character_generation_filter();
         characreate(-1, 0, -3, 0);
@@ -29035,7 +29035,7 @@ int initialize_random_nefia_rdtype2()
     for (int cnt = 0, cnt_end = (rdextraroom); cnt < cnt_end; ++cnt)
     {
         p = 0;
-        for (int cnt = 0, cnt_end = (100); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 100; ++cnt)
         {
             x = rnd(mdata(0));
             y = rnd(mdata(1));
@@ -29139,16 +29139,16 @@ int initialize_quest_map_party()
         map_createroom(4);
     }
     map_converttile();
-    for (int cnt = 0, cnt_end = (500); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 500; ++cnt)
     {
         dx = rnd(mdata(0) - 5);
         dy = rnd(mdata(1) - 5);
         p(0) = 1;
         p(1) = 1;
-        for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 4; ++cnt)
         {
             y = dy + cnt;
-            for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 4; ++cnt)
             {
                 x = dx + cnt;
                 if (map(x, y, 0) != tile_tunnel || map(x, y, 4) != 0)
@@ -29164,11 +29164,11 @@ int initialize_quest_map_party()
         if (p(0) == 1)
         {
             int n = rnd(5);
-            for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 4; ++cnt)
             {
                 y = dy + cnt;
                 int cnt2 = cnt;
-                for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 4; ++cnt)
                 {
                     x = dx + cnt;
                     if (n < 2)
@@ -29636,7 +29636,7 @@ void label_1709()
     maze(mdig) = 7;
     elona_vector1<int> way;
     DIM2(way, 4);
-    for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 4; ++cnt)
     {
         way(cnt) = cnt;
     }
@@ -29645,7 +29645,7 @@ void label_1709()
     {
         dimmix(way);
         digno = 0;
-        for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 4; ++cnt)
         {
             pmdig = mdig;
             if (way(cnt) == 0)
@@ -29829,7 +29829,7 @@ void initialize_random_nefia_rdtype10()
     mdata(10) = mdata(0) * mdata(1) / 12;
     map_initialize();
     label_1709();
-    for (int cnt = 0, cnt_end = (50); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 50; ++cnt)
     {
         int cnt2 = cnt;
         t = 100 + cnt2 + 1;
@@ -30431,7 +30431,7 @@ void use_house_board()
         goto label_1722_internal;
     case 2:
         gsel(4);
-        for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 8; ++cnt)
         {
             pos(cnt % 4 * 180, cnt / 4 * 300);
             picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
@@ -30466,7 +30466,7 @@ void use_house_board()
         p(1) = gdata(77);
         p(2) = gdata(78);
         p(3) = (p + p(1) + p(2)) / 3;
-        for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 4; ++cnt)
         {
             x = wx + 45 + cnt / 2 * 190;
             y = wy + 68 + cnt % 2 * 18;
@@ -30486,7 +30486,7 @@ void use_house_board()
         font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
         listmax = 10;
         sort_list_by_column1();
-        for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 10; ++cnt)
         {
             p = list(0, cnt);
             if (p == 0)
@@ -30673,7 +30673,7 @@ void use_house_board()
                 u8"You already have too many guests in your home."s));
             goto label_1722_internal;
         }
-        for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 10; ++cnt)
         {
             randomize(gdata_day + cnt);
             if (rnd(2))
@@ -30786,7 +30786,7 @@ void use_house_board()
                 snd(64);
             }
         }
-        for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 245; ++cnt)
         {
             if (cdata[cnt].state == 10)
             {
@@ -30811,7 +30811,7 @@ void label_1723()
 {
     p = 0;
     gsel(2);
-    for (int cnt = 0, cnt_end = (2772); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 2772; ++cnt)
     {
         f = 0;
         if (cnt < 231)
@@ -30934,7 +30934,7 @@ void show_shop_log()
     listmax = 0;
     shoplv = 100 - gdata(125) / 100;
     customer = 0;
-    for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 3; ++cnt)
     {
         customer += rnd(shoplv / 3 + 5);
     }
@@ -31047,7 +31047,7 @@ void show_shop_log()
         }
         if (area == gdata_current_map)
         {
-            for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 245; ++cnt)
             {
                 if (cdata[cnt].state != 1)
                 {
@@ -31096,7 +31096,7 @@ void show_shop_log()
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
         int cnt2 = cnt;
-        for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 4; ++cnt)
         {
             flt(list(0, cnt2), list(1, cnt2));
             flttypemajor = elona::stoi(listn(0, cnt2));
@@ -31324,7 +31324,7 @@ void label_1729(int val0)
         gdata(77) += std::clamp(inv[val0].value / 50, 50, 500);
     }
     p = inv[val0].value;
-    for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 1; ++cnt)
     {
         if (category == 60000)
         {
@@ -31348,7 +31348,7 @@ void label_1729(int val0)
     {
         list(0, n) = val0;
         list(1, n) = p;
-        for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 10; ++cnt)
         {
             if (list(1, cnt) < list(1, n))
             {
@@ -31372,7 +31372,7 @@ void label_1730()
     rankcur = 0;
     gdata(77) = 0;
     gdata(78) = 0;
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         list(0, cnt) = 0;
         list(1, cnt) = 0;
@@ -31390,7 +31390,7 @@ void label_1730()
         }
         label_1729(cnt);
     }
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         if (list(0, cnt) != 0)
         {
@@ -31454,7 +31454,7 @@ void update_ranch()
 {
     worker = getworker(gdata_current_map);
     livestock = 0;
-    for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 245; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {
@@ -31507,7 +31507,7 @@ void update_ranch()
         }
     label_1734_internal:
         egg = 0;
-        for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 245; ++cnt)
         {
             if (cdata[cnt].state != 1)
             {
@@ -32237,7 +32237,7 @@ void exit_map()
                 u8"You reached the town of Larna."s);
         }
     }
-    for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 16; ++cnt)
     {
         cdata[cnt].hate = 0;
         cdata[cnt].enemy_id = 0;
@@ -32287,7 +32287,7 @@ void exit_map()
 
 void label_1738()
 {
-    for (int cnt = 0, cnt_end = (57); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 57; ++cnt)
     {
         rowactend(cnt);
         cdata[cnt].item_which_will_be_used = 0;
@@ -32774,14 +32774,14 @@ void label_1749()
 void label_1750()
 {
     initialize_map_chip();
-    for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 20; ++cnt)
     {
         int cnt2 = cnt;
         if (gdata(850) != 4)
         {
             break;
         }
-        for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 10; ++cnt)
         {
             if (bddata(0, cnt2, cnt) != 0)
             {
@@ -32796,7 +32796,7 @@ void label_1750()
             }
         }
     }
-    for (int cnt = 0, cnt_end = (500); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 500; ++cnt)
     {
         if (adata(16, cnt) == 0 || adata(15, cnt) == 0)
         {
@@ -33629,7 +33629,7 @@ int label_1753()
             continue;
         }
         f = -1;
-        for (int cnt = 0, cnt_end = (1000); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 1000; ++cnt)
         {
             x = cxinit + rnd((cnt + 1)) - rnd((cnt + 1));
             y = cyinit + rnd((cnt + 1)) - rnd((cnt + 1));
@@ -33650,7 +33650,7 @@ int label_1753()
                 continue;
             }
             p = 1;
-            for (int cnt = 0, cnt_end = (500); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 500; ++cnt)
             {
                 if (adata(16, cnt) == 0)
                 {
@@ -33944,7 +33944,7 @@ void label_1754()
         else if (mdata(9) == 1000000)
         {
             mdata(9) = 10000;
-            for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 245; ++cnt)
             {
                 cdata[cnt].turn_cost = 0;
             }
@@ -33994,7 +33994,7 @@ void label_1754()
             {
                 txtef(9);
                 txtmore();
-                for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 1; ++cnt)
                 {
                     if (en)
                     {
@@ -34287,7 +34287,7 @@ void label_1755()
                     sncnv(cdatan(0, rc)) + u8"the street vendor"s);
             }
         }
-        for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 20; ++cnt)
         {
             flt();
             int stat = characreate(-1, 349, -3, 0);
@@ -34304,7 +34304,7 @@ void label_1755()
                 }
             }
         }
-        for (int cnt = 0, cnt_end = (15); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 15; ++cnt)
         {
             flt();
             int stat = characreate(-1, 326, -3, 0);
@@ -34313,7 +34313,7 @@ void label_1755()
                 cbitmod(991, rc, 1);
             }
         }
-        for (int cnt = 0, cnt_end = (7); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 7; ++cnt)
         {
             flt();
             int stat = characreate(-1, 335, -3, 0);
@@ -34346,7 +34346,7 @@ void label_1755()
                 }
             }
         }
-        for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 3; ++cnt)
         {
             flt();
             int stat = characreate(-1, 332, -3, 0);
@@ -34392,7 +34392,7 @@ int random_material(int prm_1028, int prm_1029)
     lv_at_m174 = prm_1028;
     rare_at_m174 = prm_1029;
     loc_at_m174 = atxspot;
-    for (int cnt = 0, cnt_end = (500); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 500; ++cnt)
     {
         p_at_m174 = rnd(55);
         if (p_at_m174 == 0)
@@ -34413,7 +34413,7 @@ int random_material(int prm_1028, int prm_1029)
             continue;
         }
         f2_at_m174 = 0;
-        for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 5; ++cnt)
         {
             p2_at_m174 = matspot(cnt, p_at_m174);
             if (p2_at_m174 == 0)
@@ -34565,7 +34565,7 @@ label_18551_internal:
     }
     else
     {
-        for (int cnt = 0, cnt_end = (50); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 50; ++cnt)
         {
             listn(0, listmax) = ""s + prodcheck();
             list(0, listmax) = 630;
@@ -34658,7 +34658,7 @@ label_1857_internal:
                 mes(s + u8" "s);
                 color(0, 0, 0);
             }
-            for (int cnt = 0, cnt_end = (6); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 6; ++cnt)
             {
                 int j0 = matneed(cnt * 2);
                 int j1 = matneed(cnt * 2 + 1);
@@ -34743,7 +34743,7 @@ label_1857_internal:
             goto label_1857_internal;
         }
         matuse = 0;
-        for (int cnt = 0, cnt_end = (6); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 6; ++cnt)
         {
             int j0 = matneed(cnt * 2);
             int j1 = matneed(cnt * 2 + 1);
@@ -34814,7 +34814,7 @@ void craft_material_menu()
     cc = 0;
     cs_bk = -1;
     curmenu = 3;
-    for (int cnt = 0, cnt_end = (400); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 400; ++cnt)
     {
         if (mat(cnt) != 0)
         {
@@ -35253,7 +35253,7 @@ void label_1870()
     {
         mattile = rnd(mattile(2)) + mattile(1);
     }
-    for (int cnt = 0, cnt_end = (12); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 12; ++cnt)
     {
         x(0) = 170;
         x(1) = 300;
@@ -35306,7 +35306,7 @@ void label_1870()
         if (mattile != -1)
         {
             int cnt2 = cnt;
-            for (int cnt = 0, cnt_end = (2); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 2; ++cnt)
             {
                 x(0) = cnt * 250 + 170;
                 x(1) = 96;
@@ -35339,7 +35339,7 @@ void label_1870()
 void label_1871()
 {
     label_1872();
-    for (int cnt = 0, cnt_end = (11); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 11; ++cnt)
     {
         x = 170;
         y(0) = noteinfo(0) * 20 + 120 + txtadvmsgfix + 16;
@@ -35690,7 +35690,7 @@ label_1876_internal:
         atxinit();
         if (rtval == 1)
         {
-            for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 3; ++cnt)
             {
                 p = random_material(atxlv);
                 atxpic(0) = 1;
@@ -36083,7 +36083,7 @@ void label_1879()
         showcard();
         if (cardround == 0)
         {
-            for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 4; ++cnt)
             {
                 int stat = servecard(cnt % 2);
                 if (cnt != 2)
@@ -36091,7 +36091,7 @@ void label_1879()
                     opencard2(stat);
                 }
             }
-            for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 1; ++cnt)
             {
                 if (cpcardnum(0) >= 5)
                 {
@@ -36212,7 +36212,7 @@ void label_1879()
         {
             int stat = servecard(1);
             p = stat;
-            for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 3; ++cnt)
             {
                 if (cpscore(1) >= 22)
                 {
@@ -36281,7 +36281,7 @@ void label_1879()
             u8"おめでとうございます。あなたは"s + winrow + u8"連勝しました。"s,
             u8"Congratulations! You've won "s + winrow
                 + u8" times in a row."s));
-        for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 1; ++cnt)
         {
             i = 2;
             if (winrow > 2)
@@ -37376,7 +37376,7 @@ void offer()
     else
     {
         txtef(2);
-        for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 1; ++cnt)
         {
             if (i >= 15)
             {
@@ -37625,7 +37625,7 @@ label_1894_internal:
     switch (id0)
     {
     case 15:
-        for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 20; ++cnt)
         {
             p = rnd(gdata_other_character_count + 1) + 57;
             if (p >= 245)
@@ -38247,7 +38247,7 @@ void label_1901()
     mode = 6;
     income(0) = 0;
     income(1) = 0;
-    for (int cnt = 0, cnt_end = (9); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 9; ++cnt)
     {
         if (gdata(120 + cnt) >= 10000)
         {
@@ -38582,7 +38582,7 @@ int rpdiff(int, int prm_1042, int prm_1043)
             }
         }
     }
-    for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 5; ++cnt)
     {
         if (rpdata(10 + cnt * 2, rpid) == 0)
         {
@@ -38636,7 +38636,7 @@ int blendcheckmat(int prm_1044)
     int rp_at_m181 = 0;
     int o_at_m181 = 0;
     rpid = prm_1044;
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         if (rpdata(20 + cnt, rpid) == 0)
         {
@@ -38646,7 +38646,7 @@ int blendcheckmat(int prm_1044)
         step_at_m181 = cnt;
         id_at_m181 = rpdata(20 + cnt, rpid);
         rp_at_m181 = cnt;
-        for (int cnt = 0, cnt_end = (2); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 2; ++cnt)
         {
             if (cnt == 0)
             {
@@ -38738,7 +38738,7 @@ int blendmatnum(int prm_1045, int prm_1046)
     int m_at_m182 = 0;
     int o_at_m182 = 0;
     m_at_m182 = 0;
-    for (int cnt = 0, cnt_end = (2); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 2; ++cnt)
     {
         if (cnt == 0)
         {
@@ -38823,7 +38823,7 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
     int f_at_m183 = 0;
     id_at_m183 = rpdata(20 + prm_1048, rpid);
     m_at_m183 = 0;
-    for (int cnt = 0, cnt_end = (2); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 2; ++cnt)
     {
         if (cnt == 0)
         {
@@ -39066,7 +39066,7 @@ void window_recipe_(
     }
     dy_at_m184 += 17;
     ++i_at_m184;
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         if (rpdata(20 + cnt, rpid) == 0)
         {
@@ -39129,7 +39129,7 @@ void window_recipe_(
         mes(lang(u8"必要なスキル:"s, u8"Required Skills:"s));
         dy_at_m184 = dy_at_m184 + 18;
         font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
-        for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 5; ++cnt)
         {
             if (rpdata(10 + cnt * 2, rpid) == 0)
             {
@@ -39217,7 +39217,7 @@ void window_recipe_(
 
 void clear_rprefmat()
 {
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         rpref(10 + cnt * 2) = -1;
     }
@@ -39228,7 +39228,7 @@ void clear_rprefmat()
 
 void initialize_recipememory()
 {
-    for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 8; ++cnt)
     {
         recipememory(200 + cnt) = 1;
     }
@@ -39477,7 +39477,7 @@ label_1923:
             promptl(2, promptmax) = ""s + promptmax;
             ++promptmax;
             p = 10;
-            for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 10; ++cnt)
             {
                 if (rpref(10 + cnt * 2) == -1)
                 {
@@ -39526,7 +39526,7 @@ label_1923:
         rppage(0) = 0;
         rppage(1) = 0;
         listmax = 0;
-        for (int cnt = 0, cnt_end = (1200); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 1200; ++cnt)
         {
             if (rpdata(0, cnt) == 0)
             {
@@ -39879,7 +39879,7 @@ label_1928_internal:
 int label_1931()
 {
     f = 1;
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         if (rpref(10 + cnt * 2) == -1)
         {
@@ -39905,7 +39905,7 @@ int label_1931()
 int label_1932()
 {
     p = 0;
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         if (rpref(10 + cnt * 2) == -1)
         {
@@ -39989,7 +39989,7 @@ void label_1933()
                 u8"You successfully create "s + itemname(ci, 1) + u8"!"s));
             snd(17);
         }
-        for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 5; ++cnt)
         {
             if (rpdata(10 + cnt * 2, rpid) == 0)
             {
@@ -40056,7 +40056,7 @@ label_19341_internal:
                 txt(lang(u8" *こねこね* "s, u8"*pug*"s),
                     lang(u8" *トントン* "s, u8"*clank*"s));
             }
-            for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 20; ++cnt)
             {
                 redraw(0);
                 redraw(1);
@@ -40354,7 +40354,7 @@ std::string txtitemoncell(int prm_1055, int prm_1056)
             i_at_m185(0) = p_at_m185 % 1000 + 5080;
             i_at_m185(1) = p_at_m185 / 1000 % 1000 + 5080;
             i_at_m185(2) = p_at_m185 / 1000000 % 1000 + 5080;
-            for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 3; ++cnt)
             {
                 if (i_at_m185(cnt) == 6079)
                 {
@@ -40965,7 +40965,7 @@ label_1948_internal:
     else
     {
         rc = -1;
-        for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 1; ++cnt)
         {
             if (map(tlocx, tlocy, 1) <= 1)
             {
@@ -41000,7 +41000,7 @@ label_1948_internal:
             {
                 dx = cdata[cc].position.x;
                 dy = cdata[cc].position.y;
-                for (int cnt = 0, cnt_end = (100); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 100; ++cnt)
                 {
                     int stat = route_info(dx, dy, cnt);
                     if (stat == 0)
@@ -41301,7 +41301,7 @@ label_1953_internal:
                 {
                     dx = cdata[cc].position.x;
                     dy = cdata[cc].position.y;
-                    for (int cnt = 0, cnt_end = (100); cnt < cnt_end; ++cnt)
+                    for (int cnt = 0; cnt < 100; ++cnt)
                     {
                         int stat = route_info(dx, dy, cnt);
                         if (stat == 0)
@@ -41518,7 +41518,7 @@ int ctrl_ally()
         list(1, listmax) = -9999;
         ++listmax;
     }
-    for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 16; ++cnt)
     {
         if (cdata[cnt].state == 0)
         {
@@ -41629,7 +41629,7 @@ label_1960_internal:
     if (allyctrl == 2)
     {
         i = 0;
-        for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 16; ++cnt)
         {
             i += followerin(cnt) == 1;
         }
@@ -41909,7 +41909,7 @@ label_1961_internal:
         if (allyctrl == 2)
         {
             i = 0;
-            for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 16; ++cnt)
             {
                 if (followerin(cnt) == 1)
                 {
@@ -42011,7 +42011,7 @@ void label_1964()
     r1 = 56;
     cdata[r1].piety_point = cdata[0].piety_point;
     cdata[r1].god_id = cdata[0].god_id;
-    for (int cnt = 0, cnt_end = (600); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 600; ++cnt)
     {
         sdata(cnt, rc) = 1;
     }
@@ -42020,7 +42020,7 @@ void label_1964()
     {
         buff += u8"<title1>◆ "s + i18n::_(u8"god", cdata[0].god_id, u8"name")
             + u8"による能力の恩恵<def>\n"s;
-        for (int cnt = 0, cnt_end = (600); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 600; ++cnt)
         {
             p = sdata(cnt, rc) - 1;
             cnvbonus(cnt, p);
@@ -42151,7 +42151,7 @@ label_196901_internal:
         ++listmax;
     }
     f = 0;
-    for (int cnt = 0, cnt_end = (217); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 217; ++cnt)
     {
         if (tc != 0)
         {
@@ -42718,7 +42718,7 @@ label_1970_internal:
     if (key == u8"z"s || key == u8"x"s)
     {
         p = tc;
-        for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 16; ++cnt)
         {
             if (key == u8"z"s)
             {
@@ -42847,7 +42847,7 @@ void update_journal()
     noteadd(""s);
     noteadd(lang(u8"名声: "s, u8"Fame: "s) + cdata[0].fame);
     noteadd(""s);
-    for (int cnt = 0, cnt_end = (9); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 9; ++cnt)
     {
         if (gdata(120 + cnt) < 10000)
         {
@@ -43166,7 +43166,7 @@ void show_quest_board()
     wh = h * 4;
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
-    for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 4; ++cnt)
     {
         y = wy + cnt * 120;
         window(wx + 4, y + 4, ww, h, 0, -1);
@@ -43239,7 +43239,7 @@ label_1978_internal:
         talk_conv(buff, 70);
         p(0) = qdata(5, rq) / 5 + 1;
         p(1) = 14;
-        for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 1; ++cnt)
         {
             if (cdata[0].level * 2 < qdata(5, rq))
             {
@@ -43369,7 +43369,7 @@ int label_1980()
     cs = 0;
     cc = 0;
     cs_bk = -1;
-    for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 245; ++cnt)
     {
         if (allyctrl == 2)
         {
@@ -43573,7 +43573,7 @@ int label_1984()
     cs = 0;
     cc = 0;
     cs_bk = -1;
-    for (int cnt = 0, cnt_end = (800); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 800; ++cnt)
     {
         if (itemmemory(2, cnt) == 0)
         {
@@ -43724,7 +43724,7 @@ void list_adventurers()
     cs = 0;
     cc = 0;
     cs_bk = -1;
-    for (int cnt = 0, cnt_end = (56); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 56; ++cnt)
     {
         if (cdata[cnt].state == 0)
         {
@@ -43906,7 +43906,7 @@ label_1994_internal:
             (windoww - 400) / 2 + inf_screenx, winposy(458), 400, 458);
         display_topic(lang(u8"異名の候補"s, u8"Alias List"s), wx + 28, wy + 30);
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        for (int cnt = 0, cnt_end = (17); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 17; ++cnt)
         {
             key_list(cnt) = key_select(cnt);
             keyrange = cnt + 1;
@@ -44435,7 +44435,7 @@ label_1998_internal:
 label_1999_internal:
     fix_wish();
     i = 0;
-    for (int cnt = 0, cnt_end = (600); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 600; ++cnt)
     {
         f = 0;
         if (cnt >= 10 && cnt < 20)
@@ -44575,7 +44575,7 @@ void select_wished_character()
     i = 0;
     s2 = inputlog;
     fix_wish(s2);
-    for (int cnt = 0, cnt_end = (800); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 800; ++cnt)
     {
         p = 0;
         s = refchara_str(cnt, 2);
@@ -44788,7 +44788,7 @@ void label_2007()
             ++listmax;
         }
     }
-    for (int cnt = 0, cnt_end = (61); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 61; ++cnt)
     {
         if (spact(cnt) != 0)
         {
@@ -44870,7 +44870,7 @@ label_2009_internal:
             inf_tiles,
             inf_tiles);
         s = "";
-        for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 20; ++cnt)
         {
             if (gdata(40 + cnt) == list(0, p))
             {
@@ -44925,7 +44925,7 @@ label_2009_internal:
             gdata(40 + sc) = 0;
             goto label_2008_internal;
         }
-        for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 20; ++cnt)
         {
             if (gdata(40 + cnt) == p)
             {
@@ -45311,7 +45311,7 @@ void call_npc()
 int change_npc_tone()
 {
     gsel(4);
-    for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
         picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
@@ -45459,7 +45459,7 @@ int summon_cnpc()
 {
     snd(94);
     gsel(4);
-    for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
         picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
@@ -45580,7 +45580,7 @@ label_2020_internal:
             fs::u8path(u8"./user/"s + listn(1, listmax)),
             fs::u8path(u8"./user/"s + listn(0, listmax) + u8".npc"s));
         load_cnpc_data();
-        for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 245; ++cnt)
         {
             if (cdata[cnt].id == 343)
             {
@@ -45755,7 +45755,7 @@ void label_2027()
     cs = commark(1) % 1000;
     page = commark(1) / 1000;
     curmenu = 0;
-    for (int cnt = 0, cnt_end = (200); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 200; ++cnt)
     {
         if (spell(cnt) > 0)
         {
@@ -45839,7 +45839,7 @@ label_2029_internal:
             inf_tiles,
             inf_tiles);
         s = "";
-        for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 20; ++cnt)
         {
             if (gdata(40 + cnt) == list(0, p))
             {
@@ -45895,7 +45895,7 @@ label_2029_internal:
             gdata(40 + sc) = 0;
             goto label_2028_internal;
         }
-        for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 20; ++cnt)
         {
             if (gdata(40 + cnt) == p)
             {
@@ -46582,7 +46582,7 @@ label_2035_internal:
         s(2) = lang(u8"必要値"s, u8"Next Lv"s);
         s(3) = lang(u8"信仰"s, u8"God"s);
         s(4) = lang(u8"所属"s, u8"Guild"s);
-        for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 5; ++cnt)
         {
             pos(wx + 355, wy + 46 + cnt * 15);
             color(20, 10, 0);
@@ -46597,14 +46597,14 @@ label_2035_internal:
         s(5) = lang(u8"年齢"s, u8"Age"s);
         s(6) = lang(u8"身長"s, u8"Height"s);
         s(7) = lang(u8"体重"s, u8"Weight"s);
-        for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 8; ++cnt)
         {
             pos(wx + 30 + cnt / 4 * 190, wy + 61 + cnt % 4 * 15);
             color(20, 10, 0);
             mes(s(cnt));
             color(0, 0, 0);
         }
-        for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 8; ++cnt)
         {
             pos(wx + 37, wy + 157 + cnt * 15);
             gmode(2, inf_tiles, inf_tiles);
@@ -46630,7 +46630,7 @@ label_2035_internal:
         s(13) = "";
         s(14) = "";
         s(15) = "";
-        for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 8; ++cnt)
         {
             pos(wx + 255, wy + 151 + cnt * 15);
             color(20, 10, 0);
@@ -46643,7 +46643,7 @@ label_2035_internal:
         s(3) = lang(u8"総時間"s, u8"Time"s);
         s(4) = "";
         s(5) = "";
-        for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 5; ++cnt)
         {
             pos(wx + 32, wy + 301 + cnt * 15);
             color(20, 10, 0);
@@ -46654,7 +46654,7 @@ label_2035_internal:
         s(1) = lang(u8"荷車限界"s, u8"Cargo Lmt"s);
         s(2) = lang(u8"装備重量"s, u8"Equip Wt"s);
         s(3) = lang(u8"最深到達"s, u8"Deepest Lv"s);
-        for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 4; ++cnt)
         {
             pos(wx + 224, wy + 301 + cnt * 15);
             color(20, 10, 0);
@@ -46667,7 +46667,7 @@ label_2035_internal:
         s(2) = ""s + cdata[cc].required_experience;
         s(3) = i18n::_(u8"god", cdata[cc].god_id, u8"name");
         s(4) = guildname();
-        for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 5; ++cnt)
         {
             pos(wx + 410 + en * 5, wy + 45 + cnt * 15);
             color(20, 10, 0);
@@ -46691,7 +46691,7 @@ label_2035_internal:
         s(5) = ""s + calcage(cc) + u8" "s + lang(u8"歳"s, ""s);
         s(6) = ""s + cdata[cc].height + u8" cm"s;
         s(7) = ""s + cdata[cc].weight + u8" kg"s;
-        for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 8; ++cnt)
         {
             pos(wx + 68 + cnt / 4 * 190 + en * ((cnt > 3) * 12),
                 wy + 60 + cnt % 4 * 15);
@@ -46699,7 +46699,7 @@ label_2035_internal:
             mes(s(cnt));
             color(0, 0, 0);
         }
-        for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 8; ++cnt)
         {
             s = u8"("s + sdata.get(10 + cnt, cc).original_level + u8")"s;
             if (encfind(cc, 60010 + cnt) != -1)
@@ -46759,7 +46759,7 @@ label_2035_internal:
         s(6) = ""s + cdata[cc].karma;
         s(7) = "";
         s(8) = "";
-        for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 8; ++cnt)
         {
             color(20, 10, 0);
             pos(wx + 310, wy + 151 + cnt * 15);
@@ -46795,7 +46795,7 @@ label_2035_internal:
                    (gdata_play_time + timeGetTime() / 1000 - time_begin));
         s(4) = "";
         s(5) = "";
-        for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 5; ++cnt)
         {
             pos(wx + 80, wy + 299 + cnt * 15);
             mes(s(cnt));
@@ -46806,13 +46806,13 @@ label_2035_internal:
             + cnveqweight(cc);
         s(3) = cnvrank(gdata_deepest_dungeon_level)
             + lang(u8"階相当"s, u8" Level"s);
-        for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 4; ++cnt)
         {
             pos(wx + 287 + en * 14, wy + 299 + cnt * 15);
             mes(s(cnt));
         }
         cs_buffmax = 0;
-        for (int cnt = 0, cnt_end = (15); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 15; ++cnt)
         {
             x = wx + 430 + cnt / 3 * 40;
             y = wy + 151 + cnt % 3 * 32;
@@ -46944,7 +46944,7 @@ label_2035_internal:
                     s = lang(""s, u8"Resist "s) + cnven(s)
                         + lang(u8"耐性"s, ""s);
                 }
-                for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 3; ++cnt)
                 {
                     if (gdata(750 + cnt) == cc * 10000 + i)
                     {
@@ -47372,7 +47372,7 @@ int change_appearance()
     picload(fs::u8path(u8"./graphic/face1.bmp"), 1);
     buffer(7, 800, 112);
     boxf();
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         s = fs::u8path(u8"./user/graphic/face"s + (cnt + 1) + u8".bmp");
         if (fs::exists(s))
@@ -47830,7 +47830,7 @@ void label_2047(int val0)
     attackskill = 106;
     ammo = -1;
     attacknum = 0;
-    for (int cnt = 0, cnt_end = (30); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
         if (cdata_body_part(cc, cnt) % 10000 == 0)
@@ -47928,7 +47928,7 @@ void label_2048(int val0)
 void equip_melee_weapon()
 {
     attacknum = 0;
-    for (int cnt = 0, cnt_end = (30); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
         if (cdata_body_part(cc, cnt) / 10000 != 5)
@@ -48851,7 +48851,7 @@ void show_item_description()
     }
     if (inv[ci].identification_state >= 3)
     {
-        for (int cnt = 0, cnt_end = (15); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 15; ++cnt)
         {
             if (inv[ci].enchantments[cnt].id == 0)
             {
@@ -48887,7 +48887,7 @@ void show_item_description()
         }
         if (jp)
         {
-            for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 3; ++cnt)
             {
                 if (description(cnt) == ""s)
                 {
@@ -49091,7 +49091,7 @@ int label_2072()
                 p(1) = 0;
                 p(2) = 0;
             }
-            for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 3; ++cnt)
             {
                 int cnt2 = cnt;
                 for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
@@ -49217,7 +49217,7 @@ int can_do_ranged_attack()
 {
     cw = -1;
     ammo = -1;
-    for (int cnt = 0, cnt_end = (30); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
         if (cdata_body_part(cc, cnt) % 10000 == 0)
@@ -49262,9 +49262,9 @@ int can_do_ranged_attack()
 void label_2076()
 {
     listmax = 0;
-    for (int cnt = 0, cnt_end = (2); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 2; ++cnt)
     {
-        for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 245; ++cnt)
         {
             if (cdata[cnt].state != 1)
             {
@@ -49458,7 +49458,7 @@ void label_2079()
 int label_2080()
 {
     f = 0;
-    for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 5; ++cnt)
     {
         p = gdata(160 + cnt);
         if (qdata(8, p) == 1)
@@ -49510,7 +49510,7 @@ void label_2081()
         ++promptmax;
         ++p;
     }
-    for (int cnt = 0, cnt_end = (500); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 500; ++cnt)
     {
         i = 500 - (cnt + 1);
         if (adata(16, i) == 0)
@@ -49789,7 +49789,7 @@ void label_2084()
             u8"どのメンバー構成を記録する？"s,
             u8"Which members do you want to save?"s));
         DIM2(followerexist, 16);
-        for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 16; ++cnt)
         {
             followerexist(cnt) = cdata[cnt].state;
         }
@@ -49805,7 +49805,7 @@ void label_2084()
         }
         lv = 0;
         int n = 0;
-        for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 245; ++cnt)
         {
             list(0, cnt) = 0;
             if (cnt < 16)
@@ -49966,7 +49966,7 @@ void label_2085()
     s(7) = u8"DV        : "s + cdata[0].dv;
     s(8) = u8"PV        : "s + cdata[0].pv;
     s(9) = "";
-    for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 8; ++cnt)
     {
         s = "";
         p = sdata.get(10 + cnt, 0).potential;
@@ -50094,7 +50094,7 @@ void label_2085()
     noteadd(""s);
     noteadd(u8"------------------------------ 仲間"s);
     noteadd(""s);
-    for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 16; ++cnt)
     {
         if (cdata[cnt].state == 0)
         {
@@ -50121,7 +50121,7 @@ void label_2085()
     }
     noteadd(u8"------------------------------ 称号"s);
     noteadd(""s);
-    for (int cnt = 0, cnt_end = (9); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 9; ++cnt)
     {
         if (gdata(120 + cnt) < 10000)
         {
@@ -50155,7 +50155,7 @@ void label_2085()
 void label_2086()
 {
     f = 0;
-    for (int cnt = 0, cnt_end = (30); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
         if (cdata_body_part(cc, cnt) % 10000 == 0)
@@ -50176,7 +50176,7 @@ void label_2086()
     }
     listmax = 0;
     cs = -1;
-    for (int cnt = 0, cnt_end = (15); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 15; ++cnt)
     {
         if (inv[ci].enchantments[cnt].id == 0)
         {
@@ -50268,7 +50268,7 @@ void remove_card_and_figures()
 
 void label_2088()
 {
-    for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 245; ++cnt)
     {
         if (cdata[cnt].state == 1)
         {
@@ -50352,7 +50352,7 @@ void migrate_save_data()
         {
             p = cnt;
             SDIM1(file_cnv);
-            for (int cnt = 0, cnt_end = (40); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 40; ++cnt)
             {
                 adata(cnt, p) = 0;
             }
@@ -50382,7 +50382,7 @@ void migrate_save_data()
                 fileadd(file, 1);
             }
         }
-        for (int cnt = 0, cnt_end = (500); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 500; ++cnt)
         {
             if (adata(16, cnt) != 0)
             {
@@ -50430,7 +50430,7 @@ void get_inheritance()
     ctrl_file(4, u8"shop3.s2");
     p = 0;
     i = 0;
-    for (int cnt = 0, cnt_end = (600); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 600; ++cnt)
     {
         if (cnt >= 10 && cnt < 20)
         {
@@ -50462,7 +50462,7 @@ void get_inheritance()
     cdata[0].gold += std::clamp(cdata[56].gold / 100, 1000, 100000);
     cdata[0].platinum_coin += p;
     cdata[0].skill_bonus += i;
-    for (int cnt = 0, cnt_end = (400); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 400; ++cnt)
     {
         mat(cnt) = mat(cnt) / 3;
     }
@@ -50476,7 +50476,7 @@ void load_gene_files()
     ctrl_file(15);
     DIM2(spell, 200);
     DIM2(spact, 500);
-    for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 245; ++cnt)
     {
         cdata[cnt].state = 0;
     }
@@ -50524,7 +50524,7 @@ void load_gene_files()
         inv[cnt].body_part = 0;
         item_copy(cnt, inv_getfreeid(-1));
     }
-    for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 245; ++cnt)
     {
         del_chara(cnt);
     }
@@ -50574,7 +50574,7 @@ void load_user_file(const fs::path& file)
     SDIM2(filebuff, zipsize);
     bload(folder + file, filebuff, zipsize);
     lenhead = 1024;
-    for (int cnt = 0, cnt_end = (10000); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10000; ++cnt)
     {
         SDIM2(ziptmp1, p);
         SDIM2(ziptmp2, p);
@@ -50655,7 +50655,7 @@ void unzip2(const std::string& prm_1066, const std::string& prm_1067)
     SDIM2(filebuff_at_m188, zipsize_at_m188);
     bload(prm_1066 + prm_1067, filebuff_at_m188, zipsize_at_m188);
     lenhead_at_m188 = 0;
-    for (int cnt = 0, cnt_end = (10000); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10000; ++cnt)
     {
         SDIM2(ziptmp1_at_m188, p_at_m188(1));
         SDIM2(ziptmp2_at_m188, p_at_m188(2));
@@ -50738,7 +50738,7 @@ void create_cnpc()
     creaturepack = 0;
     cdata[rc].ai_act_num = 55;
     cdata[rc].ai_act_sub_freq = unaiactsubfreq(cun);
-    for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 5; ++cnt)
     {
         cdata[rc].act[cnt] = userdata(15 + cnt, cun);
         cdata[rc].act[cnt + 5] = userdata(20 + cnt, cun);
@@ -50872,13 +50872,13 @@ void load_cnpc_data()
         }
         s = getnpctxt(u8"aiAct."s, u8"0,0,0,0,0"s);
         csvstr2(s, s);
-        for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 5; ++cnt)
         {
             userdata(15 + cnt, cnt2) = elona::stoi(s(cnt));
         }
         s = getnpctxt(u8"aiActSub."s, u8"0,0,0,0,0"s);
         csvstr2(s, s);
-        for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 5; ++cnt)
         {
             userdata(20 + cnt, cnt2) = elona::stoi(s(cnt));
         }
@@ -51017,7 +51017,7 @@ void create_new_cnpc()
         u8"A custom NPC has been successfully generated!"s));
     flt();
     characreate(-1, 343, cdata[0].position.x, cdata[0].position.y);
-    for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 245; ++cnt)
     {
         if (cdata[cnt].id == 343)
         {
@@ -51056,7 +51056,7 @@ void label_2108()
     headtemp += ""s + userrelation + u8"\n"s;
     memcpy_(filebuff, headtemp, 1024, 0);
     ctrl_file(20);
-    for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 245; ++cnt)
     {
         list(0, cnt) = 0;
         if (cnt != 0)
@@ -51176,7 +51176,7 @@ void load_save_data()
     ctrl_file(7);
     migrate_save_data();
     set_item_info();
-    for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 16; ++cnt)
     {
         if (cbit(967, cnt) == 1 || cnt == 0)
         {
@@ -51577,10 +51577,10 @@ void initialize_fovmap_and_fovlist()
     {
         cdata[0].vision_distance = 14;
     }
-    for (int cnt = 0, cnt_end = (15); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 15; ++cnt)
     {
         y = cnt;
-        for (int cnt = 0, cnt_end = (19); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 19; ++cnt)
         {
             x = cnt;
             if (dist(x * 10 / 12, y, 7, 7) < 7)
@@ -51589,11 +51589,11 @@ void initialize_fovmap_and_fovlist()
             }
         }
     }
-    for (int cnt = 0, cnt_end = (15); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 15; ++cnt)
     {
         y = cnt;
         p(1) = 0;
-        for (int cnt = 0, cnt_end = (19); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 19; ++cnt)
         {
             x = cnt;
             p = fovmap(x, y);
@@ -52292,7 +52292,7 @@ int label_2143()
     }
     if (rnd(7) == 0)
     {
-        for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 1; ++cnt)
         {
             i = 5;
             if (atxspot == 14)
@@ -52540,7 +52540,7 @@ label_21451_internal:
                         }
                         return;
                     }
-                    for (int cnt = 0, cnt_end = (200); cnt < cnt_end; ++cnt)
+                    for (int cnt = 0; cnt < 200; ++cnt)
                     {
                         cdata[cc].next_position.x = rnd(mdata(0) - 2) + 1;
                         cdata[cc].next_position.y = rnd(mdata(1) - 2) + 1;
@@ -52673,7 +52673,7 @@ void label_2146()
         {
             gold = 0;
             make_sound(cdata[cc].position.x, cdata[cc].position.y, 5, 1, 1, cc);
-            for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 245; ++cnt)
             {
                 if (cdata[cnt].state != 1)
                 {
@@ -53013,7 +53013,7 @@ void label_2146()
         }
         return;
     }
-    for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 1; ++cnt)
     {
         if (cc != 0)
         {
@@ -53192,7 +53192,7 @@ void label_2147()
         rowactend(cc);
         return;
     }
-    for (int cnt = 0, cnt_end = (2); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 2; ++cnt)
     {
         int c{};
         if (cnt == 0)
@@ -53910,7 +53910,7 @@ void label_2151()
     music = 78;
     play_music();
     msg_halt();
-    for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 20; ++cnt)
     {
         gmode(4, -1, -1, cnt * 10);
         label_2149();
@@ -53918,7 +53918,7 @@ void label_2151()
     }
     gmode(2);
     cc = 0;
-    for (int cnt = 0, cnt_end = (57); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 57; ++cnt)
     {
         tc = cnt;
         cdata[tc].wet = 0;
@@ -54325,7 +54325,7 @@ void label_2154()
     ci = cdata[0].continuous_action_item;
     int dbmax = 0;
     int dbsum = 0;
-    for (int cnt = 0, cnt_end = (100); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 100; ++cnt)
     {
         if (fishdata(0, cnt) == 0)
         {
@@ -54489,7 +54489,7 @@ void label_2156()
         {
             fishanime = 4;
             snd(88);
-            for (int cnt = 0, cnt_end = (21); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 21; ++cnt)
             {
                 redraw(0);
                 fishanime(1) = cnt;
@@ -55600,7 +55600,7 @@ int drink_well()
     tc = cc;
     cibk = ci;
     p = rnd(100);
-    for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 1; ++cnt)
     {
         if (cc != 0)
         {
@@ -55988,7 +55988,7 @@ int label_2174()
         {
             if (cdata[cc].relationship == -3)
             {
-                for (int cnt = 0, cnt_end = (57); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 57; ++cnt)
                 {
                     if (cdata[cnt].state == 1)
                     {
@@ -57985,7 +57985,7 @@ void label_2205()
                 }
                 if (rnd(20) == 0)
                 {
-                    for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+                    for (int cnt = 0; cnt < 5; ++cnt)
                     {
                         rq = gdata(160 + cnt);
                         if (qdata(3, rq) == 1007)
@@ -58064,7 +58064,7 @@ void label_2205()
                     u8" (最も近い街までの距離:"s + p + u8" 敵勢力:"s,
                     u8" (Distance from nearest town:"s + p
                         + u8" Enemy strength:"s);
-                for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 1; ++cnt)
                 {
                     if (encounterlv < 5)
                     {
@@ -59099,7 +59099,7 @@ void open_new_year_gift()
                     u8"罠だ！お年玉袋は発火した。"s,
                     u8"It's trap! The gift ignites."s));
             }
-            for (int cnt = 0, cnt_end = (6); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 6; ++cnt)
             {
                 tlocx = cdata[0].position.x + rnd(3) - rnd(3);
                 tlocy = cdata[0].position.y - rnd(3) + rnd(3);
@@ -59404,7 +59404,7 @@ int label_2217()
     }
     if (ammoproc == 0)
     {
-        for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 3; ++cnt)
         {
             can_do_ranged_attack();
             ele = 0;
@@ -59426,7 +59426,7 @@ int label_2217()
     }
     else if (ammoproc == 5)
     {
-        for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 10; ++cnt)
         {
             can_do_ranged_attack();
             ele = 0;
@@ -59530,7 +59530,7 @@ void try_to_melee_attack()
             cdata[tc].paralyzed += rnd(3);
         }
     }
-    for (int cnt = 0, cnt_end = (30); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
         if (cdata_body_part(cc, cnt) % 10000 == 0)
@@ -60002,7 +60002,7 @@ label_22191_internal:
         {
             p = cdata[tc].damage_reaction_info % 1000;
             ccbk = cc;
-            for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 1; ++cnt)
             {
                 if (attackrange == 0)
                 {
@@ -60197,7 +60197,7 @@ label_22191_internal:
 
 void label_2220()
 {
-    for (int cnt = 0, cnt_end = (15); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 15; ++cnt)
     {
         cw = attackitem;
         if (inv[cw].enchantments[cnt].id == 0)
@@ -60431,14 +60431,14 @@ void label_2221()
             }
         }
     }
-    for (int cnt = 0, cnt_end = (11); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 11; ++cnt)
     {
         y = cdata[cc].position.y + cnt - 5;
         if (y < 0 || y >= mdata(1))
         {
             continue;
         }
-        for (int cnt = 0, cnt_end = (11); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 11; ++cnt)
         {
             x = cdata[cc].position.x + cnt - 5;
             if (x < 0 || x >= mdata(0))
@@ -61028,7 +61028,7 @@ void do_use_command()
             txt(lang(u8"それは…"s, u8"It..."s));
             reftype = the_item_db[inv[ci].id]->category;
             listmax = 0;
-            for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 3; ++cnt)
             {
                 randomize(inv[ci].subname + inv[ci].param1 * 10 + cnt);
                 exrand_randomize(inv[ci].subname + inv[ci].param1 * 10 + cnt);
@@ -62044,7 +62044,7 @@ void do_use_command()
             int stat = label_2230();
             if (stat != 0)
             {
-                for (int cnt = 0, cnt_end = (2); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 2; ++cnt)
                 {
                     if (rtval(cnt) == -1)
                     {
@@ -62091,7 +62091,7 @@ void do_use_command()
                 ++listmax;
             }
             sort_list_by_column1();
-            for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 3; ++cnt)
             {
                 p = listmax - cnt - 1;
                 i = list(0, p);
@@ -62196,7 +62196,7 @@ int label_2230()
     }
     randomize(cdata[tc].id);
     int dbmax = 0;
-    for (int cnt = 0, cnt_end = (100); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 100; ++cnt)
     {
         rtval = rnd(40) + 150;
         if (sdata(rtval, rc) == 0)
@@ -62272,7 +62272,7 @@ int label_2231()
         return -1;
     }
     randomize(cdata[tc].id);
-    for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 3; ++cnt)
     {
         rtval = dblist(0, rnd(dbmax));
         f = 0;
@@ -62302,7 +62302,7 @@ int label_2231()
     {
         ++dblist(0, cdata_body_part(tc, i) / 10000);
     }
-    for (int cnt = 0, cnt_end = (25); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 25; ++cnt)
     {
         rtval = rnd(15) + 1;
         f = 0;
@@ -62567,7 +62567,7 @@ int clientguide(int)
     int i_at_m193 = 0;
     int f_at_m193 = 0;
     j_at_m193 = 0;
-    for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 5; ++cnt)
     {
         p_at_m193 = gdata(160 + cnt);
         if (qdata(8, p_at_m193) == 1)
@@ -62617,7 +62617,7 @@ int clientguide(int)
 int tradecheck(int prm_1081)
 {
     j_at_m193 = 0;
-    for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 5; ++cnt)
     {
         p_at_m193 = gdata(160 + cnt);
         if (qdata(8, p_at_m193) == 1)
@@ -62938,7 +62938,7 @@ void label_2244()
                 cnvtalk(u8"Eat this!"s)));
             if (rnd(2) == 0)
             {
-                for (int cnt = 0, cnt_end = (28); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 28; ++cnt)
                 {
                     tlocx = cdata[tc].position.x + rnd(3) - rnd(3);
                     tlocy = cdata[tc].position.y - rnd(3) + rnd(3);
@@ -63506,7 +63506,7 @@ void label_2244()
             plat = 4;
             p(3) = -1;
             i = rnd(6);
-            for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 3; ++cnt)
             {
                 p(cnt) = 10 + cnt + i;
             }
@@ -63524,7 +63524,7 @@ void label_2244()
         ++listmax;
         if (cdata[0].platinum_coin >= plat)
         {
-            for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 8; ++cnt)
             {
                 if (p(cnt) == -1)
                 {
@@ -64327,11 +64327,11 @@ void label_2252()
             talk_npc();
             return;
         }
-        for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 5; ++cnt)
         {
             p = gdata(160 + cnt);
             f = 0;
-            for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 5; ++cnt)
             {
                 if (gdata(160 + cnt) == p)
                 {
@@ -64384,7 +64384,7 @@ void label_2252()
                 f = stat;
                 if (f == 1)
                 {
-                    for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+                    for (int cnt = 0; cnt < 16; ++cnt)
                     {
                         if (cdata[cnt].state == 0)
                         {
@@ -65083,7 +65083,7 @@ void label_2265()
         if (cdata[tc].character_role == 1020)
         {
             listmax = 0;
-            for (int cnt = 0, cnt_end = (800); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 800; ++cnt)
             {
                 if (itemmemory(2, cnt) > 1)
                 {
@@ -65661,7 +65661,7 @@ void label_2266()
     p = the_item_db[inv[ci].id]->category;
     i = the_item_db[inv[ci].id]->rarity / 1000;
     rtval = 1;
-    for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 1; ++cnt)
     {
         if (i <= 100)
         {
@@ -65725,7 +65725,7 @@ void label_2266()
 void label_2267()
 {
     DIM2(trate, 8);
-    for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 8; ++cnt)
     {
         trate(cnt) = 100;
     }
@@ -65798,7 +65798,7 @@ void label_2267()
         (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
          + gdata_year * 24 * 30 * 12)
         / 100);
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         trate(cnt) += rnd(15) - rnd(15);
     }
@@ -65812,7 +65812,7 @@ void addbuilding(int prm_1082, int prm_1083, int prm_1084, int prm_1085)
 {
     int p_at_m194 = 0;
     p_at_m194 = -1;
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         if (bddata(0, prm_1082, cnt) == 0)
         {
@@ -65851,7 +65851,7 @@ void initialize_economy()
     cdata[0].position.y = 0;
     scx = cdata[0].position.x;
     scy = cdata[0].position.y;
-    for (int cnt = 0, cnt_end = (500); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 500; ++cnt)
     {
         if (adata(16, cnt) == 0)
         {
@@ -65999,7 +65999,7 @@ label_2272_internal:
                 }
                 j0 = 0;
                 i = 0;
-                for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 10; ++cnt)
                 {
                     if (pochart(cnt, n, lv) != 0)
                     {
@@ -66825,7 +66825,7 @@ void label_2662()
         }
         if (rnd(60) == 0)
         {
-            for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 10; ++cnt)
             {
                 if (rnd(4) == 0)
                 {
@@ -66912,7 +66912,7 @@ int label_2664()
 {
     f = 0;
     inv_getheader(rc);
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         ci = invhead + rnd(invrange);
         if (inv[ci].number == 0)
@@ -66974,7 +66974,7 @@ int inv_getfreeid_force()
     {
         return p;
     }
-    for (int cnt = 0, cnt_end = (100); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 100; ++cnt)
     {
         p = rnd(invrange) + invhead;
         if (inv[p].body_part == 0)
@@ -67079,11 +67079,11 @@ void supply_new_equipment()
     int haveweapon = 0;
     int mustequip = 0;
     haveweapon = 0;
-    for (int cnt = 0, cnt_end = (100); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 100; ++cnt)
     {
         f = 0;
         inv_getheader(rc);
-        for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 4; ++cnt)
         {
             ci = invhead + rnd(invrange);
             if (inv[ci].number == 0)
@@ -67232,7 +67232,7 @@ void label_2669()
             continue;
         }
         i = -1;
-        for (int cnt = 0, cnt_end = (500); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 500; ++cnt)
         {
             if (qdata(0, cnt) == 0)
             {
@@ -67241,7 +67241,7 @@ void label_2669()
             }
         }
         int cnt2 = cnt;
-        for (int cnt = 0, cnt_end = (500); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 500; ++cnt)
         {
             if (qdata(0, cnt) == cnt2)
             {
@@ -67341,7 +67341,7 @@ int label_2672()
     if (rnd(14) == 0)
     {
         i = -1;
-        for (int cnt = 0, cnt_end = (300); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 300; ++cnt)
         {
             int n = rnd(188) + 57;
             if (n == qdata(0, rq))
@@ -67398,7 +67398,7 @@ int label_2672()
                 rnd(cdata[0].level + 10) + rnd((cdata[0].fame / 2500 + 1));
             qdata(5, rq) = roundmargin(qdata(5, rq), cdata[0].level);
             minlevel = std::clamp(qdata(5, rq) / 7, 5, 30);
-            for (int cnt = 0, cnt_end = (50); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 50; ++cnt)
             {
                 flt(qdata(5, rq), 2);
                 characreate(56, 0, -3, 0);
@@ -67434,7 +67434,7 @@ int label_2672()
                 rnd(cdata[0].level + 10) + rnd((cdata[0].fame / 2500 + 1));
             qdata(5, rq) = roundmargin(qdata(5, rq), cdata[0].level);
             minlevel = std::clamp(qdata(5, rq) / 4, 5, 30);
-            for (int cnt = 0, cnt_end = (50); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 50; ++cnt)
             {
                 flt(qdata(5, rq), 2);
                 characreate(56, 0, -3, 0);
@@ -67849,7 +67849,7 @@ void failed_quest(int val0)
             txt(lang(
                 u8"あなたは護衛の任務を果たせなかった。"s,
                 u8"You have failed to protect the client."s));
-            for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 16; ++cnt)
             {
                 if (cnt != 0)
                 {
@@ -67930,7 +67930,7 @@ void failed_quest(int val0)
 
 void label_2677()
 {
-    for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 16; ++cnt)
     {
         if (followerin(cnt) == 0)
         {
@@ -68289,7 +68289,7 @@ label_2682_internal:
     }
     if (s == u8"{fadein}"s)
     {
-        for (int cnt = 0, cnt_end = (25); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 25; ++cnt)
         {
             redraw(1);
             pos(0, 0);
@@ -68490,7 +68490,7 @@ void label_2685()
 
 int ai_check()
 {
-    for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 3; ++cnt)
     {
         if (dir == 2)
         {
@@ -68761,7 +68761,7 @@ void label_2687()
             }
         }
         cdata[cc].enemy_id = p(1);
-        for (int cnt = 0, cnt_end = (100); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 100; ++cnt)
         {
             i = rnd(p(2)) + p(1);
             if (cdata[i].state == 1)
@@ -69726,7 +69726,7 @@ void label_2693(bool retreat)
                         cdatan(0, cc) + u8"は訓練所に通い潜在能力を伸ばした！"s,
                         cdatan(0, cc) + u8" visits a trainer and develops "s
                             + his(cc) + u8" potential!"s));
-                    for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+                    for (int cnt = 0; cnt < 4; ++cnt)
                     {
                         while (1)
                         {
@@ -70455,7 +70455,7 @@ label_2699_internal:
     y(8) = 50;
     s = u8"○コマンド"s;
     gmode(2);
-    for (int cnt = 0, cnt_end = (9); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 9; ++cnt)
     {
         p = cnt;
         if (listn(0, p) == u8"null"s)
@@ -70694,7 +70694,7 @@ void label_2702()
     {
         return;
     }
-    for (int cnt = 0, cnt_end = (24); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 24; ++cnt)
     {
         if (!strutil::contains(s(cnt), u8"("))
         {
@@ -70724,7 +70724,7 @@ void show_game_help()
     if (mode != 1)
     {
         gsel(4);
-        for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 8; ++cnt)
         {
             pos(cnt % 4 * 180, cnt / 4 * 300);
             picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
@@ -70855,7 +70855,7 @@ label_2705_internal:
         s(22) = u8"装填(ammo)"s;
         s(23) = key_ammo;
         label_2702();
-        for (int cnt = 0, cnt_end = (12); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 12; ++cnt)
         {
             font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
             pos(x + 38 + cnt / 6 * 290, y + 58 + cnt % 6 * 14);
@@ -70891,7 +70891,7 @@ label_2705_internal:
         s(24) = "";
         s(25) = "";
         label_2702();
-        for (int cnt = 0, cnt_end = (12); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 12; ++cnt)
         {
             font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
             pos(x + 38 + cnt / 6 * 290, y + 170 + cnt % 6 * 14);
@@ -70913,7 +70913,7 @@ label_2705_internal:
         s(10) = u8"特徴の表示(feat)"s;
         s(11) = key_trait;
         label_2702();
-        for (int cnt = 0, cnt_end = (6); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 6; ++cnt)
         {
             font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
             pos(x + 38 + cnt / 3 * 290, y + 284 + cnt % 3 * 14);
@@ -70936,7 +70936,7 @@ label_2705_internal:
         s(11) = "";
         s(12) = "";
         label_2702();
-        for (int cnt = 0, cnt_end = (6); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 6; ++cnt)
         {
             font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
             pos(x + 38 + cnt / 3 * 290, y + 356 + cnt % 3 * 14);
@@ -71085,7 +71085,7 @@ void label_2707()
     }
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
     i = 0;
-    for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 20; ++cnt)
     {
         if (i >= 20)
         {
@@ -71458,7 +71458,7 @@ int cnvjkey(const std::string& prm_1092)
 {
     int p_at_m198 = 0;
     p_at_m198 = -2;
-    for (int cnt = 0, cnt_end = (12); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 12; ++cnt)
     {
         if (prm_1092 == jkey(cnt))
         {
@@ -71497,7 +71497,7 @@ void play_scene()
         }
     }
     p = 0;
-    for (int cnt = 0, cnt_end = (200); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 200; ++cnt)
     {
         s = u8"{"s + cnt + u8"}"s;
         p = instr(buff, 0, s);
@@ -71644,7 +71644,7 @@ void turn_begin()
     int spd = 0;
     sound = 0;
     ct = 0;
-    for (int cnt = 0, cnt_end = (200); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 200; ++cnt)
     {
         if (mef(0, cnt) == 0)
         {
@@ -71752,7 +71752,7 @@ void turn_begin()
             goto label_2734_internal;
         }
     }
-    for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 245; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {
@@ -71864,7 +71864,7 @@ void label_2736()
     {
         gdata_hours_until_weather_changes = rnd(22) + 2;
         p = gdata_weather;
-        for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 1; ++cnt)
         {
             if (gdata_month % 3 == 0)
             {
@@ -72126,7 +72126,7 @@ void label_2736()
             u8"一日が終わり、日付が変わった。"s,
             u8"A day passes and a new day begins."s));
         label_1724();
-        for (int cnt = 0, cnt_end = (9); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 9; ++cnt)
         {
             p = 120 + cnt;
             if (gdata(p) >= 10000)
@@ -72270,7 +72270,7 @@ void pass_one_turn(bool label_2738_flg)
         p = cdata[0].turn % 10;
         if (p == 1)
         {
-            for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 16; ++cnt)
             {
                 if (cdata[cnt].state == 1)
                 {
@@ -72503,7 +72503,7 @@ void pass_one_turn(bool label_2738_flg)
     }
     if (cdata[cc].buffs[0].id != 0)
     {
-        for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 16; ++cnt)
         {
             if (cdata[cc].buffs[cnt].id == 0)
             {
@@ -72545,7 +72545,7 @@ void pass_one_turn(bool label_2738_flg)
         {
             if (cc != 0)
             {
-                for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 245; ++cnt)
                 {
                     if (cdata[cnt].state != 1)
                     {
@@ -73516,7 +73516,7 @@ label_2747:
         s(5) = key_northeast;
         s(6) = key_east;
         s(7) = key_southeast;
-        for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 8; ++cnt)
         {
             if (p <= cnt * 45 + 23 && p > cnt * 45 - 23)
             {
@@ -74125,7 +74125,7 @@ void conquer_lesimas()
         u8"Unbelievable! You conquered Lesimas!"s));
     update_screen();
     txtsetwinword(3);
-    for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 3; ++cnt)
     {
         promptl(0, promptmax) = s(cnt);
         promptl(1, promptmax) = key_select(cnt);
@@ -74349,7 +74349,7 @@ void pc_died()
     while (1)
     {
         p(1) = 0;
-        for (int cnt = 0, cnt_end = (79); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 79; ++cnt)
         {
             p = cnt * 4;
             noteget(s(10), p + 3);

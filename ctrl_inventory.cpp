@@ -36,7 +36,7 @@ label_20591:
         if (mdata(6) == 1)
         {
             p = 0;
-            for (int cnt = 0, cnt_end = (12); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 12; ++cnt)
             {
                 if (cycle(cnt, 1) == -1)
                 {
@@ -65,7 +65,7 @@ label_20591:
     cc = 0;
     page_load();
     mainweapon = -1;
-    for (int cnt = 0, cnt_end = (2); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 2; ++cnt)
     {
         if (cnt == 0)
         {
@@ -808,7 +808,7 @@ label_2060_internal:
         {
             i = 0;
         }
-        for (int cnt = 0, cnt_end = (12); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 12; ++cnt)
         {
             if (cycle(cnt, i) == -1)
             {
@@ -1022,7 +1022,7 @@ label_2061_internal:
                 s += lang(u8"(足元)"s, u8" (Ground)"s);
             }
         }
-        for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 20; ++cnt)
         {
             if (gdata(40 + cnt) == inv[p].id + invctrl * 10000)
             {
@@ -2208,7 +2208,7 @@ label_2061_internal:
                 i = 0;
             }
             p = -1;
-            for (int cnt = 0, cnt_end = (12); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 12; ++cnt)
             {
                 if (invctrl == cycle(cnt, i))
                 {
@@ -2376,7 +2376,7 @@ label_2061_internal:
                 gdata(40 + sc) = 0;
                 goto label_2060_internal;
             }
-            for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 20; ++cnt)
             {
                 if (gdata(40 + cnt) == p)
                 {

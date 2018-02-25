@@ -184,7 +184,7 @@ void key_check(int prm_299)
             p_at_m19 += 4;
         }
         a_at_m19 = 0;
-        for (int cnt = 0, cnt_end = (12); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 12; ++cnt)
         {
             if (HMMBITCHECK(j_at_m19, 4 + cnt))
             {
@@ -507,10 +507,10 @@ void bmes(const std::string& prm_301, int prm_302, int prm_303, int prm_304)
     mes_color_at_m21(0) = prm_302;
     mes_color_at_m21(1) = prm_303;
     mes_color_at_m21(2) = prm_304;
-    for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 3; ++cnt)
     {
         mes_y_at_m21 = cnt + pos_y_at_m21 - 1;
-        for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 3; ++cnt)
         {
             pos(pos_x_at_m21 - 1 + cnt, mes_y_at_m21);
             mes(prm_301);
@@ -530,7 +530,7 @@ void msg_write(std::string& prm_307)
     int msglen_ = jp ? msglen / 1.5 : msglen;
     int mp_at_txtfunc = 0;
     int mark_at_txtfunc = 0;
-    for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 1; ++cnt)
     {
         mp_at_txtfunc = instr(prm_307, 0, u8"♪"s);
         if (mp_at_txtfunc != -1)
@@ -594,7 +594,7 @@ void anime_halt()
     pos(672, 504);
     gcopy(0, x_at_txtfunc, y_at_txtfunc, 120, 24);
     gsel(0);
-    for (int cnt = 0, cnt_end = (12); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 12; ++cnt)
     {
         redraw(0);
         await(10);
@@ -604,7 +604,7 @@ void anime_halt()
     }
     press(1);
     snd(20);
-    for (int cnt = 0, cnt_end = (7); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 7; ++cnt)
     {
         redraw(0);
         await(10);
@@ -744,7 +744,7 @@ void txtnew()
 void msg_clear()
 {
     msgtemp = "";
-    for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 3; ++cnt)
     {
         msg_newline();
     }

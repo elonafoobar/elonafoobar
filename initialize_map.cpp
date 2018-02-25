@@ -42,7 +42,7 @@ label_17401:
     {
         adata(6, gdata_current_map) = gdata_current_dungeon_level;
     }
-    for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 16; ++cnt)
     {
         if (cnt == 0)
         {
@@ -110,7 +110,7 @@ label_1741_internal:
     {
         maxnpcbk = 0;
         DIM3(rolebk, 2, 245);
-        for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 245; ++cnt)
         {
             if (cdata[cnt].state == 0)
             {
@@ -337,12 +337,12 @@ label_1741_internal:
             }
         }
         map_placeplayer();
-        for (int cnt = 0, cnt_end = (0); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 0; ++cnt)
         {
             flt();
             characreate(-1, 0, cdata[0].position.x, cdata[0].position.y + 5);
         }
-        for (int cnt = 0, cnt_end = (100); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 100; ++cnt)
         {
             x = rnd(mdata(0));
             y = rnd(mdata(1));
@@ -434,7 +434,7 @@ label_1741_internal:
         characreate(-1, 173, 3, 2);
         cdata[rc].character_role = 1013;
         cdata[rc].shop_rank = 10;
-        for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 3; ++cnt)
         {
             flt();
             characreate(-1, 16, -3, 0);
@@ -443,7 +443,7 @@ label_1741_internal:
             characreate(-1, 39, -3, 0);
             cdata[rc].character_role = 4;
         }
-        for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 4; ++cnt)
         {
             flt();
             characreate(-1, 77, 3 + cnt * 6, 9);
@@ -479,7 +479,7 @@ label_1741_internal:
         flt();
         characreate(-1, 353, 7, 3);
         cdata[rc].character_role = 23;
-        for (int cnt = 0, cnt_end = (2); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 2; ++cnt)
         {
             flt();
             characreate(-1, 9, -3, 0);
@@ -535,7 +535,7 @@ label_1741_internal:
         flt();
         characreate(-1, 353, 7, 3);
         cdata[rc].character_role = 23;
-        for (int cnt = 0, cnt_end = (2); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 2; ++cnt)
         {
             flt();
             characreate(-1, 9, -3, 0);
@@ -612,7 +612,7 @@ label_1741_internal:
         characreate(-1, 239, 25, 9);
         flt();
         characreate(-1, 326, 12, 9);
-        for (int cnt = 0, cnt_end = (2); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 2; ++cnt)
         {
             flt();
             characreate(-1, 9, -3, 0);
@@ -643,7 +643,7 @@ label_1741_internal:
         characreate(-1, 209, 8, 16);
         cdata[rc].character_role = 1016;
         cdata[rc].shop_rank = 100;
-        for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 5; ++cnt)
         {
             flt();
             characreate(-1, 164, -3, 0);
@@ -666,13 +666,13 @@ label_1741_internal:
         flt();
         characreate(-1, 249, 12, 6);
         cdata[rc].character_role = 1019;
-        for (int cnt = 0, cnt_end = (6); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 6; ++cnt)
         {
             flt();
             characreate(-1, 211, -3, 0);
             cdata[rc].character_role = 3;
         }
-        for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 8; ++cnt)
         {
             flt();
             characreate(-1, 246, -3, 0);
@@ -699,7 +699,7 @@ label_1741_internal:
         flt();
         characreate(-1, 322, 28, 7);
         cdata[rc].character_role = 3;
-        for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 4; ++cnt)
         {
             flt();
             characreate(-1, 171, -3, 0);
@@ -752,7 +752,7 @@ label_1741_internal:
         characreate(-1, 239, 8, 31);
         flt();
         characreate(-1, 239, 4, 36);
-        for (int cnt = 0, cnt_end = (7); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 7; ++cnt)
         {
             flt();
             characreate(-1, 16, -3, 0);
@@ -763,7 +763,7 @@ label_1741_internal:
             flt();
             characreate(-1, 239, -3, 0);
         }
-        for (int cnt = 0, cnt_end = (15); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 15; ++cnt)
         {
             flt();
             characreate(-1, 239, -3, 0);
@@ -780,7 +780,7 @@ label_1741_internal:
     {
         map_initcustom(u8"arena_1"s);
         map_placeplayer();
-        for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 16; ++cnt)
         {
             if (cdata[cnt].state == 1)
             {
@@ -836,7 +836,7 @@ label_1741_internal:
         map_initcustom(u8"arena_2"s);
         mdata(10) = 0;
         mdata(13) = 81;
-        for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 16; ++cnt)
         {
             if (cnt == 0 || cnt == 56)
             {
@@ -1116,7 +1116,7 @@ label_1741_internal:
             flt();
             characreate(-1, 69, 3, 28);
             cdata[rc].character_role = 8;
-            for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 4; ++cnt)
             {
                 flt();
                 characreate(-1, 16, -3, 0);
@@ -1126,7 +1126,7 @@ label_1741_internal:
                 cdata[rc].character_role = 4;
             }
             label_2669();
-            for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 20; ++cnt)
             {
                 dbid = 0;
                 set_character_generation_filter();
@@ -1171,7 +1171,7 @@ label_1741_internal:
             cdatan(0, rc) = lang(
                 u8"盗賊店の"s + cdatan(0, rc),
                 sncnv(cdatan(0, rc)) + u8"the fence"s);
-            for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 16; ++cnt)
             {
                 flt();
                 characreate(-1, 293, -3, 0);
@@ -1313,7 +1313,7 @@ label_1741_internal:
         characreate(-1, 77, 22, 18);
         cdata[rc].character_role = 14;
         cdata[rc].ai_calm = 3;
-        for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 5; ++cnt)
         {
             flt();
             characreate(-1, 16, -3, 0);
@@ -1322,14 +1322,14 @@ label_1741_internal:
             characreate(-1, 39, -3, 0);
             cdata[rc].character_role = 4;
         }
-        for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 4; ++cnt)
         {
             flt();
             characreate(-1, 77, -3, 0);
             cdata[rc].character_role = 14;
         }
         label_2669();
-        for (int cnt = 0, cnt_end = (25); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 25; ++cnt)
         {
             dbid = 0;
             set_character_generation_filter();
@@ -1433,7 +1433,7 @@ label_1741_internal:
             flt();
             characreate(-1, 69, 23, 38);
             cdata[rc].character_role = 8;
-            for (int cnt = 0, cnt_end = (6); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 6; ++cnt)
             {
                 flt();
                 characreate(-1, 16, -3, 0);
@@ -1442,14 +1442,14 @@ label_1741_internal:
                 characreate(-1, 39, -3, 0);
                 cdata[rc].character_role = 4;
             }
-            for (int cnt = 0, cnt_end = (7); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 7; ++cnt)
             {
                 flt();
                 characreate(-1, 77, -3, 0);
                 cdata[rc].character_role = 14;
             }
             label_2669();
-            for (int cnt = 0, cnt_end = (25); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 25; ++cnt)
             {
                 dbid = 0;
                 set_character_generation_filter();
@@ -1491,7 +1491,7 @@ label_1741_internal:
             flt();
             characreate(-1, 41, 3, 3);
             cdata[rc].character_role = 5;
-            for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 16; ++cnt)
             {
                 flt();
                 characreate(-1, 289, -3, 0);
@@ -1590,7 +1590,7 @@ label_1741_internal:
             flt();
             characreate(-1, 213, 14, 12);
             cdata[rc].character_role = 3;
-            for (int cnt = 0, cnt_end = (2); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 2; ++cnt)
             {
                 flt();
                 characreate(-1, 16, -3, 0);
@@ -1599,14 +1599,14 @@ label_1741_internal:
                 characreate(-1, 39, -3, 0);
                 cdata[rc].character_role = 4;
             }
-            for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 3; ++cnt)
             {
                 flt();
                 characreate(-1, 77, -3, 0);
                 cdata[rc].character_role = 14;
             }
             label_2669();
-            for (int cnt = 0, cnt_end = (15); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 15; ++cnt)
             {
                 dbid = 0;
                 set_character_generation_filter();
@@ -1652,7 +1652,7 @@ label_1741_internal:
                     }
                 }
             }
-            for (int cnt = 0, cnt_end = (30); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 30; ++cnt)
             {
                 flt();
                 characreate(-1, 233 + 2 * (cnt > 22), 11, 16);
@@ -1756,7 +1756,7 @@ label_1741_internal:
         flt();
         characreate(-1, 69, 6, 33);
         cdata[rc].character_role = 8;
-        for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 3; ++cnt)
         {
             flt();
             characreate(-1, 16, rnd(32), rnd(mdata(1)));
@@ -1765,20 +1765,20 @@ label_1741_internal:
             characreate(-1, 39, rnd(32), rnd(mdata(1)));
             cdata[rc].character_role = 4;
         }
-        for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 3; ++cnt)
         {
             flt();
             characreate(-1, 77, rnd(32), rnd(mdata(1)));
             cdata[rc].character_role = 14;
         }
         label_2669();
-        for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 8; ++cnt)
         {
             set_character_generation_filter();
             characreate(-1, 35, rnd(11) + 25, rnd(5) + 15);
             cdata[rc].character_role = 3;
         }
-        for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 20; ++cnt)
         {
             dbid = 0;
             set_character_generation_filter();
@@ -1885,7 +1885,7 @@ label_1741_internal:
             flt();
             characreate(-1, 74, 27, 11);
             cdata[rc].character_role = 12;
-            for (int cnt = 0, cnt_end = (2); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 2; ++cnt)
             {
                 flt();
                 characreate(-1, 16, -3, 0);
@@ -1894,13 +1894,13 @@ label_1741_internal:
                 characreate(-1, 39, -3, 0);
                 cdata[rc].character_role = 4;
             }
-            for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 4; ++cnt)
             {
                 flt();
                 characreate(-1, 71, -3, 0);
                 cdata[rc].character_role = 4;
             }
-            for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 5; ++cnt)
             {
                 flt();
                 characreate(-1, 76, -3, 0);
@@ -1910,7 +1910,7 @@ label_1741_internal:
             characreate(-1, 72, 7, 6);
             cdata[rc].character_role = 4;
             label_2669();
-            for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 20; ++cnt)
             {
                 set_character_generation_filter();
                 characreate(-1, 0, -3, 0);
@@ -1945,7 +1945,7 @@ label_1741_internal:
             cdata[rc].character_role = 1001;
             cdata[rc].shop_rank = 12;
             snarmor(cdatan(0, rc));
-            for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 16; ++cnt)
             {
                 flt();
                 characreate(-1, 295, -3, 0);
@@ -1965,7 +1965,7 @@ label_1741_internal:
             gdata_entrance_type = 4;
             gdata_duration_of_kamikaze_attack = 0;
             map_placeplayer();
-            for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 10; ++cnt)
             {
                 flt();
                 characreate(-1, 204, cdata[0].position.x, cdata[0].position.y);
@@ -2071,7 +2071,7 @@ label_1741_internal:
             flt();
             characreate(-1, 69, 25, 16);
             cdata[rc].character_role = 8;
-            for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 4; ++cnt)
             {
                 flt();
                 characreate(-1, 16, -3, 0);
@@ -2080,14 +2080,14 @@ label_1741_internal:
                 characreate(-1, 39, -3, 0);
                 cdata[rc].character_role = 4;
             }
-            for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 4; ++cnt)
             {
                 flt();
                 characreate(-1, 77, -3, 0);
                 cdata[rc].character_role = 14;
             }
             label_2669();
-            for (int cnt = 0, cnt_end = (25); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 25; ++cnt)
             {
                 dbid = 0;
                 set_character_generation_filter();
@@ -2379,7 +2379,7 @@ label_1741_internal:
     if (gdata_current_map == 3)
     {
         map_tileset(mdata(12));
-        for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 1; ++cnt)
         {
             if (gdata_current_dungeon_level == adata(10, gdata_current_map))
             {
@@ -2519,13 +2519,13 @@ label_1741_internal:
                 flt();
                 characreate(-1, 242, -3, 0);
                 tc = rc;
-                for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 5; ++cnt)
                 {
                     flt();
                     characreate(
                         -1, 240, cdata[tc].position.x, cdata[tc].position.y);
                 }
-                for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 10; ++cnt)
                 {
                     flt();
                     characreate(
@@ -2594,7 +2594,7 @@ label_1741_internal:
                 {
                     continue;
                 }
-                for (int cnt = 0, cnt_end = (300); cnt < cnt_end; ++cnt)
+                for (int cnt = 0; cnt < 300; ++cnt)
                 {
                     if (adata(1, cnt) == 0 || adata(2, cnt) == 0
                         || adata(16, cnt) == 0)
@@ -2672,7 +2672,7 @@ label_1741_internal:
             label_1749();
         }
         mapupdate = 0;
-        for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 245; ++cnt)
         {
             if (cdata[cnt].state == 0)
             {
@@ -2833,7 +2833,7 @@ label_1742_internal:
                 map(cnt, y, 1) = 0;
             }
         }
-        for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 245; ++cnt)
         {
             rc = cnt;
             cbitmod(987, rc, 0);
@@ -2975,7 +2975,7 @@ label_1744_internal:
     }
     label_1745();
     gdata_other_character_count = 0;
-    for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 245; ++cnt)
     {
         cdata[cnt].turn_cost = 0;
         if (cdata[cnt].id == 343)
@@ -3337,7 +3337,7 @@ label_1744_internal:
                 if (qdata(8, cnt) == 1)
                 {
                     int cnt2 = cnt;
-                    for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+                    for (int cnt = 0; cnt < 16; ++cnt)
                     {
                         if (cbit(963, cnt) == 1)
                         {
@@ -3362,7 +3362,7 @@ label_1744_internal:
     if (adata(16, gdata_current_map) == 101
         || adata(16, gdata_current_map) == 102)
     {
-        for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 5; ++cnt)
         {
             monster_respawn();
         }
@@ -3385,7 +3385,7 @@ label_1744_internal:
     }
     if (adata(16, gdata_current_map) == 31)
     {
-        for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 245; ++cnt)
         {
             if (cbit(960, cnt) == 1)
             {
@@ -3467,7 +3467,7 @@ label_1744_internal:
             exp = cdata[0].level * gdata_distance_between_town * sdata(182, 0)
                     / 100
                 + 1;
-            for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 16; ++cnt)
             {
                 if (cdata[cnt].state != 1)
                 {

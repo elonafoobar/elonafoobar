@@ -962,7 +962,7 @@ void talk_unique()
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
-            for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 3; ++cnt)
             {
                 flt();
                 flttypemajor = 60000;
@@ -1065,7 +1065,7 @@ void talk_unique()
             txt(lang(
                 u8"ロミアスは隠し持っていたプチを放った。"s,
                 u8"Lomias releases tiny cute creatures."s));
-            for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 3; ++cnt)
             {
                 flt();
                 characreate(-1, 3, cdata[0].position.x, cdata[0].position.y);
@@ -1224,7 +1224,7 @@ void talk_unique()
             RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
-            for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 4; ++cnt)
             {
                 flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
                 flttypemajor = fltsetdungeon();
@@ -1748,7 +1748,7 @@ void talk_unique()
             RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             SCENE_CUT();
-            for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+            for (int cnt = 0; cnt < 4; ++cnt)
             {
                 flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
                 flttypemajor = fltsetdungeon();
@@ -4887,7 +4887,7 @@ void talk_unique()
                     itemcreate(-1, 283, -1, -1, 0);
                     flt();
                     itemcreate(-1, 284, -1, -1, 0);
-                    for (int cnt = 0, cnt_end = (800); cnt < cnt_end; ++cnt)
+                    for (int cnt = 0; cnt < 800; ++cnt)
                     {
                         if (cnt == 672)
                         {

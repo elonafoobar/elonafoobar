@@ -144,7 +144,7 @@ void play_animation_3(int anicol, int anisound)
     gmode(0);
     gcopy(0, 0, 0, windoww, windowh);
     gsel(0);
-    for (int cnt = 0, cnt_end = (6); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 6; ++cnt)
     {
         int cnt2 = cnt;
         redraw(0);
@@ -209,7 +209,7 @@ void play_animation_17_2(int animeid, int anicol, int anisound)
     gcopy(0, 0, 0, windoww, windowh);
     gmode(2);
     gsel(0);
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         int anip = cnt;
         int anip1 = 0;
@@ -298,7 +298,7 @@ void play_animation_0(int anicol, int anisound)
     gcopy(0, 0, 0, windoww, windowh);
     gsel(0);
     ap(20) = -1;
-    for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 20; ++cnt)
     {
         if (ap(20) == -1)
         {
@@ -533,7 +533,7 @@ void play_animation_9()
     gcopy(0, anidx - 16, anidy - 16, 64, 64);
     gmode(2);
     gsel(0);
-    for (int cnt = 0, cnt_end = (4); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 4; ++cnt)
     {
         redraw(0);
         pos(anidx - 16, anidy - 16);
@@ -665,7 +665,7 @@ void play_animation_20()
     gsel(0);
     int anidx = (cdata[anic].position.x - scx) * inf_tiles + inf_screenx - 24;
     int anidy = (cdata[anic].position.y - scy) * inf_tiles + inf_screeny - 60;
-    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 10; ++cnt)
     {
         redraw(0);
         pos(0, 0);
@@ -694,7 +694,7 @@ void play_animation_19()
     gcopy(0, 0, 0, windoww, windowh);
     gsel(0);
     am = 0;
-    for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 245; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {
@@ -821,7 +821,7 @@ void play_animation_22()
     gcopy(0, 0, 0, windoww, windowh);
     gsel(0);
     am = 0;
-    for (int cnt = 0, cnt_end = (75); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 75; ++cnt)
     {
         ax(am) = 240 + rnd(windoww);
         ay(am) = -96;
@@ -904,7 +904,7 @@ void play_animation_21()
     gcopy(0, 0, 0, windoww, windowh);
     gsel(0);
     am = 0;
-    for (int cnt = 0, cnt_end = (100); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 100; ++cnt)
     {
         ax(am) = rnd(windoww);
         ay(am) = rnd(inf_screenh * inf_tiles) - 96 - 24;
@@ -992,7 +992,7 @@ void play_animation_14_16(int animeid)
     gcopy(0, ax - 16, ay - 16, 64, 64);
     gmode(2);
     gsel(0);
-    for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
+    for (int cnt = 0; cnt < 5; ++cnt)
     {
         redraw(0);
         gmode(2);

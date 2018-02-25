@@ -1447,7 +1447,7 @@ int calccostreload(int prm_905, int prm_906)
             continue;
         }
         ci_at_m153 = cnt;
-        for (int cnt = 0, cnt_end = (15); cnt < cnt_end; ++cnt)
+        for (int cnt = 0; cnt < 15; ++cnt)
         {
             if (inv[ci_at_m153].enchantments[cnt].id == 0)
             {
