@@ -147,11 +147,9 @@ std::string sncnv(const std::string& name_with_job)
 
 
 
-void sngeneral(std::string& prm_350)
+std::string sngeneral(const std::string& name)
 {
-    prm_350 =
-        lang(u8"雑貨屋の"s + prm_350, sncnv(prm_350) + u8"the general vendor"s);
-    return;
+    return lang(u8"雑貨屋の"s + name, sncnv(name) + u8"the general vendor"s);
 }
 
 

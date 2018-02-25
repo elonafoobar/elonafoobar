@@ -1501,7 +1501,7 @@ void snd(int = 0, int = 0, int = 0);
 void sndload(const std::string&, int = 0);
 void snfish(std::string&);
 void snfood(std::string&);
-void sngeneral(std::string&);
+std::string sngeneral(const std::string&);
 void sngoods(std::string&);
 void sninn(std::string&);
 void snmagic(std::string&);
