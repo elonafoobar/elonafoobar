@@ -11629,7 +11629,7 @@ void make_sound(
                                         + u8" can no longer put up with it."s));
                                 txt(lang(
                                     u8"「もう我慢できない」"s,
-                                    cnvtalk(u8"That's it."s)));
+                                    u8"\"That's it.\""s));
                             }
                             turn_aggro(cnt, prm_782, 80);
                         }
@@ -14891,7 +14891,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     name(cnt)
                         + u8"は叫んだ。「この者にジュアの加護を。レイハンド！」"s,
                     name(cnt) + u8" shout"s + _s(cnt) + u8", "s
-                        + cnvtalk(u8"Lay hand!"s)));
+                        + u8"\"Lay hand!\""s));
                 txtmore();
                 txt(lang(
                     name(prm_853) + u8"は回復した。"s,
@@ -16054,14 +16054,14 @@ void end_dmghp()
             txt(u8"("s + dmg_at_m141 + u8")"s + lang(u8" "s, ""s));
             if (rnd(20) == 0)
             {
-                txt(lang(u8"「くっ！」"s, cnvtalk(u8"Kill me already!"s)),
-                    lang(u8"「まだまだ！」"s, cnvtalk(u8"No..not yet...!"s)),
+                txt(lang(u8"「くっ！」"s, u8"\"Kill me already!\""s),
+                    lang(u8"「まだまだ！」"s, u8"\"No..not yet...!\""s),
                     lang(
                         u8"「もう限界…」"s,
-                        cnvtalk(u8"I can't take it anymore..."s)),
-                    lang(u8"「うぐぐ」"s, cnvtalk(u8"Argh!"s)),
-                    lang(u8"「あう」"s, cnvtalk(u8"Uhhh"s)),
-                    lang(u8"「ああんっ」"s, cnvtalk(u8"Ugggg"s)));
+                        u8"\"I can't take it anymore...\""s),
+                    lang(u8"「うぐぐ」"s, u8"\"Argh!\""s),
+                    lang(u8"「あう」"s, u8"\"Uhhh\""s),
+                    lang(u8"「ああんっ」"s, u8"\"Ugggg\""s));
             }
         }
     }
@@ -17173,7 +17173,7 @@ label_1402_internal:
             + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 168;
         txt(lang(
             u8"「"s + listn(0, (cs + pagesize * page)) + u8"は素敵！」"s,
-            cnvtalk(u8"I like "s + listn(0, (cs + pagesize * page)) + u8"!"s)));
+            u8"\"I like "s + listn(0, (cs + pagesize * page)) + u8"!\""s));
         txtmore();
         txt(lang(u8"投票した。"s, u8"You vote."s));
         net_send(""s + p, 2);
@@ -20423,7 +20423,7 @@ void label_1520()
         {
             if (is_in_fov(r1))
             {
-                txt(lang(u8"「うぐぐ…！」"s, cnvtalk(u8"Ughh...!"s)));
+                txt(lang(u8"「うぐぐ…！」"s, u8"\"Ughh...!\""s));
             }
         }
         ++cdata[r1].choked;
@@ -20620,12 +20620,12 @@ void label_1520()
                     }
                     if (r2 == 1)
                     {
-                        txt(cnvtalk(u8"Weeeeeee!"s),
-                            cnvtalk(u8"Forgive me! Forgive me!"s),
-                            cnvtalk(u8"P-P-Pika!"s),
-                            cnvtalk(u8"Shhhhhh!"s),
-                            cnvtalk(u8"So I have to kill."s),
-                            cnvtalk(u8"You snail!"s));
+                        txt(u8"\"Weeeeeee!\""s,
+                            u8"\"Forgive me! Forgive me!\""s,
+                            u8"\"P-P-Pika!\""s,
+                            u8"\"Shhhhhh!\""s,
+                            u8"\"So I have to kill.\""s,
+                            u8"\"You snail!\""s);
                     }
                 }
             }
@@ -23807,10 +23807,10 @@ void label_1578()
                     + u8" stomach uneasily."s));
             txt(lang(
                     u8"「なにかが産まれそうだよ！」"s,
-                    cnvtalk(u8"I'm going to have a baby!"s)),
+                    u8"\"I'm going to have a baby!\""s),
                 lang(
                     u8"「腹になにかが…」"s,
-                    cnvtalk(u8"Something is wrong with my stomach..."s)));
+                    u8"\"Something is wrong with my stomach...\""s));
         }
     }
     if (mdata(6) != 1)
@@ -24534,7 +24534,7 @@ void lovemiracle(int prm_932)
     cibk = ci;
     txtmore();
     txtef(9);
-    txt(lang(u8"「あ…！」"s, cnvtalk(u8"Uh...!"s)));
+    txt(lang(u8"「あ…！」"s, u8"\"Uh...!\""s));
     flt();
     if (rnd(2))
     {
@@ -25582,8 +25582,8 @@ void apply_general_eating_effect()
                     + u8"はもがき苦しみのたうちまわった！"s,
                 u8"It's poisoned! "s + name(cc) + u8" writhe"s + _s(cc)
                     + u8" in agony!"s));
-            txt(lang(u8"「ギャァァ…！」"s, cnvtalk(u8"Gyaaaaa...!"s)),
-                lang(u8"「ブッ！」"s, cnvtalk(u8"Ugh!"s)));
+            txt(lang(u8"「ギャァァ…！」"s, u8"\"Gyaaaaa...!\""s),
+                lang(u8"「ブッ！」"s, u8"\"Ugh!\""s));
         }
         dmghp(cc, rnd(250) + 250, -4);
         if (cdata[cc].state != 1)
@@ -25611,12 +25611,12 @@ void apply_general_eating_effect()
                     + lang(
                           u8"「なんだか…変な気分なの…」"s,
                           (u8" gasps, "s
-                           + cnvtalk(u8"I f-feel...strange..."s))),
+                           + u8"\"I f-feel...strange...\""s)),
                 name(cc)
                     + lang(
                           u8"「あれ…なにこの感じは…」"s,
                           (u8"gasps "s
-                           + cnvtalk(u8"Uh..uh..What is this feeling..."s))));
+                           + u8"\"Uh..uh..What is this feeling...\""s)));
             cdata[cc].emotion_icon = 317;
             modimp(cc, 30);
             modify_karma(0, -10);
@@ -30539,7 +30539,7 @@ void use_house_board()
             txt(cdatan(0, stat)
                 + lang(
                       u8"「触るな！」"s,
-                      (u8" "s + cnvtalk(u8"Don't touch me!"s))));
+                      (u8" "s + u8"\"Don't touch me!\""s)));
             goto label_1722_internal;
         }
         tchome = stat;
@@ -33867,8 +33867,8 @@ void label_1754()
                 txt(lang(
                     u8"伝令「パルミア軍の撤退が完了しました！これ以上ここに留まる必要はありません。機を見て地下から退却してください！」"s,
                     u8"The messenger "s
-                        + cnvtalk(
-                              u8"The retreat of our army is over now. You don't need to fight them any more. Please leave at once!"s)));
+                        + 
+                              u8"\"The retreat of our army is over now. You don't need to fight them any more. Please leave at once!\""s));
                 txtmore();
                 txt(lang(u8"階段が現れた。"s, u8"Suddenly, stairs appear."s));
                 cell_featset(18, 9, tile_downstairs, 11, 1);
@@ -33908,8 +33908,7 @@ void label_1754()
                         u8"You hear footsteps coming towards your cell."s));
                     txt(lang(
                         u8"「そこのお前、もう反省したころだろう。出てもいいぞ」"s,
-                        cnvtalk(
-                            u8"Hey punk, our boss says you can leave the jail now. Do not come back, okay?"s)));
+                            u8"\"Hey punk, our boss says you can leave the jail now. Do not come back, okay?\""s));
                     txt(lang(
                         u8"ガードは面倒くさそうにあなたの牢の扉を開けた。"s,
                         u8"A guard unenthusiastically unlocks your cell."s));
@@ -33962,15 +33961,15 @@ void label_1754()
                 txtef(9);
                 txtmore();
                 txt(lang(u8" *ざわざわ* "s, u8"*noise*"s),
-                    lang(u8"「ふむ…悪くないな」"s, cnvtalk(u8"Hmm. Not bad."s)),
-                    lang(u8"「何だろう、これは」"s, cnvtalk(u8"What's this?"s)),
-                    lang(u8"「ほほう…」"s, cnvtalk(u8"Ohh..."s)),
+                    lang(u8"「ふむ…悪くないな」"s, u8"\"Hmm. Not bad.\""s),
+                    lang(u8"「何だろう、これは」"s, u8"\"What's this?\""s),
+                    lang(u8"「ほほう…」"s, u8"\"Ohh...\""s),
                     lang(
                         u8"「私も死んだらはく製に…」"s,
-                        cnvtalk(u8"I want to be stuffed..."s)),
+                        u8"\"I want to be stuffed...\""s),
                     lang(
                         u8"「ここが噂の…」"s,
-                        cnvtalk(u8"So this is the famous..."s)));
+                        u8"\"So this is the famous...\""s));
             }
             if (rnd(25) == 0)
             {
@@ -33979,16 +33978,16 @@ void label_1754()
                 txt(lang(u8" *がやがや* "s, u8"*murmur*"s),
                     lang(
                         u8"「やだっ気持ち悪い」"s,
-                        cnvtalk(u8"Gross! Disgusting."s)),
+                        u8"\"Gross! Disgusting.\""s),
                     lang(
                         u8"「ねーねーこれ死んでるんでしょ？」"s,
-                        cnvtalk(u8"Hey. Is it really dead?"s)),
-                    lang(u8"「かわ、いー♪」"s, cnvtalk(u8"Scut!"s)),
+                        u8"\"Hey. Is it really dead?\""s),
+                    lang(u8"「かわ、いー♪」"s, u8"\"Scut!\""s),
                     lang(
                         u8"「今日はとことん見るぜ」"s,
-                        cnvtalk(u8"Absolutely amazing."s)),
+                        u8"\"Absolutely amazing.\""s),
                     lang(
-                        u8"「触ってもいいの？」"s, cnvtalk(u8"Can I touch?"s)));
+                        u8"「触ってもいいの？」"s, u8"\"Can I touch?\""s));
             }
             if (rnd(15) == 0)
             {
@@ -34052,17 +34051,17 @@ void label_1754()
                 txt(lang(u8" *ざわざわ* "s, u8"*murmur*"s),
                     lang(
                         u8"「これ欲しい〜」"s,
-                        cnvtalk(u8"I want this! I want this!"s)),
+                        u8"\"I want this! I want this!\""s),
                     lang(
                         u8"「何だろう、これは」"s,
-                        cnvtalk(u8"Oh what's this?"s)),
-                    lang(u8"「お買い物♪」"s, cnvtalk(u8"I'm just watching"s)),
+                        u8"\"Oh what's this?\""s),
+                    lang(u8"「お買い物♪」"s, u8"\"I'm just watching\""s),
                     lang(
                         u8"「金が足りん…」"s,
-                        cnvtalk(u8"My wallet is empty..."s)),
+                        u8"\"My wallet is empty...\""s),
                     lang(
                         u8"「ここが噂の…」"s,
-                        cnvtalk(u8"So this is the famous...."s)));
+                        u8"\"So this is the famous....\""s));
             }
             return;
         }
@@ -37637,7 +37636,7 @@ label_1894_internal:
             {
                 txt(lang(
                     name(p) + u8"「ぎゃぁーー！」"s,
-                    name(p) + u8" screams, "s + cnvtalk(u8"Ahhhhhhh!"s)));
+                    name(p) + u8" screams, "s + u8"\"Ahhhhhhh!\""s));
                 dmghp(p, 99999, -11);
                 break;
             }
@@ -43675,7 +43674,7 @@ label_1986_internal:
             snd(27);
             txt(lang(
                 u8"「その本は入手できないね」"s,
-                cnvtalk(u8"Ah, that book is unavailable."s)));
+                u8"\"Ah, that book is unavailable.\""s));
             goto label_1985_internal;
         }
         snd(20);
@@ -44019,7 +44018,7 @@ void what_do_you_wish_for()
     show_number_of_text_prompt(
         (windoww - 290) / 2 + inf_screenx, winposy(90), 16, 0);
     txtmore();
-    txt(lang(u8"「"s + inputlog + u8"！！」"s, cnvtalk(inputlog + u8"!!"s)));
+    txt(lang(u8"「"s + inputlog + u8"！！」"s, u8"\""s + inputlog + u8"!!\""s));
     msgtemp = "";
     autosave = 1 * (gdata_current_map != 35);
     tcopy = 1;
@@ -44051,7 +44050,7 @@ void what_do_you_wish_for()
     }
     if (inputlog == u8"エヘカトル"s || inputlog == u8"ehekatl"s)
     {
-        txt(lang(u8"「うみみゅみゅぁ！」"s, cnvtalk(u8"Meeewmew!"s)));
+        txt(lang(u8"「うみみゅみゅぁ！」"s, u8"\"Meeewmew!\""s));
         flt();
         characreate(-1, 331, cdata[0].position.x, cdata[0].position.y);
         wish_end();
@@ -44061,7 +44060,7 @@ void what_do_you_wish_for()
     {
         txt(lang(
             u8"「アタシを呼びつけるとは生意気ね。」"s,
-            cnvtalk(u8"You dare to call my name?"s)));
+            u8"\"You dare to call my name?\""s));
         flt();
         characreate(-1, 306, cdata[0].position.x, cdata[0].position.y);
         wish_end();
@@ -44069,7 +44068,7 @@ void what_do_you_wish_for()
     }
     if (inputlog == u8"オパートス"s || inputlog == u8"opatos"s)
     {
-        txt(lang(u8"工事中。"s, cnvtalk(u8"Under construction."s)));
+        txt(lang(u8"工事中。"s, u8"\"Under construction.\""s));
         flt();
         characreate(-1, 338, cdata[0].position.x, cdata[0].position.y);
         wish_end();
@@ -44077,7 +44076,7 @@ void what_do_you_wish_for()
     }
     if (inputlog == u8"クミロミ"s || inputlog == u8"kumiromi"s)
     {
-        txt(lang(u8"工事中。"s, cnvtalk(u8"Under construction."s)));
+        txt(lang(u8"工事中。"s, u8"\"Under construction.\""s));
         flt();
         characreate(-1, 339, cdata[0].position.x, cdata[0].position.y);
         wish_end();
@@ -44085,7 +44084,7 @@ void what_do_you_wish_for()
     }
     if (inputlog == u8"マニ"s || inputlog == u8"mani"s)
     {
-        txt(lang(u8"工事中。"s, cnvtalk(u8"Under construction."s)));
+        txt(lang(u8"工事中。"s, u8"\"Under construction.\""s));
         flt();
         characreate(-1, 342, cdata[0].position.x, cdata[0].position.y);
         wish_end();
@@ -52755,9 +52754,9 @@ void label_2146()
                         }
                         if (en)
                         {
-                            txt(cnvtalk(u8"Boring."s),
-                                cnvtalk(u8"I've heard this before."s),
-                                cnvtalk(u8"This song again?"s));
+                            txt(u8"\"Boring.\""s,
+                                u8"\"I've heard this before.\""s,
+                                u8"\"This song again?\""s);
                         }
                     }
                     cdata[tc].interest = 0;
@@ -52780,10 +52779,10 @@ void label_2146()
                             }
                             if (en)
                             {
-                                txt(cnvtalk(u8"Boo boo!"s),
-                                    cnvtalk(u8"Shut it!"s),
-                                    cnvtalk(u8"What are you doing!"s),
-                                    cnvtalk(u8"You can't play shit."s));
+                                txt(u8"\"Boo boo!\""s,
+                                    u8"\"Shut it!\""s,
+                                    u8"\"What are you doing!\""s,
+                                    u8"\"You can't play shit.\""s);
                             }
                             txt(lang(
                                 ""s + name(tc) + u8"は石を投げた。"s,
@@ -52885,9 +52884,9 @@ void label_2146()
                                     name(tc) + u8" listene"s + _s(tc)
                                         + u8" to "s + name(cc) + your(cc)
                                         + u8" music joyfully."s,
-                                    cnvtalk(u8"Bravo!"s),
-                                    cnvtalk(u8"Nice song."s),
-                                    cnvtalk(u8"Scut!"s),
+                                    u8"\"Bravo!\""s,
+                                    u8"\"Nice song.\""s,
+                                    u8"\"Scut!\""s,
                                     name(tc) + u8" "s + is(tc)
                                         + u8" excited!"s);
                             }
@@ -53176,11 +53175,11 @@ void label_2147()
                     }
                     if (en)
                     {
-                        txt(cnvtalk(u8"Yes!"s),
-                            cnvtalk(u8"Ohhh"s),
+                        txt(u8"\"Yes!\""s,
+                            u8"\"Ohhh\""s,
                             u8"*gasp*"s,
                             u8"*rumble*"s,
-                            cnvtalk(u8"come on!"s));
+                            u8"\"come on!\""s);
                     }
                 }
             }
@@ -53276,8 +53275,7 @@ void label_2147()
                         txt(lang(
                             name(cc) + u8"は激怒した。「なめてんの？」"s,
                             name(cc) + u8" gets furious, "s
-                                + cnvtalk(
-                                      u8"And you think you can just run away?"s)));
+                                      u8"\"And you think you can just run away?\""s));
                         cdata[cc].enemy_id = tc;
                         cdata[cc].hate = 20;
                     }
@@ -53609,14 +53607,14 @@ void continuous_action_others()
                     {
                         txt(lang(
                             u8"「貴様、何をしている！」"s,
-                            cnvtalk(u8"You there, stop!"s)));
+                            u8"\"You there, stop!\""s));
                         modimp(cnt, -5);
                     }
                     else
                     {
                         txt(lang(
                             u8"「ガード！ガード！」"s,
-                            cnvtalk(u8"Guards! Guards!"s)));
+                            u8"\"Guards! Guards!\""s));
                         modimp(cnt, -5);
                     }
                     cdata[cnt].emotion_icon = 520;
@@ -54841,7 +54839,7 @@ void label_2160()
             if (inv[ci].id == 204 && inv[ci].subname == 344)
             {
                 txt(lang(
-                    u8"「いただきマンモス」"s, cnvtalk(u8"Let's eatammoth."s)));
+                    u8"「いただきマンモス」"s, u8"\"Let's eatammoth.\""s));
             }
         }
         return;
@@ -54916,11 +54914,11 @@ void label_2161()
                     }
                     if (en)
                     {
-                        txt(cnvtalk(u8"Yuck!!"s),
-                            cnvtalk(u8"....!!"s),
-                            cnvtalk(u8"W-What..."s),
-                            cnvtalk(u8"Are you teasing me?"s),
-                            cnvtalk(u8"You fool!"s));
+                        txt(u8"\"Yuck!!\""s,
+                            u8"\"....!!\""s,
+                            u8"\"W-What...\""s,
+                            u8"\"Are you teasing me?\""s,
+                            u8"\"You fool!\""s);
                     }
                     dmghp(cc, 999, -12);
                     if (cdata[cc].state != 1)
@@ -54949,7 +54947,7 @@ void label_2161()
             txt(lang(
                 name(cc) + u8"はもちを喉につまらせた！"s,
                 name(cc) + u8" choke"s + _s(cc) + u8" on mochi!"s));
-            txt(lang(u8"「むがっ」"s, cnvtalk(u8"Mm-ghmm"s)));
+            txt(lang(u8"「むがっ」"s, u8"\"Mm-ghmm\""s));
         }
         ++cdata[cc].choked;
     }
@@ -55615,7 +55613,7 @@ int drink_well()
                     + lang(
                           u8"「手を伸ばせー」"s,
                           (u8" yells, "s
-                           + cnvtalk(u8"G-Give me your hands!"s))));
+                           + u8"\"G-Give me your hands!\""s)));
                 if (cbit(5, cc) == 1 && cdata[cc].gravity == 0)
                 {
                     txtmore();
@@ -56522,17 +56520,17 @@ void do_throw_command()
                         {
                             txtef(9);
                             txtmore();
-                            txt(lang(u8"「いてー！」"s, cnvtalk(u8"Hey!"s)),
+                            txt(lang(u8"「いてー！」"s, u8"\"Hey!\""s),
                                 lang(
                                     u8"「やったな」"s,
-                                    cnvtalk(u8"Now you did it."s)),
+                                    u8"\"Now you did it.\""s),
                                 lang(u8" *クスクス* "s, u8"*chuckle*"s),
                                 lang(
                                     u8"「キャハハ」"s,
-                                    cnvtalk(u8"Tee-hee-hee!"s)),
+                                    u8"\"Tee-hee-hee!\""s),
                                 lang(
                                     u8"「こやつめ」"s,
-                                    cnvtalk(u8"You'll pay for this."s)),
+                                    u8"\"You'll pay for this.\""s),
                                 lang(u8"「むむっ」"s, u8"*grin*"s));
                         }
                     }
@@ -57389,7 +57387,7 @@ void label_2201()
                         name(tc) + u8"はもちを吐き出した。"s,
                         name(tc) + u8" spit"s + _s(tc) + u8" mochi."s));
                     txt(lang(
-                        u8"「助かったよ！」"s, cnvtalk(u8"You saved me!"s)));
+                        u8"「助かったよ！」"s, u8"\"You saved me!\""s));
                     cdata[tc].choked = 0;
                     modimp(tc, 10);
                 }
@@ -57630,10 +57628,10 @@ void label_2203()
                                 cdata[tc].gold += p;
                                 txt(lang(
                                         u8"「おっと、ごめんよ」"s,
-                                        cnvtalk(u8"Ops, sorry."s)),
+                                        u8"\"Ops, sorry.\""s),
                                     lang(
                                         u8"「気をつけな」"s,
-                                        cnvtalk(u8"Watch it."s)));
+                                        u8"\"Watch it.\""s));
                             }
                         }
                     }
@@ -58748,7 +58746,7 @@ void do_open_command()
                             txtmore();
                             txt(lang(
                                 u8"モイアー「馬鹿やろう！！」"s,
-                                u8"Moyer yells, "s + cnvtalk(u8"You idiot!"s)));
+                                u8"Moyer yells, "s + u8"\"You idiot!\""s));
                             cdata[gdata_fire_giant].enemy_id = tc;
                             cdata[gdata_fire_giant].hate = 1000;
                         }
@@ -61362,7 +61360,7 @@ void do_use_command()
                         name(tc) + u8" blush"s + _s(tc, 1) + u8"."s));
                     txtmore();
                     txtef(4);
-                    txt(lang(u8"「キャー」"s, cnvtalk(u8"Pervert!"s)));
+                    txt(lang(u8"「キャー」"s, u8"\"Pervert!\""s));
                 }
                 cbitmod(966, tc, 1);
                 turn_end();
@@ -61417,7 +61415,7 @@ void do_use_command()
                         txt(lang(
                             name(tc) + u8"は呻き声を洩らした。「アン…♪」"s,
                             name(tc) + u8" gasp"s + _s(tc) + u8", "s
-                                + cnvtalk(u8"Pervert!"s)));
+                                + u8"\"Pervert!\""s));
                     }
                     else
                     {
@@ -61430,7 +61428,7 @@ void do_use_command()
                         txt(lang(
                             name(tc) + u8"は呻き声を洩らした。「はぁはぁ…」"s,
                             name(tc) + u8" gasp"s + _s(tc) + u8", "s
-                                + cnvtalk(u8"D-don't sto....N-nothing!"s)));
+                                + u8"\"D-don't sto....N-nothing!\""s));
                     }
                     animeload(8, tc);
                     f = 1;
@@ -61501,7 +61499,7 @@ void do_use_command()
                         txt(lang(
                             name(tc) + u8"は呻き声を洩らした。「アン…♪」"s,
                             name(tc) + u8" gasp"s + _s(tc) + u8", "s
-                                + cnvtalk(u8"Pervert!"s)));
+                                + u8"\"Pervert!\""s));
                         animeload(8, tc);
                         --inv[ci].number;
                         cell_refresh(inv[ci].position.x, inv[ci].position.y);
@@ -61702,7 +61700,7 @@ void do_use_command()
         txt(lang(
             u8"オパートス「フハハハ！間もなく、この地に変動が起こるであろう！」"s,
             u8"A voice echos, "s
-                + cnvtalk(u8"Muwahahaha! I shall shake the land for you!"s)));
+                + u8"\"Muwahahaha! I shall shake the land for you!\""s));
         goto label_2229_internal;
     case 34:
         txt(lang(
@@ -61712,7 +61710,7 @@ void do_use_command()
         txt(lang(
             u8"ジュア「べ、別にあんたのためにするんじゃないからね。バカっ！」"s,
             u8"A voice echos, "s
-                + cnvtalk(u8"I-I'm not doing for you! Silly!"s)));
+                + u8"\"I-I'm not doing for you! Silly!\""s));
         efid = 637;
         efp = 5000;
         magic();
@@ -61725,7 +61723,7 @@ void do_use_command()
         txtef(5);
         txt(lang(
             u8"エヘカトル「呼んだ？呼んだ？」"s,
-            u8"A voice echos, "s + cnvtalk(u8"Did you call me? Call me?"s)));
+            u8"A voice echos, "s + u8"\"Did you call me? Call me?\""s));
         addbuff(tc, 19, 77, 2500);
         goto label_2229_internal;
     case 27:
@@ -61739,8 +61737,7 @@ void do_use_command()
             txt(lang(
                 u8"ルルウィ「あさはかね。エーテルの風を止めてあげるとでも思ったの？」"s,
                 u8"A rather angry voice echos, "s
-                    + cnvtalk(
-                          u8"Listen my little slave. Did you really think I would turn a hand in this filthy wind for you?"s)));
+                          u8"\"Listen my little slave. Did you really think I would turn a hand in this filthy wind for you?\""s));
             goto label_2229_internal;
         }
         p = gdata_weather;
@@ -61770,8 +61767,7 @@ void do_use_command()
         txt(lang(
             u8"ルルウィ「あらあら、定命の分際でそんなおねだりするの？ウフフ…今回は特別よ」"s,
             u8"An impish voice echos, "s
-                + cnvtalk(
-                      u8"Ah you ask too much for a mortal. Still, it is hard to refuse a call from such a pretty slave like you."s)));
+                      u8"\"Ah you ask too much for a mortal. Still, it is hard to refuse a call from such a pretty slave like you.\""s));
         txtmore();
         txt(lang(u8"天候が変わった。"s, u8"The weather changes."s));
         envonly = 1;
@@ -61862,8 +61858,7 @@ void do_use_command()
             txt(lang(
                 u8"クミロミの声がした。「ダメ…経験…足りない…」"s,
                 u8"Kumiromi talks to you, "s
-                    + cnvtalk(
-                          u8"No...you aren't...experienced enough...for this..."s)));
+                          u8"\"No...you aren't...experienced enough...for this...\""s));
             update_screen();
             pc_turn(false);
         }
@@ -61874,8 +61869,7 @@ void do_use_command()
         ++gdata_acquirable_feat_count;
         txt(lang(
             u8"「…よく…経験をつんだね…酬いてあげる…」"s,
-            cnvtalk(
-                u8"...You have acquired enough...experience...I shall reward you..."s)));
+                u8"\"...You have acquired enough...experience...I shall reward you...\""s));
         txtef(5);
         txt(lang(
             u8"クミロミはあなたを祝福した。あなたは新たなフィートを取得できるようになった！"s,
@@ -62122,7 +62116,7 @@ void do_use_command()
             u8"You enter the iron maiden."s));
         txtmore();
         txtef(9);
-        txt(lang(u8"「わくわく♪」"s, cnvtalk(u8"Interesting!"s)));
+        txt(lang(u8"「わくわく♪」"s, u8"\"Interesting!\""s));
         txtmore();
         txt(lang(
             u8"突然誰かが蓋を閉めた。"s,
@@ -62138,7 +62132,7 @@ void do_use_command()
             u8"You set your head on the guillotine."s));
         txtmore();
         txtef(9);
-        txt(lang(u8"「わくわく♪」"s, cnvtalk(u8"Interesting!"s)));
+        txt(lang(u8"「わくわく♪」"s, u8"\"Interesting!\""s));
         txtmore();
         txt(lang(
             u8"突然誰かがギロチンの刃を落とした。"s,
@@ -62935,7 +62929,7 @@ void label_2244()
             }
             txt(lang(
                 u8"「これでも食らうがいい"s + _yo(2) + u8"」"s,
-                cnvtalk(u8"Eat this!"s)));
+                u8"\"Eat this!\""s));
             if (rnd(2) == 0)
             {
                 for (int cnt = 0; cnt < 28; ++cnt)
@@ -63408,16 +63402,16 @@ void label_2244()
             snd(17);
             txt(lang(
                 u8"あなたと"s + name(tc) + u8"は乾杯した！"s,
-                cnvtalk(u8"Cheers!"s)));
+                u8"\"Cheers!\""s));
             txtef(9);
             txtmore();
             txt(lang(u8"「うぃっ！」"s, u8"*Hic*"s),
-                lang(u8"「うまいぜ」"s, cnvtalk(u8"Ah, good booze."s)),
-                lang(u8"「らららー♪」"s, cnvtalk(u8"La-la-la-la."s)),
-                lang(u8"「ひっく」"s, cnvtalk(u8"I'm going to heaven."s)),
-                lang(u8"「ふぅ」"s, cnvtalk(u8"Whew!"s)),
-                lang(u8"「たまらないわ」"s, cnvtalk(u8"I'm revived!"s)),
-                lang(u8"「んまっ♪」"s, cnvtalk(u8"Awesome."s)));
+                lang(u8"「うまいぜ」"s, u8"\"Ah, good booze.\""s),
+                lang(u8"「らららー♪」"s, u8"\"La-la-la-la.\""s),
+                lang(u8"「ひっく」"s, u8"\"I'm going to heaven.\""s),
+                lang(u8"「ふぅ」"s, u8"\"Whew!\""s),
+                lang(u8"「たまらないわ」"s, u8"\"I'm revived!\""s),
+                lang(u8"「んまっ♪」"s, u8"\"Awesome.\""s));
             dmgcon(tc, 8, 1000);
             dmgcon(cc, 8, 1000);
             modimp(tc, 15);
@@ -63957,7 +63951,7 @@ void label_2249()
         txtnew();
         txtef(3);
         txt(lang(u8"何かは殺された。"s, u8"Something is killed."s));
-        txt(lang(u8"「ぐわぁ」"s, cnvtalk(u8"Uggghhh!"s)));
+        txt(lang(u8"「ぐわぁ」"s, u8"\"Uggghhh!\""s));
         snd(8);
         spillblood(28, 6, 10);
         flt();
@@ -67865,16 +67859,14 @@ void failed_quest(int val0)
                                 {
                                     s = lang(
                                         u8"「おい、暗殺者が私の後ろにいるぞ」"s,
-                                        cnvtalk(
-                                            u8"Hey, the assassins are killing me."s));
+                                        u8"\"Hey, the assassins are killing me.\""s);
                                     p = -11;
                                 }
                                 if (qdata(4, rq) == 1)
                                 {
                                     s = lang(
                                         u8"「毒が、毒がー！」"s,
-                                        cnvtalk(
-                                            u8"Poison! P-P-Poison in my vein!!"s));
+                                        u8"\"Poison! P-P-Poison in my vein!!\""s);
                                     p = -4;
                                 }
                                 if (qdata(4, rq) == 2)
@@ -67883,8 +67875,7 @@ void failed_quest(int val0)
                                         u8"「時間切れだ。こうなったら…」"s +
                                             name(tc) +
                                             u8"は火をかぶった。"s,
-                                        cnvtalk(
-                                            u8"I missed the deadline. I don't have a right to live anymore."s) +
+                                            u8"\"I missed the deadline. I don't have a right to live anymore.\""s +
                                             u8" "s + name(tc) +
                                             u8" pours a bottole of molotov cocktail over "s +
                                             him(tc) + u8"self."s);
@@ -68572,13 +68563,13 @@ void label_2687()
                 tc = cc;
                 txt(lang(
                         u8"「もっとぶって"s + _yo(2) + u8"」"s,
-                        cnvtalk(u8"Release me now."s)),
+                        u8"\"Release me now.\""s),
                     lang(
                         u8"「こんなことして、許さない"s + _yo() + u8"」"s,
-                        cnvtalk(u8"I won't forget this."s)),
+                        u8"\"I won't forget this.\""s),
                     lang(
                         u8"「何をする"s + _nda(2) + u8"」"s,
-                        cnvtalk(u8"Hit me!"s)));
+                        u8"\"Hit me!\""s));
             }
         }
         cdata[cc].hate = 0;
@@ -68608,10 +68599,10 @@ void label_2687()
                                 {
                                     txt(lang(
                                             u8"「痛っ！」"s,
-                                            cnvtalk(u8"Ouch!"s)),
+                                            u8"\"Ouch!\""s),
                                         lang(
                                             u8"「やめて！」"s,
-                                            cnvtalk(u8"Stop it!"s)));
+                                            u8"\"Stop it!\""s));
                                     hostileaction(0, cc);
                                 }
                                 if (rnd(4) == 0)
@@ -68723,15 +68714,15 @@ void label_2687()
                 {
                     txtef(4);
                     txtmore();
-                    txt(lang(u8"「いいぞ！」"s, cnvtalk(u8"Come on!"s)),
-                        lang(u8"「もっとやれー」"s, cnvtalk(u8"More blood!"s)),
-                        lang(u8"「血をみせろー」"s, cnvtalk(u8"Beat'em!"s)),
+                    txt(lang(u8"「いいぞ！」"s, u8"\"Come on!\""s),
+                        lang(u8"「もっとやれー」"s, u8"\"More blood!\""s),
+                        lang(u8"「血をみせろー」"s, u8"\"Beat'em!\""s),
                         lang(
-                            u8"「頑張って！」"s, cnvtalk(u8"Use your brain!"s)),
-                        lang(u8"「うぉぉぉぉ！」"s, cnvtalk(u8"Wooooo!"s)),
-                        lang(u8"「行けぇ！」"s, cnvtalk(u8"Go go!"s)),
-                        lang(u8"「頭を使えよ」"s, cnvtalk(u8"Good fighting."s)),
-                        lang(u8"「きゃー」"s, cnvtalk(u8"Yeeee!"s)));
+                            u8"「頑張って！」"s, u8"\"Use your brain!\""s),
+                        lang(u8"「うぉぉぉぉ！」"s, u8"\"Wooooo!\""s),
+                        lang(u8"「行けぇ！」"s, u8"\"Go go!\""s),
+                        lang(u8"「頭を使えよ」"s, u8"\"Good fighting.\""s),
+                        lang(u8"「きゃー」"s, u8"\"Yeeee!\""s));
                 }
                 label_2690();
                 return;
@@ -69247,14 +69238,14 @@ void label_2690()
                 {
                     if (rnd(2) == 0)
                     {
-                        txt(cnvtalk(u8"Vrei sa pleci dar♪"s),
-                            cnvtalk(u8"Numa numa yay!!"s),
-                            cnvtalk(u8"Numa numa numa yay!!"s));
+                        txt(u8"\"Vrei sa pleci dar♪\""s,
+                            u8"\"Numa numa yay!!\""s,
+                            u8"\"Numa numa numa yay!!\""s);
                         goto label_2692_internal;
                     }
-                    txt(cnvtalk(u8"Mai-Ya-Hi♪"s),
-                        cnvtalk(u8"Mai-Ya-Hoo♪"s),
-                        cnvtalk(u8"Mai-Ya-Ha Ma Mi A♪"s));
+                    txt(u8"\"Mai-Ya-Hi♪\""s,
+                        u8"\"Mai-Ya-Hoo♪\""s,
+                        u8"\"Mai-Ya-Ha Ma Mi A♪\""s);
                     goto label_2692_internal;
                 }
                 goto label_2691_internal;
@@ -69340,18 +69331,16 @@ label_2692_internal:
                                             txtef(9);
                                             txt(lang(
                                                     u8"「化け物め！」"s,
-                                                    cnvtalk(
-                                                        u8"Filthy monster!"s)),
+                                                    u8"\"Filthy monster!\""s),
                                                 lang(
                                                     u8"「くたばれっ」"s,
-                                                    cnvtalk(u8"Go to hell!"s)),
+                                                    u8"\"Go to hell!\""s),
                                                 lang(
                                                     u8"「退治してやるぅ！」"s,
-                                                    cnvtalk(
-                                                        u8"I'll get rid of you."s)),
+                                                    u8"\"I'll get rid of you.\""s),
                                                 lang(
                                                     u8"「くらえー！」"s,
-                                                    cnvtalk(u8"Eat this!"s)));
+                                                    u8"\"Eat this!\""s));
                                             do_throw_command();
                                             return;
                                         }
@@ -69431,19 +69420,19 @@ label_2692_internal:
                                     txt(lang(u8" *クスクス* "s, u8"*grin*"s),
                                         lang(
                                             u8"「えいっ」"s,
-                                            cnvtalk(u8"Fire in the hole!"s)),
+                                            u8"\"Fire in the hole!\""s),
                                         lang(
                                             u8"「うりゃ」"s,
-                                            cnvtalk(u8"Tee-hee-hee!"s)),
+                                            u8"\"Tee-hee-hee!\""s),
                                         lang(
                                             u8"「くらえー！」"s,
-                                            cnvtalk(u8"Eat this!"s)),
+                                            u8"\"Eat this!\""s),
                                         lang(
                                             u8"「危ないっ！」"s,
-                                            cnvtalk(u8"Watch out!"s)),
+                                            u8"\"Watch out!\""s),
                                         lang(
                                             u8"「避けてー」"s,
-                                            cnvtalk(u8"Scut!"s)));
+                                            u8"\"Scut!\""s));
                                     txtmore();
                                     do_throw_command();
                                     return;
@@ -69548,8 +69537,8 @@ label_2692_internal:
                                 txtmore();
                                 txt(lang(
                                         u8"「なめくじだ！」"s,
-                                        cnvtalk(u8"Snail!"s)),
-                                    lang(u8"「殺す！」"s, cnvtalk(u8"Kill!"s)));
+                                        u8"\"Snail!\""s),
+                                    lang(u8"「殺す！」"s, u8"\"Kill!\""s));
                             }
                             do_throw_command();
                             return;
@@ -72592,10 +72581,10 @@ void pass_one_turn(bool label_2738_flg)
                         }
                         if (en)
                         {
-                            txt(cnvtalk(u8"Have a drink baby."s),
-                                cnvtalk(u8"What are you looking at?"s),
-                                cnvtalk(u8"I ain't drunk."s),
-                                cnvtalk(u8"Let's have fun."s));
+                            txt(u8"\"Have a drink baby.\""s,
+                                u8"\"What are you looking at?\""s,
+                                u8"\"I ain't drunk.\""s,
+                                u8"\"Let's have fun.\""s);
                         }
                     }
                     if (rnd(4) == 0)
@@ -72611,7 +72600,7 @@ void pass_one_turn(bool label_2738_flg)
                                         + u8" is pretty annoyed with the drunkard."s));
                                 txt(lang(
                                     u8"「酔っ払いにはうんざり！」"s,
-                                    cnvtalk(u8"Your time is over, drunk!"s)));
+                                    u8"\"Your time is over, drunk!\""s));
                             }
                             cdata[tc].hate = 20;
                             cdata[tc].enemy_id = cc;
@@ -74241,7 +74230,7 @@ void conquer_lesimas()
     pos(wx + 40, wy + 206);
     mes(lang(
         u8"あなたは「"s + wincomment + u8"」とコメントした。"s,
-        u8"Upon killing Zeome, you said, "s + cnvtalk((""s + wincomment))));
+        u8"Upon killing Zeome, you said, \""s + wincomment + u8"\""));
     pos(wx + 40, wy + 246);
     mes(lang(
         u8"…あなたの旅はまだ終わらない。"s, u8"Your journey continues..."s));

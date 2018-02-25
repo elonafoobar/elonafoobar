@@ -677,7 +677,7 @@ int magic()
                 {
                     txt(lang(
                         u8"「余分な機能は削除してしまえ」"s,
-                        cnvtalk(u8"Delete."s)));
+                        u8"\"Delete.\""s));
                     cdata[tc].hp = cdata[tc].max_hp / 12 + 1;
                     goto the_end;
                 }
@@ -1345,7 +1345,7 @@ label_2181_internal:
                     txtef(9);
                     txt(lang(
                         u8"「ぺっぺっ、まずー」"s,
-                        cnvtalk(u8"Argh, the milk is cursed!"s)));
+                        u8"\"Argh, the milk is cursed!\""s));
                 }
             }
             else if (tc == 0)
@@ -1357,7 +1357,7 @@ label_2181_internal:
             else
             {
                 txtef(9);
-                txt(lang(u8"「うまー」"s, cnvtalk(u8"Yummy!"s)));
+                txt(lang(u8"「うまー」"s, u8"\"Yummy!\""s));
             }
         }
         if (efstatus >= 1)
@@ -1384,23 +1384,23 @@ label_2181_internal:
                 txtef(9);
                 txtmore();
                 txt(lang(u8"「うぃっ…」"s, u8"*Hic*"s),
-                    lang(u8"「まずいぜ」"s, cnvtalk(u8"Ah, bad booze."s)),
-                    lang(u8"「げー♪」"s, cnvtalk(u8"Ugh..."s)),
+                    lang(u8"「まずいぜ」"s, u8"\"Ah, bad booze.\""s),
+                    lang(u8"「げー♪」"s, u8"\"Ugh...\""s),
                     lang(
                         u8"「腐ったミルクみたいな味だ」"s,
-                        cnvtalk(u8"Bah, smells like rotten milk."s)));
+                        u8"\"Bah, smells like rotten milk.\""s));
             }
             else
             {
                 txtef(9);
                 txtmore();
                 txt(lang(u8"「うぃっ！」"s, u8"*Hic*"s),
-                    lang(u8"「うまいぜ」"s, cnvtalk(u8"Ah, good booze."s)),
-                    lang(u8"「らららー♪」"s, cnvtalk(u8"La-la-la-la."s)),
-                    lang(u8"「ひっく」"s, cnvtalk(u8"I'm going to heaven."s)),
-                    lang(u8"「ふぅ」"s, cnvtalk(u8"Whew!"s)),
-                    lang(u8"「たまらないわ」"s, cnvtalk(u8"I'm revived!"s)),
-                    lang(u8"「んまっ♪」"s, cnvtalk(u8"Awesome."s)));
+                    lang(u8"「うまいぜ」"s, u8"\"Ah, good booze.\""s),
+                    lang(u8"「らららー♪」"s, u8"\"La-la-la-la.\""s),
+                    lang(u8"「ひっく」"s, u8"\"I'm going to heaven.\""s),
+                    lang(u8"「ふぅ」"s, u8"\"Whew!\""s),
+                    lang(u8"「たまらないわ」"s, u8"\"I'm revived!\""s),
+                    lang(u8"「んまっ♪」"s, u8"\"Awesome.\""s));
             }
         }
         dmgcon(tc, 8, efp);
@@ -1493,7 +1493,7 @@ label_2181_internal:
         {
             txtef(9);
             txtmore();
-            txt(lang(u8"「しょっぱ〜」"s, cnvtalk(u8"Salty!"s)));
+            txt(lang(u8"「しょっぱ〜」"s, u8"\"Salty!\""s));
         }
         break;
     case 1130:
@@ -1589,13 +1589,13 @@ label_2181_internal:
                 }
                 if (en)
                 {
-                    txt(name(gdata_mount) + u8" "s + cnvtalk(u8"Phew."s),
+                    txt(name(gdata_mount) + u8" "s + u8"\"Phew.\""s,
                         name(gdata_mount) + u8" "s
-                            + cnvtalk(u8"How was my ride?"s),
+                            + u8"\"How was my ride?\""s,
                         name(gdata_mount) + u8" "s
-                            + cnvtalk(u8"Tired...tired..."s),
+                            + u8"\"Tired...tired...\""s,
                         name(gdata_mount) + u8" "s
-                            + cnvtalk(u8"It was nice."s));
+                            + u8"\"It was nice.\""s);
                 }
                 ride_end();
                 break;
@@ -1653,11 +1653,11 @@ label_2181_internal:
             }
             if (en)
             {
-                txt(name(gdata_mount) + u8" "s + cnvtalk(u8"Awww."s),
+                txt(name(gdata_mount) + u8" "s + u8"\"Awww.\""s,
                     name(gdata_mount) + u8" "s
-                        + cnvtalk(u8"You should go on a diet."s),
-                    name(gdata_mount) + u8" "s + cnvtalk(u8"Let's roll!"s),
-                    name(gdata_mount) + u8" "s + cnvtalk(u8"Be gentle."s));
+                        + u8"\"You should go on a diet.\""s,
+                    name(gdata_mount) + u8" "s + u8"\"Let's roll!\""s,
+                    name(gdata_mount) + u8" "s + u8"\"Be gentle.\""s);
             }
         }
         break;
@@ -2206,7 +2206,7 @@ label_2181_internal:
             + lang(
                   u8"は復活した！"s,
                   (u8" "s + have(rc) + u8" been resurrected!"s)));
-        txt(lang(u8"「ありがとう！」"s, cnvtalk(u8"Thanks!"s)));
+        txt(lang(u8"「ありがとう！」"s, u8"\"Thanks!\""s));
         animode = 100 + rc;
         play_animation(19);
         snd(120);
@@ -4399,21 +4399,19 @@ label_2181_internal:
                 }
                 else if (rnd(2))
                 {
-                    txt(cnvtalk(u8"You suck!"s),
-                        cnvtalk(u8"You will die alone."s),
-                        cnvtalk(u8"Bow down before me."s),
-                        cnvtalk(u8"Go jump off a bridge."s),
-                        cnvtalk(u8"Bang your head against the wall!"s),
-                        cnvtalk(u8"Why do you sniff under your dog's tail?"s));
+                    txt(u8"\"You suck!\""s,
+                        u8"\"You will die alone.\""s,
+                        u8"\"Bow down before me.\""s,
+                        u8"\"Go jump off a bridge.\""s,
+                        u8"\"Bang your head against the wall!\""s,
+                        u8"\"Why do you sniff under your dog's tail?\""s);
                 }
                 else
                 {
-                    txt(cnvtalk(
-                            u8"The world is against you because you are a unsavory decomposing virus."s),
-                        cnvtalk(
-                            u8"You are no better than a immoral guzzling bureaucrat."s),
-                        cnvtalk(u8"You are so lowly."s),
-                        cnvtalk(u8"Get off me."s));
+                    txt(u8"\"The world is against you because you are a unsavory decomposing virus.\""s,
+                        u8"\"You are no better than a immoral guzzling bureaucrat.\""s,
+                        u8"\"You are so lowly.\""s,
+                        u8"\"Get off me.\""s);
                 }
             }
         }

@@ -3372,7 +3372,7 @@ void talk_unique()
                 chatesc = 1;
                 SCENE_CUT();
                 txtef(5);
-                txt(lang(u8"エヘカトル「うみゃ〜？」"s, cnvtalk(u8"Mew?"s)));
+                txt(lang(u8"エヘカトル「うみゃ〜？」"s, u8"\"Mew?\""s));
                 listmax = 0;
                 buff = lang(
                     u8"…こんな絵は天才にしか描けない。努力じゃダメだ。妹には…どう頑張っても、描けなかっただろう。幸運の女神というものがいるのなら、私は彼女を恨もう。…すまない、報酬だ。しばらく一人にしておくれ。"s,

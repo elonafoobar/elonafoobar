@@ -98,7 +98,7 @@ void proc_event()
         txt(lang(
             u8"ビッグダディの肩から、リトルシスターが滑り落ちた。「Mr Bubbles！！」"s,
             u8"The little sister slips from Big Daddy's shoulder, "s
-                + cnvtalk(u8"Mr.Bubbles!"s)));
+                + u8"\"Mr.Bubbles!\""s));
         break;
     case 28:
         txtef(5);
@@ -394,7 +394,7 @@ void proc_event()
                 txtef(4);
                 txt(lang(
                     u8"パエル「おかあさんーー！！」"s,
-                    cnvtalk(u8"M-mom...!!"s)));
+                    u8"\"M-mom...!!\""s));
                 cdata[tc].relationship = -3;
                 cdata[tc].hate = 1000;
                 cdata[tc].enemy_id = 0;
@@ -629,7 +629,7 @@ void proc_event()
                 txt(lang(
                     name(cc) + u8"「目が！目がー！！」"s,
                     name(cc) + u8" shout"s + _s(cc) + u8" "s
-                        + cnvtalk(u8"Eyes! My eyes!"s)));
+                        + u8"\"Eyes! My eyes!\""s));
             }
         }
         break;
@@ -667,11 +667,11 @@ void proc_event()
             }
             if (en)
             {
-                txt(cnvtalk(u8"Welcome home!"s),
-                    cnvtalk(u8"Hey, dear."s),
-                    cnvtalk(u8"You're back!"s),
-                    cnvtalk(u8"I was waiting for you."s),
-                    cnvtalk(u8"Nice to see you again."s));
+                txt(u8"\"Welcome home!\""s,
+                    u8"\"Hey, dear.\""s,
+                    u8"\"You're back!\""s,
+                    u8"\"I was waiting for you.\""s,
+                    u8"\"Nice to see you again.\""s);
             }
         }
         if (gdata_number_of_waiting_guests != 0)

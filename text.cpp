@@ -31,13 +31,6 @@ std::string cnvrank(int n)
 
 
 
-std::string cnvtalk(const std::string& prm_249)
-{
-    return u8"\""s + prm_249 + u8"\" "s;
-}
-
-
-
 std::string cnvarticle(const std::string& prm_250)
 {
     if (jp)
@@ -4478,69 +4471,67 @@ void cheer_up_message()
     {
         s += lang(
             u8"ラーネイレ「がんばれ〜」"s,
-            u8"Larneire cheers, "s + cnvtalk(u8"Way to go!"s));
+            u8"Larneire cheers, "s + u8"\"Way to go!\""s);
     }
     if (hour_played == 2)
     {
         s += lang(
             u8"ロミアス「陰ながら応援しているよ（ニヤリ）」"s,
-            u8"Lomias grins, "s + cnvtalk(u8"Go for it."s));
+            u8"Lomias grins, "s + u8"\"Go for it.\""s);
     }
     if (hour_played == 3)
     {
         s += lang(
             u8"クミロミ「…大丈夫…だよね？」"s,
-            u8"Kumiromi worries, "s + cnvtalk(u8"Are you...okay..?"s));
+            u8"Kumiromi worries, "s + u8"\"Are you...okay..?\""s);
     }
     if (hour_played == 4)
     {
         s += lang(
             u8"ルルウィ「あら、思いの他がんばるのね」"s,
             u8"Lulwy sneers, "s
-                + cnvtalk(u8"You're tougher than I thought, little kitty."s));
+                + u8"\"You're tougher than I thought, little kitty.\""s);
     }
     if (hour_played == 5)
     {
         s += lang(
             u8"ラーネイレ「いけない。このままでは…手遅れになってしまうわ…」"s,
             u8"Larneire cries, "s
-                + cnvtalk(u8"No...before it is too late..."s));
+                + u8"\"No...before it is too late...\""s);
     }
     if (hour_played == 6)
     {
         s += lang(
             u8"ロミアス「まだまだ、これからだろう（ニヤリ）」"s,
             u8"Lomias grins, "s
-                + cnvtalk(u8"Tt hasn't even started yet... hasn't it?"s));
+                + u8"\"Tt hasn't even started yet... hasn't it?\""s);
     }
     if (hour_played == 7)
     {
         s += lang(
             u8"ルルウィ「休憩しなさい。壊れちゃったら、私の役にたてないじゃない」"s,
             u8"Lulwy warns you, "s
-                + cnvtalk(
-                      u8"Have a rest, kitty. If you are broken, you're no use to me."s));
+                + u8"\"Have a rest, kitty. If you are broken, you're no use to me.\""s);
     }
     if (hour_played == 8)
     {
         s += lang(
             u8"ルルウィ「何を言っても無駄のようね。好きにするといいわ」"s,
             u8"Lulwy laughs, "s
-                + cnvtalk(
-                      u8"I guess there's no use warning you. Alright. Do as you please, kitty."s));
+                + u8"\"I guess there's no use warning you. Alright. Do as you please, kitty.\""s));
     }
     if (hour_played == 12)
     {
         s += lang(
             u8"オパートス「フハハハハッフハー」"s,
-            u8"Opatos laughs, "s + cnvtalk(u8"Muwahahahahahaha!"s));
+            u8"Opatos laughs, "s + u8"\"Muwahahahahahaha!\""s);
     }
     if (hour_played == 24)
     {
         s += lang(
             u8"虚空「希望はまだあるはずだ」"s,
             u8"Ehekatl hugs you,"s
-                + cnvtalk(u8"Don't die! Promise you don't die!"s));
+                + u8"\"Don't die! Promise you don't die!\""s);
     }
     return;
 }
