@@ -40469,7 +40469,7 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
                     + map(prm_1057, prm_1058, 6) / 10000000 * 100;
                 pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
                 ++dy_at_m186;
-                bmes(mapname(p_at_m186, 1), 255, 2552, 255);
+                bmes(mapname(p_at_m186, true), 255, 2552, 255);
             }
             if (map(prm_1057, prm_1058, 6) / 1000 % 100 == 34)
             {
@@ -58191,7 +58191,7 @@ void label_2206()
             }
             if (feat(1) == 15)
             {
-                txt(mapname(feat(2) + feat(3) * 100, 1));
+                txt(mapname(feat(2) + feat(3) * 100, true));
                 if (adata(16, feat(2) + feat(3) * 100) == 8)
                 {
                     if (cfg_extrahelp)

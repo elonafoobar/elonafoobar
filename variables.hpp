@@ -834,7 +834,7 @@ std::string itemname(int = 0, int = 0, int = 0);
 std::string lang(const std::string&, const std::string&);
 std::string mapfile(int = 0);
 std::string maplevel(int = 0);
-std::string mapname(int = 0, int = 0);
+std::string mapname(int, bool = false);
 std::string name(int = 0);
 std::string npcn(int = 0);
 std::string random_title(int = 0);
