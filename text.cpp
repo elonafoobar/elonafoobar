@@ -75,16 +75,11 @@ std::string cnven(const std::string& source)
 
 
 
-std::string cnvfix(int prm_339)
+std::string cnvfix(int n)
 {
-    if (prm_339 >= 0)
-    {
-        return u8"+"s + prm_339;
-    }
-    else
-    {
-        return ""s + prm_339;
-    }
+    return n >= 0
+        ? u8"+"s + std::to_string(n)
+        : std::to_string(n);
 }
 
 
