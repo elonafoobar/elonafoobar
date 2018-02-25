@@ -1500,7 +1500,7 @@ std::string snblack(const std::string&);
 void snd(int = 0, int = 0, int = 0);
 void sndload(const std::string&, int = 0);
 std::string snfish(const std::string&);
-void snfood(std::string&);
+std::string snfood(const std::string&);
 std::string sngeneral(const std::string&);
 std::string sngoods(const std::string&);
 std::string sninn(const std::string&);

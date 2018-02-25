@@ -34203,7 +34203,7 @@ void label_1755()
                 cbitmod(991, rc, 1);
                 cdata[rc].character_role = 1002;
                 cdata[rc].shop_rank = 10;
-                snfood(cdatan(0, rc));
+                cdatan(0, rc) = snfood(cdatan(0, rc));
             }
         }
         {

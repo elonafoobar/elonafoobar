@@ -1846,7 +1846,7 @@ label_1741_internal:
             characreate(-1, 1, 17, 28);
             cdata[rc].character_role = 1002;
             cdata[rc].shop_rank = 10;
-            snfood(cdatan(0, rc));
+            cdatan(0, rc) = snfood(cdatan(0, rc));
             flt();
             characreate(-1, 41, 22, 22);
             cdata[rc].character_role = 1004;

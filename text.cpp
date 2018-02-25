@@ -219,11 +219,9 @@ std::string snblack(const std::string& name)
 
 
 
-void snfood(std::string& prm_360)
+std::string snfood(const std::string& name)
 {
-    prm_360 =
-        lang(u8"食品店"s + prm_360, sncnv(prm_360) + u8"the food vendor"s);
-    return;
+    return lang(u8"食品店"s + name, sncnv(name) + u8"the food vendor"s);
 }
 
 
