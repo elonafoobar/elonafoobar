@@ -189,11 +189,9 @@ std::string snmagic(const std::string& name)
 
 
 
-void snarmor(std::string& prm_356)
+std::string snarmor(const std::string& name)
 {
-    prm_356 =
-        lang(u8"武具店の"s + prm_356, sncnv(prm_356) + u8"the blacksmith"s);
-    return;
+    return lang(u8"武具店の"s + name, sncnv(name) + u8"the blacksmith"s);
 }
 
 

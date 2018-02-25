@@ -997,7 +997,7 @@ label_1741_internal:
                 characreate(-1, 1, 9, 20);
                 cdata[rc].character_role = 1001;
                 cdata[rc].shop_rank = 12;
-                snarmor(cdatan(0, rc));
+                cdatan(0, rc) = snarmor(cdatan(0, rc));
                 flt();
                 characreate(-1, 1, 4, 20);
                 cdata[rc].character_role = 1008;
@@ -1097,7 +1097,7 @@ label_1741_internal:
             characreate(-1, 1, 10, 6);
             cdata[rc].character_role = 1001;
             cdata[rc].shop_rank = 12;
-            snarmor(cdatan(0, rc));
+            cdatan(0, rc) = snarmor(cdatan(0, rc));
             flt();
             characreate(-1, 73, 7, 15);
             cdata[rc].character_role = 10;
@@ -1236,7 +1236,7 @@ label_1741_internal:
         characreate(-1, 1, 42, 17);
         cdata[rc].character_role = 1001;
         cdata[rc].shop_rank = 12;
-        snarmor(cdatan(0, rc));
+        cdatan(0, rc) = snarmor(cdatan(0, rc));
         flt();
         characreate(-1, 1, 11, 14);
         cdata[rc].character_role = 1003;
@@ -1395,7 +1395,7 @@ label_1741_internal:
             characreate(-1, 1, 37, 30);
             cdata[rc].character_role = 1001;
             cdata[rc].shop_rank = 12;
-            snarmor(cdatan(0, rc));
+            cdatan(0, rc) = snarmor(cdatan(0, rc));
             flt();
             characreate(-1, 1, 37, 12);
             cdata[rc].character_role = 1003;
@@ -1714,7 +1714,7 @@ label_1741_internal:
         characreate(-1, 1, 19, 31);
         cdata[rc].character_role = 1001;
         cdata[rc].shop_rank = 12;
-        snarmor(cdatan(0, rc));
+        cdatan(0, rc) = snarmor(cdatan(0, rc));
         flt();
         characreate(-1, 1, 11, 31);
         cdata[rc].character_role = 1006;
@@ -1826,7 +1826,7 @@ label_1741_internal:
             characreate(-1, 1, 23, 7);
             cdata[rc].character_role = 1001;
             cdata[rc].shop_rank = 12;
-            snarmor(cdatan(0, rc));
+            cdatan(0, rc) = snarmor(cdatan(0, rc));
             flt();
             characreate(-1, 1, 32, 14);
             cdata[rc].character_role = 1006;
@@ -1944,7 +1944,7 @@ label_1741_internal:
             characreate(-1, 1, 29, 15);
             cdata[rc].character_role = 1001;
             cdata[rc].shop_rank = 12;
-            snarmor(cdatan(0, rc));
+            cdatan(0, rc) = snarmor(cdatan(0, rc));
             for (int cnt = 0; cnt < 16; ++cnt)
             {
                 flt();
@@ -2022,7 +2022,7 @@ label_1741_internal:
             characreate(-1, 1, 14, 12);
             cdata[rc].character_role = 1001;
             cdata[rc].shop_rank = 12;
-            snarmor(cdatan(0, rc));
+            cdatan(0, rc) = snarmor(cdatan(0, rc));
             flt();
             characreate(-1, 1, 39, 27);
             cdata[rc].character_role = 1009;
