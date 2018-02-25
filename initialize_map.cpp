@@ -1016,7 +1016,7 @@ label_1741_internal:
                 characreate(-1, 41, 4, 4);
                 cdata[rc].character_role = 1004;
                 cdata[rc].shop_rank = 11;
-                snmagic(cdatan(0, rc));
+                cdatan(0, rc) = snmagic(cdatan(0, rc));
             }
         }
         else
@@ -1247,7 +1247,7 @@ label_1741_internal:
         characreate(-1, 41, 41, 3);
         cdata[rc].character_role = 1004;
         cdata[rc].shop_rank = 11;
-        snmagic(cdatan(0, rc));
+        cdatan(0, rc) = snmagic(cdatan(0, rc));
         flt();
         characreate(-1, 1, 41, 28);
         cdata[rc].character_role = 1009;
@@ -1406,7 +1406,7 @@ label_1741_internal:
             characreate(-1, 41, 6, 15);
             cdata[rc].character_role = 1004;
             cdata[rc].shop_rank = 11;
-            snmagic(cdatan(0, rc));
+            cdatan(0, rc) = snmagic(cdatan(0, rc));
             flt();
             characreate(-1, 1, 33, 43);
             cdata[rc].character_role = 1009;
@@ -1480,7 +1480,7 @@ label_1741_internal:
             characreate(-1, 41, 22, 8);
             cdata[rc].character_role = 1004;
             cdata[rc].shop_rank = 11;
-            snmagic(cdatan(0, rc));
+            cdatan(0, rc) = snmagic(cdatan(0, rc));
             flt();
             characreate(-1, 74, 3, 9);
             cdata[rc].character_role = 12;
@@ -1735,7 +1735,7 @@ label_1741_internal:
         characreate(-1, 41, 56, 5);
         cdata[rc].character_role = 1004;
         cdata[rc].shop_rank = 11;
-        snmagic(cdatan(0, rc));
+        cdatan(0, rc) = snmagic(cdatan(0, rc));
         flt();
         characreate(-1, 1, 39, 35);
         cdata[rc].character_role = 1009;
@@ -1851,7 +1851,7 @@ label_1741_internal:
             characreate(-1, 41, 22, 22);
             cdata[rc].character_role = 1004;
             cdata[rc].shop_rank = 11;
-            snmagic(cdatan(0, rc));
+            cdatan(0, rc) = snmagic(cdatan(0, rc));
             flt();
             characreate(-1, 1, 35, 3);
             cdata[rc].character_role = 1005;
@@ -2037,7 +2037,7 @@ label_1741_internal:
             characreate(-1, 41, 7, 26);
             cdata[rc].character_role = 1004;
             cdata[rc].shop_rank = 11;
-            snmagic(cdatan(0, rc));
+            cdatan(0, rc) = snmagic(cdatan(0, rc));
             flt();
             characreate(-1, 1, 14, 25);
             cdata[rc].character_role = 1005;

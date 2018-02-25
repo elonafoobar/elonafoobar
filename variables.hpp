@@ -1504,7 +1504,7 @@ void snfood(std::string&);
 std::string sngeneral(const std::string&);
 std::string sngoods(const std::string&);
 std::string sninn(const std::string&);
-void snmagic(std::string&);
+std::string snmagic(const std::string&);
 std::string sntrade(const std::string&);
 void sntrainer(std::string&);
 void sortenc(int = 0);

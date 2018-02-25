@@ -182,11 +182,9 @@ std::string snbakery(const std::string& name)
 
 
 
-void snmagic(std::string& prm_355)
+std::string snmagic(const std::string& name)
 {
-    prm_355 =
-        lang(u8"魔法店の"s + prm_355, sncnv(prm_355) + u8"the magic vendor"s);
-    return;
+    return lang(u8"魔法店の"s + name, sncnv(name) + u8"the magic vendor"s);
 }
 
 
