@@ -848,7 +848,7 @@ std::string sncnv(const std::string&);
 std::string trimdesc(const std::string&, int = 0);
 std::string txtbuilding(int = 0, int = 0);
 std::string txtitemoncell(int = 0, int = 0);
-std::string txtskillchange(int = 0, int = 0, int = 0);
+std::string txtskillchange(int, int, bool);
 std::string your(int = 0, int = 0);
 std::string yourself(int = 0);
 void actionproc();

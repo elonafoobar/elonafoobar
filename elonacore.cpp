@@ -7254,7 +7254,7 @@ int skillmod(int cc, int id, int experience)
                 snd(61);
                 txtef(2);
             }
-            txt(txtskillchange(cc, 0, id));
+            txt(txtskillchange(cc, id, true));
         }
         r1 = id;
         refresh_character();
@@ -7294,7 +7294,7 @@ int skillmod(int cc, int id, int experience)
                 if (lvchange_at_m77 != 0)
                 {
                     txtef(3);
-                    txt(txtskillchange(cc, 1, id));
+                    txt(txtskillchange(cc, id, false));
                 }
             }
         }
@@ -7411,7 +7411,7 @@ int skillexp(int cc, int id, int experience, int prm_572, int prm_573)
                 txtef(2);
                 msgalert = 1;
             }
-            txt(txtskillchange(cc, 0, id));
+            txt(txtskillchange(cc, id, true));
         }
         r1 = id;
         refresh_character();
@@ -7452,7 +7452,7 @@ int skillexp(int cc, int id, int experience, int prm_572, int prm_573)
                 {
                     msgalert = 1;
                     txtef(3);
-                    txt(txtskillchange(cc, 1, id));
+                    txt(txtskillchange(cc, id, false));
                 }
             }
         }

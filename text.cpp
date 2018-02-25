@@ -588,212 +588,192 @@ std::string txtbuilding(int prm_368, int prm_369)
 
 
 
-std::string txtskillchange(int prm_370, int prm_371, int prm_372)
+std::string txtskillchange(int id, int cc, bool increase)
 {
-    if (prm_370 == 2)
+    switch (id)
     {
-        if (prm_371 == 0)
+    case 2:
+        if (increase)
         {
             return lang(
-                name(prm_372) + u8"は生命力の上昇を感じた。"s,
-                name(prm_372) + your(prm_372) + u8" life force increases."s);
+                name(cc) + u8"は生命力の上昇を感じた。"s,
+                name(cc) + your(cc) + u8" life force increases."s);
         }
         else
         {
             return lang(
-                name(prm_372) + u8"は生命力の衰えを感じた。"s,
-                name(prm_372) + your(prm_372) + u8" life force decreases."s);
+                name(cc) + u8"は生命力の衰えを感じた。"s,
+                name(cc) + your(cc) + u8" life force decreases."s);
         }
-    }
-    if (prm_370 == 3)
-    {
-        if (prm_371 == 0)
+    case 3:
+        if (increase)
         {
             return lang(
-                name(prm_372) + u8"はマナの向上を感じた。"s,
-                name(prm_372) + your(prm_372) + u8" mana increases."s);
+                name(cc) + u8"はマナの向上を感じた。"s,
+                name(cc) + your(cc) + u8" mana increases."s);
         }
         else
         {
             return lang(
-                name(prm_372) + u8"はマナの衰えを感じた。"s,
-                name(prm_372) + your(prm_372) + u8" mana decreases."s);
+                name(cc) + u8"はマナの衰えを感じた。"s,
+                name(cc) + your(cc) + u8" mana decreases."s);
         }
-    }
-    if (prm_370 == 10)
-    {
-        if (prm_371 == 0)
+    case 10:
+        if (increase)
         {
             return lang(
-                name(prm_372) + u8"はより強くなった。"s,
-                name(prm_372) + your(prm_372) + u8" muscles feel stronger."s);
+                name(cc) + u8"はより強くなった。"s,
+                name(cc) + your(cc) + u8" muscles feel stronger."s);
         }
         else
         {
             return lang(
-                name(prm_372) + u8"は少し贅肉が増えたような気がした。"s,
-                name(prm_372) + your(prm_372) + u8" muscles soften."s);
+                name(cc) + u8"は少し贅肉が増えたような気がした。"s,
+                name(cc) + your(cc) + u8" muscles soften."s);
         }
-    }
-    if (prm_370 == 11)
-    {
-        if (prm_371 == 0)
+    case 11:
+        if (increase)
         {
             return lang(
-                name(prm_372) + u8"は我慢することの快感を知った。"s,
-                name(prm_372) + u8" begin"s + _s(prm_372)
+                name(cc) + u8"は我慢することの快感を知った。"s,
+                name(cc) + u8" begin"s + _s(cc)
                     + u8" to feel good when being hit hard."s);
         }
         else
         {
             return lang(
-                name(prm_372) + u8"は我慢ができなくなった。"s,
-                name(prm_372) + u8" lose"s + _s(prm_372) + u8" patience."s);
+                name(cc) + u8"は我慢ができなくなった。"s,
+                name(cc) + u8" lose"s + _s(cc) + u8" patience."s);
         }
-    }
-    if (prm_370 == 12)
-    {
-        if (prm_371 == 0)
+    case 12:
+        if (increase)
         {
             return lang(
-                name(prm_372) + u8"は器用になった。"s,
-                name(prm_372) + u8" become"s + _s(prm_372) + u8" dexterous."s);
+                name(cc) + u8"は器用になった。"s,
+                name(cc) + u8" become"s + _s(cc) + u8" dexterous."s);
         }
         else
         {
             return lang(
-                name(prm_372) + u8"は不器用になった。"s,
-                name(prm_372) + u8" become"s + _s(prm_372) + u8" clumsy."s);
+                name(cc) + u8"は不器用になった。"s,
+                name(cc) + u8" become"s + _s(cc) + u8" clumsy."s);
         }
-    }
-    if (prm_370 == 13)
-    {
-        if (prm_371 == 0)
+    case 13:
+        if (increase)
         {
             return lang(
-                name(prm_372) + u8"は世界をより身近に感じるようになった。"s,
-                name(prm_372) + u8" feel"s + _s(prm_372)
+                name(cc) + u8"は世界をより身近に感じるようになった。"s,
+                name(cc) + u8" feel"s + _s(cc)
                     + u8" more in touch with the world."s);
         }
         else
         {
             return lang(
-                name(prm_372) + u8"は感覚のずれを感じた。"s,
-                name(prm_372) + u8" "s + is(prm_372)
+                name(cc) + u8"は感覚のずれを感じた。"s,
+                name(cc) + u8" "s + is(cc)
                     + u8" getting out of touch with the world"s);
         }
-    }
-    if (prm_370 == 14)
-    {
-        if (prm_371 == 0)
+    case 14:
+        if (increase)
         {
             return lang(
-                name(prm_372) + u8"は急に色々なことを学びたくなった。"s,
-                name(prm_372) + u8" feel"s + _s(prm_372) + u8" studious."s);
+                name(cc) + u8"は急に色々なことを学びたくなった。"s,
+                name(cc) + u8" feel"s + _s(cc) + u8" studious."s);
         }
         else
         {
             return lang(
-                name(prm_372) + u8"の学習意欲が低下した。"s,
-                name(prm_372) + u8" lose"s + _s(prm_372) + u8" curiosity."s);
+                name(cc) + u8"の学習意欲が低下した。"s,
+                name(cc) + u8" lose"s + _s(cc) + u8" curiosity."s);
         }
-    }
-    if (prm_370 == 15)
-    {
-        if (prm_371 == 0)
+    case 15:
+        if (increase)
         {
             return lang(
-                name(prm_372) + u8"の意思は固くなった。"s,
-                name(prm_372) + your(prm_372) + u8" will hardens."s);
+                name(cc) + u8"の意思は固くなった。"s,
+                name(cc) + your(cc) + u8" will hardens."s);
         }
         else
         {
             return lang(
-                name(prm_372) + u8"は何でもすぐ諦める。"s,
-                name(prm_372) + your(prm_372) + u8" will softens."s);
+                name(cc) + u8"は何でもすぐ諦める。"s,
+                name(cc) + your(cc) + u8" will softens."s);
         }
-    }
-    if (prm_370 == 16)
-    {
-        if (prm_371 == 0)
+    case 16:
+        if (increase)
         {
             return lang(
-                name(prm_372) + u8"は魔力の上昇を感じた。"s,
-                name(prm_372) + your(prm_372) + u8" magic improves."s);
+                name(cc) + u8"は魔力の上昇を感じた。"s,
+                name(cc) + your(cc) + u8" magic improves."s);
         }
         else
         {
             return lang(
-                name(prm_372) + u8"は魔力の衰えを感じた。"s,
-                name(prm_372) + your(prm_372) + u8" magic degrades."s);
+                name(cc) + u8"は魔力の衰えを感じた。"s,
+                name(cc) + your(cc) + u8" magic degrades."s);
         }
-    }
-    if (prm_370 == 17)
-    {
-        if (prm_371 == 0)
+    case 17:
+        if (increase)
         {
             return lang(
-                name(prm_372) + u8"は周囲の視線を心地よく感じる。"s,
-                name(prm_372) + u8" enjoy"s + _s(prm_372) + u8" showing off "s
-                    + his(prm_372) + u8" body."s);
+                name(cc) + u8"は周囲の視線を心地よく感じる。"s,
+                name(cc) + u8" enjoy"s + _s(cc) + u8" showing off "s
+                    + his(cc) + u8" body."s);
         }
         else
         {
             return lang(
-                name(prm_372) + u8"は急に人前に出るのが嫌になった。"s,
-                name(prm_372) + u8" start"s + _s(prm_372)
+                name(cc) + u8"は急に人前に出るのが嫌になった。"s,
+                name(cc) + u8" start"s + _s(cc)
                     + u8" to avoid eyes of people."s);
         }
-    }
-    if (prm_370 == 18)
-    {
-        if (prm_371 == 0)
+    case 18:
+        if (increase)
         {
             return lang(
-                name(prm_372) + u8"は周りの動きが遅く見えるようになった。"s,
-                name(prm_372) + your(prm_372) + u8" speed increases."s);
+                name(cc) + u8"は周りの動きが遅く見えるようになった。"s,
+                name(cc) + your(cc) + u8" speed increases."s);
         }
         else
         {
             return lang(
-                name(prm_372) + u8"は遅くなった。"s,
-                name(prm_372) + your(prm_372) + u8" speed decreases."s);
+                name(cc) + u8"は遅くなった。"s,
+                name(cc) + your(cc) + u8" speed decreases."s);
         }
-    }
-    if (prm_370 == 19)
-    {
-        if (prm_371 == 0)
+    case 19:
+        if (increase)
         {
             return lang(
-                name(prm_372) + u8"は幸運になった。"s,
-                name(prm_372) + u8" become"s + _s(prm_372) + u8" lucky."s);
+                name(cc) + u8"は幸運になった。"s,
+                name(cc) + u8" become"s + _s(cc) + u8" lucky."s);
         }
         else
         {
             return lang(
-                name(prm_372) + u8"は不幸になった。"s,
-                name(prm_372) + u8" become"s + _s(prm_372) + u8" unlucky."s);
+                name(cc) + u8"は不幸になった。"s,
+                name(cc) + u8" become"s + _s(cc) + u8" unlucky."s);
         }
-    }
-    if (prm_371 == 0)
-    {
-        return lang(
-            name(prm_372) + u8"は"s
-                + i18n::_(u8"ability", std::to_string(prm_370), u8"name")
-                + u8"の技術の向上を感じた。"s,
-            name(prm_372) + your(prm_372) + u8" "s
-                + i18n::_(u8"ability", std::to_string(prm_370), u8"name")
-                + u8" skill increases."s);
-    }
-    else
-    {
-        return lang(
-            name(prm_372) + u8"は"s
-                + i18n::_(u8"ability", std::to_string(prm_370), u8"name")
-                + u8"の技術の衰えを感じた。"s,
-            name(prm_372) + your(prm_372) + u8" "s
-                + i18n::_(u8"ability", std::to_string(prm_370), u8"name")
-                + u8" skill falls off."s);
+    default:
+        if (increase)
+        {
+            return lang(
+                name(cc) + u8"は"s
+                    + i18n::_(u8"ability", std::to_string(id), u8"name")
+                    + u8"の技術の向上を感じた。"s,
+                name(cc) + your(cc) + u8" "s
+                    + i18n::_(u8"ability", std::to_string(id), u8"name")
+                    + u8" skill increases."s);
+        }
+        else
+        {
+            return lang(
+                name(cc) + u8"は"s
+                    + i18n::_(u8"ability", std::to_string(id), u8"name")
+                    + u8"の技術の衰えを感じた。"s,
+                name(cc) + your(cc) + u8" "s
+                    + i18n::_(u8"ability", std::to_string(id), u8"name")
+                    + u8" skill falls off."s);
+        }
     }
 }
 
