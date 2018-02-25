@@ -1503,7 +1503,7 @@ void snfish(std::string&);
 void snfood(std::string&);
 std::string sngeneral(const std::string&);
 void sngoods(std::string&);
-void sninn(std::string&);
+std::string sninn(const std::string&);
 void snmagic(std::string&);
 void sntrade(std::string&);
 void sntrainer(std::string&);

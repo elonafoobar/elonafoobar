@@ -472,7 +472,7 @@ label_1741_internal:
         characreate(-1, 1, 16, 19);
         cdata[rc].character_role = 1005;
         cdata[rc].shop_rank = 8;
-        sninn(cdatan(0, rc));
+        cdatan(0, rc) = sninn(cdatan(0, rc));
         flt();
         characreate(-1, 70, 17, 13);
         cdata[rc].character_role = 9;
@@ -528,7 +528,7 @@ label_1741_internal:
         characreate(-1, 1, 16, 19);
         cdata[rc].character_role = 1005;
         cdata[rc].shop_rank = 8;
-        sninn(cdatan(0, rc));
+        cdatan(0, rc) = sninn(cdatan(0, rc));
         flt();
         characreate(-1, 70, 17, 13);
         cdata[rc].character_role = 9;
@@ -571,7 +571,7 @@ label_1741_internal:
         characreate(-1, 1, 19, 10);
         cdata[rc].character_role = 1005;
         cdata[rc].shop_rank = 8;
-        sninn(cdatan(0, rc));
+        cdatan(0, rc) = sninn(cdatan(0, rc));
         flt();
         characreate(-1, 351, 26, 16);
         cdata[rc].character_role = 3;
@@ -1078,7 +1078,7 @@ label_1741_internal:
             characreate(-1, 1, 29, 23);
             cdata[rc].character_role = 1005;
             cdata[rc].shop_rank = 8;
-            sninn(cdatan(0, rc));
+            cdatan(0, rc) = sninn(cdatan(0, rc));
             flt();
             characreate(-1, 1, 26, 7);
             cdata[rc].character_role = 1008;
@@ -1226,7 +1226,7 @@ label_1741_internal:
         characreate(-1, 1, 30, 17);
         cdata[rc].character_role = 1005;
         cdata[rc].shop_rank = 8;
-        sninn(cdatan(0, rc));
+        cdatan(0, rc) = sninn(cdatan(0, rc));
         flt();
         characreate(-1, 1, 48, 3);
         cdata[rc].character_role = 1008;
@@ -1390,7 +1390,7 @@ label_1741_internal:
             characreate(-1, 1, 24, 47);
             cdata[rc].character_role = 1005;
             cdata[rc].shop_rank = 8;
-            sninn(cdatan(0, rc));
+            cdatan(0, rc) = sninn(cdatan(0, rc));
             flt();
             characreate(-1, 1, 37, 30);
             cdata[rc].character_role = 1001;
@@ -1542,7 +1542,7 @@ label_1741_internal:
             characreate(-1, 1, 25, 8);
             cdata[rc].character_role = 1005;
             cdata[rc].shop_rank = 8;
-            sninn(cdatan(0, rc));
+            cdatan(0, rc) = sninn(cdatan(0, rc));
             flt();
             characreate(-1, 1, 7, 8);
             cdata[rc].character_role = 1008;
@@ -1724,7 +1724,7 @@ label_1741_internal:
         characreate(-1, 1, 38, 34);
         cdata[rc].character_role = 1005;
         cdata[rc].shop_rank = 8;
-        sninn(cdatan(0, rc));
+        cdatan(0, rc) = sninn(cdatan(0, rc));
         flt();
         characreate(-1, 1, 5, 27);
         cdata[rc].character_role = 1003;
@@ -1856,7 +1856,7 @@ label_1741_internal:
             characreate(-1, 1, 35, 3);
             cdata[rc].character_role = 1005;
             cdata[rc].shop_rank = 8;
-            sninn(cdatan(0, rc));
+            cdatan(0, rc) = sninn(cdatan(0, rc));
             flt();
             characreate(-1, 70, 15, 15);
             cdata[rc].character_role = 9;
@@ -2042,7 +2042,7 @@ label_1741_internal:
             characreate(-1, 1, 14, 25);
             cdata[rc].character_role = 1005;
             cdata[rc].shop_rank = 8;
-            sninn(cdatan(0, rc));
+            cdatan(0, rc) = sninn(cdatan(0, rc));
             flt();
             characreate(-1, 1, 22, 26);
             cdata[rc].character_role = 1003;

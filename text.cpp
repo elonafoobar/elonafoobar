@@ -154,10 +154,9 @@ std::string sngeneral(const std::string& name)
 
 
 
-void sninn(std::string& prm_351)
+std::string sninn(const std::string& name)
 {
-    prm_351 = lang(u8"宿屋の"s + prm_351, sncnv(prm_351) + u8"the Innkeeper"s);
-    return;
+    return lang(u8"宿屋の"s + name, sncnv(name) + u8"the Innkeeper"s);
 }
 
 
