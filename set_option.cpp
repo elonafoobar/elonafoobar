@@ -44,7 +44,7 @@ void set_option()
         sel = 4;
     }
     gsel(sel);
-    for (int cnt = 0, cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
         picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
@@ -291,7 +291,7 @@ void set_option()
         dx = 440;
         dy = 300;
     }
-    for (int cnt = 0, cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
     {
         if (s(cnt) == ""s)
         {
@@ -366,7 +366,7 @@ label_2725_internal:
     grotate(p, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
     gmode(2);
     keyrange = 0;
-    for (int cnt = 0, cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
         if (p >= listmax)
@@ -406,7 +406,7 @@ label_2725_internal:
         }
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    for (int cnt = 0, cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
         if (p >= listmax)
@@ -918,7 +918,7 @@ label_2725_internal:
     key_check();
     cursor_check();
     p = -1;
-    for (int cnt = 0, cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
     {
         if (key == key_select(cnt))
         {
@@ -944,13 +944,12 @@ label_2725_internal:
             int j0 = 0;
             DIGETJOYSTATE(j0, 0);
             f = 0;
-            for (int cnt = 0, cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (12); cnt < cnt_end; ++cnt)
             {
                 if (HMMBITCHECK(j0, 4 + cnt))
                 {
                     p = cnt;
-                    for (int cnt = 0, cnt_end = cnt + (12); cnt < cnt_end;
-                         ++cnt)
+                    for (int cnt = 0, cnt_end = (12); cnt < cnt_end; ++cnt)
                     {
                         jkey(cnt) = "";
                     }
@@ -1295,7 +1294,7 @@ label_2725_internal:
                 y(4) = 768;
                 y(5) = 1024;
                 i = 0;
-                for (int cnt = 0, cnt_end = cnt + (5); cnt < cnt_end; ++cnt)
+                for (int cnt = 0, cnt_end = (5); cnt < cnt_end; ++cnt)
                 {
                     if (windoww2 == x(cnt))
                     {

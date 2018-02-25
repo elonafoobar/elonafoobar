@@ -36,7 +36,7 @@ label_20591:
         if (mdata(6) == 1)
         {
             p = 0;
-            for (int cnt = 0, cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (12); cnt < cnt_end; ++cnt)
             {
                 if (cycle(cnt, 1) == -1)
                 {
@@ -65,7 +65,7 @@ label_20591:
     cc = 0;
     page_load();
     mainweapon = -1;
-    for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (2); cnt < cnt_end; ++cnt)
     {
         if (cnt == 0)
         {
@@ -716,7 +716,7 @@ label_2060_internal:
     if (invsc != 0)
     {
         f = 0;
-        for (int cnt = 0, cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
         {
             p = list(0, cnt);
             if (inv[p].id == invsc)
@@ -808,7 +808,7 @@ label_2060_internal:
         {
             i = 0;
         }
-        for (int cnt = 0, cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (12); cnt < cnt_end; ++cnt)
         {
             if (cycle(cnt, i) == -1)
             {
@@ -973,7 +973,7 @@ label_2061_internal:
         }
     }
     keyrange = 0;
-    for (int cnt = 0, cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
         if (p >= listmax)
@@ -990,7 +990,7 @@ label_2061_internal:
         }
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    for (int cnt = 0, cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
         if (p >= listmax)
@@ -1022,7 +1022,7 @@ label_2061_internal:
                 s += lang(u8"(足元)"s, u8" (Ground)"s);
             }
         }
-        for (int cnt = 0, cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
         {
             if (gdata(40 + cnt) == inv[p].id + invctrl * 10000)
             {
@@ -1081,7 +1081,7 @@ label_2061_internal:
     cursor_check();
     p = -1;
     invmark(invctrl) = page * 1000 + cs;
-    for (int cnt = 0, cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
     {
         if (key == key_select(cnt))
         {
@@ -2208,7 +2208,7 @@ label_2061_internal:
                 i = 0;
             }
             p = -1;
-            for (int cnt = 0, cnt_end = cnt + (12); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (12); cnt < cnt_end; ++cnt)
             {
                 if (invctrl == cycle(cnt, i))
                 {
@@ -2376,7 +2376,7 @@ label_2061_internal:
                 gdata(40 + sc) = 0;
                 goto label_2060_internal;
             }
-            for (int cnt = 0, cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
             {
                 if (gdata(40 + cnt) == p)
                 {

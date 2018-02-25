@@ -835,7 +835,7 @@ void fmode_22_21(bool read)
     enemyteam = -1;
     gdata(86) = 0;
     SDIM1(untaglist);
-    for (int cnt = 0, cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
     {
         if (!read)
         {

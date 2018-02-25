@@ -629,7 +629,7 @@ void main_title_menu()
     pagesize = 0;
     redraw(0);
     gsel(2);
-    for (int cnt = 0, cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
         picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
@@ -733,7 +733,7 @@ label_2116_internal:
             f = 2;
         }
     }
-    for (int cnt = 0, cnt_end = cnt + (6); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (6); cnt < cnt_end; ++cnt)
     {
         x = wx + 40;
         y = cnt * 35 + wy + 50;
@@ -818,7 +818,7 @@ void main_menu_new_game()
     picload(fs::u8path(u8"./graphic/void.bmp"), 1);
     gzoom(windoww, windowh, 4, 0, 0, 800, 600);
     gsel(2);
-    for (int cnt = 0, cnt_end = cnt + (8); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (8); cnt < cnt_end; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
         picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
@@ -900,7 +900,7 @@ void character_making_select_race()
             ++listmax;
         }
     }
-    for (int cnt = 0, cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
         listn(0, cnt) = i18n::_(u8"race", listn(1, cnt), u8"name");
         if (list(0, cnt) == 1)
@@ -938,7 +938,7 @@ label_1546_internal:
         display_topic(lang(u8"選択できる種族"s, u8"Race"s), wx + 28, wy + 30);
         display_topic(lang(u8"種族の説明"s, u8"Detail"s), wx + 188, wy + 30);
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        for (int cnt = 0, cnt_end = cnt + (pagesize); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
         {
             p = page * pagesize + cnt;
             if (p >= listmax)
@@ -961,7 +961,7 @@ label_1546_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    for (int cnt = 0, cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
     {
         if (key == key_select(cnt))
         {
@@ -1056,7 +1056,7 @@ label_1549_internal:
     listn(0, 0) = cnven(i18n::_(u8"ui", u8"male"));
     listn(0, 1) = cnven(i18n::_(u8"ui", u8"female"));
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (2); cnt < cnt_end; ++cnt)
     {
         key_list(cnt) = key_select(cnt);
         keyrange = cnt + 1;
@@ -1137,7 +1137,7 @@ void character_making_select_class(bool label_1551_flg)
             ++listmax;
         }
     }
-    for (int cnt = 0, cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
         access_class_info(2, listn(1, cnt));
         listn(0, cnt) = classname;
@@ -1161,7 +1161,7 @@ label_1552_internal:
         display_topic(lang(u8"選択できる職業"s, u8"Class"s), wx + 28, wy + 30);
         display_topic(lang(u8"職業の説明"s, u8"Detail"s), wx + 188, wy + 30);
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        for (int cnt = 0, cnt_end = cnt + (listmax); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
         {
             key_list(cnt) = key_select(cnt);
             keyrange = cnt + 1;
@@ -1187,7 +1187,7 @@ label_1552_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    for (int cnt = 0, cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
     {
         if (key == key_select(cnt))
         {
@@ -1299,7 +1299,7 @@ label_1555_internal:
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
     pos(wx + 180, wy + 84);
     mes(lang(u8"残りロック: "s, u8"Locks left: "s) + cmlock(8));
-    for (int cnt = 0, cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
     {
         key_list(cnt) = key_select(cnt);
         keyrange = cnt + 1;
@@ -1330,7 +1330,7 @@ label_1555_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    for (int cnt = 0, cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
     {
         if (key == key_select(cnt))
         {
@@ -1457,7 +1457,7 @@ label_1559_internal:
         gmode(2);
         display_topic(lang(u8"異名の候補"s, u8"Alias List"s), wx + 28, wy + 30);
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        for (int cnt = 0, cnt_end = cnt + (17); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (17); cnt < cnt_end; ++cnt)
         {
             key_list(cnt) = key_select(cnt);
             keyrange = cnt + 1;
@@ -1487,7 +1487,7 @@ label_1559_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    for (int cnt = 0, cnt_end = cnt + (keyrange); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
     {
         if (key == key_select(cnt))
         {
@@ -1760,10 +1760,10 @@ void show_race_or_class_info(int CNT, int val0)
         s(6) = u8"Little"s;
         s(7) = u8"Slight"s;
     }
-    for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
     {
         int cnt2 = cnt;
-        for (int cnt = 0, cnt_end = cnt + (3); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (3); cnt < cnt_end; ++cnt)
         {
             if (cnt2 == 2)
             {
@@ -1774,7 +1774,7 @@ void show_race_or_class_info(int CNT, int val0)
             }
             r = cnt2 * 3 + cnt + 10;
             p = 0;
-            for (int cnt = 0, cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
             {
                 if (sdata.get(r, 0).original_level > 13)
                 {
@@ -1912,7 +1912,7 @@ void initialize_game()
     }
     if (mode == 4)
     {
-        for (int cnt = 0, cnt_end = cnt + (9); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (9); cnt < cnt_end; ++cnt)
         {
             gdata(120 + cnt) = 5000;
         }
@@ -2102,7 +2102,7 @@ void initialize_game()
         inv[ci].number = 100;
         gdata(41) = 140789;
         gdata(42) = 140790;
-        for (int cnt = 0, cnt_end = cnt + (1200); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (1200); cnt < cnt_end; ++cnt)
         {
             recipememory(cnt) = 1;
         }
@@ -2185,7 +2185,7 @@ void initialize_game()
                 inv[ci].number = 50;
             }
         }
-        for (int cnt = 0, cnt_end = cnt + (40); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (40); cnt < cnt_end; ++cnt)
         {
             flt(50, 5);
             flttypemajor = 56000;
@@ -2200,7 +2200,7 @@ void initialize_game()
         cbitmod(20, 0, 1);
         mode = 0;
         refresh_burden_state();
-        for (int cnt = 0, cnt_end = cnt + (55); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (55); cnt < cnt_end; ++cnt)
         {
             mat(cnt) = 200;
         }
@@ -2228,7 +2228,7 @@ void initialize_game()
         gdata_version = 1220;
         gdata_weather = 3;
         gdata_hours_until_weather_changes = 6;
-        for (int cnt = 0, cnt_end = cnt + (20); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (20); cnt < cnt_end; ++cnt)
         {
             gdata(120 + cnt) = 10000;
         }

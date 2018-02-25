@@ -318,7 +318,7 @@ void talk_npc()
         int stat = clientguide();
         if (stat != 0)
         {
-            for (int cnt = 0, cnt_end = cnt + (stat); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (stat); cnt < cnt_end; ++cnt)
             {
                 list(0, listmax) = 10000 + cnt;
                 listn(0, listmax) = lang(
@@ -396,7 +396,7 @@ void talk_npc()
     deliver(1) = -1;
     if (gdata_current_dungeon_level == 1)
     {
-        for (int cnt = 0, cnt_end = cnt + (gdata_number_of_existing_quests);
+        for (int cnt = 0, cnt_end = (gdata_number_of_existing_quests);
              cnt < cnt_end;
              ++cnt)
         {
@@ -413,7 +413,7 @@ void talk_npc()
     }
     if (f == 1)
     {
-        for (int cnt = 0, cnt_end = cnt + (gdata_number_of_existing_quests);
+        for (int cnt = 0, cnt_end = (gdata_number_of_existing_quests);
              cnt < cnt_end;
              ++cnt)
         {
@@ -791,7 +791,7 @@ void talk_npc()
         snd(12);
         cdata[0].gold -= calcrestorecost();
         tcbk = tc;
-        for (int cnt = 0, cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
         {
             if (cdata[cnt].state != 1)
             {
@@ -878,7 +878,7 @@ void talk_npc()
             }
             randomize(adata(24, gdata_current_map));
             exrand_randomize(adata(24, gdata_current_map));
-            for (int cnt = 0, cnt_end = cnt + (50); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (50); cnt < cnt_end; ++cnt)
             {
                 arenaop(0) = 0;
                 arenaop(1) = (100 - gdata(120) / 100) / 3 + 1;
@@ -1054,7 +1054,7 @@ void talk_npc()
             return;
         }
         DIM2(followerexist, 16);
-        for (int cnt = 0, cnt_end = cnt + (16); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (16); cnt < cnt_end; ++cnt)
         {
             followerexist(cnt) = cdata[cnt].state;
         }
@@ -1358,7 +1358,7 @@ void talk_npc()
     }
     if (chatval == 36 || chatval == 57)
     {
-        for (int cnt = 0, cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
         {
             flt(cdata[0].level / 2 + 5);
             fixlv = 2;
@@ -2118,7 +2118,7 @@ void talk_npc()
             p(1) = 45;
             p(2) = 0;
         }
-        for (int cnt = 0, cnt_end = cnt + (10); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (10); cnt < cnt_end; ++cnt)
         {
             if (p(cnt) == 0)
             {
@@ -2181,7 +2181,7 @@ void talk_npc()
             cdata[0].position.y,
             cdata[rc].position.x,
             cdata[rc].position.y);
-        for (int cnt = 0, cnt_end = cnt + (1); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (1); cnt < cnt_end; ++cnt)
         {
             if (rc == tc)
             {

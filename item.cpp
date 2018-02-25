@@ -170,7 +170,7 @@ int item_find(int prm_476, int prm_477, int prm_478)
     elona_vector1<int> p_at_m52;
     p_at_m52(0) = -1;
     p_at_m52(1) = -1;
-    for (int cnt = 0, cnt_end = cnt + (2); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (2); cnt < cnt_end; ++cnt)
     {
         if (cnt == 0)
         {
@@ -254,7 +254,7 @@ int encfind(int prm_479, int prm_480)
             continue;
         }
         i_at_m53 = cdata_body_part(prm_479, cnt) % 10000 - 1;
-        for (int cnt = 0, cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (15); cnt < cnt_end; ++cnt)
         {
             if (inv[i_at_m53].enchantments[cnt].id == 0)
             {
@@ -278,7 +278,7 @@ int encfind(int prm_479, int prm_480)
 int encfindspec(int prm_481, int prm_482)
 {
     f_at_m53 = -1;
-    for (int cnt = 0, cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (15); cnt < cnt_end; ++cnt)
     {
         if (inv[prm_481].enchantments[cnt].id == 0)
         {
@@ -319,7 +319,7 @@ void itemlist(int prm_483, int prm_484)
 int itemusingfind(int prm_485, int prm_486)
 {
     f_at_m54 = -1;
-    for (int cnt = 0, cnt_end = cnt + (245); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (245); cnt < cnt_end; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {
@@ -460,11 +460,11 @@ void cell_refresh(int prm_493, int prm_494)
     else if (p_at_m55 > 1)
     {
         n_at_m55(2) = 0;
-        for (int cnt = 0, cnt_end = cnt + (p_at_m55); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (p_at_m55); cnt < cnt_end; ++cnt)
         {
             cnt2_at_m55 = cnt;
             i_at_m55 = -1;
-            for (int cnt = 0, cnt_end = cnt + (p_at_m55); cnt < cnt_end; ++cnt)
+            for (int cnt = 0, cnt_end = (p_at_m55); cnt < cnt_end; ++cnt)
             {
                 if (cnt2_at_m55 == 1)
                 {
@@ -609,7 +609,7 @@ int inv_sum(int prm_504)
 void item_compress(int)
 {
     p_at_m57 = 0;
-    for (int cnt = 0, cnt_end = cnt + (100); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (100); cnt < cnt_end; ++cnt)
     {
         p_at_m57(1) = 200 * (cnt * cnt + 1);
         for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
