@@ -138,9 +138,11 @@ std::string cnvplaytime(int datetime_id)
 
 
 
-std::string sncnv(std::string& prm_349)
+// Get rid of the job and extract the name.
+// Lomias the general vendor => Lomias
+std::string sncnv(const std::string& name_with_job)
 {
-    return strmid(prm_349, 0, instr(prm_349, 0, u8" "s)) + u8" "s;
+    return name_with_job.substr(0, name_with_job.find(u8' ')) + u8' ';
 }
 
 

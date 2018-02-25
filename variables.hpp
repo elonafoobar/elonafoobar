@@ -844,7 +844,7 @@ std::string refchara_str(int = 0, int = 0);
 std::string rpmatname(int = 0);
 std::string rpname(int = 0);
 std::string rpsuccessrate(int = 0);
-std::string sncnv(std::string&);
+std::string sncnv(const std::string&);
 std::string trimdesc(const std::string&, int = 0);
 std::string txtbuilding(int = 0, int = 0);
 std::string txtitemoncell(int = 0, int = 0);
