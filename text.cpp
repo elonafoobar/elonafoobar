@@ -3046,91 +3046,84 @@ std::string cheer_up_message(int hours)
 
 
 
-void get_enchantment_description(int val0, int val1, int val2, int val3)
+void get_enchantment_description(int val0, int power, int category, bool trait)
 {
-    int sid = 0;
     rtval(0) = 4;
     rtval(1) = 0;
-    s = u8"error:"s + val0 + u8"/"s + val1;
-    int val10 = val0 / 10000;
-    if (val10 != 0)
+
+    s = "";
+
+    if (val0 / 10000 != 0)
     {
-        if (val2 == 1)
-        {
-            s = "";
+        if (trait)
             return;
-        }
-        sid = val0 % 10000;
-        if (val10 == 1)
+
+        int sid = val0 % 10000;
+        switch (val0 / 10000)
         {
+        case 1:
             rtval = 2;
-            if (val1 / 50 + 1 < 0)
+            if (power / 50 + 1 < 0)
             {
                 rtval = 9;
-                s = lang(
-                    ""s + i18n::_(u8"ability", std::to_string(sid), u8"name")
-                        + u8"を"s + std::abs((val1 / 50 + 1)) + u8"下げる"s,
-                    u8"decreases your "s
-                        + i18n::_(u8"ability", std::to_string(sid), u8"name")
-                        + u8" by "s + std::abs((val1 / 50 + 1)) + u8"."s);
-                if (val3 == 57000)
+                const auto skill_name =
+                    i18n::_(u8"ability", std::to_string(sid), u8"name");
+                if (category == 57000)
                 {
                     s = lang(
-                            ""s
-                                + i18n::_(
-                                      u8"ability",
-                                      std::to_string(sid),
-                                      u8"name")
+                            skill_name
                                 + u8"を減衰させる毒素を含んでいる"s,
                             u8"has which deteriorates your "s
-                                + i18n::_(
-                                      u8"ability",
-                                      std::to_string(sid),
-                                      u8"name")
+                                + skill_name
                                 + u8"."s)
                         + u8" ["s;
-                    putenclv(val1 / 50);
+                    putenclv(power / 50);
                     s += u8"]"s;
+                }
+                else
+                {
+                    s = lang(
+                        skill_name
+                            + u8"を"s + std::abs(power / 50 + 1) + u8"下げる"s,
+                        u8"decreases your "s
+                            + skill_name
+                            + u8" by "s + std::abs(power / 50 + 1) + u8"."s);
                 }
             }
             else
             {
-                s = lang(
-                    ""s + i18n::_(u8"ability", std::to_string(sid), u8"name")
-                        + u8"を"s + std::abs((val1 / 50 + 1)) + u8"上げる"s,
-                    u8"increases your "s
-                        + i18n::_(u8"ability", std::to_string(sid), u8"name")
-                        + u8" by "s + std::abs((val1 / 50 + 1)) + u8"."s);
-                if (val3 == 57000)
+                const auto skill_name =
+                    i18n::_(u8"ability", std::to_string(sid), u8"name");
+                if (category == 57000)
                 {
                     s = lang(
-                            ""s
-                                + i18n::_(
-                                      u8"ability",
-                                      std::to_string(sid),
-                                      u8"name")
+                            skill_name
                                 + u8"を増強させる栄養をもっている"s,
                             u8"has essential nutrients to enhance your "s
-                                + i18n::_(
-                                      u8"ability",
-                                      std::to_string(sid),
-                                      u8"name")
+                                + skill_name
                                 + u8"."s)
                         + u8" ["s;
-                    putenclv(val1 / 50);
+                    putenclv(power / 50);
                     s += u8"]"s;
                 }
+                else
+                {
+                    s = lang(
+                        skill_name
+                            + u8"を"s + std::abs(power / 50 + 1) + u8"上げる"s,
+                        u8"increases your "s
+                            + skill_name
+                            + u8" by "s + std::abs(power / 50 + 1) + u8"."s);
+                }
             }
-        }
-        if (val10 == 2)
-        {
+            break;
+        case 2:
             rtval = 3;
-            i = val1 / 2 / 50;
-            if (val1 / 2 < 0)
+            if (power / 2 < 0)
             {
                 rtval = 9;
                 s = lang(
-                    ""s + i18n::_(u8"ability", std::to_string(sid), u8"name")
+                    i18n::_(u8"ability", std::to_string(sid), u8"name")
                         + u8"への耐性を弱化する"s,
                     u8"weaken your resistance to "s
                         + i18n::_(u8"ability", std::to_string(sid), u8"name")
@@ -3145,9 +3138,7 @@ void get_enchantment_description(int val0, int val1, int val2, int val3)
                 if (s == ""s)
                 {
                     s = lang(
-                        ""s
-                            + i18n::_(
-                                  u8"ability", std::to_string(sid), u8"name")
+                        i18n::_(u8"ability", std::to_string(sid), u8"name")
                             + u8"への耐性を授ける"s,
                         u8"grants your resistance to "s
                             + i18n::_(
@@ -3156,18 +3147,16 @@ void get_enchantment_description(int val0, int val1, int val2, int val3)
                 }
             }
             s += u8" ["s;
-            putenclv(i);
+            putenclv(power / 100);
             s += u8"]"s;
-        }
-        if (val10 == 3)
-        {
+            break;
+        case 3:
             rtval = 1;
-            i = val1 / 50 + 1;
-            if (val1 / 50 + 1 < 0)
+            if (power / 50 + 1 < 0)
             {
                 rtval = 9;
                 s = lang(
-                    ""s + i18n::_(u8"ability", std::to_string(sid), u8"name")
+                    i18n::_(u8"ability", std::to_string(sid), u8"name")
                         + u8"の技能を下げる"s,
                     u8"decreases your "s
                         + i18n::_(u8"ability", std::to_string(sid), u8"name")
@@ -3182,8 +3171,7 @@ void get_enchantment_description(int val0, int val1, int val2, int val3)
                 if (s == ""s)
                 {
                     s = lang(
-                        ""s
-                            + i18n::_(
+                        i18n::_(
                                   u8"ability", std::to_string(sid), u8"name")
                             + u8"の技能を上げる"s,
                         u8"improves your "s
@@ -3193,23 +3181,15 @@ void get_enchantment_description(int val0, int val1, int val2, int val3)
                 }
             }
             s += u8" ["s;
-            putenclv(i / 5);
+            putenclv((power / 50 + 1) / 5);
             s += u8"]"s;
-        }
-        if (val10 == 6)
-        {
+            break;
+        case 6:
             rtval = 8;
-            s = lang(
-                i18n::_(u8"ability", std::to_string(sid), u8"name")
-                    + u8"を維持する"s,
-                u8"maintains "s
-                    + i18n::_(u8"ability", std::to_string(sid), u8"name")
-                    + u8"."s);
-            if (val3 == 57000)
+            if (category == 57000)
             {
                 s = lang(
-                        ""s
-                            + i18n::_(
+                        i18n::_(
                                   u8"ability", std::to_string(sid), u8"name")
                             + u8"の成長を助ける栄養をもっている"s,
                         u8"can help you exercise your "s
@@ -3217,14 +3197,21 @@ void get_enchantment_description(int val0, int val1, int val2, int val3)
                                   u8"ability", std::to_string(sid), u8"name")
                             + u8" faster."s)
                     + u8" ["s;
-                putenclv(val1 / 50);
+                putenclv(power / 50);
                 s += u8"]"s;
             }
-        }
-        if (val10 == 7)
-        {
+            else
+            {
+                s = lang(
+                    i18n::_(u8"ability", std::to_string(sid), u8"name")
+                        + u8"を維持する"s,
+                    u8"maintains "s
+                        + i18n::_(u8"ability", std::to_string(sid), u8"name")
+                        + u8"."s);
+            }
+            break;
+        case 7:
             rtval = 4;
-            i = val1 / 2 / 50;
             s = i18n::_(
                 u8"ability", std::to_string(sid), u8"enchantment_description");
             if (s == ""s)
@@ -3237,13 +3224,11 @@ void get_enchantment_description(int val0, int val1, int val2, int val3)
                         + u8" damage."s);
             }
             s += u8" ["s;
-            putenclv(i);
+            putenclv(power / 100);
             s += u8"]"s;
-        }
-        if (val10 == 8)
-        {
+            break;
+        case 8:
             rtval = 4;
-            i = val1 / 50;
             sid = encprocref(0, sid);
             s = lang(
                 ""s + i18n::_(u8"ability", std::to_string(sid), u8"name")
@@ -3252,932 +3237,437 @@ void get_enchantment_description(int val0, int val1, int val2, int val3)
                     + i18n::_(u8"ability", std::to_string(sid), u8"name")
                     + u8"."s);
             s += u8" ["s;
-            putenclv(i);
+            putenclv(power / 50);
             s += u8"]"s;
-        }
-        if (val10 == 9)
-        {
+            break;
+        case 9:
             rtval = 4;
             s = lang(
                 ""s + ammoname(sid) + u8"を装填できる"s,
                 u8"can be loaded with "s + ammoname(sid) + u8"."s);
-            s += lang(u8" [最大"s, u8" [Max "s) + val1 / 1000
+            s += lang(u8" [最大"s, u8" [Max "s) + power / 1000
                 + lang(u8"発]"s, u8"]"s);
+            break;
         }
         return;
     }
-    if (val0 == 0)
+
+    switch (val0)
     {
+    case 0:
         s = u8"?????"s;
-    }
-    if (val0 == 21)
-    {
+        break;
+    case 21:
         rtval = 9;
         s = lang(
             u8"ランダムなテレポートを引き起こす"s,
             u8"causes random teleport."s);
-        if (val1 / 50 == -1)
+        if (trait)
         {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(val1 / 50);
-            s += u8"]"s;
-            return;
+            rtval(1) = power / 50;
         }
         else
         {
-            rtval(1) = val1 / 50;
-            return;
+            s += u8" ["s;
+            putenclv(power / 50);
+            s += u8"]"s;
         }
-    }
-    if (val0 == 45)
-    {
+        break;
+    case 45:
         rtval = 9;
         s = lang(u8"使用者の生き血を吸う"s, u8"sucks blood of the wielder."s);
-        if (val1 / 50 == -1)
+        if (trait)
         {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(val1 / 50);
-            s += u8"]"s;
-            return;
+            rtval(1) = power / 50;
         }
         else
         {
-            rtval(1) = val1 / 50;
-            return;
+            s += u8" ["s;
+            putenclv(power / 50);
+            s += u8"]"s;
         }
-    }
-    if (val0 == 46)
-    {
+        break;
+    case 46:
         rtval = 9;
         s = lang(u8"あなたの成長を妨げる"s, u8"disturbs your growth."s);
-        if (val1 / 50 == -1)
+        if (trait)
         {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(val1 / 50);
-            s += u8"]"s;
-            return;
+            rtval(1) = power / 50;
         }
         else
         {
-            rtval(1) = val1 / 50;
-            return;
+            s += u8" ["s;
+            putenclv(power / 50);
+            s += u8"]"s;
         }
-    }
-    if (val0 == 47)
-    {
+        break;
+    case 47:
         rtval = 9;
         s = lang(u8"魔物を呼び寄せる"s, u8"attracts monsters."s);
-        if (val1 / 50 == -1)
+        if (trait)
         {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(val1 / 50);
-            s += u8"]"s;
-            return;
+            rtval(1) = power / 50;
         }
         else
         {
-            rtval(1) = val1 / 50;
-            return;
+            s += u8" ["s;
+            putenclv(power / 50);
+            s += u8"]"s;
         }
-    }
-    if (val0 == 22)
-    {
+        break;
+    case 22:
         rtval = 4;
         s = lang(
             u8"テレポートを妨害する"s, u8"prevents you from teleporting."s);
-        if (-1 == -1)
-        {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(-1);
-            s += u8"]"s;
-            return;
-        }
-        else
-        {
-            rtval(1) = -1;
-            return;
-        }
-    }
-    if (val0 == 23)
-    {
+        break;
+    case 23:
         rtval = 4;
         s = lang(u8"盲目を無効にする"s, u8"negates the effect of blindness."s);
-        if (-1 == -1)
-        {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(-1);
-            s += u8"]"s;
-            return;
-        }
-        else
-        {
-            rtval(1) = -1;
-            return;
-        }
-    }
-    if (val0 == 24)
-    {
+        break;
+    case 24:
         rtval = 4;
         s = lang(u8"麻痺を無効にする"s, u8"negates the effect of paralysis."s);
-        if (-1 == -1)
-        {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(-1);
-            s += u8"]"s;
-            return;
-        }
-        else
-        {
-            rtval(1) = -1;
-            return;
-        }
-    }
-    if (val0 == 25)
-    {
+        break;
+    case 25:
         rtval = 4;
         s = lang(u8"混乱を無効にする"s, u8"negates the effect of confusion."s);
-        if (-1 == -1)
-        {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(-1);
-            s += u8"]"s;
-            return;
-        }
-        else
-        {
-            rtval(1) = -1;
-            return;
-        }
-    }
-    if (val0 == 26)
-    {
+        break;
+    case 26:
         rtval = 4;
         s = lang(u8"恐怖を無効にする"s, u8"negates the effect of fear."s);
-        if (-1 == -1)
-        {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(-1);
-            s += u8"]"s;
-            return;
-        }
-        else
-        {
-            rtval(1) = -1;
-            return;
-        }
-    }
-    if (val0 == 27)
-    {
+        break;
+    case 27:
         rtval = 4;
         s = lang(u8"睡眠を無効にする"s, u8"negates the effect of sleep."s);
-        if (-1 == -1)
-        {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(-1);
-            s += u8"]"s;
-            return;
-        }
-        else
-        {
-            rtval(1) = -1;
-            return;
-        }
-    }
-    if (val0 == 28)
-    {
+        break;
+    case 28:
         rtval = 4;
         s = lang(u8"毒を無効にする"s, u8"negates the effect of poison."s);
-        if (-1 == -1)
-        {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(-1);
-            s += u8"]"s;
-            return;
-        }
-        else
-        {
-            rtval(1) = -1;
-            return;
-        }
-    }
-    if (val0 == 41)
-    {
+        break;
+    case 41:
         rtval = 4;
         s = lang(
             u8"アイテムを盗まれなくする"s, u8"protects you from thieves."s);
-        if (-1 == -1)
-        {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(-1);
-            s += u8"]"s;
-            return;
-        }
-        else
-        {
-            rtval(1) = -1;
-            return;
-        }
-    }
-    if (val0 == 42)
-    {
+        break;
+    case 42:
         rtval = 4;
         s = lang(
             u8"腐ったものを難なく消化させる"s,
             u8"allows you to digest rotten food."s);
-        if (-1 == -1)
-        {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(-1);
-            s += u8"]"s;
-            return;
-        }
-        else
-        {
-            rtval(1) = -1;
-            return;
-        }
-    }
-    if (val0 == 29)
-    {
+        break;
+    case 29:
         rtval = 4;
         s = lang(
             u8"速度を上げ、ワールドマップでの移動時間を短くする"s,
             u8"speeds up your travel progress."s);
-        if (val1 / 100 == -1)
+        if (trait)
         {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(val1 / 100);
-            s += u8"]"s;
-            return;
+            rtval(1) = power / 100;
         }
         else
         {
-            rtval(1) = val1 / 100;
-            return;
+            s += u8" ["s;
+            putenclv(power / 100);
+            s += u8"]"s;
         }
-    }
-    if (val0 == 30)
-    {
+        break;
+    case 30:
         rtval = 4;
         s = lang(
             u8"エーテルの風からあなたを保護する"s,
             u8"protects you from Etherwind."s);
-        if (-1 == -1)
-        {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(-1);
-            s += u8"]"s;
-            return;
-        }
-        else
-        {
-            rtval(1) = -1;
-            return;
-        }
-    }
-    if (val0 == 31)
-    {
+        break;
+    case 31:
         rtval = 4;
         s = lang(
             u8"雷雨と雪による足止めを無効にする"s,
             u8"negates the effect of being stranded by bad weather."s);
-        if (-1 == -1)
-        {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(-1);
-            s += u8"]"s;
-            return;
-        }
-        else
-        {
-            rtval(1) = -1;
-            return;
-        }
-    }
-    if (val0 == 48)
-    {
+        break;
+    case 48:
         rtval = 4;
         s = lang(
             u8"異物の体内への侵入を防ぐ"s,
             u8"prevents aliens from entering your body."s);
-        if (-1 == -1)
-        {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(-1);
-            s += u8"]"s;
-            return;
-        }
-        else
-        {
-            rtval(1) = -1;
-            return;
-        }
-    }
-    if (val0 == 32)
-    {
+        break;
+    case 32:
         rtval = 4;
         s = lang(u8"あなたを浮遊させる"s, u8"floats you."s);
-        if (-1 == -1)
-        {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(-1);
-            s += u8"]"s;
-            return;
-        }
-        else
-        {
-            rtval(1) = -1;
-            return;
-        }
-    }
-    if (val0 == 33)
-    {
+        break;
+    case 33:
         rtval = 4;
         s = lang(
             u8"あなたを変異から保護する"s, u8"protects you from mutation."s);
-        if (-1 == -1)
-        {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(-1);
-            s += u8"]"s;
-            return;
-        }
-        else
-        {
-            rtval(1) = -1;
-            return;
-        }
-    }
-    if (val0 == 34)
-    {
+        break;
+    case 34:
         rtval = 4;
         s = lang(u8"魔法の威力を高める"s, u8"enchances your spells."s);
-        if (val1 / 50 == -1)
+        if (trait)
         {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(val1 / 50);
-            s += u8"]"s;
-            return;
+            rtval(1) = power / 50;
         }
         else
         {
-            rtval(1) = val1 / 50;
-            return;
+            s += u8" ["s;
+            putenclv(power / 50);
+            s += u8"]"s;
         }
-    }
-    if (val0 == 35)
-    {
+        break;
+    case 35:
         rtval = 4;
         s = lang(
             u8"透明な存在を見ることを可能にする"s,
             u8"allows you to see invisible creatures."s);
-        if (-1 == -1)
-        {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(-1);
-            s += u8"]"s;
-            return;
-        }
-        else
-        {
-            rtval(1) = -1;
-            return;
-        }
-    }
-    if (val0 == 36)
-    {
+        break;
+    case 36:
         rtval = 4;
         s = lang(
             u8"攻撃対象からスタミナを吸収する"s,
             u8"absorbs stamina from an enemy."s);
-        if (val1 / 50 == -1)
+        if (trait)
         {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(val1 / 50);
-            s += u8"]"s;
-            return;
+            rtval(1) = power / 50;
         }
         else
         {
-            rtval(1) = val1 / 50;
-            return;
+            s += u8" ["s;
+            putenclv(power / 50);
+            s += u8"]"s;
         }
-    }
-    if (val0 == 37)
-    {
+        break;
+    case 37:
         rtval = 4;
         s = lang(u8"全てを終結させる"s, u8"brings an end."s);
-        if (-1 == -1)
-        {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(-1);
-            s += u8"]"s;
-            return;
-        }
-        else
-        {
-            rtval(1) = -1;
-            return;
-        }
-    }
-    if (val0 == 38)
-    {
+        break;
+    case 38:
         rtval = 4;
         s = lang(
             u8"攻撃対象からマナを吸収する"s, u8"absorbs MP from an enemy."s);
-        if (val1 / 50 == -1)
+        if (trait)
         {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(val1 / 50);
-            s += u8"]"s;
-            return;
+            rtval(1) = power / 50;
         }
         else
         {
-            rtval(1) = val1 / 50;
-            return;
+            s += u8" ["s;
+            putenclv(power / 50);
+            s += u8"]"s;
         }
-    }
-    if (val0 == 39)
-    {
+        break;
+    case 39:
         rtval = 4;
         s = lang(
             u8"完全貫通攻撃発動の機会を増やす"s,
             u8"gives you a chance to throw an absolute piercing attak."s);
-        if (val1 / 50 == -1)
+        if (trait)
         {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(val1 / 50);
-            s += u8"]"s;
-            return;
+            rtval(1) = power / 50;
         }
         else
         {
-            rtval(1) = val1 / 50;
-            return;
+            s += u8" ["s;
+            putenclv(power / 50);
+            s += u8"]"s;
         }
-    }
-    if (val0 == 44)
-    {
+        break;
+    case 44:
         rtval = 4;
         s = lang(
             u8"クリティカルヒットの機会を増やす"s,
             u8"increases your chance to deliver critical hits."s);
-        if (val1 / 50 == -1)
+        if (trait)
         {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(val1 / 50);
-            s += u8"]"s;
-            return;
+            rtval(1) = power / 50;
         }
         else
         {
-            rtval(1) = val1 / 50;
-            return;
+            s += u8" ["s;
+            putenclv(power / 50);
+            s += u8"]"s;
         }
-    }
-    if (val0 == 50)
-    {
+        break;
+    case 50:
         rtval = 4;
         s = lang(
             u8"追加打撃の機会を増やす"s,
             u8"increases the chance of extra melee attack."s);
-        if (val1 / 50 == -1)
+        if (trait)
         {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(val1 / 50);
-            s += u8"]"s;
-            return;
+            rtval(1) = power / 50;
         }
         else
         {
-            rtval(1) = val1 / 50;
-            return;
+            s += u8" ["s;
+            putenclv(power / 50);
+            s += u8"]"s;
         }
-    }
-    if (val0 == 51)
-    {
+        break;
+    case 51:
         rtval = 4;
         s = lang(
             u8"追加射撃の機会を増やす"s,
             u8"increases the chance of extra ranged attack."s);
-        if (val1 / 50 == -1)
+        if (trait)
         {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(val1 / 50);
-            s += u8"]"s;
-            return;
+            rtval(1) = power / 50;
         }
         else
         {
-            rtval(1) = val1 / 50;
-            return;
+            s += u8" ["s;
+            putenclv(power / 50);
+            s += u8"]"s;
         }
-    }
-    if (val0 == 40)
-    {
+        break;
+    case 40:
         rtval = 4;
         s = lang(u8"稀に時を止める"s, u8"occasionally stops time."s);
-        if (val1 == -1)
+        if (trait)
         {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(val1 / 100);
-            s += u8"]"s;
-            return;
+            rtval(1) = power / 100;
         }
         else
         {
-            rtval(1) = val1 / 100;
-            return;
+            s += u8" ["s;
+            putenclv(power / 100);
+            s += u8"]"s;
         }
-    }
-    if (val0 == 43)
-    {
+        break;
+    case 43:
         rtval = 4;
         s = lang(
             u8"呪いの言葉から保護する"s, u8"protects you from cursing words."s);
-        if (val1 / 50 == -1)
+        if (trait)
         {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(val1 / 50);
-            s += u8"]"s;
-            return;
+            rtval(1) = power / 50;
         }
         else
         {
-            rtval(1) = val1 / 50;
-            return;
+            s += u8" ["s;
+            putenclv(power / 50);
+            s += u8"]"s;
         }
-    }
-    if (val0 == 49)
-    {
+        break;
+    case 49:
         rtval = 4;
         s = lang(
             u8"演奏報酬の品質を上げる"s,
             u8"increases the qualitiy of reward."s);
-        if (-1 == -1)
-        {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(-1);
-            s += u8"]"s;
-            return;
-        }
-        else
-        {
-            rtval(1) = -1;
-            return;
-        }
-    }
-    if (val0 == 52)
-    {
+        break;
+    case 52:
         rtval = 4;
         s = lang(
             u8"被る物理ダメージを軽減する"s,
             u8"decreases physical damage you take."s);
-        if (val1 / 50 == -1)
+        if (trait)
         {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(val1 / 50);
-            s += u8"]"s;
-            return;
+            rtval(1) = power / 50;
         }
         else
         {
-            rtval(1) = val1 / 50;
-            return;
+            s += u8" ["s;
+            putenclv(power / 50);
+            s += u8"]"s;
         }
-    }
-    if (val0 == 53)
-    {
+        break;
+    case 53:
         rtval = 4;
         s = lang(
             u8"被るダメージを稀に無効にする"s,
             u8"sometimes nullifies damage you take."s);
-        if (val1 / 50 == -1)
+        if (trait)
         {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(val1 / 50);
-            s += u8"]"s;
-            return;
+            rtval(1) = power / 50;
         }
         else
         {
-            rtval(1) = val1 / 50;
-            return;
+            s += u8" ["s;
+            putenclv(power / 50);
+            s += u8"]"s;
         }
-    }
-    if (val0 == 54)
-    {
+        break;
+    case 54:
         rtval = 4;
         s = lang(
             u8"攻撃された時、相手に切り傷のダメージを与える"s,
             u8"deals cut damage to the attacker."s);
-        if (val1 / 50 == -1)
+        if (trait)
         {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(val1 / 50);
-            s += u8"]"s;
-            return;
+            rtval(1) = power / 50;
         }
         else
         {
-            rtval(1) = val1 / 50;
-            return;
+            s += u8" ["s;
+            putenclv(power / 50);
+            s += u8"]"s;
         }
-    }
-    if (val0 == 55)
-    {
+        break;
+    case 55:
         rtval = 4;
         s = lang(u8"出血を抑える"s, u8"diminishs bleeding."s);
-        if (-1 == -1)
-        {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(-1);
-            s += u8"]"s;
-            return;
-        }
-        else
-        {
-            rtval(1) = -1;
-            return;
-        }
-    }
-    if (val0 == 56)
-    {
+        break;
+    case 56:
         rtval = 4;
         s = lang(
             u8"神が発する電波をキャッチする"s, u8"catches signals from God."s);
-        if (-1 == -1)
-        {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(-1);
-            s += u8"]"s;
-            return;
-        }
-        else
-        {
-            rtval(1) = -1;
-            return;
-        }
-    }
-    if (val0 == 57)
-    {
+        break;
+    case 57:
         rtval = 4;
         s = lang(
             u8"竜族に対して強力な威力を発揮する"s,
             u8"inflicts massive damage to dragons."s);
-        if (val1 / 50 == -1)
+        if (trait)
         {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(val1 / 50);
-            s += u8"]"s;
-            return;
+            rtval(1) = power / 50;
         }
         else
         {
-            rtval(1) = val1 / 50;
-            return;
+            s += u8" ["s;
+            putenclv(power / 50);
+            s += u8"]"s;
         }
-    }
-    if (val0 == 58)
-    {
+        break;
+    case 58:
         rtval = 4;
         s = lang(
             u8"不死者に対して強力な威力を発揮する"s,
             u8"inflicts massive damage to undeads."s);
-        if (val1 / 50 == -1)
+        if (trait)
         {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(val1 / 50);
-            s += u8"]"s;
-            return;
+            rtval(1) = power / 50;
         }
         else
         {
-            rtval(1) = val1 / 50;
-            return;
+            s += u8" ["s;
+            putenclv(power / 50);
+            s += u8"]"s;
         }
-    }
-    if (val0 == 59)
-    {
+        break;
+    case 59:
         rtval = 4;
         s = lang(u8"他者の信仰を明らかにする"s, u8"reveals religion."s);
-        if (-1 == -1)
-        {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(-1);
-            s += u8"]"s;
-            return;
-        }
-        else
-        {
-            rtval(1) = -1;
-            return;
-        }
-    }
-    if (val0 == 60)
-    {
+        break;
+    case 60:
         rtval = 4;
         s = lang(
             u8"深い音色で聴衆を酔わす"s,
             u8"makes audience drunk with haunting tones."s);
-        if (-1 == -1)
-        {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(-1);
-            s += u8"]"s;
-            return;
-        }
-        else
-        {
-            rtval(1) = -1;
-            return;
-        }
-    }
-    if (val0 == 61)
-    {
+        break;
+    case 61:
         rtval = 4;
         s = lang(
             u8"神に対して強力な威力を発揮する"s,
             u8"inflicts massive damage to Gods."s);
-        if (val1 / 50 == -1)
+        if (trait)
         {
-            return;
-        }
-        else if (val2 == 0)
-        {
-            s += u8" ["s;
-            putenclv(val1 / 50);
-            s += u8"]"s;
-            return;
+            rtval(1) = power / 50;
         }
         else
         {
-            rtval(1) = val1 / 50;
-            return;
+            s += u8" ["s;
+            putenclv(power / 50);
+            s += u8"]"s;
         }
+        break;
     }
-    return;
 }
 
 

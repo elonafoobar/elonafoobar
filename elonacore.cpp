@@ -39189,7 +39189,6 @@ void window_recipe_(
             get_enchantment_description(
                 inv[prm_1050].enchantments[cnt2_at_m184].id,
                 inv[prm_1050].enchantments[cnt2_at_m184].power,
-                0,
                 the_item_db[inv[prm_1050].id]->category);
             color(0, 0, 100);
             if (inv[prm_1050].enchantments[cnt2_at_m184].power < 0)
@@ -42378,8 +42377,8 @@ label_196901_internal:
                 get_enchantment_description(
                     inv[ci].enchantments[cnt].id,
                     inv[ci].enchantments[cnt].power,
-                    1,
-                    0);
+                    0,
+                    true);
                 if (s == ""s)
                 {
                     continue;
@@ -48859,7 +48858,6 @@ void show_item_description()
             get_enchantment_description(
                 inv[ci].enchantments[cnt].id,
                 inv[ci].enchantments[cnt].power,
-                0,
                 reftype);
             listn(0, p) = lang(u8"それは"s, u8"It "s) + s;
             list(0, p) = rtval;
@@ -61044,7 +61042,7 @@ void do_use_command()
                     list(0, listmax) = rtval;
                     list(1, listmax) = rtval(1);
                     get_enchantment_description(
-                        list(0, listmax), list(1, listmax), 0, 0);
+                        list(0, listmax), list(1, listmax), 0);
                     promptl(0, promptmax) = s;
                     promptl(1, promptmax) = u8"null"s;
                     promptl(2, promptmax) = ""s + promptmax;
@@ -73255,7 +73253,7 @@ label_2747:
                 + u8"時間が経過しています。"s,
             u8"You have been playing Elona for "s + hour_played + u8" hour"s
                 + _s2(hour_played) + u8"."s);
-        cheer_up_message();
+        s += cheer_up_message(hour_played);
         txtmore();
         txtef(5);
         txt(s);
