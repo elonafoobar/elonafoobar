@@ -1581,87 +1581,87 @@ int calcspellpower(int id, int cc)
 
 
 
-int calcspellfail(int prm_920, int prm_921)
+int calcspellfail(int id, int cc)
 {
     if (debug::voldemort)
     {
         return 100;
     }
 
-    int i_at_m157 = 0;
-    int f_at_m157 = 0;
-    int p_at_m157 = 0;
-    if (prm_921 != 0)
+    if (cc != 0)
     {
-        if (gdata_mount == prm_921)
+        if (gdata_mount == cc)
         {
-            return 95 - std::clamp((30 - sdata(301, 0) / 2), 0, 30);
+            return 95 - std::clamp(30 - sdata(301, 0) / 2, 0, 30);
         }
         else
         {
             return 95;
         }
     }
-    i_at_m157 = 4;
-    f_at_m157 = carmor(prm_921);
-    if (f_at_m157 == 169)
+
+    int penalty = 4;
+
+    int armor_skill = carmor(cc);
+    if (armor_skill == 169)
     {
-        i_at_m157 = 17 - sdata(169, prm_921) / 5;
+        penalty = 17 - sdata(169, cc) / 5;
     }
-    if (f_at_m157 == 170)
+    else if (armor_skill == 170)
     {
-        i_at_m157 = 12 - sdata(170, prm_921) / 5;
+        penalty = 12 - sdata(170, cc) / 5;
     }
-    if (i_at_m157 < 4)
+    if (penalty < 4)
     {
-        i_at_m157 = 4;
+        penalty = 4;
     }
     if (gdata_mount != 0)
     {
-        i_at_m157 += 4;
+        penalty += 4;
     }
-    if (prm_920 == 441)
+    if (id == 441) // Wish
     {
-        i_at_m157 += sdata(prm_920, prm_921);
+        penalty += sdata(id, cc);
     }
-    if (prm_920 == 464)
+    if (id == 464) // Harvest
     {
-        i_at_m157 += sdata(prm_920, prm_921) / 3;
+        penalty += sdata(id, cc) / 3;
     }
-    p_at_m157 = 90 + sdata(prm_920, prm_921)
-        - the_ability_db[prm_920].sdataref4 * i_at_m157
-            / (5 + sdata(172, prm_921) * 4);
-    if (f_at_m157 == 169)
+
+    int percentage = 90 + sdata(id, cc)
+        - the_ability_db[id].sdataref4 * penalty
+            / (5 + sdata(172, cc) * 4);
+    if (armor_skill == 169)
     {
-        if (p_at_m157 > 80)
+        if (percentage > 80)
         {
-            p_at_m157 = 80;
+            percentage = 80;
         }
     }
-    else if (f_at_m157 == 170)
+    else if (armor_skill == 170)
     {
-        if (p_at_m157 > 92)
+        if (percentage > 92)
         {
-            p_at_m157 = 92;
+            percentage = 92;
         }
     }
-    else if (p_at_m157 > 100)
+    else if (percentage > 100)
     {
-        p_at_m157 = 100;
+        percentage = 100;
     }
-    if (cdata[prm_921].equipment_type & 4)
+    if (cdata[cc].equipment_type & 4)
     {
-        p_at_m157 -= 6;
+        percentage -= 6;
     }
-    if (cdata[prm_921].equipment_type & 1)
+    if (cdata[cc].equipment_type & 1)
     {
-        p_at_m157 -= 12;
+        percentage -= 12;
     }
-    if (p_at_m157 < 0)
+    if (percentage < 0)
     {
-        p_at_m157 = 0;
+        percentage = 0;
     }
-    return p_at_m157;
+    return percentage;
 }
 
 
