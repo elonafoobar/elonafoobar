@@ -1695,21 +1695,23 @@ int calcspellcostmp(int id, int cc)
 
 
 
-int calcspellcoststock(int prm_924, int prm_925)
+int calcspellcoststock(int id, int cc)
 {
-    int cost_at_m159 = 0;
-    cost_at_m159 = the_ability_db[prm_924].cost * 200
-        / (sdata(prm_924, prm_925) * 3 + 100);
-    if (cost_at_m159 < the_ability_db[prm_924].cost / 5)
+    if (debug::voldemort)
+        return 1;
+
+    int cost = the_ability_db[id].cost * 200
+        / (sdata(id, cc) * 3 + 100);
+    if (cost < the_ability_db[id].cost / 5)
     {
-        cost_at_m159 = the_ability_db[prm_924].cost / 5;
+        cost = the_ability_db[id].cost / 5;
     }
-    cost_at_m159 = rnd(cost_at_m159 / 2 + 1) + cost_at_m159 / 2;
-    if (cost_at_m159 < 1)
+    cost = rnd(cost / 2 + 1) + cost / 2;
+    if (cost < 1)
     {
-        cost_at_m159 = 1;
+        cost = 1;
     }
-    return cost_at_m159;
+    return cost;
 }
 
 
