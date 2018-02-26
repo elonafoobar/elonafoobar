@@ -1666,33 +1666,31 @@ int calcspellfail(int id, int cc)
 
 
 
-int calcspellcostmp(int prm_922, int prm_923)
+int calcspellcostmp(int id, int cc)
 {
     if (debug::voldemort)
-    {
         return 1;
-    }
 
-    int cost_at_m158 = 0;
-    if (prm_923 == 0)
+    if (cc == 0)
     {
-        if (prm_922 == 413 || prm_922 == 461 || prm_922 == 457 || prm_922 == 438
-            || prm_922 == 409 || prm_922 == 408 || prm_922 == 410
-            || prm_922 == 466)
+        if (id == 413 || id == 461 || id == 457 || id == 438
+            || id == 409 || id == 408 || id == 410
+            || id == 466)
         {
-            cost_at_m158 = the_ability_db[prm_922].cost;
-            return cost_at_m158;
+            return the_ability_db[id].cost;
         }
-        cost_at_m158 = the_ability_db[prm_922].cost
-                * (100 + sdata(prm_922, prm_923) * 3) / 100
-            + sdata(prm_922, prm_923) / 8;
+        else
+        {
+            return the_ability_db[id].cost
+                    * (100 + sdata(id, cc) * 3) / 100
+                + sdata(id, cc) / 8;
+        }
     }
     else
     {
-        cost_at_m158 = the_ability_db[prm_922].cost
-            * (50 + cdata[prm_923].level * 3) / 100;
+        return the_ability_db[id].cost
+            * (50 + cdata[cc].level * 3) / 100;
     }
-    return cost_at_m158;
 }
 
 
