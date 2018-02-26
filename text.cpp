@@ -3039,75 +3039,9 @@ skip:
 
 
 
-void cheer_up_message()
+std::string cheer_up_message(int hours)
 {
-    if (hour_played == 1)
-    {
-        s += lang(
-            u8"ラーネイレ「がんばれ〜」"s,
-            u8"Larneire cheers, "s + u8"\"Way to go!\""s);
-    }
-    if (hour_played == 2)
-    {
-        s += lang(
-            u8"ロミアス「陰ながら応援しているよ（ニヤリ）」"s,
-            u8"Lomias grins, "s + u8"\"Go for it.\""s);
-    }
-    if (hour_played == 3)
-    {
-        s += lang(
-            u8"クミロミ「…大丈夫…だよね？」"s,
-            u8"Kumiromi worries, "s + u8"\"Are you...okay..?\""s);
-    }
-    if (hour_played == 4)
-    {
-        s += lang(
-            u8"ルルウィ「あら、思いの他がんばるのね」"s,
-            u8"Lulwy sneers, "s
-                + u8"\"You're tougher than I thought, little kitty.\""s);
-    }
-    if (hour_played == 5)
-    {
-        s += lang(
-            u8"ラーネイレ「いけない。このままでは…手遅れになってしまうわ…」"s,
-            u8"Larneire cries, "s
-                + u8"\"No...before it is too late...\""s);
-    }
-    if (hour_played == 6)
-    {
-        s += lang(
-            u8"ロミアス「まだまだ、これからだろう（ニヤリ）」"s,
-            u8"Lomias grins, "s
-                + u8"\"Tt hasn't even started yet... hasn't it?\""s);
-    }
-    if (hour_played == 7)
-    {
-        s += lang(
-            u8"ルルウィ「休憩しなさい。壊れちゃったら、私の役にたてないじゃない」"s,
-            u8"Lulwy warns you, "s
-                + u8"\"Have a rest, kitty. If you are broken, you're no use to me.\""s);
-    }
-    if (hour_played == 8)
-    {
-        s += lang(
-            u8"ルルウィ「何を言っても無駄のようね。好きにするといいわ」"s,
-            u8"Lulwy laughs, "s
-                + u8"\"I guess there's no use warning you. Alright. Do as you please, kitty.\""s));
-    }
-    if (hour_played == 12)
-    {
-        s += lang(
-            u8"オパートス「フハハハハッフハー」"s,
-            u8"Opatos laughs, "s + u8"\"Muwahahahahahaha!\""s);
-    }
-    if (hour_played == 24)
-    {
-        s += lang(
-            u8"虚空「希望はまだあるはずだ」"s,
-            u8"Ehekatl hugs you,"s
-                + u8"\"Don't die! Promise you don't die!\""s);
-    }
-    return;
+    return i18n::_(u8"ui", u8"cheer_up_message", u8"_"s + hours);
 }
 
 

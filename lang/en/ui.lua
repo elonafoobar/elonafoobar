@@ -321,4 +321,18 @@ ui.random_ring = {
 }
 
 
+ui.cheer_up_message = {
+  _1 = "Larneire cheers, \"Way to go!\"",
+  _2 = "Lomias grins, \"Go for it.\"",
+  _3 = "Kumiromi worries, \"Are you...okay..?\"",
+  _4 = "Lulwy sneers, \"You're tougher than I thought, little kitty.\"",
+  _5 = "Larneire cries, \"No...before it is too late...\"",
+  _6 = "Lomias grins, \"Tt hasn't even started yet... hasn't it?\"",
+  _7 = "Lulwy warns you, \"Have a rest, kitty. If you are broken, you're no use to me.\"",
+  _8 = "Lulwy laughs, \"I guess there's no use warning you. Alright. Do as you please, kitty.\"",
+  _12 = "Opatos laughs, \"Muwahahahahahaha!\"",
+  _24 = "Ehekatl hugs you,\"Don't die! Promise you don't die!\"",
+}
+
+
 -- vim: et sw=2 sts=2
