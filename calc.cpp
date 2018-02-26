@@ -91,8 +91,6 @@ namespace elona
 
 
 int rangedist = 0;
-int value_at_m153 = 0;
-int p_at_m153 = 0;
 
 
 
@@ -1446,17 +1444,19 @@ int calccargoupdatecost()
 
 
 
-int calcidentifyvalue(int prm_907)
+int calcidentifyvalue(int type)
 {
-    value_at_m153 = 300;
-    if (prm_907 == 2)
+    int cost;
+
+    cost = 300;
+    if (type == 2)
     {
-        value_at_m153 = 5000;
+        cost = 5000;
     }
-    if (prm_907 == 1)
+    if (type == 1)
     {
+        int need_to_identify{};
         inv_getheader(0);
-        p_at_m153 = 0;
         for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
              ++cnt)
         {
@@ -1466,20 +1466,17 @@ int calcidentifyvalue(int prm_907)
             }
             if (inv[cnt].identification_state < 3)
             {
-                ++p_at_m153;
+                ++need_to_identify;
             }
         }
-        if (p_at_m153 >= 2)
+        if (need_to_identify >= 2)
         {
-            value_at_m153 = value_at_m153 * p_at_m153 * 70 / 100;
+            cost = cost * need_to_identify * 70 / 100;
         }
     }
-    value_at_m153 = value_at_m153 * 100 / (100 + sdata(156, 0) * 2);
-    if (gdata_belongs_to_fighters_guild)
-    {
-        value_at_m153 /= 2;
-    }
-    return value_at_m153;
+    cost = cost * 100 / (100 + sdata(156, 0) * 2);
+
+    return gdata_belongs_to_fighters_guild ? cost / 2 : cost;
 }
 
 

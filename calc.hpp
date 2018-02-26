@@ -47,7 +47,7 @@ int calcmealvalue();
 int calccostreload(int, bool = false);
 int calccargoupdate();
 int calccargoupdatecost();
-int calcidentifyvalue(int = 0);
+int calcidentifyvalue(int);
 int calctraincost(int, int, bool = false);
 int calclearncost(int, int, bool = false);
 int calcresurrectvalue(int = 0);
