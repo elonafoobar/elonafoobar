@@ -780,1586 +780,311 @@ std::string txtskillchange(int id, int cc, bool increase)
 
 
 std::string
-foodname(int prm_373, const std::string& prm_374, int prm_375, int prm_376)
+foodname(int type, const std::string& prm_374, int rank, int character_id)
 {
-    std::string s_at_m33;
-    std::string n_at_m33;
-    int p_at_m33 = 0;
-    s_at_m33 = prm_374;
-    if (prm_373 == 1)
+    std::string s_ = prm_374;
+    std::string ingredient;
+
+    switch (type)
     {
-        if (prm_376 == 0)
+    case 1:
+        if (character_id == 0)
         {
-            n_at_m33 = lang(u8"動物"s, u8"beast"s);
+            ingredient = lang(u8"動物"s, u8"beast"s);
         }
         else
         {
-            n_at_m33 = refchara_str(prm_376, 2);
-        }
-        if (prm_375 == 1)
-        {
-            p_at_m33 = (lang(
-                            u8"グロテスクな"s + n_at_m33 + u8"の肉"s,
-                            u8"grotesque "s + n_at_m33 + u8" meat"s)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    u8"グロテスクな"s + n_at_m33 + u8"の肉"s,
-                    u8"grotesque "s + n_at_m33 + u8" meat"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 2)
-        {
-            p_at_m33 = (lang(
-                            u8"焼け焦げた"s + n_at_m33 + u8"の肉"s,
-                            u8"charred "s + n_at_m33 + u8" meat"s)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    u8"焼け焦げた"s + n_at_m33 + u8"の肉"s,
-                    u8"charred "s + n_at_m33 + u8" meat"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 3)
-        {
-            p_at_m33 =
-                (lang(
-                     ""s + n_at_m33 + u8"のこんがり肉"s, u8"roast "s + n_at_m33)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + n_at_m33 + u8"のこんがり肉"s, u8"roast "s + n_at_m33);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 4)
-        {
-            p_at_m33 = (lang(
-                            ""s + n_at_m33 + u8"肉のオードブル"s,
-                            u8"deep fried "s + n_at_m33)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + n_at_m33 + u8"肉のオードブル"s,
-                    u8"deep fried "s + n_at_m33);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 5)
-        {
-            p_at_m33 = (lang(
-                            ""s + n_at_m33 + u8"のピリ辛炒め"s,
-                            u8"skewer grilled "s + n_at_m33)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + n_at_m33 + u8"のピリ辛炒め"s,
-                    u8"skewer grilled "s + n_at_m33);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 6)
-        {
-            p_at_m33 =
-                (lang(
-                     ""s + n_at_m33 + u8"コロッケ"s, n_at_m33 + u8" croquette"s)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + n_at_m33 + u8"コロッケ"s, n_at_m33 + u8" croquette"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 7)
-        {
-            p_at_m33 = (lang(
-                            ""s + n_at_m33 + u8"のハンバーグ"s,
-                            n_at_m33 + u8" hamburger"s)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + n_at_m33 + u8"のハンバーグ"s,
-                    n_at_m33 + u8" hamburger"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 8)
-        {
-            p_at_m33 = (lang(
-                            ""s + n_at_m33 + u8"肉の大葉焼き"s,
-                            n_at_m33 + u8" cutlet"s)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + n_at_m33 + u8"肉の大葉焼き"s,
-                    n_at_m33 + u8" cutlet"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 9)
-        {
-            p_at_m33 =
-                (lang(""s + n_at_m33 + u8"ステーキ"s, n_at_m33 + u8" steak"s)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + n_at_m33 + u8"ステーキ"s, n_at_m33 + u8" steak"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        return s_at_m33;
-    }
-    if (prm_373 == 2)
-    {
-        if (s_at_m33 == ""s)
-        {
-            s_at_m33 = lang(u8"野菜"s, u8"vegetable"s);
-        }
-        if (prm_375 == 1)
-        {
-            p_at_m33 = (lang(
-                            u8"生ごみ同然の"s + s_at_m33,
-                            u8"kitchen refuse "s + s_at_m33)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    u8"生ごみ同然の"s + s_at_m33,
-                    u8"kitchen refuse "s + s_at_m33);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 2)
-        {
-            p_at_m33 =
-                (lang(u8"悪臭を放つ"s + s_at_m33, u8"smelly "s + s_at_m33)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    u8"悪臭を放つ"s + s_at_m33, u8"smelly "s + s_at_m33);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 3)
-        {
-            p_at_m33 =
-                (lang(""s + s_at_m33 + u8"のサラダ"s, s_at_m33 + u8" salad"s)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"のサラダ"s, s_at_m33 + u8" salad"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 4)
-        {
-            p_at_m33 =
-                (lang(""s + s_at_m33 + u8"の炒め物"s, u8"fried "s + s_at_m33)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"の炒め物"s, u8"fried "s + s_at_m33);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 5)
-        {
-            p_at_m33 = (lang(
-                            ""s + s_at_m33 + u8"風味の肉じゃが"s,
-                            s_at_m33 + u8" roll"s)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"風味の肉じゃが"s,
-                    s_at_m33 + u8" roll"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 6)
-        {
-            p_at_m33 =
-                (lang(""s + s_at_m33 + u8"の天ぷら"s, s_at_m33 + u8" tenpura"s)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"の天ぷら"s, s_at_m33 + u8" tenpura"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 7)
-        {
-            p_at_m33 =
-                (lang(""s + s_at_m33 + u8"の煮込み"s, s_at_m33 + u8" gratin"s)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"の煮込み"s, s_at_m33 + u8" gratin"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 8)
-        {
-            p_at_m33 = (lang(
-                            ""s + s_at_m33 + u8"シチュー"s,
-                            u8"meat and "s + s_at_m33 + u8" stew"s)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"シチュー"s,
-                    u8"meat and "s + s_at_m33 + u8" stew"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 9)
-        {
-            p_at_m33 =
-                (lang(""s + s_at_m33 + u8"風カレー"s, s_at_m33 + u8" curry"s)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"風カレー"s, s_at_m33 + u8" curry"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        return s_at_m33;
-    }
-    if (prm_373 == 3)
-    {
-        if (s_at_m33 == ""s)
-        {
-            s_at_m33 = lang(u8"果物"s, u8"fruit"s);
-        }
-        if (prm_375 == 1)
-        {
-            p_at_m33 = (lang(
-                            u8"食べてはならない"s + s_at_m33,
-                            u8"dangerous "s + s_at_m33)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    u8"食べてはならない"s + s_at_m33,
-                    u8"dangerous "s + s_at_m33);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 2)
-        {
-            p_at_m33 =
-                (lang(u8"べっちょりした"s + s_at_m33, u8"doubtful "s + s_at_m33)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    u8"べっちょりした"s + s_at_m33, u8"doubtful "s + s_at_m33);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 3)
-        {
-            p_at_m33 = (lang(
-                            ""s + s_at_m33 + u8"のフルーツサラダ"s,
-                            s_at_m33 + u8" jelly salad"s)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"のフルーツサラダ"s,
-                    s_at_m33 + u8" jelly salad"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 4)
-        {
-            p_at_m33 =
-                (lang(""s + s_at_m33 + u8"のプリン"s, s_at_m33 + u8" pudding"s)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"のプリン"s, s_at_m33 + u8" pudding"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 5)
-        {
-            p_at_m33 = (lang(
-                            ""s + s_at_m33 + u8"シャーベット"s,
-                            s_at_m33 + u8" sherbet"s)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"シャーベット"s,
-                    s_at_m33 + u8" sherbet"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 6)
-        {
-            p_at_m33 =
-                (lang(
-                     ""s + s_at_m33 + u8"シェイク"s, s_at_m33 + u8" ice cream"s)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"シェイク"s, s_at_m33 + u8" ice cream"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 7)
-        {
-            p_at_m33 =
-                (lang(""s + s_at_m33 + u8"クレープ"s, s_at_m33 + u8" crepe"s)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"クレープ"s, s_at_m33 + u8" crepe"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 8)
-        {
-            p_at_m33 = (lang(
-                            ""s + s_at_m33 + u8"フルーツケーキ"s,
-                            s_at_m33 + u8" fruit cake"s)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"フルーツケーキ"s,
-                    s_at_m33 + u8" fruit cake"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 9)
-        {
-            p_at_m33 = (lang(
-                            ""s + s_at_m33 + u8"パフェ"s,
-                            s_at_m33 + u8" grand parfait"s)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"パフェ"s,
-                    s_at_m33 + u8" grand parfait"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        return s_at_m33;
-    }
-    if (prm_373 == 5)
-    {
-        n_at_m33 = lang(u8"麺"s, u8"noodle"s);
-        if (prm_375 == 1)
-        {
-            p_at_m33 =
-                (lang(u8"禁断の"s + n_at_m33, u8"risky "s + n_at_m33) != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(u8"禁断の"s + n_at_m33, u8"risky "s + n_at_m33);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 2)
-        {
-            p_at_m33 = (lang(
-                            u8"のびてふにゃった"s + n_at_m33,
-                            u8"exhausted "s + n_at_m33)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    u8"のびてふにゃった"s + n_at_m33,
-                    u8"exhausted "s + n_at_m33);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 3)
-        {
-            p_at_m33 =
-                (lang(u8"サラダパスタ"s, u8"salad pasta"s) != ""s) + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(u8"サラダパスタ"s, u8"salad pasta"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 4)
-        {
-            p_at_m33 = (lang(u8"うどん"s, u8"udon"s) != ""s) + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(u8"うどん"s, u8"udon"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 5)
-        {
-            p_at_m33 = (lang(u8"冷やし蕎麦"s, u8"soba"s) != ""s) + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(u8"冷やし蕎麦"s, u8"soba"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 6)
-        {
-            p_at_m33 =
-                (lang(u8"ペペロンチーノ"s, u8"peperoncino"s) != ""s) + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(u8"ペペロンチーノ"s, u8"peperoncino"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 7)
-        {
-            p_at_m33 = (lang(u8"カルボナーラ"s, u8"carbonara"s) != ""s) + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(u8"カルボナーラ"s, u8"carbonara"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 8)
-        {
-            p_at_m33 = (lang(u8"ラーメン"s, u8"ramen"s) != ""s) + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(u8"ラーメン"s, u8"ramen"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 9)
-        {
-            p_at_m33 = (lang(u8"ミートスパゲティ"s, u8"meat spaghetti"s) != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(u8"ミートスパゲティ"s, u8"meat spaghetti"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        return s_at_m33;
-    }
-    if (prm_373 == 4)
-    {
-        if (s_at_m33 == ""s)
-        {
-            s_at_m33 = lang(u8"お菓子"s, u8"candy"s);
-        }
-        if (prm_375 == 1)
-        {
-            p_at_m33 =
-                (lang(
-                     u8"原型を留めない"s + s_at_m33, u8"collapsed "s + s_at_m33)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    u8"原型を留めない"s + s_at_m33, u8"collapsed "s + s_at_m33);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 2)
-        {
-            p_at_m33 = (lang(u8"まずそうな"s + s_at_m33, u8"nasty "s + s_at_m33)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(u8"まずそうな"s + s_at_m33, u8"nasty "s + s_at_m33);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 3)
-        {
-            p_at_m33 =
-                (lang(""s + s_at_m33 + u8"クッキー"s, s_at_m33 + u8" cookie"s)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"クッキー"s, s_at_m33 + u8" cookie"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 4)
-        {
-            p_at_m33 =
-                (lang(""s + s_at_m33 + u8"のゼリー"s, s_at_m33 + u8" jelly"s)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"のゼリー"s, s_at_m33 + u8" jelly"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 5)
-        {
-            p_at_m33 =
-                (lang(""s + s_at_m33 + u8"パイ"s, s_at_m33 + u8" pie"s) != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(""s + s_at_m33 + u8"パイ"s, s_at_m33 + u8" pie"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 6)
-        {
-            p_at_m33 =
-                (lang(""s + s_at_m33 + u8"まんじゅう"s, s_at_m33 + u8" bun"s)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"まんじゅう"s, s_at_m33 + u8" bun"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 7)
-        {
-            p_at_m33 = (lang(
-                            ""s + s_at_m33 + u8"風味のシュークリーム"s,
-                            s_at_m33 + u8" cream puff"s)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"風味のシュークリーム"s,
-                    s_at_m33 + u8" cream puff"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 8)
-        {
-            p_at_m33 =
-                (lang(""s + s_at_m33 + u8"のケーキ"s, s_at_m33 + u8" cake"s)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"のケーキ"s, s_at_m33 + u8" cake"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 9)
-        {
-            p_at_m33 = (lang(
-                            ""s + s_at_m33 + u8"風ザッハトルテ"s,
-                            s_at_m33 + u8" sachertorte"s)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"風ザッハトルテ"s,
-                    s_at_m33 + u8" sachertorte"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        return s_at_m33;
-    }
-    if (prm_373 == 6)
-    {
-        if (s_at_m33 == ""s)
-        {
-            s_at_m33 = lang(u8"魚"s, u8"fish"s);
-        }
-        if (prm_375 == 1)
-        {
-            p_at_m33 =
-                (lang(""s + s_at_m33 + u8"の残骸"s, u8"leftover "s + s_at_m33)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"の残骸"s, u8"leftover "s + s_at_m33);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 2)
-        {
-            p_at_m33 =
-                (lang(u8"骨だけ残った"s + s_at_m33, u8"bony "s + s_at_m33)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    u8"骨だけ残った"s + s_at_m33, u8"bony "s + s_at_m33);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 3)
-        {
-            p_at_m33 =
-                (lang(""s + s_at_m33 + u8"のフライ"s, u8"fried "s + s_at_m33)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"のフライ"s, u8"fried "s + s_at_m33);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 4)
-        {
-            p_at_m33 =
-                (lang(""s + s_at_m33 + u8"の煮込み"s, u8"stewed "s + s_at_m33)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"の煮込み"s, u8"stewed "s + s_at_m33);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 5)
-        {
-            p_at_m33 =
-                (lang(""s + s_at_m33 + u8"スープ"s, s_at_m33 + u8" soup"s)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"スープ"s, s_at_m33 + u8" soup"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 6)
-        {
-            p_at_m33 =
-                (lang(""s + s_at_m33 + u8"の天ぷら"s, s_at_m33 + u8" tenpura"s)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"の天ぷら"s, s_at_m33 + u8" tenpura"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 7)
-        {
-            p_at_m33 =
-                (lang(
-                     ""s + s_at_m33 + u8"ソーセージ"s, s_at_m33 + u8" sausage"s)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"ソーセージ"s, s_at_m33 + u8" sausage"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 8)
-        {
-            p_at_m33 =
-                (lang(""s + s_at_m33 + u8"の刺身"s, s_at_m33 + u8" sashimi"s)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"の刺身"s, s_at_m33 + u8" sashimi"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 9)
-        {
-            p_at_m33 =
-                (lang(""s + s_at_m33 + u8"の活け作り"s, s_at_m33 + u8" sushi"s)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    ""s + s_at_m33 + u8"の活け作り"s, s_at_m33 + u8" sushi"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        return s_at_m33;
-    }
-    if (prm_373 == 7)
-    {
-        n_at_m33 = lang(u8"パン"s, u8"bread"s);
-        if (prm_375 == 1)
-        {
-            p_at_m33 =
-                (lang(u8"恐怖の"s + n_at_m33, u8"fearsome "s + n_at_m33) != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(u8"恐怖の"s + n_at_m33, u8"fearsome "s + n_at_m33);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 2)
-        {
-            p_at_m33 =
-                (lang(u8"ガチガチの"s + n_at_m33, u8"hard "s + n_at_m33) != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(u8"ガチガチの"s + n_at_m33, u8"hard "s + n_at_m33);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 3)
-        {
-            p_at_m33 =
-                (lang(u8"くるみパン"s, u8"walnut bread"s) != ""s) + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(u8"くるみパン"s, u8"walnut bread"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 4)
-        {
-            p_at_m33 = (lang(u8"アップルパイ"s, u8"apple pie"s) != ""s) + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(u8"アップルパイ"s, u8"apple pie"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 5)
-        {
-            p_at_m33 = (lang(u8"サンドイッチ"s, u8"sandwich"s) != ""s) + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(u8"サンドイッチ"s, u8"sandwich"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 6)
-        {
-            p_at_m33 = (lang(u8"クロワッサン"s, u8"croissant"s) != ""s) + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(u8"クロワッサン"s, u8"croissant"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 7)
-        {
-            p_at_m33 = (lang(u8"コロッケパン"s, u8"croquette sandwich"s) != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(u8"コロッケパン"s, u8"croquette sandwich"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 8)
-        {
-            p_at_m33 =
-                (lang(u8"カレーパン"s, u8"chocolate babka"s) != ""s) + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(u8"カレーパン"s, u8"chocolate babka"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 9)
-        {
-            p_at_m33 = (lang(u8"メロンパン"s, u8"melon flavored bread"s) != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(u8"メロンパン"s, u8"melon flavored bread"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        return s_at_m33;
-    }
-    if (prm_373 == 8)
-    {
-        if (prm_376 == 0)
-        {
-            n_at_m33 = lang(u8"鳥"s, u8"animal"s);
+            ingredient = refchara_str(character_id, 2);
+        }
+        switch (rank)
+        {
+        case 1:
+            return lang(
+                u8"グロテスクな"s + ingredient + u8"の肉"s,
+                u8"grotesque "s + ingredient + u8" meat"s);
+        case 2:
+            return lang(
+                u8"焼け焦げた"s + ingredient + u8"の肉"s,
+                u8"charred "s + ingredient + u8" meat"s);
+        case 3:
+            return lang(
+                ""s + ingredient + u8"のこんがり肉"s, u8"roast "s + ingredient);
+        case 4:
+            return lang(
+                ""s + ingredient + u8"肉のオードブル"s,
+                u8"deep fried "s + ingredient);
+        case 5:
+            return lang(
+                ""s + ingredient + u8"のピリ辛炒め"s,
+                u8"skewer grilled "s + ingredient);
+        case 6:
+            return lang(
+                ""s + ingredient + u8"コロッケ"s, ingredient + u8" croquette"s);
+        case 7:
+            return lang(
+                ""s + ingredient + u8"のハンバーグ"s,
+                ingredient + u8" hamburger"s);
+        case 8:
+            return lang(
+                ""s + ingredient + u8"肉の大葉焼き"s,
+                ingredient + u8" cutlet"s);
+        case 9:
+            return lang(
+                ""s + ingredient + u8"ステーキ"s, ingredient + u8" steak"s);
+        }
+        return s_;
+    case 2:
+        if (s_ == ""s)
+        {
+            s_ = lang(u8"野菜"s, u8"vegetable"s);
+        }
+        switch (rank)
+        {
+        case 1:
+            return lang(
+                u8"生ごみ同然の"s + s_,
+                u8"kitchen refuse "s + s_);
+        case 2:
+            return lang(
+                u8"悪臭を放つ"s + s_, u8"smelly "s + s_);
+        case 3:
+            return lang(
+                ""s + s_ + u8"のサラダ"s, s_ + u8" salad"s);
+        case 4:
+            return lang(
+                ""s + s_ + u8"の炒め物"s, u8"fried "s + s_);
+        case 5:
+            return lang(
+                ""s + s_ + u8"風味の肉じゃが"s,
+                s_ + u8" roll"s);
+        case 6:
+            return lang(
+                ""s + s_ + u8"の天ぷら"s, s_ + u8" tenpura"s);
+        case 7:
+            return lang(
+                ""s + s_ + u8"の煮込み"s, s_ + u8" gratin"s);
+        case 8:
+            return lang(
+                ""s + s_ + u8"シチュー"s,
+                u8"meat and "s + s_ + u8" stew"s);
+        case 9:
+            return lang(
+                ""s + s_ + u8"風カレー"s, s_ + u8" curry"s);
+        }
+        return s_;
+    case 3:
+        if (s_ == ""s)
+        {
+            s_ = lang(u8"果物"s, u8"fruit"s);
+        }
+        switch (rank)
+        {
+        case 1:
+            return lang(
+                u8"食べてはならない"s + s_,
+                u8"dangerous "s + s_);
+        case 2:
+            return lang(
+                u8"べっちょりした"s + s_, u8"doubtful "s + s_);
+        case 3:
+            return lang(
+                ""s + s_ + u8"のフルーツサラダ"s,
+                s_ + u8" jelly salad"s);
+        case 4:
+            return lang(
+                ""s + s_ + u8"のプリン"s, s_ + u8" pudding"s);
+        case 5:
+            return lang(
+                ""s + s_ + u8"シャーベット"s,
+                s_ + u8" sherbet"s);
+        case 6:
+            return lang(
+                ""s + s_ + u8"シェイク"s, s_ + u8" ice cream"s);
+        case 7:
+            return lang(
+                ""s + s_ + u8"クレープ"s, s_ + u8" crepe"s);
+        case 8:
+            return lang(
+                ""s + s_ + u8"フルーツケーキ"s,
+                s_ + u8" fruit cake"s);
+        case 9:
+            return lang(
+                ""s + s_ + u8"パフェ"s,
+                s_ + u8" grand parfait"s);
+        }
+        return s_;
+    case 5:
+        ingredient = lang(u8"麺"s, u8"noodle"s);
+        switch (rank)
+        {
+        case 1:
+            return lang(u8"禁断の"s + ingredient, u8"risky "s + ingredient);
+        case 2:
+            return lang(
+                u8"のびてふにゃった"s + ingredient,
+                u8"exhausted "s + ingredient);
+        case 3:
+            return lang(u8"サラダパスタ"s, u8"salad pasta"s);
+        case 4:
+            return lang(u8"うどん"s, u8"udon"s);
+        case 5:
+            return lang(u8"冷やし蕎麦"s, u8"soba"s);
+        case 6:
+            return lang(u8"ペペロンチーノ"s, u8"peperoncino"s);
+        case 7:
+            return lang(u8"カルボナーラ"s, u8"carbonara"s);
+        case 8:
+            return lang(u8"ラーメン"s, u8"ramen"s);
+        case 9:
+            return lang(u8"ミートスパゲティ"s, u8"meat spaghetti"s);
+        }
+        return s_;
+    case 4:
+        if (s_ == ""s)
+        {
+            s_ = lang(u8"お菓子"s, u8"candy"s);
+        }
+        switch (rank)
+        {
+        case 1:
+            return lang(
+                u8"原型を留めない"s + s_, u8"collapsed "s + s_);
+        case 2:
+            return lang(u8"まずそうな"s + s_, u8"nasty "s + s_);
+        case 3:
+            return lang(
+                ""s + s_ + u8"クッキー"s, s_ + u8" cookie"s);
+        case 4:
+            return lang(
+                ""s + s_ + u8"のゼリー"s, s_ + u8" jelly"s);
+        case 5:
+            return lang(""s + s_ + u8"パイ"s, s_ + u8" pie"s);
+        case 6:
+            return lang(
+                ""s + s_ + u8"まんじゅう"s, s_ + u8" bun"s);
+        case 7:
+            return lang(
+                ""s + s_ + u8"風味のシュークリーム"s,
+                s_ + u8" cream puff"s);
+        case 8:
+            return lang(
+                ""s + s_ + u8"のケーキ"s, s_ + u8" cake"s);
+        case 9:
+            return lang(
+                ""s + s_ + u8"風ザッハトルテ"s,
+                s_ + u8" sachertorte"s);
+        }
+        return s_;
+    case 6:
+        if (s_ == ""s)
+        {
+            s_ = lang(u8"魚"s, u8"fish"s);
+        }
+        switch (rank)
+        {
+        case 1:
+            return lang(
+                ""s + s_ + u8"の残骸"s, u8"leftover "s + s_);
+        case 2:
+            return lang(
+                u8"骨だけ残った"s + s_, u8"bony "s + s_);
+        case 3:
+            return lang(
+                ""s + s_ + u8"のフライ"s, u8"fried "s + s_);
+        case 4:
+            return lang(
+                ""s + s_ + u8"の煮込み"s, u8"stewed "s + s_);
+        case 5:
+            return lang(
+                ""s + s_ + u8"スープ"s, s_ + u8" soup"s);
+        case 6:
+            return lang(
+                ""s + s_ + u8"の天ぷら"s, s_ + u8" tenpura"s);
+        case 7:
+            return lang(
+                ""s + s_ + u8"ソーセージ"s, s_ + u8" sausage"s);
+        case 8:
+            return lang(
+                ""s + s_ + u8"の刺身"s, s_ + u8" sashimi"s);
+        case 9:
+            return lang(
+                ""s + s_ + u8"の活け作り"s, s_ + u8" sushi"s);
+        }
+        return s_;
+    case 7:
+        ingredient = lang(u8"パン"s, u8"bread"s);
+        switch (rank)
+        {
+        case 1:
+            return lang(u8"恐怖の"s + ingredient, u8"fearsome "s + ingredient);
+        case 2:
+            return lang(u8"ガチガチの"s + ingredient, u8"hard "s + ingredient);
+        case 3:
+            return lang(u8"くるみパン"s, u8"walnut bread"s);
+        case 4:
+            return lang(u8"アップルパイ"s, u8"apple pie"s);
+        case 5:
+            return lang(u8"サンドイッチ"s, u8"sandwich"s);
+        case 6:
+            return lang(u8"クロワッサン"s, u8"croissant"s);
+        case 7:
+            return lang(u8"コロッケパン"s, u8"croquette sandwich"s);
+        case 8:
+            return lang(u8"カレーパン"s, u8"chocolate babka"s);
+        case 9:
+            return lang(u8"メロンパン"s, u8"melon flavored bread"s);
+        }
+        return s_;
+    case 8:
+        if (character_id == 0)
+        {
+            ingredient = lang(u8"鳥"s, u8"animal"s);
         }
         else
         {
-            n_at_m33 = refchara_str(prm_376, 2);
+            ingredient = refchara_str(character_id, 2);
         }
-        if (prm_375 == 1)
+        switch (rank)
         {
-            p_at_m33 = (lang(
-                            u8"グロテスクな"s + n_at_m33 + u8"の卵"s,
-                            u8"grotesque "s + n_at_m33 + u8" egg"s)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    u8"グロテスクな"s + n_at_m33 + u8"の卵"s,
-                    u8"grotesque "s + n_at_m33 + u8" egg"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
+        case 1:
+            return lang(
+                u8"グロテスクな"s + ingredient + u8"の卵"s,
+                u8"grotesque "s + ingredient + u8" egg"s);
+        case 2:
+            return lang(
+                u8"焦げた"s + ingredient + u8"の卵"s,
+                u8"overcooked "s + ingredient + u8" egg"s);
+        case 3:
+            return lang(
+                ingredient + u8"の卵の目玉焼き"s,
+                u8"fried "s + ingredient + u8" egg"s);
+        case 4:
+            return lang(
+                ingredient + u8"風味のキッシュ"s, ingredient + u8" egg toast"s);
+        case 5:
+            return lang(
+                u8"半熟"s + ingredient,
+                u8"soft boiled "s + ingredient + u8" egg"s);
+        case 6:
+            return lang(
+                ingredient + u8"の卵入りスープ"s,
+                u8"soup with "s + ingredient + u8" egg"s);
+        case 7:
+            return lang(
+                u8"熟成"s + ingredient + u8"チーズ"s,
+                u8"mature "s + ingredient + u8" cheeze"s);
+        case 8:
+            return lang(
+                ingredient + u8"のレアチーズケーキ"s,
+                ingredient + u8" cheeze cake"s);
+        case 9:
+            return lang(
+                ingredient + u8"風オムライス"s, ingredient + u8" omelet"s);
         }
-        if (prm_375 == 2)
-        {
-            p_at_m33 = (lang(
-                            u8"焦げた"s + n_at_m33 + u8"の卵"s,
-                            u8"overcooked "s + n_at_m33 + u8" egg"s)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    u8"焦げた"s + n_at_m33 + u8"の卵"s,
-                    u8"overcooked "s + n_at_m33 + u8" egg"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 3)
-        {
-            p_at_m33 = (lang(
-                            n_at_m33 + u8"の卵の目玉焼き"s,
-                            u8"fried "s + n_at_m33 + u8" egg"s)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    n_at_m33 + u8"の卵の目玉焼き"s,
-                    u8"fried "s + n_at_m33 + u8" egg"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 4)
-        {
-            p_at_m33 =
-                (lang(
-                     n_at_m33 + u8"風味のキッシュ"s, n_at_m33 + u8" egg toast"s)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    n_at_m33 + u8"風味のキッシュ"s, n_at_m33 + u8" egg toast"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 5)
-        {
-            p_at_m33 = (lang(
-                            u8"半熟"s + n_at_m33,
-                            u8"soft boiled "s + n_at_m33 + u8" egg"s)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    u8"半熟"s + n_at_m33,
-                    u8"soft boiled "s + n_at_m33 + u8" egg"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 6)
-        {
-            p_at_m33 = (lang(
-                            n_at_m33 + u8"の卵入りスープ"s,
-                            u8"soup with "s + n_at_m33 + u8" egg"s)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    n_at_m33 + u8"の卵入りスープ"s,
-                    u8"soup with "s + n_at_m33 + u8" egg"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 7)
-        {
-            p_at_m33 = (lang(
-                            u8"熟成"s + n_at_m33 + u8"チーズ"s,
-                            u8"mature "s + n_at_m33 + u8" cheeze"s)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    u8"熟成"s + n_at_m33 + u8"チーズ"s,
-                    u8"mature "s + n_at_m33 + u8" cheeze"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 8)
-        {
-            p_at_m33 = (lang(
-                            n_at_m33 + u8"のレアチーズケーキ"s,
-                            n_at_m33 + u8" cheeze cake"s)
-                        != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    n_at_m33 + u8"のレアチーズケーキ"s,
-                    n_at_m33 + u8" cheeze cake"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        if (prm_375 == 9)
-        {
-            p_at_m33 =
-                (lang(n_at_m33 + u8"風オムライス"s, n_at_m33 + u8" omelet"s)
-                 != ""s)
-                + 0 + 0;
-            p_at_m33 = prm_376 % p_at_m33;
-            if (p_at_m33 == 0)
-            {
-                return lang(
-                    n_at_m33 + u8"風オムライス"s, n_at_m33 + u8" omelet"s);
-            }
-            else if (p_at_m33 == 1)
-            {
-                return "";
-            }
-            else
-            {
-                return "";
-            }
-        }
-        return s_at_m33;
+        return s_;
+    default:
+        return s_;
     }
-    return s_at_m33;
 }
 
 
