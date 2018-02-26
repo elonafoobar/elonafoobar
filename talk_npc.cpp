@@ -1958,7 +1958,7 @@ void talk_npc()
         {
             snd(12);
             cdata[0].gold -= calccostreload(0);
-            p = calccostreload(0, 1);
+            p = calccostreload(0, true);
             buff = lang(_thanks(2), u8"Thanks!"s);
         }
         else

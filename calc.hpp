@@ -44,7 +44,7 @@ void calccosthire();
 int calccostbuilding();
 int calccosttax();
 int calcmealvalue();
-int calccostreload(int = 0, int = 0);
+int calccostreload(int, bool = false);
 int calccargoupdate();
 int calccargoupdatecost();
 int calcidentifyvalue(int = 0);

@@ -93,7 +93,6 @@ namespace elona
 int rangedist = 0;
 int value_at_m153 = 0;
 int p_at_m153 = 0;
-int cost_at_m153 = 0;
 
 
 
@@ -1391,53 +1390,44 @@ int calcmealvalue()
 
 
 
-int calccostreload(int prm_905, int prm_906)
+int calccostreload(int owner, bool do_reload)
 {
-    int ci_at_m153 = 0;
-    int enc_at_m153 = 0;
-    elona_vector1<int> i_at_m153;
-    cost_at_m153 = 0;
-    inv_getheader(prm_905);
+    int cost{};
+
+    inv_getheader(owner);
     for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
     {
         if (inv[cnt].number == 0)
-        {
             continue;
-        }
         if (the_item_db[inv[cnt].id]->category != 25000)
-        {
             continue;
-        }
-        ci_at_m153 = cnt;
+
+        int ammo = cnt;
         for (int cnt = 0; cnt < 15; ++cnt)
         {
-            if (inv[ci_at_m153].enchantments[cnt].id == 0)
-            {
+            if (inv[ammo].enchantments[cnt].id == 0)
                 break;
-            }
-            enc_at_m153 = inv[ci_at_m153].enchantments[cnt].id;
-            i_at_m153 = enc_at_m153 / 10000;
-            if (i_at_m153 != 0)
+
+            int enc = inv[ammo].enchantments[cnt].id;
+            if (enc / 10000 == 9)
             {
-                enc_at_m153 = enc_at_m153 % 10000;
-                if (i_at_m153 == 9)
+                int type = enc % 10000;
+                int current =
+                    inv[ammo].enchantments[cnt].power % 1000;
+                int max =
+                    inv[ammo].enchantments[cnt].power / 1000;
+                cost += (max - current)
+                    * (50 + type * type * 10);
+                if (do_reload)
                 {
-                    i_at_m153(0) =
-                        inv[ci_at_m153].enchantments[cnt].power % 1000;
-                    i_at_m153(1) =
-                        inv[ci_at_m153].enchantments[cnt].power / 1000;
-                    cost_at_m153 += (i_at_m153(1) - i_at_m153)
-                        * (50 + enc_at_m153 * enc_at_m153 * 10);
-                    if (prm_906 == 1)
-                    {
-                        inv[ci_at_m153].enchantments[cnt].power =
-                            i_at_m153(1) * 1000 + i_at_m153(1);
-                    }
+                    inv[ammo].enchantments[cnt].power =
+                        max * 1000 + max;
                 }
             }
         }
     }
-    return cost_at_m153;
+
+    return cost;
 }
 
 
