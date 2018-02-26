@@ -1264,52 +1264,30 @@ int calchireadv(int adventurer)
 
 
 
-int calchirecost(int prm_903)
+int calchirecost(int cc)
 {
-    value_at_m153 = 0;
-    if (cdata[prm_903].character_role == 18)
+    switch (cdata[cc].character_role)
     {
-        value_at_m153 = 450;
-    }
-    if (cdata[prm_903].character_role == 7)
-    {
-        value_at_m153 = 250;
-    }
-    if (cdata[prm_903].character_role == 9)
-    {
-        value_at_m153 = 350;
-    }
-    if (cdata[prm_903].character_role == 12)
-    {
-        value_at_m153 = 500;
-    }
-    if (cdata[prm_903].character_role == 5)
-    {
-        value_at_m153 = 750;
-    }
-    if (cdata[prm_903].character_role == 8)
-    {
-        value_at_m153 = 250;
-    }
-    if (cdata[prm_903].character_role == 14)
-    {
-        value_at_m153 = 50;
-    }
-    if ((cdata[prm_903].character_role >= 1000
-         && cdata[prm_903].character_role < 2000)
-        || cdata[prm_903].character_role == 2003)
-    {
-        value_at_m153 = 1000;
-        if (cdata[prm_903].character_role == 1007)
+    case 18: return 450;
+    case 7: return 250;
+    case 9: return 350;
+    case 12: return 500;
+    case 5: return 750;
+    case 8: return 250;
+    case 14: return 50;
+    case 1007: return 4000;
+    case 2003: return 0;
+    default:
+        if (cdata[cc].character_role >= 1000
+             && cdata[cc].character_role < 2000)
         {
-            value_at_m153 *= 4;
+            return 1000;
         }
-        if (cdata[prm_903].character_role == 2003)
+        else
         {
-            value_at_m153 = 0;
+            return 0;
         }
     }
-    return value_at_m153;
 }
 
 
