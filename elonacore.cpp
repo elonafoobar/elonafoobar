@@ -63031,7 +63031,8 @@ void label_2244()
                             u8" for a friendly price of "s +
                             calclearncost(csskill, cc, true) +
                             u8" platinum pieces. Do you want me to train you?"s);
-                    if (cdata[0].platinum_coin >= calclearncost(csskill, cc, true))
+                    if (cdata[0].platinum_coin
+                        >= calclearncost(csskill, cc, true))
                     {
                         list(0, listmax) = 1;
                         listn(0, listmax) =
@@ -63050,7 +63051,8 @@ void label_2244()
                             u8" skill for a friendly price of "s +
                             calctraincost(csskill, cc, true) +
                             u8" platinum pieces. Do you want me to train you?"s);
-                    if (cdata[0].platinum_coin >= calctraincost(csskill, cc, true))
+                    if (cdata[0].platinum_coin
+                        >= calctraincost(csskill, cc, true))
                     {
                         list(0, listmax) = 2;
                         listn(0, listmax) = lang(u8"訓練する"s, u8"Train me."s);

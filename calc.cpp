@@ -1275,8 +1275,7 @@ int calchirecost(int cc)
     case 1007: return 4000;
     case 2003: return 0;
     default:
-        if (cdata[cc].character_role >= 1000
-             && cdata[cc].character_role < 2000)
+        if (cdata[cc].character_role >= 1000 && cdata[cc].character_role < 2000)
         {
             return 1000;
         }
@@ -1292,8 +1291,7 @@ int calchirecost(int cc)
 void generatemoney(int cc)
 {
     int gold = rnd(100) + rnd(cdata[cc].level * 50 + 1);
-    if ((cdata[cc].character_role >= 1000
-         && cdata[cc].character_role < 2000)
+    if ((cdata[cc].character_role >= 1000 && cdata[cc].character_role < 2000)
         || cdata[cc].character_role == 2003)
     {
         gold += 2500 + cdata[cc].shop_rank * 250;
@@ -1318,10 +1316,11 @@ void calccosthire()
         cost += calchirecost(cnt);
     }
     cost = cost
-        * std::clamp(100 - std::clamp(cdata[0].karma / 2, 0, 50)
-                      - 7 * trait(38) - (cdata[0].karma >= 20) * 5,
-                     25,
-                     200)
+        * std::clamp(
+               100 - std::clamp(cdata[0].karma / 2, 0, 50) - 7 * trait(38)
+                   - (cdata[0].karma >= 20) * 5,
+               25,
+               200)
         / 100;
     gdata_cost_to_hire = cost;
 }
@@ -1336,30 +1335,21 @@ int calccostbuilding()
     {
         switch (adata(16, cnt))
         {
-        case 101:
-            cost += 1500;
-            break;
-        case 31:
-            cost += 1000;
-            break;
-        case 103:
-            cost += 750;
-            break;
-        case 102:
-            cost += 5000;
-            break;
-        case 104:
-            cost += 750;
-            break;
+        case 101: cost += 1500; break;
+        case 31: cost += 1000; break;
+        case 103: cost += 750; break;
+        case 102: cost += 5000; break;
+        case 104: cost += 750; break;
         default: break;
         }
     }
 
     return cost
-        * std::clamp(100 - std::clamp(cdata[0].karma / 2, 0, 50)
-                      - 7 * trait(38) - (cdata[0].karma >= 20) * 5,
-                     25,
-                     200)
+        * std::clamp(
+               100 - std::clamp(cdata[0].karma / 2, 0, 50) - 7 * trait(38)
+                   - (cdata[0].karma >= 20) * 5,
+               25,
+               200)
         / 100;
 }
 
@@ -1372,10 +1362,11 @@ int calccosttax()
     cost += cdata[0].fame;
     cost += cdata[0].level * 200;
     return cost
-        * std::clamp(100 - std::clamp(cdata[0].karma / 2, 0, 50)
-                      - 7 * trait(38) - (cdata[0].karma >= 20) * 5,
-                     25,
-                     200)
+        * std::clamp(
+               100 - std::clamp(cdata[0].karma / 2, 0, 50) - 7 * trait(38)
+                   - (cdata[0].karma >= 20) * 5,
+               25,
+               200)
         / 100;
 }
 
@@ -1410,16 +1401,12 @@ int calccostreload(int owner, bool do_reload)
             if (enc / 10000 == 9)
             {
                 int type = enc % 10000;
-                int current =
-                    inv[ammo].enchantments[cnt].power % 1000;
-                int max =
-                    inv[ammo].enchantments[cnt].power / 1000;
-                cost += (max - current)
-                    * (50 + type * type * 10);
+                int current = inv[ammo].enchantments[cnt].power % 1000;
+                int max = inv[ammo].enchantments[cnt].power / 1000;
+                cost += (max - current) * (50 + type * type * 10);
                 if (do_reload)
                 {
-                    inv[ammo].enchantments[cnt].power =
-                        max * 1000 + max;
+                    inv[ammo].enchantments[cnt].power = max * 1000 + max;
                 }
             }
         }
@@ -1495,18 +1482,15 @@ int calclearncost(int skill_id, int cc, bool discount)
     (void)cc;
 
     int platinum = 15 + 3 * gdata_number_of_learned_skills_by_trainer;
-    return discount
-        ? platinum * 2 / 3
-        : platinum;
+    return discount ? platinum * 2 / 3 : platinum;
 }
 
 
 
 int calcresurrectvalue(int pet)
 {
-    return cdata[pet].state != 6
-        ? 100
-        : cdata[pet].level * cdata[pet].level * 15;
+    return cdata[pet].state != 6 ? 100
+                                 : cdata[pet].level * cdata[pet].level * 15;
 }
 
 
@@ -1561,9 +1545,7 @@ int calcspellpower(int id, int cc)
     {
         if (the_ability_db[id].related_basic_attribute != 0)
         {
-            return sdata(
-                       the_ability_db[id].related_basic_attribute, cc)
-                * 6
+            return sdata(the_ability_db[id].related_basic_attribute, cc) * 6
                 + 10;
         }
         return 100;
@@ -1629,8 +1611,7 @@ int calcspellfail(int id, int cc)
     }
 
     int percentage = 90 + sdata(id, cc)
-        - the_ability_db[id].sdataref4 * penalty
-            / (5 + sdata(172, cc) * 4);
+        - the_ability_db[id].sdataref4 * penalty / (5 + sdata(172, cc) * 4);
     if (armor_skill == 169)
     {
         if (percentage > 80)
@@ -1673,23 +1654,20 @@ int calcspellcostmp(int id, int cc)
 
     if (cc == 0)
     {
-        if (id == 413 || id == 461 || id == 457 || id == 438
-            || id == 409 || id == 408 || id == 410
-            || id == 466)
+        if (id == 413 || id == 461 || id == 457 || id == 438 || id == 409
+            || id == 408 || id == 410 || id == 466)
         {
             return the_ability_db[id].cost;
         }
         else
         {
-            return the_ability_db[id].cost
-                    * (100 + sdata(id, cc) * 3) / 100
+            return the_ability_db[id].cost * (100 + sdata(id, cc) * 3) / 100
                 + sdata(id, cc) / 8;
         }
     }
     else
     {
-        return the_ability_db[id].cost
-            * (50 + cdata[cc].level * 3) / 100;
+        return the_ability_db[id].cost * (50 + cdata[cc].level * 3) / 100;
     }
 }
 
@@ -1700,8 +1678,7 @@ int calcspellcoststock(int id, int cc)
     if (debug::voldemort)
         return 1;
 
-    int cost = the_ability_db[id].cost * 200
-        / (sdata(id, cc) * 3 + 100);
+    int cost = the_ability_db[id].cost * 200 / (sdata(id, cc) * 3 + 100);
     if (cost < the_ability_db[id].cost / 5)
     {
         cost = the_ability_db[id].cost / 5;
