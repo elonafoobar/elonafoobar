@@ -1771,33 +1771,29 @@ void calcpartyscore()
 
 void calcpartyscore2()
 {
-    p = 0;
+    int score{};
     for (int cnt = 57; cnt < 245; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {
             continue;
         }
-        if (cdata[cnt].impression >= 53)
+        if (cdata[cnt].impression >= 53 && cdata[cnt].quality >= 4)
         {
-            if (cdata[cnt].quality >= 4)
-            {
-                p += 20 + cdata[cnt].level / 2;
-                txt(lang(
-                    cdatan(0, cnt) + u8"は満足した。"s,
-                    cdatan(0, cnt) + u8" "s + is(cnt) + u8" satisfied."s));
-            }
+            score += 20 + cdata[cnt].level / 2;
+            txt(lang(
+                cdatan(0, cnt) + u8"は満足した。"s,
+                cdatan(0, cnt) + u8" "s + is(cnt) + u8" satisfied."s));
         }
     }
-    if (p != 0)
+    if (score != 0)
     {
         txt(lang(
-            u8"(合計ボーナス:"s + p + u8"%) "s,
-            u8"(Total Bonus:"s + p + u8"%)"s));
+            u8"(合計ボーナス:"s + score + u8"%) "s,
+            u8"(Total Bonus:"s + score + u8"%)"s));
     }
     qdata(13, gdata_executing_immediate_quest) =
-        qdata(13, gdata_executing_immediate_quest) * (100 + p) / 100;
-    return;
+        qdata(13, gdata_executing_immediate_quest) * (100 + score) / 100;
 }
 
 
