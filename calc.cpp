@@ -1292,20 +1292,19 @@ int calchirecost(int cc)
 
 
 
-void generatemoney(int prm_904)
+void generatemoney(int cc)
 {
-    p_at_m153 = rnd(100) + rnd((cdata[prm_904].level * 50 + 1));
-    if ((cdata[prm_904].character_role >= 1000
-         && cdata[prm_904].character_role < 2000)
-        || cdata[prm_904].character_role == 2003)
+    int gold = rnd(100) + rnd(cdata[cc].level * 50 + 1);
+    if ((cdata[cc].character_role >= 1000
+         && cdata[cc].character_role < 2000)
+        || cdata[cc].character_role == 2003)
     {
-        p_at_m153 += 2500 + cdata[prm_904].shop_rank * 250;
+        gold += 2500 + cdata[cc].shop_rank * 250;
     }
-    if (cdata[prm_904].gold < p_at_m153 / 2)
+    if (cdata[cc].gold < gold / 2)
     {
-        cdata[prm_904].gold = p_at_m153;
+        cdata[cc].gold = gold;
     }
-    return;
 }
 
 
