@@ -1508,14 +1508,11 @@ int calclearncost(int, int, int prm_913)
 
 
 
-int calcresurrectvalue(int prm_914)
+int calcresurrectvalue(int pet)
 {
-    if (cdata[prm_914].state != 6)
-    {
-        return 100;
-    }
-    value_at_m153 = cdata[prm_914].level * cdata[prm_914].level * 15;
-    return value_at_m153;
+    return cdata[pet].state != 6
+        ? 100
+        : cdata[pet].level * cdata[pet].level * 15;
 }
 
 
