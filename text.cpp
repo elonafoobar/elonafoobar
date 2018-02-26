@@ -1487,124 +1487,103 @@ std::string _ta(int mark)
 
 
 
+std::string replace_tag(const std::string source)
+{
+    if (source == u8"ref"s && talkref == 1)
+    {
+        return lang(
+            ""s + gdata_number_of_waiting_guests,
+            ""s + gdata_number_of_waiting_guests + u8" guest"s
+                + _s2(gdata_number_of_waiting_guests));
+    }
+    if (source == u8"you"s)
+    {
+        return _kimi(3);
+    }
+    if (source == u8"sex"s)
+    {
+        return i18n::_(u8"ui", u8"sex2", u8"_0");
+    }
+    if (source == u8"player"s)
+    {
+        return cdatan(0, 0);
+    }
+    if (source == u8"aka"s)
+    {
+        return cdatan(1, 0);
+    }
+    if (source == u8"npc"s)
+    {
+        return cdatan(0, tc);
+    }
+    if (source == u8"ある"s)
+    {
+        return _aru(3);
+    }
+    if (source == u8"が"s)
+    {
+        return _ga(3);
+    }
+    if (source == u8"か"s)
+    {
+        return _ka(3);
+    }
+    if (source == u8"かな"s)
+    {
+        return _kana(3);
+    }
+    if (source == u8"だ"s)
+    {
+        return _da(3);
+    }
+    if (source == u8"よ"s)
+    {
+        return _yo(3);
+    }
+    if (source == u8"だな"s)
+    {
+        return _dana(3);
+    }
+    if (source == u8"だろ"s)
+    {
+        return _daro(3);
+    }
+    if (source == u8"る"s)
+    {
+        return _ru(3);
+    }
+    if (source == u8"のだ"s)
+    {
+        return _nda(3);
+    }
+    if (source == u8"な"s)
+    {
+        return _na(3);
+    }
+    if (source == u8"くれ"s)
+    {
+        return _kure(3);
+    }
+    return u8"Unknown Code"s;
+}
+
+
 void replace_tags_in_quest_board()
 {
-    for (int cnt = 0; cnt < 20; ++cnt)
+    while (1)
     {
-        await();
-        p(0) = instr(buff, 0, u8"{"s);
-        p(1) = instr(buff, p, u8"}"s);
-        p(2) = std::size(buff(0));
-        if (p == -1)
+        const int p0 = instr(buff, 0, u8"{"s);
+        const int p1 = instr(buff, p0, u8"}"s);
+        const int p2 = std::size(buff(0));
+        if (p0 == -1)
         {
             break;
         }
-        s(0) = strmid(buff, p + 1, p(1) - 1);
-        s(1) = strmid(buff, 0, p);
-        s(2) = strmid(buff, p + p(1) + 1, p(2) - p(1) - p);
-        for (int cnt = 0; cnt < 1; ++cnt)
-        {
-            if (s == u8"ref"s)
-            {
-                if (talkref == 1)
-                {
-                    s = lang(
-                        ""s + gdata_number_of_waiting_guests,
-                        ""s + gdata_number_of_waiting_guests + u8" guest"s
-                            + _s2(gdata_number_of_waiting_guests));
-                    break;
-                }
-            }
-            if (s == u8"you"s)
-            {
-                s = _kimi(3);
-                break;
-            }
-            if (s == u8"sex"s)
-            {
-                s = i18n::_(u8"ui", u8"sex2", u8"_0");
-                break;
-            }
-            if (s == u8"player"s)
-            {
-                s = cdatan(0, 0);
-                break;
-            }
-            if (s == u8"aka"s)
-            {
-                s = cdatan(1, 0);
-                break;
-            }
-            if (s == u8"npc"s)
-            {
-                s = cdatan(0, tc);
-                break;
-            }
-            if (s == u8"ある"s)
-            {
-                s = _aru(3);
-                break;
-            }
-            if (s == u8"が"s)
-            {
-                s = _ga(3);
-                break;
-            }
-            if (s == u8"か"s)
-            {
-                s = _ka(3);
-                break;
-            }
-            if (s == u8"かな"s)
-            {
-                s = _kana(3);
-                break;
-            }
-            if (s == u8"だ"s)
-            {
-                s = _da(3);
-                break;
-            }
-            if (s == u8"よ"s)
-            {
-                s = _yo(3);
-                break;
-            }
-            if (s == u8"だな"s)
-            {
-                s = _dana(3);
-                break;
-            }
-            if (s == u8"だろ"s)
-            {
-                s = _daro(3);
-                break;
-            }
-            if (s == u8"る"s)
-            {
-                s = _ru(3);
-                break;
-            }
-            if (s == u8"のだ"s)
-            {
-                s = _nda(3);
-                break;
-            }
-            if (s == u8"な"s)
-            {
-                s = _na(3);
-                break;
-            }
-            if (s == u8"くれ"s)
-            {
-                s = _kure(3);
-                break;
-            }
-            s = u8"Unknown Code"s;
-        }
-        buff = s(1) + s + s(2);
+        const auto tag = strmid(buff, p0 + 1, p1 - 1);
+        const auto head = strmid(buff, 0, p0);
+        const auto tail = strmid(buff, p0 + p1 + 1, p2 - p1 - p0);
+        buff = head + replace_tag(tag) + tail;
     }
-    return;
 }
 
 
