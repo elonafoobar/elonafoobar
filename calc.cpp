@@ -1484,14 +1484,10 @@ int calcidentifyvalue(int prm_907)
 
 
 
-int calctraincost(int prm_908, int prm_909, int prm_910)
+int calctraincost(int skill_id, int cc, bool discount)
 {
-    value_at_m153 = sdata.get(prm_908, prm_909).original_level / 5 + 2;
-    if (prm_910)
-    {
-        value_at_m153 /= 2;
-    }
-    return value_at_m153;
+    int platinum = sdata.get(skill_id, cc).original_level / 5 + 2;
+    return discount ? platinum / 2 : platinum;
 }
 
 

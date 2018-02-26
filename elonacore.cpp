@@ -63043,14 +63043,14 @@ void label_2244()
                 {
                     buff = lang(i18n::_(u8"ability", std::to_string(csskill), u8"name") +
                             u8"のスキルを、友達価格の"s +
-                            calctraincost(csskill, cc, 1) + i18n::_(u8"ui", u8"platinum") +
+                            calctraincost(csskill, cc, true) + i18n::_(u8"ui", u8"platinum") +
                             u8"で訓練してもいい"s + _ga(3) + u8"どう"s +
                             _kana(1),
                         u8"I can train your "s + i18n::_(u8"ability", std::to_string(csskill), u8"name") +
                             u8" skill for a friendly price of "s +
-                            calctraincost(csskill, cc, 1) +
+                            calctraincost(csskill, cc, true) +
                             u8" platinum pieces. Do you want me to train you?"s);
-                    if (cdata[0].platinum_coin >= calctraincost(csskill, cc, 1))
+                    if (cdata[0].platinum_coin >= calctraincost(csskill, cc, true))
                     {
                         list(0, listmax) = 2;
                         listn(0, listmax) = lang(u8"訓練する"s, u8"Train me."s);
@@ -63111,7 +63111,7 @@ void label_2244()
                 }
                 if (chatval == 2)
                 {
-                    cdata[0].platinum_coin -= calctraincost(csskill, 0, 1);
+                    cdata[0].platinum_coin -= calctraincost(csskill, 0, true);
                     modify_potential(
                         cc,
                         csskill,
