@@ -1370,17 +1370,16 @@ int calccostbuilding()
 
 int calccosttax()
 {
-    cost_at_m153 = 0;
-    cost_at_m153 += cdata[0].gold / 1000;
-    cost_at_m153 += cdata[0].fame;
-    cost_at_m153 += cdata[0].level * 200;
-    cost_at_m153 = cost_at_m153
-        * std::clamp((100 - std::clamp(cdata[0].karma / 2, 0, 50)
-                      - 7 * trait(38) - (cdata[0].karma >= 20) * 5),
+    int cost{};
+    cost += cdata[0].gold / 1000;
+    cost += cdata[0].fame;
+    cost += cdata[0].level * 200;
+    return cost
+        * std::clamp(100 - std::clamp(cdata[0].karma / 2, 0, 50)
+                      - 7 * trait(38) - (cdata[0].karma >= 20) * 5,
                      25,
                      200)
         / 100;
-    return cost_at_m153;
 }
 
 
