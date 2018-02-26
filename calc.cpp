@@ -1555,31 +1555,28 @@ int calcinitgold(int owner)
 
 
 
-int calcspellpower(int prm_918, int prm_919)
+int calcspellpower(int id, int cc)
 {
-    if (prm_918 >= 600)
+    if (id >= 600)
     {
-        if (the_ability_db[prm_918].related_basic_attribute != 0)
+        if (the_ability_db[id].related_basic_attribute != 0)
         {
             return sdata(
-                       the_ability_db[prm_918].related_basic_attribute, prm_919)
+                       the_ability_db[id].related_basic_attribute, cc)
                 * 6
                 + 10;
         }
         return 100;
     }
-    if (prm_919 == 0)
+    if (cc == 0)
     {
-        return sdata(prm_918, prm_919) * 10 + 50;
+        return sdata(id, cc) * 10 + 50;
     }
-    if (sdata(172, prm_919) == 0)
+    if (sdata(172, cc) == 0 && cc >= 16)
     {
-        if (prm_919 >= 16)
-        {
-            return cdata[prm_919].level * 6 + 10;
-        }
+        return cdata[cc].level * 6 + 10;
     }
-    return sdata(172, prm_919) * 6 + 10;
+    return sdata(172, cc) * 6 + 10;
 }
 
 
