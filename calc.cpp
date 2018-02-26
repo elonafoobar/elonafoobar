@@ -1333,38 +1333,37 @@ void calccosthire()
 
 int calccostbuilding()
 {
-    cost_at_m153 = 0;
-    cost_at_m153 += gdata_home_scale * gdata_home_scale * 200;
+    int cost = gdata_home_scale * gdata_home_scale * 200;
+
     for (int cnt = 300; cnt < 450; ++cnt)
     {
-        if (adata(16, cnt) == 101)
+        switch (adata(16, cnt))
         {
-            cost_at_m153 += 1500;
-        }
-        if (adata(16, cnt) == 31)
-        {
-            cost_at_m153 += 1000;
-        }
-        if (adata(16, cnt) == 103)
-        {
-            cost_at_m153 += 750;
-        }
-        if (adata(16, cnt) == 102)
-        {
-            cost_at_m153 += 5000;
-        }
-        if (adata(16, cnt) == 104)
-        {
-            cost_at_m153 += 750;
+        case 101:
+            cost += 1500;
+            break;
+        case 31:
+            cost += 1000;
+            break;
+        case 103:
+            cost += 750;
+            break;
+        case 102:
+            cost += 5000;
+            break;
+        case 104:
+            cost += 750;
+            break;
+        default: break;
         }
     }
-    cost_at_m153 = cost_at_m153
-        * std::clamp((100 - std::clamp(cdata[0].karma / 2, 0, 50)
-                      - 7 * trait(38) - (cdata[0].karma >= 20) * 5),
+
+    return cost
+        * std::clamp(100 - std::clamp(cdata[0].karma / 2, 0, 50)
+                      - 7 * trait(38) - (cdata[0].karma >= 20) * 5,
                      25,
                      200)
         / 100;
-    return cost_at_m153;
 }
 
 
