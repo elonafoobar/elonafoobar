@@ -596,13 +596,10 @@ int calc_rate_to_pierce(int id)
 
 
 
-std::string calcage(int prm_762)
+std::string calcage(int cc)
 {
-    if (gdata_year - cdata[prm_762].birth_year < 0)
-    {
-        return lang(u8"不明"s, u8"Unknown"s);
-    }
-    return std::to_string(gdata_year - cdata[prm_762].birth_year);
+    int n = gdata_year - cdata[cc].birth_year;
+    return n >= 0 ? std::to_string(n) : lang(u8"不明", u8"Unknown");
 }
 
 
