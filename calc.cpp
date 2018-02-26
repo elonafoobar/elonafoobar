@@ -1257,9 +1257,9 @@ int calcguiltvalue()
 
 
 
-int calchireadv(int prm_902)
+int calchireadv(int adventurer)
 {
-    return 250 + cdata[prm_902].level * cdata[prm_902].level * 30;
+    return 250 + cdata[adventurer].level * cdata[adventurer].level * 30;
 }
 
 
