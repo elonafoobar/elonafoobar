@@ -1386,8 +1386,7 @@ int calccosttax()
 
 int calcmealvalue()
 {
-    value_at_m153 = 140;
-    return value_at_m153;
+    return 140;
 }
 
 
