@@ -1496,14 +1496,15 @@ int calctraincost(int prm_908, int prm_909, int prm_910)
 
 
 
-int calclearncost(int, int, int prm_913)
+int calclearncost(int skill_id, int cc, bool discount)
 {
-    value_at_m153 = 15 + 3 * gdata_number_of_learned_skills_by_trainer;
-    if (prm_913)
-    {
-        value_at_m153 = value_at_m153 * 2 / 3;
-    }
-    return value_at_m153;
+    (void)skill_id;
+    (void)cc;
+
+    int platinum = 15 + 3 * gdata_number_of_learned_skills_by_trainer;
+    return discount
+        ? platinum * 2 / 3
+        : platinum;
 }
 
 

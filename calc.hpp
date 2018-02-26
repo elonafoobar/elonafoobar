@@ -49,7 +49,7 @@ int calccargoupdate();
 int calccargoupdatecost();
 int calcidentifyvalue(int = 0);
 int calctraincost(int = 0, int = 0, int = 0);
-int calclearncost(int = 0, int = 0, int = 0);
+int calclearncost(int, int, bool = false);
 int calcresurrectvalue(int = 0);
 int calcslavevalue(int = 0);
 int calcrestorecost();

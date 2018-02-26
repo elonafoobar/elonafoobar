@@ -63024,14 +63024,14 @@ void label_2244()
                 {
                     buff = lang(i18n::_(u8"ability", std::to_string(csskill), u8"name") +
                             u8"のスキルを、友達価格の"s +
-                            calclearncost(csskill, cc, 1) + i18n::_(u8"ui", u8"platinum") +
+                            calclearncost(csskill, cc, true) + i18n::_(u8"ui", u8"platinum") +
                             u8"で教えてあげてもいい"s + _ga(3) + u8"どう"s +
                             _kana(1),
                         u8"I can teach you the art of "s + i18n::_(u8"ability", std::to_string(csskill), u8"name") +
                             u8" for a friendly price of "s +
-                            calclearncost(csskill, cc, 1) +
+                            calclearncost(csskill, cc, true) +
                             u8" platinum pieces. Do you want me to train you?"s);
-                    if (cdata[0].platinum_coin >= calclearncost(csskill, cc, 1))
+                    if (cdata[0].platinum_coin >= calclearncost(csskill, cc, true))
                     {
                         list(0, listmax) = 1;
                         listn(0, listmax) =
@@ -63086,7 +63086,7 @@ void label_2244()
                 snd(12);
                 if (chatval == 1)
                 {
-                    cdata[0].platinum_coin -= calclearncost(csskill, 0, 1);
+                    cdata[0].platinum_coin -= calclearncost(csskill, 0, true);
                     skillgain(cc, csskill);
                     ++gdata_number_of_learned_skills_by_trainer;
                     listmax = 0;
