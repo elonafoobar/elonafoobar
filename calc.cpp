@@ -1812,7 +1812,7 @@ int calcscore()
 
 void calcpartyscore()
 {
-    p = 0;
+    int score = 0;
     for (int cnt = 57; cnt < 245; ++cnt)
     {
         if (cdata[cnt].state != 1)
@@ -1821,27 +1821,26 @@ void calcpartyscore()
         }
         if (cdata[cnt].impression >= 53)
         {
-            p += cdata[cnt].level + 5;
+            score += cdata[cnt].level + 5;
         }
         if (cdata[cnt].impression < 50)
         {
-            p -= 20;
+            score -= 20;
         }
     }
-    if (p > qdata(13, gdata_executing_immediate_quest))
+    if (score > qdata(13, gdata_executing_immediate_quest))
     {
         txtef(4);
-        txt(u8"(+"s + (p - qdata(13, gdata_executing_immediate_quest))
+        txt(u8"(+"s + (score - qdata(13, gdata_executing_immediate_quest))
             + u8") "s);
     }
-    if (p < qdata(13, gdata_executing_immediate_quest))
+    if (score < qdata(13, gdata_executing_immediate_quest))
     {
         txtef(3);
-        txt(u8"("s + (p - qdata(13, gdata_executing_immediate_quest))
+        txt(u8"("s + (score - qdata(13, gdata_executing_immediate_quest))
             + u8") "s);
     }
-    qdata(13, gdata_executing_immediate_quest) = p;
-    return;
+    qdata(13, gdata_executing_immediate_quest) = score;
 }
 
 
