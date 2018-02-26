@@ -1718,18 +1718,18 @@ int calcspellcoststock(int id, int cc)
 
 int calcscore()
 {
-    p = cdata[0].level * cdata[0].level
+    int score = cdata[0].level * cdata[0].level
         + gdata_deepest_dungeon_level * gdata_deepest_dungeon_level
         + gdata_kill_count;
     if (gdata_death_count > 1)
     {
-        p = p / 10 + 1;
+        score = score / 10 + 1;
     }
     if (gdata_wizard)
     {
-        p = 0;
+        score = 0;
     }
-    return p;
+    return score;
 }
 
 
