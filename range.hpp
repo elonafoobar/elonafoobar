@@ -150,4 +150,78 @@ void sort(R&& range, F compare)
 }
 
 
+
+template <typename T>
+struct iota
+{
+    iota(T first, T last)
+        : first(first)
+        , last(last)
+    {
+    }
+
+
+    iota(T last)
+        : iota(0, last)
+    {
+    }
+
+
+    struct iterator
+    {
+        using value_type = const T;
+        using difference_type = size_t;
+        using pointer = const T*;
+        using reference = const T&;
+        using iterator_category = std::random_access_iterator_tag;
+
+
+        iterator(T n)
+            : n(n)
+        {
+        }
+
+
+        void operator++()
+        {
+            ++n;
+        }
+
+
+        reference operator*() const
+        {
+            return n;
+        }
+
+
+        bool operator!=(const iterator& other) const
+        {
+            return n != other.n;
+        }
+
+
+    private:
+        T n;
+    };
+
+
+    iterator begin() const
+    {
+        return {first};
+    }
+
+
+    iterator end() const
+    {
+        return {last};
+    }
+
+
+private:
+    const T first;
+    const T last;
+};
+
+
+
 } // namespace elona::range
