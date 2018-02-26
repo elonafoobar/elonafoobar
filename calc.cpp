@@ -1237,17 +1237,15 @@ int calcitemvalue(int ci, int situation)
 
 
 
-int calcinvestvalue(int)
+int calcinvestvalue()
 {
-    value_at_m153 = std::clamp(cdata[tc].shop_rank, 1, 200)
-            * std::clamp(cdata[tc].shop_rank, 1, 200) * 15
-        + 200;
-    if (value_at_m153 > 500000)
+    int rank = std::clamp(cdata[tc].shop_rank, 1, 200);
+    int ret = rank * rank * 15 + 200;
+    if (ret > 500'000)
     {
-        value_at_m153 = 500000;
+        ret = 500'000;
     }
-    value_at_m153 = value_at_m153 * 100 / (100 + sdata(160, 0) * 10) + 200;
-    return value_at_m153;
+    return ret * 100 / (100 + sdata(160, 0) * 10) + 200;
 }
 
 

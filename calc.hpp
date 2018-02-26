@@ -35,7 +35,7 @@ int calcattackhit();
 int calcattackdmg(int = 0);
 int calcmedalvalue(int = 0);
 int calcitemvalue(int = 0, int = 0);
-int calcinvestvalue(int = 0);
+int calcinvestvalue();
 int calcguiltvalue();
 int calchireadv(int = 0);
 int calchirecost(int = 0);
