@@ -1252,11 +1252,9 @@ int calcinvestvalue(int)
 
 
 
-int calcguiltvalue(int)
+int calcguiltvalue()
 {
-    value_at_m153 =
-        (-cdata[0].karma + -30) * (cdata[0].fame / 2 + cdata[0].level * 200);
-    return value_at_m153;
+    return -(cdata[0].karma + 30) * (cdata[0].fame / 2 + cdata[0].level * 200);
 }
 
 
