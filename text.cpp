@@ -1753,45 +1753,21 @@ std::string cnvweight(int weight)
 
 
 
-std::string fltname(int prm_400)
+std::string fltname(int category)
 {
-    if (prm_400 == 60001)
+    switch (category)
     {
-        return lang(u8"井戸"s, u8"well"s);
+    case 60001: return lang(u8"井戸", u8"well");
+    case 57000: return lang(u8"食べ物", u8"food");
+    case 56000: return lang(u8"杖", u8"rods");
+    case 53000: return lang(u8"巻物", u8"scrolls");
+    case 52000: return lang(u8"ポーション", u8"potions");
+    case 64000: return lang(u8"ジャンク", u8"junks");
+    case 77000: return lang(u8"鉱石", u8"ores");
+    case 60000: return lang(u8"家具", u8"furniture");
+    case 25000: return lang(u8"矢弾", u8"ammos");
+    default: return lang(u8"不明", u8"Unknown");
     }
-    if (prm_400 == 57000)
-    {
-        return lang(u8"食べ物"s, u8"food"s);
-    }
-    if (prm_400 == 56000)
-    {
-        return lang(u8"杖"s, u8"rods"s);
-    }
-    if (prm_400 == 53000)
-    {
-        return lang(u8"巻物"s, u8"scrolls"s);
-    }
-    if (prm_400 == 52000)
-    {
-        return lang(u8"ポーション"s, u8"potions"s);
-    }
-    if (prm_400 == 64000)
-    {
-        return lang(u8"ジャンク"s, u8"junks"s);
-    }
-    if (prm_400 == 77000)
-    {
-        return lang(u8"鉱石"s, u8"ores"s);
-    }
-    if (prm_400 == 60000)
-    {
-        return lang(u8"家具"s, u8"furniture"s);
-    }
-    if (prm_400 == 25000)
-    {
-        return lang(u8"矢弾"s, u8"ammos"s);
-    }
-    return lang(u8"不明"s, u8"Unknown"s);
 }
 
 
