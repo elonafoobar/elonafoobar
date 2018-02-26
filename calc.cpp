@@ -1539,12 +1539,7 @@ int calcslavevalue(int prm_915)
 
 int calcrestorecost()
 {
-    value_at_m153 = 500;
-    if (gdata_belongs_to_fighters_guild)
-    {
-        value_at_m153 /= 2;
-    }
-    return value_at_m153;
+    return gdata_belongs_to_fighters_guild ? 250 : 500;
 }
 
 
