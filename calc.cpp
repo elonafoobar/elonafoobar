@@ -1520,19 +1520,19 @@ int calcresurrectvalue(int prm_914)
 
 
 
-int calcslavevalue(int prm_915)
+int calcslavevalue(int pet)
 {
-    value_at_m153 = sdata(10, prm_915) * sdata(11, prm_915)
-        + cdata[prm_915].level * cdata[prm_915].level + 1000;
-    if (value_at_m153 > 50000)
+    int value = sdata(10, pet) * sdata(11, pet)
+        + cdata[pet].level * cdata[pet].level + 1000;
+    if (value > 50'000)
     {
-        value_at_m153 = 50000;
+        value = 50'000;
     }
-    if (cbit(23, prm_915) || cbit(27, prm_915))
+    if (cbit(23, pet) || cbit(27, pet))
     {
-        value_at_m153 = 10;
+        value = 10;
     }
-    return value_at_m153;
+    return value;
 }
 
 
