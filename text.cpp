@@ -1745,12 +1745,10 @@ void get_npc_talk()
 
 
 
-std::string cnvweight(int prm_399)
+std::string cnvweight(int weight)
 {
-    std::string s_at_m35;
-    s_at_m35 = ""s + std::abs(prm_399) / 1000 + u8"."s
-        + std::abs(prm_399) % 1000 / 100 + ""s + i18n::_(u8"ui", u8"weight");
-    return s_at_m35;
+    return ""s + std::abs(weight) / 1000 + u8'.'
+        + std::abs(weight) % 1000 / 100 + i18n::_(u8"ui", u8"weight");
 }
 
 
