@@ -53,7 +53,7 @@ int calclearncost(int, int, bool = false);
 int calcresurrectvalue(int = 0);
 int calcslavevalue(int = 0);
 int calcrestorecost();
-int calcinitgold(int = 0);
+int calcinitgold(int);
 int calcspellpower(int = 0, int = 0);
 int calcspellfail(int = 0, int = 0);
 int calcspellcostmp(int = 0, int = 0);

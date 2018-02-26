@@ -1535,33 +1535,22 @@ int calcrestorecost()
 
 
 
-int calcinitgold(int prm_917)
+int calcinitgold(int owner)
 {
-    int lootrich_at_m155 = 0;
-    if (prm_917 < 0)
+    if (owner < 0)
     {
         return rnd(gdata_current_dungeon_level * 25 * (gdata_current_map != 30)
                    + 10)
             + 1;
     }
-    lootrich_at_m155 = -1;
-    if (cdata[prm_917].id == 183)
+
+    switch (cdata[owner].id)
     {
-        lootrich_at_m155 = 10;
+    case 183: return 5000 + rnd(11000);
+    case 184: return 2000 + rnd(5000);
+    case 185: return 1000 + rnd(3000);
+    default: return rnd(cdata[owner].level * 25 + 10) + 1;
     }
-    if (cdata[prm_917].id == 184)
-    {
-        lootrich_at_m155 = 4;
-    }
-    if (cdata[prm_917].id == 185)
-    {
-        lootrich_at_m155 = 2;
-    }
-    if (lootrich_at_m155 != -1)
-    {
-        return lootrich_at_m155 * 500 + rnd((1000 + lootrich_at_m155 * 1000));
-    }
-    return rnd(cdata[prm_917].level * 25 + 10) + 1;
 }
 
 
