@@ -393,8 +393,7 @@ void proc_event()
             {
                 txtef(4);
                 txt(lang(
-                    u8"パエル「おかあさんーー！！」"s,
-                    u8"\"M-mom...!!\""s));
+                    u8"パエル「おかあさんーー！！」"s, u8"\"M-mom...!!\""s));
                 cdata[tc].relationship = -3;
                 cdata[tc].hate = 1000;
                 cdata[tc].enemy_id = 0;

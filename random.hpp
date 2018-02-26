@@ -85,5 +85,4 @@ Iterator sample(const Range& range, Iterator result, Distance n)
 
 
 
-
 } // namespace elona

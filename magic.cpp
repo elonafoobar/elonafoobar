@@ -676,8 +676,7 @@ int magic()
                 if (efid == 660)
                 {
                     txt(lang(
-                        u8"「余分な機能は削除してしまえ」"s,
-                        u8"\"Delete.\""s));
+                        u8"「余分な機能は削除してしまえ」"s, u8"\"Delete.\""s));
                     cdata[tc].hp = cdata[tc].max_hp / 12 + 1;
                     goto the_end;
                 }
@@ -1590,12 +1589,9 @@ label_2181_internal:
                 if (en)
                 {
                     txt(name(gdata_mount) + u8" "s + u8"\"Phew.\""s,
-                        name(gdata_mount) + u8" "s
-                            + u8"\"How was my ride?\""s,
-                        name(gdata_mount) + u8" "s
-                            + u8"\"Tired...tired...\""s,
-                        name(gdata_mount) + u8" "s
-                            + u8"\"It was nice.\""s);
+                        name(gdata_mount) + u8" "s + u8"\"How was my ride?\""s,
+                        name(gdata_mount) + u8" "s + u8"\"Tired...tired...\""s,
+                        name(gdata_mount) + u8" "s + u8"\"It was nice.\""s);
                 }
                 ride_end();
                 break;

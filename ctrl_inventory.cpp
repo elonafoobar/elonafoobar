@@ -1691,8 +1691,7 @@ label_2061_internal:
                             || inv[ci].id == 392)
                         {
                             f = 1;
-                            txt(lang(
-                                u8"「おろす…」"s, u8"\"Abortion...\""s));
+                            txt(lang(u8"「おろす…」"s, u8"\"Abortion...\""s));
                         }
                     }
                 }

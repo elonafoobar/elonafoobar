@@ -77,9 +77,7 @@ std::string cnven(const std::string& source)
 
 std::string cnvfix(int n)
 {
-    return n >= 0
-        ? u8"+"s + std::to_string(n)
-        : std::to_string(n);
+    return n >= 0 ? u8"+"s + std::to_string(n) : std::to_string(n);
 }
 
 
@@ -104,8 +102,7 @@ std::string cnvdate(int datetime_id, bool show_hour)
     int year = datetime_id / 24 / 30 / 12;
     if (jp)
     {
-        ret = ""s + year + u8"年"s + month + u8"月"s
-            + day + u8"日"s;
+        ret = ""s + year + u8"年"s + month + u8"月"s + day + u8"日"s;
         if (show_hour)
         {
             ret += std::to_string(hour) + u8"時";
@@ -113,8 +110,7 @@ std::string cnvdate(int datetime_id, bool show_hour)
     }
     else
     {
-        ret = ""s + year + u8" "s + month + u8"/"s
-            + day + u8" "s;
+        ret = ""s + year + u8" "s + month + u8"/"s + day + u8" "s;
         if (show_hour)
         {
             ret += std::to_string(hour) + u8"h";
@@ -319,9 +315,7 @@ std::string mapname(int id, bool description)
 
     switch (adata(16, id))
     {
-    case 4:
-        name = lang(u8"ノースティリス"s, u8"North Tyris"s);
-        break;
+    case 4: name = lang(u8"ノースティリス"s, u8"North Tyris"s); break;
     case 5:
         name = lang(u8"ヴェルニース"s, u8"Vernis"s);
         desc = lang(
@@ -352,15 +346,11 @@ std::string mapname(int id, bool description)
             u8"パルミアの都がある。都は高い壁に囲われている。"s,
             u8"You see the great city of Palmia. Entire city is surrounded by tall wall."s);
         break;
-    case 16:
-        name = lang(u8"灼熱の塔"s, u8"the Tower of Fire"s);
-        break;
+    case 16: name = lang(u8"灼熱の塔"s, u8"the Tower of Fire"s); break;
     case 17:
         name = lang(u8"死者の洞窟"s, u8" the crypt of the damned "s);
         break;
-    case 18:
-        name = lang(u8"古城"s, u8"the Ancient Castle"s);
-        break;
+    case 18: name = lang(u8"古城"s, u8"the Ancient Castle"s); break;
     case 7:
         name = lang(u8"わが家"s, u8"Your Home"s);
         desc = lang(u8"あなたの家だ。"s, u8"It's your sweet home."s);
@@ -375,21 +365,15 @@ std::string mapname(int id, bool description)
         name = lang(u8"すくつ"s, u8"the Void"s);
         desc = lang(u8"なんだこの場所は…？"s, u8"What is this place?"s);
         break;
-    case 2:
-        name = lang(u8"野外"s, u8"Wilderness"s);
-        break;
+    case 2: name = lang(u8"野外"s, u8"Wilderness"s); break;
     case 10:
         name = lang(u8"ルミエスト墓所"s, u8"the graveyard"s);
         desc = lang(
             u8"墓所が見える。辺りは静寂に包まれている…"s,
             u8"You see the graveyard of Lumiest. It's slient. Very silent."s);
         break;
-    case 6:
-        name = lang(u8"闘技場"s, u8"Arena"s);
-        break;
-    case 19:
-        name = lang(u8"竜窟"s, u8"the Dragon's Nest"s);
-        break;
+    case 6: name = lang(u8"闘技場"s, u8"Arena"s); break;
+    case 19: name = lang(u8"竜窟"s, u8"the Dragon's Nest"s); break;
     case 20:
         name = lang(u8"神々の休戦地"s, u8"the Truce Ground"s);
         desc = lang(
@@ -420,33 +404,15 @@ std::string mapname(int id, bool description)
             u8"不気味な城がある。絶対に入ってはいけない予感がする。(危険度は666階相当)"s,
             u8"You see an unearthly fort. Your inner voice wanrs you to not go there. (Approximate danger level: 666) "s);
         break;
-    case 40:
-        name = lang(u8"コロシアム"s, u8"Pet Arena"s);
-        break;
-    case 101:
-        name = lang(u8"博物館"s, u8"My Museum"s);
-        break;
-    case 102:
-        name = lang(u8"店"s, u8"Shop"s);
-        break;
-    case 103:
-        name = lang(u8"畑"s, u8"Crop"s);
-        break;
-    case 104:
-        name = lang(u8"倉庫"s, u8"Storage House"s);
-        break;
-    case 31:
-        name = lang(u8"牧場"s, u8"Ranch"s);
-        break;
-    case 30:
-        name = lang(u8"シェルター"s, u8"Shelter"s);
-        break;
-    case 32:
-        name = lang(u8"パルミア大使館"s, u8"the Embassy"s);
-        break;
-    case 9:
-        name = lang(u8"実験場"s, u8"Test Ground"s);
-        break;
+    case 40: name = lang(u8"コロシアム"s, u8"Pet Arena"s); break;
+    case 101: name = lang(u8"博物館"s, u8"My Museum"s); break;
+    case 102: name = lang(u8"店"s, u8"Shop"s); break;
+    case 103: name = lang(u8"畑"s, u8"Crop"s); break;
+    case 104: name = lang(u8"倉庫"s, u8"Storage House"s); break;
+    case 31: name = lang(u8"牧場"s, u8"Ranch"s); break;
+    case 30: name = lang(u8"シェルター"s, u8"Shelter"s); break;
+    case 32: name = lang(u8"パルミア大使館"s, u8"the Embassy"s); break;
+    case 9: name = lang(u8"実験場"s, u8"Test Ground"s); break;
     case 33:
         name = lang(u8"ノイエル"s, u8"Noyel"s);
         desc = lang(
@@ -456,21 +422,11 @@ std::string mapname(int id, bool description)
     case 34:
         name = lang(u8"工房ミラル・ガロク"s, u8"Miral and Garok's Workshop"s);
         break;
-    case 35:
-        name = lang(u8"ハウスドーム"s, u8"Show House"s);
-        break;
-    case 25:
-        name = lang(u8"ラーナ"s, u8"Larna"s);
-        break;
-    case 26:
-        name = lang(u8"山道"s, u8"the Mountain Pass"s);
-        break;
-    case 27:
-        name = lang(u8"子犬の洞窟"s, u8"the Puppy Cave"s);
-        break;
-    case 28:
-        name = lang(u8"イークの洞窟"s, u8"the Yeek's Nest"s);
-        break;
+    case 35: name = lang(u8"ハウスドーム"s, u8"Show House"s); break;
+    case 25: name = lang(u8"ラーナ"s, u8"Larna"s); break;
+    case 26: name = lang(u8"山道"s, u8"the Mountain Pass"s); break;
+    case 27: name = lang(u8"子犬の洞窟"s, u8"the Puppy Cave"s); break;
+    case 28: name = lang(u8"イークの洞窟"s, u8"the Yeek's Nest"s); break;
     case 29:
         name = lang(u8"妹の館"s, u8"the mansion of younger sister"s);
         break;
@@ -480,12 +436,8 @@ std::string mapname(int id, bool description)
             u8"ルミエストの都が見える。水のせせらぎが聴こえる。"s,
             u8"You see Lumiest. Murmuring of water pleasantly echos."s);
         break;
-    case 37:
-        name = lang(u8"ピラミッド"s, u8"the Pyramid"s);
-        break;
-    case 38:
-        name = lang(u8"ﾐﾉﾀｳﾛｽの巣"s, u8"the Minotaur's Nest"s);
-        break;
+    case 37: name = lang(u8"ピラミッド"s, u8"the Pyramid"s); break;
+    case 38: name = lang(u8"ﾐﾉﾀｳﾛｽの巣"s, u8"the Minotaur's Nest"s); break;
     case 41:
         name = lang(u8"牢獄"s, u8"Jail"s);
         desc = lang(
@@ -495,18 +447,12 @@ std::string mapname(int id, bool description)
     case 43:
         name = lang(u8"ノースティリス南関所"s, u8"North Tyris south border"s);
         break;
-    case 44:
-        name = lang(u8"サウスティリス"s, u8"South Tyris"s);
-        break;
+    case 44: name = lang(u8"サウスティリス"s, u8"South Tyris"s); break;
     case 45:
         name = lang(u8"サウスティリス北関所"s, u8"South Tyris north border"s);
         break;
-    case 46:
-        name = lang(u8"煙とパイプ亭"s, u8"The smoke and pipe"s);
-        break;
-    case 47:
-        name = lang(u8"テストワールド"s, u8"Test World"s);
-        break;
+    case 46: name = lang(u8"煙とパイプ亭"s, u8"The smoke and pipe"s); break;
+    case 47: name = lang(u8"テストワールド"s, u8"Test World"s); break;
     case 48:
         name = lang(u8"テストワールド北関所"s, u8"Test World north border"s);
         break;
@@ -717,8 +663,8 @@ std::string txtskillchange(int id, int cc, bool increase)
         {
             return lang(
                 name(cc) + u8"は周囲の視線を心地よく感じる。"s,
-                name(cc) + u8" enjoy"s + _s(cc) + u8" showing off "s
-                    + his(cc) + u8" body."s);
+                name(cc) + u8" enjoy"s + _s(cc) + u8" showing off "s + his(cc)
+                    + u8" body."s);
         }
         else
         {
@@ -840,36 +786,17 @@ foodname(int type, const std::string& prm_374, int rank, int character_id)
         }
         switch (rank)
         {
-        case 1:
-            return lang(
-                u8"生ごみ同然の"s + s_,
-                u8"kitchen refuse "s + s_);
-        case 2:
-            return lang(
-                u8"悪臭を放つ"s + s_, u8"smelly "s + s_);
-        case 3:
-            return lang(
-                ""s + s_ + u8"のサラダ"s, s_ + u8" salad"s);
-        case 4:
-            return lang(
-                ""s + s_ + u8"の炒め物"s, u8"fried "s + s_);
-        case 5:
-            return lang(
-                ""s + s_ + u8"風味の肉じゃが"s,
-                s_ + u8" roll"s);
-        case 6:
-            return lang(
-                ""s + s_ + u8"の天ぷら"s, s_ + u8" tenpura"s);
-        case 7:
-            return lang(
-                ""s + s_ + u8"の煮込み"s, s_ + u8" gratin"s);
+        case 1: return lang(u8"生ごみ同然の"s + s_, u8"kitchen refuse "s + s_);
+        case 2: return lang(u8"悪臭を放つ"s + s_, u8"smelly "s + s_);
+        case 3: return lang(""s + s_ + u8"のサラダ"s, s_ + u8" salad"s);
+        case 4: return lang(""s + s_ + u8"の炒め物"s, u8"fried "s + s_);
+        case 5: return lang(""s + s_ + u8"風味の肉じゃが"s, s_ + u8" roll"s);
+        case 6: return lang(""s + s_ + u8"の天ぷら"s, s_ + u8" tenpura"s);
+        case 7: return lang(""s + s_ + u8"の煮込み"s, s_ + u8" gratin"s);
         case 8:
             return lang(
-                ""s + s_ + u8"シチュー"s,
-                u8"meat and "s + s_ + u8" stew"s);
-        case 9:
-            return lang(
-                ""s + s_ + u8"風カレー"s, s_ + u8" curry"s);
+                ""s + s_ + u8"シチュー"s, u8"meat and "s + s_ + u8" stew"s);
+        case 9: return lang(""s + s_ + u8"風カレー"s, s_ + u8" curry"s);
         }
         return s_;
     case 3:
@@ -879,64 +806,36 @@ foodname(int type, const std::string& prm_374, int rank, int character_id)
         }
         switch (rank)
         {
-        case 1:
-            return lang(
-                u8"食べてはならない"s + s_,
-                u8"dangerous "s + s_);
-        case 2:
-            return lang(
-                u8"べっちょりした"s + s_, u8"doubtful "s + s_);
+        case 1: return lang(u8"食べてはならない"s + s_, u8"dangerous "s + s_);
+        case 2: return lang(u8"べっちょりした"s + s_, u8"doubtful "s + s_);
         case 3:
             return lang(
-                ""s + s_ + u8"のフルーツサラダ"s,
-                s_ + u8" jelly salad"s);
-        case 4:
-            return lang(
-                ""s + s_ + u8"のプリン"s, s_ + u8" pudding"s);
-        case 5:
-            return lang(
-                ""s + s_ + u8"シャーベット"s,
-                s_ + u8" sherbet"s);
-        case 6:
-            return lang(
-                ""s + s_ + u8"シェイク"s, s_ + u8" ice cream"s);
-        case 7:
-            return lang(
-                ""s + s_ + u8"クレープ"s, s_ + u8" crepe"s);
+                ""s + s_ + u8"のフルーツサラダ"s, s_ + u8" jelly salad"s);
+        case 4: return lang(""s + s_ + u8"のプリン"s, s_ + u8" pudding"s);
+        case 5: return lang(""s + s_ + u8"シャーベット"s, s_ + u8" sherbet"s);
+        case 6: return lang(""s + s_ + u8"シェイク"s, s_ + u8" ice cream"s);
+        case 7: return lang(""s + s_ + u8"クレープ"s, s_ + u8" crepe"s);
         case 8:
-            return lang(
-                ""s + s_ + u8"フルーツケーキ"s,
-                s_ + u8" fruit cake"s);
-        case 9:
-            return lang(
-                ""s + s_ + u8"パフェ"s,
-                s_ + u8" grand parfait"s);
+            return lang(""s + s_ + u8"フルーツケーキ"s, s_ + u8" fruit cake"s);
+        case 9: return lang(""s + s_ + u8"パフェ"s, s_ + u8" grand parfait"s);
         }
         return s_;
     case 5:
         ingredient = lang(u8"麺"s, u8"noodle"s);
         switch (rank)
         {
-        case 1:
-            return lang(u8"禁断の"s + ingredient, u8"risky "s + ingredient);
+        case 1: return lang(u8"禁断の"s + ingredient, u8"risky "s + ingredient);
         case 2:
             return lang(
                 u8"のびてふにゃった"s + ingredient,
                 u8"exhausted "s + ingredient);
-        case 3:
-            return lang(u8"サラダパスタ"s, u8"salad pasta"s);
-        case 4:
-            return lang(u8"うどん"s, u8"udon"s);
-        case 5:
-            return lang(u8"冷やし蕎麦"s, u8"soba"s);
-        case 6:
-            return lang(u8"ペペロンチーノ"s, u8"peperoncino"s);
-        case 7:
-            return lang(u8"カルボナーラ"s, u8"carbonara"s);
-        case 8:
-            return lang(u8"ラーメン"s, u8"ramen"s);
-        case 9:
-            return lang(u8"ミートスパゲティ"s, u8"meat spaghetti"s);
+        case 3: return lang(u8"サラダパスタ"s, u8"salad pasta"s);
+        case 4: return lang(u8"うどん"s, u8"udon"s);
+        case 5: return lang(u8"冷やし蕎麦"s, u8"soba"s);
+        case 6: return lang(u8"ペペロンチーノ"s, u8"peperoncino"s);
+        case 7: return lang(u8"カルボナーラ"s, u8"carbonara"s);
+        case 8: return lang(u8"ラーメン"s, u8"ramen"s);
+        case 9: return lang(u8"ミートスパゲティ"s, u8"meat spaghetti"s);
         }
         return s_;
     case 4:
@@ -946,33 +845,18 @@ foodname(int type, const std::string& prm_374, int rank, int character_id)
         }
         switch (rank)
         {
-        case 1:
-            return lang(
-                u8"原型を留めない"s + s_, u8"collapsed "s + s_);
-        case 2:
-            return lang(u8"まずそうな"s + s_, u8"nasty "s + s_);
-        case 3:
-            return lang(
-                ""s + s_ + u8"クッキー"s, s_ + u8" cookie"s);
-        case 4:
-            return lang(
-                ""s + s_ + u8"のゼリー"s, s_ + u8" jelly"s);
-        case 5:
-            return lang(""s + s_ + u8"パイ"s, s_ + u8" pie"s);
-        case 6:
-            return lang(
-                ""s + s_ + u8"まんじゅう"s, s_ + u8" bun"s);
+        case 1: return lang(u8"原型を留めない"s + s_, u8"collapsed "s + s_);
+        case 2: return lang(u8"まずそうな"s + s_, u8"nasty "s + s_);
+        case 3: return lang(""s + s_ + u8"クッキー"s, s_ + u8" cookie"s);
+        case 4: return lang(""s + s_ + u8"のゼリー"s, s_ + u8" jelly"s);
+        case 5: return lang(""s + s_ + u8"パイ"s, s_ + u8" pie"s);
+        case 6: return lang(""s + s_ + u8"まんじゅう"s, s_ + u8" bun"s);
         case 7:
             return lang(
-                ""s + s_ + u8"風味のシュークリーム"s,
-                s_ + u8" cream puff"s);
-        case 8:
-            return lang(
-                ""s + s_ + u8"のケーキ"s, s_ + u8" cake"s);
+                ""s + s_ + u8"風味のシュークリーム"s, s_ + u8" cream puff"s);
+        case 8: return lang(""s + s_ + u8"のケーキ"s, s_ + u8" cake"s);
         case 9:
-            return lang(
-                ""s + s_ + u8"風ザッハトルテ"s,
-                s_ + u8" sachertorte"s);
+            return lang(""s + s_ + u8"風ザッハトルテ"s, s_ + u8" sachertorte"s);
         }
         return s_;
     case 6:
@@ -982,33 +866,15 @@ foodname(int type, const std::string& prm_374, int rank, int character_id)
         }
         switch (rank)
         {
-        case 1:
-            return lang(
-                ""s + s_ + u8"の残骸"s, u8"leftover "s + s_);
-        case 2:
-            return lang(
-                u8"骨だけ残った"s + s_, u8"bony "s + s_);
-        case 3:
-            return lang(
-                ""s + s_ + u8"のフライ"s, u8"fried "s + s_);
-        case 4:
-            return lang(
-                ""s + s_ + u8"の煮込み"s, u8"stewed "s + s_);
-        case 5:
-            return lang(
-                ""s + s_ + u8"スープ"s, s_ + u8" soup"s);
-        case 6:
-            return lang(
-                ""s + s_ + u8"の天ぷら"s, s_ + u8" tenpura"s);
-        case 7:
-            return lang(
-                ""s + s_ + u8"ソーセージ"s, s_ + u8" sausage"s);
-        case 8:
-            return lang(
-                ""s + s_ + u8"の刺身"s, s_ + u8" sashimi"s);
-        case 9:
-            return lang(
-                ""s + s_ + u8"の活け作り"s, s_ + u8" sushi"s);
+        case 1: return lang(""s + s_ + u8"の残骸"s, u8"leftover "s + s_);
+        case 2: return lang(u8"骨だけ残った"s + s_, u8"bony "s + s_);
+        case 3: return lang(""s + s_ + u8"のフライ"s, u8"fried "s + s_);
+        case 4: return lang(""s + s_ + u8"の煮込み"s, u8"stewed "s + s_);
+        case 5: return lang(""s + s_ + u8"スープ"s, s_ + u8" soup"s);
+        case 6: return lang(""s + s_ + u8"の天ぷら"s, s_ + u8" tenpura"s);
+        case 7: return lang(""s + s_ + u8"ソーセージ"s, s_ + u8" sausage"s);
+        case 8: return lang(""s + s_ + u8"の刺身"s, s_ + u8" sashimi"s);
+        case 9: return lang(""s + s_ + u8"の活け作り"s, s_ + u8" sushi"s);
         }
         return s_;
     case 7:
@@ -1019,20 +885,13 @@ foodname(int type, const std::string& prm_374, int rank, int character_id)
             return lang(u8"恐怖の"s + ingredient, u8"fearsome "s + ingredient);
         case 2:
             return lang(u8"ガチガチの"s + ingredient, u8"hard "s + ingredient);
-        case 3:
-            return lang(u8"くるみパン"s, u8"walnut bread"s);
-        case 4:
-            return lang(u8"アップルパイ"s, u8"apple pie"s);
-        case 5:
-            return lang(u8"サンドイッチ"s, u8"sandwich"s);
-        case 6:
-            return lang(u8"クロワッサン"s, u8"croissant"s);
-        case 7:
-            return lang(u8"コロッケパン"s, u8"croquette sandwich"s);
-        case 8:
-            return lang(u8"カレーパン"s, u8"chocolate babka"s);
-        case 9:
-            return lang(u8"メロンパン"s, u8"melon flavored bread"s);
+        case 3: return lang(u8"くるみパン"s, u8"walnut bread"s);
+        case 4: return lang(u8"アップルパイ"s, u8"apple pie"s);
+        case 5: return lang(u8"サンドイッチ"s, u8"sandwich"s);
+        case 6: return lang(u8"クロワッサン"s, u8"croissant"s);
+        case 7: return lang(u8"コロッケパン"s, u8"croquette sandwich"s);
+        case 8: return lang(u8"カレーパン"s, u8"chocolate babka"s);
+        case 9: return lang(u8"メロンパン"s, u8"melon flavored bread"s);
         }
         return s_;
     case 8:
@@ -1082,8 +941,7 @@ foodname(int type, const std::string& prm_374, int rank, int character_id)
                 ingredient + u8"風オムライス"s, ingredient + u8" omelet"s);
         }
         return s_;
-    default:
-        return s_;
+    default: return s_;
     }
 }
 
@@ -1747,8 +1605,8 @@ void get_npc_talk()
 
 std::string cnvweight(int weight)
 {
-    return ""s + std::abs(weight) / 1000 + u8'.'
-        + std::abs(weight) % 1000 / 100 + i18n::_(u8"ui", u8"weight");
+    return ""s + std::abs(weight) / 1000 + u8'.' + std::abs(weight) % 1000 / 100
+        + i18n::_(u8"ui", u8"weight");
 }
 
 
@@ -3071,10 +2929,8 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                 if (category == 57000)
                 {
                     s = lang(
-                            skill_name
-                                + u8"を減衰させる毒素を含んでいる"s,
-                            u8"has which deteriorates your "s
-                                + skill_name
+                            skill_name + u8"を減衰させる毒素を含んでいる"s,
+                            u8"has which deteriorates your "s + skill_name
                                 + u8"."s)
                         + u8" ["s;
                     putenclv(power / 50);
@@ -3083,11 +2939,10 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                 else
                 {
                     s = lang(
-                        skill_name
-                            + u8"を"s + std::abs(power / 50 + 1) + u8"下げる"s,
-                        u8"decreases your "s
-                            + skill_name
-                            + u8" by "s + std::abs(power / 50 + 1) + u8"."s);
+                        skill_name + u8"を"s + std::abs(power / 50 + 1)
+                            + u8"下げる"s,
+                        u8"decreases your "s + skill_name + u8" by "s
+                            + std::abs(power / 50 + 1) + u8"."s);
                 }
             }
             else
@@ -3097,11 +2952,9 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                 if (category == 57000)
                 {
                     s = lang(
-                            skill_name
-                                + u8"を増強させる栄養をもっている"s,
+                            skill_name + u8"を増強させる栄養をもっている"s,
                             u8"has essential nutrients to enhance your "s
-                                + skill_name
-                                + u8"."s)
+                                + skill_name + u8"."s)
                         + u8" ["s;
                     putenclv(power / 50);
                     s += u8"]"s;
@@ -3109,11 +2962,10 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                 else
                 {
                     s = lang(
-                        skill_name
-                            + u8"を"s + std::abs(power / 50 + 1) + u8"上げる"s,
-                        u8"increases your "s
-                            + skill_name
-                            + u8" by "s + std::abs(power / 50 + 1) + u8"."s);
+                        skill_name + u8"を"s + std::abs(power / 50 + 1)
+                            + u8"上げる"s,
+                        u8"increases your "s + skill_name + u8" by "s
+                            + std::abs(power / 50 + 1) + u8"."s);
                 }
             }
             break;
@@ -3171,8 +3023,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                 if (s == ""s)
                 {
                     s = lang(
-                        i18n::_(
-                                  u8"ability", std::to_string(sid), u8"name")
+                        i18n::_(u8"ability", std::to_string(sid), u8"name")
                             + u8"の技能を上げる"s,
                         u8"improves your "s
                             + i18n::_(
@@ -3189,8 +3040,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             if (category == 57000)
             {
                 s = lang(
-                        i18n::_(
-                                  u8"ability", std::to_string(sid), u8"name")
+                        i18n::_(u8"ability", std::to_string(sid), u8"name")
                             + u8"の成長を助ける栄養をもっている"s,
                         u8"can help you exercise your "s
                             + i18n::_(
@@ -3254,9 +3104,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
 
     switch (val0)
     {
-    case 0:
-        s = u8"?????"s;
-        break;
+    case 0: s = u8"?????"s; break;
     case 21:
         rtval = 9;
         s = lang(
