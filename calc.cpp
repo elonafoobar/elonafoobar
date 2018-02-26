@@ -1311,27 +1311,22 @@ void generatemoney(int cc)
 
 void calccosthire()
 {
-    cost_at_m153 = 0;
+    int cost{};
     for (int cnt = 57; cnt < 245; ++cnt)
     {
         if (cdata[cnt].character_role == 0)
-        {
             continue;
-        }
         if (cdata[cnt].state != 1)
-        {
             continue;
-        }
-        cost_at_m153 += calchirecost(cnt);
+        cost += calchirecost(cnt);
     }
-    cost_at_m153 = cost_at_m153
-        * std::clamp((100 - std::clamp(cdata[0].karma / 2, 0, 50)
-                      - 7 * trait(38) - (cdata[0].karma >= 20) * 5),
+    cost = cost
+        * std::clamp(100 - std::clamp(cdata[0].karma / 2, 0, 50)
+                      - 7 * trait(38) - (cdata[0].karma >= 20) * 5,
                      25,
                      200)
         / 100;
-    gdata_cost_to_hire = cost_at_m153;
-    return;
+    gdata_cost_to_hire = cost;
 }
 
 
