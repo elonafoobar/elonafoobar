@@ -604,9 +604,9 @@ std::string calcage(int cc)
 
 
 
-int calcexpalive(int prm_892)
+int calcexpalive(int level)
 {
-    return prm_892 * 100;
+    return level * 100;
 }
 
 
