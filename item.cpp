@@ -581,106 +581,100 @@ int inv_sum(int owner)
 
 
 
-void item_compress(int)
+void item_compress(int owner)
 {
-    p_at_m57 = 0;
-    for (int cnt = 0; cnt < 100; ++cnt)
+    int number_of_deleted_items{};
+    for (int i = 0; i < 100; ++i)
     {
-        p_at_m57(1) = 200 * (cnt * cnt + 1);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        int threshold = 200 * (i * i + 1);
+        for (const auto& cnt : items(owner))
         {
             if (inv[cnt].number != 0)
             {
-                if (ibit(5, cnt) == 0)
+                if (!ibit(5, cnt) && inv[cnt].value < threshold)
                 {
-                    if (inv[cnt].value < p_at_m57(1))
+                    inv[cnt].number = 0;
+                    ++number_of_deleted_items;
+                    if (inv[cnt].position.x >= 0
+                        && inv[cnt].position.x < mdata(0)
+                        && inv[cnt].position.y >= 0
+                        && inv[cnt].position.y < mdata(1))
                     {
-                        inv[cnt].number = 0;
-                        ++p_at_m57;
-                        if (inv[cnt].position.x >= 0
-                            && inv[cnt].position.x < mdata(0)
-                            && inv[cnt].position.y >= 0
-                            && inv[cnt].position.y < mdata(1))
-                        {
-                            cell_refresh(
-                                inv[cnt].position.x, inv[cnt].position.y);
-                        }
+                        cell_refresh(
+                            inv[cnt].position.x, inv[cnt].position.y);
                     }
                 }
             }
-            if (p_at_m57 > 10)
+            if (number_of_deleted_items > 10)
             {
                 break;
             }
         }
-        if (p_at_m57 > 10)
+        if (number_of_deleted_items > 10)
         {
             break;
         }
     }
-    p_at_m57 = -1;
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+
+    int slot = -1;
+    for (const auto& cnt : items(owner))
     {
         if (inv[cnt].number == 0)
         {
-            p_at_m57 = cnt;
+            slot = cnt;
             break;
         }
     }
-    if (p_at_m57 == -1)
+
+    if (slot == -1)
     {
-        for (int cnt = 0;; ++cnt)
+        while (1)
         {
-            p_at_m57 = invhead + rnd(invrange);
-            if (ibit(5, cnt) == 0)
+            int ci = get_random_inv(owner);
+            if (!ibit(5, ci))
             {
-                inv[p_at_m57].number = 0;
+                inv[ci].number = 0;
                 if (mode != 6)
                 {
-                    if (inv[p_at_m57].position.x >= 0
-                        && inv[p_at_m57].position.x < mdata(0)
-                        && inv[p_at_m57].position.y >= 0
-                        && inv[p_at_m57].position.y < mdata(1))
+                    if (inv[ci].position.x >= 0
+                        && inv[ci].position.x < mdata(0)
+                        && inv[ci].position.y >= 0
+                        && inv[ci].position.y < mdata(1))
                     {
                         cell_refresh(
-                            inv[p_at_m57].position.x, inv[p_at_m57].position.y);
+                            inv[ci].position.x, inv[ci].position.y);
                     }
                 }
                 break;
             }
         }
     }
-    return;
 }
 
 
 
-int inv_getfreeid(int prm_506)
+int inv_getfreeid(int owner)
 {
-    p_at_m57 = -1;
-    for (const auto& cnt : items(prm_506))
+    int slot = -1;
+    for (const auto& cnt : items(owner))
     {
         if (inv[cnt].number == 0)
         {
-            p_at_m57 = cnt;
+            slot = cnt;
             break;
         }
     }
-    if (p_at_m57 == -1)
+    if (slot == -1)
     {
-        if (prm_506 == -1)
+        if (owner == -1 && mode != 6)
         {
-            if (mode != 6)
-            {
-                txt(lang(
-                    u8"アイテム情報が多すぎる！幾つかのアイテムは破壊された。"s,
-                    u8"Too many item data! Some items in this area are destroyed."s));
-                item_compress(prm_506);
-            }
+            txt(lang(
+                u8"アイテム情報が多すぎる！幾つかのアイテムは破壊された。"s,
+                u8"Too many item data! Some items in this area are destroyed."s));
+            item_compress(owner);
         }
     }
-    return p_at_m57;
+    return slot;
 }
 
 

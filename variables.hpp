@@ -962,7 +962,7 @@ void initcard(int = 0, int = 0, int = 0);
 std::pair<int, int> inv_getheader(int);
 void item_acid(int = 0, int = 0);
 void item_checkknown(int = 0);
-void item_compress(int = 0);
+void item_compress(int);
 void item_copy(int = 0, int = 0);
 void item_delete(int = 0);
 void item_exchange(int = 0, int = 0);
