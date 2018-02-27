@@ -326,9 +326,8 @@ std::vector<int> itemlist(int owner, int id)
 
 
 
-int itemusingfind(int prm_485, int prm_486)
+int itemusingfind(int ci, bool disallow_pc)
 {
-    f_at_m54 = -1;
     for (int cnt = 0; cnt < 245; ++cnt)
     {
         if (cdata[cnt].state != 1)
@@ -336,22 +335,17 @@ int itemusingfind(int prm_485, int prm_486)
             continue;
         }
         if (cdata[cnt].continuous_action_id != 0
-            && cdata[cnt].continuous_action_id != 11)
+            && cdata[cnt].continuous_action_id != 11
+            && cdata[cnt].continuous_action_turn > 0
+            && cdata[cnt].continuous_action_item == ci)
         {
-            if (cdata[cnt].continuous_action_turn > 0)
+            if (!disallow_pc || cnt != 0)
             {
-                if (cdata[cnt].continuous_action_item == prm_485)
-                {
-                    if (prm_486 == 0 || (prm_486 == 1 && cnt != 0))
-                    {
-                        f_at_m54 = cnt;
-                        break;
-                    }
-                }
+                return cnt;
             }
         }
     }
-    return f_at_m54;
+    return -1; // Not found
 }
 
 

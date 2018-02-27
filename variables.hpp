@@ -664,7 +664,7 @@ int item_separate(int&);
 int item_stack(int = 0, int = 0, int = 0);
 int itemcreate(int = 0, int = 0, int = 0, int = 0, int = 0);
 int itemfind(int = 0, int = 0, int = 0);
-int itemusingfind(int = 0, int = 0);
+int itemusingfind(int, bool = false);
 int key_direction();
 int access_item_db(int);
 int get_required_craft_materials();
