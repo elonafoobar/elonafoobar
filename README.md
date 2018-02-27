@@ -11,6 +11,12 @@
 
 
 
+# How To Contribute
+
+See CONTRIBUTING.md for details.
+
+
+
 # License
 
 MIT License. See LICENSE for details. This license is applied for the
