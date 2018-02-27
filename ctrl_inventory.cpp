@@ -97,7 +97,6 @@ label_20591:
                 break;
             }
         }
-        inv_getheader(p);
         int cnt2 = cnt;
         if (invctrl != 1 && invctrl != 5 && invctrl != 13 && invctrl != 14
             && invctrl != 18 && invctrl != 20 && invctrl != 23 && invctrl != 25
@@ -117,8 +116,7 @@ label_20591:
         {
             showmoney = 0;
         }
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(p))
         {
             if (inv[cnt].number <= 0)
             {

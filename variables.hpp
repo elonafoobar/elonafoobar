@@ -959,7 +959,7 @@ void imeset(int = 0);
 void incognitobegin();
 void incognitoend();
 void initcard(int = 0, int = 0, int = 0);
-void inv_getheader(int = 0);
+std::pair<int, int> inv_getheader(int);
 void item_acid(int = 0, int = 0);
 void item_checkknown(int = 0);
 void item_compress(int = 0);

@@ -7936,8 +7936,7 @@ void chara_preparepic(int prm_618, int prm_619)
 int cell_itemlist(int prm_625, int prm_626)
 {
     listmax = 0;
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number > 0)
         {
@@ -7958,8 +7957,7 @@ int cell_itemoncell(int prm_627, int prm_628)
 {
     rtval(0) = 0;
     rtval(1) = 0;
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number > 0)
         {
@@ -11680,8 +11678,7 @@ int get_freeally()
 
 void del_chara(int prm_783)
 {
-    inv_getheader(prm_783);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(prm_783))
     {
         inv[cnt].number = 0;
     }
@@ -11754,11 +11751,10 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
     hp_at_m125 = cdata[tc_at_m125].hp;
     cdata[prm_784].item_which_will_be_used = 0;
     cbitmod(960, prm_784, 0);
-    inv_getheader(prm_784);
+    const auto [invhead, invrange] = inv_getheader(prm_784);
     p_at_m125 = invhead;
     invrangecc_at_m125 = invrange;
-    inv_getheader(tc_at_m125);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(tc_at_m125))
     {
         cnt2_at_m125 = cnt;
         if (cnt == invrangecc_at_m125)
@@ -13881,9 +13877,7 @@ int item_fire(int prm_840, int prm_841)
         {
             return 0;
         }
-        inv_getheader(prm_840);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(prm_840))
         {
             if (inv[cnt].number == 0)
             {
@@ -14098,9 +14092,8 @@ void mapitem_fire(int prm_842, int prm_843)
     {
         return;
     }
-    inv_getheader(-1);
     ci_at_m138 = -1;
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number == 0)
         {
@@ -14148,9 +14141,7 @@ int item_cold(int prm_844, int prm_845)
         {
             return 0;
         }
-        inv_getheader(prm_844);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(prm_844))
         {
             if (inv[cnt].number == 0)
             {
@@ -14261,9 +14252,8 @@ void mapitem_cold(int prm_846, int prm_847)
     {
         return;
     }
-    inv_getheader(-1);
     ci_at_m138 = -1;
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number == 0)
         {
@@ -15661,12 +15651,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             }
             if (prm_855 == -6)
             {
-                inv_getheader(0);
                 p_at_m141(0) = -1;
                 p_at_m141(1) = 0;
-                for (int cnt = invhead, cnt_end = cnt + (invrange);
-                     cnt < cnt_end;
-                     ++cnt)
+                for (const auto& cnt : items(0))
                 {
                     if (inv[cnt].number == 0)
                     {
@@ -16338,10 +16325,8 @@ void chara_vomit(int prm_876)
     }
     if (mdata(6) != 1)
     {
-        inv_getheader(-1);
         p_at_m146 = 2;
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(-1))
         {
             if (inv[cnt].number > 0)
             {
@@ -22144,8 +22129,7 @@ void initialize_pc_character()
     gain_race_feat();
     cdata[r1].skill_bonus = 5 + trait(154);
     cdata[r1].total_skill_bonus = 5 + trait(154);
-    inv_getheader(0);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(0))
     {
         if (inv[cnt].number == 0)
         {
@@ -22714,9 +22698,7 @@ void label_1573()
         {
             return;
         }
-        inv_getheader(rc);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(rc))
         {
             ci = cnt;
             if (inv[cnt].number == 0)
@@ -22889,8 +22871,7 @@ void label_1573()
             return;
         }
     }
-    inv_getheader(rc);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(rc))
     {
         if (inv[cnt].number == 0)
         {
@@ -23646,9 +23627,7 @@ void label_1576()
                 continue;
             }
         }
-        inv_getheader(p);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(p))
         {
             if (inv[cnt].number == 0)
             {
@@ -23979,8 +23958,7 @@ void label_1580()
     {
         return;
     }
-    inv_getheader(0);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(0))
     {
         if (inv[cnt].number == 0 || inv[cnt].identification_state >= 3)
         {
@@ -26646,8 +26624,7 @@ void map_reload(const std::string& prm_935)
     {
         mef(0, cnt) = 0;
     }
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number > 0)
         {
@@ -29420,8 +29397,7 @@ int initialize_quest_map_party()
         cdata[rc].relationship = -1;
         cdata[rc].original_relationship = -1;
     }
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number > 0)
         {
@@ -29467,8 +29443,7 @@ void initialize_quest_map_town()
             cdata[rc].original_relationship = -3;
         }
     }
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number == 0)
         {
@@ -30246,11 +30221,10 @@ void use_house_board()
         update_screen();
         pc_turn(false);
     }
-    inv_getheader(-1);
     p(0) = 0;
     p(1) = 0;
     p(2) = 0;
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         ++p(2);
         if (inv[cnt].number != 0)
@@ -30947,8 +30921,7 @@ void show_shop_log()
     }
     mode = 6;
     dblistmax = 0;
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number <= 0)
         {
@@ -31077,9 +31050,7 @@ void show_shop_log()
     }
     else
     {
-        inv_getheader(-1);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(-1))
         {
             inv[cnt].number = 0;
         }
@@ -31184,7 +31155,6 @@ void show_shop_log()
 void label_1726()
 {
     mdata(10) = (100 - gdata(125) / 100) / 4 + 1;
-    inv_getheader(-1);
     for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
     {
         y = cnt;
@@ -31194,7 +31164,7 @@ void label_1726()
             map(cnt, y, 9) = 0;
         }
     }
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number <= 0)
         {
@@ -31253,10 +31223,9 @@ void label_1727(bool val0)
 void label_1728()
 {
     rankorg = gdata(123);
-    inv_getheader(-1);
     rankcur = 0;
     DIM3(dblist, 2, 800);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number == 0)
         {
@@ -31365,7 +31334,6 @@ void label_1730()
         return;
     }
     rankorg = gdata(124);
-    inv_getheader(-1);
     rankcur = 0;
     gdata(77) = 0;
     gdata(78) = 0;
@@ -31374,7 +31342,7 @@ void label_1730()
         list(0, cnt) = 0;
         list(1, cnt) = 0;
     }
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number == 0)
         {
@@ -32354,10 +32322,7 @@ void label_1745()
                         }
                     }
                 }
-                inv_getheader(-1);
-                for (int cnt = invhead, cnt_end = cnt + (invrange);
-                     cnt < cnt_end;
-                     ++cnt)
+                for (const auto& cnt : items(-1))
                 {
                     if (inv[cnt].number == 0)
                     {
@@ -34063,8 +34028,7 @@ void label_1754()
 
 void label_1755()
 {
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].id == 555 || inv[cnt].id == 600)
         {
@@ -35026,8 +34990,7 @@ void atxinit()
 void begintempinv()
 {
     ctrl_file(4, u8"shoptmp.s2");
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         inv[cnt].number = 0;
     }
@@ -35401,8 +35364,7 @@ void label_1873()
     mtilefilecur = -1;
     label_1746();
     f = 0;
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number != 0)
         {
@@ -38226,9 +38188,7 @@ void label_1901()
     }
     else
     {
-        inv_getheader(-1);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(-1))
         {
             inv[cnt].number = 0;
         }
@@ -38308,10 +38268,8 @@ void label_1901()
         if (cdata[0].level > 5)
         {
             autosave = 1 * (gdata_current_map != 35);
-            inv_getheader(-1);
             p = -1;
-            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-                 ++cnt)
+            for (const auto& cnt : items(-1))
             {
                 if (inv[cnt].number == 0)
                 {
@@ -38645,9 +38603,7 @@ int blendcheckmat(int prm_1044)
             {
                 o_at_m181 = 0;
             }
-            inv_getheader(o_at_m181);
-            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-                 ++cnt)
+            for (const auto& cnt : items(o_at_m181))
             {
                 if (inv[cnt].number <= 0)
                 {
@@ -38737,9 +38693,7 @@ int blendmatnum(int prm_1045, int prm_1046)
         {
             o_at_m182 = 0;
         }
-        inv_getheader(o_at_m182);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(o_at_m182))
         {
             if (inv[cnt].number <= 0)
             {
@@ -38822,9 +38776,7 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
         {
             o_at_m183 = 0;
         }
-        inv_getheader(o_at_m183);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(o_at_m183))
         {
             if (m_at_m183 >= 500)
             {
@@ -50240,8 +50192,7 @@ void label_2086()
 
 void remove_card_and_figures()
 {
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].id == 504 || inv[cnt].id == 503)
         {
@@ -50471,13 +50422,11 @@ void load_gene_files()
     sdata.clear(0);
     cdata(56) = cdata(0);
     cdata(0).clear();
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         inv[cnt].number = 0;
     }
-    inv_getheader(0);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(0))
     {
         if (inv[cnt].number == 0)
         {
@@ -54149,10 +54098,8 @@ void label_2153()
     }
     if (cdata[0].nutrition <= 5000)
     {
-        inv_getheader(cc);
         f = 0;
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(cc))
         {
             if (inv[cnt].number == 0)
             {
@@ -54570,9 +54517,7 @@ void label_2158()
     txt(lang(u8"地面を掘り終えた。"s, u8"You finish digging."s));
     if (mdata(6) == 1)
     {
-        inv_getheader(0);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(0))
         {
             if (inv[cnt].number == 0)
             {
@@ -57005,13 +56950,10 @@ int pick_up_item()
     {
         if (inv[ti].id == 255)
         {
-            inv_getheader(-1);
             if (mdata(20) == 1)
             {
                 f = 0;
-                for (int cnt = invhead, cnt_end = cnt + (invrange);
-                     cnt < cnt_end;
-                     ++cnt)
+                for (const auto& cnt : items(-1))
                 {
                     if (inv[cnt].number == 0)
                     {
@@ -58783,9 +58725,7 @@ void do_open_command()
         }
         else
         {
-            inv_getheader(-1);
-            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-                 ++cnt)
+            for (const auto& cnt : items(-1))
             {
                 inv[cnt].number = 0;
             }
@@ -60352,10 +60292,8 @@ void label_2221()
         u8"You search the surroundings carefully."s));
     if (gdata_current_map == 35)
     {
-        inv_getheader(-1);
         p = 9999;
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(-1))
         {
             if (inv[cnt].number == 0)
             {
@@ -64993,8 +64931,7 @@ void load_shoptmp()
 
 void label_2265()
 {
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         inv[cnt].number = 0;
     }
@@ -66890,10 +66827,9 @@ void set_item_which_will_be_used()
 int label_2664()
 {
     f = 0;
-    inv_getheader(rc);
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        ci = invhead + rnd(invrange);
+        ci = get_random_inv(rc);
         if (inv[ci].number == 0)
         {
             f = 1;
@@ -66973,8 +66909,7 @@ int inv_getfreeid_force()
 
 void wear_most_valuable_equipment_for_all_body_parts()
 {
-    inv_getheader(rc);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(rc))
     {
         ci = cnt;
         if (inv[cnt].number == 0 || inv[cnt].body_part != 0)
@@ -67061,10 +66996,9 @@ void supply_new_equipment()
     for (int cnt = 0; cnt < 100; ++cnt)
     {
         f = 0;
-        inv_getheader(rc);
         for (int cnt = 0; cnt < 4; ++cnt)
         {
-            ci = invhead + rnd(invrange);
+            ci = get_random_inv(rc);
             if (inv[ci].number == 0)
             {
                 f = 1;
@@ -67737,9 +67671,7 @@ void label_2674()
 {
     if (gdata_executing_immediate_quest_type == 1006)
     {
-        inv_getheader(0);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(0))
         {
             if (inv[cnt].own_state == 4)
             {
@@ -69651,12 +69583,9 @@ void label_2693(bool retreat)
         {
             if (rnd(100) == 0)
             {
-                inv_getheader(cc);
                 sell(0) = 0;
                 sell(1) = 0;
-                for (int cnt = invhead, cnt_end = cnt + (invrange);
-                     cnt < cnt_end;
-                     ++cnt)
+                for (const auto& cnt : items(cc))
                 {
                     if (inv[cnt].number == 0)
                     {
@@ -73147,8 +73076,7 @@ void pc_turn(bool label_2747_flg)
         }
         if (trait(210) != 0 && rnd(5) == 0)
         {
-            inv_getheader(0);
-            ci = rnd(invrange) + invhead;
+            ci = get_random_inv(0);
             if (inv[ci].number > 0
                 && the_item_db[inv[ci].id]->category == 52000)
             {
@@ -73384,9 +73312,8 @@ label_2747:
         {
             key = key_search;
         }
-        inv_getheader(-1);
         p = 0;
-        for (int ci = invhead; ci < invhead + invrange; ++ci)
+        for (const auto& ci : items(-1))
         {
             if (inv[ci].number == 0)
                 continue;

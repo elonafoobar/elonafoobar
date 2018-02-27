@@ -3277,9 +3277,7 @@ void talk_unique()
             p(3) = 0;
             p(4) = 0;
             p(5) = 0;
-            inv_getheader(0);
-            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-                 ++cnt)
+            for (const auto& cnt : items(0))
             {
                 if (inv[cnt].number == 0)
                 {
@@ -3316,10 +3314,7 @@ void talk_unique()
                 p(3) = 0;
                 p(4) = 0;
                 p(5) = 0;
-                inv_getheader(0);
-                for (int cnt = invhead, cnt_end = cnt + (invrange);
-                     cnt < cnt_end;
-                     ++cnt)
+                for (const auto& cnt : items(0))
                 {
                     if (inv[cnt].number == 0)
                     {
@@ -3701,9 +3696,9 @@ void talk_unique()
         }
         if (gdata_ambitious_scientist >= 1 && gdata_ambitious_scientist <= 5)
         {
-            inv_getheader(0);
             f = 0;
-            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
+            const auto [invhead, invrange] = inv_getheader(0);
+            for (int cnt = invhead, cnt_end = invhead + invrange; cnt < cnt_end;
                  ++cnt)
             {
                 if (gdata_ambitious_scientist >= 6)
@@ -4769,9 +4764,7 @@ void talk_unique()
         {
             snd(12);
             cdata[0].gold -= cdata[0].gold / 5;
-            inv_getheader(0);
-            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-                 ++cnt)
+            for (const auto& cnt : items(0))
             {
                 if (inv[cnt].number > 0)
                 {

@@ -548,10 +548,9 @@ void proc_event()
                     continue;
                 }
             }
-            inv_getheader(-1);
             p(0) = 0;
             p(1) = 6;
-            for (int ci = invhead; ci < invhead + invrange; ++ci)
+            for (const auto& ci : items(-1))
             {
                 if (inv[ci].number == 0)
                     continue;

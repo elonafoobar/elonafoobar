@@ -148,4 +148,9 @@ int ibit(size_t type, int ci);
 void ibitmod(size_t type, int ci, int on);
 
 
+
+range::iota<int> items(int owner);
+int get_random_inv(int owner);
+
+
 } // namespace elona

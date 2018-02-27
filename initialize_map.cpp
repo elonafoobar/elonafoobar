@@ -228,9 +228,7 @@ label_1741_internal:
         mdata(6) = 7;
         mdata(9) = 10000;
         gdata(73) = 3;
-        inv_getheader(-1);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(-1))
         {
             if (inv[cnt].id >= maxitemid - 2
                 || size_t(inv[cnt].id) > length(ioriginalnameref))
@@ -964,10 +962,7 @@ label_1741_internal:
             else
             {
                 ctrl_file(3, u8"inv_"s + mid + u8".s2");
-                inv_getheader(-1);
-                for (int cnt = invhead, cnt_end = cnt + (invrange);
-                     cnt < cnt_end;
-                     ++cnt)
+                for (const auto& cnt : items(-1))
                 {
                     if (inv[cnt].number == 0)
                     {

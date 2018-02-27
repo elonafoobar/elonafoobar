@@ -1661,9 +1661,7 @@ label_2181_internal:
         if (cc != 0)
         {
             f = 0;
-            inv_getheader(cc);
-            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-                 ++cnt)
+            for (const auto& cnt : items(cc))
             {
                 if (inv[cnt].number == 0)
                 {
@@ -2247,11 +2245,9 @@ label_2181_internal:
             }
             goto label_2183_internal;
         }
-        inv_getheader(tc);
         p(1) = 0;
         p(2) = 0;
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(tc))
         {
             if (inv[cnt].number == 0)
             {
@@ -3187,10 +3183,9 @@ label_2181_internal:
         }
         if (i == 0)
         {
-            inv_getheader(tc);
             for (int cnt = 0; cnt < 200; ++cnt)
             {
-                p = invhead + rnd(invrange);
+                p = get_random_inv(tc);
                 if (inv[p].number == 0)
                 {
                     continue;
@@ -4448,9 +4443,7 @@ label_2181_internal:
                     + u8" backpack."s));
         }
         p = -1;
-        inv_getheader(tc);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(tc))
         {
             if (inv[cnt].number == 0)
             {
@@ -4464,9 +4457,7 @@ label_2181_internal:
         }
         if (p == -1)
         {
-            inv_getheader(tc);
-            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-                 ++cnt)
+            for (const auto& cnt : items(tc))
             {
                 if (inv[cnt].number == 0)
                 {
@@ -4564,9 +4555,7 @@ label_2181_internal:
         }
         else
         {
-            inv_getheader(-1);
-            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-                 ++cnt)
+            for (const auto& cnt : items(-1))
             {
                 inv[cnt].number = 0;
             }

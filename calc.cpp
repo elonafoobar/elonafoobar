@@ -1383,8 +1383,7 @@ int calccostreload(int owner, bool do_reload)
 {
     int cost{};
 
-    inv_getheader(owner);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(owner))
     {
         if (inv[cnt].number == 0)
             continue;
@@ -1443,9 +1442,7 @@ int calcidentifyvalue(int type)
     if (type == 1)
     {
         int need_to_identify{};
-        inv_getheader(0);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(0))
         {
             if (inv[cnt].number == 0)
             {

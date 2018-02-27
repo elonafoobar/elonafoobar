@@ -107,23 +107,36 @@ int itemcreate(int slot, int id, int x, int y, int number)
 
 
 
-void inv_getheader(int prm_472)
+range::iota<int> items(int owner)
 {
-    if (prm_472 == 0)
+    const auto [invhead, invrange] = inv_getheader(owner);
+    return {invhead, invhead + invrange};
+}
+
+
+
+int get_random_inv(int owner)
+{
+    const auto [invhead, invrange] = inv_getheader(owner);
+    return invhead + rnd(invrange);
+}
+
+
+
+std::pair<int, int> inv_getheader(int owner)
+{
+    if (owner == 0)
     {
-        invhead = 0;
-        invrange = 200;
-        return;
+        return {0, 200};
     }
-    if (prm_472 == -1)
+    else if (owner == -1)
     {
-        invhead = 5080;
-        invrange = 400;
-        return;
+        return {5080, 400};
     }
-    invhead = 200 + 20 * (prm_472 - 1);
-    invrange = 20;
-    return;
+    else
+    {
+        return {200 + 20 * (owner - 1), 20};
+    }
 }
 
 
@@ -147,8 +160,7 @@ int inv_find(int prm_474, int prm_475)
 {
     int f_at_m52 = 0;
     f_at_m52 = -1;
-    inv_getheader(prm_475);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(prm_475))
     {
         if (inv[cnt].number == 0)
         {
@@ -172,13 +184,17 @@ int item_find(int prm_476, int prm_477, int prm_478)
     p_at_m52(1) = -1;
     for (int cnt = 0; cnt < 2; ++cnt)
     {
+        int invhead;
+        int invrange;
         if (cnt == 0)
         {
             if (prm_478 > 0)
             {
                 continue;
             }
-            inv_getheader(-1);
+            const auto pair = inv_getheader(-1);
+            invhead = pair.first;
+            invrange = pair.second;
         }
         else
         {
@@ -186,7 +202,9 @@ int item_find(int prm_476, int prm_477, int prm_478)
             {
                 continue;
             }
-            inv_getheader(0);
+            const auto pair = inv_getheader(0);
+            invhead = pair.first;
+            invrange = pair.second;
         }
         p_at_m52(2) = cnt;
         for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
@@ -297,9 +315,8 @@ int encfindspec(int prm_481, int prm_482)
 
 void itemlist(int prm_483, int prm_484)
 {
-    inv_getheader(prm_483);
     listmax = 0;
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(prm_483))
     {
         if (inv[cnt].number == 0)
         {
@@ -348,12 +365,10 @@ int itemusingfind(int prm_485, int prm_486)
 
 int itemfind(int prm_487, int prm_488, int prm_489)
 {
-    inv_getheader(prm_487);
     f_at_m54 = -1;
     if (prm_489 == 0)
     {
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(prm_487))
         {
             if (inv[cnt].number == 0)
             {
@@ -369,8 +384,7 @@ int itemfind(int prm_487, int prm_488, int prm_489)
     }
     else
     {
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(prm_487))
         {
             if (inv[cnt].number == 0)
             {
@@ -390,9 +404,8 @@ int itemfind(int prm_487, int prm_488, int prm_489)
 
 int mapitemfind(int prm_490, int prm_491, int prm_492)
 {
-    inv_getheader(-1);
     f_at_m54 = -1;
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number == 0)
         {
@@ -433,8 +446,7 @@ void cell_refresh(int prm_493, int prm_494)
     p_at_m55 = 0;
     map(prm_493, prm_494, 4) = 0;
     map(prm_493, prm_494, 9) = 0;
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number > 0)
         {
@@ -575,9 +587,8 @@ void item_delete(int prm_502)
 
 int inv_getspace(int prm_503)
 {
-    inv_getheader(prm_503);
     p_at_m57 = 0;
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(prm_503))
     {
         if (inv[cnt].number == 0)
         {
@@ -592,9 +603,8 @@ int inv_getspace(int prm_503)
 
 int inv_sum(int prm_504)
 {
-    inv_getheader(prm_504);
     p_at_m57 = 0;
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(prm_504))
     {
         if (inv[cnt].number != 0)
         {
@@ -683,9 +693,8 @@ void item_compress(int)
 
 int inv_getfreeid(int prm_506)
 {
-    inv_getheader(prm_506);
     p_at_m57 = -1;
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(prm_506))
     {
         if (inv[cnt].number == 0)
         {
@@ -714,12 +723,11 @@ int inv_getfreeid(int prm_506)
 int inv_weight(int prm_507)
 {
     p_at_m57 = 0;
-    inv_getheader(prm_507);
     if (prm_507 == 0)
     {
         gdata_cargo_weight = 0;
     }
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(prm_507))
     {
         if (inv[cnt].number != 0)
         {
@@ -1785,8 +1793,7 @@ int item_stack(int inventory_id, int ci, int show_message)
 
     bool did_stack = false;
 
-    inv_getheader(inventory_id);
-    for (int i = invhead; i < invhead + invrange; ++i)
+    for (const auto& i : items(inventory_id))
     {
         if (i == ci || inv[i].number == 0 || inv[i].id != inv[ci].id)
             continue;
