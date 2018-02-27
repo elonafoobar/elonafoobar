@@ -1,4 +1,5 @@
 #include "ability.hpp"
+#include "buff.hpp"
 #include "cat.hpp"
 #include "character.hpp"
 #include "class.hpp"
@@ -588,6 +589,7 @@ int main()
     cat::global.initialize();
 
     the_ability_db.initialize();
+    the_buff_db.initialize();
     the_character_db.initialize();
     the_class_db.initialize();
     the_item_db.initialize();

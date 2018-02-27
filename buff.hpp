@@ -19,6 +19,7 @@ struct buff_data
     };
 
 
+    int id;
     type_t type;
 };
 
@@ -29,6 +30,7 @@ class buff_db
 public:
     buff_db();
 
+    void initialize();
 
     const buff_data& operator[](int id) const
     {

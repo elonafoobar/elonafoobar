@@ -1,4 +1,48 @@
 #include "buff.hpp"
+#include "cat.hpp"
+
+using namespace elona;
+
+
+namespace
+{
+
+
+// FIXME: DO NOT USE A GLOBAL VARIABLE!
+std::unordered_map<int, buff_data>* storage_ptr;
+
+
+int define(lua_State* state)
+{
+    int argc = lua_gettop(state);
+    if (argc != 2)
+        throw 0;
+
+    const char* id = luaL_checklstring(state, 1, nullptr);
+    if (!id)
+        throw 0;
+
+#define FIELD_I(name) \
+    lua_getfield(state, 2, #name); \
+    int name = luaL_checkinteger(state, -1); \
+    lua_pop(state, 1);
+
+    FIELD_I(type_);
+
+#undef FIELD_I
+
+    storage_ptr->emplace(
+        std::stoi(id), // TODO
+        buff_data{
+            std::stoi(id),
+            buff_data::type_t(type_),
+        });
+
+    return 0;
+}
+
+
+} // namespace
 
 
 namespace elona
@@ -7,35 +51,17 @@ namespace elona
 
 buff_db::buff_db()
 {
-    storage.emplace(0, buff_data{buff_data::type_t::buff}); // dummy
-    storage.emplace(1, buff_data{buff_data::type_t::buff});
-    storage.emplace(2, buff_data{buff_data::type_t::hex});
-    storage.emplace(3, buff_data{buff_data::type_t::buff});
-    storage.emplace(4, buff_data{buff_data::type_t::buff});
-    storage.emplace(5, buff_data{buff_data::type_t::buff});
-    storage.emplace(6, buff_data{buff_data::type_t::hex});
-    storage.emplace(7, buff_data{buff_data::type_t::buff});
-    storage.emplace(8, buff_data{buff_data::type_t::hex});
-    storage.emplace(9, buff_data{buff_data::type_t::hex});
-    storage.emplace(10, buff_data{buff_data::type_t::buff});
-    storage.emplace(11, buff_data{buff_data::type_t::hex});
-    storage.emplace(12, buff_data{buff_data::type_t::buff});
-    storage.emplace(13, buff_data{buff_data::type_t::hex});
-    storage.emplace(14, buff_data{buff_data::type_t::buff});
-    storage.emplace(15, buff_data{buff_data::type_t::buff});
-    storage.emplace(16, buff_data{buff_data::type_t::hex});
-    storage.emplace(17, buff_data{buff_data::type_t::buff});
-    storage.emplace(18, buff_data{buff_data::type_t::buff});
-    storage.emplace(19, buff_data{buff_data::type_t::buff});
-    storage.emplace(20, buff_data{buff_data::type_t::food});
-    storage.emplace(21, buff_data{buff_data::type_t::food});
-    storage.emplace(22, buff_data{buff_data::type_t::food});
-    storage.emplace(23, buff_data{buff_data::type_t::food});
-    storage.emplace(24, buff_data{buff_data::type_t::food});
-    storage.emplace(25, buff_data{buff_data::type_t::food});
-    storage.emplace(26, buff_data{buff_data::type_t::food});
-    storage.emplace(27, buff_data{buff_data::type_t::food});
-    storage.emplace(28, buff_data{buff_data::type_t::food});
+    storage.emplace(0, buff_data{0, buff_data::type_t::buff}); // dummy
+}
+
+
+
+void buff_db::initialize()
+{
+    cat::global.register_function("Buff", &define);
+    storage_ptr = &storage;
+    cat::global.load(fs::u8path(u8"../data/buff.lua"));
+    storage_ptr = nullptr;
 }
 
 
