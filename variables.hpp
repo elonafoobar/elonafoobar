@@ -1467,7 +1467,7 @@ void netload(const std::string&);
 void opencard(int = 0);
 void page_load();
 void page_save();
-void press(int = 0);
+void press(bool = false);
 void put_questtarget();
 void putenclv(int = 0);
 void refreshspeed(int = 0);

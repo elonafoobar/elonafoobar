@@ -468,29 +468,28 @@ void keyrelease()
 
 
 
-void press(int prm_300)
+void press(bool only_enter_of_cancel)
 {
     while (1)
     {
         await(20);
         key_check();
-        if (prm_300 == 0)
-        {
-            if (key != ""s)
-            {
-                break;
-            }
-        }
-        if (prm_300 == 1)
+        if (only_enter_of_cancel)
         {
             if (key == key_enter || key == key_cancel)
             {
                 break;
             }
         }
+        else
+        {
+            if (key != ""s)
+            {
+                break;
+            }
+        }
     }
     keyhalt = 1;
-    return;
 }
 
 
@@ -601,7 +600,7 @@ void anime_halt()
         gzoom(120, cnt * 2 + 1, 3, 552, 504, 120, 22);
         redraw(1);
     }
-    press(1);
+    press(true);
     snd(20);
     for (int cnt = 0; cnt < 7; ++cnt)
     {
