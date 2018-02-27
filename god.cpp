@@ -1,5 +1,5 @@
-#include <iostream>
 #include "god.hpp"
+#include <iostream>
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "variables.hpp"
@@ -35,7 +35,6 @@ void txtgod(const god_id_t& id, int type)
     txtef(5);
     if (type == 6)
     {
-        txtmore();
     }
     txt(message);
 }

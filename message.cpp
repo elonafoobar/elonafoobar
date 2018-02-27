@@ -450,12 +450,12 @@ void key_check(int prm_299)
 
 void keyrelease()
 {
-    int a_at_m20 = 0;
     while (1)
     {
         await(30);
-        stick(a_at_m20, 768);
-        if (a_at_m20 == 0)
+        int result{};
+        stick(result, 768);
+        if (result == 0)
         {
             key_check();
             if (key == ""s)
@@ -464,63 +464,52 @@ void keyrelease()
             }
         }
     }
-    return;
 }
 
 
 
-void press(int prm_300)
+void press(bool only_enter_of_cancel)
 {
     while (1)
     {
         await(20);
         key_check();
-        if (prm_300 == 0)
-        {
-            if (key != ""s)
-            {
-                break;
-            }
-        }
-        if (prm_300 == 1)
+        if (only_enter_of_cancel)
         {
             if (key == key_enter || key == key_cancel)
             {
                 break;
             }
         }
+        else
+        {
+            if (key != ""s)
+            {
+                break;
+            }
+        }
     }
     keyhalt = 1;
-    return;
 }
 
 
 
-void bmes(const std::string& prm_301, int prm_302, int prm_303, int prm_304)
+void bmes(const std::string& str, int r, int g, int b)
 {
-    int pos_x_at_m21 = 0;
-    int pos_y_at_m21 = 0;
-    elona_vector1<int> mes_color_at_m21;
-    int mes_y_at_m21 = 0;
-    pos_x_at_m21 = ginfo(22);
-    pos_y_at_m21 = ginfo(23);
-    mes_color_at_m21(0) = prm_302;
-    mes_color_at_m21(1) = prm_303;
-    mes_color_at_m21(2) = prm_304;
-    for (int cnt = 0; cnt < 3; ++cnt)
+    int x = ginfo(22);
+    int y = ginfo(23);
+    for (int dy = -1; dy <= 1; ++dy)
     {
-        mes_y_at_m21 = cnt + pos_y_at_m21 - 1;
-        for (int cnt = 0; cnt < 3; ++cnt)
+        for (int dx = -1; dx <= 1; ++dx)
         {
-            pos(pos_x_at_m21 - 1 + cnt, mes_y_at_m21);
-            mes(prm_301);
+            pos(x + dx, y + dy);
+            mes(str);
         }
     }
-    color(mes_color_at_m21(0), mes_color_at_m21(1), mes_color_at_m21(2));
-    pos(pos_x_at_m21, pos_y_at_m21);
-    mes(prm_301);
+    color(r, g, b);
+    pos(x, y);
+    mes(str);
     color(0, 0, 0);
-    return;
 }
 
 
@@ -568,13 +557,6 @@ void msg_write(std::string& prm_307)
 
 
 
-void txtmore()
-{
-    return;
-}
-
-
-
 void txtcontinue()
 {
     tcontinue_at_txtfunc = 1;
@@ -602,7 +584,7 @@ void anime_halt()
         gzoom(120, cnt * 2 + 1, 3, 552, 504, 120, 22);
         redraw(1);
     }
-    press(1);
+    press(true);
     snd(20);
     for (int cnt = 0; cnt < 7; ++cnt)
     {
@@ -940,75 +922,74 @@ void txt_conv()
 
 
 
-std::string name(int prm_309)
+std::string name(int cc)
 {
-    std::string s_at_m23;
-    if (prm_309 == 0)
+    if (cc == 0)
     {
         return lang(u8"あなた"s, u8"you"s);
     }
-    if (is_in_fov(prm_309) == 0)
+    if (is_in_fov(cc) == 0)
     {
         return lang(u8"何か"s, u8"something"s);
     }
     if (cdata[0].blind != 0
-        || (cbit(6, prm_309) == 1 && cbit(7, 0) == 0
-            && cdata[prm_309].wet == 0))
+        || (cbit(6, cc) == 1 && cbit(7, 0) == 0
+            && cdata[cc].wet == 0))
     {
         return lang(u8"何か"s, u8"something"s);
     }
     if (en)
     {
-        s_at_m23 = strmid(cdatan(0, prm_309), 0, 1);
-        if (s_at_m23 == u8"\""s || s_at_m23 == u8"<"s)
+        const char first = cdatan(0, cc)[0];
+        if (first == u8'\"' || first == u8'<')
         {
-            return cdatan(0, prm_309);
+            return cdatan(0, cc);
         }
-        if (cbit(977, prm_309) == 0)
+        if (cbit(977, cc) == 0)
         {
-            return u8"the "s + cdatan(0, prm_309);
+            return u8"the "s + cdatan(0, cc);
         }
     }
-    return cdatan(0, prm_309);
+    return cdatan(0, cc);
 }
 
 
 
-std::string aln(int prm_310)
+std::string aln(int cc)
 {
-    if (prm_310 == 0)
+    if (cc == 0)
     {
         return "";
     }
-    if (is_in_fov(prm_310) == 0)
+    if (is_in_fov(cc) == 0)
     {
-        return u8"それは"s;
+        return u8"それは";
     }
-    return ""s + cdatan(0, prm_310) + u8"は"s;
+    return cdatan(0, cc) + u8"は";
 }
 
 
 
-std::string npcn(int prm_311)
+std::string npcn(int cc)
 {
-    if (prm_311 == 0)
+    if (cc == 0)
     {
         return "";
     }
-    if (is_in_fov(prm_311) == 0)
+    if (is_in_fov(cc) == 0)
     {
-        return u8"それは"s;
+        return u8"それは";
     }
-    return ""s + cdatan(0, prm_311) + u8"は"s;
+    return cdatan(0, cc) + u8"は";
 }
 
 
 
-std::string _s(int prm_312, int prm_313)
+std::string _s(int cc, int need_e)
 {
-    if (prm_312 < 0 || prm_312 >= 245)
+    if (cc < 0 || cc >= 245)
     {
-        if (prm_313)
+        if (need_e)
         {
             return u8"es"s;
         }
@@ -1017,11 +998,11 @@ std::string _s(int prm_312, int prm_313)
             return u8"s"s;
         }
     }
-    if (prm_312 == 0)
+    if (cc == 0)
     {
         return "";
     }
-    if (prm_313)
+    if (need_e)
     {
         return u8"es"s;
     }
@@ -1033,9 +1014,9 @@ std::string _s(int prm_312, int prm_313)
 
 
 
-std::string _s2(int prm_314)
+std::string _s2(int n)
 {
-    if (prm_314 > 1)
+    if (n > 1)
     {
         return "";
     }
@@ -1047,9 +1028,9 @@ std::string _s2(int prm_314)
 
 
 
-std::string is2(int prm_315)
+std::string is2(int n)
 {
-    if (prm_315 > 1)
+    if (n > 1)
     {
         return u8"are"s;
     }
@@ -1061,13 +1042,13 @@ std::string is2(int prm_315)
 
 
 
-std::string is(int prm_316)
+std::string is(int cc)
 {
-    if (prm_316 < 0 || prm_316 >= 245)
+    if (cc < 0 || cc >= 245)
     {
         return u8"is"s;
     }
-    if (prm_316 == 0)
+    if (cc == 0)
     {
         return u8"are"s;
     }
@@ -1076,13 +1057,13 @@ std::string is(int prm_316)
 
 
 
-std::string have(int prm_318)
+std::string have(int cc)
 {
-    if (prm_318 < 0 || prm_318 >= 245)
+    if (cc < 0 || cc >= 245)
     {
         return u8"has"s;
     }
-    if (prm_318 == 0)
+    if (cc == 0)
     {
         return u8"have"s;
     }
@@ -1091,9 +1072,9 @@ std::string have(int prm_318)
 
 
 
-std::string does(int prm_319)
+std::string does(int n)
 {
-    if (prm_319 == 1)
+    if (n == 1)
     {
         return u8"do"s;
     }
@@ -1105,13 +1086,13 @@ std::string does(int prm_319)
 
 
 
-std::string he(int prm_320, int prm_321)
+std::string he(int cc, int prm_321)
 {
     if (prm_321)
     {
         if (jp)
         {
-            if (cdata[prm_320].sex == 0)
+            if (cdata[cc].sex == 0)
             {
                 return u8"彼"s;
             }
@@ -1120,7 +1101,7 @@ std::string he(int prm_320, int prm_321)
                 return u8"彼女"s;
             }
         }
-        if (cdata[prm_320].sex == 0)
+        if (cdata[cc].sex == 0)
         {
             return u8"he"s;
         }
@@ -1129,19 +1110,19 @@ std::string he(int prm_320, int prm_321)
             return u8"she"s;
         }
     }
-    if (prm_320 < 0 || prm_320 >= 245)
+    if (cc < 0 || cc >= 245)
     {
         return u8"it"s;
     }
-    if (is_in_fov(prm_320) == 0)
+    if (is_in_fov(cc) == 0)
     {
         return u8"it"s;
     }
-    if (prm_320 == 0)
+    if (cc == 0)
     {
         return u8"you"s;
     }
-    if (cdata[prm_320].sex == 0)
+    if (cdata[cc].sex == 0)
     {
         return u8"he"s;
     }
@@ -1150,17 +1131,17 @@ std::string he(int prm_320, int prm_321)
 
 
 
-std::string his(int prm_322, int prm_323)
+std::string his(int cc, int prm_323)
 {
     if (prm_323)
     {
         if (jp)
         {
-            if (prm_322 == 0)
+            if (cc == 0)
             {
                 return u8"あなたの"s;
             }
-            else if (cdata[prm_322].sex == 0)
+            else if (cdata[cc].sex == 0)
             {
                 return u8"彼の"s;
             }
@@ -1169,11 +1150,11 @@ std::string his(int prm_322, int prm_323)
                 return u8"彼女の"s;
             }
         }
-        if (prm_322 == 0)
+        if (cc == 0)
         {
             return u8"your"s;
         }
-        else if (cdata[prm_322].sex == 0)
+        else if (cdata[cc].sex == 0)
         {
             return u8"his"s;
         }
@@ -1182,19 +1163,19 @@ std::string his(int prm_322, int prm_323)
             return u8"her"s;
         }
     }
-    if (prm_322 < 0 || prm_322 >= 245)
+    if (cc < 0 || cc >= 245)
     {
         return u8"its"s;
     }
-    if (is_in_fov(prm_322) == 0)
+    if (is_in_fov(cc) == 0)
     {
         return u8"its"s;
     }
-    if (prm_322 == 0)
+    if (cc == 0)
     {
         return u8"your"s;
     }
-    if (cdata[prm_322].sex == 0)
+    if (cdata[cc].sex == 0)
     {
         return u8"his"s;
     }
@@ -1203,13 +1184,13 @@ std::string his(int prm_322, int prm_323)
 
 
 
-std::string him(int prm_324, int prm_325)
+std::string him(int cc, int prm_325)
 {
     if (prm_325)
     {
         if (jp)
         {
-            if (cdata[prm_324].sex == 0)
+            if (cdata[cc].sex == 0)
             {
                 return u8"彼"s;
             }
@@ -1218,7 +1199,7 @@ std::string him(int prm_324, int prm_325)
                 return u8"彼女"s;
             }
         }
-        if (cdata[prm_324].sex == 0)
+        if (cdata[cc].sex == 0)
         {
             return u8"him"s;
         }
@@ -1227,19 +1208,19 @@ std::string him(int prm_324, int prm_325)
             return u8"her"s;
         }
     }
-    if (prm_324 < 0 || prm_324 >= 245)
+    if (cc < 0 || cc >= 245)
     {
         return u8"it"s;
     }
-    if (is_in_fov(prm_324) == 0)
+    if (is_in_fov(cc) == 0)
     {
         return u8"it"s;
     }
-    if (prm_324 == 0)
+    if (cc == 0)
     {
         return u8"yourself"s;
     }
-    if (cdata[prm_324].sex == 0)
+    if (cdata[cc].sex == 0)
     {
         return u8"him"s;
     }
@@ -1248,13 +1229,13 @@ std::string him(int prm_324, int prm_325)
 
 
 
-std::string your(int prm_326, int)
+std::string your(int x)
 {
-    if (prm_326 < 0 || prm_326 >= 245)
+    if (x < 0 || x >= 245)
     {
         return u8"'s"s;
     }
-    if (prm_326 == 0)
+    if (x == 0)
     {
         return u8"r"s;
     }
@@ -1263,21 +1244,21 @@ std::string your(int prm_326, int)
 
 
 
-std::string yourself(int prm_328)
+std::string yourself(int x)
 {
-    if (prm_328 < 0 || prm_328 >= 245)
+    if (x < 0 || x >= 245)
     {
         return u8"itself"s;
     }
-    if (is_in_fov(prm_328) == 0)
+    if (is_in_fov(x) == 0)
     {
         return u8"itself"s;
     }
-    if (prm_328 == 0)
+    if (x == 0)
     {
         return u8"yourself"s;
     }
-    if (cdata[prm_328].sex == 0)
+    if (cdata[x].sex == 0)
     {
         return u8"himself"s;
     }
@@ -1286,80 +1267,19 @@ std::string yourself(int prm_328)
 
 
 
-void txt_check(int prm_329)
+void txt_check()
 {
-    txtvalid = -1;
-    if (prm_329 == 0)
-    {
-        if (cc >= 0)
-        {
-            if (is_in_fov(cc) || cc == 0)
-            {
-                txtvalid = 0;
-                return;
-            }
-        }
-    }
-    if (prm_329 == 1)
-    {
-        if (tc >= 0)
-        {
-            if (is_in_fov(tc) || tc == 0)
-            {
-                txtvalid = 0;
-                return;
-            }
-        }
-    }
-    if (prm_329 == 2)
-    {
-        if (cc == 0 || cdata[cc].relationship == 10)
-        {
-            txtvalid = 0;
-            return;
-        }
-    }
-    if (prm_329 == 3)
-    {
-        if (cc > 0)
-        {
-            if (is_in_fov(cc))
-            {
-                txtvalid = 0;
-                return;
-            }
-        }
-    }
-    if (prm_329 == 4)
-    {
-        if (tc == 0)
-        {
-            txtvalid = 0;
-            return;
-        }
-    }
-    if (prm_329 == 5)
-    {
-        if (tc > 0)
-        {
-            if (is_in_fov(tc))
-            {
-                txtvalid = 0;
-            }
-        }
-    }
-    return;
+    txtvalid = (cc > 0 && is_in_fov(cc)) || cc == 0 ? 0 : -1;
 }
 
 
 
-void stxt(int prm_340, const std::string& prm_341)
+void stxt(int cc, const std::string& str)
 {
-    if (prm_340 == 0 || (is_in_fov(prm_340) && cdata[0].blind == 0))
+    if (cc == 0 || (is_in_fov(cc) && cdata[0].blind == 0))
     {
-        txt(prm_341);
+        txt(str);
     }
-    return;
 }
 
 

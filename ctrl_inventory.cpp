@@ -97,7 +97,6 @@ label_20591:
                 break;
             }
         }
-        inv_getheader(p);
         int cnt2 = cnt;
         if (invctrl != 1 && invctrl != 5 && invctrl != 13 && invctrl != 14
             && invctrl != 18 && invctrl != 20 && invctrl != 23 && invctrl != 25
@@ -117,8 +116,7 @@ label_20591:
         {
             showmoney = 0;
         }
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(p))
         {
             if (inv[cnt].number <= 0)
             {
@@ -684,7 +682,6 @@ label_20591:
             {
                 p = 0;
             }
-            txtmore();
             txt(lang(
                 u8"(持っているメダル: "s + p + u8"枚)"s,
                 u8"(Coins: "s + p + u8")"s));
@@ -1129,7 +1126,7 @@ label_2061_internal:
                     u8"It's set as no-drop. You can reset it from the <examine> menu."s));
                 goto label_2060_internal;
             }
-            if (inv_getspace(-1) == 0)
+            if (!inv_getspace(-1))
             {
                 txt(lang(
                     u8"これ以上は置けない。"s,
@@ -1581,7 +1578,7 @@ label_2061_internal:
                 txt(lang(
                     u8"「え、これを"s + _ore(3) + u8"にくれるの"s + _ka(1) + ""s
                         + _thanks(2) + u8"」"s,
-                    cnvtalk(u8"Thank you!"s)));
+                    u8"\"Thank you!\""s));
                 modimp(tc, giftvalue(inv[ci].param4));
                 cdata[tc].emotion_icon = 317;
                 update_screen();
@@ -1616,12 +1613,12 @@ label_2061_internal:
             if (f)
             {
                 s(0) = "";
-                s(1) = lang(u8"重すぎ"s, u8"Too heavy!"s);
-                s(2) = lang(u8"無理"s, u8"No way."s);
-                s(3) = lang(u8"いらん"s, u8"I don't want it."s);
-                s(4) = lang(u8"イヤ！"s, u8"Never!"s);
+                s(1) = lang(u8"「重すぎ」"s, u8"\"Too heavy!\""s);
+                s(2) = lang(u8"「無理」"s, u8"\"No way.\""s);
+                s(3) = lang(u8"「いらん」"s, u8"\"I don't want it.\""s);
+                s(4) = lang(u8"「イヤ！」"s, u8"\"Never!\""s);
                 snd(27);
-                txt(lang(name(tc) + u8"「"s + s(f) + u8"」"s, cnvtalk(s(f))));
+                txt(lang(name(tc) + s(f), s(f)));
                 goto label_2060_internal;
             }
             f = 0;
@@ -1637,7 +1634,7 @@ label_2061_internal:
                     txt(lang(
                         u8"「そんな得体の知れないものはいらない"s + _yo()
                             + u8"」"s,
-                        cnvtalk(u8"I dont't want it. It's too creepy."s)));
+                        u8"\"I dont't want it. It's too creepy.\""s));
                     goto label_2060_internal;
                 }
                 if (inv[ci].curse_state <= -1)
@@ -1645,7 +1642,7 @@ label_2061_internal:
                     snd(27);
                     txt(lang(
                         u8"「それ、呪われてい"s + _ru() + u8"」"s,
-                        cnvtalk(u8"It's cursed!"s)));
+                        u8"\"It's cursed!\""s));
                     goto label_2060_internal;
                 }
                 if (reftype == 53000)
@@ -1671,7 +1668,7 @@ label_2061_internal:
                             snd(27);
                             txt(lang(
                                 u8"「もう飲めない"s + _yo() + u8"」"s,
-                                cnvtalk(u8"Enough for me."s)));
+                                u8"\"Enough for me.\""s));
                             goto label_2060_internal;
                         }
                     }
@@ -1691,8 +1688,7 @@ label_2061_internal:
                             || inv[ci].id == 392)
                         {
                             f = 1;
-                            txt(lang(
-                                u8"「おろす…」"s, cnvtalk(u8"Abortion..."s)));
+                            txt(lang(u8"「おろす…」"s, u8"\"Abortion...\""s));
                         }
                     }
                 }
@@ -1715,24 +1711,22 @@ label_2061_internal:
                 }
                 if (inv[ci].id == 620)
                 {
-                    txtmore();
                     txtef(8);
                     txt(lang(
                         name(tc) + u8"は激怒して"s + itemname(ci, 1)
                             + u8"を叩き割った。"s,
                         name(tc) + u8" throws it on the ground angrily."s));
                     snd(47);
-                    txtmore();
                     txtef(9);
                     txt(lang(
                             name(tc) + u8"「サイテー！！」"s,
-                            cnvtalk(u8"You scum!"s)),
+                            u8"\"You scum!\""s),
                         lang(
                             name(tc) + u8"「このヘンタイ！」"s,
-                            cnvtalk(u8"What are you trying to do!"s)),
+                            u8"\"What are you trying to do!\""s),
                         lang(
                             name(tc) + u8"「ガード！ガード！ガード！」"s,
-                            cnvtalk(u8"Guard! Guard! Guard!"s)));
+                            u8"\"Guard! Guard! Guard!\""s));
                     modimp(tc, -20);
                     cdata[tc].emotion_icon = 318;
                     --inv[ci].number;
@@ -2010,13 +2004,13 @@ label_2061_internal:
             if (f != 0)
             {
                 s(0) = "";
-                s(1) = lang(u8"やだ"s, u8"No!"s);
-                s(2) = lang(u8"あげないよ"s, u8"It's mine."s);
-                s(3) = lang(u8"だめ"s, u8"Get off!"s);
-                s(4) = lang(u8"イヤ！"s, u8"Never."s);
+                s(1) = lang(u8"「やだ」"s, u8"\"No!\""s);
+                s(2) = lang(u8"「あげないよ」"s, u8"\"It's mine.\""s);
+                s(3) = lang(u8"「だめ」"s, u8"\"Get off!\""s);
+                s(4) = lang(u8"「イヤ！」"s, u8"\"Never.\""s);
                 snd(27);
                 txtef(4);
-                txt(lang(name(tc) + u8"「"s + s(f) + u8"」"s, cnvtalk(s(f))));
+                txt(lang(name(tc) + s(f), s(f)));
                 goto label_2060_internal;
             }
             if (inv[ci].body_part != 0)

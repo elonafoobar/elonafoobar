@@ -429,12 +429,9 @@ void talk_npc()
             {
                 if (qdata(10, cnt) == rq)
                 {
-                    inv_getheader(0);
                     p = qdata(11, cnt);
                     deliver = cnt;
-                    for (int cnt = invhead, cnt_end = cnt + (invrange);
-                         cnt < cnt_end;
-                         ++cnt)
+                    for (const auto& cnt : items(0))
                     {
                         if (inv[cnt].number == 0)
                         {
@@ -457,9 +454,7 @@ void talk_npc()
         else if (qdata(14, rq) == 3 && qdata(8, rq) == 1)
         {
             supply = -1;
-            inv_getheader(0);
-            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-                 ++cnt)
+            for (const auto& cnt : items(0))
             {
                 if (inv[cnt].number == 0)
                 {
@@ -674,10 +669,8 @@ void talk_npc()
             talk_npc();
             return;
         }
-        inv_getheader(0);
         p = 0;
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(0))
         {
             if (inv[cnt].number == 0)
             {
@@ -699,13 +692,11 @@ void talk_npc()
         if (chatval == 15)
         {
             cdata[0].gold -= calcidentifyvalue(1);
-            inv_getheader(0);
             p(0) = 0;
             p(1) = 0;
             p(0) = 0;
             p(1) = 0;
-            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-                 ++cnt)
+            for (const auto& cnt : items(0))
             {
                 if (inv[cnt].number == 0)
                 {
@@ -801,7 +792,6 @@ void talk_npc()
             efid = 439;
             efp = 100;
             magic();
-            txtmore();
             efid = 440;
             efp = 100;
             magic();
@@ -815,9 +805,7 @@ void talk_npc()
     if (chatval == 20)
     {
         invsubroutine = 1;
-        inv_getheader(tc);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(tc))
         {
             if (inv[cnt].number != 0)
             {
@@ -1958,7 +1946,7 @@ void talk_npc()
         {
             snd(12);
             cdata[0].gold -= calccostreload(0);
-            p = calccostreload(0, 1);
+            p = calccostreload(0, true);
             buff = lang(_thanks(2), u8"Thanks!"s);
         }
         else

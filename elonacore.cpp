@@ -7062,7 +7062,6 @@ void modify_karma(int cc, int delta)
         delta = delta * 150 / 100;
     }
 
-    txtmore();
     if (delta >= 0)
     {
         txtef(5);
@@ -7076,7 +7075,6 @@ void modify_karma(int cc, int delta)
     {
         if (cdata[cc].karma < -30 && cdata[cc].karma + delta >= -30)
         {
-            txtmore();
             txtef(2);
             txt(lang(
                 u8"あなたの罪は軽くなった。",
@@ -7087,7 +7085,6 @@ void modify_karma(int cc, int delta)
     {
         if (cdata[cc].karma >= -30 && cdata[cc].karma + delta < -30)
         {
-            txtmore();
             txtef(8);
             txt(lang(u8"あなたは今や罪人だ。", u8"You are a criminal now."));
             go_hostile();
@@ -7148,7 +7145,6 @@ void modrank(int prm_552, int prm_553, int prm_554)
     if (orgrank_at_m75 / 100 != gdata(p_at_m75) / 100)
     {
         i_at_m75 = gdata(p_at_m75) / 100 - orgrank_at_m75 / 100;
-        txtmore();
         if (i_at_m75 < 0)
         {
             txtef(2);
@@ -7166,7 +7162,6 @@ void modrank(int prm_552, int prm_553, int prm_554)
     else if (i_at_m75 > 0)
     {
         txtef(2);
-        txtmore();
         txt(lang(
             u8"着実に次のランクに近づいている。"s,
             u8"You are one step closer to the next rank."s));
@@ -7222,11 +7217,11 @@ void skillgain(int cc, int id, int initial_level, int stock)
 
 
 
-int skillmod(int cc, int id, int experience)
+int skillmod(int id, int cc, int experience)
 {
-    lv_at_m77 = sdata.get(cc, id).original_level;
-    exp_at_m77 = sdata.get(cc, id).experience + experience;
-    growth_at_m77 = sdata.get(cc, id).potential;
+    lv_at_m77 = sdata.get(id, cc).original_level;
+    exp_at_m77 = sdata.get(id, cc).experience + experience;
+    growth_at_m77 = sdata.get(id, cc).potential;
     if (growth_at_m77 == 0)
     {
         return 0;
@@ -7244,19 +7239,19 @@ int skillmod(int cc, int id, int experience)
                 growth_at_m77 = 1;
             }
         }
-        sdata.get(cc, id).original_level = std::clamp(lv_at_m77, 0, 2000);
-        sdata.get(cc, id).experience = exp_at_m77;
-        sdata.get(cc, id).potential = growth_at_m77;
-        if (is_in_fov(id))
+        sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
+        sdata.get(id, cc).experience = exp_at_m77;
+        sdata.get(id, cc).potential = growth_at_m77;
+        if (is_in_fov(cc))
         {
-            if (id == 0 || id < 16)
+            if (cc == 0 || cc < 16)
             {
                 snd(61);
                 txtef(2);
             }
-            txt(txtskillchange(cc, 0, id));
+            txt(txtskillchange(id, cc, true));
         }
-        r1 = id;
+        r1 = cc;
         refresh_character();
         return 1;
     }
@@ -7284,36 +7279,36 @@ int skillmod(int cc, int id, int experience)
                 growth_at_m77 = 400;
             }
         }
-        sdata.get(cc, id).original_level = std::clamp(lv_at_m77, 0, 2000);
-        sdata.get(cc, id).experience = exp_at_m77;
-        sdata.get(cc, id).potential = growth_at_m77;
-        if (id == 0 || id < 16)
+        sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
+        sdata.get(id, cc).experience = exp_at_m77;
+        sdata.get(id, cc).potential = growth_at_m77;
+        if (cc == 0 || cc < 16)
         {
-            if (is_in_fov(id))
+            if (is_in_fov(cc))
             {
                 if (lvchange_at_m77 != 0)
                 {
                     txtef(3);
-                    txt(txtskillchange(cc, 1, id));
+                    txt(txtskillchange(id, cc, false));
                 }
             }
         }
-        r1 = id;
+        r1 = cc;
         refresh_character();
         return 1;
     }
-    sdata.get(cc, id).original_level = std::clamp(lv_at_m77, 0, 2000);
-    sdata.get(cc, id).experience = exp_at_m77;
-    sdata.get(cc, id).potential = growth_at_m77;
+    sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
+    sdata.get(id, cc).experience = exp_at_m77;
+    sdata.get(id, cc).potential = growth_at_m77;
     return 0;
 }
 
 
 
-int skillexp(int cc, int id, int experience, int prm_572, int prm_573)
+int skillexp(int id, int cc, int experience, int prm_572, int prm_573)
 {
     int exp2_at_m77 = 0;
-    if (sdata.get(cc, id).original_level == 0)
+    if (sdata.get(id, cc).original_level == 0)
     {
         return 0;
     }
@@ -7321,15 +7316,15 @@ int skillexp(int cc, int id, int experience, int prm_572, int prm_573)
     {
         return 0;
     }
-    if (the_ability_db[cc].related_basic_attribute != 0)
+    if (the_ability_db[id].related_basic_attribute != 0)
     {
         skillexp(
-            the_ability_db[cc].related_basic_attribute,
-            id,
+            the_ability_db[id].related_basic_attribute,
+            cc,
             experience / (2 + prm_572));
     }
-    lv_at_m77 = sdata.get(cc, id).original_level;
-    growth_at_m77 = sdata.get(cc, id).potential;
+    lv_at_m77 = sdata.get(id, cc).original_level;
+    growth_at_m77 = sdata.get(id, cc).potential;
     if (growth_at_m77 == 0)
     {
         return 0;
@@ -7337,14 +7332,14 @@ int skillexp(int cc, int id, int experience, int prm_572, int prm_573)
     if (experience > 0)
     {
         exp_at_m77 = experience * growth_at_m77 / (100 + lv_at_m77 * 15);
-        if (cc >= 10)
+        if (id >= 10)
         {
-            if (cc <= 19)
+            if (id <= 19)
             {
-                if (cdata[id].growth_buffs[cc - 10] > 0)
+                if (cdata[cc].growth_buffs[id - 10] > 0)
                 {
                     exp_at_m77 = exp_at_m77
-                        * (100 + cdata[id].growth_buffs[cc - 10]) / 100;
+                        * (100 + cdata[cc].growth_buffs[id - 10]) / 100;
                 }
             }
         }
@@ -7370,23 +7365,23 @@ int skillexp(int cc, int id, int experience, int prm_572, int prm_573)
     }
     if (exp_at_m77 > 0)
     {
-        if (cc >= 100)
+        if (id >= 100)
         {
             if (prm_573 != 1000)
             {
-                exp2_at_m77 = rnd(cdata[id].required_experience * exp_at_m77
-                                      / 1000 / (cdata[id].level + prm_573)
+                exp2_at_m77 = rnd(cdata[cc].required_experience * exp_at_m77
+                                      / 1000 / (cdata[cc].level + prm_573)
                                   + 1)
                     + rnd(2);
-                cdata[id].experience += exp2_at_m77;
-                if (id == 0)
+                cdata[cc].experience += exp2_at_m77;
+                if (cc == 0)
                 {
                     gdata_sleep_experience += exp2_at_m77;
                 }
             }
         }
     }
-    exp_at_m77 += sdata.get(cc, id).experience;
+    exp_at_m77 += sdata.get(id, cc).experience;
     if (exp_at_m77 >= 1000)
     {
         lvchange_at_m77 = exp_at_m77 / 1000;
@@ -7400,20 +7395,20 @@ int skillexp(int cc, int id, int experience, int prm_572, int prm_573)
                 growth_at_m77 = 1;
             }
         }
-        sdata.get(cc, id).original_level = std::clamp(lv_at_m77, 0, 2000);
-        sdata.get(cc, id).experience = exp_at_m77;
-        sdata.get(cc, id).potential = growth_at_m77;
-        if (is_in_fov(id))
+        sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
+        sdata.get(id, cc).experience = exp_at_m77;
+        sdata.get(id, cc).potential = growth_at_m77;
+        if (is_in_fov(cc))
         {
-            if (id == 0 || id < 16)
+            if (cc == 0 || cc < 16)
             {
                 snd(61);
                 txtef(2);
                 msgalert = 1;
             }
-            txt(txtskillchange(cc, 0, id));
+            txt(txtskillchange(id, cc, true));
         }
-        r1 = id;
+        r1 = cc;
         refresh_character();
         return 1;
     }
@@ -7441,28 +7436,28 @@ int skillexp(int cc, int id, int experience, int prm_572, int prm_573)
                 growth_at_m77 = 400;
             }
         }
-        sdata.get(cc, id).original_level = std::clamp(lv_at_m77, 0, 2000);
-        sdata.get(cc, id).experience = exp_at_m77;
-        sdata.get(cc, id).potential = growth_at_m77;
-        if (is_in_fov(id))
+        sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
+        sdata.get(id, cc).experience = exp_at_m77;
+        sdata.get(id, cc).potential = growth_at_m77;
+        if (is_in_fov(cc))
         {
-            if (id == 0 || id < 16)
+            if (cc == 0 || cc < 16)
             {
                 if (lvchange_at_m77 != 0)
                 {
                     msgalert = 1;
                     txtef(3);
-                    txt(txtskillchange(cc, 1, id));
+                    txt(txtskillchange(id, cc, false));
                 }
             }
         }
-        r1 = id;
+        r1 = cc;
         refresh_character();
         return 1;
     }
-    sdata.get(cc, id).original_level = std::clamp(lv_at_m77, 0, 2000);
-    sdata.get(cc, id).experience = exp_at_m77;
-    sdata.get(cc, id).potential = growth_at_m77;
+    sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
+    sdata.get(id, cc).experience = exp_at_m77;
+    sdata.get(id, cc).potential = growth_at_m77;
     return 0;
 }
 
@@ -7936,8 +7931,7 @@ void chara_preparepic(int prm_618, int prm_619)
 int cell_itemlist(int prm_625, int prm_626)
 {
     listmax = 0;
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number > 0)
         {
@@ -7958,8 +7952,7 @@ int cell_itemoncell(int prm_627, int prm_628)
 {
     rtval(0) = 0;
     rtval(1) = 0;
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number > 0)
         {
@@ -11398,7 +11391,6 @@ void check_quest()
             }
             else
             {
-                txtmore();
                 txtef(4);
                 txt(lang(
                     u8"[殲滅依頼]残り"s + p_at_m119 + u8"体"s + u8"] "s,
@@ -11629,7 +11621,7 @@ void make_sound(
                                         + u8" can no longer put up with it."s));
                                 txt(lang(
                                     u8"「もう我慢できない」"s,
-                                    cnvtalk(u8"That's it."s)));
+                                    u8"\"That's it.\""s));
                             }
                             turn_aggro(cnt, prm_782, 80);
                         }
@@ -11680,8 +11672,7 @@ int get_freeally()
 
 void del_chara(int prm_783)
 {
-    inv_getheader(prm_783);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(prm_783))
     {
         inv[cnt].number = 0;
     }
@@ -11754,11 +11745,10 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
     hp_at_m125 = cdata[tc_at_m125].hp;
     cdata[prm_784].item_which_will_be_used = 0;
     cbitmod(960, prm_784, 0);
-    inv_getheader(prm_784);
+    const auto [invhead, invrange] = inv_getheader(prm_784);
     p_at_m125 = invhead;
     invrangecc_at_m125 = invrange;
-    inv_getheader(tc_at_m125);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(tc_at_m125))
     {
         cnt2_at_m125 = cnt;
         if (cnt == invrangecc_at_m125)
@@ -11863,7 +11853,6 @@ void hostileaction(int prm_787, int prm_788)
     }
     if (cdata[prm_788].relationship == 10)
     {
-        txtmore();
         txtef(8);
         txt(lang(
             name(prm_788) + u8"は嫌な顔をした。"s,
@@ -11879,7 +11868,6 @@ void hostileaction(int prm_787, int prm_788)
         {
             if (gdata_released_fire_giant == 0)
             {
-                txtmore();
                 txtef(8);
                 txt(lang(
                     name(prm_788) + u8"は嫌な顔をした。"s,
@@ -11889,7 +11877,6 @@ void hostileaction(int prm_787, int prm_788)
         }
         if (cdata[prm_788].relationship > -2)
         {
-            txtmore();
             txtef(8);
             txt(lang(
                 name(prm_788) + u8"は嫌な顔をした。"s,
@@ -11901,7 +11888,6 @@ void hostileaction(int prm_787, int prm_788)
             if (cdata[prm_788].relationship != -3)
             {
                 txtef(8);
-                txtmore();
                 txt(lang(
                     name(prm_788) + u8"は激怒した。"s,
                     name(prm_788) + u8" gets furious!"s));
@@ -12174,7 +12160,6 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
     {
         if (is_in_fov(prm_801))
         {
-            txtmore();
             txt(lang(
                 u8"しかし、効果はなかった。"s,
                 u8"But it produces no effect."s));
@@ -12232,7 +12217,6 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
         {
             if (is_in_fov(prm_801))
             {
-                txtmore();
                 txt(lang(
                     name(prm_801) + u8"は抵抗した。"s,
                     name(prm_801) + u8" resist"s + _s(prm_801)
@@ -12248,7 +12232,6 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
     if (the_buff_db[prm_802].type != buff_data::type_t::food
         && is_in_fov(prm_801))
     {
-        txtmore();
         txt(lang(
             name(prm_801)
                 + i18n::_(u8"buff", std::to_string(prm_802), u8"message_0"),
@@ -12673,7 +12656,7 @@ void resistmod(int cc, int element, int delta)
         case 55:
             txt(lang(
                 name(cc) + u8"の毒への耐性は薄れた。"s,
-                name(cc) + u8" lose"s + _s(cc, 1)
+                name(cc) + u8" lose"s + _s(cc, true)
                     + u8" antibodies to poisons."s));
             break;
         case 56:
@@ -12782,7 +12765,6 @@ void modcorrupt(int prm_815)
                 txt(lang(
                     u8"あなたはエーテルに侵食された。"s,
                     u8"Your disease is getting worse."s));
-                txtmore();
                 txtef(3);
                 txt(traitrefn(1));
                 if (tid == 203)
@@ -12854,7 +12836,6 @@ void modcorrupt(int prm_815)
                 txt(lang(
                     u8"あなたのエーテルの侵食はやわらいだ。"s,
                     u8"The symptoms of the Ether disease seem to calm down."s));
-                txtmore();
                 txtef(2);
                 txt(traitrefn(0));
                 break;
@@ -12875,18 +12856,15 @@ void wet(int cc, int turns)
     cdata[cc].wet += turns;
     if (is_in_fov(cc))
     {
-        txtmore();
         txt(lang(
             name(cc) + u8"は濡れた。"s,
             name(cc) + u8" get"s + _s(cc) + u8" wet."s));
         if (cbit(6, cc))
         {
-            txtmore();
             txt(lang(
                 name(cc) + u8"の姿があらわになった。"s,
                 name(cc) + u8" "s + is(cc) + u8" revealed "s + his(cc)
                     + u8" shape."s));
-            txtmore();
         }
     }
 }
@@ -12932,7 +12910,6 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
                 cdata[prm_818].blind = p_at_con;
                 if (is_in_fov(prm_818))
                 {
-                    txtmore();
                     txtef(8);
                     txt(lang(
                         name(prm_818) + u8"は盲目になった。"s,
@@ -12978,7 +12955,6 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
                 cdata[prm_818].confused = p_at_con;
                 if (is_in_fov(prm_818))
                 {
-                    txtmore();
                     txtef(8);
                     txt(lang(
                         name(prm_818) + u8"は混乱した。"s,
@@ -13021,7 +12997,6 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
                 cdata[prm_818].paralyzed = p_at_con;
                 if (is_in_fov(prm_818))
                 {
-                    txtmore();
                     txtef(8);
                     txt(lang(
                         name(prm_818) + u8"は麻痺した。"s,
@@ -13064,7 +13039,6 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
                 cdata[prm_818].poisoned = p_at_con;
                 if (is_in_fov(prm_818))
                 {
-                    txtmore();
                     txtef(8);
                     txt(lang(
                         name(prm_818) + u8"は毒におかされた。"s,
@@ -13107,7 +13081,6 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
                 cdata[prm_818].sleep = p_at_con;
                 if (is_in_fov(prm_818))
                 {
-                    txtmore();
                     txtef(8);
                     txt(lang(
                         name(prm_818) + u8"は眠りにおちた。"s,
@@ -13159,7 +13132,6 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
             }
             if (is_in_fov(prm_818))
             {
-                txtmore();
                 txt(lang(
                     name(prm_818) + u8"は恐怖に侵された。"s,
                     name(prm_818) + u8" "s + is(prm_818) + u8" frightened."s));
@@ -13194,7 +13166,6 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
                 cdata[prm_818].dimmed = p_at_con;
                 if (is_in_fov(prm_818))
                 {
-                    txtmore();
                     txtef(8);
                     txt(lang(
                         name(prm_818) + u8"は朦朧とした。"s,
@@ -13223,7 +13194,6 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
                 cdata[prm_818].bleeding = p_at_con;
                 if (is_in_fov(prm_818))
                 {
-                    txtmore();
                     txtef(8);
                     txt(lang(
                         name(prm_818) + u8"は血を流し始めた。"s,
@@ -13249,7 +13219,6 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
                 cdata[prm_818].drunk = p_at_con;
                 if (is_in_fov(prm_818))
                 {
-                    txtmore();
                     txt(lang(
                         name(prm_818) + u8"は酔っ払った。"s,
                         name(prm_818) + u8" get"s + _s(prm_818)
@@ -13273,7 +13242,6 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
                 cdata[prm_818].insane = p_at_con;
                 if (is_in_fov(prm_818))
                 {
-                    txtmore();
                     txtef(8);
                     txt(lang(
                         name(prm_818) + u8"は気が狂った。"s,
@@ -13299,7 +13267,6 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
                 cdata[prm_818].sick = p_at_con;
                 if (is_in_fov(prm_818))
                 {
-                    txtmore();
                     txtef(8);
                     txt(lang(
                         name(prm_818) + u8"は病気になった。"s,
@@ -13842,7 +13809,6 @@ void item_acid(int prm_838, int prm_839)
     {
         return;
     }
-    txtmore();
     if (ibit(1, ci_at_m138) == 0)
     {
         txtef(8);
@@ -13881,9 +13847,7 @@ int item_fire(int prm_840, int prm_841)
         {
             return 0;
         }
-        inv_getheader(prm_840);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(prm_840))
         {
             if (inv[cnt].number == 0)
             {
@@ -14098,9 +14062,8 @@ void mapitem_fire(int prm_842, int prm_843)
     {
         return;
     }
-    inv_getheader(-1);
     ci_at_m138 = -1;
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number == 0)
         {
@@ -14148,9 +14111,7 @@ int item_cold(int prm_844, int prm_845)
         {
             return 0;
         }
-        inv_getheader(prm_844);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(prm_844))
         {
             if (inv[cnt].number == 0)
             {
@@ -14185,7 +14146,6 @@ int item_cold(int prm_844, int prm_845)
             continue;
         }
         rowact_item(ci_at_m138);
-        txtmore();
         if (ibit(5, ci_at_m138) == 0)
         {
             a_at_m138 = the_item_db[inv[ci_at_m138].id]->category;
@@ -14261,9 +14221,8 @@ void mapitem_cold(int prm_846, int prm_847)
     {
         return;
     }
-    inv_getheader(-1);
     ci_at_m138 = -1;
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number == 0)
         {
@@ -14567,7 +14526,7 @@ void txteledmg(int type, int attacker, int target, int element)
         {
             txt(lang(
                 name(target) + u8"は冥界に墜ちた。"s,
-                name(target) + u8" go"s + _s(target, 1) + u8" to hell."s));
+                name(target) + u8" go"s + _s(target, true) + u8" to hell."s));
         }
         break;
     case 55:
@@ -14891,8 +14850,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     name(cnt)
                         + u8"は叫んだ。「この者にジュアの加護を。レイハンド！」"s,
                     name(cnt) + u8" shout"s + _s(cnt) + u8", "s
-                        + cnvtalk(u8"Lay hand!"s)));
-                txtmore();
+                        + u8"\"Lay hand!\""s));
                 txt(lang(
                     name(prm_853) + u8"は回復した。"s,
                     name(prm_853) + u8" "s + is(prm_853) + u8" healed."s));
@@ -14985,7 +14943,6 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         {
             if (is_in_fov(prm_853))
             {
-                txtmore();
                 txtef(11);
                 txt(lang(
                     name(prm_853) + u8"は痛手を負った。"s,
@@ -14996,7 +14953,6 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         {
             if (is_in_fov(prm_853))
             {
-                txtmore();
                 txtef(10);
                 txt(lang(
                     name(prm_853) + u8"は苦痛にもだえた。"s,
@@ -15008,7 +14964,6 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         {
             if (is_in_fov(prm_853))
             {
-                txtmore();
                 txtef(3);
                 txt(lang(
                     name(prm_853) + u8"は悲痛な叫び声をあげた。"s,
@@ -15061,7 +15016,6 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                             cdata[prm_853].fear = rnd(20) + 5;
                             if (is_in_fov(prm_853))
                             {
-                                txtmore();
                                 txtef(4);
                                 txt(lang(
                                     name(prm_853) + u8"は恐怖して逃げ出した。"s,
@@ -15157,7 +15111,6 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             if (ele_at_m141 != 54 && ele_at_m141 != 58 && ele_at_m141 != 59)
             {
                 cdata[prm_853].sleep = 0;
-                txtmore();
                 txt(lang(
                     name(prm_853) + u8"は眠りを妨げられた。"s,
                     name(prm_853) + your(prm_853) + u8" sleep "s + is(prm_853)
@@ -15191,7 +15144,6 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 cbitmod(972, prm_853, 1);
                 txtef(9);
-                txtmore();
                 txt(lang(u8" *カチッ* "s, u8"*click*"s));
             }
         }
@@ -15318,7 +15270,6 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         {
             snd(se_at_m141, 0, 1);
         }
-        txtmore();
         txtef(3);
         if (prm_855 >= 0)
         {
@@ -15661,12 +15612,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             }
             if (prm_855 == -6)
             {
-                inv_getheader(0);
                 p_at_m141(0) = -1;
                 p_at_m141(1) = 0;
-                for (int cnt = invhead, cnt_end = cnt + (invrange);
-                     cnt < cnt_end;
-                     ++cnt)
+                for (const auto& cnt : items(0))
                 {
                     if (inv[cnt].number == 0)
                     {
@@ -15963,7 +15911,6 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         {
             if (prm_853 == gdata_mount)
             {
-                txtmore();
                 txt(lang(
                     name(0) + u8"は"s + name(prm_853) + u8"の死体から降りた。"s,
                     name(0) + u8" get off the corpse of "s + name(prm_853)
@@ -16001,7 +15948,6 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         }
         if (cbit(19, prm_853) == 1)
         {
-            txtmore();
             txt(lang(
                 u8"死の宣告は無効になった。"s, u8"The death word breaks."s));
             for (int cnt = 0; cnt < 245; ++cnt)
@@ -16054,14 +16000,14 @@ void end_dmghp()
             txt(u8"("s + dmg_at_m141 + u8")"s + lang(u8" "s, ""s));
             if (rnd(20) == 0)
             {
-                txt(lang(u8"「くっ！」"s, cnvtalk(u8"Kill me already!"s)),
-                    lang(u8"「まだまだ！」"s, cnvtalk(u8"No..not yet...!"s)),
+                txt(lang(u8"「くっ！」"s, u8"\"Kill me already!\""s),
+                    lang(u8"「まだまだ！」"s, u8"\"No..not yet...!\""s),
                     lang(
                         u8"「もう限界…」"s,
-                        cnvtalk(u8"I can't take it anymore..."s)),
-                    lang(u8"「うぐぐ」"s, cnvtalk(u8"Argh!"s)),
-                    lang(u8"「あう」"s, cnvtalk(u8"Uhhh"s)),
-                    lang(u8"「ああんっ」"s, cnvtalk(u8"Ugggg"s)));
+                        u8"\"I can't take it anymore...\""s),
+                    lang(u8"「うぐぐ」"s, u8"\"Argh!\""s),
+                    lang(u8"「あう」"s, u8"\"Uhhh\""s),
+                    lang(u8"「ああんっ」"s, u8"\"Ugggg\""s));
             }
         }
     }
@@ -16338,10 +16284,8 @@ void chara_vomit(int prm_876)
     }
     if (mdata(6) != 1)
     {
-        inv_getheader(-1);
         p_at_m146 = 2;
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(-1))
         {
             if (inv[cnt].number > 0)
             {
@@ -16971,7 +16915,6 @@ void label_1399()
     {
         inputlog = u8"\""s + inputlog + u8"\""s;
     }
-    txtmore();
     txt(inputlog);
     net_send(
         u8"chat"s + cdatan(1, 0) + lang(""s, u8" "s) + cdatan(0, 0)
@@ -17019,8 +16962,8 @@ label_14001_internal:
         comctrl = 0;
         txt(lang(
             u8"あなたの投票権はまだ復活していない("s
-                + cnvdate(gdata_next_voting_time, 1) + u8"まで)"s,
-            u8"You can't vote until "s + cnvdate(gdata_next_voting_time, 1)
+                + cnvdate(gdata_next_voting_time) + u8"まで)"s,
+            u8"You can't vote until "s + cnvdate(gdata_next_voting_time)
                 + u8"."s));
         for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
         {
@@ -17173,8 +17116,7 @@ label_1402_internal:
             + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 168;
         txt(lang(
             u8"「"s + listn(0, (cs + pagesize * page)) + u8"は素敵！」"s,
-            cnvtalk(u8"I like "s + listn(0, (cs + pagesize * page)) + u8"!"s)));
-        txtmore();
+            u8"\"I like "s + listn(0, (cs + pagesize * page)) + u8"!\""s));
         txt(lang(u8"投票した。"s, u8"You vote."s));
         net_send(""s + p, 2);
         modrank(6, 100, 5);
@@ -20423,7 +20365,7 @@ void label_1520()
         {
             if (is_in_fov(r1))
             {
-                txt(lang(u8"「うぐぐ…！」"s, cnvtalk(u8"Ughh...!"s)));
+                txt(lang(u8"「うぐぐ…！」"s, u8"\"Ughh...!\""s));
             }
         }
         ++cdata[r1].choked;
@@ -20560,7 +20502,6 @@ void label_1520()
         {
             if (rnd(3) == 0)
             {
-                txtmore();
                 txtef(9);
                 if (jp)
                 {
@@ -20620,12 +20561,12 @@ void label_1520()
                     }
                     if (r2 == 1)
                     {
-                        txt(cnvtalk(u8"Weeeeeee!"s),
-                            cnvtalk(u8"Forgive me! Forgive me!"s),
-                            cnvtalk(u8"P-P-Pika!"s),
-                            cnvtalk(u8"Shhhhhh!"s),
-                            cnvtalk(u8"So I have to kill."s),
-                            cnvtalk(u8"You snail!"s));
+                        txt(u8"\"Weeeeeee!\""s,
+                            u8"\"Forgive me! Forgive me!\""s,
+                            u8"\"P-P-Pika!\""s,
+                            u8"\"Shhhhhh!\""s,
+                            u8"\"So I have to kill.\""s,
+                            u8"\"You snail!\""s);
                     }
                 }
             }
@@ -20780,7 +20721,6 @@ void gain_special_action()
         if (spact(29) == 0)
         {
             spact(29) = 1;
-            txtmore();
             txtef(5);
             txt(lang(
                 u8"あなたは「"s
@@ -20793,7 +20733,6 @@ void gain_special_action()
         if (spact(30) == 0)
         {
             spact(30) = 1;
-            txtmore();
             txtef(5);
             txt(lang(
                 u8"あなたは「"s
@@ -20809,7 +20748,6 @@ void gain_special_action()
         if (spact(31) == 0)
         {
             spact(31) = 1;
-            txtmore();
             txtef(5);
             txt(lang(
                 u8"あなたは「"s
@@ -22144,8 +22082,7 @@ void initialize_pc_character()
     gain_race_feat();
     cdata[r1].skill_bonus = 5 + trait(154);
     cdata[r1].total_skill_bonus = 5 + trait(154);
-    inv_getheader(0);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(0))
     {
         if (inv[cnt].number == 0)
         {
@@ -22714,9 +22651,7 @@ void label_1573()
         {
             return;
         }
-        inv_getheader(rc);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(rc))
         {
             ci = cnt;
             if (inv[cnt].number == 0)
@@ -22889,8 +22824,7 @@ void label_1573()
             return;
         }
     }
-    inv_getheader(rc);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(rc))
     {
         if (inv[cnt].number == 0)
         {
@@ -23646,9 +23580,7 @@ void label_1576()
                 continue;
             }
         }
-        inv_getheader(p);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(p))
         {
             if (inv[cnt].number == 0)
             {
@@ -23677,7 +23609,6 @@ void label_1576()
                                         {
                                             continue;
                                         }
-                                        txtmore();
                                         txt(lang(
                                             itemname(cnt)
                                                 + u8"は上手い具合に干された。"s,
@@ -23722,7 +23653,6 @@ void label_1576()
                                     i = the_item_db[inv[cnt].id]->subcategory;
                                     if (rnd(3) == 0)
                                     {
-                                        txtmore();
                                         txt(lang(
                                             u8"あなたは"s + itemname(cnt)
                                                 + u8"から種を取り出した。"s,
@@ -23807,10 +23737,10 @@ void label_1578()
                     + u8" stomach uneasily."s));
             txt(lang(
                     u8"「なにかが産まれそうだよ！」"s,
-                    cnvtalk(u8"I'm going to have a baby!"s)),
+                    u8"\"I'm going to have a baby!\""s),
                 lang(
                     u8"「腹になにかが…」"s,
-                    cnvtalk(u8"Something is wrong with my stomach..."s)));
+                    u8"\"Something is wrong with my stomach...\""s));
         }
     }
     if (mdata(6) != 1)
@@ -23979,8 +23909,7 @@ void label_1580()
     {
         return;
     }
-    inv_getheader(0);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(0))
     {
         if (inv[cnt].number == 0 || inv[cnt].identification_state >= 3)
         {
@@ -24532,9 +24461,8 @@ void lovemiracle(int prm_932)
         return;
     }
     cibk = ci;
-    txtmore();
     txtef(9);
-    txt(lang(u8"「あ…！」"s, cnvtalk(u8"Uh...!"s)));
+    txt(lang(u8"「あ…！」"s, u8"\"Uh...!\""s));
     flt();
     if (rnd(2))
     {
@@ -24571,7 +24499,6 @@ void eat_rotten_food()
 {
     if (cbit(14, cc) == 1)
     {
-        txtmore();
         txt(lang(
             u8"しかし、"s + name(cc) + u8"は何ともなかった。"s,
             u8"But "s + name(cc) + your(cc) + u8" stomach isn't affected."s));
@@ -25061,7 +24988,6 @@ void apply_general_eating_effect()
         nutrition = 2500;
         if (cc == 0)
         {
-            txtmore();
             txtef(2);
             txt(lang(
                 u8"このハーブは活力の源だ。"s,
@@ -25124,7 +25050,6 @@ void apply_general_eating_effect()
         modify_potential(cc, 11, 2);
         if (cc == 0)
         {
-            txtmore();
             txtef(2);
             txt(lang(
                 u8"新たな力が湧きあがってくる。"s,
@@ -25187,7 +25112,6 @@ void apply_general_eating_effect()
         modify_potential(cc, 15, 2);
         if (cc == 0)
         {
-            txtmore();
             txtef(2);
             txt(lang(
                 u8"魔力の向上を感じる。"s,
@@ -25250,7 +25174,6 @@ void apply_general_eating_effect()
         nutrition = 500;
         if (cc == 0)
         {
-            txtmore();
             txtef(2);
             txt(lang(
                 u8"感覚が研ぎ澄まされるようだ。"s,
@@ -25313,7 +25236,6 @@ void apply_general_eating_effect()
         modify_potential(cc, 14, 2);
         if (cc == 0)
         {
-            txtmore();
             txtef(2);
             txt(lang(
                 u8"ホルモンが活発化した。"s,
@@ -25405,7 +25327,6 @@ void apply_general_eating_effect()
                     txt(lang(
                         u8"これは人肉だ…うぇぇ！"s,
                         u8"Eeeek! It's human flesh!"s));
-                    txtmore();
                     damage_insanity(cc, 15);
                     dmgcon(cc, 11, 150);
                     if (trait(41) == 0)
@@ -25485,7 +25406,6 @@ void apply_general_eating_effect()
             flttypeminor = 58500;
             itemcreate(-1, 0, cdata[cc].position.x, cdata[cc].position.y, 0);
             txtef(9);
-            txtmore();
             txt(lang(
                 u8"「げふぅ」"s + name(cc) + u8"は"s + itemname(ci, 1)
                     + u8"を吐き出した。"s,
@@ -25567,7 +25487,6 @@ void apply_general_eating_effect()
     }
     if (inv[ci].id == 667)
     {
-        txtmore();
         txt(lang(
             name(cc) + u8"の心はすこし癒された。"s,
             name(cc) + your(cc) + u8" heart is warmed."s));
@@ -25582,8 +25501,8 @@ void apply_general_eating_effect()
                     + u8"はもがき苦しみのたうちまわった！"s,
                 u8"It's poisoned! "s + name(cc) + u8" writhe"s + _s(cc)
                     + u8" in agony!"s));
-            txt(lang(u8"「ギャァァ…！」"s, cnvtalk(u8"Gyaaaaa...!"s)),
-                lang(u8"「ブッ！」"s, cnvtalk(u8"Ugh!"s)));
+            txt(lang(u8"「ギャァァ…！」"s, u8"\"Gyaaaaa...!\""s),
+                lang(u8"「ブッ！」"s, u8"\"Ugh!\""s));
         }
         dmghp(cc, rnd(250) + 250, -4);
         if (cdata[cc].state != 1)
@@ -25610,13 +25529,12 @@ void apply_general_eating_effect()
             txt(name(cc)
                     + lang(
                           u8"「なんだか…変な気分なの…」"s,
-                          (u8" gasps, "s
-                           + cnvtalk(u8"I f-feel...strange..."s))),
+                          (u8" gasps, "s + u8"\"I f-feel...strange...\""s)),
                 name(cc)
                     + lang(
                           u8"「あれ…なにこの感じは…」"s,
                           (u8"gasps "s
-                           + cnvtalk(u8"Uh..uh..What is this feeling..."s))));
+                           + u8"\"Uh..uh..What is this feeling...\""s)));
             cdata[cc].emotion_icon = 317;
             modimp(cc, 30);
             modify_karma(0, -10);
@@ -26647,8 +26565,7 @@ void map_reload(const std::string& prm_935)
     {
         mef(0, cnt) = 0;
     }
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number > 0)
         {
@@ -29421,8 +29338,7 @@ int initialize_quest_map_party()
         cdata[rc].relationship = -1;
         cdata[rc].original_relationship = -1;
     }
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number > 0)
         {
@@ -29468,8 +29384,7 @@ void initialize_quest_map_town()
             cdata[rc].original_relationship = -3;
         }
     }
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number == 0)
         {
@@ -30247,11 +30162,10 @@ void use_house_board()
         update_screen();
         pc_turn(false);
     }
-    inv_getheader(-1);
     p(0) = 0;
     p(1) = 0;
     p(2) = 0;
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         ++p(2);
         if (inv[cnt].number != 0)
@@ -30275,7 +30189,6 @@ void use_house_board()
             + u8"個の家具がある(アイテム最大"s + p(2) + u8"個) "s,
         u8"There are "s + p + u8" items and "s + p(1) + u8" furniture in "s
             + mapname(gdata_current_map) + u8".(Max: "s + p(2) + u8") "s));
-    txtmore();
     if (adata(16, gdata_current_map) == 102)
     {
         if (getworker(gdata_current_map) != -1)
@@ -30323,7 +30236,6 @@ void use_house_board()
                 }
             }
         }
-        txtmore();
         txt(lang(
             u8"現在"s + p + u8"人の滞在者がいる(最大"s + (gdata_home_scale + 2)
                 + u8"人) "s,
@@ -30537,9 +30449,7 @@ void use_house_board()
             txtnew();
             txtef(9);
             txt(cdatan(0, stat)
-                + lang(
-                      u8"「触るな！」"s,
-                      (u8" "s + cnvtalk(u8"Don't touch me!"s))));
+                + lang(u8"「触るな！」"s, (u8" "s + u8"\"Don't touch me!\""s)));
             goto label_1722_internal;
         }
         tchome = stat;
@@ -30950,8 +30860,7 @@ void show_shop_log()
     }
     mode = 6;
     dblistmax = 0;
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number <= 0)
         {
@@ -31080,9 +30989,7 @@ void show_shop_log()
     }
     else
     {
-        inv_getheader(-1);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(-1))
         {
             inv[cnt].number = 0;
         }
@@ -31158,7 +31065,6 @@ void show_shop_log()
                     u8" and "s + income(1) + u8" items"s);
             }
             snd(24);
-            txtmore();
             txtef(5);
             txt(lang(
                 u8"[店]"s + customer + u8"人の来客があり、"s + cdatan(0, worker)
@@ -31187,7 +31093,6 @@ void show_shop_log()
 void label_1726()
 {
     mdata(10) = (100 - gdata(125) / 100) / 4 + 1;
-    inv_getheader(-1);
     for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
     {
         y = cnt;
@@ -31197,7 +31102,7 @@ void label_1726()
             map(cnt, y, 9) = 0;
         }
     }
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number <= 0)
         {
@@ -31256,10 +31161,9 @@ void label_1727(bool val0)
 void label_1728()
 {
     rankorg = gdata(123);
-    inv_getheader(-1);
     rankcur = 0;
     DIM3(dblist, 2, 800);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number == 0)
         {
@@ -31368,7 +31272,6 @@ void label_1730()
         return;
     }
     rankorg = gdata(124);
-    inv_getheader(-1);
     rankcur = 0;
     gdata(77) = 0;
     gdata(78) = 0;
@@ -31377,7 +31280,7 @@ void label_1730()
         list(0, cnt) = 0;
         list(1, cnt) = 0;
     }
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number == 0)
         {
@@ -32357,10 +32260,7 @@ void label_1745()
                         }
                     }
                 }
-                inv_getheader(-1);
-                for (int cnt = invhead, cnt_end = cnt + (invrange);
-                     cnt < cnt_end;
-                     ++cnt)
+                for (const auto& cnt : items(-1))
                 {
                     if (inv[cnt].number == 0)
                     {
@@ -33804,7 +33704,6 @@ void label_1754()
             {
                 dmg = (6 - r) * (6 - r) * 2;
                 txtef(3);
-                txtmore();
                 txt(lang(u8"熱い！"s, u8"It's hot!"s));
                 dmghp(cc, dmg, -9);
             }
@@ -33867,9 +33766,7 @@ void label_1754()
                 txt(lang(
                     u8"伝令「パルミア軍の撤退が完了しました！これ以上ここに留まる必要はありません。機を見て地下から退却してください！」"s,
                     u8"The messenger "s
-                        + cnvtalk(
-                              u8"The retreat of our army is over now. You don't need to fight them any more. Please leave at once!"s)));
-                txtmore();
+                        + u8"\"The retreat of our army is over now. You don't need to fight them any more. Please leave at once!\""s));
                 txt(lang(u8"階段が現れた。"s, u8"Suddenly, stairs appear."s));
                 cell_featset(18, 9, tile_downstairs, 11, 1);
             }
@@ -33908,8 +33805,7 @@ void label_1754()
                         u8"You hear footsteps coming towards your cell."s));
                     txt(lang(
                         u8"「そこのお前、もう反省したころだろう。出てもいいぞ」"s,
-                        cnvtalk(
-                            u8"Hey punk, our boss says you can leave the jail now. Do not come back, okay?"s)));
+                        u8"\"Hey punk, our boss says you can leave the jail now. Do not come back, okay?\""s));
                     txt(lang(
                         u8"ガードは面倒くさそうにあなたの牢の扉を開けた。"s,
                         u8"A guard unenthusiastically unlocks your cell."s));
@@ -33960,40 +33856,35 @@ void label_1754()
             if (rnd(25) == 0)
             {
                 txtef(9);
-                txtmore();
                 txt(lang(u8" *ざわざわ* "s, u8"*noise*"s),
-                    lang(u8"「ふむ…悪くないな」"s, cnvtalk(u8"Hmm. Not bad."s)),
-                    lang(u8"「何だろう、これは」"s, cnvtalk(u8"What's this?"s)),
-                    lang(u8"「ほほう…」"s, cnvtalk(u8"Ohh..."s)),
+                    lang(u8"「ふむ…悪くないな」"s, u8"\"Hmm. Not bad.\""s),
+                    lang(u8"「何だろう、これは」"s, u8"\"What's this?\""s),
+                    lang(u8"「ほほう…」"s, u8"\"Ohh...\""s),
                     lang(
                         u8"「私も死んだらはく製に…」"s,
-                        cnvtalk(u8"I want to be stuffed..."s)),
+                        u8"\"I want to be stuffed...\""s),
                     lang(
                         u8"「ここが噂の…」"s,
-                        cnvtalk(u8"So this is the famous..."s)));
+                        u8"\"So this is the famous...\""s));
             }
             if (rnd(25) == 0)
             {
                 txtef(9);
-                txtmore();
                 txt(lang(u8" *がやがや* "s, u8"*murmur*"s),
                     lang(
-                        u8"「やだっ気持ち悪い」"s,
-                        cnvtalk(u8"Gross! Disgusting."s)),
+                        u8"「やだっ気持ち悪い」"s, u8"\"Gross! Disgusting.\""s),
                     lang(
                         u8"「ねーねーこれ死んでるんでしょ？」"s,
-                        cnvtalk(u8"Hey. Is it really dead?"s)),
-                    lang(u8"「かわ、いー♪」"s, cnvtalk(u8"Scut!"s)),
+                        u8"\"Hey. Is it really dead?\""s),
+                    lang(u8"「かわ、いー♪」"s, u8"\"Scut!\""s),
                     lang(
                         u8"「今日はとことん見るぜ」"s,
-                        cnvtalk(u8"Absolutely amazing."s)),
-                    lang(
-                        u8"「触ってもいいの？」"s, cnvtalk(u8"Can I touch?"s)));
+                        u8"\"Absolutely amazing.\""s),
+                    lang(u8"「触ってもいいの？」"s, u8"\"Can I touch?\""s));
             }
             if (rnd(15) == 0)
             {
                 txtef(9);
-                txtmore();
                 for (int cnt = 0; cnt < 1; ++cnt)
                 {
                     if (en)
@@ -34048,21 +33939,16 @@ void label_1754()
             if (rnd(25) == 0)
             {
                 txtef(9);
-                txtmore();
                 txt(lang(u8" *ざわざわ* "s, u8"*murmur*"s),
                     lang(
                         u8"「これ欲しい〜」"s,
-                        cnvtalk(u8"I want this! I want this!"s)),
-                    lang(
-                        u8"「何だろう、これは」"s,
-                        cnvtalk(u8"Oh what's this?"s)),
-                    lang(u8"「お買い物♪」"s, cnvtalk(u8"I'm just watching"s)),
-                    lang(
-                        u8"「金が足りん…」"s,
-                        cnvtalk(u8"My wallet is empty..."s)),
+                        u8"\"I want this! I want this!\""s),
+                    lang(u8"「何だろう、これは」"s, u8"\"Oh what's this?\""s),
+                    lang(u8"「お買い物♪」"s, u8"\"I'm just watching\""s),
+                    lang(u8"「金が足りん…」"s, u8"\"My wallet is empty...\""s),
                     lang(
                         u8"「ここが噂の…」"s,
-                        cnvtalk(u8"So this is the famous...."s)));
+                        u8"\"So this is the famous....\""s));
             }
             return;
         }
@@ -34074,8 +33960,7 @@ void label_1754()
 
 void label_1755()
 {
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].id == 555 || inv[cnt].id == 600)
         {
@@ -34204,7 +34089,7 @@ void label_1755()
                 cbitmod(991, rc, 1);
                 cdata[rc].character_role = 1002;
                 cdata[rc].shop_rank = 10;
-                snfood(cdatan(0, rc));
+                cdatan(0, rc) = snfood(cdatan(0, rc));
             }
         }
         {
@@ -34249,7 +34134,7 @@ void label_1755()
                 cdata[rc].ai_calm = 3;
                 cdata[rc].character_role = 1007;
                 cdata[rc].shop_rank = 10;
-                snblack(cdatan(0, rc));
+                cdatan(0, rc) = snblack(cdatan(0, rc));
                 cbitmod(991, rc, 1);
             }
         }
@@ -34735,7 +34620,7 @@ label_1857_internal:
                 u8"You don't meet requirements to create the item."s));
             goto label_1857_internal;
         }
-        if (inv_getspace() == 0)
+        if (!inv_getspace(0))
         {
             snd(27);
             txt(lang(
@@ -35037,8 +34922,7 @@ void atxinit()
 void begintempinv()
 {
     ctrl_file(4, u8"shoptmp.s2");
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         inv[cnt].number = 0;
     }
@@ -35412,8 +35296,7 @@ void label_1873()
     mtilefilecur = -1;
     label_1746();
     f = 0;
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number != 0)
         {
@@ -37015,7 +36898,6 @@ void pray()
             + u8"."s));
     if (cdata[0].piety_point < 200 || cdata[0].praying_point < 1000)
     {
-        txtmore();
         txt(lang(
             i18n::_(u8"god", cdata[0].god_id, u8"name")
                 + u8"はあなたに無関心だ。"s,
@@ -37074,7 +36956,6 @@ void pray()
             }
             if (f)
             {
-                txtmore();
                 txt(lang(
                     u8"この贈り物を諦める？"s,
                     u8"Do you want to decline this gift?"s));
@@ -37096,7 +36977,6 @@ void pray()
             flt();
             dbid = 0;
             txtef(4);
-            txtmore();
             if (cdata[0].god_id == core_god::mani)
             {
                 dbid = 262;
@@ -37637,7 +37517,7 @@ label_1894_internal:
             {
                 txt(lang(
                     name(p) + u8"「ぎゃぁーー！」"s,
-                    name(p) + u8" screams, "s + cnvtalk(u8"Ahhhhhhh!"s)));
+                    name(p) + u8" screams, "s + u8"\"Ahhhhhhh!\""s));
                 dmghp(p, 99999, -11);
                 break;
             }
@@ -38237,9 +38117,7 @@ void label_1901()
     }
     else
     {
-        inv_getheader(-1);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(-1))
         {
             inv[cnt].number = 0;
         }
@@ -38307,7 +38185,6 @@ void label_1901()
     if (income != 0 || income(1) != 0)
     {
         snd(24);
-        txtmore();
         txtef(5);
         txt(lang(
             s + u8"が給料として振り込まれた。"s,
@@ -38319,10 +38196,8 @@ void label_1901()
         if (cdata[0].level > 5)
         {
             autosave = 1 * (gdata_current_map != 35);
-            inv_getheader(-1);
             p = -1;
-            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-                 ++cnt)
+            for (const auto& cnt : items(-1))
             {
                 if (inv[cnt].number == 0)
                 {
@@ -38341,7 +38216,6 @@ void label_1901()
             inv[ci].subname = inv[ci].subname * (100 + rnd(20)) / 100;
             mode = 0;
             ++gdata_left_bill;
-            txtmore();
             txt(lang(
                 u8"請求書が送られてきた。"s,
                 u8"A bill has been sent to your house."s));
@@ -38349,7 +38223,6 @@ void label_1901()
             {
                 if (gdata_left_bill <= 4)
                 {
-                    txtmore();
                     txtef(3);
                     if (gdata_left_bill > 3)
                     {
@@ -38374,7 +38247,6 @@ void label_1901()
             }
             if (gdata_left_bill > 4)
             {
-                txtmore();
                 txtef(3);
                 txt(lang(
                     u8"あなたは税金を"s + (gdata_left_bill - 1)
@@ -38383,18 +38255,15 @@ void label_1901()
                         + (gdata_left_bill - 1) + u8" months."s));
                 int stat = decfame(0, 50);
                 p = stat;
-                txtmore();
                 txtef(3);
                 txt(lang(
                     u8"名声値を"s + p + u8"失った。"s,
                     u8"You lose "s + p + u8" fame."s));
-                txtmore();
                 modify_karma(0, -30 * 2);
             }
         }
         else
         {
-            txtmore();
             txt(lang(
                 u8"レベルが6に達していないので納税の義務はない。"s,
                 u8"You don't have to pay tax until you hit level 6."s));
@@ -38656,9 +38525,7 @@ int blendcheckmat(int prm_1044)
             {
                 o_at_m181 = 0;
             }
-            inv_getheader(o_at_m181);
-            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-                 ++cnt)
+            for (const auto& cnt : items(o_at_m181))
             {
                 if (inv[cnt].number <= 0)
                 {
@@ -38748,9 +38615,7 @@ int blendmatnum(int prm_1045, int prm_1046)
         {
             o_at_m182 = 0;
         }
-        inv_getheader(o_at_m182);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(o_at_m182))
         {
             if (inv[cnt].number <= 0)
             {
@@ -38833,9 +38698,7 @@ int blendlist(elona_vector2<int>& prm_1047, int prm_1048)
         {
             o_at_m183 = 0;
         }
-        inv_getheader(o_at_m183);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(o_at_m183))
         {
             if (m_at_m183 >= 500)
             {
@@ -39190,7 +39053,6 @@ void window_recipe_(
             get_enchantment_description(
                 inv[prm_1050].enchantments[cnt2_at_m184].id,
                 inv[prm_1050].enchantments[cnt2_at_m184].power,
-                0,
                 the_item_db[inv[prm_1050].id]->category);
             color(0, 0, 100);
             if (inv[prm_1050].enchantments[cnt2_at_m184].power < 0)
@@ -39926,8 +39788,7 @@ int label_1932()
                 u8"You lose "s + itemname(rpref((10 + cnt * 2)), 1) + u8"."s));
             --inv[rpref(10 + cnt * 2)].number;
         }
-        int stat = chara_unequip(rpref(10 + cnt * 2));
-        if (stat == 1)
+        if (chara_unequip(rpref(10 + cnt * 2)))
         {
             r1 = 0;
             refresh_character();
@@ -40285,7 +40146,6 @@ void label_1935()
         {
             const auto valn = itemname(ci);
             txt(lang(valn + u8"は涸れている。"s, valn + u8" is dry."s));
-            txtmore();
             txt(lang(
                 u8"あっ！空き瓶を井戸に落としてしまった…"s,
                 u8"Ops! You drop the empty bottle into the well..."s));
@@ -40470,7 +40330,7 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
                     + map(prm_1057, prm_1058, 6) / 10000000 * 100;
                 pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
                 ++dy_at_m186;
-                bmes(mapname(p_at_m186, 1), 255, 2552, 255);
+                bmes(mapname(p_at_m186, true), 255, 2552, 255);
             }
             if (map(prm_1057, prm_1058, 6) / 1000 % 100 == 34)
             {
@@ -40569,7 +40429,6 @@ void label_1942()
     {
         snd(44);
         save_game();
-        txtmore();
         txtef(5);
         txt(lang(u8" *保存* "s, u8"*saving*"s));
     }
@@ -40633,7 +40492,6 @@ label_19431_internal:
     {
         snd(44);
         save_game();
-        txtmore();
         txtef(5);
         txt(lang(u8" *保存* "s, u8"*saving*"s));
     }
@@ -42379,8 +42237,8 @@ label_196901_internal:
                 get_enchantment_description(
                     inv[ci].enchantments[cnt].id,
                     inv[ci].enchantments[cnt].power,
-                    1,
-                    0);
+                    0,
+                    true);
                 if (s == ""s)
                 {
                     continue;
@@ -43675,7 +43533,7 @@ label_1986_internal:
             snd(27);
             txt(lang(
                 u8"「その本は入手できないね」"s,
-                cnvtalk(u8"Ah, that book is unavailable."s)));
+                u8"\"Ah, that book is unavailable.\""s));
             goto label_1985_internal;
         }
         snd(20);
@@ -44018,8 +43876,7 @@ void what_do_you_wish_for()
     inputlog = "";
     show_number_of_text_prompt(
         (windoww - 290) / 2 + inf_screenx, winposy(90), 16, 0);
-    txtmore();
-    txt(lang(u8"「"s + inputlog + u8"！！」"s, cnvtalk(inputlog + u8"!!"s)));
+    txt(lang(u8"「"s + inputlog + u8"！！」"s, u8"\""s + inputlog + u8"!!\""s));
     msgtemp = "";
     autosave = 1 * (gdata_current_map != 35);
     tcopy = 1;
@@ -44051,7 +43908,7 @@ void what_do_you_wish_for()
     }
     if (inputlog == u8"エヘカトル"s || inputlog == u8"ehekatl"s)
     {
-        txt(lang(u8"「うみみゅみゅぁ！」"s, cnvtalk(u8"Meeewmew!"s)));
+        txt(lang(u8"「うみみゅみゅぁ！」"s, u8"\"Meeewmew!\""s));
         flt();
         characreate(-1, 331, cdata[0].position.x, cdata[0].position.y);
         wish_end();
@@ -44061,7 +43918,7 @@ void what_do_you_wish_for()
     {
         txt(lang(
             u8"「アタシを呼びつけるとは生意気ね。」"s,
-            cnvtalk(u8"You dare to call my name?"s)));
+            u8"\"You dare to call my name?\""s));
         flt();
         characreate(-1, 306, cdata[0].position.x, cdata[0].position.y);
         wish_end();
@@ -44069,7 +43926,7 @@ void what_do_you_wish_for()
     }
     if (inputlog == u8"オパートス"s || inputlog == u8"opatos"s)
     {
-        txt(lang(u8"工事中。"s, cnvtalk(u8"Under construction."s)));
+        txt(lang(u8"工事中。"s, u8"\"Under construction.\""s));
         flt();
         characreate(-1, 338, cdata[0].position.x, cdata[0].position.y);
         wish_end();
@@ -44077,7 +43934,7 @@ void what_do_you_wish_for()
     }
     if (inputlog == u8"クミロミ"s || inputlog == u8"kumiromi"s)
     {
-        txt(lang(u8"工事中。"s, cnvtalk(u8"Under construction."s)));
+        txt(lang(u8"工事中。"s, u8"\"Under construction.\""s));
         flt();
         characreate(-1, 339, cdata[0].position.x, cdata[0].position.y);
         wish_end();
@@ -44085,7 +43942,7 @@ void what_do_you_wish_for()
     }
     if (inputlog == u8"マニ"s || inputlog == u8"mani"s)
     {
-        txt(lang(u8"工事中。"s, cnvtalk(u8"Under construction."s)));
+        txt(lang(u8"工事中。"s, u8"\"Under construction.\""s));
         flt();
         characreate(-1, 342, cdata[0].position.x, cdata[0].position.y);
         wish_end();
@@ -44127,7 +43984,6 @@ void what_do_you_wish_for()
         }
         else
         {
-            txtmore();
             txt(lang(
                 u8"あら、そのままでいいの？"s, u8"What a waste of a wish!"s));
             msgtemp = u8"あら、そのままでいいの？"s;
@@ -44375,7 +44231,6 @@ label_1998_internal:
                     -1, 516, cdata[cc].position.x, cdata[cc].position.y, 3);
                 inv[ci].curse_state = 1;
                 txt(lang(u8"あ、それ在庫切れ。"s, u8"It's sold out."s));
-                txtmore();
             }
             if (the_item_db[inv[ci].id]->category == 52000
                 || the_item_db[inv[ci].id]->category == 53000)
@@ -48376,7 +48231,7 @@ void do_get_command()
                 turn_end();
                 return;
             }
-            if (inv_getspace(0) == 0)
+            if (!inv_getspace(0))
             {
                 txt(lang(
                     u8"バックパックが一杯だ。"s, u8"Your inventory is full."s));
@@ -48860,7 +48715,6 @@ void show_item_description()
             get_enchantment_description(
                 inv[ci].enchantments[cnt].id,
                 inv[ci].enchantments[cnt].power,
-                0,
                 reftype);
             listn(0, p) = lang(u8"それは"s, u8"It "s) + s;
             list(0, p) = rtval;
@@ -49133,7 +48987,6 @@ int label_2073()
 {
     s = txttargetlevel(cc, tc);
     txt(s);
-    txtmore();
     txt(lang(
         u8"本当に"s + name(tc) + u8"を攻撃する？ "s,
         u8"Really attack "s + name(tc) + u8"? "s));
@@ -49891,10 +49744,10 @@ void label_2084()
             snd(27);
             txt(lang(
                 u8"まだ次のアップロードはできない("s
-                    + cnvdate(gdata_time_when_uploding_becomes_available, 1)
+                    + cnvdate(gdata_time_when_uploding_becomes_available)
                     + u8"まで)"s,
                 u8"You can't do this till "s
-                    + cnvdate(gdata_time_when_uploding_becomes_available, 1)
+                    + cnvdate(gdata_time_when_uploding_becomes_available)
                     + u8"."s));
             return;
         }
@@ -50243,7 +50096,6 @@ void label_2086()
         {
             s = u8" "s + s + u8" "s;
         }
-        txtmore();
         txt(u8" "s + s);
     }
     pc_turn(false);
@@ -50253,8 +50105,7 @@ void label_2086()
 
 void remove_card_and_figures()
 {
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         if (inv[cnt].id == 504 || inv[cnt].id == 503)
         {
@@ -50484,13 +50335,11 @@ void load_gene_files()
     sdata.clear(0);
     cdata(56) = cdata(0);
     cdata(0).clear();
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         inv[cnt].number = 0;
     }
-    inv_getheader(0);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(0))
     {
         if (inv[cnt].number == 0)
         {
@@ -52369,7 +52218,6 @@ void label_2144()
         txt(lang(u8"あなたは罠を解体した。"s, u8"You dismantle the trap."s));
         for (int cnt = 0, cnt_end = (rnd(3) + 1); cnt < cnt_end; ++cnt)
         {
-            txtmore();
             atxspot = 19;
             matgetmain(
                 random_material(
@@ -52577,7 +52425,6 @@ label_21451_internal:
                     {
                         if (is_in_fov(cc))
                         {
-                            txtmore();
                             txt(lang(
                                 u8"しかし"s + name(cc)
                                     + u8"には届かなかった。"s,
@@ -52755,9 +52602,9 @@ void label_2146()
                         }
                         if (en)
                         {
-                            txt(cnvtalk(u8"Boring."s),
-                                cnvtalk(u8"I've heard this before."s),
-                                cnvtalk(u8"This song again?"s));
+                            txt(u8"\"Boring.\""s,
+                                u8"\"I've heard this before.\""s,
+                                u8"\"This song again?\""s);
                         }
                     }
                     cdata[tc].interest = 0;
@@ -52780,10 +52627,10 @@ void label_2146()
                             }
                             if (en)
                             {
-                                txt(cnvtalk(u8"Boo boo!"s),
-                                    cnvtalk(u8"Shut it!"s),
-                                    cnvtalk(u8"What are you doing!"s),
-                                    cnvtalk(u8"You can't play shit."s));
+                                txt(u8"\"Boo boo!\""s,
+                                    u8"\"Shut it!\""s,
+                                    u8"\"What are you doing!\""s,
+                                    u8"\"You can't play shit.\""s);
                             }
                             txt(lang(
                                 ""s + name(tc) + u8"は石を投げた。"s,
@@ -52855,7 +52702,7 @@ void label_2146()
                         cdata[cc].quality_of_performance -= p;
                     }
                 }
-                if (encfindspec(ci, 60) != -1)
+                if (encfindspec(ci, 60))
                 {
                     if (rnd(15) == 0)
                     {
@@ -52885,9 +52732,9 @@ void label_2146()
                                     name(tc) + u8" listene"s + _s(tc)
                                         + u8" to "s + name(cc) + your(cc)
                                         + u8" music joyfully."s,
-                                    cnvtalk(u8"Bravo!"s),
-                                    cnvtalk(u8"Nice song."s),
-                                    cnvtalk(u8"Scut!"s),
+                                    u8"\"Bravo!\""s,
+                                    u8"\"Nice song.\""s,
+                                    u8"\"Scut!\""s,
                                     name(tc) + u8" "s + is(tc)
                                         + u8" excited!"s);
                             }
@@ -52921,7 +52768,7 @@ void label_2146()
                                     {
                                         continue;
                                     }
-                                    if (encfindspec(ci, 49) != -1)
+                                    if (encfindspec(ci, 49))
                                     {
                                         flt(calcobjlv(
                                                 cdata[cc].quality_of_performance
@@ -53176,11 +53023,11 @@ void label_2147()
                     }
                     if (en)
                     {
-                        txt(cnvtalk(u8"Yes!"s),
-                            cnvtalk(u8"Ohhh"s),
+                        txt(u8"\"Yes!\""s,
+                            u8"\"Ohhh\""s,
                             u8"*gasp*"s,
                             u8"*rumble*"s,
-                            cnvtalk(u8"come on!"s));
+                            u8"\"come on!\""s);
                     }
                 }
             }
@@ -53275,9 +53122,9 @@ void label_2147()
                     {
                         txt(lang(
                             name(cc) + u8"は激怒した。「なめてんの？」"s,
-                            name(cc) + u8" gets furious, "s
-                                + cnvtalk(
-                                      u8"And you think you can just run away?"s)));
+                            name(cc)
+                                + u8" gets furious, "s
+                                  u8"\"And you think you can just run away?\""s));
                         cdata[cc].enemy_id = tc;
                         cdata[cc].hate = 20;
                     }
@@ -53609,14 +53456,14 @@ void continuous_action_others()
                     {
                         txt(lang(
                             u8"「貴様、何をしている！」"s,
-                            cnvtalk(u8"You there, stop!"s)));
+                            u8"\"You there, stop!\""s));
                         modimp(cnt, -5);
                     }
                     else
                     {
                         txt(lang(
                             u8"「ガード！ガード！」"s,
-                            cnvtalk(u8"Guards! Guards!"s)));
+                            u8"\"Guards! Guards!\""s));
                         modimp(cnt, -5);
                     }
                     cdata[cnt].emotion_icon = 520;
@@ -53625,7 +53472,6 @@ void continuous_action_others()
             }
             if (f)
             {
-                txtmore();
                 txt(lang(
                     u8"盗みを見咎められた！"s, u8"You are found stealing."s));
                 modify_karma(0, -5);
@@ -53701,7 +53547,7 @@ void continuous_action_others()
                     f = 1;
                 }
             }
-            if (itemusingfind(ci, 1) != -1)
+            if (itemusingfind(ci, true) != -1)
             {
                 if (f != 1)
                 {
@@ -53786,7 +53632,6 @@ void continuous_action_others()
         {
             if (rnd(3) == 0)
             {
-                txtmore();
                 txt(lang(
                     u8"あなたは良心の呵責を感じた。"s,
                     u8"You feel the stings of conscience."s));
@@ -53893,7 +53738,6 @@ void label_2151()
     int timeslept = 0;
     if (gdata_current_map == 13)
     {
-        txtmore();
         txt(lang(
             u8"しかし、大事な用を思い出して飛び起きた。"s,
             u8"But you can't sleep right now."s));
@@ -54061,7 +53905,6 @@ void label_2151()
                 }
             }
         }
-        txtmore();
         txtef(2);
         txt(lang(
             u8"心地よい目覚めだ。潜在能力が伸びた(計"s + grown + u8"%)"s,
@@ -54162,10 +54005,8 @@ void label_2153()
     }
     if (cdata[0].nutrition <= 5000)
     {
-        inv_getheader(cc);
         f = 0;
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(cc))
         {
             if (inv[cnt].number == 0)
             {
@@ -54570,7 +54411,6 @@ void label_2158()
     {
         if (cdata[cc].turn % 5 == 0)
         {
-            txtmore();
             txtef(4);
             txt(lang(u8" *ざくっ* "s, u8"*clink*"s),
                 lang(u8" *カキン* "s, u8"*smash*"s),
@@ -54583,9 +54423,7 @@ void label_2158()
     txt(lang(u8"地面を掘り終えた。"s, u8"You finish digging."s));
     if (mdata(6) == 1)
     {
-        inv_getheader(0);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(0))
         {
             if (inv[cnt].number == 0)
             {
@@ -54794,7 +54632,6 @@ void label_2159()
         }
         else if (cdata[cc].turn % 5 == 0)
         {
-            txtmore();
             txtef(4);
             txt(lang(u8" *ざくっ* "s, u8"*clink*"s),
                 lang(u8" *カキン* "s, u8"*smash*"s),
@@ -54840,8 +54677,7 @@ void label_2160()
             }
             if (inv[ci].id == 204 && inv[ci].subname == 344)
             {
-                txt(lang(
-                    u8"「いただきマンモス」"s, cnvtalk(u8"Let's eatammoth."s)));
+                txt(lang(u8"「いただきマンモス」"s, u8"\"Let's eatammoth.\""s));
             }
         }
         return;
@@ -54873,8 +54709,7 @@ void label_2161()
     {
         item_identify(ci, 1);
     }
-    int stat = chara_unequip(ci);
-    if (stat == 1)
+    if (chara_unequip(ci))
     {
         r1 = cc;
         refresh_character();
@@ -54916,11 +54751,11 @@ void label_2161()
                     }
                     if (en)
                     {
-                        txt(cnvtalk(u8"Yuck!!"s),
-                            cnvtalk(u8"....!!"s),
-                            cnvtalk(u8"W-What..."s),
-                            cnvtalk(u8"Are you teasing me?"s),
-                            cnvtalk(u8"You fool!"s));
+                        txt(u8"\"Yuck!!\""s,
+                            u8"\"....!!\""s,
+                            u8"\"W-What...\""s,
+                            u8"\"Are you teasing me?\""s,
+                            u8"\"You fool!\""s);
                     }
                     dmghp(cc, 999, -12);
                     if (cdata[cc].state != 1)
@@ -54949,7 +54784,7 @@ void label_2161()
             txt(lang(
                 name(cc) + u8"はもちを喉につまらせた！"s,
                 name(cc) + u8" choke"s + _s(cc) + u8" on mochi!"s));
-            txt(lang(u8"「むがっ」"s, cnvtalk(u8"Mm-ghmm"s)));
+            txt(lang(u8"「むがっ」"s, u8"\"Mm-ghmm\""s));
         }
         ++cdata[cc].choked;
     }
@@ -54960,7 +54795,6 @@ void label_2161()
 
 void label_2162()
 {
-    txtmore();
     txtef(2);
     if (cdata[cc].nutrition >= 12000)
     {
@@ -55402,7 +55236,6 @@ int label_2168()
                 name(cc) + u8"は混乱しながらも魔法の詠唱を試みた。"s,
                 name(cc) + u8" try"s + _s(cc)
                     + u8" to cast a spell in confusion."s));
-            txtmore();
         }
         int stat = try_to_cast_spell();
         if (stat == 0)
@@ -55426,7 +55259,6 @@ int label_2168()
                 name(cc) + u8" cast "s
                     + i18n::_(u8"ability", std::to_string(efid), u8"name")
                     + u8"."s));
-            txtmore();
         }
         else
         {
@@ -55441,7 +55273,6 @@ int label_2168()
                           u8"ui",
                           u8"cast_style",
                           u8"_"s + cdata[cc].special_attack_type)));
-            txtmore();
         }
     }
     if (findbuff(cc, 2) != -1)
@@ -55596,7 +55427,6 @@ int drink_well()
     txt(lang(
         name(cc) + u8"は"s + valn + u8"の水をすくって飲んだ。"s,
         name(cc) + u8" draw"s + _s(cc) + u8" water from "s + valn + u8"."s));
-    txtmore();
     tc = cc;
     cibk = ci;
     p = rnd(100);
@@ -55609,16 +55439,13 @@ int drink_well()
                 txt(lang(
                     name(cc) + u8"は井戸に落ちた！ "s,
                     name(cc) + u8" falls in the well!"s));
-                txtmore();
                 txtef(9);
                 txt(name(cc)
                     + lang(
                           u8"「手を伸ばせー」"s,
-                          (u8" yells, "s
-                           + cnvtalk(u8"G-Give me your hands!"s))));
+                          (u8" yells, "s + u8"\"G-Give me your hands!\""s)));
                 if (cbit(5, cc) == 1 && cdata[cc].gravity == 0)
                 {
-                    txtmore();
                     txt(lang(
                         u8"しかしすぐに浮いてきた… "s,
                         u8"Soon "s + he(cc) + u8" floats up to the surface."s));
@@ -55837,7 +55664,6 @@ int read_scroll()
             npcn(cc) + itemname(ci, 1) + u8"を読んだ。"s,
             name(cc) + u8" read"s + _s(cc) + u8" "s + itemname(ci, 1)
                 + u8"."s));
-        txtmore();
     }
     if (inv[ci].id != 621)
     {
@@ -55911,7 +55737,6 @@ int label_2172()
         txt(lang(
             itemname(ci, 1) + u8"を振った。"s,
             u8"You zap "s + itemname(ci, 1) + u8"."s));
-        txtmore();
     }
     efp = efp
         * (100 + sdata(174, cc) * 10 + sdata(16, cc) / 2 + sdata(13, cc) / 2)
@@ -56421,7 +56246,6 @@ void do_throw_command()
         if (map(tlocx, tlocy, 1) != 0)
         {
             tc = map(tlocx, tlocy, 1) - 1;
-            txtmore();
             txt(lang(
                 name(tc) + u8"に見事に命中した！"s,
                 u8"It hits "s + name(tc) + u8"!"s));
@@ -56521,18 +56345,15 @@ void do_throw_command()
                         if (tc != 0)
                         {
                             txtef(9);
-                            txtmore();
-                            txt(lang(u8"「いてー！」"s, cnvtalk(u8"Hey!"s)),
+                            txt(lang(u8"「いてー！」"s, u8"\"Hey!\""s),
                                 lang(
                                     u8"「やったな」"s,
-                                    cnvtalk(u8"Now you did it."s)),
+                                    u8"\"Now you did it.\""s),
                                 lang(u8" *クスクス* "s, u8"*chuckle*"s),
-                                lang(
-                                    u8"「キャハハ」"s,
-                                    cnvtalk(u8"Tee-hee-hee!"s)),
+                                lang(u8"「キャハハ」"s, u8"\"Tee-hee-hee!\""s),
                                 lang(
                                     u8"「こやつめ」"s,
-                                    cnvtalk(u8"You'll pay for this."s)),
+                                    u8"\"You'll pay for this.\""s),
                                 lang(u8"「むむっ」"s, u8"*grin*"s));
                         }
                     }
@@ -56587,7 +56408,6 @@ void do_throw_command()
                         {
                             if (is_in_fov({tlocx, tlocy}))
                             {
-                                txtmore();
                                 txt(lang(
                                     itemname(p, 1)
                                         + u8"に命中して、雪だるまは崩れた。"s,
@@ -56616,7 +56436,6 @@ void do_throw_command()
                 }
                 if (is_in_fov({tlocx, tlocy}))
                 {
-                    txtmore();
                     txt(lang(
                         u8"それは地面に落ちて溶けた。"s,
                         u8"It falls on the ground and melts."s));
@@ -56624,7 +56443,6 @@ void do_throw_command()
             }
             else if (is_in_fov({tlocx, tlocy}))
             {
-                txtmore();
                 txt(lang(
                     u8"それは地面に落ちて砕けた。"s,
                     u8"It falls on the ground and shatters."s));
@@ -56755,7 +56573,7 @@ int pick_up_item()
             {
                 if (cdata[0].continuous_action_id == 0)
                 {
-                    if (inv_getspace(0) == 0)
+                    if (!inv_getspace(0))
                     {
                         txt(lang(
                             u8"バックパックが一杯だ。"s,
@@ -56924,7 +56742,6 @@ int pick_up_item()
         if (invctrl == 11)
         {
             msgkeep = 1;
-            txtmore();
             txt(lang(
                 itemname(ti, in) + u8"を買った。"s,
                 u8"You buy "s + itemname(ti, in) + u8"."s));
@@ -56961,7 +56778,6 @@ int pick_up_item()
                     {
                         gdata_thieves_guild_quota = 0;
                     }
-                    txtmore();
                     txt(lang(
                         u8"盗賊ギルドのノルマ達成まで、あと金貨"s
                             + gdata_thieves_guild_quota
@@ -57022,13 +56838,10 @@ int pick_up_item()
     {
         if (inv[ti].id == 255)
         {
-            inv_getheader(-1);
             if (mdata(20) == 1)
             {
                 f = 0;
-                for (int cnt = invhead, cnt_end = cnt + (invrange);
-                     cnt < cnt_end;
-                     ++cnt)
+                for (const auto& cnt : items(-1))
                 {
                     if (inv[cnt].number == 0)
                     {
@@ -57329,7 +57142,6 @@ void label_2201()
                 u8"You throw your weight against "s + itemname(ci) + u8"."s));
             if (inv[ci].own_state == 5 || inv[ci].param1 <= 0)
             {
-                txtmore();
                 txt(lang(
                     u8"もう実はないようだ… "s,
                     u8"It seems there are no fruits left on the tree."s));
@@ -57388,8 +57200,7 @@ void label_2201()
                     txt(lang(
                         name(tc) + u8"はもちを吐き出した。"s,
                         name(tc) + u8" spit"s + _s(tc) + u8" mochi."s));
-                    txt(lang(
-                        u8"「助かったよ！」"s, cnvtalk(u8"You saved me!"s)));
+                    txt(lang(u8"「助かったよ！」"s, u8"\"You saved me!\""s));
                     cdata[tc].choked = 0;
                     modimp(tc, 10);
                 }
@@ -57499,7 +57310,6 @@ void label_2201()
                         refresh_character();
                         if (is_in_fov(cc))
                         {
-                            txtmore();
                             txtef(8);
                             txt(lang(
                                 name(cc) + u8"は筋肉を痛めた。"s,
@@ -57527,7 +57337,7 @@ void label_2201()
             }
         }
     }
-    txt_check(0);
+    txt_check();
     txt(lang(
         name(cc) + u8"は空気に体当たりした。"s,
         name(cc) + u8" bash"s + _s(cc) + u8" up the air."s));
@@ -57553,7 +57363,6 @@ void label_2203()
         if (rnd(5) == 0)
         {
             txtef(9);
-            txtmore();
             txt(lang(u8" *ふらり* "s, u8"*stagger*"s));
             f = 1;
         }
@@ -57574,7 +57383,6 @@ void label_2203()
                     name(gdata_mount) + u8" stares in your face."s));
                 cdata[gdata_mount].continuous_action_id = 0;
                 cdata[gdata_mount].continuous_action_turn = 0;
-                txtmore();
             }
         }
     }
@@ -57611,7 +57419,6 @@ void label_2203()
                 txt(lang(
                     name(tc) + u8"と入れ替わった。"s,
                     u8"You displace "s + name(tc) + u8"."s));
-                txtmore();
                 if (cdata[tc].id == 271)
                 {
                     if (rnd(5) == 0)
@@ -57630,10 +57437,10 @@ void label_2203()
                                 cdata[tc].gold += p;
                                 txt(lang(
                                         u8"「おっと、ごめんよ」"s,
-                                        cnvtalk(u8"Ops, sorry."s)),
+                                        u8"\"Ops, sorry.\""s),
                                     lang(
                                         u8"「気をつけな」"s,
-                                        cnvtalk(u8"Watch it."s)));
+                                        u8"\"Watch it.\""s));
                             }
                         }
                     }
@@ -57647,7 +57454,6 @@ void label_2203()
                             name(tc) + u8" stares in your face."s));
                         cdata[tc].continuous_action_id = 0;
                         cdata[tc].continuous_action_turn = 0;
-                        txtmore();
                     }
                 }
                 label_2206();
@@ -57746,7 +57552,6 @@ void label_2203()
                 {
                     if (gdata(73) != 3)
                     {
-                        txtmore();
                         txt(lang(
                             u8"注意！現在のクエストは失敗に終わってしまう。"s,
                             u8"Warning! You are going to abandon your current quest."s));
@@ -57874,7 +57679,6 @@ void label_2205()
         {
             if (cdatan(2, cc) != u8"spider"s)
             {
-                txtmore();
                 if (rnd(mef(5, i) + 25) < rnd(sdata(10, cc) + sdata(12, cc) + 1)
                     || cdata[cc].weight > 100)
                 {
@@ -58151,7 +57955,6 @@ void label_2206()
         {
             if (tname(p) != ""s)
             {
-                txtmore();
                 txt(lang(
                     u8"足元には"s + tname(p) + u8"がある。"s,
                     u8"You walk into "s + tname(p) + u8"."s));
@@ -58193,7 +57996,7 @@ void label_2206()
             }
             if (feat(1) == 15)
             {
-                txt(mapname(feat(2) + feat(3) * 100, 1));
+                txt(mapname(feat(2) + feat(3) * 100, true));
                 if (adata(16, feat(2) + feat(3) * 100) == 8)
                 {
                     if (cfg_extrahelp)
@@ -58619,7 +58422,6 @@ int unlock_box(int difficulty)
     }
     ti = stat;
     txt(lang(u8"ロックピックを使用した。"s, u8"You use a lockpick."s));
-    txtmore();
     snd(22);
     {
         int stat = item_find(637, 3);
@@ -58665,7 +58467,6 @@ int unlock_box(int difficulty)
         {
             --inv[ti].number;
             cell_refresh(inv[ti].position.x, inv[ti].position.y);
-            txtmore();
             txt(lang(u8"ロックピックは壊れた。"s, u8"Your lockpick breaks."s));
         }
         txtnew();
@@ -58688,7 +58489,6 @@ int unlock_box(int difficulty)
     goto label_2211_internal;
     return 0;
 label_2211_internal:
-    txtmore();
     txt(lang(u8"開錠に成功した。"s, u8"You successfully unlock it."s));
     r1 = cc;
     gain_skill_experience_lock_picking();
@@ -58745,10 +58545,9 @@ void do_open_command()
                         if (tc != 0)
                         {
                             txtef(9);
-                            txtmore();
                             txt(lang(
                                 u8"モイアー「馬鹿やろう！！」"s,
-                                u8"Moyer yells, "s + cnvtalk(u8"You idiot!"s)));
+                                u8"Moyer yells, "s + u8"\"You idiot!\""s));
                             cdata[gdata_fire_giant].enemy_id = tc;
                             cdata[gdata_fire_giant].hate = 1000;
                         }
@@ -58801,9 +58600,7 @@ void do_open_command()
         }
         else
         {
-            inv_getheader(-1);
-            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-                 ++cnt)
+            for (const auto& cnt : items(-1))
             {
                 inv[cnt].number = 0;
             }
@@ -59043,7 +58840,6 @@ void open_box()
         itemcreate(-1, 622, cdata[0].position.x, cdata[0].position.y, 1);
     }
     snd(24);
-    txtmore();
     txt(lang(
         itemname(ri) + u8"から溢れ出た高級品が、足元に散らばった。"s,
         u8"Several quality goods spread out from "s + itemname(ri) + u8"."s));
@@ -59596,7 +59392,6 @@ label_22191_internal:
             {
                 if (is_in_fov(cc))
                 {
-                    txtmore();
                     txt(lang(
                         name(cc) + u8"は霧の中の幻影を攻撃した。"s,
                         name(cc) + u8" attack"s + _s(cc)
@@ -59613,7 +59408,6 @@ label_22191_internal:
     }
     if (attacknum > 1 || cc != 0)
     {
-        txtmore();
     }
     expmodifer = 1 + cbit(985, tc) * 15 + cbit(23, tc) + cbit(27, tc)
         + (gdata_current_map == 35);
@@ -59627,7 +59421,6 @@ label_22191_internal:
             {
                 txtef(3);
                 txt(lang(u8"会心の一撃！ "s, u8"Critical Hit!"s));
-                txtmore();
             }
         }
         dmg = calcattackdmg();
@@ -59669,7 +59462,6 @@ label_22191_internal:
                                 + u8"を誇らしげに構えた。"s,
                             name(cc) + u8" wield"s + _s(cc) + u8" "s + s(1)
                                 + u8" proudly."s));
-                        txtmore();
                     }
                 }
                 i = 1;
@@ -60115,7 +59907,7 @@ label_22191_internal:
             {
                 txt(lang(
                     aln(cc) + u8"攻撃をかわされた。"s,
-                    name(cc) + u8" miss"s + _s(cc, 1) + u8" "s + name(tc)
+                    name(cc) + u8" miss"s + _s(cc, true) + u8" "s + name(tc)
                         + u8"."s));
             }
         }
@@ -60370,10 +60162,8 @@ void label_2221()
         u8"You search the surroundings carefully."s));
     if (gdata_current_map == 35)
     {
-        inv_getheader(-1);
         p = 9999;
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(-1))
         {
             if (inv[cnt].number == 0)
             {
@@ -60495,7 +60285,6 @@ void label_2221()
                         }
                         else
                         {
-                            txtmore();
                             if (dist(
                                     cdata[cc].position.x,
                                     cdata[cc].position.y,
@@ -60681,7 +60470,6 @@ void do_dip_command()
                         + u8"に浸した。"s,
                     u8"You dip "s + itemname(ci) + u8" into "s
                         + itemname(cidip, 1) + u8"."s));
-                txtmore();
                 if (inv[ci].id == 602)
                 {
                     txt(lang(
@@ -60718,7 +60506,6 @@ void do_dip_command()
                 {
                     const auto valn = itemname(ci);
                     txt(lang(valn + u8"は涸れている。"s, valn + u8" is dry."s));
-                    txtmore();
                     txt(lang(
                         u8"あっ！空き瓶を井戸に落としてしまった…"s,
                         u8"Ops! You drop the empty bottle into the well..."s));
@@ -60935,10 +60722,10 @@ void do_use_command()
             < inv[ci].count)
         {
             txt(lang(
-                u8"そのアイテムが次に使用できるのは"s
-                    + cnvdate(inv[ci].count, 1) + u8"だ。"s,
+                u8"そのアイテムが次に使用できるのは"s + cnvdate(inv[ci].count)
+                    + u8"だ。"s,
                 u8"This item will be useable again at "s
-                    + cnvdate(inv[ci].count, 1) + u8"."s));
+                    + cnvdate(inv[ci].count) + u8"."s));
             update_screen();
             pc_turn(false);
         }
@@ -61046,7 +60833,7 @@ void do_use_command()
                     list(0, listmax) = rtval;
                     list(1, listmax) = rtval(1);
                     get_enchantment_description(
-                        list(0, listmax), list(1, listmax), 0, 0);
+                        list(0, listmax), list(1, listmax), 0);
                     promptl(0, promptmax) = s;
                     promptl(1, promptmax) = u8"null"s;
                     promptl(2, promptmax) = ""s + promptmax;
@@ -61359,10 +61146,9 @@ void do_use_command()
                 {
                     txt(lang(
                         ""s + name(tc) + u8"は顔を赤らめた。"s,
-                        name(tc) + u8" blush"s + _s(tc, 1) + u8"."s));
-                    txtmore();
+                        name(tc) + u8" blush"s + _s(tc, true) + u8"."s));
                     txtef(4);
-                    txt(lang(u8"「キャー」"s, cnvtalk(u8"Pervert!"s)));
+                    txt(lang(u8"「キャー」"s, u8"\"Pervert!\""s));
                 }
                 cbitmod(966, tc, 1);
                 turn_end();
@@ -61417,7 +61203,7 @@ void do_use_command()
                         txt(lang(
                             name(tc) + u8"は呻き声を洩らした。「アン…♪」"s,
                             name(tc) + u8" gasp"s + _s(tc) + u8", "s
-                                + cnvtalk(u8"Pervert!"s)));
+                                + u8"\"Pervert!\""s));
                     }
                     else
                     {
@@ -61430,7 +61216,7 @@ void do_use_command()
                         txt(lang(
                             name(tc) + u8"は呻き声を洩らした。「はぁはぁ…」"s,
                             name(tc) + u8" gasp"s + _s(tc) + u8", "s
-                                + cnvtalk(u8"D-don't sto....N-nothing!"s)));
+                                + u8"\"D-don't sto....N-nothing!\""s));
                     }
                     animeload(8, tc);
                     f = 1;
@@ -61501,7 +61287,7 @@ void do_use_command()
                         txt(lang(
                             name(tc) + u8"は呻き声を洩らした。「アン…♪」"s,
                             name(tc) + u8" gasp"s + _s(tc) + u8", "s
-                                + cnvtalk(u8"Pervert!"s)));
+                                + u8"\"Pervert!\""s));
                         animeload(8, tc);
                         --inv[ci].number;
                         cell_refresh(inv[ci].position.x, inv[ci].position.y);
@@ -61702,7 +61488,7 @@ void do_use_command()
         txt(lang(
             u8"オパートス「フハハハ！間もなく、この地に変動が起こるであろう！」"s,
             u8"A voice echos, "s
-                + cnvtalk(u8"Muwahahaha! I shall shake the land for you!"s)));
+                + u8"\"Muwahahaha! I shall shake the land for you!\""s));
         goto label_2229_internal;
     case 34:
         txt(lang(
@@ -61711,8 +61497,7 @@ void do_use_command()
         txtef(5);
         txt(lang(
             u8"ジュア「べ、別にあんたのためにするんじゃないからね。バカっ！」"s,
-            u8"A voice echos, "s
-                + cnvtalk(u8"I-I'm not doing for you! Silly!"s)));
+            u8"A voice echos, "s + u8"\"I-I'm not doing for you! Silly!\""s));
         efid = 637;
         efp = 5000;
         magic();
@@ -61725,7 +61510,7 @@ void do_use_command()
         txtef(5);
         txt(lang(
             u8"エヘカトル「呼んだ？呼んだ？」"s,
-            u8"A voice echos, "s + cnvtalk(u8"Did you call me? Call me?"s)));
+            u8"A voice echos, "s + u8"\"Did you call me? Call me?\""s));
         addbuff(tc, 19, 77, 2500);
         goto label_2229_internal;
     case 27:
@@ -61739,8 +61524,7 @@ void do_use_command()
             txt(lang(
                 u8"ルルウィ「あさはかね。エーテルの風を止めてあげるとでも思ったの？」"s,
                 u8"A rather angry voice echos, "s
-                    + cnvtalk(
-                          u8"Listen my little slave. Did you really think I would turn a hand in this filthy wind for you?"s)));
+                u8"\"Listen my little slave. Did you really think I would turn a hand in this filthy wind for you?\""s));
             goto label_2229_internal;
         }
         p = gdata_weather;
@@ -61770,9 +61554,7 @@ void do_use_command()
         txt(lang(
             u8"ルルウィ「あらあら、定命の分際でそんなおねだりするの？ウフフ…今回は特別よ」"s,
             u8"An impish voice echos, "s
-                + cnvtalk(
-                      u8"Ah you ask too much for a mortal. Still, it is hard to refuse a call from such a pretty slave like you."s)));
-        txtmore();
+            u8"\"Ah you ask too much for a mortal. Still, it is hard to refuse a call from such a pretty slave like you.\""s));
         txt(lang(u8"天候が変わった。"s, u8"The weather changes."s));
         envonly = 1;
         play_music();
@@ -61862,8 +61644,7 @@ void do_use_command()
             txt(lang(
                 u8"クミロミの声がした。「ダメ…経験…足りない…」"s,
                 u8"Kumiromi talks to you, "s
-                    + cnvtalk(
-                          u8"No...you aren't...experienced enough...for this..."s)));
+                u8"\"No...you aren't...experienced enough...for this...\""s));
             update_screen();
             pc_turn(false);
         }
@@ -61874,8 +61655,7 @@ void do_use_command()
         ++gdata_acquirable_feat_count;
         txt(lang(
             u8"「…よく…経験をつんだね…酬いてあげる…」"s,
-            cnvtalk(
-                u8"...You have acquired enough...experience...I shall reward you..."s)));
+            u8"\"...You have acquired enough...experience...I shall reward you...\""s));
         txtef(5);
         txt(lang(
             u8"クミロミはあなたを祝福した。あなたは新たなフィートを取得できるようになった！"s,
@@ -61967,7 +61747,6 @@ void do_use_command()
         txt(lang(
             u8"まずは素体となる仲間を選ぶ必要がある。"s,
             u8"Choose an original body."s));
-        txtmore();
         rc = 0;
         allyctrl = 5;
         {
@@ -61983,7 +61762,6 @@ void do_use_command()
         txt(lang(
             u8"遺伝子を取り出す仲間を選ぶ必要がある。この仲間は合成後、永久に失われる。"s,
             u8"Choose a gene. Once you extract a gene, the subject will be lost forever."s));
-        txtmore();
         allyctrl = 5;
         {
             int stat = ctrl_ally();
@@ -62100,7 +61878,6 @@ void do_use_command()
                     p = (list(1, p) - sdata.get(i, rc).original_level) * 500;
                     p = std::clamp(p * 10 / std::clamp(lv, 2, 10), 1000, 10000);
                     skillmod(i, rc, p);
-                    txtmore();
                 }
             }
         }
@@ -62120,14 +61897,11 @@ void do_use_command()
         txt(lang(
             u8"あなたはアイアンメイデンの中に入った。"s,
             u8"You enter the iron maiden."s));
-        txtmore();
         txtef(9);
-        txt(lang(u8"「わくわく♪」"s, cnvtalk(u8"Interesting!"s)));
-        txtmore();
+        txt(lang(u8"「わくわく♪」"s, u8"\"Interesting!\""s));
         txt(lang(
             u8"突然誰かが蓋を閉めた。"s,
             u8"Suddenly, someone closes the door."s));
-        txtmore();
         txtef(9);
         txt(lang(u8"「ニヤリ」"s, u8"*Grin*"s));
         dmghp(0, 9999, -18);
@@ -62136,14 +61910,11 @@ void do_use_command()
         txt(lang(
             u8"あなたはギロチンに首をつっこんでみた。"s,
             u8"You set your head on the guillotine."s));
-        txtmore();
         txtef(9);
-        txt(lang(u8"「わくわく♪」"s, cnvtalk(u8"Interesting!"s)));
-        txtmore();
+        txt(lang(u8"「わくわく♪」"s, u8"\"Interesting!\""s));
         txt(lang(
             u8"突然誰かがギロチンの刃を落とした。"s,
             u8"Suddenly, someone activates the guillotine."s));
-        txtmore();
         txtef(9);
         txt(lang(u8"「ニヤリ」"s, u8"*Grin*"s));
         dmghp(0, 9999, -19);
@@ -62935,7 +62706,7 @@ void label_2244()
             }
             txt(lang(
                 u8"「これでも食らうがいい"s + _yo(2) + u8"」"s,
-                cnvtalk(u8"Eat this!"s)));
+                u8"\"Eat this!\""s));
             if (rnd(2) == 0)
             {
                 for (int cnt = 0; cnt < 28; ++cnt)
@@ -63047,14 +62818,15 @@ void label_2244()
                 {
                     buff = lang(i18n::_(u8"ability", std::to_string(csskill), u8"name") +
                             u8"のスキルを、友達価格の"s +
-                            calclearncost(csskill, cc, 1) + i18n::_(u8"ui", u8"platinum") +
+                            calclearncost(csskill, cc, true) + i18n::_(u8"ui", u8"platinum") +
                             u8"で教えてあげてもいい"s + _ga(3) + u8"どう"s +
                             _kana(1),
                         u8"I can teach you the art of "s + i18n::_(u8"ability", std::to_string(csskill), u8"name") +
                             u8" for a friendly price of "s +
-                            calclearncost(csskill, cc, 1) +
+                            calclearncost(csskill, cc, true) +
                             u8" platinum pieces. Do you want me to train you?"s);
-                    if (cdata[0].platinum_coin >= calclearncost(csskill, cc, 1))
+                    if (cdata[0].platinum_coin
+                        >= calclearncost(csskill, cc, true))
                     {
                         list(0, listmax) = 1;
                         listn(0, listmax) =
@@ -63066,14 +62838,15 @@ void label_2244()
                 {
                     buff = lang(i18n::_(u8"ability", std::to_string(csskill), u8"name") +
                             u8"のスキルを、友達価格の"s +
-                            calctraincost(csskill, cc, 1) + i18n::_(u8"ui", u8"platinum") +
+                            calctraincost(csskill, cc, true) + i18n::_(u8"ui", u8"platinum") +
                             u8"で訓練してもいい"s + _ga(3) + u8"どう"s +
                             _kana(1),
                         u8"I can train your "s + i18n::_(u8"ability", std::to_string(csskill), u8"name") +
                             u8" skill for a friendly price of "s +
-                            calctraincost(csskill, cc, 1) +
+                            calctraincost(csskill, cc, true) +
                             u8" platinum pieces. Do you want me to train you?"s);
-                    if (cdata[0].platinum_coin >= calctraincost(csskill, cc, 1))
+                    if (cdata[0].platinum_coin
+                        >= calctraincost(csskill, cc, true))
                     {
                         list(0, listmax) = 2;
                         listn(0, listmax) = lang(u8"訓練する"s, u8"Train me."s);
@@ -63109,7 +62882,7 @@ void label_2244()
                 snd(12);
                 if (chatval == 1)
                 {
-                    cdata[0].platinum_coin -= calclearncost(csskill, 0, 1);
+                    cdata[0].platinum_coin -= calclearncost(csskill, 0, true);
                     skillgain(cc, csskill);
                     ++gdata_number_of_learned_skills_by_trainer;
                     listmax = 0;
@@ -63134,7 +62907,7 @@ void label_2244()
                 }
                 if (chatval == 2)
                 {
-                    cdata[0].platinum_coin -= calctraincost(csskill, 0, 1);
+                    cdata[0].platinum_coin -= calctraincost(csskill, 0, true);
                     modify_potential(
                         cc,
                         csskill,
@@ -63408,16 +63181,15 @@ void label_2244()
             snd(17);
             txt(lang(
                 u8"あなたと"s + name(tc) + u8"は乾杯した！"s,
-                cnvtalk(u8"Cheers!"s)));
+                u8"\"Cheers!\""s));
             txtef(9);
-            txtmore();
             txt(lang(u8"「うぃっ！」"s, u8"*Hic*"s),
-                lang(u8"「うまいぜ」"s, cnvtalk(u8"Ah, good booze."s)),
-                lang(u8"「らららー♪」"s, cnvtalk(u8"La-la-la-la."s)),
-                lang(u8"「ひっく」"s, cnvtalk(u8"I'm going to heaven."s)),
-                lang(u8"「ふぅ」"s, cnvtalk(u8"Whew!"s)),
-                lang(u8"「たまらないわ」"s, cnvtalk(u8"I'm revived!"s)),
-                lang(u8"「んまっ♪」"s, cnvtalk(u8"Awesome."s)));
+                lang(u8"「うまいぜ」"s, u8"\"Ah, good booze.\""s),
+                lang(u8"「らららー♪」"s, u8"\"La-la-la-la.\""s),
+                lang(u8"「ひっく」"s, u8"\"I'm going to heaven.\""s),
+                lang(u8"「ふぅ」"s, u8"\"Whew!\""s),
+                lang(u8"「たまらないわ」"s, u8"\"I'm revived!\""s),
+                lang(u8"「んまっ♪」"s, u8"\"Awesome.\""s));
             dmgcon(tc, 8, 1000);
             dmgcon(cc, 8, 1000);
             modimp(tc, 15);
@@ -63957,7 +63729,7 @@ void label_2249()
         txtnew();
         txtef(3);
         txt(lang(u8"何かは殺された。"s, u8"Something is killed."s));
-        txt(lang(u8"「ぐわぁ」"s, cnvtalk(u8"Uggghhh!"s)));
+        txt(lang(u8"「ぐわぁ」"s, u8"\"Uggghhh!\""s));
         snd(8);
         spillblood(28, 6, 10);
         flt();
@@ -65014,8 +64786,7 @@ void load_shoptmp()
 
 void label_2265()
 {
-    inv_getheader(-1);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(-1))
     {
         inv[cnt].number = 0;
     }
@@ -66911,10 +66682,9 @@ void set_item_which_will_be_used()
 int label_2664()
 {
     f = 0;
-    inv_getheader(rc);
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        ci = invhead + rnd(invrange);
+        ci = get_random_inv(rc);
         if (inv[ci].number == 0)
         {
             f = 1;
@@ -66994,8 +66764,7 @@ int inv_getfreeid_force()
 
 void wear_most_valuable_equipment_for_all_body_parts()
 {
-    inv_getheader(rc);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    for (const auto& cnt : items(rc))
     {
         ci = cnt;
         if (inv[cnt].number == 0 || inv[cnt].body_part != 0)
@@ -67082,10 +66851,9 @@ void supply_new_equipment()
     for (int cnt = 0; cnt < 100; ++cnt)
     {
         f = 0;
-        inv_getheader(rc);
         for (int cnt = 0; cnt < 4; ++cnt)
         {
-            ci = invhead + rnd(invrange);
+            ci = get_random_inv(rc);
             if (inv[ci].number == 0)
             {
                 f = 1;
@@ -67758,9 +67526,7 @@ void label_2674()
 {
     if (gdata_executing_immediate_quest_type == 1006)
     {
-        inv_getheader(0);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(0))
         {
             if (inv[cnt].own_state == 4)
             {
@@ -67787,7 +67553,6 @@ void label_2674()
             }
             else
             {
-                txtmore();
                 txt(lang(
                     u8"あなたはクライアントを置き去りにした。"s,
                     u8"You left your client."s));
@@ -67835,7 +67600,6 @@ void failed_quest(int val0)
         if (qdata(3, rq) == 1002)
         {
             --qdata(15, qdata(10, rq));
-            txtmore();
             txtef(8);
             txt(lang(
                 u8"あなたは重大な罪を犯した!"s,
@@ -67844,7 +67608,6 @@ void failed_quest(int val0)
         }
         if (qdata(3, rq) == 1007)
         {
-            txtmore();
             txtef(8);
             txt(lang(
                 u8"あなたは護衛の任務を果たせなかった。"s,
@@ -67865,16 +67628,14 @@ void failed_quest(int val0)
                                 {
                                     s = lang(
                                         u8"「おい、暗殺者が私の後ろにいるぞ」"s,
-                                        cnvtalk(
-                                            u8"Hey, the assassins are killing me."s));
+                                        u8"\"Hey, the assassins are killing me.\""s);
                                     p = -11;
                                 }
                                 if (qdata(4, rq) == 1)
                                 {
                                     s = lang(
                                         u8"「毒が、毒がー！」"s,
-                                        cnvtalk(
-                                            u8"Poison! P-P-Poison in my vein!!"s));
+                                        u8"\"Poison! P-P-Poison in my vein!!\""s);
                                     p = -4;
                                 }
                                 if (qdata(4, rq) == 2)
@@ -67883,8 +67644,7 @@ void failed_quest(int val0)
                                         u8"「時間切れだ。こうなったら…」"s +
                                             name(tc) +
                                             u8"は火をかぶった。"s,
-                                        cnvtalk(
-                                            u8"I missed the deadline. I don't have a right to live anymore."s) +
+                                            u8"\"I missed the deadline. I don't have a right to live anymore.\""s +
                                             u8" "s + name(tc) +
                                             u8" pours a bottole of molotov cocktail over "s +
                                             him(tc) + u8"self."s);
@@ -67902,7 +67662,6 @@ void failed_quest(int val0)
                                     p = -9;
                                 }
                                 txtef(9);
-                                txtmore();
                                 txt(s);
                                 dmghp(tc, 999999, p);
                             }
@@ -67919,7 +67678,6 @@ void failed_quest(int val0)
     }
     int stat = decfame(0, 40);
     p = stat;
-    txtmore();
     txtef(3);
     txt(lang(
         u8"名声値を"s + p + u8"失った。"s, u8"You lose "s + p + u8" fame."s));
@@ -67948,7 +67706,6 @@ void label_2677()
         txt(lang(
             u8"あなたのチームは勝利した！"s, u8"Your team is victorious!"s));
         txtef(2);
-        txtmore();
         txt(lang(
             ""s + gdata(74) + u8"の名声値を手に入れた。"s,
             u8"You gain "s + gdata(74) + u8" fame."s));
@@ -67990,7 +67747,6 @@ void label_2677()
         p = stat;
         if (arenaop == 0)
         {
-            txtmore();
             txtef(3);
             txt(lang(
                 u8"名声値を"s + p + u8"失った。"s,
@@ -68014,7 +67770,6 @@ void hunt_all_targets()
         txtef(2);
         txt(lang(u8"あなたは勝利した！"s, u8"You are victorious!"s));
         txtef(2);
-        txtmore();
         txt(lang(
             ""s + gdata(74) + u8"の名声値を手に入れた。"s,
             u8"You gain "s + gdata(74) + u8" fame."s));
@@ -68160,7 +67915,6 @@ void complete_quest()
         qname(rq) + u8"から受けた依頼を完了した。"s,
         u8"You have completed the quest taken from "s + qname(rq) + u8"."s));
     txtef(2);
-    txtmore();
     txt(lang(
         ""s + gdata(74) + u8"の名声値を手に入れた。"s,
         u8"You gain "s + gdata(74) + u8" fame."s));
@@ -68572,13 +68326,12 @@ void label_2687()
                 tc = cc;
                 txt(lang(
                         u8"「もっとぶって"s + _yo(2) + u8"」"s,
-                        cnvtalk(u8"Release me now."s)),
+                        u8"\"Release me now.\""s),
                     lang(
                         u8"「こんなことして、許さない"s + _yo() + u8"」"s,
-                        cnvtalk(u8"I won't forget this."s)),
+                        u8"\"I won't forget this.\""s),
                     lang(
-                        u8"「何をする"s + _nda(2) + u8"」"s,
-                        cnvtalk(u8"Hit me!"s)));
+                        u8"「何をする"s + _nda(2) + u8"」"s, u8"\"Hit me!\""s));
             }
         }
         cdata[cc].hate = 0;
@@ -68606,12 +68359,10 @@ void label_2687()
                             {
                                 if (rnd(2))
                                 {
-                                    txt(lang(
-                                            u8"「痛っ！」"s,
-                                            cnvtalk(u8"Ouch!"s)),
+                                    txt(lang(u8"「痛っ！」"s, u8"\"Ouch!\""s),
                                         lang(
                                             u8"「やめて！」"s,
-                                            cnvtalk(u8"Stop it!"s)));
+                                            u8"\"Stop it!\""s));
                                     hostileaction(0, cc);
                                 }
                                 if (rnd(4) == 0)
@@ -68722,16 +68473,14 @@ void label_2687()
                 if (rnd(40) == 0)
                 {
                     txtef(4);
-                    txtmore();
-                    txt(lang(u8"「いいぞ！」"s, cnvtalk(u8"Come on!"s)),
-                        lang(u8"「もっとやれー」"s, cnvtalk(u8"More blood!"s)),
-                        lang(u8"「血をみせろー」"s, cnvtalk(u8"Beat'em!"s)),
-                        lang(
-                            u8"「頑張って！」"s, cnvtalk(u8"Use your brain!"s)),
-                        lang(u8"「うぉぉぉぉ！」"s, cnvtalk(u8"Wooooo!"s)),
-                        lang(u8"「行けぇ！」"s, cnvtalk(u8"Go go!"s)),
-                        lang(u8"「頭を使えよ」"s, cnvtalk(u8"Good fighting."s)),
-                        lang(u8"「きゃー」"s, cnvtalk(u8"Yeeee!"s)));
+                    txt(lang(u8"「いいぞ！」"s, u8"\"Come on!\""s),
+                        lang(u8"「もっとやれー」"s, u8"\"More blood!\""s),
+                        lang(u8"「血をみせろー」"s, u8"\"Beat'em!\""s),
+                        lang(u8"「頑張って！」"s, u8"\"Use your brain!\""s),
+                        lang(u8"「うぉぉぉぉ！」"s, u8"\"Wooooo!\""s),
+                        lang(u8"「行けぇ！」"s, u8"\"Go go!\""s),
+                        lang(u8"「頭を使えよ」"s, u8"\"Good fighting.\""s),
+                        lang(u8"「きゃー」"s, u8"\"Yeeee!\""s));
                 }
                 label_2690();
                 return;
@@ -68848,7 +68597,6 @@ void label_2687()
         {
             if (rnd(30) == 0)
             {
-                txtmore();
                 txtef(9);
                 txt(""s + cdatan(4, cc));
             }
@@ -69247,14 +68995,14 @@ void label_2690()
                 {
                     if (rnd(2) == 0)
                     {
-                        txt(cnvtalk(u8"Vrei sa pleci dar♪"s),
-                            cnvtalk(u8"Numa numa yay!!"s),
-                            cnvtalk(u8"Numa numa numa yay!!"s));
+                        txt(u8"\"Vrei sa pleci dar♪\""s,
+                            u8"\"Numa numa yay!!\""s,
+                            u8"\"Numa numa numa yay!!\""s);
                         goto label_2692_internal;
                     }
-                    txt(cnvtalk(u8"Mai-Ya-Hi♪"s),
-                        cnvtalk(u8"Mai-Ya-Hoo♪"s),
-                        cnvtalk(u8"Mai-Ya-Ha Ma Mi A♪"s));
+                    txt(u8"\"Mai-Ya-Hi♪\""s,
+                        u8"\"Mai-Ya-Hoo♪\""s,
+                        u8"\"Mai-Ya-Ha Ma Mi A♪\""s);
                     goto label_2692_internal;
                 }
                 goto label_2691_internal;
@@ -69340,18 +69088,16 @@ label_2692_internal:
                                             txtef(9);
                                             txt(lang(
                                                     u8"「化け物め！」"s,
-                                                    cnvtalk(
-                                                        u8"Filthy monster!"s)),
+                                                    u8"\"Filthy monster!\""s),
                                                 lang(
                                                     u8"「くたばれっ」"s,
-                                                    cnvtalk(u8"Go to hell!"s)),
+                                                    u8"\"Go to hell!\""s),
                                                 lang(
                                                     u8"「退治してやるぅ！」"s,
-                                                    cnvtalk(
-                                                        u8"I'll get rid of you."s)),
+                                                    u8"\"I'll get rid of you.\""s),
                                                 lang(
                                                     u8"「くらえー！」"s,
-                                                    cnvtalk(u8"Eat this!"s)));
+                                                    u8"\"Eat this!\""s));
                                             do_throw_command();
                                             return;
                                         }
@@ -69360,13 +69106,10 @@ label_2692_internal:
                             }
                             if (rnd(12) == 0)
                             {
-                                itemlist(-1, 541);
-                                f = 0;
-                                for (int cnt = 0, cnt_end = (listmax);
-                                     cnt < cnt_end;
-                                     ++cnt)
+                                bool found_snowman{};
+                                for (const auto& cnt : itemlist(-1, 541))
                                 {
-                                    ti = list(0, cnt);
+                                    ti = cnt;
                                     if (inv[ti].position.x >= scx
                                         && inv[ti].position.x
                                             < scx + inf_screenw
@@ -69374,18 +69117,18 @@ label_2692_internal:
                                         && inv[ti].position.y
                                             < scy + inf_screenh)
                                     {
-                                        f = 1;
+                                        found_snowman = true;
                                         break;
                                     }
                                 }
-                                tlocx = inv[ti].position.x;
-                                tlocy = inv[ti].position.y;
-                                if (f == 1)
+                                if (found_snowman)
                                 {
                                     flt();
                                     int stat = itemcreate(cc, 587, -1, -1, 0);
                                     if (stat == 1)
                                     {
+                                        tlocx = inv[ti].position.x;
+                                        tlocy = inv[ti].position.y;
                                         do_throw_command();
                                         return;
                                     }
@@ -69431,20 +69174,18 @@ label_2692_internal:
                                     txt(lang(u8" *クスクス* "s, u8"*grin*"s),
                                         lang(
                                             u8"「えいっ」"s,
-                                            cnvtalk(u8"Fire in the hole!"s)),
+                                            u8"\"Fire in the hole!\""s),
                                         lang(
                                             u8"「うりゃ」"s,
-                                            cnvtalk(u8"Tee-hee-hee!"s)),
+                                            u8"\"Tee-hee-hee!\""s),
                                         lang(
                                             u8"「くらえー！」"s,
-                                            cnvtalk(u8"Eat this!"s)),
+                                            u8"\"Eat this!\""s),
                                         lang(
                                             u8"「危ないっ！」"s,
-                                            cnvtalk(u8"Watch out!"s)),
+                                            u8"\"Watch out!\""s),
                                         lang(
-                                            u8"「避けてー」"s,
-                                            cnvtalk(u8"Scut!"s)));
-                                    txtmore();
+                                            u8"「避けてー」"s, u8"\"Scut!\""s));
                                     do_throw_command();
                                     return;
                                 }
@@ -69545,11 +69286,9 @@ label_2692_internal:
                             if (is_in_fov(cc))
                             {
                                 txtef(9);
-                                txtmore();
                                 txt(lang(
-                                        u8"「なめくじだ！」"s,
-                                        cnvtalk(u8"Snail!"s)),
-                                    lang(u8"「殺す！」"s, cnvtalk(u8"Kill!"s)));
+                                        u8"「なめくじだ！」"s, u8"\"Snail!\""s),
+                                    lang(u8"「殺す！」"s, u8"\"Kill!\""s));
                             }
                             do_throw_command();
                             return;
@@ -69683,12 +69422,9 @@ void label_2693(bool retreat)
         {
             if (rnd(100) == 0)
             {
-                inv_getheader(cc);
                 sell(0) = 0;
                 sell(1) = 0;
-                for (int cnt = invhead, cnt_end = cnt + (invrange);
-                     cnt < cnt_end;
-                     ++cnt)
+                for (const auto& cnt : items(cc))
                 {
                     if (inv[cnt].number == 0)
                     {
@@ -72347,7 +72083,6 @@ void pass_one_turn(bool label_2738_flg)
                 int stat = label_2080();
                 if (stat == 1)
                 {
-                    txtmore();
                     txt(lang(
                         u8"あなたは法を犯した。"s, u8"You commit a crime."s));
                     modify_karma(0, -10);
@@ -72479,7 +72214,6 @@ void pass_one_turn(bool label_2738_flg)
                     txt(lang(
                         name(tc) + u8"は地面の液体を浴びた。"s,
                         name(tc) + u8" step"s + _s(tc) + u8" in the pool."s));
-                    txtmore();
                 }
                 wet(tc, 25);
                 if (mef(6, ef) == 0)
@@ -72592,10 +72326,10 @@ void pass_one_turn(bool label_2738_flg)
                         }
                         if (en)
                         {
-                            txt(cnvtalk(u8"Have a drink baby."s),
-                                cnvtalk(u8"What are you looking at?"s),
-                                cnvtalk(u8"I ain't drunk."s),
-                                cnvtalk(u8"Let's have fun."s));
+                            txt(u8"\"Have a drink baby.\""s,
+                                u8"\"What are you looking at?\""s,
+                                u8"\"I ain't drunk.\""s,
+                                u8"\"Let's have fun.\""s);
                         }
                     }
                     if (rnd(4) == 0)
@@ -72611,7 +72345,7 @@ void pass_one_turn(bool label_2738_flg)
                                         + u8" is pretty annoyed with the drunkard."s));
                                 txt(lang(
                                     u8"「酔っ払いにはうんざり！」"s,
-                                    cnvtalk(u8"Your time is over, drunk!"s)));
+                                    u8"\"Your time is over, drunk!\""s));
                             }
                             cdata[tc].hate = 20;
                             cdata[tc].enemy_id = cc;
@@ -73037,7 +72771,6 @@ void pc_turn(bool label_2747_flg)
             {
                 snd(44);
                 save_game();
-                txtmore();
                 txtef(5);
                 txt(lang(u8" *保存* "s, u8"*saving*"s));
             }
@@ -73179,8 +72912,7 @@ void pc_turn(bool label_2747_flg)
         }
         if (trait(210) != 0 && rnd(5) == 0)
         {
-            inv_getheader(0);
-            ci = rnd(invrange) + invhead;
+            ci = get_random_inv(0);
             if (inv[ci].number > 0
                 && the_item_db[inv[ci].id]->category == 52000)
             {
@@ -73266,8 +72998,7 @@ label_2747:
                 + u8"時間が経過しています。"s,
             u8"You have been playing Elona for "s + hour_played + u8" hour"s
                 + _s2(hour_played) + u8"."s);
-        cheer_up_message();
-        txtmore();
+        s += cheer_up_message(hour_played);
         txtef(5);
         txt(s);
     }
@@ -73416,9 +73147,8 @@ label_2747:
         {
             key = key_search;
         }
-        inv_getheader(-1);
         p = 0;
-        for (int ci = invhead; ci < invhead + invrange; ++ci)
+        for (const auto& ci : items(-1))
         {
             if (inv[ci].number == 0)
                 continue;
@@ -74124,10 +73854,10 @@ void conquer_lesimas()
         u8"信じられない！あなたはネフィアの迷宮「レシマス」を制覇した！"s,
         u8"Unbelievable! You conquered Lesimas!"s));
     update_screen();
-    txtsetwinword(3);
+    const auto win_words = txtsetwinword(3);
     for (int cnt = 0; cnt < 3; ++cnt)
     {
-        promptl(0, promptmax) = s(cnt);
+        promptl(0, promptmax) = win_words[cnt];
         promptl(1, promptmax) = key_select(cnt);
         promptl(2, promptmax) = ""s + promptmax;
         ++promptmax;
@@ -74241,7 +73971,7 @@ void conquer_lesimas()
     pos(wx + 40, wy + 206);
     mes(lang(
         u8"あなたは「"s + wincomment + u8"」とコメントした。"s,
-        u8"Upon killing Zeome, you said, "s + cnvtalk((""s + wincomment))));
+        u8"Upon killing Zeome, you said, \""s + wincomment + u8"\""));
     pos(wx + 40, wy + 246);
     mes(lang(
         u8"…あなたの旅はまだ終わらない。"s, u8"Your journey continues..."s));
@@ -74300,7 +74030,6 @@ void pc_died()
         return;
     }
     txt(lang(u8"さようなら… "s, u8"Good bye... "s));
-    txtmore();
     txt(lang(u8"遺言は？"s, u8"You leave a dying message."s));
     inputlog = "";
     show_number_of_text_prompt(

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <optional>
 #include <random>
 #include <utility>
@@ -70,6 +71,16 @@ auto choice(const Range& range)
     auto itr = std::begin(range);
     std::advance(itr, dist(detail::random_engine));
     return *itr;
+}
+
+
+
+template <typename Range, typename Iterator, typename Distance>
+Iterator sample(const Range& range, Iterator result, Distance n)
+{
+    using std::begin, std::end;
+    std::sample(begin(range), end(range), result, n, detail::random_engine);
+    return result;
 }
 
 

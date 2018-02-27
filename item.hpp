@@ -74,7 +74,7 @@ struct item
 
     void clear();
 
-    bool almost_euqals(const item& other, bool ignore_position);
+    bool almost_equals(const item& other, bool ignore_position);
 
 
     template <typename Archive>
@@ -146,6 +146,11 @@ inline inventory inv;
 
 int ibit(size_t type, int ci);
 void ibitmod(size_t type, int ci, int on);
+
+
+
+range::iota<int> items(int owner);
+int get_random_inv(int owner);
 
 
 } // namespace elona

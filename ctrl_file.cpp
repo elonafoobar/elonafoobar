@@ -900,7 +900,7 @@ void fmode_22_21(bool read)
         }
         {
             const auto filepath = folder + u8"c3_"s + id + u8".t"s;
-            inv_getheader(tg);
+            const auto [invhead, invrange] = inv_getheader(tg);
             if (read)
             {
                 load(filepath, inv, invhead, invhead + invrange);
@@ -949,9 +949,7 @@ void fmode_22_21(bool read)
         }
         else
         {
-            inv_getheader(tg);
-            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-                 ++cnt)
+            for (const auto& cnt : items(tg))
             {
                 inv[cnt].body_part = 0;
             }

@@ -91,9 +91,6 @@ namespace elona
 
 
 int rangedist = 0;
-int value_at_m153 = 0;
-int p_at_m153 = 0;
-int cost_at_m153 = 0;
 
 
 
@@ -596,20 +593,17 @@ int calc_rate_to_pierce(int id)
 
 
 
-std::string calcage(int prm_762)
+std::string calcage(int cc)
 {
-    if (gdata_year - cdata[prm_762].birth_year < 0)
-    {
-        return lang(u8"不明"s, u8"Unknown"s);
-    }
-    return std::to_string(gdata_year - cdata[prm_762].birth_year);
+    int n = gdata_year - cdata[cc].birth_year;
+    return n >= 0 ? std::to_string(n) : lang(u8"不明", u8"Unknown");
 }
 
 
 
-int calcexpalive(int prm_892)
+int calcexpalive(int level)
 {
-    return prm_892 * 100;
+    return level * 100;
 }
 
 
@@ -976,7 +970,6 @@ int calcattackdmg(int prm_894)
             {
                 txtef(5);
                 txt(lang(u8" *シャキーン* "s, u8"*vopal*"s));
-                txtmore();
             }
         }
     }
@@ -989,7 +982,6 @@ int calcattackdmg(int prm_894)
             {
                 txtef(5);
                 txt(lang(u8" *ズバシュッ* "s, u8"*vopal*"s));
-                txtmore();
             }
         }
         if (ammoproc == 0)
@@ -1240,242 +1232,184 @@ int calcitemvalue(int ci, int situation)
 
 
 
-int calcinvestvalue(int)
+int calcinvestvalue()
 {
-    value_at_m153 = std::clamp(cdata[tc].shop_rank, 1, 200)
-            * std::clamp(cdata[tc].shop_rank, 1, 200) * 15
-        + 200;
-    if (value_at_m153 > 500000)
+    int rank = std::clamp(cdata[tc].shop_rank, 1, 200);
+    int ret = rank * rank * 15 + 200;
+    if (ret > 500'000)
     {
-        value_at_m153 = 500000;
+        ret = 500'000;
     }
-    value_at_m153 = value_at_m153 * 100 / (100 + sdata(160, 0) * 10) + 200;
-    return value_at_m153;
+    return ret * 100 / (100 + sdata(160, 0) * 10) + 200;
 }
 
 
 
-int calcguiltvalue(int)
+int calcguiltvalue()
 {
-    value_at_m153 =
-        (-cdata[0].karma + -30) * (cdata[0].fame / 2 + cdata[0].level * 200);
-    return value_at_m153;
+    return -(cdata[0].karma + 30) * (cdata[0].fame / 2 + cdata[0].level * 200);
 }
 
 
 
-int calchireadv(int prm_902)
+int calchireadv(int adventurer)
 {
-    return 250 + cdata[prm_902].level * cdata[prm_902].level * 30;
+    return 250 + cdata[adventurer].level * cdata[adventurer].level * 30;
 }
 
 
 
-int calchirecost(int prm_903)
+int calchirecost(int cc)
 {
-    value_at_m153 = 0;
-    if (cdata[prm_903].character_role == 18)
+    switch (cdata[cc].character_role)
     {
-        value_at_m153 = 450;
-    }
-    if (cdata[prm_903].character_role == 7)
-    {
-        value_at_m153 = 250;
-    }
-    if (cdata[prm_903].character_role == 9)
-    {
-        value_at_m153 = 350;
-    }
-    if (cdata[prm_903].character_role == 12)
-    {
-        value_at_m153 = 500;
-    }
-    if (cdata[prm_903].character_role == 5)
-    {
-        value_at_m153 = 750;
-    }
-    if (cdata[prm_903].character_role == 8)
-    {
-        value_at_m153 = 250;
-    }
-    if (cdata[prm_903].character_role == 14)
-    {
-        value_at_m153 = 50;
-    }
-    if ((cdata[prm_903].character_role >= 1000
-         && cdata[prm_903].character_role < 2000)
-        || cdata[prm_903].character_role == 2003)
-    {
-        value_at_m153 = 1000;
-        if (cdata[prm_903].character_role == 1007)
+    case 18: return 450;
+    case 7: return 250;
+    case 9: return 350;
+    case 12: return 500;
+    case 5: return 750;
+    case 8: return 250;
+    case 14: return 50;
+    case 1007: return 4000;
+    case 2003: return 0;
+    default:
+        if (cdata[cc].character_role >= 1000 && cdata[cc].character_role < 2000)
         {
-            value_at_m153 *= 4;
+            return 1000;
         }
-        if (cdata[prm_903].character_role == 2003)
+        else
         {
-            value_at_m153 = 0;
+            return 0;
         }
     }
-    return value_at_m153;
 }
 
 
 
-void generatemoney(int prm_904)
+void generatemoney(int cc)
 {
-    p_at_m153 = rnd(100) + rnd((cdata[prm_904].level * 50 + 1));
-    if ((cdata[prm_904].character_role >= 1000
-         && cdata[prm_904].character_role < 2000)
-        || cdata[prm_904].character_role == 2003)
+    int gold = rnd(100) + rnd(cdata[cc].level * 50 + 1);
+    if ((cdata[cc].character_role >= 1000 && cdata[cc].character_role < 2000)
+        || cdata[cc].character_role == 2003)
     {
-        p_at_m153 += 2500 + cdata[prm_904].shop_rank * 250;
+        gold += 2500 + cdata[cc].shop_rank * 250;
     }
-    if (cdata[prm_904].gold < p_at_m153 / 2)
+    if (cdata[cc].gold < gold / 2)
     {
-        cdata[prm_904].gold = p_at_m153;
+        cdata[cc].gold = gold;
     }
-    return;
 }
 
 
 
 void calccosthire()
 {
-    cost_at_m153 = 0;
+    int cost{};
     for (int cnt = 57; cnt < 245; ++cnt)
     {
         if (cdata[cnt].character_role == 0)
-        {
             continue;
-        }
         if (cdata[cnt].state != 1)
-        {
             continue;
-        }
-        cost_at_m153 += calchirecost(cnt);
+        cost += calchirecost(cnt);
     }
-    cost_at_m153 = cost_at_m153
-        * std::clamp((100 - std::clamp(cdata[0].karma / 2, 0, 50)
-                      - 7 * trait(38) - (cdata[0].karma >= 20) * 5),
-                     25,
-                     200)
+    cost = cost
+        * std::clamp(
+               100 - std::clamp(cdata[0].karma / 2, 0, 50) - 7 * trait(38)
+                   - (cdata[0].karma >= 20) * 5,
+               25,
+               200)
         / 100;
-    gdata_cost_to_hire = cost_at_m153;
-    return;
+    gdata_cost_to_hire = cost;
 }
 
 
 
 int calccostbuilding()
 {
-    cost_at_m153 = 0;
-    cost_at_m153 += gdata_home_scale * gdata_home_scale * 200;
+    int cost = gdata_home_scale * gdata_home_scale * 200;
+
     for (int cnt = 300; cnt < 450; ++cnt)
     {
-        if (adata(16, cnt) == 101)
+        switch (adata(16, cnt))
         {
-            cost_at_m153 += 1500;
-        }
-        if (adata(16, cnt) == 31)
-        {
-            cost_at_m153 += 1000;
-        }
-        if (adata(16, cnt) == 103)
-        {
-            cost_at_m153 += 750;
-        }
-        if (adata(16, cnt) == 102)
-        {
-            cost_at_m153 += 5000;
-        }
-        if (adata(16, cnt) == 104)
-        {
-            cost_at_m153 += 750;
+        case 101: cost += 1500; break;
+        case 31: cost += 1000; break;
+        case 103: cost += 750; break;
+        case 102: cost += 5000; break;
+        case 104: cost += 750; break;
+        default: break;
         }
     }
-    cost_at_m153 = cost_at_m153
-        * std::clamp((100 - std::clamp(cdata[0].karma / 2, 0, 50)
-                      - 7 * trait(38) - (cdata[0].karma >= 20) * 5),
-                     25,
-                     200)
+
+    return cost
+        * std::clamp(
+               100 - std::clamp(cdata[0].karma / 2, 0, 50) - 7 * trait(38)
+                   - (cdata[0].karma >= 20) * 5,
+               25,
+               200)
         / 100;
-    return cost_at_m153;
 }
 
 
 
 int calccosttax()
 {
-    cost_at_m153 = 0;
-    cost_at_m153 += cdata[0].gold / 1000;
-    cost_at_m153 += cdata[0].fame;
-    cost_at_m153 += cdata[0].level * 200;
-    cost_at_m153 = cost_at_m153
-        * std::clamp((100 - std::clamp(cdata[0].karma / 2, 0, 50)
-                      - 7 * trait(38) - (cdata[0].karma >= 20) * 5),
-                     25,
-                     200)
+    int cost{};
+    cost += cdata[0].gold / 1000;
+    cost += cdata[0].fame;
+    cost += cdata[0].level * 200;
+    return cost
+        * std::clamp(
+               100 - std::clamp(cdata[0].karma / 2, 0, 50) - 7 * trait(38)
+                   - (cdata[0].karma >= 20) * 5,
+               25,
+               200)
         / 100;
-    return cost_at_m153;
 }
 
 
 
 int calcmealvalue()
 {
-    value_at_m153 = 140;
-    return value_at_m153;
+    return 140;
 }
 
 
 
-int calccostreload(int prm_905, int prm_906)
+int calccostreload(int owner, bool do_reload)
 {
-    int ci_at_m153 = 0;
-    int enc_at_m153 = 0;
-    elona_vector1<int> i_at_m153;
-    cost_at_m153 = 0;
-    inv_getheader(prm_905);
-    for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end; ++cnt)
+    int cost{};
+
+    for (const auto& cnt : items(owner))
     {
         if (inv[cnt].number == 0)
-        {
             continue;
-        }
         if (the_item_db[inv[cnt].id]->category != 25000)
-        {
             continue;
-        }
-        ci_at_m153 = cnt;
+
+        int ammo = cnt;
         for (int cnt = 0; cnt < 15; ++cnt)
         {
-            if (inv[ci_at_m153].enchantments[cnt].id == 0)
-            {
+            if (inv[ammo].enchantments[cnt].id == 0)
                 break;
-            }
-            enc_at_m153 = inv[ci_at_m153].enchantments[cnt].id;
-            i_at_m153 = enc_at_m153 / 10000;
-            if (i_at_m153 != 0)
+
+            int enc = inv[ammo].enchantments[cnt].id;
+            if (enc / 10000 == 9)
             {
-                enc_at_m153 = enc_at_m153 % 10000;
-                if (i_at_m153 == 9)
+                int type = enc % 10000;
+                int current = inv[ammo].enchantments[cnt].power % 1000;
+                int max = inv[ammo].enchantments[cnt].power / 1000;
+                cost += (max - current) * (50 + type * type * 10);
+                if (do_reload)
                 {
-                    i_at_m153(0) =
-                        inv[ci_at_m153].enchantments[cnt].power % 1000;
-                    i_at_m153(1) =
-                        inv[ci_at_m153].enchantments[cnt].power / 1000;
-                    cost_at_m153 += (i_at_m153(1) - i_at_m153)
-                        * (50 + enc_at_m153 * enc_at_m153 * 10);
-                    if (prm_906 == 1)
-                    {
-                        inv[ci_at_m153].enchantments[cnt].power =
-                            i_at_m153(1) * 1000 + i_at_m153(1);
-                    }
+                    inv[ammo].enchantments[cnt].power = max * 1000 + max;
                 }
             }
         }
     }
-    return cost_at_m153;
+
+    return cost;
 }
 
 
@@ -1494,19 +1428,19 @@ int calccargoupdatecost()
 
 
 
-int calcidentifyvalue(int prm_907)
+int calcidentifyvalue(int type)
 {
-    value_at_m153 = 300;
-    if (prm_907 == 2)
+    int cost;
+
+    cost = 300;
+    if (type == 2)
     {
-        value_at_m153 = 5000;
+        cost = 5000;
     }
-    if (prm_907 == 1)
+    if (type == 1)
     {
-        inv_getheader(0);
-        p_at_m153 = 0;
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        int need_to_identify{};
+        for (const auto& cnt : items(0))
         {
             if (inv[cnt].number == 0)
             {
@@ -1514,298 +1448,260 @@ int calcidentifyvalue(int prm_907)
             }
             if (inv[cnt].identification_state < 3)
             {
-                ++p_at_m153;
+                ++need_to_identify;
             }
         }
-        if (p_at_m153 >= 2)
+        if (need_to_identify >= 2)
         {
-            value_at_m153 = value_at_m153 * p_at_m153 * 70 / 100;
+            cost = cost * need_to_identify * 70 / 100;
         }
     }
-    value_at_m153 = value_at_m153 * 100 / (100 + sdata(156, 0) * 2);
-    if (gdata_belongs_to_fighters_guild)
-    {
-        value_at_m153 /= 2;
-    }
-    return value_at_m153;
+    cost = cost * 100 / (100 + sdata(156, 0) * 2);
+
+    return gdata_belongs_to_fighters_guild ? cost / 2 : cost;
 }
 
 
 
-int calctraincost(int prm_908, int prm_909, int prm_910)
+int calctraincost(int skill_id, int cc, bool discount)
 {
-    value_at_m153 = sdata.get(prm_908, prm_909).original_level / 5 + 2;
-    if (prm_910)
-    {
-        value_at_m153 /= 2;
-    }
-    return value_at_m153;
+    int platinum = sdata.get(skill_id, cc).original_level / 5 + 2;
+    return discount ? platinum / 2 : platinum;
 }
 
 
 
-int calclearncost(int, int, int prm_913)
+int calclearncost(int skill_id, int cc, bool discount)
 {
-    value_at_m153 = 15 + 3 * gdata_number_of_learned_skills_by_trainer;
-    if (prm_913)
-    {
-        value_at_m153 = value_at_m153 * 2 / 3;
-    }
-    return value_at_m153;
+    (void)skill_id;
+    (void)cc;
+
+    int platinum = 15 + 3 * gdata_number_of_learned_skills_by_trainer;
+    return discount ? platinum * 2 / 3 : platinum;
 }
 
 
 
-int calcresurrectvalue(int prm_914)
+int calcresurrectvalue(int pet)
 {
-    if (cdata[prm_914].state != 6)
-    {
-        return 100;
-    }
-    value_at_m153 = cdata[prm_914].level * cdata[prm_914].level * 15;
-    return value_at_m153;
+    return cdata[pet].state != 6 ? 100
+                                 : cdata[pet].level * cdata[pet].level * 15;
 }
 
 
 
-int calcslavevalue(int prm_915)
+int calcslavevalue(int pet)
 {
-    value_at_m153 = sdata(10, prm_915) * sdata(11, prm_915)
-        + cdata[prm_915].level * cdata[prm_915].level + 1000;
-    if (value_at_m153 > 50000)
+    int value = sdata(10, pet) * sdata(11, pet)
+        + cdata[pet].level * cdata[pet].level + 1000;
+    if (value > 50'000)
     {
-        value_at_m153 = 50000;
+        value = 50'000;
     }
-    if (cbit(23, prm_915) || cbit(27, prm_915))
+    if (cbit(23, pet) || cbit(27, pet))
     {
-        value_at_m153 = 10;
+        value = 10;
     }
-    return value_at_m153;
+    return value;
 }
 
 
 
 int calcrestorecost()
 {
-    value_at_m153 = 500;
-    if (gdata_belongs_to_fighters_guild)
-    {
-        value_at_m153 /= 2;
-    }
-    return value_at_m153;
+    return gdata_belongs_to_fighters_guild ? 250 : 500;
 }
 
 
 
-int calcinitgold(int prm_917)
+int calcinitgold(int owner)
 {
-    int lootrich_at_m155 = 0;
-    if (prm_917 < 0)
+    if (owner < 0)
     {
         return rnd(gdata_current_dungeon_level * 25 * (gdata_current_map != 30)
                    + 10)
             + 1;
     }
-    lootrich_at_m155 = -1;
-    if (cdata[prm_917].id == 183)
+
+    switch (cdata[owner].id)
     {
-        lootrich_at_m155 = 10;
+    case 183: return 5000 + rnd(11000);
+    case 184: return 2000 + rnd(5000);
+    case 185: return 1000 + rnd(3000);
+    default: return rnd(cdata[owner].level * 25 + 10) + 1;
     }
-    if (cdata[prm_917].id == 184)
-    {
-        lootrich_at_m155 = 4;
-    }
-    if (cdata[prm_917].id == 185)
-    {
-        lootrich_at_m155 = 2;
-    }
-    if (lootrich_at_m155 != -1)
-    {
-        return lootrich_at_m155 * 500 + rnd((1000 + lootrich_at_m155 * 1000));
-    }
-    return rnd(cdata[prm_917].level * 25 + 10) + 1;
 }
 
 
 
-int calcspellpower(int prm_918, int prm_919)
+int calcspellpower(int id, int cc)
 {
-    if (prm_918 >= 600)
+    if (id >= 600)
     {
-        if (the_ability_db[prm_918].related_basic_attribute != 0)
+        if (the_ability_db[id].related_basic_attribute != 0)
         {
-            return sdata(
-                       the_ability_db[prm_918].related_basic_attribute, prm_919)
-                * 6
+            return sdata(the_ability_db[id].related_basic_attribute, cc) * 6
                 + 10;
         }
         return 100;
     }
-    if (prm_919 == 0)
+    if (cc == 0)
     {
-        return sdata(prm_918, prm_919) * 10 + 50;
+        return sdata(id, cc) * 10 + 50;
     }
-    if (sdata(172, prm_919) == 0)
+    if (sdata(172, cc) == 0 && cc >= 16)
     {
-        if (prm_919 >= 16)
-        {
-            return cdata[prm_919].level * 6 + 10;
-        }
+        return cdata[cc].level * 6 + 10;
     }
-    return sdata(172, prm_919) * 6 + 10;
+    return sdata(172, cc) * 6 + 10;
 }
 
 
 
-int calcspellfail(int prm_920, int prm_921)
+int calcspellfail(int id, int cc)
 {
     if (debug::voldemort)
     {
         return 100;
     }
 
-    int i_at_m157 = 0;
-    int f_at_m157 = 0;
-    int p_at_m157 = 0;
-    if (prm_921 != 0)
+    if (cc != 0)
     {
-        if (gdata_mount == prm_921)
+        if (gdata_mount == cc)
         {
-            return 95 - std::clamp((30 - sdata(301, 0) / 2), 0, 30);
+            return 95 - std::clamp(30 - sdata(301, 0) / 2, 0, 30);
         }
         else
         {
             return 95;
         }
     }
-    i_at_m157 = 4;
-    f_at_m157 = carmor(prm_921);
-    if (f_at_m157 == 169)
+
+    int penalty = 4;
+
+    int armor_skill = carmor(cc);
+    if (armor_skill == 169)
     {
-        i_at_m157 = 17 - sdata(169, prm_921) / 5;
+        penalty = 17 - sdata(169, cc) / 5;
     }
-    if (f_at_m157 == 170)
+    else if (armor_skill == 170)
     {
-        i_at_m157 = 12 - sdata(170, prm_921) / 5;
+        penalty = 12 - sdata(170, cc) / 5;
     }
-    if (i_at_m157 < 4)
+    if (penalty < 4)
     {
-        i_at_m157 = 4;
+        penalty = 4;
     }
     if (gdata_mount != 0)
     {
-        i_at_m157 += 4;
+        penalty += 4;
     }
-    if (prm_920 == 441)
+    if (id == 441) // Wish
     {
-        i_at_m157 += sdata(prm_920, prm_921);
+        penalty += sdata(id, cc);
     }
-    if (prm_920 == 464)
+    if (id == 464) // Harvest
     {
-        i_at_m157 += sdata(prm_920, prm_921) / 3;
+        penalty += sdata(id, cc) / 3;
     }
-    p_at_m157 = 90 + sdata(prm_920, prm_921)
-        - the_ability_db[prm_920].sdataref4 * i_at_m157
-            / (5 + sdata(172, prm_921) * 4);
-    if (f_at_m157 == 169)
+
+    int percentage = 90 + sdata(id, cc)
+        - the_ability_db[id].sdataref4 * penalty / (5 + sdata(172, cc) * 4);
+    if (armor_skill == 169)
     {
-        if (p_at_m157 > 80)
+        if (percentage > 80)
         {
-            p_at_m157 = 80;
+            percentage = 80;
         }
     }
-    else if (f_at_m157 == 170)
+    else if (armor_skill == 170)
     {
-        if (p_at_m157 > 92)
+        if (percentage > 92)
         {
-            p_at_m157 = 92;
+            percentage = 92;
         }
     }
-    else if (p_at_m157 > 100)
+    else if (percentage > 100)
     {
-        p_at_m157 = 100;
+        percentage = 100;
     }
-    if (cdata[prm_921].equipment_type & 4)
+    if (cdata[cc].equipment_type & 4)
     {
-        p_at_m157 -= 6;
+        percentage -= 6;
     }
-    if (cdata[prm_921].equipment_type & 1)
+    if (cdata[cc].equipment_type & 1)
     {
-        p_at_m157 -= 12;
+        percentage -= 12;
     }
-    if (p_at_m157 < 0)
+    if (percentage < 0)
     {
-        p_at_m157 = 0;
+        percentage = 0;
     }
-    return p_at_m157;
+    return percentage;
 }
 
 
 
-int calcspellcostmp(int prm_922, int prm_923)
+int calcspellcostmp(int id, int cc)
 {
     if (debug::voldemort)
-    {
         return 1;
-    }
 
-    int cost_at_m158 = 0;
-    if (prm_923 == 0)
+    if (cc == 0)
     {
-        if (prm_922 == 413 || prm_922 == 461 || prm_922 == 457 || prm_922 == 438
-            || prm_922 == 409 || prm_922 == 408 || prm_922 == 410
-            || prm_922 == 466)
+        if (id == 413 || id == 461 || id == 457 || id == 438 || id == 409
+            || id == 408 || id == 410 || id == 466)
         {
-            cost_at_m158 = the_ability_db[prm_922].cost;
-            return cost_at_m158;
+            return the_ability_db[id].cost;
         }
-        cost_at_m158 = the_ability_db[prm_922].cost
-                * (100 + sdata(prm_922, prm_923) * 3) / 100
-            + sdata(prm_922, prm_923) / 8;
+        else
+        {
+            return the_ability_db[id].cost * (100 + sdata(id, cc) * 3) / 100
+                + sdata(id, cc) / 8;
+        }
     }
     else
     {
-        cost_at_m158 = the_ability_db[prm_922].cost
-            * (50 + cdata[prm_923].level * 3) / 100;
+        return the_ability_db[id].cost * (50 + cdata[cc].level * 3) / 100;
     }
-    return cost_at_m158;
 }
 
 
 
-int calcspellcoststock(int prm_924, int prm_925)
+int calcspellcoststock(int id, int cc)
 {
-    int cost_at_m159 = 0;
-    cost_at_m159 = the_ability_db[prm_924].cost * 200
-        / (sdata(prm_924, prm_925) * 3 + 100);
-    if (cost_at_m159 < the_ability_db[prm_924].cost / 5)
+    if (debug::voldemort)
+        return 1;
+
+    int cost = the_ability_db[id].cost * 200 / (sdata(id, cc) * 3 + 100);
+    if (cost < the_ability_db[id].cost / 5)
     {
-        cost_at_m159 = the_ability_db[prm_924].cost / 5;
+        cost = the_ability_db[id].cost / 5;
     }
-    cost_at_m159 = rnd(cost_at_m159 / 2 + 1) + cost_at_m159 / 2;
-    if (cost_at_m159 < 1)
+    cost = rnd(cost / 2 + 1) + cost / 2;
+    if (cost < 1)
     {
-        cost_at_m159 = 1;
+        cost = 1;
     }
-    return cost_at_m159;
+    return cost;
 }
 
 
 
 int calcscore()
 {
-    p = cdata[0].level * cdata[0].level
+    int score = cdata[0].level * cdata[0].level
         + gdata_deepest_dungeon_level * gdata_deepest_dungeon_level
         + gdata_kill_count;
     if (gdata_death_count > 1)
     {
-        p = p / 10 + 1;
+        score = score / 10 + 1;
     }
     if (gdata_wizard)
     {
-        p = 0;
+        score = 0;
     }
-    return p;
+    return score;
 }
 
 
@@ -1847,33 +1743,29 @@ void calcpartyscore()
 
 void calcpartyscore2()
 {
-    p = 0;
+    int score{};
     for (int cnt = 57; cnt < 245; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {
             continue;
         }
-        if (cdata[cnt].impression >= 53)
+        if (cdata[cnt].impression >= 53 && cdata[cnt].quality >= 4)
         {
-            if (cdata[cnt].quality >= 4)
-            {
-                p += 20 + cdata[cnt].level / 2;
-                txt(lang(
-                    cdatan(0, cnt) + u8"は満足した。"s,
-                    cdatan(0, cnt) + u8" "s + is(cnt) + u8" satisfied."s));
-            }
+            score += 20 + cdata[cnt].level / 2;
+            txt(lang(
+                cdatan(0, cnt) + u8"は満足した。"s,
+                cdatan(0, cnt) + u8" "s + is(cnt) + u8" satisfied."s));
         }
     }
-    if (p != 0)
+    if (score != 0)
     {
         txt(lang(
-            u8"(合計ボーナス:"s + p + u8"%) "s,
-            u8"(Total Bonus:"s + p + u8"%)"s));
+            u8"(合計ボーナス:"s + score + u8"%) "s,
+            u8"(Total Bonus:"s + score + u8"%)"s));
     }
     qdata(13, gdata_executing_immediate_quest) =
-        qdata(13, gdata_executing_immediate_quest) * (100 + p) / 100;
-    return;
+        qdata(13, gdata_executing_immediate_quest) * (100 + score) / 100;
 }
 
 

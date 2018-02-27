@@ -241,7 +241,6 @@ int magic()
                             }
                             if (is_in_fov(tc))
                             {
-                                txtmore();
                                 if (tc >= 16)
                                 {
                                     gdata(809) = 2;
@@ -405,7 +404,6 @@ int magic()
                         {
                             dmg = roll(dice1, dice2, bonus) * 100
                                 / (75 + dist(tlocx, tlocy, dx, dy) * 25);
-                            txtmore();
                             int stat = calcmagiccontrol(cc, tc);
                             if (stat == 1)
                             {
@@ -415,7 +413,6 @@ int magic()
                             {
                                 if (is_in_fov(tc))
                                 {
-                                    txtmore();
                                     if (tc >= 16)
                                     {
                                         gdata(809) = 2;
@@ -444,7 +441,6 @@ int magic()
                             }
                             else if (is_in_fov(tc))
                             {
-                                txtmore();
                                 if (tc >= 16)
                                 {
                                     gdata(809) = 2;
@@ -508,7 +504,6 @@ int magic()
                 dmg = roll(dice1, dice2, bonus);
                 if (is_in_fov(tc))
                 {
-                    txtmore();
                     if (tc >= 16)
                     {
                         gdata(809) = 2;
@@ -599,7 +594,6 @@ int magic()
                                           std::to_string(efid),
                                           u8"name")
                                     + u8"."s));
-                            txtmore();
                         }
                         else
                         {
@@ -617,7 +611,6 @@ int magic()
                                           u8"_"s
                                               + cdata[cc]
                                                     .special_attack_type)));
-                            txtmore();
                         }
                     }
                 }
@@ -676,8 +669,7 @@ int magic()
                 if (efid == 660)
                 {
                     txt(lang(
-                        u8"「余分な機能は削除してしまえ」"s,
-                        cnvtalk(u8"Delete."s)));
+                        u8"「余分な機能は削除してしまえ」"s, u8"\"Delete.\""s));
                     cdata[tc].hp = cdata[tc].max_hp / 12 + 1;
                     goto the_end;
                 }
@@ -695,7 +687,6 @@ int magic()
                     cdata[tc].nutrition -= 800;
                     if (is_in_fov(tc))
                     {
-                        txtmore();
                         txtef(8);
                         txt(lang(
                             name(tc) + u8"はお腹が減った。"s,
@@ -724,7 +715,6 @@ int magic()
                         }
                         if (is_in_fov(tc))
                         {
-                            txtmore();
                             txtef(8);
                             txt(lang(
                                 name(tc) + u8"は弱くなった。"s,
@@ -972,7 +962,6 @@ int magic()
                         {
                             if (is_in_fov(cc))
                             {
-                                txtmore();
                                 txt(lang(
                                     name(tc) + u8"は引き寄せられた。"s,
                                     name(tc) + u8" "s + is(tc) + u8" drawn."s));
@@ -982,7 +971,6 @@ int magic()
                         {
                             if (efidprev == 635)
                             {
-                                txtmore();
                                 txt(lang(
                                     u8"泥棒は笑って逃げた。"s,
                                     u8"A thief escapes laughing."s));
@@ -1078,7 +1066,6 @@ int magic()
                             dmg = roll(dice1, dice2, bonus);
                             if (is_in_fov(tc))
                             {
-                                txtmore();
                                 if (tc >= 16)
                                 {
                                     gdata(809) = 2;
@@ -1345,7 +1332,7 @@ label_2181_internal:
                     txtef(9);
                     txt(lang(
                         u8"「ぺっぺっ、まずー」"s,
-                        cnvtalk(u8"Argh, the milk is cursed!"s)));
+                        u8"\"Argh, the milk is cursed!\""s));
                 }
             }
             else if (tc == 0)
@@ -1357,7 +1344,7 @@ label_2181_internal:
             else
             {
                 txtef(9);
-                txt(lang(u8"「うまー」"s, cnvtalk(u8"Yummy!"s)));
+                txt(lang(u8"「うまー」"s, u8"\"Yummy!\""s));
             }
         }
         if (efstatus >= 1)
@@ -1382,25 +1369,23 @@ label_2181_internal:
             if (efstatus <= -1)
             {
                 txtef(9);
-                txtmore();
                 txt(lang(u8"「うぃっ…」"s, u8"*Hic*"s),
-                    lang(u8"「まずいぜ」"s, cnvtalk(u8"Ah, bad booze."s)),
-                    lang(u8"「げー♪」"s, cnvtalk(u8"Ugh..."s)),
+                    lang(u8"「まずいぜ」"s, u8"\"Ah, bad booze.\""s),
+                    lang(u8"「げー♪」"s, u8"\"Ugh...\""s),
                     lang(
                         u8"「腐ったミルクみたいな味だ」"s,
-                        cnvtalk(u8"Bah, smells like rotten milk."s)));
+                        u8"\"Bah, smells like rotten milk.\""s));
             }
             else
             {
                 txtef(9);
-                txtmore();
                 txt(lang(u8"「うぃっ！」"s, u8"*Hic*"s),
-                    lang(u8"「うまいぜ」"s, cnvtalk(u8"Ah, good booze."s)),
-                    lang(u8"「らららー♪」"s, cnvtalk(u8"La-la-la-la."s)),
-                    lang(u8"「ひっく」"s, cnvtalk(u8"I'm going to heaven."s)),
-                    lang(u8"「ふぅ」"s, cnvtalk(u8"Whew!"s)),
-                    lang(u8"「たまらないわ」"s, cnvtalk(u8"I'm revived!"s)),
-                    lang(u8"「んまっ♪」"s, cnvtalk(u8"Awesome."s)));
+                    lang(u8"「うまいぜ」"s, u8"\"Ah, good booze.\""s),
+                    lang(u8"「らららー♪」"s, u8"\"La-la-la-la.\""s),
+                    lang(u8"「ひっく」"s, u8"\"I'm going to heaven.\""s),
+                    lang(u8"「ふぅ」"s, u8"\"Whew!\""s),
+                    lang(u8"「たまらないわ」"s, u8"\"I'm revived!\""s),
+                    lang(u8"「んまっ♪」"s, u8"\"Awesome.\""s));
             }
         }
         dmgcon(tc, 8, efp);
@@ -1474,7 +1459,6 @@ label_2181_internal:
             if (is_in_fov(tc))
             {
                 txtef(3);
-                txtmore();
                 txt(lang(
                     u8"塩だ！"s + name(tc) + u8"は溶けはじめた！"s,
                     u8"It's salt! "s + name(tc) + u8" start"s + _s(tc)
@@ -1492,8 +1476,7 @@ label_2181_internal:
         else if (is_in_fov(tc))
         {
             txtef(9);
-            txtmore();
-            txt(lang(u8"「しょっぱ〜」"s, cnvtalk(u8"Salty!"s)));
+            txt(lang(u8"「しょっぱ〜」"s, u8"\"Salty!\""s));
         }
         break;
     case 1130:
@@ -1589,13 +1572,10 @@ label_2181_internal:
                 }
                 if (en)
                 {
-                    txt(name(gdata_mount) + u8" "s + cnvtalk(u8"Phew."s),
-                        name(gdata_mount) + u8" "s
-                            + cnvtalk(u8"How was my ride?"s),
-                        name(gdata_mount) + u8" "s
-                            + cnvtalk(u8"Tired...tired..."s),
-                        name(gdata_mount) + u8" "s
-                            + cnvtalk(u8"It was nice."s));
+                    txt(name(gdata_mount) + u8" "s + u8"\"Phew.\""s,
+                        name(gdata_mount) + u8" "s + u8"\"How was my ride?\""s,
+                        name(gdata_mount) + u8" "s + u8"\"Tired...tired...\""s,
+                        name(gdata_mount) + u8" "s + u8"\"It was nice.\""s);
                 }
                 ride_end();
                 break;
@@ -1653,11 +1633,11 @@ label_2181_internal:
             }
             if (en)
             {
-                txt(name(gdata_mount) + u8" "s + cnvtalk(u8"Awww."s),
+                txt(name(gdata_mount) + u8" "s + u8"\"Awww.\""s,
                     name(gdata_mount) + u8" "s
-                        + cnvtalk(u8"You should go on a diet."s),
-                    name(gdata_mount) + u8" "s + cnvtalk(u8"Let's roll!"s),
-                    name(gdata_mount) + u8" "s + cnvtalk(u8"Be gentle."s));
+                        + u8"\"You should go on a diet.\""s,
+                    name(gdata_mount) + u8" "s + u8"\"Let's roll!\""s,
+                    name(gdata_mount) + u8" "s + u8"\"Be gentle.\""s);
             }
         }
         break;
@@ -1665,9 +1645,7 @@ label_2181_internal:
         if (cc != 0)
         {
             f = 0;
-            inv_getheader(cc);
-            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-                 ++cnt)
+            for (const auto& cnt : items(cc))
             {
                 if (inv[cnt].number == 0)
                 {
@@ -1761,7 +1739,7 @@ label_2181_internal:
                 u8"釣りの仕方を知らない。"s, u8"You don't know how to fish."s));
             return 0;
         }
-        if (inv_getspace() == 0)
+        if (!inv_getspace(0))
         {
             txt(lang(
                 u8"バックパックが一杯だ。"s, u8"Your inventory is full."s));
@@ -1945,7 +1923,6 @@ label_2181_internal:
              cnt < cnt_end;
              ++cnt)
         {
-            txtmore();
             atxspot = 19;
             if (efstatus >= 0)
             {
@@ -1967,8 +1944,7 @@ label_2181_internal:
         }
         if (efid == 632)
         {
-            txtmore();
-            txt_check(0);
+            txt_check();
             txt(lang(
                 name(cc) + u8"は"s + name(tc)
                     + u8"を気の狂いそうな眼差しで見た。"s,
@@ -1978,7 +1954,6 @@ label_2181_internal:
             {
                 break;
             }
-            txtmore();
         }
         if (tc != 0)
         {
@@ -2206,7 +2181,7 @@ label_2181_internal:
             + lang(
                   u8"は復活した！"s,
                   (u8" "s + have(rc) + u8" been resurrected!"s)));
-        txt(lang(u8"「ありがとう！」"s, cnvtalk(u8"Thanks!"s)));
+        txt(lang(u8"「ありがとう！」"s, u8"\"Thanks!\""s));
         animode = 100 + rc;
         play_animation(19);
         snd(120);
@@ -2251,11 +2226,9 @@ label_2181_internal:
             }
             goto label_2183_internal;
         }
-        inv_getheader(tc);
         p(1) = 0;
         p(2) = 0;
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(tc))
         {
             if (inv[cnt].number == 0)
             {
@@ -3191,10 +3164,9 @@ label_2181_internal:
         }
         if (i == 0)
         {
-            inv_getheader(tc);
             for (int cnt = 0; cnt < 200; ++cnt)
             {
-                p = invhead + rnd(invrange);
+                p = get_random_inv(tc);
                 if (inv[p].number == 0)
                 {
                     continue;
@@ -4365,7 +4337,6 @@ label_2181_internal:
                     name(cc) + u8"は"s + name(tc) + u8"を罵倒した。"s,
                     name(cc) + u8" insult"s + _s(cc) + u8" "s + name(tc)
                         + u8"."s));
-                txtmore();
                 txtef(9);
                 if (jp)
                 {
@@ -4399,21 +4370,19 @@ label_2181_internal:
                 }
                 else if (rnd(2))
                 {
-                    txt(cnvtalk(u8"You suck!"s),
-                        cnvtalk(u8"You will die alone."s),
-                        cnvtalk(u8"Bow down before me."s),
-                        cnvtalk(u8"Go jump off a bridge."s),
-                        cnvtalk(u8"Bang your head against the wall!"s),
-                        cnvtalk(u8"Why do you sniff under your dog's tail?"s));
+                    txt(u8"\"You suck!\""s,
+                        u8"\"You will die alone.\""s,
+                        u8"\"Bow down before me.\""s,
+                        u8"\"Go jump off a bridge.\""s,
+                        u8"\"Bang your head against the wall!\""s,
+                        u8"\"Why do you sniff under your dog's tail?\""s);
                 }
                 else
                 {
-                    txt(cnvtalk(
-                            u8"The world is against you because you are a unsavory decomposing virus."s),
-                        cnvtalk(
-                            u8"You are no better than a immoral guzzling bureaucrat."s),
-                        cnvtalk(u8"You are so lowly."s),
-                        cnvtalk(u8"Get off me."s));
+                    txt(u8"\"The world is against you because you are a unsavory decomposing virus.\""s,
+                        u8"\"You are no better than a immoral guzzling bureaucrat.\""s,
+                        u8"\"You are so lowly.\""s,
+                        u8"\"Get off me.\""s);
                 }
             }
         }
@@ -4454,9 +4423,7 @@ label_2181_internal:
                     + u8" backpack."s));
         }
         p = -1;
-        inv_getheader(tc);
-        for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-             ++cnt)
+        for (const auto& cnt : items(tc))
         {
             if (inv[cnt].number == 0)
             {
@@ -4470,9 +4437,7 @@ label_2181_internal:
         }
         if (p == -1)
         {
-            inv_getheader(tc);
-            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-                 ++cnt)
+            for (const auto& cnt : items(tc))
             {
                 if (inv[cnt].number == 0)
                 {
@@ -4570,9 +4535,7 @@ label_2181_internal:
         }
         else
         {
-            inv_getheader(-1);
-            for (int cnt = invhead, cnt_end = cnt + (invrange); cnt < cnt_end;
-                 ++cnt)
+            for (const auto& cnt : items(-1))
             {
                 inv[cnt].number = 0;
             }

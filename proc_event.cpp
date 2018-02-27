@@ -98,7 +98,7 @@ void proc_event()
         txt(lang(
             u8"ビッグダディの肩から、リトルシスターが滑り落ちた。「Mr Bubbles！！」"s,
             u8"The little sister slips from Big Daddy's shoulder, "s
-                + cnvtalk(u8"Mr.Bubbles!"s)));
+                + u8"\"Mr.Bubbles!\""s));
         break;
     case 28:
         txtef(5);
@@ -225,7 +225,6 @@ void proc_event()
         tc = rc;
         adata(20, gdata_current_map) = tc;
         txtef(3);
-        txtmore();
         txt(lang(
             u8"気をつけろ！この階は"s + mapname(gdata_current_map)
                 + u8"の守護者、"s + cdatan(0, tc) + u8"によって守られている。"s,
@@ -258,7 +257,6 @@ void proc_event()
             u8"どうやら最深層まで辿り着いたらしい…"s,
             u8"It seems you have reached the deepest level of this dungeon."s));
         txtef(3);
-        txtmore();
         txt(lang(
             u8"気をつけろ！この階は"s + mapname(gdata_current_map)
                 + u8"の守護者、"s + cdatan(0, tc) + u8"によって守られている。"s,
@@ -293,14 +291,12 @@ void proc_event()
         txt(lang(
             u8"クエストを達成した！"s, u8"You have completed the quest!"s));
         snd(51);
-        txtmore();
         txt(lang(
             u8"何かが足元に転がってきた。"s,
             u8"Something is put on the ground."s));
         modrank(2, 300, 8);
         gdata(74) = calcfame(0, gdata_current_dungeon_level * 30 + 200);
         txtef(2);
-        txtmore();
         txt(lang(
             ""s + gdata(74) + u8"の名声値を手に入れた。"s,
             u8"You gain "s + gdata(74) + u8" fame."s));
@@ -347,7 +343,6 @@ void proc_event()
             {
                 if (sdata(i, 0) != 0 && rnd(3) == 0)
                 {
-                    txtmore();
                     skillexp(i, 0, -500);
                 }
             }
@@ -366,7 +361,6 @@ void proc_event()
         {
             modcorrupt(-2000);
         }
-        txtmore();
         txt(lang(u8"金貨を幾らか失った…"s, u8"You lost some money."s));
         cdata[0].gold -= cdata[0].gold / 3;
         decfame(0, 10);
@@ -393,8 +387,7 @@ void proc_event()
             {
                 txtef(4);
                 txt(lang(
-                    u8"パエル「おかあさんーー！！」"s,
-                    cnvtalk(u8"M-mom...!!"s)));
+                    u8"パエル「おかあさんーー！！」"s, u8"\"M-mom...!!\""s));
                 cdata[tc].relationship = -3;
                 cdata[tc].hate = 1000;
                 cdata[tc].enemy_id = 0;
@@ -549,10 +542,9 @@ void proc_event()
                     continue;
                 }
             }
-            inv_getheader(-1);
             p(0) = 0;
             p(1) = 6;
-            for (int ci = invhead; ci < invhead + invrange; ++ci)
+            for (const auto& ci : items(-1))
             {
                 if (inv[ci].number == 0)
                     continue;
@@ -629,7 +621,7 @@ void proc_event()
                 txt(lang(
                     name(cc) + u8"「目が！目がー！！」"s,
                     name(cc) + u8" shout"s + _s(cc) + u8" "s
-                        + cnvtalk(u8"Eyes! My eyes!"s)));
+                        + u8"\"Eyes! My eyes!\""s));
             }
         }
         break;
@@ -667,11 +659,11 @@ void proc_event()
             }
             if (en)
             {
-                txt(cnvtalk(u8"Welcome home!"s),
-                    cnvtalk(u8"Hey, dear."s),
-                    cnvtalk(u8"You're back!"s),
-                    cnvtalk(u8"I was waiting for you."s),
-                    cnvtalk(u8"Nice to see you again."s));
+                txt(u8"\"Welcome home!\""s,
+                    u8"\"Hey, dear.\""s,
+                    u8"\"You're back!\""s,
+                    u8"\"I was waiting for you.\""s,
+                    u8"\"Nice to see you again.\""s);
             }
         }
         if (gdata_number_of_waiting_guests != 0)
