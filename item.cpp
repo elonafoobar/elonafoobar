@@ -566,17 +566,17 @@ bool inv_getspace(int owner)
 
 
 
-int inv_sum(int prm_504)
+int inv_sum(int owner)
 {
-    p_at_m57 = 0;
-    for (const auto& cnt : items(prm_504))
+    int n{};
+    for (const auto& cnt : items(owner))
     {
         if (inv[cnt].number != 0)
         {
-            ++p_at_m57;
+            ++n;
         }
     }
-    return p_at_m57;
+    return n;
 }
 
 
