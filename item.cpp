@@ -307,22 +307,21 @@ bool encfindspec(int ci, int id)
 
 
 
-void itemlist(int prm_483, int prm_484)
+std::vector<int> itemlist(int owner, int id)
 {
-    listmax = 0;
-    for (const auto& cnt : items(prm_483))
+    std::vector<int> ret;
+    for (const auto& cnt : items(owner))
     {
         if (inv[cnt].number == 0)
         {
             continue;
         }
-        if (inv[cnt].id == prm_484)
+        if (inv[cnt].id == id)
         {
-            list(0, listmax) = cnt;
-            ++listmax;
+            ret.push_back(cnt);
         }
     }
-    return;
+    return ret;
 }
 
 

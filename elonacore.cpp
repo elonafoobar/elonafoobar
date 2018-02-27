@@ -69262,13 +69262,10 @@ label_2692_internal:
                             }
                             if (rnd(12) == 0)
                             {
-                                itemlist(-1, 541);
-                                f = 0;
-                                for (int cnt = 0, cnt_end = (listmax);
-                                     cnt < cnt_end;
-                                     ++cnt)
+                                bool found_snowman{};
+                                for (const auto& cnt : itemlist(-1, 541))
                                 {
-                                    ti = list(0, cnt);
+                                    ti = cnt;
                                     if (inv[ti].position.x >= scx
                                         && inv[ti].position.x
                                             < scx + inf_screenw
@@ -69276,18 +69273,18 @@ label_2692_internal:
                                         && inv[ti].position.y
                                             < scy + inf_screenh)
                                     {
-                                        f = 1;
+                                        found_snowman = true;
                                         break;
                                     }
                                 }
-                                tlocx = inv[ti].position.x;
-                                tlocy = inv[ti].position.y;
-                                if (f == 1)
+                                if (found_snowman)
                                 {
                                     flt();
                                     int stat = itemcreate(cc, 587, -1, -1, 0);
                                     if (stat == 1)
                                     {
+                                        tlocx = inv[ti].position.x;
+                                        tlocy = inv[ti].position.y;
                                         do_throw_command();
                                         return;
                                     }

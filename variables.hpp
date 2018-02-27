@@ -967,7 +967,7 @@ void item_copy(int = 0, int = 0);
 void item_delete(int = 0);
 void item_exchange(int = 0, int = 0);
 void item_num(int = 0, int = 0);
-void itemlist(int = 0, int = 0);
+std::vector<int> itemlist(int, int);
 void itemturn(int = 0);
 void key_check(int = 0);
 void keyrelease();
