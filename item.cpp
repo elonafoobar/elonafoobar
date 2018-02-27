@@ -89,9 +89,9 @@ void ibitmod(size_t type, int ci, int on)
 int f_at_m53 = 0;
 int f_at_m54 = 0;
 elona_vector1<int> p_at_m57;
-std::string s_at_m63;
-int a_at_m63 = 0;
-int skip_at_m63 = 0;
+std::string s_;
+int a_ = 0;
+int skip_ = 0;
 
 
 int itemcreate(int slot, int id, int x, int y, int number)
@@ -835,13 +835,13 @@ void itemname_additional_info()
 {
     if (inv[prm_518].id == 578)
     {
-        s_at_m63 += lang(
+        s_ += lang(
             ""s + moneyboxn(inv[prm_518].param2),
             u8"("s + moneyboxn(inv[prm_518].param2) + u8")"s);
     }
     if (inv[prm_518].id == 617)
     {
-        s_at_m63 += lang(
+        s_ += lang(
             ""s + biten(inv[prm_518].param1),
             u8" <"s + biten(inv[prm_518].param1) + u8">"s);
     }
@@ -851,12 +851,12 @@ void itemname_additional_info()
         {
             if (inv[prm_518].param2 != 0)
             {
-                s_at_m63 += u8"解読済みの"s;
+                s_ += u8"解読済みの"s;
             }
         }
         if (inv[prm_518].identification_state >= 3)
         {
-            s_at_m63 += lang(
+            s_ += lang(
                 u8"《"s + magebookn(inv[prm_518].param1) + u8"》という題名の"s,
                 u8" titled <"s + magebookn(inv[prm_518].param1) + u8">"s);
         }
@@ -865,25 +865,25 @@ void itemname_additional_info()
     {
         if (inv[prm_518].param1 == 0)
         {
-            s_at_m63 +=
+            s_ +=
                 lang(u8"もう使えない"s, u8" which cannot be used anymore"s);
         }
         else if (inv[prm_518].subname == 0)
         {
-            s_at_m63 += lang(u8"カスタム"s, ""s);
+            s_ += lang(u8"カスタム"s, ""s);
         }
         else
         {
-            s_at_m63 += lang(
+            s_ += lang(
                 u8"《"s + rpname(inv[prm_518].subname) + u8"》の"s,
                 u8" of <"s + rpname(inv[prm_518].subname) + u8">"s);
         }
     }
-    if (a_at_m63 == 55000)
+    if (a_ == 55000)
     {
         if (inv[prm_518].id == 563)
         {
-            s_at_m63 += lang(
+            s_ += lang(
                 u8"《"s
                     + i18n::_(
                           u8"ability",
@@ -899,21 +899,21 @@ void itemname_additional_info()
         }
         else if (inv[prm_518].id == 668)
         {
-            s_at_m63 += lang(u8"第"s, u8" of Rachel No."s) + inv[prm_518].param2
+            s_ += lang(u8"第"s, u8" of Rachel No."s) + inv[prm_518].param2
                 + lang(u8"巻目の"s, ""s);
         }
         else if (inv[prm_518].id == 24)
         {
-            s_at_m63 += lang(
+            s_ += lang(
                 u8"《"s + booktitle(inv[prm_518].param1) + u8"》という題名の"s,
                 u8" titled <"s + booktitle(inv[prm_518].param1) + u8">"s);
         }
     }
-    if (a_at_m63 == 60002)
+    if (a_ == 60002)
     {
         if (inv[prm_518].param1 != 0)
         {
-            s_at_m63 += lang(
+            s_ += lang(
                 i18n::_(
                     u8"god", core_god::int2godid(inv[prm_518].param1), u8"name")
                     + u8"の"s,
@@ -925,16 +925,16 @@ void itemname_additional_info()
                     + u8">"s);
         }
     }
-    if (a_at_m63 == 57000)
+    if (a_ == 57000)
     {
         if (inv[prm_518].param1 != 0)
         {
             if (inv[prm_518].param2 != 0)
             {
-                skip_at_m63 = 1;
+                skip_ = 1;
                 if (inv[prm_518].id == 618)
                 {
-                    s_at_m63 = s_at_m63
+                    s_ = s_
                         + foodname(inv[prm_518].param1 / 1000,
                                    (""s + fishdatan(inv[prm_518].subname)),
                                    inv[prm_518].param2,
@@ -942,7 +942,7 @@ void itemname_additional_info()
                 }
                 else
                 {
-                    s_at_m63 = s_at_m63
+                    s_ = s_
                         + foodname(inv[prm_518].param1 / 1000,
                                    ioriginalnameref(inv[prm_518].id),
                                    inv[prm_518].param2,
@@ -953,7 +953,7 @@ void itemname_additional_info()
         }
         if (inv[prm_518].own_state == 4)
         {
-            s_at_m63 += lang(""s, u8" grown "s)
+            s_ += lang(""s, u8" grown "s)
                 + i18n::_(u8"ui", u8"weight", u8"_"s + inv[prm_518].subname)
                 + lang(u8"育った"s, ""s);
         }
@@ -964,32 +964,32 @@ void itemname_additional_info()
         {
             if (inv[prm_518].subname < 0 || inv[prm_518].subname >= 100)
             {
-                s_at_m63 += u8"/bugged/"s;
+                s_ += u8"/bugged/"s;
                 return;
             }
-            s_at_m63 += ""s + fishdatan(inv[prm_518].subname);
+            s_ += ""s + fishdatan(inv[prm_518].subname);
         }
         else if (
-            a_at_m63 == 57000 || a_at_m63 == 62000 || inv[prm_518].id == 503
+            a_ == 57000 || a_ == 62000 || inv[prm_518].id == 503
             || inv[prm_518].id == 504 || inv[prm_518].id == 575
             || inv[prm_518].id == 574)
         {
             if (inv[prm_518].subname < 0 || inv[prm_518].subname >= 800)
             {
-                s_at_m63 += u8"/bugged/"s;
+                s_ += u8"/bugged/"s;
                 return;
             }
             if (inv[prm_518].own_state != 4)
             {
-                s_at_m63 += lang(""s, u8" of "s)
+                s_ += lang(""s, u8" of "s)
                     + refchara_str(inv[prm_518].subname, 2);
                 if (jp)
                 {
-                    s_at_m63 += u8"の"s;
+                    s_ += u8"の"s;
                 }
             }
         }
-        if (a_at_m63 == 60000)
+        if (a_ == 60000)
         {
             if (jp)
             {
@@ -999,20 +999,20 @@ void itemname_additional_info()
                 }
                 else
                 {
-                    s_at_m63 += i18n::_(
+                    s_ += i18n::_(
                         u8"ui", u8"furniture", u8"_"s + inv[prm_518].subname);
                 }
             }
         }
         if (inv[prm_518].id == 344)
         {
-            s_at_m63 += lang(""s, u8" of "s)
+            s_ += lang(""s, u8" of "s)
                 + i18n::_(u8"ui", u8"home", u8"_"s + inv[prm_518].param1)
                 + lang(u8"の"s, ""s);
         }
         if (inv[prm_518].id == 615)
         {
-            s_at_m63 += lang(
+            s_ += lang(
                 ""s + inv[prm_518].subname + u8"goldの"s,
                 u8" <"s + inv[prm_518].subname + u8" gp>"s);
         }
@@ -1020,10 +1020,10 @@ void itemname_additional_info()
         {
             if (inv[prm_518].subname < 0 || inv[prm_518].subname >= 800)
             {
-                s_at_m63 += u8"/bugged/"s;
+                s_ += u8"/bugged/"s;
                 return;
             }
-            s_at_m63 += lang(
+            s_ += lang(
                 ""s + refchara_str(inv[prm_518].subname, 2) + u8"の"s,
                 u8" of "s + refchara_str(inv[prm_518].subname, 2));
         }
@@ -1032,27 +1032,27 @@ void itemname_additional_info()
     {
         if (inv[prm_518].param1 == 169)
         {
-            s_at_m63 += lang(u8"善人の"s, u8" of saint"s);
+            s_ += lang(u8"善人の"s, u8" of saint"s);
         }
         if (inv[prm_518].param1 == 162)
         {
-            s_at_m63 += lang(u8"悪人の"s, u8" of wicked"s);
+            s_ += lang(u8"悪人の"s, u8" of wicked"s);
         }
         if (inv[prm_518].param1 == 163)
         {
-            s_at_m63 += lang(u8"エヘカトルの"s, u8" of Ehekatl"s);
+            s_ += lang(u8"エヘカトルの"s, u8" of Ehekatl"s);
         }
         if (inv[prm_518].param1 == 164)
         {
-            s_at_m63 += lang(u8"オパートスの"s, u8" of Opatos"s);
+            s_ += lang(u8"オパートスの"s, u8" of Opatos"s);
         }
         if (inv[prm_518].param1 == 165)
         {
-            s_at_m63 += lang(u8"イツパロトルの"s, u8" of Itzpalt"s);
+            s_ += lang(u8"イツパロトルの"s, u8" of Itzpalt"s);
         }
         if (inv[prm_518].param1 == 166)
         {
-            s_at_m63 += lang(u8"ジュアの"s, u8" of Jure"s);
+            s_ += lang(u8"ジュアの"s, u8" of Jure"s);
         }
     }
     return;
@@ -1062,14 +1062,14 @@ void itemname_additional_info()
 
 std::string itemname(int prm_518, int prm_519, int prm_520)
 {
-    elona_vector1<int> iqiality_at_m63;
-    int num2_at_m63 = 0;
-    std::string s2_at_m63;
-    std::string s3_at_m63;
-    int alpha_at_m63 = 0;
-    std::string s4_at_m63;
-    int len_at_m63 = 0;
-    elona_vector1<std::string> buf_at_m63;
+    elona_vector1<int> iqiality_;
+    int num2_ = 0;
+    std::string s2_;
+    std::string s3_;
+    int alpha_ = 0;
+    std::string s4_;
+    int len_ = 0;
+    elona_vector1<std::string> buf_;
     elona::prm_518 = prm_518;
     if (inv[prm_518].id >= maxitemid - 2
         || size_t(inv[prm_518].id) > length(ioriginalnameref))
@@ -1080,300 +1080,267 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     }
     if (inv[prm_518].quality >= 5)
     {
-        iqiality_at_m63(prm_518) = 5;
+        iqiality_(prm_518) = 5;
     }
     item_checkknown(prm_518);
     if (prm_519 == 0)
     {
-        num2_at_m63 = inv[prm_518].number;
+        num2_ = inv[prm_518].number;
     }
     else
     {
-        num2_at_m63 = prm_519;
+        num2_ = prm_519;
     }
-    a_at_m63 = the_item_db[inv[prm_518].id]->category;
+    a_ = the_item_db[inv[prm_518].id]->category;
     if (jp)
     {
-        if (num2_at_m63 > 1)
+        if (num2_ > 1)
         {
-            s2_at_m63 = u8"個の"s;
-            if (a_at_m63 == 16000)
+            s2_ = u8"個の"s;
+            if (a_ == 16000)
             {
-                s2_at_m63 = u8"着の"s;
+                s2_ = u8"着の"s;
             }
-            if (a_at_m63 == 54000 || a_at_m63 == 55000)
+            if (a_ == 54000 || a_ == 55000)
             {
                 if (inv[prm_518].id == 783)
                 {
-                    s2_at_m63 = u8"枚の"s;
+                    s2_ = u8"枚の"s;
                 }
                 else
                 {
-                    s2_at_m63 = u8"冊の"s;
+                    s2_ = u8"冊の"s;
                 }
             }
-            if (a_at_m63 == 10000)
+            if (a_ == 10000)
             {
-                s2_at_m63 = u8"本の"s;
+                s2_ = u8"本の"s;
             }
-            if (a_at_m63 == 52000)
+            if (a_ == 52000)
             {
-                s2_at_m63 = u8"服の"s;
+                s2_ = u8"服の"s;
             }
-            if (a_at_m63 == 53000)
+            if (a_ == 53000)
             {
-                s2_at_m63 = u8"巻の"s;
+                s2_ = u8"巻の"s;
             }
-            if (a_at_m63 == 22000 || a_at_m63 == 18000)
+            if (a_ == 22000 || a_ == 18000)
             {
-                s2_at_m63 = u8"対の"s;
+                s2_ = u8"対の"s;
             }
-            if (a_at_m63 == 68000 || a_at_m63 == 69000 || inv[prm_518].id == 622
+            if (a_ == 68000 || a_ == 69000 || inv[prm_518].id == 622
                 || inv[prm_518].id == 724 || inv[prm_518].id == 730)
             {
-                s2_at_m63 = u8"枚の"s;
+                s2_ = u8"枚の"s;
             }
             if (inv[prm_518].id == 618)
             {
-                s2_at_m63 = u8"匹の"s;
+                s2_ = u8"匹の"s;
             }
-            s_at_m63 = ""s + num2_at_m63 + s2_at_m63;
+            s_ = ""s + num2_ + s2_;
         }
         else
         {
-            s_at_m63 = "";
+            s_ = "";
         }
         if (inv[prm_518].identification_state >= 3)
         {
             if (inv[prm_518].curse_state == 1)
             {
-                s_at_m63 += i18n::_(u8"ui", u8"blessed");
+                s_ += i18n::_(u8"ui", u8"blessed");
             }
             if (inv[prm_518].curse_state == -1)
             {
-                s_at_m63 += i18n::_(u8"ui", u8"cursed");
+                s_ += i18n::_(u8"ui", u8"cursed");
             }
             if (inv[prm_518].curse_state == -2)
             {
-                s_at_m63 += i18n::_(u8"ui", u8"doomed");
+                s_ += i18n::_(u8"ui", u8"doomed");
             }
         }
     }
     else
     {
-        s_at_m63 = "";
+        s_ = "";
         if (inv[prm_518].identification_state >= 3)
         {
             if (inv[prm_518].curse_state == 1)
             {
-                s_at_m63 = i18n::_(u8"ui", u8"blessed") + u8" "s;
+                s_ = i18n::_(u8"ui", u8"blessed") + u8" "s;
             }
             if (inv[prm_518].curse_state == -1)
             {
-                s_at_m63 = i18n::_(u8"ui", u8"cursed") + u8" "s;
+                s_ = i18n::_(u8"ui", u8"cursed") + u8" "s;
             }
             if (inv[prm_518].curse_state == -2)
             {
-                s_at_m63 = i18n::_(u8"ui", u8"doomed") + u8" "s;
+                s_ = i18n::_(u8"ui", u8"doomed") + u8" "s;
             }
         }
         if (irandomname(inv[prm_518].id) == 1
             && inv[prm_518].identification_state < 1)
         {
-            s2_at_m63 = "";
+            s2_ = "";
         }
         else
         {
-            s2_at_m63 = ""s + ioriginalnameref2(inv[prm_518].id);
+            s2_ = ""s + ioriginalnameref2(inv[prm_518].id);
             if (strutil::contains(ioriginalnameref(inv[prm_518].id), u8"with"))
             {
-                s3_at_m63 = u8"with"s;
+                s3_ = u8"with"s;
             }
             else
             {
-                s3_at_m63 = u8"of"s;
+                s3_ = u8"of"s;
             }
-            if (inv[prm_518].identification_state != 0)
+            if (inv[prm_518].identification_state != 0 && s2_ == ""s)
             {
-                if (s2_at_m63 == ""s)
+                if (inv[prm_518].weight < 0)
                 {
-                    if (inv[prm_518].weight < 0)
-                    {
-                        s2_at_m63 = u8"cargo"s;
-                    }
-                    if (a_at_m63 == 22000 || a_at_m63 == 18000)
-                    {
-                        s2_at_m63 = u8"pair"s;
-                    }
+                    s2_ = u8"cargo"s;
+                }
+                if (a_ == 22000 || a_ == 18000)
+                {
+                    s2_ = u8"pair"s;
                 }
             }
-            if (a_at_m63 == 57000)
+            if (a_ == 57000 && inv[prm_518].param1 != 0 && inv[prm_518].param2 != 0)
             {
-                if (inv[prm_518].param1 != 0)
-                {
-                    if (inv[prm_518].param2 != 0)
-                    {
-                        s2_at_m63 = u8"dish"s;
-                    }
-                }
+                s2_ = u8"dish"s;
             }
         }
-        if (s2_at_m63 != ""s)
+        if (s2_ != ""s)
         {
-            if (num2_at_m63 > 1)
+            if (num2_ > 1)
             {
-                s_at_m63 = ""s + num2_at_m63 + u8" "s + s_at_m63 + s2_at_m63
-                    + u8"s "s + s3_at_m63 + u8" "s;
+                s_ = ""s + num2_ + u8" "s + s_ + s2_
+                    + u8"s "s + s3_ + u8" "s;
             }
             else
             {
-                s_at_m63 = s_at_m63 + s2_at_m63 + u8" "s + s3_at_m63 + u8" "s;
+                s_ = s_ + s2_ + u8" "s + s3_ + u8" "s;
             }
         }
-        else if (num2_at_m63 > 1)
+        else if (num2_ > 1)
         {
-            s_at_m63 = ""s + num2_at_m63 + u8" "s + s_at_m63;
+            s_ = ""s + num2_ + u8" "s + s_;
         }
     }
-    if (inv[prm_518].material == 35)
+    if (inv[prm_518].material == 35 && inv[prm_518].param3 < 0)
     {
-        if (inv[prm_518].param3 < 0)
+        if (jp)
         {
-            if (jp)
-            {
-                s_at_m63 += u8"腐った"s;
-            }
-            else
-            {
-                s_at_m63 += u8"rotten "s;
-            }
+            s_ += u8"腐った"s;
+        }
+        else
+        {
+            s_ += u8"rotten "s;
         }
     }
     if (en)
     {
-        if (a_at_m63 == 57000)
+        if (a_ == 57000 && inv[prm_518].param1 != 0 && inv[prm_518].param2 != 0)
         {
-            if (inv[prm_518].param1 != 0)
+            skip_ = 1;
+        }
+        if (inv[prm_518].subname != 0 && a_ == 60000)
+        {
+            if (inv[prm_518].subname >= 12)
             {
-                if (inv[prm_518].param2 != 0)
-                {
-                    skip_at_m63 = 1;
-                }
+                inv[prm_518].subname = 0;
+            }
+            else
+            {
+                s_ += i18n::_(
+                                u8"ui",
+                                u8"furniture",
+                                u8"_"s + inv[prm_518].subname)
+                    + u8" "s;
             }
         }
-        if (inv[prm_518].subname != 0)
+        if (inv[prm_518].id == 687 && inv[prm_518].param2 != 0)
         {
-            if (a_at_m63 == 60000)
-            {
-                if (inv[prm_518].subname >= 12)
-                {
-                    inv[prm_518].subname = 0;
-                }
-                else
-                {
-                    s_at_m63 += i18n::_(
-                                    u8"ui",
-                                    u8"furniture",
-                                    u8"_"s + inv[prm_518].subname)
-                        + u8" "s;
-                }
-            }
+            s_ += u8"undecoded "s;
         }
-        if (inv[prm_518].id == 687)
+        if (inv[prm_518].id == 783 && inv[prm_518].subname == 0)
         {
-            if (inv[prm_518].param2 != 0)
-            {
-                s_at_m63 += u8"undecoded "s;
-            }
-        }
-        if (inv[prm_518].id == 783)
-        {
-            if (inv[prm_518].subname == 0)
-            {
-                s_at_m63 += u8"custom "s;
-            }
+            s_ += u8"custom "s;
         }
     }
     if (inv[prm_518].id == 630)
     {
-        s_at_m63 +=
+        s_ +=
             ""s + mtname(0, inv[prm_518].material) + lang(u8"製の"s, u8" "s);
     }
     if (jp)
     {
         itemname_additional_info();
     }
-    if (a_at_m63 == 60000)
+    if (a_ == 60000 && inv[prm_518].material != 0)
     {
-        if (inv[prm_518].material != 0)
+        if (jp)
         {
-            if (jp)
-            {
-                s_at_m63 +=
-                    ""s + mtname(0, inv[prm_518].material) + u8"細工の"s;
-            }
-            else
-            {
-                s_at_m63 += ""s + mtname(0, inv[prm_518].material) + u8"work "s;
-            }
+            s_ +=
+                ""s + mtname(0, inv[prm_518].material) + u8"細工の"s;
+        }
+        else
+        {
+            s_ += ""s + mtname(0, inv[prm_518].material) + u8"work "s;
         }
     }
     if (inv[prm_518].id == 729)
     {
-        s_at_m63 += ""s + giftn(inv[prm_518].param4) + lang(""s, u8" "s);
+        s_ += ""s + giftn(inv[prm_518].param4) + lang(""s, u8" "s);
     }
-    if (skip_at_m63 == 1)
+    if (skip_ == 1)
     {
         goto label_0313_internal;
     }
-    alpha_at_m63 = 0;
-    if (inv[prm_518].identification_state >= 3)
+    alpha_ = 0;
+    if (inv[prm_518].identification_state >= 3 && a_ < 50000)
     {
-        if (a_at_m63 < 50000)
+        if (ibit(15, prm_518))
         {
-            if (ibit(15, prm_518))
+            alpha_ = 1;
+            s_ += lang(u8"エターナルフォース"s, u8"eternal force"s)
+                + strblank;
+        }
+        else
+        {
+            if (inv[prm_518].subname >= 10000)
             {
-                alpha_at_m63 = 1;
-                s_at_m63 += lang(u8"エターナルフォース"s, u8"eternal force"s)
-                    + strblank;
-            }
-            else
-            {
-                if (inv[prm_518].subname >= 10000)
+                if (inv[prm_518].subname < 20000)
                 {
-                    if (inv[prm_518].subname < 20000)
+                    if (jp)
                     {
-                        if (jp)
-                        {
-                            s_at_m63 += egoname(inv[prm_518].subname - 10000)
-                                + strblank;
-                        }
-                    }
-                    else if (inv[prm_518].subname < 40000)
-                    {
-                        s_at_m63 +=
-                            egominorn(inv[prm_518].subname - 20000) + strblank;
+                        s_ += egoname(inv[prm_518].subname - 10000)
+                            + strblank;
                     }
                 }
-                if (inv[prm_518].quality != 6)
+                else if (inv[prm_518].subname < 40000)
                 {
-                    if (inv[prm_518].quality >= 4)
+                    s_ +=
+                        egominorn(inv[prm_518].subname - 20000) + strblank;
+                }
+            }
+            if (inv[prm_518].quality != 6)
+            {
+                if (inv[prm_518].quality >= 4)
+                {
+                    s_ += mtname(1, inv[prm_518].material) + strblank;
+                }
+                else
+                {
+                    s_ += mtname(0, inv[prm_518].material) + strblank;
+                    if (jp)
                     {
-                        s_at_m63 += mtname(1, inv[prm_518].material) + strblank;
-                    }
-                    else
-                    {
-                        s_at_m63 += mtname(0, inv[prm_518].material) + strblank;
-                        if (jp)
+                        if (/* TODO is_katakana */ false)
                         {
-                            if (/* TODO is_katakana */ false)
-                            {
-                                alpha_at_m63 = 1;
-                            }
-                            else
-                            {
-                                s_at_m63 += u8"の"s;
-                            }
+                            alpha_ = 1;
+                        }
+                        else
+                        {
+                            s_ += u8"の"s;
                         }
                     }
                 }
@@ -1382,72 +1349,60 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     }
     if (inv[prm_518].identification_state == 0)
     {
-        s_at_m63 += iknownnameref(inv[prm_518].id);
+        s_ += iknownnameref(inv[prm_518].id);
     }
     else if (inv[prm_518].identification_state < 3)
     {
-        if (inv[prm_518].quality < 4 || a_at_m63 >= 50000)
+        if (inv[prm_518].quality < 4 || a_ >= 50000)
         {
-            s_at_m63 += ioriginalnameref(inv[prm_518].id);
+            s_ += ioriginalnameref(inv[prm_518].id);
         }
         else
         {
-            s_at_m63 += iknownnameref(inv[prm_518].id);
+            s_ += iknownnameref(inv[prm_518].id);
         }
     }
     else if (inv[prm_518].quality == 6 || ibit(5, prm_518) == 1)
     {
         if (jp)
         {
-            s_at_m63 = u8"★"s + s_at_m63 + ioriginalnameref(inv[prm_518].id);
+            s_ = u8"★"s + s_ + ioriginalnameref(inv[prm_518].id);
         }
         else
         {
-            s_at_m63 += ioriginalnameref(inv[prm_518].id);
+            s_ += ioriginalnameref(inv[prm_518].id);
         }
     }
     else
     {
-        if (inv[prm_518].quality >= 4)
+        if (inv[prm_518].quality >= 4 && jp)
         {
-            if (jp)
-            {
-                s_at_m63 = u8"☆"s + s_at_m63;
-            }
+            s_ = u8"☆"s + s_;
         }
-        if (alpha_at_m63 == 1 && jp)
+        if (alpha_ == 1 && jp)
         {
-            s_at_m63 += ialphanameref(inv[prm_518].id);
+            s_ += ialphanameref(inv[prm_518].id);
         }
         else
         {
-            s_at_m63 += ioriginalnameref(inv[prm_518].id);
+            s_ += ioriginalnameref(inv[prm_518].id);
         }
-        if (en)
+        if (en && a_ < 50000 && inv[prm_518].subname >= 10000 && inv[prm_518].subname < 20000)
         {
-            if (a_at_m63 < 50000)
-            {
-                if (inv[prm_518].subname >= 10000)
-                {
-                    if (inv[prm_518].subname < 20000)
-                    {
-                        s_at_m63 +=
-                            u8" "s + egoname((inv[prm_518].subname - 10000));
-                    }
-                }
-            }
+            s_ +=
+                u8" "s + egoname((inv[prm_518].subname - 10000));
         }
         if (inv[prm_518].subname >= 40000)
         {
             randomize(inv[prm_518].subname - 40000);
             if (inv[prm_518].quality == 4)
             {
-                s_at_m63 += lang(u8"『"s, u8" <"s) + random_title(1)
+                s_ += lang(u8"『"s, u8" <"s) + random_title(1)
                     + lang(u8"』"s, u8">"s);
             }
             else
             {
-                s_at_m63 += lang(u8"《"s, u8" {"s) + random_title(1)
+                s_ += lang(u8"《"s, u8" {"s) + random_title(1)
                     + lang(u8"》"s, u8"}"s);
             }
             randomize();
@@ -1459,34 +1414,28 @@ label_0313_internal:
         if (prm_520 == 0)
         {
             if (inv[prm_518].identification_state >= 3
-                && (inv[prm_518].quality >= 4 && a_at_m63 < 50000))
+                && (inv[prm_518].quality >= 4 && a_ < 50000))
             {
-                s_at_m63 = u8"the "s + s_at_m63;
+                s_ = u8"the "s + s_;
             }
-            else if (num2_at_m63 == 1)
+            else if (num2_ == 1)
             {
-                s4_at_m63 = strmid(s_at_m63, 0, 1);
-                if (s4_at_m63 == u8"a"s || s4_at_m63 == u8"o"s
-                    || s4_at_m63 == u8"i"s || s4_at_m63 == u8"u"s
-                    || s4_at_m63 == u8"e"s)
+                s4_ = strmid(s_, 0, 1);
+                if (s4_ == u8"a"s || s4_ == u8"o"s
+                    || s4_ == u8"i"s || s4_ == u8"u"s
+                    || s4_ == u8"e"s)
                 {
-                    s_at_m63 = u8"an "s + s_at_m63;
+                    s_ = u8"an "s + s_;
                 }
                 else
                 {
-                    s_at_m63 = u8"a "s + s_at_m63;
+                    s_ = u8"a "s + s_;
                 }
             }
         }
-        if (s2_at_m63 == ""s)
+        if (s2_ == ""s && inv[prm_518].id != 618 && num2_ > 1)
         {
-            if (inv[prm_518].id != 618)
-            {
-                if (num2_at_m63 > 1)
-                {
-                    s_at_m63 += u8"s"s;
-                }
-            }
+            s_ += u8"s"s;
         }
         itemname_additional_info();
     }
@@ -1494,184 +1443,166 @@ label_0313_internal:
     {
         if (inv[prm_518].enhancement != 0)
         {
-            s_at_m63 += ""s + cnvfix(inv[prm_518].enhancement) + u8" "s;
+            s_ += ""s + cnvfix(inv[prm_518].enhancement) + u8" "s;
         }
         if (ibit(4, prm_518) == 1)
         {
-            s_at_m63 += lang(
+            s_ += lang(
                 u8"(残り"s + inv[prm_518].count + u8"回)"s,
                 u8"(Charges: "s + inv[prm_518].count + u8")"s);
         }
         if (inv[prm_518].dice_x != 0 || inv[prm_518].hit_bonus != 0
             || inv[prm_518].damage_bonus != 0)
         {
-            s_at_m63 += u8" ("s;
+            s_ += u8" ("s;
             if (inv[prm_518].dice_x != 0)
             {
-                s_at_m63 +=
+                s_ +=
                     ""s + inv[prm_518].dice_x + u8"d"s + inv[prm_518].dice_y;
                 if (inv[prm_518].damage_bonus != 0)
                 {
                     if (inv[prm_518].damage_bonus > 0)
                     {
-                        s_at_m63 += u8"+"s + inv[prm_518].damage_bonus;
+                        s_ += u8"+"s + inv[prm_518].damage_bonus;
                     }
                     else
                     {
-                        s_at_m63 += ""s + inv[prm_518].damage_bonus;
+                        s_ += ""s + inv[prm_518].damage_bonus;
                     }
                 }
-                s_at_m63 += u8")"s;
+                s_ += u8")"s;
                 if (inv[prm_518].hit_bonus != 0)
                 {
-                    s_at_m63 += u8"("s + inv[prm_518].hit_bonus + u8")"s;
+                    s_ += u8"("s + inv[prm_518].hit_bonus + u8")"s;
                 }
             }
             else
             {
-                s_at_m63 += ""s + inv[prm_518].hit_bonus + u8","s
+                s_ += ""s + inv[prm_518].hit_bonus + u8","s
                     + inv[prm_518].damage_bonus + u8")"s;
             }
         }
         if (inv[prm_518].dv != 0 || inv[prm_518].pv != 0)
         {
-            s_at_m63 +=
+            s_ +=
                 u8" ["s + inv[prm_518].dv + u8","s + inv[prm_518].pv + u8"]"s;
         }
     }
-    if (en)
+    if (en && (inv[prm_518].id == 284 || inv[prm_518].id == 283))
     {
-        if (inv[prm_518].id == 284 || inv[prm_518].id == 283)
-        {
-            s_at_m63 += u8"(Lost property)"s;
-        }
+        s_ += u8"(Lost property)"s;
     }
-    if (inv[prm_518].id == 342)
+    if (inv[prm_518].id == 342 && inv[prm_518].count != 0)
     {
-        if (inv[prm_518].count != 0)
-        {
-            s_at_m63 += lang(
-                u8"("s + biten(inv[prm_518].param4) + u8"残り"s
-                    + inv[prm_518].count + u8"匹)"s,
-                u8"("s + inv[prm_518].count + u8" "s
-                    + biten(inv[prm_518].param4) + u8")"s);
-        }
+        s_ += lang(
+            u8"("s + biten(inv[prm_518].param4) + u8"残り"s
+                + inv[prm_518].count + u8"匹)"s,
+            u8"("s + inv[prm_518].count + u8" "s
+                + biten(inv[prm_518].param4) + u8")"s);
     }
     if (inv[prm_518].id == 685)
     {
         if (inv[prm_518].subname == 0)
         {
-            s_at_m63 += lang(u8" Lv"s, u8" Level "s) + inv[prm_518].param2
+            s_ += lang(u8" Lv"s, u8" Level "s) + inv[prm_518].param2
                 + lang(u8" (空)"s, u8"(Empty)"s);
         }
         else
         {
-            s_at_m63 +=
+            s_ +=
                 u8" ("s + refchara_str(inv[prm_518].subname, 2) + u8")"s;
         }
     }
     if (inv[prm_518].id == 734)
     {
-        s_at_m63 += lang(u8" Lv"s, u8" Level "s) + inv[prm_518].param2;
+        s_ += lang(u8" Lv"s, u8" Level "s) + inv[prm_518].param2;
     }
-    if (inv[prm_518].identification_state == 2)
+    if (inv[prm_518].identification_state == 2 && a_ < 50000)
     {
-        if (a_at_m63 < 50000)
+        s_ += u8" ("s
+            + cnven(i18n::_(
+                  u8"ui", u8"quality", u8"_"s + inv[prm_518].quality))
+            + u8")"s;
+        if (jp)
         {
-            s_at_m63 += u8" ("s
-                + cnven(i18n::_(
-                      u8"ui", u8"quality", u8"_"s + inv[prm_518].quality))
-                + u8")"s;
-            if (jp)
-            {
-                s_at_m63 +=
-                    u8"["s + mtname(0, inv[prm_518].material) + u8"製]"s;
-            }
-            else
-            {
-                s_at_m63 +=
-                    u8"["s + cnven(mtname(0, inv[prm_518].material)) + u8"]"s;
-            }
-            if (inv[prm_518].curse_state == -1)
-            {
-                s_at_m63 += lang(u8"(恐ろしい)"s, u8"(Scary)"s);
-            }
-            if (inv[prm_518].curse_state == -2)
-            {
-                s_at_m63 += lang(u8"(禍々しい)"s, u8"(Dreadful)"s);
-            }
+            s_ +=
+                u8"["s + mtname(0, inv[prm_518].material) + u8"製]"s;
+        }
+        else
+        {
+            s_ +=
+                u8"["s + cnven(mtname(0, inv[prm_518].material)) + u8"]"s;
+        }
+        if (inv[prm_518].curse_state == -1)
+        {
+            s_ += lang(u8"(恐ろしい)"s, u8"(Scary)"s);
+        }
+        if (inv[prm_518].curse_state == -2)
+        {
+            s_ += lang(u8"(禍々しい)"s, u8"(Dreadful)"s);
         }
     }
-    if (a_at_m63 == 72000)
+    if (a_ == 72000)
     {
         if (inv[prm_518].id == 361)
         {
-            s_at_m63 += lang(u8"(移動時消滅)"s, u8"(Temporal)"s);
+            s_ += lang(u8"(移動時消滅)"s, u8"(Temporal)"s);
         }
         else if (inv[prm_518].count == 0)
         {
             if (inv[prm_518].param1 == 0)
             {
-                s_at_m63 += lang(u8"(空っぽ)"s, u8"(Empty)"s);
+                s_ += lang(u8"(空っぽ)"s, u8"(Empty)"s);
             }
         }
     }
-    if (a_at_m63 == 92000)
+    if (a_ == 92000 && inv[prm_518].param2 != 0)
     {
-        if (inv[prm_518].param2 != 0)
-        {
-            s_at_m63 += lang(
-                u8"(仕入れ値 "s + inv[prm_518].param2 + u8"g)"s,
-                u8"(Buying price: "s + inv[prm_518].param2 + u8")"s);
-        }
+        s_ += lang(
+            u8"(仕入れ値 "s + inv[prm_518].param2 + u8"g)"s,
+            u8"(Buying price: "s + inv[prm_518].param2 + u8")"s);
     }
     if (ibit(6, prm_518) == 1)
     {
-        s_at_m63 += lang(u8"(媚薬混入)"s, u8"(Aphrodisiac)"s);
+        s_ += lang(u8"(媚薬混入)"s, u8"(Aphrodisiac)"s);
     }
     if (ibit(14, prm_518) == 1)
     {
-        s_at_m63 += lang(u8"(毒物混入)"s, u8"(Poisoned)"s);
+        s_ += lang(u8"(毒物混入)"s, u8"(Poisoned)"s);
     }
-    if (ibit(7, prm_518) == 1)
-    {
-        if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
+    if (ibit(7, prm_518) == 1 && gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                 + gdata_year * 24 * 30 * 12
             < inv[prm_518].count)
-        {
-            s_at_m63 += lang(
-                u8"("s
-                    + (inv[prm_518].count
-                       - (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                          + gdata_year * 24 * 30 * 12))
-                    + u8"時間)"s,
-                u8"(Next: "s
-                    + (inv[prm_518].count
-                       - (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                          + gdata_year * 24 * 30 * 12))
-                    + u8"h.)"s);
-        }
-    }
-    if (inv[prm_518].id == 555)
     {
-        if (inv[prm_518].count != 0)
-        {
-            s_at_m63 +=
-                lang(u8" シリアルNo."s, u8" serial no."s) + inv[prm_518].count;
-        }
+        s_ += lang(
+            u8"("s
+                + (inv[prm_518].count
+                   - (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
+                      + gdata_year * 24 * 30 * 12))
+                + u8"時間)"s,
+            u8"(Next: "s
+                + (inv[prm_518].count
+                   - (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
+                      + gdata_year * 24 * 30 * 12))
+                + u8"h.)"s);
+    }
+    if (inv[prm_518].id == 555 && inv[prm_518].count != 0)
+    {
+        s_ +=
+            lang(u8" シリアルNo."s, u8" serial no."s) + inv[prm_518].count;
     }
     if (inv[prm_518].id == 544)
     {
-        s_at_m63 += u8" <BGM"s + inv[prm_518].param1 + u8">"s;
+        s_ += u8" <BGM"s + inv[prm_518].param1 + u8">"s;
     }
-    if (strlen_u(s_at_m63) > 66)
+    if (strlen_u(s_) > 66)
     {
-        len_at_m63 = zentohan(s_at_m63, buf_at_m63, 0);
-        SDIM2(buf_at_m63, len_at_m63);
-        zentohan(s_at_m63, s_at_m63, len_at_m63);
+        len_ = zentohan(s_, buf_, 0);
+        SDIM2(buf_, len_);
+        zentohan(s_, s_, len_);
     }
-    skip_at_m63 = 0;
-    return s_at_m63;
+    skip_ = 0;
+    return s_;
 }
 
 
