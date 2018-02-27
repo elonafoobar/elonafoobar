@@ -1472,7 +1472,7 @@ void put_questtarget();
 void putenclv(int = 0);
 void refreshspeed(int = 0);
 void remain_make(int = 0, int = 0);
-void removeitem(int = 0, int = 0);
+void removeitem(int, int);
 void removeworker(int = 0);
 void resistmod(int = 0, int = 0, int = 0);
 void ride_begin(int = 0);

@@ -508,31 +508,21 @@ void itemturn(int ci)
 
 
 
-void removeitem(int prm_496, int prm_497)
+void removeitem(int ci, int delta)
 {
-    int n_at_m56 = 0;
-    n_at_m56 = prm_497;
-    if (n_at_m56 == 0)
-    {
-        n_at_m56 = 1;
-    }
-    inv[prm_496].number -= n_at_m56;
-    if (prm_496 < 200)
+    inv[ci].number -= delta;
+    if (ci < 200)
     {
         refresh_burden_state();
     }
-    if (inv[prm_496].number <= 0)
+    if (inv[ci].number <= 0)
     {
-        inv[prm_496].number = 0;
-        if (mode != 6)
+        inv[ci].number = 0;
+        if (mode != 6 && ci >= 5080)
         {
-            if (prm_496 >= 5080)
-            {
-                cell_refresh(inv[prm_496].position.x, inv[prm_496].position.y);
-            }
+            cell_refresh(inv[ci].position.x, inv[ci].position.y);
         }
     }
-    return;
 }
 
 
