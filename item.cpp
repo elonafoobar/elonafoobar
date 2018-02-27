@@ -705,22 +705,21 @@ int inv_weight(int owner)
 
 
 
-void item_num(int prm_508, int prm_509)
+void item_num(int ci, int delta)
 {
-    inv[prm_508].number += prm_509;
-    if (inv[prm_508].number < 0)
+    inv[ci].number += delta;
+    if (inv[ci].number < 0)
     {
-        inv[prm_508].number = 0;
+        inv[ci].number = 0;
     }
-    if (prm_508 >= 5080)
+    if (ci >= 5080)
     {
-        cell_refresh(inv[prm_508].position.x, inv[prm_508].position.y);
+        cell_refresh(inv[ci].position.x, inv[ci].position.y);
     }
     else
     {
         refresh_burden_state();
     }
-    return;
 }
 
 
