@@ -1248,13 +1248,13 @@ std::string him(int prm_324, int prm_325)
 
 
 
-std::string your(int prm_326, int)
+std::string your(int x)
 {
-    if (prm_326 < 0 || prm_326 >= 245)
+    if (x < 0 || x >= 245)
     {
         return u8"'s"s;
     }
-    if (prm_326 == 0)
+    if (x == 0)
     {
         return u8"r"s;
     }
@@ -1263,21 +1263,21 @@ std::string your(int prm_326, int)
 
 
 
-std::string yourself(int prm_328)
+std::string yourself(int x)
 {
-    if (prm_328 < 0 || prm_328 >= 245)
+    if (x < 0 || x >= 245)
     {
         return u8"itself"s;
     }
-    if (is_in_fov(prm_328) == 0)
+    if (is_in_fov(x) == 0)
     {
         return u8"itself"s;
     }
-    if (prm_328 == 0)
+    if (x == 0)
     {
         return u8"yourself"s;
     }
-    if (cdata[prm_328].sex == 0)
+    if (cdata[x].sex == 0)
     {
         return u8"himself"s;
     }
