@@ -682,7 +682,6 @@ label_20591:
             {
                 p = 0;
             }
-            txtmore();
             txt(lang(
                 u8"(持っているメダル: "s + p + u8"枚)"s,
                 u8"(Coins: "s + p + u8")"s));
@@ -1712,14 +1711,12 @@ label_2061_internal:
                 }
                 if (inv[ci].id == 620)
                 {
-                    txtmore();
                     txtef(8);
                     txt(lang(
                         name(tc) + u8"は激怒して"s + itemname(ci, 1)
                             + u8"を叩き割った。"s,
                         name(tc) + u8" throws it on the ground angrily."s));
                     snd(47);
-                    txtmore();
                     txtef(9);
                     txt(lang(
                             name(tc) + u8"「サイテー！！」"s,

@@ -134,7 +134,6 @@ int access_character_info()
             {
                 if (jp)
                 {
-                    txtmore();
                     txtef(9);
                     txt(u8"「"
                             + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
@@ -164,7 +163,6 @@ int access_character_info()
             {
                 if (jp)
                 {
-                    txtmore();
                     txtef(9);
                     txt(u8"「おかえり、"
                             + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
@@ -185,7 +183,6 @@ int access_character_info()
             {
                 if (jp)
                 {
-                    txtmore();
                     txtef(9);
                     txt(u8"「"
                             + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
@@ -215,7 +212,6 @@ int access_character_info()
             {
                 if (jp)
                 {
-                    txtmore();
                     txtef(9);
                     txt(u8"「おかえり、"
                             + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
@@ -236,7 +232,6 @@ int access_character_info()
             {
                 if (jp)
                 {
-                    txtmore();
                     txtef(9);
                     txt(u8"「"
                             + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
@@ -266,7 +261,6 @@ int access_character_info()
             {
                 if (jp)
                 {
-                    txtmore();
                     txtef(9);
                     txt(u8"「おかえりにゃ、"
                             + i18n::_(u8"ui", u8"onii", u8"_"s + cdata[0].sex)
@@ -285,7 +279,6 @@ int access_character_info()
         {
             if (dbmode == 100)
             {
-                txtmore();
                 txtef(9);
                 if (jp)
                 {
@@ -303,7 +296,6 @@ int access_character_info()
             {
                 if (jp)
                 {
-                    txtmore();
                     txtef(9);
                     txt(u8"「ダメぇ！」",
                         u8"「"
@@ -316,7 +308,6 @@ int access_character_info()
             {
                 if (jp)
                 {
-                    txtmore();
                     txtef(9);
                     txt(u8"「おかえりなさいませ、"
                             + i18n::_(u8"ui", u8"syujin", u8"_"s + cdata[0].sex)
@@ -330,7 +321,6 @@ int access_character_info()
                 u8"character", std::to_string(dbid), u8"text_"s + dbmode);
             !std::empty(text))
         {
-            txtmore();
             txtef(9);
             txt(text);
         }

@@ -970,7 +970,6 @@ int calcattackdmg(int prm_894)
             {
                 txtef(5);
                 txt(lang(u8" *シャキーン* "s, u8"*vopal*"s));
-                txtmore();
             }
         }
     }
@@ -983,7 +982,6 @@ int calcattackdmg(int prm_894)
             {
                 txtef(5);
                 txt(lang(u8" *ズバシュッ* "s, u8"*vopal*"s));
-                txtmore();
             }
         }
         if (ammoproc == 0)

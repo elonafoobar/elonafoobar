@@ -557,13 +557,6 @@ void msg_write(std::string& prm_307)
 
 
 
-void txtmore()
-{
-    return;
-}
-
-
-
 void txtcontinue()
 {
     tcontinue_at_txtfunc = 1;

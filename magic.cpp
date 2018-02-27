@@ -241,7 +241,6 @@ int magic()
                             }
                             if (is_in_fov(tc))
                             {
-                                txtmore();
                                 if (tc >= 16)
                                 {
                                     gdata(809) = 2;
@@ -405,7 +404,6 @@ int magic()
                         {
                             dmg = roll(dice1, dice2, bonus) * 100
                                 / (75 + dist(tlocx, tlocy, dx, dy) * 25);
-                            txtmore();
                             int stat = calcmagiccontrol(cc, tc);
                             if (stat == 1)
                             {
@@ -415,7 +413,6 @@ int magic()
                             {
                                 if (is_in_fov(tc))
                                 {
-                                    txtmore();
                                     if (tc >= 16)
                                     {
                                         gdata(809) = 2;
@@ -444,7 +441,6 @@ int magic()
                             }
                             else if (is_in_fov(tc))
                             {
-                                txtmore();
                                 if (tc >= 16)
                                 {
                                     gdata(809) = 2;
@@ -508,7 +504,6 @@ int magic()
                 dmg = roll(dice1, dice2, bonus);
                 if (is_in_fov(tc))
                 {
-                    txtmore();
                     if (tc >= 16)
                     {
                         gdata(809) = 2;
@@ -599,7 +594,6 @@ int magic()
                                           std::to_string(efid),
                                           u8"name")
                                     + u8"."s));
-                            txtmore();
                         }
                         else
                         {
@@ -617,7 +611,6 @@ int magic()
                                           u8"_"s
                                               + cdata[cc]
                                                     .special_attack_type)));
-                            txtmore();
                         }
                     }
                 }
@@ -694,7 +687,6 @@ int magic()
                     cdata[tc].nutrition -= 800;
                     if (is_in_fov(tc))
                     {
-                        txtmore();
                         txtef(8);
                         txt(lang(
                             name(tc) + u8"はお腹が減った。"s,
@@ -723,7 +715,6 @@ int magic()
                         }
                         if (is_in_fov(tc))
                         {
-                            txtmore();
                             txtef(8);
                             txt(lang(
                                 name(tc) + u8"は弱くなった。"s,
@@ -971,7 +962,6 @@ int magic()
                         {
                             if (is_in_fov(cc))
                             {
-                                txtmore();
                                 txt(lang(
                                     name(tc) + u8"は引き寄せられた。"s,
                                     name(tc) + u8" "s + is(tc) + u8" drawn."s));
@@ -981,7 +971,6 @@ int magic()
                         {
                             if (efidprev == 635)
                             {
-                                txtmore();
                                 txt(lang(
                                     u8"泥棒は笑って逃げた。"s,
                                     u8"A thief escapes laughing."s));
@@ -1077,7 +1066,6 @@ int magic()
                             dmg = roll(dice1, dice2, bonus);
                             if (is_in_fov(tc))
                             {
-                                txtmore();
                                 if (tc >= 16)
                                 {
                                     gdata(809) = 2;
@@ -1381,7 +1369,6 @@ label_2181_internal:
             if (efstatus <= -1)
             {
                 txtef(9);
-                txtmore();
                 txt(lang(u8"「うぃっ…」"s, u8"*Hic*"s),
                     lang(u8"「まずいぜ」"s, u8"\"Ah, bad booze.\""s),
                     lang(u8"「げー♪」"s, u8"\"Ugh...\""s),
@@ -1392,7 +1379,6 @@ label_2181_internal:
             else
             {
                 txtef(9);
-                txtmore();
                 txt(lang(u8"「うぃっ！」"s, u8"*Hic*"s),
                     lang(u8"「うまいぜ」"s, u8"\"Ah, good booze.\""s),
                     lang(u8"「らららー♪」"s, u8"\"La-la-la-la.\""s),
@@ -1473,7 +1459,6 @@ label_2181_internal:
             if (is_in_fov(tc))
             {
                 txtef(3);
-                txtmore();
                 txt(lang(
                     u8"塩だ！"s + name(tc) + u8"は溶けはじめた！"s,
                     u8"It's salt! "s + name(tc) + u8" start"s + _s(tc)
@@ -1491,7 +1476,6 @@ label_2181_internal:
         else if (is_in_fov(tc))
         {
             txtef(9);
-            txtmore();
             txt(lang(u8"「しょっぱ〜」"s, u8"\"Salty!\""s));
         }
         break;
@@ -1939,7 +1923,6 @@ label_2181_internal:
              cnt < cnt_end;
              ++cnt)
         {
-            txtmore();
             atxspot = 19;
             if (efstatus >= 0)
             {
@@ -1961,7 +1944,6 @@ label_2181_internal:
         }
         if (efid == 632)
         {
-            txtmore();
             txt_check();
             txt(lang(
                 name(cc) + u8"は"s + name(tc)
@@ -1972,7 +1954,6 @@ label_2181_internal:
             {
                 break;
             }
-            txtmore();
         }
         if (tc != 0)
         {
@@ -4356,7 +4337,6 @@ label_2181_internal:
                     name(cc) + u8"は"s + name(tc) + u8"を罵倒した。"s,
                     name(cc) + u8" insult"s + _s(cc) + u8" "s + name(tc)
                         + u8"."s));
-                txtmore();
                 txtef(9);
                 if (jp)
                 {

@@ -225,7 +225,6 @@ void proc_event()
         tc = rc;
         adata(20, gdata_current_map) = tc;
         txtef(3);
-        txtmore();
         txt(lang(
             u8"気をつけろ！この階は"s + mapname(gdata_current_map)
                 + u8"の守護者、"s + cdatan(0, tc) + u8"によって守られている。"s,
@@ -258,7 +257,6 @@ void proc_event()
             u8"どうやら最深層まで辿り着いたらしい…"s,
             u8"It seems you have reached the deepest level of this dungeon."s));
         txtef(3);
-        txtmore();
         txt(lang(
             u8"気をつけろ！この階は"s + mapname(gdata_current_map)
                 + u8"の守護者、"s + cdatan(0, tc) + u8"によって守られている。"s,
@@ -293,14 +291,12 @@ void proc_event()
         txt(lang(
             u8"クエストを達成した！"s, u8"You have completed the quest!"s));
         snd(51);
-        txtmore();
         txt(lang(
             u8"何かが足元に転がってきた。"s,
             u8"Something is put on the ground."s));
         modrank(2, 300, 8);
         gdata(74) = calcfame(0, gdata_current_dungeon_level * 30 + 200);
         txtef(2);
-        txtmore();
         txt(lang(
             ""s + gdata(74) + u8"の名声値を手に入れた。"s,
             u8"You gain "s + gdata(74) + u8" fame."s));
@@ -347,7 +343,6 @@ void proc_event()
             {
                 if (sdata(i, 0) != 0 && rnd(3) == 0)
                 {
-                    txtmore();
                     skillexp(i, 0, -500);
                 }
             }
@@ -366,7 +361,6 @@ void proc_event()
         {
             modcorrupt(-2000);
         }
-        txtmore();
         txt(lang(u8"金貨を幾らか失った…"s, u8"You lost some money."s));
         cdata[0].gold -= cdata[0].gold / 3;
         decfame(0, 10);

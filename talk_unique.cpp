@@ -258,7 +258,6 @@ void talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txtmore();
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -367,7 +366,6 @@ void talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txtmore();
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -483,7 +481,6 @@ void talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txtmore();
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -2116,7 +2113,6 @@ void talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txtmore();
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -2458,7 +2454,6 @@ void talk_unique()
                 txt(lang(
                     u8"ジャーナルが更新された。"s,
                     u8"Your journal has been updated."s));
-                txtmore();
                 gdata_wife_collector = 1000;
             }
             chara_vanquish(rc);
@@ -2565,7 +2560,6 @@ void talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txtmore();
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -2696,7 +2690,6 @@ void talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txtmore();
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -2792,7 +2785,6 @@ void talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txtmore();
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -2944,7 +2936,6 @@ void talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txtmore();
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -3074,7 +3065,6 @@ void talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txtmore();
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -3194,7 +3184,6 @@ void talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txtmore();
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -3391,7 +3380,6 @@ void talk_unique()
                     u8"クエストを達成した！"s,
                     u8"You have completed the quest!"s));
                 snd(51);
-                txtmore();
                 txt(lang(
                     u8"何かが足元に転がってきた。"s,
                     u8"Something is put on the ground."s));
@@ -3474,7 +3462,6 @@ void talk_unique()
             txt(lang(
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
-            txtmore();
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -3530,7 +3517,6 @@ void talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txtmore();
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -3613,7 +3599,6 @@ void talk_unique()
             talk_end();
             return;
         }
-        txtmore();
         txt(lang(
             u8"何かが足元に転がってきた。"s,
             u8"Something is put on the ground."s));
@@ -3678,7 +3663,6 @@ void talk_unique()
             txt(lang(
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
-            txtmore();
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -3764,7 +3748,6 @@ void talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txtmore();
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -3862,7 +3845,6 @@ void talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txtmore();
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -3989,13 +3971,11 @@ void talk_unique()
                     u8"クエストを達成した！"s,
                     u8"You have completed the quest!"s));
                 snd(51);
-                txtmore();
                 snd(44);
                 txtef(2);
                 txt(lang(
                     u8"ジャーナルが更新された。"s,
                     u8"Your journal has been updated."s));
-                txtmore();
                 txtef(5);
                 txt(lang(
                     u8"魔術士ギルドに加入した！"s,
@@ -4099,7 +4079,6 @@ void talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txtmore();
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -4218,13 +4197,11 @@ void talk_unique()
                     u8"クエストを達成した！"s,
                     u8"You have completed the quest!"s));
                 snd(51);
-                txtmore();
                 snd(44);
                 txtef(2);
                 txt(lang(
                     u8"ジャーナルが更新された。"s,
                     u8"Your journal has been updated."s));
-                txtmore();
                 txtef(5);
                 txt(lang(
                     u8"盗賊ギルドに加入した！"s,
@@ -4328,7 +4305,6 @@ void talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txtmore();
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -4477,13 +4453,11 @@ void talk_unique()
                     u8"クエストを達成した！"s,
                     u8"You have completed the quest!"s));
                 snd(51);
-                txtmore();
                 snd(44);
                 txtef(2);
                 txt(lang(
                     u8"ジャーナルが更新された。"s,
                     u8"Your journal has been updated."s));
-                txtmore();
                 txtef(5);
                 txt(lang(
                     u8"戦士ギルドに加入した！"s,
@@ -4607,7 +4581,6 @@ void talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txtmore();
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -4718,7 +4691,6 @@ void talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txtmore();
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -4770,7 +4742,6 @@ void talk_unique()
                 {
                     if (the_item_db[inv[cnt].id]->is_cargo == 1)
                     {
-                        txtmore();
                         txt(lang(
                             itemname(cnt) + u8"を渡した。"s,
                             u8"You hand over "s + itemname(cnt) + u8"."s));

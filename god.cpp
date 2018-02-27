@@ -35,7 +35,6 @@ void txtgod(const god_id_t& id, int type)
     txtef(5);
     if (type == 6)
     {
-        txtmore();
     }
     txt(message);
 }

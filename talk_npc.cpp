@@ -792,7 +792,6 @@ void talk_npc()
             efid = 439;
             efp = 100;
             magic();
-            txtmore();
             efid = 440;
             efp = 100;
             magic();

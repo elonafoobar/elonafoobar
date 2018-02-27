@@ -1675,7 +1675,6 @@ int item_stack(int inventory_id, int ci, int show_message)
         }
         if (show_message)
         {
-            txtmore();
             txt(lang(
                 itemname(ti, 1) + u8"をまとめた(計"s + inv[ti].number
                     + u8"個) "s,

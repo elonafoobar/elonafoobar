@@ -3450,7 +3450,6 @@ label_1744_internal:
         {
             p = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                 + gdata_year * 24 * 30 * 12 - gdata_departure_date;
-            txtmore();
             txt(lang(
                 cnvdate(gdata_departure_date, false) + u8"に"s
                     + mapname(gdata_left_town_map) + u8"を発ってから、"s
@@ -3479,7 +3478,6 @@ label_1744_internal:
             {
                 s = u8"あなたとその仲間"s;
             }
-            txtmore();
             txt(lang(
                 s + u8"は"s + gdata_distance_between_town
                     + u8"マイルの距離を歩き、経験を積んだ。"s,

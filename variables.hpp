@@ -1524,7 +1524,6 @@ void txt_conv();
 void txtcontinue();
 void txtef(int = 0);
 void txteledmg(int = 0, int = 0, int = 0, int = 0);
-void txtmore();
 void txtnew();
 void txtsetlastword();
 std::vector<std::string> txtsetwinword(int);
