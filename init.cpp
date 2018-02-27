@@ -1222,6 +1222,7 @@ label_1552_internal:
 void character_making_role_attributes(bool label_1554_flg)
 {
     elona_vector1<int> cmlock;
+    bool minimum{};
     if (label_1554_flg)
     {
         snd(101);
@@ -1257,13 +1258,22 @@ label_1554:
     {
         if (cmlock(cnt - 10) == 0)
         {
-            sdata.get(cnt, rc).original_level -=
-                rnd(sdata.get(cnt, rc).original_level / 2 + 1);
+            if (minimum)
+            {
+                sdata.get(cnt, rc).original_level -=
+                    sdata.get(cnt, rc).original_level / 2;
+            }
+            else
+            {
+                sdata.get(cnt, rc).original_level -=
+                    rnd(sdata.get(cnt, rc).original_level / 2 + 1);
+            }
             cmstats(cnt - 10) = sdata.get(cnt, rc).original_level * 1'000'000
                 + sdata.get(cnt, rc).experience * 1'000
                 + sdata.get(cnt, rc).potential;
         }
     }
+    minimum = false;
     listmax = 0;
     list(0, 0) = 0;
     listn(0, 0) = lang(u8"リロール"s, u8"Reroll"s);
@@ -1281,7 +1291,7 @@ label_1554:
 label_1555_internal:
     redraw(0);
     s(0) = lang(u8"能力のロール"s, u8"Attb Reroll"s);
-    s(1) = strhint3b;
+    s(1) = strhint3b + key_mode2 + lang(u8" [最低値ロール]", u8" [Min Roll]");
     display_window(
         (windoww - 360) / 2 + inf_screenx, winposy(352, 1) - 20, 360, 352);
     x = 150;
@@ -1365,6 +1375,12 @@ label_1555_internal:
             --cmlock(8);
         }
         snd(20);
+    }
+    if (key == key_mode2)
+    {
+        minimum = true;
+        snd(103);
+        goto label_1554;
     }
     if (key == key_cancel)
     {
