@@ -57449,7 +57449,7 @@ void label_2201()
             }
         }
     }
-    txt_check(0);
+    txt_check();
     txt(lang(
         name(cc) + u8"は空気に体当たりした。"s,
         name(cc) + u8" bash"s + _s(cc) + u8" up the air."s));

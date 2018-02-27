@@ -1286,69 +1286,9 @@ std::string yourself(int prm_328)
 
 
 
-void txt_check(int prm_329)
+void txt_check()
 {
-    txtvalid = -1;
-    if (prm_329 == 0)
-    {
-        if (cc >= 0)
-        {
-            if (is_in_fov(cc) || cc == 0)
-            {
-                txtvalid = 0;
-                return;
-            }
-        }
-    }
-    if (prm_329 == 1)
-    {
-        if (tc >= 0)
-        {
-            if (is_in_fov(tc) || tc == 0)
-            {
-                txtvalid = 0;
-                return;
-            }
-        }
-    }
-    if (prm_329 == 2)
-    {
-        if (cc == 0 || cdata[cc].relationship == 10)
-        {
-            txtvalid = 0;
-            return;
-        }
-    }
-    if (prm_329 == 3)
-    {
-        if (cc > 0)
-        {
-            if (is_in_fov(cc))
-            {
-                txtvalid = 0;
-                return;
-            }
-        }
-    }
-    if (prm_329 == 4)
-    {
-        if (tc == 0)
-        {
-            txtvalid = 0;
-            return;
-        }
-    }
-    if (prm_329 == 5)
-    {
-        if (tc > 0)
-        {
-            if (is_in_fov(tc))
-            {
-                txtvalid = 0;
-            }
-        }
-    }
-    return;
+    txtvalid = (cc > 0 && is_in_fov(cc)) || cc == 0 ? 0 : -1;
 }
 
 
