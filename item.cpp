@@ -817,20 +817,16 @@ int item_identify(int ci, int level, int power)
 
 
 
-void item_checkknown(int prm_515)
+void item_checkknown(int ci)
 {
-    if (inv[prm_515].identification_state >= 3)
+    if (inv[ci].identification_state >= 3)
     {
-        inv[prm_515].identification_state = 3;
+        inv[ci].identification_state = 3;
     }
-    if (itemmemory(0, inv[prm_515].id))
+    if (itemmemory(0, inv[ci].id) && inv[ci].identification_state == 0)
     {
-        if (inv[prm_515].identification_state == 0)
-        {
-            item_identify(prm_515, 1);
-        }
+        item_identify(ci, 1);
     }
-    return;
 }
 
 
