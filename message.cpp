@@ -973,32 +973,32 @@ std::string name(int cc)
 
 
 
-std::string aln(int prm_310)
+std::string aln(int cc)
 {
-    if (prm_310 == 0)
+    if (cc == 0)
     {
         return "";
     }
-    if (is_in_fov(prm_310) == 0)
+    if (is_in_fov(cc) == 0)
     {
-        return u8"それは"s;
+        return u8"それは";
     }
-    return ""s + cdatan(0, prm_310) + u8"は"s;
+    return cdatan(0, cc) + u8"は";
 }
 
 
 
-std::string npcn(int prm_311)
+std::string npcn(int cc)
 {
-    if (prm_311 == 0)
+    if (cc == 0)
     {
         return "";
     }
-    if (is_in_fov(prm_311) == 0)
+    if (is_in_fov(cc) == 0)
     {
-        return u8"それは"s;
+        return u8"それは";
     }
-    return ""s + cdatan(0, prm_311) + u8"は"s;
+    return cdatan(0, cc) + u8"は";
 }
 
 
