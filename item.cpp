@@ -389,28 +389,20 @@ int itemfind(int prm_487, int prm_488, int prm_489)
 
 
 
-int mapitemfind(int prm_490, int prm_491, int prm_492)
+int mapitemfind(int x, int y, int id)
 {
-    f_at_m54 = -1;
     for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number == 0)
         {
             continue;
         }
-        if (inv[cnt].id == prm_492)
+        if (inv[cnt].id == id && inv[cnt].position == position_t{x, y})
         {
-            if (inv[cnt].position.x == prm_490)
-            {
-                if (inv[cnt].position.y == prm_491)
-                {
-                    f_at_m54 = cnt;
-                    break;
-                }
-            }
+            return cnt;
         }
     }
-    return f_at_m54;
+    return -1; // Not found
 }
 
 
