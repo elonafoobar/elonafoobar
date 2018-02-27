@@ -28,7 +28,7 @@ void item::clear()
 }
 
 
-bool item::almost_euqals(const item& other, bool ignore_position)
+bool item::almost_equals(const item& other, bool ignore_position)
 {
     return true
         // && number == other.number
@@ -1804,7 +1804,7 @@ int item_stack(int inventory_id, int ci, int show_message)
                 || inv[i].position == inv[ci].position;
         else
             stackable =
-                inv[i].almost_euqals(inv[ci], inventory_id != -1 || mode == 6);
+                inv[i].almost_equals(inv[ci], inventory_id != -1 || mode == 6);
 
         if (stackable)
         {

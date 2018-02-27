@@ -74,7 +74,7 @@ struct item
 
     void clear();
 
-    bool almost_euqals(const item& other, bool ignore_position);
+    bool almost_equals(const item& other, bool ignore_position);
 
 
     template <typename Archive>
