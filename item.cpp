@@ -785,35 +785,33 @@ bool chara_unequip(int ci)
 
 
 
-int item_identify(int prm_512, int prm_513, int prm_514)
+int item_identify(int ci, int level, int power)
 {
-    int idlv_at_m60 = 0;
-    idlv_at_m60 = prm_513;
-    if (prm_514)
+    if (power != 0)
     {
-        if (prm_514 >= inv[prm_512].difficulty_of_identification)
+        if (power >= inv[ci].difficulty_of_identification)
         {
-            idlv_at_m60 = 3;
+            level = 3;
         }
     }
-    if (idlv_at_m60 >= 2)
+    if (level >= 2)
     {
-        if (the_item_db[inv[prm_512].id]->category >= 50000)
+        if (the_item_db[inv[ci].id]->category >= 50000)
         {
-            idlv_at_m60 = 3;
+            level = 3;
         }
     }
-    if (idlv_at_m60 == -1 || inv[prm_512].identification_state >= idlv_at_m60)
+    if (level == -1 || inv[ci].identification_state >= level)
     {
         idtresult = 0;
         return 0;
     }
-    inv[prm_512].identification_state = idlv_at_m60;
-    if (inv[prm_512].identification_state >= 1)
+    inv[ci].identification_state = level;
+    if (inv[ci].identification_state >= 1)
     {
-        itemmemory(0, inv[prm_512].id) = 1;
+        itemmemory(0, inv[ci].id) = 1;
     }
-    idtresult = idlv_at_m60;
+    idtresult = level;
     return idtresult;
 }
 
