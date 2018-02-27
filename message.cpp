@@ -1032,9 +1032,9 @@ std::string _s(int cc, int need_e)
 
 
 
-std::string _s2(int prm_314)
+std::string _s2(int n)
 {
-    if (prm_314 > 1)
+    if (n > 1)
     {
         return "";
     }
@@ -1046,9 +1046,9 @@ std::string _s2(int prm_314)
 
 
 
-std::string is2(int prm_315)
+std::string is2(int n)
 {
-    if (prm_315 > 1)
+    if (n > 1)
     {
         return u8"are"s;
     }
@@ -1060,13 +1060,13 @@ std::string is2(int prm_315)
 
 
 
-std::string is(int prm_316)
+std::string is(int cc)
 {
-    if (prm_316 < 0 || prm_316 >= 245)
+    if (cc < 0 || cc >= 245)
     {
         return u8"is"s;
     }
-    if (prm_316 == 0)
+    if (cc == 0)
     {
         return u8"are"s;
     }
@@ -1075,13 +1075,13 @@ std::string is(int prm_316)
 
 
 
-std::string have(int prm_318)
+std::string have(int cc)
 {
-    if (prm_318 < 0 || prm_318 >= 245)
+    if (cc < 0 || cc >= 245)
     {
         return u8"has"s;
     }
-    if (prm_318 == 0)
+    if (cc == 0)
     {
         return u8"have"s;
     }
@@ -1090,9 +1090,9 @@ std::string have(int prm_318)
 
 
 
-std::string does(int prm_319)
+std::string does(int n)
 {
-    if (prm_319 == 1)
+    if (n == 1)
     {
         return u8"do"s;
     }
@@ -1104,13 +1104,13 @@ std::string does(int prm_319)
 
 
 
-std::string he(int prm_320, int prm_321)
+std::string he(int cc, int prm_321)
 {
     if (prm_321)
     {
         if (jp)
         {
-            if (cdata[prm_320].sex == 0)
+            if (cdata[cc].sex == 0)
             {
                 return u8"彼"s;
             }
@@ -1119,7 +1119,7 @@ std::string he(int prm_320, int prm_321)
                 return u8"彼女"s;
             }
         }
-        if (cdata[prm_320].sex == 0)
+        if (cdata[cc].sex == 0)
         {
             return u8"he"s;
         }
@@ -1128,19 +1128,19 @@ std::string he(int prm_320, int prm_321)
             return u8"she"s;
         }
     }
-    if (prm_320 < 0 || prm_320 >= 245)
+    if (cc < 0 || cc >= 245)
     {
         return u8"it"s;
     }
-    if (is_in_fov(prm_320) == 0)
+    if (is_in_fov(cc) == 0)
     {
         return u8"it"s;
     }
-    if (prm_320 == 0)
+    if (cc == 0)
     {
         return u8"you"s;
     }
-    if (cdata[prm_320].sex == 0)
+    if (cdata[cc].sex == 0)
     {
         return u8"he"s;
     }
@@ -1149,17 +1149,17 @@ std::string he(int prm_320, int prm_321)
 
 
 
-std::string his(int prm_322, int prm_323)
+std::string his(int cc, int prm_323)
 {
     if (prm_323)
     {
         if (jp)
         {
-            if (prm_322 == 0)
+            if (cc == 0)
             {
                 return u8"あなたの"s;
             }
-            else if (cdata[prm_322].sex == 0)
+            else if (cdata[cc].sex == 0)
             {
                 return u8"彼の"s;
             }
@@ -1168,11 +1168,11 @@ std::string his(int prm_322, int prm_323)
                 return u8"彼女の"s;
             }
         }
-        if (prm_322 == 0)
+        if (cc == 0)
         {
             return u8"your"s;
         }
-        else if (cdata[prm_322].sex == 0)
+        else if (cdata[cc].sex == 0)
         {
             return u8"his"s;
         }
@@ -1181,19 +1181,19 @@ std::string his(int prm_322, int prm_323)
             return u8"her"s;
         }
     }
-    if (prm_322 < 0 || prm_322 >= 245)
+    if (cc < 0 || cc >= 245)
     {
         return u8"its"s;
     }
-    if (is_in_fov(prm_322) == 0)
+    if (is_in_fov(cc) == 0)
     {
         return u8"its"s;
     }
-    if (prm_322 == 0)
+    if (cc == 0)
     {
         return u8"your"s;
     }
-    if (cdata[prm_322].sex == 0)
+    if (cdata[cc].sex == 0)
     {
         return u8"his"s;
     }
@@ -1202,13 +1202,13 @@ std::string his(int prm_322, int prm_323)
 
 
 
-std::string him(int prm_324, int prm_325)
+std::string him(int cc, int prm_325)
 {
     if (prm_325)
     {
         if (jp)
         {
-            if (cdata[prm_324].sex == 0)
+            if (cdata[cc].sex == 0)
             {
                 return u8"彼"s;
             }
@@ -1217,7 +1217,7 @@ std::string him(int prm_324, int prm_325)
                 return u8"彼女"s;
             }
         }
-        if (cdata[prm_324].sex == 0)
+        if (cdata[cc].sex == 0)
         {
             return u8"him"s;
         }
@@ -1226,19 +1226,19 @@ std::string him(int prm_324, int prm_325)
             return u8"her"s;
         }
     }
-    if (prm_324 < 0 || prm_324 >= 245)
+    if (cc < 0 || cc >= 245)
     {
         return u8"it"s;
     }
-    if (is_in_fov(prm_324) == 0)
+    if (is_in_fov(cc) == 0)
     {
         return u8"it"s;
     }
-    if (prm_324 == 0)
+    if (cc == 0)
     {
         return u8"yourself"s;
     }
-    if (cdata[prm_324].sex == 0)
+    if (cdata[cc].sex == 0)
     {
         return u8"him"s;
     }
