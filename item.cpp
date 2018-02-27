@@ -600,8 +600,7 @@ void item_compress(int owner)
                         && inv[cnt].position.y >= 0
                         && inv[cnt].position.y < mdata(1))
                     {
-                        cell_refresh(
-                            inv[cnt].position.x, inv[cnt].position.y);
+                        cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
                     }
                 }
             }
@@ -636,13 +635,11 @@ void item_compress(int owner)
                 inv[ci].number = 0;
                 if (mode != 6)
                 {
-                    if (inv[ci].position.x >= 0
-                        && inv[ci].position.x < mdata(0)
+                    if (inv[ci].position.x >= 0 && inv[ci].position.x < mdata(0)
                         && inv[ci].position.y >= 0
                         && inv[ci].position.y < mdata(1))
                     {
-                        cell_refresh(
-                            inv[ci].position.x, inv[ci].position.y);
+                        cell_refresh(inv[ci].position.x, inv[ci].position.y);
                     }
                 }
                 break;
@@ -865,8 +862,7 @@ void itemname_additional_info()
     {
         if (inv[prm_518].param1 == 0)
         {
-            s_ +=
-                lang(u8"もう使えない"s, u8" which cannot be used anymore"s);
+            s_ += lang(u8"もう使えない"s, u8" which cannot be used anymore"s);
         }
         else if (inv[prm_518].subname == 0)
         {
@@ -935,18 +931,20 @@ void itemname_additional_info()
                 if (inv[prm_518].id == 618)
                 {
                     s_ = s_
-                        + foodname(inv[prm_518].param1 / 1000,
-                                   (""s + fishdatan(inv[prm_518].subname)),
-                                   inv[prm_518].param2,
-                                   inv[prm_518].subname);
+                        + foodname(
+                              inv[prm_518].param1 / 1000,
+                              (""s + fishdatan(inv[prm_518].subname)),
+                              inv[prm_518].param2,
+                              inv[prm_518].subname);
                 }
                 else
                 {
                     s_ = s_
-                        + foodname(inv[prm_518].param1 / 1000,
-                                   ioriginalnameref(inv[prm_518].id),
-                                   inv[prm_518].param2,
-                                   inv[prm_518].subname);
+                        + foodname(
+                              inv[prm_518].param1 / 1000,
+                              ioriginalnameref(inv[prm_518].id),
+                              inv[prm_518].param2,
+                              inv[prm_518].subname);
                 }
                 return;
             }
@@ -1204,7 +1202,8 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
                     s2_ = u8"pair"s;
                 }
             }
-            if (a_ == 57000 && inv[prm_518].param1 != 0 && inv[prm_518].param2 != 0)
+            if (a_ == 57000 && inv[prm_518].param1 != 0
+                && inv[prm_518].param2 != 0)
             {
                 s2_ = u8"dish"s;
             }
@@ -1213,8 +1212,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
         {
             if (num2_ > 1)
             {
-                s_ = ""s + num2_ + u8" "s + s_ + s2_
-                    + u8"s "s + s3_ + u8" "s;
+                s_ = ""s + num2_ + u8" "s + s_ + s2_ + u8"s "s + s3_ + u8" "s;
             }
             else
             {
@@ -1252,9 +1250,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
             else
             {
                 s_ += i18n::_(
-                                u8"ui",
-                                u8"furniture",
-                                u8"_"s + inv[prm_518].subname)
+                          u8"ui", u8"furniture", u8"_"s + inv[prm_518].subname)
                     + u8" "s;
             }
         }
@@ -1269,8 +1265,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     }
     if (inv[prm_518].id == 630)
     {
-        s_ +=
-            ""s + mtname(0, inv[prm_518].material) + lang(u8"製の"s, u8" "s);
+        s_ += ""s + mtname(0, inv[prm_518].material) + lang(u8"製の"s, u8" "s);
     }
     if (jp)
     {
@@ -1280,8 +1275,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     {
         if (jp)
         {
-            s_ +=
-                ""s + mtname(0, inv[prm_518].material) + u8"細工の"s;
+            s_ += ""s + mtname(0, inv[prm_518].material) + u8"細工の"s;
         }
         else
         {
@@ -1302,8 +1296,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
         if (ibit(15, prm_518))
         {
             alpha_ = 1;
-            s_ += lang(u8"エターナルフォース"s, u8"eternal force"s)
-                + strblank;
+            s_ += lang(u8"エターナルフォース"s, u8"eternal force"s) + strblank;
         }
         else
         {
@@ -1313,14 +1306,12 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
                 {
                     if (jp)
                     {
-                        s_ += egoname(inv[prm_518].subname - 10000)
-                            + strblank;
+                        s_ += egoname(inv[prm_518].subname - 10000) + strblank;
                     }
                 }
                 else if (inv[prm_518].subname < 40000)
                 {
-                    s_ +=
-                        egominorn(inv[prm_518].subname - 20000) + strblank;
+                    s_ += egominorn(inv[prm_518].subname - 20000) + strblank;
                 }
             }
             if (inv[prm_518].quality != 6)
@@ -1387,10 +1378,10 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
         {
             s_ += ioriginalnameref(inv[prm_518].id);
         }
-        if (en && a_ < 50000 && inv[prm_518].subname >= 10000 && inv[prm_518].subname < 20000)
+        if (en && a_ < 50000 && inv[prm_518].subname >= 10000
+            && inv[prm_518].subname < 20000)
         {
-            s_ +=
-                u8" "s + egoname((inv[prm_518].subname - 10000));
+            s_ += u8" "s + egoname((inv[prm_518].subname - 10000));
         }
         if (inv[prm_518].subname >= 40000)
         {
@@ -1421,9 +1412,8 @@ label_0313_internal:
             else if (num2_ == 1)
             {
                 s4_ = strmid(s_, 0, 1);
-                if (s4_ == u8"a"s || s4_ == u8"o"s
-                    || s4_ == u8"i"s || s4_ == u8"u"s
-                    || s4_ == u8"e"s)
+                if (s4_ == u8"a"s || s4_ == u8"o"s || s4_ == u8"i"s
+                    || s4_ == u8"u"s || s4_ == u8"e"s)
                 {
                     s_ = u8"an "s + s_;
                 }
@@ -1457,8 +1447,7 @@ label_0313_internal:
             s_ += u8" ("s;
             if (inv[prm_518].dice_x != 0)
             {
-                s_ +=
-                    ""s + inv[prm_518].dice_x + u8"d"s + inv[prm_518].dice_y;
+                s_ += ""s + inv[prm_518].dice_x + u8"d"s + inv[prm_518].dice_y;
                 if (inv[prm_518].damage_bonus != 0)
                 {
                     if (inv[prm_518].damage_bonus > 0)
@@ -1484,8 +1473,7 @@ label_0313_internal:
         }
         if (inv[prm_518].dv != 0 || inv[prm_518].pv != 0)
         {
-            s_ +=
-                u8" ["s + inv[prm_518].dv + u8","s + inv[prm_518].pv + u8"]"s;
+            s_ += u8" ["s + inv[prm_518].dv + u8","s + inv[prm_518].pv + u8"]"s;
         }
     }
     if (en && (inv[prm_518].id == 284 || inv[prm_518].id == 283))
@@ -1495,10 +1483,10 @@ label_0313_internal:
     if (inv[prm_518].id == 342 && inv[prm_518].count != 0)
     {
         s_ += lang(
-            u8"("s + biten(inv[prm_518].param4) + u8"残り"s
-                + inv[prm_518].count + u8"匹)"s,
-            u8"("s + inv[prm_518].count + u8" "s
-                + biten(inv[prm_518].param4) + u8")"s);
+            u8"("s + biten(inv[prm_518].param4) + u8"残り"s + inv[prm_518].count
+                + u8"匹)"s,
+            u8"("s + inv[prm_518].count + u8" "s + biten(inv[prm_518].param4)
+                + u8")"s);
     }
     if (inv[prm_518].id == 685)
     {
@@ -1509,8 +1497,7 @@ label_0313_internal:
         }
         else
         {
-            s_ +=
-                u8" ("s + refchara_str(inv[prm_518].subname, 2) + u8")"s;
+            s_ += u8" ("s + refchara_str(inv[prm_518].subname, 2) + u8")"s;
         }
     }
     if (inv[prm_518].id == 734)
@@ -1520,18 +1507,15 @@ label_0313_internal:
     if (inv[prm_518].identification_state == 2 && a_ < 50000)
     {
         s_ += u8" ("s
-            + cnven(i18n::_(
-                  u8"ui", u8"quality", u8"_"s + inv[prm_518].quality))
+            + cnven(i18n::_(u8"ui", u8"quality", u8"_"s + inv[prm_518].quality))
             + u8")"s;
         if (jp)
         {
-            s_ +=
-                u8"["s + mtname(0, inv[prm_518].material) + u8"製]"s;
+            s_ += u8"["s + mtname(0, inv[prm_518].material) + u8"製]"s;
         }
         else
         {
-            s_ +=
-                u8"["s + cnven(mtname(0, inv[prm_518].material)) + u8"]"s;
+            s_ += u8"["s + cnven(mtname(0, inv[prm_518].material)) + u8"]"s;
         }
         if (inv[prm_518].curse_state == -1)
         {
@@ -1570,7 +1554,8 @@ label_0313_internal:
     {
         s_ += lang(u8"(毒物混入)"s, u8"(Poisoned)"s);
     }
-    if (ibit(7, prm_518) == 1 && gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
+    if (ibit(7, prm_518) == 1
+        && gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
                 + gdata_year * 24 * 30 * 12
             < inv[prm_518].count)
     {
@@ -1588,8 +1573,7 @@ label_0313_internal:
     }
     if (inv[prm_518].id == 555 && inv[prm_518].count != 0)
     {
-        s_ +=
-            lang(u8" シリアルNo."s, u8" serial no."s) + inv[prm_518].count;
+        s_ += lang(u8" シリアルNo."s, u8" serial no."s) + inv[prm_518].count;
     }
     if (inv[prm_518].id == 544)
     {
@@ -1625,12 +1609,12 @@ void remain_make(int ci, int cc)
         if (the_character_db[cdata[cc].id]->rarity / 1000 < 20
             && cdata[cc].original_relationship < -1)
         {
-            inv[ci].value = inv[ci].value
-                * std::clamp(4
-                              - the_character_db[cdata[cc].id]->rarity
-                                  / 1000 / 5,
-                             1,
-                             5);
+            inv[ci].value =
+                inv[ci].value
+                * std::clamp(
+                      4 - the_character_db[cdata[cc].id]->rarity / 1000 / 5,
+                      1,
+                      5);
         }
     }
 }
@@ -1644,8 +1628,8 @@ void make_dish(int ci, int type)
     inv[ci].param2 = type;
     if (inv[ci].material == 35 && inv[ci].param3 >= 0)
     {
-        inv[ci].param3 = gdata_hour + gdata_day * 24
-            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 72;
+        inv[ci].param3 = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
+            + gdata_year * 24 * 30 * 12 + 72;
     }
 }
 
