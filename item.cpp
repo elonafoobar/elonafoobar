@@ -679,28 +679,28 @@ int inv_getfreeid(int owner)
 
 
 
-int inv_weight(int prm_507)
+int inv_weight(int owner)
 {
-    p_at_m57 = 0;
-    if (prm_507 == 0)
+    int weight{};
+    if (owner == 0)
     {
         gdata_cargo_weight = 0;
     }
-    for (const auto& cnt : items(prm_507))
+    for (const auto& cnt : items(owner))
     {
         if (inv[cnt].number != 0)
         {
             if (inv[cnt].weight >= 0)
             {
-                p_at_m57 += inv[cnt].weight * inv[cnt].number;
+                weight += inv[cnt].weight * inv[cnt].number;
             }
-            else if (prm_507 == 0)
+            else if (owner == 0)
             {
-                gdata_cargo_weight += inv[cnt].weight * inv[cnt].number * -1;
+                gdata_cargo_weight += -inv[cnt].weight * inv[cnt].number;
             }
         }
     }
-    return p_at_m57;
+    return weight;
 }
 
 
