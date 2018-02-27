@@ -1353,13 +1353,12 @@ void txt_check(int prm_329)
 
 
 
-void stxt(int prm_340, const std::string& prm_341)
+void stxt(int cc, const std::string& str)
 {
-    if (prm_340 == 0 || (is_in_fov(prm_340) && cdata[0].blind == 0))
+    if (cc == 0 || (is_in_fov(cc) && cdata[0].blind == 0))
     {
-        txt(prm_341);
+        txt(str);
     }
-    return;
 }
 
 
