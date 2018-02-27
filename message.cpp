@@ -494,31 +494,22 @@ void press(bool only_enter_of_cancel)
 
 
 
-void bmes(const std::string& prm_301, int prm_302, int prm_303, int prm_304)
+void bmes(const std::string& str, int r, int g, int b)
 {
-    int pos_x_at_m21 = 0;
-    int pos_y_at_m21 = 0;
-    elona_vector1<int> mes_color_at_m21;
-    int mes_y_at_m21 = 0;
-    pos_x_at_m21 = ginfo(22);
-    pos_y_at_m21 = ginfo(23);
-    mes_color_at_m21(0) = prm_302;
-    mes_color_at_m21(1) = prm_303;
-    mes_color_at_m21(2) = prm_304;
-    for (int cnt = 0; cnt < 3; ++cnt)
+    int x = ginfo(22);
+    int y = ginfo(23);
+    for (int dy = -1; dy <= 1; ++dy)
     {
-        mes_y_at_m21 = cnt + pos_y_at_m21 - 1;
-        for (int cnt = 0; cnt < 3; ++cnt)
+        for (int dx = -1; dx <= 1; ++dx)
         {
-            pos(pos_x_at_m21 - 1 + cnt, mes_y_at_m21);
-            mes(prm_301);
+            pos(x + dx, y + dy);
+            mes(str);
         }
     }
-    color(mes_color_at_m21(0), mes_color_at_m21(1), mes_color_at_m21(2));
-    pos(pos_x_at_m21, pos_y_at_m21);
-    mes(prm_301);
+    color(r, g, b);
+    pos(x, y);
+    mes(str);
     color(0, 0, 0);
-    return;
 }
 
 
