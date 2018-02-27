@@ -141,17 +141,17 @@ std::pair<int, int> inv_getheader(int owner)
 
 
 
-int inv_getowner(int prm_473)
+int inv_getowner(int inv_id)
 {
-    if (prm_473 < 200)
+    if (inv_id < 200)
     {
         return 0;
     }
-    if (prm_473 >= 5080)
+    if (inv_id >= 5080)
     {
         return -1;
     }
-    return (prm_473 - 200) / 20 + 1;
+    return (inv_id - 200) / 20 + 1;
 }
 
 
