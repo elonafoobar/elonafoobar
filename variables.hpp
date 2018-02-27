@@ -660,7 +660,7 @@ int item_cold(int = 0, int = 0);
 int item_find(int = 0, int = 0, int = 0);
 int item_fire(int = 0, int = 0);
 int item_identify(int = 0, int = 0, int = 0);
-int item_separate(int&);
+int item_separate(int);
 int item_stack(int = 0, int = 0, int = 0);
 int itemcreate(int = 0, int = 0, int = 0, int = 0, int = 0);
 int itemfind(int = 0, int = 0, int = 0);

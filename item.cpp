@@ -724,51 +724,45 @@ void item_num(int ci, int delta)
 
 
 
-int item_separate(int& prm_510)
+int item_separate(int ci)
 {
-    int ti_at_m59 = 0;
-    if (inv[prm_510].number <= 1)
+    if (inv[ci].number <= 1)
+        return ci;
+
+    int ti = inv_getfreeid(inv_getowner(ci));
+    if (ti == -1)
     {
-        return prm_510;
-    }
-    ti_at_m59 = inv_getfreeid(inv_getowner(prm_510));
-    if (ti_at_m59 == -1)
-    {
-        ti_at_m59 = inv_getfreeid(-1);
-        if (ti_at_m59 == -1)
+        ti = inv_getfreeid(-1);
+        if (ti == -1)
         {
-            inv[prm_510].number = 1;
+            inv[ci].number = 1;
             txt(lang(
                 u8"何かが地面に落ちて消えた…"s,
                 u8"Something falls to the ground and desappear..."s));
-            return prm_510;
+            return ci;
         }
     }
-    item_copy(prm_510, ti_at_m59);
-    inv[ti_at_m59].number = inv[prm_510].number - 1;
-    inv[prm_510].number = 1;
-    if (inv_getowner(ti_at_m59) == -1)
+
+    item_copy(ci, ti);
+    inv[ti].number = inv[ci].number - 1;
+    inv[ci].number = 1;
+
+    if (inv_getowner(ti) == -1 && mode != 6)
     {
-        if (mode != 6)
+        if (inv_getowner(ci) != -1)
         {
-            if (inv_getowner(prm_510) != -1)
-            {
-                inv[prm_510].position.x =
-                    cdata[inv_getowner(prm_510)].position.x;
-                inv[prm_510].position.y =
-                    cdata[inv_getowner(prm_510)].position.y;
-            }
-            inv[ti_at_m59].position.x = inv[prm_510].position.x;
-            inv[ti_at_m59].position.y = inv[prm_510].position.y;
-            itemturn(ti_at_m59);
-            cell_refresh(inv[ti_at_m59].position.x, inv[ti_at_m59].position.y);
-            txt(lang(
-                u8"何かが地面に落ちた。"s,
-                u8"Something falls to the ground from your backpack."s));
-            refresh_burden_state();
+            inv[ci].position = cdata[inv_getowner(ci)].position;
         }
+        inv[ti].position = inv[ci].position;
+        itemturn(ti);
+        cell_refresh(inv[ti].position.x, inv[ti].position.y);
+        txt(lang(
+            u8"何かが地面に落ちた。"s,
+            u8"Something falls to the ground from your backpack."s));
+        refresh_burden_state();
     }
-    return ti_at_m59;
+
+    return ti;
 }
 
 
