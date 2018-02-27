@@ -1,6 +1,7 @@
 #pragma once
 
 #include <unordered_map>
+#include "cat.hpp"
 
 
 
@@ -21,6 +22,7 @@ struct buff_data
 
     int id;
     type_t type;
+    cat::ref duration;
 };
 
 

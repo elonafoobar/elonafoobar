@@ -1,5 +1,6 @@
 #include "calc.hpp"
 #include "ability.hpp"
+#include "buff.hpp"
 #include "character.hpp"
 #include "debug.hpp"
 #include "elona.hpp"
@@ -96,38 +97,8 @@ int rangedist = 0;
 
 int calc_buff_duration(int id, int power)
 {
-    switch (id)
-    {
-    case 1: return 10 + power / 10;
-    case 2: return 5 + power / 40;
-    case 3: return 12 + power / 20;
-    case 4: return 4 + power / 6;
-    case 5: return 8 + power / 30;
-    case 6: return 8 + power / 30;
-    case 7: return 10 + power / 4;
-    case 8: return 6 + power / 10;
-    case 9: return 4 + power / 15;
-    case 10: return 15 + power / 5;
-    case 11: return 4 + power / 15;
-    case 12: return 10 + power / 4;
-    case 13: return power;
-    case 14: return 7;
-    case 15: return 4 + power / 40;
-    case 16: return 20;
-    case 17: return 5;
-    case 18: return 66;
-    case 19: return 777;
-    case 20:
-    case 21:
-    case 22:
-    case 23:
-    case 24:
-    case 25:
-    case 26:
-    case 27:
-    case 28: return 10 + power / 10;
-    default: assert(0);
-    }
+    auto func = the_buff_db[id].duration;
+    return cat::global.call<int>(func, power);
 }
 
 

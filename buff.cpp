@@ -26,16 +26,22 @@ int define(lua_State* state)
     lua_getfield(state, 2, #name); \
     int name = luaL_checkinteger(state, -1); \
     lua_pop(state, 1);
+#define FIELD_R(name) \
+    lua_getfield(state, 2, #name); \
+    cat::ref name = luaL_ref(state, LUA_REGISTRYINDEX);
 
     FIELD_I(type_);
+    FIELD_R(duration);
 
 #undef FIELD_I
+#undef FIELD_R
 
     storage_ptr->emplace(
         std::stoi(id), // TODO
         buff_data{
             std::stoi(id),
             buff_data::type_t(type_),
+            duration,
         });
 
     return 0;
@@ -51,7 +57,8 @@ namespace elona
 
 buff_db::buff_db()
 {
-    storage.emplace(0, buff_data{0, buff_data::type_t::buff}); // dummy
+    storage.emplace(
+        0, buff_data{0, buff_data::type_t::buff, LUA_REFNIL}); // dummy
 }
 
 
