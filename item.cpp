@@ -496,15 +496,14 @@ void cell_refresh(int prm_493, int prm_494)
 
 
 
-void itemturn(int prm_495)
+void itemturn(int ci)
 {
     if (gdata_item_turns < 0)
     {
         gdata_item_turns = 0;
     }
     ++gdata_item_turns;
-    inv[prm_495].turn = gdata_item_turns;
-    return;
+    inv[ci].turn = gdata_item_turns;
 }
 
 
@@ -538,28 +537,27 @@ void removeitem(int prm_496, int prm_497)
 
 
 
-void item_copy(int prm_498, int prm_499)
+void item_copy(int a, int b)
 {
-    if (prm_498 < 0 || prm_499 < 0)
-    {
+    if (a < 0 || b < 0)
         return;
-    }
-    inv(prm_499) = inv(prm_498);
+
+    inv(b) = inv(a);
 }
 
 
 
-void item_exchange(int prm_500, int prm_501)
+void item_exchange(int a, int b)
 {
     using std::swap;
-    swap(inv(prm_500), inv(prm_501));
+    swap(inv(a), inv(b));
 }
 
 
 
-void item_delete(int prm_502)
+void item_delete(int ci)
 {
-    inv(prm_502).clear();
+    inv(ci).clear();
 }
 
 
