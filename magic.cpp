@@ -1755,7 +1755,7 @@ label_2181_internal:
                 u8"釣りの仕方を知らない。"s, u8"You don't know how to fish."s));
             return 0;
         }
-        if (inv_getspace() == 0)
+        if (!inv_getspace(0))
         {
             txt(lang(
                 u8"バックパックが一杯だ。"s, u8"Your inventory is full."s));

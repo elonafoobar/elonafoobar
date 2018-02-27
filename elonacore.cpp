@@ -34688,7 +34688,7 @@ label_1857_internal:
                 u8"You don't meet requirements to create the item."s));
             goto label_1857_internal;
         }
-        if (inv_getspace() == 0)
+        if (!inv_getspace(0))
         {
             snd(27);
             txt(lang(
@@ -48316,7 +48316,7 @@ void do_get_command()
                 turn_end();
                 return;
             }
-            if (inv_getspace(0) == 0)
+            if (!inv_getspace(0))
             {
                 txt(lang(
                     u8"バックパックが一杯だ。"s, u8"Your inventory is full."s));
@@ -53637,7 +53637,7 @@ void continuous_action_others()
                     f = 1;
                 }
             }
-            if (itemusingfind(ci, 1) != -1)
+            if (itemusingfind(ci, true) != -1)
             {
                 if (f != 1)
                 {
@@ -56683,7 +56683,7 @@ int pick_up_item()
             {
                 if (cdata[0].continuous_action_id == 0)
                 {
-                    if (inv_getspace(0) == 0)
+                    if (!inv_getspace(0))
                     {
                         txt(lang(
                             u8"バックパックが一杯だ。"s,

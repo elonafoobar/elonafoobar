@@ -653,7 +653,7 @@ int implevel(int = 0);
 int inv_find(int = 0, int = 0);
 int inv_getfreeid(int = 0);
 int inv_getowner(int = 0);
-int inv_getspace(int = 0);
+bool inv_getspace(int);
 int inv_sum(int = 0);
 int inv_weight(int = 0);
 int item_cold(int = 0, int = 0);

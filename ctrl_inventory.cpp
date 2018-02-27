@@ -1127,7 +1127,7 @@ label_2061_internal:
                     u8"It's set as no-drop. You can reset it from the <examine> menu."s));
                 goto label_2060_internal;
             }
-            if (inv_getspace(-1) == 0)
+            if (!inv_getspace(-1))
             {
                 txt(lang(
                     u8"これ以上は置けない。"s,

@@ -552,18 +552,16 @@ void item_delete(int ci)
 
 
 
-int inv_getspace(int prm_503)
+bool inv_getspace(int owner)
 {
-    p_at_m57 = 0;
-    for (const auto& cnt : items(prm_503))
+    for (const auto& cnt : items(owner))
     {
         if (inv[cnt].number == 0)
         {
-            ++p_at_m57;
-            break;
+            return true;
         }
     }
-    return p_at_m57;
+    return false;
 }
 
 
