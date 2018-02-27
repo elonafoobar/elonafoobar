@@ -12669,7 +12669,7 @@ void resistmod(int cc, int element, int delta)
         case 55:
             txt(lang(
                 name(cc) + u8"の毒への耐性は薄れた。"s,
-                name(cc) + u8" lose"s + _s(cc, 1)
+                name(cc) + u8" lose"s + _s(cc, true)
                     + u8" antibodies to poisons."s));
             break;
         case 56:
@@ -14557,7 +14557,7 @@ void txteledmg(int type, int attacker, int target, int element)
         {
             txt(lang(
                 name(target) + u8"は冥界に墜ちた。"s,
-                name(target) + u8" go"s + _s(target, 1) + u8" to hell."s));
+                name(target) + u8" go"s + _s(target, true) + u8" to hell."s));
         }
         break;
     case 55:
@@ -60035,7 +60035,7 @@ label_22191_internal:
             {
                 txt(lang(
                     aln(cc) + u8"攻撃をかわされた。"s,
-                    name(cc) + u8" miss"s + _s(cc, 1) + u8" "s + name(tc)
+                    name(cc) + u8" miss"s + _s(cc, true) + u8" "s + name(tc)
                         + u8"."s));
             }
         }
@@ -61277,7 +61277,7 @@ void do_use_command()
                 {
                     txt(lang(
                         ""s + name(tc) + u8"は顔を赤らめた。"s,
-                        name(tc) + u8" blush"s + _s(tc, 1) + u8"."s));
+                        name(tc) + u8" blush"s + _s(tc, true) + u8"."s));
                     txtmore();
                     txtef(4);
                     txt(lang(u8"「キャー」"s, u8"\"Pervert!\""s));

@@ -797,7 +797,7 @@ std::string _noka(int = 0);
 std::string _ore(int = 0);
 std::string _rob(int = 0);
 std::string _ru(int = 0);
-std::string _s(int = 0, int = 0);
+std::string _s(int, bool = false);
 std::string _s2(int = 0);
 std::string _ta(int = 0);
 std::string _tanomu(int = 0);

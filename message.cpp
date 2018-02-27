@@ -1003,11 +1003,11 @@ std::string npcn(int cc)
 
 
 
-std::string _s(int prm_312, int prm_313)
+std::string _s(int cc, int need_e)
 {
-    if (prm_312 < 0 || prm_312 >= 245)
+    if (cc < 0 || cc >= 245)
     {
-        if (prm_313)
+        if (need_e)
         {
             return u8"es"s;
         }
@@ -1016,11 +1016,11 @@ std::string _s(int prm_312, int prm_313)
             return u8"s"s;
         }
     }
-    if (prm_312 == 0)
+    if (cc == 0)
     {
         return "";
     }
-    if (prm_313)
+    if (need_e)
     {
         return u8"es"s;
     }
