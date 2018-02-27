@@ -258,34 +258,33 @@ int item_find(int prm_476, int prm_477, int prm_478)
 
 
 
-int encfind(int prm_479, int prm_480)
+int encfind(int cc, int id)
 {
-    int i_at_m53 = 0;
-    f_at_m53 = -1;
+    int power = -1;
     for (int cnt = 100; cnt < 130; ++cnt)
     {
-        if (cdata_body_part(prm_479, cnt) % 10000 == 0)
+        if (cdata_body_part(cc, cnt) % 10000 == 0)
         {
             continue;
         }
-        i_at_m53 = cdata_body_part(prm_479, cnt) % 10000 - 1;
+        int ci = cdata_body_part(cc, cnt) % 10000 - 1;
         for (int cnt = 0; cnt < 15; ++cnt)
         {
-            if (inv[i_at_m53].enchantments[cnt].id == 0)
+            if (inv[ci].enchantments[cnt].id == 0)
             {
                 break;
             }
-            if (inv[i_at_m53].enchantments[cnt].id == prm_480)
+            if (inv[ci].enchantments[cnt].id == id)
             {
-                if (inv[i_at_m53].enchantments[cnt].power > f_at_m53)
+                if (inv[ci].enchantments[cnt].power > power)
                 {
-                    f_at_m53 = inv[i_at_m53].enchantments[cnt].power;
+                    power = inv[ci].enchantments[cnt].power;
                     break;
                 }
             }
         }
     }
-    return f_at_m53;
+    return power;
 }
 
 
