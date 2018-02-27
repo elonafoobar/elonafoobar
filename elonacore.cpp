@@ -39866,8 +39866,7 @@ int label_1932()
                 u8"You lose "s + itemname(rpref((10 + cnt * 2)), 1) + u8"."s));
             --inv[rpref(10 + cnt * 2)].number;
         }
-        int stat = chara_unequip(rpref(10 + cnt * 2));
-        if (stat == 1)
+        if (chara_unequip(rpref(10 + cnt * 2)))
         {
             r1 = 0;
             refresh_character();
@@ -54804,8 +54803,7 @@ void label_2161()
     {
         item_identify(ci, 1);
     }
-    int stat = chara_unequip(ci);
-    if (stat == 1)
+    if (chara_unequip(ci))
     {
         r1 = cc;
         refresh_character();

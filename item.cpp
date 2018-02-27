@@ -767,24 +767,20 @@ int item_separate(int ci)
 
 
 
-int chara_unequip(int prm_511)
+bool chara_unequip(int ci)
 {
-    int p_at_m59 = 0;
-    int c_at_m59 = 0;
-    if (inv[prm_511].body_part == 0)
-    {
-        return 0;
-    }
-    p_at_m59 = inv[prm_511].body_part;
-    c_at_m59 = inv_getowner(prm_511);
-    if (c_at_m59 == -1)
-    {
-        return 0;
-    }
-    cdata_body_part(c_at_m59, p_at_m59) =
-        cdata_body_part(c_at_m59, p_at_m59) / 10000 * 10000;
-    inv[prm_511].body_part = 0;
-    return 1;
+    if (inv[ci].body_part == 0)
+        return false;
+
+    int body_part = inv[ci].body_part;
+    int owner = inv_getowner(ci);
+    if (owner == -1)
+        return false;
+
+    cdata_body_part(owner, body_part) =
+        cdata_body_part(owner, body_part) / 10000 * 10000;
+    inv[ci].body_part = 0;
+    return true;
 }
 
 

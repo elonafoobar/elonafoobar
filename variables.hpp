@@ -601,7 +601,7 @@ int cell_findspace(int = 0, int = 0, int = 0);
 int cell_itemlist(int = 0, int = 0);
 int cell_itemoncell(int = 0, int = 0);
 int chara_anorexia(int = 0);
-int chara_unequip(int = 0);
+bool chara_unequip(int);
 int characreate(int = 0, int = 0, int = 0, int = 0);
 int clientguide(int = 0);
 int cnvjkey(const std::string&);
