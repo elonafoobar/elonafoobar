@@ -940,36 +940,35 @@ void txt_conv()
 
 
 
-std::string name(int prm_309)
+std::string name(int cc)
 {
-    std::string s_at_m23;
-    if (prm_309 == 0)
+    if (cc == 0)
     {
         return lang(u8"あなた"s, u8"you"s);
     }
-    if (is_in_fov(prm_309) == 0)
+    if (is_in_fov(cc) == 0)
     {
         return lang(u8"何か"s, u8"something"s);
     }
     if (cdata[0].blind != 0
-        || (cbit(6, prm_309) == 1 && cbit(7, 0) == 0
-            && cdata[prm_309].wet == 0))
+        || (cbit(6, cc) == 1 && cbit(7, 0) == 0
+            && cdata[cc].wet == 0))
     {
         return lang(u8"何か"s, u8"something"s);
     }
     if (en)
     {
-        s_at_m23 = strmid(cdatan(0, prm_309), 0, 1);
-        if (s_at_m23 == u8"\""s || s_at_m23 == u8"<"s)
+        const char first = cdatan(0, cc)[0];
+        if (first == u8'\"' || first == u8'<')
         {
-            return cdatan(0, prm_309);
+            return cdatan(0, cc);
         }
-        if (cbit(977, prm_309) == 0)
+        if (cbit(977, cc) == 0)
         {
-            return u8"the "s + cdatan(0, prm_309);
+            return u8"the "s + cdatan(0, cc);
         }
     }
-    return cdatan(0, prm_309);
+    return cdatan(0, cc);
 }
 
 
