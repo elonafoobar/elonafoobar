@@ -450,12 +450,12 @@ void key_check(int prm_299)
 
 void keyrelease()
 {
-    int a_at_m20 = 0;
     while (1)
     {
         await(30);
-        stick(a_at_m20, 768);
-        if (a_at_m20 == 0)
+        int result{};
+        stick(result, 768);
+        if (result == 0)
         {
             key_check();
             if (key == ""s)
@@ -464,7 +464,6 @@ void keyrelease()
             }
         }
     }
-    return;
 }
 
 
