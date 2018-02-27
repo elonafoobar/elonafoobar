@@ -985,7 +985,7 @@ std::string npcn(int cc)
 
 
 
-std::string _s(int cc, int need_e)
+std::string _s(int cc, bool need_e)
 {
     if (cc < 0 || cc >= 245)
     {
