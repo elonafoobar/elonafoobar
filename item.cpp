@@ -1676,34 +1676,32 @@ label_0313_internal:
 
 
 
-void remain_make(int prm_521, int prm_522)
+void remain_make(int ci, int cc)
 {
-    inv[prm_521].subname = cdata[prm_522].id;
-    inv[prm_521].color = cdata[prm_522].image / 1000;
-    inv[prm_521].weight = cdata[prm_522].weight;
-    if (inv[prm_521].id == 204)
+    inv[ci].subname = cdata[cc].id;
+    inv[ci].color = cdata[cc].image / 1000;
+    inv[ci].weight = cdata[cc].weight;
+
+    if (inv[ci].id == 204)
     {
-        inv[prm_521].weight = 250 * (inv[prm_521].weight + 100) / 100 + 500;
-        inv[prm_521].value = inv[prm_521].weight / 5;
+        inv[ci].weight = 250 * (inv[ci].weight + 100) / 100 + 500;
+        inv[ci].value = inv[ci].weight / 5;
     }
     else
     {
-        inv[prm_521].weight = 20 * (inv[prm_521].weight + 500) / 500;
-        inv[prm_521].value = cdata[prm_522].level * 40 + 600;
-        if (the_character_db[cdata[prm_522].id]->rarity / 1000 < 20)
+        inv[ci].weight = 20 * (inv[ci].weight + 500) / 500;
+        inv[ci].value = cdata[cc].level * 40 + 600;
+        if (the_character_db[cdata[cc].id]->rarity / 1000 < 20
+            && cdata[cc].original_relationship < -1)
         {
-            if (cdata[prm_522].original_relationship < -1)
-            {
-                inv[prm_521].value = inv[prm_521].value
-                    * std::clamp((4
-                                  - the_character_db[cdata[prm_522].id]->rarity
-                                      / 1000 / 5),
-                                 1,
-                                 5);
-            }
+            inv[ci].value = inv[ci].value
+                * std::clamp(4
+                              - the_character_db[cdata[cc].id]->rarity
+                                  / 1000 / 5,
+                             1,
+                             5);
         }
     }
-    return;
 }
 
 
