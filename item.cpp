@@ -156,23 +156,20 @@ int inv_getowner(int inv_id)
 
 
 
-int inv_find(int prm_474, int prm_475)
+int inv_find(int id, int owner)
 {
-    int f_at_m52 = 0;
-    f_at_m52 = -1;
-    for (const auto& cnt : items(prm_475))
+    for (const auto& cnt : items(owner))
     {
         if (inv[cnt].number == 0)
         {
             continue;
         }
-        if (inv[cnt].id == prm_474)
+        if (inv[cnt].id == id)
         {
-            f_at_m52 = cnt;
-            break;
+            return cnt;
         }
     }
-    return f_at_m52;
+    return -1; // Not found
 }
 
 
