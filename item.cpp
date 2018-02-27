@@ -1706,20 +1706,16 @@ void remain_make(int ci, int cc)
 
 
 
-void make_dish(int prm_523, int prm_524)
+void make_dish(int ci, int type)
 {
-    inv[prm_523].image = picfood(prm_524, inv[prm_523].param1 / 1000);
-    inv[prm_523].weight = 500;
-    if (inv[prm_523].material == 35)
+    inv[ci].image = picfood(type, inv[ci].param1 / 1000);
+    inv[ci].weight = 500;
+    inv[ci].param2 = type;
+    if (inv[ci].material == 35 && inv[ci].param3 >= 0)
     {
-        if (inv[prm_523].param3 >= 0)
-        {
-            inv[prm_523].param3 = gdata_hour + gdata_day * 24
-                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 72;
-        }
+        inv[ci].param3 = gdata_hour + gdata_day * 24
+            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 72;
     }
-    inv[prm_523].param2 = prm_524;
-    return;
 }
 
 
