@@ -289,22 +289,20 @@ int encfind(int cc, int id)
 
 
 
-int encfindspec(int prm_481, int prm_482)
+bool encfindspec(int ci, int id)
 {
-    f_at_m53 = -1;
     for (int cnt = 0; cnt < 15; ++cnt)
     {
-        if (inv[prm_481].enchantments[cnt].id == 0)
+        if (inv[ci].enchantments[cnt].id == 0)
         {
             break;
         }
-        if (inv[prm_481].enchantments[cnt].id == prm_482)
+        if (inv[ci].enchantments[cnt].id == id)
         {
-            f_at_m53 = 1;
-            break;
+            return true;
         }
     }
-    return f_at_m53;
+    return false;
 }
 
 

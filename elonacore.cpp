@@ -52791,7 +52791,7 @@ void label_2146()
                         cdata[cc].quality_of_performance -= p;
                     }
                 }
-                if (encfindspec(ci, 60) != -1)
+                if (encfindspec(ci, 60))
                 {
                     if (rnd(15) == 0)
                     {
@@ -52857,7 +52857,7 @@ void label_2146()
                                     {
                                         continue;
                                     }
-                                    if (encfindspec(ci, 49) != -1)
+                                    if (encfindspec(ci, 49))
                                     {
                                         flt(calcobjlv(
                                                 cdata[cc].quality_of_performance

@@ -625,7 +625,7 @@ int efstatusfix(int = 0, int = 0, int = 0, int = 0);
 int eleinfo(int = 0, int = 0);
 int encadd(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
 int encfind(int = 0, int = 0);
-int encfindspec(int = 0, int = 0);
+bool encfindspec(int = 0, int = 0);
 int encflt(int = 0, int = 0);
 int eqweaponheavy();
 int eqweaponlight();
