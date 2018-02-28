@@ -523,7 +523,6 @@ std::unordered_map<int, snail::font_t> font_cache;
 
 void font(const std::string& name, int size, int style)
 {
-    (void)name;
     (void)style;
     if (auto i = font_detail::font_cache.find(size);
         i != std::end(font_detail::font_cache))
@@ -536,7 +535,7 @@ void font(const std::string& name, int size, int style)
             std::piecewise_construct,
             std::forward_as_tuple(size),
             std::forward_as_tuple(
-                "font/APJapanesefontT.ttf",
+                fs::u8path(u8"font") / name,
                 size,
                 snail::font_t::style_t::regular));
         snail::application::instance().get_renderer().set_font(i_->second);
