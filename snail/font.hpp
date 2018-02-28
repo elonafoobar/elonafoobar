@@ -47,6 +47,7 @@ struct font_t
     }
 
 
+    font_t() = default;
     font_t(
         const fs::path& filepath,
         int size,
