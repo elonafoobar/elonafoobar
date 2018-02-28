@@ -1,5 +1,6 @@
 #include "calc.hpp"
 #include "ability.hpp"
+#include "buff.hpp"
 #include "character.hpp"
 #include "debug.hpp"
 #include "elona.hpp"
@@ -96,122 +97,14 @@ int rangedist = 0;
 
 int calc_buff_duration(int id, int power)
 {
-    switch (id)
-    {
-    case 1: return 10 + power / 10;
-    case 2: return 5 + power / 40;
-    case 3: return 12 + power / 20;
-    case 4: return 4 + power / 6;
-    case 5: return 8 + power / 30;
-    case 6: return 8 + power / 30;
-    case 7: return 10 + power / 4;
-    case 8: return 6 + power / 10;
-    case 9: return 4 + power / 15;
-    case 10: return 15 + power / 5;
-    case 11: return 4 + power / 15;
-    case 12: return 10 + power / 4;
-    case 13: return power;
-    case 14: return 7;
-    case 15: return 4 + power / 40;
-    case 16: return 20;
-    case 17: return 5;
-    case 18: return 66;
-    case 19: return 777;
-    case 20:
-    case 21:
-    case 22:
-    case 23:
-    case 24:
-    case 25:
-    case 26:
-    case 27:
-    case 28: return 10 + power / 10;
-    default: assert(0);
-    }
+    auto func = the_buff_db[id].duration;
+    return cat::global.call<int>(func, power);
 }
 
 
 std::string get_buff_description(int id, int power)
 {
-    const auto [effect1, effect2] = calc_buff_effect(id, power);
-
-    switch (id)
-    {
-    case 1:
-        return lang(
-            u8"PVを"s + effect1 + u8"上昇/耐恐怖"s,
-            u8"Increases PV by "s + effect1 + u8"/RES+ fear"s);
-    case 2: return lang(u8"魔法の使用を禁止"s, u8"Inhibits casting"s);
-    case 3: return lang(u8"自然回復強化"s, u8"Enhances regeneration"s);
-    case 4:
-        return lang(u8"炎冷気電撃耐性の獲得"s, u8"RES+ fire,cold,lightning"s);
-    case 5:
-        return lang(
-            ""s + effect1 + u8"の加速"s, u8"Increases speed by "s + effect1);
-    case 6:
-        return lang(
-            ""s + effect1 + u8"の鈍足"s, u8"Decreases speed by "s + effect1);
-    case 7:
-        return lang(
-            u8"筋力・器用を"s + effect1 + u8"上昇/耐恐怖/耐混乱"s,
-            u8"Increases STR,DEX by "s + effect1 + u8"/RES+ fear,confusion"s);
-    case 8: return lang(u8"DVとPVを半減"s, u8"Halves DV and PV"s);
-    case 9:
-        return lang(u8"炎冷気電撃耐性の減少"s, u8"RES- fire,cold,lightning"s);
-    case 10:
-        return lang(
-            u8"ﾊﾟﾜｰ"s + effect1 + u8"の呪い(hex)への抵抗"s,
-            u8"grants hex protection(power:"s + effect1 + u8")"s);
-    case 11: return lang(u8"神経幻影耐性の減少"s, u8"RES- mind,nerve"s);
-    case 12:
-        return lang(
-            u8"習得・魔力を"s + effect1 + u8"上昇/読書を"s + effect2
-                + u8"上昇"s,
-            u8"Increases LER,MAG by "s + effect1 + u8", literacy skill by "s
-                + effect2);
-    case 13:
-        return lang(
-            ""s + effect1 + u8"の鈍足/PVを20%減少"s,
-            u8"Decreases speed by "s + effect1 + u8", PV by 20%"s);
-    case 14:
-        return lang(
-            ""s + effect1 + u8"の加速"s, u8"Increases speed by "s + effect1);
-    case 15: return lang(u8"変装"s, u8"Grants new identify"s);
-    case 16:
-        return lang(
-            u8"呪いが完了したときに確実なる死"s,
-            u8"Guaranteed death when the hex ends"s);
-    case 17:
-        return lang(
-            ""s + effect1 + u8"の加速と能力のアップ"s,
-            u8"Increases speed by "s + effect1
-                + u8"/Boosts physical attributes"s);
-    case 18:
-        return lang(
-            u8"致命傷を負ったとき"s + effect1 + u8"%の確率でダメージ分回復。"s,
-            ""s + effect1
-                + u8"% chances taking a lethal damage heals you instead"s);
-    case 19:
-        return lang(
-            ""s + effect1 + u8"の幸運の上昇"s,
-            u8"Increase luck by "s + effect1 + u8"."s);
-    case 20:
-    case 21:
-    case 22:
-    case 23:
-    case 24:
-    case 25:
-    case 26:
-    case 27:
-    case 28:
-        return lang(
-            i18n::_(u8"ability", std::to_string(id - 20 + 10), u8"name")
-                + u8"の成長率を"s + effect1 + u8"%上昇"s,
-            u8"Increases the growth rate "s
-                + i18n::_(u8"ability", std::to_string(id - 20 + 10), u8"name")
-                + u8" by "s + effect1 + ""s);
-    default: assert(0);
-    }
+    return i18n::fmt(u8"buff", std::to_string(id), u8"description")(power);
 }
 
 
