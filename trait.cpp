@@ -14,24 +14,17 @@ namespace
 {
 
 
-// FIXME: DO NOT USE A GLOBAL VARIABLE!
-std::unordered_map<int, trait_data>* storage_ptr;
 
-
-int define(lua_State* state)
+int define(lua_State* L, std::unordered_map<int, trait_data>& storage)
 {
-    int argc = lua_gettop(state);
-    if (argc != 2)
-        throw 0;
-
-    const char* id = luaL_checklstring(state, 1, nullptr);
+    const char* id = luaL_checkstring(L, -2);
     if (!id)
         throw 0;
 
 #define FIELD_I(name) \
-    lua_getfield(state, 2, #name); \
-    int name = luaL_checkinteger(state, -1); \
-    lua_pop(state, 1);
+    lua_getfield(L, -1, #name); \
+    int name = luaL_checkinteger(L, -1); \
+    lua_pop(L, 1);
 
     FIELD_I(traitref0);
     FIELD_I(traitref1);
@@ -39,7 +32,7 @@ int define(lua_State* state)
 
 #undef FIELD_I
 
-    storage_ptr->emplace(
+    storage.emplace(
         std::stoi(id), // TODO
         trait_data{
             std::stoi(id),
@@ -63,10 +56,15 @@ namespace elona
 
 void trait_db::initialize()
 {
-    cat::global.register_function("Trait", &define);
-    storage_ptr = &storage;
     cat::global.load(fs::u8path(u8"../data/trait.lua"));
-    storage_ptr = nullptr;
+
+    lua_getglobal(cat::global.ptr(), u8"trait");
+    lua_pushnil(cat::global.ptr());
+    while (lua_next(cat::global.ptr(), -2))
+    {
+        define(cat::global.ptr(), storage);
+        lua_pop(cat::global.ptr(), 1);
+    }
 }
 
 

@@ -1,4 +1,7 @@
-Character('0', {
+character = {}
+
+
+character['0'] = {
   item_type = 3,
   filter = "",
   level = 1,
@@ -18,8 +21,8 @@ Character('0', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('343', {
+}
+character['343'] = {
   item_type = 6,
   filter = "",
   level = 1,
@@ -42,8 +45,8 @@ Character('343', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('1', {
+}
+character['1'] = {
   item_type = 3,
   filter = "/man/",
   level = 35,
@@ -67,8 +70,8 @@ Character('1', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('353', {
+}
+character['353'] = {
   item_type = 3,
   filter = "/man/",
   level = 22,
@@ -90,8 +93,8 @@ Character('353', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('70', {
+}
+character['70'] = {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -115,8 +118,8 @@ Character('70', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('69', {
+}
+character['69'] = {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -140,8 +143,8 @@ Character('69', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('73', {
+}
+character['73'] = {
   item_type = 3,
   filter = "/man/",
   level = 40,
@@ -165,8 +168,8 @@ Character('73', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('74', {
+}
+character['74'] = {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -190,8 +193,8 @@ Character('74', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('206', {
+}
+character['206'] = {
   item_type = 3,
   filter = "/man/",
   level = 50,
@@ -215,8 +218,8 @@ Character('206', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('38', {
+}
+character['38'] = {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -240,8 +243,8 @@ Character('38', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('40', {
+}
+character['40'] = {
   item_type = 3,
   filter = "/man/",
   level = 40,
@@ -265,8 +268,8 @@ Character('40', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('333', {
+}
+character['333'] = {
   item_type = 3,
   filter = "/man/",
   level = 69,
@@ -290,8 +293,8 @@ Character('333', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('76', {
+}
+character['76'] = {
   item_type = 3,
   filter = "/man/",
   level = 40,
@@ -314,8 +317,8 @@ Character('76', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('77', {
+}
+character['77'] = {
   item_type = 3,
   filter = "/man/",
   level = 40,
@@ -338,8 +341,8 @@ Character('77', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('204', {
+}
+character['204'] = {
   item_type = 3,
   filter = "/man/",
   level = 10,
@@ -365,8 +368,8 @@ Character('204', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('2', {
+}
+character['2'] = {
   item_type = 3,
   filter = "/man/",
   level = 55,
@@ -395,8 +398,8 @@ Character('2', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('37', {
+}
+character['37'] = {
   item_type = 3,
   filter = "/man/",
   level = 1,
@@ -419,8 +422,8 @@ Character('37', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('23', {
+}
+character['23'] = {
   item_type = 3,
   filter = "/man/god/",
   level = 20,
@@ -445,8 +448,8 @@ Character('23', {
   category = 0,
   rarity = 1000,
   coefficient = 400,
-})
-Character('26', {
+}
+character['26'] = {
   item_type = 3,
   filter = "/man/",
   level = 6,
@@ -469,8 +472,8 @@ Character('26', {
   category = 0,
   rarity = 1000,
   coefficient = 400,
-})
-Character('27', {
+}
+character['27'] = {
   item_type = 3,
   filter = "/man/god/",
   level = 42,
@@ -493,8 +496,8 @@ Character('27', {
   category = 0,
   rarity = 1000,
   coefficient = 400,
-})
-Character('28', {
+}
+character['28'] = {
   item_type = 3,
   filter = "/man/",
   level = 78,
@@ -519,8 +522,8 @@ Character('28', {
   category = 0,
   rarity = 1000,
   coefficient = 400,
-})
-Character('29', {
+}
+character['29'] = {
   item_type = 3,
   filter = "/man/",
   level = 50,
@@ -544,8 +547,8 @@ Character('29', {
   category = 0,
   rarity = 1000,
   coefficient = 400,
-})
-Character('140', {
+}
+character['140'] = {
   item_type = 5,
   filter = "/dragon/",
   level = 25,
@@ -569,8 +572,8 @@ Character('140', {
   category = 0,
   rarity = 1000,
   coefficient = 400,
-})
-Character('30', {
+}
+character['30'] = {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -594,8 +597,8 @@ Character('30', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('31', {
+}
+character['31'] = {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -619,8 +622,8 @@ Character('31', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('351', {
+}
+character['351'] = {
   item_type = 3,
   filter = "/man/",
   level = 130,
@@ -647,8 +650,8 @@ Character('351', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('352', {
+}
+character['352'] = {
   item_type = 3,
   filter = "/man/",
   level = 1,
@@ -672,8 +675,8 @@ Character('352', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('32', {
+}
+character['32'] = {
   item_type = 3,
   filter = "",
   level = 20,
@@ -697,8 +700,8 @@ Character('32', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('33', {
+}
+character['33'] = {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -724,8 +727,8 @@ Character('33', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('34', {
+}
+character['34'] = {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -754,8 +757,8 @@ Character('34', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('139', {
+}
+character['139'] = {
   item_type = 3,
   filter = "/man/",
   level = 10,
@@ -779,8 +782,8 @@ Character('139', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('146', {
+}
+character['146'] = {
   item_type = 3,
   filter = "/man/",
   level = 10,
@@ -804,8 +807,8 @@ Character('146', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('142', {
+}
+character['142'] = {
   item_type = 3,
   filter = "/man/",
   level = 10,
@@ -829,8 +832,8 @@ Character('142', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('141', {
+}
+character['141'] = {
   item_type = 6,
   filter = "/undead/god/",
   level = 28,
@@ -858,8 +861,8 @@ Character('141', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('143', {
+}
+character['143'] = {
   item_type = 3,
   filter = "",
   level = 25,
@@ -886,8 +889,8 @@ Character('143', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('144', {
+}
+character['144'] = {
   item_type = 6,
   filter = "",
   level = 24,
@@ -915,8 +918,8 @@ Character('144', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('145', {
+}
+character['145'] = {
   item_type = 5,
   filter = "",
   level = 16,
@@ -939,8 +942,8 @@ Character('145', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('306', {
+}
+character['306'] = {
   item_type = 6,
   filter = "/god/",
   level = 350,
@@ -965,8 +968,8 @@ Character('306', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('331', {
+}
+character['331'] = {
   item_type = 6,
   filter = "/god/",
   level = 350,
@@ -990,8 +993,8 @@ Character('331', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('336', {
+}
+character['336'] = {
   item_type = 6,
   filter = "/god/",
   level = 1200,
@@ -1020,8 +1023,8 @@ Character('336', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('338', {
+}
+character['338'] = {
   item_type = 6,
   filter = "/god/",
   level = 350,
@@ -1047,8 +1050,8 @@ Character('338', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('339', {
+}
+character['339'] = {
   item_type = 6,
   filter = "/god/",
   level = 350,
@@ -1074,8 +1077,8 @@ Character('339', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('342', {
+}
+character['342'] = {
   item_type = 6,
   filter = "/god/",
   level = 350,
@@ -1101,8 +1104,8 @@ Character('342', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('340', {
+}
+character['340'] = {
   item_type = 6,
   filter = "",
   level = 1200,
@@ -1131,8 +1134,8 @@ Character('340', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('3', {
+}
+character['3'] = {
   item_type = 1,
   filter = "/slime/",
   level = 1,
@@ -1154,8 +1157,8 @@ Character('3', {
   category = 3,
   rarity = 80000,
   coefficient = 400,
-})
-Character('4', {
+}
+character['4'] = {
   item_type = 1,
   filter = "/fire/slime/",
   level = 4,
@@ -1177,8 +1180,8 @@ Character('4', {
   category = 3,
   rarity = 70000,
   coefficient = 400,
-})
-Character('169', {
+}
+character['169'] = {
   item_type = 1,
   filter = "/slime/",
   level = 10,
@@ -1203,8 +1206,8 @@ Character('169', {
   category = 3,
   rarity = 70000,
   coefficient = 400,
-})
-Character('194', {
+}
+character['194'] = {
   item_type = 1,
   filter = "/slime/",
   level = 16,
@@ -1231,8 +1234,8 @@ Character('194', {
   category = 3,
   rarity = 70000,
   coefficient = 400,
-})
-Character('286', {
+}
+character['286'] = {
   item_type = 1,
   filter = "/slime/",
   level = 9,
@@ -1254,8 +1257,8 @@ Character('286', {
   category = 0,
   rarity = 25000,
   coefficient = 400,
-})
-Character('285', {
+}
+character['285'] = {
   item_type = 1,
   filter = "/slime/",
   level = 22,
@@ -1278,8 +1281,8 @@ Character('285', {
   category = 0,
   rarity = 25000,
   coefficient = 400,
-})
-Character('287', {
+}
+character['287'] = {
   item_type = 1,
   filter = "",
   level = 20,
@@ -1300,8 +1303,8 @@ Character('287', {
   category = 0,
   rarity = 25000,
   coefficient = 400,
-})
-Character('327', {
+}
+character['327'] = {
   item_type = 1,
   filter = "",
   level = 52,
@@ -1322,8 +1325,8 @@ Character('327', {
   category = 0,
   rarity = 15000,
   coefficient = 400,
-})
-Character('5', {
+}
+character['5'] = {
   item_type = 1,
   filter = "/wild/",
   level = 1,
@@ -1343,8 +1346,8 @@ Character('5', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('6', {
+}
+character['6'] = {
   item_type = 1,
   filter = "/wild/",
   level = 1,
@@ -1365,8 +1368,8 @@ Character('6', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('7', {
+}
+character['7'] = {
   item_type = 0,
   filter = "/man/",
   level = 3,
@@ -1388,8 +1391,8 @@ Character('7', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('8', {
+}
+character['8'] = {
   item_type = 0,
   filter = "/man/",
   level = 4,
@@ -1412,8 +1415,8 @@ Character('8', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('9', {
+}
+character['9'] = {
   item_type = 0,
   filter = "/man/",
   level = 2,
@@ -1437,8 +1440,8 @@ Character('9', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('269', {
+}
+character['269'] = {
   item_type = 0,
   filter = "/man/",
   level = 5,
@@ -1462,8 +1465,8 @@ Character('269', {
   category = 0,
   rarity = 2000,
   coefficient = 400,
-})
-Character('320', {
+}
+character['320'] = {
   item_type = 0,
   filter = "/man/",
   level = 32,
@@ -1488,8 +1491,8 @@ Character('320', {
   category = 0,
   rarity = 10000,
   coefficient = 100,
-})
-Character('273', {
+}
+character['273'] = {
   item_type = 0,
   filter = "/man/",
   level = 5,
@@ -1513,8 +1516,8 @@ Character('273', {
   category = 0,
   rarity = 2000,
   coefficient = 400,
-})
-Character('326', {
+}
+character['326'] = {
   item_type = 0,
   filter = "/man/",
   level = 16,
@@ -1537,8 +1540,8 @@ Character('326', {
   category = 0,
   rarity = 2000,
   coefficient = 400,
-})
-Character('270', {
+}
+character['270'] = {
   item_type = 0,
   filter = "/man/",
   level = 5,
@@ -1562,8 +1565,8 @@ Character('270', {
   category = 0,
   rarity = 2000,
   coefficient = 400,
-})
-Character('349', {
+}
+character['349'] = {
   item_type = 0,
   filter = "/man/god/",
   level = 12,
@@ -1585,8 +1588,8 @@ Character('349', {
   category = 0,
   rarity = 2000,
   coefficient = 400,
-})
-Character('348', {
+}
+character['348'] = {
   item_type = 0,
   filter = "/man/",
   level = 35,
@@ -1609,8 +1612,8 @@ Character('348', {
   category = 0,
   rarity = 2000,
   coefficient = 400,
-})
-Character('347', {
+}
+character['347'] = {
   item_type = 0,
   filter = "/man/",
   level = 5,
@@ -1635,8 +1638,8 @@ Character('347', {
   category = 0,
   rarity = 2000,
   coefficient = 400,
-})
-Character('271', {
+}
+character['271'] = {
   item_type = 0,
   filter = "/man/",
   level = 8,
@@ -1661,8 +1664,8 @@ Character('271', {
   category = 0,
   rarity = 2000,
   coefficient = 400,
-})
-Character('335', {
+}
+character['335'] = {
   item_type = 0,
   filter = "/man/",
   level = 8,
@@ -1686,8 +1689,8 @@ Character('335', {
   category = 0,
   rarity = 2000,
   coefficient = 400,
-})
-Character('337', {
+}
+character['337'] = {
   item_type = 0,
   filter = "/man/",
   level = 3,
@@ -1711,8 +1714,8 @@ Character('337', {
   category = 0,
   rarity = 2000,
   coefficient = 400,
-})
-Character('272', {
+}
+character['272'] = {
   item_type = 0,
   filter = "/man/",
   level = 6,
@@ -1736,8 +1739,8 @@ Character('272', {
   category = 0,
   rarity = 2000,
   coefficient = 400,
-})
-Character('274', {
+}
+character['274'] = {
   item_type = 0,
   filter = "/man/",
   level = 10,
@@ -1761,8 +1764,8 @@ Character('274', {
   category = 0,
   rarity = 2000,
   coefficient = 400,
-})
-Character('289', {
+}
+character['289'] = {
   item_type = 3,
   filter = "/man/",
   level = 26,
@@ -1789,8 +1792,8 @@ Character('289', {
   category = 0,
   rarity = 2000,
   coefficient = 400,
-})
-Character('293', {
+}
+character['293'] = {
   item_type = 3,
   filter = "/man/",
   level = 26,
@@ -1814,8 +1817,8 @@ Character('293', {
   category = 0,
   rarity = 2000,
   coefficient = 400,
-})
-Character('295', {
+}
+character['295'] = {
   item_type = 3,
   filter = "/man/",
   level = 26,
@@ -1839,8 +1842,8 @@ Character('295', {
   category = 0,
   rarity = 2000,
   coefficient = 400,
-})
-Character('35', {
+}
+character['35'] = {
   item_type = 0,
   filter = "/man/",
   level = 1,
@@ -1864,8 +1867,8 @@ Character('35', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('36', {
+}
+character['36'] = {
   item_type = 0,
   filter = "/man/",
   level = 1,
@@ -1889,8 +1892,8 @@ Character('36', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('174', {
+}
+character['174'] = {
   item_type = 0,
   filter = "/man/sf/",
   level = 1,
@@ -1913,8 +1916,8 @@ Character('174', {
   category = 0,
   rarity = 60000,
   coefficient = 400,
-})
-Character('10', {
+}
+character['10'] = {
   item_type = 1,
   filter = "/wild/",
   level = 1,
@@ -1934,8 +1937,8 @@ Character('10', {
   category = 0,
   rarity = 30000,
   coefficient = 400,
-})
-Character('11', {
+}
+character['11'] = {
   item_type = 1,
   filter = "/wild/",
   level = 2,
@@ -1955,8 +1958,8 @@ Character('11', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('12', {
+}
+character['12'] = {
   item_type = 3,
   filter = "/man/",
   level = 3,
@@ -1979,8 +1982,8 @@ Character('12', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('13', {
+}
+character['13'] = {
   item_type = 3,
   filter = "",
   level = 3,
@@ -2000,8 +2003,8 @@ Character('13', {
   category = 5,
   rarity = 100000,
   coefficient = 400,
-})
-Character('236', {
+}
+character['236'] = {
   item_type = 3,
   filter = "/yeek/",
   level = 2,
@@ -2020,8 +2023,8 @@ Character('236', {
   category = 7,
   rarity = 100000,
   coefficient = 400,
-})
-Character('238', {
+}
+character['238'] = {
   item_type = 3,
   filter = "/yeek/",
   level = 6,
@@ -2041,8 +2044,8 @@ Character('238', {
   category = 7,
   rarity = 100000,
   coefficient = 400,
-})
-Character('241', {
+}
+character['241'] = {
   item_type = 3,
   filter = "/yeek/",
   level = 4,
@@ -2063,8 +2066,8 @@ Character('241', {
   category = 7,
   rarity = 100000,
   coefficient = 400,
-})
-Character('240', {
+}
+character['240'] = {
   item_type = 3,
   filter = "/yeek/",
   level = 9,
@@ -2088,8 +2091,8 @@ Character('240', {
   category = 7,
   rarity = 50000,
   coefficient = 400,
-})
-Character('237', {
+}
+character['237'] = {
   item_type = 3,
   filter = "/yeek/",
   level = 6,
@@ -2109,8 +2112,8 @@ Character('237', {
   category = 12,
   rarity = 150000,
   coefficient = 400,
-})
-Character('244', {
+}
+character['244'] = {
   item_type = 3,
   filter = "",
   level = 18,
@@ -2132,8 +2135,8 @@ Character('244', {
   category = 12,
   rarity = 25000,
   coefficient = 400,
-})
-Character('245', {
+}
+character['245'] = {
   item_type = 1,
   filter = "",
   level = 25,
@@ -2155,8 +2158,8 @@ Character('245', {
   category = 0,
   rarity = 20000,
   coefficient = 400,
-})
-Character('321', {
+}
+character['321'] = {
   item_type = 3,
   filter = "",
   level = 10,
@@ -2179,8 +2182,8 @@ Character('321', {
   category = 0,
   rarity = 15000,
   coefficient = 200,
-})
-Character('242', {
+}
+character['242'] = {
   item_type = 3,
   filter = "/yeek/",
   level = 14,
@@ -2209,8 +2212,8 @@ Character('242', {
   category = 7,
   rarity = 100000,
   coefficient = 400,
-})
-Character('239', {
+}
+character['239'] = {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2233,8 +2236,8 @@ Character('239', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('14', {
+}
+character['14'] = {
   item_type = 2,
   filter = "",
   level = 4,
@@ -2253,8 +2256,8 @@ Character('14', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('15', {
+}
+character['15'] = {
   item_type = 2,
   filter = "",
   level = 4,
@@ -2275,8 +2278,8 @@ Character('15', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('283', {
+}
+character['283'] = {
   item_type = 2,
   filter = "",
   level = 8,
@@ -2298,8 +2301,8 @@ Character('283', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('284', {
+}
+character['284'] = {
   item_type = 2,
   filter = "",
   level = 21,
@@ -2322,8 +2325,8 @@ Character('284', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('16', {
+}
+character['16'] = {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2347,8 +2350,8 @@ Character('16', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('39', {
+}
+character['39'] = {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2372,8 +2375,8 @@ Character('39', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('171', {
+}
+character['171'] = {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2397,8 +2400,8 @@ Character('171', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('172', {
+}
+character['172'] = {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2422,8 +2425,8 @@ Character('172', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('173', {
+}
+character['173'] = {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -2447,8 +2450,8 @@ Character('173', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('71', {
+}
+character['71'] = {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2472,8 +2475,8 @@ Character('71', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('72', {
+}
+character['72'] = {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2497,8 +2500,8 @@ Character('72', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('79', {
+}
+character['79'] = {
   item_type = 3,
   filter = "/man/",
   level = 25,
@@ -2522,8 +2525,8 @@ Character('79', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('80', {
+}
+character['80'] = {
   item_type = 3,
   filter = "/man/",
   level = 35,
@@ -2547,8 +2550,8 @@ Character('80', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('17', {
+}
+character['17'] = {
   item_type = 3,
   filter = "",
   level = 5,
@@ -2568,8 +2571,8 @@ Character('17', {
   category = 2,
   rarity = 100000,
   coefficient = 400,
-})
-Character('281', {
+}
+character['281'] = {
   item_type = 3,
   filter = "/dragon/",
   level = 7,
@@ -2589,8 +2592,8 @@ Character('281', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('282', {
+}
+character['282'] = {
   item_type = 3,
   filter = "/mino/",
   level = 18,
@@ -2610,8 +2613,8 @@ Character('282', {
   category = 0,
   rarity = 70000,
   coefficient = 400,
-})
-Character('296', {
+}
+character['296'] = {
   item_type = 3,
   filter = "/mino/",
   level = 22,
@@ -2636,8 +2639,8 @@ Character('296', {
   category = 0,
   rarity = 70000,
   coefficient = 400,
-})
-Character('298', {
+}
+character['298'] = {
   item_type = 3,
   filter = "/mino/",
   level = 23,
@@ -2658,8 +2661,8 @@ Character('298', {
   category = 0,
   rarity = 70000,
   coefficient = 400,
-})
-Character('299', {
+}
+character['299'] = {
   item_type = 3,
   filter = "/mino/",
   level = 25,
@@ -2681,8 +2684,8 @@ Character('299', {
   category = 0,
   rarity = 40000,
   coefficient = 400,
-})
-Character('300', {
+}
+character['300'] = {
   item_type = 3,
   filter = "/mino/",
   level = 31,
@@ -2707,8 +2710,8 @@ Character('300', {
   category = 0,
   rarity = 40000,
   coefficient = 400,
-})
-Character('251', {
+}
+character['251'] = {
   item_type = 3,
   filter = "",
   level = 14,
@@ -2728,8 +2731,8 @@ Character('251', {
   category = 2,
   rarity = 100000,
   coefficient = 400,
-})
-Character('18', {
+}
+character['18'] = {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2750,8 +2753,8 @@ Character('18', {
   category = 4,
   rarity = 100000,
   coefficient = 400,
-})
-Character('24', {
+}
+character['24'] = {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2776,8 +2779,8 @@ Character('24', {
   category = 4,
   rarity = 100000,
   coefficient = 400,
-})
-Character('309', {
+}
+character['309'] = {
   item_type = 3,
   filter = "/god/",
   level = 12,
@@ -2798,8 +2801,8 @@ Character('309', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('310', {
+}
+character['310'] = {
   item_type = 3,
   filter = "/god/",
   level = 26,
@@ -2821,8 +2824,8 @@ Character('310', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('311', {
+}
+character['311'] = {
   item_type = 3,
   filter = "/god/",
   level = 37,
@@ -2844,8 +2847,8 @@ Character('311', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('41', {
+}
+character['41'] = {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2872,8 +2875,8 @@ Character('41', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('75', {
+}
+character['75'] = {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -2896,8 +2899,8 @@ Character('75', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('19', {
+}
+character['19'] = {
   item_type = 2,
   filter = "",
   level = 5,
@@ -2916,8 +2919,8 @@ Character('19', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('22', {
+}
+character['22'] = {
   item_type = 2,
   filter = "",
   level = 5,
@@ -2937,8 +2940,8 @@ Character('22', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('20', {
+}
+character['20'] = {
   item_type = 3,
   filter = "",
   level = 10,
@@ -2958,8 +2961,8 @@ Character('20', {
   category = 2,
   rarity = 100000,
   coefficient = 400,
-})
-Character('25', {
+}
+character['25'] = {
   item_type = 3,
   filter = "",
   level = 25,
@@ -2981,8 +2984,8 @@ Character('25', {
   category = 2,
   rarity = 100000,
   coefficient = 400,
-})
-Character('21', {
+}
+character['21'] = {
   item_type = 3,
   filter = "/undead/",
   level = 8,
@@ -3002,8 +3005,8 @@ Character('21', {
   category = 9,
   rarity = 100000,
   coefficient = 400,
-})
-Character('42', {
+}
+character['42'] = {
   item_type = 1,
   filter = "/wild/",
   level = 1,
@@ -3022,8 +3025,8 @@ Character('42', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('43', {
+}
+character['43'] = {
   item_type = 1,
   filter = "/wild/",
   level = 10,
@@ -3046,8 +3049,8 @@ Character('43', {
   category = 0,
   rarity = 70000,
   coefficient = 400,
-})
-Character('44', {
+}
+character['44'] = {
   item_type = 1,
   filter = "/wild/fire/dragon/",
   level = 30,
@@ -3068,8 +3071,8 @@ Character('44', {
   category = 0,
   rarity = 60000,
   coefficient = 400,
-})
-Character('45', {
+}
+character['45'] = {
   item_type = 1,
   filter = "/fire/",
   level = 15,
@@ -3095,8 +3098,8 @@ Character('45', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('46', {
+}
+character['46'] = {
   item_type = 1,
   filter = "",
   level = 15,
@@ -3122,8 +3125,8 @@ Character('46', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('47', {
+}
+character['47'] = {
   item_type = 6,
   filter = "/undead/",
   level = 20,
@@ -3147,8 +3150,8 @@ Character('47', {
   category = 0,
   rarity = 60000,
   coefficient = 400,
-})
-Character('48', {
+}
+character['48'] = {
   item_type = 6,
   filter = "/undead/",
   level = 30,
@@ -3174,8 +3177,8 @@ Character('48', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('49', {
+}
+character['49'] = {
   item_type = 6,
   filter = "/undead/",
   level = 45,
@@ -3200,8 +3203,8 @@ Character('49', {
   category = 0,
   rarity = 40000,
   coefficient = 400,
-})
-Character('307', {
+}
+character['307'] = {
   item_type = 6,
   filter = "/undead/",
   level = 18,
@@ -3228,8 +3231,8 @@ Character('307', {
   category = 0,
   rarity = 10000,
   coefficient = 400,
-})
-Character('308', {
+}
+character['308'] = {
   item_type = 6,
   filter = "/undead/",
   level = 35,
@@ -3255,8 +3258,8 @@ Character('308', {
   category = 0,
   rarity = 10000,
   coefficient = 400,
-})
-Character('50', {
+}
+character['50'] = {
   item_type = 1,
   filter = "/wild/",
   level = 5,
@@ -3278,8 +3281,8 @@ Character('50', {
   category = 0,
   rarity = 80000,
   coefficient = 400,
-})
-Character('51', {
+}
+character['51'] = {
   item_type = 1,
   filter = "/wild/fire/",
   level = 10,
@@ -3305,8 +3308,8 @@ Character('51', {
   category = 14,
   rarity = 70000,
   coefficient = 400,
-})
-Character('52', {
+}
+character['52'] = {
   item_type = 1,
   filter = "/wild/",
   level = 10,
@@ -3332,8 +3335,8 @@ Character('52', {
   category = 15,
   rarity = 70000,
   coefficient = 400,
-})
-Character('53', {
+}
+character['53'] = {
   item_type = 1,
   filter = "/wild/",
   level = 12,
@@ -3356,8 +3359,8 @@ Character('53', {
   category = 16,
   rarity = 70000,
   coefficient = 400,
-})
-Character('54', {
+}
+character['54'] = {
   item_type = 1,
   filter = "/wild/",
   level = 12,
@@ -3380,8 +3383,8 @@ Character('54', {
   category = 17,
   rarity = 70000,
   coefficient = 400,
-})
-Character('55', {
+}
+character['55'] = {
   item_type = 1,
   filter = "/wild/",
   level = 18,
@@ -3404,8 +3407,8 @@ Character('55', {
   category = 18,
   rarity = 50000,
   coefficient = 400,
-})
-Character('56', {
+}
+character['56'] = {
   item_type = 1,
   filter = "/wild/",
   level = 18,
@@ -3428,8 +3431,8 @@ Character('56', {
   category = 19,
   rarity = 50000,
   coefficient = 400,
-})
-Character('57', {
+}
+character['57'] = {
   item_type = 1,
   filter = "/wild/",
   level = 15,
@@ -3452,8 +3455,8 @@ Character('57', {
   category = 20,
   rarity = 50000,
   coefficient = 400,
-})
-Character('58', {
+}
+character['58'] = {
   item_type = 1,
   filter = "/wild/",
   level = 22,
@@ -3476,8 +3479,8 @@ Character('58', {
   category = 21,
   rarity = 40000,
   coefficient = 400,
-})
-Character('59', {
+}
+character['59'] = {
   item_type = 1,
   filter = "/wild/",
   level = 25,
@@ -3500,8 +3503,8 @@ Character('59', {
   category = 22,
   rarity = 40000,
   coefficient = 400,
-})
-Character('60', {
+}
+character['60'] = {
   item_type = 1,
   filter = "/wild/",
   level = 30,
@@ -3524,8 +3527,8 @@ Character('60', {
   category = 23,
   rarity = 40000,
   coefficient = 400,
-})
-Character('61', {
+}
+character['61'] = {
   item_type = 1,
   filter = "/wild/",
   level = 4,
@@ -3547,8 +3550,8 @@ Character('61', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('62', {
+}
+character['62'] = {
   item_type = 1,
   filter = "/wild/",
   level = 10,
@@ -3570,8 +3573,8 @@ Character('62', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('63', {
+}
+character['63'] = {
   item_type = 3,
   filter = "/undead/",
   level = 7,
@@ -3593,8 +3596,8 @@ Character('63', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('64', {
+}
+character['64'] = {
   item_type = 3,
   filter = "/undead/",
   level = 3,
@@ -3615,8 +3618,8 @@ Character('64', {
   category = 0,
   rarity = 70000,
   coefficient = 400,
-})
-Character('312', {
+}
+character['312'] = {
   item_type = 3,
   filter = "",
   level = 8,
@@ -3638,8 +3641,8 @@ Character('312', {
   category = 0,
   rarity = 40000,
   coefficient = 400,
-})
-Character('313', {
+}
+character['313'] = {
   item_type = 3,
   filter = "",
   level = 19,
@@ -3662,8 +3665,8 @@ Character('313', {
   category = 0,
   rarity = 40000,
   coefficient = 400,
-})
-Character('65', {
+}
+character['65'] = {
   item_type = 1,
   filter = "",
   level = 12,
@@ -3686,8 +3689,8 @@ Character('65', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('66', {
+}
+character['66'] = {
   item_type = 1,
   filter = "",
   level = 30,
@@ -3710,8 +3713,8 @@ Character('66', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('67', {
+}
+character['67'] = {
   item_type = 1,
   filter = "",
   level = 2,
@@ -3735,8 +3738,8 @@ Character('67', {
   category = 0,
   rarity = 80000,
   coefficient = 400,
-})
-Character('315', {
+}
+character['315'] = {
   item_type = 1,
   filter = "",
   level = 14,
@@ -3763,8 +3766,8 @@ Character('315', {
   category = 0,
   rarity = 60000,
   coefficient = 400,
-})
-Character('316', {
+}
+character['316'] = {
   item_type = 1,
   filter = "",
   level = 7,
@@ -3791,8 +3794,8 @@ Character('316', {
   category = 0,
   rarity = 60000,
   coefficient = 400,
-})
-Character('314', {
+}
+character['314'] = {
   item_type = 1,
   filter = "",
   level = 29,
@@ -3820,8 +3823,8 @@ Character('314', {
   category = 0,
   rarity = 60000,
   coefficient = 400,
-})
-Character('68', {
+}
+character['68'] = {
   item_type = 4,
   filter = "/dragon/",
   level = 20,
@@ -3843,8 +3846,8 @@ Character('68', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('78', {
+}
+character['78'] = {
   item_type = 3,
   filter = "",
   level = 15,
@@ -3868,8 +3871,8 @@ Character('78', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('81', {
+}
+character['81'] = {
   item_type = 2,
   filter = "",
   level = 5,
@@ -3889,8 +3892,8 @@ Character('81', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('82', {
+}
+character['82'] = {
   item_type = 2,
   filter = "/fire/",
   level = 10,
@@ -3911,8 +3914,8 @@ Character('82', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('83', {
+}
+character['83'] = {
   item_type = 3,
   filter = "",
   level = 22,
@@ -3932,8 +3935,8 @@ Character('83', {
   category = 0,
   rarity = 60000,
   coefficient = 400,
-})
-Character('84', {
+}
+character['84'] = {
   item_type = 3,
   filter = "",
   level = 40,
@@ -3955,8 +3958,8 @@ Character('84', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('85', {
+}
+character['85'] = {
   item_type = 3,
   filter = "/fire/",
   level = 7,
@@ -3980,8 +3983,8 @@ Character('85', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('86', {
+}
+character['86'] = {
   item_type = 3,
   filter = "/god/",
   level = 16,
@@ -4004,8 +4007,8 @@ Character('86', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('87', {
+}
+character['87'] = {
   item_type = 3,
   filter = "",
   level = 27,
@@ -4028,8 +4031,8 @@ Character('87', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('88', {
+}
+character['88'] = {
   item_type = 3,
   filter = "/undead/",
   level = 4,
@@ -4051,8 +4054,8 @@ Character('88', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('89', {
+}
+character['89'] = {
   item_type = 3,
   filter = "/undead/",
   level = 11,
@@ -4074,8 +4077,8 @@ Character('89', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('90', {
+}
+character['90'] = {
   item_type = 3,
   filter = "/undead/",
   level = 15,
@@ -4099,8 +4102,8 @@ Character('90', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('91', {
+}
+character['91'] = {
   item_type = 3,
   filter = "/undead/",
   level = 5,
@@ -4123,8 +4126,8 @@ Character('91', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('92', {
+}
+character['92'] = {
   item_type = 3,
   filter = "/undead/",
   level = 13,
@@ -4150,8 +4153,8 @@ Character('92', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('93', {
+}
+character['93'] = {
   item_type = 2,
   filter = "",
   level = 8,
@@ -4172,8 +4175,8 @@ Character('93', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('94', {
+}
+character['94'] = {
   item_type = 2,
   filter = "",
   level = 19,
@@ -4195,8 +4198,8 @@ Character('94', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('95', {
+}
+character['95'] = {
   item_type = 1,
   filter = "/wild/",
   level = 10,
@@ -4217,8 +4220,8 @@ Character('95', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('96', {
+}
+character['96'] = {
   item_type = 1,
   filter = "/wild/",
   level = 18,
@@ -4239,8 +4242,8 @@ Character('96', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('97', {
+}
+character['97'] = {
   item_type = 4,
   filter = "/fire/dragon/",
   level = 16,
@@ -4262,8 +4265,8 @@ Character('97', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('98', {
+}
+character['98'] = {
   item_type = 4,
   filter = "/dragon/",
   level = 16,
@@ -4284,8 +4287,8 @@ Character('98', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('99', {
+}
+character['99'] = {
   item_type = 3,
   filter = "/undead/",
   level = 7,
@@ -4307,8 +4310,8 @@ Character('99', {
   category = 13,
   rarity = 100000,
   coefficient = 400,
-})
-Character('100', {
+}
+character['100'] = {
   item_type = 3,
   filter = "/undead/",
   level = 14,
@@ -4332,8 +4335,8 @@ Character('100', {
   category = 13,
   rarity = 100000,
   coefficient = 400,
-})
-Character('101', {
+}
+character['101'] = {
   item_type = 3,
   filter = "/undead/",
   level = 22,
@@ -4357,8 +4360,8 @@ Character('101', {
   category = 13,
   rarity = 100000,
   coefficient = 400,
-})
-Character('257', {
+}
+character['257'] = {
   item_type = 3,
   filter = "/undead/",
   level = 28,
@@ -4383,8 +4386,8 @@ Character('257', {
   category = 13,
   rarity = 100000,
   coefficient = 400,
-})
-Character('254', {
+}
+character['254'] = {
   item_type = 3,
   filter = "/undead/",
   level = 19,
@@ -4408,8 +4411,8 @@ Character('254', {
   category = 13,
   rarity = 50000,
   coefficient = 400,
-})
-Character('102', {
+}
+character['102'] = {
   item_type = 3,
   filter = "",
   level = 2,
@@ -4429,8 +4432,8 @@ Character('102', {
   category = 1,
   rarity = 100000,
   coefficient = 400,
-})
-Character('103', {
+}
+character['103'] = {
   item_type = 3,
   filter = "",
   level = 6,
@@ -4451,8 +4454,8 @@ Character('103', {
   category = 1,
   rarity = 100000,
   coefficient = 400,
-})
-Character('104', {
+}
+character['104'] = {
   item_type = 3,
   filter = "",
   level = 8,
@@ -4477,8 +4480,8 @@ Character('104', {
   category = 1,
   rarity = 100000,
   coefficient = 400,
-})
-Character('105', {
+}
+character['105'] = {
   item_type = 3,
   filter = "",
   level = 10,
@@ -4500,8 +4503,8 @@ Character('105', {
   category = 1,
   rarity = 100000,
   coefficient = 400,
-})
-Character('106', {
+}
+character['106'] = {
   item_type = 3,
   filter = "/undead/fire/",
   level = 12,
@@ -4526,8 +4529,8 @@ Character('106', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('107', {
+}
+character['107'] = {
   item_type = 3,
   filter = "/undead/",
   level = 12,
@@ -4552,8 +4555,8 @@ Character('107', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('108', {
+}
+character['108'] = {
   item_type = 1,
   filter = "/wild/",
   level = 4,
@@ -4574,8 +4577,8 @@ Character('108', {
   category = 11,
   rarity = 100000,
   coefficient = 400,
-})
-Character('109', {
+}
+character['109'] = {
   item_type = 1,
   filter = "/wild/",
   level = 10,
@@ -4595,8 +4598,8 @@ Character('109', {
   category = 11,
   rarity = 100000,
   coefficient = 400,
-})
-Character('344', {
+}
+character['344'] = {
   item_type = 1,
   filter = "/wild/",
   level = 28,
@@ -4616,8 +4619,8 @@ Character('344', {
   category = 11,
   rarity = 50000,
   coefficient = 400,
-})
-Character('110', {
+}
+character['110'] = {
   item_type = 3,
   filter = "/undead/",
   level = 15,
@@ -4637,8 +4640,8 @@ Character('110', {
   category = 0,
   rarity = 40000,
   coefficient = 400,
-})
-Character('111', {
+}
+character['111'] = {
   item_type = 3,
   filter = "/undead/",
   level = 25,
@@ -4659,8 +4662,8 @@ Character('111', {
   category = 0,
   rarity = 30000,
   coefficient = 400,
-})
-Character('112', {
+}
+character['112'] = {
   item_type = 3,
   filter = "/undead/",
   level = 35,
@@ -4681,8 +4684,8 @@ Character('112', {
   category = 0,
   rarity = 30000,
   coefficient = 400,
-})
-Character('113', {
+}
+character['113'] = {
   item_type = 3,
   filter = "",
   level = 45,
@@ -4704,8 +4707,8 @@ Character('113', {
   category = 0,
   rarity = 30000,
   coefficient = 400,
-})
-Character('114', {
+}
+character['114'] = {
   item_type = 3,
   filter = "/god/",
   level = 22,
@@ -4725,8 +4728,8 @@ Character('114', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('115', {
+}
+character['115'] = {
   item_type = 3,
   filter = "/god/",
   level = 33,
@@ -4747,8 +4750,8 @@ Character('115', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('116', {
+}
+character['116'] = {
   item_type = 3,
   filter = "/god/",
   level = 44,
@@ -4769,8 +4772,8 @@ Character('116', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('117', {
+}
+character['117'] = {
   item_type = 3,
   filter = "/god/",
   level = 8,
@@ -4791,8 +4794,8 @@ Character('117', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('118', {
+}
+character['118'] = {
   item_type = 3,
   filter = "/undead/",
   level = 9,
@@ -4813,8 +4816,8 @@ Character('118', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('248', {
+}
+character['248'] = {
   item_type = 1,
   filter = "/dragon/",
   level = 30,
@@ -4834,8 +4837,8 @@ Character('248', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('119', {
+}
+character['119'] = {
   item_type = 3,
   filter = "",
   level = 13,
@@ -4854,8 +4857,8 @@ Character('119', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('120', {
+}
+character['120'] = {
   item_type = 5,
   filter = "/dragon/",
   level = 32,
@@ -4877,8 +4880,8 @@ Character('120', {
   category = 0,
   rarity = 30000,
   coefficient = 400,
-})
-Character('121', {
+}
+character['121'] = {
   item_type = 5,
   filter = "/fire/dragon/",
   level = 40,
@@ -4901,8 +4904,8 @@ Character('121', {
   category = 0,
   rarity = 20000,
   coefficient = 400,
-})
-Character('122', {
+}
+character['122'] = {
   item_type = 5,
   filter = "/dragon/",
   level = 40,
@@ -4924,8 +4927,8 @@ Character('122', {
   category = 0,
   rarity = 20000,
   coefficient = 400,
-})
-Character('123', {
+}
+character['123'] = {
   item_type = 5,
   filter = "/dragon/",
   level = 40,
@@ -4948,8 +4951,8 @@ Character('123', {
   category = 0,
   rarity = 20000,
   coefficient = 400,
-})
-Character('124', {
+}
+character['124'] = {
   item_type = 5,
   filter = "/undead/dragon/",
   level = 45,
@@ -4972,8 +4975,8 @@ Character('124', {
   category = 0,
   rarity = 10000,
   coefficient = 400,
-})
-Character('125', {
+}
+character['125'] = {
   item_type = 5,
   filter = "/dragon/",
   level = 50,
@@ -4996,8 +4999,8 @@ Character('125', {
   category = 0,
   rarity = 10000,
   coefficient = 400,
-})
-Character('126', {
+}
+character['126'] = {
   item_type = 4,
   filter = "/fire/",
   level = 23,
@@ -5019,8 +5022,8 @@ Character('126', {
   category = 0,
   rarity = 40000,
   coefficient = 400,
-})
-Character('255', {
+}
+character['255'] = {
   item_type = 2,
   filter = "/wild/",
   level = 4,
@@ -5042,8 +5045,8 @@ Character('255', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('256', {
+}
+character['256'] = {
   item_type = 2,
   filter = "/wild/",
   level = 24,
@@ -5066,8 +5069,8 @@ Character('256', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('127', {
+}
+character['127'] = {
   item_type = 2,
   filter = "/wild/",
   level = 3,
@@ -5089,8 +5092,8 @@ Character('127', {
   category = 6,
   rarity = 100000,
   coefficient = 400,
-})
-Character('128', {
+}
+character['128'] = {
   item_type = 2,
   filter = "/wild/",
   level = 11,
@@ -5114,8 +5117,8 @@ Character('128', {
   category = 6,
   rarity = 100000,
   coefficient = 400,
-})
-Character('129', {
+}
+character['129'] = {
   item_type = 2,
   filter = "/wild/",
   level = 21,
@@ -5139,8 +5142,8 @@ Character('129', {
   category = 6,
   rarity = 100000,
   coefficient = 400,
-})
-Character('130', {
+}
+character['130'] = {
   item_type = 2,
   filter = "/wild/",
   level = 15,
@@ -5164,8 +5167,8 @@ Character('130', {
   category = 6,
   rarity = 100000,
   coefficient = 400,
-})
-Character('131', {
+}
+character['131'] = {
   item_type = 2,
   filter = "/undead/",
   level = 28,
@@ -5189,8 +5192,8 @@ Character('131', {
   category = 6,
   rarity = 100000,
   coefficient = 400,
-})
-Character('132', {
+}
+character['132'] = {
   item_type = 3,
   filter = "",
   level = 13,
@@ -5211,8 +5214,8 @@ Character('132', {
   category = 0,
   rarity = 40000,
   coefficient = 400,
-})
-Character('133', {
+}
+character['133'] = {
   item_type = 3,
   filter = "/fire/",
   level = 19,
@@ -5232,8 +5235,8 @@ Character('133', {
   category = 0,
   rarity = 40000,
   coefficient = 400,
-})
-Character('134', {
+}
+character['134'] = {
   item_type = 3,
   filter = "/fire/",
   level = 25,
@@ -5255,8 +5258,8 @@ Character('134', {
   category = 0,
   rarity = 40000,
   coefficient = 400,
-})
-Character('135', {
+}
+character['135'] = {
   item_type = 3,
   filter = "",
   level = 30,
@@ -5278,8 +5281,8 @@ Character('135', {
   category = 0,
   rarity = 30000,
   coefficient = 400,
-})
-Character('136', {
+}
+character['136'] = {
   item_type = 3,
   filter = "",
   level = 35,
@@ -5301,8 +5304,8 @@ Character('136', {
   category = 0,
   rarity = 20000,
   coefficient = 400,
-})
-Character('137', {
+}
+character['137'] = {
   item_type = 3,
   filter = "",
   level = 40,
@@ -5324,8 +5327,8 @@ Character('137', {
   category = 0,
   rarity = 15000,
   coefficient = 400,
-})
-Character('138', {
+}
+character['138'] = {
   item_type = 3,
   filter = "",
   level = 50,
@@ -5347,8 +5350,8 @@ Character('138', {
   category = 0,
   rarity = 15000,
   coefficient = 400,
-})
-Character('147', {
+}
+character['147'] = {
   item_type = 2,
   filter = "/fire/",
   level = 16,
@@ -5369,8 +5372,8 @@ Character('147', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('148', {
+}
+character['148'] = {
   item_type = 2,
   filter = "/fire/",
   level = 18,
@@ -5392,8 +5395,8 @@ Character('148', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('149', {
+}
+character['149'] = {
   item_type = 3,
   filter = "/fire/",
   level = 20,
@@ -5418,8 +5421,8 @@ Character('149', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('150', {
+}
+character['150'] = {
   item_type = 3,
   filter = "/undead/",
   level = 12,
@@ -5439,8 +5442,8 @@ Character('150', {
   category = 9,
   rarity = 100000,
   coefficient = 400,
-})
-Character('151', {
+}
+character['151'] = {
   item_type = 3,
   filter = "/undead/",
   level = 20,
@@ -5462,8 +5465,8 @@ Character('151', {
   category = 9,
   rarity = 100000,
   coefficient = 400,
-})
-Character('152', {
+}
+character['152'] = {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -5486,8 +5489,8 @@ Character('152', {
   category = 9,
   rarity = 100000,
   coefficient = 400,
-})
-Character('153', {
+}
+character['153'] = {
   item_type = 3,
   filter = "/pawn/",
   level = 12,
@@ -5507,8 +5510,8 @@ Character('153', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('154', {
+}
+character['154'] = {
   item_type = 3,
   filter = "/pawn/",
   level = 16,
@@ -5529,8 +5532,8 @@ Character('154', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('155', {
+}
+character['155'] = {
   item_type = 3,
   filter = "/pawn/",
   level = 18,
@@ -5554,8 +5557,8 @@ Character('155', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('156', {
+}
+character['156'] = {
   item_type = 3,
   filter = "/pawn/",
   level = 18,
@@ -5577,8 +5580,8 @@ Character('156', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('157', {
+}
+character['157'] = {
   item_type = 3,
   filter = "",
   level = 22,
@@ -5602,8 +5605,8 @@ Character('157', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('158', {
+}
+character['158'] = {
   item_type = 3,
   filter = "",
   level = 22,
@@ -5625,8 +5628,8 @@ Character('158', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('159', {
+}
+character['159'] = {
   item_type = 3,
   filter = "/man/shopguard/",
   level = 20,
@@ -5649,8 +5652,8 @@ Character('159', {
   category = 8,
   rarity = 25000,
   coefficient = 400,
-})
-Character('160', {
+}
+character['160'] = {
   item_type = 3,
   filter = "/man/shopguard/",
   level = 20,
@@ -5673,8 +5676,8 @@ Character('160', {
   category = 8,
   rarity = 25000,
   coefficient = 400,
-})
-Character('161', {
+}
+character['161'] = {
   item_type = 3,
   filter = "/man/shopguard/",
   level = 20,
@@ -5698,8 +5701,8 @@ Character('161', {
   category = 8,
   rarity = 25000,
   coefficient = 400,
-})
-Character('302', {
+}
+character['302'] = {
   item_type = 3,
   filter = "/man/rogue/",
   level = 12,
@@ -5724,8 +5727,8 @@ Character('302', {
   category = 0,
   rarity = 25000,
   coefficient = 400,
-})
-Character('303', {
+}
+character['303'] = {
   item_type = 3,
   filter = "/man/rogue/",
   level = 10,
@@ -5749,8 +5752,8 @@ Character('303', {
   category = 0,
   rarity = 25000,
   coefficient = 400,
-})
-Character('304', {
+}
+character['304'] = {
   item_type = 3,
   filter = "/man/rogue/",
   level = 10,
@@ -5773,8 +5776,8 @@ Character('304', {
   category = 0,
   rarity = 25000,
   coefficient = 400,
-})
-Character('305', {
+}
+character['305'] = {
   item_type = 3,
   filter = "/man/rogue/",
   level = 10,
@@ -5800,8 +5803,8 @@ Character('305', {
   category = 0,
   rarity = 25000,
   coefficient = 400,
-})
-Character('162', {
+}
+character['162'] = {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -5823,8 +5826,8 @@ Character('162', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('234', {
+}
+character['234'] = {
   item_type = 3,
   filter = "/man/",
   level = 22,
@@ -5847,8 +5850,8 @@ Character('234', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('231', {
+}
+character['231'] = {
   item_type = 3,
   filter = "/man/",
   level = 45,
@@ -5872,8 +5875,8 @@ Character('231', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('232', {
+}
+character['232'] = {
   item_type = 3,
   filter = "",
   level = 17,
@@ -5894,8 +5897,8 @@ Character('232', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('233', {
+}
+character['233'] = {
   item_type = 3,
   filter = "/man/",
   level = 7,
@@ -5917,8 +5920,8 @@ Character('233', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('235', {
+}
+character['235'] = {
   item_type = 3,
   filter = "/man/",
   level = 15,
@@ -5941,8 +5944,8 @@ Character('235', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('163', {
+}
+character['163'] = {
   item_type = 3,
   filter = "/man/",
   level = 9,
@@ -5964,8 +5967,8 @@ Character('163', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('164', {
+}
+character['164'] = {
   item_type = 1,
   filter = "/wild/cat/",
   level = 4,
@@ -5986,8 +5989,8 @@ Character('164', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('246', {
+}
+character['246'] = {
   item_type = 1,
   filter = "/wild/cat/",
   level = 3,
@@ -6009,8 +6012,8 @@ Character('246', {
   category = 0,
   rarity = 1000,
   coefficient = 0,
-})
-Character('332', {
+}
+character['332'] = {
   item_type = 1,
   filter = "/wild/cat/",
   level = 9,
@@ -6033,8 +6036,8 @@ Character('332', {
   category = 0,
   rarity = 10000,
   coefficient = 0,
-})
-Character('229', {
+}
+character['229'] = {
   item_type = 1,
   filter = "/wild/cat/",
   level = 18,
@@ -6056,8 +6059,8 @@ Character('229', {
   category = 10,
   rarity = 100000,
   coefficient = 400,
-})
-Character('230', {
+}
+character['230'] = {
   item_type = 1,
   filter = "/wild/cat/",
   level = 25,
@@ -6081,8 +6084,8 @@ Character('230', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('228', {
+}
+character['228'] = {
   item_type = 1,
   filter = "/wild/cat/",
   level = 20,
@@ -6106,8 +6109,8 @@ Character('228', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('165', {
+}
+character['165'] = {
   item_type = 1,
   filter = "/wild/",
   level = 4,
@@ -6128,8 +6131,8 @@ Character('165', {
   category = 10,
   rarity = 100000,
   coefficient = 400,
-})
-Character('225', {
+}
+character['225'] = {
   item_type = 1,
   filter = "/wild/",
   level = 1,
@@ -6151,8 +6154,8 @@ Character('225', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('226', {
+}
+character['226'] = {
   item_type = 3,
   filter = "/man/",
   level = 4,
@@ -6174,8 +6177,8 @@ Character('226', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('227', {
+}
+character['227'] = {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -6198,8 +6201,8 @@ Character('227', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('166', {
+}
+character['166'] = {
   item_type = 3,
   filter = "/man/",
   level = 4,
@@ -6222,8 +6225,8 @@ Character('166', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('167', {
+}
+character['167'] = {
   item_type = 1,
   filter = "/wild/",
   level = 1,
@@ -6244,8 +6247,8 @@ Character('167', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('168', {
+}
+character['168'] = {
   item_type = 1,
   filter = "/wild/",
   level = 1,
@@ -6265,8 +6268,8 @@ Character('168', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('170', {
+}
+character['170'] = {
   item_type = 3,
   filter = "/man/",
   level = 1,
@@ -6289,8 +6292,8 @@ Character('170', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('175', {
+}
+character['175'] = {
   item_type = 3,
   filter = "/god/",
   level = 80,
@@ -6312,8 +6315,8 @@ Character('175', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('176', {
+}
+character['176'] = {
   item_type = 3,
   filter = "/man/",
   level = 1,
@@ -6336,8 +6339,8 @@ Character('176', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('249', {
+}
+character['249'] = {
   item_type = 3,
   filter = "/man/",
   level = 50,
@@ -6361,8 +6364,8 @@ Character('249', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('210', {
+}
+character['210'] = {
   item_type = 3,
   filter = "/man/",
   level = 1,
@@ -6384,8 +6387,8 @@ Character('210', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('211', {
+}
+character['211'] = {
   item_type = 3,
   filter = "/man/",
   level = 1,
@@ -6412,8 +6415,8 @@ Character('211', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('177', {
+}
+character['177'] = {
   item_type = 3,
   filter = "/god/",
   level = 80,
@@ -6443,8 +6446,8 @@ Character('177', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('178', {
+}
+character['178'] = {
   item_type = 6,
   filter = "/undead/god/",
   level = 80,
@@ -6474,8 +6477,8 @@ Character('178', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('179', {
+}
+character['179'] = {
   item_type = 3,
   filter = "/man/",
   level = 35,
@@ -6496,8 +6499,8 @@ Character('179', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('208', {
+}
+character['208'] = {
   item_type = 3,
   filter = "/man/",
   level = 45,
@@ -6521,8 +6524,8 @@ Character('208', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('209', {
+}
+character['209'] = {
   item_type = 3,
   filter = "/man/",
   level = 45,
@@ -6546,8 +6549,8 @@ Character('209', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('180', {
+}
+character['180'] = {
   item_type = 1,
   filter = "",
   level = 1,
@@ -6568,8 +6571,8 @@ Character('180', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('181', {
+}
+character['181'] = {
   item_type = 1,
   filter = "/god/",
   level = 10,
@@ -6590,8 +6593,8 @@ Character('181', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('182', {
+}
+character['182'] = {
   item_type = 3,
   filter = "/man/",
   level = 8,
@@ -6614,8 +6617,8 @@ Character('182', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('183', {
+}
+character['183'] = {
   item_type = 3,
   filter = "/man/",
   level = 15,
@@ -6638,8 +6641,8 @@ Character('183', {
   category = 0,
   rarity = 20000,
   coefficient = 400,
-})
-Character('184', {
+}
+character['184'] = {
   item_type = 3,
   filter = "/man/",
   level = 9,
@@ -6662,8 +6665,8 @@ Character('184', {
   category = 0,
   rarity = 40000,
   coefficient = 400,
-})
-Character('185', {
+}
+character['185'] = {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -6687,8 +6690,8 @@ Character('185', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('350', {
+}
+character['350'] = {
   item_type = 3,
   filter = "/man/",
   level = 10,
@@ -6713,8 +6716,8 @@ Character('350', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('186', {
+}
+character['186'] = {
   item_type = 3,
   filter = "",
   level = 5,
@@ -6734,8 +6737,8 @@ Character('186', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('187', {
+}
+character['187'] = {
   item_type = 3,
   filter = "",
   level = 13,
@@ -6757,8 +6760,8 @@ Character('187', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('188', {
+}
+character['188'] = {
   item_type = 3,
   filter = "",
   level = 30,
@@ -6780,8 +6783,8 @@ Character('188', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('345', {
+}
+character['345'] = {
   item_type = 3,
   filter = "",
   level = 22,
@@ -6804,8 +6807,8 @@ Character('345', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('346', {
+}
+character['346'] = {
   item_type = 3,
   filter = "",
   level = 8,
@@ -6827,8 +6830,8 @@ Character('346', {
   category = 0,
   rarity = 5000,
   coefficient = 400,
-})
-Character('341', {
+}
+character['341'] = {
   item_type = 3,
   filter = "",
   level = 15,
@@ -6851,8 +6854,8 @@ Character('341', {
   category = 0,
   rarity = 25000,
   coefficient = 400,
-})
-Character('258', {
+}
+character['258'] = {
   item_type = 3,
   filter = "",
   level = 25,
@@ -6874,8 +6877,8 @@ Character('258', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('189', {
+}
+character['189'] = {
   item_type = 3,
   filter = "/undead/",
   level = 8,
@@ -6896,8 +6899,8 @@ Character('189', {
   category = 0,
   rarity = 60000,
   coefficient = 400,
-})
-Character('190', {
+}
+character['190'] = {
   item_type = 3,
   filter = "/undead/",
   level = 19,
@@ -6919,8 +6922,8 @@ Character('190', {
   category = 0,
   rarity = 60000,
   coefficient = 400,
-})
-Character('191', {
+}
+character['191'] = {
   item_type = 3,
   filter = "/undead/ether/",
   level = 14,
@@ -6943,8 +6946,8 @@ Character('191', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('192', {
+}
+character['192'] = {
   item_type = 1,
   filter = "/wild/",
   level = 5,
@@ -6965,8 +6968,8 @@ Character('192', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('193', {
+}
+character['193'] = {
   item_type = 1,
   filter = "/wild/ether/",
   level = 15,
@@ -6988,8 +6991,8 @@ Character('193', {
   category = 0,
   rarity = 70000,
   coefficient = 400,
-})
-Character('195', {
+}
+character['195'] = {
   item_type = 1,
   filter = "/wild/",
   level = 1,
@@ -7009,8 +7012,8 @@ Character('195', {
   category = 0,
   rarity = 30000,
   coefficient = 400,
-})
-Character('196', {
+}
+character['196'] = {
   item_type = 2,
   filter = "/undead/",
   level = 7,
@@ -7032,8 +7035,8 @@ Character('196', {
   category = 0,
   rarity = 60000,
   coefficient = 400,
-})
-Character('201', {
+}
+character['201'] = {
   item_type = 2,
   filter = "/undead/",
   level = 5,
@@ -7056,8 +7059,8 @@ Character('201', {
   category = 0,
   rarity = 20000,
   coefficient = 400,
-})
-Character('197', {
+}
+character['197'] = {
   item_type = 2,
   filter = "/undead/",
   level = 18,
@@ -7080,8 +7083,8 @@ Character('197', {
   category = 0,
   rarity = 60000,
   coefficient = 400,
-})
-Character('198', {
+}
+character['198'] = {
   item_type = 2,
   filter = "/undead/",
   level = 30,
@@ -7104,8 +7107,8 @@ Character('198', {
   category = 0,
   rarity = 60000,
   coefficient = 400,
-})
-Character('199', {
+}
+character['199'] = {
   item_type = 3,
   filter = "/undead/",
   level = 12,
@@ -7126,8 +7129,8 @@ Character('199', {
   category = 0,
   rarity = 30000,
   coefficient = 400,
-})
-Character('200', {
+}
+character['200'] = {
   item_type = 3,
   filter = "/undead/",
   level = 26,
@@ -7149,8 +7152,8 @@ Character('200', {
   category = 0,
   rarity = 30000,
   coefficient = 400,
-})
-Character('202', {
+}
+character['202'] = {
   item_type = 3,
   filter = "",
   level = 80,
@@ -7175,8 +7178,8 @@ Character('202', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('203', {
+}
+character['203'] = {
   item_type = 3,
   filter = "/man/",
   level = 10,
@@ -7199,8 +7202,8 @@ Character('203', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('205', {
+}
+character['205'] = {
   item_type = 3,
   filter = "/man/",
   level = 1,
@@ -7224,8 +7227,8 @@ Character('205', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('207', {
+}
+character['207'] = {
   item_type = 3,
   filter = "/god/",
   level = 30,
@@ -7250,8 +7253,8 @@ Character('207', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('212', {
+}
+character['212'] = {
   item_type = 3,
   filter = "",
   level = 1,
@@ -7275,8 +7278,8 @@ Character('212', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('213', {
+}
+character['213'] = {
   item_type = 3,
   filter = "/man/",
   level = 1,
@@ -7300,8 +7303,8 @@ Character('213', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('221', {
+}
+character['221'] = {
   item_type = 3,
   filter = "/man/",
   level = 10,
@@ -7325,8 +7328,8 @@ Character('221', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('222', {
+}
+character['222'] = {
   item_type = 3,
   filter = "/man/",
   level = 15,
@@ -7350,8 +7353,8 @@ Character('222', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('223', {
+}
+character['223'] = {
   item_type = 3,
   filter = "/man/",
   level = 10,
@@ -7375,8 +7378,8 @@ Character('223', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('224', {
+}
+character['224'] = {
   item_type = 3,
   filter = "/man/",
   level = 7,
@@ -7400,8 +7403,8 @@ Character('224', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('243', {
+}
+character['243'] = {
   item_type = 3,
   filter = "/man/",
   level = 15,
@@ -7425,8 +7428,8 @@ Character('243', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('247', {
+}
+character['247'] = {
   item_type = 3,
   filter = "/man/",
   level = 4,
@@ -7449,8 +7452,8 @@ Character('247', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('252', {
+}
+character['252'] = {
   item_type = 3,
   filter = "/man/",
   level = 45,
@@ -7477,8 +7480,8 @@ Character('252', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('253', {
+}
+character['253'] = {
   item_type = 3,
   filter = "/man/",
   level = 25,
@@ -7503,8 +7506,8 @@ Character('253', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('259', {
+}
+character['259'] = {
   item_type = 3,
   filter = "/man/",
   level = 20,
@@ -7529,8 +7532,8 @@ Character('259', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('301', {
+}
+character['301'] = {
   item_type = 3,
   filter = "/man/",
   level = 38,
@@ -7555,8 +7558,8 @@ Character('301', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('214', {
+}
+character['214'] = {
   item_type = 3,
   filter = "/man/",
   level = 2,
@@ -7578,8 +7581,8 @@ Character('214', {
   category = 0,
   rarity = 30000,
   coefficient = 400,
-})
-Character('215', {
+}
+character['215'] = {
   item_type = 3,
   filter = "/man/",
   level = 5,
@@ -7603,8 +7606,8 @@ Character('215', {
   category = 0,
   rarity = 30000,
   coefficient = 400,
-})
-Character('217', {
+}
+character['217'] = {
   item_type = 3,
   filter = "/man/",
   level = 35,
@@ -7628,8 +7631,8 @@ Character('217', {
   category = 0,
   rarity = 30000,
   coefficient = 400,
-})
-Character('216', {
+}
+character['216'] = {
   item_type = 1,
   filter = "",
   level = 50,
@@ -7652,8 +7655,8 @@ Character('216', {
   category = 0,
   rarity = 20000,
   coefficient = 400,
-})
-Character('218', {
+}
+character['218'] = {
   item_type = 1,
   filter = "",
   level = 45,
@@ -7679,8 +7682,8 @@ Character('218', {
   category = 0,
   rarity = 40000,
   coefficient = 400,
-})
-Character('219', {
+}
+character['219'] = {
   item_type = 3,
   filter = "",
   level = 38,
@@ -7702,8 +7705,8 @@ Character('219', {
   category = 0,
   rarity = 80000,
   coefficient = 400,
-})
-Character('220', {
+}
+character['220'] = {
   item_type = 3,
   filter = "/god/",
   level = 65,
@@ -7729,8 +7732,8 @@ Character('220', {
   category = 0,
   rarity = 30000,
   coefficient = 400,
-})
-Character('250', {
+}
+character['250'] = {
   item_type = 3,
   filter = "",
   level = 13,
@@ -7752,8 +7755,8 @@ Character('250', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('260', {
+}
+character['260'] = {
   item_type = 3,
   filter = "/god/",
   level = 8,
@@ -7780,8 +7783,8 @@ Character('260', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('261', {
+}
+character['261'] = {
   item_type = 3,
   filter = "/god/",
   level = 8,
@@ -7808,8 +7811,8 @@ Character('261', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('262', {
+}
+character['262'] = {
   item_type = 3,
   filter = "/god/",
   level = 8,
@@ -7833,8 +7836,8 @@ Character('262', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('263', {
+}
+character['263'] = {
   item_type = 3,
   filter = "/god/",
   level = 8,
@@ -7865,8 +7868,8 @@ Character('263', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('264', {
+}
+character['264'] = {
   item_type = 3,
   filter = "/god/",
   level = 8,
@@ -7891,8 +7894,8 @@ Character('264', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('265', {
+}
+character['265'] = {
   item_type = 3,
   filter = "/god/",
   level = 8,
@@ -7919,8 +7922,8 @@ Character('265', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('266', {
+}
+character['266'] = {
   item_type = 3,
   filter = "/god/",
   level = 8,
@@ -7947,8 +7950,8 @@ Character('266', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('267', {
+}
+character['267'] = {
   item_type = 1,
   filter = "/wild/horse/",
   level = 1,
@@ -7970,8 +7973,8 @@ Character('267', {
   category = 0,
   rarity = 10000,
   coefficient = 400,
-})
-Character('276', {
+}
+character['276'] = {
   item_type = 1,
   filter = "/wild/horse/",
   level = 4,
@@ -7994,8 +7997,8 @@ Character('276', {
   category = 0,
   rarity = 10000,
   coefficient = 400,
-})
-Character('275', {
+}
+character['275'] = {
   item_type = 1,
   filter = "/wild/horse/",
   level = 10,
@@ -8018,8 +8021,8 @@ Character('275', {
   category = 0,
   rarity = 10000,
   coefficient = 400,
-})
-Character('268', {
+}
+character['268'] = {
   item_type = 1,
   filter = "/wild/horse/",
   level = 15,
@@ -8042,8 +8045,8 @@ Character('268', {
   category = 0,
   rarity = 10000,
   coefficient = 400,
-})
-Character('277', {
+}
+character['277'] = {
   item_type = 1,
   filter = "/wild/horse/",
   level = 20,
@@ -8066,8 +8069,8 @@ Character('277', {
   category = 0,
   rarity = 10000,
   coefficient = 400,
-})
-Character('278', {
+}
+character['278'] = {
   item_type = 3,
   filter = "",
   level = 6,
@@ -8089,8 +8092,8 @@ Character('278', {
   category = 0,
   rarity = 70000,
   coefficient = 400,
-})
-Character('279', {
+}
+character['279'] = {
   item_type = 3,
   filter = "/man/",
   level = 15,
@@ -8114,8 +8117,8 @@ Character('279', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('280', {
+}
+character['280'] = {
   item_type = 3,
   filter = "/man/",
   level = 10,
@@ -8138,8 +8141,8 @@ Character('280', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('288', {
+}
+character['288'] = {
   item_type = 3,
   filter = "/man/",
   level = 55,
@@ -8165,8 +8168,8 @@ Character('288', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('290', {
+}
+character['290'] = {
   item_type = 3,
   filter = "/man/",
   level = 38,
@@ -8192,8 +8195,8 @@ Character('290', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('292', {
+}
+character['292'] = {
   item_type = 3,
   filter = "/man/",
   level = 55,
@@ -8216,8 +8219,8 @@ Character('292', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('294', {
+}
+character['294'] = {
   item_type = 3,
   filter = "/man/",
   level = 38,
@@ -8241,8 +8244,8 @@ Character('294', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('291', {
+}
+character['291'] = {
   item_type = 3,
   filter = "/man/",
   level = 55,
@@ -8265,8 +8268,8 @@ Character('291', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('297', {
+}
+character['297'] = {
   item_type = 3,
   filter = "/man/",
   level = 38,
@@ -8290,8 +8293,8 @@ Character('297', {
   category = 0,
   rarity = 100000,
   coefficient = 400,
-})
-Character('317', {
+}
+character['317'] = {
   item_type = 3,
   filter = "",
   level = 28,
@@ -8318,8 +8321,8 @@ Character('317', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('318', {
+}
+character['318'] = {
   item_type = 3,
   filter = "",
   level = 30,
@@ -8347,8 +8350,8 @@ Character('318', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('319', {
+}
+character['319'] = {
   item_type = 3,
   filter = "",
   level = 1,
@@ -8372,8 +8375,8 @@ Character('319', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('322', {
+}
+character['322'] = {
   item_type = 3,
   filter = "/man/",
   level = 15,
@@ -8397,8 +8400,8 @@ Character('322', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('334', {
+}
+character['334'] = {
   item_type = 3,
   filter = "/man/",
   level = 7,
@@ -8422,8 +8425,8 @@ Character('334', {
   category = 0,
   rarity = 50000,
   coefficient = 400,
-})
-Character('323', {
+}
+character['323'] = {
   item_type = 3,
   filter = "/undead/",
   level = 12,
@@ -8446,8 +8449,8 @@ Character('323', {
   category = 0,
   rarity = 10000,
   coefficient = 0,
-})
-Character('324', {
+}
+character['324'] = {
   item_type = 3,
   filter = "",
   level = 10,
@@ -8467,8 +8470,8 @@ Character('324', {
   category = 0,
   rarity = 15000,
   coefficient = 400,
-})
-Character('325', {
+}
+character['325'] = {
   item_type = 3,
   filter = "",
   level = 17,
@@ -8492,8 +8495,8 @@ Character('325', {
   category = 0,
   rarity = 15000,
   coefficient = 400,
-})
-Character('328', {
+}
+character['328'] = {
   item_type = 1,
   filter = "",
   level = 3,
@@ -8514,8 +8517,8 @@ Character('328', {
   category = 0,
   rarity = 2000,
   coefficient = 0,
-})
-Character('329', {
+}
+character['329'] = {
   item_type = 1,
   filter = "",
   level = 1,
@@ -8537,8 +8540,8 @@ Character('329', {
   category = 0,
   rarity = 5000,
   coefficient = 0,
-})
-Character('330', {
+}
+character['330'] = {
   item_type = 1,
   filter = "/dragon/",
   level = 19,
@@ -8562,12 +8565,12 @@ Character('330', {
   category = 0,
   rarity = 40000,
   coefficient = 400,
-})
+}
 
 
 
 -- For debug
-Character('500', {
+character['500'] = {
   item_type = 1,
   filter = "/slime/",
   level = 1,
@@ -8593,7 +8596,7 @@ Character('500', {
   category = 3,
   rarity = 100000,
   coefficient = 0,
-})
+}
 
 
 -- vim: et sw=2 sts=2

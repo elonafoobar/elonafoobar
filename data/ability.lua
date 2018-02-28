@@ -1,1423 +1,1426 @@
-Ability('2', {
+ability = {}
+
+
+ability['2'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('3', {
+}
+ability['3'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('10', {
+}
+ability['10'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('11', {
+}
+ability['11'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('12', {
+}
+ability['12'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('13', {
+}
+ability['13'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('14', {
+}
+ability['14'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('15', {
+}
+ability['15'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('16', {
+}
+ability['16'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('17', {
+}
+ability['17'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('18', {
+}
+ability['18'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('19', {
+}
+ability['19'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('100', {
+}
+ability['100'] = {
   related_basic_attribute = 10,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('101', {
+}
+ability['101'] = {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('102', {
+}
+ability['102'] = {
   related_basic_attribute = 10,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('103', {
+}
+ability['103'] = {
   related_basic_attribute = 11,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('104', {
+}
+ability['104'] = {
   related_basic_attribute = 11,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('105', {
+}
+ability['105'] = {
   related_basic_attribute = 11,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('107', {
+}
+ability['107'] = {
   related_basic_attribute = 10,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('108', {
+}
+ability['108'] = {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('109', {
+}
+ability['109'] = {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('110', {
+}
+ability['110'] = {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('111', {
+}
+ability['111'] = {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('106', {
+}
+ability['106'] = {
   related_basic_attribute = 10,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('168', {
+}
+ability['168'] = {
   related_basic_attribute = 11,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('173', {
+}
+ability['173'] = {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('166', {
+}
+ability['166'] = {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('167', {
+}
+ability['167'] = {
   related_basic_attribute = 10,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('50', {
+}
+ability['50'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 1,
   sdataref4 = 0,
-})
-Ability('51', {
+}
+ability['51'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 1,
   sdataref4 = 0,
-})
-Ability('52', {
+}
+ability['52'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 1,
   sdataref4 = 0,
-})
-Ability('53', {
+}
+ability['53'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 2,
   sdataref4 = 0,
-})
-Ability('54', {
+}
+ability['54'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 2,
   sdataref4 = 0,
-})
-Ability('56', {
+}
+ability['56'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 4,
   sdataref4 = 0,
-})
-Ability('55', {
+}
+ability['55'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 3,
   sdataref4 = 0,
-})
-Ability('57', {
+}
+ability['57'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 3,
   sdataref4 = 0,
-})
-Ability('59', {
+}
+ability['59'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 4,
   sdataref4 = 0,
-})
-Ability('58', {
+}
+ability['58'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 3,
   sdataref4 = 0,
-})
-Ability('60', {
+}
+ability['60'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 5,
   sdataref4 = 0,
-})
-Ability('61', {
+}
+ability['61'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('153', {
+}
+ability['153'] = {
   related_basic_attribute = 10,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('152', {
+}
+ability['152'] = {
   related_basic_attribute = 10,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('189', {
+}
+ability['189'] = {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('154', {
+}
+ability['154'] = {
   related_basic_attribute = 11,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('163', {
+}
+ability['163'] = {
   related_basic_attribute = 11,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('176', {
+}
+ability['176'] = {
   related_basic_attribute = 11,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('169', {
+}
+ability['169'] = {
   related_basic_attribute = 11,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('170', {
+}
+ability['170'] = {
   related_basic_attribute = 11,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('171', {
+}
+ability['171'] = {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('158', {
+}
+ability['158'] = {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('175', {
+}
+ability['175'] = {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('177', {
+}
+ability['177'] = {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('179', {
+}
+ability['179'] = {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('300', {
+}
+ability['300'] = {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 20,
   sdataref3 = 8000,
   sdataref4 = 0,
-})
-Ability('157', {
+}
+ability['157'] = {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('159', {
+}
+ability['159'] = {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('162', {
+}
+ability['162'] = {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('186', {
+}
+ability['186'] = {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('185', {
+}
+ability['185'] = {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 5,
   sdataref3 = 10000,
   sdataref4 = 0,
-})
-Ability('187', {
+}
+ability['187'] = {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('161', {
+}
+ability['161'] = {
   related_basic_attribute = 14,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('150', {
+}
+ability['150'] = {
   related_basic_attribute = 14,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('165', {
+}
+ability['165'] = {
   related_basic_attribute = 14,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('178', {
+}
+ability['178'] = {
   related_basic_attribute = 14,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('180', {
+}
+ability['180'] = {
   related_basic_attribute = 14,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('151', {
+}
+ability['151'] = {
   related_basic_attribute = 14,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('184', {
+}
+ability['184'] = {
   related_basic_attribute = 14,
   sdataref1 = 0,
   cost = 15,
   sdataref3 = 10000,
   sdataref4 = 0,
-})
-Ability('155', {
+}
+ability['155'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('174', {
+}
+ability['174'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('172', {
+}
+ability['172'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('188', {
+}
+ability['188'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('164', {
+}
+ability['164'] = {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('181', {
+}
+ability['181'] = {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('182', {
+}
+ability['182'] = {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('301', {
+}
+ability['301'] = {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 20,
   sdataref3 = 8000,
   sdataref4 = 0,
-})
-Ability('156', {
+}
+ability['156'] = {
   related_basic_attribute = 17,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('160', {
+}
+ability['160'] = {
   related_basic_attribute = 17,
   sdataref1 = 0,
   cost = 0,
   sdataref3 = 0,
   sdataref4 = 0,
-})
-Ability('183', {
+}
+ability['183'] = {
   related_basic_attribute = 17,
   sdataref1 = 0,
   cost = 25,
   sdataref3 = 10000,
   sdataref4 = 0,
-})
-Ability('400', {
+}
+ability['400'] = {
   related_basic_attribute = 15,
   sdataref1 = 4,
   cost = 6,
   sdataref3 = 3000,
   sdataref4 = 80,
-})
-Ability('401', {
+}
+ability['401'] = {
   related_basic_attribute = 15,
   sdataref1 = 4,
   cost = 15,
   sdataref3 = 3000,
   sdataref4 = 350,
-})
-Ability('402', {
+}
+ability['402'] = {
   related_basic_attribute = 15,
   sdataref1 = 4,
   cost = 35,
   sdataref3 = 3000,
   sdataref4 = 800,
-})
-Ability('403', {
+}
+ability['403'] = {
   related_basic_attribute = 15,
   sdataref1 = 4,
   cost = 80,
   sdataref3 = 3000,
   sdataref4 = 1300,
-})
-Ability('405', {
+}
+ability['405'] = {
   related_basic_attribute = 15,
   sdataref1 = 4,
   cost = 20,
   sdataref3 = 8000,
   sdataref4 = 400,
-})
-Ability('406', {
+}
+ability['406'] = {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 15,
   sdataref3 = 3000,
   sdataref4 = 400,
-})
-Ability('407', {
+}
+ability['407'] = {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 35,
   sdataref3 = 3000,
   sdataref4 = 850,
-})
-Ability('409', {
+}
+ability['409'] = {
   related_basic_attribute = 16,
   sdataref1 = 5,
   cost = 10,
   sdataref3 = 5000,
   sdataref4 = 200,
-})
-Ability('408', {
+}
+ability['408'] = {
   related_basic_attribute = 16,
   sdataref1 = 5,
   cost = 10,
   sdataref3 = 10000,
   sdataref4 = 400,
-})
-Ability('410', {
+}
+ability['410'] = {
   related_basic_attribute = 16,
   sdataref1 = 5,
   cost = 8,
   sdataref3 = 10000,
   sdataref4 = 120,
-})
-Ability('411', {
+}
+ability['411'] = {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 28,
   sdataref3 = 10000,
   sdataref4 = 800,
-})
-Ability('412', {
+}
+ability['412'] = {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 35,
   sdataref3 = 3000,
   sdataref4 = 700,
-})
-Ability('413', {
+}
+ability['413'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 150,
   sdataref3 = 3000,
   sdataref4 = 1500,
-})
-Ability('414', {
+}
+ability['414'] = {
   related_basic_attribute = 16,
   sdataref1 = 2,
   cost = 5,
   sdataref3 = 2006,
   sdataref4 = 110,
-})
-Ability('415', {
+}
+ability['415'] = {
   related_basic_attribute = 16,
   sdataref1 = 2,
   cost = 8,
   sdataref3 = 2006,
   sdataref4 = 400,
-})
-Ability('417', {
+}
+ability['417'] = {
   related_basic_attribute = 16,
   sdataref1 = 2,
   cost = 10,
   sdataref3 = 2006,
   sdataref4 = 650,
-})
-Ability('416', {
+}
+ability['416'] = {
   related_basic_attribute = 16,
   sdataref1 = 2,
   cost = 10,
   sdataref3 = 2006,
   sdataref4 = 400,
-})
-Ability('418', {
+}
+ability['418'] = {
   related_basic_attribute = 16,
   sdataref1 = 2,
   cost = 10,
   sdataref3 = 2006,
   sdataref4 = 200,
-})
-Ability('459', {
+}
+ability['459'] = {
   related_basic_attribute = 16,
   sdataref1 = 2,
   cost = 24,
   sdataref3 = 2006,
   sdataref4 = 950,
-})
-Ability('419', {
+}
+ability['419'] = {
   related_basic_attribute = 16,
   sdataref1 = 1,
   cost = 10,
   sdataref3 = 9006,
   sdataref4 = 220,
-})
-Ability('420', {
+}
+ability['420'] = {
   related_basic_attribute = 16,
   sdataref1 = 1,
   cost = 10,
   sdataref3 = 9006,
   sdataref4 = 220,
-})
-Ability('421', {
+}
+ability['421'] = {
   related_basic_attribute = 16,
   sdataref1 = 1,
   cost = 10,
   sdataref3 = 9006,
   sdataref4 = 220,
-})
-Ability('422', {
+}
+ability['422'] = {
   related_basic_attribute = 16,
   sdataref1 = 1,
   cost = 12,
   sdataref3 = 9006,
   sdataref4 = 350,
-})
-Ability('423', {
+}
+ability['423'] = {
   related_basic_attribute = 16,
   sdataref1 = 1,
   cost = 12,
   sdataref3 = 9006,
   sdataref4 = 350,
-})
-Ability('644', {
+}
+ability['644'] = {
   related_basic_attribute = 11,
   sdataref1 = 3,
   cost = 16,
   sdataref3 = 8000,
   sdataref4 = 450,
-})
-Ability('431', {
+}
+ability['431'] = {
   related_basic_attribute = 16,
   sdataref1 = 3,
   cost = 16,
   sdataref3 = 3002,
   sdataref4 = 450,
-})
-Ability('432', {
+}
+ability['432'] = {
   related_basic_attribute = 16,
   sdataref1 = 3,
   cost = 16,
   sdataref3 = 3002,
   sdataref4 = 450,
-})
-Ability('433', {
+}
+ability['433'] = {
   related_basic_attribute = 16,
   sdataref1 = 3,
   cost = 20,
   sdataref3 = 3002,
   sdataref4 = 1000,
-})
-Ability('434', {
+}
+ability['434'] = {
   related_basic_attribute = 16,
   sdataref1 = 3,
   cost = 18,
   sdataref3 = 3002,
   sdataref4 = 700,
-})
-Ability('460', {
+}
+ability['460'] = {
   related_basic_attribute = 16,
   sdataref1 = 3,
   cost = 40,
   sdataref3 = 3002,
   sdataref4 = 1400,
-})
-Ability('404', {
+}
+ability['404'] = {
   related_basic_attribute = 15,
   sdataref1 = 3,
   cost = 38,
   sdataref3 = 3002,
   sdataref4 = 500,
-})
-Ability('637', {
+}
+ability['637'] = {
   related_basic_attribute = 15,
   sdataref1 = 3,
   cost = 50,
   sdataref3 = 3002,
   sdataref4 = 500,
-})
-Ability('466', {
+}
+ability['466'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 24,
   sdataref3 = 3002,
   sdataref4 = 750,
-})
-Ability('424', {
+}
+ability['424'] = {
   related_basic_attribute = 16,
   sdataref1 = 7,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 200,
-})
-Ability('425', {
+}
+ability['425'] = {
   related_basic_attribute = 16,
   sdataref1 = 7,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 200,
-})
-Ability('642', {
+}
+ability['642'] = {
   related_basic_attribute = 16,
   sdataref1 = 7,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 200,
-})
-Ability('641', {
+}
+ability['641'] = {
   related_basic_attribute = 16,
   sdataref1 = 7,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 200,
-})
-Ability('639', {
+}
+ability['639'] = {
   related_basic_attribute = 16,
   sdataref1 = 7,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 200,
-})
-Ability('640', {
+}
+ability['640'] = {
   related_basic_attribute = 16,
   sdataref1 = 7,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 200,
-})
-Ability('643', {
+}
+ability['643'] = {
   related_basic_attribute = 16,
   sdataref1 = 7,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 200,
-})
-Ability('435', {
+}
+ability['435'] = {
   related_basic_attribute = 17,
   sdataref1 = 0,
   cost = 125,
   sdataref3 = 2006,
   sdataref4 = 2000,
-})
-Ability('436', {
+}
+ability['436'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 7000,
   sdataref4 = 150,
-})
-Ability('437', {
+}
+ability['437'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 12,
   sdataref3 = 7000,
   sdataref4 = 320,
-})
-Ability('438', {
+}
+ability['438'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 20,
   sdataref3 = 7000,
   sdataref4 = 250,
-})
-Ability('457', {
+}
+ability['457'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 15,
   sdataref3 = 7000,
   sdataref4 = 200,
-})
-Ability('455', {
+}
+ability['455'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 18,
   sdataref3 = 7000,
   sdataref4 = 480,
-})
-Ability('634', {
+}
+ability['634'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 18,
   sdataref3 = 7000,
   sdataref4 = 480,
-})
-Ability('456', {
+}
+ability['456'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 24,
   sdataref3 = 7000,
   sdataref4 = 640,
-})
-Ability('645', {
+}
+ability['645'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 2004,
   sdataref4 = 100,
-})
-Ability('428', {
+}
+ability['428'] = {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 28,
   sdataref3 = 10000,
   sdataref4 = 550,
-})
-Ability('463', {
+}
+ability['463'] = {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 60,
   sdataref3 = 10000,
   sdataref4 = 750,
-})
-Ability('429', {
+}
+ability['429'] = {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 30,
   sdataref3 = 10000,
   sdataref4 = 450,
-})
-Ability('464', {
+}
+ability['464'] = {
   related_basic_attribute = 17,
   sdataref1 = 0,
   cost = 45,
   sdataref3 = 10000,
   sdataref4 = 350,
-})
-Ability('430', {
+}
+ability['430'] = {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 22,
   sdataref3 = 10000,
   sdataref4 = 250,
-})
-Ability('439', {
+}
+ability['439'] = {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 18,
   sdataref3 = 3000,
   sdataref4 = 250,
-})
-Ability('440', {
+}
+ability['440'] = {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 18,
   sdataref3 = 3000,
   sdataref4 = 250,
-})
-Ability('461', {
+}
+ability['461'] = {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 60,
   sdataref3 = 10000,
   sdataref4 = 1650,
-})
-Ability('441', {
+}
+ability['441'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 580,
   sdataref3 = 10000,
   sdataref4 = 5250,
-})
-Ability('465', {
+}
+ability['465'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 220,
   sdataref3 = 10000,
   sdataref4 = 1450,
-})
-Ability('454', {
+}
+ability['454'] = {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 70,
   sdataref3 = 3000,
   sdataref4 = 2250,
-})
-Ability('442', {
+}
+ability['442'] = {
   related_basic_attribute = 15,
   sdataref1 = 1001,
   cost = 8,
   sdataref3 = 3000,
   sdataref4 = 150,
-})
-Ability('443', {
+}
+ability['443'] = {
   related_basic_attribute = 13,
   sdataref1 = 1002,
   cost = 24,
   sdataref3 = 2006,
   sdataref4 = 620,
-})
-Ability('444', {
+}
+ability['444'] = {
   related_basic_attribute = 15,
   sdataref1 = 1003,
   cost = 16,
   sdataref3 = 3000,
   sdataref4 = 400,
-})
-Ability('445', {
+}
+ability['445'] = {
   related_basic_attribute = 15,
   sdataref1 = 1004,
   cost = 14,
   sdataref3 = 3000,
   sdataref4 = 350,
-})
-Ability('446', {
+}
+ability['446'] = {
   related_basic_attribute = 15,
   sdataref1 = 1005,
   cost = 28,
   sdataref3 = 3000,
   sdataref4 = 1050,
-})
-Ability('447', {
+}
+ability['447'] = {
   related_basic_attribute = 16,
   sdataref1 = 1006,
   cost = 10,
   sdataref3 = 2006,
   sdataref4 = 450,
-})
-Ability('448', {
+}
+ability['448'] = {
   related_basic_attribute = 15,
   sdataref1 = 1007,
   cost = 12,
   sdataref3 = 3000,
   sdataref4 = 80,
-})
-Ability('449', {
+}
+ability['449'] = {
   related_basic_attribute = 16,
   sdataref1 = 1008,
   cost = 8,
   sdataref3 = 2006,
   sdataref4 = 300,
-})
-Ability('450', {
+}
+ability['450'] = {
   related_basic_attribute = 16,
   sdataref1 = 1009,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 600,
-})
-Ability('451', {
+}
+ability['451'] = {
   related_basic_attribute = 15,
   sdataref1 = 1010,
   cost = 20,
   sdataref3 = 3000,
   sdataref4 = 900,
-})
-Ability('452', {
+}
+ability['452'] = {
   related_basic_attribute = 13,
   sdataref1 = 1011,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 500,
-})
-Ability('453', {
+}
+ability['453'] = {
   related_basic_attribute = 14,
   sdataref1 = 1012,
   cost = 22,
   sdataref3 = 10000,
   sdataref4 = 350,
-})
-Ability('458', {
+}
+ability['458'] = {
   related_basic_attribute = 13,
   sdataref1 = 1015,
   cost = 38,
   sdataref3 = 10000,
   sdataref4 = 250,
-})
-Ability('462', {
+}
+ability['462'] = {
   related_basic_attribute = 15,
   sdataref1 = 1018,
   cost = 25,
   sdataref3 = 3000,
   sdataref4 = 1250,
-})
-Ability('647', {
+}
+ability['647'] = {
   related_basic_attribute = 15,
   sdataref1 = 1017,
   cost = 50,
   sdataref3 = 10000,
   sdataref4 = 500,
-})
-Ability('646', {
+}
+ability['646'] = {
   related_basic_attribute = 15,
   sdataref1 = 1016,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 500,
-})
-Ability('622', {
+}
+ability['622'] = {
   related_basic_attribute = 15,
   sdataref1 = 1013,
   cost = 15,
   sdataref3 = 2006,
   sdataref4 = 500,
-})
-Ability('625', {
+}
+ability['625'] = {
   related_basic_attribute = 12,
   sdataref1 = 1014,
   cost = 20,
   sdataref3 = 10000,
   sdataref4 = 500,
-})
-Ability('621', {
+}
+ability['621'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 3000,
   sdataref4 = 700,
-})
-Ability('601', {
+}
+ability['601'] = {
   related_basic_attribute = 12,
   sdataref1 = 6,
   cost = 7,
   sdataref3 = 2000,
   sdataref4 = 0,
-})
-Ability('612', {
+}
+ability['612'] = {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 10,
   sdataref3 = 9005,
   sdataref4 = 0,
-})
-Ability('602', {
+}
+ability['602'] = {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 12,
   sdataref3 = 9005,
   sdataref4 = 0,
-})
-Ability('603', {
+}
+ability['603'] = {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 10,
   sdataref3 = 9005,
   sdataref4 = 0,
-})
-Ability('604', {
+}
+ability['604'] = {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 10,
   sdataref3 = 9005,
   sdataref4 = 0,
-})
-Ability('606', {
+}
+ability['606'] = {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 10,
   sdataref3 = 9005,
   sdataref4 = 0,
-})
-Ability('610', {
+}
+ability['610'] = {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 10,
   sdataref3 = 9005,
   sdataref4 = 0,
-})
-Ability('608', {
+}
+ability['608'] = {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 10,
   sdataref3 = 9005,
   sdataref4 = 0,
-})
-Ability('607', {
+}
+ability['607'] = {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 10,
   sdataref3 = 9005,
   sdataref4 = 0,
-})
-Ability('605', {
+}
+ability['605'] = {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 10,
   sdataref3 = 9005,
   sdataref4 = 0,
-})
-Ability('611', {
+}
+ability['611'] = {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 10,
   sdataref3 = 9005,
   sdataref4 = 0,
-})
-Ability('609', {
+}
+ability['609'] = {
   related_basic_attribute = 11,
   sdataref1 = 8,
   cost = 10,
   sdataref3 = 9005,
   sdataref4 = 0,
-})
-Ability('619', {
+}
+ability['619'] = {
   related_basic_attribute = 15,
   sdataref1 = 5,
   cost = 10,
   sdataref3 = 6005,
   sdataref4 = 0,
-})
-Ability('627', {
+}
+ability['627'] = {
   related_basic_attribute = 15,
   sdataref1 = 5,
   cost = 15,
   sdataref3 = 10000,
   sdataref4 = 0,
-})
-Ability('620', {
+}
+ability['620'] = {
   related_basic_attribute = 15,
   sdataref1 = 5,
   cost = 10,
   sdataref3 = 6005,
   sdataref4 = 0,
-})
-Ability('623', {
+}
+ability['623'] = {
   related_basic_attribute = 15,
   sdataref1 = 4,
   cost = 30,
   sdataref3 = 3000,
   sdataref4 = 0,
-})
-Ability('624', {
+}
+ability['624'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 25,
   sdataref3 = 10000,
   sdataref4 = 0,
-})
-Ability('654', {
+}
+ability['654'] = {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 15,
   sdataref3 = 2001,
   sdataref4 = 0,
-})
-Ability('613', {
+}
+ability['613'] = {
   related_basic_attribute = 16,
   sdataref1 = 6,
   cost = 10,
   sdataref3 = 8000,
   sdataref4 = 0,
-})
-Ability('614', {
+}
+ability['614'] = {
   related_basic_attribute = 16,
   sdataref1 = 6,
   cost = 10,
   sdataref3 = 8000,
   sdataref4 = 0,
-})
-Ability('615', {
+}
+ability['615'] = {
   related_basic_attribute = 12,
   sdataref1 = 6,
   cost = 10,
   sdataref3 = 8000,
   sdataref4 = 0,
-})
-Ability('616', {
+}
+ability['616'] = {
   related_basic_attribute = 12,
   sdataref1 = 6,
   cost = 10,
   sdataref3 = 8000,
   sdataref4 = 0,
-})
-Ability('617', {
+}
+ability['617'] = {
   related_basic_attribute = 15,
   sdataref1 = 6,
   cost = 10,
   sdataref3 = 8000,
   sdataref4 = 0,
-})
-Ability('618', {
+}
+ability['618'] = {
   related_basic_attribute = 15,
   sdataref1 = 6,
   cost = 10,
   sdataref3 = 8000,
   sdataref4 = 0,
-})
-Ability('635', {
+}
+ability['635'] = {
   related_basic_attribute = 12,
   sdataref1 = 5,
   cost = 10,
   sdataref3 = 8000,
   sdataref4 = 0,
-})
-Ability('651', {
+}
+ability['651'] = {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 8000,
   sdataref4 = 0,
-})
-Ability('658', {
+}
+ability['658'] = {
   related_basic_attribute = 12,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 2001,
   sdataref4 = 0,
-})
-Ability('660', {
+}
+ability['660'] = {
   related_basic_attribute = 15,
   sdataref1 = 6,
   cost = 10,
   sdataref3 = 8000,
   sdataref4 = 0,
-})
-Ability('632', {
+}
+ability['632'] = {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 2002,
   sdataref4 = 0,
-})
-Ability('633', {
+}
+ability['633'] = {
   related_basic_attribute = 15,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 2002,
   sdataref4 = 0,
-})
-Ability('636', {
+}
+ability['636'] = {
   related_basic_attribute = 17,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 2002,
   sdataref4 = 0,
-})
-Ability('638', {
+}
+ability['638'] = {
   related_basic_attribute = 17,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 2002,
   sdataref4 = 0,
-})
-Ability('652', {
+}
+ability['652'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 2002,
   sdataref4 = 0,
-})
-Ability('648', {
+}
+ability['648'] = {
   related_basic_attribute = 17,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 2004,
   sdataref4 = 0,
-})
-Ability('653', {
+}
+ability['653'] = {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 10000,
   sdataref4 = 0,
-})
-Ability('649', {
+}
+ability['649'] = {
   related_basic_attribute = 10,
   sdataref1 = 10,
   cost = 10,
   sdataref3 = 2004,
   sdataref4 = 0,
-})
-Ability('650', {
+}
+ability['650'] = {
   related_basic_attribute = 10,
   sdataref1 = 10,
   cost = 10,
   sdataref3 = 2007,
   sdataref4 = 0,
-})
-Ability('628', {
+}
+ability['628'] = {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 2006,
   sdataref4 = 0,
-})
-Ability('629', {
+}
+ability['629'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 1,
   sdataref3 = 10000,
   sdataref4 = 0,
-})
-Ability('630', {
+}
+ability['630'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 10,
   sdataref3 = 10000,
   sdataref4 = 0,
-})
-Ability('631', {
+}
+ability['631'] = {
   related_basic_attribute = 10,
   sdataref1 = 0,
   cost = 5,
   sdataref3 = 10000,
   sdataref4 = 220,
-})
-Ability('656', {
+}
+ability['656'] = {
   related_basic_attribute = 17,
   sdataref1 = 0,
   cost = 28,
   sdataref3 = 3006,
   sdataref4 = 500,
-})
-Ability('657', {
+}
+ability['657'] = {
   related_basic_attribute = 19,
   sdataref1 = 0,
   cost = 1,
   sdataref3 = 3000,
   sdataref4 = 500,
-})
-Ability('626', {
+}
+ability['626'] = {
   related_basic_attribute = 13,
   sdataref1 = 0,
   cost = 30,
   sdataref3 = 10000,
   sdataref4 = 500,
-})
-Ability('655', {
+}
+ability['655'] = {
   related_basic_attribute = 16,
   sdataref1 = 3,
   cost = 18,
   sdataref3 = 3000,
   sdataref4 = 700,
-})
-Ability('659', {
+}
+ability['659'] = {
   related_basic_attribute = 16,
   sdataref1 = 0,
   cost = 15,
   sdataref3 = 3000,
   sdataref4 = 0,
-})
+}
 
 -- vim: et sw=2 sts=2

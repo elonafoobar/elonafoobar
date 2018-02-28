@@ -10,28 +10,21 @@ namespace
 {
 
 
-// FIXME: DO NOT USE A GLOBAL VARIABLE!
-std::unordered_map<std::string, class_data>* storage_ptr;
 
-
-int define(lua_State* state)
+int define(lua_State* L, std::unordered_map<std::string, class_data>& storage)
 {
-    int argc = lua_gettop(state);
-    if (argc != 2)
-        throw 0;
-
-    const char* id = luaL_checklstring(state, 1, nullptr);
+    const char* id = luaL_checkstring(L, -2);
     if (!id)
         throw 0;
 
 #define FIELD_I(name) \
-    lua_getfield(state, 2, #name); \
-    int name = luaL_checkinteger(state, -1); \
-    lua_pop(state, 1);
+    lua_getfield(L, -1, #name); \
+    int name = luaL_checkinteger(L, -1); \
+    lua_pop(L, 1);
 #define FIELD_B(name) \
-    lua_getfield(state, 2, #name); \
-    bool name = lua_toboolean(state, -1); \
-    lua_pop(state, 1);
+    lua_getfield(L, -1, #name); \
+    bool name = lua_toboolean(L, -1); \
+    lua_pop(L, 1);
 
     FIELD_I(ordering);
     FIELD_B(is_extra);
@@ -39,23 +32,24 @@ int define(lua_State* state)
     FIELD_I(equipment_type);
 
     std::unordered_map<int, int> skills;
-    lua_getfield(state, 2, u8"skills");
-    if (!lua_isnil(state, -1))
+    lua_getfield(L, -1, u8"skills");
+    if (!lua_isnil(L, -1))
     {
-        lua_pushnil(state);
-        while (lua_next(state, -2))
+        lua_pushnil(L);
+        while (lua_next(L, -2))
         {
-            int k = std::stoi(luaL_checkstring(state, -2) + 1);
-            int v = luaL_checkinteger(state, -1);
+            int k = std::stoi(luaL_checkstring(L, -2) + 1);
+            int v = luaL_checkinteger(L, -1);
             skills.emplace(k, v);
-            lua_pop(state, 1);
+            lua_pop(L, 1);
         }
     }
+    lua_pop(L, 1);
 
 #undef FIELD_I
 #undef FIELD_B
 
-    storage_ptr->emplace(
+    storage.emplace(
         id,
         class_data{
             id,
@@ -137,10 +131,15 @@ int access_class_info(int dbmode, const std::string& dbidn)
 
 void class_db::initialize()
 {
-    cat::global.register_function("Class", &define);
-    storage_ptr = &storage;
     cat::global.load(fs::u8path(u8"../data/class.lua"));
-    storage_ptr = nullptr;
+
+    lua_getglobal(cat::global.ptr(), u8"class");
+    lua_pushnil(cat::global.ptr());
+    while (lua_next(cat::global.ptr(), -2))
+    {
+        define(cat::global.ptr(), storage);
+        lua_pop(cat::global.ptr(), 1);
+    }
 }
 
 

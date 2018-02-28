@@ -14,8 +14,10 @@ end
 --]]
 
 
+buff = {}
 
-Buff('1', {
+
+buff['1'] = {
   type_ = BUFF_TYPE_BUFF,
   duration = function(power)
     return 10 + power // 10
@@ -23,8 +25,8 @@ Buff('1', {
   _effect = function(power)
     return 25 + power // 15
   end,
-})
-Buff('2', {
+}
+buff['2'] = {
   type_ = BUFF_TYPE_HEX,
   duration = function(power)
     return 5 + power // 40
@@ -32,8 +34,8 @@ Buff('2', {
   _effect = function(power)
     return 0
   end,
-})
-Buff('3', {
+}
+buff['3'] = {
   type_ = BUFF_TYPE_BUFF,
   duration = function(power)
     return 12 + power // 20
@@ -41,8 +43,8 @@ Buff('3', {
   _effect = function(power)
     return 0
   end,
-})
-Buff('4', {
+}
+buff['4'] = {
   type_ = BUFF_TYPE_BUFF,
   duration = function(power)
     return 4 + power // 6
@@ -50,8 +52,8 @@ Buff('4', {
   _effect = function(power)
     return 0
   end,
-})
-Buff('5', {
+}
+buff['5'] = {
   type_ = BUFF_TYPE_BUFF,
   duration = function(power)
     return 8 + power // 30
@@ -59,8 +61,8 @@ Buff('5', {
   _effect = function(power)
     return 50 + math.sqrt(power // 5) // 1
   end,
-})
-Buff('6', {
+}
+buff['6'] = {
   type_ = BUFF_TYPE_HEX,
   duration = function(power)
     return 8 + power // 30
@@ -68,8 +70,8 @@ Buff('6', {
   _effect = function(power)
     return math.min(20 + power // 20, 50)
   end,
-})
-Buff('7', {
+}
+buff['7'] = {
   type_ = BUFF_TYPE_BUFF,
   duration = function(power)
     return 10 + power // 4
@@ -77,8 +79,8 @@ Buff('7', {
   _effect = function(power)
     return 5 + power // 30
   end,
-})
-Buff('8', {
+}
+buff['8'] = {
   type_ = BUFF_TYPE_HEX,
   duration = function(power)
     return 6 + power // 10
@@ -86,8 +88,8 @@ Buff('8', {
   _effect = function(power)
     return 0
   end,
-})
-Buff('9', {
+}
+buff['9'] = {
   type_ = BUFF_TYPE_HEX,
   duration = function(power)
     return 4 + power // 15
@@ -95,8 +97,8 @@ Buff('9', {
   _effect = function(power)
     return 0
   end,
-})
-Buff('10', {
+}
+buff['10'] = {
   type_ = BUFF_TYPE_BUFF,
   duration = function(power)
     return 15 + power // 5
@@ -104,8 +106,8 @@ Buff('10', {
   _effect = function(power)
     return 50 + power // 3 * 2
   end,
-})
-Buff('11', {
+}
+buff['11'] = {
   type_ = BUFF_TYPE_HEX,
   duration = function(power)
     return 4 + power // 15
@@ -113,8 +115,8 @@ Buff('11', {
   _effect = function(power)
     return 0
   end,
-})
-Buff('12', {
+}
+buff['12'] = {
   type_ = BUFF_TYPE_BUFF,
   duration = function(power)
     return 10 + power // 4
@@ -122,8 +124,8 @@ Buff('12', {
   _effect = function(power)
     return 6 + power // 40, 3 + power // 100
   end,
-})
-Buff('13', {
+}
+buff['13'] = {
   type_ = BUFF_TYPE_HEX,
   duration = function(power)
     return power
@@ -131,8 +133,8 @@ Buff('13', {
   _effect = function(power)
     return 20
   end,
-})
-Buff('14', {
+}
+buff['14'] = {
   type_ = BUFF_TYPE_BUFF,
   duration = function(power)
     return 7
@@ -140,8 +142,8 @@ Buff('14', {
   _effect = function(power)
     return 155 + power // 5
   end,
-})
-Buff('15', {
+}
+buff['15'] = {
   type_ = BUFF_TYPE_BUFF,
   duration = function(power)
     return 4 + power // 40
@@ -149,8 +151,8 @@ Buff('15', {
   _effect = function(power)
     return 0
   end,
-})
-Buff('16', {
+}
+buff['16'] = {
   type_ = BUFF_TYPE_HEX,
   duration = function(power)
     return 20
@@ -158,8 +160,8 @@ Buff('16', {
   _effect = function(power)
     return 0
   end,
-})
-Buff('17', {
+}
+buff['17'] = {
   type_ = BUFF_TYPE_BUFF,
   duration = function(power)
     return 5
@@ -167,8 +169,8 @@ Buff('17', {
   _effect = function(power)
     return 120
   end,
-})
-Buff('18', {
+}
+buff['18'] = {
   type_ = BUFF_TYPE_BUFF,
   duration = function(power)
     return 66
@@ -176,8 +178,8 @@ Buff('18', {
   _effect = function(power)
     return clamp(25 + power // 17, 25, 80)
   end,
-})
-Buff('19', {
+}
+buff['19'] = {
   type_ = BUFF_TYPE_BUFF,
   duration = function(power)
     return 777
@@ -185,8 +187,8 @@ Buff('19', {
   _effect = function(power)
     return power
   end,
-})
-Buff('20', {
+}
+buff['20'] = {
   type_ = BUFF_TYPE_FOOD,
   duration = function(power)
     return 10 + power // 10;
@@ -194,8 +196,8 @@ Buff('20', {
   _effect = function(power)
     return power
   end,
-})
-Buff('21', {
+}
+buff['21'] = {
   type_ = BUFF_TYPE_FOOD,
   duration = function(power)
     return 10 + power // 10;
@@ -203,8 +205,8 @@ Buff('21', {
   _effect = function(power)
     return power
   end,
-})
-Buff('22', {
+}
+buff['22'] = {
   type_ = BUFF_TYPE_FOOD,
   duration = function(power)
     return 10 + power // 10;
@@ -212,8 +214,8 @@ Buff('22', {
   _effect = function(power)
     return power
   end,
-})
-Buff('23', {
+}
+buff['23'] = {
   type_ = BUFF_TYPE_FOOD,
   duration = function(power)
     return 10 + power // 10;
@@ -221,8 +223,8 @@ Buff('23', {
   _effect = function(power)
     return power
   end,
-})
-Buff('24', {
+}
+buff['24'] = {
   type_ = BUFF_TYPE_FOOD,
   duration = function(power)
     return 10 + power // 10;
@@ -230,8 +232,8 @@ Buff('24', {
   _effect = function(power)
     return power
   end,
-})
-Buff('25', {
+}
+buff['25'] = {
   type_ = BUFF_TYPE_FOOD,
   duration = function(power)
     return 10 + power // 10;
@@ -239,8 +241,8 @@ Buff('25', {
   _effect = function(power)
     return power
   end,
-})
-Buff('26', {
+}
+buff['26'] = {
   type_ = BUFF_TYPE_FOOD,
   duration = function(power)
     return 10 + power // 10;
@@ -248,8 +250,8 @@ Buff('26', {
   _effect = function(power)
     return power
   end,
-})
-Buff('27', {
+}
+buff['27'] = {
   type_ = BUFF_TYPE_FOOD,
   duration = function(power)
     return 10 + power // 10;
@@ -257,8 +259,8 @@ Buff('27', {
   _effect = function(power)
     return power
   end,
-})
-Buff('28', {
+}
+buff['28'] = {
   type_ = BUFF_TYPE_FOOD,
   duration = function(power)
     return 10 + power // 10;
@@ -266,6 +268,6 @@ Buff('28', {
   _effect = function(power)
     return power
   end,
-})
+}
 
 -- vim: et sw=2 sts=2
