@@ -19,6 +19,10 @@ namespace filesystem
 {
 
 
+fs::path get_executable_path();
+
+
+
 struct dir_entries
 {
     enum class type

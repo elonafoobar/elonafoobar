@@ -1,13 +1,28 @@
 #include "filesystem.hpp"
 #include <boost/locale.hpp>
+#include "defines.hpp"
 
-#if BOOST_OS_WINDOWS
+#if defined(ELONA_OS_WINDOWS)
 // For WideCharToMultiByte().
 #include <windows.h>
 #define USE_UTF16_AS_FILEPATH 1
 #else
 #define USE_UTF16_AS_FILEPATH 0
 #endif
+
+// For get_executable_path()
+#if defined(ELONA_OS_WINDOWS)
+#include <windows.h> // GetModuleFileName
+#elif defined(ELONA_OS_MACOS)
+#include <limits.h> // PATH_MAX
+#include <mach-o/dyld.h> // _NSGetExecutablePath
+#elif defined(ELONA_OS_LINUX)
+#include <limits.h> // PATH_MAX
+#include <unistd.h> // readlink
+#else
+#error Unsupported OS
+#endif
+
 
 
 namespace
@@ -37,6 +52,41 @@ namespace elona
 {
 namespace filesystem
 {
+
+
+
+fs::path get_executable_path()
+{
+    static auto cache = ([] {
+#if defined(ELONA_OS_WINDOWS)
+        TCHAR buf[1024 + 1];
+        size_t buf_size = sizeof(buf);
+        if (GetModuleFileName(nullptr, buf, buf_size) == 0)
+        {
+            throw 0; // TODO
+        }
+#elif defined(ELONA_OS_MACOS)
+        char buf[PATH_MAX + 1];
+        uint32_t buf_size = sizeof(buf);
+        if (_NSGetExecutablePath(buf, &buf_size) != 0)
+        {
+            throw 0; // TODO
+        }
+#elif defined(ELONA_OS_LINUX)
+        char buf[PATH_MAX + 1];
+        size_t buf_size = sizeof(buf);
+        if (readlink("/proc/self/exe", buf, buf_size) == -1)
+        {
+            throw 0; // TODO
+        }
+#else
+#error Unsupported OS
+#endif
+        return fs::canonical(fs::path{buf}.remove_filename());
+    })();
+
+    return cache;
+}
 
 
 std::string make_preferred_path_in_utf8(const fs::path& path)
