@@ -1,407 +1,410 @@
-Trait('24', {
+trait = {}
+
+
+trait['24'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 3,
-})
-Trait('3', {
+}
+trait['3'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('40', {
+}
+trait['40'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('13', {
+}
+trait['13'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('14', {
+}
+trait['14'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('22', {
+}
+trait['22'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('23', {
+}
+trait['23'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('21', {
+}
+trait['21'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
-})
-Trait('5', {
+}
+trait['5'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 3,
-})
-Trait('38', {
+}
+trait['38'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
-})
-Trait('39', {
+}
+trait['39'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
-})
-Trait('42', {
+}
+trait['42'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('9', {
+}
+trait['9'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 3,
-})
-Trait('20', {
+}
+trait['20'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
-})
-Trait('12', {
+}
+trait['12'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
-})
-Trait('43', {
+}
+trait['43'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('44', {
+}
+trait['44'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('19', {
+}
+trait['19'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
-})
-Trait('15', {
+}
+trait['15'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
-})
-Trait('18', {
+}
+trait['18'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
-})
-Trait('16', {
+}
+trait['16'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
-})
-Trait('17', {
+}
+trait['17'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
-})
-Trait('1', {
+}
+trait['1'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 3,
-})
-Trait('2', {
+}
+trait['2'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 5,
-})
-Trait('11', {
+}
+trait['11'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 5,
-})
-Trait('6', {
+}
+trait['6'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
-})
-Trait('4', {
+}
+trait['4'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 2,
-})
-Trait('7', {
+}
+trait['7'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 3,
-})
-Trait('8', {
+}
+trait['8'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 3,
-})
-Trait('10', {
+}
+trait['10'] = {
   traitref0 = 0,
   traitref1 = 0,
   traitref2 = 3,
-})
-Trait('41', {
+}
+trait['41'] = {
   traitref0 = 1,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('25', {
-  traitref0 = 1,
-  traitref1 = -3,
-  traitref2 = 3,
-})
-Trait('26', {
+}
+trait['25'] = {
   traitref0 = 1,
   traitref1 = -3,
   traitref2 = 3,
-})
-Trait('27', {
-  traitref0 = 1,
-  traitref1 = -2,
-  traitref2 = 2,
-})
-Trait('28', {
+}
+trait['26'] = {
   traitref0 = 1,
   traitref1 = -3,
   traitref2 = 3,
-})
-Trait('29', {
+}
+trait['27'] = {
+  traitref0 = 1,
+  traitref1 = -2,
+  traitref2 = 2,
+}
+trait['28'] = {
   traitref0 = 1,
   traitref1 = -3,
   traitref2 = 3,
-})
-Trait('30', {
+}
+trait['29'] = {
+  traitref0 = 1,
+  traitref1 = -3,
+  traitref2 = 3,
+}
+trait['30'] = {
   traitref0 = 1,
   traitref1 = -2,
   traitref2 = 2,
-})
-Trait('31', {
+}
+trait['31'] = {
   traitref0 = 1,
   traitref1 = -2,
   traitref2 = 2,
-})
-Trait('32', {
-  traitref0 = 1,
-  traitref1 = -1,
-  traitref2 = 1,
-})
-Trait('33', {
-  traitref0 = 1,
-  traitref1 = -1,
-  traitref2 = 1,
-})
-Trait('34', {
+}
+trait['32'] = {
   traitref0 = 1,
   traitref1 = -1,
   traitref2 = 1,
-})
-Trait('35', {
+}
+trait['33'] = {
   traitref0 = 1,
   traitref1 = -1,
   traitref2 = 1,
-})
-Trait('36', {
+}
+trait['34'] = {
   traitref0 = 1,
   traitref1 = -1,
   traitref2 = 1,
-})
-Trait('37', {
+}
+trait['35'] = {
+  traitref0 = 1,
+  traitref1 = -1,
+  traitref2 = 1,
+}
+trait['36'] = {
+  traitref0 = 1,
+  traitref1 = -1,
+  traitref2 = 1,
+}
+trait['37'] = {
   traitref0 = 1,
   traitref1 = -2,
   traitref2 = 2,
-})
-Trait('150', {
+}
+trait['150'] = {
   traitref0 = 2,
   traitref1 = -2,
   traitref2 = 2,
-})
-Trait('151', {
+}
+trait['151'] = {
   traitref0 = 2,
   traitref1 = -2,
   traitref2 = 2,
-})
-Trait('152', {
+}
+trait['152'] = {
   traitref0 = 2,
   traitref1 = -2,
   traitref2 = 2,
-})
-Trait('155', {
+}
+trait['155'] = {
   traitref0 = 2,
   traitref1 = -2,
   traitref2 = 2,
-})
-Trait('156', {
+}
+trait['156'] = {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('160', {
+}
+trait['160'] = {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('161', {
+}
+trait['161'] = {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('162', {
+}
+trait['162'] = {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('169', {
+}
+trait['169'] = {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('163', {
+}
+trait['163'] = {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('164', {
+}
+trait['164'] = {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('165', {
+}
+trait['165'] = {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('166', {
+}
+trait['166'] = {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('167', {
+}
+trait['167'] = {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('157', {
+}
+trait['157'] = {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('158', {
+}
+trait['158'] = {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('159', {
+}
+trait['159'] = {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('154', {
+}
+trait['154'] = {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('153', {
+}
+trait['153'] = {
   traitref0 = 2,
   traitref1 = -2,
   traitref2 = 2,
-})
-Trait('0', {
+}
+trait['0'] = {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('168', {
+}
+trait['168'] = {
   traitref0 = 2,
   traitref1 = 0,
   traitref2 = 1,
-})
-Trait('201', {
+}
+trait['201'] = {
   traitref0 = 3,
   traitref1 = -3,
   traitref2 = 0,
-})
-Trait('202', {
+}
+trait['202'] = {
   traitref0 = 3,
   traitref1 = -3,
   traitref2 = 0,
-})
-Trait('203', {
+}
+trait['203'] = {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
-})
-Trait('204', {
+}
+trait['204'] = {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
-})
-Trait('205', {
+}
+trait['205'] = {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
-})
-Trait('206', {
+}
+trait['206'] = {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
-})
-Trait('207', {
+}
+trait['207'] = {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
-})
-Trait('208', {
+}
+trait['208'] = {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
-})
-Trait('209', {
+}
+trait['209'] = {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
-})
-Trait('210', {
+}
+trait['210'] = {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
-})
-Trait('211', {
+}
+trait['211'] = {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
-})
-Trait('212', {
+}
+trait['212'] = {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
-})
-Trait('213', {
+}
+trait['213'] = {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
-})
-Trait('214', {
+}
+trait['214'] = {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
-})
-Trait('215', {
+}
+trait['215'] = {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
-})
-Trait('216', {
+}
+trait['216'] = {
   traitref0 = 3,
   traitref1 = -1,
   traitref2 = 0,
-})
+}
 
 -- vim: et sw=2 sts=2

@@ -10,11 +10,6 @@ namespace elona::i18n
 {
 
 
-namespace detail
-{
-inline cat::engine lang_state;
-}
-
 
 void load(const std::string& language = "jp"); // TODO
 
@@ -43,7 +38,7 @@ struct formattable_string
     template <typename... Args>
     std::string operator()(Args&&... args)
     {
-        return detail::lang_state.call<std::string>(func, args...);
+        return cat::global.call<std::string>(func, args...);
     }
 
 private:

@@ -1,4 +1,7 @@
-Race('kobolt', {
+race = {}
+
+
+race.kobolt = {
   is_extra = true,
   ordering = 20010,
   breed_power = 250,
@@ -26,8 +29,8 @@ Race('kobolt', {
     _174 = 3,
   },
   body_parts = {1, 4, 3, 5, 5, 6, 6, 7, 8, 9},
-})
-Race('orc', {
+}
+race.orc = {
   is_extra = true,
   ordering = 20020,
   breed_power = 300,
@@ -55,8 +58,8 @@ Race('orc', {
     _168 = 3,
   },
   body_parts = {1, 4, 3, 5, 5, 6, 7, 8, 9},
-})
-Race('troll', {
+}
+race.troll = {
   is_extra = true,
   ordering = 20030,
   breed_power = 250,
@@ -83,8 +86,8 @@ Race('troll', {
     _154 = 40,
   },
   body_parts = {1, 4, 3, 5, 5, 7, 8},
-})
-Race('lizardman', {
+}
+race.lizardman = {
   is_extra = true,
   ordering = 20040,
   breed_power = 300,
@@ -113,8 +116,8 @@ Race('lizardman', {
     _173 = 2,
   },
   body_parts = {1, 4, 3, 5, 5, 6, 7, 8, 9},
-})
-Race('minotaur', {
+}
+race.minotaur = {
   is_extra = true,
   ordering = 20050,
   breed_power = 300,
@@ -141,8 +144,8 @@ Race('minotaur', {
     _186 = 3,
   },
   body_parts = {1, 4, 5, 5, 6, 8, 9},
-})
-Race('yerles', {
+}
+race.yerles = {
   is_extra = false,
   ordering = 10010,
   breed_power = 220,
@@ -171,8 +174,8 @@ Race('yerles', {
     _111 = 3,
   },
   body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
-})
-Race('norland', {
+}
+race.norland = {
   is_extra = true,
   ordering = 20060,
   breed_power = 220,
@@ -201,8 +204,8 @@ Race('norland', {
     _188 = 3,
   },
   body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
-})
-Race('eulderna', {
+}
+race.eulderna = {
   is_extra = false,
   ordering = 10020,
   breed_power = 180,
@@ -230,8 +233,8 @@ Race('eulderna', {
     _174 = 3,
   },
   body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
-})
-Race('fairy', {
+}
+race.fairy = {
   is_extra = false,
   ordering = 10030,
   breed_power = 180,
@@ -269,8 +272,8 @@ Race('fairy', {
     _171 = 3,
   },
   body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
-})
-Race('asura', {
+}
+race.asura = {
   is_extra = true,
   ordering = 20070,
   breed_power = 100,
@@ -299,8 +302,8 @@ Race('asura', {
     _161 = 4,
   },
   body_parts = {5, 5, 5, 5, 2},
-})
-Race('slime', {
+}
+race.slime = {
   is_extra = true,
   ordering = 20080,
   breed_power = 700,
@@ -328,8 +331,8 @@ Race('slime', {
     _183 = 3,
   },
   body_parts = {1},
-})
-Race('wolf', {
+}
+race.wolf = {
   is_extra = true,
   ordering = 20090,
   breed_power = 800,
@@ -357,8 +360,8 @@ Race('wolf', {
     _187 = 2,
   },
   body_parts = {1, 2, 4, 3, 7, 9},
-})
-Race('dwarf', {
+}
+race.dwarf = {
   is_extra = false,
   ordering = 10040,
   breed_power = 150,
@@ -386,8 +389,8 @@ Race('dwarf', {
     _163 = 4,
   },
   body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
-})
-Race('juere', {
+}
+race.juere = {
   is_extra = false,
   ordering = 10050,
   breed_power = 210,
@@ -416,8 +419,8 @@ Race('juere', {
     _111 = 3,
   },
   body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
-})
-Race('zombie', {
+}
+race.zombie = {
   is_extra = true,
   ordering = 20100,
   breed_power = 100,
@@ -450,8 +453,8 @@ Race('zombie', {
     _185 = 3,
   },
   body_parts = {1, 2, 4, 3, 5, 6, 7, 8},
-})
-Race('elea', {
+}
+race.elea = {
   is_extra = false,
   ordering = 10060,
   breed_power = 120,
@@ -479,8 +482,8 @@ Race('elea', {
     _165 = 3,
   },
   body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
-})
-Race('rabbit', {
+}
+race.rabbit = {
   is_extra = true,
   ordering = 20110,
   breed_power = 800,
@@ -506,8 +509,8 @@ Race('rabbit', {
     _301 = 3,
   },
   body_parts = {1, 2, 4, 3, 7},
-})
-Race('sheep', {
+}
+race.sheep = {
   is_extra = true,
   ordering = 20120,
   breed_power = 1000,
@@ -534,8 +537,8 @@ Race('sheep', {
     _161 = 3,
   },
   body_parts = {1, 2, 4, 3, 7, 9},
-})
-Race('frog', {
+}
+race.frog = {
   is_extra = true,
   ordering = 20130,
   breed_power = 600,
@@ -562,8 +565,8 @@ Race('frog', {
     _160 = 2,
   },
   body_parts = {4},
-})
-Race('centipede', {
+}
+race.centipede = {
   is_extra = true,
   ordering = 20140,
   breed_power = 400,
@@ -589,8 +592,8 @@ Race('centipede', {
     _186 = 3,
   },
   body_parts = {3, 6, 6},
-})
-Race('snail', {
+}
+race.snail = {
   is_extra = false,
   ordering = 10070,
   breed_power = 500,
@@ -616,8 +619,8 @@ Race('snail', {
     _111 = 5,
   },
   body_parts = {3},
-})
-Race('mandrake', {
+}
+race.mandrake = {
   is_extra = true,
   ordering = 20150,
   breed_power = 80,
@@ -645,8 +648,8 @@ Race('mandrake', {
     _164 = 3,
   },
   body_parts = {1, 3},
-})
-Race('beetle', {
+}
+race.beetle = {
   is_extra = true,
   ordering = 20160,
   breed_power = 750,
@@ -674,8 +677,8 @@ Race('beetle', {
     _157 = 3,
   },
   body_parts = {2},
-})
-Race('mushroom', {
+}
+race.mushroom = {
   is_extra = true,
   ordering = 20170,
   breed_power = 440,
@@ -704,8 +707,8 @@ Race('mushroom', {
     _178 = 2,
   },
   body_parts = {1, 2},
-})
-Race('bat', {
+}
+race.bat = {
   is_extra = true,
   ordering = 20180,
   breed_power = 350,
@@ -733,8 +736,8 @@ Race('bat', {
     _187 = 3,
   },
   body_parts = {1},
-})
-Race('ent', {
+}
+race.ent = {
   is_extra = true,
   ordering = 20190,
   breed_power = 35,
@@ -761,8 +764,8 @@ Race('ent', {
     _176 = 4,
   },
   body_parts = {5, 6, 6, 7, 9},
-})
-Race('lich', {
+}
+race.lich = {
   is_extra = false,
   ordering = 10080,
   breed_power = 25,
@@ -798,8 +801,8 @@ Race('lich', {
     _172 = 3,
   },
   body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
-})
-Race('hound', {
+}
+race.hound = {
   is_extra = true,
   ordering = 20200,
   breed_power = 540,
@@ -828,8 +831,8 @@ Race('hound', {
     _183 = 2,
   },
   body_parts = {1, 2, 4, 3, 9},
-})
-Race('ghost', {
+}
+race.ghost = {
   is_extra = true,
   ordering = 20210,
   breed_power = 30,
@@ -864,8 +867,8 @@ Race('ghost', {
     _174 = 2,
   },
   body_parts = {1, 2, 4, 3, 5, 5, 6, 6},
-})
-Race('spirit', {
+}
+race.spirit = {
   is_extra = true,
   ordering = 20220,
   breed_power = 25,
@@ -892,8 +895,8 @@ Race('spirit', {
     _188 = 2,
   },
   body_parts = {1, 2, 4, 3, 5, 5, 6, 6},
-})
-Race('eye', {
+}
+race.eye = {
   is_extra = true,
   ordering = 20230,
   breed_power = 50,
@@ -921,8 +924,8 @@ Race('eye', {
     _161 = 3,
   },
   body_parts = {1},
-})
-Race('wyvern', {
+}
+race.wyvern = {
   is_extra = true,
   ordering = 20240,
   breed_power = 100,
@@ -950,8 +953,8 @@ Race('wyvern', {
     _182 = 3,
   },
   body_parts = {2, 4, 6, 6},
-})
-Race('wasp', {
+}
+race.wasp = {
   is_extra = true,
   ordering = 20250,
   breed_power = 580,
@@ -979,8 +982,8 @@ Race('wasp', {
     _187 = 2,
   },
   body_parts = {1},
-})
-Race('giant', {
+}
+race.giant = {
   is_extra = true,
   ordering = 20260,
   breed_power = 60,
@@ -1008,8 +1011,8 @@ Race('giant', {
     _176 = 3,
   },
   body_parts = {4, 3, 5, 5, 7, 9},
-})
-Race('imp', {
+}
+race.imp = {
   is_extra = true,
   ordering = 20270,
   breed_power = 240,
@@ -1038,8 +1041,8 @@ Race('imp', {
     _188 = 3,
   },
   body_parts = {2, 4, 5, 5, 6, 6, 6},
-})
-Race('hand', {
+}
+race.hand = {
   is_extra = true,
   ordering = 20280,
   breed_power = 160,
@@ -1065,8 +1068,8 @@ Race('hand', {
     _186 = 4,
   },
   body_parts = {5, 5, 6, 6, 7},
-})
-Race('snake', {
+}
+race.snake = {
   is_extra = true,
   ordering = 20290,
   breed_power = 430,
@@ -1093,8 +1096,8 @@ Race('snake', {
     _157 = 4,
   },
   body_parts = {4},
-})
-Race('drake', {
+}
+race.drake = {
   is_extra = true,
   ordering = 20300,
   breed_power = 120,
@@ -1123,8 +1126,8 @@ Race('drake', {
     _185 = 2,
   },
   body_parts = {2, 4, 6, 6},
-})
-Race('goblin', {
+}
+race.goblin = {
   is_extra = false,
   ordering = 10090,
   breed_power = 290,
@@ -1153,8 +1156,8 @@ Race('goblin', {
     _186 = 3,
   },
   body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
-})
-Race('bear', {
+}
+race.bear = {
   is_extra = true,
   ordering = 20310,
   breed_power = 350,
@@ -1183,8 +1186,8 @@ Race('bear', {
     _186 = 3,
   },
   body_parts = {5, 5, 6, 6, 7, 8, 9},
-})
-Race('armor', {
+}
+race.armor = {
   is_extra = true,
   ordering = 20320,
   breed_power = 40,
@@ -1213,8 +1216,8 @@ Race('armor', {
     _174 = 2,
   },
   body_parts = {1, 2, 4, 3, 5, 5, 7, 8},
-})
-Race('medusa', {
+}
+race.medusa = {
   is_extra = true,
   ordering = 20330,
   breed_power = 180,
@@ -1242,8 +1245,8 @@ Race('medusa', {
     _188 = 3,
   },
   body_parts = {4, 5, 5, 6, 6, 7, 9},
-})
-Race('cupid', {
+}
+race.cupid = {
   is_extra = true,
   ordering = 20340,
   breed_power = 350,
@@ -1271,8 +1274,8 @@ Race('cupid', {
     _188 = 3,
   },
   body_parts = {2, 4, 5, 5, 6, 6, 7},
-})
-Race('phantom', {
+}
+race.phantom = {
   is_extra = true,
   ordering = 20350,
   breed_power = 35,
@@ -1307,8 +1310,8 @@ Race('phantom', {
     _175 = 3,
   },
   body_parts = {2, 4, 5, 5, 6, 6, 7},
-})
-Race('harpy', {
+}
+race.harpy = {
   is_extra = true,
   ordering = 20360,
   breed_power = 420,
@@ -1336,8 +1339,8 @@ Race('harpy', {
     _174 = 2,
   },
   body_parts = {2, 5, 5, 6, 6, 7, 9, 9},
-})
-Race('dragon', {
+}
+race.dragon = {
   is_extra = true,
   ordering = 20370,
   breed_power = 20,
@@ -1366,8 +1369,8 @@ Race('dragon', {
     _179 = 3,
   },
   body_parts = {2, 4, 6, 6},
-})
-Race('dinosaur', {
+}
+race.dinosaur = {
   is_extra = true,
   ordering = 20380,
   breed_power = 100,
@@ -1396,8 +1399,8 @@ Race('dinosaur', {
     _187 = 2,
   },
   body_parts = {2, 4, 6, 6},
-})
-Race('cerberus', {
+}
+race.cerberus = {
   is_extra = true,
   ordering = 20390,
   breed_power = 80,
@@ -1425,8 +1428,8 @@ Race('cerberus', {
     _177 = 3,
   },
   body_parts = {1, 2, 4, 3, 7, 9, 9},
-})
-Race('spider', {
+}
+race.spider = {
   is_extra = true,
   ordering = 20400,
   breed_power = 560,
@@ -1456,8 +1459,8 @@ Race('spider', {
     _161 = 5,
   },
   body_parts = {6, 6},
-})
-Race('golem', {
+}
+race.golem = {
   is_extra = false,
   ordering = 10100,
   breed_power = 40,
@@ -1486,8 +1489,8 @@ Race('golem', {
     _163 = 3,
   },
   body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
-})
-Race('rock', {
+}
+race.rock = {
   is_extra = true,
   ordering = 20410,
   breed_power = 200,
@@ -1516,8 +1519,8 @@ Race('rock', {
     _163 = 3,
   },
   body_parts = {1},
-})
-Race('crab', {
+}
+race.crab = {
   is_extra = true,
   ordering = 20420,
   breed_power = 420,
@@ -1546,8 +1549,8 @@ Race('crab', {
     _168 = 3,
   },
   body_parts = {3, 5, 5, 6, 6, 9},
-})
-Race('skeleton', {
+}
+race.skeleton = {
   is_extra = true,
   ordering = 20430,
   breed_power = 30,
@@ -1582,8 +1585,8 @@ Race('skeleton', {
     _158 = 3,
   },
   body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
-})
-Race('piece', {
+}
+race.piece = {
   is_extra = true,
   ordering = 20440,
   breed_power = 25,
@@ -1612,8 +1615,8 @@ Race('piece', {
     _150 = 3,
   },
   body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8},
-})
-Race('cat', {
+}
+race.cat = {
   is_extra = true,
   ordering = 20450,
   breed_power = 950,
@@ -1643,8 +1646,8 @@ Race('cat', {
     _173 = 2,
   },
   body_parts = {1, 2, 4, 3, 5, 9, 9},
-})
-Race('dog', {
+}
+race.dog = {
   is_extra = true,
   ordering = 20460,
   breed_power = 920,
@@ -1673,8 +1676,8 @@ Race('dog', {
     _159 = 3,
   },
   body_parts = {1, 2, 4, 3, 5, 9, 9},
-})
-Race('roran', {
+}
+race.roran = {
   is_extra = true,
   ordering = 20470,
   breed_power = 220,
@@ -1703,8 +1706,8 @@ Race('roran', {
     _160 = 2,
   },
   body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
-})
-Race('rat', {
+}
+race.rat = {
   is_extra = true,
   ordering = 20480,
   breed_power = 1100,
@@ -1732,8 +1735,8 @@ Race('rat', {
     _161 = 2,
   },
   body_parts = {3, 7, 8, 9},
-})
-Race('shell', {
+}
+race.shell = {
   is_extra = true,
   ordering = 20490,
   breed_power = 450,
@@ -1762,8 +1765,8 @@ Race('shell', {
     _162 = 3,
   },
   body_parts = {9},
-})
-Race('catgod', {
+}
+race.catgod = {
   is_extra = true,
   ordering = 20500,
   breed_power = 5,
@@ -1793,8 +1796,8 @@ Race('catgod', {
     _186 = 2,
   },
   body_parts = {1, 2, 4, 5, 6, 7, 9},
-})
-Race('machinegod', {
+}
+race.machinegod = {
   is_extra = true,
   ordering = 20510,
   breed_power = 5,
@@ -1822,8 +1825,8 @@ Race('machinegod', {
     _110 = 30,
   },
   body_parts = {1, 4, 3, 5, 5, 7, 8, 9},
-})
-Race('undeadgod', {
+}
+race.undeadgod = {
   is_extra = true,
   ordering = 20520,
   breed_power = 5,
@@ -1850,8 +1853,8 @@ Race('undeadgod', {
     _164 = 5,
   },
   body_parts = {2, 4, 3, 5, 5, 6, 6},
-})
-Race('machine', {
+}
+race.machine = {
   is_extra = true,
   ordering = 20530,
   breed_power = 15,
@@ -1881,8 +1884,8 @@ Race('machine', {
     _175 = 3,
   },
   body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
-})
-Race('wisp', {
+}
+race.wisp = {
   is_extra = true,
   ordering = 20540,
   breed_power = 25,
@@ -1910,8 +1913,8 @@ Race('wisp', {
     _164 = 5,
   },
   body_parts = {1},
-})
-Race('chicken', {
+}
+race.chicken = {
   is_extra = true,
   ordering = 20550,
   breed_power = 1000,
@@ -1939,8 +1942,8 @@ Race('chicken', {
     _155 = 3,
   },
   body_parts = {1},
-})
-Race('stalker', {
+}
+race.stalker = {
   is_extra = true,
   ordering = 20560,
   breed_power = 25,
@@ -1975,8 +1978,8 @@ Race('stalker', {
     _157 = 4,
   },
   body_parts = {2, 5, 5, 6, 6, 7},
-})
-Race('catsister', {
+}
+race.catsister = {
   is_extra = true,
   ordering = 20570,
   breed_power = 5,
@@ -2004,8 +2007,8 @@ Race('catsister', {
     _152 = 4,
   },
   body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
-})
-Race('mutant', {
+}
+race.mutant = {
   is_extra = false,
   ordering = 10110,
   breed_power = 50,
@@ -2032,8 +2035,8 @@ Race('mutant', {
     _154 = 4,
   },
   body_parts = {4, 5},
-})
-Race('yeek', {
+}
+race.yeek = {
   is_extra = true,
   ordering = 20580,
   breed_power = 500,
@@ -2060,8 +2063,8 @@ Race('yeek', {
     _156 = 4,
   },
   body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
-})
-Race('yith', {
+}
+race.yith = {
   is_extra = true,
   ordering = 20590,
   breed_power = 25,
@@ -2091,8 +2094,8 @@ Race('yith', {
     _181 = 4,
   },
   body_parts = {5, 5, 5, 5, 6, 6, 6, 6},
-})
-Race('servant', {
+}
+race.servant = {
   is_extra = true,
   ordering = 20600,
   breed_power = 5,
@@ -2124,8 +2127,8 @@ Race('servant', {
     _167 = 3,
   },
   body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
-})
-Race('horse', {
+}
+race.horse = {
   is_extra = true,
   ordering = 20610,
   breed_power = 1000,
@@ -2152,8 +2155,8 @@ Race('horse', {
     _154 = 4,
   },
   body_parts = {4, 9, 9},
-})
-Race('god', {
+}
+race.god = {
   is_extra = true,
   ordering = 20620,
   breed_power = 1,
@@ -2188,8 +2191,8 @@ Race('god', {
     _152 = 7,
   },
   body_parts = {5, 5},
-})
-Race('quickling', {
+}
+race.quickling = {
   is_extra = true,
   ordering = 20630,
   breed_power = 1,
@@ -2219,8 +2222,8 @@ Race('quickling', {
     _187 = 6,
   },
   body_parts = {1, 4, 3, 5, 5, 6, 6, 7, 9},
-})
-Race('metal', {
+}
+race.metal = {
   is_extra = true,
   ordering = 20640,
   breed_power = 1,
@@ -2251,8 +2254,8 @@ Race('metal', {
     _187 = 6,
   },
   body_parts = {1, 4, 3},
-})
-Race('bike', {
+}
+race.bike = {
   is_extra = true,
   ordering = 20650,
   breed_power = 15,
@@ -2283,12 +2286,12 @@ Race('bike', {
     _175 = 3,
   },
   body_parts = {1, 4, 3, 5, 5, 8, 9, 9},
-})
+}
 
 
 
 -- For debug
-Race('slug', {
+race.slug = {
   ordering = 0,
   pv_correction = 1000,
   dv_correction = 1000,
@@ -2307,6 +2310,6 @@ Race('slug', {
     _163 = 100,
   },
   body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
-})
+}
 
 -- vim: et sw=2 sts=2

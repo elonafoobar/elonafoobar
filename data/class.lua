@@ -1,4 +1,7 @@
-Class("warrior", {
+class = {}
+
+
+class.warrior = {
   ordering = 10010,
   item_type = 1,
   is_extra = false,
@@ -27,8 +30,8 @@ Class("warrior", {
     _169 = 4,
     _168 = 5,
   },
-})
-Class("thief", {
+}
+class.thief = {
   ordering = 10020,
   item_type = 7,
   is_extra = false,
@@ -54,8 +57,8 @@ Class("thief", {
     _174 = 3,
     _170 = 4,
   },
-})
-Class("wizard", {
+}
+class.wizard = {
   ordering = 10030,
   item_type = 2,
   is_extra = false,
@@ -80,8 +83,8 @@ Class("wizard", {
     _178 = 4,
     _172 = 5,
   },
-})
-Class("farmer", {
+}
+class.farmer = {
   ordering = 10040,
   item_type = 1,
   is_extra = false,
@@ -106,8 +109,8 @@ Class("farmer", {
     _180 = 5,
     _177 = 5,
   },
-})
-Class("predator", {
+}
+class.predator = {
   ordering = 20010,
   item_type = 0,
   is_extra = true,
@@ -124,8 +127,8 @@ Class("predator", {
     _18 = 10,
     _152 = 4,
   },
-})
-Class("archer", {
+}
+class.archer = {
   ordering = 10050,
   item_type = 3,
   is_extra = false,
@@ -151,8 +154,8 @@ Class("archer", {
     _301 = 4,
     _189 = 3,
   },
-})
-Class("warmage", {
+}
+class.warmage = {
   ordering = 10060,
   item_type = 5,
   is_extra = false,
@@ -177,8 +180,8 @@ Class("warmage", {
     _169 = 4,
     _172 = 4,
   },
-})
-Class("tourist", {
+}
+class.tourist = {
   ordering = 10070,
   item_type = 0,
   is_extra = false,
@@ -196,8 +199,8 @@ Class("tourist", {
     _185 = 5,
     _182 = 3,
   },
-})
-Class("pianist", {
+}
+class.pianist = {
   ordering = 10080,
   item_type = 3,
   is_extra = false,
@@ -221,8 +224,8 @@ Class("pianist", {
     _171 = 4,
     _301 = 3,
   },
-})
-Class("gunner", {
+}
+class.gunner = {
   ordering = 20020,
   item_type = 4,
   is_extra = true,
@@ -243,8 +246,8 @@ Class("gunner", {
     _154 = 4,
     _189 = 3,
   },
-})
-Class("priest", {
+}
+class.priest = {
   ordering = 10090,
   item_type = 6,
   is_extra = false,
@@ -269,8 +272,8 @@ Class("priest", {
     _181 = 5,
     _172 = 5,
   },
-})
-Class("claymore", {
+}
+class.claymore = {
   ordering = 10100,
   item_type = 8,
   is_extra = false,
@@ -294,11 +297,11 @@ Class("claymore", {
     _171 = 5,
     _150 = 4,
   },
-})
+}
 
 
 -- For debug
-Class("debugger", {
+class.debugger = {
   ordering = 0,
   item_type = 1,
   is_extra = true,
@@ -354,6 +357,6 @@ Class("debugger", {
     _300 = 50,
     _301 = 50,
   },
-})
+}
 
 -- vim: et sw=2 sts=2

@@ -1,4 +1,7 @@
-Item(792, {
+item = {}
+
+
+item['792'] = {
   image = 695,
   value = 2000,
   weight = 200,
@@ -36,8 +39,8 @@ Item(792, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(791, {
+}
+item['791'] = {
   image = 697,
   value = 72000,
   weight = 22500,
@@ -75,8 +78,8 @@ Item(791, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(790, {
+}
+item['790'] = {
   image = 555,
   value = 1000,
   weight = 500,
@@ -114,8 +117,8 @@ Item(790, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(789, {
+}
+item['789'] = {
   image = 554,
   value = 1000,
   weight = 500,
@@ -153,8 +156,8 @@ Item(789, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(788, {
+}
+item['788'] = {
   image = 402,
   value = 2000,
   weight = 700,
@@ -192,8 +195,8 @@ Item(788, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(787, {
+}
+item['787'] = {
   image = 552,
   value = 350,
   weight = 350,
@@ -231,8 +234,8 @@ Item(787, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(786, {
+}
+item['786'] = {
   image = 551,
   value = 50,
   weight = 120,
@@ -270,8 +273,8 @@ Item(786, {
   has_random_name = false,
   filter = "",
   rffilter = "/flavor/",
-})
-Item(785, {
+}
+item['785'] = {
   image = 553,
   value = 80,
   weight = 80,
@@ -309,8 +312,8 @@ Item(785, {
   has_random_name = false,
   filter = "",
   rffilter = "/flavor/",
-})
-Item(784, {
+}
+item['784'] = {
   image = 549,
   value = 2500,
   weight = 550,
@@ -348,8 +351,8 @@ Item(784, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(783, {
+}
+item['783'] = {
   image = 550,
   value = 1000,
   weight = 50,
@@ -387,8 +390,8 @@ Item(783, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(782, {
+}
+item['782'] = {
   image = 360,
   value = 100,
   weight = 150,
@@ -426,8 +429,8 @@ Item(782, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(781, {
+}
+item['781'] = {
   image = 546,
   value = 2400,
   weight = 400,
@@ -465,8 +468,8 @@ Item(781, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(780, {
+}
+item['780'] = {
   image = 545,
   value = 23000,
   weight = 4200,
@@ -504,8 +507,8 @@ Item(780, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(779, {
+}
+item['779'] = {
   image = 544,
   value = 16000,
   weight = 1800,
@@ -543,8 +546,8 @@ Item(779, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(778, {
+}
+item['778'] = {
   image = 543,
   value = 4900,
   weight = 9000,
@@ -582,8 +585,8 @@ Item(778, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(777, {
+}
+item['777'] = {
   image = 682,
   value = 100000,
   weight = 15000,
@@ -621,8 +624,8 @@ Item(777, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(776, {
+}
+item['776'] = {
   image = 681,
   value = 100000,
   weight = 15000,
@@ -660,8 +663,8 @@ Item(776, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(775, {
+}
+item['775'] = {
   image = 542,
   value = 160,
   weight = 250,
@@ -699,8 +702,8 @@ Item(775, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(774, {
+}
+item['774'] = {
   image = 683,
   value = 7200,
   weight = 23800,
@@ -738,8 +741,8 @@ Item(774, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(773, {
+}
+item['773'] = {
   image = 541,
   value = 2400,
   weight = 15000,
@@ -777,8 +780,8 @@ Item(773, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(772, {
+}
+item['772'] = {
   image = 540,
   value = 90,
   weight = 330,
@@ -816,8 +819,8 @@ Item(772, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(771, {
+}
+item['771'] = {
   image = 679,
   value = 7500,
   weight = 100,
@@ -855,8 +858,8 @@ Item(771, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(770, {
+}
+item['770'] = {
   image = 678,
   value = 500,
   weight = 50,
@@ -894,8 +897,8 @@ Item(770, {
   has_random_name = false,
   filter = "/fest/",
   rffilter = "",
-})
-Item(769, {
+}
+item['769'] = {
   image = 677,
   value = 1650,
   weight = 530,
@@ -933,8 +936,8 @@ Item(769, {
   has_random_name = false,
   filter = "/fest/",
   rffilter = "",
-})
-Item(768, {
+}
+item['768'] = {
   image = 676,
   value = 400,
   weight = 150,
@@ -972,8 +975,8 @@ Item(768, {
   has_random_name = false,
   filter = "/fest/",
   rffilter = "",
-})
-Item(767, {
+}
+item['767'] = {
   image = 675,
   value = 250,
   weight = 800,
@@ -1011,8 +1014,8 @@ Item(767, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(766, {
+}
+item['766'] = {
   image = 684,
   value = 3800,
   weight = 48500,
@@ -1050,8 +1053,8 @@ Item(766, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(765, {
+}
+item['765'] = {
   image = 685,
   value = 3800,
   weight = 48500,
@@ -1089,8 +1092,8 @@ Item(765, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(764, {
+}
+item['764'] = {
   image = 674,
   value = 1200,
   weight = 9900,
@@ -1128,8 +1131,8 @@ Item(764, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(763, {
+}
+item['763'] = {
   image = 673,
   value = 3600,
   weight = 85000,
@@ -1167,8 +1170,8 @@ Item(763, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(762, {
+}
+item['762'] = {
   image = 672,
   value = 760,
   weight = 280,
@@ -1206,8 +1209,8 @@ Item(762, {
   has_random_name = false,
   filter = "/fest/",
   rffilter = "",
-})
-Item(761, {
+}
+item['761'] = {
   image = 76,
   value = 35000,
   weight = 45000,
@@ -1245,8 +1248,8 @@ Item(761, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(760, {
+}
+item['760'] = {
   image = 629,
   value = 75000,
   weight = 5000,
@@ -1284,8 +1287,8 @@ Item(760, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(759, {
+}
+item['759'] = {
   image = 671,
   value = 4800,
   weight = 600,
@@ -1323,8 +1326,8 @@ Item(759, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(758, {
+}
+item['758'] = {
   image = 419,
   value = 25000,
   weight = 950,
@@ -1362,8 +1365,8 @@ Item(758, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(757, {
+}
+item['757'] = {
   image = 480,
   value = 15000,
   weight = 2400,
@@ -1401,8 +1404,8 @@ Item(757, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(756, {
+}
+item['756'] = {
   image = 670,
   value = 800,
   weight = 350,
@@ -1440,8 +1443,8 @@ Item(756, {
   has_random_name = false,
   filter = "/fest/",
   rffilter = "",
-})
-Item(755, {
+}
+item['755'] = {
   image = 669,
   value = 2500,
   weight = 800,
@@ -1479,8 +1482,8 @@ Item(755, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(754, {
+}
+item['754'] = {
   image = 668,
   value = 3200,
   weight = 720,
@@ -1518,8 +1521,8 @@ Item(754, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(753, {
+}
+item['753'] = {
   image = 667,
   value = 7800,
   weight = 9800,
@@ -1557,8 +1560,8 @@ Item(753, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(752, {
+}
+item['752'] = {
   image = 666,
   value = 1650,
   weight = 80,
@@ -1596,8 +1599,8 @@ Item(752, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(751, {
+}
+item['751'] = {
   image = 664,
   value = 150000,
   weight = 7500,
@@ -1635,8 +1638,8 @@ Item(751, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(750, {
+}
+item['750'] = {
   image = 665,
   value = 150000,
   weight = 7500,
@@ -1674,8 +1677,8 @@ Item(750, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(749, {
+}
+item['749'] = {
   image = 686,
   value = 50,
   weight = 15000,
@@ -1713,8 +1716,8 @@ Item(749, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(748, {
+}
+item['748'] = {
   image = 662,
   value = 4500,
   weight = 7500,
@@ -1752,8 +1755,8 @@ Item(748, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(747, {
+}
+item['747'] = {
   image = 333,
   value = 4000,
   weight = 80,
@@ -1791,8 +1794,8 @@ Item(747, {
   has_random_name = false,
   filter = "/noshop/",
   rffilter = "",
-})
-Item(746, {
+}
+item['746'] = {
   image = 657,
   value = 50000,
   weight = 1200,
@@ -1830,8 +1833,8 @@ Item(746, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(745, {
+}
+item['745'] = {
   image = 657,
   value = 50000,
   weight = 1200,
@@ -1869,8 +1872,8 @@ Item(745, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(744, {
+}
+item['744'] = {
   image = 657,
   value = 50000,
   weight = 1200,
@@ -1908,8 +1911,8 @@ Item(744, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(743, {
+}
+item['743'] = {
   image = 657,
   value = 50000,
   weight = 1200,
@@ -1947,8 +1950,8 @@ Item(743, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(742, {
+}
+item['742'] = {
   image = 308,
   value = 15000,
   weight = 500,
@@ -1986,8 +1989,8 @@ Item(742, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(741, {
+}
+item['741'] = {
   image = 501,
   value = 40000,
   weight = 2500,
@@ -2025,8 +2028,8 @@ Item(741, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(740, {
+}
+item['740'] = {
   image = 488,
   value = 1200,
   weight = 150,
@@ -2064,8 +2067,8 @@ Item(740, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(739, {
+}
+item['739'] = {
   image = 425,
   value = 30000,
   weight = 376500,
@@ -2103,8 +2106,8 @@ Item(739, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(738, {
+}
+item['738'] = {
   image = 539,
   value = 250,
   weight = 50,
@@ -2142,8 +2145,8 @@ Item(738, {
   has_random_name = false,
   filter = "/fest/",
   rffilter = "",
-})
-Item(737, {
+}
+item['737'] = {
   image = 470,
   value = 7500,
   weight = 20,
@@ -2181,8 +2184,8 @@ Item(737, {
   has_random_name = true,
   filter = "/noshop/",
   rffilter = "",
-})
-Item(736, {
+}
+item['736'] = {
   image = 354,
   value = 1500,
   weight = 120,
@@ -2220,8 +2223,8 @@ Item(736, {
   has_random_name = true,
   filter = "/nogive/",
   rffilter = "",
-})
-Item(735, {
+}
+item['735'] = {
   image = 421,
   value = 500,
   weight = 4000,
@@ -2259,8 +2262,8 @@ Item(735, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(734, {
+}
+item['734'] = {
   image = 220,
   value = 1200,
   weight = 3400,
@@ -2298,8 +2301,8 @@ Item(734, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(733, {
+}
+item['733'] = {
   image = 563,
   value = 4800,
   weight = 8500,
@@ -2337,8 +2340,8 @@ Item(733, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(732, {
+}
+item['732'] = {
   image = 429,
   value = 4000,
   weight = 380,
@@ -2376,8 +2379,8 @@ Item(732, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(731, {
+}
+item['731'] = {
   image = 429,
   value = 8500,
   weight = 380,
@@ -2415,8 +2418,8 @@ Item(731, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(730, {
+}
+item['730'] = {
   image = 538,
   value = 1,
   weight = 1,
@@ -2454,8 +2457,8 @@ Item(730, {
   has_random_name = false,
   filter = "/noshop/",
   rffilter = "/ore/",
-})
-Item(729, {
+}
+item['729'] = {
   image = 391,
   value = 2500,
   weight = 1000,
@@ -2493,8 +2496,8 @@ Item(729, {
   has_random_name = false,
   filter = "/spshop/",
   rffilter = "",
-})
-Item(728, {
+}
+item['728'] = {
   image = 474,
   value = 15000,
   weight = 1250,
@@ -2532,8 +2535,8 @@ Item(728, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(727, {
+}
+item['727'] = {
   image = 453,
   value = 17500,
   weight = 950,
@@ -2571,8 +2574,8 @@ Item(727, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(726, {
+}
+item['726'] = {
   image = 393,
   value = 7500,
   weight = 2850,
@@ -2610,8 +2613,8 @@ Item(726, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(725, {
+}
+item['725'] = {
   image = 76,
   value = 25000,
   weight = 75000,
@@ -2649,8 +2652,8 @@ Item(725, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(724, {
+}
+item['724'] = {
   image = 538,
   value = 1,
   weight = 1,
@@ -2688,8 +2691,8 @@ Item(724, {
   has_random_name = false,
   filter = "/noshop/",
   rffilter = "/ore/",
-})
-Item(723, {
+}
+item['723'] = {
   image = 486,
   value = 9500,
   weight = 400,
@@ -2727,8 +2730,8 @@ Item(723, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(722, {
+}
+item['722'] = {
   image = 486,
   value = 9500,
   weight = 400,
@@ -2766,8 +2769,8 @@ Item(722, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(721, {
+}
+item['721'] = {
   image = 687,
   value = 100000,
   weight = 12000,
@@ -2805,8 +2808,8 @@ Item(721, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(720, {
+}
+item['720'] = {
   image = 649,
   value = 25000,
   weight = 31000,
@@ -2844,8 +2847,8 @@ Item(720, {
   has_random_name = false,
   filter = "/noshop/",
   rffilter = "",
-})
-Item(719, {
+}
+item['719'] = {
   image = 698,
   value = 45000,
   weight = 6500,
@@ -2883,8 +2886,8 @@ Item(719, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(718, {
+}
+item['718'] = {
   image = 630,
   value = 94000,
   weight = 250,
@@ -2922,8 +2925,8 @@ Item(718, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(717, {
+}
+item['717'] = {
   image = 657,
   value = 6800,
   weight = 1200,
@@ -2961,8 +2964,8 @@ Item(717, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(716, {
+}
+item['716'] = {
   image = 424,
   value = 9500,
   weight = 7500,
@@ -3000,8 +3003,8 @@ Item(716, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(715, {
+}
+item['715'] = {
   image = 657,
   value = 6800,
   weight = 1200,
@@ -3039,8 +3042,8 @@ Item(715, {
   has_random_name = false,
   filter = "/noshop/",
   rffilter = "",
-})
-Item(714, {
+}
+item['714'] = {
   image = 537,
   value = 550,
   weight = 850,
@@ -3078,8 +3081,8 @@ Item(714, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(713, {
+}
+item['713'] = {
   image = 536,
   value = 750,
   weight = 400,
@@ -3117,8 +3120,8 @@ Item(713, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(712, {
+}
+item['712'] = {
   image = 308,
   value = 500000,
   weight = 500,
@@ -3156,8 +3159,8 @@ Item(712, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(711, {
+}
+item['711'] = {
   image = 354,
   value = 12000,
   weight = 120,
@@ -3195,8 +3198,8 @@ Item(711, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(710, {
+}
+item['710'] = {
   image = 429,
   value = 8500,
   weight = 380,
@@ -3234,8 +3237,8 @@ Item(710, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(709, {
+}
+item['709'] = {
   image = 470,
   value = 3500,
   weight = 20,
@@ -3273,8 +3276,8 @@ Item(709, {
   has_random_name = true,
   filter = "/noshop/",
   rffilter = "",
-})
-Item(708, {
+}
+item['708'] = {
   image = 429,
   value = 6000,
   weight = 380,
@@ -3312,8 +3315,8 @@ Item(708, {
   has_random_name = true,
   filter = "/noshop/",
   rffilter = "",
-})
-Item(707, {
+}
+item['707'] = {
   image = 699,
   value = 35000,
   weight = 4500,
@@ -3351,8 +3354,8 @@ Item(707, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(706, {
+}
+item['706'] = {
   image = 354,
   value = 4500,
   weight = 120,
@@ -3390,8 +3393,8 @@ Item(706, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(705, {
+}
+item['705'] = {
   image = 486,
   value = 50,
   weight = 250,
@@ -3429,8 +3432,8 @@ Item(705, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(704, {
+}
+item['704'] = {
   image = 535,
   value = 400,
   weight = 100,
@@ -3468,8 +3471,8 @@ Item(704, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(703, {
+}
+item['703'] = {
   image = 534,
   value = 1400,
   weight = 20,
@@ -3507,8 +3510,8 @@ Item(703, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(702, {
+}
+item['702'] = {
   image = 301,
   value = 10000,
   weight = 150,
@@ -3546,8 +3549,8 @@ Item(702, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(701, {
+}
+item['701'] = {
   image = 533,
   value = 2200,
   weight = 20,
@@ -3585,8 +3588,8 @@ Item(701, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(700, {
+}
+item['700'] = {
   image = 532,
   value = 750,
   weight = 20,
@@ -3624,8 +3627,8 @@ Item(700, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(699, {
+}
+item['699'] = {
   image = 658,
   value = 10,
   weight = 3000,
@@ -3663,8 +3666,8 @@ Item(699, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(698, {
+}
+item['698'] = {
   image = 365,
   value = 10,
   weight = 50,
@@ -3702,8 +3705,8 @@ Item(698, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(697, {
+}
+item['697'] = {
   image = 429,
   value = 12500,
   weight = 380,
@@ -3741,8 +3744,8 @@ Item(697, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(696, {
+}
+item['696'] = {
   image = 429,
   value = 14200,
   weight = 380,
@@ -3780,8 +3783,8 @@ Item(696, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(695, {
+}
+item['695'] = {
   image = 399,
   value = 50000,
   weight = 14000,
@@ -3819,8 +3822,8 @@ Item(695, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(694, {
+}
+item['694'] = {
   image = 659,
   value = 2000,
   weight = 1200,
@@ -3858,8 +3861,8 @@ Item(694, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(693, {
+}
+item['693'] = {
   image = 395,
   value = 7500,
   weight = 30000,
@@ -3897,8 +3900,8 @@ Item(693, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(692, {
+}
+item['692'] = {
   image = 394,
   value = 1500,
   weight = 850,
@@ -3936,8 +3939,8 @@ Item(692, {
   has_random_name = false,
   filter = "/fest/",
   rffilter = "",
-})
-Item(691, {
+}
+item['691'] = {
   image = 393,
   value = 3800,
   weight = 8500,
@@ -3975,8 +3978,8 @@ Item(691, {
   has_random_name = false,
   filter = "/fest/",
   rffilter = "",
-})
-Item(690, {
+}
+item['690'] = {
   image = 392,
   value = 4500,
   weight = 18000,
@@ -4014,8 +4017,8 @@ Item(690, {
   has_random_name = false,
   filter = "/fest/",
   rffilter = "",
-})
-Item(689, {
+}
+item['689'] = {
   image = 688,
   value = 5000,
   weight = 22000,
@@ -4053,8 +4056,8 @@ Item(689, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(688, {
+}
+item['688'] = {
   image = 689,
   value = 7500,
   weight = 26000,
@@ -4092,8 +4095,8 @@ Item(688, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(687, {
+}
+item['687'] = {
   image = 429,
   value = 2000,
   weight = 380,
@@ -4131,8 +4134,8 @@ Item(687, {
   has_random_name = false,
   filter = "/noshop/",
   rffilter = "",
-})
-Item(686, {
+}
+item['686'] = {
   image = 690,
   value = 100000,
   weight = 12000,
@@ -4170,8 +4173,8 @@ Item(686, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(685, {
+}
+item['685'] = {
   image = 658,
   value = 4500,
   weight = 1400,
@@ -4209,8 +4212,8 @@ Item(685, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(684, {
+}
+item['684'] = {
   image = 691,
   value = 20000,
   weight = 25000,
@@ -4248,8 +4251,8 @@ Item(684, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(683, {
+}
+item['683'] = {
   image = 657,
   value = 50000,
   weight = 1200,
@@ -4287,8 +4290,8 @@ Item(683, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(682, {
+}
+item['682'] = {
   image = 657,
   value = 50000,
   weight = 1200,
@@ -4326,8 +4329,8 @@ Item(682, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(681, {
+}
+item['681'] = {
   image = 657,
   value = 50000,
   weight = 1200,
@@ -4365,8 +4368,8 @@ Item(681, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(680, {
+}
+item['680'] = {
   image = 657,
   value = 50000,
   weight = 1200,
@@ -4404,8 +4407,8 @@ Item(680, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(679, {
+}
+item['679'] = {
   image = 504,
   value = 35000,
   weight = 6500,
@@ -4443,8 +4446,8 @@ Item(679, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(678, {
+}
+item['678'] = {
   image = 400,
   value = 35000,
   weight = 400,
@@ -4482,8 +4485,8 @@ Item(678, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(677, {
+}
+item['677'] = {
   image = 415,
   value = 35000,
   weight = 4400,
@@ -4521,8 +4524,8 @@ Item(677, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(676, {
+}
+item['676'] = {
   image = 425,
   value = 35000,
   weight = 900,
@@ -4560,8 +4563,8 @@ Item(676, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(675, {
+}
+item['675'] = {
   image = 421,
   value = 35000,
   weight = 850,
@@ -4599,8 +4602,8 @@ Item(675, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(674, {
+}
+item['674'] = {
   image = 514,
   value = 35000,
   weight = 2800,
@@ -4638,8 +4641,8 @@ Item(674, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(673, {
+}
+item['673'] = {
   image = 404,
   value = 35000,
   weight = 800,
@@ -4677,8 +4680,8 @@ Item(673, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(672, {
+}
+item['672'] = {
   image = 656,
   value = 5000,
   weight = 1000,
@@ -4716,8 +4719,8 @@ Item(672, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(671, {
+}
+item['671'] = {
   image = 632,
   value = 10000,
   weight = 120000,
@@ -4755,8 +4758,8 @@ Item(671, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(670, {
+}
+item['670'] = {
   image = 132,
   value = 750,
   weight = -7000,
@@ -4794,8 +4797,8 @@ Item(670, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(669, {
+}
+item['669'] = {
   image = 92,
   value = 3800,
   weight = -35000,
@@ -4833,8 +4836,8 @@ Item(669, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(668, {
+}
+item['668'] = {
   image = 333,
   value = 4000,
   weight = 80,
@@ -4872,8 +4875,8 @@ Item(668, {
   has_random_name = false,
   filter = "/noshop/",
   rffilter = "",
-})
-Item(667, {
+}
+item['667'] = {
   image = 391,
   value = 900,
   weight = 500,
@@ -4911,8 +4914,8 @@ Item(667, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(666, {
+}
+item['666'] = {
   image = 692,
   value = 100000,
   weight = 14000,
@@ -4950,8 +4953,8 @@ Item(666, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(665, {
+}
+item['665'] = {
   image = 680,
   value = 100000,
   weight = 15000,
@@ -4989,8 +4992,8 @@ Item(665, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(664, {
+}
+item['664'] = {
   image = 489,
   value = 50000,
   weight = 50,
@@ -5028,8 +5031,8 @@ Item(664, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(663, {
+}
+item['663'] = {
   image = 654,
   value = 25000,
   weight = 2500,
@@ -5067,8 +5070,8 @@ Item(663, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(662, {
+}
+item['662'] = {
   image = 189,
   value = 100000,
   weight = 440,
@@ -5106,8 +5109,8 @@ Item(662, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(661, {
+}
+item['661'] = {
   image = 459,
   value = 25000,
   weight = 650,
@@ -5145,8 +5148,8 @@ Item(661, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(660, {
+}
+item['660'] = {
   image = 429,
   value = 3500,
   weight = 380,
@@ -5184,8 +5187,8 @@ Item(660, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(659, {
+}
+item['659'] = {
   image = 653,
   value = 1000,
   weight = 1000,
@@ -5223,8 +5226,8 @@ Item(659, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(658, {
+}
+item['658'] = {
   image = 652,
   value = 2500,
   weight = 500,
@@ -5262,8 +5265,8 @@ Item(658, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(657, {
+}
+item['657'] = {
   image = 651,
   value = 3500,
   weight = 1200,
@@ -5301,8 +5304,8 @@ Item(657, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(656, {
+}
+item['656'] = {
   image = 650,
   value = 3000,
   weight = 7900,
@@ -5340,8 +5343,8 @@ Item(656, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(655, {
+}
+item['655'] = {
   image = 168,
   value = 100000,
   weight = 500,
@@ -5379,8 +5382,8 @@ Item(655, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(654, {
+}
+item['654'] = {
   image = 649,
   value = 7500,
   weight = 16000,
@@ -5418,8 +5421,8 @@ Item(654, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(653, {
+}
+item['653'] = {
   image = 648,
   value = 600,
   weight = 150000,
@@ -5457,8 +5460,8 @@ Item(653, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(652, {
+}
+item['652'] = {
   image = 647,
   value = 3500,
   weight = 15000,
@@ -5496,8 +5499,8 @@ Item(652, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(651, {
+}
+item['651'] = {
   image = 646,
   value = 4800,
   weight = 8400,
@@ -5535,8 +5538,8 @@ Item(651, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(650, {
+}
+item['650'] = {
   image = 645,
   value = 1000,
   weight = 12000,
@@ -5574,8 +5577,8 @@ Item(650, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(649, {
+}
+item['649'] = {
   image = 644,
   value = 1500,
   weight = 4000,
@@ -5613,8 +5616,8 @@ Item(649, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(648, {
+}
+item['648'] = {
   image = 643,
   value = 2500,
   weight = 5000,
@@ -5652,8 +5655,8 @@ Item(648, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(647, {
+}
+item['647'] = {
   image = 642,
   value = 5000,
   weight = 7800,
@@ -5691,8 +5694,8 @@ Item(647, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(646, {
+}
+item['646'] = {
   image = 641,
   value = 1800,
   weight = 4500,
@@ -5730,8 +5733,8 @@ Item(646, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(645, {
+}
+item['645'] = {
   image = 640,
   value = 9500,
   weight = 11000,
@@ -5769,8 +5772,8 @@ Item(645, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(644, {
+}
+item['644'] = {
   image = 639,
   value = 2400,
   weight = 2000,
@@ -5808,8 +5811,8 @@ Item(644, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(643, {
+}
+item['643'] = {
   image = 638,
   value = 2500,
   weight = 2000,
@@ -5847,8 +5850,8 @@ Item(643, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(642, {
+}
+item['642'] = {
   image = 637,
   value = 500,
   weight = 4800,
@@ -5886,8 +5889,8 @@ Item(642, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(641, {
+}
+item['641'] = {
   image = 636,
   value = 7500,
   weight = 2500,
@@ -5925,8 +5928,8 @@ Item(641, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(640, {
+}
+item['640'] = {
   image = 635,
   value = 8000,
   weight = 2000,
@@ -5964,8 +5967,8 @@ Item(640, {
   has_random_name = false,
   filter = "/noshop/spshop/",
   rffilter = "",
-})
-Item(639, {
+}
+item['639'] = {
   image = 172,
   value = 100000,
   weight = 720,
@@ -6003,8 +6006,8 @@ Item(639, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(638, {
+}
+item['638'] = {
   image = 470,
   value = 450,
   weight = 20,
@@ -6042,8 +6045,8 @@ Item(638, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(637, {
+}
+item['637'] = {
   image = 633,
   value = 150000,
   weight = 400,
@@ -6081,8 +6084,8 @@ Item(637, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(636, {
+}
+item['636'] = {
   image = 634,
   value = 800,
   weight = 400,
@@ -6120,8 +6123,8 @@ Item(636, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(635, {
+}
+item['635'] = {
   image = 632,
   value = 7500,
   weight = 9800,
@@ -6159,8 +6162,8 @@ Item(635, {
   has_random_name = false,
   filter = "/spshop/",
   rffilter = "",
-})
-Item(634, {
+}
+item['634'] = {
   image = 631,
   value = 1200,
   weight = 1200,
@@ -6198,8 +6201,8 @@ Item(634, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(633, {
+}
+item['633'] = {
   image = 630,
   value = 25000,
   weight = 500,
@@ -6237,8 +6240,8 @@ Item(633, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(632, {
+}
+item['632'] = {
   image = 470,
   value = 40000,
   weight = 5,
@@ -6276,8 +6279,8 @@ Item(632, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(631, {
+}
+item['631'] = {
   image = 566,
   value = 50,
   weight = 5000000,
@@ -6315,8 +6318,8 @@ Item(631, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(630, {
+}
+item['630'] = {
   image = 629,
   value = 2500,
   weight = 5000,
@@ -6354,8 +6357,8 @@ Item(630, {
   has_random_name = false,
   filter = "/noshop/spshop/",
   rffilter = "",
-})
-Item(629, {
+}
+item['629'] = {
   image = 628,
   value = 7200,
   weight = 3500,
@@ -6393,8 +6396,8 @@ Item(629, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(628, {
+}
+item['628'] = {
   image = 429,
   value = 7000,
   weight = 380,
@@ -6432,8 +6435,8 @@ Item(628, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(627, {
+}
+item['627'] = {
   image = 480,
   value = 40000,
   weight = 1500,
@@ -6471,8 +6474,8 @@ Item(627, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(626, {
+}
+item['626'] = {
   image = 354,
   value = 50000,
   weight = 120,
@@ -6510,8 +6513,8 @@ Item(626, {
   has_random_name = true,
   filter = "/spshop/",
   rffilter = "",
-})
-Item(625, {
+}
+item['625'] = {
   image = 627,
   value = 7500,
   weight = 8000,
@@ -6549,8 +6552,8 @@ Item(625, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(624, {
+}
+item['624'] = {
   image = 429,
   value = 10000,
   weight = 380,
@@ -6588,8 +6591,8 @@ Item(624, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(623, {
+}
+item['623'] = {
   image = 429,
   value = 15000,
   weight = 380,
@@ -6627,8 +6630,8 @@ Item(623, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(622, {
+}
+item['622'] = {
   image = 165,
   value = 1,
   weight = 1,
@@ -6666,8 +6669,8 @@ Item(622, {
   has_random_name = false,
   filter = "/noshop/",
   rffilter = "/ore/",
-})
-Item(621, {
+}
+item['621'] = {
   image = 252,
   value = 10000,
   weight = 20,
@@ -6705,8 +6708,8 @@ Item(621, {
   has_random_name = false,
   filter = "/noshop/spshop/",
   rffilter = "",
-})
-Item(620, {
+}
+item['620'] = {
   image = 354,
   value = 4500,
   weight = 50,
@@ -6744,8 +6747,8 @@ Item(620, {
   has_random_name = false,
   filter = "/nogive/",
   rffilter = "",
-})
-Item(619, {
+}
+item['619'] = {
   image = 310,
   value = 1200,
   weight = 1250,
@@ -6783,8 +6786,8 @@ Item(619, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(618, {
+}
+item['618'] = {
   image = 310,
   value = 1200,
   weight = 1250,
@@ -6822,8 +6825,8 @@ Item(618, {
   has_random_name = false,
   filter = "",
   rffilter = "/fish/",
-})
-Item(617, {
+}
+item['617'] = {
   image = 569,
   value = 1000,
   weight = 250,
@@ -6861,8 +6864,8 @@ Item(617, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(616, {
+}
+item['616'] = {
   image = 384,
   value = 14500,
   weight = 6500,
@@ -6900,8 +6903,8 @@ Item(616, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(615, {
+}
+item['615'] = {
   image = 383,
   value = 100,
   weight = 100,
@@ -6939,8 +6942,8 @@ Item(615, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(614, {
+}
+item['614'] = {
   image = 568,
   value = 2000,
   weight = 8000,
@@ -6978,8 +6981,8 @@ Item(614, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(613, {
+}
+item['613'] = {
   image = 569,
   value = 35000,
   weight = 24000,
@@ -7017,8 +7020,8 @@ Item(613, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(612, {
+}
+item['612'] = {
   image = 382,
   value = 1000,
   weight = 2000,
@@ -7056,8 +7059,8 @@ Item(612, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(611, {
+}
+item['611'] = {
   image = 107,
   value = 3500,
   weight = 1200,
@@ -7095,8 +7098,8 @@ Item(611, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(610, {
+}
+item['610'] = {
   image = 380,
   value = 1500,
   weight = 5600,
@@ -7134,8 +7137,8 @@ Item(610, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(609, {
+}
+item['609'] = {
   image = 379,
   value = 700,
   weight = 1600,
@@ -7173,8 +7176,8 @@ Item(609, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(608, {
+}
+item['608'] = {
   image = 378,
   value = 500,
   weight = 1500,
@@ -7212,8 +7215,8 @@ Item(608, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(607, {
+}
+item['607'] = {
   image = 377,
   value = 2600,
   weight = 4200,
@@ -7251,8 +7254,8 @@ Item(607, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(606, {
+}
+item['606'] = {
   image = 376,
   value = 9500,
   weight = 8250,
@@ -7290,8 +7293,8 @@ Item(606, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(605, {
+}
+item['605'] = {
   image = 375,
   value = 2200,
   weight = 1200,
@@ -7329,8 +7332,8 @@ Item(605, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(604, {
+}
+item['604'] = {
   image = 374,
   value = 400,
   weight = 800,
@@ -7368,8 +7371,8 @@ Item(604, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(603, {
+}
+item['603'] = {
   image = 373,
   value = 12000,
   weight = 2400,
@@ -7407,8 +7410,8 @@ Item(603, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(602, {
+}
+item['602'] = {
   image = 372,
   value = 185000,
   weight = 350000,
@@ -7446,8 +7449,8 @@ Item(602, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(601, {
+}
+item['601'] = {
   image = 371,
   value = 100,
   weight = 120,
@@ -7485,8 +7488,8 @@ Item(601, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(600, {
+}
+item['600'] = {
   image = 370,
   value = 1800,
   weight = 150000,
@@ -7524,8 +7527,8 @@ Item(600, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(599, {
+}
+item['599'] = {
   image = 570,
   value = 4800,
   weight = 35000,
@@ -7563,8 +7566,8 @@ Item(599, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(598, {
+}
+item['598'] = {
   image = 134,
   value = 1200,
   weight = -11000,
@@ -7602,8 +7605,8 @@ Item(598, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(597, {
+}
+item['597'] = {
   image = 570,
   value = 3500,
   weight = -60000,
@@ -7641,8 +7644,8 @@ Item(597, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(596, {
+}
+item['596'] = {
   image = 369,
   value = 1800,
   weight = 4800,
@@ -7680,8 +7683,8 @@ Item(596, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(595, {
+}
+item['595'] = {
   image = 571,
   value = 2500,
   weight = 16000,
@@ -7719,8 +7722,8 @@ Item(595, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(594, {
+}
+item['594'] = {
   image = 572,
   value = 18000,
   weight = 12000,
@@ -7758,8 +7761,8 @@ Item(594, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(593, {
+}
+item['593'] = {
   image = 573,
   value = 7200,
   weight = 250000,
@@ -7797,8 +7800,8 @@ Item(593, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(592, {
+}
+item['592'] = {
   image = 368,
   value = 180,
   weight = 3400,
@@ -7836,8 +7839,8 @@ Item(592, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(591, {
+}
+item['591'] = {
   image = 366,
   value = 400,
   weight = 8500,
@@ -7875,8 +7878,8 @@ Item(591, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(590, {
+}
+item['590'] = {
   image = 367,
   value = 10,
   weight = 4800,
@@ -7914,8 +7917,8 @@ Item(590, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(589, {
+}
+item['589'] = {
   image = 574,
   value = 1800,
   weight = 28000,
@@ -7953,8 +7956,8 @@ Item(589, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(588, {
+}
+item['588'] = {
   image = 575,
   value = 500,
   weight = 14000,
@@ -7992,8 +7995,8 @@ Item(588, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(587, {
+}
+item['587'] = {
   image = 365,
   value = 10,
   weight = 50,
@@ -8031,8 +8034,8 @@ Item(587, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(586, {
+}
+item['586'] = {
   image = 576,
   value = 7200,
   weight = 250000,
@@ -8070,8 +8073,8 @@ Item(586, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(585, {
+}
+item['585'] = {
   image = 364,
   value = 4500,
   weight = 1500,
@@ -8109,8 +8112,8 @@ Item(585, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(584, {
+}
+item['584'] = {
   image = 353,
   value = 1500,
   weight = 200,
@@ -8148,8 +8151,8 @@ Item(584, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(583, {
+}
+item['583'] = {
   image = 352,
   value = 200,
   weight = 150,
@@ -8187,8 +8190,8 @@ Item(583, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(582, {
+}
+item['582'] = {
   image = 429,
   value = 2000,
   weight = 380,
@@ -8226,8 +8229,8 @@ Item(582, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(581, {
+}
+item['581'] = {
   image = 471,
   value = 2000,
   weight = 800,
@@ -8265,8 +8268,8 @@ Item(581, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(580, {
+}
+item['580'] = {
   image = 236,
   value = 1600,
   weight = 10200,
@@ -8304,8 +8307,8 @@ Item(580, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(579, {
+}
+item['579'] = {
   image = 577,
   value = 3800,
   weight = 15000,
@@ -8343,8 +8346,8 @@ Item(579, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(578, {
+}
+item['578'] = {
   image = 348,
   value = 1400,
   weight = 500,
@@ -8382,8 +8385,8 @@ Item(578, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(577, {
+}
+item['577'] = {
   image = 223,
   value = 400,
   weight = 50,
@@ -8421,8 +8424,8 @@ Item(577, {
   has_random_name = true,
   filter = "/nogive/",
   rffilter = "",
-})
-Item(576, {
+}
+item['576'] = {
   image = 516,
   value = 1000,
   weight = 500,
@@ -8460,8 +8463,8 @@ Item(576, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(575, {
+}
+item['575'] = {
   image = 340,
   value = 25,
   weight = 80,
@@ -8499,8 +8502,8 @@ Item(575, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(574, {
+}
+item['574'] = {
   image = 339,
   value = 1000,
   weight = 300,
@@ -8538,8 +8541,8 @@ Item(574, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(573, {
+}
+item['573'] = {
   image = 338,
   value = 500,
   weight = 300,
@@ -8577,8 +8580,8 @@ Item(573, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(572, {
+}
+item['572'] = {
   image = 308,
   value = 80000,
   weight = 500,
@@ -8616,8 +8619,8 @@ Item(572, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(571, {
+}
+item['571'] = {
   image = 337,
   value = 640,
   weight = 450,
@@ -8655,8 +8658,8 @@ Item(571, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(570, {
+}
+item['570'] = {
   image = 471,
   value = 3800,
   weight = 800,
@@ -8694,8 +8697,8 @@ Item(570, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(569, {
+}
+item['569'] = {
   image = 429,
   value = 5800,
   weight = 380,
@@ -8733,8 +8736,8 @@ Item(569, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(568, {
+}
+item['568'] = {
   image = 335,
   value = 2400,
   weight = 800,
@@ -8772,8 +8775,8 @@ Item(568, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(567, {
+}
+item['567'] = {
   image = 335,
   value = 2400,
   weight = 800,
@@ -8811,8 +8814,8 @@ Item(567, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(566, {
+}
+item['566'] = {
   image = 354,
   value = 1900,
   weight = 120,
@@ -8850,8 +8853,8 @@ Item(566, {
   has_random_name = true,
   filter = "/nogive/",
   rffilter = "",
-})
-Item(565, {
+}
+item['565'] = {
   image = 471,
   value = 4400,
   weight = 800,
@@ -8889,8 +8892,8 @@ Item(565, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(564, {
+}
+item['564'] = {
   image = 429,
   value = 7500,
   weight = 380,
@@ -8928,8 +8931,8 @@ Item(564, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(563, {
+}
+item['563'] = {
   image = 334,
   value = 4800,
   weight = 80,
@@ -8967,8 +8970,8 @@ Item(563, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(562, {
+}
+item['562'] = {
   image = 332,
   value = 1500,
   weight = 20000,
@@ -9006,8 +9009,8 @@ Item(562, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(561, {
+}
+item['561'] = {
   image = 197,
   value = 7200,
   weight = 20000,
@@ -9045,8 +9048,8 @@ Item(561, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(560, {
+}
+item['560'] = {
   image = 331,
   value = 380,
   weight = 20000,
@@ -9084,8 +9087,8 @@ Item(560, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(559, {
+}
+item['559'] = {
   image = 354,
   value = 100000,
   weight = 120,
@@ -9123,8 +9126,8 @@ Item(559, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(558, {
+}
+item['558'] = {
   image = 489,
   value = 17000,
   weight = 50,
@@ -9162,8 +9165,8 @@ Item(558, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(557, {
+}
+item['557'] = {
   image = 422,
   value = 18000,
   weight = 400,
@@ -9201,8 +9204,8 @@ Item(557, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(556, {
+}
+item['556'] = {
   image = 460,
   value = 24000,
   weight = 300,
@@ -9240,8 +9243,8 @@ Item(556, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(555, {
+}
+item['555'] = {
   image = 330,
   value = 6500,
   weight = 12500,
@@ -9279,8 +9282,8 @@ Item(555, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(554, {
+}
+item['554'] = {
   image = 323,
   value = 3500,
   weight = 40,
@@ -9318,8 +9321,8 @@ Item(554, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(553, {
+}
+item['553'] = {
   image = 323,
   value = 4500,
   weight = 40,
@@ -9357,8 +9360,8 @@ Item(553, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(552, {
+}
+item['552'] = {
   image = 326,
   value = 18000,
   weight = 500,
@@ -9396,8 +9399,8 @@ Item(552, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(551, {
+}
+item['551'] = {
   image = 471,
   value = 5600,
   weight = 800,
@@ -9435,8 +9438,8 @@ Item(551, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(550, {
+}
+item['550'] = {
   image = 429,
   value = 5800,
   weight = 380,
@@ -9474,8 +9477,8 @@ Item(550, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(549, {
+}
+item['549'] = {
   image = 470,
   value = 3500,
   weight = 20,
@@ -9513,8 +9516,8 @@ Item(549, {
   has_random_name = true,
   filter = "/noshop/",
   rffilter = "",
-})
-Item(548, {
+}
+item['548'] = {
   image = 429,
   value = 9500,
   weight = 380,
@@ -9552,8 +9555,8 @@ Item(548, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(547, {
+}
+item['547'] = {
   image = 325,
   value = 6400,
   weight = 20000,
@@ -9591,8 +9594,8 @@ Item(547, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(546, {
+}
+item['546'] = {
   image = 429,
   value = 6800,
   weight = 380,
@@ -9630,8 +9633,8 @@ Item(546, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(545, {
+}
+item['545'] = {
   image = 471,
   value = 4000,
   weight = 800,
@@ -9669,8 +9672,8 @@ Item(545, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(544, {
+}
+item['544'] = {
   image = 516,
   value = 1000,
   weight = 500,
@@ -9708,8 +9711,8 @@ Item(544, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(543, {
+}
+item['543'] = {
   image = 308,
   value = 10000,
   weight = 500,
@@ -9747,8 +9750,8 @@ Item(543, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(542, {
+}
+item['542'] = {
   image = 308,
   value = 45000,
   weight = 500,
@@ -9786,8 +9789,8 @@ Item(542, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(541, {
+}
+item['541'] = {
   image = 134,
   value = 200,
   weight = 8500,
@@ -9825,8 +9828,8 @@ Item(541, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(540, {
+}
+item['540'] = {
   image = 130,
   value = 7000,
   weight = 2500,
@@ -9864,8 +9867,8 @@ Item(540, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(539, {
+}
+item['539'] = {
   image = 578,
   value = 25000,
   weight = 48000,
@@ -9903,8 +9906,8 @@ Item(539, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(538, {
+}
+item['538'] = {
   image = 131,
   value = 12000,
   weight = 450,
@@ -9942,8 +9945,8 @@ Item(538, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(537, {
+}
+item['537'] = {
   image = 92,
   value = 8200,
   weight = 500,
@@ -9981,8 +9984,8 @@ Item(537, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(536, {
+}
+item['536'] = {
   image = 81,
   value = 8500,
   weight = 2000,
@@ -10020,8 +10023,8 @@ Item(536, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(535, {
+}
+item['535'] = {
   image = 83,
   value = 2400,
   weight = 5800,
@@ -10059,8 +10062,8 @@ Item(535, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(534, {
+}
+item['534'] = {
   image = 582,
   value = 4500,
   weight = 15000,
@@ -10098,8 +10101,8 @@ Item(534, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(533, {
+}
+item['533'] = {
   image = 581,
   value = 7500,
   weight = 85000,
@@ -10137,8 +10140,8 @@ Item(533, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(532, {
+}
+item['532'] = {
   image = 584,
   value = 9400,
   weight = 45000,
@@ -10176,8 +10179,8 @@ Item(532, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(531, {
+}
+item['531'] = {
   image = 583,
   value = 8500,
   weight = 68000,
@@ -10215,8 +10218,8 @@ Item(531, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(530, {
+}
+item['530'] = {
   image = 587,
   value = 900,
   weight = 28000,
@@ -10254,8 +10257,8 @@ Item(530, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(529, {
+}
+item['529'] = {
   image = 588,
   value = 1000,
   weight = 39000,
@@ -10293,8 +10296,8 @@ Item(529, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(528, {
+}
+item['528'] = {
   image = 589,
   value = 800,
   weight = 28000,
@@ -10332,8 +10335,8 @@ Item(528, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(527, {
+}
+item['527'] = {
   image = 590,
   value = 500,
   weight = 20000,
@@ -10371,8 +10374,8 @@ Item(527, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(526, {
+}
+item['526'] = {
   image = 591,
   value = 2000,
   weight = 42000,
@@ -10410,8 +10413,8 @@ Item(526, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(525, {
+}
+item['525'] = {
   image = 592,
   value = 500,
   weight = 35000,
@@ -10449,8 +10452,8 @@ Item(525, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(524, {
+}
+item['524'] = {
   image = 593,
   value = 500,
   weight = 38000,
@@ -10488,8 +10491,8 @@ Item(524, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(523, {
+}
+item['523'] = {
   image = 527,
   value = 700,
   weight = 45000,
@@ -10527,8 +10530,8 @@ Item(523, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(522, {
+}
+item['522'] = {
   image = 308,
   value = 200000,
   weight = 500,
@@ -10566,8 +10569,8 @@ Item(522, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(521, {
+}
+item['521'] = {
   image = 308,
   value = 140000,
   weight = 500,
@@ -10605,8 +10608,8 @@ Item(521, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(520, {
+}
+item['520'] = {
   image = 522,
   value = 4500,
   weight = 500,
@@ -10644,8 +10647,8 @@ Item(520, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(519, {
+}
+item['519'] = {
   image = 354,
   value = 500,
   weight = 120,
@@ -10683,8 +10686,8 @@ Item(519, {
   has_random_name = true,
   filter = "/nogive/",
   rffilter = "",
-})
-Item(518, {
+}
+item['518'] = {
   image = 471,
   value = 6000,
   weight = 800,
@@ -10722,8 +10725,8 @@ Item(518, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(517, {
+}
+item['517'] = {
   image = 471,
   value = 4500,
   weight = 800,
@@ -10761,8 +10764,8 @@ Item(517, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(516, {
+}
+item['516'] = {
   image = 354,
   value = 280,
   weight = 50,
@@ -10800,8 +10803,8 @@ Item(516, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(515, {
+}
+item['515'] = {
   image = 470,
   value = 2500,
   weight = 20,
@@ -10839,8 +10842,8 @@ Item(515, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(514, {
+}
+item['514'] = {
   image = 520,
   value = 60000,
   weight = 8500,
@@ -10878,8 +10881,8 @@ Item(514, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(513, {
+}
+item['513'] = {
   image = 521,
   value = 150,
   weight = 800,
@@ -10917,8 +10920,8 @@ Item(513, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(512, {
+}
+item['512'] = {
   image = 520,
   value = 1500,
   weight = 1200,
@@ -10956,8 +10959,8 @@ Item(512, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(511, {
+}
+item['511'] = {
   image = 308,
   value = 10000,
   weight = 500,
@@ -10995,8 +10998,8 @@ Item(511, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(510, {
+}
+item['510'] = {
   image = 253,
   value = 4500,
   weight = 20000,
@@ -11034,8 +11037,8 @@ Item(510, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(509, {
+}
+item['509'] = {
   image = 470,
   value = 14000,
   weight = 20,
@@ -11073,8 +11076,8 @@ Item(509, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(508, {
+}
+item['508'] = {
   image = 470,
   value = 8000,
   weight = 20,
@@ -11112,8 +11115,8 @@ Item(508, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(507, {
+}
+item['507'] = {
   image = 470,
   value = 14000,
   weight = 20,
@@ -11151,8 +11154,8 @@ Item(507, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(506, {
+}
+item['506'] = {
   image = 470,
   value = 8000,
   weight = 20,
@@ -11190,8 +11193,8 @@ Item(506, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(505, {
+}
+item['505'] = {
   image = 429,
   value = 8000,
   weight = 380,
@@ -11229,8 +11232,8 @@ Item(505, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(504, {
+}
+item['504'] = {
   image = 528,
   value = 500,
   weight = 200,
@@ -11268,8 +11271,8 @@ Item(504, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(503, {
+}
+item['503'] = {
   image = 531,
   value = 1000,
   weight = 2500,
@@ -11307,8 +11310,8 @@ Item(503, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(502, {
+}
+item['502'] = {
   image = 470,
   value = 20000,
   weight = 20,
@@ -11346,8 +11349,8 @@ Item(502, {
   has_random_name = true,
   filter = "/spshop/",
   rffilter = "",
-})
-Item(501, {
+}
+item['501'] = {
   image = 470,
   value = 5000,
   weight = 20,
@@ -11385,8 +11388,8 @@ Item(501, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(500, {
+}
+item['500'] = {
   image = 470,
   value = 600,
   weight = 20,
@@ -11424,8 +11427,8 @@ Item(500, {
   has_random_name = true,
   filter = "/neg/",
   rffilter = "",
-})
-Item(499, {
+}
+item['499'] = {
   image = 519,
   value = 750,
   weight = 500,
@@ -11463,8 +11466,8 @@ Item(499, {
   has_random_name = false,
   filter = "/sf/fest/",
   rffilter = "",
-})
-Item(498, {
+}
+item['498'] = {
   image = 518,
   value = 350,
   weight = 180,
@@ -11502,8 +11505,8 @@ Item(498, {
   has_random_name = false,
   filter = "/sf/fest/",
   rffilter = "",
-})
-Item(497, {
+}
+item['497'] = {
   image = 517,
   value = 440,
   weight = 200,
@@ -11541,8 +11544,8 @@ Item(497, {
   has_random_name = false,
   filter = "/sf/fest/",
   rffilter = "",
-})
-Item(496, {
+}
+item['496'] = {
   image = 514,
   value = 800,
   weight = 1500,
@@ -11580,8 +11583,8 @@ Item(496, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(495, {
+}
+item['495'] = {
   image = 516,
   value = 1000,
   weight = 500,
@@ -11619,8 +11622,8 @@ Item(495, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(494, {
+}
+item['494'] = {
   image = 515,
   value = 1200,
   weight = 800,
@@ -11658,8 +11661,8 @@ Item(494, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(493, {
+}
+item['493'] = {
   image = 513,
   value = 1000,
   weight = 8000,
@@ -11697,8 +11700,8 @@ Item(493, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(492, {
+}
+item['492'] = {
   image = 512,
   value = 3100,
   weight = 14000,
@@ -11736,8 +11739,8 @@ Item(492, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(491, {
+}
+item['491'] = {
   image = 511,
   value = 2400,
   weight = 95000,
@@ -11775,8 +11778,8 @@ Item(491, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(490, {
+}
+item['490'] = {
   image = 510,
   value = 3200,
   weight = 150000,
@@ -11814,8 +11817,8 @@ Item(490, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(489, {
+}
+item['489'] = {
   image = 509,
   value = 1600,
   weight = 1500,
@@ -11853,8 +11856,8 @@ Item(489, {
   has_random_name = false,
   filter = "/sf/fest/",
   rffilter = "",
-})
-Item(488, {
+}
+item['488'] = {
   image = 506,
   value = 2400,
   weight = 120000,
@@ -11892,8 +11895,8 @@ Item(488, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(487, {
+}
+item['487'] = {
   image = 508,
   value = 4400,
   weight = 45000,
@@ -11931,8 +11934,8 @@ Item(487, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(486, {
+}
+item['486'] = {
   image = 507,
   value = 3600,
   weight = 150000,
@@ -11970,8 +11973,8 @@ Item(486, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(485, {
+}
+item['485'] = {
   image = 471,
   value = 3500,
   weight = 800,
@@ -12009,8 +12012,8 @@ Item(485, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(484, {
+}
+item['484'] = {
   image = 429,
   value = 4500,
   weight = 380,
@@ -12048,8 +12051,8 @@ Item(484, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(483, {
+}
+item['483'] = {
   image = 412,
   value = 150,
   weight = 3500,
@@ -12087,8 +12090,8 @@ Item(483, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(482, {
+}
+item['482'] = {
   image = 498,
   value = 500,
   weight = 2800,
@@ -12126,8 +12129,8 @@ Item(482, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(481, {
+}
+item['481'] = {
   image = 429,
   value = 28000,
   weight = 380,
@@ -12165,8 +12168,8 @@ Item(481, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(480, {
+}
+item['480'] = {
   image = 471,
   value = 16000,
   weight = 800,
@@ -12204,8 +12207,8 @@ Item(480, {
   has_random_name = true,
   filter = "/noshop/",
   rffilter = "",
-})
-Item(479, {
+}
+item['479'] = {
   image = 470,
   value = 9000,
   weight = 20,
@@ -12243,8 +12246,8 @@ Item(479, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(478, {
+}
+item['478'] = {
   image = 493,
   value = 1200,
   weight = 250,
@@ -12282,8 +12285,8 @@ Item(478, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(477, {
+}
+item['477'] = {
   image = 489,
   value = 5200,
   weight = 50,
@@ -12321,8 +12324,8 @@ Item(477, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(476, {
+}
+item['476'] = {
   image = 490,
   value = 450,
   weight = 50,
@@ -12360,8 +12363,8 @@ Item(476, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(475, {
+}
+item['475'] = {
   image = 491,
   value = 450,
   weight = 50,
@@ -12399,8 +12402,8 @@ Item(475, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(474, {
+}
+item['474'] = {
   image = 492,
   value = 450,
   weight = 50,
@@ -12438,8 +12441,8 @@ Item(474, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(473, {
+}
+item['473'] = {
   image = 483,
   value = 5000,
   weight = 50,
@@ -12477,8 +12480,8 @@ Item(473, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(472, {
+}
+item['472'] = {
   image = 484,
   value = 1800,
   weight = 50,
@@ -12516,8 +12519,8 @@ Item(472, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(471, {
+}
+item['471'] = {
   image = 485,
   value = 2000,
   weight = 50,
@@ -12555,8 +12558,8 @@ Item(471, {
   has_random_name = true,
   filter = "/fest/",
   rffilter = "",
-})
-Item(470, {
+}
+item['470'] = {
   image = 486,
   value = 2200,
   weight = 50,
@@ -12594,8 +12597,8 @@ Item(470, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(469, {
+}
+item['469'] = {
   image = 487,
   value = 4400,
   weight = 50,
@@ -12633,8 +12636,8 @@ Item(469, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(468, {
+}
+item['468'] = {
   image = 488,
   value = 4400,
   weight = 50,
@@ -12672,8 +12675,8 @@ Item(468, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(467, {
+}
+item['467'] = {
   image = 482,
   value = 9600,
   weight = 1800,
@@ -12711,8 +12714,8 @@ Item(467, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(466, {
+}
+item['466'] = {
   image = 479,
   value = 600,
   weight = 1600,
@@ -12750,8 +12753,8 @@ Item(466, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(465, {
+}
+item['465'] = {
   image = 480,
   value = 2200,
   weight = 2000,
@@ -12789,8 +12792,8 @@ Item(465, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(464, {
+}
+item['464'] = {
   image = 481,
   value = 4800,
   weight = 2400,
@@ -12828,8 +12831,8 @@ Item(464, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(463, {
+}
+item['463'] = {
   image = 413,
   value = 400,
   weight = 500,
@@ -12867,8 +12870,8 @@ Item(463, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(462, {
+}
+item['462'] = {
   image = 476,
   value = 3500,
   weight = 1500,
@@ -12906,8 +12909,8 @@ Item(462, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(461, {
+}
+item['461'] = {
   image = 475,
   value = 1400,
   weight = 1800,
@@ -12945,8 +12948,8 @@ Item(461, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(460, {
+}
+item['460'] = {
   image = 474,
   value = 3900,
   weight = 1400,
@@ -12984,8 +12987,8 @@ Item(460, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(459, {
+}
+item['459'] = {
   image = 474,
   value = 2400,
   weight = 650,
@@ -13023,8 +13026,8 @@ Item(459, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(458, {
+}
+item['458'] = {
   image = 461,
   value = 4800,
   weight = 1400,
@@ -13062,8 +13065,8 @@ Item(458, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(457, {
+}
+item['457'] = {
   image = 459,
   value = 3500,
   weight = 650,
@@ -13101,8 +13104,8 @@ Item(457, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(456, {
+}
+item['456'] = {
   image = 473,
   value = 1500,
   weight = 450,
@@ -13140,8 +13143,8 @@ Item(456, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(455, {
+}
+item['455'] = {
   image = 473,
   value = 260,
   weight = 250,
@@ -13179,8 +13182,8 @@ Item(455, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(454, {
+}
+item['454'] = {
   image = 458,
   value = 18000,
   weight = 2400,
@@ -13218,8 +13221,8 @@ Item(454, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(453, {
+}
+item['453'] = {
   image = 457,
   value = 10000,
   weight = 3500,
@@ -13257,8 +13260,8 @@ Item(453, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(452, {
+}
+item['452'] = {
   image = 456,
   value = 7500,
   weight = 1400,
@@ -13296,8 +13299,8 @@ Item(452, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(451, {
+}
+item['451'] = {
   image = 455,
   value = 2500,
   weight = 1000,
@@ -13335,8 +13338,8 @@ Item(451, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(450, {
+}
+item['450'] = {
   image = 454,
   value = 1200,
   weight = 1500,
@@ -13374,8 +13377,8 @@ Item(450, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(449, {
+}
+item['449'] = {
   image = 453,
   value = 500,
   weight = 1200,
@@ -13413,8 +13416,8 @@ Item(449, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(448, {
+}
+item['448'] = {
   image = 452,
   value = 950,
   weight = 1300,
@@ -13452,8 +13455,8 @@ Item(448, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(447, {
+}
+item['447'] = {
   image = 451,
   value = 280,
   weight = 200,
@@ -13491,8 +13494,8 @@ Item(447, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(446, {
+}
+item['446'] = {
   image = 414,
   value = 1800,
   weight = 1800,
@@ -13530,8 +13533,8 @@ Item(446, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(445, {
+}
+item['445'] = {
   image = 448,
   value = 800,
   weight = 450,
@@ -13569,8 +13572,8 @@ Item(445, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(444, {
+}
+item['444'] = {
   image = 447,
   value = 7200,
   weight = 1600,
@@ -13608,8 +13611,8 @@ Item(444, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(443, {
+}
+item['443'] = {
   image = 446,
   value = 5500,
   weight = 2800,
@@ -13647,8 +13650,8 @@ Item(443, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(442, {
+}
+item['442'] = {
   image = 445,
   value = 2000,
   weight = 1500,
@@ -13686,8 +13689,8 @@ Item(442, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(441, {
+}
+item['441'] = {
   image = 444,
   value = 1200,
   weight = 1800,
@@ -13725,8 +13728,8 @@ Item(441, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(440, {
+}
+item['440'] = {
   image = 443,
   value = 9500,
   weight = 1200,
@@ -13764,8 +13767,8 @@ Item(440, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(439, {
+}
+item['439'] = {
   image = 442,
   value = 8000,
   weight = 5200,
@@ -13803,8 +13806,8 @@ Item(439, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(438, {
+}
+item['438'] = {
   image = 441,
   value = 4500,
   weight = 5500,
@@ -13842,8 +13845,8 @@ Item(438, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(437, {
+}
+item['437'] = {
   image = 440,
   value = 2400,
   weight = 5000,
@@ -13881,8 +13884,8 @@ Item(437, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(436, {
+}
+item['436'] = {
   image = 410,
   value = 12500,
   weight = 7500,
@@ -13920,8 +13923,8 @@ Item(436, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(435, {
+}
+item['435'] = {
   image = 409,
   value = 1500,
   weight = 6500,
@@ -13959,8 +13962,8 @@ Item(435, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(434, {
+}
+item['434'] = {
   image = 429,
   value = 20000,
   weight = 380,
@@ -13998,8 +14001,8 @@ Item(434, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(433, {
+}
+item['433'] = {
   image = 354,
   value = 4000,
   weight = 120,
@@ -14037,8 +14040,8 @@ Item(433, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(432, {
+}
+item['432'] = {
   image = 354,
   value = 5000,
   weight = 120,
@@ -14076,8 +14079,8 @@ Item(432, {
   has_random_name = true,
   filter = "/nogive/",
   rffilter = "",
-})
-Item(431, {
+}
+item['431'] = {
   image = 470,
   value = 12000,
   weight = 20,
@@ -14115,8 +14118,8 @@ Item(431, {
   has_random_name = true,
   filter = "/noshop/",
   rffilter = "",
-})
-Item(430, {
+}
+item['430'] = {
   image = 470,
   value = 15000,
   weight = 20,
@@ -14154,8 +14157,8 @@ Item(430, {
   has_random_name = true,
   filter = "/noshop/",
   rffilter = "",
-})
-Item(429, {
+}
+item['429'] = {
   image = 354,
   value = 150,
   weight = 120,
@@ -14193,8 +14196,8 @@ Item(429, {
   has_random_name = true,
   filter = "/neg/",
   rffilter = "",
-})
-Item(428, {
+}
+item['428'] = {
   image = 324,
   value = 800,
   weight = 2400,
@@ -14232,8 +14235,8 @@ Item(428, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(427, {
+}
+item['427'] = {
   image = 170,
   value = 800,
   weight = 480,
@@ -14271,8 +14274,8 @@ Item(427, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(426, {
+}
+item['426'] = {
   image = 170,
   value = 1200,
   weight = 120,
@@ -14310,8 +14313,8 @@ Item(426, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(425, {
+}
+item['425'] = {
   image = 170,
   value = 680,
   weight = 260,
@@ -14349,8 +14352,8 @@ Item(425, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(424, {
+}
+item['424'] = {
   image = 170,
   value = 900,
   weight = 220,
@@ -14388,8 +14391,8 @@ Item(424, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(423, {
+}
+item['423'] = {
   image = 170,
   value = 800,
   weight = 210,
@@ -14427,8 +14430,8 @@ Item(423, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(422, {
+}
+item['422'] = {
   image = 170,
   value = 1050,
   weight = 250,
@@ -14466,8 +14469,8 @@ Item(422, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(421, {
+}
+item['421'] = {
   image = 323,
   value = 120000,
   weight = 40,
@@ -14505,8 +14508,8 @@ Item(421, {
   has_random_name = false,
   filter = "/noshop/spshop/",
   rffilter = "",
-})
-Item(420, {
+}
+item['420'] = {
   image = 323,
   value = 2500,
   weight = 40,
@@ -14544,8 +14547,8 @@ Item(420, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(419, {
+}
+item['419'] = {
   image = 323,
   value = 1800,
   weight = 40,
@@ -14583,8 +14586,8 @@ Item(419, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(418, {
+}
+item['418'] = {
   image = 323,
   value = 280,
   weight = 40,
@@ -14622,8 +14625,8 @@ Item(418, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(417, {
+}
+item['417'] = {
   image = 323,
   value = 240,
   weight = 40,
@@ -14661,8 +14664,8 @@ Item(417, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(416, {
+}
+item['416'] = {
   image = 322,
   value = 12000,
   weight = 500,
@@ -14700,8 +14703,8 @@ Item(416, {
   has_random_name = false,
   filter = "/spshop/",
   rffilter = "",
-})
-Item(415, {
+}
+item['415'] = {
   image = 322,
   value = 4000,
   weight = 500,
@@ -14739,8 +14742,8 @@ Item(415, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(414, {
+}
+item['414'] = {
   image = 321,
   value = 30000,
   weight = 140000,
@@ -14778,8 +14781,8 @@ Item(414, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(413, {
+}
+item['413'] = {
   image = 320,
   value = 15000,
   weight = 140000,
@@ -14817,8 +14820,8 @@ Item(413, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(412, {
+}
+item['412'] = {
   image = 471,
   value = 3800,
   weight = 800,
@@ -14856,8 +14859,8 @@ Item(412, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(411, {
+}
+item['411'] = {
   image = 470,
   value = 350,
   weight = 20,
@@ -14895,8 +14898,8 @@ Item(411, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(410, {
+}
+item['410'] = {
   image = 429,
   value = 4000,
   weight = 380,
@@ -14934,8 +14937,8 @@ Item(410, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(409, {
+}
+item['409'] = {
   image = 251,
   value = 340,
   weight = -1500,
@@ -14973,8 +14976,8 @@ Item(409, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(408, {
+}
+item['408'] = {
   image = 68,
   value = 1200,
   weight = -32000,
@@ -15012,8 +15015,8 @@ Item(408, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(407, {
+}
+item['407'] = {
   image = 208,
   value = 1400,
   weight = -16000,
@@ -15051,8 +15054,8 @@ Item(407, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(406, {
+}
+item['406'] = {
   image = 316,
   value = 350,
   weight = -7500,
@@ -15090,8 +15093,8 @@ Item(406, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(405, {
+}
+item['405'] = {
   image = 161,
   value = 2800,
   weight = -48000,
@@ -15129,8 +15132,8 @@ Item(405, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(404, {
+}
+item['404'] = {
   image = 312,
   value = 800,
   weight = -10000,
@@ -15168,8 +15171,8 @@ Item(404, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(403, {
+}
+item['403'] = {
   image = 269,
   value = 2200,
   weight = -12000,
@@ -15207,8 +15210,8 @@ Item(403, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(402, {
+}
+item['402'] = {
   image = 202,
   value = 550,
   weight = -4800,
@@ -15246,8 +15249,8 @@ Item(402, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(401, {
+}
+item['401'] = {
   image = 292,
   value = 4000,
   weight = -50000,
@@ -15285,8 +15288,8 @@ Item(401, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(400, {
+}
+item['400'] = {
   image = 72,
   value = 420,
   weight = -10000,
@@ -15324,8 +15327,8 @@ Item(400, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(399, {
+}
+item['399'] = {
   image = 67,
   value = 700,
   weight = -6500,
@@ -15363,8 +15366,8 @@ Item(399, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(398, {
+}
+item['398'] = {
   image = 470,
   value = 1800,
   weight = 20,
@@ -15402,8 +15405,8 @@ Item(398, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(397, {
+}
+item['397'] = {
   image = 429,
   value = 3800,
   weight = 380,
@@ -15441,8 +15444,8 @@ Item(397, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(396, {
+}
+item['396'] = {
   image = 429,
   value = 3400,
   weight = 380,
@@ -15480,8 +15483,8 @@ Item(396, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(395, {
+}
+item['395'] = {
   image = 470,
   value = 3800,
   weight = 20,
@@ -15519,8 +15522,8 @@ Item(395, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(394, {
+}
+item['394'] = {
   image = 438,
   value = 500,
   weight = 1200,
@@ -15558,8 +15561,8 @@ Item(394, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(393, {
+}
+item['393'] = {
   image = 319,
   value = 2000,
   weight = 500,
@@ -15597,8 +15600,8 @@ Item(393, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(392, {
+}
+item['392'] = {
   image = 223,
   value = 800,
   weight = 50,
@@ -15636,8 +15639,8 @@ Item(392, {
   has_random_name = false,
   filter = "/nogive/",
   rffilter = "",
-})
-Item(391, {
+}
+item['391'] = {
   image = 471,
   value = 4100,
   weight = 800,
@@ -15675,8 +15678,8 @@ Item(391, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(390, {
+}
+item['390'] = {
   image = 470,
   value = 2400,
   weight = 20,
@@ -15714,8 +15717,8 @@ Item(390, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(389, {
+}
+item['389'] = {
   image = 470,
   value = 1400,
   weight = 20,
@@ -15753,8 +15756,8 @@ Item(389, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(388, {
+}
+item['388'] = {
   image = 470,
   value = 350,
   weight = 20,
@@ -15792,8 +15795,8 @@ Item(388, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(387, {
+}
+item['387'] = {
   image = 429,
   value = 9800,
   weight = 380,
@@ -15831,8 +15834,8 @@ Item(387, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(386, {
+}
+item['386'] = {
   image = 429,
   value = 3500,
   weight = 380,
@@ -15870,8 +15873,8 @@ Item(386, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(385, {
+}
+item['385'] = {
   image = 471,
   value = 3600,
   weight = 800,
@@ -15909,8 +15912,8 @@ Item(385, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(384, {
+}
+item['384'] = {
   image = 470,
   value = 1500,
   weight = 20,
@@ -15948,8 +15951,8 @@ Item(384, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(383, {
+}
+item['383'] = {
   image = 429,
   value = 11000,
   weight = 380,
@@ -15987,8 +15990,8 @@ Item(383, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(382, {
+}
+item['382'] = {
   image = 354,
   value = 30,
   weight = 120,
@@ -16026,8 +16029,8 @@ Item(382, {
   has_random_name = true,
   filter = "/neg/",
   rffilter = "",
-})
-Item(381, {
+}
+item['381'] = {
   image = 429,
   value = 6400,
   weight = 380,
@@ -16065,8 +16068,8 @@ Item(381, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(380, {
+}
+item['380'] = {
   image = 429,
   value = 2500,
   weight = 380,
@@ -16104,8 +16107,8 @@ Item(380, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(379, {
+}
+item['379'] = {
   image = 354,
   value = 450,
   weight = 120,
@@ -16143,8 +16146,8 @@ Item(379, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(378, {
+}
+item['378'] = {
   image = 429,
   value = 2600,
   weight = 380,
@@ -16182,8 +16185,8 @@ Item(378, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(377, {
+}
+item['377'] = {
   image = 471,
   value = 4200,
   weight = 800,
@@ -16221,8 +16224,8 @@ Item(377, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(376, {
+}
+item['376'] = {
   image = 354,
   value = 30,
   weight = 120,
@@ -16260,8 +16263,8 @@ Item(376, {
   has_random_name = true,
   filter = "/neg/",
   rffilter = "",
-})
-Item(375, {
+}
+item['375'] = {
   image = 354,
   value = 850,
   weight = 120,
@@ -16299,8 +16302,8 @@ Item(375, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(374, {
+}
+item['374'] = {
   image = 429,
   value = 4800,
   weight = 380,
@@ -16338,8 +16341,8 @@ Item(374, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(373, {
+}
+item['373'] = {
   image = 429,
   value = 12000,
   weight = 380,
@@ -16377,8 +16380,8 @@ Item(373, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(372, {
+}
+item['372'] = {
   image = 354,
   value = 700,
   weight = 120,
@@ -16416,8 +16419,8 @@ Item(372, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(371, {
+}
+item['371'] = {
   image = 429,
   value = 7500,
   weight = 380,
@@ -16455,8 +16458,8 @@ Item(371, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(370, {
+}
+item['370'] = {
   image = 354,
   value = 800,
   weight = 120,
@@ -16494,8 +16497,8 @@ Item(370, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(369, {
+}
+item['369'] = {
   image = 429,
   value = 4400,
   weight = 380,
@@ -16533,8 +16536,8 @@ Item(369, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(368, {
+}
+item['368'] = {
   image = 354,
   value = 40,
   weight = 120,
@@ -16572,8 +16575,8 @@ Item(368, {
   has_random_name = true,
   filter = "/neg/",
   rffilter = "",
-})
-Item(367, {
+}
+item['367'] = {
   image = 429,
   value = 8400,
   weight = 380,
@@ -16611,8 +16614,8 @@ Item(367, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(366, {
+}
+item['366'] = {
   image = 471,
   value = 1080,
   weight = 800,
@@ -16650,8 +16653,8 @@ Item(366, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(365, {
+}
+item['365'] = {
   image = 429,
   value = 2800,
   weight = 380,
@@ -16689,8 +16692,8 @@ Item(365, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(364, {
+}
+item['364'] = {
   image = 354,
   value = 150,
   weight = 120,
@@ -16728,8 +16731,8 @@ Item(364, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(363, {
+}
+item['363'] = {
   image = 470,
   value = 4400,
   weight = 20,
@@ -16767,8 +16770,8 @@ Item(363, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(362, {
+}
+item['362'] = {
   image = 470,
   value = 3500,
   weight = 20,
@@ -16806,8 +16809,8 @@ Item(362, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(361, {
+}
+item['361'] = {
   image = 253,
   value = 380,
   weight = 1200,
@@ -16845,8 +16848,8 @@ Item(361, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(360, {
+}
+item['360'] = {
   image = 407,
   value = 30000,
   weight = 500,
@@ -16884,8 +16887,8 @@ Item(360, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(359, {
+}
+item['359'] = {
   image = 426,
   value = 30000,
   weight = 2000,
@@ -16923,8 +16926,8 @@ Item(359, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(358, {
+}
+item['358'] = {
   image = 425,
   value = 30000,
   weight = 2500,
@@ -16962,8 +16965,8 @@ Item(358, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(357, {
+}
+item['357'] = {
   image = 407,
   value = 30000,
   weight = 1200,
@@ -17001,8 +17004,8 @@ Item(357, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(356, {
+}
+item['356'] = {
   image = 427,
   value = 30000,
   weight = 1800,
@@ -17040,8 +17043,8 @@ Item(356, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(355, {
+}
+item['355'] = {
   image = 414,
   value = 40000,
   weight = 1200,
@@ -17079,8 +17082,8 @@ Item(355, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(354, {
+}
+item['354'] = {
   image = 318,
   value = 380,
   weight = 450,
@@ -17118,8 +17121,8 @@ Item(354, {
   has_random_name = false,
   filter = "/fish/",
   rffilter = "/fish/",
-})
-Item(353, {
+}
+item['353'] = {
   image = 317,
   value = 620,
   weight = 600,
@@ -17157,8 +17160,8 @@ Item(353, {
   has_random_name = false,
   filter = "/fish/",
   rffilter = "/fish/",
-})
-Item(352, {
+}
+item['352'] = {
   image = 316,
   value = 640,
   weight = 700,
@@ -17196,8 +17199,8 @@ Item(352, {
   has_random_name = false,
   filter = "/fish/",
   rffilter = "/fish/",
-})
-Item(351, {
+}
+item['351'] = {
   image = 315,
   value = 320,
   weight = 550,
@@ -17235,8 +17238,8 @@ Item(351, {
   has_random_name = false,
   filter = "/fish/",
   rffilter = "/fish/",
-})
-Item(350, {
+}
+item['350'] = {
   image = 314,
   value = 170,
   weight = 600,
@@ -17274,8 +17277,8 @@ Item(350, {
   has_random_name = false,
   filter = "/fish/",
   rffilter = "/fish/",
-})
-Item(349, {
+}
+item['349'] = {
   image = 313,
   value = 150,
   weight = 800,
@@ -17313,8 +17316,8 @@ Item(349, {
   has_random_name = false,
   filter = "/fish/",
   rffilter = "/fish/",
-})
-Item(348, {
+}
+item['348'] = {
   image = 312,
   value = 1500,
   weight = 2400,
@@ -17352,8 +17355,8 @@ Item(348, {
   has_random_name = false,
   filter = "/fish/",
   rffilter = "/fish/",
-})
-Item(347, {
+}
+item['347'] = {
   image = 311,
   value = 700,
   weight = 900,
@@ -17391,8 +17394,8 @@ Item(347, {
   has_random_name = false,
   filter = "/fish/",
   rffilter = "/fish/",
-})
-Item(346, {
+}
+item['346'] = {
   image = 310,
   value = 1200,
   weight = 1250,
@@ -17430,8 +17433,8 @@ Item(346, {
   has_random_name = false,
   filter = "/fish/",
   rffilter = "/fish/",
-})
-Item(345, {
+}
+item['345'] = {
   image = 309,
   value = 900,
   weight = 800,
@@ -17469,8 +17472,8 @@ Item(345, {
   has_random_name = false,
   filter = "/fish/",
   rffilter = "/fish/",
-})
-Item(344, {
+}
+item['344'] = {
   image = 308,
   value = 50000,
   weight = 500,
@@ -17508,8 +17511,8 @@ Item(344, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(343, {
+}
+item['343'] = {
   image = 307,
   value = 780,
   weight = 500,
@@ -17547,8 +17550,8 @@ Item(343, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(342, {
+}
+item['342'] = {
   image = 306,
   value = 1200,
   weight = 2400,
@@ -17586,8 +17589,8 @@ Item(342, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(341, {
+}
+item['341'] = {
   image = 305,
   value = 100,
   weight = 1500,
@@ -17625,8 +17628,8 @@ Item(341, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(340, {
+}
+item['340'] = {
   image = 304,
   value = 100,
   weight = 1500,
@@ -17664,8 +17667,8 @@ Item(340, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(339, {
+}
+item['339'] = {
   image = 303,
   value = 100,
   weight = 1500,
@@ -17703,8 +17706,8 @@ Item(339, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(338, {
+}
+item['338'] = {
   image = 302,
   value = 100,
   weight = 1500,
@@ -17742,8 +17745,8 @@ Item(338, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(337, {
+}
+item['337'] = {
   image = 301,
   value = 100,
   weight = 1500,
@@ -17781,8 +17784,8 @@ Item(337, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(336, {
+}
+item['336'] = {
   image = 300,
   value = 3200,
   weight = 21000,
@@ -17820,8 +17823,8 @@ Item(336, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(335, {
+}
+item['335'] = {
   image = 299,
   value = 1200,
   weight = 15000,
@@ -17859,8 +17862,8 @@ Item(335, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(334, {
+}
+item['334'] = {
   image = 579,
   value = 6800,
   weight = 35000,
@@ -17898,8 +17901,8 @@ Item(334, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(333, {
+}
+item['333'] = {
   image = 297,
   value = 40,
   weight = -2000,
@@ -17937,8 +17940,8 @@ Item(333, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(332, {
+}
+item['332'] = {
   image = 296,
   value = 1200,
   weight = 4900,
@@ -17976,8 +17979,8 @@ Item(332, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(331, {
+}
+item['331'] = {
   image = 295,
   value = 1440,
   weight = 1050,
@@ -18015,8 +18018,8 @@ Item(331, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(330, {
+}
+item['330'] = {
   image = 294,
   value = 250,
   weight = 3500,
@@ -18054,8 +18057,8 @@ Item(330, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(329, {
+}
+item['329'] = {
   image = 293,
   value = 1500,
   weight = 15600,
@@ -18093,8 +18096,8 @@ Item(329, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(328, {
+}
+item['328'] = {
   image = 292,
   value = 4600,
   weight = 29000,
@@ -18132,8 +18135,8 @@ Item(328, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(327, {
+}
+item['327'] = {
   image = 291,
   value = 600,
   weight = 6400,
@@ -18171,8 +18174,8 @@ Item(327, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(326, {
+}
+item['326'] = {
   image = 290,
   value = 1400,
   weight = 8900,
@@ -18210,8 +18213,8 @@ Item(326, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(325, {
+}
+item['325'] = {
   image = 289,
   value = 2800,
   weight = 10000,
@@ -18249,8 +18252,8 @@ Item(325, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(324, {
+}
+item['324'] = {
   image = 288,
   value = 1500,
   weight = 15000,
@@ -18288,8 +18291,8 @@ Item(324, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(323, {
+}
+item['323'] = {
   image = 586,
   value = 2800,
   weight = 8900,
@@ -18327,8 +18330,8 @@ Item(323, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(322, {
+}
+item['322'] = {
   image = 286,
   value = 2200,
   weight = 12000,
@@ -18366,8 +18369,8 @@ Item(322, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(321, {
+}
+item['321'] = {
   image = 285,
   value = 1480,
   weight = 8800,
@@ -18405,8 +18408,8 @@ Item(321, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(320, {
+}
+item['320'] = {
   image = 284,
   value = 900,
   weight = 6800,
@@ -18444,8 +18447,8 @@ Item(320, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(319, {
+}
+item['319'] = {
   image = 283,
   value = 880,
   weight = 2800,
@@ -18483,8 +18486,8 @@ Item(319, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(318, {
+}
+item['318'] = {
   image = 282,
   value = 1020,
   weight = 8900,
@@ -18522,8 +18525,8 @@ Item(318, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(317, {
+}
+item['317'] = {
   image = 281,
   value = 890,
   weight = 7600,
@@ -18561,8 +18564,8 @@ Item(317, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(316, {
+}
+item['316'] = {
   image = 280,
   value = 3200,
   weight = 1200,
@@ -18600,8 +18603,8 @@ Item(316, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(315, {
+}
+item['315'] = {
   image = 279,
   value = 1800,
   weight = 8900,
@@ -18639,8 +18642,8 @@ Item(315, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(314, {
+}
+item['314'] = {
   image = 278,
   value = 2000,
   weight = 12000,
@@ -18678,8 +18681,8 @@ Item(314, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(313, {
+}
+item['313'] = {
   image = 277,
   value = 2800,
   weight = 24000,
@@ -18717,8 +18720,8 @@ Item(313, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(312, {
+}
+item['312'] = {
   image = 276,
   value = 2800,
   weight = 14000,
@@ -18756,8 +18759,8 @@ Item(312, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(311, {
+}
+item['311'] = {
   image = 275,
   value = 4800,
   weight = 28000,
@@ -18795,8 +18798,8 @@ Item(311, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(310, {
+}
+item['310'] = {
   image = 274,
   value = 1500,
   weight = 9500,
@@ -18834,8 +18837,8 @@ Item(310, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(309, {
+}
+item['309'] = {
   image = 273,
   value = 2400,
   weight = 8000,
@@ -18873,8 +18876,8 @@ Item(309, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(308, {
+}
+item['308'] = {
   image = 272,
   value = 1200,
   weight = 9000,
@@ -18912,8 +18915,8 @@ Item(308, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(307, {
+}
+item['307'] = {
   image = 271,
   value = 2200,
   weight = 12000,
@@ -18951,8 +18954,8 @@ Item(307, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(306, {
+}
+item['306'] = {
   image = 270,
   value = 5200,
   weight = 34000,
@@ -18990,8 +18993,8 @@ Item(306, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(305, {
+}
+item['305'] = {
   image = 269,
   value = 2400,
   weight = 8900,
@@ -19029,8 +19032,8 @@ Item(305, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(304, {
+}
+item['304'] = {
   image = 268,
   value = 1200,
   weight = 13000,
@@ -19068,8 +19071,8 @@ Item(304, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(303, {
+}
+item['303'] = {
   image = 267,
   value = 3800,
   weight = 15000,
@@ -19107,8 +19110,8 @@ Item(303, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(302, {
+}
+item['302'] = {
   image = 266,
   value = 1500,
   weight = 6800,
@@ -19146,8 +19149,8 @@ Item(302, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(301, {
+}
+item['301'] = {
   image = 265,
   value = 240,
   weight = 1400,
@@ -19185,8 +19188,8 @@ Item(301, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(300, {
+}
+item['300'] = {
   image = 264,
   value = 1900,
   weight = 8500,
@@ -19224,8 +19227,8 @@ Item(300, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(299, {
+}
+item['299'] = {
   image = 263,
   value = 5500,
   weight = 9000,
@@ -19263,8 +19266,8 @@ Item(299, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(298, {
+}
+item['298'] = {
   image = 262,
   value = 2000,
   weight = 2400,
@@ -19302,8 +19305,8 @@ Item(298, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(297, {
+}
+item['297'] = {
   image = 261,
   value = 4500,
   weight = 17500,
@@ -19341,8 +19344,8 @@ Item(297, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(296, {
+}
+item['296'] = {
   image = 260,
   value = 2400,
   weight = 15000,
@@ -19380,8 +19383,8 @@ Item(296, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(295, {
+}
+item['295'] = {
   image = 259,
   value = 890,
   weight = 4500,
@@ -19419,8 +19422,8 @@ Item(295, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(294, {
+}
+item['294'] = {
   image = 258,
   value = 320,
   weight = 1080,
@@ -19458,8 +19461,8 @@ Item(294, {
   has_random_name = false,
   filter = "/fest/",
   rffilter = "",
-})
-Item(293, {
+}
+item['293'] = {
   image = 257,
   value = 2000,
   weight = 7500,
@@ -19497,8 +19500,8 @@ Item(293, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(292, {
+}
+item['292'] = {
   image = 256,
   value = 1800,
   weight = 6800,
@@ -19536,8 +19539,8 @@ Item(292, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(291, {
+}
+item['291'] = {
   image = 255,
   value = 1500,
   weight = 12000,
@@ -19575,8 +19578,8 @@ Item(291, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(290, {
+}
+item['290'] = {
   image = 471,
   value = 300000,
   weight = 800,
@@ -19614,8 +19617,8 @@ Item(290, {
   has_random_name = true,
   filter = "/noshop/",
   rffilter = "",
-})
-Item(289, {
+}
+item['289'] = {
   image = 429,
   value = 40000,
   weight = 380,
@@ -19653,8 +19656,8 @@ Item(289, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(288, {
+}
+item['288'] = {
   image = 470,
   value = 150,
   weight = 20,
@@ -19692,8 +19695,8 @@ Item(288, {
   has_random_name = true,
   filter = "/neg/",
   rffilter = "",
-})
-Item(287, {
+}
+item['287'] = {
   image = 354,
   value = 50000,
   weight = 120,
@@ -19731,8 +19734,8 @@ Item(287, {
   has_random_name = true,
   filter = "/spshop/",
   rffilter = "",
-})
-Item(286, {
+}
+item['286'] = {
   image = 354,
   value = 280,
   weight = 120,
@@ -19770,8 +19773,8 @@ Item(286, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(285, {
+}
+item['285'] = {
   image = 354,
   value = 280,
   weight = 120,
@@ -19809,8 +19812,8 @@ Item(285, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(284, {
+}
+item['284'] = {
   image = 254,
   value = 380,
   weight = 250,
@@ -19848,8 +19851,8 @@ Item(284, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(283, {
+}
+item['283'] = {
   image = 253,
   value = 380,
   weight = 1200,
@@ -19887,8 +19890,8 @@ Item(283, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(282, {
+}
+item['282'] = {
   image = 252,
   value = 380,
   weight = 180,
@@ -19926,8 +19929,8 @@ Item(282, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(281, {
+}
+item['281'] = {
   image = 251,
   value = 380,
   weight = 1500,
@@ -19965,8 +19968,8 @@ Item(281, {
   has_random_name = false,
   filter = "/fish/",
   rffilter = "",
-})
-Item(280, {
+}
+item['280'] = {
   image = 250,
   value = 1800,
   weight = 9800,
@@ -20004,8 +20007,8 @@ Item(280, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(279, {
+}
+item['279'] = {
   image = 249,
   value = 380,
   weight = 300000,
@@ -20043,8 +20046,8 @@ Item(279, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(278, {
+}
+item['278'] = {
   image = 585,
   value = 1200,
   weight = 300000,
@@ -20082,8 +20085,8 @@ Item(278, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(277, {
+}
+item['277'] = {
   image = 82,
   value = 1300,
   weight = 300000,
@@ -20121,8 +20124,8 @@ Item(277, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(276, {
+}
+item['276'] = {
   image = 524,
   value = 2600,
   weight = 350000,
@@ -20160,8 +20163,8 @@ Item(276, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(275, {
+}
+item['275'] = {
   image = 248,
   value = 100,
   weight = 800,
@@ -20199,8 +20202,8 @@ Item(275, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(274, {
+}
+item['274'] = {
   image = 232,
   value = 10,
   weight = 4800,
@@ -20238,8 +20241,8 @@ Item(274, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(273, {
+}
+item['273'] = {
   image = 231,
   value = 10,
   weight = 1500,
@@ -20277,8 +20280,8 @@ Item(273, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(272, {
+}
+item['272'] = {
   image = 429,
   value = 12000,
   weight = 380,
@@ -20316,8 +20319,8 @@ Item(272, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(271, {
+}
+item['271'] = {
   image = 429,
   value = 8400,
   weight = 380,
@@ -20355,8 +20358,8 @@ Item(271, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(270, {
+}
+item['270'] = {
   image = 429,
   value = 5400,
   weight = 380,
@@ -20394,8 +20397,8 @@ Item(270, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(269, {
+}
+item['269'] = {
   image = 429,
   value = 5400,
   weight = 380,
@@ -20433,8 +20436,8 @@ Item(269, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(268, {
+}
+item['268'] = {
   image = 429,
   value = 5500,
   weight = 380,
@@ -20472,8 +20475,8 @@ Item(268, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(267, {
+}
+item['267'] = {
   image = 429,
   value = 4500,
   weight = 380,
@@ -20511,8 +20514,8 @@ Item(267, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(266, {
+}
+item['266'] = {
   image = 432,
   value = 500,
   weight = 700,
@@ -20550,8 +20553,8 @@ Item(266, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(265, {
+}
+item['265'] = {
   image = 429,
   value = 6400,
   weight = 380,
@@ -20589,8 +20592,8 @@ Item(265, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(264, {
+}
+item['264'] = {
   image = 429,
   value = 9600,
   weight = 380,
@@ -20628,8 +20631,8 @@ Item(264, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(263, {
+}
+item['263'] = {
   image = 429,
   value = 7200,
   weight = 380,
@@ -20667,8 +20670,8 @@ Item(263, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(262, {
+}
+item['262'] = {
   image = 354,
   value = 120,
   weight = 120,
@@ -20706,8 +20709,8 @@ Item(262, {
   has_random_name = true,
   filter = "/nogive/",
   rffilter = "",
-})
-Item(261, {
+}
+item['261'] = {
   image = 201,
   value = 280,
   weight = 350,
@@ -20745,8 +20748,8 @@ Item(261, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(260, {
+}
+item['260'] = {
   image = 233,
   value = 280,
   weight = 800,
@@ -20784,8 +20787,8 @@ Item(260, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(259, {
+}
+item['259'] = {
   image = 233,
   value = 280,
   weight = 400,
@@ -20823,8 +20826,8 @@ Item(259, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(258, {
+}
+item['258'] = {
   image = 117,
   value = 280,
   weight = 350,
@@ -20862,8 +20865,8 @@ Item(258, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(257, {
+}
+item['257'] = {
   image = 429,
   value = 2500,
   weight = 380,
@@ -20901,8 +20904,8 @@ Item(257, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(256, {
+}
+item['256'] = {
   image = 226,
   value = 1860,
   weight = 1200,
@@ -20940,8 +20943,8 @@ Item(256, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(255, {
+}
+item['255'] = {
   image = 349,
   value = 1860,
   weight = 12000,
@@ -20979,8 +20982,8 @@ Item(255, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(254, {
+}
+item['254'] = {
   image = 224,
   value = 2500,
   weight = 6500,
@@ -21018,8 +21021,8 @@ Item(254, {
   has_random_name = false,
   filter = "/fest/",
   rffilter = "",
-})
-Item(253, {
+}
+item['253'] = {
   image = 223,
   value = 280,
   weight = 50,
@@ -21057,8 +21060,8 @@ Item(253, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(252, {
+}
+item['252'] = {
   image = 429,
   value = 35000,
   weight = 380,
@@ -21096,8 +21099,8 @@ Item(252, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(251, {
+}
+item['251'] = {
   image = 429,
   value = 15000,
   weight = 380,
@@ -21135,8 +21138,8 @@ Item(251, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(250, {
+}
+item['250'] = {
   image = 429,
   value = 9000,
   weight = 380,
@@ -21174,8 +21177,8 @@ Item(250, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(249, {
+}
+item['249'] = {
   image = 429,
   value = 4500,
   weight = 380,
@@ -21213,8 +21216,8 @@ Item(249, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(248, {
+}
+item['248'] = {
   image = 429,
   value = 8900,
   weight = 380,
@@ -21252,8 +21255,8 @@ Item(248, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(247, {
+}
+item['247'] = {
   image = 429,
   value = 25000,
   weight = 380,
@@ -21291,8 +21294,8 @@ Item(247, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(246, {
+}
+item['246'] = {
   image = 429,
   value = 8500,
   weight = 380,
@@ -21330,8 +21333,8 @@ Item(246, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(245, {
+}
+item['245'] = {
   image = 470,
   value = 200,
   weight = 20,
@@ -21369,8 +21372,8 @@ Item(245, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(244, {
+}
+item['244'] = {
   image = 470,
   value = 8000,
   weight = 20,
@@ -21408,8 +21411,8 @@ Item(244, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(243, {
+}
+item['243'] = {
   image = 470,
   value = 240000,
   weight = 20,
@@ -21447,8 +21450,8 @@ Item(243, {
   has_random_name = true,
   filter = "/noshop/",
   rffilter = "",
-})
-Item(242, {
+}
+item['242'] = {
   image = 470,
   value = 480,
   weight = 20,
@@ -21486,8 +21489,8 @@ Item(242, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(241, {
+}
+item['241'] = {
   image = 197,
   value = 1000,
   weight = 300000,
@@ -21525,8 +21528,8 @@ Item(241, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(240, {
+}
+item['240'] = {
   image = 220,
   value = 1200,
   weight = 300000,
@@ -21564,8 +21567,8 @@ Item(240, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(239, {
+}
+item['239'] = {
   image = 220,
   value = 3000,
   weight = 3000,
@@ -21603,8 +21606,8 @@ Item(239, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(238, {
+}
+item['238'] = {
   image = 221,
   value = 2000,
   weight = 240,
@@ -21642,8 +21645,8 @@ Item(238, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(237, {
+}
+item['237'] = {
   image = 222,
   value = 2000,
   weight = 240,
@@ -21681,8 +21684,8 @@ Item(237, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(236, {
+}
+item['236'] = {
   image = 470,
   value = 750,
   weight = 20,
@@ -21720,8 +21723,8 @@ Item(236, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(235, {
+}
+item['235'] = {
   image = 426,
   value = 500,
   weight = 3800,
@@ -21759,8 +21762,8 @@ Item(235, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(234, {
+}
+item['234'] = {
   image = 399,
   value = 500,
   weight = 3500,
@@ -21798,8 +21801,8 @@ Item(234, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(233, {
+}
+item['233'] = {
   image = 233,
   value = 280,
   weight = 400,
@@ -21837,8 +21840,8 @@ Item(233, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(232, {
+}
+item['232'] = {
   image = 503,
   value = 500,
   weight = 4000,
@@ -21876,8 +21879,8 @@ Item(232, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(231, {
+}
+item['231'] = {
   image = 547,
   value = 500,
   weight = 1800,
@@ -21915,8 +21918,8 @@ Item(231, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(230, {
+}
+item['230'] = {
   image = 404,
   value = 500,
   weight = 800,
@@ -21954,8 +21957,8 @@ Item(230, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(229, {
+}
+item['229'] = {
   image = 505,
   value = 500,
   weight = 800,
@@ -21993,8 +21996,8 @@ Item(229, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(228, {
+}
+item['228'] = {
   image = 494,
   value = 500,
   weight = 1800,
@@ -22032,8 +22035,8 @@ Item(228, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(227, {
+}
+item['227'] = {
   image = 504,
   value = 500,
   weight = 4200,
@@ -22071,8 +22074,8 @@ Item(227, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(226, {
+}
+item['226'] = {
   image = 500,
   value = 500,
   weight = 3700,
@@ -22110,8 +22113,8 @@ Item(226, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(225, {
+}
+item['225'] = {
   image = 502,
   value = 500,
   weight = 900,
@@ -22149,8 +22152,8 @@ Item(225, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(224, {
+}
+item['224'] = {
   image = 431,
   value = 500,
   weight = 1200,
@@ -22188,8 +22191,8 @@ Item(224, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(223, {
+}
+item['223'] = {
   image = 198,
   value = 150,
   weight = 15000,
@@ -22227,8 +22230,8 @@ Item(223, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(222, {
+}
+item['222'] = {
   image = 199,
   value = 8,
   weight = 40,
@@ -22266,8 +22269,8 @@ Item(222, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(221, {
+}
+item['221'] = {
   image = 200,
   value = 7,
   weight = 70,
@@ -22305,8 +22308,8 @@ Item(221, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(220, {
+}
+item['220'] = {
   image = 201,
   value = 4,
   weight = 50,
@@ -22344,8 +22347,8 @@ Item(220, {
   has_random_name = false,
   filter = "/fish/",
   rffilter = "",
-})
-Item(219, {
+}
+item['219'] = {
   image = 202,
   value = 180,
   weight = 340,
@@ -22383,8 +22386,8 @@ Item(219, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(218, {
+}
+item['218'] = {
   image = 203,
   value = 30,
   weight = 80,
@@ -22422,8 +22425,8 @@ Item(218, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(217, {
+}
+item['217'] = {
   image = 206,
   value = 25,
   weight = 90,
@@ -22461,8 +22464,8 @@ Item(217, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(216, {
+}
+item['216'] = {
   image = 207,
   value = 40,
   weight = 80,
@@ -22500,8 +22503,8 @@ Item(216, {
   has_random_name = false,
   filter = "/fest/",
   rffilter = "",
-})
-Item(215, {
+}
+item['215'] = {
   image = 208,
   value = 10,
   weight = 220,
@@ -22539,8 +22542,8 @@ Item(215, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(214, {
+}
+item['214'] = {
   image = 209,
   value = 180,
   weight = 12000,
@@ -22578,8 +22581,8 @@ Item(214, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(213, {
+}
+item['213'] = {
   image = 401,
   value = 500,
   weight = 2500,
@@ -22617,8 +22620,8 @@ Item(213, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(212, {
+}
+item['212'] = {
   image = 425,
   value = 500,
   weight = 900,
@@ -22656,8 +22659,8 @@ Item(212, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(211, {
+}
+item['211'] = {
   image = 421,
   value = 500,
   weight = 1400,
@@ -22695,8 +22698,8 @@ Item(211, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(210, {
+}
+item['210'] = {
   image = 424,
   value = 180,
   weight = 2000,
@@ -22734,8 +22737,8 @@ Item(210, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(209, {
+}
+item['209'] = {
   image = 470,
   value = 1050,
   weight = 20,
@@ -22773,8 +22776,8 @@ Item(209, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(208, {
+}
+item['208'] = {
   image = 33,
   value = 1,
   weight = 1,
@@ -22812,8 +22815,8 @@ Item(208, {
   has_random_name = false,
   filter = "",
   rffilter = "/ore/",
-})
-Item(207, {
+}
+item['207'] = {
   image = 404,
   value = 60000,
   weight = 1200,
@@ -22851,8 +22854,8 @@ Item(207, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(206, {
+}
+item['206'] = {
   image = 400,
   value = 60000,
   weight = 600,
@@ -22890,8 +22893,8 @@ Item(206, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(205, {
+}
+item['205'] = {
   image = 210,
   value = 180,
   weight = 50,
@@ -22929,8 +22932,8 @@ Item(205, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(204, {
+}
+item['204'] = {
   image = 196,
   value = 80,
   weight = 2000,
@@ -22968,8 +22971,8 @@ Item(204, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(203, {
+}
+item['203'] = {
   image = 471,
   value = 2600,
   weight = 800,
@@ -23007,8 +23010,8 @@ Item(203, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(202, {
+}
+item['202'] = {
   image = 471,
   value = 3250,
   weight = 800,
@@ -23046,8 +23049,8 @@ Item(202, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(201, {
+}
+item['201'] = {
   image = 193,
   value = 70,
   weight = 550,
@@ -23085,8 +23088,8 @@ Item(201, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(200, {
+}
+item['200'] = {
   image = 192,
   value = 30,
   weight = 840,
@@ -23124,8 +23127,8 @@ Item(200, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(199, {
+}
+item['199'] = {
   image = 191,
   value = 80,
   weight = 970,
@@ -23163,8 +23166,8 @@ Item(199, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(198, {
+}
+item['198'] = {
   image = 164,
   value = 260,
   weight = 360,
@@ -23202,8 +23205,8 @@ Item(198, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(197, {
+}
+item['197'] = {
   image = 189,
   value = 240,
   weight = 440,
@@ -23241,8 +23244,8 @@ Item(197, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(196, {
+}
+item['196'] = {
   image = 188,
   value = 130,
   weight = 880,
@@ -23280,8 +23283,8 @@ Item(196, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(195, {
+}
+item['195'] = {
   image = 187,
   value = 100,
   weight = 560,
@@ -23319,8 +23322,8 @@ Item(195, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(194, {
+}
+item['194'] = {
   image = 186,
   value = 220,
   weight = 1070,
@@ -23358,8 +23361,8 @@ Item(194, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(193, {
+}
+item['193'] = {
   image = 185,
   value = 240,
   weight = 90,
@@ -23397,8 +23400,8 @@ Item(193, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(192, {
+}
+item['192'] = {
   image = 184,
   value = 260,
   weight = 720,
@@ -23436,8 +23439,8 @@ Item(192, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(191, {
+}
+item['191'] = {
   image = 183,
   value = 80,
   weight = 40,
@@ -23475,8 +23478,8 @@ Item(191, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(190, {
+}
+item['190'] = {
   image = 182,
   value = 70,
   weight = 650,
@@ -23514,8 +23517,8 @@ Item(190, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(189, {
+}
+item['189'] = {
   image = 181,
   value = 120,
   weight = 450,
@@ -23553,8 +23556,8 @@ Item(189, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(188, {
+}
+item['188'] = {
   image = 180,
   value = 50,
   weight = 650,
@@ -23592,8 +23595,8 @@ Item(188, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(187, {
+}
+item['187'] = {
   image = 179,
   value = 40,
   weight = 790,
@@ -23631,8 +23634,8 @@ Item(187, {
   has_random_name = false,
   filter = "/fest/",
   rffilter = "",
-})
-Item(186, {
+}
+item['186'] = {
   image = 178,
   value = 50,
   weight = 950,
@@ -23670,8 +23673,8 @@ Item(186, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(185, {
+}
+item['185'] = {
   image = 177,
   value = 40,
   weight = 420,
@@ -23709,8 +23712,8 @@ Item(185, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(184, {
+}
+item['184'] = {
   image = 176,
   value = 80,
   weight = 620,
@@ -23748,8 +23751,8 @@ Item(184, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(183, {
+}
+item['183'] = {
   image = 175,
   value = 170,
   weight = 220,
@@ -23787,8 +23790,8 @@ Item(183, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(182, {
+}
+item['182'] = {
   image = 174,
   value = 190,
   weight = 440,
@@ -23826,8 +23829,8 @@ Item(182, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(181, {
+}
+item['181'] = {
   image = 173,
   value = 220,
   weight = 510,
@@ -23865,8 +23868,8 @@ Item(181, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(180, {
+}
+item['180'] = {
   image = 172,
   value = 180,
   weight = 720,
@@ -23904,8 +23907,8 @@ Item(180, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(179, {
+}
+item['179'] = {
   image = 171,
   value = 60,
   weight = 100,
@@ -23943,8 +23946,8 @@ Item(179, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(178, {
+}
+item['178'] = {
   image = 170,
   value = 70,
   weight = 170,
@@ -23982,8 +23985,8 @@ Item(178, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(177, {
+}
+item['177'] = {
   image = 169,
   value = 80,
   weight = 160,
@@ -24021,8 +24024,8 @@ Item(177, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(176, {
+}
+item['176'] = {
   image = 471,
   value = 1500,
   weight = 800,
@@ -24060,8 +24063,8 @@ Item(176, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(175, {
+}
+item['175'] = {
   image = 471,
   value = 1900,
   weight = 800,
@@ -24099,8 +24102,8 @@ Item(175, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(174, {
+}
+item['174'] = {
   image = 166,
   value = 2200,
   weight = 12400,
@@ -24138,8 +24141,8 @@ Item(174, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(173, {
+}
+item['173'] = {
   image = 355,
   value = 2400,
   weight = 600000,
@@ -24177,8 +24180,8 @@ Item(173, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(172, {
+}
+item['172'] = {
   image = 163,
   value = 1600,
   weight = 500000,
@@ -24216,8 +24219,8 @@ Item(172, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(171, {
+}
+item['171'] = {
   image = 163,
   value = 1500,
   weight = 500000,
@@ -24255,8 +24258,8 @@ Item(171, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(170, {
+}
+item['170'] = {
   image = 162,
   value = 2400,
   weight = 650000,
@@ -24294,8 +24297,8 @@ Item(170, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(169, {
+}
+item['169'] = {
   image = 161,
   value = 6500,
   weight = 650000,
@@ -24333,8 +24336,8 @@ Item(169, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(168, {
+}
+item['168'] = {
   image = 160,
   value = 4400,
   weight = 650000,
@@ -24372,8 +24375,8 @@ Item(168, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(167, {
+}
+item['167'] = {
   image = 159,
   value = 2500,
   weight = 650000,
@@ -24411,8 +24414,8 @@ Item(167, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(166, {
+}
+item['166'] = {
   image = 158,
   value = 3250,
   weight = 650000,
@@ -24450,8 +24453,8 @@ Item(166, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(165, {
+}
+item['165'] = {
   image = 157,
   value = 1700,
   weight = 400000,
@@ -24489,8 +24492,8 @@ Item(165, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(164, {
+}
+item['164'] = {
   image = 156,
   value = 1800,
   weight = 400000,
@@ -24528,8 +24531,8 @@ Item(164, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(163, {
+}
+item['163'] = {
   image = 155,
   value = 1400,
   weight = 340,
@@ -24567,8 +24570,8 @@ Item(163, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(162, {
+}
+item['162'] = {
   image = 154,
   value = 430,
   weight = 1200,
@@ -24606,8 +24609,8 @@ Item(162, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(161, {
+}
+item['161'] = {
   image = 153,
   value = 1250,
   weight = 500,
@@ -24645,8 +24648,8 @@ Item(161, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(160, {
+}
+item['160'] = {
   image = 152,
   value = 780,
   weight = 500,
@@ -24684,8 +24687,8 @@ Item(160, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(159, {
+}
+item['159'] = {
   image = 151,
   value = 1200,
   weight = 11000,
@@ -24723,8 +24726,8 @@ Item(159, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(158, {
+}
+item['158'] = {
   image = 150,
   value = 800,
   weight = 860,
@@ -24762,8 +24765,8 @@ Item(158, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(157, {
+}
+item['157'] = {
   image = 149,
   value = 3500,
   weight = 8600,
@@ -24801,8 +24804,8 @@ Item(157, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(156, {
+}
+item['156'] = {
   image = 148,
   value = 1200,
   weight = 9700,
@@ -24840,8 +24843,8 @@ Item(156, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(155, {
+}
+item['155'] = {
   image = 147,
   value = 1500,
   weight = 14000,
@@ -24879,8 +24882,8 @@ Item(155, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(154, {
+}
+item['154'] = {
   image = 146,
   value = 1100,
   weight = 15000,
@@ -24918,8 +24921,8 @@ Item(154, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(153, {
+}
+item['153'] = {
   image = 145,
   value = 1200,
   weight = 14000,
@@ -24957,8 +24960,8 @@ Item(153, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(152, {
+}
+item['152'] = {
   image = 144,
   value = 350,
   weight = 320,
@@ -24996,8 +24999,8 @@ Item(152, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(151, {
+}
+item['151'] = {
   image = 143,
   value = 4400,
   weight = 8600,
@@ -25035,8 +25038,8 @@ Item(151, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(150, {
+}
+item['150'] = {
   image = 142,
   value = 4500,
   weight = 8700,
@@ -25074,8 +25077,8 @@ Item(150, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(149, {
+}
+item['149'] = {
   image = 141,
   value = 320,
   weight = 940,
@@ -25113,8 +25116,8 @@ Item(149, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(148, {
+}
+item['148'] = {
   image = 140,
   value = 240,
   weight = 830,
@@ -25152,8 +25155,8 @@ Item(148, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(147, {
+}
+item['147'] = {
   image = 139,
   value = 3600,
   weight = 7500,
@@ -25191,8 +25194,8 @@ Item(147, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(146, {
+}
+item['146'] = {
   image = 138,
   value = 1900,
   weight = 4400,
@@ -25230,8 +25233,8 @@ Item(146, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(145, {
+}
+item['145'] = {
   image = 137,
   value = 1400,
   weight = 860,
@@ -25269,8 +25272,8 @@ Item(145, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(144, {
+}
+item['144'] = {
   image = 136,
   value = 940,
   weight = 2400,
@@ -25308,8 +25311,8 @@ Item(144, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(143, {
+}
+item['143'] = {
   image = 135,
   value = 240,
   weight = 1500,
@@ -25347,8 +25350,8 @@ Item(143, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(142, {
+}
+item['142'] = {
   image = 523,
   value = 7800,
   weight = 17400,
@@ -25386,8 +25389,8 @@ Item(142, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(141, {
+}
+item['141'] = {
   image = 133,
   value = 450,
   weight = 240,
@@ -25425,8 +25428,8 @@ Item(141, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(140, {
+}
+item['140'] = {
   image = 132,
   value = 830,
   weight = 1100,
@@ -25464,8 +25467,8 @@ Item(140, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(139, {
+}
+item['139'] = {
   image = 526,
   value = 3900,
   weight = 32000,
@@ -25503,8 +25506,8 @@ Item(139, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(138, {
+}
+item['138'] = {
   image = 525,
   value = 3400,
   weight = 32000,
@@ -25542,8 +25545,8 @@ Item(138, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(137, {
+}
+item['137'] = {
   image = 129,
   value = 780,
   weight = 250,
@@ -25581,8 +25584,8 @@ Item(137, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(136, {
+}
+item['136'] = {
   image = 128,
   value = 1500,
   weight = 240,
@@ -25620,8 +25623,8 @@ Item(136, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(135, {
+}
+item['135'] = {
   image = 127,
   value = 920,
   weight = 300,
@@ -25659,8 +25662,8 @@ Item(135, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(134, {
+}
+item['134'] = {
   image = 126,
   value = 880,
   weight = 400,
@@ -25698,8 +25701,8 @@ Item(134, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(133, {
+}
+item['133'] = {
   image = 125,
   value = 750,
   weight = 350,
@@ -25737,8 +25740,8 @@ Item(133, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(132, {
+}
+item['132'] = {
   image = 124,
   value = 650,
   weight = 320,
@@ -25776,8 +25779,8 @@ Item(132, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(131, {
+}
+item['131'] = {
   image = 123,
   value = 1800,
   weight = 380,
@@ -25815,8 +25818,8 @@ Item(131, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(130, {
+}
+item['130'] = {
   image = 122,
   value = 1050,
   weight = 400,
@@ -25854,8 +25857,8 @@ Item(130, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(129, {
+}
+item['129'] = {
   image = 121,
   value = 850,
   weight = 420,
@@ -25893,8 +25896,8 @@ Item(129, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(128, {
+}
+item['128'] = {
   image = 120,
   value = 3500,
   weight = 1840,
@@ -25932,8 +25935,8 @@ Item(128, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(127, {
+}
+item['127'] = {
   image = 119,
   value = 1960,
   weight = 900,
@@ -25971,8 +25974,8 @@ Item(127, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(126, {
+}
+item['126'] = {
   image = 118,
   value = 80,
   weight = 210,
@@ -26010,8 +26013,8 @@ Item(126, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(125, {
+}
+item['125'] = {
   image = 471,
   value = 4800,
   weight = 800,
@@ -26049,8 +26052,8 @@ Item(125, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(124, {
+}
+item['124'] = {
   image = 116,
   value = 1400,
   weight = 7800,
@@ -26088,8 +26091,8 @@ Item(124, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(123, {
+}
+item['123'] = {
   image = 471,
   value = 1600,
   weight = 800,
@@ -26127,8 +26130,8 @@ Item(123, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(122, {
+}
+item['122'] = {
   image = 471,
   value = 1460,
   weight = 800,
@@ -26166,8 +26169,8 @@ Item(122, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(121, {
+}
+item['121'] = {
   image = 471,
   value = 700,
   weight = 800,
@@ -26205,8 +26208,8 @@ Item(121, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(120, {
+}
+item['120'] = {
   image = 471,
   value = 800,
   weight = 800,
@@ -26244,8 +26247,8 @@ Item(120, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(119, {
+}
+item['119'] = {
   image = 471,
   value = 650,
   weight = 800,
@@ -26283,8 +26286,8 @@ Item(119, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(118, {
+}
+item['118'] = {
   image = 429,
   value = 6000,
   weight = 380,
@@ -26322,8 +26325,8 @@ Item(118, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(117, {
+}
+item['117'] = {
   image = 109,
   value = 20,
   weight = 80,
@@ -26361,8 +26364,8 @@ Item(117, {
   has_random_name = false,
   filter = "/fish/",
   rffilter = "",
-})
-Item(116, {
+}
+item['116'] = {
   image = 429,
   value = 2400,
   weight = 380,
@@ -26400,8 +26403,8 @@ Item(116, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(115, {
+}
+item['115'] = {
   image = 381,
   value = 240,
   weight = 9500,
@@ -26439,8 +26442,8 @@ Item(115, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(114, {
+}
+item['114'] = {
   image = 106,
   value = 120,
   weight = 3500,
@@ -26478,8 +26481,8 @@ Item(114, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(113, {
+}
+item['113'] = {
   image = 105,
   value = 100,
   weight = 3200,
@@ -26517,8 +26520,8 @@ Item(113, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(112, {
+}
+item['112'] = {
   image = 104,
   value = 8500,
   weight = 14000,
@@ -26556,8 +26559,8 @@ Item(112, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(111, {
+}
+item['111'] = {
   image = 103,
   value = 4400,
   weight = 45800,
@@ -26595,8 +26598,8 @@ Item(111, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(110, {
+}
+item['110'] = {
   image = 102,
   value = 1800,
   weight = 950,
@@ -26634,8 +26637,8 @@ Item(110, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(109, {
+}
+item['109'] = {
   image = 101,
   value = 1800,
   weight = 350000,
@@ -26673,8 +26676,8 @@ Item(109, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(108, {
+}
+item['108'] = {
   image = 100,
   value = 1300,
   weight = 820,
@@ -26712,8 +26715,8 @@ Item(108, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(107, {
+}
+item['107'] = {
   image = 99,
   value = 1050,
   weight = 750,
@@ -26751,8 +26754,8 @@ Item(107, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(106, {
+}
+item['106'] = {
   image = 98,
   value = 1500,
   weight = 6800,
@@ -26790,8 +26793,8 @@ Item(106, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(105, {
+}
+item['105'] = {
   image = 97,
   value = 1800,
   weight = 7600,
@@ -26829,8 +26832,8 @@ Item(105, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(104, {
+}
+item['104'] = {
   image = 96,
   value = 750,
   weight = 8200,
@@ -26868,8 +26871,8 @@ Item(104, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(103, {
+}
+item['103'] = {
   image = 95,
   value = 2400,
   weight = 7300,
@@ -26907,8 +26910,8 @@ Item(103, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(102, {
+}
+item['102'] = {
   image = 94,
   value = 120,
   weight = 6800,
@@ -26946,8 +26949,8 @@ Item(102, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(101, {
+}
+item['101'] = {
   image = 93,
   value = 360,
   weight = 1200,
@@ -26985,8 +26988,8 @@ Item(101, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(100, {
+}
+item['100'] = {
   image = 580,
   value = 3800,
   weight = 80,
@@ -27024,8 +27027,8 @@ Item(100, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(99, {
+}
+item['99'] = {
   image = 91,
   value = 1050,
   weight = 4200,
@@ -27063,8 +27066,8 @@ Item(99, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(98, {
+}
+item['98'] = {
   image = 90,
   value = 120,
   weight = 540,
@@ -27102,8 +27105,8 @@ Item(98, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(97, {
+}
+item['97'] = {
   image = 89,
   value = 140,
   weight = 420,
@@ -27141,8 +27144,8 @@ Item(97, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(96, {
+}
+item['96'] = {
   image = 88,
   value = 3500,
   weight = 9500,
@@ -27180,8 +27183,8 @@ Item(96, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(95, {
+}
+item['95'] = {
   image = 87,
   value = 4200,
   weight = 3800,
@@ -27219,8 +27222,8 @@ Item(95, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(94, {
+}
+item['94'] = {
   image = 86,
   value = 120,
   weight = 400,
@@ -27258,8 +27261,8 @@ Item(94, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(93, {
+}
+item['93'] = {
   image = 85,
   value = 160,
   weight = 1200,
@@ -27297,8 +27300,8 @@ Item(93, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(92, {
+}
+item['92'] = {
   image = 84,
   value = 750,
   weight = 1100,
@@ -27336,8 +27339,8 @@ Item(92, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(91, {
+}
+item['91'] = {
   image = 72,
   value = 180,
   weight = 3400,
@@ -27375,8 +27378,8 @@ Item(91, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(90, {
+}
+item['90'] = {
   image = 80,
   value = 1200,
   weight = 7900,
@@ -27414,8 +27417,8 @@ Item(90, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(89, {
+}
+item['89'] = {
   image = 78,
   value = 1200,
   weight = 7900,
@@ -27453,8 +27456,8 @@ Item(89, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(88, {
+}
+item['88'] = {
   image = 76,
   value = 15000,
   weight = 45000,
@@ -27492,8 +27495,8 @@ Item(88, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(87, {
+}
+item['87'] = {
   image = 75,
   value = 720,
   weight = 750,
@@ -27531,8 +27534,8 @@ Item(87, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(86, {
+}
+item['86'] = {
   image = 74,
   value = 450,
   weight = 800,
@@ -27570,8 +27573,8 @@ Item(86, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(85, {
+}
+item['85'] = {
   image = 73,
   value = 1600,
   weight = 8400,
@@ -27609,8 +27612,8 @@ Item(85, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(84, {
+}
+item['84'] = {
   image = 70,
   value = 3800,
   weight = 7000,
@@ -27648,8 +27651,8 @@ Item(84, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(83, {
+}
+item['83'] = {
   image = 69,
   value = 2400,
   weight = 6800,
@@ -27687,8 +27690,8 @@ Item(83, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(82, {
+}
+item['82'] = {
   image = 68,
   value = 320,
   weight = 320,
@@ -27726,8 +27729,8 @@ Item(82, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(81, {
+}
+item['81'] = {
   image = 67,
   value = 240,
   weight = 350,
@@ -27765,8 +27768,8 @@ Item(81, {
   has_random_name = false,
   filter = "/fest/",
   rffilter = "",
-})
-Item(80, {
+}
+item['80'] = {
   image = 66,
   value = 1400,
   weight = 15000,
@@ -27804,8 +27807,8 @@ Item(80, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(79, {
+}
+item['79'] = {
   image = 234,
   value = 6400,
   weight = 8900,
@@ -27843,8 +27846,8 @@ Item(79, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(78, {
+}
+item['78'] = {
   image = 235,
   value = 1800,
   weight = 10200,
@@ -27882,8 +27885,8 @@ Item(78, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(77, {
+}
+item['77'] = {
   image = 237,
   value = 80,
   weight = 900,
@@ -27921,8 +27924,8 @@ Item(77, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(76, {
+}
+item['76'] = {
   image = 354,
   value = 15000,
   weight = 120,
@@ -27960,8 +27963,8 @@ Item(76, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(75, {
+}
+item['75'] = {
   image = 354,
   value = 10000,
   weight = 120,
@@ -27999,8 +28002,8 @@ Item(75, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(74, {
+}
+item['74'] = {
   image = 354,
   value = 7500,
   weight = 120,
@@ -28038,8 +28041,8 @@ Item(74, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(73, {
+}
+item['73'] = {
   image = 405,
   value = 20000,
   weight = 4200,
@@ -28077,8 +28080,8 @@ Item(73, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(72, {
+}
+item['72'] = {
   image = 354,
   value = 5000,
   weight = 120,
@@ -28116,8 +28119,8 @@ Item(72, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(71, {
+}
+item['71'] = {
   image = 354,
   value = 3000,
   weight = 120,
@@ -28155,8 +28158,8 @@ Item(71, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(70, {
+}
+item['70'] = {
   image = 354,
   value = 1280,
   weight = 120,
@@ -28194,8 +28197,8 @@ Item(70, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(69, {
+}
+item['69'] = {
   image = 354,
   value = 300,
   weight = 120,
@@ -28233,8 +28236,8 @@ Item(69, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(68, {
+}
+item['68'] = {
   image = 354,
   value = 150,
   weight = 120,
@@ -28272,8 +28275,8 @@ Item(68, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(67, {
+}
+item['67'] = {
   image = 398,
   value = 200,
   weight = 50,
@@ -28311,8 +28314,8 @@ Item(67, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(66, {
+}
+item['66'] = {
   image = 423,
   value = 300,
   weight = 900,
@@ -28350,8 +28353,8 @@ Item(66, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(65, {
+}
+item['65'] = {
   image = 422,
   value = 250,
   weight = 700,
@@ -28389,8 +28392,8 @@ Item(65, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(64, {
+}
+item['64'] = {
   image = 405,
   value = 60000,
   weight = 4000,
@@ -28428,8 +28431,8 @@ Item(64, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(63, {
+}
+item['63'] = {
   image = 421,
   value = 50000,
   weight = 9000,
@@ -28467,8 +28470,8 @@ Item(63, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(62, {
+}
+item['62'] = {
   image = 420,
   value = 150,
   weight = 2400,
@@ -28506,8 +28509,8 @@ Item(62, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(61, {
+}
+item['61'] = {
   image = 412,
   value = 150,
   weight = 1200,
@@ -28545,8 +28548,8 @@ Item(61, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(60, {
+}
+item['60'] = {
   image = 419,
   value = 500,
   weight = 800,
@@ -28584,8 +28587,8 @@ Item(60, {
   has_random_name = false,
   filter = "/sf/",
   rffilter = "",
-})
-Item(59, {
+}
+item['59'] = {
   image = 411,
   value = 4800,
   weight = 2200,
@@ -28623,8 +28626,8 @@ Item(59, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(58, {
+}
+item['58'] = {
   image = 404,
   value = 500,
   weight = 1200,
@@ -28662,8 +28665,8 @@ Item(58, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(57, {
+}
+item['57'] = {
   image = 501,
   value = 40000,
   weight = 1400,
@@ -28701,8 +28704,8 @@ Item(57, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(56, {
+}
+item['56'] = {
   image = 405,
   value = 40000,
   weight = 2200,
@@ -28740,8 +28743,8 @@ Item(56, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(55, {
+}
+item['55'] = {
   image = 437,
   value = 1,
   weight = 1,
@@ -28779,8 +28782,8 @@ Item(55, {
   has_random_name = false,
   filter = "/noshop/",
   rffilter = "",
-})
-Item(54, {
+}
+item['54'] = {
   image = 433,
   value = 1,
   weight = 0,
@@ -28818,8 +28821,8 @@ Item(54, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(53, {
+}
+item['53'] = {
   image = 247,
   value = 10,
   weight = 12000,
@@ -28857,8 +28860,8 @@ Item(53, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(52, {
+}
+item['52'] = {
   image = 246,
   value = 10,
   weight = 80,
@@ -28896,8 +28899,8 @@ Item(52, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(51, {
+}
+item['51'] = {
   image = 245,
   value = 10,
   weight = 80,
@@ -28935,8 +28938,8 @@ Item(51, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(50, {
+}
+item['50'] = {
   image = 244,
   value = 10,
   weight = 1050,
@@ -28974,8 +28977,8 @@ Item(50, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(49, {
+}
+item['49'] = {
   image = 243,
   value = 130,
   weight = 1400,
@@ -29013,8 +29016,8 @@ Item(49, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(48, {
+}
+item['48'] = {
   image = 242,
   value = 170,
   weight = 3200,
@@ -29052,8 +29055,8 @@ Item(48, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(47, {
+}
+item['47'] = {
   image = 204,
   value = 140,
   weight = 250,
@@ -29091,8 +29094,8 @@ Item(47, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(46, {
+}
+item['46'] = {
   image = 241,
   value = 6,
   weight = 800,
@@ -29130,8 +29133,8 @@ Item(46, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(45, {
+}
+item['45'] = {
   image = 240,
   value = 8,
   weight = 80,
@@ -29169,8 +29172,8 @@ Item(45, {
   has_random_name = false,
   filter = "/fish/",
   rffilter = "",
-})
-Item(44, {
+}
+item['44'] = {
   image = 238,
   value = 10,
   weight = 450,
@@ -29208,8 +29211,8 @@ Item(44, {
   has_random_name = false,
   filter = "",
   rffilter = "/ore/",
-})
-Item(43, {
+}
+item['43'] = {
   image = 239,
   value = 10,
   weight = 120,
@@ -29247,8 +29250,8 @@ Item(43, {
   has_random_name = false,
   filter = "/fish/",
   rffilter = "",
-})
-Item(42, {
+}
+item['42'] = {
   image = 213,
   value = 4200,
   weight = 320,
@@ -29286,8 +29289,8 @@ Item(42, {
   has_random_name = false,
   filter = "",
   rffilter = "/ore/",
-})
-Item(41, {
+}
+item['41'] = {
   image = 213,
   value = 2450,
   weight = 380,
@@ -29325,8 +29328,8 @@ Item(41, {
   has_random_name = false,
   filter = "",
   rffilter = "/ore/",
-})
-Item(40, {
+}
+item['40'] = {
   image = 212,
   value = 720,
   weight = 70,
@@ -29364,8 +29367,8 @@ Item(40, {
   has_random_name = false,
   filter = "",
   rffilter = "/ore/",
-})
-Item(39, {
+}
+item['39'] = {
   image = 212,
   value = 1400,
   weight = 240,
@@ -29403,8 +29406,8 @@ Item(39, {
   has_random_name = false,
   filter = "",
   rffilter = "/ore/",
-})
-Item(38, {
+}
+item['38'] = {
   image = 33,
   value = 2000,
   weight = 1100,
@@ -29442,8 +29445,8 @@ Item(38, {
   has_random_name = false,
   filter = "",
   rffilter = "/ore/",
-})
-Item(37, {
+}
+item['37'] = {
   image = 211,
   value = 450,
   weight = 1200,
@@ -29481,8 +29484,8 @@ Item(37, {
   has_random_name = false,
   filter = "",
   rffilter = "/ore/",
-})
-Item(36, {
+}
+item['36'] = {
   image = 211,
   value = 470,
   weight = 900,
@@ -29520,8 +29523,8 @@ Item(36, {
   has_random_name = false,
   filter = "",
   rffilter = "/ore/",
-})
-Item(35, {
+}
+item['35'] = {
   image = 211,
   value = 450,
   weight = 1600,
@@ -29559,8 +29562,8 @@ Item(35, {
   has_random_name = false,
   filter = "",
   rffilter = "/ore/",
-})
-Item(34, {
+}
+item['34'] = {
   image = 429,
   value = 3800,
   weight = 380,
@@ -29598,8 +29601,8 @@ Item(34, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(33, {
+}
+item['33'] = {
   image = 429,
   value = 3800,
   weight = 380,
@@ -29637,8 +29640,8 @@ Item(33, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(32, {
+}
+item['32'] = {
   image = 429,
   value = 3800,
   weight = 380,
@@ -29676,8 +29679,8 @@ Item(32, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(31, {
+}
+item['31'] = {
   image = 354,
   value = 280,
   weight = 50,
@@ -29715,8 +29718,8 @@ Item(31, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(30, {
+}
+item['30'] = {
   image = 354,
   value = 120,
   weight = 120,
@@ -29754,8 +29757,8 @@ Item(30, {
   has_random_name = true,
   filter = "/nogive/",
   rffilter = "",
-})
-Item(29, {
+}
+item['29'] = {
   image = 354,
   value = 40,
   weight = 120,
@@ -29793,8 +29796,8 @@ Item(29, {
   has_random_name = true,
   filter = "/neg/",
   rffilter = "",
-})
-Item(28, {
+}
+item['28'] = {
   image = 354,
   value = 30,
   weight = 120,
@@ -29832,8 +29835,8 @@ Item(28, {
   has_random_name = true,
   filter = "/neg/",
   rffilter = "",
-})
-Item(27, {
+}
+item['27'] = {
   image = 354,
   value = 20,
   weight = 120,
@@ -29871,8 +29874,8 @@ Item(27, {
   has_random_name = true,
   filter = "/neg/",
   rffilter = "",
-})
-Item(26, {
+}
+item['26'] = {
   image = 354,
   value = 100,
   weight = 120,
@@ -29910,8 +29913,8 @@ Item(26, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(25, {
+}
+item['25'] = {
   image = 333,
   value = 100,
   weight = 80,
@@ -29949,8 +29952,8 @@ Item(25, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(24, {
+}
+item['24'] = {
   image = 333,
   value = 500,
   weight = 80,
@@ -29988,8 +29991,8 @@ Item(24, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(23, {
+}
+item['23'] = {
   image = 333,
   value = 100,
   weight = 80,
@@ -30027,8 +30030,8 @@ Item(23, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(22, {
+}
+item['22'] = {
   image = 429,
   value = 6400,
   weight = 380,
@@ -30066,8 +30069,8 @@ Item(22, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(21, {
+}
+item['21'] = {
   image = 429,
   value = 5600,
   weight = 380,
@@ -30105,8 +30108,8 @@ Item(21, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(20, {
+}
+item['20'] = {
   image = 429,
   value = 3200,
   weight = 380,
@@ -30144,8 +30147,8 @@ Item(20, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(19, {
+}
+item['19'] = {
   image = 471,
   value = 840,
   weight = 800,
@@ -30183,8 +30186,8 @@ Item(19, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(18, {
+}
+item['18'] = {
   image = 471,
   value = 1080,
   weight = 800,
@@ -30222,8 +30225,8 @@ Item(18, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(17, {
+}
+item['17'] = {
   image = 470,
   value = 3500,
   weight = 20,
@@ -30261,8 +30264,8 @@ Item(17, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(16, {
+}
+item['16'] = {
   image = 470,
   value = 200,
   weight = 20,
@@ -30300,8 +30303,8 @@ Item(16, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(15, {
+}
+item['15'] = {
   image = 470,
   value = 12000,
   weight = 20,
@@ -30339,8 +30342,8 @@ Item(15, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(14, {
+}
+item['14'] = {
   image = 470,
   value = 480,
   weight = 20,
@@ -30378,8 +30381,8 @@ Item(14, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(13, {
+}
+item['13'] = {
   image = 407,
   value = 450,
   weight = 50,
@@ -30417,8 +30420,8 @@ Item(13, {
   has_random_name = true,
   filter = "",
   rffilter = "",
-})
-Item(12, {
+}
+item['12'] = {
   image = 460,
   value = 2200,
   weight = 720,
@@ -30456,8 +30459,8 @@ Item(12, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(11, {
+}
+item['11'] = {
   image = 418,
   value = 480,
   weight = 950,
@@ -30495,8 +30498,8 @@ Item(11, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(10, {
+}
+item['10'] = {
   image = 450,
   value = 400,
   weight = 1100,
@@ -30534,8 +30537,8 @@ Item(10, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(9, {
+}
+item['9'] = {
   image = 449,
   value = 1400,
   weight = 700,
@@ -30573,8 +30576,8 @@ Item(9, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(8, {
+}
+item['8'] = {
   image = 408,
   value = 450,
   weight = 800,
@@ -30612,8 +30615,8 @@ Item(8, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(7, {
+}
+item['7'] = {
   image = 396,
   value = 600,
   weight = 4500,
@@ -30651,8 +30654,8 @@ Item(7, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(6, {
+}
+item['6'] = {
   image = 478,
   value = 7200,
   weight = 400,
@@ -30690,8 +30693,8 @@ Item(6, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(5, {
+}
+item['5'] = {
   image = 477,
   value = 1400,
   weight = 600,
@@ -30729,8 +30732,8 @@ Item(5, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(4, {
+}
+item['4'] = {
   image = 427,
   value = 500,
   weight = 1000,
@@ -30768,8 +30771,8 @@ Item(4, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(3, {
+}
+item['3'] = {
   image = 499,
   value = 500,
   weight = 900,
@@ -30807,8 +30810,8 @@ Item(3, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(2, {
+}
+item['2'] = {
   image = 400,
   value = 500,
   weight = 600,
@@ -30846,8 +30849,8 @@ Item(2, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(1, {
+}
+item['1'] = {
   image = 405,
   value = 500,
   weight = 1500,
@@ -30885,8 +30888,8 @@ Item(1, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
-Item(0, {
+}
+item['0'] = {
   image = 33,
   value = 1,
   weight = 1,
@@ -30924,6 +30927,6 @@ Item(0, {
   has_random_name = false,
   filter = "",
   rffilter = "",
-})
+}
 
 -- vim: et sw=2 sts=2
