@@ -14,9 +14,6 @@ end
 --]]
 
 
-buff = {}
-
-
 buff['1'] = {
   type_ = BUFF_TYPE_BUFF,
   duration = function(power)

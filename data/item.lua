@@ -1,6 +1,3 @@
-item = {}
-
-
 item['792'] = {
   image = 695,
   value = 2000,

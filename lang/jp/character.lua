@@ -1,5 +1,3 @@
-character = character or {}
-
 character['0'] = {
   name = "バグ",
 }

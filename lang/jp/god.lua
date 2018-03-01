@@ -1,5 +1,3 @@
-god = god or {}
-
 god[''] = {
   name = "無のエイス",
 }

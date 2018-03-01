@@ -1,6 +1,3 @@
-race = {}
-
-
 race.kobolt = {
   is_extra = true,
   ordering = 20010,

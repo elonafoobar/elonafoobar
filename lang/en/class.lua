@@ -1,5 +1,3 @@
-class = class or {}
-
 class.warrior = {
   name = "Warrior",
   description = "The Warrior. With working knowledge of all things stabby, bashy, choppy, and shooty, anything in a Warrior's hands is bad news for their enemies. No mere thug, they have knowledge of tactics to bring even the strongest down, and are trained early on to be comfortable in all kinds of armor and shields. Warriors are personifications of the adage \"If violence isn't working, you are obviously not using enough of it.\""

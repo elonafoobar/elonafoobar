@@ -1,6 +1,3 @@
-class = {}
-
-
 class.warrior = {
   ordering = 10010,
   item_type = 1,

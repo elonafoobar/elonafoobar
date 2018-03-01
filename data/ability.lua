@@ -1,6 +1,3 @@
-ability = {}
-
-
 ability['2'] = {
   related_basic_attribute = 0,
   sdataref1 = 0,

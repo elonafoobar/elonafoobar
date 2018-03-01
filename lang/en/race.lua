@@ -1,5 +1,3 @@
-race = race or {}
-
 race.kobolt = {
   name = "Kobolt",
   description = "",
