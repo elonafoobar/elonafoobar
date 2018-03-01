@@ -11,7 +11,7 @@ namespace elona::i18n
 
 
 
-void load(const std::string& language = "jp"); // TODO
+void load(const std::string& language);
 
 
 

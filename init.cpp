@@ -118,6 +118,8 @@ void initialize_elona()
     time_warn = timeGetTime() / 1000;
     time_begin = timeGetTime() / 1000;
 
+    mesbox(keylog, 0, 0, 1, 10);
+
     backup_config_files();
 
     check_double_launching();
@@ -131,6 +133,9 @@ void initialize_elona()
     initialize_jkey();
     load_config2();
     load_config();
+
+    i18n::load(jp ? u8"jp" : u8"en");
+
     initialize_ui_constants();
     if (cfg_fullscreen)
     {
@@ -345,7 +350,6 @@ void initialize_elona()
     invctrl(0) = 0;
     invctrl(1) = 0;
     pos(-40, -40);
-    mesbox(keylog, 0, 0, 1, 10);
     SDIM1(buffboard);
     notesel(buffboard);
     {
@@ -595,8 +599,6 @@ int main()
     the_item_db.initialize();
     the_race_db.initialize();
     the_trait_db.initialize();
-
-    i18n::load();
 
     title(u8"Elona ver 1.22"s);
     try
