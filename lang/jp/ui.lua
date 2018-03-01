@@ -1,5 +1,3 @@
-ui = ui or {}
-
 ui.cursed = "呪われた"
 ui.blessed = "祝福された"
 ui.amulet = "首飾り"

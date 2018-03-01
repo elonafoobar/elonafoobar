@@ -1,6 +1,3 @@
-trait = {}
-
-
 trait['24'] = {
   traitref0 = 0,
   traitref1 = 0,

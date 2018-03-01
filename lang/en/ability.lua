@@ -1,5 +1,3 @@
-ability = ability or {}
-
 ability['2'] = {
   name = "Life",
   description = "",

@@ -1,6 +1,3 @@
-character = {}
-
-
 character['0'] = {
   item_type = 3,
   filter = "",

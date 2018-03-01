@@ -1,5 +1,3 @@
-ui = ui or {}
-
 ui.cursed = "cursed"
 ui.blessed = "blessed"
 ui.amulet = "amulet"
