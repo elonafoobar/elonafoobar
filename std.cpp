@@ -1320,6 +1320,24 @@ void picload(const fs::path& filename, int mode)
         snail::blend_mode_t::none);
     snail::application::instance().get_renderer().render_image(
         img, detail::current_tex_buffer().x, detail::current_tex_buffer().y);
+
+    if (filename.u8string().find(u8"interface.bmp") != std::string::npos)
+    {
+        snail::basic_image ex{filename.parent_path()
+                              / fs::u8path(u8"interface_ex.png")};
+        snail::application::instance().get_renderer().render_image(ex, 0, 656);
+        snail::basic_image ex2{filename.parent_path()
+                               / fs::u8path(u8"interface_ex2.png")};
+        snail::application::instance().get_renderer().render_image(
+            ex2, 144, 656);
+        snail::application::instance().get_renderer().render_image(
+            ex2, 144, 704);
+        snail::basic_image ex3{filename.parent_path()
+                               / fs::u8path(u8"interface_ex3.png")};
+        snail::application::instance().get_renderer().render_image(
+            ex3, 144, 752);
+    }
+
     snail::application::instance().get_renderer().set_blend_mode(save);
 }
 
