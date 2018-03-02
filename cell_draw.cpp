@@ -1190,6 +1190,9 @@ void cell_draw()
         render_cloud();
     }
 
+    // Work around
+    light_ *= 1.3;
+
     if (cfg_shadow != 0)
     {
         render_shadow_low(light_);
