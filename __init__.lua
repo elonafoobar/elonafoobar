@@ -53,4 +53,25 @@ ui = {}
 setmetatable(ui, metatable)
 
 
+
+
+local cnt = -1
+
+function keymacro(original_key)
+  cnt = cnt + 1
+  local n = cnt % 2
+  local ret
+  if n == 0 then
+    ret = "v"
+  elseif n == 1 then
+    ret = "a"
+  end
+  if cnt >= 1000 then
+    return "n"
+  end
+  return ret
+end
+
+
+
 -- vim: et sw=2 sts=2

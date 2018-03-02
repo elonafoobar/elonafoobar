@@ -265,6 +265,9 @@ void load_config()
         std::make_unique<config_integer>(
             u8"msg_addTime",
             [&](auto value) { cfg_msgaddtime = value; }),
+        std::make_unique<config_string>(
+            u8"key_macro",
+            [&](auto value) { key_macro = std::string{value}; }),
         std::make_unique<config_key>(
             u8"key_cancel",
             [&](auto value, auto jk) {

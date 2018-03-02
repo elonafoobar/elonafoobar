@@ -1,21 +1,18 @@
+#include "message.hpp"
+#include "cat.hpp"
 #include "character.hpp"
 #include "elona.hpp"
 #include "map.hpp"
 #include "variables.hpp"
 
+using namespace elona;
 
 
 namespace elona
 {
 
 
-int msglen = 0;
-int tcontinue_at_txtfunc = 0;
-int tcolfix_at_txtfunc = 0;
-int p_at_txtfunc = 0;
-
-
-void key_check(int prm_299)
+void key_check_(int prm_299)
 {
     int key_ctrl = 0;
     int p_at_m19 = 0;
@@ -444,6 +441,41 @@ void key_check(int prm_299)
         }
     }
     return;
+}
+
+
+} // namespace elona
+
+
+
+namespace elona
+{
+
+
+int msglen = 0;
+int tcontinue_at_txtfunc = 0;
+int tcolfix_at_txtfunc = 0;
+int p_at_txtfunc = 0;
+
+
+void key_check(int prm_299)
+{
+    static cat::ref keymacro = [L = cat::global.ptr()] {
+        lua_getglobal(L, u8"keymacro");
+        return luaL_ref(L, LUA_REGISTRYINDEX);
+    }();
+
+    key_check_(prm_299);
+
+    if (keymacro_is_active)
+    {
+        key = cat::global.call<std::string>(keymacro, key);
+    }
+
+    if (key == key_macro)
+    {
+        keymacro_is_active = !keymacro_is_active;
+    }
 }
 
 
@@ -933,8 +965,7 @@ std::string name(int cc)
         return lang(u8"何か"s, u8"something"s);
     }
     if (cdata[0].blind != 0
-        || (cbit(6, cc) == 1 && cbit(7, 0) == 0
-            && cdata[cc].wet == 0))
+        || (cbit(6, cc) == 1 && cbit(7, 0) == 0 && cdata[cc].wet == 0))
     {
         return lang(u8"何か"s, u8"something"s);
     }
