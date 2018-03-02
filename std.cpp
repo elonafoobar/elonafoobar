@@ -590,14 +590,49 @@ void gcopy(int window_id, int src_x, int src_y, int src_width, int src_height)
         return;
     }
 
+    int dst_x = detail::current_tex_buffer().x;
+    int dst_y = detail::current_tex_buffer().y;
+    src_width = src_width == 0 ? detail::current_tex_buffer().width : src_width;
+    src_height =
+        src_height == 0 ? detail::current_tex_buffer().height : src_height;
+    int dst_width = src_width;
+    int dst_height = src_height;
+
+    if (src_x < 0)
+    {
+        int excess = -src_x;
+        dst_x += excess;
+        dst_width -= excess;
+    }
+    if (src_y < 0)
+    {
+        int excess = -src_y;
+        dst_y += excess;
+        dst_height -= excess;
+    }
+    if (src_x + src_width >= detail::tex_buffers[window_id].tex_width)
+    {
+        int excess =
+            src_x + src_width - detail::tex_buffers[window_id].tex_width;
+        dst_width -= excess;
+    }
+    if (src_y + src_height >= detail::tex_buffers[window_id].tex_height)
+    {
+        int excess =
+            src_y + src_height - detail::tex_buffers[window_id].tex_height;
+        dst_height -= excess;
+    }
+
     snail::application::instance().get_renderer().render_image(
         detail::tex_buffers[window_id].texture,
         src_x,
         src_y,
-        src_width == 0 ? detail::current_tex_buffer().width : src_width,
-        src_height == 0 ? detail::current_tex_buffer().height : src_height,
-        detail::current_tex_buffer().x,
-        detail::current_tex_buffer().y);
+        src_width,
+        src_height,
+        dst_x,
+        dst_y,
+        dst_width,
+        dst_height);
 }
 
 
