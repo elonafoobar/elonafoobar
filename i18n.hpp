@@ -30,27 +30,46 @@ std::string _(const std::string& key_head, const Args&... key_tail)
 
 struct formattable_string
 {
-    explicit formattable_string(cat::ref func)
-        : func(func)
+    explicit formattable_string(
+        const std::string& key_head,
+        const std::vector<std::string>& key_tail)
+        : key_head(key_head)
+        , key_tail(key_tail)
     {
     }
 
+    // FIXME: DRY
     template <typename... Args>
     std::string operator()(Args&&... args)
     {
-        return cat::global.call<std::string>(func, args...);
+        lua_getglobal(cat::global.ptr(), key_head.c_str());
+        int pop_count = 1;
+        for (const auto& k : key_tail)
+        {
+            lua_getfield(cat::global.ptr(), -1, k.c_str());
+            ++pop_count;
+        }
+
+        lua_pushvalue(cat::global.ptr(), -2);
+        auto ret = cat::global.call_method<std::string>(args...);
+        lua_pop(cat::global.ptr(), pop_count);
+        return ret;
     }
 
 private:
-    cat::ref func;
+    std::string key_head;
+    std::vector<std::string> key_tail;
 };
 
 
 
 // TODO rename
-formattable_string fmt(
+inline formattable_string fmt(
     const std::string& key_head,
-    const std::vector<std::string>& key_tail);
+    const std::vector<std::string>& key_tail)
+{
+    return formattable_string{key_head, key_tail};
+}
 
 
 

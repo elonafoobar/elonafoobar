@@ -41,6 +41,20 @@ public:
     }
 
 
+    // FIXME: DRY
+    // -2 is the called function.
+    // -1 is the first argument, i.e., self.
+    template <typename T, typename... Args>
+    T call_method(Args&&... args)
+    {
+        using swallow = std::initializer_list<int>;
+        (void)swallow{(void(push(args)), 0)...};
+
+        lua_pcall(ptr(), sizeof...(Args) + 1 /* for self */, 1 /* TODO */, 0);
+        return to_cpp_type<T>(-1);
+    }
+
+
 private:
     std::unique_ptr<lua_State, decltype(&lua_close)> L{nullptr, lua_close};
 

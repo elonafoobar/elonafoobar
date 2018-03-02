@@ -38,41 +38,12 @@ std::string _(
     if (lua_istable(cat::global.ptr(), -1))
     {
         lua_rawgeti(
-            cat::global.ptr(),
-            -1,
-            rnd(lua_rawlen(cat::global.ptr(), -1)) + 1);
+            cat::global.ptr(), -1, rnd(lua_rawlen(cat::global.ptr(), -1)) + 1);
         ++pop_count;
     }
     const char* ret = lua_tostring(cat::global.ptr(), -1);
     lua_pop(cat::global.ptr(), pop_count);
     return ret ? ret : "";
-}
-
-
-
-// TODO DRY!
-formattable_string fmt(
-    const std::string& key_head,
-    const std::vector<std::string>& key_tail)
-{
-    lua_getglobal(cat::global.ptr(), key_head.c_str());
-    int pop_count = 1;
-    for (const auto& k : key_tail)
-    {
-        lua_getfield(cat::global.ptr(), -1, k.c_str());
-        ++pop_count;
-    }
-    if (lua_istable(cat::global.ptr(), -1))
-    {
-        lua_rawgeti(
-            cat::global.ptr(),
-            -1,
-            rnd(lua_rawlen(cat::global.ptr(), -1)) + 1);
-        ++pop_count;
-    }
-
-    return formattable_string{
-        luaL_ref(cat::global.ptr(), LUA_REGISTRYINDEX)};
 }
 
 
