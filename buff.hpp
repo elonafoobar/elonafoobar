@@ -21,8 +21,10 @@ struct buff_data
 
 
     int id;
+    cat::ref self;
     type_t type;
     cat::ref duration;
+    cat::ref on_refresh;
 };
 
 

@@ -16,43 +16,6 @@ namespace
 {
 
 
-std::tuple<int, int> calc_buff_effect(int id, int power)
-{
-    switch (id)
-    {
-    case 1: return {25 + power / 15, 0};
-    case 2: return {0, 0};
-    case 3: return {0, 0};
-    case 4: return {0, 0};
-    case 5: return {50 + std::sqrt(power / 5), 0};
-    case 6: return {std::min(20 + power / 20, 50), 0};
-    case 7: return {5 + power / 30, 0};
-    case 8: return {0, 0};
-    case 9: return {0, 0};
-    case 10: return {50 + power / 3 * 2, 0};
-    case 11: return {0, 0};
-    case 12: return {6 + power / 40, 3 + power / 100};
-    case 13: return {20, 0};
-    case 14: return {155 + power / 5, 0};
-    case 15: return {0, 0};
-    case 16: return {0, 0};
-    case 17: return {120, 0};
-    case 18: return {std::clamp(25 + power / 17, 25, 80), 0};
-    case 19: return {power, 0};
-    case 20:
-    case 21:
-    case 22:
-    case 23:
-    case 24:
-    case 25:
-    case 26:
-    case 27:
-    case 28: return {power, 0};
-    default: assert(0);
-    }
-}
-
-
 
 std::vector<int> calc_effective_range(int id)
 {
@@ -111,85 +74,9 @@ std::string get_buff_description(int id, int power)
 
 void apply_buff(int cc, int id, int power)
 {
-    const auto [effect1, effect2] = calc_buff_effect(id, power);
-
-    switch (id)
-    {
-    case 1:
-        cdata[cc].pv += effect1;
-        cdata[cc].fear = 0;
-        break;
-    case 2: break;
-    case 3: sdata(154, cc) += 40; break;
-    case 4:
-        sdata(50, cc) += 100;
-        sdata(51, cc) += 100;
-        sdata(52, cc) += 100;
-        break;
-    case 5: sdata(18, cc) += effect1; break;
-    case 6: sdata(18, cc) -= effect1; break;
-    case 7:
-        sdata(10, cc) += effect1;
-        sdata(12, cc) += effect1;
-        cdata[cc].fear = 0;
-        cdata[cc].confused = 0;
-        break;
-    case 8:
-        cdata[cc].dv = cdata[cc].dv / 2;
-        cdata[cc].pv = cdata[cc].pv / 2;
-        break;
-    case 9:
-        sdata(50, cc) =
-            std::clamp(sdata(50, cc) + -100, int{sdata(50, cc) > 0}, 9999);
-        sdata(51, cc) =
-            std::clamp(sdata(51, cc) + -100, int{sdata(51, cc) > 0}, 9999);
-        sdata(52, cc) =
-            std::clamp(sdata(52, cc) + -100, int{sdata(52, cc) > 0}, 9999);
-        break;
-    case 10: break;
-    case 11:
-        sdata(58, cc) =
-            std::clamp(sdata(58, cc) + -100, int{sdata(58, cc) > 0}, 9999);
-        sdata(54, cc) =
-            std::clamp(sdata(54, cc) + -100, int{sdata(54, cc) > 0}, 9999);
-        break;
-    case 12:
-        sdata(14, cc) += effect1;
-        sdata(16, cc) += effect1;
-        sdata(150, cc) += effect2;
-        break;
-    case 13:
-        sdata(18, cc) -= effect1;
-        if (cdata[cc].pv > 1)
-        {
-            cdata[cc].pv -= cdata[cc].pv / 5;
-        }
-        break;
-    case 14: sdata(18, cc) += effect1; break;
-    case 15: cbitmod(16, cc, 1); break;
-    case 16: cbitmod(973, cc, 1); break;
-    case 17:
-        sdata(18, cc) += effect1;
-        sdata(10, cc) = sdata(10, cc) * 150 / 100 + 10;
-        sdata(12, cc) = sdata(12, cc) * 150 / 100 + 10;
-        sdata(154, cc) += 50;
-        cdata[cc].pv = cdata[cc].pv * 150 / 100 + 25;
-        cdata[cc].dv = cdata[cc].dv * 150 / 100 + 25;
-        cdata[cc].hit_bonus = cdata[cc].hit_bonus * 150 / 100 + 50;
-        break;
-    case 18: cbitmod(980, cc, 1); break;
-    case 19: sdata(19, cc) += effect1; break;
-    case 20:
-    case 21:
-    case 22:
-    case 23:
-    case 24:
-    case 25:
-    case 26:
-    case 27:
-    case 28: cdata[cc].growth_buffs[id - 20] = effect1; break;
-    default: assert(0);
-    }
+    const auto self = the_buff_db[id].self;
+    const auto func = the_buff_db[id].on_refresh;
+    cat::global.call_with_self<nullptr_t>(self, func, cc, power, 1 /* TODO */);
 }
 
 

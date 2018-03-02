@@ -3,7 +3,7 @@ buff['1'] = {
   message_0 = "begin",
   message_1 = " to shine.",
   description = function(self, power)
-    return "Increases PV by " .. tostring(self._effect(power)) .. "/RES+ fear"
+    return "Increases PV by " .. self._effect(power)) .. "/RES+ fear"
   end,
 }
 buff['2'] = {
@@ -35,7 +35,7 @@ buff['5'] = {
   message_0 = "speed",
   message_1 = " up.",
   description = function(self, power)
-    return "Increases speed by " .. tostring(self._effect(power))
+    return "Increases speed by " .. self._effect(power)
   end,
 }
 buff['6'] = {
@@ -43,7 +43,7 @@ buff['6'] = {
   message_0 = "slow",
   message_1 = " down.",
   description = function(self, power)
-    return "Decreases speed by " .. tostring(self._effect(power))
+    return "Decreases speed by " .. self._effect(power)
   end,
 }
 buff['7'] = {
@@ -51,7 +51,7 @@ buff['7'] = {
   message_0 = "feel",
   message_1 = " heroic.",
   description = function(self, power)
-    return "Increases STR,DEX by " .. tostring(self._effect(power)) .. "/RES+ fear,confusion"
+    return "Increases STR,DEX by " .. self._effect(power) .. "/RES+ fear,confusion"
   end,
 }
 buff['8'] = {
@@ -75,7 +75,7 @@ buff['10'] = {
   message_0 = "receive",
   message_1 = " holy protection.",
   description = function(self, power)
-    return "grants hex protection(power:" .. tostring(self._effect(power)) .. ")"
+    return "grants hex protection(power:" .. self._effect(power) .. ")"
   end,
 }
 buff['11'] = {
@@ -92,7 +92,7 @@ buff['12'] = {
   message_1 = " to think clearly.",
   description = function(self, power)
     a, b = self._effect(power)
-    return "Increases LER,MAG by " .. tostring(a) .. ", literacy skill by " .. tostring(b)
+    return "Increases LER,MAG by " .. a .. ", literacy skill by " .. b
   end,
 }
 buff['13'] = {
@@ -101,7 +101,7 @@ buff['13'] = {
   message_1 = " the wrath of God.",
   description = function(self, power)
     a, b = self._effect(power)
-    return "Decreases speed by " .. tostring(a) .. ", PV by " .. tostring(b) .. "%"
+    return "Decreases speed by " .. a .. ", PV by " .. b .. "%"
   end,
 }
 buff['14'] = {
@@ -109,7 +109,7 @@ buff['14'] = {
   message_0 = "repeat",
   message_1 = "the name of Lulwy.",
   description = function(self, power)
-    return "Increases speed by " .. tostring(self._effect(power))
+    return "Increases speed by " .. self._effect(power)
   end,
 }
 buff['15'] = {
@@ -133,7 +133,7 @@ buff['17'] = {
   message_0 = "gain",
   message_1 = " massive power.",
   description = function(self, power)
-    return "Increases speed by " .. tostring(self._effect(power)) .. "/Boosts physical attributes"
+    return "Increases speed by " .. self._effect(power) .. "/Boosts physical attributes"
   end,
 }
 buff['18'] = {
@@ -141,7 +141,7 @@ buff['18'] = {
   message_0 = "set",
   message_1 = " up contracts with the Reaper.",
   description = function(self, power)
-    return tostring(self._effect(power)) .. "% chances taking a lethal damage heals you instead"
+    return self._effect(power) .. "% chances taking a lethal damage heals you instead"
   end,
 }
 buff['19'] = {
@@ -149,7 +149,7 @@ buff['19'] = {
   message_0 = "feel",
   message_1 = " very lucky today!",
   description = function(self, power)
-    return "Increase luck by " .. tostring(self._effect(power)) .. "."
+    return "Increase luck by " .. self._effect(power) .. "."
   end,
 }
 buff['20'] = {
@@ -157,7 +157,7 @@ buff['20'] = {
   message_0 = "",
   message_1 = " magical effect.",
   description = function(self, power)
-    return "Increases the growth rate " .. ability['10'].name .. " by " .. tostring(self._effect(power))
+    return "Increases the growth rate " .. ability['10'].name .. " by " .. self._effect(power)
   end,
 }
 buff['21'] = {
@@ -165,7 +165,7 @@ buff['21'] = {
   message_0 = "",
   message_1 = " magical effect.",
   description = function(self, power)
-    return "Increases the growth rate " .. ability['11'].name .. " by " .. tostring(self._effect(power))
+    return "Increases the growth rate " .. ability['11'].name .. " by " .. self._effect(power)
   end,
 }
 buff['22'] = {
@@ -173,7 +173,7 @@ buff['22'] = {
   message_0 = "",
   message_1 = " magical effect.",
   description = function(self, power)
-    return "Increases the growth rate " .. ability['12'].name .. " by " .. tostring(self._effect(power))
+    return "Increases the growth rate " .. ability['12'].name .. " by " .. self._effect(power)
   end,
 }
 buff['23'] = {
@@ -181,7 +181,7 @@ buff['23'] = {
   message_0 = "",
   message_1 = " magical effect.",
   description = function(self, power)
-    return "Increases the growth rate " .. ability['13'].name .. " by " .. tostring(self._effect(power))
+    return "Increases the growth rate " .. ability['13'].name .. " by " .. self._effect(power)
   end,
 }
 buff['24'] = {
@@ -189,7 +189,7 @@ buff['24'] = {
   message_0 = "",
   message_1 = " magical effect.",
   description = function(self, power)
-    return "Increases the growth rate " .. ability['14'].name .. " by " .. tostring(self._effect(power))
+    return "Increases the growth rate " .. ability['14'].name .. " by " .. self._effect(power)
   end,
 }
 buff['25'] = {
@@ -197,7 +197,7 @@ buff['25'] = {
   message_0 = "",
   message_1 = " magical effect.",
   description = function(self, power)
-    return "Increases the growth rate " .. ability['15'].name .. " by " .. tostring(self._effect(power))
+    return "Increases the growth rate " .. ability['15'].name .. " by " .. self._effect(power)
   end,
 }
 buff['26'] = {
@@ -205,7 +205,7 @@ buff['26'] = {
   message_0 = "",
   message_1 = " magical effect.",
   description = function(self, power)
-    return "Increases the growth rate " .. ability['16'].name .. " by " .. tostring(self._effect(power))
+    return "Increases the growth rate " .. ability['16'].name .. " by " .. self._effect(power)
   end,
 }
 buff['27'] = {
@@ -213,7 +213,7 @@ buff['27'] = {
   message_0 = "",
   message_1 = " magical effect.",
   description = function(self, power)
-    return "Increases the growth rate " .. ability['17'].name .. " by " .. tostring(self._effect(power))
+    return "Increases the growth rate " .. ability['17'].name .. " by " .. self._effect(power)
   end,
 }
 buff['28'] = {
@@ -221,7 +221,7 @@ buff['28'] = {
   message_0 = "",
   message_1 = " magical effect.",
   description = function(self, power)
-    return "Increases the growth rate " .. ability['18'].name .. " by " .. tostring(self._effect(power))
+    return "Increases the growth rate " .. ability['18'].name .. " by " .. self._effect(power)
   end,
 }
 

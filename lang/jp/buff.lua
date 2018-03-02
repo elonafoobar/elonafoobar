@@ -3,7 +3,7 @@ buff['1'] = {
   message_0 = "は光り輝いた。",
   message_1 = "",
   description = function(self, power)
-    return "PVを" .. tostring(self._effect(power)) .. "上昇/耐恐怖"
+    return "PVを" .. self._effect(power) .. "上昇/耐恐怖"
   end,
 }
 buff['2'] = {
@@ -35,7 +35,7 @@ buff['5'] = {
   message_0 = "は機敏になった。",
   message_1 = "",
   description = function(self, power)
-    return tostring(self._effect(power)) .. "の加速"
+    return self._effect(power) .. "の加速"
   end,
 }
 buff['6'] = {
@@ -43,7 +43,7 @@ buff['6'] = {
   message_0 = "は鈍重になった。",
   message_1 = "",
   description = function(self, power)
-    return tostring(self._effect(power)) .. "の鈍足"
+    return self._effect(power) .. "の鈍足"
   end,
 }
 buff['7'] = {
@@ -51,7 +51,7 @@ buff['7'] = {
   message_0 = "の士気が向上した。",
   message_1 = "",
   description = function(self, power)
-    return "筋力・器用を" .. tostring(self._effect(power)) .. "上昇/耐恐怖/耐混乱"
+    return "筋力・器用を" .. self._effect(power) .. "上昇/耐恐怖/耐混乱"
   end,
 }
 buff['8'] = {
@@ -75,7 +75,7 @@ buff['10'] = {
   message_0 = "は聖なる衣に保護された。",
   message_1 = "",
   description = function(self, power)
-    return "ﾊﾟﾜｰ" .. tostring(self._effect(power)) .. "の呪い(hex)への抵抗"
+    return "ﾊﾟﾜｰ" .. self._effect(power) .. "の呪い(hex)への抵抗"
   end,
 }
 buff['11'] = {
@@ -92,7 +92,7 @@ buff['12'] = {
   message_1 = "",
   description = function(self, power)
     a, b = self._effect(power)
-    return "習得・魔力を" .. tostring(a) .. "上昇/読書を" .. tostring(b) .. "上昇"
+    return "習得・魔力を" .. a .. "上昇/読書を" .. b .. "上昇"
   end,
 }
 buff['13'] = {
@@ -101,7 +101,7 @@ buff['13'] = {
   message_1 = "",
   description = function(self, power)
     a, b = self._effect(power)
-    return tostring(a) .. "の鈍足/PVを" .. tostring(b) .. "%減少"
+    return a .. "の鈍足/PVを" .. b .. "%減少"
   end,
 }
 buff['14'] = {
@@ -109,7 +109,7 @@ buff['14'] = {
   message_0 = "にルルウィが乗り移った。",
   message_1 = "",
   description = function(self, power)
-    return tostring(self._effect(power)) .. "の加速"
+    return self._effect(power) .. "の加速"
   end,
 }
 buff['15'] = {
@@ -133,7 +133,7 @@ buff['17'] = {
   message_0 = "はブーストした！",
   message_1 = "",
   description = function(self, power)
-    return tostring(self._effect(power)) .. "の加速と能力のアップ"
+    return self._effect(power) .. "の加速と能力のアップ"
   end,
 }
 buff['18'] = {
@@ -141,7 +141,7 @@ buff['18'] = {
   message_0 = "は死神と契約した。",
   message_1 = "",
   description = function(self, power)
-    return "致命傷を負ったとき" .. tostring(self._effect(power)) .. "%の確率でダメージ分回復。"
+    return "致命傷を負ったとき" .. self._effect(power) .. "%の確率でダメージ分回復。"
   end,
 }
 buff['19'] = {
@@ -149,7 +149,7 @@ buff['19'] = {
   message_0 = "に幸運な日が訪れた！",
   message_1 = "",
   description = function(self, power)
-    return tostring(self._effect(power)) .. "の幸運の上昇"
+    return self._effect(power) .. "の幸運の上昇"
   end,
 }
 buff['20'] = {
@@ -157,7 +157,7 @@ buff['20'] = {
   message_0 = "",
   message_1 = "",
   description = function(self, power)
-    return ability['10'].name .. "の成長率を" .. tostring(self._effect(power)) .. "%上昇"
+    return ability['10'].name .. "の成長率を" .. self._effect(power) .. "%上昇"
   end,
 }
 buff['21'] = {
@@ -165,7 +165,7 @@ buff['21'] = {
   message_0 = "",
   message_1 = "",
   description = function(self, power)
-    return ability['11'].name .. "の成長率を" .. tostring(self._effect(power)) .. "%上昇"
+    return ability['11'].name .. "の成長率を" .. self._effect(power) .. "%上昇"
   end,
 }
 buff['22'] = {
@@ -173,7 +173,7 @@ buff['22'] = {
   message_0 = "",
   message_1 = "",
   description = function(self, power)
-    return ability['12'].name .. "の成長率を" .. tostring(self._effect(power)) .. "%上昇"
+    return ability['12'].name .. "の成長率を" .. self._effect(power) .. "%上昇"
   end,
 }
 buff['23'] = {
@@ -181,7 +181,7 @@ buff['23'] = {
   message_0 = "",
   message_1 = "",
   description = function(self, power)
-    return ability['13'].name .. "の成長率を" .. tostring(self._effect(power)) .. "%上昇"
+    return ability['13'].name .. "の成長率を" .. self._effect(power) .. "%上昇"
   end,
 }
 buff['24'] = {
@@ -189,7 +189,7 @@ buff['24'] = {
   message_0 = "",
   message_1 = "",
   description = function(self, power)
-    return ability['14'].name .. "の成長率を" .. tostring(self._effect(power)) .. "%上昇"
+    return ability['14'].name .. "の成長率を" .. self._effect(power) .. "%上昇"
   end,
 }
 buff['25'] = {
@@ -197,7 +197,7 @@ buff['25'] = {
   message_0 = "",
   message_1 = "",
   description = function(self, power)
-    return ability['15'].name .. "の成長率を" .. tostring(self._effect(power)) .. "%上昇"
+    return ability['15'].name .. "の成長率を" .. self._effect(power) .. "%上昇"
   end,
 }
 buff['26'] = {
@@ -205,7 +205,7 @@ buff['26'] = {
   message_0 = "",
   message_1 = "",
   description = function(self, power)
-    return ability['16'].name .. "の成長率を" .. tostring(self._effect(power)) .. "%上昇"
+    return ability['16'].name .. "の成長率を" .. self._effect(power) .. "%上昇"
   end,
 }
 buff['27'] = {
@@ -213,7 +213,7 @@ buff['27'] = {
   message_0 = "",
   message_1 = "",
   description = function(self, power)
-    return ability['17'].name .. "の成長率を" .. tostring(self._effect(power)) .. "%上昇"
+    return ability['17'].name .. "の成長率を" .. self._effect(power) .. "%上昇"
   end,
 }
 buff['28'] = {
@@ -221,7 +221,7 @@ buff['28'] = {
   message_0 = "",
   message_1 = "",
   description = function(self, power)
-    return ability['18'].name .. "の成長率を" .. tostring(self._effect(power)) .. "%上昇"
+    return ability['18'].name .. "の成長率を" .. self._effect(power) .. "%上昇"
   end,
 }
 
