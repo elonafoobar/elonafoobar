@@ -11,7 +11,7 @@ ui.bracket_right = "』"
 ui.doomed = "堕落した"
 ui.gold = " gold"
 ui.platinum = " plat"
-ui.weight = "s"
+ui.unit_of_weight = "s"
 ui.yes = "ああ"
 ui.no = "いや…"
 
