@@ -59,12 +59,14 @@ void trait_db::initialize()
     cat::global.load(fs::u8path(u8"../data/trait.lua"));
 
     lua_getglobal(cat::global.ptr(), u8"trait");
+    lua_getfield(cat::global.ptr(), -1, u8"__storage__");
     lua_pushnil(cat::global.ptr());
     while (lua_next(cat::global.ptr(), -2))
     {
         define(cat::global.ptr(), storage);
         lua_pop(cat::global.ptr(), 1);
     }
+    lua_pop(cat::global.ptr(), 2);
 }
 
 

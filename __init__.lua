@@ -14,43 +14,38 @@ local function merge(a, b)
 end
 
 
-local metatable = {
-  __newindex = function(table, key, value)
-    if type(value) == 'table' then
-      rawset(table, key, merge(table[key] or {}, value or {}))
-    else
-      rawset(table, key, value)
-    end
-  end
-}
+
+local DataStorage = {}
+
+DataStorage.new = function()
+  local self = { __storage__ = {} }
+
+  setmetatable(self, {
+    __newindex = function(table, key, value)
+      if type(value) == 'table' then
+        rawset(table.__storage__, key, merge(table.__storage__[key] or {}, value))
+      else
+        rawset(table.__storage__, key, value)
+      end
+    end,
+    __index = function(table, key)
+      return table.__storage__[key]
+    end,
+  })
+
+  return self
+end
 
 
-ability = {}
-setmetatable(ability, metatable)
-
-buff = {}
-setmetatable(buff, metatable)
-
-character = {}
-setmetatable(character, metatable)
-
-class = {}
-setmetatable(class, metatable)
-
-item = {}
-setmetatable(item, metatable)
-
-race = {}
-setmetatable(race, metatable)
-
-trait = {}
-setmetatable(trait, metatable)
-
-god = {}
-setmetatable(god, metatable)
-
-ui = {}
-setmetatable(ui, metatable)
+ability = DataStorage.new()
+buff = DataStorage.new()
+character = DataStorage.new()
+class = DataStorage.new()
+item = DataStorage.new()
+race = DataStorage.new()
+trait = DataStorage.new()
+god = DataStorage.new()
+ui = DataStorage.new()
 
 
 -- vim: et sw=2 sts=2
