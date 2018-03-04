@@ -8089,5 +8089,26 @@ character['500'] = {
   coefficient = 0,
 }
 
+-- For debug
+character['501'] = {
+  item_type = 5,
+  filter = "/dragon/",
+  level = 1,
+  portrait = -1,
+  ai_calm = 1,
+  ai_move = 100,
+  ai_dist = 1,
+  creaturepack = 0,
+  normal_actions = {602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612},
+  original_relationship = -3,
+  race = "dragon",
+  class_ = "predator",
+  cspecialeq = 0,
+  fltselect = 0,
+  category = 0,
+  rarity = 100000,
+  coefficient = 0,
+}
+
 
 -- vim: et sw=2 sts=2
