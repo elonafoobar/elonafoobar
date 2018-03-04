@@ -650,6 +650,10 @@ void load_config()
                     std::end(values),
                     [&](auto index, auto value) { key_select(index) = value; });
             }),
+        std::make_unique<config_integer>(
+            u8"use_autopick",
+            1,
+            [&](auto value) { config::instance().use_autopick = value; }),
     };
 
     picojson::value value;

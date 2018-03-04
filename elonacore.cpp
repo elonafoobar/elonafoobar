@@ -1,5 +1,6 @@
 #include "ability.hpp"
 #include "animation.hpp"
+#include "autopick.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
 #include "character.hpp"
@@ -5796,7 +5797,8 @@ void cs_list(
 {
     if (is_selected)
     {
-        const auto width = clamp(int(strlen_u(text)) * 7 + 32 + x_offset, 10, 480);
+        const auto width =
+            clamp(int(strlen_u(text)) * 7 + 32 + x_offset, 10, 480);
 
         gsel(3);
         pos(264, 96);
@@ -55240,6 +55242,123 @@ void label_2205()
 
 
 
+void proc_autopick()
+{
+    if (!config::instance().use_autopick)
+        return;
+    if (key_ctrl)
+        return;
+    if (adata(0, gdata_current_map) == 5 && adata(16, gdata_current_map) != 30
+        && adata(16, gdata_current_map) != 31)
+        return;
+
+
+    for (const auto& ci : items(-1))
+    {
+        if (inv[ci].number == 0)
+            continue;
+        if (inv[ci].position != cdata[0].position)
+            continue;
+        if (inv[ci].own_state > 0)
+            continue;
+
+        item_checkknown(ci);
+
+        const auto x = cdata[0].position.x;
+        const auto y = cdata[0].position.y;
+
+        bool did_something = true;
+        const auto op = autopick::instance().get_operation(inv[ci]);
+        switch (op.type)
+        {
+        case autopick::operation::type_t::do_nothing:
+            did_something = false;
+            break;
+        case autopick::operation::type_t::pick_up:
+        case autopick::operation::type_t::save:
+        case autopick::operation::type_t::no_drop:
+        case autopick::operation::type_t::save_and_no_drop:
+            // FIXME: DRY
+            if (op.show_prompt)
+            {
+                txt(i18n::fmt(u8"ui", u8"autopick", u8"do_you_really_pick_up")(
+                    itemname(ci)));
+                ELONA_YES_NO_PROMPT();
+                show_prompt(promptx, prompty, 160);
+                if (rtval != 0)
+                {
+                    did_something = false;
+                    break;
+                }
+            }
+            in = inv[ci].number;
+            elona::ci = ci;
+            pick_up_item();
+            if (int(op.type) & int(autopick::operation::type_t::no_drop))
+            {
+                ibitmod(13, ti, 1);
+                txt(lang(
+                    itemname(ti) + u8"を大事なものに指定した。"s,
+                    u8"You set "s + itemname(ti) + u8" as no-drop."s));
+            }
+            if (int(op.type) & int(autopick::operation::type_t::save))
+            {
+                if (gdata_wizard == 0)
+                {
+                    snd(44);
+                    save_game();
+                    txtef(5);
+                    txt(lang(u8" *保存* "s, u8"*saving*"s));
+                }
+            }
+            break;
+        case autopick::operation::type_t::destroy:
+            // FIXME: DRY
+            if (op.show_prompt)
+            {
+                txt(i18n::fmt(u8"ui", u8"autopick", u8"do_you_really_destroy")(
+                    itemname(ci)));
+                ELONA_YES_NO_PROMPT();
+                show_prompt(promptx, prompty, 160);
+                if (rtval != 0)
+                {
+                    did_something = false;
+                    break;
+                }
+            }
+            snd(45);
+            txt(i18n::fmt(u8"ui", u8"autopick", u8"destroyed")(itemname(ci)));
+            inv[ci].number = 0;
+            cell_refresh(x, y);
+            map(x, y, 5) = map(x, y, 4);
+            break;
+        case autopick::operation::type_t::open:
+            // FIXME: DRY
+            if (op.show_prompt)
+            {
+                txt(i18n::fmt(u8"ui", u8"autopick", u8"do_you_really_open")(
+                    itemname(ci)));
+                ELONA_YES_NO_PROMPT();
+                show_prompt(promptx, prompty, 160);
+                if (rtval != 0)
+                {
+                    did_something = false;
+                    break;
+                }
+            }
+            elona::ci = ci;
+            do_open_command();
+        }
+        if (did_something && !op.sound.empty())
+        {
+            DSLOADFNAME((filesystem::path(u8"sound") / op.sound).native(), 15);
+            DSPLAY(15, 0);
+        }
+    }
+}
+
+
+
 void label_2206()
 {
     if (cc == 0)
@@ -55269,6 +55388,7 @@ void label_2206()
             if (cdata[0].blind == 0)
             {
                 txt(txtitemoncell(x, y));
+                proc_autopick();
             }
             else
             {

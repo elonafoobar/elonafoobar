@@ -1,4 +1,5 @@
 #include "ability.hpp"
+#include "autopick.hpp"
 #include "buff.hpp"
 #include "cat.hpp"
 #include "character.hpp"
@@ -2070,6 +2071,8 @@ void show_race_or_class_info(int CNT, int val0)
 
 void initialize_game()
 {
+    autopick::instance().load(playerid);
+
     mtilefilecur = -1;
     firstturn = 1;
     msgtemp = u8"  Lafrontier presents Elona ver 1.22. Welcome traveler! "s;

@@ -43,6 +43,7 @@ set(CORE_SOURCES
     access_character_info.cpp
     access_item_db.cpp
     animation.cpp
+    autopick.cpp
     buff.cpp
     calc.cpp
     cat.cpp
