@@ -5,12 +5,14 @@ BIN_DIR := bin
 SRC_DIR := .
 SOURCES := $(wildcard $(SRC_DIR)/*.cpp)
 OBJECTS := $(foreach i, $(SOURCES), $(BIN_DIR)/$(basename $(i)).o)
-PROGRAM := ./runtime/elonafoobar
+RUNTIME_DIR := ./runtime
+PROGRAM := $(RUNTIME_DIR)/elonafoobar
 
 
 FORMAT := clang-format
 FIND := find
 XARGS := xargs
+MKDIR := mkdir
 
 
 .PHONY: FORCE clean cleandep
@@ -19,19 +21,27 @@ XARGS := xargs
 all: build
 
 
-build: $(PROGRAM)
+build: $(RUNTIME_DIR) $(PROGRAM)
 
 
 $(PROGRAM): $(OBJECTS) snail/snail.a
 	$(CXX) $(CXX_FLAGS) $^ -o $@ $(LN_FLAGS)
 
 
+$(RUNTIME_DIR):
+	$(MKDIR) $(RUNTIME_DIR)
+
+
 snail/snail.a: FORCE
 	cd snail; make
 
 
-$(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp $(BIN_DIR)
 	$(CXX) $(CXX_FLAGS) -c $< -o $@
+
+
+$(BIN_DIR):
+	$(MKDIR) $(BIN_DIR)
 
 
 clean:

@@ -8,6 +8,9 @@ OBJECTS = $(foreach i, $(SOURCES), $(BIN_DIR)/$(basename $(i)).o)
 LIB = ./snail.a
 
 
+MKDIR := mkdir
+
+
 .PHONY: build clean rebuild
 
 
@@ -22,8 +25,12 @@ $(LIB): $(OBJECTS)
 	$(AR) r $@ $^
 
 
-$(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp $(BIN_DIR)
 	$(CXX) $(CXX_FLAGS) -c $< -o $@
+
+
+$(BIN_DIR):
+	$(MKDIR) -p $(BIN_DIR)/detail
 
 
 clean:
