@@ -1606,7 +1606,7 @@ void get_npc_talk()
 std::string cnvweight(int weight)
 {
     return ""s + std::abs(weight) / 1000 + u8'.' + std::abs(weight) % 1000 / 100
-        + i18n::_(u8"ui", u8"weight");
+        + i18n::_(u8"ui", u8"unit_of_weight");
 }
 
 

@@ -11,7 +11,7 @@ ui.bracket_right = ">"
 ui.doomed = "doomed"
 ui.gold = " gold pieces"
 ui.platinum = " platinum pieces"
-ui.weight = "s"
+ui.unit_of_weight = "s"
 ui.yes = "Yes"
 ui.no = "No.."
 
