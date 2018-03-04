@@ -17,16 +17,8 @@ namespace elona
 struct character_data
 {
     int id;
-    int act_0;
-    int act_1;
-    int act_2;
-    int act_3;
-    int act_4;
-    int act_5;
-    int act_6;
-    int act_7;
-    int act_8;
-    int ai_act_num;
+    std::vector<int> normal_actions;
+    std::vector<int> special_actions;
     int ai_act_sub_freq;
     int ai_calm;
     int ai_dist;
@@ -252,7 +244,6 @@ struct character
     int ai_dist = 0;
     int ai_act_sub_freq = 0;
     int ai_heal = 0;
-    int ai_act_num = 0;
     int element_of_unarmed_attack = 0;
     int poisoned = 0;
     int sleep = 0;
@@ -272,7 +263,8 @@ struct character
 
     std::vector<int> growth_buffs;
     std::vector<int> body_parts;
-    std::vector<int> act;
+    std::vector<int> normal_actions;
+    std::vector<int> special_actions;
     std::vector<buff_t> buffs;
     std::vector<int> attr_adjs;
     std::vector<int> flags;
@@ -391,7 +383,6 @@ struct character
         ar(ai_dist);
         ar(ai_act_sub_freq);
         ar(ai_heal);
-        ar(ai_act_num);
         ar(element_of_unarmed_attack);
         ar(poisoned);
         ar(sleep);
@@ -411,7 +402,8 @@ struct character
         range::for_each(
             growth_buffs, [&](auto&& growth_buff) { ar(growth_buff); });
         range::for_each(body_parts, [&](auto&& body_part) { ar(body_part); });
-        range::for_each(act, [&](auto&& a) { ar(a); });
+        ar(normal_actions);
+        ar(special_actions);
         range::for_each(buffs, [&](auto&& buff) { ar(buff); });
         range::for_each(attr_adjs, [&](auto&& attr_adj) { ar(attr_adj); });
         range::for_each(flags, [&](auto&& flag) { ar(flag); });

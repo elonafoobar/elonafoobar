@@ -1268,4 +1268,9 @@ character['500'] = {
   name = "spiral putit",
 }
 
+-- For debug
+character['501'] = {
+  name = "dragon putit",
+}
+
 -- vim: et sw=2 sts=2

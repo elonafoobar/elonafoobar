@@ -1,6 +1,5 @@
 #include "character.hpp"
 #include <cassert>
-#include <iostream>
 #include <type_traits>
 #include "cat.hpp"
 #include "elona.hpp"
@@ -35,16 +34,6 @@ int define(lua_State* L, std::unordered_map<int, character_data>& storage)
     bool name = lua_isnil(L, -1) ? (default_value) : lua_toboolean(L, -1); \
     lua_pop(L, 1);
 
-    FIELD_I(act_0, 0);
-    FIELD_I(act_1, 0);
-    FIELD_I(act_2, 0);
-    FIELD_I(act_3, 0);
-    FIELD_I(act_4, 0);
-    FIELD_I(act_5, 0);
-    FIELD_I(act_6, 0);
-    FIELD_I(act_7, 0);
-    FIELD_I(act_8, 0);
-    FIELD_I(ai_act_num, 0);
     FIELD_I(ai_act_sub_freq, 0);
     FIELD_I(ai_calm, 0);
     FIELD_I(ai_dist, 0);
@@ -99,6 +88,36 @@ int define(lua_State* L, std::unordered_map<int, character_data>& storage)
     FIELD_I(rarity, 10000);
     FIELD_I(coefficient, 400);
 
+    // TODO DRY
+    std::vector<int> normal_actions;
+    lua_getfield(L, -1, u8"normal_actions");
+    if (!lua_isnil(L, -1))
+    {
+        lua_pushnil(L);
+        while (lua_next(L, -2))
+        {
+            int v = luaL_checkinteger(L, -1);
+            normal_actions.push_back(v);
+            lua_pop(L, 1);
+        }
+    }
+    lua_pop(L, 1);
+
+    std::vector<int> special_actions;
+    lua_getfield(L, -1, u8"special_actions");
+    if (!lua_isnil(L, -1))
+    {
+        lua_pushnil(L);
+        while (lua_next(L, -2))
+        {
+            int v = luaL_checkinteger(L, -1);
+            special_actions.push_back(v);
+            lua_pop(L, 1);
+        }
+    }
+    lua_pop(L, 1);
+
+
 #undef FIELD_I
 #undef FIELD_S
 #undef FIELD_B
@@ -107,16 +126,8 @@ int define(lua_State* L, std::unordered_map<int, character_data>& storage)
         std::stoi(id), // TODO
         character_data{
             std::stoi(id),
-            act_0,
-            act_1,
-            act_2,
-            act_3,
-            act_4,
-            act_5,
-            act_6,
-            act_7,
-            act_8,
-            ai_act_num,
+            normal_actions,
+            special_actions,
             ai_act_sub_freq,
             ai_calm,
             ai_dist,
@@ -200,7 +211,6 @@ optional_ref<character_data> character_db::operator[](int id) const
 character::character()
     : growth_buffs(10)
     , body_parts(30)
-    , act(10)
     , buffs(16)
     , attr_adjs(10)
     , flags(31)

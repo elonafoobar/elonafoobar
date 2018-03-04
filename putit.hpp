@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <memory>
+#include <vector>
 
 
 namespace elona::putit
@@ -179,6 +180,30 @@ void serialize(Archive& ar, std::string& data)
         const auto length = std::size(data);
         ar.primitive(length);
         ar.primitive_array(data.c_str(), length);
+    }
+}
+
+
+
+template <typename Archive, typename T>
+void serialize(Archive& ar, std::vector<T>& data)
+{
+    if constexpr (std::is_base_of_v<iarchive_base, Archive>)
+    {
+        typename std::vector<T>::size_type length;
+        ar.primitive(length);
+        std::unique_ptr<T[]> buf{new T[length]};
+        ar.primitive_array(buf.get(), length);
+        data = std::vector<T>(buf.get(), buf.get() + length);
+    }
+    else
+    {
+        const auto length = std::size(data);
+        ar.primitive(length);
+        if (length != 0)
+        {
+            ar.primitive_array(data.data(), length);
+        }
     }
 }
 

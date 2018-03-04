@@ -1530,4 +1530,9 @@ character['500'] = {
   name = "螺旋プチ",
 }
 
+-- For debug
+character['501'] = {
+  name = "ドラゴンプチ",
+}
+
 -- vim: et sw=2 sts=2
