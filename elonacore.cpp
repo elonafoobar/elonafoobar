@@ -15,6 +15,7 @@
 #include "main.hpp"
 #include "map.hpp"
 #include "race.hpp"
+#include "random.hpp"
 #include "snail/application.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
@@ -10788,17 +10789,22 @@ int get_required_craft_materials()
 
 void fixaiact(int prm_753)
 {
-    int i_at_m112 = 0;
-    for (int cnt = 0; cnt < 10; ++cnt)
+    // FIXME: DRY
+    for (auto&& action : cdata[prm_753].normal_actions)
     {
-        i_at_m112 = cdata[prm_753].act[cnt];
-        if (i_at_m112 == 464 || i_at_m112 == 441 || i_at_m112 == 660
-            || i_at_m112 == 657)
+        if (action == 464 || action == 441 || action == 660 || action == 657)
         {
-            cdata[prm_753].act[cnt] = -1;
+            action = -1;
         }
     }
-    i_at_m112 = cdata[prm_753].ai_heal;
+    for (auto&& action : cdata[prm_753].special_actions)
+    {
+        if (action == 464 || action == 441 || action == 660 || action == 657)
+        {
+            action = -1;
+        }
+    }
+    int i_at_m112 = cdata[prm_753].ai_heal;
     if (i_at_m112 == 464 || i_at_m112 == 441 || i_at_m112 == 660
         || i_at_m112 == 657)
     {
@@ -50585,13 +50591,25 @@ void create_cnpc()
     }
     cdata[rc].portrait = -1;
     creaturepack = 0;
-    cdata[rc].ai_act_num = 55;
     cdata[rc].ai_act_sub_freq = unaiactsubfreq(cun);
+
+    cdata[rc].normal_actions.clear();
     for (int cnt = 0; cnt < 5; ++cnt)
     {
-        cdata[rc].act[cnt] = userdata(15 + cnt, cun);
-        cdata[rc].act[cnt + 5] = userdata(20 + cnt, cun);
+        int action = userdata(15 + cnt, cun);
+        if (action == 0)
+            break;
+        cdata[rc].normal_actions.push_back(action);
     }
+    cdata[rc].special_actions.clear();
+    for (int cnt = 0; cnt < 5; ++cnt)
+    {
+        int action = userdata(20 + cnt, cun);
+        if (action == 0)
+            break;
+        cdata[rc].special_actions.push_back(action);
+    }
+
     if (userdatan(5, cun) != ""s)
     {
         SDIM3(unres, 6, 32);
@@ -69792,14 +69810,14 @@ void label_2696()
     {
         pcattacker = cc;
     }
-    int act = cdata[cc].act[rnd(cdata[cc].ai_act_num % 10)];
+    int act = choice(cdata[cc].normal_actions);
     if (cdata[cc].ai_act_sub_freq != 0)
     {
         if (cdata[cc].ai_act_sub_freq > rnd(100))
         {
-            if (cdata[cc].ai_act_num / 10 != 0)
+            if (!std::empty(cdata[cc].special_actions))
             {
-                act = cdata[cc].act[rnd(cdata[cc].ai_act_num / 10) + 5];
+                act = choice(cdata[cc].special_actions);
             }
             if (act >= -10000 && act < -9995)
             {
