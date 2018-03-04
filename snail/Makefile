@@ -18,19 +18,19 @@ all: build
 
 
 
-build: $(LIB)
+build: $(BIN_DIR) $(LIB)
+
+
+$(BIN_DIR):
+	$(MKDIR) -p $(BIN_DIR)/detail
 
 
 $(LIB): $(OBJECTS)
 	$(AR) r $@ $^
 
 
-$(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp $(BIN_DIR)
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(CXX_FLAGS) -c $< -o $@
-
-
-$(BIN_DIR):
-	$(MKDIR) -p $(BIN_DIR)/detail
 
 
 clean:
