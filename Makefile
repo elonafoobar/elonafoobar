@@ -21,27 +21,27 @@ MKDIR := mkdir
 all: build
 
 
-build: $(RUNTIME_DIR) $(PROGRAM)
-
-
-$(PROGRAM): $(OBJECTS) snail/snail.a
-	$(CXX) $(CXX_FLAGS) $^ -o $@ $(LN_FLAGS)
+build: $(RUNTIME_DIR) $(BIN_DIR) $(PROGRAM)
 
 
 $(RUNTIME_DIR):
 	$(MKDIR) $(RUNTIME_DIR)
 
 
+$(BIN_DIR):
+	$(MKDIR) $(BIN_DIR)
+
+
+$(PROGRAM): $(OBJECTS) snail/snail.a
+	$(CXX) $(CXX_FLAGS) $^ -o $@ $(LN_FLAGS)
+
+
 snail/snail.a: FORCE
 	cd snail; make
 
 
-$(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp $(BIN_DIR)
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(CXX_FLAGS) -c $< -o $@
-
-
-$(BIN_DIR):
-	$(MKDIR) $(BIN_DIR)
 
 
 clean:
