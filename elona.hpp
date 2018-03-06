@@ -25,7 +25,7 @@ namespace fs = std::experimental::filesystem;
 
 namespace elona
 {
-int main();
+int run();
 
 
 template <typename...>

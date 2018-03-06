@@ -1,11 +1,11 @@
 namespace elona
 {
-int main();
+int run();
 }
 
 
 
 int main()
 {
-    return elona::main();
+    return elona::run();
 }

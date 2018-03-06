@@ -721,7 +721,7 @@ int cat_cbitmod(lua_State* L)
 }
 
 
-int main()
+int run()
 {
     cat::global.initialize();
 
