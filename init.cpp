@@ -16,6 +16,8 @@
 #include "trait.hpp"
 #include "variables.hpp"
 
+#include <iostream>
+
 using namespace elona;
 
 
@@ -588,9 +590,147 @@ namespace elona
 {
 
 
+
+template <typename Class, typename T, T Class::*Pointer>
+int cat_get_field(lua_State* L)
+{
+    const int argc = lua_gettop(L);
+
+    auto self = static_cast<cat::userdata<Class>*>(lua_touserdata(L, 1))->ptr();
+    if (!self)
+        throw 0; // TODO
+
+    if (argc == 1) // only "self"
+    {
+        // Get
+        // push(self->*Pointer); TODO
+        lua_pushinteger(L, self->*Pointer);
+        return 1;
+    }
+    else
+    {
+        // Set
+        // self->*Pointer = to_cpp_type<T>(2); TODO
+        self->*Pointer = luaL_checkinteger(L, 2);
+        return 0;
+    }
+}
+
+
+
+// TODO DRY
+template <typename Class, typename T, std::vector<T> Class::*Pointer>
+int cat_get_field_with_index(lua_State* L)
+{
+    const int argc = lua_gettop(L);
+
+    auto self = static_cast<cat::userdata<Class>*>(lua_touserdata(L, 1))->ptr();
+    if (!self)
+        throw 0; // TODO
+    auto index = luaL_checkinteger(L, 2);
+
+    if (argc == 2) // "self" and index
+    {
+        // Get
+        // push(self->*Pointer); TODO
+        lua_pushinteger(L, (self->*Pointer)[index]);
+        return 1;
+    }
+    else
+    {
+        // Set
+        // self->*Pointer = to_cpp_type<T>(3); TODO
+        (self->*Pointer)[index] = luaL_checkinteger(L, 3);
+        return 0;
+    }
+}
+
+
+
+const luaL_Reg cdata_functions[] = {
+    {u8"pv", &cat_get_field<character, int, &character::pv>},
+    {u8"fear", &cat_get_field<character, int, &character::fear>},
+    {u8"confused", &cat_get_field<character, int, &character::confused>},
+    {u8"dv", &cat_get_field<character, int, &character::dv>},
+    {u8"hit_bonus", &cat_get_field<character, int, &character::hit_bonus>},
+    {u8"growth_buffs",
+     &cat_get_field_with_index<character, int, &character::growth_buffs>},
+    {nullptr, nullptr},
+};
+
+
+const luaL_Reg sdata_functions[] = {
+    {u8"current_level", &cat_get_field<ability, int, &ability::current_level>},
+    {u8"original_level",
+     &cat_get_field<ability, int, &ability::original_level>},
+    {u8"experience", &cat_get_field<ability, int, &ability::experience>},
+    {u8"potential", &cat_get_field<ability, int, &ability::potential>},
+    {nullptr, nullptr},
+};
+
+
+
+void export_to_cat_world(lua_State* L)
+{
+#define DEFINE(name) \
+    luaL_newmetatable(L, u8"elona__" #name); \
+    lua_pushvalue(L, -1); \
+    lua_setfield(L, -2, u8"__index"); \
+    luaL_setfuncs(L, name##_functions, 0); \
+    lua_pop(L, 1);
+
+    DEFINE(cdata);
+    DEFINE(sdata);
+
+#undef DEFINE
+}
+
+
+int cat_cdata(lua_State* L)
+{
+    int cc = luaL_checknumber(L, 1);
+
+    cat::userdata<character>::push_new(L, &cdata(cc));
+    luaL_setmetatable(L, "elona__cdata");
+
+    return 1;
+}
+
+
+int cat_sdata(lua_State* L)
+{
+    int id = luaL_checknumber(L, 1);
+    int cc = luaL_checknumber(L, 2);
+
+    cat::userdata<ability>::push_new(L, &sdata.get(id, cc));
+    luaL_setmetatable(L, "elona__sdata");
+
+    return 1;
+}
+
+
+int cat_cbitmod(lua_State* L)
+{
+    int id = luaL_checknumber(L, 1);
+    int cc = luaL_checknumber(L, 2);
+    int flag = luaL_checknumber(L, 3);
+
+    cbitmod(id, cc, flag);
+
+    return 0;
+}
+
+
 int main()
 {
     cat::global.initialize();
+
+
+    export_to_cat_world(cat::global.ptr());
+    cat::global.register_function(u8"cdata", cat_cdata);
+    cat::global.register_function(u8"sdata", cat_sdata);
+    cat::global.register_function(u8"cbitmod", cat_cbitmod);
+
 
     the_ability_db.initialize();
     the_buff_db.initialize();

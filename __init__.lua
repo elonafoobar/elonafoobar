@@ -1,7 +1,7 @@
 local function merge(a, b)
   for k, v in pairs(b) do
     if type(v) == 'table' then
-      if type(a[k] or nil) == 'table' then
+      if type(a[k]) == 'table' then
         merge(a[k] or {}, b[k] or {})
       else
         a[k] = v

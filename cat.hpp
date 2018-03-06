@@ -41,6 +41,34 @@ public:
     }
 
 
+    // FIXME: DRY
+    // -2 is the called function.
+    // -1 is the first argument, i.e., self.
+    template <typename T, typename... Args>
+    T call_method(Args&&... args)
+    {
+        using swallow = std::initializer_list<int>;
+        (void)swallow{(void(push(args)), 0)...};
+
+        lua_pcall(ptr(), sizeof...(Args) + 1 /* for self */, 1 /* TODO */, 0);
+        return to_cpp_type<T>(-1);
+    }
+
+
+    // FIXME: rename
+    template <typename T, typename... Args>
+    T call_with_self(ref self, ref func, Args&&... args)
+    {
+        lua_rawgeti(ptr(), LUA_REGISTRYINDEX, func);
+        lua_rawgeti(ptr(), LUA_REGISTRYINDEX, self);
+        using swallow = std::initializer_list<int>;
+        (void)swallow{(void(push(args)), 0)...};
+
+        lua_pcall(ptr(), sizeof...(Args) + 1 /* for self */, 1 /* TODO */, 0);
+        return to_cpp_type<T>(-1);
+    }
+
+
 private:
     std::unique_ptr<lua_State, decltype(&lua_close)> L{nullptr, lua_close};
 
@@ -92,9 +120,33 @@ private:
         {
             return luaL_checknumber(ptr(), index);
         }
+        else if constexpr (std::is_same_v<T, nullptr_t>)
+        {
+            (void)index;
+            return nullptr;
+        }
     }
 };
 
+
+
+template <typename T>
+struct userdata
+{
+    static void push_new(lua_State* L, T* ptr)
+    {
+        auto self = lua_newuserdata(L, sizeof(userdata<T>));
+        (static_cast<userdata<T>*>(self))->_ptr = ptr;
+    }
+
+    T* ptr() noexcept
+    {
+        return _ptr;
+    }
+
+private:
+    T* _ptr;
+};
 
 
 inline engine global;

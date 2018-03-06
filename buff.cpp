@@ -24,16 +24,21 @@ int define(lua_State* L, std::unordered_map<int, buff_data>& storage)
 
     FIELD_I(type_);
     FIELD_R(duration);
+    FIELD_R(on_refresh);
 
 #undef FIELD_I
 #undef FIELD_R
+
+    cat::ref self = luaL_ref(L, LUA_REGISTRYINDEX);
 
     storage.emplace(
         std::stoi(id), // TODO
         buff_data{
             std::stoi(id),
+            self,
             buff_data::type_t(type_),
             duration,
+            on_refresh,
         });
 
     return 0;
@@ -50,7 +55,12 @@ namespace elona
 buff_db::buff_db()
 {
     storage.emplace(
-        0, buff_data{0, buff_data::type_t::buff, LUA_REFNIL}); // dummy
+        0,
+        buff_data{0,
+                  LUA_REFNIL,
+                  buff_data::type_t::buff,
+                  LUA_REFNIL,
+                  LUA_REFNIL}); // dummy
 }
 
 
@@ -65,7 +75,6 @@ void buff_db::initialize()
     while (lua_next(cat::global.ptr(), -2))
     {
         define(cat::global.ptr(), storage);
-        lua_pop(cat::global.ptr(), 1);
     }
     lua_pop(cat::global.ptr(), 2);
 }
