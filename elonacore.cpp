@@ -22955,7 +22955,7 @@ void label_1573()
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
-        goto label_1574_internal;
+        break;
     case 7:
         if (rnd(20) == 0)
         {
@@ -22965,7 +22965,7 @@ void label_1573()
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
-        goto label_1574_internal;
+        break;
     case 3:
         if (rnd(20) == 0)
         {
@@ -22975,7 +22975,7 @@ void label_1573()
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
-        goto label_1574_internal;
+        break;
     case 2:
         if (rnd(20) == 0)
         {
@@ -22993,7 +22993,7 @@ void label_1573()
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
-        goto label_1574_internal;
+        break;
     case 4:
         if (rnd(20) == 0)
         {
@@ -23003,7 +23003,7 @@ void label_1573()
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
-        goto label_1574_internal;
+        break;
     case 5:
         if (rnd(50) == 0)
         {
@@ -23013,9 +23013,9 @@ void label_1573()
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
-        goto label_1574_internal;
+        break;
     }
-label_1574_internal:
+
     dbid = cdata[rc].id;
     dbmode = 16;
     dbspec = 3;
@@ -23062,7 +23062,7 @@ label_1574_internal:
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
-        goto label_1575_internal;
+        break;
     case 1:
         if (rnd(20) == 0)
         {
@@ -23073,7 +23073,7 @@ label_1574_internal:
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
             remain_make(ci, rc);
         }
-        goto label_1575_internal;
+        break;
     case 2:
         if (rnd(20) == 0)
         {
@@ -23084,7 +23084,7 @@ label_1574_internal:
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
             remain_make(ci, rc);
         }
-        goto label_1575_internal;
+        break;
     case 6:
         if (rnd(10) == 0)
         {
@@ -23150,7 +23150,7 @@ label_1574_internal:
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
-        goto label_1575_internal;
+        break;
     case 4:
         if (rnd(5) == 0)
         {
@@ -23184,7 +23184,7 @@ label_1574_internal:
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
-        goto label_1575_internal;
+        break;
     case 5:
         if (rnd(5) == 0)
         {
@@ -23250,9 +23250,9 @@ label_1574_internal:
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
-        goto label_1575_internal;
+        break;
     }
-label_1575_internal:
+
     if (rnd(40) == 0)
     {
         p = 0;
@@ -30346,7 +30346,7 @@ void use_house_board()
         homemapmode = 0;
         cdata[0].position.x = cxbk;
         cdata[0].position.y = cybk;
-        goto label_1722_internal;
+        break;
     case 2:
         gsel(4);
         for (int cnt = 0; cnt < 8; ++cnt)
@@ -30427,17 +30427,19 @@ void use_house_board()
             pos(wx + 110, cnt * 16 + wy + 138);
             mes(itemname(p));
         }
-    label_1715_internal:
-        redraw(1);
-        await(cfg_wait1);
-        key_check();
-        cursor_check();
-        if (key == key_cancel)
+
+        while (1)
         {
-            goto label_1722_internal;
+            redraw(1);
+            await(cfg_wait1);
+            key_check();
+            cursor_check();
+            if (key == key_cancel)
+            {
+                break;
+            }
         }
-        goto label_1715_internal;
-        goto label_1722_internal;
+        break;
     case 3:
     label_1717_internal:
         txtnew();
@@ -30548,7 +30550,7 @@ void use_house_board()
                 }
             }
         }
-        goto label_1722_internal;
+        break;
     case 5:
         txtnew();
         if (cdata[0].gold < calcshopreform())
@@ -30568,7 +30570,7 @@ void use_house_board()
                 u8"You extend your shop! You can display max of "s + mdata(18)
                     + u8" items now!"s));
         }
-        goto label_1722_internal;
+        break;
     case 6:
         txtnew();
         p = 0;
@@ -30587,7 +30589,7 @@ void use_house_board()
             txt(lang(
                 u8"家はすでに人であふれかえっている。"s,
                 u8"You already have too many guests in your home."s));
-            goto label_1722_internal;
+            break;
         }
         for (int cnt = 0; cnt < 10; ++cnt)
         {
@@ -30710,7 +30712,7 @@ void use_house_board()
             }
         }
         calccosthire();
-        goto label_1722_internal;
+        break;
     }
 label_1722_internal:
     tlocinitx = 0;
@@ -37536,7 +37538,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"なむ…"s, u8"Sorry for you."s);
         ++listmax;
         show_random_event_window(u8"bg_re9");
-        goto label_1895_internal;
+        break;
     case 14:
         s = lang(u8"謎のご馳走"s, u8"Strange Feast"s);
         buff = lang(
@@ -37558,7 +37560,7 @@ label_1894_internal:
             label_2162();
             chara_anorexia(0);
         }
-        goto label_1895_internal;
+        break;
     case 13:
         s = lang(u8"ご馳走の匂い"s, u8"Smell of Food"s);
         buff = lang(
@@ -37569,7 +37571,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"腹減った…"s, u8"I'm hungry now!"s);
         ++listmax;
         show_random_event_window(u8"bg_re10");
-        goto label_1895_internal;
+        break;
     case 1:
         s = lang(u8"不運の回避"s, u8"Avoiding Misfortune"s);
         buff = lang(
@@ -37579,7 +37581,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"よし"s, u8"Good."s);
         ++listmax;
         show_random_event_window(u8"bg_re8");
-        goto label_1895_internal;
+        break;
     case 24:
         efid = 1113;
         tc = 0;
@@ -37592,7 +37594,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"ワァオー"s, u8"Woohoo!"s);
         ++listmax;
         show_random_event_window(u8"bg_re4");
-        goto label_1895_internal;
+        break;
     case 18:
         skillexp(181, 0, 1000, 6, 1000);
         s = lang(u8"信仰の深まり"s, u8"Gaining Faith"s);
@@ -37603,7 +37605,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"神よ"s, u8"Great."s);
         ++listmax;
         show_random_event_window(u8"bg_re12");
-        goto label_1895_internal;
+        break;
     case 12:
         s = lang(u8"マテリアルの発見"s, u8"Small Luck"s);
         buff = lang(
@@ -37617,7 +37619,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"よし"s, u8"Nice."s);
         ++listmax;
         show_random_event_window(u8"bg_re3");
-        goto label_1895_internal;
+        break;
     case 23:
         efid = 1117;
         efp = 200;
@@ -37631,7 +37633,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"るん♪"s, u8"Sweet."s);
         ++listmax;
         show_random_event_window(u8"bg_re3");
-        goto label_1895_internal;
+        break;
     case 10:
         s = lang(u8"野営跡の発見"s, u8"Camping Site"s);
         buff = lang(
@@ -37656,7 +37658,7 @@ label_1894_internal:
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
         }
-        goto label_1895_internal;
+        break;
     case 4:
         snd(116);
         efid = 1118;
@@ -37671,7 +37673,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"おかしな夢だ"s, u8"Strange..."s);
         ++listmax;
         show_random_event_window(u8"bg_re5");
-        goto label_1895_internal;
+        break;
     case 22:
         snd(116);
         efid = 454;
@@ -37686,7 +37688,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"ううぅん…"s, u8"Urrgh..hh.."s);
         ++listmax;
         show_random_event_window(u8"bg_re2");
-        goto label_1895_internal;
+        break;
     case 19:
         flt();
         itemcreate(0, 621, -1, -1, 0);
@@ -37701,7 +37703,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"ワァオー"s, u8"Woohoo!"s);
         ++listmax;
         show_random_event_window(u8"bg_re15");
-        goto label_1895_internal;
+        break;
     case 20:
         addbuff(tc, 19, 777, 1500);
         s = lang(u8"幸運の日"s, u8"Lucky Day"s);
@@ -37710,7 +37712,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"ワァオー"s, u8"Woohoo!"s);
         ++listmax;
         show_random_event_window(u8"bg_re12");
-        goto label_1895_internal;
+        break;
     case 21:
         flt();
         itemcreate(0, 721, -1, -1, 0);
@@ -37724,7 +37726,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"ワァオー"s, u8"Woohoo!"s);
         ++listmax;
         show_random_event_window(u8"bg_re15");
-        goto label_1895_internal;
+        break;
     case 5:
         if (trait(42))
         {
@@ -37766,7 +37768,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"眠れない…"s, u8"Can't...sleep..."s);
         ++listmax;
         show_random_event_window(u8"bg_re5");
-        goto label_1895_internal;
+        break;
     case 8:
         p = rnd(cdata[0].gold / 8 + 1);
         if (cbit(15, 0))
@@ -37794,7 +37796,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"盗人め…"s, u8"Bloody thieves..."s);
         ++listmax;
         show_random_event_window(u8"bg_re9");
-        goto label_1895_internal;
+        break;
     case 11:
         s = lang(u8"冒険者の遺骸"s, u8"Corpse"s);
         buff = lang(
@@ -37836,7 +37838,7 @@ label_1894_internal:
                 u8"You bury the corpse with respect."s));
             modify_karma(0, 5);
         }
-        goto label_1895_internal;
+        break;
     case 2:
         efid = 1104;
         efp = 100;
@@ -37850,7 +37852,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"おかしな夢だ"s, u8"A weird dream."s);
         ++listmax;
         show_random_event_window(u8"bg_re6");
-        goto label_1895_internal;
+        break;
     case 3:
         efid = 1119;
         efp = 100;
@@ -37864,7 +37866,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"よし！"s, u8"Good!"s);
         ++listmax;
         show_random_event_window(u8"bg_re4");
-        goto label_1895_internal;
+        break;
     case 6:
         skillexp(154, 0, 1000);
         s = lang(u8"自然治癒力の向上"s, u8"Regeneration"s);
@@ -37875,7 +37877,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"よし"s, u8"Good."s);
         ++listmax;
         show_random_event_window(u8"bg_re4");
-        goto label_1895_internal;
+        break;
     case 7:
         skillexp(155, 0, 1000);
         s = lang(u8"瞑想力の向上"s, u8"Meditation"s);
@@ -37886,7 +37888,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"よし"s, u8"Good."s);
         ++listmax;
         show_random_event_window(u8"bg_re4");
-        goto label_1895_internal;
+        break;
     case 9:
         ++cdata[0].platinum_coin;
         s = lang(u8"路上に転がる幸運"s, u8"Great Luck"s);
@@ -37897,7 +37899,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"ラッキー！"s, u8"What a luck!"s);
         ++listmax;
         show_random_event_window(u8"bg_re1");
-        goto label_1895_internal;
+        break;
     case 16:
         p = rnd(cdata[0].gold / 10 + 1000) + 1;
         cdata[0].gold += p;
@@ -37912,7 +37914,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"ラッキー！"s, u8"What a luck!"s);
         ++listmax;
         show_random_event_window(u8"bg_re1");
-        goto label_1895_internal;
+        break;
     case 17:
         efid = 451;
         efp = 800;
@@ -37926,9 +37928,9 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"ありがとう"s, u8"Thanks."s);
         ++listmax;
         show_random_event_window(u8"bg_re11");
-        goto label_1895_internal;
+        break;
     }
-label_1895_internal:
+
     cc = 0;
     label_1422();
     return 1;
@@ -40016,7 +40018,7 @@ void label_1935()
             u8"あなたはうしろめたさを感じた…"s,
             u8"You kind of feel guilty..."s));
         snd(65);
-        goto label_1936_internal;
+        break;
     case 10001:
         inv[ci].color = inv[ti].color;
         txtef(2);
@@ -40024,7 +40026,7 @@ void label_1935()
             u8"あなたは"s + itemname(ci) + u8"を染めた。"s,
             u8"You dye "s + itemname(ci) + u8"."s));
         snd(17);
-        goto label_1936_internal;
+        break;
     case 10002:
         ibitmod(14, ci, 1);
         txtef(2);
@@ -40033,7 +40035,7 @@ void label_1935()
             u8"You successfully create "s + itemname(ci, 1) + u8"!"s));
         txt(lang(u8"あなたはにやりと口元を歪めた。"s, u8"You grin."s));
         snd(65);
-        goto label_1936_internal;
+        break;
     case 10003:
         txtef(2);
         txt(lang(
@@ -40052,7 +40054,7 @@ void label_1935()
                 itemname(ci) + u8" gain"s + _s2(in) + u8" fireproof."s));
         }
         snd(17);
-        goto label_1936_internal;
+        break;
     case 10004:
         txtef(2);
         txt(lang(
@@ -40064,7 +40066,7 @@ void label_1935()
             itemname(ci) + u8"は酸から守られた。"s,
             itemname(ci) + u8" gain"s + _s2(in) + u8" acidproof."s));
         snd(17);
-        goto label_1936_internal;
+        break;
     case 10005:
         txtef(2);
         txt(lang(
@@ -40081,7 +40083,7 @@ void label_1935()
             inv[ci].param4 = inv[ti].param1;
         }
         snd(13);
-        goto label_1936_internal;
+        break;
     case 10006:
         txtef(2);
         txt(lang(
@@ -40107,7 +40109,7 @@ void label_1935()
             inv[ci].curse_state = -1;
         }
         snd(17);
-        goto label_1936_internal;
+        break;
     case 10007:
         txt(lang(
             itemname(ti, 1) + u8"を"s + itemname(ci) + u8"に放り込んだ。"s,
@@ -40118,20 +40120,20 @@ void label_1935()
             txt(lang(
                 u8"空き瓶の割れる音がした。"s,
                 u8"You hear the sound of the empty bottle shatters."s));
-            goto label_1936_internal;
+            break;
         }
         snd(17);
         if (inv[ci].id == 602)
         {
             txt(lang(u8"井戸は汚れた。"s, u8"The holy well is polluted."s));
-            goto label_1936_internal;
+            break;
         }
         if (inv[ci].param3 >= 20)
         {
             txt(lang(
                 itemname(ci) + u8"は完全に枯れている。"s,
                 itemname(ci) + u8" is completely dry."s));
-            goto label_1936_internal;
+            break;
         }
         txtef(2);
         txt(lang(
@@ -40145,7 +40147,7 @@ void label_1935()
         {
             inv[ci].param1 += rnd(3);
         }
-        goto label_1936_internal;
+        break;
     case 10008:
         if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
             || (inv[ci].id == 602 && gdata_holy_well_count <= 0))
@@ -40155,7 +40157,7 @@ void label_1935()
             txt(lang(
                 u8"あっ！空き瓶を井戸に落としてしまった…"s,
                 u8"Ops! You drop the empty bottle into the well..."s));
-            goto label_1936_internal;
+            break;
         }
         cibk = ci;
         if (inv[ci].id == 602)
@@ -40186,9 +40188,9 @@ void label_1935()
         item_stack(0, ci);
         ci = cibk;
         snd(17);
-        goto label_1936_internal;
+        break;
     }
-label_1936_internal:
+
     item_stack(0, ci);
     if (inv[ci].body_part != 0)
     {

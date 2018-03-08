@@ -1419,24 +1419,24 @@ label_1799_internal:
             card_at_tcg(5, ac_at_tcg) -= 25;
         }
         tcgdraw();
-        goto label_1800_internal;
+        break;
     case 2:
         getrandomcard(ap_at_tcg);
         tcgdraw();
         getrandomcard(ap_at_tcg);
         tcgdraw();
-        goto label_1800_internal;
+        break;
     case 1:
         deckmode_at_tcg = 1;
         deckrefn_at_tcg = cardn_at_tcg(0, ac_at_tcg);
         label_1828();
-        goto label_1800_internal;
+        break;
     case 0:
         deckmode_at_tcg = 2;
         label_1828();
-        goto label_1800_internal;
+        break;
     }
-label_1800_internal:
+
     if (card_at_tcg(9, ac_at_tcg) == 20)
     {
         card_at_tcg(6, ac_at_tcg) = 2;

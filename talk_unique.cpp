@@ -116,7 +116,7 @@ void talk_unique()
             talk_end();
             return;
         }
-        goto label_2247_internal;
+        break;
     case 28:
         listmax = 0;
         buff = lang(u8"よそへいってくれ…"s, u8"Leave me alone."s);
@@ -386,7 +386,7 @@ void talk_unique()
             talk_end();
             return;
         }
-        goto label_2247_internal;
+        break;
     case 31:
         if (gdata_thieves_hideout == 1000)
         {
@@ -501,7 +501,7 @@ void talk_unique()
             talk_end();
             return;
         }
-        goto label_2247_internal;
+        break;
     case 33:
         RESPONSE(3, lang(u8"旅の目的"s, u8"What's your mission?"s));
         list(0, listmax) = 2;
@@ -1192,7 +1192,7 @@ void talk_unique()
             talk_unique();
             return;
         }
-        goto label_2247_internal;
+        break;
     case 139:
         if (gdata_main_quest_flag == 20)
         {
@@ -1252,7 +1252,7 @@ void talk_unique()
             talk_end();
             return;
         }
-        goto label_2247_internal;
+        break;
     case 142:
         if (gdata_main_quest_flag == 200)
         {
@@ -1776,7 +1776,7 @@ void talk_unique()
             talk_end();
             return;
         }
-        goto label_2247_internal;
+        break;
     case 208:
         RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         buff = lang(
@@ -2071,7 +2071,7 @@ void talk_unique()
             talk_end();
             return;
         }
-        goto label_2247_internal;
+        break;
     case 222:
         if (gdata_pael_and_her_mom == 1002)
         {
@@ -2476,7 +2476,7 @@ void talk_unique()
             talk_end();
             return;
         }
-        goto label_2247_internal;
+        break;
     case 224:
         if (gdata_novice_knight == 1000)
         {
@@ -2572,7 +2572,7 @@ void talk_unique()
             talk_end();
             return;
         }
-        goto label_2247_internal;
+        break;
     case 225:
         if (gdata_puppys_cave == 1000)
         {
@@ -2610,7 +2610,7 @@ void talk_unique()
             talk_end();
             return;
         }
-        goto label_2247_internal;
+        break;
     case 226:
         if (gdata_puppys_cave == 1000)
         {
@@ -2706,7 +2706,7 @@ void talk_unique()
             talk_end();
             return;
         }
-        goto label_2247_internal;
+        break;
     case 227:
         if (gdata_cat_house == 1000)
         {
@@ -2805,7 +2805,7 @@ void talk_unique()
             talk_end();
             return;
         }
-        goto label_2247_internal;
+        break;
     case 231:
         if (gdata_defense_line == 1000)
         {
@@ -3200,7 +3200,7 @@ void talk_unique()
             talk_end();
             return;
         }
-        goto label_2247_internal;
+        break;
     case 252:
         if (gdata_rare_books == 1000)
         {
@@ -3393,7 +3393,7 @@ void talk_unique()
             talk_end();
             return;
         }
-        goto label_2247_internal;
+        break;
     case 253:
         if (gdata_pyramid_trial != 0)
         {
@@ -3482,7 +3482,7 @@ void talk_unique()
             talk_end();
             return;
         }
-        goto label_2247_internal;
+        break;
     case 259:
         if (gdata_red_blossom_in_palmia == 1000)
         {
@@ -3865,7 +3865,7 @@ void talk_unique()
             talk_end();
             return;
         }
-        goto label_2247_internal;
+        break;
     case 290:
         if (gdata_belongs_to_mages_guild == 0)
         {
@@ -4703,7 +4703,7 @@ void talk_unique()
             talk_end();
             return;
         }
-        goto label_2247_internal;
+        break;
     case 302:
         if (cdata[0].gold <= 10)
         {
@@ -4978,7 +4978,7 @@ void talk_unique()
             talk_end();
             return;
         }
-        goto label_2247_internal;
+        break;
     case 345:
         if (gdata_blue_capsule_drug >= 3)
         {
@@ -5067,7 +5067,7 @@ void talk_unique()
     case 348:
         if (gdata_current_map != 33 || adata(29, gdata_current_map) == 0)
         {
-            goto label_2247_internal;
+            break;
         }
         if (cdata[0].god_id == core_god::jure)
         {
@@ -5133,7 +5133,7 @@ void talk_unique()
         talk_end();
         return;
     }
-label_2247_internal:
+
     listmax = 0;
     buff = lang(
         u8"…(あなたを無視している)"s, u8"("s + he(tc) + u8" ignores you...)"s);
