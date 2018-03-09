@@ -20324,171 +20324,171 @@ void get_hungry(int cc)
 
 
 
-void label_1520()
+void label_1520(int cc)
 {
     int regen = 0;
     regen = 1;
-    if (cdata[r1].sleep > 0)
+    if (cdata[cc].sleep > 0)
     {
-        healcon(r1, 2, 1);
-        if (cdata[r1].sleep > 0)
+        healcon(cc, 2, 1);
+        if (cdata[cc].sleep > 0)
         {
-            cdata[r1].emotion_icon = 114;
+            cdata[cc].emotion_icon = 114;
         }
-        healhp(r1, 1);
-        healmp(r1, 1);
+        healhp(cc, 1);
+        healmp(cc, 1);
     }
-    if (cdata[r1].poisoned > 0)
+    if (cdata[cc].poisoned > 0)
     {
-        dmghp(r1, rnd(2 + sdata(11, r1) / 10), -4);
-        healcon(r1, 1, 1);
-        if (cdata[r1].poisoned > 0)
+        dmghp(cc, rnd(2 + sdata(11, cc) / 10), -4);
+        healcon(cc, 1, 1);
+        if (cdata[cc].poisoned > 0)
         {
-            cdata[r1].emotion_icon = 108;
+            cdata[cc].emotion_icon = 108;
         }
         regen = 0;
     }
-    if (cdata[r1].choked > 0)
+    if (cdata[cc].choked > 0)
     {
-        if (cdata[r1].choked % 3 == 0)
+        if (cdata[cc].choked % 3 == 0)
         {
-            if (is_in_fov(r1))
+            if (is_in_fov(cc))
             {
                 txt(lang(u8"「うぐぐ…！」"s, u8"\"Ughh...!\""s));
             }
         }
-        ++cdata[r1].choked;
-        if (cdata[r1].choked > 15)
+        ++cdata[cc].choked;
+        if (cdata[cc].choked > 15)
         {
-            dmghp(r1, 500, -21);
+            dmghp(cc, 500, -21);
         }
         regen = 0;
     }
-    if (cdata[r1].gravity > 0)
+    if (cdata[cc].gravity > 0)
     {
-        --cdata[r1].gravity;
-        if (cdata[r1].gravity == 0)
+        --cdata[cc].gravity;
+        if (cdata[cc].gravity == 0)
         {
-            if (is_in_fov(r1))
+            if (is_in_fov(cc))
             {
                 txt(lang(
-                    name(r1) + u8"は重力から抜け出した。"s,
-                    name(r1) + u8" break"s + _s(r1)
+                    name(cc) + u8"は重力から抜け出した。"s,
+                    name(cc) + u8" break"s + _s(cc)
                         + u8" away from gravity."s));
             }
         }
     }
-    if (cdata[r1].furious > 0)
+    if (cdata[cc].furious > 0)
     {
-        --cdata[r1].furious;
-        if (cdata[r1].furious == 0)
+        --cdata[cc].furious;
+        if (cdata[cc].furious == 0)
         {
-            if (is_in_fov(r1))
+            if (is_in_fov(cc))
             {
                 txt(lang(
-                    name(r1) + u8"はやや落ち着いた。"s,
-                    name(r1) + u8" calm"s + _s(r1) + u8" down."s));
+                    name(cc) + u8"はやや落ち着いた。"s,
+                    name(cc) + u8" calm"s + _s(cc) + u8" down."s));
             }
         }
     }
-    if (cdata[r1].sick > 0)
+    if (cdata[cc].sick > 0)
     {
         if (rnd(80) == 0)
         {
             p = rnd(10);
-            if (encfind(r1, 60010 + p) == -1)
+            if (encfind(cc, 60010 + p) == -1)
             {
-                cdata[r1].attr_adjs[p] -=
-                    sdata.get(10 + p, r1).original_level / 25 + 1;
-                r1 = r1;
-                refresh_character(r1);
+                cdata[cc].attr_adjs[p] -=
+                    sdata.get(10 + p, cc).original_level / 25 + 1;
+                cc = cc;
+                refresh_character(cc);
             }
         }
         if (rnd(5))
         {
             regen = 0;
         }
-        if (r1 >= 16)
+        if (cc >= 16)
         {
-            if (cdata[r1].quality >= 4)
+            if (cdata[cc].quality >= 4)
             {
                 if (rnd(200) == 0)
                 {
-                    healcon(r1, 12);
+                    healcon(cc, 12);
                 }
             }
         }
     }
-    if (cdata[r1].blind > 0)
+    if (cdata[cc].blind > 0)
     {
-        healcon(r1, 4, 1);
-        if (cdata[r1].blind > 0)
+        healcon(cc, 4, 1);
+        if (cdata[cc].blind > 0)
         {
-            cdata[r1].emotion_icon = 110;
+            cdata[cc].emotion_icon = 110;
         }
     }
-    if (cdata[r1].paralyzed > 0)
+    if (cdata[cc].paralyzed > 0)
     {
         regen = 0;
-        healcon(r1, 3, 1);
-        if (cdata[r1].paralyzed > 0)
+        healcon(cc, 3, 1);
+        if (cdata[cc].paralyzed > 0)
         {
-            cdata[r1].emotion_icon = 115;
+            cdata[cc].emotion_icon = 115;
         }
     }
-    if (cdata[r1].confused > 0)
+    if (cdata[cc].confused > 0)
     {
-        healcon(r1, 5, 1);
-        if (cdata[r1].confused > 0)
+        healcon(cc, 5, 1);
+        if (cdata[cc].confused > 0)
         {
-            cdata[r1].emotion_icon = 111;
+            cdata[cc].emotion_icon = 111;
         }
     }
-    if (cdata[r1].fear > 0)
+    if (cdata[cc].fear > 0)
     {
-        healcon(r1, 6, 1);
-        if (cdata[r1].fear > 0)
+        healcon(cc, 6, 1);
+        if (cdata[cc].fear > 0)
         {
-            cdata[r1].emotion_icon = 113;
+            cdata[cc].emotion_icon = 113;
         }
     }
-    if (cdata[r1].dimmed > 0)
+    if (cdata[cc].dimmed > 0)
     {
-        healcon(r1, 7, 1);
-        if (cdata[r1].dimmed > 0)
+        healcon(cc, 7, 1);
+        if (cdata[cc].dimmed > 0)
         {
-            cdata[r1].emotion_icon = 112;
+            cdata[cc].emotion_icon = 112;
         }
     }
-    if (cdata[r1].drunk > 0)
+    if (cdata[cc].drunk > 0)
     {
-        healcon(r1, 8, 1);
-        if (cdata[r1].drunk > 0)
+        healcon(cc, 8, 1);
+        if (cdata[cc].drunk > 0)
         {
-            cdata[r1].emotion_icon = 106;
+            cdata[cc].emotion_icon = 106;
         }
     }
-    if (cdata[r1].bleeding > 0)
+    if (cdata[cc].bleeding > 0)
     {
         dmghp(
-            r1,
-            rnd(cdata[r1].hp * (1 + cdata[r1].bleeding / 4) / 100 + 3) + 1,
+            cc,
+            rnd(cdata[cc].hp * (1 + cdata[cc].bleeding / 4) / 100 + 3) + 1,
             -13);
-        healcon(r1, 9, 1 + cbit(29, r1) * 3);
-        if (cdata[r1].bleeding > 0)
+        healcon(cc, 9, 1 + cbit(29, cc) * 3);
+        if (cdata[cc].bleeding > 0)
         {
-            cdata[r1].emotion_icon = 109;
+            cdata[cc].emotion_icon = 109;
         }
         regen = 0;
-        spillblood(cdata[r1].position.x, cdata[r1].position.y);
+        spillblood(cdata[cc].position.x, cdata[cc].position.y);
     }
-    if (cdata[r1].wet > 0)
+    if (cdata[cc].wet > 0)
     {
-        --cdata[r1].wet;
+        --cdata[cc].wet;
     }
-    if (cdata[r1].insane > 0)
+    if (cdata[cc].insane > 0)
     {
-        if (is_in_fov(r1))
+        if (is_in_fov(cc))
         {
             if (rnd(3) == 0)
             {
@@ -20498,45 +20498,45 @@ void label_1520()
                     r2 = rnd(5);
                     if (r2 == 0)
                     {
-                        txt(name(r1) + u8"「キョキョキョ」"s,
-                            name(r1) + u8"「クワッ」"s,
-                            name(r1) + u8"「シャアァァ」"s,
-                            name(r1) + u8"「ばぶっふ！」"s,
-                            name(r1) + u8"「煮殺せ！」"s,
-                            name(r1) + u8"「許しなさい許しなさい！！」"s);
+                        txt(name(cc) + u8"「キョキョキョ」"s,
+                            name(cc) + u8"「クワッ」"s,
+                            name(cc) + u8"「シャアァァ」"s,
+                            name(cc) + u8"「ばぶっふ！」"s,
+                            name(cc) + u8"「煮殺せ！」"s,
+                            name(cc) + u8"「許しなさい許しなさい！！」"s);
                     }
                     if (r2 == 1)
                     {
-                        txt(name(r1) + u8"「フゥハハハー！」"s,
-                            name(r1) + u8"「あ、あ、あ、あ」"s,
-                            name(r1) + u8"「ぴ…ぴ…ぴか…」"s,
-                            name(r1) + u8"「お兄ちゃん！」"s,
-                            name(r1) + u8"「うみみやぁ」"s);
+                        txt(name(cc) + u8"「フゥハハハー！」"s,
+                            name(cc) + u8"「あ、あ、あ、あ」"s,
+                            name(cc) + u8"「ぴ…ぴ…ぴか…」"s,
+                            name(cc) + u8"「お兄ちゃん！」"s,
+                            name(cc) + u8"「うみみやぁ」"s);
                     }
                     if (r2 == 2)
                     {
-                        txt(name(r1) + u8"は突然踊りだした。"s,
-                            name(r1) + u8"は着ていたものを脱ぎだした。"s,
-                            name(r1) + u8"はぐるぐる回りだした。"s,
-                            name(r1) + u8"は奇声を発した。"s,
-                            name(r1) + u8"「ねうねう♪ねうねう♪」"s);
+                        txt(name(cc) + u8"は突然踊りだした。"s,
+                            name(cc) + u8"は着ていたものを脱ぎだした。"s,
+                            name(cc) + u8"はぐるぐる回りだした。"s,
+                            name(cc) + u8"は奇声を発した。"s,
+                            name(cc) + u8"「ねうねう♪ねうねう♪」"s);
                     }
                     if (r2 == 3)
                     {
-                        txt(name(r1) + u8"「ウージッムシ♪ウージッムシ♪」"s,
-                            name(r1) + u8"「じゃあ殺さなきゃ。うん♪」"s,
-                            name(r1) + u8"「このナメクジがっ」"s,
-                            name(r1) + u8"「おすわり！」"s,
-                            name(r1) +
+                        txt(name(cc) + u8"「ウージッムシ♪ウージッムシ♪」"s,
+                            name(cc) + u8"「じゃあ殺さなきゃ。うん♪」"s,
+                            name(cc) + u8"「このナメクジがっ」"s,
+                            name(cc) + u8"「おすわり！」"s,
+                            name(cc) +
                                 u8"「フーーーーン フーーーーン･･･ フーーーンフ」"s);
                     }
                     if (r2 == 4)
                     {
-                        txt(name(r1) + u8"「このかたつむり野郎がっ」"s,
-                            name(r1) + u8"「うにゅみゅあ！」"s,
-                            name(r1) + u8"「ごめんなさいごめんなさい！」"s,
-                            name(r1) + u8"「もうすぐ生まれるよ♪」"s,
-                            name(r1) + u8"「フーーーーン フー…クワッ！」"s);
+                        txt(name(cc) + u8"「このかたつむり野郎がっ」"s,
+                            name(cc) + u8"「うにゅみゅあ！」"s,
+                            name(cc) + u8"「ごめんなさいごめんなさい！」"s,
+                            name(cc) + u8"「もうすぐ生まれるよ♪」"s,
+                            name(cc) + u8"「フーーーーン フー…クワッ！」"s);
                     }
                 }
                 else
@@ -20544,10 +20544,10 @@ void label_1520()
                     r2 = rnd(2);
                     if (r2 == 0)
                     {
-                        txt(name(r1) + u8" start"s + _s(r1) + u8" to take "s
-                                + his(r1) + u8" cloths off."s,
-                            name(r1) + u8" shout"s + _s(r1) + u8"."s,
-                            name(r1) + u8" dance"s + _s(r1) + u8"."s);
+                        txt(name(cc) + u8" start"s + _s(cc) + u8" to take "s
+                                + his(cc) + u8" cloths off."s,
+                            name(cc) + u8" shout"s + _s(cc) + u8"."s,
+                            name(cc) + u8" dance"s + _s(cc) + u8"."s);
                     }
                     if (r2 == 1)
                     {
@@ -20563,41 +20563,41 @@ void label_1520()
         }
         if (rnd(5) == 0)
         {
-            cdata[r1].confused += rnd(10);
+            cdata[cc].confused += rnd(10);
         }
         if (rnd(5) == 0)
         {
-            cdata[r1].dimmed += rnd(10);
+            cdata[cc].dimmed += rnd(10);
         }
         if (rnd(5) == 0)
         {
-            cdata[r1].sleep += rnd(5);
+            cdata[cc].sleep += rnd(5);
         }
         if (rnd(5) == 0)
         {
-            cdata[r1].fear += rnd(10);
+            cdata[cc].fear += rnd(10);
         }
-        healcon(r1, 11, 1);
-        if (cdata[r1].insane > 0)
+        healcon(cc, 11, 1);
+        if (cdata[cc].insane > 0)
         {
-            cdata[r1].emotion_icon = 124;
+            cdata[cc].emotion_icon = 124;
         }
     }
-    if (r1 == 0)
+    if (cc == 0)
     {
-        if (cdata[r1].nutrition < 2000)
+        if (cdata[cc].nutrition < 2000)
         {
-            if (cdata[r1].nutrition < 1000)
+            if (cdata[cc].nutrition < 1000)
             {
-                if (cdata[r1].continuous_action_id != 1)
+                if (cdata[cc].continuous_action_id != 1)
                 {
-                    dmghp(r1, rnd(2) + cdata[0].max_hp / 50, -3);
+                    dmghp(cc, rnd(2) + cdata[0].max_hp / 50, -3);
                     if (gdata_play_turns % 10 == 0)
                     {
-                        rowact_check(r1);
+                        rowact_check(cc);
                         if (rnd(50) == 0)
                         {
-                            modweight(r1, -1);
+                            modweight(cc, -1);
                         }
                     }
                 }
@@ -20623,32 +20623,32 @@ void label_1520()
             if (gdata_continuous_active_hours >= 50)
             {
                 regen = 0;
-                dmgsp(r1, 1);
+                dmgsp(cc, 1);
             }
         }
     }
-    else if (cdata[r1].related_quest_id != 0)
+    else if (cdata[cc].related_quest_id != 0)
     {
-        p = cdata[r1].related_quest_id - 1;
+        p = cdata[cc].related_quest_id - 1;
         if (qdata(15, p) > 0)
         {
-            cdata[r1].emotion_icon = 122;
+            cdata[cc].emotion_icon = 122;
         }
         if (qdata(8, p) != 0)
         {
-            if (cdata[r1].turn % 2 == 1)
+            if (cdata[cc].turn % 2 == 1)
             {
-                cdata[r1].emotion_icon = 123;
+                cdata[cc].emotion_icon = 123;
             }
         }
     }
     if (gdata_executing_immediate_quest_type == 1009)
     {
-        if (r1 >= 57)
+        if (cc >= 57)
         {
-            if (cdata[r1].impression >= 53)
+            if (cdata[cc].impression >= 53)
             {
-                cdata[r1].emotion_icon = 225;
+                cdata[cc].emotion_icon = 225;
             }
         }
     }
@@ -20656,14 +20656,13 @@ void label_1520()
     {
         if (rnd(6) == 0)
         {
-            healhp(r1, rnd(sdata(154, r1) / 3 + 1) + 1);
+            healhp(cc, rnd(sdata(154, cc) / 3 + 1) + 1);
         }
         if (rnd(5) == 0)
         {
-            healmp(r1, rnd(sdata(155, r1) / 2 + 1) + 1);
+            healmp(cc, rnd(sdata(155, cc) / 2 + 1) + 1);
         }
     }
-    return;
 }
 
 
@@ -72615,7 +72614,7 @@ void turn_end()
     }
     hear = 0;
     r1 = cc;
-    label_1520();
+    label_1520(r1);
     if (cc == 0)
     {
         chatturn = 10;

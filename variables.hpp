@@ -1070,7 +1070,7 @@ void refresh_character(int);
 void label_1512(int);
 void gain_disarm_trap_experience();
 void get_hungry(int);
-void label_1520();
+void label_1520(int);
 void refresh_burden_state();
 void gain_special_action();
 void label_1530();
