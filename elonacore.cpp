@@ -19457,10 +19457,9 @@ void label_1471(int cc)
 
 
 
-void label_1472()
+void label_1472(int skill)
 {
-    skillexp(r1, 0, 50 + r2 * 20);
-    return;
+    skillexp(skill, 0, 50 + r2 * 20);
 }
 
 
@@ -34653,9 +34652,8 @@ label_1857_internal:
         txt(lang(
             itemname(ci, 1) + u8"を製造した。"s,
             u8"You producted "s + itemname(ci, 1) + u8"."s));
-        r1 = matval;
         r2 = matuse;
-        label_1472();
+        label_1472(matval);
         r1 = 0;
         refresh_character(r1);
         render_hud();
