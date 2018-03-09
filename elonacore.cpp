@@ -24602,10 +24602,10 @@ void cook()
             + u8"を作った。"s,
         u8"You cook "s + s + u8" with "s + itemname(cooktool, 1)
             + u8" and make "s + itemname(ci, 1) + u8"."s));
-    r1 = inv[ci].param2;
-    if (r1 > 2)
+    int rank = inv[ci].param2;
+    if (rank > 2)
     {
-        skillexp(184, cc, 30 + r1 * 5);
+        skillexp(184, cc, 30 + rank * 5);
     }
     refresh_burden_state();
     return;
