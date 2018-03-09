@@ -693,8 +693,7 @@ int magic()
                             u8"Suddenly "s + name(tc) + u8" feel"s + _s(tc)
                                 + u8" hungry."s));
                     }
-                    r1 = tc;
-                    get_hungry(r1);
+                    get_hungry(tc);
                 }
                 if (efid == 613)
                 {
@@ -720,8 +719,7 @@ int magic()
                                 name(tc) + u8"は弱くなった。"s,
                                 name(tc) + u8" "s + is(tc) + u8" weakened."s));
                         }
-                        r1 = tc;
-                        refresh_character();
+                        refresh_character(tc);
                     }
                 }
                 goto the_end;
@@ -2046,8 +2044,7 @@ label_2181_internal:
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
         }
-        r1 = 0;
-        refresh_character();
+        refresh_character(0);
         break;
     case 1121:
         if (tc != 0)
@@ -2113,8 +2110,7 @@ label_2181_internal:
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
         }
-        r1 = 0;
-        refresh_character();
+        refresh_character(0);
         break;
     case 411:
         if (cc != 0)
@@ -2310,8 +2306,7 @@ label_2181_internal:
         {
             animeload(10, tc);
         }
-        r1 = tc;
-        refresh_character();
+        refresh_character(tc);
         break;
     case 413:
         if (tc >= 16)
@@ -2438,8 +2433,7 @@ label_2181_internal:
             }
             --cdata[tc].level;
             cdata[tc].experience = 0;
-            r1 = tc;
-            label_1456();
+            label_1456(tc);
             txtef(8);
             txt(lang(
                 name(tc) + u8"のレベルが下がった…"s,
@@ -2448,9 +2442,8 @@ label_2181_internal:
         else
         {
             cdata[tc].experience = cdata[tc].required_experience;
-            r1 = tc;
             r2 = 0;
-            gain_level();
+            gain_level(tc);
             if (is_in_fov(tc))
             {
                 snd(60);
@@ -2474,7 +2467,7 @@ label_2181_internal:
             }
             animeload(8, tc);
         }
-        refresh_character();
+        refresh_character(tc);
         break;
     case 1105:
         for (int cnt = 0;; ++cnt)
@@ -2525,8 +2518,7 @@ label_2181_internal:
                 }
             }
         }
-        r1 = tc;
-        refresh_character();
+        refresh_character(tc);
         autosave = 1 * (gdata_current_map != 35);
         break;
     case 1107:
@@ -2579,8 +2571,7 @@ label_2181_internal:
             modpiety(75);
             skillexp(181, 0, 1000 + (efstatus >= 1) * 750, 6, 1000);
         }
-        r1 = tc;
-        refresh_character();
+        refresh_character(tc);
         break;
     case 1119:
         for (int cnt = 0, cnt_end = (1 + (efstatus >= 1)); cnt < cnt_end; ++cnt)
@@ -2647,16 +2638,14 @@ label_2181_internal:
                 }
             }
         }
-        r1 = tc;
-        refresh_character();
+        refresh_character(tc);
         autosave = 1 * (gdata_current_map != 35);
         break;
     case 1106:
         i = rnd(10) + 10;
         skillexp(i, tc, efstatusfix(-2000, -2000, -1000, -250));
         play_animation(6);
-        r1 = tc;
-        refresh_character();
+        refresh_character(tc);
         break;
     case 1139:
         txt(lang(
@@ -2670,8 +2659,7 @@ label_2181_internal:
             txtef(2);
             txt(lang(u8"あつつ！"s, u8"It really burns!"s));
         }
-        r1 = tc;
-        refresh_character();
+        refresh_character(tc);
         break;
     case 1113:
         if (efstatus >= 1)
@@ -2934,8 +2922,7 @@ label_2181_internal:
                     sdata.get(p(cnt), tc).original_level / 10 + 5;
             }
         }
-        r1 = tc;
-        refresh_character();
+        refresh_character(tc);
         break;
     case 441:
         what_do_you_wish_for();
@@ -3200,8 +3187,7 @@ label_2181_internal:
                     name(tc) + u8"の"s + valn + u8"は黒く輝いた。"s,
                     name(tc) + your(tc) + u8" "s + valn + u8" glows black."s));
             }
-            r1 = tc;
-            refresh_character();
+            refresh_character(tc);
             snd(117);
             animeload(14, tc);
             item_stack(tc, i, 1);
@@ -3236,8 +3222,7 @@ label_2181_internal:
         {
             snd(38);
         }
-        r1 = tc;
-        refresh_character();
+        refresh_character(tc);
         break;
     case 1138:
     case 1123:
@@ -3517,8 +3502,7 @@ label_2181_internal:
                 cdata_body_part(cc, equip) / 10000 * 10000 + ci + 1;
             inv[ci].body_part = equip;
         }
-        r1 = cc;
-        refresh_character();
+        refresh_character(cc);
         fixmaterial = 0;
         objfix = 0;
         ci = efcibk;
@@ -3605,8 +3589,7 @@ label_2181_internal:
                 cdata_body_part(cc, equip) / 10000 * 10000 + ci + 1;
             inv[ci].body_part = equip;
         }
-        r1 = cc;
-        refresh_character();
+        refresh_character(cc);
         fixmaterial = 0;
         objfix = 0;
         break;
@@ -3669,8 +3652,7 @@ label_2181_internal:
                         itemname(ci) + u8" resist"s + _s2(inv[ci].number)
                             + u8"."s));
                 }
-                r1 = cc;
-                refresh_character();
+                refresh_character(cc);
             }
             else
             {
@@ -3956,8 +3938,7 @@ label_2181_internal:
                 obvious = 0;
             }
         }
-        r1 = cc;
-        refresh_character();
+        refresh_character(cc);
         break;
     case 1132:
         if (cc != 0)

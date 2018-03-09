@@ -2192,8 +2192,7 @@ void initialize_game()
         cdata[0].platinum_coin = 30;
         cdata[0].fame = 65000;
         gdata_main_quest_flag = 100;
-        r1 = 0;
-        refresh_character();
+        refresh_character(0);
         flt();
         itemcreate(0, 284, -1, -1, 0);
         inv[ci].number = 20;

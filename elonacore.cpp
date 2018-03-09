@@ -6239,8 +6239,7 @@ void change_item_material()
     }
     apply_item_material();
     label_1583();
-    r1 = cc;
-    refresh_character();
+    refresh_character(cc);
     return;
 }
 
@@ -7212,8 +7211,7 @@ void skillgain(int cc, int id, int initial_level, int stock)
         modify_potential(cc, id, 50);
     }
     sdata.get(id, cc).original_level = std::clamp(lv, 0, 2000);
-    r1 = cc;
-    refresh_character();
+    refresh_character(cc);
 }
 
 
@@ -7252,8 +7250,7 @@ int skillmod(int id, int cc, int experience)
             }
             txt(txtskillchange(id, cc, true));
         }
-        r1 = cc;
-        refresh_character();
+        refresh_character(cc);
         return 1;
     }
     if (exp_at_m77 < 0)
@@ -7294,8 +7291,7 @@ int skillmod(int id, int cc, int experience)
                 }
             }
         }
-        r1 = cc;
-        refresh_character();
+        refresh_character(cc);
         return 1;
     }
     sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
@@ -7409,8 +7405,7 @@ int skillexp(int id, int cc, int experience, int prm_572, int prm_573)
             }
             txt(txtskillchange(id, cc, true));
         }
-        r1 = cc;
-        refresh_character();
+        refresh_character(cc);
         return 1;
     }
     if (exp_at_m77 < 0)
@@ -7452,8 +7447,7 @@ int skillexp(int id, int cc, int experience, int prm_572, int prm_573)
                 }
             }
         }
-        r1 = cc;
-        refresh_character();
+        refresh_character(cc);
         return 1;
     }
     sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
@@ -11838,8 +11832,7 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
     }
     rc = tc_at_m125;
     wear_most_valuable_equipment_for_all_body_parts();
-    r1 = tc_at_m125;
-    refresh_character();
+    refresh_character(tc_at_m125);
     return prm_784;
 }
 
@@ -12247,8 +12240,7 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
     cdata[prm_801].buffs[p_at_m132].id = prm_802;
     cdata[prm_801].buffs[p_at_m132].power = prm_803;
     cdata[prm_801].buffs[p_at_m132].turns = fixeddur_at_m132;
-    r1 = prm_801;
-    refresh_character();
+    refresh_character(prm_801);
     return 0;
 }
 
@@ -12311,8 +12303,7 @@ void delbuff(int prm_805, int prm_806)
             }
         }
     }
-    r1 = prm_805;
-    refresh_character();
+    refresh_character(prm_805);
     return;
 }
 
@@ -12682,8 +12673,7 @@ void resistmod(int cc, int element, int delta)
     snd(107);
     animeload(15, cc);
 
-    r1 = cc;
-    refresh_character();
+    refresh_character(cc);
 }
 
 
@@ -12774,27 +12764,23 @@ void modcorrupt(int prm_815)
                 if (tid == 203)
                 {
                     body = 9;
-                    r1 = 0;
-                    label_2196();
+                    label_2196(0);
                 }
                 if (tid == 205)
                 {
                     body = 3;
-                    r1 = 0;
-                    label_2196();
+                    label_2196(0);
                 }
                 if (tid == 206)
                 {
                     body = 2;
-                    r1 = 0;
-                    label_2196();
+                    label_2196(0);
                 }
                 break;
             }
         }
         animeload(8, 0);
-        r1 = 0;
-        refresh_character();
+        refresh_character(0);
         return;
     }
     if (mod_at_m134 < 0)
@@ -12846,8 +12832,7 @@ void modcorrupt(int prm_815)
             }
         }
         animeload(10, 0);
-        r1 = 0;
-        refresh_character();
+        refresh_character(0);
         return;
     }
     return;
@@ -14021,8 +14006,7 @@ int item_fire(int prm_840, int prm_841)
                             cdata_body_part(prm_840, inv[ci_at_m138].body_part)
                             / 10000 * 10000;
                         inv[ci_at_m138].body_part = 0;
-                        r1 = prm_840;
-                        refresh_character();
+                        refresh_character(prm_840);
                     }
                     else if (is_in_fov(prm_840))
                     {
@@ -16031,8 +16015,7 @@ void dmgmp(int cc, int delta)
     }
     if (cdata[cc].mp < 0)
     {
-        r1 = cc;
-        gain_skill_experience_mana_capacity();
+        gain_skill_experience_mana_capacity(cc);
         int damage = -cdata[cc].mp * 400 / (100 + sdata(164, cc) * 10);
         if (cc == 0)
         {
@@ -19019,17 +19002,17 @@ void refresh_speed_correction_value(int cc)
 
 
 
-void gain_new_body_part()
+void gain_new_body_part(int cc)
 {
     for (int i = 0; i < 30; ++i)
     {
-        if (cdata_body_part(r1, i) != 0)
+        if (cdata_body_part(cc, i) != 0)
         {
             continue;
         }
         if (rnd(7) == 0)
         {
-            cdata_body_part(r1, i) = 20000;
+            cdata_body_part(cc, i) = 20000;
             if (cm)
             {
                 break;
@@ -19037,17 +19020,17 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s
+                    name(cc) + u8"の身体から新たな"s
                         + i18n::_(u8"ui", u8"body_part", u8"_2")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
                         + i18n::_(u8"ui", u8"body_part", u8"_2") + u8"!"s));
                 break;
             }
         }
         if (rnd(9) == 0)
         {
-            cdata_body_part(r1, i) = 30000;
+            cdata_body_part(cc, i) = 30000;
             if (cm)
             {
                 break;
@@ -19055,17 +19038,17 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s
+                    name(cc) + u8"の身体から新たな"s
                         + i18n::_(u8"ui", u8"body_part", u8"_3")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
                         + i18n::_(u8"ui", u8"body_part", u8"_3") + u8"!"s));
                 break;
             }
         }
         if (rnd(8) == 0)
         {
-            cdata_body_part(r1, i) = 50000;
+            cdata_body_part(cc, i) = 50000;
             if (cm)
             {
                 break;
@@ -19073,17 +19056,17 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s
+                    name(cc) + u8"の身体から新たな"s
                         + i18n::_(u8"ui", u8"body_part", u8"_5")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
                         + i18n::_(u8"ui", u8"body_part", u8"_5") + u8"!"s));
                 break;
             }
         }
         if (rnd(4) == 0)
         {
-            cdata_body_part(r1, i) = 60000;
+            cdata_body_part(cc, i) = 60000;
             if (cm)
             {
                 break;
@@ -19091,17 +19074,17 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s
+                    name(cc) + u8"の身体から新たな"s
                         + i18n::_(u8"ui", u8"body_part", u8"_6")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
                         + i18n::_(u8"ui", u8"body_part", u8"_6") + u8"!"s));
                 break;
             }
         }
         if (rnd(6) == 0)
         {
-            cdata_body_part(r1, i) = 70000;
+            cdata_body_part(cc, i) = 70000;
             if (cm)
             {
                 break;
@@ -19109,17 +19092,17 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s
+                    name(cc) + u8"の身体から新たな"s
                         + i18n::_(u8"ui", u8"body_part", u8"_7")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
                         + i18n::_(u8"ui", u8"body_part", u8"_7") + u8"!"s));
                 break;
             }
         }
         if (rnd(5) == 0)
         {
-            cdata_body_part(r1, i) = 80000;
+            cdata_body_part(cc, i) = 80000;
             if (cm)
             {
                 break;
@@ -19127,17 +19110,17 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s
+                    name(cc) + u8"の身体から新たな"s
                         + i18n::_(u8"ui", u8"body_part", u8"_8")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
                         + i18n::_(u8"ui", u8"body_part", u8"_8") + u8"!"s));
                 break;
             }
         }
         if (rnd(5) == 0)
         {
-            cdata_body_part(r1, i) = 90000;
+            cdata_body_part(cc, i) = 90000;
             if (cm)
             {
                 break;
@@ -19145,17 +19128,17 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s
+                    name(cc) + u8"の身体から新たな"s
                         + i18n::_(u8"ui", u8"body_part", u8"_9")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
                         + i18n::_(u8"ui", u8"body_part", u8"_9") + u8"!"s));
                 break;
             }
         }
         if (rnd(1) == 0)
         {
-            cdata_body_part(r1, i) = 10000;
+            cdata_body_part(cc, i) = 10000;
             if (cm)
             {
                 break;
@@ -19163,64 +19146,63 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s
+                    name(cc) + u8"の身体から新たな"s
                         + i18n::_(u8"ui", u8"body_part", u8"_1")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
                         + i18n::_(u8"ui", u8"body_part", u8"_1") + u8"!"s));
                 break;
             }
         }
         break;
     }
-    refresh_speed_correction_value(r1);
-    return;
+    refresh_speed_correction_value(cc);
 }
 
 
 
-void gain_level()
+void gain_level(int cc)
 {
-    cdata[r1].experience -= cdata[r1].required_experience;
-    if (cdata[r1].experience < 0)
+    cdata[cc].experience -= cdata[cc].required_experience;
+    if (cdata[cc].experience < 0)
     {
-        cdata[r1].experience = 0;
+        cdata[cc].experience = 0;
     }
-    ++cdata[r1].level;
-    if (cdata[r1].character_role != 13)
+    ++cdata[cc].level;
+    if (cdata[cc].character_role != 13)
     {
         if (r2 == 0)
         {
             txtef(2);
-            if (r1 == 0)
+            if (cc == 0)
             {
                 txt(lang(
-                    name(r1) + u8"はレベル"s + cdata[r1].level
+                    name(cc) + u8"はレベル"s + cdata[cc].level
                         + u8"になった！"s,
-                    name(r1) + u8" have gained a level."s));
+                    name(cc) + u8" have gained a level."s));
             }
             else
             {
                 txt(lang(
-                    name(r1) + u8"は成長した。"s,
-                    name(r1) + u8" "s + have(r1) + u8" grown up."s));
+                    name(cc) + u8"は成長した。"s,
+                    name(cc) + u8" "s + have(cc) + u8" grown up."s));
             }
         }
     }
     else
     {
-        addnews(2, r1);
+        addnews(2, cc);
     }
-    p = 5 * (100 + sdata.get(14, r1).original_level * 10)
-            / (300 + cdata[r1].level * 15)
+    p = 5 * (100 + sdata.get(14, cc).original_level * 10)
+            / (300 + cdata[cc].level * 15)
         + 1;
-    if (r1 == 0)
+    if (cc == 0)
     {
-        if (cdata[r1].level % 5 == 0)
+        if (cdata[cc].level % 5 == 0)
         {
-            if (cdata[r1].max_level < cdata[r1].level)
+            if (cdata[cc].max_level < cdata[cc].level)
             {
-                if (cdata[r1].level <= 50)
+                if (cdata[cc].level <= 50)
                 {
                     ++gdata_acquirable_feat_count;
                 }
@@ -19229,72 +19211,72 @@ void gain_level()
         gain_special_action();
         p += trait(154);
     }
-    cdata[r1].skill_bonus += p;
-    cdata[r1].total_skill_bonus += p;
-    if (cdatan(2, r1) == u8"mutant"s || (r1 == 0 && trait(0) == 1))
+    cdata[cc].skill_bonus += p;
+    cdata[cc].total_skill_bonus += p;
+    if (cdatan(2, cc) == u8"mutant"s || (cc == 0 && trait(0) == 1))
     {
-        if (cdata[r1].level < 37)
+        if (cdata[cc].level < 37)
         {
-            if (cdata[r1].level % 3 == 0)
+            if (cdata[cc].level % 3 == 0)
             {
-                if (cdata[r1].max_level < cdata[r1].level)
+                if (cdata[cc].max_level < cdata[cc].level)
                 {
-                    gain_new_body_part();
+                    cc = cc;
+                    gain_new_body_part(cc);
                 }
             }
         }
     }
-    if (cdata[r1].max_level < cdata[r1].level)
+    if (cdata[cc].max_level < cdata[cc].level)
     {
-        cdata[r1].max_level = cdata[r1].level;
+        cdata[cc].max_level = cdata[cc].level;
     }
-    if (r1 >= 16)
+    if (cc >= 16)
     {
-        label_1455();
+        label_1455(cc);
     }
-    label_1456();
-    refresh_character();
-    return;
+    cc = cc;
+    label_1456(cc);
+    cc = cc;
+    refresh_character(cc);
 }
 
 
 
-void label_1455()
+void label_1455(int cc)
 {
     for (int cnt = 10; cnt < 20; ++cnt)
     {
-        sdata.get(cnt, r1).original_level += rnd(3);
-        if (sdata.get(cnt, r1).original_level > 2000)
+        sdata.get(cnt, cc).original_level += rnd(3);
+        if (sdata.get(cnt, cc).original_level > 2000)
         {
-            sdata.get(cnt, r1).original_level = 2000;
+            sdata.get(cnt, cc).original_level = 2000;
         }
     }
     for (int cnt = 0, cnt_end = (length(mainskill)); cnt < cnt_end; ++cnt)
     {
-        sdata.get(mainskill(cnt), r1).original_level += rnd(3);
-        if (sdata.get(mainskill(cnt), r1).original_level > 2000)
+        sdata.get(mainskill(cnt), cc).original_level += rnd(3);
+        if (sdata.get(mainskill(cnt), cc).original_level > 2000)
         {
-            sdata.get(mainskill(cnt), r1).original_level = 2000;
+            sdata.get(mainskill(cnt), cc).original_level = 2000;
         }
     }
-    return;
 }
 
 
 
-void label_1456()
+void label_1456(int cc)
 {
-    cdata[r1].required_experience = std::clamp(cdata[r1].level, 1, 200)
-            * (std::clamp(cdata[r1].level, 1, 200) + 1)
-            * (std::clamp(cdata[r1].level, 1, 200) + 2)
-            * (std::clamp(cdata[r1].level, 1, 200) + 3)
+    cdata[cc].required_experience = std::clamp(cdata[cc].level, 1, 200)
+            * (std::clamp(cdata[cc].level, 1, 200) + 1)
+            * (std::clamp(cdata[cc].level, 1, 200) + 2)
+            * (std::clamp(cdata[cc].level, 1, 200) + 3)
         + 3000;
-    if (cdata[r1].required_experience > 100000000
-        || cdata[r1].required_experience < 0)
+    if (cdata[cc].required_experience > 100000000
+        || cdata[cc].required_experience < 0)
     {
-        cdata[r1].required_experience = 100000000;
+        cdata[cc].required_experience = 100000000;
     }
-    return;
 }
 
 
@@ -19315,83 +19297,77 @@ void label_1458()
 
 
 
-void label_1459()
+void label_1459(int cc)
 {
-    if (r2 >= (sdata(156, r1) + 10) * (sdata(156, r1) + 10))
+    if (r2 >= (sdata(156, cc) + 10) * (sdata(156, cc) + 10))
     {
         skillexp(
             156,
-            r1,
-            std::clamp(r2 * r2 / (sdata(156, r1) * 5 + 10), 10, 1000),
+            cc,
+            std::clamp(r2 * r2 / (sdata(156, cc) * 5 + 10), 10, 1000),
             10);
     }
-    return;
 }
 
 
 
-void gain_skill_experience_lock_picking()
+void gain_skill_experience_lock_picking(int cc)
 {
-    skillexp(158, r1, 100);
-    return;
+    skillexp(158, cc, 100);
 }
 
 
 
-void gain_skill_experience_detection()
+void gain_skill_experience_detection(int cc)
 {
     skillexp(159, cc, gdata_current_dungeon_level * 2 + 20);
-    return;
 }
 
 
 
-void gain_skill_experience_casting()
+void gain_skill_experience_casting(int cc)
 {
-    if (r1 == 0)
+    if (cc == 0)
     {
-        skillexp(r2, r1, the_ability_db[r2].cost * 4 + 20, 4, 5);
-        skillexp(172, r1, the_ability_db[r2].cost + 10, 5);
+        skillexp(r2, cc, the_ability_db[r2].cost * 4 + 20, 4, 5);
+        skillexp(172, cc, the_ability_db[r2].cost + 10, 5);
     }
     else
     {
-        skillexp(172, r1, the_ability_db[r2].cost + 10, 5);
+        skillexp(172, cc, the_ability_db[r2].cost + 10, 5);
     }
-    return;
 }
 
 
 
-void gain_skill_experience_mana_capacity()
+void gain_skill_experience_mana_capacity(int cc)
 {
-    skillexp(164, r1, std::abs(cdata[r1].mp) * 200 / (cdata[r1].max_mp + 1));
-    return;
+    skillexp(164, cc, std::abs(cdata[cc].mp) * 200 / (cdata[cc].max_mp + 1));
 }
 
 
 
-void label_1464()
+void label_1464(int cc)
 {
-    if (cdata[r1].hp != cdata[r1].max_hp)
+    if (cdata[cc].hp != cdata[cc].max_hp)
     {
-        if (sdata(154, r1) < sdata(11, r1))
+        if (sdata(154, cc) < sdata(11, cc))
         {
-            skillexp(154, r1, 5 + sdata(154, r1) / 5, 1000);
+            skillexp(154, cc, 5 + sdata(154, cc) / 5, 1000);
         }
     }
-    if (cdata[r1].mp != cdata[r1].max_mp)
+    if (cdata[cc].mp != cdata[cc].max_mp)
     {
-        if (sdata(155, r1) < sdata(16, r1))
+        if (sdata(155, cc) < sdata(16, cc))
         {
-            skillexp(155, r1, 5 + sdata(155, r1) / 5, 1000);
+            skillexp(155, cc, 5 + sdata(155, cc) / 5, 1000);
         }
     }
-    return;
 }
 
 
 
-void label_1465()
+void label_1465(int cc)
 {
     if (mdata(6) == 1)
     {
@@ -19400,29 +19376,26 @@ void label_1465()
             return;
         }
     }
-    skillexp(157, 0, 2, 0, 1000);
-    return;
+    skillexp(157, cc, 2, 0, 1000);
 }
 
 
 
-void label_1466()
+void label_1466(int cc)
 {
-    skillexp(160, 0, 600);
-    return;
+    skillexp(160, cc, 600);
 }
 
 
 
-void label_1467()
+void label_1467(int cc, int experience)
 {
-    skillexp(183, cc, r1, 0, 0);
-    return;
+    skillexp(183, cc, experience, 0, 0);
 }
 
 
 
-void label_1468()
+void label_1468(int cc)
 {
     if (cdata[0].inventory_weight_type == 0)
     {
@@ -19435,43 +19408,38 @@ void label_1468()
             return;
         }
     }
-    skillexp(153, 0, 4, 0, 1000);
-    return;
+    skillexp(153, cc, 4, 0, 1000);
 }
 
 
 
-void label_1469()
+void label_1469(int cc)
 {
     if (cc == 0)
     {
-        skillexp(174, 0, 40);
+        skillexp(174, cc, 40);
     }
-    return;
 }
 
 
 
-void label_1470()
+void label_1470(int cc)
 {
-    skillexp(185, 0, 100);
-    return;
+    skillexp(185, cc, 100);
 }
 
 
 
-void label_1471()
+void label_1471(int cc)
 {
-    skillexp(165, 0, 10 + the_ability_db[efid].sdataref4 / 5);
-    return;
+    skillexp(165, cc, 10 + the_ability_db[efid].sdataref4 / 5);
 }
 
 
 
-void label_1472()
+void label_1472(int skill)
 {
-    skillexp(r1, 0, 50 + r2 * 20);
-    return;
+    skillexp(skill, 0, 50 + r2 * 20);
 }
 
 
@@ -19515,12 +19483,12 @@ void cnvbonus(int prm_895, int prm_896)
 
 
 
-void refresh_character()
+void refresh_character(int cc)
 {
     int rp = 0;
     int rp2 = 0;
     int rp3 = 0;
-    if (r1 == 0)
+    if (cc == 0)
     {
         gdata_seven_league_boot_effect = 0;
         gdata_ether_disease_speed = 0;
@@ -19532,108 +19500,108 @@ void refresh_character()
     }
     for (int cnt = 0; cnt < 600; ++cnt)
     {
-        sdata(cnt, r1) = sdata.get(cnt, r1).original_level;
+        sdata(cnt, cc) = sdata.get(cnt, cc).original_level;
     }
-    if (r1 == 0)
+    if (cc == 0)
     {
-        cdata(r1).clear_flags();
+        cdata(cc).clear_flags();
         if (trait(161) != 0)
         {
             for (int i = 0; i < 30; ++i)
             {
-                if (cdata_body_part(r1, i) % 10000 == 0)
+                if (cdata_body_part(cc, i) % 10000 == 0)
                 {
                     continue;
                 }
-                rp = cdata_body_part(r1, i) % 10000 - 1;
+                rp = cdata_body_part(cc, i) % 10000 - 1;
                 if (inv[rp].weight >= 1000)
                 {
-                    cdata_body_part(r1, i) =
-                        cdata_body_part(r1, i) / 10000 * 10000;
+                    cdata_body_part(cc, i) =
+                        cdata_body_part(cc, i) / 10000 * 10000;
                     inv[rp].body_part = 0;
                 }
             }
         }
     }
-    else if (cdata[r1].id == 343)
+    else if (cdata[cc].id == 343)
     {
         for (int i = 0; i < 30; ++i)
         {
-            cdata(r1).flags[i] = userdata(40 + i, cdata[r1].cnpc_id);
+            cdata(cc).flags[i] = userdata(40 + i, cdata[cc].cnpc_id);
         }
     }
     else
     {
         for (int i = 0; i < 30; ++i)
         {
-            cdata(r1).flags[i] = cbitorg(i, cdata[r1].id);
+            cdata(cc).flags[i] = cbitorg(i, cdata[cc].id);
         }
     }
     for (int cnt = 10; cnt < 20; ++cnt)
     {
-        cdata[r1].growth_buffs[cnt - 10] = 0;
+        cdata[cc].growth_buffs[cnt - 10] = 0;
     }
-    cdata[r1].dv = 0;
-    cdata[r1].pv = 0;
-    cdata[r1].hit_bonus = 0;
-    cdata[r1].damage_bonus = 0;
-    cdata[r1].equipment_type = 0;
+    cdata[cc].dv = 0;
+    cdata[cc].pv = 0;
+    cdata[cc].hit_bonus = 0;
+    cdata[cc].damage_bonus = 0;
+    cdata[cc].equipment_type = 0;
     attacknum = 0;
-    cdata[r1].rate_to_pierce = 0;
-    if (sdata(186, r1))
+    cdata[cc].rate_to_pierce = 0;
+    if (sdata(186, cc))
     {
-        cdata[r1].rate_of_critical_hit = int(std::sqrt(sdata(186, r1))) + 2;
+        cdata[cc].rate_of_critical_hit = int(std::sqrt(sdata(186, cc))) + 2;
     }
     else
     {
-        cdata[r1].rate_of_critical_hit = 0;
+        cdata[cc].rate_of_critical_hit = 0;
     }
-    cdata[r1].curse_power = 0;
-    cdata[r1].extra_attack = 0;
-    cdata[r1].extra_shot = 0;
-    cdata[r1].sum_of_equipment_weight = 0;
-    cdata[r1].decrease_physical_damage = 0;
-    cdata[r1].nullify_damage = 0;
-    cdata[r1].cut_counterattack = 0;
+    cdata[cc].curse_power = 0;
+    cdata[cc].extra_attack = 0;
+    cdata[cc].extra_shot = 0;
+    cdata[cc].sum_of_equipment_weight = 0;
+    cdata[cc].decrease_physical_damage = 0;
+    cdata[cc].nullify_damage = 0;
+    cdata[cc].cut_counterattack = 0;
     for (int i = 0; i < 30; ++i)
     {
-        if (cdata_body_part(r1, i) % 10000 == 0)
+        if (cdata_body_part(cc, i) % 10000 == 0)
         {
             continue;
         }
-        rp = cdata_body_part(r1, i) % 10000 - 1;
-        cdata[r1].sum_of_equipment_weight += inv[rp].weight;
+        rp = cdata_body_part(cc, i) % 10000 - 1;
+        cdata[cc].sum_of_equipment_weight += inv[rp].weight;
         if (inv[rp].skill == 168)
         {
-            if (!(cdata[r1].equipment_type & 1))
+            if (!(cdata[cc].equipment_type & 1))
             {
-                cdata[r1].equipment_type += 1;
+                cdata[cc].equipment_type += 1;
             }
         }
-        cdata[r1].dv += inv[rp].dv;
-        cdata[r1].pv += inv[rp].pv;
+        cdata[cc].dv += inv[rp].dv;
+        cdata[cc].pv += inv[rp].pv;
         if (inv[rp].dice_x == 0)
         {
-            cdata[r1].hit_bonus += inv[rp].hit_bonus;
-            cdata[r1].damage_bonus += inv[rp].damage_bonus;
-            cdata[r1].pv +=
+            cdata[cc].hit_bonus += inv[rp].hit_bonus;
+            cdata[cc].damage_bonus += inv[rp].damage_bonus;
+            cdata[cc].pv +=
                 inv[rp].enhancement * 2 + (inv[rp].curse_state == 1) * 2;
         }
-        else if (cdata_body_part(r1, i) / 10000 == 5)
+        else if (cdata_body_part(cc, i) / 10000 == 5)
         {
             ++attacknum;
         }
         if (inv[rp].curse_state == -1)
         {
-            cdata[r1].curse_power += 20;
+            cdata[cc].curse_power += 20;
         }
         if (inv[rp].curse_state == -2)
         {
-            cdata[r1].curse_power += 100;
+            cdata[cc].curse_power += 100;
         }
         if (inv[rp].material == 8)
         {
-            if (r1 == 0)
+            if (cc == 0)
             {
                 gdata_ether_disease_speed += 5;
             }
@@ -19651,27 +19619,27 @@ void refresh_character()
                 rp2 = rp2 / 10000;
                 if (rp2 == 1)
                 {
-                    sdata(rp3, r1) += inv[rp].enchantments[cnt].power / 50 + 1;
+                    sdata(rp3, cc) += inv[rp].enchantments[cnt].power / 50 + 1;
                     continue;
                 }
                 if (rp2 == 2)
                 {
-                    sdata(rp3, r1) += inv[rp].enchantments[cnt].power / 2;
-                    if (sdata(rp3, r1) < 0)
+                    sdata(rp3, cc) += inv[rp].enchantments[cnt].power / 2;
+                    if (sdata(rp3, cc) < 0)
                     {
-                        sdata(rp3, r1) = 1;
+                        sdata(rp3, cc) = 1;
                     }
                     continue;
                 }
                 if (rp2 == 3)
                 {
-                    if (sdata.get(rp3, r1).original_level != 0)
+                    if (sdata.get(rp3, cc).original_level != 0)
                     {
-                        sdata(rp3, r1) +=
+                        sdata(rp3, cc) +=
                             inv[rp].enchantments[cnt].power / 50 + 1;
-                        if (sdata(rp3, r1) < 1)
+                        if (sdata(rp3, cc) < 1)
                         {
-                            sdata(rp3, r1) = 1;
+                            sdata(rp3, cc) = 1;
                         }
                     }
                     continue;
@@ -19681,7 +19649,7 @@ void refresh_character()
             {
                 if (rp2 == 56)
                 {
-                    if (r1 == 0)
+                    if (cc == 0)
                     {
                         gdata_catches_god_signal = 1;
                         continue;
@@ -19689,7 +19657,7 @@ void refresh_character()
                 }
                 if (rp2 == 59)
                 {
-                    if (r1 == 0)
+                    if (cc == 0)
                     {
                         gdata_reveals_religion = 1;
                         continue;
@@ -19697,8 +19665,8 @@ void refresh_character()
                 }
                 if (rp2 == 29)
                 {
-                    sdata(18, r1) += inv[rp].enchantments[cnt].power / 50 + 1;
-                    if (r1 == 0)
+                    sdata(18, cc) += inv[rp].enchantments[cnt].power / 50 + 1;
+                    if (cc == 0)
                     {
                         gdata_seven_league_boot_effect +=
                             inv[rp].enchantments[cnt].power / 8;
@@ -19707,107 +19675,107 @@ void refresh_character()
                 }
                 if (rp2 == 32)
                 {
-                    cbitmod(5, r1, 1);
+                    cbitmod(5, cc, 1);
                     continue;
                 }
                 if (rp2 == 35)
                 {
-                    cbitmod(7, r1, 1);
+                    cbitmod(7, cc, 1);
                     continue;
                 }
                 if (rp2 == 23)
                 {
-                    cbitmod(9, r1, 1);
+                    cbitmod(9, cc, 1);
                     continue;
                 }
                 if (rp2 == 24)
                 {
-                    cbitmod(12, r1, 1);
+                    cbitmod(12, cc, 1);
                     continue;
                 }
                 if (rp2 == 25)
                 {
-                    cbitmod(8, r1, 1);
+                    cbitmod(8, cc, 1);
                     continue;
                 }
                 if (rp2 == 26)
                 {
-                    cbitmod(10, r1, 1);
+                    cbitmod(10, cc, 1);
                     continue;
                 }
                 if (rp2 == 27)
                 {
-                    cbitmod(11, r1, 1);
+                    cbitmod(11, cc, 1);
                     continue;
                 }
                 if (rp2 == 28)
                 {
-                    cbitmod(13, r1, 1);
+                    cbitmod(13, cc, 1);
                     continue;
                 }
                 if (rp2 == 42)
                 {
-                    cbitmod(14, r1, 1);
+                    cbitmod(14, cc, 1);
                     continue;
                 }
                 if (rp2 == 41)
                 {
-                    cbitmod(15, r1, 1);
+                    cbitmod(15, cc, 1);
                     continue;
                 }
                 if (rp2 == 55)
                 {
-                    cbitmod(29, r1, 1);
+                    cbitmod(29, cc, 1);
                     continue;
                 }
                 if (rp2 == 52)
                 {
-                    cdata[r1].decrease_physical_damage +=
+                    cdata[cc].decrease_physical_damage +=
                         inv[rp].enchantments[cnt].power / 40 + 5;
                     continue;
                 }
                 if (rp2 == 53)
                 {
-                    cdata[r1].nullify_damage +=
+                    cdata[cc].nullify_damage +=
                         inv[rp].enchantments[cnt].power / 60 + 3;
                     continue;
                 }
                 if (rp2 == 54)
                 {
-                    cdata[r1].cut_counterattack +=
+                    cdata[cc].cut_counterattack +=
                         inv[rp].enchantments[cnt].power / 5;
                     continue;
                 }
                 if (rp2 == 44)
                 {
-                    cdata[r1].rate_of_critical_hit +=
+                    cdata[cc].rate_of_critical_hit +=
                         inv[rp].enchantments[cnt].power / 50;
                     continue;
                 }
                 if (rp2 == 39)
                 {
-                    cdata[r1].rate_to_pierce +=
+                    cdata[cc].rate_to_pierce +=
                         inv[rp].enchantments[cnt].power / 50;
                     continue;
                 }
                 if (rp2 == 50)
                 {
-                    cdata[r1].extra_attack +=
+                    cdata[cc].extra_attack +=
                         inv[rp].enchantments[cnt].power / 15;
                     continue;
                 }
                 if (rp2 == 51)
                 {
-                    cdata[r1].extra_shot +=
+                    cdata[cc].extra_shot +=
                         inv[rp].enchantments[cnt].power / 15;
                     continue;
                 }
                 if (rp2 == 21 || rp2 == 45 || rp2 == 46 || rp2 == 47)
                 {
-                    cbitmod(24, r1, 1);
+                    cbitmod(24, cc, 1);
                     continue;
                 }
-                if (r1 == 0)
+                if (cc == 0)
                 {
                     if (rp2 == 30)
                     {
@@ -19829,37 +19797,37 @@ void refresh_character()
         buff += u8"<title1>◆ 装備による能力の修正<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {
-            sdata(cnt, 56) = sdata.get(cnt, r1).original_level;
-            if (sdata(cnt, 56) != sdata(cnt, r1))
+            sdata(cnt, 56) = sdata.get(cnt, cc).original_level;
+            if (sdata(cnt, 56) != sdata(cnt, cc))
             {
-                rp = sdata(cnt, r1) - sdata(cnt, 56);
+                rp = sdata(cnt, cc) - sdata(cnt, 56);
                 cnvbonus(cnt, rp);
             }
         }
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        if (cdata[r1].attr_adjs[cnt] != 0)
+        if (cdata[cc].attr_adjs[cnt] != 0)
         {
-            if (cdata[r1].quality >= 4)
+            if (cdata[cc].quality >= 4)
             {
-                if (cdata[r1].attr_adjs[cnt]
-                    < sdata.get(10 + cnt, r1).original_level / 5)
+                if (cdata[cc].attr_adjs[cnt]
+                    < sdata.get(10 + cnt, cc).original_level / 5)
                 {
-                    cdata[r1].attr_adjs[cnt] =
-                        sdata.get(10 + cnt, r1).original_level / 5;
+                    cdata[cc].attr_adjs[cnt] =
+                        sdata.get(10 + cnt, cc).original_level / 5;
                 }
             }
-            sdata(10 + cnt, r1) += cdata[r1].attr_adjs[cnt];
+            sdata(10 + cnt, cc) += cdata[cc].attr_adjs[cnt];
         }
-        if (sdata(10 + cnt, r1) < 1)
+        if (sdata(10 + cnt, cc) < 1)
         {
-            sdata(10 + cnt, r1) = 1;
+            sdata(10 + cnt, cc) = 1;
         }
     }
-    if (r1 == 0)
+    if (cc == 0)
     {
-        apply_god_blessing();
+        apply_god_blessing(cc);
         for (int cnt = 0; cnt < 217; ++cnt)
         {
             if (trait(cnt) != 0)
@@ -19868,93 +19836,92 @@ void refresh_character()
             }
         }
     }
-    if (cdata[r1].equipment_type & 1)
+    if (cdata[cc].equipment_type & 1)
     {
-        if (cdata[r1].pv > 0)
+        if (cdata[cc].pv > 0)
         {
-            cdata[r1].pv =
-                cdata[r1].pv * (120 + int(std::sqrt(sdata(168, r1))) * 2) / 100;
+            cdata[cc].pv =
+                cdata[cc].pv * (120 + int(std::sqrt(sdata(168, cc))) * 2) / 100;
         }
     }
     else if (attacknum == 1)
     {
-        cdata[r1].equipment_type += 2;
+        cdata[cc].equipment_type += 2;
     }
     else if (attacknum != 0)
     {
-        cdata[r1].equipment_type += 4;
+        cdata[cc].equipment_type += 4;
     }
-    cdata[r1].max_mp =
+    cdata[cc].max_mp =
         std::clamp(
-            ((sdata(16, r1) * 2 + sdata(15, r1) + sdata(14, r1) / 3)
-                 * cdata[r1].level / 25
-             + sdata(16, r1)),
+            ((sdata(16, cc) * 2 + sdata(15, cc) + sdata(14, cc) / 3)
+                 * cdata[cc].level / 25
+             + sdata(16, cc)),
             1,
             1000000)
-        * sdata(3, r1) / 100;
-    cdata[r1].max_hp =
+        * sdata(3, cc) / 100;
+    cdata[cc].max_hp =
         std::clamp(
-            ((sdata(11, r1) * 2 + sdata(10, r1) + sdata(15, r1) / 3)
-                 * cdata[r1].level / 25
-             + sdata(11, r1)),
+            ((sdata(11, cc) * 2 + sdata(10, cc) + sdata(15, cc) / 3)
+                 * cdata[cc].level / 25
+             + sdata(11, cc)),
             1,
             1000000)
-            * sdata(2, r1) / 100
+            * sdata(2, cc) / 100
         + 5;
-    cdata[r1].max_sp =
-        100 + (sdata(15, r1) + sdata(11, r1)) / 5 + trait(24) * 8;
-    if (cdata[r1].max_mp < 1)
+    cdata[cc].max_sp =
+        100 + (sdata(15, cc) + sdata(11, cc)) / 5 + trait(24) * 8;
+    if (cdata[cc].max_mp < 1)
     {
-        cdata[r1].max_mp = 1;
+        cdata[cc].max_mp = 1;
     }
-    if (cdata[r1].max_hp < 1)
+    if (cdata[cc].max_hp < 1)
     {
-        cdata[r1].max_hp = 1;
+        cdata[cc].max_hp = 1;
     }
-    if (r1 >= 57 || 0)
+    if (cc >= 57 || 0)
     {
-        cdata[r1].dv = cdata[r1].level / 2
-            + cdata[r1].dv * cdata[r1].dv_correction_value / 100
-            + cdata[r1].dv_correction_value - 100;
-        cdata[r1].pv = cdata[r1].level
-            + (cdata[r1].pv + cdata[r1].level / 2
-               + cdata[r1].pv_correction_value / 25)
-                * cdata[r1].pv_correction_value / 100;
-        if (cdata[r1].quality == 3)
+        cdata[cc].dv = cdata[cc].level / 2
+            + cdata[cc].dv * cdata[cc].dv_correction_value / 100
+            + cdata[cc].dv_correction_value - 100;
+        cdata[cc].pv = cdata[cc].level
+            + (cdata[cc].pv + cdata[cc].level / 2
+               + cdata[cc].pv_correction_value / 25)
+                * cdata[cc].pv_correction_value / 100;
+        if (cdata[cc].quality == 3)
         {
-            cdata[r1].max_hp = cdata[r1].max_hp * 3 / 2;
+            cdata[cc].max_hp = cdata[cc].max_hp * 3 / 2;
         }
-        if (cdata[r1].quality >= 4)
+        if (cdata[cc].quality >= 4)
         {
-            cdata[r1].max_hp = cdata[r1].max_hp * 5;
+            cdata[cc].max_hp = cdata[cc].max_hp * 5;
         }
     }
     else
     {
-        cdata[r1].max_hp += 10;
+        cdata[cc].max_hp += 10;
     }
     for (int cnt = 0; cnt < 16; ++cnt)
     {
-        rp = cdata[r1].buffs[cnt].id;
+        rp = cdata[cc].buffs[cnt].id;
         if (rp == 0)
         {
             break;
         }
-        apply_buff(r1, rp, cdata[r1].buffs[cnt].power);
+        apply_buff(cc, rp, cdata[cc].buffs[cnt].power);
     }
-    if (cdata[r1].equipment_type & 4)
+    if (cdata[cc].equipment_type & 4)
     {
-        cdata[r1].extra_attack += int(std::sqrt(sdata(166, r1))) * 3 / 2 + 4;
+        cdata[cc].extra_attack += int(std::sqrt(sdata(166, cc))) * 3 / 2 + 4;
     }
-    if (cdata[r1].rate_of_critical_hit > 30)
+    if (cdata[cc].rate_of_critical_hit > 30)
     {
-        cdata[r1].hit_bonus += (cdata[r1].rate_of_critical_hit - 30) * 2;
-        cdata[r1].rate_of_critical_hit = 30;
+        cdata[cc].hit_bonus += (cdata[cc].rate_of_critical_hit - 30) * 2;
+        cdata[cc].rate_of_critical_hit = 30;
     }
     refresh_burden_state();
-    refreshspeed(r1);
-    cbitmod(981, r1, 0);
-    return;
+    refreshspeed(cc);
+    cbitmod(981, cc, 0);
 }
 
 
@@ -20016,57 +19983,56 @@ void skillinit(int id, int cc, int initial_level)
 
 
 
-void label_1512()
+void label_1512(int cc)
 {
     for (int cnt = 50; cnt < 61; ++cnt)
     {
-        p = cdata[r1].level * 4 + 96;
+        p = cdata[cc].level * 4 + 96;
         if (p > 300)
         {
             p = 300;
         }
-        if (sdata(cnt, r1) != 0)
+        if (sdata(cnt, cc) != 0)
         {
-            if (sdata(cnt, r1) < 100 || sdata(cnt, r1) >= 500)
+            if (sdata(cnt, cc) < 100 || sdata(cnt, cc) >= 500)
             {
-                p = sdata(cnt, r1);
+                p = sdata(cnt, cc);
             }
             else
             {
-                p += sdata(cnt, r1);
+                p += sdata(cnt, cc);
             }
         }
-        if ((cnt == 60 && p < 500) || r1 == 0)
+        if ((cnt == 60 && p < 500) || cc == 0)
         {
             p = 100;
         }
-        sdata.get(cnt, r1).original_level = std::clamp(p(0), 1, 2000);
-        sdata.get(cnt, r1).experience = 0;
-        sdata.get(cnt, r1).potential = 0;
+        sdata.get(cnt, cc).original_level = std::clamp(p(0), 1, 2000);
+        sdata.get(cnt, cc).experience = 0;
+        sdata.get(cnt, cc).potential = 0;
     }
-    i = 4;
-    skillinit(100, r1, i);
-    skillinit(101, r1, i);
-    skillinit(103, r1, i);
-    skillinit(102, r1, i);
-    skillinit(104, r1, i);
-    skillinit(105, r1, i);
-    skillinit(107, r1, i);
-    skillinit(108, r1, i);
-    skillinit(111, r1, i);
-    skillinit(109, r1, i);
-    skillinit(173, r1, 4);
-    skillinit(154, r1, 4);
-    skillinit(155, r1, 4);
-    skillinit(106, r1, 4);
-    skillinit(157, r1, 4);
-    skillinit(181, r1, 4);
-    skillinit(171, r1, 4);
-    skillinit(170, r1, 4);
-    skillinit(169, r1, 4);
-    skillinit(168, r1, 3);
-    skillinit(19, r1, 50);
-    return;
+
+    skillinit(100, cc, 4);
+    skillinit(101, cc, 4);
+    skillinit(103, cc, 4);
+    skillinit(102, cc, 4);
+    skillinit(104, cc, 4);
+    skillinit(105, cc, 4);
+    skillinit(107, cc, 4);
+    skillinit(108, cc, 4);
+    skillinit(111, cc, 4);
+    skillinit(109, cc, 4);
+    skillinit(173, cc, 4);
+    skillinit(154, cc, 4);
+    skillinit(155, cc, 4);
+    skillinit(106, cc, 4);
+    skillinit(157, cc, 4);
+    skillinit(181, cc, 4);
+    skillinit(171, cc, 4);
+    skillinit(170, cc, 4);
+    skillinit(169, cc, 4);
+    skillinit(168, cc, 3);
+    skillinit(19, cc, 50);
 }
 
 
@@ -20209,7 +20175,7 @@ int try_to_reveal()
     if (rnd(sdata(159, cc) * 15 + 20 + sdata(13, cc))
         > rnd(gdata_current_dungeon_level * 8 + 60))
     {
-        gain_skill_experience_detection();
+        gain_skill_experience_detection(cc);
         return 1;
     }
     return 0;
@@ -20260,27 +20226,27 @@ int try_to_disarm_trap()
 
 
 
-int try_to_perceive_npc()
+int try_to_perceive_npc(int cc)
 {
     int cv = 0;
     cv = 8;
-    if (cdata[r1].position.x > cdata[r2].position.x - cv
-        && cdata[r1].position.x < cdata[r2].position.x + cv)
+    if (cdata[cc].position.x > cdata[r2].position.x - cv
+        && cdata[cc].position.x < cdata[r2].position.x + cv)
     {
-        if (cdata[r1].position.y > cdata[r2].position.y - cv
-            && cdata[r1].position.y < cdata[r2].position.y + cv)
+        if (cdata[cc].position.y > cdata[r2].position.y - cv
+            && cdata[cc].position.y < cdata[r2].position.y + cv)
         {
             if (cdata[r2].hate > 0)
             {
                 return 1;
             }
             p = dist(
-                    cdata[r1].position.x,
-                    cdata[r1].position.y,
+                    cdata[cc].position.x,
+                    cdata[cc].position.y,
                     cdata[r2].position.x,
                     cdata[r2].position.y)
                     * 150
-                + (sdata(157, r1) * 100 + 150) + 1;
+                + (sdata(157, cc) * 100 + 150) + 1;
             if (rnd(p) < rnd(sdata(13, r2) * 60 + 150))
             {
                 return 1;
@@ -20339,170 +20305,171 @@ void get_hungry(int cc)
 
 
 
-void label_1520()
+void label_1520(int cc)
 {
     int regen = 0;
     regen = 1;
-    if (cdata[r1].sleep > 0)
+    if (cdata[cc].sleep > 0)
     {
-        healcon(r1, 2, 1);
-        if (cdata[r1].sleep > 0)
+        healcon(cc, 2, 1);
+        if (cdata[cc].sleep > 0)
         {
-            cdata[r1].emotion_icon = 114;
+            cdata[cc].emotion_icon = 114;
         }
-        healhp(r1, 1);
-        healmp(r1, 1);
+        healhp(cc, 1);
+        healmp(cc, 1);
     }
-    if (cdata[r1].poisoned > 0)
+    if (cdata[cc].poisoned > 0)
     {
-        dmghp(r1, rnd(2 + sdata(11, r1) / 10), -4);
-        healcon(r1, 1, 1);
-        if (cdata[r1].poisoned > 0)
+        dmghp(cc, rnd(2 + sdata(11, cc) / 10), -4);
+        healcon(cc, 1, 1);
+        if (cdata[cc].poisoned > 0)
         {
-            cdata[r1].emotion_icon = 108;
+            cdata[cc].emotion_icon = 108;
         }
         regen = 0;
     }
-    if (cdata[r1].choked > 0)
+    if (cdata[cc].choked > 0)
     {
-        if (cdata[r1].choked % 3 == 0)
+        if (cdata[cc].choked % 3 == 0)
         {
-            if (is_in_fov(r1))
+            if (is_in_fov(cc))
             {
                 txt(lang(u8"「うぐぐ…！」"s, u8"\"Ughh...!\""s));
             }
         }
-        ++cdata[r1].choked;
-        if (cdata[r1].choked > 15)
+        ++cdata[cc].choked;
+        if (cdata[cc].choked > 15)
         {
-            dmghp(r1, 500, -21);
+            dmghp(cc, 500, -21);
         }
         regen = 0;
     }
-    if (cdata[r1].gravity > 0)
+    if (cdata[cc].gravity > 0)
     {
-        --cdata[r1].gravity;
-        if (cdata[r1].gravity == 0)
+        --cdata[cc].gravity;
+        if (cdata[cc].gravity == 0)
         {
-            if (is_in_fov(r1))
+            if (is_in_fov(cc))
             {
                 txt(lang(
-                    name(r1) + u8"は重力から抜け出した。"s,
-                    name(r1) + u8" break"s + _s(r1)
+                    name(cc) + u8"は重力から抜け出した。"s,
+                    name(cc) + u8" break"s + _s(cc)
                         + u8" away from gravity."s));
             }
         }
     }
-    if (cdata[r1].furious > 0)
+    if (cdata[cc].furious > 0)
     {
-        --cdata[r1].furious;
-        if (cdata[r1].furious == 0)
+        --cdata[cc].furious;
+        if (cdata[cc].furious == 0)
         {
-            if (is_in_fov(r1))
+            if (is_in_fov(cc))
             {
                 txt(lang(
-                    name(r1) + u8"はやや落ち着いた。"s,
-                    name(r1) + u8" calm"s + _s(r1) + u8" down."s));
+                    name(cc) + u8"はやや落ち着いた。"s,
+                    name(cc) + u8" calm"s + _s(cc) + u8" down."s));
             }
         }
     }
-    if (cdata[r1].sick > 0)
+    if (cdata[cc].sick > 0)
     {
         if (rnd(80) == 0)
         {
             p = rnd(10);
-            if (encfind(r1, 60010 + p) == -1)
+            if (encfind(cc, 60010 + p) == -1)
             {
-                cdata[r1].attr_adjs[p] -=
-                    sdata.get(10 + p, r1).original_level / 25 + 1;
-                refresh_character();
+                cdata[cc].attr_adjs[p] -=
+                    sdata.get(10 + p, cc).original_level / 25 + 1;
+                cc = cc;
+                refresh_character(cc);
             }
         }
         if (rnd(5))
         {
             regen = 0;
         }
-        if (r1 >= 16)
+        if (cc >= 16)
         {
-            if (cdata[r1].quality >= 4)
+            if (cdata[cc].quality >= 4)
             {
                 if (rnd(200) == 0)
                 {
-                    healcon(r1, 12);
+                    healcon(cc, 12);
                 }
             }
         }
     }
-    if (cdata[r1].blind > 0)
+    if (cdata[cc].blind > 0)
     {
-        healcon(r1, 4, 1);
-        if (cdata[r1].blind > 0)
+        healcon(cc, 4, 1);
+        if (cdata[cc].blind > 0)
         {
-            cdata[r1].emotion_icon = 110;
+            cdata[cc].emotion_icon = 110;
         }
     }
-    if (cdata[r1].paralyzed > 0)
+    if (cdata[cc].paralyzed > 0)
     {
         regen = 0;
-        healcon(r1, 3, 1);
-        if (cdata[r1].paralyzed > 0)
+        healcon(cc, 3, 1);
+        if (cdata[cc].paralyzed > 0)
         {
-            cdata[r1].emotion_icon = 115;
+            cdata[cc].emotion_icon = 115;
         }
     }
-    if (cdata[r1].confused > 0)
+    if (cdata[cc].confused > 0)
     {
-        healcon(r1, 5, 1);
-        if (cdata[r1].confused > 0)
+        healcon(cc, 5, 1);
+        if (cdata[cc].confused > 0)
         {
-            cdata[r1].emotion_icon = 111;
+            cdata[cc].emotion_icon = 111;
         }
     }
-    if (cdata[r1].fear > 0)
+    if (cdata[cc].fear > 0)
     {
-        healcon(r1, 6, 1);
-        if (cdata[r1].fear > 0)
+        healcon(cc, 6, 1);
+        if (cdata[cc].fear > 0)
         {
-            cdata[r1].emotion_icon = 113;
+            cdata[cc].emotion_icon = 113;
         }
     }
-    if (cdata[r1].dimmed > 0)
+    if (cdata[cc].dimmed > 0)
     {
-        healcon(r1, 7, 1);
-        if (cdata[r1].dimmed > 0)
+        healcon(cc, 7, 1);
+        if (cdata[cc].dimmed > 0)
         {
-            cdata[r1].emotion_icon = 112;
+            cdata[cc].emotion_icon = 112;
         }
     }
-    if (cdata[r1].drunk > 0)
+    if (cdata[cc].drunk > 0)
     {
-        healcon(r1, 8, 1);
-        if (cdata[r1].drunk > 0)
+        healcon(cc, 8, 1);
+        if (cdata[cc].drunk > 0)
         {
-            cdata[r1].emotion_icon = 106;
+            cdata[cc].emotion_icon = 106;
         }
     }
-    if (cdata[r1].bleeding > 0)
+    if (cdata[cc].bleeding > 0)
     {
         dmghp(
-            r1,
-            rnd(cdata[r1].hp * (1 + cdata[r1].bleeding / 4) / 100 + 3) + 1,
+            cc,
+            rnd(cdata[cc].hp * (1 + cdata[cc].bleeding / 4) / 100 + 3) + 1,
             -13);
-        healcon(r1, 9, 1 + cbit(29, r1) * 3);
-        if (cdata[r1].bleeding > 0)
+        healcon(cc, 9, 1 + cbit(29, cc) * 3);
+        if (cdata[cc].bleeding > 0)
         {
-            cdata[r1].emotion_icon = 109;
+            cdata[cc].emotion_icon = 109;
         }
         regen = 0;
-        spillblood(cdata[r1].position.x, cdata[r1].position.y);
+        spillblood(cdata[cc].position.x, cdata[cc].position.y);
     }
-    if (cdata[r1].wet > 0)
+    if (cdata[cc].wet > 0)
     {
-        --cdata[r1].wet;
+        --cdata[cc].wet;
     }
-    if (cdata[r1].insane > 0)
+    if (cdata[cc].insane > 0)
     {
-        if (is_in_fov(r1))
+        if (is_in_fov(cc))
         {
             if (rnd(3) == 0)
             {
@@ -20512,45 +20479,45 @@ void label_1520()
                     r2 = rnd(5);
                     if (r2 == 0)
                     {
-                        txt(name(r1) + u8"「キョキョキョ」"s,
-                            name(r1) + u8"「クワッ」"s,
-                            name(r1) + u8"「シャアァァ」"s,
-                            name(r1) + u8"「ばぶっふ！」"s,
-                            name(r1) + u8"「煮殺せ！」"s,
-                            name(r1) + u8"「許しなさい許しなさい！！」"s);
+                        txt(name(cc) + u8"「キョキョキョ」"s,
+                            name(cc) + u8"「クワッ」"s,
+                            name(cc) + u8"「シャアァァ」"s,
+                            name(cc) + u8"「ばぶっふ！」"s,
+                            name(cc) + u8"「煮殺せ！」"s,
+                            name(cc) + u8"「許しなさい許しなさい！！」"s);
                     }
                     if (r2 == 1)
                     {
-                        txt(name(r1) + u8"「フゥハハハー！」"s,
-                            name(r1) + u8"「あ、あ、あ、あ」"s,
-                            name(r1) + u8"「ぴ…ぴ…ぴか…」"s,
-                            name(r1) + u8"「お兄ちゃん！」"s,
-                            name(r1) + u8"「うみみやぁ」"s);
+                        txt(name(cc) + u8"「フゥハハハー！」"s,
+                            name(cc) + u8"「あ、あ、あ、あ」"s,
+                            name(cc) + u8"「ぴ…ぴ…ぴか…」"s,
+                            name(cc) + u8"「お兄ちゃん！」"s,
+                            name(cc) + u8"「うみみやぁ」"s);
                     }
                     if (r2 == 2)
                     {
-                        txt(name(r1) + u8"は突然踊りだした。"s,
-                            name(r1) + u8"は着ていたものを脱ぎだした。"s,
-                            name(r1) + u8"はぐるぐる回りだした。"s,
-                            name(r1) + u8"は奇声を発した。"s,
-                            name(r1) + u8"「ねうねう♪ねうねう♪」"s);
+                        txt(name(cc) + u8"は突然踊りだした。"s,
+                            name(cc) + u8"は着ていたものを脱ぎだした。"s,
+                            name(cc) + u8"はぐるぐる回りだした。"s,
+                            name(cc) + u8"は奇声を発した。"s,
+                            name(cc) + u8"「ねうねう♪ねうねう♪」"s);
                     }
                     if (r2 == 3)
                     {
-                        txt(name(r1) + u8"「ウージッムシ♪ウージッムシ♪」"s,
-                            name(r1) + u8"「じゃあ殺さなきゃ。うん♪」"s,
-                            name(r1) + u8"「このナメクジがっ」"s,
-                            name(r1) + u8"「おすわり！」"s,
-                            name(r1) +
+                        txt(name(cc) + u8"「ウージッムシ♪ウージッムシ♪」"s,
+                            name(cc) + u8"「じゃあ殺さなきゃ。うん♪」"s,
+                            name(cc) + u8"「このナメクジがっ」"s,
+                            name(cc) + u8"「おすわり！」"s,
+                            name(cc) +
                                 u8"「フーーーーン フーーーーン･･･ フーーーンフ」"s);
                     }
                     if (r2 == 4)
                     {
-                        txt(name(r1) + u8"「このかたつむり野郎がっ」"s,
-                            name(r1) + u8"「うにゅみゅあ！」"s,
-                            name(r1) + u8"「ごめんなさいごめんなさい！」"s,
-                            name(r1) + u8"「もうすぐ生まれるよ♪」"s,
-                            name(r1) + u8"「フーーーーン フー…クワッ！」"s);
+                        txt(name(cc) + u8"「このかたつむり野郎がっ」"s,
+                            name(cc) + u8"「うにゅみゅあ！」"s,
+                            name(cc) + u8"「ごめんなさいごめんなさい！」"s,
+                            name(cc) + u8"「もうすぐ生まれるよ♪」"s,
+                            name(cc) + u8"「フーーーーン フー…クワッ！」"s);
                     }
                 }
                 else
@@ -20558,10 +20525,10 @@ void label_1520()
                     r2 = rnd(2);
                     if (r2 == 0)
                     {
-                        txt(name(r1) + u8" start"s + _s(r1) + u8" to take "s
-                                + his(r1) + u8" cloths off."s,
-                            name(r1) + u8" shout"s + _s(r1) + u8"."s,
-                            name(r1) + u8" dance"s + _s(r1) + u8"."s);
+                        txt(name(cc) + u8" start"s + _s(cc) + u8" to take "s
+                                + his(cc) + u8" cloths off."s,
+                            name(cc) + u8" shout"s + _s(cc) + u8"."s,
+                            name(cc) + u8" dance"s + _s(cc) + u8"."s);
                     }
                     if (r2 == 1)
                     {
@@ -20577,41 +20544,41 @@ void label_1520()
         }
         if (rnd(5) == 0)
         {
-            cdata[r1].confused += rnd(10);
+            cdata[cc].confused += rnd(10);
         }
         if (rnd(5) == 0)
         {
-            cdata[r1].dimmed += rnd(10);
+            cdata[cc].dimmed += rnd(10);
         }
         if (rnd(5) == 0)
         {
-            cdata[r1].sleep += rnd(5);
+            cdata[cc].sleep += rnd(5);
         }
         if (rnd(5) == 0)
         {
-            cdata[r1].fear += rnd(10);
+            cdata[cc].fear += rnd(10);
         }
-        healcon(r1, 11, 1);
-        if (cdata[r1].insane > 0)
+        healcon(cc, 11, 1);
+        if (cdata[cc].insane > 0)
         {
-            cdata[r1].emotion_icon = 124;
+            cdata[cc].emotion_icon = 124;
         }
     }
-    if (r1 == 0)
+    if (cc == 0)
     {
-        if (cdata[r1].nutrition < 2000)
+        if (cdata[cc].nutrition < 2000)
         {
-            if (cdata[r1].nutrition < 1000)
+            if (cdata[cc].nutrition < 1000)
             {
-                if (cdata[r1].continuous_action_id != 1)
+                if (cdata[cc].continuous_action_id != 1)
                 {
-                    dmghp(r1, rnd(2) + cdata[0].max_hp / 50, -3);
+                    dmghp(cc, rnd(2) + cdata[0].max_hp / 50, -3);
                     if (gdata_play_turns % 10 == 0)
                     {
-                        rowact_check(r1);
+                        rowact_check(cc);
                         if (rnd(50) == 0)
                         {
-                            modweight(r1, -1);
+                            modweight(cc, -1);
                         }
                     }
                 }
@@ -20637,32 +20604,32 @@ void label_1520()
             if (gdata_continuous_active_hours >= 50)
             {
                 regen = 0;
-                dmgsp(r1, 1);
+                dmgsp(cc, 1);
             }
         }
     }
-    else if (cdata[r1].related_quest_id != 0)
+    else if (cdata[cc].related_quest_id != 0)
     {
-        p = cdata[r1].related_quest_id - 1;
+        p = cdata[cc].related_quest_id - 1;
         if (qdata(15, p) > 0)
         {
-            cdata[r1].emotion_icon = 122;
+            cdata[cc].emotion_icon = 122;
         }
         if (qdata(8, p) != 0)
         {
-            if (cdata[r1].turn % 2 == 1)
+            if (cdata[cc].turn % 2 == 1)
             {
-                cdata[r1].emotion_icon = 123;
+                cdata[cc].emotion_icon = 123;
             }
         }
     }
     if (gdata_executing_immediate_quest_type == 1009)
     {
-        if (r1 >= 57)
+        if (cc >= 57)
         {
-            if (cdata[r1].impression >= 53)
+            if (cdata[cc].impression >= 53)
             {
-                cdata[r1].emotion_icon = 225;
+                cdata[cc].emotion_icon = 225;
             }
         }
     }
@@ -20670,14 +20637,13 @@ void label_1520()
     {
         if (rnd(6) == 0)
         {
-            healhp(r1, rnd(sdata(154, r1) / 3 + 1) + 1);
+            healhp(cc, rnd(sdata(154, cc) / 3 + 1) + 1);
         }
         if (rnd(5) == 0)
         {
-            healmp(r1, rnd(sdata(155, r1) / 2 + 1) + 1);
+            healmp(cc, rnd(sdata(155, cc) / 2 + 1) + 1);
         }
     }
-    return;
 }
 
 
@@ -20838,13 +20804,12 @@ void label_1530()
     int eqtwowield = 0;
     if (cdatan(2, rc) == u8"mutant"s)
     {
-        r1 = rc;
         for (int cnt = 0,
-                 cnt_end = cnt + std::clamp(cdata[r1].level / 3, 0, 12);
+                 cnt_end = cnt + std::clamp(cdata[rc].level / 3, 0, 12);
              cnt < cnt_end;
              ++cnt)
         {
-            gain_new_body_part();
+            gain_new_body_part(rc);
         }
     }
 
@@ -21222,9 +21187,8 @@ void label_1530()
                     dbid = eqamulet1;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                equip_item(rc);
                 eqamulet1 = 0;
                 continue;
             }
@@ -21243,9 +21207,8 @@ void label_1530()
                     dbid = eqamulet2;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                equip_item(rc);
                 eqamulet2 = 0;
                 continue;
             }
@@ -21267,9 +21230,8 @@ void label_1530()
                     dbid = eqring1;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                equip_item(rc);
                 eqring1 = 0;
                 continue;
             }
@@ -21288,9 +21250,8 @@ void label_1530()
                     dbid = eqring2;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                equip_item(rc);
                 eqring2 = 0;
                 continue;
             }
@@ -21312,9 +21273,8 @@ void label_1530()
                     dbid = eqcloack;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                equip_item(rc);
                 eqcloack = 0;
                 continue;
             }
@@ -21337,9 +21297,8 @@ void label_1530()
                     dbid = eqgirdle;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                equip_item(rc);
                 eqgirdle = 0;
                 continue;
             }
@@ -21362,9 +21321,8 @@ void label_1530()
                     dbid = eqhelm;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                equip_item(rc);
                 eqhelm = 0;
                 continue;
             }
@@ -21387,9 +21345,8 @@ void label_1530()
                     dbid = eqarmor;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                equip_item(rc);
                 eqarmor = 0;
                 continue;
             }
@@ -21412,9 +21369,8 @@ void label_1530()
                     dbid = eqglove;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                equip_item(rc);
                 eqglove = 0;
                 continue;
             }
@@ -21437,9 +21393,8 @@ void label_1530()
                     dbid = eqboots;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                equip_item(rc);
                 eqboots = 0;
                 continue;
             }
@@ -21463,9 +21418,8 @@ void label_1530()
                     }
                     break;
                 }
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                equip_item(rc);
                 eqweapon1 = 0;
                 continue;
             }
@@ -21511,9 +21465,8 @@ void label_1530()
                     dbid = eqweapon1;
                     itemcreate(rc, dbid, -1, -1, 0);
                 }
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                equip_item(rc);
                 eqweapon1 = 0;
                 continue;
             }
@@ -21549,9 +21502,8 @@ void label_1530()
                     itemcreate(rc, dbid, -1, -1, 0);
                 }
                 eqweapon2 = 0;
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                equip_item(rc);
                 continue;
             }
             if (eqshield)
@@ -21569,9 +21521,8 @@ void label_1530()
                     dbid = eqshield;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                equip_item(rc);
                 eqshield = 0;
                 continue;
             }
@@ -21594,9 +21545,8 @@ void label_1530()
                     dbid = eqrange;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                equip_item(rc);
                 eqrange = 0;
                 continue;
             }
@@ -21619,9 +21569,8 @@ void label_1530()
                     dbid = eqammo;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                equip_item(rc);
                 eqammo = 0;
                 continue;
             }
@@ -22003,10 +21952,8 @@ void initialize_character()
         - rnd((cdata[rc].height / 5 + 1));
     cdata[rc].weight =
         cdata[rc].height * cdata[rc].height * (rnd(6) + 18) / 10000;
-    r1 = rc;
-    label_1456();
-    r1 = rc;
-    label_1512();
+    label_1456(rc);
+    label_1512(rc);
     if (cdata[rc].portrait == 0)
     {
         cdata[rc].portrait = rnd(32);
@@ -22014,8 +21961,7 @@ void initialize_character()
     cdata[rc].personality = rnd(4);
     cdata[rc].talk_type = rnd(7);
     label_1530();
-    r1 = rc;
-    refresh_character();
+    refresh_character(rc);
     ++gdata_other_character_count;
     cdata[rc].hp = cdata[rc].max_hp;
     cdata[rc].mp = cdata[rc].max_mp;
@@ -22038,10 +21984,10 @@ void initialize_character()
 
 void initialize_pc_character()
 {
-    cdata[rc].quality = 2;
-    cdata[rc].relationship = 10;
-    cdata[rc].original_relationship = 10;
-    cbitmod(967, rc, 1);
+    cdata[0].quality = 2;
+    cdata[0].relationship = 10;
+    cdata[0].original_relationship = 10;
+    cbitmod(967, 0, 1);
     flt();
     itemcreate(0, 333, -1, -1, 0);
     inv[ci].number = 8;
@@ -22084,8 +22030,8 @@ void initialize_pc_character()
         itemcreate(0, 378, -1, -1, 0);
     }
     gain_race_feat();
-    cdata[r1].skill_bonus = 5 + trait(154);
-    cdata[r1].total_skill_bonus = 5 + trait(154);
+    cdata[0].skill_bonus = 5 + trait(154);
+    cdata[0].total_skill_bonus = 5 + trait(154);
     for (const auto& cnt : items(0))
     {
         if (inv[cnt].number == 0)
@@ -22094,8 +22040,7 @@ void initialize_pc_character()
         }
         inv[cnt].identification_state = 3;
     }
-    r1 = 0;
-    refresh_character();
+    refresh_character(0);
     return;
 }
 
@@ -22197,8 +22142,7 @@ void label_15390()
             continue;
         }
     }
-    r1 = rc;
-    refresh_character();
+    refresh_character(rc);
     return;
 }
 
@@ -22225,17 +22169,15 @@ void label_1540()
         p = rnd(5) + 1;
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
-            r1 = rc;
             r2 = 1;
-            gain_level();
+            gain_level(rc);
         }
     }
     if (cdata[rc].id == 326)
     {
         skillmod(183, rc, 1000);
     }
-    r1 = rc;
-    refresh_character();
+    refresh_character(rc);
     return;
 }
 
@@ -24616,10 +24558,10 @@ void cook()
             + u8"を作った。"s,
         u8"You cook "s + s + u8" with "s + itemname(cooktool, 1)
             + u8" and make "s + itemname(ci, 1) + u8"."s));
-    r1 = inv[ci].param2;
-    if (r1 > 2)
+    int rank = inv[ci].param2;
+    if (rank > 2)
     {
-        skillexp(184, cc, 30 + r1 * 5);
+        skillexp(184, cc, 30 + rank * 5);
     }
     refresh_burden_state();
     return;
@@ -34663,11 +34605,9 @@ label_1857_internal:
         txt(lang(
             itemname(ci, 1) + u8"を製造した。"s,
             u8"You producted "s + itemname(ci, 1) + u8"."s));
-        r1 = matval;
         r2 = matuse;
-        label_1472();
-        r1 = 0;
-        refresh_character();
+        label_1472(matval);
+        refresh_character(0);
         render_hud();
         page_save();
         goto label_18551_internal;
@@ -36296,255 +36236,254 @@ void set_npc_religion()
 
 
 
-void apply_god_blessing()
+void apply_god_blessing(int cc)
 {
-    if (cdata[r1].god_id == core_god::mani)
+    if (cdata[cc].god_id == core_god::mani)
     {
-        if (sdata(12, r1) > 0)
+        if (sdata(12, cc) > 0)
         {
-            sdata(12, r1) += std::clamp(
-                cdata[r1].piety_point / 400, 1, 8 + sdata(181, 0) / 10);
+            sdata(12, cc) += std::clamp(
+                cdata[cc].piety_point / 400, 1, 8 + sdata(181, 0) / 10);
         }
-        if (sdata(13, r1) > 0)
+        if (sdata(13, cc) > 0)
         {
-            sdata(13, r1) += std::clamp(
-                cdata[r1].piety_point / 300, 1, 14 + sdata(181, 0) / 10);
+            sdata(13, cc) += std::clamp(
+                cdata[cc].piety_point / 300, 1, 14 + sdata(181, 0) / 10);
         }
-        if (sdata(154, r1) > 0)
+        if (sdata(154, cc) > 0)
         {
-            sdata(154, r1) += std::clamp(
-                cdata[r1].piety_point / 500, 1, 8 + sdata(181, 0) / 10);
+            sdata(154, cc) += std::clamp(
+                cdata[cc].piety_point / 500, 1, 8 + sdata(181, 0) / 10);
         }
-        if (sdata(110, r1) > 0)
+        if (sdata(110, cc) > 0)
         {
-            sdata(110, r1) += std::clamp(
-                cdata[r1].piety_point / 250, 1, 18 + sdata(181, 0) / 10);
+            sdata(110, cc) += std::clamp(
+                cdata[cc].piety_point / 250, 1, 18 + sdata(181, 0) / 10);
         }
-        if (sdata(159, r1) > 0)
+        if (sdata(159, cc) > 0)
         {
-            sdata(159, r1) += std::clamp(
-                cdata[r1].piety_point / 350, 1, 8 + sdata(181, 0) / 10);
+            sdata(159, cc) += std::clamp(
+                cdata[cc].piety_point / 350, 1, 8 + sdata(181, 0) / 10);
         }
-        if (sdata(158, r1) > 0)
+        if (sdata(158, cc) > 0)
         {
-            sdata(158, r1) += std::clamp(
-                cdata[r1].piety_point / 250, 1, 16 + sdata(181, 0) / 10);
+            sdata(158, cc) += std::clamp(
+                cdata[cc].piety_point / 250, 1, 16 + sdata(181, 0) / 10);
         }
-        if (sdata(176, r1) > 0)
+        if (sdata(176, cc) > 0)
         {
-            sdata(176, r1) += std::clamp(
-                cdata[r1].piety_point / 300, 1, 10 + sdata(181, 0) / 10);
+            sdata(176, cc) += std::clamp(
+                cdata[cc].piety_point / 300, 1, 10 + sdata(181, 0) / 10);
         }
-        if (sdata(179, r1) > 0)
+        if (sdata(179, cc) > 0)
         {
-            sdata(179, r1) += std::clamp(
-                cdata[r1].piety_point / 350, 1, 12 + sdata(181, 0) / 10);
+            sdata(179, cc) += std::clamp(
+                cdata[cc].piety_point / 350, 1, 12 + sdata(181, 0) / 10);
         }
     }
-    if (cdata[r1].god_id == core_god::lulwy)
+    if (cdata[cc].god_id == core_god::lulwy)
     {
-        if (sdata(13, r1) > 0)
+        if (sdata(13, cc) > 0)
         {
-            sdata(13, r1) += std::clamp(
-                cdata[r1].piety_point / 450, 1, 10 + sdata(181, 0) / 10);
+            sdata(13, cc) += std::clamp(
+                cdata[cc].piety_point / 450, 1, 10 + sdata(181, 0) / 10);
         }
-        if (sdata(18, r1) > 0)
+        if (sdata(18, cc) > 0)
         {
-            sdata(18, r1) += std::clamp(
-                cdata[r1].piety_point / 350, 1, 30 + sdata(181, 0) / 10);
+            sdata(18, cc) += std::clamp(
+                cdata[cc].piety_point / 350, 1, 30 + sdata(181, 0) / 10);
         }
-        if (sdata(108, r1) > 0)
+        if (sdata(108, cc) > 0)
         {
-            sdata(108, r1) += std::clamp(
-                cdata[r1].piety_point / 350, 1, 16 + sdata(181, 0) / 10);
+            sdata(108, cc) += std::clamp(
+                cdata[cc].piety_point / 350, 1, 16 + sdata(181, 0) / 10);
         }
-        if (sdata(109, r1) > 0)
+        if (sdata(109, cc) > 0)
         {
-            sdata(109, r1) += std::clamp(
-                cdata[r1].piety_point / 450, 1, 12 + sdata(181, 0) / 10);
+            sdata(109, cc) += std::clamp(
+                cdata[cc].piety_point / 450, 1, 12 + sdata(181, 0) / 10);
         }
-        if (sdata(157, r1) > 0)
+        if (sdata(157, cc) > 0)
         {
-            sdata(157, r1) += std::clamp(
-                cdata[r1].piety_point / 450, 1, 12 + sdata(181, 0) / 10);
+            sdata(157, cc) += std::clamp(
+                cdata[cc].piety_point / 450, 1, 12 + sdata(181, 0) / 10);
         }
-        if (sdata(174, r1) > 0)
+        if (sdata(174, cc) > 0)
         {
-            sdata(174, r1) += std::clamp(
-                cdata[r1].piety_point / 550, 1, 8 + sdata(181, 0) / 10);
+            sdata(174, cc) += std::clamp(
+                cdata[cc].piety_point / 550, 1, 8 + sdata(181, 0) / 10);
         }
     }
-    if (cdata[r1].god_id == core_god::itzpalt)
+    if (cdata[cc].god_id == core_god::itzpalt)
     {
-        if (sdata(16, r1) > 0)
+        if (sdata(16, cc) > 0)
         {
-            sdata(16, r1) += std::clamp(
-                cdata[r1].piety_point / 300, 1, 18 + sdata(181, 0) / 10);
+            sdata(16, cc) += std::clamp(
+                cdata[cc].piety_point / 300, 1, 18 + sdata(181, 0) / 10);
         }
-        if (sdata(155, r1) > 0)
+        if (sdata(155, cc) > 0)
         {
-            sdata(155, r1) += std::clamp(
-                cdata[r1].piety_point / 350, 1, 15 + sdata(181, 0) / 10);
+            sdata(155, cc) += std::clamp(
+                cdata[cc].piety_point / 350, 1, 15 + sdata(181, 0) / 10);
         }
-        if (sdata(50, r1) > 0)
+        if (sdata(50, cc) > 0)
         {
-            sdata(50, r1) += std::clamp(
-                cdata[r1].piety_point / 50, 1, 200 + sdata(181, 0) / 10);
+            sdata(50, cc) += std::clamp(
+                cdata[cc].piety_point / 50, 1, 200 + sdata(181, 0) / 10);
         }
-        if (sdata(51, r1) > 0)
+        if (sdata(51, cc) > 0)
         {
-            sdata(51, r1) += std::clamp(
-                cdata[r1].piety_point / 50, 1, 200 + sdata(181, 0) / 10);
+            sdata(51, cc) += std::clamp(
+                cdata[cc].piety_point / 50, 1, 200 + sdata(181, 0) / 10);
         }
-        if (sdata(52, r1) > 0)
+        if (sdata(52, cc) > 0)
         {
-            sdata(52, r1) += std::clamp(
-                cdata[r1].piety_point / 50, 1, 200 + sdata(181, 0) / 10);
+            sdata(52, cc) += std::clamp(
+                cdata[cc].piety_point / 50, 1, 200 + sdata(181, 0) / 10);
         }
     }
-    if (cdata[r1].god_id == core_god::ehekatl)
+    if (cdata[cc].god_id == core_god::ehekatl)
     {
-        if (sdata(17, r1) > 0)
+        if (sdata(17, cc) > 0)
         {
-            sdata(17, r1) += std::clamp(
-                cdata[r1].piety_point / 250, 1, 20 + sdata(181, 0) / 10);
+            sdata(17, cc) += std::clamp(
+                cdata[cc].piety_point / 250, 1, 20 + sdata(181, 0) / 10);
         }
-        if (sdata(19, r1) > 0)
+        if (sdata(19, cc) > 0)
         {
-            sdata(19, r1) += std::clamp(
-                cdata[r1].piety_point / 100, 1, 50 + sdata(181, 0) / 10);
+            sdata(19, cc) += std::clamp(
+                cdata[cc].piety_point / 100, 1, 50 + sdata(181, 0) / 10);
         }
-        if (sdata(173, r1) > 0)
+        if (sdata(173, cc) > 0)
         {
-            sdata(173, r1) += std::clamp(
-                cdata[r1].piety_point / 300, 1, 15 + sdata(181, 0) / 10);
+            sdata(173, cc) += std::clamp(
+                cdata[cc].piety_point / 300, 1, 15 + sdata(181, 0) / 10);
         }
-        if (sdata(164, r1) > 0)
+        if (sdata(164, cc) > 0)
         {
-            sdata(164, r1) += std::clamp(
-                cdata[r1].piety_point / 350, 1, 17 + sdata(181, 0) / 10);
+            sdata(164, cc) += std::clamp(
+                cdata[cc].piety_point / 350, 1, 17 + sdata(181, 0) / 10);
         }
-        if (sdata(185, r1) > 0)
+        if (sdata(185, cc) > 0)
         {
-            sdata(185, r1) += std::clamp(
-                cdata[r1].piety_point / 300, 1, 12 + sdata(181, 0) / 10);
+            sdata(185, cc) += std::clamp(
+                cdata[cc].piety_point / 300, 1, 12 + sdata(181, 0) / 10);
         }
-        if (sdata(158, r1) > 0)
+        if (sdata(158, cc) > 0)
         {
-            sdata(158, r1) += std::clamp(
-                cdata[r1].piety_point / 450, 1, 8 + sdata(181, 0) / 10);
+            sdata(158, cc) += std::clamp(
+                cdata[cc].piety_point / 450, 1, 8 + sdata(181, 0) / 10);
         }
     }
-    if (cdata[r1].god_id == core_god::opatos)
+    if (cdata[cc].god_id == core_god::opatos)
     {
-        if (sdata(10, r1) > 0)
+        if (sdata(10, cc) > 0)
         {
-            sdata(10, r1) += std::clamp(
-                cdata[r1].piety_point / 450, 1, 11 + sdata(181, 0) / 10);
+            sdata(10, cc) += std::clamp(
+                cdata[cc].piety_point / 450, 1, 11 + sdata(181, 0) / 10);
         }
-        if (sdata(11, r1) > 0)
+        if (sdata(11, cc) > 0)
         {
-            sdata(11, r1) += std::clamp(
-                cdata[r1].piety_point / 350, 1, 16 + sdata(181, 0) / 10);
+            sdata(11, cc) += std::clamp(
+                cdata[cc].piety_point / 350, 1, 16 + sdata(181, 0) / 10);
         }
-        if (sdata(168, r1) > 0)
+        if (sdata(168, cc) > 0)
         {
-            sdata(168, r1) += std::clamp(
-                cdata[r1].piety_point / 350, 1, 15 + sdata(181, 0) / 10);
+            sdata(168, cc) += std::clamp(
+                cdata[cc].piety_point / 350, 1, 15 + sdata(181, 0) / 10);
         }
-        if (sdata(153, r1) > 0)
+        if (sdata(153, cc) > 0)
         {
-            sdata(153, r1) += std::clamp(
-                cdata[r1].piety_point / 300, 1, 16 + sdata(181, 0) / 10);
+            sdata(153, cc) += std::clamp(
+                cdata[cc].piety_point / 300, 1, 16 + sdata(181, 0) / 10);
         }
-        if (sdata(163, r1) > 0)
+        if (sdata(163, cc) > 0)
         {
-            sdata(163, r1) += std::clamp(
-                cdata[r1].piety_point / 350, 1, 12 + sdata(181, 0) / 10);
+            sdata(163, cc) += std::clamp(
+                cdata[cc].piety_point / 350, 1, 12 + sdata(181, 0) / 10);
         }
-        if (sdata(174, r1) > 0)
+        if (sdata(174, cc) > 0)
         {
-            sdata(174, r1) += std::clamp(
-                cdata[r1].piety_point / 450, 1, 8 + sdata(181, 0) / 10);
+            sdata(174, cc) += std::clamp(
+                cdata[cc].piety_point / 450, 1, 8 + sdata(181, 0) / 10);
         }
     }
-    if (cdata[r1].god_id == core_god::jure)
+    if (cdata[cc].god_id == core_god::jure)
     {
-        if (sdata(15, r1) > 0)
+        if (sdata(15, cc) > 0)
         {
-            sdata(15, r1) += std::clamp(
-                cdata[r1].piety_point / 300, 1, 16 + sdata(181, 0) / 10);
+            sdata(15, cc) += std::clamp(
+                cdata[cc].piety_point / 300, 1, 16 + sdata(181, 0) / 10);
         }
-        if (sdata(154, r1) > 0)
+        if (sdata(154, cc) > 0)
         {
-            sdata(154, r1) += std::clamp(
-                cdata[r1].piety_point / 250, 1, 18 + sdata(181, 0) / 10);
+            sdata(154, cc) += std::clamp(
+                cdata[cc].piety_point / 250, 1, 18 + sdata(181, 0) / 10);
         }
-        if (sdata(155, r1) > 0)
+        if (sdata(155, cc) > 0)
         {
-            sdata(155, r1) += std::clamp(
-                cdata[r1].piety_point / 400, 1, 10 + sdata(181, 0) / 10);
+            sdata(155, cc) += std::clamp(
+                cdata[cc].piety_point / 400, 1, 10 + sdata(181, 0) / 10);
         }
-        if (sdata(161, r1) > 0)
+        if (sdata(161, cc) > 0)
         {
-            sdata(161, r1) += std::clamp(
-                cdata[r1].piety_point / 400, 1, 9 + sdata(181, 0) / 10);
+            sdata(161, cc) += std::clamp(
+                cdata[cc].piety_point / 400, 1, 9 + sdata(181, 0) / 10);
         }
-        if (sdata(184, r1) > 0)
+        if (sdata(184, cc) > 0)
         {
-            sdata(184, r1) += std::clamp(
-                cdata[r1].piety_point / 450, 1, 8 + sdata(181, 0) / 10);
+            sdata(184, cc) += std::clamp(
+                cdata[cc].piety_point / 450, 1, 8 + sdata(181, 0) / 10);
         }
-        if (sdata(174, r1) > 0)
+        if (sdata(174, cc) > 0)
         {
-            sdata(174, r1) += std::clamp(
-                cdata[r1].piety_point / 400, 1, 10 + sdata(181, 0) / 10);
+            sdata(174, cc) += std::clamp(
+                cdata[cc].piety_point / 400, 1, 10 + sdata(181, 0) / 10);
         }
-        if (sdata(164, r1) > 0)
+        if (sdata(164, cc) > 0)
         {
-            sdata(164, r1) += std::clamp(
-                cdata[r1].piety_point / 400, 1, 12 + sdata(181, 0) / 10);
+            sdata(164, cc) += std::clamp(
+                cdata[cc].piety_point / 400, 1, 12 + sdata(181, 0) / 10);
         }
     }
-    if (cdata[r1].god_id == core_god::kumiromi)
+    if (cdata[cc].god_id == core_god::kumiromi)
     {
-        if (sdata(13, r1) > 0)
+        if (sdata(13, cc) > 0)
         {
-            sdata(13, r1) += std::clamp(
-                cdata[r1].piety_point / 400, 1, 8 + sdata(181, 0) / 10);
+            sdata(13, cc) += std::clamp(
+                cdata[cc].piety_point / 400, 1, 8 + sdata(181, 0) / 10);
         }
-        if (sdata(12, r1) > 0)
+        if (sdata(12, cc) > 0)
         {
-            sdata(12, r1) += std::clamp(
-                cdata[r1].piety_point / 350, 1, 12 + sdata(181, 0) / 10);
+            sdata(12, cc) += std::clamp(
+                cdata[cc].piety_point / 350, 1, 12 + sdata(181, 0) / 10);
         }
-        if (sdata(14, r1) > 0)
+        if (sdata(14, cc) > 0)
         {
-            sdata(14, r1) += std::clamp(
-                cdata[r1].piety_point / 250, 1, 16 + sdata(181, 0) / 10);
+            sdata(14, cc) += std::clamp(
+                cdata[cc].piety_point / 250, 1, 16 + sdata(181, 0) / 10);
         }
-        if (sdata(180, r1) > 0)
+        if (sdata(180, cc) > 0)
         {
-            sdata(180, r1) += std::clamp(
-                cdata[r1].piety_point / 300, 1, 12 + sdata(181, 0) / 10);
+            sdata(180, cc) += std::clamp(
+                cdata[cc].piety_point / 300, 1, 12 + sdata(181, 0) / 10);
         }
-        if (sdata(178, r1) > 0)
+        if (sdata(178, cc) > 0)
         {
-            sdata(178, r1) += std::clamp(
-                cdata[r1].piety_point / 350, 1, 10 + sdata(181, 0) / 10);
+            sdata(178, cc) += std::clamp(
+                cdata[cc].piety_point / 350, 1, 10 + sdata(181, 0) / 10);
         }
-        if (sdata(177, r1) > 0)
+        if (sdata(177, cc) > 0)
         {
-            sdata(177, r1) += std::clamp(
-                cdata[r1].piety_point / 350, 1, 9 + sdata(181, 0) / 10);
+            sdata(177, cc) += std::clamp(
+                cdata[cc].piety_point / 350, 1, 9 + sdata(181, 0) / 10);
         }
-        if (sdata(150, r1) > 0)
+        if (sdata(150, cc) > 0)
         {
-            sdata(150, r1) += std::clamp(
-                cdata[r1].piety_point / 350, 1, 8 + sdata(181, 0) / 10);
+            sdata(150, cc) += std::clamp(
+                cdata[cc].piety_point / 350, 1, 8 + sdata(181, 0) / 10);
         }
     }
-    return;
 }
 
 
@@ -36825,8 +36764,7 @@ void label_1888()
         switch_religion();
         msg_halt();
     }
-    r1 = 0;
-    refresh_character();
+    refresh_character(0);
     return;
 }
 
@@ -39799,8 +39737,7 @@ int label_1932()
         }
         if (chara_unequip(rpref(10 + cnt * 2)))
         {
-            r1 = 0;
-            refresh_character();
+            refresh_character(0);
         }
         cell_refresh(
             inv[rpref(10 + cnt * 2)].position.x,
@@ -40201,8 +40138,7 @@ void label_1935()
     {
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
     }
-    r1 = 0;
-    refresh_character();
+    refresh_character(0);
     return;
 }
 
@@ -41875,14 +41811,13 @@ void label_1964()
     buff = "";
     notesel(buff);
     del_chara(56);
-    r1 = 56;
-    cdata[r1].piety_point = cdata[0].piety_point;
-    cdata[r1].god_id = cdata[0].god_id;
+    cdata[56].piety_point = cdata[0].piety_point;
+    cdata[56].god_id = cdata[0].god_id;
     for (int cnt = 0; cnt < 600; ++cnt)
     {
         sdata(cnt, rc) = 1;
     }
-    apply_god_blessing();
+    apply_god_blessing(56);
     if (!std::empty(cdata[0].god_id))
     {
         buff += u8"<title1>◆ "s + i18n::_(u8"god", cdata[0].god_id, u8"name")
@@ -41893,9 +41828,8 @@ void label_1964()
             cnvbonus(cnt, p);
         }
     }
-    r1 = 0;
     refreshmode = 1;
-    refresh_character();
+    refresh_character(0);
     refreshmode = 0;
     buff += u8"\n"s;
     buff += u8"<title1>◆ 特徴と特殊状態による能力の恩恵<def>\n"s;
@@ -42166,7 +42100,6 @@ label_196901_internal:
         }
         listn(0, cnt) = s;
     }
-    r1 = tc;
     if (cbit(16, tc) == 1)
     {
         list(0, listmax) = 1;
@@ -42496,8 +42429,7 @@ label_1970_internal:
                     cs = -10000 + tid;
                     snd(61);
                     ++trait(tid);
-                    r1 = tc;
-                    refresh_character();
+                    refresh_character(tc);
                     if (mode == 1)
                     {
                         if (gdata_acquirable_feat_count == 0)
@@ -48090,10 +48022,8 @@ label_2052_internal:
                     ""s + itemname(ci) + u8" can't be taken off."s));
                 goto label_2051_internal;
             }
-            r1 = cc;
-            unequip_item();
-            r1 = cc;
-            refresh_character();
+            unequip_item(cc);
+            refresh_character(cc);
             snd(13);
             txtnew();
             txt(lang(
@@ -49232,7 +49162,6 @@ void label_2076()
 
 void label_2077()
 {
-    r1 = 50;
     label_2152();
     turn_end();
     return;
@@ -52973,10 +52902,10 @@ void label_2146()
         }
     }
     rowactend(cc);
-    r1 = cdata[cc].quality_of_performance - sdata(183, cc) + 50;
-    if (r1 > 0)
+    int experience = cdata[cc].quality_of_performance - sdata(183, cc) + 50;
+    if (experience > 0)
     {
-        label_1467();
+        label_1467(0, experience);
     }
     return;
 }
@@ -53634,8 +53563,7 @@ void continuous_action_others()
                 cdata_body_part(tc, p) = cdata_body_part(tc, p) / 10000 * 10000;
             }
             inv[ci].body_part = 0;
-            r1 = tc;
-            refresh_character();
+            refresh_character(tc);
         }
         item_copy(ci, ti);
         inv[ti].number = in;
@@ -53958,7 +53886,7 @@ void label_2152()
     if (cdata[cc].continuous_action_id == 0)
     {
         cdata[cc].continuous_action_id = 4;
-        cdata[cc].continuous_action_turn = r1;
+        cdata[cc].continuous_action_turn = 50;
         txt(lang(u8"あなたは横になった。"s, u8"You lie down to rest."s));
         update_screen();
         return;
@@ -54381,7 +54309,7 @@ void label_2156()
             fishanime = 0;
             rowactend(cc);
             label_2155();
-            label_1470();
+            label_1470(0);
             cdata[0].emotion_icon = 306;
         }
         if (rnd(10) == 0)
@@ -54745,8 +54673,7 @@ void label_2161()
     }
     if (chara_unequip(ci))
     {
-        r1 = cc;
-        refresh_character();
+        refresh_character(cc);
     }
     --inv[ci].number;
     if (ci >= 5080)
@@ -55049,7 +54976,7 @@ int decode_book()
             (rnd(51) + 50) * (90 + sdata(165, cc) + (sdata(165, cc) > 0) * 20)
                     / std::clamp((100 + spell((efid - 400)) / 2), 50, 1000)
                 + 1);
-        label_1471();
+        label_1471(0);
         if (itemmemory(2, inv[ci].id) == 0)
         {
             itemmemory(2, inv[ci].id) = 1;
@@ -55174,9 +55101,8 @@ int label_2167()
     if (stat == 1)
     {
         cc = ccbk;
-        r1 = cc;
         r2 = spellbk;
-        gain_skill_experience_casting();
+        gain_skill_experience_casting(cc);
         return 1;
     }
     return 0;
@@ -55778,20 +55704,20 @@ int label_2172()
     if (efid >= 400 && efid < 467)
     {
         f = 0;
-        r1 = sdata(174, cc) * 20 + 100;
+        int skill = sdata(174, cc) * 20 + 100;
         if (inv[ci].curse_state >= 1)
         {
-            r1 = r1 * 125 / 100;
+            skill = skill * 125 / 100;
         }
         if (inv[ci].curse_state <= -1)
         {
-            r1 = r1 * 50 / 100;
+            skill = skill * 50 / 100;
         }
         else if (rnd(2))
         {
             f = 1;
         }
-        if (rnd((the_ability_db[efid].sdataref4 + 1)) / 2 <= r1)
+        if (rnd((the_ability_db[efid].sdataref4 + 1)) / 2 <= skill)
         {
             f = 1;
         }
@@ -55814,7 +55740,7 @@ int label_2172()
                 item_identify(ci, 1);
             }
         }
-        label_1469();
+        label_1469(cc);
     }
     else if (is_in_fov(cc))
     {
@@ -56851,9 +56777,8 @@ int pick_up_item()
         }
         else
         {
-            r1 = 0;
             r2 = sellgold;
-            label_1459();
+            label_1459(0);
         }
     }
     else
@@ -57003,13 +56928,13 @@ int drop_item()
 
 
 
-int equip_item()
+int equip_item(int cc)
 {
     if (ci == -1)
     {
         return 0;
     }
-    if (cdata_body_part(r1, body) % 10000 != 0)
+    if (cdata_body_part(cc, body) % 10000 != 0)
     {
         return 0;
     }
@@ -57018,49 +56943,48 @@ int equip_item()
         return 0;
     }
     item_separate(ci);
-    if (r1 == 0)
+    if (cc == 0)
     {
         item_identify(ci, 2);
     }
     inv[ci].body_part = body;
-    cdata_body_part(r1, body) =
-        cdata_body_part(r1, body) / 10000 * 10000 + ci + 1;
+    cdata_body_part(cc, body) =
+        cdata_body_part(cc, body) / 10000 * 10000 + ci + 1;
     return 1;
 }
 
 
 
-void unequip_item()
+void unequip_item(int cc)
 {
-    p = cdata_body_part(r1, body) % 10000;
+    p = cdata_body_part(cc, body) % 10000;
     if (p == 0)
     {
         rtval = -2;
         return;
     }
     ci = p - 1;
-    cdata_body_part(r1, body) = cdata_body_part(r1, body) / 10000 * 10000;
+    cdata_body_part(cc, body) = cdata_body_part(cc, body) / 10000 * 10000;
     inv[ci].body_part = 0;
-    item_stack(r1, ci);
-    return;
+    item_stack(cc, ci);
 }
 
 
 
-void label_2196()
+void label_2196(int cc)
 {
     for (int cnt = 100; cnt < 130; ++cnt)
     {
-        if (cdata_body_part(r1, cnt) / 10000 == body)
+        if (cdata_body_part(cc, cnt) / 10000 == body)
         {
-            p = cdata_body_part(r1, cnt) % 10000;
+            p = cdata_body_part(cc, cnt) % 10000;
             if (p == 0)
             {
                 continue;
             }
             --p;
             inv[p].body_part = 0;
-            cdata_body_part(r1, cnt) = cdata_body_part(r1, cnt) / 10000 * 10000;
+            cdata_body_part(cc, cnt) = cdata_body_part(cc, cnt) / 10000 * 10000;
         }
     }
     return;
@@ -57340,8 +57264,7 @@ void label_2201()
                     if (cdata[cc].quality < 4 && encfind(cc, 60010) == -1)
                     {
                         --cdata[cc].attr_adjs[0];
-                        r1 = cc;
-                        refresh_character();
+                        refresh_character(cc);
                         if (is_in_fov(cc))
                         {
                             txtef(8);
@@ -58521,8 +58444,7 @@ int unlock_box(int difficulty)
         return 0;
     }
     txt(lang(u8"開錠に成功した。"s, u8"You successfully unlock it."s));
-    r1 = cc;
-    gain_skill_experience_lock_picking();
+    gain_skill_experience_lock_picking(cc);
     return 1;
 }
 
@@ -59108,8 +59030,7 @@ void try_to_open_locked_door()
     {
         if (feat(2) > 0)
         {
-            r1 = cc;
-            gain_skill_experience_lock_picking();
+            gain_skill_experience_lock_picking(cc);
         }
         cell_featset(dx, dy, tile_dooropen, 20, 0, -1);
         if (is_in_fov(cc))
@@ -60453,8 +60374,7 @@ void dipcursed(int prm_1078, int)
             ""s + itemname(prm_1078) + u8" rusts."s));
         if (inv_getowner(prm_1078) != -1)
         {
-            r1 = inv_getowner(prm_1078);
-            refresh_character();
+            refresh_character(inv_getowner(prm_1078));
         }
         return;
     }
@@ -60713,8 +60633,7 @@ void do_dip_command()
                 itemname(ci) + u8" shine"s + _s2(inv[ci].number)
                     + u8" silvery."s));
             inv[ci].curse_state = 1;
-            r1 = cc;
-            refresh_character();
+            refresh_character(cc);
             turn_end();
             return;
         }
@@ -60726,8 +60645,7 @@ void do_dip_command()
                 itemname(ci) + u8" "s + is2(inv[ci].number)
                     + u8" wrapped by a dark aura."s));
             inv[ci].curse_state = -1;
-            r1 = cc;
-            refresh_character();
+            refresh_character(cc);
             turn_end();
             return;
         }
@@ -60923,8 +60841,7 @@ void do_use_command()
             randomize();
             exrand_randomize();
         }
-        r1 = cc;
-        refresh_character();
+        refresh_character(cc);
         update_screen();
         pc_turn(false);
     }
@@ -61116,8 +61033,7 @@ void do_use_command()
             gdata_torch = 0;
             txt(lang(u8"松明を消した。"s, u8"You put out the fire."s));
         }
-        r1 = 0;
-        refresh_character();
+        refresh_character(0);
         goto label_2229_internal;
     case 9:
     {
@@ -61655,8 +61571,7 @@ void do_use_command()
             u8"あなたは新たなフィートを獲得した！"s,
             u8"You gain a new feat."s));
         animeload(10, 0);
-        r1 = cc;
-        refresh_character();
+        refresh_character(cc);
         goto label_2229_internal;
     case 30:
         txt(lang(
@@ -61845,8 +61760,7 @@ void do_use_command()
                     cdatan(0, rc) + u8" gains new "s
                         + i18n::_(u8"ui", u8"body_part", u8"_"s + rtval)
                         + u8"!"s));
-                r1 = rc;
-                refresh_speed_correction_value(r1);
+                refresh_speed_correction_value(rc);
             }
         }
         {
@@ -61882,9 +61796,8 @@ void do_use_command()
             lv = (cdata[tc].level - cdata[rc].level) / 2 + 1;
             for (int cnt = 0, cnt_end = (lv); cnt < cnt_end; ++cnt)
             {
-                r1 = rc;
                 r2 = 1;
-                gain_level();
+                gain_level(rc);
             }
             txtef(2);
             txt(lang(
@@ -64452,7 +64365,7 @@ void label_2255()
     {
         snd(12);
         cdata[0].gold -= calcinvestvalue();
-        label_1466();
+        label_1466(0);
         cdata[tc].shop_rank += rnd(2) + 2;
         buff = lang(_thanks(2), u8"Thanks!"s);
     }
@@ -66680,9 +66593,8 @@ void label_2662()
         }
         if (cdata[rc].experience >= cdata[rc].required_experience)
         {
-            r1 = rc;
             r2 = 0;
-            gain_level();
+            gain_level(rc);
         }
     }
     notesel(newsbuff);
@@ -66816,7 +66728,6 @@ void wear_most_valuable_equipment()
     i = iequiploc(ci);
     if (i != 0)
     {
-        r1 = rc;
         eqdup = 0;
         for (int j = 0; j < 30; ++j)
         {
@@ -66836,7 +66747,7 @@ void wear_most_valuable_equipment()
             i = cdata_body_part(rc, body) % 10000;
             if (i == 0)
             {
-                equip_item();
+                equip_item(rc);
                 break;
             }
             --i;
@@ -66862,9 +66773,9 @@ void wear_most_valuable_equipment()
             if (f == 1)
             {
                 cibk = ci;
-                unequip_item();
+                unequip_item(rc);
                 ci = cibk;
-                equip_item();
+                equip_item(rc);
                 break;
             }
         }
@@ -68943,9 +68854,8 @@ label_2689_internal:
     }
     if (tc == 0)
     {
-        r1 = tc;
         r2 = cc;
-        int stat = try_to_perceive_npc();
+        int stat = try_to_perceive_npc(tc);
         if (stat == 1)
         {
             if (cdata[cc].relationship == -3)
@@ -69513,8 +69423,7 @@ void label_2693(bool retreat)
                             break;
                         }
                     }
-                    r1 = cc;
-                    refresh_character();
+                    refresh_character(cc);
                 }
             }
         }
@@ -72046,20 +71955,17 @@ void pass_one_turn(bool label_2738_flg)
             {
                 if (cdata[cnt].state == 1)
                 {
-                    r1 = cnt;
-                    label_1464();
+                    label_1464(cnt);
                 }
             }
         }
         if (p == 2)
         {
-            r1 = 0;
-            label_1465();
+            label_1465(0);
         }
         if (p == 3)
         {
-            r1 = 0;
-            label_1468();
+            label_1468(0);
         }
         if (p == 4)
         {
@@ -72558,8 +72464,7 @@ void pass_one_turn(bool label_2738_flg)
     }
     if (cbit(981, cc))
     {
-        r1 = cc;
-        refresh_character();
+        refresh_character(cc);
     }
     if (cdata[cc].state == 1)
     {
@@ -72602,9 +72507,8 @@ label_27411_internal:
             snd(60);
             msgalert = 1;
         }
-        r1 = cc;
         r2 = 0;
-        gain_level();
+        gain_level(cc);
         goto label_27411_internal;
     }
     return;
@@ -72621,8 +72525,7 @@ void turn_end()
         return;
     }
     hear = 0;
-    r1 = cc;
-    label_1520();
+    label_1520(cc);
     if (cc == 0)
     {
         chatturn = 10;
@@ -72653,7 +72556,7 @@ void turn_end()
                     -6);
             }
         }
-        get_hungry(r1);
+        get_hungry(cc);
         refreshspeed(cc);
     }
     else if (mdata(6) != 1)
