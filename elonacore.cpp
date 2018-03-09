@@ -19338,10 +19338,9 @@ void gain_skill_experience_lock_picking(int cc)
 
 
 
-void gain_skill_experience_detection()
+void gain_skill_experience_detection(int cc)
 {
     skillexp(159, cc, gdata_current_dungeon_level * 2 + 20);
-    return;
 }
 
 
@@ -20208,7 +20207,8 @@ int try_to_reveal()
     if (rnd(sdata(159, cc) * 15 + 20 + sdata(13, cc))
         > rnd(gdata_current_dungeon_level * 8 + 60))
     {
-        gain_skill_experience_detection();
+        r1 = cc;
+        gain_skill_experience_detection(r1);
         return 1;
     }
     return 0;
