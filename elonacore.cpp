@@ -20003,57 +20003,56 @@ void skillinit(int id, int cc, int initial_level)
 
 
 
-void label_1512()
+void label_1512(int cc)
 {
     for (int cnt = 50; cnt < 61; ++cnt)
     {
-        p = cdata[r1].level * 4 + 96;
+        p = cdata[cc].level * 4 + 96;
         if (p > 300)
         {
             p = 300;
         }
-        if (sdata(cnt, r1) != 0)
+        if (sdata(cnt, cc) != 0)
         {
-            if (sdata(cnt, r1) < 100 || sdata(cnt, r1) >= 500)
+            if (sdata(cnt, cc) < 100 || sdata(cnt, cc) >= 500)
             {
-                p = sdata(cnt, r1);
+                p = sdata(cnt, cc);
             }
             else
             {
-                p += sdata(cnt, r1);
+                p += sdata(cnt, cc);
             }
         }
-        if ((cnt == 60 && p < 500) || r1 == 0)
+        if ((cnt == 60 && p < 500) || cc == 0)
         {
             p = 100;
         }
-        sdata.get(cnt, r1).original_level = std::clamp(p(0), 1, 2000);
-        sdata.get(cnt, r1).experience = 0;
-        sdata.get(cnt, r1).potential = 0;
+        sdata.get(cnt, cc).original_level = std::clamp(p(0), 1, 2000);
+        sdata.get(cnt, cc).experience = 0;
+        sdata.get(cnt, cc).potential = 0;
     }
-    i = 4;
-    skillinit(100, r1, i);
-    skillinit(101, r1, i);
-    skillinit(103, r1, i);
-    skillinit(102, r1, i);
-    skillinit(104, r1, i);
-    skillinit(105, r1, i);
-    skillinit(107, r1, i);
-    skillinit(108, r1, i);
-    skillinit(111, r1, i);
-    skillinit(109, r1, i);
-    skillinit(173, r1, 4);
-    skillinit(154, r1, 4);
-    skillinit(155, r1, 4);
-    skillinit(106, r1, 4);
-    skillinit(157, r1, 4);
-    skillinit(181, r1, 4);
-    skillinit(171, r1, 4);
-    skillinit(170, r1, 4);
-    skillinit(169, r1, 4);
-    skillinit(168, r1, 3);
-    skillinit(19, r1, 50);
-    return;
+
+    skillinit(100, cc, 4);
+    skillinit(101, cc, 4);
+    skillinit(103, cc, 4);
+    skillinit(102, cc, 4);
+    skillinit(104, cc, 4);
+    skillinit(105, cc, 4);
+    skillinit(107, cc, 4);
+    skillinit(108, cc, 4);
+    skillinit(111, cc, 4);
+    skillinit(109, cc, 4);
+    skillinit(173, cc, 4);
+    skillinit(154, cc, 4);
+    skillinit(155, cc, 4);
+    skillinit(106, cc, 4);
+    skillinit(157, cc, 4);
+    skillinit(181, cc, 4);
+    skillinit(171, cc, 4);
+    skillinit(170, cc, 4);
+    skillinit(169, cc, 4);
+    skillinit(168, cc, 3);
+    skillinit(19, cc, 50);
 }
 
 
@@ -21995,7 +21994,7 @@ void initialize_character()
     r1 = rc;
     label_1456();
     r1 = rc;
-    label_1512();
+    label_1512(r1);
     if (cdata[rc].portrait == 0)
     {
         cdata[rc].portrait = rnd(32);
