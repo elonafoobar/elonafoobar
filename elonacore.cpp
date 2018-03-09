@@ -19367,23 +19367,22 @@ void gain_skill_experience_mana_capacity(int cc)
 
 
 
-void label_1464()
+void label_1464(int cc)
 {
-    if (cdata[r1].hp != cdata[r1].max_hp)
+    if (cdata[cc].hp != cdata[cc].max_hp)
     {
-        if (sdata(154, r1) < sdata(11, r1))
+        if (sdata(154, cc) < sdata(11, cc))
         {
-            skillexp(154, r1, 5 + sdata(154, r1) / 5, 1000);
+            skillexp(154, cc, 5 + sdata(154, cc) / 5, 1000);
         }
     }
-    if (cdata[r1].mp != cdata[r1].max_mp)
+    if (cdata[cc].mp != cdata[cc].max_mp)
     {
-        if (sdata(155, r1) < sdata(16, r1))
+        if (sdata(155, cc) < sdata(16, cc))
         {
-            skillexp(155, r1, 5 + sdata(155, r1) / 5, 1000);
+            skillexp(155, cc, 5 + sdata(155, cc) / 5, 1000);
         }
     }
-    return;
 }
 
 
@@ -72047,7 +72046,7 @@ void pass_one_turn(bool label_2738_flg)
                 if (cdata[cnt].state == 1)
                 {
                     r1 = cnt;
-                    label_1464();
+                    label_1464(r1);
                 }
             }
         }

@@ -1057,7 +1057,7 @@ void gain_skill_experience_lock_picking(int);
 void gain_skill_experience_detection(int);
 void gain_skill_experience_casting(int);
 void gain_skill_experience_mana_capacity(int);
-void label_1464();
+void label_1464(int);
 void label_1465();
 void label_1466();
 void label_1467();
