@@ -55764,20 +55764,20 @@ int label_2172()
     if (efid >= 400 && efid < 467)
     {
         f = 0;
-        r1 = sdata(174, cc) * 20 + 100;
+        int skill = sdata(174, cc) * 20 + 100;
         if (inv[ci].curse_state >= 1)
         {
-            r1 = r1 * 125 / 100;
+            skill = skill * 125 / 100;
         }
         if (inv[ci].curse_state <= -1)
         {
-            r1 = r1 * 50 / 100;
+            skill = skill * 50 / 100;
         }
         else if (rnd(2))
         {
             f = 1;
         }
-        if (rnd((the_ability_db[efid].sdataref4 + 1)) / 2 <= r1)
+        if (rnd((the_ability_db[efid].sdataref4 + 1)) / 2 <= skill)
         {
             f = 1;
         }
