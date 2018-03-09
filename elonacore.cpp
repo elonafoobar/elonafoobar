@@ -19415,7 +19415,7 @@ void label_1467(int cc, int experience)
 
 
 
-void label_1468()
+void label_1468(int cc)
 {
     if (cdata[0].inventory_weight_type == 0)
     {
@@ -19428,8 +19428,7 @@ void label_1468()
             return;
         }
     }
-    skillexp(153, 0, 4, 0, 1000);
-    return;
+    skillexp(153, cc, 4, 0, 1000);
 }
 
 
@@ -72057,7 +72056,7 @@ void pass_one_turn(bool label_2738_flg)
         if (p == 3)
         {
             r1 = 0;
-            label_1468();
+            label_1468(r1);
         }
         if (p == 4)
         {
