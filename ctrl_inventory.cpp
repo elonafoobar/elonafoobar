@@ -1477,7 +1477,7 @@ label_2061_internal:
                 }
             }
             r1 = cc;
-            equip_item();
+            equip_item(r1);
             r1 = cc;
             refresh_character(r1);
             screenupdate = -1;

@@ -21223,9 +21223,9 @@ void label_1530()
                     dbid = eqamulet1;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                r1 = rc;
+                equip_item(r1);
                 eqamulet1 = 0;
                 continue;
             }
@@ -21244,9 +21244,9 @@ void label_1530()
                     dbid = eqamulet2;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                r1 = rc;
+                equip_item(r1);
                 eqamulet2 = 0;
                 continue;
             }
@@ -21268,9 +21268,9 @@ void label_1530()
                     dbid = eqring1;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                r1 = rc;
+                equip_item(r1);
                 eqring1 = 0;
                 continue;
             }
@@ -21289,9 +21289,9 @@ void label_1530()
                     dbid = eqring2;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                r1 = rc;
+                equip_item(r1);
                 eqring2 = 0;
                 continue;
             }
@@ -21313,9 +21313,9 @@ void label_1530()
                     dbid = eqcloack;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                r1 = rc;
+                equip_item(r1);
                 eqcloack = 0;
                 continue;
             }
@@ -21338,9 +21338,9 @@ void label_1530()
                     dbid = eqgirdle;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                r1 = rc;
+                equip_item(r1);
                 eqgirdle = 0;
                 continue;
             }
@@ -21363,9 +21363,9 @@ void label_1530()
                     dbid = eqhelm;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                r1 = rc;
+                equip_item(r1);
                 eqhelm = 0;
                 continue;
             }
@@ -21388,9 +21388,9 @@ void label_1530()
                     dbid = eqarmor;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                r1 = rc;
+                equip_item(r1);
                 eqarmor = 0;
                 continue;
             }
@@ -21413,9 +21413,9 @@ void label_1530()
                     dbid = eqglove;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                r1 = rc;
+                equip_item(r1);
                 eqglove = 0;
                 continue;
             }
@@ -21438,9 +21438,9 @@ void label_1530()
                     dbid = eqboots;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                r1 = rc;
+                equip_item(r1);
                 eqboots = 0;
                 continue;
             }
@@ -21464,9 +21464,9 @@ void label_1530()
                     }
                     break;
                 }
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                r1 = rc;
+                equip_item(r1);
                 eqweapon1 = 0;
                 continue;
             }
@@ -21512,9 +21512,9 @@ void label_1530()
                     dbid = eqweapon1;
                     itemcreate(rc, dbid, -1, -1, 0);
                 }
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                r1 = rc;
+                equip_item(r1);
                 eqweapon1 = 0;
                 continue;
             }
@@ -21550,9 +21550,9 @@ void label_1530()
                     itemcreate(rc, dbid, -1, -1, 0);
                 }
                 eqweapon2 = 0;
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                r1 = rc;
+                equip_item(r1);
                 continue;
             }
             if (eqshield)
@@ -21570,9 +21570,9 @@ void label_1530()
                     dbid = eqshield;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                r1 = rc;
+                equip_item(r1);
                 eqshield = 0;
                 continue;
             }
@@ -21595,9 +21595,9 @@ void label_1530()
                     dbid = eqrange;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                r1 = rc;
+                equip_item(r1);
                 eqrange = 0;
                 continue;
             }
@@ -21620,9 +21620,9 @@ void label_1530()
                     dbid = eqammo;
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
-                r1 = rc;
                 body = 100 + i;
-                equip_item();
+                r1 = rc;
+                equip_item(r1);
                 eqammo = 0;
                 continue;
             }
@@ -57004,13 +57004,13 @@ int drop_item()
 
 
 
-int equip_item()
+int equip_item(int cc)
 {
     if (ci == -1)
     {
         return 0;
     }
-    if (cdata_body_part(r1, body) % 10000 != 0)
+    if (cdata_body_part(cc, body) % 10000 != 0)
     {
         return 0;
     }
@@ -57019,13 +57019,13 @@ int equip_item()
         return 0;
     }
     item_separate(ci);
-    if (r1 == 0)
+    if (cc == 0)
     {
         item_identify(ci, 2);
     }
     inv[ci].body_part = body;
-    cdata_body_part(r1, body) =
-        cdata_body_part(r1, body) / 10000 * 10000 + ci + 1;
+    cdata_body_part(cc, body) =
+        cdata_body_part(cc, body) / 10000 * 10000 + ci + 1;
     return 1;
 }
 
@@ -66837,7 +66837,8 @@ void wear_most_valuable_equipment()
             i = cdata_body_part(rc, body) % 10000;
             if (i == 0)
             {
-                equip_item();
+                r1 = r1;
+                equip_item(r1);
                 break;
             }
             --i;
@@ -66865,7 +66866,8 @@ void wear_most_valuable_equipment()
                 cibk = ci;
                 unequip_item();
                 ci = cibk;
-                equip_item();
+                r1 = r1;
+                equip_item(r1);
                 break;
             }
         }
