@@ -19450,10 +19450,9 @@ void label_1470(int cc)
 
 
 
-void label_1471()
+void label_1471(int cc)
 {
-    skillexp(165, 0, 10 + the_ability_db[efid].sdataref4 / 5);
-    return;
+    skillexp(165, cc, 10 + the_ability_db[efid].sdataref4 / 5);
 }
 
 
@@ -55042,7 +55041,8 @@ int decode_book()
             (rnd(51) + 50) * (90 + sdata(165, cc) + (sdata(165, cc) > 0) * 20)
                     / std::clamp((100 + spell((efid - 400)) / 2), 50, 1000)
                 + 1);
-        label_1471();
+        r1 = 0;
+        label_1471(r1);
         if (itemmemory(2, inv[ci].id) == 0)
         {
             itemmemory(2, inv[ci].id) = 1;
