@@ -1318,7 +1318,7 @@ void label_2188();
 void do_throw_command();
 void label_2190();
 void unequip_item();
-void label_2196();
+void label_2196(int);
 void do_read_commad();
 void do_eat_command();
 void do_drink_command();

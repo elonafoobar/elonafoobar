@@ -12775,19 +12775,19 @@ void modcorrupt(int prm_815)
                 {
                     body = 9;
                     r1 = 0;
-                    label_2196();
+                    label_2196(r1);
                 }
                 if (tid == 205)
                 {
                     body = 3;
                     r1 = 0;
-                    label_2196();
+                    label_2196(r1);
                 }
                 if (tid == 206)
                 {
                     body = 2;
                     r1 = 0;
-                    label_2196();
+                    label_2196(r1);
                 }
                 break;
             }
@@ -57048,20 +57048,20 @@ void unequip_item()
 
 
 
-void label_2196()
+void label_2196(int cc)
 {
     for (int cnt = 100; cnt < 130; ++cnt)
     {
-        if (cdata_body_part(r1, cnt) / 10000 == body)
+        if (cdata_body_part(cc, cnt) / 10000 == body)
         {
-            p = cdata_body_part(r1, cnt) % 10000;
+            p = cdata_body_part(cc, cnt) % 10000;
             if (p == 0)
             {
                 continue;
             }
             --p;
             inv[p].body_part = 0;
-            cdata_body_part(r1, cnt) = cdata_body_part(r1, cnt) / 10000 * 10000;
+            cdata_body_part(cc, cnt) = cdata_body_part(cc, cnt) / 10000 * 10000;
         }
     }
     return;
