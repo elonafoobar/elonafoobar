@@ -2474,7 +2474,7 @@ label_2181_internal:
             }
             animeload(8, tc);
         }
-        r1 = r1;
+        r1 = tc;
         refresh_character(r1);
         break;
     case 1105:
