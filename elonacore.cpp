@@ -19345,18 +19345,17 @@ void gain_skill_experience_detection(int cc)
 
 
 
-void gain_skill_experience_casting()
+void gain_skill_experience_casting(int cc)
 {
-    if (r1 == 0)
+    if (cc == 0)
     {
-        skillexp(r2, r1, the_ability_db[r2].cost * 4 + 20, 4, 5);
-        skillexp(172, r1, the_ability_db[r2].cost + 10, 5);
+        skillexp(r2, cc, the_ability_db[r2].cost * 4 + 20, 4, 5);
+        skillexp(172, cc, the_ability_db[r2].cost + 10, 5);
     }
     else
     {
-        skillexp(172, r1, the_ability_db[r2].cost + 10, 5);
+        skillexp(172, cc, the_ability_db[r2].cost + 10, 5);
     }
-    return;
 }
 
 
@@ -55174,9 +55173,9 @@ int label_2167()
     if (stat == 1)
     {
         cc = ccbk;
-        r1 = cc;
         r2 = spellbk;
-        gain_skill_experience_casting();
+        r1 = cc;
+        gain_skill_experience_casting(r1);
         return 1;
     }
     return 0;
