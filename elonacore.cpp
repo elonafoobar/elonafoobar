@@ -19387,7 +19387,7 @@ void label_1464(int cc)
 
 
 
-void label_1465()
+void label_1465(int cc)
 {
     if (mdata(6) == 1)
     {
@@ -19396,8 +19396,7 @@ void label_1465()
             return;
         }
     }
-    skillexp(157, 0, 2, 0, 1000);
-    return;
+    skillexp(157, cc, 2, 0, 1000);
 }
 
 
@@ -72053,7 +72052,7 @@ void pass_one_turn(bool label_2738_flg)
         if (p == 2)
         {
             r1 = 0;
-            label_1465();
+            label_1465(r1);
         }
         if (p == 3)
         {
