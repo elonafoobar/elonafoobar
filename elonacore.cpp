@@ -19408,10 +19408,9 @@ void label_1466(int cc)
 
 
 
-void label_1467()
+void label_1467(int cc, int experience)
 {
-    skillexp(183, cc, r1, 0, 0);
-    return;
+    skillexp(183, cc, experience, 0, 0);
 }
 
 
@@ -52968,10 +52967,11 @@ void label_2146()
         }
     }
     rowactend(cc);
-    r1 = cdata[cc].quality_of_performance - sdata(183, cc) + 50;
-    if (r1 > 0)
+    int experience = cdata[cc].quality_of_performance - sdata(183, cc) + 50;
+    if (experience > 0)
     {
-        label_1467();
+        r1 = 0;
+        label_1467(r1, experience);
     }
     return;
 }

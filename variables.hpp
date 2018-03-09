@@ -1060,7 +1060,7 @@ void gain_skill_experience_mana_capacity(int);
 void label_1464(int);
 void label_1465(int);
 void label_1466(int);
-void label_1467();
+void label_1467(int, int);
 void label_1468();
 void label_1469();
 void label_1470();
