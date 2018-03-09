@@ -19401,10 +19401,9 @@ void label_1465(int cc)
 
 
 
-void label_1466()
+void label_1466(int cc)
 {
-    skillexp(160, 0, 600);
-    return;
+    skillexp(160, cc, 600);
 }
 
 
@@ -64448,7 +64447,8 @@ void label_2255()
     {
         snd(12);
         cdata[0].gold -= calcinvestvalue();
-        label_1466();
+        r1 = 0;
+        label_1466(r1);
         cdata[tc].shop_rank += rnd(2) + 2;
         buff = lang(_thanks(2), u8"Thanks!"s);
     }
