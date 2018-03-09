@@ -19433,13 +19433,12 @@ void label_1468(int cc)
 
 
 
-void label_1469()
+void label_1469(int cc)
 {
     if (cc == 0)
     {
-        skillexp(174, 0, 40);
+        skillexp(174, cc, 40);
     }
-    return;
 }
 
 
@@ -55808,7 +55807,8 @@ int label_2172()
                 item_identify(ci, 1);
             }
         }
-        label_1469();
+        r1 = cc;
+        label_1469(r1);
     }
     else if (is_in_fov(cc))
     {
