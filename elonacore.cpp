@@ -41859,14 +41859,13 @@ void label_1964()
     buff = "";
     notesel(buff);
     del_chara(56);
-    r1 = 56;
-    cdata[r1].piety_point = cdata[0].piety_point;
-    cdata[r1].god_id = cdata[0].god_id;
+    cdata[56].piety_point = cdata[0].piety_point;
+    cdata[56].god_id = cdata[0].god_id;
     for (int cnt = 0; cnt < 600; ++cnt)
     {
         sdata(cnt, rc) = 1;
     }
-    r1 = r1;
+    r1 = 56;
     apply_god_blessing(r1);
     if (!std::empty(cdata[0].god_id))
     {
