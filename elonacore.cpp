@@ -66803,7 +66803,6 @@ void wear_most_valuable_equipment()
     i = iequiploc(ci);
     if (i != 0)
     {
-        r1 = rc;
         eqdup = 0;
         for (int j = 0; j < 30; ++j)
         {
@@ -66823,7 +66822,7 @@ void wear_most_valuable_equipment()
             i = cdata_body_part(rc, body) % 10000;
             if (i == 0)
             {
-                r1 = r1;
+                r1 = rc;
                 equip_item(r1);
                 break;
             }
@@ -66850,10 +66849,10 @@ void wear_most_valuable_equipment()
             if (f == 1)
             {
                 cibk = ci;
-                r1 = r1;
+                r1 = rc;
                 unequip_item(r1);
                 ci = cibk;
-                r1 = r1;
+                r1 = rc;
                 equip_item(r1);
                 break;
             }
