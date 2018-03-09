@@ -19019,17 +19019,17 @@ void refresh_speed_correction_value(int cc)
 
 
 
-void gain_new_body_part()
+void gain_new_body_part(int cc)
 {
     for (int i = 0; i < 30; ++i)
     {
-        if (cdata_body_part(r1, i) != 0)
+        if (cdata_body_part(cc, i) != 0)
         {
             continue;
         }
         if (rnd(7) == 0)
         {
-            cdata_body_part(r1, i) = 20000;
+            cdata_body_part(cc, i) = 20000;
             if (cm)
             {
                 break;
@@ -19037,17 +19037,17 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s
+                    name(cc) + u8"の身体から新たな"s
                         + i18n::_(u8"ui", u8"body_part", u8"_2")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
                         + i18n::_(u8"ui", u8"body_part", u8"_2") + u8"!"s));
                 break;
             }
         }
         if (rnd(9) == 0)
         {
-            cdata_body_part(r1, i) = 30000;
+            cdata_body_part(cc, i) = 30000;
             if (cm)
             {
                 break;
@@ -19055,17 +19055,17 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s
+                    name(cc) + u8"の身体から新たな"s
                         + i18n::_(u8"ui", u8"body_part", u8"_3")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
                         + i18n::_(u8"ui", u8"body_part", u8"_3") + u8"!"s));
                 break;
             }
         }
         if (rnd(8) == 0)
         {
-            cdata_body_part(r1, i) = 50000;
+            cdata_body_part(cc, i) = 50000;
             if (cm)
             {
                 break;
@@ -19073,17 +19073,17 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s
+                    name(cc) + u8"の身体から新たな"s
                         + i18n::_(u8"ui", u8"body_part", u8"_5")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
                         + i18n::_(u8"ui", u8"body_part", u8"_5") + u8"!"s));
                 break;
             }
         }
         if (rnd(4) == 0)
         {
-            cdata_body_part(r1, i) = 60000;
+            cdata_body_part(cc, i) = 60000;
             if (cm)
             {
                 break;
@@ -19091,17 +19091,17 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s
+                    name(cc) + u8"の身体から新たな"s
                         + i18n::_(u8"ui", u8"body_part", u8"_6")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
                         + i18n::_(u8"ui", u8"body_part", u8"_6") + u8"!"s));
                 break;
             }
         }
         if (rnd(6) == 0)
         {
-            cdata_body_part(r1, i) = 70000;
+            cdata_body_part(cc, i) = 70000;
             if (cm)
             {
                 break;
@@ -19109,17 +19109,17 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s
+                    name(cc) + u8"の身体から新たな"s
                         + i18n::_(u8"ui", u8"body_part", u8"_7")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
                         + i18n::_(u8"ui", u8"body_part", u8"_7") + u8"!"s));
                 break;
             }
         }
         if (rnd(5) == 0)
         {
-            cdata_body_part(r1, i) = 80000;
+            cdata_body_part(cc, i) = 80000;
             if (cm)
             {
                 break;
@@ -19127,17 +19127,17 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s
+                    name(cc) + u8"の身体から新たな"s
                         + i18n::_(u8"ui", u8"body_part", u8"_8")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
                         + i18n::_(u8"ui", u8"body_part", u8"_8") + u8"!"s));
                 break;
             }
         }
         if (rnd(5) == 0)
         {
-            cdata_body_part(r1, i) = 90000;
+            cdata_body_part(cc, i) = 90000;
             if (cm)
             {
                 break;
@@ -19145,17 +19145,17 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s
+                    name(cc) + u8"の身体から新たな"s
                         + i18n::_(u8"ui", u8"body_part", u8"_9")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
                         + i18n::_(u8"ui", u8"body_part", u8"_9") + u8"!"s));
                 break;
             }
         }
         if (rnd(1) == 0)
         {
-            cdata_body_part(r1, i) = 10000;
+            cdata_body_part(cc, i) = 10000;
             if (cm)
             {
                 break;
@@ -19163,18 +19163,17 @@ void gain_new_body_part()
             else
             {
                 txt(lang(
-                    name(r1) + u8"の身体から新たな"s
+                    name(cc) + u8"の身体から新たな"s
                         + i18n::_(u8"ui", u8"body_part", u8"_1")
                         + u8"が生えてきた！"s,
-                    name(r1) + u8" grow"s + _s(r1) + u8" a new "s
+                    name(cc) + u8" grow"s + _s(cc) + u8" a new "s
                         + i18n::_(u8"ui", u8"body_part", u8"_1") + u8"!"s));
                 break;
             }
         }
         break;
     }
-    refresh_speed_correction_value(r1);
-    return;
+    refresh_speed_correction_value(cc);
 }
 
 
@@ -19239,7 +19238,8 @@ void gain_level()
             {
                 if (cdata[r1].max_level < cdata[r1].level)
                 {
-                    gain_new_body_part();
+                    r1 = r1;
+                    gain_new_body_part(r1);
                 }
             }
         }
@@ -20831,7 +20831,8 @@ void label_1530()
              cnt < cnt_end;
              ++cnt)
         {
-            gain_new_body_part();
+            r1 = r1;
+            gain_new_body_part(r1);
         }
     }
 
