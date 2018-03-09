@@ -2600,8 +2600,7 @@ void talk_unique()
             rc = tc;
             new_ally_joins();
             cbitmod(971, rc, 1);
-            r1 = rc;
-            refresh_character(r1);
+            refresh_character(rc);
             talk_end();
             return;
         }

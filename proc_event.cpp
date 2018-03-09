@@ -364,8 +364,7 @@ void proc_event()
         txt(lang(u8"金貨を幾らか失った…"s, u8"You lost some money."s));
         cdata[0].gold -= cdata[0].gold / 3;
         decfame(0, 10);
-        r1 = 0;
-        refresh_character(r1);
+        refresh_character(0);
         autosave = 1 * (gdata_current_map != 35);
         break;
     case 20:

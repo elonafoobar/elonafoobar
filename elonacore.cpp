@@ -6239,8 +6239,7 @@ void change_item_material()
     }
     apply_item_material();
     label_1583();
-    r1 = cc;
-    refresh_character(r1);
+    refresh_character(cc);
     return;
 }
 
@@ -7212,8 +7211,7 @@ void skillgain(int cc, int id, int initial_level, int stock)
         modify_potential(cc, id, 50);
     }
     sdata.get(id, cc).original_level = std::clamp(lv, 0, 2000);
-    r1 = cc;
-    refresh_character(r1);
+    refresh_character(cc);
 }
 
 
@@ -7252,8 +7250,7 @@ int skillmod(int id, int cc, int experience)
             }
             txt(txtskillchange(id, cc, true));
         }
-        r1 = cc;
-        refresh_character(r1);
+        refresh_character(cc);
         return 1;
     }
     if (exp_at_m77 < 0)
@@ -7294,8 +7291,7 @@ int skillmod(int id, int cc, int experience)
                 }
             }
         }
-        r1 = cc;
-        refresh_character(r1);
+        refresh_character(cc);
         return 1;
     }
     sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
@@ -7409,8 +7405,7 @@ int skillexp(int id, int cc, int experience, int prm_572, int prm_573)
             }
             txt(txtskillchange(id, cc, true));
         }
-        r1 = cc;
-        refresh_character(r1);
+        refresh_character(cc);
         return 1;
     }
     if (exp_at_m77 < 0)
@@ -7452,8 +7447,7 @@ int skillexp(int id, int cc, int experience, int prm_572, int prm_573)
                 }
             }
         }
-        r1 = cc;
-        refresh_character(r1);
+        refresh_character(cc);
         return 1;
     }
     sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
@@ -11838,8 +11832,7 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
     }
     rc = tc_at_m125;
     wear_most_valuable_equipment_for_all_body_parts();
-    r1 = tc_at_m125;
-    refresh_character(r1);
+    refresh_character(tc_at_m125);
     return prm_784;
 }
 
@@ -12247,8 +12240,7 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
     cdata[prm_801].buffs[p_at_m132].id = prm_802;
     cdata[prm_801].buffs[p_at_m132].power = prm_803;
     cdata[prm_801].buffs[p_at_m132].turns = fixeddur_at_m132;
-    r1 = prm_801;
-    refresh_character(r1);
+    refresh_character(prm_801);
     return 0;
 }
 
@@ -12311,8 +12303,7 @@ void delbuff(int prm_805, int prm_806)
             }
         }
     }
-    r1 = prm_805;
-    refresh_character(r1);
+    refresh_character(prm_805);
     return;
 }
 
@@ -12682,8 +12673,7 @@ void resistmod(int cc, int element, int delta)
     snd(107);
     animeload(15, cc);
 
-    r1 = cc;
-    refresh_character(r1);
+    refresh_character(cc);
 }
 
 
@@ -12774,27 +12764,23 @@ void modcorrupt(int prm_815)
                 if (tid == 203)
                 {
                     body = 9;
-                    r1 = 0;
-                    label_2196(r1);
+                    label_2196(0);
                 }
                 if (tid == 205)
                 {
                     body = 3;
-                    r1 = 0;
-                    label_2196(r1);
+                    label_2196(0);
                 }
                 if (tid == 206)
                 {
                     body = 2;
-                    r1 = 0;
-                    label_2196(r1);
+                    label_2196(0);
                 }
                 break;
             }
         }
         animeload(8, 0);
-        r1 = 0;
-        refresh_character(r1);
+        refresh_character(0);
         return;
     }
     if (mod_at_m134 < 0)
@@ -12846,8 +12832,7 @@ void modcorrupt(int prm_815)
             }
         }
         animeload(10, 0);
-        r1 = 0;
-        refresh_character(r1);
+        refresh_character(0);
         return;
     }
     return;
@@ -14021,8 +14006,7 @@ int item_fire(int prm_840, int prm_841)
                             cdata_body_part(prm_840, inv[ci_at_m138].body_part)
                             / 10000 * 10000;
                         inv[ci_at_m138].body_part = 0;
-                        r1 = prm_840;
-                        refresh_character(r1);
+                        refresh_character(prm_840);
                     }
                     else if (is_in_fov(prm_840))
                     {
@@ -16031,8 +16015,7 @@ void dmgmp(int cc, int delta)
     }
     if (cdata[cc].mp < 0)
     {
-        r1 = cc;
-        gain_skill_experience_mana_capacity(r1);
+        gain_skill_experience_mana_capacity(cc);
         int damage = -cdata[cc].mp * 400 / (100 + sdata(164, cc) * 10);
         if (cc == 0)
         {
@@ -19250,8 +19233,7 @@ void gain_level(int cc)
     }
     if (cc >= 16)
     {
-        r1 = cc;
-        label_1455(r1);
+        label_1455(cc);
     }
     cc = cc;
     label_1456(cc);
@@ -19845,8 +19827,7 @@ void refresh_character(int cc)
     }
     if (cc == 0)
     {
-        r1 = cc;
-        apply_god_blessing(r1);
+        apply_god_blessing(cc);
         for (int cnt = 0; cnt < 217; ++cnt)
         {
             if (trait(cnt) != 0)
@@ -20194,8 +20175,7 @@ int try_to_reveal()
     if (rnd(sdata(159, cc) * 15 + 20 + sdata(13, cc))
         > rnd(gdata_current_dungeon_level * 8 + 60))
     {
-        r1 = cc;
-        gain_skill_experience_detection(r1);
+        gain_skill_experience_detection(cc);
         return 1;
     }
     return 0;
@@ -20829,8 +20809,7 @@ void label_1530()
              cnt < cnt_end;
              ++cnt)
         {
-            r1 = rc;
-            gain_new_body_part(r1);
+            gain_new_body_part(rc);
         }
     }
 
@@ -21209,8 +21188,7 @@ void label_1530()
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
                 body = 100 + i;
-                r1 = rc;
-                equip_item(r1);
+                equip_item(rc);
                 eqamulet1 = 0;
                 continue;
             }
@@ -21230,8 +21208,7 @@ void label_1530()
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
                 body = 100 + i;
-                r1 = rc;
-                equip_item(r1);
+                equip_item(rc);
                 eqamulet2 = 0;
                 continue;
             }
@@ -21254,8 +21231,7 @@ void label_1530()
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
                 body = 100 + i;
-                r1 = rc;
-                equip_item(r1);
+                equip_item(rc);
                 eqring1 = 0;
                 continue;
             }
@@ -21275,8 +21251,7 @@ void label_1530()
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
                 body = 100 + i;
-                r1 = rc;
-                equip_item(r1);
+                equip_item(rc);
                 eqring2 = 0;
                 continue;
             }
@@ -21299,8 +21274,7 @@ void label_1530()
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
                 body = 100 + i;
-                r1 = rc;
-                equip_item(r1);
+                equip_item(rc);
                 eqcloack = 0;
                 continue;
             }
@@ -21324,8 +21298,7 @@ void label_1530()
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
                 body = 100 + i;
-                r1 = rc;
-                equip_item(r1);
+                equip_item(rc);
                 eqgirdle = 0;
                 continue;
             }
@@ -21349,8 +21322,7 @@ void label_1530()
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
                 body = 100 + i;
-                r1 = rc;
-                equip_item(r1);
+                equip_item(rc);
                 eqhelm = 0;
                 continue;
             }
@@ -21374,8 +21346,7 @@ void label_1530()
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
                 body = 100 + i;
-                r1 = rc;
-                equip_item(r1);
+                equip_item(rc);
                 eqarmor = 0;
                 continue;
             }
@@ -21399,8 +21370,7 @@ void label_1530()
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
                 body = 100 + i;
-                r1 = rc;
-                equip_item(r1);
+                equip_item(rc);
                 eqglove = 0;
                 continue;
             }
@@ -21424,8 +21394,7 @@ void label_1530()
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
                 body = 100 + i;
-                r1 = rc;
-                equip_item(r1);
+                equip_item(rc);
                 eqboots = 0;
                 continue;
             }
@@ -21450,8 +21419,7 @@ void label_1530()
                     break;
                 }
                 body = 100 + i;
-                r1 = rc;
-                equip_item(r1);
+                equip_item(rc);
                 eqweapon1 = 0;
                 continue;
             }
@@ -21498,8 +21466,7 @@ void label_1530()
                     itemcreate(rc, dbid, -1, -1, 0);
                 }
                 body = 100 + i;
-                r1 = rc;
-                equip_item(r1);
+                equip_item(rc);
                 eqweapon1 = 0;
                 continue;
             }
@@ -21536,8 +21503,7 @@ void label_1530()
                 }
                 eqweapon2 = 0;
                 body = 100 + i;
-                r1 = rc;
-                equip_item(r1);
+                equip_item(rc);
                 continue;
             }
             if (eqshield)
@@ -21556,8 +21522,7 @@ void label_1530()
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
                 body = 100 + i;
-                r1 = rc;
-                equip_item(r1);
+                equip_item(rc);
                 eqshield = 0;
                 continue;
             }
@@ -21581,8 +21546,7 @@ void label_1530()
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
                 body = 100 + i;
-                r1 = rc;
-                equip_item(r1);
+                equip_item(rc);
                 eqrange = 0;
                 continue;
             }
@@ -21606,8 +21570,7 @@ void label_1530()
                 }
                 itemcreate(rc, dbid, -1, -1, 0);
                 body = 100 + i;
-                r1 = rc;
-                equip_item(r1);
+                equip_item(rc);
                 eqammo = 0;
                 continue;
             }
@@ -21989,10 +21952,8 @@ void initialize_character()
         - rnd((cdata[rc].height / 5 + 1));
     cdata[rc].weight =
         cdata[rc].height * cdata[rc].height * (rnd(6) + 18) / 10000;
-    r1 = rc;
-    label_1456(r1);
-    r1 = rc;
-    label_1512(r1);
+    label_1456(rc);
+    label_1512(rc);
     if (cdata[rc].portrait == 0)
     {
         cdata[rc].portrait = rnd(32);
@@ -22000,8 +21961,7 @@ void initialize_character()
     cdata[rc].personality = rnd(4);
     cdata[rc].talk_type = rnd(7);
     label_1530();
-    r1 = rc;
-    refresh_character(r1);
+    refresh_character(rc);
     ++gdata_other_character_count;
     cdata[rc].hp = cdata[rc].max_hp;
     cdata[rc].mp = cdata[rc].max_mp;
@@ -22080,8 +22040,7 @@ void initialize_pc_character()
         }
         inv[cnt].identification_state = 3;
     }
-    r1 = 0;
-    refresh_character(r1);
+    refresh_character(0);
     return;
 }
 
@@ -22183,8 +22142,7 @@ void label_15390()
             continue;
         }
     }
-    r1 = rc;
-    refresh_character(r1);
+    refresh_character(rc);
     return;
 }
 
@@ -22212,16 +22170,14 @@ void label_1540()
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
             r2 = 1;
-            r1 = rc;
-            gain_level(r1);
+            gain_level(rc);
         }
     }
     if (cdata[rc].id == 326)
     {
         skillmod(183, rc, 1000);
     }
-    r1 = rc;
-    refresh_character(r1);
+    refresh_character(rc);
     return;
 }
 
@@ -34651,8 +34607,7 @@ label_1857_internal:
             u8"You producted "s + itemname(ci, 1) + u8"."s));
         r2 = matuse;
         label_1472(matval);
-        r1 = 0;
-        refresh_character(r1);
+        refresh_character(0);
         render_hud();
         page_save();
         goto label_18551_internal;
@@ -36809,8 +36764,7 @@ void label_1888()
         switch_religion();
         msg_halt();
     }
-    r1 = 0;
-    refresh_character(r1);
+    refresh_character(0);
     return;
 }
 
@@ -39783,8 +39737,7 @@ int label_1932()
         }
         if (chara_unequip(rpref(10 + cnt * 2)))
         {
-            r1 = 0;
-            refresh_character(r1);
+            refresh_character(0);
         }
         cell_refresh(
             inv[rpref(10 + cnt * 2)].position.x,
@@ -40185,8 +40138,7 @@ void label_1935()
     {
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
     }
-    r1 = 0;
-    refresh_character(r1);
+    refresh_character(0);
     return;
 }
 
@@ -41865,8 +41817,7 @@ void label_1964()
     {
         sdata(cnt, rc) = 1;
     }
-    r1 = 56;
-    apply_god_blessing(r1);
+    apply_god_blessing(56);
     if (!std::empty(cdata[0].god_id))
     {
         buff += u8"<title1>◆ "s + i18n::_(u8"god", cdata[0].god_id, u8"name")
@@ -41878,8 +41829,7 @@ void label_1964()
         }
     }
     refreshmode = 1;
-    r1 = 0;
-    refresh_character(r1);
+    refresh_character(0);
     refreshmode = 0;
     buff += u8"\n"s;
     buff += u8"<title1>◆ 特徴と特殊状態による能力の恩恵<def>\n"s;
@@ -42150,7 +42100,6 @@ label_196901_internal:
         }
         listn(0, cnt) = s;
     }
-    r1 = tc;
     if (cbit(16, tc) == 1)
     {
         list(0, listmax) = 1;
@@ -42480,8 +42429,7 @@ label_1970_internal:
                     cs = -10000 + tid;
                     snd(61);
                     ++trait(tid);
-                    r1 = tc;
-                    refresh_character(r1);
+                    refresh_character(tc);
                     if (mode == 1)
                     {
                         if (gdata_acquirable_feat_count == 0)
@@ -48074,10 +48022,8 @@ label_2052_internal:
                     ""s + itemname(ci) + u8" can't be taken off."s));
                 goto label_2051_internal;
             }
-            r1 = cc;
-            unequip_item(r1);
-            r1 = cc;
-            refresh_character(r1);
+            unequip_item(cc);
+            refresh_character(cc);
             snd(13);
             txtnew();
             txt(lang(
@@ -52959,8 +52905,7 @@ void label_2146()
     int experience = cdata[cc].quality_of_performance - sdata(183, cc) + 50;
     if (experience > 0)
     {
-        r1 = 0;
-        label_1467(r1, experience);
+        label_1467(0, experience);
     }
     return;
 }
@@ -53618,8 +53563,7 @@ void continuous_action_others()
                 cdata_body_part(tc, p) = cdata_body_part(tc, p) / 10000 * 10000;
             }
             inv[ci].body_part = 0;
-            r1 = tc;
-            refresh_character(r1);
+            refresh_character(tc);
         }
         item_copy(ci, ti);
         inv[ti].number = in;
@@ -54365,8 +54309,7 @@ void label_2156()
             fishanime = 0;
             rowactend(cc);
             label_2155();
-            r1 = 0;
-            label_1470(r1);
+            label_1470(0);
             cdata[0].emotion_icon = 306;
         }
         if (rnd(10) == 0)
@@ -54730,8 +54673,7 @@ void label_2161()
     }
     if (chara_unequip(ci))
     {
-        r1 = cc;
-        refresh_character(r1);
+        refresh_character(cc);
     }
     --inv[ci].number;
     if (ci >= 5080)
@@ -55034,8 +54976,7 @@ int decode_book()
             (rnd(51) + 50) * (90 + sdata(165, cc) + (sdata(165, cc) > 0) * 20)
                     / std::clamp((100 + spell((efid - 400)) / 2), 50, 1000)
                 + 1);
-        r1 = 0;
-        label_1471(r1);
+        label_1471(0);
         if (itemmemory(2, inv[ci].id) == 0)
         {
             itemmemory(2, inv[ci].id) = 1;
@@ -55161,8 +55102,7 @@ int label_2167()
     {
         cc = ccbk;
         r2 = spellbk;
-        r1 = cc;
-        gain_skill_experience_casting(r1);
+        gain_skill_experience_casting(cc);
         return 1;
     }
     return 0;
@@ -55800,8 +55740,7 @@ int label_2172()
                 item_identify(ci, 1);
             }
         }
-        r1 = cc;
-        label_1469(r1);
+        label_1469(cc);
     }
     else if (is_in_fov(cc))
     {
@@ -56839,8 +56778,7 @@ int pick_up_item()
         else
         {
             r2 = sellgold;
-            r1 = 0;
-            label_1459(r1);
+            label_1459(0);
         }
     }
     else
@@ -57326,8 +57264,7 @@ void label_2201()
                     if (cdata[cc].quality < 4 && encfind(cc, 60010) == -1)
                     {
                         --cdata[cc].attr_adjs[0];
-                        r1 = cc;
-                        refresh_character(r1);
+                        refresh_character(cc);
                         if (is_in_fov(cc))
                         {
                             txtef(8);
@@ -58507,8 +58444,7 @@ int unlock_box(int difficulty)
         return 0;
     }
     txt(lang(u8"開錠に成功した。"s, u8"You successfully unlock it."s));
-    r1 = cc;
-    gain_skill_experience_lock_picking(r1);
+    gain_skill_experience_lock_picking(cc);
     return 1;
 }
 
@@ -59094,8 +59030,7 @@ void try_to_open_locked_door()
     {
         if (feat(2) > 0)
         {
-            r1 = cc;
-            gain_skill_experience_lock_picking(r1);
+            gain_skill_experience_lock_picking(cc);
         }
         cell_featset(dx, dy, tile_dooropen, 20, 0, -1);
         if (is_in_fov(cc))
@@ -60439,8 +60374,7 @@ void dipcursed(int prm_1078, int)
             ""s + itemname(prm_1078) + u8" rusts."s));
         if (inv_getowner(prm_1078) != -1)
         {
-            r1 = inv_getowner(prm_1078);
-            refresh_character(r1);
+            refresh_character(inv_getowner(prm_1078));
         }
         return;
     }
@@ -60699,8 +60633,7 @@ void do_dip_command()
                 itemname(ci) + u8" shine"s + _s2(inv[ci].number)
                     + u8" silvery."s));
             inv[ci].curse_state = 1;
-            r1 = cc;
-            refresh_character(r1);
+            refresh_character(cc);
             turn_end();
             return;
         }
@@ -60712,8 +60645,7 @@ void do_dip_command()
                 itemname(ci) + u8" "s + is2(inv[ci].number)
                     + u8" wrapped by a dark aura."s));
             inv[ci].curse_state = -1;
-            r1 = cc;
-            refresh_character(r1);
+            refresh_character(cc);
             turn_end();
             return;
         }
@@ -60909,8 +60841,7 @@ void do_use_command()
             randomize();
             exrand_randomize();
         }
-        r1 = cc;
-        refresh_character(r1);
+        refresh_character(cc);
         update_screen();
         pc_turn(false);
     }
@@ -61102,8 +61033,7 @@ void do_use_command()
             gdata_torch = 0;
             txt(lang(u8"松明を消した。"s, u8"You put out the fire."s));
         }
-        r1 = 0;
-        refresh_character(r1);
+        refresh_character(0);
         goto label_2229_internal;
     case 9:
     {
@@ -61641,8 +61571,7 @@ void do_use_command()
             u8"あなたは新たなフィートを獲得した！"s,
             u8"You gain a new feat."s));
         animeload(10, 0);
-        r1 = cc;
-        refresh_character(r1);
+        refresh_character(cc);
         goto label_2229_internal;
     case 30:
         txt(lang(
@@ -61831,8 +61760,7 @@ void do_use_command()
                     cdatan(0, rc) + u8" gains new "s
                         + i18n::_(u8"ui", u8"body_part", u8"_"s + rtval)
                         + u8"!"s));
-                r1 = rc;
-                refresh_speed_correction_value(r1);
+                refresh_speed_correction_value(rc);
             }
         }
         {
@@ -61869,8 +61797,7 @@ void do_use_command()
             for (int cnt = 0, cnt_end = (lv); cnt < cnt_end; ++cnt)
             {
                 r2 = 1;
-                r1 = rc;
-                gain_level(r1);
+                gain_level(rc);
             }
             txtef(2);
             txt(lang(
@@ -64438,8 +64365,7 @@ void label_2255()
     {
         snd(12);
         cdata[0].gold -= calcinvestvalue();
-        r1 = 0;
-        label_1466(r1);
+        label_1466(0);
         cdata[tc].shop_rank += rnd(2) + 2;
         buff = lang(_thanks(2), u8"Thanks!"s);
     }
@@ -66668,8 +66594,7 @@ void label_2662()
         if (cdata[rc].experience >= cdata[rc].required_experience)
         {
             r2 = 0;
-            r1 = rc;
-            gain_level(r1);
+            gain_level(rc);
         }
     }
     notesel(newsbuff);
@@ -66822,8 +66747,7 @@ void wear_most_valuable_equipment()
             i = cdata_body_part(rc, body) % 10000;
             if (i == 0)
             {
-                r1 = rc;
-                equip_item(r1);
+                equip_item(rc);
                 break;
             }
             --i;
@@ -66849,11 +66773,9 @@ void wear_most_valuable_equipment()
             if (f == 1)
             {
                 cibk = ci;
-                r1 = rc;
-                unequip_item(r1);
+                unequip_item(rc);
                 ci = cibk;
-                r1 = rc;
-                equip_item(r1);
+                equip_item(rc);
                 break;
             }
         }
@@ -68933,8 +68855,7 @@ label_2689_internal:
     if (tc == 0)
     {
         r2 = cc;
-        r1 = tc;
-        int stat = try_to_perceive_npc(r1);
+        int stat = try_to_perceive_npc(tc);
         if (stat == 1)
         {
             if (cdata[cc].relationship == -3)
@@ -69502,8 +69423,7 @@ void label_2693(bool retreat)
                             break;
                         }
                     }
-                    r1 = cc;
-                    refresh_character(r1);
+                    refresh_character(cc);
                 }
             }
         }
@@ -72035,20 +71955,17 @@ void pass_one_turn(bool label_2738_flg)
             {
                 if (cdata[cnt].state == 1)
                 {
-                    r1 = cnt;
-                    label_1464(r1);
+                    label_1464(cnt);
                 }
             }
         }
         if (p == 2)
         {
-            r1 = 0;
-            label_1465(r1);
+            label_1465(0);
         }
         if (p == 3)
         {
-            r1 = 0;
-            label_1468(r1);
+            label_1468(0);
         }
         if (p == 4)
         {
@@ -72547,8 +72464,7 @@ void pass_one_turn(bool label_2738_flg)
     }
     if (cbit(981, cc))
     {
-        r1 = cc;
-        refresh_character(r1);
+        refresh_character(cc);
     }
     if (cdata[cc].state == 1)
     {
@@ -72592,8 +72508,7 @@ label_27411_internal:
             msgalert = 1;
         }
         r2 = 0;
-        r1 = cc;
-        gain_level(r1);
+        gain_level(cc);
         goto label_27411_internal;
     }
     return;
@@ -72610,8 +72525,7 @@ void turn_end()
         return;
     }
     hear = 0;
-    r1 = cc;
-    label_1520(r1);
+    label_1520(cc);
     if (cc == 0)
     {
         chatturn = 10;
@@ -72642,8 +72556,7 @@ void turn_end()
                     -6);
             }
         }
-        r1 = cc;
-        get_hungry(r1);
+        get_hungry(cc);
         refreshspeed(cc);
     }
     else if (mdata(6) != 1)

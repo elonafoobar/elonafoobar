@@ -468,7 +468,6 @@ inline int protdice1;
 inline int protdice2;
 inline int quickkeywait;
 inline int quickpage;
-inline int r1;
 inline int r2;
 inline int r;
 inline int raderh;
