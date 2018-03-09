@@ -19250,7 +19250,8 @@ void gain_level(int cc)
     }
     if (cc >= 16)
     {
-        label_1455();
+        r1 = cc;
+        label_1455(r1);
     }
     cc = cc;
     label_1456(cc);
@@ -19260,25 +19261,24 @@ void gain_level(int cc)
 
 
 
-void label_1455()
+void label_1455(int cc)
 {
     for (int cnt = 10; cnt < 20; ++cnt)
     {
-        sdata.get(cnt, r1).original_level += rnd(3);
-        if (sdata.get(cnt, r1).original_level > 2000)
+        sdata.get(cnt, cc).original_level += rnd(3);
+        if (sdata.get(cnt, cc).original_level > 2000)
         {
-            sdata.get(cnt, r1).original_level = 2000;
+            sdata.get(cnt, cc).original_level = 2000;
         }
     }
     for (int cnt = 0, cnt_end = (length(mainskill)); cnt < cnt_end; ++cnt)
     {
-        sdata.get(mainskill(cnt), r1).original_level += rnd(3);
-        if (sdata.get(mainskill(cnt), r1).original_level > 2000)
+        sdata.get(mainskill(cnt), cc).original_level += rnd(3);
+        if (sdata.get(mainskill(cnt), cc).original_level > 2000)
         {
-            sdata.get(mainskill(cnt), r1).original_level = 2000;
+            sdata.get(mainskill(cnt), cc).original_level = 2000;
         }
     }
-    return;
 }
 
 
