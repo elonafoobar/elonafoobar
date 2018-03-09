@@ -1063,7 +1063,7 @@ void label_1466(int);
 void label_1467(int, int);
 void label_1468(int);
 void label_1469(int);
-void label_1470();
+void label_1470(int);
 void label_1471();
 void label_1472();
 void refresh_character(int);

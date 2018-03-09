@@ -19443,10 +19443,9 @@ void label_1469(int cc)
 
 
 
-void label_1470()
+void label_1470(int cc)
 {
-    skillexp(185, 0, 100);
-    return;
+    skillexp(185, cc, 100);
 }
 
 
@@ -54374,7 +54373,8 @@ void label_2156()
             fishanime = 0;
             rowactend(cc);
             label_2155();
-            label_1470();
+            r1 = 0;
+            label_1470(r1);
             cdata[0].emotion_icon = 306;
         }
         if (rnd(10) == 0)
