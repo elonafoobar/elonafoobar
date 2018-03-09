@@ -20245,27 +20245,27 @@ int try_to_disarm_trap()
 
 
 
-int try_to_perceive_npc()
+int try_to_perceive_npc(int cc)
 {
     int cv = 0;
     cv = 8;
-    if (cdata[r1].position.x > cdata[r2].position.x - cv
-        && cdata[r1].position.x < cdata[r2].position.x + cv)
+    if (cdata[cc].position.x > cdata[r2].position.x - cv
+        && cdata[cc].position.x < cdata[r2].position.x + cv)
     {
-        if (cdata[r1].position.y > cdata[r2].position.y - cv
-            && cdata[r1].position.y < cdata[r2].position.y + cv)
+        if (cdata[cc].position.y > cdata[r2].position.y - cv
+            && cdata[cc].position.y < cdata[r2].position.y + cv)
         {
             if (cdata[r2].hate > 0)
             {
                 return 1;
             }
             p = dist(
-                    cdata[r1].position.x,
-                    cdata[r1].position.y,
+                    cdata[cc].position.x,
+                    cdata[cc].position.y,
                     cdata[r2].position.x,
                     cdata[r2].position.y)
                     * 150
-                + (sdata(157, r1) * 100 + 150) + 1;
+                + (sdata(157, cc) * 100 + 150) + 1;
             if (rnd(p) < rnd(sdata(13, r2) * 60 + 150))
             {
                 return 1;
@@ -68936,9 +68936,9 @@ label_2689_internal:
     }
     if (tc == 0)
     {
-        r1 = tc;
         r2 = cc;
-        int stat = try_to_perceive_npc();
+        r1 = tc;
+        int stat = try_to_perceive_npc(r1);
         if (stat == 1)
         {
             if (cdata[cc].relationship == -3)

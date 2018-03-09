@@ -673,7 +673,7 @@ int try_to_cast_spell();
 int try_to_reveal();
 int can_evade_trap();
 int try_to_disarm_trap();
-int try_to_perceive_npc();
+int try_to_perceive_npc(int);
 int do_create_character();
 int do_create_item(int, int, int);
 int initialize_quest_map_crop();
