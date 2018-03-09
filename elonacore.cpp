@@ -72642,6 +72642,7 @@ void turn_end()
                     -6);
             }
         }
+        r1 = cc;
         get_hungry(r1);
         refreshspeed(cc);
     }
