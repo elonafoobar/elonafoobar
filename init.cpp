@@ -42,14 +42,17 @@ namespace
 
 void main_loop()
 {
-redo:
-    try
+    while (1)
     {
-        turn_begin();
-    }
-    catch (elona_turn_sequence&)
-    {
-        goto redo;
+        try
+        {
+            turn_begin();
+            break;
+        }
+        catch (elona_turn_sequence&)
+        {
+            // Ignore this exception.
+        }
     }
 }
 
@@ -849,96 +852,98 @@ void main_title_menu()
     pos(0, 0);
     gcopy(4, 0, 0, windoww, windowh);
     gmode(2);
-label_2116_internal:
-    if (cfg_autonumlock)
+
+    while (1)
     {
-        // TODO
-        // if NumLock key is pressed, send an event to release the key.
-    }
-    redraw(0);
-    tx += (rnd(10) + 2) * p(1);
-    ty += (rnd(10) + 2) * p(2);
-    if (rnd(10) == 0)
-    {
-        tx = rnd(800);
-        ty = rnd(600);
-        p(1) = rnd(9) - 4;
-        p(2) = rnd(9) - 4;
-    }
-    f = 0;
-    if (tx > 40 && tx < 500 && ty > 100 && ty < 450)
-    {
-        f = 1;
-    }
-    if (f == 0)
-    {
+        if (cfg_autonumlock)
+        {
+            // TODO
+            // if NumLock key is pressed, send an event to release the key.
+        }
+        redraw(0);
+        tx += (rnd(10) + 2) * p(1);
+        ty += (rnd(10) + 2) * p(2);
         if (rnd(10) == 0)
         {
-            f = 2;
+            tx = rnd(800);
+            ty = rnd(600);
+            p(1) = rnd(9) - 4;
+            p(2) = rnd(9) - 4;
         }
-    }
-    for (int cnt = 0; cnt < 6; ++cnt)
-    {
-        x = wx + 40;
-        y = cnt * 35 + wy + 50;
-        display_customkey(key_list(cnt), x, y);
-        if (jp)
+        f = 0;
+        if (tx > 40 && tx < 500 && ty > 100 && ty < 450)
         {
-            font(lang(cfg_font1, cfg_font2), 11 - en * 2, 0);
-            pos(x + 40, y - 4);
-            mes(s(cnt * 2));
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
-            cs_list(cs == cnt, s(cnt * 2 + 1), x + 40, y + 8);
+            f = 1;
         }
-        else
+        if (f == 0)
         {
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-            cs_list(cs == cnt, s(cnt), x + 40, y + 1);
+            if (rnd(10) == 0)
+            {
+                f = 2;
+            }
+        }
+        for (int cnt = 0; cnt < 6; ++cnt)
+        {
+            x = wx + 40;
+            y = cnt * 35 + wy + 50;
+            display_customkey(key_list(cnt), x, y);
+            if (jp)
+            {
+                font(lang(cfg_font1, cfg_font2), 11 - en * 2, 0);
+                pos(x + 40, y - 4);
+                mes(s(cnt * 2));
+                font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+                cs_list(cs == cnt, s(cnt * 2 + 1), x + 40, y + 8);
+            }
+            else
+            {
+                font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+                cs_list(cs == cnt, s(cnt), x + 40, y + 1);
+            }
+        }
+        cs_bk = cs;
+        redraw(1);
+        await(cfg_wait1);
+        key_check();
+        cursor_check();
+        if (key == u8"b"s)
+        {
+            snd(20);
+            geneuse = "";
+            main_menu_new_game();
+            return;
+        }
+        if (key == u8"a"s)
+        {
+            snd(20);
+            main_menu_continue();
+            return;
+        }
+        if (key == u8"c"s)
+        {
+            snd(20);
+            main_menu_incarnate();
+            return;
+        }
+        if (key == u8"d"s)
+        {
+            snd(20);
+            exec(homepage, 16);
+        }
+        if (key == u8"e"s)
+        {
+            snd(20);
+            set_option();
+            return;
+        }
+        if (key == u8"f"s)
+        {
+            snd(20);
+            await(400);
+            finish_elona();
+            return;
         }
     }
-    cs_bk = cs;
-    redraw(1);
-    await(cfg_wait1);
-    key_check();
-    cursor_check();
-    if (key == u8"b"s)
-    {
-        snd(20);
-        geneuse = "";
-        main_menu_new_game();
-        return;
-    }
-    if (key == u8"a"s)
-    {
-        snd(20);
-        main_menu_continue();
-        return;
-    }
-    if (key == u8"c"s)
-    {
-        snd(20);
-        main_menu_incarnate();
-        return;
-    }
-    if (key == u8"d"s)
-    {
-        snd(20);
-        exec(homepage, 16);
-    }
-    if (key == u8"e"s)
-    {
-        snd(20);
-        set_option();
-        return;
-    }
-    if (key == u8"f"s)
-    {
-        snd(20);
-        await(400);
-        finish_elona();
-        return;
-    }
-    goto label_2116_internal;
 }
 
 
@@ -986,16 +991,17 @@ void main_menu_new_game()
             u8"Save slots are full. You have to delete some of your adventurers."s);
         draw_caption();
         redraw(1);
-    label_1542_internal:
-        key_check();
-        cursor_check();
-        await(cfg_wait1);
-        if (key != ""s)
+        while (1)
         {
-            main_title_menu();
-            return;
+            key_check();
+            cursor_check();
+            await(cfg_wait1);
+            if (key != ""s)
+            {
+                main_title_menu();
+                return;
+            }
         }
-        goto label_1542_internal;
         main_title_menu();
         return;
     }
@@ -1053,108 +1059,123 @@ void character_making_select_race()
         }
     }
     windowshadow = 1;
-label_1545_internal:
-    cs_bk = -1;
-    pagemax = (listmax - 1) / pagesize;
-    if (page < 0)
+
+    bool reset_page = true;
+    while (1)
     {
-        page = pagemax;
-    }
-    else if (page > pagemax)
-    {
-        page = 0;
-    }
-label_1546_internal:
-    redraw(0);
-    if (cs != cs_bk)
-    {
-        s(0) = lang(u8"種族の選択"s, u8"Race Selection"s);
-        s(1) = strhint3b;
-        display_window(
-            (windoww - 680) / 2 + inf_screenx, winposy(500, 1) + 20, 680, 500);
-        ++cmbg;
-        x = ww / 5 * 2;
-        y = wh - 80;
-        gmode(4, 180, 300, 50);
-        pos(wx + ww / 4, wy + wh / 2);
-        grotate(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
-        gmode(2);
-        display_topic(lang(u8"選択できる種族"s, u8"Race"s), wx + 28, wy + 30);
-        display_topic(lang(u8"種族の説明"s, u8"Detail"s), wx + 188, wy + 30);
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
+        if (reset_page)
         {
-            p = page * pagesize + cnt;
-            if (p >= listmax)
+            cs_bk = -1;
+            pagemax = (listmax - 1) / pagesize;
+            if (page < 0)
             {
+                page = pagemax;
+            }
+            else if (page > pagemax)
+            {
+                page = 0;
+            }
+            reset_page = false;
+        }
+
+        redraw(0);
+        if (cs != cs_bk)
+        {
+            s(0) = lang(u8"種族の選択"s, u8"Race Selection"s);
+            s(1) = strhint3b;
+            display_window(
+                (windoww - 680) / 2 + inf_screenx,
+                winposy(500, 1) + 20,
+                680,
+                500);
+            ++cmbg;
+            x = ww / 5 * 2;
+            y = wh - 80;
+            gmode(4, 180, 300, 50);
+            pos(wx + ww / 4, wy + wh / 2);
+            grotate(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
+            gmode(2);
+            display_topic(
+                lang(u8"選択できる種族"s, u8"Race"s), wx + 28, wy + 30);
+            display_topic(
+                lang(u8"種族の説明"s, u8"Detail"s), wx + 188, wy + 30);
+            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
+            {
+                p = page * pagesize + cnt;
+                if (p >= listmax)
+                {
+                    break;
+                }
+                key_list(cnt) = key_select(cnt);
+                keyrange = cnt + 1;
+                display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
+                cs_list(
+                    cs == cnt, listn(0, p), wx + 64, wy + 66 + cnt * 19 - 1);
+            }
+            cs_bk = cs;
+            pos(wx + 200, wy + 66);
+            del_chara(0);
+            access_race_info(3, listn(1, page * pagesize + cs));
+            access_race_info(11, listn(1, page * pagesize + cs));
+            show_race_or_class_info(0, 0);
+        }
+        redraw(1);
+        await(cfg_wait1);
+        key_check();
+        cursor_check();
+        for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
+        {
+            if (key == key_select(cnt))
+            {
+                p = page * pagesize + cnt;
                 break;
             }
-            key_list(cnt) = key_select(cnt);
-            keyrange = cnt + 1;
-            display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
-            cs_list(cs == cnt, listn(0, p), wx + 64, wy + 66 + cnt * 19 - 1);
+            else
+            {
+                p = -1;
+            }
         }
-        cs_bk = cs;
-        pos(wx + 200, wy + 66);
-        del_chara(0);
-        access_race_info(3, listn(1, page * pagesize + cs));
-        access_race_info(11, listn(1, page * pagesize + cs));
-        show_race_or_class_info(0, 0);
-    }
-    redraw(1);
-    await(cfg_wait1);
-    key_check();
-    cursor_check();
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
+        if (p != -1)
         {
-            p = page * pagesize + cnt;
-            break;
+            cmrace(0) = listn(1, p);
+            cmrace(1) = listn(0, p);
+            access_race_info(11, cmrace);
+            character_making_select_sex();
+            return;
         }
-        else
+        if (key == key_pageup)
         {
-            p = -1;
+            if (pagemax != 0)
+            {
+                snd(1);
+                ++page;
+                reset_page = true;
+                continue;
+            }
         }
-    }
-    if (p != -1)
-    {
-        cmrace(0) = listn(1, p);
-        cmrace(1) = listn(0, p);
-        access_race_info(11, cmrace);
-        character_making_select_sex();
-        return;
-    }
-    if (key == key_pageup)
-    {
-        if (pagemax != 0)
+        if (key == key_pagedown)
         {
-            snd(1);
-            ++page;
-            goto label_1545_internal;
+            if (pagemax != 0)
+            {
+                snd(1);
+                --page;
+                reset_page = true;
+                continue;
+            }
         }
-    }
-    if (key == key_pagedown)
-    {
-        if (pagemax != 0)
+        if (key == key_cancel)
         {
-            snd(1);
-            --page;
-            goto label_1545_internal;
+            main_title_menu();
+            return;
+        }
+        if (getkey(snail::key::f1))
+        {
+            show_game_help();
+            character_making_select_race();
+            return;
         }
     }
-    if (key == key_cancel)
-    {
-        main_title_menu();
-        return;
-    }
-    if (getkey(snail::key::f1))
-    {
-        show_game_help();
-        character_making_select_race();
-        return;
-    }
-    goto label_1546_internal;
 }
 
 
@@ -1184,58 +1205,60 @@ void character_making_select_sex(bool label_1548_flg)
         mes(u8"Gene from "s + geneuse);
     }
     windowshadow = 1;
-label_1549_internal:
-    redraw(0);
-    s(0) = lang(u8"性別の選択"s, u8"Gender Selection"s);
-    s(1) = strhint3b;
-    display_window(
-        (windoww - 370) / 2 + inf_screenx, winposy(168, 1) - 20, 370, 168);
-    x = ww / 2;
-    y = wh - 60;
-    gmode(4, 180, 300, 30);
-    pos(wx + ww / 2, wy + wh / 2);
-    grotate(2, 0, 0, 0, x, y);
-    gmode(2);
-    display_topic(lang(u8"性別の候補"s, u8"Gender"s), wx + 28, wy + 30);
-    listn(0, 0) = cnven(i18n::_(u8"ui", u8"male"));
-    listn(0, 1) = cnven(i18n::_(u8"ui", u8"female"));
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    for (int cnt = 0; cnt < 2; ++cnt)
+
+    while (1)
     {
-        key_list(cnt) = key_select(cnt);
-        keyrange = cnt + 1;
-        pos(wx + 38, wy + 66 + cnt * 19 - 2);
-        gcopy(3, cnt * 24 + 72, 30, 24, 18);
-        cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
+        redraw(0);
+        s(0) = lang(u8"性別の選択"s, u8"Gender Selection"s);
+        s(1) = strhint3b;
+        display_window(
+            (windoww - 370) / 2 + inf_screenx, winposy(168, 1) - 20, 370, 168);
+        x = ww / 2;
+        y = wh - 60;
+        gmode(4, 180, 300, 30);
+        pos(wx + ww / 2, wy + wh / 2);
+        grotate(2, 0, 0, 0, x, y);
+        gmode(2);
+        display_topic(lang(u8"性別の候補"s, u8"Gender"s), wx + 28, wy + 30);
+        listn(0, 0) = cnven(i18n::_(u8"ui", u8"male"));
+        listn(0, 1) = cnven(i18n::_(u8"ui", u8"female"));
+        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        for (int cnt = 0; cnt < 2; ++cnt)
+        {
+            key_list(cnt) = key_select(cnt);
+            keyrange = cnt + 1;
+            pos(wx + 38, wy + 66 + cnt * 19 - 2);
+            gcopy(3, cnt * 24 + 72, 30, 24, 18);
+            cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
+        }
+        cs_bk = cs;
+        redraw(1);
+        await(cfg_wait1);
+        key_check();
+        cursor_check();
+        if (key == key_select(0))
+        {
+            cmsex = 0;
+            character_making_select_class();
+            return;
+        }
+        if (key == key_select(1))
+        {
+            cmsex = 1;
+            character_making_select_class();
+            return;
+        }
+        if (key == key_cancel)
+        {
+            main_menu_new_game();
+            return;
+        }
+        if (getkey(snail::key::f1))
+        {
+            show_game_help();
+            character_making_select_sex(false);
+        }
     }
-    cs_bk = cs;
-    redraw(1);
-    await(cfg_wait1);
-    key_check();
-    cursor_check();
-    if (key == key_select(0))
-    {
-        cmsex = 0;
-        character_making_select_class();
-        return;
-    }
-    if (key == key_select(1))
-    {
-        cmsex = 1;
-        character_making_select_class();
-        return;
-    }
-    if (key == key_cancel)
-    {
-        main_menu_new_game();
-        return;
-    }
-    if (getkey(snail::key::f1))
-    {
-        show_game_help();
-        character_making_select_sex(false);
-    }
-    goto label_1549_internal;
 }
 
 
@@ -1287,78 +1310,85 @@ void character_making_select_class(bool label_1551_flg)
         listn(0, cnt) = classname;
     }
     windowshadow = 1;
-label_1552_internal:
-    if (cs != cs_bk)
+
+    while (1)
     {
-        redraw(0);
-        s(0) = lang(u8"職業の選択"s, u8"Class Selection"s);
-        s(1) = strhint3b;
-        display_window(
-            (windoww - 680) / 2 + inf_screenx, winposy(500, 1) + 20, 680, 500);
-        ++cmbg;
-        x = ww / 5 * 2;
-        y = wh - 80;
-        gmode(4, 180, 300, 50);
-        pos(wx + ww / 4, wy + wh / 2);
-        grotate(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
-        gmode(2);
-        display_topic(lang(u8"選択できる職業"s, u8"Class"s), wx + 28, wy + 30);
-        display_topic(lang(u8"職業の説明"s, u8"Detail"s), wx + 188, wy + 30);
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
+        if (cs != cs_bk)
         {
-            key_list(cnt) = key_select(cnt);
-            keyrange = cnt + 1;
-            display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
-            if (jp)
+            redraw(0);
+            s(0) = lang(u8"職業の選択"s, u8"Class Selection"s);
+            s(1) = strhint3b;
+            display_window(
+                (windoww - 680) / 2 + inf_screenx,
+                winposy(500, 1) + 20,
+                680,
+                500);
+            ++cmbg;
+            x = ww / 5 * 2;
+            y = wh - 80;
+            gmode(4, 180, 300, 50);
+            pos(wx + ww / 4, wy + wh / 2);
+            grotate(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
+            gmode(2);
+            display_topic(
+                lang(u8"選択できる職業"s, u8"Class"s), wx + 28, wy + 30);
+            display_topic(
+                lang(u8"職業の説明"s, u8"Detail"s), wx + 188, wy + 30);
+            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
             {
-                s = listn(0, cnt);
+                key_list(cnt) = key_select(cnt);
+                keyrange = cnt + 1;
+                display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
+                if (jp)
+                {
+                    s = listn(0, cnt);
+                }
+                else
+                {
+                    s = cnven(listn(1, cnt));
+                }
+                cs_list(cs == cnt, s, wx + 64, wy + 66 + cnt * 19 - 1);
+            }
+            cs_bk = cs;
+            pos(wx + 200, wy + 66);
+            del_chara(0);
+            access_class_info(3, listn(1, cs));
+            access_class_info(11, listn(1, cs));
+            show_race_or_class_info(0, 1);
+            redraw(1);
+        }
+        await(cfg_wait1);
+        key_check();
+        cursor_check();
+        for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
+        {
+            if (key == key_select(cnt))
+            {
+                p = page * pagesize + cnt;
+                break;
             }
             else
             {
-                s = cnven(listn(1, cnt));
+                p = -1;
             }
-            cs_list(cs == cnt, s, wx + 64, wy + 66 + cnt * 19 - 1);
         }
-        cs_bk = cs;
-        pos(wx + 200, wy + 66);
-        del_chara(0);
-        access_class_info(3, listn(1, cs));
-        access_class_info(11, listn(1, cs));
-        show_race_or_class_info(0, 1);
-        redraw(1);
-    }
-    await(cfg_wait1);
-    key_check();
-    cursor_check();
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
+        if (p != -1)
         {
-            p = page * pagesize + cnt;
-            break;
+            cmclass = listn(1, p);
+            character_making_role_attributes();
+            return;
         }
-        else
+        if (key == key_cancel)
         {
-            p = -1;
+            character_making_select_sex(false);
+        }
+        if (getkey(snail::key::f1))
+        {
+            show_game_help();
+            character_making_select_class(false);
         }
     }
-    if (p != -1)
-    {
-        cmclass = listn(1, p);
-        character_making_role_attributes();
-        return;
-    }
-    if (key == key_cancel)
-    {
-        character_making_select_sex(false);
-    }
-    if (getkey(snail::key::f1))
-    {
-        show_game_help();
-        character_making_select_class(false);
-    }
-    goto label_1552_internal;
 }
 
 
@@ -1373,169 +1403,180 @@ void character_making_role_attributes(bool label_1554_flg)
         DIM2(cmlock, 10);
         cmlock(8) = 2;
     }
-label_1554:
-    redraw(0);
-    cs = 0;
-    cs_bk = -1;
-    pagesize = 0;
-    gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh);
-    gmode(2);
-    s = lang(
-        u8"死にたくないなら、ある程度の能力は必要だね。"s,
-        u8"You should prepare well, if you want to survive long enough in Irva."s);
-    draw_caption();
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
-    pos(20, windowh - 20);
-    mes(u8"Press F1 to show help."s);
-    if (geneuse != ""s)
+
+    bool init = true;
+    while (1)
     {
-        pos(20, windowh - 36);
-        mes(u8"Gene from "s + geneuse);
-    }
-    del_chara(0);
-    access_race_info(3, cmrace);
-    access_class_info(3, cmclass);
-    cdata[rc].level = 1;
-    for (int cnt = 10; cnt < 18; ++cnt)
-    {
-        if (cmlock(cnt - 10) == 0)
+        if (init)
         {
-            if (minimum)
+            redraw(0);
+            cs = 0;
+            cs_bk = -1;
+            pagesize = 0;
+            gmode(0);
+            pos(0, 0);
+            gcopy(4, 0, 0, windoww, windowh);
+            gmode(2);
+            s = lang(
+                u8"死にたくないなら、ある程度の能力は必要だね。"s,
+                u8"You should prepare well, if you want to survive long enough in Irva."s);
+            draw_caption();
+            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
+            pos(20, windowh - 20);
+            mes(u8"Press F1 to show help."s);
+            if (geneuse != ""s)
             {
-                sdata.get(cnt, rc).original_level -=
-                    sdata.get(cnt, rc).original_level / 2;
+                pos(20, windowh - 36);
+                mes(u8"Gene from "s + geneuse);
+            }
+            del_chara(0);
+            access_race_info(3, cmrace);
+            access_class_info(3, cmclass);
+            cdata[rc].level = 1;
+            for (int cnt = 10; cnt < 18; ++cnt)
+            {
+                if (cmlock(cnt - 10) == 0)
+                {
+                    if (minimum)
+                    {
+                        sdata.get(cnt, rc).original_level -=
+                            sdata.get(cnt, rc).original_level / 2;
+                    }
+                    else
+                    {
+                        sdata.get(cnt, rc).original_level -=
+                            rnd(sdata.get(cnt, rc).original_level / 2 + 1);
+                    }
+                    cmstats(cnt - 10) =
+                        sdata.get(cnt, rc).original_level * 1'000'000
+                        + sdata.get(cnt, rc).experience * 1'000
+                        + sdata.get(cnt, rc).potential;
+                }
+            }
+            minimum = false;
+            listmax = 0;
+            list(0, 0) = 0;
+            listn(0, 0) = lang(u8"リロール"s, u8"Reroll"s);
+            ++listmax;
+            list(0, 1) = 0;
+            listn(0, 1) = lang(u8"決定"s, u8"Proceed"s);
+            ++listmax;
+            for (int cnt = 10; cnt < 18; ++cnt)
+            {
+                list(0, listmax) = cmstats(cnt - 10);
+                listn(0, listmax) =
+                    i18n::_(u8"ability", std::to_string(cnt), u8"name");
+                ++listmax;
+            }
+            windowshadow = 1;
+            init = false;
+        }
+        redraw(0);
+        s(0) = lang(u8"能力のロール"s, u8"Attb Reroll"s);
+        s(1) =
+            strhint3b + key_mode2 + lang(u8" [最低値ロール]", u8" [Min Roll]");
+        display_window(
+            (windoww - 360) / 2 + inf_screenx, winposy(352, 1) - 20, 360, 352);
+        x = 150;
+        y = 240;
+        gmode(4, 180, 300, 30);
+        pos(wx + 85, wy + wh / 2);
+        grotate(2, 0, 0, 0, x, y);
+        gmode(2);
+        display_topic(lang(u8"能力"s, u8"Attributes"s), wx + 28, wy + 30);
+        font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+        pos(wx + 175, wy + 52);
+        mes(lang(
+            u8"ロックされた能力は\n変化しません"s,
+            u8"Locked items will\nnot change."s));
+        font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
+        pos(wx + 180, wy + 84);
+        mes(lang(u8"残りロック: "s, u8"Locks left: "s) + cmlock(8));
+        for (int cnt = 0; cnt < 10; ++cnt)
+        {
+            key_list(cnt) = key_select(cnt);
+            keyrange = cnt + 1;
+            pos(wx + 38, wy + 66 + cnt * 23 - 2);
+            gcopy(3, cnt * 24 + 72, 30, 24, 18);
+            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 23 - 1);
+            font(lang(cfg_font1, cfg_font2), 15 - en * 2, 1);
+            if (cnt >= 2)
+            {
+                pos(wx + 198, wy + 76 + cnt * 23);
+                gmode(2, inf_tiles, inf_tiles);
+                grotate(1, (cnt - 2) * inf_tiles, 672, 0, inf_tiles, inf_tiles);
+                pos(wx + 210, wy + 66 + cnt * 23);
+                mes(""s + list(0, cnt) / 1000000);
+                if (cmlock(cnt - 2) == 1)
+                {
+                    font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
+                    pos(wx + 240, wy + 66 + cnt * 23 + 2);
+                    color(20, 20, 140);
+                    mes(u8"Locked!"s);
+                    color(0, 0, 0);
+                }
+            }
+        }
+        cs_bk = cs;
+        redraw(1);
+        await(cfg_wait1);
+        key_check();
+        cursor_check();
+        for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
+        {
+            if (key == key_select(cnt))
+            {
+                p = cnt;
+                break;
             }
             else
             {
-                sdata.get(cnt, rc).original_level -=
-                    rnd(sdata.get(cnt, rc).original_level / 2 + 1);
+                p = -1;
             }
-            cmstats(cnt - 10) = sdata.get(cnt, rc).original_level * 1'000'000
-                + sdata.get(cnt, rc).experience * 1'000
-                + sdata.get(cnt, rc).potential;
         }
-    }
-    minimum = false;
-    listmax = 0;
-    list(0, 0) = 0;
-    listn(0, 0) = lang(u8"リロール"s, u8"Reroll"s);
-    ++listmax;
-    list(0, 1) = 0;
-    listn(0, 1) = lang(u8"決定"s, u8"Proceed"s);
-    ++listmax;
-    for (int cnt = 10; cnt < 18; ++cnt)
-    {
-        list(0, listmax) = cmstats(cnt - 10);
-        listn(0, listmax) = i18n::_(u8"ability", std::to_string(cnt), u8"name");
-        ++listmax;
-    }
-    windowshadow = 1;
-label_1555_internal:
-    redraw(0);
-    s(0) = lang(u8"能力のロール"s, u8"Attb Reroll"s);
-    s(1) = strhint3b + key_mode2 + lang(u8" [最低値ロール]", u8" [Min Roll]");
-    display_window(
-        (windoww - 360) / 2 + inf_screenx, winposy(352, 1) - 20, 360, 352);
-    x = 150;
-    y = 240;
-    gmode(4, 180, 300, 30);
-    pos(wx + 85, wy + wh / 2);
-    grotate(2, 0, 0, 0, x, y);
-    gmode(2);
-    display_topic(lang(u8"能力"s, u8"Attributes"s), wx + 28, wy + 30);
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
-    pos(wx + 175, wy + 52);
-    mes(lang(
-        u8"ロックされた能力は\n変化しません"s,
-        u8"Locked items will\nnot change."s));
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
-    pos(wx + 180, wy + 84);
-    mes(lang(u8"残りロック: "s, u8"Locks left: "s) + cmlock(8));
-    for (int cnt = 0; cnt < 10; ++cnt)
-    {
-        key_list(cnt) = key_select(cnt);
-        keyrange = cnt + 1;
-        pos(wx + 38, wy + 66 + cnt * 23 - 2);
-        gcopy(3, cnt * 24 + 72, 30, 24, 18);
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 23 - 1);
-        font(lang(cfg_font1, cfg_font2), 15 - en * 2, 1);
-        if (cnt >= 2)
+        if (p != -1)
         {
-            pos(wx + 198, wy + 76 + cnt * 23);
-            gmode(2, inf_tiles, inf_tiles);
-            grotate(1, (cnt - 2) * inf_tiles, 672, 0, inf_tiles, inf_tiles);
-            pos(wx + 210, wy + 66 + cnt * 23);
-            mes(""s + list(0, cnt) / 1000000);
-            if (cmlock(cnt - 2) == 1)
+            if (p == 0)
             {
-                font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
-                pos(wx + 240, wy + 66 + cnt * 23 + 2);
-                color(20, 20, 140);
-                mes(u8"Locked!"s);
-                color(0, 0, 0);
+                snd(103);
+                init = true;
+                break;
             }
+            if (p == 1)
+            {
+                character_making_select_feats_and_alias();
+                return;
+            }
+            if (cmlock(p - 2) != 0)
+            {
+                ++cmlock(8);
+                cmlock(p - 2) = 0;
+            }
+            else if (cmlock(8) > 0)
+            {
+                cmlock(p - 2) = 1;
+                --cmlock(8);
+            }
+            snd(20);
         }
-    }
-    cs_bk = cs;
-    redraw(1);
-    await(cfg_wait1);
-    key_check();
-    cursor_check();
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
+        if (key == key_mode2)
         {
-            p = cnt;
+            minimum = true;
+            snd(103);
+            init = true;
             break;
         }
-        else
+        if (key == key_cancel)
         {
-            p = -1;
+            character_making_select_class(false);
+        }
+        if (getkey(snail::key::f1))
+        {
+            show_game_help();
+            character_making_role_attributes(false);
         }
     }
-    if (p != -1)
-    {
-        if (p == 0)
-        {
-            snd(103);
-            goto label_1554;
-        }
-        if (p == 1)
-        {
-            character_making_select_feats_and_alias();
-            return;
-        }
-        if (cmlock(p - 2) != 0)
-        {
-            ++cmlock(8);
-            cmlock(p - 2) = 0;
-        }
-        else if (cmlock(8) > 0)
-        {
-            cmlock(p - 2) = 1;
-            --cmlock(8);
-        }
-        snd(20);
-    }
-    if (key == key_mode2)
-    {
-        minimum = true;
-        snd(103);
-        goto label_1554;
-    }
-    if (key == key_cancel)
-    {
-        character_making_select_class(false);
-    }
-    if (getkey(snail::key::f1))
-    {
-        show_game_help();
-        character_making_role_attributes(false);
-    }
-    goto label_1555_internal;
 }
 
 
@@ -1600,91 +1641,98 @@ void character_making_select_feats_and_alias(bool label_1558_flg)
     cs = 0;
     cs_bk = -1;
     list(0, 0) = -1;
-label_1559_internal:
-    redraw(0);
-    if (cs != cs_bk)
+
+    while (1)
     {
-        s(0) = lang(u8"異名の選択"s, u8"Alias Selection"s);
-        s(1) = strhint3b;
-        display_window(
-            (windoww - 400) / 2 + inf_screenx, winposy(458, 1) + 20, 400, 458);
-        ++cmbg;
-        x = ww / 3 * 2;
-        y = wh - 80;
-        gmode(4, 180, 300, 40);
-        pos(wx + ww / 2, wy + wh / 2);
-        grotate(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
-        gmode(2);
-        display_topic(lang(u8"異名の候補"s, u8"Alias List"s), wx + 28, wy + 30);
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        for (int cnt = 0; cnt < 17; ++cnt)
+        redraw(0);
+        if (cs != cs_bk)
         {
-            key_list(cnt) = key_select(cnt);
-            keyrange = cnt + 1;
-            if (list(0, 0) == -1)
+            s(0) = lang(u8"異名の選択"s, u8"Alias Selection"s);
+            s(1) = strhint3b;
+            display_window(
+                (windoww - 400) / 2 + inf_screenx,
+                winposy(458, 1) + 20,
+                400,
+                458);
+            ++cmbg;
+            x = ww / 3 * 2;
+            y = wh - 80;
+            gmode(4, 180, 300, 40);
+            pos(wx + ww / 2, wy + wh / 2);
+            grotate(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
+            gmode(2);
+            display_topic(
+                lang(u8"異名の候補"s, u8"Alias List"s), wx + 28, wy + 30);
+            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            for (int cnt = 0; cnt < 17; ++cnt)
             {
-                if (gdata_wizard == 1)
+                key_list(cnt) = key_select(cnt);
+                keyrange = cnt + 1;
+                if (list(0, 0) == -1)
                 {
-                    listn(0, cnt) = u8"*Debug*"s;
+                    if (gdata_wizard == 1)
+                    {
+                        listn(0, cnt) = u8"*Debug*"s;
+                    }
+                    else
+                    {
+                        listn(0, cnt) = random_title();
+                    }
                 }
-                else
+                if (cnt == 0)
                 {
-                    listn(0, cnt) = random_title();
+                    listn(0, cnt) = lang(u8"リロール"s, u8"Reroll"s);
                 }
+                pos(wx + 38, wy + 66 + cnt * 19 - 2);
+                gcopy(3, cnt * 24 + 72, 30, 24, 18);
+                cs_list(
+                    cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
             }
-            if (cnt == 0)
+            cs_bk = cs;
+            list(0, 0) = 0;
+        }
+        redraw(1);
+        await(cfg_wait1);
+        key_check();
+        cursor_check();
+        for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
+        {
+            if (key == key_select(cnt))
             {
-                listn(0, cnt) = lang(u8"リロール"s, u8"Reroll"s);
+                p = cnt;
+                break;
             }
-            pos(wx + 38, wy + 66 + cnt * 19 - 2);
-            gcopy(3, cnt * 24 + 72, 30, 24, 18);
-            cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
+            else
+            {
+                p = -1;
+            }
         }
-        cs_bk = cs;
-        list(0, 0) = 0;
-    }
-    redraw(1);
-    await(cfg_wait1);
-    key_check();
-    cursor_check();
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
+        if (p != -1)
         {
-            p = cnt;
-            break;
+            if (key == key_select(0))
+            {
+                list(0, 0) = -1;
+                snd(103);
+                cs_bk = -1;
+            }
+            else
+            {
+                cmaka = listn(0, p);
+                character_making_final_phase();
+                return;
+            }
         }
-        else
+        if (key == key_cancel)
         {
-            p = -1;
-        }
-    }
-    if (p != -1)
-    {
-        if (key == key_select(0))
-        {
-            list(0, 0) = -1;
-            snd(103);
-            cs_bk = -1;
-        }
-        else
-        {
-            cmaka = listn(0, p);
-            character_making_final_phase();
+            character_making_select_feats_and_alias();
             return;
         }
+        if (getkey(snail::key::f1))
+        {
+            show_game_help();
+            character_making_select_feats_and_alias(false);
+        }
     }
-    if (key == key_cancel)
-    {
-        character_making_select_feats_and_alias();
-        return;
-    }
-    if (getkey(snail::key::f1))
-    {
-        show_game_help();
-        character_making_select_feats_and_alias(false);
-    }
-    goto label_1559_internal;
 }
 
 
@@ -1694,107 +1742,118 @@ void character_making_final_phase()
     int cmportrait = 0;
     std::string cmname;
     pcc(15, 0) = 0;
-label_1561_internal:
-    redraw(0);
-    gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh);
-    gmode(2);
-    s = lang(
-        u8"君の見た目を知っておきたいな。まあ、後からいつでも変えられるけどね。"s,
-        u8"What you look like? Don't worry, you can change them later."s);
-    draw_caption();
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
-    pos(20, windowh - 20);
-    mes(u8"Press F1 to show help."s);
-    if (geneuse != ""s)
+
+    while (1)
     {
-        pos(20, windowh - 36);
-        mes(u8"Gene from "s + geneuse);
-    }
-    cbitmod(967, 0, 1);
-    {
+        redraw(0);
+        gmode(0);
+        pos(0, 0);
+        gcopy(4, 0, 0, windoww, windowh);
+        gmode(2);
+        s = lang(
+            u8"君の見た目を知っておきたいな。まあ、後からいつでも変えられるけどね。"s,
+            u8"What you look like? Don't worry, you can change them later."s);
+        draw_caption();
+        font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
+        pos(20, windowh - 20);
+        mes(u8"Press F1 to show help."s);
+        if (geneuse != ""s)
+        {
+            pos(20, windowh - 36);
+            mes(u8"Gene from "s + geneuse);
+        }
+        cbitmod(967, 0, 1);
         int stat = change_appearance();
         if (stat == 0)
         {
             clear_background_in_character_making();
             character_making_select_feats_and_alias(false);
         }
-        if (stat == -1)
+        if (stat != -1)
         {
-            show_game_help();
-            clear_background_in_character_making();
-            goto label_1561_internal;
+            break;
         }
+        show_game_help();
+        clear_background_in_character_making();
     }
     clear_background_in_character_making();
     cmportrait = cdata[rc].portrait;
-label_1562_internal:
-    snd(94);
-label_1563_internal:
-    redraw(0);
-    gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh);
-    gmode(2);
-    s = lang(
-        u8"決定ｷｰを押すことで、生い立ちをリロールできる。"s,
-        u8"Hit the enter key to reroll your personal history."s);
-    draw_caption();
-    del_chara(0);
-    access_race_info(3, cmrace);
-    access_class_info(3, cmclass);
-    cdatan(0, rc) = u8"????"s;
-    cdatan(1, rc) = cmaka;
-    cdata[rc].level = 1;
-    for (int cnt = 10; cnt < 18; ++cnt)
+
+    while (1)
     {
-        sdata.get(cnt, rc).original_level = cmstats(cnt - 10) / 1'000'000;
-        sdata.get(cnt, rc).experience = cmstats(cnt - 10) % 1'000'000 / 1'000;
-        sdata.get(cnt, rc).potential = cmstats(cnt - 10) % 1'000;
-    }
-    initialize_character();
-    initialize_pc_character();
-    cdata[rc].portrait = cmportrait;
-    create_pcpic(0, true);
-    mode = 1;
-    csctrl = 1;
-    menucycle = 0;
-    {
-        int stat = show_character_sheet();
-        if (stat == 0)
+        snd(94);
+        while (1)
         {
-            nowindowanime = 1;
-            clear_background_in_character_making();
-            goto label_1563_internal;
+            redraw(0);
+            gmode(0);
+            pos(0, 0);
+            gcopy(4, 0, 0, windoww, windowh);
+            gmode(2);
+            s = lang(
+                u8"決定ｷｰを押すことで、生い立ちをリロールできる。"s,
+                u8"Hit the enter key to reroll your personal history."s);
+            draw_caption();
+            del_chara(0);
+            access_race_info(3, cmrace);
+            access_class_info(3, cmclass);
+            cdatan(0, rc) = u8"????"s;
+            cdatan(1, rc) = cmaka;
+            cdata[rc].level = 1;
+            for (int cnt = 10; cnt < 18; ++cnt)
+            {
+                sdata.get(cnt, rc).original_level =
+                    cmstats(cnt - 10) / 1'000'000;
+                sdata.get(cnt, rc).experience =
+                    cmstats(cnt - 10) % 1'000'000 / 1'000;
+                sdata.get(cnt, rc).potential = cmstats(cnt - 10) % 1'000;
+            }
+            initialize_character();
+            initialize_pc_character();
+            cdata[rc].portrait = cmportrait;
+            create_pcpic(0, true);
+            mode = 1;
+            csctrl = 1;
+            menucycle = 0;
+            {
+                int stat = show_character_sheet();
+                if (stat == 0)
+                {
+                    nowindowanime = 1;
+                    clear_background_in_character_making();
+                }
+                else
+                {
+                    break;
+                }
+            }
         }
-    }
-    redraw(0);
-    gsel(2);
-    pos(0, 0);
-    gmode(0);
-    gcopy(0, 0, 100, windoww, windowh - 100);
-    gsel(0);
-    clear_background_in_character_making();
-    s = lang(u8"満足できたかな？"s, u8"Are you satisfied now?"s);
-    draw_caption();
-    promptl(0, promptmax) = lang(u8"はい"s, u8"Yes"s);
-    promptl(1, promptmax) = u8"a"s;
-    promptl(2, promptmax) = ""s + promptmax;
-    ++promptmax;
-    promptl(0, promptmax) = lang(u8"いいえ"s, u8"No"s);
-    promptl(1, promptmax) = u8"b"s;
-    promptl(2, promptmax) = ""s + promptmax;
-    ++promptmax;
-    promptl(0, promptmax) = lang(u8"最初から"s, u8"Restart"s);
-    promptl(1, promptmax) = u8"c"s;
-    promptl(2, promptmax) = ""s + promptmax;
-    ++promptmax;
-    show_prompt(promptx, 240, 160);
-    snd(20);
-    if (rtval == 1 || rtval == -1)
-    {
-        goto label_1562_internal;
+        redraw(0);
+        gsel(2);
+        pos(0, 0);
+        gmode(0);
+        gcopy(0, 0, 100, windoww, windowh - 100);
+        gsel(0);
+        clear_background_in_character_making();
+        s = lang(u8"満足できたかな？"s, u8"Are you satisfied now?"s);
+        draw_caption();
+        promptl(0, promptmax) = lang(u8"はい"s, u8"Yes"s);
+        promptl(1, promptmax) = u8"a"s;
+        promptl(2, promptmax) = ""s + promptmax;
+        ++promptmax;
+        promptl(0, promptmax) = lang(u8"いいえ"s, u8"No"s);
+        promptl(1, promptmax) = u8"b"s;
+        promptl(2, promptmax) = ""s + promptmax;
+        ++promptmax;
+        promptl(0, promptmax) = lang(u8"最初から"s, u8"Restart"s);
+        promptl(1, promptmax) = u8"c"s;
+        promptl(2, promptmax) = ""s + promptmax;
+        ++promptmax;
+        show_prompt(promptx, 240, 160);
+        snd(20);
+        if (rtval != 1 && rtval != -1)
+        {
+            break;
+        }
     }
     if (rtval == 2)
     {
@@ -1810,35 +1869,42 @@ label_1563_internal:
     s = lang(
         u8"最後の質問だ。君の名前は？"s, u8"Last question. What's your name?"s);
     draw_caption();
-label_1565_internal:
-    inputlog = "";
-    input_mode = 1;
-    show_number_of_text_prompt(
-        (windoww - 230) / 2 + inf_screenx, winposy(120), 10, 0);
-    cmname = ""s + inputlog;
-    if (cmname == ""s || cmname == u8" "s)
+
+    while (1)
     {
-        cmname = randomname();
-    }
-    playerid = u8"sav_"s + cmname;
-    const auto save_dir = fs::u8path(u8"./save");
-    if (range::any_of(
-            filesystem::dir_entries{save_dir,
-                                    filesystem::dir_entries::type::dir},
-            [&](const auto& entry) {
-                return entry.path().filename().generic_u8string() == playerid;
-            }))
-    {
-        redraw(0);
-        gmode(0);
-        pos(0, 100);
-        gcopy(2, 0, 0, windoww, windowh - 100);
-        gmode(2);
-        s = lang(
-            u8"あいにく、その名前の冒険者はすでに存在する。"s,
-            u8"Sorry, but the name is already taken."s);
-        draw_caption();
-        goto label_1565_internal;
+        inputlog = "";
+        input_mode = 1;
+        show_number_of_text_prompt(
+            (windoww - 230) / 2 + inf_screenx, winposy(120), 10, 0);
+        cmname = ""s + inputlog;
+        if (cmname == ""s || cmname == u8" "s)
+        {
+            cmname = randomname();
+        }
+        playerid = u8"sav_"s + cmname;
+        const auto save_dir = fs::u8path(u8"./save");
+        if (range::any_of(
+                filesystem::dir_entries{save_dir,
+                                        filesystem::dir_entries::type::dir},
+                [&](const auto& entry) {
+                    return entry.path().filename().generic_u8string()
+                        == playerid;
+                }))
+        {
+            redraw(0);
+            gmode(0);
+            pos(0, 100);
+            gcopy(2, 0, 0, windoww, windowh - 100);
+            gmode(2);
+            s = lang(
+                u8"あいにく、その名前の冒険者はすでに存在する。"s,
+                u8"Sorry, but the name is already taken."s);
+            draw_caption();
+        }
+        else
+        {
+            break;
+        }
     }
     snd(101);
     cdatan(0, rc) = cmname;

@@ -7985,43 +7985,43 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
         if (dy_at_modfov > 0)
         {
             ty_at_modfov = prm_630 + 1;
-        label_0386_internal:
-            if (ty_at_modfov >= prm_632)
+            while (1)
             {
-                goto label_0387_internal;
+                if (ty_at_modfov >= prm_632)
+                {
+                    break;
+                }
+                if (chipm(7, map(prm_629, ty_at_modfov, 0)) & 1)
+                {
+                    return 0;
+                }
+                if (chipm(7, map(prm_629, ty_at_modfov, 6) % 1000) & 1)
+                {
+                    return 0;
+                }
+                ++ty_at_modfov;
             }
-            if (chipm(7, map(prm_629, ty_at_modfov, 0)) & 1)
-            {
-                return 0;
-            }
-            if (chipm(7, map(prm_629, ty_at_modfov, 6) % 1000) & 1)
-            {
-                return 0;
-            }
-            ++ty_at_modfov;
-            goto label_0386_internal;
-        label_0387_internal:;
         }
         else
         {
             ty_at_modfov = prm_630 - 1;
-        label_0388_internal:
-            if (ty_at_modfov <= prm_632)
+            while (1)
             {
-                goto label_0389_internal;
+                if (ty_at_modfov <= prm_632)
+                {
+                    break;
+                }
+                if (chipm(7, map(prm_629, ty_at_modfov, 0)) & 1)
+                {
+                    return 0;
+                }
+                if (chipm(7, map(prm_629, ty_at_modfov, 6) % 1000) & 1)
+                {
+                    return 0;
+                }
+                --ty_at_modfov;
             }
-            if (chipm(7, map(prm_629, ty_at_modfov, 0)) & 1)
-            {
-                return 0;
-            }
-            if (chipm(7, map(prm_629, ty_at_modfov, 6) % 1000) & 1)
-            {
-                return 0;
-            }
-            --ty_at_modfov;
-            goto label_0388_internal;
         }
-    label_0389_internal:
         return 1;
     }
     if (dy_at_modfov == 0)
@@ -8029,43 +8029,43 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
         if (dx_at_modfov > 0)
         {
             tx_at_modfov = prm_629 + 1;
-        label_0390_internal:
-            if (tx_at_modfov >= prm_631)
+            while (1)
             {
-                goto label_0391_internal;
+                if (tx_at_modfov >= prm_631)
+                {
+                    break;
+                }
+                if (chipm(7, map(tx_at_modfov, prm_630, 0)) & 1)
+                {
+                    return 0;
+                }
+                if (chipm(7, map(tx_at_modfov, prm_630, 6) % 1000) & 1)
+                {
+                    return 0;
+                }
+                ++tx_at_modfov;
             }
-            if (chipm(7, map(tx_at_modfov, prm_630, 0)) & 1)
-            {
-                return 0;
-            }
-            if (chipm(7, map(tx_at_modfov, prm_630, 6) % 1000) & 1)
-            {
-                return 0;
-            }
-            ++tx_at_modfov;
-            goto label_0390_internal;
-        label_0391_internal:;
         }
         else
         {
             tx_at_modfov = prm_629 - 1;
-        label_0392_internal:
-            if (tx_at_modfov <= prm_631)
+            while (1)
             {
-                goto label_0393_internal;
+                if (tx_at_modfov <= prm_631)
+                {
+                    break;
+                }
+                if (chipm(7, map(tx_at_modfov, prm_630, 0)) & 1)
+                {
+                    return 0;
+                }
+                if (chipm(7, map(tx_at_modfov, prm_630, 6) % 1000) & 1)
+                {
+                    return 0;
+                }
+                --tx_at_modfov;
             }
-            if (chipm(7, map(tx_at_modfov, prm_630, 0)) & 1)
-            {
-                return 0;
-            }
-            if (chipm(7, map(tx_at_modfov, prm_630, 6) % 1000) & 1)
-            {
-                return 0;
-            }
-            --tx_at_modfov;
-            goto label_0392_internal;
         }
-    label_0393_internal:
         return 1;
     }
     if (dx_at_modfov < 0)
@@ -8130,27 +8130,12 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
         {
             ty_at_modfov = prm_630;
         }
-    label_0394_internal:
-        if (prm_631 - tx_at_modfov == 0)
+        while (1)
         {
-            goto label_0395_internal;
-        }
-        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
-        {
-            return 0;
-        }
-        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
-        {
-            return 0;
-        }
-        qy_at_modfov += m_at_modfov;
-        if (qy_at_modfov < f2_at_modfov)
-        {
-            tx_at_modfov += sx_at_modfov;
-        }
-        else if (qy_at_modfov > f2_at_modfov)
-        {
-            ty_at_modfov += sy_at_modfov;
+            if (prm_631 - tx_at_modfov == 0)
+            {
+                break;
+            }
             if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
             {
                 return 0;
@@ -8159,17 +8144,32 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
             {
                 return 0;
             }
-            qy_at_modfov -= f1_at_modfov;
-            tx_at_modfov += sx_at_modfov;
+            qy_at_modfov += m_at_modfov;
+            if (qy_at_modfov < f2_at_modfov)
+            {
+                tx_at_modfov += sx_at_modfov;
+            }
+            else if (qy_at_modfov > f2_at_modfov)
+            {
+                ty_at_modfov += sy_at_modfov;
+                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
+                {
+                    return 0;
+                }
+                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
+                {
+                    return 0;
+                }
+                qy_at_modfov -= f1_at_modfov;
+                tx_at_modfov += sx_at_modfov;
+            }
+            else
+            {
+                ty_at_modfov += sy_at_modfov;
+                qy_at_modfov -= f1_at_modfov;
+                tx_at_modfov += sx_at_modfov;
+            }
         }
-        else
-        {
-            ty_at_modfov += sy_at_modfov;
-            qy_at_modfov -= f1_at_modfov;
-            tx_at_modfov += sx_at_modfov;
-        }
-        goto label_0394_internal;
-    label_0395_internal:;
     }
     else
     {
@@ -8185,28 +8185,12 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
         {
             tx_at_modfov = prm_629;
         }
-    label_0396_internal:
-        if (prm_632 - ty_at_modfov == 0)
+        while (1)
         {
-            goto label_0397_internal;
-            return 0;
-        }
-        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
-        {
-            return 0;
-        }
-        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
-        {
-            return 0;
-        }
-        qx_at_modfov += m_at_modfov;
-        if (qx_at_modfov < f2_at_modfov)
-        {
-            ty_at_modfov += sy_at_modfov;
-        }
-        else if (qx_at_modfov > f2_at_modfov)
-        {
-            tx_at_modfov += sx_at_modfov;
+            if (prm_632 - ty_at_modfov == 0)
+            {
+                break;
+            }
             if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
             {
                 return 0;
@@ -8215,18 +8199,33 @@ int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
             {
                 return 0;
             }
-            qx_at_modfov -= f1_at_modfov;
-            ty_at_modfov += sy_at_modfov;
+            qx_at_modfov += m_at_modfov;
+            if (qx_at_modfov < f2_at_modfov)
+            {
+                ty_at_modfov += sy_at_modfov;
+            }
+            else if (qx_at_modfov > f2_at_modfov)
+            {
+                tx_at_modfov += sx_at_modfov;
+                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
+                {
+                    return 0;
+                }
+                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
+                {
+                    return 0;
+                }
+                qx_at_modfov -= f1_at_modfov;
+                ty_at_modfov += sy_at_modfov;
+            }
+            else
+            {
+                tx_at_modfov += sx_at_modfov;
+                qx_at_modfov -= f1_at_modfov;
+                ty_at_modfov += sy_at_modfov;
+            }
         }
-        else
-        {
-            tx_at_modfov += sx_at_modfov;
-            qx_at_modfov -= f1_at_modfov;
-            ty_at_modfov += sy_at_modfov;
-        }
-        goto label_0396_internal;
     }
-label_0397_internal:
     return 1;
 }
 
@@ -8259,25 +8258,25 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             route(0, p_at_modfov) = 2;
             route(1, p_at_modfov) = 1;
             ++p_at_modfov;
-        label_0399_internal:
-            if (ty_at_modfov >= prm_636)
+            while (1)
             {
-                goto label_0400_internal;
+                if (ty_at_modfov >= prm_636)
+                {
+                    break;
+                }
+                if (chipm(7, map(prm_633, ty_at_modfov, 0)) & 1)
+                {
+                    return 0;
+                }
+                if (chipm(7, map(prm_633, ty_at_modfov, 6) % 1000) & 1)
+                {
+                    return 0;
+                }
+                ++ty_at_modfov;
+                route(0, p_at_modfov) = 2;
+                route(1, p_at_modfov) = 1;
+                ++p_at_modfov;
             }
-            if (chipm(7, map(prm_633, ty_at_modfov, 0)) & 1)
-            {
-                return 0;
-            }
-            if (chipm(7, map(prm_633, ty_at_modfov, 6) % 1000) & 1)
-            {
-                return 0;
-            }
-            ++ty_at_modfov;
-            route(0, p_at_modfov) = 2;
-            route(1, p_at_modfov) = 1;
-            ++p_at_modfov;
-            goto label_0399_internal;
-        label_0400_internal:;
         }
         else
         {
@@ -8285,26 +8284,26 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             route(0, p_at_modfov) = 2;
             route(1, p_at_modfov) = -1;
             ++p_at_modfov;
-        label_0401_internal:
-            if (ty_at_modfov <= prm_636)
+            while (1)
             {
-                goto label_0402_internal;
+                if (ty_at_modfov <= prm_636)
+                {
+                    break;
+                }
+                if (chipm(7, map(prm_633, ty_at_modfov, 0)) & 1)
+                {
+                    return 0;
+                }
+                if (chipm(7, map(prm_633, ty_at_modfov, 6) % 1000) & 1)
+                {
+                    return 0;
+                }
+                --ty_at_modfov;
+                route(0, p_at_modfov) = 2;
+                route(1, p_at_modfov) = -1;
+                ++p_at_modfov;
             }
-            if (chipm(7, map(prm_633, ty_at_modfov, 0)) & 1)
-            {
-                return 0;
-            }
-            if (chipm(7, map(prm_633, ty_at_modfov, 6) % 1000) & 1)
-            {
-                return 0;
-            }
-            --ty_at_modfov;
-            route(0, p_at_modfov) = 2;
-            route(1, p_at_modfov) = -1;
-            ++p_at_modfov;
-            goto label_0401_internal;
         }
-    label_0402_internal:
         maxroute = p_at_modfov;
         return 1;
     }
@@ -8316,25 +8315,25 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             route(0, p_at_modfov) = 1;
             route(1, p_at_modfov) = 1;
             ++p_at_modfov;
-        label_0403_internal:
-            if (tx_at_modfov >= prm_635)
+            while (1)
             {
-                goto label_0404_internal;
+                if (tx_at_modfov >= prm_635)
+                {
+                    break;
+                }
+                if (chipm(7, map(tx_at_modfov, prm_634, 0)) & 1)
+                {
+                    return 0;
+                }
+                if (chipm(7, map(tx_at_modfov, prm_634, 6) % 1000) & 1)
+                {
+                    return 0;
+                }
+                ++tx_at_modfov;
+                route(0, p_at_modfov) = 1;
+                route(1, p_at_modfov) = 1;
+                ++p_at_modfov;
             }
-            if (chipm(7, map(tx_at_modfov, prm_634, 0)) & 1)
-            {
-                return 0;
-            }
-            if (chipm(7, map(tx_at_modfov, prm_634, 6) % 1000) & 1)
-            {
-                return 0;
-            }
-            ++tx_at_modfov;
-            route(0, p_at_modfov) = 1;
-            route(1, p_at_modfov) = 1;
-            ++p_at_modfov;
-            goto label_0403_internal;
-        label_0404_internal:;
         }
         else
         {
@@ -8342,26 +8341,26 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             route(0, p_at_modfov) = 1;
             route(1, p_at_modfov) = -1;
             ++p_at_modfov;
-        label_0405_internal:
-            if (tx_at_modfov <= prm_635)
+            while (1)
             {
-                goto label_0406_internal;
+                if (tx_at_modfov <= prm_635)
+                {
+                    break;
+                }
+                if (chipm(7, map(tx_at_modfov, prm_634, 0)) & 1)
+                {
+                    return 0;
+                }
+                if (chipm(7, map(tx_at_modfov, prm_634, 6) % 1000) & 1)
+                {
+                    return 0;
+                }
+                --tx_at_modfov;
+                route(0, p_at_modfov) = 1;
+                route(1, p_at_modfov) = -1;
+                ++p_at_modfov;
             }
-            if (chipm(7, map(tx_at_modfov, prm_634, 0)) & 1)
-            {
-                return 0;
-            }
-            if (chipm(7, map(tx_at_modfov, prm_634, 6) % 1000) & 1)
-            {
-                return 0;
-            }
-            --tx_at_modfov;
-            route(0, p_at_modfov) = 1;
-            route(1, p_at_modfov) = -1;
-            ++p_at_modfov;
-            goto label_0405_internal;
         }
-    label_0406_internal:
         maxroute = p_at_modfov;
         return 1;
     }
@@ -8454,33 +8453,12 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
         {
             ty_at_modfov = prm_634;
         }
-    label_0407_internal:
-        if (prm_635 - tx_at_modfov == 0)
+        while (1)
         {
-            goto label_0408_internal;
-        }
-        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
-        {
-            return 0;
-        }
-        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
-        {
-            return 0;
-        }
-        qy_at_modfov += m_at_modfov;
-        if (qy_at_modfov < f2_at_modfov)
-        {
-            tx_at_modfov += sx_at_modfov;
-            route(0, p_at_modfov) = 1;
-            route(1, p_at_modfov) = sx_at_modfov;
-            ++p_at_modfov;
-        }
-        else if (qy_at_modfov > f2_at_modfov)
-        {
-            ty_at_modfov += sy_at_modfov;
-            route(0, p_at_modfov) = 2;
-            route(1, p_at_modfov) = sy_at_modfov;
-            ++p_at_modfov;
+            if (prm_635 - tx_at_modfov == 0)
+            {
+                break;
+            }
             if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
             {
                 return 0;
@@ -8489,26 +8467,47 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             {
                 return 0;
             }
-            qy_at_modfov -= f1_at_modfov;
-            tx_at_modfov += sx_at_modfov;
-            route(0, p_at_modfov) = 1;
-            route(1, p_at_modfov) = sx_at_modfov;
-            ++p_at_modfov;
+            qy_at_modfov += m_at_modfov;
+            if (qy_at_modfov < f2_at_modfov)
+            {
+                tx_at_modfov += sx_at_modfov;
+                route(0, p_at_modfov) = 1;
+                route(1, p_at_modfov) = sx_at_modfov;
+                ++p_at_modfov;
+            }
+            else if (qy_at_modfov > f2_at_modfov)
+            {
+                ty_at_modfov += sy_at_modfov;
+                route(0, p_at_modfov) = 2;
+                route(1, p_at_modfov) = sy_at_modfov;
+                ++p_at_modfov;
+                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
+                {
+                    return 0;
+                }
+                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
+                {
+                    return 0;
+                }
+                qy_at_modfov -= f1_at_modfov;
+                tx_at_modfov += sx_at_modfov;
+                route(0, p_at_modfov) = 1;
+                route(1, p_at_modfov) = sx_at_modfov;
+                ++p_at_modfov;
+            }
+            else
+            {
+                ty_at_modfov += sy_at_modfov;
+                route(0, p_at_modfov) = 2;
+                route(1, p_at_modfov) = sy_at_modfov;
+                ++p_at_modfov;
+                qy_at_modfov -= f1_at_modfov;
+                tx_at_modfov += sx_at_modfov;
+                route(0, p_at_modfov) = 1;
+                route(1, p_at_modfov) = sx_at_modfov;
+                ++p_at_modfov;
+            }
         }
-        else
-        {
-            ty_at_modfov += sy_at_modfov;
-            route(0, p_at_modfov) = 2;
-            route(1, p_at_modfov) = sy_at_modfov;
-            ++p_at_modfov;
-            qy_at_modfov -= f1_at_modfov;
-            tx_at_modfov += sx_at_modfov;
-            route(0, p_at_modfov) = 1;
-            route(1, p_at_modfov) = sx_at_modfov;
-            ++p_at_modfov;
-        }
-        goto label_0407_internal;
-    label_0408_internal:;
     }
     else
     {
@@ -8530,34 +8529,12 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
         {
             tx_at_modfov = prm_633;
         }
-    label_0409_internal:
-        if (prm_636 - ty_at_modfov == 0)
+        while (1)
         {
-            goto label_0410_internal;
-            return 0;
-        }
-        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
-        {
-            return 0;
-        }
-        if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
-        {
-            return 0;
-        }
-        qx_at_modfov += m_at_modfov;
-        if (qx_at_modfov < f2_at_modfov)
-        {
-            ty_at_modfov += sy_at_modfov;
-            route(0, p_at_modfov) = 2;
-            route(1, p_at_modfov) = sy_at_modfov;
-            ++p_at_modfov;
-        }
-        else if (qx_at_modfov > f2_at_modfov)
-        {
-            tx_at_modfov += sx_at_modfov;
-            route(0, p_at_modfov) = 1;
-            route(1, p_at_modfov) = sx_at_modfov;
-            ++p_at_modfov;
+            if (prm_636 - ty_at_modfov == 0)
+            {
+                break;
+            }
             if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
             {
                 return 0;
@@ -8566,27 +8543,48 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
             {
                 return 0;
             }
-            qx_at_modfov -= f1_at_modfov;
-            ty_at_modfov += sy_at_modfov;
-            route(0, p_at_modfov) = 2;
-            route(1, p_at_modfov) = sy_at_modfov;
-            ++p_at_modfov;
+            qx_at_modfov += m_at_modfov;
+            if (qx_at_modfov < f2_at_modfov)
+            {
+                ty_at_modfov += sy_at_modfov;
+                route(0, p_at_modfov) = 2;
+                route(1, p_at_modfov) = sy_at_modfov;
+                ++p_at_modfov;
+            }
+            else if (qx_at_modfov > f2_at_modfov)
+            {
+                tx_at_modfov += sx_at_modfov;
+                route(0, p_at_modfov) = 1;
+                route(1, p_at_modfov) = sx_at_modfov;
+                ++p_at_modfov;
+                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 0)) & 1)
+                {
+                    return 0;
+                }
+                if (chipm(7, map(tx_at_modfov, ty_at_modfov, 6) % 1000) & 1)
+                {
+                    return 0;
+                }
+                qx_at_modfov -= f1_at_modfov;
+                ty_at_modfov += sy_at_modfov;
+                route(0, p_at_modfov) = 2;
+                route(1, p_at_modfov) = sy_at_modfov;
+                ++p_at_modfov;
+            }
+            else
+            {
+                tx_at_modfov += sx_at_modfov;
+                route(0, p_at_modfov) = 1;
+                route(1, p_at_modfov) = sx_at_modfov;
+                ++p_at_modfov;
+                qx_at_modfov -= f1_at_modfov;
+                ty_at_modfov += sy_at_modfov;
+                route(0, p_at_modfov) = 2;
+                route(1, p_at_modfov) = sy_at_modfov;
+                ++p_at_modfov;
+            }
         }
-        else
-        {
-            tx_at_modfov += sx_at_modfov;
-            route(0, p_at_modfov) = 1;
-            route(1, p_at_modfov) = sx_at_modfov;
-            ++p_at_modfov;
-            qx_at_modfov -= f1_at_modfov;
-            ty_at_modfov += sy_at_modfov;
-            route(0, p_at_modfov) = 2;
-            route(1, p_at_modfov) = sy_at_modfov;
-            ++p_at_modfov;
-        }
-        goto label_0409_internal;
     }
-label_0410_internal:
     maxroute = p_at_modfov;
     return 1;
 }
@@ -22317,23 +22315,24 @@ int convertartifact(int prm_930, int prm_931)
         return prm_930;
     }
     n_at_m163 = ""s + itemname(prm_930);
-label_1569_internal:
-    flt(the_item_db[inv[prm_930].id]->level, 4);
-    flttypeminor = the_item_db[inv[prm_930].id]->subcategory;
-    inv[prm_930].number = 0;
-    itemcreate(
-        inv_getowner(prm_930),
-        0,
-        inv[prm_930].position.x,
-        inv[prm_930].position.y,
-        0);
-    if (inv[prm_930].quality != 6)
+
+    while (1)
     {
-        goto label_1570_internal;
-        return 0;
+        flt(the_item_db[inv[prm_930].id]->level, 4);
+        flttypeminor = the_item_db[inv[prm_930].id]->subcategory;
+        inv[prm_930].number = 0;
+        itemcreate(
+            inv_getowner(prm_930),
+            0,
+            inv[prm_930].position.x,
+            inv[prm_930].position.y,
+            0);
+        if (inv[prm_930].quality != 6)
+        {
+            break;
+        }
     }
-    goto label_1569_internal;
-label_1570_internal:
+
     txt(lang(
         n_at_m163 + u8"は"s + itemname(ci) + u8"に形を変えた。"s,
         n_at_m163 + u8" turns its shape into "s + itemname(ci) + u8"."s));
@@ -22955,7 +22954,7 @@ void label_1573()
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
-        goto label_1574_internal;
+        break;
     case 7:
         if (rnd(20) == 0)
         {
@@ -22965,7 +22964,7 @@ void label_1573()
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
-        goto label_1574_internal;
+        break;
     case 3:
         if (rnd(20) == 0)
         {
@@ -22975,7 +22974,7 @@ void label_1573()
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
-        goto label_1574_internal;
+        break;
     case 2:
         if (rnd(20) == 0)
         {
@@ -22993,7 +22992,7 @@ void label_1573()
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
-        goto label_1574_internal;
+        break;
     case 4:
         if (rnd(20) == 0)
         {
@@ -23003,7 +23002,7 @@ void label_1573()
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
-        goto label_1574_internal;
+        break;
     case 5:
         if (rnd(50) == 0)
         {
@@ -23013,9 +23012,9 @@ void label_1573()
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
-        goto label_1574_internal;
+        break;
     }
-label_1574_internal:
+
     dbid = cdata[rc].id;
     dbmode = 16;
     dbspec = 3;
@@ -23062,7 +23061,7 @@ label_1574_internal:
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
-        goto label_1575_internal;
+        break;
     case 1:
         if (rnd(20) == 0)
         {
@@ -23073,7 +23072,7 @@ label_1574_internal:
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
             remain_make(ci, rc);
         }
-        goto label_1575_internal;
+        break;
     case 2:
         if (rnd(20) == 0)
         {
@@ -23084,7 +23083,7 @@ label_1574_internal:
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
             remain_make(ci, rc);
         }
-        goto label_1575_internal;
+        break;
     case 6:
         if (rnd(10) == 0)
         {
@@ -23150,7 +23149,7 @@ label_1574_internal:
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
-        goto label_1575_internal;
+        break;
     case 4:
         if (rnd(5) == 0)
         {
@@ -23184,7 +23183,7 @@ label_1574_internal:
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
-        goto label_1575_internal;
+        break;
     case 5:
         if (rnd(5) == 0)
         {
@@ -23250,9 +23249,9 @@ label_1574_internal:
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
-        goto label_1575_internal;
+        break;
     }
-label_1575_internal:
+
     if (rnd(40) == 0)
     {
         p = 0;
@@ -27494,28 +27493,27 @@ int map_createroom(int prm_966)
                 continue;
             }
         }
-        p = 0;
-    label_1644_internal:
-        if (p >= roomsum)
+        bool do_continue{};
+        for (p = 0; p < roomsum; ++p)
         {
-            goto label_1646_internal;
+            if (p == cr)
+            {
+                continue;
+            }
+            x1 = roomx(p) - 1 - roomx(cr);
+            x2 = -roomwidth(p) - 2 < x1 && x1 < roomwidth(cr);
+            y1 = roomy(p) - 1 - roomy(cr);
+            y2 = -roomheight(p) - 2 < y1 && y1 < roomheight(cr);
+            if (x2 && y2)
+            {
+                do_continue = true;
+                break;
+            }
         }
-        if (p == cr)
-        {
-            goto label_1645_internal;
-        }
-        x1 = roomx(p) - 1 - roomx(cr);
-        x2 = -roomwidth(p) - 2 < x1 && x1 < roomwidth(cr);
-        y1 = roomy(p) - 1 - roomy(cr);
-        y2 = -roomheight(p) - 2 < y1 && y1 < roomheight(cr);
-        if (x2 && y2)
+        if (do_continue)
         {
             continue;
         }
-    label_1645_internal:
-        p += 1;
-        goto label_1644_internal;
-    label_1646_internal:
         ++roomsum;
         f = 1;
         break;
@@ -27825,61 +27823,62 @@ int map_trap(int prm_973, int prm_974, int, int prm_976)
     dx_at_m170 = prm_973;
     dy_at_m170 = prm_974;
     p_at_m170 = 0;
-label_1652_internal:
-    if (p_at_m170 >= 3)
+    while (1)
     {
-        return 0;
-    }
-    if (prm_973 == 0)
-    {
-        dx_at_m170 = rnd(mdata(0) - 5) + 2;
-        dy_at_m170 = rnd(mdata(1) - 5) + 2;
-    }
-    else
-    {
-        dx_at_m170 = prm_973;
-        dy_at_m170 = prm_974;
-    }
-    if ((chipm(7, map(dx_at_m170, dy_at_m170, 0)) & 4) == 0)
-    {
-        if (map(dx_at_m170, dy_at_m170, 6) == 0)
+        if (p_at_m170 >= 3)
         {
-            if (prm_976 == 0)
-            {
-                trap_at_m170 = rnd(8);
-            }
-            else
-            {
-                trap_at_m170 = prm_976;
-            }
-            if (gdata_current_dungeon_level <= 5)
-            {
-                if (trap_at_m170 == 6)
-                {
-                    return 0;
-                }
-                if (trap_at_m170 == 1)
-                {
-                    return 0;
-                }
-                if (trap_at_m170 == 5)
-                {
-                    return 0;
-                }
-            }
-            if (gdata_current_dungeon_level <= 25)
-            {
-                if (trap_at_m170 == 7)
-                {
-                    return 0;
-                }
-            }
-            cell_featset(dx_at_m170, dy_at_m170, 0, 14, trap_at_m170);
-            return 1;
+            return 0;
         }
+        if (prm_973 == 0)
+        {
+            dx_at_m170 = rnd(mdata(0) - 5) + 2;
+            dy_at_m170 = rnd(mdata(1) - 5) + 2;
+        }
+        else
+        {
+            dx_at_m170 = prm_973;
+            dy_at_m170 = prm_974;
+        }
+        if ((chipm(7, map(dx_at_m170, dy_at_m170, 0)) & 4) == 0)
+        {
+            if (map(dx_at_m170, dy_at_m170, 6) == 0)
+            {
+                if (prm_976 == 0)
+                {
+                    trap_at_m170 = rnd(8);
+                }
+                else
+                {
+                    trap_at_m170 = prm_976;
+                }
+                if (gdata_current_dungeon_level <= 5)
+                {
+                    if (trap_at_m170 == 6)
+                    {
+                        return 0;
+                    }
+                    if (trap_at_m170 == 1)
+                    {
+                        return 0;
+                    }
+                    if (trap_at_m170 == 5)
+                    {
+                        return 0;
+                    }
+                }
+                if (gdata_current_dungeon_level <= 25)
+                {
+                    if (trap_at_m170 == 7)
+                    {
+                        return 0;
+                    }
+                }
+                cell_featset(dx_at_m170, dy_at_m170, 0, 14, trap_at_m170);
+                return 1;
+            }
+        }
+        p_at_m170 += 1;
     }
-    p_at_m170 += 1;
-    goto label_1652_internal;
 }
 
 
@@ -27889,31 +27888,33 @@ int map_web(int prm_977, int prm_978, int prm_979)
     dx_at_m170 = prm_977;
     dy_at_m170 = prm_978;
     p_at_m170 = 0;
-label_1655_internal:
-    if (p_at_m170 >= 3)
+
+    while (1)
     {
-        return 0;
-    }
-    if (prm_977 == 0)
-    {
-        dx_at_m170 = rnd(mdata(0) - 5) + 2;
-        dy_at_m170 = rnd(mdata(1) - 5) + 2;
-    }
-    else
-    {
-        dx_at_m170 = prm_977;
-        dy_at_m170 = prm_978;
-    }
-    if ((chipm(7, map(dx_at_m170, dy_at_m170, 0)) & 4) == 0)
-    {
-        if (map(dx_at_m170, dy_at_m170, 6) == 0)
+        if (p_at_m170 >= 3)
         {
-            addmef(dx_at_m170, dy_at_m170, 1, 11, -1, prm_979);
-            return 1;
+            return 0;
         }
+        if (prm_977 == 0)
+        {
+            dx_at_m170 = rnd(mdata(0) - 5) + 2;
+            dy_at_m170 = rnd(mdata(1) - 5) + 2;
+        }
+        else
+        {
+            dx_at_m170 = prm_977;
+            dy_at_m170 = prm_978;
+        }
+        if ((chipm(7, map(dx_at_m170, dy_at_m170, 0)) & 4) == 0)
+        {
+            if (map(dx_at_m170, dy_at_m170, 6) == 0)
+            {
+                addmef(dx_at_m170, dy_at_m170, 1, 11, -1, prm_979);
+                return 1;
+            }
+        }
+        p_at_m170 += 1;
     }
-    p_at_m170 += 1;
-    goto label_1655_internal;
 }
 
 
@@ -27923,31 +27924,33 @@ int map_barrel(int prm_980, int prm_981)
     dx_at_m170 = prm_980;
     dy_at_m170 = prm_981;
     p_at_m170 = 0;
-label_1658_internal:
-    if (p_at_m170 >= 3)
+
+    while (1)
     {
-        return 0;
-    }
-    if (prm_980 == 0)
-    {
-        dx_at_m170 = rnd(mdata(0) - 5) + 2;
-        dy_at_m170 = rnd(mdata(1) - 5) + 2;
-    }
-    else
-    {
-        dx_at_m170 = prm_980;
-        dy_at_m170 = prm_981;
-    }
-    if ((chipm(7, map(dx_at_m170, dy_at_m170, 0)) & 4) == 0)
-    {
-        if (map(dx_at_m170, dy_at_m170, 6) == 0)
+        if (p_at_m170 >= 3)
         {
-            cell_featset(dx_at_m170, dy_at_m170, tile_pot, 30);
-            return 1;
+            return 0;
         }
+        if (prm_980 == 0)
+        {
+            dx_at_m170 = rnd(mdata(0) - 5) + 2;
+            dy_at_m170 = rnd(mdata(1) - 5) + 2;
+        }
+        else
+        {
+            dx_at_m170 = prm_980;
+            dy_at_m170 = prm_981;
+        }
+        if ((chipm(7, map(dx_at_m170, dy_at_m170, 0)) & 4) == 0)
+        {
+            if (map(dx_at_m170, dy_at_m170, 6) == 0)
+            {
+                cell_featset(dx_at_m170, dy_at_m170, tile_pot, 30);
+                return 1;
+            }
+        }
+        p_at_m170 += 1;
     }
-    p_at_m170 += 1;
-    goto label_1658_internal;
 }
 
 
@@ -28031,52 +28034,47 @@ int map_connectroom()
 
 void map_makedoor()
 {
-    cr = 0;
-label_1665_internal:
-    if (cr >= roomsum)
+    for (cr = 0; cr < roomsum; ++cr)
     {
-        return;
-    }
-    tx = 0;
-    ty = 0;
-    for (int cnt = 0, cnt_end = (roomheight(cr) * 2 + roomwidth(cr) * 2);
-         cnt < cnt_end;
-         ++cnt)
-    {
-        if (tx == 0)
+        tx = 0;
+        ty = 0;
+        for (int cnt = 0, cnt_end = (roomheight(cr) * 2 + roomwidth(cr) * 2);
+             cnt < cnt_end;
+             ++cnt)
         {
-            if (cnt != 0)
+            if (tx == 0)
             {
-                --ty;
+                if (cnt != 0)
+                {
+                    --ty;
+                }
             }
+            if (ty == roomheight(cr) - 1)
+            {
+                --tx;
+            }
+            if (tx == roomwidth(cr) - 1)
+            {
+                ++ty;
+            }
+            if (ty == 0)
+            {
+                ++tx;
+            }
+            dx = tx + roomx(cr);
+            dy = ty + roomy(cr);
+            if (map(dx, dy, 0) == 1)
+            {
+                continue;
+            }
+            cell_featset(
+                dx,
+                dy,
+                tile_doorclosed,
+                21,
+                rnd(std::abs(gdata_current_dungeon_level * 3 / 2) + 1));
         }
-        if (ty == roomheight(cr) - 1)
-        {
-            --tx;
-        }
-        if (tx == roomwidth(cr) - 1)
-        {
-            ++ty;
-        }
-        if (ty == 0)
-        {
-            ++tx;
-        }
-        dx = tx + roomx(cr);
-        dy = ty + roomy(cr);
-        if (map(dx, dy, 0) == 1)
-        {
-            continue;
-        }
-        cell_featset(
-            dx,
-            dy,
-            tile_doorclosed,
-            21,
-            rnd(std::abs(gdata_current_dungeon_level * 3 / 2) + 1));
     }
-    cr += 1;
-    goto label_1665_internal;
 }
 
 
@@ -28090,300 +28088,303 @@ void generate_random_nefia()
     int rdx3 = 0;
     int mobdensity = 0;
     int itemdensity = 0;
-label_16951_internal:
-    randomize();
-    ++rdtry;
-    mdata(15) = 0;
-    mdata(0) = 34 + rnd(15);
-    mdata(1) = 22 + rnd(15);
-    mdata(10) = mdata(0) * mdata(1) / 100;
-    roomsum = 0;
-    rdroomnum = mdata(0) * mdata(1) / 70;
-    rdroomsizemin = 3;
-    rdroomsizemax = 4;
-    rdroomentrance = 1;
-    rdhiddenpath = 20;
-    rdval(2) = 2;
-    rdtunnel = mdata(0) * mdata(1);
-    rdextraroom = 10;
-    rdtype = 1;
-    if (rnd(30) == 0)
+
+    while (1)
     {
-        rdtype = 3;
-    }
-    if (adata(0, gdata_current_map) == 20)
-    {
-        rdtype = 2;
-        if (rnd(4) == 0)
-        {
-            rdtype = 1;
-        }
-        if (rnd(6) == 0)
-        {
-            rdtype = 10;
-        }
-        if (rnd(10) == 0)
-        {
-            rdtype = 4;
-        }
-        if (rnd(25) == 0)
-        {
-            rdtype = 8;
-        }
-        if (rnd(20) == 0)
-        {
-            mdata(12) = 10;
-        }
-    }
-    if (adata(0, gdata_current_map) == 22)
-    {
-        rdtype = 2;
-        if (rnd(6) == 0)
-        {
-            rdtype = 1;
-        }
-        if (rnd(6) == 0)
-        {
-            rdtype = 10;
-        }
-        if (rnd(25) == 0)
-        {
-            rdtype = 8;
-        }
-        if (rnd(20) == 0)
-        {
-            rdtype = 4;
-        }
-    }
-    if (adata(0, gdata_current_map) == 21)
-    {
+        randomize();
+        ++rdtry;
+        mdata(15) = 0;
+        mdata(0) = 34 + rnd(15);
+        mdata(1) = 22 + rnd(15);
+        mdata(10) = mdata(0) * mdata(1) / 100;
+        roomsum = 0;
+        rdroomnum = mdata(0) * mdata(1) / 70;
+        rdroomsizemin = 3;
+        rdroomsizemax = 4;
+        rdroomentrance = 1;
+        rdhiddenpath = 20;
+        rdval(2) = 2;
+        rdtunnel = mdata(0) * mdata(1);
+        rdextraroom = 10;
         rdtype = 1;
-        if (rnd(5) == 0)
-        {
-            rdtype = 4;
-        }
-        if (rnd(10) == 0)
+        if (rnd(30) == 0)
         {
             rdtype = 3;
         }
-        if (rnd(25) == 0)
+        if (adata(0, gdata_current_map) == 20)
         {
             rdtype = 2;
-        }
-        if (rnd(40) == 0)
-        {
-            mdata(12) = 10;
-        }
-    }
-    if (adata(0, gdata_current_map) == 23)
-    {
-        rdtype = 1;
-        if (rnd(5) == 0)
-        {
-            rdtype = 4;
-        }
-        if (rnd(6) == 0)
-        {
-            rdtype = 5;
-        }
-        if (rnd(7) == 0)
-        {
-            rdtype = 2;
-        }
-        if (rnd(40) == 0)
-        {
-            mdata(12) = 10;
-        }
-    }
-    if (adata(16, gdata_current_map) == 3)
-    {
-        mdata(10) += gdata_current_dungeon_level / 2;
-        mdata(12) = 101;
-        if (rnd(20) == 0)
-        {
-            mdata(12) = 10;
-        }
-        if (gdata_current_dungeon_level < 35)
-        {
-            mdata(12) = 0;
-        }
-        if (gdata_current_dungeon_level < 20)
-        {
-            mdata(12) = 100;
-        }
-        if (gdata_current_dungeon_level < 10)
-        {
-            mdata(12) = 200;
-        }
-        if (gdata_current_dungeon_level < 5)
-        {
-            mdata(12) = 0;
-        }
-        rdtype = 1;
-        for (int cnt = 0; cnt < 1; ++cnt)
-        {
-            if (gdata_current_dungeon_level == 1)
+            if (rnd(4) == 0)
             {
-                rdtype = 2;
-                break;
-            }
-            if (gdata_current_dungeon_level == 5)
-            {
-                rdtype = 5;
-                break;
-            }
-            if (gdata_current_dungeon_level == 10)
-            {
-                rdtype = 3;
-                break;
-            }
-            if (gdata_current_dungeon_level == 15)
-            {
-                rdtype = 5;
-                break;
-            }
-            if (gdata_current_dungeon_level == 20)
-            {
-                rdtype = 3;
-                break;
-            }
-            if (gdata_current_dungeon_level == 25)
-            {
-                rdtype = 5;
-                break;
-            }
-            if (gdata_current_dungeon_level == 30)
-            {
-                rdtype = 3;
-                break;
-            }
-            if (gdata_current_dungeon_level < 30)
-            {
-                if (rnd(4) == 0)
-                {
-                    rdtype = 2;
-                }
-            }
-            if (rnd(5) == 0)
-            {
-                rdtype = 4;
-            }
-            if (rnd(20) == 0)
-            {
-                rdtype = 8;
+                rdtype = 1;
             }
             if (rnd(6) == 0)
             {
                 rdtype = 10;
             }
+            if (rnd(10) == 0)
+            {
+                rdtype = 4;
+            }
+            if (rnd(25) == 0)
+            {
+                rdtype = 8;
+            }
+            if (rnd(20) == 0)
+            {
+                mdata(12) = 10;
+            }
         }
-    }
-    if (adata(16, gdata_current_map) == 16)
-    {
-        mdata(10) += gdata_current_dungeon_level / 2;
-        mdata(12) = 7;
-        rdtype = 1;
-    }
-    if (adata(16, gdata_current_map) == 17)
-    {
-        mdata(10) += gdata_current_dungeon_level / 2;
-        mdata(12) = 0;
-        rdtype = 1;
-    }
-    if (adata(16, gdata_current_map) == 18)
-    {
-        mdata(10) += gdata_current_dungeon_level / 2;
-        mdata(12) = 200;
-        rdtype = 1;
-    }
-    if (adata(16, gdata_current_map) == 26)
-    {
-        rdtype = 8;
-    }
-    if (adata(16, gdata_current_map) == 27)
-    {
-        rdtype = 10;
-    }
-    if (adata(16, gdata_current_map) == 38)
-    {
-        rdtype = 9;
-    }
-    if (adata(16, gdata_current_map) == 13)
-    {
-        if (gdata_executing_immediate_quest_type == 1001)
+        if (adata(0, gdata_current_map) == 22)
         {
-            mdata(12) = 300;
-            mdata(0) = 28 + rnd(6);
-            mdata(1) = 20 + rnd(6);
-            rdtype = 6;
+            rdtype = 2;
+            if (rnd(6) == 0)
+            {
+                rdtype = 1;
+            }
+            if (rnd(6) == 0)
+            {
+                rdtype = 10;
+            }
+            if (rnd(25) == 0)
+            {
+                rdtype = 8;
+            }
+            if (rnd(20) == 0)
+            {
+                rdtype = 4;
+            }
         }
-        if (gdata_executing_immediate_quest_type == 1009)
+        if (adata(0, gdata_current_map) == 21)
         {
-            initialize_quest_map_party();
+            rdtype = 1;
+            if (rnd(5) == 0)
+            {
+                rdtype = 4;
+            }
+            if (rnd(10) == 0)
+            {
+                rdtype = 3;
+            }
+            if (rnd(25) == 0)
+            {
+                rdtype = 2;
+            }
+            if (rnd(40) == 0)
+            {
+                mdata(12) = 10;
+            }
+        }
+        if (adata(0, gdata_current_map) == 23)
+        {
+            rdtype = 1;
+            if (rnd(5) == 0)
+            {
+                rdtype = 4;
+            }
+            if (rnd(6) == 0)
+            {
+                rdtype = 5;
+            }
+            if (rnd(7) == 0)
+            {
+                rdtype = 2;
+            }
+            if (rnd(40) == 0)
+            {
+                mdata(12) = 10;
+            }
+        }
+        if (adata(16, gdata_current_map) == 3)
+        {
+            mdata(10) += gdata_current_dungeon_level / 2;
+            mdata(12) = 101;
+            if (rnd(20) == 0)
+            {
+                mdata(12) = 10;
+            }
+            if (gdata_current_dungeon_level < 35)
+            {
+                mdata(12) = 0;
+            }
+            if (gdata_current_dungeon_level < 20)
+            {
+                mdata(12) = 100;
+            }
+            if (gdata_current_dungeon_level < 10)
+            {
+                mdata(12) = 200;
+            }
+            if (gdata_current_dungeon_level < 5)
+            {
+                mdata(12) = 0;
+            }
+            rdtype = 1;
+            for (int cnt = 0; cnt < 1; ++cnt)
+            {
+                if (gdata_current_dungeon_level == 1)
+                {
+                    rdtype = 2;
+                    break;
+                }
+                if (gdata_current_dungeon_level == 5)
+                {
+                    rdtype = 5;
+                    break;
+                }
+                if (gdata_current_dungeon_level == 10)
+                {
+                    rdtype = 3;
+                    break;
+                }
+                if (gdata_current_dungeon_level == 15)
+                {
+                    rdtype = 5;
+                    break;
+                }
+                if (gdata_current_dungeon_level == 20)
+                {
+                    rdtype = 3;
+                    break;
+                }
+                if (gdata_current_dungeon_level == 25)
+                {
+                    rdtype = 5;
+                    break;
+                }
+                if (gdata_current_dungeon_level == 30)
+                {
+                    rdtype = 3;
+                    break;
+                }
+                if (gdata_current_dungeon_level < 30)
+                {
+                    if (rnd(4) == 0)
+                    {
+                        rdtype = 2;
+                    }
+                }
+                if (rnd(5) == 0)
+                {
+                    rdtype = 4;
+                }
+                if (rnd(20) == 0)
+                {
+                    rdtype = 8;
+                }
+                if (rnd(6) == 0)
+                {
+                    rdtype = 10;
+                }
+            }
+        }
+        if (adata(16, gdata_current_map) == 16)
+        {
+            mdata(10) += gdata_current_dungeon_level / 2;
+            mdata(12) = 7;
+            rdtype = 1;
+        }
+        if (adata(16, gdata_current_map) == 17)
+        {
+            mdata(10) += gdata_current_dungeon_level / 2;
+            mdata(12) = 0;
+            rdtype = 1;
+        }
+        if (adata(16, gdata_current_map) == 18)
+        {
+            mdata(10) += gdata_current_dungeon_level / 2;
+            mdata(12) = 200;
+            rdtype = 1;
+        }
+        if (adata(16, gdata_current_map) == 26)
+        {
+            rdtype = 8;
+        }
+        if (adata(16, gdata_current_map) == 27)
+        {
+            rdtype = 10;
+        }
+        if (adata(16, gdata_current_map) == 38)
+        {
+            rdtype = 9;
+        }
+        if (adata(16, gdata_current_map) == 13)
+        {
+            if (gdata_executing_immediate_quest_type == 1001)
+            {
+                mdata(12) = 300;
+                mdata(0) = 28 + rnd(6);
+                mdata(1) = 20 + rnd(6);
+                rdtype = 6;
+            }
+            if (gdata_executing_immediate_quest_type == 1009)
+            {
+                initialize_quest_map_party();
+                return;
+            }
+            if (gdata_executing_immediate_quest_type == 1006)
+            {
+                initialize_quest_map_crop();
+                return;
+            }
+            if (gdata_executing_immediate_quest_type == 1008)
+            {
+                initialize_quest_map_town();
+                return;
+            }
+            if (gdata_executing_immediate_quest_type == 1010)
+            {
+                initialize_quest_map_town();
+                return;
+            }
+        }
+        int stat = 1;
+        if (rdtype == 2)
+        {
+            initialize_random_nefia_rdtype2();
+        }
+        if (rdtype == 1)
+        {
+            stat = initialize_random_nefia_rdtype1();
+        }
+        if (rdtype == 4)
+        {
+            initialize_random_nefia_rdtype4();
+        }
+        if (rdtype == 5)
+        {
+            initialize_random_nefia_rdtype5();
+        }
+        if (rdtype == 3)
+        {
+            initialize_random_nefia_rdtype3();
+        }
+        if (rdtype == 6)
+        {
+            mdata(14) = 2;
+            initialize_random_nefia_rdtype6();
             return;
         }
-        if (gdata_executing_immediate_quest_type == 1006)
+        if (rdtype == 8)
         {
-            initialize_quest_map_crop();
-            return;
+            initialize_random_nefia_rdtype8();
         }
-        if (gdata_executing_immediate_quest_type == 1008)
+        if (rdtype == 10)
         {
-            initialize_quest_map_town();
-            return;
+            _mclass = 5 + rnd(4);
+            _bold = 2;
+            initialize_random_nefia_rdtype10();
         }
-        if (gdata_executing_immediate_quest_type == 1010)
+        if (rdtype == 9)
         {
-            initialize_quest_map_town();
-            return;
+            _mclass = 12;
+            _bold = 2;
+            initialize_random_nefia_rdtype9();
         }
-    }
-    int stat = 1;
-    if (rdtype == 2)
-    {
-        initialize_random_nefia_rdtype2();
-    }
-    if (rdtype == 1)
-    {
-        stat = initialize_random_nefia_rdtype1();
-    }
-    if (rdtype == 4)
-    {
-        initialize_random_nefia_rdtype4();
-    }
-    if (rdtype == 5)
-    {
-        initialize_random_nefia_rdtype5();
-    }
-    if (rdtype == 3)
-    {
-        initialize_random_nefia_rdtype3();
-    }
-    if (rdtype == 6)
-    {
-        mdata(14) = 2;
-        initialize_random_nefia_rdtype6();
-        return;
-    }
-    if (rdtype == 8)
-    {
-        initialize_random_nefia_rdtype8();
-    }
-    if (rdtype == 10)
-    {
-        _mclass = 5 + rnd(4);
-        _bold = 2;
-        initialize_random_nefia_rdtype10();
-    }
-    if (rdtype == 9)
-    {
-        _mclass = 12;
-        _bold = 2;
-        initialize_random_nefia_rdtype9();
-    }
-    if (stat == 0)
-    {
-        goto label_16951_internal;
+        if (stat != 0)
+        {
+            break;
+        }
     }
     map_converttile();
     map_placeplayer();
@@ -30346,7 +30347,7 @@ void use_house_board()
         homemapmode = 0;
         cdata[0].position.x = cxbk;
         cdata[0].position.y = cybk;
-        goto label_1722_internal;
+        break;
     case 2:
         gsel(4);
         for (int cnt = 0; cnt < 8; ++cnt)
@@ -30427,17 +30428,19 @@ void use_house_board()
             pos(wx + 110, cnt * 16 + wy + 138);
             mes(itemname(p));
         }
-    label_1715_internal:
-        redraw(1);
-        await(cfg_wait1);
-        key_check();
-        cursor_check();
-        if (key == key_cancel)
+
+        while (1)
         {
-            goto label_1722_internal;
+            redraw(1);
+            await(cfg_wait1);
+            key_check();
+            cursor_check();
+            if (key == key_cancel)
+            {
+                break;
+            }
         }
-        goto label_1715_internal;
-        goto label_1722_internal;
+        break;
     case 3:
     label_1717_internal:
         txtnew();
@@ -30548,7 +30551,7 @@ void use_house_board()
                 }
             }
         }
-        goto label_1722_internal;
+        break;
     case 5:
         txtnew();
         if (cdata[0].gold < calcshopreform())
@@ -30568,7 +30571,7 @@ void use_house_board()
                 u8"You extend your shop! You can display max of "s + mdata(18)
                     + u8" items now!"s));
         }
-        goto label_1722_internal;
+        break;
     case 6:
         txtnew();
         p = 0;
@@ -30587,7 +30590,7 @@ void use_house_board()
             txt(lang(
                 u8"家はすでに人であふれかえっている。"s,
                 u8"You already have too many guests in your home."s));
-            goto label_1722_internal;
+            break;
         }
         for (int cnt = 0; cnt < 10; ++cnt)
         {
@@ -30710,7 +30713,7 @@ void use_house_board()
             }
         }
         calccosthire();
-        goto label_1722_internal;
+        break;
     }
 label_1722_internal:
     tlocinitx = 0;
@@ -37536,7 +37539,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"なむ…"s, u8"Sorry for you."s);
         ++listmax;
         show_random_event_window(u8"bg_re9");
-        goto label_1895_internal;
+        break;
     case 14:
         s = lang(u8"謎のご馳走"s, u8"Strange Feast"s);
         buff = lang(
@@ -37558,7 +37561,7 @@ label_1894_internal:
             label_2162();
             chara_anorexia(0);
         }
-        goto label_1895_internal;
+        break;
     case 13:
         s = lang(u8"ご馳走の匂い"s, u8"Smell of Food"s);
         buff = lang(
@@ -37569,7 +37572,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"腹減った…"s, u8"I'm hungry now!"s);
         ++listmax;
         show_random_event_window(u8"bg_re10");
-        goto label_1895_internal;
+        break;
     case 1:
         s = lang(u8"不運の回避"s, u8"Avoiding Misfortune"s);
         buff = lang(
@@ -37579,7 +37582,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"よし"s, u8"Good."s);
         ++listmax;
         show_random_event_window(u8"bg_re8");
-        goto label_1895_internal;
+        break;
     case 24:
         efid = 1113;
         tc = 0;
@@ -37592,7 +37595,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"ワァオー"s, u8"Woohoo!"s);
         ++listmax;
         show_random_event_window(u8"bg_re4");
-        goto label_1895_internal;
+        break;
     case 18:
         skillexp(181, 0, 1000, 6, 1000);
         s = lang(u8"信仰の深まり"s, u8"Gaining Faith"s);
@@ -37603,7 +37606,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"神よ"s, u8"Great."s);
         ++listmax;
         show_random_event_window(u8"bg_re12");
-        goto label_1895_internal;
+        break;
     case 12:
         s = lang(u8"マテリアルの発見"s, u8"Small Luck"s);
         buff = lang(
@@ -37617,7 +37620,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"よし"s, u8"Nice."s);
         ++listmax;
         show_random_event_window(u8"bg_re3");
-        goto label_1895_internal;
+        break;
     case 23:
         efid = 1117;
         efp = 200;
@@ -37631,7 +37634,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"るん♪"s, u8"Sweet."s);
         ++listmax;
         show_random_event_window(u8"bg_re3");
-        goto label_1895_internal;
+        break;
     case 10:
         s = lang(u8"野営跡の発見"s, u8"Camping Site"s);
         buff = lang(
@@ -37656,7 +37659,7 @@ label_1894_internal:
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
         }
-        goto label_1895_internal;
+        break;
     case 4:
         snd(116);
         efid = 1118;
@@ -37671,7 +37674,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"おかしな夢だ"s, u8"Strange..."s);
         ++listmax;
         show_random_event_window(u8"bg_re5");
-        goto label_1895_internal;
+        break;
     case 22:
         snd(116);
         efid = 454;
@@ -37686,7 +37689,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"ううぅん…"s, u8"Urrgh..hh.."s);
         ++listmax;
         show_random_event_window(u8"bg_re2");
-        goto label_1895_internal;
+        break;
     case 19:
         flt();
         itemcreate(0, 621, -1, -1, 0);
@@ -37701,7 +37704,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"ワァオー"s, u8"Woohoo!"s);
         ++listmax;
         show_random_event_window(u8"bg_re15");
-        goto label_1895_internal;
+        break;
     case 20:
         addbuff(tc, 19, 777, 1500);
         s = lang(u8"幸運の日"s, u8"Lucky Day"s);
@@ -37710,7 +37713,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"ワァオー"s, u8"Woohoo!"s);
         ++listmax;
         show_random_event_window(u8"bg_re12");
-        goto label_1895_internal;
+        break;
     case 21:
         flt();
         itemcreate(0, 721, -1, -1, 0);
@@ -37724,7 +37727,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"ワァオー"s, u8"Woohoo!"s);
         ++listmax;
         show_random_event_window(u8"bg_re15");
-        goto label_1895_internal;
+        break;
     case 5:
         if (trait(42))
         {
@@ -37766,7 +37769,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"眠れない…"s, u8"Can't...sleep..."s);
         ++listmax;
         show_random_event_window(u8"bg_re5");
-        goto label_1895_internal;
+        break;
     case 8:
         p = rnd(cdata[0].gold / 8 + 1);
         if (cbit(15, 0))
@@ -37794,7 +37797,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"盗人め…"s, u8"Bloody thieves..."s);
         ++listmax;
         show_random_event_window(u8"bg_re9");
-        goto label_1895_internal;
+        break;
     case 11:
         s = lang(u8"冒険者の遺骸"s, u8"Corpse"s);
         buff = lang(
@@ -37836,7 +37839,7 @@ label_1894_internal:
                 u8"You bury the corpse with respect."s));
             modify_karma(0, 5);
         }
-        goto label_1895_internal;
+        break;
     case 2:
         efid = 1104;
         efp = 100;
@@ -37850,7 +37853,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"おかしな夢だ"s, u8"A weird dream."s);
         ++listmax;
         show_random_event_window(u8"bg_re6");
-        goto label_1895_internal;
+        break;
     case 3:
         efid = 1119;
         efp = 100;
@@ -37864,7 +37867,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"よし！"s, u8"Good!"s);
         ++listmax;
         show_random_event_window(u8"bg_re4");
-        goto label_1895_internal;
+        break;
     case 6:
         skillexp(154, 0, 1000);
         s = lang(u8"自然治癒力の向上"s, u8"Regeneration"s);
@@ -37875,7 +37878,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"よし"s, u8"Good."s);
         ++listmax;
         show_random_event_window(u8"bg_re4");
-        goto label_1895_internal;
+        break;
     case 7:
         skillexp(155, 0, 1000);
         s = lang(u8"瞑想力の向上"s, u8"Meditation"s);
@@ -37886,7 +37889,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"よし"s, u8"Good."s);
         ++listmax;
         show_random_event_window(u8"bg_re4");
-        goto label_1895_internal;
+        break;
     case 9:
         ++cdata[0].platinum_coin;
         s = lang(u8"路上に転がる幸運"s, u8"Great Luck"s);
@@ -37897,7 +37900,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"ラッキー！"s, u8"What a luck!"s);
         ++listmax;
         show_random_event_window(u8"bg_re1");
-        goto label_1895_internal;
+        break;
     case 16:
         p = rnd(cdata[0].gold / 10 + 1000) + 1;
         cdata[0].gold += p;
@@ -37912,7 +37915,7 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"ラッキー！"s, u8"What a luck!"s);
         ++listmax;
         show_random_event_window(u8"bg_re1");
-        goto label_1895_internal;
+        break;
     case 17:
         efid = 451;
         efp = 800;
@@ -37926,9 +37929,9 @@ label_1894_internal:
         listn(0, listmax) = lang(u8"ありがとう"s, u8"Thanks."s);
         ++listmax;
         show_random_event_window(u8"bg_re11");
-        goto label_1895_internal;
+        break;
     }
-label_1895_internal:
+
     cc = 0;
     label_1422();
     return 1;
@@ -40016,7 +40019,7 @@ void label_1935()
             u8"あなたはうしろめたさを感じた…"s,
             u8"You kind of feel guilty..."s));
         snd(65);
-        goto label_1936_internal;
+        break;
     case 10001:
         inv[ci].color = inv[ti].color;
         txtef(2);
@@ -40024,7 +40027,7 @@ void label_1935()
             u8"あなたは"s + itemname(ci) + u8"を染めた。"s,
             u8"You dye "s + itemname(ci) + u8"."s));
         snd(17);
-        goto label_1936_internal;
+        break;
     case 10002:
         ibitmod(14, ci, 1);
         txtef(2);
@@ -40033,7 +40036,7 @@ void label_1935()
             u8"You successfully create "s + itemname(ci, 1) + u8"!"s));
         txt(lang(u8"あなたはにやりと口元を歪めた。"s, u8"You grin."s));
         snd(65);
-        goto label_1936_internal;
+        break;
     case 10003:
         txtef(2);
         txt(lang(
@@ -40052,7 +40055,7 @@ void label_1935()
                 itemname(ci) + u8" gain"s + _s2(in) + u8" fireproof."s));
         }
         snd(17);
-        goto label_1936_internal;
+        break;
     case 10004:
         txtef(2);
         txt(lang(
@@ -40064,7 +40067,7 @@ void label_1935()
             itemname(ci) + u8"は酸から守られた。"s,
             itemname(ci) + u8" gain"s + _s2(in) + u8" acidproof."s));
         snd(17);
-        goto label_1936_internal;
+        break;
     case 10005:
         txtef(2);
         txt(lang(
@@ -40081,7 +40084,7 @@ void label_1935()
             inv[ci].param4 = inv[ti].param1;
         }
         snd(13);
-        goto label_1936_internal;
+        break;
     case 10006:
         txtef(2);
         txt(lang(
@@ -40107,7 +40110,7 @@ void label_1935()
             inv[ci].curse_state = -1;
         }
         snd(17);
-        goto label_1936_internal;
+        break;
     case 10007:
         txt(lang(
             itemname(ti, 1) + u8"を"s + itemname(ci) + u8"に放り込んだ。"s,
@@ -40118,20 +40121,20 @@ void label_1935()
             txt(lang(
                 u8"空き瓶の割れる音がした。"s,
                 u8"You hear the sound of the empty bottle shatters."s));
-            goto label_1936_internal;
+            break;
         }
         snd(17);
         if (inv[ci].id == 602)
         {
             txt(lang(u8"井戸は汚れた。"s, u8"The holy well is polluted."s));
-            goto label_1936_internal;
+            break;
         }
         if (inv[ci].param3 >= 20)
         {
             txt(lang(
                 itemname(ci) + u8"は完全に枯れている。"s,
                 itemname(ci) + u8" is completely dry."s));
-            goto label_1936_internal;
+            break;
         }
         txtef(2);
         txt(lang(
@@ -40145,7 +40148,7 @@ void label_1935()
         {
             inv[ci].param1 += rnd(3);
         }
-        goto label_1936_internal;
+        break;
     case 10008:
         if (inv[ci].param1 < -5 || inv[ci].param3 >= 20
             || (inv[ci].id == 602 && gdata_holy_well_count <= 0))
@@ -40155,7 +40158,7 @@ void label_1935()
             txt(lang(
                 u8"あっ！空き瓶を井戸に落としてしまった…"s,
                 u8"Ops! You drop the empty bottle into the well..."s));
-            goto label_1936_internal;
+            break;
         }
         cibk = ci;
         if (inv[ci].id == 602)
@@ -40186,9 +40189,9 @@ void label_1935()
         item_stack(0, ci);
         ci = cibk;
         snd(17);
-        goto label_1936_internal;
+        break;
     }
-label_1936_internal:
+
     item_stack(0, ci);
     if (inv[ci].body_part != 0)
     {
@@ -43760,81 +43763,85 @@ int select_alias(int val0)
     list(0, 0) = -1;
     windowshadow = 1;
     i = 10500;
-label_1994_internal:
-    redraw(0);
-    if (cs != cs_bk)
+
+    while (1)
     {
-        s(0) = lang(u8"異名の選択"s, u8"Alias Selection"s);
-        s(1) = strhint3b;
-        display_window(
-            (windoww - 400) / 2 + inf_screenx, winposy(458), 400, 458);
-        display_topic(lang(u8"異名の候補"s, u8"Alias List"s), wx + 28, wy + 30);
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        for (int cnt = 0; cnt < 17; ++cnt)
+        redraw(0);
+        if (cs != cs_bk)
         {
-            key_list(cnt) = key_select(cnt);
-            keyrange = cnt + 1;
-            if (val0 == 3)
+            s(0) = lang(u8"異名の選択"s, u8"Alias Selection"s);
+            s(1) = strhint3b;
+            display_window(
+                (windoww - 400) / 2 + inf_screenx, winposy(458), 400, 458);
+            display_topic(
+                lang(u8"異名の候補"s, u8"Alias List"s), wx + 28, wy + 30);
+            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            for (int cnt = 0; cnt < 17; ++cnt)
             {
-                randomize(i + cnt);
+                key_list(cnt) = key_select(cnt);
+                keyrange = cnt + 1;
+                if (val0 == 3)
+                {
+                    randomize(i + cnt);
+                }
+                if (list(0, 0) == -1)
+                {
+                    listn(0, cnt) = random_title(val0);
+                    list(1, cnt) = i + cnt;
+                }
+                if (cnt == 0)
+                {
+                    listn(0, cnt) = lang(u8"別の名前を考える"s, u8"Reroll"s);
+                }
+                pos(wx + 38, wy + 66 + cnt * 19 - 2);
+                gcopy(3, cnt * 24 + 72, 30, 24, 18);
+                cs_list(
+                    cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
             }
-            if (list(0, 0) == -1)
+            i += 17;
+            cs_bk = cs;
+            list(0, 0) = 0;
+        }
+        redraw(1);
+        await(cfg_wait1);
+        key_check();
+        cursor_check();
+        for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
+        {
+            if (key == key_select(cnt))
             {
-                listn(0, cnt) = random_title(val0);
-                list(1, cnt) = i + cnt;
+                p = cnt;
+                break;
             }
-            if (cnt == 0)
+            else
             {
-                listn(0, cnt) = lang(u8"別の名前を考える"s, u8"Reroll"s);
+                p = -1;
             }
-            pos(wx + 38, wy + 66 + cnt * 19 - 2);
-            gcopy(3, cnt * 24 + 72, 30, 24, 18);
-            cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
         }
-        i += 17;
-        cs_bk = cs;
-        list(0, 0) = 0;
-    }
-    redraw(1);
-    await(cfg_wait1);
-    key_check();
-    cursor_check();
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
+        if (p != -1)
         {
-            p = cnt;
-            break;
-        }
-        else
-        {
-            p = -1;
-        }
-    }
-    if (p != -1)
-    {
-        if (key == key_select(0))
-        {
-            list(0, 0) = -1;
-            snd(103);
-            cs_bk = -1;
-        }
-        else
-        {
-            if (val0 == 3)
+            if (key == key_select(0))
             {
-                return p;
+                list(0, 0) = -1;
+                snd(103);
+                cs_bk = -1;
             }
-            cmaka = listn(0, p);
-            return 1;
+            else
+            {
+                if (val0 == 3)
+                {
+                    return p;
+                }
+                cmaka = listn(0, p);
+                return 1;
+            }
+        }
+        if (key == key_cancel)
+        {
+            snd(26);
+            return 0;
         }
     }
-    if (key == key_cancel)
-    {
-        snd(26);
-        return 0;
-    }
-    goto label_1994_internal;
 }
 
 
@@ -47593,93 +47600,95 @@ int label_2044()
         key_list(cnt) = key_enter;
         ++keyrange;
     }
-label_2045_internal:
-    redraw(0);
-    pagesize = 0;
-    s(0) = lang(u8"装備表示の変更"s, u8"Parts to hide"s);
-    s(1) = lang(
-        u8"左右キー [変更]  ｷｬﾝｾﾙ [閉じる]"s,
-        u8"Right,left [Change]  Shift,Esc [Close]"s);
-    display_window(
-        (windoww - 360) / 2 + inf_screenx, winposy(289) - 12, 360, 289);
-    s = lang(u8"項目"s, u8"Part"s);
-    pagesize = listmax;
-    display_topic(s, wx + 34, wy + 36);
-    ++i;
-    if (i % 100 < 45)
+
+    while (1)
     {
-        f = i % 16;
-    }
-    else
-    {
-        ++f;
-    }
-    window2(wx + 234, wy + 60, 88, 120, 1, 1);
-    pos(wx + 280, wy + 120);
-    gmode(2, 32, 48);
-    grotate(10 + cc, f / 4 % 4 * 32, f / 16 % 4 * 48, 0, 48, 80);
-    gmode(2);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = cnt;
-        if (p >= listmax)
+        redraw(0);
+        pagesize = 0;
+        s(0) = lang(u8"装備表示の変更"s, u8"Parts to hide"s);
+        s(1) = lang(
+            u8"左右キー [変更]  ｷｬﾝｾﾙ [閉じる]"s,
+            u8"Right,left [Change]  Shift,Esc [Close]"s);
+        display_window(
+            (windoww - 360) / 2 + inf_screenx, winposy(289) - 12, 360, 289);
+        s = lang(u8"項目"s, u8"Part"s);
+        pagesize = listmax;
+        display_topic(s, wx + 34, wy + 36);
+        ++i;
+        if (i % 100 < 45)
         {
-            break;
+            f = i % 16;
         }
-        s = listn(0, p);
-        if (cnt != 0)
+        else
         {
-            if (pcc(20 + cnt - 1, cc) == 0)
-            {
-                s += u8"On"s;
-            }
-            else
-            {
-                s += u8"Off"s;
-            }
-            pos(wx + 30, wy + 66 + cnt * 21 - 5);
-            gcopy(3, 312, 336, 24, 24);
-            pos(wx + 175, wy + 66 + cnt * 21 - 5);
-            gcopy(3, 336, 336, 24, 24);
+            ++f;
         }
-        cs_list(cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1, 0);
-    }
-    if (keyrange != 0)
-    {
-        cs_bk = cs;
-    }
-    redraw(1);
-    await(cfg_wait1);
-    key_check();
-    cursor_check();
-    if (cs != 0)
-    {
-        if (key == key_enter)
+        window2(wx + 234, wy + 60, 88, 120, 1, 1);
+        pos(wx + 280, wy + 120);
+        gmode(2, 32, 48);
+        grotate(10 + cc, f / 4 % 4 * 32, f / 16 % 4 * 48, 0, 48, 80);
+        gmode(2);
+        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
         {
-            key = key_pageup;
+            p = cnt;
+            if (p >= listmax)
+            {
+                break;
+            }
+            s = listn(0, p);
+            if (cnt != 0)
+            {
+                if (pcc(20 + cnt - 1, cc) == 0)
+                {
+                    s += u8"On"s;
+                }
+                else
+                {
+                    s += u8"Off"s;
+                }
+                pos(wx + 30, wy + 66 + cnt * 21 - 5);
+                gcopy(3, 312, 336, 24, 24);
+                pos(wx + 175, wy + 66 + cnt * 21 - 5);
+                gcopy(3, 336, 336, 24, 24);
+            }
+            cs_list(cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1, 0);
         }
-        if (key == key_pageup || key == key_pagedown)
+        if (keyrange != 0)
         {
-            if (pcc(20 + cs - 1, cc) == 0)
+            cs_bk = cs;
+        }
+        redraw(1);
+        await(cfg_wait1);
+        key_check();
+        cursor_check();
+        if (cs != 0)
+        {
+            if (key == key_enter)
             {
-                pcc(20 + cs - 1, cc) = 1;
+                key = key_pageup;
             }
-            else
+            if (key == key_pageup || key == key_pagedown)
             {
-                pcc(20 + cs - 1, cc) = 0;
+                if (pcc(20 + cs - 1, cc) == 0)
+                {
+                    pcc(20 + cs - 1, cc) = 1;
+                }
+                else
+                {
+                    pcc(20 + cs - 1, cc) = 0;
+                }
+                create_pcpic(cc, true);
+                snd(5);
             }
+        }
+        if ((cs == 0 && key == key_enter) || key == key_cancel)
+        {
+            snd(20);
             create_pcpic(cc, true);
-            snd(5);
+            return 1;
         }
     }
-    if ((cs == 0 && key == key_enter) || key == key_cancel)
-    {
-        snd(20);
-        create_pcpic(cc, true);
-        return 1;
-    }
-    goto label_2045_internal;
 }
 
 
@@ -51200,126 +51209,130 @@ void main_menu_continue()
         ++save_data_count;
     }
     windowshadow = 1;
-label_2119_internal:
-    redraw(0);
-    if (jp)
+
+    while (1)
     {
-        s(0) = u8"冒険者の選択"s;
-        s(1) = u8"BackSpace [削除]  "s + strhint3b;
-    }
-    else
-    {
-        s(0) = u8"Game Selection"s;
-        s(1) = u8"BackSpace [Delete]  "s + strhint3b;
-    }
-    display_window(
-        (windoww - 440) / 2 + inf_screenx, winposy(288, 1), 440, 288);
-    for (int cnt = 0, cnt_end = save_data_count; cnt < cnt_end; ++cnt)
-    {
-        x = wx + 20;
-        y = cnt * 40 + wy + 50;
-        display_key(x + 20, y - 2, cnt);
-        font(lang(cfg_font1, cfg_font2), 11 - en * 2, 0);
-        pos(x + 48, y - 4);
-        mes(listn(0, cnt));
-        font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
-        cs_list(cs == cnt, listn(1, cnt), x + 48, y + 8);
-    }
-    cs_bk = cs;
-    if (save_data_count == 0)
-    {
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        pos(wx + 140, wy + 120);
-        mes(u8"No save files found"s);
-    }
-    redraw(1);
-    await(cfg_wait1);
-    key_check();
-    cursor_check();
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
+        redraw(0);
+        if (jp)
         {
-            p = list(0, cnt);
-            break;
+            s(0) = u8"冒険者の選択"s;
+            s(1) = u8"BackSpace [削除]  "s + strhint3b;
         }
-    }
-    if (p != -1)
-    {
-        playerid = listn(0, p);
-        snd(20);
-        await(200);
-        mode = 3;
-        music = 0;
-        initialize_game();
-        return;
-    }
-    if (ginfo(2) == 0)
-    {
-        if (noteinfo(0) != 0)
+        else
         {
-            if (getkey(snail::key::backspace))
+            s(0) = u8"Game Selection"s;
+            s(1) = u8"BackSpace [Delete]  "s + strhint3b;
+        }
+        display_window(
+            (windoww - 440) / 2 + inf_screenx, winposy(288, 1), 440, 288);
+        for (int cnt = 0, cnt_end = save_data_count; cnt < cnt_end; ++cnt)
+        {
+            x = wx + 20;
+            y = cnt * 40 + wy + 50;
+            display_key(x + 20, y - 2, cnt);
+            font(lang(cfg_font1, cfg_font2), 11 - en * 2, 0);
+            pos(x + 48, y - 4);
+            mes(listn(0, cnt));
+            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+            cs_list(cs == cnt, listn(1, cnt), x + 48, y + 8);
+        }
+        cs_bk = cs;
+        if (save_data_count == 0)
+        {
+            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            pos(wx + 140, wy + 120);
+            mes(u8"No save files found"s);
+        }
+        redraw(1);
+        await(cfg_wait1);
+        key_check();
+        cursor_check();
+        p = -1;
+        for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
+        {
+            if (key == key_select(cnt))
             {
-                p = list(0, cs);
-                playerid = listn(0, p);
-                if (jp)
+                p = list(0, cnt);
+                break;
+            }
+        }
+        if (p != -1)
+        {
+            playerid = listn(0, p);
+            snd(20);
+            await(200);
+            mode = 3;
+            music = 0;
+            initialize_game();
+            return;
+        }
+        if (ginfo(2) == 0)
+        {
+            if (noteinfo(0) != 0)
+            {
+                if (getkey(snail::key::backspace))
                 {
-                    s = u8"本当に"s + playerid + u8"を削除していいのかい？"s;
-                }
-                else
-                {
-                    s = u8"Do you really want to delete "s + playerid + u8" ?"s;
-                }
-                draw_caption();
-                promptl(0, 0) = i18n::_(u8"ui", u8"yes");
-                promptl(1, 0) = u8"y"s;
-                promptl(2, 0) = u8"0"s;
-                promptl(0, 1) = i18n::_(u8"ui", u8"no");
-                promptl(1, 1) = u8"n"s;
-                promptl(2, 1) = u8"1"s;
-                promptmax = 2;
-                show_prompt(promptx, prompty, 200);
-                if (rtval != 0)
-                {
+                    p = list(0, cs);
+                    playerid = listn(0, p);
+                    if (jp)
+                    {
+                        s = u8"本当に"s + playerid
+                            + u8"を削除していいのかい？"s;
+                    }
+                    else
+                    {
+                        s = u8"Do you really want to delete "s + playerid
+                            + u8" ?"s;
+                    }
+                    draw_caption();
+                    promptl(0, 0) = i18n::_(u8"ui", u8"yes");
+                    promptl(1, 0) = u8"y"s;
+                    promptl(2, 0) = u8"0"s;
+                    promptl(0, 1) = i18n::_(u8"ui", u8"no");
+                    promptl(1, 1) = u8"n"s;
+                    promptl(2, 1) = u8"1"s;
+                    promptmax = 2;
+                    show_prompt(promptx, prompty, 200);
+                    if (rtval != 0)
+                    {
+                        main_menu_continue();
+                        return;
+                    }
+                    if (jp)
+                    {
+                        s = u8"本当の本当に"s + playerid
+                            + u8"を削除していいのかい？"s;
+                    }
+                    else
+                    {
+                        s = u8"Are you sure you really want to delete "s
+                            + playerid + u8" ?"s;
+                    }
+                    draw_caption();
+                    promptl(0, 0) = i18n::_(u8"ui", u8"yes");
+                    promptl(1, 0) = u8"y"s;
+                    promptl(2, 0) = u8"0"s;
+                    promptl(0, 1) = i18n::_(u8"ui", u8"no");
+                    promptl(1, 1) = u8"n"s;
+                    promptl(2, 1) = u8"1"s;
+                    promptmax = 2;
+                    show_prompt(promptx, prompty, 200);
+                    if (rtval == 0)
+                    {
+                        snd(20);
+                        ctrl_file(9);
+                    }
                     main_menu_continue();
                     return;
                 }
-                if (jp)
-                {
-                    s = u8"本当の本当に"s + playerid
-                        + u8"を削除していいのかい？"s;
-                }
-                else
-                {
-                    s = u8"Are you sure you really want to delete "s + playerid
-                        + u8" ?"s;
-                }
-                draw_caption();
-                promptl(0, 0) = i18n::_(u8"ui", u8"yes");
-                promptl(1, 0) = u8"y"s;
-                promptl(2, 0) = u8"0"s;
-                promptl(0, 1) = i18n::_(u8"ui", u8"no");
-                promptl(1, 1) = u8"n"s;
-                promptl(2, 1) = u8"1"s;
-                promptmax = 2;
-                show_prompt(promptx, prompty, 200);
-                if (rtval == 0)
-                {
-                    snd(20);
-                    ctrl_file(9);
-                }
-                main_menu_continue();
-                return;
             }
         }
+        if (key == key_cancel)
+        {
+            main_title_menu();
+            return;
+        }
     }
-    if (key == key_cancel)
-    {
-        main_title_menu();
-        return;
-    }
-    goto label_2119_internal;
 }
 
 
@@ -51368,65 +51381,67 @@ void main_menu_incarnate()
         ++listmax;
     }
     windowshadow = 1;
-label_2122_internal:
-    redraw(0);
-    if (jp)
+
+    while (1)
     {
-        s(0) = u8"遺伝子の選択"s;
-        s(1) = strhint3b;
-    }
-    else
-    {
-        s(0) = u8"Gene Selection"s;
-        s(1) = strhint3b;
-    }
-    display_window(
-        (windoww - 440) / 2 + inf_screenx, winposy(288, 1), 440, 288);
-    for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
-    {
-        x = wx + 20;
-        y = cnt * 40 + wy + 50;
-        display_key(x + 20, y - 2, cnt);
-        font(lang(cfg_font1, cfg_font2), 11 - en * 2, 0);
-        pos(x + 48, y - 4);
-        mes(listn(0, cnt));
-        font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
-        cs_list(cs == cnt, listn(1, cnt), x + 48, y + 8);
-    }
-    cs_bk = cs;
-    if (listmax == 0)
-    {
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-        pos(wx + 140, wy + 120);
-        mes(u8"No gene files found"s);
-    }
-    redraw(1);
-    await(cfg_wait1);
-    key_check();
-    cursor_check();
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
+        redraw(0);
+        if (jp)
         {
-            p = list(0, cnt);
-            break;
+            s(0) = u8"遺伝子の選択"s;
+            s(1) = strhint3b;
+        }
+        else
+        {
+            s(0) = u8"Gene Selection"s;
+            s(1) = strhint3b;
+        }
+        display_window(
+            (windoww - 440) / 2 + inf_screenx, winposy(288, 1), 440, 288);
+        for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
+        {
+            x = wx + 20;
+            y = cnt * 40 + wy + 50;
+            display_key(x + 20, y - 2, cnt);
+            font(lang(cfg_font1, cfg_font2), 11 - en * 2, 0);
+            pos(x + 48, y - 4);
+            mes(listn(0, cnt));
+            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+            cs_list(cs == cnt, listn(1, cnt), x + 48, y + 8);
+        }
+        cs_bk = cs;
+        if (listmax == 0)
+        {
+            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            pos(wx + 140, wy + 120);
+            mes(u8"No gene files found"s);
+        }
+        redraw(1);
+        await(cfg_wait1);
+        key_check();
+        cursor_check();
+        p = -1;
+        for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
+        {
+            if (key == key_select(cnt))
+            {
+                p = list(0, cnt);
+                break;
+            }
+        }
+        if (p != -1)
+        {
+            snd(20);
+            geneuse = listn(0, p);
+            playerid = listn(0, p);
+            main_menu_new_game();
+            return;
+        }
+        if (key == key_cancel)
+        {
+            main_title_menu();
+            return;
         }
     }
-    if (p != -1)
-    {
-        snd(20);
-        geneuse = listn(0, p);
-        playerid = listn(0, p);
-        main_menu_new_game();
-        return;
-    }
-    if (key == key_cancel)
-    {
-        main_title_menu();
-        return;
-    }
-    goto label_2122_internal;
 }
 
 
@@ -52039,16 +52054,17 @@ void label_2134()
     pos(0, 0);
     mesbox(buff, 800, 24, 1);
     objsel(2);
-label_2135_internal:
-    await(20);
-    int a{};
-    stick(a);
-    if (a == 128)
+    while (1)
     {
-        label_2136();
-        return;
+        await(20);
+        int a{};
+        stick(a);
+        if (a == 128)
+        {
+            label_2136();
+            return;
+        }
     }
-    goto label_2135_internal;
 }
 
 
@@ -58504,9 +58520,6 @@ int unlock_box(int difficulty)
         }
         return 0;
     }
-    goto label_2211_internal;
-    return 0;
-label_2211_internal:
     txt(lang(u8"開錠に成功した。"s, u8"You successfully unlock it."s));
     r1 = cc;
     gain_skill_experience_lock_picking();
@@ -71498,29 +71511,34 @@ void turn_begin()
         pc_died();
         return;
     }
+
+    bool update_turn_cost = true;
     if (mdata(6) == 1)
     {
         if (cdata[0].continuous_action_turn > 2)
         {
             cdata[0].turn_cost = mdata(9);
-            goto label_2734_internal;
+            update_turn_cost = false;
         }
     }
-    for (int cnt = 0; cnt < 245; ++cnt)
+    if (update_turn_cost)
     {
-        if (cdata[cnt].state != 1)
+        for (int cnt = 0; cnt < 245; ++cnt)
         {
-            continue;
+            if (cdata[cnt].state != 1)
+            {
+                continue;
+            }
+            spd = cdata[cnt].current_speed * (100 + cdata[cnt].speed_percentage)
+                / 100;
+            if (spd < 10)
+            {
+                spd = 10;
+            }
+            cdata[cnt].turn_cost += spd * turncost;
         }
-        spd = cdata[cnt].current_speed * (100 + cdata[cnt].speed_percentage)
-            / 100;
-        if (spd < 10)
-        {
-            spd = 10;
-        }
-        cdata[cnt].turn_cost += spd * turncost;
     }
-label_2734_internal:
+
     gdata_second += turncost / 5 + 1;
     if (gdata_second >= 60)
     {
@@ -73996,16 +74014,18 @@ void conquer_lesimas()
     redraw(1);
     key_list = key_enter;
     keyrange = 0;
-label_2750_internal:
-    await(cfg_wait1);
-    key_check();
-    cursor_check();
-    if (key == key_cancel)
+
+    while (1)
     {
-        play_the_last_scene_again();
-        return;
+        await(cfg_wait1);
+        key_check();
+        cursor_check();
+        if (key == key_cancel)
+        {
+            play_the_last_scene_again();
+            return;
+        }
     }
-    goto label_2750_internal;
 }
 
 

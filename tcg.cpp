@@ -546,232 +546,243 @@ void tcgdraw()
     int chaintime_at_tcg = 0;
     elona_vector2<int> star_at_tcg;
     int screenupdate_at_tcg = 0;
-label_1772_internal:
-    ++t_at_tcg;
-    redraw(0);
-    label_1825();
-    anime_at_tcg = 0;
-    font(lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0);
-    color(255, 255, 255);
-    gmode(2);
-    for (int cnt = 0; cnt < 2; ++cnt)
+
+    while (1)
     {
-        x_at_tcg = holderix_at_tcg(cnt) - holderspace_at_tcg;
-        y_at_tcg = holderiy_at_tcg(cnt);
-        pos(x_at_tcg, y_at_tcg);
-        gcopy(7, 96, 144, 72, 96);
-        pos(x_at_tcg + 14, y_at_tcg + 75);
-        mes(""s + cpdata_at_tcg(7, cnt) + u8"/"s + cpdata_at_tcg(8, cnt));
-    }
-    color(0, 0, 0);
-    font(lang(cfg_font1, cfg_font2), 13 + en - en * 2, 0);
-    for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
-    {
-        c_at_tcg = maxcard_at_tcg - cnt - 1;
-        if (cc_at_tcg != 0)
+        ++t_at_tcg;
+        redraw(0);
+        label_1825();
+        anime_at_tcg = 0;
+        font(lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0);
+        color(255, 255, 255);
+        gmode(2);
+        for (int cnt = 0; cnt < 2; ++cnt)
         {
-            if (c_at_tcg == 0)
-            {
-                c_at_tcg = cc_at_tcg;
-            }
-            else if (c_at_tcg == cc_at_tcg)
-            {
-                c_at_tcg = 0;
-            }
+            x_at_tcg = holderix_at_tcg(cnt) - holderspace_at_tcg;
+            y_at_tcg = holderiy_at_tcg(cnt);
+            pos(x_at_tcg, y_at_tcg);
+            gcopy(7, 96, 144, 72, 96);
+            pos(x_at_tcg + 14, y_at_tcg + 75);
+            mes(""s + cpdata_at_tcg(7, cnt) + u8"/"s + cpdata_at_tcg(8, cnt));
         }
-        if (card_at_tcg(0, c_at_tcg) <= 0)
+        color(0, 0, 0);
+        font(lang(cfg_font1, cfg_font2), 13 + en - en * 2, 0);
+        for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
         {
-            if (card_at_tcg(7, c_at_tcg) == 0)
+            c_at_tcg = maxcard_at_tcg - cnt - 1;
+            if (cc_at_tcg != 0)
+            {
+                if (c_at_tcg == 0)
+                {
+                    c_at_tcg = cc_at_tcg;
+                }
+                else if (c_at_tcg == cc_at_tcg)
+                {
+                    c_at_tcg = 0;
+                }
+            }
+            if (card_at_tcg(0, c_at_tcg) <= 0)
+            {
+                if (card_at_tcg(7, c_at_tcg) == 0)
+                {
+                    continue;
+                }
+            }
+            if (card_at_tcg(0, c_at_tcg) == 4)
             {
                 continue;
             }
-        }
-        if (card_at_tcg(0, c_at_tcg) == 4)
-        {
-            continue;
-        }
-        if (card_at_tcg(2, c_at_tcg) != card_at_tcg(4, c_at_tcg)
-            || card_at_tcg(3, c_at_tcg) != card_at_tcg(5, c_at_tcg)
-            || card_at_tcg(7, c_at_tcg) > 0)
-        {
-            anime_at_tcg = 1;
-            p_at_tcg = 0;
-            if (card_at_tcg(2, c_at_tcg) != card_at_tcg(4, c_at_tcg))
+            if (card_at_tcg(2, c_at_tcg) != card_at_tcg(4, c_at_tcg)
+                || card_at_tcg(3, c_at_tcg) != card_at_tcg(5, c_at_tcg)
+                || card_at_tcg(7, c_at_tcg) > 0)
             {
-                p_at_tcg =
-                    (card_at_tcg(4, c_at_tcg) - card_at_tcg(2, c_at_tcg)) / 6;
-                if (card_at_tcg(2, c_at_tcg) > card_at_tcg(4, c_at_tcg))
+                anime_at_tcg = 1;
+                p_at_tcg = 0;
+                if (card_at_tcg(2, c_at_tcg) != card_at_tcg(4, c_at_tcg))
                 {
-                    --p_at_tcg;
+                    p_at_tcg =
+                        (card_at_tcg(4, c_at_tcg) - card_at_tcg(2, c_at_tcg))
+                        / 6;
+                    if (card_at_tcg(2, c_at_tcg) > card_at_tcg(4, c_at_tcg))
+                    {
+                        --p_at_tcg;
+                    }
+                    else
+                    {
+                        ++p_at_tcg;
+                    }
                 }
-                else
+                card_at_tcg(2, c_at_tcg) += p_at_tcg;
+                p_at_tcg = 0;
+                if (card_at_tcg(3, c_at_tcg) != card_at_tcg(5, c_at_tcg))
                 {
-                    ++p_at_tcg;
+                    p_at_tcg =
+                        (card_at_tcg(5, c_at_tcg) - card_at_tcg(3, c_at_tcg))
+                        / 6;
+                    if (card_at_tcg(3, c_at_tcg) > card_at_tcg(5, c_at_tcg))
+                    {
+                        --p_at_tcg;
+                    }
+                    else
+                    {
+                        ++p_at_tcg;
+                    }
                 }
-            }
-            card_at_tcg(2, c_at_tcg) += p_at_tcg;
-            p_at_tcg = 0;
-            if (card_at_tcg(3, c_at_tcg) != card_at_tcg(5, c_at_tcg))
-            {
-                p_at_tcg =
-                    (card_at_tcg(5, c_at_tcg) - card_at_tcg(3, c_at_tcg)) / 6;
-                if (card_at_tcg(3, c_at_tcg) > card_at_tcg(5, c_at_tcg))
+                card_at_tcg(3, c_at_tcg) += p_at_tcg;
+                if (card_at_tcg(7, c_at_tcg) > 0)
                 {
-                    --p_at_tcg;
-                }
-                else
-                {
-                    ++p_at_tcg;
-                }
-            }
-            card_at_tcg(3, c_at_tcg) += p_at_tcg;
-            if (card_at_tcg(7, c_at_tcg) > 0)
-            {
-                --card_at_tcg(7, c_at_tcg);
-            }
-        }
-        tcgdrawcard(c_at_tcg);
-    }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    color(255, 255, 255);
-    gmode(2);
-    if (cursor_at_tcg)
-    {
-        if (cs_at_tcg == -1)
-        {
-            if (phase_at_tcg == 2)
-            {
-                if (selectmode_at_tcg == 0)
-                {
-                    cardhelp(lang(
-                        u8"メインフェイズを終了する。"s,
-                        u8"End your main phase."s));
-                }
-                else
-                {
-                    cardhelp(lang(u8"ブロックしない。"s, u8"No blocker."s));
+                    --card_at_tcg(7, c_at_tcg);
                 }
             }
-            pos(holderix_at_tcg - holderspace_at_tcg - 5, holderiy_at_tcg - 5);
-            gcopy(7, 168, 144, 82, 106);
+            tcgdrawcard(c_at_tcg);
         }
-    }
-    color(0, 0, 0);
-    if (chaintime_at_tcg > 0)
-    {
-        if (chaintime_at_tcg == cfg_chaintime)
+        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        color(255, 255, 255);
+        gmode(2);
+        if (cursor_at_tcg)
         {
-            DIM3(star_at_tcg, 2, 10);
-            for (int cnt = 0; cnt < 10; ++cnt)
+            if (cs_at_tcg == -1)
             {
-                star_at_tcg(0, cnt) = rnd(72) - 32;
-                star_at_tcg(1, cnt) = rnd(40) - 32;
+                if (phase_at_tcg == 2)
+                {
+                    if (selectmode_at_tcg == 0)
+                    {
+                        cardhelp(lang(
+                            u8"メインフェイズを終了する。"s,
+                            u8"End your main phase."s));
+                    }
+                    else
+                    {
+                        cardhelp(lang(u8"ブロックしない。"s, u8"No blocker."s));
+                    }
+                }
+                pos(holderix_at_tcg - holderspace_at_tcg - 5,
+                    holderiy_at_tcg - 5);
+                gcopy(7, 168, 144, 82, 106);
             }
         }
-        if (chaintime_at_tcg > 5)
+        color(0, 0, 0);
+        if (chaintime_at_tcg > 0)
         {
-            gmode(5, -1, -1, std::clamp(chaintime_at_tcg * 3 - 40, 0, 255));
-            cnt2_at_tcg = 0;
-            for (int cnt = 0; cnt < 10; ++cnt)
+            if (chaintime_at_tcg == cfg_chaintime)
             {
-                pos(chainx_at_tcg + star_at_tcg(0, cnt),
-                    chainy_at_tcg + star_at_tcg(1, cnt));
+                DIM3(star_at_tcg, 2, 10);
+                for (int cnt = 0; cnt < 10; ++cnt)
+                {
+                    star_at_tcg(0, cnt) = rnd(72) - 32;
+                    star_at_tcg(1, cnt) = rnd(40) - 32;
+                }
+            }
+            if (chaintime_at_tcg > 5)
+            {
+                gmode(5, -1, -1, std::clamp(chaintime_at_tcg * 3 - 40, 0, 255));
+                cnt2_at_tcg = 0;
+                for (int cnt = 0; cnt < 10; ++cnt)
+                {
+                    pos(chainx_at_tcg + star_at_tcg(0, cnt),
+                        chainy_at_tcg + star_at_tcg(1, cnt));
+                    gcopy(
+                        7,
+                        64 * std::clamp((17 - chaintime_at_tcg / 3), 0, 8),
+                        416,
+                        64,
+                        64);
+                    star_at_tcg(1, cnt) += 2;
+                }
+            }
+            for (int cnt = 0; cnt < 3; ++cnt)
+            {
+                p_at_tcg = (t_at_tcg / 4 + cnt) % 7;
+                color(p_at_tcg * 20, 25 + p_at_tcg * 20, 60 + p_at_tcg * 20);
+                boxl(
+                    chainx_at_tcg - p_at_tcg,
+                    chainy_at_tcg - p_at_tcg,
+                    chainx_at_tcg + 72 + p_at_tcg,
+                    chainy_at_tcg + 96 + p_at_tcg);
+                color(0, 0, 0);
+            }
+        }
+        for (int cnt = 0, cnt_end = (efllistmax_at_tcg); cnt < cnt_end; ++cnt)
+        {
+            if (efllist_at_tcg(4, cnt) <= 0)
+            {
+                continue;
+            }
+            --efllist_at_tcg(4, cnt);
+            if (efllist_at_tcg(0, cnt) == 1)
+            {
+                font(lang(cfg_font1, cfg_font2), 20 - en * 2, 1);
+                pos(efllist_at_tcg(5, cnt) + 11,
+                    efllist_at_tcg(6, cnt) + efllist_at_tcg(4, cnt) / 3 + 21);
+                mes(std::abs(efllist_at_tcg(1, cnt)));
+                color(255, 100, 100);
+                pos(efllist_at_tcg(5, cnt) + 10,
+                    efllist_at_tcg(6, cnt) + efllist_at_tcg(4, cnt) / 3 + 20);
+                mes(std::abs(efllist_at_tcg(1, cnt)));
+                color(0, 0, 0);
+                font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+                gmode(5, -1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
+                pos(efllist_at_tcg(5, cnt) - 12, efllist_at_tcg(6, cnt) + 10);
                 gcopy(
                     7,
-                    64 * std::clamp((17 - chaintime_at_tcg / 3), 0, 8),
+                    64
+                        * std::clamp(
+                              (10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
+                    360,
+                    48,
+                    64);
+            }
+            if (efllist_at_tcg(0, cnt) == 2)
+            {
+                font(lang(cfg_font1, cfg_font2), 20 - en * 2, 1);
+                pos(efllist_at_tcg(2, cnt) + 31,
+                    efllist_at_tcg(3, cnt) + efllist_at_tcg(4, cnt) / 3 + 26);
+                mes(std::abs(efllist_at_tcg(1, cnt)));
+                color(100, 100, 255);
+                pos(efllist_at_tcg(2, cnt) + 30,
+                    efllist_at_tcg(3, cnt) + efllist_at_tcg(4, cnt) / 3 + 25);
+                mes(std::abs(efllist_at_tcg(1, cnt)));
+                color(0, 0, 0);
+                font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+                gmode(5, -1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
+                pos(efllist_at_tcg(5, cnt), efllist_at_tcg(6, cnt) + 24);
+                gcopy(
+                    7,
+                    64
+                        * std::clamp(
+                              (10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
                     416,
                     64,
                     64);
-                star_at_tcg(1, cnt) += 2;
+                pos(efllist_at_tcg(2, cnt), efllist_at_tcg(3, cnt) + 24);
+                gcopy(
+                    7,
+                    64
+                        * std::clamp(
+                              (10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
+                    416,
+                    64,
+                    64);
             }
         }
-        for (int cnt = 0; cnt < 3; ++cnt)
+        gmode(2);
+        if (screenupdate_at_tcg == -1)
         {
-            p_at_tcg = (t_at_tcg / 4 + cnt) % 7;
-            color(p_at_tcg * 20, 25 + p_at_tcg * 20, 60 + p_at_tcg * 20);
-            boxl(
-                chainx_at_tcg - p_at_tcg,
-                chainy_at_tcg - p_at_tcg,
-                chainx_at_tcg + 72 + p_at_tcg,
-                chainy_at_tcg + 96 + p_at_tcg);
-            color(0, 0, 0);
+            screenupdate_at_tcg = 0;
+            label_1773();
+            return;
+        }
+        else
+        {
+            await(15);
+            redraw(1);
+        }
+        if (anime_at_tcg == 0)
+        {
+            label_1773();
+            return;
         }
     }
-    for (int cnt = 0, cnt_end = (efllistmax_at_tcg); cnt < cnt_end; ++cnt)
-    {
-        if (efllist_at_tcg(4, cnt) <= 0)
-        {
-            continue;
-        }
-        --efllist_at_tcg(4, cnt);
-        if (efllist_at_tcg(0, cnt) == 1)
-        {
-            font(lang(cfg_font1, cfg_font2), 20 - en * 2, 1);
-            pos(efllist_at_tcg(5, cnt) + 11,
-                efllist_at_tcg(6, cnt) + efllist_at_tcg(4, cnt) / 3 + 21);
-            mes(std::abs(efllist_at_tcg(1, cnt)));
-            color(255, 100, 100);
-            pos(efllist_at_tcg(5, cnt) + 10,
-                efllist_at_tcg(6, cnt) + efllist_at_tcg(4, cnt) / 3 + 20);
-            mes(std::abs(efllist_at_tcg(1, cnt)));
-            color(0, 0, 0);
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
-            gmode(5, -1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
-            pos(efllist_at_tcg(5, cnt) - 12, efllist_at_tcg(6, cnt) + 10);
-            gcopy(
-                7,
-                64 * std::clamp((10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
-                360,
-                48,
-                64);
-        }
-        if (efllist_at_tcg(0, cnt) == 2)
-        {
-            font(lang(cfg_font1, cfg_font2), 20 - en * 2, 1);
-            pos(efllist_at_tcg(2, cnt) + 31,
-                efllist_at_tcg(3, cnt) + efllist_at_tcg(4, cnt) / 3 + 26);
-            mes(std::abs(efllist_at_tcg(1, cnt)));
-            color(100, 100, 255);
-            pos(efllist_at_tcg(2, cnt) + 30,
-                efllist_at_tcg(3, cnt) + efllist_at_tcg(4, cnt) / 3 + 25);
-            mes(std::abs(efllist_at_tcg(1, cnt)));
-            color(0, 0, 0);
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
-            gmode(5, -1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
-            pos(efllist_at_tcg(5, cnt), efllist_at_tcg(6, cnt) + 24);
-            gcopy(
-                7,
-                64 * std::clamp((10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
-                416,
-                64,
-                64);
-            pos(efllist_at_tcg(2, cnt), efllist_at_tcg(3, cnt) + 24);
-            gcopy(
-                7,
-                64 * std::clamp((10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
-                416,
-                64,
-                64);
-        }
-    }
-    gmode(2);
-    if (screenupdate_at_tcg == -1)
-    {
-        screenupdate_at_tcg = 0;
-        label_1773();
-        return;
-    }
-    else
-    {
-        await(15);
-        redraw(1);
-    }
-    if (anime_at_tcg == 0)
-    {
-        label_1773();
-        return;
-    }
-    goto label_1772_internal;
 }
 
 
@@ -1160,18 +1171,19 @@ void getrandomcard(int prm_1018)
         return;
     }
     p_at_tcg = getholdersum(prm_1018);
-label_1789_internal:
-    c_at_tcg = rnd(maxcard_at_tcg);
-    if (card_at_tcg(0, c_at_tcg) == -1)
+
+    while (1)
     {
-        if (card_at_tcg(1, c_at_tcg) == prm_1018)
+        c_at_tcg = rnd(maxcard_at_tcg);
+        if (card_at_tcg(0, c_at_tcg) == -1)
         {
-            goto label_1790_internal;
-            return;
+            if (card_at_tcg(1, c_at_tcg) == prm_1018)
+            {
+                break;
+            }
         }
     }
-    goto label_1789_internal;
-label_1790_internal:
+
     card_at_tcg(0, c_at_tcg) = 2;
     card_at_tcg(1, c_at_tcg) = prm_1018;
     card_at_tcg(2, c_at_tcg) = deckix_at_tcg(prm_1018);
@@ -1299,152 +1311,154 @@ void actionproc()
     int ap_at_tcg = 0;
     int tc_at_tcg = 0;
     spellused_at_tcg = 0;
-label_1799_internal:
-    if (stack_at_tcg > 0)
+
+    while (1)
     {
-        cc_at_tcg = cardstack_at_tcg(0, stack_at_tcg - 1);
-        if (spellused_at_tcg == 0)
+        if (stack_at_tcg > 0)
         {
-            if (cardstack_at_tcg(1, stack_at_tcg - 1) == -1)
+            cc_at_tcg = cardstack_at_tcg(0, stack_at_tcg - 1);
+            if (spellused_at_tcg == 0)
             {
+                if (cardstack_at_tcg(1, stack_at_tcg - 1) == -1)
+                {
+                    if (cp_at_tcg == 0)
+                    {
+                        card_at_tcg(5, cc_at_tcg) -= 25;
+                    }
+                    else
+                    {
+                        card_at_tcg(5, cc_at_tcg) += 25;
+                    }
+                    card_at_tcg(14, cc_at_tcg) = -1;
+                    cdbitmod(0, cc_at_tcg, 1);
+                    tcgdraw();
+                    attacktarget_at_tcg = -1;
+                    cpisenemy();
+                    chainmode_at_tcg = 1;
+                    if (cp_at_tcg == player_at_tcg)
+                    {
+                        cs_at_tcg = -1;
+                        for (int cnt = 0,
+                                 cnt_end = cnt + (clistmax_at_tcg(cl_at_tcg));
+                             cnt < cnt_end;
+                             ++cnt)
+                        {
+                            c_at_tcg = clist_at_tcg(cnt, cl_at_tcg);
+                            if (cdbit(0, c_at_tcg) == 0
+                                || card_at_tcg(14, c_at_tcg) == -4)
+                            {
+                                cs_at_tcg = cnt;
+                                csline_at_tcg = cl_at_tcg;
+                                break;
+                            }
+                        }
+                        selectmode_at_tcg = 1;
+                        label_1836();
+                        selectmode_at_tcg = -1;
+                    }
+                    else
+                    {
+                        aiblock_at_tcg = 1;
+                        label_18462();
+                        aiblock_at_tcg = 0;
+                    }
+                    chainmode_at_tcg = 0;
+                    if (spellused_at_tcg)
+                    {
+                        continue;
+                    }
+                }
+            }
+        }
+        --stack_at_tcg;
+        if (stack_at_tcg < 0)
+        {
+            label_1802();
+            return;
+        }
+        ac_at_tcg = cardstack_at_tcg(0, stack_at_tcg);
+        act_at_tcg = cardstack_at_tcg(1, stack_at_tcg);
+        ap_at_tcg = cardstack_at_tcg(2, stack_at_tcg);
+        if (ap_at_tcg != cp_at_tcg)
+        {
+            cpflip();
+        }
+        if (cardstack_at_tcg(1, stack_at_tcg) == -3)
+        {
+            act_at_tcg = card_at_tcg(13, ac_at_tcg);
+            card_at_tcg(14, ac_at_tcg) = -3;
+        }
+        if (card_at_tcg(0, ac_at_tcg) != 1)
+        {
+            continue;
+        }
+        switch (act_at_tcg)
+        {
+        case -1:
+            tc_at_tcg = attacktarget_at_tcg;
+            if (tc_at_tcg != -1)
+            {
+                card_at_tcg(14, tc_at_tcg) = -2;
+                cdbitmod(0, tc_at_tcg, 1);
                 if (cp_at_tcg == 0)
                 {
-                    card_at_tcg(5, cc_at_tcg) -= 25;
+                    card_at_tcg(5, tc_at_tcg) += 25;
                 }
                 else
                 {
-                    card_at_tcg(5, cc_at_tcg) += 25;
+                    card_at_tcg(5, tc_at_tcg) -= 25;
                 }
-                card_at_tcg(14, cc_at_tcg) = -1;
-                cdbitmod(0, cc_at_tcg, 1);
                 tcgdraw();
-                attacktarget_at_tcg = -1;
-                cpisenemy();
-                chainmode_at_tcg = 1;
-                if (cp_at_tcg == player_at_tcg)
+                dmgcard(tc_at_tcg, card_at_tcg(11, ac_at_tcg));
+                dmgcard(ac_at_tcg, card_at_tcg(11, tc_at_tcg));
+                if (cp_at_tcg == 0)
                 {
-                    cs_at_tcg = -1;
-                    for (int cnt = 0,
-                             cnt_end = cnt + (clistmax_at_tcg(cl_at_tcg));
-                         cnt < cnt_end;
-                         ++cnt)
-                    {
-                        c_at_tcg = clist_at_tcg(cnt, cl_at_tcg);
-                        if (cdbit(0, c_at_tcg) == 0
-                            || card_at_tcg(14, c_at_tcg) == -4)
-                        {
-                            cs_at_tcg = cnt;
-                            csline_at_tcg = cl_at_tcg;
-                            break;
-                        }
-                    }
-                    selectmode_at_tcg = 1;
-                    label_1836();
-                    selectmode_at_tcg = -1;
+                    card_at_tcg(5, tc_at_tcg) -= 25;
                 }
                 else
                 {
-                    aiblock_at_tcg = 1;
-                    label_18462();
-                    aiblock_at_tcg = 0;
+                    card_at_tcg(5, tc_at_tcg) += 25;
                 }
-                chainmode_at_tcg = 0;
-                if (spellused_at_tcg)
-                {
-                    goto label_1799_internal;
-                }
-            }
-        }
-    }
-    --stack_at_tcg;
-    if (stack_at_tcg < 0)
-    {
-        label_1802();
-        return;
-    }
-    ac_at_tcg = cardstack_at_tcg(0, stack_at_tcg);
-    act_at_tcg = cardstack_at_tcg(1, stack_at_tcg);
-    ap_at_tcg = cardstack_at_tcg(2, stack_at_tcg);
-    if (ap_at_tcg != cp_at_tcg)
-    {
-        cpflip();
-    }
-    if (cardstack_at_tcg(1, stack_at_tcg) == -3)
-    {
-        act_at_tcg = card_at_tcg(13, ac_at_tcg);
-        card_at_tcg(14, ac_at_tcg) = -3;
-    }
-    if (card_at_tcg(0, ac_at_tcg) != 1)
-    {
-        goto label_1799_internal;
-    }
-    switch (act_at_tcg)
-    {
-    case -1:
-        tc_at_tcg = attacktarget_at_tcg;
-        if (tc_at_tcg != -1)
-        {
-            card_at_tcg(14, tc_at_tcg) = -2;
-            cdbitmod(0, tc_at_tcg, 1);
-            if (cp_at_tcg == 0)
-            {
-                card_at_tcg(5, tc_at_tcg) += 25;
             }
             else
             {
-                card_at_tcg(5, tc_at_tcg) -= 25;
+                dmgplayer(tp_at_tcg, card_at_tcg(11, ac_at_tcg));
+            }
+            if (cp_at_tcg == 0)
+            {
+                card_at_tcg(5, ac_at_tcg) += 25;
+            }
+            else
+            {
+                card_at_tcg(5, ac_at_tcg) -= 25;
             }
             tcgdraw();
-            dmgcard(tc_at_tcg, card_at_tcg(11, ac_at_tcg));
-            dmgcard(ac_at_tcg, card_at_tcg(11, tc_at_tcg));
-            if (cp_at_tcg == 0)
-            {
-                card_at_tcg(5, tc_at_tcg) -= 25;
-            }
-            else
-            {
-                card_at_tcg(5, tc_at_tcg) += 25;
-            }
+            break;
+        case 2:
+            getrandomcard(ap_at_tcg);
+            tcgdraw();
+            getrandomcard(ap_at_tcg);
+            tcgdraw();
+            break;
+        case 1:
+            deckmode_at_tcg = 1;
+            deckrefn_at_tcg = cardn_at_tcg(0, ac_at_tcg);
+            label_1828();
+            break;
+        case 0:
+            deckmode_at_tcg = 2;
+            label_1828();
+            break;
         }
-        else
+
+        if (card_at_tcg(9, ac_at_tcg) == 20)
         {
-            dmgplayer(tp_at_tcg, card_at_tcg(11, ac_at_tcg));
+            card_at_tcg(6, ac_at_tcg) = 2;
+            card_at_tcg(7, ac_at_tcg) = 18;
+            tcgdraw();
+            gravecard(ac_at_tcg);
         }
-        if (cp_at_tcg == 0)
-        {
-            card_at_tcg(5, ac_at_tcg) += 25;
-        }
-        else
-        {
-            card_at_tcg(5, ac_at_tcg) -= 25;
-        }
-        tcgdraw();
-        goto label_1800_internal;
-    case 2:
-        getrandomcard(ap_at_tcg);
-        tcgdraw();
-        getrandomcard(ap_at_tcg);
-        tcgdraw();
-        goto label_1800_internal;
-    case 1:
-        deckmode_at_tcg = 1;
-        deckrefn_at_tcg = cardn_at_tcg(0, ac_at_tcg);
-        label_1828();
-        goto label_1800_internal;
-    case 0:
-        deckmode_at_tcg = 2;
-        label_1828();
-        goto label_1800_internal;
     }
-label_1800_internal:
-    if (card_at_tcg(9, ac_at_tcg) == 20)
-    {
-        card_at_tcg(6, ac_at_tcg) = 2;
-        card_at_tcg(7, ac_at_tcg) = 18;
-        tcgdraw();
-        gravecard(ac_at_tcg);
-    }
-    goto label_1799_internal;
 }
 
 
@@ -1747,41 +1761,45 @@ void tcgdeck()
         card_at_tcg(1, i_at_tcg) = 0;
         ++i_at_tcg;
     }
-label_1812_internal:
-    tcgdrawbg();
-    s_at_tcg(0) = lang(u8"白"s, u8"White"s);
-    s_at_tcg(1) = lang(u8"青"s, u8"Blue"s);
-    s_at_tcg(2) = lang(u8"銀"s, u8"Silver"s);
-    s_at_tcg(3) = lang(u8"赤"s, u8"Red"s);
-    s_at_tcg(4) = lang(u8"黒"s, u8"Black"s);
-    for (int cnt = 0; cnt < 5; ++cnt)
+
+    while (1)
     {
-        s_at_tcg(cnt) += lang(u8"のデッキ"s, u8" Deck"s);
-        file_at_tcg = fs::u8path(u8"./tmp/deck_"s) + cnt + u8".s2"s;
-        if (!fs::exists(file_at_tcg))
+        tcgdrawbg();
+        s_at_tcg(0) = lang(u8"白"s, u8"White"s);
+        s_at_tcg(1) = lang(u8"青"s, u8"Blue"s);
+        s_at_tcg(2) = lang(u8"銀"s, u8"Silver"s);
+        s_at_tcg(3) = lang(u8"赤"s, u8"Red"s);
+        s_at_tcg(4) = lang(u8"黒"s, u8"Black"s);
+        for (int cnt = 0; cnt < 5; ++cnt)
         {
-            s_at_tcg(cnt) += lang(u8" (新規作成)"s, u8" (New)"s);
+            s_at_tcg(cnt) += lang(u8"のデッキ"s, u8" Deck"s);
+            file_at_tcg = fs::u8path(u8"./tmp/deck_"s) + cnt + u8".s2"s;
+            if (!fs::exists(file_at_tcg))
+            {
+                s_at_tcg(cnt) += lang(u8" (新規作成)"s, u8" (New)"s);
+            }
+            else
+            {
+                if (gdata(830 + cnt) != 30)
+                {
+                    s_at_tcg(cnt) +=
+                        u8" (NG "s + gdata((830 + cnt)) + u8"/"s + 30 + u8")"s;
+                }
+                if (gdata(813) == cnt)
+                {
+                    s_at_tcg(cnt) += u8" [Use]"s;
+                }
+            }
+            promptl(0, promptmax) = s_at_tcg(cnt);
+            promptl(1, promptmax) = u8"null"s;
+            promptl(2, promptmax) = ""s + promptmax;
+            ++promptmax;
         }
-        else
+        show_prompt(basex_at_tcg + 400, basey_at_tcg + 230, 300);
+        if (rtval == -1)
         {
-            if (gdata(830 + cnt) != 30)
-            {
-                s_at_tcg(cnt) +=
-                    u8" (NG "s + gdata((830 + cnt)) + u8"/"s + 30 + u8")"s;
-            }
-            if (gdata(813) == cnt)
-            {
-                s_at_tcg(cnt) += u8" [Use]"s;
-            }
+            break;
         }
-        promptl(0, promptmax) = s_at_tcg(cnt);
-        promptl(1, promptmax) = u8"null"s;
-        promptl(2, promptmax) = ""s + promptmax;
-        ++promptmax;
-    }
-    show_prompt(basex_at_tcg + 400, basey_at_tcg + 230, 300);
-    if (rtval != -1)
-    {
         DIM2(deck, 1000);
         curdeck = rtval;
         if (fs::exists(fs::u8path(u8"./tmp/deck_"s + curdeck + u8".s2")))
@@ -1798,12 +1816,12 @@ label_1812_internal:
             show_prompt(400, basey_at_tcg + 230, 240);
             if (rtval == -1)
             {
-                goto label_1812_internal;
+                continue;
             }
             if (rtval == 1)
             {
                 gdata(813) = curdeck;
-                goto label_1812_internal;
+                continue;
             }
             if (rtval == 0)
             {
@@ -1816,9 +1834,7 @@ label_1812_internal:
         deckmode_at_tcg(0) = 0;
         deckmode_at_tcg(1) = rtval_at_tcg;
         label_1828();
-        goto label_1812_internal;
     }
-    return;
 }
 
 
@@ -1861,36 +1877,38 @@ void tcgmain()
     }
     ct_at_tcg = 0;
     player_at_tcg = -1;
-label_1814_internal:
-    cpisme();
-    label_1816();
-    if (gameover())
+
+    while (1)
     {
-        label_1815();
-        return;
+        cpisme();
+        label_1816();
+        if (gameover())
+        {
+            label_1815();
+            return;
+        }
+        label_1817();
+        if (gameover())
+        {
+            label_1815();
+            return;
+        }
+        label_1818();
+        if (gameover())
+        {
+            label_1815();
+            return;
+        }
+        label_1819();
+        if (ct_at_tcg == 0)
+        {
+            ct_at_tcg = 1;
+        }
+        else
+        {
+            ct_at_tcg = 0;
+        }
     }
-    label_1817();
-    if (gameover())
-    {
-        label_1815();
-        return;
-    }
-    label_1818();
-    if (gameover())
-    {
-        label_1815();
-        return;
-    }
-    label_1819();
-    if (ct_at_tcg == 0)
-    {
-        ct_at_tcg = 1;
-    }
-    else
-    {
-        ct_at_tcg = 0;
-    }
-    goto label_1814_internal;
 }
 
 
@@ -2744,201 +2762,253 @@ void label_1836()
             csline_at_tcg = 1;
         }
     }
-label_1837_internal:
-    tcgdraw();
-    cursor_at_tcg = 1;
-    await(15);
-    stick(a_at_tcg);
-    key_check();
-    if (key == key_east)
+
+    while (1)
     {
-        ++cs_at_tcg;
-        snd(5);
-        if (cs_at_tcg == 0)
+        tcgdraw();
+        cursor_at_tcg = 1;
+        await(15);
+        stick(a_at_tcg);
+        key_check();
+        if (key == key_east)
         {
-            if (clistmax_at_tcg(csline_at_tcg) == 0)
+            ++cs_at_tcg;
+            snd(5);
+            if (cs_at_tcg == 0)
             {
-                cslineup();
-            }
-        }
-        csfix();
-    }
-    if (key == key_west)
-    {
-        --cs_at_tcg;
-        snd(5);
-        if (cs_at_tcg == -1)
-        {
-            if (csline_at_tcg != 0)
-            {
-                cs_at_tcg = clistmax_at_tcg(csline_at_tcg) - 1;
-            }
-        }
-        if (cs_at_tcg == -2)
-        {
-            if (clistmax_at_tcg(csline_at_tcg) == 0)
-            {
-                cslinedown();
-            }
-        }
-        csfix();
-    }
-    if (key == key_north)
-    {
-        cslineup();
-        snd(5);
-        csfix();
-    }
-    if (key == key_south)
-    {
-        cslinedown();
-        snd(5);
-        csfix();
-    }
-    if (key == key_enter)
-    {
-        if (cs_at_tcg == -1)
-        {
-            label_1839();
-            return;
-        }
-        act_at_tcg(0) = 0;
-        act_at_tcg(1) = 0;
-        act_at_tcg(2) = 0;
-        s_at_tcg = "";
-        cc_at_tcg = clist_at_tcg(cs_at_tcg, csline_at_tcg);
-        if (csline_at_tcg == 0)
-        {
-            if (card_at_tcg(10, cc_at_tcg) <= cpdata_at_tcg(5, cp_at_tcg))
-            {
-                if (card_at_tcg(9, cc_at_tcg) == 20 || selectmode_at_tcg == 0)
+                if (clistmax_at_tcg(csline_at_tcg) == 0)
                 {
-                    act_at_tcg(0) = 1;
-                    s_at_tcg += lang(
-                        u8"↑   カードを出す。\n"s, u8"UP: Put the card.\n"s);
+                    cslineup();
                 }
             }
-            if (sac_at_tcg == 0)
+            csfix();
+        }
+        if (key == key_west)
+        {
+            --cs_at_tcg;
+            snd(5);
+            if (cs_at_tcg == -1)
             {
-                if (selectmode_at_tcg == 0)
+                if (csline_at_tcg != 0)
                 {
-                    act_at_tcg(1) = 1;
-                    s_at_tcg += lang(
-                        u8"↓   カードを捧げてマナを得る(1ターンに1回)。\n"s,
-                        u8"Down: Sacrifice the card.\n"s);
+                    cs_at_tcg = clistmax_at_tcg(csline_at_tcg) - 1;
                 }
             }
-        }
-        if (csline_at_tcg == 1)
-        {
-            if (selectmode_at_tcg == 0)
+            if (cs_at_tcg == -2)
             {
-                if (card_at_tcg(14, cc_at_tcg) != -1)
+                if (clistmax_at_tcg(csline_at_tcg) == 0)
                 {
-                    if (cardcandeclareattack(cc_at_tcg))
+                    cslinedown();
+                }
+            }
+            csfix();
+        }
+        if (key == key_north)
+        {
+            cslineup();
+            snd(5);
+            csfix();
+        }
+        if (key == key_south)
+        {
+            cslinedown();
+            snd(5);
+            csfix();
+        }
+        if (key == key_enter)
+        {
+            if (cs_at_tcg == -1)
+            {
+                label_1839();
+                return;
+            }
+            act_at_tcg(0) = 0;
+            act_at_tcg(1) = 0;
+            act_at_tcg(2) = 0;
+            s_at_tcg = "";
+            cc_at_tcg = clist_at_tcg(cs_at_tcg, csline_at_tcg);
+            if (csline_at_tcg == 0)
+            {
+                if (card_at_tcg(10, cc_at_tcg) <= cpdata_at_tcg(5, cp_at_tcg))
+                {
+                    if (card_at_tcg(9, cc_at_tcg) == 20
+                        || selectmode_at_tcg == 0)
                     {
                         act_at_tcg(0) = 1;
                         s_at_tcg += lang(
-                            u8"↑   攻撃を宣言する。\n"s,
-                            u8"UP: Declare an attack.\n"s);
+                            u8"↑   カードを出す。\n"s,
+                            u8"UP: Put the card.\n"s);
+                    }
+                }
+                if (sac_at_tcg == 0)
+                {
+                    if (selectmode_at_tcg == 0)
+                    {
+                        act_at_tcg(1) = 1;
+                        s_at_tcg += lang(
+                            u8"↓   カードを捧げてマナを得る(1ターンに1回)。\n"s,
+                            u8"Down: Sacrifice the card.\n"s);
                     }
                 }
             }
-            if (selectmode_at_tcg == 1)
+            if (csline_at_tcg == 1)
             {
-                if (cardcanblock(cc_at_tcg))
+                if (selectmode_at_tcg == 0)
                 {
-                    act_at_tcg(0) = 1;
-                    s_at_tcg +=
-                        lang(u8"↑   ブロックする。\n"s, u8"UP: Block.\n"s);
+                    if (card_at_tcg(14, cc_at_tcg) != -1)
+                    {
+                        if (cardcandeclareattack(cc_at_tcg))
+                        {
+                            act_at_tcg(0) = 1;
+                            s_at_tcg += lang(
+                                u8"↑   攻撃を宣言する。\n"s,
+                                u8"UP: Declare an attack.\n"s);
+                        }
+                    }
                 }
-            }
-            if (cardcanuseskill(cc_at_tcg))
-            {
-                act_at_tcg(2) = 1;
-                s_at_tcg += lang(
-                    u8"決定 スキルを使用する。\n"s,
-                    u8"ENTER: Use the skill.\n"s);
-            }
-        }
-        f_at_tcg = 0;
-        for (int cnt = 0; cnt < 3; ++cnt)
-        {
-            if (act_at_tcg(cnt) != 0)
-            {
-                f_at_tcg = 1;
-                break;
-            }
-        }
-        if (f_at_tcg == 0)
-        {
-            snd(27);
-            cardhelp(
-                lang(
-                    u8"可能な行動はない。"s,
-                    u8"There is no action available."s),
-                40);
-            goto label_1837_internal;
-        }
-        snd(40);
-        cardhelp(s_at_tcg, 10);
-        tcgdraw();
-        label_1840();
-        cc_at_tcg = clist_at_tcg(cs_at_tcg, csline_at_tcg);
-        key = "";
-        if (f_at_tcg == -1)
-        {
-            goto label_1837_internal;
-        }
-        if (act_at_tcg(f_at_tcg) == 0)
-        {
-            goto label_1837_internal;
-        }
-        if (csline_at_tcg == 1)
-        {
-            if (f_at_tcg == 0)
-            {
                 if (selectmode_at_tcg == 1)
                 {
-                    attacktarget_at_tcg = cc_at_tcg;
-                    label_1839();
-                    return;
+                    if (cardcanblock(cc_at_tcg))
+                    {
+                        act_at_tcg(0) = 1;
+                        s_at_tcg +=
+                            lang(u8"↑   ブロックする。\n"s, u8"UP: Block.\n"s);
+                    }
                 }
-                cardstack_at_tcg(0, stack_at_tcg) = cc_at_tcg;
-                cardstack_at_tcg(1, stack_at_tcg) = -1;
-                cardstack_at_tcg(2, stack_at_tcg) = cp_at_tcg;
-                ++stack_at_tcg;
-                actionproc();
-                if (gameover())
+                if (cardcanuseskill(cc_at_tcg))
                 {
-                    label_1839();
-                    return;
+                    act_at_tcg(2) = 1;
+                    s_at_tcg += lang(
+                        u8"決定 スキルを使用する。\n"s,
+                        u8"ENTER: Use the skill.\n"s);
+                }
+            }
+            f_at_tcg = 0;
+            for (int cnt = 0; cnt < 3; ++cnt)
+            {
+                if (act_at_tcg(cnt) != 0)
+                {
+                    f_at_tcg = 1;
+                    break;
+                }
+            }
+            if (f_at_tcg == 0)
+            {
+                snd(27);
+                cardhelp(
+                    lang(
+                        u8"可能な行動はない。"s,
+                        u8"There is no action available."s),
+                    40);
+                continue;
+            }
+            snd(40);
+            cardhelp(s_at_tcg, 10);
+            tcgdraw();
+            label_1840();
+            cc_at_tcg = clist_at_tcg(cs_at_tcg, csline_at_tcg);
+            key = "";
+            if (f_at_tcg == -1)
+            {
+                continue;
+            }
+            if (act_at_tcg(f_at_tcg) == 0)
+            {
+                continue;
+            }
+            if (csline_at_tcg == 1)
+            {
+                if (f_at_tcg == 0)
+                {
+                    if (selectmode_at_tcg == 1)
+                    {
+                        attacktarget_at_tcg = cc_at_tcg;
+                        label_1839();
+                        return;
+                    }
+                    cardstack_at_tcg(0, stack_at_tcg) = cc_at_tcg;
+                    cardstack_at_tcg(1, stack_at_tcg) = -1;
+                    cardstack_at_tcg(2, stack_at_tcg) = cp_at_tcg;
+                    ++stack_at_tcg;
+                    actionproc();
+                    if (gameover())
+                    {
+                        label_1839();
+                        return;
+                    }
+                    if (cs_at_tcg >= clistmax_at_tcg(csline_at_tcg))
+                    {
+                        cs_at_tcg = clistmax_at_tcg(csline_at_tcg) - 1;
+                    }
+                    csfix();
+                    continue;
+                }
+                if (f_at_tcg == 1)
+                {
+                    card_at_tcg(14, cc_at_tcg) = 0;
+                }
+                if (f_at_tcg == 2)
+                {
+                    cardstack_at_tcg(0, stack_at_tcg) = cc_at_tcg;
+                    cardstack_at_tcg(1, stack_at_tcg) = -3;
+                    cardstack_at_tcg(2, stack_at_tcg) = cp_at_tcg;
+                    ++stack_at_tcg;
+                    if (chainmode_at_tcg)
+                    {
+                        chaincontinue_at_tcg = 1;
+                        spellused_at_tcg = 1;
+                        label_1839();
+                        return;
+                    }
+                    actionproc();
+                    if (gameover())
+                    {
+                        label_1839();
+                        return;
+                    }
                 }
                 if (cs_at_tcg >= clistmax_at_tcg(csline_at_tcg))
                 {
                     cs_at_tcg = clistmax_at_tcg(csline_at_tcg) - 1;
                 }
                 csfix();
-                goto label_1837_internal;
+                continue;
             }
             if (f_at_tcg == 1)
             {
-                card_at_tcg(14, cc_at_tcg) = 0;
-            }
-            if (f_at_tcg == 2)
-            {
-                cardstack_at_tcg(0, stack_at_tcg) = cc_at_tcg;
-                cardstack_at_tcg(1, stack_at_tcg) = -3;
-                cardstack_at_tcg(2, stack_at_tcg) = cp_at_tcg;
-                ++stack_at_tcg;
-                if (chainmode_at_tcg)
+                cursor_at_tcg = 0;
+                saccard(cc_at_tcg, cp_at_tcg + (csline_at_tcg == 3));
+                if (cs_at_tcg >= clistmax_at_tcg(csline_at_tcg))
                 {
-                    chaincontinue_at_tcg = 1;
-                    spellused_at_tcg = 1;
+                    cs_at_tcg = clistmax_at_tcg(csline_at_tcg) - 1;
+                }
+                csfix();
+                continue;
+            }
+            if (f_at_tcg == 0)
+            {
+                cursor_at_tcg = 0;
+                putcard(cc_at_tcg, cp_at_tcg + (csline_at_tcg == 3));
+                if (gameover())
+                {
                     label_1839();
                     return;
                 }
-                actionproc();
+                if (card_at_tcg(9, cc_at_tcg) == 20)
+                {
+                    cardstack_at_tcg(0, stack_at_tcg) = cc_at_tcg;
+                    cardstack_at_tcg(1, stack_at_tcg) = -3;
+                    cardstack_at_tcg(2, stack_at_tcg) = cp_at_tcg;
+                    ++stack_at_tcg;
+                    if (chainmode_at_tcg)
+                    {
+                        chaincontinue_at_tcg = 1;
+                        spellused_at_tcg = 1;
+                        label_1839();
+                        return;
+                    }
+                    actionproc();
+                }
                 if (gameover())
                 {
                     label_1839();
@@ -2950,75 +3020,27 @@ label_1837_internal:
                 cs_at_tcg = clistmax_at_tcg(csline_at_tcg) - 1;
             }
             csfix();
-            goto label_1837_internal;
         }
-        if (f_at_tcg == 1)
+        if (key == key_cancel || key_escape)
         {
-            cursor_at_tcg = 0;
-            saccard(cc_at_tcg, cp_at_tcg + (csline_at_tcg == 3));
-            if (cs_at_tcg >= clistmax_at_tcg(csline_at_tcg))
-            {
-                cs_at_tcg = clistmax_at_tcg(csline_at_tcg) - 1;
-            }
-            csfix();
-            goto label_1837_internal;
-        }
-        if (f_at_tcg == 0)
-        {
-            cursor_at_tcg = 0;
-            putcard(cc_at_tcg, cp_at_tcg + (csline_at_tcg == 3));
-            if (gameover())
-            {
-                label_1839();
-                return;
-            }
-            if (card_at_tcg(9, cc_at_tcg) == 20)
-            {
-                cardstack_at_tcg(0, stack_at_tcg) = cc_at_tcg;
-                cardstack_at_tcg(1, stack_at_tcg) = -3;
-                cardstack_at_tcg(2, stack_at_tcg) = cp_at_tcg;
-                ++stack_at_tcg;
-                if (chainmode_at_tcg)
-                {
-                    chaincontinue_at_tcg = 1;
-                    spellused_at_tcg = 1;
-                    label_1839();
-                    return;
-                }
-                actionproc();
-            }
-            if (gameover())
-            {
-                label_1839();
-                return;
-            }
-        }
-        if (cs_at_tcg >= clistmax_at_tcg(csline_at_tcg))
-        {
-            cs_at_tcg = clistmax_at_tcg(csline_at_tcg) - 1;
-        }
-        csfix();
-    }
-    if (key == key_cancel || key_escape)
-    {
-        label_1839();
-        return;
-    }
-    if (key == u8"s"s)
-    {
-        promptl(0, promptmax) = lang(u8"降参する"s, u8"Surrender"s);
-        promptl(1, promptmax) = u8"null"s;
-        promptl(2, promptmax) = ""s + promptmax;
-        ++promptmax;
-        show_prompt(basex_at_tcg + 420, basey_at_tcg + 230, 200);
-        if (rtval == 0)
-        {
-            cpdata_at_tcg(4, 0) = 0;
-            cursor_at_tcg = 0;
+            label_1839();
             return;
         }
+        if (key == u8"s"s)
+        {
+            promptl(0, promptmax) = lang(u8"降参する"s, u8"Surrender"s);
+            promptl(1, promptmax) = u8"null"s;
+            promptl(2, promptmax) = ""s + promptmax;
+            ++promptmax;
+            show_prompt(basex_at_tcg + 420, basey_at_tcg + 230, 200);
+            if (rtval == 0)
+            {
+                cpdata_at_tcg(4, 0) = 0;
+                cursor_at_tcg = 0;
+                return;
+            }
+        }
     }
-    goto label_1837_internal;
 }
 
 
@@ -3037,89 +3059,91 @@ void label_1840()
     p_at_tcg = 0;
     i_at_tcg = 0;
     f_at_tcg = 1;
-label_1841_internal:
-    ++p_at_tcg;
-    i_at_tcg += f_at_tcg;
-    if (i_at_tcg > 30)
+
+    while (1)
     {
-        f_at_tcg = -1;
-    }
-    else if (i_at_tcg < 0)
-    {
-        f_at_tcg = 1;
-    }
-    for (int cnt = 0; cnt < 3; ++cnt)
-    {
-        x_at_tcg(cnt) = card_at_tcg(2, cc_at_tcg) + 20;
-        if (cnt == 0)
+        ++p_at_tcg;
+        i_at_tcg += f_at_tcg;
+        if (i_at_tcg > 30)
         {
-            y_at_tcg(cnt) =
-                card_at_tcg(3, cc_at_tcg) - std::clamp(p_at_tcg * 3, 0, 16);
+            f_at_tcg = -1;
         }
-        if (cnt == 1)
+        else if (i_at_tcg < 0)
         {
-            y_at_tcg(cnt) = card_at_tcg(3, cc_at_tcg) + 60
-                + std::clamp(p_at_tcg * 3, 0, 16);
+            f_at_tcg = 1;
         }
-        if (cnt == 2)
+        for (int cnt = 0; cnt < 3; ++cnt)
         {
-            y_at_tcg(cnt) = card_at_tcg(3, cc_at_tcg) + 30;
+            x_at_tcg(cnt) = card_at_tcg(2, cc_at_tcg) + 20;
+            if (cnt == 0)
+            {
+                y_at_tcg(cnt) =
+                    card_at_tcg(3, cc_at_tcg) - std::clamp(p_at_tcg * 3, 0, 16);
+            }
+            if (cnt == 1)
+            {
+                y_at_tcg(cnt) = card_at_tcg(3, cc_at_tcg) + 60
+                    + std::clamp(p_at_tcg * 3, 0, 16);
+            }
+            if (cnt == 2)
+            {
+                y_at_tcg(cnt) = card_at_tcg(3, cc_at_tcg) + 30;
+            }
+            gmode(0);
+            gsel(7);
+            pos(cnt * 48, 264);
+            gcopy(0, x_at_tcg(cnt), y_at_tcg(cnt), 36, 36);
+            gsel(0);
+            if (act_at_tcg(cnt) == 0)
+            {
+                continue;
+            }
+            gmode(4, 0, 0, std::clamp(p_at_tcg * 30 + 20, 0, 255));
+            pos(x_at_tcg(cnt), y_at_tcg(cnt));
+            gcopy(7, 192, 96, 36, 36);
+            gmode(4, 0, 0, 50 + i_at_tcg * 2);
+            pos(x_at_tcg(cnt) + 13, y_at_tcg(cnt) + 11);
+            gcopy(7, 336 + (cnt == 2) * 12, 96 + cnt % 2 * 24, 12, 12);
         }
+        redraw(1);
+        redraw(0);
         gmode(0);
-        gsel(7);
-        pos(cnt * 48, 264);
-        gcopy(0, x_at_tcg(cnt), y_at_tcg(cnt), 36, 36);
-        gsel(0);
-        if (act_at_tcg(cnt) == 0)
+        for (int cnt = 0; cnt < 3; ++cnt)
         {
-            continue;
+            if (act_at_tcg(cnt) == 0)
+            {
+                continue;
+            }
+            pos(x_at_tcg(cnt), y_at_tcg(cnt));
+            gcopy(7, cnt * 48, 264, 36, 36);
         }
-        gmode(4, 0, 0, std::clamp(p_at_tcg * 30 + 20, 0, 255));
-        pos(x_at_tcg(cnt), y_at_tcg(cnt));
-        gcopy(7, 192, 96, 36, 36);
-        gmode(4, 0, 0, 50 + i_at_tcg * 2);
-        pos(x_at_tcg(cnt) + 13, y_at_tcg(cnt) + 11);
-        gcopy(7, 336 + (cnt == 2) * 12, 96 + cnt % 2 * 24, 12, 12);
-    }
-    redraw(1);
-    redraw(0);
-    gmode(0);
-    for (int cnt = 0; cnt < 3; ++cnt)
-    {
-        if (act_at_tcg(cnt) == 0)
+        await(15);
+        key_check();
+        if (key == key_north)
         {
-            continue;
+            f_at_tcg = 0;
+            label_1842();
+            return;
         }
-        pos(x_at_tcg(cnt), y_at_tcg(cnt));
-        gcopy(7, cnt * 48, 264, 36, 36);
+        if (key == key_south)
+        {
+            f_at_tcg = 1;
+            label_1842();
+            return;
+        }
+        if (key == key_enter)
+        {
+            f_at_tcg = 2;
+            label_1842();
+            return;
+        }
+        if (key != ""s)
+        {
+            f_at_tcg = -1;
+            label_1842();
+            return;
+        }
     }
-    await(15);
-    key_check();
-    if (key == key_north)
-    {
-        f_at_tcg = 0;
-        label_1842();
-        return;
-    }
-    if (key == key_south)
-    {
-        f_at_tcg = 1;
-        label_1842();
-        return;
-    }
-    if (key == key_enter)
-    {
-        f_at_tcg = 2;
-        label_1842();
-        return;
-    }
-    if (key != ""s)
-    {
-        f_at_tcg = -1;
-        label_1842();
-        return;
-    }
-    goto label_1841_internal;
 }
 
 
@@ -3273,84 +3297,92 @@ int label_1845()
 void label_18462()
 {
     int ec_at_tcg = 0;
-label_18461:
-    spellused_at_tcg = 0;
-    stick(a_at_tcg);
-    if (a_at_tcg)
+
+    bool init = true;
+    while (1)
     {
-        cpdata_at_tcg(4, 0) = 0;
-    }
-    label_1844();
-    ec_at_tcg = 0;
-label_1847_internal:
-    if (gameover())
-    {
-        label_1848();
-        return;
-    }
-    if (ec_at_tcg >= emax_at_tcg)
-    {
-        label_1848();
-        return;
-    }
-    if (elist_at_tcg(0, ec_at_tcg) <= 0)
-    {
-        label_1848();
-        return;
-    }
-    cc_at_tcg = elist_at_tcg(1, ec_at_tcg);
-    if (elist_at_tcg(2, ec_at_tcg) == -5)
-    {
-        if (card_at_tcg(10, cc_at_tcg) <= cpdata_at_tcg(5, cp_at_tcg))
+        if (init)
         {
-            putcard(cc_at_tcg, cp_at_tcg);
-            if (gameover())
+            spellused_at_tcg = 0;
+            stick(a_at_tcg);
+            if (a_at_tcg)
             {
-                label_1848();
-                return;
+                cpdata_at_tcg(4, 0) = 0;
             }
-            if (card_at_tcg(9, cc_at_tcg) == 20)
+            label_1844();
+            ec_at_tcg = 0;
+            init = false;
+        }
+        if (gameover())
+        {
+            label_1848();
+            return;
+        }
+        if (ec_at_tcg >= emax_at_tcg)
+        {
+            label_1848();
+            return;
+        }
+        if (elist_at_tcg(0, ec_at_tcg) <= 0)
+        {
+            label_1848();
+            return;
+        }
+        cc_at_tcg = elist_at_tcg(1, ec_at_tcg);
+        if (elist_at_tcg(2, ec_at_tcg) == -5)
+        {
+            if (card_at_tcg(10, cc_at_tcg) <= cpdata_at_tcg(5, cp_at_tcg))
             {
-                cardstack_at_tcg(0, stack_at_tcg) = cc_at_tcg;
-                cardstack_at_tcg(1, stack_at_tcg) = -3;
-                cardstack_at_tcg(2, stack_at_tcg) = cp_at_tcg;
-                ++stack_at_tcg;
-                if (chainmode_at_tcg)
+                putcard(cc_at_tcg, cp_at_tcg);
+                if (gameover())
                 {
-                    chaincontinue_at_tcg = 1;
-                    spellused_at_tcg = 1;
                     label_1848();
                     return;
                 }
-                actionproc();
+                if (card_at_tcg(9, cc_at_tcg) == 20)
+                {
+                    cardstack_at_tcg(0, stack_at_tcg) = cc_at_tcg;
+                    cardstack_at_tcg(1, stack_at_tcg) = -3;
+                    cardstack_at_tcg(2, stack_at_tcg) = cp_at_tcg;
+                    ++stack_at_tcg;
+                    if (chainmode_at_tcg)
+                    {
+                        chaincontinue_at_tcg = 1;
+                        spellused_at_tcg = 1;
+                        label_1848();
+                        return;
+                    }
+                    actionproc();
+                }
+                init = true;
+                break;
             }
-            goto label_18461;
-        }
-        else
-        {
-            int stat = label_1845();
-            if (stat == 1)
+            else
             {
-                goto label_18461;
+                int stat = label_1845();
+                if (stat == 1)
+                {
+                    init = true;
+                    break;
+                }
             }
         }
+        if (elist_at_tcg(2, ec_at_tcg) == -1)
+        {
+            cardstack_at_tcg(0, stack_at_tcg) = cc_at_tcg;
+            cardstack_at_tcg(1, stack_at_tcg) = -1;
+            cardstack_at_tcg(2, stack_at_tcg) = cp_at_tcg;
+            ++stack_at_tcg;
+            actionproc();
+        }
+        if (elist_at_tcg(2, ec_at_tcg) == -2)
+        {
+            attacktarget_at_tcg = cc_at_tcg;
+            label_1848();
+            return;
+        }
+        ++ec_at_tcg;
     }
-    if (elist_at_tcg(2, ec_at_tcg) == -1)
-    {
-        cardstack_at_tcg(0, stack_at_tcg) = cc_at_tcg;
-        cardstack_at_tcg(1, stack_at_tcg) = -1;
-        cardstack_at_tcg(2, stack_at_tcg) = cp_at_tcg;
-        ++stack_at_tcg;
-        actionproc();
-    }
-    if (elist_at_tcg(2, ec_at_tcg) == -2)
-    {
-        attacktarget_at_tcg = cc_at_tcg;
-        label_1848();
-        return;
-    }
-    ++ec_at_tcg;
-    goto label_1847_internal;
 }
 
 
