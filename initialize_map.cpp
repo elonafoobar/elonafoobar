@@ -2310,9 +2310,9 @@ label_1741_internal:
             for (int cnt = 0, cnt_end = (encounterlv / 2 + 1); cnt < cnt_end;
                  ++cnt)
             {
-                r1 = rc;
                 r2 = 1;
-                gain_level();
+                r1 = rc;
+                gain_level(r1);
             }
             evadd(11);
             for (int cnt = 0, cnt_end = (6 + rnd(6)); cnt < cnt_end; ++cnt)
@@ -2862,9 +2862,9 @@ label_1742_internal:
                 {
                     if (cdata[0].level > cdata[rc].level)
                     {
-                        r1 = rc;
                         r2 = 1;
-                        gain_level();
+                        r1 = rc;
+                        gain_level(r1);
                     }
                 }
             }

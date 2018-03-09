@@ -2448,9 +2448,9 @@ label_2181_internal:
         else
         {
             cdata[tc].experience = cdata[tc].required_experience;
-            r1 = tc;
             r2 = 0;
-            gain_level();
+            r1 = tc;
+            gain_level(r1);
             if (is_in_fov(tc))
             {
                 snd(60);

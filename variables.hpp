@@ -1047,7 +1047,7 @@ void label_1445();
 void label_1446();
 void refresh_speed_correction_value();
 void gain_new_body_part(int);
-void gain_level();
+void gain_level(int);
 void label_1455();
 void label_1456(int);
 void label_1457();

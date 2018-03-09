@@ -19178,48 +19178,48 @@ void gain_new_body_part(int cc)
 
 
 
-void gain_level()
+void gain_level(int cc)
 {
-    cdata[r1].experience -= cdata[r1].required_experience;
-    if (cdata[r1].experience < 0)
+    cdata[cc].experience -= cdata[cc].required_experience;
+    if (cdata[cc].experience < 0)
     {
-        cdata[r1].experience = 0;
+        cdata[cc].experience = 0;
     }
-    ++cdata[r1].level;
-    if (cdata[r1].character_role != 13)
+    ++cdata[cc].level;
+    if (cdata[cc].character_role != 13)
     {
         if (r2 == 0)
         {
             txtef(2);
-            if (r1 == 0)
+            if (cc == 0)
             {
                 txt(lang(
-                    name(r1) + u8"はレベル"s + cdata[r1].level
+                    name(cc) + u8"はレベル"s + cdata[cc].level
                         + u8"になった！"s,
-                    name(r1) + u8" have gained a level."s));
+                    name(cc) + u8" have gained a level."s));
             }
             else
             {
                 txt(lang(
-                    name(r1) + u8"は成長した。"s,
-                    name(r1) + u8" "s + have(r1) + u8" grown up."s));
+                    name(cc) + u8"は成長した。"s,
+                    name(cc) + u8" "s + have(cc) + u8" grown up."s));
             }
         }
     }
     else
     {
-        addnews(2, r1);
+        addnews(2, cc);
     }
-    p = 5 * (100 + sdata.get(14, r1).original_level * 10)
-            / (300 + cdata[r1].level * 15)
+    p = 5 * (100 + sdata.get(14, cc).original_level * 10)
+            / (300 + cdata[cc].level * 15)
         + 1;
-    if (r1 == 0)
+    if (cc == 0)
     {
-        if (cdata[r1].level % 5 == 0)
+        if (cdata[cc].level % 5 == 0)
         {
-            if (cdata[r1].max_level < cdata[r1].level)
+            if (cdata[cc].max_level < cdata[cc].level)
             {
-                if (cdata[r1].level <= 50)
+                if (cdata[cc].level <= 50)
                 {
                     ++gdata_acquirable_feat_count;
                 }
@@ -19228,35 +19228,34 @@ void gain_level()
         gain_special_action();
         p += trait(154);
     }
-    cdata[r1].skill_bonus += p;
-    cdata[r1].total_skill_bonus += p;
-    if (cdatan(2, r1) == u8"mutant"s || (r1 == 0 && trait(0) == 1))
+    cdata[cc].skill_bonus += p;
+    cdata[cc].total_skill_bonus += p;
+    if (cdatan(2, cc) == u8"mutant"s || (cc == 0 && trait(0) == 1))
     {
-        if (cdata[r1].level < 37)
+        if (cdata[cc].level < 37)
         {
-            if (cdata[r1].level % 3 == 0)
+            if (cdata[cc].level % 3 == 0)
             {
-                if (cdata[r1].max_level < cdata[r1].level)
+                if (cdata[cc].max_level < cdata[cc].level)
                 {
-                    r1 = r1;
-                    gain_new_body_part(r1);
+                    cc = cc;
+                    gain_new_body_part(cc);
                 }
             }
         }
     }
-    if (cdata[r1].max_level < cdata[r1].level)
+    if (cdata[cc].max_level < cdata[cc].level)
     {
-        cdata[r1].max_level = cdata[r1].level;
+        cdata[cc].max_level = cdata[cc].level;
     }
-    if (r1 >= 16)
+    if (cc >= 16)
     {
         label_1455();
     }
-    r1 = r1;
-    label_1456(r1);
-    r1 = r1;
-    refresh_character(r1);
-    return;
+    cc = cc;
+    label_1456(cc);
+    cc = cc;
+    refresh_character(cc);
 }
 
 
@@ -22213,9 +22212,9 @@ void label_1540()
         p = rnd(5) + 1;
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
-            r1 = rc;
             r2 = 1;
-            gain_level();
+            r1 = rc;
+            gain_level(r1);
         }
     }
     if (cdata[rc].id == 326)
@@ -61873,9 +61872,9 @@ void do_use_command()
             lv = (cdata[tc].level - cdata[rc].level) / 2 + 1;
             for (int cnt = 0, cnt_end = (lv); cnt < cnt_end; ++cnt)
             {
-                r1 = rc;
                 r2 = 1;
-                gain_level();
+                r1 = rc;
+                gain_level(r1);
             }
             txtef(2);
             txt(lang(
@@ -66672,9 +66671,9 @@ void label_2662()
         }
         if (cdata[rc].experience >= cdata[rc].required_experience)
         {
-            r1 = rc;
             r2 = 0;
-            gain_level();
+            r1 = rc;
+            gain_level(r1);
         }
     }
     notesel(newsbuff);
@@ -72596,9 +72595,9 @@ label_27411_internal:
             snd(60);
             msgalert = 1;
         }
-        r1 = cc;
         r2 = 0;
-        gain_level();
+        r1 = cc;
+        gain_level(r1);
         goto label_27411_internal;
     }
     return;
