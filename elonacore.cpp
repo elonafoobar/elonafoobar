@@ -20824,13 +20824,12 @@ void label_1530()
     int eqtwowield = 0;
     if (cdatan(2, rc) == u8"mutant"s)
     {
-        r1 = rc;
         for (int cnt = 0,
-                 cnt_end = cnt + std::clamp(cdata[r1].level / 3, 0, 12);
+                 cnt_end = cnt + std::clamp(cdata[rc].level / 3, 0, 12);
              cnt < cnt_end;
              ++cnt)
         {
-            r1 = r1;
+            r1 = rc;
             gain_new_body_part(r1);
         }
     }
