@@ -48077,7 +48077,7 @@ label_2052_internal:
                 goto label_2051_internal;
             }
             r1 = cc;
-            unequip_item();
+            unequip_item(r1);
             r1 = cc;
             refresh_character(r1);
             snd(13);
@@ -57020,19 +57020,18 @@ int equip_item(int cc)
 
 
 
-void unequip_item()
+void unequip_item(int cc)
 {
-    p = cdata_body_part(r1, body) % 10000;
+    p = cdata_body_part(cc, body) % 10000;
     if (p == 0)
     {
         rtval = -2;
         return;
     }
     ci = p - 1;
-    cdata_body_part(r1, body) = cdata_body_part(r1, body) / 10000 * 10000;
+    cdata_body_part(cc, body) = cdata_body_part(cc, body) / 10000 * 10000;
     inv[ci].body_part = 0;
-    item_stack(r1, ci);
-    return;
+    item_stack(cc, ci);
 }
 
 
@@ -66854,7 +66853,8 @@ void wear_most_valuable_equipment()
             if (f == 1)
             {
                 cibk = ci;
-                unequip_item();
+                r1 = r1;
+                unequip_item(r1);
                 ci = cibk;
                 r1 = r1;
                 equip_item(r1);
