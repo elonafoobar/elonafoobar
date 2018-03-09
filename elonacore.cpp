@@ -19316,17 +19316,16 @@ void label_1458()
 
 
 
-void label_1459()
+void label_1459(int cc)
 {
-    if (r2 >= (sdata(156, r1) + 10) * (sdata(156, r1) + 10))
+    if (r2 >= (sdata(156, cc) + 10) * (sdata(156, cc) + 10))
     {
         skillexp(
             156,
-            r1,
-            std::clamp(r2 * r2 / (sdata(156, r1) * 5 + 10), 10, 1000),
+            cc,
+            std::clamp(r2 * r2 / (sdata(156, cc) * 5 + 10), 10, 1000),
             10);
     }
-    return;
 }
 
 
@@ -56842,9 +56841,9 @@ int pick_up_item()
         }
         else
         {
-            r1 = 0;
             r2 = sellgold;
-            label_1459();
+            r1 = 0;
+            label_1459(r1);
         }
     }
     else

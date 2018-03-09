@@ -1052,7 +1052,7 @@ void label_1455();
 void label_1456(int);
 void label_1457();
 void label_1458();
-void label_1459();
+void label_1459(int);
 void gain_skill_experience_lock_picking(int);
 void gain_skill_experience_detection(int);
 void gain_skill_experience_casting(int);
