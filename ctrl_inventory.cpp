@@ -1479,7 +1479,7 @@ label_2061_internal:
             r1 = cc;
             equip_item();
             r1 = cc;
-            refresh_character();
+            refresh_character(r1);
             screenupdate = -1;
             update_screen();
             snd(13);
@@ -1746,7 +1746,7 @@ label_2061_internal:
                     create_pcpic(tc, true);
                 }
                 r1 = tc;
-                refresh_character();
+                refresh_character(r1);
                 refresh_burden_state();
                 if (invally == 1)
                 {
@@ -1898,7 +1898,7 @@ label_2061_internal:
             }
             inv_getfreeid_force();
             r1 = tc;
-            refresh_character();
+            refresh_character(r1);
             refresh_burden_state();
             invsubroutine = 0;
             return 1;
@@ -2074,7 +2074,7 @@ label_2061_internal:
                 create_pcpic(tc, true);
             }
             r1 = tc;
-            refresh_character();
+            refresh_character(r1);
             refresh_burden_state();
             goto label_20591;
         }

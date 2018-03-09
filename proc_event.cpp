@@ -365,7 +365,7 @@ void proc_event()
         cdata[0].gold -= cdata[0].gold / 3;
         decfame(0, 10);
         r1 = 0;
-        refresh_character();
+        refresh_character(r1);
         autosave = 1 * (gdata_current_map != 35);
         break;
     case 20:

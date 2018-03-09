@@ -6240,7 +6240,7 @@ void change_item_material()
     apply_item_material();
     label_1583();
     r1 = cc;
-    refresh_character();
+    refresh_character(r1);
     return;
 }
 
@@ -7213,7 +7213,7 @@ void skillgain(int cc, int id, int initial_level, int stock)
     }
     sdata.get(id, cc).original_level = std::clamp(lv, 0, 2000);
     r1 = cc;
-    refresh_character();
+    refresh_character(r1);
 }
 
 
@@ -7253,7 +7253,7 @@ int skillmod(int id, int cc, int experience)
             txt(txtskillchange(id, cc, true));
         }
         r1 = cc;
-        refresh_character();
+        refresh_character(r1);
         return 1;
     }
     if (exp_at_m77 < 0)
@@ -7295,7 +7295,7 @@ int skillmod(int id, int cc, int experience)
             }
         }
         r1 = cc;
-        refresh_character();
+        refresh_character(r1);
         return 1;
     }
     sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
@@ -7410,7 +7410,7 @@ int skillexp(int id, int cc, int experience, int prm_572, int prm_573)
             txt(txtskillchange(id, cc, true));
         }
         r1 = cc;
-        refresh_character();
+        refresh_character(r1);
         return 1;
     }
     if (exp_at_m77 < 0)
@@ -7453,7 +7453,7 @@ int skillexp(int id, int cc, int experience, int prm_572, int prm_573)
             }
         }
         r1 = cc;
-        refresh_character();
+        refresh_character(r1);
         return 1;
     }
     sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
@@ -11839,7 +11839,7 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
     rc = tc_at_m125;
     wear_most_valuable_equipment_for_all_body_parts();
     r1 = tc_at_m125;
-    refresh_character();
+    refresh_character(r1);
     return prm_784;
 }
 
@@ -12248,7 +12248,7 @@ int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
     cdata[prm_801].buffs[p_at_m132].power = prm_803;
     cdata[prm_801].buffs[p_at_m132].turns = fixeddur_at_m132;
     r1 = prm_801;
-    refresh_character();
+    refresh_character(r1);
     return 0;
 }
 
@@ -12312,7 +12312,7 @@ void delbuff(int prm_805, int prm_806)
         }
     }
     r1 = prm_805;
-    refresh_character();
+    refresh_character(r1);
     return;
 }
 
@@ -12683,7 +12683,7 @@ void resistmod(int cc, int element, int delta)
     animeload(15, cc);
 
     r1 = cc;
-    refresh_character();
+    refresh_character(r1);
 }
 
 
@@ -12794,7 +12794,7 @@ void modcorrupt(int prm_815)
         }
         animeload(8, 0);
         r1 = 0;
-        refresh_character();
+        refresh_character(r1);
         return;
     }
     if (mod_at_m134 < 0)
@@ -12847,7 +12847,7 @@ void modcorrupt(int prm_815)
         }
         animeload(10, 0);
         r1 = 0;
-        refresh_character();
+        refresh_character(r1);
         return;
     }
     return;
@@ -14022,7 +14022,7 @@ int item_fire(int prm_840, int prm_841)
                             / 10000 * 10000;
                         inv[ci_at_m138].body_part = 0;
                         r1 = prm_840;
-                        refresh_character();
+                        refresh_character(r1);
                     }
                     else if (is_in_fov(prm_840))
                     {
@@ -19253,7 +19253,8 @@ void gain_level()
         label_1455();
     }
     label_1456();
-    refresh_character();
+    r1 = r1;
+    refresh_character(r1);
     return;
 }
 
@@ -19515,12 +19516,12 @@ void cnvbonus(int prm_895, int prm_896)
 
 
 
-void refresh_character()
+void refresh_character(int cc)
 {
     int rp = 0;
     int rp2 = 0;
     int rp3 = 0;
-    if (r1 == 0)
+    if (cc == 0)
     {
         gdata_seven_league_boot_effect = 0;
         gdata_ether_disease_speed = 0;
@@ -19532,108 +19533,108 @@ void refresh_character()
     }
     for (int cnt = 0; cnt < 600; ++cnt)
     {
-        sdata(cnt, r1) = sdata.get(cnt, r1).original_level;
+        sdata(cnt, cc) = sdata.get(cnt, cc).original_level;
     }
-    if (r1 == 0)
+    if (cc == 0)
     {
-        cdata(r1).clear_flags();
+        cdata(cc).clear_flags();
         if (trait(161) != 0)
         {
             for (int i = 0; i < 30; ++i)
             {
-                if (cdata_body_part(r1, i) % 10000 == 0)
+                if (cdata_body_part(cc, i) % 10000 == 0)
                 {
                     continue;
                 }
-                rp = cdata_body_part(r1, i) % 10000 - 1;
+                rp = cdata_body_part(cc, i) % 10000 - 1;
                 if (inv[rp].weight >= 1000)
                 {
-                    cdata_body_part(r1, i) =
-                        cdata_body_part(r1, i) / 10000 * 10000;
+                    cdata_body_part(cc, i) =
+                        cdata_body_part(cc, i) / 10000 * 10000;
                     inv[rp].body_part = 0;
                 }
             }
         }
     }
-    else if (cdata[r1].id == 343)
+    else if (cdata[cc].id == 343)
     {
         for (int i = 0; i < 30; ++i)
         {
-            cdata(r1).flags[i] = userdata(40 + i, cdata[r1].cnpc_id);
+            cdata(cc).flags[i] = userdata(40 + i, cdata[cc].cnpc_id);
         }
     }
     else
     {
         for (int i = 0; i < 30; ++i)
         {
-            cdata(r1).flags[i] = cbitorg(i, cdata[r1].id);
+            cdata(cc).flags[i] = cbitorg(i, cdata[cc].id);
         }
     }
     for (int cnt = 10; cnt < 20; ++cnt)
     {
-        cdata[r1].growth_buffs[cnt - 10] = 0;
+        cdata[cc].growth_buffs[cnt - 10] = 0;
     }
-    cdata[r1].dv = 0;
-    cdata[r1].pv = 0;
-    cdata[r1].hit_bonus = 0;
-    cdata[r1].damage_bonus = 0;
-    cdata[r1].equipment_type = 0;
+    cdata[cc].dv = 0;
+    cdata[cc].pv = 0;
+    cdata[cc].hit_bonus = 0;
+    cdata[cc].damage_bonus = 0;
+    cdata[cc].equipment_type = 0;
     attacknum = 0;
-    cdata[r1].rate_to_pierce = 0;
-    if (sdata(186, r1))
+    cdata[cc].rate_to_pierce = 0;
+    if (sdata(186, cc))
     {
-        cdata[r1].rate_of_critical_hit = int(std::sqrt(sdata(186, r1))) + 2;
+        cdata[cc].rate_of_critical_hit = int(std::sqrt(sdata(186, cc))) + 2;
     }
     else
     {
-        cdata[r1].rate_of_critical_hit = 0;
+        cdata[cc].rate_of_critical_hit = 0;
     }
-    cdata[r1].curse_power = 0;
-    cdata[r1].extra_attack = 0;
-    cdata[r1].extra_shot = 0;
-    cdata[r1].sum_of_equipment_weight = 0;
-    cdata[r1].decrease_physical_damage = 0;
-    cdata[r1].nullify_damage = 0;
-    cdata[r1].cut_counterattack = 0;
+    cdata[cc].curse_power = 0;
+    cdata[cc].extra_attack = 0;
+    cdata[cc].extra_shot = 0;
+    cdata[cc].sum_of_equipment_weight = 0;
+    cdata[cc].decrease_physical_damage = 0;
+    cdata[cc].nullify_damage = 0;
+    cdata[cc].cut_counterattack = 0;
     for (int i = 0; i < 30; ++i)
     {
-        if (cdata_body_part(r1, i) % 10000 == 0)
+        if (cdata_body_part(cc, i) % 10000 == 0)
         {
             continue;
         }
-        rp = cdata_body_part(r1, i) % 10000 - 1;
-        cdata[r1].sum_of_equipment_weight += inv[rp].weight;
+        rp = cdata_body_part(cc, i) % 10000 - 1;
+        cdata[cc].sum_of_equipment_weight += inv[rp].weight;
         if (inv[rp].skill == 168)
         {
-            if (!(cdata[r1].equipment_type & 1))
+            if (!(cdata[cc].equipment_type & 1))
             {
-                cdata[r1].equipment_type += 1;
+                cdata[cc].equipment_type += 1;
             }
         }
-        cdata[r1].dv += inv[rp].dv;
-        cdata[r1].pv += inv[rp].pv;
+        cdata[cc].dv += inv[rp].dv;
+        cdata[cc].pv += inv[rp].pv;
         if (inv[rp].dice_x == 0)
         {
-            cdata[r1].hit_bonus += inv[rp].hit_bonus;
-            cdata[r1].damage_bonus += inv[rp].damage_bonus;
-            cdata[r1].pv +=
+            cdata[cc].hit_bonus += inv[rp].hit_bonus;
+            cdata[cc].damage_bonus += inv[rp].damage_bonus;
+            cdata[cc].pv +=
                 inv[rp].enhancement * 2 + (inv[rp].curse_state == 1) * 2;
         }
-        else if (cdata_body_part(r1, i) / 10000 == 5)
+        else if (cdata_body_part(cc, i) / 10000 == 5)
         {
             ++attacknum;
         }
         if (inv[rp].curse_state == -1)
         {
-            cdata[r1].curse_power += 20;
+            cdata[cc].curse_power += 20;
         }
         if (inv[rp].curse_state == -2)
         {
-            cdata[r1].curse_power += 100;
+            cdata[cc].curse_power += 100;
         }
         if (inv[rp].material == 8)
         {
-            if (r1 == 0)
+            if (cc == 0)
             {
                 gdata_ether_disease_speed += 5;
             }
@@ -19651,27 +19652,27 @@ void refresh_character()
                 rp2 = rp2 / 10000;
                 if (rp2 == 1)
                 {
-                    sdata(rp3, r1) += inv[rp].enchantments[cnt].power / 50 + 1;
+                    sdata(rp3, cc) += inv[rp].enchantments[cnt].power / 50 + 1;
                     continue;
                 }
                 if (rp2 == 2)
                 {
-                    sdata(rp3, r1) += inv[rp].enchantments[cnt].power / 2;
-                    if (sdata(rp3, r1) < 0)
+                    sdata(rp3, cc) += inv[rp].enchantments[cnt].power / 2;
+                    if (sdata(rp3, cc) < 0)
                     {
-                        sdata(rp3, r1) = 1;
+                        sdata(rp3, cc) = 1;
                     }
                     continue;
                 }
                 if (rp2 == 3)
                 {
-                    if (sdata.get(rp3, r1).original_level != 0)
+                    if (sdata.get(rp3, cc).original_level != 0)
                     {
-                        sdata(rp3, r1) +=
+                        sdata(rp3, cc) +=
                             inv[rp].enchantments[cnt].power / 50 + 1;
-                        if (sdata(rp3, r1) < 1)
+                        if (sdata(rp3, cc) < 1)
                         {
-                            sdata(rp3, r1) = 1;
+                            sdata(rp3, cc) = 1;
                         }
                     }
                     continue;
@@ -19681,7 +19682,7 @@ void refresh_character()
             {
                 if (rp2 == 56)
                 {
-                    if (r1 == 0)
+                    if (cc == 0)
                     {
                         gdata_catches_god_signal = 1;
                         continue;
@@ -19689,7 +19690,7 @@ void refresh_character()
                 }
                 if (rp2 == 59)
                 {
-                    if (r1 == 0)
+                    if (cc == 0)
                     {
                         gdata_reveals_religion = 1;
                         continue;
@@ -19697,8 +19698,8 @@ void refresh_character()
                 }
                 if (rp2 == 29)
                 {
-                    sdata(18, r1) += inv[rp].enchantments[cnt].power / 50 + 1;
-                    if (r1 == 0)
+                    sdata(18, cc) += inv[rp].enchantments[cnt].power / 50 + 1;
+                    if (cc == 0)
                     {
                         gdata_seven_league_boot_effect +=
                             inv[rp].enchantments[cnt].power / 8;
@@ -19707,107 +19708,107 @@ void refresh_character()
                 }
                 if (rp2 == 32)
                 {
-                    cbitmod(5, r1, 1);
+                    cbitmod(5, cc, 1);
                     continue;
                 }
                 if (rp2 == 35)
                 {
-                    cbitmod(7, r1, 1);
+                    cbitmod(7, cc, 1);
                     continue;
                 }
                 if (rp2 == 23)
                 {
-                    cbitmod(9, r1, 1);
+                    cbitmod(9, cc, 1);
                     continue;
                 }
                 if (rp2 == 24)
                 {
-                    cbitmod(12, r1, 1);
+                    cbitmod(12, cc, 1);
                     continue;
                 }
                 if (rp2 == 25)
                 {
-                    cbitmod(8, r1, 1);
+                    cbitmod(8, cc, 1);
                     continue;
                 }
                 if (rp2 == 26)
                 {
-                    cbitmod(10, r1, 1);
+                    cbitmod(10, cc, 1);
                     continue;
                 }
                 if (rp2 == 27)
                 {
-                    cbitmod(11, r1, 1);
+                    cbitmod(11, cc, 1);
                     continue;
                 }
                 if (rp2 == 28)
                 {
-                    cbitmod(13, r1, 1);
+                    cbitmod(13, cc, 1);
                     continue;
                 }
                 if (rp2 == 42)
                 {
-                    cbitmod(14, r1, 1);
+                    cbitmod(14, cc, 1);
                     continue;
                 }
                 if (rp2 == 41)
                 {
-                    cbitmod(15, r1, 1);
+                    cbitmod(15, cc, 1);
                     continue;
                 }
                 if (rp2 == 55)
                 {
-                    cbitmod(29, r1, 1);
+                    cbitmod(29, cc, 1);
                     continue;
                 }
                 if (rp2 == 52)
                 {
-                    cdata[r1].decrease_physical_damage +=
+                    cdata[cc].decrease_physical_damage +=
                         inv[rp].enchantments[cnt].power / 40 + 5;
                     continue;
                 }
                 if (rp2 == 53)
                 {
-                    cdata[r1].nullify_damage +=
+                    cdata[cc].nullify_damage +=
                         inv[rp].enchantments[cnt].power / 60 + 3;
                     continue;
                 }
                 if (rp2 == 54)
                 {
-                    cdata[r1].cut_counterattack +=
+                    cdata[cc].cut_counterattack +=
                         inv[rp].enchantments[cnt].power / 5;
                     continue;
                 }
                 if (rp2 == 44)
                 {
-                    cdata[r1].rate_of_critical_hit +=
+                    cdata[cc].rate_of_critical_hit +=
                         inv[rp].enchantments[cnt].power / 50;
                     continue;
                 }
                 if (rp2 == 39)
                 {
-                    cdata[r1].rate_to_pierce +=
+                    cdata[cc].rate_to_pierce +=
                         inv[rp].enchantments[cnt].power / 50;
                     continue;
                 }
                 if (rp2 == 50)
                 {
-                    cdata[r1].extra_attack +=
+                    cdata[cc].extra_attack +=
                         inv[rp].enchantments[cnt].power / 15;
                     continue;
                 }
                 if (rp2 == 51)
                 {
-                    cdata[r1].extra_shot +=
+                    cdata[cc].extra_shot +=
                         inv[rp].enchantments[cnt].power / 15;
                     continue;
                 }
                 if (rp2 == 21 || rp2 == 45 || rp2 == 46 || rp2 == 47)
                 {
-                    cbitmod(24, r1, 1);
+                    cbitmod(24, cc, 1);
                     continue;
                 }
-                if (r1 == 0)
+                if (cc == 0)
                 {
                     if (rp2 == 30)
                     {
@@ -19829,35 +19830,35 @@ void refresh_character()
         buff += u8"<title1>◆ 装備による能力の修正<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {
-            sdata(cnt, 56) = sdata.get(cnt, r1).original_level;
-            if (sdata(cnt, 56) != sdata(cnt, r1))
+            sdata(cnt, 56) = sdata.get(cnt, cc).original_level;
+            if (sdata(cnt, 56) != sdata(cnt, cc))
             {
-                rp = sdata(cnt, r1) - sdata(cnt, 56);
+                rp = sdata(cnt, cc) - sdata(cnt, 56);
                 cnvbonus(cnt, rp);
             }
         }
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        if (cdata[r1].attr_adjs[cnt] != 0)
+        if (cdata[cc].attr_adjs[cnt] != 0)
         {
-            if (cdata[r1].quality >= 4)
+            if (cdata[cc].quality >= 4)
             {
-                if (cdata[r1].attr_adjs[cnt]
-                    < sdata.get(10 + cnt, r1).original_level / 5)
+                if (cdata[cc].attr_adjs[cnt]
+                    < sdata.get(10 + cnt, cc).original_level / 5)
                 {
-                    cdata[r1].attr_adjs[cnt] =
-                        sdata.get(10 + cnt, r1).original_level / 5;
+                    cdata[cc].attr_adjs[cnt] =
+                        sdata.get(10 + cnt, cc).original_level / 5;
                 }
             }
-            sdata(10 + cnt, r1) += cdata[r1].attr_adjs[cnt];
+            sdata(10 + cnt, cc) += cdata[cc].attr_adjs[cnt];
         }
-        if (sdata(10 + cnt, r1) < 1)
+        if (sdata(10 + cnt, cc) < 1)
         {
-            sdata(10 + cnt, r1) = 1;
+            sdata(10 + cnt, cc) = 1;
         }
     }
-    if (r1 == 0)
+    if (cc == 0)
     {
         apply_god_blessing();
         for (int cnt = 0; cnt < 217; ++cnt)
@@ -19868,93 +19869,92 @@ void refresh_character()
             }
         }
     }
-    if (cdata[r1].equipment_type & 1)
+    if (cdata[cc].equipment_type & 1)
     {
-        if (cdata[r1].pv > 0)
+        if (cdata[cc].pv > 0)
         {
-            cdata[r1].pv =
-                cdata[r1].pv * (120 + int(std::sqrt(sdata(168, r1))) * 2) / 100;
+            cdata[cc].pv =
+                cdata[cc].pv * (120 + int(std::sqrt(sdata(168, cc))) * 2) / 100;
         }
     }
     else if (attacknum == 1)
     {
-        cdata[r1].equipment_type += 2;
+        cdata[cc].equipment_type += 2;
     }
     else if (attacknum != 0)
     {
-        cdata[r1].equipment_type += 4;
+        cdata[cc].equipment_type += 4;
     }
-    cdata[r1].max_mp =
+    cdata[cc].max_mp =
         std::clamp(
-            ((sdata(16, r1) * 2 + sdata(15, r1) + sdata(14, r1) / 3)
-                 * cdata[r1].level / 25
-             + sdata(16, r1)),
+            ((sdata(16, cc) * 2 + sdata(15, cc) + sdata(14, cc) / 3)
+                 * cdata[cc].level / 25
+             + sdata(16, cc)),
             1,
             1000000)
-        * sdata(3, r1) / 100;
-    cdata[r1].max_hp =
+        * sdata(3, cc) / 100;
+    cdata[cc].max_hp =
         std::clamp(
-            ((sdata(11, r1) * 2 + sdata(10, r1) + sdata(15, r1) / 3)
-                 * cdata[r1].level / 25
-             + sdata(11, r1)),
+            ((sdata(11, cc) * 2 + sdata(10, cc) + sdata(15, cc) / 3)
+                 * cdata[cc].level / 25
+             + sdata(11, cc)),
             1,
             1000000)
-            * sdata(2, r1) / 100
+            * sdata(2, cc) / 100
         + 5;
-    cdata[r1].max_sp =
-        100 + (sdata(15, r1) + sdata(11, r1)) / 5 + trait(24) * 8;
-    if (cdata[r1].max_mp < 1)
+    cdata[cc].max_sp =
+        100 + (sdata(15, cc) + sdata(11, cc)) / 5 + trait(24) * 8;
+    if (cdata[cc].max_mp < 1)
     {
-        cdata[r1].max_mp = 1;
+        cdata[cc].max_mp = 1;
     }
-    if (cdata[r1].max_hp < 1)
+    if (cdata[cc].max_hp < 1)
     {
-        cdata[r1].max_hp = 1;
+        cdata[cc].max_hp = 1;
     }
-    if (r1 >= 57 || 0)
+    if (cc >= 57 || 0)
     {
-        cdata[r1].dv = cdata[r1].level / 2
-            + cdata[r1].dv * cdata[r1].dv_correction_value / 100
-            + cdata[r1].dv_correction_value - 100;
-        cdata[r1].pv = cdata[r1].level
-            + (cdata[r1].pv + cdata[r1].level / 2
-               + cdata[r1].pv_correction_value / 25)
-                * cdata[r1].pv_correction_value / 100;
-        if (cdata[r1].quality == 3)
+        cdata[cc].dv = cdata[cc].level / 2
+            + cdata[cc].dv * cdata[cc].dv_correction_value / 100
+            + cdata[cc].dv_correction_value - 100;
+        cdata[cc].pv = cdata[cc].level
+            + (cdata[cc].pv + cdata[cc].level / 2
+               + cdata[cc].pv_correction_value / 25)
+                * cdata[cc].pv_correction_value / 100;
+        if (cdata[cc].quality == 3)
         {
-            cdata[r1].max_hp = cdata[r1].max_hp * 3 / 2;
+            cdata[cc].max_hp = cdata[cc].max_hp * 3 / 2;
         }
-        if (cdata[r1].quality >= 4)
+        if (cdata[cc].quality >= 4)
         {
-            cdata[r1].max_hp = cdata[r1].max_hp * 5;
+            cdata[cc].max_hp = cdata[cc].max_hp * 5;
         }
     }
     else
     {
-        cdata[r1].max_hp += 10;
+        cdata[cc].max_hp += 10;
     }
     for (int cnt = 0; cnt < 16; ++cnt)
     {
-        rp = cdata[r1].buffs[cnt].id;
+        rp = cdata[cc].buffs[cnt].id;
         if (rp == 0)
         {
             break;
         }
-        apply_buff(r1, rp, cdata[r1].buffs[cnt].power);
+        apply_buff(cc, rp, cdata[cc].buffs[cnt].power);
     }
-    if (cdata[r1].equipment_type & 4)
+    if (cdata[cc].equipment_type & 4)
     {
-        cdata[r1].extra_attack += int(std::sqrt(sdata(166, r1))) * 3 / 2 + 4;
+        cdata[cc].extra_attack += int(std::sqrt(sdata(166, cc))) * 3 / 2 + 4;
     }
-    if (cdata[r1].rate_of_critical_hit > 30)
+    if (cdata[cc].rate_of_critical_hit > 30)
     {
-        cdata[r1].hit_bonus += (cdata[r1].rate_of_critical_hit - 30) * 2;
-        cdata[r1].rate_of_critical_hit = 30;
+        cdata[cc].hit_bonus += (cdata[cc].rate_of_critical_hit - 30) * 2;
+        cdata[cc].rate_of_critical_hit = 30;
     }
     refresh_burden_state();
-    refreshspeed(r1);
-    cbitmod(981, r1, 0);
-    return;
+    refreshspeed(cc);
+    cbitmod(981, cc, 0);
 }
 
 
@@ -20415,7 +20415,8 @@ void label_1520()
             {
                 cdata[r1].attr_adjs[p] -=
                     sdata.get(10 + p, r1).original_level / 25 + 1;
-                refresh_character();
+                r1 = r1;
+                refresh_character(r1);
             }
         }
         if (rnd(5))
@@ -22015,7 +22016,7 @@ void initialize_character()
     cdata[rc].talk_type = rnd(7);
     label_1530();
     r1 = rc;
-    refresh_character();
+    refresh_character(r1);
     ++gdata_other_character_count;
     cdata[rc].hp = cdata[rc].max_hp;
     cdata[rc].mp = cdata[rc].max_mp;
@@ -22095,7 +22096,7 @@ void initialize_pc_character()
         inv[cnt].identification_state = 3;
     }
     r1 = 0;
-    refresh_character();
+    refresh_character(r1);
     return;
 }
 
@@ -22198,7 +22199,7 @@ void label_15390()
         }
     }
     r1 = rc;
-    refresh_character();
+    refresh_character(r1);
     return;
 }
 
@@ -22235,7 +22236,7 @@ void label_1540()
         skillmod(183, rc, 1000);
     }
     r1 = rc;
-    refresh_character();
+    refresh_character(r1);
     return;
 }
 
@@ -34667,7 +34668,7 @@ label_1857_internal:
         r2 = matuse;
         label_1472();
         r1 = 0;
-        refresh_character();
+        refresh_character(r1);
         render_hud();
         page_save();
         goto label_18551_internal;
@@ -36826,7 +36827,7 @@ void label_1888()
         msg_halt();
     }
     r1 = 0;
-    refresh_character();
+    refresh_character(r1);
     return;
 }
 
@@ -39800,7 +39801,7 @@ int label_1932()
         if (chara_unequip(rpref(10 + cnt * 2)))
         {
             r1 = 0;
-            refresh_character();
+            refresh_character(r1);
         }
         cell_refresh(
             inv[rpref(10 + cnt * 2)].position.x,
@@ -40202,7 +40203,7 @@ void label_1935()
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
     }
     r1 = 0;
-    refresh_character();
+    refresh_character(r1);
     return;
 }
 
@@ -41893,9 +41894,9 @@ void label_1964()
             cnvbonus(cnt, p);
         }
     }
-    r1 = 0;
     refreshmode = 1;
-    refresh_character();
+    r1 = 0;
+    refresh_character(r1);
     refreshmode = 0;
     buff += u8"\n"s;
     buff += u8"<title1>◆ 特徴と特殊状態による能力の恩恵<def>\n"s;
@@ -42497,7 +42498,7 @@ label_1970_internal:
                     snd(61);
                     ++trait(tid);
                     r1 = tc;
-                    refresh_character();
+                    refresh_character(r1);
                     if (mode == 1)
                     {
                         if (gdata_acquirable_feat_count == 0)
@@ -48093,7 +48094,7 @@ label_2052_internal:
             r1 = cc;
             unequip_item();
             r1 = cc;
-            refresh_character();
+            refresh_character(r1);
             snd(13);
             txtnew();
             txt(lang(
@@ -53635,7 +53636,7 @@ void continuous_action_others()
             }
             inv[ci].body_part = 0;
             r1 = tc;
-            refresh_character();
+            refresh_character(r1);
         }
         item_copy(ci, ti);
         inv[ti].number = in;
@@ -54746,7 +54747,7 @@ void label_2161()
     if (chara_unequip(ci))
     {
         r1 = cc;
-        refresh_character();
+        refresh_character(r1);
     }
     --inv[ci].number;
     if (ci >= 5080)
@@ -57341,7 +57342,7 @@ void label_2201()
                     {
                         --cdata[cc].attr_adjs[0];
                         r1 = cc;
-                        refresh_character();
+                        refresh_character(r1);
                         if (is_in_fov(cc))
                         {
                             txtef(8);
@@ -60454,7 +60455,7 @@ void dipcursed(int prm_1078, int)
         if (inv_getowner(prm_1078) != -1)
         {
             r1 = inv_getowner(prm_1078);
-            refresh_character();
+            refresh_character(r1);
         }
         return;
     }
@@ -60714,7 +60715,7 @@ void do_dip_command()
                     + u8" silvery."s));
             inv[ci].curse_state = 1;
             r1 = cc;
-            refresh_character();
+            refresh_character(r1);
             turn_end();
             return;
         }
@@ -60727,7 +60728,7 @@ void do_dip_command()
                     + u8" wrapped by a dark aura."s));
             inv[ci].curse_state = -1;
             r1 = cc;
-            refresh_character();
+            refresh_character(r1);
             turn_end();
             return;
         }
@@ -60924,7 +60925,7 @@ void do_use_command()
             exrand_randomize();
         }
         r1 = cc;
-        refresh_character();
+        refresh_character(r1);
         update_screen();
         pc_turn(false);
     }
@@ -61117,7 +61118,7 @@ void do_use_command()
             txt(lang(u8"松明を消した。"s, u8"You put out the fire."s));
         }
         r1 = 0;
-        refresh_character();
+        refresh_character(r1);
         goto label_2229_internal;
     case 9:
     {
@@ -61656,7 +61657,7 @@ void do_use_command()
             u8"You gain a new feat."s));
         animeload(10, 0);
         r1 = cc;
-        refresh_character();
+        refresh_character(r1);
         goto label_2229_internal;
     case 30:
         txt(lang(
@@ -69514,7 +69515,7 @@ void label_2693(bool retreat)
                         }
                     }
                     r1 = cc;
-                    refresh_character();
+                    refresh_character(r1);
                 }
             }
         }
@@ -72559,7 +72560,7 @@ void pass_one_turn(bool label_2738_flg)
     if (cbit(981, cc))
     {
         r1 = cc;
-        refresh_character();
+        refresh_character(r1);
     }
     if (cdata[cc].state == 1)
     {

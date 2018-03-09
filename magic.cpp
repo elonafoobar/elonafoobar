@@ -721,7 +721,7 @@ int magic()
                                 name(tc) + u8" "s + is(tc) + u8" weakened."s));
                         }
                         r1 = tc;
-                        refresh_character();
+                        refresh_character(r1);
                     }
                 }
                 goto the_end;
@@ -2047,7 +2047,7 @@ label_2181_internal:
             obvious = 0;
         }
         r1 = 0;
-        refresh_character();
+        refresh_character(r1);
         break;
     case 1121:
         if (tc != 0)
@@ -2114,7 +2114,7 @@ label_2181_internal:
             obvious = 0;
         }
         r1 = 0;
-        refresh_character();
+        refresh_character(r1);
         break;
     case 411:
         if (cc != 0)
@@ -2311,7 +2311,7 @@ label_2181_internal:
             animeload(10, tc);
         }
         r1 = tc;
-        refresh_character();
+        refresh_character(r1);
         break;
     case 413:
         if (tc >= 16)
@@ -2474,7 +2474,8 @@ label_2181_internal:
             }
             animeload(8, tc);
         }
-        refresh_character();
+        r1 = r1;
+        refresh_character(r1);
         break;
     case 1105:
         for (int cnt = 0;; ++cnt)
@@ -2526,7 +2527,7 @@ label_2181_internal:
             }
         }
         r1 = tc;
-        refresh_character();
+        refresh_character(r1);
         autosave = 1 * (gdata_current_map != 35);
         break;
     case 1107:
@@ -2580,7 +2581,7 @@ label_2181_internal:
             skillexp(181, 0, 1000 + (efstatus >= 1) * 750, 6, 1000);
         }
         r1 = tc;
-        refresh_character();
+        refresh_character(r1);
         break;
     case 1119:
         for (int cnt = 0, cnt_end = (1 + (efstatus >= 1)); cnt < cnt_end; ++cnt)
@@ -2648,7 +2649,7 @@ label_2181_internal:
             }
         }
         r1 = tc;
-        refresh_character();
+        refresh_character(r1);
         autosave = 1 * (gdata_current_map != 35);
         break;
     case 1106:
@@ -2656,7 +2657,7 @@ label_2181_internal:
         skillexp(i, tc, efstatusfix(-2000, -2000, -1000, -250));
         play_animation(6);
         r1 = tc;
-        refresh_character();
+        refresh_character(r1);
         break;
     case 1139:
         txt(lang(
@@ -2671,7 +2672,7 @@ label_2181_internal:
             txt(lang(u8"あつつ！"s, u8"It really burns!"s));
         }
         r1 = tc;
-        refresh_character();
+        refresh_character(r1);
         break;
     case 1113:
         if (efstatus >= 1)
@@ -2935,7 +2936,7 @@ label_2181_internal:
             }
         }
         r1 = tc;
-        refresh_character();
+        refresh_character(r1);
         break;
     case 441:
         what_do_you_wish_for();
@@ -3201,7 +3202,7 @@ label_2181_internal:
                     name(tc) + your(tc) + u8" "s + valn + u8" glows black."s));
             }
             r1 = tc;
-            refresh_character();
+            refresh_character(r1);
             snd(117);
             animeload(14, tc);
             item_stack(tc, i, 1);
@@ -3237,7 +3238,7 @@ label_2181_internal:
             snd(38);
         }
         r1 = tc;
-        refresh_character();
+        refresh_character(r1);
         break;
     case 1138:
     case 1123:
@@ -3518,7 +3519,7 @@ label_2181_internal:
             inv[ci].body_part = equip;
         }
         r1 = cc;
-        refresh_character();
+        refresh_character(r1);
         fixmaterial = 0;
         objfix = 0;
         ci = efcibk;
@@ -3606,7 +3607,7 @@ label_2181_internal:
             inv[ci].body_part = equip;
         }
         r1 = cc;
-        refresh_character();
+        refresh_character(r1);
         fixmaterial = 0;
         objfix = 0;
         break;
@@ -3670,7 +3671,7 @@ label_2181_internal:
                             + u8"."s));
                 }
                 r1 = cc;
-                refresh_character();
+                refresh_character(r1);
             }
             else
             {
@@ -3957,7 +3958,7 @@ label_2181_internal:
             }
         }
         r1 = cc;
-        refresh_character();
+        refresh_character(r1);
         break;
     case 1132:
         if (cc != 0)
