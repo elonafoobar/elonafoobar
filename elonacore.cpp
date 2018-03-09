@@ -49218,7 +49218,6 @@ void label_2076()
 
 void label_2077()
 {
-    r1 = 50;
     label_2152();
     turn_end();
     return;
@@ -53945,7 +53944,7 @@ void label_2152()
     if (cdata[cc].continuous_action_id == 0)
     {
         cdata[cc].continuous_action_id = 4;
-        cdata[cc].continuous_action_turn = r1;
+        cdata[cc].continuous_action_turn = 50;
         txt(lang(u8"あなたは横になった。"s, u8"You lie down to rest."s));
         update_screen();
         return;
