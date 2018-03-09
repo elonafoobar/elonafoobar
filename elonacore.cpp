@@ -19331,10 +19331,9 @@ void label_1459()
 
 
 
-void gain_skill_experience_lock_picking()
+void gain_skill_experience_lock_picking(int cc)
 {
-    skillexp(158, r1, 100);
-    return;
+    skillexp(158, cc, 100);
 }
 
 
@@ -58523,7 +58522,7 @@ int unlock_box(int difficulty)
     }
     txt(lang(u8"開錠に成功した。"s, u8"You successfully unlock it."s));
     r1 = cc;
-    gain_skill_experience_lock_picking();
+    gain_skill_experience_lock_picking(r1);
     return 1;
 }
 
@@ -59110,7 +59109,7 @@ void try_to_open_locked_door()
         if (feat(2) > 0)
         {
             r1 = cc;
-            gain_skill_experience_lock_picking();
+            gain_skill_experience_lock_picking(r1);
         }
         cell_featset(dx, dy, tile_dooropen, 20, 0, -1);
         if (is_in_fov(cc))
