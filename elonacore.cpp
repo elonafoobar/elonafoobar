@@ -16032,7 +16032,7 @@ void dmgmp(int cc, int delta)
     if (cdata[cc].mp < 0)
     {
         r1 = cc;
-        gain_skill_experience_mana_capacity();
+        gain_skill_experience_mana_capacity(r1);
         int damage = -cdata[cc].mp * 400 / (100 + sdata(164, cc) * 10);
         if (cc == 0)
         {
@@ -19360,10 +19360,9 @@ void gain_skill_experience_casting(int cc)
 
 
 
-void gain_skill_experience_mana_capacity()
+void gain_skill_experience_mana_capacity(int cc)
 {
-    skillexp(164, r1, std::abs(cdata[r1].mp) * 200 / (cdata[r1].max_mp + 1));
-    return;
+    skillexp(164, cc, std::abs(cdata[cc].mp) * 200 / (cdata[cc].max_mp + 1));
 }
 
 
