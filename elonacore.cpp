@@ -19252,7 +19252,8 @@ void gain_level()
     {
         label_1455();
     }
-    label_1456();
+    r1 = r1;
+    label_1456(r1);
     r1 = r1;
     refresh_character(r1);
     return;
@@ -19283,19 +19284,18 @@ void label_1455()
 
 
 
-void label_1456()
+void label_1456(int cc)
 {
-    cdata[r1].required_experience = std::clamp(cdata[r1].level, 1, 200)
-            * (std::clamp(cdata[r1].level, 1, 200) + 1)
-            * (std::clamp(cdata[r1].level, 1, 200) + 2)
-            * (std::clamp(cdata[r1].level, 1, 200) + 3)
+    cdata[cc].required_experience = std::clamp(cdata[cc].level, 1, 200)
+            * (std::clamp(cdata[cc].level, 1, 200) + 1)
+            * (std::clamp(cdata[cc].level, 1, 200) + 2)
+            * (std::clamp(cdata[cc].level, 1, 200) + 3)
         + 3000;
-    if (cdata[r1].required_experience > 100000000
-        || cdata[r1].required_experience < 0)
+    if (cdata[cc].required_experience > 100000000
+        || cdata[cc].required_experience < 0)
     {
-        cdata[r1].required_experience = 100000000;
+        cdata[cc].required_experience = 100000000;
     }
-    return;
 }
 
 
@@ -21992,7 +21992,7 @@ void initialize_character()
     cdata[rc].weight =
         cdata[rc].height * cdata[rc].height * (rnd(6) + 18) / 10000;
     r1 = rc;
-    label_1456();
+    label_1456(r1);
     r1 = rc;
     label_1512(r1);
     if (cdata[rc].portrait == 0)

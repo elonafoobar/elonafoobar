@@ -2439,7 +2439,7 @@ label_2181_internal:
             --cdata[tc].level;
             cdata[tc].experience = 0;
             r1 = tc;
-            label_1456();
+            label_1456(r1);
             txtef(8);
             txt(lang(
                 name(tc) + u8"のレベルが下がった…"s,
