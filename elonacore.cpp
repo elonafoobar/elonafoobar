@@ -22025,10 +22025,10 @@ void initialize_character()
 
 void initialize_pc_character()
 {
-    cdata[rc].quality = 2;
-    cdata[rc].relationship = 10;
-    cdata[rc].original_relationship = 10;
-    cbitmod(967, rc, 1);
+    cdata[0].quality = 2;
+    cdata[0].relationship = 10;
+    cdata[0].original_relationship = 10;
+    cbitmod(967, 0, 1);
     flt();
     itemcreate(0, 333, -1, -1, 0);
     inv[ci].number = 8;
@@ -22071,8 +22071,8 @@ void initialize_pc_character()
         itemcreate(0, 378, -1, -1, 0);
     }
     gain_race_feat();
-    cdata[r1].skill_bonus = 5 + trait(154);
-    cdata[r1].total_skill_bonus = 5 + trait(154);
+    cdata[0].skill_bonus = 5 + trait(154);
+    cdata[0].total_skill_bonus = 5 + trait(154);
     for (const auto& cnt : items(0))
     {
         if (inv[cnt].number == 0)
