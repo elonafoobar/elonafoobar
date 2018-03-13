@@ -1942,7 +1942,6 @@ label_2181_internal:
         }
         if (efid == 632)
         {
-            txt_check();
             txt(lang(
                 name(cc) + u8"は"s + name(tc)
                     + u8"を気の狂いそうな眼差しで見た。"s,
