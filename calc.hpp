@@ -21,7 +21,7 @@ struct skill_damage
     int element_power;
 };
 std::optional<skill_damage> calc_skill_damage(int, int, int);
-int calcobjlv(int = 0);
+int calcobjlv(int = -1);
 int calcfixlv(int = 0);
 int calcfame(int = 0, int = 0);
 int decfame(int = 0, int = 0);
