@@ -1920,7 +1920,7 @@ std::string txttargetlevel(int cc, int tc)
     {
         return lang(
             u8"負ける気はしない。",
-            cnven(he(tc)) + u8" " + is(tc) + u8" a easy opponent.");
+            cnven(he(tc)) + u8" " + is(tc) + u8" an easy opponent.");
     }
     else if (x / 3 < y)
     {
@@ -11312,7 +11312,7 @@ void resistmod(int cc, int element, int delta)
             txt(lang(
                 name(cc) + u8"の身体に電気が走った。"s,
                 name(cc) + u8" "s + is(cc)
-                    + u8" struck by an electoric shock."s));
+                    + u8" struck by an electric shock."s));
             break;
         case 54:
             txt(lang(
@@ -13224,7 +13224,7 @@ void txteledmg(int type, int attacker, int target, int element)
             txt(lang(
                 name(target) + u8"は発狂して死んだ。"s,
                 name(target) + u8" lose"s + _s(target) + u8" "s + his(target)
-                    + u8" mind and commit"s + _s(target) + u8" a suicde."s));
+                    + u8" mind and commit"s + _s(target) + u8" a suicide."s));
         }
         break;
     case 59:
@@ -14211,13 +14211,13 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 txt(lang(
                     name(prm_853) + u8"は階段から転げ落ちて死んだ。"s,
-                    name(prm_853) + u8" trumble"s + _s(prm_853)
+                    name(prm_853) + u8" tumble"s + _s(prm_853)
                         + u8" from stairs and die"s + _s(prm_853) + u8"."s));
                 if (prm_853 == 0)
                 {
                     ndeathcause = lang(
                         u8"階段から転げ落ちて亡くなった。"s,
-                        u8"trumbled from stairs and died"s);
+                        u8"tumbled from stairs and died"s);
                 }
             }
             if (prm_855 == -8)
@@ -18883,7 +18883,7 @@ int try_to_cast_spell()
         {
             txt(lang(
                 name(cc) + u8"はマナを吸い取られた！"s,
-                name(cc) + your(cc) + u8" mana is absored."s));
+                name(cc) + your(cc) + u8" mana is absorbed."s));
         }
         if (cc == 0)
         {
@@ -21617,8 +21617,11 @@ void label_1573()
                         if (rnd(3))
                         {
                             txtef(9);
-                            txt(name(catitem) + u8"は"s + itemname(ci)
-                                + u8"をぺろぺろと舐めた。"s);
+                            txt(lang(
+                                name(catitem) + u8"は"s + itemname(ci)
+                                    + u8"をぺろぺろと舐めた。"s,
+                                name(catitem) + " licks " + itemname(ci)
+                                    + "."));
                             ibitmod(8, ci, 1);
                             reftype = the_item_db[inv[ci].id]->category;
                             encadd(
@@ -29407,8 +29410,7 @@ void use_house_board()
             if (cdata[0].gold < calchirecost(tc) * 20)
             {
                 txt(lang(
-                    u8"お金が足りない…"s,
-                    u8"You dont't have enough money..."s));
+                    u8"お金が足りない…"s, u8"You don't have enough money..."s));
             }
             else
             {
@@ -34002,7 +34004,7 @@ void label_1873()
         {
             txt(lang(
                 u8"幾つかの戦利品がある。"s,
-                u8"There're some items you can aquire."s));
+                u8"There're some items you can acquire."s));
             screenupdate = -1;
             update_screen();
             invsubroutine = 1;
@@ -35245,10 +35247,10 @@ void get_god_description()
             u8"Offering: Corpses/Guns/Machinery<p>"s);
         buff += lang(
             u8"ボーナス: 器用 / 感覚 / 銃 / 治癒 / 探知 / 宝石細工 / 鍵開け / 大工<p>"s,
-            u8"Bonus   : DEX/PER/Gun/Jweller/Lockpick/Carpentry<p>"s);
+            u8"   Bonus: DEX/PER/Gun/Jeweller/Lockpick/Carpentry<p>"s);
         buff += lang(
             u8"特殊能力: マニの分解術(自動:罠からマテリアルを取り出す)<p>"s,
-            u8"Ability : Mani's decomposition (Passive: Extracts materials<br>from traps.)<p>"s);
+            u8" Ability: Mani's decomposition (Passive: Extract materials<br>from traps.)<p>"s);
     }
     if (inv[ci].param1 == 2)
     {
@@ -35259,10 +35261,10 @@ void get_god_description()
             lang(u8"　捧げ物: 死体 / 弓<p>"s, u8"Offering: Corpses/Bows<p>"s);
         buff += lang(
             u8"ボーナス: 感覚 / 速度 / 弓 / クロスボウ / 隠密 / 魔道具<p>"s,
-            u8"Bonus   : PER/SPD/Bow/Crossbow/Stealth/Magic Device<p>"s);
+            u8"   Bonus: PER/SPD/Bow/Crossbow/Stealth/Magic Device<p>"s);
         buff += lang(
             u8"特殊能力: ルルウィの憑依(スキル:瞬間的に高速になる)<p>"s,
-            u8"Ability : Lulwy's trick (Boosts your speed for a short time.)<p>"s);
+            u8" Ability: Lulwy's trick (Boost your speed for a short time.)<p>"s);
     }
     if (inv[ci].param1 == 3)
     {
@@ -35270,13 +35272,13 @@ void get_god_description()
             u8"イツパロトルは元素を司る神です。イツパロトルを信仰した者は、魔力を大気から吸収し、元素に対する保護を受けることができます。<p><p>"s,
             u8"Itzpalt is a god of elements. Those faithful to Itzpalt are<br>protected from elemental damages and learn to absorb mana from<br>their surroundings.<p>"s);
         buff +=
-            lang(u8"　捧げ物: 死体 / 杖<p>"s, u8"Offering: Corpses/Stavse<p>"s);
+            lang(u8"　捧げ物: 死体 / 杖<p>"s, u8"Offering: Corpses/Staves<p>"s);
         buff += lang(
             u8"ボーナス: 魔力 / 瞑想 / 火炎耐性 / 冷気耐性 / 電撃耐性<p>"s,
-            u8"Bonus   : MAG/Meditation/RES Fire/RES Cold/RES Lightning<p>"s);
+            u8"   Bonus: MAG/Meditation/RES Fire/RES Cold/RES Lightning<p>"s);
         buff += lang(
             u8"特殊能力: マナの抽出(スキル:周囲の空気からマナを吸い出す)<p>"s,
-            u8"Ability : Absorb mana (Absorbs mana from the air.)<p>"s);
+            u8" Ability: Absorb mana (Absorb mana from the air.)<p>"s);
     }
     if (inv[ci].param1 == 4)
     {
@@ -35287,10 +35289,10 @@ void get_god_description()
             lang(u8"　捧げ物: 死体 / 魚<p>"s, u8"Offering: Corpses/Fish<p>"s);
         buff += lang(
             u8"ボーナス: 魅力 / 運 / 回避 / 魔力の限界 / 釣り/ 鍵開け<p>"s,
-            u8"Bonus   : CHR/LUCK/Evasion/Magic Capacity/Fishing/Lockpick<p>"s);
+            u8"   Bonus: CHR/LUCK/Evasion/Magic Capacity/Fishing/Lockpick<p>"s);
         buff += lang(
             u8"特殊能力: エヘカトル流魔術(自動:マナの消費がランダムになる)<p>"s,
-            u8"Ability : Ehekatl school of magic (Passive: randomize casting mana<br>cost.)<p>"s);
+            u8" Ability: Ehekatl school of magic (Passive: Randomize casting mana<br>cost.)<p>"s);
     }
     if (inv[ci].param1 == 5)
     {
@@ -35301,10 +35303,10 @@ void get_god_description()
             lang(u8"　捧げ物: 死体 / 鉱石<p>"s, u8"Offering: Corpses/Ores<p>"s);
         buff += lang(
             u8"ボーナス: 腕力 / 耐久 / 盾 / 重量挙げ / 採掘 / 魔道具<p>"s,
-            u8"Bonus   : STR/END/Shield/Weight Lifting/Mining/Magic Device<p>"s);
+            u8"   Bonus: STR/CON/Shield/Weight Lifting/Mining/Magic Device<p>"s);
         buff += lang(
             u8"特殊能力: オパートスの甲殻(自動:受ける物理ダメージを減らす)<p>"s,
-            u8"Ability : Opatos' shell (Passive: Reduce any physical damage you<br>receive.)<p>"s);
+            u8" Ability: Opatos' shell (Passive: Reduce any physical damage you<br>receive.)<p>"s);
     }
     if (inv[ci].param1 == 6)
     {
@@ -35315,10 +35317,10 @@ void get_god_description()
             lang(u8"　捧げ物: 死体 / 鉱石<p>"s, u8"Offering: Corpses/Ores<p>"s);
         buff += lang(
             u8"ボーナス: 意思 / 治癒 / 瞑想 / 解剖学 / 料理 / 魔道具 / 魔力の限界<p>"s,
-            u8"Bonus   : WIL/Healing/Anatomy/Cooking/Magic Device/Magic Capacity<p>"s);
+            u8"   Bonus: WIL/Healing/Anatomy/Cooking/Magic Device/Magic Capacity<p>"s);
         buff += lang(
             u8"特殊能力: ジュアの祈り(スキル:失った体力を回復)<p>"s,
-            u8"Ability : Prayer of Jure (Heal yourself.)<p>"s);
+            u8" Ability: Prayer of Jure (Heal yourself.)<p>"s);
     }
     if (inv[ci].param1 == 7)
     {
@@ -35330,10 +35332,10 @@ void get_god_description()
             u8"Offering: Corpses/Vegetables<p>"s);
         buff += lang(
             u8"ボーナス: 感覚 / 器用 / 習得 / 栽培 / 錬金術 / 裁縫 / 読書<p>"s,
-            u8"Bonus   : PER/DEX/LER/Gardening/Alchemy/Tailoring/Literacy<p>"s);
+            u8"   Bonus: PER/DEX/LER/Gardening/Alchemy/Tailoring/Literacy<p>"s);
         buff += lang(
             u8"特殊能力: 生命の輪廻(自動：腐った作物から種を取り出す)<p>"s,
-            u8"Ability : Kumiromi's recycle (Passive: Extracts seeds from rotten foods.)<p>"s);
+            u8" Ability: Kumiromi's recycle (Passive: Extract seeds from rotten foods.)<p>"s);
     }
     return;
 }
@@ -35663,7 +35665,7 @@ void pray()
                 dbid = 264;
                 txt(lang(
                     u8"この追放者は連続魔法を使えるようだ。"s,
-                    u8"This exile can cast several spells in a raw."s));
+                    u8"This exile can cast several spells in a row."s));
             }
             if (cdata[0].god_id == core_god::ehekatl)
             {
@@ -35684,7 +35686,7 @@ void pray()
                 dbid = 266;
                 txt(lang(
                     u8"この防衛者は致死ダメージを受けた仲間をレイハンドで回復できるようだ。レイハンドは眠るたびに再使用可能になる。"s,
-                    u8"This defender can use Lay on hand to heal a deadly wounded ally. The ability becomes re-useable after sleeping."s));
+                    u8"This defender can use Lay on hand to heal a mortally wounded ally. The ability becomes re-useable after sleeping."s));
             }
             if (cdata[0].god_id == core_god::kumiromi)
             {
@@ -36297,7 +36299,7 @@ label_1894_internal:
         s = lang(u8"野営跡の発見"s, u8"Camping Site"s);
         buff = lang(
             u8"あなたは何者かが野営した跡を見つけた。辺りには食べ残しやがらくたが散らばっている。もしかしたら、何か役に立つものがあるかもしれない。"s,
-            u8"You discover a camping site someone left behind. Chunks of leftovers and junks remain here. You may possibly find some usefull items."s);
+            u8"You discover a camping site someone left behind. Chunks of leftovers and junks remain here. You may possibly find some useful items."s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"調べる"s, u8"(Search)"s);
         ++listmax;
@@ -36327,7 +36329,7 @@ label_1894_internal:
         s = lang(u8"不気味な夢"s, u8"Creepy Dream"s);
         buff = lang(
             u8"あなたは不気味な夢をみた。陰気な幾つもの瞳があなたを凝視し、どこからともなく笑い声がこだました。「ケラケラケラ…ミツケタヨ…ケラケラ」あなたが二度寝返りをうった後、その夢は終わった。"s,
-            u8"In your dreams, several pairs of gloomy eyes stare at you and laughter seemingly from nowhere echos around you.  \"Keh-la keh-la keh-la I found you...I found you.. keh-la keh-la keh-la\" After tossing around a couple times, the dream is gone."s);
+            u8"In your dreams, several pairs of gloomy eyes stare at you and laughter seemingly from nowhere echoes around you.  \"Keh-la keh-la keh-la I found you...I found you.. keh-la keh-la keh-la\" After tossing around a couple times, the dream is gone."s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"おかしな夢だ"s, u8"Strange..."s);
         ++listmax;
@@ -36531,7 +36533,7 @@ label_1894_internal:
         s = lang(u8"自然治癒力の向上"s, u8"Regeneration"s);
         buff = lang(
             u8"身体が妙に火照ってあなたは目を覚ました。気がつくと、腕にあった傷跡が完全に消えていた。"s,
-            u8"Your entire body flushs. When you wake up, a scar in your arm is gone."s);
+            u8"Your entire body flushes. When you wake up, a scar in your arm is gone."s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"よし"s, u8"Good."s);
         ++listmax;
@@ -38568,7 +38570,7 @@ label_19341_internal:
                 {
                     txt(lang(
                         u8"調合に必要な材料が見つからない。"s,
-                        u8"A requied material cannot be found."s));
+                        u8"A required material cannot be found."s));
                     break;
                 }
                 label_1933();
@@ -38593,7 +38595,7 @@ label_19341_internal:
     {
         txt(lang(
             u8"調合に必要な材料が見つからない。"s,
-            u8"A requied material cannot be found."s));
+            u8"A required material cannot be found."s));
         rowactend(cc);
         return;
     }
@@ -39104,7 +39106,7 @@ void label_1942()
         {
             txt(lang(
                 u8"ファイルの取得に失敗した。"s,
-                u8"Failed to retreive designated files."s));
+                u8"Failed to retrieve designated files."s));
             update_screen();
             pc_turn(false);
         }
@@ -40452,6 +40454,7 @@ label_1961_internal:
 
 void label_1964()
 {
+    // TODO: untranslated
     if (rc < 0)
     {
         rc = tc;
@@ -42820,10 +42823,18 @@ void do_interact_command()
                 }
                 if (tc < 16)
                 {
+<<<<<<< HEAD
                     ELONA_APPEND_PROMPT(
                         lang(u8"着替えさせる"s, u8"Appearence"s),
                         u8"null"s,
                         ""s + 8);
+=======
+                    promptl(0, promptmax) =
+                        lang(u8"着替えさせる"s, u8"Appearance"s);
+                    promptl(1, promptmax) = u8"null"s;
+                    promptl(2, promptmax) = ""s + 8;
+                    ++promptmax;
+>>>>>>> Fix typo
                 }
             }
         }
@@ -43454,7 +43465,7 @@ label_2029_internal:
     display_window((windoww - 720) / 2 + inf_screenx, winposy(438), 720, 438);
     display_topic(lang(u8"魔法の名称"s, u8"Name"s), wx + 28, wy + 36);
     display_topic(
-        lang(u8"消費MP(ｽﾄｯｸ) LV/成功"s, u8"Cost(Stock) Lv/Chance"s),
+        lang(u8"消費MP(ｽﾄｯｸ) Lv/成功"s, u8"Cost(Stock) Lv/Chance"s),
         wx + 220,
         wy + 36);
     display_topic(lang(u8"効果"s, u8"Effect"s), wx + 400, wy + 36);
@@ -45119,7 +45130,7 @@ label_2040_internal:
     }
 label_2041_internal:
     pagesize = 0;
-    s(0) = lang(u8"肖像の変更"s, u8"Appearence"s);
+    s(0) = lang(u8"肖像の変更"s, u8"Appearance"s);
     s(1) = lang(
         u8"左右キー [変更]  ｷｬﾝｾﾙ [閉じる]"s,
         u8"Right,left [Change]  Shift,Esc [Close]"s);
@@ -50655,7 +50666,7 @@ void continuous_action_others()
                     rowactend(cc);
                     txt(lang(
                         u8"突然ふたが閉まった！"s,
-                        u8"Suddenly, the iron maiden falls foward."s));
+                        u8"Suddenly, the iron maiden falls forward."s));
                     dmghp(cc, 9999, -18);
                     return;
                 }
@@ -50819,7 +50830,7 @@ void continuous_action_others()
                     {
                         txt(lang(
                             u8"対象が見当たらない。"s,
-                            u8"You loose the target."s));
+                            u8"You lose the target."s));
                         f = 0;
                     }
                 }
@@ -55143,7 +55154,7 @@ void label_2205()
                 {
                     if (encounterlv < 5)
                     {
-                        valn += lang(u8"プチ級"s, u8"Puti Rank"s);
+                        valn += lang(u8"プチ級"s, u8"Putit Rank"s);
                         break;
                     }
                     if (encounterlv < 10)
@@ -55527,7 +55538,7 @@ void label_2207(int val0)
                 {
                     txt(lang(
                         u8"昇る階段は見つからない。"s,
-                        u8"There're no upstaris here."s));
+                        u8"There're no upstairs here."s));
                     update_screen();
                     pc_turn(false);
                 }
@@ -56254,7 +56265,7 @@ void open_new_year_gift()
         {
             txt(lang(
                 u8"これは素晴らしい贈り物だ！"s,
-                u8"This is truely a wonderful gift!"s));
+                u8"This is truly a wonderful gift!"s));
         }
         flt();
         itemcreate(
@@ -56926,7 +56937,7 @@ label_22191_internal:
             }
             if (attackskill == 107)
             {
-                s = lang(u8"鎌"s, u8"sythe"s);
+                s = lang(u8"鎌"s, u8"scythe"s);
                 if (tc >= 16)
                 {
                     gdata(809) = 2;
@@ -57456,7 +57467,7 @@ void label_2221()
                 {
                     txt(lang(
                         u8"まだだ、まだ遠い…"s,
-                        u8"Stll, still lying far ahead."s));
+                        u8"Still, still lying far ahead."s));
                     break;
                 }
                 txt(lang(
@@ -58607,7 +58618,7 @@ void do_use_command()
         }
         if (inv[ci].param1 >= 1000000000)
         {
-            txt(lang(u8"貯金箱は一杯だ。"s, u8"The money box if ull."s));
+            txt(lang(u8"貯金箱は一杯だ。"s, u8"The money box is full."s));
             update_screen();
             pc_turn(false);
         }
@@ -58711,7 +58722,7 @@ void do_use_command()
         txtef(5);
         txt(lang(
             u8"オパートス「フハハハ！間もなく、この地に変動が起こるであろう！」"s,
-            u8"A voice echos, "s
+            u8"A voice echoes, "s
                 + u8"\"Muwahahaha! I shall shake the land for you!\""s));
         goto label_2229_internal;
     case 34:
@@ -58721,7 +58732,7 @@ void do_use_command()
         txtef(5);
         txt(lang(
             u8"ジュア「べ、別にあんたのためにするんじゃないからね。バカっ！」"s,
-            u8"A voice echos, "s + u8"\"I-I'm not doing for you! Silly!\""s));
+            u8"A voice echoes, "s + u8"\"I-I'm not doing for you! Silly!\""s));
         efid = 637;
         efp = 5000;
         magic();
@@ -58734,7 +58745,7 @@ void do_use_command()
         txtef(5);
         txt(lang(
             u8"エヘカトル「呼んだ？呼んだ？」"s,
-            u8"A voice echos, "s + u8"\"Did you call me? Call me?\""s));
+            u8"A voice echoes, "s + u8"\"Did you call me? Call me?\""s));
         addbuff(tc, 19, 77, 2500);
         goto label_2229_internal;
     case 27:
@@ -58747,7 +58758,7 @@ void do_use_command()
         {
             txt(lang(
                 u8"ルルウィ「あさはかね。エーテルの風を止めてあげるとでも思ったの？」"s,
-                u8"A rather angry voice echos, "s
+                u8"A rather angry voice echoes, "s
                 u8"\"Listen my little slave. Did you really think I would turn a hand in this filthy wind for you?\""s));
             goto label_2229_internal;
         }
@@ -58777,7 +58788,7 @@ void do_use_command()
         }
         txt(lang(
             u8"ルルウィ「あらあら、定命の分際でそんなおねだりするの？ウフフ…今回は特別よ」"s,
-            u8"An impish voice echos, "s
+            u8"An impish voice echoes, "s
             u8"\"Ah you ask too much for a mortal. Still, it is hard to refuse a call from such a pretty slave like you.\""s));
         txt(lang(u8"天候が変わった。"s, u8"The weather changes."s));
         envonly = 1;
@@ -60122,7 +60133,7 @@ void label_2244()
                     buff = lang(
                         u8"よし、これで訓練は終わり"s + _da()
                             + u8"かなり潜在能力が伸びた"s + _yo(2),
-                        u8"Marverous! The traing is now complete. I think you've improved some potential."s);
+                        u8"Marvelous! The training is now complete. I think you've improved some potential."s);
                     tc = tc * 1 + 0;
                     list(0, listmax) = 0;
                     listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -60770,7 +60781,7 @@ void label_2244()
                 + u8"普段は一般の客には売らない格安の品を、特別に見せてあげ"s
                 + _ru() + u8"覚えておいて"s + _kure(3) + u8"、今日だけだ"s
                 + _yo(),
-            u8"This is your lucky day. I wouldn't normaly show my discounted goods to commoners but since I feel so good today..."s);
+            u8"This is your lucky day. I wouldn't normally show my discounted goods to commoners but since I feel so good today..."s);
         talk_window();
         if (chatval == 0)
         {
@@ -60844,7 +60855,7 @@ int give_potion_of_cure_corruption()
     if (stat == -1)
     {
         listmax = 0;
-        buff = lang(u8"うそつき！"s, u8"Lier!"s);
+        buff = lang(u8"うそつき！"s, u8"Liar!"s);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -61297,7 +61308,7 @@ void label_2252()
             buff = lang(
                 u8"未完了の依頼が多すぎじゃない"s + _kana(1)
                     + u8"この仕事は、安心してまかせられない"s + _yo(),
-                u8"Hey, you've got quite a few unfinished contracts. See me again when you have fishined them."s);
+                u8"Hey, you've got quite a few unfinished contracts. See me again when you have finished them."s);
             talk_npc();
             return;
         }
@@ -63282,6 +63293,7 @@ label_2278_internal:
 
 void label_2280()
 {
+    // TODO: untranslated
     listmax = 0;
     page = 0;
     pagesize = 13;
@@ -64614,7 +64626,7 @@ void failed_quest(int val0)
             txtef(8);
             txt(lang(
                 u8"あなたは重大な罪を犯した!"s,
-                u8"You comit a serious crime!"s));
+                u8"You commit a serious crime!"s));
             modify_karma(0, -20);
         }
         if (qdata(3, rq) == 1007)
@@ -64726,7 +64738,7 @@ void label_2677()
             if (enemylv > gdata_ex_arena_level)
             {
                 txt(lang(
-                    u8"EXバトルの撃破相手LVの記録を更新した(Lv"s
+                    u8"EXバトルの撃破相手Lvの記録を更新した(Lv"s
                         + gdata_ex_arena_level + u8" → "s + enemylv + u8" )"s,
                     u8"You've made a new record. (Lv"s + gdata_ex_arena_level
                         + u8" to "s + enemylv + u8" )"s));
@@ -64761,7 +64773,7 @@ void label_2677()
             txtef(3);
             txt(lang(
                 u8"名声値を"s + p + u8"失った。"s,
-                u8"You loose "s + p + u8" fame."s));
+                u8"You lose "s + p + u8" fame."s));
         }
     }
     return;
@@ -70920,7 +70932,7 @@ void conquer_lesimas()
         ""s + cdatan(1, 0) + cdatan(0, 0)
             + u8"に祝福あれ！あなたは遂にレシマスの秘宝を手にいれた！"s,
         u8"Blessing to "s + cdatan(0, 0) + u8", "s + cdatan(1, 0)
-            + u8"! You've finally aquired the codex!"s);
+            + u8"! You've finally acquired the codex!"s);
     draw_caption();
     s(0) = lang(u8"*勝利*"s, u8"*Win*"s);
     s(1) = ""s + strhint3;
@@ -71114,7 +71126,7 @@ void pc_died()
     gsel(0);
     show_game_score_ranking();
     s = lang(
-        u8"あともう少しで埋葬される…"s, u8"You are about to be burried..."s);
+        u8"あともう少しで埋葬される…"s, u8"You are about to be buried..."s);
     draw_caption();
     ELONA_APPEND_PROMPT(
         lang(u8"這い上がる"s, u8"Crawl up"s), u8"a"s, ""s + promptmax);
@@ -71126,7 +71138,7 @@ void pc_died()
         show_game_score_ranking();
         s = lang(
             u8"あなたは埋められた。さようなら…（キーを押すと終了します）"s,
-            u8"You have been burried. Bye...(Hit any key to exit)"s);
+            u8"You have been buried. Bye...(Hit any key to exit)"s);
         draw_caption();
         redraw();
         press();

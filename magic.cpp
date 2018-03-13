@@ -2374,7 +2374,7 @@ label_2181_internal:
                         }
                         else
                         {
-                            s = lang(u8"さらに、"s, u8"Futhermore, "s);
+                            s = lang(u8"さらに、"s, u8"Furthermore, "s);
                         }
                         skillgain(0, p, 1, 200);
                         txtef(2);
@@ -3100,7 +3100,7 @@ label_2181_internal:
         {
             txt(lang(
                 name(tc) + u8"は甘い液体を浴びた！"s,
-                u8"Strange sweet liquid splashs onto "s + name(tc) + u8"!"s));
+                u8"Strange sweet liquid splashes onto "s + name(tc) + u8"!"s));
         }
         dmgcon(tc, 2, efp);
         break;
@@ -3223,7 +3223,7 @@ label_2181_internal:
         }
         if (f == 0)
         {
-            txt(lang(u8"何も起こらなかったようだ。"s, u8"Nothing happenes."s));
+            txt(lang(u8"何も起こらなかったようだ。"s, u8"Nothing happens."s));
             obvious = 0;
         }
         else
@@ -4315,7 +4315,7 @@ label_2181_internal:
         txtef(8);
         txt(lang(
             name(cc) + u8"に睨まれ、あなたはエーテルに侵食された。"s,
-            name(cc) + u8" gazes you. Your Ether Disease deteriorates."s));
+            name(cc) + u8" gazes at you. Your Ether Disease deteriorates."s));
         modcorrupt(100);
         break;
     case 638:
@@ -4384,7 +4384,8 @@ label_2181_internal:
         {
             txt(lang(
                 name(cc) + u8"は"s + name(tc) + u8"を睨み付けた。"s,
-                name(cc) + u8" gaze"s + _s(cc) + u8" "s + name(tc) + u8"."s));
+                name(cc) + u8" gaze"s + _s(cc) + u8" at "s + name(tc)
+                    + u8"."s));
         }
         dmgmp(tc, rnd(20) + 1);
         break;

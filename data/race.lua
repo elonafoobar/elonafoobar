@@ -1,4 +1,4 @@
-race.kobolt = {
+race.kobold = {
   is_extra = true,
   ordering = 20010,
   breed_power = 250,

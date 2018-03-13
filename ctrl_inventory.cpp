@@ -936,7 +936,7 @@ label_2061_internal:
         window(x, y, w, h - h % 8, 0, 0);
         font(lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0);
         pos(x + 16, y + 17);
-        mes(u8"Dv:"s + cdata[tc].dv + u8" Pv:"s + cdata[tc].pv);
+        mes(u8"DV:"s + cdata[tc].dv + u8" PV:"s + cdata[tc].pv);
         pos(x + 16, y + 35);
         mes(lang(u8"装備重量:"s, u8"EquipWt:"s)
             + cnvweight(cdata[tc].sum_of_equipment_weight) + ""s
@@ -1624,7 +1624,7 @@ label_2061_internal:
                     txt(lang(
                         u8"「そんな得体の知れないものはいらない"s + _yo()
                             + u8"」"s,
-                        u8"\"I dont't want it. It's too creepy.\""s));
+                        u8"\"I don't want it. It's too creepy.\""s));
                     goto label_2060_internal;
                 }
                 if (is_cursed(inv[ci].curse_state))

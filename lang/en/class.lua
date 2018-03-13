@@ -8,7 +8,7 @@ class.thief = {
 }
 class.wizard = {
   name = "Wizard",
-  description = "The Wizard. Master of the Arcane, the Eldritch, and the Esoteric. A pity all those years have left little time to build muscles or quick reflexes. Still, they do have some small skill with staff and short sword. And while they start out so feeblePurits scare them, with a few books under their belt, and a little practice, a Wizard will soon decimate legions. Their motto: \"If it's not on fire now, it will be soon\".",
+  description = "The Wizard. Master of the Arcane, the Eldritch, and the Esoteric. A pity all those years have left little time to build muscles or quick reflexes. Still, they do have some small skill with staff and short sword. And while they start out so feeble Putits scare them, with a few books under their belt, and a little practice, a Wizard will soon decimate legions. Their motto: \"If it's not on fire now, it will be soon\".",
 }
 class.farmer = {
   name = "Farmer",
@@ -24,7 +24,7 @@ class.archer = {
 }
 class.warmage = {
   name = "Warmage",
-  description = "The Warmage. Not really a Wizard, not really a Warrior, the Warmage is a believer that stabbing things that are on fire is better than just stabbing them or setting them on fire. Good with swords, armor, books and casting. Their only weakness is that without specialization, they won't truely excel in a field. Still when your motto is: \"Everything worth doing is worth overdoing\", you don't really care.",
+  description = "The Warmage. Not really a Wizard, not really a Warrior, the Warmage is a believer that stabbing things that are on fire is better than just stabbing them or setting them on fire. Good with swords, armor, books and casting. Their only weakness is that without specialization, they won't truly excel in a field. Still when your motto is: \"Everything worth doing is worth overdoing\", you don't really care.",
 }
 class.tourist = {
   name = "Tourist",

@@ -504,7 +504,7 @@ void talk_unique()
             listmax = 0;
             buff = lang(
                 u8"あるところに、魔法によって醜い獣のような姿に変えられた 王子がいた…彼は自分の姿に絶望し、国を捨て森の中の小屋で暮らしたの。"s,
-                u8"There was once a prince who had his shape changed into that of an ugly beast by a witch. Desparing of his bloodcurdling appearince, he hid himself in a forest far from his kingdom."s);
+                u8"There was once a prince who had his shape changed into that of an ugly beast by a witch. Despairing of his bloodcurdling appearance, he hid himself in a forest far from his kingdom."s);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -602,7 +602,7 @@ void talk_unique()
                 listmax = 0;
                 buff = lang(
                     u8"移動方法はもうわかっているだろうが、もしカーソルキーを使っているのならば、できるだけテンキーでの移動に変えたほうがいいだろう。テンキーの周りには、床のアイテムを取得する0キー、その場で足踏みする5キー、そして射撃などのターゲットを指定できる*キーがあるからな。"s,
-                    u8"Pray tell me at least you know how to move. Sure, pressing cursor keys will do. But it's better to use a key pad if you have one. By using a key pad, you can easily acceess keys which are used frequently. Like [0] for picking up stuff, [5] for passing a turn and [*] for targeting."s);
+                    u8"Pray tell me at least you know how to move. Sure, pressing cursor keys will do. But it's better to use a key pad if you have one. By using a key pad, you can easily access keys which are used frequently. Like [0] for picking up stuff, [5] for passing a turn and [*] for targeting."s);
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
@@ -1211,7 +1211,7 @@ void talk_unique()
             txtef(2);
             txt(lang(
                 u8"ジャビ王への書簡を受け取った。ジャーナルが更新された。"s,
-                u8"You recive a letter to the king Xabi. Your journal has been updated."s));
+                u8"You receive a letter to the king Xabi. Your journal has been updated."s));
             txt(lang(
                 cdatan(0, tc) + u8"は静かに息絶えた…"s,
                 cdatan(0, tc) + u8" dies silently..."s));
@@ -2097,7 +2097,7 @@ void talk_unique()
             {
                 buff = lang(
                     u8"ああ、もうこんな時期になったのね。パエルったら、私のことなんか気にせずお祭りを楽しんでくればいいのに。元気な頃は、よく二人でジュア様の像にお参りしていたのよ。"s,
-                    u8"Oh, it's already this time of the year. Poor Pael, she should stop worring about me and go to the festival. We used to visit the St.Jure's statue and pray together around this time."s);
+                    u8"Oh, it's already this time of the year. Poor Pael, she should stop worrying about me and go to the festival. We used to visit the St.Jure's statue and pray together around this time."s);
                 int stat = inv_find(559, 0);
                 if (stat != -1)
                 {
@@ -2359,7 +2359,7 @@ void talk_unique()
                 u8"ほう、これがお前さんの嫁か。"s + cdatan(0, rc)
                     + u8"ちゃんというのだな？恥ずかしがらずこっちに来なさい。"s,
                 u8"So... this is your wife eh? "s + cdatan(0, rc)
-                    + u8" is her name? Don't be embarassed, come along!"s);
+                    + u8" is her name? Don't be embarrassed, come along!"s);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -2492,7 +2492,7 @@ void talk_unique()
             listmax = 0;
             buff = lang(
                 u8"イィッック！やめて！くるなぁー！イィーック！ハ…あなたでしたか…"s,
-                u8"Yeeeeck! Noo...! Don't..! That's my nose..! Yeee-eeeck! Hmup, oh, it's you..."s);
+                u8"Yeeeeck! Noo...! Don't..! That's my nose..! Yeee-eeeck! Hump, oh, it's you..."s);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
@@ -2624,7 +2624,7 @@ void talk_unique()
             if (findally(225) == -1)
             {
                 listmax = 0;
-                buff = lang(u8"ポピーまだ〜？"s, u8"Where's poppy?"s);
+                buff = lang(u8"ポピーまだ〜？"s, u8"Where's Poppy?"s);
                 tc = tc * 1 + 0;
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
@@ -3544,7 +3544,7 @@ void talk_unique()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         buff = lang(
             u8"ねえ、核爆弾買う？金貨12000枚よ。"s,
-            u8"Here, you need a nuke. Only 12000 gold pices."s);
+            u8"Here, you need a nuke. Only 12000 gold pieces."s);
         talk_window();
         if (chatval != 1)
         {
@@ -3624,7 +3624,7 @@ void talk_unique()
                 u8"Something is put on the ground."s));
             listmax = 0;
             buff = lang(
-                u8"よしよし…このモンスターボールを持っていくがいい。使い方はわかっておるな？そう、瀕死のモンスターに投げつけるだけでよい。ボールのLVより上の相手には効かないから、気をつけるのじゃ。5個のボールにモンスターを捕獲して持ってきてくれ。いいか、「ボールに入れたまま」持ってくるのじゃぞ！"s,
+                u8"よしよし…このモンスターボールを持っていくがいい。使い方はわかっておるな？そう、瀕死のモンスターに投げつけるだけでよい。ボールのLvより上の相手には効かないから、気をつけるのじゃ。5個のボールにモンスターを捕獲して持ってきてくれ。いいか、「ボールに入れたまま」持ってくるのじゃぞ！"s,
                 u8"Good good! Take these monster balls with you. Do you know how to use them? Yes yes, throw them at a monster when it is near death. The ball won't work if the monster is too high in level, so be careful. Please bring me five captured monsters. Oh... and... *please* bring them back to me IN the balls!"s);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
@@ -4212,7 +4212,7 @@ void talk_unique()
                 u8"良い心がけです。あなたにランク昇格のためのノルマを与えましょう。他人の所有物を奪い取り、盗品を売り払いなさい。金貨"s +
                     gdata_thieves_guild_quota +
                     u8"枚相当の盗品を売ったら、昇進のための審査会に報告してあげましょう。"s,
-                u8"Alright. The Thieves Guild wants you to put stolen goods into circulation. Steal some goods and sell them to any vendors. When the sum of your earning reachs "s +
+                u8"Alright. The Thieves Guild wants you to put stolen goods into circulation. Steal some goods and sell them to any vendors. When the sum of your earning reaches "s +
                     gdata_thieves_guild_quota +
                     u8" gold pieces, we will think about your promotion."s);
             tc = tc * 1 + 0;
@@ -4662,7 +4662,7 @@ void talk_unique()
             buff = lang(
                 u8"チッ、一文無しの乞食"s + _ka() + u8"とっとといっちまい"s
                     + _na(),
-                u8"Bah, a begger without a penny. What a waste of time! Just go away!"s);
+                u8"Bah, a beggar without a penny. What a waste of time! Just go away!"s);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
@@ -4680,7 +4680,7 @@ void talk_unique()
                 gdatan(1) +
                 u8"\" that the mere mention of its name is enough to silence a naughty child. Yet we will spare your life for only a toll of "s +
                 cdata[0].gold / 5 +
-                u8" gold pices and your cargos. Quite fortunate indeed."s);
+                u8" gold pieces and your cargos. Quite fortunate indeed."s);
         chatesc = 0;
         talk_window();
         if (chatval == 0)
@@ -4982,7 +4982,7 @@ void talk_unique()
             {
                 buff = lang(
                     u8"それはカプセル・ドラッグ！…なあ、それ譲ってくれよ。"s,
-                    u8"That-that's a capsule drag! ...hey, you want to give it to me?"s);
+                    u8"That-that's a capsule drug! ...hey, you want to give it to me?"s);
                 ELONA_APPEND_RESPONSE(1, lang(u8"譲る"s, u8"Take it."s));
                 ELONA_APPEND_RESPONSE(0, lang(u8"断る"s, u8"Nope."s));
                 chatesc = 1;
@@ -4993,7 +4993,7 @@ void talk_unique()
                     --inv[stat].number;
                     txt(lang(
                         u8"カプセルドラッグを1錠渡した。"s,
-                        u8"You hand him a capsule drag."s));
+                        u8"You hand him a capsule drug."s));
                     snd(13);
                     listmax = 0;
                     buff = lang(u8"いいねえ。"s, u8"Great, you are great."s);
@@ -5042,7 +5042,7 @@ void talk_unique()
         ELONA_APPEND_RESPONSE(0, lang(u8"興味ない"s, u8"Not interested."s));
         buff = lang(
             u8"ジュア教団では、ただ今他の神からの乗り換えキャンペーン実施中だ！聖夜祭の期間中なら、改宗によるペナルティは払わなくていいよ。さらになんと、今なら無料で数量限定のジュア様の抱き枕も付けちゃうよ！お客さん、このチャンスを見逃す手はないよ。"s,
-            u8"We are running a special campagin to help you join our religion! Be a brother of Jure today and win free body pillow of Jure! During the festival, you won't have to pay penalty to convert your religion neither. So what are you waiting? Sign up now!"s);
+            u8"We are running a special campaign to help you join our religion! Be a brother of Jure today and win free body pillow of Jure! During the festival, you won't have to pay penalty to convert your religion neither. So what are you waiting? Sign up now!"s);
         chatesc = 1;
         talk_window();
         if (chatval == 1)

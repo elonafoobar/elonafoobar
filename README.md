@@ -5,7 +5,7 @@
 * It is derived from Elona v1.22.
 * It is alpha version yet(note: binary file is not distributed yet).
 * It ~~has~~will have the highest extensibity with Lua. [####+]
-* It ~~achieves~~will achieve truely internationalization. [####+]
+* It ~~achieves~~will achieve truly internationalization. [####+]
 * It ~~works~~will work on multi-platform. [####+] (currently, macOS only)
 * It decreases the compatibility by -10.
 

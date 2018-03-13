@@ -491,7 +491,7 @@ int get_trait_info(int traitmode, int tid)
                     u8"Being a taster for a noble grants you resistance to poison."s);
                 traitrefn(3) = lang(
                     u8"あなたは毒に免疫がある[毒耐性強化]"s,
-                    u8"You have a torerance to poison. [RES Poison+]"s);
+                    u8"You have a tolerance to poison. [RES Poison+]"s);
                 traitrefn(4) = lang(
                     u8"あなたには毒に強い免疫がある[毒耐性強化]"s,
                     u8"You have a strong tolerance to poison. [RES Poison++]"s);
@@ -1487,7 +1487,7 @@ int get_trait_info(int traitmode, int tid)
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
                     u8"あなたの周りでは質の高いエンチャントが生成される"s,
-                    u8"Quality stuff are generated around you."s);
+                    u8"Quality stuff is generated around you."s);
             }
             return 1;
         }
@@ -1559,7 +1559,7 @@ int get_trait_info(int traitmode, int tid)
             {
                 traitrefn(2) = "";
                 traitrefn(3) = lang(
-                    u8"あなたは朦朧状態にならない"s, u8"You won't be dim."s);
+                    u8"あなたは朦朧状態にならない"s, u8"You won't be dimmed."s);
             }
             return 1;
         }
@@ -1687,7 +1687,7 @@ int get_trait_info(int traitmode, int tid)
                     u8"You generate massive gravity. [Weight+30%]"s);
             }
             traitrefn(0) = lang(
-                u8"あなたの周りの重力は軽減した。"s, u8"You wieght less."s);
+                u8"あなたの周りの重力は軽減した。"s, u8"You weight less."s);
             traitrefn(1) = lang(
                 u8"あなたは重力を発するようになった。"s,
                 u8"You start to generate gravity."s);
@@ -1773,7 +1773,7 @@ int get_trait_info(int traitmode, int tid)
             traitrefn(0) =
                 lang(u8"あなたの目は減った。"s, u8"Your eyes become normal."s);
             traitrefn(1) = lang(
-                u8"あなたの目は増殖した。"s, u8"Your eyes are multipling."s);
+                u8"あなたの目は増殖した。"s, u8"Your eyes are multiplying."s);
             return 1;
         }
         sdata(17, 0) = clamp(
@@ -1855,7 +1855,7 @@ int get_trait_info(int traitmode, int tid)
                         + (15 + cdata[0].level * 3 / 2) * -1
                         + u8" ダメージ修正+"s + (5 + cdata[0].level * 2 / 3)
                         + u8"]"s,
-                    u8"Desire for violence arises withn in you. [DV"s
+                    u8"Desire for violence arises within you. [DV"s
                         + (15 + cdata[0].level * 3 / 2) * -1 + u8" Dmg bonus+"s
                         + (5 + cdata[0].level * 2 / 3) + u8"]"s);
             }
@@ -1883,7 +1883,7 @@ int get_trait_info(int traitmode, int tid)
                         + (4 + cdata[0].level / 4) * -1 + u8" 習得+"s
                         + (6 + cdata[0].level / 2) + u8" 意思+"s
                         + (2 + cdata[0].level / 6) + u8"]"s,
-                    u8"Your head has grown huge. [END"s
+                    u8"Your head has grown huge. [CON"s
                         + (5 + cdata[0].level / 3) * -1 + u8" DEX"s
                         + (4 + cdata[0].level / 4) * -1 + u8" LER+"s
                         + (6 + cdata[0].level / 2) + u8" WIL+"s

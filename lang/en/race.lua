@@ -1,5 +1,5 @@
-race.kobolt = {
-  name = "Kobolt",
+race.kobold = {
+  name = "Kobold",
   description = "",
 }
 race.orc = {
