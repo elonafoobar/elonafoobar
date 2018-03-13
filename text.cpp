@@ -229,9 +229,7 @@ void txtsetlastword()
         fileutil::read_by_line{fs::u8path(u8"./user")
                                / lang(u8"lastwords.txt", u8"lastwords-e.txt")},
         std::back_inserter(last_words));
-    lastword = last_words[rnd(std::size(last_words))];
-    // TODO: bug? rnd(noteinfo(0)) ?
-    // noteget(lastword, rnd(noteinfo(0) + 1));
+    lastword = choice(last_words);
 }
 
 
@@ -2704,7 +2702,6 @@ std::string random_title(int prm_439)
 
     elona_vector1<std::string> randn2_at_m41;
     int rtval_at_m41 = 0;
-    elona_vector1<std::string> s2_at_m41;
 redo:
     for (int cnt = 0; cnt < 1; ++cnt)
     {
@@ -2855,40 +2852,44 @@ skip:
     {
         if (jp)
         {
-            s2_at_m41(0) = u8"団"s;
-            s2_at_m41(1) = u8"チーム"s;
-            s2_at_m41(2) = u8"パーティー"s;
-            s2_at_m41(3) = u8"の集い"s;
-            s2_at_m41(4) = u8"の軍"s;
-            s2_at_m41(5) = u8"アーミー"s;
-            s2_at_m41(6) = u8"隊"s;
-            s2_at_m41(7) = u8"の一家"s;
-            s2_at_m41(8) = u8"軍"s;
-            s2_at_m41(9) = u8"の隊"s;
-            s2_at_m41(10) = u8"の団"s;
             if (rnd(5))
             {
-                ret += s2_at_m41(rnd(10));
+                ret += choice(std::initializer_list<const char*>{
+                    u8"団",
+                    u8"チーム",
+                    u8"パーティー",
+                    u8"の集い",
+                    u8"の軍",
+                    u8"アーミー",
+                    u8"隊",
+                    u8"の一家",
+                    u8"軍",
+                    u8"の隊",
+                    u8"の団",
+                });
             }
         }
         else if (rnd(2))
         {
-            s2_at_m41(0) = u8"The army of "s;
-            s2_at_m41(1) = u8"The party of "s;
-            s2_at_m41(2) = u8"The house of "s;
-            s2_at_m41(3) = u8"Clan "s;
-            ret = s2_at_m41(rnd(4)) + ret;
+            ret = choice(std::initializer_list<const char*>{
+                      u8"The army of ",
+                      u8"The party of ",
+                      u8"The house of ",
+                      u8"Clan ",
+                  })
+                + ret;
         }
         else
         {
-            s2_at_m41(0) = u8"Clan"s;
-            s2_at_m41(1) = u8"Party"s;
-            s2_at_m41(2) = u8"Band"s;
-            s2_at_m41(3) = u8"Gangs"s;
-            s2_at_m41(4) = u8"Gathering"s;
-            s2_at_m41(5) = u8"House"s;
-            s2_at_m41(6) = u8"Army"s;
-            ret += u8" "s + s2_at_m41(rnd(7));
+            ret += choice(std::initializer_list<const char*>{
+                u8" Clan",
+                u8" Party",
+                u8" Band",
+                u8" Gangs",
+                u8" Gathering",
+                u8" House",
+                u8" Army",
+            });
         }
     }
 
