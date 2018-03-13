@@ -44139,7 +44139,7 @@ label_1998_internal:
             flt(cdata[0].level + 10, 4);
             if (p == 558 || p == 556 || p == 557 || p == 664)
             {
-                fixlv = calcobjlv(3);
+                fixlv = calcfixlv(3);
             }
             if (p == 630)
             {
