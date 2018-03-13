@@ -1267,13 +1267,6 @@ std::string yourself(int x)
 
 
 
-void txt_check()
-{
-    txtvalid = (cc > 0 && is_in_fov(cc)) || cc == 0 ? 0 : -1;
-}
-
-
-
 void stxt(int cc, const std::string& str)
 {
     if (cc == 0 || (is_in_fov(cc) && cdata[0].blind == 0))

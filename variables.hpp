@@ -527,7 +527,6 @@ inline int tlocy;
 inline int tnew;
 inline int tx;
 inline int txt3rd;
-inline int txtvalid;
 inline int ty;
 inline int usernpcmax;
 inline int userrelation;
@@ -1518,7 +1517,6 @@ void tcginit();
 void tcgmain();
 void text_set();
 void turn_aggro(int = 0, int = 0, int = 0);
-void txt_check();
 void txt_conv();
 void txtcontinue();
 void txtef(int = 0);
@@ -1569,7 +1567,6 @@ template <typename... Args>
 void txt(Args&&... args)
 {
     std::vector<std::string> text{txt_tostr(args)...};
-    txtvalid = 0;
     if (hear != 0)
     {
         snd(hear);
