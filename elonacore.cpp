@@ -68313,7 +68313,7 @@ void label_2687()
                                     txtef(9);
                                     txt(lang(
                                         name(cc)
-                                            + u8"は巻きついてたひもをほどいた。"s,
+                                            + u8"は巻きついていた紐をほどいた。"s,
                                         name(cc) + u8" untangle"s + _s(cc)
                                             + u8" the leash."s));
                                 }
