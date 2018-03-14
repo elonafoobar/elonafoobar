@@ -30245,7 +30245,7 @@ void use_house_board()
         promptl(2, promptmax) = ""s + 3;
         ++promptmax;
     }
-    int stat = show_prompt(promptx, prompty, 240, 1);
+    int stat = show_prompt(promptx, prompty, 240);
     if (stat == 0)
     {
         update_screen();
@@ -44958,7 +44958,7 @@ void do_interact_command()
         ++promptmax;
     }
     {
-        int stat = show_prompt(promptx, prompty, 200, 1);
+        int stat = show_prompt(promptx, prompty, 200);
         if (stat == 0)
         {
             update_screen();
@@ -60907,7 +60907,7 @@ void do_use_command()
             ++promptmax;
         }
         {
-            int stat = show_prompt(promptx, prompty, 260, 1);
+            int stat = show_prompt(promptx, prompty, 260);
             if (stat == 0)
             {
                 goto label_2229_internal;
@@ -73800,7 +73800,7 @@ void conquer_lesimas()
         promptl(2, promptmax) = ""s + promptmax;
         ++promptmax;
     }
-    show_prompt(promptx, prompty, 310);
+    show_prompt(promptx, prompty, 310, 0);
     wincomment = ""s + promptl(0, rtval);
     mode = 7;
     screenupdate = -1;

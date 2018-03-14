@@ -1157,7 +1157,11 @@ label_2061_internal:
                 display_msg(screenmsgy, 1);
                 inputlog = ""s + inv[ci].number;
                 show_number_of_text_prompt(
-                    (windoww - 200) / 2 + inf_screenx, winposy(60), 8, 1);
+                    (windoww - 200) / 2 + inf_screenx,
+                    winposy(60),
+                    8,
+                    1,
+                    inv[ci].number);
                 in = elona::stoi(inputlog(0));
                 if (in > inv[ci].number)
                 {
@@ -1308,7 +1312,11 @@ label_2061_internal:
                 display_msg(screenmsgy, 2);
                 inputlog = ""s + inv[ci].number;
                 show_number_of_text_prompt(
-                    (windoww - 200) / 2 + inf_screenx, winposy(60), 8, 1);
+                    (windoww - 200) / 2 + inf_screenx,
+                    winposy(60),
+                    8,
+                    1,
+                    inv[ci].number);
                 in = elona::stoi(inputlog(0));
                 if (in > inv[ci].number)
                 {
