@@ -1,8 +1,93 @@
 #include "draw.hpp"
+#include <cmath>
 #include "character.hpp"
 #include "config.hpp"
 #include "elona.hpp"
+#include "map.hpp"
 #include "variables.hpp"
+
+
+namespace
+{
+
+
+struct damage_popup_t
+{
+    int frame;
+    std::string text;
+    int character;
+    snail::color color;
+
+
+    damage_popup_t(
+        const std::string& text,
+        int character,
+        const snail::color& color)
+        : frame(0)
+        , text(text)
+        , character(character)
+        , color(color)
+    {
+    }
+};
+
+
+std::vector<damage_popup_t> damage_popups;
+
+
+
+/*
+ * TERMS OF USE - EASING EQUATIONS
+ *
+ * Open source under the BSD License.
+ *
+ * Copyright © 2001 Robert Penner
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer. Redistributions in binary
+ * form must reproduce the above copyright notice, this list of conditions and
+ * the following disclaimer in the documentation and/or other materials provided
+ * with the distribution. Neither the name of the author nor the names of
+ * contributors may be used to endorse or promote products derived from this
+ * software without specific prior written permission. THIS SOFTWARE IS PROVIDED
+ * BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+ * EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+double elastic_easing(double t)
+{
+    constexpr double pi = 3.14159265358979323;
+
+    if (t == 0)
+        return 0;
+    if (t == 1)
+        return 1;
+    return std::pow(2, -10 * t) * std::sin((t - 0.075) * (2 * pi) / 0.3) + 1;
+}
+
+
+double easing(double t)
+{
+    if (t > 0.3)
+        return 0;
+
+    return elastic_easing(t);
+}
+
+
+} // namespace
 
 
 namespace elona
@@ -182,6 +267,71 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
             ++cnt;
         }
     }
+}
+
+
+void add_damage_popup(
+    const std::string& text,
+    int character,
+    const snail::color& color)
+{
+    damage_popups.emplace_back(text, character, color);
+}
+
+
+void show_damage_popups(int inf_ver)
+{
+    for (auto&& damage_popup : damage_popups)
+    {
+        const auto& cc = cdata[damage_popup.character];
+        if (gdata(20) != 40)
+        {
+            if (!is_in_fov(cc.position))
+                continue;
+            if (dist(
+                    cdata[0].position.x,
+                    cdata[0].position.y,
+                    cc.position.x,
+                    cc.position.y)
+                > cdata[0].vision_distance / 2)
+                continue;
+        }
+        int mondmgpos{};
+        for (auto&& damage_popup2 : damage_popups)
+        {
+            if (damage_popup.frame >= damage_popup2.frame)
+            {
+                if (cc.position == cdata[damage_popup2.character].position)
+                {
+                    ++mondmgpos;
+                }
+            }
+        }
+
+        int cfg_dmgfont = easing(damage_popup.frame / 10.0) * 20 + 12;
+
+        int x = (cc.position.x - scx) * inf_tiles + inf_screenx
+            - strlen_u(damage_popup.text) * (2 + cfg_dmgfont + 1) / 2 / 2
+            + inf_tiles / 2;
+        int y = (cc.position.y - scy) * inf_tiles + inf_screeny
+            - mondmgpos * (2 + cfg_dmgfont + 3) - 2 * damage_popup.frame;
+        x += sxfix * (scx != scxbk) * (scrollp >= 3);
+        y += syfix * (scy != scybk) * (scrollp >= 3);
+
+        font(lang(cfg_font1, cfg_font2), 2 + cfg_dmgfont - en * 2, 0);
+        pos(x, y);
+        color(damage_popup.color.r, damage_popup.color.g, damage_popup.color.b);
+        bmes(damage_popup.text, 255, 255, 255);
+        color(0, 0, 0);
+
+        ++damage_popup.frame;
+    }
+    damage_popups.erase(
+        std::remove_if(
+            std::begin(damage_popups),
+            std::end(damage_popups),
+            [](const auto& d) { return d.frame > 50; }),
+        std::end(damage_popups));
 }
 
 

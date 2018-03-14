@@ -1,5 +1,8 @@
 #pragma once
 
+#include <string>
+#include "snail/color.hpp"
+
 
 namespace elona
 {
@@ -17,4 +20,12 @@ enum class show_hp_bar_side
 };
 
 void show_hp_bar(show_hp_bar_side side, int inf_clocky);
+
+void add_damage_popup(
+    const std::string& text,
+    int character,
+    const snail::color& color);
+void show_damage_popups(int inf_ver);
+
+
 } // namespace elona

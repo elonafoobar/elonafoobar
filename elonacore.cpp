@@ -13556,6 +13556,13 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
     }
     cdata[prm_853].hp -= dmg_at_m141;
 
+
+    if (is_in_fov(prm_853))
+    {
+        add_damage_popup(std::to_string(dmg_at_m141), prm_853, {0, 0, 0});
+    }
+
+
     if (ele_at_m141 == 56)
     {
         if (prm_855 >= 0)
@@ -16735,6 +16742,8 @@ void render_hud()
                                            : show_hp_bar_side::right_side,
             inf_clocky);
     }
+
+    show_damage_popups(inf_ver);
 }
 
 
@@ -57212,6 +57221,7 @@ label_22191_internal:
                     name(cc) + u8" miss"s + _s(cc, true) + u8" "s + name(tc)
                         + u8"."s));
             }
+            add_damage_popup(u8"miss", tc, {0, 0, 0});
         }
     }
     if (hit == -2)
@@ -57237,6 +57247,7 @@ label_22191_internal:
                     name(tc) + u8" skillfully evade"s + _s(tc) + u8" "s
                         + name(cc) + u8"."s));
             }
+            add_damage_popup(u8"evade!!", tc, {0, 0, 0});
         }
     }
     if (tc == 0)
