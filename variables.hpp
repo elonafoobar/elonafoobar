@@ -710,7 +710,7 @@ int can_do_ranged_attack();
 int label_2080();
 int label_2083();
 int ask_direction();
-int show_prompt(int, int, int, int = 0, int = 0);
+int show_prompt(int, int, int, int = 1, int = 0);
 int label_2143();
 int decode_book();
 int read_normal_book();
