@@ -890,16 +890,14 @@ void gsel(int window_id)
 
 
 void gzoom(
-    int dst_width,
-    int dst_height,
     int window_id,
     int src_x,
     int src_y,
     int src_width,
     int src_height,
-    int mode)
+    int dst_width,
+    int dst_height)
 {
-    (void)mode;
     snail::application::instance().get_renderer().set_blend_mode(
         snail::blend_mode_t::none);
     snail::detail::enforce_sdl(

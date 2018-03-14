@@ -62,8 +62,6 @@ void prepare_item_image(int id, int color, int character_image)
             255 - c_col(2, character_color),
             5);
         gzoom(
-            22,
-            20,
             5,
             chipc(0, character_id) + 8,
             chipc(1, character_id) + 4
@@ -71,7 +69,8 @@ void prepare_item_image(int id, int color, int character_image)
             chipc(2, character_id) - 16,
             chipc(3, character_id) - 8
                 - (chipc(3, character_id) > inf_tiles) * 10,
-            1);
+            22,
+            20);
         set_color_mod(255, 255, 255, 5);
         pos(6, 974);
         gcopy(1, 0, 1008, 22, 20);
