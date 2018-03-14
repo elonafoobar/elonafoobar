@@ -241,7 +241,7 @@ int calcobjlv(int base)
     {
         ret = 1;
     }
-    for (int i = 0; i < 3; ++i)
+    for (int i = 1; i < 4; ++i)
     {
         if (rnd(30 + i * 5) == 0)
         {
@@ -265,7 +265,7 @@ int calcobjlv(int base)
 int calcfixlv(int base)
 {
     int ret = base == 0 ? 2 : base;
-    for (int i = 0; i < 3; ++i)
+    for (int i = 1; i < 4; ++i)
     {
         int p = rnd(30 + i * 5);
         if (p == 0)
