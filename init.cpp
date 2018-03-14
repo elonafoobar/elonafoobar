@@ -167,7 +167,7 @@ void initialize_elona()
     if (inf_tiles != 48)
     {
         pos(0, 0);
-        gzoom(33 * inf_tiles, 25 * inf_tiles, 1, 0, 0, 1584, 1200);
+        gzoom(1, 0, 0, 1584, 1200, 33 * inf_tiles, 25 * inf_tiles);
     }
     buffer(2, 33 * inf_tiles, 25 * inf_tiles);
     buffer(6, 33 * inf_tiles, 25 * inf_tiles);
@@ -785,7 +785,7 @@ void main_title_menu()
     gmode(0);
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/title.bmp"), 1);
-    gzoom(windoww, windowh, 4, 0, 0, 800, 600);
+    gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gmode(2);
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
     color(255, 255, 255);
@@ -965,7 +965,7 @@ void main_menu_new_game()
     gsel(4);
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/void.bmp"), 1);
-    gzoom(windoww, windowh, 4, 0, 0, 800, 600);
+    gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gsel(2);
     for (int cnt = 0; cnt < 8; ++cnt)
     {

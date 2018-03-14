@@ -8857,12 +8857,12 @@ void window2(
     if (prm_661 == 0)
     {
         pos(prm_656 + 4, prm_657 + 4);
-        gzoom(x2_at_m93 - 6, y2_at_m93 - 8, 3, 24, 72, 228, 144);
+        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
     }
     if (prm_661 == 1)
     {
         pos(prm_656 + 4, prm_657 + 4);
-        gzoom(x2_at_m93 - 6, y2_at_m93 - 8, 3, 24, 72, 228, 144);
+        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
         pos(prm_656 + 4, prm_657 + 4);
         gfini(x2_at_m93 - 4, y2_at_m93 - 4);
         gfdec2(195, 205, 195);
@@ -8870,7 +8870,7 @@ void window2(
     if (prm_661 == 2)
     {
         pos(prm_656 + 4, prm_657 + 4);
-        gzoom(x2_at_m93 - 6, y2_at_m93 - 8, 3, 24, 72, 228, 144);
+        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
         pos(prm_656 + 4, prm_657 + 4);
         gfini(x2_at_m93 - 4, y2_at_m93 - 4);
         gfdec2(210, 215, 205);
@@ -8878,7 +8878,7 @@ void window2(
     if (prm_661 == 3)
     {
         pos(prm_656 + 4, prm_657 + 4);
-        gzoom(x2_at_m93 - 6, y2_at_m93 - 8, 3, 24, 72, 228, 144);
+        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
         pos(prm_656 + 4, prm_657 + 4);
         gfini(x2_at_m93 - 4, y2_at_m93 - 4);
         gfdec2(10, 13, 16);
@@ -8886,7 +8886,7 @@ void window2(
     if (prm_661 == 4)
     {
         pos(prm_656 + 4, prm_657 + 4);
-        gzoom(x2_at_m93 - 6, y2_at_m93 - 8, 3, 24, 72, 228, 144);
+        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
         pos(prm_656 + 4, prm_657 + 4);
         gfini(x2_at_m93 - 4, y2_at_m93 - 4);
         gfdec2(195, 205, 195);
@@ -8936,7 +8936,7 @@ void window2(
     if (prm_661 == 5)
     {
         pos(prm_656 + 2, prm_657 + 2);
-        gzoom(x2_at_m93 - 4, y2_at_m93 - 5, 3, 24, 72, 228, 144);
+        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 4, y2_at_m93 - 5);
         pos(prm_656 + 2, prm_657 + 2);
         gfini(x2_at_m93 - 4, y2_at_m93 - 4);
         gfdec2(195, 205, 195);
@@ -22189,7 +22189,7 @@ void clear_background_in_character_making()
     gsel(4);
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/void.bmp"), 1);
-    gzoom(windoww, windowh, 4, 0, 0, 800, 600);
+    gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gsel(0);
     gmode(0);
     pos(0, 0);
@@ -34842,7 +34842,7 @@ void atxinit()
         pos(0, 0);
         picload(fs::u8path(u8"./graphic/"s + atxbg + u8".bmp"), 1);
         pos(0, inf_msgh);
-        gzoom(windoww, windowh - inf_verh - inf_msgh, 4, 0, 0, 240, 160);
+        gzoom(4, 0, 0, 240, 160, windoww, windowh - inf_verh - inf_msgh);
         gmode(2);
         p = windoww / 192;
         for (int cnt = 0, cnt_end = (p + 1); cnt < cnt_end; ++cnt)
@@ -34860,7 +34860,7 @@ void atxinit()
         }
         window2(windoww - 208, 0, 208, 98, 0, 0);
         pos(windoww - 204, 4);
-        gzoom(200, 90, 0, 120, 88, windoww - 120, windowh - inf_verh - 112, 1);
+        gzoom(0, 120, 88, windoww - 120, windowh - inf_verh - 112, 200, 90);
         gsel(0);
     }
     return;
@@ -36650,7 +36650,7 @@ void label_1886()
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/bg_altar.bmp"), 1);
     pos(0, 0);
-    gzoom(windoww, windowh - inf_verh, 4, 0, 0, 600, 400, 1);
+    gzoom(4, 0, 0, 600, 400, windoww, windowh - inf_verh);
     gsel(0);
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -41248,13 +41248,13 @@ label_1956_internal:
             {
                 pos(wx + cnt * 24, wy + cnt2 * 24);
                 gzoom(
-                    24,
-                    24,
                     2,
                     list(0, p) % ww * 48,
                     list(0, p) / ww * 48,
                     48,
-                    48);
+                    48,
+                    24,
+                    24);
                 if (chipm(7, list(0, p)) & 4)
                 {
                     color(240, 230, 220);
@@ -46340,7 +46340,7 @@ label_2035_internal:
         {
             p = cdata[cc].sex * 64 + cdata[cc].portrait;
             pos(wx + 560, wy + 27);
-            gzoom(80, 112, 4, p % 16 * 48, p / 16 * 72, 48, 72);
+            gzoom(4, p % 16 * 48, p / 16 * 72, 48, 72, 80, 112);
         }
         else
         {
@@ -46351,7 +46351,7 @@ label_2035_internal:
                 if (fs::exists(s))
                 {
                     pos(wx + 560, wy + 27);
-                    gzoom(80, 112, 4, 0, 0, 80, 112);
+                    gzoom(4, 0, 0, 80, 112, 80, 112);
                 }
             }
         }
@@ -47296,17 +47296,17 @@ label_2041_internal:
         {
             p = cdata[cc].sex * 64 + cdata[cc].portrait;
             pos(wx + 238, wy + 75);
-            gzoom(80, 112, 4, p % 16 * 48, p / 16 * 72, 48, 72);
+            gzoom(4, p % 16 * 48, p / 16 * 72, 48, 72, 80, 112);
         }
         else if (cdata[cc].portrait != -1)
         {
             pos(wx + 238, wy + 75);
             gzoom(
-                80,
-                112,
                 7,
                 std::abs((cdata[cc].portrait + 2)) * 80,
                 0,
+                80,
+                112,
                 80,
                 112);
         }
@@ -51103,7 +51103,7 @@ void main_menu_continue()
     gsel(4);
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/void.bmp"), 1);
-    gzoom(windoww, windowh, 4, 0, 0, 800, 600);
+    gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gsel(0);
     gmode(0);
     pos(0, 0);
@@ -51274,7 +51274,7 @@ void main_menu_incarnate()
     gsel(4);
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/void.bmp"), 1);
-    gzoom(windoww, windowh, 4, 0, 0, 800, 600);
+    gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gsel(0);
     gmode(0);
     pos(0, 0);
@@ -53688,7 +53688,7 @@ void label_2150()
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/bg_night.bmp"), 1);
     pos(0, 0);
-    gzoom(windoww, windowh - inf_verh, 4, 0, 0, 640, 480, 1);
+    gzoom(4, 0, 0, 640, 480, windoww, windowh - inf_verh);
     gsel(0);
     return;
 }
@@ -64530,7 +64530,7 @@ void show_talk_window()
             p = elona::stoi(actor(1, rc));
         }
         pos(wx + 42, wy + 42);
-        gzoom(80, 112, 4, p % 16 * 48, p / 16 * 72, 48, 72);
+        gzoom(4, p % 16 * 48, p / 16 * 72, 48, 72, 80, 112);
     }
     else
     {
@@ -64556,7 +64556,7 @@ void show_talk_window()
                 chatpicloaded = 1;
             }
             pos(wx + 42, wy + 42);
-            gzoom(80, 112, 4, 0, 0, 80, 112);
+            gzoom(4, 0, 0, 80, 112, 80, 112);
         }
     }
     font(lang(cfg_font1, cfg_font2), 10 - en * 2, 0);
@@ -68081,7 +68081,7 @@ label_2684_internal:
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/"s + file + u8".bmp"), 1);
     pos(0, y1);
-    gzoom(windoww, y2 - y1, 4, 0, 0, 640, 480);
+    gzoom(4, 0, 0, 640, 480, windoww, y2 - y1);
     gmode(2);
     boxf(0, 0, windoww, y1, {5, 5, 5});
     boxf(0, y2, windoww, windowh, {5, 5, 5});
@@ -73852,7 +73852,7 @@ void conquer_lesimas()
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/void.bmp"), 1);
     pos(0, 0);
-    gzoom(windoww, windowh, 4, 0, 0, 640, 480);
+    gzoom(4, 0, 0, 640, 480, windoww, windowh);
     gsel(0);
     label_1443();
     pos(0, 0);
@@ -74115,7 +74115,7 @@ void show_game_score_ranking()
     redraw(0);
     gmode(0);
     pos(0, 0);
-    gzoom(windoww, windowh, 4, 0, 0, 800, 600);
+    gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gmode(2);
     x = 135;
     y = 134;

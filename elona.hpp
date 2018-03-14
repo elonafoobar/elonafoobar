@@ -436,14 +436,13 @@ void grotate(
 void gsel(int window_id);
 
 void gzoom(
-    int dst_width,
-    int dst_height,
     int window_id,
     int src_x,
     int src_y,
     int src_width,
     int src_height,
-    int mode = 0);
+    int dst_width,
+    int dst_height);
 
 
 int instr(const std::string& str, size_t pos, const std::string pattern);

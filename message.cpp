@@ -581,7 +581,7 @@ void anime_halt()
         redraw(0);
         await(10);
         pos(x_at_txtfunc, y_at_txtfunc + 12 - cnt);
-        gzoom(120, cnt * 2 + 1, 3, 552, 504, 120, 22);
+        gzoom(3, 552, 504, 120, 22, 120, cnt * 2 + 1);
         redraw(1);
     }
     press(true);
@@ -595,7 +595,7 @@ void anime_halt()
         if (cnt != 6)
         {
             pos(x_at_txtfunc, y_at_txtfunc + cnt * 2);
-            gzoom(120, 22 - cnt * 4, 3, 552, 504, 120, 22);
+            gzoom(3, 552, 504, 120, 22, 120, 22 - cnt * 4);
         }
         redraw(1);
     }
@@ -933,8 +933,7 @@ std::string name(int cc)
         return lang(u8"何か"s, u8"something"s);
     }
     if (cdata[0].blind != 0
-        || (cbit(6, cc) == 1 && cbit(7, 0) == 0
-            && cdata[cc].wet == 0))
+        || (cbit(6, cc) == 1 && cbit(7, 0) == 0 && cdata[cc].wet == 0))
     {
         return lang(u8"何か"s, u8"something"s);
     }

@@ -62,7 +62,7 @@ void set_option()
         gmode(0);
         pos(0, 0);
         picload(fs::u8path(u8"./graphic/title.bmp"), 1);
-        gzoom(windoww, windowh, 4, 0, 0, 800, 600);
+        gzoom(4, 0, 0, 800, 600, windoww, windowh);
         gsel(0);
         gmode(0);
         pos(0, 0);
