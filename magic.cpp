@@ -1210,7 +1210,6 @@ label_2181_internal:
         pos(0, 0);
         picload(fs::u8path(u8"./graphic/paper.bmp"), 1);
         gsel(0);
-        redraw(0);
         ww = 400;
         wh = 300;
         wx = (windoww - ww) / 2 + inf_screenx;
@@ -1246,7 +1245,7 @@ label_2181_internal:
         gmode(2);
         pos(wx, wy);
         gcopy(4, 400, 0, ww, wh);
-        redraw(1);
+        redraw();
         press();
         snd(71);
         break;
@@ -2792,7 +2791,6 @@ label_2181_internal:
             }
         }
         animeload(10, tc);
-        redraw(0);
         update_minimap();
         update_screen();
         break;
@@ -4499,7 +4497,7 @@ label_2181_internal:
                 itemname(ci) + u8"が降ってきた！"s,
                 itemname(ci) + u8" fall"s + _s2(inv[ci].number) + u8" down!"s));
             await(100);
-            redraw(1);
+            redraw();
         }
         break;
     case 463:

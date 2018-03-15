@@ -50,7 +50,6 @@ void set_option()
         picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(0);
-    redraw(0);
     if (mode == 0)
     {
         screenupdate = -1;
@@ -328,7 +327,6 @@ void set_option()
                 key_inventory = u8"x"s;
                 key_quickinv = u8"X"s;
             }
-            redraw(0);
             cs_bk = -1;
             pagemax = (listmax - 1) / pagesize;
             if (page < 0)
@@ -341,7 +339,6 @@ void set_option()
             }
             reset_page = false;
         }
-        redraw(0);
         s(0) = q;
         s(1) = strhint3;
         pagesize = 0;
@@ -919,7 +916,7 @@ void set_option()
         {
             cs_bk = cs;
         }
-        redraw(1);
+        redraw();
         await(cfg_wait1);
         key_check();
         cursor_check();

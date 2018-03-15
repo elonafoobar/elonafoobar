@@ -563,7 +563,6 @@ void load_config()
 
     if (cfg_language == -1)
     {
-        redraw(0);
         buffer(4);
         picload(fs::u8path(u8"./graphic/lang.bmp"));
         gsel(0);
@@ -572,13 +571,12 @@ void load_config()
 
         while (1)
         {
-            redraw(0);
             boxf();
             pos(160, 170);
             gcopy(4, 0, 0, 340, 100);
             pos(180, 220 + p * 20);
             gcopy(4, 360, 6, 20, 18);
-            redraw(1);
+            redraw();
             await(30);
             if (getkey(snail::key::down))
             {
@@ -608,7 +606,6 @@ void load_config()
 
         cfg_language = p;
         set_config(u8"language", p);
-        redraw(0);
     }
     if (cfg_language == 0)
     {

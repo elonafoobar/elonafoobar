@@ -550,7 +550,6 @@ void tcgdraw()
     while (1)
     {
         ++t_at_tcg;
-        redraw(0);
         label_1825();
         anime_at_tcg = 0;
         font(lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0);
@@ -775,7 +774,7 @@ void tcgdraw()
         else
         {
             await(15);
-            redraw(1);
+            redraw();
         }
         if (anime_at_tcg == 0)
         {
@@ -1559,7 +1558,6 @@ void tcgdrawbg()
 {
     int w_at_tcg = 0;
     int h_at_tcg = 0;
-    redraw(0);
     x_at_tcg = 960;
     y_at_tcg = 96;
     w_at_tcg = 128;
@@ -2419,7 +2417,6 @@ void label_1825()
 void label_1826()
 {
     gmode(4, -1, -1, 180);
-    redraw(0);
     for (int cnt = 0; cnt < 2; ++cnt)
     {
         cnt2_at_tcg = cnt;
@@ -2573,10 +2570,9 @@ label_1829_internal:
     }
     label_1827();
 label_1830_internal:
-    redraw(0);
     label_1825();
     label_1824();
-    redraw(1);
+    redraw();
     await(30);
     key_check();
     if (key == key_next)
@@ -2642,7 +2638,6 @@ label_1830_internal:
                 }
             }
         label_1831_internal:
-            redraw(0);
             calcdecksize();
             label_1825();
             label_1824();
@@ -3055,7 +3050,6 @@ void label_1839()
 
 void label_1840()
 {
-    redraw(0);
     p_at_tcg = 0;
     i_at_tcg = 0;
     f_at_tcg = 1;
@@ -3105,8 +3099,7 @@ void label_1840()
             pos(x_at_tcg(cnt) + 13, y_at_tcg(cnt) + 11);
             gcopy(7, 336 + (cnt == 2) * 12, 96 + cnt % 2 * 24, 12, 12);
         }
-        redraw(1);
-        redraw(0);
+        redraw();
         gmode(0);
         for (int cnt = 0; cnt < 3; ++cnt)
         {

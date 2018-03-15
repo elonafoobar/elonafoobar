@@ -570,7 +570,6 @@ void anime_halt()
     key = "";
     objprm(0, ""s);
     keylog = "";
-    redraw(0);
     gmode(0);
     gsel(3);
     pos(672, 504);
@@ -578,17 +577,15 @@ void anime_halt()
     gsel(0);
     for (int cnt = 0; cnt < 12; ++cnt)
     {
-        redraw(0);
         await(10);
         pos(x_at_txtfunc, y_at_txtfunc + 12 - cnt);
         gzoom(3, 552, 504, 120, 22, 120, cnt * 2 + 1);
-        redraw(1);
+        redraw();
     }
     press(true);
     snd(20);
     for (int cnt = 0; cnt < 7; ++cnt)
     {
-        redraw(0);
         await(10);
         pos(x_at_txtfunc, y_at_txtfunc);
         gcopy(3, 672, 504, 120, 24);
@@ -597,9 +594,8 @@ void anime_halt()
             pos(x_at_txtfunc, y_at_txtfunc + cnt * 2);
             gzoom(3, 552, 504, 120, 22, 120, 22 - cnt * 4);
         }
-        redraw(1);
+        redraw();
     }
-    redraw(0);
     gmode(2);
     return;
 }
@@ -674,7 +670,6 @@ void msg_newline()
     }
     msg(msgline % inf_maxlog) = "";
     p_at_txtfunc = (windoww - inf_msgx) / 192;
-    redraw(0);
     gmode(0);
     pos(inf_msgx, inf_msgy + 5);
     gcopy(
@@ -737,7 +732,6 @@ void msg_clear()
 
 void txt_conv()
 {
-    redraw(0);
 
     if (std::empty(msgtemp(0)))
         return;
@@ -757,7 +751,6 @@ void txt_conv()
             if (cfg_msgtrans)
             {
                 p_at_txtfunc = (windoww - inf_msgx) / 192;
-                redraw(0);
                 gmode(4, -1, -1, cfg_msgtrans * 20);
                 for (int i = 0; i < p_at_txtfunc + 1; ++i)
                 {

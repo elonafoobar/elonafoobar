@@ -561,7 +561,7 @@ void pos(int x, int y = 0);
 void randomize(std::random_device::result_type seed = std::random_device{}());
 
 
-void redraw(int n);
+void redraw();
 
 int rnd(int n);
 

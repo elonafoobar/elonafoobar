@@ -1348,20 +1348,16 @@ void pos(int x, int y)
 }
 
 
-void redraw(int n)
+void redraw()
 {
-    if (n != 1)
-        return;
-    const auto save =
-        snail::application::instance().get_renderer().render_target();
-    snail::application::instance().get_renderer().set_render_target(nullptr);
-    snail::application::instance().get_renderer().set_draw_color(
-        snail::color{0, 0, 0, 255});
-    snail::application::instance().get_renderer().clear();
-    snail::application::instance().get_renderer().render_image(
-        detail::tex_buffers[0].texture, 0, 0);
-    snail::application::instance().get_renderer().present();
-    snail::application::instance().get_renderer().set_render_target(save);
+    auto& renderer = snail::application::instance().get_renderer();
+    const auto save = renderer.render_target();
+    renderer.set_render_target(nullptr);
+    renderer.set_draw_color(snail::color{0, 0, 0, 255});
+    renderer.clear();
+    renderer.render_image(detail::tex_buffers[0].texture, 0, 0);
+    renderer.present();
+    renderer.set_render_target(save);
 }
 
 
