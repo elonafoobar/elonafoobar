@@ -153,9 +153,8 @@ void initialize_elona()
         screen(0, windoww, windowh, 0, windowx, windowy);
     }
     gsel(0);
-    redraw(0);
     boxf();
-    redraw(1);
+    redraw();
     buffer(3, 1440, 800);
     picload(fs::u8path(u8"./graphic/interface.bmp"), 1);
     buffer(4, windoww, windowh);
@@ -333,7 +332,6 @@ void initialize_elona()
 
     gsel(3);
     gmode(0);
-    redraw(0);
     font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
     for (int i = 0; i < 18; ++i)
     {
@@ -547,12 +545,6 @@ void start_elona()
     gdata_hour = 16;
     gdata_minute = 10;
     quickpage = 1;
-    if (dirinfo(4) == u8"medit"s)
-    {
-        medit = 1;
-        std::exit(1);
-        return;
-    }
     if (defload != ""s)
     {
         if (!fs::exists(fs::u8path(u8"./save/"s + defload + u8"/header.txt")))
@@ -774,7 +766,6 @@ void main_title_menu()
     key_list(4) = u8"e"s;
     key_list(5) = u8"f"s;
     pagesize = 0;
-    redraw(0);
     gsel(2);
     for (int cnt = 0; cnt < 8; ++cnt)
     {
@@ -860,7 +851,6 @@ void main_title_menu()
             // TODO
             // if NumLock key is pressed, send an event to release the key.
         }
-        redraw(0);
         tx += (rnd(10) + 2) * p(1);
         ty += (rnd(10) + 2) * p(2);
         if (rnd(10) == 0)
@@ -902,7 +892,7 @@ void main_title_menu()
             }
         }
         cs_bk = cs;
-        redraw(1);
+        redraw();
         await(cfg_wait1);
         key_check();
         cursor_check();
@@ -958,7 +948,6 @@ void main_menu_new_game()
     {
         load_gene_files();
     }
-    redraw(0);
     rc = 0;
     mode = 1;
     cm = 1;
@@ -980,7 +969,6 @@ void main_menu_new_game()
             fs::u8path(u8"./save"), filesystem::dir_entries::type::dir})
         >= 5)
     {
-        redraw(0);
         keyrange = 0;
         gmode(0);
         pos(0, 0);
@@ -990,7 +978,7 @@ void main_menu_new_game()
             u8"これ以上は冒険者を保存できない。"s,
             u8"Save slots are full. You have to delete some of your adventurers."s);
         draw_caption();
-        redraw(1);
+        redraw();
         while (1)
         {
             key_check();
@@ -1013,7 +1001,6 @@ void main_menu_new_game()
 
 void character_making_select_race()
 {
-    redraw(0);
     cs = 0;
     cs_bk = -1;
     pagesize = 16;
@@ -1078,7 +1065,6 @@ void character_making_select_race()
             reset_page = false;
         }
 
-        redraw(0);
         if (cs != cs_bk)
         {
             s(0) = lang(u8"種族の選択"s, u8"Race Selection"s);
@@ -1120,7 +1106,7 @@ void character_making_select_race()
             access_race_info(11, listn(1, page * pagesize + cs));
             show_race_or_class_info(0, 0);
         }
-        redraw(1);
+        redraw();
         await(cfg_wait1);
         key_check();
         cursor_check();
@@ -1186,7 +1172,6 @@ void character_making_select_sex(bool label_1548_flg)
     {
         snd(102);
     }
-    redraw(0);
     cs = 0;
     cs_bk = -1;
     pagesize = 0;
@@ -1208,7 +1193,6 @@ void character_making_select_sex(bool label_1548_flg)
 
     while (1)
     {
-        redraw(0);
         s(0) = lang(u8"性別の選択"s, u8"Gender Selection"s);
         s(1) = strhint3b;
         display_window(
@@ -1232,7 +1216,7 @@ void character_making_select_sex(bool label_1548_flg)
             cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
         }
         cs_bk = cs;
-        redraw(1);
+        redraw();
         await(cfg_wait1);
         key_check();
         cursor_check();
@@ -1269,7 +1253,6 @@ void character_making_select_class(bool label_1551_flg)
     {
         snd(20);
     }
-    redraw(0);
     cs = 0;
     cs_bk = -1;
     page = 0;
@@ -1315,7 +1298,6 @@ void character_making_select_class(bool label_1551_flg)
     {
         if (cs != cs_bk)
         {
-            redraw(0);
             s(0) = lang(u8"職業の選択"s, u8"Class Selection"s);
             s(1) = strhint3b;
             display_window(
@@ -1356,7 +1338,7 @@ void character_making_select_class(bool label_1551_flg)
             access_class_info(3, listn(1, cs));
             access_class_info(11, listn(1, cs));
             show_race_or_class_info(0, 1);
-            redraw(1);
+            redraw();
         }
         await(cfg_wait1);
         key_check();
@@ -1409,7 +1391,6 @@ void character_making_role_attributes(bool label_1554_flg)
     {
         if (init)
         {
-            redraw(0);
             cs = 0;
             cs_bk = -1;
             pagesize = 0;
@@ -1471,7 +1452,6 @@ void character_making_role_attributes(bool label_1554_flg)
             windowshadow = 1;
             init = false;
         }
-        redraw(0);
         s(0) = lang(u8"能力のロール"s, u8"Attb Reroll"s);
         s(1) =
             strhint3b + key_mode2 + lang(u8" [最低値ロール]", u8" [Min Roll]");
@@ -1519,7 +1499,7 @@ void character_making_role_attributes(bool label_1554_flg)
             }
         }
         cs_bk = cs;
-        redraw(1);
+        redraw();
         await(cfg_wait1);
         key_check();
         cursor_check();
@@ -1589,7 +1569,6 @@ void character_making_select_feats_and_alias(bool label_1558_flg)
         DIM2(trait, 500);
         DIM2(spact, 500);
         gain_race_feat();
-        redraw(0);
         gmode(0);
         pos(0, 0);
         gcopy(4, 0, 0, windoww, windowh);
@@ -1618,7 +1597,6 @@ void character_making_select_feats_and_alias(bool label_1558_flg)
             character_making_role_attributes(false);
         }
     }
-    redraw(0);
     pagemax = 0;
     page = 0;
     gmode(0);
@@ -1644,7 +1622,6 @@ void character_making_select_feats_and_alias(bool label_1558_flg)
 
     while (1)
     {
-        redraw(0);
         if (cs != cs_bk)
         {
             s(0) = lang(u8"異名の選択"s, u8"Alias Selection"s);
@@ -1691,7 +1668,7 @@ void character_making_select_feats_and_alias(bool label_1558_flg)
             cs_bk = cs;
             list(0, 0) = 0;
         }
-        redraw(1);
+        redraw();
         await(cfg_wait1);
         key_check();
         cursor_check();
@@ -1745,7 +1722,6 @@ void character_making_final_phase()
 
     while (1)
     {
-        redraw(0);
         gmode(0);
         pos(0, 0);
         gcopy(4, 0, 0, windoww, windowh);
@@ -1784,7 +1760,6 @@ void character_making_final_phase()
         snd(94);
         while (1)
         {
-            redraw(0);
             gmode(0);
             pos(0, 0);
             gcopy(4, 0, 0, windoww, windowh);
@@ -1827,7 +1802,6 @@ void character_making_final_phase()
                 }
             }
         }
-        redraw(0);
         gsel(2);
         pos(0, 0);
         gmode(0);
@@ -1861,7 +1835,6 @@ void character_making_final_phase()
         main_menu_new_game();
         return;
     }
-    redraw(0);
     gmode(0);
     pos(0, 100);
     gcopy(2, 0, 0, windoww, windowh - 100);
@@ -1891,7 +1864,6 @@ void character_making_final_phase()
                         == playerid;
                 }))
         {
-            redraw(0);
             gmode(0);
             pos(0, 100);
             gcopy(2, 0, 0, windoww, windowh - 100);

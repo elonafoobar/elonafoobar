@@ -1640,7 +1640,7 @@ void auto_turn(int delay)
     }
     if (cfg_autoturn == 0)
     {
-        redraw(1);
+        redraw();
     }
 }
 
@@ -3597,7 +3597,6 @@ void showcard2(int prm_425, int prm_426)
 void showcardpile()
 {
     int pilestack_at_cardcontrol = 0;
-    redraw(0);
     pos(pilex_at_cardcontrol - 8, piley_at_cardcontrol - 8);
     gcopy(3, 528, 216, 80, 112);
     pilestack_at_cardcontrol = 0;
@@ -3629,7 +3628,6 @@ void showcardpile()
 
 void showcard()
 {
-    redraw(0);
     showcardpile();
     for (int cnt = 0, cnt_end = (cardmax_at_cardcontrol); cnt < cnt_end; ++cnt)
     {
@@ -3678,7 +3676,6 @@ int servecard(int prm_427)
         cardid_at_cardcontrol;
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        redraw(0);
         if (cnt != 0)
         {
             pos(card_at_cardcontrol(3, cardid_at_cardcontrol),
@@ -3713,7 +3710,7 @@ int servecard(int prm_427)
         showcard2(cardid_at_cardcontrol);
         showcardpile();
         await(10);
-        redraw(1);
+        redraw();
     }
     return cardid_at_cardcontrol;
 }
@@ -3722,7 +3719,6 @@ int servecard(int prm_427)
 
 void showcardholder()
 {
-    redraw(0);
     for (int cnt = 0, cnt_end = (cardplayermax_at_cardcontrol); cnt < cnt_end;
          ++cnt)
     {
@@ -3755,7 +3751,6 @@ int opencard2(int prm_428, int prm_429)
     snd(71);
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        redraw(0);
         if (prm_429 == 0)
         {
             pos(card_at_cardcontrol(3, prm_428) - 8,
@@ -3779,11 +3774,11 @@ int opencard2(int prm_428, int prm_429)
             card_at_cardcontrol(4, prm_428) + 48);
         grotate(3, 736, 216, 0, 64 - cnt * 14, 96);
         await(10);
-        redraw(1);
+        redraw();
     }
     card_at_cardcontrol(2, prm_428) = 0;
     showcard2(prm_428, prm_429);
-    redraw(1);
+    redraw();
     return prm_428;
 }
 
@@ -3793,21 +3788,20 @@ int trashcard(int prm_430)
 {
     for (int cnt = 0; cnt < 21; ++cnt)
     {
-        redraw(0);
         pos(card_at_cardcontrol(3, prm_430) - 8,
             card_at_cardcontrol(4, prm_430) - 8);
         gcopy(3, 528, 216, 80, 112);
         gmode(2, 64, 96);
         if (cnt == 20)
         {
-            redraw(1);
+            redraw();
             break;
         }
         pos(card_at_cardcontrol(3, prm_430) + 32,
             card_at_cardcontrol(4, prm_430) + 48);
         grotate(3, 736, 216, 0.015 * cnt * cnt, 64 - cnt * 3, 96 - cnt * 4);
         await(10);
-        redraw(1);
+        redraw();
     }
     for (int cnt = 0, cnt_end = (cardplayermax_at_cardcontrol); cnt < cnt_end;
          ++cnt)
@@ -8587,7 +8581,6 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
 
 void display_customkey(const std::string& key, int x, int y)
 {
-    redraw(0);
     gsel(3);
     gmode(0);
     font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
@@ -9074,7 +9067,6 @@ void display_msg(int prm_680, int prm_681)
 {
     msgkeep = prm_681;
     msgy = prm_680;
-    redraw(0);
     return;
 }
 
@@ -9496,7 +9488,6 @@ void windowanime(
     y2_at_m105 = prm_729 / 2;
     cenx_at_m105 = prm_726 + x2_at_m105;
     ceny_at_m105 = prm_727 + y2_at_m105;
-    redraw(0);
     for (int cnt = 1, cnt_end = cnt + (prm_730 - 1); cnt < cnt_end; ++cnt)
     {
         color(30, 30, 30);
@@ -9512,13 +9503,11 @@ void windowanime(
             cenx_at_m105 + x2_at_m105 / prm_730 * cnt - 1,
             ceny_at_m105 + y2_at_m105 / prm_730 * cnt - 1);
         color(0, 0, 0);
-        redraw(0);
-        redraw(1);
+        redraw();
         if (cnt != prm_730 - 1)
         {
             await(15);
         }
-        redraw(0);
         pos(prm_726, prm_727);
         gcopy(prm_731, 0, 0, prm_728, prm_729);
     }
@@ -9548,7 +9537,6 @@ void windowanimecorner(
     gmode(0);
     x2_at_m105 = prm_734 - prm_732;
     y2_at_m105 = prm_735 - prm_733;
-    redraw(0);
     for (int cnt = 1, cnt_end = cnt + (prm_736); cnt < cnt_end; ++cnt)
     {
         color(30, 30, 30);
@@ -9564,12 +9552,11 @@ void windowanimecorner(
             prm_732 + prm_734 - (prm_734 - prm_732) / prm_736 * cnt - 1,
             prm_733 + prm_735 - (prm_735 - prm_733) / prm_736 * cnt - 1);
         color(0, 0, 0);
-        redraw(1);
+        redraw();
         if (cnt != prm_736)
         {
             await(15);
         }
-        redraw(0);
         pos(prm_732, prm_733);
         gcopy(prm_737, 0, 0, prm_734, prm_735);
     }
@@ -12368,8 +12355,7 @@ void animeload(int prm_807, int prm_808)
         pos(dx_at_m133 + 24, dy_at_m133 + 8);
         grotate(7, cnt * 96, 0, r_at_m133 * cnt, 96, 96);
         gmode(0);
-        redraw(1);
-        redraw(0);
+        redraw();
         pos(dx_at_m133 - 24, dy_at_m133 - 40);
         gcopy(4, 0, 0, 96, 96);
         await(cfg_animewait + i_at_m133(1));
@@ -12516,8 +12502,7 @@ void animeblood(int prm_809, int prm_810, int prm_811)
                 24 - cnt2_at_m133 * 2);
         }
         gmode(0);
-        redraw(1);
-        redraw(0);
+        redraw();
         pos(dx_at_m133 - 48, dy_at_m133 - 56);
         gcopy(4, 0, 0, 144, 160);
         await(cfg_animewait + 15 + (ele2_at_m133 != 0) * 20);
@@ -16983,7 +16968,6 @@ label_14001_internal:
     }
     windowshadow = 1;
 label_1401_internal:
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -16995,7 +16979,6 @@ label_1401_internal:
         page = 0;
     }
 label_1402_internal:
-    redraw(0);
     s(0) = lang(u8"投票箱"s, u8"Voting Box"s);
     s(1) = lang(u8"決定 [投票する項目を選択]  "s, u8"Enter [Vote] "s) + strhint2
         + strhint3;
@@ -17064,7 +17047,7 @@ label_1402_internal:
     {
         cs_bk = cs;
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -17203,7 +17186,6 @@ void initialize_ui_constants()
 
 void label_1416()
 {
-    redraw(0);
     gmode(2);
     update_screen();
     return;
@@ -17225,7 +17207,6 @@ void update_screen()
 {
     screendrawhack = 1;
     gmode(2);
-    redraw(0);
     if (mode != 9)
     {
         sxfix = 0;
@@ -17247,7 +17228,7 @@ void update_screen()
     }
     if (screenupdate != -1)
     {
-        redraw(1);
+        redraw();
     }
     screenupdate = 0;
     screendrawhack = 0;
@@ -17257,7 +17238,6 @@ void update_screen()
 
 void update_screen_hud()
 {
-    redraw(0);
     gmode(2);
     ap = windoww / 192;
     for (int cnt = 0, cnt_end = (ap + 1); cnt < cnt_end; ++cnt)
@@ -17332,10 +17312,9 @@ void update_minimap()
 void label_1420()
 {
     gmode(2);
-    redraw(0);
     label_1433();
     render_hud();
-    redraw(1);
+    redraw();
     screenupdate = 0;
     return;
 }
@@ -17984,7 +17963,6 @@ void label_1423()
         {
             for (int cnt = 0; cnt < 10; ++cnt)
             {
-                redraw(0);
                 gmode(0);
                 pos(sx + 2, sy - 102);
                 if (cdata[0].continuous_action_id == 5)
@@ -18026,7 +18004,7 @@ void label_1423()
                     gcopy(9, cnt / 2 % 4 * 144, 0, 144, 96);
                     await(60);
                 }
-                redraw(1);
+                redraw();
             }
         }
         else
@@ -18034,11 +18012,11 @@ void label_1423()
             gcopy(9, 0, 0, 144, 96);
         }
         ++racount;
-        redraw(1);
+        redraw();
     }
     if (firstautoturn == 1)
     {
-        redraw(1);
+        redraw();
         firstautoturn = 0;
     }
     gmode(2);
@@ -18638,7 +18616,6 @@ void label_1438()
         {
             ++scrturn;
         }
-        redraw(0);
         sxfix = (cdata[0].next_position.x - cdata[0].position.x) * cnt
             * inf_tiles / scrollp * -1;
         syfix = (cdata[0].next_position.y - cdata[0].position.y) * cnt
@@ -18656,7 +18633,7 @@ void label_1438()
         gmode(2);
         render_hud();
         gmode(2);
-        redraw(1);
+        redraw();
         await(40);
     }
     scrollanime = 0;
@@ -18722,22 +18699,19 @@ void fade_out()
     for (int cnt = 0; cnt < 50; ++cnt)
     {
         await(20);
-        redraw(0);
         pos(0, 0);
         gfini(windoww, windowh);
         gfdec2(5, 5, 5);
-        redraw(1);
+        redraw();
     }
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         gmode(4, 0, 0, 10 + cnt * 5);
         await(20);
-        redraw(0);
         pos(0, 0);
         gcopy(4, 0, 0, windoww, windowh);
-        redraw(1);
+        redraw();
     }
-    redraw(0);
     gmode(2);
     return;
 }
@@ -18749,13 +18723,11 @@ void label_1442()
     for (int cnt = 0; cnt < 50; ++cnt)
     {
         await(20);
-        redraw(0);
         pos(0, 0);
         gfini(windoww, windowh);
         gfdec2(5, 5, 5);
-        redraw(1);
+        redraw();
     }
-    redraw(0);
     return;
 }
 
@@ -18767,12 +18739,10 @@ void label_1443()
     {
         gmode(4, 0, 0, 10 + cnt * 5);
         await(20);
-        redraw(0);
         pos(0, 0);
         gcopy(4, 0, 0, windoww, windowh);
-        redraw(1);
+        redraw();
     }
-    redraw(0);
     gmode(2);
     return;
 }
@@ -18781,7 +18751,6 @@ void label_1443()
 
 void label_1444()
 {
-    redraw(0);
     boxf();
     evx = 12;
     evy = 14;
@@ -18789,7 +18758,7 @@ void label_1444()
     evscrh = windowh / evtiles - 1;
     evscrw = windoww / evtiles + 2;
     label_1445();
-    redraw(1);
+    redraw();
     return;
 }
 
@@ -22185,7 +22154,6 @@ void label_1540()
 
 void clear_background_in_character_making()
 {
-    redraw(0);
     gsel(4);
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/void.bmp"), 1);
@@ -22556,9 +22524,9 @@ void initialize_set_of_random_generation()
     p = instr(buff, 0, u8"%DEFINE"s);
     buff = strmid(buff, p, instr(buff, p, u8"%END"s));
     notedel(0);
-    SDIM3(booktitle, noteinfo(0), 25);
+    SDIM3(booktitle, noteinfo(), 25);
     p = 0;
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         noteget(msgtemp, cnt);
         csvsort(s, msgtemp, 44);
@@ -30299,7 +30267,6 @@ void use_house_board()
         }
         gsel(0);
         snd(26);
-        redraw(0);
         pagesize = 0;
         keyrange = 0;
         key_list = key_cancel;
@@ -30373,7 +30340,7 @@ void use_house_board()
 
         while (1)
         {
-            redraw(1);
+            redraw();
             await(cfg_wait1);
             key_check();
             cursor_check();
@@ -32405,7 +32372,6 @@ void label_1745()
 void label_1746()
 {
     gsel(6);
-    redraw(0);
     if (mdata(2) != mtilefilecur)
     {
         pos(0, 0);
@@ -34411,7 +34377,6 @@ label_18551_internal:
     }
     windowshadow = 1;
 label_1857_internal:
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -34544,7 +34509,7 @@ label_1857_internal:
     }
     if (f == 1 || listmax == 0)
     {
-        redraw(1);
+        redraw();
     }
     await(cfg_wait1);
     key_check();
@@ -34656,7 +34621,6 @@ void craft_material_menu()
             ++listmax;
         }
     }
-    redraw(0);
     gsel(7);
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/ie_scroll.bmp"));
@@ -34670,7 +34634,6 @@ void craft_material_menu()
     windowanime(wx, wy, ww, wh, 10, 4);
     windowshadow = 1;
 label_1860_internal:
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -34683,7 +34646,6 @@ label_1860_internal:
     }
     drawmenu();
 label_1861_internal:
-    redraw(0);
     s = strhint2 + strhint3b;
     showscroll(s, wx, wy, ww, wh);
     display_topic(lang(u8"所持マテリアル"s, u8"Name"s), wx + 38, wy + 36);
@@ -34730,7 +34692,7 @@ label_1861_internal:
     {
         cs_bk = cs;
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -34898,7 +34860,6 @@ void label_1866()
     atxbg = u8"bg13"s;
     atxbgbk = "";
     SDIM3(atxinfon, 80, 5);
-    redraw(0);
     if (atxid == 2)
     {
         label_1874();
@@ -34928,14 +34889,13 @@ void label_1866()
 void label_18672()
 {
 label_18671_internal:
-    redraw(0);
     screenupdate = -1;
     update_screen();
     if (atxid >= 2)
     {
         txtadvmsgfix = 136;
     }
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         noteget(s, cnt);
         if (strmid(s, 0, 1) == u8"@"s)
@@ -34995,10 +34955,9 @@ label_18671_internal:
     }
     label_1870();
 label_1868_internal:
-    redraw(0);
     x(0) = 170;
     x(1) = 400;
-    y(0) = noteinfo(0) * 20 + 120 + txtadvmsgfix + 16;
+    y(0) = noteinfo() * 20 + 120 + txtadvmsgfix + 16;
     y(1) = 20 * listmax;
     gmode(0);
     pos(x, y);
@@ -35014,13 +34973,13 @@ label_1868_internal:
         }
         i = list(0, p);
         display_key(
-            170, noteinfo(0) * 20 + 120 + txtadvmsgfix + 16 + cnt * 20, cnt);
+            170, noteinfo() * 20 + 120 + txtadvmsgfix + 16 + cnt * 20, cnt);
         s = listn(0, p);
         cs_list(
             cs == cnt,
             s,
             200,
-            noteinfo(0) * 20 + 120 + txtadvmsgfix + 16 + cnt * 20,
+            noteinfo() * 20 + 120 + txtadvmsgfix + 16 + cnt * 20,
             0,
             2);
     }
@@ -35028,7 +34987,7 @@ label_1868_internal:
     {
         cs_bk = cs;
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -35090,9 +35049,8 @@ void label_1870()
     {
         x(0) = 170;
         x(1) = 300;
-        y(0) = noteinfo(0) * 20 + 120 + txtadvmsgfix + 16;
+        y(0) = noteinfo() * 20 + 120 + txtadvmsgfix + 16;
         y(1) = 20 * listmax;
-        redraw(0);
         gmode(0);
         pos(x - 50, y - 50);
         gcopy(2, x - 50, y - 50, 100 + x(1), y(1) + 100);
@@ -35160,7 +35118,7 @@ void label_1870()
             }
         }
         await(20);
-        redraw(1);
+        redraw();
     }
     gmode(2);
     atxpic = 0;
@@ -35175,9 +35133,8 @@ void label_1871()
     for (int cnt = 0; cnt < 11; ++cnt)
     {
         x = 170;
-        y(0) = noteinfo(0) * 20 + 120 + txtadvmsgfix + 16;
+        y(0) = noteinfo() * 20 + 120 + txtadvmsgfix + 16;
         y(1) = 20 * listmax;
-        redraw(0);
         gmode(0);
         pos(x - 50, y - 50);
         gcopy(2, x - 50, y - 50, 100 + x(1), y(1) + 100);
@@ -35185,7 +35142,7 @@ void label_1871()
         pos(x + x(1) / 2 - 2 * cnt, y + y(1) / 2);
         grotate(2, 0, 0, 0, x(1), y(1));
         await(15);
-        redraw(1);
+        redraw();
     }
     return;
 }
@@ -35196,12 +35153,11 @@ void label_1872()
 {
     x(1) = 300;
     cs = -1;
-    redraw(0);
     boxf(
         170,
-        noteinfo(0) * 20 + 120 + txtadvmsgfix + 16,
+        noteinfo() * 20 + 120 + txtadvmsgfix + 16,
         170 + x(1),
-        noteinfo(0) * 20 + 120 + txtadvmsgfix + 16 + 20 * listmax);
+        noteinfo() * 20 + 120 + txtadvmsgfix + 16 + 20 * listmax);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
@@ -35212,14 +35168,14 @@ void label_1872()
         }
         i = list(0, p);
         display_key(
-            170, noteinfo(0) * 20 + 120 + txtadvmsgfix + 16 + cnt * 20, cnt);
+            170, noteinfo() * 20 + 120 + txtadvmsgfix + 16 + cnt * 20, cnt);
         s = listn(0, p);
         gmode(2);
         cs_list(
             cs == cnt,
             s,
             200,
-            noteinfo(0) * 20 + 120 + txtadvmsgfix + 16 + cnt * 20,
+            noteinfo() * 20 + 120 + txtadvmsgfix + 16 + cnt * 20,
             0,
             2);
     }
@@ -35231,7 +35187,7 @@ void label_1872()
     gmode(0);
     pos(0, 0);
     gcopy(
-        0, 170, noteinfo(0) * 20 + 120 + txtadvmsgfix + 16, x(1), 20 * listmax);
+        0, 170, noteinfo() * 20 + 120 + txtadvmsgfix + 16, x(1), 20 * listmax);
     gsel(0);
     gmode(2);
     cs = 0;
@@ -36644,7 +36600,6 @@ void label_1886()
     listn(0, listmax) = lang(u8"やめる"s, u8"Cancel"s);
     ++listmax;
     snd(62);
-    redraw(0);
     gsel(4);
     gmode(0);
     pos(0, 0);
@@ -36664,7 +36619,6 @@ void label_1886()
         ++keyrange;
     }
 label_1887_internal:
-    redraw(0);
     gmode(0);
     pos(0, 0);
     gcopy(4, 0, 0, windoww, windowh - inf_verh);
@@ -36699,7 +36653,7 @@ label_1887_internal:
     {
         cs_bk = cs;
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -36735,13 +36689,12 @@ void label_1888()
 {
     if (rtval == 0)
     {
-        redraw(0);
         gmode(0);
         pos(0, 0);
         gcopy(4, 0, 0, windoww, windowh - inf_verh);
         gmode(2);
         render_hud();
-        redraw(1);
+        redraw();
         if (!std::empty(cdata[0].god_id))
         {
             mode = 9;
@@ -36751,7 +36704,7 @@ void label_1888()
                 i18n::_(u8"god", cdata[0].god_id, u8"name")
                     + u8" is enraged."s));
             txtgod(cdata[0].god_id, 1);
-            redraw(1);
+            redraw();
             efid = 622;
             efp = 10000;
             tc = 0;
@@ -37918,9 +37871,8 @@ int show_random_event_window(const std::string& file)
     dx = tx + 36;
     talk_conv(buff, (dx - 80) / (7 - en) - en * 4);
     notesel(buff);
-    dy = ty + noteinfo(0) * 15 + 80 + listmax * 20;
+    dy = ty + noteinfo() * 15 + 80 + listmax * 20;
 label_1897_internal:
-    redraw(0);
     gmode(2);
     window(
         (windoww - dx) / 2 + inf_screenx + 4, winposy(dy) - 12, dx, dy, 0, -1);
@@ -37969,7 +37921,7 @@ label_1897_internal:
     {
         cs_bk = cs;
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -39390,7 +39342,6 @@ label_1924_internal:
         blendchecklist(cnt) = blendcheckmat(list(0, p));
     }
 label_1925_internal:
-    redraw(0);
     s(0) = lang(u8"レシピの選択"s, u8"Choose a recipe"s);
     s(1) = strhint2;
     windowshadow = windowshadow(1);
@@ -39459,7 +39410,7 @@ label_1925_internal:
     windowshadow(1) = 0;
     pos(wx + 10, wy + wh - 100);
     gcopy(3, 960, 96, 80, 90);
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -39525,7 +39476,6 @@ label_1928_internal:
     {
         page = 0;
     }
-    redraw(0);
     if (jp)
     {
         s = rpmatname(step) + u8"を追加"s;
@@ -39611,7 +39561,7 @@ label_1928_internal:
     windowshadow(1) = 0;
     pos(wx + 10, wy + wh - 100);
     gcopy(3, 960, 96, 80, 90);
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -39855,7 +39805,6 @@ label_19341_internal:
             mode = 12;
             ++gdata_hour;
             label_2736();
-            redraw(0);
             render_hud();
             if (cnt % 5 == 0)
             {
@@ -39865,8 +39814,7 @@ label_19341_internal:
             }
             for (int cnt = 0; cnt < 20; ++cnt)
             {
-                redraw(0);
-                redraw(1);
+                redraw();
                 await(30);
             }
             gdata_minute = 0;
@@ -40497,7 +40445,6 @@ label_19431_internal:
     }
     windowshadow = 1;
 label_1944_internal:
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -40509,7 +40456,6 @@ label_1944_internal:
         page = 0;
     }
 label_1945_internal:
-    redraw(0);
     if (comctrl == 0 || comctrl == 2)
     {
         s = lang(u8"ルーム一覧"s, u8"Room List"s);
@@ -40567,7 +40513,7 @@ label_1945_internal:
     {
         cs_bk = cs;
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -40634,7 +40580,7 @@ label_1945_internal:
     }
     if (ginfo(2) == 0)
     {
-        if (noteinfo(0) != 0)
+        if (noteinfo() != 0)
         {
             if (getkey(snail::key::backspace))
             {
@@ -40840,7 +40786,7 @@ label_1948_internal:
         }
     }
     txttargetnpc(tlocx, tlocy);
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     if (homemapmode == 1)
@@ -41061,7 +41007,6 @@ void label_1951()
         }
     }
 label_1952_internal:
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -41172,7 +41117,7 @@ label_1953_internal:
             cdata[list(0, i)].position.x, cdata[list(0, i)].position.y);
         cs_bk = cs;
         render_hud();
-        redraw(1);
+        redraw();
     }
     await(cfg_wait1);
     key_check();
@@ -41236,7 +41181,6 @@ void label_1955()
     wy = 0;
     snd(26);
 label_1956_internal:
-    redraw(0);
     gmode(0);
     p = 0;
     for (int cnt = 0, cnt_end = (wh); cnt < cnt_end; ++cnt)
@@ -41270,7 +41214,7 @@ label_1956_internal:
         }
     }
     gmode(2);
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     int a{};
     stick(a);
@@ -41399,7 +41343,6 @@ int ctrl_ally()
     }
     windowshadow = 1;
 label_1960_internal:
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -41500,7 +41443,6 @@ label_1960_internal:
         x = 0;
     }
 label_1961_internal:
-    redraw(0);
     s(0) = s(10);
     s(1) = s(11);
     display_window((windoww - 620) / 2 + inf_screenx, winposy(400), 620, 400);
@@ -41683,7 +41625,7 @@ label_1961_internal:
     {
         cs_bk = cs;
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -41833,9 +41775,8 @@ void label_1964()
     refreshmode = 0;
     buff += u8"\n"s;
     buff += u8"<title1>◆ 特徴と特殊状態による能力の恩恵<def>\n"s;
-    listmax = noteinfo(0);
+    listmax = noteinfo();
 label_1965_internal:
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -41863,10 +41804,9 @@ label_1965_internal:
         pos(wx + 54, wy + 66 + cnt * 19 + 2);
         gmes(s, wx, wy + 66 + cnt * 19 + 2, 600, {30, 30, 30}, false);
     }
-    redraw(1);
+    redraw();
 label_1966_internal:
-    redraw(0);
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -41929,7 +41869,6 @@ void label_1968()
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
     windowanime(wx, wy, ww, wh, 10, 4);
-    redraw(0);
     gsel(3);
     pos(960, 96);
     picload(fs::u8path(u8"./graphic/deco_feat.bmp"), 1);
@@ -42190,7 +42129,7 @@ label_196901_internal:
         }
     }
     notesel(buff);
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         noteget(s, cnt);
         list(0, listmax) = 1;
@@ -42215,7 +42154,6 @@ label_196901_internal:
             }
         }
     }
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -42246,7 +42184,6 @@ label_196901_internal:
         }
     }
 label_1970_internal:
-    redraw(0);
     s(0) = lang(u8"特徴と体質"s, u8"Feats and Traits"s);
     s(1) = lang(
                u8"決定 [フィート取得]  "s + strhint2 + strhint3,
@@ -42392,7 +42329,7 @@ label_1970_internal:
     {
         cs_bk = cs;
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -42439,7 +42376,6 @@ label_1970_internal:
                     }
                     else
                     {
-                        redraw(0);
                         render_hud();
                     }
                     goto label_196901_internal;
@@ -42577,7 +42513,7 @@ void update_journal()
     pagesize = 40;
     cs = 0;
     cc = 0;
-    listmax = noteinfo(0);
+    listmax = noteinfo();
     keyrange = 0;
     key_list(0) = key_enter;
     buff = newsbuff;
@@ -42588,16 +42524,16 @@ void update_journal()
     notesel(buff);
     noteadd(u8" - News - "s, 0);
     noteadd(""s, 1);
-    if (noteinfo(0) / (pagesize / 2) % 2 == 1)
+    if (noteinfo() / (pagesize / 2) % 2 == 1)
     {
         for (int cnt = 0, cnt_end = (pagesize / 2); cnt < cnt_end; ++cnt)
         {
             noteadd(""s, 2);
         }
     }
-    page = noteinfo(0) / pagesize;
+    page = noteinfo() / pagesize;
     for (int cnt = 0,
-             cnt_end = cnt + (pagesize / 2 - noteinfo(0) % (pagesize / 2));
+             cnt_end = cnt + (pagesize / 2 - noteinfo() % (pagesize / 2));
          cnt < cnt_end;
          ++cnt)
     {
@@ -42619,7 +42555,7 @@ void update_journal()
     }
     append_subquest_journal(0);
     for (int cnt = 0,
-             cnt_end = cnt + (pagesize / 2 - noteinfo(0) % (pagesize / 2));
+             cnt_end = cnt + (pagesize / 2 - noteinfo() % (pagesize / 2));
          cnt < cnt_end;
          ++cnt)
     {
@@ -42629,7 +42565,7 @@ void update_journal()
     noteadd(""s);
     append_quest_item_journal();
     for (int cnt = 0,
-             cnt_end = cnt + (pagesize / 2 - noteinfo(0) % (pagesize / 2));
+             cnt_end = cnt + (pagesize / 2 - noteinfo() % (pagesize / 2));
          cnt < cnt_end;
          ++cnt)
     {
@@ -42672,7 +42608,7 @@ void update_journal()
             + cnvrank(gdata_ex_arena_level)));
     noteadd(""s);
     for (int cnt = 0,
-             cnt_end = cnt + (pagesize / 2 - noteinfo(0) % (pagesize / 2));
+             cnt_end = cnt + (pagesize / 2 - noteinfo() % (pagesize / 2));
          cnt < cnt_end;
          ++cnt)
     {
@@ -42719,7 +42655,7 @@ void update_journal()
         noteadd(u8"You have "s + gdata_left_bill + u8" unpaid bills."s);
     }
     for (int cnt = 0,
-             cnt_end = cnt + (pagesize / 2 - noteinfo(0) % (pagesize / 2));
+             cnt_end = cnt + (pagesize / 2 - noteinfo() % (pagesize / 2));
          cnt < cnt_end;
          ++cnt)
     {
@@ -42728,8 +42664,7 @@ void update_journal()
     noteadd(u8" - Completed Quests - "s);
     noteadd(""s);
     append_subquest_journal(1);
-    listmax = noteinfo(0);
-    redraw(0);
+    listmax = noteinfo();
     showtitle(lang(u8"ジャーナル"s, u8"Journal"s), strhint2 + strhint3, 236, 1);
     drawmenu(2);
     wx = (windoww - 736) / 2 + inf_screenx;
@@ -42737,7 +42672,6 @@ void update_journal()
     snd(59);
     windowanime(wx, wy, 736, 448, 10, 4);
 label_1973_internal:
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -42816,7 +42750,7 @@ label_1973_internal:
         }
     }
 label_1974_internal:
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -42957,7 +42891,6 @@ void show_quest_board()
     pos(960, 96);
     picload(fs::u8path(u8"./graphic/deco_board.bmp"), 1);
     gsel(0);
-    redraw(0);
     gsel(4);
     fillbg(3, 960, 96, 128, 128);
     ww = 560;
@@ -42976,7 +42909,6 @@ void show_quest_board()
     render_hud();
     gsel(0);
 label_1977_internal:
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -42988,7 +42920,6 @@ label_1977_internal:
         page = 0;
     }
 label_1978_internal:
-    redraw(0);
     s(0) = lang(u8"掲載されている依頼"s, u8"Notice Board"s);
     s(1) = strhint2 + strhint3b;
     gmode(0);
@@ -43085,7 +43016,7 @@ label_1978_internal:
     {
         cs_bk = cs;
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -43216,7 +43147,6 @@ int label_1980()
     sort_list_by_column1();
     windowshadow = 1;
 label_1981_internal:
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -43228,7 +43158,6 @@ label_1981_internal:
         page = 0;
     }
 label_1982_internal:
-    redraw(0);
     s(0) = lang(u8"NPC一覧"s, u8"NPC List"s);
     s(1) = strhint2 + strhint3;
     display_window((windoww - 700) / 2 + inf_screenx, winposy(448), 700, 448);
@@ -43319,7 +43248,7 @@ label_1982_internal:
     {
         cs_bk = cs;
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -43385,7 +43314,6 @@ int label_1984()
     sort_list_by_column1();
     windowshadow = 1;
 label_1985_internal:
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -43397,7 +43325,6 @@ label_1985_internal:
         page = 0;
     }
 label_1986_internal:
-    redraw(0);
     s(0) = lang(u8"予約リスト"s, u8"Reserve List"s);
     s(1) = strhint2 + strhint3;
     display_window((windoww - 540) / 2 + inf_screenx, winposy(448), 540, 448);
@@ -43454,7 +43381,7 @@ label_1986_internal:
     {
         cs_bk = cs;
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -43536,7 +43463,6 @@ void list_adventurers()
     sort_list_by_column1();
     windowshadow = 1;
 label_1989_internal:
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -43548,7 +43474,6 @@ label_1989_internal:
         page = 0;
     }
 label_1990_internal:
-    redraw(0);
     s(0) = lang(u8"冒険者ランク"s, u8"Adventurer Rank"s);
     s(1) = strhint2 + strhint3;
     display_window((windoww - 640) / 2 + inf_screenx, winposy(448), 640, 448);
@@ -43619,7 +43544,7 @@ label_1990_internal:
     {
         cs_bk = cs;
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -43689,7 +43614,6 @@ void fix_wish()
 
 int select_alias(int val0)
 {
-    redraw(0);
     cs = 0;
     cs_bk = -1;
     list(0, 0) = -1;
@@ -43698,7 +43622,6 @@ int select_alias(int val0)
 
     while (1)
     {
-        redraw(0);
         if (cs != cs_bk)
         {
             s(0) = lang(u8"異名の選択"s, u8"Alias Selection"s);
@@ -43734,7 +43657,7 @@ int select_alias(int val0)
             cs_bk = cs;
             list(0, 0) = 0;
         }
-        redraw(1);
+        redraw();
         await(cfg_wait1);
         key_check();
         cursor_check();
@@ -44449,7 +44372,7 @@ void do_short_cut()
                 u8"その行為は、ワールドマップにいる間はできない。"s,
                 u8"You can't do that while you're in a global area."s));
             display_msg();
-            redraw(1);
+            redraw();
             pc_turn(false);
         }
         if (efid < 661)
@@ -44475,7 +44398,7 @@ void do_short_cut()
                 u8"その行為は、ワールドマップにいる間はできない。"s,
                 u8"You can't do that while you're in a global area."s));
             display_msg();
-            redraw(1);
+            redraw();
             pc_turn(false);
         }
         if (spell(efid - 400) <= 0)
@@ -44605,7 +44528,6 @@ void label_2007()
     gsel(0);
     windowshadow = 1;
 label_2008_internal:
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -44618,7 +44540,6 @@ label_2008_internal:
     }
     drawmenu(1);
 label_2009_internal:
-    redraw(0);
     s(0) = lang(u8"能力の発動"s, u8"Skill"s);
     s(1) = strhint2 + strhint3 + strhint7;
     display_window(
@@ -44693,7 +44614,7 @@ label_2009_internal:
     {
         cs_bk = cs;
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -45139,7 +45060,6 @@ int change_npc_tone()
     }
     windowshadow = 1;
 label_2015_internal:
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -45151,7 +45071,6 @@ label_2015_internal:
         page = 0;
     }
 label_2016_internal:
-    redraw(0);
     s(0) = lang(u8"口調一覧"s, u8"Tone of Voice"s);
     s(1) = lang(u8"決定 [口調の変更]  "s, u8"Enter [Change Tone] "s) + strhint2
         + strhint3;
@@ -45198,7 +45117,7 @@ label_2016_internal:
     {
         cs_bk = cs;
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -45292,7 +45211,6 @@ int summon_cnpc()
         u8"Which one do you wish to summon?"s));
     windowshadow = 1;
 label_2019_internal:
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -45304,7 +45222,6 @@ label_2019_internal:
         page = 0;
     }
 label_2020_internal:
-    redraw(0);
     s(0) = lang(u8"カスタムNPC一覧"s, u8"Custom NPC"s);
     s(1) = lang(u8"決定 [召喚]  "s, u8"Enter [Summon] "s) + strhint2 + strhint3;
     display_window((windoww - 500) / 2 + inf_screenx, winposy(400), 500, 400);
@@ -45353,7 +45270,7 @@ label_2020_internal:
     {
         cs_bk = cs;
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -45447,11 +45364,10 @@ void label_2022()
     pagesize = 40;
     cs = 0;
     cc = 0;
-    listmax = noteinfo(0);
+    listmax = noteinfo();
     keyrange = 0;
     key_list(0) = key_enter;
 label_2023_internal:
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -45498,7 +45414,7 @@ label_2023_internal:
         }
     }
 label_2024_internal:
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -45566,14 +45482,12 @@ void label_2027()
         }
     }
     sort_list_by_column1();
-    redraw(0);
     gsel(3);
     pos(960, 96);
     picload(fs::u8path(u8"./graphic/deco_spell.bmp"), 1);
     gsel(0);
     windowshadow = 1;
 label_2028_internal:
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -45586,7 +45500,6 @@ label_2028_internal:
     }
     drawmenu(1);
 label_2029_internal:
-    redraw(0);
     s(0) = lang(u8"魔法の詠唱"s, u8"Spell"s);
     s(1) = strhint2 + strhint3 + strhint7;
     display_window((windoww - 720) / 2 + inf_screenx, winposy(438), 720, 438);
@@ -45665,7 +45578,7 @@ label_2029_internal:
     {
         cs_bk = cs;
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -46174,7 +46087,6 @@ label_20331:
     wy = winposy(400) - 10;
     ww = 700;
     wh = 400;
-    redraw(0);
     s = lang(u8"キャラクターシート"s, u8"Character Sheet"s);
     if (csctrl == 2)
     {
@@ -46209,7 +46121,6 @@ label_20331:
     gsel(0);
     if (returnfromportrait == 0)
     {
-        redraw(0);
         gmode(6, -1, -1, 80);
         pos(wx + 4, wy + 4);
         gcopy(7, 0, 0, 700, 400);
@@ -46240,7 +46151,6 @@ label_2034_internal:
         pagemax = 0;
     }
     cs_bk = -1;
-    redraw(0);
     if (csctrl == 0)
     {
         if (page == 0)
@@ -46305,7 +46215,6 @@ label_2034_internal:
     }
     showtitle(s, s, 236, 1);
 label_2035_internal:
-    redraw(0);
     s = "";
     if (csctrl == 0)
     {
@@ -46813,7 +46722,7 @@ label_2035_internal:
         }
         cs_bk = cs;
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -46931,7 +46840,6 @@ label_2035_internal:
                 cc,
                 csskill,
                 std::clamp(15 - sdata.get(csskill, cc).potential / 15, 2, 15));
-            redraw(0);
             render_hud();
             goto label_2034_internal;
         }
@@ -47268,7 +47176,6 @@ label_2040_internal:
         ++keyrange;
     }
 label_2041_internal:
-    redraw(0);
     pagesize = 0;
     s(0) = lang(u8"肖像の変更"s, u8"Appearence"s);
     s(1) = lang(
@@ -47364,7 +47271,7 @@ label_2041_internal:
     {
         cs_bk = cs;
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -47535,7 +47442,6 @@ int label_2044()
 
     while (1)
     {
-        redraw(0);
         pagesize = 0;
         s(0) = lang(u8"装備表示の変更"s, u8"Parts to hide"s);
         s(1) = lang(
@@ -47590,7 +47496,7 @@ int label_2044()
         {
             cs_bk = cs;
         }
-        redraw(1);
+        redraw();
         await(cfg_wait1);
         key_check();
         cursor_check();
@@ -47862,7 +47768,6 @@ void ctrl_inventory_equipment()
         }
     }
     sort_list_by_column1();
-    redraw(0);
     drawmenu();
     ww = 690;
     wh = 380;
@@ -47890,7 +47795,6 @@ label_2051_internal:
         page = 0;
     }
 label_2052_internal:
-    redraw(0);
     s(0) = lang(u8"装備品"s, u8"Equipment"s);
     s(1) = strhint5 + strhint5b + strhint3;
     display_window(
@@ -47994,7 +47898,7 @@ label_2052_internal:
         mes(s(1));
     }
     cs_bk = cs;
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -48033,7 +47937,6 @@ label_2052_internal:
             {
                 equip_melee_weapon();
             }
-            redraw(0);
             render_hud();
             goto label_2051_internal;
         }
@@ -48697,7 +48600,7 @@ void show_item_description()
                 ++p;
                 std::string buf = trimdesc(description(cnt), 2);
                 notesel(buf);
-                for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+                for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
                 {
                     noteget(q, cnt);
                     p(1) = 66;
@@ -48728,7 +48631,7 @@ void show_item_description()
                     {
                         list(0, p) = 0;
                         listn(0, p) = q;
-                        if (cnt == noteinfo(0) - 1)
+                        if (cnt == noteinfo() - 1)
                         {
                             list(0, p) = -2;
                         }
@@ -48757,7 +48660,6 @@ void show_item_description()
 label_2069_internal:
     key_list = key_enter;
     keyrange = 0;
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -48769,7 +48671,6 @@ label_2069_internal:
         page = 0;
     }
 label_2070_internal:
-    redraw(0);
     s(0) = lang(u8"アイテムの知識"s, u8"Known Information"s);
     s(1) = strhint4 + strhint3;
     display_window((windoww - 600) / 2 + inf_screenx, winposy(408), 600, 408);
@@ -48830,7 +48731,7 @@ label_2070_internal:
             gcopy(3, 384, 360, 24, 24);
         }
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -49496,7 +49397,6 @@ void label_2084()
     if (gdata_current_map == 35 || gdata_current_map == 6
         || gdata_current_map == 40)
     {
-        redraw(0);
         snd(27);
         txt(lang(
             u8"このマップでは利用できない。"s,
@@ -49504,7 +49404,6 @@ void label_2084()
         return;
     }
     label_2719();
-    redraw(0);
     if (gdatan(0) == ""s)
     {
         gdatan(0) = random_title(2);
@@ -49555,7 +49454,6 @@ void label_2084()
     {
         if (mdata(6) == 1 || gdata_current_map == 35)
         {
-            redraw(0);
             snd(27);
             txt(lang(
                 u8"このマップは保存できない。"s,
@@ -49563,7 +49461,7 @@ void label_2084()
             return;
         }
         txt(lang(u8"どのファイル名で保存する？"s, u8"Enter file name."s));
-        redraw(1);
+        redraw();
         fileext = u8"eum"s;
         filedsc = u8"Elona User Map"s;
         int stat = _fdialog(
@@ -49624,7 +49522,7 @@ void label_2084()
             lv = lv / n;
         }
         txt(lang(u8"どのファイル名で保存する？"s, u8"Enter file name."s));
-        redraw(1);
+        redraw();
         fileext = u8"ept"s;
         filedsc = u8"Elona Pet Team"s;
         {
@@ -50610,7 +50508,7 @@ void load_cnpc_data()
         buff += '\n';
     }
     notesel(buff);
-    usernpcmax = noteinfo(0);
+    usernpcmax = noteinfo();
     if (usernpcmax >= 100)
     {
         usernpcmax = 100;
@@ -50751,7 +50649,7 @@ void create_new_cnpc()
     cun = usernpcmax;
     txt(lang(
         u8"どのファイルからNPCを作成する？"s, u8"Choose the original file."s));
-    redraw(1);
+    redraw();
     fileext = u8"txt"s;
     filedsc = u8"Custom Npc Text"s;
     int stat = _fdialog(fileext, 16, filedsc, fs::u8path(u8"./user"s), ""s);
@@ -50770,7 +50668,7 @@ void create_new_cnpc()
         return;
     }
     txt(lang(u8"どの画像を埋め込む？"s, u8"Choose the graphic file."s));
-    redraw(1);
+    redraw();
     fileext = u8"bmp"s;
     filedsc = u8"Bit Map File"s;
     {
@@ -50970,7 +50868,7 @@ void load_save_data()
             buff(0) += tmp + '\n';
         }
     }
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         noteget(s, cnt);
         if (strutil::contains(s(0), u8".s2"))
@@ -51032,7 +50930,7 @@ void save_game()
     }
     file += u8"/"s;
     notesel(filemod);
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         noteget(save_s, cnt);
         if (strmid(save_s, 0, 1) == u8"*"s)
@@ -51099,7 +50997,6 @@ void main_menu_continue()
 {
     cs = 0;
     cs_bk = -1;
-    redraw(0);
     gsel(4);
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/void.bmp"), 1);
@@ -51141,7 +51038,6 @@ void main_menu_continue()
 
     while (1)
     {
-        redraw(0);
         if (jp)
         {
             s(0) = u8"冒険者の選択"s;
@@ -51172,7 +51068,7 @@ void main_menu_continue()
             pos(wx + 140, wy + 120);
             mes(u8"No save files found"s);
         }
-        redraw(1);
+        redraw();
         await(cfg_wait1);
         key_check();
         cursor_check();
@@ -51197,7 +51093,7 @@ void main_menu_continue()
         }
         if (ginfo(2) == 0)
         {
-            if (noteinfo(0) != 0)
+            if (noteinfo() != 0)
             {
                 if (getkey(snail::key::backspace))
                 {
@@ -51270,7 +51166,6 @@ void main_menu_incarnate()
 {
     cs = 0;
     cs_bk = -1;
-    redraw(0);
     gsel(4);
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/void.bmp"), 1);
@@ -51313,7 +51208,6 @@ void main_menu_incarnate()
 
     while (1)
     {
-        redraw(0);
         if (jp)
         {
             s(0) = u8"遺伝子の選択"s;
@@ -51344,7 +51238,7 @@ void main_menu_incarnate()
             pos(wx + 140, wy + 120);
             mes(u8"No gene files found"s);
         }
-        redraw(1);
+        redraw();
         await(cfg_wait1);
         key_check();
         cursor_check();
@@ -51450,13 +51344,11 @@ label_21261_internal:
         {
             dx += std::size(std::to_string(val5)) * 8;
         }
-        redraw(0);
         pos(x + 24, y + 4);
         gfini(dx - 42, 35);
         gfdec(60, 60, 60);
         while (1)
         {
-            redraw(0);
             window2(x + 20, y, dx - 40, 36, 0, 2);
             pos(x + dx / 2 - 56, y - 32);
             gcopy(3, 128, 288, 128, 32);
@@ -51469,7 +51361,7 @@ label_21261_internal:
             color(255, 255, 255);
             mes(inputlog2);
             color(0, 0, 0);
-            redraw(1);
+            redraw();
             await(cfg_wait1);
             key_check();
             if (key == key_enter)
@@ -51525,7 +51417,6 @@ label_21261_internal:
         rtval = 0;
         return;
     }
-    redraw(0);
     objmode(2, 0);
     if (cfg_msg_box == 0)
     {
@@ -51578,7 +51469,6 @@ label_21261_internal:
             --cnt;
             continue;
         }
-        redraw(0);
         await(40);
         window2(x, y, dx, 36, 0, 2);
         pos(x + dx / 2 - 60, y - 32);
@@ -51647,7 +51537,7 @@ label_21261_internal:
                 ime_esc = 1;
             }
         }
-        redraw(1);
+        redraw();
         if (val3 == 1)
         {
             if (ime_esc == 1)
@@ -51685,7 +51575,6 @@ label_21261_internal:
 int ask_direction()
 {
     snd(26);
-    redraw(0);
     gsel(4);
     x = (cdata[0].position.x - scx) * inf_tiles + inf_screenx - 48;
     y = (cdata[0].position.y - scy) * inf_tiles + inf_screeny - 48;
@@ -51718,8 +51607,7 @@ label_2128_internal:
     grotate(3, 212, 432, 0.25 * 3.14, 28, 28);
     pos(x - 48, y + 48);
     grotate(3, 212, 432, 1.25 * 3.14, 28, 28);
-    redraw(1);
-    redraw(0);
+    redraw();
     gmode(0);
     pos(x - 48 - 24, y - 48 - 24);
     gcopy(4, 0, 0, 144, 144);
@@ -51833,7 +51721,6 @@ int show_prompt(int val0, int val1, int val2, int val3, int val4)
     csprev = cs;
     cs = 0;
     cs_bk = -1;
-    redraw(0);
     gsel(3);
     gmode(0);
     font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
@@ -51874,7 +51761,6 @@ int show_prompt(int val0, int val1, int val2, int val3, int val4)
         gfdec(60, 60, 60);
     }
 label_2132_internal:
-    redraw(0);
     gmode(2);
     if (val3 == 2)
     {
@@ -51911,7 +51797,7 @@ label_2132_internal:
         window_recipe2(TODO_show_prompt_val);
         font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -52369,7 +52255,6 @@ label_21451_internal:
                                         + _s(cc) + u8"."s));
                             }
                             rowactend(cc);
-                            redraw(0);
                             update_screen();
                             break;
                         }
@@ -53666,14 +53551,13 @@ void continuous_action_others()
 
 void label_2149()
 {
-    redraw(0);
     pos(0, 0);
     gcopy(4, 0, 0, windoww, windowh - inf_verh);
     gmode(2);
     render_hud();
     if (screenupdate == 0)
     {
-        redraw(1);
+        redraw();
     }
     screenupdate = 0;
     return;
@@ -53710,7 +53594,6 @@ void label_2151()
     {
         txtgod(cdata[0].god_id, 10);
     }
-    redraw(0);
     label_2150();
     musicloop = 1;
     music = 78;
@@ -54218,13 +54101,12 @@ void label_2156()
             {
                 for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end; ++cnt)
                 {
-                    redraw(0);
                     fishanime(0) = 1;
                     fishanime(1) = 3 + rnd(3);
                     addefmap(fishx, fishy, 4, 2);
                     ++scrturn;
                     update_screen();
-                    redraw(1);
+                    redraw();
                     await(cfg_wait1 * 2);
                 }
                 if (rnd(3) == 0)
@@ -54245,10 +54127,9 @@ void label_2156()
             cdata[0].emotion_icon = 220;
             for (int cnt = 0, cnt_end = (8 + rnd(10)); cnt < cnt_end; ++cnt)
             {
-                redraw(0);
                 ++scrturn;
                 update_screen();
-                redraw(1);
+                redraw();
                 await(cfg_wait1 * 2);
             }
             if (rnd(10))
@@ -54270,12 +54151,11 @@ void label_2156()
                 {
                     snd(89);
                 }
-                redraw(0);
                 fishanime(1) = cnt;
                 ++scrturn;
                 update_screen();
                 addefmap(fishx, fishy, 5, 2);
-                redraw(1);
+                redraw();
                 await(cfg_wait1 * 2);
             }
             if (fishdata(3, fish) >= rnd(sdata(185, 0) + 1))
@@ -54294,7 +54174,6 @@ void label_2156()
             snd(88);
             for (int cnt = 0; cnt < 21; ++cnt)
             {
-                redraw(0);
                 fishanime(1) = cnt;
                 if (cnt == 1)
                 {
@@ -54302,7 +54181,7 @@ void label_2156()
                 }
                 ++scrturn;
                 update_screen();
-                redraw(1);
+                redraw();
                 await(cfg_wait1 * 2);
             }
             snd(14 + rnd(2));
@@ -55683,7 +55562,6 @@ int label_2172()
         {
             if (is_in_fov(cc))
             {
-                redraw(0);
                 txt(lang(
                     itemname(ci, 1) + u8"を振った。"s,
                     u8"You zap "s + itemname(ci, 1) + u8"."s));
@@ -63771,7 +63649,6 @@ void label_2249()
             }
         }
         await(1500);
-        redraw(0);
         update_screen();
         fade_out();
         gsel(4);
@@ -64430,7 +64307,7 @@ label_2258_internal:
         color(0, 0, 0);
     }
     cs_bk = cs;
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -64503,7 +64380,6 @@ void init_talk_window()
     }
     talk_conv(buff, 56 - en * 3);
     chatpicloaded = 0;
-    redraw(0);
     wx = (windoww - 600) / 2 + inf_screenx;
     wy = winposy(380);
     ww = 600;
@@ -64518,7 +64394,6 @@ void init_talk_window()
 
 void show_talk_window()
 {
-    redraw(0);
     gmode(2);
     pos(wx, wy - 20);
     gcopy(7, 0, 0, 600, 380);
@@ -64640,7 +64515,7 @@ void show_talk_window()
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     color(20, 10, 5);
     notesel(buff);
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         p = cnt;
         x = wx + 150;
@@ -65657,7 +65532,6 @@ label_22711:
     cs_bk = -1;
     snd(99);
     curmenu = 0;
-    redraw(0);
     gsel(3);
     pos(960, 96);
     picload(fs::u8path(u8"./graphic/deco_politics.bmp"), 1);
@@ -65668,7 +65542,6 @@ label_22711:
     windowshadow = 1;
     city = adata(28, gdata_current_map);
     lv = 0;
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -65680,7 +65553,6 @@ label_22711:
         page = 0;
     }
 label_2272_internal:
-    redraw(0);
     s(0) = lang(u8"ポストチャート"s, u8"City Chart"s);
     s(1) = strhint3b;
     display_window((windoww - 580) / 2 + inf_screenx, winposy(400), 580, 400);
@@ -65749,7 +65621,7 @@ label_2272_internal:
             cs_bk = cs;
         }
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -65873,7 +65745,6 @@ void label_2276()
     keyrange = 0;
     pagesize = 1;
     listmax = 2;
-    redraw(0);
     gsel(3);
     pos(960, 96);
     picload(fs::u8path(u8"./graphic/deco_politics.bmp"), 1);
@@ -65904,7 +65775,6 @@ label_2277_internal:
         page = 0;
     }
 label_2278_internal:
-    redraw(0);
     s = strhint2 + strhint3b;
     showscroll(s, wx, wy, ww, wh);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
@@ -65960,7 +65830,7 @@ label_2278_internal:
             font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
         }
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -66064,7 +65934,6 @@ void label_2280()
     listn(0, listmax) = u8"この街では殺人が許される。"s;
     ++listmax;
 label_2281_internal:
-    redraw(0);
     gsel(3);
     pos(960, 96);
     picload(fs::u8path(u8"./graphic/deco_politics.bmp"), 1);
@@ -66095,7 +65964,6 @@ label_2282_internal:
         page = 0;
     }
 label_2283_internal:
-    redraw(0);
     s = strhint2 + strhint3b;
     showscroll(s, wx, wy, ww, wh);
     display_topic(lang(u8"法律"s, u8"Law"s), wx + 65, wy + 45);
@@ -66153,7 +66021,7 @@ label_2283_internal:
     {
         cs_bk = cs;
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -66597,9 +66465,9 @@ void label_2662()
         }
     }
     notesel(newsbuff);
-    if (noteinfo(0) > 195)
+    if (noteinfo() > 195)
     {
-        for (int cnt = 0, cnt_end = (noteinfo(0) - 195); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (noteinfo() - 195); cnt < cnt_end; ++cnt)
         {
             notedel(0);
         }
@@ -67986,7 +67854,7 @@ label_2682_internal:
     {
         for (int cnt = 0; cnt < 25; ++cnt)
         {
-            redraw(1);
+            redraw();
             pos(0, 0);
             gmode(4, -1, -1, cnt * 15);
             pos(0, 0);
@@ -68066,8 +67934,8 @@ label_2682_internal:
     goto label_2682_internal;
 label_2684_internal:
     buff = strmid(buff, scidxtop, scidx - scidxtop);
-    p = noteinfo(0);
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    p = noteinfo();
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         noteget(s, p - cnt - 1);
         if (s == ""s)
@@ -68075,7 +67943,6 @@ label_2684_internal:
             notedel(p - cnt - 1);
         }
     }
-    redraw(0);
     gsel(4);
     gmode(0);
     pos(0, 0);
@@ -68088,7 +67955,6 @@ label_2684_internal:
     if (val0 == 1)
     {
         gsel(0);
-        redraw(0);
         gmode(0);
         pos(0, 0);
         gcopy(4, 0, 0, windoww, windowh);
@@ -68100,20 +67966,19 @@ label_2684_internal:
     if (val0 == 2)
     {
         gsel(0);
-        redraw(0);
         gmode(0);
         pos(0, 0);
         gcopy(4, 0, 0, windoww, windowh);
         gmode(2);
-        redraw(1);
+        redraw();
         await(1000);
         goto label_2681;
     }
     font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
     x = 44;
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
-        y = y1 + 31 + (9 - noteinfo(0) / 2 + cnt) * 20;
+        y = y1 + 31 + (9 - noteinfo() / 2 + cnt) * 20;
         noteget(s, cnt);
         x = windoww / 2 - std::size(s(0)) * 4;
         dx = 80 + std::size(s(0)) * 8;
@@ -68126,9 +67991,9 @@ label_2684_internal:
         grotate(3, 456, 144, 0, dx, 72);
     }
     x = 40;
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
-        y = y1 + 28 + (9 - noteinfo(0) / 2 + cnt) * 20;
+        y = y1 + 28 + (9 - noteinfo() / 2 + cnt) * 20;
         noteget(s, cnt);
         x = windoww / 2 - std::size(s(0)) * 4;
         color(10, 10, 10);
@@ -68139,7 +68004,6 @@ label_2684_internal:
     gsel(0);
     for (int cnt = 1; cnt < 16; ++cnt)
     {
-        redraw(0);
         await(30);
         stick(a, 128);
         if (a == 128)
@@ -68149,19 +68013,16 @@ label_2684_internal:
         gmode(4, -1, -1, cnt * 16);
         pos(0, 0);
         gcopy(4, 0, 0, windoww, windowh);
-        redraw(1);
+        redraw();
     }
     gmode(2);
-    redraw(0);
     gmode(0);
     pos(0, 0);
     gcopy(4, 0, 0, windoww, windowh);
     gmode(2);
-    redraw(0);
     x_at_txtfunc = windoww - 120;
     y_at_txtfunc = windowh - 60;
     anime_halt();
-    redraw(0);
     boxf(0, 0, windoww, y1, {5, 5, 5});
     boxf(0, y2, windoww, windowh, {5, 5, 5});
     goto label_2681;
@@ -70106,7 +69967,6 @@ label_2698:
     listn(0, 8) = s(p);
     t = 0;
 label_2699_internal:
-    redraw(0);
     font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
     tx = 50;
     ty = windowh - 255;
@@ -70169,7 +70029,7 @@ label_2699_internal:
         bmes(s, 255, 255, 255);
     }
     ++t;
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check(2);
     if (key == key_north)
@@ -70299,14 +70159,13 @@ void show_ex_help()
     }
     buff = strmid(buff, p, instr(buff, p, u8"%END"s));
     notedel(0);
-    if (noteinfo(0) == 0)
+    if (noteinfo() == 0)
     {
         return;
     }
     snd(53);
     while (1)
     {
-        redraw(0);
         gmode(2);
         dx = 480;
         dy = 175;
@@ -70340,7 +70199,7 @@ void show_ex_help()
             {
                 noteget(s, page);
                 ++page;
-                if (page > noteinfo(0) || s == ""s)
+                if (page > noteinfo() || s == ""s)
                 {
                     break;
                 }
@@ -70351,9 +70210,9 @@ void show_ex_help()
             }
         }
         gmode(2);
-        redraw(1);
+        redraw();
         help_halt();
-        if (page >= noteinfo(0))
+        if (page >= noteinfo())
         {
             break;
         }
@@ -70425,7 +70284,7 @@ void show_game_help()
     list(0, 0) = 0;
     listn(0, 0) = lang(u8"キーの一覧"s, u8"Key List"s);
     ++listmax;
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         noteget(q, cnt);
         p = instr(q, 0, u8"{}"s);
@@ -70438,7 +70297,6 @@ void show_game_help()
     }
     windowshadow = 1;
 label_2704_internal:
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -70450,7 +70308,6 @@ label_2704_internal:
         page = 0;
     }
 label_2705_internal:
-    redraw(0);
     s(0) = u8"Elona In-Game Help"s;
     s(1) = strhint2 + strhint3b;
     if (mode == 1)
@@ -70635,7 +70492,7 @@ label_2705_internal:
         {
             int y = wy + 60;
             int cnt = p;
-            for (int cnt_end = cnt + (noteinfo(0) - p); cnt < cnt_end; ++cnt)
+            for (int cnt_end = cnt + (noteinfo() - p); cnt < cnt_end; ++cnt)
             {
                 noteget(s1, cnt);
                 i = instr(s1, 0, u8"{"s);
@@ -70665,7 +70522,7 @@ label_2705_internal:
     {
         cs_bk = cs;
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -70719,7 +70576,6 @@ void label_2707()
     key_list(0) = key_enter;
     keyrange = 0;
     pagesize = 0;
-    redraw(0);
     gsel(7);
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/ie_scroll.bmp"));
@@ -70786,7 +70642,7 @@ void label_2707()
         color(0, 0, 0);
         ++i;
     }
-    redraw(1);
+    redraw();
 label_2708_internal:
     await(cfg_wait1);
     key_check();
@@ -70852,7 +70708,6 @@ void label_2710()
     key_list(0) = key_enter;
     keyrange = 0;
     pagesize = 0;
-    redraw(0);
     wx = inf_msgx - 2;
     wy = inf_msgy - (inf_maxlog - 3) * inf_msgspace - 1;
     ww = windoww - inf_msgx + 6;
@@ -70927,7 +70782,7 @@ void label_2710()
     pos(0, -3);
     gcopy(4, 0, 0, windoww, inf_msgy);
 
-    redraw(1);
+    redraw();
 label_2711_internal:
     await(cfg_wait1);
     key_check();
@@ -71010,7 +70865,7 @@ void label_2719()
     usertitle = "";
     usermsg = "";
     userpassword = u8"nyaa"s;
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         noteget(s, cnt);
         if (strutil::contains(s(0), u8"room_title."))
@@ -71186,11 +71041,9 @@ void play_scene()
             }
         }
     }
-    redraw(0);
     txt(lang(
         u8"どのシーンを再生する？"s, u8"Which scene do you want to replay?"s));
 label_2728_internal:
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -71204,7 +71057,6 @@ label_2728_internal:
     wx = (windoww - 720) / 2 + inf_screenx;
     wy = winposy(468);
 label_2729_internal:
-    redraw(0);
     pos(wx, wy);
     gcopy(4, 0, 0, 736, 448);
     x = 240;
@@ -71260,7 +71112,7 @@ label_2729_internal:
     {
         cs_bk = cs;
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();
@@ -72904,9 +72756,9 @@ label_2747:
         {
             net_read();
             notesel(chatnew);
-            for (int i = 0; i < noteinfo(0); ++i)
+            for (int i = 0; i < noteinfo(); ++i)
             {
-                noteget(s, noteinfo(0) - i - 1);
+                noteget(s, noteinfo() - i - 1);
                 s(1) = strmid(s, 4, 9999);
                 s(2) = strmid(s, 0, 4);
                 if (s(2) == u8"chat"s)
@@ -73015,7 +72867,6 @@ label_2747:
     }
     if (getkey(snail::key::f9))
     {
-        redraw(0);
         gmode(2);
         sxfix = 0;
         syfix = 0;
@@ -73036,7 +72887,7 @@ label_2747:
             pos(i * 192, inf_msgy);
             gcopy(3, 496, 528, sx, 5);
         }
-        redraw(1);
+        redraw();
         press();
         update_entire_screen();
         snd(20);
@@ -73225,7 +73076,7 @@ label_2747:
                 u8"その行為は、ワールドマップにいる間はできない。"s,
                 u8"You can't do that while you're in a global area."s));
             display_msg();
-            redraw(1);
+            redraw();
             goto label_2747;
         }
         else
@@ -73252,7 +73103,7 @@ label_2747:
                 u8"その行為は、ワールドマップにいる間はできない。"s,
                 u8"You can't do that while you're in a global area."s));
             display_msg();
-            redraw(1);
+            redraw();
             goto label_2747;
         }
         else
@@ -73293,7 +73144,7 @@ label_2747:
                 u8"その行為は、ワールドマップにいる間はできない。"s,
                 u8"You can't do that while you're in a global area."s));
             display_msg();
-            redraw(1);
+            redraw();
             goto label_2747;
         }
         else
@@ -73320,7 +73171,7 @@ label_2747:
                 u8"その行為は、ワールドマップにいる間はできない。"s,
                 u8"You can't do that while you're in a global area."s));
             display_msg();
-            redraw(1);
+            redraw();
             goto label_2747;
         }
         else
@@ -73340,7 +73191,7 @@ label_2747:
                 u8"その行為は、ワールドマップにいる間はできない。"s,
                 u8"You can't do that while you're in a global area."s));
             display_msg();
-            redraw(1);
+            redraw();
             goto label_2747;
         }
         else
@@ -73381,7 +73232,7 @@ label_2747:
                 u8"その行為は、ワールドマップにいる間はできない。"s,
                 u8"You can't do that while you're in a global area."s));
             display_msg();
-            redraw(1);
+            redraw();
             goto label_2747;
         }
         else
@@ -73400,7 +73251,7 @@ label_2747:
                 u8"その行為は、ワールドマップにいる間はできない。"s,
                 u8"You can't do that while you're in a global area."s));
             display_msg();
-            redraw(1);
+            redraw();
             goto label_2747;
         }
         else
@@ -73430,7 +73281,7 @@ label_2747:
                 u8"その行為は、ワールドマップにいる間はできない。"s,
                 u8"You can't do that while you're in a global area."s));
             display_msg();
-            redraw(1);
+            redraw();
             goto label_2747;
         }
         else
@@ -73461,7 +73312,7 @@ label_2747:
                 u8"その行為は、ワールドマップにいる間はできない。"s,
                 u8"You can't do that while you're in a global area."s));
             display_msg();
-            redraw(1);
+            redraw();
             goto label_2747;
         }
         else
@@ -73486,7 +73337,7 @@ label_2747:
                 u8"その行為は、ワールドマップにいる間はできない。"s,
                 u8"You can't do that while you're in a global area."s));
             display_msg();
-            redraw(1);
+            redraw();
             goto label_2747;
         }
         else
@@ -73504,7 +73355,7 @@ label_2747:
                 u8"その行為は、ワールドマップにいる間はできない。"s,
                 u8"You can't do that while you're in a global area."s));
             display_msg();
-            redraw(1);
+            redraw();
             goto label_2747;
         }
         else
@@ -73550,7 +73401,7 @@ label_2747:
                 u8"その行為は、ワールドマップにいる間はできない。"s,
                 u8"You can't do that while you're in a global area."s));
             display_msg();
-            redraw(1);
+            redraw();
             goto label_2747;
         }
         else
@@ -73573,7 +73424,7 @@ label_2747:
                 u8"その行為は、ワールドマップにいる間はできない。"s,
                 u8"You can't do that while you're in a global area."s));
             display_msg();
-            redraw(1);
+            redraw();
             goto label_2747;
         }
         else
@@ -73591,7 +73442,7 @@ label_2747:
                 u8"その行為は、ワールドマップにいる間はできない。"s,
                 u8"You can't do that while you're in a global area."s));
             display_msg();
-            redraw(1);
+            redraw();
             goto label_2747;
         }
         else
@@ -73847,7 +73698,6 @@ void conquer_lesimas()
     music = 71;
     play_music();
     label_1442();
-    redraw(0);
     gsel(4);
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/void.bmp"), 1);
@@ -73913,7 +73763,7 @@ void conquer_lesimas()
     pos(wx + 40, wy + 246);
     mes(lang(
         u8"…あなたの旅はまだ終わらない。"s, u8"Your journey continues..."s));
-    redraw(1);
+    redraw();
     key_list = key_enter;
     keyrange = 0;
 
@@ -74008,8 +73858,8 @@ void pc_died()
     noteadd(s, 2);
     s = ""s + calcscore() + u8","s + cdata[cc].image;
     noteadd(s, 3);
-    if (noteinfo(0) >= 320)
-        for (int cnt = 320, cnt_end = cnt + (noteinfo(0) - 320); cnt < cnt_end;
+    if (noteinfo() >= 320)
+        for (int cnt = 320, cnt_end = cnt + (noteinfo() - 320); cnt < cnt_end;
              ++cnt)
         {
             notedel(320);
@@ -74052,7 +73902,7 @@ void pc_died()
             break;
         }
     }
-    for (int cnt = 0, cnt_end = (noteinfo(0) / 4); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo() / 4); cnt < cnt_end; ++cnt)
     {
         noteadd(""s + cnvrank((cnt + 1)) + lang(u8"位"s, ""s), cnt * 4, 1);
     }
@@ -74060,7 +73910,6 @@ void pc_died()
         std::ofstream out{bone_filepath};
         out << buff(0) << std::endl;
     }
-    redraw(0);
     gsel(4);
     pos(0, 0);
     picload(fs::u8path(u8"./graphic/void.bmp"), 1);
@@ -74085,7 +73934,7 @@ void pc_died()
             u8"あなたは埋められた。さようなら…（キーを押すと終了します）"s,
             u8"You have been burried. Bye...(Hit any key to exit)"s);
         draw_caption();
-        redraw(1);
+        redraw();
         press();
         finish_elona();
         return;
@@ -74112,7 +73961,6 @@ void pc_died()
 void show_game_score_ranking()
 {
     notesel(buff);
-    redraw(0);
     gmode(0);
     pos(0, 0);
     gzoom(4, 0, 0, 800, 600, windoww, windowh);
@@ -74147,7 +73995,7 @@ void show_game_score_ranking()
         mes(s);
         color(0, 0, 0);
         bool no_entry = false;
-        if (p >= noteinfo(0))
+        if (p >= noteinfo())
         {
             no_entry = true;
         }

@@ -766,7 +766,6 @@ label_2060_internal:
         }
         goto label_2062_internal;
     }
-    redraw(0);
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
     if (page < 0)
@@ -857,7 +856,6 @@ label_2060_internal:
             255);
     }
 label_2061_internal:
-    redraw(0);
     s = lang(
         i18n::_(u8"ui", u8"inventory_command", u8"_"s + invctrl)
             + u8"アイテムの選択"s,
@@ -1072,7 +1070,7 @@ label_2061_internal:
             mes(""s + cdata[tc].gold + u8" gp"s);
         }
     }
-    redraw(1);
+    redraw();
     await(cfg_wait1);
     key_check();
     cursor_check();

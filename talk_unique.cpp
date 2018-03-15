@@ -1154,7 +1154,6 @@ void talk_unique()
             RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
-            redraw(0);
             update_screen();
             fade_out();
             gsel(4);
@@ -1356,7 +1355,6 @@ void talk_unique()
             RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             SCENE_CUT();
-            redraw(0);
             update_screen();
             fade_out();
             gsel(4);

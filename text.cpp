@@ -1447,7 +1447,7 @@ void replace_tags_in_quest_board()
 void parse_talk_file()
 {
     buff = strmid(buff, p, instr(buff, p, u8"%END"s));
-    if (noteinfo(0) <= 1)
+    if (noteinfo() <= 1)
     {
         buff(0).clear();
         std::ifstream in{fs::u8path(u8"./data/talk.txt")};
@@ -1460,7 +1460,7 @@ void parse_talk_file()
         buff = strmid(buff, p, instr(buff, p, u8"%END"s));
     }
     notedel(0);
-    p = rnd(noteinfo(0));
+    p = rnd(noteinfo());
     noteget(s, p);
     buff = s;
     replace_tags_in_quest_board();
@@ -2615,12 +2615,12 @@ void parse_quest_board_text(int val0)
     p = instr(buffboard, 0, s + u8","s + lang(u8"JP"s, u8"EN"s));
     buff2 = strmid(buffboard, p, instr(buffboard, p, u8"%END"s));
     notesel(buff2);
-    if (noteinfo(0) <= 1)
+    if (noteinfo() <= 1)
     {
         buff2 = u8"no txt"s;
         return;
     }
-    p = rnd(noteinfo(0) - 1) + 1;
+    p = rnd(noteinfo() - 1) + 1;
     noteget(buff2, p);
     p = instr(buff2, 0, u8":"s);
     s(3) = strmid(buff2, 0, p);

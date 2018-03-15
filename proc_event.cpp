@@ -713,7 +713,6 @@ void proc_event()
             {
                 snd(108);
             }
-            redraw(0);
             if (i < 16)
             {
                 pos(0, 0);
@@ -797,7 +796,7 @@ void proc_event()
             gmode(4, 192, 96, p(3) * 10);
             pos(dx, dy - 48 - std::clamp(p(3) * 2, 0, 148));
             grotate(7, i / 3 % 2 * 192, 96, 0, 192, 96);
-            redraw(1);
+            redraw();
             await(cfg_animewait + 50);
         }
         gmode(2);

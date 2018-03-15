@@ -441,14 +441,6 @@ void clrobj(int)
 
 
 
-// Shift-JIS -> Unicode
-void cnvstow(std::string& out, const std::string& source)
-{
-    out = source;
-}
-
-
-
 void color(int r, int g, int b)
 {
     detail::current_tex_buffer().color = {
@@ -480,30 +472,6 @@ int dialog(const std::string& message, int)
 {
     (void)message;
     return 0;
-}
-
-
-
-// TODO
-std::string dirinfo(int n)
-{
-    (void)n;
-    return ".";
-    // switch (n)
-    // {
-    // case 0:
-    //     return "dir_cur";
-    // case 1:
-    //     return "dir_exe";
-    // case 2:
-    //     return "dir_win";
-    // case 3:
-    //     return "dir_sys";
-    // case 4:
-    //     return "dir_cmdline";
-    // default:
-    //     assert(0);
-    // }
 }
 
 
@@ -1124,13 +1092,6 @@ void mmstop()
 
 
 
-// // Special function
-// void mref()
-// {
-// }
-
-
-
 namespace notemanip
 {
 std::string* buffer = nullptr;
@@ -1247,9 +1208,8 @@ void noteget(std::string& out, size_t index)
 
 
 
-int noteinfo(int mode)
+int noteinfo()
 {
-    assert(mode == 0);
     return notemanip::buffer ? notemanip::count(*notemanip::buffer) : 0;
 }
 
@@ -1258,7 +1218,7 @@ int noteinfo(int mode)
 int notesel(std::string& buf)
 {
     notemanip::buffer = &buf;
-    return noteinfo(0);
+    return noteinfo();
 }
 
 
@@ -1348,20 +1308,16 @@ void pos(int x, int y)
 }
 
 
-void redraw(int n)
+void redraw()
 {
-    if (n != 1)
-        return;
-    const auto save =
-        snail::application::instance().get_renderer().render_target();
-    snail::application::instance().get_renderer().set_render_target(nullptr);
-    snail::application::instance().get_renderer().set_draw_color(
-        snail::color{0, 0, 0, 255});
-    snail::application::instance().get_renderer().clear();
-    snail::application::instance().get_renderer().render_image(
-        detail::tex_buffers[0].texture, 0, 0);
-    snail::application::instance().get_renderer().present();
-    snail::application::instance().get_renderer().set_render_target(save);
+    auto& renderer = snail::application::instance().get_renderer();
+    const auto save = renderer.render_target();
+    renderer.set_render_target(nullptr);
+    renderer.set_draw_color(snail::color{0, 0, 0, 255});
+    renderer.clear();
+    renderer.render_image(detail::tex_buffers[0].texture, 0, 0);
+    renderer.present();
+    renderer.set_render_target(save);
 }
 
 
@@ -1471,11 +1427,6 @@ void title(const std::string& title_str)
 }
 
 
-
-// // Special function
-// void varptr()
-// {
-// }
 
 void width(int width, int height, int, int)
 {
@@ -1692,18 +1643,6 @@ void memcpy_(
     {
         dst[i + dst_offset] = src[i + src_offset];
     }
-}
-
-
-
-void GetOpenFileNameA()
-{
-}
-
-
-
-void GetSaveFileNameA()
-{
 }
 
 

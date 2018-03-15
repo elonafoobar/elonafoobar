@@ -45,12 +45,11 @@ void play_animation_8(int anicol)
 
     for (int i = 0; i < 12; ++i)
     {
-        redraw(0);
         pos(anidx - inf_tiles / 2, anidy - inf_tiles / 2);
         gcopy(4, 0, 0, inf_tiles * 2, inf_tiles * 2);
         pos(anidx + inf_tiles / 2, anidy + 16);
         grotate(1, 0, 960, 5 * i, i + 40, i + 40);
-        redraw(1);
+        redraw();
         await(cfg_animewait);
     }
 }
@@ -111,7 +110,6 @@ void play_animation_6_5_7_11(int animeid, int anicol)
             await(cfg_animewait);
         }
         int acnt2 = i * 2;
-        redraw(0);
         pos(ax - inf_tiles / 2, ay - inf_tiles / 2);
         gcopy(4, 0, 0, inf_tiles * 2, inf_tiles * 2);
         for (int j = 0; j < 15; ++j)
@@ -125,7 +123,7 @@ void play_animation_6_5_7_11(int animeid, int anicol)
                 inf_tiles - acnt2 * 2,
                 inf_tiles - acnt2 * 2);
         }
-        redraw(1);
+        redraw();
     }
 }
 
@@ -147,7 +145,6 @@ void play_animation_3(int anicol, int anisound)
     for (int cnt = 0; cnt < 6; ++cnt)
     {
         int cnt2 = cnt;
-        redraw(0);
         pos(0, 0);
         gmode(0);
         gcopy(4, 0, 0, windoww, windowh);
@@ -183,7 +180,7 @@ void play_animation_3(int anicol, int anisound)
             }
         }
         await(cfg_animewait);
-        redraw(1);
+        redraw();
     }
     if (anisound)
     {
@@ -266,8 +263,7 @@ void play_animation_17_2(int animeid, int anicol, int anisound)
                 grotate(7, cnt * 96, 0, 0, 96, 96);
             }
         }
-        redraw(1);
-        redraw(0);
+        redraw();
         gmode(0);
         pos(0, 0);
         gcopy(4, 0, 0, windoww, windowh);
@@ -333,7 +329,6 @@ void play_animation_0(int anicol, int anisound)
                 break;
             }
         }
-        redraw(0);
         pos(0, 0);
         gmode(0);
         gcopy(4, 0, 0, windoww, windowh);
@@ -372,7 +367,7 @@ void play_animation_0(int anicol, int anisound)
             ++ap(cnt);
         }
         await(cfg_animewait + 15);
-        redraw(1);
+        redraw();
     }
     if (anisound)
     {
@@ -419,8 +414,7 @@ void play_animation_15()
                     inf_tiles);
             }
         }
-        redraw(1);
-        redraw(0);
+        redraw();
         gmode(0);
         pos(ax, ay - inf_tiles / 2);
         gcopy(4, 0, 0, inf_tiles, inf_tiles);
@@ -505,8 +499,7 @@ void play_animation_ranged_attack(int animeid, int anicol, int anisound)
                 cdata[cc].position.y - cdata[tc].position.y),
             inf_tiles,
             inf_tiles);
-        redraw(1);
-        redraw(0);
+        redraw();
         gmode(0);
         pos(ax, ay - inf_tiles / 2);
         gcopy(4, 0, 0, inf_tiles, inf_tiles);
@@ -535,12 +528,11 @@ void play_animation_9()
     gsel(0);
     for (int cnt = 0; cnt < 4; ++cnt)
     {
-        redraw(0);
         pos(anidx - 16, anidy - 16);
         gcopy(4, 0, 0, 64, 64);
         pos(anidx + 16, anidy + 16);
         grotate(1, 0, 960, 0.5 * cnt - 0.8, cnt * 8 + 18, cnt * 8 + 18);
-        redraw(1);
+        redraw();
         await(cfg_animewait);
     }
 }
@@ -600,7 +592,6 @@ void play_animation_12()
     gsel(0);
     for (int cnt = 0, cnt_end = (4 + (critical != 0)); cnt < cnt_end; ++cnt)
     {
-        redraw(0);
         gmode(2);
         int cnt2 = cnt * 2;
         gmode(2, inf_tiles, inf_tiles);
@@ -638,8 +629,7 @@ void play_animation_12()
             pos(anidx, anidy);
             gcopy(3, 816 + cnt * 48, 432, 48, 48);
         }
-        redraw(1);
-        redraw(0);
+        redraw();
         gmode(0);
         pos(anidx - 24, anidy - 48);
         gcopy(4, 0, 0, 96, 144);
@@ -667,7 +657,6 @@ void play_animation_20()
     int anidy = (cdata[anic].position.y - scy) * inf_tiles + inf_screeny - 60;
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        redraw(0);
         pos(0, 0);
         gmode(0);
         gcopy(4, 0, 0, windoww, windowh);
@@ -679,7 +668,7 @@ void play_animation_20()
             gcopy(7, cnt2 / 2 * 96, (cnt == 0) * 96, 96, 96);
         }
         await(cfg_animewait + 25);
-        redraw(1);
+        redraw();
     }
 }
 
@@ -733,7 +722,6 @@ void play_animation_19()
     }
     for (int cnt = 0;; ++cnt)
     {
-        redraw(0);
         pos(0, 0);
         gmode(0);
         gcopy(4, 0, 0, windoww, windowh);
@@ -806,7 +794,7 @@ void play_animation_19()
             break;
         }
         await(cfg_animewait + 25);
-        redraw(1);
+        redraw();
     }
 }
 
@@ -830,7 +818,6 @@ void play_animation_22()
     }
     for (int cnt = 0;; ++cnt)
     {
-        redraw(0);
         if (cnt < 4)
         {
             pos(0, 0);
@@ -882,15 +869,14 @@ void play_animation_22()
             break;
         }
         await(cfg_animewait + 40);
-        redraw(1);
+        redraw();
     }
     await(cfg_animewait);
-    redraw(0);
     pos(0, 0);
     gmode(0);
     gcopy(4, 0, 0, windoww, windowh);
     gmode(2);
-    redraw(1);
+    redraw();
 }
 
 
@@ -913,7 +899,6 @@ void play_animation_21()
     }
     for (int cnt = 0;; ++cnt)
     {
-        redraw(0);
         pos(5 - rnd(10), 5 - rnd(10));
         gmode(0);
         gcopy(4, 0, 0, windoww, windowh);
@@ -957,15 +942,14 @@ void play_animation_21()
             break;
         }
         await(cfg_animewait + 40);
-        redraw(1);
+        redraw();
     }
     await(cfg_animewait);
-    redraw(0);
     pos(0, 0);
     gmode(0);
     gcopy(4, 0, 0, windoww, windowh);
     gmode(2);
-    redraw(1);
+    redraw();
 }
 
 
@@ -994,7 +978,6 @@ void play_animation_14_16(int animeid)
     gsel(0);
     for (int cnt = 0; cnt < 5; ++cnt)
     {
-        redraw(0);
         gmode(2);
         int cnt2 = cnt * 2;
         gmode(2, inf_tiles, inf_tiles);
@@ -1014,8 +997,7 @@ void play_animation_14_16(int animeid)
             0.5 * cnt - 0.8,
             cnt * 10 + aniref * 3,
             cnt * 10 + aniref * 3);
-        redraw(1);
-        redraw(0);
+        redraw();
         gmode(0);
         pos(ax - 16, ay - 16);
         pos(ax - 16, ay - 16);
@@ -1047,7 +1029,6 @@ void play_animation(int animeid)
         update_screen();
     }
 
-    redraw(0);
     gmode(2, inf_tiles, inf_tiles);
 
     int anicol = 0;
