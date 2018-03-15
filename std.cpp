@@ -441,14 +441,6 @@ void clrobj(int)
 
 
 
-// Shift-JIS -> Unicode
-void cnvstow(std::string& out, const std::string& source)
-{
-    out = source;
-}
-
-
-
 void color(int r, int g, int b)
 {
     detail::current_tex_buffer().color = {
@@ -1100,13 +1092,6 @@ void mmstop()
 
 
 
-// // Special function
-// void mref()
-// {
-// }
-
-
-
 namespace notemanip
 {
 std::string* buffer = nullptr;
@@ -1443,11 +1428,6 @@ void title(const std::string& title_str)
 
 
 
-// // Special function
-// void varptr()
-// {
-// }
-
 void width(int width, int height, int, int)
 {
     (void)width;
@@ -1663,18 +1643,6 @@ void memcpy_(
     {
         dst[i + dst_offset] = src[i + src_offset];
     }
-}
-
-
-
-void GetOpenFileNameA()
-{
-}
-
-
-
-void GetSaveFileNameA()
-{
 }
 
 

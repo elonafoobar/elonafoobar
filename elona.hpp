@@ -380,10 +380,6 @@ void chgdisp(int, int width, int height);
 void clrobj(int);
 
 
-// Shift-JIS -> Unicode
-void cnvstow(std::string& out, const std::string& source);
-
-
 void color(int r, int g, int b);
 
 
@@ -520,13 +516,6 @@ void mmplay(int id);
 
 void mmstop();
 
-
-// // Special function
-// void mref()
-// {
-// }
-#define mref(a, b)
-
 void noteadd(const std::string& text, int index = -1, int = 0);
 
 void notedel(size_t index);
@@ -574,11 +563,6 @@ std::string strmid(const std::string& source, int pos, int length);
 
 void title(const std::string& title_str);
 
-// // Special function
-// void varptr()
-// {
-// }
-
 void width(int width, int height, int, int);
 
 
@@ -621,11 +605,6 @@ int aplobj(const std::string&, int);
 void apledit(int, int, int = 0);
 
 void func_2(int, int, int, int, int, int);
-
-void GetOpenFileNameA();
-
-
-void GetSaveFileNameA();
 
 int DSINIT();
 
