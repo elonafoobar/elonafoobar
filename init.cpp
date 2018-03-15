@@ -545,12 +545,6 @@ void start_elona()
     gdata_hour = 16;
     gdata_minute = 10;
     quickpage = 1;
-    if (dirinfo(4) == u8"medit"s)
-    {
-        medit = 1;
-        std::exit(1);
-        return;
-    }
     if (defload != ""s)
     {
         if (!fs::exists(fs::u8path(u8"./save/"s + defload + u8"/header.txt")))

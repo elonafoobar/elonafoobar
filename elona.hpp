@@ -394,9 +394,6 @@ void elona_delete(const fs::path& filename);
 
 int dialog(const std::string& message, int = 0);
 
-// TODO
-std::string dirinfo(int n);
-
 
 
 void exec(const std::string&, int);

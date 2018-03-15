@@ -484,30 +484,6 @@ int dialog(const std::string& message, int)
 
 
 
-// TODO
-std::string dirinfo(int n)
-{
-    (void)n;
-    return ".";
-    // switch (n)
-    // {
-    // case 0:
-    //     return "dir_cur";
-    // case 1:
-    //     return "dir_exe";
-    // case 2:
-    //     return "dir_win";
-    // case 3:
-    //     return "dir_sys";
-    // case 4:
-    //     return "dir_cmdline";
-    // default:
-    //     assert(0);
-    // }
-}
-
-
-
 void exec(const std::string&, int)
 {
 }
