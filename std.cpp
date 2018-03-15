@@ -1247,9 +1247,8 @@ void noteget(std::string& out, size_t index)
 
 
 
-int noteinfo(int mode)
+int noteinfo()
 {
-    assert(mode == 0);
     return notemanip::buffer ? notemanip::count(*notemanip::buffer) : 0;
 }
 
@@ -1258,7 +1257,7 @@ int noteinfo(int mode)
 int notesel(std::string& buf)
 {
     notemanip::buffer = &buf;
-    return noteinfo(0);
+    return noteinfo();
 }
 
 

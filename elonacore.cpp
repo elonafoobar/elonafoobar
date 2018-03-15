@@ -22524,9 +22524,9 @@ void initialize_set_of_random_generation()
     p = instr(buff, 0, u8"%DEFINE"s);
     buff = strmid(buff, p, instr(buff, p, u8"%END"s));
     notedel(0);
-    SDIM3(booktitle, noteinfo(0), 25);
+    SDIM3(booktitle, noteinfo(), 25);
     p = 0;
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         noteget(msgtemp, cnt);
         csvsort(s, msgtemp, 44);
@@ -34895,7 +34895,7 @@ label_18671_internal:
     {
         txtadvmsgfix = 136;
     }
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         noteget(s, cnt);
         if (strmid(s, 0, 1) == u8"@"s)
@@ -34957,7 +34957,7 @@ label_18671_internal:
 label_1868_internal:
     x(0) = 170;
     x(1) = 400;
-    y(0) = noteinfo(0) * 20 + 120 + txtadvmsgfix + 16;
+    y(0) = noteinfo() * 20 + 120 + txtadvmsgfix + 16;
     y(1) = 20 * listmax;
     gmode(0);
     pos(x, y);
@@ -34973,13 +34973,13 @@ label_1868_internal:
         }
         i = list(0, p);
         display_key(
-            170, noteinfo(0) * 20 + 120 + txtadvmsgfix + 16 + cnt * 20, cnt);
+            170, noteinfo() * 20 + 120 + txtadvmsgfix + 16 + cnt * 20, cnt);
         s = listn(0, p);
         cs_list(
             cs == cnt,
             s,
             200,
-            noteinfo(0) * 20 + 120 + txtadvmsgfix + 16 + cnt * 20,
+            noteinfo() * 20 + 120 + txtadvmsgfix + 16 + cnt * 20,
             0,
             2);
     }
@@ -35049,7 +35049,7 @@ void label_1870()
     {
         x(0) = 170;
         x(1) = 300;
-        y(0) = noteinfo(0) * 20 + 120 + txtadvmsgfix + 16;
+        y(0) = noteinfo() * 20 + 120 + txtadvmsgfix + 16;
         y(1) = 20 * listmax;
         gmode(0);
         pos(x - 50, y - 50);
@@ -35133,7 +35133,7 @@ void label_1871()
     for (int cnt = 0; cnt < 11; ++cnt)
     {
         x = 170;
-        y(0) = noteinfo(0) * 20 + 120 + txtadvmsgfix + 16;
+        y(0) = noteinfo() * 20 + 120 + txtadvmsgfix + 16;
         y(1) = 20 * listmax;
         gmode(0);
         pos(x - 50, y - 50);
@@ -35155,9 +35155,9 @@ void label_1872()
     cs = -1;
     boxf(
         170,
-        noteinfo(0) * 20 + 120 + txtadvmsgfix + 16,
+        noteinfo() * 20 + 120 + txtadvmsgfix + 16,
         170 + x(1),
-        noteinfo(0) * 20 + 120 + txtadvmsgfix + 16 + 20 * listmax);
+        noteinfo() * 20 + 120 + txtadvmsgfix + 16 + 20 * listmax);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
@@ -35168,14 +35168,14 @@ void label_1872()
         }
         i = list(0, p);
         display_key(
-            170, noteinfo(0) * 20 + 120 + txtadvmsgfix + 16 + cnt * 20, cnt);
+            170, noteinfo() * 20 + 120 + txtadvmsgfix + 16 + cnt * 20, cnt);
         s = listn(0, p);
         gmode(2);
         cs_list(
             cs == cnt,
             s,
             200,
-            noteinfo(0) * 20 + 120 + txtadvmsgfix + 16 + cnt * 20,
+            noteinfo() * 20 + 120 + txtadvmsgfix + 16 + cnt * 20,
             0,
             2);
     }
@@ -35187,7 +35187,7 @@ void label_1872()
     gmode(0);
     pos(0, 0);
     gcopy(
-        0, 170, noteinfo(0) * 20 + 120 + txtadvmsgfix + 16, x(1), 20 * listmax);
+        0, 170, noteinfo() * 20 + 120 + txtadvmsgfix + 16, x(1), 20 * listmax);
     gsel(0);
     gmode(2);
     cs = 0;
@@ -37871,7 +37871,7 @@ int show_random_event_window(const std::string& file)
     dx = tx + 36;
     talk_conv(buff, (dx - 80) / (7 - en) - en * 4);
     notesel(buff);
-    dy = ty + noteinfo(0) * 15 + 80 + listmax * 20;
+    dy = ty + noteinfo() * 15 + 80 + listmax * 20;
 label_1897_internal:
     gmode(2);
     window(
@@ -40580,7 +40580,7 @@ label_1945_internal:
     }
     if (ginfo(2) == 0)
     {
-        if (noteinfo(0) != 0)
+        if (noteinfo() != 0)
         {
             if (getkey(snail::key::backspace))
             {
@@ -41775,7 +41775,7 @@ void label_1964()
     refreshmode = 0;
     buff += u8"\n"s;
     buff += u8"<title1>◆ 特徴と特殊状態による能力の恩恵<def>\n"s;
-    listmax = noteinfo(0);
+    listmax = noteinfo();
 label_1965_internal:
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -42129,7 +42129,7 @@ label_196901_internal:
         }
     }
     notesel(buff);
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         noteget(s, cnt);
         list(0, listmax) = 1;
@@ -42513,7 +42513,7 @@ void update_journal()
     pagesize = 40;
     cs = 0;
     cc = 0;
-    listmax = noteinfo(0);
+    listmax = noteinfo();
     keyrange = 0;
     key_list(0) = key_enter;
     buff = newsbuff;
@@ -42524,16 +42524,16 @@ void update_journal()
     notesel(buff);
     noteadd(u8" - News - "s, 0);
     noteadd(""s, 1);
-    if (noteinfo(0) / (pagesize / 2) % 2 == 1)
+    if (noteinfo() / (pagesize / 2) % 2 == 1)
     {
         for (int cnt = 0, cnt_end = (pagesize / 2); cnt < cnt_end; ++cnt)
         {
             noteadd(""s, 2);
         }
     }
-    page = noteinfo(0) / pagesize;
+    page = noteinfo() / pagesize;
     for (int cnt = 0,
-             cnt_end = cnt + (pagesize / 2 - noteinfo(0) % (pagesize / 2));
+             cnt_end = cnt + (pagesize / 2 - noteinfo() % (pagesize / 2));
          cnt < cnt_end;
          ++cnt)
     {
@@ -42555,7 +42555,7 @@ void update_journal()
     }
     append_subquest_journal(0);
     for (int cnt = 0,
-             cnt_end = cnt + (pagesize / 2 - noteinfo(0) % (pagesize / 2));
+             cnt_end = cnt + (pagesize / 2 - noteinfo() % (pagesize / 2));
          cnt < cnt_end;
          ++cnt)
     {
@@ -42565,7 +42565,7 @@ void update_journal()
     noteadd(""s);
     append_quest_item_journal();
     for (int cnt = 0,
-             cnt_end = cnt + (pagesize / 2 - noteinfo(0) % (pagesize / 2));
+             cnt_end = cnt + (pagesize / 2 - noteinfo() % (pagesize / 2));
          cnt < cnt_end;
          ++cnt)
     {
@@ -42608,7 +42608,7 @@ void update_journal()
             + cnvrank(gdata_ex_arena_level)));
     noteadd(""s);
     for (int cnt = 0,
-             cnt_end = cnt + (pagesize / 2 - noteinfo(0) % (pagesize / 2));
+             cnt_end = cnt + (pagesize / 2 - noteinfo() % (pagesize / 2));
          cnt < cnt_end;
          ++cnt)
     {
@@ -42655,7 +42655,7 @@ void update_journal()
         noteadd(u8"You have "s + gdata_left_bill + u8" unpaid bills."s);
     }
     for (int cnt = 0,
-             cnt_end = cnt + (pagesize / 2 - noteinfo(0) % (pagesize / 2));
+             cnt_end = cnt + (pagesize / 2 - noteinfo() % (pagesize / 2));
          cnt < cnt_end;
          ++cnt)
     {
@@ -42664,7 +42664,7 @@ void update_journal()
     noteadd(u8" - Completed Quests - "s);
     noteadd(""s);
     append_subquest_journal(1);
-    listmax = noteinfo(0);
+    listmax = noteinfo();
     showtitle(lang(u8"ジャーナル"s, u8"Journal"s), strhint2 + strhint3, 236, 1);
     drawmenu(2);
     wx = (windoww - 736) / 2 + inf_screenx;
@@ -45364,7 +45364,7 @@ void label_2022()
     pagesize = 40;
     cs = 0;
     cc = 0;
-    listmax = noteinfo(0);
+    listmax = noteinfo();
     keyrange = 0;
     key_list(0) = key_enter;
 label_2023_internal:
@@ -48600,7 +48600,7 @@ void show_item_description()
                 ++p;
                 std::string buf = trimdesc(description(cnt), 2);
                 notesel(buf);
-                for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+                for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
                 {
                     noteget(q, cnt);
                     p(1) = 66;
@@ -48631,7 +48631,7 @@ void show_item_description()
                     {
                         list(0, p) = 0;
                         listn(0, p) = q;
-                        if (cnt == noteinfo(0) - 1)
+                        if (cnt == noteinfo() - 1)
                         {
                             list(0, p) = -2;
                         }
@@ -50508,7 +50508,7 @@ void load_cnpc_data()
         buff += '\n';
     }
     notesel(buff);
-    usernpcmax = noteinfo(0);
+    usernpcmax = noteinfo();
     if (usernpcmax >= 100)
     {
         usernpcmax = 100;
@@ -50868,7 +50868,7 @@ void load_save_data()
             buff(0) += tmp + '\n';
         }
     }
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         noteget(s, cnt);
         if (strutil::contains(s(0), u8".s2"))
@@ -50930,7 +50930,7 @@ void save_game()
     }
     file += u8"/"s;
     notesel(filemod);
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         noteget(save_s, cnt);
         if (strmid(save_s, 0, 1) == u8"*"s)
@@ -51093,7 +51093,7 @@ void main_menu_continue()
         }
         if (ginfo(2) == 0)
         {
-            if (noteinfo(0) != 0)
+            if (noteinfo() != 0)
             {
                 if (getkey(snail::key::backspace))
                 {
@@ -64515,7 +64515,7 @@ void show_talk_window()
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     color(20, 10, 5);
     notesel(buff);
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         p = cnt;
         x = wx + 150;
@@ -66465,9 +66465,9 @@ void label_2662()
         }
     }
     notesel(newsbuff);
-    if (noteinfo(0) > 195)
+    if (noteinfo() > 195)
     {
-        for (int cnt = 0, cnt_end = (noteinfo(0) - 195); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (noteinfo() - 195); cnt < cnt_end; ++cnt)
         {
             notedel(0);
         }
@@ -67934,8 +67934,8 @@ label_2682_internal:
     goto label_2682_internal;
 label_2684_internal:
     buff = strmid(buff, scidxtop, scidx - scidxtop);
-    p = noteinfo(0);
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    p = noteinfo();
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         noteget(s, p - cnt - 1);
         if (s == ""s)
@@ -67976,9 +67976,9 @@ label_2684_internal:
     }
     font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
     x = 44;
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
-        y = y1 + 31 + (9 - noteinfo(0) / 2 + cnt) * 20;
+        y = y1 + 31 + (9 - noteinfo() / 2 + cnt) * 20;
         noteget(s, cnt);
         x = windoww / 2 - std::size(s(0)) * 4;
         dx = 80 + std::size(s(0)) * 8;
@@ -67991,9 +67991,9 @@ label_2684_internal:
         grotate(3, 456, 144, 0, dx, 72);
     }
     x = 40;
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
-        y = y1 + 28 + (9 - noteinfo(0) / 2 + cnt) * 20;
+        y = y1 + 28 + (9 - noteinfo() / 2 + cnt) * 20;
         noteget(s, cnt);
         x = windoww / 2 - std::size(s(0)) * 4;
         color(10, 10, 10);
@@ -70159,7 +70159,7 @@ void show_ex_help()
     }
     buff = strmid(buff, p, instr(buff, p, u8"%END"s));
     notedel(0);
-    if (noteinfo(0) == 0)
+    if (noteinfo() == 0)
     {
         return;
     }
@@ -70199,7 +70199,7 @@ void show_ex_help()
             {
                 noteget(s, page);
                 ++page;
-                if (page > noteinfo(0) || s == ""s)
+                if (page > noteinfo() || s == ""s)
                 {
                     break;
                 }
@@ -70212,7 +70212,7 @@ void show_ex_help()
         gmode(2);
         redraw();
         help_halt();
-        if (page >= noteinfo(0))
+        if (page >= noteinfo())
         {
             break;
         }
@@ -70284,7 +70284,7 @@ void show_game_help()
     list(0, 0) = 0;
     listn(0, 0) = lang(u8"キーの一覧"s, u8"Key List"s);
     ++listmax;
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         noteget(q, cnt);
         p = instr(q, 0, u8"{}"s);
@@ -70492,7 +70492,7 @@ label_2705_internal:
         {
             int y = wy + 60;
             int cnt = p;
-            for (int cnt_end = cnt + (noteinfo(0) - p); cnt < cnt_end; ++cnt)
+            for (int cnt_end = cnt + (noteinfo() - p); cnt < cnt_end; ++cnt)
             {
                 noteget(s1, cnt);
                 i = instr(s1, 0, u8"{"s);
@@ -70865,7 +70865,7 @@ void label_2719()
     usertitle = "";
     usermsg = "";
     userpassword = u8"nyaa"s;
-    for (int cnt = 0, cnt_end = (noteinfo(0)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         noteget(s, cnt);
         if (strutil::contains(s(0), u8"room_title."))
@@ -72756,9 +72756,9 @@ label_2747:
         {
             net_read();
             notesel(chatnew);
-            for (int i = 0; i < noteinfo(0); ++i)
+            for (int i = 0; i < noteinfo(); ++i)
             {
-                noteget(s, noteinfo(0) - i - 1);
+                noteget(s, noteinfo() - i - 1);
                 s(1) = strmid(s, 4, 9999);
                 s(2) = strmid(s, 0, 4);
                 if (s(2) == u8"chat"s)
@@ -73858,8 +73858,8 @@ void pc_died()
     noteadd(s, 2);
     s = ""s + calcscore() + u8","s + cdata[cc].image;
     noteadd(s, 3);
-    if (noteinfo(0) >= 320)
-        for (int cnt = 320, cnt_end = cnt + (noteinfo(0) - 320); cnt < cnt_end;
+    if (noteinfo() >= 320)
+        for (int cnt = 320, cnt_end = cnt + (noteinfo() - 320); cnt < cnt_end;
              ++cnt)
         {
             notedel(320);
@@ -73902,7 +73902,7 @@ void pc_died()
             break;
         }
     }
-    for (int cnt = 0, cnt_end = (noteinfo(0) / 4); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (noteinfo() / 4); cnt < cnt_end; ++cnt)
     {
         noteadd(""s + cnvrank((cnt + 1)) + lang(u8"位"s, ""s), cnt * 4, 1);
     }
@@ -73995,7 +73995,7 @@ void show_game_score_ranking()
         mes(s);
         color(0, 0, 0);
         bool no_entry = false;
-        if (p >= noteinfo(0))
+        if (p >= noteinfo())
         {
             no_entry = true;
         }

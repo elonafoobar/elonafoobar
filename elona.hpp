@@ -536,7 +536,7 @@ void notedel(size_t index);
 
 void noteget(std::string& out, size_t index);
 
-int noteinfo(int = 0);
+int noteinfo();
 
 int notesel(std::string&);
 
