@@ -10,6 +10,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "macro.hpp"
 #include "main.hpp"
 #include "race.hpp"
 #include "range.hpp"
@@ -1810,18 +1811,11 @@ void character_making_final_phase()
         clear_background_in_character_making();
         s = lang(u8"満足できたかな？"s, u8"Are you satisfied now?"s);
         draw_caption();
-        promptl(0, promptmax) = lang(u8"はい"s, u8"Yes"s);
-        promptl(1, promptmax) = u8"a"s;
-        promptl(2, promptmax) = ""s + promptmax;
-        ++promptmax;
-        promptl(0, promptmax) = lang(u8"いいえ"s, u8"No"s);
-        promptl(1, promptmax) = u8"b"s;
-        promptl(2, promptmax) = ""s + promptmax;
-        ++promptmax;
-        promptl(0, promptmax) = lang(u8"最初から"s, u8"Restart"s);
-        promptl(1, promptmax) = u8"c"s;
-        promptl(2, promptmax) = ""s + promptmax;
-        ++promptmax;
+        ELONA_APPEND_PROMPT(lang(u8"はい"s, u8"Yes"s), u8"a"s, ""s + promptmax);
+        ELONA_APPEND_PROMPT(
+            lang(u8"いいえ"s, u8"No"s), u8"b"s, ""s + promptmax);
+        ELONA_APPEND_PROMPT(
+            lang(u8"最初から"s, u8"Restart"s), u8"c"s, ""s + promptmax);
         show_prompt(promptx, 240, 160);
         snd(20);
         if (rtval != 1 && rtval != -1)

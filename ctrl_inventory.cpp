@@ -6,6 +6,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "macro.hpp"
 #include "variables.hpp"
 
 
@@ -1352,13 +1353,7 @@ label_2061_internal:
                             + u8" for "s + in * calcitemvalue(ci, 1)
                             + u8" gold pieces?"s));
                 }
-                promptl(0, 0) = i18n::_(u8"ui", u8"yes");
-                promptl(1, 0) = u8"y"s;
-                promptl(2, 0) = u8"0"s;
-                promptl(0, 1) = i18n::_(u8"ui", u8"no");
-                promptl(1, 1) = u8"n"s;
-                promptl(2, 1) = u8"1"s;
-                promptmax = 2;
+                ELONA_YES_NO_PROMPT();
                 show_prompt(promptx, prompty, 160);
                 if (rtval != 0)
                 {
@@ -2301,13 +2296,7 @@ label_2061_internal:
                     txt(lang(
                         u8"まだアイテムが残っているがいい？"s,
                         u8"Really leave these items?"s));
-                    promptl(0, 0) = i18n::_(u8"ui", u8"yes");
-                    promptl(1, 0) = u8"y"s;
-                    promptl(2, 0) = u8"0"s;
-                    promptl(0, 1) = i18n::_(u8"ui", u8"no");
-                    promptl(1, 1) = u8"n"s;
-                    promptl(2, 1) = u8"1"s;
-                    promptmax = 2;
+                    ELONA_YES_NO_PROMPT();
                     show_prompt(promptx, prompty, 160);
                     if (rtval != 0)
                     {
