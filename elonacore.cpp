@@ -66907,7 +66907,7 @@ int label_2672()
     qdata(3, rq) = 0;
     qdata(14, rq) = 0;
     qdata(8, rq) = 0;
-    qdata(2, rq) = rnd(4) * 24
+    qdata(2, rq) = (rnd(3) + 1) * 24
         + (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
            + gdata_year * 24 * 30 * 12);
     qdata(7, rq) = 0;
