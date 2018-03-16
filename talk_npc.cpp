@@ -5,7 +5,9 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "macro.hpp"
 #include "variables.hpp"
+
 
 
 namespace elona
@@ -55,74 +57,59 @@ void talk_npc()
     {
         if (gdata_number_of_waiting_guests > 0)
         {
-            list(0, listmax) = 58;
-            listn(0, listmax) =
-                lang(u8"客に会う"s, u8"Yes, I'll meet the guest now."s);
-            ++listmax;
-            list(0, listmax) = 59;
-            listn(0, listmax) =
-                lang(u8"追い返す"s, u8"I don't want to meet anyone."s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(
+                58, lang(u8"客に会う"s, u8"Yes, I'll meet the guest now."s));
+            ELONA_APPEND_RESPONSE(
+                59, lang(u8"追い返す"s, u8"I don't want to meet anyone."s));
         }
     }
     if (cdata[tc].interest > 0 && chatval(1) == 0)
     {
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"話がしたい"s, u8"Let's Talk."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(1, lang(u8"話がしたい"s, u8"Let's Talk."s));
     }
     if ((cdata[tc].character_role >= 1000 && cdata[tc].character_role < 2000)
         || cdata[tc].character_role == 2003)
     {
-        list(0, listmax) = 10;
-        listn(0, listmax) = lang(u8"買いたい"s, u8"I want to buy something."s);
-        ++listmax;
-        list(0, listmax) = 11;
-        listn(0, listmax) = lang(u8"売りたい"s, u8"I want to sell something."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(
+            10, lang(u8"買いたい"s, u8"I want to buy something."s));
+        ELONA_APPEND_RESPONSE(
+            11, lang(u8"売りたい"s, u8"I want to sell something."s));
         if (cdata[tc].character_role == 1010)
         {
-            list(0, listmax) = 31;
-            listn(0, listmax) = lang(u8"襲撃するよ"s, u8"Prepare to die!"s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(
+                31, lang(u8"襲撃するよ"s, u8"Prepare to die!"s));
         }
         if (cdata[tc].character_role != 1010
             && cdata[tc].character_role != 1009)
         {
-            list(0, listmax) = 12;
-            listn(0, listmax) = lang(
-                u8"投資したい"s, u8"Need someone to invest in your shop?"s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(
+                12,
+                lang(
+                    u8"投資したい"s,
+                    u8"Need someone to invest in your shop?"s));
         }
     }
     if (cdata[tc].character_role == 9)
     {
-        list(0, listmax) = 33;
-        listn(0, listmax) =
-            lang(u8"仲間を呼び戻す"s, u8"Call back my allies."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(
+            33, lang(u8"仲間を呼び戻す"s, u8"Call back my allies."s));
     }
     if (cdata[tc].character_role == 17)
     {
         if (get_freeally() != 0)
         {
-            list(0, listmax) = 36;
-            listn(0, listmax) =
-                lang(u8"奴隷を買う"s, u8"I want to buy a slave."s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(
+                36, lang(u8"奴隷を買う"s, u8"I want to buy a slave."s));
         }
-        list(0, listmax) = 37;
-        listn(0, listmax) = lang(u8"奴隷を売る"s, u8"I want to sell a slave."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(
+            37, lang(u8"奴隷を売る"s, u8"I want to sell a slave."s));
     }
     if (cdata[tc].character_role == 22)
     {
         if (get_freeally() != 0)
         {
-            list(0, listmax) = 57;
-            listn(0, listmax) =
-                lang(u8"馬を買う"s, u8"I want to buy a horse."s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(
+                57, lang(u8"馬を買う"s, u8"I want to buy a horse."s));
         }
     }
     if (tc < 16)
@@ -131,187 +118,154 @@ void talk_npc()
         {
             if (cbit(971, tc) == 0)
             {
-                list(0, listmax) = 34;
-                listn(0, listmax) =
-                    lang(u8"街で待機しろ"s, u8"Wait at the town."s);
-                ++listmax;
+                ELONA_APPEND_RESPONSE(
+                    34, lang(u8"街で待機しろ"s, u8"Wait at the town."s));
                 if (cbit(961, tc) == 0)
                 {
-                    list(0, listmax) = 38;
-                    listn(0, listmax) = lang(
-                        u8"婚約を申し込む"s, u8"May I ask for your hand?"s);
-                    ++listmax;
+                    ELONA_APPEND_RESPONSE(
+                        38,
+                        lang(
+                            u8"婚約を申し込む"s,
+                            u8"May I ask for your hand?"s));
                 }
                 else if (gdata_continuous_active_hours >= 15)
                 {
-                    list(0, listmax) = 39;
-                    listn(0, listmax) =
-                        lang(u8"遺伝子を残す"s, u8"Let's make a gene."s);
-                    ++listmax;
+                    ELONA_APPEND_RESPONSE(
+                        39, lang(u8"遺伝子を残す"s, u8"Let's make a gene."s));
                 }
                 if (cdata[tc].can_talk != 0)
                 {
                     if (cbit(965, tc) == 0)
                     {
-                        list(0, listmax) = 48;
-                        listn(0, listmax) = lang(u8"黙らせる"s, u8"Shut up."s);
-                        ++listmax;
+                        ELONA_APPEND_RESPONSE(
+                            48, lang(u8"黙らせる"s, u8"Shut up."s));
                     }
                     else
                     {
-                        list(0, listmax) = 48;
-                        listn(0, listmax) =
-                            lang(u8"喋らせる"s, u8"You can speak now."s);
-                        ++listmax;
+                        ELONA_APPEND_RESPONSE(
+                            48, lang(u8"喋らせる"s, u8"You can speak now."s));
                     }
                 }
-                list(0, listmax) = 35;
-                listn(0, listmax) =
-                    lang(u8"縁を切る"s, u8"I'm going to abandon you."s);
-                ++listmax;
+                ELONA_APPEND_RESPONSE(
+                    35, lang(u8"縁を切る"s, u8"I'm going to abandon you."s));
             }
         }
     }
     if (cdata[tc].character_role == 1000 || cdata[tc].character_role == 1001)
     {
-        list(0, listmax) = 54;
-        listn(0, listmax) =
-            lang(u8"矢弾の充填"s, u8"I need ammos for my weapon."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(
+            54, lang(u8"矢弾の充填"s, u8"I need ammos for my weapon."s));
     }
     if (cdata[tc].character_role == 1005)
     {
-        list(0, listmax) = 13;
-        listn(0, listmax) =
+        ELONA_APPEND_RESPONSE(
+            13,
             lang(u8"食事をとる"s, u8"Bring me something to eat."s) + u8" ("s
-            + calcmealvalue() + i18n::_(u8"ui", u8"gold") + u8")"s;
-        ++listmax;
+                + calcmealvalue() + i18n::_(u8"ui", u8"gold") + u8")"s);
         if (gdata_weather == 1 || gdata_weather == 4 || gdata_weather == 2)
         {
-            list(0, listmax) = 43;
-            listn(0, listmax) =
-                lang(u8"シェルターに入る"s, u8"Take me to the shelter."s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(
+                43, lang(u8"シェルターに入る"s, u8"Take me to the shelter."s));
         }
     }
     if (cdata[tc].character_role == 5)
     {
-        list(0, listmax) = 14;
-        listn(0, listmax) =
+        ELONA_APPEND_RESPONSE(
+            14,
             lang(u8"鑑定したい"s, u8"I need you to identify an item."s)
-            + u8" ("s + calcidentifyvalue(0) + i18n::_(u8"ui", u8"gold")
-            + u8")"s;
-        ++listmax;
-        list(0, listmax) = 15;
-        listn(0, listmax) =
+                + u8" ("s + calcidentifyvalue(0) + i18n::_(u8"ui", u8"gold")
+                + u8")"s);
+        ELONA_APPEND_RESPONSE(
+            15,
             lang(u8"全て鑑定してほしい"s, u8"Identify all of my stuff."s)
-            + u8" ("s + calcidentifyvalue(1) + i18n::_(u8"ui", u8"gold")
-            + u8")"s;
-        ++listmax;
-        list(0, listmax) = 16;
-        listn(0, listmax) = lang(u8"調査したい"s, u8"Investigate an item."s)
-            + u8" ("s + calcidentifyvalue(2) + i18n::_(u8"ui", u8"gold")
-            + u8")"s;
-        ++listmax;
+                + u8" ("s + calcidentifyvalue(1) + i18n::_(u8"ui", u8"gold")
+                + u8")"s);
+        ELONA_APPEND_RESPONSE(
+            16,
+            lang(u8"調査したい"s, u8"Investigate an item."s) + u8" ("s
+                + calcidentifyvalue(2) + i18n::_(u8"ui", u8"gold") + u8")"s);
     }
     if (cdata[tc].character_role == 7)
     {
-        list(0, listmax) = 17;
-        listn(0, listmax) = lang(u8"訓練したい"s, u8"Train me."s);
-        ++listmax;
-        list(0, listmax) = 30;
-        listn(0, listmax) =
-            lang(u8"新しい能力を覚えたい"s, u8"What skills can you teach me?"s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(17, lang(u8"訓練したい"s, u8"Train me."s));
+        ELONA_APPEND_RESPONSE(
+            30,
+            lang(
+                u8"新しい能力を覚えたい"s, u8"What skills can you teach me?"s));
     }
     if (cdata[tc].character_role == 8)
     {
-        list(0, listmax) = 18;
-        listn(0, listmax) =
-            lang(u8"冒険者の情報"s, u8"Show me the list of adventurers."s);
-        ++listmax;
-        list(0, listmax) = 47;
-        listn(0, listmax) = lang(
-            u8"仲間の調査"s, u8"I want you to investigate one of my allies."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(
+            18, lang(u8"冒険者の情報"s, u8"Show me the list of adventurers."s));
+        ELONA_APPEND_RESPONSE(
+            47,
+            lang(
+                u8"仲間の調査"s,
+                u8"I want you to investigate one of my allies."s));
     }
     if (cdata[tc].character_role == 12)
     {
-        list(0, listmax) = 19;
-        listn(0, listmax) = lang(u8"能力の復元"s, u8"Restore my attributes."s)
-            + u8"("s + calcrestorecost() + i18n::_(u8"ui", u8"gold") + u8")"s;
-        ++listmax;
+        ELONA_APPEND_RESPONSE(
+            19,
+            lang(u8"能力の復元"s, u8"Restore my attributes."s) + u8"("s
+                + calcrestorecost() + i18n::_(u8"ui", u8"gold") + u8")"s);
     }
     if (cdata[tc].character_role == 13)
     {
-        list(0, listmax) = 20;
-        listn(0, listmax) =
-            lang(u8"アイテム交換"s, u8"Are you interested in trade?"s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(
+            20, lang(u8"アイテム交換"s, u8"Are you interested in trade?"s));
         if (cbit(969, tc) == 0)
         {
-            list(0, listmax) = 50;
-            listn(0, listmax) =
-                lang(u8"護衛を依頼する"s, u8"I want to hire you."s);
-            ++listmax;
-            list(0, listmax) = 51;
-            listn(0, listmax) = lang(u8"仲間に誘う"s, u8"Join me!"s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(
+                50, lang(u8"護衛を依頼する"s, u8"I want to hire you."s));
+            ELONA_APPEND_RESPONSE(51, lang(u8"仲間に誘う"s, u8"Join me!"s));
         }
     }
     if (cdata[tc].character_role == 10)
     {
-        list(0, listmax) = 21;
-        listn(0, listmax) =
-            lang(u8"試合に出る[決闘]"s, u8"I'm entering the arena. [Duel]"s);
-        ++listmax;
-        list(0, listmax) = 22;
-        listn(0, listmax) = lang(
-            u8"試合に出る[ランブル]"s, u8"I'm entering the arena. [Rumble]"s);
-        ++listmax;
-        list(0, listmax) = 23;
-        listn(0, listmax) = lang(u8"成績を聞く"s, u8"Tell me my scores."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(
+            21,
+            lang(u8"試合に出る[決闘]"s, u8"I'm entering the arena. [Duel]"s));
+        ELONA_APPEND_RESPONSE(
+            22,
+            lang(
+                u8"試合に出る[ランブル]"s,
+                u8"I'm entering the arena. [Rumble]"s));
+        ELONA_APPEND_RESPONSE(
+            23, lang(u8"成績を聞く"s, u8"Tell me my scores."s));
     }
     if (cdata[tc].character_role == 11)
     {
-        list(0, listmax) = 40;
-        listn(0, listmax) =
-            lang(u8"ペットデュエル"s, u8"I want to register my pet. [Duel]"s);
-        ++listmax;
-        list(0, listmax) = 41;
-        listn(0, listmax) =
-            lang(u8"チームバトル"s, u8"I want to register my team. [Team]"s);
-        ++listmax;
-        list(0, listmax) = 49;
-        listn(0, listmax) =
-            lang(u8"EXバトル"s, u8"I want to see extra teams. [Ex Battle]"s);
-        ++listmax;
-        list(0, listmax) = 42;
-        listn(0, listmax) = lang(u8"成績を聞く"s, u8"Tell me my scores."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(
+            40,
+            lang(u8"ペットデュエル"s, u8"I want to register my pet. [Duel]"s));
+        ELONA_APPEND_RESPONSE(
+            41,
+            lang(u8"チームバトル"s, u8"I want to register my team. [Team]"s));
+        ELONA_APPEND_RESPONSE(
+            49,
+            lang(u8"EXバトル"s, u8"I want to see extra teams. [Ex Battle]"s));
+        ELONA_APPEND_RESPONSE(
+            42, lang(u8"成績を聞く"s, u8"Tell me my scores."s));
     }
     if (cdata[tc].character_role == 18)
     {
-        list(0, listmax) = 45;
-        listn(0, listmax) = lang(
-            u8"家の名前を考えてくれ"s, u8"Think of a nice name for my house."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(
+            45,
+            lang(
+                u8"家の名前を考えてくれ"s,
+                u8"Think of a nice name for my house."s));
     }
     if (cdata[tc].character_role == 19)
     {
-        list(0, listmax) = 46;
-        listn(0, listmax) =
-            lang(u8"免罪符を買いたい"s, u8"I want to buy an indulgence."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(
+            46, lang(u8"免罪符を買いたい"s, u8"I want to buy an indulgence."s));
     }
     int stat = tradecheck(tc);
     if (stat)
     {
-        list(0, listmax) = 20;
-        listn(0, listmax) =
-            lang(u8"アイテム交換"s, u8"Are you interested in trade?"s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(
+            20, lang(u8"アイテム交換"s, u8"Are you interested in trade?"s));
     }
     if (cdata[tc].character_role == 14)
     {
@@ -320,43 +274,42 @@ void talk_npc()
         {
             for (int cnt = 0, cnt_end = (stat); cnt < cnt_end; ++cnt)
             {
-                list(0, listmax) = 10000 + cnt;
-                listn(0, listmax) = lang(
-                    cdatan(0, rtval(cnt)) + u8"の居場所を聞く"s,
-                    u8"Where is "s + cdatan(0, rtval(cnt)) + u8"?"s);
-                ++listmax;
+                ELONA_APPEND_RESPONSE(
+                    10000 + cnt,
+                    lang(
+                        cdatan(0, rtval(cnt)) + u8"の居場所を聞く"s,
+                        u8"Where is "s + cdatan(0, rtval(cnt)) + u8"?"s));
             }
         }
         if (itemfind(0, 284) != -1)
         {
-            list(0, listmax) = 32;
-            listn(0, listmax) = lang(
-                u8"落し物の財布を届ける"s, u8"Here is a lost wallet I found."s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(
+                32,
+                lang(
+                    u8"落し物の財布を届ける"s,
+                    u8"Here is a lost wallet I found."s));
         }
         else if (itemfind(0, 283) != -1)
         {
-            list(0, listmax) = 32;
-            listn(0, listmax) = lang(
-                u8"落し物のカバンを届ける。"s,
-                u8"Here is a lost suitcase I found."s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(
+                32,
+                lang(
+                    u8"落し物のカバンを届ける。"s,
+                    u8"Here is a lost suitcase I found."s));
         }
     }
     if (cdata[tc].character_role == 21)
     {
-        list(0, listmax) = 53;
-        listn(0, listmax) = lang(u8"帰還したい"s, u8"I want to return."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(
+            53, lang(u8"帰還したい"s, u8"I want to return."s));
     }
     if (cdata[tc].character_role == 1020)
     {
         if (gdata_belongs_to_mages_guild != 0)
         {
-            list(0, listmax) = 55;
-            listn(0, listmax) =
-                lang(u8"魔法書の予約"s, u8"I want to reserve some books."s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(
+                55,
+                lang(u8"魔法書の予約"s, u8"I want to reserve some books."s));
         }
     }
     if (cdata[tc].drunk != 0 || 0)
@@ -367,11 +320,11 @@ void talk_npc()
             {
                 if (evid() == -1)
                 {
-                    list(0, listmax) = 56;
-                    listn(0, listmax) = lang(
-                        u8"気持ちいいことしない？"s,
-                        u8"Interested in a little tail t'night?"s);
-                    ++listmax;
+                    ELONA_APPEND_RESPONSE(
+                        56,
+                        lang(
+                            u8"気持ちいいことしない？"s,
+                            u8"Interested in a little tail t'night?"s));
                 }
             }
         }
@@ -380,16 +333,14 @@ void talk_npc()
     {
         if (evid() == -1)
         {
-            list(0, listmax) = 60;
-            listn(0, listmax) = lang(u8"暗い場所に移ろう"s, u8"I'll buy you."s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(
+                60, lang(u8"暗い場所に移ろう"s, u8"I'll buy you."s));
         }
     }
     if (cdata[tc].character_role == 23)
     {
-        list(0, listmax) = 61;
-        listn(0, listmax) = lang(u8"キャラバンを雇う"s, u8"Hire caravan."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(
+            61, lang(u8"キャラバンを雇う"s, u8"Hire caravan."s));
     }
     f = 0;
     deliver(0) = -1;
@@ -489,32 +440,29 @@ void talk_npc()
             }
             if (supply != -1)
             {
-                list(0, listmax) = 26;
-                listn(0, listmax) = lang(
-                    itemname(supply, 1) + u8"を納入する"s,
-                    u8"Here is "s + itemname(supply, 1) + u8" you asked."s);
-                ++listmax;
+                ELONA_APPEND_RESPONSE(
+                    26,
+                    lang(
+                        itemname(supply, 1) + u8"を納入する"s,
+                        u8"Here is "s + itemname(supply, 1)
+                            + u8" you asked."s));
             }
             else
             {
-                list(0, listmax) = 24;
-                listn(0, listmax) =
-                    lang(u8"依頼について"s, u8"About the work."s);
-                ++listmax;
+                ELONA_APPEND_RESPONSE(
+                    24, lang(u8"依頼について"s, u8"About the work."s));
             }
         }
         else if (qdata(3, rq) != 0)
         {
-            list(0, listmax) = 24;
-            listn(0, listmax) = lang(u8"依頼について"s, u8"About the work."s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(
+                24, lang(u8"依頼について"s, u8"About the work."s));
         }
     }
     if (deliver != -1 && deliver(1) != -1)
     {
-        list(0, listmax) = 25;
-        listn(0, listmax) = lang(u8"配達物を渡す"s, u8"Here's your delivery."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(
+            25, lang(u8"配達物を渡す"s, u8"Here's your delivery."s));
     }
     if (gdata_current_map == 7)
     {
@@ -526,10 +474,8 @@ void talk_npc()
                      || cdata[tc].character_role >= 3000)
                     && evid() == -1)
                 {
-                    list(0, listmax) = 44;
-                    listn(0, listmax) =
-                        lang(u8"解雇する"s, u8"You are fired."s);
-                    ++listmax;
+                    ELONA_APPEND_RESPONSE(
+                        44, lang(u8"解雇する"s, u8"You are fired."s));
                 }
             }
         }
@@ -543,17 +489,16 @@ void talk_npc()
             {
                 if (cdata[rc].state == 1)
                 {
-                    list(0, listmax) = 52;
-                    listn(0, listmax) = lang(
-                        u8"パエルの母を売る"s, u8"I want to sell Pael's mom."s);
-                    ++listmax;
+                    ELONA_APPEND_RESPONSE(
+                        52,
+                        lang(
+                            u8"パエルの母を売る"s,
+                            u8"I want to sell Pael's mom."s));
                 }
             }
         }
     }
-    list(0, listmax) = 0;
-    listn(0, listmax) = i18n::_(u8"ui", u8"bye");
-    ++listmax;
+    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
     chatesc = 1;
     talk_window();
     if (chatval == 10 || chatval == 11)
@@ -575,19 +520,9 @@ void talk_npc()
                                 u8"犯罪者に売る物はない"s + _yo(),
                                 u8"I don't have business with criminals."s);
                             tc = tc * 1 + 0;
-                            list(0, listmax) = 0;
-                            listn(0, listmax) = i18n::_(u8"ui", u8"more");
-                            ++listmax;
+                            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                             chatesc = 1;
-                            talk_window();
-                            if (scenemode)
-                            {
-                                if (scene_cut == 1)
-                                {
-                                    talk_end();
-                                    return;
-                                }
-                            }
+                            ELONA_TALK_SCENE_CUT();
                             talk_npc();
                             return;
                         }
@@ -922,12 +857,8 @@ void talk_npc()
                 u8"Your play is a group of monster around level "s + arenaop(1)
                     + u8". Sounds easy huh?"s);
         }
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"挑戦する"s, u8"Alright."s);
-        ++listmax;
-        list(0, listmax) = 0;
-        listn(0, listmax) = lang(u8"やめる"s, u8"I'll pass."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(1, lang(u8"挑戦する"s, u8"Alright."s));
+        ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"I'll pass."s));
         chatesc = 1;
         talk_window();
         if (chatval != 1)
@@ -1025,12 +956,8 @@ void talk_npc()
                     u8" match. The opponent's group is formed by the pets less than "s +
                     arenaop(2) + u8" levels. What you say?"s);
         }
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"挑戦する"s, u8"I'll send my pet."s);
-        ++listmax;
-        list(0, listmax) = 0;
-        listn(0, listmax) = lang(u8"やめる"s, u8"I'll pass."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(1, lang(u8"挑戦する"s, u8"I'll send my pet."s));
+        ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"I'll pass."s));
         chatesc = 1;
         talk_window();
         if (chatval != 1)
@@ -1146,13 +1073,9 @@ void talk_npc()
         buff = lang(
             _rob(2),
             u8"Oh crap. Another bandit trying to spoil my business! Form up, mercenaries."s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"神に祈れ"s, u8"Pray to your God."s);
-        ++listmax;
-        list(0, listmax) = 0;
-        listn(0, listmax) =
-            lang(u8"いや、冗談です"s, u8"W-Wait! I was just kidding."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(1, lang(u8"神に祈れ"s, u8"Pray to your God."s));
+        ELONA_APPEND_RESPONSE(
+            0, lang(u8"いや、冗談です"s, u8"W-Wait! I was just kidding."s));
         chatesc = 1;
         talk_window();
         if (chatval != 1)
@@ -1177,9 +1100,7 @@ void talk_npc()
         if (inv[p].param1 == 0)
         {
             buff = lang(u8"む…中身が空っぽ"s + _dana(2), u8"Hmm! It's empty!"s);
-            list(0, listmax) = 0;
-            listn(0, listmax) = lang(u8"しまった…"s, u8"Oops...!"s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(0, lang(u8"しまった…"s, u8"Oops...!"s));
             chatesc = 1;
             talk_window();
             modify_karma(0, -5);
@@ -1190,9 +1111,8 @@ void talk_npc()
                 u8"わざわざ落し物を届けてくれた"s + _noka() + _kimi(3)
                     + u8"は市民の模範"s + _da() + _thanks(),
                 u8"How nice of you to take the trouble to bring it. You're a model citizen indeed!"s);
-            list(0, listmax) = 0;
-            listn(0, listmax) = lang(u8"当然のことだ"s, u8"It's nothing."s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(
+                0, lang(u8"当然のことだ"s, u8"It's nothing."s));
             chatesc = 1;
             talk_window();
             modify_karma(0, 5);
@@ -1205,24 +1125,13 @@ void talk_npc()
                         + u8"随分と頻繁に財布を見つけられるもの"s + _dana(),
                     u8"Oh, it's you again? How come you find the wallets so often?"s);
                 tc = tc * 1 + 0;
-                list(0, listmax) = 0;
-                listn(0, listmax) = i18n::_(u8"ui", u8"more");
-                ++listmax;
+                ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
-                talk_window();
-                if (scenemode)
-                {
-                    if (scene_cut == 1)
-                    {
-                        talk_end();
-                        return;
-                    }
-                }
+                ELONA_TALK_SCENE_CUT();
                 buff = lang(u8"（…あやしい）"s, u8"(...suspicious)"s);
-                list(0, listmax) = 0;
-                listn(0, listmax) =
-                    lang(u8"ぎくっ"s, u8"I really found it on the street!"s);
-                ++listmax;
+                ELONA_APPEND_RESPONSE(
+                    0,
+                    lang(u8"ぎくっ"s, u8"I really found it on the street!"s));
                 chatesc = 1;
                 talk_window();
                 modify_karma(0, -10);
@@ -1256,13 +1165,9 @@ void talk_npc()
                     + calcresurrectvalue(rc) + u8" gold pieces."s);
             if (cdata[0].gold >= calcresurrectvalue(rc))
             {
-                list(0, listmax) = 1;
-                listn(0, listmax) = lang(u8"呼び戻す"s, u8"I'll pay."s);
-                ++listmax;
+                ELONA_APPEND_RESPONSE(1, lang(u8"呼び戻す"s, u8"I'll pay."s));
             }
-            list(0, listmax) = 0;
-            listn(0, listmax) = lang(u8"やめる"s, u8"Never mind."s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"Never mind."s));
             chatesc = 1;
             talk_window();
             if (chatval == 1)
@@ -1295,19 +1200,9 @@ void talk_npc()
             u8"(あなたは、"s + name(tc) + u8"に街で待っているように指示した)"s,
             u8"(You order "s + name(tc) + u8" to wait at the town.)"s);
         tc = tc * 1 + 0;
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
-        ++listmax;
+        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
-        talk_window();
-        if (scenemode)
-        {
-            if (scene_cut == 1)
-            {
-                talk_end();
-                return;
-            }
-        }
+        ELONA_TALK_SCENE_CUT();
         map(cdata[tc].position.x, cdata[tc].position.y, 1) = 0;
         cdata[tc].state = 7;
         cdata[tc].current_map = 0;
@@ -1322,12 +1217,8 @@ void talk_npc()
                 + u8"は悲しそうな目であなたを見ている。本当に縁を切る？)"s,
             u8"("s + name(tc) + u8" looks at you sadly. Really abandon "s
                 + him(tc) + u8"? )"s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"切る"s, u8"Yes."s);
-        ++listmax;
-        list(0, listmax) = 0;
-        listn(0, listmax) = lang(u8"やめる"s, u8"No."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(1, lang(u8"切る"s, u8"Yes."s));
+        ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"No."s));
         chatesc = 1;
         talk_window();
         if (chatval == 1)
@@ -1376,13 +1267,9 @@ void talk_npc()
                 + u8" gold pieces. I'd say it's quite a bargain!"s);
         if (cdata[0].gold >= calcslavevalue(56))
         {
-            list(0, listmax) = 1;
-            listn(0, listmax) = lang(u8"買い取る"s, u8"I'll pay."s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(1, lang(u8"買い取る"s, u8"I'll pay."s));
         }
-        list(0, listmax) = 0;
-        listn(0, listmax) = lang(u8"やめる"s, u8"Never mind."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"Never mind."s));
         chatesc = 1;
         talk_window();
         if (chatval == 1)
@@ -1416,12 +1303,8 @@ void talk_npc()
                     + i18n::_(u8"ui", u8"gold") + u8"でどう"s + _da(1),
                 u8"Let me see....Hmmm, this one got a nice figure. I'll give you "s
                     + calcslavevalue(rc) * 2 / 3 + u8" gold pieces."s);
-            list(0, listmax) = 1;
-            listn(0, listmax) = lang(u8"売る"s, u8"Deal."s);
-            ++listmax;
-            list(0, listmax) = 0;
-            listn(0, listmax) = lang(u8"やめる"s, u8"No way."s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(1, lang(u8"売る"s, u8"Deal."s));
+            ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"No way."s));
             chatesc = 1;
             talk_window();
             if (chatval == 1)
@@ -1468,19 +1351,9 @@ void talk_npc()
         listmax = 0;
         buff = lang(u8"はい…喜んで。"s, u8"With preasure."s);
         tc = tc * 1 + 0;
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
-        ++listmax;
+        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
-        talk_window();
-        if (scenemode)
-        {
-            if (scene_cut == 1)
-            {
-                talk_end();
-                return;
-            }
-        }
+        ELONA_TALK_SCENE_CUT();
         marry = tc;
         evadd(13);
         talk_end();
@@ -1493,38 +1366,18 @@ void talk_npc()
             listmax = 0;
             buff = lang(u8"こんな場所では嫌よ"s, u8"Not here!"s);
             tc = tc * 1 + 0;
-            list(0, listmax) = 0;
-            listn(0, listmax) = i18n::_(u8"ui", u8"more");
-            ++listmax;
+            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
-            talk_window();
-            if (scenemode)
-            {
-                if (scene_cut == 1)
-                {
-                    talk_end();
-                    return;
-                }
-            }
+            ELONA_TALK_SCENE_CUT();
             talk_end();
             return;
         }
         listmax = 0;
         buff = lang(u8"いやん、あなたったら…"s, u8"*blush*"s);
         tc = tc * 1 + 0;
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
-        ++listmax;
+        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
-        talk_window();
-        if (scenemode)
-        {
-            if (scene_cut == 1)
-            {
-                talk_end();
-                return;
-            }
-        }
+        ELONA_TALK_SCENE_CUT();
         cbitmod(962, tc, 1);
         if (gdata_wizard == 0)
         {
@@ -1541,19 +1394,9 @@ void talk_npc()
                 + u8"すみやかに避難して"s + _kure(),
             u8"The shelter is free to use for anyone. Here, come in."s);
         tc = tc * 1 + 0;
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
-        ++listmax;
+        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
-        talk_window();
-        if (scenemode)
-        {
-            if (scene_cut == 1)
-            {
-                talk_end();
-                return;
-            }
-        }
+        ELONA_TALK_SCENE_CUT();
         gdata_previous_map2 = gdata_current_map;
         gdata_previous_dungeon_level = gdata_current_dungeon_level;
         gdata_previous_x = cdata[0].position.x;
@@ -1574,12 +1417,8 @@ void talk_npc()
                 + u8"は悲しそうな目であなたを見ている。本当に縁を切る？)"s,
             u8"("s + name(tc) + u8" looks at you sadly. Really dismiss "s
                 + him(tc) + u8"? )"s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"切る"s, u8"Yes."s);
-        ++listmax;
-        list(0, listmax) = 0;
-        listn(0, listmax) = lang(u8"やめる"s, u8"No."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(1, lang(u8"切る"s, u8"Yes."s));
+        ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"No."s));
         chatesc = 1;
         talk_window();
         if (chatval == 1)
@@ -1663,13 +1502,10 @@ void talk_npc()
                 + calcguiltvalue() + u8" gold pieces."s);
         if (cdata[0].gold >= calcguiltvalue())
         {
-            list(0, listmax) = 1;
-            listn(0, listmax) = lang(u8"買う"s, u8"Deal."s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(1, lang(u8"買う"s, u8"Deal."s));
         }
-        list(0, listmax) = 0;
-        listn(0, listmax) = lang(u8"やめる"s, u8"The price is too high."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(
+            0, lang(u8"やめる"s, u8"The price is too high."s));
         chatesc = 1;
         talk_window();
         if (chatval == 1)
@@ -1700,14 +1536,10 @@ void talk_npc()
                 u8"10000 gold pieces."s);
             if (cdata[0].gold >= 10000)
             {
-                list(0, listmax) = 1;
-                listn(0, listmax) =
-                    lang(u8"調査する"s, u8"Too expensive, but okay."s);
-                ++listmax;
+                ELONA_APPEND_RESPONSE(
+                    1, lang(u8"調査する"s, u8"Too expensive, but okay."s));
             }
-            list(0, listmax) = 0;
-            listn(0, listmax) = lang(u8"やめる"s, u8"No way!"s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"No way!"s));
             chatesc = 1;
             talk_window();
             if (chatval == 1)
@@ -1766,13 +1598,9 @@ void talk_npc()
                 + u8" gold pieces, for seven day."s);
         if (cdata[0].gold >= calchireadv(tc))
         {
-            list(0, listmax) = 1;
-            listn(0, listmax) = lang(u8"頼む"s, u8"Sounds fair enough."s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(1, lang(u8"頼む"s, u8"Sounds fair enough."s));
         }
-        list(0, listmax) = 0;
-        listn(0, listmax) = lang(u8"やめる"s, u8"Some other time."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"Some other time."s));
         chatesc = 1;
         talk_window();
         if (chatval == 1)
@@ -1816,19 +1644,9 @@ void talk_npc()
                 _kimi(3) + u8"となら上手くやっていけそう"s + _da() + _yoro(2),
                 u8"Sure, I guess you and I can make a good team."s);
             tc = tc * 1 + 0;
-            list(0, listmax) = 0;
-            listn(0, listmax) = i18n::_(u8"ui", u8"more");
-            ++listmax;
+            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
-            talk_window();
-            if (scenemode)
-            {
-                if (scene_cut == 1)
-                {
-                    talk_end();
-                    return;
-                }
-            }
+            ELONA_TALK_SCENE_CUT();
             f = get_freeally();
             if (f == 0)
             {
@@ -1861,12 +1679,8 @@ void talk_npc()
         buff = lang(
             u8"ほほう、モンスターの顔をした人間か。見世物としてなかなかいけそうだ。金貨50000枚で買い取ろう。"s,
             u8"Look what we have! A woman who got a monster's face. It'll be a good show. Wanna sell me for 50000 gold coins?"s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"売る"s, u8"Sure, take her."s);
-        ++listmax;
-        list(0, listmax) = 0;
-        listn(0, listmax) = lang(u8"やめる"s, u8"You cold bastard."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(1, lang(u8"売る"s, u8"Sure, take her."s));
+        ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"You cold bastard."s));
         chatesc = 1;
         talk_window();
         if (chatval == 1)
@@ -1899,19 +1713,9 @@ void talk_npc()
                 + _ru() + _kimi(3) + u8"も帰還サービスを希望"s + _kana(),
             u8"I'm practicing a spell of return. Would you like to take my service?"s);
         tc = tc * 1 + 0;
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
-        ++listmax;
+        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
-        talk_window();
-        if (scenemode)
-        {
-            if (scene_cut == 1)
-            {
-                talk_end();
-                return;
-            }
-        }
+        ELONA_TALK_SCENE_CUT();
         label_2081();
         talk_end();
         return;
@@ -1933,13 +1737,9 @@ void talk_npc()
                 + calccostreload(0) + u8" gold pieces."s);
         if (cdata[0].gold >= calccostreload(0))
         {
-            list(0, listmax) = 1;
-            listn(0, listmax) = lang(u8"頼む"s, u8"Alright."s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(1, lang(u8"頼む"s, u8"Alright."s));
         }
-        list(0, listmax) = 0;
-        listn(0, listmax) = lang(u8"やめる"s, u8"Another time."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"Another time."s));
         chatesc = 1;
         talk_window();
         if (chatval == 1)
@@ -1968,12 +1768,8 @@ void talk_npc()
     }
     if (chatval == 56)
     {
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"はじめる"s, u8"Let's do it."s);
-        ++listmax;
-        list(0, listmax) = 0;
-        listn(0, listmax) = lang(u8"やめる"s, u8"W-wai.t.."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(1, lang(u8"はじめる"s, u8"Let's do it."s));
+        ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"W-wai.t.."s));
         buff = lang(
             u8"なかなかの体つき"s + _dana() + u8"よし、買"s + _u(2),
             u8"You are...quite attractive. I'll buy you."s);
@@ -1987,19 +1783,9 @@ void talk_npc()
         listmax = 0;
         buff = lang(u8"いく"s + _yo(2), u8"Okay, no turning back now!"s);
         tc = tc * 1 + 0;
-        list(0, listmax) = 0;
-        listn(0, listmax) = lang(u8"うふふ"s, u8"Come on!"s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(0, lang(u8"うふふ"s, u8"Come on!"s));
         chatesc = 1;
-        talk_window();
-        if (scenemode)
-        {
-            if (scene_cut == 1)
-            {
-                talk_end();
-                return;
-            }
-        }
+        ELONA_TALK_SCENE_CUT();
         label_2147();
         talk_end();
         return;
@@ -2019,19 +1805,9 @@ void talk_npc()
         listmax = 0;
         buff = lang(u8"追い返す"s + _yo(), u8"Alright."s);
         tc = tc * 1 + 0;
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"more");
-        ++listmax;
+        ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
-        talk_window();
-        if (scenemode)
-        {
-            if (scene_cut == 1)
-            {
-                talk_end();
-                return;
-            }
-        }
+        ELONA_TALK_SCENE_CUT();
         buff = "";
         talk_npc();
         return;
@@ -2041,13 +1817,9 @@ void talk_npc()
         sexvalue = sdata(17, tc) * 25 + 100 + cdata[0].fame / 10;
         if (cdata[0].gold >= sexvalue)
         {
-            list(0, listmax) = 1;
-            listn(0, listmax) = lang(u8"はじめる"s, u8"Let's do it."s);
-            ++listmax;
+            ELONA_APPEND_RESPONSE(1, lang(u8"はじめる"s, u8"Let's do it."s));
         }
-        list(0, listmax) = 0;
-        listn(0, listmax) = lang(u8"やめる"s, u8"W-wai.t.."s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"W-wai.t.."s));
         buff = lang(
             u8"そう"s + _dana() + u8"金貨"s + sexvalue + u8"枚を前払いで"s
                 + _kure(),
@@ -2066,19 +1838,9 @@ void talk_npc()
         listmax = 0;
         buff = lang(u8"いく"s + _yo(2), u8"Okay, no turning back now!"s);
         tc = tc * 1 + 0;
-        list(0, listmax) = 0;
-        listn(0, listmax) = lang(u8"うふふ"s, u8"Come on!"s);
-        ++listmax;
+        ELONA_APPEND_RESPONSE(0, lang(u8"うふふ"s, u8"Come on!"s));
         chatesc = 1;
-        talk_window();
-        if (scenemode)
-        {
-            if (scene_cut == 1)
-            {
-                talk_end();
-                return;
-            }
-        }
+        ELONA_TALK_SCENE_CUT();
         cc = tc;
         tc = 0;
         label_2147();
@@ -2110,14 +1872,10 @@ void talk_npc()
         {
             if (p(cnt) == 0)
             {
-                list(0, listmax) = 0;
-                listn(0, listmax) = lang(u8"やめる"s, u8"Never mind!"s);
-                ++listmax;
+                ELONA_APPEND_RESPONSE(0, lang(u8"やめる"s, u8"Never mind!"s));
                 break;
             }
-            list(0, listmax) = p(cnt);
-            listn(0, listmax) = mapname(p(cnt));
-            ++listmax;
+            ELONA_APPEND_RESPONSE(p(cnt), mapname(p(cnt)));
         }
         buff = lang(u8"つぇｔ"s, u8"tset"s);
         talk_window();

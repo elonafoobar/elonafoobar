@@ -9,6 +9,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "macro.hpp"
 #include "map.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
@@ -2948,13 +2949,7 @@ label_2181_internal:
                 txt(lang(
                     u8"依頼請負中の帰還は法律で禁止されている。それでも帰還する？"s,
                     u8"Returning while taking a quest if forbidden. Are you sure you want to return?"s));
-                promptl(0, 0) = i18n::_(u8"ui", u8"yes");
-                promptl(1, 0) = u8"y"s;
-                promptl(2, 0) = u8"0"s;
-                promptl(0, 1) = i18n::_(u8"ui", u8"no");
-                promptl(1, 1) = u8"n"s;
-                promptl(2, 1) = u8"1"s;
-                promptmax = 2;
+                ELONA_YES_NO_PROMPT();
                 show_prompt(promptx, prompty, 160);
                 if (rtval != 0)
                 {

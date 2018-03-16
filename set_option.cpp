@@ -1,5 +1,6 @@
 #include "config.hpp"
 #include "elona.hpp"
+#include "macro.hpp"
 #include "variables.hpp"
 
 
@@ -920,16 +921,7 @@ void set_option()
         await(cfg_wait1);
         key_check();
         cursor_check();
-        p = -1;
-        for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-        {
-            if (key == key_select(cnt))
-            {
-                p = list(0, pagesize * page + cnt);
-                cs = cnt;
-                break;
-            }
-        }
+        ELONA_GET_SELECTED_ITEM(p, cs = i);
         if (p != -1)
         {
             if (submenu == 0)

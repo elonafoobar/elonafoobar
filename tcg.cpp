@@ -1,6 +1,7 @@
 #include "ctrl_file.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
+#include "macro.hpp"
 #include "variables.hpp"
 
 
@@ -1788,10 +1789,7 @@ void tcgdeck()
                     s_at_tcg(cnt) += u8" [Use]"s;
                 }
             }
-            promptl(0, promptmax) = s_at_tcg(cnt);
-            promptl(1, promptmax) = u8"null"s;
-            promptl(2, promptmax) = ""s + promptmax;
-            ++promptmax;
+            ELONA_APPEND_PROMPT(s_at_tcg(cnt), u8"null"s, ""s + promptmax);
         }
         show_prompt(basex_at_tcg + 400, basey_at_tcg + 230, 300);
         if (rtval == -1)
@@ -1802,15 +1800,14 @@ void tcgdeck()
         curdeck = rtval;
         if (fs::exists(fs::u8path(u8"./tmp/deck_"s + curdeck + u8".s2")))
         {
-            promptl(0, promptmax) = lang(u8"デッキの構築"s, u8"Edit Deck"s);
-            promptl(1, promptmax) = u8"null"s;
-            promptl(2, promptmax) = ""s + promptmax;
-            ++promptmax;
-            promptl(0, promptmax) =
-                lang(u8"メインデッキに設定"s, u8"Set as Main Deck"s);
-            promptl(1, promptmax) = u8"null"s;
-            promptl(2, promptmax) = ""s + promptmax;
-            ++promptmax;
+            ELONA_APPEND_PROMPT(
+                lang(u8"デッキの構築"s, u8"Edit Deck"s),
+                u8"null"s,
+                ""s + promptmax);
+            ELONA_APPEND_PROMPT(
+                lang(u8"メインデッキに設定"s, u8"Set as Main Deck"s),
+                u8"null"s,
+                ""s + promptmax);
             show_prompt(400, basey_at_tcg + 230, 240);
             if (rtval == -1)
             {
@@ -2696,15 +2693,14 @@ label_1830_internal:
     {
         if (deckmode_at_tcg == 0)
         {
-            promptl(0, promptmax) = lang(u8"セーブして終了"s, u8"Save & Exit"s);
-            promptl(1, promptmax) = u8"null"s;
-            promptl(2, promptmax) = ""s + promptmax;
-            ++promptmax;
-            promptl(0, promptmax) =
-                lang(u8"セーブしないで終了"s, u8"Just Exit"s);
-            promptl(1, promptmax) = u8"null"s;
-            promptl(2, promptmax) = ""s + promptmax;
-            ++promptmax;
+            ELONA_APPEND_PROMPT(
+                lang(u8"セーブして終了"s, u8"Save & Exit"s),
+                u8"null"s,
+                ""s + promptmax);
+            ELONA_APPEND_PROMPT(
+                lang(u8"セーブしないで終了"s, u8"Just Exit"s),
+                u8"null"s,
+                ""s + promptmax);
             show_prompt(basex_at_tcg + 420, basey_at_tcg + 230, 240);
             if (rtval == 0)
             {
@@ -3023,10 +3019,10 @@ void label_1836()
         }
         if (key == u8"s"s)
         {
-            promptl(0, promptmax) = lang(u8"降参する"s, u8"Surrender"s);
-            promptl(1, promptmax) = u8"null"s;
-            promptl(2, promptmax) = ""s + promptmax;
-            ++promptmax;
+            ELONA_APPEND_PROMPT(
+                lang(u8"降参する"s, u8"Surrender"s),
+                u8"null"s,
+                ""s + promptmax);
             show_prompt(basex_at_tcg + 420, basey_at_tcg + 230, 200);
             if (rtval == 0)
             {
