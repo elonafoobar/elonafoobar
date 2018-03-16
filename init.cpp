@@ -1111,18 +1111,7 @@ void character_making_select_race()
         await(cfg_wait1);
         key_check();
         cursor_check();
-        for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-        {
-            if (key == key_select(cnt))
-            {
-                p = page * pagesize + cnt;
-                break;
-            }
-            else
-            {
-                p = -1;
-            }
-        }
+        ELONA_GET_SELECTED_INDEX(p);
         if (p != -1)
         {
             cmrace(0) = listn(1, p);
@@ -1344,18 +1333,7 @@ void character_making_select_class(bool label_1551_flg)
         await(cfg_wait1);
         key_check();
         cursor_check();
-        for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-        {
-            if (key == key_select(cnt))
-            {
-                p = page * pagesize + cnt;
-                break;
-            }
-            else
-            {
-                p = -1;
-            }
-        }
+        ELONA_GET_SELECTED_INDEX(p);
         if (p != -1)
         {
             cmclass = listn(1, p);
@@ -1504,18 +1482,7 @@ void character_making_role_attributes(bool label_1554_flg)
         await(cfg_wait1);
         key_check();
         cursor_check();
-        for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-        {
-            if (key == key_select(cnt))
-            {
-                p = cnt;
-                break;
-            }
-            else
-            {
-                p = -1;
-            }
-        }
+        ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);
         if (p != -1)
         {
             if (p == 0)
@@ -1673,18 +1640,7 @@ void character_making_select_feats_and_alias(bool label_1558_flg)
         await(cfg_wait1);
         key_check();
         cursor_check();
-        for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-        {
-            if (key == key_select(cnt))
-            {
-                p = cnt;
-                break;
-            }
-            else
-            {
-                p = -1;
-            }
-        }
+        ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);
         if (p != -1)
         {
             if (key == key_select(0))

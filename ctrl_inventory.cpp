@@ -1075,16 +1075,8 @@ label_2061_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
     invmark(invctrl) = page * 1000 + cs;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, 0);
     if (mode == 9)
     {
         if (listmax == 0)

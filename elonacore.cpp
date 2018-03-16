@@ -17052,16 +17052,7 @@ label_1402_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            cs = cnt;
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, cs = i);
     if (p != -1)
     {
         if (p == -999)
@@ -34494,15 +34485,7 @@ label_1857_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, 0);
     if (p != -1)
     {
         matid = p;
@@ -34676,15 +34659,7 @@ label_1861_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, 0);
     if (menucycle == 1)
     {
         if (key == key_next || key == key_prev)
@@ -34971,16 +34946,7 @@ label_1868_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    rtval = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            rtval = list(0, pagesize * page + cnt);
-            snd(40);
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(rtval, snd(40));
     if (chatesc != -1)
     {
         if (key == key_cancel)
@@ -36637,16 +36603,7 @@ label_1887_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    rtval = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            rtval = list(0, pagesize * page + cnt);
-            snd(40);
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(rtval, snd(40));
     if (chatesc != -1)
     {
         if (key == key_cancel)
@@ -37893,16 +37850,7 @@ label_1897_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    rtval = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            rtval = list(0, pagesize * page + cnt);
-            snd(40);
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(rtval, snd(40));
     if (chatesc != -1)
     {
         if (key == key_cancel)
@@ -39379,15 +39327,7 @@ label_1925_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, 0);
     if (p != -1)
     {
         rpid = p;
@@ -39530,15 +39470,7 @@ label_1928_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, 0);
     if (key == key_pageup)
     {
         if (pagemax != 0)
@@ -40482,15 +40414,7 @@ label_1945_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, 0);
     if (p != -1)
     {
         if (p == -999)
@@ -41085,15 +41009,7 @@ label_1953_internal:
     {
         key = key_list(cs);
     }
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, 0);
     if (p != -1)
     {
         cdata[0].enemy_id = p;
@@ -41588,15 +41504,7 @@ label_1961_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, 0);
     if (p != -1)
     {
         if (allyctrl == 5)
@@ -42292,15 +42200,7 @@ label_1970_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = pagesize * page + cnt;
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_INDEX(p);
     if (tc == 0)
     {
         if (gdata_acquirable_feat_count > 0)
@@ -42979,15 +42879,7 @@ label_1978_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, 0);
     if (p != -1)
     {
         txtnew();
@@ -43205,15 +43097,7 @@ label_1982_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, 0);
     if (p != -1)
     {
         return p;
@@ -43338,15 +43222,7 @@ label_1986_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, 0);
     if (p != -1)
     {
         if (p == 289 || p == 732)
@@ -43501,15 +43377,7 @@ label_1990_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, 0);
     if (key == key_pageup)
     {
         if (pagemax != 0)
@@ -43614,18 +43482,7 @@ int select_alias(int val0)
         await(cfg_wait1);
         key_check();
         cursor_check();
-        for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-        {
-            if (key == key_select(cnt))
-            {
-                p = cnt;
-                break;
-            }
-            else
-            {
-                p = -1;
-            }
-        }
+        ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);
         if (p != -1)
         {
             if (key == key_select(0))
@@ -44571,16 +44428,8 @@ label_2009_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
     commark(0) = page * 1000 + cs;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, 0);
     if (p != -1)
     {
         menucycle = 0;
@@ -45053,16 +44902,7 @@ label_2016_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            cs = cnt;
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, cs = i);
     if (p != -1)
     {
         snd(20);
@@ -45206,16 +45046,7 @@ label_2020_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            cs = cnt;
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, cs = i);
     if (p != -1)
     {
         listmax = p;
@@ -45514,16 +45345,8 @@ label_2029_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
     commark(1) = page * 1000 + cs;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, 0);
     if (p != -1)
     {
         menucycle = 0;
@@ -47834,15 +47657,7 @@ label_2052_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, 0);
     if (p != -1)
     {
         cs_prev = cs;
@@ -65420,15 +65235,7 @@ label_2272_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, 0);
     if (p != -1)
     {
         return;
@@ -65820,15 +65627,7 @@ label_2283_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, 0);
     if (menucycle == 1)
     {
         if (key == key_next || key == key_prev)
@@ -70321,16 +70120,7 @@ label_2705_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            cs = cnt;
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, cs = i);
     if (p != -1)
     {
         snd(20);
@@ -70911,15 +70701,7 @@ label_2729_internal:
     await(cfg_wait1);
     key_check();
     cursor_check();
-    p = -1;
-    for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
-    {
-        if (key == key_select(cnt))
-        {
-            p = list(0, pagesize * page + cnt);
-            break;
-        }
-    }
+    ELONA_GET_SELECTED_ITEM(p, 0);
     if (p != -1)
     {
         sceneid = p;
