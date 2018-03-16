@@ -17814,7 +17814,7 @@ void render_hud()
         gcopy(3, 0, 416, 50 + en * 30, 15);
         pos(sx + 6, sy + 1);
         mes(i18n::_(
-            u8"ui", u8"body_part", u8"_"s + cdata[0].inventory_weight_type));
+            u8"ui", u8"burden", u8"_"s + cdata[0].inventory_weight_type));
         color(0, 0, 0);
         sy -= 20;
     }
