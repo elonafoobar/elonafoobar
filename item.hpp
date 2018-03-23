@@ -44,7 +44,8 @@ struct item
     int quality = 0;
     position_t position;
     int weight = 0;
-    int identification_state = 0;
+    identification_state_t identification_state =
+        identification_state_t::unidentified;
     int count = 0;
     int dice_x = 0;
     int dice_y = 0;
@@ -148,6 +149,9 @@ inline inventory inv;
 int ibit(size_t type, int ci);
 void ibitmod(size_t type, int ci, int on);
 
+
+identification_state_t item_identify(item& ci, identification_state_t level);
+identification_state_t item_identify(item& ci, int power);
 
 
 range::iota<int> items(int owner);

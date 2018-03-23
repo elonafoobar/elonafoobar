@@ -843,7 +843,7 @@ int calcitemvalue(int ci, int situation)
 {
     int category = the_item_db[inv[ci].id]->category;
     int ret = 0;
-    if (inv[ci].identification_state == 0)
+    if (inv[ci].identification_state == identification_state_t::unidentified)
     {
         if (situation == 2)
         {
@@ -862,20 +862,22 @@ int calcitemvalue(int ci, int situation)
     }
     else
     {
-        if (inv[ci].identification_state == 1)
+        switch (inv[ci].identification_state)
         {
+        case identification_state_t::unidentified: break;
+        case identification_state_t::partly_identified:
             ret = inv[ci].value * 2 / 10;
-        }
-        if (inv[ci].identification_state == 2)
-        {
+            break;
+        case identification_state_t::almost_identified:
             ret = inv[ci].value * 5 / 10;
-        }
-        if (inv[ci].identification_state >= 3)
-        {
+            break;
+        case identification_state_t::completely_identified:
             ret = inv[ci].value;
+            break;
         }
     }
-    if (inv[ci].identification_state >= 3)
+    if (inv[ci].identification_state
+        == identification_state_t::completely_identified)
     {
         switch (inv[ci].curse_state)
         {
@@ -1222,7 +1224,8 @@ int calcidentifyvalue(int type)
             {
                 continue;
             }
-            if (inv[cnt].identification_state < 3)
+            if (inv[cnt].identification_state
+                != identification_state_t::completely_identified)
             {
                 ++need_to_identify;
             }
