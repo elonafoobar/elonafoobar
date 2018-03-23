@@ -1143,17 +1143,18 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
         }
         if (inv[prm_518].identification_state >= 3)
         {
-            if (inv[prm_518].curse_state == 1)
+            switch (inv[prm_518].curse_state)
             {
-                s_ += i18n::_(u8"ui", u8"blessed");
-            }
-            if (inv[prm_518].curse_state == -1)
-            {
-                s_ += i18n::_(u8"ui", u8"cursed");
-            }
-            if (inv[prm_518].curse_state == -2)
-            {
+            case curse_state_t::doomed:
                 s_ += i18n::_(u8"ui", u8"doomed");
+                break;
+            case curse_state_t::cursed:
+                s_ += i18n::_(u8"ui", u8"cursed");
+                break;
+            case curse_state_t::none: break;
+            case curse_state_t::blessed:
+                s_ += i18n::_(u8"ui", u8"blessed");
+                break;
             }
         }
     }
@@ -1162,17 +1163,18 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
         s_ = "";
         if (inv[prm_518].identification_state >= 3)
         {
-            if (inv[prm_518].curse_state == 1)
+            switch (inv[prm_518].curse_state)
             {
-                s_ = i18n::_(u8"ui", u8"blessed") + u8" "s;
-            }
-            if (inv[prm_518].curse_state == -1)
-            {
-                s_ = i18n::_(u8"ui", u8"cursed") + u8" "s;
-            }
-            if (inv[prm_518].curse_state == -2)
-            {
+            case curse_state_t::doomed:
                 s_ = i18n::_(u8"ui", u8"doomed") + u8" "s;
+                break;
+            case curse_state_t::cursed:
+                s_ = i18n::_(u8"ui", u8"cursed") + u8" "s;
+                break;
+            case curse_state_t::none: break;
+            case curse_state_t::blessed:
+                s_ = i18n::_(u8"ui", u8"blessed") + u8" "s;
+                break;
             }
         }
         if (irandomname(inv[prm_518].id) == 1
@@ -1517,11 +1519,11 @@ label_0313_internal:
         {
             s_ += u8"["s + cnven(mtname(0, inv[prm_518].material)) + u8"]"s;
         }
-        if (inv[prm_518].curse_state == -1)
+        if (inv[prm_518].curse_state == curse_state_t::cursed)
         {
             s_ += lang(u8"(恐ろしい)"s, u8"(Scary)"s);
         }
-        if (inv[prm_518].curse_state == -2)
+        if (inv[prm_518].curse_state == curse_state_t::doomed)
         {
             s_ += lang(u8"(禍々しい)"s, u8"(Dreadful)"s);
         }

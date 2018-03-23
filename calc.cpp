@@ -633,7 +633,8 @@ int calcattackdmg(int prm_894)
     else
     {
         dmgfix = cdata[cc].damage_bonus + inv[cw].damage_bonus
-            + inv[cw].enhancement + (inv[cw].curse_state == 1);
+            + inv[cw].enhancement
+            + (inv[cw].curse_state == curse_state_t::blessed);
         dice1 = inv[cw].dice_x;
         dice2 = inv[cw].dice_y;
         if (ammo != -1)
@@ -876,17 +877,12 @@ int calcitemvalue(int ci, int situation)
     }
     if (inv[ci].identification_state >= 3)
     {
-        if (inv[ci].curse_state == 1)
+        switch (inv[ci].curse_state)
         {
-            ret = ret * 120 / 100;
-        }
-        if (inv[ci].curse_state == -1)
-        {
-            ret = ret / 2;
-        }
-        if (inv[ci].curse_state == -2)
-        {
-            ret = ret / 5;
+        case curse_state_t::doomed: ret = ret / 5; break;
+        case curse_state_t::cursed: ret = ret / 2; break;
+        case curse_state_t::none: break;
+        case curse_state_t::blessed: ret = ret * 120 / 100; break;
         }
     }
     if (category == 57000)

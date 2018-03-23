@@ -1479,23 +1479,24 @@ label_2061_internal:
                 itemname(ci) + u8"を装備した。"s,
                 u8"You equip "s + itemname(ci) + u8"."s));
             gdata(808) = 1;
-            if (inv[ci].curse_state == -1)
+            switch (inv[ci].curse_state)
             {
-                txt(lang(
-                    name(cc) + u8"は急に寒気がしてふるえた。"s,
-                    u8"You suddenly feel a chill and shudder."s));
-            }
-            if (inv[ci].curse_state == -2)
-            {
+            case curse_state_t::doomed:
                 txt(lang(
                     name(cc) + u8"は破滅への道を歩み始めた。"s,
                     u8"You are now one step closer to doom."s));
-            }
-            if (inv[ci].curse_state == 1)
-            {
+                break;
+            case curse_state_t::cursed:
+                txt(lang(
+                    name(cc) + u8"は急に寒気がしてふるえた。"s,
+                    u8"You suddenly feel a chill and shudder."s));
+                break;
+            case curse_state_t::none: break;
+            case curse_state_t::blessed:
                 txt(lang(
                     name(cc) + u8"は何かに見守られている感じがした。"s,
                     u8"You feel as someone is watching you intently."s));
+                break;
             }
             if (cdata_body_part(cc, body) / 10000 == 5)
             {
@@ -1628,7 +1629,7 @@ label_2061_internal:
                         u8"\"I dont't want it. It's too creepy.\""s));
                     goto label_2060_internal;
                 }
-                if (inv[ci].curse_state <= -1)
+                if (is_cursed(inv[ci].curse_state))
                 {
                     snd(27);
                     txt(lang(
@@ -2004,7 +2005,7 @@ label_2061_internal:
             }
             if (inv[ci].body_part != 0)
             {
-                if (inv[ci].curse_state == -1 || inv[ci].curse_state == -2)
+                if (is_cursed(inv[ci].curse_state))
                 {
                     txt(lang(
                         itemname(ci) + u8"は呪われていて外せない。"s,

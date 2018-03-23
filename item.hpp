@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <vector>
+#include "enums.hpp"
 #include "position.hpp"
 #include "range.hpp"
 
@@ -52,7 +53,7 @@ struct item
     int dv = 0;
     int pv = 0;
     int skill = 0;
-    int curse_state = 0;
+    curse_state_t curse_state = curse_state_t::none;
     int body_part = 0;
     int function = 0;
     int enhancement = 0;

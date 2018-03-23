@@ -132,7 +132,10 @@ private:
 
 
 
-template <typename Archive, typename T>
+template <
+    typename Archive,
+    typename T,
+    std::enable_if_t<!std::is_enum_v<T>, nullptr_t> = nullptr>
 void serialize(Archive& ar, T& data)
 {
     data.serialize(ar);
@@ -161,6 +164,29 @@ PRIMITIVE_TYPES(double)
 PRIMITIVE_TYPES(long double)
 
 #undef PRIMITIVE_TYPES
+
+
+
+template <
+    typename Archive,
+    typename E,
+    std::enable_if_t<std::is_enum_v<E>, nullptr_t> = nullptr>
+void serialize(Archive& ar, E& data)
+{
+    using primitive_type = std::underlying_type_t<E>;
+
+    if constexpr (std::is_base_of_v<iarchive_base, Archive>)
+    {
+        primitive_type tmp;
+        ar.primitive(tmp);
+        data = static_cast<E>(tmp);
+    }
+    else
+    {
+        primitive_type tmp = static_cast<primitive_type>(data);
+        ar.primitive(tmp);
+    }
+}
 
 
 

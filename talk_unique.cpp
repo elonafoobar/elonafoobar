@@ -981,14 +981,14 @@ void talk_unique()
             ELONA_TALK_SCENE_CUT();
             flt();
             itemcreate(-1, 58, cdata[0].position.x, cdata[0].position.y, 0);
-            inv[ci].curse_state = -1;
+            inv[ci].curse_state = curse_state_t::cursed;
             flt();
             itemcreate(-1, 61, cdata[0].position.x, cdata[0].position.y, 0);
-            inv[ci].curse_state = 0;
+            inv[ci].curse_state = curse_state_t::none;
             flt();
             itemcreate(-1, 363, cdata[0].position.x, cdata[0].position.y, 0);
             inv[ci].identification_state = 3;
-            inv[ci].curse_state = 1;
+            inv[ci].curse_state = curse_state_t::blessed;
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
