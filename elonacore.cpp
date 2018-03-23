@@ -5206,7 +5206,7 @@ void add_enchantments()
                 {
                     ibitmod(15, ci, 1);
                     encadd(ci, randomenc(99), randomencp());
-                    inv[ci].curse_state = 1;
+                    inv[ci].curse_state = curse_state_t::blessed;
                 }
             }
         }
@@ -5226,15 +5226,18 @@ void add_enchantments()
             encadd(ci, randomenc(randomenclv(egolv)), randomencp(), 10);
         }
     }
-    if (inv[ci].curse_state <= -1)
+    if (is_cursed(inv[ci].curse_state))
     {
         encadd(
             ci,
             randomenc(randomenclv(egolv)),
             std::clamp(randomencp(), 250, 10000)
-                * (125 + (inv[ci].curse_state == -2) * 25) / 100);
+                * (125 + (inv[ci].curse_state == curse_state_t::doomed) * 25)
+                / 100);
         for (int cnt = 0,
-                 cnt_end = cnt + (1 + (inv[ci].curse_state == -2) + rnd(2));
+                 cnt_end = cnt
+                 + (1 + (inv[ci].curse_state == curse_state_t::doomed)
+                    + rnd(2));
              cnt < cnt_end;
              ++cnt)
         {
@@ -6997,18 +7000,12 @@ void cs_list(
         color(0, 0, 0);
         if (inv[ci].identification_state >= 3)
         {
-            color(10, 40, 120);
-            if (inv[ci].curse_state == 1)
+            switch (inv[ci].curse_state)
             {
-                color(10, 110, 30);
-            }
-            if (inv[ci].curse_state == -1)
-            {
-                color(150, 10, 10);
-            }
-            if (inv[ci].curse_state == -2)
-            {
-                color(100, 10, 100);
+            case curse_state_t::doomed: color(100, 10, 100); break;
+            case curse_state_t::cursed: color(150, 10, 10); break;
+            case curse_state_t::none: color(10, 40, 120); break;
+            case curse_state_t::blessed: color(10, 110, 30); break;
             }
         }
         if (ibit(13, ci))
@@ -16323,38 +16320,36 @@ void chara_vomit(int prm_876)
 
 
 
-void eatstatus(int prm_877, int prm_878)
+void eatstatus(curse_state_t curse_state, int eater)
 {
-    if (cdata[prm_878].state != 1)
-    {
+    if (cdata[eater].state != 1)
         return;
-    }
-    if (prm_877 <= -1)
+
+    if (is_cursed(curse_state))
     {
-        cdata[prm_878].nutrition -= 1500;
-        if (is_in_fov(prm_878))
+        cdata[eater].nutrition -= 1500;
+        if (is_in_fov(eater))
         {
             txt(lang(
-                name(prm_878) + u8"は嫌な感じがした。"s,
-                name(prm_878) + u8" feel"s + _s(prm_878) + u8" bad."s));
+                name(eater) + u8"は嫌な感じがした。"s,
+                name(eater) + u8" feel"s + _s(eater) + u8" bad."s));
         }
-        chara_vomit(prm_878);
+        chara_vomit(eater);
     }
-    if (prm_877 >= 1)
+    else if (curse_state == curse_state_t::blessed)
     {
-        if (is_in_fov(prm_878))
+        if (is_in_fov(eater))
         {
             txt(lang(
-                name(prm_878) + u8"は良い予感がした。"s,
-                name(prm_878) + u8" feel"s + _s(prm_878) + u8" good."s));
+                name(eater) + u8"は良い予感がした。"s,
+                name(eater) + u8" feel"s + _s(eater) + u8" good."s));
         }
         if (rnd(5) == 0)
         {
-            addbuff(prm_878, 19, 100, 500 + rnd(500));
+            addbuff(eater, 19, 100, 500 + rnd(500));
         }
-        healsan(prm_878, 2);
+        healsan(eater, 2);
     }
-    return;
 }
 
 
@@ -16371,22 +16366,21 @@ int chara_anorexia(int prm_879)
 
 
 
-void sickifcursed(int prm_880, int prm_881, int prm_882)
+void sickifcursed(curse_state_t curse_state, int drinker, int prm_882)
 {
-    if (prm_880 <= -1)
+    if (!is_cursed(curse_state))
+        return;
+
+    if (rnd(prm_882) == 0)
     {
-        if (rnd(prm_882 + (prm_882 == 0)) == 0)
+        if (is_in_fov(drinker))
         {
-            if (is_in_fov(prm_881))
-            {
-                txt(lang(
-                    name(prm_881) + u8"は気分が悪くなった。"s,
-                    name(prm_881) + u8" feel"s + _s(prm_881) + u8" grumpy."s));
-            }
-            dmgcon(prm_881, 12, 200);
+            txt(lang(
+                name(drinker) + u8"は気分が悪くなった。"s,
+                name(drinker) + u8" feel"s + _s(drinker) + u8" grumpy."s));
         }
+        dmgcon(drinker, 12, 200);
     }
-    return;
 }
 
 
@@ -19539,18 +19533,18 @@ void refresh_character(int cc)
         {
             cdata[cc].hit_bonus += inv[rp].hit_bonus;
             cdata[cc].damage_bonus += inv[rp].damage_bonus;
-            cdata[cc].pv +=
-                inv[rp].enhancement * 2 + (inv[rp].curse_state == 1) * 2;
+            cdata[cc].pv += inv[rp].enhancement * 2
+                + (inv[rp].curse_state == curse_state_t::blessed) * 2;
         }
         else if (cdata_body_part(cc, i) / 10000 == 5)
         {
             ++attacknum;
         }
-        if (inv[rp].curse_state == -1)
+        if (inv[rp].curse_state == curse_state_t::cursed)
         {
             cdata[cc].curse_power += 20;
         }
-        if (inv[rp].curse_state == -2)
+        if (inv[rp].curse_state == curse_state_t::doomed)
         {
             cdata[cc].curse_power += 100;
         }
@@ -22597,21 +22591,21 @@ void label_1573()
                 {
                     f = 1;
                 }
-                if (inv[ci].curse_state >= 1)
+                if (inv[ci].curse_state == curse_state_t::blessed)
                 {
                     if (rnd(2))
                     {
                         f = 1;
                     }
                 }
-                if (inv[ci].curse_state <= -1)
+                if (is_cursed(inv[ci].curse_state))
                 {
                     if (rnd(2))
                     {
                         f = 0;
                     }
                 }
-                if (inv[ci].curse_state <= -2)
+                if (inv[ci].curse_state == curse_state_t::doomed)
                 {
                     if (rnd(2))
                     {
@@ -22643,21 +22637,21 @@ void label_1573()
                 {
                     f = 1;
                 }
-                if (inv[ci].curse_state >= 1)
+                if (inv[ci].curse_state == curse_state_t::blessed)
                 {
                     if (rnd(3) == 0)
                     {
                         f = 0;
                     }
                 }
-                if (inv[ci].curse_state <= -1)
+                if (is_cursed(inv[ci].curse_state))
                 {
                     if (rnd(3) == 0)
                     {
                         f = 1;
                     }
                 }
-                if (inv[ci].curse_state <= -2)
+                if (inv[ci].curse_state == curse_state_t::doomed)
                 {
                     if (rnd(3) == 0)
                     {
@@ -23871,23 +23865,23 @@ void label_1581()
     {
         if (rnd(12) == 0)
         {
-            inv[ci].curse_state = 1;
+            inv[ci].curse_state = curse_state_t::blessed;
         }
         if (rnd(13) == 0)
         {
-            inv[ci].curse_state = -1;
+            inv[ci].curse_state = curse_state_t::cursed;
             if (the_item_db[inv[ci].id]->category < 50000)
             {
                 if (rnd(4) == 0)
                 {
-                    inv[ci].curse_state = -2;
+                    inv[ci].curse_state = curse_state_t::doomed;
                 }
             }
         }
     }
     if (cm || mode == 1 || inv[ci].quality == 6)
     {
-        inv[ci].curse_state = 0;
+        inv[ci].curse_state = curse_state_t::none;
     }
     if (reftype < 50000 || (reftype == 60000 && rnd(5) == 0))
     {
@@ -24285,18 +24279,18 @@ int do_create_item(int slot, int x, int y)
     if (reftype == 68000 || reftype == 69000 || inv[ci].id == 622
         || inv[ci].id == 724 || inv[ci].id == 730 || inv[ci].id == 615)
     {
-        inv[ci].curse_state = 0;
+        inv[ci].curse_state = curse_state_t::none;
         inv[ci].identification_state = 3;
     }
     if (reftype == 92000)
     {
         inv[ci].identification_state = 3;
-        inv[ci].curse_state = 0;
+        inv[ci].curse_state = curse_state_t::none;
         itemmemory(0, inv[ci].id) = 1;
     }
     if (reftype == 62000 || reftype == 64000 || reftype == 77000)
     {
-        inv[ci].curse_state = 0;
+        inv[ci].curse_state = curse_state_t::none;
     }
     if (mode != 6)
     {
@@ -25282,11 +25276,11 @@ void apply_general_eating_effect()
             skillexp(fdlist(0, cnt), cc, fdlist(1, cnt) * i / 100);
         }
     }
-    if (inv[ci].curse_state >= 1)
+    if (inv[ci].curse_state == curse_state_t::blessed)
     {
         nutrition = nutrition * 150 / 100;
     }
-    if (inv[ci].curse_state <= -1)
+    if (is_cursed(inv[ci].curse_state))
     {
         nutrition = nutrition * 50 / 100;
     }
@@ -25377,8 +25371,8 @@ void apply_general_eating_effect()
                 name(cc) + u8"はクッキーの中のおみくじを読んだ。"s,
                 name(cc) + u8" read"s + _s(cc) + u8" the paper fortune."s));
             read_talk_file(u8"%COOKIE2");
-            if (inv[ci].curse_state >= 1
-                || (inv[ci].curse_state == 0 && rnd(2)))
+            if (inv[ci].curse_state == curse_state_t::blessed
+                || (inv[ci].curse_state == curse_state_t::none && rnd(2)))
             {
                 read_talk_file(u8"%COOKIE1");
             }
@@ -38232,11 +38226,11 @@ int rpdiff(int, int prm_1042, int prm_1043)
                 break;
             }
             i_at_m180 = rpref(10 + cnt * 2);
-            if (inv[i_at_m180].curse_state >= 1)
+            if (inv[i_at_m180].curse_state == curse_state_t::blessed)
             {
                 f2_at_m180 -= 10;
             }
-            if (inv[i_at_m180].curse_state <= -1)
+            if (is_cursed(inv[i_at_m180].curse_state))
             {
                 f2_at_m180 += 20;
             }
@@ -39873,23 +39867,23 @@ void label_1935()
             itemname(ti, 1) + u8"を"s + itemname(ci) + u8"に降りかけた。"s,
             u8"You shower "s + itemname(ci) + u8" on "s + itemname(ti, 1)
                 + u8"."s));
-        if (inv[ti].curse_state >= 1)
+        if (inv[ti].curse_state == curse_state_t::blessed)
         {
             txtef(5);
             txt(lang(
                 itemname(ci) + u8"は銀色に輝いた。"s,
                 itemname(ci) + u8" shine"s + _s2(inv[ci].number)
                     + u8" silvery."s));
-            inv[ci].curse_state = 1;
+            inv[ci].curse_state = curse_state_t::blessed;
         }
-        if (inv[ti].curse_state <= -1)
+        if (is_cursed(inv[ti].curse_state))
         {
             txtef(8);
             txt(lang(
                 itemname(ci) + u8"は黒いオーラに包まれた。"s,
                 itemname(ci) + u8" "s + is2(inv[ci].number)
                     + u8" wrapped by a dark aura."s));
-            inv[ci].curse_state = -1;
+            inv[ci].curse_state = curse_state_t::cursed;
         }
         snd(17);
         break;
@@ -39950,7 +39944,7 @@ void label_1935()
             int stat = itemcreate(0, 516, -1, -1, 0);
             if (stat != 0)
             {
-                inv[ci].curse_state = 1;
+                inv[ci].curse_state = curse_state_t::blessed;
             }
         }
         else
@@ -43907,7 +43901,7 @@ label_1998_internal:
                 flt();
                 itemcreate(
                     -1, 516, cdata[cc].position.x, cdata[cc].position.y, 3);
-                inv[ci].curse_state = 1;
+                inv[ci].curse_state = curse_state_t::blessed;
                 txt(lang(u8"あ、それ在庫切れ。"s, u8"It's sold out."s));
             }
             if (the_item_db[inv[ci].id]->category == 52000
@@ -47666,7 +47660,7 @@ label_2052_internal:
         {
             gdata(808) = 1;
             ci = cdata_body_part(cc, body) % 10000 - 1;
-            if (inv[ci].curse_state == -1 || inv[ci].curse_state == -2)
+            if (is_cursed(inv[ci].curse_state))
             {
                 txt(lang(
                     itemname(ci) + u8"は外せない。"s,
@@ -47892,7 +47886,7 @@ void do_get_command()
                 int stat = itemcreate(0, 587, -1, -1, 0);
                 if (stat != 0)
                 {
-                    inv[ci].curse_state = 0;
+                    inv[ci].curse_state = curse_state_t::none;
                     inv[ci].identification_state = 3;
                     item_stack(0, ci, 1);
                 }
@@ -51581,21 +51575,16 @@ void label_2136()
 
 
 
-int efstatusfix(int prm_1072, int prm_1073, int prm_1074, int prm_1075)
+int efstatusfix(int doomed, int cursed, int none, int blessed)
 {
-    if (efstatus <= -2)
+    switch (efstatus)
     {
-        return prm_1072;
+    case curse_state_t::doomed: return doomed;
+    case curse_state_t::cursed: return cursed;
+    case curse_state_t::none: return none;
+    case curse_state_t::blessed: return blessed;
+    default: assert(0);
     }
-    if (efstatus == -1)
-    {
-        return prm_1073;
-    }
-    if (efstatus == 0)
-    {
-        return prm_1074;
-    }
-    return prm_1075;
 }
 
 
@@ -54126,7 +54115,7 @@ void label_2159()
             {
                 flt();
                 itemcreate(-1, 208, digx, digy, 0);
-                inv[ci].curse_state = -1;
+                inv[ci].curse_state = curse_state_t::cursed;
                 txt(lang(
                     u8"何かを見つけた。"s,
                     u8"You found something out of crushed heaps of rock."s));
@@ -54450,11 +54439,11 @@ int decode_book()
             r2 = the_ability_db[efid].sdataref4;
             r3 = efid;
         }
-        if (inv[ci].curse_state >= 1)
+        if (inv[ci].curse_state == curse_state_t::blessed)
         {
             r2 = r2 * 100 / 120;
         }
-        if (inv[ci].curse_state <= -1)
+        if (is_cursed(inv[ci].curse_state))
         {
             r2 = r2 * 150 / 100;
         }
@@ -54674,7 +54663,7 @@ int label_2168()
 {
     int mp = 0;
     efsource = 3;
-    efstatus = 0;
+    efstatus = curse_state_t::none;
     efp = calcspellpower(efid, cc);
     if (cc == 0)
     {
@@ -55219,9 +55208,9 @@ int label_2172()
         return 0;
     }
     efstatus = inv[ci].curse_state;
-    if (efstatus >= 1)
+    if (efstatus == curse_state_t::blessed)
     {
-        efstatus = 0;
+        efstatus = curse_state_t::none;
     }
     efsource = 1;
     int stat = label_2175();
@@ -55258,11 +55247,11 @@ int label_2172()
     {
         f = 0;
         int skill = sdata(174, cc) * 20 + 100;
-        if (inv[ci].curse_state >= 1)
+        if (inv[ci].curse_state == curse_state_t::blessed)
         {
             skill = skill * 125 / 100;
         }
-        if (inv[ci].curse_state <= -1)
+        if (is_cursed(inv[ci].curse_state))
         {
             skill = skill * 50 / 100;
         }
@@ -55993,7 +55982,7 @@ void do_throw_command()
                 efp,
                 cc,
                 inv[ci].id,
-                inv[ci].curse_state,
+                static_cast<int>(inv[ci].curse_state), // TODO
                 inv[ci].color);
             turn_end();
             return;
@@ -56440,10 +56429,10 @@ int drop_item()
             p = stat;
             if (core_god::int2godid(inv[p].param1) == cdata[cc].god_id)
             {
-                if (inv[ti].curse_state != 1)
+                if (inv[ti].curse_state != curse_state_t::blessed)
                 {
                     snd(64);
-                    inv[ti].curse_state = 1;
+                    inv[ti].curse_state = curse_state_t::blessed;
                     txtef(2);
                     txt(lang(
                         u8"水は祝福を受けた。"s, u8"The water is blessed."s));
@@ -59992,7 +59981,7 @@ void do_dip_command()
                     int stat = itemcreate(0, 516, -1, -1, 0);
                     if (stat != 0)
                     {
-                        inv[ci].curse_state = 1;
+                        inv[ci].curse_state = curse_state_t::blessed;
                     }
                 }
                 else
@@ -60024,7 +60013,7 @@ void do_dip_command()
                 itemname(ci) + u8"に"s + itemname(cidip, 1)
                     + u8"を混入した！あなたはにやりと笑った。"s,
                 u8"You made aphrodisiac food! You grin."s));
-            if (inv[cidip].curse_state <= -1)
+            if (is_cursed(inv[cidip].curse_state))
             {
                 dipcursed(ci);
             }
@@ -60043,7 +60032,7 @@ void do_dip_command()
                 itemname(ci) + u8"に"s + itemname(cidip, 1)
                     + u8"を混入した！あなたはうしろめたさを感じた…"s,
                 u8"You made aphrodisiac food! You kind of feel guilty..."s));
-            if (inv[cidip].curse_state <= -1)
+            if (is_cursed(inv[cidip].curse_state))
             {
                 dipcursed(ci);
             }
@@ -60054,7 +60043,7 @@ void do_dip_command()
     }
     if (inv[cidip].id == 519)
     {
-        if (inv[cidip].curse_state == 1)
+        if (inv[cidip].curse_state == curse_state_t::blessed)
         {
             in = inv[cidip].number;
         }
@@ -60081,7 +60070,7 @@ void do_dip_command()
     }
     if (inv[cidip].id == 566)
     {
-        if (inv[cidip].curse_state == 1)
+        if (inv[cidip].curse_state == curse_state_t::blessed)
         {
             in = inv[cidip].number;
         }
@@ -60094,7 +60083,7 @@ void do_dip_command()
             itemname(ci) + u8"に"s + itemname(cidip, 1) + u8"を塗りたくった。"s,
             u8"You put "s + itemname(cidip, 1) + u8" on "s + itemname(ci)
                 + u8"."s));
-        if (inv[cidip].curse_state <= -1)
+        if (is_cursed(inv[cidip].curse_state))
         {
             dipcursed(ci);
         }
@@ -60111,7 +60100,7 @@ void do_dip_command()
     }
     if (inv[cidip].id == 736)
     {
-        if (inv[cidip].curse_state == 1)
+        if (inv[cidip].curse_state == curse_state_t::blessed)
         {
             in = inv[cidip].number;
         }
@@ -60125,7 +60114,7 @@ void do_dip_command()
                 + u8"を塗りたくった。"s,
             u8"You put "s + itemname(cidip, 1) + u8" on "s + itemname(ci, in)
                 + u8"."s));
-        if (inv[cidip].curse_state <= -1)
+        if (is_cursed(inv[cidip].curse_state))
         {
             dipcursed(ci);
         }
@@ -60147,26 +60136,26 @@ void do_dip_command()
     if (inv[cidip].id == 516)
     {
         item_num(cidip, -1);
-        if (inv[cidip].curse_state == 1)
+        if (inv[cidip].curse_state == curse_state_t::blessed)
         {
             txtef(2);
             txt(lang(
                 itemname(ci) + u8"は銀色に輝いた。"s,
                 itemname(ci) + u8" shine"s + _s2(inv[ci].number)
                     + u8" silvery."s));
-            inv[ci].curse_state = 1;
+            inv[ci].curse_state = curse_state_t::blessed;
             refresh_character(cc);
             turn_end();
             return;
         }
-        if (inv[cidip].curse_state <= -1)
+        if (is_cursed(inv[cidip].curse_state))
         {
             txtef(8);
             txt(lang(
                 itemname(ci) + u8"は黒いオーラに包まれた。"s,
                 itemname(ci) + u8" "s + is2(inv[ci].number)
                     + u8" wrapped by a dark aura."s));
-            inv[ci].curse_state = -1;
+            inv[ci].curse_state = curse_state_t::cursed;
             refresh_character(cc);
             turn_end();
             return;
@@ -61079,7 +61068,7 @@ void do_use_command()
         efid = inv[ci].param1;
         efp = inv[ci].param2;
         tc = cc;
-        efstatus = 0;
+        efstatus = curse_state_t::none;
         magic();
         goto label_2229_internal;
     case 41:
@@ -64722,7 +64711,7 @@ void label_2265()
         if (cdata[tc].character_role == 1016)
         {
             inv[ci].number = 1;
-            inv[ci].curse_state = 0;
+            inv[ci].curse_state = curse_state_t::none;
             if (inv[ci].id == 480)
             {
                 inv[ci].count = 4;
@@ -64785,12 +64774,12 @@ void label_2265()
                 inv[ci].number * (100 + sdata(156, 0) * 10) / 100 + 1;
         }
         p = the_item_db[inv[ci].id]->category;
-        if (inv[ci].curse_state == -1 || inv[ci].curse_state == -2)
+        if (is_cursed(inv[ci].curse_state))
         {
             inv[ci].number = 0;
             continue;
         }
-        if (inv[ci].curse_state == 1)
+        if (inv[ci].curse_state == curse_state_t::blessed)
         {
             inv[ci].number = 1;
         }
@@ -68154,7 +68143,7 @@ label_2689_internal:
                             {
                                 if (inv[ci].own_state <= 0)
                                 {
-                                    if (inv[ci].curse_state >= 0)
+                                    if (!is_cursed(inv[ci].curse_state))
                                     {
                                         do_eat_command();
                                         return;
@@ -71594,7 +71583,7 @@ void pass_one_turn(bool label_2738_flg)
                     }
                 }
                 potionspill = 1;
-                efstatus = mef(8, ef);
+                efstatus = static_cast<curse_state_t>(mef(8, ef)); // TODO
                 dbid = mef(7, ef);
                 access_item_db(15);
                 if (cdata[tc].state == 0)

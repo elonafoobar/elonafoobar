@@ -9,6 +9,7 @@
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
+#include "enums.hpp"
 #include "macro_gdata.hpp"
 #include "snail/color.hpp"
 #include "snail/input.hpp"

@@ -37,7 +37,7 @@ int magic()
     obvious = 1;
     if (efsource != 4 && efsource != 1 && efsource != 2)
     {
-        efstatus = 0;
+        efstatus = curse_state_t::none;
     }
     efsource = 0;
     efbad = 0;
@@ -63,22 +63,22 @@ int magic()
             }
             if (efbad == 0)
             {
-                if (efstatus >= 1)
+                if (efstatus == curse_state_t::blessed)
                 {
                     efp = efp * 150 / 100;
                 }
-                if (efstatus <= -1)
+                if (is_cursed(efstatus))
                 {
                     efp = 50;
                 }
             }
             else
             {
-                if (efstatus >= 1)
+                if (efstatus == curse_state_t::blessed)
                 {
                     efp = 50;
                 }
-                if (efstatus <= -1)
+                if (is_cursed(efstatus))
                 {
                     efp = efp * 150 / 100;
                 }
@@ -106,7 +106,7 @@ int magic()
                 addbuff(tc, p, efp, calc_buff_duration(p, efp));
                 if (efid == 447)
                 {
-                    if (efstatus >= 1)
+                    if (efstatus == curse_state_t::blessed)
                     {
                         cdata[tc].birth_year += rnd(3) + 1;
                         if (cdata[tc].birth_year + 12 > gdata_year)
@@ -125,7 +125,7 @@ int magic()
                 }
                 if (efid == 446)
                 {
-                    if (efstatus <= -1)
+                    if (is_cursed(efstatus))
                     {
                         cdata[tc].birth_year -= rnd(3) + 1;
                         if (is_in_fov(tc))
@@ -563,7 +563,7 @@ int magic()
                     }
                 }
                 label_2187();
-                if (efstatus >= 1)
+                if (efstatus == curse_state_t::blessed)
                 {
                     healcon(tc, 12, 5 + rnd(5));
                 }
@@ -1094,11 +1094,11 @@ int magic()
         }
         else
         {
-            if (efstatus >= 1)
+            if (efstatus == curse_state_t::blessed)
             {
                 efp = efp * 150 / 100;
             }
-            if (efstatus <= -1)
+            if (is_cursed(efstatus))
             {
                 efp = 50;
             }
@@ -1143,7 +1143,7 @@ label_2181_internal:
                 u8"You need to read it while you are in the global map."s));
             break;
         }
-        if (efstatus <= -1)
+        if (is_cursed(efstatus))
         {
             if (rnd(5) == 0)
             {
@@ -1251,7 +1251,7 @@ label_2181_internal:
         snd(71);
         break;
     case 1135:
-        if (efstatus <= -1)
+        if (is_cursed(efstatus))
         {
             if (tc == 0)
             {
@@ -1317,7 +1317,7 @@ label_2181_internal:
         if (is_in_fov(tc))
         {
             snd(107);
-            if (efstatus <= -1)
+            if (is_cursed(efstatus))
             {
                 if (tc == 0)
                 {
@@ -1345,11 +1345,11 @@ label_2181_internal:
                 txt(lang(u8"「うまー」"s, u8"\"Yummy!\""s));
             }
         }
-        if (efstatus >= 1)
+        if (efstatus == curse_state_t::blessed)
         {
             modheight(tc, rnd(5) + 1);
         }
-        if (efstatus <= -1)
+        if (is_cursed(efstatus))
         {
             modheight(tc, (rnd(5) + 1) * -1);
         }
@@ -1364,7 +1364,7 @@ label_2181_internal:
     case 1102:
         if (is_in_fov(tc))
         {
-            if (efstatus <= -1)
+            if (is_cursed(efstatus))
             {
                 txtef(9);
                 txt(lang(u8"「うぃっ…」"s, u8"*Hic*"s),
@@ -1844,7 +1844,7 @@ label_2181_internal:
         break;
     case 406:
     case 407:
-        if (efstatus <= -1)
+        if (is_cursed(efstatus))
         {
             if (is_in_fov(tc))
             {
@@ -1904,7 +1904,7 @@ label_2181_internal:
             obvious = 0;
             break;
         }
-        if (efstatus >= 0)
+        if (!is_cursed(efstatus))
         {
             s = lang(u8"素材"s, u8"materials"s);
         }
@@ -1917,12 +1917,14 @@ label_2181_internal:
             u8"たくさんの"s + s + u8"が降ってきた！"s,
             u8"Some "s + s + u8" fall from above!"s));
         autosave = 1 * (gdata_current_map != 35);
-        for (int cnt = 0, cnt_end = (rnd(3) + 3 + (efstatus >= 1) * 6);
+        for (int cnt = 0,
+                 cnt_end =
+                     (rnd(3) + 3 + (efstatus == curse_state_t::blessed) * 6);
              cnt < cnt_end;
              ++cnt)
         {
             atxspot = 19;
-            if (efstatus >= 0)
+            if (!is_cursed(efstatus))
             {
                 p = random_material(efp / 10, efp / 50);
             }
@@ -2000,7 +2002,7 @@ label_2181_internal:
                 {
                     p = 1;
                 }
-                if (efstatus <= -1)
+                if (is_cursed(efstatus))
                 {
                     if (p == 1)
                     {
@@ -2009,7 +2011,7 @@ label_2181_internal:
                 }
                 else if (p == -1)
                 {
-                    if (efstatus >= 1)
+                    if (efstatus == curse_state_t::blessed)
                     {
                         if (rnd(3) == 0)
                         {
@@ -2051,7 +2053,7 @@ label_2181_internal:
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             break;
         }
-        if (efstatus <= -1)
+        if (is_cursed(efstatus))
         {
             if (is_in_fov(tc))
             {
@@ -2061,8 +2063,9 @@ label_2181_internal:
         }
         f = 0;
         for (int cnt = 0,
-                 cnt_end =
-                     cnt + (1 + (efstatus >= 1) + (efstatus >= 0) + rnd(2));
+                 cnt_end = cnt
+                 + (1 + (efstatus == curse_state_t::blessed)
+                    + (!is_cursed(efstatus)) + rnd(2));
              cnt < cnt_end;
              ++cnt)
         {
@@ -2130,7 +2133,7 @@ label_2181_internal:
             obvious = 0;
             break;
         }
-        if (efstatus <= -1)
+        if (is_cursed(efstatus))
         {
             txt(lang(
                 u8"冥界から死霊が呼び出された！"s,
@@ -2191,7 +2194,7 @@ label_2181_internal:
         }
         break;
     case 412:
-        if (efstatus == 0)
+        if (efstatus == curse_state_t::none)
         {
             if (is_in_fov(tc))
             {
@@ -2201,7 +2204,7 @@ label_2181_internal:
                         + u8" equipment are surrounded by a white aura."s));
             }
         }
-        if (efstatus >= 1)
+        if (efstatus == curse_state_t::blessed)
         {
             if (is_in_fov(tc))
             {
@@ -2211,7 +2214,7 @@ label_2181_internal:
                         + u8" surrounded by a holy aura."s));
             }
         }
-        if (efstatus <= -1)
+        if (is_cursed(efstatus))
         {
             if (is_in_fov(tc))
             {
@@ -2229,21 +2232,21 @@ label_2181_internal:
             {
                 continue;
             }
-            if (inv[cnt].curse_state >= 0)
+            if (is_cursed(inv[cnt].curse_state))
             {
                 continue;
             }
             ci = cnt;
             p = 0;
-            if (inv[ci].curse_state == -1)
+            if (inv[ci].curse_state == curse_state_t::cursed)
             {
                 p = rnd(200) + 1;
             }
-            if (inv[ci].curse_state == -2)
+            if (inv[ci].curse_state == curse_state_t::doomed)
             {
                 p = rnd(1000) + 1;
             }
-            if (efstatus >= 1)
+            if (efstatus == curse_state_t::blessed)
             {
                 p = p / 2 + 1;
             }
@@ -2256,7 +2259,7 @@ label_2181_internal:
                 if (efp >= p)
                 {
                     ++p(1);
-                    inv[ci].curse_state = 0;
+                    inv[ci].curse_state = curse_state_t::none;
                     item_stack(tc, ci, 1);
                 }
                 else
@@ -2265,7 +2268,7 @@ label_2181_internal:
                 }
             }
         }
-        if (efstatus >= 1)
+        if (efstatus == curse_state_t::blessed)
         {
             if (p(1) != 0)
             {
@@ -2313,7 +2316,7 @@ label_2181_internal:
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             break;
         }
-        if (efstatus <= -1)
+        if (is_cursed(efstatus))
         {
             artifactlocation.clear();
             txt(lang(
@@ -2342,7 +2345,9 @@ label_2181_internal:
             break;
         }
         f = 0;
-        for (int cnt = 0, cnt_end = (1 + (efstatus >= 1)); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (1 + (efstatus == curse_state_t::blessed));
+             cnt < cnt_end;
+             ++cnt)
         {
             int cnt2 = cnt;
             for (int cnt = 0; cnt < 2000; ++cnt)
@@ -2356,7 +2361,7 @@ label_2181_internal:
                         continue;
                     }
                 }
-                if (efstatus >= 0)
+                if (!is_cursed(efstatus))
                 {
                     if (the_ability_db[p].related_basic_attribute != 0)
                     {
@@ -2422,7 +2427,17 @@ label_2181_internal:
         autosave = 1 * (gdata_current_map != 35);
         break;
     case 1143:
-        if (efstatus <= 0)
+        if (efstatus == curse_state_t::blessed)
+        {
+            cdata[tc].experience = cdata[tc].required_experience;
+            r2 = 0;
+            gain_level(tc);
+            if (is_in_fov(tc))
+            {
+                snd(60);
+            }
+        }
+        else
         {
             if (cdata[tc].level <= 1)
             {
@@ -2438,17 +2453,7 @@ label_2181_internal:
                 name(tc) + u8"のレベルが下がった…"s,
                 name(tc) + u8" lose"s + _s(tc) + u8" a level..."s));
         }
-        else
-        {
-            cdata[tc].experience = cdata[tc].required_experience;
-            r2 = 0;
-            gain_level(tc);
-            if (is_in_fov(tc))
-            {
-                snd(60);
-            }
-        }
-        if (efstatus <= -1)
+        if (is_cursed(efstatus))
         {
             txt(lang(u8"これは呪われている！"s, u8"It's cursed!"s));
             for (int cnt = 10; cnt < 50; ++cnt)
@@ -2475,7 +2480,7 @@ label_2181_internal:
             p = rnd(300) + 100;
             if (the_ability_db[p].related_basic_attribute != 0)
             {
-                if (efstatus >= 0)
+                if (!is_cursed(efstatus))
                 {
                     if (cnt < efstatusfix(0, 0, 100, 2000))
                     {
@@ -2533,7 +2538,7 @@ label_2181_internal:
             obvious = 0;
             break;
         }
-        if (efstatus <= -1)
+        if (is_cursed(efstatus))
         {
             txt(lang(
                 u8"あなたの神はあなたの信仰に疑問を抱いた。"s,
@@ -2557,7 +2562,7 @@ label_2181_internal:
                 u8"You feel as if "s
                     + i18n::_(u8"god", cdata[0].god_id, u8"name")
                     + u8" is watching you."s));
-            if (efstatus >= 1)
+            if (efstatus == curse_state_t::blessed)
             {
                 txt(lang(
                     u8"空から三つ葉のクローバーがふってきた。"s,
@@ -2568,12 +2573,19 @@ label_2181_internal:
             snd(120);
             cdata[0].praying_point += 500;
             modpiety(75);
-            skillexp(181, 0, 1000 + (efstatus >= 1) * 750, 6, 1000);
+            skillexp(
+                181,
+                0,
+                1000 + (efstatus == curse_state_t::blessed) * 750,
+                6,
+                1000);
         }
         refresh_character(tc);
         break;
     case 1119:
-        for (int cnt = 0, cnt_end = (1 + (efstatus >= 1)); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (1 + (efstatus == curse_state_t::blessed));
+             cnt < cnt_end;
+             ++cnt)
         {
             int cnt2 = cnt;
             while (1)
@@ -2596,7 +2608,7 @@ label_2181_internal:
                     {
                         s = lang(u8"さらに"s, u8"Furthermore, the "s);
                     }
-                    if (efstatus >= 0)
+                    if (!is_cursed(efstatus))
                     {
                         if (is_in_fov(tc))
                         {
@@ -2652,7 +2664,7 @@ label_2181_internal:
             name(tc) + your(tc) + u8" blood burns and a new strength fills "s
                 + his(tc) + u8" body!"s));
         skillexp(18, tc, efstatusfix(-4000, -1000, 8000, 12000));
-        if (efstatus == 1)
+        if (efstatus == curse_state_t::blessed)
         {
             modify_potential(tc, 18, 15);
             txtef(2);
@@ -2661,7 +2673,7 @@ label_2181_internal:
         refresh_character(tc);
         break;
     case 1113:
-        if (efstatus >= 1)
+        if (efstatus == curse_state_t::blessed)
         {
             for (int cnt = 10; cnt < 18; ++cnt)
             {
@@ -2680,7 +2692,7 @@ label_2181_internal:
         {
             i = rnd(8) + 10;
             const auto valn = i18n::_(u8"ability", std::to_string(i), u8"name");
-            if (efstatus == 0)
+            if (efstatus == curse_state_t::none)
             {
                 txt(lang(
                     name(tc) + u8"の"s + valn + u8"の潜在能力が上昇した。"s,
@@ -2741,7 +2753,7 @@ label_2181_internal:
                 {
                     x = cnt;
                     p = dist(cdata[tc].position.x, cdata[tc].position.y, x, y);
-                    if (efstatus <= -1)
+                    if (is_cursed(efstatus))
                     {
                         if (efid == 429)
                         {
@@ -2753,7 +2765,8 @@ label_2181_internal:
                         }
                         continue;
                     }
-                    if (p < 7 || rnd(efp + 1) > rnd(p * 8 + 1) || efstatus >= 1)
+                    if (p < 7 || rnd(efp + 1) > rnd(p * 8 + 1)
+                        || efstatus == curse_state_t::blessed)
                     {
                         if (efid == 429)
                         {
@@ -2770,7 +2783,7 @@ label_2181_internal:
                 }
             }
         }
-        if (efstatus <= -1)
+        if (is_cursed(efstatus))
         {
             txt(lang(
                 u8"あれ…？あなたは軽い記憶障害を受けた。"s,
@@ -2830,7 +2843,7 @@ label_2181_internal:
         {
             if (is_in_fov(tc))
             {
-                if (efstatus <= -1)
+                if (is_cursed(efstatus))
                 {
                     snd(117);
                     txt(lang(
@@ -2844,7 +2857,7 @@ label_2181_internal:
                         name(tc) + your(tc) + u8" body is restored."s));
                     animeload(10, tc);
                 }
-                if (efstatus >= 1)
+                if (efstatus == curse_state_t::blessed)
                 {
                     txt(lang(
                         u8"さらに、"s + name(tc) + u8"の肉体は強化された。"s,
@@ -2864,7 +2877,7 @@ label_2181_internal:
         {
             if (is_in_fov(tc))
             {
-                if (efstatus <= -1)
+                if (is_cursed(efstatus))
                 {
                     snd(117);
                     txt(lang(
@@ -2878,7 +2891,7 @@ label_2181_internal:
                         name(tc) + your(tc) + u8" spirit is restored."s));
                     animeload(10, tc);
                 }
-                if (efstatus >= 1)
+                if (efstatus == curse_state_t::blessed)
                 {
                     txt(lang(
                         u8"さらに、"s + name(tc) + u8"の精神は強化された。"s,
@@ -2901,7 +2914,7 @@ label_2181_internal:
                 break;
             }
             const auto attr = p(cnt) - 10;
-            if (efstatus <= -1)
+            if (is_cursed(efstatus))
             {
                 if (cdata[tc].quality <= 3)
                 {
@@ -2914,7 +2927,7 @@ label_2181_internal:
             {
                 cdata[tc].attr_adjs[attr] = 0;
             }
-            if (efstatus >= 1)
+            if (efstatus == curse_state_t::blessed)
             {
                 cdata[tc].attr_adjs[attr] =
                     sdata.get(p(cnt), tc).original_level / 10 + 5;
@@ -2973,7 +2986,7 @@ label_2181_internal:
             }
             gdata_destination_map = gdata(850);
             gdata_destination_dungeon_level = 1;
-            if (efstatus <= -1)
+            if (is_cursed(efstatus))
             {
                 if (rnd(3) == 0)
                 {
@@ -3001,7 +3014,7 @@ label_2181_internal:
         else
         {
             label_2081();
-            if (efstatus <= -1)
+            if (is_cursed(efstatus))
             {
                 if (rnd(3) == 0)
                 {
@@ -3107,7 +3120,7 @@ label_2181_internal:
         {
             p += encfind(tc, 43) / 2;
         }
-        if (rnd(p) > efp / 2 + (efstatus <= -1) * 100)
+        if (rnd(p) > efp / 2 + (is_cursed(efstatus)) * 100)
         {
             break;
         }
@@ -3132,7 +3145,7 @@ label_2181_internal:
                 continue;
             }
             p(i) = cdata_body_part(tc, cnt) % 10000 - 1;
-            if (inv[p(i)].curse_state == 1)
+            if (inv[p(i)].curse_state == curse_state_t::blessed)
             {
                 if (rnd(10))
                 {
@@ -3150,7 +3163,7 @@ label_2181_internal:
                 {
                     continue;
                 }
-                if (inv[p].curse_state == 1)
+                if (inv[p].curse_state == curse_state_t::blessed)
                 {
                     if (rnd(10))
                     {
@@ -3165,13 +3178,13 @@ label_2181_internal:
         {
             i = p(rnd(i));
             const auto valn = itemname(i, 1, 1);
-            if (inv[i].curse_state == -1)
+            if (inv[i].curse_state == curse_state_t::cursed)
             {
-                inv[i].curse_state = -2;
+                inv[i].curse_state = curse_state_t::doomed;
             }
             else
             {
-                inv[i].curse_state = -1;
+                inv[i].curse_state = curse_state_t::cursed;
             }
             if (is_in_fov(tc))
             {
@@ -3883,7 +3896,7 @@ label_2181_internal:
             {
                 autosave = 1 * (gdata_current_map != 35);
                 animeload(8, cc);
-                if (efstatus >= 0)
+                if (!is_cursed(efstatus))
                 {
                     if (inv[ci].weight > 0)
                     {
@@ -3893,12 +3906,13 @@ label_2181_internal:
                             inv[ci].weight);
                         if (inv[ci].pv > 0)
                         {
-                            inv[ci].pv -= inv[ci].pv / 10 + 1 + (efstatus < 1);
+                            inv[ci].pv -= inv[ci].pv / 10 + 1
+                                + (efstatus != curse_state_t::blessed);
                         }
                         if (inv[ci].damage_bonus > 0)
                         {
-                            inv[ci].damage_bonus -=
-                                inv[ci].damage_bonus / 10 + 1 + (efstatus < 1);
+                            inv[ci].damage_bonus -= inv[ci].damage_bonus / 10
+                                + 1 + (efstatus != curse_state_t::blessed);
                         }
                     }
                     txt(lang(
@@ -4272,7 +4286,7 @@ label_2181_internal:
             break;
         }
         snd(64);
-        if (efstatus >= 0)
+        if (!is_cursed(efstatus))
         {
             txtef(2);
             txt(lang(
@@ -4531,7 +4545,7 @@ label_2181_internal:
 
 the_end:
     ci = efcibk;
-    efstatus = 0;
+    efstatus = curse_state_t::none;
     efsource = 0;
     return 1;
 }
