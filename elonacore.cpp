@@ -6787,7 +6787,8 @@ void equipinfo(int prm_529, int prm_530, int prm_531)
 {
     int p_at_m66 = 0;
     std::string s_at_m66;
-    if (inv[prm_529].identification_state < 3)
+    if (inv[prm_529].identification_state
+        != identification_state_t::completely_identified)
     {
         return;
     }
@@ -6998,7 +6999,8 @@ void cs_list(
     case 0: color(10, 10, 10); break;
     case 1:
         color(0, 0, 0);
-        if (inv[ci].identification_state >= 3)
+        if (inv[ci].identification_state
+            == identification_state_t::completely_identified)
         {
             switch (inv[ci].curse_state)
             {
@@ -21987,7 +21989,8 @@ void initialize_pc_character()
         {
             continue;
         }
-        inv[cnt].identification_state = 3;
+        inv[cnt].identification_state =
+            identification_state_t::completely_identified;
     }
     refresh_character(0);
     return;
@@ -22613,7 +22616,9 @@ void label_1573()
                     }
                 }
             }
-            else if (inv[ci].identification_state >= 3)
+            else if (
+                inv[ci].identification_state
+                == identification_state_t::completely_identified)
             {
                 if (rnd(4))
                 {
@@ -23806,7 +23811,9 @@ void label_1580()
     }
     for (const auto& cnt : items(0))
     {
-        if (inv[cnt].number == 0 || inv[cnt].identification_state >= 3)
+        if (inv[cnt].number == 0
+            || inv[cnt].identification_state
+                == identification_state_t::completely_identified)
         {
             continue;
         }
@@ -23820,7 +23827,8 @@ void label_1580()
         if (p > rnd(p(1) * 5))
         {
             s = itemname(ci);
-            item_identify(ci, 3);
+            item_identify(
+                inv[ci], identification_state_t::completely_identified);
             itemmemory(0, inv[ci].id) = 1;
             if (cfg_hideautoidentify <= 1)
             {
@@ -23832,7 +23840,8 @@ void label_1580()
             }
             skillexp(162, 0, 50);
         }
-        if (inv[ci].identification_state < 2)
+        if (inv[ci].identification_state
+            <= identification_state_t::partly_identified)
         {
             if (p > rnd(p(1)))
             {
@@ -23849,7 +23858,8 @@ void label_1580()
                                   u8"ui", u8"quality", u8"_"s + inv[ci].quality)
                             + u8"."s));
                 }
-                item_identify(ci, 2);
+                item_identify(
+                    inv[ci], identification_state_t::almost_identified);
                 skillexp(162, 0, 50);
             }
         }
@@ -24274,17 +24284,20 @@ int do_create_item(int slot, int x, int y)
 
     if (mode == 6)
     {
-        inv[ci].identification_state = 3;
+        inv[ci].identification_state =
+            identification_state_t::completely_identified;
     }
     if (reftype == 68000 || reftype == 69000 || inv[ci].id == 622
         || inv[ci].id == 724 || inv[ci].id == 730 || inv[ci].id == 615)
     {
         inv[ci].curse_state = curse_state_t::none;
-        inv[ci].identification_state = 3;
+        inv[ci].identification_state =
+            identification_state_t::completely_identified;
     }
     if (reftype == 92000)
     {
-        inv[ci].identification_state = 3;
+        inv[ci].identification_state =
+            identification_state_t::completely_identified;
         inv[ci].curse_state = curse_state_t::none;
         itemmemory(0, inv[ci].id) = 1;
     }
@@ -24298,7 +24311,8 @@ int do_create_item(int slot, int x, int y)
         {
             if (rnd(sdata(162, 0) + 1) > 5)
             {
-                inv[ci].identification_state = 2;
+                inv[ci].identification_state =
+                    identification_state_t::almost_identified;
             }
         }
     }
@@ -38840,7 +38854,8 @@ void window_recipe_(
     mes(itemname(prm_1050));
     dy_at_m184 += 20;
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
-    if (inv[prm_1050].identification_state < 2)
+    if (inv[prm_1050].identification_state
+        <= identification_state_t::partly_identified)
     {
         pos(dx_at_m184, dy_at_m184);
         mes(lang(
@@ -43945,7 +43960,8 @@ label_1998_internal:
             {
                 inv[ci].number = number_of_items;
             }
-            item_identify(ci, 3);
+            item_identify(
+                inv[ci], identification_state_t::completely_identified);
             txt(lang(
                 u8"足元に"s + itemname(ci) + u8"が転がってきた。"s,
                 ""s + itemname(ci) + u8" appear"s + _s2(inv[ci].number)
@@ -47887,7 +47903,8 @@ void do_get_command()
                 if (stat != 0)
                 {
                     inv[ci].curse_state = curse_state_t::none;
-                    inv[ci].identification_state = 3;
+                    inv[ci].identification_state =
+                        identification_state_t::completely_identified;
                     item_stack(0, ci, 1);
                 }
             }
@@ -48137,7 +48154,8 @@ void show_item_description()
     dbid = inv[ci].id;
     access_item_db(2);
     access_item_db(17);
-    if (inv[ci].identification_state >= 3)
+    if (inv[ci].identification_state
+        == identification_state_t::completely_identified)
     {
         std::string buf = trimdesc(description(3), 1);
         if (buf != ""s)
@@ -48147,7 +48165,8 @@ void show_item_description()
             ++p;
         }
     }
-    if (inv[ci].identification_state >= 2)
+    if (inv[ci].identification_state
+        >= identification_state_t::almost_identified)
     {
         if (inv[ci].material != 0)
         {
@@ -48279,7 +48298,8 @@ void show_item_description()
             ++p;
         }
     }
-    if (inv[ci].identification_state < 2)
+    if (inv[ci].identification_state
+        <= identification_state_t::partly_identified)
     {
         list(0, p) = 0;
         listn(0, p) = lang(
@@ -48287,7 +48307,8 @@ void show_item_description()
             u8"You have to identify the item to gain knowledge."s);
         ++p;
     }
-    if (inv[ci].identification_state >= 3)
+    if (inv[ci].identification_state
+        == identification_state_t::completely_identified)
     {
         for (int cnt = 0; cnt < 15; ++cnt)
         {
@@ -54218,7 +54239,7 @@ void label_2161()
     ci = cieat;
     if (cc == 0)
     {
-        item_identify(ci, 1);
+        item_identify(inv[ci], identification_state_t::partly_identified);
     }
     if (chara_unequip(ci))
     {
@@ -54494,7 +54515,7 @@ int decode_book()
         txt(lang(
             itemname(ci, 1) + u8"を覚えた！"s, u8"You learned the recipe!"s));
         ++recipememory(inv[ci].subname);
-        item_identify(ci, 1);
+        item_identify(inv[ci], identification_state_t::partly_identified);
         removeitem(ci, 1);
         if (is_in_fov(cc))
         {
@@ -54507,7 +54528,7 @@ int decode_book()
     }
     if (inv[ci].id == 687)
     {
-        item_identify(ci, 3);
+        item_identify(inv[ci], identification_state_t::completely_identified);
         txt(lang(
             itemname(ci, 1) + u8"を解読した！"s,
             u8"You finished decoding "s + itemname(ci, 1) + u8"!"s));
@@ -54531,7 +54552,7 @@ int decode_book()
             itemmemory(2, inv[ci].id) = 1;
         }
     }
-    item_identify(ci, 1);
+    item_identify(inv[ci], identification_state_t::partly_identified);
     if (inv[ci].id != 687)
     {
         --inv[ci].count;
@@ -54597,7 +54618,7 @@ int read_normal_book()
         return 1;
     }
     tc = cc;
-    item_identify(ci, 1);
+    item_identify(inv[ci], identification_state_t::partly_identified);
     label_2022();
     return 1;
 }
@@ -54887,7 +54908,8 @@ int drink_potion()
         {
             if (tc == 0)
             {
-                item_identify(ci, 1);
+                item_identify(
+                    inv[ci], identification_state_t::partly_identified);
             }
         }
         --inv[ci].number;
@@ -55186,7 +55208,7 @@ int read_scroll()
     {
         if (obvious == 1)
         {
-            item_identify(ci, 1);
+            item_identify(inv[ci], identification_state_t::partly_identified);
         }
     }
     return 1;
@@ -55279,7 +55301,8 @@ int label_2172()
         {
             if (obvious == 1)
             {
-                item_identify(ci, 1);
+                item_identify(
+                    inv[ci], identification_state_t::partly_identified);
             }
         }
         label_1469(cc);
@@ -56290,7 +56313,8 @@ int pick_up_item()
             {
                 cdata[tc].gold = 0;
             }
-            inv[ti].identification_state = 3;
+            inv[ti].identification_state =
+                identification_state_t::completely_identified;
         }
         if (invctrl == 22 || invctrl == 24)
         {
@@ -56481,7 +56505,7 @@ int equip_item(int cc)
     item_separate(ci);
     if (cc == 0)
     {
-        item_identify(ci, 2);
+        item_identify(inv[ci], identification_state_t::almost_identified);
     }
     inv[ci].body_part = body;
     cdata_body_part(cc, body) =
@@ -66116,7 +66140,8 @@ int label_2664()
     {
         return 0;
     }
-    inv[ci].identification_state = 3;
+    inv[ci].identification_state =
+        identification_state_t::completely_identified;
     if (inv[ci].quality >= 4)
     {
         if (the_item_db[inv[ci].id]->category < 50000)
@@ -66346,7 +66371,8 @@ void supply_new_equipment()
         {
             break;
         }
-        inv[ci].identification_state = 3;
+        inv[ci].identification_state =
+            identification_state_t::completely_identified;
         if (inv[ci].quality >= 4)
         {
             if (the_item_db[inv[ci].id]->category < 50000)

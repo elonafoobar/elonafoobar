@@ -611,7 +611,8 @@ void talk_npc()
             {
                 continue;
             }
-            if (inv[cnt].identification_state < 3)
+            if (inv[cnt].identification_state
+                != identification_state_t::completely_identified)
             {
                 ++p;
             }
@@ -637,12 +638,13 @@ void talk_npc()
                 {
                     continue;
                 }
-                if (inv[cnt].identification_state < 3)
+                if (inv[cnt].identification_state
+                    != identification_state_t::completely_identified)
                 {
-                    item_identify(cnt, -1, 250);
+                    const auto result = item_identify(inv[cnt], 250);
                     item_stack(0, cnt, 1);
                     ++p(1);
-                    if (idtresult >= 3)
+                    if (result >= identification_state_t::completely_identified)
                     {
                         ++p;
                     }
@@ -675,7 +677,7 @@ void talk_npc()
                 talk_npc();
                 return;
             }
-            if (idtresult >= 3)
+            if (idtresult == identification_state_t::completely_identified)
             {
                 buff = lang(
                     u8"鑑定結果はこの通り"s + _da(),
@@ -744,7 +746,8 @@ void talk_npc()
         {
             if (inv[cnt].number != 0)
             {
-                inv[cnt].identification_state = 3;
+                inv[cnt].identification_state =
+                    identification_state_t::completely_identified;
             }
         }
         invctrl(0) = 20;

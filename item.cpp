@@ -781,48 +781,50 @@ bool chara_unequip(int ci)
 }
 
 
-
-int item_identify(int ci, int level, int power)
+identification_state_t item_identify(item& ci, identification_state_t level)
 {
-    if (power != 0)
+    if (level == identification_state_t::almost_identified
+        && the_item_db[ci.id]->category >= 50000)
     {
-        if (power >= inv[ci].difficulty_of_identification)
-        {
-            level = 3;
-        }
+        level = identification_state_t::completely_identified;
     }
-    if (level >= 2)
+    if (ci.identification_state >= level)
     {
-        if (the_item_db[inv[ci].id]->category >= 50000)
-        {
-            level = 3;
-        }
+        idtresult = identification_state_t::unidentified;
+        return idtresult;
     }
-    if (level == -1 || inv[ci].identification_state >= level)
+    ci.identification_state = level;
+    if (ci.identification_state >= identification_state_t::partly_identified)
     {
-        idtresult = 0;
-        return 0;
-    }
-    inv[ci].identification_state = level;
-    if (inv[ci].identification_state >= 1)
-    {
-        itemmemory(0, inv[ci].id) = 1;
+        itemmemory(0, ci.id) = 1;
     }
     idtresult = level;
     return idtresult;
 }
 
 
+identification_state_t item_identify(item& ci, int power)
+{
+    return item_identify(
+        ci,
+        power >= ci.difficulty_of_identification
+            ? identification_state_t::completely_identified
+            : identification_state_t::unidentified);
+}
+
 
 void item_checkknown(int ci)
 {
-    if (inv[ci].identification_state >= 3)
+    if (inv[ci].identification_state
+        == identification_state_t::completely_identified)
     {
-        inv[ci].identification_state = 3;
+        inv[ci].identification_state =
+            identification_state_t::completely_identified;
     }
-    if (itemmemory(0, inv[ci].id) && inv[ci].identification_state == 0)
+    if (itemmemory(0, inv[ci].id)
+        && inv[ci].identification_state == identification_state_t::unidentified)
     {
-        item_identify(ci, 1);
+        item_identify(inv[ci], identification_state_t::partly_identified);
     }
 }
 
@@ -851,7 +853,8 @@ void itemname_additional_info()
                 s_ += u8"解読済みの"s;
             }
         }
-        if (inv[prm_518].identification_state >= 3)
+        if (inv[prm_518].identification_state
+            == identification_state_t::completely_identified)
         {
             s_ += lang(
                 u8"《"s + magebookn(inv[prm_518].param1) + u8"》という題名の"s,
@@ -1141,7 +1144,8 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
         {
             s_ = "";
         }
-        if (inv[prm_518].identification_state >= 3)
+        if (inv[prm_518].identification_state
+            == identification_state_t::completely_identified)
         {
             switch (inv[prm_518].curse_state)
             {
@@ -1161,7 +1165,8 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     else
     {
         s_ = "";
-        if (inv[prm_518].identification_state >= 3)
+        if (inv[prm_518].identification_state
+            == identification_state_t::completely_identified)
         {
             switch (inv[prm_518].curse_state)
             {
@@ -1178,7 +1183,8 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
             }
         }
         if (irandomname(inv[prm_518].id) == 1
-            && inv[prm_518].identification_state < 1)
+            && inv[prm_518].identification_state
+                == identification_state_t::unidentified)
         {
             s2_ = "";
         }
@@ -1193,7 +1199,9 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
             {
                 s3_ = u8"of"s;
             }
-            if (inv[prm_518].identification_state != 0 && s2_ == ""s)
+            if (inv[prm_518].identification_state
+                    != identification_state_t::unidentified
+                && s2_ == ""s)
             {
                 if (inv[prm_518].weight < 0)
                 {
@@ -1293,7 +1301,9 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
         goto label_0313_internal;
     }
     alpha_ = 0;
-    if (inv[prm_518].identification_state >= 3 && a_ < 50000)
+    if (inv[prm_518].identification_state
+            == identification_state_t::completely_identified
+        && a_ < 50000)
     {
         if (ibit(15, prm_518))
         {
@@ -1340,11 +1350,14 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
             }
         }
     }
-    if (inv[prm_518].identification_state == 0)
+    if (inv[prm_518].identification_state
+        == identification_state_t::unidentified)
     {
         s_ += iknownnameref(inv[prm_518].id);
     }
-    else if (inv[prm_518].identification_state < 3)
+    else if (
+        inv[prm_518].identification_state
+        != identification_state_t::completely_identified)
     {
         if (inv[prm_518].quality < 4 || a_ >= 50000)
         {
@@ -1406,7 +1419,8 @@ label_0313_internal:
     {
         if (prm_520 == 0)
         {
-            if (inv[prm_518].identification_state >= 3
+            if (inv[prm_518].identification_state
+                    == identification_state_t::completely_identified
                 && (inv[prm_518].quality >= 4 && a_ < 50000))
             {
                 s_ = u8"the "s + s_;
@@ -1431,7 +1445,8 @@ label_0313_internal:
         }
         itemname_additional_info();
     }
-    if (inv[prm_518].identification_state >= 3)
+    if (inv[prm_518].identification_state
+        == identification_state_t::completely_identified)
     {
         if (inv[prm_518].enhancement != 0)
         {
@@ -1506,7 +1521,9 @@ label_0313_internal:
     {
         s_ += lang(u8" Lv"s, u8" Level "s) + inv[prm_518].param2;
     }
-    if (inv[prm_518].identification_state == 2 && a_ < 50000)
+    if (inv[prm_518].identification_state
+            == identification_state_t::almost_identified
+        && a_ < 50000)
     {
         s_ += u8" ("s
             + cnven(i18n::_(u8"ui", u8"quality", u8"_"s + inv[prm_518].quality))

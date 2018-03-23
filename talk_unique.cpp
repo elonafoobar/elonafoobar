@@ -659,7 +659,8 @@ void talk_unique()
                     u8"Something is put on the ground."s));
                 flt();
                 itemcreate(-1, 14, cdata[0].position.x, cdata[0].position.y, 0);
-                inv[ci].identification_state = 3;
+                inv[ci].identification_state =
+                    identification_state_t::completely_identified;
                 listmax = 0;
                 buff = lang(
                     u8"どうやら何かを掘り当てたようだな。"s,
@@ -858,7 +859,8 @@ void talk_unique()
             flt();
             itemcreate(-1, 204, cdata[0].position.x, cdata[0].position.y, 0);
             inv[ci].subname = 9;
-            inv[ci].identification_state = 3;
+            inv[ci].identification_state =
+                identification_state_t::completely_identified;
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
@@ -987,7 +989,8 @@ void talk_unique()
             inv[ci].curse_state = curse_state_t::none;
             flt();
             itemcreate(-1, 363, cdata[0].position.x, cdata[0].position.y, 0);
-            inv[ci].identification_state = 3;
+            inv[ci].identification_state =
+                identification_state_t::completely_identified;
             inv[ci].curse_state = curse_state_t::blessed;
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
@@ -1034,7 +1037,8 @@ void talk_unique()
             }
             flt();
             itemcreate(-1, 68, cdata[0].position.x, cdata[0].position.y, 0);
-            inv[ci].identification_state = 3;
+            inv[ci].identification_state =
+                identification_state_t::completely_identified;
             txt(lang(
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));

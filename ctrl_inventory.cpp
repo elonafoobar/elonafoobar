@@ -283,7 +283,8 @@ label_20591:
             }
             if (invctrl == 13)
             {
-                if (inv[cnt].identification_state >= 3)
+                if (inv[cnt].identification_state
+                    == identification_state_t::completely_identified)
                 {
                     continue;
                 }
@@ -1620,7 +1621,8 @@ label_2061_internal:
             }
             else
             {
-                if (inv[ci].identification_state < 2)
+                if (inv[ci].identification_state
+                    <= identification_state_t::partly_identified)
                 {
                     snd(27);
                     txt(lang(
@@ -1758,14 +1760,14 @@ label_2061_internal:
         {
             screenupdate = -1;
             update_screen();
-            int stat = item_identify(ci, -1, efp);
-            if (stat == 0)
+            const auto result = item_identify(inv[ci], efp);
+            if (result == identification_state_t::unidentified)
             {
                 txt(lang(
                     u8"新しい知識は得られなかった。より上位の鑑定で調べる必要がある。"s,
                     u8"You need higher identification to gain new knowledge."s));
             }
-            else if (stat < 3)
+            else if (result != identification_state_t::completely_identified)
             {
                 txt(lang(
                     u8"それは"s + itemname(ci, inv[ci].number)
