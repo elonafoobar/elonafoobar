@@ -10,10 +10,18 @@ namespace elona
 
 struct trait_data
 {
+    enum class type_t
+    {
+        feat,
+        mutation,
+        nature,
+        ether_disease,
+    };
+
     int id;
-    int traitref0;
-    int traitref1;
-    int traitref2;
+    type_t type;
+    int min;
+    int max;
 };
 
 

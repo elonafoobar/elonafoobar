@@ -19,17 +19,17 @@ void trait_db::define(lua_State* L)
     if (!id)
         throw 0;
 
-    ELONA_CAT_DB_FIELD_INTEGER(traitref0, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(traitref1, 0);
-    ELONA_CAT_DB_FIELD_INTEGER(traitref2, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(type, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(min, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(max, 0);
 
     storage.emplace(
         std::stoi(id), // TODO
         trait_data{
             std::stoi(id),
-            traitref0,
-            traitref1,
-            traitref2,
+            trait_data::type_t(type),
+            min,
+            max,
         });
 }
 
@@ -43,9 +43,9 @@ int get_trait_info(int traitmode, int tid)
 
     if (traitmode == 0)
     {
-        traitref(0) = data->traitref0;
-        traitref(1) = data->traitref1;
-        traitref(2) = data->traitref2;
+        traitref(0) = int(data->type);
+        traitref(1) = data->min;
+        traitref(2) = data->max;
     }
 
     if (tid == 24)
