@@ -7,45 +7,31 @@
 #include "variables.hpp"
 
 
-namespace
+
+namespace elona
 {
 
 
-
-int define(lua_State* L, std::unordered_map<std::string, race_data>& storage)
+void race_db::define(lua_State* L)
 {
     const char* id = luaL_checkstring(L, -2);
     if (!id)
         throw 0;
 
-#define FIELD_I(name, default_value) \
-    lua_getfield(L, -1, #name); \
-    int name = lua_isnil(L, -1) ? (default_value) : luaL_checkinteger(L, -1); \
-    lua_pop(L, 1);
-#define FIELD_S(name, default_value) \
-    lua_getfield(L, -1, #name); \
-    const char* name = \
-        lua_isnil(L, -1) ? (default_value) : luaL_checkstring(L, -1); \
-    lua_pop(L, 1);
-#define FIELD_B(name, default_value) \
-    lua_getfield(L, -1, #name); \
-    bool name = lua_isnil(L, -1) ? (default_value) : lua_toboolean(L, -1); \
-    lua_pop(L, 1);
-
-    FIELD_B(is_extra, true);
-    FIELD_I(ordering, 30000);
-    FIELD_I(male_image, 174);
-    FIELD_I(female_image, 174);
-    FIELD_I(breed_power, 500);
-    FIELD_I(min_age, 1);
-    FIELD_I(max_age, 1);
-    FIELD_I(height, 2);
-    FIELD_I(male_ratio, 50);
-    FIELD_B(is_made_of_rock, false);
-    FIELD_I(melee_attack_type, 0);
-    FIELD_I(special_attack_type, 0);
-    FIELD_I(dv_correction, 100);
-    FIELD_I(pv_correction, 100);
+    ELONA_CAT_DB_FIELD_BOOLEAN(is_extra, true);
+    ELONA_CAT_DB_FIELD_INTEGER(ordering, 30000);
+    ELONA_CAT_DB_FIELD_INTEGER(male_image, 174);
+    ELONA_CAT_DB_FIELD_INTEGER(female_image, 174);
+    ELONA_CAT_DB_FIELD_INTEGER(breed_power, 500);
+    ELONA_CAT_DB_FIELD_INTEGER(min_age, 1);
+    ELONA_CAT_DB_FIELD_INTEGER(max_age, 1);
+    ELONA_CAT_DB_FIELD_INTEGER(height, 2);
+    ELONA_CAT_DB_FIELD_INTEGER(male_ratio, 50);
+    ELONA_CAT_DB_FIELD_BOOLEAN(is_made_of_rock, false);
+    ELONA_CAT_DB_FIELD_INTEGER(melee_attack_type, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(special_attack_type, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(dv_correction, 100);
+    ELONA_CAT_DB_FIELD_INTEGER(pv_correction, 100);
 
     std::vector<int> body_parts;
     lua_getfield(L, -1, u8"body_parts");
@@ -91,10 +77,6 @@ int define(lua_State* L, std::unordered_map<std::string, race_data>& storage)
     }
     lua_pop(L, 1);
 
-#undef FIELD_I
-#undef FIELD_S
-#undef FIELD_B
-
     storage.emplace(
         id,
         race_data{
@@ -117,46 +99,7 @@ int define(lua_State* L, std::unordered_map<std::string, race_data>& storage)
             skills,
             resistances,
         });
-
-    return 0;
 }
-
-
-} // namespace
-
-
-
-namespace elona
-{
-
-
-
-void race_db::initialize()
-{
-    cat::global.load(fs::u8path(u8"../data/race.lua"));
-
-    lua_getglobal(cat::global.ptr(), u8"race");
-    lua_getfield(cat::global.ptr(), -1, u8"__storage__");
-    lua_pushnil(cat::global.ptr());
-    while (lua_next(cat::global.ptr(), -2))
-    {
-        define(cat::global.ptr(), storage);
-        lua_pop(cat::global.ptr(), 1);
-    }
-    lua_pop(cat::global.ptr(), 2);
-}
-
-
-
-optional_ref<race_data> race_db::operator[](const std::string& id) const
-{
-    const auto itr = storage.find(id);
-    if (itr == std::end(storage))
-        return std::nullopt;
-    else
-        return itr->second;
-}
-
 
 
 std::vector<std::reference_wrapper<const race_data>>

@@ -29,21 +29,31 @@ struct buff_data
 
 
 
-class buff_db
+class buff_db;
+
+
+namespace cat
+{
+
+template <>
+struct cat_db_traits<buff_db>
+{
+    using id_type = int;
+    using data_type = buff_data;
+    static constexpr const char* filename = u8"buff.lua";
+    static constexpr const char* table_name = u8"buff";
+};
+
+} // namespace cat
+
+
+
+class buff_db : public cat::cat_db<buff_db>
 {
 public:
     buff_db();
 
-    void initialize();
-
-    const buff_data& operator[](int id) const
-    {
-        return storage.at(id);
-    }
-
-
-private:
-    std::unordered_map<int, buff_data> storage;
+    void define(lua_State* L);
 };
 
 

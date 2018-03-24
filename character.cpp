@@ -9,64 +9,51 @@
 using namespace elona;
 
 
-namespace
+
+namespace elona
 {
 
 
 
-int define(lua_State* L, std::unordered_map<int, character_data>& storage)
+void character_db::define(lua_State* L)
 {
     const char* id = luaL_checkstring(L, -2);
     if (!id)
         throw 0;
 
-#define FIELD_I(name, default_value) \
-    lua_getfield(L, -1, #name); \
-    int name = lua_isnil(L, -1) ? (default_value) : luaL_checkinteger(L, -1); \
-    lua_pop(L, 1);
-#define FIELD_S(name, default_value) \
-    lua_getfield(L, -1, #name); \
-    const char* name = \
-        lua_isnil(L, -1) ? (default_value) : luaL_checkstring(L, -1); \
-    lua_pop(L, 1);
-#define FIELD_B(name, default_value) \
-    lua_getfield(L, -1, #name); \
-    bool name = lua_isnil(L, -1) ? (default_value) : lua_toboolean(L, -1); \
-    lua_pop(L, 1);
-
-    FIELD_I(ai_act_sub_freq, 0);
-    FIELD_I(ai_calm, 0);
-    FIELD_I(ai_dist, 0);
-    FIELD_I(ai_heal, 0);
-    FIELD_I(ai_move, 0);
-    FIELD_I(can_talk, 0);
-    FIELD_B(cbit_988, false);
-    FIELD_S(class_, "");
-    FIELD_I(color, 0);
-    FIELD_I(creaturepack, 0);
-    FIELD_I(cspecialeq, 0);
-    FIELD_I(damage_reaction_info, 0);
-    FIELD_I(item_type, 0);
-    FIELD_I(element_of_unarmed_attack, 0);
-    FIELD_I(eqammo_0, 0);
-    FIELD_I(eqammo_1, 0);
-    FIELD_I(eqmultiweapon, 0);
-    FIELD_I(eqrange_0, 0);
-    FIELD_I(eqrange_1, 0);
-    FIELD_I(eqring1, 0);
-    FIELD_I(eqtwohand, 0);
-    FIELD_I(eqweapon1, 0);
-    FIELD_I(female_image, 0);
-    FIELD_S(filter, "");
-    FIELD_I(fixlv, 0);
-    FIELD_B(has_random_name, false);
-    FIELD_I(image, 0);
-    FIELD_I(level, 0);
-    FIELD_I(male_image, 0);
-    FIELD_I(original_relationship, 0);
-    FIELD_I(portrait, 0);
-    FIELD_S(race, "");
-    FIELD_I(sex, -1);
+    ELONA_CAT_DB_FIELD_INTEGER(ai_act_sub_freq, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(ai_calm, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(ai_dist, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(ai_heal, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(ai_move, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(can_talk, 0);
+    ELONA_CAT_DB_FIELD_BOOLEAN(cbit_988, false);
+    ELONA_CAT_DB_FIELD_STRING(class_, "");
+    ELONA_CAT_DB_FIELD_INTEGER(color, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(creaturepack, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(cspecialeq, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(damage_reaction_info, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(item_type, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(element_of_unarmed_attack, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(eqammo_0, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(eqammo_1, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(eqmultiweapon, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(eqrange_0, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(eqrange_1, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(eqring1, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(eqtwohand, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(eqweapon1, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(female_image, 0);
+    ELONA_CAT_DB_FIELD_STRING(filter, "");
+    ELONA_CAT_DB_FIELD_INTEGER(fixlv, 0);
+    ELONA_CAT_DB_FIELD_BOOLEAN(has_random_name, false);
+    ELONA_CAT_DB_FIELD_INTEGER(image, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(level, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(male_image, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(original_relationship, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(portrait, 0);
+    ELONA_CAT_DB_FIELD_STRING(race, "");
+    ELONA_CAT_DB_FIELD_INTEGER(sex, -1);
 
     std::unordered_map<int, int> resistances;
     lua_getfield(L, -1, u8"resistances");
@@ -83,10 +70,10 @@ int define(lua_State* L, std::unordered_map<int, character_data>& storage)
     }
     lua_pop(L, 1);
 
-    FIELD_I(fltselect, 0);
-    FIELD_I(category, 0);
-    FIELD_I(rarity, 10000);
-    FIELD_I(coefficient, 400);
+    ELONA_CAT_DB_FIELD_INTEGER(fltselect, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(category, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(rarity, 10000);
+    ELONA_CAT_DB_FIELD_INTEGER(coefficient, 400);
 
     // TODO DRY
     std::vector<int> normal_actions;
@@ -116,11 +103,6 @@ int define(lua_State* L, std::unordered_map<int, character_data>& storage)
         }
     }
     lua_pop(L, 1);
-
-
-#undef FIELD_I
-#undef FIELD_S
-#undef FIELD_B
 
     storage.emplace(
         std::stoi(id), // TODO
@@ -167,44 +149,6 @@ int define(lua_State* L, std::unordered_map<int, character_data>& storage)
             rarity,
             coefficient,
         });
-
-    return 0;
-}
-
-
-} // namespace
-
-
-
-namespace elona
-{
-
-
-
-void character_db::initialize()
-{
-    cat::global.load(fs::u8path(u8"../data/character.lua"));
-
-    lua_getglobal(cat::global.ptr(), u8"character");
-    lua_getfield(cat::global.ptr(), -1, u8"__storage__");
-    lua_pushnil(cat::global.ptr());
-    while (lua_next(cat::global.ptr(), -2))
-    {
-        define(cat::global.ptr(), storage);
-        lua_pop(cat::global.ptr(), 1);
-    }
-    lua_pop(cat::global.ptr(), 2);
-}
-
-
-
-optional_ref<character_data> character_db::operator[](int id) const
-{
-    const auto itr = storage.find(id);
-    if (itr == std::end(storage))
-        return std::nullopt;
-    else
-        return itr->second;
 }
 
 

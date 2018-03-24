@@ -311,7 +311,7 @@ void play_animation_0(int anicol, int anisound)
                 continue;
             }
             if (dist(anidx, anidy, cdata[cc].position.x, cdata[cc].position.y)
-                > the_ability_db[efid].sdataref3 % 1000 + 1)
+                > the_ability_db[efid]->sdataref3 % 1000 + 1)
             {
                 ap(cnt) = -2;
                 ap(20) = 4;

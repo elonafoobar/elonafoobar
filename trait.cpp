@@ -9,28 +9,19 @@
 using namespace elona;
 
 
-
-namespace
+namespace elona
 {
 
 
-
-int define(lua_State* L, std::unordered_map<int, trait_data>& storage)
+void trait_db::define(lua_State* L)
 {
     const char* id = luaL_checkstring(L, -2);
     if (!id)
         throw 0;
 
-#define FIELD_I(name) \
-    lua_getfield(L, -1, #name); \
-    int name = luaL_checkinteger(L, -1); \
-    lua_pop(L, 1);
-
-    FIELD_I(traitref0);
-    FIELD_I(traitref1);
-    FIELD_I(traitref2);
-
-#undef FIELD_I
+    ELONA_CAT_DB_FIELD_INTEGER(traitref0, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(traitref1, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(traitref2, 0);
 
     storage.emplace(
         std::stoi(id), // TODO
@@ -40,44 +31,6 @@ int define(lua_State* L, std::unordered_map<int, trait_data>& storage)
             traitref1,
             traitref2,
         });
-
-    return 0;
-}
-
-
-} // namespace
-
-
-
-namespace elona
-{
-
-
-
-void trait_db::initialize()
-{
-    cat::global.load(fs::u8path(u8"../data/trait.lua"));
-
-    lua_getglobal(cat::global.ptr(), u8"trait");
-    lua_getfield(cat::global.ptr(), -1, u8"__storage__");
-    lua_pushnil(cat::global.ptr());
-    while (lua_next(cat::global.ptr(), -2))
-    {
-        define(cat::global.ptr(), storage);
-        lua_pop(cat::global.ptr(), 1);
-    }
-    lua_pop(cat::global.ptr(), 2);
-}
-
-
-
-optional_ref<trait_data> trait_db::operator[](int id) const
-{
-    const auto itr = storage.find(id);
-    if (itr == std::end(storage))
-        return std::nullopt;
-    else
-        return itr->second;
 }
 
 

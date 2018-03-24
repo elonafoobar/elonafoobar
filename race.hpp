@@ -2,7 +2,7 @@
 
 #include <unordered_map>
 #include <vector>
-#include "optional_ref.hpp"
+#include "cat.hpp"
 
 
 namespace elona
@@ -33,20 +33,34 @@ struct race_data
 
 
 
-class race_db
+class race_db;
+
+
+namespace cat
+{
+
+template <>
+struct cat_db_traits<race_db>
+{
+    using id_type = std::string;
+    using data_type = race_data;
+    static constexpr const char* filename = u8"race.lua";
+    static constexpr const char* table_name = u8"race";
+};
+
+} // namespace cat
+
+
+
+class race_db : public cat::cat_db<race_db>
 {
 public:
     race_db() = default;
 
-    void initialize();
-
-    optional_ref<race_data> operator[](const std::string& id) const;
-
     std::vector<std::reference_wrapper<const race_data>> get_available_races(
         bool is_extra_race) const;
 
-private:
-    std::unordered_map<std::string, race_data> storage;
+    void define(lua_State* L);
 };
 
 

@@ -40,10 +40,5 @@ void txtgod(const god_id_t& id, int type)
 }
 
 
-god_db::god_db()
-{
-}
-
-
 
 } // namespace elona

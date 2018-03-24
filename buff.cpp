@@ -1,51 +1,9 @@
 #include "buff.hpp"
 #include "cat.hpp"
 
+#include <iostream>
+
 using namespace elona;
-
-
-namespace
-{
-
-
-int define(lua_State* L, std::unordered_map<int, buff_data>& storage)
-{
-    const char* id = luaL_checkstring(L, -2);
-    if (!id)
-        throw 0;
-
-#define FIELD_I(name) \
-    lua_getfield(L, -1, #name); \
-    int name = luaL_checkinteger(L, -1); \
-    lua_pop(L, 1);
-#define FIELD_R(name) \
-    lua_getfield(L, -1, #name); \
-    cat::ref name = luaL_ref(L, LUA_REGISTRYINDEX);
-
-    FIELD_I(type_);
-    FIELD_R(duration);
-    FIELD_R(on_refresh);
-
-#undef FIELD_I
-#undef FIELD_R
-
-    cat::ref self = luaL_ref(L, LUA_REGISTRYINDEX);
-
-    storage.emplace(
-        std::stoi(id), // TODO
-        buff_data{
-            std::stoi(id),
-            self,
-            buff_data::type_t(type_),
-            duration,
-            on_refresh,
-        });
-
-    return 0;
-}
-
-
-} // namespace
 
 
 namespace elona
@@ -64,21 +22,31 @@ buff_db::buff_db()
 }
 
 
-
-void buff_db::initialize()
+void buff_db::define(lua_State* L)
 {
-    cat::global.load(fs::u8path(u8"../data/buff.lua"));
+    const char* id = luaL_checkstring(L, -2);
+    if (!id)
+        throw 0;
 
-    lua_getglobal(cat::global.ptr(), u8"buff");
-    lua_getfield(cat::global.ptr(), -1, u8"__storage__");
-    lua_pushnil(cat::global.ptr());
-    while (lua_next(cat::global.ptr(), -2))
-    {
-        define(cat::global.ptr(), storage);
-    }
-    lua_pop(cat::global.ptr(), 2);
+    ELONA_CAT_DB_FIELD_INTEGER(type_, 0);
+    ELONA_CAT_DB_FIELD_REF(duration);
+    ELONA_CAT_DB_FIELD_REF(on_refresh);
+
+    cat::ref self = luaL_ref(L, LUA_REGISTRYINDEX);
+    // Dummy; after calling this function, the caller pop one value from the Lua
+    // stack.
+    lua_pushnil(L);
+
+    storage.emplace(
+        std::stoi(id), // TODO
+        buff_data{
+            std::stoi(id),
+            self,
+            buff_data::type_t(type_),
+            duration,
+            on_refresh,
+        });
 }
-
 
 
 } // namespace elona

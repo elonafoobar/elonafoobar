@@ -48,16 +48,16 @@ int magic()
         if (efid < 661)
         {
             f = 0;
-            if (the_ability_db[efid].sdataref1 / 1000 == 1)
+            if (the_ability_db[efid]->sdataref1 / 1000 == 1)
             {
                 f = 1;
-                p = the_ability_db[efid].sdataref1 % 1000;
-                if (the_buff_db[p].type == buff_data::type_t::hex)
+                p = the_ability_db[efid]->sdataref1 % 1000;
+                if (the_buff_db[p]->type == buff_data::type_t::hex)
                 {
                     efbad = 1;
                 }
             }
-            if (the_ability_db[efid].sdataref1 == 7)
+            if (the_ability_db[efid]->sdataref1 == 7)
             {
                 efbad = 1;
             }
@@ -85,11 +85,11 @@ int magic()
             }
             if (f)
             {
-                if (the_buff_db[p].type == buff_data::type_t::buff)
+                if (the_buff_db[p]->type == buff_data::type_t::buff)
                 {
                     animeload(11, tc);
                 }
-                else if (the_buff_db[p].type == buff_data::type_t::hex)
+                else if (the_buff_db[p]->type == buff_data::type_t::hex)
                 {
                     play_animation(6);
                 }
@@ -172,7 +172,7 @@ int magic()
                 dice2 = dice2 / 2 + 1;
                 bonus = bonus / 2 + 1;
             }
-            switch (the_ability_db[efid].sdataref1)
+            switch (the_ability_db[efid]->sdataref1)
             {
             case 10:
                 play_animation(18);
@@ -202,7 +202,7 @@ int magic()
                         continue;
                     }
                     if (dist(dx, dy, cdata[cc].position.x, cdata[cc].position.y)
-                        > the_ability_db[efid].sdataref3 % 1000 + 1)
+                        > the_ability_db[efid]->sdataref3 % 1000 + 1)
                     {
                         break;
                     }
@@ -279,7 +279,7 @@ int magic()
                 }
             label_2177_internal:
                 cbitmod(972, cc, 0);
-                range_ = the_ability_db[efid].sdataref3 % 1000 + 1;
+                range_ = the_ability_db[efid]->sdataref3 % 1000 + 1;
                 if (debug::voldemort && cc == 0)
                 {
                     range_ *= 2;
@@ -1509,14 +1509,14 @@ label_2181_internal:
                     txt(lang(
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
-                    dmgsp(0, the_ability_db[efid].cost / 2 + 1);
+                    dmgsp(0, the_ability_db[efid]->cost / 2 + 1);
                     break;
                 }
             }
             dmgsp(
                 0,
-                rnd(the_ability_db[efid].cost / 2 + 1)
-                    + the_ability_db[efid].cost / 2 + 1);
+                rnd(the_ability_db[efid]->cost / 2 + 1)
+                    + the_ability_db[efid]->cost / 2 + 1);
         }
         invsubroutine = 1;
         invctrl(0) = 27;
@@ -1534,14 +1534,14 @@ label_2181_internal:
                     txt(lang(
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
-                    dmgsp(0, the_ability_db[efid].cost / 2 + 1);
+                    dmgsp(0, the_ability_db[efid]->cost / 2 + 1);
                     break;
                 }
             }
             dmgsp(
                 0,
-                rnd(the_ability_db[efid].cost / 2 + 1)
-                    + the_ability_db[efid].cost / 2 + 1);
+                rnd(the_ability_db[efid]->cost / 2 + 1)
+                    + the_ability_db[efid]->cost / 2 + 1);
         }
         if (gdata_mount != 0)
         {
@@ -1681,14 +1681,14 @@ label_2181_internal:
                     txt(lang(
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
-                    dmgsp(0, the_ability_db[efid].cost / 2 + 1);
+                    dmgsp(0, the_ability_db[efid]->cost / 2 + 1);
                     break;
                 }
             }
             dmgsp(
                 0,
-                rnd(the_ability_db[efid].cost / 2 + 1)
-                    + the_ability_db[efid].cost / 2 + 1);
+                rnd(the_ability_db[efid]->cost / 2 + 1)
+                    + the_ability_db[efid]->cost / 2 + 1);
         }
         label_2146();
         break;
@@ -1719,14 +1719,14 @@ label_2181_internal:
                     txt(lang(
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
-                    dmgsp(0, the_ability_db[efid].cost / 2 + 1);
+                    dmgsp(0, the_ability_db[efid]->cost / 2 + 1);
                     break;
                 }
             }
             dmgsp(
                 0,
-                rnd(the_ability_db[efid].cost / 2 + 1)
-                    + the_ability_db[efid].cost / 2 + 1);
+                rnd(the_ability_db[efid]->cost / 2 + 1)
+                    + the_ability_db[efid]->cost / 2 + 1);
         }
         cook();
         break;
@@ -1828,14 +1828,14 @@ label_2181_internal:
                     txt(lang(
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
-                    dmgsp(0, the_ability_db[efid].cost / 2 + 1);
+                    dmgsp(0, the_ability_db[efid]->cost / 2 + 1);
                     break;
                 }
             }
             dmgsp(
                 0,
-                rnd(the_ability_db[efid].cost / 2 + 1)
-                    + the_ability_db[efid].cost / 2 + 1);
+                rnd(the_ability_db[efid]->cost / 2 + 1)
+                    + the_ability_db[efid]->cost / 2 + 1);
         }
         item_separate(ci);
         --inv[ci].count;
@@ -1865,7 +1865,7 @@ label_2181_internal:
                     break;
                 }
             }
-            if (the_buff_db[cdata[tc].buffs[i].id].type
+            if (the_buff_db[cdata[tc].buffs[i].id]->type
                 != buff_data::type_t::hex)
             {
                 continue;
@@ -2363,7 +2363,7 @@ label_2181_internal:
                 }
                 if (!is_cursed(efstatus))
                 {
-                    if (the_ability_db[p].related_basic_attribute != 0)
+                    if (the_ability_db[p]->related_basic_attribute != 0)
                     {
                         if (cnt2 == 0)
                         {
@@ -2478,7 +2478,7 @@ label_2181_internal:
         {
             await();
             p = rnd(300) + 100;
-            if (the_ability_db[p].related_basic_attribute != 0)
+            if (the_ability_db[p]->related_basic_attribute != 0)
             {
                 if (!is_cursed(efstatus))
                 {
@@ -2592,7 +2592,7 @@ label_2181_internal:
             {
                 await();
                 p = rnd(300) + 100;
-                if (the_ability_db[p].related_basic_attribute != 0)
+                if (the_ability_db[p]->related_basic_attribute != 0)
                 {
                     if (sdata.get(p, tc).original_level == 0)
                     {
@@ -4112,7 +4112,7 @@ label_2181_internal:
             dx = cdata[tc].position.x;
             dy = cdata[tc].position.y;
             if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy)
-                > the_ability_db[631].sdataref3 % 1000 + 1)
+                > the_ability_db[631]->sdataref3 % 1000 + 1)
             {
                 continue;
             }
@@ -4258,7 +4258,7 @@ label_2181_internal:
             dx = cdata[tc].position.x;
             dy = cdata[tc].position.y;
             if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy)
-                > the_ability_db[656].sdataref3 % 1000 + 1)
+                > the_ability_db[656]->sdataref3 % 1000 + 1)
             {
                 continue;
             }
