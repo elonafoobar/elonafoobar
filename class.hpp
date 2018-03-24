@@ -3,7 +3,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include "optional_ref.hpp"
+#include "cat.hpp"
 
 
 namespace elona
@@ -22,20 +22,33 @@ struct class_data
 
 
 
-class class_db
+class class_db;
+
+
+namespace cat
+{
+
+template <>
+struct cat_db_traits<class_db>
+{
+    using id_type = std::string;
+    using data_type = class_data;
+    static constexpr const char* filename = u8"class.lua";
+    static constexpr const char* table_name = u8"class";
+};
+
+} // namespace cat
+
+
+
+class class_db : public cat::cat_db<class_db>
 {
 public:
     class_db() = default;
 
-    void initialize();
-
-    optional_ref<class_data> operator[](const std::string& id) const;
-
+    void define(lua_State* L);
     std::vector<std::reference_wrapper<const class_data>> get_available_classes(
         bool is_extra_class) const;
-
-private:
-    std::unordered_map<std::string, class_data> storage;
 };
 
 

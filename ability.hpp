@@ -4,6 +4,7 @@
 #include <memory>
 #include <unordered_map>
 #include <vector>
+#include "cat.hpp"
 
 
 namespace elona
@@ -22,19 +23,31 @@ struct ability_data
 };
 
 
+class ability_db;
 
-class ability_db
+
+namespace cat
+{
+
+template <>
+struct cat_db_traits<ability_db>
+{
+    using id_type = int;
+    using data_type = ability_data;
+    static constexpr const char* filename = u8"ability.lua";
+    static constexpr const char* table_name = u8"ability";
+};
+
+} // namespace cat
+
+
+
+class ability_db : public cat::cat_db<ability_db>
 {
 public:
     ability_db() = default;
 
-    void initialize();
-
-    const ability_data& operator[](int id) const;
-
-
-private:
-    std::unordered_map<int, ability_data> storage;
+    void define(lua_State* L);
 };
 
 

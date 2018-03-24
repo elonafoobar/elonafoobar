@@ -3,7 +3,7 @@
 #include <array>
 #include <optional>
 #include <unordered_map>
-#include "optional_ref.hpp"
+#include "cat.hpp"
 
 
 
@@ -52,57 +52,30 @@ struct item_data
 
 
 
-class item_db
+class item_db;
+
+
+namespace cat
+{
+
+template <>
+struct cat_db_traits<item_db>
+{
+    using id_type = int;
+    using data_type = item_data;
+    static constexpr const char* filename = u8"item.lua";
+    static constexpr const char* table_name = u8"item";
+};
+
+} // namespace cat
+
+
+class item_db : public cat::cat_db<item_db>
 {
 public:
-    struct iterator
-    {
-        iterator(const std::unordered_map<int, item_data>::const_iterator& itr)
-            : itr(itr)
-        {
-        }
-
-        const item_data& operator*() const
-        {
-            return itr->second;
-        }
-
-        void operator++()
-        {
-            ++itr;
-        }
-
-        bool operator!=(const iterator& other) const
-        {
-            return itr != other.itr;
-        }
-
-    private:
-        std::unordered_map<int, item_data>::const_iterator itr;
-    };
-
-
     item_db() = default;
 
-    void initialize();
-
-
-    optional_ref<item_data> operator[](int id) const;
-
-
-    iterator begin() const
-    {
-        return iterator{std::begin(storage)};
-    }
-
-    iterator end() const
-    {
-        return iterator{std::end(storage)};
-    }
-
-
-private:
-    std::unordered_map<int, item_data> storage;
+    void define(lua_State* L);
 };
 
 

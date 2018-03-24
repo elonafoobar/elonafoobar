@@ -60,7 +60,7 @@ int rangedist = 0;
 
 int calc_buff_duration(int id, int power)
 {
-    auto func = the_buff_db[id].duration;
+    auto func = the_buff_db[id]->duration;
     return cat::global.call<int>(func, power);
 }
 
@@ -74,8 +74,8 @@ std::string get_buff_description(int id, int power)
 
 void apply_buff(int cc, int id, int power)
 {
-    const auto self = the_buff_db[id].self;
-    const auto func = the_buff_db[id].on_refresh;
+    const auto self = the_buff_db[id]->self;
+    const auto func = the_buff_db[id]->on_refresh;
     cat::global.call_with_self<nullptr_t>(self, func, cc, power, 1 /* TODO */);
 }
 
@@ -83,7 +83,7 @@ void apply_buff(int cc, int id, int power)
 
 std::optional<skill_damage> calc_skill_damage(int skill, int cc, int power)
 {
-    int x = sdata(the_ability_db[skill].related_basic_attribute, cc);
+    int x = sdata(the_ability_db[skill]->related_basic_attribute, cc);
 
     switch (skill)
     {
@@ -1317,9 +1317,9 @@ int calcspellpower(int id, int cc)
 {
     if (id >= 600)
     {
-        if (the_ability_db[id].related_basic_attribute != 0)
+        if (the_ability_db[id]->related_basic_attribute != 0)
         {
-            return sdata(the_ability_db[id].related_basic_attribute, cc) * 6
+            return sdata(the_ability_db[id]->related_basic_attribute, cc) * 6
                 + 10;
         }
         return 100;
@@ -1385,7 +1385,7 @@ int calcspellfail(int id, int cc)
     }
 
     int percentage = 90 + sdata(id, cc)
-        - the_ability_db[id].sdataref4 * penalty / (5 + sdata(172, cc) * 4);
+        - the_ability_db[id]->sdataref4 * penalty / (5 + sdata(172, cc) * 4);
     if (armor_skill == 169)
     {
         if (percentage > 80)
@@ -1431,17 +1431,17 @@ int calcspellcostmp(int id, int cc)
         if (id == 413 || id == 461 || id == 457 || id == 438 || id == 409
             || id == 408 || id == 410 || id == 466)
         {
-            return the_ability_db[id].cost;
+            return the_ability_db[id]->cost;
         }
         else
         {
-            return the_ability_db[id].cost * (100 + sdata(id, cc) * 3) / 100
+            return the_ability_db[id]->cost * (100 + sdata(id, cc) * 3) / 100
                 + sdata(id, cc) / 8;
         }
     }
     else
     {
-        return the_ability_db[id].cost * (50 + cdata[cc].level * 3) / 100;
+        return the_ability_db[id]->cost * (50 + cdata[cc].level * 3) / 100;
     }
 }
 
@@ -1452,10 +1452,10 @@ int calcspellcoststock(int id, int cc)
     if (debug::voldemort)
         return 1;
 
-    int cost = the_ability_db[id].cost * 200 / (sdata(id, cc) * 3 + 100);
-    if (cost < the_ability_db[id].cost / 5)
+    int cost = the_ability_db[id]->cost * 200 / (sdata(id, cc) * 3 + 100);
+    if (cost < the_ability_db[id]->cost / 5)
     {
-        cost = the_ability_db[id].cost / 5;
+        cost = the_ability_db[id]->cost / 5;
     }
     cost = rnd(cost / 2 + 1) + cost / 2;
     if (cost < 1)

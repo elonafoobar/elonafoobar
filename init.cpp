@@ -2026,7 +2026,7 @@ void show_race_or_class_info(int CNT, int val0)
             gmode(2, inf_tiles, inf_tiles);
             grotate(
                 1,
-                (the_ability_db[cnt].related_basic_attribute - 10) * inf_tiles,
+                (the_ability_db[cnt]->related_basic_attribute - 10) * inf_tiles,
                 672,
                 0,
                 inf_tiles,

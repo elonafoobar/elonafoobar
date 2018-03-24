@@ -5,74 +5,58 @@
 using namespace elona;
 
 
-namespace
+
+namespace elona
 {
 
 
-
-int define(lua_State* L, std::unordered_map<int, item_data>& storage)
+void item_db::define(lua_State* L)
 {
     const char* id = luaL_checkstring(L, -2);
     if (!id)
         throw 0;
 
-#define FIELD_I(name) \
-    lua_getfield(L, -1, #name); \
-    int name = luaL_checkinteger(L, -1); \
-    lua_pop(L, 1);
-#define FIELD_S(name) \
-    lua_getfield(L, -1, #name); \
-    const char* name = luaL_checkstring(L, -1); \
-    lua_pop(L, 1);
-#define FIELD_B(name) \
-    lua_getfield(L, -1, #name); \
-    bool name = lua_toboolean(L, -1); \
-    lua_pop(L, 1);
+    ELONA_CAT_DB_FIELD_INTEGER(image, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(value, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(weight, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(dice_x, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(dice_y, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(hit_bonus, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(damage_bonus, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(pv, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(dv, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(material, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(chargelevel, 0);
 
-    FIELD_I(image);
-    FIELD_I(value);
-    FIELD_I(weight);
-    FIELD_I(dice_x);
-    FIELD_I(dice_y);
-    FIELD_I(hit_bonus);
-    FIELD_I(damage_bonus);
-    FIELD_I(pv);
-    FIELD_I(dv);
-    FIELD_I(material);
-    FIELD_I(chargelevel);
+    ELONA_CAT_DB_FIELD_STRING(description_jp_0, "");
+    ELONA_CAT_DB_FIELD_STRING(description_jp_1, "");
+    ELONA_CAT_DB_FIELD_STRING(description_jp_2, "");
+    ELONA_CAT_DB_FIELD_STRING(description_jp_3, "");
+    ELONA_CAT_DB_FIELD_STRING(description_en, "");
 
-    FIELD_S(description_jp_0);
-    FIELD_S(description_jp_1);
-    FIELD_S(description_jp_2);
-    FIELD_S(description_jp_3);
-    FIELD_S(description_en);
+    ELONA_CAT_DB_FIELD_INTEGER(is_readable, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(is_zappable, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(is_drinkable, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(is_cargo, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(is_usable, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(appearance, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(expiration_date, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(level, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(fltselect, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(category, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(subcategory, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(rarity, 0);
+    ELONA_CAT_DB_FIELD_INTEGER(coefficient, 0);
 
-    FIELD_I(is_readable);
-    FIELD_I(is_zappable);
-    FIELD_I(is_drinkable);
-    FIELD_I(is_cargo);
-    FIELD_I(is_usable);
-    FIELD_I(appearance);
-    FIELD_I(expiration_date);
-    FIELD_I(level);
-    FIELD_I(fltselect);
-    FIELD_I(category);
-    FIELD_I(subcategory);
-    FIELD_I(rarity);
-    FIELD_I(coefficient);
+    ELONA_CAT_DB_FIELD_INTEGER(light, 0);
+    ELONA_CAT_DB_FIELD_STRING(katakana_name, "");
+    ELONA_CAT_DB_FIELD_STRING(original_name_jp, "");
+    ELONA_CAT_DB_FIELD_STRING(original_name_en, "");
+    ELONA_CAT_DB_FIELD_STRING(originalnameref2, "");
+    ELONA_CAT_DB_FIELD_BOOLEAN(has_random_name, false);
 
-    FIELD_I(light);
-    FIELD_S(katakana_name);
-    FIELD_S(original_name_jp);
-    FIELD_S(original_name_en);
-    FIELD_S(originalnameref2);
-    FIELD_B(has_random_name);
-
-    FIELD_S(filter);
-    FIELD_S(rffilter);
-
-#undef FIELD_I
-#undef FIELD_S
+    ELONA_CAT_DB_FIELD_STRING(filter, "");
+    ELONA_CAT_DB_FIELD_STRING(rffilter, "");
 
     storage.emplace(
         std::stoi(id), // TODO
@@ -121,44 +105,6 @@ int define(lua_State* L, std::unordered_map<int, item_data>& storage)
             filter,
             rffilter,
         });
-
-    return 0;
-}
-
-
-} // namespace
-
-
-
-namespace elona
-{
-
-
-
-void item_db::initialize()
-{
-    cat::global.load(fs::u8path(u8"../data/item.lua"));
-
-    lua_getglobal(cat::global.ptr(), u8"item");
-    lua_getfield(cat::global.ptr(), -1, u8"__storage__");
-    lua_pushnil(cat::global.ptr());
-    while (lua_next(cat::global.ptr(), -2))
-    {
-        define(cat::global.ptr(), storage);
-        lua_pop(cat::global.ptr(), 1);
-    }
-    lua_pop(cat::global.ptr(), 2);
-}
-
-
-
-optional_ref<item_data> item_db::operator[](int id) const
-{
-    const auto itr = storage.find(id);
-    if (itr == std::end(storage))
-        return std::nullopt;
-    else
-        return itr->second;
 }
 
 

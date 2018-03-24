@@ -3,8 +3,8 @@
 #include <memory>
 #include <unordered_map>
 #include <vector>
+#include "cat.hpp"
 #include "god.hpp"
-#include "optional_ref.hpp"
 #include "position.hpp"
 #include "range.hpp"
 
@@ -61,58 +61,31 @@ struct character_data
 
 
 
-class character_db
+class character_db;
+
+
+namespace cat
+{
+
+template <>
+struct cat_db_traits<character_db>
+{
+    using id_type = int;
+    using data_type = character_data;
+    static constexpr const char* filename = u8"character.lua";
+    static constexpr const char* table_name = u8"character";
+};
+
+} // namespace cat
+
+
+
+class character_db : public cat::cat_db<character_db>
 {
 public:
-    struct iterator
-    {
-        iterator(
-            const std::unordered_map<int, character_data>::const_iterator& itr)
-            : itr(itr)
-        {
-        }
-
-        const character_data& operator*() const
-        {
-            return itr->second;
-        }
-
-        void operator++()
-        {
-            ++itr;
-        }
-
-        bool operator!=(const iterator& other) const
-        {
-            return itr != other.itr;
-        }
-
-    private:
-        std::unordered_map<int, character_data>::const_iterator itr;
-    };
-
-
     character_db() = default;
 
-    void initialize();
-
-
-    optional_ref<character_data> operator[](int id) const;
-
-
-    iterator begin() const
-    {
-        return iterator{std::begin(storage)};
-    }
-
-    iterator end() const
-    {
-        return iterator{std::end(storage)};
-    }
-
-
-private:
-    std::unordered_map<int, character_data> storage;
+    void define(lua_State* L);
 };
 
 

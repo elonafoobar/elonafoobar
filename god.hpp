@@ -2,6 +2,7 @@
 
 #include <string>
 #include <unordered_map>
+#include "cat.hpp"
 
 
 namespace elona
@@ -71,15 +72,30 @@ struct god_data
 };
 
 
-class god_db
+class god_db;
+
+
+namespace cat
+{
+
+template <>
+struct cat_db_traits<god_db>
+{
+    using id_type = god_id_t;
+    using data_type = god_data;
+    static constexpr const char* filename = u8"god.lua";
+    static constexpr const char* table_name = u8"god";
+};
+
+} // namespace cat
+
+
+class god_db : public cat::cat_db<god_db>
 {
 public:
-    god_db();
+    god_db() = default;
 
-    const god_data& operator[](const god_id_t& id) const;
-
-private:
-    std::unordered_map<god_id_t, god_data> storage;
+    void define(lua_State* L);
 };
 
 
