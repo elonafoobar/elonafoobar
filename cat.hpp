@@ -4,6 +4,7 @@
 #include <lua.hpp>
 #include "filesystem.hpp"
 #include "lib/noncopyable.hpp"
+#include "optional_ref.hpp"
 
 
 namespace elona::cat
@@ -129,6 +130,9 @@ private:
 };
 
 
+inline engine global;
+
+
 
 template <typename T>
 struct userdata
@@ -149,7 +153,129 @@ private:
 };
 
 
-inline engine global;
+
+template <typename>
+struct cat_db_traits;
+
+
+template <class T>
+class cat_db : public lib::noncopyable
+{
+    using traits_type = cat_db_traits<T>;
+
+public:
+    using id_type = typename traits_type::id_type;
+    using data_type = typename traits_type::data_type;
+    using map_type = std::unordered_map<id_type, data_type>;
+
+
+    struct iterator
+    {
+    private:
+        using base_iterator_type = typename map_type::const_iterator;
+
+    public:
+        using value_type = const data_type;
+        using difference_type = typename base_iterator_type::difference_type;
+        using pointer = value_type*;
+        using reference = value_type&;
+        using iterator_category =
+            typename base_iterator_type::iterator_category;
+
+
+        iterator(const typename map_type::const_iterator& itr)
+            : itr(itr)
+        {
+        }
+
+        reference operator*() const
+        {
+            return itr->second;
+        }
+
+        pointer operator->() const
+        {
+            return itr.operator->();
+        }
+
+        void operator++()
+        {
+            ++itr;
+        }
+
+        bool operator!=(const iterator& other) const
+        {
+            return itr != other.itr;
+        }
+
+    private:
+        typename map_type::const_iterator itr;
+    };
+
+
+
+    iterator begin() const
+    {
+        return iterator{std::begin(storage)};
+    }
+
+    iterator end() const
+    {
+        return iterator{std::end(storage)};
+    }
+
+
+    void initialize()
+    {
+        cat::global.load(
+            fs::u8path(u8"../data") / fs::u8path(traits_type::filename));
+
+        auto L = cat::global.ptr();
+
+        lua_getglobal(L, traits_type::table_name);
+        lua_getfield(L, -1, u8"__storage__");
+        lua_pushnil(L);
+        while (lua_next(L, -2))
+        {
+            static_cast<T&>(*this).define(L);
+            lua_pop(L, 1);
+        }
+        lua_pop(L, 2);
+    }
+
+
+    optional_ref<data_type> operator[](const id_type& id) const
+    {
+        const auto itr = storage.find(id);
+        if (itr == std::end(storage))
+            return std::nullopt;
+        else
+            return itr->second;
+    }
+
+
+protected:
+    map_type storage;
+};
+
+
+
+#define ELONA_CAT_DB_FIELD_INTEGER(name, default_value) \
+    lua_getfield(L, -1, #name); \
+    int name = lua_isnil(L, -1) ? (default_value) : luaL_checkinteger(L, -1); \
+    lua_pop(L, 1);
+#define ELONA_CAT_DB_FIELD_STRING(name, default_value) \
+    lua_getfield(L, -1, #name); \
+    const char* name = \
+        lua_isnil(L, -1) ? (default_value) : luaL_checkstring(L, -1); \
+    lua_pop(L, 1);
+#define ELONA_CAT_DB_FIELD_BOOLEAN(name, default_value) \
+    lua_getfield(L, -1, #name); \
+    bool name = lua_isnil(L, -1) ? (default_value) : lua_toboolean(L, -1); \
+    lua_pop(L, 1);
+#define ELONA_CAT_DB_FIELD_REF(name) \
+    lua_getfield(L, -1, #name); \
+    cat::ref name = luaL_ref(L, LUA_REGISTRYINDEX);
 
 
 
