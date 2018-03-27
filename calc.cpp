@@ -236,7 +236,7 @@ std::optional<skill_damage> calc_skill_damage(int skill, int cc, int power)
 
 int calcobjlv(int base)
 {
-    int ret = base < 0 ? gdata_current_dungeon_level : base;
+    int ret = base <= 0 ? gdata_current_dungeon_level : base;
     if (gdata_current_map == 30)
     {
         ret = 1;
