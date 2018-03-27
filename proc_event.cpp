@@ -268,7 +268,7 @@ void proc_event()
         music = 64;
         play_music();
         snd(51);
-        flt(calcobjlv(), calcfixlv());
+        flt(0, calcfixlv());
         flttypemajor = 54000;
         itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
         flt();
