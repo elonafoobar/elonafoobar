@@ -1275,7 +1275,12 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     }
     if (inv[prm_518].id == 630)
     {
-        s_ += ""s + mtname(0, inv[prm_518].material) + lang(u8"製の"s, u8" "s);
+        s_ += ""s
+            + i18n::_(
+                  u8"item_material",
+                  std::to_string(inv[prm_518].material),
+                  u8"name")
+            + lang(u8"製の"s, u8" "s);
     }
     if (jp)
     {
@@ -1285,11 +1290,21 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     {
         if (jp)
         {
-            s_ += ""s + mtname(0, inv[prm_518].material) + u8"細工の"s;
+            s_ += ""s
+                + i18n::_(
+                      u8"item_material",
+                      std::to_string(inv[prm_518].material),
+                      u8"name")
+                + u8"細工の"s;
         }
         else
         {
-            s_ += ""s + mtname(0, inv[prm_518].material) + u8"work "s;
+            s_ += ""s
+                + i18n::_(
+                      u8"item_material",
+                      std::to_string(inv[prm_518].material),
+                      u8"name")
+                + u8"work "s;
         }
     }
     if (inv[prm_518].id == 729)
@@ -1330,11 +1345,19 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
             {
                 if (inv[prm_518].quality >= 4)
                 {
-                    s_ += mtname(1, inv[prm_518].material) + strblank;
+                    s_ += i18n::_(
+                              u8"item_material",
+                              std::to_string(inv[prm_518].material),
+                              u8"alias")
+                        + strblank;
                 }
                 else
                 {
-                    s_ += mtname(0, inv[prm_518].material) + strblank;
+                    s_ += i18n::_(
+                              u8"item_material",
+                              std::to_string(inv[prm_518].material),
+                              u8"name")
+                        + strblank;
                     if (jp)
                     {
                         if (/* TODO is_katakana */ false)
@@ -1530,11 +1553,21 @@ label_0313_internal:
             + u8")"s;
         if (jp)
         {
-            s_ += u8"["s + mtname(0, inv[prm_518].material) + u8"製]"s;
+            s_ += u8"["s
+                + i18n::_(
+                      u8"item_material",
+                      std::to_string(inv[prm_518].material),
+                      u8"name")
+                + u8"製]"s;
         }
         else
         {
-            s_ += u8"["s + cnven(mtname(0, inv[prm_518].material)) + u8"]"s;
+            s_ += u8"["s
+                + cnven(i18n::_(
+                      u8"item_material",
+                      std::to_string(inv[prm_518].material),
+                      u8"name"))
+                + u8"]"s;
         }
         if (inv[prm_518].curse_state == curse_state_t::cursed)
         {

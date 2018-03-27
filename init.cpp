@@ -10,6 +10,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "item_material.hpp"
 #include "macro.hpp"
 #include "main.hpp"
 #include "race.hpp"
@@ -392,7 +393,6 @@ void initialize_elona()
     clear_trait_data();
     initialize_rankn();
     initialize_post_data();
-    initialize_item_material_data();
     initialize_ego_data();
     initialize_enchantment_data();
     initialize_set_of_random_generation();
@@ -733,6 +733,7 @@ int run()
     the_character_db.initialize();
     the_class_db.initialize();
     the_item_db.initialize();
+    the_item_material_db.initialize();
     the_race_db.initialize();
     the_trait_db.initialize();
 

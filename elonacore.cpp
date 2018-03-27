@@ -12,6 +12,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "item_material.hpp"
 #include "macro.hpp"
 #include "main.hpp"
 #include "map.hpp"
@@ -306,11 +307,6 @@ elona_vector2<int> egoenc;
 elona_vector2<int> egoref;
 elona_vector1<int> egolist;
 int maxegominorn = 0;
-elona_vector2<int> mtref;
-elona_vector2<int> mtenc;
-elona_vector2<int> mtbit;
-elona_vector2<int> mtlistmetal;
-elona_vector2<int> mtlistleather;
 elona_vector2<int> fishdata;
 elona_vector1<std::string> rpdatan;
 int i_at_m66 = 0;
@@ -5259,849 +5255,6 @@ void add_enchantments()
 
 
 
-void initialize_item_material_data()
-{
-    SDIM4(mtname, 18, 2, 50);
-    DIM3(mtref, 10, 50);
-    DIM3(mtenc, 16, 50);
-    DIM3(mtbit, 10, 50);
-    if (jp)
-    {
-        mtname(0, 36) = u8"野菜"s;
-        mtname(0, 37) = u8"果実"s;
-        mtname(0, 38) = u8"ハーブ"s;
-        mtname(0, 39) = u8"謎の物体"s;
-        mtname(0, 40) = u8"アーティファクト"s;
-        mtname(0, 41) = u8"宝石"s;
-        mtname(0, 42) = u8"魔法の木"s;
-    }
-    else
-    {
-        mtname(0, 36) = u8"野菜"s;
-        mtname(0, 37) = u8"果実"s;
-        mtname(0, 38) = u8"ハーブ"s;
-        mtname(0, 39) = u8"謎の物体"s;
-        mtname(0, 40) = u8"アーティファクト"s;
-        mtname(0, 41) = u8"宝石"s;
-        mtname(0, 42) = u8"魔法の木"s;
-    }
-    p = 0;
-    if (jp)
-    {
-        mtname(0, p) = u8"砂"s;
-        mtname(1, p) = u8"子供のおもちゃの"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"sand"s;
-        mtname(1, p) = u8"toy"s;
-    }
-    mtref(0, p) = 10;
-    mtref(1, p) = 80;
-    mtref(2, p) = -5;
-    mtref(3, p) = -5;
-    mtref(4, p) = -5;
-    mtref(5, p) = -5;
-    mtref(6, p) = 100;
-    mtenc(0, p) = 0;
-    p = 35;
-    if (jp)
-    {
-        mtname(0, p) = u8"生もの"s;
-        mtname(1, p) = u8"食用"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"raw"s;
-        mtname(1, p) = u8"candy"s;
-    }
-    mtref(0, p) = 100;
-    mtref(1, p) = 50;
-    mtref(2, p) = -5;
-    mtref(3, p) = -5;
-    mtref(4, p) = -5;
-    mtref(5, p) = -5;
-    mtref(6, p) = 100;
-    mtref(7, p) = 0;
-    mtenc(0, p) = 0;
-    p = 43;
-    if (jp)
-    {
-        mtname(0, p) = u8"木"s;
-        mtname(1, p) = u8"古き"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"wood"s;
-        mtname(1, p) = u8"old"s;
-    }
-    mtref(0, p) = 150;
-    mtref(1, p) = 50;
-    mtref(2, p) = -5;
-    mtref(3, p) = -5;
-    mtref(4, p) = -5;
-    mtref(5, p) = -5;
-    mtref(6, p) = 100;
-    mtref(7, p) = 0;
-    mtenc(0, p) = 0;
-    p = 34;
-    if (jp)
-    {
-        mtname(0, p) = u8"鉛"s;
-        mtname(1, p) = u8"重き"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"iron"s;
-        mtname(1, p) = u8"heavy"s;
-    }
-    mtref(0, p) = 300;
-    mtref(1, p) = 50;
-    mtref(2, p) = 3;
-    mtref(3, p) = 4;
-    mtref(4, p) = -3;
-    mtref(5, p) = 11;
-    mtref(6, p) = 100;
-    mtref(7, p) = 0;
-    mtenc(0, p) = 0;
-    mtbit(0, p) = 1;
-    p = 12;
-    if (jp)
-    {
-        mtname(0, p) = u8"ブロンズ"s;
-        mtname(1, p) = u8"気高き"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"bronze"s;
-        mtname(1, p) = u8"noble"s;
-    }
-    mtref(0, p) = 200;
-    mtref(1, p) = 70;
-    mtref(2, p) = 2;
-    mtref(3, p) = 5;
-    mtref(4, p) = 1;
-    mtref(5, p) = 5;
-    mtref(6, p) = 100;
-    mtref(7, p) = 6;
-    mtenc(0, p) = 20052;
-    mtenc(1, p) = 50;
-    p = 21;
-    if (jp)
-    {
-        mtname(0, p) = u8"ミカ"s;
-        mtname(1, p) = u8"儚き"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"mica"s;
-        mtname(1, p) = u8"ephemeral"s;
-    }
-    mtref(0, p) = 40;
-    mtref(1, p) = 150;
-    mtref(2, p) = 10;
-    mtref(3, p) = -2;
-    mtref(4, p) = 12;
-    mtref(5, p) = 0;
-    mtref(6, p) = 100;
-    mtref(7, p) = 0;
-    mtenc(0, p) = 10019;
-    mtenc(1, p) = 100;
-    p = 33;
-    if (jp)
-    {
-        mtname(0, p) = u8"珊瑚"s;
-        mtname(1, p) = u8"海からもたらされし"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"coral"s;
-        mtname(1, p) = u8"ocean"s;
-    }
-    mtref(0, p) = 180;
-    mtref(1, p) = 240;
-    mtref(2, p) = 7;
-    mtref(3, p) = 2;
-    mtref(4, p) = 10;
-    mtref(5, p) = 7;
-    mtref(6, p) = 120;
-    mtref(7, p) = 5;
-    mtenc(0, p) = 20052;
-    mtenc(1, p) = 100;
-    p = 10;
-    if (jp)
-    {
-        mtname(0, p) = u8"鉄"s;
-        mtname(1, p) = u8"鉄塊と呼ばれる"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"metal"s;
-        mtname(1, p) = u8"mass"s;
-    }
-    mtref(0, p) = 280;
-    mtref(1, p) = 190;
-    mtref(2, p) = 8;
-    mtref(3, p) = 8;
-    mtref(4, p) = 3;
-    mtref(5, p) = 14;
-    mtref(6, p) = 130;
-    mtref(7, p) = 0;
-    mtenc(0, p) = 20050;
-    mtenc(1, p) = 25;
-    mtbit(0, p) = 2;
-    p = 25;
-    if (jp)
-    {
-        mtname(0, p) = u8"シルバー"s;
-        mtname(1, p) = u8"闇を砕く"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"silver"s;
-        mtname(1, p) = u8"dreadbane"s;
-    }
-    mtref(0, p) = 230;
-    mtref(1, p) = 250;
-    mtref(2, p) = 10;
-    mtref(3, p) = 7;
-    mtref(4, p) = 7;
-    mtref(5, p) = 11;
-    mtref(6, p) = 130;
-    mtref(7, p) = 0;
-    mtenc(0, p) = 20053;
-    mtenc(1, p) = 50;
-    mtbit(0, p) = 2;
-    p = 5;
-    if (jp)
-    {
-        mtname(0, p) = u8"硝子"s;
-        mtname(1, p) = u8"透き通る"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"glass"s;
-        mtname(1, p) = u8"transparent"s;
-    }
-    mtref(0, p) = 180;
-    mtref(1, p) = 150;
-    mtref(2, p) = 19;
-    mtref(3, p) = 0;
-    mtref(4, p) = 17;
-    mtref(5, p) = 0;
-    mtref(6, p) = 100;
-    mtref(7, p) = 4;
-    mtenc(0, p) = 10018;
-    mtenc(1, p) = 150;
-    mtbit(0, p) = 2;
-    p = 20;
-    if (jp)
-    {
-        mtname(0, p) = u8"オブシディアン"s;
-        mtname(1, p) = u8"神殺しの"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"obsidian"s;
-        mtname(1, p) = u8"godbane"s;
-    }
-    mtref(0, p) = 160;
-    mtref(1, p) = 350;
-    mtref(2, p) = 16;
-    mtref(3, p) = 10;
-    mtref(4, p) = 13;
-    mtref(5, p) = 14;
-    mtref(6, p) = 130;
-    mtref(7, p) = 0;
-    mtenc(0, p) = 20059;
-    mtenc(1, p) = 100;
-    p = 9;
-    if (jp)
-    {
-        mtname(0, p) = u8"スティール"s;
-        mtname(1, p) = u8"由緒ある"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"steel"s;
-        mtname(1, p) = u8"historic"s;
-    }
-    mtref(0, p) = 270;
-    mtref(1, p) = 280;
-    mtref(2, p) = 12;
-    mtref(3, p) = 13;
-    mtref(4, p) = 8;
-    mtref(5, p) = 18;
-    mtref(6, p) = 140;
-    mtref(7, p) = 0;
-    mtenc(0, p) = 0;
-    mtbit(0, p) = 2;
-    p = 26;
-    if (jp)
-    {
-        mtname(0, p) = u8"白銀"s;
-        mtname(1, p) = u8"光を纏いし"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"platinum"s;
-        mtname(1, p) = u8"brilliant"s;
-    }
-    mtref(0, p) = 260;
-    mtref(1, p) = 350;
-    mtref(2, p) = 16;
-    mtref(3, p) = 11;
-    mtref(4, p) = 14;
-    mtref(5, p) = 17;
-    mtref(6, p) = 140;
-    mtref(7, p) = 0;
-    mtenc(0, p) = 20053;
-    mtenc(1, p) = 100;
-    mtbit(0, p) = 2;
-    p = 22;
-    if (jp)
-    {
-        mtname(0, p) = u8"真珠"s;
-        mtname(1, p) = u8"闇を照らす"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"perl"s;
-        mtname(1, p) = u8"shining"s;
-    }
-    mtref(0, p) = 240;
-    mtref(1, p) = 400;
-    mtref(2, p) = 18;
-    mtref(3, p) = 6;
-    mtref(4, p) = 18;
-    mtref(5, p) = 12;
-    mtref(6, p) = 140;
-    mtref(7, p) = 10;
-    mtenc(0, p) = 10013;
-    mtenc(1, p) = 100;
-    p = 7;
-    if (jp)
-    {
-        mtname(0, p) = u8"ミスリル"s;
-        mtname(1, p) = u8"古なる"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"mithril"s;
-        mtname(1, p) = u8"ancient"s;
-    }
-    mtref(0, p) = 240;
-    mtref(1, p) = 750;
-    mtref(2, p) = 20;
-    mtref(3, p) = 18;
-    mtref(4, p) = 25;
-    mtref(5, p) = 17;
-    mtref(6, p) = 190;
-    mtref(7, p) = 2;
-    mtenc(0, p) = 30172;
-    mtenc(1, p) = 100;
-    mtbit(0, p) = 1;
-    mtbit(1, p) = 2;
-    p = 30;
-    if (jp)
-    {
-        mtname(0, p) = u8"クロム"s;
-        mtname(1, p) = u8"真実を暴く"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"chrome"s;
-        mtname(1, p) = u8"pure"s;
-    }
-    mtref(0, p) = 320;
-    mtref(1, p) = 500;
-    mtref(2, p) = 15;
-    mtref(3, p) = 17;
-    mtref(4, p) = 12;
-    mtref(5, p) = 22;
-    mtref(6, p) = 150;
-    mtref(7, p) = 0;
-    mtenc(0, p) = 0;
-    p = 11;
-    if (jp)
-    {
-        mtname(0, p) = u8"水晶"s;
-        mtname(1, p) = u8"異光を放つ"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"crystal"s;
-        mtname(1, p) = u8"rainbow"s;
-    }
-    mtref(0, p) = 200;
-    mtref(1, p) = 800;
-    mtref(2, p) = 19;
-    mtref(3, p) = 14;
-    mtref(4, p) = 16;
-    mtref(5, p) = 19;
-    mtref(6, p) = 150;
-    mtref(7, p) = 12;
-    mtenc(0, p) = 10016;
-    mtenc(1, p) = 100;
-    p = 23;
-    if (jp)
-    {
-        mtname(0, p) = u8"エメラルド"s;
-        mtname(1, p) = u8"奇跡を呼ぶ"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"emerald"s;
-        mtname(1, p) = u8"miracle"s;
-    }
-    mtref(0, p) = 240;
-    mtref(1, p) = 1050;
-    mtref(2, p) = 22;
-    mtref(3, p) = 23;
-    mtref(4, p) = 18;
-    mtref(5, p) = 28;
-    mtref(6, p) = 190;
-    mtref(7, p) = 2;
-    mtenc(0, p) = 20058;
-    mtenc(1, p) = 100;
-    p = 31;
-    if (jp)
-    {
-        mtname(0, p) = u8"アダマンタイト"s;
-        mtname(1, p) = u8"大地を揺るがす"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"adamantium"s;
-        mtname(1, p) = u8"earth"s;
-    }
-    mtref(0, p) = 360;
-    mtref(1, p) = 1150;
-    mtref(2, p) = 11;
-    mtref(3, p) = 38;
-    mtref(4, p) = 8;
-    mtref(5, p) = 42;
-    mtref(6, p) = 240;
-    mtref(7, p) = 10;
-    mtenc(0, p) = 10011;
-    mtenc(1, p) = 100;
-    mtbit(0, p) = 1;
-    mtbit(1, p) = 2;
-    p = 29;
-    if (jp)
-    {
-        mtname(0, p) = u8"チタン"s;
-        mtname(1, p) = u8"色褪せぬ"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"titanium"s;
-        mtname(1, p) = u8"fadeless"s;
-    }
-    mtref(0, p) = 200;
-    mtref(1, p) = 750;
-    mtref(2, p) = 21;
-    mtref(3, p) = 18;
-    mtref(4, p) = 19;
-    mtref(5, p) = 22;
-    mtref(6, p) = 160;
-    mtref(7, p) = 0;
-    mtenc(0, p) = 10010;
-    mtenc(1, p) = 100;
-    mtbit(0, p) = 2;
-    p = 13;
-    if (jp)
-    {
-        mtname(0, p) = u8"ダイヤ"s;
-        mtname(1, p) = u8"うつろいなき"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"diamond"s;
-        mtname(1, p) = u8"ever lasting"s;
-    }
-    mtref(0, p) = 330;
-    mtref(1, p) = 1100;
-    mtref(2, p) = 19;
-    mtref(3, p) = 27;
-    mtref(4, p) = 13;
-    mtref(5, p) = 31;
-    mtref(6, p) = 220;
-    mtref(7, p) = 0;
-    mtenc(0, p) = 20052;
-    mtenc(1, p) = 100;
-    p = 15;
-    if (jp)
-    {
-        mtname(0, p) = u8"ルビナス"s;
-        mtname(1, p) = u8"赤く染まった"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"rubynus"s;
-        mtname(1, p) = u8"crimson"s;
-    }
-    mtref(0, p) = 250;
-    mtref(1, p) = 1000;
-    mtref(2, p) = 38;
-    mtref(3, p) = 18;
-    mtref(4, p) = 31;
-    mtref(5, p) = 24;
-    mtref(6, p) = 190;
-    mtref(7, p) = 3;
-    mtenc(0, p) = 10002;
-    mtenc(1, p) = 125;
-    mtbit(0, p) = 1;
-    mtbit(1, p) = 2;
-    p = 8;
-    if (jp)
-    {
-        mtname(0, p) = u8"エーテル"s;
-        mtname(1, p) = u8"永遠なる"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"ether"s;
-        mtname(1, p) = u8"eternal"s;
-    }
-    mtref(0, p) = 80;
-    mtref(1, p) = 1200;
-    mtref(2, p) = 8;
-    mtref(3, p) = 45;
-    mtref(4, p) = 35;
-    mtref(5, p) = 8;
-    mtref(6, p) = 250;
-    mtref(7, p) = 4;
-    mtenc(0, p) = 10018;
-    mtenc(1, p) = 200;
-    mtbit(0, p) = 1;
-    mtbit(1, p) = 2;
-    p = 3;
-    if (jp)
-    {
-        mtname(0, p) = u8"布"s;
-        mtname(1, p) = u8"艶やかなる"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"cloth"s;
-        mtname(1, p) = u8"charming"s;
-    }
-    mtref(0, p) = 20;
-    mtref(1, p) = 30;
-    mtref(2, p) = 6;
-    mtref(3, p) = -5;
-    mtref(4, p) = 7;
-    mtref(5, p) = 2;
-    mtref(6, p) = 100;
-    mtref(7, p) = 10;
-    mtenc(0, p) = 0;
-    p = 2;
-    if (jp)
-    {
-        mtname(0, p) = u8"シルク"s;
-        mtname(1, p) = u8"美しき"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"silk"s;
-        mtname(1, p) = u8"beautiful"s;
-    }
-    mtref(0, p) = 40;
-    mtref(1, p) = 190;
-    mtref(2, p) = 9;
-    mtref(3, p) = -2;
-    mtref(4, p) = 10;
-    mtref(5, p) = 2;
-    mtref(6, p) = 100;
-    mtref(7, p) = 5;
-    mtenc(0, p) = 20054;
-    mtenc(1, p) = 50;
-    p = 16;
-    if (jp)
-    {
-        mtname(0, p) = u8"紙"s;
-        mtname(1, p) = u8"ふざけた"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"paper"s;
-        mtname(1, p) = u8"silly"s;
-    }
-    mtref(0, p) = 10;
-    mtref(1, p) = 20;
-    mtref(2, p) = 15;
-    mtref(3, p) = -10;
-    mtref(4, p) = 12;
-    mtref(5, p) = 0;
-    mtref(6, p) = 100;
-    mtref(7, p) = 0;
-    mtenc(0, p) = 30173;
-    mtenc(1, p) = 100;
-    p = 18;
-    if (jp)
-    {
-        mtname(0, p) = u8"ボーン"s;
-        mtname(1, p) = u8"不死なる"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"bone"s;
-        mtname(1, p) = u8"immortal"s;
-    }
-    mtref(0, p) = 120;
-    mtref(1, p) = 300;
-    mtref(2, p) = 10;
-    mtref(3, p) = 6;
-    mtref(4, p) = 12;
-    mtref(5, p) = 11;
-    mtref(6, p) = 140;
-    mtref(7, p) = 0;
-    mtenc(0, p) = 20056;
-    mtenc(1, p) = 100;
-    mtbit(0, p) = 2;
-    p = 1;
-    if (jp)
-    {
-        mtname(0, p) = u8"革"s;
-        mtname(1, p) = u8"全てを包む"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"leather"s;
-        mtname(1, p) = u8"mysterious"s;
-    }
-    mtref(0, p) = 100;
-    mtref(1, p) = 150;
-    mtref(2, p) = 12;
-    mtref(3, p) = 2;
-    mtref(4, p) = 13;
-    mtref(5, p) = 6;
-    mtref(6, p) = 100;
-    mtref(7, p) = 6;
-    mtenc(0, p) = 0;
-    p = 4;
-    if (jp)
-    {
-        mtname(0, p) = u8"鱗"s;
-        mtname(1, p) = u8"逆鱗に触れし"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"scale"s;
-        mtname(1, p) = u8"wrath"s;
-    }
-    mtref(0, p) = 180;
-    mtref(1, p) = 250;
-    mtref(2, p) = 14;
-    mtref(3, p) = 6;
-    mtref(4, p) = 12;
-    mtref(5, p) = 11;
-    mtref(6, p) = 120;
-    mtref(7, p) = 10;
-    mtenc(0, p) = 20050;
-    mtenc(1, p) = 50;
-    p = 19;
-    if (jp)
-    {
-        mtname(0, p) = u8"鉄鎖"s;
-        mtname(1, p) = u8"連鎖せし"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"chain"s;
-        mtname(1, p) = u8"spiral"s;
-    }
-    mtref(0, p) = 200;
-    mtref(1, p) = 300;
-    mtref(2, p) = 11;
-    mtref(3, p) = 8;
-    mtref(4, p) = 17;
-    mtref(5, p) = 14;
-    mtref(6, p) = 100;
-    mtref(7, p) = 0;
-    mtenc(0, p) = 20053;
-    mtenc(1, p) = 50;
-    mtbit(0, p) = 2;
-    p = 27;
-    if (jp)
-    {
-        mtname(0, p) = u8"ザイロン"s;
-        mtname(1, p) = u8"異国からもたらされし"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"zylon"s;
-        mtname(1, p) = u8"foreign"s;
-    }
-    mtref(0, p) = 50;
-    mtref(1, p) = 500;
-    mtref(2, p) = 5;
-    mtref(3, p) = 4;
-    mtref(4, p) = 21;
-    mtref(5, p) = 16;
-    mtref(6, p) = 100;
-    mtref(7, p) = 4;
-    mtenc(0, p) = 20056;
-    mtenc(1, p) = 50;
-    p = 32;
-    if (jp)
-    {
-        mtname(0, p) = u8"ゴールデン"s;
-        mtname(1, p) = u8"黄金に輝く"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"gold"s;
-        mtname(1, p) = u8"golden"s;
-    }
-    mtref(0, p) = 300;
-    mtref(1, p) = 800;
-    mtref(2, p) = 13;
-    mtref(3, p) = 18;
-    mtref(4, p) = 14;
-    mtref(5, p) = 22;
-    mtref(6, p) = 140;
-    mtref(7, p) = 5;
-    mtenc(0, p) = 10010;
-    mtenc(1, p) = 100;
-    mtbit(0, p) = 2;
-    p = 14;
-    if (jp)
-    {
-        mtname(0, p) = u8"霊布"s;
-        mtname(1, p) = u8"この世ならざる"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"spirit cloth"s;
-        mtname(1, p) = u8"amazing"s;
-    }
-    mtref(0, p) = 40;
-    mtref(1, p) = 750;
-    mtref(2, p) = 3;
-    mtref(3, p) = 2;
-    mtref(4, p) = 34;
-    mtref(5, p) = 6;
-    mtref(6, p) = 100;
-    mtref(7, p) = 4;
-    mtenc(0, p) = 10018;
-    mtenc(1, p) = 200;
-    mtbit(0, p) = 1;
-    p = 24;
-    if (jp)
-    {
-        mtname(0, p) = u8"竜鱗"s;
-        mtname(1, p) = u8"竜を統べし"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"dragon scale"s;
-        mtname(1, p) = u8"dragonbane"s;
-    }
-    mtref(0, p) = 220;
-    mtref(1, p) = 800;
-    mtref(2, p) = 25;
-    mtref(3, p) = 24;
-    mtref(4, p) = 29;
-    mtref(5, p) = 24;
-    mtref(6, p) = 160;
-    mtref(7, p) = 2;
-    mtenc(0, p) = 20050;
-    mtenc(1, p) = 50;
-    mtenc(2, p) = 20051;
-    mtenc(3, p) = 50;
-    mtbit(0, p) = 1;
-    mtbit(1, p) = 2;
-    p = 17;
-    if (jp)
-    {
-        mtname(0, p) = u8"宵晒"s;
-        mtname(1, p) = u8"宵闇を纏いし"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"dawn cloth"s;
-        mtname(1, p) = u8"dawn"s;
-    }
-    mtref(0, p) = 45;
-    mtref(1, p) = 850;
-    mtref(2, p) = 10;
-    mtref(3, p) = 8;
-    mtref(4, p) = 35;
-    mtref(5, p) = 15;
-    mtref(6, p) = 100;
-    mtref(7, p) = 4;
-    mtenc(0, p) = 10003;
-    mtenc(1, p) = 200;
-    p = 28;
-    if (jp)
-    {
-        mtname(0, p) = u8"翼鳥鱗"s;
-        mtname(1, p) = u8"翼を折られし"s;
-    }
-    else
-    {
-        mtname(0, p) = u8"griffon scale"s;
-        mtname(1, p) = u8"fallen"s;
-    }
-    mtref(0, p) = 70;
-    mtref(1, p) = 1000;
-    mtref(2, p) = 16;
-    mtref(3, p) = 17;
-    mtref(4, p) = 32;
-    mtref(5, p) = 24;
-    mtref(6, p) = 120;
-    mtref(7, p) = 2;
-    mtenc(0, p) = 30173;
-    mtenc(1, p) = 100;
-    DIM3(mtlistmetal, 4, 5);
-    DIM3(mtlistleather, 4, 5);
-    mtlistmetal(0, 0) = 12;
-    mtlistmetal(1, 0) = 34;
-    mtlistmetal(2, 0) = 21;
-    mtlistmetal(3, 0) = 33;
-    mtlistmetal(0, 1) = 10;
-    mtlistmetal(1, 1) = 25;
-    mtlistmetal(2, 1) = 5;
-    mtlistmetal(3, 1) = 20;
-    mtlistmetal(0, 2) = 9;
-    mtlistmetal(1, 2) = 26;
-    mtlistmetal(2, 2) = 22;
-    mtlistmetal(3, 2) = 7;
-    mtlistmetal(0, 3) = 30;
-    mtlistmetal(1, 3) = 11;
-    mtlistmetal(2, 3) = 23;
-    mtlistmetal(3, 3) = 31;
-    mtlistmetal(0, 4) = 29;
-    mtlistmetal(1, 4) = 13;
-    mtlistmetal(2, 4) = 15;
-    mtlistmetal(3, 4) = 8;
-    mtlistleather(0, 0) = 3;
-    mtlistleather(1, 0) = 2;
-    mtlistleather(2, 0) = 16;
-    mtlistleather(3, 0) = 18;
-    mtlistleather(0, 1) = 1;
-    mtlistleather(1, 1) = 4;
-    mtlistleather(2, 1) = 5;
-    mtlistleather(3, 1) = 20;
-    mtlistleather(0, 2) = 19;
-    mtlistleather(1, 2) = 26;
-    mtlistleather(2, 2) = 22;
-    mtlistleather(3, 2) = 7;
-    mtlistleather(0, 3) = 27;
-    mtlistleather(1, 3) = 32;
-    mtlistleather(2, 3) = 14;
-    mtlistleather(3, 3) = 24;
-    mtlistleather(0, 4) = 17;
-    mtlistleather(1, 4) = 28;
-    mtlistleather(2, 4) = 15;
-    mtlistleather(3, 4) = 8;
-    return;
-}
-
-
-
 void initialize_item_material()
 {
     determine_item_material();
@@ -6180,22 +5333,22 @@ void determine_item_material()
     {
         if (rnd(10) != 0)
         {
-            inv[ci].material = mtlistmetal(p, mtlv);
+            inv[ci].material = the_item_material_db.lookup_metal(p, mtlv);
         }
         else
         {
-            inv[ci].material = mtlistleather(p, mtlv);
+            inv[ci].material = the_item_material_db.lookup_leather(p, mtlv);
         }
     }
     if (inv[ci].material == 1001)
     {
         if (rnd(10) != 0)
         {
-            inv[ci].material = mtlistleather(p, mtlv);
+            inv[ci].material = the_item_material_db.lookup_leather(p, mtlv);
         }
         else
         {
-            inv[ci].material = mtlistmetal(p, mtlv);
+            inv[ci].material = the_item_material_db.lookup_metal(p, mtlv);
         }
     }
     if (rnd(25) == 0)
@@ -6214,15 +5367,11 @@ void change_item_material()
     p = inv[ci].material;
     reftype = the_item_db[inv[ci].id]->category;
     fixlv = inv[ci].quality;
-    for (int cnt = 0; cnt < 8; ++cnt)
+    for (auto e : the_item_material_db[p]->enchantments)
     {
-        if (mtenc(cnt * 2, p) == 0)
-        {
-            break;
-        }
-        encremove(ci, mtenc(cnt * 2, p), mtenc(cnt * 2 + 1, p));
+        encremove(ci, e.id, e.power);
     }
-    originalvalue = inv[ci].value * 100 / mtref(1, p);
+    originalvalue = inv[ci].value * 100 / the_item_material_db[p]->value;
     dbid = inv[ci].id;
     access_item_db(10);
     inv[ci].value = originalvalue;
@@ -6254,18 +5403,18 @@ void apply_item_material()
         }
     }
     p = inv[ci].material;
-    inv[ci].weight = inv[ci].weight * mtref(0, p) / 100;
+    inv[ci].weight = inv[ci].weight * the_item_material_db[p]->weight / 100;
     if (reftype == 60000)
     {
-        inv[ci].value += mtref(1, p) * 2;
+        inv[ci].value += the_item_material_db[p]->value * 2;
     }
     else
     {
-        inv[ci].value = inv[ci].value * mtref(1, p) / 100;
+        inv[ci].value = inv[ci].value * the_item_material_db[p]->value / 100;
     }
     if (inv[ci].color == 0)
     {
-        inv[ci].color = mtref(7, p);
+        inv[ci].color = the_item_material_db[p]->color;
     }
     p(1) = 120;
     p(2) = 80;
@@ -6286,25 +5435,28 @@ void apply_item_material()
     }
     if (inv[ci].hit_bonus != 0)
     {
-        inv[ci].hit_bonus =
-            mtref(2, p) * inv[ci].hit_bonus * 9 / (p(1) - rnd(30));
+        inv[ci].hit_bonus = the_item_material_db[p]->hit_bonus
+            * inv[ci].hit_bonus * 9 / (p(1) - rnd(30));
     }
     if (inv[ci].damage_bonus != 0)
     {
-        inv[ci].damage_bonus =
-            mtref(3, p) * inv[ci].damage_bonus * 5 / (p(1) - rnd(30));
+        inv[ci].damage_bonus = the_item_material_db[p]->damage_bonus
+            * inv[ci].damage_bonus * 5 / (p(1) - rnd(30));
     }
     if (inv[ci].dv != 0)
     {
-        inv[ci].dv = mtref(4, p) * inv[ci].dv * 7 / (p(1) - rnd(30));
+        inv[ci].dv =
+            the_item_material_db[p]->dv * inv[ci].dv * 7 / (p(1) - rnd(30));
     }
     if (inv[ci].pv != 0)
     {
-        inv[ci].pv = mtref(5, p) * inv[ci].pv * 9 / (p(1) - rnd(30));
+        inv[ci].pv =
+            the_item_material_db[p]->pv * inv[ci].pv * 9 / (p(1) - rnd(30));
     }
     if (inv[ci].dice_y != 0)
     {
-        inv[ci].dice_y = inv[ci].dice_y * mtref(6, p) / (p(1) + rnd(25));
+        inv[ci].dice_y =
+            inv[ci].dice_y * the_item_material_db[p]->dice_y / (p(1) + rnd(25));
     }
     set_material_specific_attributes();
     return;
@@ -6315,21 +5467,20 @@ void apply_item_material()
 void set_material_specific_attributes()
 {
     p = inv[ci].material;
-    for (int cnt = 0; cnt < 8; ++cnt)
+    for (auto e : the_item_material_db[p]->enchantments)
     {
-        if (mtenc(cnt * 2, p) == 0)
-        {
-            break;
-        }
-        encadd(ci, mtenc(cnt * 2, p), mtenc(cnt * 2 + 1, p), 0, 1);
+        encadd(ci, e.id, e.power, 0, 1);
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        if (mtbit(cnt, p) == 0)
+        if (the_item_material_db[p]->fireproof)
         {
-            break;
+            ibitmod(1, ci, 1);
         }
-        ibitmod(mtbit(cnt, p), ci, 1);
+        if (the_item_material_db[p]->acidproof)
+        {
+            ibitmod(2, ci, 1);
+        }
     }
     return;
 }
@@ -48172,8 +47323,18 @@ void show_item_description()
         {
             list(0, p) = 7;
             listn(0, p) = lang(
-                u8"それは"s + mtname(0, inv[ci].material) + u8"で作られている"s,
-                u8"It is made of "s + mtname(0, inv[ci].material) + u8"."s);
+                u8"それは"s
+                    + i18n::_(
+                          u8"item_material",
+                          std::to_string(inv[ci].material),
+                          u8"name")
+                    + u8"で作られている"s,
+                u8"It is made of "s
+                    + i18n::_(
+                          u8"item_material",
+                          std::to_string(inv[ci].material),
+                          u8"name")
+                    + u8"."s);
             ++p;
         }
         if (inv[ci].material == 8)
