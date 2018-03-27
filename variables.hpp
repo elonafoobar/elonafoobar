@@ -218,7 +218,7 @@ inline elona_vector2<std::string> cdatan2;
 inline elona_vector2<std::string> cdatan;
 inline elona_vector2<std::string> listn;
 inline elona_vector2<std::string> mapnamerd;
-inline elona_vector2<std::string> mtname;
+
 inline elona_vector2<std::string> promptl;
 inline elona_vector2<std::string> rnlist;
 inline elona_vector2<std::string> userdatan;
