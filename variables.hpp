@@ -159,6 +159,8 @@ inline int key_alt;
 inline std::string key_mode;
 inline std::string key_ammo;
 inline std::string key_mode2;
+inline std::string key_quicksave;
+inline std::string key_quickload;
 inline elona_vector1<std::string> key_list;
 inline elona_vector1<std::string> key_select;
 inline elona_vector1<std::string> keylog;

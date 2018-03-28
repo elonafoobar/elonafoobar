@@ -71581,14 +71581,17 @@ label_2747:
             }
         }
     }
-    if (getkey(snail::key::f1))
+
+    if (key == key_quicksave)
     {
+        key = "";
         save_game();
         txt(lang(u8" *保存* "s, u8" *Save* "s));
         await(100);
     }
-    if (getkey(snail::key::f2))
+    if (key == key_quickload)
     {
+        key = "";
         msg_newline();
         msgtemp = u8"  "s;
         firstturn = 1;
@@ -71597,6 +71600,7 @@ label_2747:
         initialize_map();
         return;
     }
+
     if (getkey(snail::key::f3))
     {
         tcgmain();

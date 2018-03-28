@@ -472,6 +472,12 @@ void load_config()
                 key_quickinv = std::string{value};
                 jkey(jk) = std::string{value};
             }),
+        std::make_unique<config_string>(
+            u8"key_quicksave",
+            [&](auto value) { key_quicksave = std::string{value}; }),
+        std::make_unique<config_string>(
+            u8"key_quickload",
+            [&](auto value) { key_quickload = std::string{value}; }),
         std::make_unique<config_integer>(
             u8"zkey",
             [&](auto value) { cfg_zkey = value; }),
