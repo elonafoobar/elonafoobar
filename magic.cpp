@@ -7,6 +7,7 @@
 #include "debug.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
+#include "input.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "macro.hpp"
@@ -2963,7 +2964,7 @@ label_2181_internal:
                     u8"依頼請負中の帰還は法律で禁止されている。それでも帰還する？"s,
                     u8"Returning while taking a quest if forbidden. Are you sure you want to return?"s));
                 ELONA_YES_NO_PROMPT();
-                show_prompt(promptx, prompty, 160);
+                rtval = show_prompt(promptx, prompty, 160);
                 if (rtval != 0)
                 {
                     break;
