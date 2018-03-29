@@ -1281,7 +1281,7 @@ void main_title_menu();
 void main_menu_continue();
 void main_menu_incarnate();
 void initialize_fovmap_and_fovlist();
-void show_number_of_text_prompt(
+void input_number_or_text_dialog(
     int val0,
     int val1,
     int val2,

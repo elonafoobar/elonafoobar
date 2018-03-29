@@ -16022,7 +16022,7 @@ void label_1399()
         imeset(1);
     }
     inputlog = "";
-    show_number_of_text_prompt(80, windowh - inf_verh - 70, 38, 1);
+    input_number_or_text_dialog(80, windowh - inf_verh - 70, 38, 1);
     imeset(0);
     if (inputlog == ""s)
     {
@@ -42715,7 +42715,7 @@ void what_do_you_wish_for()
     txtef(5);
     txt(lang(u8"何を望む？"s, u8"What do you wish for? "s));
     inputlog = "";
-    show_number_of_text_prompt(
+    input_number_or_text_dialog(
         (windoww - 290) / 2 + inf_screenx, winposy(90), 16, 0);
     txt(lang(u8"「"s + inputlog + u8"！！」"s, u8"\""s + inputlog + u8"!!\""s));
     msgtemp = "";
@@ -43899,7 +43899,7 @@ void do_interact_command()
             u8"どんな言葉を教えようか。"s,
             u8"What sentence should "s + name(tc) + u8" learn? "s));
         inputlog = "";
-        show_number_of_text_prompt(
+        input_number_or_text_dialog(
             (windoww - 360) / 2 + inf_screenx, winposy(90), 20, 1);
         cbitmod(989, tc, 0);
         if (inputlog == ""s)
@@ -43955,7 +43955,7 @@ void call_npc()
         u8"What do you want to call "s + him(tc) + u8"? "s));
     inputlog = "";
     input_mode = 1;
-    show_number_of_text_prompt(
+    input_number_or_text_dialog(
         (windoww - 220) / 2 + inf_screenx, winposy(90), 12, 1);
     if (inputlog == ""s)
     {
@@ -50180,7 +50180,7 @@ void initialize_fovmap_and_fovlist()
 
 
 
-void show_number_of_text_prompt(
+void input_number_or_text_dialog(
     int val0,
     int val1,
     int val2,
@@ -72427,7 +72427,7 @@ void pc_died()
     txt(lang(u8"さようなら… "s, u8"Good bye... "s));
     txt(lang(u8"遺言は？"s, u8"You leave a dying message."s));
     inputlog = "";
-    show_number_of_text_prompt(
+    input_number_or_text_dialog(
         (windoww - 310) / 2 + inf_screenx, winposy(90), 16, 1);
     if (inputlog == ""s)
     {

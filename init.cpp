@@ -1799,7 +1799,7 @@ void character_making_final_phase()
     {
         inputlog = "";
         input_mode = 1;
-        show_number_of_text_prompt(
+        input_number_or_text_dialog(
             (windoww - 230) / 2 + inf_screenx, winposy(120), 10, 0);
         cmname = ""s + inputlog;
         if (cmname == ""s || cmname == u8" "s)
