@@ -71550,22 +71550,6 @@ label_2747:
 
     if (gdata_wizard)
     {
-        if (getkey(snail::key::f1))
-        {
-            save_game();
-            txt(lang(u8" *保存* "s, u8" *Save* "s));
-            await(100);
-        }
-        if (getkey(snail::key::f2))
-        {
-            msg_newline();
-            msgtemp = u8"  "s;
-            firstturn = 1;
-            load_save_data();
-            mode = 3;
-            initialize_map();
-            return;
-        }
         if (getkey(snail::key::f5))
         {
             what_do_you_wish_for();
@@ -71597,6 +71581,26 @@ label_2747:
             }
         }
     }
+
+    if (key == key_quicksave)
+    {
+        key = "";
+        save_game();
+        txt(lang(u8" *保存* "s, u8" *Save* "s));
+        await(100);
+    }
+    if (key == key_quickload)
+    {
+        key = "";
+        msg_newline();
+        msgtemp = u8"  "s;
+        firstturn = 1;
+        load_save_data();
+        mode = 3;
+        initialize_map();
+        return;
+    }
+
     if (getkey(snail::key::f3))
     {
         tcgmain();

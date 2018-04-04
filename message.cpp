@@ -321,6 +321,56 @@ void key_check(int prm_299)
         key = key_southeast;
         f_at_m19 = 1;
     }
+
+    if (getkey(snail::key::f1))
+    {
+        key = u8"F1";
+    }
+    else if (getkey(snail::key::f2))
+    {
+        key = u8"F2";
+    }
+    else if (getkey(snail::key::f3))
+    {
+        key = u8"F3";
+    }
+    else if (getkey(snail::key::f4))
+    {
+        key = u8"F4";
+    }
+    else if (getkey(snail::key::f5))
+    {
+        key = u8"F5";
+    }
+    else if (getkey(snail::key::f6))
+    {
+        key = u8"F6";
+    }
+    else if (getkey(snail::key::f7))
+    {
+        key = u8"F7";
+    }
+    else if (getkey(snail::key::f8))
+    {
+        key = u8"F8";
+    }
+    else if (getkey(snail::key::f9))
+    {
+        key = u8"F9";
+    }
+    else if (getkey(snail::key::f10))
+    {
+        key = u8"F10";
+    }
+    else if (getkey(snail::key::f11))
+    {
+        key = u8"F11";
+    }
+    else if (getkey(snail::key::f12))
+    {
+        key = u8"F12";
+    }
+
     if (prm_299 == 2)
     {
         return;
