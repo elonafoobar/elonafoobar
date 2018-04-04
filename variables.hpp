@@ -68,7 +68,6 @@ inline elona_vector1<int> tile_wall;
 inline elona_vector1<int> trait;
 inline elona_vector1<int> traitref;
 inline elona_vector1<int> trate;
-inline int TODO_show_prompt_val = 0;
 inline elona_vector1<int> wh;
 inline elona_vector1<int> windowshadow;
 inline elona_vector1<int> x;
@@ -711,7 +710,6 @@ int can_do_ranged_attack();
 int label_2080();
 int label_2083();
 int ask_direction();
-int show_prompt(int, int, int, int = 1, int = 0);
 int label_2143();
 int decode_book();
 int read_normal_book();
@@ -1285,7 +1283,7 @@ void main_title_menu();
 void main_menu_continue();
 void main_menu_incarnate();
 void initialize_fovmap_and_fovlist();
-void show_number_of_text_prompt(
+void input_number_or_text_dialog(
     int val0,
     int val1,
     int val2,

@@ -8,6 +8,7 @@
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "i18n.hpp"
+#include "input.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "item_material.hpp"
@@ -1773,7 +1774,7 @@ void character_making_final_phase()
             lang(u8"いいえ"s, u8"No"s), u8"b"s, ""s + promptmax);
         ELONA_APPEND_PROMPT(
             lang(u8"最初から"s, u8"Restart"s), u8"c"s, ""s + promptmax);
-        show_prompt(promptx, 240, 160);
+        rtval = show_prompt(promptx, 240, 160);
         snd(20);
         if (rtval != 1 && rtval != -1)
         {
@@ -1798,7 +1799,7 @@ void character_making_final_phase()
     {
         inputlog = "";
         input_mode = 1;
-        show_number_of_text_prompt(
+        input_number_or_text_dialog(
             (windoww - 230) / 2 + inf_screenx, winposy(120), 10, 0);
         cmname = ""s + inputlog;
         if (cmname == ""s || cmname == u8" "s)

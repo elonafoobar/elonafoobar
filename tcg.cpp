@@ -1,6 +1,7 @@
 #include "ctrl_file.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
+#include "input.hpp"
 #include "macro.hpp"
 #include "variables.hpp"
 
@@ -1791,7 +1792,7 @@ void tcgdeck()
             }
             ELONA_APPEND_PROMPT(s_at_tcg(cnt), u8"null"s, ""s + promptmax);
         }
-        show_prompt(basex_at_tcg + 400, basey_at_tcg + 230, 300);
+        rtval = show_prompt(basex_at_tcg + 400, basey_at_tcg + 230, 300);
         if (rtval == -1)
         {
             break;
@@ -1808,7 +1809,7 @@ void tcgdeck()
                 lang(u8"メインデッキに設定"s, u8"Set as Main Deck"s),
                 u8"null"s,
                 ""s + promptmax);
-            show_prompt(400, basey_at_tcg + 230, 240);
+            rtval = show_prompt(400, basey_at_tcg + 230, 240);
             if (rtval == -1)
             {
                 continue;
@@ -2701,7 +2702,7 @@ label_1830_internal:
                 lang(u8"セーブしないで終了"s, u8"Just Exit"s),
                 u8"null"s,
                 ""s + promptmax);
-            show_prompt(basex_at_tcg + 420, basey_at_tcg + 230, 240);
+            rtval = show_prompt(basex_at_tcg + 420, basey_at_tcg + 230, 240);
             if (rtval == 0)
             {
                 ctrl_file(23, fs::u8path(u8"./tmp/deck_"s + curdeck + u8".s2"));
@@ -3023,7 +3024,7 @@ void label_1836()
                 lang(u8"降参する"s, u8"Surrender"s),
                 u8"null"s,
                 ""s + promptmax);
-            show_prompt(basex_at_tcg + 420, basey_at_tcg + 230, 200);
+            rtval = show_prompt(basex_at_tcg + 420, basey_at_tcg + 230, 200);
             if (rtval == 0)
             {
                 cpdata_at_tcg(4, 0) = 0;

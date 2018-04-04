@@ -10,6 +10,7 @@
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "i18n.hpp"
+#include "input.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "item_material.hpp"
@@ -16021,7 +16022,7 @@ void label_1399()
         imeset(1);
     }
     inputlog = "";
-    show_number_of_text_prompt(80, windowh - inf_verh - 70, 38, 1);
+    input_number_or_text_dialog(80, windowh - inf_verh - 70, 38, 1);
     imeset(0);
     if (inputlog == ""s)
     {
@@ -16206,7 +16207,7 @@ label_1402_internal:
         {
             net_send(""s + cdatan(1, 0) + lang(""s, u8" "s) + cdatan(0, 0), 1);
             ELONA_APPEND_PROMPT(lang(u8"オッケー"s, u8"Ok"s), u8"y"s, u8"0"s);
-            show_prompt(promptx, prompty, 200);
+            rtval = show_prompt(promptx, prompty, 200);
             goto label_14001_internal;
         }
         if (gdata_next_voting_time > gdata_hour + gdata_day * 24
@@ -16227,7 +16228,7 @@ label_1402_internal:
         net_send(""s + p, 2);
         modrank(6, 100, 5);
         ELONA_APPEND_PROMPT(lang(u8"オッケー"s, u8"Ok"s), u8"y"s, u8"0"s);
-        show_prompt(promptx, prompty, 200);
+        rtval = show_prompt(promptx, prompty, 200);
         goto label_14001_internal;
     }
     if (key == key_pageup)
@@ -29074,7 +29075,7 @@ void build_new_building()
     }
     txt(lang(u8"本当にこの場所に建設する？ "s, u8"Really build it here? "s));
     ELONA_YES_NO_PROMPT();
-    show_prompt(promptx, prompty, 160);
+    rtval = show_prompt(promptx, prompty, 160);
     if (rtval != 0)
     {
         update_screen();
@@ -29344,11 +29345,12 @@ void use_house_board()
             lang(u8"滞在者の移動"s, u8"Move a stayer"s), u8"null"s, ""s + 3);
     }
     int stat = show_prompt(promptx, prompty, 240);
-    if (stat == 0)
+    if (stat == -1)
     {
         update_screen();
         pc_turn(false);
     }
+    rtval = stat;
     switch (rtval)
     {
     case 0:
@@ -35876,7 +35878,7 @@ void pray()
     txtnew();
     txt(lang(u8"あなたの神に祈りを乞う？"s, u8"Really pray to your God?"s));
     ELONA_YES_NO_PROMPT();
-    show_prompt(promptx, prompty, 160);
+    rtval = show_prompt(promptx, prompty, 160);
     if (rtval != 0)
     {
         update_screen();
@@ -35950,7 +35952,7 @@ void pray()
                     u8"この贈り物を諦める？"s,
                     u8"Do you want to decline this gift?"s));
                 ELONA_YES_NO_PROMPT();
-                show_prompt(promptx, prompty, 160);
+                rtval = show_prompt(promptx, prompty, 160);
                 if (rtval == 0)
                 {
                     ++gdata_god_rank;
@@ -38327,7 +38329,8 @@ label_1923:
                 }
             }
             rpmode = 1;
-            show_prompt(promptx, prompty, 220, 2, p);
+            rtval = show_prompt(
+                promptx, prompty, 220, show_prompt_type::with_number, p);
             rpmode = 0;
             if (rtval == 0)
             {
@@ -39642,7 +39645,7 @@ label_1945_internal:
                     u8"本当に"s + userfile + u8"を削除する？ "s,
                     u8"Do you really want to delete "s + userfile + u8"? "s));
                 ELONA_YES_NO_PROMPT();
-                show_prompt(promptx, prompty, 160);
+                rtval = show_prompt(promptx, prompty, 160);
                 if (rtval == 0)
                 {
                     elona_delete(fs::u8path(u8"./user/"s + userfile));
@@ -42045,7 +42048,7 @@ label_1978_internal:
         txtnew();
         txt(lang(u8"依頼主に会う？"s, u8"Do you want to meet the client?"s));
         ELONA_YES_NO_PROMPT();
-        show_prompt(promptx, prompty, 160);
+        rtval = show_prompt(promptx, prompty, 160);
         if (rtval != 0)
         {
             goto label_1977_internal;
@@ -42712,7 +42715,7 @@ void what_do_you_wish_for()
     txtef(5);
     txt(lang(u8"何を望む？"s, u8"What do you wish for? "s));
     inputlog = "";
-    show_number_of_text_prompt(
+    input_number_or_text_dialog(
         (windoww - 290) / 2 + inf_screenx, winposy(90), 16, 0);
     txt(lang(u8"「"s + inputlog + u8"！！」"s, u8"\""s + inputlog + u8"!!\""s));
     msgtemp = "";
@@ -43822,14 +43825,15 @@ void do_interact_command()
     }
     {
         int stat = show_prompt(promptx, prompty, 200);
-        if (stat == 0)
+        if (stat == -1)
         {
             update_screen();
             pc_turn(false);
         }
+        rtval = stat;
     }
-    p = rtval;
     screenupdate = -1;
+    p = rtval;
     if (p == 0)
     {
         update_screen();
@@ -43895,7 +43899,7 @@ void do_interact_command()
             u8"どんな言葉を教えようか。"s,
             u8"What sentence should "s + name(tc) + u8" learn? "s));
         inputlog = "";
-        show_number_of_text_prompt(
+        input_number_or_text_dialog(
             (windoww - 360) / 2 + inf_screenx, winposy(90), 20, 1);
         cbitmod(989, tc, 0);
         if (inputlog == ""s)
@@ -43951,7 +43955,7 @@ void call_npc()
         u8"What do you want to call "s + him(tc) + u8"? "s));
     inputlog = "";
     input_mode = 1;
-    show_number_of_text_prompt(
+    input_number_or_text_dialog(
         (windoww - 220) / 2 + inf_screenx, winposy(90), 12, 1);
     if (inputlog == ""s)
     {
@@ -47014,7 +47018,7 @@ void do_get_command()
                 u8"本当にこの建物を撤去する？（注意！建物と中の物は完全に失われます）"s,
                 u8"Really remove this building?"s));
             ELONA_YES_NO_PROMPT();
-            show_prompt(promptx, prompty, 160);
+            rtval = show_prompt(promptx, prompty, 160);
             if (rtval != 0)
             {
                 update_screen();
@@ -47754,7 +47758,7 @@ int label_2073()
         u8"本当に"s + name(tc) + u8"を攻撃する？ "s,
         u8"Really attack "s + name(tc) + u8"? "s));
     ELONA_YES_NO_PROMPT();
-    show_prompt(promptx, prompty, 160);
+    rtval = show_prompt(promptx, prompty, 160);
     if (rtval == 0)
     {
         update_screen();
@@ -47991,7 +47995,7 @@ void label_2078()
                   u8"ui", u8"action", u8"_"s + cdata[cc].continuous_action_id)
             + u8"? "s));
     ELONA_YES_NO_PROMPT();
-    show_prompt(promptx, prompty, 160);
+    rtval = show_prompt(promptx, prompty, 160);
     return;
 }
 
@@ -48018,7 +48022,7 @@ void label_2079()
         lang(u8"いいえ"s, u8"Cancel"s), u8"b"s, ""s + promptmax);
     ELONA_APPEND_PROMPT(
         lang(u8"ゲーム設定"s, u8"Game Setting"s), u8"c"s, ""s + promptmax);
-    show_prompt(promptx, prompty, 190);
+    rtval = show_prompt(promptx, prompty, 190);
     if (rtval == 0)
     {
         if (gdata_current_map != 35)
@@ -48080,7 +48084,7 @@ void label_2081()
             u8"依頼請負中の帰還は法律で禁止されている。それでも帰還する？"s,
             u8"Returning while taking a quest if forbidden. Are you sure you want to return?"s));
         ELONA_YES_NO_PROMPT();
-        show_prompt(promptx, prompty, 160);
+        rtval = show_prompt(promptx, prompty, 160);
         if (rtval != 0)
         {
             update_screen();
@@ -48151,7 +48155,7 @@ void label_2081()
     }
     txt(lang(u8"どの場所に帰還する？"s, u8"Where do you want to go?"s));
     display_msg(inf_screeny + inf_tiles);
-    show_prompt(promptx, prompty, 240);
+    rtval = show_prompt(promptx, prompty, 240);
     update_screen();
     if (rtval >= 0)
     {
@@ -48197,7 +48201,7 @@ void label_2082()
         ""s + matname(tmat) + u8"を使ってガシャガシャする？"s,
         u8"Pay "s + matname(tmat) + u8" to gasha-gasha?"s));
     ELONA_YES_NO_PROMPT();
-    show_prompt(promptx, prompty, 160);
+    rtval = show_prompt(promptx, prompty, 160);
     if (rtval == 0)
     {
         if (mat(tmat) > 0)
@@ -48245,7 +48249,7 @@ int label_2083()
                 u8"この本の内容には興味がない。それでも読む？ "s,
                 u8"You are not interested in this book. Do you want to read it anyway? "s));
             ELONA_YES_NO_PROMPT();
-            show_prompt(promptx, prompty, 160);
+            rtval = show_prompt(promptx, prompty, 160);
             if (rtval != 0)
             {
                 return 0;
@@ -48316,7 +48320,7 @@ void label_2084()
         ELONA_APPEND_PROMPT(
             lang(u8"設定"s, u8"Setting"s), u8"f"s, ""s + promptmax);
     }
-    show_prompt(promptx, prompty, 240);
+    rtval = show_prompt(promptx, prompty, 240);
     update_screen();
     label_2719();
     if (rtval == 0)
@@ -49980,7 +49984,7 @@ void main_menu_continue()
                     }
                     draw_caption();
                     ELONA_YES_NO_PROMPT();
-                    show_prompt(promptx, prompty, 200);
+                    rtval = show_prompt(promptx, prompty, 200);
                     if (rtval != 0)
                     {
                         main_menu_continue();
@@ -49998,7 +50002,7 @@ void main_menu_continue()
                     }
                     draw_caption();
                     ELONA_YES_NO_PROMPT();
-                    show_prompt(promptx, prompty, 200);
+                    rtval = show_prompt(promptx, prompty, 200);
                     if (rtval == 0)
                     {
                         snd(20);
@@ -50176,7 +50180,7 @@ void initialize_fovmap_and_fovlist()
 
 
 
-void show_number_of_text_prompt(
+void input_number_or_text_dialog(
     int val0,
     int val1,
     int val2,
@@ -50567,144 +50571,6 @@ label_2128_internal:
         return 1;
     }
     goto label_2128_internal;
-}
-
-
-
-int show_prompt(int val0, int val1, int val2, int val3, int val4)
-{
-    int val5{};
-    snd(26);
-    csprev = cs;
-    cs = 0;
-    cs_bk = -1;
-    gsel(3);
-    gmode(0);
-    font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
-    for (int cnt = 0, cnt_end = (promptmax); cnt < cnt_end; ++cnt)
-    {
-        if (promptl(1, cnt) == u8"null"s)
-        {
-            promptl(1, cnt) = key_select(cnt);
-        }
-        pos(cnt * 24 + 624, 30);
-        gcopy(3, 0, 30, 24, 18);
-        pos(cnt * 24 + 629, 31);
-        color(50, 60, 80);
-        bmes(promptl(1, cnt), 250, 240, 230);
-        color(0, 0, 0);
-    }
-    gsel(0);
-    sx = val0 - val2 / 2;
-    sy = val1 - promptmax * 10;
-    pos(sx + 12, sy + 12);
-    gfini(val2 - 17, promptmax * 20 + 43 - 18);
-    gfdec(60, 60, 60);
-    keyhalt = 1;
-    if (val3 == 2)
-    {
-        dx(0) = 200;
-        dx(1) = 10;
-        dy = sy + 140;
-        val5 = val4;
-        val4 = 1;
-        TODO_show_prompt_val = 1;
-        if (strlen_u(std::to_string(val5)) >= 3)
-        {
-            dx += std::size(std::to_string(val5)) * 8;
-        }
-        pos(dx(1) + sx + 24, dy + 4);
-        gfini(dx - 42, 35);
-        gfdec(60, 60, 60);
-    }
-label_2132_internal:
-    gmode(2);
-    if (val3 == 2)
-    {
-        window2(dx(1) + sx + 20, dy, dx - 40, 36, 0, 2);
-        pos(dx(1) + sx + dx / 2 - 56, dy - 32);
-        gcopy(3, 128, 288, 128, 32);
-        pos(dx(1) + sx + 28, dy + 4);
-        gcopy(3, 312, 336, 24, 24);
-        pos(dx(1) + sx + dx - 51, dy + 4);
-        gcopy(3, 336, 336, 24, 24);
-        inputlog2 = ""s + elona::stoi(inputlog(0)) + u8"("s + val5 + u8")"s;
-        pos(dx(1) + sx + dx - 70 - strlen_u(inputlog2) * 8 + 8, dy + 11);
-        color(255, 255, 255);
-        mes(inputlog2);
-        color(0, 0, 0);
-        inputlog = ""s + val4;
-    }
-    window2(sx + 8, sy + 8, val2 - 16, promptmax * 20 + 42 - 16, 0, 0);
-    pos(sx - 16, sy);
-    gcopy(3, 64, 288, 50, 32);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    keyrange = 0;
-    for (int cnt = 0, cnt_end = (promptmax); cnt < cnt_end; ++cnt)
-    {
-        pos(sx + 30, cnt * 20 + sy + 22);
-        gcopy(3, cnt * 24 + 624, 30, 24, 24);
-        cs_list(cs == cnt, promptl(0, cnt), sx + 56, cnt * 20 + sy + 21);
-        key_list(cnt) = promptl(1, cnt);
-        ++keyrange;
-    }
-    cs_bk = cs;
-    if (rpmode)
-    {
-        window_recipe2(TODO_show_prompt_val);
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-    }
-    redraw();
-    await(cfg_wait1);
-    key_check();
-    cursor_check();
-    rtval = -1;
-    for (int cnt = 0, cnt_end = (promptmax); cnt < cnt_end; ++cnt)
-    {
-        if (key == promptl(1, cnt))
-        {
-            rtval = elona::stoi(promptl(2, cnt));
-            break;
-        }
-    }
-    if (val3 == 2)
-    {
-        TODO_show_prompt_val = elona::stoi(inputlog(0));
-        if (key == key_west || key == key_pagedown)
-        {
-            snd(5);
-            --val4;
-            if (val4 < 1)
-            {
-                val4 = val5;
-            }
-        }
-        if (key == key_east || key == key_pageup)
-        {
-            snd(5);
-            ++val4;
-            if (val4 > val5)
-            {
-                val4 = 1;
-            }
-        }
-    }
-    if (rtval != -1)
-    {
-        promptmax = 0;
-        cs = csprev;
-        return 1;
-    }
-    if (val3 != 0)
-    {
-        if (key == key_cancel)
-        {
-            promptmax = 0;
-            cs = csprev;
-            return 0;
-        }
-    }
-    goto label_2132_internal;
 }
 
 
@@ -53855,7 +53721,7 @@ int label_2168()
                 u8"マナが足りないが、それでも詠唱を試みる？"s,
                 u8"You are going to over-cast the spell. Are you sure?"s));
             ELONA_YES_NO_PROMPT();
-            show_prompt(promptx, prompty, 160);
+            rtval = show_prompt(promptx, prompty, 160);
             if (rtval != 0)
             {
                 update_screen();
@@ -55278,7 +55144,7 @@ int pick_up_item()
                 itemname(ci) + u8"を撤去する？ "s,
                 u8"Do you want to remove "s + itemname(ci) + u8"? "s));
             ELONA_YES_NO_PROMPT();
-            show_prompt(promptx, prompty, 160);
+            rtval = show_prompt(promptx, prompty, 160);
             if (rtval == 0)
             {
                 snd(58);
@@ -56235,7 +56101,7 @@ void label_2203()
                     }
                 }
                 ELONA_YES_NO_PROMPT();
-                show_prompt(promptx, prompty, 160);
+                rtval = show_prompt(promptx, prompty, 160);
                 update_screen();
                 if (rtval == 0)
                 {
@@ -56843,7 +56709,7 @@ void label_2207(int val0)
                 u8"本当にこたつの中に入る？"s,
                 u8"Really get into the Kotatsu?"s));
             ELONA_YES_NO_PROMPT();
-            show_prompt(promptx, prompty, 160);
+            rtval = show_prompt(promptx, prompty, 160);
             if (rtval != 0)
             {
                 update_screen();
@@ -57007,7 +56873,7 @@ void label_2207(int val0)
                     u8"クエストを放棄して階を移動する？"s,
                     u8"Really give up the quest and move over?"s));
                 ELONA_YES_NO_PROMPT();
-                show_prompt(promptx, prompty, 160);
+                rtval = show_prompt(promptx, prompty, 160);
                 if (rtval != 0)
                 {
                     update_screen();
@@ -57131,7 +56997,7 @@ int unlock_box(int difficulty)
         txtnew();
         txt(lang(u8"もう一度試みる？"s, u8"Try again?"s));
         ELONA_YES_NO_PROMPT();
-        show_prompt(promptx, prompty, 160);
+        rtval = show_prompt(promptx, prompty, 160);
         if (rtval == 0)
         {
             unlock_box(difficulty);
@@ -59487,7 +59353,7 @@ void do_use_command()
             ++listmax;
             s = lang(u8"ボーナス+1"s, u8"Bonus+1"s);
             ELONA_APPEND_PROMPT(s, u8"null"s, ""s + promptmax);
-            show_prompt(promptx, prompty, 400);
+            rtval = show_prompt(promptx, prompty, 400);
             txtnew();
             if (rtval == -1)
             {
@@ -59594,10 +59460,11 @@ void do_use_command()
         }
         {
             int stat = show_prompt(promptx, prompty, 260);
-            if (stat == 0)
+            if (stat == -1)
             {
                 goto label_2229_internal;
             }
+            rtval = stat;
         }
         if (rtval == 0)
         {
@@ -59987,7 +59854,7 @@ void do_use_command()
                         u8"クエストを放棄してシェルターに非難する？"s,
                         u8"Really give up the quest and evacuate to the shelter?"s));
                     ELONA_YES_NO_PROMPT();
-                    show_prompt(promptx, prompty, 160);
+                    rtval = show_prompt(promptx, prompty, 160);
                     if (rtval != 0)
                     {
                         update_screen();
@@ -60200,7 +60067,7 @@ void do_use_command()
                     u8"ここはクエストの目標位置ではない。本当にここに設置する？"s,
                     u8"This location is not your quest goal. Really place it here?"s));
                 ELONA_YES_NO_PROMPT();
-                show_prompt(promptx, prompty, 160);
+                rtval = show_prompt(promptx, prompty, 160);
                 if (rtval != 0)
                 {
                     update_screen();
@@ -60291,7 +60158,7 @@ void do_use_command()
         txtnew();
         txt(lang(u8"本当に首を吊る？"s, u8"Really hang yourself?"s));
         ELONA_YES_NO_PROMPT();
-        show_prompt(promptx, prompty, 160);
+        rtval = show_prompt(promptx, prompty, 160);
         if (rtval != 0)
         {
             turn_end();
@@ -60393,7 +60260,7 @@ void do_use_command()
             u8"Really add "s + cdatan(0, tc) + u8"'s gene to "s + cdatan(0, rc)
                 + u8"?"s));
         ELONA_YES_NO_PROMPT();
-        show_prompt(promptx, prompty, 160);
+        rtval = show_prompt(promptx, prompty, 160);
         if (rtval != 0)
         {
             turn_end();
@@ -71431,7 +71298,7 @@ void pc_turn(bool label_2747_flg)
                     u8"試合を放棄する？"s,
                     u8"Do you want to give up the game?"s));
                 ELONA_YES_NO_PROMPT();
-                show_prompt(promptx, prompty, 160);
+                rtval = show_prompt(promptx, prompty, 160);
                 if (rtval == 0)
                 {
                     petarenawin = 2;
@@ -72399,7 +72266,7 @@ void conquer_lesimas()
     {
         ELONA_APPEND_PROMPT(win_words[cnt], key_select(cnt), ""s + promptmax);
     }
-    show_prompt(promptx, prompty, 310, 0);
+    rtval = show_prompt(promptx, prompty, 310, show_prompt_type::cannot_cancel);
     wincomment = ""s + promptl(0, rtval);
     mode = 7;
     screenupdate = -1;
@@ -72537,7 +72404,7 @@ void play_the_last_scene_again()
         u8"達成のシーンをもう一度再現する？"s,
         u8"You want to watch this event again?"s));
     ELONA_YES_NO_PROMPT();
-    show_prompt(promptx, prompty, 160);
+    rtval = show_prompt(promptx, prompty, 160);
     if (rtval == 0)
     {
         conquer_lesimas();
@@ -72564,7 +72431,7 @@ void pc_died()
     txt(lang(u8"さようなら… "s, u8"Good bye... "s));
     txt(lang(u8"遺言は？"s, u8"You leave a dying message."s));
     inputlog = "";
-    show_number_of_text_prompt(
+    input_number_or_text_dialog(
         (windoww - 310) / 2 + inf_screenx, winposy(90), 16, 1);
     if (inputlog == ""s)
     {
@@ -72664,7 +72531,7 @@ void pc_died()
         lang(u8"這い上がる"s, u8"Crawl up"s), u8"a"s, ""s + promptmax);
     ELONA_APPEND_PROMPT(
         lang(u8"埋まる"s, u8"Lie on your back"s), u8"b"s, ""s + promptmax);
-    show_prompt(promptx, 100, 240);
+    rtval = show_prompt(promptx, 100, 240);
     if (rtval == 1)
     {
         show_game_score_ranking();

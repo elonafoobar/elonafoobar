@@ -4,6 +4,7 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
+#include "input.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "macro.hpp"
@@ -1148,7 +1149,7 @@ label_2061_internal:
                     u8"How many? (1 to "s + inv[ci].number + u8")"s));
                 display_msg(screenmsgy, 1);
                 inputlog = ""s + inv[ci].number;
-                show_number_of_text_prompt(
+                input_number_or_text_dialog(
                     (windoww - 200) / 2 + inf_screenx,
                     winposy(60),
                     8,
@@ -1303,7 +1304,7 @@ label_2061_internal:
                 }
                 display_msg(screenmsgy, 2);
                 inputlog = ""s + inv[ci].number;
-                show_number_of_text_prompt(
+                input_number_or_text_dialog(
                     (windoww - 200) / 2 + inf_screenx,
                     winposy(60),
                     8,
@@ -1347,7 +1348,7 @@ label_2061_internal:
                             + u8" gold pieces?"s));
                 }
                 ELONA_YES_NO_PROMPT();
-                show_prompt(promptx, prompty, 160);
+                rtval = show_prompt(promptx, prompty, 160);
                 if (rtval != 0)
                 {
                     screenupdate = -1;
@@ -2292,7 +2293,7 @@ label_2061_internal:
                         u8"まだアイテムが残っているがいい？"s,
                         u8"Really leave these items?"s));
                     ELONA_YES_NO_PROMPT();
-                    show_prompt(promptx, prompty, 160);
+                    rtval = show_prompt(promptx, prompty, 160);
                     if (rtval != 0)
                     {
                         goto label_2060_internal;
