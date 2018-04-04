@@ -56078,7 +56078,7 @@ void label_2203()
             || (cdata[tc].relationship == -1 && cfg_ignoredislike != 0)
             || (cdata[tc].relationship == 0
                 && (adata(16, gdata_current_map) == 101
-                    || adata(16, gdata_current_map) == 102)))
+                    || adata(16, gdata_current_map) == 102 || key_shift)))
         {
             if (cbit(985, tc) == 0)
             {
