@@ -1,0 +1,117 @@
+# CMake v2.8 or later
+cmake_minimum_required(VERSION 3.0)
+
+
+# Project
+project(ElonaFoobar VERSION 0.1.0) # FIXME
+
+
+# C++17 or later
+enable_language(CXX)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+
+# Source files
+set(CORE_SOURCES
+    ability.cpp
+    access_character_info.cpp
+    access_item_db.cpp
+    animation.cpp
+    buff.cpp
+    calc.cpp
+    cat.cpp
+    cell_draw.cpp
+    character.cpp
+    class.cpp
+    config.cpp
+    ctrl_file.cpp
+    ctrl_inventory.cpp
+    debug.cpp
+    draw.cpp
+    elonacore.cpp
+    get_card_info.cpp
+    get_random_item_id.cpp
+    get_random_npc_id.cpp
+    god.cpp
+    i18n.cpp
+    init.cpp
+    initialize_map.cpp
+    input.cpp
+    item.cpp
+    item_db.cpp
+    item_material.cpp
+    magic.cpp
+    main.cpp
+    map.cpp
+    message.cpp
+    proc_event.cpp
+    race.cpp
+    random.cpp
+    set_item_info.cpp
+    set_option.cpp
+    std.cpp
+    talk_npc.cpp
+    talk_unique.cpp
+    tcg.cpp
+    text.cpp
+    trait.cpp
+    variables.cpp
+)
+
+
+# Executable
+add_executable(${PROJECT_NAME} ${CORE_SOURCES})
+
+
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
+
+
+# Thirdparty libraries
+find_package(Boost REQUIRED COMPONENTS system filesystem)
+include_directories(${Boost_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
+
+if(NOT DEFINED LUA_INCLUDE_DIR OR NOT DEFINED LUA_LIBRARIES)
+    find_package(lua REQUIRED)
+endif()
+include_directories(${LUA_INCLUDE_DIR})
+target_link_libraries(${PROJECT_NAME} ${LUA_LIBRARIES})
+
+if(NOT DEFINED SDL2_INCLUDE_DIR OR NOT DEFINED SDL2_LIBRARIES)
+    find_package(SDL2 REQUIRED)
+endif()
+include_directories(${SDL2_INCLUDE_DIR})
+target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES})
+
+if(NOT DEFINED SDL2_IMAGE_INCLUDE_DIR OR NOT DEFINED SDL2_IMAGE_LIBRARIES)
+    find_package(SDL2_image REQUIRED)
+endif()
+include_directories(${SDL2_IMAGE_INCLUDE_DIR})
+target_link_libraries(${PROJECT_NAME} ${SDL2_IMAGE_LIBRARIES})
+
+if(NOT DEFINED SDL2_TTF_INCLUDE_DIR OR NOT DEFINED SDL2_TTF_LIBRARIES)
+    find_package(SDL2_ttf REQUIRED)
+endif()
+include_directories(${SDL2_TTF_INCLUDE_DIR})
+target_link_libraries(${PROJECT_NAME} ${SDL2_TTF_LIBRARIES})
+
+if(NOT DEFINED SDL2_MIXER_INCLUDE_DIR OR NOT DEFINED SDL2_MIXER_LIBRARIES)
+    find_package(SDL2_mixer REQUIRED)
+endif()
+include_directories(${SDL2_MIXER_INCLUDE_DIR})
+target_link_libraries(${PROJECT_NAME} ${SDL2_MIXER_LIBRARIES})
+
+
+
+# My libraries
+add_subdirectory(snail)
+target_link_libraries(${PROJECT_NAME} snail)
+
+
+
+# Compiler options
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+
+# Compiler options(debug build)
+set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DDEBUG")
