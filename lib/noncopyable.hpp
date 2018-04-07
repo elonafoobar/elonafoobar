@@ -4,6 +4,8 @@
 
 namespace lib
 {
+
+
 class noncopyable
 {
 public:

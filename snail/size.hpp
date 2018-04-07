@@ -1,7 +1,9 @@
 #pragma once
 
 
-namespace elona::snail
+namespace elona
+{
+namespace snail
 {
 
 
@@ -13,4 +15,5 @@ struct size
 
 
 
-} // namespace elona::snail
+} // namespace snail
+} // namespace elona

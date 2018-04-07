@@ -1659,10 +1659,10 @@ int DSINIT()
 {
     Mix_AllocateChannels(16);
     snail::application::instance().register_finalizer([&]() {
-        for (const auto& [_, ptr] : mixer_detail::chunks)
+        for (const auto& pair : mixer_detail::chunks)
         {
-            if (ptr)
-                ::Mix_FreeChunk(ptr);
+            if (pair.second)
+                ::Mix_FreeChunk(pair.second);
         }
     });
     return 1;

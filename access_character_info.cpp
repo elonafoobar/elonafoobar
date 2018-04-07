@@ -70,9 +70,9 @@ int access_character_info()
             access_class_info(3, data->class_);
         }
         cdata[rc].element_of_unarmed_attack = data->element_of_unarmed_attack;
-        for (const auto& [k, v] : data->resistances)
+        for (const auto& pair : data->resistances)
         {
-            sdata(k, rc) = v;
+            sdata(pair.first, rc) = pair.second;
         }
         if (data->sex != -1)
         {

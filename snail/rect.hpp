@@ -2,7 +2,9 @@
 
 
 
-namespace elona::snail
+namespace elona
+{
+namespace snail
 {
 
 
@@ -15,4 +17,5 @@ struct rect
 };
 
 
-} // namespace elona::snail
+} // namespace snail
+} // namespace elona

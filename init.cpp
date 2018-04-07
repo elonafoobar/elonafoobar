@@ -90,10 +90,10 @@ void backup_config_files()
         {u8"./original/face1.bmp", u8"./user/graphic/face1.bmp"},
     };
 
-    for (const auto& [from, to] : files)
+    for (const auto& from_to : files)
     {
-        const auto from_path = fs::path(from);
-        const auto to_path = fs::path(to);
+        const auto from_path = fs::path(from_to.first);
+        const auto to_path = fs::path(from_to.second);
         if (!fs::exists(to_path))
         {
             fs::copy_file(from_path, to_path);

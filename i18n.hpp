@@ -6,7 +6,9 @@
 
 
 
-namespace elona::i18n
+namespace elona
+{
+namespace i18n
 {
 
 
@@ -82,4 +84,5 @@ formattable_string fmt(const std::string& key_head, const Args&... key_tail)
 
 
 
-} // namespace elona::i18n
+} // namespace i18n
+} // namespace elona

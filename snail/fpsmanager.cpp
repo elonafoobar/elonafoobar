@@ -17,7 +17,9 @@ int sum(const std::vector<int>& v)
 
 
 
-namespace elona::snail
+namespace elona
+{
+namespace snail
 {
 
 
@@ -86,4 +88,5 @@ void fps_manager::wait()
 
 
 
-} // namespace elona::snail
+} // namespace snail
+} // namespace elona

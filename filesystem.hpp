@@ -13,7 +13,9 @@ namespace fs = boost::filesystem;
 
 
 
-namespace elona::filesystem
+namespace elona
+{
+namespace filesystem
 {
 
 
@@ -149,4 +151,5 @@ private:
 
 
 
-} // namespace elona::filesystem
+} // namespace filesystem
+} // namespace elona

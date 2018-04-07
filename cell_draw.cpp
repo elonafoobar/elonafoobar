@@ -90,11 +90,13 @@ void render_shadow_low(int light)
 {
     gmode(6, inf_tiles, inf_tiles, light);
 
-    for (const auto& [x, y] : loop_xy{inf_screenw, inf_screenh})
+    for (const auto& pos : loop_xy<int>(inf_screenw, inf_screenh))
     {
+        const auto x = pos.first;
+        const auto y = pos.second;
         if (slight(x + 2, y + 2) >= 1000)
         {
-            pos(x * inf_tiles + inf_screenx, y * inf_tiles + inf_screeny);
+            elona::pos(x * inf_tiles + inf_screenx, y * inf_tiles + inf_screeny);
             gcopy(3, 144, 752);
         }
     }
@@ -269,8 +271,10 @@ void render_shadow_high(int light, int sxfix_, int syfix_)
 
     if (scrollanime == 0)
     {
-        for (const auto& [x, y] : loop_xy{inf_screenw, inf_screenh})
+        for (const auto& pos : loop_xy<int>(inf_screenw, inf_screenh))
         {
+            const auto x = pos.first;
+            const auto y = pos.second;
             render_shadow(
                 slight(x + 2, y + 2),
                 inf_screenx + sxfix_ * (scrollp > 3) + x * inf_tiles,
@@ -284,8 +288,10 @@ void render_shadow_high(int light, int sxfix_, int syfix_)
         {
             f_ = 1;
         }
-        for (const auto& [x, y] : loop_xy{inf_screenw + 2, inf_screenh + 2})
+        for (const auto& pos : loop_xy<int>(inf_screenw + 2, inf_screenh + 2))
         {
+            const auto x = pos.first;
+            const auto y = pos.second;
             int dy_ = inf_screeny + syfix_ * f_ - 48 + y * inf_tiles;
             if (dy_ <= -inf_tiles || dy_ >= windowh - inf_verh)
                 continue;

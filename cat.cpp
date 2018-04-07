@@ -2,7 +2,9 @@
 #include <iostream>
 
 
-namespace elona::cat
+namespace elona
+{
+namespace cat
 {
 
 
@@ -29,4 +31,5 @@ void engine::register_function(const char* name, lua_CFunction func)
 
 
 
-} // namespace elona::cat
+} // namespace cat
+} // namespace elona

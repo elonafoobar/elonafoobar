@@ -10,7 +10,11 @@
 
 
 
-namespace elona::snail::detail
+namespace elona
+{
+namespace snail
+{
+namespace detail
 {
 
 
@@ -101,4 +105,6 @@ public:
 };
 
 
-} // namespace elona::snail::detail
+} // namespace detail
+} // namespace snail
+} // namespace elona

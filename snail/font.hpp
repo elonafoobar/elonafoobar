@@ -7,7 +7,9 @@
 #include "detail/sdl.hpp"
 
 
-namespace elona::snail
+namespace elona
+{
+namespace snail
 {
 
 
@@ -69,4 +71,5 @@ private:
 };
 
 
-} // namespace elona::snail
+} // namespace snail
+} // namespace elona

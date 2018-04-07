@@ -49,7 +49,9 @@ void render(
 
 
 
-namespace elona::snail
+namespace elona
+{
+namespace snail
 {
 
 
@@ -159,4 +161,5 @@ void frame_image::_render(
 }
 
 
-} // namespace elona::snail
+} // namespace snail
+} // namespace elona

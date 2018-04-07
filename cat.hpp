@@ -8,7 +8,9 @@
 #include "optional.hpp"
 
 
-namespace elona::cat
+namespace elona
+{
+namespace cat
 {
 
 
@@ -280,4 +282,5 @@ protected:
 
 
 
-} // namespace elona::cat
+} // namespace cat
+} // namespace elona

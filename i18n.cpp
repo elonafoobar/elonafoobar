@@ -8,7 +8,9 @@
 
 
 
-namespace elona::i18n
+namespace elona
+{
+namespace i18n
 {
 
 
@@ -48,4 +50,5 @@ std::string _(
 
 
 
-} // namespace elona::i18n
+} // namespace i18n
+} // namespace elona

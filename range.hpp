@@ -3,7 +3,9 @@
 #include <iterator>
 
 
-namespace elona::range
+namespace elona
+{
+namespace range
 {
 
 
@@ -224,4 +226,5 @@ private:
 
 
 
-} // namespace elona::range
+} // namespace range
+} // namespace elona

@@ -3,7 +3,9 @@
 #include "input.hpp"
 
 
-namespace elona::snail
+namespace elona
+{
+namespace snail
 {
 
 
@@ -177,4 +179,5 @@ void application::proc_event()
 }
 
 
-} // namespace elona::snail
+} // namespace snail
+} // namespace elona

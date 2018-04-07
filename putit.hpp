@@ -5,7 +5,9 @@
 #include <vector>
 
 
-namespace elona::putit
+namespace elona
+{
+namespace putit
 {
 
 
@@ -234,4 +236,5 @@ void serialize(Archive& ar, std::vector<T>& data)
 }
 
 
-} // namespace elona::putit
+} // namespace putit
+} // namespace elona

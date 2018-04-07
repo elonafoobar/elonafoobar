@@ -2,7 +2,9 @@
 #include <sstream>
 
 
-namespace elona::snail
+namespace elona
+{
+namespace snail
 {
 
 
@@ -367,4 +369,5 @@ void renderer::render_image(
 }
 
 
-} // namespace elona::snail
+} // namespace snail
+} // namespace elona
