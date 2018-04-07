@@ -111,7 +111,7 @@ private:
 
     template <
         typename T,
-        std::enable_if_t<std::is_same_v<T, nullptr_t>, nullptr_t> = nullptr>
+        std::enable_if_t<std::is_same<T, nullptr_t>::value, nullptr_t> = nullptr>
     T to_cpp_type(int index)
     {
         (void)index;
@@ -121,7 +121,7 @@ private:
 #define ELONA_DEFINE_TO_CPP_TYPE(type, function) \
     template < \
         typename T, \
-        std::enable_if_t<std::is_same_v<T, type>, nullptr_t> = nullptr> \
+        std::enable_if_t<std::is_same<T, type>::value, nullptr_t> = nullptr> \
     T to_cpp_type(int index) \
     { \
         return function(ptr(), index); \

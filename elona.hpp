@@ -85,7 +85,7 @@ struct elona_vector1
     template <
         typename U,
         std::enable_if_t<
-            std::is_same_v<T, std::string> && std::is_same_v<U, int>,
+            std::is_same<T, std::string>::value && std::is_same<U, int>::value,
             nullptr_t> = nullptr>
     T& operator+=(const U& x)
     {
@@ -96,7 +96,7 @@ struct elona_vector1
     template <
         typename U,
         std::enable_if_t<
-            !std::is_same_v<T, std::string> || !std::is_same_v<U, int>,
+            !std::is_same<T, std::string>::value || !std::is_same<U, int>::value,
             nullptr_t> = nullptr>
     T& operator+=(const U& x)
     {

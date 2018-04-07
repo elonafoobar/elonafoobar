@@ -142,7 +142,7 @@ private:
 template <
     typename Archive,
     typename T,
-    std::enable_if_t<!std::is_enum_v<T>, nullptr_t> = nullptr>
+    std::enable_if_t<!std::is_enum<T>::value, nullptr_t> = nullptr>
 void serialize(Archive& ar, T& data)
 {
     data.serialize(ar);
@@ -177,8 +177,8 @@ PRIMITIVE_TYPES(long double)
 template <
     typename Archive,
     typename E,
-    std::enable_if_t<std::is_enum_v<E>, nullptr_t> = nullptr,
-    std::enable_if_t<std::is_base_of_v<iarchive_base, Archive>, nullptr_t> =
+    std::enable_if_t<std::is_enum<E>::value, nullptr_t> = nullptr,
+    std::enable_if_t<std::is_base_of<iarchive_base, Archive>::value, nullptr_t> =
         nullptr>
 void serialize(Archive& ar, E& data)
 {
@@ -194,8 +194,8 @@ void serialize(Archive& ar, E& data)
 template <
     typename Archive,
     typename E,
-    std::enable_if_t<std::is_enum_v<E>, nullptr_t> = nullptr,
-    std::enable_if_t<std::is_base_of_v<oarchive_base, Archive>, nullptr_t> =
+    std::enable_if_t<std::is_enum<E>::value, nullptr_t> = nullptr,
+    std::enable_if_t<std::is_base_of<oarchive_base, Archive>::value, nullptr_t> =
         nullptr>
 void serialize(Archive& ar, E& data)
 {
@@ -209,7 +209,7 @@ void serialize(Archive& ar, E& data)
 
 template <
     typename Archive,
-    std::enable_if_t<std::is_base_of_v<iarchive_base, Archive>, nullptr_t> =
+    std::enable_if_t<std::is_base_of<iarchive_base, Archive>::value, nullptr_t> =
         nullptr>
 void serialize(Archive& ar, std::string& data)
 {
@@ -224,7 +224,7 @@ void serialize(Archive& ar, std::string& data)
 
 template <
     typename Archive,
-    std::enable_if_t<std::is_base_of_v<oarchive_base, Archive>, nullptr_t> =
+    std::enable_if_t<std::is_base_of<oarchive_base, Archive>::value, nullptr_t> =
         nullptr>
 void serialize(Archive& ar, std::string& data)
 {
@@ -238,7 +238,7 @@ void serialize(Archive& ar, std::string& data)
 template <
     typename Archive,
     typename T,
-    std::enable_if_t<std::is_base_of_v<iarchive_base, Archive>, nullptr_t> =
+    std::enable_if_t<std::is_base_of<iarchive_base, Archive>::value, nullptr_t> =
         nullptr>
 void serialize(Archive& ar, std::vector<T>& data)
 {
@@ -254,7 +254,7 @@ void serialize(Archive& ar, std::vector<T>& data)
 template <
     typename Archive,
     typename T,
-    std::enable_if_t<std::is_base_of_v<oarchive_base, Archive>, nullptr_t> =
+    std::enable_if_t<std::is_base_of<oarchive_base, Archive>::value, nullptr_t> =
         nullptr>
 void serialize(Archive& ar, std::vector<T>& data)
 {
