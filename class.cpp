@@ -9,6 +9,10 @@ namespace elona
 {
 
 
+class_db the_class_db;
+int cequipment = 0;
+
+
 
 int access_class_info(int dbmode, const std::string& dbidn)
 {

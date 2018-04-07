@@ -8,6 +8,9 @@ namespace elona
 {
 
 
+int TODO_show_prompt_val;
+
+
 int show_prompt(int x, int y, int width, show_prompt_type type, int val4)
 {
     int val5{};

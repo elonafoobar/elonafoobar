@@ -99,7 +99,7 @@ public:
 };
 
 
-inline god_db the_god_db;
+extern god_db the_god_db;
 
 
 void txtgod(const god_id_t& id, int type);

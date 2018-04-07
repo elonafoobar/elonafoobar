@@ -10,6 +10,10 @@ namespace elona
 {
 
 
+ability_db the_ability_db;
+skill_data sdata;
+
+
 void ability_db::define(lua_State* L)
 {
     const char* id = luaL_checkstring(L, -2);

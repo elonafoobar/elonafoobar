@@ -162,6 +162,9 @@ namespace elona
 {
 
 
+int cfg_extraclass;
+
+
 void load_config()
 {
     // FIXME std::string{value} => value

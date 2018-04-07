@@ -48,8 +48,6 @@ renderer::renderer(window& target_window, int flag)
 {
     detail::enforce_sdl(
         ::SDL_SetRenderDrawBlendMode(ptr(), SDL_BLENDMODE_BLEND));
-
-    detail::current_renderer = this;
 }
 
 

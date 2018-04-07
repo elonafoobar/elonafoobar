@@ -89,7 +89,7 @@ public:
 };
 
 
-inline character_db the_character_db;
+extern character_db the_character_db;
 
 
 
@@ -411,7 +411,7 @@ private:
 };
 
 
-inline cdata_t cdata;
+extern cdata_t cdata;
 
 
 

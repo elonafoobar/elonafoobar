@@ -25,7 +25,7 @@ void set_config(const std::string& key, const std::string& value1, int value2);
 
 
 
-inline int cfg_extraclass;
+extern int cfg_extraclass;
 
 
 } // namespace elona

@@ -199,13 +199,5 @@ private:
 
 
 
-namespace detail
-{
-
-inline renderer* current_renderer;
-}
-
-
-
 } // namespace snail
 } // namespace elona

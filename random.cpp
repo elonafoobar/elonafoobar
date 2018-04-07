@@ -6,6 +6,14 @@ namespace elona
 {
 
 
+namespace detail
+{
+std::mt19937 random_engine{std::random_device{}()};
+// For exrand
+std::mt19937 random_engine2{std::random_device{}()};
+} // namespace detail
+
+
 void randomize(std::random_device::result_type seed)
 {
     detail::random_engine.seed(seed);

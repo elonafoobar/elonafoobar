@@ -1,4 +1,5 @@
 #include "image.hpp"
+#include "application.hpp"
 #include "renderer.hpp"
 
 
@@ -73,7 +74,7 @@ basic_image::basic_image(
 
     _ptr.reset(
         detail::enforce_sdl(::SDL_CreateTextureFromSurface(
-            detail::current_renderer->ptr(), surface)),
+            application::instance().get_renderer().ptr(), surface)),
         ::SDL_DestroyTexture);
     _width = surface->w;
     _height = surface->h;

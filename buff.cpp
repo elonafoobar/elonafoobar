@@ -10,6 +10,9 @@ namespace elona
 {
 
 
+buff_db the_buff_db;
+
+
 buff_db::buff_db()
 {
     storage.emplace(

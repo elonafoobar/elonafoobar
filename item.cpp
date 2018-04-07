@@ -13,6 +13,9 @@ namespace elona
 {
 
 
+inventory inv;
+
+
 
 item::item()
     : enchantments(15)

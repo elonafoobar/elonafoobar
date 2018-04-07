@@ -51,7 +51,7 @@ public:
 };
 
 
-inline ability_db the_ability_db;
+extern ability_db the_ability_db;
 
 
 
@@ -104,7 +104,7 @@ private:
 };
 
 
-inline skill_data sdata;
+extern skill_data sdata;
 
 
 } // namespace elona

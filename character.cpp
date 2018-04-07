@@ -14,6 +14,10 @@ namespace elona
 {
 
 
+character_db the_character_db;
+cdata_t cdata;
+
+
 
 void character_db::define(lua_State* L)
 {

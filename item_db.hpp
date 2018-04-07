@@ -80,7 +80,7 @@ public:
 
 
 
-inline item_db the_item_db;
+extern item_db the_item_db;
 
 
 } // namespace elona

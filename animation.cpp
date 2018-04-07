@@ -1016,6 +1016,10 @@ namespace elona
 {
 
 
+int FIXME_dig_animation_x;
+int FIXME_dig_animation_y;
+
+
 
 void play_animation(int animeid)
 {

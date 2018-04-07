@@ -9,7 +9,7 @@ namespace debug
 {
 
 
-inline bool voldemort = true;
+extern bool voldemort;
 }
 
 

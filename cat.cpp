@@ -8,6 +8,9 @@ namespace cat
 {
 
 
+engine global;
+
+
 
 void engine::initialize()
 {

@@ -55,7 +55,7 @@ public:
 
 
 
-inline trait_db the_trait_db;
+extern trait_db the_trait_db;
 
 
 int get_trait_info(int traitmode, int tid);

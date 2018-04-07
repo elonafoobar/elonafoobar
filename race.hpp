@@ -64,7 +64,7 @@ public:
 };
 
 
-inline race_db the_race_db;
+extern race_db the_race_db;
 
 
 

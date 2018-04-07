@@ -134,7 +134,7 @@ private:
 };
 
 
-inline engine global;
+extern engine global;
 
 
 

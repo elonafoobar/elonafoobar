@@ -260,6 +260,21 @@ namespace elona
 {
 
 
+
+int prm_518;
+int prm_818;
+int prm_820;
+int prm_853;
+
+int tmp_at_m172;
+
+elona_vector1<int> inhlist_at_m184;
+elona_vector1<int> inhlist;
+
+int i_at_m68;
+double r_at_m133;
+
+
 elona_vector2<std::string> rankn;
 elona_vector1<int> ranknorma;
 elona_vector1<std::string> popostname;

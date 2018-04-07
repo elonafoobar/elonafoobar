@@ -16,9 +16,9 @@ namespace elona
 namespace detail
 {
 
-inline std::mt19937 random_engine{std::random_device{}()};
+extern std::mt19937 random_engine;
 // For exrand
-inline std::mt19937 random_engine2{std::random_device{}()};
+extern std::mt19937 random_engine2;
 
 } // namespace detail
 

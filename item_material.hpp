@@ -56,7 +56,7 @@ public:
 };
 
 
-inline item_material_db the_item_material_db;
+extern item_material_db the_item_material_db;
 
 
 

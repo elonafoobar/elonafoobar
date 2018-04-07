@@ -5,7 +5,7 @@
 namespace elona
 {
 
-inline int TODO_show_prompt_val = 0;
+extern int TODO_show_prompt_val;
 
 
 // val3 = 0 ?
