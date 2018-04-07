@@ -81,7 +81,7 @@ void load_musiclist()
 
 void backup_config_files()
 {
-    std::tuple<const char*, const char*> files[] = {
+    std::pair<const char*, const char*> files[] = {
         {u8"./original/config.txt", u8"./config.txt"},
         {u8"./original/export.txt", u8"./user/export.txt"},
         {u8"./original/lastwords.txt", u8"./user/lastwords.txt"},

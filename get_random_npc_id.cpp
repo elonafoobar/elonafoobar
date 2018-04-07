@@ -96,11 +96,11 @@ void get_random_npc_id()
         }
     }
 
-    const auto [id, cnpcid] = sampler.get().value_or(character_id{0, 0});
-    dbid = id;
-    if (id == 343)
+    const auto id_info = sampler.get().value_or(character_id{0, 0});
+    dbid = id_info.id;
+    if (id_info.id == 343)
     {
-        cdata[rc].cnpc_id = cnpcid;
+        cdata[rc].cnpc_id = id_info.cnpcid;
     }
 }
 

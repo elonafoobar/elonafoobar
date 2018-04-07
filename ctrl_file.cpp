@@ -900,7 +900,9 @@ void fmode_22_21(bool read)
         }
         {
             const auto filepath = folder + u8"c3_"s + id + u8".t"s;
-            const auto [invhead, invrange] = inv_getheader(tg);
+            const auto tmp = inv_getheader(tg);
+            const auto invhead = tmp.first;
+            const auto invrange = tmp.second;
             if (read)
             {
                 load(filepath, inv, invhead, invhead + invrange);

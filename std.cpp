@@ -297,7 +297,7 @@ void bload(const fs::path& filename, std::string& data, int size, int)
     {
         throw 0;
     }
-    auto [buf, _] = read_binary(in, size);
+    auto buf = read_binary(in, size).first;
     data = {buf.get(), static_cast<size_t>(size)};
 }
 
@@ -310,7 +310,7 @@ void bload(const fs::path& filename, int& data, int size, int)
     {
         throw 0;
     }
-    auto [buf, _] = read_binary(in, size);
+    auto buf = read_binary(in, size).first;
     data = *reinterpret_cast<int*>(buf.get());
 }
 
@@ -327,7 +327,7 @@ void bload(const fs::path& filename, elona_vector1<int>& data, int size, int)
     {
         throw 0;
     }
-    auto [buf, _] = read_binary(in, size);
+    auto buf = read_binary(in, size).first;
     for (size_t i = 0; i < length(data); ++i)
     {
         data(i) = reinterpret_cast<int*>(buf.get())[i];
@@ -499,14 +499,15 @@ void font(const std::string& name, int size, int style)
     }
     else
     {
-        const auto [i_, _] = font_detail::font_cache.emplace(
+        const auto inserted = font_detail::font_cache.emplace(
             std::piecewise_construct,
             std::forward_as_tuple(size),
             std::forward_as_tuple(
                 fs::path(u8"font") / name,
                 size,
                 snail::font_t::style_t::regular));
-        snail::application::instance().get_renderer().set_font(i_->second);
+        snail::application::instance().get_renderer().set_font(
+            inserted.first->second);
     }
 }
 

@@ -109,16 +109,16 @@ int itemcreate(int slot, int id, int x, int y, int number)
 
 range::iota<int> items(int owner)
 {
-    const auto [invhead, invrange] = inv_getheader(owner);
-    return {invhead, invhead + invrange};
+    const auto tmp = inv_getheader(owner);
+    return {tmp.first, tmp.first + tmp.second};
 }
 
 
 
 int get_random_inv(int owner)
 {
-    const auto [invhead, invrange] = inv_getheader(owner);
-    return invhead + rnd(invrange);
+    const auto tmp = inv_getheader(owner);
+    return tmp.first + rnd(tmp.second);
 }
 
 

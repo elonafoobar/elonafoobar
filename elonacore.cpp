@@ -10878,7 +10878,9 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
     hp_at_m125 = cdata[tc_at_m125].hp;
     cdata[prm_784].item_which_will_be_used = 0;
     cbitmod(960, prm_784, 0);
-    const auto [invhead, invrange] = inv_getheader(prm_784);
+    const auto tmp = inv_getheader(prm_784);
+    const auto invhead = tmp.first;
+    const auto invrange = tmp.second;
     p_at_m125 = invhead;
     invrangecc_at_m125 = invrange;
     for (const auto& cnt : items(tc_at_m125))
@@ -68838,7 +68840,7 @@ void show_ex_help()
                     break;
                 }
                 color(30, 30, 30);
-                const auto [_, ny] = gmes(s, tx, y, 330, {30, 30, 30}, true);
+                const auto ny = gmes(s, tx, y, 330, {30, 30, 30}, true).y;
                 color(0, 0, 0);
                 y = ny;
             }
@@ -69136,8 +69138,8 @@ label_2705_internal:
                 {
                     break;
                 }
-                const auto [_, ny] =
-                    gmes(s1, wx + 216, y, 510, {30, 30, 30}, false);
+                const auto ny =
+                    gmes(s1, wx + 216, y, 510, {30, 30, 30}, false).y;
                 y = ny;
             }
         }

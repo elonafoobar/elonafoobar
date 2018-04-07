@@ -3637,7 +3637,9 @@ void talk_unique()
         if (gdata_ambitious_scientist >= 1 && gdata_ambitious_scientist <= 5)
         {
             f = 0;
-            const auto [invhead, invrange] = inv_getheader(0);
+            const auto tmp = inv_getheader(0);
+            const auto invhead = tmp.first;
+            const auto invrange = tmp.second;
             for (int cnt = invhead, cnt_end = invhead + invrange; cnt < cnt_end;
                  ++cnt)
             {
