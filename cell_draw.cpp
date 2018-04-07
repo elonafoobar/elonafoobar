@@ -352,7 +352,7 @@ void render_cloud()
     static int dummy = ((void)initialize_cloud_data(), 0);
     (void)dummy;
 
-    for (size_t i = 0; i < std::size(clouds); ++i)
+    for (size_t i = 0; i < clouds.size(); ++i)
     {
         gmode(5, -1, -1, 7 + i * 2);
         int x = (clouds[i].x0 - cdata[0].position.x * inf_tiles + sxfix) * 100
@@ -1115,7 +1115,7 @@ void cell_draw()
                     && mapsync(x_, y) == msync)
                 {
                     light_ -= (6
-                               - std::clamp(
+                               - clamp(
                                      dist(
                                          cdata[0].position.x,
                                          cdata[0].position.y,

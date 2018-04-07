@@ -58,7 +58,7 @@ int show_prompt(int x, int y, int width, show_prompt_type type, int val4)
         TODO_show_prompt_val = 1;
         if (strlen_u(std::to_string(val5)) >= 3)
         {
-            dx += std::size(std::to_string(val5)) * 8;
+            dx += std::to_string(val5).size() * 8;
         }
         pos(dx(1) + sx + 24, dy + 4);
         gfini(dx - 42, 35);

@@ -16,7 +16,7 @@ int cequipment = 0;
 
 int access_class_info(int dbmode, const std::string& dbidn)
 {
-    if (std::empty(dbidn))
+    if (dbidn.empty())
     {
         classname = u8"なし";
         cequipment = 0;

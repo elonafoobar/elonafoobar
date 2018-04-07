@@ -228,7 +228,7 @@ template <
         nullptr>
 void serialize(Archive& ar, std::string& data)
 {
-    const auto length = std::size(data);
+    const auto length = data.size();
     ar.primitive(length);
     ar.primitive_array(data.c_str(), length);
 }
@@ -258,7 +258,7 @@ template <
         nullptr>
 void serialize(Archive& ar, std::vector<T>& data)
 {
-    const auto length = std::size(data);
+    const auto length = data.size();
     ar.primitive(length);
     if (length != 0)
     {

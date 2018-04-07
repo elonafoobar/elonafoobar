@@ -90,7 +90,7 @@ optional<skill_damage> calc_skill_damage(int skill, int cc, int power)
     case 412: return skill_damage{0, 1, x * power * 5 / 100, 0, 0};
     case 461:
         return skill_damage{
-            0, 1, std::clamp((x * 5 + power) / 20 + 40, 40, 100), 0, 0};
+            0, 1, clamp((x * 5 + power) / 20 + 40, 40, 100), 0, 0};
     case 411: return skill_damage{0, 1, x * power * 10 / 100, 0, 0};
     case 400:
         return skill_damage{1 + x / 30, power / 40 + 5 + 1, power / 30, 0, 0};
@@ -280,7 +280,7 @@ int calcfixlv(int base)
         }
         break;
     }
-    return std::clamp(ret, 1, 5);
+    return clamp(ret, 1, 5);
 }
 
 
@@ -427,7 +427,7 @@ int calc_accuracy(bool consider_distance)
         {
             if (consider_distance)
             {
-                rangedist = std::clamp(
+                rangedist = clamp(
                     dist(
                         cdata[cc].position.x,
                         cdata[cc].position.y,
@@ -474,7 +474,7 @@ int calc_accuracy(bool consider_distance)
         if (cc == 0)
         {
             accuracy = accuracy * 100
-                / std::clamp((150 - sdata(301, cc) / 2), 115, 150);
+                / clamp((150 - sdata(301, cc) / 2), 115, 150);
             if (attackskill != 106 && attackrange == 0
                 && inv[cw].weight >= 4000)
             {
@@ -485,7 +485,7 @@ int calc_accuracy(bool consider_distance)
         if (cc == gdata_mount)
         {
             accuracy = accuracy * 100
-                / std::clamp((150 - sdata(10, cc) / 2), 115, 150);
+                / clamp((150 - sdata(10, cc) / 2), 115, 150);
             if (attackskill != 106 && attackrange == 0
                 && inv[cw].weight >= 4000)
             {
@@ -551,7 +551,7 @@ int calcattackhit()
     {
         if (tohit < sdata(187, tc) * 10)
         {
-            int evaderef = evasion * 100 / std::clamp(tohit, 1, tohit);
+            int evaderef = evasion * 100 / clamp(tohit, 1, tohit);
             if (evaderef > 300)
             {
                 if (rnd(sdata(187, tc) + 250) > 100)
@@ -628,7 +628,7 @@ int calcattackdmg(int prm_894)
                   (sdata(10, cc) + sdata(attackskill, cc) / 5
                    + sdata(152, cc) * 2))
                 / 40;
-        pierce = std::clamp(sdata(attackskill, cc) / 5, 5, 50);
+        pierce = clamp(sdata(attackskill, cc) / 5, 5, 50);
     }
     else
     {
@@ -728,12 +728,12 @@ int calcattackdmg(int prm_894)
         else if (ammo != -1)
         {
             dmgmulti = dmgmulti
-                * std::clamp((inv[ammo].weight / 100 + 100), 100, 150) / 100;
+                * clamp((inv[ammo].weight / 100 + 100), 100, 150) / 100;
         }
         else
         {
             dmgmulti = dmgmulti
-                * std::clamp((inv[cw].weight / 200 + 100), 100, 150) / 100;
+                * clamp((inv[cw].weight / 200 + 100), 100, 150) / 100;
         }
     }
     damage = damage * dmgmulti / 100;
@@ -799,7 +799,7 @@ int calcattackdmg(int prm_894)
     if (cdata[tc].decrease_physical_damage != 0)
     {
         damage = damage * 100
-            / std::clamp((100 + cdata[tc].decrease_physical_damage), 25, 1000);
+            / clamp((100 + cdata[tc].decrease_physical_damage), 25, 1000);
     }
     if (damage < 0)
     {
@@ -898,7 +898,7 @@ int calcitemvalue(int ci, int situation)
     {
         if (situation == 0)
         {
-            ret += std::clamp(
+            ret += clamp(
                 cdata[0].fame / 40 + ret * (cdata[0].fame / 80) / 100, 0, 800);
         }
     }
@@ -1012,7 +1012,7 @@ int calcitemvalue(int ci, int situation)
 
 int calcinvestvalue()
 {
-    int rank = std::clamp(cdata[tc].shop_rank, 1, 200);
+    int rank = clamp(cdata[tc].shop_rank, 1, 200);
     int ret = rank * rank * 15 + 200;
     if (ret > 500'000)
     {
@@ -1092,8 +1092,8 @@ void calccosthire()
         cost += calchirecost(cnt);
     }
     cost = cost
-        * std::clamp(
-               100 - std::clamp(cdata[0].karma / 2, 0, 50) - 7 * trait(38)
+        * clamp(
+               100 - clamp(cdata[0].karma / 2, 0, 50) - 7 * trait(38)
                    - (cdata[0].karma >= 20) * 5,
                25,
                200)
@@ -1121,8 +1121,8 @@ int calccostbuilding()
     }
 
     return cost
-        * std::clamp(
-               100 - std::clamp(cdata[0].karma / 2, 0, 50) - 7 * trait(38)
+        * clamp(
+               100 - clamp(cdata[0].karma / 2, 0, 50) - 7 * trait(38)
                    - (cdata[0].karma >= 20) * 5,
                25,
                200)
@@ -1138,8 +1138,8 @@ int calccosttax()
     cost += cdata[0].fame;
     cost += cdata[0].level * 200;
     return cost
-        * std::clamp(
-               100 - std::clamp(cdata[0].karma / 2, 0, 50) - 7 * trait(38)
+        * clamp(
+               100 - clamp(cdata[0].karma / 2, 0, 50) - 7 * trait(38)
                    - (cdata[0].karma >= 20) * 5,
                25,
                200)
@@ -1348,7 +1348,7 @@ int calcspellfail(int id, int cc)
     {
         if (gdata_mount == cc)
         {
-            return 95 - std::clamp(30 - sdata(301, 0) / 2, 0, 30);
+            return 95 - clamp(30 - sdata(301, 0) / 2, 0, 30);
         }
         else
         {

@@ -1571,7 +1571,7 @@ void txt(Args&&... args)
         snd(hear);
         hear = 0;
     }
-    msgtemp = text[rnd(std::size(text))];
+    msgtemp = text[rnd(text.size())];
     txt_conv();
     tcol_at_txtfunc(0) = 255;
     tcol_at_txtfunc(1) = 255;

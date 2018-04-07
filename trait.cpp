@@ -209,7 +209,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(17, 0) = std::clamp(
+        sdata(17, 0) = clamp(
             sdata(17, 0) + trait(tid) * 4, int{sdata(17, 0) > 0}, 9999);
         return 1;
     }
@@ -238,7 +238,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(10, 0) = std::clamp(
+        sdata(10, 0) = clamp(
             sdata(10, 0) + trait(tid) * 3, int{sdata(10, 0) > 0}, 9999);
         return 1;
     }
@@ -328,7 +328,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(11, 0) = std::clamp(
+        sdata(11, 0) = clamp(
             sdata(11, 0) + trait(tid) * 3, int{sdata(11, 0) > 0}, 9999);
         return 1;
     }
@@ -352,7 +352,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(106, 0) = std::clamp(
+        sdata(106, 0) = clamp(
             sdata(106, 0) + trait(tid) * 3, int{sdata(106, 0) > 0}, 9999);
         return 1;
     }
@@ -380,7 +380,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(172, 0) = std::clamp(
+        sdata(172, 0) = clamp(
             sdata(172, 0) + trait(tid) * 4, int{sdata(172, 0) > 0}, 9999);
         return 1;
     }
@@ -449,7 +449,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(166, 0) = std::clamp(
+        sdata(166, 0) = clamp(
             sdata(166, 0) + trait(tid) * 4, int{sdata(166, 0) > 0}, 9999);
         return 1;
     }
@@ -474,7 +474,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(53, 0) = std::clamp(
+        sdata(53, 0) = clamp(
             sdata(53, 0) + trait(tid) * 50 / 2, int{sdata(53, 0) > 0}, 9999);
         return 1;
     }
@@ -498,7 +498,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(55, 0) = std::clamp(
+        sdata(55, 0) = clamp(
             sdata(55, 0) + trait(tid) * 50 / 2, int{sdata(55, 0) > 0}, 9999);
         return 1;
     }
@@ -526,7 +526,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(156, 0) = std::clamp(
+        sdata(156, 0) = clamp(
             sdata(156, 0) + trait(tid) * 4, int{sdata(156, 0) > 0}, 9999);
         return 1;
     }
@@ -550,7 +550,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(181, 0) = std::clamp(
+        sdata(181, 0) = clamp(
             sdata(181, 0) + trait(tid) * 4, int{sdata(181, 0) > 0}, 9999);
         return 1;
     }
@@ -577,7 +577,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(19, 0) = std::clamp(
+        sdata(19, 0) = clamp(
             sdata(19, 0) + trait(tid) * 5, int{sdata(19, 0) > 0}, 9999);
         return 1;
     }
@@ -613,7 +613,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(2, 0) = std::clamp(
+        sdata(2, 0) = clamp(
             sdata(2, 0) + trait(tid) * 5, int{sdata(2, 0) > 0}, 9999);
         return 1;
     }
@@ -649,7 +649,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(3, 0) = std::clamp(
+        sdata(3, 0) = clamp(
             sdata(3, 0) + trait(tid) * 5, int{sdata(3, 0) > 0}, 9999);
         return 1;
     }
@@ -677,7 +677,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(159, 0) = std::clamp(
+        sdata(159, 0) = clamp(
             sdata(159, 0) + trait(tid) * 3, int{sdata(159, 0) > 0}, 9999);
         return 1;
     }
@@ -708,7 +708,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(18, 0) = std::clamp(
+        sdata(18, 0) = clamp(
             sdata(18, 0) + trait(tid) * 5, int{sdata(18, 0) > 0}, 9999);
         return 1;
     }
@@ -743,7 +743,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        cdata[0].pv = std::clamp(
+        cdata[0].pv = clamp(
             cdata[0].pv + trait(tid) * 5, int{cdata[0].pv > 0}, 9999);
         return 1;
     }
@@ -771,7 +771,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        cdata[0].dv = std::clamp(
+        cdata[0].dv = clamp(
             cdata[0].dv + trait(tid) * 4, int{cdata[0].dv > 0}, 9999);
         return 1;
     }
@@ -803,7 +803,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(173, 0) = std::clamp(
+        sdata(173, 0) = clamp(
             sdata(173, 0) + trait(tid) * 2, int{sdata(173, 0) > 0}, 9999);
         return 1;
     }
@@ -905,7 +905,7 @@ int get_trait_info(int traitmode, int tid)
                 lang(u8"あなたの関節は痛み出した。"s, u8"Your joints creak."s);
             return 1;
         }
-        sdata(12, 0) = std::clamp(
+        sdata(12, 0) = clamp(
             sdata(12, 0) + trait(tid) * 3, int{sdata(12, 0) > 0}, 9999);
         return 1;
     }
@@ -940,7 +940,7 @@ int get_trait_info(int traitmode, int tid)
                 u8"あなたの血液は薄れた。"s, u8"Your metabolism slows down."s);
             return 1;
         }
-        sdata(154, 0) = std::clamp(
+        sdata(154, 0) = clamp(
             sdata(154, 0) + trait(tid) * 4, int{sdata(154, 0) > 0}, 9999);
         return 1;
     }
@@ -981,7 +981,7 @@ int get_trait_info(int traitmode, int tid)
                 lang(u8"あなたの脚はねじれた。"s, u8"Your legs are twisted!"s);
             return 1;
         }
-        sdata(18, 0) = std::clamp(
+        sdata(18, 0) = clamp(
             sdata(18, 0) + trait(tid) * 5, int{sdata(18, 0) > 0}, 9999);
         return 1;
     }
@@ -1021,7 +1021,7 @@ int get_trait_info(int traitmode, int tid)
                 u8"あなたの腕の贅肉が増えた。"s, u8"Your arms become thin."s);
             return 1;
         }
-        sdata(10, 0) = std::clamp(
+        sdata(10, 0) = clamp(
             sdata(10, 0) + trait(tid) * 3, int{sdata(10, 0) > 0}, 9999);
         return 1;
     }
@@ -1055,7 +1055,7 @@ int get_trait_info(int traitmode, int tid)
                 lang(u8"あなたの声はかれた。"s, u8"Your voice becomes scary."s);
             return 1;
         }
-        sdata(17, 0) = std::clamp(
+        sdata(17, 0) = clamp(
             sdata(17, 0) + trait(tid) * 5, int{sdata(17, 0) > 0}, 9999);
         return 1;
     }
@@ -1089,7 +1089,7 @@ int get_trait_info(int traitmode, int tid)
                 u8"あなたの脳は原始化した。"s, u8"Your brain degenerates."s);
             return 1;
         }
-        sdata(165, 0) = std::clamp(
+        sdata(165, 0) = clamp(
             sdata(165, 0) + trait(tid) * 4, int{sdata(165, 0) > 0}, 9999);
         return 1;
     }
@@ -1119,7 +1119,7 @@ int get_trait_info(int traitmode, int tid)
                 u8"You lose resistance to magic."s);
             return 1;
         }
-        sdata(60, 0) = std::clamp(
+        sdata(60, 0) = clamp(
             sdata(60, 0) + trait(tid) * 50, int{sdata(60, 0) > 0}, 9999);
         return 1;
     }
@@ -1149,7 +1149,7 @@ int get_trait_info(int traitmode, int tid)
                 u8"Your eardrums become thin."s);
             return 1;
         }
-        sdata(57, 0) = std::clamp(
+        sdata(57, 0) = clamp(
             sdata(57, 0) + trait(tid) * 50, int{sdata(57, 0) > 0}, 9999);
         return 1;
     }
@@ -1178,7 +1178,7 @@ int get_trait_info(int traitmode, int tid)
                 u8"Your skin gets gooseflesh."s);
             return 1;
         }
-        sdata(50, 0) = std::clamp(
+        sdata(50, 0) = clamp(
             sdata(50, 0) + trait(tid) * 50, int{sdata(50, 0) > 0}, 9999);
         return 1;
     }
@@ -1206,7 +1206,7 @@ int get_trait_info(int traitmode, int tid)
                 lang(u8"あなたは汗をかきはじめた。"s, u8"You shiver."s);
             return 1;
         }
-        sdata(51, 0) = std::clamp(
+        sdata(51, 0) = clamp(
             sdata(51, 0) + trait(tid) * 50, int{sdata(51, 0) > 0}, 9999);
         return 1;
     }
@@ -1236,7 +1236,7 @@ int get_trait_info(int traitmode, int tid)
                 u8"You lose resistance to lightning."s);
             return 1;
         }
-        sdata(52, 0) = std::clamp(
+        sdata(52, 0) = clamp(
             sdata(52, 0) + trait(tid) * 50, int{sdata(52, 0) > 0}, 9999);
         return 1;
     }
@@ -1270,7 +1270,7 @@ int get_trait_info(int traitmode, int tid)
                 u8"あなたの視力は低下した。"s, u8"Your sight is weakened."s);
             return 1;
         }
-        sdata(13, 0) = std::clamp(
+        sdata(13, 0) = clamp(
             sdata(13, 0) + trait(tid) * 5, int{sdata(13, 0) > 0}, 9999);
         return 1;
     }
@@ -1299,7 +1299,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(50, 0) = std::clamp(
+        sdata(50, 0) = clamp(
             sdata(50, 0) + trait(tid) * 50, int{sdata(50, 0) > 0}, 9999);
         return 1;
     }
@@ -1328,7 +1328,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(51, 0) = std::clamp(
+        sdata(51, 0) = clamp(
             sdata(51, 0) + trait(tid) * 50, int{sdata(51, 0) > 0}, 9999);
         return 1;
     }
@@ -1357,7 +1357,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(55, 0) = std::clamp(
+        sdata(55, 0) = clamp(
             sdata(55, 0) + trait(tid) * 50, int{sdata(55, 0) > 0}, 9999);
         return 1;
     }
@@ -1387,7 +1387,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(53, 0) = std::clamp(
+        sdata(53, 0) = clamp(
             sdata(53, 0) + trait(tid) * 50, int{sdata(53, 0) > 0}, 9999);
         return 1;
     }
@@ -1420,21 +1420,21 @@ int get_trait_info(int traitmode, int tid)
             return 1;
         }
         sdata(60, 0) =
-            std::clamp(sdata(60, 0) + 150, int{sdata(60, 0) > 0}, 9999);
+            clamp(sdata(60, 0) + 150, int{sdata(60, 0) > 0}, 9999);
         sdata(52, 0) =
-            std::clamp(sdata(52, 0) + 100, int{sdata(52, 0) > 0}, 9999);
+            clamp(sdata(52, 0) + 100, int{sdata(52, 0) > 0}, 9999);
         sdata(53, 0) =
-            std::clamp(sdata(53, 0) + 200, int{sdata(53, 0) > 0}, 9999);
+            clamp(sdata(53, 0) + 200, int{sdata(53, 0) > 0}, 9999);
         sdata(57, 0) =
-            std::clamp(sdata(57, 0) + 50, int{sdata(57, 0) > 0}, 9999);
+            clamp(sdata(57, 0) + 50, int{sdata(57, 0) > 0}, 9999);
         sdata(59, 0) =
-            std::clamp(sdata(59, 0) + 100, int{sdata(59, 0) > 0}, 9999);
+            clamp(sdata(59, 0) + 100, int{sdata(59, 0) > 0}, 9999);
         sdata(54, 0) =
-            std::clamp(sdata(54, 0) + 200, int{sdata(54, 0) > 0}, 9999);
+            clamp(sdata(54, 0) + 200, int{sdata(54, 0) > 0}, 9999);
         sdata(58, 0) =
-            std::clamp(sdata(58, 0) + 100, int{sdata(58, 0) > 0}, 9999);
+            clamp(sdata(58, 0) + 100, int{sdata(58, 0) > 0}, 9999);
         sdata(51, 0) =
-            std::clamp(sdata(51, 0) + 100, int{sdata(51, 0) > 0}, 9999);
+            clamp(sdata(51, 0) + 100, int{sdata(51, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 161)
@@ -1643,7 +1643,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(60, 0) = std::clamp(
+        sdata(60, 0) = clamp(
             sdata(60, 0) + trait(tid) * 50, int{sdata(60, 0) > 0}, 9999);
         return 1;
     }
@@ -1733,7 +1733,7 @@ int get_trait_info(int traitmode, int tid)
                 lang(u8"あなたの顔はただれた。"s, u8"Your face is festered."s);
             return 1;
         }
-        sdata(17, 0) = std::clamp(
+        sdata(17, 0) = clamp(
             sdata(17, 0) + trait(tid) * (4 + cdata[0].level / 5),
             int{sdata(17, 0) > 0},
             9999);
@@ -1759,7 +1759,7 @@ int get_trait_info(int traitmode, int tid)
                 u8"Your feet change into hooves."s);
             return 1;
         }
-        sdata(18, 0) = std::clamp(
+        sdata(18, 0) = clamp(
             sdata(18, 0) + (20 + cdata[0].level / 2),
             int{sdata(18, 0) > 0},
             9999);
@@ -1784,11 +1784,11 @@ int get_trait_info(int traitmode, int tid)
                 u8"あなたの目は増殖した。"s, u8"Your eyes are multipling."s);
             return 1;
         }
-        sdata(17, 0) = std::clamp(
+        sdata(17, 0) = clamp(
             sdata(17, 0) + (5 + cdata[0].level / 3) * -1,
             int{sdata(17, 0) > 0},
             9999);
-        sdata(13, 0) = std::clamp(
+        sdata(13, 0) = clamp(
             sdata(13, 0) + (5 + cdata[0].level / 3),
             int{sdata(13, 0) > 0},
             9999);
@@ -1816,7 +1816,7 @@ int get_trait_info(int traitmode, int tid)
             return 1;
         }
         cbitmod(5, 0, 1);
-        sdata(18, 0) = std::clamp(
+        sdata(18, 0) = clamp(
             sdata(18, 0) + (12 + cdata[0].level / 4),
             int{sdata(18, 0) > 0},
             9999);
@@ -1844,7 +1844,7 @@ int get_trait_info(int traitmode, int tid)
                 u8"Your neck becomes extremely thick."s);
             return 1;
         }
-        sdata(17, 0) = std::clamp(
+        sdata(17, 0) = clamp(
             sdata(17, 0) + (5 + cdata[0].level / 5) * -1,
             int{sdata(17, 0) > 0},
             9999);
@@ -1905,19 +1905,19 @@ int get_trait_info(int traitmode, int tid)
                 u8"Suddenly your head become giant size."s);
             return 1;
         }
-        sdata(11, 0) = std::clamp(
+        sdata(11, 0) = clamp(
             sdata(11, 0) + (5 + cdata[0].level / 3) * -1,
             int{sdata(11, 0) > 0},
             9999);
-        sdata(12, 0) = std::clamp(
+        sdata(12, 0) = clamp(
             sdata(12, 0) + (4 + cdata[0].level / 4) * -1,
             int{sdata(12, 0) > 0},
             9999);
-        sdata(14, 0) = std::clamp(
+        sdata(14, 0) = clamp(
             sdata(14, 0) + (6 + cdata[0].level / 2),
             int{sdata(14, 0) > 0},
             9999);
-        sdata(15, 0) = std::clamp(
+        sdata(15, 0) = clamp(
             sdata(15, 0) + (2 + cdata[0].level / 6),
             int{sdata(15, 0) > 0},
             9999);
@@ -1984,11 +1984,11 @@ int get_trait_info(int traitmode, int tid)
                 lang(u8"あなたは衰弱した。"s, u8"You become weak, very weak."s);
             return 1;
         }
-        sdata(10, 0) = std::clamp(
+        sdata(10, 0) = clamp(
             sdata(10, 0) + (4 + cdata[0].level / 2) * -1,
             int{sdata(10, 0) > 0},
             9999);
-        sdata(2, 0) = std::clamp(sdata(2, 0) + -15, int{sdata(2, 0) > 0}, 9999);
+        sdata(2, 0) = clamp(sdata(2, 0) + -15, int{sdata(2, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 212)
@@ -2010,11 +2010,11 @@ int get_trait_info(int traitmode, int tid)
                 lang(u8"あなたはぼけた。"s, u8"You become feebleminded."s);
             return 1;
         }
-        sdata(16, 0) = std::clamp(
+        sdata(16, 0) = clamp(
             sdata(16, 0) + (4 + cdata[0].level / 2) * -1,
             int{sdata(16, 0) > 0},
             9999);
-        sdata(3, 0) = std::clamp(sdata(3, 0) + -15, int{sdata(3, 0) > 0}, 9999);
+        sdata(3, 0) = clamp(sdata(3, 0) + -15, int{sdata(3, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 213)
@@ -2040,7 +2040,7 @@ int get_trait_info(int traitmode, int tid)
                 u8"Heavy carapace starts to cover up your skin."s);
             return 1;
         }
-        sdata(18, 0) = std::clamp(
+        sdata(18, 0) = clamp(
             sdata(18, 0) + (20 + cdata[0].level / 2) * -1,
             int{sdata(18, 0) > 0},
             9999);
@@ -2108,7 +2108,7 @@ int get_trait_info(int traitmode, int tid)
             return 1;
         }
         sdata(55, 0) =
-            std::clamp(sdata(55, 0) + 100, int{sdata(55, 0) > 0}, 9999);
+            clamp(sdata(55, 0) + 100, int{sdata(55, 0) > 0}, 9999);
         return 1;
     }
     return 0;

@@ -61,11 +61,11 @@ int access_character_info()
         }
         cdata[rc].original_relationship = cdata[rc].relationship =
             data->original_relationship;
-        if (!std::empty(data->race))
+        if (!data->race.empty())
         {
             access_race_info(3, data->race);
         }
-        if (!std::empty(data->class_))
+        if (!data->class_.empty())
         {
             access_class_info(3, data->class_);
         }
@@ -311,7 +311,7 @@ int access_character_info()
         }
         if (const auto text = i18n::_(
                 u8"character", std::to_string(dbid), u8"text_"s + dbmode);
-            !std::empty(text))
+            !text.empty())
         {
             txtef(9);
             txt(text);

@@ -965,7 +965,7 @@ label_2061_internal:
             mes(""s + i18n::_(u8"ui", u8"body_part", u8"_"s + (p / 10000)));
             color(0, 0, 0);
             x +=
-                (std::size(i18n::_(u8"ui", u8"body_part", u8"_"s + (p / 10000)))
+                (i18n::_(u8"ui", u8"body_part", u8"_"s + (p / 10000)).size()
                  + 1)
                 * 6;
         }

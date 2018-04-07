@@ -346,7 +346,7 @@ void bsave(const fs::path& filename, const std::string& data)
     {
         throw 0;
     }
-    out.write(reinterpret_cast<const char*>(data.c_str()), std::size(data));
+    out.write(reinterpret_cast<const char*>(data.c_str()), data.size());
 }
 
 
@@ -362,7 +362,7 @@ void bsave(const fs::path& filename, int data)
 void bsave(const fs::path& filename, elona_vector1<int>& data)
 {
     std::ofstream out{filename.native(), std::ios::binary};
-    for (size_t i = 0; i < std::size(data); ++i)
+    for (size_t i = 0; i < data.size(); ++i)
     {
         out.write(reinterpret_cast<const char*>(&data(i)), sizeof(int));
     }
@@ -377,7 +377,7 @@ void buffer(int window_id, int width, int height)
         width = 1;
     if (height == 0)
         height = 1;
-    if (size_t(window_id) >= std::size(detail::tex_buffers))
+    if (size_t(window_id) >= detail::tex_buffers.size())
     {
         detail::tex_buffers.resize(window_id + 1);
     }
@@ -444,9 +444,9 @@ void clrobj(int)
 void color(int r, int g, int b)
 {
     detail::current_tex_buffer().color = {
-        static_cast<uint8_t>(std::clamp(r, 0, 255)),
-        static_cast<uint8_t>(std::clamp(g, 0, 255)),
-        static_cast<uint8_t>(std::clamp(b, 0, 255)),
+        static_cast<uint8_t>(clamp(r, 0, 255)),
+        static_cast<uint8_t>(clamp(g, 0, 255)),
+        static_cast<uint8_t>(clamp(b, 0, 255)),
         detail::current_tex_buffer().color.a,
     };
     snail::application::instance().get_renderer().set_draw_color(
@@ -628,7 +628,7 @@ void getstr(
     }
     if (pos == std::string::npos)
     {
-        pos = std::size(source);
+        pos = source.size();
     }
     if (pos >= size_t(offset))
     {
@@ -688,7 +688,7 @@ void gmode(int mode, int width, int height, int alpha)
 
     detail::current_tex_buffer().width = width;
     detail::current_tex_buffer().height = height;
-    detail::current_tex_buffer().color.a = std::clamp(alpha, 0, 255);
+    detail::current_tex_buffer().color.a = clamp(alpha, 0, 255);
 }
 
 
@@ -962,7 +962,7 @@ int stoi(std::string_view s)
 
 size_t length(const std::string& str)
 {
-    return std::size(str);
+    return str.size();
 }
 
 
@@ -1020,7 +1020,7 @@ void memcpy(
 
 void mes(const std::string& text)
 {
-    if (std::size(text) >= 25 /* TODO */)
+    if (text.size() >= 25 /* TODO */)
     {
         snail::application::instance().get_renderer().render_multiline_text(
             text,
@@ -1114,7 +1114,7 @@ std::vector<std::string> split_lines(const std::string& str)
 
 size_t count(const std::string& str)
 {
-    return std::size(split_lines(str));
+    return split_lines(str).size();
 }
 
 
@@ -1142,10 +1142,10 @@ void noteadd(const std::string& text, int index, int overwrite)
 
     if (index == -1)
     {
-        index = std::size(lines);
+        index = lines.size();
     }
 
-    if (size_t(index) >= std::size(lines))
+    if (size_t(index) >= lines.size())
     {
         lines.resize(index + 1);
     }
@@ -1177,7 +1177,7 @@ void notedel(size_t index)
 
     const auto lines = notemanip::split_lines(*notemanip::buffer);
     notemanip::buffer->clear();
-    for (size_t i = 0; i < std::size(lines); ++i)
+    for (size_t i = 0; i < lines.size(); ++i)
     {
         if (i != index)
         {
@@ -1197,7 +1197,7 @@ void noteget(std::string& out, size_t index)
     }
 
     const auto lines = notemanip::split_lines(*notemanip::buffer);
-    if (index >= std::size(lines))
+    if (index >= lines.size())
     {
         out = "";
     }
@@ -1374,7 +1374,7 @@ void stick(int& out, int allow_repeat_keys)
 size_t strlen_u(const std::string& str)
 {
     int ret = 0;
-    for (size_t i = 0; i < std::size(str);)
+    for (size_t i = 0; i < str.size();)
     {
         const auto byte = byte_count(static_cast<uint8_t>(str[i]));
         ret += byte == 1 ? 1 : 2;
@@ -1387,7 +1387,7 @@ size_t strlen_u(const std::string& str)
 
 std::string strmid(const std::string& source, int pos, int length)
 {
-    const auto src_len = std::size(source);
+    const auto src_len = source.size();
     if (pos == -1)
     {
         // n characters from right to left.
@@ -1531,9 +1531,9 @@ void map(F f)
 void set_color_mod(int r, int g, int b, int window_id)
 {
     window_id = window_id == -1 ? detail::current_buffer : window_id;
-    r = std::clamp(r, 0, 255);
-    g = std::clamp(g, 0, 255);
-    b = std::clamp(b, 0, 255);
+    r = clamp(r, 0, 255);
+    g = clamp(g, 0, 255);
+    b = clamp(b, 0, 255);
     snail::detail::enforce_sdl(::SDL_SetTextureColorMod(
         detail::tex_buffers[window_id].texture,
         uint8_t(r),
@@ -2040,7 +2040,7 @@ int talk_conv_jp(std::string& text, int max_line_length)
 
     while (1)
     {
-        const auto len = std::size(rest);
+        const auto len = rest.size();
         if (int(len) < max_line_length)
         {
             text += rest;
@@ -2066,7 +2066,7 @@ int talk_conv_jp(std::string& text, int max_line_length)
                 // }
                 text += rest.substr(0, line_length) + '\n';
                 ++n;
-                if (std::size(rest) > line_length)
+                if (rest.size() > line_length)
                 {
                     rest = rest.substr(line_length);
                 }

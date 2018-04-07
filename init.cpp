@@ -70,7 +70,7 @@ void load_musiclist()
     size_t i = 0;
     for (auto&& line : fileutil::read_by_line{filepath})
     {
-        if (std::empty(line))
+        if (line.empty())
             continue;
         musicfile(i + 50) = strmid(line, 0, instr(line, 0, u8"\t"));
         ++i;

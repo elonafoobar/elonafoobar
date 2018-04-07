@@ -734,12 +734,12 @@ void play_animation_19()
             }
             af = 1;
             int cnt2 = cnt;
-            int anidy = ay(cnt) * std::clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
+            int anidy = ay(cnt) * clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
             gmode(2, 96, 96);
             pos(ax(cnt), anidy);
             gcopy(
                 7,
-                std::clamp((8 - ap(cnt)), 0, 8) * 96 + 96 * (ap(cnt) < 15),
+                clamp((8 - ap(cnt)), 0, 8) * 96 + 96 * (ap(cnt) < 15),
                 0,
                 96,
                 96);
@@ -751,8 +751,8 @@ void play_animation_19()
                     gcopy(7, (14 - ap(cnt)) / 2 * 96, 96, 96, 96);
                 }
             }
-            int anidx = std::clamp(
-                anidy / 55 + 1, 0, 7 - std::clamp((11 - ap(cnt)) * 2, 0, 7));
+            int anidx = clamp(
+                anidy / 55 + 1, 0, 7 - clamp((11 - ap(cnt)) * 2, 0, 7));
             for (int cnt = 1, cnt_end = cnt + (anidx); cnt < cnt_end; ++cnt)
             {
                 pos(ax(cnt2), anidy - cnt * 55);
@@ -850,7 +850,7 @@ void play_animation_22()
             if (ap(cnt) < 16)
             {
                 pos(ax(cnt), ay(cnt));
-                gcopy(7, std::clamp((ap(cnt) - 8), 0, 8) * 96, 0, 96, 96);
+                gcopy(7, clamp((ap(cnt) - 8), 0, 8) * 96, 0, 96, 96);
             }
             ++ap(cnt);
         }

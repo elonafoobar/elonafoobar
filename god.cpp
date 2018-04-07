@@ -14,7 +14,7 @@ god_db the_god_db;
 
 void txtgod(const god_id_t& id, int type)
 {
-    if (std::empty(id))
+    if (id.empty())
         return;
 
     std::string message;

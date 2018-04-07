@@ -36,7 +36,7 @@ void get_random_npc_id()
             continue;
         if (flttypemajor != 0 && flttypemajor != data.category)
             continue;
-        if (!std::empty(fltnrace(0)) && fltnrace(0) != data.race)
+        if (!fltnrace(0).empty() && fltnrace(0) != data.race)
             continue;
         if (filtermax != 0)
         {
@@ -71,7 +71,7 @@ void get_random_npc_id()
                 continue;
             if (flttypemajor != 0)
                 continue;
-            if (!std::empty(fltnrace(0)) && fltnrace(0) != userdatan(2, i))
+            if (!fltnrace(0).empty() && fltnrace(0) != userdatan(2, i))
                 continue;
             if (filtermax != 0)
             {
@@ -90,7 +90,7 @@ void get_random_npc_id()
             }
             sampler.add(
                 {343, i},
-                std::clamp(userdata(6, i), 1'000, 500'000)
+                clamp(userdata(6, i), 1'000, 500'000)
                         / (500 + std::abs(userdata(2, i) - objlv) * 400)
                     + 1);
         }

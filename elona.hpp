@@ -49,7 +49,7 @@ struct elona_vector1
 
     T& operator()(size_t i)
     {
-        if (i >= std::size(storage))
+        if (i >= storage.size())
         {
             storage.resize(i + 1);
         }
@@ -124,7 +124,7 @@ struct elona_vector1
 
     size_t size() const noexcept
     {
-        return std::size(storage);
+        return storage.size();
     }
 
 
@@ -140,7 +140,7 @@ struct elona_vector2
 {
     T& operator()(size_t i, size_t j)
     {
-        if (j >= std::size(storage))
+        if (j >= storage.size())
         {
             storage.resize(j + 1);
             for (size_t j_ = 0; j_ < j + 1; ++j_)
@@ -151,7 +151,7 @@ struct elona_vector2
                 }
             }
         }
-        if (i >= std::size(*storage.at(j)))
+        if (i >= storage.at(j)->size())
         {
             storage.at(j)->resize(i + 1);
         }
@@ -173,7 +173,7 @@ struct elona_vector2
 
     void clear(size_t j)
     {
-        if (j >= std::size(storage))
+        if (j >= storage.size())
             return;
 
         std::fill(std::begin(*storage.at(j)), std::end(*storage.at(j)), T{});
@@ -182,10 +182,10 @@ struct elona_vector2
 
     void clear(size_t j, size_t i_begin, size_t i_length)
     {
-        if (j >= std::size(storage))
+        if (j >= storage.size())
             return;
 
-        if (i_begin + i_length >= std::size(*storage.at(j)))
+        if (i_begin + i_length >= storage.at(j)->size())
         {
             storage.at(j)->resize(i_begin + i_length + 1);
         }
@@ -210,13 +210,13 @@ struct elona_vector2
 
     size_t j_size() const noexcept
     {
-        return std::size(storage);
+        return storage.size();
     }
 
 
     size_t i_size() const noexcept
     {
-        return std::empty(storage) ? 0 : std::size(*storage.at(0));
+        return storage.empty() ? 0 : storage.at(0)->size();
     }
 
 
@@ -231,7 +231,7 @@ struct elona_vector3
 {
     T& operator()(size_t i, size_t j, size_t k)
     {
-        if (k >= std::size(storage))
+        if (k >= storage.size())
         {
             storage.resize(k + 1);
             for (size_t k_ = 0; k_ < k + 1; ++k_)
@@ -243,7 +243,7 @@ struct elona_vector3
                 }
             }
         }
-        if (j >= std::size(*storage.at(k)))
+        if (j >= storage.at(k)->size())
         {
             storage.at(k)->resize(j + 1);
             for (size_t j_ = 0; j_ < j + 1; ++j_)
@@ -254,7 +254,7 @@ struct elona_vector3
                 }
             }
         }
-        if (i >= std::size(*(*storage.at(k))[j]))
+        if (i >= (*storage.at(k))[j]->size())
         {
             (*storage.at(k))[j]->resize(i + 1);
         }
@@ -289,21 +289,21 @@ struct elona_vector3
 
     size_t k_size() const noexcept
     {
-        return std::size(storage);
+        return storage.size();
     }
 
 
     size_t j_size() const noexcept
     {
-        return std::empty(storage) ? 0 : std::size(*storage.at(0));
+        return storage.empty() ? 0 : storage.at(0)->size();
     }
 
 
     size_t i_size() const noexcept
     {
-        return std::empty(storage)
+        return storage.empty()
             ? 0
-            : std::empty(*storage.at(0)) ? 0 : std::size(*(*storage.at(0))[0]);
+            : storage.at(0)->empty() ? 0 : (*storage.at(0))[0]->size();
     }
 
 
@@ -459,7 +459,7 @@ size_t length(elona_vector2<T>& arr)
 template <typename T>
 size_t length(const elona_vector1<T>& arr)
 {
-    return std::size(arr);
+    return arr.size();
 }
 
 
@@ -758,6 +758,16 @@ void memcpy_(
     int size,
     int dst_offset = 0,
     int src_offset = 0);
+
+
+
+
+template <typename T>
+inline T clamp(const T& x, const T& min, const T& max)
+{
+    return std::min(std::max(x, min), max);
+}
+
 
 
 

@@ -56,13 +56,13 @@ std::string cnven(const std::string& source)
 {
     if (jp)
         return source;
-    if (std::empty(source))
+    if (source.empty())
         return source;
 
     std::string ret = source;
     if (ret[0] == '*')
     {
-        if (std::size(source) == 1)
+        if (source.size() == 1)
             return source;
         ret[1] = std::toupper(ret[1]);
     }
@@ -238,7 +238,7 @@ std::vector<std::string> txtsetwinword(int n)
 {
     std::vector<std::string> ret;
     sample(
-        std::initializer_list<std::string>{
+        std::vector<std::string>{
             lang(u8"遂に…！", u8"Finally!"),
             lang(u8"当然の結果だ", u8"It's a matter of course."),
             lang(u8"おぉぉぉぉ！", u8"Woooooo!"),
@@ -1430,7 +1430,7 @@ void replace_tags_in_quest_board()
     {
         const int p0 = instr(buff, 0, u8"{"s);
         const int p1 = instr(buff, p0, u8"}"s);
-        const int p2 = std::size(buff(0));
+        const int p2 = buff(0).size();
         if (p0 == -1)
         {
             break;
@@ -2629,7 +2629,7 @@ void parse_quest_board_text(int val0)
         notesel(buff);
         return;
     }
-    buff2 = strmid(buff2, p + 1, std::size(buff2(0)) - p - 1);
+    buff2 = strmid(buff2, p + 1, buff2(0).size() - p - 1);
     if (val0 != 2)
     {
         buff = buff2;
@@ -2646,7 +2646,7 @@ std::string randomname()
     while (1)
     {
         ret = rn1(rnd(length(rn1)));
-        if (std::empty(ret))
+        if (ret.empty())
         {
             continue;
         }
@@ -2661,7 +2661,7 @@ std::string randomname()
         {
             ret += rn2(rnd(length(rn2)));
         }
-        const auto length = std::size(ret);
+        const auto length = ret.size();
         if (length < 4)
         {
             continue;

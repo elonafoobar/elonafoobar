@@ -70,7 +70,7 @@ inline std::string remove_str(
     const std::string& pattern)
 {
     std::string ret = str;
-    const auto length = std::size(pattern);
+    const auto length = pattern.size();
     while (1)
     {
         const auto p = ret.find(pattern);

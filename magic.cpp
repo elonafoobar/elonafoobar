@@ -1277,7 +1277,7 @@ label_2181_internal:
             txt(lang(
                 name(tc) + u8"は恋の予感がした。"s,
                 name(tc) + u8" sense"s + _s(tc) + u8" a sigh of love,"s));
-            modimp(tc, std::clamp(efp / 15, 0, 15));
+            modimp(tc, clamp(efp / 15, 0, 15));
             dmgcon(tc, 7, 100);
             lovemiracle(tc);
             break;
@@ -1293,7 +1293,7 @@ label_2181_internal:
                 name(tc) + u8" give"s + _s(tc) + u8" "s + name(0)
                     + u8" the eye."s));
             lovemiracle(tc);
-            modimp(tc, std::clamp(efp / 4, 0, 25));
+            modimp(tc, clamp(efp / 4, 0, 25));
         }
         dmgcon(tc, 7, 500);
         break;
@@ -2325,7 +2325,7 @@ label_2181_internal:
                 u8"You hear a sepulchral whisper but the voice is too small to distinguish a word."s));
             break;
         }
-        if (std::empty(artifactlocation))
+        if (artifactlocation.empty())
         {
             txt(lang(
                 u8"まだ特殊なアイテムは生成されていない。"s,
@@ -2533,7 +2533,7 @@ label_2181_internal:
             obvious = 0;
             break;
         }
-        if (std::empty(cdata[0].god_id))
+        if (cdata[0].god_id.empty())
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
@@ -2549,7 +2549,7 @@ label_2181_internal:
             skillexp(181, 0, -1000);
             break;
         }
-        if (std::empty(cdata[0].god_id))
+        if (cdata[0].god_id.empty())
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
@@ -3488,7 +3488,7 @@ label_2181_internal:
         randomize(inv[efcibk].param1);
         inv[ci].subname = 40000 + rnd(30000);
         p = rnd(rnd(rnd(10) + 1) + 3) + 3;
-        egolv = rnd(std::clamp(rnd(6), 0, 4) + 1);
+        egolv = rnd(clamp(rnd(6), 0, 4) + 1);
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
             randomize(inv[efcibk].param1);
@@ -3901,7 +3901,7 @@ label_2181_internal:
                 {
                     if (inv[ci].weight > 0)
                     {
-                        inv[ci].weight = std::clamp(
+                        inv[ci].weight = clamp(
                             inv[ci].weight * (100 - efp / 10) / 100,
                             1,
                             inv[ci].weight);
@@ -3926,12 +3926,12 @@ label_2181_internal:
                     inv[ci].weight = inv[ci].weight * 150 / 100 + 1000;
                     if (inv[ci].pv > 0)
                     {
-                        inv[ci].pv += std::clamp(inv[ci].pv / 10, 1, 5);
+                        inv[ci].pv += clamp(inv[ci].pv / 10, 1, 5);
                     }
                     if (inv[ci].damage_bonus > 0)
                     {
                         inv[ci].damage_bonus +=
-                            std::clamp(inv[ci].damage_bonus / 10, 1, 5);
+                            clamp(inv[ci].damage_bonus / 10, 1, 5);
                     }
                     txt(lang(
                         ""s + itemname(ci, 1) + u8"はずしりと重くなった。"s,
@@ -4477,7 +4477,7 @@ label_2181_internal:
     case 464:
         animeload(10, tc);
         for (int cnt = 0,
-                 cnt_end = cnt + (std::clamp(4 + rnd((efp / 50 + 1)), 1, 15));
+                 cnt_end = cnt + (clamp(4 + rnd((efp / 50 + 1)), 1, 15));
              cnt < cnt_end;
              ++cnt)
         {
@@ -4533,7 +4533,7 @@ label_2181_internal:
         invsubroutine = 1;
         invctrl(0) = 22;
         invctrl(1) = 5;
-        invcontainer = std::clamp(efp / 10 + 10, 10, 300);
+        invcontainer = clamp(efp / 10 + 10, 10, 300);
         mode = 6;
         snd(100);
         ctrl_inventory();

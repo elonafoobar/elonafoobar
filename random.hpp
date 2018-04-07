@@ -36,7 +36,7 @@ struct weighted_random_sampler
 
     optional<T> get()
     {
-        if (std::empty(candidates))
+        if (candidates.empty())
             return none;
         if (sum == 0)
             return none;
@@ -65,9 +65,10 @@ private:
 template <typename Range>
 auto choice(const Range& range)
 {
-    assert(!std::empty(range));
+    // std::initializer_list does not have empty() for some reason.
+    assert(range.size() != 0);
 
-    std::uniform_int_distribution<size_t> dist{0, std::size(range) - 1};
+    std::uniform_int_distribution<size_t> dist{0, range.size() - 1};
     auto itr = std::begin(range);
     std::advance(itr, dist(detail::random_engine));
     return *itr;
@@ -80,7 +81,9 @@ Iterator sample(const Range& range, Iterator result, Distance n)
 {
     using std::begin;
     using std::end;
-    std::sample(begin(range), end(range), result, n, detail::random_engine);
+    auto copy = range;
+    std::shuffle(begin(copy), end(copy), detail::random_engine);
+    std::copy_n(begin(copy), n, result);
     return result;
 }
 

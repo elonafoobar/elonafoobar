@@ -4031,7 +4031,7 @@ void talk_unique()
                 55,
                 cdata[0].position.x,
                 cdata[0].position.y,
-                std::clamp(4 - gdata(128) / 2500, 1, 4));
+                clamp(4 - gdata(128) / 2500, 1, 4));
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
@@ -4254,7 +4254,7 @@ void talk_unique()
                 55,
                 cdata[0].position.x,
                 cdata[0].position.y,
-                std::clamp(3 - gdata(128) / 3000, 1, 3));
+                clamp(3 - gdata(128) / 3000, 1, 3));
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
@@ -4527,7 +4527,7 @@ void talk_unique()
                 55,
                 cdata[0].position.x,
                 cdata[0].position.y,
-                std::clamp(4 - gdata(128) / 2500, 1, 4));
+                clamp(4 - gdata(128) / 2500, 1, 4));
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);

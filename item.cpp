@@ -1666,7 +1666,7 @@ void remain_make(int ci, int cc)
         {
             inv[ci].value =
                 inv[ci].value
-                * std::clamp(
+                * clamp(
                       4 - the_character_db[cdata[cc].id]->rarity / 1000 / 5,
                       1,
                       5);

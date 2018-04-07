@@ -283,7 +283,7 @@ void proc_event()
             55,
             cdata[0].position.x,
             cdata[0].position.y,
-            std::clamp(rnd(3) + gdata_current_dungeon_level / 10, 1, 6));
+            clamp(rnd(3) + gdata_current_dungeon_level / 10, 1, 6));
         flt();
         itemcreate(-1, 239, cdata[0].position.x, cdata[0].position.y, 0);
         inv[ci].param2 = 0;
@@ -438,7 +438,7 @@ void proc_event()
                     characreate(-1, 1, -3, 0);
                     cdata[rc].character_role = 2003;
                     cdata[rc].shop_rank =
-                        std::clamp(cdata[0].fame / 100, 20, 100);
+                        clamp(cdata[0].fame / 100, 20, 100);
                     break;
                 }
                 if (rnd(4) == 0)
@@ -644,7 +644,7 @@ void proc_event()
                 }
             }
         }
-        for (int j = 0; j < std::clamp(i(0), 0, 3); ++j)
+        for (int j = 0; j < clamp(i(0), 0, 3); ++j)
         {
             txtef(9);
             if (jp)
@@ -738,8 +738,8 @@ void proc_event()
                 i / 2 % 2 * 192,
                 408,
                 0,
-                std::clamp(p * 32, 0, 192),
-                std::clamp(p * 8, 0, 48));
+                clamp(p * 32, 0, 192),
+                clamp(p * 8, 0, 48));
             if (i > 14)
             {
                 ++p(1);
@@ -753,48 +753,48 @@ void proc_event()
                 p(1) = i % 3;
             }
             gmode(2, 96, 48);
-            pos(dx, dy - std::clamp(i * 3 / 2, 0, 18) - 16);
+            pos(dx, dy - clamp(i * 3 / 2, 0, 18) - 16);
             grotate(
                 7,
                 p(1) * 96,
                 288,
                 0,
-                std::clamp(i * 12, 0, 144),
-                std::clamp(i * 6, 0, 72));
+                clamp(i * 12, 0, 144),
+                clamp(i * 6, 0, 72));
             if (i > 4)
             {
                 ++p(2);
                 ++p(3);
             }
-            gmode(4, 96, 96, std::clamp(p(2) * 6, 0, 100));
-            pos(dx, dy - std::clamp(p(2) * 2, 0, 40));
+            gmode(4, 96, 96, clamp(p(2) * 6, 0, 100));
+            pos(dx, dy - clamp(p(2) * 2, 0, 40));
             grotate(
                 7,
                 0,
                 0,
                 0,
-                std::clamp(p(2) * 8, 0, 240),
-                std::clamp(p(2) * 5, 0, 96));
+                clamp(p(2) * 8, 0, 240),
+                clamp(p(2) * 5, 0, 96));
             gmode(4, 96, 96, p(3) * 10);
-            pos(dx, dy - std::clamp(p(3) * 2, 0, 160) - 6);
+            pos(dx, dy - clamp(p(3) * 2, 0, 160) - 6);
             grotate(
                 7,
                 96,
                 0,
                 0,
-                std::clamp(p(3) * 10, 0, 96),
-                std::clamp(p(3) * 10, 0, 96));
-            gmode(4, 192, 80, std::clamp(p(3) * 5, 0, 100));
+                clamp(p(3) * 10, 0, 96),
+                clamp(p(3) * 10, 0, 96));
+            gmode(4, 192, 80, clamp(p(3) * 5, 0, 100));
             pos(dx, dy - 4);
             grotate(
                 7,
                 i / 4 % 2 * 192,
                 96,
                 0,
-                std::clamp(p(2) * 8, 0, 400),
-                std::clamp(p(2), 0, 48));
+                clamp(p(2) * 8, 0, 400),
+                clamp(p(2), 0, 48));
             gmode(4, 192, 96, p(3) * 10);
-            pos(dx, dy - 48 - std::clamp(p(3) * 2, 0, 148));
+            pos(dx, dy - 48 - clamp(p(3) * 2, 0, 148));
             grotate(7, i / 3 % 2 * 192, 96, 0, 192, 96);
             redraw();
             await(cfg_animewait + 50);
