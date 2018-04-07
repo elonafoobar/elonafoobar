@@ -492,8 +492,8 @@ std::unordered_map<int, snail::font_t> font_cache;
 void font(const std::string& name, int size, int style)
 {
     (void)style;
-    if (auto i = font_detail::font_cache.find(size);
-        i != std::end(font_detail::font_cache))
+    auto i = font_detail::font_cache.find(size);
+    if (i != std::end(font_detail::font_cache))
     {
         snail::application::instance().get_renderer().set_font(i->second);
     }

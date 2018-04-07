@@ -309,12 +309,13 @@ int access_character_info()
                 }
             }
         }
-        if (const auto text = i18n::_(
-                u8"character", std::to_string(dbid), u8"text_"s + dbmode);
-            !text.empty())
         {
-            txtef(9);
-            txt(text);
+            const auto text = i18n::_(u8"character", std::to_string(dbid), u8"text_"s + dbmode);
+            if (!text.empty())
+            {
+                txtef(9);
+                txt(text);
+            }
         }
         break;
     default: break;
