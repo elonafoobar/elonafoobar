@@ -12,7 +12,8 @@ namespace range
 template <typename R, typename P>
 auto count_if(const R& range, P predicate)
 {
-    using std::begin, std::end;
+    using std::begin;
+    using std::end;
     return std::count_if(begin(range), end(range), predicate);
 }
 
@@ -21,7 +22,8 @@ auto count_if(const R& range, P predicate)
 template <typename R>
 auto distance(const R& range)
 {
-    using std::begin, std::end;
+    using std::begin;
+    using std::end;
     return std::distance(begin(range), end(range));
 }
 
@@ -30,7 +32,8 @@ auto distance(const R& range)
 template <typename R, typename F>
 bool all_of(const R& range, F predicate)
 {
-    using std::begin, std::end;
+    using std::begin;
+    using std::end;
     return std::all_of(begin(range), end(range), predicate);
 }
 
@@ -39,7 +42,8 @@ bool all_of(const R& range, F predicate)
 template <typename R, typename F>
 bool any_of(const R& range, F predicate)
 {
-    using std::begin, std::end;
+    using std::begin;
+    using std::end;
     return std::any_of(begin(range), end(range), predicate);
 }
 
@@ -48,7 +52,8 @@ bool any_of(const R& range, F predicate)
 template <typename R, typename I, typename F>
 auto transform(const R& src, I dst, F func)
 {
-    using std::begin, std::end;
+    using std::begin;
+    using std::end;
     return std::transform(begin(src), end(src), dst, func);
 }
 
@@ -57,7 +62,8 @@ auto transform(const R& src, I dst, F func)
 template <typename R, typename I, typename F>
 auto transform(R&& src, I dst, F func)
 {
-    using std::begin, std::end;
+    using std::begin;
+    using std::end;
     return std::transform(begin(src), end(src), dst, func);
 }
 
@@ -66,7 +72,8 @@ auto transform(R&& src, I dst, F func)
 template <typename R, typename I>
 auto copy(const R& src, I dst)
 {
-    using std::begin, std::end;
+    using std::begin;
+    using std::end;
     return std::copy(begin(src), end(src), dst);
 }
 
@@ -75,7 +82,8 @@ auto copy(const R& src, I dst)
 template <typename R, typename I>
 auto copy(R&& src, I dst)
 {
-    using std::begin, std::end;
+    using std::begin;
+    using std::end;
     return std::copy(begin(src), end(src), dst);
 }
 
@@ -84,7 +92,8 @@ auto copy(R&& src, I dst)
 template <typename R, typename F>
 auto for_each(const R& range, F func)
 {
-    using std::begin, std::end;
+    using std::begin;
+    using std::end;
     return std::for_each(begin(range), end(range), func);
 }
 
@@ -93,7 +102,8 @@ auto for_each(const R& range, F func)
 template <typename R, typename F>
 auto for_each(R&& range, F func)
 {
-    using std::begin, std::end;
+    using std::begin;
+    using std::end;
     return std::for_each(begin(range), end(range), func);
 }
 
@@ -102,7 +112,8 @@ auto for_each(R&& range, F func)
 template <typename R, typename T>
 auto find(const R& range, const T& value)
 {
-    using std::begin, std::end;
+    using std::begin;
+    using std::end;
     return std::find(begin(range), end(range), value);
 }
 
@@ -111,7 +122,8 @@ auto find(const R& range, const T& value)
 template <typename R, typename F>
 auto find_if(const R& range, F predicate)
 {
-    using std::begin, std::end;
+    using std::begin;
+    using std::end;
     return std::find_if(begin(range), end(range), predicate);
 }
 
@@ -120,7 +132,8 @@ auto find_if(const R& range, F predicate)
 template <typename R, typename T>
 auto fill(R&& range, const T& value)
 {
-    using std::begin, std::end;
+    using std::begin;
+    using std::end;
     return std::fill(begin(range), end(range), value);
 }
 
@@ -129,7 +142,8 @@ auto fill(R&& range, const T& value)
 template <typename R1, typename R2>
 bool equal(const R1& range1, const R2& range2)
 {
-    using std::begin, std::end;
+    using std::begin;
+    using std::end;
     return std::equal(begin(range1), end(range1), begin(range2));
 }
 
@@ -138,7 +152,8 @@ bool equal(const R1& range1, const R2& range2)
 template <typename R>
 void sort(R&& range)
 {
-    using std::begin, std::end;
+    using std::begin;
+    using std::end;
     std::sort(begin(range), end(range));
 }
 
@@ -147,7 +162,8 @@ void sort(R&& range)
 template <typename R, typename F>
 void sort(R&& range, F compare)
 {
-    using std::begin, std::end;
+    using std::begin;
+    using std::end;
     std::sort(begin(range), end(range), compare);
 }
 
