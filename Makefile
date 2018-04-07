@@ -1,5 +1,5 @@
 CXX := clang++
-CXX_FLAGS := -Wall -Wextra -g -O0 -MMD -DDEBUG -std=c++17 -I/usr/local/include -I./thirdparty $(EX_CXX_FLAGS)
+CXX_FLAGS := -Wall -Wextra -g -O0 -MMD -DDEBUG -std=c++14 -I/usr/local/include -I./thirdparty $(EX_CXX_FLAGS)
 LN_FLAGS := -lboost_system -lboost_filesystem -L/usr/local/lib -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -llua
 BIN_DIR := bin
 SRC_DIR := .
