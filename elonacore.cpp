@@ -8291,13 +8291,13 @@ void fileadd(const std::string& prm_692, int prm_693)
     char mark_b;
     if (prm_693 == 0)
     {
-        mark_a = u8'*';
-        mark_b = u8'#';
+        mark_a = '*';
+        mark_b = '#';
     }
     else
     {
-        mark_a = u8'#';
-        mark_b = u8'*';
+        mark_a = '#';
+        mark_b = '*';
     }
     notesel(filemod);
     int p_at_m98 = instr(filemod, 0, prm_692);

@@ -153,7 +153,7 @@ struct MessageBox
         buffer += snail::input::instance().get_text();
         if (snail::input::instance().is_pressed(snail::key::enter))
         {
-            buffer += u8'\n';
+            buffer += '\n';
         }
     }
 

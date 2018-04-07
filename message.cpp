@@ -983,7 +983,7 @@ std::string name(int cc)
     if (en)
     {
         const char first = cdatan(0, cc)[0];
-        if (first == u8'\"' || first == u8'<')
+        if (first == '\"' || first == '<')
         {
             return cdatan(0, cc);
         }
