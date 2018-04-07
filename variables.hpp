@@ -1543,7 +1543,7 @@ void cs_list(bool, const std::string&, int, int, int = 0, int = 0, int = 0);
 template <typename T>
 void txt()
 {
-    static_assert(false_v<T>);
+    static_assert(false_v<T>, u8"Need one argument at least.");
 }
 
 
