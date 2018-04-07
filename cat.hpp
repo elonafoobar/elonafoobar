@@ -109,27 +109,28 @@ private:
 
 
 
-    template <typename T>
+    template <
+        typename T,
+        std::enable_if_t<std::is_same_v<T, nullptr_t>, nullptr_t> = nullptr>
     T to_cpp_type(int index)
     {
-        if constexpr (std::is_same_v<T, std::string>)
-        {
-            return luaL_checkstring(ptr(), index);
-        }
-        else if constexpr (std::is_same_v<T, int>)
-        {
-            return luaL_checkinteger(ptr(), index);
-        }
-        else if constexpr (std::is_same_v<T, double>)
-        {
-            return luaL_checknumber(ptr(), index);
-        }
-        else if constexpr (std::is_same_v<T, nullptr_t>)
-        {
-            (void)index;
-            return nullptr;
-        }
+        (void)index;
+        return nullptr;
     }
+
+#define ELONA_DEFINE_TO_CPP_TYPE(type, function) \
+    template < \
+        typename T, \
+        std::enable_if_t<std::is_same_v<T, type>, nullptr_t> = nullptr> \
+    T to_cpp_type(int index) \
+    { \
+        return function(ptr(), index); \
+    }
+
+    ELONA_DEFINE_TO_CPP_TYPE(std::string, luaL_checkstring)
+    ELONA_DEFINE_TO_CPP_TYPE(int, luaL_checkinteger)
+    ELONA_DEFINE_TO_CPP_TYPE(double, luaL_checknumber)
+#undef ELONA_DEFINE_TO_CPP_TYPE
 };
 
 

@@ -79,17 +79,25 @@ struct elona_vector1
     }
 
 
-    template <typename U>
+    template <
+        typename U,
+        std::enable_if_t<
+            std::is_same_v<T, std::string> && std::is_same_v<U, int>,
+            nullptr_t> = nullptr>
     T& operator+=(const U& x)
     {
-        if constexpr (std::is_same_v<T, std::string> && std::is_same_v<U, int>)
-        {
-            return storage.at(0) += std::to_string(x);
-        }
-        else
-        {
-            return storage.at(0) += x;
-        }
+        return storage.at(0) += std::to_string(x);
+    }
+
+
+    template <
+        typename U,
+        std::enable_if_t<
+            !std::is_same_v<T, std::string> || !std::is_same_v<U, int>,
+            nullptr_t> = nullptr>
+    T& operator+=(const U& x)
+    {
+        return storage.at(0) += x;
     }
 
 

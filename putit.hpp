@@ -45,26 +45,31 @@ public:
     }
 
 
-    template <typename T>
+    template <
+        typename T,
+        std::enable_if_t<sizeof(T) <= sizeof(long long), nullptr_t> = nullptr>
     void primitive(T& data)
     {
         char* buf;
-        if constexpr (sizeof(T) <= sizeof(long long))
-        {
-            buf = memory.get();
-        }
-        else
-        {
-            buf = new char[sizeof(T)];
-        }
+        buf = memory.get();
+
+        in.read(buf, sizeof(T));
+        data = *reinterpret_cast<T*>(buf);
+    }
+
+
+    template <
+        typename T,
+        std::enable_if_t<(sizeof(T) > sizeof(long long)), nullptr_t> = nullptr>
+    void primitive(T& data)
+    {
+        char* buf;
+        buf = new char[sizeof(T)];
 
         in.read(buf, sizeof(T));
         data = *reinterpret_cast<T*>(buf);
 
-        if constexpr (sizeof(T) > sizeof(long long))
-        {
-            delete[] buf;
-        }
+        delete[] buf;
     }
 
 
@@ -172,66 +177,92 @@ PRIMITIVE_TYPES(long double)
 template <
     typename Archive,
     typename E,
-    std::enable_if_t<std::is_enum_v<E>, nullptr_t> = nullptr>
+    std::enable_if_t<std::is_enum_v<E>, nullptr_t> = nullptr,
+    std::enable_if_t<std::is_base_of_v<iarchive_base, Archive>, nullptr_t> =
+        nullptr>
 void serialize(Archive& ar, E& data)
 {
     using primitive_type = std::underlying_type_t<E>;
 
-    if constexpr (std::is_base_of_v<iarchive_base, Archive>)
-    {
-        primitive_type tmp;
-        ar.primitive(tmp);
-        data = static_cast<E>(tmp);
-    }
-    else
-    {
-        primitive_type tmp = static_cast<primitive_type>(data);
-        ar.primitive(tmp);
-    }
+    primitive_type tmp;
+    ar.primitive(tmp);
+    data = static_cast<E>(tmp);
 }
 
 
 
-template <typename Archive>
+template <
+    typename Archive,
+    typename E,
+    std::enable_if_t<std::is_enum_v<E>, nullptr_t> = nullptr,
+    std::enable_if_t<std::is_base_of_v<oarchive_base, Archive>, nullptr_t> =
+        nullptr>
+void serialize(Archive& ar, E& data)
+{
+    using primitive_type = std::underlying_type_t<E>;
+
+    primitive_type tmp = static_cast<primitive_type>(data);
+    ar.primitive(tmp);
+}
+
+
+
+template <
+    typename Archive,
+    std::enable_if_t<std::is_base_of_v<iarchive_base, Archive>, nullptr_t> =
+        nullptr>
 void serialize(Archive& ar, std::string& data)
 {
-    if constexpr (std::is_base_of_v<iarchive_base, Archive>)
-    {
-        std::string::size_type length;
-        ar.primitive(length);
-        std::unique_ptr<char[]> buf{new char[length]};
-        ar.primitive_array(buf.get(), length);
-        data = std::string(buf.get(), length);
-    }
-    else
-    {
-        const auto length = std::size(data);
-        ar.primitive(length);
-        ar.primitive_array(data.c_str(), length);
-    }
+    std::string::size_type length;
+    ar.primitive(length);
+    std::unique_ptr<char[]> buf{new char[length]};
+    ar.primitive_array(buf.get(), length);
+    data = std::string(buf.get(), length);
 }
 
 
 
-template <typename Archive, typename T>
+template <
+    typename Archive,
+    std::enable_if_t<std::is_base_of_v<oarchive_base, Archive>, nullptr_t> =
+        nullptr>
+void serialize(Archive& ar, std::string& data)
+{
+    const auto length = std::size(data);
+    ar.primitive(length);
+    ar.primitive_array(data.c_str(), length);
+}
+
+
+
+template <
+    typename Archive,
+    typename T,
+    std::enable_if_t<std::is_base_of_v<iarchive_base, Archive>, nullptr_t> =
+        nullptr>
 void serialize(Archive& ar, std::vector<T>& data)
 {
-    if constexpr (std::is_base_of_v<iarchive_base, Archive>)
+    typename std::vector<T>::size_type length;
+    ar.primitive(length);
+    std::unique_ptr<T[]> buf{new T[length]};
+    ar.primitive_array(buf.get(), length);
+    data = std::vector<T>(buf.get(), buf.get() + length);
+}
+
+
+
+template <
+    typename Archive,
+    typename T,
+    std::enable_if_t<std::is_base_of_v<oarchive_base, Archive>, nullptr_t> =
+        nullptr>
+void serialize(Archive& ar, std::vector<T>& data)
+{
+    const auto length = std::size(data);
+    ar.primitive(length);
+    if (length != 0)
     {
-        typename std::vector<T>::size_type length;
-        ar.primitive(length);
-        std::unique_ptr<T[]> buf{new T[length]};
-        ar.primitive_array(buf.get(), length);
-        data = std::vector<T>(buf.get(), buf.get() + length);
-    }
-    else
-    {
-        const auto length = std::size(data);
-        ar.primitive(length);
-        if (length != 0)
-        {
-            ar.primitive_array(data.data(), length);
-        }
+        ar.primitive_array(data.data(), length);
     }
 }
 
