@@ -2,7 +2,9 @@
 #include <sstream>
 
 
-namespace elona::snail
+namespace elona
+{
+namespace snail
 {
 
 
@@ -46,8 +48,6 @@ renderer::renderer(window& target_window, int flag)
 {
     detail::enforce_sdl(
         ::SDL_SetRenderDrawBlendMode(ptr(), SDL_BLENDMODE_BLEND));
-
-    detail::current_renderer = this;
 }
 
 
@@ -367,4 +367,5 @@ void renderer::render_image(
 }
 
 
-} // namespace elona::snail
+} // namespace snail
+} // namespace elona

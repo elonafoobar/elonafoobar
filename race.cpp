@@ -12,6 +12,9 @@ namespace elona
 {
 
 
+race_db the_race_db;
+
+
 void race_db::define(lua_State* L)
 {
     const char* id = luaL_checkstring(L, -2);
@@ -106,11 +109,11 @@ std::vector<std::reference_wrapper<const race_data>>
 race_db::get_available_races(bool is_extra_race) const
 {
     std::vector<std::reference_wrapper<const race_data>> ret;
-    for (const auto& [_, race] : storage)
+    for (const auto& pair : storage)
     {
-        if (race.is_extra == is_extra_race)
+        if (pair.second.is_extra == is_extra_race)
         {
-            ret.emplace_back(race);
+            ret.emplace_back(pair.second);
         }
     }
     range::sort(ret, [](const auto& a, const auto& b) {
@@ -189,13 +192,13 @@ int access_race_info(int dbmode, const std::string& dbidn)
         cdata_body_part(rc, i) = 11 * 10'000;
         ++i;
     }
-    for (const auto& [k, v] : data->skills)
+    for (const auto& pair : data->skills)
     {
-        skillinit(k, rc, v);
+        skillinit(pair.first, rc, pair.second);
     }
-    for (const auto& [k, v] : data->resistances)
+    for (const auto& pair : data->resistances)
     {
-        sdata(k, rc) = v;
+        sdata(pair.first, rc) = pair.second;
     }
 
     return 0;

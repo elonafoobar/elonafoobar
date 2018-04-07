@@ -52,10 +52,10 @@ public:
 };
 
 
-inline class_db the_class_db;
+extern class_db the_class_db;
 
 
-inline int cequipment = 0;
+extern int cequipment;
 std::vector<std::string> get_available_classes();
 int access_class_info(int dbmode, const std::string& dbidn);
 

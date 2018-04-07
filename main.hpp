@@ -11,18 +11,18 @@ namespace elona
 void update_screen();
 void show_race_or_class_info(int, int);
 
-inline int prm_518;
-inline int prm_818;
-inline int prm_820;
-inline int prm_853;
+extern int prm_518;
+extern int prm_818;
+extern int prm_820;
+extern int prm_853;
 
-inline int tmp_at_m172;
+extern int tmp_at_m172;
 
-inline elona_vector1<int> inhlist_at_m184;
-inline elona_vector1<int> inhlist;
+extern elona_vector1<int> inhlist_at_m184;
+extern elona_vector1<int> inhlist;
 
-inline int i_at_m68;
-inline double r_at_m133;
+extern int i_at_m68;
+extern double r_at_m133;
 
 
 #define window_recipe(a, b, c, d, e, f) window_recipe_(b, c, d, e, f)

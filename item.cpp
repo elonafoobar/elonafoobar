@@ -13,6 +13,9 @@ namespace elona
 {
 
 
+inventory inv;
+
+
 
 item::item()
     : enchantments(15)
@@ -109,16 +112,16 @@ int itemcreate(int slot, int id, int x, int y, int number)
 
 range::iota<int> items(int owner)
 {
-    const auto [invhead, invrange] = inv_getheader(owner);
-    return {invhead, invhead + invrange};
+    const auto tmp = inv_getheader(owner);
+    return {tmp.first, tmp.first + tmp.second};
 }
 
 
 
 int get_random_inv(int owner)
 {
-    const auto [invhead, invrange] = inv_getheader(owner);
-    return invhead + rnd(invrange);
+    const auto tmp = inv_getheader(owner);
+    return tmp.first + rnd(tmp.second);
 }
 
 
@@ -1663,7 +1666,7 @@ void remain_make(int ci, int cc)
         {
             inv[ci].value =
                 inv[ci].value
-                * std::clamp(
+                * clamp(
                       4 - the_character_db[cdata[cc].id]->rarity / 1000 / 5,
                       1,
                       5);

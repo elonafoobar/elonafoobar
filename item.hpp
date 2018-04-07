@@ -142,7 +142,7 @@ private:
 };
 
 
-inline inventory inv;
+extern inventory inv;
 
 
 

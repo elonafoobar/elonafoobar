@@ -166,7 +166,9 @@ key sdlkey2key(::SDL_Keycode k)
 
 
 
-namespace elona::snail
+namespace elona
+{
+namespace snail
 {
 
 
@@ -382,4 +384,5 @@ void input::_handle_event(const ::SDL_TextInputEvent& event)
 
 
 
-} // namespace elona::snail
+} // namespace snail
+} // namespace elona

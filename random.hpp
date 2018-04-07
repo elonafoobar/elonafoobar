@@ -1,10 +1,10 @@
 #pragma once
 
 #include <algorithm>
-#include <optional>
 #include <random>
 #include <utility>
 #include <vector>
+#include "optional.hpp"
 
 
 
@@ -16,9 +16,9 @@ namespace elona
 namespace detail
 {
 
-inline std::mt19937 random_engine{std::random_device{}()};
+extern std::mt19937 random_engine;
 // For exrand
-inline std::mt19937 random_engine2{std::random_device{}()};
+extern std::mt19937 random_engine2;
 
 } // namespace detail
 
@@ -34,12 +34,12 @@ struct weighted_random_sampler
     }
 
 
-    std::optional<T> get()
+    optional<T> get()
     {
-        if (std::empty(candidates))
-            return std::nullopt;
+        if (candidates.empty())
+            return none;
         if (sum == 0)
-            return std::nullopt;
+            return none;
 
         std::uniform_int_distribution<Weight> dist{0, sum - 1};
         int n = dist(detail::random_engine2);
@@ -51,7 +51,7 @@ struct weighted_random_sampler
             }
         }
 
-        return std::nullopt;
+        return none;
     }
 
 
@@ -65,9 +65,10 @@ private:
 template <typename Range>
 auto choice(const Range& range)
 {
-    assert(!std::empty(range));
+    // std::initializer_list does not have empty() for some reason.
+    assert(range.size() != 0);
 
-    std::uniform_int_distribution<size_t> dist{0, std::size(range) - 1};
+    std::uniform_int_distribution<size_t> dist{0, range.size() - 1};
     auto itr = std::begin(range);
     std::advance(itr, dist(detail::random_engine));
     return *itr;
@@ -78,8 +79,11 @@ auto choice(const Range& range)
 template <typename Range, typename Iterator, typename Distance>
 Iterator sample(const Range& range, Iterator result, Distance n)
 {
-    using std::begin, std::end;
-    std::sample(begin(range), end(range), result, n, detail::random_engine);
+    using std::begin;
+    using std::end;
+    auto copy = range;
+    std::shuffle(begin(copy), end(copy), detail::random_engine);
+    std::copy_n(begin(copy), n, result);
     return result;
 }
 

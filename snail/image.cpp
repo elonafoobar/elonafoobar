@@ -1,4 +1,5 @@
 #include "image.hpp"
+#include "application.hpp"
 #include "renderer.hpp"
 
 
@@ -49,14 +50,16 @@ void render(
 
 
 
-namespace elona::snail
+namespace elona
+{
+namespace snail
 {
 
 
 
 basic_image::basic_image(
     const fs::path& filepath,
-    const std::optional<color>& keycolor)
+    const optional<color>& keycolor)
 {
     auto surface = detail::enforce_img(::IMG_Load(filepath.c_str()));
 
@@ -71,7 +74,7 @@ basic_image::basic_image(
 
     _ptr.reset(
         detail::enforce_sdl(::SDL_CreateTextureFromSurface(
-            detail::current_renderer->ptr(), surface)),
+            application::instance().get_renderer().ptr(), surface)),
         ::SDL_DestroyTexture);
     _width = surface->w;
     _height = surface->h;
@@ -159,4 +162,5 @@ void frame_image::_render(
 }
 
 
-} // namespace elona::snail
+} // namespace snail
+} // namespace elona

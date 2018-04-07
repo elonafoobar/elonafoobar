@@ -783,7 +783,7 @@ void msg_clear()
 void txt_conv()
 {
 
-    if (std::empty(msgtemp(0)))
+    if (msgtemp(0).empty())
         return;
 
     if (tcopy)
@@ -794,7 +794,7 @@ void txt_conv()
 
     if (tnew == 1)
     {
-        if (!std::empty(msg(msgline % inf_maxlog)))
+        if (!msg(msgline % inf_maxlog).empty())
         {
             msg_newline();
             tnew = 0;
@@ -856,8 +856,8 @@ void txt_conv()
         int len = 0;
         while (1)
         {
-            len = std::size(msgtemp(0));
-            if (msglen + 4 > inf_maxmsglen_ && !std::empty(msgtemp(0)))
+            len = msgtemp(0).size();
+            if (msglen + 4 > inf_maxmsglen_ && !msgtemp(0).empty())
             {
                 msg_newline();
             }
@@ -900,7 +900,7 @@ void txt_conv()
                 msg(msgline % inf_maxlog) += m;
                 msg_write(m);
                 msgtemp(0) = strmid(msgtemp(0), p2, len - p2);
-                if (std::empty(msgtemp(0)) || msgtemp(0) == u8" ")
+                if (msgtemp(0).empty() || msgtemp(0) == u8" ")
                 {
                     break;
                 }
@@ -955,11 +955,11 @@ void txt_conv()
             msg_write(mst);
             msglen += p_at_txtfunc;
             msgtemp(0) = strmid(
-                msgtemp(0), p_at_txtfunc, std::size(msgtemp(0)) - p_at_txtfunc);
+                msgtemp(0), p_at_txtfunc, msgtemp(0).size() - p_at_txtfunc);
         }
         msg(msgline % inf_maxlog) += msgtemp(0);
         msg_write(msgtemp(0));
-        msglen += std::size(msgtemp(0));
+        msglen += msgtemp(0).size();
     }
 }
 
@@ -983,7 +983,7 @@ std::string name(int cc)
     if (en)
     {
         const char first = cdatan(0, cc)[0];
-        if (first == u8'\"' || first == u8'<')
+        if (first == '\"' || first == '<')
         {
             return cdatan(0, cc);
         }

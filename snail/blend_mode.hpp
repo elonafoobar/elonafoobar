@@ -1,7 +1,9 @@
 #pragma once
 
 
-namespace elona::snail
+namespace elona
+{
+namespace snail
 {
 
 
@@ -12,3 +14,4 @@ enum class blend_mode_t
     add,
 };
 }
+} // namespace elona

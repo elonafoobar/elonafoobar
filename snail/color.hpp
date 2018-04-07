@@ -5,7 +5,9 @@
 
 
 
-namespace elona::snail
+namespace elona
+{
+namespace snail
 {
 
 
@@ -66,4 +68,5 @@ inline ::SDL_Color to_sdl_color(const color& c)
 } // namespace detail
 
 
-} // namespace elona::snail
+} // namespace snail
+} // namespace elona

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <optional>
 #include <string>
+#include "optional.hpp"
 
 
 namespace elona
@@ -20,7 +20,7 @@ struct skill_damage
     int element;
     int element_power;
 };
-std::optional<skill_damage> calc_skill_damage(int, int, int);
+optional<skill_damage> calc_skill_damage(int, int, int);
 int calcobjlv(int = 0);
 int calcfixlv(int = 0);
 int calcfame(int = 0, int = 0);

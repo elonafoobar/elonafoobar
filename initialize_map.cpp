@@ -69,7 +69,7 @@ label_17401:
     }
     if (getkey(snail::key::backspace))
     {
-        if (fs::exists(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2")))
+        if (fs::exists(fs::path(u8"./tmp/mdata_"s + mid + u8".s2")))
         {
             int stat = dialog(
                 lang(
@@ -82,7 +82,7 @@ label_17401:
             }
         }
     }
-    if (fs::exists(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2")))
+    if (fs::exists(fs::path(u8"./tmp/mdata_"s + mid + u8".s2")))
     {
         ctrl_file(1);
         if (mdata(7) == 0)
@@ -2602,9 +2602,9 @@ label_1741_internal:
                             for (int cnt = 0;; ++cnt)
                             {
                                 await();
-                                dx = std::clamp(
+                                dx = clamp(
                                     rnd(cnt / 4 + 1) + 1, 1, mdata(0));
-                                dy = std::clamp(
+                                dy = clamp(
                                     rnd(cnt / 4 + 1) + 1, 1, mdata(1));
                                 x = adata(1, p) + rnd(dx) - rnd(dx);
                                 y = adata(2, p) + rnd(dy) - rnd(dy);

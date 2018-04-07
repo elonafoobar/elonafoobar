@@ -204,7 +204,7 @@ void cpisenemy()
 std::string cnvrare(int prm_990)
 {
     s_at_tcg = "";
-    for (int cnt = 0, cnt_end = (std::clamp(5 - prm_990 / 20, 1, 5));
+    for (int cnt = 0, cnt_end = (clamp(5 - prm_990 / 20, 1, 5));
          cnt < cnt_end;
          ++cnt)
     {
@@ -676,7 +676,7 @@ void tcgdraw()
             }
             if (chaintime_at_tcg > 5)
             {
-                gmode(5, -1, -1, std::clamp(chaintime_at_tcg * 3 - 40, 0, 255));
+                gmode(5, -1, -1, clamp(chaintime_at_tcg * 3 - 40, 0, 255));
                 cnt2_at_tcg = 0;
                 for (int cnt = 0; cnt < 10; ++cnt)
                 {
@@ -684,7 +684,7 @@ void tcgdraw()
                         chainy_at_tcg + star_at_tcg(1, cnt));
                     gcopy(
                         7,
-                        64 * std::clamp((17 - chaintime_at_tcg / 3), 0, 8),
+                        64 * clamp((17 - chaintime_at_tcg / 3), 0, 8),
                         416,
                         64,
                         64);
@@ -727,7 +727,7 @@ void tcgdraw()
                 gcopy(
                     7,
                     64
-                        * std::clamp(
+                        * clamp(
                               (10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
                     360,
                     48,
@@ -750,7 +750,7 @@ void tcgdraw()
                 gcopy(
                     7,
                     64
-                        * std::clamp(
+                        * clamp(
                               (10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
                     416,
                     64,
@@ -759,7 +759,7 @@ void tcgdraw()
                 gcopy(
                     7,
                     64
-                        * std::clamp(
+                        * clamp(
                               (10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
                     416,
                     64,
@@ -1253,7 +1253,7 @@ void saccard(int prm_1019, int prm_1020)
     cdbitmod(1, prm_1019, 1);
     card_at_tcg(4, prm_1019) = landix_at_tcg(prm_1020)
         + landsum_at_tcg(prm_1020)
-            * std::clamp(
+            * clamp(
                   (landspace_at_tcg - landsum_at_tcg(prm_1020) / 2),
                   4,
                   landspace_at_tcg);
@@ -1527,7 +1527,7 @@ int putcard(int prm_1024, int prm_1025)
         cdbitmod(1, prm_1024, 1);
         card_at_tcg(4, prm_1024) = landix_at_tcg(prm_1025)
             + landsum_at_tcg(prm_1025)
-                * std::clamp(
+                * clamp(
                       (landspace_at_tcg - landsum_at_tcg(prm_1025) / 2),
                       4,
                       landspace_at_tcg);
@@ -1648,15 +1648,15 @@ void tcginit()
     selectmode_at_tcg = -1;
     gsel(3);
     pos(960, 96);
-    picload(fs::u8path(u8"./graphic/deco_card.bmp"), 1);
+    picload(fs::path(u8"./graphic/deco_card.bmp"), 1);
     gsel(7);
-    picload(fs::u8path(u8"./graphic/interface2.bmp"));
+    picload(fs::path(u8"./graphic/interface2.bmp"));
     gsel(2);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/card0.bmp"), 1);
+    picload(fs::path(u8"./graphic/card0.bmp"), 1);
     gsel(4);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/bg_card.bmp"), 1);
+    picload(fs::path(u8"./graphic/bg_card.bmp"), 1);
     label_1826();
     tcgdrawbg();
     return;
@@ -1773,7 +1773,8 @@ void tcgdeck()
         for (int cnt = 0; cnt < 5; ++cnt)
         {
             s_at_tcg(cnt) += lang(u8"のデッキ"s, u8" Deck"s);
-            file_at_tcg = fs::u8path(u8"./tmp/deck_"s) + cnt + u8".s2"s;
+            file_at_tcg =
+                fs::path(u8"./tmp/deck_"s).generic_string() + cnt + u8".s2"s;
             if (!fs::exists(file_at_tcg))
             {
                 s_at_tcg(cnt) += lang(u8" (新規作成)"s, u8" (New)"s);
@@ -1799,7 +1800,7 @@ void tcgdeck()
         }
         DIM2(deck, 1000);
         curdeck = rtval;
-        if (fs::exists(fs::u8path(u8"./tmp/deck_"s + curdeck + u8".s2")))
+        if (fs::exists(fs::path(u8"./tmp/deck_"s + curdeck + u8".s2")))
         {
             ELONA_APPEND_PROMPT(
                 lang(u8"デッキの構築"s, u8"Edit Deck"s),
@@ -2115,7 +2116,7 @@ void label_1823()
     int m_at_tcg = 0;
     gsel(4);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/bg_card.bmp"), 1);
+    picload(fs::path(u8"./graphic/bg_card.bmp"), 1);
     gmode(2);
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     color(255, 255, 255);
@@ -2130,7 +2131,7 @@ void label_1823()
         {
             x_at_tcg = landix_at_tcg(cnt2_at_tcg)
                 + cnt
-                    * std::clamp(
+                    * clamp(
                           (landspace_at_tcg - landsum_at_tcg(cnt2_at_tcg) / 2),
                           4,
                           landspace_at_tcg);
@@ -2453,7 +2454,7 @@ void label_1828()
 {
     gsel(4);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/bg_card.bmp"), 1);
+    picload(fs::path(u8"./graphic/bg_card.bmp"), 1);
     gsel(0);
     DIM3(dlist_at_tcg, 2, 400);
     DIM2(cflist_at_tcg, 10);
@@ -2705,7 +2706,7 @@ label_1830_internal:
             rtval = show_prompt(basex_at_tcg + 420, basey_at_tcg + 230, 240);
             if (rtval == 0)
             {
-                ctrl_file(23, fs::u8path(u8"./tmp/deck_"s + curdeck + u8".s2"));
+                ctrl_file(23, fs::path(u8"./tmp/deck_"s + curdeck + u8".s2"));
             }
             else
             {
@@ -2729,7 +2730,7 @@ int label_1835()
 {
     gsel(4);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/bg_card.bmp"), 1);
+    picload(fs::path(u8"./graphic/bg_card.bmp"), 1);
     label_1826();
     return rtval_at_tcg;
 }
@@ -3069,12 +3070,12 @@ void label_1840()
             if (cnt == 0)
             {
                 y_at_tcg(cnt) =
-                    card_at_tcg(3, cc_at_tcg) - std::clamp(p_at_tcg * 3, 0, 16);
+                    card_at_tcg(3, cc_at_tcg) - clamp(p_at_tcg * 3, 0, 16);
             }
             if (cnt == 1)
             {
                 y_at_tcg(cnt) = card_at_tcg(3, cc_at_tcg) + 60
-                    + std::clamp(p_at_tcg * 3, 0, 16);
+                    + clamp(p_at_tcg * 3, 0, 16);
             }
             if (cnt == 2)
             {
@@ -3089,7 +3090,7 @@ void label_1840()
             {
                 continue;
             }
-            gmode(4, 0, 0, std::clamp(p_at_tcg * 30 + 20, 0, 255));
+            gmode(4, 0, 0, clamp(p_at_tcg * 30 + 20, 0, 255));
             pos(x_at_tcg(cnt), y_at_tcg(cnt));
             gcopy(7, 192, 96, 36, 36);
             gmode(4, 0, 0, 50 + i_at_tcg * 2);

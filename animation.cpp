@@ -133,7 +133,7 @@ void play_animation_3(int anicol, int anisound)
     prepare_item_image(5, anicol);
     snd(35);
     gsel(7);
-    picload(fs::u8path(u8"./graphic/anime7.bmp"));
+    picload(fs::path(u8"./graphic/anime7.bmp"));
     pos(0, 0);
     gfini(480, 48);
     gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
@@ -194,7 +194,7 @@ void play_animation_17_2(int animeid, int anicol, int anisound)
     snd(34);
     gsel(7);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/anime5.bmp"));
+    picload(fs::path(u8"./graphic/anime5.bmp"));
     pos(0, 96);
     gfini(480, 48);
     gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
@@ -284,7 +284,7 @@ void play_animation_0(int anicol, int anisound)
     int anidx = cdata[cc].position.x;
     int anidy = cdata[cc].position.y;
     gsel(7);
-    picload(fs::u8path(u8"./graphic/anime6.bmp"));
+    picload(fs::path(u8"./graphic/anime6.bmp"));
     pos(0, 0);
     gfini(480, 48);
     gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
@@ -586,7 +586,7 @@ void play_animation_12()
     if (critical)
     {
         gsel(7);
-        picload(fs::u8path(u8"./graphic/anime28.bmp"));
+        picload(fs::path(u8"./graphic/anime28.bmp"));
     }
     gmode(2);
     gsel(0);
@@ -647,7 +647,7 @@ void play_animation_20()
         return;
     }
     gsel(7);
-    picload(fs::u8path(u8"./graphic/anime13.bmp"));
+    picload(fs::path(u8"./graphic/anime13.bmp"));
     gsel(4);
     gmode(0);
     pos(0, 0);
@@ -676,7 +676,7 @@ void play_animation_20()
 void play_animation_19()
 {
     gsel(7);
-    picload(fs::u8path(u8"./graphic/anime12.bmp"));
+    picload(fs::path(u8"./graphic/anime12.bmp"));
     gsel(4);
     pos(0, 0);
     gmode(0);
@@ -734,12 +734,12 @@ void play_animation_19()
             }
             af = 1;
             int cnt2 = cnt;
-            int anidy = ay(cnt) * std::clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
+            int anidy = ay(cnt) * clamp((20 - ap(cnt)), 0, 6) / 6 - 96;
             gmode(2, 96, 96);
             pos(ax(cnt), anidy);
             gcopy(
                 7,
-                std::clamp((8 - ap(cnt)), 0, 8) * 96 + 96 * (ap(cnt) < 15),
+                clamp((8 - ap(cnt)), 0, 8) * 96 + 96 * (ap(cnt) < 15),
                 0,
                 96,
                 96);
@@ -751,8 +751,8 @@ void play_animation_19()
                     gcopy(7, (14 - ap(cnt)) / 2 * 96, 96, 96, 96);
                 }
             }
-            int anidx = std::clamp(
-                anidy / 55 + 1, 0, 7 - std::clamp((11 - ap(cnt)) * 2, 0, 7));
+            int anidx = clamp(
+                anidy / 55 + 1, 0, 7 - clamp((11 - ap(cnt)) * 2, 0, 7));
             for (int cnt = 1, cnt_end = cnt + (anidx); cnt < cnt_end; ++cnt)
             {
                 pos(ax(cnt2), anidy - cnt * 55);
@@ -802,7 +802,7 @@ void play_animation_19()
 void play_animation_22()
 {
     gsel(7);
-    picload(fs::u8path(u8"./graphic/anime17.bmp"));
+    picload(fs::path(u8"./graphic/anime17.bmp"));
     gsel(4);
     pos(0, 0);
     gmode(0);
@@ -850,7 +850,7 @@ void play_animation_22()
             if (ap(cnt) < 16)
             {
                 pos(ax(cnt), ay(cnt));
-                gcopy(7, std::clamp((ap(cnt) - 8), 0, 8) * 96, 0, 96, 96);
+                gcopy(7, clamp((ap(cnt) - 8), 0, 8) * 96, 0, 96, 96);
             }
             ++ap(cnt);
         }
@@ -883,7 +883,7 @@ void play_animation_22()
 void play_animation_21()
 {
     gsel(7);
-    picload(fs::u8path(u8"./graphic/anime16.bmp"));
+    picload(fs::path(u8"./graphic/anime16.bmp"));
     gsel(4);
     pos(0, 0);
     gmode(0);
@@ -1014,6 +1014,10 @@ void play_animation_14_16(int animeid)
 
 namespace elona
 {
+
+
+int FIXME_dig_animation_x;
+int FIXME_dig_animation_y;
 
 
 

@@ -2,8 +2,13 @@
 #include <iostream>
 
 
-namespace elona::cat
+namespace elona
 {
+namespace cat
+{
+
+
+engine global;
 
 
 
@@ -11,7 +16,7 @@ void engine::initialize()
 {
     L.reset(luaL_newstate());
     luaL_openlibs(ptr());
-    load(fs::u8path(u8"../__init__.lua"));
+    load(fs::path(u8"../__init__.lua"));
 }
 
 
@@ -29,4 +34,5 @@ void engine::register_function(const char* name, lua_CFunction func)
 
 
 
-} // namespace elona::cat
+} // namespace cat
+} // namespace elona

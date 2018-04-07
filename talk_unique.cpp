@@ -1126,7 +1126,7 @@ void talk_unique()
             fade_out();
             gsel(4);
             pos(0, 0);
-            picload(fs::u8path(u8"./graphic/face1.bmp"), 1);
+            picload(fs::path(u8"./graphic/face1.bmp"), 1);
             gsel(0);
             listmax = 0;
             buff = lang(
@@ -1327,7 +1327,7 @@ void talk_unique()
             fade_out();
             gsel(4);
             pos(0, 0);
-            picload(fs::u8path(u8"./graphic/face1.bmp"), 1);
+            picload(fs::path(u8"./graphic/face1.bmp"), 1);
             gsel(0);
             listmax = 0;
             buff = lang(
@@ -3637,7 +3637,9 @@ void talk_unique()
         if (gdata_ambitious_scientist >= 1 && gdata_ambitious_scientist <= 5)
         {
             f = 0;
-            const auto [invhead, invrange] = inv_getheader(0);
+            const auto tmp = inv_getheader(0);
+            const auto invhead = tmp.first;
+            const auto invrange = tmp.second;
             for (int cnt = invhead, cnt_end = invhead + invrange; cnt < cnt_end;
                  ++cnt)
             {
@@ -4029,7 +4031,7 @@ void talk_unique()
                 55,
                 cdata[0].position.x,
                 cdata[0].position.y,
-                std::clamp(4 - gdata(128) / 2500, 1, 4));
+                clamp(4 - gdata(128) / 2500, 1, 4));
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
@@ -4252,7 +4254,7 @@ void talk_unique()
                 55,
                 cdata[0].position.x,
                 cdata[0].position.y,
-                std::clamp(3 - gdata(128) / 3000, 1, 3));
+                clamp(3 - gdata(128) / 3000, 1, 3));
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
@@ -4525,7 +4527,7 @@ void talk_unique()
                 55,
                 cdata[0].position.x,
                 cdata[0].position.y,
-                std::clamp(4 - gdata(128) / 2500, 1, 4));
+                clamp(4 - gdata(128) / 2500, 1, 4));
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);

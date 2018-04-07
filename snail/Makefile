@@ -1,6 +1,6 @@
 AR = ar
-CXX := /usr/local/bin/g++-HEAD
-CXX_FLAGS = -Wall -Wextra -g -O0 -MMD -DDEBUG -std=c++17 -I/usr/local/include
+CXX = clang++
+CXX_FLAGS = -Wall -Wextra -g -O0 -MMD -DDEBUG -std=c++14 -I/usr/local/include
 BIN_DIR = bin
 SRC_DIR = .
 SOURCES = $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/*/*.cpp)

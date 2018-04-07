@@ -9,10 +9,14 @@ namespace elona
 {
 
 
+class_db the_class_db;
+int cequipment = 0;
+
+
 
 int access_class_info(int dbmode, const std::string& dbidn)
 {
-    if (std::empty(dbidn))
+    if (dbidn.empty())
     {
         classname = u8"なし";
         cequipment = 0;
@@ -38,9 +42,9 @@ int access_class_info(int dbmode, const std::string& dbidn)
 
     cdatan(3, rc) = dbidn;
     cequipment = data->equipment_type;
-    for (const auto& [k, v] : data->skills)
+    for (const auto& pair : data->skills)
     {
-        skillinit(k, rc, v);
+        skillinit(pair.first, rc, pair.second);
     }
 
     return 0;
@@ -91,11 +95,11 @@ std::vector<std::reference_wrapper<const class_data>>
 class_db::get_available_classes(bool is_extra_class) const
 {
     std::vector<std::reference_wrapper<const class_data>> ret;
-    for (const auto& [_, class_] : storage)
+    for (const auto& pair : storage)
     {
-        if (class_.is_extra == is_extra_class)
+        if (pair.second.is_extra == is_extra_class)
         {
-            ret.emplace_back(class_);
+            ret.emplace_back(pair.second);
         }
     }
     range::sort(ret, [](const auto& a, const auto& b) {

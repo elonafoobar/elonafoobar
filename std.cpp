@@ -153,7 +153,7 @@ struct MessageBox
         buffer += snail::input::instance().get_text();
         if (snail::input::instance().is_pressed(snail::key::enter))
         {
-            buffer += u8'\n';
+            buffer += '\n';
         }
     }
 
@@ -242,7 +242,7 @@ void axobj(int, const std::string&, int, int)
 
 void bcopy(const fs::path& from, const fs::path& to)
 {
-    fs::copy_file(from, to, fs::copy_options::overwrite_existing);
+    fs::copy_file(from, to, fs::copy_option::overwrite_if_exists);
 }
 
 
@@ -292,12 +292,12 @@ void bload(const fs::path& filename, std::string& data, int size, int)
     {
         size = data.size();
     }
-    std::ifstream in{filename, std::ios::binary};
+    std::ifstream in{filename.native(), std::ios::binary};
     if (!in)
     {
         throw 0;
     }
-    auto [buf, _] = read_binary(in, size);
+    auto buf = read_binary(in, size).first;
     data = {buf.get(), static_cast<size_t>(size)};
 }
 
@@ -305,12 +305,12 @@ void bload(const fs::path& filename, std::string& data, int size, int)
 
 void bload(const fs::path& filename, int& data, int size, int)
 {
-    std::ifstream in{filename, std::ios::binary};
+    std::ifstream in{filename.native(), std::ios::binary};
     if (!in)
     {
         throw 0;
     }
-    auto [buf, _] = read_binary(in, size);
+    auto buf = read_binary(in, size).first;
     data = *reinterpret_cast<int*>(buf.get());
 }
 
@@ -322,12 +322,12 @@ void bload(const fs::path& filename, elona_vector1<int>& data, int size, int)
     {
         size = data.size() * sizeof(int);
     }
-    std::ifstream in{filename, std::ios::binary};
+    std::ifstream in{filename.native(), std::ios::binary};
     if (!in)
     {
         throw 0;
     }
-    auto [buf, _] = read_binary(in, size);
+    auto buf = read_binary(in, size).first;
     for (size_t i = 0; i < length(data); ++i)
     {
         data(i) = reinterpret_cast<int*>(buf.get())[i];
@@ -341,19 +341,19 @@ void bload(const fs::path& filename, elona_vector1<int>& data, int size, int)
 
 void bsave(const fs::path& filename, const std::string& data)
 {
-    std::ofstream out{filename, std::ios::binary};
+    std::ofstream out{filename.native(), std::ios::binary};
     if (!out)
     {
         throw 0;
     }
-    out.write(reinterpret_cast<const char*>(data.c_str()), std::size(data));
+    out.write(reinterpret_cast<const char*>(data.c_str()), data.size());
 }
 
 
 
 void bsave(const fs::path& filename, int data)
 {
-    std::ofstream out{filename, std::ios::binary};
+    std::ofstream out{filename.native(), std::ios::binary};
     out.write(reinterpret_cast<const char*>(&data), sizeof(data));
 }
 
@@ -361,8 +361,8 @@ void bsave(const fs::path& filename, int data)
 
 void bsave(const fs::path& filename, elona_vector1<int>& data)
 {
-    std::ofstream out{filename, std::ios::binary};
-    for (size_t i = 0; i < std::size(data); ++i)
+    std::ofstream out{filename.native(), std::ios::binary};
+    for (size_t i = 0; i < data.size(); ++i)
     {
         out.write(reinterpret_cast<const char*>(&data(i)), sizeof(int));
     }
@@ -377,7 +377,7 @@ void buffer(int window_id, int width, int height)
         width = 1;
     if (height == 0)
         height = 1;
-    if (size_t(window_id) >= std::size(detail::tex_buffers))
+    if (size_t(window_id) >= detail::tex_buffers.size())
     {
         detail::tex_buffers.resize(window_id + 1);
     }
@@ -444,9 +444,9 @@ void clrobj(int)
 void color(int r, int g, int b)
 {
     detail::current_tex_buffer().color = {
-        static_cast<uint8_t>(std::clamp(r, 0, 255)),
-        static_cast<uint8_t>(std::clamp(g, 0, 255)),
-        static_cast<uint8_t>(std::clamp(b, 0, 255)),
+        static_cast<uint8_t>(clamp(r, 0, 255)),
+        static_cast<uint8_t>(clamp(g, 0, 255)),
+        static_cast<uint8_t>(clamp(b, 0, 255)),
         detail::current_tex_buffer().color.a,
     };
     snail::application::instance().get_renderer().set_draw_color(
@@ -492,21 +492,22 @@ std::unordered_map<int, snail::font_t> font_cache;
 void font(const std::string& name, int size, int style)
 {
     (void)style;
-    if (auto i = font_detail::font_cache.find(size);
-        i != std::end(font_detail::font_cache))
+    auto i = font_detail::font_cache.find(size);
+    if (i != std::end(font_detail::font_cache))
     {
         snail::application::instance().get_renderer().set_font(i->second);
     }
     else
     {
-        const auto [i_, _] = font_detail::font_cache.emplace(
+        const auto inserted = font_detail::font_cache.emplace(
             std::piecewise_construct,
             std::forward_as_tuple(size),
             std::forward_as_tuple(
-                fs::u8path(u8"font") / name,
+                fs::path(u8"font") / name,
                 size,
                 snail::font_t::style_t::regular));
-        snail::application::instance().get_renderer().set_font(i_->second);
+        snail::application::instance().get_renderer().set_font(
+            inserted.first->second);
     }
 }
 
@@ -627,7 +628,7 @@ void getstr(
     }
     if (pos == std::string::npos)
     {
-        pos = std::size(source);
+        pos = source.size();
     }
     if (pos >= size_t(offset))
     {
@@ -687,7 +688,7 @@ void gmode(int mode, int width, int height, int alpha)
 
     detail::current_tex_buffer().width = width;
     detail::current_tex_buffer().height = height;
-    detail::current_tex_buffer().color.a = std::clamp(alpha, 0, 255);
+    detail::current_tex_buffer().color.a = clamp(alpha, 0, 255);
 }
 
 
@@ -961,7 +962,7 @@ int stoi(std::string_view s)
 
 size_t length(const std::string& str)
 {
-    return std::size(str);
+    return str.size();
 }
 
 
@@ -1019,7 +1020,7 @@ void memcpy(
 
 void mes(const std::string& text)
 {
-    if (std::size(text) >= 25 /* TODO */)
+    if (text.size() >= 25 /* TODO */)
     {
         snail::application::instance().get_renderer().render_multiline_text(
             text,
@@ -1113,7 +1114,7 @@ std::vector<std::string> split_lines(const std::string& str)
 
 size_t count(const std::string& str)
 {
-    return std::size(split_lines(str));
+    return split_lines(str).size();
 }
 
 
@@ -1141,10 +1142,10 @@ void noteadd(const std::string& text, int index, int overwrite)
 
     if (index == -1)
     {
-        index = std::size(lines);
+        index = lines.size();
     }
 
-    if (size_t(index) >= std::size(lines))
+    if (size_t(index) >= lines.size())
     {
         lines.resize(index + 1);
     }
@@ -1176,7 +1177,7 @@ void notedel(size_t index)
 
     const auto lines = notemanip::split_lines(*notemanip::buffer);
     notemanip::buffer->clear();
-    for (size_t i = 0; i < std::size(lines); ++i)
+    for (size_t i = 0; i < lines.size(); ++i)
     {
         if (i != index)
         {
@@ -1196,7 +1197,7 @@ void noteget(std::string& out, size_t index)
     }
 
     const auto lines = notemanip::split_lines(*notemanip::buffer);
-    if (index >= std::size(lines))
+    if (index >= lines.size())
     {
         out = "";
     }
@@ -1258,14 +1259,14 @@ void pget(int x, int y)
 
 void picload(const fs::path& filename, int mode)
 {
-    std::optional<snail::color> keycolor = snail::color{0, 0, 0};
-    if (filename.u8string().find("pcc") != std::string::npos)
+    optional<snail::color> keycolor = snail::color{0, 0, 0};
+    if (filename.generic_string().find("pcc") != std::string::npos)
     {
-        keycolor = {43, 133, 133};
+        keycolor = snail::color(43, 133, 133);
     }
-    if (filename.u8string().find("bg") != std::string::npos)
+    if (filename.generic_string().find("bg") != std::string::npos)
     {
-        keycolor = std::nullopt;
+        keycolor = none;
     }
     snail::basic_image img{filename, keycolor};
     if (mode == 0)
@@ -1279,19 +1280,19 @@ void picload(const fs::path& filename, int mode)
     snail::application::instance().get_renderer().render_image(
         img, detail::current_tex_buffer().x, detail::current_tex_buffer().y);
 
-    if (filename.u8string().find(u8"interface.bmp") != std::string::npos)
+    if (filename.generic_string().find(u8"interface.bmp") != std::string::npos)
     {
         snail::basic_image ex{filename.parent_path()
-                              / fs::u8path(u8"interface_ex.png")};
+                              / fs::path(u8"interface_ex.png")};
         snail::application::instance().get_renderer().render_image(ex, 0, 656);
         snail::basic_image ex2{filename.parent_path()
-                               / fs::u8path(u8"interface_ex2.png")};
+                               / fs::path(u8"interface_ex2.png")};
         snail::application::instance().get_renderer().render_image(
             ex2, 144, 656);
         snail::application::instance().get_renderer().render_image(
             ex2, 144, 704);
         snail::basic_image ex3{filename.parent_path()
-                               / fs::u8path(u8"interface_ex3.png")};
+                               / fs::path(u8"interface_ex3.png")};
         snail::application::instance().get_renderer().render_image(
             ex3, 144, 752);
     }
@@ -1373,7 +1374,7 @@ void stick(int& out, int allow_repeat_keys)
 size_t strlen_u(const std::string& str)
 {
     int ret = 0;
-    for (size_t i = 0; i < std::size(str);)
+    for (size_t i = 0; i < str.size();)
     {
         const auto byte = byte_count(static_cast<uint8_t>(str[i]));
         ret += byte == 1 ? 1 : 2;
@@ -1386,7 +1387,7 @@ size_t strlen_u(const std::string& str)
 
 std::string strmid(const std::string& source, int pos, int length)
 {
-    const auto src_len = std::size(source);
+    const auto src_len = source.size();
     if (pos == -1)
     {
         // n characters from right to left.
@@ -1530,9 +1531,9 @@ void map(F f)
 void set_color_mod(int r, int g, int b, int window_id)
 {
     window_id = window_id == -1 ? detail::current_buffer : window_id;
-    r = std::clamp(r, 0, 255);
-    g = std::clamp(g, 0, 255);
-    b = std::clamp(b, 0, 255);
+    r = clamp(r, 0, 255);
+    g = clamp(g, 0, 255);
+    b = clamp(b, 0, 255);
     snail::detail::enforce_sdl(::SDL_SetTextureColorMod(
         detail::tex_buffers[window_id].texture,
         uint8_t(r),
@@ -1659,10 +1660,10 @@ int DSINIT()
 {
     Mix_AllocateChannels(16);
     snail::application::instance().register_finalizer([&]() {
-        for (const auto& [_, ptr] : mixer_detail::chunks)
+        for (const auto& pair : mixer_detail::chunks)
         {
-            if (ptr)
-                ::Mix_FreeChunk(ptr);
+            if (pair.second)
+                ::Mix_FreeChunk(pair.second);
         }
     });
     return 1;
@@ -2039,7 +2040,7 @@ int talk_conv_jp(std::string& text, int max_line_length)
 
     while (1)
     {
-        const auto len = std::size(rest);
+        const auto len = rest.size();
         if (int(len) < max_line_length)
         {
             text += rest;
@@ -2065,7 +2066,7 @@ int talk_conv_jp(std::string& text, int max_line_length)
                 // }
                 text += rest.substr(0, line_length) + '\n';
                 ++n;
-                if (std::size(rest) > line_length)
+                if (rest.size() > line_length)
                 {
                     rest = rest.substr(line_length);
                 }

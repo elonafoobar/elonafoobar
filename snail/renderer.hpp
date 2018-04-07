@@ -12,7 +12,9 @@
 #include "window.hpp"
 
 
-namespace elona::snail
+namespace elona
+{
+namespace snail
 {
 
 
@@ -197,12 +199,5 @@ private:
 
 
 
-namespace detail
-{
-
-inline renderer* current_renderer;
-}
-
-
-
-} // namespace elona::snail
+} // namespace snail
+} // namespace elona

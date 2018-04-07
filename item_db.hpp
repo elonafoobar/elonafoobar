@@ -1,9 +1,9 @@
 #pragma once
 
 #include <array>
-#include <optional>
 #include <unordered_map>
 #include "cat.hpp"
+#include "optional.hpp"
 
 
 
@@ -80,7 +80,7 @@ public:
 
 
 
-inline item_db the_item_db;
+extern item_db the_item_db;
 
 
 } // namespace elona

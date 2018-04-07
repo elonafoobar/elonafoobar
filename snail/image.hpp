@@ -1,15 +1,17 @@
 #pragma once
 
 #include <memory>
-#include <optional>
 #include <string>
 #include "../filesystem.hpp"
+#include "../optional.hpp"
 #include "blend_mode.hpp"
 #include "color.hpp"
 #include "detail/sdl.hpp"
 
 
-namespace elona::snail
+namespace elona
+{
+namespace snail
 {
 
 
@@ -97,7 +99,7 @@ class basic_image : public image_base
 public:
     explicit basic_image(
         const fs::path& filepath,
-        const std::optional<color>& keycolor = std::nullopt);
+        const optional<color>& keycolor = none);
 
     explicit basic_image(::SDL_Texture* ptr);
 
@@ -160,4 +162,5 @@ private:
 };
 
 
-} // namespace elona::snail
+} // namespace snail
+} // namespace elona

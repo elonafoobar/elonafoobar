@@ -5,7 +5,7 @@ namespace elona
 {
 
 
-class position_t;
+struct position_t;
 
 
 // Returns wheather the PC can see  the position or the character.

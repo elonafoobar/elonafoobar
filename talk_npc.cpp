@@ -786,7 +786,7 @@ void talk_npc()
         gdata(74) = calcfame(
             0,
             (220 - gdata(120) / 50)
-                    * (100 + std::clamp(adata(22, gdata_current_map), 0, 50))
+                    * (100 + clamp(adata(22, gdata_current_map), 0, 50))
                     / 100
                 + 2);
         listmax = 0;
@@ -903,7 +903,7 @@ void talk_npc()
         gdata(74) = calcfame(
             0,
             (220 - gdata(121) / 50)
-                    * (50 + std::clamp(adata(23, gdata_current_map), 0, 50))
+                    * (50 + clamp(adata(23, gdata_current_map), 0, 50))
                     / 100
                 + 2);
         if (chatval == 49)

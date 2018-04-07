@@ -57,7 +57,7 @@ public:
 };
 
 
-inline buff_db the_buff_db;
+extern buff_db the_buff_db;
 
 
 

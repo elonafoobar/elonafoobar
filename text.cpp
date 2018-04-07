@@ -33,7 +33,7 @@ std::string cnvrank(int n)
 
 std::string cnvarticle(const std::string& str)
 {
-    return lang(str, u8'[' + str + u8']');
+    return lang(str, '[' + str + ']');
 }
 
 
@@ -56,13 +56,13 @@ std::string cnven(const std::string& source)
 {
     if (jp)
         return source;
-    if (std::empty(source))
+    if (source.empty())
         return source;
 
     std::string ret = source;
     if (ret[0] == '*')
     {
-        if (std::size(source) == 1)
+        if (source.size() == 1)
             return source;
         ret[1] = std::toupper(ret[1]);
     }
@@ -138,7 +138,7 @@ std::string cnvplaytime(int datetime_id)
 // Lomias the general vendor => Lomias
 std::string sncnv(const std::string& name_with_job)
 {
-    return name_with_job.substr(0, name_with_job.find(u8' ')) + u8' ';
+    return name_with_job.substr(0, name_with_job.find(' ')) + ' ';
 }
 
 
@@ -226,7 +226,7 @@ void txtsetlastword()
 {
     std::vector<std::string> last_words;
     range::copy(
-        fileutil::read_by_line{fs::u8path(u8"./user")
+        fileutil::read_by_line{fs::path(u8"./user")
                                / lang(u8"lastwords.txt", u8"lastwords-e.txt")},
         std::back_inserter(last_words));
     lastword = choice(last_words);
@@ -238,7 +238,7 @@ std::vector<std::string> txtsetwinword(int n)
 {
     std::vector<std::string> ret;
     sample(
-        std::initializer_list<std::string>{
+        std::vector<std::string>{
             lang(u8"遂に…！", u8"Finally!"),
             lang(u8"当然の結果だ", u8"It's a matter of course."),
             lang(u8"おぉぉぉぉ！", u8"Woooooo!"),
@@ -1430,7 +1430,7 @@ void replace_tags_in_quest_board()
     {
         const int p0 = instr(buff, 0, u8"{"s);
         const int p1 = instr(buff, p0, u8"}"s);
-        const int p2 = std::size(buff(0));
+        const int p2 = buff(0).size();
         if (p0 == -1)
         {
             break;
@@ -1450,7 +1450,7 @@ void parse_talk_file()
     if (noteinfo() <= 1)
     {
         buff(0).clear();
-        std::ifstream in{fs::u8path(u8"./data/talk.txt")};
+        std::ifstream in{fs::path(u8"./data/talk.txt").native()};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -1475,7 +1475,7 @@ void read_talk_file(const std::string& valn)
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{fs::u8path(u8"./data/talk.txt")};
+        std::ifstream in{fs::path(u8"./data/talk.txt").native()};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -1495,7 +1495,7 @@ void get_npc_talk()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{fs::u8path(u8"./data/talk.txt")};
+        std::ifstream in{fs::path(u8"./data/talk.txt").native()};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -1603,7 +1603,7 @@ void get_npc_talk()
 
 std::string cnvweight(int weight)
 {
-    return ""s + std::abs(weight) / 1000 + u8'.' + std::abs(weight) % 1000 / 100
+    return ""s + std::abs(weight) / 1000 + '.' + std::abs(weight) % 1000 / 100
         + i18n::_(u8"ui", u8"unit_of_weight");
 }
 
@@ -2629,7 +2629,7 @@ void parse_quest_board_text(int val0)
         notesel(buff);
         return;
     }
-    buff2 = strmid(buff2, p + 1, std::size(buff2(0)) - p - 1);
+    buff2 = strmid(buff2, p + 1, buff2(0).size() - p - 1);
     if (val0 != 2)
     {
         buff = buff2;
@@ -2646,7 +2646,7 @@ std::string randomname()
     while (1)
     {
         ret = rn1(rnd(length(rn1)));
-        if (std::empty(ret))
+        if (ret.empty())
         {
             continue;
         }
@@ -2661,7 +2661,7 @@ std::string randomname()
         {
             ret += rn2(rnd(length(rn2)));
         }
-        const auto length = std::size(ret);
+        const auto length = ret.size();
         if (length < 4)
         {
             continue;

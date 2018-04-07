@@ -36,8 +36,8 @@ enum class animation_type
 void play_animation(int);
 
 
-inline int FIXME_dig_animation_x;
-inline int FIXME_dig_animation_y;
+extern int FIXME_dig_animation_x;
+extern int FIXME_dig_animation_y;
 
 
 } // namespace elona

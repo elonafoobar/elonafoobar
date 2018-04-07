@@ -63,14 +63,14 @@ void main_loop()
 
 void load_musiclist()
 {
-    const auto filepath = fs::u8path(u8"./user/music/musiclist.txt");
+    const auto filepath = fs::path(u8"./user/music/musiclist.txt");
     if (!fs::exists(filepath))
         return;
 
     size_t i = 0;
     for (auto&& line : fileutil::read_by_line{filepath})
     {
-        if (std::empty(line))
+        if (line.empty())
             continue;
         musicfile(i + 50) = strmid(line, 0, instr(line, 0, u8"\t"));
         ++i;
@@ -81,7 +81,7 @@ void load_musiclist()
 
 void backup_config_files()
 {
-    std::tuple<const char*, const char*> files[] = {
+    std::pair<const char*, const char*> files[] = {
         {u8"./original/config.txt", u8"./config.txt"},
         {u8"./original/export.txt", u8"./user/export.txt"},
         {u8"./original/lastwords.txt", u8"./user/lastwords.txt"},
@@ -90,10 +90,10 @@ void backup_config_files()
         {u8"./original/face1.bmp", u8"./user/graphic/face1.bmp"},
     };
 
-    for (const auto& [from, to] : files)
+    for (const auto& from_to : files)
     {
-        const auto from_path = fs::u8path(from);
-        const auto to_path = fs::u8path(to);
+        const auto from_path = fs::path(from_to.first);
+        const auto to_path = fs::path(from_to.second);
         if (!fs::exists(to_path))
         {
             fs::copy_file(from_path, to_path);
@@ -159,13 +159,13 @@ void initialize_elona()
     boxf();
     redraw();
     buffer(3, 1440, 800);
-    picload(fs::u8path(u8"./graphic/interface.bmp"), 1);
+    picload(fs::path(u8"./graphic/interface.bmp"), 1);
     buffer(4, windoww, windowh);
     buffer(8, windoww, windowh);
     gsel(0);
-    folder = fs::u8path(u8"./user/graphic/");
+    folder = fs::path(u8"./user/graphic/").generic_string();
     buffer(1, 1584, 1200);
-    picload(fs::u8path(u8"./graphic/item.bmp"), 1);
+    picload(fs::path(u8"./graphic/item.bmp"), 1);
     if (inf_tiles != 48)
     {
         pos(0, 0);
@@ -360,7 +360,7 @@ void initialize_elona()
     notesel(buffboard);
     {
         buffboard(0).clear();
-        std::ifstream in{fs::u8path(u8"./data/board.txt")};
+        std::ifstream in{fs::path(u8"./data/board.txt").native()};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -549,10 +549,10 @@ void start_elona()
     quickpage = 1;
     if (defload != ""s)
     {
-        if (!fs::exists(fs::u8path(u8"./save/"s + defload + u8"/header.txt")))
+        if (!fs::exists(fs::path(u8"./save/"s + defload + u8"/header.txt")))
         {
             if (fs::exists(
-                    fs::u8path(u8"./save/sav_"s + defload + u8"/header.txt")))
+                    fs::path(u8"./save/sav_"s + defload + u8"/header.txt")))
             {
                 defload = u8"sav_"s + defload;
             }
@@ -773,12 +773,12 @@ void main_title_menu()
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+        picload(fs::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(4);
     gmode(0);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/title.bmp"), 1);
+    picload(fs::path(u8"./graphic/title.bmp"), 1);
     gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gmode(2);
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
@@ -840,7 +840,7 @@ void main_title_menu()
     }
     gsel(3);
     pos(960, 96);
-    picload(fs::u8path(u8"./graphic/deco_title.bmp"), 1);
+    picload(fs::path(u8"./graphic/deco_title.bmp"), 1);
     gsel(0);
     gmode(0);
     pos(0, 0);
@@ -956,20 +956,20 @@ void main_menu_new_game()
     cm = 1;
     gsel(4);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/void.bmp"), 1);
+    picload(fs::path(u8"./graphic/void.bmp"), 1);
     gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gsel(2);
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+        picload(fs::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(3);
     pos(960, 96);
-    picload(fs::u8path(u8"./graphic/deco_cm.bmp"), 1);
+    picload(fs::path(u8"./graphic/deco_cm.bmp"), 1);
     gsel(0);
     if (range::distance(filesystem::dir_entries{
-            fs::u8path(u8"./save"), filesystem::dir_entries::type::dir})
+            fs::path(u8"./save"), filesystem::dir_entries::type::dir})
         >= 5)
     {
         keyrange = 0;
@@ -1807,13 +1807,12 @@ void character_making_final_phase()
             cmname = randomname();
         }
         playerid = u8"sav_"s + cmname;
-        const auto save_dir = fs::u8path(u8"./save");
+        const auto save_dir = fs::path(u8"./save");
         if (range::any_of(
                 filesystem::dir_entries{save_dir,
                                         filesystem::dir_entries::type::dir},
                 [&](const auto& entry) {
-                    return entry.path().filename().generic_u8string()
-                        == playerid;
+                    return entry.path().filename().generic_string() == playerid;
                 }))
         {
             gmode(0);

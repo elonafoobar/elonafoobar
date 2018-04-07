@@ -1,13 +1,16 @@
 #pragma once
 
 #include <memory>
+#include <unordered_map>
 #include <lua.hpp>
 #include "filesystem.hpp"
 #include "lib/noncopyable.hpp"
-#include "optional_ref.hpp"
+#include "optional.hpp"
 
 
-namespace elona::cat
+namespace elona
+{
+namespace cat
 {
 
 
@@ -106,31 +109,32 @@ private:
 
 
 
-    template <typename T>
+    template <
+        typename T,
+        std::enable_if_t<std::is_same<T, nullptr_t>::value, nullptr_t> = nullptr>
     T to_cpp_type(int index)
     {
-        if constexpr (std::is_same_v<T, std::string>)
-        {
-            return luaL_checkstring(ptr(), index);
-        }
-        else if constexpr (std::is_same_v<T, int>)
-        {
-            return luaL_checkinteger(ptr(), index);
-        }
-        else if constexpr (std::is_same_v<T, double>)
-        {
-            return luaL_checknumber(ptr(), index);
-        }
-        else if constexpr (std::is_same_v<T, nullptr_t>)
-        {
-            (void)index;
-            return nullptr;
-        }
+        (void)index;
+        return nullptr;
     }
+
+#define ELONA_DEFINE_TO_CPP_TYPE(type, function) \
+    template < \
+        typename T, \
+        std::enable_if_t<std::is_same<T, type>::value, nullptr_t> = nullptr> \
+    T to_cpp_type(int index) \
+    { \
+        return function(ptr(), index); \
+    }
+
+    ELONA_DEFINE_TO_CPP_TYPE(std::string, luaL_checkstring)
+    ELONA_DEFINE_TO_CPP_TYPE(int, luaL_checkinteger)
+    ELONA_DEFINE_TO_CPP_TYPE(double, luaL_checknumber)
+#undef ELONA_DEFINE_TO_CPP_TYPE
 };
 
 
-inline engine global;
+extern engine global;
 
 
 
@@ -228,7 +232,7 @@ public:
     void initialize()
     {
         cat::global.load(
-            fs::u8path(u8"../data") / fs::u8path(traits_type::filename));
+            fs::path(u8"../data") / fs::path(traits_type::filename));
 
         auto L = cat::global.ptr();
 
@@ -248,7 +252,7 @@ public:
     {
         const auto itr = storage.find(id);
         if (itr == std::end(storage))
-            return std::nullopt;
+            return none;
         else
             return itr->second;
     }
@@ -279,4 +283,5 @@ protected:
 
 
 
-} // namespace elona::cat
+} // namespace cat
+} // namespace elona

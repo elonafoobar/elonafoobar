@@ -1,7 +1,9 @@
 #include "scene.hpp"
 #include <cassert>
 
-namespace elona::snail
+namespace elona
+{
+namespace snail
 {
 
 
@@ -52,4 +54,5 @@ void scene_manager::replace(std::shared_ptr<scene_base> new_scene)
 }
 
 
-} // namespace elona::snail
+} // namespace snail
+} // namespace elona

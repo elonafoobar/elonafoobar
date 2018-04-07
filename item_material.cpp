@@ -85,6 +85,9 @@ namespace elona
 {
 
 
+item_material_db the_item_material_db;
+
+
 void item_material_db::define(lua_State* L)
 {
     const char* id = luaL_checkstring(L, -2);

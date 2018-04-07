@@ -8,14 +8,16 @@
 
 
 
-namespace elona::i18n
+namespace elona
+{
+namespace i18n
 {
 
 
 void load(const std::string& language)
 {
     for (auto&& entry : filesystem::dir_entries{
-             fs::u8path(u8"../lang") / language,
+             fs::path(u8"../lang") / language,
              filesystem::dir_entries::type::file,
          })
     {
@@ -48,4 +50,5 @@ std::string _(
 
 
 
-} // namespace elona::i18n
+} // namespace i18n
+} // namespace elona

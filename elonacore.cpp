@@ -260,6 +260,21 @@ namespace elona
 {
 
 
+
+int prm_518;
+int prm_818;
+int prm_820;
+int prm_853;
+
+int tmp_at_m172;
+
+elona_vector1<int> inhlist_at_m184;
+elona_vector1<int> inhlist;
+
+int i_at_m68;
+double r_at_m133;
+
+
 elona_vector2<std::string> rankn;
 elona_vector1<int> ranknorma;
 elona_vector1<std::string> popostname;
@@ -1243,7 +1258,7 @@ void initialize_sound_file()
     {
         cfg_svolume = DSGETMASTERVOLUME();
     }
-    folder = fs::u8path(u8"./sound/");
+    folder = fs::path(u8"./sound/").generic_string();
     sndload(folder + u8"exitmap1.wav"s, 49);
     sndload(folder + u8"book1.wav"s, 59);
     sndload(folder + u8"write1.wav"s, 44);
@@ -1564,15 +1579,15 @@ void play_music()
         if (cfg_music == 1)
         {
             DMSTOP();
-            DMLOADFNAME(fs::u8path(u8"./sound/gm_on.mid"), 0);
+            DMLOADFNAME(fs::path(u8"./sound/gm_on.mid").generic_string(), 0);
             DMPLAY(1, 0);
         }
         if (music != -1)
         {
-            musicfolder = fs::u8path(u8"./user/music/");
+            musicfolder = fs::path(u8"./user/music/").generic_string();
             if (!fs::exists(musicfolder + musicfile(music)))
             {
-                musicfolder = fs::u8path(u8"./sound/");
+                musicfolder = fs::path(u8"./sound/").generic_string();
                 if (!fs::exists(musicfolder + musicfile(music)))
                 {
                     return;
@@ -2289,7 +2304,7 @@ void replace_tags_in_quest_text()
         await();
         p(0) = instr(buff, 0, u8"{"s);
         p(1) = instr(buff, p, u8"}"s);
-        p(2) = std::size(buff(0));
+        p(2) = buff(0).size();
         if (p == -1)
         {
             break;
@@ -2561,7 +2576,7 @@ void finish_elona()
 
 void load_pcc_part(int cc, int body_part, const char* body_part_str)
 {
-    const auto filepath = fs::u8path(
+    const auto filepath = fs::path(
         "./graphic/pcc_"s + body_part_str + (pcc(body_part, cc) % 1000)
         + u8".bmp");
     if (!fs::exists(filepath))
@@ -3950,13 +3965,13 @@ void load_random_name_table()
     std::vector<std::string> lines;
     range::copy(
         fileutil::read_by_line{
-            fs::u8path(lang(u8"data/ndata.csv"s, u8"data/ndata-e.csv"s))},
+            fs::path(lang(u8"data/ndata.csv"s, u8"data/ndata-e.csv"s))},
         std::back_inserter(lines));
 
     SDIM3(randn1, 30, 20);
-    SDIM4(rnlist, 20, 15, std::size(lines));
+    SDIM4(rnlist, 20, 15, lines.size());
 
-    for (size_t i = 0; i < std::size(lines); ++i)
+    for (size_t i = 0; i < lines.size(); ++i)
     {
         csvsort(randn1, lines[i], 44);
         for (size_t j = 0; j < 15; ++j)
@@ -3972,13 +3987,13 @@ void load_random_title_table()
 {
     std::vector<std::string> lines;
     range::copy(
-        fileutil::read_by_line{fs::u8path(u8"data/name.csv"s)},
+        fileutil::read_by_line{fs::path(u8"data/name.csv"s)},
         std::back_inserter(lines));
 
-    SDIM3(rn1, 15, std::size(lines));
-    SDIM3(rn2, 15, std::size(lines));
+    SDIM3(rn1, 15, lines.size());
+    SDIM3(rn2, 15, lines.size());
 
-    for (size_t i = 0; i < std::size(lines); ++i)
+    for (size_t i = 0; i < lines.size(); ++i)
     {
         csvsort(randn1, lines[i], 44);
         rn1(i) = lang(randn1(0), randn1(1));
@@ -4634,7 +4649,7 @@ int randomenc(int prm_451)
 int randomenclv(int prm_452)
 {
     int enclv_at_m47 = 0;
-    enclv_at_m47 = std::clamp(prm_452, 0, 4);
+    enclv_at_m47 = clamp(prm_452, 0, 4);
     enclv_at_m47 = rnd(enclv_at_m47 + 1);
     return enclv_at_m47;
 }
@@ -4873,7 +4888,7 @@ int encadd(
         if (enc_at_m48 == 9)
         {
             enc_at_m48 = rnd(rnd(6) + 1);
-            encp_at_m48 = std::clamp(encp_at_m48, 0, 500)
+            encp_at_m48 = clamp(encp_at_m48, 0, 500)
                     * encammoref(1, enc_at_m48) / 500
                 + encammoref(0, enc_at_m48);
             enc_at_m48 += 90000;
@@ -5126,7 +5141,7 @@ void add_enchantments()
     }
     else
     {
-        egolv = rnd(std::clamp(rnd(objlv / 10 + 3), 0, 4) + 1);
+        egolv = rnd(clamp(rnd(objlv / 10 + 3), 0, 4) + 1);
         inv[ci].value = inv[ci].value * 3;
         inv[ci].difficulty_of_identification =
             50 + rnd((std::abs((fixlv - 2)) * 100 + 100));
@@ -5228,7 +5243,7 @@ void add_enchantments()
         encadd(
             ci,
             randomenc(randomenclv(egolv)),
-            std::clamp(randomencp(), 250, 10000)
+            clamp(randomencp(), 250, 10000)
                 * (125 + (inv[ci].curse_state == curse_state_t::doomed) * 25)
                 / 100);
         for (int cnt = 0,
@@ -5317,7 +5332,7 @@ void determine_item_material()
     {
         mtlv = 4;
     }
-    mtlv = std::clamp(rnd(mtlv + 1) + objfix, 0, 4);
+    mtlv = clamp(rnd(mtlv + 1) + objfix, 0, 4);
     objfix = 0;
     if (reftype == 60000)
     {
@@ -6009,12 +6024,12 @@ void csvstr2(elona_vector1<std::string>& prm_532, const std::string& prm_533)
     int i_at_m67 = 0;
     word_at_m67 = prm_533;
     p_at_m67 = 0;
-    i_at_m67 = std::size(word_at_m67);
+    i_at_m67 = word_at_m67.size();
     for (int cnt = 0; cnt < 40; ++cnt)
     {
         prm_532(cnt) = "";
         getstr(
-            prm_532(cnt), word_at_m67, std::clamp(p_at_m67, 0, i_at_m67), 44);
+            prm_532(cnt), word_at_m67, clamp(p_at_m67, 0, i_at_m67), 44);
         if (strsize > i_at_m67)
         {
             break;
@@ -6142,7 +6157,7 @@ void cs_list(
         // boxf(
         //     x + 4 + x_offset,
         //     y + 3,
-        //     x + 4 + x_offset + std::size(text) * 7 + 32,
+        //     x + 4 + x_offset + text.size() * 7 + 32,
         //     y + 3 + 19);
     }
 
@@ -6248,7 +6263,7 @@ void modify_karma(int cc, int delta)
     {
         max += 20;
     }
-    cdata[cc].karma = std::clamp(cdata[cc].karma, -100, max);
+    cdata[cc].karma = clamp(cdata[cc].karma, -100, max);
 }
 
 
@@ -6320,7 +6335,7 @@ void modrank(int prm_552, int prm_553, int prm_554)
 void modify_potential(int cc, int id, int delta)
 {
     sdata.get(id, cc).potential =
-        std::clamp(sdata.get(id, cc).potential + delta, 2, 400);
+        clamp(sdata.get(id, cc).potential + delta, 2, 400);
 }
 
 
@@ -6356,7 +6371,7 @@ void skillgain(int cc, int id, int initial_level, int stock)
     {
         modify_potential(cc, id, 50);
     }
-    sdata.get(id, cc).original_level = std::clamp(lv, 0, 2000);
+    sdata.get(id, cc).original_level = clamp(lv, 0, 2000);
     refresh_character(cc);
 }
 
@@ -6384,7 +6399,7 @@ int skillmod(int id, int cc, int experience)
                 growth_at_m77 = 1;
             }
         }
-        sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
+        sdata.get(id, cc).original_level = clamp(lv_at_m77, 0, 2000);
         sdata.get(id, cc).experience = exp_at_m77;
         sdata.get(id, cc).potential = growth_at_m77;
         if (is_in_fov(cc))
@@ -6423,7 +6438,7 @@ int skillmod(int id, int cc, int experience)
                 growth_at_m77 = 400;
             }
         }
-        sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
+        sdata.get(id, cc).original_level = clamp(lv_at_m77, 0, 2000);
         sdata.get(id, cc).experience = exp_at_m77;
         sdata.get(id, cc).potential = growth_at_m77;
         if (cc == 0 || cc < 16)
@@ -6440,7 +6455,7 @@ int skillmod(int id, int cc, int experience)
         refresh_character(cc);
         return 1;
     }
-    sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
+    sdata.get(id, cc).original_level = clamp(lv_at_m77, 0, 2000);
     sdata.get(id, cc).experience = exp_at_m77;
     sdata.get(id, cc).potential = growth_at_m77;
     return 0;
@@ -6538,7 +6553,7 @@ int skillexp(int id, int cc, int experience, int prm_572, int prm_573)
                 growth_at_m77 = 1;
             }
         }
-        sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
+        sdata.get(id, cc).original_level = clamp(lv_at_m77, 0, 2000);
         sdata.get(id, cc).experience = exp_at_m77;
         sdata.get(id, cc).potential = growth_at_m77;
         if (is_in_fov(cc))
@@ -6578,7 +6593,7 @@ int skillexp(int id, int cc, int experience, int prm_572, int prm_573)
                 growth_at_m77 = 400;
             }
         }
-        sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
+        sdata.get(id, cc).original_level = clamp(lv_at_m77, 0, 2000);
         sdata.get(id, cc).experience = exp_at_m77;
         sdata.get(id, cc).potential = growth_at_m77;
         if (is_in_fov(cc))
@@ -6596,7 +6611,7 @@ int skillexp(int id, int cc, int experience, int prm_572, int prm_573)
         refresh_character(cc);
         return 1;
     }
-    sdata.get(id, cc).original_level = std::clamp(lv_at_m77, 0, 2000);
+    sdata.get(id, cc).original_level = clamp(lv_at_m77, 0, 2000);
     sdata.get(id, cc).experience = exp_at_m77;
     sdata.get(id, cc).potential = growth_at_m77;
     return 0;
@@ -7836,7 +7851,7 @@ void showscroll(const std::string& title, int x, int y, int width, int height)
     }
     draw_scroll(x, y, width, height);
 
-    if (std::empty(title))
+    if (title.empty())
         return;
 
     pos(x + 40, y + height - 67 - height % 8);
@@ -8140,7 +8155,7 @@ void display_window(
         window2(
             prm_668 + 34,
             prm_669 - 4,
-            45 * prm_670 / 100 + std::clamp(int(strlen_u(s) * 8 - 120), 0, 200),
+            45 * prm_670 / 100 + clamp(int(strlen_u(s) * 8 - 120), 0, 200),
             32,
             1,
             1);
@@ -8163,7 +8178,7 @@ void display_window(
     font(lang(cfg_font1, cfg_font2), 15 + en - en * 2, 0);
     color(0, 0, 0);
     pos(prm_668 + 45 * prm_670 / 200 + 34 - strlen_u(s) * 4
-            + std::clamp(int(std::size(s(0)) * 8 - 120), 0, 200) / 2,
+            + clamp(int(s(0).size() * 8 - 120), 0, 200) / 2,
         prm_669 + 4 + vfix);
     color(20, 10, 0);
     bmes(s, 255, 255, 255);
@@ -8276,13 +8291,13 @@ void fileadd(const std::string& prm_692, int prm_693)
     char mark_b;
     if (prm_693 == 0)
     {
-        mark_a = u8'*';
-        mark_b = u8'#';
+        mark_a = '*';
+        mark_b = '#';
     }
     else
     {
-        mark_a = u8'#';
-        mark_b = u8'*';
+        mark_a = '#';
+        mark_b = '*';
     }
     notesel(filemod);
     int p_at_m98 = instr(filemod, 0, prm_692);
@@ -8349,7 +8364,7 @@ void arrayfile_read(std::string_view fmode_str, const fs::path& filepath)
     }
     else if (fmode_str == u8"cdatan1"s)
     {
-        if (std::size(lines) <= 57 * 10 / 2)
+        if (lines.size() <= 57 * 10 / 2)
             lines.resize(57 * 10 / 2);
         else
             lines.resize(57 * 10);
@@ -8358,7 +8373,7 @@ void arrayfile_read(std::string_view fmode_str, const fs::path& filepath)
         {
             for (int j = 0; j < 10; ++j)
             {
-                if (std::size(lines) <= 57 * 10 / 2 && j >= 10 / 2)
+                if (lines.size() <= 57 * 10 / 2 && j >= 10 / 2)
                     break;
                 cdatan(j, i) = *itr;
                 ++itr;
@@ -8367,7 +8382,7 @@ void arrayfile_read(std::string_view fmode_str, const fs::path& filepath)
     }
     else if (fmode_str == u8"cdatan2"s)
     {
-        if (std::size(lines) <= 188 * 10 / 2)
+        if (lines.size() <= 188 * 10 / 2)
             lines.resize(188 * 10 / 2);
         else
             lines.resize(188 * 10);
@@ -8376,7 +8391,7 @@ void arrayfile_read(std::string_view fmode_str, const fs::path& filepath)
         {
             for (int j = 0; j < 10; ++j)
             {
-                if (std::size(lines) <= 188 * 10 / 2 && j >= 10 / 2)
+                if (lines.size() <= 188 * 10 / 2 && j >= 10 / 2)
                     break;
                 cdatan(j, i) = *itr;
                 ++itr;
@@ -8385,14 +8400,14 @@ void arrayfile_read(std::string_view fmode_str, const fs::path& filepath)
     }
     else if (fmode_str == u8"cdatan3"s)
     {
-        if (std::size(lines) <= 10 / 2)
+        if (lines.size() <= 10 / 2)
             lines.resize(10 / 2);
         else
             lines.resize(10);
         auto itr = std::begin(lines);
         for (int j = 0; j < 10; ++j)
         {
-            if (std::size(lines) < 10 / 2 && j >= 10 / 2)
+            if (lines.size() < 10 / 2 && j >= 10 / 2)
                 break;
             cdatan(j, tg) = *itr;
             ++itr;
@@ -8404,7 +8419,7 @@ void arrayfile_read(std::string_view fmode_str, const fs::path& filepath)
 
 void arrayfile_write(std::string_view fmode_str, const fs::path& filepath)
 {
-    std::ofstream out{filepath};
+    std::ofstream out{filepath.native()};
     if (!out)
     {
         throw "TODO";
@@ -8461,7 +8476,7 @@ void arrayfile_write(std::string_view fmode_str, const fs::path& filepath)
 
     if (elona_export == 0)
     {
-        fileadd(filepath);
+        fileadd(filepath.generic_string());
     }
 }
 
@@ -8499,7 +8514,7 @@ std::string cnv_str(
             break;
         }
         prm_696 = strmid(prm_696, 0, p_at_m100) + lang(prm_698, prm_698)
-            + strmid(prm_696, (p_at_m100 + std::size(prm_697)), 300);
+            + strmid(prm_696, (p_at_m100 + prm_697.size()), 300);
     }
     return prm_696;
 }
@@ -10162,7 +10177,7 @@ int customtalk(int cc, int talk_type)
 
     if (cbit(989, cc))
     {
-        const auto filepath = fs::u8path(u8"./user/talk") / cdatan(4, cc);
+        const auto filepath = fs::path(u8"./user/talk") / cdatan(4, cc);
         if (!fs::exists(filepath))
             return 0;
         range::copy(
@@ -10222,8 +10237,8 @@ int customtalk(int cc, int talk_type)
             std::vector<std::string> lines;
             std::copy(
                 std::next(start_text), end_text, std::back_inserter(lines));
-            const auto line = lines[rnd(int(std::size(lines)))];
-            if (!std::empty(line))
+            const auto line = lines[rnd(int(lines.size()))];
+            if (!line.empty())
             {
                 if (talk_type == 106)
                 {
@@ -10324,11 +10339,7 @@ int implevel(int impression)
 void modimp(int cc, int delta)
 {
     int level1 = implevel(cdata[cc].impression);
-    if (delta < 0)
-    {
-        delta = delta;
-    }
-    else
+    if (delta >= 0)
     {
         delta = delta * 100 / (50 + level1 * level1 * level1);
         if (delta == 0)
@@ -10556,7 +10567,7 @@ void refreshspeed(int cc)
     else
     {
         cdata[cc].current_speed = sdata(18, cc)
-            * std::clamp((100 - cdata[cc].speed_correction_value), 0, 100)
+            * clamp((100 - cdata[cc].speed_correction_value), 0, 100)
             / 100;
     }
     if (cdata[cc].current_speed < 10)
@@ -10571,7 +10582,7 @@ void refreshspeed(int cc)
     if (gdata_mount != 0)
     {
         cdata[0].current_speed = sdata(18, gdata_mount) * 100
-            / std::clamp((100 + sdata(18, gdata_mount)
+            / clamp((100 + sdata(18, gdata_mount)
                           - sdata(10, gdata_mount) * 3 / 2 - sdata(301, 0) * 2
                           - (cbit(22, gdata_mount) == 1) * 50),
                          100,
@@ -10583,7 +10594,7 @@ void refreshspeed(int cc)
         if (gdata_mount == cc)
         {
             cdata[cc].current_speed =
-                std::clamp(sdata(10, cc) + sdata(301, 0), 10, sdata(18, cc));
+                clamp(sdata(10, cc) + sdata(301, 0), 10, sdata(18, cc));
             return;
         }
     }
@@ -10791,7 +10802,7 @@ int get_freechara()
 int get_freeally()
 {
     f_at_m125 = 0;
-    for (int cnt = 1, cnt_end = cnt + (std::clamp(sdata(17, 0) / 5 + 1, 2, 15));
+    for (int cnt = 1, cnt_end = cnt + (clamp(sdata(17, 0) / 5 + 1, 2, 15));
          cnt < cnt_end;
          ++cnt)
     {
@@ -10882,7 +10893,9 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
     hp_at_m125 = cdata[tc_at_m125].hp;
     cdata[prm_784].item_which_will_be_used = 0;
     cbitmod(960, prm_784, 0);
-    const auto [invhead, invrange] = inv_getheader(prm_784);
+    const auto tmp = inv_getheader(prm_784);
+    const auto invhead = tmp.first;
+    const auto invrange = tmp.second;
     p_at_m125 = invhead;
     invrangecc_at_m125 = invrange;
     for (const auto& cnt : items(tc_at_m125))
@@ -11468,7 +11481,7 @@ void animeload(int prm_807, int prm_808)
     dx_at_m133 = (cdata[prm_808].position.x - scx) * inf_tiles + inf_screenx;
     dy_at_m133 = (cdata[prm_808].position.y - scy) * inf_tiles + inf_screeny;
     gsel(7);
-    picload(fs::u8path(u8"./graphic/anime"s + prm_807 + u8".bmp"));
+    picload(fs::path(u8"./graphic/anime"s + prm_807 + u8".bmp"));
     gsel(4);
     gmode(0);
     pos(0, 0);
@@ -11554,70 +11567,70 @@ void animeblood(int prm_809, int prm_810, int prm_811)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(fs::u8path(u8"./graphic/anime18.bmp"));
+        picload(fs::path(u8"./graphic/anime18.bmp"));
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 51)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(fs::u8path(u8"./graphic/anime19.bmp"));
+        picload(fs::path(u8"./graphic/anime19.bmp"));
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 50)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(fs::u8path(u8"./graphic/anime20.bmp"));
+        picload(fs::path(u8"./graphic/anime20.bmp"));
         dy_at_m133(1) = -20;
     }
     if (prm_811 == 56)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(fs::u8path(u8"./graphic/anime22.bmp"));
+        picload(fs::path(u8"./graphic/anime22.bmp"));
         dy_at_m133(1) = -24;
     }
     if (prm_811 == 53)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(fs::u8path(u8"./graphic/anime21.bmp"));
+        picload(fs::path(u8"./graphic/anime21.bmp"));
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 54)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(fs::u8path(u8"./graphic/anime23.bmp"));
+        picload(fs::path(u8"./graphic/anime23.bmp"));
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 57)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(fs::u8path(u8"./graphic/anime24.bmp"));
+        picload(fs::path(u8"./graphic/anime24.bmp"));
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 59)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(fs::u8path(u8"./graphic/anime25.bmp"));
+        picload(fs::path(u8"./graphic/anime25.bmp"));
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 58)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(fs::u8path(u8"./graphic/anime26.bmp"));
+        picload(fs::path(u8"./graphic/anime26.bmp"));
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 55 || prm_811 == 63)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(fs::u8path(u8"./graphic/anime27.bmp"));
+        picload(fs::path(u8"./graphic/anime27.bmp"));
         dy_at_m133(1) = -16;
     }
     gmode(2);
@@ -11806,7 +11819,7 @@ void resistmod(int cc, int element, int delta)
     }
 
     sdata.get(element, cc).original_level =
-        std::clamp(sdata.get(element, cc).original_level + delta, 50, 200);
+        clamp(sdata.get(element, cc).original_level + delta, 50, 200);
     snd(107);
     animeload(15, cc);
 
@@ -12917,7 +12930,7 @@ void item_acid(int prm_838, int prm_839)
             {
                 continue;
             }
-            if (rnd(std::clamp(30, 1, 30)) == 0)
+            if (rnd(clamp(30, 1, 30)) == 0)
             {
                 if (inv[p_at_m138].enhancement > -4)
                 {
@@ -13820,7 +13833,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         if (r_at_m141 < 3)
         {
             dmg_at_m141 =
-                dmg_at_m141 * 150 / std::clamp((r_at_m141 * 50 + 50), 40, 150);
+                dmg_at_m141 * 150 / clamp((r_at_m141 * 50 + 50), 40, 150);
         }
         else if (r_at_m141 < 10)
         {
@@ -13872,7 +13885,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
     {
         if (cdata[prm_853].hp - dmg_at_m141 <= 0)
         {
-            if (std::clamp(
+            if (clamp(
                     25 + cdata[prm_853].buffs[findbuff(prm_853, 18)].power / 17,
                     25,
                     80)
@@ -13914,7 +13927,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 healhp(
                     prm_855,
-                    std::clamp(
+                    clamp(
                         rnd(dmg_at_m141 * (150 + prm_857 * 2) / 1000 + 10),
                         1,
                         cdata[prm_855].max_hp / 10 + rnd(5)));
@@ -14864,9 +14877,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 customtalk(prm_855, 103);
             }
-            exp_at_m141 = std::clamp(cdata[prm_853].level, 1, 200)
-                    * std::clamp((cdata[prm_853].level + 1), 1, 200)
-                    * std::clamp((cdata[prm_853].level + 2), 1, 200) / 20
+            exp_at_m141 = clamp(cdata[prm_853].level, 1, 200)
+                    * clamp((cdata[prm_853].level + 1), 1, 200)
+                    * clamp((cdata[prm_853].level + 2), 1, 200) / 20
                 + 8;
             if (cdata[prm_853].level > cdata[prm_855].level)
             {
@@ -15841,7 +15854,7 @@ int net_dllist(const std::string& prm_886, int prm_887)
     std::string s_at_m147;
     netinit();
     neturl(u8"http://homepage3.nifty.com/rfish/userfile/"s);
-    file_at_m147 = fs::u8path(u8"./user/net.tmp");
+    file_at_m147 = fs::path(u8"./user/net.tmp").generic_string();
     if (fs::exists(file_at_m147))
     {
         elona_delete(file_at_m147);
@@ -15927,14 +15940,14 @@ int net_dllist(const std::string& prm_886, int prm_887)
 
 int net_dl(const std::string& prm_888, const std::string& prm_889)
 {
-    if (fs::exists(fs::u8path(u8"./user/"s + prm_889)))
+    if (fs::exists(fs::path(u8"./user/"s + prm_889)))
     {
-        elona_delete(fs::u8path(u8"./user/"s + prm_889));
+        elona_delete(fs::path(u8"./user/"s + prm_889));
     }
     neturl(u8"http://homepage3.nifty.com/rfish/userfile/"s);
-    netdlname(fs::u8path(u8"./user/"s + prm_889));
+    netdlname(fs::path(u8"./user/"s + prm_889).generic_string());
     netload(prm_888);
-    if (!fs::exists(fs::u8path(u8"./user/"s + prm_889)))
+    if (!fs::exists(fs::path(u8"./user/"s + prm_889)))
     {
         return 0;
     }
@@ -15959,7 +15972,7 @@ void initialize_server_info()
     {
         {
             serverlist(0).clear();
-            std::ifstream in{fs::u8path(u8"./server.txt")};
+            std::ifstream in{fs::path(u8"./server.txt").native()};
             std::string tmp;
             while (std::getline(in, tmp))
             {
@@ -15973,7 +15986,7 @@ void initialize_server_info()
     cgiurl2 = strmid(netbuf, 0, p);
     cgiurl3 = strmid(netbuf, p + 1, instr(netbuf, p + 1, u8"%"s));
     {
-        std::ofstream out{fs::u8path(u8"./server.txt")};
+        std::ofstream out{fs::path(u8"./server.txt").native()};
         out << serverlist(0) << std::endl;
     }
     if (jp)
@@ -16054,7 +16067,7 @@ label_14001_internal:
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+        picload(fs::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(0);
     listmax = 0;
@@ -17033,22 +17046,22 @@ void label_1422()
     pos(0, 0);
     if (cdata[0].continuous_action_id == 5)
     {
-        picload(fs::u8path(u8"./graphic/anime1.bmp"));
+        picload(fs::path(u8"./graphic/anime1.bmp"));
     }
     if (cdata[0].continuous_action_id == 7)
     {
         if (rowactre)
         {
-            picload(fs::u8path(u8"./graphic/anime2.bmp"));
+            picload(fs::path(u8"./graphic/anime2.bmp"));
         }
     }
     if (cdata[0].continuous_action_id == 8)
     {
-        picload(fs::u8path(u8"./graphic/anime3.bmp"));
+        picload(fs::path(u8"./graphic/anime3.bmp"));
     }
     if (cdata[0].continuous_action_id == 9)
     {
-        picload(fs::u8path(u8"./graphic/anime4.bmp"));
+        picload(fs::path(u8"./graphic/anime4.bmp"));
     }
     gsel(0);
     return;
@@ -17168,7 +17181,7 @@ void draw_caption()
     msgx = 20;
     msgy = 30;
     sx = 760;
-    sx = std::size(s(0)) * 8 + 45;
+    sx = s(0).size() * 8 + 45;
     if (sx > 760)
     {
         sx = 760;
@@ -17498,8 +17511,8 @@ void label_1433()
     {
         for (int x = 0; x < mdata(0); ++x)
         {
-            int sx = std::clamp(120 * x / mdata(0), 2, 112);
-            int sy = std::clamp(84 * y / mdata(1), 2, 76);
+            int sx = clamp(120 * x / mdata(0), 2, 112);
+            int sy = clamp(84 * y / mdata(1), 2, 76);
             if (map(x, y, 6) / 1000 % 100 == 11)
             {
                 // Downstairs
@@ -17965,7 +17978,7 @@ void label_1446()
                 144 + fishanime(1) % 2 * 48,
                 0,
                 48,
-                std::clamp(fishanime(1) * 5, 1, 48));
+                clamp(fishanime(1) * 5, 1, 48));
         }
         return;
     }
@@ -18324,7 +18337,6 @@ void gain_level(int cc)
             {
                 if (cdata[cc].max_level < cdata[cc].level)
                 {
-                    cc = cc;
                     gain_new_body_part(cc);
                 }
             }
@@ -18338,9 +18350,7 @@ void gain_level(int cc)
     {
         label_1455(cc);
     }
-    cc = cc;
     label_1456(cc);
-    cc = cc;
     refresh_character(cc);
 }
 
@@ -18370,10 +18380,10 @@ void label_1455(int cc)
 
 void label_1456(int cc)
 {
-    cdata[cc].required_experience = std::clamp(cdata[cc].level, 1, 200)
-            * (std::clamp(cdata[cc].level, 1, 200) + 1)
-            * (std::clamp(cdata[cc].level, 1, 200) + 2)
-            * (std::clamp(cdata[cc].level, 1, 200) + 3)
+    cdata[cc].required_experience = clamp(cdata[cc].level, 1, 200)
+            * (clamp(cdata[cc].level, 1, 200) + 1)
+            * (clamp(cdata[cc].level, 1, 200) + 2)
+            * (clamp(cdata[cc].level, 1, 200) + 3)
         + 3000;
     if (cdata[cc].required_experience > 100000000
         || cdata[cc].required_experience < 0)
@@ -18407,7 +18417,7 @@ void label_1459(int cc)
         skillexp(
             156,
             cc,
-            std::clamp(r2 * r2 / (sdata(156, cc) * 5 + 10), 10, 1000),
+            clamp(r2 * r2 / (sdata(156, cc) * 5 + 10), 10, 1000),
             10);
     }
 }
@@ -18956,7 +18966,7 @@ void refresh_character(int cc)
         cdata[cc].equipment_type += 4;
     }
     cdata[cc].max_mp =
-        std::clamp(
+        clamp(
             ((sdata(16, cc) * 2 + sdata(15, cc) + sdata(14, cc) / 3)
                  * cdata[cc].level / 25
              + sdata(16, cc)),
@@ -18964,7 +18974,7 @@ void refresh_character(int cc)
             1000000)
         * sdata(3, cc) / 100;
     cdata[cc].max_hp =
-        std::clamp(
+        clamp(
             ((sdata(11, cc) * 2 + sdata(10, cc) + sdata(15, cc) / 3)
                  * cdata[cc].level / 25
              + sdata(11, cc)),
@@ -19080,7 +19090,7 @@ void skillinit(int id, int cc, int initial_level)
     {
         level = 2000 - original_level;
     }
-    sdata.get(id, cc).original_level += std::clamp(level, 0, 2000);
+    sdata.get(id, cc).original_level += clamp(level, 0, 2000);
     sdata.get(id, cc).potential += potential;
 }
 
@@ -19110,7 +19120,7 @@ void label_1512(int cc)
         {
             p = 100;
         }
-        sdata.get(cnt, cc).original_level = std::clamp(p(0), 1, 2000);
+        sdata.get(cnt, cc).original_level = clamp(p(0), 1, 2000);
         sdata.get(cnt, cc).experience = 0;
         sdata.get(cnt, cc).potential = 0;
     }
@@ -19484,7 +19494,6 @@ void label_1520(int cc)
             {
                 cdata[cc].attr_adjs[p] -=
                     sdata.get(10 + p, cc).original_level / 25 + 1;
-                cc = cc;
                 refresh_character(cc);
             }
         }
@@ -19753,7 +19762,7 @@ void label_1520(int cc)
 
 void refresh_burden_state()
 {
-    cdata[0].inventory_weight = std::clamp(inv_weight(0), 0, 20000000)
+    cdata[0].inventory_weight = clamp(inv_weight(0), 0, 20000000)
         * (100 - trait(201) * 10 + trait(205) * 20) / 100;
     cdata[0].max_inventory_weight =
         sdata(10, 0) * 500 + sdata(11, 0) * 250 + sdata(153, 0) * 2000 + 45000;
@@ -19908,7 +19917,7 @@ void label_1530()
     if (cdatan(2, rc) == u8"mutant"s)
     {
         for (int cnt = 0,
-                 cnt_end = cnt + std::clamp(cdata[rc].level / 3, 0, 12);
+                 cnt_end = cnt + clamp(cdata[rc].level / 3, 0, 12);
              cnt < cnt_end;
              ++cnt)
         {
@@ -20924,7 +20933,7 @@ int do_create_character()
     }
     if (dbid == -1)
     {
-        if (fltselect == 0 && filtermax == 0 && std::empty(fltnrace(0)))
+        if (fltselect == 0 && filtermax == 0 && fltnrace(0).empty())
         {
             if (fixlv == 3)
             {
@@ -21291,7 +21300,7 @@ void clear_background_in_character_making()
 {
     gsel(4);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/void.bmp"), 1);
+    picload(fs::path(u8"./graphic/void.bmp"), 1);
     gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gsel(0);
     gmode(0);
@@ -21649,7 +21658,7 @@ void initialize_set_of_random_generation()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{fs::u8path(u8"./data/book.txt")};
+        std::ifstream in{fs::path(u8"./data/book.txt").native()};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -22742,7 +22751,7 @@ void label_1577()
     }
     if (mdata(6) != 1)
     {
-        if (rnd(10 - std::clamp(cdata[cc].curse_power / 10, 0, 9)) == 0)
+        if (rnd(10 - clamp(cdata[cc].curse_power / 10, 0, 9)) == 0)
         {
             efid = 408;
             tc = cc;
@@ -22854,7 +22863,7 @@ void label_1579()
                 if (mdata(6) != 1)
                 {
                     if (rnd(25)
-                        < std::clamp(
+                        < clamp(
                               std::abs(inv[ci].enchantments[cnt].power) / 50,
                               1,
                               25))
@@ -22897,7 +22906,7 @@ void label_1579()
                     }
                     cdata[cc].experience -= cdata[cc].required_experience
                             / (300
-                               - std::clamp(
+                               - clamp(
                                      std::abs(inv[ci].enchantments[cnt].power)
                                          / 2,
                                      0,
@@ -22917,7 +22926,7 @@ void label_1579()
                     if (mdata(6) != 5)
                     {
                         if (rnd(50)
-                            < std::clamp(
+                            < clamp(
                                   std::abs(inv[ci].enchantments[cnt].power)
                                       / 50,
                                   1,
@@ -23335,7 +23344,7 @@ int do_create_item(int slot, int x, int y)
 
     if (inv[ci].id == 687)
     {
-        inv[ci].param1 = rnd(rnd(std::clamp(objlv / 2, 1, 15)) + 1);
+        inv[ci].param1 = rnd(rnd(clamp(objlv / 2, 1, 15)) + 1);
     }
 
     if (inv[ci].id == 667)
@@ -23533,7 +23542,7 @@ void lovemiracle(int prm_932)
         {
             inv[ci].subname = cdata[prm_932].id;
             inv[ci].weight = cdata[prm_932].weight * 10 + 250;
-            inv[ci].value = std::clamp(
+            inv[ci].value = clamp(
                 cdata[prm_932].weight * cdata[prm_932].weight / 10000,
                 200,
                 40000);
@@ -25125,7 +25134,7 @@ void eating_effect_quick()
     skillexp(
         18,
         cc,
-        std::clamp(2500 - sdata(18, cc) * sdata(18, cc) / 10, 20, 2500));
+        clamp(2500 - sdata(18, cc) * sdata(18, cc) / 10, 20, 2500));
     return;
 }
 
@@ -25548,7 +25557,7 @@ int dist_town()
 
 void map_initcustom(const std::string& prm_934)
 {
-    fmapfile = fs::u8path(u8"./map/"s + prm_934);
+    fmapfile = fs::path(u8"./map/"s + prm_934).generic_string();
     ctrl_file(5);
     map_tileset(mdata(12));
     nooracle = 1;
@@ -25611,7 +25620,7 @@ void map_reload(const std::string& prm_935)
 {
     int y_at_m166 = 0;
     int x_at_m166 = 0;
-    fmapfile = fs::u8path(u8"./map/"s + prm_935);
+    fmapfile = fs::path(u8"./map/"s + prm_935).generic_string();
     ctrl_file(16);
     for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
     {
@@ -27583,7 +27592,7 @@ void generate_random_nefia()
     }
     if (rnd(4) == 0)
     {
-        p = std::clamp(rnd(mdata(0) * mdata(1) / 500 + 1) + 1, 3, 15);
+        p = clamp(rnd(mdata(0) * mdata(1) / 500 + 1) + 1, 3, 15);
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
             map_barrel(0, 0);
@@ -27703,7 +27712,7 @@ int initialize_quest_map_crop()
         {
             tile = 31;
         }
-        size = std::clamp(dist(dx, dy, mdata(0) / 2, mdata(1) / 2) / 8, 0, 8);
+        size = clamp(dist(dx, dy, mdata(0) / 2, mdata(1) / 2) / 8, 0, 8);
         crop = isetcrop(rnd(length(isetcrop)));
         for (int cnt = dy, cnt_end = cnt + (h); cnt < cnt_end; ++cnt)
         {
@@ -27735,7 +27744,7 @@ int initialize_quest_map_crop()
                 flt();
                 itemcreate(-1, dbid, x, y, 0);
                 inv[ci].own_state = 4;
-                p = std::clamp(size + rnd((rnd(4) + 1)), 0, 9);
+                p = clamp(size + rnd((rnd(4) + 1)), 0, 9);
                 inv[ci].weight = inv[ci].weight * (80 + p * p * 100) / 100;
                 inv[ci].subname = p;
             }
@@ -28259,7 +28268,7 @@ int initialize_quest_map_party()
         ry = roomy(cnt) + 1;
         rh = roomheight(cnt) - 2;
         rdsize = rw * rh;
-        roomdiff = std::clamp(
+        roomdiff = clamp(
             rnd(qdata(5, gdata_executing_immediate_quest) / 3 + 3), 0, 9);
         if (rnd(2) == 0)
         {
@@ -29395,7 +29404,7 @@ void use_house_board()
         for (int cnt = 0; cnt < 8; ++cnt)
         {
             pos(cnt % 4 * 180, cnt / 4 * 300);
-            picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+            picload(fs::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
         }
         gsel(0);
         snd(26);
@@ -29435,7 +29444,7 @@ void use_house_board()
             mes(s(cnt));
             font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
             for (int cnt = 0,
-                     cnt_end = cnt + (std::clamp(p(cnt) / 1000, 1, 10));
+                     cnt_end = cnt + (clamp(p(cnt) / 1000, 1, 10));
                  cnt < cnt_end;
                  ++cnt)
             {
@@ -29604,7 +29613,7 @@ void use_house_board()
         {
             snd(12);
             cdata[0].gold -= calcshopreform();
-            mdata(18) = std::clamp(mdata(18) + 10, 1, 400);
+            mdata(18) = clamp(mdata(18) + 10, 1, 400);
             txtef(2);
             txt(lang(
                 u8"店を拡張した！これからは"s + mdata(18)
@@ -30033,7 +30042,7 @@ void show_shop_log()
     {
         ctrl_file(4, u8"shoptmp.s2");
     }
-    if (fs::exists(fs::u8path(u8"./tmp") / u8"shop5.s2"))
+    if (fs::exists(fs::path(u8"./tmp") / u8"shop5.s2"))
     {
         ctrl_file(3, u8"shop5.s2");
     }
@@ -30126,7 +30135,7 @@ void show_shop_log()
                     + u8" in the shop strong box."s));
         }
         skillexp(
-            156, worker, std::clamp(int(std::sqrt(income(0))) * 6, 25, 1000));
+            156, worker, clamp(int(std::sqrt(income(0))) * 6, 25, 1000));
     }
     if (sold > (110 - gdata(125) / 100) / 10)
     {
@@ -30275,7 +30284,7 @@ void label_1729(int val0)
     int category = the_item_db[inv[val0].id]->category;
     if (category == 60000)
     {
-        gdata(77) += std::clamp(inv[val0].value / 50, 50, 500);
+        gdata(77) += clamp(inv[val0].value / 50, 50, 500);
     }
     p = inv[val0].value;
     for (int cnt = 0; cnt < 1; ++cnt)
@@ -30347,7 +30356,7 @@ void label_1730()
     {
         if (list(0, cnt) != 0)
         {
-            gdata(78) += std::clamp(list(1, cnt), 100, 2000);
+            gdata(78) += clamp(list(1, cnt), 100, 2000);
         }
     }
     if (gdata(77) > 10000)
@@ -30532,7 +30541,7 @@ void update_ranch()
                     {
                         inv[ci].subname = cdata[cnt].id;
                         inv[ci].weight = cdata[cnt].weight * 10 + 250;
-                        inv[ci].value = std::clamp(
+                        inv[ci].value = clamp(
                             cdata[cnt].weight * cdata[cnt].weight / 10000,
                             200,
                             40000);
@@ -30577,7 +30586,7 @@ void update_ranch()
                     {
                         inv[ci].subname = cdata[cnt].id;
                         inv[ci].weight = cdata[cnt].weight * 40 + 300;
-                        inv[ci].value = std::clamp(
+                        inv[ci].value = clamp(
                             cdata[cnt].weight * cdata[cnt].weight / 5000,
                             1,
                             20000);
@@ -30766,7 +30775,7 @@ void set_character_generation_filter()
         if (gdata_executing_immediate_quest_type == 1006)
         {
             fltn(u8"wild"s);
-            objlv = std::clamp(objlv / 4, 1, 8);
+            objlv = clamp(objlv / 4, 1, 8);
         }
         return;
     }
@@ -31219,7 +31228,7 @@ void exit_map()
     else
     {
         label_1738();
-        if (fs::exists(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2")))
+        if (fs::exists(fs::path(u8"./tmp/mdata_"s + mid + u8".s2")))
         {
             ctrl_file(11);
         }
@@ -31507,7 +31516,7 @@ void label_1746()
     if (mdata(2) != mtilefilecur)
     {
         pos(0, 0);
-        picload(fs::u8path(u8"./graphic/map"s + mdata(2) + u8".bmp"), 1);
+        picload(fs::path(u8"./graphic/map"s + mdata(2) + u8".bmp"), 1);
         mtilefilecur = mdata(2);
         initialize_map_chip();
     }
@@ -31778,8 +31787,8 @@ void label_1750()
             for (int cnt = 0;; ++cnt)
             {
                 await();
-                dx = std::clamp(rnd(cnt / 4 + 1) + 1, 1, mdata(0));
-                dy = std::clamp(rnd(cnt / 4 + 1) + 1, 1, mdata(1));
+                dx = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata(0));
+                dy = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata(1));
                 x = adata(1, p) + rnd(dx) - rnd(dx);
                 y = adata(2, p) + rnd(dy) - rnd(dy);
                 if (x <= 0 || y <= 0 || x >= mdata(0) - 1 || y >= mdata(1) - 1)
@@ -33747,7 +33756,7 @@ void craft_material_menu()
     }
     gsel(7);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/ie_scroll.bmp"));
+    picload(fs::path(u8"./graphic/ie_scroll.bmp"));
     gsel(0);
     snd(92);
     drawmenu();
@@ -33918,7 +33927,7 @@ void atxinit()
         gsel(4);
         gmode(0);
         pos(0, 0);
-        picload(fs::u8path(u8"./graphic/"s + atxbg + u8".bmp"), 1);
+        picload(fs::path(u8"./graphic/"s + atxbg + u8".bmp"), 1);
         pos(0, inf_msgh);
         gzoom(4, 0, 0, 240, 160, windoww, windowh - inf_verh - inf_msgh);
         gmode(2);
@@ -34017,7 +34026,7 @@ label_18671_internal:
         if (strmid(s, 0, 1) == u8"@"s)
         {
             s(1) = strmid(s, 1, 2);
-            s = strmid(s, 3, std::size(s(0)) - 3);
+            s = strmid(s, 3, s(0).size() - 3);
             font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
             color(250, 240, 230);
             if (s(1) == u8"BL"s)
@@ -35283,14 +35292,14 @@ int modpiety(int prm_1035)
 
 void set_npc_religion()
 {
-    if (!std::empty(cdata[tc].god_id) || cbit(990, tc) || tc == 0)
+    if (!cdata[tc].god_id.empty() || cbit(990, tc) || tc == 0)
     {
         return;
     }
     randomize(gdata_random_seed + gdata_current_map);
     cdata[tc].god_id = core_god::int2godid(rnd(8));
     randomize();
-    if (std::empty(cdata[tc].god_id) || rnd(4) == 0)
+    if (cdata[tc].god_id.empty() || rnd(4) == 0)
     {
         cbitmod(990, tc, 1);
     }
@@ -35305,42 +35314,42 @@ void apply_god_blessing(int cc)
     {
         if (sdata(12, cc) > 0)
         {
-            sdata(12, cc) += std::clamp(
+            sdata(12, cc) += clamp(
                 cdata[cc].piety_point / 400, 1, 8 + sdata(181, 0) / 10);
         }
         if (sdata(13, cc) > 0)
         {
-            sdata(13, cc) += std::clamp(
+            sdata(13, cc) += clamp(
                 cdata[cc].piety_point / 300, 1, 14 + sdata(181, 0) / 10);
         }
         if (sdata(154, cc) > 0)
         {
-            sdata(154, cc) += std::clamp(
+            sdata(154, cc) += clamp(
                 cdata[cc].piety_point / 500, 1, 8 + sdata(181, 0) / 10);
         }
         if (sdata(110, cc) > 0)
         {
-            sdata(110, cc) += std::clamp(
+            sdata(110, cc) += clamp(
                 cdata[cc].piety_point / 250, 1, 18 + sdata(181, 0) / 10);
         }
         if (sdata(159, cc) > 0)
         {
-            sdata(159, cc) += std::clamp(
+            sdata(159, cc) += clamp(
                 cdata[cc].piety_point / 350, 1, 8 + sdata(181, 0) / 10);
         }
         if (sdata(158, cc) > 0)
         {
-            sdata(158, cc) += std::clamp(
+            sdata(158, cc) += clamp(
                 cdata[cc].piety_point / 250, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(176, cc) > 0)
         {
-            sdata(176, cc) += std::clamp(
+            sdata(176, cc) += clamp(
                 cdata[cc].piety_point / 300, 1, 10 + sdata(181, 0) / 10);
         }
         if (sdata(179, cc) > 0)
         {
-            sdata(179, cc) += std::clamp(
+            sdata(179, cc) += clamp(
                 cdata[cc].piety_point / 350, 1, 12 + sdata(181, 0) / 10);
         }
     }
@@ -35348,32 +35357,32 @@ void apply_god_blessing(int cc)
     {
         if (sdata(13, cc) > 0)
         {
-            sdata(13, cc) += std::clamp(
+            sdata(13, cc) += clamp(
                 cdata[cc].piety_point / 450, 1, 10 + sdata(181, 0) / 10);
         }
         if (sdata(18, cc) > 0)
         {
-            sdata(18, cc) += std::clamp(
+            sdata(18, cc) += clamp(
                 cdata[cc].piety_point / 350, 1, 30 + sdata(181, 0) / 10);
         }
         if (sdata(108, cc) > 0)
         {
-            sdata(108, cc) += std::clamp(
+            sdata(108, cc) += clamp(
                 cdata[cc].piety_point / 350, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(109, cc) > 0)
         {
-            sdata(109, cc) += std::clamp(
+            sdata(109, cc) += clamp(
                 cdata[cc].piety_point / 450, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(157, cc) > 0)
         {
-            sdata(157, cc) += std::clamp(
+            sdata(157, cc) += clamp(
                 cdata[cc].piety_point / 450, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(174, cc) > 0)
         {
-            sdata(174, cc) += std::clamp(
+            sdata(174, cc) += clamp(
                 cdata[cc].piety_point / 550, 1, 8 + sdata(181, 0) / 10);
         }
     }
@@ -35381,27 +35390,27 @@ void apply_god_blessing(int cc)
     {
         if (sdata(16, cc) > 0)
         {
-            sdata(16, cc) += std::clamp(
+            sdata(16, cc) += clamp(
                 cdata[cc].piety_point / 300, 1, 18 + sdata(181, 0) / 10);
         }
         if (sdata(155, cc) > 0)
         {
-            sdata(155, cc) += std::clamp(
+            sdata(155, cc) += clamp(
                 cdata[cc].piety_point / 350, 1, 15 + sdata(181, 0) / 10);
         }
         if (sdata(50, cc) > 0)
         {
-            sdata(50, cc) += std::clamp(
+            sdata(50, cc) += clamp(
                 cdata[cc].piety_point / 50, 1, 200 + sdata(181, 0) / 10);
         }
         if (sdata(51, cc) > 0)
         {
-            sdata(51, cc) += std::clamp(
+            sdata(51, cc) += clamp(
                 cdata[cc].piety_point / 50, 1, 200 + sdata(181, 0) / 10);
         }
         if (sdata(52, cc) > 0)
         {
-            sdata(52, cc) += std::clamp(
+            sdata(52, cc) += clamp(
                 cdata[cc].piety_point / 50, 1, 200 + sdata(181, 0) / 10);
         }
     }
@@ -35409,32 +35418,32 @@ void apply_god_blessing(int cc)
     {
         if (sdata(17, cc) > 0)
         {
-            sdata(17, cc) += std::clamp(
+            sdata(17, cc) += clamp(
                 cdata[cc].piety_point / 250, 1, 20 + sdata(181, 0) / 10);
         }
         if (sdata(19, cc) > 0)
         {
-            sdata(19, cc) += std::clamp(
+            sdata(19, cc) += clamp(
                 cdata[cc].piety_point / 100, 1, 50 + sdata(181, 0) / 10);
         }
         if (sdata(173, cc) > 0)
         {
-            sdata(173, cc) += std::clamp(
+            sdata(173, cc) += clamp(
                 cdata[cc].piety_point / 300, 1, 15 + sdata(181, 0) / 10);
         }
         if (sdata(164, cc) > 0)
         {
-            sdata(164, cc) += std::clamp(
+            sdata(164, cc) += clamp(
                 cdata[cc].piety_point / 350, 1, 17 + sdata(181, 0) / 10);
         }
         if (sdata(185, cc) > 0)
         {
-            sdata(185, cc) += std::clamp(
+            sdata(185, cc) += clamp(
                 cdata[cc].piety_point / 300, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(158, cc) > 0)
         {
-            sdata(158, cc) += std::clamp(
+            sdata(158, cc) += clamp(
                 cdata[cc].piety_point / 450, 1, 8 + sdata(181, 0) / 10);
         }
     }
@@ -35442,32 +35451,32 @@ void apply_god_blessing(int cc)
     {
         if (sdata(10, cc) > 0)
         {
-            sdata(10, cc) += std::clamp(
+            sdata(10, cc) += clamp(
                 cdata[cc].piety_point / 450, 1, 11 + sdata(181, 0) / 10);
         }
         if (sdata(11, cc) > 0)
         {
-            sdata(11, cc) += std::clamp(
+            sdata(11, cc) += clamp(
                 cdata[cc].piety_point / 350, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(168, cc) > 0)
         {
-            sdata(168, cc) += std::clamp(
+            sdata(168, cc) += clamp(
                 cdata[cc].piety_point / 350, 1, 15 + sdata(181, 0) / 10);
         }
         if (sdata(153, cc) > 0)
         {
-            sdata(153, cc) += std::clamp(
+            sdata(153, cc) += clamp(
                 cdata[cc].piety_point / 300, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(163, cc) > 0)
         {
-            sdata(163, cc) += std::clamp(
+            sdata(163, cc) += clamp(
                 cdata[cc].piety_point / 350, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(174, cc) > 0)
         {
-            sdata(174, cc) += std::clamp(
+            sdata(174, cc) += clamp(
                 cdata[cc].piety_point / 450, 1, 8 + sdata(181, 0) / 10);
         }
     }
@@ -35475,37 +35484,37 @@ void apply_god_blessing(int cc)
     {
         if (sdata(15, cc) > 0)
         {
-            sdata(15, cc) += std::clamp(
+            sdata(15, cc) += clamp(
                 cdata[cc].piety_point / 300, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(154, cc) > 0)
         {
-            sdata(154, cc) += std::clamp(
+            sdata(154, cc) += clamp(
                 cdata[cc].piety_point / 250, 1, 18 + sdata(181, 0) / 10);
         }
         if (sdata(155, cc) > 0)
         {
-            sdata(155, cc) += std::clamp(
+            sdata(155, cc) += clamp(
                 cdata[cc].piety_point / 400, 1, 10 + sdata(181, 0) / 10);
         }
         if (sdata(161, cc) > 0)
         {
-            sdata(161, cc) += std::clamp(
+            sdata(161, cc) += clamp(
                 cdata[cc].piety_point / 400, 1, 9 + sdata(181, 0) / 10);
         }
         if (sdata(184, cc) > 0)
         {
-            sdata(184, cc) += std::clamp(
+            sdata(184, cc) += clamp(
                 cdata[cc].piety_point / 450, 1, 8 + sdata(181, 0) / 10);
         }
         if (sdata(174, cc) > 0)
         {
-            sdata(174, cc) += std::clamp(
+            sdata(174, cc) += clamp(
                 cdata[cc].piety_point / 400, 1, 10 + sdata(181, 0) / 10);
         }
         if (sdata(164, cc) > 0)
         {
-            sdata(164, cc) += std::clamp(
+            sdata(164, cc) += clamp(
                 cdata[cc].piety_point / 400, 1, 12 + sdata(181, 0) / 10);
         }
     }
@@ -35513,37 +35522,37 @@ void apply_god_blessing(int cc)
     {
         if (sdata(13, cc) > 0)
         {
-            sdata(13, cc) += std::clamp(
+            sdata(13, cc) += clamp(
                 cdata[cc].piety_point / 400, 1, 8 + sdata(181, 0) / 10);
         }
         if (sdata(12, cc) > 0)
         {
-            sdata(12, cc) += std::clamp(
+            sdata(12, cc) += clamp(
                 cdata[cc].piety_point / 350, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(14, cc) > 0)
         {
-            sdata(14, cc) += std::clamp(
+            sdata(14, cc) += clamp(
                 cdata[cc].piety_point / 250, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(180, cc) > 0)
         {
-            sdata(180, cc) += std::clamp(
+            sdata(180, cc) += clamp(
                 cdata[cc].piety_point / 300, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(178, cc) > 0)
         {
-            sdata(178, cc) += std::clamp(
+            sdata(178, cc) += clamp(
                 cdata[cc].piety_point / 350, 1, 10 + sdata(181, 0) / 10);
         }
         if (sdata(177, cc) > 0)
         {
-            sdata(177, cc) += std::clamp(
+            sdata(177, cc) += clamp(
                 cdata[cc].piety_point / 350, 1, 9 + sdata(181, 0) / 10);
         }
         if (sdata(150, cc) > 0)
         {
-            sdata(150, cc) += std::clamp(
+            sdata(150, cc) += clamp(
                 cdata[cc].piety_point / 350, 1, 8 + sdata(181, 0) / 10);
         }
     }
@@ -35671,7 +35680,7 @@ void label_1886()
     keylog = "";
     listmax = 0;
     chatesc = 2;
-    if (!std::empty(cdata[0].god_id))
+    if (!cdata[0].god_id.empty())
     {
         if (inv[ci].param1 == 0)
         {
@@ -35710,7 +35719,7 @@ void label_1886()
     gsel(4);
     gmode(0);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/bg_altar.bmp"), 1);
+    picload(fs::path(u8"./graphic/bg_altar.bmp"), 1);
     pos(0, 0);
     gzoom(4, 0, 0, 600, 400, windoww, windowh - inf_verh);
     gsel(0);
@@ -35793,7 +35802,7 @@ void label_1888()
         gmode(2);
         render_hud();
         redraw();
-        if (!std::empty(cdata[0].god_id))
+        if (!cdata[0].god_id.empty())
         {
             mode = 9;
             txtef(8);
@@ -35829,7 +35838,7 @@ void switch_religion()
     spact(23) = 0;
     spact(24) = 0;
     spact(25) = 0;
-    if (std::empty(cdata[0].god_id))
+    if (cdata[0].god_id.empty())
     {
         txtef(5);
         txt(lang(
@@ -35867,7 +35876,7 @@ void switch_religion()
 
 void pray()
 {
-    if (std::empty(cdata[0].god_id))
+    if (cdata[0].god_id.empty())
     {
         txt(lang(
             name(0) + u8"は神を信仰していないが、試しに祈ってみた。"s,
@@ -36127,7 +36136,7 @@ void pray()
 
 void offer()
 {
-    if (std::empty(cdata[0].god_id))
+    if (cdata[0].god_id.empty())
     {
         txt(lang(
             u8"あなたは神を信仰していないが、試しに捧げてみた。"s,
@@ -36158,7 +36167,7 @@ void offer()
     }
     if (inv[ci].id == 204)
     {
-        i = std::clamp(inv[ci].weight / 200, 1, 50);
+        i = clamp(inv[ci].weight / 200, 1, 50);
         if (inv[ci].param3 < 0)
         {
             i = 1;
@@ -36336,7 +36345,7 @@ int proc_random_event()
     }
     if (mode == 9)
     {
-        if (!std::empty(cdata[0].god_id))
+        if (!cdata[0].god_id.empty())
         {
             if (rnd(12) == 0)
             {
@@ -36949,7 +36958,7 @@ int show_random_event_window(const std::string& file)
     gsel(7);
     gmode(0);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/"s + file + u8".bmp"), 0);
+    picload(fs::path(u8"./graphic/"s + file + u8".bmp"), 0);
     tx = ginfo(12);
     ty = ginfo(13);
     gsel(0);
@@ -37087,7 +37096,7 @@ void label_1901()
 {
     invfile = 4;
     ctrl_file(4, u8"shoptmp.s2");
-    if (fs::exists(fs::u8path(u8"./tmp") / u8"shop4.s2"s))
+    if (fs::exists(fs::path(u8"./tmp") / u8"shop4.s2"s))
     {
         ctrl_file(3, u8"shop4.s2"s);
     }
@@ -37142,7 +37151,7 @@ void label_1901()
     }
     if (cdata[0].fame > 0)
     {
-        p = std::clamp(cdata[0].fame / 10, 100, 25000);
+        p = clamp(cdata[0].fame / 10, 100, 25000);
         if (cdata[0].fame >= 25000)
         {
             p += (cdata[0].fame - 25000) / 100;
@@ -38289,7 +38298,7 @@ void label_1922()
     rpid = 0;
     gsel(3);
     pos(960, 96);
-    picload(fs::u8path(u8"./graphic/deco_blend.bmp"), 1);
+    picload(fs::path(u8"./graphic/deco_blend.bmp"), 1);
     gsel(0);
     clear_rprefmat();
 label_1923:
@@ -39425,7 +39434,7 @@ void label_1942()
         }
     }
     userfile = u8"temp.eum"s;
-    bload(fs::u8path(u8"./user/"s + userfile), headtemp, 1024);
+    bload(fs::path(u8"./user/"s + userfile), headtemp, 1024);
     notesel(headtemp);
     noteget(s, 5);
     noteget(s(1), 6);
@@ -39456,15 +39465,14 @@ label_19431_internal:
     cc = 0;
     cs_bk = -1;
     SDIM2(headtemp, 1024);
-    const auto base_dir = fs::u8path("./user");
+    const auto base_dir = fs::path("./user");
     const auto pattern =
         comctrl == 1 ? std::regex{u8R"(.*\.ept)"} : std::regex{u8R"(.*\.eum)"};
     for (const auto& entry : filesystem::dir_entries{
              base_dir, filesystem::dir_entries::type::file, pattern})
     {
         const auto path = entry.path();
-        if (path == fs::u8path(u8"temp.enum")
-            || path == fs::u8path(u8"temp.ept"))
+        if (path == fs::path(u8"temp.enum") || path == fs::path(u8"temp.ept"))
             continue;
         bload(path, headtemp, 1024);
         notesel(headtemp);
@@ -39474,9 +39482,9 @@ label_19431_internal:
         list(0, listmax) = listmax;
         list(1, listmax) = 0;
         list(2, listmax) = elona::stoi(s(2));
-        listn(0, listmax) = u8"("s + path.filename().generic_u8string()
-            + u8") "s + s + u8" "s + s(1);
-        listn(1, listmax) = path.filename();
+        listn(0, listmax) = u8"("s + path.filename().generic_string() + u8") "s
+            + s + u8" "s + s(1);
+        listn(1, listmax) = path.filename().generic_string();
         ++listmax;
         noteunsel();
     }
@@ -39588,7 +39596,7 @@ label_1945_internal:
                 u8"Selected item is incompatible."s));
             goto label_1944_internal;
         }
-        folder = fs::u8path(u8"./user/");
+        folder = fs::path(u8"./user/").generic_string();
         if (listn(1, p) == u8"net"s)
         {
             if (comctrl == 1)
@@ -39637,7 +39645,7 @@ label_1945_internal:
             if (getkey(snail::key::backspace))
             {
                 userfile = listn(1, cs + pagesize * page);
-                if (!fs::exists(fs::u8path(u8"./user/"s + userfile)))
+                if (!fs::exists(fs::path(u8"./user/"s + userfile)))
                 {
                     goto label_1944_internal;
                 }
@@ -39648,7 +39656,7 @@ label_1945_internal:
                 rtval = show_prompt(promptx, prompty, 160);
                 if (rtval == 0)
                 {
-                    elona_delete(fs::u8path(u8"./user/"s + userfile));
+                    elona_delete(fs::path(u8"./user/"s + userfile));
                     goto label_19431_internal;
                 }
                 goto label_1944_internal;
@@ -39862,8 +39870,8 @@ label_1948_internal:
             snd(5);
             keyrelease();
         }
-        tx = std::clamp((mousex - inf_screenx), 0, windoww) / 48;
-        ty = std::clamp((mousey - inf_screeny), 0, (windowh - inf_verh)) / 48;
+        tx = clamp((mousex - inf_screenx), 0, windoww) / 48;
+        ty = clamp((mousey - inf_screeny), 0, (windowh - inf_verh)) / 48;
         int stat = key_direction();
         if (stat == 1)
         {
@@ -40790,7 +40798,7 @@ void label_1964()
         sdata(cnt, rc) = 1;
     }
     apply_god_blessing(56);
-    if (!std::empty(cdata[0].god_id))
+    if (!cdata[0].god_id.empty())
     {
         buff += u8"<title1>◆ "s + i18n::_(u8"god", cdata[0].god_id, u8"name")
             + u8"による能力の恩恵<def>\n"s;
@@ -40901,7 +40909,7 @@ void label_1968()
     windowanime(wx, wy, ww, wh, 10, 4);
     gsel(3);
     pos(960, 96);
-    picload(fs::u8path(u8"./graphic/deco_feat.bmp"), 1);
+    picload(fs::path(u8"./graphic/deco_feat.bmp"), 1);
     gsel(0);
     windowshadow = 1;
     return;
@@ -41594,7 +41602,7 @@ void update_journal()
         noteadd(""s);
     }
     gold = 0;
-    p = std::clamp(cdata[0].fame / 10, 100, 25000);
+    p = clamp(cdata[0].fame / 10, 100, 25000);
     if (cdata[0].fame >= 25000)
     {
         p += (cdata[0].fame - 25000) / 100;
@@ -41706,7 +41714,7 @@ label_1973_internal:
     }
     gsel(4);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/book.bmp"), 1);
+    picload(fs::path(u8"./graphic/book.bmp"), 1);
     gsel(0);
     pos(wx, wy);
     gcopy(4, 0, 0, 736, 448);
@@ -41723,7 +41731,7 @@ label_1973_internal:
         if (strmid(s, 0, 1) == u8"@"s)
         {
             s(1) = strmid(s, 1, 2);
-            s = strmid(s, 3, std::size(s(0)) - 3);
+            s = strmid(s, 3, s(0).size() - 3);
             font(lang(cfg_font1, cfg_font2), 10 + en - en * 2, 1);
             color(0, 0, 200);
             if (s(1) == u8"QL"s)
@@ -41911,7 +41919,7 @@ void show_quest_board()
     sort_list_by_column1();
     gsel(3);
     pos(960, 96);
-    picload(fs::u8path(u8"./graphic/deco_board.bmp"), 1);
+    picload(fs::path(u8"./graphic/deco_board.bmp"), 1);
     gsel(0);
     gsel(4);
     fillbg(3, 960, 96, 128, 128);
@@ -42997,7 +43005,7 @@ label_1998_internal:
         {
             s = strutil::to_lower(s(0));
         }
-        for (int cnt = 0, cnt_end = (std::size(inputlog(0))); cnt < cnt_end;
+        for (int cnt = 0, cnt_end = (inputlog(0).size()); cnt < cnt_end;
              ++cnt)
         {
             if (strutil::contains(s(0), strmid(inputlog, 0, cnt * (1 + jp))))
@@ -43158,7 +43166,7 @@ label_1999_internal:
         {
             s = strutil::to_lower(s(0));
         }
-        for (int cnt = 0, cnt_end = (std::size(inputlog(0)) / (1 + jp));
+        for (int cnt = 0, cnt_end = (inputlog(0).size() / (1 + jp));
              cnt < cnt_end;
              ++cnt)
         {
@@ -43282,7 +43290,7 @@ void select_wished_character()
         }
         if (strutil::contains(s(0), s2))
         {
-            p = 1000 - (std::size(s(0)) - std::size(s2)) * 10;
+            p = 1000 - (s(0).size() - s2.size()) * 10;
         }
         if (p != 0)
         {
@@ -43498,7 +43506,7 @@ void label_2007()
     sort_list_by_column1();
     gsel(3);
     pos(960, 96);
-    picload(fs::u8path(u8"./graphic/deco_skill.bmp"), 1);
+    picload(fs::path(u8"./graphic/deco_skill.bmp"), 1);
     gsel(0);
     windowshadow = 1;
 label_2008_internal:
@@ -43919,7 +43927,7 @@ void do_interact_command()
     {
         gsel(4);
         pos(0, 0);
-        picload(fs::u8path(u8"./graphic/face1.bmp"), 1);
+        picload(fs::path(u8"./graphic/face1.bmp"), 1);
         gsel(0);
         ccbk = cc;
         cc = tc;
@@ -43981,7 +43989,7 @@ int change_npc_tone()
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+        picload(fs::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(0);
     listmax = 0;
@@ -43993,7 +44001,7 @@ int change_npc_tone()
     list(0, 0) = -999;
     listn(0, 0) = lang(u8"デフォルトの口調"s, u8"Default Tone"s);
     ++listmax;
-    const auto base_dir = fs::u8path(u8"./user/talk");
+    const auto base_dir = fs::path(u8"./user/talk");
     for (const auto& entry :
          filesystem::dir_entries{base_dir,
                                  filesystem::dir_entries::type::file,
@@ -44001,7 +44009,7 @@ int change_npc_tone()
     {
         list(0, listmax) = listmax;
         listn(0, listmax) =
-            fs::relative(entry.path(), base_dir).generic_u8string();
+            fs::relative(entry.path(), base_dir).generic_string();
         ++listmax;
     }
     windowshadow = 1;
@@ -44118,7 +44126,7 @@ int summon_cnpc()
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+        picload(fs::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(0);
     listmax = 0;
@@ -44222,8 +44230,8 @@ label_2020_internal:
                   u8" has been summoned to your world!"s));
         load_user_file(userfile);
         bcopy(
-            fs::u8path(u8"./user/"s + listn(1, listmax)),
-            fs::u8path(u8"./user/"s + listn(0, listmax) + u8".npc"s));
+            fs::path(u8"./user/"s + listn(1, listmax)),
+            fs::path(u8"./user/"s + listn(0, listmax) + u8".npc"s));
         load_cnpc_data();
         for (int cnt = 0; cnt < 245; ++cnt)
         {
@@ -44268,12 +44276,12 @@ void label_2022()
     snd(59);
     gsel(4);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/book.bmp"), 1);
+    picload(fs::path(u8"./graphic/book.bmp"), 1);
     gsel(0);
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{fs::u8path(u8"./data/book.txt")};
+        std::ifstream in{fs::path(u8"./data/book.txt").native()};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -44412,7 +44420,7 @@ void label_2027()
     sort_list_by_column1();
     gsel(3);
     pos(960, 96);
-    picload(fs::u8path(u8"./graphic/deco_spell.bmp"), 1);
+    picload(fs::path(u8"./graphic/deco_spell.bmp"), 1);
     gsel(0);
     windowshadow = 1;
 label_2028_internal:
@@ -44656,7 +44664,7 @@ void label_2031()
         }
         else if (i == 461)
         {
-            s += ""s + std::clamp(bonus, 1, 100) + u8"%"s;
+            s += ""s + clamp(bonus, 1, 100) + u8"%"s;
         }
         else
         {
@@ -45001,7 +45009,7 @@ label_20331:
     }
     sort_list_by_column1();
     gsel(7);
-    picload(fs::u8path(u8"./graphic/ie_sheet.bmp"));
+    picload(fs::path(u8"./graphic/ie_sheet.bmp"));
     gsel(0);
     wx = (windoww - 700) / 2 + inf_screenx;
     wy = winposy(400) - 10;
@@ -45024,10 +45032,10 @@ label_20331:
     windowanime(wx, wy, ww, wh, 10, 4);
     gsel(4);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/face1.bmp"), 1);
+    picload(fs::path(u8"./graphic/face1.bmp"), 1);
     if (cdata[cc].portrait < 0)
     {
-        s = fs::u8path(u8"./user/graphic/face"s)
+        s = fs::path(u8"./user/graphic/face"s).generic_string()
             + std::abs((cdata[cc].portrait + 1)) + u8".bmp"s;
         if (cdata[cc].portrait != -1)
         {
@@ -45173,7 +45181,7 @@ label_2035_internal:
         }
         else
         {
-            s = fs::u8path(u8"./user/graphic/face"s)
+            s = fs::path(u8"./user/graphic/face"s).generic_string()
                 + std::abs((cdata[cc].portrait + 1)) + u8".bmp"s;
             if (cdata[cc].portrait != -1)
             {
@@ -45583,7 +45591,7 @@ label_2035_internal:
                 cs_list(cs == cnt, s, wx + x, wy + 66 + cnt * 19 - 1);
                 if (list(0, p) >= 50 && list(0, p) < 100)
                 {
-                    p(1) = std::clamp(sdata(list(0, p), cc) / 50, 0, 6);
+                    p(1) = clamp(sdata(list(0, p), cc) / 50, 0, 6);
                     s = i18n::_(u8"ui", u8"resistance", u8"_"s + p(1));
                 }
                 else
@@ -45759,7 +45767,7 @@ label_2035_internal:
             modify_potential(
                 cc,
                 csskill,
-                std::clamp(15 - sdata.get(csskill, cc).potential / 15, 2, 15));
+                clamp(15 - sdata.get(csskill, cc).potential / 15, 2, 15));
             render_hud();
             goto label_2034_internal;
         }
@@ -45997,12 +46005,13 @@ int change_appearance()
     windowanime(wx, wy, ww, wh, 10, 7);
     gsel(4);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/face1.bmp"), 1);
+    picload(fs::path(u8"./graphic/face1.bmp"), 1);
     buffer(7, 800, 112);
     boxf();
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        s = fs::u8path(u8"./user/graphic/face"s + (cnt + 1) + u8".bmp");
+        s = fs::path(u8"./user/graphic/face"s + (cnt + 1) + u8".bmp")
+                .generic_string();
         if (fs::exists(s))
         {
             pos(cnt * 80, 0);
@@ -46011,7 +46020,7 @@ int change_appearance()
     }
     gsel(3);
     pos(960, 96);
-    picload(fs::u8path(u8"./graphic/deco_mirror.bmp"), 1);
+    picload(fs::path(u8"./graphic/deco_mirror.bmp"), 1);
     gsel(0);
     windowshadow = 1;
 label_2040_internal:
@@ -46249,8 +46258,8 @@ label_2041_internal:
         if (rtval(1) == 0)
         {
             if (fs::exists(
-                    fs::u8path(u8"./graphic/pcc_"s) + rtvaln + u8"_"s
-                    + (pcc(rtval, cc) % 1000 + 1) + u8".bmp"s))
+                    fs::path(u8"./graphic/pcc_"s).generic_string() + rtvaln
+                    + u8"_"s + (pcc(rtval, cc) % 1000 + 1) + u8".bmp"s))
             {
                 ++pcc(rtval, cc);
                 p = 1;
@@ -46282,8 +46291,8 @@ label_2041_internal:
         {
             if ((pcc(rtval, cc) % 1000 == 1 && rtval != 15)
                 || fs::exists(
-                       fs::u8path(u8"./graphic/pcc_"s) + rtvaln + u8"_"s
-                       + (pcc(rtval, cc) % 1000 - 1) + u8".bmp"s))
+                       fs::path(u8"./graphic/pcc_"s).generic_string() + rtvaln
+                       + u8"_"s + (pcc(rtval, cc) % 1000 - 1) + u8".bmp"s))
             {
                 --pcc(rtval, cc);
                 p = 1;
@@ -46700,7 +46709,7 @@ void ctrl_inventory_equipment()
     windowanime(wx, wy, ww, wh, 10, 4);
     gsel(3);
     pos(960, 96);
-    picload(fs::u8path(u8"./graphic/deco_wear.bmp"), 1);
+    picload(fs::path(u8"./graphic/deco_wear.bmp"), 1);
     gsel(0);
     windowshadow = 1;
 label_2051_internal:
@@ -47255,9 +47264,9 @@ std::string trimdesc(const std::string& prm_1060, int prm_1061)
             }
             if (jp)
             {
-                if (strmid(q_at_m187, std::size(q_at_m187) - 3, 2) == u8"。"s)
+                if (strmid(q_at_m187, q_at_m187.size() - 3, 2) == u8"。"s)
                 {
-                    q_at_m187 = strmid(q_at_m187, 0, std::size(q_at_m187) - 3);
+                    q_at_m187 = strmid(q_at_m187, 0, q_at_m187.size() - 3);
                 }
             }
             else
@@ -47388,7 +47397,7 @@ void show_item_description()
             list(0, p) = 7;
             listn(0, p) = lang(u8"それは生きている"s, u8"It is alive."s)
                 + u8" [Lv:"s + inv[ci].param1 + u8" Exp:"s
-                + std::clamp(inv[ci].param2 * 100
+                + clamp(inv[ci].param2 * 100
                                  / calcexpalive(inv[ci].param1),
                              0,
                              100)
@@ -47529,7 +47538,7 @@ void show_item_description()
                     if (strlen_u(q) > size_t(p(1)))
                     {
                         for (int cnt = 0,
-                                 cnt_end = cnt + (std::size(q(0)) / p(1) + 1);
+                                 cnt_end = cnt + (q(0).size() / p(1) + 1);
                              cnt < cnt_end;
                              ++cnt)
                         {
@@ -48126,7 +48135,7 @@ void label_2081()
         {
             f = 1;
         }
-        if (gdata_wizard || 0)
+        if (gdata_wizard)
         {
             if (adata(0, i) == 3 || adata(0, i) == 2)
             {
@@ -48338,7 +48347,11 @@ void label_2084()
         fileext = u8"eum"s;
         filedsc = u8"Elona User Map"s;
         int stat = _fdialog(
-            fileext, 17, filedsc, fs::u8path(u8"./user"s), u8"default.eum"s);
+            fileext,
+            17,
+            filedsc,
+            fs::path(u8"./user"s).generic_string(),
+            u8"default.eum"s);
         if (stat == 0)
         {
             return;
@@ -48403,7 +48416,7 @@ void label_2084()
                 fileext,
                 17,
                 filedsc,
-                fs::u8path(u8"./user"s),
+                fs::path(u8"./user"s).generic_string(),
                 u8"default.ept"s);
             if (stat == 0)
             {
@@ -48470,7 +48483,7 @@ void label_2084()
     }
     if (rtval == 5)
     {
-        exec(fs::u8path(u8"./user/export.txt"), 16);
+        exec(fs::path(u8"./user/export.txt").generic_string(), 16);
     }
     return;
 }
@@ -48709,7 +48722,7 @@ void label_2085()
             noteadd(""s);
         }
     }
-    s = fs::u8path(u8"./save/"s + playerid + u8".txt");
+    s = fs::path(u8"./save/"s + playerid + u8".txt").generic_string();
     {
         std::ofstream out{s};
         out << s(0) << std::endl;
@@ -48923,12 +48936,12 @@ void migrate_save_data()
                 adata(cnt, p) = 0;
             }
             for (const auto& entry : filesystem::dir_entries{
-                     fs::u8path(u8"./tmp"),
+                     fs::path(u8"./tmp"),
                      filesystem::dir_entries::type::file,
                      std::regex{u8R"(.*_)"s + std::to_string(p)
                                 + u8R"(_.*\..*)"}})
             {
-                std::string file = entry.path().filename().generic_u8string();
+                std::string file = entry.path().filename().generic_string();
                 p1 = instr(file, 0, u8"_"s);
                 p2 = instr(file, p1 + 1, u8"_"s);
                 if (p >= 150)
@@ -49025,7 +49038,7 @@ void get_inheritance()
     {
         i = 40;
     }
-    cdata[0].gold += std::clamp(cdata[56].gold / 100, 1000, 100000);
+    cdata[0].gold += clamp(cdata[56].gold / 100, 1000, 100000);
     cdata[0].platinum_coin += p;
     cdata[0].skill_bonus += i;
     for (int cnt = 0; cnt < 400; ++cnt)
@@ -49131,12 +49144,12 @@ void load_user_file(const fs::path& file)
 {
     int zipsize = 0;
     p = 12;
-    folder = fs::u8path(u8"./user/");
-    bload(folder + file, headtemp, 1024);
+    folder = fs::path(u8"./user/").generic_string();
+    bload(folder + file.generic_string(), headtemp, 1024);
     label_2720();
-    zipsize = fs::file_size(folder + file);
+    zipsize = fs::file_size(folder + file.generic_string());
     SDIM2(filebuff, zipsize);
-    bload(folder + file, filebuff, zipsize);
+    bload(folder + file.generic_string(), filebuff, zipsize);
     lenhead = 1024;
     for (int cnt = 0; cnt < 10000; ++cnt)
     {
@@ -49275,7 +49288,7 @@ std::string getnpctxt(const std::string& prm_1068, const std::string& prm_1069)
     return strmid(
         txtbuff,
         p_at_m189 + 1,
-        std::clamp(instr(txtbuff, p_at_m189 + 1, u8"\""s), 0, 70));
+        clamp(instr(txtbuff, p_at_m189 + 1, u8"\""s), 0, 70));
 }
 
 
@@ -49296,7 +49309,7 @@ void create_cnpc()
     }
     else
     {
-        cdata[rc].level = std::clamp(userdata(2, cun), 1, 100);
+        cdata[rc].level = clamp(userdata(2, cun), 1, 100);
     }
     cdata[rc].portrait = -1;
     creaturepack = 0;
@@ -49336,14 +49349,14 @@ void create_cnpc()
     cdata[rc].can_talk = 1;
     cdatan(0, rc) = userdatan(1, cun);
     cdatan(5, rc) = userdatan(0, cun);
-    cdata[rc].relationship = std::clamp(userdata(4, cun), -3, 10);
-    cdata[rc].ai_calm = std::clamp(userdata(7, cun), 1, 4);
-    cdata[rc].ai_move = std::clamp(userdata(8, cun), 0, 100);
-    cdata[rc].ai_dist = std::clamp(userdata(9, cun), 1, 100);
+    cdata[rc].relationship = clamp(userdata(4, cun), -3, 10);
+    cdata[rc].ai_calm = clamp(userdata(7, cun), 1, 4);
+    cdata[rc].ai_move = clamp(userdata(8, cun), 0, 100);
+    cdata[rc].ai_dist = clamp(userdata(9, cun), 1, 100);
     if (userdata(11, cun))
     {
         cdata[rc].element_of_unarmed_attack =
-            std::clamp(userdata(11, cun), 5000000, 6400000);
+            clamp(userdata(11, cun), 5000000, 6400000);
     }
     cdata[rc].ai_heal = userdata(10, cun);
     access_race_info(3, userdatan(2, cun));
@@ -49358,7 +49371,7 @@ void create_cnpc()
     }
     if (userdata(5, cun))
     {
-        fixlv = std::clamp(userdata(5, cun), 0, 6);
+        fixlv = clamp(userdata(5, cun), 0, 6);
     }
     cspecialeq = 0;
     cdata[rc].original_relationship = cdata[rc].relationship;
@@ -49373,11 +49386,11 @@ void load_cnpc_data()
 {
     buff(0).clear();
     for (const auto& entry :
-         filesystem::dir_entries{fs::u8path(u8"./user"),
+         filesystem::dir_entries{fs::path(u8"./user"),
                                  filesystem::dir_entries::type::file,
                                  std::regex{u8R"(.*\.npc)"}})
     {
-        buff += entry.path().filename().generic_u8string();
+        buff += entry.path().filename().generic_string();
         buff += '\n';
     }
     notesel(buff);
@@ -49393,7 +49406,7 @@ void load_cnpc_data()
     gdata(86) = 0;
     buffer(5, 1584, (25 + (usernpcmax / 33 + 1) * 2) * 48);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/character.bmp"), 1);
+    picload(fs::path(u8"./graphic/character.bmp"), 1);
     gmode(0);
     func_1(buff, 1);
     tg = 0;
@@ -49402,7 +49415,7 @@ void load_cnpc_data()
         // TODO: Delete
         noteget(s, cnt);
         int cnt2 = tg;
-        unzip2(fs::u8path(u8"./user/"), s);
+        unzip2(fs::path(u8"./user/").generic_string(), s);
         DIM2(bmpbuff, userdata(0, tg));
         SDIM2(txtbuff, userdata(1, tg));
         s = getnpctxt(u8"name."s, u8"unknown,unknown"s);
@@ -49500,11 +49513,11 @@ void load_cnpc_data()
     delete_temporary_npc_files();
     gsel(5);
     for (const auto& entry :
-         filesystem::dir_entries{fs::u8path(u8"./user/graphic"),
+         filesystem::dir_entries{fs::path(u8"./user/graphic"),
                                  filesystem::dir_entries::type::file,
                                  std::regex{u8R"(chara_.*\.bmp)"}})
     {
-        const auto file = entry.path().filename().generic_u8string();
+        const auto file = entry.path().filename().generic_string();
         p = elona::stoi(strmid(file, 6, instr(file, 6, u8"."s)));
         pos(p % 33 * inf_tiles, p / 33 * inf_tiles);
         picload(folder + file, 1);
@@ -49525,7 +49538,8 @@ void create_new_cnpc()
     redraw();
     fileext = u8"txt"s;
     filedsc = u8"Custom Npc Text"s;
-    int stat = _fdialog(fileext, 16, filedsc, fs::u8path(u8"./user"s), ""s);
+    int stat = _fdialog(
+        fileext, 16, filedsc, fs::path(u8"./user"s).generic_string(), ""s);
     if (stat == 0)
     {
         return;
@@ -49545,7 +49559,8 @@ void create_new_cnpc()
     fileext = u8"bmp"s;
     filedsc = u8"Bit Map File"s;
     {
-        int stat = _fdialog(fileext, 16, filedsc, fs::u8path(u8"./user"s), ""s);
+        int stat = _fdialog(
+            fileext, 16, filedsc, fs::path(u8"./user"s).generic_string(), ""s);
         if (stat == 0)
         {
             return;
@@ -49575,12 +49590,12 @@ void create_new_cnpc()
         dialog(u8"The first letter of the name must be alphabetic."s);
         return;
     }
-    if (strlen_u(s) >= 32 || std::size(s(1)) >= 32)
+    if (strlen_u(s) >= 32 || s(1).size() >= 32)
     {
         dialog(u8"The name is too long."s);
         return;
     }
-    zipinit2(fs::u8path(u8"./user/"s), s + u8".npc");
+    zipinit2(fs::path(u8"./user/"s).generic_string(), s + u8".npc");
     zipadd2(u8"npc1.t"s);
     zipadd2(u8"npc2.t"s);
     zipadd2(u8"npc3.t"s);
@@ -49604,7 +49619,7 @@ void create_new_cnpc()
     txt(lang(
         name(rc) + u8"は興奮して襲い掛かってきた。"s,
         name(rc) + u8" is excited and attacks you."s));
-    folder = fs::u8path(u8"./user/");
+    folder = fs::path(u8"./user/").generic_string();
     delete_temporary_user_files();
     return;
 }
@@ -49681,14 +49696,14 @@ void label_2109(int n)
 void delete_temporary_npc_files()
 {
     for (const auto& entry :
-         filesystem::dir_entries{fs::u8path(u8"./user"),
+         filesystem::dir_entries{fs::path(u8"./user"),
                                  filesystem::dir_entries::type::file,
                                  std::regex{u8R"(_tmp_.*\.npc)"}})
     {
         elona_delete(entry.path());
     }
     for (const auto& entry :
-         filesystem::dir_entries{fs::u8path(u8"./user"),
+         filesystem::dir_entries{fs::path(u8"./user"),
                                  filesystem::dir_entries::type::file,
                                  std::regex{u8R"(!tmp.*\.npc)"}})
     {
@@ -49702,7 +49717,7 @@ void delete_temporary_npc_files()
 void delete_temporary_user_files()
 {
     for (const auto& entry :
-         filesystem::dir_entries{fs::u8path(u8"./user"),
+         filesystem::dir_entries{fs::path(u8"./user"),
                                  filesystem::dir_entries::type::file,
                                  std::regex{u8R"(.*\.t)"}})
     {
@@ -49717,17 +49732,17 @@ void load_save_data()
 {
     filemod = "";
     ctrl_file(10);
-    folder = fs::u8path(u8"./save/"s + playerid + u8"/");
+    folder = fs::path(u8"./save/"s + playerid + u8"/").generic_string();
     notesel(buff);
     if (!fs::exists(folder + u8"filelist.txt"s))
     {
         buff(0).clear();
         for (const auto& entry :
-             filesystem::dir_entries{fs::u8path(folder(0)),
+             filesystem::dir_entries{fs::path(folder(0)),
                                      filesystem::dir_entries::type::file,
                                      std::regex{u8R"(.*\..*)"}})
         {
-            buff += entry.path().filename().generic_u8string();
+            buff += entry.path().filename().generic_string();
             buff += '\n';
         }
     }
@@ -49746,7 +49761,7 @@ void load_save_data()
         noteget(s, cnt);
         if (strutil::contains(s(0), u8".s2"))
         {
-            bcopy(folder + s, fs::u8path(u8"./tmp/"s + s));
+            bcopy(folder + s, fs::path(u8"./tmp/"s + s));
         }
     }
     ctrl_file(7);
@@ -49788,15 +49803,15 @@ void save_game()
     ctrl_file(4, u8"inv_"s + mid + u8".s2");
     save_f = 0;
     for (const auto& entry : filesystem::dir_entries{
-             fs::u8path(u8"./save"), filesystem::dir_entries::type::dir})
+             fs::path(u8"./save"), filesystem::dir_entries::type::dir})
     {
-        if (entry.path().filename().generic_u8string() == playerid)
+        if (entry.path().filename().generic_string() == playerid)
         {
             save_f = 1;
             break;
         }
     }
-    auto file = fs::u8path(u8"./save") / playerid;
+    auto file = fs::path(u8"./save") / playerid;
     if (save_f == 0)
     {
         mkdir(file);
@@ -49814,14 +49829,14 @@ void save_game()
         {
             save_p = 1;
         }
-        save_s = strmid(save_s, 1, std::size(save_s));
+        save_s = strmid(save_s, 1, save_s.size());
         if (save_p == 0)
         {
-            bcopy(save_s, file / fs::u8path(save_s).filename());
+            bcopy(save_s, file / fs::path(save_s).filename());
         }
         else
         {
-            const auto path = file / fs::u8path(save_s).filename();
+            const auto path = file / fs::path(save_s).filename();
             if (fs::exists(path) && !fs::is_directory(path))
             {
                 elona_delete(path);
@@ -49832,17 +49847,17 @@ void save_game()
     filemod = "";
     buff(0).clear();
     for (const auto& entry :
-         filesystem::dir_entries{fs::u8path(u8"./tmp"),
+         filesystem::dir_entries{fs::path(u8"./tmp"),
                                  filesystem::dir_entries::type::file,
                                  std::regex{u8R"(.*\..*)"}})
     {
-        buff += entry.path().filename().generic_u8string();
+        buff += entry.path().filename().generic_string();
         buff += '\n';
     }
     notesel(buff);
     {
         std::ofstream out{
-            fs::u8path(u8"./save/"s + playerid + u8"/filelist.txt")};
+            fs::path(u8"./save/"s + playerid + u8"/filelist.txt").native()};
         out << buff(0) << std::endl;
     }
     return;
@@ -49872,7 +49887,7 @@ void main_menu_continue()
     cs_bk = -1;
     gsel(4);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/void.bmp"), 1);
+    picload(fs::path(u8"./graphic/void.bmp"), 1);
     gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gsel(0);
     gmode(0);
@@ -49891,10 +49906,10 @@ void main_menu_continue()
     keyrange = 0;
     int save_data_count = 0;
     for (const auto& entry : filesystem::dir_entries{
-             fs::u8path(u8"./save"), filesystem::dir_entries::type::dir})
+             fs::path(u8"./save"), filesystem::dir_entries::type::dir})
     {
-        s = entry.path().filename().generic_u8string();
-        const auto file = fs::u8path(u8"./save/"s + s + u8"/header.txt");
+        s = entry.path().filename().generic_string();
+        const auto file = fs::path(u8"./save/"s + s + u8"/header.txt");
         if (!fs::exists(file))
         {
             continue;
@@ -50029,7 +50044,7 @@ void main_menu_incarnate()
     cs_bk = -1;
     gsel(4);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/void.bmp"), 1);
+    picload(fs::path(u8"./graphic/void.bmp"), 1);
     gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gsel(0);
     gmode(0);
@@ -50048,10 +50063,10 @@ void main_menu_incarnate()
     keyrange = 0;
     listmax = 0;
     for (const auto& entry : filesystem::dir_entries{
-             fs::u8path(u8"./save"), filesystem::dir_entries::type::dir})
+             fs::path(u8"./save"), filesystem::dir_entries::type::dir})
     {
-        s = entry.path().filename().generic_u8string();
-        const auto file = fs::u8path(u8"./save/"s + s + u8"/gene_header.txt");
+        s = entry.path().filename().generic_string();
+        const auto file = fs::path(u8"./save/"s + s + u8"/gene_header.txt");
         await();
         if (!fs::exists(file))
         {
@@ -50203,7 +50218,7 @@ label_21261_internal:
         val5 = val4;
         if (strlen_u(std::to_string(val5)) >= 3)
         {
-            dx += std::size(std::to_string(val5)) * 8;
+            dx += std::to_string(val5).size() * 8;
         }
         pos(x + 24, y + 4);
         gfini(dx - 42, 35);
@@ -51222,13 +51237,13 @@ void label_2146()
                             * cdata[cc].quality_of_performance
                             * (100 + inv[ci].param1 / 5) / 100 / 1000
                         + rnd(10);
-                    p = std::clamp(
-                        cdata[tc].gold * std::clamp(p(0), 1, 100) / 125,
+                    p = clamp(
+                        cdata[tc].gold * clamp(p(0), 1, 100) / 125,
                         0,
                         sdata(183, cc) * 100);
                     if (tc < 16)
                     {
-                        p = rnd(std::clamp(p(0), 1, 100)) + 1;
+                        p = rnd(clamp(p(0), 1, 100)) + 1;
                     }
                     if ((cdata[tc].character_role >= 1000
                          && cdata[tc].character_role < 2000)
@@ -51312,11 +51327,11 @@ void label_2146()
                             {
                                 if (rnd(performtips * 2 + 2) == 0)
                                 {
-                                    x = std::clamp(
+                                    x = clamp(
                                         cdata[cc].position.x - 1 + rnd(3),
                                         0,
                                         mdata(0) - 1);
-                                    y = std::clamp(
+                                    y = clamp(
                                         cdata[cc].position.y - 1 + rnd(3),
                                         0,
                                         mdata(1) - 1);
@@ -51744,7 +51759,7 @@ void continuous_action_others()
                 itemname(ci, 1) + u8"に目星をつけた。"s,
                 u8"You target "s + itemname(ci, 1) + u8"."s));
             cdata[cc].continuous_action_turn =
-                2 + std::clamp(inv[ci].weight / 500, 0, 50);
+                2 + clamp(inv[ci].weight / 500, 0, 50);
         }
         if (gdata(91) == 100)
         {
@@ -51779,7 +51794,7 @@ void continuous_action_others()
                 itemname(ci, 1) + u8"を掘り始めた。"s,
                 u8"You start to pick "s + itemname(ci, 1) + u8"."s));
             cdata[cc].continuous_action_turn = 10
-                + std::clamp(inv[ci].weight
+                + clamp(inv[ci].weight
                                  / (1 + sdata(10, 0) * 10 + sdata(180, 0) * 40),
                              1,
                              100);
@@ -52192,7 +52207,7 @@ void continuous_action_others()
             snd(14 + rnd(2));
         }
         refresh_burden_state();
-        skillexp(300, 0, std::clamp(inv[ti].weight / 25, 0, 450) + 50);
+        skillexp(300, 0, clamp(inv[ti].weight / 25, 0, 450) + 50);
         if (cdata[0].karma >= -30)
         {
             if (rnd(3) == 0)
@@ -52288,7 +52303,7 @@ void label_2150()
     gsel(4);
     gmode(0);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/bg_night.bmp"), 1);
+    picload(fs::path(u8"./graphic/bg_night.bmp"), 1);
     pos(0, 0);
     gzoom(4, 0, 0, 640, 480, windoww, windowh - inf_verh);
     gsel(0);
@@ -52443,7 +52458,7 @@ void label_2151()
         {
             i += sdata.get(cnt, 0).original_level;
         }
-        i = std::clamp(i / 6, 10, 1000);
+        i = clamp(i / 6, 10, 1000);
         exp = i * i * i / 10;
         gdata_sleep_experience = gdata_sleep_experience * inv[ci].param1 / 100;
         grown = 0;
@@ -52735,7 +52750,7 @@ void label_2154()
         {
             continue;
         }
-        i = std::clamp(inv[ci].param4 + (rnd(5) == 0) - (rnd(5) == 0), 0, 5);
+        i = clamp(inv[ci].param4 + (rnd(5) == 0) - (rnd(5) == 0), 0, 5);
         if (fishdata(1, cnt) != i)
         {
             continue;
@@ -52797,7 +52812,7 @@ void label_2156()
         fishstat = 0;
         gsel(9);
         pos(0, 0);
-        picload(fs::u8path(u8"./graphic/fishing.bmp"));
+        picload(fs::path(u8"./graphic/fishing.bmp"));
         gsel(0);
         return;
     }
@@ -53571,7 +53586,7 @@ int decode_book()
             efid,
             1,
             (rnd(51) + 50) * (90 + sdata(165, cc) + (sdata(165, cc) > 0) * 20)
-                    / std::clamp((100 + spell((efid - 400)) / 2), 50, 1000)
+                    / clamp((100 + spell((efid - 400)) / 2), 50, 1000)
                 + 1);
         label_1471(0);
         if (itemmemory(2, inv[ci].id) == 0)
@@ -54835,7 +54850,7 @@ void do_throw_command()
                 animeload(8, tc);
                 inv[ci].subname = cdata[tc].id;
                 inv[ci].param3 = cdata[tc].level;
-                inv[ci].weight = std::clamp(cdata[tc].weight, 10000, 100000);
+                inv[ci].weight = clamp(cdata[tc].weight, 10000, 100000);
                 inv[ci].value = 1000;
             }
             else
@@ -55152,8 +55167,7 @@ int pick_up_item()
                 {
                     midbk = mid;
                     mid = ""s + 30 + u8"_"s + (100 + inv[ci].count);
-                    if (fs::exists(
-                            fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2")))
+                    if (fs::exists(fs::path(u8"./tmp/mdata_"s + mid + u8".s2")))
                     {
                         ctrl_file(11);
                     }
@@ -55968,7 +55982,7 @@ void label_2203()
                     {
                         if (cdata[tc].sleep == 0)
                         {
-                            p = rnd(std::clamp(cdata[cc].gold, 0, 20) + 1);
+                            p = rnd(clamp(cdata[cc].gold, 0, 20) + 1);
                             if (cbit(15, cc))
                             {
                                 p = 0;
@@ -56315,7 +56329,7 @@ void label_2205()
                     }
                 }
                 if (rnd(220 + cdata[0].level * 10
-                        - std::clamp(
+                        - clamp(
                               gdata_cargo_weight * 150
                                   / (gdata_current_cart_limit + 1),
                               0,
@@ -57109,9 +57123,9 @@ void do_open_command()
             }
         }
         ctrl_file(4, u8"shoptmp.s2");
-        if (fs::exists(fs::u8path(u8"./tmp/"s + u8"shop"s + invfile + u8".s2")))
+        if (fs::exists(fs::path(u8"./tmp/"s + u8"shop"s + invfile + u8".s2")))
         {
-            ctrl_file(3, fs::u8path(u8"shop"s + invfile + u8".s2"));
+            ctrl_file(3, fs::path(u8"shop"s + invfile + u8".s2"));
         }
         else
         {
@@ -57824,7 +57838,7 @@ void try_to_melee_attack()
     ele = 0;
     if (cdata[cc].equipment_type & 1)
     {
-        if (std::clamp(int(std::sqrt(sdata(168, cc)) - 3), 1, 5)
+        if (clamp(int(std::sqrt(sdata(168, cc)) - 3), 1, 5)
                 + cbit(30, cc) * 5
             > rnd(100))
         {
@@ -58241,7 +58255,7 @@ label_22191_internal:
             skillexp(
                 attackskill,
                 cc,
-                std::clamp(
+                clamp(
                     (sdata(173, tc) * 2 - sdata(attackskill, cc) + 1), 5, 50)
                     / expmodifer,
                 0,
@@ -58278,7 +58292,7 @@ label_22191_internal:
                 skillexp(
                     carmor(tc),
                     tc,
-                    std::clamp((250 * rtdmg / cdata[tc].max_hp + 1), 3, 100)
+                    clamp((250 * rtdmg / cdata[tc].max_hp + 1), 3, 100)
                         / expmodifer,
                     0,
                     5);
@@ -58324,7 +58338,7 @@ label_22191_internal:
                         }
                         dmghp(
                             cc,
-                            std::clamp(
+                            clamp(
                                 attackdmg / 10, 1, cdata[tc].max_hp / 10),
                             tc,
                             p,
@@ -58344,7 +58358,7 @@ label_22191_internal:
                         }
                         dmghp(
                             cc,
-                            std::clamp(
+                            clamp(
                                 attackdmg / 10, 1, cdata[tc].max_hp / 10),
                             tc,
                             p,
@@ -58394,7 +58408,7 @@ label_22191_internal:
         }
         if (sdata(attackskill, cc) > sdata(173, tc) || rnd(5) == 0)
         {
-            p = std::clamp(
+            p = clamp(
                     (sdata(attackskill, cc) - sdata(173, tc) / 2 + 1), 1, 20)
                 / expmodifer;
             skillexp(173, tc, p, 0, 4);
@@ -60348,7 +60362,7 @@ void do_use_command()
                 if (list(1, p) > sdata.get(i, rc).original_level)
                 {
                     p = (list(1, p) - sdata.get(i, rc).original_level) * 500;
-                    p = std::clamp(p * 10 / std::clamp(lv, 2, 10), 1000, 10000);
+                    p = clamp(p * 10 / clamp(lv, 2, 10), 1000, 10000);
                     skillmod(i, rc, p);
                 }
             }
@@ -60887,9 +60901,9 @@ void label_2241()
 {
     gsel(4);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/face1.bmp"), 1);
+    picload(fs::path(u8"./graphic/face1.bmp"), 1);
     gsel(7);
-    picload(fs::u8path(u8"./graphic/ie_chat.bmp"));
+    picload(fs::path(u8"./graphic/ie_chat.bmp"));
     gsel(0);
     return;
 }
@@ -61383,7 +61397,7 @@ void label_2244()
                     modify_potential(
                         cc,
                         csskill,
-                        std::clamp(
+                        clamp(
                             15 - sdata.get(csskill, cc).potential / 15,
                             2,
                             15 - (csskill < 18) * 10));
@@ -62304,7 +62318,7 @@ void label_2249()
         fade_out();
         gsel(4);
         pos(0, 0);
-        picload(fs::u8path(u8"./graphic/face1.bmp"), 1);
+        picload(fs::path(u8"./graphic/face1.bmp"), 1);
         gsel(0);
         cdata[0].blind = 0;
         txt(lang(u8" 夢…か… "s, u8"It was...a dream...?"s));
@@ -62839,7 +62853,7 @@ void label_2254()
             modify_potential(
                 cc,
                 csskill,
-                std::clamp(15 - sdata.get(csskill, cc).potential / 15, 2, 15));
+                clamp(15 - sdata.get(csskill, cc).potential / 15, 2, 15));
             buff = lang(
                 u8"訓練は完了し"s + _ta()
                     + u8"潜在能力が伸びているはずなので、後は自分で鍛えて"s
@@ -63060,7 +63074,7 @@ void show_talk_window()
     }
     else
     {
-        s = fs::u8path(u8"./user/graphic/face"s)
+        s = fs::path(u8"./user/graphic/face"s).generic_string()
             + std::abs((cdata[tc].portrait + 1)) + u8".bmp"s;
         if (!fs::exists(s) || cdata[tc].portrait == -1)
         {
@@ -63854,7 +63868,7 @@ void label_2265()
         }
         if (cdata[tc].character_role == 1018)
         {
-            inv[ci].value = std::clamp(inv[ci].value, 1, 1000000) * 50;
+            inv[ci].value = clamp(inv[ci].value, 1, 1000000) * 50;
             if (inv[ci].id == 729)
             {
                 inv[ci].value *= 10;
@@ -64185,7 +64199,7 @@ label_22711:
     curmenu = 0;
     gsel(3);
     pos(960, 96);
-    picload(fs::u8path(u8"./graphic/deco_politics.bmp"), 1);
+    picload(fs::path(u8"./graphic/deco_politics.bmp"), 1);
     gsel(0);
     fillbg(3, 960, 96, 128, 128);
     render_hud();
@@ -64390,13 +64404,13 @@ void label_2276()
     listmax = 2;
     gsel(3);
     pos(960, 96);
-    picload(fs::u8path(u8"./graphic/deco_politics.bmp"), 1);
+    picload(fs::path(u8"./graphic/deco_politics.bmp"), 1);
     gsel(0);
     fillbg(3, 960, 96, 128, 128);
     render_hud();
     gsel(7);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/ie_scroll.bmp"));
+    picload(fs::path(u8"./graphic/ie_scroll.bmp"));
     gsel(0);
     windowshadow = 1;
     snd(92);
@@ -64579,13 +64593,13 @@ void label_2280()
 label_2281_internal:
     gsel(3);
     pos(960, 96);
-    picload(fs::u8path(u8"./graphic/deco_politics.bmp"), 1);
+    picload(fs::path(u8"./graphic/deco_politics.bmp"), 1);
     gsel(0);
     fillbg(3, 960, 96, 128, 128);
     render_hud();
     gsel(7);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/ie_scroll.bmp"));
+    picload(fs::path(u8"./graphic/ie_scroll.bmp"));
     gsel(0);
     windowshadow = 1;
     snd(92);
@@ -65500,7 +65514,7 @@ void label_2670()
     {
         qdata(6, rq) = qdata(6, rq)
             * (100
-               + std::clamp((qdata(5, rq) - cdata[0].level) / 5 * 25, 0, 200))
+               + clamp((qdata(5, rq) - cdata[0].level) / 5 * 25, 0, 200))
             / 100;
     }
     return;
@@ -65611,7 +65625,7 @@ int label_2672()
             qdata(5, rq) =
                 rnd(cdata[0].level + 10) + rnd((cdata[0].fame / 2500 + 1));
             qdata(5, rq) = roundmargin(qdata(5, rq), cdata[0].level);
-            minlevel = std::clamp(qdata(5, rq) / 7, 5, 30);
+            minlevel = clamp(qdata(5, rq) / 7, 5, 30);
             for (int cnt = 0; cnt < 50; ++cnt)
             {
                 flt(qdata(5, rq), 2);
@@ -65647,7 +65661,7 @@ int label_2672()
             qdata(5, rq) =
                 rnd(cdata[0].level + 10) + rnd((cdata[0].fame / 2500 + 1));
             qdata(5, rq) = roundmargin(qdata(5, rq), cdata[0].level);
-            minlevel = std::clamp(qdata(5, rq) / 4, 5, 30);
+            minlevel = clamp(qdata(5, rq) / 4, 5, 30);
             for (int cnt = 0; cnt < 50; ++cnt)
             {
                 flt(qdata(5, rq), 2);
@@ -65705,7 +65719,7 @@ int label_2672()
                       adata(2, p))
                     * 2;
             qdata(9, rq) = rnd(8) + 6;
-            qdata(5, rq) = std::clamp(
+            qdata(5, rq) = clamp(
                 rnd(cdata[0].level + 10) + rnd((cdata[0].fame / 500 + 1)) + 1,
                 1,
                 80);
@@ -65720,7 +65734,7 @@ int label_2672()
                       adata(2, p))
                     * 2;
             qdata(9, rq) = rnd(5) + 2;
-            qdata(5, rq) = std::clamp(rewardfix / 10 + 1, 1, 40);
+            qdata(5, rq) = clamp(rewardfix / 10 + 1, 1, 40);
         }
         if (qdata(4, rq) == 2)
         {
@@ -65732,7 +65746,7 @@ int label_2672()
                       adata(2, p))
                     * 2;
             qdata(9, rq) = rnd(8) + 6;
-            qdata(5, rq) = std::clamp(rewardfix / 20 + 1, 1, 40);
+            qdata(5, rq) = clamp(rewardfix / 20 + 1, 1, 40);
         }
         if (qdata(12, rq) == 33 || gdata_current_map == 33)
         {
@@ -65742,7 +65756,7 @@ int label_2672()
     }
     if (rnd(23) == 0 || (gdata_current_map == 15 && rnd(8) == 0))
     {
-        qdata(5, rq) = std::clamp(
+        qdata(5, rq) = clamp(
             rnd(sdata(183, 0) + 10),
             int(1.5 * std::sqrt(sdata(183, 0))) + 1,
             cdata[0].fame / 1000 + 10);
@@ -65762,7 +65776,7 @@ int label_2672()
     }
     if (rnd(30) == 0 || (gdata_current_map == 12 && rnd(2) == 0))
     {
-        qdata(5, rq) = std::clamp(
+        qdata(5, rq) = clamp(
             rnd(cdata[0].level + 5) + rnd((cdata[0].fame / 800 + 1)) + 1,
             1,
             50);
@@ -65781,7 +65795,7 @@ int label_2672()
     }
     if (rnd(8) == 0)
     {
-        qdata(5, rq) = std::clamp(
+        qdata(5, rq) = clamp(
             rnd(cdata[0].level + 10) + rnd((cdata[0].fame / 500 + 1)) + 1,
             1,
             80);
@@ -65874,7 +65888,7 @@ int label_2672()
             qdata(14, rq) = 2;
             qdata(4, rq) = 0;
             qdata(9, rq) = rnd(12) + 3;
-            qdata(5, rq) = std::clamp(rewardfix / 20 + 1, 1, 25);
+            qdata(5, rq) = clamp(rewardfix / 20 + 1, 1, 25);
         }
         return 0;
     }
@@ -65929,7 +65943,7 @@ int label_2672()
         get_random_item_id();
         qdata(7, rq) = 5;
         qdata(11, rq) = dbid;
-        qdata(5, rq) = std::clamp(rnd(cdata[0].level + 5) + 1, 1, 30);
+        qdata(5, rq) = clamp(rnd(cdata[0].level + 5) + 1, 1, 30);
         rewardfix = 65 + qdata(5, rq);
         return 0;
     }
@@ -66268,7 +66282,7 @@ void complete_quest()
         {
             if (qdata(12, rq) * 125 / 100 < qdata(13, rq))
             {
-                p = std::clamp(p * qdata(13, rq) / qdata(12, rq), p(0), p * 3);
+                p = clamp(p * qdata(13, rq) / qdata(12, rq), p(0), p * 3);
             }
         }
     }
@@ -66416,7 +66430,7 @@ void do_play_scene()
         label_2685();
         return;
     }
-    scidx += std::size(s(0));
+    scidx += s(0).size();
 label_2681:
     await();
     int a{};
@@ -66555,7 +66569,7 @@ label_2682_internal:
     }
     if (s == u8"{se}"s)
     {
-        folder = fs::u8path(u8"./sound/");
+        folder = fs::path(u8"./sound/").generic_string();
         sndload(folder + s(1), 28);
         snd(28);
         goto label_2682_internal;
@@ -66583,7 +66597,7 @@ label_2684_internal:
     gsel(4);
     gmode(0);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/"s + file + u8".bmp"), 1);
+    picload(fs::path(u8"./graphic/"s + file + u8".bmp"), 1);
     pos(0, y1);
     gzoom(4, 0, 0, 640, 480, windoww, y2 - y1);
     gmode(2);
@@ -66617,8 +66631,8 @@ label_2684_internal:
     {
         y = y1 + 31 + (9 - noteinfo() / 2 + cnt) * 20;
         noteget(s, cnt);
-        x = windoww / 2 - std::size(s(0)) * 4;
-        dx = 80 + std::size(s(0)) * 8;
+        x = windoww / 2 - s(0).size() * 4;
+        dx = 80 + s(0).size() * 8;
         if (dx < 180)
         {
             dx = 0;
@@ -66632,7 +66646,7 @@ label_2684_internal:
     {
         y = y1 + 28 + (9 - noteinfo() / 2 + cnt) * 20;
         noteget(s, cnt);
-        x = windoww / 2 - std::size(s(0)) * 4;
+        x = windoww / 2 - s(0).size() * 4;
         color(10, 10, 10);
         pos(x, y);
         bmes(s, 240, 240, 240);
@@ -68234,7 +68248,7 @@ void label_2696()
     {
         if (cdata[cc].ai_act_sub_freq > rnd(100))
         {
-            if (!std::empty(cdata[cc].special_actions))
+            if (!cdata[cc].special_actions.empty())
             {
                 act = choice(cdata[cc].special_actions);
             }
@@ -68773,13 +68787,13 @@ void show_ex_help()
 {
     gsel(3);
     pos(960, 96);
-    picload(fs::u8path(u8"./graphic/deco_help.bmp"), 1);
+    picload(fs::path(u8"./graphic/deco_help.bmp"), 1);
     gsel(0);
     page = 0;
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{fs::u8path(u8"./data/exhelp.txt")};
+        std::ifstream in{fs::path(u8"./data/exhelp.txt").native()};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -68841,7 +68855,7 @@ void show_ex_help()
                     break;
                 }
                 color(30, 30, 30);
-                const auto [_, ny] = gmes(s, tx, y, 330, {30, 30, 30}, true);
+                const auto ny = gmes(s, tx, y, 330, {30, 30, 30}, true).y;
                 color(0, 0, 0);
                 y = ny;
             }
@@ -68898,7 +68912,7 @@ void show_game_help()
         for (int cnt = 0; cnt < 8; ++cnt)
         {
             pos(cnt % 4 * 180, cnt / 4 * 300);
-            picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+            picload(fs::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
         }
         gsel(0);
     }
@@ -68910,8 +68924,10 @@ void show_game_help()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{fs::u8path(
-            u8"./data/"s + lang(u8"manual_JP.txt"s, u8"manual_ENG.txt"s))};
+        std::ifstream in{
+            fs::path(
+                u8"./data/"s + lang(u8"manual_JP.txt"s, u8"manual_ENG.txt"s))
+                .native()};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -69137,8 +69153,8 @@ label_2705_internal:
                 {
                     break;
                 }
-                const auto [_, ny] =
-                    gmes(s1, wx + 216, y, 510, {30, 30, 30}, false);
+                const auto ny =
+                    gmes(s1, wx + 216, y, 510, {30, 30, 30}, false).y;
                 y = ny;
             }
         }
@@ -69206,12 +69222,12 @@ void label_2707()
     pagesize = 0;
     gsel(7);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/ie_scroll.bmp"));
+    picload(fs::path(u8"./graphic/ie_scroll.bmp"));
     gsel(0);
     windowshadow = 1;
     snd(92);
     drawmenu(2);
-    ww = std::clamp(windoww - 90, windoww - 90, 720);
+    ww = clamp(windoww - 90, windoww - 90, 720);
     wh = 440;
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
@@ -69483,7 +69499,7 @@ void label_2719()
     notesel(note_buff);
     {
         note_buff.clear();
-        std::ifstream in{fs::u8path(u8"./user/export.txt")};
+        std::ifstream in{fs::path(u8"./user/export.txt").native()};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -69514,7 +69530,7 @@ void label_2719()
                     break;
                 }
                 rtvaln(i) = strmid(s, p + 1, p(1));
-                p += std::size(rtvaln(i)) + 2;
+                p += rtvaln(i).size() + 2;
                 ++i;
             }
             usertitle = rtvaln;
@@ -69538,7 +69554,7 @@ void label_2719()
                     break;
                 }
                 rtvaln(i) = strmid(s, p + 1, p(1));
-                p += std::size(rtvaln(i)) + 2;
+                p += rtvaln(i).size() + 2;
                 ++i;
             }
             usermsg = rtvaln;
@@ -69562,7 +69578,7 @@ void label_2719()
                     break;
                 }
                 rtvaln(i) = strmid(s, p + 1, p(1));
-                p += std::size(rtvaln(i)) + 2;
+                p += rtvaln(i).size() + 2;
                 ++i;
             }
             userrelation = elona::stoi(rtvaln(0));
@@ -69586,7 +69602,7 @@ void label_2719()
                     break;
                 }
                 rtvaln(i) = strmid(s, p + 1, p(1));
-                p += std::size(rtvaln(i)) + 2;
+                p += rtvaln(i).size() + 2;
                 ++i;
             }
             userpassword = rtvaln;
@@ -69634,10 +69650,10 @@ void play_scene()
     snd(59);
     gsel(4);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/book.bmp"), 1);
+    picload(fs::path(u8"./graphic/book.bmp"), 1);
     gsel(7);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/g1.bmp"), 0);
+    picload(fs::path(u8"./graphic/g1.bmp"), 0);
     gsel(0);
     listmax = 0;
     page = 0;
@@ -70316,9 +70332,9 @@ void label_2736()
             ++gdata_year;
             gdata_month = 1;
             gdata_last_month_when_trainer_visited = 0;
-            gdata_wish_count = std::clamp(gdata_wish_count - 1, 0, 10);
+            gdata_wish_count = clamp(gdata_wish_count - 1, 0, 10);
             gdata_lost_wallet_count =
-                std::clamp(gdata_lost_wallet_count - 1, 0, 999999);
+                clamp(gdata_lost_wallet_count - 1, 0, 999999);
         }
         if (gdata_day == 1 || gdata_day == 15)
         {
@@ -70534,7 +70550,7 @@ void pass_one_turn(bool label_2738_flg)
                     if (gdata_protects_from_etherwind == 0)
                     {
                         modcorrupt(
-                            5 + std::clamp(gdata_play_turns / 20000, 0, 15));
+                            5 + clamp(gdata_play_turns / 20000, 0, 15));
                     }
                     else if (rnd(10) == 0)
                     {
@@ -71618,7 +71634,7 @@ label_2747:
         }
         if (p == 3)
         {
-            if (!std::empty(cdata[0].god_id))
+            if (!cdata[0].god_id.empty())
             {
                 key = key_offer;
             }
@@ -72315,7 +72331,7 @@ void conquer_lesimas()
     label_1442();
     gsel(4);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/void.bmp"), 1);
+    picload(fs::path(u8"./graphic/void.bmp"), 1);
     pos(0, 0);
     gzoom(4, 0, 0, 640, 480, windoww, windowh);
     gsel(0);
@@ -72324,7 +72340,7 @@ void conquer_lesimas()
     gcopy(4, 0, 0, windoww, windowh);
     gsel(4);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/g1.bmp"), 1);
+    picload(fs::path(u8"./graphic/g1.bmp"), 1);
     gsel(0);
     s = lang(
         ""s + cdatan(1, 0) + cdatan(0, 0)
@@ -72443,10 +72459,10 @@ void pc_died()
     }
     buff = "";
     notesel(buff);
-    const auto bone_filepath = fs::u8path(u8"./save/bone.txt");
+    const auto bone_filepath = fs::path(u8"./save/bone.txt");
     if (fs::exists(bone_filepath))
     {
-        std::ifstream in{bone_filepath};
+        std::ifstream in{bone_filepath.native()};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -72516,12 +72532,12 @@ void pc_died()
         noteadd(""s + cnvrank((cnt + 1)) + lang(u8"位"s, ""s), cnt * 4, 1);
     }
     {
-        std::ofstream out{bone_filepath};
+        std::ofstream out{bone_filepath.native()};
         out << buff(0) << std::endl;
     }
     gsel(4);
     pos(0, 0);
-    picload(fs::u8path(u8"./graphic/void.bmp"), 1);
+    picload(fs::path(u8"./graphic/void.bmp"), 1);
     gsel(0);
     show_game_score_ranking();
     s = lang(
@@ -72607,7 +72623,7 @@ void show_game_score_ranking()
         else
         {
             noteget(s, p + 1);
-            if (std::empty(s(0)))
+            if (s(0).empty())
             {
                 no_entry = true;
             }

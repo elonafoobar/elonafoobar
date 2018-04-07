@@ -3,7 +3,9 @@
 #include <unordered_map>
 
 
-namespace elona::snail
+namespace elona
+{
+namespace snail
 {
 
 
@@ -21,4 +23,5 @@ font_t::font_t(const fs::path& filepath, int size, style_t style)
 
 
 
-} // namespace elona::snail
+} // namespace snail
+} // namespace elona
