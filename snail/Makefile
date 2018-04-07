@@ -1,5 +1,5 @@
 AR = ar
-CXX := /usr/local/bin/g++-HEAD
+CXX = clang++
 CXX_FLAGS = -Wall -Wextra -g -O0 -MMD -DDEBUG -std=c++17 -I/usr/local/include
 BIN_DIR = bin
 SRC_DIR = .

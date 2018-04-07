@@ -81,7 +81,7 @@ void apply_buff(int cc, int id, int power)
 
 
 
-std::optional<skill_damage> calc_skill_damage(int skill, int cc, int power)
+optional<skill_damage> calc_skill_damage(int skill, int cc, int power)
 {
     int x = sdata(the_ability_db[skill]->related_basic_attribute, cc);
 
@@ -228,7 +228,7 @@ std::optional<skill_damage> calc_skill_damage(int skill, int cc, int power)
     case 655:
         return skill_damage{
             power / 80 + 1, power / 8 + 2 + 1, 0, 57, 150 + power / 2};
-    default: return std::nullopt;
+    default: return none;
     }
 }
 

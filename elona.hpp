@@ -15,14 +15,6 @@
 #include "snail/input.hpp"
 #include "util.hpp"
 
-#if __has_include(<filesystem>)
-#include <filesystem>
-namespace fs = std::filesystem;
-#else
-#include <experimental/filesystem>
-namespace fs = std::experimental::filesystem;
-#endif
-
 
 namespace elona
 {
@@ -83,7 +75,7 @@ struct elona_vector1
 
     operator fs::path()
     {
-        return fs::u8path(storage.at(0));
+        return fs::path(storage.at(0));
     }
 
 

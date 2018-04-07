@@ -3,8 +3,8 @@
 #include <cctype>
 #include <fstream>
 #include <iterator>
+#include <sstream>
 #include <string>
-#include <string_view>
 #include <utility>
 #include "filesystem.hpp"
 
@@ -19,9 +19,9 @@ namespace strutil
 
 
 inline bool contains(
-    std::string_view str,
-    std::string_view pattern,
-    std::string_view::size_type pos = 0)
+    const std::string& str,
+    const std::string& pattern,
+    std::string::size_type pos = 0)
 {
     return str.find(pattern, pos) != std::string::npos;
 }
@@ -29,16 +29,16 @@ inline bool contains(
 
 
 inline bool starts_with(
-    std::string_view str,
-    std::string_view prefix,
-    std::string_view::size_type pos = 0)
+    const std::string& str,
+    const std::string& prefix,
+    std::string::size_type pos = 0)
 {
     return str.find(prefix, pos) == pos;
 }
 
 
 
-inline std::string to_lower(std::string_view source)
+inline std::string to_lower(const std::string& source)
 {
     std::string ret;
     std::transform(
@@ -54,7 +54,7 @@ inline std::string to_lower(std::string_view source)
 inline std::vector<std::string> split_lines(const std::string& str)
 {
     std::vector<std::string> lines;
-    std::istringstream ss{str};
+    std::istringstream ss(str);
     std::string buf;
     while (std::getline(ss, buf))
     {
@@ -159,7 +159,7 @@ struct read_by_line
 
 
     read_by_line(const fs::path& filepath)
-        : in(filepath)
+        : in(filepath.native())
     {
     }
 

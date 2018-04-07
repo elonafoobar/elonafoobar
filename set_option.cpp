@@ -48,7 +48,7 @@ void set_option()
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(fs::u8path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+        picload(fs::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(0);
     if (mode == 0)
@@ -61,7 +61,7 @@ void set_option()
         gsel(4);
         gmode(0);
         pos(0, 0);
-        picload(fs::u8path(u8"./graphic/title.bmp"), 1);
+        picload(fs::path(u8"./graphic/title.bmp"), 1);
         gzoom(4, 0, 0, 800, 600, windoww, windowh);
         gsel(0);
         gmode(0);

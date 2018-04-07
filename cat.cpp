@@ -11,7 +11,7 @@ void engine::initialize()
 {
     L.reset(luaL_newstate());
     luaL_openlibs(ptr());
-    load(fs::u8path(u8"../__init__.lua"));
+    load(fs::path(u8"../__init__.lua"));
 }
 
 

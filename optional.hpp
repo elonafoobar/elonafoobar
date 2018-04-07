@@ -1,12 +1,19 @@
 #pragma once
 
 #include <memory>
-#include <optional>
+#include <boost/optional.hpp>
 
 
 
 namespace elona
 {
+
+
+template <typename T>
+using optional = boost::optional<T>;
+
+using none_t = boost::none_t;
+const none_t none = boost::none;
 
 
 
@@ -18,7 +25,7 @@ struct optional_ref
     }
 
 
-    optional_ref(std::nullopt_t)
+    optional_ref(none_t)
     {
     }
 
@@ -49,7 +56,6 @@ struct optional_ref
 private:
     const T* data = nullptr;
 };
-
 
 
 } // namespace elona

@@ -242,7 +242,7 @@ void axobj(int, const std::string&, int, int)
 
 void bcopy(const fs::path& from, const fs::path& to)
 {
-    fs::copy_file(from, to, fs::copy_options::overwrite_existing);
+    fs::copy_file(from, to, fs::copy_option::overwrite_if_exists);
 }
 
 
@@ -292,7 +292,7 @@ void bload(const fs::path& filename, std::string& data, int size, int)
     {
         size = data.size();
     }
-    std::ifstream in{filename, std::ios::binary};
+    std::ifstream in{filename.native(), std::ios::binary};
     if (!in)
     {
         throw 0;
@@ -305,7 +305,7 @@ void bload(const fs::path& filename, std::string& data, int size, int)
 
 void bload(const fs::path& filename, int& data, int size, int)
 {
-    std::ifstream in{filename, std::ios::binary};
+    std::ifstream in{filename.native(), std::ios::binary};
     if (!in)
     {
         throw 0;
@@ -322,7 +322,7 @@ void bload(const fs::path& filename, elona_vector1<int>& data, int size, int)
     {
         size = data.size() * sizeof(int);
     }
-    std::ifstream in{filename, std::ios::binary};
+    std::ifstream in{filename.native(), std::ios::binary};
     if (!in)
     {
         throw 0;
@@ -341,7 +341,7 @@ void bload(const fs::path& filename, elona_vector1<int>& data, int size, int)
 
 void bsave(const fs::path& filename, const std::string& data)
 {
-    std::ofstream out{filename, std::ios::binary};
+    std::ofstream out{filename.native(), std::ios::binary};
     if (!out)
     {
         throw 0;
@@ -353,7 +353,7 @@ void bsave(const fs::path& filename, const std::string& data)
 
 void bsave(const fs::path& filename, int data)
 {
-    std::ofstream out{filename, std::ios::binary};
+    std::ofstream out{filename.native(), std::ios::binary};
     out.write(reinterpret_cast<const char*>(&data), sizeof(data));
 }
 
@@ -361,7 +361,7 @@ void bsave(const fs::path& filename, int data)
 
 void bsave(const fs::path& filename, elona_vector1<int>& data)
 {
-    std::ofstream out{filename, std::ios::binary};
+    std::ofstream out{filename.native(), std::ios::binary};
     for (size_t i = 0; i < std::size(data); ++i)
     {
         out.write(reinterpret_cast<const char*>(&data(i)), sizeof(int));
@@ -503,7 +503,7 @@ void font(const std::string& name, int size, int style)
             std::piecewise_construct,
             std::forward_as_tuple(size),
             std::forward_as_tuple(
-                fs::u8path(u8"font") / name,
+                fs::path(u8"font") / name,
                 size,
                 snail::font_t::style_t::regular));
         snail::application::instance().get_renderer().set_font(i_->second);
@@ -1258,14 +1258,14 @@ void pget(int x, int y)
 
 void picload(const fs::path& filename, int mode)
 {
-    std::optional<snail::color> keycolor = snail::color{0, 0, 0};
-    if (filename.u8string().find("pcc") != std::string::npos)
+    optional<snail::color> keycolor = snail::color{0, 0, 0};
+    if (filename.generic_string().find("pcc") != std::string::npos)
     {
-        keycolor = {43, 133, 133};
+        keycolor = snail::color(43, 133, 133);
     }
-    if (filename.u8string().find("bg") != std::string::npos)
+    if (filename.generic_string().find("bg") != std::string::npos)
     {
-        keycolor = std::nullopt;
+        keycolor = none;
     }
     snail::basic_image img{filename, keycolor};
     if (mode == 0)
@@ -1279,19 +1279,19 @@ void picload(const fs::path& filename, int mode)
     snail::application::instance().get_renderer().render_image(
         img, detail::current_tex_buffer().x, detail::current_tex_buffer().y);
 
-    if (filename.u8string().find(u8"interface.bmp") != std::string::npos)
+    if (filename.generic_string().find(u8"interface.bmp") != std::string::npos)
     {
         snail::basic_image ex{filename.parent_path()
-                              / fs::u8path(u8"interface_ex.png")};
+                              / fs::path(u8"interface_ex.png")};
         snail::application::instance().get_renderer().render_image(ex, 0, 656);
         snail::basic_image ex2{filename.parent_path()
-                               / fs::u8path(u8"interface_ex2.png")};
+                               / fs::path(u8"interface_ex2.png")};
         snail::application::instance().get_renderer().render_image(
             ex2, 144, 656);
         snail::application::instance().get_renderer().render_image(
             ex2, 144, 704);
         snail::basic_image ex3{filename.parent_path()
-                               / fs::u8path(u8"interface_ex3.png")};
+                               / fs::path(u8"interface_ex3.png")};
         snail::application::instance().get_renderer().render_image(
             ex3, 144, 752);
     }

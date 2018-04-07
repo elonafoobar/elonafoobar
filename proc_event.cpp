@@ -692,13 +692,13 @@ void proc_event()
         msg_halt();
         gsel(7);
         pos(0, 0);
-        picload(fs::u8path(u8"./graphic/bg22.bmp"));
+        picload(fs::path(u8"./graphic/bg22.bmp"));
         gsel(4);
         pos(windoww / 2 - 1, windowh / 2 - 1);
         gmode(0, 640, 480);
         grotate(7, 0, 0, 0, windoww + 4, windowh + 4);
         gsel(7);
-        picload(fs::u8path(u8"./graphic/anime9.bmp"));
+        picload(fs::path(u8"./graphic/anime9.bmp"));
         gsel(0);
         dx = windoww / 2;
         dy = (windowh - inf_verh) / 2;

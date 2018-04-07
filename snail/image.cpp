@@ -56,7 +56,7 @@ namespace elona::snail
 
 basic_image::basic_image(
     const fs::path& filepath,
-    const std::optional<color>& keycolor)
+    const optional<color>& keycolor)
 {
     auto surface = detail::enforce_img(::IMG_Load(filepath.c_str()));
 

@@ -69,7 +69,7 @@ label_17401:
     }
     if (getkey(snail::key::backspace))
     {
-        if (fs::exists(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2")))
+        if (fs::exists(fs::path(u8"./tmp/mdata_"s + mid + u8".s2")))
         {
             int stat = dialog(
                 lang(
@@ -82,7 +82,7 @@ label_17401:
             }
         }
     }
-    if (fs::exists(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2")))
+    if (fs::exists(fs::path(u8"./tmp/mdata_"s + mid + u8".s2")))
     {
         ctrl_file(1);
         if (mdata(7) == 0)

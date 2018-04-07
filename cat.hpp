@@ -1,10 +1,11 @@
 #pragma once
 
 #include <memory>
+#include <unordered_map>
 #include <lua.hpp>
 #include "filesystem.hpp"
 #include "lib/noncopyable.hpp"
-#include "optional_ref.hpp"
+#include "optional.hpp"
 
 
 namespace elona::cat
@@ -228,7 +229,7 @@ public:
     void initialize()
     {
         cat::global.load(
-            fs::u8path(u8"../data") / fs::u8path(traits_type::filename));
+            fs::path(u8"../data") / fs::path(traits_type::filename));
 
         auto L = cat::global.ptr();
 
@@ -248,7 +249,7 @@ public:
     {
         const auto itr = storage.find(id);
         if (itr == std::end(storage))
-            return std::nullopt;
+            return none;
         else
             return itr->second;
     }

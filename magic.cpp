@@ -1210,7 +1210,7 @@ label_2181_internal:
         snd(59);
         gsel(4);
         pos(0, 0);
-        picload(fs::u8path(u8"./graphic/paper.bmp"), 1);
+        picload(fs::path(u8"./graphic/paper.bmp"), 1);
         gsel(0);
         ww = 400;
         wh = 300;
@@ -4517,7 +4517,7 @@ label_2181_internal:
             u8"You summon 4 dimensional pocket."s));
         invfile = 8;
         ctrl_file(4, u8"shoptmp.s2");
-        if (fs::exists(fs::u8path(u8"./tmp/"s + u8"shop" + invfile + u8".s2")))
+        if (fs::exists(fs::path(u8"./tmp/"s + u8"shop" + invfile + u8".s2")))
         {
             ctrl_file(3, u8"shop"s + invfile + u8".s2");
         }

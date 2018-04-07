@@ -1,6 +1,6 @@
-CXX := /usr/local/bin/g++-HEAD
-CXX_FLAGS := -Werror -Wall -Wextra -g -O0 -MMD -DDEBUG -std=c++17 -I/usr/local/include -I./thirdparty $(EX_CXX_FLAGS)
-LN_FLAGS := -lstdc++fs -L/usr/local/lib -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -llua
+CXX := clang++
+CXX_FLAGS := -Wall -Wextra -g -O0 -MMD -DDEBUG -std=c++17 -I/usr/local/include -I./thirdparty $(EX_CXX_FLAGS)
+LN_FLAGS := -lboost_system -lboost_filesystem -L/usr/local/lib -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -llua
 BIN_DIR := bin
 SRC_DIR := .
 SOURCES := $(wildcard $(SRC_DIR)/*.cpp)

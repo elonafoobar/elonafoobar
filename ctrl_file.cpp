@@ -22,8 +22,8 @@ void load_v1(
     size_t begin,
     size_t end)
 {
-    std::ifstream in{filepath};
-    putit::binary_iarchive ar{in};
+    std::ifstream in(filepath.native());
+    putit::binary_iarchive ar(in);
     for (size_t i = begin; i < end; ++i)
     {
         ar.load(data(i));
@@ -38,8 +38,8 @@ void save_v1(
     size_t begin,
     size_t end)
 {
-    std::ofstream out{filepath};
-    putit::binary_oarchive ar{out};
+    std::ofstream out(filepath.native());
+    putit::binary_oarchive ar(out);
     for (size_t i = begin; i < end; ++i)
     {
         ar.save(data(i));
@@ -56,7 +56,7 @@ void load_v2(
     size_t j_begin,
     size_t j_end)
 {
-    std::ifstream in{filepath};
+    std::ifstream in(filepath.native());
     putit::binary_iarchive ar{in};
     for (size_t j = j_begin; j < j_end; ++j)
     {
@@ -77,7 +77,7 @@ void save_v2(
     size_t j_begin,
     size_t j_end)
 {
-    std::ofstream out{filepath};
+    std::ofstream out(filepath.native());
     putit::binary_oarchive ar{out};
     for (size_t j = j_begin; j < j_end; ++j)
     {
@@ -100,7 +100,7 @@ void load_v3(
     size_t k_begin,
     size_t k_end)
 {
-    std::ifstream in{filepath};
+    std::ifstream in(filepath.native());
     putit::binary_iarchive ar{in};
     for (size_t k = k_begin; k < k_end; ++k)
     {
@@ -126,7 +126,7 @@ void save_v3(
     size_t k_begin,
     size_t k_end)
 {
-    std::ofstream out{filepath};
+    std::ofstream out(filepath.native());
     putit::binary_oarchive ar{out};
     for (size_t k = k_begin; k < k_end; ++k)
     {
@@ -144,7 +144,7 @@ void save_v3(
 template <typename T>
 void load(const fs::path& filepath, T& data, size_t begin, size_t end)
 {
-    std::ifstream in{filepath};
+    std::ifstream in(filepath.native());
     putit::binary_iarchive ar{in};
     for (size_t i = begin; i < end; ++i)
     {
@@ -156,7 +156,7 @@ void load(const fs::path& filepath, T& data, size_t begin, size_t end)
 template <typename T>
 void save(const fs::path& filepath, T& data, size_t begin, size_t end)
 {
-    std::ofstream out{filepath};
+    std::ofstream out(filepath.native());
     putit::binary_oarchive ar{out};
     for (size_t i = begin; i < end; ++i)
     {
@@ -168,7 +168,7 @@ void save(const fs::path& filepath, T& data, size_t begin, size_t end)
 
 void fmode_8_7(bool read)
 {
-    folder = fs::u8path(u8"./save/"s + playerid + u8"/");
+    folder = fs::path(u8"./save/"s + playerid + u8"/").generic_string();
     if (!read)
     {
         playerheader = ""s + cdatan(0, 0) + u8" Lv:"s + cdata[0].level + u8" "s
@@ -495,11 +495,11 @@ void fmode_14_15(bool read)
     std::string filepath;
     if (!read)
     {
-        folder = fs::u8path(u8"./tmp/");
+        folder = fs::path(u8"./tmp/").generic_string();
     }
     if (read)
     {
-        folder = fs::u8path(u8"./save/"s + geneuse + u8"/");
+        folder = fs::path(u8"./save/"s + geneuse + u8"/").generic_string();
     }
     if (!read)
     {
@@ -659,7 +659,7 @@ void fmode_14_15(bool read)
 void fmode_2_1(bool read)
 {
     std::string filepath;
-    folder = fs::u8path(u8"./tmp/");
+    folder = fs::path(u8"./tmp/").generic_string();
 
     {
         const auto filepath = folder + u8"mdata_"s + mid + u8".s2"s;
@@ -767,7 +767,7 @@ void fmode_2_1(bool read)
 void fmode_20_19(bool read)
 {
     std::string filepath;
-    folder = fs::u8path(u8"./user/");
+    folder = fs::path(u8"./user/").generic_string();
 
     {
         const auto filepath = folder + u8"m1_0.t"s;
@@ -823,7 +823,7 @@ void fmode_20_19(bool read)
 void fmode_22_21(bool read)
 {
     int id = 0;
-    folder = fs::u8path(u8"./user/");
+    folder = fs::path(u8"./user/").generic_string();
     if (read)
     {
         tg = 0;
@@ -1077,14 +1077,14 @@ void fmode_6_5(bool read)
 
 void fmode_4_3(bool read, const fs::path& file)
 {
-    const auto path = fs::u8path(u8"./tmp") / file;
+    const auto path = fs::path(u8"./tmp") / file;
     if (read)
     {
         load(path, inv, 1320, 5480);
     }
     else
     {
-        fileadd(path);
+        fileadd(path.generic_string());
         save(path, inv, 1320, 5480);
     }
 }
@@ -1095,7 +1095,7 @@ void fmode_23_24(bool read, const fs::path& filepath)
 {
     if (read)
     {
-        fileadd(filepath);
+        fileadd(filepath.generic_string());
         save_v1(filepath, deck, 0, 1000);
     }
     else
@@ -1107,8 +1107,8 @@ void fmode_23_24(bool read, const fs::path& filepath)
 
 void fmode_18_17(bool read, const fs::path& file)
 {
-    folder = fs::u8path(u8"./tmp/");
-    if (!fs::exists(std::string(file) + u8"cdata_"s + mid + u8".s2"s))
+    folder = fs::path(u8"./tmp/").generic_string();
+    if (!fs::exists(file.generic_string() + u8"cdata_"s + mid + u8".s2"s))
     {
         return;
     }
@@ -1162,7 +1162,7 @@ void fmode_18_17(bool read, const fs::path& file)
 void fmode_10()
 {
     for (const auto& entry : filesystem::dir_entries(
-             fs::u8path(u8"./tmp"),
+             fs::path(u8"./tmp"),
              filesystem::dir_entries::type::file,
              std::regex{u8R"(.*\..*)"}))
     {
@@ -1173,7 +1173,7 @@ void fmode_10()
 
 void fmode_9()
 {
-    elona_delete(fs::u8path(u8"./save/"s + playerid));
+    elona_delete(fs::path(u8"./save/"s + playerid));
 }
 
 
@@ -1182,12 +1182,12 @@ void fmode_11_12(int fmode)
     std::string filepath;
     if (fmode == 12)
     {
-        if (!fs::exists(fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2")))
+        if (!fs::exists(fs::path(u8"./tmp/mdata_"s + mid + u8".s2")))
         {
             return;
         }
     }
-    filepath = fs::u8path(u8"./tmp/map_"s + mid + u8".s2");
+    filepath = fs::path(u8"./tmp/map_"s + mid + u8".s2").generic_string();
     if (!fs::exists(filepath))
     {
         return;
@@ -1196,26 +1196,27 @@ void fmode_11_12(int fmode)
     fileadd(filepath, 1);
     if (fmode == 11)
     {
-        filepath = fs::u8path(u8"./tmp/cdata_"s + mid + u8".s2");
+        filepath = fs::path(u8"./tmp/cdata_"s + mid + u8".s2").generic_string();
         elona_delete(filepath);
         fileadd(filepath, 1);
-        filepath = fs::u8path(u8"./tmp/sdata_"s + mid + u8".s2");
+        filepath = fs::path(u8"./tmp/sdata_"s + mid + u8".s2").generic_string();
         elona_delete(filepath);
         fileadd(filepath, 1);
-        filepath = fs::u8path(u8"./tmp/cdatan_"s + mid + u8".s2");
+        filepath =
+            fs::path(u8"./tmp/cdatan_"s + mid + u8".s2").generic_string();
         elona_delete(filepath);
         fileadd(filepath, 1);
-        filepath = fs::u8path(u8"./tmp/inv_"s + mid + u8".s2");
+        filepath = fs::path(u8"./tmp/inv_"s + mid + u8".s2").generic_string();
         elona_delete(filepath);
         fileadd(filepath, 1);
     }
-    filepath = fs::u8path(u8"./tmp/mdata_"s + mid + u8".s2");
+    filepath = fs::path(u8"./tmp/mdata_"s + mid + u8".s2").generic_string();
     elona_delete(filepath);
     fileadd(filepath, 1);
-    filepath = fs::u8path(u8"./tmp/mdatan_"s + mid + u8".s2");
+    filepath = fs::path(u8"./tmp/mdatan_"s + mid + u8".s2").generic_string();
     elona_delete(filepath);
     fileadd(filepath, 1);
-    filepath = fs::u8path(u8"./tmp/mef_"s + mid + u8".s2");
+    filepath = fs::path(u8"./tmp/mef_"s + mid + u8".s2").generic_string();
     elona_delete(filepath);
     fileadd(filepath, 1);
 }
@@ -1228,12 +1229,12 @@ void fmode_13()
         adata(i, area) = 0;
     }
     for (const auto& entry : filesystem::dir_entries(
-             fs::u8path(u8"./tmp"),
+             fs::path(u8"./tmp"),
              filesystem::dir_entries::type::file,
              std::regex{u8R"(.*_)"s + area + u8R"(_.*\..*)"}))
     {
         elona_delete(entry.path());
-        fileadd(entry.path().generic_u8string(), 1);
+        fileadd(entry.path().generic_string(), 1);
     }
 }
 

@@ -1,10 +1,10 @@
 #pragma once
 
 #include <algorithm>
-#include <optional>
 #include <random>
 #include <utility>
 #include <vector>
+#include "optional.hpp"
 
 
 
@@ -34,12 +34,12 @@ struct weighted_random_sampler
     }
 
 
-    std::optional<T> get()
+    optional<T> get()
     {
         if (std::empty(candidates))
-            return std::nullopt;
+            return none;
         if (sum == 0)
-            return std::nullopt;
+            return none;
 
         std::uniform_int_distribution<Weight> dist{0, sum - 1};
         int n = dist(detail::random_engine2);
@@ -51,7 +51,7 @@ struct weighted_random_sampler
             }
         }
 
-        return std::nullopt;
+        return none;
     }
 
 

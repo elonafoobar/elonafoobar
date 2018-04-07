@@ -1,14 +1,14 @@
 #pragma once
 
-#if __has_include(<filesystem>)
-#include <filesystem>
-namespace fs = std::filesystem;
-#else
-#include <experimental/filesystem>
-namespace fs = std::experimental::filesystem;
-#endif
 #include <functional>
 #include <regex>
+
+// Prevent some old features from being defined.
+// See also https://www.boost.org/doc/libs/1_66_0/libs/filesystem/doc/index.htm.
+#define BOOST_FILESYSTEM_NO_DEPRECATED
+#include <boost/filesystem.hpp>
+namespace fs = boost::filesystem;
+
 #include "range.hpp"
 
 
@@ -111,18 +111,18 @@ struct dir_entries
         return {fs::directory_iterator{base_dir}, [this](const auto& itr) {
                     if (itr == fs::directory_iterator{})
                         return false;
-                    if (!itr->exists())
+                    if (!fs::exists(itr->path()))
                         return true;
                     switch (entry_type)
                     {
                     case type::dir:
-                        if (!itr->is_directory())
+                        if (!fs::is_directory(itr->path()))
                         {
                             return true;
                         }
                         break;
                     case type::file:
-                        if (!itr->is_regular_file())
+                        if (!fs::is_regular_file(itr->path()))
                         {
                             return true;
                         }
@@ -130,7 +130,7 @@ struct dir_entries
                     case type::all: break;
                     }
                     return !std::regex_match(
-                        itr->path().filename().generic_u8string(), pattern);
+                        itr->path().filename().generic_string(), pattern);
                 }};
     }
 

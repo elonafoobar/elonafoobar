@@ -705,7 +705,7 @@ label_20591:
     }
     gsel(3);
     pos(960, 96);
-    picload(fs::u8path(u8"./graphic/deco_inv.bmp"), 1);
+    picload(fs::path(u8"./graphic/deco_inv.bmp"), 1);
     gsel(0);
     if (returnfromidentify == 0)
     {
