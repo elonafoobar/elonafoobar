@@ -22,9 +22,9 @@ See CONTRIBUTING.md for details.
 ## Requirements
 
 * `make`
-* `clang-format`(only contributing)
-* Some unix commands. `find` and `xargs`.
-* `g++` which supports C++17 and `std::filesystem`.
+* `clang-format`, `find` and `xargs`(Optional)
+* C++ compiler which supports C++14.
+* Boost
 * Lua 5.3
 * SDL2, SDL2_image, SDL2_ttf and SDL2_mixer
 
@@ -35,27 +35,12 @@ See CONTRIBUTING.md for details.
 
 # How To Play
 
-1. Prepare `runtime` directory:
-1. Execute `elonafoobar` in the directory.
-
-```
-runtime/
-  elonafoobar # Excutable binary
-  scene1.hsp
-  scene2.hsp # Scene files from the original Elona v1.22
-  config.json # Copy the below file
-  font/
-    APJapanesefontT.ttf # Sorry, but the filename of font is hard-coded now.
-  graphic/ # Same as the original Elona v1.22
-  sound/ # Same as the original Elona v1.22
-  map/
-    *.idx
-    *.obj
-    *.map # Please extend gzip file manually.
-  data/ # Same as the original Elona v1.22
-```
-
-Important note: convert the encoding of all text files to UTF-8 from Shift-JIS.
+1. Copy `graphic` and `sound` folders from vanilla v1.22 to `runtime/graphic` and `runtime/sound`.
+1. Copy `user/graphic/face1.bmp` from vanilla v1.22 to `runtime/user/graphic/face1.bmp`.
+1. Add your favorite font to `runtime/font` folder.
+1. Edit `font1` and `font2` in `runtime/config.json` and set them to the above filename. Be sure to append the extension like .ttf.
+1. `cd path-to-elonafoobar`.
+1. Execute `ElonaFoobar` or `ElonaFoobar.exe`.
 
 
 ```json
@@ -130,6 +115,8 @@ Important note: convert the encoding of all text files to UTF-8 from Shift-JIS.
   "key_pray": "p",
   "key_quick": "z",
   "key_quickinv": "x",
+  "key_quickload": "F2",
+  "key_quicksave": "F1",
   "key_read": "r",
   "key_rest": "R",
   "key_sCancel": 1,
@@ -217,3 +204,4 @@ contents in this repository. Note that images and sounds are not included.
 ## Thirdparty libraries
 
 * picojson: see thirdparty/picojson/LICENSE.
+* cmake/FindXXX.cmake: see cmake/LICENSE.
