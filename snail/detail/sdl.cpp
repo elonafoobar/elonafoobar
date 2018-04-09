@@ -1,7 +1,11 @@
 #include "sdl.hpp"
 
 
-namespace elona::snail::detail
+namespace elona
+{
+namespace snail
+{
+namespace detail
 {
 
 
@@ -114,4 +118,6 @@ sdl_mixer::~sdl_mixer()
 }
 
 
-} // namespace elona::snail::detail
+} // namespace elona
+} // namespace snail
+} // namespace detail
