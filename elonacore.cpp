@@ -8419,7 +8419,7 @@ void arrayfile_read(std::string_view fmode_str, const fs::path& filepath)
 
 void arrayfile_write(std::string_view fmode_str, const fs::path& filepath)
 {
-    std::ofstream out{filepath.native()};
+    std::ofstream out{filepath.native(), std::ios::binary};
     if (!out)
     {
         throw "TODO";
@@ -15868,7 +15868,7 @@ int net_dllist(const std::string& prm_886, int prm_887)
     notesel(netbuf);
     {
         netbuf(0).clear();
-        std::ifstream in{file_at_m147};
+        std::ifstream in{file_at_m147, std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -15972,7 +15972,7 @@ void initialize_server_info()
     {
         {
             serverlist(0).clear();
-            std::ifstream in{fs::path(u8"./server.txt").native()};
+            std::ifstream in{fs::path(u8"./server.txt").native(), std::ios::binary};
             std::string tmp;
             while (std::getline(in, tmp))
             {
@@ -15986,7 +15986,7 @@ void initialize_server_info()
     cgiurl2 = strmid(netbuf, 0, p);
     cgiurl3 = strmid(netbuf, p + 1, instr(netbuf, p + 1, u8"%"s));
     {
-        std::ofstream out{fs::path(u8"./server.txt").native()};
+        std::ofstream out{fs::path(u8"./server.txt").native(), std::ios::binary};
         out << serverlist(0) << std::endl;
     }
     if (jp)
@@ -21658,7 +21658,7 @@ void initialize_set_of_random_generation()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{fs::path(u8"./data/book.txt").native()};
+        std::ifstream in{fs::path(u8"./data/book.txt").native(), std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -44281,7 +44281,7 @@ void label_2022()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{fs::path(u8"./data/book.txt").native()};
+        std::ifstream in{fs::path(u8"./data/book.txt").native(), std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -48724,7 +48724,7 @@ void label_2085()
     }
     s = fs::path(u8"./save/"s + playerid + u8".txt").generic_string();
     {
-        std::ofstream out{s};
+        std::ofstream out{s, std::ios::binary};
         out << s(0) << std::endl;
     }
     exec(s, 16);
@@ -49749,7 +49749,7 @@ void load_save_data()
     else
     {
         buff(0).clear();
-        std::ifstream in{folder + u8"filelist.txt"s};
+        std::ifstream in{folder + u8"filelist.txt"s, std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -49857,7 +49857,7 @@ void save_game()
     notesel(buff);
     {
         std::ofstream out{
-            fs::path(u8"./save/"s + playerid + u8"/filelist.txt").native()};
+            fs::path(u8"./save/"s + playerid + u8"/filelist.txt").native(), std::ios::binary};
         out << buff(0) << std::endl;
     }
     return;
@@ -66416,7 +66416,7 @@ void do_play_scene()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s)};
+        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s), std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -66447,7 +66447,7 @@ label_2681:
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s)};
+        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s), std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -68793,7 +68793,7 @@ void show_ex_help()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{fs::path(u8"./data/exhelp.txt").native()};
+        std::ifstream in{fs::path(u8"./data/exhelp.txt").native(), std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -68927,7 +68927,7 @@ void show_game_help()
         std::ifstream in{
             fs::path(
                 u8"./data/"s + lang(u8"manual_JP.txt"s, u8"manual_ENG.txt"s))
-                .native()};
+                .native(), std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -69499,7 +69499,7 @@ void label_2719()
     notesel(note_buff);
     {
         note_buff.clear();
-        std::ifstream in{fs::path(u8"./user/export.txt").native()};
+        std::ifstream in{fs::path(u8"./user/export.txt").native(), std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -69663,7 +69663,7 @@ void play_scene()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s)};
+        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s), std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -72462,7 +72462,7 @@ void pc_died()
     const auto bone_filepath = fs::path(u8"./save/bone.txt");
     if (fs::exists(bone_filepath))
     {
-        std::ifstream in{bone_filepath.native()};
+        std::ifstream in{bone_filepath.native(), std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -72532,7 +72532,7 @@ void pc_died()
         noteadd(""s + cnvrank((cnt + 1)) + lang(u8"位"s, ""s), cnt * 4, 1);
     }
     {
-        std::ofstream out{bone_filepath.native()};
+        std::ofstream out{bone_filepath.native(), std::ios::binary};
         out << buff(0) << std::endl;
     }
     gsel(4);

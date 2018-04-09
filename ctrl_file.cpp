@@ -22,7 +22,7 @@ void load_v1(
     size_t begin,
     size_t end)
 {
-    std::ifstream in(filepath.native());
+    std::ifstream in{filepath.native(), std::ios::binary};
     putit::binary_iarchive ar(in);
     for (size_t i = begin; i < end; ++i)
     {
@@ -38,7 +38,7 @@ void save_v1(
     size_t begin,
     size_t end)
 {
-    std::ofstream out(filepath.native());
+    std::ofstream out{filepath.native(), std::ios::binary};
     putit::binary_oarchive ar(out);
     for (size_t i = begin; i < end; ++i)
     {
@@ -56,7 +56,7 @@ void load_v2(
     size_t j_begin,
     size_t j_end)
 {
-    std::ifstream in(filepath.native());
+    std::ifstream in{filepath.native(), std::ios::binary};
     putit::binary_iarchive ar{in};
     for (size_t j = j_begin; j < j_end; ++j)
     {
@@ -77,7 +77,7 @@ void save_v2(
     size_t j_begin,
     size_t j_end)
 {
-    std::ofstream out(filepath.native());
+    std::ofstream out{filepath.native(), std::ios::binary};
     putit::binary_oarchive ar{out};
     for (size_t j = j_begin; j < j_end; ++j)
     {
@@ -100,7 +100,7 @@ void load_v3(
     size_t k_begin,
     size_t k_end)
 {
-    std::ifstream in(filepath.native());
+    std::ifstream in{filepath.native(), std::ios::binary};
     putit::binary_iarchive ar{in};
     for (size_t k = k_begin; k < k_end; ++k)
     {
@@ -126,7 +126,7 @@ void save_v3(
     size_t k_begin,
     size_t k_end)
 {
-    std::ofstream out(filepath.native());
+    std::ofstream out{filepath.native(), std::ios::binary};
     putit::binary_oarchive ar{out};
     for (size_t k = k_begin; k < k_end; ++k)
     {
@@ -144,7 +144,7 @@ void save_v3(
 template <typename T>
 void load(const fs::path& filepath, T& data, size_t begin, size_t end)
 {
-    std::ifstream in(filepath.native());
+    std::ifstream in{filepath.native(), std::ios::binary};
     putit::binary_iarchive ar{in};
     for (size_t i = begin; i < end; ++i)
     {
@@ -156,7 +156,7 @@ void load(const fs::path& filepath, T& data, size_t begin, size_t end)
 template <typename T>
 void save(const fs::path& filepath, T& data, size_t begin, size_t end)
 {
-    std::ofstream out(filepath.native());
+    std::ofstream out{filepath.native(), std::ios::binary};
     putit::binary_oarchive ar{out};
     for (size_t i = begin; i < end; ++i)
     {
@@ -212,7 +212,7 @@ void fmode_8_7(bool read)
         {
             if (fs::exists(filepath))
             {
-                std::ifstream in{filepath};
+                std::ifstream in{filepath, std::ios::binary};
                 putit::binary_iarchive ar{in};
                 for (int cc = 0; cc < 57; ++cc)
                 {
@@ -225,7 +225,7 @@ void fmode_8_7(bool read)
         }
         else
         {
-            std::ofstream out{filepath};
+            std::ofstream out{filepath, std::ios::binary};
             putit::binary_oarchive ar{out};
             for (int cc = 0; cc < 57; ++cc)
             {
@@ -424,7 +424,7 @@ void fmode_8_7(bool read)
         const auto filepath = folder + u8"art.log"s;
         if (!read)
         {
-            std::ofstream out{filepath};
+            std::ofstream out{filepath, std::ios::binary};
             range::for_each(artifactlocation, [&](const auto& line) {
                 out << line << std::endl;
             });
@@ -443,13 +443,13 @@ void fmode_8_7(bool read)
         notesel(newsbuff);
         if (!read)
         {
-            std::ofstream out{filepath};
+            std::ofstream out{filepath, std::ios::binary};
             out << newsbuff(0) << std::endl;
         }
         if (read)
         {
             newsbuff(0).clear();
-            std::ifstream in{filepath};
+            std::ifstream in{filepath, std::ios::binary};
             std::string tmp;
             while (std::getline(in, tmp))
             {
@@ -532,7 +532,7 @@ void fmode_14_15(bool read)
         {
             if (fs::exists(filepath))
             {
-                std::ifstream in{filepath};
+                std::ifstream in{filepath, std::ios::binary};
                 putit::binary_iarchive ar{in};
                 for (int cc = 0; cc < 57; ++cc)
                 {
@@ -546,7 +546,7 @@ void fmode_14_15(bool read)
         else
         {
             fileadd(""s + filepath);
-            std::ofstream out{filepath};
+            std::ofstream out{filepath, std::ios::binary};
             putit::binary_oarchive ar{out};
             for (int cc = 0; cc < 57; ++cc)
             {
@@ -707,7 +707,7 @@ void fmode_2_1(bool read)
         const auto filepath = folder + u8"sdata_"s + mid + u8".s2"s;
         if (read)
         {
-            std::ifstream in{filepath};
+            std::ifstream in{filepath, std::ios::binary};
             putit::binary_iarchive ar{in};
             for (int cc = 57; cc < 245; ++cc)
             {
@@ -720,7 +720,7 @@ void fmode_2_1(bool read)
         else
         {
             fileadd(""s + filepath);
-            std::ofstream out{filepath};
+            std::ofstream out{filepath, std::ios::binary};
             putit::binary_oarchive ar{out};
             for (int cc = 57; cc < 245; ++cc)
             {
@@ -881,7 +881,7 @@ void fmode_22_21(bool read)
             const auto filepath = folder + u8"c2_"s + id + u8".t"s;
             if (read)
             {
-                std::ifstream in{filepath};
+                std::ifstream in{filepath, std::ios::binary};
                 putit::binary_iarchive ar{in};
                 for (int i = 0; i < 600; ++i)
                 {
@@ -890,7 +890,7 @@ void fmode_22_21(bool read)
             }
             else
             {
-                std::ofstream out{filepath};
+                std::ofstream out{filepath, std::ios::binary};
                 putit::binary_oarchive ar{out};
                 for (int i = 0; i < 600; ++i)
                 {
@@ -1132,7 +1132,7 @@ void fmode_18_17(bool read, const fs::path& file)
         const auto filepath = folder + u8"sdata_"s + mid + u8".s2"s;
         if (read)
         {
-            std::ifstream in{filepath};
+            std::ifstream in{filepath, std::ios::binary};
             putit::binary_iarchive ar{in};
             for (int cc = 57; cc < 245; ++cc)
             {
@@ -1145,7 +1145,7 @@ void fmode_18_17(bool read, const fs::path& file)
         else
         {
             fileadd(""s + filepath);
-            std::ofstream out{filepath};
+            std::ofstream out{filepath, std::ios::binary};
             putit::binary_oarchive ar{out};
             for (int cc = 57; cc < 245; ++cc)
             {

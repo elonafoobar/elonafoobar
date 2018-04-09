@@ -509,7 +509,7 @@ void load_config()
     picojson::value value;
 
     {
-        std::ifstream file(fs::path(u8"./config.json").native());
+        std::ifstream file{fs::path(u8"./config.json").native(), std::ios::binary};
         if (!file)
         {
             throw config_loading_error(
@@ -650,7 +650,7 @@ void set_config(const std::string& key, int value)
     picojson::value options;
 
     {
-        std::ifstream file(fs::path(u8"./config.json").native());
+        std::ifstream file{fs::path(u8"./config.json").native(), std::ios::binary};
         if (!file)
         {
             throw config_loading_error(
@@ -662,7 +662,7 @@ void set_config(const std::string& key, int value)
     options.get(key) = picojson::value{int64_t{value}};
 
     {
-        std::ofstream file(fs::path(u8"./config.json").native());
+        std::ofstream file{fs::path(u8"./config.json").native(), std::ios::binary};
         if (!file)
         {
             throw config_loading_error(
@@ -679,7 +679,7 @@ void set_config(const std::string& key, const std::string& value)
     picojson::value options;
 
     {
-        std::ifstream file{fs::path(u8"./config.json").native()};
+        std::ifstream file{fs::path(u8"./config.json").native(), std::ios::binary};
         if (!file)
         {
             throw config_loading_error{u8"Failed to open: "s
@@ -691,7 +691,7 @@ void set_config(const std::string& key, const std::string& value)
     options.get(key) = picojson::value{value};
 
     {
-        std::ofstream file{fs::path(u8"./config.json").native()};
+        std::ofstream file{fs::path(u8"./config.json").native(), std::ios::binary};
         if (!file)
         {
             throw config_loading_error{u8"Failed to open: "s
@@ -708,7 +708,7 @@ void set_config(const std::string& key, const std::string& value1, int value2)
     picojson::value options;
 
     {
-        std::ifstream file{fs::path(u8"./config.json").native()};
+        std::ifstream file{fs::path(u8"./config.json").native(), std::ios::binary};
         if (!file)
         {
             throw config_loading_error{u8"Failed to open: "s
@@ -721,7 +721,7 @@ void set_config(const std::string& key, const std::string& value1, int value2)
     (void)value2; // TODO
 
     {
-        std::ofstream file{fs::path(u8"./config.json").native()};
+        std::ofstream file{fs::path(u8"./config.json").native(), std::ios::binary};
         if (!file)
         {
             throw config_loading_error{u8"Failed to open: "s
@@ -800,7 +800,7 @@ void load_config2()
             u8"charamake_wiz", [&](auto value) { cfg_wizard = value; }),
     };
 
-    std::ifstream file(fs::path(u8"./config.json").native());
+    std::ifstream file{fs::path(u8"./config.json").native(), std::ios::binary};
     if (!file)
     {
         throw config_loading_error(
