@@ -22,7 +22,7 @@ void engine::initialize()
 
 void engine::load(const fs::path& filepath)
 {
-    luaL_dofile(ptr(), filepath.c_str());
+    luaL_dofile(ptr(), filesystem::to_narrow_path(filepath).c_str());
 }
 
 
