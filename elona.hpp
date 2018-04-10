@@ -96,7 +96,8 @@ struct elona_vector1
     template <
         typename U,
         std::enable_if_t<
-            !std::is_same<T, std::string>::value || !std::is_same<U, int>::value,
+            !std::is_same<T, std::string>::value
+                || !std::is_same<U, int>::value,
             nullptr_t> = nullptr>
     T& operator+=(const U& x)
     {
@@ -445,7 +446,7 @@ void gzoom(
 int instr(const std::string& str, size_t pos, const std::string pattern);
 
 
-int stoi(std::string_view s);
+int stoi(const std::string&);
 
 
 template <typename T>
@@ -761,13 +762,11 @@ void memcpy_(
 
 
 
-
 template <typename T>
 inline T clamp(const T& x, const T& min, const T& max)
 {
     return std::min(std::max(x, min), max);
 }
-
 
 
 

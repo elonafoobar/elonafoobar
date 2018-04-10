@@ -4888,8 +4888,8 @@ int encadd(
         if (enc_at_m48 == 9)
         {
             enc_at_m48 = rnd(rnd(6) + 1);
-            encp_at_m48 = clamp(encp_at_m48, 0, 500)
-                    * encammoref(1, enc_at_m48) / 500
+            encp_at_m48 =
+                clamp(encp_at_m48, 0, 500) * encammoref(1, enc_at_m48) / 500
                 + encammoref(0, enc_at_m48);
             enc_at_m48 += 90000;
             encp_at_m48 += encp_at_m48 * 1000;
@@ -6028,8 +6028,7 @@ void csvstr2(elona_vector1<std::string>& prm_532, const std::string& prm_533)
     for (int cnt = 0; cnt < 40; ++cnt)
     {
         prm_532(cnt) = "";
-        getstr(
-            prm_532(cnt), word_at_m67, clamp(p_at_m67, 0, i_at_m67), 44);
+        getstr(prm_532(cnt), word_at_m67, clamp(p_at_m67, 0, i_at_m67), 44);
         if (strsize > i_at_m67)
         {
             break;
@@ -8323,7 +8322,7 @@ void fileadd(const std::string& prm_692, int prm_693)
 
 
 
-void arrayfile_read(std::string_view fmode_str, const fs::path& filepath)
+void arrayfile_read(const std::string& fmode_str, const fs::path& filepath)
 {
     std::vector<std::string> lines;
     if (fs::exists(filepath))
@@ -8417,7 +8416,7 @@ void arrayfile_read(std::string_view fmode_str, const fs::path& filepath)
 
 
 
-void arrayfile_write(std::string_view fmode_str, const fs::path& filepath)
+void arrayfile_write(const std::string& fmode_str, const fs::path& filepath)
 {
     std::ofstream out{filepath.native(), std::ios::binary};
     if (!out)
@@ -8482,7 +8481,10 @@ void arrayfile_write(std::string_view fmode_str, const fs::path& filepath)
 
 
 
-void arrayfile(bool fread, std::string_view fmode_str, const fs::path& filepath)
+void arrayfile(
+    bool fread,
+    const std::string& fmode_str,
+    const fs::path& filepath)
 {
     if (!fread)
     {
@@ -10567,8 +10569,7 @@ void refreshspeed(int cc)
     else
     {
         cdata[cc].current_speed = sdata(18, cc)
-            * clamp((100 - cdata[cc].speed_correction_value), 0, 100)
-            / 100;
+            * clamp((100 - cdata[cc].speed_correction_value), 0, 100) / 100;
     }
     if (cdata[cc].current_speed < 10)
     {
@@ -10583,10 +10584,10 @@ void refreshspeed(int cc)
     {
         cdata[0].current_speed = sdata(18, gdata_mount) * 100
             / clamp((100 + sdata(18, gdata_mount)
-                          - sdata(10, gdata_mount) * 3 / 2 - sdata(301, 0) * 2
-                          - (cbit(22, gdata_mount) == 1) * 50),
-                         100,
-                         1000);
+                     - sdata(10, gdata_mount) * 3 / 2 - sdata(301, 0) * 2
+                     - (cbit(22, gdata_mount) == 1) * 50),
+                    100,
+                    1000);
         if (cbit(25, gdata_mount))
         {
             cdata[0].current_speed /= 10;
@@ -18417,10 +18418,7 @@ void label_1459(int cc)
     if (r2 >= (sdata(156, cc) + 10) * (sdata(156, cc) + 10))
     {
         skillexp(
-            156,
-            cc,
-            clamp(r2 * r2 / (sdata(156, cc) * 5 + 10), 10, 1000),
-            10);
+            156, cc, clamp(r2 * r2 / (sdata(156, cc) * 5 + 10), 10, 1000), 10);
     }
 }
 
@@ -19918,8 +19916,7 @@ void label_1530()
     int eqtwowield = 0;
     if (cdatan(2, rc) == u8"mutant"s)
     {
-        for (int cnt = 0,
-                 cnt_end = cnt + clamp(cdata[rc].level / 3, 0, 12);
+        for (int cnt = 0, cnt_end = cnt + clamp(cdata[rc].level / 3, 0, 12);
              cnt < cnt_end;
              ++cnt)
         {
@@ -25135,9 +25132,7 @@ void eating_effect_quick()
             u8"Wow, "s + name(cc) + u8" speed"s + _s(cc) + u8" up!"s));
     }
     skillexp(
-        18,
-        cc,
-        clamp(2500 - sdata(18, cc) * sdata(18, cc) / 10, 20, 2500));
+        18, cc, clamp(2500 - sdata(18, cc) * sdata(18, cc) / 10, 20, 2500));
     return;
 }
 
@@ -28271,8 +28266,8 @@ int initialize_quest_map_party()
         ry = roomy(cnt) + 1;
         rh = roomheight(cnt) - 2;
         rdsize = rw * rh;
-        roomdiff = clamp(
-            rnd(qdata(5, gdata_executing_immediate_quest) / 3 + 3), 0, 9);
+        roomdiff =
+            clamp(rnd(qdata(5, gdata_executing_immediate_quest) / 3 + 3), 0, 9);
         if (rnd(2) == 0)
         {
             x = rnd(rw) + rx;
@@ -29446,8 +29441,7 @@ void use_house_board()
             pos(x, y);
             mes(s(cnt));
             font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
-            for (int cnt = 0,
-                     cnt_end = cnt + (clamp(p(cnt) / 1000, 1, 10));
+            for (int cnt = 0, cnt_end = cnt + (clamp(p(cnt) / 1000, 1, 10));
                  cnt < cnt_end;
                  ++cnt)
             {
@@ -30137,8 +30131,7 @@ void show_shop_log()
                     + cdatan(0, worker) + u8" put "s + s
                     + u8" in the shop strong box."s));
         }
-        skillexp(
-            156, worker, clamp(int(std::sqrt(income(0))) * 6, 25, 1000));
+        skillexp(156, worker, clamp(int(std::sqrt(income(0))) * 6, 25, 1000));
     }
     if (sold > (110 - gdata(125) / 100) / 10)
     {
@@ -35317,246 +35310,246 @@ void apply_god_blessing(int cc)
     {
         if (sdata(12, cc) > 0)
         {
-            sdata(12, cc) += clamp(
-                cdata[cc].piety_point / 400, 1, 8 + sdata(181, 0) / 10);
+            sdata(12, cc) +=
+                clamp(cdata[cc].piety_point / 400, 1, 8 + sdata(181, 0) / 10);
         }
         if (sdata(13, cc) > 0)
         {
-            sdata(13, cc) += clamp(
-                cdata[cc].piety_point / 300, 1, 14 + sdata(181, 0) / 10);
+            sdata(13, cc) +=
+                clamp(cdata[cc].piety_point / 300, 1, 14 + sdata(181, 0) / 10);
         }
         if (sdata(154, cc) > 0)
         {
-            sdata(154, cc) += clamp(
-                cdata[cc].piety_point / 500, 1, 8 + sdata(181, 0) / 10);
+            sdata(154, cc) +=
+                clamp(cdata[cc].piety_point / 500, 1, 8 + sdata(181, 0) / 10);
         }
         if (sdata(110, cc) > 0)
         {
-            sdata(110, cc) += clamp(
-                cdata[cc].piety_point / 250, 1, 18 + sdata(181, 0) / 10);
+            sdata(110, cc) +=
+                clamp(cdata[cc].piety_point / 250, 1, 18 + sdata(181, 0) / 10);
         }
         if (sdata(159, cc) > 0)
         {
-            sdata(159, cc) += clamp(
-                cdata[cc].piety_point / 350, 1, 8 + sdata(181, 0) / 10);
+            sdata(159, cc) +=
+                clamp(cdata[cc].piety_point / 350, 1, 8 + sdata(181, 0) / 10);
         }
         if (sdata(158, cc) > 0)
         {
-            sdata(158, cc) += clamp(
-                cdata[cc].piety_point / 250, 1, 16 + sdata(181, 0) / 10);
+            sdata(158, cc) +=
+                clamp(cdata[cc].piety_point / 250, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(176, cc) > 0)
         {
-            sdata(176, cc) += clamp(
-                cdata[cc].piety_point / 300, 1, 10 + sdata(181, 0) / 10);
+            sdata(176, cc) +=
+                clamp(cdata[cc].piety_point / 300, 1, 10 + sdata(181, 0) / 10);
         }
         if (sdata(179, cc) > 0)
         {
-            sdata(179, cc) += clamp(
-                cdata[cc].piety_point / 350, 1, 12 + sdata(181, 0) / 10);
+            sdata(179, cc) +=
+                clamp(cdata[cc].piety_point / 350, 1, 12 + sdata(181, 0) / 10);
         }
     }
     if (cdata[cc].god_id == core_god::lulwy)
     {
         if (sdata(13, cc) > 0)
         {
-            sdata(13, cc) += clamp(
-                cdata[cc].piety_point / 450, 1, 10 + sdata(181, 0) / 10);
+            sdata(13, cc) +=
+                clamp(cdata[cc].piety_point / 450, 1, 10 + sdata(181, 0) / 10);
         }
         if (sdata(18, cc) > 0)
         {
-            sdata(18, cc) += clamp(
-                cdata[cc].piety_point / 350, 1, 30 + sdata(181, 0) / 10);
+            sdata(18, cc) +=
+                clamp(cdata[cc].piety_point / 350, 1, 30 + sdata(181, 0) / 10);
         }
         if (sdata(108, cc) > 0)
         {
-            sdata(108, cc) += clamp(
-                cdata[cc].piety_point / 350, 1, 16 + sdata(181, 0) / 10);
+            sdata(108, cc) +=
+                clamp(cdata[cc].piety_point / 350, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(109, cc) > 0)
         {
-            sdata(109, cc) += clamp(
-                cdata[cc].piety_point / 450, 1, 12 + sdata(181, 0) / 10);
+            sdata(109, cc) +=
+                clamp(cdata[cc].piety_point / 450, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(157, cc) > 0)
         {
-            sdata(157, cc) += clamp(
-                cdata[cc].piety_point / 450, 1, 12 + sdata(181, 0) / 10);
+            sdata(157, cc) +=
+                clamp(cdata[cc].piety_point / 450, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(174, cc) > 0)
         {
-            sdata(174, cc) += clamp(
-                cdata[cc].piety_point / 550, 1, 8 + sdata(181, 0) / 10);
+            sdata(174, cc) +=
+                clamp(cdata[cc].piety_point / 550, 1, 8 + sdata(181, 0) / 10);
         }
     }
     if (cdata[cc].god_id == core_god::itzpalt)
     {
         if (sdata(16, cc) > 0)
         {
-            sdata(16, cc) += clamp(
-                cdata[cc].piety_point / 300, 1, 18 + sdata(181, 0) / 10);
+            sdata(16, cc) +=
+                clamp(cdata[cc].piety_point / 300, 1, 18 + sdata(181, 0) / 10);
         }
         if (sdata(155, cc) > 0)
         {
-            sdata(155, cc) += clamp(
-                cdata[cc].piety_point / 350, 1, 15 + sdata(181, 0) / 10);
+            sdata(155, cc) +=
+                clamp(cdata[cc].piety_point / 350, 1, 15 + sdata(181, 0) / 10);
         }
         if (sdata(50, cc) > 0)
         {
-            sdata(50, cc) += clamp(
-                cdata[cc].piety_point / 50, 1, 200 + sdata(181, 0) / 10);
+            sdata(50, cc) +=
+                clamp(cdata[cc].piety_point / 50, 1, 200 + sdata(181, 0) / 10);
         }
         if (sdata(51, cc) > 0)
         {
-            sdata(51, cc) += clamp(
-                cdata[cc].piety_point / 50, 1, 200 + sdata(181, 0) / 10);
+            sdata(51, cc) +=
+                clamp(cdata[cc].piety_point / 50, 1, 200 + sdata(181, 0) / 10);
         }
         if (sdata(52, cc) > 0)
         {
-            sdata(52, cc) += clamp(
-                cdata[cc].piety_point / 50, 1, 200 + sdata(181, 0) / 10);
+            sdata(52, cc) +=
+                clamp(cdata[cc].piety_point / 50, 1, 200 + sdata(181, 0) / 10);
         }
     }
     if (cdata[cc].god_id == core_god::ehekatl)
     {
         if (sdata(17, cc) > 0)
         {
-            sdata(17, cc) += clamp(
-                cdata[cc].piety_point / 250, 1, 20 + sdata(181, 0) / 10);
+            sdata(17, cc) +=
+                clamp(cdata[cc].piety_point / 250, 1, 20 + sdata(181, 0) / 10);
         }
         if (sdata(19, cc) > 0)
         {
-            sdata(19, cc) += clamp(
-                cdata[cc].piety_point / 100, 1, 50 + sdata(181, 0) / 10);
+            sdata(19, cc) +=
+                clamp(cdata[cc].piety_point / 100, 1, 50 + sdata(181, 0) / 10);
         }
         if (sdata(173, cc) > 0)
         {
-            sdata(173, cc) += clamp(
-                cdata[cc].piety_point / 300, 1, 15 + sdata(181, 0) / 10);
+            sdata(173, cc) +=
+                clamp(cdata[cc].piety_point / 300, 1, 15 + sdata(181, 0) / 10);
         }
         if (sdata(164, cc) > 0)
         {
-            sdata(164, cc) += clamp(
-                cdata[cc].piety_point / 350, 1, 17 + sdata(181, 0) / 10);
+            sdata(164, cc) +=
+                clamp(cdata[cc].piety_point / 350, 1, 17 + sdata(181, 0) / 10);
         }
         if (sdata(185, cc) > 0)
         {
-            sdata(185, cc) += clamp(
-                cdata[cc].piety_point / 300, 1, 12 + sdata(181, 0) / 10);
+            sdata(185, cc) +=
+                clamp(cdata[cc].piety_point / 300, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(158, cc) > 0)
         {
-            sdata(158, cc) += clamp(
-                cdata[cc].piety_point / 450, 1, 8 + sdata(181, 0) / 10);
+            sdata(158, cc) +=
+                clamp(cdata[cc].piety_point / 450, 1, 8 + sdata(181, 0) / 10);
         }
     }
     if (cdata[cc].god_id == core_god::opatos)
     {
         if (sdata(10, cc) > 0)
         {
-            sdata(10, cc) += clamp(
-                cdata[cc].piety_point / 450, 1, 11 + sdata(181, 0) / 10);
+            sdata(10, cc) +=
+                clamp(cdata[cc].piety_point / 450, 1, 11 + sdata(181, 0) / 10);
         }
         if (sdata(11, cc) > 0)
         {
-            sdata(11, cc) += clamp(
-                cdata[cc].piety_point / 350, 1, 16 + sdata(181, 0) / 10);
+            sdata(11, cc) +=
+                clamp(cdata[cc].piety_point / 350, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(168, cc) > 0)
         {
-            sdata(168, cc) += clamp(
-                cdata[cc].piety_point / 350, 1, 15 + sdata(181, 0) / 10);
+            sdata(168, cc) +=
+                clamp(cdata[cc].piety_point / 350, 1, 15 + sdata(181, 0) / 10);
         }
         if (sdata(153, cc) > 0)
         {
-            sdata(153, cc) += clamp(
-                cdata[cc].piety_point / 300, 1, 16 + sdata(181, 0) / 10);
+            sdata(153, cc) +=
+                clamp(cdata[cc].piety_point / 300, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(163, cc) > 0)
         {
-            sdata(163, cc) += clamp(
-                cdata[cc].piety_point / 350, 1, 12 + sdata(181, 0) / 10);
+            sdata(163, cc) +=
+                clamp(cdata[cc].piety_point / 350, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(174, cc) > 0)
         {
-            sdata(174, cc) += clamp(
-                cdata[cc].piety_point / 450, 1, 8 + sdata(181, 0) / 10);
+            sdata(174, cc) +=
+                clamp(cdata[cc].piety_point / 450, 1, 8 + sdata(181, 0) / 10);
         }
     }
     if (cdata[cc].god_id == core_god::jure)
     {
         if (sdata(15, cc) > 0)
         {
-            sdata(15, cc) += clamp(
-                cdata[cc].piety_point / 300, 1, 16 + sdata(181, 0) / 10);
+            sdata(15, cc) +=
+                clamp(cdata[cc].piety_point / 300, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(154, cc) > 0)
         {
-            sdata(154, cc) += clamp(
-                cdata[cc].piety_point / 250, 1, 18 + sdata(181, 0) / 10);
+            sdata(154, cc) +=
+                clamp(cdata[cc].piety_point / 250, 1, 18 + sdata(181, 0) / 10);
         }
         if (sdata(155, cc) > 0)
         {
-            sdata(155, cc) += clamp(
-                cdata[cc].piety_point / 400, 1, 10 + sdata(181, 0) / 10);
+            sdata(155, cc) +=
+                clamp(cdata[cc].piety_point / 400, 1, 10 + sdata(181, 0) / 10);
         }
         if (sdata(161, cc) > 0)
         {
-            sdata(161, cc) += clamp(
-                cdata[cc].piety_point / 400, 1, 9 + sdata(181, 0) / 10);
+            sdata(161, cc) +=
+                clamp(cdata[cc].piety_point / 400, 1, 9 + sdata(181, 0) / 10);
         }
         if (sdata(184, cc) > 0)
         {
-            sdata(184, cc) += clamp(
-                cdata[cc].piety_point / 450, 1, 8 + sdata(181, 0) / 10);
+            sdata(184, cc) +=
+                clamp(cdata[cc].piety_point / 450, 1, 8 + sdata(181, 0) / 10);
         }
         if (sdata(174, cc) > 0)
         {
-            sdata(174, cc) += clamp(
-                cdata[cc].piety_point / 400, 1, 10 + sdata(181, 0) / 10);
+            sdata(174, cc) +=
+                clamp(cdata[cc].piety_point / 400, 1, 10 + sdata(181, 0) / 10);
         }
         if (sdata(164, cc) > 0)
         {
-            sdata(164, cc) += clamp(
-                cdata[cc].piety_point / 400, 1, 12 + sdata(181, 0) / 10);
+            sdata(164, cc) +=
+                clamp(cdata[cc].piety_point / 400, 1, 12 + sdata(181, 0) / 10);
         }
     }
     if (cdata[cc].god_id == core_god::kumiromi)
     {
         if (sdata(13, cc) > 0)
         {
-            sdata(13, cc) += clamp(
-                cdata[cc].piety_point / 400, 1, 8 + sdata(181, 0) / 10);
+            sdata(13, cc) +=
+                clamp(cdata[cc].piety_point / 400, 1, 8 + sdata(181, 0) / 10);
         }
         if (sdata(12, cc) > 0)
         {
-            sdata(12, cc) += clamp(
-                cdata[cc].piety_point / 350, 1, 12 + sdata(181, 0) / 10);
+            sdata(12, cc) +=
+                clamp(cdata[cc].piety_point / 350, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(14, cc) > 0)
         {
-            sdata(14, cc) += clamp(
-                cdata[cc].piety_point / 250, 1, 16 + sdata(181, 0) / 10);
+            sdata(14, cc) +=
+                clamp(cdata[cc].piety_point / 250, 1, 16 + sdata(181, 0) / 10);
         }
         if (sdata(180, cc) > 0)
         {
-            sdata(180, cc) += clamp(
-                cdata[cc].piety_point / 300, 1, 12 + sdata(181, 0) / 10);
+            sdata(180, cc) +=
+                clamp(cdata[cc].piety_point / 300, 1, 12 + sdata(181, 0) / 10);
         }
         if (sdata(178, cc) > 0)
         {
-            sdata(178, cc) += clamp(
-                cdata[cc].piety_point / 350, 1, 10 + sdata(181, 0) / 10);
+            sdata(178, cc) +=
+                clamp(cdata[cc].piety_point / 350, 1, 10 + sdata(181, 0) / 10);
         }
         if (sdata(177, cc) > 0)
         {
-            sdata(177, cc) += clamp(
-                cdata[cc].piety_point / 350, 1, 9 + sdata(181, 0) / 10);
+            sdata(177, cc) +=
+                clamp(cdata[cc].piety_point / 350, 1, 9 + sdata(181, 0) / 10);
         }
         if (sdata(150, cc) > 0)
         {
-            sdata(150, cc) += clamp(
-                cdata[cc].piety_point / 350, 1, 8 + sdata(181, 0) / 10);
+            sdata(150, cc) +=
+                clamp(cdata[cc].piety_point / 350, 1, 8 + sdata(181, 0) / 10);
         }
     }
 }
@@ -43008,8 +43001,7 @@ label_1998_internal:
         {
             s = strutil::to_lower(s(0));
         }
-        for (int cnt = 0, cnt_end = (inputlog(0).size()); cnt < cnt_end;
-             ++cnt)
+        for (int cnt = 0, cnt_end = (inputlog(0).size()); cnt < cnt_end; ++cnt)
         {
             if (strutil::contains(s(0), strmid(inputlog, 0, cnt * (1 + jp))))
             {
@@ -47401,10 +47393,9 @@ void show_item_description()
             list(0, p) = 7;
             listn(0, p) = lang(u8"それは生きている"s, u8"It is alive."s)
                 + u8" [Lv:"s + inv[ci].param1 + u8" Exp:"s
-                + clamp(inv[ci].param2 * 100
-                                 / calcexpalive(inv[ci].param1),
-                             0,
-                             100)
+                + clamp(inv[ci].param2 * 100 / calcexpalive(inv[ci].param1),
+                        0,
+                        100)
                 + u8"%]"s;
             ++p;
         }
@@ -51800,9 +51791,9 @@ void continuous_action_others()
                 u8"You start to pick "s + itemname(ci, 1) + u8"."s));
             cdata[cc].continuous_action_turn = 10
                 + clamp(inv[ci].weight
-                                 / (1 + sdata(10, 0) * 10 + sdata(180, 0) * 40),
-                             1,
-                             100);
+                            / (1 + sdata(10, 0) * 10 + sdata(180, 0) * 40),
+                        1,
+                        100);
         }
         if (gdata(91) == 104)
         {
@@ -57843,8 +57834,7 @@ void try_to_melee_attack()
     ele = 0;
     if (cdata[cc].equipment_type & 1)
     {
-        if (clamp(int(std::sqrt(sdata(168, cc)) - 3), 1, 5)
-                + cbit(30, cc) * 5
+        if (clamp(int(std::sqrt(sdata(168, cc)) - 3), 1, 5) + cbit(30, cc) * 5
             > rnd(100))
         {
             if (is_in_fov(cc))
@@ -58260,8 +58250,7 @@ label_22191_internal:
             skillexp(
                 attackskill,
                 cc,
-                clamp(
-                    (sdata(173, tc) * 2 - sdata(attackskill, cc) + 1), 5, 50)
+                clamp((sdata(173, tc) * 2 - sdata(attackskill, cc) + 1), 5, 50)
                     / expmodifer,
                 0,
                 4);
@@ -58343,8 +58332,7 @@ label_22191_internal:
                         }
                         dmghp(
                             cc,
-                            clamp(
-                                attackdmg / 10, 1, cdata[tc].max_hp / 10),
+                            clamp(attackdmg / 10, 1, cdata[tc].max_hp / 10),
                             tc,
                             p,
                             cdata[tc].damage_reaction_info / 1000);
@@ -58363,8 +58351,7 @@ label_22191_internal:
                         }
                         dmghp(
                             cc,
-                            clamp(
-                                attackdmg / 10, 1, cdata[tc].max_hp / 10),
+                            clamp(attackdmg / 10, 1, cdata[tc].max_hp / 10),
                             tc,
                             p,
                             cdata[tc].damage_reaction_info / 1000);
@@ -58413,8 +58400,7 @@ label_22191_internal:
         }
         if (sdata(attackskill, cc) > sdata(173, tc) || rnd(5) == 0)
         {
-            p = clamp(
-                    (sdata(attackskill, cc) - sdata(173, tc) / 2 + 1), 1, 20)
+            p = clamp((sdata(attackskill, cc) - sdata(173, tc) / 2 + 1), 1, 20)
                 / expmodifer;
             skillexp(173, tc, p, 0, 4);
             skillexp(187, tc, p, 0, 4);
@@ -65518,8 +65504,7 @@ void label_2670()
     else
     {
         qdata(6, rq) = qdata(6, rq)
-            * (100
-               + clamp((qdata(5, rq) - cdata[0].level) / 5 * 25, 0, 200))
+            * (100 + clamp((qdata(5, rq) - cdata[0].level) / 5 * 25, 0, 200))
             / 100;
     }
     return;
@@ -70560,8 +70545,7 @@ void pass_one_turn(bool label_2738_flg)
                 {
                     if (gdata_protects_from_etherwind == 0)
                     {
-                        modcorrupt(
-                            5 + clamp(gdata_play_turns / 20000, 0, 15));
+                        modcorrupt(5 + clamp(gdata_play_turns / 20000, 0, 15));
                     }
                     else if (rnd(10) == 0)
                     {

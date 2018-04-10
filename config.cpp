@@ -2,7 +2,6 @@
 #include <fstream>
 #include <functional>
 #include <stdexcept>
-#include <string_view>
 #include "elona.hpp"
 #include "json.hpp"
 #include "range.hpp"
@@ -71,7 +70,7 @@ struct config_string : public config_base
 {
     config_string(
         const std::string& name,
-        std::function<void(std::string_view)> callback)
+        std::function<void(const std::string&)> callback)
         : name(name)
         , callback(callback)
     {
@@ -89,7 +88,7 @@ struct config_string : public config_base
 
 private:
     std::string name;
-    std::function<void(std::string_view)> callback;
+    std::function<void(const std::string&)> callback;
 };
 
 
@@ -98,7 +97,7 @@ struct config_key : public config_base
 {
     config_key(
         const std::string& name,
-        std::function<void(std::string_view, int)> callback)
+        std::function<void(const std::string&, int)> callback)
         : name(name)
         , callback(callback)
     {
@@ -116,7 +115,7 @@ struct config_key : public config_base
 
 private:
     std::string name;
-    std::function<void(std::string_view, int)> callback;
+    std::function<void(const std::string&, int)> callback;
 };
 
 

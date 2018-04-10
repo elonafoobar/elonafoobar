@@ -942,11 +942,11 @@ int instr(const std::string& str, size_t pos, const std::string pattern)
 
 
 
-int stoi(std::string_view s)
+int stoi(const std::string& s)
 {
     try
     {
-        return std::stoi(std::string{s});
+        return std::stoi(s);
     }
     catch (std::invalid_argument&)
     {

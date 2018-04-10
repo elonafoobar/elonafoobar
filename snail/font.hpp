@@ -2,7 +2,6 @@
 
 #include <memory>
 #include <string>
-#include <string_view>
 #include "../filesystem.hpp"
 #include "detail/sdl.hpp"
 
