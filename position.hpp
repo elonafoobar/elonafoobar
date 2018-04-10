@@ -23,7 +23,7 @@ struct position_t
 
 inline bool operator==(const position_t& lhs, const position_t& rhs)
 {
-    return lhs.x == rhs.x && lhs.x == rhs.x;
+    return lhs.x == rhs.x && lhs.y == rhs.y;
 }
 
 
