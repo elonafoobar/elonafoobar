@@ -43135,45 +43135,42 @@ label_1998_internal:
 label_1999_internal:
     fix_wish();
     i = 0;
-    for (int cnt = 0; cnt < 600; ++cnt)
+    for (const auto& ability_data : the_ability_db)
     {
-        f = 0;
-        if (cnt >= 10 && cnt < 20)
-        {
-            f = 1;
-        }
-        if (cnt >= 100 && cnt < 400)
-        {
-            f = 1;
-        }
-        if (f == 0)
+        const int id = ability_data.id;
+        const bool is_basic_attribute_excluding_life_and_mana =
+            10 <= id && id <= 19;
+        const bool is_skill = 100 <= id && id <= 399;
+
+        if (!is_basic_attribute_excluding_life_and_mana && !is_skill)
         {
             continue;
         }
-        p = 0;
-        int cnt2 = cnt;
-        if (i18n::_(u8"ability", std::to_string(cnt), u8"name") == inputlog)
+
+        auto ability_name = i18n::_(u8"ability", std::to_string(id), u8"name");
+        int priority = 0;
+        if (ability_name == inputlog)
         {
-            p = 10000;
+            priority = 10'000;
         }
-        s = i18n::_(u8"ability", std::to_string(cnt2), u8"name");
         if (en)
         {
-            s = strutil::to_lower(s(0));
+            ability_name = strutil::to_lower(ability_name);
         }
-        for (int cnt = 0, cnt_end = (inputlog(0).size() / (1 + jp));
-             cnt < cnt_end;
-             ++cnt)
+        // Calculate similarity.
+        for (int i = 0; i < inputlog(0).size() / (1 + jp); ++i)
         {
-            if (instr(s, 0, strmid(inputlog, cnt * (1 + jp), 1 + jp)) != -1)
+            if (instr(ability_name, 0, strmid(inputlog, i * (1 + jp), 1 + jp))
+                != -1)
             {
-                p += 50 + rnd(15);
+                priority += 50 + rnd(15);
             }
         }
-        if (p != 0)
+
+        if (priority != 0)
         {
-            dblist(0, i) = cnt;
-            dblist(1, i) = p;
+            dblist(0, i) = id;
+            dblist(1, i) = priority;
             ++i;
         }
     }
