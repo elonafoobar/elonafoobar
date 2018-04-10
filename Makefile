@@ -1,69 +1,35 @@
-CXX := clang++
-CXX_FLAGS := -Wall -Wextra -g -O0 -MMD -DDEBUG -std=c++14 -I/usr/local/include -I./thirdparty $(EX_CXX_FLAGS)
-LN_FLAGS := -lboost_system -lboost_filesystem -L/usr/local/lib -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -llua
 BIN_DIR := bin
-SRC_DIR := .
-SOURCES := $(wildcard $(SRC_DIR)/*.cpp)
-OBJECTS := $(foreach i, $(SOURCES), $(BIN_DIR)/$(basename $(i)).o)
-RUNTIME_DIR := ./runtime
-PROGRAM := $(RUNTIME_DIR)/elonafoobar
-
+PROGRAM := $(BIN_DIR)/ElonaFoobar
 
 FORMAT := clang-format
 FIND := find
 XARGS := xargs
 MKDIR := mkdir
+ 
 
-
-.PHONY: FORCE clean cleandep
+.PHONY: FORCE
 
 
 all: build
 
 
-build: $(RUNTIME_DIR) $(BIN_DIR) $(PROGRAM)
-
-
-$(RUNTIME_DIR):
-	$(MKDIR) $(RUNTIME_DIR)
+build: $(BIN_DIR) $(PROGRAM)
 
 
 $(BIN_DIR):
 	$(MKDIR) $(BIN_DIR)
 
 
-$(PROGRAM): $(OBJECTS) snail/snail.a
-	$(CXX) $(CXX_FLAGS) $^ -o $@ $(LN_FLAGS)
+$(PROGRAM): FORCE
+	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS); make
 
 
-snail/snail.a: FORCE
-	cd snail; make
-
-
-$(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CXX) $(CXX_FLAGS) -c $< -o $@
-
-
-clean:
-	-@$(RM) -f $(PROGRAM)
-	$(MAKE) cleandep
-	-@$(RM) -f $(BIN_DIR)/*.o
+clean: FORCE
+	-@$(RM) -rf $(BIN_DIR)
 
 
 format: FORCE
-	$(FIND) $(SRC_DIR) \( -name "*.cpp" -or -name "*.hpp" \) -print0 | $(XARGS) -0 $(FORMAT) -i
-
-
-checksyntax:
-	$(MAKE) EX_CXX_FLAGS=-fsyntax-only
-
-
-cleandep:
-	-@$(RM) -f $(BIN_DIR)/*.d
-
+	$(FIND) . \( -name "*.cpp" -or -name "*.hpp" \) -print0 | $(XARGS) -0 $(FORMAT) -i
 
 
 rebuild: clean build
-
-
--include $(BIN_DIR)/*.d
