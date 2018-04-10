@@ -38,8 +38,7 @@ void renderer::set_draw_color(const color& color)
 
 
 renderer::renderer(window& target_window, int flag)
-    : _font(u8"font/APJapanesefontT.ttf", 16) // TODO
-    , _ptr(
+    : _ptr(
           detail::enforce_sdl(::SDL_CreateRenderer(
               target_window.ptr(),
               -1,
