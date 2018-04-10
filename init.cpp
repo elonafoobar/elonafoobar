@@ -360,7 +360,8 @@ void initialize_elona()
     notesel(buffboard);
     {
         buffboard(0).clear();
-        std::ifstream in{fs::path(u8"./data/board.txt").native()};
+        std::ifstream in{fs::path(u8"./data/board.txt").native(),
+                         std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
