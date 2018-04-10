@@ -1492,7 +1492,7 @@ void character_making_role_attributes(bool label_1554_flg)
             {
                 snd(103);
                 init = true;
-                break;
+                continue;
             }
             if (p == 1)
             {
@@ -1516,7 +1516,7 @@ void character_making_role_attributes(bool label_1554_flg)
             minimum = true;
             snd(103);
             init = true;
-            break;
+            continue;
         }
         if (key == key_cancel)
         {
