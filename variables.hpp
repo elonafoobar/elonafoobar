@@ -11,6 +11,7 @@ namespace elona
 {
 ELONA_EXTERN(int anic);
 ELONA_EXTERN(elona_vector1<int> ap);
+ELONA_EXTERN(bool autodig_enabled);
 
 ELONA_EXTERN(elona_vector1<int> _randcolor);
 ELONA_EXTERN(elona_vector1<int> aniref);
@@ -169,6 +170,7 @@ ELONA_EXTERN(std::string key_ammo);
 ELONA_EXTERN(std::string key_mode2);
 ELONA_EXTERN(std::string key_quicksave);
 ELONA_EXTERN(std::string key_quickload);
+ELONA_EXTERN(std::string key_autodig);
 ELONA_EXTERN(elona_vector1<std::string> key_list);
 ELONA_EXTERN(elona_vector1<std::string> key_select);
 ELONA_EXTERN(elona_vector1<std::string> keylog);
