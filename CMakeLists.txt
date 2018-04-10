@@ -111,7 +111,15 @@ target_link_libraries(${PROJECT_NAME} snail)
 
 
 # Compiler options
-set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+if(MSVC)
+    set(CMAKE_CXX_FLAGS "/W4 /source-charset:utf-8 /MT /EHsc")
+else()
+    set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+endif()
 
 # Compiler options(debug build)
-set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DDEBUG")
+if(MSVC)
+    set(CMAKE_CXX_FLAGS_DEBUG "")
+else()
+    set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DDEBUG")
+endif()
