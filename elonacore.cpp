@@ -8323,7 +8323,7 @@ void fileadd(const std::string& prm_692, int prm_693)
 
 
 
-void arrayfile_read(std::string_view fmode_str, const fs::path& filepath)
+void arrayfile_read(const std::string& fmode_str, const fs::path& filepath)
 {
     std::vector<std::string> lines;
     if (fs::exists(filepath))
@@ -8417,7 +8417,7 @@ void arrayfile_read(std::string_view fmode_str, const fs::path& filepath)
 
 
 
-void arrayfile_write(std::string_view fmode_str, const fs::path& filepath)
+void arrayfile_write(const std::string& fmode_str, const fs::path& filepath)
 {
     std::ofstream out{filepath.native()};
     if (!out)
@@ -8482,7 +8482,7 @@ void arrayfile_write(std::string_view fmode_str, const fs::path& filepath)
 
 
 
-void arrayfile(bool fread, std::string_view fmode_str, const fs::path& filepath)
+void arrayfile(bool fread, const std::string& fmode_str, const fs::path& filepath)
 {
     if (!fread)
     {

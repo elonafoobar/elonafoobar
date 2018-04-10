@@ -868,7 +868,7 @@ void addnewstopic(const std::string&, const std::string&);
 void anime_halt();
 void animeblood(int = 0, int = 0, int = 0);
 void animeload(int = 0, int = 0);
-void arrayfile(bool, std::string_view, const fs::path&);
+void arrayfile(bool, const std::string&, const fs::path&);
 void auto_turn(int = 0);
 void atxinit();
 void begintempinv();

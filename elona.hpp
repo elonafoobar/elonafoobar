@@ -445,7 +445,7 @@ void gzoom(
 int instr(const std::string& str, size_t pos, const std::string pattern);
 
 
-int stoi(std::string_view s);
+int stoi(const std::string&);
 
 
 template <typename T>
