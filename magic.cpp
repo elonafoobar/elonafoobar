@@ -2233,7 +2233,7 @@ label_2181_internal:
             {
                 continue;
             }
-            if (is_cursed(inv[cnt].curse_state))
+            if (!is_cursed(inv[cnt].curse_state))
             {
                 continue;
             }
