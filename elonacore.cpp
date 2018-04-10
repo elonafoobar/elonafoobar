@@ -15972,7 +15972,8 @@ void initialize_server_info()
     {
         {
             serverlist(0).clear();
-            std::ifstream in{fs::path(u8"./server.txt").native(), std::ios::binary};
+            std::ifstream in{fs::path(u8"./server.txt").native(),
+                             std::ios::binary};
             std::string tmp;
             while (std::getline(in, tmp))
             {
@@ -15986,7 +15987,8 @@ void initialize_server_info()
     cgiurl2 = strmid(netbuf, 0, p);
     cgiurl3 = strmid(netbuf, p + 1, instr(netbuf, p + 1, u8"%"s));
     {
-        std::ofstream out{fs::path(u8"./server.txt").native(), std::ios::binary};
+        std::ofstream out{fs::path(u8"./server.txt").native(),
+                          std::ios::binary};
         out << serverlist(0) << std::endl;
     }
     if (jp)
@@ -21658,7 +21660,8 @@ void initialize_set_of_random_generation()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{fs::path(u8"./data/book.txt").native(), std::ios::binary};
+        std::ifstream in{fs::path(u8"./data/book.txt").native(),
+                         std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -44281,7 +44284,8 @@ void label_2022()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{fs::path(u8"./data/book.txt").native(), std::ios::binary};
+        std::ifstream in{fs::path(u8"./data/book.txt").native(),
+                         std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -49857,7 +49861,8 @@ void save_game()
     notesel(buff);
     {
         std::ofstream out{
-            fs::path(u8"./save/"s + playerid + u8"/filelist.txt").native(), std::ios::binary};
+            fs::path(u8"./save/"s + playerid + u8"/filelist.txt").native(),
+            std::ios::binary};
         out << buff(0) << std::endl;
     }
     return;
@@ -66416,7 +66421,8 @@ void do_play_scene()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s), std::ios::binary};
+        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s),
+                         std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -66447,7 +66453,8 @@ label_2681:
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s), std::ios::binary};
+        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s),
+                         std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -68793,7 +68800,8 @@ void show_ex_help()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{fs::path(u8"./data/exhelp.txt").native(), std::ios::binary};
+        std::ifstream in{fs::path(u8"./data/exhelp.txt").native(),
+                         std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -68927,7 +68935,8 @@ void show_game_help()
         std::ifstream in{
             fs::path(
                 u8"./data/"s + lang(u8"manual_JP.txt"s, u8"manual_ENG.txt"s))
-                .native(), std::ios::binary};
+                .native(),
+            std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -69499,7 +69508,8 @@ void label_2719()
     notesel(note_buff);
     {
         note_buff.clear();
-        std::ifstream in{fs::path(u8"./user/export.txt").native(), std::ios::binary};
+        std::ifstream in{fs::path(u8"./user/export.txt").native(),
+                         std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -69663,7 +69673,8 @@ void play_scene()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s), std::ios::binary};
+        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s),
+                         std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
