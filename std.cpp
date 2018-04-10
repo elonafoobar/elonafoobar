@@ -298,7 +298,7 @@ void bload(const fs::path& filename, std::string& data, int size, int)
         throw 0;
     }
     auto buf = read_binary(in, size).first;
-    data = {buf.get(), static_cast<size_t>(size)};
+    data = std::string{buf.get(), static_cast<size_t>(size)};
 }
 
 
@@ -1690,7 +1690,8 @@ void DSLOADFNAME(const std::string& filename, int channel)
         if (mixer_detail::chunks[channel])
             Mix_FreeChunk(mixer_detail::chunks[channel]);
     }
-    auto chunk = snail::detail::enforce_mixer(Mix_LoadWAV(filename.c_str()));
+    auto chunk = snail::detail::enforce_mixer(
+        Mix_LoadWAV(filesystem::to_narrow_path(filename).c_str()));
     mixer_detail::chunks[channel] = chunk;
 }
 
@@ -1759,8 +1760,8 @@ void DMLOADFNAME(const std::string& filename, int)
     if (mixer_detail::music)
         ::Mix_FreeMusic(mixer_detail::music);
 
-    mixer_detail::music =
-        snail::detail::enforce_mixer(Mix_LoadMUS(filename.c_str()));
+    mixer_detail::music = snail::detail::enforce_mixer(
+        Mix_LoadMUS(filesystem::to_narrow_path(filename).c_str()));
 }
 
 

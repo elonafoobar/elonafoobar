@@ -30,6 +30,7 @@ set(CORE_SOURCES
     debug.cpp
     draw.cpp
     elonacore.cpp
+    filesystem.cpp
     get_card_info.cpp
     get_random_item_id.cpp
     get_random_npc_id.cpp
@@ -68,7 +69,7 @@ set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
 
 # Thirdparty libraries
-find_package(Boost REQUIRED COMPONENTS system filesystem)
+find_package(Boost REQUIRED COMPONENTS system filesystem locale)
 include_directories(${Boost_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 

@@ -512,9 +512,10 @@ void load_config()
                            std::ios::binary};
         if (!file)
         {
-            throw config_loading_error(
+            throw config_loading_error{
                 u8"Failed to open: "s
-                + fs::path(u8"./config.json").generic_string());
+                + filesystem::make_preferred_path_in_utf8(
+                      fs::path(u8"./config.json"))};
         }
 
         file >> value;
@@ -654,8 +655,10 @@ void set_config(const std::string& key, int value)
                            std::ios::binary};
         if (!file)
         {
-            throw config_loading_error(
-                u8"Failed to open: "s + fs::path(u8"./config.json").native());
+            throw config_loading_error{
+                u8"Failed to open: "s
+                + filesystem::make_preferred_path_in_utf8(
+                      fs::path(u8"./config.json"))};
         }
         file >> options;
     }
@@ -667,8 +670,10 @@ void set_config(const std::string& key, int value)
                            std::ios::binary};
         if (!file)
         {
-            throw config_loading_error(
-                u8"Failed to open: "s + fs::path(u8"./config.json").native());
+            throw config_loading_error{
+                u8"Failed to open: "s
+                + filesystem::make_preferred_path_in_utf8(
+                      fs::path(u8"./config.json"))};
         }
         options.serialize(std::ostream_iterator<char>(file), true);
     }
@@ -685,8 +690,10 @@ void set_config(const std::string& key, const std::string& value)
                            std::ios::binary};
         if (!file)
         {
-            throw config_loading_error{u8"Failed to open: "s
-                                       + fs::path(u8"./config.json").native()};
+            throw config_loading_error{
+                u8"Failed to open: "s
+                + filesystem::make_preferred_path_in_utf8(
+                      fs::path(u8"./config.json"))};
         }
         file >> options;
     }
@@ -698,8 +705,10 @@ void set_config(const std::string& key, const std::string& value)
                            std::ios::binary};
         if (!file)
         {
-            throw config_loading_error{u8"Failed to open: "s
-                                       + fs::path(u8"./config.json").native()};
+            throw config_loading_error{
+                u8"Failed to open: "s
+                + filesystem::make_preferred_path_in_utf8(
+                      fs::path(u8"./config.json"))};
         }
         options.serialize(std::ostream_iterator<char>(file), true);
     }
@@ -716,8 +725,10 @@ void set_config(const std::string& key, const std::string& value1, int value2)
                            std::ios::binary};
         if (!file)
         {
-            throw config_loading_error{u8"Failed to open: "s
-                                       + fs::path(u8"./config.json").native()};
+            throw config_loading_error{
+                u8"Failed to open: "s
+                + filesystem::make_preferred_path_in_utf8(
+                      fs::path(u8"./config.json"))};
         }
         file >> options;
     }
@@ -730,8 +741,10 @@ void set_config(const std::string& key, const std::string& value1, int value2)
                            std::ios::binary};
         if (!file)
         {
-            throw config_loading_error{u8"Failed to open: "s
-                                       + fs::path(u8"./config.json").native()};
+            throw config_loading_error{
+                u8"Failed to open: "s
+                + filesystem::make_preferred_path_in_utf8(
+                      fs::path(u8"./config.json"))};
         }
         options.serialize(std::ostream_iterator<char>(file), true);
     }
@@ -809,8 +822,9 @@ void load_config2()
     std::ifstream file{fs::path(u8"./config.json").native(), std::ios::binary};
     if (!file)
     {
-        throw config_loading_error(
-            u8"Failed to open: "s + fs::path(u8"./config.json").native());
+        throw config_loading_error{u8"Failed to open: "s
+                                   + filesystem::make_preferred_path_in_utf8(
+                                         fs::path(u8"./config.json"))};
     }
 
     picojson::value value;
