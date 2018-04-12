@@ -146,5 +146,10 @@ fish['36'] = {
   name = "broken cell phone",
 }
 
+-- For debug
+fish['37'] = {
+  name = "strange fish",
+}
+
 
 -- vim: et sw=2 sts=2

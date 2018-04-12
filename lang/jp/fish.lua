@@ -146,5 +146,10 @@ fish['36'] = {
   name = "壊れた携帯",
 }
 
+-- For debug
+fish['37'] = {
+  name = "謎のお魚",
+}
+
 
 -- vim: et sw=2 sts=2
