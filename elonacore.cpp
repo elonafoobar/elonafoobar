@@ -40657,51 +40657,20 @@ label_196901_internal:
         {
             pos(wx + 45, wy + 61 + cnt * 19);
             x = 70;
-            if (traitref == 0)
+            std::string prefix;
+            switch (traitref)
             {
-                if (jp)
-                {
-                    s = u8"[フィート]"s;
-                }
-                else
-                {
-                    s = u8"[Feat]"s;
-                }
+            case 0: prefix = i18n::_(u8"trait", u8"prefix", u8"feat"); break;
+            case 1:
+                prefix = i18n::_(u8"trait", u8"prefix", u8"mutation");
+                break;
+            case 2: prefix = i18n::_(u8"trait", u8"prefix", u8"nature"); break;
+            case 3:
+                prefix = i18n::_(u8"trait", u8"prefix", u8"ether_disease");
+                break;
+            default: assert(0);
             }
-            if (traitref == 1)
-            {
-                if (jp)
-                {
-                    s = u8"[変異]"s;
-                }
-                else
-                {
-                    s = u8"[Mutation]"s;
-                }
-            }
-            if (traitref == 2)
-            {
-                if (jp)
-                {
-                    s = u8"[先天]"s;
-                }
-                else
-                {
-                    s = u8"[Race]"s;
-                }
-            }
-            if (traitref == 3)
-            {
-                if (jp)
-                {
-                    s = u8"[ｴｰﾃﾙ病]"s;
-                }
-                else
-                {
-                    s = u8"[Disease]"s;
-                }
-            }
-            s += traitrefn(2 + std::abs(trait(tid)));
+            s = prefix + traitrefn(2 + std::abs(trait(tid)));
         }
         listn(0, cnt) = s;
     }
