@@ -38,18 +38,29 @@ void trait_db::define(lua_State* L)
 
 
 
+std::string trait_db::get_prefix(id_type id) const
+{
+    switch ((*this)[id]->type)
+    {
+    case trait_data::type_t::feat:
+        return i18n::_(u8"trait", u8"prefix", u8"feat");
+    case trait_data::type_t::mutation:
+        return i18n::_(u8"trait", u8"prefix", u8"mutation");
+    case trait_data::type_t::nature:
+        return i18n::_(u8"trait", u8"prefix", u8"nature");
+    case trait_data::type_t::ether_disease:
+        return i18n::_(u8"trait", u8"prefix", u8"ether_disease");
+    default: assert(0);
+    }
+}
+
+
+
 int get_trait_info(int traitmode, int tid)
 {
     const auto data = the_trait_db[tid];
     if (!data)
         return 0;
-
-    if (traitmode == 0)
-    {
-        traitref(0) = int(data->type);
-        traitref(1) = data->min;
-        traitref(2) = data->max;
-    }
 
     if (tid == 24)
     {

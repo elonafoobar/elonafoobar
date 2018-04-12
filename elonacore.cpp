@@ -976,7 +976,6 @@ int randattb()
 
 void clear_trait_data()
 {
-    DIM2(traitref, 10);
     SDIM3(traitrefn, 80, 9);
     SDIM3(traitrefn2, 20, 6);
     return;
@@ -11463,11 +11462,13 @@ void modcorrupt(int prm_815)
                 await();
                 int tid = rnd(17) + 200;
                 int stat = get_trait_info(0, tid);
-                if (stat == 0 || traitref != 3)
+                if (stat == 0
+                    || the_trait_db[tid]->type
+                        != trait_data::type_t::ether_disease)
                 {
                     continue;
                 }
-                if (trait(tid) <= traitref(1))
+                if (trait(tid) <= the_trait_db[tid]->min)
                 {
                     continue;
                 }
@@ -11532,7 +11533,9 @@ void modcorrupt(int prm_815)
                     }
                 }
                 int stat = get_trait_info(0, tid);
-                if (stat == 0 || traitref != 3)
+                if (stat == 0
+                    || the_trait_db[tid]->type
+                        != trait_data::type_t::ether_disease)
                 {
                     continue;
                 }
@@ -40570,7 +40573,7 @@ label_196901_internal:
         }
         if (stat == 1)
         {
-            if (traitref == 0)
+            if (the_trait_db[tid]->type == trait_data::type_t::feat)
             {
                 if (gdata_acquirable_feat_count > 0)
                 {
@@ -40631,13 +40634,13 @@ label_196901_internal:
         s = "";
         if (list(1, cnt) < 10000)
         {
-            if (trait(tid) < traitref(2))
+            if (trait(tid) < the_trait_db[tid]->max)
             {
                 s = traitrefn2(trait(tid));
             }
             else
             {
-                s = traitrefn2(traitref(2) - 1) + u8"(MAX)"s;
+                s = traitrefn2(the_trait_db[tid]->max - 1) + u8"(MAX)"s;
             }
             if (featrq == -1)
             {
@@ -40657,20 +40660,8 @@ label_196901_internal:
         {
             pos(wx + 45, wy + 61 + cnt * 19);
             x = 70;
-            std::string prefix;
-            switch (traitref)
-            {
-            case 0: prefix = i18n::_(u8"trait", u8"prefix", u8"feat"); break;
-            case 1:
-                prefix = i18n::_(u8"trait", u8"prefix", u8"mutation");
-                break;
-            case 2: prefix = i18n::_(u8"trait", u8"prefix", u8"nature"); break;
-            case 3:
-                prefix = i18n::_(u8"trait", u8"prefix", u8"ether_disease");
-                break;
-            default: assert(0);
-            }
-            s = prefix + traitrefn(2 + std::abs(trait(tid)));
+            s = the_trait_db.get_prefix(tid)
+                + traitrefn(2 + std::abs(trait(tid)));
         }
         listn(0, cnt) = s;
     }
@@ -40922,10 +40913,12 @@ label_1970_internal:
                 -1);
             continue;
         }
+        int trait_icon{};
         if (list(1, p) != 99999)
         {
             int stat = get_trait_info(0, i);
             featrq = stat;
+            trait_icon = int(the_trait_id[i]->type);
             if (trait(i) == 0)
             {
             }
@@ -40940,7 +40933,7 @@ label_1970_internal:
         }
         else
         {
-            traitref = 5;
+            trait_icon = 5;
         }
         if (list(1, p) < 10000)
         {
@@ -40952,7 +40945,7 @@ label_1970_internal:
             pos(wx + 45, wy + 61 + cnt * 19);
             x = 70;
         }
-        gcopy(3, 384 + traitref * 24, 336, 24, 24);
+        gcopy(3, 384 + trait_icon * 24, 336, 24, 24);
         cs_list(cs == cnt, listn(0, p), wx + x, wy + 66 + cnt * 19 - 1, 0, -1);
         if (list(1, p) < 10000)
         {
@@ -40980,7 +40973,7 @@ label_1970_internal:
                 {
                     int tid = list(0, p);
                     get_trait_info(0, tid);
-                    if (traitref(2) <= trait(tid))
+                    if (the_trait_db[tid]->max <= trait(tid))
                     {
                         if (mode != 1)
                         {

@@ -51,6 +51,8 @@ public:
     trait_db() = default;
 
     void define(lua_State* L);
+
+    std::string get_prefix(id_type id) const;
 };
 
 
