@@ -7,6 +7,7 @@
 #include "ctrl_file.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
+#include "fish.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
@@ -400,7 +401,6 @@ void initialize_elona()
     initialize_set_of_random_generation();
     initialize_picfood();
     initialize_recipe();
-    initialize_fish_data();
     initialize_nefia_names();
     initialize_home_adata();
     load_cnpc_data();
@@ -734,6 +734,7 @@ int run()
     the_buff_db.initialize();
     the_character_db.initialize();
     the_class_db.initialize();
+    the_fish_db.initialize();
     the_item_db.initialize();
     the_item_material_db.initialize();
     the_race_db.initialize();

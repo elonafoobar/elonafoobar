@@ -939,7 +939,10 @@ void itemname_additional_info()
                     s_ = s_
                         + foodname(
                               inv[prm_518].param1 / 1000,
-                              (""s + fishdatan(inv[prm_518].subname)),
+                              i18n::_(
+                                  u8"fish",
+                                  std::to_string(inv[prm_518].subname),
+                                  u8"name"),
                               inv[prm_518].param2,
                               inv[prm_518].subname);
                 }
@@ -971,7 +974,8 @@ void itemname_additional_info()
                 s_ += u8"/bugged/"s;
                 return;
             }
-            s_ += ""s + fishdatan(inv[prm_518].subname);
+            s_ += i18n::_(
+                u8"fish", std::to_string(inv[prm_518].subname), u8"name");
         }
         else if (
             a_ == 57000 || a_ == 62000 || inv[prm_518].id == 503
@@ -1664,12 +1668,10 @@ void remain_make(int ci, int cc)
         if (the_character_db[cdata[cc].id]->rarity / 1000 < 20
             && cdata[cc].original_relationship < -1)
         {
-            inv[ci].value =
-                inv[ci].value
-                * clamp(
-                      4 - the_character_db[cdata[cc].id]->rarity / 1000 / 5,
-                      1,
-                      5);
+            inv[ci].value = inv[ci].value
+                * clamp(4 - the_character_db[cdata[cc].id]->rarity / 1000 / 5,
+                        1,
+                        5);
         }
     }
 }

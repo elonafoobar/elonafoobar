@@ -41,11 +41,12 @@ ability = DataStorage.new()
 buff = DataStorage.new()
 character = DataStorage.new()
 class = DataStorage.new()
+fish = DataStorage.new()
+god = DataStorage.new()
 item = DataStorage.new()
 item_material = DataStorage.new()
 race = DataStorage.new()
 trait = DataStorage.new()
-god = DataStorage.new()
 ui = DataStorage.new()
 
 

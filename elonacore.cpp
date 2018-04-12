@@ -9,6 +9,7 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
+#include "fish.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
@@ -323,7 +324,6 @@ elona_vector2<int> egoenc;
 elona_vector2<int> egoref;
 elona_vector1<int> egolist;
 int maxegominorn = 0;
-elona_vector2<int> fishdata;
 elona_vector1<std::string> rpdatan;
 int i_at_m66 = 0;
 int lv_at_m77 = 0;
@@ -5499,384 +5499,6 @@ void set_material_specific_attributes()
         }
     }
     return;
-}
-
-
-
-void initialize_fish_data()
-{
-    DIM3(fishdata, 10, 100);
-    SDIM3(fishdatan, 24, 100);
-
-    fishdatan(0) = lang(u8"バグ"s, u8"bug"s);
-    fishdata(0, 0) = 0;
-    fishdata(1, 0) = 0;
-    fishdata(2, 0) = 0;
-    fishdata(3, 0) = 0;
-    fishdata(4, 0) = 100;
-    fishdata(5, 0) = 250;
-    fishdata(6, 0) = 100;
-    fishdata(7, 0) = 618;
-
-    fishdatan(1) = lang(u8"金魚"s, u8"goldfish"s);
-    fishdata(0, 1) = 1;
-    fishdata(1, 1) = 0;
-    fishdata(2, 1) = 1000;
-    fishdata(3, 1) = 2;
-    fishdata(4, 1) = 100;
-    fishdata(5, 1) = 100;
-    fishdata(6, 1) = 180;
-    fishdata(7, 1) = 618;
-
-    fishdatan(2) = lang(u8"亀"s, u8"turtle"s);
-    fishdata(0, 2) = 1;
-    fishdata(1, 2) = 0;
-    fishdata(2, 2) = 250;
-    fishdata(3, 2) = 4;
-    fishdata(4, 2) = 100;
-    fishdata(5, 2) = 250;
-    fishdata(6, 2) = 450;
-    fishdata(7, 2) = 618;
-
-    fishdatan(3) = lang(u8"ゼニタナゴ"s, u8"bitterling"s);
-    fishdata(0, 3) = 1;
-    fishdata(1, 3) = 0;
-    fishdata(2, 3) = 50;
-    fishdata(3, 3) = 5;
-    fishdata(4, 3) = 100;
-    fishdata(5, 3) = 1500;
-    fishdata(6, 3) = 2200;
-    fishdata(7, 3) = 618;
-
-    fishdatan(4) = lang(u8"おたまじゃくし"s, u8"tadpole"s);
-    fishdata(0, 4) = 1;
-    fishdata(1, 4) = 0;
-    fishdata(2, 4) = 1000;
-    fishdata(3, 4) = 0;
-    fishdata(4, 4) = 100;
-    fishdata(5, 4) = 150;
-    fishdata(6, 4) = 80;
-    fishdata(7, 4) = 618;
-
-    fishdatan(5) = lang(u8"海水パンツ"s, u8"swimming trunks"s);
-    fishdata(0, 5) = 1;
-    fishdata(1, 5) = 0;
-    fishdata(2, 5) = 400;
-    fishdata(3, 5) = 0;
-    fishdata(4, 5) = 100;
-    fishdata(5, 5) = 250;
-    fishdata(6, 5) = 40;
-    fishdata(7, 5) = 619;
-
-    fishdatan(6) = lang(u8"小汚い長靴"s, u8"dirty long boots"s);
-    fishdata(0, 6) = 1;
-    fishdata(1, 6) = 0;
-    fishdata(2, 6) = 100;
-    fishdata(3, 6) = 0;
-    fishdata(4, 6) = 100;
-    fishdata(5, 6) = 250;
-    fishdata(6, 6) = 25;
-    fishdata(7, 6) = 619;
-
-    fishdatan(7) = lang(u8"コイ"s, u8"carp"s);
-    fishdata(0, 7) = 1;
-    fishdata(1, 7) = 1;
-    fishdata(2, 7) = 1000;
-    fishdata(3, 7) = 4;
-    fishdata(4, 7) = 100;
-    fishdata(5, 7) = 250;
-    fishdata(6, 7) = 400;
-    fishdata(7, 7) = 618;
-
-    fishdatan(8) = lang(u8"ウナギ"s, u8"eel"s);
-    fishdata(0, 8) = 1;
-    fishdata(1, 8) = 1;
-    fishdata(2, 8) = 800;
-    fishdata(3, 8) = 6;
-    fishdata(4, 8) = 100;
-    fishdata(5, 8) = 300;
-    fishdata(6, 8) = 750;
-    fishdata(7, 8) = 618;
-
-    fishdatan(9) = lang(u8"ハゼ"s, u8"goby"s);
-    fishdata(0, 9) = 1;
-    fishdata(1, 9) = 1;
-    fishdata(2, 9) = 250;
-    fishdata(3, 9) = 8;
-    fishdata(4, 9) = 100;
-    fishdata(5, 9) = 400;
-    fishdata(6, 9) = 1250;
-    fishdata(7, 9) = 618;
-
-    fishdatan(10) = lang(u8"キンメダイ"s, u8"sea bream"s);
-    fishdata(0, 10) = 1;
-    fishdata(1, 10) = 1;
-    fishdata(2, 10) = 50;
-    fishdata(3, 10) = 12;
-    fishdata(4, 10) = 100;
-    fishdata(5, 10) = 350;
-    fishdata(6, 10) = 3500;
-    fishdata(7, 10) = 618;
-
-    fishdatan(11) = lang(u8"空き缶"s, u8"empty can"s);
-    fishdata(0, 11) = 1;
-    fishdata(1, 11) = 1;
-    fishdata(2, 11) = 400;
-    fishdata(3, 11) = 0;
-    fishdata(4, 11) = 100;
-    fishdata(5, 11) = 250;
-    fishdata(6, 11) = 40;
-    fishdata(7, 11) = 619;
-
-    fishdatan(12) = lang(u8"壊れた機械"s, u8"broken machine"s);
-    fishdata(0, 12) = 1;
-    fishdata(1, 12) = 1;
-    fishdata(2, 12) = 400;
-    fishdata(3, 12) = 0;
-    fishdata(4, 12) = 100;
-    fishdata(5, 12) = 250;
-    fishdata(6, 12) = 25;
-    fishdata(7, 12) = 619;
-
-    fishdatan(13) = lang(u8"カジカ"s, u8"sculpin"s);
-    fishdata(0, 13) = 1;
-    fishdata(1, 13) = 2;
-    fishdata(2, 13) = 1000;
-    fishdata(3, 13) = 8;
-    fishdata(4, 13) = 100;
-    fishdata(5, 13) = 250;
-    fishdata(6, 13) = 800;
-    fishdata(7, 13) = 618;
-
-    fishdatan(14) = lang(u8"スズキ"s, u8"sea bass"s);
-    fishdata(0, 14) = 1;
-    fishdata(1, 14) = 2;
-    fishdata(2, 14) = 800;
-    fishdata(3, 14) = 10;
-    fishdata(4, 14) = 100;
-    fishdata(5, 14) = 300;
-    fishdata(6, 14) = 1200;
-    fishdata(7, 14) = 618;
-
-    fishdatan(15) = lang(u8"ウニ"s, u8"sea urchin"s);
-    fishdata(0, 15) = 1;
-    fishdata(1, 15) = 2;
-    fishdata(2, 15) = 250;
-    fishdata(3, 15) = 12;
-    fishdata(4, 15) = 100;
-    fishdata(5, 15) = 400;
-    fishdata(6, 15) = 1800;
-    fishdata(7, 15) = 618;
-
-    fishdatan(16) = lang(u8"シロアマダイ"s, u8"red sea bream"s);
-    fishdata(0, 16) = 1;
-    fishdata(1, 16) = 2;
-    fishdata(2, 16) = 50;
-    fishdata(3, 16) = 16;
-    fishdata(4, 16) = 100;
-    fishdata(5, 16) = 350;
-    fishdata(6, 16) = 4500;
-    fishdata(7, 16) = 618;
-
-    fishdatan(17) = lang(u8"空きビン"s, u8"empty bottle"s);
-    fishdata(0, 17) = 1;
-    fishdata(1, 17) = 2;
-    fishdata(2, 17) = 400;
-    fishdata(3, 17) = 0;
-    fishdata(4, 17) = 100;
-    fishdata(5, 17) = 250;
-    fishdata(6, 17) = 40;
-    fishdata(7, 17) = 619;
-
-    fishdatan(18) = lang(u8"汚い指輪"s, u8"dirty ring"s);
-    fishdata(0, 18) = 1;
-    fishdata(1, 18) = 2;
-    fishdata(2, 18) = 400;
-    fishdata(3, 18) = 0;
-    fishdata(4, 18) = 100;
-    fishdata(5, 18) = 250;
-    fishdata(6, 18) = 325;
-    fishdata(7, 18) = 619;
-
-    fishdatan(19) = lang(u8"キレアジ"s, u8"sword fish"s);
-    fishdata(0, 19) = 1;
-    fishdata(1, 19) = 3;
-    fishdata(2, 19) = 1000;
-    fishdata(3, 19) = 15;
-    fishdata(4, 19) = 100;
-    fishdata(5, 19) = 250;
-    fishdata(6, 19) = 1500;
-    fishdata(7, 19) = 618;
-
-    fishdatan(20) = lang(u8"アロワナ"s, u8"moonfish"s);
-    fishdata(0, 20) = 1;
-    fishdata(1, 20) = 3;
-    fishdata(2, 20) = 800;
-    fishdata(3, 20) = 18;
-    fishdata(4, 20) = 100;
-    fishdata(5, 20) = 300;
-    fishdata(6, 20) = 1900;
-    fishdata(7, 20) = 618;
-
-    fishdatan(21) = lang(u8"ハリマグロ"s, u8"tuna fish"s);
-    fishdata(0, 21) = 1;
-    fishdata(1, 21) = 3;
-    fishdata(2, 21) = 250;
-    fishdata(3, 21) = 22;
-    fishdata(4, 21) = 100;
-    fishdata(5, 21) = 400;
-    fishdata(6, 21) = 2400;
-    fishdata(7, 21) = 618;
-
-    fishdatan(22) = lang(u8"古代魚"s, u8"ancient fish"s);
-    fishdata(0, 22) = 1;
-    fishdata(1, 22) = 3;
-    fishdata(2, 22) = 50;
-    fishdata(3, 22) = 28;
-    fishdata(4, 22) = 100;
-    fishdata(5, 22) = 350;
-    fishdata(6, 22) = 7200;
-    fishdata(7, 22) = 618;
-
-    fishdatan(23) = lang(u8"破れた傘"s, u8"broken umbrella"s);
-    fishdata(0, 23) = 1;
-    fishdata(1, 23) = 3;
-    fishdata(2, 23) = 1000;
-    fishdata(3, 23) = 0;
-    fishdata(4, 23) = 100;
-    fishdata(5, 23) = 250;
-    fishdata(6, 23) = 40;
-    fishdata(7, 23) = 619;
-
-    fishdatan(24) = lang(u8"かつら"s, u8"hairpiece"s);
-    fishdata(0, 24) = 1;
-    fishdata(1, 24) = 3;
-    fishdata(2, 24) = 1000;
-    fishdata(3, 24) = 0;
-    fishdata(4, 24) = 100;
-    fishdata(5, 24) = 250;
-    fishdata(6, 24) = 425;
-    fishdata(7, 24) = 619;
-
-    fishdatan(25) = lang(u8"カツオ"s, u8"bonito"s);
-    fishdata(0, 25) = 1;
-    fishdata(1, 25) = 4;
-    fishdata(2, 25) = 1000;
-    fishdata(3, 25) = 19;
-    fishdata(4, 25) = 100;
-    fishdata(5, 25) = 250;
-    fishdata(6, 25) = 2200;
-    fishdata(7, 25) = 618;
-
-    fishdatan(26) = lang(u8"アユ"s, u8"sweetfish"s);
-    fishdata(0, 26) = 1;
-    fishdata(1, 26) = 4;
-    fishdata(2, 26) = 800;
-    fishdata(3, 26) = 22;
-    fishdata(4, 26) = 100;
-    fishdata(5, 26) = 300;
-    fishdata(6, 26) = 2600;
-    fishdata(7, 26) = 618;
-
-    fishdatan(27) = lang(u8"シマアジ"s, u8"yellow jack"s);
-    fishdata(0, 27) = 1;
-    fishdata(1, 27) = 4;
-    fishdata(2, 27) = 250;
-    fishdata(3, 27) = 25;
-    fishdata(4, 27) = 100;
-    fishdata(5, 27) = 400;
-    fishdata(6, 27) = 4500;
-    fishdata(7, 27) = 618;
-
-    fishdatan(28) = lang(u8"ブラックバス"s, u8"black bass"s);
-    fishdata(0, 28) = 1;
-    fishdata(1, 28) = 4;
-    fishdata(2, 28) = 50;
-    fishdata(3, 28) = 30;
-    fishdata(4, 28) = 100;
-    fishdata(5, 28) = 350;
-    fishdata(6, 28) = 11200;
-    fishdata(7, 28) = 618;
-
-    fishdatan(29) = lang(u8"北からの漂着物"s, u8"ashore from the north"s);
-    fishdata(0, 29) = 1;
-    fishdata(1, 29) = 4;
-    fishdata(2, 29) = 400;
-    fishdata(3, 29) = 0;
-    fishdata(4, 29) = 100;
-    fishdata(5, 29) = 250;
-    fishdata(6, 29) = 240;
-    fishdata(7, 29) = 619;
-
-    fishdatan(30) = lang(u8"エロ本"s, u8"pornographic book"s);
-    fishdata(0, 30) = 1;
-    fishdata(1, 30) = 4;
-    fishdata(2, 30) = 400;
-    fishdata(3, 30) = 0;
-    fishdata(4, 30) = 100;
-    fishdata(5, 30) = 250;
-    fishdata(6, 30) = 525;
-    fishdata(7, 30) = 619;
-
-    fishdatan(31) = lang(u8"サバ"s, u8"mackerel"s);
-    fishdata(0, 31) = 1;
-    fishdata(1, 31) = 5;
-    fishdata(2, 31) = 1000;
-    fishdata(3, 31) = 25;
-    fishdata(4, 31) = 100;
-    fishdata(5, 31) = 250;
-    fishdata(6, 31) = 3500;
-    fishdata(7, 31) = 618;
-
-    fishdatan(32) = lang(u8"大食いマグロ"s, u8"big tuna fish"s);
-    fishdata(0, 32) = 1;
-    fishdata(1, 32) = 5;
-    fishdata(2, 32) = 800;
-    fishdata(3, 32) = 29;
-    fishdata(4, 32) = 100;
-    fishdata(5, 32) = 300;
-    fishdata(6, 32) = 4400;
-    fishdata(7, 32) = 618;
-
-    fishdatan(33) = lang(u8"コバンザメ"s, u8"remora"s);
-    fishdata(0, 33) = 1;
-    fishdata(1, 33) = 5;
-    fishdata(2, 33) = 250;
-    fishdata(3, 33) = 33;
-    fishdata(4, 33) = 100;
-    fishdata(5, 33) = 400;
-    fishdata(6, 33) = 9550;
-    fishdata(7, 33) = 618;
-
-    fishdatan(34) = lang(u8"クジラ"s, u8"whale"s);
-    fishdata(0, 34) = 1;
-    fishdata(1, 34) = 5;
-    fishdata(2, 34) = 50;
-    fishdata(3, 34) = 40;
-    fishdata(4, 34) = 100;
-    fishdata(5, 34) = 350;
-    fishdata(6, 34) = 25000;
-    fishdata(7, 34) = 618;
-
-    fishdatan(35) = lang(u8"空き箱"s, u8"empty box"s);
-    fishdata(0, 35) = 1;
-    fishdata(1, 35) = 5;
-    fishdata(2, 35) = 400;
-    fishdata(3, 35) = 0;
-    fishdata(4, 35) = 100;
-    fishdata(5, 35) = 250;
-    fishdata(6, 35) = 40;
-    fishdata(7, 35) = 619;
-
-    fishdatan(36) = lang(u8"壊れた携帯"s, u8"broken cell phone"s);
-    fishdata(0, 36) = 1;
-    fishdata(1, 36) = 5;
-    fishdata(2, 36) = 400;
-    fishdata(3, 36) = 0;
-    fishdata(4, 36) = 100;
-    fishdata(5, 36) = 250;
-    fishdata(6, 36) = 25;
-    fishdata(7, 36) = 619;
 }
 
 
@@ -52737,20 +52359,20 @@ void label_2154()
     ci = cdata[0].continuous_action_item;
     int dbmax = 0;
     int dbsum = 0;
-    for (int cnt = 0; cnt < 100; ++cnt)
+    for (const auto fish : the_fish_db)
     {
-        if (fishdata(0, cnt) == 0)
+        if (fish.no_generate)
         {
             continue;
         }
         i = clamp(inv[ci].param4 + (rnd(5) == 0) - (rnd(5) == 0), 0, 5);
-        if (fishdata(1, cnt) != i)
+        if (fish.rank != i)
         {
             continue;
         }
-        dblist(0, dbmax) = cnt;
-        dblist(1, dbmax) = fishdata(2, cnt) + dbsum;
-        dbsum += fishdata(2, cnt);
+        dblist(0, dbmax) = fish.id;
+        dblist(1, dbmax) = fish.rarity + dbsum;
+        dbsum += fish.rarity;
         ++dbmax;
     }
     fish = 1;
@@ -52775,10 +52397,10 @@ void label_2154()
 void label_2155()
 {
     flt();
-    itemcreate(0, fishdata(7, fish), -1, -1, 0);
+    itemcreate(0, the_fish_db[fish]->item_id, -1, -1, 0);
     inv[ci].subname = fish;
-    inv[ci].value = fishdata(6, fish);
-    inv[ci].weight = fishdata(5, fish);
+    inv[ci].value = the_fish_db[fish]->value;
+    inv[ci].weight = the_fish_db[fish]->weight;
     txt(lang(
         itemname(ci, 1) + u8"を釣り上げた！"s,
         u8"You get "s + itemname(ci, 1) + u8"!"s));
@@ -52884,7 +52506,7 @@ void label_2156()
                 redraw();
                 await(cfg_wait1 * 2);
             }
-            if (fishdata(3, fish) >= rnd(sdata(185, 0) + 1))
+            if (the_fish_db[fish]->difficulty >= rnd(sdata(185, 0) + 1))
             {
                 fishstat = 0;
             }
