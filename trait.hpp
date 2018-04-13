@@ -53,6 +53,7 @@ public:
     void define(lua_State* L);
 
     std::string get_prefix(id_type id) const;
+    std::string get_description(id_type id, int stage) const;
 };
 
 

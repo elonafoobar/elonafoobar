@@ -11480,7 +11480,7 @@ void modcorrupt(int prm_815)
                     u8"あなたはエーテルに侵食された。"s,
                     u8"Your disease is getting worse."s));
                 txtef(3);
-                txt(traitrefn(1));
+                txt(i18n::_(u8"trait", std::to_string(tid), u8"message_negative"));
                 if (tid == 203)
                 {
                     body = 9;
@@ -11549,7 +11549,7 @@ void modcorrupt(int prm_815)
                     u8"あなたのエーテルの侵食はやわらいだ。"s,
                     u8"The symptoms of the Ether disease seem to calm down."s));
                 txtef(2);
-                txt(traitrefn(0));
+                txt(i18n::_(u8"trait", std::to_string(tid), u8"message_positive"));
                 break;
             }
         }
@@ -24053,7 +24053,7 @@ void apply_general_eating_effect()
                         {
                             get_trait_info(0, 41);
                             txtef(2);
-                            txt(traitrefn(0));
+                            txt(i18n::_(u8"trait", u8"41", u8"message_positive"));
                             trait(41) = 1;
                         }
                     }
@@ -40636,11 +40636,11 @@ label_196901_internal:
         {
             if (trait(tid) < the_trait_db[tid]->max)
             {
-                s = traitrefn2(trait(tid));
+                s = i18n::_(u8"trait", std::to_string(tid), u8"name", u8"_"s + trait(tid));
             }
             else
             {
-                s = traitrefn2(the_trait_db[tid]->max - 1) + u8"(MAX)"s;
+                s = i18n::_(u8"trait", std::to_string(tid), u8"name", u8"_"s + the_trait_db[tid]->max - 1) + u8"(MAX)";
             }
             if (featrq == -1)
             {
@@ -40660,8 +40660,7 @@ label_196901_internal:
         {
             pos(wx + 45, wy + 61 + cnt * 19);
             x = 70;
-            s = the_trait_db.get_prefix(tid)
-                + traitrefn(2 + std::abs(trait(tid)));
+            s = the_trait_db.get_prefix(tid) + the_trait_db(tid, trait(tid));
         }
         listn(0, cnt) = s;
     }
@@ -40950,7 +40949,7 @@ label_1970_internal:
         if (list(1, p) < 10000)
         {
             pos(wx + 270, wy + 66 + cnt * 19 + 2);
-            mes(traitrefn(2));
+            mes(i18n::_(u8"trait", std::to_string(list(0, p)), u8"how_to_acquire"));
         }
         color(0, 0, 0);
     }

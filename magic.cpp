@@ -2033,12 +2033,12 @@ label_2181_internal:
                 if (p > 0)
                 {
                     txtef(2);
-                    txt(traitrefn(0));
+                    txt(i18n::_(u8"trait", std::to_string(tid), u8"message_positive"));
                 }
                 else
                 {
                     txtef(3);
-                    txt(traitrefn(1));
+                    txt(i18n::_(u8"trait", std::to_string(tid), u8"message_negative"));
                 }
                 animeload(8, 0);
                 f = 1;
@@ -2102,12 +2102,12 @@ label_2181_internal:
                 if (p > 0)
                 {
                     txtef(2);
-                    txt(traitrefn(0));
+                    txt(i18n::_(u8"trait", std::to_string(tid), u8"message_positive"));
                 }
                 else
                 {
                     txtef(3);
-                    txt(traitrefn(1));
+                    txt(i18n::_(u8"trait", std::to_string(tid), u8"message_negative"));
                 }
                 f = 1;
                 break;

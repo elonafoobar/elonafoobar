@@ -56,6 +56,13 @@ std::string trait_db::get_prefix(id_type id) const
 
 
 
+std::string trait_db::get_description(id_type id, int stage) const
+{
+    return i18n::fmt(u8"trait", std::to_string(id), u8"description")(stage);
+}
+
+
+
 int get_trait_info(int traitmode, int tid)
 {
     const auto data = the_trait_db[tid];
