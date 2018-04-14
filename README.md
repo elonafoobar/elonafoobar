@@ -117,6 +117,7 @@ See CONTRIBUTING.md for details.
   "key_quickinv": "x",
   "key_quickload": "F2",
   "key_quicksave": "F1",
+  "key_autodig": "H",
   "key_read": "r",
   "key_rest": "R",
   "key_sCancel": 1,

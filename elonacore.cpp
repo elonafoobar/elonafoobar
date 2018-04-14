@@ -16590,6 +16590,16 @@ void render_hud()
         color(0, 0, 0);
         sy -= 20;
     }
+
+    if (autodig_enabled)
+    {
+        pos(sx, sy);
+        gcopy(3, 0, 416, 50 + en * 30, 15);
+        pos(sx + 6, sy + 1);
+        mes(i18n::_(u8"ui", u8"autodig", u8"mode"));
+        sy -= 20;
+    }
+
     pos(inf_clockx, inf_clocky);
     gcopy(3, 448, 408, inf_clockw, inf_clockh);
     pos(inf_clockx + 78, inf_clocky + 8);
@@ -71640,6 +71650,15 @@ label_2747:
         do_dig_command();
         return;
     }
+
+    if (key == key_autodig)
+    {
+        autodig_enabled = !autodig_enabled;
+        txt(i18n::_(
+            u8"ui", u8"autodig", autodig_enabled ? u8"enabled" : u8"disabled"));
+        goto label_2747;
+    }
+
     if (key == key_bash)
     {
         if (mdata(6) == 1)
@@ -71781,18 +71800,21 @@ label_2747:
         // Autodig
         int x = cdata[0].next_position.x;
         int y = cdata[0].next_position.y;
-        if (0 <= x && x < mdata(0) && 0 <= y && y < mdata(1)
-            && (chipm(7, map(x, y, 0)) & 4) && chipm(0, map(x, y, 0)) != 3
-            && mdata(6) != 1)
+        if (autodig_enabled)
         {
-            refx = x;
-            refy = y;
-            tlocx = x;
-            tlocy = y;
-            screenupdate = -1;
-            update_screen();
-            label_2224();
-            return;
+            if (0 <= x && x < mdata(0) && 0 <= y && y < mdata(1)
+                && (chipm(7, map(x, y, 0)) & 4) && chipm(0, map(x, y, 0)) != 3
+                && mdata(6) != 1)
+            {
+                refx = x;
+                refy = y;
+                tlocx = x;
+                tlocy = y;
+                screenupdate = -1;
+                update_screen();
+                label_2224();
+                return;
+            }
         }
         label_2203();
         return;

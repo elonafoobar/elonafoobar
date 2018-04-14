@@ -339,5 +339,11 @@ ui.cheer_up_message = {
   _24 = "虚空「希望はまだあるはずだ」",
 }
 
+ui.autodig = {
+  mode = "採掘",
+  enabled = "自動採掘をオンにした。",
+  disabled = "自動採掘をオフにした。",
+}
+
 
 -- vim: et sw=2 sts=2

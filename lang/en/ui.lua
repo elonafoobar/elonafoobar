@@ -332,5 +332,11 @@ ui.cheer_up_message = {
   _24 = "Ehekatl hugs you,\"Don't die! Promise you don't die!\"",
 }
 
+ui.autodig = {
+  mode = "Autodig",
+  enabled = "You enable autodig.",
+  disabled = "You disable autodig.",
+}
+
 
 -- vim: et sw=2 sts=2

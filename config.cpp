@@ -480,6 +480,9 @@ void load_config()
         std::make_unique<config_string>(
             u8"key_quickload",
             [&](auto value) { key_quickload = std::string{value}; }),
+        std::make_unique<config_string>(
+            u8"key_autodig",
+            [&](auto value) { key_autodig = std::string{value}; }),
         std::make_unique<config_integer>(
             u8"zkey",
             [&](auto value) { cfg_zkey = value; }),
