@@ -31,6 +31,7 @@ set(CORE_SOURCES
     draw.cpp
     elonacore.cpp
     filesystem.cpp
+    fish.cpp
     get_card_info.cpp
     get_random_item_id.cpp
     get_random_npc_id.cpp
