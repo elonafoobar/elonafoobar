@@ -3,7 +3,32 @@ cmake_minimum_required(VERSION 3.0)
 
 
 # Project
-project(ElonaFoobar VERSION 0.1.0) # FIXME
+project(ElonaFoobar VERSION 0.1.0)
+
+
+# Versioning
+
+# Get commit hash from Git
+find_package(Git)
+if(NOT GIT_FOUND)
+    message(FATAL_ERROR "Git not Found")
+endif()
+execute_process(
+    COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+    OUTPUT_VARIABLE PROJECT_VERSION_REVISION
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+
+# Get date and time
+string(TIMESTAMP PROJECT_VERSION_TIMESTAMP UTC)
+
+# Get platform
+set(PROJECT_VERSION_PLATFORM "${CMAKE_SYSTEM}")
+
+# Versioning file
+configure_file("${PROJECT_SOURCE_DIR}/version.cpp.in" "${PROJECT_BINARY_DIR}/version.cpp")
 
 
 # C++14 or later
@@ -59,6 +84,7 @@ set(CORE_SOURCES
     text.cpp
     trait.cpp
     variables.cpp
+    ${PROJECT_BINARY_DIR}/version.cpp
 )
 
 

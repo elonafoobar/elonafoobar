@@ -19,6 +19,7 @@
 #include "range.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
+#include "version.hpp"
 
 #include <iostream>
 
@@ -740,7 +741,7 @@ int run()
     the_race_db.initialize();
     the_trait_db.initialize();
 
-    title(u8"Elona ver 1.22"s);
+    title(u8"Elona Foobar version "s + version::short_string);
     try
     {
         initialize_elona();
@@ -788,14 +789,23 @@ void main_title_menu()
     pos(20, 20);
     mes(u8"Elona version 1.22  Developed by Noa"s);
     color(0, 0, 0);
+    color(255, 255, 255);
     pos(20, 38);
+    mes(u8"Variant "s + version::long_string + u8"  Developed by KI");
+    color(0, 0, 0);
     if (jp)
     {
+        color(255, 255, 255);
+        pos(20, 56);
         mes(u8"Contributor MSL / View the credits for more"s);
+        color(0, 0, 0);
     }
     else
     {
+        color(255, 255, 255);
+        pos(20, 56);
         mes(u8"Contributor f1r3fly, Sunstrike, Schmidt, Elvenspirit / View the credits for more"s);
+        color(0, 0, 0);
     }
     if (jp)
     {
