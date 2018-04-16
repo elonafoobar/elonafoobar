@@ -31,6 +31,9 @@ namespace
 {
 
 
+std::string atbuff;
+
+
 
 position_t gmes(
     const std::string& text,
@@ -260,6 +263,8 @@ void draw_scroll(int x, int y, int width, int height)
 namespace elona
 {
 
+
+void screen_txtadv();
 
 
 int prm_518;
@@ -15979,7 +15984,11 @@ void update_screen()
 {
     screendrawhack = 1;
     gmode(2);
-    if (mode != 9)
+    if (mode == 9)
+    {
+        screen_txtadv();
+    }
+    else
     {
         sxfix = 0;
         syfix = 0;
@@ -16004,6 +16013,45 @@ void update_screen()
     }
     screenupdate = 0;
     screendrawhack = 0;
+}
+
+
+
+void screen_txtadv()
+{
+    gmode(0);
+    pos(0, 0);
+    if (txtadvscreenupdate == 1)
+    {
+        gcopy(4, 0, 0, windoww, windowh - inf_verh);
+    }
+    else
+    {
+        gcopy(4, 0, 0, windoww, 100);
+    }
+    gmode(2);
+    for (int i = 0; i < 4; ++i)
+    {
+        font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+        color(250, 250, 250);
+        if (i == 0)
+        {
+            sx = 265;
+            sy = 8;
+            pos(sx - 30, 5);
+            gcopy(3, 192, 360, 24, 16);
+            pos(sx + atxinfon(0).size() * 13 / 2 + 14, 5);
+            gcopy(3, 216, 360, 24, 16);
+        }
+        else
+        {
+            sx = 220;
+            sy = 10 + i * 14;
+        }
+        pos(sx, sy);
+        mes(atxinfon(i));
+    }
+    txtadvscreenupdate = 1;
 }
 
 
@@ -33537,6 +33585,11 @@ label_1861_internal:
 
 void atxinit()
 {
+    if (atxthrough == 0)
+    {
+        atbuff = "";
+        notesel(atbuff);
+    }
     atxthrough = 0;
     listmax = 0;
     cs = 0;
