@@ -1020,10 +1020,18 @@ void memcpy(
 
 void mes(const std::string& text)
 {
-    if (text.size() >= 25 /* TODO */)
+    constexpr size_t tab_width = 4;
+
+    auto copy = text;
+    for (auto i = copy.find('\t'); i != std::string::npos; i = copy.find('\t'))
+    {
+        copy.replace(i, 1, tab_width, ' ');
+    }
+
+    if (copy.size() >= 25 /* TODO */)
     {
         snail::application::instance().get_renderer().render_multiline_text(
-            text,
+            copy,
             detail::current_tex_buffer().x,
             detail::current_tex_buffer().y,
             detail::current_tex_buffer().color);
@@ -1031,7 +1039,7 @@ void mes(const std::string& text)
     else
     {
         snail::application::instance().get_renderer().render_text(
-            text,
+            copy,
             detail::current_tex_buffer().x,
             detail::current_tex_buffer().y,
             detail::current_tex_buffer().color);
