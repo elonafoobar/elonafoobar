@@ -23,6 +23,7 @@
 #include "snail/application.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
+#include "version.hpp"
 
 using namespace elona;
 
@@ -48173,10 +48174,11 @@ void label_2085()
     access_class_info(2, cdatan(3, 0));
     buff = "";
     notesel(buff);
+    noteadd(version::long_string);
     noteadd(
-        u8"Elona Version 1.22 キャラクター情報 "s + gdata_year + u8"年"s
-        + gdata_month + u8"月"s + gdata_day + u8"日 "s + gdata_hour + u8"時"s
-        + gdata_minute + u8"分  "s + mdatan(0));
+        u8"キャラクター情報 "s + gdata_year + u8"年"s + gdata_month + u8"月"s
+        + gdata_day + u8"日 "s + gdata_hour + u8"時"s + gdata_minute + u8"分  "s
+        + mdatan(0));
     noteadd(""s);
     noteadd(
         u8"  "s + fixtxt((""s + cdatan(1, 0) + cdatan(0, 0)), 34)
@@ -50274,8 +50276,8 @@ void label_2134()
     buff = "";
     if (dbm == ""s)
     {
-        noteadd(
-            u8"Elona v1.22 Debug Console    Type \"?\" for help. Hit ESC to exit."s);
+        noteadd(version::long_string);
+        noteadd(u8"Debug Console    Type \"?\" for help. Hit ESC to exit."s);
         noteadd(""s);
     }
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
