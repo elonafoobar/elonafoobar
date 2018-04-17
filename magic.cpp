@@ -148,8 +148,8 @@ int magic()
                 }
                 goto the_end;
             }
+            if (const auto damage = calc_skill_damage(efid, cc, efp))
             {
-                const auto damage = calc_skill_damage(efid, cc, efp);
                 dice1 = damage->dice_x;
                 dice2 = damage->dice_y;
                 bonus = damage->damage_bonus;
