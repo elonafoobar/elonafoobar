@@ -672,6 +672,7 @@ int cat_get_field_with_index(lua_State* L)
 
 
 const luaL_Reg cdata_functions[] = {
+    {u8"level", &cat_get_field<character, int, &character::level>},
     {u8"pv", &cat_get_field<character, int, &character::pv>},
     {u8"fear", &cat_get_field<character, int, &character::fear>},
     {u8"confused", &cat_get_field<character, int, &character::confused>},

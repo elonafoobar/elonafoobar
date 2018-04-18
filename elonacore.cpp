@@ -40573,7 +40573,7 @@ label_196901_internal:
         }
         if (stat == 1)
         {
-            if (the_trait_db[tid]->type == trait_data::type_t::feat)
+            if (the_trait_db[cnt]->type == trait_data::type_t::feat)
             {
                 if (gdata_acquirable_feat_count > 0)
                 {
@@ -40640,7 +40640,7 @@ label_196901_internal:
             }
             else
             {
-                s = i18n::_(u8"trait", std::to_string(tid), u8"name", u8"_"s + the_trait_db[tid]->max - 1) + u8"(MAX)";
+                s = i18n::_(u8"trait", std::to_string(tid), u8"name", u8"_"s + (the_trait_db[tid]->max - 1)) + u8"(MAX)";
             }
             if (featrq == -1)
             {
@@ -40660,7 +40660,8 @@ label_196901_internal:
         {
             pos(wx + 45, wy + 61 + cnt * 19);
             x = 70;
-            s = the_trait_db.get_prefix(tid) + the_trait_db(tid, trait(tid));
+            std::cout << tid << ":" << trait(tid) << std::endl;
+            s = the_trait_db.get_prefix(tid) + the_trait_db.get_description(tid, trait(tid));
         }
         listn(0, cnt) = s;
     }
@@ -40917,7 +40918,7 @@ label_1970_internal:
         {
             int stat = get_trait_info(0, i);
             featrq = stat;
-            trait_icon = int(the_trait_id[i]->type);
+            trait_icon = int(the_trait_db[i]->type);
             if (trait(i) == 0)
             {
             }

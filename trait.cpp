@@ -3,6 +3,7 @@
 #include "cat.hpp"
 #include "character.hpp"
 #include "elona.hpp"
+#include "i18n.hpp"
 #include "range.hpp"
 #include "variables.hpp"
 
