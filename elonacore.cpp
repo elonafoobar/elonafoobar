@@ -42267,6 +42267,14 @@ void fix_wish()
         {
             inputlog = inputlog(0).substr(pos);
         }
+        inputlog = strutil::remove_str(inputlog, u8"呪われた");
+        inputlog = strutil::remove_str(inputlog, u8"堕落した");
+        inputlog = strutil::remove_str(inputlog, u8"祝福された");
+        inputlog = strutil::remove_str(inputlog, u8"呪われていない");
+        inputlog = strutil::remove_str(inputlog, u8"cursed ");
+        inputlog = strutil::remove_str(inputlog, u8"doomed ");
+        inputlog = strutil::remove_str(inputlog, u8"blessed ");
+        inputlog = strutil::remove_str(inputlog, u8"uncursed ");
     }
     if (jp)
     {
@@ -42400,6 +42408,8 @@ void wish_for_character()
 
 void what_do_you_wish_for()
 {
+    int number_of_items{};
+    optional<curse_state_t> curse_state;
     int wishid = 0;
     txtcopy = "";
     txtef(5);
@@ -42648,9 +42658,34 @@ void what_do_you_wish_for()
         wish_for_figure();
         return;
     }
-    int number_of_items;
 label_1998_internal:
     number_of_items = elona::stoi(inputlog(0));
+    if (debug::voldemort)
+    {
+        if (strutil::contains(inputlog(0), u8"呪われた")
+            || strutil::contains(inputlog(0), u8"cursed "))
+        {
+            curse_state = curse_state_t::cursed;
+        }
+        else if (
+            strutil::contains(inputlog(0), u8"堕落した")
+            || strutil::contains(inputlog(0), u8"doomed "))
+        {
+            curse_state = curse_state_t::doomed;
+        }
+        else if (
+            strutil::contains(inputlog(0), u8"祝福された")
+            || strutil::contains(inputlog(0), u8"blessed "))
+        {
+            curse_state = curse_state_t::blessed;
+        }
+        else if (
+            strutil::contains(inputlog(0), u8"呪われていない")
+            || strutil::contains(inputlog(0), u8"uncursed "))
+        {
+            curse_state = curse_state_t::none;
+        }
+    }
     fix_wish();
     i = 0;
     for (int cnt = 0, cnt_end = (length(ioriginalnameref)); cnt < cnt_end;
@@ -42802,6 +42837,10 @@ label_1998_internal:
             if (debug::voldemort && number_of_items != 0)
             {
                 inv[ci].number = number_of_items;
+            }
+            if (curse_state)
+            {
+                inv[ci].curse_state = curse_state.get();
             }
             item_identify(
                 inv[ci], identification_state_t::completely_identified);
