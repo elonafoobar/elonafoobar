@@ -1,29 +1,39 @@
-TODO translation
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
 
-# 既知の不具合
+## [0.1.0] - 2018-04-08
 
-* 減色合成が行われない。今の所中途半端にエミューレートがなされる。
+### Added
 
+- Introduce Lua.
+- Externalize part of data to Lua scripts.
+- Externalize part of text to Lua scripts.
+- Internationalization.
+- Use JSON file for configuration.
+- Custom race.
+- Custom class.
+- Custom NPC.
+- Specify number of wished items in wizard mode.
+- Do not ask direction to close if there is only one door around you.
+- Autodig.
+- Highlight positions of upstaris/downstairs.
+- Always show HP bars.
+- Exchange position pressing Shift key.
+- Quick save and quick load.
+- Abolish upper limit of number of NPC's actions(10 -> unlimited).
+- Minimum attribute roll in character making.
 
+### Deleted
 
-# 仕様変更
+- Delete F12 console commands.
+- Remove compatibility with too old versions(older than 1.16).
 
-* ファイルの読み込みに際して、全面的にエラーチェックを行う。
-  読み込みに失敗した場合やフォーマットに誤りがあった場合にはエラー側に倒す。
-  正しい形式のファイルの場合には互換性の問題は起こらないが、何らかの誤りがあった場合には
-  非互換となりうる。
-  なおこのCHANGELOG内においてエラーチェックの拡充についてはこれ以上言及しない
-  すなわち、
+### Fixed
 
-> # 仕様変更
-
-> * sava/sav_foobar/a.s1が読み込めなかった場合にエラーになるように
-> * sava/sav_foobar/a.s1が正しい形式でなかった場合エラーになるように
-
-  のようにいちいち記述することはない
-
-* セーブデータの互換性がない。インポート・エクスポートは将来的に実装の余地あり
-
-* 最低値ロール。能力ロールにおいて、`key_mode2`のキー(何も設定を変えていなければ`*`)を押すことで全ての能力が最低値となる。23232212
+too many...
