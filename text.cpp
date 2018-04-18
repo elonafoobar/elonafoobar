@@ -3524,7 +3524,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
 
 
 
-std::string trimdesc(const std::string& source, bool summary)
+std::string trim_item_description(const std::string& source, bool summary)
 {
     std::string ret{source};
 

@@ -46975,7 +46975,7 @@ void show_item_description()
     if (inv[ci].identification_state
         == identification_state_t::completely_identified)
     {
-        std::string buf = trimdesc(description(3), true);
+        std::string buf = trim_item_description(description(3), true);
         if (buf != ""s)
         {
             list(0, p) = 7;
@@ -47181,7 +47181,8 @@ void show_item_description()
                 list(0, p) = 0;
                 listn(0, p) = "";
                 ++p;
-                std::string buf = trimdesc(description(cnt), false);
+                std::string buf =
+                    trim_item_description(description(cnt), false);
                 notesel(buf);
                 for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
                 {
