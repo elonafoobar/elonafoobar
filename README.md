@@ -162,7 +162,6 @@ See CONTRIBUTING.md for details.
   "language": 0,
   "msgLine": 4,
   "msg_addTime": 1,
-  "msg_box": 1,
   "msg_log": 16,
   "msg_trans": 4,
   "music": 0,

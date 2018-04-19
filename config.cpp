@@ -793,8 +793,6 @@ void load_config2()
         std::make_unique<config_integer>(
             u8"joypad", [&](auto value) { cfg_joypad = value; }),
         std::make_unique<config_integer>(
-            u8"msg_box", [&](auto value) { cfg_msg_box = value; }),
-        std::make_unique<config_integer>(
             u8"msgLine", [&](auto value) { inf_msgline = value; }),
         std::make_unique<config_integer>(
             u8"tileSize", [&](auto value) { inf_tiles = value; }),
