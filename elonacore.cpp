@@ -49864,15 +49864,13 @@ void input_number_or_text_dialog(
     int val4)
 {
     int val5{};
-    int inputfail = 0;
     int ime_esc = 0;
-label_21261_internal:
+
     snd(26);
     x = val0;
     y = val1;
     dx = val2 * 16 + 60;
     font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
-    inputfail = 0;
     SDIM1(inputlog2);
     if (val4 != 0)
     {
@@ -49955,39 +49953,13 @@ label_21261_internal:
         return;
     }
     objmode(2, 0);
-    if (cfg_msg_box == 0)
-    {
-        pos(x + 4, y + 4);
-        mesbox(inputlog, dx - 8, 26, 1, val2 * (1 + en));
-    }
-    else
-    {
-        pos(x, y);
-        mesbox(inputlog, 600, 0, 5, val2 * (1 + en));
-        pos(x + 4, y + 4);
-        gfini(dx - 1, 35);
-        gfdec(60, 60, 60);
-        {
-            int stat = aplsel(u8"Elona ver 1.22"s);
-            if (stat == 1)
-            {
-                dialog(u8"Failed to get WINDOW ID"s, 1);
-                clrobj(1);
-                cfg_msg_box = 0;
-                goto label_21261_internal;
-            }
-        }
-        {
-            int stat = aplobj(""s, 1);
-            if (stat == 1)
-            {
-                dialog(u8"Failed to get OBJECT ID"s, 1);
-                clrobj(1);
-                cfg_msg_box = 0;
-                goto label_21261_internal;
-            }
-        }
-    }
+
+    pos(x, y);
+    mesbox(inputlog, 600, 0, 5, val2 * (1 + en));
+    pos(x + 4, y + 4);
+    gfini(dx - 1, 35);
+    gfdec(60, 60, 60);
+
     notesel(inputlog);
     p(1) = 2;
     ime_esc = 0;
@@ -50010,56 +49982,54 @@ label_21261_internal:
         window2(x, y, dx, 36, 0, 2);
         pos(x + dx / 2 - 60, y - 32);
         gcopy(3, 128, 288, 128, 32);
-        if (cfg_msg_box == 1)
+
+        pos(x + 8, y + 4);
+        if (imeget() != 0)
+        {
+            gcopy(3, 48, 336, 24, 24);
+        }
+        else
+        {
+            gcopy(3, 24, 336, 24, 24);
+        }
+        apledit(p(2), 2, 0);
+        if (p(2) > val2 * (1 + en) - 2)
         {
             pos(x + 8, y + 4);
-            if (imeget() != 0)
-            {
-                gcopy(3, 48, 336, 24, 24);
-            }
-            else
-            {
-                gcopy(3, 24, 336, 24, 24);
-            }
-            apledit(p(2), 2, 0);
-            if (p(2) > val2 * (1 + en) - 2)
-            {
-                pos(x + 8, y + 4);
-                gcopy(3, 72, 336, 24, 24);
-            }
-            if (cnt % 20 < 10)
-            {
-                p(1) = p(1) * 2;
-            }
-            else
-            {
-                p(1) = p(1) / 2;
-            }
-            apledit(p(2), 0);
-            p(4) = 0;
-            for (int cnt = 0, cnt_end = (p(2)); cnt < cnt_end; ++cnt)
-            {
-                p(3) = inputlog(0)[p(4)];
-                if ((p(3) >= 129 && p(3) <= 159)
-                    || (p(3) >= 224 && p(3) <= 252))
-                {
-                    p(4) += 2;
-                }
-                else
-                {
-                    p(4) += 1;
-                }
-            }
-            gmode(4, -1, -1, p(1) / 2 + 50);
-            pos(x + 34 + p(4) * 8, y + 5);
-            gcopy(3, 0, 336, 12, 24);
-            gmode(2);
-            color(255, 255, 255);
-            pos(x + 36, y + 9);
-            noteget(s, 0);
-            mes(s);
-            color(0, 0, 0);
+            gcopy(3, 72, 336, 24, 24);
         }
+        if (cnt % 20 < 10)
+        {
+            p(1) = p(1) * 2;
+        }
+        else
+        {
+            p(1) = p(1) / 2;
+        }
+        apledit(p(2), 0);
+        p(4) = 0;
+        for (int cnt = 0, cnt_end = (p(2)); cnt < cnt_end; ++cnt)
+        {
+            p(3) = inputlog(0)[p(4)];
+            if ((p(3) >= 129 && p(3) <= 159) || (p(3) >= 224 && p(3) <= 252))
+            {
+                p(4) += 2;
+            }
+            else
+            {
+                p(4) += 1;
+            }
+        }
+        gmode(4, -1, -1, p(1) / 2 + 50);
+        pos(x + 34 + p(4) * 8, y + 5);
+        gcopy(3, 0, 336, 12, 24);
+        gmode(2);
+        color(255, 255, 255);
+        pos(x + 36, y + 9);
+        noteget(s, 0);
+        mes(s);
+        color(0, 0, 0);
+
         if (strutil::contains(inputlog(0), u8"\n"))
         {
             rtval = 0;
@@ -50088,11 +50058,6 @@ label_21261_internal:
     }
     gmode(2);
     clrobj(1);
-    if (inputfail)
-    {
-        cfg_msg_box = 0;
-        goto label_21261_internal;
-    }
     if (input_mode == 1)
     {
         cnv_filestr(inputlog);

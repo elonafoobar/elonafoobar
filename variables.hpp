@@ -280,7 +280,6 @@ ELONA_EXTERN(int cfg_hideshopresult);
 ELONA_EXTERN(int cfg_ignoredislike);
 ELONA_EXTERN(int cfg_joypad);
 ELONA_EXTERN(int cfg_language);
-ELONA_EXTERN(int cfg_msg_box);
 ELONA_EXTERN(int cfg_msgaddtime);
 ELONA_EXTERN(int cfg_msgtrans);
 ELONA_EXTERN(int cfg_music);
