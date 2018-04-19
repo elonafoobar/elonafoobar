@@ -83,6 +83,52 @@ inline std::string remove_str(
 
 
 
+inline size_t byte_count(uint8_t c)
+{
+    if (c <= 0x7F)
+        return 1;
+    else if (c >= 0xc2 && c <= 0xdf)
+        return 2;
+    else if (c >= 0xe0 && c <= 0xef)
+        return 3;
+    else if (c >= 0xf0 && c <= 0xf7)
+        return 4;
+    else if (c >= 0xf8 && c <= 0xfb)
+        return 5;
+    else if (c >= 0xfc && c <= 0xfd)
+        return 6;
+    else
+        return 1;
+}
+
+
+
+inline size_t byte_count(char c)
+{
+    return byte_count(static_cast<uint8_t>(c));
+}
+
+
+
+inline std::string take_by_width(const std::string& str, size_t width)
+{
+    size_t w{};
+    for (size_t i = 0; i < str.size();)
+    {
+        const auto byte = byte_count(str[i]);
+        const auto char_width = byte == 1 ? 1 : 2;
+        if (w + char_width > width)
+        {
+            return str.substr(0, i);
+        }
+        i += byte;
+        w += char_width;
+    }
+    return str;
+}
+
+
+
 } // namespace strutil
 
 

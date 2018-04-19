@@ -47187,26 +47187,31 @@ void show_item_description()
                 for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
                 {
                     noteget(q, cnt);
-                    p(1) = 66;
-                    p(2) = 0;
-                    if (strlen_u(q) > size_t(p(1)))
+                    constexpr size_t max_width = 66;
+                    if (strlen_u(q) > max_width)
                     {
-                        for (int cnt = 0,
-                                 cnt_end = cnt + (q(0).size() / p(1) + 1);
-                             cnt < cnt_end;
-                             ++cnt)
+                        p(2) = 0;
+                        for (size_t i = 0; i < strlen_u(q) / max_width + 1; ++i)
                         {
-                            if (strmid(q, p(2) + p(1), 2) == u8"。"s
-                                || strmid(q, p(2) + p(1), 2) == u8"、"s)
+                            auto one_line = strutil::take_by_width(
+                                q(0).substr(p(2)), max_width);
+                            p(1) = one_line.size();
+                            if (strutil::starts_with(q, u8"。", p(1) + p(2)))
                             {
-                                p(1) += 2;
+                                one_line += u8"。";
+                                p(1) += std::strlen(u8"。");
+                            }
+                            if (strutil::starts_with(q, u8"、", p(1) + p(2)))
+                            {
+                                one_line += u8"、";
+                                p(1) += std::strlen(u8"、");
                             }
                             if (strmid(q, p(2), p(1)) == ""s)
                             {
                                 break;
                             }
                             list(0, p) = -1;
-                            listn(0, p) = strmid(q, p(2), p(1));
+                            listn(0, p) = one_line;
                             ++p;
                             p(2) += p(1);
                         }

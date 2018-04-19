@@ -10,32 +10,12 @@
 #include "snail/application.hpp"
 
 #include "elona.hpp"
+#include "util.hpp"
 #include "variables.hpp"
 
 
 namespace
 {
-
-
-
-// UTF-8
-size_t byte_count(uint8_t c)
-{
-    if (c <= 0x7F)
-        return 1;
-    else if (c >= 0xc2 && c <= 0xdf)
-        return 2;
-    else if (c >= 0xe0 && c <= 0xef)
-        return 3;
-    else if (c >= 0xf0 && c <= 0xf7)
-        return 4;
-    else if (c >= 0xf8 && c <= 0xfb)
-        return 5;
-    else if (c >= 0xfc && c <= 0xfd)
-        return 6;
-    else
-        return 1;
-}
 
 
 
@@ -1384,7 +1364,7 @@ size_t strlen_u(const std::string& str)
     int ret = 0;
     for (size_t i = 0; i < str.size();)
     {
-        const auto byte = byte_count(static_cast<uint8_t>(str[i]));
+        const auto byte = strutil::byte_count(str[i]);
         ret += byte == 1 ? 1 : 2;
         i += byte;
     }
@@ -2058,7 +2038,7 @@ int talk_conv_jp(std::string& text, int max_line_length)
         size_t line_length = 0;
         while (line_length <= len)
         {
-            line_length += byte_count(static_cast<uint8_t>(rest[line_length]));
+            line_length += strutil::byte_count(rest[line_length]);
             if (int(line_length) > max_line_length)
             {
                 // m = strmid(rest, line_length, 2);
