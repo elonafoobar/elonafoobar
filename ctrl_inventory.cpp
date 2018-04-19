@@ -964,9 +964,8 @@ label_2061_internal:
             pos(x, y);
             mes(""s + i18n::_(u8"ui", u8"body_part", u8"_"s + (p / 10000)));
             color(0, 0, 0);
-            x +=
-                (i18n::_(u8"ui", u8"body_part", u8"_"s + (p / 10000)).size()
-                 + 1)
+            x += (i18n::_(u8"ui", u8"body_part", u8"_"s + (p / 10000)).size()
+                  + 1)
                 * 6;
         }
     }
@@ -1149,11 +1148,9 @@ label_2061_internal:
                     u8"How many? (1 to "s + inv[ci].number + u8")"s));
                 display_msg(screenmsgy, 1);
                 inputlog = ""s + inv[ci].number;
-                input_number_or_text_dialog(
+                input_number_dialog(
                     (windoww - 200) / 2 + inf_screenx,
                     winposy(60),
-                    8,
-                    1,
                     inv[ci].number);
                 in = elona::stoi(inputlog(0));
                 if (in > inv[ci].number)
@@ -1304,11 +1301,9 @@ label_2061_internal:
                 }
                 display_msg(screenmsgy, 2);
                 inputlog = ""s + inv[ci].number;
-                input_number_or_text_dialog(
+                input_number_dialog(
                     (windoww - 200) / 2 + inf_screenx,
                     winposy(60),
-                    8,
-                    1,
                     inv[ci].number);
                 in = elona::stoi(inputlog(0));
                 if (in > inv[ci].number)

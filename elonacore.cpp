@@ -597,7 +597,6 @@ int cun = 0;
 elona_vector1<int> unaiactsubfreq;
 elona_vector1<int> bmpbuff;
 std::string usertitle;
-elona_vector1<std::string> inputlog2;
 std::string dbm;
 int dbg_exitshowroom = 0;
 int dbg_freemove = 0;
@@ -15666,7 +15665,7 @@ void label_1399()
         imeset(1);
     }
     inputlog = "";
-    input_number_or_text_dialog(80, windowh - inf_verh - 70, 38, 1);
+    input_text_dialog(80, windowh - inf_verh - 70, 38);
     imeset(0);
     if (inputlog == ""s)
     {
@@ -42415,8 +42414,8 @@ void what_do_you_wish_for()
     txtef(5);
     txt(lang(u8"何を望む？"s, u8"What do you wish for? "s));
     inputlog = "";
-    input_number_or_text_dialog(
-        (windoww - 290) / 2 + inf_screenx, winposy(90), 16, 0);
+    input_text_dialog(
+        (windoww - 290) / 2 + inf_screenx, winposy(90), 16, false);
     txt(lang(u8"「"s + inputlog + u8"！！」"s, u8"\""s + inputlog + u8"!!\""s));
     msgtemp = "";
     autosave = 1 * (gdata_current_map != 35);
@@ -43624,8 +43623,7 @@ void do_interact_command()
             u8"どんな言葉を教えようか。"s,
             u8"What sentence should "s + name(tc) + u8" learn? "s));
         inputlog = "";
-        input_number_or_text_dialog(
-            (windoww - 360) / 2 + inf_screenx, winposy(90), 20, 1);
+        input_text_dialog((windoww - 360) / 2 + inf_screenx, winposy(90), 20);
         cbitmod(989, tc, 0);
         if (inputlog == ""s)
         {
@@ -43680,8 +43678,7 @@ void call_npc()
         u8"What do you want to call "s + him(tc) + u8"? "s));
     inputlog = "";
     input_mode = 1;
-    input_number_or_text_dialog(
-        (windoww - 220) / 2 + inf_screenx, winposy(90), 12, 1);
+    input_text_dialog((windoww - 220) / 2 + inf_screenx, winposy(90), 12);
     if (inputlog == ""s)
     {
         txt(lang(u8"名前をつけるのはやめた。"s, u8"You changed your mind."s));
@@ -49850,224 +49847,6 @@ void initialize_fovmap_and_fovlist()
             }
         }
     }
-    return;
-}
-
-
-
-void input_number_or_text_dialog(
-    int val0,
-    int val1,
-    int val2,
-    int val3,
-    int val4)
-{
-    int val5{};
-    int ime_esc = 0;
-
-    snd(26);
-    x = val0;
-    y = val1;
-    dx = val2 * 16 + 60;
-    font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
-    SDIM1(inputlog2);
-    if (val4 != 0)
-    {
-        val5 = val4;
-        if (strlen_u(std::to_string(val5)) >= 3)
-        {
-            dx += std::to_string(val5).size() * 8;
-        }
-        pos(x + 24, y + 4);
-        gfini(dx - 42, 35);
-        gfdec(60, 60, 60);
-        while (1)
-        {
-            window2(x + 20, y, dx - 40, 36, 0, 2);
-            pos(x + dx / 2 - 56, y - 32);
-            gcopy(3, 128, 288, 128, 32);
-            pos(x + 28, y + 4);
-            gcopy(3, 312, 336, 24, 24);
-            pos(x + dx - 51, y + 4);
-            gcopy(3, 336, 336, 24, 24);
-            inputlog2 = ""s + elona::stoi(inputlog(0)) + u8"("s + val5 + u8")"s;
-            pos(x + dx - 70 - strlen_u(inputlog2) * 8 + 8, y + 11);
-            color(255, 255, 255);
-            mes(inputlog2);
-            color(0, 0, 0);
-            redraw();
-            await(cfg_wait1);
-            key_check();
-            if (key == key_enter)
-            {
-                f = 1;
-                break;
-            }
-            if (key == key_cancel)
-            {
-                if (val3 == 1)
-                {
-                    f = -1;
-                    break;
-                }
-            }
-            if (key == key_west)
-            {
-                snd(5);
-                --val4;
-                if (val4 < 1)
-                {
-                    val4 = val5;
-                }
-            }
-            if (key == key_east)
-            {
-                snd(5);
-                ++val4;
-                if (val4 > val5)
-                {
-                    val4 = 1;
-                }
-            }
-            if (key == key_south)
-            {
-                snd(5);
-                val4 = 1;
-            }
-            if (key == key_north)
-            {
-                snd(5);
-                val4 = val5;
-            }
-            inputlog = ""s + val4;
-        }
-        if (f == -1)
-        {
-            inputlog = "";
-            rtval = -1;
-        }
-        keywait = 1;
-        key = "";
-        rtval = 0;
-        return;
-    }
-    objmode(2, 0);
-
-    pos(x, y);
-    mesbox(inputlog, 600, 0, 5, val2 * (1 + en));
-    pos(x + 4, y + 4);
-    gfini(dx - 1, 35);
-    gfdec(60, 60, 60);
-
-    notesel(inputlog);
-    p(1) = 2;
-    ime_esc = 0;
-    onkey_1();
-    for (int cnt = 0;; ++cnt)
-    {
-        if (ginfo(2) == 0)
-        {
-            objsel(1);
-        }
-        else
-        {
-            objprm(1, ""s);
-            inputlog = "";
-            await(100);
-            --cnt;
-            continue;
-        }
-        await(40);
-        window2(x, y, dx, 36, 0, 2);
-        pos(x + dx / 2 - 60, y - 32);
-        gcopy(3, 128, 288, 128, 32);
-
-        pos(x + 8, y + 4);
-        if (imeget() != 0)
-        {
-            gcopy(3, 48, 336, 24, 24);
-        }
-        else
-        {
-            gcopy(3, 24, 336, 24, 24);
-        }
-        apledit(p(2), 2, 0);
-        if (p(2) > val2 * (1 + en) - 2)
-        {
-            pos(x + 8, y + 4);
-            gcopy(3, 72, 336, 24, 24);
-        }
-        if (cnt % 20 < 10)
-        {
-            p(1) = p(1) * 2;
-        }
-        else
-        {
-            p(1) = p(1) / 2;
-        }
-        apledit(p(2), 0);
-        p(4) = 0;
-        for (int cnt = 0, cnt_end = (p(2)); cnt < cnt_end; ++cnt)
-        {
-            p(3) = inputlog(0)[p(4)];
-            if ((p(3) >= 129 && p(3) <= 159) || (p(3) >= 224 && p(3) <= 252))
-            {
-                p(4) += 2;
-            }
-            else
-            {
-                p(4) += 1;
-            }
-        }
-        gmode(4, -1, -1, p(1) / 2 + 50);
-        pos(x + 34 + p(4) * 8, y + 5);
-        gcopy(3, 0, 336, 12, 24);
-        gmode(2);
-        color(255, 255, 255);
-        pos(x + 36, y + 9);
-        noteget(s, 0);
-        mes(s);
-        color(0, 0, 0);
-
-        if (strutil::contains(inputlog(0), u8"\n"))
-        {
-            rtval = 0;
-            break;
-        }
-        if (strutil::contains(inputlog(0), u8"\t"))
-        {
-            objprm(1, ""s);
-            inputlog = "";
-            if (val3 == 1)
-            {
-                ime_esc = 1;
-            }
-        }
-        redraw();
-        if (val3 == 1)
-        {
-            if (ime_esc == 1)
-            {
-                inputlog = "";
-                keywait = 1;
-                key = "";
-                break;
-            }
-        }
-    }
-    gmode(2);
-    clrobj(1);
-    if (input_mode == 1)
-    {
-        cnv_filestr(inputlog);
-    }
-    input_mode = 0;
-    if (en)
-    {
-        cnv_str(inputlog, u8"\""s, u8"'"s);
-    }
-    rm_crlf(inputlog);
-    onkey_0();
     return;
 }
 
@@ -72083,8 +71862,7 @@ void pc_died()
     txt(lang(u8"さようなら… "s, u8"Good bye... "s));
     txt(lang(u8"遺言は？"s, u8"You leave a dying message."s));
     inputlog = "";
-    input_number_or_text_dialog(
-        (windoww - 310) / 2 + inf_screenx, winposy(90), 16, 1);
+    input_text_dialog((windoww - 310) / 2 + inf_screenx, winposy(90), 16);
     if (inputlog == ""s)
     {
         txtsetlastword();

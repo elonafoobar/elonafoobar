@@ -158,4 +158,209 @@ int show_prompt(int x, int y, int width, show_prompt_type type, int val4)
 }
 
 
+
+void input_number_dialog(int x, int y, int max_number)
+{
+    snd(26);
+    dx = 8 * 16 + 60;
+    font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
+
+    int number = max_number;
+    if (strlen_u(std::to_string(max_number)) >= 3)
+    {
+        dx += std::to_string(max_number).size() * 8;
+    }
+    pos(x + 24, y + 4);
+    gfini(dx - 42, 35);
+    gfdec(60, 60, 60);
+    while (1)
+    {
+        window2(x + 20, y, dx - 40, 36, 0, 2);
+        pos(x + dx / 2 - 56, y - 32);
+        gcopy(3, 128, 288, 128, 32);
+        pos(x + 28, y + 4);
+        gcopy(3, 312, 336, 24, 24);
+        pos(x + dx - 51, y + 4);
+        gcopy(3, 336, 336, 24, 24);
+        const auto inputlog2 = inputlog + u8"(" + max_number + u8")";
+        pos(x + dx - 70 - strlen_u(inputlog2) * 8 + 8, y + 11);
+        color(255, 255, 255);
+        mes(inputlog2);
+        color(0, 0, 0);
+        redraw();
+        await(cfg_wait1);
+        key_check();
+        if (key == key_enter)
+        {
+            f = 1;
+            break;
+        }
+        if (key == key_west)
+        {
+            snd(5);
+            --number;
+            if (number < 1)
+            {
+                number = max_number;
+            }
+        }
+        if (key == key_east)
+        {
+            snd(5);
+            ++number;
+            if (number > max_number)
+            {
+                number = 1;
+            }
+        }
+        if (key == key_south)
+        {
+            snd(5);
+            number = 1;
+        }
+        if (key == key_north)
+        {
+            snd(5);
+            number = max_number;
+        }
+        inputlog = ""s + number;
+    }
+    if (f == -1)
+    {
+        inputlog = "";
+        rtval = -1;
+    }
+    keywait = 1;
+    key = "";
+    rtval = 0;
+}
+
+
+
+void input_text_dialog(int x, int y, int val2, bool is_cancelable)
+{
+    int ime_esc = 0;
+
+    snd(26);
+    dx = val2 * 16 + 60;
+    font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
+
+    pos(x, y);
+    mesbox(inputlog, 600, 0, 5, val2 * (1 + en));
+    pos(x + 4, y + 4);
+    gfini(dx - 1, 35);
+    gfdec(60, 60, 60);
+
+    notesel(inputlog);
+    p(1) = 2;
+    ime_esc = 0;
+
+    for (int cnt = 0;; ++cnt)
+    {
+        if (ginfo(2) == 0)
+        {
+            objsel(1);
+        }
+        else
+        {
+            objprm(1, ""s);
+            inputlog = "";
+            await(100);
+            --cnt;
+            continue;
+        }
+        await(40);
+        window2(x, y, dx, 36, 0, 2);
+        pos(x + dx / 2 - 60, y - 32);
+        gcopy(3, 128, 288, 128, 32);
+
+        pos(x + 8, y + 4);
+        if (imeget() != 0)
+        {
+            gcopy(3, 48, 336, 24, 24);
+        }
+        else
+        {
+            gcopy(3, 24, 336, 24, 24);
+        }
+        apledit(p(2), 2, 0);
+        if (p(2) > val2 * (1 + en) - 2)
+        {
+            pos(x + 8, y + 4);
+            gcopy(3, 72, 336, 24, 24);
+        }
+        if (cnt % 20 < 10)
+        {
+            p(1) = p(1) * 2;
+        }
+        else
+        {
+            p(1) = p(1) / 2;
+        }
+        apledit(p(2), 0);
+        p(4) = 0;
+        for (int cnt = 0, cnt_end = (p(2)); cnt < cnt_end; ++cnt)
+        {
+            p(3) = inputlog(0)[p(4)];
+            if ((p(3) >= 129 && p(3) <= 159) || (p(3) >= 224 && p(3) <= 252))
+            {
+                p(4) += 2;
+            }
+            else
+            {
+                p(4) += 1;
+            }
+        }
+        gmode(4, -1, -1, p(1) / 2 + 50);
+        pos(x + 34 + p(4) * 8, y + 5);
+        gcopy(3, 0, 336, 12, 24);
+        gmode(2);
+        noteget(s, 0);
+        color(255, 255, 255);
+        pos(x + 36, y + 9);
+        mes(s);
+        color(0, 0, 0);
+
+        if (strutil::contains(inputlog(0), u8"\n"))
+        {
+            rtval = 0;
+            break;
+        }
+        if (strutil::contains(inputlog(0), u8"\t"))
+        {
+            objprm(1, ""s);
+            inputlog = "";
+            if (is_cancelable)
+            {
+                ime_esc = 1;
+            }
+        }
+        redraw();
+        if (is_cancelable)
+        {
+            if (ime_esc == 1)
+            {
+                inputlog = "";
+                keywait = 1;
+                key = "";
+                break;
+            }
+        }
+    }
+    gmode(2);
+    clrobj(1);
+    if (input_mode == 1)
+    {
+        cnv_filestr(inputlog);
+    }
+    input_mode = 0;
+    if (en)
+    {
+        cnv_str(inputlog, u8"\""s, u8"'"s);
+    }
+    rm_crlf(inputlog);
+    onkey_0();
+}
+
+
 } // namespace elona
