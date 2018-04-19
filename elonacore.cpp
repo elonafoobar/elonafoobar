@@ -46951,70 +46951,6 @@ void savecycle()
 
 
 
-std::string trimdesc(const std::string& prm_1060, int prm_1061)
-{
-    std::string q_at_m187;
-    int p_at_m187 = 0;
-    q_at_m187 = prm_1060;
-    while (1)
-    {
-        await();
-        p_at_m187 = instr(q_at_m187, 0, u8"\t"s);
-        if (p_at_m187 != -1)
-        {
-            q_at_m187 = strmid(q_at_m187, 0, p_at_m187)
-                + strmid(q_at_m187, (p_at_m187 + 1), 999);
-            continue;
-        }
-        if (prm_1061 == 1)
-        {
-            p_at_m187 = instr(q_at_m187, 0, u8"\n"s);
-            if (p_at_m187 != -1)
-            {
-                q_at_m187 = strmid(q_at_m187, 0, p_at_m187)
-                    + strmid(q_at_m187, (p_at_m187 + 1), 999);
-                continue;
-            }
-            p_at_m187 = instr(q_at_m187, 0, u8"#"s);
-            if (p_at_m187 != -1)
-            {
-                q_at_m187 = strmid(q_at_m187, 0, p_at_m187);
-            }
-            if (jp)
-            {
-                if (strmid(q_at_m187, q_at_m187.size() - 3, 2) == u8"。"s)
-                {
-                    q_at_m187 = strmid(q_at_m187, 0, q_at_m187.size() - 3);
-                }
-            }
-            else
-            {
-                p_at_m187 = instr(q_at_m187, 0, u8","s);
-                if (p_at_m187 != -1)
-                {
-                    q_at_m187 = strmid(q_at_m187, 0, p_at_m187) + u8"."s
-                        + strmid(q_at_m187, (p_at_m187 + 1), 999);
-                    continue;
-                }
-            }
-        }
-        if (prm_1061 == 2)
-        {
-            p_at_m187 = instr(q_at_m187, 0, u8"#"s);
-            if (p_at_m187 != -1)
-            {
-                q_at_m187 = strmid(q_at_m187, 0, p_at_m187)
-                    + strmid(q_at_m187, (p_at_m187 + 1), 999);
-                continue;
-            }
-        }
-        break;
-    }
-    return q_at_m187;
-}
-
-
-
 void show_item_description()
 {
     int inhmax = 0;
@@ -47039,7 +46975,7 @@ void show_item_description()
     if (inv[ci].identification_state
         == identification_state_t::completely_identified)
     {
-        std::string buf = trimdesc(description(3), 1);
+        std::string buf = trim_item_description(description(3), true);
         if (buf != ""s)
         {
             list(0, p) = 7;
@@ -47245,31 +47181,37 @@ void show_item_description()
                 list(0, p) = 0;
                 listn(0, p) = "";
                 ++p;
-                std::string buf = trimdesc(description(cnt), 2);
+                std::string buf =
+                    trim_item_description(description(cnt), false);
                 notesel(buf);
                 for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
                 {
                     noteget(q, cnt);
-                    p(1) = 66;
-                    p(2) = 0;
-                    if (strlen_u(q) > size_t(p(1)))
+                    constexpr size_t max_width = 66;
+                    if (strlen_u(q) > max_width)
                     {
-                        for (int cnt = 0,
-                                 cnt_end = cnt + (q(0).size() / p(1) + 1);
-                             cnt < cnt_end;
-                             ++cnt)
+                        p(2) = 0;
+                        for (size_t i = 0; i < strlen_u(q) / max_width + 1; ++i)
                         {
-                            if (strmid(q, p(2) + p(1), 2) == u8"。"s
-                                || strmid(q, p(2) + p(1), 2) == u8"、"s)
+                            auto one_line = strutil::take_by_width(
+                                q(0).substr(p(2)), max_width);
+                            p(1) = one_line.size();
+                            if (strutil::starts_with(q, u8"。", p(1) + p(2)))
                             {
-                                p(1) += 2;
+                                one_line += u8"。";
+                                p(1) += std::strlen(u8"。");
+                            }
+                            if (strutil::starts_with(q, u8"、", p(1) + p(2)))
+                            {
+                                one_line += u8"、";
+                                p(1) += std::strlen(u8"、");
                             }
                             if (strmid(q, p(2), p(1)) == ""s)
                             {
                                 break;
                             }
                             list(0, p) = -1;
-                            listn(0, p) = strmid(q, p(2), p(1));
+                            listn(0, p) = one_line;
                             ++p;
                             p(2) += p(1);
                         }

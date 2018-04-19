@@ -3524,4 +3524,73 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
 
 
 
+std::string trim_item_description(const std::string& source, bool summary)
+{
+    std::string ret{source};
+
+    while (1)
+    {
+        // Delete tab character.
+        const auto tab_pos = ret.find('\t');
+        if (tab_pos != std::string::npos)
+        {
+            ret.erase(tab_pos, 1);
+            continue;
+        }
+
+        if (summary)
+        {
+            // Delete line break.
+            const auto line_break_pos = ret.find('\n');
+            if (line_break_pos != std::string::npos)
+            {
+                ret.erase(line_break_pos, 1);
+                continue;
+            }
+            // Delete number sign and rest.
+            const auto number_sign_pos = ret.find('#');
+            if (number_sign_pos != std::string::npos)
+            {
+                ret.erase(number_sign_pos);
+            }
+            if (jp)
+            {
+                // If "ret" ends with period, delete it.
+                constexpr const char* japanese_period = u8"。";
+                const auto period_pos = ret.find(japanese_period);
+                if (period_pos != std::string::npos
+                    && period_pos + std::strlen(japanese_period) == ret.size())
+                {
+                    ret.erase(period_pos);
+                }
+            }
+            else
+            {
+                // Replace comma with period.
+                const auto comma_pos = ret.find(',');
+                if (comma_pos != std::string::npos)
+                {
+                    ret[comma_pos] = '.';
+                    continue;
+                }
+            }
+        }
+        else
+        {
+            // Delete number sign.
+            const auto number_sign_pos = ret.find('#');
+            if (number_sign_pos != std::string::npos)
+            {
+                ret.erase(number_sign_pos, 1);
+                continue;
+            }
+        }
+        break;
+    }
+
+    return ret;
+}
+
+
+
 } // namespace elona
