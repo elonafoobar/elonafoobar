@@ -17,12 +17,12 @@ int submenu = 0;
 
 void set_option()
 {
-    int cfg_sound2 = 0;
-    int cfg_music2 = 0;
-    int cfg_fullscreen2 = 0;
-    int windoww2 = 0;
-    int windowh2 = 0;
-    int sel = 0;
+    int cfg_sound2 = cfg_sound;
+    int cfg_music2 = cfg_music;
+    int cfg_fullscreen2 = cfg_fullscreen;
+    int windoww2 = windoww;
+    int windowh2 = windowh;
+
     listmax = 0;
     page = 0;
     pagesize = 18;
@@ -31,26 +31,15 @@ void set_option()
     cs_bk = -1;
     page_bk = 0;
     cs_bk2 = 0;
-    cfg_sound2 = cfg_sound;
-    cfg_music2 = cfg_music;
-    cfg_fullscreen2 = cfg_fullscreen;
-    windoww2 = windoww;
-    windowh2 = windowh;
-    if (mode == 10)
+
+    gsel(mode == 10 ? 2 : 4);
+    for (int i = 0; i < 8; ++i)
     {
-        sel = 2;
-    }
-    else
-    {
-        sel = 4;
-    }
-    gsel(sel);
-    for (int cnt = 0; cnt < 8; ++cnt)
-    {
-        pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(fs::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+        pos(i % 4 * 180, i / 4 * 300);
+        picload(fs::path(u8"./graphic/g"s + (i + 1) + u8".bmp"), 1);
     }
     gsel(0);
+
     if (mode == 0)
     {
         screenupdate = -1;
@@ -69,7 +58,10 @@ void set_option()
         gcopy(4, 0, 0, windoww, windowh);
         gmode(2);
     }
-    if (submenu == 0)
+
+    switch (submenu)
+    {
+    case 0:
     {
         if (jp)
         {
@@ -98,7 +90,7 @@ void set_option()
         dx = 370;
         dy = 270;
     }
-    if (submenu == 1)
+    case 1:
     {
         if (jp)
         {
@@ -127,7 +119,7 @@ void set_option()
         dx = 440;
         dy = 340;
     }
-    if (submenu == 2)
+    case 2:
     {
         if (jp)
         {
@@ -164,7 +156,7 @@ void set_option()
         dx = 440;
         dy = 370;
     }
-    if (submenu == 3)
+    case 3:
     {
         if (jp)
         {
@@ -185,7 +177,7 @@ void set_option()
         dx = 440;
         dy = 300;
     }
-    if (submenu == 4)
+    case 4:
     {
         if (jp)
         {
@@ -214,7 +206,7 @@ void set_option()
         dx = 440;
         dy = 300;
     }
-    if (submenu == 5)
+    case 5:
     {
         if (jp)
         {
@@ -255,7 +247,7 @@ void set_option()
         dx = 440;
         dy = 430;
     }
-    if (submenu == 6)
+    case 6:
     {
         if (jp)
         {
@@ -274,7 +266,7 @@ void set_option()
         dx = 440;
         dy = 300;
     }
-    if (submenu == 7)
+    case 7:
     {
         if (jp)
         {
@@ -291,16 +283,17 @@ void set_option()
         dx = 440;
         dy = 300;
     }
-    for (int cnt = 0; cnt < 20; ++cnt)
+    }
+
+    for (int i = 0; i < 20; ++i)
     {
-        if (s(cnt) == ""s)
-        {
+        if (s(i).empty())
             break;
-        }
-        list(0, listmax) = cnt;
-        listn(0, listmax) = s(cnt);
+        list(0, listmax) = i;
+        listn(0, listmax) = s(i);
         ++listmax;
     }
+
     windowshadow = 1;
 
     bool reset_page = true;
@@ -313,23 +306,26 @@ void set_option()
                 key_quick = u8"z"s;
                 key_zap = u8"Z"s;
             }
-            else if (cfg_zkey == 1)
+            else
             {
                 key_zap = u8"z"s;
                 key_quick = u8"Z"s;
             }
+
             if (cfg_xkey == 0)
             {
                 key_quickinv = u8"x"s;
                 key_inventory = u8"X"s;
             }
-            else if (cfg_xkey == 1)
+            else
             {
                 key_inventory = u8"x"s;
                 key_quickinv = u8"X"s;
             }
+
             cs_bk = -1;
             pagemax = (listmax - 1) / pagesize;
+
             if (page < 0)
             {
                 page = pagemax;
