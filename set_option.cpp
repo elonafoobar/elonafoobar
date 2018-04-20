@@ -1576,14 +1576,8 @@ void set_option()
                 {
                     initialize_server_info();
                 }
-                update_screen();
-                pc_turn(false);
             }
-            else
-            {
-                main_title_menu();
-                return;
-            }
+            return;
         }
     }
 }

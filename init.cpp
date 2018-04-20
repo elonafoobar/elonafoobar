@@ -939,6 +939,7 @@ void main_title_menu()
         {
             snd(20);
             set_option();
+            main_title_menu();
             return;
         }
         if (key == u8"f"s)
