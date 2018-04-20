@@ -47715,7 +47715,6 @@ void label_2079()
     {
         snd(20);
         set_option();
-        return;
     }
     update_screen();
     pc_turn(false);

@@ -3,6 +3,333 @@
 #include "macro.hpp"
 #include "variables.hpp"
 
+using namespace elona;
+
+
+namespace
+{
+
+
+class config_menu_item_base
+{
+public:
+    std::string name;
+
+    config_menu_item_base(const std::string& name)
+        : name(name)
+    {
+    }
+
+    virtual ~config_menu_item_base() noexcept = default;
+};
+
+
+class config_menu_item_yesno : public config_menu_item_base
+{
+public:
+    int& variable;
+    std::string yes;
+    std::string no;
+
+    config_menu_item_yesno(
+        const std::string& name,
+        int& variable,
+        const std::string& yes,
+        const std::string& no)
+        : config_menu_item_base(name)
+        , variable(variable)
+        , yes(yes)
+        , no(no)
+    {
+    }
+
+    virtual ~config_menu_item_yesno() noexcept = default;
+};
+
+
+class config_menu_item_info : public config_menu_item_base
+{
+public:
+    std::string info;
+
+    config_menu_item_info(const std::string& name, const std::string& info)
+        : config_menu_item_base(name)
+        , info(info)
+    {
+    }
+
+    virtual ~config_menu_item_info() noexcept = default;
+};
+
+
+class config_menu_item_integer : public config_menu_item_base
+{
+public:
+    int& variable;
+    std::string text;
+
+    config_menu_item_integer(
+        const std::string& name,
+        int& variable,
+        const std::string& text)
+        : config_menu_item_base(name)
+        , variable(variable)
+        , text(text)
+    {
+    }
+
+
+    std::string get_text()
+    {
+        auto ret{text};
+        ret.replace(
+            ret.find(marker), std::strlen(marker), std::to_string(variable));
+        return ret;
+    }
+
+    virtual ~config_menu_item_integer() noexcept = default;
+
+
+private:
+    static constexpr const char* marker = u8"{}";
+};
+
+
+class config_menu_item_choice : public config_menu_item_base
+{
+public:
+    int& variable;
+    std::vector<std::string> texts;
+
+    config_menu_item_choice(
+        const std::string& name,
+        int& variable,
+        const std::vector<std::string>& texts)
+        : config_menu_item_base(name)
+        , variable(variable)
+        , texts(texts)
+    {
+    }
+
+
+    std::string get_text()
+    {
+        return texts[variable];
+    }
+
+    virtual ~config_menu_item_choice() noexcept = default;
+};
+
+
+class config_menu
+{
+public:
+    std::string title;
+    std::vector<std::unique_ptr<config_menu_item_base>> items;
+    int width;
+    int height;
+
+    config_menu(const std::string& title, int width, int height)
+        : title(title)
+        , width(width)
+        , height(height)
+    {
+    }
+};
+
+
+
+std::vector<config_menu> create_config_menu()
+{
+    std::vector<config_menu> ret;
+
+#define ELONA_CONFIG_ITEM(name) \
+    ret.back().items.emplace_back(std::make_unique<config_menu_item_base>(name))
+
+#define ELONA_CONFIG_ITEM_YESNO(name, var, yes, no) \
+    ret.back().items.emplace_back( \
+        std::make_unique<config_menu_item_yesno>(name, var, yes, no))
+
+#define ELONA_CONFIG_ITEM_INFO(name, info) \
+    ret.back().items.emplace_back( \
+        std::make_unique<config_menu_item_info>(name, info))
+
+#define ELONA_CONFIG_ITEM_INTEGER(name, var, text) \
+    ret.back().items.emplace_back( \
+        std::make_unique<config_menu_item_integer>(name, var, text))
+
+#define ELONA_CONFIG_ITEM_CHOICE(name, var, ...) \
+    ret.back().items.emplace_back(std::make_unique<config_menu_item_choice>( \
+        name, var, std::vector<std::string>{__VA_ARGS__}))
+
+    ret.emplace_back(lang(u8"オプション", u8"Option"), 370, 270);
+    ELONA_CONFIG_ITEM(lang(u8"ゲームの設定", u8"Game Setting"));
+    ELONA_CONFIG_ITEM(lang(u8"画面と音の設定", u8"Screen & Sound"));
+    ELONA_CONFIG_ITEM(lang(u8"ネット機能の設定", u8"Network Setting"));
+    ELONA_CONFIG_ITEM(lang(u8"詳細な設定", u8"Detailed Setting"));
+    ELONA_CONFIG_ITEM(lang(u8"ゲームパッド", u8"Game Pad"));
+    ELONA_CONFIG_ITEM(lang(u8"メッセージとログ", u8"Message & Log"));
+    ELONA_CONFIG_ITEM(lang(u8"言語(Language)", u8"Language"));
+
+    ret.emplace_back(lang(u8"ゲームの設定", u8"Game Setting"), 440, 340);
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"ノルンの冒険ガイド", u8"Extra Help"),
+        cfg_extrahelp,
+        lang(u8"あり", u8"Show"),
+        lang(u8"なし", u8"Don't show"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"非好戦的NPCを無視", u8"Neutral Npcs"),
+        cfg_ignoredislike,
+        lang(u8"する", u8"Ignore"),
+        lang(u8"しない", u8"Attack"));
+    ELONA_CONFIG_ITEM_CHOICE(
+        lang(u8"zキーの割当て", u8"Assign z key"),
+        cfg_zkey,
+        lang(u8"ｸｨｯｸﾒﾆｭｰ", u8"Quick menu"),
+        lang(u8"道具を振る", u8"Zap"),
+        lang(u8"割当なし", u8"Don't assign"), );
+    ELONA_CONFIG_ITEM_CHOICE(
+        lang(u8"xキーの割当て", u8"Assign x key"),
+        cfg_xkey,
+        lang(u8"ｸｲｯｸｲﾝﾍﾞﾝﾄﾘ", u8"Quick Inv"),
+        lang(u8"道具を調べる", u8"Identify"),
+        lang(u8"割当なし", u8"Don't assign"), );
+    ELONA_CONFIG_ITEM(lang(u8"走り始める歩数", u8"Start Running After"));
+    ELONA_CONFIG_ITEM_INTEGER(
+        lang(u8"歩きの速さ", u8"Walk Speed"), cfg_walkwait, u8"{} wait");
+    ELONA_CONFIG_ITEM_INTEGER(
+        lang(u8"攻撃の間隔", u8"Attack Interval"), cfg_attackwait, u8"{} wait");
+
+    ret.emplace_back(lang(u8"画面と音の設定", u8"Screen & Sound"), 440, 370);
+    ELONA_CONFIG_ITEM(lang(u8"サウンドの再生*", u8"Sound*"));
+    ELONA_CONFIG_ITEM(lang(u8"midiの再生*", u8"Music*"));
+    ELONA_CONFIG_ITEM(lang(u8"画面モード*", u8"Screen Mode*"));
+    ELONA_CONFIG_ITEM(lang(u8"画面の大きさ*", u8"Screen Resolution*"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"スクロール", u8"Smooth Scroll"),
+        cfg_scroll,
+        lang(u8"する", u8"Yes"),
+        lang(u8"しない", u8"No"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"主人公中心に描写", u8"Always Center"),
+        cfg_alwayscenter,
+        lang(u8"する", u8"Yes"),
+        lang(u8"しない", u8"No"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"心臓の音", u8"Heartbeat Sound"),
+        cfg_heart,
+        lang(u8"再生する", u8"Play"),
+        lang(u8"再生しない", u8"Don't play"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"攻撃時アニメ", u8"Attack Animation"),
+        cfg_attackanime,
+        lang(u8"アニメあり", u8"Yes"),
+        lang(u8"アニメなし", u8"No"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"天候エフェクト", u8"Weather Effect"),
+        cfg_env,
+        lang(u8"アニメあり", u8"Always"),
+        lang(u8"アニメなし", u8"No animation"));
+    ELONA_CONFIG_ITEM_CHOICE(
+        lang(u8"光源の描写", u8"Lighting"),
+        cfg_shadow,
+        lang(u8"高画質", u8"High"),
+        lang(u8"低画質", u8"Low"), );
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"アイテムの影描写", u8"object Shadow"),
+        cfg_objectshadow,
+        lang(u8"あり（低速）", u8"Yes(Fast)"),
+        lang(u8"なし（高速）", u8"No(Slow)"));
+
+    ret.emplace_back(lang(u8"ネット機能の設定", u8"Network Setting"), 440, 300);
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"ネットの使用", u8"Use Network"),
+        cfg_net,
+        lang(u8"する", u8"Yes"),
+        lang(u8"しない", u8"No"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"定期的に接続", u8"Constantly Connect"),
+        cfg_netwish,
+        lang(u8"する", u8"Yes"),
+        lang(u8"しない", u8"No"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"チャットをフィルタ", u8"Filter Chat"),
+        cfg_netchat,
+        lang(u8"する", u8"Yes"),
+        lang(u8"しない", u8"No"));
+
+    ret.emplace_back(lang(u8"詳細な設定", u8"Detailed Setting"), 440, 300);
+    ELONA_CONFIG_ITEM_INTEGER(
+        lang(u8"走りの速さ", u8"Run Speed"), cfg_runwait, u8"{} wait");
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"numlockを自動制御", u8"Auto Numlock"),
+        cfg_autonumlock,
+        lang(u8"する", u8"Yes"),
+        lang(u8"しない", u8"No"));
+    ELONA_CONFIG_ITEM_INFO(
+        lang(u8"タイトルの水の波紋", u8"Title Water Effect"),
+        lang(u8"オフ(未実装)", u8"No(unsupported)"));
+    ELONA_CONFIG_ITEM_INTEGER(
+        lang(u8"画面の更新頻度", u8"Screen Refresh"), cfg_scrsync, u8"{} wait");
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"走り時スクロール", u8"Scroll When Run"),
+        cfg_runscroll,
+        lang(u8"する", u8"Yes"),
+        lang(u8"しない", u8"No"));
+    ELONA_CONFIG_ITEM_CHOICE(
+        lang(u8"オートターンの挙動", u8"Auto Turn Speed"),
+        cfg_autoturn,
+        lang(u8"普通", u8"Normal"),
+        lang(u8"速め", u8"High"),
+        lang(u8"省略", u8"Highest"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"イベントの短縮", u8"Skip Random Events"),
+        cfg_skiprandevents,
+        lang(u8"する", u8"Yes"),
+        lang(u8"しない", u8"No"));
+
+    ret.emplace_back(lang(u8"ゲームパッド", u8"Game Pad"), 440, 430);
+    ELONA_CONFIG_ITEM(lang(u8"ゲームパッド", u8"Game Pad"));
+    ELONA_CONFIG_ITEM(lang(u8"決定キー", u8"Enter/Ok"));
+    ELONA_CONFIG_ITEM(lang(u8"キャンセルキー", u8"Cancel"));
+    ELONA_CONFIG_ITEM(lang(u8"所持品", u8"Inventory"));
+    ELONA_CONFIG_ITEM(lang(u8"行動", u8"Action"));
+    ELONA_CONFIG_ITEM(lang(u8"斜め移動(L)", u8"diagonal Move/(L)"));
+    ELONA_CONFIG_ITEM(lang(u8"拾う(R)", u8"Pick/(R)"));
+    ELONA_CONFIG_ITEM(lang(u8"射撃(R)", u8"Shoot/(R)"));
+    ELONA_CONFIG_ITEM(lang(u8"目標(L)", u8"Target/(L)"));
+    ELONA_CONFIG_ITEM(lang(u8"ポーズメニュー", u8"Peuse/Menu"));
+    ELONA_CONFIG_ITEM(lang(u8"ヘルプ", u8"Help"));
+    ELONA_CONFIG_ITEM(lang(u8"キャラ情報", u8"Chara-sheet"));
+    ELONA_CONFIG_ITEM(lang(u8"装填", u8"Reload"));
+
+    ret.emplace_back(lang(u8"メッセージとログ", u8"Message&Log"), 440, 300);
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"ﾒｯｾｰｼﾞに分表示追加", u8"Add time info"),
+        cfg_msgaddtime,
+        lang(u8"する", u8"Yes"),
+        lang(u8"しない", u8"No"));
+    ELONA_CONFIG_ITEM(lang(u8"過去のﾒｯｾｰｼﾞの透過", u8"Transparency"));
+
+    ret.emplace_back(lang(u8"言語(Language)", u8"Language"), 440, 300);
+    ELONA_CONFIG_ITEM_CHOICE(
+        lang(u8"言語*", u8"Language*"),
+        cfg_language,
+        u8"Japanese",
+        u8"English");
+
+#undef ELONA_CONFIG_ITEM
+#undef ELONA_CONFIG_ITEM_YESNO
+#undef ELONA_CONFIG_ITEM_INFO
+#undef ELONA_CONFIG_ITEM_INTEGER
+
+    return ret;
+}
+
+
+
+} // namespace
+
 
 
 namespace elona
@@ -17,12 +344,14 @@ int submenu = 0;
 
 void set_option()
 {
-    int cfg_sound2 = 0;
-    int cfg_music2 = 0;
-    int cfg_fullscreen2 = 0;
-    int windoww2 = 0;
-    int windowh2 = 0;
-    int sel = 0;
+    int cfg_sound2 = cfg_sound;
+    int cfg_music2 = cfg_music;
+    int cfg_fullscreen2 = cfg_fullscreen;
+    int windoww2 = windoww;
+    int windowh2 = windowh;
+
+    const auto config_menu_definitions = create_config_menu();
+
     listmax = 0;
     page = 0;
     pagesize = 18;
@@ -31,26 +360,15 @@ void set_option()
     cs_bk = -1;
     page_bk = 0;
     cs_bk2 = 0;
-    cfg_sound2 = cfg_sound;
-    cfg_music2 = cfg_music;
-    cfg_fullscreen2 = cfg_fullscreen;
-    windoww2 = windoww;
-    windowh2 = windowh;
-    if (mode == 10)
+
+    gsel(mode == 10 ? 2 : 4);
+    for (int i = 0; i < 8; ++i)
     {
-        sel = 2;
-    }
-    else
-    {
-        sel = 4;
-    }
-    gsel(sel);
-    for (int cnt = 0; cnt < 8; ++cnt)
-    {
-        pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(fs::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+        pos(i % 4 * 180, i / 4 * 300);
+        picload(fs::path(u8"./graphic/g"s + (i + 1) + u8".bmp"), 1);
     }
     gsel(0);
+
     if (mode == 0)
     {
         screenupdate = -1;
@@ -69,238 +387,19 @@ void set_option()
         gcopy(4, 0, 0, windoww, windowh);
         gmode(2);
     }
-    if (submenu == 0)
+
+    const auto& menu_def = config_menu_definitions[submenu];
+    const auto menu_title = menu_def.title;
+    const auto width = menu_def.width;
+    const auto height = menu_def.height;
+
+    for (const auto& menu_item : menu_def.items)
     {
-        if (jp)
-        {
-            q = u8"オプション"s;
-            s(0) = u8"ゲームの設定"s;
-            s(1) = u8"画面と音の設定"s;
-            s(2) = u8"ネット機能の設定"s;
-            s(3) = u8"詳細な設定"s;
-            s(4) = u8"ゲームパッド"s;
-            s(5) = u8"メッセージとログ"s;
-            s(6) = u8"言語(Language)"s;
-            s(7) = "";
-        }
-        if (en)
-        {
-            q = u8"Option"s;
-            s(0) = u8"Game Setting"s;
-            s(1) = u8"Screen & Sound"s;
-            s(2) = u8"Network Setting"s;
-            s(3) = u8"Detailed Setting"s;
-            s(4) = u8"Game Pad"s;
-            s(5) = u8"Message & Log"s;
-            s(6) = u8"Language"s;
-            s(7) = "";
-        }
-        dx = 370;
-        dy = 270;
-    }
-    if (submenu == 1)
-    {
-        if (jp)
-        {
-            q = u8"ゲームの設定"s;
-            s(0) = u8"ノルンの冒険ガイド"s;
-            s(1) = u8"非好戦的NPCを無視"s;
-            s(2) = u8"zキーの割当て"s;
-            s(3) = u8"xキーの割当て"s;
-            s(4) = u8"走り始める歩数"s;
-            s(5) = u8"歩きの速さ"s;
-            s(6) = u8"攻撃の間隔"s;
-            s(7) = "";
-        }
-        if (en)
-        {
-            q = u8"Game Setting"s;
-            s(0) = u8"Extra Help"s;
-            s(1) = u8"Neutral Npcs"s;
-            s(2) = u8"Assign z key"s;
-            s(3) = u8"Assign x key"s;
-            s(4) = u8"Start Running After"s;
-            s(5) = u8"Walk Speed"s;
-            s(6) = u8"Attack Interval"s;
-            s(7) = "";
-        }
-        dx = 440;
-        dy = 340;
-    }
-    if (submenu == 2)
-    {
-        if (jp)
-        {
-            q = u8"画面と音の設定"s;
-            s(0) = u8"サウンドの再生*"s;
-            s(1) = u8"midiの再生*"s;
-            s(2) = u8"画面モード*"s;
-            s(3) = u8"画面の大きさ*"s;
-            s(4) = u8"スクロール"s;
-            s(5) = u8"主人公中心に描写"s;
-            s(6) = u8"心臓の音"s;
-            s(7) = u8"攻撃時アニメ"s;
-            s(8) = u8"天候エフェクト"s;
-            s(9) = u8"光源の描写"s;
-            s(10) = u8"アイテムの影描写"s;
-            s(11) = "";
-        }
-        if (en)
-        {
-            q = u8"Screen & Sound"s;
-            s(0) = u8"Sound*"s;
-            s(1) = u8"Music*"s;
-            s(2) = u8"Screen Mode*"s;
-            s(3) = u8"Screen Resolution*"s;
-            s(4) = u8"Smooth Scroll"s;
-            s(5) = u8"Always Center"s;
-            s(6) = u8"Heartbeat Sound"s;
-            s(7) = u8"Attack Animation"s;
-            s(8) = u8"Weather Effect"s;
-            s(9) = u8"Lighting"s;
-            s(10) = u8"object Shadow"s;
-            s(11) = "";
-        }
-        dx = 440;
-        dy = 370;
-    }
-    if (submenu == 3)
-    {
-        if (jp)
-        {
-            q = u8"ネット機能の設定"s;
-            s(0) = u8"ネットの使用"s;
-            s(1) = u8"定期的に接続"s;
-            s(2) = u8"チャットをフィルタ"s;
-            s(3) = "";
-        }
-        if (en)
-        {
-            q = u8"Network Setting"s;
-            s(0) = u8"Use Network"s;
-            s(1) = u8"Constantly Connect"s;
-            s(2) = u8"Filter Chat"s;
-            s(3) = "";
-        }
-        dx = 440;
-        dy = 300;
-    }
-    if (submenu == 4)
-    {
-        if (jp)
-        {
-            q = u8"詳細な設定"s;
-            s(0) = u8"走りの速さ"s;
-            s(1) = u8"numlockを自動制御"s;
-            s(2) = u8"タイトルの水の波紋"s;
-            s(3) = u8"画面の更新頻度"s;
-            s(4) = u8"走り時スクロール"s;
-            s(5) = u8"オートターンの挙動"s;
-            s(6) = u8"イベントの短縮"s;
-            s(7) = "";
-        }
-        if (en)
-        {
-            q = u8"Detailed Setting"s;
-            s(0) = u8"Run Speed"s;
-            s(1) = u8"Auto Numlock"s;
-            s(2) = u8"Title Water Effect"s;
-            s(3) = u8"Screen Refresh"s;
-            s(4) = u8"Scroll When Run"s;
-            s(5) = u8"Auto Turn Speed"s;
-            s(6) = u8"Skip Random Events"s;
-            s(7) = "";
-        }
-        dx = 440;
-        dy = 300;
-    }
-    if (submenu == 5)
-    {
-        if (jp)
-        {
-            q = u8"ゲームパッド"s;
-            s(0) = u8"ゲームパッド"s;
-            s(1) = u8"決定キー"s;
-            s(2) = u8"キャンセルキー"s;
-            s(3) = u8"所持品"s;
-            s(4) = u8"行動"s;
-            s(5) = u8"斜め移動(L)"s;
-            s(6) = u8"拾う(R)"s;
-            s(7) = u8"射撃(R)"s;
-            s(8) = u8"目標(L)"s;
-            s(9) = u8"ポーズメニュー"s;
-            s(10) = u8"ヘルプ"s;
-            s(11) = u8"キャラ情報"s;
-            s(12) = u8"装填"s;
-            s(13) = "";
-        }
-        if (en)
-        {
-            q = u8"Game Pad"s;
-            s(0) = u8"Game Pad"s;
-            s(1) = u8"Enter/Ok"s;
-            s(2) = u8"Cancel"s;
-            s(3) = u8"Inventory"s;
-            s(4) = u8"Action"s;
-            s(5) = u8"diagonal Move/(L)"s;
-            s(6) = u8"Pick/(R)"s;
-            s(7) = u8"Shoot/(R)"s;
-            s(8) = u8"Target/(L)"s;
-            s(9) = u8"Peuse/Menu"s;
-            s(10) = u8"Help"s;
-            s(11) = u8"Chara-sheet"s;
-            s(12) = u8"Reload"s;
-            s(13) = "";
-        }
-        dx = 440;
-        dy = 430;
-    }
-    if (submenu == 6)
-    {
-        if (jp)
-        {
-            q = u8"メッセージとログ"s;
-            s(0) = u8"ﾒｯｾｰｼﾞに分表示追加"s;
-            s(1) = u8"過去のﾒｯｾｰｼﾞの透過"s;
-            s(2) = "";
-        }
-        if (en)
-        {
-            q = u8"Message&Log"s;
-            s(0) = u8"Add time info"s;
-            s(1) = u8"Transparency"s;
-            s(2) = "";
-        }
-        dx = 440;
-        dy = 300;
-    }
-    if (submenu == 7)
-    {
-        if (jp)
-        {
-            q = u8"言語(Language)"s;
-            s(0) = u8"言語*"s;
-            s(1) = "";
-        }
-        if (en)
-        {
-            q = u8"Language"s;
-            s(0) = u8"Language*"s;
-            s(1) = "";
-        }
-        dx = 440;
-        dy = 300;
-    }
-    for (int cnt = 0; cnt < 20; ++cnt)
-    {
-        if (s(cnt) == ""s)
-        {
-            break;
-        }
-        list(0, listmax) = cnt;
-        listn(0, listmax) = s(cnt);
+        list(0, listmax) = listmax;
+        listn(0, listmax) = menu_item->name;
         ++listmax;
     }
+
     windowshadow = 1;
 
     bool reset_page = true;
@@ -313,23 +412,26 @@ void set_option()
                 key_quick = u8"z"s;
                 key_zap = u8"Z"s;
             }
-            else if (cfg_zkey == 1)
+            else
             {
                 key_zap = u8"z"s;
                 key_quick = u8"Z"s;
             }
+
             if (cfg_xkey == 0)
             {
                 key_quickinv = u8"x"s;
                 key_inventory = u8"X"s;
             }
-            else if (cfg_xkey == 1)
+            else
             {
                 key_inventory = u8"x"s;
                 key_quickinv = u8"X"s;
             }
+
             cs_bk = -1;
             pagemax = (listmax - 1) / pagesize;
+
             if (page < 0)
             {
                 page = pagemax;
@@ -340,18 +442,24 @@ void set_option()
             }
             reset_page = false;
         }
-        s(0) = q;
+        s(0) = menu_title;
         s(1) = strhint3;
         pagesize = 0;
         if (mode == 1)
         {
             display_window(
-                (windoww - dx) / 2 + inf_screenx, winposy(dy, 1), dx, dy);
+                (windoww - width) / 2 + inf_screenx,
+                winposy(height, 1),
+                width,
+                height);
         }
         else
         {
             display_window(
-                (windoww - dx) / 2 + inf_screenx, winposy(dy) - 12, dx, dy);
+                (windoww - width) / 2 + inf_screenx,
+                winposy(height) - 12,
+                width,
+                height);
         }
         pagesize = listmax;
         display_topic(lang(u8"項目"s, u8"Menu"s), wx + 34, wy + 36);
@@ -446,402 +554,78 @@ void set_option()
                 gcopy(3, 336, 336, 24, 24);
             }
             pos(wx + 250, wy + 66 + cnt * 19);
-            if (submenu == 1)
+            if (auto ptr = dynamic_cast<config_menu_item_yesno*>(
+                    config_menu_definitions[submenu].items[cnt].get()))
             {
-                if (cnt == 0)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"なし"s;
-                        s(1) = u8"あり"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Don't show"s;
-                        s(1) = u8"Show"s;
-                    }
-                    mes(s(cfg_extrahelp));
-                }
-                if (cnt == 1)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Attack"s;
-                        s(1) = u8"Ignore"s;
-                    }
-                    mes(s(cfg_ignoredislike));
-                }
-                if (cnt == 2)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"ｸｨｯｸﾒﾆｭｰ"s;
-                        s(1) = u8"道具を振る"s;
-                        s(2) = u8"割当なし"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Quick menu"s;
-                        s(1) = u8"Zap"s;
-                        s(2) = u8"Don't assign"s;
-                    }
-                    mes(s(cfg_zkey));
-                }
-                if (cnt == 3)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"ｸｲｯｸｲﾝﾍﾞﾝﾄﾘ"s;
-                        s(1) = u8"道具を調べる"s;
-                        s(2) = u8"割当なし"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Quick Inv"s;
-                        s(1) = u8"Identify"s;
-                        s(2) = u8"Don't assign"s;
-                    }
-                    mes(s(cfg_xkey));
-                }
+                mes(ptr->variable ? ptr->yes : ptr->no);
+            }
+            else if (
+                auto ptr = dynamic_cast<config_menu_item_info*>(
+                    config_menu_definitions[submenu].items[cnt].get()))
+            {
+                mes(ptr->info);
+            }
+            else if (
+                auto ptr = dynamic_cast<config_menu_item_integer*>(
+                    config_menu_definitions[submenu].items[cnt].get()))
+            {
+                mes(ptr->get_text());
+            }
+            else if (
+                auto ptr = dynamic_cast<config_menu_item_choice*>(
+                    config_menu_definitions[submenu].items[cnt].get()))
+            {
+                mes(ptr->get_text());
+            }
+            else if (submenu == 1)
+            {
                 if (cnt == 4)
                 {
                     if (cfg_startrun >= 20)
                     {
-                        if (jp)
-                        {
-                            mes(u8"走らない"s);
-                        }
-                        else
-                        {
-                            mes(u8"Dont't run"s);
-                        }
-                    }
-                    else if (jp)
-                    {
-                        mes(""s + (cfg_startrun + 1) + u8"歩目から"s);
+                        mes(lang(u8"走らない"s, u8"Dont't run"s));
                     }
                     else
                     {
-                        mes(u8"After "s + (cfg_startrun + 1) + u8" steps"s);
+                        mes(lang(
+                            ""s + (cfg_startrun + 1) + u8"歩目から"s,
+                            u8"After "s + (cfg_startrun + 1) + u8" steps"s));
                     }
                 }
-                if (cnt == 5)
-                {
-                    mes(""s + cfg_walkwait + u8" wait"s);
-                }
-                if (cnt == 6)
-                {
-                    mes(""s + cfg_attackwait + u8" wait"s);
-                }
             }
-            if (submenu == 2)
+            else if (submenu == 2)
             {
                 if (cnt == 0)
                 {
-                    if (jp)
-                    {
-                        s(0) = u8"なし"s;
-                        s(1) = u8"direct sound"s;
-                        s(2) = u8"MCI"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"None"s;
-                        s(1) = u8"Direct sound"s;
-                        s(2) = u8"MCI"s;
-                    }
+                    s(0) = lang(u8"なし"s, u8"None"s);
+                    s(1) = lang(u8"direct sound"s, u8"Direct sound"s);
+                    s(2) = lang(u8"MCI"s, u8"MCI"s);
                     mes(s(cfg_sound2));
                 }
                 if (cnt == 1)
                 {
-                    if (jp)
-                    {
-                        s(0) = u8"なし"s;
-                        s(1) = u8"direct music"s;
-                        s(2) = u8"MCI"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"None"s;
-                        s(1) = u8"Direct music"s;
-                        s(2) = u8"MCI"s;
-                    }
+                    s(0) = lang(u8"なし"s, u8"None"s);
+                    s(1) = lang(u8"direct music"s, u8"Direct music"s);
+                    s(2) = lang(u8"MCI"s, u8"MCI"s);
                     mes(s(cfg_music2));
                 }
                 if (cnt == 2)
                 {
-                    if (jp)
-                    {
-                        s(0) = u8"ウィンドウ"s;
-                        s(1) = u8"フルスクリーン"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Window mode"s;
-                        s(1) = u8"Full screen"s;
-                    }
+                    s(0) = lang(u8"ウィンドウ"s, u8"Window mode"s);
+                    s(1) = lang(u8"フルスクリーン"s, u8"Full screen"s);
                     mes(s(cfg_fullscreen2));
                 }
                 if (cnt == 3)
                 {
                     mes(""s + windoww2 + u8" * "s + windowh2);
                 }
-                if (cnt == 4)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_scroll));
-                }
-                if (cnt == 5)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_alwayscenter));
-                }
-                if (cnt == 6)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"再生しない"s;
-                        s(1) = u8"再生する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Don't play"s;
-                        s(1) = u8"Play"s;
-                    }
-                    mes(s(cfg_heart));
-                }
-                if (cnt == 7)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"アニメなし"s;
-                        s(1) = u8"アニメあり"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_attackanime));
-                }
-                if (cnt == 8)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"アニメなし"s;
-                        s(1) = u8"アニメあり"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No animation"s;
-                        s(1) = u8"Always"s;
-                    }
-                    mes(s(cfg_env));
-                }
-                if (cnt == 9)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"高画質"s;
-                        s(1) = u8"低画質"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"High"s;
-                        s(1) = u8"Low"s;
-                    }
-                    mes(s(cfg_shadow));
-                }
-                if (cnt == 10)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"なし（高速）"s;
-                        s(1) = u8"あり（低速）"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No(Slow)"s;
-                        s(1) = u8"Yes(Fast)"s;
-                    }
-                    mes(s(cfg_objectshadow));
-                }
             }
-            if (submenu == 3)
+            else if (submenu == 5)
             {
                 if (cnt == 0)
                 {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_net));
-                }
-                if (cnt == 1)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_netwish));
-                }
-                if (cnt == 2)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_netchat));
-                }
-            }
-            if (submenu == 4)
-            {
-                if (cnt == 0)
-                {
-                    mes(""s + cfg_runwait + u8" wait"s);
-                }
-                if (cnt == 1)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_autonumlock));
-                }
-                if (cnt == 2)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"オフ(オンにはできません)"s;
-                        s(1) = u8"オフ(オンにはできません)"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No(unsupported)"s;
-                        s(1) = u8"No(unsupported)"s;
-                    }
-                    mes(s(0));
-                }
-                if (cnt == 3)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"オフ"s;
-                        s(1) = u8"オン"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(""s + cfg_scrsync + u8" wait"s);
-                }
-                if (cnt == 4)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_runscroll));
-                }
-                if (cnt == 5)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"普通"s;
-                        s(1) = u8"速め"s;
-                        s(2) = u8"省略"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Normal"s;
-                        s(1) = u8"High"s;
-                        s(2) = u8"Highest"s;
-                    }
-                    mes(s(cfg_autoturn));
-                }
-                if (cnt == 6)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_skiprandevents));
-                }
-            }
-            if (submenu == 5)
-            {
-                if (cnt == 0)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"使用しない"s;
-                        s(1) = u8"使用する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Don't use"s;
-                        s(1) = u8"Use"s;
-                    }
+                    s(0) = lang(u8"使用しない"s, u8"Don't use"s);
+                    s(1) = lang(u8"使用する"s, u8"Use"s);
                     mes(s(cfg_joypad));
                 }
                 else if (list(1, cnt) == -1)
@@ -853,34 +637,11 @@ void set_option()
                     mes(lang(u8"ボタン"s, u8"Button"s) + list(1, cnt));
                 }
             }
-            if (submenu == 6)
+            else if (submenu == 6)
             {
-                if (cnt == 0)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_msgaddtime));
-                }
                 if (cnt == 1)
                 {
                     mes(""s + cfg_msgtrans * 10 + u8" %"s);
-                }
-            }
-            if (submenu == 7)
-            {
-                if (cnt == 0)
-                {
-                    s(0) = u8"Japanese"s;
-                    s(1) = u8"English"s;
-                    mes(s(cfg_language));
                 }
             }
         }
@@ -1580,14 +1341,8 @@ void set_option()
                 {
                     initialize_server_info();
                 }
-                update_screen();
-                pc_turn(false);
             }
-            else
-            {
-                main_title_menu();
-                return;
-            }
+            return;
         }
     }
 }
