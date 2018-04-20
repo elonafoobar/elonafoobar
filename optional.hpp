@@ -53,6 +53,12 @@ struct optional_ref
     }
 
 
+    const T& operator*() const
+    {
+        return *data;
+    }
+
+
 private:
     const T* data = nullptr;
 };

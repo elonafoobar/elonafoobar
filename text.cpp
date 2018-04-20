@@ -1,8 +1,97 @@
+#include "text.hpp"
 #include "character.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "random.hpp"
 #include "variables.hpp"
+
+
+namespace
+{
+
+
+std::string get_action_description(int action)
+{
+    switch (action)
+    {
+    case -9999:
+    case -9998:
+    case -9997:
+        return lang(u8"それはポーションを投げる", u8"It throws potion.");
+    case -9996:
+        return lang(u8"それは食塩水を投げる", u8"It throws salt solution.");
+    case -4: return lang(u8"それは不規則に動き回る", u8"It walks at random.");
+    case -2:
+    case -3:
+    case -1:
+    case 0: return "";
+    default:
+        return lang(
+            u8"それは" + i18n::_(u8"ability", std::to_string(action), u8"name")
+                + u8"を行う",
+            "It does " + i18n::_(u8"ability", std::to_string(action), u8"name")
+                + u8".");
+    }
+}
+
+
+
+std::vector<std::string> get_card_descriptions(const character_data& data)
+{
+    std::vector<std::string> ret;
+
+#define ELONA_CARD_ADD_TRAIT_DESCRIPTION(trait, text) \
+    if (data.trait()) \
+    { \
+        ret.emplace_back(text); \
+    }
+    ELONA_CARD_ADD_TRAIT_DESCRIPTION(
+        is_floating, lang(u8"それは浮遊している", u8"It is floating."));
+    ELONA_CARD_ADD_TRAIT_DESCRIPTION(
+        is_invisible, lang(u8"それは透明だ", u8"It is invisible."));
+    ELONA_CARD_ADD_TRAIT_DESCRIPTION(
+        explodes, lang(u8"それは爆発する", u8"It explodes."));
+    ELONA_CARD_ADD_TRAIT_DESCRIPTION(
+        is_suitable_for_mount,
+        lang(u8"それは乗馬用にちょうどいい", u8"It is suitable for mount."));
+    ELONA_CARD_ADD_TRAIT_DESCRIPTION(
+        splits, lang(u8"それは分裂する", u8"It splits."));
+    ELONA_CARD_ADD_TRAIT_DESCRIPTION(
+        is_unsuitable_for_mount,
+        lang(u8"それは乗馬に向かない", u8"It is unsuitable for mount."));
+    ELONA_CARD_ADD_TRAIT_DESCRIPTION(
+        is_immune_to_elemental_damage,
+        lang(
+            u8"それは属性ダメージを無効にする",
+            u8"It immune to elemental damage."));
+    ELONA_CARD_ADD_TRAIT_DESCRIPTION(
+        splits2, lang(u8"それは分裂する", u8"It splits."));
+    ELONA_CARD_ADD_TRAIT_DESCRIPTION(
+        is_metal,
+        lang(u8"それは硬い金属で出来ている", u8"It is made of solid metal."));
+    ELONA_CARD_ADD_TRAIT_DESCRIPTION(
+        is_quick_tempered, lang(u8"それは短気だ", u8"It is quick-tempered."));
+#undef ELONA_CARD_ADD_TRAIT_DESCRIPTION
+
+    for (const auto& action : data.normal_actions)
+    {
+        const auto desc = get_action_description(action);
+        if (!desc.empty())
+            ret.emplace_back(desc);
+    }
+    for (const auto& action : data.special_actions)
+    {
+        const auto desc = get_action_description(action);
+        if (!desc.empty())
+            ret.emplace_back(desc);
+    }
+
+    return ret;
+}
+
+
+} // namespace
+
 
 
 namespace elona
@@ -3589,6 +3678,69 @@ std::string trim_item_description(const std::string& source, bool summary)
     }
 
     return ret;
+}
+
+
+void generate_card_description(const item& card)
+{
+    constexpr auto kill_count_for_new_knowledge = 3;
+
+#define ELONA_CARD_ADD_DESCRIPTION(text) \
+    do \
+    { \
+        list(0, p) = 7; \
+        listn(0, p) = (text); \
+        ++p; \
+    } while (0)
+
+    const auto& data = *the_character_db[card.subname];
+    const auto name =
+        i18n::_(u8"character", std::to_string(card.subname), u8"name");
+    const auto counter_word =
+        strutil::contains(data.filter, u8"/man/") ? u8"人" : u8"匹";
+
+    if (jp)
+    {
+        ELONA_CARD_ADD_DESCRIPTION(name + u8"のカードだ");
+    }
+    else
+    {
+        ELONA_CARD_ADD_DESCRIPTION(u8"Card of " + name + u8".");
+    }
+
+    const auto kill_count = npcmemory(0, card.subname);
+    if (jp)
+    {
+        ELONA_CARD_ADD_DESCRIPTION(
+            u8"あなたはその生物を"s + kill_count + counter_word
+            + u8"殺している");
+    }
+    else
+    {
+        ELONA_CARD_ADD_DESCRIPTION(
+            u8"You have killed "s + kill_count + u8" this creature"
+            + _s2(kill_count) + u8".");
+    }
+
+    const size_t known_info = kill_count / kill_count_for_new_knowledge + 1;
+    const auto descriptions = get_card_descriptions(data);
+    for (size_t i = 0; i < std::min(known_info, descriptions.size()); ++i)
+    {
+        ELONA_CARD_ADD_DESCRIPTION(descriptions[i]);
+    }
+    if (known_info < descriptions.size())
+    {
+        const auto rest = kill_count_for_new_knowledge
+            - kill_count % kill_count_for_new_knowledge;
+        list(0, p) = 0;
+        listn(0, p) = lang(
+            u8"その生物に関する新たな知識を得るには、あと"s + rest
+                + counter_word + u8"の" + name + u8"を殺す必要がある",
+            u8"You have to kill another "s + rest + u8" this creature"
+                + _s2(kill_count) + u8" to gain knowledge.");
+        ++p;
+    }
+#undef ELONA_CARD_ADD_DESCRIPTION
 }
 
 

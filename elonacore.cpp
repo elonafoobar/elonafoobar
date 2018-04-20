@@ -26,6 +26,7 @@
 #include "race.hpp"
 #include "random.hpp"
 #include "snail/application.hpp"
+#include "text.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
 #include "version.hpp"
@@ -46086,7 +46087,7 @@ void show_item_description()
         == identification_state_t::completely_identified)
     {
         std::string buf = trim_item_description(description(3), true);
-        if (buf != ""s)
+        if (buf != ""s && inv[ci].id != 504)
         {
             list(0, p) = 7;
             listn(0, p) = buf;
@@ -46257,6 +46258,10 @@ void show_item_description()
                     + percentage + u8"%)");
             ++p;
         }
+        else if (inv[ci].id == 504)
+        {
+            generate_card_description(inv[ci]);
+        }
     }
     if (inv[ci].identification_state
         <= identification_state_t::partly_identified)
@@ -46307,7 +46312,7 @@ void show_item_description()
         {
             for (int cnt = 0; cnt < 3; ++cnt)
             {
-                if (description(cnt) == ""s)
+                if (description(cnt) == ""s || inv[ci].id == 504)
                 {
                     continue;
                 }
