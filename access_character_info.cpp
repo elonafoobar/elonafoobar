@@ -310,7 +310,8 @@ int access_character_info()
             }
         }
         {
-            const auto text = i18n::_(u8"character", std::to_string(dbid), u8"text_"s + dbmode);
+            const auto text = i18n::_(
+                u8"character", std::to_string(dbid), u8"text_"s + dbmode);
             if (!text.empty())
             {
                 txtef(9);

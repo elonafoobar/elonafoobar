@@ -204,8 +204,7 @@ void cpisenemy()
 std::string cnvrare(int prm_990)
 {
     s_at_tcg = "";
-    for (int cnt = 0, cnt_end = (clamp(5 - prm_990 / 20, 1, 5));
-         cnt < cnt_end;
+    for (int cnt = 0, cnt_end = (clamp(5 - prm_990 / 20, 1, 5)); cnt < cnt_end;
          ++cnt)
     {
         s_at_tcg += u8"*"s;
@@ -726,9 +725,7 @@ void tcgdraw()
                 pos(efllist_at_tcg(5, cnt) - 12, efllist_at_tcg(6, cnt) + 10);
                 gcopy(
                     7,
-                    64
-                        * clamp(
-                              (10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
+                    64 * clamp((10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
                     360,
                     48,
                     64);
@@ -749,18 +746,14 @@ void tcgdraw()
                 pos(efllist_at_tcg(5, cnt), efllist_at_tcg(6, cnt) + 24);
                 gcopy(
                     7,
-                    64
-                        * clamp(
-                              (10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
+                    64 * clamp((10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
                     416,
                     64,
                     64);
                 pos(efllist_at_tcg(2, cnt), efllist_at_tcg(3, cnt) + 24);
                 gcopy(
                     7,
-                    64
-                        * clamp(
-                              (10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
+                    64 * clamp((10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
                     416,
                     64,
                     64);
@@ -3074,8 +3067,8 @@ void label_1840()
             }
             if (cnt == 1)
             {
-                y_at_tcg(cnt) = card_at_tcg(3, cc_at_tcg) + 60
-                    + clamp(p_at_tcg * 3, 0, 16);
+                y_at_tcg(cnt) =
+                    card_at_tcg(3, cc_at_tcg) + 60 + clamp(p_at_tcg * 3, 0, 16);
             }
             if (cnt == 2)
             {

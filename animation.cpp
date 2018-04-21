@@ -751,8 +751,8 @@ void play_animation_19()
                     gcopy(7, (14 - ap(cnt)) / 2 * 96, 96, 96, 96);
                 }
             }
-            int anidx = clamp(
-                anidy / 55 + 1, 0, 7 - clamp((11 - ap(cnt)) * 2, 0, 7));
+            int anidx =
+                clamp(anidy / 55 + 1, 0, 7 - clamp((11 - ap(cnt)) * 2, 0, 7));
             for (int cnt = 1, cnt_end = cnt + (anidx); cnt < cnt_end; ++cnt)
             {
                 pos(ax(cnt2), anidy - cnt * 55);

@@ -209,8 +209,8 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(17, 0) = clamp(
-            sdata(17, 0) + trait(tid) * 4, int{sdata(17, 0) > 0}, 9999);
+        sdata(17, 0) =
+            clamp(sdata(17, 0) + trait(tid) * 4, int{sdata(17, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 5)
@@ -238,8 +238,8 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(10, 0) = clamp(
-            sdata(10, 0) + trait(tid) * 3, int{sdata(10, 0) > 0}, 9999);
+        sdata(10, 0) =
+            clamp(sdata(10, 0) + trait(tid) * 3, int{sdata(10, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 38)
@@ -328,8 +328,8 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(11, 0) = clamp(
-            sdata(11, 0) + trait(tid) * 3, int{sdata(11, 0) > 0}, 9999);
+        sdata(11, 0) =
+            clamp(sdata(11, 0) + trait(tid) * 3, int{sdata(11, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 20)
@@ -352,8 +352,8 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(106, 0) = clamp(
-            sdata(106, 0) + trait(tid) * 3, int{sdata(106, 0) > 0}, 9999);
+        sdata(106, 0) =
+            clamp(sdata(106, 0) + trait(tid) * 3, int{sdata(106, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 12)
@@ -380,8 +380,8 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(172, 0) = clamp(
-            sdata(172, 0) + trait(tid) * 4, int{sdata(172, 0) > 0}, 9999);
+        sdata(172, 0) =
+            clamp(sdata(172, 0) + trait(tid) * 4, int{sdata(172, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 43)
@@ -449,8 +449,8 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(166, 0) = clamp(
-            sdata(166, 0) + trait(tid) * 4, int{sdata(166, 0) > 0}, 9999);
+        sdata(166, 0) =
+            clamp(sdata(166, 0) + trait(tid) * 4, int{sdata(166, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 15)
@@ -526,8 +526,8 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(156, 0) = clamp(
-            sdata(156, 0) + trait(tid) * 4, int{sdata(156, 0) > 0}, 9999);
+        sdata(156, 0) =
+            clamp(sdata(156, 0) + trait(tid) * 4, int{sdata(156, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 17)
@@ -550,8 +550,8 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(181, 0) = clamp(
-            sdata(181, 0) + trait(tid) * 4, int{sdata(181, 0) > 0}, 9999);
+        sdata(181, 0) =
+            clamp(sdata(181, 0) + trait(tid) * 4, int{sdata(181, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 1)
@@ -577,8 +577,8 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(19, 0) = clamp(
-            sdata(19, 0) + trait(tid) * 5, int{sdata(19, 0) > 0}, 9999);
+        sdata(19, 0) =
+            clamp(sdata(19, 0) + trait(tid) * 5, int{sdata(19, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 2)
@@ -613,8 +613,8 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(2, 0) = clamp(
-            sdata(2, 0) + trait(tid) * 5, int{sdata(2, 0) > 0}, 9999);
+        sdata(2, 0) =
+            clamp(sdata(2, 0) + trait(tid) * 5, int{sdata(2, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 11)
@@ -649,8 +649,8 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(3, 0) = clamp(
-            sdata(3, 0) + trait(tid) * 5, int{sdata(3, 0) > 0}, 9999);
+        sdata(3, 0) =
+            clamp(sdata(3, 0) + trait(tid) * 5, int{sdata(3, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 6)
@@ -677,8 +677,8 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(159, 0) = clamp(
-            sdata(159, 0) + trait(tid) * 3, int{sdata(159, 0) > 0}, 9999);
+        sdata(159, 0) =
+            clamp(sdata(159, 0) + trait(tid) * 3, int{sdata(159, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 4)
@@ -708,8 +708,8 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(18, 0) = clamp(
-            sdata(18, 0) + trait(tid) * 5, int{sdata(18, 0) > 0}, 9999);
+        sdata(18, 0) =
+            clamp(sdata(18, 0) + trait(tid) * 5, int{sdata(18, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 7)
@@ -743,8 +743,8 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        cdata[0].pv = clamp(
-            cdata[0].pv + trait(tid) * 5, int{cdata[0].pv > 0}, 9999);
+        cdata[0].pv =
+            clamp(cdata[0].pv + trait(tid) * 5, int{cdata[0].pv > 0}, 9999);
         return 1;
     }
     if (tid == 8)
@@ -771,8 +771,8 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        cdata[0].dv = clamp(
-            cdata[0].dv + trait(tid) * 4, int{cdata[0].dv > 0}, 9999);
+        cdata[0].dv =
+            clamp(cdata[0].dv + trait(tid) * 4, int{cdata[0].dv > 0}, 9999);
         return 1;
     }
     if (tid == 10)
@@ -803,8 +803,8 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(173, 0) = clamp(
-            sdata(173, 0) + trait(tid) * 2, int{sdata(173, 0) > 0}, 9999);
+        sdata(173, 0) =
+            clamp(sdata(173, 0) + trait(tid) * 2, int{sdata(173, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 41)
@@ -905,8 +905,8 @@ int get_trait_info(int traitmode, int tid)
                 lang(u8"あなたの関節は痛み出した。"s, u8"Your joints creak."s);
             return 1;
         }
-        sdata(12, 0) = clamp(
-            sdata(12, 0) + trait(tid) * 3, int{sdata(12, 0) > 0}, 9999);
+        sdata(12, 0) =
+            clamp(sdata(12, 0) + trait(tid) * 3, int{sdata(12, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 27)
@@ -940,8 +940,8 @@ int get_trait_info(int traitmode, int tid)
                 u8"あなたの血液は薄れた。"s, u8"Your metabolism slows down."s);
             return 1;
         }
-        sdata(154, 0) = clamp(
-            sdata(154, 0) + trait(tid) * 4, int{sdata(154, 0) > 0}, 9999);
+        sdata(154, 0) =
+            clamp(sdata(154, 0) + trait(tid) * 4, int{sdata(154, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 28)
@@ -981,8 +981,8 @@ int get_trait_info(int traitmode, int tid)
                 lang(u8"あなたの脚はねじれた。"s, u8"Your legs are twisted!"s);
             return 1;
         }
-        sdata(18, 0) = clamp(
-            sdata(18, 0) + trait(tid) * 5, int{sdata(18, 0) > 0}, 9999);
+        sdata(18, 0) =
+            clamp(sdata(18, 0) + trait(tid) * 5, int{sdata(18, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 29)
@@ -1021,8 +1021,8 @@ int get_trait_info(int traitmode, int tid)
                 u8"あなたの腕の贅肉が増えた。"s, u8"Your arms become thin."s);
             return 1;
         }
-        sdata(10, 0) = clamp(
-            sdata(10, 0) + trait(tid) * 3, int{sdata(10, 0) > 0}, 9999);
+        sdata(10, 0) =
+            clamp(sdata(10, 0) + trait(tid) * 3, int{sdata(10, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 30)
@@ -1055,8 +1055,8 @@ int get_trait_info(int traitmode, int tid)
                 lang(u8"あなたの声はかれた。"s, u8"Your voice becomes scary."s);
             return 1;
         }
-        sdata(17, 0) = clamp(
-            sdata(17, 0) + trait(tid) * 5, int{sdata(17, 0) > 0}, 9999);
+        sdata(17, 0) =
+            clamp(sdata(17, 0) + trait(tid) * 5, int{sdata(17, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 31)
@@ -1089,8 +1089,8 @@ int get_trait_info(int traitmode, int tid)
                 u8"あなたの脳は原始化した。"s, u8"Your brain degenerates."s);
             return 1;
         }
-        sdata(165, 0) = clamp(
-            sdata(165, 0) + trait(tid) * 4, int{sdata(165, 0) > 0}, 9999);
+        sdata(165, 0) =
+            clamp(sdata(165, 0) + trait(tid) * 4, int{sdata(165, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 32)
@@ -1119,8 +1119,8 @@ int get_trait_info(int traitmode, int tid)
                 u8"You lose resistance to magic."s);
             return 1;
         }
-        sdata(60, 0) = clamp(
-            sdata(60, 0) + trait(tid) * 50, int{sdata(60, 0) > 0}, 9999);
+        sdata(60, 0) =
+            clamp(sdata(60, 0) + trait(tid) * 50, int{sdata(60, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 33)
@@ -1149,8 +1149,8 @@ int get_trait_info(int traitmode, int tid)
                 u8"Your eardrums become thin."s);
             return 1;
         }
-        sdata(57, 0) = clamp(
-            sdata(57, 0) + trait(tid) * 50, int{sdata(57, 0) > 0}, 9999);
+        sdata(57, 0) =
+            clamp(sdata(57, 0) + trait(tid) * 50, int{sdata(57, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 34)
@@ -1178,8 +1178,8 @@ int get_trait_info(int traitmode, int tid)
                 u8"Your skin gets gooseflesh."s);
             return 1;
         }
-        sdata(50, 0) = clamp(
-            sdata(50, 0) + trait(tid) * 50, int{sdata(50, 0) > 0}, 9999);
+        sdata(50, 0) =
+            clamp(sdata(50, 0) + trait(tid) * 50, int{sdata(50, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 35)
@@ -1206,8 +1206,8 @@ int get_trait_info(int traitmode, int tid)
                 lang(u8"あなたは汗をかきはじめた。"s, u8"You shiver."s);
             return 1;
         }
-        sdata(51, 0) = clamp(
-            sdata(51, 0) + trait(tid) * 50, int{sdata(51, 0) > 0}, 9999);
+        sdata(51, 0) =
+            clamp(sdata(51, 0) + trait(tid) * 50, int{sdata(51, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 36)
@@ -1236,8 +1236,8 @@ int get_trait_info(int traitmode, int tid)
                 u8"You lose resistance to lightning."s);
             return 1;
         }
-        sdata(52, 0) = clamp(
-            sdata(52, 0) + trait(tid) * 50, int{sdata(52, 0) > 0}, 9999);
+        sdata(52, 0) =
+            clamp(sdata(52, 0) + trait(tid) * 50, int{sdata(52, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 37)
@@ -1270,8 +1270,8 @@ int get_trait_info(int traitmode, int tid)
                 u8"あなたの視力は低下した。"s, u8"Your sight is weakened."s);
             return 1;
         }
-        sdata(13, 0) = clamp(
-            sdata(13, 0) + trait(tid) * 5, int{sdata(13, 0) > 0}, 9999);
+        sdata(13, 0) =
+            clamp(sdata(13, 0) + trait(tid) * 5, int{sdata(13, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 150)
@@ -1299,8 +1299,8 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(50, 0) = clamp(
-            sdata(50, 0) + trait(tid) * 50, int{sdata(50, 0) > 0}, 9999);
+        sdata(50, 0) =
+            clamp(sdata(50, 0) + trait(tid) * 50, int{sdata(50, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 151)
@@ -1328,8 +1328,8 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(51, 0) = clamp(
-            sdata(51, 0) + trait(tid) * 50, int{sdata(51, 0) > 0}, 9999);
+        sdata(51, 0) =
+            clamp(sdata(51, 0) + trait(tid) * 50, int{sdata(51, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 152)
@@ -1357,8 +1357,8 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(55, 0) = clamp(
-            sdata(55, 0) + trait(tid) * 50, int{sdata(55, 0) > 0}, 9999);
+        sdata(55, 0) =
+            clamp(sdata(55, 0) + trait(tid) * 50, int{sdata(55, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 155)
@@ -1387,8 +1387,8 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(53, 0) = clamp(
-            sdata(53, 0) + trait(tid) * 50, int{sdata(53, 0) > 0}, 9999);
+        sdata(53, 0) =
+            clamp(sdata(53, 0) + trait(tid) * 50, int{sdata(53, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 156)
@@ -1419,22 +1419,14 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(60, 0) =
-            clamp(sdata(60, 0) + 150, int{sdata(60, 0) > 0}, 9999);
-        sdata(52, 0) =
-            clamp(sdata(52, 0) + 100, int{sdata(52, 0) > 0}, 9999);
-        sdata(53, 0) =
-            clamp(sdata(53, 0) + 200, int{sdata(53, 0) > 0}, 9999);
-        sdata(57, 0) =
-            clamp(sdata(57, 0) + 50, int{sdata(57, 0) > 0}, 9999);
-        sdata(59, 0) =
-            clamp(sdata(59, 0) + 100, int{sdata(59, 0) > 0}, 9999);
-        sdata(54, 0) =
-            clamp(sdata(54, 0) + 200, int{sdata(54, 0) > 0}, 9999);
-        sdata(58, 0) =
-            clamp(sdata(58, 0) + 100, int{sdata(58, 0) > 0}, 9999);
-        sdata(51, 0) =
-            clamp(sdata(51, 0) + 100, int{sdata(51, 0) > 0}, 9999);
+        sdata(60, 0) = clamp(sdata(60, 0) + 150, int{sdata(60, 0) > 0}, 9999);
+        sdata(52, 0) = clamp(sdata(52, 0) + 100, int{sdata(52, 0) > 0}, 9999);
+        sdata(53, 0) = clamp(sdata(53, 0) + 200, int{sdata(53, 0) > 0}, 9999);
+        sdata(57, 0) = clamp(sdata(57, 0) + 50, int{sdata(57, 0) > 0}, 9999);
+        sdata(59, 0) = clamp(sdata(59, 0) + 100, int{sdata(59, 0) > 0}, 9999);
+        sdata(54, 0) = clamp(sdata(54, 0) + 200, int{sdata(54, 0) > 0}, 9999);
+        sdata(58, 0) = clamp(sdata(58, 0) + 100, int{sdata(58, 0) > 0}, 9999);
+        sdata(51, 0) = clamp(sdata(51, 0) + 100, int{sdata(51, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 161)
@@ -1643,8 +1635,8 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        sdata(60, 0) = clamp(
-            sdata(60, 0) + trait(tid) * 50, int{sdata(60, 0) > 0}, 9999);
+        sdata(60, 0) =
+            clamp(sdata(60, 0) + trait(tid) * 50, int{sdata(60, 0) > 0}, 9999);
         return 1;
     }
     if (tid == 0)
@@ -2107,8 +2099,7 @@ int get_trait_info(int traitmode, int tid)
                 u8"Poison starts to drip from your hands."s);
             return 1;
         }
-        sdata(55, 0) =
-            clamp(sdata(55, 0) + 100, int{sdata(55, 0) > 0}, 9999);
+        sdata(55, 0) = clamp(sdata(55, 0) + 100, int{sdata(55, 0) > 0}, 9999);
         return 1;
     }
     return 0;
