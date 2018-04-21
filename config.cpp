@@ -205,6 +205,9 @@ void load_config()
             u8"hpBar",
             [&](auto value) { cfg_hp_bar = value; }),
         std::make_unique<config_integer>(
+            u8"leashIcon",
+            [&](auto value) { cfg_leash_icon = value; }),
+        std::make_unique<config_integer>(
             u8"alwaysCenter",
             [&](auto value) { cfg_alwayscenter = value; }),
         std::make_unique<config_integer>(

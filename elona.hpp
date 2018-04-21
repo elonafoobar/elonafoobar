@@ -440,7 +440,8 @@ void gzoom(
     int src_width,
     int src_height,
     int dst_width,
-    int dst_height);
+    int dst_height,
+    bool blend = false);
 
 
 int instr(const std::string& str, size_t pos, const std::string pattern);

@@ -143,6 +143,39 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
                 // y_} << std::endl;
                 pos(x_, y_);
                 gzoom(3, 480 - width, 517, width, 3, width * 3, 9);
+
+                // Show leash icon.
+                if (cfg_leash_icon && cbit(968, i))
+                {
+                    constexpr int leash = 631;
+                    prepare_item_image(leash, 2);
+                    const int icon_width = chipi(2, leash);
+                    const int icon_height = chipi(3, leash);
+
+                    pos(right ? std::min(x, x_) - icon_width / 2
+                              : std::max(x_ + 90, int(x + strlen_u(name) * 7)),
+                        y);
+                    gzoom(
+                        1,
+                        0,
+                        960,
+                        icon_width,
+                        icon_height,
+                        icon_width / 2,
+                        icon_height / 2,
+                        true);
+                    gmode(5);
+                    gzoom(
+                        1,
+                        0,
+                        960,
+                        icon_width,
+                        icon_height,
+                        icon_width / 2,
+                        icon_height / 2,
+                        true);
+                    gmode(2);
+                }
             }
             ++cnt;
         }

@@ -872,12 +872,23 @@ void gzoom(
     int src_width,
     int src_height,
     int dst_width,
-    int dst_height)
+    int dst_height,
+    bool blend)
 {
-    snail::application::instance().get_renderer().set_blend_mode(
-        snail::blend_mode_t::none);
-    snail::detail::enforce_sdl(
-        ::SDL_SetTextureAlphaMod(detail::tex_buffers[window_id].texture, 255));
+    if (blend)
+    {
+        detail::set_blend_mode();
+        snail::detail::enforce_sdl(::SDL_SetTextureAlphaMod(
+            detail::tex_buffers[window_id].texture,
+            detail::current_tex_buffer().color.a));
+    }
+    else
+    {
+        snail::application::instance().get_renderer().set_blend_mode(
+            snail::blend_mode_t::none);
+        snail::detail::enforce_sdl(::SDL_SetTextureAlphaMod(
+            detail::tex_buffers[window_id].texture, 255));
+    }
 
     if (window_id == detail::current_buffer)
     {

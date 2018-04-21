@@ -281,6 +281,7 @@ ELONA_EXTERN(int cfg_hp_bar);
 ELONA_EXTERN(int cfg_ignoredislike);
 ELONA_EXTERN(int cfg_joypad);
 ELONA_EXTERN(int cfg_language);
+ELONA_EXTERN(int cfg_leash_icon);
 ELONA_EXTERN(int cfg_msgaddtime);
 ELONA_EXTERN(int cfg_msgtrans);
 ELONA_EXTERN(int cfg_music);

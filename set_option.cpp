@@ -327,6 +327,11 @@ std::vector<config_menu> create_config_menu()
         lang(u8"表示しない", u8"Don't show"),
         lang(u8"左側に表示", u8"Show left side"),
         lang(u8"右側に表示", u8"Show right side"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"紐のアイコン表示", u8"Leash icon"),
+        cfg_leash_icon,
+        lang(u8"する", u8"Show"),
+        lang(u8"しない", u8"Don't show"));
 
 #undef ELONA_CONFIG_ITEM
 #undef ELONA_CONFIG_ITEM_YESNO
@@ -1351,6 +1356,22 @@ void set_option()
                     }
                     snd(20);
                     set_config(u8"hpBar", cfg_hp_bar);
+                    reset_page = true;
+                    continue;
+                }
+                if (cs == 1)
+                {
+                    cfg_leash_icon += p;
+                    if (cfg_leash_icon > 1)
+                    {
+                        cfg_leash_icon = 1;
+                    }
+                    else if (cfg_leash_icon < 0)
+                    {
+                        cfg_leash_icon = 0;
+                    }
+                    snd(20);
+                    set_config(u8"leashIcon", cfg_leash_icon);
                     reset_page = true;
                     continue;
                 }
