@@ -202,6 +202,9 @@ void load_config()
             u8"extraHelp",
             [&](auto value) { cfg_extrahelp = value; }),
         std::make_unique<config_integer>(
+            u8"hpBar",
+            [&](auto value) { cfg_hp_bar = value; }),
+        std::make_unique<config_integer>(
             u8"alwaysCenter",
             [&](auto value) { cfg_alwayscenter = value; }),
         std::make_unique<config_integer>(

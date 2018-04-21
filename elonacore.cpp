@@ -16718,7 +16718,13 @@ void render_hud()
             255);
         ++ap3;
     }
-    return;
+    if (cfg_hp_bar)
+    {
+        show_hp_bar(
+            cfg_hp_bar == 1 ? show_hp_bar_side::left_side
+                            : show_hp_bar_side::right_side,
+            inf_clocky);
+    }
 }
 
 

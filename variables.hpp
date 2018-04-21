@@ -277,6 +277,7 @@ ELONA_EXTERN(int cfg_fullscreen);
 ELONA_EXTERN(int cfg_heart);
 ELONA_EXTERN(int cfg_hideautoidentify);
 ELONA_EXTERN(int cfg_hideshopresult);
+ELONA_EXTERN(int cfg_hp_bar);
 ELONA_EXTERN(int cfg_ignoredislike);
 ELONA_EXTERN(int cfg_joypad);
 ELONA_EXTERN(int cfg_language);

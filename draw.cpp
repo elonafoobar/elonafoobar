@@ -1,4 +1,5 @@
 #include "draw.hpp"
+#include "character.hpp"
 #include "elona.hpp"
 #include "variables.hpp"
 
@@ -108,6 +109,43 @@ void prepare_item_image(int id, int color, int character_image)
         set_color_mod(255, 255, 255);
         gmode(2);
         gsel(0);
+    }
+}
+
+
+
+void show_hp_bar(show_hp_bar_side side, int inf_clocky)
+{
+    const bool right = side == show_hp_bar_side::right_side;
+
+    int cnt{};
+    for (int i = 1; i < 16; ++i)
+    {
+        auto& cc = cdata[i];
+        if ((cc.state == 1 || cc.state == 6) && cbit(966, i))
+        {
+            const auto name = cdatan(0, i);
+            const int x = 16 + (windoww - strlen_u(name) * 7 - 16) * right;
+            const int y = inf_clocky + 200 - 180 * right + cnt * 32;
+            // std::cout << "HP bar(" << i << "):name: " << position_t{x, y} <<
+            // std::endl;
+            pos(x, y);
+            color(0, 0, 0);
+            const auto color = cc.state == 1 ? snail::color{255, 255, 255}
+                                             : snail::color{255, 35, 35};
+            bmes(name, color.r, color.g, color.b);
+            if (cc.state == 1)
+            {
+                const int width = clamp(cc.hp * 30 / cc.max_hp, 1, 30);
+                const int x_ = 16 + (windoww - 108) * right;
+                const int y_ = y + 17;
+                // std::cout << "HP bar(" << i << "):bar:  " << position_t{x_,
+                // y_} << std::endl;
+                pos(x_, y_);
+                gzoom(3, 480 - width, 517, width, 3, width * 3, 9);
+            }
+            ++cnt;
+        }
     }
 }
 
