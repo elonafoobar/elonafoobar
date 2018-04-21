@@ -129,6 +129,24 @@ inline std::string take_by_width(const std::string& str, size_t width)
 
 
 
+inline std::string replace_crlf(const std::string& str)
+{
+    constexpr const auto crlf = u8"\r\n";
+    constexpr const auto lf = u8"\n";
+
+    auto ret{str};
+    std::string::size_type pos{};
+    while ((pos = ret.find(crlf, pos)) != std::string::npos)
+    {
+        ret.replace(pos, std::strlen(crlf), lf);
+        pos += std::strlen(lf);
+    }
+
+    return ret;
+}
+
+
+
 } // namespace strutil
 
 

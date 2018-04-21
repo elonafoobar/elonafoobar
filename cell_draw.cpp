@@ -96,7 +96,8 @@ void render_shadow_low(int light)
         const auto y = pos.second;
         if (slight(x + 2, y + 2) >= 1000)
         {
-            elona::pos(x * inf_tiles + inf_screenx, y * inf_tiles + inf_screeny);
+            elona::pos(
+                x * inf_tiles + inf_screenx, y * inf_tiles + inf_screeny);
             gcopy(3, 144, 752);
         }
     }

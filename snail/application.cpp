@@ -157,6 +157,7 @@ void application::handle_event(const ::SDL_Event& event)
     case SDL_KEYUP:
     case SDL_KEYDOWN: input::instance()._handle_event(event.key); break;
     case SDL_TEXTINPUT: input::instance()._handle_event(event.text); break;
+    case SDL_TEXTEDITING: input::instance()._handle_event(event.edit); break;
     default: break;
     }
 }

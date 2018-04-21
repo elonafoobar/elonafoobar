@@ -1290,12 +1290,6 @@ void main_title_menu();
 void main_menu_continue();
 void main_menu_incarnate();
 void initialize_fovmap_and_fovlist();
-void input_number_or_text_dialog(
-    int val0,
-    int val1,
-    int val2,
-    int val3,
-    int val4 = 0);
 void label_2134();
 void label_2136();
 void label_2144();

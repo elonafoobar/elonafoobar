@@ -437,8 +437,7 @@ void proc_event()
                 {
                     characreate(-1, 1, -3, 0);
                     cdata[rc].character_role = 2003;
-                    cdata[rc].shop_rank =
-                        clamp(cdata[0].fame / 100, 20, 100);
+                    cdata[rc].shop_rank = clamp(cdata[0].fame / 100, 20, 100);
                     break;
                 }
                 if (rnd(4) == 0)
@@ -769,21 +768,11 @@ void proc_event()
             gmode(4, 96, 96, clamp(p(2) * 6, 0, 100));
             pos(dx, dy - clamp(p(2) * 2, 0, 40));
             grotate(
-                7,
-                0,
-                0,
-                0,
-                clamp(p(2) * 8, 0, 240),
-                clamp(p(2) * 5, 0, 96));
+                7, 0, 0, 0, clamp(p(2) * 8, 0, 240), clamp(p(2) * 5, 0, 96));
             gmode(4, 96, 96, p(3) * 10);
             pos(dx, dy - clamp(p(3) * 2, 0, 160) - 6);
             grotate(
-                7,
-                96,
-                0,
-                0,
-                clamp(p(3) * 10, 0, 96),
-                clamp(p(3) * 10, 0, 96));
+                7, 96, 0, 0, clamp(p(3) * 10, 0, 96), clamp(p(3) * 10, 0, 96));
             gmode(4, 192, 80, clamp(p(3) * 5, 0, 100));
             pos(dx, dy - 4);
             grotate(

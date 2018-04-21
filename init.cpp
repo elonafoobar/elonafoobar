@@ -128,7 +128,7 @@ void initialize_elona()
     time_warn = timeGetTime() / 1000;
     time_begin = timeGetTime() / 1000;
 
-    mesbox(keylog, 0, 0, 1, 10);
+    mesbox(keylog);
 
     backup_config_files();
 
@@ -1812,8 +1812,8 @@ void character_making_final_phase()
     {
         inputlog = "";
         input_mode = 1;
-        input_number_or_text_dialog(
-            (windoww - 230) / 2 + inf_screenx, winposy(120), 10, 0);
+        input_text_dialog(
+            (windoww - 230) / 2 + inf_screenx, winposy(120), 10, false);
         cmname = ""s + inputlog;
         if (cmname == ""s || cmname == u8" "s)
         {

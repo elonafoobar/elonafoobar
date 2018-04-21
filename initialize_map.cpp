@@ -2602,10 +2602,8 @@ label_1741_internal:
                             for (int cnt = 0;; ++cnt)
                             {
                                 await();
-                                dx = clamp(
-                                    rnd(cnt / 4 + 1) + 1, 1, mdata(0));
-                                dy = clamp(
-                                    rnd(cnt / 4 + 1) + 1, 1, mdata(1));
+                                dx = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata(0));
+                                dy = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata(1));
                                 x = adata(1, p) + rnd(dx) - rnd(dx);
                                 y = adata(2, p) + rnd(dy) - rnd(dy);
                                 if (x < 0 || y < 0 || x >= mdata(0)

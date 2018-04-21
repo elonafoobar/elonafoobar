@@ -25,4 +25,10 @@ int show_prompt(
     show_prompt_type type = show_prompt_type::normal,
     int initial_number = 0);
 
+
+void input_number_dialog(int x, int y, int max_number);
+
+void input_text_dialog(int x, int y, int val2, bool is_cancelable = true);
+
+
 } // namespace elona

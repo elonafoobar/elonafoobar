@@ -111,7 +111,8 @@ private:
 
     template <
         typename T,
-        std::enable_if_t<std::is_same<T, nullptr_t>::value, nullptr_t> = nullptr>
+        std::enable_if_t<std::is_same<T, nullptr_t>::value, nullptr_t> =
+            nullptr>
     T to_cpp_type(int index)
     {
         (void)index;
