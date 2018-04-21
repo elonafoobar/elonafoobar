@@ -162,7 +162,7 @@ std::vector<config_menu> create_config_menu()
     ret.back().items.emplace_back(std::make_unique<config_menu_item_choice>( \
         name, var, std::vector<std::string>{__VA_ARGS__}))
 
-    ret.emplace_back(lang(u8"オプション", u8"Option"), 370, 270);
+    ret.emplace_back(lang(u8"オプション", u8"Option"), 370, 285);
     ELONA_CONFIG_ITEM(lang(u8"ゲームの設定", u8"Game Setting"));
     ELONA_CONFIG_ITEM(lang(u8"画面と音の設定", u8"Screen & Sound"));
     ELONA_CONFIG_ITEM(lang(u8"ネット機能の設定", u8"Network Setting"));
@@ -170,6 +170,7 @@ std::vector<config_menu> create_config_menu()
     ELONA_CONFIG_ITEM(lang(u8"ゲームパッド", u8"Game Pad"));
     ELONA_CONFIG_ITEM(lang(u8"メッセージとログ", u8"Message & Log"));
     ELONA_CONFIG_ITEM(lang(u8"言語(Language)", u8"Language"));
+    ELONA_CONFIG_ITEM(lang(u8"拡張設定(Foobar)", u8"Ex setting(Foobar)"));
 
     ret.emplace_back(lang(u8"ゲームの設定", u8"Game Setting"), 440, 340);
     ELONA_CONFIG_ITEM_YESNO(
@@ -318,10 +319,20 @@ std::vector<config_menu> create_config_menu()
         u8"Japanese",
         u8"English");
 
+    ret.emplace_back(
+        lang(u8"拡張設定(Foobar)", u8"Ex setting(Foobar)"), 440, 300);
+    ELONA_CONFIG_ITEM_CHOICE(
+        lang(u8"ペットのHPバー", u8"Pets' HP bar"),
+        cfg_hp_bar,
+        lang(u8"表示しない", u8"Don't show"),
+        lang(u8"左側に表示", u8"Show left side"),
+        lang(u8"右側に表示", u8"Show right side"));
+
 #undef ELONA_CONFIG_ITEM
 #undef ELONA_CONFIG_ITEM_YESNO
 #undef ELONA_CONFIG_ITEM_INFO
 #undef ELONA_CONFIG_ITEM_INTEGER
+#undef ELONA_CONFIG_ITEM_CHOICE
 
     return ret;
 }
@@ -1321,6 +1332,25 @@ void set_option()
                     }
                     snd(20);
                     set_config(u8"language", cfg_language);
+                    reset_page = true;
+                    continue;
+                }
+            }
+            if (submenu == 8)
+            {
+                if (cs == 0)
+                {
+                    cfg_hp_bar += p;
+                    if (cfg_hp_bar > 2)
+                    {
+                        cfg_hp_bar = 2;
+                    }
+                    else if (cfg_hp_bar < 0)
+                    {
+                        cfg_hp_bar = 0;
+                    }
+                    snd(20);
+                    set_config(u8"hpBar", cfg_hp_bar);
                     reset_page = true;
                     continue;
                 }

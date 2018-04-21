@@ -70,6 +70,7 @@ See CONTRIBUTING.md for details.
   "heartbeat": 1,
   "hide_autoIdentify": 0,
   "hide_shopResult": 0,
+  "hpBar": 0,
   "ignoreDislike": 1,
   "infVerType": 1,
   "joypad": 0,
