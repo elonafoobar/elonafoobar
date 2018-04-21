@@ -5,6 +5,6 @@ namespace elona
 {
 namespace debug
 {
-bool voldemort = true;
+bool voldemort = false;
 } // namespace debug
 } // namespace elona
