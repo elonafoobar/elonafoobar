@@ -128,7 +128,7 @@ void initialize_elona()
     time_warn = timeGetTime() / 1000;
     time_begin = timeGetTime() / 1000;
 
-    mesbox(keylog, 0, 0, 1, 10);
+    mesbox(keylog);
 
     backup_config_files();
 

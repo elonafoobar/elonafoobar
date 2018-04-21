@@ -506,12 +506,7 @@ void mes(const std::string& text);
 
 void mes(int n);
 
-void mesbox(
-    std::string& buffer,
-    int width,
-    int height,
-    int style,
-    int max_input_size = -1);
+void mesbox(std::string& buffer);
 
 void mkdir(const fs::path& path);
 

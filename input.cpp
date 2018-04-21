@@ -246,7 +246,7 @@ void input_text_dialog(int x, int y, int val2, bool is_cancelable)
     font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
 
     pos(x, y);
-    mesbox(inputlog, 600, 0, 5, val2 * (1 + en));
+    mesbox(inputlog);
     pos(x + 4, y + 4);
     gfini(dx - 1, 35);
     gfdec(60, 60, 60);

@@ -130,10 +130,37 @@ struct MessageBox
 
     void update()
     {
-        buffer += snail::input::instance().get_text();
-        if (snail::input::instance().is_pressed(snail::key::enter))
+        auto& input = snail::input::instance();
+        buffer += input.get_text();
+        if (!input.is_ime_active())
         {
-            buffer += '\n';
+            if (input.is_pressed(snail::key::enter))
+            {
+                // New line.
+                buffer += '\n';
+            }
+            else if (input.is_pressed(snail::key::backspace) && !buffer.empty())
+            {
+                // Delete the last character.
+                size_t last_byte_count{};
+                for (size_t i = 0; i < buffer.size();)
+                {
+                    const auto byte = strutil::byte_count(buffer[i]);
+                    last_byte_count = byte;
+                    i += byte;
+                }
+                buffer.erase(buffer.size() - last_byte_count, last_byte_count);
+            }
+            else if (
+                input.is_pressed(snail::key::key_v)
+                && input.is_pressed(snail::key::ctrl))
+            {
+                // Paste.
+                std::unique_ptr<char, decltype(&::SDL_free)> text_ptr{
+                    ::SDL_GetClipboardText(), ::SDL_free};
+
+                buffer += strutil::replace_crlf(text_ptr.get());
+            }
         }
     }
 
@@ -1035,17 +1062,8 @@ void mes(int n)
 
 
 
-void mesbox(
-    std::string& buffer,
-    int width,
-    int height,
-    int style,
-    int max_input_size)
+void mesbox(std::string& buffer)
 {
-    (void)width;
-    (void)height;
-    (void)style;
-    (void)max_input_size;
     mesbox_detail::message_boxes.emplace_back(
         std::make_unique<mesbox_detail::MessageBox>(buffer));
 }

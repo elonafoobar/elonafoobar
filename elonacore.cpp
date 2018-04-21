@@ -50007,9 +50007,9 @@ void label_2134()
     font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
     objmode(2);
     pos(0, 24);
-    mesbox(dbm, 800, 576, 0);
+    mesbox(dbm);
     pos(0, 0);
-    mesbox(buff, 800, 24, 1);
+    mesbox(buff);
     objsel(2);
     while (1)
     {
