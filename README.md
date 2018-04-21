@@ -161,6 +161,7 @@ See CONTRIBUTING.md for details.
   "key_wipe": "W",
   "key_zap": "Z",
   "language": 0,
+  "leashIcon": 0,
   "msgLine": 4,
   "msg_addTime": 1,
   "msg_log": 16,
