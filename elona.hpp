@@ -86,7 +86,7 @@ struct elona_vector1
         typename U,
         std::enable_if_t<
             std::is_same<T, std::string>::value && std::is_same<U, int>::value,
-            nullptr_t> = nullptr>
+            std::nullptr_t> = nullptr>
     T& operator+=(const U& x)
     {
         return storage.at(0) += std::to_string(x);
@@ -98,7 +98,7 @@ struct elona_vector1
         std::enable_if_t<
             !std::is_same<T, std::string>::value
                 || !std::is_same<U, int>::value,
-            nullptr_t> = nullptr>
+            std::nullptr_t> = nullptr>
     T& operator+=(const U& x)
     {
         return storage.at(0) += x;
