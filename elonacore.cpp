@@ -70944,6 +70944,7 @@ label_2747:
     }
     if (getkey(snail::key::f12))
     {
+        debug::voldemort = true;
         if (debug::voldemort)
         {
             gdata_wizard = 1;
