@@ -510,7 +510,7 @@ void font(const std::string& name, int size, int style)
             std::piecewise_construct,
             std::forward_as_tuple(size),
             std::forward_as_tuple(
-                fs::path(u8"font") / name,
+                filesystem::path(u8"font") / name,
                 size,
                 snail::font_t::style_t::regular));
         snail::application::instance().get_renderer().set_font(
@@ -1299,17 +1299,14 @@ void picload(const fs::path& filename, int mode)
 
     if (filename.generic_string().find(u8"interface.bmp") != std::string::npos)
     {
-        snail::basic_image ex{filename.parent_path()
-                              / fs::path(u8"interface_ex.png")};
+        snail::basic_image ex{filename.parent_path() / u8"interface_ex.png"};
         snail::application::instance().get_renderer().render_image(ex, 0, 656);
-        snail::basic_image ex2{filename.parent_path()
-                               / fs::path(u8"interface_ex2.png")};
+        snail::basic_image ex2{filename.parent_path() / u8"interface_ex2.png"};
         snail::application::instance().get_renderer().render_image(
             ex2, 144, 656);
         snail::application::instance().get_renderer().render_image(
             ex2, 144, 704);
-        snail::basic_image ex3{filename.parent_path()
-                               / fs::path(u8"interface_ex3.png")};
+        snail::basic_image ex3{filename.parent_path() / u8"interface_ex3.png"};
         snail::application::instance().get_renderer().render_image(
             ex3, 144, 752);
     }

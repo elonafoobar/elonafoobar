@@ -65,7 +65,7 @@ void main_loop()
 
 void load_musiclist()
 {
-    const auto filepath = fs::path(u8"./user/music/musiclist.txt");
+    const auto filepath = filesystem::path(u8"./user/music/musiclist.txt");
     if (!fs::exists(filepath))
         return;
 
@@ -94,8 +94,8 @@ void backup_config_files()
 
     for (const auto& from_to : files)
     {
-        const auto from_path = fs::path(from_to.first);
-        const auto to_path = fs::path(from_to.second);
+        const auto from_path = filesystem::path(from_to.first);
+        const auto to_path = filesystem::path(from_to.second);
         if (!fs::exists(to_path))
         {
             fs::copy_file(from_path, to_path);
@@ -161,13 +161,13 @@ void initialize_elona()
     boxf();
     redraw();
     buffer(3, 1440, 800);
-    picload(fs::path(u8"./graphic/interface.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/interface.bmp"), 1);
     buffer(4, windoww, windowh);
     buffer(8, windoww, windowh);
     gsel(0);
-    folder = fs::path(u8"./user/graphic/").generic_string();
+    folder = filesystem::path(u8"./user/graphic/").generic_string();
     buffer(1, 1584, 1200);
-    picload(fs::path(u8"./graphic/item.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/item.bmp"), 1);
     if (inf_tiles != 48)
     {
         pos(0, 0);
@@ -362,7 +362,7 @@ void initialize_elona()
     notesel(buffboard);
     {
         buffboard(0).clear();
-        std::ifstream in{fs::path(u8"./data/board.txt").native(),
+        std::ifstream in{filesystem::path(u8"./data/board.txt").native(),
                          std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -551,10 +551,11 @@ void start_elona()
     quickpage = 1;
     if (defload != ""s)
     {
-        if (!fs::exists(fs::path(u8"./save/"s + defload + u8"/header.txt")))
+        if (!fs::exists(
+                filesystem::path(u8"./save/"s + defload + u8"/header.txt")))
         {
-            if (fs::exists(
-                    fs::path(u8"./save/sav_"s + defload + u8"/header.txt")))
+            if (fs::exists(filesystem::path(
+                    u8"./save/sav_"s + defload + u8"/header.txt")))
             {
                 defload = u8"sav_"s + defload;
             }
@@ -776,12 +777,12 @@ void main_title_menu()
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(fs::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+        picload(filesystem::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(4);
     gmode(0);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/title.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/title.bmp"), 1);
     gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gmode(2);
     font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
@@ -852,7 +853,7 @@ void main_title_menu()
     }
     gsel(3);
     pos(960, 96);
-    picload(fs::path(u8"./graphic/deco_title.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/deco_title.bmp"), 1);
     gsel(0);
     gmode(0);
     pos(0, 0);
@@ -969,20 +970,20 @@ void main_menu_new_game()
     cm = 1;
     gsel(4);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/void.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/void.bmp"), 1);
     gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gsel(2);
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(fs::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+        picload(filesystem::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(3);
     pos(960, 96);
-    picload(fs::path(u8"./graphic/deco_cm.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/deco_cm.bmp"), 1);
     gsel(0);
     if (range::distance(filesystem::dir_entries{
-            fs::path(u8"./save"), filesystem::dir_entries::type::dir})
+            filesystem::path(u8"./save"), filesystem::dir_entries::type::dir})
         >= 5)
     {
         keyrange = 0;
@@ -1820,7 +1821,7 @@ void character_making_final_phase()
             cmname = randomname();
         }
         playerid = u8"sav_"s + cmname;
-        const auto save_dir = fs::path(u8"./save");
+        const auto save_dir = filesystem::path(u8"./save");
         if (range::any_of(
                 filesystem::dir_entries{save_dir,
                                         filesystem::dir_entries::type::dir},
