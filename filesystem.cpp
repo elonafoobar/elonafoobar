@@ -23,7 +23,7 @@
 #error Unsupported OS
 #endif
 
-
+#include <iostream>
 
 namespace
 {
@@ -86,6 +86,12 @@ fs::path get_executable_path()
     })();
 
     return cache;
+}
+
+
+fs::path path(const std::string& str)
+{
+    return get_executable_path() / str;
 }
 
 

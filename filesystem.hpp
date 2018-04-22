@@ -21,6 +21,8 @@ namespace filesystem
 
 fs::path get_executable_path();
 
+fs::path path(const std::string&);
+
 
 
 struct dir_entries
