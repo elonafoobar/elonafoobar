@@ -76,7 +76,8 @@ void apply_buff(int cc, int id, int power)
 {
     const auto self = the_buff_db[id]->self;
     const auto func = the_buff_db[id]->on_refresh;
-    cat::global.call_with_self<nullptr_t>(self, func, cc, power, 1 /* TODO */);
+    cat::global.call_with_self<std::nullptr_t>(
+        self, func, cc, power, 1 /* TODO */);
 }
 
 

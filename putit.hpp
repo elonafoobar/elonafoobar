@@ -47,7 +47,8 @@ public:
 
     template <
         typename T,
-        std::enable_if_t<sizeof(T) <= sizeof(long long), nullptr_t> = nullptr>
+        std::enable_if_t<sizeof(T) <= sizeof(long long), std::nullptr_t> =
+            nullptr>
     void primitive(T& data)
     {
         char* buf;
@@ -60,7 +61,8 @@ public:
 
     template <
         typename T,
-        std::enable_if_t<(sizeof(T) > sizeof(long long)), nullptr_t> = nullptr>
+        std::enable_if_t<(sizeof(T) > sizeof(long long)), std::nullptr_t> =
+            nullptr>
     void primitive(T& data)
     {
         char* buf;
@@ -142,7 +144,7 @@ private:
 template <
     typename Archive,
     typename T,
-    std::enable_if_t<!std::is_enum<T>::value, nullptr_t> = nullptr>
+    std::enable_if_t<!std::is_enum<T>::value, std::nullptr_t> = nullptr>
 void serialize(Archive& ar, T& data)
 {
     data.serialize(ar);
@@ -177,10 +179,10 @@ PRIMITIVE_TYPES(long double)
 template <
     typename Archive,
     typename E,
-    std::enable_if_t<std::is_enum<E>::value, nullptr_t> = nullptr,
+    std::enable_if_t<std::is_enum<E>::value, std::nullptr_t> = nullptr,
     std::enable_if_t<
         std::is_base_of<iarchive_base, Archive>::value,
-        nullptr_t> = nullptr>
+        std::nullptr_t> = nullptr>
 void serialize(Archive& ar, E& data)
 {
     using primitive_type = std::underlying_type_t<E>;
@@ -195,10 +197,10 @@ void serialize(Archive& ar, E& data)
 template <
     typename Archive,
     typename E,
-    std::enable_if_t<std::is_enum<E>::value, nullptr_t> = nullptr,
+    std::enable_if_t<std::is_enum<E>::value, std::nullptr_t> = nullptr,
     std::enable_if_t<
         std::is_base_of<oarchive_base, Archive>::value,
-        nullptr_t> = nullptr>
+        std::nullptr_t> = nullptr>
 void serialize(Archive& ar, E& data)
 {
     using primitive_type = std::underlying_type_t<E>;
@@ -213,7 +215,7 @@ template <
     typename Archive,
     std::enable_if_t<
         std::is_base_of<iarchive_base, Archive>::value,
-        nullptr_t> = nullptr>
+        std::nullptr_t> = nullptr>
 void serialize(Archive& ar, std::string& data)
 {
     std::string::size_type length;
@@ -229,7 +231,7 @@ template <
     typename Archive,
     std::enable_if_t<
         std::is_base_of<oarchive_base, Archive>::value,
-        nullptr_t> = nullptr>
+        std::nullptr_t> = nullptr>
 void serialize(Archive& ar, std::string& data)
 {
     const auto length = data.size();
@@ -244,7 +246,7 @@ template <
     typename T,
     std::enable_if_t<
         std::is_base_of<iarchive_base, Archive>::value,
-        nullptr_t> = nullptr>
+        std::nullptr_t> = nullptr>
 void serialize(Archive& ar, std::vector<T>& data)
 {
     typename std::vector<T>::size_type length;
@@ -261,7 +263,7 @@ template <
     typename T,
     std::enable_if_t<
         std::is_base_of<oarchive_base, Archive>::value,
-        nullptr_t> = nullptr>
+        std::nullptr_t> = nullptr>
 void serialize(Archive& ar, std::vector<T>& data)
 {
     const auto length = data.size();
