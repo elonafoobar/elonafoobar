@@ -433,31 +433,37 @@ bool wish_for_item(const std::string& input)
 
     by_similarity_selector<int> selector;
     const auto wish = fix_wish(input);
-    for (int i = 0; i < length(ioriginalnameref); ++i)
+    for (const auto& item_data : the_item_db)
     {
-        if (i == 0 || i == 23 || i == 290 || i == 289 || i == 361)
+        const auto id = item_data.id;
+
+        if (id == 0 || id == 23 || id == 290 || id == 289 || id == 361)
             continue;
 
         int similarity{};
-        if (ioriginalnameref(i) == wish)
+        if (ioriginalnameref(id) == wish)
         {
-            similarity = 10000;
+            similarity = 10'000;
         }
-        auto name = cnvitemname(i);
+        auto name = cnvitemname(id);
         if (en)
         {
             name = to_lower(name);
         }
-        for (int j = 0; j < wish.size(); ++j)
+        // Calculate similarity.
+        for (size_t i = 0; i < wish.size();)
         {
-            if (contains(name, strmid(wish, 0, j * (1 + jp))))
+            const auto byte = byte_count(wish[i]);
+            if (contains(name, wish.substr(0, i + byte)))
             {
-                similarity = similarity + 50 * (j + 1) + rnd(15);
+                similarity += 50 + (i * 1) + rnd(15);
             }
+            i += byte;
         }
+
         if (similarity)
         {
-            selector.add(i, similarity);
+            selector.add(id, similarity);
         }
     }
 
@@ -592,12 +598,14 @@ bool wish_for_skill(const std::string& input)
             name = to_lower(name);
         }
         // Calculate similarity.
-        for (int i = 0; i < wish.size() / (1 + jp); ++i)
+        for (size_t i = 0; i < wish.size();)
         {
-            if (instr(name, 0, strmid(wish, i * (1 + jp), 1 + jp)) != -1)
+            const auto byte = byte_count(wish[i]);
+            if (contains(name, wish.substr(i, byte)))
             {
                 similarity += 50 + rnd(15);
             }
+            i += byte;
         }
 
         if (similarity != 0)
