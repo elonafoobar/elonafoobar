@@ -122,7 +122,8 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
     for (int i = 1; i < 16; ++i)
     {
         auto& cc = cdata[i];
-        if ((cc.state == 1 || cc.state == 6) && cbit(966, i))
+        if ((cc.state == 1 || cc.state == 6)
+            && cdata[i].has_been_used_stethoscope())
         {
             const auto name = cdatan(0, i);
             const int x = 16 + (windoww - strlen_u(name) * 7 - 16) * right;
@@ -145,7 +146,7 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
                 gzoom(3, 480 - width, 517, width, 3, width * 3, 9);
 
                 // Show leash icon.
-                if (cfg_leash_icon && cbit(968, i))
+                if (cfg_leash_icon && cdata[i].is_leashed())
                 {
                     constexpr int leash = 631;
                     prepare_item_image(leash, 2);

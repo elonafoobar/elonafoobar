@@ -161,7 +161,6 @@ character::character()
     , body_parts(30)
     , buffs(16)
     , attr_adjs(10)
-    , flags(31)
 {
 }
 
@@ -176,36 +175,13 @@ void character::clear()
 
 void character::clear_flags()
 {
-    range::fill(flags, 0);
+    _flags.reset();
 }
 
 
 cdata_t::cdata_t()
     : storage(245)
 {
-}
-
-
-
-int cbit(size_t type, int cc)
-{
-    assert(type < sizeof(int) * 8 * 50);
-    return cdata(cc).flags[type / 32] & (1 << (type % 32)) ? 1 : 0;
-}
-
-
-
-void cbitmod(size_t type, int cc, int on)
-{
-    assert(type < sizeof(int) * 8 * 50);
-    if (on)
-    {
-        cdata(cc).flags[type / 32] |= 1 << (type % 32);
-    }
-    else
-    {
-        cdata(cc).flags[type / 32] &= ~(1 << (type % 32));
-    }
 }
 
 

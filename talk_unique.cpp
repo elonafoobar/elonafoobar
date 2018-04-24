@@ -1033,7 +1033,7 @@ void talk_unique()
             {
                 flt();
                 characreate(-1, 3, cdata[0].position.x, cdata[0].position.y);
-                cbitmod(979, rc, 1);
+                cdata[rc].does_not_search_enemy() = true;
             }
             flt();
             itemcreate(-1, 68, cdata[0].position.x, cdata[0].position.y, 0);
@@ -2089,7 +2089,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_pael_and_her_mom = 1000;
-            cbitmod(965, tc, 1);
+            cdata[tc].is_silent() = true;
         }
         if (gdata_pael_and_her_mom == 1000)
         {
@@ -2341,7 +2341,7 @@ void talk_unique()
                 return;
             }
             rc = stat;
-            if (cbit(961, rc) == 0)
+            if (cdata[rc].is_married() == 0)
             {
                 listmax = 0;
                 buff = lang(
@@ -2558,7 +2558,7 @@ void talk_unique()
                 u8"You must return the puppy safely."s));
             rc = tc;
             new_ally_joins();
-            cbitmod(971, rc, 1);
+            cdata[rc].is_escorted_in_sub_quest() = true;
             refresh_character(rc);
             talk_end();
             return;

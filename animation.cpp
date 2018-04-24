@@ -560,7 +560,7 @@ void play_animation_12()
     {
         aniref = 20;
     }
-    if (cbit(983, tc))
+    if (cdata[tc].breaks_into_debris())
     {
         anix1 = 1104;
     }

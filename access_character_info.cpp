@@ -53,11 +53,11 @@ int access_character_info()
             cdatan(0, rc) = lang(
                 cdatan(0, rc) + u8"の" + randomname(),
                 randomname() + u8" the " + cdatan(0, rc));
-            cbitmod(977, rc, 1);
+            cdata[rc].has_own_name() = true;
         }
         if (data->cbit_988)
         {
-            cbitmod(988, rc, 1);
+            cdata[rc].cures_mp_frequently() = true;
         }
         cdata[rc].original_relationship = cdata[rc].relationship =
             data->original_relationship;

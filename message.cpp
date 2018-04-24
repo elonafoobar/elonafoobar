@@ -976,7 +976,8 @@ std::string name(int cc)
         return lang(u8"何か"s, u8"something"s);
     }
     if (cdata[0].blind != 0
-        || (cbit(6, cc) == 1 && cbit(7, 0) == 0 && cdata[cc].wet == 0))
+        || (cdata[cc].is_invisible() == 1 && cdata[0].can_see_invisible() == 0
+            && cdata[cc].wet == 0))
     {
         return lang(u8"何か"s, u8"something"s);
     }
@@ -987,7 +988,7 @@ std::string name(int cc)
         {
             return cdatan(0, cc);
         }
-        if (cbit(977, cc) == 0)
+        if (cdata[cc].has_own_name() == 0)
         {
             return u8"the "s + cdatan(0, cc);
         }
