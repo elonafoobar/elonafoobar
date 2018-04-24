@@ -14,6 +14,7 @@
 #include "map.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
+#include "wish.hpp"
 
 
 namespace elona

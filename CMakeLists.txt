@@ -84,6 +84,7 @@ set(CORE_SOURCES
     text.cpp
     trait.cpp
     variables.cpp
+    wish.cpp
     ${PROJECT_BINARY_DIR}/version.cpp
 )
 
