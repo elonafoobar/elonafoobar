@@ -1278,7 +1278,7 @@ int calcslavevalue(int pet)
     {
         value = 50'000;
     }
-    if (cbit(23, pet) || cbit(27, pet))
+    if (cdata[pet].splits() || cdata[pet].splits2())
     {
         value = 10;
     }

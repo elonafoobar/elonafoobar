@@ -275,5 +275,34 @@ void serialize(Archive& ar, std::vector<T>& data)
 }
 
 
+
+template <
+    typename Archive,
+    size_t N,
+    std::enable_if_t<
+        std::is_base_of<iarchive_base, Archive>::value,
+        nullptr_t> = nullptr>
+void serialize(Archive& ar, std::bitset<N>& data)
+{
+    std::string buf;
+    serialize(ar, buf);
+    data = std::bitset<N>(buf);
+}
+
+
+
+template <
+    typename Archive,
+    size_t N,
+    std::enable_if_t<
+        std::is_base_of<oarchive_base, Archive>::value,
+        nullptr_t> = nullptr>
+void serialize(Archive& ar, std::bitset<N>& data)
+{
+    auto buf = data.to_string();
+    serialize(ar, buf);
+}
+
+
 } // namespace putit
 } // namespace elona

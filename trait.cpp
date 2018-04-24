@@ -404,7 +404,7 @@ int get_trait_info(int traitmode, int tid)
             }
             return 1;
         }
-        cbitmod(30, 0, 1);
+        cdata[0].has_power_bash() = true;
         return 1;
     }
     if (tid == 44)
@@ -1807,7 +1807,7 @@ int get_trait_info(int traitmode, int tid)
                 u8"Feathers come out from your back."s);
             return 1;
         }
-        cbitmod(5, 0, 1);
+        cdata[0].is_floating() = true;
         sdata(18, 0) = clamp(
             sdata(18, 0) + (12 + cdata[0].level / 4),
             int{sdata(18, 0) > 0},

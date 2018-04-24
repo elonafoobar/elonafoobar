@@ -219,7 +219,7 @@ void proc_event()
         fixlv = 4;
         initlv = gdata_current_dungeon_level / 4;
         characreate(-1, c, -3, 0);
-        cbitmod(976, rc, 1);
+        cdata[rc].is_lord_of_dungeon() = true;
         cdata[rc].relationship = -3;
         cdata[rc].original_relationship = -3;
         tc = rc;
@@ -246,7 +246,7 @@ void proc_event()
             }
             else
             {
-                cbitmod(976, rc, 1);
+                cdata[rc].is_lord_of_dungeon() = true;
                 break;
             }
         }
@@ -459,7 +459,7 @@ void proc_event()
             tc = rc;
             cdata[tc].relationship = 0;
             cdata[tc].original_relationship = 0;
-            cbitmod(964, tc, 1);
+            cdata[tc].is_temporary() = true;
         }
         else
         {
@@ -468,7 +468,7 @@ void proc_event()
             for (int j = 0; j < 100; ++j)
             {
                 i = rnd(39) + 16;
-                if (cdata[i].state == 3 && cbit(969, i) == 0
+                if (cdata[i].state == 3 && cdata[i].is_contracting() == 0
                     && cdata[i].current_map != gdata_current_map
                     && cdata[i].relationship >= 0)
                 {
@@ -516,7 +516,7 @@ void proc_event()
             cyinit = cdata[0].position.y;
             place_character();
         }
-        cbitmod(982, tc, 1);
+        cdata[tc].visited_just_now() = true;
         i = 0;
         for (int cnt = 0; cnt < 17; ++cnt) // 17?
         {
@@ -902,7 +902,7 @@ void proc_event()
                 int stat = characreate(-1, 0, x, y);
                 if (stat != 0)
                 {
-                    cbitmod(964, rc, 1);
+                    cdata[rc].is_temporary() = true;
                 }
             }
             if (i % 7 == 0)

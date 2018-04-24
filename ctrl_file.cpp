@@ -965,12 +965,12 @@ void fmode_22_21(bool read)
             wear_most_valuable_equipment_for_all_body_parts();
             cdata[rc].item_which_will_be_used = 0;
             rowactend(rc);
-            cbitmod(967, rc, 0);
-            cbitmod(968, rc, 0);
+            cdata[rc].has_own_sprite() = false;
+            cdata[rc].is_leashed() = false;
             cdata[rc].hp = cdata[rc].max_hp;
             cdata[rc].mp = cdata[rc].max_mp;
-            cbitmod(960, rc, 0);
-            cbitmod(989, tc, 0);
+            cdata[rc].is_livestock() = false;
+            cdata[tc].has_custom_talk() = false;
             if (importmode == 0)
             {
                 cdata[tg].character_role = 20;

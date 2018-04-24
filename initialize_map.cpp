@@ -348,7 +348,7 @@ label_1741_internal:
         flt();
         characreate(-1, 41, cdata[0].position.x, cdata[0].position.y);
         cdata[rc].character_role = 22;
-        cbitmod(960, rc, 1);
+        cdata[rc].is_livestock() = true;
     }
     if (gdata_current_map == 10)
     {
@@ -805,7 +805,7 @@ label_1741_internal:
             cdata[rc].relationship = -3;
             cdata[rc].relationship = -3;
             cdata[rc].original_relationship = -3;
-            cbitmod(976, rc, 1);
+            cdata[rc].is_lord_of_dungeon() = true;
         }
         if (arenaop == 1)
         {
@@ -818,7 +818,7 @@ label_1741_internal:
                 cdata[rc].original_relationship = -3;
                 cdata[rc].hate = 30;
                 cdata[rc].relationship = -3;
-                cbitmod(976, rc, 1);
+                cdata[rc].is_lord_of_dungeon() = true;
                 if (cdata[rc].level > arenaop(1)
                     || cdata[rc].relationship != -3)
                 {
@@ -896,7 +896,7 @@ label_1741_internal:
         {
             if (cdata[cnt].relationship == -3)
             {
-                cbitmod(966, cnt, 1);
+                cdata[cnt].has_been_used_stethoscope() = true;
             }
         }
     }
@@ -1640,7 +1640,7 @@ label_1741_internal:
             {
                 if (cdata[cnt].state == 1)
                 {
-                    if (cbit(970, cnt) == 1)
+                    if (cdata[cnt].is_quest_target() == 1)
                     {
                         list(0, listmax) = cnt;
                         ++listmax;
@@ -2486,7 +2486,7 @@ label_1741_internal:
                 {
                     flt();
                     characreate(-1, 225, -3, 0);
-                    cbitmod(979, rc, 1);
+                    cdata[rc].does_not_search_enemy() = true;
                 }
             }
         }
@@ -2716,7 +2716,7 @@ label_1742_internal:
         {
             continue;
         }
-        if (cbit(969, cnt))
+        if (cdata[cnt].is_contracting())
         {
             cdata[cnt].relationship = 10;
             cdata[cnt].current_map = gdata_current_map;
@@ -2741,7 +2741,7 @@ label_1742_internal:
         }
         rc = cnt;
         cdata[rc].state = 1;
-        if (cbit(969, cnt) == 1)
+        if (cdata[cnt].is_contracting() == 1)
         {
             cxinit = cdata[0].position.x;
             cyinit = cdata[0].position.y;
@@ -2828,7 +2828,7 @@ label_1742_internal:
         for (int cnt = 0; cnt < 245; ++cnt)
         {
             rc = cnt;
-            cbitmod(987, rc, 0);
+            cdata[rc].was_passed_item_by_you_just_now() = false;
             if (rc < 57)
             {
                 if (mode == 11)
@@ -2877,7 +2877,7 @@ label_1742_internal:
                     cdata[rc].position.x = cdata[rc].initial_position.x;
                     cdata[rc].position.y = cdata[rc].initial_position.y;
                 }
-                if (cbit(970, rc) == 0)
+                if (cdata[rc].is_quest_target() == 0)
                 {
                     cdata[rc].hate = 0;
                     cdata[rc].relationship = cdata[rc].original_relationship;
@@ -2886,7 +2886,7 @@ label_1742_internal:
                 {
                     if (cdata[0].karma < -30)
                     {
-                        if (cbit(16, 0) == 0)
+                        if (cdata[0].is_incognito() == 0)
                         {
                             cdata[rc].hate = 200;
                             cdata[rc].relationship = -3;
@@ -2936,7 +2936,7 @@ label_1742_internal:
                     }
                 }
             }
-            if (cbit(975, rc) == 0)
+            if (cdata[rc].is_ridden() == 0)
             {
                 map(cdata[rc].position.x, cdata[rc].position.y, 1) = rc + 1;
             }
@@ -3330,7 +3330,7 @@ label_1744_internal:
                     int cnt2 = cnt;
                     for (int cnt = 0; cnt < 16; ++cnt)
                     {
-                        if (cbit(963, cnt) == 1)
+                        if (cdata[cnt].is_escorted() == 1)
                         {
                             if (cdata[cnt].state == 1)
                             {
@@ -3339,7 +3339,7 @@ label_1744_internal:
                                     if (qdata(12, cnt2) == gdata_current_map)
                                     {
                                         evadd(16, cnt2, cnt);
-                                        cbitmod(963, cnt, 0);
+                                        cdata[cnt].is_escorted() = false;
                                         break;
                                     }
                                 }
@@ -3378,7 +3378,7 @@ label_1744_internal:
     {
         for (int cnt = 0; cnt < 245; ++cnt)
         {
-            if (cbit(960, cnt) == 1)
+            if (cdata[cnt].is_livestock() == 1)
             {
                 cdata[cnt].hate = 0;
                 cdata[cnt].relationship = -1;

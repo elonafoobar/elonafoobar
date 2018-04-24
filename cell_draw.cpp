@@ -945,10 +945,11 @@ void cell_draw()
             {
                 const int c_ = map(x_, y, 1) - 1;
                 if (c_ != 0 && is_in_fov(c_)
-                    && (cbit(6, c_) == 0 || cbit(7, 0) == 1
+                    && (cdata[c_].is_invisible() == 0
+                        || cdata[0].can_see_invisible() == 1
                         || cdata[c_].wet != 0))
                 {
-                    if (cbit(967, c_) == 1)
+                    if (cdata[c_].has_own_sprite() == 1)
                     {
                         if (mdata(6) == 1)
                         {
@@ -1016,7 +1017,7 @@ void cell_draw()
                     {
                         const int col_ = cdata[c_].image / 1000;
                         p_ = cdata[c_].image % 1000;
-                        if (cbit(985, c_))
+                        if (cdata[c_].is_hung_on_sand_bag())
                         {
                             gmode(2, 48, 96, 80);
                             pos(dx_ + 26 - 11, dy_ - 32 + 11);
@@ -1095,15 +1096,15 @@ void cell_draw()
                                 draw_emo(c_, dx_ + 4, dy_ - chipc(4, p_) - 16);
                             }
                         }
-                        if (cbit(985, c_))
+                        if (cdata[c_].is_hung_on_sand_bag())
                         {
                             pos(dx_, dy_ - 26);
                             gcopy(1, 96, 768, 48, 48);
                             chipc(4, p_) -= 24;
                         }
                     }
-                    if (cbit(966, c_) == 1 || gdata(94) == c_
-                        || debug::voldemort)
+                    if (cdata[c_].has_been_used_stethoscope() == 1
+                        || gdata(94) == c_ || debug::voldemort)
                     {
                         draw_hp_bar(c_, dx_, dy_);
                     }

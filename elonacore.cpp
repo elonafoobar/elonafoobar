@@ -9805,7 +9805,7 @@ int customtalk(int cc, int talk_type)
 
     bool use_external_file = false;
 
-    if (cbit(989, cc))
+    if (cdata[cc].has_custom_talk())
     {
         const auto filepath = filesystem::path(u8"./user/talk") / cdatan(4, cc);
         if (!fs::exists(filepath))
@@ -10017,7 +10017,7 @@ void put_questtarget()
     {
         if (cdata[cnt].state == 1)
         {
-            cbitmod(970, cnt, 1);
+            cdata[cnt].is_quest_target() = true;
             cdata[cnt].relationship = -3;
         }
     }
@@ -10034,7 +10034,7 @@ int exist_questtarget()
     {
         if (cdata[cnt].state == 1)
         {
-            if (cbit(970, cnt) == 1)
+            if (cdata[cnt].is_quest_target() == 1)
             {
                 ++f_at_m119;
             }
@@ -10213,10 +10213,10 @@ void refreshspeed(int cc)
         cdata[0].current_speed = sdata(18, gdata_mount) * 100
             / clamp((100 + sdata(18, gdata_mount)
                      - sdata(10, gdata_mount) * 3 / 2 - sdata(301, 0) * 2
-                     - (cbit(22, gdata_mount) == 1) * 50),
+                     - (cdata[gdata_mount].is_suitable_for_mount() == 1) * 50),
                     100,
                     1000);
-        if (cbit(25, gdata_mount))
+        if (cdata[gdata_mount].is_unsuitable_for_mount())
         {
             cdata[0].current_speed /= 10;
         }
@@ -10290,19 +10290,19 @@ void ride_begin(int mount)
             + cdata[mount].current_speed + u8"→"s,
         u8"You ride "s + name(mount) + u8". ("s + name(mount) + u8"'s speed: "s
             + cdata[mount].current_speed + u8"->"s));
-    cbitmod(975, mount, 1);
+    cdata[mount].is_ridden() = true;
     map(cdata[mount].position.x, cdata[mount].position.y, 1) = 0;
     gdata_mount = mount;
     create_pcpic(0, true);
     rowactend(gdata_mount);
     refreshspeed(gdata_mount);
     txt(""s + cdata[mount].current_speed + u8") "s);
-    if (cbit(22, gdata_mount))
+    if (cdata[gdata_mount].is_suitable_for_mount())
     {
         txt(lang(
             u8"この生物は乗馬用にちょうどいい！"s, u8"You feel comfortable."s));
     }
-    else if (cbit(25, gdata_mount))
+    else if (cdata[gdata_mount].is_unsuitable_for_mount())
     {
         txt(lang(
             u8"この生物はあなたを乗せるには非力すぎる。"s,
@@ -10315,7 +10315,7 @@ void ride_begin(int mount)
 void ride_end()
 {
     int mount = gdata_mount;
-    cbitmod(975, mount, 0);
+    cdata[mount].is_ridden() = false;
     rowactend(mount);
     gdata_mount = 0;
     create_pcpic(0, true);
@@ -10521,7 +10521,7 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
     p3_at_m125 = cdata[tc_at_m125].state;
     hp_at_m125 = cdata[tc_at_m125].hp;
     cdata[prm_784].item_which_will_be_used = 0;
-    cbitmod(960, prm_784, 0);
+    cdata[prm_784].is_livestock() = false;
     const auto tmp = inv_getheader(prm_784);
     const auto invhead = tmp.first;
     const auto invrange = tmp.second;
@@ -10676,7 +10676,7 @@ void hostileaction(int prm_787, int prm_788)
         }
         customtalk(prm_788, 101);
     }
-    if (cbit(960, prm_788) == 1)
+    if (cdata[prm_788].is_livestock() == 1)
     {
         if (rnd(50) == 0)
         {
@@ -10684,7 +10684,7 @@ void hostileaction(int prm_787, int prm_788)
             txt(lang(u8"家畜は興奮した！"s, u8"Animals get excited!"s));
             for (int cnt = 0; cnt < 245; ++cnt)
             {
-                if (cbit(960, cnt) == 1)
+                if (cdata[cnt].is_livestock() == 1)
                 {
                     cdata[cnt].enemy_id = 0;
                     cdata[cnt].hate = 20;
@@ -11055,11 +11055,11 @@ void delbuff(int prm_805, int prm_806)
     }
     if (cdata[prm_805].buffs[prm_806].id == 16)
     {
-        cbitmod(973, prm_805, 0);
+        cdata[prm_805].is_sentenced_daeth() = false;
     }
     if (cdata[prm_805].buffs[prm_806].id == 18)
     {
-        cbitmod(980, prm_805, 0);
+        cdata[prm_805].is_contracting_with_reaper() = false;
     }
     cdata[prm_805].buffs[prm_806].id = 0;
     for (int cnt = prm_806, cnt_end = cnt + (16 - prm_806 - 1); cnt < cnt_end;
@@ -11627,7 +11627,7 @@ void wet(int cc, int turns)
         txt(lang(
             name(cc) + u8"は濡れた。"s,
             name(cc) + u8" get"s + _s(cc) + u8" wet."s));
-        if (cbit(6, cc))
+        if (cdata[cc].is_invisible())
         {
             txt(lang(
                 name(cc) + u8"の姿があらわになった。"s,
@@ -11653,7 +11653,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
     }
     if (prm_819 == 4)
     {
-        if (cbit(9, prm_818) == 1)
+        if (cdata[prm_818].is_immune_to_blindness() == 1)
         {
             f_at_con = 0;
         }
@@ -11694,7 +11694,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
     }
     if (prm_819 == 5)
     {
-        if (cbit(8, prm_818) == 1)
+        if (cdata[prm_818].is_immune_to_confusion() == 1)
         {
             f_at_con = 0;
         }
@@ -11740,7 +11740,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
     }
     if (prm_819 == 3)
     {
-        if (cbit(12, prm_818) == 1)
+        if (cdata[prm_818].is_immune_to_paralyzation() == 1)
         {
             f_at_con = 0;
         }
@@ -11782,7 +11782,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
     }
     if (prm_819 == 1)
     {
-        if (cbit(13, prm_818) == 1)
+        if (cdata[prm_818].is_immune_to_poison() == 1)
         {
             f_at_con = 0;
         }
@@ -11824,7 +11824,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
     }
     if (prm_819 == 2)
     {
-        if (cbit(11, prm_818) == 1)
+        if (cdata[prm_818].is_immune_to_sleep() == 1)
         {
             f_at_con = 0;
         }
@@ -11866,7 +11866,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
     }
     if (prm_819 == 6)
     {
-        if (cbit(10, prm_818) == 1)
+        if (cdata[prm_818].is_immune_to_fear() == 1)
         {
             f_at_con = 0;
         }
@@ -13079,12 +13079,12 @@ int copy_chara(int prm_848)
             cdata_body_part(c_at_m139, i) / 10000 * 10000;
     }
     cdata[c_at_m139].original_relationship = -3;
-    cbitmod(967, c_at_m139, 0);
-    cbitmod(960, c_at_m139, 0);
-    cbitmod(961, c_at_m139, 0);
-    cbitmod(975, c_at_m139, 0);
-    cbitmod(981, c_at_m139, 1);
-    cbitmod(985, c_at_m139, 0);
+    cdata[c_at_m139].has_own_sprite() = false;
+    cdata[c_at_m139].is_livestock() = false;
+    cdata[c_at_m139].is_married() = false;
+    cdata[c_at_m139].is_ridden() = false;
+    cdata[c_at_m139].needs_refreshing_status() = true;
+    cdata[c_at_m139].is_hung_on_sand_bag() = false;
     return 1;
 }
 
@@ -13500,17 +13500,17 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
     {
         if (ele_at_m141 != 60)
         {
-            if (cbit(26, prm_853))
+            if (cdata[prm_853].is_immune_to_elemental_damage())
             {
                 dmg_at_m141 = 0;
             }
         }
     }
-    if (cbit(28, prm_853))
+    if (cdata[prm_853].is_metal())
     {
         dmg_at_m141 = rnd(dmg_at_m141 / 10 + 2);
     }
-    if (cbit(980, prm_853))
+    if (cdata[prm_853].is_contracting_with_reaper())
     {
         if (cdata[prm_853].hp - dmg_at_m141 <= 0)
         {
@@ -13603,15 +13603,15 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 {
                     continue;
                 }
-                if (cbit(21, cnt) == 0)
+                if (cdata[cnt].has_lay_hand() == 0)
                 {
                     continue;
                 }
-                if (cbit(974, cnt) == 0)
+                if (cdata[cnt].is_lay_hand_available() == 0)
                 {
                     continue;
                 }
-                cbitmod(974, cnt, 0);
+                cdata[cnt].is_lay_hand_available() = false;
                 txtef(9);
                 txt(lang(
                     name(cnt)
@@ -13628,7 +13628,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 break;
             }
         }
-        else if (cbit(985, prm_853))
+        else if (cdata[prm_853].is_hung_on_sand_bag())
         {
             cdata[prm_853].hp = cdata[prm_853].max_hp;
         }
@@ -13760,7 +13760,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 if (cdata[prm_853].fear == 0)
                 {
-                    if (cbit(10, prm_853) == 0)
+                    if (cdata[prm_853].is_immune_to_fear() == 0)
                     {
                         if (dmg_at_m141 * 100 / cdata[prm_853].max_hp + 10
                             > rnd(200))
@@ -13905,16 +13905,16 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 }
             }
         }
-        if (cbit(18, prm_853))
+        if (cdata[prm_853].explodes())
         {
             if (rnd(3) == 0)
             {
-                cbitmod(972, prm_853, 1);
+                cdata[prm_853].will_explode_soon() = true;
                 txtef(9);
                 txt(lang(u8" *カチッ* "s, u8"*click*"s));
             }
         }
-        if (cbit(23, prm_853))
+        if (cdata[prm_853].splits())
         {
             if (gdata(809) != 1)
             {
@@ -13934,7 +13934,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 }
             }
         }
-        if (cbit(27, prm_853))
+        if (cdata[prm_853].splits2())
         {
             if (gdata(809) != 1)
             {
@@ -13961,7 +13961,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 }
             }
         }
-        if (cbit(32, prm_853))
+        if (cdata[prm_853].is_quick_tempered())
         {
             if (gdata(809) != 1)
             {
@@ -14440,7 +14440,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             cell_removechara(
                 cdata[prm_853].position.x, cdata[prm_853].position.y);
         }
-        if (cbit(983, prm_853))
+        if (cdata[prm_853].breaks_into_debris())
         {
             if (is_in_fov(prm_853))
             {
@@ -14481,12 +14481,12 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 modimp(prm_853, -10);
                 cdata[prm_853].state = 6;
                 cdata[prm_853].current_map = 0;
-                if (cbit(963, prm_853) == 1)
+                if (cdata[prm_853].is_escorted() == 1)
                 {
                     evadd(15, cdata[prm_853].id);
                     cdata[prm_853].state = 0;
                 }
-                if (cbit(971, prm_853) == 1)
+                if (cdata[prm_853].is_escorted_in_sub_quest() == 1)
                 {
                     cdata[prm_853].state = 0;
                 }
@@ -14514,7 +14514,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 exp_at_m141 /= 4;
             }
-            if (cbit(23, prm_853) || cbit(27, prm_853))
+            if (cdata[prm_853].splits() || cdata[prm_853].splits2())
             {
                 exp_at_m141 /= 20;
             }
@@ -14635,7 +14635,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                         || gdata_current_map == 42)
                     {
                         if (adata(20, gdata_current_map) == prm_853
-                            && cbit(976, prm_853) == 1)
+                            && cdata[prm_853].is_lord_of_dungeon() == 1)
                         {
                             evadd(5);
                         }
@@ -14655,7 +14655,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 else if (gdata_current_map == 42)
                 {
                     if (adata(20, gdata_current_map) == prm_853
-                        && cbit(976, prm_853) == 1)
+                        && cdata[prm_853].is_lord_of_dungeon() == 1)
                     {
                         evadd(5);
                     }
@@ -14713,7 +14713,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 snd(69);
             }
         }
-        if (cbit(19, prm_853) == 1)
+        if (cdata[prm_853].is_death_master() == 1)
         {
             txt(lang(
                 u8"死の宣告は無効になった。"s, u8"The death word breaks."s));
@@ -14760,7 +14760,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
 
 void end_dmghp()
 {
-    if (cbit(985, prm_853))
+    if (cdata[prm_853].is_hung_on_sand_bag())
     {
         if (is_in_fov(prm_853))
         {
@@ -14993,10 +14993,10 @@ void modheight(int cc, int delta)
 
 void cure_anorexia(int cc)
 {
-    if (cbit(986, cc) == 0)
+    if (cdata[cc].has_anorexia() == 0)
         return;
 
-    cbitmod(986, cc, 0);
+    cdata[cc].has_anorexia() = false;
     if (is_in_fov(cc) || cc < 16)
     {
         txt(lang(
@@ -15020,9 +15020,9 @@ void chara_vomit(int prm_876)
             name(prm_876) + u8"は吐いた。"s,
             name(prm_876) + u8" vomit"s + _s(prm_876) + u8"."s));
     }
-    if (cbit(978, prm_876))
+    if (cdata[prm_876].is_pregnant())
     {
-        cbitmod(978, prm_876, 0);
+        cdata[prm_876].is_pregnant() = false;
         if (is_in_fov(prm_876))
         {
             txt(lang(
@@ -15079,14 +15079,14 @@ void chara_vomit(int prm_876)
             }
         }
     }
-    if (cbit(986, prm_876) == 0)
+    if (cdata[prm_876].has_anorexia() == 0)
     {
         if ((prm_876 < 16 && cdata[prm_876].anorexia_count > 10)
             || (prm_876 >= 16 && rnd(4) == 0))
         {
             if (rnd(5) == 0)
             {
-                cbitmod(986, prm_876, 1);
+                cdata[prm_876].has_anorexia() = true;
                 if (is_in_fov(prm_876))
                 {
                     txt(lang(
@@ -15152,7 +15152,7 @@ void eatstatus(curse_state_t curse_state, int eater)
 
 int chara_anorexia(int prm_879)
 {
-    if (cbit(986, prm_879) == 0)
+    if (cdata[prm_879].has_anorexia() == 0)
     {
         return 0;
     }
@@ -18325,16 +18325,19 @@ void refresh_character(int cc)
     }
     else if (cdata[cc].id == 343)
     {
-        for (int i = 0; i < 30; ++i)
+        for (size_t i = 0; i < cdata[cc]._flags.size(); ++i)
         {
-            cdata(cc).flags[i] = userdata(40 + i, cdata[cc].cnpc_id);
+            cdata[cc]._flags[i] =
+                userdata(40 + i / (8 * sizeof(int)), cdata[cc].cnpc_id)
+                & (1 << (i % (8 * sizeof(int))));
         }
     }
     else
     {
-        for (int i = 0; i < 30; ++i)
+        for (size_t i = 0; i < cdata[cc]._flags.size(); ++i)
         {
-            cdata(cc).flags[i] = cbitorg(i, cdata[cc].id);
+            cdata(cc)._flags[i] = cbitorg(i / (8 * sizeof(int)), cdata[cc].id)
+                & (1 << (i % (8 * sizeof(int))));
         }
     }
     for (int cnt = 10; cnt < 20; ++cnt)
@@ -18475,57 +18478,57 @@ void refresh_character(int cc)
                 }
                 if (rp2 == 32)
                 {
-                    cbitmod(5, cc, 1);
+                    cdata[cc].is_floating() = true;
                     continue;
                 }
                 if (rp2 == 35)
                 {
-                    cbitmod(7, cc, 1);
+                    cdata[cc].can_see_invisible() = true;
                     continue;
                 }
                 if (rp2 == 23)
                 {
-                    cbitmod(9, cc, 1);
+                    cdata[cc].is_immune_to_blindness() = true;
                     continue;
                 }
                 if (rp2 == 24)
                 {
-                    cbitmod(12, cc, 1);
+                    cdata[cc].is_immune_to_paralyzation() = true;
                     continue;
                 }
                 if (rp2 == 25)
                 {
-                    cbitmod(8, cc, 1);
+                    cdata[cc].is_immune_to_confusion() = true;
                     continue;
                 }
                 if (rp2 == 26)
                 {
-                    cbitmod(10, cc, 1);
+                    cdata[cc].is_immune_to_fear() = true;
                     continue;
                 }
                 if (rp2 == 27)
                 {
-                    cbitmod(11, cc, 1);
+                    cdata[cc].is_immune_to_sleep() = true;
                     continue;
                 }
                 if (rp2 == 28)
                 {
-                    cbitmod(13, cc, 1);
+                    cdata[cc].is_immune_to_poison() = true;
                     continue;
                 }
                 if (rp2 == 42)
                 {
-                    cbitmod(14, cc, 1);
+                    cdata[cc].can_digest_rotten_food() = true;
                     continue;
                 }
                 if (rp2 == 41)
                 {
-                    cbitmod(15, cc, 1);
+                    cdata[cc].is_protected_from_thieves() = true;
                     continue;
                 }
                 if (rp2 == 55)
                 {
-                    cbitmod(29, cc, 1);
+                    cdata[cc].cures_bleeding_quickly() = true;
                     continue;
                 }
                 if (rp2 == 52)
@@ -18572,7 +18575,7 @@ void refresh_character(int cc)
                 }
                 if (rp2 == 21 || rp2 == 45 || rp2 == 46 || rp2 == 47)
                 {
-                    cbitmod(24, cc, 1);
+                    cdata[cc].has_cursed_equipments() = true;
                     continue;
                 }
                 if (cc == 0)
@@ -18721,7 +18724,7 @@ void refresh_character(int cc)
     }
     refresh_burden_state();
     refreshspeed(cc);
-    cbitmod(981, cc, 0);
+    cdata[cc].needs_refreshing_status() = false;
 }
 
 
@@ -19254,7 +19257,7 @@ void label_1520(int cc)
             cc,
             rnd(cdata[cc].hp * (1 + cdata[cc].bleeding / 4) / 100 + 3) + 1,
             -13);
-        healcon(cc, 9, 1 + cbit(29, cc) * 3);
+        healcon(cc, 9, 1 + cdata[cc].cures_bleeding_quickly() * 3);
         if (cdata[cc].bleeding > 0)
         {
             cdata[cc].emotion_icon = 109;
@@ -20770,9 +20773,9 @@ void initialize_character()
         gdata_initial_cart_limit = 80000;
         gdata_current_cart_limit = gdata_initial_cart_limit;
     }
-    if (cbit(21, rc))
+    if (cdata[rc].has_lay_hand())
     {
-        cbitmod(974, rc, 1);
+        cdata[rc].is_lay_hand_available() = true;
     }
     cm = 0;
     return;
@@ -20785,7 +20788,7 @@ void initialize_pc_character()
     cdata[0].quality = 2;
     cdata[0].relationship = 10;
     cdata[0].original_relationship = 10;
-    cbitmod(967, 0, 1);
+    cdata[0].has_own_sprite() = true;
     flt();
     itemcreate(0, 333, -1, -1, 0);
     inv[ci].number = 8;
@@ -20882,11 +20885,11 @@ void label_1539()
 
 void label_15380()
 {
-    cbitmod(972, rc, 0);
-    cbitmod(973, rc, 0);
-    cbitmod(978, rc, 0);
-    cbitmod(980, rc, 0);
-    cbitmod(986, rc, 0);
+    cdata[rc].will_explode_soon() = false;
+    cdata[rc].is_sentenced_daeth() = false;
+    cdata[rc].is_pregnant() = false;
+    cdata[rc].is_contracting_with_reaper() = false;
+    cdata[rc].has_anorexia() = false;
     cdata[rc].hp = cdata[rc].max_hp / 3;
     cdata[rc].mp = cdata[rc].max_mp / 3;
     cdata[rc].sp = cdata[rc].max_sp / 3;
@@ -20902,7 +20905,7 @@ void label_15380()
 
 void label_15390()
 {
-    cbitmod(980, rc, 0);
+    cdata[rc].is_contracting_with_reaper() = false;
     rowactend(rc);
     cdata[rc].poisoned = 0;
     cdata[rc].sleep = 0;
@@ -21540,7 +21543,7 @@ void label_1573()
     {
         if (rc < 16)
         {
-            if (cbit(967, rc) == 1)
+            if (cdata[rc].has_own_sprite() == 1)
             {
                 create_pcpic(rc, true);
             }
@@ -21561,11 +21564,11 @@ void label_1573()
             return;
         }
     }
-    if (cbit(969, rc))
+    if (cdata[rc].is_contracting())
     {
         return;
     }
-    if (cbit(23, rc) || cbit(27, rc))
+    if (cdata[rc].splits() || cdata[rc].splits2())
     {
         if (rnd(6))
         {
@@ -21671,7 +21674,8 @@ void label_1573()
         }
         inv[ci].number = 0;
     }
-    if (cdata[rc].quality >= 4 || rnd(20) == 0 || cbit(17, rc) == 1 || rc < 16)
+    if (cdata[rc].quality >= 4 || rnd(20) == 0 || cdata[rc].drops_gold() == 1
+        || rc < 16)
     {
         if (cdata[rc].gold > 0)
         {
@@ -21681,8 +21685,9 @@ void label_1573()
                 54,
                 cdata[rc].position.x,
                 cdata[rc].position.y,
-                cdata[rc].gold / (1 + 3 * (cbit(17, rc) == 0)));
-            cdata[rc].gold -= cdata[rc].gold / (1 + 3 * (cbit(17, rc) == 0));
+                cdata[rc].gold / (1 + 3 * (cdata[rc].drops_gold() == 0)));
+            cdata[rc].gold -=
+                cdata[rc].gold / (1 + 3 * (cdata[rc].drops_gold() == 0));
         }
     }
 
@@ -22039,8 +22044,8 @@ void label_1573()
         inv[ci].param1 = cdata[rc].shop_store_id;
         inv[ci].own_state = 2;
     }
-    if (rollanatomy == 1 || cdata[rc].quality >= 4 || 0 || cbit(960, rc) == 1
-        || 0)
+    if (rollanatomy == 1 || cdata[rc].quality >= 4 || 0
+        || cdata[rc].is_livestock() == 1 || 0)
     {
         flt();
         int stat =
@@ -22048,7 +22053,7 @@ void label_1573()
         if (stat != 0)
         {
             remain_make(ci, rc);
-            if (cbit(960, rc) == 1)
+            if (cdata[rc].is_livestock() == 1)
             {
                 if (sdata(161, 0) != 0)
                 {
@@ -23254,7 +23259,7 @@ void lovemiracle(int prm_932)
 
 void eat_rotten_food()
 {
-    if (cbit(14, cc) == 1)
+    if (cdata[cc].can_digest_rotten_food() == 1)
     {
         txt(lang(
             u8"しかし、"s + name(cc) + u8"は何ともなかった。"s,
@@ -24853,14 +24858,14 @@ void get_pregnant()
         }
         return;
     }
-    if (cbit(978, tc) == 0)
+    if (cdata[tc].is_pregnant() == 0)
     {
         txtef(5);
         txt(lang(
             name(tc) + u8"は寄生された。"s,
             name(tc) + u8" get"s + _s(tc) + u8" pregnant."s));
         animeload(8, tc);
-        cbitmod(978, tc, 1);
+        cdata[tc].is_pregnant() = true;
     }
     return;
 }
@@ -30106,7 +30111,7 @@ void update_ranch()
         {
             continue;
         }
-        if (cbit(960, cnt) == 0)
+        if (cdata[cnt].is_livestock() == 0)
         {
             continue;
         }
@@ -30147,7 +30152,7 @@ void update_ranch()
             int stat = characreate(-1, dbid, 4 + rnd(11), 4 + rnd(8));
             if (stat != 0)
             {
-                cbitmod(960, rc, 1);
+                cdata[rc].is_livestock() = true;
                 ++livestock;
             }
         }
@@ -30159,7 +30164,7 @@ void update_ranch()
             {
                 continue;
             }
-            if (cbit(960, cnt) == 0)
+            if (cdata[cnt].is_livestock() == 0)
             {
                 continue;
             }
@@ -31042,7 +31047,7 @@ void label_1745()
                 {
                     continue;
                 }
-                if (cbit(964, cnt) == 1)
+                if (cdata[cnt].is_temporary() == 1)
                 {
                     if (rnd(2))
                     {
@@ -31100,7 +31105,7 @@ void label_1745()
                 {
                     continue;
                 }
-                if (cbit(964, cnt) == 1)
+                if (cdata[cnt].is_temporary() == 1)
                 {
                     cdata[cnt].state = 0;
                     map(cdata[cnt].position.x, cdata[cnt].position.y, 1) = 0;
@@ -32563,7 +32568,7 @@ void label_1754()
         {
             if (cdata[0].nutrition < 5000)
             {
-                if (cbit(986, 0) == 0)
+                if (cdata[0].has_anorexia() == 0)
                 {
                     snd(18);
                     txt(lang(
@@ -32750,7 +32755,7 @@ void label_1755()
             if (stat != 0)
             {
                 cdata[rc].character_role = 3;
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
         }
         {
@@ -32759,7 +32764,7 @@ void label_1755()
             if (stat != 0)
             {
                 cdata[rc].character_role = 3;
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
         }
         {
@@ -32767,8 +32772,8 @@ void label_1755()
             int stat = characreate(-1, 174, 38, 19);
             if (stat != 0)
             {
-                cbitmod(991, rc, 1);
-                cbitmod(985, rc, 1);
+                cdata[rc].only_christmas() = true;
+                cdata[rc].is_hung_on_sand_bag() = true;
                 cdatan(0, rc) =
                     lang(u8"オパートスの信者"s, u8"Opatos Fanatic"s);
                 if (rnd(2))
@@ -32787,7 +32792,7 @@ void label_1755()
             int stat = characreate(-1, 347, 35, 19);
             if (stat != 0)
             {
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
         }
         {
@@ -32795,7 +32800,7 @@ void label_1755()
             int stat = characreate(-1, 347, 37, 18);
             if (stat != 0)
             {
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
         }
         {
@@ -32803,7 +32808,7 @@ void label_1755()
             int stat = characreate(-1, 347, 37, 21);
             if (stat != 0)
             {
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
         }
         {
@@ -32811,7 +32816,7 @@ void label_1755()
             int stat = characreate(-1, 347, 39, 20);
             if (stat != 0)
             {
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
         }
         {
@@ -32819,7 +32824,7 @@ void label_1755()
             int stat = characreate(-1, 347, 38, 21);
             if (stat != 0)
             {
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
         }
         {
@@ -32828,7 +32833,7 @@ void label_1755()
             if (stat != 0)
             {
                 cdata[rc].ai_calm = 3;
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
                 cdata[rc].character_role = 1002;
                 cdata[rc].shop_rank = 10;
                 cdatan(0, rc) = snfood(cdatan(0, rc));
@@ -32842,7 +32847,7 @@ void label_1755()
                 cdata[rc].ai_calm = 3;
                 cdata[rc].relationship = 0;
                 cdata[rc].original_relationship = 0;
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
                 cdata[rc].character_role = 1018;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = randomname();
@@ -32859,7 +32864,7 @@ void label_1755()
                 cdata[rc].ai_calm = 3;
                 cdata[rc].relationship = 0;
                 cdata[rc].original_relationship = 0;
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
                 cdata[rc].character_role = 1018;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = randomname();
@@ -32877,7 +32882,7 @@ void label_1755()
                 cdata[rc].character_role = 1007;
                 cdata[rc].shop_rank = 10;
                 cdatan(0, rc) = snblack(cdatan(0, rc));
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
         }
         {
@@ -32888,7 +32893,7 @@ void label_1755()
                 cdata[rc].ai_calm = 3;
                 cdata[rc].relationship = 0;
                 cdata[rc].original_relationship = 0;
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
                 cdata[rc].character_role = 1022;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = randomname();
@@ -32905,7 +32910,7 @@ void label_1755()
                 cdata[rc].ai_calm = 3;
                 cdata[rc].relationship = 0;
                 cdata[rc].original_relationship = 0;
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
                 cdata[rc].character_role = 1022;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = randomname();
@@ -32920,14 +32925,14 @@ void label_1755()
             int stat = characreate(-1, 349, -3, 0);
             if (stat != 0)
             {
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
             flt();
             {
                 int stat = characreate(-1, 350, -3, 0);
                 if (stat != 0)
                 {
-                    cbitmod(991, rc, 1);
+                    cdata[rc].only_christmas() = true;
                 }
             }
         }
@@ -32937,7 +32942,7 @@ void label_1755()
             int stat = characreate(-1, 326, -3, 0);
             if (stat != 0)
             {
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
         }
         for (int cnt = 0; cnt < 7; ++cnt)
@@ -32946,14 +32951,14 @@ void label_1755()
             int stat = characreate(-1, 335, -3, 0);
             if (stat != 0)
             {
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
             {
                 flt();
                 int stat = characreate(-1, 185, -3, 0);
                 if (stat != 0)
                 {
-                    cbitmod(991, rc, 1);
+                    cdata[rc].only_christmas() = true;
                 }
             }
             {
@@ -32961,7 +32966,7 @@ void label_1755()
                 int stat = characreate(-1, 274, -3, 0);
                 if (stat != 0)
                 {
-                    cbitmod(991, rc, 1);
+                    cdata[rc].only_christmas() = true;
                 }
             }
             {
@@ -32969,7 +32974,7 @@ void label_1755()
                 int stat = characreate(-1, 174, -3, 0);
                 if (stat != 0)
                 {
-                    cbitmod(991, rc, 1);
+                    cdata[rc].only_christmas() = true;
                 }
             }
         }
@@ -32979,14 +32984,14 @@ void label_1755()
             int stat = characreate(-1, 332, -3, 0);
             if (stat != 0)
             {
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
             {
                 flt();
                 int stat = characreate(-1, 185, -3, 0);
                 if (stat != 0)
                 {
-                    cbitmod(991, rc, 1);
+                    cdata[rc].only_christmas() = true;
                 }
             }
         }
@@ -32995,7 +33000,7 @@ void label_1755()
     {
         for (int cnt = 57; cnt < 245; ++cnt)
         {
-            if (cbit(991, cnt) == 1)
+            if (cdata[cnt].only_christmas() == 1)
             {
                 chara_vanquish(cnt);
             }
@@ -34981,7 +34986,7 @@ int modpiety(int prm_1035)
 
 void set_npc_religion()
 {
-    if (!cdata[tc].god_id.empty() || cbit(990, tc) || tc == 0)
+    if (!cdata[tc].god_id.empty() || cdata[tc].has_learned_words() || tc == 0)
     {
         return;
     }
@@ -34990,7 +34995,7 @@ void set_npc_religion()
     randomize();
     if (cdata[tc].god_id.empty() || rnd(4) == 0)
     {
-        cbitmod(990, tc, 1);
+        cdata[tc].has_learned_words() = true;
     }
     return;
 }
@@ -36447,7 +36452,7 @@ label_1894_internal:
         break;
     case 8:
         p = rnd(cdata[0].gold / 8 + 1);
-        if (cbit(15, 0))
+        if (cdata[0].is_protected_from_thieves())
         {
             p = 0;
         }
@@ -38942,7 +38947,8 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
     if (map(prm_1057, prm_1058, 1) != 0)
     {
         i_at_m186 = map(prm_1057, prm_1058, 1) - 1;
-        if (cbit(6, i_at_m186) == 0 || cbit(7, 0) || cdata[i_at_m186].wet)
+        if (cdata[i_at_m186].is_invisible() == 0 || cdata[0].can_see_invisible()
+            || cdata[i_at_m186].wet)
         {
             tc = i_at_m186;
             s = txttargetlevel(cc, tc);
@@ -39478,7 +39484,9 @@ label_1948_internal:
             {
                 break;
             }
-            if ((cbit(6, rc) == 0 || cbit(7, 0) || cdata[rc].wet) == 0)
+            if ((cdata[rc].is_invisible() == 0 || cdata[0].can_see_invisible()
+                 || cdata[rc].wet)
+                == 0)
             {
                 break;
             }
@@ -40037,12 +40045,12 @@ int ctrl_ally()
         }
         if (allyctrl != 1)
         {
-            if (cbit(963, cnt) == 1)
+            if (cdata[cnt].is_escorted() == 1)
             {
                 continue;
             }
         }
-        if (cbit(975, cnt))
+        if (cdata[cnt].is_ridden())
         {
             continue;
         }
@@ -40767,7 +40775,7 @@ label_196901_internal:
         }
         listn(0, cnt) = s;
     }
-    if (cbit(16, tc) == 1)
+    if (cdata[tc].is_incognito() == 1)
     {
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
@@ -40776,7 +40784,7 @@ label_196901_internal:
                    u8"You are disguising yourself."s);
         ++listmax;
     }
-    if (cbit(978, tc) == 1)
+    if (cdata[tc].is_pregnant() == 1)
     {
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
@@ -40784,7 +40792,7 @@ label_196901_internal:
             + lang(u8"あなたは寄生されている"s, u8"You are pregnant."s);
         ++listmax;
     }
-    if (cbit(986, tc) == 1)
+    if (cdata[tc].has_anorexia() == 1)
     {
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
@@ -41842,7 +41850,7 @@ int label_1980()
         {
             continue;
         }
-        if (cbit(971, cnt) == 1)
+        if (cdata[cnt].is_escorted_in_sub_quest() == 1)
         {
             continue;
         }
@@ -43457,7 +43465,7 @@ void do_give_command()
     {
         if (tc < 16)
         {
-            if (cbit(963, tc) == 0)
+            if (cdata[tc].is_escorted() == 0)
             {
                 label_2055();
                 return;
@@ -43508,9 +43516,9 @@ void do_interact_command()
             ELONA_APPEND_PROMPT(
                 lang(u8"攻撃する"s, u8"Attack"s), u8"null"s, ""s + 1);
         }
-        if (cbit(963, tc) == 0)
+        if (cdata[tc].is_escorted() == 0)
         {
-            if (cbit(971, tc) == 0)
+            if (cdata[tc].is_escorted_in_sub_quest() == 0)
             {
                 if (tc < 16)
                 {
@@ -43522,7 +43530,7 @@ void do_interact_command()
                     ELONA_APPEND_PROMPT(
                         lang(u8"何かを渡す"s, u8"Give"s), u8"null"s, ""s + 2);
                 }
-                if (cbit(960, tc) == 1)
+                if (cdata[tc].is_livestock() == 1)
                 {
                     ELONA_APPEND_PROMPT(
                         lang(u8"連れ出す"s, u8"Bring Out"s),
@@ -43544,7 +43552,7 @@ void do_interact_command()
             lang(u8"口調を変える"s, u8"Change Tone"s), u8"null"s, ""s + 10);
         if (gdata_current_map != 35)
         {
-            if (cbit(985, tc))
+            if (cdata[tc].is_hung_on_sand_bag())
             {
                 ELONA_APPEND_PROMPT(
                     lang(u8"縄を解く"s, u8"Release"s), u8"null"s, ""s + 9);
@@ -43633,7 +43641,7 @@ void do_interact_command()
             u8"What sentence should "s + name(tc) + u8" learn? "s));
         inputlog = "";
         input_text_dialog((windoww - 360) / 2 + inf_screenx, winposy(90), 20);
-        cbitmod(989, tc, 0);
+        cdata[tc].has_custom_talk() = false;
         if (inputlog == ""s)
         {
             cdatan(4, tc) = "";
@@ -43663,7 +43671,7 @@ void do_interact_command()
     if (p == 9)
     {
         snd(58);
-        cbitmod(985, tc, 0);
+        cdata[tc].is_hung_on_sand_bag() = false;
         txt(lang(
             name(tc) + u8"の縄を解いた。"s,
             u8"You release "s + name(tc) + u8"."s));
@@ -43695,7 +43703,7 @@ void call_npc()
     else
     {
         cdatan(0, tc) = ""s + inputlog;
-        cbitmod(977, tc, 1);
+        cdata[tc].has_own_name() = true;
         txt(lang(
             ""s + cdatan(0, tc) + u8"という名前で呼ぶことにした。"s,
             u8"You named "s + him(tc) + u8" "s + cdatan(0, tc) + u8"."s));
@@ -43807,11 +43815,11 @@ label_2016_internal:
             name(tc) + u8" is somewhat different."s));
         if (p == -999)
         {
-            cbitmod(989, tc, 0);
+            cdata[tc].has_custom_talk() = false;
             cdatan(4, tc) = "";
             return 1;
         }
-        cbitmod(989, tc, 1);
+        cdata[tc].has_custom_talk() = true;
         cdatan(4, tc) = listn(0, p);
         return 1;
     }
@@ -44917,7 +44925,7 @@ label_2035_internal:
             }
         }
         window2(wx + 557, wy + 23, 87, 120, 1, 10);
-        if (cbit(967, cc) == 1)
+        if (cdata[cc].has_own_sprite() == 1)
         {
             pos(wx + 596 + 22, wy + 86 + 24);
             gmode(2, 32, 48);
@@ -45644,7 +45652,7 @@ void label_2038(int val0)
             {
                 rtval(0) = 101;
                 rtval(1) = 0;
-                rtval(2) = cbit(967, cc);
+                rtval(2) = cdata[cc].has_own_sprite();
             }
             else
             {
@@ -45871,7 +45879,7 @@ label_2041_internal:
                 112);
         }
     }
-    else if (cbit(967, cc) == 1)
+    else if (cdata[cc].has_own_sprite() == 1)
     {
         pos(wx + 280, wy + 130);
         gmode(2, 32, 48);
@@ -45976,7 +45984,7 @@ label_2041_internal:
         }
         if (rtval == 101)
         {
-            cbitmod(967, cc, 1);
+            cdata[cc].has_own_sprite() = true;
             goto label_2041_internal;
         }
         if (rtval(1) == 0)
@@ -46009,7 +46017,7 @@ label_2041_internal:
         }
         if (rtval == 101)
         {
-            cbitmod(967, cc, 0);
+            cdata[cc].has_own_sprite() = false;
             goto label_2041_internal;
         }
         if (rtval(1) == 0)
@@ -47584,9 +47592,9 @@ void label_2076()
             {
                 continue;
             }
-            if (cbit(6, cnt) == 1)
+            if (cdata[cnt].is_invisible() == 1)
             {
-                if (cbit(7, cc) == 0)
+                if (cdata[cc].can_see_invisible() == 0)
                 {
                     if (cdata[cnt].wet == 0)
                     {
@@ -48360,7 +48368,7 @@ void label_2085()
             + u8" "s + calcage(cnt) + u8"歳"s + u8"  "s + cdata[cnt].height
             + u8"cm"s + u8" "s + cdata[cnt].weight + u8"kg"s);
         s = u8"レベル "s + cdata[cnt].level + u8" "s;
-        if (cbit(961, cnt) == 1)
+        if (cdata[cnt].is_married() == 1)
         {
             s += u8"婚約済み "s;
         }
@@ -48652,7 +48660,7 @@ void migrate_save_data()
         return;
     }
     gdata_version = 1220;
-    cbitmod(967, 0, 1);
+    cdata[0].has_own_sprite() = true;
     initialize_recipememory();
     return;
 }
@@ -49331,7 +49339,7 @@ void label_2108()
             {
                 if (cdata[cnt].state == 1)
                 {
-                    if (cbit(975, cnt) == 0)
+                    if (cdata[cnt].is_ridden() == 0)
                     {
                         list(0, cnt) = 1;
                     }
@@ -49444,7 +49452,7 @@ void load_save_data()
     set_item_info();
     for (int cnt = 0; cnt < 16; ++cnt)
     {
-        if (cbit(967, cnt) == 1 || cnt == 0)
+        if (cdata[cnt].has_own_sprite() == 1 || cnt == 0)
         {
             create_pcpic(cnt, true);
         }
@@ -50273,8 +50281,8 @@ label_21451_internal:
         {
             if (feat(2) == 7)
             {
-                if ((cbit(5, cc) == 1 && cdata[cc].gravity == 0)
-                    || cbit(31, cc) == 1)
+                if ((cdata[cc].is_floating() == 1 && cdata[cc].gravity == 0)
+                    || cdata[cc].is_immune_to_mine() == 1)
                 {
                     return;
                 }
@@ -50427,7 +50435,7 @@ label_21451_internal:
                             u8"槍が地面から飛び出した。"s,
                             u8"Several spears fly out from the ground."s));
                     }
-                    if (cbit(5, cc) == 1 && cdata[cc].gravity == 0)
+                    if (cdata[cc].is_floating() == 1 && cdata[cc].gravity == 0)
                     {
                         if (is_in_fov(cc))
                         {
@@ -51782,7 +51790,7 @@ void label_2151()
         cdata[tc].mp = cdata[tc].max_mp;
         cdata[tc].sp = cdata[tc].max_sp;
         healcon(tc, 12, 7 + rnd(7));
-        if (cbit(986, tc))
+        if (cdata[tc].has_anorexia())
         {
             cdata[tc].anorexia_count -= rnd(6);
         }
@@ -51796,9 +51804,9 @@ void label_2151()
             cdata[tc].anorexia_count = 0;
         }
         healsan(tc, 10);
-        if (cbit(21, tc))
+        if (cdata[tc].has_lay_hand())
         {
-            cbitmod(974, tc, 1);
+            cdata[tc].is_lay_hand_available() = true;
         }
     }
     mode = 9;
@@ -51823,7 +51831,7 @@ void label_2151()
         tc = -1;
         for (int cnt = 1; cnt < 16; ++cnt)
         {
-            if (cbit(962, cnt) == 1)
+            if (cdata[cnt].has_made_gene() == 1)
             {
                 if (cdata[cnt].state == 1)
                 {
@@ -51843,7 +51851,7 @@ void label_2151()
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"ふぅ"s, u8"Sweet."s);
             ++listmax;
-            cbitmod(962, tc, 0);
+            cdata[tc].has_made_gene() = false;
             show_random_event_window(u8"bg_re14");
             save_gene();
         }
@@ -52041,7 +52049,7 @@ void label_2153()
         {
             if (rnd(100) == 0)
             {
-                if (cbit(5, 0) == 0 || cdata[0].gravity > 0)
+                if (cdata[0].is_floating() == 0 || cdata[0].gravity > 0)
                 {
                     txtef(9);
                     if (jp)
@@ -52082,7 +52090,7 @@ void label_2153()
         }
         if (cdata[0].nutrition <= 2000)
         {
-            if (cbit(986, 0) == 0)
+            if (cdata[0].has_anorexia() == 0)
             {
                 snd(18);
                 txt(lang(
@@ -52100,7 +52108,7 @@ void label_2153()
         {
             if (rnd(100) == 0)
             {
-                if (cbit(5, 0) == 0 || cdata[0].gravity > 0)
+                if (cdata[0].is_floating() == 0 || cdata[0].gravity > 0)
                 {
                     txtef(9);
                     if (jp)
@@ -52731,7 +52739,7 @@ void label_2161()
         {
             cdata[cc].item_which_will_be_used = 0;
         }
-        if (cbit(987, cc))
+        if (cdata[cc].was_passed_item_by_you_just_now())
         {
             if (inv[ci].material == 35)
             {
@@ -53302,7 +53310,8 @@ int label_2168()
         efp = efp * (100 + p / 10) / 100;
     }
     rapidmagic = 0;
-    if (cbit(20, cc) && the_ability_db[efid]->sdataref1 == 2)
+    if (cdata[cc].can_cast_rapid_magic()
+        && the_ability_db[efid]->sdataref1 == 2)
     {
         rapidmagic = 1 + (rnd(3) != 0) + (rnd(2) != 0);
     }
@@ -53436,7 +53445,7 @@ int drink_well()
                     + lang(
                           u8"「手を伸ばせー」"s,
                           (u8" yells, "s + u8"\"G-Give me your hands!\""s)));
-                if (cbit(5, cc) == 1 && cdata[cc].gravity == 0)
+                if (cdata[cc].is_floating() == 1 && cdata[cc].gravity == 0)
                 {
                     txt(lang(
                         u8"しかしすぐに浮いてきた… "s,
@@ -53801,7 +53810,7 @@ int label_2174()
 {
     if (efid == 646)
     {
-        if (cbit(973, tc) == 1)
+        if (cdata[tc].is_sentenced_daeth() == 1)
         {
             if (cdata[cc].relationship == -3)
             {
@@ -54244,7 +54253,8 @@ void do_throw_command()
             if (inv[ci].id == 685)
             {
                 if (tc < 57 || cdata[tc].character_role != 0
-                    || cdata[tc].quality == 6 || cbit(976, tc) == 1)
+                    || cdata[tc].quality == 6
+                    || cdata[tc].is_lord_of_dungeon() == 1)
                 {
                     txt(lang(
                         u8"その生物には無効だ。"s,
@@ -55386,7 +55396,7 @@ void label_2203()
                 && (adata(16, gdata_current_map) == 101
                     || adata(16, gdata_current_map) == 102 || key_shift)))
         {
-            if (cbit(985, tc) == 0)
+            if (cdata[tc].is_hung_on_sand_bag() == 0)
             {
                 if (mdata(6) == 1)
                 {
@@ -55409,7 +55419,7 @@ void label_2203()
                         if (cdata[tc].sleep == 0)
                         {
                             p = rnd(clamp(cdata[cc].gold, 0, 20) + 1);
-                            if (cbit(15, cc))
+                            if (cdata[cc].is_protected_from_thieves())
                             {
                                 p = 0;
                             }
@@ -55454,9 +55464,9 @@ void label_2203()
         if (cdata[tc].relationship <= -1)
         {
             cdata[0].enemy_id = tc;
-            if (cbit(6, tc) == 1)
+            if (cdata[tc].is_invisible() == 1)
             {
-                if (cbit(7, 0) == 0)
+                if (cdata[0].can_see_invisible() == 0)
                 {
                     if (cdata[tc].wet == 0)
                     {
@@ -55598,7 +55608,7 @@ void label_2203()
 
 void label_2205()
 {
-    if (cbit(975, cc))
+    if (cdata[cc].is_ridden())
     {
         turn_end();
         return;
@@ -57265,7 +57275,8 @@ void try_to_melee_attack()
     ele = 0;
     if (cdata[cc].equipment_type & 1)
     {
-        if (clamp(int(std::sqrt(sdata(168, cc)) - 3), 1, 5) + cbit(30, cc) * 5
+        if (clamp(int(std::sqrt(sdata(168, cc)) - 3), 1, 5)
+                + cdata[cc].has_power_bash() * 5
             > rnd(100))
         {
             if (is_in_fov(cc))
@@ -57363,8 +57374,8 @@ label_22191_internal:
     if (attacknum > 1 || cc != 0)
     {
     }
-    expmodifer = 1 + cbit(985, tc) * 15 + cbit(23, tc) + cbit(27, tc)
-        + (gdata_current_map == 35);
+    expmodifer = 1 + cdata[tc].is_hung_on_sand_bag() * 15 + cdata[tc].splits()
+        + cdata[tc].splits2() + (gdata_current_map == 35);
     int hit = calcattackhit();
     i = 0;
     if (hit == 1)
@@ -59063,9 +59074,9 @@ void do_use_command()
             if (cdata[tc].state == 1)
             {
                 gdata(94) = 0;
-                if (cbit(966, tc) == 1)
+                if (cdata[tc].has_been_used_stethoscope() == 1)
                 {
-                    cbitmod(966, tc, 0);
+                    cdata[tc].has_been_used_stethoscope() = false;
                     txt(lang(
                         name(tc) + u8"から聴診器を外した。"s,
                         u8"You no longer watch on "s + his(tc)
@@ -59085,7 +59096,7 @@ void do_use_command()
                     txtef(4);
                     txt(lang(u8"「キャー」"s, u8"\"Pervert!\""s));
                 }
-                cbitmod(966, tc, 1);
+                cdata[tc].has_been_used_stethoscope() = true;
                 turn_end();
                 return;
             }
@@ -59111,7 +59122,7 @@ void do_use_command()
                             u8"あなたは自分を紐でくくってみた…"s,
                             u8"You leash yourself..."s));
                     }
-                    else if (cbit(968, tc) == 0)
+                    else if (cdata[tc].is_leashed() == 0)
                     {
                         if (tc >= 16)
                         {
@@ -59129,7 +59140,7 @@ void do_use_command()
                                 goto label_2229_internal;
                             }
                         }
-                        cbitmod(968, tc, 1);
+                        cdata[tc].is_leashed() = true;
                         txt(lang(
                             u8"あなたは"s + name(tc)
                                 + u8"を紐でくくりつけた。"s,
@@ -59142,7 +59153,7 @@ void do_use_command()
                     }
                     else
                     {
-                        cbitmod(968, tc, 0);
+                        cdata[tc].is_leashed() = false;
                         txt(lang(
                             u8"あなたは"s + name(tc)
                                 + u8"にくくりつけた紐をほどいた。"s,
@@ -59199,7 +59210,7 @@ void do_use_command()
                             pc_turn(false);
                         }
                     }
-                    if (cbit(985, tc))
+                    if (cdata[tc].is_hung_on_sand_bag())
                     {
                         txt(lang(
                             u8"それは既に吊るされている。"s,
@@ -59215,7 +59226,7 @@ void do_use_command()
                     else
                     {
                         snd(58);
-                        cbitmod(985, tc, 1);
+                        cdata[tc].is_hung_on_sand_bag() = true;
                         txt(lang(
                             u8"あなたは"s + name(tc) + u8"を吊るした。"s,
                             u8"You hang up "s + name(tc) + u8"."s));
@@ -59869,7 +59880,7 @@ label_2229_internal:
 
 int label_2230()
 {
-    if (cbit(23, tc) || cbit(27, tc))
+    if (cdata[tc].splits() || cdata[tc].splits2())
     {
         return 0;
     }
@@ -59917,7 +59928,7 @@ int label_2231()
     {
         return -1;
     }
-    if (cbit(23, tc) || cbit(27, tc))
+    if (cdata[tc].splits() || cdata[tc].splits2())
     {
         return -1;
     }
@@ -60481,9 +60492,9 @@ void speak_to_npc()
         talk_end();
         return;
     }
-    if (cbit(982, tc))
+    if (cdata[tc].visited_just_now())
     {
-        cbitmod(982, tc, 0);
+        cdata[tc].visited_just_now() = false;
         label_2244();
         return;
     }
@@ -60667,7 +60678,7 @@ void label_2244()
         }
         if (cdata[tc].impression >= 100)
         {
-            if (cbit(984, tc) == 0)
+            if (cdata[tc].is_best_friend() == 0)
             {
                 if (inv_getfreeid(-1) != -1)
                 {
@@ -60688,7 +60699,7 @@ void label_2244()
                             return;
                         }
                     }
-                    cbitmod(984, tc, 1);
+                    cdata[tc].is_best_friend() = true;
                     flt();
                     itemcreate(
                         -1, 730, cdata[0].position.x, cdata[0].position.y, 0);
@@ -62071,7 +62082,7 @@ void label_2252()
                         }
                         if (cdata[cnt].id == cdata[rc].id)
                         {
-                            if (cbit(963, cnt) == 1)
+                            if (cdata[cnt].is_escorted() == 1)
                             {
                                 f = 0;
                                 break;
@@ -62086,7 +62097,7 @@ void label_2252()
             }
             rc = 56;
             new_ally_joins();
-            cbitmod(963, rc, 1);
+            cdata[rc].is_escorted() = true;
             qdata(13, rq) = cdata[rc].id;
         }
         qdata(8, rq) = 1;
@@ -64357,11 +64368,11 @@ int new_ally_joins()
     cdata[rc].relationship = 10;
     cdata[rc].original_relationship = 10;
     cdata[rc].character_role = 0;
-    cbitmod(970, rc, 0);
-    cbitmod(979, rc, 0);
-    cbitmod(985, rc, 0);
-    cbitmod(964, rc, 0);
-    cbitmod(991, rc, 0);
+    cdata[rc].is_quest_target() = false;
+    cdata[rc].does_not_search_enemy() = false;
+    cdata[rc].is_hung_on_sand_bag() = false;
+    cdata[rc].is_temporary() = false;
+    cdata[rc].only_christmas() = false;
     snd(64);
     txtef(5);
     txt(lang(
@@ -64439,7 +64450,7 @@ void label_2662()
                     + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
             {
                 cdata[rc].period_of_contract = 0;
-                cbitmod(969, rc, 0);
+                cdata[rc].is_contracting() = false;
                 cdata[rc].relationship = 0;
                 txt(lang(
                     cdatan(0, rc) + u8"との契約期間が切れた。"s,
@@ -65497,12 +65508,12 @@ void failed_quest(int val0)
             {
                 if (cnt != 0)
                 {
-                    if (cbit(963, cnt) == 1)
+                    if (cdata[cnt].is_escorted() == 1)
                     {
                         if (qdata(13, rq) == cdata[cnt].id)
                         {
                             tc = cnt;
-                            cbitmod(963, cnt, 0);
+                            cdata[cnt].is_escorted() = false;
                             if (cdata[tc].state == 1)
                             {
                                 if (qdata(4, rq) == 0)
@@ -66193,7 +66204,7 @@ int ai_check()
 void label_2687()
 {
     int searchfov = 0;
-    if (cbit(985, cc))
+    if (cdata[cc].is_hung_on_sand_bag())
     {
         if (is_in_fov(cc))
         {
@@ -66222,7 +66233,7 @@ void label_2687()
             {
                 if (mdata(6) != 1)
                 {
-                    if (cbit(968, cc))
+                    if (cdata[cc].is_leashed())
                     {
                         if (gdata_current_map != 40)
                         {
@@ -66243,7 +66254,7 @@ void label_2687()
                                 }
                                 if (rnd(4) == 0)
                                 {
-                                    cbitmod(968, cc, 0);
+                                    cdata[cc].is_leashed() = false;
                                     txtef(9);
                                     txt(lang(
                                         name(cc)
@@ -66263,7 +66274,7 @@ void label_2687()
             }
         }
     }
-    if (cbit(972, cc))
+    if (cdata[cc].will_explode_soon())
     {
         tlocx = cdata[cc].position.x;
         tlocy = cdata[cc].position.y;
@@ -66318,9 +66329,9 @@ void label_2687()
                 }
             }
         }
-        if (cbit(6, cdata[cc].enemy_id) == 1)
+        if (cdata[cdata[cc].enemy_id].is_invisible() == 1)
         {
-            if (cbit(7, cc) == 0)
+            if (cdata[cc].can_see_invisible() == 0)
             {
                 if (cdata[cdata[cc].enemy_id].wet == 0)
                 {
@@ -66469,7 +66480,7 @@ void label_2687()
     tc = cdata[cc].enemy_id;
     if (cdatan(4, cc) != ""s)
     {
-        if (cbit(989, cc) == 0)
+        if (cdata[cc].has_custom_talk() == 0)
         {
             if (rnd(30) == 0)
             {
@@ -66478,9 +66489,9 @@ void label_2687()
             }
         }
     }
-    else if (cdata[cc].can_talk != 0 || cbit(989, cc))
+    else if (cdata[cc].can_talk != 0 || cdata[cc].has_custom_talk())
     {
-        if (cbit(965, cc) == 0)
+        if (cdata[cc].is_silent() == 0)
         {
             if (cdata[cc].turn % 5 == 0)
             {
@@ -66685,7 +66696,7 @@ label_2689_internal:
                 }
                 if (cdata[cc].current_map == gdata_current_map)
                 {
-                    if (cbit(969, cc) == 0)
+                    if (cdata[cc].is_contracting() == 0)
                     {
                         label_2690();
                         return;
@@ -66755,7 +66766,7 @@ label_2689_internal:
                 {
                     if (cdata[c].relationship > -3)
                     {
-                        if (cbit(979, c) == 0)
+                        if (cdata[c].does_not_search_enemy() == 0)
                         {
                             f = 1;
                             break;
@@ -66766,7 +66777,7 @@ label_2689_internal:
                 {
                     if (cdata[c].original_relationship <= -3)
                     {
-                        if (cbit(979, c) == 0)
+                        if (cdata[c].does_not_search_enemy() == 0)
                         {
                             f = 1;
                             break;
@@ -66776,7 +66787,7 @@ label_2689_internal:
             }
             if (f)
             {
-                if (cbit(979, cc) == 0)
+                if (cdata[cc].does_not_search_enemy() == 0)
                 {
                     cdata[cc].enemy_id = c;
                     cdata[cc].hate = 30;
@@ -67073,7 +67084,7 @@ label_2692_internal:
             {
                 if (cdata[cc].vision_flag != msync || rnd(5))
                 {
-                    if (cbit(986, cc) == 0)
+                    if (cdata[cc].has_anorexia() == 0)
                     {
                         cdata[cc].nutrition += 5000;
                     }
@@ -67087,7 +67098,7 @@ label_2692_internal:
                     flt(20);
                     p(0) = rnd(4);
                     p(1) = 0;
-                    if (p == 0 || cbit(986, cc))
+                    if (p == 0 || cdata[cc].has_anorexia())
                     {
                         flttypemajor = 57000;
                     }
@@ -67112,7 +67123,7 @@ label_2692_internal:
                         else
                         {
                             cdata[cc].item_which_will_be_used = ci;
-                            if (cbit(986, cc) == 0)
+                            if (cdata[cc].has_anorexia() == 0)
                             {
                                 cdata[cc].nutrition += 5000;
                             }
@@ -67409,7 +67420,7 @@ void label_2693(bool retreat)
         }
         else if (
             (cdata[cc].quality > 3 && cdata[cc].level > cdata[tc].level)
-            || cbit(985, tc))
+            || cdata[tc].is_hung_on_sand_bag())
         {
             if (cdata[cc].enemy_id != tc)
             {
@@ -67785,7 +67796,7 @@ void label_2696()
             if (cdata[cc].mp < cdata[cc].max_mp / 7)
             {
                 if (rnd(3) || cc < 16 || cdata[cc].quality >= 4
-                    || cbit(988, cc))
+                    || cdata[cc].cures_mp_frequently())
                 {
                     cdata[cc].mp += cdata[cc].level / 4 + 5;
                     turn_end();
@@ -69910,7 +69921,7 @@ void pass_one_turn(bool label_2738_flg)
                     {
                         continue;
                     }
-                    if (cbit(971, cnt) == 1)
+                    if (cdata[cnt].is_escorted_in_sub_quest() == 1)
                     {
                         f = 1;
                     }
@@ -70010,7 +70021,7 @@ void pass_one_turn(bool label_2738_flg)
         ef = map(cdata[tc].position.x, cdata[tc].position.y, 8) - 1;
         if (mef(0, ef) == 3)
         {
-            if (cbit(5, tc) == 0 || cdata[tc].gravity > 0)
+            if (cdata[tc].is_floating() == 0 || cdata[tc].gravity > 0)
             {
                 if (sdata(63, tc) / 50 < 7)
                 {
@@ -70062,7 +70073,7 @@ void pass_one_turn(bool label_2738_flg)
         }
         if (mef(0, ef) == 6)
         {
-            if (cbit(5, tc) == 0 || cdata[tc].gravity > 0)
+            if (cdata[tc].is_floating() == 0 || cdata[tc].gravity > 0)
             {
                 if (is_in_fov(tc))
                 {
@@ -70269,11 +70280,11 @@ void pass_one_turn(bool label_2738_flg)
         {
             label_1577();
         }
-        if (cbit(24, cc))
+        if (cdata[cc].has_cursed_equipments())
         {
             label_1579();
         }
-        if (cbit(978, cc))
+        if (cdata[cc].is_pregnant())
         {
             label_1578();
         }
@@ -70376,7 +70387,7 @@ void pass_one_turn(bool label_2738_flg)
             }
         }
     }
-    if (cbit(981, cc))
+    if (cdata[cc].needs_refreshing_status())
     {
         refresh_character(cc);
     }
@@ -70478,7 +70489,7 @@ void turn_end()
         cdata[cc].nutrition -= 16;
         if (cdata[cc].nutrition < 6000)
         {
-            if (cbit(986, cc) == 0)
+            if (cdata[cc].has_anorexia() == 0)
             {
                 cdata[cc].nutrition = 6000;
             }
@@ -70772,7 +70783,8 @@ void pc_turn(bool label_2747_flg)
             efid = 408;
             magic();
         }
-        if (cbit(6, cdata[0].enemy_id) == 1 && cbit(7, 0) == 0
+        if (cdata[cdata[0].enemy_id].is_invisible() == 1
+            && cdata[0].can_see_invisible() == 0
             && cdata[cdata[0].enemy_id].wet == 0)
         {
             cdata[0].enemy_id = 0;

@@ -715,7 +715,7 @@ int cat_cbitmod(lua_State* L)
     int cc = luaL_checknumber(L, 2);
     int flag = luaL_checknumber(L, 3);
 
-    cbitmod(id, cc, flag);
+    cdata[cc]._flags[id] = flag;
 
     return 0;
 }
@@ -1711,7 +1711,7 @@ void character_making_final_phase()
             pos(20, windowh - 36);
             mes(u8"Gene from "s + geneuse);
         }
-        cbitmod(967, 0, 1);
+        cdata[0].has_own_sprite() = true;
         int stat = change_appearance();
         if (stat == 0)
         {
@@ -2359,7 +2359,7 @@ void initialize_game()
             flttypemajor = 32000;
             itemcreate(0, -1, -1, -1, 0);
         }
-        cbitmod(20, 0, 1);
+        cdata[0].can_cast_rapid_magic() = true;
         mode = 0;
         refresh_burden_state();
         for (int cnt = 0; cnt < 55; ++cnt)

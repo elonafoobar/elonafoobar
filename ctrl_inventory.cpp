@@ -1672,7 +1672,7 @@ label_2061_internal:
                     {
                         f = 0;
                     }
-                    if (cbit(978, tc))
+                    if (cdata[tc].is_pregnant())
                     {
                         if (inv[ci].id == 262 || inv[ci].id == 519
                             || inv[ci].id == 392)
