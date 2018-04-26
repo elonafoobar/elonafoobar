@@ -57,6 +57,7 @@ set(CORE_SOURCES
     elonacore.cpp
     filesystem.cpp
     fish.cpp
+    foobar_save.cpp
     get_card_info.cpp
     get_random_item_id.cpp
     get_random_npc_id.cpp

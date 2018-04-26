@@ -158,6 +158,7 @@ void serialize(Archive& ar, T& data)
         ar.primitive(data); \
     }
 
+PRIMITIVE_TYPES(bool)
 PRIMITIVE_TYPES(char)
 PRIMITIVE_TYPES(unsigned char)
 PRIMITIVE_TYPES(short)
