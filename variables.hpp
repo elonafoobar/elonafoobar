@@ -11,7 +11,6 @@ namespace elona
 {
 ELONA_EXTERN(int anic);
 ELONA_EXTERN(elona_vector1<int> ap);
-ELONA_EXTERN(bool autodig_enabled);
 ELONA_EXTERN(int wishfilter);
 ELONA_EXTERN(int nooracle);
 

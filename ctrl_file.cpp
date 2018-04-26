@@ -3,6 +3,7 @@
 #include "character.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
+#include "foobar_save.hpp"
 #include "item.hpp"
 #include "putit.hpp"
 #include "variables.hpp"
@@ -188,6 +189,25 @@ void fmode_8_7(bool read)
         else
         {
             save_v1(filepath, gdata, 0, 1000);
+        }
+    }
+
+    {
+        const auto filepath = folder + u8"foobar_save.s1";
+        if (read)
+        {
+            if (fs::exists(filepath))
+            {
+                std::ifstream in{filepath, std::ios::binary};
+                putit::binary_iarchive ar{in};
+                ar.load(foobar_save);
+            }
+        }
+        else
+        {
+            std::ofstream out{filepath, std::ios::binary};
+            putit::binary_oarchive ar{out};
+            ar.save(foobar_save);
         }
     }
 

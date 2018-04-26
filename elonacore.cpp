@@ -10,6 +10,7 @@
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "fish.hpp"
+#include "foobar_save.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
@@ -16623,7 +16624,7 @@ void render_hud()
         sy -= 20;
     }
 
-    if (autodig_enabled)
+    if (foobar_save.is_autodig_enabled)
     {
         pos(sx, sy);
         gcopy(3, 0, 416, 50 + en * 30, 15);
@@ -70752,9 +70753,11 @@ label_2747:
 
     if (key == key_autodig)
     {
-        autodig_enabled = !autodig_enabled;
+        foobar_save.is_autodig_enabled = !foobar_save.is_autodig_enabled;
         txt(i18n::_(
-            u8"ui", u8"autodig", autodig_enabled ? u8"enabled" : u8"disabled"));
+            u8"ui",
+            u8"autodig",
+            foobar_save.is_autodig_enabled ? u8"enabled" : u8"disabled"));
         goto label_2747;
     }
 
@@ -70899,7 +70902,7 @@ label_2747:
         // Autodig
         int x = cdata[0].next_position.x;
         int y = cdata[0].next_position.y;
-        if (autodig_enabled)
+        if (foobar_save.is_autodig_enabled)
         {
             if (0 <= x && x < mdata(0) && 0 <= y && y < mdata(1)
                 && (chipm(7, map(x, y, 0)) & 4) && chipm(0, map(x, y, 0)) != 3
