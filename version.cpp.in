@@ -1,33 +1,25 @@
+#include "../version.hpp"
+
+
 namespace elona
-{
-namespace version
 {
 
 
 /* clang-format off */
 
+
 // @VARIABLE@ is replaced by CMake.
-const int major = @PROJECT_VERSION_MAJOR@;
-const int minor = @PROJECT_VERSION_MINOR@;
-const int patch = @PROJECT_VERSION_PATCH@;
-const char* revision = u8"@PROJECT_VERSION_REVISION@";
-const char* timestamp = u8"@PROJECT_VERSION_TIMESTAMP@";
-const char* platform = u8"@PROJECT_VERSION_PLATFORM@";
-
-// Like 10203
-const int id = major * 100 * 100 + minor * 100 + patch;
-
-// Like "1.2.3".
-const char* short_string =
-    u8"@PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@.@PROJECT_VERSION_PATCH@";
-
-// Like "Elona Foobar version 1.2.3 (14db8cb), compiled on Darwin-17.4.0 at 2018-04-15T14:07:28Z"
-const char* long_string =
-    u8"Elona Foobar version @PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@.@PROJECT_VERSION_PATCH@ (@PROJECT_VERSION_REVISION@), compiled on @PROJECT_VERSION_PLATFORM@ at @PROJECT_VERSION_TIMESTAMP@";
+const version_t latest_version{
+    @PROJECT_VERSION_MAJOR@,
+    @PROJECT_VERSION_MINOR@,
+    @PROJECT_VERSION_PATCH@,
+    u8"@PROJECT_VERSION_REVISION@",
+    u8"@PROJECT_VERSION_TIMESTAMP@",
+    u8"@PROJECT_VERSION_PLATFORM@",
+};
 
 
 /* clang-format on */
 
 
-} // namespace version
 } // namespace elona

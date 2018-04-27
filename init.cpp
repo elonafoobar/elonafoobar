@@ -8,6 +8,7 @@
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "fish.hpp"
+#include "foobar_save.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
@@ -742,7 +743,9 @@ int run()
     the_race_db.initialize();
     the_trait_db.initialize();
 
-    title(u8"Elona Foobar version "s + version::short_string);
+    foobar_save.initialize();
+
+    title(u8"Elona Foobar version "s + latest_version.short_string());
     try
     {
         initialize_elona();
@@ -792,7 +795,8 @@ void main_title_menu()
     color(0, 0, 0);
     color(255, 255, 255);
     pos(20, 38);
-    mes(u8"Variant "s + version::long_string + u8"  Developed by KI");
+    mes(u8"  Variant Foobar version "s + latest_version.short_string()
+        + u8"  Developed by KI");
     color(0, 0, 0);
     if (jp)
     {

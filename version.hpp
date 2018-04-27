@@ -1,32 +1,60 @@
 #pragma once
 
+#include <string>
+
 
 namespace elona
-{
-namespace version
 {
 
 
 /* clang-format off */
 
-extern const int major;
-extern const int minor;
-extern const int patch;
-extern const char* revision;
-extern const char* timestamp;
-extern const char* platform;
 
-// Like 10203
-extern const int id;
+struct version_t
+{
+    int major;
+    int minor;
+    int patch;
+    std::string revision;
+    std::string timestamp;
+    std::string platform;
 
-// Like "1.2.3".
-extern const char* short_string;
+    // Like 10203
+    int id() const
+    {
+        return major * 100 * 100 + minor * 100 + patch;
+    }
 
-// Like "Elona Foobar version 1.2.3 (14db8cb), compiled on Darwin-17.4.0 at 2018-04-15T14:07:28Z"
-extern const char* long_string;
+    // Like "1.2.3".
+    std::string short_string() const
+    {
+        return std::to_string(major) + '.' + std::to_string(minor) + '.' + std::to_string(patch);
+    }
+
+    // Like "Elona Foobar version 1.2.3 (14db8cb), compiled on Darwin-17.4.0 at 2018-04-15T14:07:28Z"
+    std::string long_string() const
+    {
+        return u8"Elona Foobar version " + short_string() + " (" + revision + "), compiled on " + platform + " at " + timestamp;
+    }
+
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        ar(major);
+        ar(minor);
+        ar(patch);
+        ar(revision);
+        ar(timestamp);
+        ar(platform);
+    }
+};
+
 
 /* clang-format on */
 
 
-} // namespace version
+extern const version_t latest_version;
+
+
 } // namespace elona

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "version.hpp"
+
 
 namespace elona
 {
@@ -7,7 +9,11 @@ namespace elona
 
 struct foobar_save_t
 {
-    bool is_autodig_enabled;
+    bool is_autodig_enabled{};
+    version_t version;
+
+
+    void initialize();
 
 
     template <typename Archive>
