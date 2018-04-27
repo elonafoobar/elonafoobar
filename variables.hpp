@@ -1,4 +1,5 @@
 #include "elona.hpp"
+#include "position.hpp"
 
 
 #ifdef ELONA_DEFINE_GLOBAL_INSTANCE
@@ -609,7 +610,7 @@ int cdbit(int = 0, int = 0);
 int cell_featread(int = 0, int = 0, int = 0);
 int cell_findspace(int = 0, int = 0, int = 0);
 int cell_itemlist(int = 0, int = 0);
-int cell_itemoncell(int = 0, int = 0);
+std::pair<int, int> cell_itemoncell(const position_t& pos);
 int chara_anorexia(int = 0);
 bool chara_unequip(int);
 int characreate(int = 0, int = 0, int = 0, int = 0);

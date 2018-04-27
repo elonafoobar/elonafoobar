@@ -871,8 +871,10 @@ void cell_draw()
                 {
                     if (p_ == 528 || p_ == 531)
                     {
-                        cell_itemoncell(x_, y);
-                        prepare_item_image(p_, i_, inv[rtval(1)].param1);
+                        prepare_item_image(
+                            p_,
+                            i_,
+                            inv[cell_itemoncell({x_, y}).second].param1);
                     }
                     else
                     {
