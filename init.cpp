@@ -8,6 +8,7 @@
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "fish.hpp"
+#include "foobar_save.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
@@ -741,6 +742,8 @@ int run()
     the_item_material_db.initialize();
     the_race_db.initialize();
     the_trait_db.initialize();
+
+    foobar_save.initialize();
 
     title(u8"Elona Foobar version "s + latest_version.short_string());
     try
