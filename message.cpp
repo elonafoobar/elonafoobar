@@ -52,6 +52,22 @@ void msg_write(std::string& message)
 }
 
 
+
+void clear_log_panel()
+{
+    gsel(8);
+    gmode(0);
+    pos(0, msgline % inf_maxlog * inf_msgspace);
+    gcopy(
+        0,
+        inf_msgx,
+        inf_msgy + 5 + inf_msgspace * 3 + en * 3,
+        windoww - inf_msgx,
+        inf_msgspace);
+    gsel(0);
+}
+
+
 } // namespace
 
 
@@ -694,26 +710,10 @@ void txtef(int prm_308)
 
 
 
-void msg_newlog()
-{
-    gsel(8);
-    gmode(0);
-    pos(0, msgline % inf_maxlog * inf_msgspace);
-    gcopy(
-        0,
-        inf_msgx,
-        inf_msgy + 5 + inf_msgspace * 3 + en * 3,
-        windoww - inf_msgx,
-        inf_msgspace);
-    gsel(0);
-    return;
-}
-
-
-
 void msg_newline()
 {
-    msg_newlog();
+    clear_log_panel();
+
     msglen = 0;
     ++msgline;
     if (msgline >= inf_maxlog)
