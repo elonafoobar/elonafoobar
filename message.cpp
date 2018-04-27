@@ -7,12 +7,57 @@
 
 namespace elona
 {
-
-
 int msglen = 0;
 int tcontinue_at_txtfunc = 0;
 int tcolfix_at_txtfunc = 0;
 int p_at_txtfunc = 0;
+} // namespace elona
+
+
+namespace
+{
+
+
+void msg_write(std::string& message)
+{
+    constexpr const auto musical_note = u8"♪";
+
+    const auto msglen_ = jp ? msglen / 1.5 : msglen;
+    for (auto pos = message.find(musical_note); pos != std::string::npos;
+         pos = message.find(musical_note))
+    {
+        const auto symbol_type =
+            elona::stoi(message.substr(pos + std::strlen(musical_note), 1));
+        if (jp && symbol_type == 0)
+        {
+            break;
+        }
+        message = message.substr(0, pos) + u8"  "
+            + message.substr(
+                  pos + std::strlen(musical_note) + (symbol_type != 0));
+        elona::pos(
+            (msglen_ + pos) * inf_mesfont / 2 + inf_msgx + 7 + en * 3,
+            (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
+        gmode(2);
+        gcopy(3, 600 + symbol_type * 24, 360, 16, 16);
+    }
+
+    elona::color(tcol_at_txtfunc(0), tcol_at_txtfunc(1), tcol_at_txtfunc(2));
+    elona::pos(
+        msglen_ * inf_mesfont / 2 + inf_msgx + 6,
+        (inf_msgline - 1) * inf_msgspace + inf_msgy + 6);
+    font(lang(cfg_font1, cfg_font2), inf_mesfont - en * 2, 0);
+    mes(message);
+    elona::color(0, 0, 0);
+}
+
+
+} // namespace
+
+
+
+namespace elona
+{
 
 
 void key_check(int prm_299)
@@ -560,49 +605,6 @@ void bmes(const std::string& str, int r, int g, int b)
     pos(x, y);
     mes(str);
     color(0, 0, 0);
-}
-
-
-
-void msg_write(std::string& prm_307)
-{
-    int msglen_ = jp ? msglen / 1.5 : msglen;
-    int mp_at_txtfunc = 0;
-    int mark_at_txtfunc = 0;
-    for (int cnt = 0; cnt < 1; ++cnt)
-    {
-        mp_at_txtfunc = instr(prm_307, 0, u8"♪"s);
-        if (mp_at_txtfunc != -1)
-        {
-            mark_at_txtfunc =
-                elona::stoi(strmid(prm_307, mp_at_txtfunc + 2, 1));
-            if (jp)
-            {
-                if (mark_at_txtfunc == 0)
-                {
-                    break;
-                }
-            }
-            prm_307 = strmid(prm_307, 0, mp_at_txtfunc) + u8"  "s
-                + strmid(prm_307,
-                         (mp_at_txtfunc + 2 + (mark_at_txtfunc != 0)),
-                         9999);
-            pos((msglen_ + mp_at_txtfunc) * inf_mesfont / 2 + inf_msgx + 7
-                    + en * 3,
-                (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
-            gmode(2);
-            gcopy(3, 600 + mark_at_txtfunc * 24, 360, 16, 16);
-            --cnt;
-            continue;
-        }
-    }
-    color(tcol_at_txtfunc(0), tcol_at_txtfunc(1), tcol_at_txtfunc(2));
-    pos(msglen_ * inf_mesfont / 2 + inf_msgx + 6,
-        (inf_msgline - 1) * inf_msgspace + inf_msgy + 6);
-    font(lang(cfg_font1, cfg_font2), inf_mesfont - en * 2, 0);
-    mes(prm_307);
-    color(0, 0, 0);
-    return;
 }
 
 
