@@ -1455,8 +1455,6 @@ void modweight(int, int, bool = false);
 void msg_clear();
 void msg_halt();
 void msg_newline();
-void msg_newlog();
-void msg_write(std::string&);
 void netload(const std::string&);
 void opencard(int = 0);
 void page_load();
