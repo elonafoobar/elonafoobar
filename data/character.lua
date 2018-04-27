@@ -1,3 +1,35 @@
+local CHARACTER_FLAG = {
+  IS_FLOATING = 5,
+  IS_INVISIBLE = 6,
+  CAN_SEE_INVISIBLE = 7,
+  IS_IMMUNE_TO_CONFUSION = 8,
+  IS_IMMUNE_TO_BLINDNESS = 9,
+  IS_IMMUNE_TO_FEAR = 10,
+  IS_IMMUNE_TO_SLEEP = 11,
+  IS_IMMUNE_TO_PARALYZATION = 12,
+  IS_IMMUNE_TO_POISON = 13,
+  CAN_DIGEST_ROTTEN_FOOD = 14,
+  IS_PROTECTED_FROM_THIEVES = 15,
+  IS_INCOGNITO = 16,
+  DROPS_GOLD = 17,
+  EXPLODES = 18,
+  IS_DEATH_MASTER = 19,
+  CAN_CAST_RAPID_MAGIC = 20,
+  HAS_LAY_HAND = 21,
+  IS_SUITABLE_FOR_MOUNT = 22,
+  SPLITS = 23,
+  HAS_CURSED_EQUIPMENTS = 24,
+  IS_UNSUITABLE_FOR_MOUNT = 25,
+  IS_IMMUNE_TO_ELEMENTAL_DAMAGE = 26,
+  SPLITS2 = 27,
+  IS_METAL = 28,
+  CURES_BLEEDING_QUICKLY = 29,
+  HAS_POWER_BASH = 30,
+  IS_IMMUNE_TO_MINE = 31,
+  IS_QUICK_TEMPERED = 32,
+  CURES_MP_FREQUENTLY = 988,
+}
+
 character['0'] = {
   item_type = 3,
   filter = "",
@@ -617,6 +649,7 @@ character['351'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_QUICK_TEMPERED},
 }
 character['352'] = {
   item_type = 3,
@@ -1088,6 +1121,7 @@ character['3'] = {
   category = 3,
   rarity = 80000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['4'] = {
   item_type = 1,
@@ -1110,6 +1144,7 @@ character['4'] = {
   category = 3,
   rarity = 70000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['169'] = {
   item_type = 1,
@@ -1184,6 +1219,7 @@ character['286'] = {
   category = 0,
   rarity = 25000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.SPLITS},
 }
 character['285'] = {
   item_type = 1,
@@ -1207,6 +1243,7 @@ character['285'] = {
   category = 0,
   rarity = 25000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.SPLITS},
 }
 character['287'] = {
   item_type = 1,
@@ -1228,6 +1265,7 @@ character['287'] = {
   category = 0,
   rarity = 25000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.SPLITS},
 }
 character['327'] = {
   item_type = 1,
@@ -1249,6 +1287,7 @@ character['327'] = {
   category = 0,
   rarity = 15000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.SPLITS2, CHARACTER_FLAG.IS_IMMUNE_TO_ELEMENTAL_DAMAGE},
 }
 character['5'] = {
   item_type = 1,
@@ -1359,6 +1398,7 @@ character['9'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.DROPS_GOLD},
 }
 character['269'] = {
   item_type = 0,
@@ -1501,6 +1541,7 @@ character['349'] = {
   category = 0,
   rarity = 2000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_QUICK_TEMPERED},
 }
 character['348'] = {
   item_type = 0,
@@ -1524,6 +1565,7 @@ character['348'] = {
   category = 0,
   rarity = 2000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_QUICK_TEMPERED},
 }
 character['347'] = {
   item_type = 0,
@@ -1549,6 +1591,7 @@ character['347'] = {
   category = 0,
   rarity = 2000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_QUICK_TEMPERED},
 }
 character['271'] = {
   item_type = 0,
@@ -1853,6 +1896,7 @@ character['11'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['12'] = {
   item_type = 3,
@@ -1997,6 +2041,7 @@ character['237'] = {
   category = 12,
   rarity = 150000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.EXPLODES},
 }
 character['244'] = {
   item_type = 3,
@@ -2019,6 +2064,7 @@ character['244'] = {
   category = 12,
   rarity = 25000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.EXPLODES},
 }
 character['245'] = {
   item_type = 1,
@@ -2041,6 +2087,7 @@ character['245'] = {
   category = 0,
   rarity = 20000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.EXPLODES},
 }
 character['321'] = {
   item_type = 3,
@@ -2064,6 +2111,7 @@ character['321'] = {
   category = 0,
   rarity = 15000,
   coefficient = 200,
+  flags = {CHARACTER_FLAG.EXPLODES},
 }
 character['242'] = {
   item_type = 3,
@@ -2449,6 +2497,7 @@ character['281'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_QUICK_TEMPERED},
 }
 character['282'] = {
   item_type = 3,
@@ -2512,6 +2561,7 @@ character['298'] = {
   category = 0,
   rarity = 70000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_QUICK_TEMPERED},
 }
 character['299'] = {
   item_type = 3,
@@ -2816,6 +2866,7 @@ character['25'] = {
   category = 2,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_QUICK_TEMPERED},
 }
 character['21'] = {
   item_type = 3,
@@ -2855,6 +2906,7 @@ character['42'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['43'] = {
   item_type = 1,
@@ -2877,6 +2929,7 @@ character['43'] = {
   category = 0,
   rarity = 70000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['44'] = {
   item_type = 1,
@@ -2898,6 +2951,7 @@ character['44'] = {
   category = 0,
   rarity = 60000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['45'] = {
   item_type = 1,
@@ -3039,6 +3093,7 @@ character['307'] = {
   category = 0,
   rarity = 10000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_DEATH_MASTER},
 }
 character['308'] = {
   item_type = 6,
@@ -3063,6 +3118,7 @@ character['308'] = {
   category = 0,
   rarity = 10000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_DEATH_MASTER},
 }
 character['50'] = {
   item_type = 1,
@@ -3085,6 +3141,7 @@ character['50'] = {
   category = 0,
   rarity = 80000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['51'] = {
   item_type = 1,
@@ -3111,6 +3168,7 @@ character['51'] = {
   category = 14,
   rarity = 70000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['52'] = {
   item_type = 1,
@@ -3137,6 +3195,7 @@ character['52'] = {
   category = 15,
   rarity = 70000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['53'] = {
   item_type = 1,
@@ -3160,6 +3219,7 @@ character['53'] = {
   category = 16,
   rarity = 70000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['54'] = {
   item_type = 1,
@@ -3183,6 +3243,7 @@ character['54'] = {
   category = 17,
   rarity = 70000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['55'] = {
   item_type = 1,
@@ -3206,6 +3267,7 @@ character['55'] = {
   category = 18,
   rarity = 50000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['56'] = {
   item_type = 1,
@@ -3229,6 +3291,7 @@ character['56'] = {
   category = 19,
   rarity = 50000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['57'] = {
   item_type = 1,
@@ -3252,6 +3315,7 @@ character['57'] = {
   category = 20,
   rarity = 50000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['58'] = {
   item_type = 1,
@@ -3275,6 +3339,7 @@ character['58'] = {
   category = 21,
   rarity = 40000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['59'] = {
   item_type = 1,
@@ -3298,6 +3363,7 @@ character['59'] = {
   category = 22,
   rarity = 40000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['60'] = {
   item_type = 1,
@@ -3321,6 +3387,7 @@ character['60'] = {
   category = 23,
   rarity = 40000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['61'] = {
   item_type = 1,
@@ -3385,6 +3452,7 @@ character['63'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['64'] = {
   item_type = 3,
@@ -3405,6 +3473,7 @@ character['64'] = {
   category = 0,
   rarity = 70000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['312'] = {
   item_type = 3,
@@ -3427,6 +3496,7 @@ character['312'] = {
   category = 0,
   rarity = 40000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['313'] = {
   item_type = 3,
@@ -3450,6 +3520,7 @@ character['313'] = {
   category = 0,
   rarity = 40000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['65'] = {
   item_type = 1,
@@ -3471,6 +3542,7 @@ character['65'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING, CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['66'] = {
   item_type = 1,
@@ -3493,6 +3565,7 @@ character['66'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING, CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['67'] = {
   item_type = 1,
@@ -3517,6 +3590,7 @@ character['67'] = {
   category = 0,
   rarity = 80000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING, CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['315'] = {
   item_type = 1,
@@ -3544,6 +3618,7 @@ character['315'] = {
   category = 0,
   rarity = 60000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING, CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['316'] = {
   item_type = 1,
@@ -3571,6 +3646,7 @@ character['316'] = {
   category = 0,
   rarity = 60000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING, CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['314'] = {
   item_type = 1,
@@ -3599,6 +3675,7 @@ character['314'] = {
   category = 0,
   rarity = 60000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING, CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['68'] = {
   item_type = 4,
@@ -3621,6 +3698,7 @@ character['68'] = {
   category = 0,
   rarity = 50000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['78'] = {
   item_type = 3,
@@ -3663,6 +3741,7 @@ character['81'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['82'] = {
   item_type = 2,
@@ -3684,6 +3763,7 @@ character['82'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['83'] = {
   item_type = 3,
@@ -3704,6 +3784,7 @@ character['83'] = {
   category = 0,
   rarity = 60000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_QUICK_TEMPERED},
 }
 character['84'] = {
   item_type = 3,
@@ -3726,6 +3807,7 @@ character['84'] = {
   category = 0,
   rarity = 50000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_QUICK_TEMPERED},
 }
 character['85'] = {
   item_type = 3,
@@ -3747,6 +3829,7 @@ character['85'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['86'] = {
   item_type = 3,
@@ -3768,6 +3851,7 @@ character['86'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['87'] = {
   item_type = 3,
@@ -3789,6 +3873,7 @@ character['87'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['88'] = {
   item_type = 3,
@@ -3876,6 +3961,7 @@ character['91'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['92'] = {
   item_type = 3,
@@ -3899,6 +3985,7 @@ character['92'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['93'] = {
   item_type = 2,
@@ -4118,6 +4205,7 @@ character['257'] = {
   category = 13,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_DEATH_MASTER},
 }
 character['254'] = {
   item_type = 3,
@@ -4248,6 +4336,7 @@ character['106'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['107'] = {
   item_type = 3,
@@ -4272,6 +4361,7 @@ character['107'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['108'] = {
   item_type = 1,
@@ -4313,6 +4403,7 @@ character['109'] = {
   category = 11,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_QUICK_TEMPERED},
 }
 character['344'] = {
   item_type = 1,
@@ -4353,6 +4444,7 @@ character['110'] = {
   category = 0,
   rarity = 40000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['111'] = {
   item_type = 3,
@@ -4374,6 +4466,7 @@ character['111'] = {
   category = 0,
   rarity = 30000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['112'] = {
   item_type = 3,
@@ -4395,6 +4488,7 @@ character['112'] = {
   category = 0,
   rarity = 30000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['113'] = {
   item_type = 3,
@@ -4417,6 +4511,7 @@ character['113'] = {
   category = 0,
   rarity = 30000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['114'] = {
   item_type = 3,
@@ -4500,6 +4595,7 @@ character['117'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['118'] = {
   item_type = 3,
@@ -4521,6 +4617,7 @@ character['118'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING, CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['248'] = {
   item_type = 1,
@@ -4902,6 +4999,7 @@ character['132'] = {
   category = 0,
   rarity = 40000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['133'] = {
   item_type = 3,
@@ -4922,6 +5020,7 @@ character['133'] = {
   category = 0,
   rarity = 40000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['134'] = {
   item_type = 3,
@@ -4944,6 +5043,7 @@ character['134'] = {
   category = 0,
   rarity = 40000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['135'] = {
   item_type = 3,
@@ -4966,6 +5066,7 @@ character['135'] = {
   category = 0,
   rarity = 30000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['136'] = {
   item_type = 3,
@@ -4988,6 +5089,7 @@ character['136'] = {
   category = 0,
   rarity = 20000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['137'] = {
   item_type = 3,
@@ -5010,6 +5112,7 @@ character['137'] = {
   category = 0,
   rarity = 15000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['138'] = {
   item_type = 3,
@@ -5032,6 +5135,7 @@ character['138'] = {
   category = 0,
   rarity = 15000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['147'] = {
   item_type = 2,
@@ -5119,6 +5223,7 @@ character['150'] = {
   category = 9,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['151'] = {
   item_type = 3,
@@ -5141,6 +5246,7 @@ character['151'] = {
   category = 9,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['152'] = {
   item_type = 3,
@@ -5163,6 +5269,7 @@ character['152'] = {
   category = 9,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['153'] = {
   item_type = 3,
@@ -5635,6 +5742,7 @@ character['164'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['246'] = {
   item_type = 1,
@@ -5702,6 +5810,7 @@ character['229'] = {
   category = 10,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['230'] = {
   item_type = 1,
@@ -5770,6 +5879,7 @@ character['165'] = {
   category = 10,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['225'] = {
   item_type = 1,
@@ -5792,6 +5902,7 @@ character['225'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['226'] = {
   item_type = 3,
@@ -5860,6 +5971,7 @@ character['166'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['167'] = {
   item_type = 1,
@@ -5969,6 +6081,7 @@ character['176'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['249'] = {
   item_type = 3,
@@ -5993,6 +6106,7 @@ character['249'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['210'] = {
   item_type = 3,
@@ -6040,6 +6154,7 @@ character['211'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['177'] = {
   item_type = 3,
@@ -6184,6 +6299,7 @@ character['180'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['181'] = {
   item_type = 1,
@@ -6228,6 +6344,7 @@ character['182'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['183'] = {
   item_type = 3,
@@ -6343,6 +6460,7 @@ character['186'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['187'] = {
   item_type = 3,
@@ -6365,6 +6483,7 @@ character['187'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['188'] = {
   item_type = 3,
@@ -6387,6 +6506,7 @@ character['188'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['345'] = {
   item_type = 3,
@@ -6410,6 +6530,7 @@ character['345'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR, CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['346'] = {
   item_type = 3,
@@ -6432,6 +6553,7 @@ character['346'] = {
   category = 0,
   rarity = 5000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR, CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['341'] = {
   item_type = 3,
@@ -6443,7 +6565,6 @@ character['341'] = {
   ai_dist = 3,
   ai_act_sub_freq = 15,
   creaturepack = 0,
-  cbit_988 = true,
   normal_actions = {659, -4},
   special_actions = {466},
   original_relationship = -3,
@@ -6454,6 +6575,7 @@ character['341'] = {
   category = 0,
   rarity = 25000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR, CHARACTER_FLAG.IS_IMMUNE_TO_MINE, CHARACTER_FLAG.CURES_MP_FREQUENTLY},
 }
 character['258'] = {
   item_type = 3,
@@ -6476,6 +6598,7 @@ character['258'] = {
   category = 0,
   rarity = 50000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['189'] = {
   item_type = 3,
@@ -6497,6 +6620,7 @@ character['189'] = {
   category = 0,
   rarity = 60000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING, CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['190'] = {
   item_type = 3,
@@ -6519,6 +6643,7 @@ character['190'] = {
   category = 0,
   rarity = 60000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING, CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['191'] = {
   item_type = 3,
@@ -6540,6 +6665,7 @@ character['191'] = {
   category = 0,
   rarity = 50000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING, CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['192'] = {
   item_type = 1,
@@ -6648,6 +6774,7 @@ character['201'] = {
   category = 0,
   rarity = 20000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_INVISIBLE},
 }
 character['197'] = {
   item_type = 2,
@@ -6671,6 +6798,7 @@ character['197'] = {
   category = 0,
   rarity = 60000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_INVISIBLE},
 }
 character['198'] = {
   item_type = 2,
@@ -6694,6 +6822,7 @@ character['198'] = {
   category = 0,
   rarity = 60000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_INVISIBLE},
 }
 character['199'] = {
   item_type = 3,
@@ -6715,6 +6844,7 @@ character['199'] = {
   category = 0,
   rarity = 30000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_INVISIBLE, CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['200'] = {
   item_type = 3,
@@ -6737,6 +6867,7 @@ character['200'] = {
   category = 0,
   rarity = 30000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_INVISIBLE, CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['202'] = {
   item_type = 3,
@@ -7124,6 +7255,7 @@ character['301'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_QUICK_TEMPERED},
 }
 character['214'] = {
   item_type = 3,
@@ -7146,6 +7278,7 @@ character['214'] = {
   category = 0,
   rarity = 30000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.DROPS_GOLD},
 }
 character['215'] = {
   item_type = 3,
@@ -7170,6 +7303,7 @@ character['215'] = {
   category = 0,
   rarity = 30000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.DROPS_GOLD},
 }
 character['217'] = {
   item_type = 3,
@@ -7194,6 +7328,7 @@ character['217'] = {
   category = 0,
   rarity = 30000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.DROPS_GOLD},
 }
 character['216'] = {
   item_type = 1,
@@ -7215,6 +7350,7 @@ character['216'] = {
   category = 0,
   rarity = 20000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['218'] = {
   item_type = 1,
@@ -7238,6 +7374,7 @@ character['218'] = {
   category = 0,
   rarity = 40000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['219'] = {
   item_type = 3,
@@ -7283,6 +7420,7 @@ character['220'] = {
   category = 0,
   rarity = 30000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['250'] = {
   item_type = 3,
@@ -7303,6 +7441,7 @@ character['250'] = {
   category = 0,
   rarity = 50000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING, CHARACTER_FLAG.DROPS_GOLD},
 }
 character['260'] = {
   item_type = 3,
@@ -7328,6 +7467,7 @@ character['260'] = {
   category = 0,
   rarity = 50000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['261'] = {
   item_type = 3,
@@ -7353,6 +7493,7 @@ character['261'] = {
   category = 0,
   rarity = 50000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['262'] = {
   item_type = 3,
@@ -7377,6 +7518,7 @@ character['262'] = {
   category = 0,
   rarity = 50000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['263'] = {
   item_type = 3,
@@ -7403,6 +7545,7 @@ character['263'] = {
   category = 0,
   rarity = 50000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING, CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['264'] = {
   item_type = 3,
@@ -7426,6 +7569,7 @@ character['264'] = {
   category = 0,
   rarity = 50000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING, CHARACTER_FLAG.CAN_CAST_RAPID_MAGIC},
 }
 character['265'] = {
   item_type = 3,
@@ -7452,6 +7596,7 @@ character['265'] = {
   category = 0,
   rarity = 50000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['266'] = {
   item_type = 3,
@@ -7478,6 +7623,7 @@ character['266'] = {
   category = 0,
   rarity = 50000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING, CHARACTER_FLAG.HAS_LAY_HAND},
 }
 character['267'] = {
   item_type = 1,
@@ -7500,6 +7646,7 @@ character['267'] = {
   category = 0,
   rarity = 10000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['276'] = {
   item_type = 1,
@@ -7523,6 +7670,7 @@ character['276'] = {
   category = 0,
   rarity = 10000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['275'] = {
   item_type = 1,
@@ -7546,6 +7694,7 @@ character['275'] = {
   category = 0,
   rarity = 10000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['268'] = {
   item_type = 1,
@@ -7569,6 +7718,7 @@ character['268'] = {
   category = 0,
   rarity = 10000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['277'] = {
   item_type = 1,
@@ -7592,6 +7742,7 @@ character['277'] = {
   category = 0,
   rarity = 10000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_SUITABLE_FOR_MOUNT},
 }
 character['278'] = {
   item_type = 3,
@@ -7685,6 +7836,7 @@ character['288'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING, CHARACTER_FLAG.CAN_CAST_RAPID_MAGIC},
 }
 character['290'] = {
   item_type = 3,
@@ -7709,6 +7861,7 @@ character['290'] = {
   category = 0,
   rarity = 100000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_FLOATING, CHARACTER_FLAG.CAN_CAST_RAPID_MAGIC},
 }
 character['292'] = {
   item_type = 3,
@@ -7858,6 +8011,7 @@ character['318'] = {
   category = 0,
   rarity = 50000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_IMMUNE_TO_FEAR},
 }
 character['319'] = {
   item_type = 3,
@@ -7951,6 +8105,7 @@ character['323'] = {
   category = 0,
   rarity = 10000,
   coefficient = 0,
+  flags = {CHARACTER_FLAG.IS_FLOATING},
 }
 character['324'] = {
   item_type = 3,
@@ -7971,6 +8126,7 @@ character['324'] = {
   category = 0,
   rarity = 15000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_UNSUITABLE_FOR_MOUNT, CHARACTER_FLAG.IS_IMMUNE_TO_ELEMENTAL_DAMAGE},
 }
 character['325'] = {
   item_type = 3,
@@ -7993,6 +8149,7 @@ character['325'] = {
   category = 0,
   rarity = 15000,
   coefficient = 400,
+  flags = {CHARACTER_FLAG.IS_UNSUITABLE_FOR_MOUNT, CHARACTER_FLAG.IS_IMMUNE_TO_ELEMENTAL_DAMAGE},
 }
 character['328'] = {
   item_type = 1,
@@ -8014,6 +8171,7 @@ character['328'] = {
   category = 0,
   rarity = 2000,
   coefficient = 0,
+  flags = {CHARACTER_FLAG.IS_UNSUITABLE_FOR_MOUNT, CHARACTER_FLAG.IS_METAL, CHARACTER_FLAG.IS_IMMUNE_TO_ELEMENTAL_DAMAGE, CHARACTER_FLAG.IS_FLOATING},
 }
 character['329'] = {
   item_type = 1,
@@ -8036,6 +8194,7 @@ character['329'] = {
   category = 0,
   rarity = 5000,
   coefficient = 0,
+  flags = {CHARACTER_FLAG.IS_UNSUITABLE_FOR_MOUNT, CHARACTER_FLAG.IS_METAL, CHARACTER_FLAG.IS_IMMUNE_TO_ELEMENTAL_DAMAGE, CHARACTER_FLAG.IS_FLOATING},
 }
 character['330'] = {
   item_type = 1,

@@ -385,7 +385,6 @@ void initialize_elona()
     delete_temporary_npc_files();
     delete_temporary_user_files();
     initialize_character_filters();
-    initialize_cbit_filters();
     initialize_item_chip();
     initialize_building_daga();
     initialize_adata();

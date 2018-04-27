@@ -1373,7 +1373,6 @@ void show_city_chart();
 void label_2276();
 void label_2280();
 void get_random_npc_id();
-void initialize_cbit_filters();
 void create_all_adventurers();
 void create_adventurer();
 void label_2662();
