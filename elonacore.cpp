@@ -65199,7 +65199,7 @@ label_2684_internal:
     {
         y = y1 + 28 + (9 - noteinfo() / 2 + cnt) * 20;
         noteget(s, cnt);
-        x = windoww / 2 - s(0).size() * 4;
+        x = windoww / 2 - strlen_u(s(0)) * 4;
         color(10, 10, 10);
         pos(x, y);
         bmes(s, 240, 240, 240);
