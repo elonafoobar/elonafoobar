@@ -31,7 +31,6 @@ void character_db::define(lua_State* L)
     ELONA_CAT_DB_FIELD_INTEGER(ai_heal, 0);
     ELONA_CAT_DB_FIELD_INTEGER(ai_move, 0);
     ELONA_CAT_DB_FIELD_INTEGER(can_talk, 0);
-    ELONA_CAT_DB_FIELD_BOOLEAN(cbit_988, false);
     ELONA_CAT_DB_FIELD_STRING(class_, "");
     ELONA_CAT_DB_FIELD_INTEGER(color, 0);
     ELONA_CAT_DB_FIELD_INTEGER(creaturepack, 0);
@@ -108,6 +107,27 @@ void character_db::define(lua_State* L)
     }
     lua_pop(L, 1);
 
+    std::vector<int> flag_types;
+    lua_getfield(L, -1, u8"flags");
+    if (!lua_isnil(L, -1))
+    {
+        lua_pushnil(L);
+        while (lua_next(L, -2))
+        {
+            int v = luaL_checkinteger(L, -1);
+            flag_types.push_back(v);
+            lua_pop(L, 1);
+        }
+    }
+    lua_pop(L, 1);
+
+    // TODO: cannot set bit flags off.
+    decltype(character_data::_flags) flags;
+    for (const auto& type : flag_types)
+    {
+        flags[type] = true;
+    }
+
     storage.emplace(
         std::stoi(id), // TODO
         character_data{
@@ -120,7 +140,6 @@ void character_db::define(lua_State* L)
             ai_heal,
             ai_move,
             can_talk,
-            cbit_988,
             class_,
             color,
             creaturepack,
@@ -152,6 +171,7 @@ void character_db::define(lua_State* L)
             category,
             rarity,
             coefficient,
+            flags,
         });
 }
 

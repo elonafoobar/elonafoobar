@@ -435,7 +435,6 @@ int evy = 0;
 int evtiles = 0;
 int evscrh = 0;
 int evscrw = 0;
-elona_vector2<int> cbitorg;
 int refreshmode = 0;
 int r3 = 0;
 int refdiff = 0;
@@ -18317,11 +18316,7 @@ void refresh_character(int cc)
     }
     else
     {
-        for (size_t i = 0; i < cdata[cc]._flags.size(); ++i)
-        {
-            cdata(cc)._flags[i] = cbitorg(i / (8 * sizeof(int)), cdata[cc].id)
-                & (1 << (i % (8 * sizeof(int))));
-        }
+        cdata[cc]._flags = the_character_db[cdata[cc].id]->_flags;
     }
     for (int cnt = 10; cnt < 20; ++cnt)
     {
@@ -63473,171 +63468,6 @@ label_2283_internal:
         return;
     }
     goto label_2283_internal;
-}
-
-
-
-void initialize_cbit_filters()
-{
-    DIM3(cbitorg, 30, 356);
-    HMMBITON(cbitorg(1, 351), 0);
-    HMMBITON(cbitorg(0, 3), 22);
-    HMMBITON(cbitorg(0, 4), 22);
-    HMMBITON(cbitorg(0, 286), 23);
-    HMMBITON(cbitorg(0, 285), 23);
-    HMMBITON(cbitorg(0, 287), 23);
-    HMMBITON(cbitorg(0, 327), 27);
-    HMMBITON(cbitorg(0, 327), 26);
-    HMMBITON(cbitorg(0, 9), 17);
-    HMMBITON(cbitorg(1, 349), 0);
-    HMMBITON(cbitorg(1, 348), 0);
-    HMMBITON(cbitorg(1, 347), 0);
-    HMMBITON(cbitorg(0, 11), 5);
-    HMMBITON(cbitorg(0, 237), 18);
-    HMMBITON(cbitorg(0, 244), 18);
-    HMMBITON(cbitorg(0, 245), 18);
-    HMMBITON(cbitorg(0, 321), 18);
-    HMMBITON(cbitorg(1, 281), 0);
-    HMMBITON(cbitorg(1, 298), 0);
-    HMMBITON(cbitorg(1, 25), 0);
-    HMMBITON(cbitorg(0, 42), 5);
-    HMMBITON(cbitorg(0, 43), 5);
-    HMMBITON(cbitorg(0, 44), 5);
-    HMMBITON(cbitorg(0, 307), 19);
-    HMMBITON(cbitorg(0, 308), 19);
-    HMMBITON(cbitorg(0, 50), 22);
-    HMMBITON(cbitorg(0, 51), 22);
-    HMMBITON(cbitorg(0, 52), 22);
-    HMMBITON(cbitorg(0, 53), 22);
-    HMMBITON(cbitorg(0, 54), 22);
-    HMMBITON(cbitorg(0, 55), 22);
-    HMMBITON(cbitorg(0, 56), 22);
-    HMMBITON(cbitorg(0, 57), 22);
-    HMMBITON(cbitorg(0, 58), 22);
-    HMMBITON(cbitorg(0, 59), 22);
-    HMMBITON(cbitorg(0, 60), 22);
-    HMMBITON(cbitorg(0, 63), 5);
-    HMMBITON(cbitorg(0, 64), 5);
-    HMMBITON(cbitorg(0, 312), 5);
-    HMMBITON(cbitorg(0, 313), 5);
-    HMMBITON(cbitorg(0, 65), 5);
-    HMMBITON(cbitorg(0, 65), 10);
-    HMMBITON(cbitorg(0, 66), 5);
-    HMMBITON(cbitorg(0, 66), 10);
-    HMMBITON(cbitorg(0, 67), 5);
-    HMMBITON(cbitorg(0, 67), 10);
-    HMMBITON(cbitorg(0, 315), 5);
-    HMMBITON(cbitorg(0, 315), 10);
-    HMMBITON(cbitorg(0, 316), 5);
-    HMMBITON(cbitorg(0, 316), 10);
-    HMMBITON(cbitorg(0, 314), 5);
-    HMMBITON(cbitorg(0, 314), 10);
-    HMMBITON(cbitorg(0, 68), 5);
-    HMMBITON(cbitorg(0, 81), 5);
-    HMMBITON(cbitorg(0, 82), 5);
-    HMMBITON(cbitorg(1, 83), 0);
-    HMMBITON(cbitorg(1, 84), 0);
-    HMMBITON(cbitorg(0, 85), 5);
-    HMMBITON(cbitorg(0, 86), 5);
-    HMMBITON(cbitorg(0, 87), 5);
-    HMMBITON(cbitorg(0, 91), 5);
-    HMMBITON(cbitorg(0, 92), 5);
-    HMMBITON(cbitorg(0, 257), 19);
-    HMMBITON(cbitorg(0, 106), 10);
-    HMMBITON(cbitorg(0, 107), 10);
-    HMMBITON(cbitorg(1, 109), 0);
-    HMMBITON(cbitorg(0, 110), 10);
-    HMMBITON(cbitorg(0, 111), 10);
-    HMMBITON(cbitorg(0, 112), 10);
-    HMMBITON(cbitorg(0, 113), 10);
-    HMMBITON(cbitorg(0, 117), 5);
-    HMMBITON(cbitorg(0, 118), 5);
-    HMMBITON(cbitorg(0, 118), 10);
-    HMMBITON(cbitorg(0, 132), 10);
-    HMMBITON(cbitorg(0, 133), 10);
-    HMMBITON(cbitorg(0, 134), 10);
-    HMMBITON(cbitorg(0, 135), 10);
-    HMMBITON(cbitorg(0, 136), 10);
-    HMMBITON(cbitorg(0, 137), 10);
-    HMMBITON(cbitorg(0, 138), 10);
-    HMMBITON(cbitorg(0, 150), 10);
-    HMMBITON(cbitorg(0, 151), 10);
-    HMMBITON(cbitorg(0, 152), 10);
-    HMMBITON(cbitorg(0, 164), 22);
-    HMMBITON(cbitorg(0, 229), 22);
-    HMMBITON(cbitorg(0, 165), 22);
-    HMMBITON(cbitorg(0, 225), 22);
-    HMMBITON(cbitorg(0, 166), 22);
-    HMMBITON(cbitorg(0, 176), 22);
-    HMMBITON(cbitorg(0, 249), 22);
-    HMMBITON(cbitorg(0, 211), 22);
-    HMMBITON(cbitorg(0, 180), 22);
-    HMMBITON(cbitorg(0, 182), 22);
-    HMMBITON(cbitorg(0, 186), 10);
-    HMMBITON(cbitorg(0, 187), 10);
-    HMMBITON(cbitorg(0, 188), 10);
-    HMMBITON(cbitorg(0, 345), 10);
-    HMMBITON(cbitorg(0, 345), 22);
-    HMMBITON(cbitorg(0, 346), 10);
-    HMMBITON(cbitorg(0, 346), 22);
-    HMMBITON(cbitorg(0, 341), 10);
-    HMMBITON(cbitorg(0, 341), 31);
-    HMMBITON(cbitorg(0, 258), 10);
-    HMMBITON(cbitorg(0, 189), 5);
-    HMMBITON(cbitorg(0, 189), 10);
-    HMMBITON(cbitorg(0, 190), 5);
-    HMMBITON(cbitorg(0, 190), 10);
-    HMMBITON(cbitorg(0, 191), 5);
-    HMMBITON(cbitorg(0, 191), 10);
-    HMMBITON(cbitorg(0, 201), 6);
-    HMMBITON(cbitorg(0, 197), 6);
-    HMMBITON(cbitorg(0, 198), 6);
-    HMMBITON(cbitorg(0, 199), 6);
-    HMMBITON(cbitorg(0, 199), 10);
-    HMMBITON(cbitorg(0, 200), 6);
-    HMMBITON(cbitorg(0, 200), 10);
-    HMMBITON(cbitorg(1, 301), 0);
-    HMMBITON(cbitorg(0, 214), 17);
-    HMMBITON(cbitorg(0, 215), 17);
-    HMMBITON(cbitorg(0, 217), 17);
-    HMMBITON(cbitorg(0, 216), 10);
-    HMMBITON(cbitorg(0, 218), 10);
-    HMMBITON(cbitorg(0, 220), 10);
-    HMMBITON(cbitorg(0, 250), 5);
-    HMMBITON(cbitorg(0, 250), 17);
-    HMMBITON(cbitorg(0, 260), 5);
-    HMMBITON(cbitorg(0, 261), 5);
-    HMMBITON(cbitorg(0, 262), 5);
-    HMMBITON(cbitorg(0, 263), 5);
-    HMMBITON(cbitorg(0, 263), 22);
-    HMMBITON(cbitorg(0, 264), 5);
-    HMMBITON(cbitorg(0, 264), 20);
-    HMMBITON(cbitorg(0, 265), 5);
-    HMMBITON(cbitorg(0, 266), 5);
-    HMMBITON(cbitorg(0, 266), 21);
-    HMMBITON(cbitorg(0, 267), 22);
-    HMMBITON(cbitorg(0, 276), 22);
-    HMMBITON(cbitorg(0, 275), 22);
-    HMMBITON(cbitorg(0, 268), 22);
-    HMMBITON(cbitorg(0, 277), 22);
-    HMMBITON(cbitorg(0, 288), 5);
-    HMMBITON(cbitorg(0, 288), 20);
-    HMMBITON(cbitorg(0, 290), 5);
-    HMMBITON(cbitorg(0, 290), 20);
-    HMMBITON(cbitorg(0, 318), 10);
-    HMMBITON(cbitorg(0, 323), 5);
-    HMMBITON(cbitorg(0, 324), 25);
-    HMMBITON(cbitorg(0, 324), 26);
-    HMMBITON(cbitorg(0, 325), 25);
-    HMMBITON(cbitorg(0, 325), 26);
-    HMMBITON(cbitorg(0, 328), 25);
-    HMMBITON(cbitorg(0, 328), 28);
-    HMMBITON(cbitorg(0, 328), 26);
-    HMMBITON(cbitorg(0, 328), 5);
-    HMMBITON(cbitorg(0, 329), 25);
-    HMMBITON(cbitorg(0, 329), 28);
-    HMMBITON(cbitorg(0, 329), 26);
-    HMMBITON(cbitorg(0, 329), 5);
 }
 
 
