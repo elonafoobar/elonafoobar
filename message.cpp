@@ -7,7 +7,7 @@
 
 namespace elona
 {
-int msglen = 0;
+size_t message_width{};
 int tcontinue_at_txtfunc = 0;
 int tcolfix_at_txtfunc = 0;
 int p_at_txtfunc = 0;
@@ -22,7 +22,6 @@ void msg_write(std::string& message)
 {
     constexpr const auto musical_note = u8"♪";
 
-    const auto msglen_ = jp ? msglen / 1.5 : msglen;
     for (auto pos = message.find(musical_note); pos != std::string::npos;
          pos = message.find(musical_note))
     {
@@ -36,7 +35,7 @@ void msg_write(std::string& message)
             + message.substr(
                   pos + std::strlen(musical_note) + (symbol_type != 0));
         elona::pos(
-            (msglen_ + pos) * inf_mesfont / 2 + inf_msgx + 7 + en * 3,
+            (message_width + pos) * inf_mesfont / 2 + inf_msgx + 7 + en * 3,
             (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
         gmode(2);
         gcopy(3, 600 + symbol_type * 24, 360, 16, 16);
@@ -44,7 +43,7 @@ void msg_write(std::string& message)
 
     elona::color(tcol_at_txtfunc(0), tcol_at_txtfunc(1), tcol_at_txtfunc(2));
     elona::pos(
-        msglen_ * inf_mesfont / 2 + inf_msgx + 6,
+        message_width * inf_mesfont / 2 + inf_msgx + 6,
         (inf_msgline - 1) * inf_msgspace + inf_msgy + 6);
     font(lang(cfg_font1, cfg_font2), inf_mesfont - en * 2, 0);
     mes(message);
@@ -714,7 +713,7 @@ void msg_newline()
 {
     clear_log_panel();
 
-    msglen = 0;
+    message_width = 0;
     ++msgline;
     if (msgline >= inf_maxlog)
     {
@@ -762,7 +761,7 @@ void txtnew()
         if (strlen_u(msg(msgline % inf_maxlog)) > 4)
         {
             msg_newline();
-            msglen = 2;
+            message_width = 2;
         }
     }
     return;
@@ -784,7 +783,6 @@ void msg_clear()
 
 void txt_conv()
 {
-
     if (msgtemp(0).empty())
         return;
 
@@ -824,7 +822,7 @@ void txt_conv()
             }
             else
             {
-                msglen = 2;
+                message_width = 2;
             }
         }
     }
@@ -836,8 +834,6 @@ void txt_conv()
         msgtempprev = msgtemp(0);
         msgdup = 0;
     }
-
-    int inf_maxmsglen_ = inf_maxmsglen * 1.5;
 
     if (jp)
     {
@@ -855,53 +851,47 @@ void txt_conv()
             }
         }
 
-        int len = 0;
+        size_t width{};
         while (1)
         {
-            len = msgtemp(0).size();
-            if (msglen + 4 > inf_maxmsglen_ && !msgtemp(0).empty())
+            width = strlen_u(msgtemp(0));
+            if (message_width + 4 > inf_maxmsglen && !msgtemp(0).empty())
             {
                 msg_newline();
             }
-            if (msglen + len > inf_maxmsglen_)
+            if (message_width + width > inf_maxmsglen)
             {
-                int p2 = 0;
+                size_t len{};
+                size_t wdt{};
                 while (1)
                 {
-                    const uint8_t c = msgtemp(0)[p2];
-                    if (c <= 0x7F)
-                        p2 += 1;
-                    else if (c >= 0xc2 && c <= 0xdf)
-                        p2 += 2;
-                    else if (c >= 0xe0 && c <= 0xef)
-                        p2 += 3;
-                    else if (c >= 0xf0 && c <= 0xf7)
-                        p2 += 4;
-                    else if (c >= 0xf8 && c <= 0xfb)
-                        p2 += 5;
-                    else if (c >= 0xfc && c <= 0xfd)
-                        p2 += 6;
-                    else
-                        p2 += 1;
-                    if (p2 + msglen > inf_maxmsglen_)
+                    const auto byte = strutil::byte_count(msgtemp(0)[len]);
+                    wdt += byte == 1 ? 1 : 2;
+                    len += byte;
+                    if (wdt + message_width > inf_maxmsglen)
                     {
-                        if (p2 + msglen > inf_maxmsglen_ + 2)
+                        if (wdt + message_width > inf_maxmsglen + 2)
                         {
                             break;
                         }
-                        const auto m = strmid(msgtemp(0), p2, 3);
-                        if (m != u8"。" && m != u8"、" && m != u8"」"
-                            && m != u8"』" && m != u8"！" && m != u8"？"
-                            && m != u8"…")
+                        if (!strutil::starts_with(msgtemp(0), u8"。", len)
+                            && !strutil::starts_with(msgtemp(0), u8"、", len)
+                            && !strutil::starts_with(msgtemp(0), u8"」", len)
+                            && !strutil::starts_with(msgtemp(0), u8"』", len)
+                            && !strutil::starts_with(msgtemp(0), u8"！", len)
+                            && !strutil::starts_with(msgtemp(0), u8"？", len)
+                            && !strutil::starts_with(msgtemp(0), u8"…", len))
                         {
                             break;
                         }
                     }
                 }
-                auto m = strmid(msgtemp(0), 0, p2);
+                if (len >= msgtemp(0).size())
+                    len = msgtemp(0).size();
+                auto m = msgtemp(0).substr(0, len);
                 msg(msgline % inf_maxlog) += m;
                 msg_write(m);
-                msgtemp(0) = strmid(msgtemp(0), p2, len - p2);
+                msgtemp(0) = msgtemp(0).substr(len);
                 if (msgtemp(0).empty() || msgtemp(0) == u8" ")
                 {
                     break;
@@ -913,7 +903,7 @@ void txt_conv()
         }
         msg(msgline % inf_maxlog) += msgtemp(0);
         msg_write(msgtemp(0));
-        msglen += len;
+        message_width += width;
     }
     else
     {
@@ -947,7 +937,7 @@ void txt_conv()
             {
                 break;
             }
-            if (msglen + p_at_txtfunc > inf_maxmsglen)
+            if (message_width + p_at_txtfunc > inf_maxmsglen)
             {
                 msg_newline();
                 continue;
@@ -955,13 +945,13 @@ void txt_conv()
             auto mst = strmid(msgtemp(0), 0, p_at_txtfunc);
             msg(msgline % inf_maxlog) += mst;
             msg_write(mst);
-            msglen += p_at_txtfunc;
+            message_width += p_at_txtfunc;
             msgtemp(0) = strmid(
                 msgtemp(0), p_at_txtfunc, msgtemp(0).size() - p_at_txtfunc);
         }
         msg(msgline % inf_maxlog) += msgtemp(0);
         msg_write(msgtemp(0));
-        msglen += msgtemp(0).size();
+        message_width += msgtemp(0).size();
     }
 }
 
