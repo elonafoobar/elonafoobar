@@ -6731,23 +6731,22 @@ int cell_itemlist(int prm_625, int prm_626)
 
 
 
-int cell_itemoncell(int prm_627, int prm_628)
+// Returns pair of number of items and the last item on the cell.
+std::pair<int, int> cell_itemoncell(const position_t& pos)
 {
-    rtval(0) = 0;
-    rtval(1) = 0;
-    for (const auto& cnt : items(-1))
+    int number{};
+    int item{};
+
+    for (const auto& ci : items(-1))
     {
-        if (inv[cnt].number > 0)
+        if (inv[ci].number > 0 && inv[ci].position == pos)
         {
-            if (inv[cnt].position.x == prm_627
-                && inv[cnt].position.y == prm_628)
-            {
-                ++rtval;
-                rtval(1) = cnt;
-            }
+            ++number;
+            item = ci;
         }
     }
-    return rtval;
+
+    return std::make_pair(number, item);
 }
 
 
@@ -38843,8 +38842,11 @@ std::string txtitemoncell(int prm_1055, int prm_1056)
 {
     elona_vector1<int> p_at_m185;
     elona_vector1<int> i_at_m185;
-    int stat = cell_itemoncell(prm_1055, prm_1056);
-    if (stat <= 3)
+    const auto item_info = cell_itemoncell({prm_1055, prm_1056});
+    const auto number = item_info.first;
+    const auto item = item_info.second;
+
+    if (number <= 3)
     {
         if (map(prm_1055, prm_1056, 5) < 0)
         {
@@ -38870,15 +38872,15 @@ std::string txtitemoncell(int prm_1055, int prm_1056)
         }
         else
         {
-            rtvaln = itemname(rtval(1));
+            rtvaln = itemname(item);
         }
-        if (inv[rtval(1)].own_state <= 0)
+        if (inv[item].own_state <= 0)
         {
             return lang(
                 rtvaln + u8"が落ちている。"s,
                 u8"You see "s + rtvaln + u8" here."s);
         }
-        else if (inv[rtval(1)].own_state == 3)
+        else if (inv[item].own_state == 3)
         {
             return lang(
                 rtvaln + u8"が設置されている。"s,
@@ -38894,8 +38896,8 @@ std::string txtitemoncell(int prm_1055, int prm_1056)
     else
     {
         return lang(
-            u8"ここには"s + rtval + u8"種類のアイテムがある。"s,
-            u8"There are "s + rtval + u8" items lying here."s);
+            u8"ここには"s + number + u8"種類のアイテムがある。"s,
+            u8"There are "s + number + u8" items lying here."s);
     }
 }
 
@@ -45996,9 +45998,12 @@ label_2052_internal:
 
 void do_get_command()
 {
+    const auto item_info = cell_itemoncell(cdata[0].position);
+    const auto number = item_info.first;
+    const auto item = item_info.second;
+
     if (map(cdata[0].position.x, cdata[0].position.y, 6) != 0
-        && gdata_current_map != 35
-        && cell_itemoncell(cdata[0].position.x, cdata[0].position.y) == 0)
+        && gdata_current_map != 35 && number == 0)
     {
         cell_featread(cdata[0].position.x, cdata[0].position.y);
         if (feat(1) == 29)
@@ -46064,7 +46069,7 @@ void do_get_command()
         }
     }
 
-    if (cell_itemoncell(cdata[0].position.x, cdata[0].position.y) == 0)
+    if (number == 0)
     {
         if ((mdata(6) == 3 || mdata(6) == 2)
             && chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 4)
@@ -46099,8 +46104,8 @@ void do_get_command()
         pc_turn(false);
     }
 
-    ci = rtval(1);
-    if (rtval > 1)
+    ci = item;
+    if (number > 1)
     {
         invctrl = 3;
         snd(100);
@@ -65917,11 +65922,12 @@ label_2689_internal:
             {
                 if (map(cdata[cc].position.x, cdata[cc].position.y, 4) != 0)
                 {
-                    int stat = cell_itemoncell(
-                        cdata[cc].position.x, cdata[cc].position.y);
-                    if (stat == 1)
+                    const auto item_info = cell_itemoncell(cdata[cc].position);
+                    const auto number = item_info.first;
+                    const auto item = item_info.second;
+                    if (number == 1)
                     {
-                        ci = rtval(1);
+                        ci = item;
                         p = the_item_db[inv[ci].id]->category;
                         if (cdata[cc].nutrition <= 6000)
                         {
