@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 
 namespace elona
 {
@@ -18,13 +20,22 @@ struct version_t
     std::string platform;
 
     // Like 10203
-    int id;
+    int id() const
+    {
+        return major * 100 * 100 + minor * 100 + patch;
+    }
 
     // Like "1.2.3".
-    const char* short_string;
+    std::string short_string() const
+    {
+        return std::to_string(major) + '.' + std::to_string(minor) + '.' + std::to_string(patch);
+    }
 
     // Like "Elona Foobar version 1.2.3 (14db8cb), compiled on Darwin-17.4.0 at 2018-04-15T14:07:28Z"
-    const char* long_string;
+    std::string long_string() const
+    {
+        return u8"Elona Foobar version " + short_string() + " (" + revision + "), compiled on " + platform + " at " + timestamp;
+    }
 
 
     template <typename Archive>
@@ -37,7 +48,6 @@ struct version_t
         ar(timestamp);
         ar(platform);
     }
->>>>>>> 57de873... TMP
 };
 
 

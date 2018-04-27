@@ -47454,7 +47454,7 @@ void label_2085()
     access_class_info(2, cdatan(3, 0));
     buff = "";
     notesel(buff);
-    noteadd(latest_version.long_string);
+    noteadd(latest_version.long_string());
     noteadd(
         u8"キャラクター情報 "s + gdata_year + u8"年"s + gdata_month + u8"月"s
         + gdata_day + u8"日 "s + gdata_hour + u8"時"s + gdata_minute + u8"分  "s
@@ -49313,7 +49313,7 @@ void label_2134()
     buff = "";
     if (dbm == ""s)
     {
-        noteadd(latest_version.long_string);
+        noteadd(latest_version.long_string());
         noteadd(u8"Debug Console    Type \"?\" for help. Hit ESC to exit."s);
         noteadd(""s);
     }
