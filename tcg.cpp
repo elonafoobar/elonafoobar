@@ -1,4 +1,5 @@
 #include "ctrl_file.hpp"
+#include "config.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "input.hpp"

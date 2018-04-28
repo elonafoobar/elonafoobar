@@ -142,7 +142,51 @@ namespace elona
 {
 
 
+int cfg_alert;
+int cfg_alwayscenter;
+int cfg_animewait;
+int cfg_attackanime;
+int cfg_attackwait;
+int cfg_autonumlock;
+int cfg_autoturn;
+int cfg_env;
 int cfg_extraclass;
+int cfg_extrahelp;
+int cfg_extrarace;
+std::string cfg_font1;
+std::string cfg_font2;
+int cfg_fullscreen;
+int cfg_heart;
+int cfg_hideautoidentify;
+int cfg_hideshopresult;
+int cfg_hp_bar;
+int cfg_ignoredislike;
+int cfg_joypad;
+int cfg_language;
+int cfg_leash_icon;
+int cfg_msgaddtime;
+int cfg_msgtrans;
+int cfg_music;
+int cfg_net;
+int cfg_netchat;
+int cfg_netwish;
+int cfg_objectshadow;
+int cfg_runscroll;
+int cfg_runwait;
+int cfg_scroll;
+int cfg_scrsync;
+int cfg_serverlist;
+int cfg_shadow;
+int cfg_skiprandevents;
+int cfg_sound;
+int cfg_startrun;
+int cfg_story;
+int cfg_wait1;
+int cfg_walkwait;
+int cfg_windowanime;
+int cfg_wizard;
+int cfg_xkey;
+int cfg_zkey;
 
 
 void load_config()

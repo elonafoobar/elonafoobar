@@ -1,4 +1,5 @@
 #include "character.hpp"
+#include "config.hpp"
 #include "elona.hpp"
 #include "map.hpp"
 #include "variables.hpp"

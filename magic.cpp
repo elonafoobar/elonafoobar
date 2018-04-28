@@ -3,6 +3,7 @@
 #include "buff.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "config.hpp"
 #include "ctrl_file.hpp"
 #include "debug.hpp"
 #include "elona.hpp"

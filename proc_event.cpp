@@ -2,6 +2,7 @@
 #include "animation.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "config.hpp"
 #include "elona.hpp"
 #include "item.hpp"
 #include "random.hpp"

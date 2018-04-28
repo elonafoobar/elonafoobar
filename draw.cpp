@@ -1,5 +1,6 @@
 #include "draw.hpp"
 #include "character.hpp"
+#include "config.hpp"
 #include "elona.hpp"
 #include "variables.hpp"
 

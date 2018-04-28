@@ -4,6 +4,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "class.hpp"
+#include "config.hpp"
 #include "ctrl_file.hpp"
 #include "debug.hpp"
 #include "draw.hpp"
