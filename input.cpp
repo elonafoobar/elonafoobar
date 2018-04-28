@@ -95,7 +95,8 @@ int show_prompt(int x, int y, int width, show_prompt_type type, int val4)
         {
             pos(sx + 30, cnt * 20 + sy + 22);
             gcopy(3, cnt * 24 + 624, 30, 24, 24);
-            cs_list(cs == cnt, promptl(0, cnt), sx + 56, cnt * 20 + sy + 21);
+            cs_list(
+                cnt, cs == cnt, promptl(0, cnt), sx + 56, cnt * 20 + sy + 21);
             key_list(cnt) = promptl(1, cnt);
             ++keyrange;
         }
