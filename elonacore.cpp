@@ -5770,6 +5770,7 @@ void cutname(std::string& prm_541, int prm_542)
 
 
 void cs_list(
+    int cnt, /* TODO refactor this ugly solution */
     bool is_selected,
     const std::string& text,
     int x,
@@ -5778,14 +5779,41 @@ void cs_list(
     int color_mode,
     int ci)
 {
+    // TODO: refactor this ugly solution
+    static int cs_selbk{};
+    static int cs_posbk_x{};
+    static int cs_posbk_y{};
+    static int cs_posbk_w{};
+    static int cs_posbk_h{};
+
+    if (cs_bk != -1 && cs_posbk_x != 0)
+    {
+        if (cnt == cs_selbk)
+        {
+            pos(cs_posbk_x, cs_posbk_y);
+            gcopy(3, 264, 96, cs_posbk_w, cs_posbk_h);
+        }
+    }
+
     if (is_selected)
     {
-        // color(128, 192, 255);
-        // boxf(
-        //     x + 4 + x_offset,
-        //     y + 3,
-        //     x + 4 + x_offset + text.size() * 7 + 32,
-        //     y + 3 + 19);
+        const auto width = strlen_u(text) * 7 + 32;
+
+        cs_posbk_x = x;
+        cs_posbk_y = y;
+        cs_posbk_w = width;
+        cs_posbk_h = 19;
+        gsel(3);
+        pos(264, 96);
+        gcopy(0, cs_posbk_x, cs_posbk_y, cs_posbk_w, cs_posbk_h);
+        gsel(0);
+
+        boxf(
+            x + x_offset, y, x + x_offset + width, y + 19, {127, 191, 255, 63});
+        pos(x + x_offset + width - 20, y + 1);
+        gcopy(3, 48, 360, 16, 16);
+
+        cs_selbk = cnt;
     }
 
     switch (color_mode)
@@ -15812,7 +15840,7 @@ label_1402_internal:
                 mes(lang(u8"候補"s, ""s));
             }
         }
-        cs_list(cs == cnt, s, wx + 138, wy + 66 + cnt * 19 - 1);
+        cs_list(cnt, cs == cnt, s, wx + 138, wy + 66 + cnt * 19 - 1);
         if (i != -999)
         {
             pos(wx + 462, wy + 66 + cnt * 19 + 2);
@@ -33307,7 +33335,8 @@ label_1857_internal:
         {
             p(2) = 0;
         }
-        cs_list(cs == cnt, cnven(s), wx + 86, wy + 66 + cnt * 19 - 1, 0, p(2));
+        cs_list(
+            cnt, cs == cnt, cnven(s), wx + 86, wy + 66 + cnt * 19 - 1, 0, p(2));
         pos(wx + 308, wy + 66 + cnt * 19 + 2);
         mes(s(1));
         pos(wx + 37, wy + 69 + cnt * 19 + 2);
@@ -33481,7 +33510,7 @@ label_1861_internal:
         }
         i = list(0, p);
         s = ""s + matname(i) + lang(u8" × "s, u8" x "s) + mat(i);
-        cs_list(cs == cnt, s, wx + 96, wy + 66 + cnt * 19 - 1, 0, 0);
+        cs_list(cnt, cs == cnt, s, wx + 96, wy + 66 + cnt * 19 - 1, 0, 0);
         s = matdesc(i);
         pos(wx + 308, wy + 66 + cnt * 19 + 2);
         mes(s);
@@ -33776,6 +33805,7 @@ label_1868_internal:
             170, noteinfo() * 20 + 120 + txtadvmsgfix + 16 + cnt * 20, cnt);
         s = listn(0, p);
         cs_list(
+            cnt,
             cs == cnt,
             s,
             200,
@@ -33963,6 +33993,7 @@ void label_1872()
         s = listn(0, p);
         gmode(2);
         cs_list(
+            cnt,
             cs == cnt,
             s,
             200,
@@ -35438,7 +35469,8 @@ label_1887_internal:
         i = list(0, p);
         display_key(wx + 50, wy + dy + cnt * 20 - listmax * 20 - 18, cnt);
         s = listn(0, p);
-        cs_list(cs == cnt, s, wx + 80, wy + dy + cnt * 20 - listmax * 20 - 18);
+        cs_list(
+            cnt, cs == cnt, s, wx + 80, wy + dy + cnt * 20 - listmax * 20 - 18);
     }
     if (keyrange != 0)
     {
@@ -36685,7 +36717,8 @@ label_1897_internal:
         i = list(0, p);
         display_key(wx + 30, wy + dy + cnt * 20 - listmax * 20 - 52, cnt);
         q = listn(0, p);
-        cs_list(cs == cnt, q, wx + 60, wy + dy + cnt * 20 - listmax * 20 - 52);
+        cs_list(
+            cnt, cs == cnt, q, wx + 60, wy + dy + cnt * 20 - listmax * 20 - 52);
     }
     if (keyrange != 0)
     {
@@ -38155,7 +38188,7 @@ label_1925_internal:
         s = lang(""s, u8"Recipe of "s) + cnven(rpname(rpid))
             + lang(u8"のレシピ"s, ""s);
         display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
-        cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, 0, p);
+        cs_list(cnt, cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, 0, p);
     }
     if (cs_bk != cs)
     {
@@ -38294,7 +38327,7 @@ label_1928_internal:
             pos(wx + 46, wy + 72 + cnt * 18 - 3);
             gcopy(3, 12, 348, 12, 12);
         }
-        cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, 1, p);
+        cs_list(cnt, cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, 1, p);
     }
     p = list(0, pagesize * page + cs);
     if (listmax == 0)
@@ -39253,7 +39286,7 @@ label_1945_internal:
         }
         s = listn(0, p);
         cutname(s, 64);
-        cs_list(cs == cnt, s, wx + 84, wy + 66 + cnt * 19 - 1);
+        cs_list(cnt, cs == cnt, s, wx + 84, wy + 66 + cnt * 19 - 1);
         pos(wx + 570, wy + 66 + cnt * 19);
         mes(""s + (list(2, p) % 1000 + 1) + u8".0"s);
     }
@@ -40221,6 +40254,7 @@ label_1961_internal:
         if (i == 99)
         {
             cs_list(
+                cnt,
                 cs == cnt,
                 lang(u8"決定"s, u8"Proceed"s),
                 wx + 84,
@@ -40250,7 +40284,7 @@ label_1961_internal:
                     n = 3;
                 }
             }
-            cs_list(cs == cnt, s, wx + 84, wy + 66 + cnt * 19 - 1, 0, n);
+            cs_list(cnt, cs == cnt, s, wx + 84, wy + 66 + cnt * 19 - 1, 0, n);
             if (allyctrl != 3 || (allyctrl == 3 && gdata_current_map == 7))
             {
                 s = u8"Lv."s + cdata[i].level + u8" "s;
@@ -40343,7 +40377,7 @@ label_1961_internal:
         {
             s = ""s + cdatan(1, i) + u8" "s + cdatan(0, i);
             s += u8" Lv."s + cdata[i].level;
-            cs_list(cs == cnt, s, wx + 84, wy + 66 + cnt * 19 - 1);
+            cs_list(cnt, cs == cnt, s, wx + 84, wy + 66 + cnt * 19 - 1);
             s = ""s + calcslavevalue(i) * 2 / 3 + i18n::_(u8"ui", u8"gold");
             pos(wx + 390, wy + 66 + cnt * 19 + 2);
             mes(s);
@@ -40999,6 +41033,7 @@ label_1970_internal:
         if (i < 0)
         {
             cs_list(
+                cnt,
                 cs == cnt,
                 listn(0, p),
                 wx + 114,
@@ -41038,7 +41073,8 @@ label_1970_internal:
             x = 70;
         }
         gcopy(3, 384 + traitref * 24, 336, 24, 24);
-        cs_list(cs == cnt, listn(0, p), wx + x, wy + 66 + cnt * 19 - 1, 0, -1);
+        cs_list(
+            cnt, cs == cnt, listn(0, p), wx + x, wy + 66 + cnt * 19 - 1, 0, -1);
         if (list(1, p) < 10000)
         {
             pos(wx + 270, wy + 66 + cnt * 19 + 2);
@@ -41671,7 +41707,7 @@ label_1978_internal:
         set_quest_data(0);
         p = pagesize * page + cnt;
         font(14 - en * 2);
-        cs_list(cs == cnt, s(3), wx + 96, y - 1, 19);
+        cs_list(cnt, cs == cnt, s(3), wx + 96, y - 1, 19);
         s(2) = u8"("s + nquestdate + u8")"s;
         pos(wx + 344, y + 2);
         mes(s(2));
@@ -41915,7 +41951,7 @@ label_1982_internal:
         i = list(0, p);
         s = cdatan(0, i);
         cutname(s, 36);
-        cs_list(cs == cnt, s, wx + 84, wy + 66 + cnt * 19 - 1);
+        cs_list(cnt, cs == cnt, s, wx + 84, wy + 66 + cnt * 19 - 1);
         s = u8"Lv."s + cdata[i].level + u8" "s;
         if (cdata[i].sex == 0)
         {
@@ -42053,7 +42089,7 @@ label_1986_internal:
         gmode(2, inf_tiles, inf_tiles);
         grotate(1, 0, 960, 0, inf_tiles, inf_tiles);
         s = ioriginalnameref(i);
-        cs_list(cs == cnt, s, wx + 84, wy + 66 + cnt * 19 - 1);
+        cs_list(cnt, cs == cnt, s, wx + 84, wy + 66 + cnt * 19 - 1);
         pos(wx + 400, wy + 66 + cnt * 19 + 2);
         if (itemmemory(2, i) == 1)
         {
@@ -42207,7 +42243,7 @@ label_1990_internal:
         i = list(0, p);
         s = ""s + cdatan(1, i) + u8" "s + cdatan(0, i);
         cutname(s, 26);
-        cs_list(cs == cnt, s, wx + 118, wy + 66 + cnt * 19 - 1);
+        cs_list(cnt, cs == cnt, s, wx + 118, wy + 66 + cnt * 19 - 1);
         s = ""s + cdata[i].fame + u8"("s + cdata[i].level + u8")"s;
         pos(wx + 402 - strlen_u(s) * 7, wy + 66 + cnt * 19 + 2);
         mes(s);
@@ -42298,7 +42334,11 @@ int select_alias(int val0)
                 pos(wx + 38, wy + 66 + cnt * 19 - 2);
                 gcopy(3, cnt * 24 + 72, 30, 24, 18);
                 cs_list(
-                    cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
+                    cnt,
+                    cs == cnt,
+                    listn(0, cnt),
+                    wx + 64,
+                    wy + 66 + cnt * 19 - 1);
             }
             i += 17;
             cs_bk = cs;
@@ -42599,6 +42639,7 @@ label_2009_internal:
             }
         }
         cs_list(
+            cnt,
             cs == cnt,
             i18n::_(u8"ability", std::to_string(list(0, p)), u8"name") + s,
             wx + 84,
@@ -43081,7 +43122,7 @@ label_2016_internal:
         }
         i = list(0, p);
         s = ""s + listn(0, p);
-        cs_list(cs == cnt, s, wx + 138, wy + 66 + cnt * 19 - 1);
+        cs_list(cnt, cs == cnt, s, wx + 138, wy + 66 + cnt * 19 - 1);
     }
     if (keyrange != 0)
     {
@@ -43225,7 +43266,7 @@ label_2020_internal:
         s = ""s + listn(0, p);
         pos(wx + 380, wy + 66 + cnt * 19);
         mes(""s + userdata(2, i));
-        cs_list(cs == cnt, s, wx + 85, wy + 66 + cnt * 19 - 1);
+        cs_list(cnt, cs == cnt, s, wx + 85, wy + 66 + cnt * 19 - 1);
     }
     if (keyrange != 0)
     {
@@ -43513,6 +43554,7 @@ label_2029_internal:
             }
         }
         cs_list(
+            cnt,
             cs == cnt,
             i18n::_(u8"ability", std::to_string(i), u8"name") + s,
             wx + 84,
@@ -44605,7 +44647,7 @@ label_2035_internal:
                         s = u8"*"s + s;
                     }
                 }
-                cs_list(cs == cnt, s, wx + x, wy + 66 + cnt * 19 - 1);
+                cs_list(cnt, cs == cnt, s, wx + x, wy + 66 + cnt * 19 - 1);
                 if (list(0, p) >= 50 && list(0, p) < 100)
                 {
                     p(1) = clamp(sdata(list(0, p), cc) / 50, 0, 6);
@@ -44661,7 +44703,8 @@ label_2035_internal:
             else
             {
                 font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
-                cs_list(cs == cnt, listn(0, p), wx + 88, wy + 66 + cnt * 19);
+                cs_list(
+                    cnt, cs == cnt, listn(0, p), wx + 88, wy + 66 + cnt * 19);
                 font(14 - en * 2);
             }
         }
@@ -45204,7 +45247,7 @@ label_2041_internal:
                 s += u8" u"s + (std::abs(rtval(2)) - 1);
             }
         }
-        cs_list(cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1, 0);
+        cs_list(cnt, cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1, 0);
         if (rtval != -2)
         {
             pos(wx + 30, wy + 66 + cnt * 21 - 5);
@@ -45438,7 +45481,7 @@ int label_2044()
                 pos(wx + 175, wy + 66 + cnt * 21 - 5);
                 gcopy(3, 336, 336, 24, 24);
             }
-            cs_list(cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1, 0);
+            cs_list(cnt, cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1, 0);
         }
         if (keyrange != 0)
         {
@@ -45835,6 +45878,7 @@ label_2052_internal:
             p(1) = -1;
         }
         cs_list(
+            cnt,
             cs == cnt,
             s,
             wx + 140 - 26,
@@ -48920,7 +48964,7 @@ void main_menu_continue()
             pos(x + 48, y - 4);
             mes(listn(0, cnt));
             font(13 - en * 2);
-            cs_list(cs == cnt, listn(1, cnt), x + 48, y + 8);
+            cs_list(cnt, cs == cnt, listn(1, cnt), x + 48, y + 8);
         }
         cs_bk = cs;
         if (save_data_count == 0)
@@ -49079,7 +49123,7 @@ void main_menu_incarnate()
             pos(x + 48, y - 4);
             mes(listn(0, cnt));
             font(13 - en * 2);
-            cs_list(cs == cnt, listn(1, cnt), x + 48, y + 8);
+            cs_list(cnt, cs == cnt, listn(1, cnt), x + 48, y + 8);
         }
         cs_bk = cs;
         if (listmax == 0)
@@ -61691,7 +61735,7 @@ label_2258_internal:
         x = wx + 136;
         y = wy + wh - 56 - keyrange * 19 + cnt * 19 + 2;
         display_key(x, y, cnt);
-        cs_list(cs == cnt, listn(0, cnt), x + 30, y, 4, 0);
+        cs_list(cnt, cs == cnt, listn(0, cnt), x + 30, y, 4, 0);
         color(0, 0, 0);
     }
     cs_bk = cs;
@@ -63001,7 +63045,7 @@ label_2272_internal:
             {
                 s = lang(u8"不在"s, u8"Empty"s);
             }
-            cs_list(cs == cnt, s, x - 2, y + 20);
+            cs_list(cnt, cs == cnt, s, x - 2, y + 20);
             ++j0;
         }
         if (keyrange != 0)
@@ -63393,7 +63437,7 @@ label_2283_internal:
         }
         i = list(0, p);
         s = listn(0, p);
-        cs_list(cs == cnt, s, wx + 100, wy + 76 + cnt * 19 - 1, 0, 0);
+        cs_list(cnt, cs == cnt, s, wx + 100, wy + 76 + cnt * 19 - 1, 0, 0);
         pos(wx + 42, wy + 68 + cnt * 19 + 2);
         gmode(2);
         gcopy(3, 288 + list(0, p) * 24, 360, 24, 24);
@@ -67733,7 +67777,7 @@ label_2705_internal:
         }
         i = list(0, p);
         s = listn(0, p);
-        cs_list(cs == cnt, s, wx + 66, wy + 66 + cnt * 19 - 1, 0);
+        cs_list(cnt, cs == cnt, s, wx + 66, wy + 66 + cnt * 19 - 1, 0);
     }
     if (keyrange != 0)
     {
@@ -68307,6 +68351,7 @@ label_2729_internal:
         }
         i = list(0, p);
         cs_list(
+            cnt,
             cs == cnt,
             lang(u8"シーン No."s, u8"Scene No. "s) + i,
             wx + 424,
