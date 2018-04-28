@@ -810,7 +810,7 @@ void set_config(const std::string& key, int value)
         file >> options;
     }
 
-    options.get(key) = picojson::value{int64_t{value}};
+    options.get<picojson::object>()[key] = picojson::value{int64_t{value}};
 
     {
         std::ofstream file{filesystem::path(u8"./config.json").native(),
@@ -845,7 +845,7 @@ void set_config(const std::string& key, const std::string& value)
         file >> options;
     }
 
-    options.get(key) = picojson::value{value};
+    options.get<picojson::object>()[key] = picojson::value{value};
 
     {
         std::ofstream file{filesystem::path(u8"./config.json").native(),
@@ -880,7 +880,7 @@ void set_config(const std::string& key, const std::string& value1, int value2)
         file >> options;
     }
 
-    options.get(key) = picojson::value{value1};
+    options.get<picojson::object>()[key] = picojson::value{value1};
     (void)value2; // TODO
 
     {
