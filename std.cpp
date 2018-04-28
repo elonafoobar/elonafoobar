@@ -9,6 +9,7 @@
 
 #include "snail/application.hpp"
 
+#include "config.hpp"
 #include "elona.hpp"
 #include "util.hpp"
 #include "variables.hpp"
