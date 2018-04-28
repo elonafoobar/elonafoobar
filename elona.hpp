@@ -15,6 +15,7 @@
 #include "enums.hpp"
 #include "macro_gdata.hpp"
 #include "snail/color.hpp"
+#include "snail/font.hpp"
 #include "snail/input.hpp"
 #include "util.hpp"
 
@@ -400,7 +401,9 @@ int dialog(const std::string& message, int = 0);
 void exec(const std::string&, int);
 
 
-void font(const std::string& name, int size, int style);
+void font(
+    int size,
+    snail::font_t::style_t style = snail::font_t::style_t::regular);
 
 void gcopy(
     int window_id,

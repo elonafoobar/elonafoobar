@@ -533,7 +533,7 @@ void set_option()
                 list(1, cnt) = p(cnt);
             }
         }
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
         for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
         {
             p = pagesize * page + cnt;
@@ -666,7 +666,7 @@ void set_option()
             if (submenu != 5)
             {
                 pos(wx + 40, wy + wh - 70);
-                font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+                font(12 + sizefix - en * 2);
                 if (jp)
                 {
                     mes(u8"* 印のついた項目は、ゲームの再起動後に適用されます"s);
@@ -680,7 +680,7 @@ void set_option()
         if (submenu == 5)
         {
             pos(wx + 40, wy + wh - 110);
-            font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+            font(12 + sizefix - en * 2);
             if (jp)
             {
                 mes(u8"ボタンを割り当てたい項目にカーソルをあわせて\nゲームパッドのボタンを押してください。(L),(R)の付いている\n項目は、メニュー画面でタブの移動に使われます。"s);

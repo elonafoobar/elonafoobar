@@ -22,7 +22,7 @@ int show_prompt(int x, int y, int width, show_prompt_type type, int val4)
 
     gsel(3);
     gmode(0);
-    font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
+    font(15 - en * 2);
     for (int i = 0; i < promptmax; ++i)
     {
         if (promptl(1, i) == u8"null"s)
@@ -88,7 +88,7 @@ int show_prompt(int x, int y, int width, show_prompt_type type, int val4)
         window2(sx + 8, sy + 8, width - 16, promptmax * 20 + 42 - 16, 0, 0);
         pos(sx - 16, sy);
         gcopy(3, 64, 288, 50, 32);
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
         keyrange = 0;
         for (int cnt = 0, cnt_end = (promptmax); cnt < cnt_end; ++cnt)
         {
@@ -102,7 +102,7 @@ int show_prompt(int x, int y, int width, show_prompt_type type, int val4)
         if (type == show_prompt_type::with_number)
         {
             window_recipe2(TODO_show_prompt_val);
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
         }
         redraw();
         await(cfg_wait1);
@@ -163,7 +163,7 @@ void input_number_dialog(int x, int y, int max_number)
 {
     snd(26);
     dx = 8 * 16 + 60;
-    font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
+    font(16 - en * 2);
 
     int number = max_number;
     if (strlen_u(std::to_string(max_number)) >= 3)
@@ -243,7 +243,7 @@ void input_text_dialog(int x, int y, int val2, bool is_cancelable)
 
     snd(26);
     dx = val2 * 16 + 60;
-    font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
+    font(16 - en * 2);
 
     pos(x, y);
     mesbox(inputlog);

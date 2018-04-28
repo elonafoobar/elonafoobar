@@ -338,7 +338,7 @@ void initialize_elona()
 
     gsel(3);
     gmode(0);
-    font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
+    font(15 - en * 2);
     for (int i = 0; i < 18; ++i)
     {
         pos(i * 24 + 72, 30);
@@ -787,7 +787,7 @@ void main_title_menu()
     picload(filesystem::path(u8"./graphic/title.bmp"), 1);
     gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gmode(2);
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+    font(13 - en * 2);
     color(255, 255, 255);
     pos(20, 20);
     mes(u8"Elona version 1.22  Developed by Noa"s);
@@ -898,15 +898,15 @@ void main_title_menu()
             display_customkey(key_list(cnt), x, y);
             if (jp)
             {
-                font(lang(cfg_font1, cfg_font2), 11 - en * 2, 0);
+                font(11 - en * 2);
                 pos(x + 40, y - 4);
                 mes(s(cnt * 2));
-                font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+                font(13 - en * 2);
                 cs_list(cs == cnt, s(cnt * 2 + 1), x + 40, y + 8);
             }
             else
             {
-                font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+                font(14 - en * 2);
                 cs_list(cs == cnt, s(cnt), x + 40, y + 1);
             }
         }
@@ -1033,7 +1033,7 @@ void character_making_select_race()
         u8"やあ、待っていたよ。早速旅の支度をしようか。"s,
         u8"Welcome traveler, I've been looking for you."s);
     draw_caption();
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
+    font(13 - en * 2, snail::font_t::style_t::bold);
     pos(20, windowh - 20);
     mes(u8"Press F1 to show help."s);
     if (geneuse != ""s)
@@ -1105,7 +1105,7 @@ void character_making_select_race()
                 lang(u8"選択できる種族"s, u8"Race"s), wx + 28, wy + 30);
             display_topic(
                 lang(u8"種族の説明"s, u8"Detail"s), wx + 188, wy + 30);
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
             for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
             {
                 p = page * pagesize + cnt;
@@ -1190,7 +1190,7 @@ void character_making_select_sex(bool label_1548_flg)
     gmode(2);
     s = lang(u8"男性と女性に能力の違いはない。"s, u8"What's your gender?"s);
     draw_caption();
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
+    font(13 - en * 2, snail::font_t::style_t::bold);
     pos(20, windowh - 20);
     mes(u8"Press F1 to show help."s);
     if (geneuse != ""s)
@@ -1215,7 +1215,7 @@ void character_making_select_sex(bool label_1548_flg)
         display_topic(lang(u8"性別の候補"s, u8"Gender"s), wx + 28, wy + 30);
         listn(0, 0) = cnven(i18n::_(u8"ui", u8"male"));
         listn(0, 1) = cnven(i18n::_(u8"ui", u8"female"));
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
         for (int cnt = 0; cnt < 2; ++cnt)
         {
             key_list(cnt) = key_select(cnt);
@@ -1274,7 +1274,7 @@ void character_making_select_class(bool label_1551_flg)
         u8"職業や種族は、初期の能力だけでなく、成長の方向性に影響するんだ。"s,
         u8"Your class and race determine growth rate of your skills and attributes."s);
     draw_caption();
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
+    font(13 - en * 2, snail::font_t::style_t::bold);
     pos(20, windowh - 20);
     mes(u8"Press F1 to show help."s);
     if (geneuse != ""s)
@@ -1325,7 +1325,7 @@ void character_making_select_class(bool label_1551_flg)
                 lang(u8"選択できる職業"s, u8"Class"s), wx + 28, wy + 30);
             display_topic(
                 lang(u8"職業の説明"s, u8"Detail"s), wx + 188, wy + 30);
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
             for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
             {
                 key_list(cnt) = key_select(cnt);
@@ -1400,7 +1400,7 @@ void character_making_role_attributes(bool label_1554_flg)
                 u8"死にたくないなら、ある程度の能力は必要だね。"s,
                 u8"You should prepare well, if you want to survive long enough in Irva."s);
             draw_caption();
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
+            font(13 - en * 2, snail::font_t::style_t::bold);
             pos(20, windowh - 20);
             mes(u8"Press F1 to show help."s);
             if (geneuse != ""s)
@@ -1462,12 +1462,12 @@ void character_making_role_attributes(bool label_1554_flg)
         grotate(2, 0, 0, 0, x, y);
         gmode(2);
         display_topic(lang(u8"能力"s, u8"Attributes"s), wx + 28, wy + 30);
-        font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+        font(12 + sizefix - en * 2);
         pos(wx + 175, wy + 52);
         mes(lang(
             u8"ロックされた能力は\n変化しません"s,
             u8"Locked items will\nnot change."s));
-        font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
+        font(13 - en * 2, snail::font_t::style_t::bold);
         pos(wx + 180, wy + 84);
         mes(lang(u8"残りロック: "s, u8"Locks left: "s) + cmlock(8));
         for (int cnt = 0; cnt < 10; ++cnt)
@@ -1476,9 +1476,9 @@ void character_making_role_attributes(bool label_1554_flg)
             keyrange = cnt + 1;
             pos(wx + 38, wy + 66 + cnt * 23 - 2);
             gcopy(3, cnt * 24 + 72, 30, 24, 18);
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
             cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 23 - 1);
-            font(lang(cfg_font1, cfg_font2), 15 - en * 2, 1);
+            font(15 - en * 2, snail::font_t::style_t::bold);
             if (cnt >= 2)
             {
                 pos(wx + 198, wy + 76 + cnt * 23);
@@ -1488,7 +1488,7 @@ void character_making_role_attributes(bool label_1554_flg)
                 mes(""s + list(0, cnt) / 1000000);
                 if (cmlock(cnt - 2) == 1)
                 {
-                    font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
+                    font(12 - en * 2, snail::font_t::style_t::bold);
                     pos(wx + 240, wy + 66 + cnt * 23 + 2);
                     color(20, 20, 140);
                     mes(u8"Locked!"s);
@@ -1564,7 +1564,7 @@ void character_making_select_feats_and_alias(bool label_1558_flg)
             u8"フィートとは、君の持っている有益な特徴だ。3つまで選べるよ。"s,
             u8"Choose your feats wisely."s);
         draw_caption();
-        font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
+        font(13 - en * 2, snail::font_t::style_t::bold);
         pos(20, windowh - 20);
         mes(u8"Press F1 to show help."s);
         if (geneuse != ""s)
@@ -1594,7 +1594,7 @@ void character_making_select_feats_and_alias(bool label_1558_flg)
         u8"有名になると、名前とは別の通り名で呼ばれることがあるらしい。"s,
         u8"Choose your Alias."s);
     draw_caption();
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
+    font(13 - en * 2, snail::font_t::style_t::bold);
     pos(20, windowh - 20);
     mes(u8"Press F1 to show help."s);
     if (geneuse != ""s)
@@ -1627,7 +1627,7 @@ void character_making_select_feats_and_alias(bool label_1558_flg)
             gmode(2);
             display_topic(
                 lang(u8"異名の候補"s, u8"Alias List"s), wx + 28, wy + 30);
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
             for (int cnt = 0; cnt < 17; ++cnt)
             {
                 key_list(cnt) = key_select(cnt);
@@ -1706,7 +1706,7 @@ void character_making_final_phase()
             u8"君の見た目を知っておきたいな。まあ、後からいつでも変えられるけどね。"s,
             u8"What you look like? Don't worry, you can change them later."s);
         draw_caption();
-        font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
+        font(13 - en * 2, snail::font_t::style_t::bold);
         pos(20, windowh - 20);
         mes(u8"Press F1 to show help."s);
         if (geneuse != ""s)
@@ -1892,18 +1892,18 @@ void show_race_or_class_info(int CNT, int val0)
         grotate(5, 0, 960, 0, chipc(2, ref1) * 2, chipc(3, ref1) * 2);
         gmode(2);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     tx = wx + 230;
     ty = wy + 62;
     talk_conv(buff, 60 + en * 2);
     pos(tx - 20, ty);
     mes(buff);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     tx = wx + 200;
     ty = wy + 166;
     display_topic(lang(u8"能力ボーナス"s, u8"Attribute Bonus"s), tx, ty);
     ty += 34;
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     if (jp)
     {
         s(0) = u8"皆無"s;
@@ -2003,7 +2003,7 @@ void show_race_or_class_info(int CNT, int val0)
     ty = wy + 260;
     display_topic(lang(u8"獲得技能"s, u8"Trained Skill"s), tx, ty);
     ty += 34;
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     r = 0;
     s = lang(u8"武器の専門  "s, u8"Proficient in "s);
     for (int cnt = 100; cnt < 150; ++cnt)

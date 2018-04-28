@@ -47,7 +47,7 @@ position_t gmes(
     bool shadow)
 {
     int font_size = 14;
-    font(lang(cfg_font1, cfg_font2), font_size - en * 2, 0);
+    font(font_size - en * 2);
 
     const auto message = text + u8"$end";
     int x = x_base;
@@ -87,24 +87,24 @@ position_t gmes(
             pos += instr(message, pos, u8">") + 1;
             if (tag == u8"emp1")
             {
-                font(lang(cfg_font1, cfg_font2), font_size - en * 2, 4);
+                font(font_size - en * 2, snail::font_t::style_t::underline);
                 text_color = {50, 50, 255};
             }
             else if (tag == u8"emp2")
             {
-                font(lang(cfg_font1, cfg_font2), font_size - en * 2, 1);
+                font(font_size - en * 2, snail::font_t::style_t::bold);
                 text_color = {40, 130, 40};
             }
             else if (tag == u8"title1")
             {
                 font_size = 12;
-                font(lang(cfg_font1, cfg_font2), font_size - en * 2, 1);
+                font(font_size - en * 2, snail::font_t::style_t::bold);
                 text_color = {100, 50, 50};
             }
             else if (tag == u8"def")
             {
                 font_size = 14;
-                font(lang(cfg_font1, cfg_font2), font_size - en * 2, 0);
+                font(font_size - en * 2);
                 text_color = text_color_base;
             }
             else if (tag == u8"p")
@@ -119,7 +119,7 @@ position_t gmes(
             }
             else if (tag == u8"b")
             {
-                font(lang(cfg_font1, cfg_font2), font_size - en * 2, 1);
+                font(font_size - en * 2, snail::font_t::style_t::bold);
             }
             else if (tag == u8"green")
             {
@@ -3504,7 +3504,7 @@ void showcard2(int prm_425, int prm_426)
     elona_vector1<int> col_at_cardcontrol;
     std::string s_at_cardcontrol;
     int tx_at_cardcontrol = 0;
-    font(lang(cfg_font1, cfg_font2), 43 - en * 2, 1);
+    font(43 - en * 2, snail::font_t::style_t::bold);
     gmode(2, 64, 96);
     pos(card_at_cardcontrol(3, prm_425), card_at_cardcontrol(4, prm_425));
     if (card_at_cardcontrol(2, prm_425) == 1)
@@ -3604,7 +3604,7 @@ void showcard2(int prm_425, int prm_426)
         }
         else
         {
-            font(lang(cfg_font1, cfg_font2), 12 - en * 2, 0);
+            font(12 - en * 2);
         }
     }
     return;
@@ -3634,7 +3634,7 @@ void showcardpile()
             showcard2(cnt);
         }
     }
-    font(lang(cfg_font1, cfg_font2), 16 - en * 2, 1);
+    font(16 - en * 2, snail::font_t::style_t::bold);
     color(10, 10, 10);
     pos(pilex_at_cardcontrol + 8, piley_at_cardcontrol + 70);
     bmes(u8"X "s + pilestack_at_cardcontrol, 240, 240, 240);
@@ -7375,7 +7375,7 @@ void display_customkey(const std::string& key, int x, int y)
 {
     gsel(3);
     gmode(0);
-    font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
+    font(15 - en * 2);
     pos(624, 30);
     gcopy(3, 0, 30, 24, 18);
     pos(629, 31);
@@ -7493,14 +7493,14 @@ void showscroll(const std::string& title, int x, int y, int width, int height)
         y + height - 69 - height % 8,
         x + width - 40,
         y + height - 69 - height % 8);
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+    font(12 + sizefix - en * 2);
     color(0, 0, 0);
     pos(x + 68, y + height - 63 - height % 8);
     mes(s);
     if (pagesize != 0)
     {
         s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
-        font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+        font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
         pos(x + width - strlen_u(s) * 7 - 40, y + height - 63 - height % 8);
         mes(s);
     }
@@ -7742,7 +7742,7 @@ void display_window2(
     gmode(2);
     pos(prm_662, prm_663);
     gcopy(prm_666, 0, 0, prm_664, prm_665);
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     if (s != ""s)
     {
         pos(prm_662 + prm_664 - strlen_u(s) * 7 - 140,
@@ -7800,21 +7800,21 @@ void display_window(
         prm_669 + prm_671 - 49 - prm_671 % 8,
         prm_668 + prm_670 - 40,
         prm_669 + prm_671 - 49 - prm_671 % 8);
-    font(lang(cfg_font1, cfg_font2), 15 + en - en * 2, 0);
+    font(15 + en - en * 2);
     color(0, 0, 0);
     pos(prm_668 + 45 * prm_670 / 200 + 34 - strlen_u(s) * 4
             + clamp(int(s(0).size() * 8 - 120), 0, 200) / 2,
         prm_669 + 4 + vfix);
     color(20, 10, 0);
     bmes(s, 255, 255, 255);
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+    font(12 + sizefix - en * 2);
     color(0, 0, 0);
     pos(prm_668 + 58 + prm_672, prm_669 + prm_671 - 43 - prm_671 % 8);
     mes(s(1));
     if (pagesize != 0)
     {
         s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
-        font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+        font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
         pos(prm_668 + prm_670 - strlen_u(s) * 7 - 40 - prm_673,
             prm_669 + prm_671 - 65 - prm_671 % 8);
         mes(s);
@@ -7830,7 +7830,7 @@ void display_window(
 
 void display_note(const std::string& prm_674, int prm_675)
 {
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     pos(wx + ww - strlen_u(prm_674) * 7 - 140 - prm_675, wy + wh - 65 - wh % 8);
     mes(prm_674);
     return;
@@ -7840,7 +7840,7 @@ void display_note(const std::string& prm_674, int prm_675)
 
 void display_topic(const std::string& prm_676, int prm_677, int prm_678, int)
 {
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     pos(prm_677, prm_678 + 7);
     gcopy(3, 120, 360, 24, 16);
     pos(prm_677 + 26, prm_678 + 8);
@@ -8349,7 +8349,7 @@ void showtitle(const std::string&, const std::string& prm_739, int prm_740, int)
 {
     int x_at_m106 = 0;
     int y_at_m106 = 0;
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+    font(12 + sizefix - en * 2);
     if (mode != 1)
     {
         x_at_m106 = prm_740 - 10;
@@ -8434,7 +8434,7 @@ void drawmenu(int prm_742)
     {
         return;
     }
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+    font(12 + sizefix - en * 2);
     window2(x_at_m107, y_at_m107, x_at_m107(1), 22, 5, 5);
     pos(x_at_m107 - 28, y_at_m107 - 8);
     gcopy(3, 64, 288, 50, 32);
@@ -15788,7 +15788,7 @@ label_1402_internal:
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
     gmode(2);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -16015,7 +16015,7 @@ void screen_txtadv()
     gmode(2);
     for (int i = 0; i < 4; ++i)
     {
-        font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+        font(13 - en * 2);
         color(250, 250, 250);
         if (i == 0)
         {
@@ -16076,7 +16076,7 @@ void update_screen_hud()
         pos(inf_raderw + cnt * 47 + 148 + sx, inf_bary + 1);
         gcopy(3, cnt * 16, 376, 16, 16);
     }
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+    font(12 + sizefix - en * 2);
     pos(inf_raderw + 24, inf_bary + 3 + vfix - en);
     if (strlen_u(mdatan(0)) > size_t(16 - (maplevel() != ""s) * 4))
     {
@@ -16128,7 +16128,7 @@ void render_hud()
 {
     int ap3 = 0;
     int ap2 = 0;
-    font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
+    font(12 - en * 2, snail::font_t::style_t::bold);
     pos(inf_hpx, inf_hpy);
     gcopy(3, 312, 504, 104, 15);
     pos(inf_mpx, inf_mpy);
@@ -16176,7 +16176,7 @@ void render_hud()
     sy = inf_mpy - 8;
     pos(sx + 4, sy);
     bmes(""s + cdata[0].mp + u8"("s + cdata[0].max_mp + u8")"s, 255, 255, 255);
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+    font(13 - en * 2);
     sy = inf_bary + 2 + vfix;
     for (int cnt = 0; cnt < 10; ++cnt)
     {
@@ -16222,7 +16222,7 @@ void render_hud()
             mes(""s + cdata[0].dv + u8"/"s + cdata[0].pv);
         }
     }
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+    font(13 - en * 2);
     sy = inf_ver - 16;
     sx = windoww - 240;
     pos(sx, sy);
@@ -16767,7 +16767,7 @@ void label_1423()
     int w = 148;
     int h = 25;
     window2(sx, sy, w, h, 0, 5);
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
+    font(13 - en * 2, snail::font_t::style_t::bold);
     pos(sx + 43, sy + 6);
     bmes(u8"AUTO TURN"s, 235, 235, 235);
     pos(sx + 18, sy + 12);
@@ -16848,7 +16848,7 @@ void draw_caption()
 {
     int msgx = 0;
     gmode(0);
-    font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
+    font(16 - en * 2);
     color(245, 245, 245);
     msgx = 20;
     msgy = 30;
@@ -29111,10 +29111,10 @@ void use_house_board()
         {
             x = wx + 45 + cnt / 2 * 190;
             y = wy + 68 + cnt % 2 * 18;
-            font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+            font(12 + sizefix - en * 2);
             pos(x, y);
             mes(s(cnt));
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
             for (int cnt = 0, cnt_end = cnt + (clamp(p(cnt) / 1000, 1, 10));
                  cnt < cnt_end;
                  ++cnt)
@@ -29123,7 +29123,7 @@ void use_house_board()
                 bmes(lang(u8"★"s, u8"*"s), 255, 255, 50);
             }
         }
-        font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+        font(12 + sizefix - en * 2);
         listmax = 10;
         sort_list_by_column1();
         for (int cnt = 0; cnt < 10; ++cnt)
@@ -33238,7 +33238,7 @@ label_1857_internal:
             if (invctrl == 0)
             {
                 get_required_craft_materials();
-                font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+                font(13 - en * 2);
                 s = lang(u8"必要スキル: "s, u8"Skill needed: "s);
                 if (matval == 178)
                 {
@@ -33297,7 +33297,7 @@ label_1857_internal:
         p(1) = ipicref(i);
         prepare_item_image(p(1), 0);
         s(1) = lang(u8"アイテム["s + s + u8"]"s, u8"Make ["s + s + u8"]"s);
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
         if (elona::stoi(listn(0, p)) == -1)
         {
             p(2) = 3;
@@ -33470,7 +33470,7 @@ label_1861_internal:
         }
         display_key(wx + 68, wy + 66 + cnt * 19 - 2, cnt);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -33701,7 +33701,7 @@ label_18671_internal:
         {
             s(1) = strmid(s, 1, 2);
             s = strmid(s, 3, s(0).size() - 3);
-            font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
+            font(16 - en * 2);
             color(250, 240, 230);
             if (s(1) == u8"BL"s)
             {
@@ -33718,7 +33718,7 @@ label_18671_internal:
         }
         else
         {
-            font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
+            font(16 - en * 2);
             color(250, 240, 230);
         }
         pos(170, cnt * 20 + 120 + txtadvmsgfix);
@@ -33762,7 +33762,7 @@ label_1868_internal:
     pos(x, y);
     gcopy(2, x, y, x(1), y(1));
     gmode(2);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -33948,7 +33948,7 @@ void label_1872()
         noteinfo() * 20 + 120 + txtadvmsgfix + 16,
         170 + x(1),
         noteinfo() * 20 + 120 + txtadvmsgfix + 16 + 20 * listmax);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -34649,7 +34649,7 @@ void label_1879()
             cardplayeradd(0, 220, 124);
             cardplayeradd(1, 220, 240);
         }
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 1);
+        font(14 - en * 2, snail::font_t::style_t::bold);
         color(255, 255, 255);
         pos(152, 154);
         mes(lang(u8"　親"s, u8"Dealer"s));
@@ -35419,7 +35419,7 @@ label_1887_internal:
     window2((windoww - dx) / 2 + inf_screenx, winposy(dy), dx, dy, 4, 6);
     wx = (windoww - dx) / 2 + inf_screenx;
     wy = winposy(dy);
-    font(lang(cfg_font1, cfg_font2), 18 - en * 2, 1);
+    font(18 - en * 2, snail::font_t::style_t::bold);
     pos(wx + 20, wy + 20);
     bmes(
         lang(u8"《 "s, u8"< "s)
@@ -35430,7 +35430,7 @@ label_1887_internal:
         255);
     get_god_description();
     gmes(buff, wx + 23, wy + 60, dx - 60, {30, 30, 30}, true);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
         p = cnt;
@@ -36655,13 +36655,13 @@ label_1897_internal:
     color(240, 230, 220);
     boxl(wx + 12, wy + 6, wx + tx + 12, wy + ty + 6);
     color(0, 0, 0);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     q = lang(u8"《 "s + s + u8" 》"s, u8" < "s + s + u8" > "s);
     pos(wx + 40, wy + 16);
     color(30, 20, 10);
     bmes(q, 245, 235, 225);
     color(0, 0, 0);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     color(30, 30, 30);
     pos(wx + 24, wy + ty + 20);
     mes(buff);
@@ -36677,7 +36677,7 @@ label_1897_internal:
         key_list(cnt) = key_select(cnt);
         ++keyrange;
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
         p = cnt;
@@ -37456,7 +37456,7 @@ void window_recipe2(int val0)
     gcopy(3, 960, 288, 480, 68);
     dx_at_m183 = x_at_m183 + w_at_m183 - 500;
     dy_at_m183 = 10;
-    font(lang(cfg_font1, cfg_font2), 15 - en * 2, 1);
+    font(15 - en * 2, snail::font_t::style_t::bold);
     s_at_m183 = ""s + rpsuccessrate(rpdiff(rpid, step, -1));
     pos(dx_at_m183 + 140, dy_at_m183);
     color(30, 30, 30);
@@ -37547,20 +37547,20 @@ void window_recipe_(
     {
         s_at_m184(1) += strhint3b;
     }
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+    font(12 + sizefix - en * 2);
     pos(prm_1051 + 25 + 0, prm_1052 + prm_1054 - 43 - prm_1054 % 8);
     mes(s_at_m184(1));
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     pos(prm_1051 + prm_1053 - strlen_u(s_at_m184) * 7 - 40 - xfix2_at_m184,
         prm_1052 + prm_1054 - 65 - prm_1054 % 8);
     mes(s_at_m184);
     dx_at_m184 = prm_1051 + 35;
     dy_at_m184 = y + 48;
-    font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
+    font(12 - en * 2, snail::font_t::style_t::bold);
     pos(dx_at_m184 - 10, dy_at_m184);
     mes(lang(u8"調合の手順"s, u8"Blending Procedure"s));
     dy_at_m184 = dy_at_m184 + 18;
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+    font(13 - en * 2);
     i_at_m184 = 1;
     pos(dx_at_m184 - 10, dy_at_m184 - 2);
     gfini(prm_1053 - 60, 17);
@@ -37642,7 +37642,7 @@ void window_recipe_(
     dy_at_m184 += 30;
     if (rppage == 0)
     {
-        font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
+        font(12 - en * 2, snail::font_t::style_t::bold);
         pos(dx_at_m184 - 10, dy_at_m184);
         mes(lang(
             rpname(rpid) + u8"のレシピ"s, u8"The recipe of "s + rpname(rpid)));
@@ -37650,7 +37650,7 @@ void window_recipe_(
         pos(dx_at_m184 - 10, dy_at_m184);
         mes(lang(u8"必要なスキル:"s, u8"Required Skills:"s));
         dy_at_m184 = dy_at_m184 + 18;
-        font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+        font(13 - en * 2);
         for (int cnt = 0; cnt < 5; ++cnt)
         {
             if (rpdata(10 + cnt * 2, rpid) == 0)
@@ -37676,7 +37676,7 @@ void window_recipe_(
             color(0, 0, 0);
         }
         dy_at_m184 += 50;
-        font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
+        font(12 - en * 2, snail::font_t::style_t::bold);
         pos(dx_at_m184 - 10, dy_at_m184);
         mes(lang(u8"必要な機材:"s, u8"Required equipment:"s));
         return;
@@ -37685,11 +37685,11 @@ void window_recipe_(
     {
         return;
     }
-    font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
+    font(12 - en * 2, snail::font_t::style_t::bold);
     pos(dx_at_m184 - 10, dy_at_m184);
     mes(itemname(prm_1050));
     dy_at_m184 += 20;
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+    font(13 - en * 2);
     if (inv[prm_1050].identification_state
         <= identification_state_t::partly_identified)
     {
@@ -38108,7 +38108,7 @@ label_1925_internal:
         (windoww - 780) / 2 + inf_screenx, winposy(445), 380, 432, 74);
     display_topic(lang(u8"レシピの名称"s, u8"Name"s), wx + 28, wy + 30);
     s = ""s + listmax + u8" recipes"s;
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     pos(wx + 130, wy + wh - 65 - wh % 8);
     mes(s);
     keyrange = 0;
@@ -38141,7 +38141,7 @@ label_1925_internal:
         pos(wx + 317, wy + 60 + cnt * 19);
         gcopy(3, 64 + (4 - rpdiff(rpid, -1, -1) / 25) * 16, 624, 16, 16);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -38241,7 +38241,7 @@ label_1928_internal:
         (windoww - 780) / 2 + inf_screenx, winposy(445), 380, 432, 74);
     display_topic(lang(u8"アイテムの名称"s, u8"Name"s), wx + 28, wy + 30);
     s = ""s + listmax + u8" items"s;
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     pos(wx + 130, wy + wh - 65 - wh % 8);
     mes(s);
     keyrange = 0;
@@ -38261,7 +38261,7 @@ label_1928_internal:
             gfdec2(12, 14, 16);
         }
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -38906,7 +38906,7 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
     int i_at_m186 = 0;
     int p_at_m186 = 0;
     dy_at_m186 = 0;
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     if (prm_1059 == 0)
     {
         if (fov_los(
@@ -39242,7 +39242,7 @@ label_1945_internal:
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -39758,7 +39758,7 @@ label_1953_internal:
         screenupdate = -1;
         update_screen();
         keyrange = 0;
-        font(lang(cfg_font1, cfg_font2), 20 - en * 2, 1);
+        font(20 - en * 2, snail::font_t::style_t::bold);
         for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
         {
             p = pagesize * page + cnt;
@@ -40193,7 +40193,7 @@ label_1961_internal:
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -40512,7 +40512,7 @@ label_1965_internal:
     display_window((windoww - 400) / 2 + inf_screenx, winposy(448), 400, 448);
     s = u8"分析結果"s;
     display_topic(s, wx + 28, wy + 36);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -40986,7 +40986,7 @@ label_1970_internal:
         s = cnven(cdatan(0, tc)) + lang(u8"の特性"s, u8"'s Trait"s);
     }
     display_note(s, 50);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -41414,7 +41414,7 @@ label_1973_internal:
         {
             s(1) = strmid(s, 1, 2);
             s = strmid(s, 3, s(0).size() - 3);
-            font(lang(cfg_font1, cfg_font2), 10 + en - en * 2, 1);
+            font(10 + en - en * 2, snail::font_t::style_t::bold);
             color(0, 0, 200);
             if (s(1) == u8"QL"s)
             {
@@ -41431,24 +41431,24 @@ label_1973_internal:
             if (s(1) == u8"RE"s)
             {
                 color(100, 0, 0);
-                font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+                font(12 + sizefix - en * 2);
             }
             if (s(1) == u8"BL"s)
             {
                 color(0, 0, 100);
-                font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+                font(12 + sizefix - en * 2);
             }
         }
         else
         {
-            font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+            font(12 + sizefix - en * 2);
         }
         pos(x, y);
         mes(s);
         color(0, 0, 0);
         if (p % 20 == 0)
         {
-            font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+            font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
             pos(x + 90, y + 330);
             mes(u8"- "s + (p / 20 + 1) + u8" -"s);
             if (p % 40 == 20)
@@ -41638,7 +41638,7 @@ label_1978_internal:
     pos(0, 0);
     gcopy(4, 0, 0, windoww, inf_ver);
     gmode(2);
-    font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
+    font(16 - en * 2);
     pos(wx + ww + 20, wy);
     bmes(u8"Page "s + (page + 1) + u8"/"s + (pagemax + 1), 255, 255, 255);
     keyrange = 0;
@@ -41669,7 +41669,7 @@ label_1978_internal:
         tc = qdata(0, rq);
         set_quest_data(0);
         p = pagesize * page + cnt;
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
         cs_list(cs == cnt, s(3), wx + 96, y - 1, 19);
         s(2) = u8"("s + nquestdate + u8")"s;
         pos(wx + 344, y + 2);
@@ -41705,7 +41705,7 @@ label_1978_internal:
             dy = 0;
             if (p > 5)
             {
-                font(lang(cfg_font1, cfg_font2), 10 - en * 2, 0);
+                font(10 - en * 2);
                 dy = -3;
             }
             for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
@@ -41720,7 +41720,7 @@ label_1978_internal:
             mes(lang(u8"★?"s, u8"$ x "s) + p);
         }
         color(0, 0, 0);
-        font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+        font(13 - en * 2);
         pos(wx + 20, y + 20);
         mes(buff);
     }
@@ -41891,7 +41891,7 @@ label_1982_internal:
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -42038,7 +42038,7 @@ label_1986_internal:
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -42181,7 +42181,7 @@ label_1990_internal:
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -42276,7 +42276,7 @@ int select_alias(int val0)
                 (windoww - 400) / 2 + inf_screenx, winposy(458), 400, 458);
             display_topic(
                 lang(u8"異名の候補"s, u8"Alias List"s), wx + 28, wy + 30);
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
             for (int cnt = 0; cnt < 17; ++cnt)
             {
                 key_list(cnt) = key_select(cnt);
@@ -42570,7 +42570,7 @@ label_2009_internal:
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -43070,7 +43070,7 @@ label_2016_internal:
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
     gmode(2);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -43212,7 +43212,7 @@ label_2020_internal:
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
     gmode(2);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -43346,21 +43346,21 @@ label_2023_internal:
         noteget(s, p);
         if (p == 0)
         {
-            font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+            font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
         }
         if (p == 1)
         {
-            font(lang(cfg_font1, cfg_font2), 10 + sizefix - en * 2, 0);
+            font(10 + sizefix - en * 2);
         }
         if (p > 2)
         {
-            font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+            font(12 + sizefix - en * 2);
         }
         pos(x, y);
         mes(s);
         if (p % 20 == 0)
         {
-            font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+            font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
             pos(x + 90, y + 330);
             mes(u8"- "s + (p / 20 + 1) + u8" -"s);
         }
@@ -43485,7 +43485,7 @@ label_2029_internal:
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -44229,7 +44229,7 @@ label_2035_internal:
                 chipc(2, i) / (1 + (chipc(3, i) > inf_tiles)),
                 inf_tiles);
         }
-        font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+        font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
         s(0) = lang(u8"レベル"s, u8"Level"s);
         s(1) = lang(u8"経験"s, u8"EXP"s);
         s(2) = lang(u8"必要値"s, u8"Next Lv"s);
@@ -44314,7 +44314,7 @@ label_2035_internal:
             mes(s(cnt));
             color(0, 0, 0);
         }
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
         s(0) = ""s + cdata[cc].level;
         s(1) = ""s + cdata[cc].experience;
         s(2) = ""s + cdata[cc].required_experience;
@@ -44421,7 +44421,7 @@ label_2035_internal:
         }
         label_2047(0);
         tc = cc;
-        font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+        font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
         color(20, 10, 0);
         pos(wx + 417, wy + 281 + p(2) * 16);
         mes(lang(u8"軽減"s, u8"Prot"s));
@@ -44433,7 +44433,7 @@ label_2035_internal:
         attackskill = 106;
         int evade = calc_evasion(tc);
         prot = calcattackdmg(2);
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
         pos(wx + 460 + en * 8, wy + 279 + p(2) * 16);
         mes(""s + (100 - 10000 / (prot + 100)) + u8"% + "s + protdice1 + u8"d"s
             + protdice2);
@@ -44510,10 +44510,10 @@ label_2035_internal:
                 u8"今は持続効果を受けていない"s,
                 u8"This character isn't currently blessed or hexed."s);
         }
-        font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+        font(13 - en * 2);
         pos(wx + 108, wy + 366);
         mes(s);
-        font(lang(cfg_font1, cfg_font2), 11 + sizefix * 2 - en * 2, 1);
+        font(11 + sizefix * 2 - en * 2, snail::font_t::style_t::bold);
         color(20, 10, 0);
         pos(wx + 70, wy + 369 - en * 3);
         mes(lang(u8"説明:"s, u8"Hint:"s));
@@ -44567,7 +44567,7 @@ label_2035_internal:
     }
     if (page > 0)
     {
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
         for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
         {
             p = pagesize * (page - 1) + cnt;
@@ -44659,9 +44659,9 @@ label_2035_internal:
             }
             else
             {
-                font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+                font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
                 cs_list(cs == cnt, listn(0, p), wx + 88, wy + 66 + cnt * 19);
-                font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+                font(14 - en * 2);
             }
         }
         cs_bk = cs;
@@ -45178,7 +45178,7 @@ label_2041_internal:
         grotate(5, 0, 960, 0, chipc(2, i), chipc(3, i));
     }
     gmode(2);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = cnt;
@@ -45413,7 +45413,7 @@ int label_2044()
         gmode(2, 32, 48);
         grotate(10 + cc, f / 4 % 4 * 32, f / 16 % 4 * 48, 0, 48, 80);
         gmode(2);
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
         for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
         {
             p = cnt;
@@ -45530,7 +45530,7 @@ void label_2047(int val0)
 void label_2048(int val0)
 {
     tc = cc;
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     color(20, 10, 0);
     if (val0 == 0)
     {
@@ -45548,7 +45548,7 @@ void label_2048(int val0)
     attackvar = 0;
     int tohit = calc_accuracy(false);
     dmg = calcattackdmg(1);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     s(2) = ""s + dmgmulti;
     s = ""s + tohit + u8"%"s;
     if (val0 == 0)
@@ -45772,7 +45772,7 @@ label_2052_internal:
         + lang(u8" ダメージ修正:"s, u8" Damage Bonus:"s)
         + cdata[cc].damage_bonus + u8"  DV/PV:"s + cdata[cc].dv + u8"/"s
         + cdata[cc].pv);
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     gmode(2);
     keyrange = 0;
     f = 0;
@@ -45801,7 +45801,7 @@ label_2052_internal:
         pos(wx + 46, wy + 60 + cnt * 19 + 3);
         mes(q);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -46574,7 +46574,7 @@ label_2070_internal:
         {
             break;
         }
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
         color(0, 0, 0);
         pos(wx + 68, wy + 68 + cnt * 18);
         if (list(0, p) % 10000 == 1)
@@ -46603,11 +46603,11 @@ label_2070_internal:
         }
         if (list(0, p) == -1)
         {
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+            font(13 - en * 2);
         }
         if (list(0, p) == -2)
         {
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 2);
+            font(13 - en * 2, snail::font_t::style_t::italic);
             pos(wx + ww - strlen_u(listn(0, p)) * 6 - 80, wy + 68 + cnt * 18);
         }
         mes(listn(0, p));
@@ -48915,16 +48915,16 @@ void main_menu_continue()
             x = wx + 20;
             y = cnt * 40 + wy + 50;
             display_key(x + 20, y - 2, cnt);
-            font(lang(cfg_font1, cfg_font2), 11 - en * 2, 0);
+            font(11 - en * 2);
             pos(x + 48, y - 4);
             mes(listn(0, cnt));
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+            font(13 - en * 2);
             cs_list(cs == cnt, listn(1, cnt), x + 48, y + 8);
         }
         cs_bk = cs;
         if (save_data_count == 0)
         {
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
             pos(wx + 140, wy + 120);
             mes(u8"No save files found"s);
         }
@@ -49074,16 +49074,16 @@ void main_menu_incarnate()
             x = wx + 20;
             y = cnt * 40 + wy + 50;
             display_key(x + 20, y - 2, cnt);
-            font(lang(cfg_font1, cfg_font2), 11 - en * 2, 0);
+            font(11 - en * 2);
             pos(x + 48, y - 4);
             mes(listn(0, cnt));
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+            font(13 - en * 2);
             cs_list(cs == cnt, listn(1, cnt), x + 48, y + 8);
         }
         cs_bk = cs;
         if (listmax == 0)
         {
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
             pos(wx + 140, wy + 120);
             mes(u8"No gene files found"s);
         }
@@ -49320,7 +49320,7 @@ void label_2134()
         noteadd(u8"Debug Console    Type \"?\" for help. Hit ESC to exit."s);
         noteadd(""s);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     objmode(2);
     pos(0, 24);
     mesbox(dbm);
@@ -61673,7 +61673,7 @@ void talk_window()
     init_talk_window_and_show();
 label_2258_internal:
     show_talk_window();
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
     {
         if (cs == cnt)
@@ -61819,10 +61819,10 @@ void show_talk_window()
             gzoom(4, 0, 0, 80, 112, 80, 112);
         }
     }
-    font(lang(cfg_font1, cfg_font2), 10 - en * 2, 0);
+    font(10 - en * 2);
     display_topic(lang(u8"友好"s, u8"Impress"s), wx + 28, wy + 170);
     display_topic(lang(u8"興味"s, u8"Attract"s), wx + 28, wy + 215);
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     if (cdatan(1, tc) == ""s)
     {
         s = cdatan(0, tc) + u8" "s;
@@ -61862,7 +61862,7 @@ void show_talk_window()
     color(20, 10, 5);
     mes(s);
     color(0, 0, 0);
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+    font(13 - en * 2);
     if (chatval(2) == 1)
     {
         s = i18n::_(
@@ -61897,7 +61897,7 @@ void show_talk_window()
         pos(wx + 60, wy + 245);
         mes(u8"-"s);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     color(20, 10, 5);
     notesel(buff);
     for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
@@ -62946,7 +62946,7 @@ label_2272_internal:
     int n = 0;
     if (adata(28, gdata_current_map) == 0 || gdata_current_dungeon_level != 1)
     {
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
         pos(wx + 40, wy + 50);
         mes(lang(
             u8"この場所には経済活動がない。"s,
@@ -62990,10 +62990,10 @@ label_2272_internal:
             key_list(cnt) = key_select(cnt);
             ++keyrange;
             display_key(x - 30, y + 21, cnt);
-            font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+            font(12 + sizefix - en * 2);
             pos(x - 2, y + jp * 2);
             bmes(cnven(popostname(p)), 255, 255, 255);
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
             if (podata(0 + cnt, city) == 0)
             {
                 s = lang(u8"不在"s, u8"Empty"s);
@@ -63154,7 +63154,7 @@ label_2277_internal:
 label_2278_internal:
     s = strhint2 + strhint3b;
     showscroll(s, wx, wy, ww, wh);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     if (adata(28, gdata_current_map) == 0 || gdata_current_dungeon_level != 1)
     {
         pos(wx + 40, wy + 60);
@@ -63170,7 +63170,7 @@ label_2278_internal:
                 lang(u8"街の概要"s, u8"Town Information"s), wx + 65, wy + 50);
             display_topic(
                 lang(u8"街の財政"s, u8"Town Finance"s), wx + 65, wy + 150);
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
             x = wx + 50;
             y = wy + 80;
             showeconomy(
@@ -63204,7 +63204,7 @@ label_2278_internal:
                 wy + 50);
             display_topic(
                 lang(u8"収支の詳細"s, u8"Finance Detail"s), wx + 65, wy + 200);
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
         }
     }
     redraw();
@@ -63345,7 +63345,7 @@ label_2283_internal:
     s = strhint2 + strhint3b;
     showscroll(s, wx, wy, ww, wh);
     display_topic(lang(u8"法律"s, u8"Law"s), wx + 65, wy + 45);
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+    font(12 + sizefix - en * 2);
     pos(wx + 185, wy + 52);
     mes(lang(u8"国法"s, u8"Global"s));
     if (mdata(6) == 3)
@@ -63361,7 +63361,7 @@ label_2283_internal:
     pos(wx + 255, wy + 46);
     gmode(2);
     gcopy(3, 288, 360, 24, 24);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
@@ -63380,7 +63380,7 @@ label_2283_internal:
         }
         display_key(wx + 72, wy + 76 + cnt * 19 - 2, cnt);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -65182,7 +65182,7 @@ label_2684_internal:
         await(1000);
         goto label_2681;
     }
-    font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
+    font(16 - en * 2);
     x = 44;
     for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
@@ -67176,7 +67176,7 @@ label_2698:
     listn(0, 8) = s(p);
     t = 0;
 label_2699_internal:
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+    font(12 + sizefix - en * 2);
     tx = 50;
     ty = windowh - 255;
     x(0) = 25;
@@ -67390,7 +67390,7 @@ void show_ex_help()
         gcopy(3, 960, 96, 48, 48);
         pos(wx + 10, wy + 42);
         gcopy(3, 960, 144, 96, 120);
-        font(lang(cfg_font1, cfg_font2), 16 - en * 2, 1);
+        font(16 - en * 2, snail::font_t::style_t::bold);
         pos(wx + 142, wy + 13);
         color(80, 60, 50);
         bmes(
@@ -67401,7 +67401,7 @@ void show_ex_help()
         color(0, 0, 0);
         tx = wx + 120;
         ty = wy + 55;
-        font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
+        font(15 - en * 2);
         {
             int y = ty;
             int cnt = 0;
@@ -67603,10 +67603,10 @@ label_2705_internal:
         label_2702();
         for (int cnt = 0; cnt < 12; ++cnt)
         {
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+            font(13 - en * 2);
             pos(x + 38 + cnt / 6 * 290, y + 58 + cnt % 6 * 14);
             mes(s(cnt * 2));
-            font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
+            font(15 - en * 2);
             pos(x + 248 + cnt / 6 * 290, y + 57 + cnt % 6 * 14);
             mes(s(cnt * 2 + 1));
         }
@@ -67639,10 +67639,10 @@ label_2705_internal:
         label_2702();
         for (int cnt = 0; cnt < 12; ++cnt)
         {
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+            font(13 - en * 2);
             pos(x + 38 + cnt / 6 * 290, y + 170 + cnt % 6 * 14);
             mes(s(cnt * 2));
-            font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
+            font(15 - en * 2);
             pos(x + 248 + cnt / 6 * 290, y + 169 + cnt % 6 * 14);
             mes(s(cnt * 2 + 1));
         }
@@ -67661,10 +67661,10 @@ label_2705_internal:
         label_2702();
         for (int cnt = 0; cnt < 6; ++cnt)
         {
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+            font(13 - en * 2);
             pos(x + 38 + cnt / 3 * 290, y + 284 + cnt % 3 * 14);
             mes(s(cnt * 2));
-            font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
+            font(15 - en * 2);
             pos(x + 248 + cnt / 3 * 290, y + 283 + cnt % 3 * 14);
             mes(s(cnt * 2 + 1));
         }
@@ -67684,14 +67684,14 @@ label_2705_internal:
         label_2702();
         for (int cnt = 0; cnt < 6; ++cnt)
         {
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+            font(13 - en * 2);
             pos(x + 38 + cnt / 3 * 290, y + 356 + cnt % 3 * 14);
             mes(s(cnt * 2));
-            font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
+            font(15 - en * 2);
             pos(x + 248 + cnt / 3 * 290, y + 355 + cnt % 3 * 14);
             mes(s(cnt * 2 + 1));
         }
-        font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+        font(13 - en * 2);
         pos(x + 38, y + 408);
         mes(lang(
             u8"F8 マップのエクスポート  F9 インタフェース非表示  F11 キャラ情報の出力\nF12 コンソールの表示"s,
@@ -67701,7 +67701,7 @@ label_2705_internal:
     {
         s(1) = listn(0, pagesize * page_bk + cs_bk2);
         display_topic(s(1), wx + 206, wy + 36);
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
         p = list(0, pagesize * page_bk + cs_bk2);
         {
             int y = wy + 60;
@@ -67720,7 +67720,7 @@ label_2705_internal:
             }
         }
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -67819,7 +67819,7 @@ void label_2707()
         s += u8"\n"s;
         buff += ""s + s;
     }
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+    font(13 - en * 2);
     i = 0;
     for (int cnt = 0; cnt < 20; ++cnt)
     {
@@ -68284,15 +68284,17 @@ label_2729_internal:
         ++keyrange;
         display_key(wx + 394, wy + 91 + cnt * 22 - 2, cnt);
     }
-    font(lang(cfg_font1, cfg_font2), 12 - en * 2, 6);
+    font(
+        12 - en * 2,
+        snail::font_t::style_t::italic | snail::font_t::style_t::underline);
     pos(wx + 90, wy + 50);
     mes(u8"Elona - Scene playback"s);
-    font(lang(cfg_font1, cfg_font2), 12 - en * 2, 0);
+    font(12 - en * 2);
     pos(wx + 390, wy + 50);
     mes(lang(
         u8"アンロックされたシーンを再生できます。\nシーンNoは連続していません。"s,
         u8"You can play the unlocked scenes."s));
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -68307,7 +68309,7 @@ label_2729_internal:
             wx + 424,
             wy + 91 + cnt * 22 - 1);
     }
-    font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
+    font(12 - en * 2, snail::font_t::style_t::bold);
     pos(wx + 500, wy + 375);
     mes(u8"- "s + (page + 1) + u8" -"s);
     if (page < pagemax)
@@ -70941,7 +70943,7 @@ void conquer_lesimas()
     grotate(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
     gmode(2);
     display_topic(lang(u8"制覇までの軌跡"s, u8"Trace"s), wx + 28, wy + 40);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     pos(wx + 40, wy + 76);
     mes(lang(
         ""s + 517 + u8"年"s + 8 + u8"月"s + 12
@@ -71165,7 +71167,7 @@ void show_game_score_ranking()
     gmode(2);
     x = 135;
     y = 134;
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     p = page - 4;
     if (p >= 80)
     {
