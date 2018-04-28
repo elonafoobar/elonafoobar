@@ -42823,18 +42823,10 @@ void do_interact_command()
                 }
                 if (tc < 16)
                 {
-<<<<<<< HEAD
                     ELONA_APPEND_PROMPT(
-                        lang(u8"着替えさせる"s, u8"Appearence"s),
+                        lang(u8"着替えさせる"s, u8"Appearance"s),
                         u8"null"s,
                         ""s + 8);
-=======
-                    promptl(0, promptmax) =
-                        lang(u8"着替えさせる"s, u8"Appearance"s);
-                    promptl(1, promptmax) = u8"null"s;
-                    promptl(2, promptmax) = ""s + 8;
-                    ++promptmax;
->>>>>>> Fix typo
                 }
             }
         }
