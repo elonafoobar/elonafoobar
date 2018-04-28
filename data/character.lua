@@ -8224,6 +8224,7 @@ character['330'] = {
 
 
 -- For debug
+--[[
 character['500'] = {
   item_type = 1,
   filter = "/slime/",
@@ -8247,8 +8248,10 @@ character['500'] = {
   rarity = 100000,
   coefficient = 0,
 }
+--]
 
 -- For debug
+--[[
 character['501'] = {
   item_type = 5,
   filter = "/dragon/",
@@ -8268,6 +8271,7 @@ character['501'] = {
   rarity = 100000,
   coefficient = 0,
 }
+--]]
 
 
 -- vim: et sw=2 sts=2
