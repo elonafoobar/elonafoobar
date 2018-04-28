@@ -1,6 +1,7 @@
 #include "animation.hpp"
 #include "ability.hpp"
 #include "character.hpp"
+#include "config.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "item.hpp"
@@ -50,7 +51,7 @@ void play_animation_8(int anicol)
         pos(anidx + inf_tiles / 2, anidy + 16);
         grotate(1, 0, 960, 5 * i, i + 40, i + 40);
         redraw();
-        await(cfg_animewait);
+        await(config::instance().animewait);
     }
 }
 
@@ -107,7 +108,7 @@ void play_animation_6_5_7_11(int animeid, int anicol)
         }
         else
         {
-            await(cfg_animewait);
+            await(config::instance().animewait);
         }
         int acnt2 = i * 2;
         pos(ax - inf_tiles / 2, ay - inf_tiles / 2);
@@ -179,7 +180,7 @@ void play_animation_3(int anicol, int anisound)
                 }
             }
         }
-        await(cfg_animewait);
+        await(config::instance().animewait);
         redraw();
     }
     if (anisound)
@@ -267,7 +268,7 @@ void play_animation_17_2(int animeid, int anicol, int anisound)
         gmode(0);
         pos(0, 0);
         gcopy(4, 0, 0, windoww, windowh);
-        await(cfg_animewait);
+        await(config::instance().animewait);
     }
     if (anisound)
     {
@@ -366,7 +367,7 @@ void play_animation_0(int anicol, int anisound)
             }
             ++ap(cnt);
         }
-        await(cfg_animewait + 15);
+        await(config::instance().animewait + 15);
         redraw();
     }
     if (anisound)
@@ -419,7 +420,7 @@ void play_animation_15()
         pos(ax, ay - inf_tiles / 2);
         gcopy(4, 0, 0, inf_tiles, inf_tiles);
         gmode(2);
-        await(cfg_animewait);
+        await(config::instance().animewait);
     }
 }
 
@@ -504,7 +505,7 @@ void play_animation_ranged_attack(int animeid, int anicol, int anisound)
         pos(ax, ay - inf_tiles / 2);
         gcopy(4, 0, 0, inf_tiles, inf_tiles);
         gmode(2);
-        await(cfg_animewait);
+        await(config::instance().animewait);
     }
     if (anisound)
     {
@@ -533,7 +534,7 @@ void play_animation_9()
         pos(anidx + 16, anidy + 16);
         grotate(1, 0, 960, 0.5 * cnt - 0.8, cnt * 8 + 18, cnt * 8 + 18);
         redraw();
-        await(cfg_animewait);
+        await(config::instance().animewait);
     }
 }
 
@@ -634,7 +635,7 @@ void play_animation_12()
         pos(anidx - 24, anidy - 48);
         gcopy(4, 0, 0, 96, 144);
         gmode(2);
-        await(cfg_animewait);
+        await(config::instance().animewait);
     }
 }
 
@@ -667,7 +668,7 @@ void play_animation_20()
             pos(anidx, anidy - cnt * 96);
             gcopy(7, cnt2 / 2 * 96, (cnt == 0) * 96, 96, 96);
         }
-        await(cfg_animewait + 25);
+        await(config::instance().animewait + 25);
         redraw();
     }
 }
@@ -793,7 +794,7 @@ void play_animation_19()
         {
             break;
         }
-        await(cfg_animewait + 25);
+        await(config::instance().animewait + 25);
         redraw();
     }
 }
@@ -868,10 +869,10 @@ void play_animation_22()
         {
             break;
         }
-        await(cfg_animewait + 40);
+        await(config::instance().animewait + 40);
         redraw();
     }
-    await(cfg_animewait);
+    await(config::instance().animewait);
     pos(0, 0);
     gmode(0);
     gcopy(4, 0, 0, windoww, windowh);
@@ -941,10 +942,10 @@ void play_animation_21()
         {
             break;
         }
-        await(cfg_animewait + 40);
+        await(config::instance().animewait + 40);
         redraw();
     }
-    await(cfg_animewait);
+    await(config::instance().animewait);
     pos(0, 0);
     gmode(0);
     gcopy(4, 0, 0, windoww, windowh);
@@ -1003,7 +1004,7 @@ void play_animation_14_16(int animeid)
         pos(ax - 16, ay - 16);
         gcopy(4, 0, 0, 64, 64);
         gmode(2);
-        await(cfg_animewait);
+        await(config::instance().animewait);
     }
 }
 
@@ -1025,7 +1026,7 @@ void play_animation(int animeid)
 {
     if (mode == 9)
         return;
-    if (cfg_animewait == 0)
+    if (config::instance().animewait == 0)
         return;
 
     if (animeid != 21)

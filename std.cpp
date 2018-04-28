@@ -9,6 +9,7 @@
 
 #include "snail/application.hpp"
 
+#include "config.hpp"
 #include "elona.hpp"
 #include "util.hpp"
 #include "variables.hpp"
@@ -550,7 +551,8 @@ void font(int size, snail::font_t::style_t style)
             std::piecewise_construct,
             std::forward_as_tuple(size, style),
             std::forward_as_tuple(
-                filesystem::path(u8"font") / lang(cfg_font1, cfg_font2),
+                filesystem::path(u8"font")
+                    / lang(config::instance().font1, config::instance().font2),
                 size,
                 style));
         renderer.set_font(inserted.first->second);

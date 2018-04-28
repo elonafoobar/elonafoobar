@@ -1,4 +1,5 @@
 #include "character.hpp"
+#include "config.hpp"
 #include "elona.hpp"
 #include "map.hpp"
 #include "variables.hpp"
@@ -100,9 +101,9 @@ void key_check(int prm_299)
     }
     if (msgalert == 1)
     {
-        if (cfg_alert > 1)
+        if (config::instance().alert > 1)
         {
-            for (int i = 0; i < cfg_alert; ++i)
+            for (int i = 0; i < config::instance().alert; ++i)
             {
                 await(10);
                 bool any_key_pressed = false;
@@ -223,7 +224,7 @@ void key_check(int prm_299)
         keywait = 0;
         key_shift = 0;
     }
-    if (cfg_joypad)
+    if (config::instance().joypad)
     {
         j_at_m19 = 0;
         DIGETJOYSTATE(j_at_m19, 0);
@@ -449,16 +450,17 @@ void key_check(int prm_299)
         {
             if (keybd_attacking != 0)
             {
-                if (keybd_wait % cfg_attackwait != 0)
+                if (keybd_wait % config::instance().attackwait != 0)
                 {
                     key = ""s;
                 }
             }
-            else if (cfg_scroll == 0)
+            else if (config::instance().scroll == 0)
             {
-                if (keybd_wait < cfg_walkwait * cfg_startrun)
+                if (keybd_wait
+                    < config::instance().walkwait * config::instance().startrun)
                 {
-                    if (keybd_wait % cfg_walkwait != 0)
+                    if (keybd_wait % config::instance().walkwait != 0)
                     {
                         key = "";
                     }
@@ -468,7 +470,7 @@ void key_check(int prm_299)
                     running = 1;
                     if (keybd_wait < 100000)
                     {
-                        if (keybd_wait % cfg_runwait != 0)
+                        if (keybd_wait % config::instance().runwait != 0)
                         {
                             key = ""s;
                         }
@@ -485,11 +487,11 @@ void key_check(int prm_299)
                     }
                 }
             }
-            else if (keybd_wait > cfg_startrun)
+            else if (keybd_wait > config::instance().startrun)
             {
-                if (cfg_runscroll == 0)
+                if (config::instance().runscroll == 0)
                 {
-                    if (keybd_wait % cfg_runwait != 0)
+                    if (keybd_wait % config::instance().runwait != 0)
                     {
                         key = "";
                     }
@@ -798,10 +800,10 @@ void txt_conv()
         {
             msg_newline();
             tnew = 0;
-            if (cfg_msgtrans)
+            if (config::instance().msgtrans)
             {
                 p_at_txtfunc = (windoww - inf_msgx) / 192;
-                gmode(4, -1, -1, cfg_msgtrans * 20);
+                gmode(4, -1, -1, config::instance().msgtrans * 20);
                 for (int i = 0; i < p_at_txtfunc + 1; ++i)
                 {
                     if (i == p_at_txtfunc)
@@ -816,7 +818,7 @@ void txt_conv()
                     gcopy(3, 496, 536, x_at_txtfunc, inf_msgspace * 3);
                 }
             }
-            if (cfg_msgaddtime)
+            if (config::instance().msgaddtime)
             {
                 msgtemp(0) = u8"["s + gdata_minute + u8"] " + msgtemp(0);
             }

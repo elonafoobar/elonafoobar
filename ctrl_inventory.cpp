@@ -1,6 +1,7 @@
 #include "ability.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "config.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
@@ -1073,7 +1074,7 @@ label_2061_internal:
         }
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     invmark(invctrl) = page * 1000 + cs;

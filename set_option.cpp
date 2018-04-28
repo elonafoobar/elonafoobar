@@ -175,31 +175,35 @@ std::vector<config_menu> create_config_menu()
     ret.emplace_back(lang(u8"ゲームの設定", u8"Game Setting"), 440, 340);
     ELONA_CONFIG_ITEM_YESNO(
         lang(u8"ノルンの冒険ガイド", u8"Extra Help"),
-        cfg_extrahelp,
+        config::instance().extrahelp,
         lang(u8"あり", u8"Show"),
         lang(u8"なし", u8"Don't show"));
     ELONA_CONFIG_ITEM_YESNO(
         lang(u8"非好戦的NPCを無視", u8"Neutral Npcs"),
-        cfg_ignoredislike,
+        config::instance().ignoredislike,
         lang(u8"する", u8"Ignore"),
         lang(u8"しない", u8"Attack"));
     ELONA_CONFIG_ITEM_CHOICE(
         lang(u8"zキーの割当て", u8"Assign z key"),
-        cfg_zkey,
+        config::instance().zkey,
         lang(u8"ｸｨｯｸﾒﾆｭｰ", u8"Quick menu"),
         lang(u8"道具を振る", u8"Zap"),
         lang(u8"割当なし", u8"Don't assign"), );
     ELONA_CONFIG_ITEM_CHOICE(
         lang(u8"xキーの割当て", u8"Assign x key"),
-        cfg_xkey,
+        config::instance().xkey,
         lang(u8"ｸｲｯｸｲﾝﾍﾞﾝﾄﾘ", u8"Quick Inv"),
         lang(u8"道具を調べる", u8"Identify"),
         lang(u8"割当なし", u8"Don't assign"), );
     ELONA_CONFIG_ITEM(lang(u8"走り始める歩数", u8"Start Running After"));
     ELONA_CONFIG_ITEM_INTEGER(
-        lang(u8"歩きの速さ", u8"Walk Speed"), cfg_walkwait, u8"{} wait");
+        lang(u8"歩きの速さ", u8"Walk Speed"),
+        config::instance().walkwait,
+        u8"{} wait");
     ELONA_CONFIG_ITEM_INTEGER(
-        lang(u8"攻撃の間隔", u8"Attack Interval"), cfg_attackwait, u8"{} wait");
+        lang(u8"攻撃の間隔", u8"Attack Interval"),
+        config::instance().attackwait,
+        u8"{} wait");
 
     ret.emplace_back(lang(u8"画面と音の設定", u8"Screen & Sound"), 440, 370);
     ELONA_CONFIG_ITEM(lang(u8"サウンドの再生*", u8"Sound*"));
@@ -208,84 +212,88 @@ std::vector<config_menu> create_config_menu()
     ELONA_CONFIG_ITEM(lang(u8"画面の大きさ*", u8"Screen Resolution*"));
     ELONA_CONFIG_ITEM_YESNO(
         lang(u8"スクロール", u8"Smooth Scroll"),
-        cfg_scroll,
+        config::instance().scroll,
         lang(u8"する", u8"Yes"),
         lang(u8"しない", u8"No"));
     ELONA_CONFIG_ITEM_YESNO(
         lang(u8"主人公中心に描写", u8"Always Center"),
-        cfg_alwayscenter,
+        config::instance().alwayscenter,
         lang(u8"する", u8"Yes"),
         lang(u8"しない", u8"No"));
     ELONA_CONFIG_ITEM_YESNO(
         lang(u8"心臓の音", u8"Heartbeat Sound"),
-        cfg_heart,
+        config::instance().heart,
         lang(u8"再生する", u8"Play"),
         lang(u8"再生しない", u8"Don't play"));
     ELONA_CONFIG_ITEM_YESNO(
         lang(u8"攻撃時アニメ", u8"Attack Animation"),
-        cfg_attackanime,
+        config::instance().attackanime,
         lang(u8"アニメあり", u8"Yes"),
         lang(u8"アニメなし", u8"No"));
     ELONA_CONFIG_ITEM_YESNO(
         lang(u8"天候エフェクト", u8"Weather Effect"),
-        cfg_env,
+        config::instance().env,
         lang(u8"アニメあり", u8"Always"),
         lang(u8"アニメなし", u8"No animation"));
     ELONA_CONFIG_ITEM_CHOICE(
         lang(u8"光源の描写", u8"Lighting"),
-        cfg_shadow,
+        config::instance().shadow,
         lang(u8"高画質", u8"High"),
         lang(u8"低画質", u8"Low"), );
     ELONA_CONFIG_ITEM_YESNO(
         lang(u8"アイテムの影描写", u8"object Shadow"),
-        cfg_objectshadow,
+        config::instance().objectshadow,
         lang(u8"あり（低速）", u8"Yes(Fast)"),
         lang(u8"なし（高速）", u8"No(Slow)"));
 
     ret.emplace_back(lang(u8"ネット機能の設定", u8"Network Setting"), 440, 300);
     ELONA_CONFIG_ITEM_YESNO(
         lang(u8"ネットの使用", u8"Use Network"),
-        cfg_net,
+        config::instance().net,
         lang(u8"する", u8"Yes"),
         lang(u8"しない", u8"No"));
     ELONA_CONFIG_ITEM_YESNO(
         lang(u8"定期的に接続", u8"Constantly Connect"),
-        cfg_netwish,
+        config::instance().netwish,
         lang(u8"する", u8"Yes"),
         lang(u8"しない", u8"No"));
     ELONA_CONFIG_ITEM_YESNO(
         lang(u8"チャットをフィルタ", u8"Filter Chat"),
-        cfg_netchat,
+        config::instance().netchat,
         lang(u8"する", u8"Yes"),
         lang(u8"しない", u8"No"));
 
     ret.emplace_back(lang(u8"詳細な設定", u8"Detailed Setting"), 440, 300);
     ELONA_CONFIG_ITEM_INTEGER(
-        lang(u8"走りの速さ", u8"Run Speed"), cfg_runwait, u8"{} wait");
+        lang(u8"走りの速さ", u8"Run Speed"),
+        config::instance().runwait,
+        u8"{} wait");
     ELONA_CONFIG_ITEM_YESNO(
         lang(u8"numlockを自動制御", u8"Auto Numlock"),
-        cfg_autonumlock,
+        config::instance().autonumlock,
         lang(u8"する", u8"Yes"),
         lang(u8"しない", u8"No"));
     ELONA_CONFIG_ITEM_INFO(
         lang(u8"タイトルの水の波紋", u8"Title Water Effect"),
         lang(u8"オフ(未実装)", u8"No(unsupported)"));
     ELONA_CONFIG_ITEM_INTEGER(
-        lang(u8"画面の更新頻度", u8"Screen Refresh"), cfg_scrsync, u8"{} wait");
+        lang(u8"画面の更新頻度", u8"Screen Refresh"),
+        config::instance().scrsync,
+        u8"{} wait");
     ELONA_CONFIG_ITEM_YESNO(
         lang(u8"走り時スクロール", u8"Scroll When Run"),
-        cfg_runscroll,
+        config::instance().runscroll,
         lang(u8"する", u8"Yes"),
         lang(u8"しない", u8"No"));
     ELONA_CONFIG_ITEM_CHOICE(
         lang(u8"オートターンの挙動", u8"Auto Turn Speed"),
-        cfg_autoturn,
+        config::instance().autoturn,
         lang(u8"普通", u8"Normal"),
         lang(u8"速め", u8"High"),
         lang(u8"省略", u8"Highest"));
     ELONA_CONFIG_ITEM_YESNO(
         lang(u8"イベントの短縮", u8"Skip Random Events"),
-        cfg_skiprandevents,
+        config::instance().skiprandevents,
         lang(u8"する", u8"Yes"),
         lang(u8"しない", u8"No"));
 
@@ -307,7 +315,7 @@ std::vector<config_menu> create_config_menu()
     ret.emplace_back(lang(u8"メッセージとログ", u8"Message&Log"), 440, 300);
     ELONA_CONFIG_ITEM_YESNO(
         lang(u8"ﾒｯｾｰｼﾞに分表示追加", u8"Add time info"),
-        cfg_msgaddtime,
+        config::instance().msgaddtime,
         lang(u8"する", u8"Yes"),
         lang(u8"しない", u8"No"));
     ELONA_CONFIG_ITEM(lang(u8"過去のﾒｯｾｰｼﾞの透過", u8"Transparency"));
@@ -315,7 +323,7 @@ std::vector<config_menu> create_config_menu()
     ret.emplace_back(lang(u8"言語(Language)", u8"Language"), 440, 300);
     ELONA_CONFIG_ITEM_CHOICE(
         lang(u8"言語*", u8"Language*"),
-        cfg_language,
+        config::instance().language,
         u8"Japanese",
         u8"English");
 
@@ -323,13 +331,13 @@ std::vector<config_menu> create_config_menu()
         lang(u8"拡張設定(Foobar)", u8"Ex setting(Foobar)"), 440, 300);
     ELONA_CONFIG_ITEM_CHOICE(
         lang(u8"ペットのHPバー", u8"Pets' HP bar"),
-        cfg_hp_bar,
+        config::instance().hp_bar,
         lang(u8"表示しない", u8"Don't show"),
         lang(u8"左側に表示", u8"Show left side"),
         lang(u8"右側に表示", u8"Show right side"));
     ELONA_CONFIG_ITEM_YESNO(
         lang(u8"紐のアイコン表示", u8"Leash icon"),
-        cfg_leash_icon,
+        config::instance().leash_icon,
         lang(u8"する", u8"Show"),
         lang(u8"しない", u8"Don't show"));
 
@@ -360,9 +368,9 @@ int submenu = 0;
 
 void set_option()
 {
-    int cfg_sound2 = cfg_sound;
-    int cfg_music2 = cfg_music;
-    int cfg_fullscreen2 = cfg_fullscreen;
+    int cfg_sound2 = config::instance().sound;
+    int cfg_music2 = config::instance().music;
+    int cfg_fullscreen2 = config::instance().fullscreen;
     int windoww2 = windoww;
     int windowh2 = windowh;
 
@@ -423,7 +431,7 @@ void set_option()
     {
         if (reset_page)
         {
-            if (cfg_zkey == 0)
+            if (config::instance().zkey == 0)
             {
                 key_quick = u8"z"s;
                 key_zap = u8"Z"s;
@@ -434,7 +442,7 @@ void set_option()
                 key_quick = u8"Z"s;
             }
 
-            if (cfg_xkey == 0)
+            if (config::instance().xkey == 0)
             {
                 key_quickinv = u8"x"s;
                 key_inventory = u8"X"s;
@@ -553,7 +561,7 @@ void set_option()
             }
             if (submenu == 3)
             {
-                if (cfg_net == 0)
+                if (config::instance().net == 0)
                 {
                     if (cnt >= 1)
                     {
@@ -597,15 +605,17 @@ void set_option()
             {
                 if (cnt == 4)
                 {
-                    if (cfg_startrun >= 20)
+                    if (config::instance().startrun >= 20)
                     {
                         mes(lang(u8"走らない"s, u8"Don't run"s));
                     }
                     else
                     {
                         mes(lang(
-                            ""s + (cfg_startrun + 1) + u8"歩目から"s,
-                            u8"After "s + (cfg_startrun + 1) + u8" steps"s));
+                            ""s + (config::instance().startrun + 1)
+                                + u8"歩目から"s,
+                            u8"After "s + (config::instance().startrun + 1)
+                                + u8" steps"s));
                     }
                 }
             }
@@ -642,7 +652,7 @@ void set_option()
                 {
                     s(0) = lang(u8"使用しない"s, u8"Don't use"s);
                     s(1) = lang(u8"使用する"s, u8"Use"s);
-                    mes(s(cfg_joypad));
+                    mes(s(config::instance().joypad));
                 }
                 else if (list(1, cnt) == -1)
                 {
@@ -657,7 +667,7 @@ void set_option()
             {
                 if (cnt == 1)
                 {
-                    mes(""s + cfg_msgtrans * 10 + u8" %"s);
+                    mes(""s + config::instance().msgtrans * 10 + u8" %"s);
                 }
             }
         }
@@ -695,7 +705,7 @@ void set_option()
             cs_bk = cs;
         }
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         ELONA_GET_SELECTED_ITEM(p, cs = i);
@@ -794,113 +804,114 @@ void set_option()
             {
                 if (cs == 0)
                 {
-                    cfg_extrahelp += p;
-                    if (cfg_extrahelp > 1)
+                    config::instance().extrahelp += p;
+                    if (config::instance().extrahelp > 1)
                     {
-                        cfg_extrahelp = 1;
+                        config::instance().extrahelp = 1;
                     }
-                    else if (cfg_extrahelp < 0)
+                    else if (config::instance().extrahelp < 0)
                     {
-                        cfg_extrahelp = 0;
+                        config::instance().extrahelp = 0;
                     }
                     snd(20);
-                    set_config(u8"extraHelp", cfg_extrahelp);
+                    set_config(u8"extraHelp", config::instance().extrahelp);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 1)
                 {
-                    cfg_ignoredislike += p;
-                    if (cfg_ignoredislike > 1)
+                    config::instance().ignoredislike += p;
+                    if (config::instance().ignoredislike > 1)
                     {
-                        cfg_ignoredislike = 1;
+                        config::instance().ignoredislike = 1;
                     }
-                    else if (cfg_ignoredislike < 0)
+                    else if (config::instance().ignoredislike < 0)
                     {
-                        cfg_ignoredislike = 0;
+                        config::instance().ignoredislike = 0;
                     }
                     snd(20);
-                    set_config(u8"ignoreDislike", cfg_ignoredislike);
+                    set_config(
+                        u8"ignoreDislike", config::instance().ignoredislike);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 2)
                 {
-                    cfg_zkey += p;
-                    if (cfg_zkey > 2)
+                    config::instance().zkey += p;
+                    if (config::instance().zkey > 2)
                     {
-                        cfg_zkey = 2;
+                        config::instance().zkey = 2;
                     }
-                    else if (cfg_zkey < 0)
+                    else if (config::instance().zkey < 0)
                     {
-                        cfg_zkey = 0;
+                        config::instance().zkey = 0;
                     }
                     snd(20);
-                    set_config(u8"zkey", cfg_zkey);
+                    set_config(u8"zkey", config::instance().zkey);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 3)
                 {
-                    cfg_xkey += p;
-                    if (cfg_xkey > 2)
+                    config::instance().xkey += p;
+                    if (config::instance().xkey > 2)
                     {
-                        cfg_xkey = 2;
+                        config::instance().xkey = 2;
                     }
-                    else if (cfg_xkey < 0)
+                    else if (config::instance().xkey < 0)
                     {
-                        cfg_xkey = 0;
+                        config::instance().xkey = 0;
                     }
                     snd(20);
-                    set_config(u8"xkey", cfg_xkey);
+                    set_config(u8"xkey", config::instance().xkey);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 4)
                 {
-                    cfg_startrun += p;
-                    if (cfg_startrun > 20)
+                    config::instance().startrun += p;
+                    if (config::instance().startrun > 20)
                     {
-                        cfg_startrun = 20;
+                        config::instance().startrun = 20;
                     }
-                    else if (cfg_startrun < 0)
+                    else if (config::instance().startrun < 0)
                     {
-                        cfg_startrun = 0;
+                        config::instance().startrun = 0;
                     }
                     snd(20);
-                    set_config(u8"startRun", cfg_startrun);
+                    set_config(u8"startRun", config::instance().startrun);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 5)
                 {
-                    cfg_walkwait += p;
-                    if (cfg_walkwait > 10)
+                    config::instance().walkwait += p;
+                    if (config::instance().walkwait > 10)
                     {
-                        cfg_walkwait = 10;
+                        config::instance().walkwait = 10;
                     }
-                    else if (cfg_walkwait < 1)
+                    else if (config::instance().walkwait < 1)
                     {
-                        cfg_walkwait = 1;
+                        config::instance().walkwait = 1;
                     }
                     snd(20);
-                    set_config(u8"walkWait", cfg_walkwait);
+                    set_config(u8"walkWait", config::instance().walkwait);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 6)
                 {
-                    cfg_attackwait += p;
-                    if (cfg_attackwait > 20)
+                    config::instance().attackwait += p;
+                    if (config::instance().attackwait > 20)
                     {
-                        cfg_attackwait = 20;
+                        config::instance().attackwait = 20;
                     }
-                    else if (cfg_attackwait < 1)
+                    else if (config::instance().attackwait < 1)
                     {
-                        cfg_attackwait = 1;
+                        config::instance().attackwait = 1;
                     }
                     snd(20);
-                    set_config(u8"attackWait", cfg_attackwait);
+                    set_config(u8"attackWait", config::instance().attackwait);
                     reset_page = true;
                     continue;
                 }
@@ -957,113 +968,115 @@ void set_option()
                 }
                 if (cs == 4)
                 {
-                    cfg_scroll += p;
-                    if (cfg_scroll > 1)
+                    config::instance().scroll += p;
+                    if (config::instance().scroll > 1)
                     {
-                        cfg_scroll = 1;
+                        config::instance().scroll = 1;
                     }
-                    else if (cfg_scroll < 0)
+                    else if (config::instance().scroll < 0)
                     {
-                        cfg_scroll = 0;
+                        config::instance().scroll = 0;
                     }
                     snd(20);
-                    set_config(u8"scroll", cfg_scroll);
+                    set_config(u8"scroll", config::instance().scroll);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 5)
                 {
-                    cfg_alwayscenter += p;
-                    if (cfg_alwayscenter > 1)
+                    config::instance().alwayscenter += p;
+                    if (config::instance().alwayscenter > 1)
                     {
-                        cfg_alwayscenter = 1;
+                        config::instance().alwayscenter = 1;
                     }
-                    else if (cfg_alwayscenter < 0)
+                    else if (config::instance().alwayscenter < 0)
                     {
-                        cfg_alwayscenter = 0;
+                        config::instance().alwayscenter = 0;
                     }
                     snd(20);
-                    set_config(u8"alwaysCenter", cfg_alwayscenter);
+                    set_config(
+                        u8"alwaysCenter", config::instance().alwayscenter);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 6)
                 {
-                    cfg_heart += p;
-                    if (cfg_heart > 1)
+                    config::instance().heart += p;
+                    if (config::instance().heart > 1)
                     {
-                        cfg_heart = 1;
+                        config::instance().heart = 1;
                     }
-                    else if (cfg_heart < 0)
+                    else if (config::instance().heart < 0)
                     {
-                        cfg_heart = 0;
+                        config::instance().heart = 0;
                     }
                     snd(20);
-                    set_config(u8"heartbeat", cfg_heart);
+                    set_config(u8"heartbeat", config::instance().heart);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 7)
                 {
-                    cfg_attackanime += p;
-                    if (cfg_attackanime > 1)
+                    config::instance().attackanime += p;
+                    if (config::instance().attackanime > 1)
                     {
-                        cfg_attackanime = 1;
+                        config::instance().attackanime = 1;
                     }
-                    else if (cfg_attackanime < 0)
+                    else if (config::instance().attackanime < 0)
                     {
-                        cfg_attackanime = 0;
+                        config::instance().attackanime = 0;
                     }
                     snd(20);
-                    set_config(u8"attackAnime", cfg_attackanime);
+                    set_config(u8"attackAnime", config::instance().attackanime);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 8)
                 {
-                    cfg_env += p;
-                    if (cfg_env > 1)
+                    config::instance().env += p;
+                    if (config::instance().env > 1)
                     {
-                        cfg_env = 1;
+                        config::instance().env = 1;
                     }
-                    else if (cfg_env < 0)
+                    else if (config::instance().env < 0)
                     {
-                        cfg_env = 0;
+                        config::instance().env = 0;
                     }
                     snd(20);
-                    set_config(u8"envEffect", cfg_env);
+                    set_config(u8"envEffect", config::instance().env);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 9)
                 {
-                    cfg_shadow += p;
-                    if (cfg_shadow > 1)
+                    config::instance().shadow += p;
+                    if (config::instance().shadow > 1)
                     {
-                        cfg_shadow = 1;
+                        config::instance().shadow = 1;
                     }
-                    else if (cfg_shadow < 0)
+                    else if (config::instance().shadow < 0)
                     {
-                        cfg_shadow = 0;
+                        config::instance().shadow = 0;
                     }
                     snd(20);
-                    set_config(u8"shadow", cfg_shadow);
+                    set_config(u8"shadow", config::instance().shadow);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 10)
                 {
-                    cfg_objectshadow += p;
-                    if (cfg_objectshadow > 1)
+                    config::instance().objectshadow += p;
+                    if (config::instance().objectshadow > 1)
                     {
-                        cfg_objectshadow = 1;
+                        config::instance().objectshadow = 1;
                     }
-                    else if (cfg_objectshadow < 0)
+                    else if (config::instance().objectshadow < 0)
                     {
-                        cfg_objectshadow = 0;
+                        config::instance().objectshadow = 0;
                     }
                     snd(20);
-                    set_config(u8"objectShadow", cfg_objectshadow);
+                    set_config(
+                        u8"objectShadow", config::instance().objectshadow);
                     reset_page = true;
                     continue;
                 }
@@ -1115,49 +1128,49 @@ void set_option()
             {
                 if (cs == 0)
                 {
-                    cfg_net += p;
-                    if (cfg_net > 1)
+                    config::instance().net += p;
+                    if (config::instance().net > 1)
                     {
-                        cfg_net = 1;
+                        config::instance().net = 1;
                     }
-                    else if (cfg_net < 0)
+                    else if (config::instance().net < 0)
                     {
-                        cfg_net = 0;
+                        config::instance().net = 0;
                     }
                     snd(20);
-                    set_config(u8"net", cfg_net);
+                    set_config(u8"net", config::instance().net);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 1)
                 {
-                    cfg_netwish += p;
-                    if (cfg_netwish > 1)
+                    config::instance().netwish += p;
+                    if (config::instance().netwish > 1)
                     {
-                        cfg_netwish = 1;
+                        config::instance().netwish = 1;
                     }
-                    else if (cfg_netwish < 0)
+                    else if (config::instance().netwish < 0)
                     {
-                        cfg_netwish = 0;
+                        config::instance().netwish = 0;
                     }
                     snd(20);
-                    set_config(u8"netWish", cfg_netwish);
+                    set_config(u8"netWish", config::instance().netwish);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 2)
                 {
-                    cfg_netchat += p;
-                    if (cfg_netchat > 1)
+                    config::instance().netchat += p;
+                    if (config::instance().netchat > 1)
                     {
-                        cfg_netchat = 1;
+                        config::instance().netchat = 1;
                     }
-                    else if (cfg_netchat < 0)
+                    else if (config::instance().netchat < 0)
                     {
-                        cfg_netchat = 0;
+                        config::instance().netchat = 0;
                     }
                     snd(20);
-                    set_config(u8"netChat", cfg_netchat);
+                    set_config(u8"netChat", config::instance().netchat);
                     reset_page = true;
                     continue;
                 }
@@ -1166,33 +1179,33 @@ void set_option()
             {
                 if (cs == 0)
                 {
-                    cfg_runwait += p;
-                    if (cfg_runwait > 5)
+                    config::instance().runwait += p;
+                    if (config::instance().runwait > 5)
                     {
-                        cfg_runwait = 5;
+                        config::instance().runwait = 5;
                     }
-                    else if (cfg_runwait < 2)
+                    else if (config::instance().runwait < 2)
                     {
-                        cfg_runwait = 2;
+                        config::instance().runwait = 2;
                     }
                     snd(20);
-                    set_config(u8"runWait", cfg_runwait);
+                    set_config(u8"runWait", config::instance().runwait);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 1)
                 {
-                    cfg_autonumlock += p;
-                    if (cfg_autonumlock > 1)
+                    config::instance().autonumlock += p;
+                    if (config::instance().autonumlock > 1)
                     {
-                        cfg_autonumlock = 1;
+                        config::instance().autonumlock = 1;
                     }
-                    else if (cfg_autonumlock < 0)
+                    else if (config::instance().autonumlock < 0)
                     {
-                        cfg_autonumlock = 0;
+                        config::instance().autonumlock = 0;
                     }
                     snd(20);
-                    set_config(u8"autoNumlock", cfg_autonumlock);
+                    set_config(u8"autoNumlock", config::instance().autonumlock);
                     reset_page = true;
                     continue;
                 }
@@ -1205,65 +1218,66 @@ void set_option()
                 }
                 if (cs == 3)
                 {
-                    cfg_scrsync += p;
-                    if (cfg_scrsync > 25)
+                    config::instance().scrsync += p;
+                    if (config::instance().scrsync > 25)
                     {
-                        cfg_scrsync = 25;
+                        config::instance().scrsync = 25;
                     }
-                    else if (cfg_scrsync < 2)
+                    else if (config::instance().scrsync < 2)
                     {
-                        cfg_scrsync = 2;
+                        config::instance().scrsync = 2;
                     }
                     snd(20);
-                    set_config(u8"scr_sync", cfg_scrsync);
+                    set_config(u8"scr_sync", config::instance().scrsync);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 4)
                 {
-                    cfg_runscroll += p;
-                    if (cfg_runscroll > 1)
+                    config::instance().runscroll += p;
+                    if (config::instance().runscroll > 1)
                     {
-                        cfg_runscroll = 1;
+                        config::instance().runscroll = 1;
                     }
-                    else if (cfg_runscroll < 0)
+                    else if (config::instance().runscroll < 0)
                     {
-                        cfg_runscroll = 0;
+                        config::instance().runscroll = 0;
                     }
                     snd(20);
-                    set_config(u8"scroll_run", cfg_runscroll);
+                    set_config(u8"scroll_run", config::instance().runscroll);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 5)
                 {
-                    cfg_autoturn += p;
-                    if (cfg_autoturn > 2)
+                    config::instance().autoturn += p;
+                    if (config::instance().autoturn > 2)
                     {
-                        cfg_autoturn = 2;
+                        config::instance().autoturn = 2;
                     }
-                    else if (cfg_autoturn < 0)
+                    else if (config::instance().autoturn < 0)
                     {
-                        cfg_autoturn = 0;
+                        config::instance().autoturn = 0;
                     }
                     snd(20);
-                    set_config(u8"autoTurnType", cfg_autoturn);
+                    set_config(u8"autoTurnType", config::instance().autoturn);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 6)
                 {
-                    cfg_skiprandevents += p;
-                    if (cfg_skiprandevents > 1)
+                    config::instance().skiprandevents += p;
+                    if (config::instance().skiprandevents > 1)
                     {
-                        cfg_skiprandevents = 1;
+                        config::instance().skiprandevents = 1;
                     }
-                    else if (cfg_skiprandevents < 0)
+                    else if (config::instance().skiprandevents < 0)
                     {
-                        cfg_skiprandevents = 0;
+                        config::instance().skiprandevents = 0;
                     }
                     snd(20);
-                    set_config(u8"skipRandEvents", cfg_skiprandevents);
+                    set_config(
+                        u8"skipRandEvents", config::instance().skiprandevents);
                     reset_page = true;
                     continue;
                 }
@@ -1272,17 +1286,17 @@ void set_option()
             {
                 if (cs == 0)
                 {
-                    cfg_joypad += p;
-                    if (cfg_joypad > 1)
+                    config::instance().joypad += p;
+                    if (config::instance().joypad > 1)
                     {
-                        cfg_joypad = 1;
+                        config::instance().joypad = 1;
                     }
-                    else if (cfg_joypad < 0)
+                    else if (config::instance().joypad < 0)
                     {
-                        cfg_joypad = 0;
+                        config::instance().joypad = 0;
                     }
                     snd(20);
-                    set_config(u8"joypad", cfg_joypad);
+                    set_config(u8"joypad", config::instance().joypad);
                     reset_page = true;
                     continue;
                 }
@@ -1291,33 +1305,33 @@ void set_option()
             {
                 if (cs == 0)
                 {
-                    cfg_msgaddtime += p;
-                    if (cfg_msgaddtime > 1)
+                    config::instance().msgaddtime += p;
+                    if (config::instance().msgaddtime > 1)
                     {
-                        cfg_msgaddtime = 1;
+                        config::instance().msgaddtime = 1;
                     }
-                    else if (cfg_msgaddtime < 0)
+                    else if (config::instance().msgaddtime < 0)
                     {
-                        cfg_msgaddtime = 0;
+                        config::instance().msgaddtime = 0;
                     }
                     snd(20);
-                    set_config(u8"msg_addTime", cfg_msgaddtime);
+                    set_config(u8"msg_addTime", config::instance().msgaddtime);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 1)
                 {
-                    cfg_msgtrans += p;
-                    if (cfg_msgtrans > 5)
+                    config::instance().msgtrans += p;
+                    if (config::instance().msgtrans > 5)
                     {
-                        cfg_msgtrans = 5;
+                        config::instance().msgtrans = 5;
                     }
-                    else if (cfg_msgtrans < 0)
+                    else if (config::instance().msgtrans < 0)
                     {
-                        cfg_msgtrans = 0;
+                        config::instance().msgtrans = 0;
                     }
                     snd(20);
-                    set_config(u8"msg_trans", cfg_msgtrans);
+                    set_config(u8"msg_trans", config::instance().msgtrans);
                     reset_page = true;
                     continue;
                 }
@@ -1326,17 +1340,17 @@ void set_option()
             {
                 if (cs == 0)
                 {
-                    cfg_language += p;
-                    if (cfg_language > 1)
+                    config::instance().language += p;
+                    if (config::instance().language > 1)
                     {
-                        cfg_language = 1;
+                        config::instance().language = 1;
                     }
-                    else if (cfg_language < 0)
+                    else if (config::instance().language < 0)
                     {
-                        cfg_language = 0;
+                        config::instance().language = 0;
                     }
                     snd(20);
-                    set_config(u8"language", cfg_language);
+                    set_config(u8"language", config::instance().language);
                     reset_page = true;
                     continue;
                 }
@@ -1345,33 +1359,33 @@ void set_option()
             {
                 if (cs == 0)
                 {
-                    cfg_hp_bar += p;
-                    if (cfg_hp_bar > 2)
+                    config::instance().hp_bar += p;
+                    if (config::instance().hp_bar > 2)
                     {
-                        cfg_hp_bar = 2;
+                        config::instance().hp_bar = 2;
                     }
-                    else if (cfg_hp_bar < 0)
+                    else if (config::instance().hp_bar < 0)
                     {
-                        cfg_hp_bar = 0;
+                        config::instance().hp_bar = 0;
                     }
                     snd(20);
-                    set_config(u8"hpBar", cfg_hp_bar);
+                    set_config(u8"hpBar", config::instance().hp_bar);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 1)
                 {
-                    cfg_leash_icon += p;
-                    if (cfg_leash_icon > 1)
+                    config::instance().leash_icon += p;
+                    if (config::instance().leash_icon > 1)
                     {
-                        cfg_leash_icon = 1;
+                        config::instance().leash_icon = 1;
                     }
-                    else if (cfg_leash_icon < 0)
+                    else if (config::instance().leash_icon < 0)
                     {
-                        cfg_leash_icon = 0;
+                        config::instance().leash_icon = 0;
                     }
                     snd(20);
-                    set_config(u8"leashIcon", cfg_leash_icon);
+                    set_config(u8"leashIcon", config::instance().leash_icon);
                     reset_page = true;
                     continue;
                 }
@@ -1388,7 +1402,7 @@ void set_option()
             load_config();
             if (mode == 0)
             {
-                if (cfg_net)
+                if (config::instance().net)
                 {
                     initialize_server_info();
                 }

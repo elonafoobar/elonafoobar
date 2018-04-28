@@ -1,4 +1,5 @@
 #include "character.hpp"
+#include "config.hpp"
 #include "debug.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
@@ -806,7 +807,7 @@ void cell_draw()
                         }
                         else
                         {
-                            if (cfg_objectshadow && chipi(6, p_))
+                            if (config::instance().objectshadow && chipi(6, p_))
                             {
                                 gmode(2, chipi(2, p_), chipi(3, p_), 70);
                                 if (chipi(3, p_) == inf_tiles)
@@ -888,7 +889,7 @@ void cell_draw()
                     }
                     else
                     {
-                        if (cfg_objectshadow && chipi(6, p_))
+                        if (config::instance().objectshadow && chipi(6, p_))
                         {
                             gmode(2, chipi(2, p_), chipi(3, p_), 80);
                             if (chipi(3, p_) == inf_tiles)
@@ -1204,7 +1205,7 @@ void cell_draw()
     // Work around
     light_ *= 1.3;
 
-    if (cfg_shadow != 0)
+    if (config::instance().shadow != 0)
     {
         render_shadow_low(light_);
     }
