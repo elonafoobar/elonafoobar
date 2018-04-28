@@ -91,12 +91,12 @@ int show_prompt(int x, int y, int width, show_prompt_type type, int val4)
         gcopy(3, 64, 288, 50, 32);
         font(14 - en * 2);
         keyrange = 0;
+        cs_listbk();
         for (int cnt = 0, cnt_end = (promptmax); cnt < cnt_end; ++cnt)
         {
             pos(sx + 30, cnt * 20 + sy + 22);
             gcopy(3, cnt * 24 + 624, 30, 24, 24);
-            cs_list(
-                cnt, cs == cnt, promptl(0, cnt), sx + 56, cnt * 20 + sy + 21);
+            cs_list(cs == cnt, promptl(0, cnt), sx + 56, cnt * 20 + sy + 21);
             key_list(cnt) = promptl(1, cnt);
             ++keyrange;
         }

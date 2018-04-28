@@ -1486,15 +1486,8 @@ void zipadd(const std::string&);
 void zipadd2(const std::string&);
 void zipend2();
 void zipinit2(const std::string&, const std::string&);
-void cs_list(
-    int,
-    bool,
-    const std::string&,
-    int,
-    int,
-    int = 0,
-    int = 0,
-    int = 0);
+void cs_listbk();
+void cs_list(bool, const std::string&, int, int, int = 0, int = 0, int = 0);
 
 
 template <typename T>

@@ -891,6 +891,7 @@ void main_title_menu()
                 f = 2;
             }
         }
+        cs_listbk();
         for (int cnt = 0; cnt < 6; ++cnt)
         {
             x = wx + 40;
@@ -902,12 +903,12 @@ void main_title_menu()
                 pos(x + 40, y - 4);
                 mes(s(cnt * 2));
                 font(13 - en * 2);
-                cs_list(cnt, cs == cnt, s(cnt * 2 + 1), x + 40, y + 8);
+                cs_list(cs == cnt, s(cnt * 2 + 1), x + 40, y + 8);
             }
             else
             {
                 font(14 - en * 2);
-                cs_list(cnt, cs == cnt, s(cnt), x + 40, y + 1);
+                cs_list(cs == cnt, s(cnt), x + 40, y + 1);
             }
         }
         cs_bk = cs;
@@ -1117,11 +1118,7 @@ void character_making_select_race()
                 keyrange = cnt + 1;
                 display_key(wx + 38, wy + 66 + cnt * 19 - 2, cnt);
                 cs_list(
-                    cnt,
-                    cs == cnt,
-                    listn(0, p),
-                    wx + 64,
-                    wy + 66 + cnt * 19 - 1);
+                    cs == cnt, listn(0, p), wx + 64, wy + 66 + cnt * 19 - 1);
             }
             cs_bk = cs;
             pos(wx + 200, wy + 66);
@@ -1226,8 +1223,7 @@ void character_making_select_sex(bool label_1548_flg)
             keyrange = cnt + 1;
             pos(wx + 38, wy + 66 + cnt * 19 - 2);
             gcopy(3, cnt * 24 + 72, 30, 24, 18);
-            cs_list(
-                cnt, cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
+            cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
         }
         cs_bk = cs;
         redraw();
@@ -1344,7 +1340,7 @@ void character_making_select_class(bool label_1551_flg)
                 {
                     s = cnven(listn(1, cnt));
                 }
-                cs_list(cnt, cs == cnt, s, wx + 64, wy + 66 + cnt * 19 - 1);
+                cs_list(cs == cnt, s, wx + 64, wy + 66 + cnt * 19 - 1);
             }
             cs_bk = cs;
             pos(wx + 200, wy + 66);
@@ -1482,8 +1478,7 @@ void character_making_role_attributes(bool label_1554_flg)
             pos(wx + 38, wy + 66 + cnt * 23 - 2);
             gcopy(3, cnt * 24 + 72, 30, 24, 18);
             font(14 - en * 2);
-            cs_list(
-                cnt, cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 23 - 1);
+            cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 23 - 1);
             font(15 - en * 2, snail::font_t::style_t::bold);
             if (cnt >= 2)
             {
@@ -1656,11 +1651,7 @@ void character_making_select_feats_and_alias(bool label_1558_flg)
                 pos(wx + 38, wy + 66 + cnt * 19 - 2);
                 gcopy(3, cnt * 24 + 72, 30, 24, 18);
                 cs_list(
-                    cnt,
-                    cs == cnt,
-                    listn(0, cnt),
-                    wx + 64,
-                    wy + 66 + cnt * 19 - 1);
+                    cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
             }
             cs_bk = cs;
             list(0, 0) = 0;
