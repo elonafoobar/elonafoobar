@@ -542,6 +542,7 @@ void set_option()
             }
         }
         font(14 - en * 2);
+        cs_listbk();
         for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
         {
             p = pagesize * page + cnt;
@@ -569,7 +570,7 @@ void set_option()
                     }
                 }
             }
-            cs_list(cnt, cs == cnt, s, wx + 56 + x, wy + 66 + cnt * 19 - 1, 0);
+            cs_list(cs == cnt, s, wx + 56 + x, wy + 66 + cnt * 19 - 1, 0);
             if ((submenu != 5 || cnt <= 0) && submenu != 0)
             {
                 pos(wx + 220, wy + 66 + cnt * 19 - 5);
