@@ -299,7 +299,7 @@ std::vector<config_menu> create_config_menu()
     ELONA_CONFIG_ITEM(lang(u8"拾う(R)", u8"Pick/(R)"));
     ELONA_CONFIG_ITEM(lang(u8"射撃(R)", u8"Shoot/(R)"));
     ELONA_CONFIG_ITEM(lang(u8"目標(L)", u8"Target/(L)"));
-    ELONA_CONFIG_ITEM(lang(u8"ポーズメニュー", u8"Peuse/Menu"));
+    ELONA_CONFIG_ITEM(lang(u8"ポーズメニュー", u8"Pause/Menu"));
     ELONA_CONFIG_ITEM(lang(u8"ヘルプ", u8"Help"));
     ELONA_CONFIG_ITEM(lang(u8"キャラ情報", u8"Chara-sheet"));
     ELONA_CONFIG_ITEM(lang(u8"装填", u8"Reload"));
@@ -599,7 +599,7 @@ void set_option()
                 {
                     if (cfg_startrun >= 20)
                     {
-                        mes(lang(u8"走らない"s, u8"Dont't run"s));
+                        mes(lang(u8"走らない"s, u8"Don't run"s));
                     }
                     else
                     {

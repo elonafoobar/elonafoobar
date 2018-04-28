@@ -797,7 +797,7 @@ void talk_npc()
             {
                 buff = lang(
                     u8"残念だが、今日の試合はもう終了し"s + _ta(),
-                    u8"The game is over today. Come again tommorow."s);
+                    u8"The game is over today. Come again tomorrow."s);
                 talk_npc();
                 return;
             }
@@ -847,7 +847,7 @@ void talk_npc()
             {
                 buff = lang(
                     u8"残念だが、今日の試合はもう終了し"s + _ta(),
-                    u8"The game is over today. Come again tommorow."s);
+                    u8"The game is over today. Come again tomorrow."s);
                 talk_npc();
                 return;
             }
@@ -1004,7 +1004,7 @@ void talk_npc()
         buff = lang(u8"現在は"s + adata(23, gdata_current_map) + u8"連勝中"s + _da() +
                 u8"5連勝,20連勝毎にボーナスを与え"s + _ru(),
             u8"Your winning streak has reached "s + adata(23, gdata_current_map) +
-                u8" matchs now. Keep the audience excited. You get nice bonus at every 5th and 20th wins in a row."s);
+                u8" matches now. Keep the audience excited. You get nice bonus at every 5th and 20th wins in a row."s);
         talk_npc();
         return;
     }
@@ -1013,7 +1013,7 @@ void talk_npc()
         buff = lang(u8"現在は"s + adata(22, gdata_current_map) + u8"連勝中"s + _da() +
                 u8"5連勝,20連勝毎にボーナスを与え"s + _ru(),
             u8"Your winning streak has reached "s + adata(22, gdata_current_map) +
-                u8" matchs now. Keep the audience excited. You get nice bonus at every 5th and 20th wins in a row."s);
+                u8" matches now. Keep the audience excited. You get nice bonus at every 5th and 20th wins in a row."s);
         talk_npc();
         return;
     }
@@ -1491,7 +1491,7 @@ void talk_npc()
         {
             buff = lang(
                 u8"その程度の罪なら自分でなんとかしなさい。"s,
-                u8"You karma isn't that low. Come back after you have comitted more crimes!"s);
+                u8"You karma isn't that low. Come back after you have committed more crimes!"s);
             talk_npc();
             return;
         }
@@ -1686,7 +1686,7 @@ void talk_npc()
         talk_window();
         if (chatval == 1)
         {
-            txt(lang(u8"パエルの母親を売った…"s, u8"You sell Pael's mon..."s));
+            txt(lang(u8"パエルの母親を売った…"s, u8"You sell Pael's mom..."s));
             modify_karma(0, -20);
             snd(11);
             cdata[0].gold += 50000;

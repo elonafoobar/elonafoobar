@@ -3495,7 +3495,7 @@ label_1744_internal:
                     + u8"ポイント。"s,
                 u8"You have to warm up the party within "s
                     + gdata_left_minutes_of_executing_quest
-                    + u8" minitues. Your target score is "s
+                    + u8" minites. Your target score is "s
                     + qdata(12, gdata_executing_immediate_quest)
                     + u8" points."s));
         }
@@ -3529,7 +3529,7 @@ label_1744_internal:
                     + refchara_str(
                           qdata(12, gdata_executing_immediate_quest), 2)
                     + u8" within "s + gdata_left_minutes_of_executing_quest
-                    + u8" minitues."s));
+                    + u8" minites."s));
         }
     }
     turn_begin();

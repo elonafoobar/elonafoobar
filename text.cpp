@@ -368,7 +368,7 @@ std::string mapname(int id, bool description)
         name = lang(u8"ルミエスト墓所"s, u8"the graveyard"s);
         desc = lang(
             u8"墓所が見える。辺りは静寂に包まれている…"s,
-            u8"You see the graveyard of Lumiest. It's slient. Very silent."s);
+            u8"You see the graveyard of Lumiest. It's silent. Very silent."s);
         break;
     case 6: name = lang(u8"闘技場"s, u8"Arena"s); break;
     case 19: name = lang(u8"竜窟"s, u8"the Dragon's Nest"s); break;
@@ -388,19 +388,19 @@ std::string mapname(int id, bool description)
         name = lang(u8"混沌の城《獣》"s, u8"Fort of Chaos <Beast>"s);
         desc = lang(
             u8"不気味な城がある。絶対に入ってはいけない予感がする。(危険度は666階相当)"s,
-            u8"You see an unearthly fort. Your inner voice wanrs you to not go there. (Approximate danger level: 666) "s);
+            u8"You see an unearthly fort. Your inner voice warns you to not go there. (Approximate danger level: 666) "s);
         break;
     case 23:
         name = lang(u8"混沌の城《機甲》"s, u8"Fort of Chaos <Machine>"s);
         desc = lang(
             u8"不気味な城がある。絶対に入ってはいけない予感がする。(危険度は666階相当)"s,
-            u8"You see an unearthly fort. Your inner voice wanrs you to not go there. (Approximate danger level: 666) "s);
+            u8"You see an unearthly fort. Your inner voice warns you to not go there. (Approximate danger level: 666) "s);
         break;
     case 24:
         name = lang(u8"混沌の城《奇形》"s, u8"Fort of Chaos <Collapsed>"s);
         desc = lang(
             u8"不気味な城がある。絶対に入ってはいけない予感がする。(危険度は666階相当)"s,
-            u8"You see an unearthly fort. Your inner voice wanrs you to not go there. (Approximate danger level: 666) "s);
+            u8"You see an unearthly fort. Your inner voice warns you to not go there. (Approximate danger level: 666) "s);
         break;
     case 40: name = lang(u8"コロシアム"s, u8"Pet Arena"s); break;
     case 101: name = lang(u8"博物館"s, u8"My Museum"s); break;
@@ -432,7 +432,7 @@ std::string mapname(int id, bool description)
         name = lang(u8"ルミエスト"s, u8"Lumiest"s);
         desc = lang(
             u8"ルミエストの都が見える。水のせせらぎが聴こえる。"s,
-            u8"You see Lumiest. Murmuring of water pleasantly echos."s);
+            u8"You see Lumiest. Murmuring of water pleasantly echoes."s);
         break;
     case 37: name = lang(u8"ピラミッド"s, u8"the Pyramid"s); break;
     case 38: name = lang(u8"ﾐﾉﾀｳﾛｽの巣"s, u8"the Minotaur's Nest"s); break;
@@ -789,7 +789,7 @@ foodname(int type, const std::string& prm_374, int rank, int character_id)
         case 3: return lang(""s + s_ + u8"のサラダ"s, s_ + u8" salad"s);
         case 4: return lang(""s + s_ + u8"の炒め物"s, u8"fried "s + s_);
         case 5: return lang(""s + s_ + u8"風味の肉じゃが"s, s_ + u8" roll"s);
-        case 6: return lang(""s + s_ + u8"の天ぷら"s, s_ + u8" tenpura"s);
+        case 6: return lang(""s + s_ + u8"の天ぷら"s, s_ + u8" tempura"s);
         case 7: return lang(""s + s_ + u8"の煮込み"s, s_ + u8" gratin"s);
         case 8:
             return lang(
@@ -869,7 +869,7 @@ foodname(int type, const std::string& prm_374, int rank, int character_id)
         case 3: return lang(""s + s_ + u8"のフライ"s, u8"fried "s + s_);
         case 4: return lang(""s + s_ + u8"の煮込み"s, u8"stewed "s + s_);
         case 5: return lang(""s + s_ + u8"スープ"s, s_ + u8" soup"s);
-        case 6: return lang(""s + s_ + u8"の天ぷら"s, s_ + u8" tenpura"s);
+        case 6: return lang(""s + s_ + u8"の天ぷら"s, s_ + u8" tempura"s);
         case 7: return lang(""s + s_ + u8"ソーセージ"s, s_ + u8" sausage"s);
         case 8: return lang(""s + s_ + u8"の刺身"s, s_ + u8" sashimi"s);
         case 9: return lang(""s + s_ + u8"の活け作り"s, s_ + u8" sushi"s);
@@ -929,11 +929,11 @@ foodname(int type, const std::string& prm_374, int rank, int character_id)
         case 7:
             return lang(
                 u8"熟成"s + ingredient + u8"チーズ"s,
-                u8"mature "s + ingredient + u8" cheeze"s);
+                u8"mature "s + ingredient + u8" cheese"s);
         case 8:
             return lang(
                 ingredient + u8"のレアチーズケーキ"s,
-                ingredient + u8" cheeze cake"s);
+                ingredient + u8" cheese cake"s);
         case 9:
             return lang(
                 ingredient + u8"風オムライス"s, ingredient + u8" omelet"s);
@@ -1644,7 +1644,7 @@ void update_main_quest_journal()
     {
         s1 = lang(
             u8"致命傷を負った斥候に、パルミアのジャビ王へ書簡を渡すよう頼まれた。パルミアには、ヴェルニースから東の街道を進めば辿り着ける。"s,
-            u8"The injured scout asked me to devliver a letter to the king of Palmia. Palmia is located east of Vernis."s);
+            u8"The injured scout asked me to deliver a letter to the king of Palmia. Palmia is located east of Vernis."s);
     }
     if (gdata_main_quest_flag >= 50 && gdata_main_quest_flag < 60)
     {
@@ -1790,7 +1790,7 @@ void append_subquest_journal(int val0)
         {
             s1 = lang(
                 u8"ヴェルニースのリリアンに、迷子の子犬ポピーを捜すよう頼まれた。どうやら子犬はヴェルニースのすぐ東にある洞窟にいるらしい。"s,
-                u8"Rilian of Vernis asked me to find her puppy named poppy in the puppy's cave located east of Vernis."s);
+                u8"Rilian of Vernis asked me to find her puppy named Poppy in the puppy's cave located east of Vernis."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1981,7 +1981,7 @@ void append_subquest_journal(int val0)
     p = 0;
     if (gdata_wife_collector != 0)
     {
-        s = lang(u8"嫁泥棒 Lv3相当"s, u8"Wife collector LV3"s);
+        s = lang(u8"嫁泥棒 Lv3相当"s, u8"Wife collector Lv3"s);
         p = gdata_wife_collector;
         if (val0 == 1)
         {
@@ -2059,7 +2059,7 @@ void append_subquest_journal(int val0)
         {
             s1 = lang(
                 u8"ヨウィンのギルバート大佐に、ジューア解放軍の援護を求められた。準備が整い次第、大佐に話し掛けよう。"s,
-                u8"Carnel Gilbert of Yowyn asked me to help the Juere freedom force fight the Yerles Army. I should speak to him again when I'm ready."s);
+                u8"Colonel Gilbert of Yowyn asked me to help the Juere freedom force fight the Yerles Army. I should speak to him again when I'm ready."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -2083,7 +2083,7 @@ void append_subquest_journal(int val0)
         {
             s1 = lang(
                 u8"防衛線を見事に突破した。ヨウィンのギルバート大佐に報告しよう。"s,
-                u8"I've won the war. Now to bring the good news to carnel Gilbert."s);
+                u8"I've won the war. Now to bring the good news to colonel Gilbert."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -2513,7 +2513,7 @@ void append_subquest_journal(int val0)
                     u8"枚分の盗品を売りさばき、ダルフィのギルドの番人に話しかける必要がある。"s,
                 u8"To raise the rank in the Thieves Guild, I need to sell stolen goods worth total of "s +
                     gdata_thieves_guild_quota +
-                    u8" gold pices and talk to the guild guard in Derphy."s);
+                    u8" gold pieces and talk to the guild guard in Derphy."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -2981,7 +2981,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                 s = lang(
                     i18n::_(u8"ability", std::to_string(sid), u8"name")
                         + u8"への耐性を弱化する"s,
-                    u8"weaken your resistance to "s
+                    u8"weakens your resistance to "s
                         + i18n::_(u8"ability", std::to_string(sid), u8"name")
                         + u8"."s);
             }
@@ -3252,7 +3252,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         break;
     case 34:
         rtval = 4;
-        s = lang(u8"魔法の威力を高める"s, u8"enchances your spells."s);
+        s = lang(u8"魔法の威力を高める"s, u8"enhances your spells."s);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -3309,7 +3309,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         rtval = 4;
         s = lang(
             u8"完全貫通攻撃発動の機会を増やす"s,
-            u8"gives you a chance to throw an absolute piercing attak."s);
+            u8"gives you a chance to throw an absolute piercing attack."s);
         if (trait)
         {
             rtval(1) = power / 50;

@@ -406,7 +406,7 @@ int get_card_info()
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
-        cardrefn = lang(u8"《風のルルウィ》"s, u8"<Luluwy>"s);
+        cardrefn = lang(u8"《風のルルウィ》"s, u8"<Lulwy>"s);
         cardrefpic = 393;
         cardrefrace = u8"god"s;
         return 1;
@@ -710,7 +710,7 @@ int get_card_info()
         cardreftype = 0;
         cardrefrare = 2;
         cardrefcost = 0;
-        cardrefn = lang(u8"娼婦"s, u8"prostitue"s);
+        cardrefn = lang(u8"娼婦"s, u8"prostitute"s);
         cardrefpic = 418;
         cardrefrace = u8"norland"s;
         return 1;
@@ -842,7 +842,7 @@ int get_card_info()
         cardrefcost = 0;
         cardrefn = lang(u8"コボルト"s, u8"kobold"s);
         cardrefpic = 171;
-        cardrefrace = u8"kobolt"s;
+        cardrefrace = u8"kobold"s;
         return 1;
     }
     if (dbid == 236)
@@ -2489,7 +2489,7 @@ int get_card_info()
         cardrefrare = 100;
         cardrefcost = 0;
         cardrefn =
-            lang(u8"辺境の勇士『ギルバート大佐』"s, u8"<Gilbert> the carnel"s);
+            lang(u8"辺境の勇士『ギルバート大佐』"s, u8"<Gilbert> the colonel"s);
         cardrefpic = 370;
         cardrefrace = u8"juere"s;
         return 1;
@@ -3434,7 +3434,7 @@ int get_card_info()
         cardreftype = 0;
         cardrefrare = 100;
         cardrefcost = 0;
-        cardrefn = lang(u8"掃除屋『バルザック』"s, u8"<Balzak> the janiator"s);
+        cardrefn = lang(u8"掃除屋『バルザック』"s, u8"<Balzak> the janitor"s);
         cardrefpic = 192;
         cardrefrace = u8"norland"s;
         return 1;
