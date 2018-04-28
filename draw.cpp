@@ -147,7 +147,7 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
                 gzoom(3, 480 - width, 517, width, 3, width * 3, 9);
 
                 // Show leash icon.
-                if (cfg_leash_icon && cdata[i].is_leashed())
+                if (config::instance().leash_icon && cdata[i].is_leashed())
                 {
                     constexpr int leash = 631;
                     prepare_item_image(leash, 2);

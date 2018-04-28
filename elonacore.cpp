@@ -1161,7 +1161,7 @@ void sndload(const std::string& prm_292, int prm_293)
 {
     if (prm_293 < 7)
     {
-        if (cfg_sound == 1)
+        if (config::instance().sound == 1)
         {
             DSLOADFNAME(prm_292, prm_293);
         }
@@ -1180,7 +1180,7 @@ void snd(int prm_296, int prm_297, int prm_298)
 {
     int sound_at_m18 = 0;
     int f_at_m18 = 0;
-    if (cfg_sound == 0)
+    if (config::instance().sound == 0)
     {
         return;
     }
@@ -1234,7 +1234,7 @@ void snd(int prm_296, int prm_297, int prm_298)
                 }
             }
         }
-        if (cfg_sound == 1)
+        if (config::instance().sound == 1)
         {
             DSLOADFNAME(soundfile(prm_296), sound_at_m18);
         }
@@ -1243,7 +1243,7 @@ void snd(int prm_296, int prm_297, int prm_298)
             mmload(soundfile(prm_296), sound_at_m18);
         }
     }
-    if (cfg_sound == 1)
+    if (config::instance().sound == 1)
     {
         DSPLAY(sound_at_m18, prm_297);
     }
@@ -1259,7 +1259,7 @@ void snd(int prm_296, int prm_297, int prm_298)
 void initialize_sound_file()
 {
     DIM2(soundlist, 6);
-    if (cfg_sound == 1)
+    if (config::instance().sound == 1)
     {
         cfg_svolume = DSGETMASTERVOLUME();
     }
@@ -1411,7 +1411,7 @@ void play_music()
     if (env != envwprev)
     {
         envwprev = env;
-        if (cfg_sound == 1)
+        if (config::instance().sound == 1)
         {
             if (env == 0)
             {
@@ -1468,7 +1468,7 @@ void play_music()
         envonly = 0;
         return;
     }
-    if (cfg_music == 0)
+    if (config::instance().music == 0)
     {
         return;
     }
@@ -1581,7 +1581,7 @@ void play_music()
     {
         musicprev = music;
         mmstop();
-        if (cfg_music == 1)
+        if (config::instance().music == 1)
         {
             DMSTOP();
             DMLOADFNAME(
@@ -1610,7 +1610,7 @@ void play_music()
         }
         if (music != -1)
         {
-            if (cfg_music == 2 || mp3 == 1)
+            if (config::instance().music == 2 || mp3 == 1)
             {
                 mmload(musicfolder + musicfile(music), 0, musicloop == 65535);
                 mmplay(0);
@@ -1647,17 +1647,17 @@ void auto_turn(int delay)
         return;
 
     autoturn = 1;
-    if (cfg_autoturn == 0)
+    if (config::instance().autoturn == 0)
     {
         await(delay);
         ++scrturn;
     }
-    if (cfg_autoturn != 2 || firstautoturn == 1)
+    if (config::instance().autoturn != 2 || firstautoturn == 1)
     {
         screenupdate = -1;
         update_screen();
     }
-    if (cfg_autoturn == 0)
+    if (config::instance().autoturn == 0)
     {
         redraw();
     }
@@ -2552,11 +2552,11 @@ void finish_elona()
     int ieopen = 0;
     int ie_event = 0;
     int ie = 0;
-    if (cfg_music == 1)
+    if (config::instance().music == 1)
     {
         DMEND();
     }
-    if (cfg_sound == 1)
+    if (config::instance().sound == 1)
     {
         DSEND();
     }
@@ -2565,7 +2565,7 @@ void finish_elona()
         delcom(ie_event);
         delcom(ie);
     }
-    if (cfg_autonumlock)
+    if (config::instance().autonumlock)
     {
         keybd_event(144);
         keybd_event(144, 0, 2);
@@ -8254,7 +8254,7 @@ void windowanime(
         nowindowanime = 0;
         return;
     }
-    if (cfg_windowanime == 0)
+    if (config::instance().windowanime == 0)
     {
         return;
     }
@@ -8305,7 +8305,7 @@ void windowanimecorner(
     int prm_736,
     int prm_737)
 {
-    if (cfg_windowanime == 0)
+    if (config::instance().windowanime == 0)
     {
         return;
     }
@@ -11084,7 +11084,7 @@ void animeload(int prm_807, int prm_808)
     {
         return;
     }
-    if (cfg_animewait == 0)
+    if (config::instance().animewait == 0)
     {
         return;
     }
@@ -11135,7 +11135,7 @@ void animeload(int prm_807, int prm_808)
         redraw();
         pos(dx_at_m133 - 24, dy_at_m133 - 40);
         gcopy(4, 0, 0, 96, 96);
-        await(cfg_animewait + i_at_m133(1));
+        await(config::instance().animewait + i_at_m133(1));
     }
     gmode(2);
     return;
@@ -11153,7 +11153,7 @@ void animeblood(int prm_809, int prm_810, int prm_811)
     {
         return;
     }
-    if (cfg_animewait == 0)
+    if (config::instance().animewait == 0)
     {
         return;
     }
@@ -11282,7 +11282,7 @@ void animeblood(int prm_809, int prm_810, int prm_811)
         redraw();
         pos(dx_at_m133 - 48, dy_at_m133 - 56);
         gcopy(4, 0, 0, 144, 160);
-        await(cfg_animewait + 15 + (ele2_at_m133 != 0) * 20);
+        await(config::instance().animewait + 15 + (ele2_at_m133 != 0) * 20);
     }
     gmode(2);
     return;
@@ -11470,7 +11470,7 @@ void modcorrupt(int prm_815)
             txt(lang(
                 u8"エーテルの病が発症した。"s,
                 u8"The symptom of the Ether disease is shown up on you."s));
-            if (cfg_extrahelp)
+            if (config::instance().extrahelp)
             {
                 if (gdata(215) == 0)
                 {
@@ -13876,9 +13876,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         {
             if (cdata[prm_853].max_hp / 4 > cdata[prm_853].hp)
             {
-                if (cfg_sound == 1)
+                if (config::instance().sound == 1)
                 {
-                    if (cfg_heart == 1)
+                    if (config::instance().heart == 1)
                     {
                         if (CHECKPLAY(32) == 0)
                         {
@@ -15168,7 +15168,7 @@ int net_send(const std::string& prm_883, int prm_884)
 {
     std::string chattemp;
     std::string msg_at_m147;
-    if (cfg_net == 0)
+    if (config::instance().net == 0)
     {
         return 0;
     }
@@ -15247,7 +15247,7 @@ int net_read(int prm_885)
     std::string chat_ip_at_m147;
     chatnew = "";
     netbuf = "";
-    if (cfg_net == 0)
+    if (config::instance().net == 0)
     {
         return 0;
     }
@@ -15576,7 +15576,7 @@ void initialize_server_info()
     SDIM2(serverlist, 200);
     notesel(serverlist);
     int stat = net_read(4);
-    if (stat == 1 && cfg_serverlist == 0)
+    if (stat == 1 && config::instance().serverlist == 0)
     {
         serverlist = netbuf;
     }
@@ -15824,7 +15824,7 @@ label_1402_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, cs = i);
@@ -16702,11 +16702,11 @@ void render_hud()
             255);
         ++ap3;
     }
-    if (cfg_hp_bar)
+    if (config::instance().hp_bar)
     {
         show_hp_bar(
-            cfg_hp_bar == 1 ? show_hp_bar_side::left_side
-                            : show_hp_bar_side::right_side,
+            config::instance().hp_bar == 1 ? show_hp_bar_side::left_side
+                                           : show_hp_bar_side::right_side,
             inf_clocky);
     }
 }
@@ -16918,7 +16918,7 @@ void label_1428()
         sy(0) = cdata[camera].position.y - scy;
         sy(1) = cdata[camera].position.y;
     }
-    if (cfg_alwayscenter)
+    if (config::instance().alwayscenter)
     {
         scx = sx + scx - inf_screenw / 2;
         scy = sy + scy - inf_screenh / 2;
@@ -16973,7 +16973,7 @@ void label_1429()
     sy(3) = cdata[0].position.y + 7;
     sy(4) = 7 - cdata[0].position.y;
     sx(3) = cdata[0].position.x - 7 - 2;
-    if (cfg_scroll)
+    if (config::instance().scroll)
     {
         repw(0) = inf_screenw + 2;
         repw(1) = scx - 1;
@@ -16987,11 +16987,11 @@ void label_1429()
         reph(0) = inf_screenh;
         reph(1) = scy;
     }
-    ly = 1 + (cfg_scroll == 0);
+    ly = 1 + (config::instance().scroll == 0);
     for (int cnt = reph(1), cnt_end = cnt + (reph); cnt < cnt_end; ++cnt)
     {
         sy = cnt;
-        lx = 1 + (cfg_scroll == 0);
+        lx = 1 + (config::instance().scroll == 0);
         if (sy < 0 || sy >= mdata(1))
         {
             for (int cnt = repw(1), cnt_end = cnt + (repw); cnt < cnt_end;
@@ -17201,7 +17201,7 @@ void label_1433()
         }
     }
     screendrawhack = 5;
-    if (cfg_env)
+    if (config::instance().env)
     {
         if (gdata_weather == 3)
         {
@@ -17398,7 +17398,7 @@ void label_1438()
     {
         return;
     }
-    scrollp = cfg_walkwait;
+    scrollp = config::instance().walkwait;
     if (mdata(6) == 1)
     {
         scrollp = 6;
@@ -17408,10 +17408,10 @@ void label_1438()
             scrollp = 9;
         }
     }
-    else if (keybd_wait > cfg_startrun)
+    else if (keybd_wait > config::instance().startrun)
     {
         scrollp = 3;
-        if (cfg_runscroll == 0)
+        if (config::instance().runscroll == 0)
         {
             return;
         }
@@ -22665,7 +22665,7 @@ void label_1580()
             item_identify(
                 inv[ci], identification_state_t::completely_identified);
             itemmemory(0, inv[ci].id) = 1;
-            if (cfg_hideautoidentify <= 1)
+            if (config::instance().hideautoidentify <= 1)
             {
                 txt(lang(
                     u8"バックパックの中の"s + s + u8"は"s + itemname(ci)
@@ -22680,7 +22680,7 @@ void label_1580()
         {
             if (p > rnd(p(1)))
             {
-                if (cfg_hideautoidentify == 0)
+                if (config::instance().hideautoidentify == 0)
                 {
                     txt(lang(
                         u8"バックパックの中の"s + itemname(ci) + u8"は"s
@@ -29154,7 +29154,7 @@ void use_house_board()
         while (1)
         {
             redraw();
-            await(cfg_wait1);
+            await(config::instance().wait1);
             key_check();
             cursor_check();
             if (key == key_cancel)
@@ -29774,7 +29774,7 @@ void show_shop_log()
     }
     if (sold == 0)
     {
-        if (cfg_hideshopresult == 0)
+        if (config::instance().hideshopresult == 0)
         {
             txt(lang(
                 u8"[店]"s + customer + u8"人が来客したが、"s + cdatan(0, worker)
@@ -29785,7 +29785,7 @@ void show_shop_log()
     }
     else
     {
-        if (cfg_hideshopresult <= 1)
+        if (config::instance().hideshopresult <= 1)
         {
             s = ""s + income + lang(u8"gold"s, u8" gold pieces"s);
             if (income(1) != 0)
@@ -30546,7 +30546,7 @@ void exit_map()
     gdata(171) = 0;
     if (mdata(6) == 5)
     {
-        if (cfg_extrahelp)
+        if (config::instance().extrahelp)
         {
             if (gdata(201) == 0)
             {
@@ -33322,7 +33322,7 @@ label_1857_internal:
     {
         redraw();
     }
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -33496,7 +33496,7 @@ label_1861_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -33788,7 +33788,7 @@ label_1868_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(rtval, snd(40));
@@ -35445,7 +35445,7 @@ label_1887_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(rtval, snd(40));
@@ -36602,7 +36602,7 @@ label_1894_internal:
 
 int show_random_event_window(const std::string& file)
 {
-    if (cfg_skiprandevents)
+    if (config::instance().skiprandevents)
     {
         if (listmax <= 1)
         {
@@ -36692,7 +36692,7 @@ label_1897_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(rtval, snd(40));
@@ -36932,7 +36932,7 @@ void label_1901()
     ctrl_file(4, u8"shop"s + invfile + u8".s2");
     ctrl_file(3, u8"shoptmp.s2");
     mode = 0;
-    if (cfg_extrahelp)
+    if (config::instance().extrahelp)
     {
         if (gdata(216) == 0)
         {
@@ -38171,7 +38171,7 @@ label_1925_internal:
     pos(wx + 10, wy + wh - 100);
     gcopy(3, 960, 96, 80, 90);
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -38314,7 +38314,7 @@ label_1928_internal:
     pos(wx + 10, wy + wh - 100);
     gcopy(3, 960, 96, 80, 90);
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -39048,7 +39048,7 @@ int key_direction()
 
 void label_1942()
 {
-    if (cfg_extrahelp)
+    if (config::instance().extrahelp)
     {
         if (gdata(217) == 0)
         {
@@ -39078,7 +39078,7 @@ void label_1942()
         u8"You stepped into the gate. The gate disappears."s));
     --inv[ci].number;
     cell_refresh(inv[ci].position.x, inv[ci].position.y);
-    if (cfg_net == 0)
+    if (config::instance().net == 0)
     {
         if (jp)
         {
@@ -39168,7 +39168,7 @@ label_19431_internal:
         ++listmax;
         noteunsel();
     }
-    if (cfg_net != 0)
+    if (config::instance().net != 0)
     {
         if (comctrl == 1)
         {
@@ -39262,7 +39262,7 @@ label_1945_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -39523,7 +39523,7 @@ label_1948_internal:
     }
     txttargetnpc(tlocx, tlocy);
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     if (homemapmode == 1)
     {
@@ -39855,7 +39855,7 @@ label_1953_internal:
         render_hud();
         redraw();
     }
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     if (key == key_target)
@@ -39943,7 +39943,7 @@ label_1956_internal:
     }
     gmode(2);
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     int a{};
     stick(a);
     if (a == 256)
@@ -40354,7 +40354,7 @@ label_1961_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -40528,7 +40528,7 @@ label_1965_internal:
     redraw();
 label_1966_internal:
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     p = -1;
@@ -41051,7 +41051,7 @@ label_1970_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_INDEX(p);
@@ -41464,7 +41464,7 @@ label_1973_internal:
     }
 label_1974_internal:
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     if (menucycle == 1)
@@ -41542,7 +41542,7 @@ label_1974_internal:
 
 void show_quest_board()
 {
-    if (cfg_extrahelp)
+    if (config::instance().extrahelp)
     {
         if (gdata(204) == 0)
         {
@@ -41730,7 +41730,7 @@ label_1978_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -41948,7 +41948,7 @@ label_1982_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -42073,7 +42073,7 @@ label_1986_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -42228,7 +42228,7 @@ label_1990_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -42305,7 +42305,7 @@ int select_alias(int val0)
             list(0, 0) = 0;
         }
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);
@@ -42615,7 +42615,7 @@ label_2009_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     commark(0) = page * 1000 + cs;
@@ -43088,7 +43088,7 @@ label_2016_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, cs = i);
@@ -43232,7 +43232,7 @@ label_2020_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, cs = i);
@@ -43368,7 +43368,7 @@ label_2023_internal:
     }
 label_2024_internal:
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     if (key == key_pageup)
@@ -43532,7 +43532,7 @@ label_2029_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     commark(1) = page * 1000 + cs;
@@ -44668,7 +44668,7 @@ label_2035_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     if (page == 0)
@@ -45218,7 +45218,7 @@ label_2041_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     label_2038(cs);
@@ -45445,7 +45445,7 @@ int label_2044()
             cs_bk = cs;
         }
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         if (cs != 0)
@@ -45847,7 +45847,7 @@ label_2052_internal:
     }
     cs_bk = cs;
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -46625,7 +46625,7 @@ label_2070_internal:
         }
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     if (key == key_pageup)
@@ -48930,7 +48930,7 @@ void main_menu_continue()
             mes(u8"No save files found"s);
         }
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         p = -1;
@@ -49089,7 +49089,7 @@ void main_menu_incarnate()
             mes(u8"No gene files found"s);
         }
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         p = -1;
@@ -49541,7 +49541,7 @@ void label_2144()
 void label_21452()
 {
 label_21451_internal:
-    if (cfg_scroll)
+    if (config::instance().scroll)
     {
         if (cc == 0)
         {
@@ -51561,7 +51561,7 @@ void label_2156()
                     ++scrturn;
                     update_screen();
                     redraw();
-                    await(cfg_wait1 * 2);
+                    await(config::instance().wait1 * 2);
                 }
                 if (rnd(3) == 0)
                 {
@@ -51584,7 +51584,7 @@ void label_2156()
                 ++scrturn;
                 update_screen();
                 redraw();
-                await(cfg_wait1 * 2);
+                await(config::instance().wait1 * 2);
             }
             if (rnd(10))
             {
@@ -51610,7 +51610,7 @@ void label_2156()
                 update_screen();
                 addefmap(fishx, fishy, 5, 2);
                 redraw();
-                await(cfg_wait1 * 2);
+                await(config::instance().wait1 * 2);
             }
             if (the_fish_db[fish]->difficulty >= rnd(sdata(185, 0) + 1))
             {
@@ -51636,7 +51636,7 @@ void label_2156()
                 ++scrturn;
                 update_screen();
                 redraw();
-                await(cfg_wait1 * 2);
+                await(config::instance().wait1 * 2);
             }
             snd(14 + rnd(2));
             fishanime = 0;
@@ -54679,7 +54679,8 @@ void label_2203()
     {
         tc = cellchara;
         if (cdata[tc].relationship >= 10
-            || (cdata[tc].relationship == -1 && cfg_ignoredislike != 0)
+            || (cdata[tc].relationship == -1
+                && config::instance().ignoredislike != 0)
             || (cdata[tc].relationship == 0
                 && (adata(16, gdata_current_map) == 101
                     || adata(16, gdata_current_map) == 102 || key_shift)))
@@ -54690,7 +54691,7 @@ void label_2203()
                 {
                     goto label_2204_internal;
                 }
-                if (cfg_scroll)
+                if (config::instance().scroll)
                 {
                     cdata[0].next_position.x = cdata[tc].position.x;
                     cdata[0].next_position.y = cdata[tc].position.y;
@@ -55247,7 +55248,8 @@ void label_2206()
                     10,
                     dirsub,
                     rnd(2));
-                if (keybd_wait <= cfg_walkwait * cfg_startrun
+                if (keybd_wait <= config::instance().walkwait
+                            * config::instance().startrun
                     || cdata[0].turn % 2 == 0 || mdata(6) == 1)
                 {
                     snd(83 + foot % 3);
@@ -55274,7 +55276,7 @@ void label_2206()
                 txt(mapname(feat(2) + feat(3) * 100, true));
                 if (adata(16, feat(2) + feat(3) * 100) == 8)
                 {
-                    if (cfg_extrahelp)
+                    if (config::instance().extrahelp)
                     {
                         if (gdata(206) == 0)
                         {
@@ -55394,7 +55396,7 @@ void label_2206()
             }
             if (feat(1) >= 24 && feat(1) <= 28)
             {
-                if (cfg_extrahelp)
+                if (config::instance().extrahelp)
                 {
                     if (gdata(205) == 0)
                     {
@@ -56680,7 +56682,7 @@ label_22191_internal:
         attackdmg = dmg;
         if (cc == 0)
         {
-            if (cfg_attackanime)
+            if (config::instance().attackanime)
             {
                 aniref = dmg * 100 / cdata[tc].max_hp;
                 play_animation(12);
@@ -59636,7 +59638,7 @@ void speak_to_npc()
     keyhalt = 1;
     if (cdata[tc].character_role == 1005)
     {
-        if (cfg_extrahelp)
+        if (config::instance().extrahelp)
         {
             if (gdata(207) == 0)
             {
@@ -59656,7 +59658,7 @@ void speak_to_npc()
     }
     if (cdata[tc].character_role == 7)
     {
-        if (cfg_extrahelp)
+        if (config::instance().extrahelp)
         {
             if (gdata(208) == 0)
             {
@@ -61694,7 +61696,7 @@ label_2258_internal:
     }
     cs_bk = cs;
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     int a{};
@@ -63008,7 +63010,7 @@ label_2272_internal:
         }
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -63209,7 +63211,7 @@ label_2278_internal:
         }
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     if (menucycle == 1)
@@ -63401,7 +63403,7 @@ label_2283_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -64958,7 +64960,7 @@ void do_play_scene()
     {
         gdata_played_scene = sceneid;
     }
-    if (cfg_story == 0 || (en == 1 && sceneid != 0))
+    if (config::instance().story == 0 || (en == 1 && sceneid != 0))
     {
         return;
     }
@@ -67240,7 +67242,7 @@ label_2699_internal:
     }
     ++t;
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check(2);
     if (key == key_north)
     {
@@ -67738,7 +67740,7 @@ label_2705_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, cs = i);
@@ -67850,7 +67852,7 @@ void label_2707()
     }
     redraw();
 label_2708_internal:
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     if (menucycle == 1)
@@ -67990,7 +67992,7 @@ void label_2710()
 
     redraw();
 label_2711_internal:
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     if (menucycle == 1)
@@ -68323,7 +68325,7 @@ label_2729_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -68721,7 +68723,7 @@ void label_2736()
         }
         if (gdata_weather == 4)
         {
-            if (cfg_extrahelp)
+            if (config::instance().extrahelp)
             {
                 if (gdata(211) == 0)
                 {
@@ -68739,7 +68741,7 @@ void label_2736()
         }
         if (gdata_weather == 2)
         {
-            if (cfg_extrahelp)
+            if (config::instance().extrahelp)
             {
                 if (gdata(212) == 0)
                 {
@@ -68757,7 +68759,7 @@ void label_2736()
         }
         if (gdata_weather == 1)
         {
-            if (cfg_extrahelp)
+            if (config::instance().extrahelp)
             {
                 if (gdata(213) == 0)
                 {
@@ -68812,7 +68814,7 @@ void label_2736()
     }
     if (gdata_continuous_active_hours >= 15)
     {
-        if (cfg_extrahelp)
+        if (config::instance().extrahelp)
         {
             if (gdata(209) == 0)
             {
@@ -68830,7 +68832,7 @@ void label_2736()
     }
     if (cdata[0].nutrition < 5000)
     {
-        if (cfg_extrahelp)
+        if (config::instance().extrahelp)
         {
             if (gdata(210) == 0)
             {
@@ -69814,7 +69816,7 @@ void pc_turn(bool label_2747_flg)
                 return;
             }
         label_2744_internal:
-            await(cfg_wait1);
+            await(config::instance().wait1);
             cdata[0].direction = 0;
             key_check();
             f = 0;
@@ -69939,13 +69941,13 @@ label_2747:
         return;
     }
     ++t;
-    if (t % cfg_scrsync == 1)
+    if (t % config::instance().scrsync == 1)
     {
         ++scrturn;
         label_1420();
     }
 
-    if (cfg_net && cfg_netwish && key == ""s)
+    if (config::instance().net && config::instance().netwish && key == ""s)
     {
         ++chatturn;
         if (chatturn % 250 == 1)
@@ -69959,7 +69961,7 @@ label_2747:
                 s(2) = strmid(s, 0, 4);
                 if (s(2) == u8"chat"s)
                 {
-                    if (cfg_netchat)
+                    if (config::instance().netchat)
                     {
                         continue;
                     }
@@ -69989,7 +69991,7 @@ label_2747:
         txt(s);
     }
 
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check(1);
 
     if (ginfo(2) != 0)
@@ -70981,7 +70983,7 @@ void conquer_lesimas()
 
     while (1)
     {
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         if (key == key_cancel)

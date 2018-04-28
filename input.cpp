@@ -106,7 +106,7 @@ int show_prompt(int x, int y, int width, show_prompt_type type, int val4)
             font(14 - en * 2);
         }
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         int ret = -1;
@@ -189,7 +189,7 @@ void input_number_dialog(int x, int y, int max_number)
         mes(inputlog2);
         color(0, 0, 0);
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         if (key == key_enter)
         {

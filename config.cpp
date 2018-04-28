@@ -142,52 +142,6 @@ namespace elona
 {
 
 
-int cfg_alert;
-int cfg_alwayscenter;
-int cfg_animewait;
-int cfg_attackanime;
-int cfg_attackwait;
-int cfg_autonumlock;
-int cfg_autoturn;
-int cfg_env;
-int cfg_extraclass;
-int cfg_extrahelp;
-int cfg_extrarace;
-std::string cfg_font1;
-std::string cfg_font2;
-int cfg_fullscreen;
-int cfg_heart;
-int cfg_hideautoidentify;
-int cfg_hideshopresult;
-int cfg_hp_bar;
-int cfg_ignoredislike;
-int cfg_joypad;
-int cfg_language;
-int cfg_leash_icon;
-int cfg_msgaddtime;
-int cfg_msgtrans;
-int cfg_music;
-int cfg_net;
-int cfg_netchat;
-int cfg_netwish;
-int cfg_objectshadow;
-int cfg_runscroll;
-int cfg_runwait;
-int cfg_scroll;
-int cfg_scrsync;
-int cfg_serverlist;
-int cfg_shadow;
-int cfg_skiprandevents;
-int cfg_sound;
-int cfg_startrun;
-int cfg_story;
-int cfg_wait1;
-int cfg_walkwait;
-int cfg_windowanime;
-int cfg_wizard;
-int cfg_xkey;
-int cfg_zkey;
-
 
 void load_config()
 {
@@ -195,22 +149,22 @@ void load_config()
     std::unique_ptr<config_base> config_list[] = {
         std::make_unique<config_integer>(
             u8"alert_wait",
-            [&](auto value) { cfg_alert = value; }),
+            [&](auto value) { config::instance().alert = value; }),
         std::make_unique<config_integer>(
             u8"anime_wait",
-            [&](auto value) { cfg_animewait = value; }),
+            [&](auto value) { config::instance().animewait = value; }),
         std::make_unique<config_integer>(
             u8"ignoreDislike",
-            [&](auto value) { cfg_ignoredislike = value; }),
+            [&](auto value) { config::instance().ignoredislike = value; }),
         std::make_unique<config_integer>(
             u8"wait1",
-            [&](auto value) { cfg_wait1 = value; }),
+            [&](auto value) { config::instance().wait1 = value; }),
         std::make_unique<config_string>(
             u8"font1",
-            [&](auto value) { cfg_font1 = std::string{value}; }),
+            [&](auto value) { config::instance().font1() = std::string{value}; }),
         std::make_unique<config_string>(
             u8"font2",
-            [&](auto value) { cfg_font2 = std::string{value}; }),
+            [&](auto value) { config::instance()._font2() = std::string{value}; }),
         std::make_unique<config_integer>(
             u8"fontVfix1",
             [&](auto value) { vfix = value; }),
@@ -219,85 +173,85 @@ void load_config()
             [&](auto value) { sizefix = value; }),
         std::make_unique<config_integer>(
             u8"story",
-            [&](auto value) { cfg_story = value; }),
+            [&](auto value) { config::instance().story = value; }),
         std::make_unique<config_integer>(
             u8"heartbeat",
-            [&](auto value) { cfg_heart = value; }),
+            [&](auto value) { config::instance().heart = value; }),
         std::make_unique<config_integer>(
             u8"extraHelp",
-            [&](auto value) { cfg_extrahelp = value; }),
+            [&](auto value) { config::instance().extrahelp = value; }),
         std::make_unique<config_integer>(
             u8"hpBar",
-            [&](auto value) { cfg_hp_bar = value; }),
+            [&](auto value) { config::instance().hp_bar = value; }),
         std::make_unique<config_integer>(
             u8"leashIcon",
-            [&](auto value) { cfg_leash_icon = value; }),
+            [&](auto value) { config::instance().leash_icon = value; }),
         std::make_unique<config_integer>(
             u8"alwaysCenter",
-            [&](auto value) { cfg_alwayscenter = value; }),
+            [&](auto value) { config::instance().alwayscenter = value; }),
         std::make_unique<config_integer>(
             u8"scroll",
-            [&](auto value) { cfg_scroll = value; }),
+            [&](auto value) { config::instance().scroll = value; }),
         std::make_unique<config_integer>(
             u8"startRun",
-            [&](auto value) { cfg_startrun = value; }),
+            [&](auto value) { config::instance().startrun = value; }),
         std::make_unique<config_integer>(
             u8"walkWait",
-            [&](auto value) { cfg_walkwait = value; }),
+            [&](auto value) { config::instance().walkwait = value; }),
         std::make_unique<config_integer>(
             u8"runWait",
-            [&](auto value) { cfg_runwait = value; }),
+            [&](auto value) { config::instance().runwait = value; }),
         std::make_unique<config_integer>(
             u8"autoTurnType",
-            [&](auto value) { cfg_autoturn = value; }),
+            [&](auto value) { config::instance().autoturn = value; }),
         std::make_unique<config_integer>(
             u8"autoNumlock",
-            [&](auto value) { cfg_autonumlock = value; }),
+            [&](auto value) { config::instance().autonumlock = value; }),
         std::make_unique<config_integer>(
             u8"attackWait",
-            [&](auto value) { cfg_attackwait = value; }),
+            [&](auto value) { config::instance().attackwait = value; }),
         std::make_unique<config_integer>(
             u8"attackAnime",
-            [&](auto value) { cfg_attackanime = value; }),
+            [&](auto value) { config::instance().attackanime = value; }),
         std::make_unique<config_integer>(
             u8"envEffect",
-            [&](auto value) { cfg_env = value; }),
+            [&](auto value) { config::instance().env = value; }),
         std::make_unique<config_integer>(
             u8"titleEffect",
             [&](auto) { /* Unsupported option */ }),
         std::make_unique<config_integer>(
             u8"net",
-            [&](auto value) { cfg_net = value; }),
+            [&](auto value) { config::instance().net = value; }),
         std::make_unique<config_integer>(
             u8"netWish",
-            [&](auto value) { cfg_netwish = value; }),
+            [&](auto value) { config::instance().netwish = value; }),
         std::make_unique<config_integer>(
             u8"netChat",
-            [&](auto value) { cfg_netchat = value; }),
+            [&](auto value) { config::instance().netchat = value; }),
         std::make_unique<config_integer>(
             u8"serverList",
-            [&](auto value) { cfg_serverlist = value; }),
+            [&](auto value) { config::instance().serverlist = value; }),
         std::make_unique<config_integer>(
             u8"shadow",
-            [&](auto value) { cfg_shadow = value; }),
+            [&](auto value) { config::instance().shadow = value; }),
         std::make_unique<config_integer>(
             u8"objectShadow",
-            [&](auto value) { cfg_objectshadow = value; }),
+            [&](auto value) { config::instance().objectshadow = value; }),
         std::make_unique<config_integer>(
             u8"windowAnime",
-            [&](auto value) { cfg_windowanime = value; }),
+            [&](auto value) { config::instance().windowanime = value; }),
         std::make_unique<config_integer>(
             u8"hide_autoIdentify",
-            [&](auto value) { cfg_hideautoidentify = value; }),
+            [&](auto value) { config::instance().hideautoidentify = value; }),
         std::make_unique<config_integer>(
             u8"hide_shopResult",
-            [&](auto value) { cfg_hideshopresult = value; }),
+            [&](auto value) { config::instance().hideshopresult = value; }),
         std::make_unique<config_integer>(
             u8"msg_trans",
-            [&](auto value) { cfg_msgtrans = value; }),
+            [&](auto value) { config::instance().msgtrans = value; }),
         std::make_unique<config_integer>(
             u8"msg_addTime",
-            [&](auto value) { cfg_msgaddtime = value; }),
+            [&](auto value) { config::instance().msgaddtime = value; }),
         std::make_unique<config_key>(
             u8"key_cancel",
             [&](auto value, auto jk) {
@@ -516,19 +470,19 @@ void load_config()
             [&](auto value) { key_autodig = std::string{value}; }),
         std::make_unique<config_integer>(
             u8"zkey",
-            [&](auto value) { cfg_zkey = value; }),
+            [&](auto value) { config::instance().zkey = value; }),
         std::make_unique<config_integer>(
             u8"xkey",
-            [&](auto value) { cfg_xkey = value; }),
+            [&](auto value) { config::instance().xkey = value; }),
         std::make_unique<config_integer>(
             u8"scr_sync",
-            [&](auto value) { cfg_scrsync = value; }),
+            [&](auto value) { config::instance().scrsync = value; }),
         std::make_unique<config_integer>(
             u8"scroll_run",
-            [&](auto value) { cfg_runscroll = value; }),
+            [&](auto value) { config::instance().runscroll = value; }),
         std::make_unique<config_integer>(
             u8"skipRandEvents",
-            [&](auto value) { cfg_skiprandevents = value; }),
+            [&](auto value) { config::instance().skiprandevents = value; }),
         std::make_unique<config_key_sequence>(
             u8"key_set",
             [&](const auto& values) {
@@ -564,48 +518,48 @@ void load_config()
     key_prev = key_northwest;
     key_next = key_northeast;
 
-    if (cfg_zkey == 0)
+    if (config::instance().zkey == 0)
     {
         key_quick = u8"z"s;
         key_zap = u8"Z"s;
     }
-    else if (cfg_zkey == 1)
+    else if (config::instance().zkey == 1)
     {
         key_zap = u8"z"s;
         key_quick = u8"Z"s;
     }
-    if (cfg_xkey == 0)
+    if (config::instance().xkey == 0)
     {
         key_quickinv = u8"x"s;
         key_inventory = u8"X"s;
     }
-    else if (cfg_xkey == 1)
+    else if (config::instance().xkey == 1)
     {
         key_inventory = u8"x"s;
         key_quickinv = u8"X"s;
     }
-    if (cfg_scrsync == 0)
+    if (config::instance().scrsync == 0)
     {
-        cfg_scrsync = 3;
+        config::instance().scrsync = 3;
     }
-    if (cfg_walkwait == 0)
+    if (config::instance().walkwait == 0)
     {
-        cfg_walkwait = 5;
+        config::instance().walkwait = 5;
     }
-    if (cfg_runwait < 1)
+    if (config::instance().runwait < 1)
     {
-        cfg_runwait = 1;
+        config::instance().runwait = 1;
     }
-    if (cfg_attackwait < 1)
+    if (config::instance().attackwait < 1)
     {
-        cfg_attackwait = 1;
+        config::instance().attackwait = 1;
     }
-    if (cfg_startrun >= 20)
+    if (config::instance().startrun >= 20)
     {
-        cfg_startrun = 1000;
+        config::instance().startrun = 1000;
     }
 
-    if (cfg_language == -1)
+    if (config::instance().language == -1)
     {
         buffer(4);
         picload(filesystem::path(u8"./graphic/lang.bmp"));
@@ -648,10 +602,10 @@ void load_config()
             }
         }
 
-        cfg_language = p;
+        config::instance().language = p;
         set_config(u8"language", p);
     }
-    if (cfg_language == 0)
+    if (config::instance().language == 0)
     {
         jp = 1;
         vfix = 0;
@@ -810,19 +764,23 @@ void load_config2()
 
     std::unique_ptr<config_base> config_list[] = {
         std::make_unique<config_integer>(
-            u8"language", [&](auto value) { cfg_language = value; }),
+            u8"language",
+            [&](auto value) { config::instance().language = value; }),
         std::make_unique<config_integer>(
-            u8"fullscreen", [&](auto value) { cfg_fullscreen = value; }),
+            u8"fullscreen",
+            [&](auto value) { config::instance().fullscreen = value; }),
         std::make_unique<config_integer>(
-            u8"music", [&](auto value) { cfg_music = value; }),
+            u8"music", [&](auto value) { config::instance().music = value; }),
         std::make_unique<config_integer>(
-            u8"sound", [&](auto value) { cfg_sound = value; }),
+            u8"sound", [&](auto value) { config::instance().sound = value; }),
         std::make_unique<config_integer>(
-            u8"extraRace", [&](auto value) { cfg_extrarace = value; }),
+            u8"extraRace",
+            [&](auto value) { config::instance().extrarace = value; }),
         std::make_unique<config_integer>(
-            u8"extraClass", [&](auto value) { cfg_extraclass = value; }),
+            u8"extraClass",
+            [&](auto value) { config::instance().extraclass = value; }),
         std::make_unique<config_integer>(
-            u8"joypad", [&](auto value) { cfg_joypad = value; }),
+            u8"joypad", [&](auto value) { config::instance().joypad = value; }),
         std::make_unique<config_integer>(
             u8"msgLine", [&](auto value) { inf_msgline = value; }),
         std::make_unique<config_integer>(
@@ -848,7 +806,8 @@ void load_config2()
         std::make_unique<config_string>(
             u8"defLoadFolder", [&](auto value) { defload = value; }),
         std::make_unique<config_integer>(
-            u8"charamake_wiz", [&](auto value) { cfg_wizard = value; }),
+            u8"charamake_wiz",
+            [&](auto value) { config::instance().wizard = value; }),
     };
 
     std::ifstream file{filesystem::path(u8"./config.json").native(),

@@ -3389,7 +3389,7 @@ label_1744_internal:
     }
     if (mdata(6) == 1)
     {
-        if (cfg_extrahelp)
+        if (config::instance().extrahelp)
         {
             if (gdata(202) == 0)
             {
@@ -3407,7 +3407,7 @@ label_1744_internal:
     }
     if (mdata(6) == 3)
     {
-        if (cfg_extrahelp)
+        if (config::instance().extrahelp)
         {
             if (gdata(203) == 0)
             {
@@ -3425,7 +3425,7 @@ label_1744_internal:
     }
     if (gdata_current_map == 30)
     {
-        if (cfg_extrahelp)
+        if (config::instance().extrahelp)
         {
             if (gdata(214) == 0)
             {

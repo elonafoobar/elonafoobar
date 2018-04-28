@@ -148,7 +148,7 @@ void initialize_elona()
     i18n::load(jp ? u8"jp" : u8"en");
 
     initialize_ui_constants();
-    if (cfg_fullscreen)
+    if (config::instance().fullscreen)
     {
         chgdisp(1, windoww, windowh);
         bgscr(0, windoww, windowh, 0, 0);
@@ -405,20 +405,20 @@ void initialize_elona()
     initialize_nefia_names();
     initialize_home_adata();
     load_cnpc_data();
-    if (cfg_music == 1 && DMINIT() == 0)
+    if (config::instance().music == 1 && DMINIT() == 0)
     {
-        cfg_music = 2;
+        config::instance().music = 2;
     }
-    if (cfg_sound == 1 && DSINIT() == 0)
+    if (config::instance().sound == 1 && DSINIT() == 0)
     {
-        cfg_sound = 2;
+        config::instance().sound = 2;
     }
-    if (cfg_joypad == 1)
+    if (config::instance().joypad == 1)
     {
         DIINIT();
         if (DIGETJOYNUM() == 0)
         {
-            cfg_joypad = 0;
+            config::instance().joypad = 0;
         }
     }
     initialize_sound_file();
@@ -532,7 +532,7 @@ void initialize_elona()
     invicon(28) = -1;
     invicon(29) = -1;
 
-    if (cfg_autonumlock)
+    if (config::instance().autonumlock)
     {
         // TODO
         // if NumLock key is pressed, send an event to release the key.
@@ -865,7 +865,7 @@ void main_title_menu()
 
     while (1)
     {
-        if (cfg_autonumlock)
+        if (config::instance().autonumlock)
         {
             // TODO
             // if NumLock key is pressed, send an event to release the key.
@@ -912,7 +912,7 @@ void main_title_menu()
         }
         cs_bk = cs;
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         if (key == u8"b"s)
@@ -960,7 +960,7 @@ void main_title_menu()
 
 void main_menu_new_game()
 {
-    if (cfg_wizard)
+    if (config::instance().wizard)
     {
         gdata_wizard = 1;
     }
@@ -1003,7 +1003,7 @@ void main_menu_new_game()
         {
             key_check();
             cursor_check();
-            await(cfg_wait1);
+            await(config::instance().wait1);
             if (key != ""s)
             {
                 main_title_menu();
@@ -1048,7 +1048,7 @@ void character_making_select_race()
         list(0, listmax) = 0;
         ++listmax;
     }
-    if (cfg_extrarace)
+    if (config::instance().extrarace)
     {
         for (const auto& race : the_race_db.get_available_races(true))
         {
@@ -1127,7 +1127,7 @@ void character_making_select_race()
             show_race_or_class_info(0, 0);
         }
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         ELONA_GET_SELECTED_INDEX(p);
@@ -1226,7 +1226,7 @@ void character_making_select_sex(bool label_1548_flg)
         }
         cs_bk = cs;
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         if (key == key_select(0))
@@ -1288,7 +1288,7 @@ void character_making_select_class(bool label_1551_flg)
         listn(1, listmax) = class_.get().id;
         ++listmax;
     }
-    if (cfg_extraclass)
+    if (config::instance().extraclass)
     {
         for (const auto& class_ : the_class_db.get_available_classes(true))
         {
@@ -1349,7 +1349,7 @@ void character_making_select_class(bool label_1551_flg)
             show_race_or_class_info(0, 1);
             redraw();
         }
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         ELONA_GET_SELECTED_INDEX(p);
@@ -1498,7 +1498,7 @@ void character_making_role_attributes(bool label_1554_flg)
         }
         cs_bk = cs;
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);
@@ -1656,7 +1656,7 @@ void character_making_select_feats_and_alias(bool label_1558_flg)
             list(0, 0) = 0;
         }
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);
@@ -2072,7 +2072,7 @@ void initialize_game()
     mtilefilecur = -1;
     firstturn = 1;
     msgtemp = u8"  Lafrontier presents Elona ver 1.22. Welcome traveler! "s;
-    if (cfg_net)
+    if (config::instance().net)
     {
         initialize_server_info();
     }
