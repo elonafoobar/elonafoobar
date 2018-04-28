@@ -1403,8 +1403,6 @@ void show_game_help();
 void label_2707();
 void label_2710();
 void initialize_jkey();
-void load_config2();
-void load_config();
 void label_2719();
 void label_2720();
 void set_option();

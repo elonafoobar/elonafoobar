@@ -19,6 +19,11 @@ private:
 };
 
 
+
+void load_config2();
+void load_config();
+
+
 void set_config(const std::string& key, int value);
 void set_config(const std::string& key, const std::string& value);
 void set_config(const std::string& key, const std::string& value1, int value2);

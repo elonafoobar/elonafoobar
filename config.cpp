@@ -41,55 +41,36 @@ struct config_base
 
 
 
-struct config_integer : public config_base
+// TODO: rename
+template <typename T>
+struct config_value : public config_base
 {
-    config_integer(const std::string& name, std::function<void(int)> callback)
-        : name(name)
-        , callback(callback)
-    {
-    }
-
-
-    virtual ~config_integer() = default;
-
-
-    virtual void set(const picojson::object& options) override
-    {
-        callback(options.at(name).get<int64_t>());
-    }
-
-
-private:
-    std::string name;
-    std::function<void(int)> callback;
-};
-
-
-
-struct config_string : public config_base
-{
-    config_string(
+    config_value(
         const std::string& name,
-        std::function<void(const std::string&)> callback)
+        std::function<void(const T&)> callback)
         : name(name)
         , callback(callback)
     {
     }
 
 
-    virtual ~config_string() = default;
+    virtual ~config_value() = default;
 
 
     virtual void set(const picojson::object& options) override
     {
-        callback(options.at(name).get<std::string>());
+        callback(options.at(name).template get<T>());
     }
 
 
 private:
     std::string name;
-    std::function<void(const std::string&)> callback;
+    std::function<void(const T&)> callback;
 };
+
+
+using config_integer = config_value<int64_t>;
+using config_string = config_value<std::string>;
 
 
 
