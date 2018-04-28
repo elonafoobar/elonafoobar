@@ -496,7 +496,7 @@ std::unordered_map<int, snail::font_t> font_cache;
 
 
 
-void font(const std::string& name, int size, int style)
+void font(int size, int style)
 {
     (void)style;
     auto i = font_detail::font_cache.find(size);
@@ -510,7 +510,7 @@ void font(const std::string& name, int size, int style)
             std::piecewise_construct,
             std::forward_as_tuple(size),
             std::forward_as_tuple(
-                filesystem::path(u8"font") / name,
+                filesystem::path(u8"font") / lang(cfg_font1, cfg_font2),
                 size,
                 snail::font_t::style_t::regular));
         snail::application::instance().get_renderer().set_font(

@@ -45,7 +45,7 @@ void msg_write(std::string& message)
     elona::pos(
         message_width * inf_mesfont / 2 + inf_msgx + 6,
         (inf_msgline - 1) * inf_msgspace + inf_msgy + 6);
-    font(lang(cfg_font1, cfg_font2), inf_mesfont - en * 2, 0);
+    font(inf_mesfont - en * 2, 0);
     mes(message);
     elona::color(0, 0, 0);
 }

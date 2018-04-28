@@ -781,7 +781,7 @@ label_2060_internal:
     }
     if (menucycle == 1)
     {
-        font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+        font(12 + sizefix - en * 2, 0);
         y = 34;
         x = windoww - 650 + 156;
         window2(x, y, 475, 22, 5, 5);
@@ -934,7 +934,7 @@ label_2061_internal:
         int h = 102;
         window(x + 4, y + 4, w, h - h % 8, 0, -1);
         window(x, y, w, h - h % 8, 0, 0);
-        font(lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0);
+        font(12 + en - en * 2, 0);
         pos(x + 16, y + 17);
         mes(u8"DV:"s + cdata[tc].dv + u8" PV:"s + cdata[tc].pv);
         pos(x + 16, y + 35);
@@ -986,7 +986,7 @@ label_2061_internal:
             gfdec2(12, 14, 16);
         }
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2, 0);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -1064,7 +1064,7 @@ label_2061_internal:
     {
         if (showresist == 0)
         {
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+            font(13 - en * 2, 0);
             gmode(2);
             pos(wx + 340, wy + 32);
             gcopy(3, 0, 392, 24, 24);
