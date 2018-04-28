@@ -48998,7 +48998,7 @@ void main_menu_continue()
         }
         if (ginfo(2) == 0)
         {
-            if (noteinfo() != 0)
+            if (save_data_count != 0)
             {
                 if (getkey(snail::key::backspace))
                 {
