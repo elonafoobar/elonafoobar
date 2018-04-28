@@ -70,5 +70,12 @@ private:
 };
 
 
+
+inline font_t::style_t operator|(font_t::style_t lhs, font_t::style_t rhs)
+{
+    return font_t::style_t(int(lhs) | int(rhs));
+}
+
+
 } // namespace snail
 } // namespace elona
