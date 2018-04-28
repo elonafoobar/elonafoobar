@@ -1237,7 +1237,7 @@ label_2181_internal:
                     if (y == inv[ci].param2)
                     {
                         pos(sx, sy);
-                        font(40 - en * 2, 2);
+                        font(40 - en * 2, snail::font_t::style_t::italic);
                         color(255, 20, 20);
                         mes(lang(u8"○"s, u8"O"s));
                         color(0, 0, 0);

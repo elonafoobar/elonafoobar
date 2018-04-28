@@ -18,6 +18,25 @@ namespace
 {
 
 
+struct font_cache_key
+{
+    font_cache_key(int size, snail::font_t::style_t style)
+        : size(size)
+        , style(style)
+    {
+    }
+
+
+    int size;
+    snail::font_t::style_t style;
+
+
+    bool operator==(const font_cache_key& other) const
+    {
+        return size == other.size && style == other.style;
+    }
+};
+
 
 size_t read_binary(std::istream& in, size_t size, char* buffer)
 {
@@ -48,6 +67,24 @@ std::pair<std::unique_ptr<char[]>, size_t> read_binary(
 
 
 } // namespace
+
+
+
+namespace std
+{
+
+
+template <>
+struct hash<font_cache_key>
+{
+    size_t operator()(const font_cache_key& key) const
+    {
+        return hash<int>()(key.size * 100 + int(key.style));
+    }
+};
+
+
+} // namespace std
 
 
 
@@ -491,30 +528,32 @@ void exec(const std::string&, int)
 
 namespace font_detail
 {
-std::unordered_map<int, snail::font_t> font_cache;
+std::unordered_map<font_cache_key, snail::font_t> font_cache;
 }
 
 
 
-void font(int size, int style)
+void font(int size, snail::font_t::style_t style)
 {
-    (void)style;
-    auto i = font_detail::font_cache.find(size);
-    if (i != std::end(font_detail::font_cache))
+    auto& renderer = snail::application::instance().get_renderer();
+    if (renderer.font().size() == size && renderer.font().style() == style)
+        return;
+
+    const auto itr = font_detail::font_cache.find({size, style});
+    if (itr != std::end(font_detail::font_cache))
     {
-        snail::application::instance().get_renderer().set_font(i->second);
+        renderer.set_font(itr->second);
     }
     else
     {
         const auto inserted = font_detail::font_cache.emplace(
             std::piecewise_construct,
-            std::forward_as_tuple(size),
+            std::forward_as_tuple(size, style),
             std::forward_as_tuple(
                 filesystem::path(u8"font") / lang(cfg_font1, cfg_font2),
                 size,
-                snail::font_t::style_t::regular));
-        snail::application::instance().get_renderer().set_font(
-            inserted.first->second);
+                style));
+        renderer.set_font(inserted.first->second);
     }
 }
 

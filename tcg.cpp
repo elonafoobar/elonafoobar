@@ -553,7 +553,7 @@ void tcgdraw()
         ++t_at_tcg;
         label_1825();
         anime_at_tcg = 0;
-        font(12 + en - en * 2, 0);
+        font(12 + en - en * 2);
         color(255, 255, 255);
         gmode(2);
         for (int cnt = 0; cnt < 2; ++cnt)
@@ -566,7 +566,7 @@ void tcgdraw()
             mes(""s + cpdata_at_tcg(7, cnt) + u8"/"s + cpdata_at_tcg(8, cnt));
         }
         color(0, 0, 0);
-        font(13 + en - en * 2, 0);
+        font(13 + en - en * 2);
         for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
         {
             c_at_tcg = maxcard_at_tcg - cnt - 1;
@@ -636,7 +636,7 @@ void tcgdraw()
             }
             tcgdrawcard(c_at_tcg);
         }
-        font(14 - en * 2, 0);
+        font(14 - en * 2);
         color(255, 255, 255);
         gmode(2);
         if (cursor_at_tcg)
@@ -711,7 +711,7 @@ void tcgdraw()
             --efllist_at_tcg(4, cnt);
             if (efllist_at_tcg(0, cnt) == 1)
             {
-                font(20 - en * 2, 1);
+                font(20 - en * 2, snail::font_t::style_t::bold);
                 pos(efllist_at_tcg(5, cnt) + 11,
                     efllist_at_tcg(6, cnt) + efllist_at_tcg(4, cnt) / 3 + 21);
                 mes(std::abs(efllist_at_tcg(1, cnt)));
@@ -720,7 +720,7 @@ void tcgdraw()
                     efllist_at_tcg(6, cnt) + efllist_at_tcg(4, cnt) / 3 + 20);
                 mes(std::abs(efllist_at_tcg(1, cnt)));
                 color(0, 0, 0);
-                font(13 - en * 2, 0);
+                font(13 - en * 2);
                 gmode(5, -1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
                 pos(efllist_at_tcg(5, cnt) - 12, efllist_at_tcg(6, cnt) + 10);
                 gcopy(
@@ -732,7 +732,7 @@ void tcgdraw()
             }
             if (efllist_at_tcg(0, cnt) == 2)
             {
-                font(20 - en * 2, 1);
+                font(20 - en * 2, snail::font_t::style_t::bold);
                 pos(efllist_at_tcg(2, cnt) + 31,
                     efllist_at_tcg(3, cnt) + efllist_at_tcg(4, cnt) / 3 + 26);
                 mes(std::abs(efllist_at_tcg(1, cnt)));
@@ -741,7 +741,7 @@ void tcgdraw()
                     efllist_at_tcg(3, cnt) + efllist_at_tcg(4, cnt) / 3 + 25);
                 mes(std::abs(efllist_at_tcg(1, cnt)));
                 color(0, 0, 0);
-                font(13 - en * 2, 0);
+                font(13 - en * 2);
                 gmode(5, -1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
                 pos(efllist_at_tcg(5, cnt), efllist_at_tcg(6, cnt) + 24);
                 gcopy(
@@ -2111,7 +2111,7 @@ void label_1823()
     pos(0, 0);
     picload(filesystem::path(u8"./graphic/bg_card.bmp"), 1);
     gmode(2);
-    font(14 - en * 2, 0);
+    font(14 - en * 2);
     color(255, 255, 255);
     for (int cnt = 0; cnt < 2; ++cnt)
     {
@@ -2194,7 +2194,7 @@ void label_1823()
 
 void label_1824()
 {
-    font(12 + en - en * 2, 0);
+    font(12 + en - en * 2);
     gmode(2);
     for (int cnt = 0, cnt_end = (cfmax_at_tcg); cnt < cnt_end; ++cnt)
     {
@@ -2224,7 +2224,7 @@ void label_1824()
             gcopy(7, 288, 96, 24, 24);
         }
     }
-    font(13 + en - en * 2, 0);
+    font(13 + en - en * 2);
     for (int cnt = 0; cnt < 24; ++cnt)
     {
         p_at_tcg = page_at_tcg * 8 + cnt;
@@ -2265,7 +2265,7 @@ void label_1824()
         card_at_tcg(3, c_at_tcg) = y_at_tcg;
         tcgdrawcard(c_at_tcg, 1);
     }
-    font(13 - en * 2, 0);
+    font(13 - en * 2);
     color(255, 255, 255);
     pos(basex_at_tcg + 160, basey_at_tcg + 510);
     mes(lang(
@@ -2287,7 +2287,7 @@ void label_1825()
     gmode(0);
     pos(basex_at_tcg, basey_at_tcg);
     gcopy(4, 0, 0, basew_at_tcg, baseh_at_tcg);
-    font(13 - en * 2, 0);
+    font(13 - en * 2);
     gmode(2);
     pos(basex_at_tcg + 20, basey_at_tcg + 22);
     if (cardmode_at_tcg != 0 || ct_at_tcg == player_at_tcg)
@@ -2398,7 +2398,7 @@ void label_1825()
         pos(basex_at_tcg + 24, basey_at_tcg + 240);
         mes(s_at_tcg);
     }
-    font(12 + en - en * 2, 0);
+    font(12 + en - en * 2);
     pos(basex_at_tcg + 146, basey_at_tcg + 545);
     mes(helpmsg_at_tcg);
     return;
