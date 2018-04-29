@@ -129,6 +129,11 @@ void key_check(int prm_299)
                             any_key_pressed = true;
                             break;
                         }
+                        if (getkey(snail::key(int(snail::key::keypad_0) + i)))
+                        {
+                            any_key_pressed = true;
+                            break;
+                        }
                     }
                 }
                 if (!any_key_pressed)
@@ -152,6 +157,29 @@ void key_check(int prm_299)
         key = keylog;
         keylog = "";
         objprm(0, ""s);
+    }
+    {
+        // Experimental implementation
+        if (getkey(snail::key::keypad_0))
+            key = "0 ";
+        else if (getkey(snail::key::keypad_1))
+            key = "1 ";
+        else if (getkey(snail::key::keypad_2))
+            key = "2 ";
+        else if (getkey(snail::key::keypad_3))
+            key = "3 ";
+        else if (getkey(snail::key::keypad_4))
+            key = "4 ";
+        else if (getkey(snail::key::keypad_5))
+            key = "5 ";
+        else if (getkey(snail::key::keypad_6))
+            key = "6 ";
+        else if (getkey(snail::key::keypad_7))
+            key = "7 ";
+        else if (getkey(snail::key::keypad_8))
+            key = "8 ";
+        else if (getkey(snail::key::keypad_9))
+            key = "9 ";
     }
     mousel = 0;
     f_at_m19 = 0;
