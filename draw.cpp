@@ -318,7 +318,7 @@ void show_damage_popups(int inf_ver)
         x += sxfix * (scx != scxbk) * (scrollp >= 3);
         y += syfix * (scy != scybk) * (scrollp >= 3);
 
-        font(lang(cfg_font1, cfg_font2), 2 + cfg_dmgfont - en * 2, 0);
+        font(2 + cfg_dmgfont - en * 2);
         pos(x, y);
         color(damage_popup.color.r, damage_popup.color.g, damage_popup.color.b);
         bmes(damage_popup.text, 255, 255, 255);
