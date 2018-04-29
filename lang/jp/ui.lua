@@ -345,5 +345,20 @@ ui.autodig = {
   disabled = "自動採掘をオフにした。",
 }
 
+ui.autopick = {
+  do_you_really_pick_up = function(_, item_name)
+    return "本当に" .. item_name .. "を拾う？"
+  end,
+  do_you_really_destroy = function(_, item_name)
+    return "本当に" .. item_name .. "を破壊する？"
+  end,
+  destroyed = function(_, item_name)
+    return "" .. item_name .. "を破壊した。"
+  end,
+  do_you_really_open = function(_, item_name)
+    return "本当に" .. item_name .. "を開ける？"
+  end,
+}
+
 
 -- vim: et sw=2 sts=2

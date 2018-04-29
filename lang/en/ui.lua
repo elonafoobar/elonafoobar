@@ -338,5 +338,20 @@ ui.autodig = {
   disabled = "You disable autodig.",
 }
 
+ui.autopick = {
+  do_you_really_pick_up = function(_, item_name)
+    return "Do you really pick " .. item_name .. " up?"
+  end,
+  do_you_really_destroy = function(_, item_name)
+    return "Do you really destroy " .. item_name .. "?"
+  end,
+  destroyed = function(_, item_name)
+    return "" .. item_name .. " is destroyed."
+  end,
+  do_you_really_open = function(_, item_name)
+    return "Do you really open " .. item_name .. "?"
+  end,
+}
+
 
 -- vim: et sw=2 sts=2

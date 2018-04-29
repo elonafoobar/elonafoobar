@@ -340,6 +340,11 @@ std::vector<config_menu> create_config_menu()
         config::instance().leash_icon,
         lang(u8"する", u8"Show"),
         lang(u8"しない", u8"Don't show"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"Autopick", u8"Autopick"),
+        config::instance().use_autopick,
+        lang(u8"使う", u8"On"),
+        lang(u8"使わない", u8"Off"));
 
 #undef ELONA_CONFIG_ITEM
 #undef ELONA_CONFIG_ITEM_YESNO
@@ -1387,6 +1392,22 @@ void set_option()
                     }
                     snd(20);
                     set_config(u8"leashIcon", config::instance().leash_icon);
+                    reset_page = true;
+                    continue;
+                }
+                if (cs == 2)
+                {
+                    config::instance().use_autopick += p;
+                    if (config::instance().use_autopick > 1)
+                    {
+                        config::instance().use_autopick = 1;
+                    }
+                    else if (config::instance().use_autopick < 0)
+                    {
+                        config::instance().use_autopick = 0;
+                    }
+                    snd(20);
+                    set_config(u8"use_autopick", config::instance().use_autopick);
                     reset_page = true;
                     continue;
                 }

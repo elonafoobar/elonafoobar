@@ -60,6 +60,18 @@ public:
     int xkey;
     int zkey;
 
+    int use_autopick;
+    int use_autopick_in_home;
+    int use_autopick_in_dungeon;
+    int use_autopick_in_shop;
+    int use_autopick_in_ranch;
+    int use_autopick_in_crop;
+    int use_autopick_in_storage_house;
+    int use_autopick_in_shelter;
+    int use_autopick_in_town;
+    int use_autopick_in_conquered_nefia;
+    int use_autopick_in_conquered_quest_map;
+
 
 private:
     config() = default;
