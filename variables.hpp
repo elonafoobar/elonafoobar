@@ -1,4 +1,5 @@
 #include "elona.hpp"
+#include "position.hpp"
 
 
 #ifdef ELONA_DEFINE_GLOBAL_INSTANCE
@@ -11,7 +12,8 @@ namespace elona
 {
 ELONA_EXTERN(int anic);
 ELONA_EXTERN(elona_vector1<int> ap);
-ELONA_EXTERN(bool autodig_enabled);
+ELONA_EXTERN(int wishfilter);
+ELONA_EXTERN(int nooracle);
 
 ELONA_EXTERN(elona_vector1<int> _randcolor);
 ELONA_EXTERN(elona_vector1<int> aniref);
@@ -263,47 +265,6 @@ ELONA_EXTERN(int cardreftype);
 ELONA_EXTERN(int cc);
 ELONA_EXTERN(int ccbk);
 ELONA_EXTERN(int cellaccess);
-ELONA_EXTERN(int cfg_alert);
-ELONA_EXTERN(int cfg_alwayscenter);
-ELONA_EXTERN(int cfg_animewait);
-ELONA_EXTERN(int cfg_attackanime);
-ELONA_EXTERN(int cfg_attackwait);
-ELONA_EXTERN(int cfg_autonumlock);
-ELONA_EXTERN(int cfg_autoturn);
-ELONA_EXTERN(int cfg_env);
-ELONA_EXTERN(int cfg_extrahelp);
-ELONA_EXTERN(int cfg_extrarace);
-ELONA_EXTERN(int cfg_fullscreen);
-ELONA_EXTERN(int cfg_heart);
-ELONA_EXTERN(int cfg_hideautoidentify);
-ELONA_EXTERN(int cfg_hideshopresult);
-ELONA_EXTERN(int cfg_ignoredislike);
-ELONA_EXTERN(int cfg_joypad);
-ELONA_EXTERN(int cfg_language);
-ELONA_EXTERN(int cfg_msg_box);
-ELONA_EXTERN(int cfg_msgaddtime);
-ELONA_EXTERN(int cfg_msgtrans);
-ELONA_EXTERN(int cfg_music);
-ELONA_EXTERN(int cfg_net);
-ELONA_EXTERN(int cfg_netchat);
-ELONA_EXTERN(int cfg_netwish);
-ELONA_EXTERN(int cfg_objectshadow);
-ELONA_EXTERN(int cfg_runscroll);
-ELONA_EXTERN(int cfg_runwait);
-ELONA_EXTERN(int cfg_scroll);
-ELONA_EXTERN(int cfg_scrsync);
-ELONA_EXTERN(int cfg_serverlist);
-ELONA_EXTERN(int cfg_shadow);
-ELONA_EXTERN(int cfg_skiprandevents);
-ELONA_EXTERN(int cfg_sound);
-ELONA_EXTERN(int cfg_startrun);
-ELONA_EXTERN(int cfg_story);
-ELONA_EXTERN(int cfg_wait1);
-ELONA_EXTERN(int cfg_walkwait);
-ELONA_EXTERN(int cfg_windowanime);
-ELONA_EXTERN(int cfg_wizard);
-ELONA_EXTERN(int cfg_xkey);
-ELONA_EXTERN(int cfg_zkey);
 ELONA_EXTERN(int chatesc);
 ELONA_EXTERN(int chatflag);
 ELONA_EXTERN(int chatteleport);
@@ -557,8 +518,6 @@ ELONA_EXTERN(int y1);
 ELONA_EXTERN(int y2);
 ELONA_EXTERN(int y_at_txtfunc);
 ELONA_EXTERN(std::string cardrefrace);
-ELONA_EXTERN(std::string cfg_font1);
-ELONA_EXTERN(std::string cfg_font2);
 ELONA_EXTERN(std::string classname);
 ELONA_EXTERN(std::string cmaka);
 ELONA_EXTERN(std::string dbidn);
@@ -607,7 +566,7 @@ int cdbit(int = 0, int = 0);
 int cell_featread(int = 0, int = 0, int = 0);
 int cell_findspace(int = 0, int = 0, int = 0);
 int cell_itemlist(int = 0, int = 0);
-int cell_itemoncell(int = 0, int = 0);
+std::pair<int, int> cell_itemoncell(const position_t& pos);
 int chara_anorexia(int = 0);
 bool chara_unequip(int);
 int characreate(int = 0, int = 0, int = 0, int = 0);
@@ -851,7 +810,7 @@ std::string rpmatname(int = 0);
 std::string rpname(int = 0);
 std::string rpsuccessrate(int = 0);
 std::string sncnv(const std::string&);
-std::string trimdesc(const std::string&, int = 0);
+std::string trim_item_description(const std::string&, bool);
 std::string txtbuilding(int = 0, int = 0);
 std::string txtitemoncell(int = 0, int = 0);
 std::string txtskillchange(int, int, bool);
@@ -947,7 +906,6 @@ void fileadd(const std::string&, int = 0);
 void fillbg(int = 0, int = 0, int = 0, int = 0, int = 0);
 void fix_input_chat(std::string&);
 void fix_input_chat2(std::string&);
-void fix_wish(std::string&);
 void fixaiact(int = 0);
 void flt(int = 0, int = 0);
 void fltn(const std::string&);
@@ -1230,12 +1188,6 @@ int label_1969();
 void update_journal();
 void show_quest_board();
 void list_adventurers();
-void fix_wish();
-void wish_end();
-void what_do_you_wish_for();
-void wish_for_card();
-void wish_for_figure();
-void select_wished_character();
 void do_short_cut();
 void do_dig_command();
 void label_2005();
@@ -1291,12 +1243,6 @@ void main_title_menu();
 void main_menu_continue();
 void main_menu_incarnate();
 void initialize_fovmap_and_fovlist();
-void input_number_or_text_dialog(
-    int val0,
-    int val1,
-    int val2,
-    int val3,
-    int val4 = 0);
 void label_2134();
 void label_2136();
 void label_2144();
@@ -1383,7 +1329,6 @@ void show_city_chart();
 void label_2276();
 void label_2280();
 void get_random_npc_id();
-void initialize_cbit_filters();
 void create_all_adventurers();
 void create_adventurer();
 void label_2662();
@@ -1414,8 +1359,6 @@ void show_game_help();
 void label_2707();
 void label_2710();
 void initialize_jkey();
-void load_config2();
-void load_config();
 void label_2719();
 void label_2720();
 void set_option();
@@ -1466,8 +1409,6 @@ void modweight(int, int, bool = false);
 void msg_clear();
 void msg_halt();
 void msg_newline();
-void msg_newlog();
-void msg_write(std::string&);
 void netload(const std::string&);
 void opencard(int = 0);
 void page_load();
@@ -1545,6 +1486,7 @@ void zipadd(const std::string&);
 void zipadd2(const std::string&);
 void zipend2();
 void zipinit2(const std::string&, const std::string&);
+void cs_listbk();
 void cs_list(bool, const std::string&, int, int, int = 0, int = 0, int = 0);
 
 

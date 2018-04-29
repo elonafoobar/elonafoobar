@@ -114,13 +114,13 @@ void talk_npc()
     }
     if (tc < 16)
     {
-        if (cbit(963, tc) == 0)
+        if (cdata[tc].is_escorted() == 0)
         {
-            if (cbit(971, tc) == 0)
+            if (cdata[tc].is_escorted_in_sub_quest() == 0)
             {
                 ELONA_APPEND_RESPONSE(
                     34, lang(u8"街で待機しろ"s, u8"Wait at the town."s));
-                if (cbit(961, tc) == 0)
+                if (cdata[tc].is_married() == 0)
                 {
                     ELONA_APPEND_RESPONSE(
                         38,
@@ -135,7 +135,7 @@ void talk_npc()
                 }
                 if (cdata[tc].can_talk != 0)
                 {
-                    if (cbit(965, tc) == 0)
+                    if (cdata[tc].is_silent() == 0)
                     {
                         ELONA_APPEND_RESPONSE(
                             48, lang(u8"黙らせる"s, u8"Shut up."s));
@@ -214,7 +214,7 @@ void talk_npc()
     {
         ELONA_APPEND_RESPONSE(
             20, lang(u8"アイテム交換"s, u8"Are you interested in trade?"s));
-        if (cbit(969, tc) == 0)
+        if (cdata[tc].is_contracting() == 0)
         {
             ELONA_APPEND_RESPONSE(
                 50, lang(u8"護衛を依頼する"s, u8"I want to hire you."s));
@@ -513,7 +513,7 @@ void talk_npc()
                 {
                     if (gdata_current_map != 7)
                     {
-                        if (cbit(16, 0) == 0)
+                        if (cdata[0].is_incognito() == 0)
                         {
                             listmax = 0;
                             buff = lang(
@@ -786,8 +786,7 @@ void talk_npc()
         gdata(74) = calcfame(
             0,
             (220 - gdata(120) / 50)
-                    * (100 + clamp(adata(22, gdata_current_map), 0, 50))
-                    / 100
+                    * (100 + clamp(adata(22, gdata_current_map), 0, 50)) / 100
                 + 2);
         listmax = 0;
         randomize(adata(26, gdata_current_map));
@@ -798,7 +797,7 @@ void talk_npc()
             {
                 buff = lang(
                     u8"残念だが、今日の試合はもう終了し"s + _ta(),
-                    u8"The game is over today. Come again tommorow."s);
+                    u8"The game is over today. Come again tomorrow."s);
                 talk_npc();
                 return;
             }
@@ -848,7 +847,7 @@ void talk_npc()
             {
                 buff = lang(
                     u8"残念だが、今日の試合はもう終了し"s + _ta(),
-                    u8"The game is over today. Come again tommorow."s);
+                    u8"The game is over today. Come again tomorrow."s);
                 talk_npc();
                 return;
             }
@@ -903,8 +902,7 @@ void talk_npc()
         gdata(74) = calcfame(
             0,
             (220 - gdata(121) / 50)
-                    * (50 + clamp(adata(23, gdata_current_map), 0, 50))
-                    / 100
+                    * (50 + clamp(adata(23, gdata_current_map), 0, 50)) / 100
                 + 2);
         if (chatval == 49)
         {
@@ -1006,7 +1004,7 @@ void talk_npc()
         buff = lang(u8"現在は"s + adata(23, gdata_current_map) + u8"連勝中"s + _da() +
                 u8"5連勝,20連勝毎にボーナスを与え"s + _ru(),
             u8"Your winning streak has reached "s + adata(23, gdata_current_map) +
-                u8" matchs now. Keep the audience excited. You get nice bonus at every 5th and 20th wins in a row."s);
+                u8" matches now. Keep the audience excited. You get nice bonus at every 5th and 20th wins in a row."s);
         talk_npc();
         return;
     }
@@ -1015,7 +1013,7 @@ void talk_npc()
         buff = lang(u8"現在は"s + adata(22, gdata_current_map) + u8"連勝中"s + _da() +
                 u8"5連勝,20連勝毎にボーナスを与え"s + _ru(),
             u8"Your winning streak has reached "s + adata(22, gdata_current_map) +
-                u8" matchs now. Keep the audience excited. You get nice bonus at every 5th and 20th wins in a row."s);
+                u8" matches now. Keep the audience excited. You get nice bonus at every 5th and 20th wins in a row."s);
         talk_npc();
         return;
     }
@@ -1050,7 +1048,7 @@ void talk_npc()
         ti = stat;
         item_copy(supply, ti);
         inv[ti].number = 1;
-        cbitmod(987, tc, 1);
+        cdata[tc].was_passed_item_by_you_just_now() = true;
         ci = ti;
         rc = tc;
         set_item_which_will_be_used();
@@ -1321,7 +1319,7 @@ void talk_npc()
                 {
                     map(cdata[rc].position.x, cdata[rc].position.y, 1) = 0;
                 }
-                if (cbit(963, rc) == 1)
+                if (cdata[rc].is_escorted() == 1)
                 {
                     evadd(15, cdata[rc].id);
                 }
@@ -1350,7 +1348,7 @@ void talk_npc()
             talk_npc();
             return;
         }
-        cbitmod(961, tc, 1);
+        cdata[tc].is_married() = true;
         listmax = 0;
         buff = lang(u8"はい…喜んで。"s, u8"With preasure."s);
         tc = tc * 1 + 0;
@@ -1381,7 +1379,7 @@ void talk_npc()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        cbitmod(962, tc, 1);
+        cdata[tc].has_made_gene() = true;
         if (gdata_wizard == 0)
         {
             gdata(98) = tc;
@@ -1493,7 +1491,7 @@ void talk_npc()
         {
             buff = lang(
                 u8"その程度の罪なら自分でなんとかしなさい。"s,
-                u8"You karma isn't that low. Come back after you have comitted more crimes!"s);
+                u8"You karma isn't that low. Come back after you have committed more crimes!"s);
             talk_npc();
             return;
         }
@@ -1572,9 +1570,9 @@ void talk_npc()
     }
     if (chatval == 48)
     {
-        if (cbit(965, tc) == 0)
+        if (cdata[tc].is_silent() == 0)
         {
-            cbitmod(965, tc, 1);
+            cdata[tc].is_silent() = true;
             buff = u8"("s
                 + lang((name(tc) + u8"はしゅんとなった…"s),
                        (name(tc) + u8" stops talking..."s))
@@ -1586,7 +1584,7 @@ void talk_npc()
                 + lang((name(tc) + u8"はあなたに抱きついた"s),
                        (name(tc) + u8" hugs you."s))
                 + u8")"s;
-            cbitmod(965, tc, 0);
+            cdata[tc].is_silent() = false;
         }
         talk_npc();
         return;
@@ -1611,7 +1609,7 @@ void talk_npc()
             snd(12);
             cdata[0].gold -= calchireadv(tc);
             cdata[tc].relationship = 10;
-            cbitmod(969, tc, 1);
+            cdata[tc].is_contracting() = true;
             cdata[tc].period_of_contract = gdata_hour + gdata_day * 24
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 168;
             ++cdata[tc].hire_count;
@@ -1688,7 +1686,7 @@ void talk_npc()
         talk_window();
         if (chatval == 1)
         {
-            txt(lang(u8"パエルの母親を売った…"s, u8"You sell Pael's mon..."s));
+            txt(lang(u8"パエルの母親を売った…"s, u8"You sell Pael's mom..."s));
             modify_karma(0, -20);
             snd(11);
             cdata[0].gold += 50000;

@@ -2,6 +2,7 @@
 #include "animation.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "config.hpp"
 #include "elona.hpp"
 #include "item.hpp"
 #include "random.hpp"
@@ -219,7 +220,7 @@ void proc_event()
         fixlv = 4;
         initlv = gdata_current_dungeon_level / 4;
         characreate(-1, c, -3, 0);
-        cbitmod(976, rc, 1);
+        cdata[rc].is_lord_of_dungeon() = true;
         cdata[rc].relationship = -3;
         cdata[rc].original_relationship = -3;
         tc = rc;
@@ -246,7 +247,7 @@ void proc_event()
             }
             else
             {
-                cbitmod(976, rc, 1);
+                cdata[rc].is_lord_of_dungeon() = true;
                 break;
             }
         }
@@ -437,8 +438,7 @@ void proc_event()
                 {
                     characreate(-1, 1, -3, 0);
                     cdata[rc].character_role = 2003;
-                    cdata[rc].shop_rank =
-                        clamp(cdata[0].fame / 100, 20, 100);
+                    cdata[rc].shop_rank = clamp(cdata[0].fame / 100, 20, 100);
                     break;
                 }
                 if (rnd(4) == 0)
@@ -460,7 +460,7 @@ void proc_event()
             tc = rc;
             cdata[tc].relationship = 0;
             cdata[tc].original_relationship = 0;
-            cbitmod(964, tc, 1);
+            cdata[tc].is_temporary() = true;
         }
         else
         {
@@ -469,7 +469,7 @@ void proc_event()
             for (int j = 0; j < 100; ++j)
             {
                 i = rnd(39) + 16;
-                if (cdata[i].state == 3 && cbit(969, i) == 0
+                if (cdata[i].state == 3 && cdata[i].is_contracting() == 0
                     && cdata[i].current_map != gdata_current_map
                     && cdata[i].relationship >= 0)
                 {
@@ -517,7 +517,7 @@ void proc_event()
             cyinit = cdata[0].position.y;
             place_character();
         }
-        cbitmod(982, tc, 1);
+        cdata[tc].visited_just_now() = true;
         i = 0;
         for (int cnt = 0; cnt < 17; ++cnt) // 17?
         {
@@ -692,13 +692,13 @@ void proc_event()
         msg_halt();
         gsel(7);
         pos(0, 0);
-        picload(fs::path(u8"./graphic/bg22.bmp"));
+        picload(filesystem::path(u8"./graphic/bg22.bmp"));
         gsel(4);
         pos(windoww / 2 - 1, windowh / 2 - 1);
         gmode(0, 640, 480);
         grotate(7, 0, 0, 0, windoww + 4, windowh + 4);
         gsel(7);
-        picload(fs::path(u8"./graphic/anime9.bmp"));
+        picload(filesystem::path(u8"./graphic/anime9.bmp"));
         gsel(0);
         dx = windoww / 2;
         dy = (windowh - inf_verh) / 2;
@@ -769,21 +769,11 @@ void proc_event()
             gmode(4, 96, 96, clamp(p(2) * 6, 0, 100));
             pos(dx, dy - clamp(p(2) * 2, 0, 40));
             grotate(
-                7,
-                0,
-                0,
-                0,
-                clamp(p(2) * 8, 0, 240),
-                clamp(p(2) * 5, 0, 96));
+                7, 0, 0, 0, clamp(p(2) * 8, 0, 240), clamp(p(2) * 5, 0, 96));
             gmode(4, 96, 96, p(3) * 10);
             pos(dx, dy - clamp(p(3) * 2, 0, 160) - 6);
             grotate(
-                7,
-                96,
-                0,
-                0,
-                clamp(p(3) * 10, 0, 96),
-                clamp(p(3) * 10, 0, 96));
+                7, 96, 0, 0, clamp(p(3) * 10, 0, 96), clamp(p(3) * 10, 0, 96));
             gmode(4, 192, 80, clamp(p(3) * 5, 0, 100));
             pos(dx, dy - 4);
             grotate(
@@ -797,7 +787,7 @@ void proc_event()
             pos(dx, dy - 48 - clamp(p(3) * 2, 0, 148));
             grotate(7, i / 3 % 2 * 192, 96, 0, 192, 96);
             redraw();
-            await(cfg_animewait + 50);
+            await(config::instance().animewait + 50);
         }
         gmode(2);
         update_entire_screen();
@@ -913,7 +903,7 @@ void proc_event()
                 int stat = characreate(-1, 0, x, y);
                 if (stat != 0)
                 {
-                    cbitmod(964, rc, 1);
+                    cdata[rc].is_temporary() = true;
                 }
             }
             if (i % 7 == 0)

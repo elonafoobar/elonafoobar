@@ -9,7 +9,9 @@
 
 #include "snail/application.hpp"
 
+#include "config.hpp"
 #include "elona.hpp"
+#include "util.hpp"
 #include "variables.hpp"
 
 
@@ -17,26 +19,24 @@ namespace
 {
 
 
-
-// UTF-8
-size_t byte_count(uint8_t c)
+struct font_cache_key
 {
-    if (c <= 0x7F)
-        return 1;
-    else if (c >= 0xc2 && c <= 0xdf)
-        return 2;
-    else if (c >= 0xe0 && c <= 0xef)
-        return 3;
-    else if (c >= 0xf0 && c <= 0xf7)
-        return 4;
-    else if (c >= 0xf8 && c <= 0xfb)
-        return 5;
-    else if (c >= 0xfc && c <= 0xfd)
-        return 6;
-    else
-        return 1;
-}
+    font_cache_key(int size, snail::font_t::style_t style)
+        : size(size)
+        , style(style)
+    {
+    }
 
+
+    int size;
+    snail::font_t::style_t style;
+
+
+    bool operator==(const font_cache_key& other) const
+    {
+        return size == other.size && style == other.style;
+    }
+};
 
 
 size_t read_binary(std::istream& in, size_t size, char* buffer)
@@ -68,6 +68,24 @@ std::pair<std::unique_ptr<char[]>, size_t> read_binary(
 
 
 } // namespace
+
+
+
+namespace std
+{
+
+
+template <>
+struct hash<font_cache_key>
+{
+    size_t operator()(const font_cache_key& key) const
+    {
+        return hash<int>()(key.size * 100 + int(key.style));
+    }
+};
+
+
+} // namespace std
 
 
 
@@ -150,10 +168,37 @@ struct MessageBox
 
     void update()
     {
-        buffer += snail::input::instance().get_text();
-        if (snail::input::instance().is_pressed(snail::key::enter))
+        auto& input = snail::input::instance();
+        buffer += input.get_text();
+        if (!input.is_ime_active())
         {
-            buffer += '\n';
+            if (input.is_pressed(snail::key::enter))
+            {
+                // New line.
+                buffer += '\n';
+            }
+            else if (input.is_pressed(snail::key::backspace) && !buffer.empty())
+            {
+                // Delete the last character.
+                size_t last_byte_count{};
+                for (size_t i = 0; i < buffer.size();)
+                {
+                    const auto byte = strutil::byte_count(buffer[i]);
+                    last_byte_count = byte;
+                    i += byte;
+                }
+                buffer.erase(buffer.size() - last_byte_count, last_byte_count);
+            }
+            else if (
+                input.is_pressed(snail::key::key_v)
+                && input.is_pressed(snail::key::ctrl))
+            {
+                // Paste.
+                std::unique_ptr<char, decltype(&::SDL_free)> text_ptr{
+                    ::SDL_GetClipboardText(), ::SDL_free};
+
+                buffer += strutil::replace_crlf(text_ptr.get());
+            }
         }
     }
 
@@ -484,30 +529,33 @@ void exec(const std::string&, int)
 
 namespace font_detail
 {
-std::unordered_map<int, snail::font_t> font_cache;
+std::unordered_map<font_cache_key, snail::font_t> font_cache;
 }
 
 
 
-void font(const std::string& name, int size, int style)
+void font(int size, snail::font_t::style_t style)
 {
-    (void)style;
-    auto i = font_detail::font_cache.find(size);
-    if (i != std::end(font_detail::font_cache))
+    auto& renderer = snail::application::instance().get_renderer();
+    if (renderer.font().size() == size && renderer.font().style() == style)
+        return;
+
+    const auto itr = font_detail::font_cache.find({size, style});
+    if (itr != std::end(font_detail::font_cache))
     {
-        snail::application::instance().get_renderer().set_font(i->second);
+        renderer.set_font(itr->second);
     }
     else
     {
         const auto inserted = font_detail::font_cache.emplace(
             std::piecewise_construct,
-            std::forward_as_tuple(size),
+            std::forward_as_tuple(size, style),
             std::forward_as_tuple(
-                fs::path(u8"font") / name,
+                filesystem::path(u8"font")
+                    / lang(config::instance().font1, config::instance().font2),
                 size,
-                snail::font_t::style_t::regular));
-        snail::application::instance().get_renderer().set_font(
-            inserted.first->second);
+                style));
+        renderer.set_font(inserted.first->second);
     }
 }
 
@@ -865,12 +913,23 @@ void gzoom(
     int src_width,
     int src_height,
     int dst_width,
-    int dst_height)
+    int dst_height,
+    bool blend)
 {
-    snail::application::instance().get_renderer().set_blend_mode(
-        snail::blend_mode_t::none);
-    snail::detail::enforce_sdl(
-        ::SDL_SetTextureAlphaMod(detail::tex_buffers[window_id].texture, 255));
+    if (blend)
+    {
+        detail::set_blend_mode();
+        snail::detail::enforce_sdl(::SDL_SetTextureAlphaMod(
+            detail::tex_buffers[window_id].texture,
+            detail::current_tex_buffer().color.a));
+    }
+    else
+    {
+        snail::application::instance().get_renderer().set_blend_mode(
+            snail::blend_mode_t::none);
+        snail::detail::enforce_sdl(::SDL_SetTextureAlphaMod(
+            detail::tex_buffers[window_id].texture, 255));
+    }
 
     if (window_id == detail::current_buffer)
     {
@@ -1020,10 +1079,18 @@ void memcpy(
 
 void mes(const std::string& text)
 {
-    if (text.size() >= 25 /* TODO */)
+    constexpr size_t tab_width = 4;
+
+    auto copy = text;
+    for (auto i = copy.find('\t'); i != std::string::npos; i = copy.find('\t'))
+    {
+        copy.replace(i, 1, tab_width, ' ');
+    }
+
+    if (copy.size() >= 25 /* TODO */)
     {
         snail::application::instance().get_renderer().render_multiline_text(
-            text,
+            copy,
             detail::current_tex_buffer().x,
             detail::current_tex_buffer().y,
             detail::current_tex_buffer().color);
@@ -1031,7 +1098,7 @@ void mes(const std::string& text)
     else
     {
         snail::application::instance().get_renderer().render_text(
-            text,
+            copy,
             detail::current_tex_buffer().x,
             detail::current_tex_buffer().y,
             detail::current_tex_buffer().color);
@@ -1047,17 +1114,8 @@ void mes(int n)
 
 
 
-void mesbox(
-    std::string& buffer,
-    int width,
-    int height,
-    int style,
-    int max_input_size)
+void mesbox(std::string& buffer)
 {
-    (void)width;
-    (void)height;
-    (void)style;
-    (void)max_input_size;
     mesbox_detail::message_boxes.emplace_back(
         std::make_unique<mesbox_detail::MessageBox>(buffer));
 }
@@ -1282,17 +1340,14 @@ void picload(const fs::path& filename, int mode)
 
     if (filename.generic_string().find(u8"interface.bmp") != std::string::npos)
     {
-        snail::basic_image ex{filename.parent_path()
-                              / fs::path(u8"interface_ex.png")};
+        snail::basic_image ex{filename.parent_path() / u8"interface_ex.png"};
         snail::application::instance().get_renderer().render_image(ex, 0, 656);
-        snail::basic_image ex2{filename.parent_path()
-                               / fs::path(u8"interface_ex2.png")};
+        snail::basic_image ex2{filename.parent_path() / u8"interface_ex2.png"};
         snail::application::instance().get_renderer().render_image(
             ex2, 144, 656);
         snail::application::instance().get_renderer().render_image(
             ex2, 144, 704);
-        snail::basic_image ex3{filename.parent_path()
-                               / fs::path(u8"interface_ex3.png")};
+        snail::basic_image ex3{filename.parent_path() / u8"interface_ex3.png"};
         snail::application::instance().get_renderer().render_image(
             ex3, 144, 752);
     }
@@ -1376,7 +1431,7 @@ size_t strlen_u(const std::string& str)
     int ret = 0;
     for (size_t i = 0; i < str.size();)
     {
-        const auto byte = byte_count(static_cast<uint8_t>(str[i]));
+        const auto byte = strutil::byte_count(str[i]);
         ret += byte == 1 ? 1 : 2;
         i += byte;
     }
@@ -2050,7 +2105,7 @@ int talk_conv_jp(std::string& text, int max_line_length)
         size_t line_length = 0;
         while (line_length <= len)
         {
-            line_length += byte_count(static_cast<uint8_t>(rest[line_length]));
+            line_length += strutil::byte_count(rest[line_length]);
             if (int(line_length) > max_line_length)
             {
                 // m = strmid(rest, line_length, 2);

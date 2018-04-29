@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 
 
 namespace elona
@@ -30,6 +32,13 @@ inline bool operator==(const position_t& lhs, const position_t& rhs)
 inline bool operator!=(const position_t& lhs, const position_t& rhs)
 {
     return !(lhs == rhs);
+}
+
+
+inline std::ostream& operator<<(std::ostream& out, const position_t& pos)
+{
+    out << '(' << pos.x << ", " << pos.y << ')';
+    return out;
 }
 
 

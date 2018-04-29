@@ -76,7 +76,8 @@ void apply_buff(int cc, int id, int power)
 {
     const auto self = the_buff_db[id]->self;
     const auto func = the_buff_db[id]->on_refresh;
-    cat::global.call_with_self<nullptr_t>(self, func, cc, power, 1 /* TODO */);
+    cat::global.call_with_self<std::nullptr_t>(
+        self, func, cc, power, 1 /* TODO */);
 }
 
 
@@ -473,8 +474,8 @@ int calc_accuracy(bool consider_distance)
     {
         if (cc == 0)
         {
-            accuracy = accuracy * 100
-                / clamp((150 - sdata(301, cc) / 2), 115, 150);
+            accuracy =
+                accuracy * 100 / clamp((150 - sdata(301, cc) / 2), 115, 150);
             if (attackskill != 106 && attackrange == 0
                 && inv[cw].weight >= 4000)
             {
@@ -484,8 +485,8 @@ int calc_accuracy(bool consider_distance)
         }
         if (cc == gdata_mount)
         {
-            accuracy = accuracy * 100
-                / clamp((150 - sdata(10, cc) / 2), 115, 150);
+            accuracy =
+                accuracy * 100 / clamp((150 - sdata(10, cc) / 2), 115, 150);
             if (attackskill != 106 && attackrange == 0
                 && inv[cw].weight >= 4000)
             {
@@ -732,8 +733,8 @@ int calcattackdmg(int prm_894)
         }
         else
         {
-            dmgmulti = dmgmulti
-                * clamp((inv[cw].weight / 200 + 100), 100, 150) / 100;
+            dmgmulti =
+                dmgmulti * clamp((inv[cw].weight / 200 + 100), 100, 150) / 100;
         }
     }
     damage = damage * dmgmulti / 100;
@@ -1277,7 +1278,7 @@ int calcslavevalue(int pet)
     {
         value = 50'000;
     }
-    if (cbit(23, pet) || cbit(27, pet))
+    if (cdata[pet].splits() || cdata[pet].splits2())
     {
         value = 10;
     }

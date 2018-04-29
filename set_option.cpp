@@ -3,6 +3,357 @@
 #include "macro.hpp"
 #include "variables.hpp"
 
+using namespace elona;
+
+
+namespace
+{
+
+
+class config_menu_item_base
+{
+public:
+    std::string name;
+
+    config_menu_item_base(const std::string& name)
+        : name(name)
+    {
+    }
+
+    virtual ~config_menu_item_base() noexcept = default;
+};
+
+
+class config_menu_item_yesno : public config_menu_item_base
+{
+public:
+    int& variable;
+    std::string yes;
+    std::string no;
+
+    config_menu_item_yesno(
+        const std::string& name,
+        int& variable,
+        const std::string& yes,
+        const std::string& no)
+        : config_menu_item_base(name)
+        , variable(variable)
+        , yes(yes)
+        , no(no)
+    {
+    }
+
+    virtual ~config_menu_item_yesno() noexcept = default;
+};
+
+
+class config_menu_item_info : public config_menu_item_base
+{
+public:
+    std::string info;
+
+    config_menu_item_info(const std::string& name, const std::string& info)
+        : config_menu_item_base(name)
+        , info(info)
+    {
+    }
+
+    virtual ~config_menu_item_info() noexcept = default;
+};
+
+
+class config_menu_item_integer : public config_menu_item_base
+{
+public:
+    int& variable;
+    std::string text;
+
+    config_menu_item_integer(
+        const std::string& name,
+        int& variable,
+        const std::string& text)
+        : config_menu_item_base(name)
+        , variable(variable)
+        , text(text)
+    {
+    }
+
+
+    std::string get_text()
+    {
+        auto ret{text};
+        ret.replace(
+            ret.find(marker), std::strlen(marker), std::to_string(variable));
+        return ret;
+    }
+
+    virtual ~config_menu_item_integer() noexcept = default;
+
+
+private:
+    static constexpr const char* marker = u8"{}";
+};
+
+
+class config_menu_item_choice : public config_menu_item_base
+{
+public:
+    int& variable;
+    std::vector<std::string> texts;
+
+    config_menu_item_choice(
+        const std::string& name,
+        int& variable,
+        const std::vector<std::string>& texts)
+        : config_menu_item_base(name)
+        , variable(variable)
+        , texts(texts)
+    {
+    }
+
+
+    std::string get_text()
+    {
+        return texts[variable];
+    }
+
+    virtual ~config_menu_item_choice() noexcept = default;
+};
+
+
+class config_menu
+{
+public:
+    std::string title;
+    std::vector<std::unique_ptr<config_menu_item_base>> items;
+    int width;
+    int height;
+
+    config_menu(const std::string& title, int width, int height)
+        : title(title)
+        , width(width)
+        , height(height)
+    {
+    }
+};
+
+
+
+std::vector<config_menu> create_config_menu()
+{
+    std::vector<config_menu> ret;
+
+#define ELONA_CONFIG_ITEM(name) \
+    ret.back().items.emplace_back(std::make_unique<config_menu_item_base>(name))
+
+#define ELONA_CONFIG_ITEM_YESNO(name, var, yes, no) \
+    ret.back().items.emplace_back( \
+        std::make_unique<config_menu_item_yesno>(name, var, yes, no))
+
+#define ELONA_CONFIG_ITEM_INFO(name, info) \
+    ret.back().items.emplace_back( \
+        std::make_unique<config_menu_item_info>(name, info))
+
+#define ELONA_CONFIG_ITEM_INTEGER(name, var, text) \
+    ret.back().items.emplace_back( \
+        std::make_unique<config_menu_item_integer>(name, var, text))
+
+#define ELONA_CONFIG_ITEM_CHOICE(name, var, ...) \
+    ret.back().items.emplace_back(std::make_unique<config_menu_item_choice>( \
+        name, var, std::vector<std::string>{__VA_ARGS__}))
+
+    ret.emplace_back(lang(u8"オプション", u8"Option"), 370, 285);
+    ELONA_CONFIG_ITEM(lang(u8"ゲームの設定", u8"Game Setting"));
+    ELONA_CONFIG_ITEM(lang(u8"画面と音の設定", u8"Screen & Sound"));
+    ELONA_CONFIG_ITEM(lang(u8"ネット機能の設定", u8"Network Setting"));
+    ELONA_CONFIG_ITEM(lang(u8"詳細な設定", u8"Detailed Setting"));
+    ELONA_CONFIG_ITEM(lang(u8"ゲームパッド", u8"Game Pad"));
+    ELONA_CONFIG_ITEM(lang(u8"メッセージとログ", u8"Message & Log"));
+    ELONA_CONFIG_ITEM(lang(u8"言語(Language)", u8"Language"));
+    ELONA_CONFIG_ITEM(lang(u8"拡張設定(Foobar)", u8"Ex setting(Foobar)"));
+
+    ret.emplace_back(lang(u8"ゲームの設定", u8"Game Setting"), 440, 340);
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"ノルンの冒険ガイド", u8"Extra Help"),
+        config::instance().extrahelp,
+        lang(u8"あり", u8"Show"),
+        lang(u8"なし", u8"Don't show"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"非好戦的NPCを無視", u8"Neutral Npcs"),
+        config::instance().ignoredislike,
+        lang(u8"する", u8"Ignore"),
+        lang(u8"しない", u8"Attack"));
+    ELONA_CONFIG_ITEM_CHOICE(
+        lang(u8"zキーの割当て", u8"Assign z key"),
+        config::instance().zkey,
+        lang(u8"ｸｨｯｸﾒﾆｭｰ", u8"Quick menu"),
+        lang(u8"道具を振る", u8"Zap"),
+        lang(u8"割当なし", u8"Don't assign"), );
+    ELONA_CONFIG_ITEM_CHOICE(
+        lang(u8"xキーの割当て", u8"Assign x key"),
+        config::instance().xkey,
+        lang(u8"ｸｲｯｸｲﾝﾍﾞﾝﾄﾘ", u8"Quick Inv"),
+        lang(u8"道具を調べる", u8"Identify"),
+        lang(u8"割当なし", u8"Don't assign"), );
+    ELONA_CONFIG_ITEM(lang(u8"走り始める歩数", u8"Start Running After"));
+    ELONA_CONFIG_ITEM_INTEGER(
+        lang(u8"歩きの速さ", u8"Walk Speed"),
+        config::instance().walkwait,
+        u8"{} wait");
+    ELONA_CONFIG_ITEM_INTEGER(
+        lang(u8"攻撃の間隔", u8"Attack Interval"),
+        config::instance().attackwait,
+        u8"{} wait");
+
+    ret.emplace_back(lang(u8"画面と音の設定", u8"Screen & Sound"), 440, 370);
+    ELONA_CONFIG_ITEM(lang(u8"サウンドの再生*", u8"Sound*"));
+    ELONA_CONFIG_ITEM(lang(u8"midiの再生*", u8"Music*"));
+    ELONA_CONFIG_ITEM(lang(u8"画面モード*", u8"Screen Mode*"));
+    ELONA_CONFIG_ITEM(lang(u8"画面の大きさ*", u8"Screen Resolution*"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"スクロール", u8"Smooth Scroll"),
+        config::instance().scroll,
+        lang(u8"する", u8"Yes"),
+        lang(u8"しない", u8"No"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"主人公中心に描写", u8"Always Center"),
+        config::instance().alwayscenter,
+        lang(u8"する", u8"Yes"),
+        lang(u8"しない", u8"No"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"心臓の音", u8"Heartbeat Sound"),
+        config::instance().heart,
+        lang(u8"再生する", u8"Play"),
+        lang(u8"再生しない", u8"Don't play"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"攻撃時アニメ", u8"Attack Animation"),
+        config::instance().attackanime,
+        lang(u8"アニメあり", u8"Yes"),
+        lang(u8"アニメなし", u8"No"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"天候エフェクト", u8"Weather Effect"),
+        config::instance().env,
+        lang(u8"アニメあり", u8"Always"),
+        lang(u8"アニメなし", u8"No animation"));
+    ELONA_CONFIG_ITEM_CHOICE(
+        lang(u8"光源の描写", u8"Lighting"),
+        config::instance().shadow,
+        lang(u8"高画質", u8"High"),
+        lang(u8"低画質", u8"Low"), );
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"アイテムの影描写", u8"object Shadow"),
+        config::instance().objectshadow,
+        lang(u8"あり（低速）", u8"Yes(Fast)"),
+        lang(u8"なし（高速）", u8"No(Slow)"));
+
+    ret.emplace_back(lang(u8"ネット機能の設定", u8"Network Setting"), 440, 300);
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"ネットの使用", u8"Use Network"),
+        config::instance().net,
+        lang(u8"する", u8"Yes"),
+        lang(u8"しない", u8"No"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"定期的に接続", u8"Constantly Connect"),
+        config::instance().netwish,
+        lang(u8"する", u8"Yes"),
+        lang(u8"しない", u8"No"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"チャットをフィルタ", u8"Filter Chat"),
+        config::instance().netchat,
+        lang(u8"する", u8"Yes"),
+        lang(u8"しない", u8"No"));
+
+    ret.emplace_back(lang(u8"詳細な設定", u8"Detailed Setting"), 440, 300);
+    ELONA_CONFIG_ITEM_INTEGER(
+        lang(u8"走りの速さ", u8"Run Speed"),
+        config::instance().runwait,
+        u8"{} wait");
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"numlockを自動制御", u8"Auto Numlock"),
+        config::instance().autonumlock,
+        lang(u8"する", u8"Yes"),
+        lang(u8"しない", u8"No"));
+    ELONA_CONFIG_ITEM_INFO(
+        lang(u8"タイトルの水の波紋", u8"Title Water Effect"),
+        lang(u8"オフ(未実装)", u8"No(unsupported)"));
+    ELONA_CONFIG_ITEM_INTEGER(
+        lang(u8"画面の更新頻度", u8"Screen Refresh"),
+        config::instance().scrsync,
+        u8"{} wait");
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"走り時スクロール", u8"Scroll When Run"),
+        config::instance().runscroll,
+        lang(u8"する", u8"Yes"),
+        lang(u8"しない", u8"No"));
+    ELONA_CONFIG_ITEM_CHOICE(
+        lang(u8"オートターンの挙動", u8"Auto Turn Speed"),
+        config::instance().autoturn,
+        lang(u8"普通", u8"Normal"),
+        lang(u8"速め", u8"High"),
+        lang(u8"省略", u8"Highest"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"イベントの短縮", u8"Skip Random Events"),
+        config::instance().skiprandevents,
+        lang(u8"する", u8"Yes"),
+        lang(u8"しない", u8"No"));
+
+    ret.emplace_back(lang(u8"ゲームパッド", u8"Game Pad"), 440, 430);
+    ELONA_CONFIG_ITEM(lang(u8"ゲームパッド", u8"Game Pad"));
+    ELONA_CONFIG_ITEM(lang(u8"決定キー", u8"Enter/Ok"));
+    ELONA_CONFIG_ITEM(lang(u8"キャンセルキー", u8"Cancel"));
+    ELONA_CONFIG_ITEM(lang(u8"所持品", u8"Inventory"));
+    ELONA_CONFIG_ITEM(lang(u8"行動", u8"Action"));
+    ELONA_CONFIG_ITEM(lang(u8"斜め移動(L)", u8"diagonal Move/(L)"));
+    ELONA_CONFIG_ITEM(lang(u8"拾う(R)", u8"Pick/(R)"));
+    ELONA_CONFIG_ITEM(lang(u8"射撃(R)", u8"Shoot/(R)"));
+    ELONA_CONFIG_ITEM(lang(u8"目標(L)", u8"Target/(L)"));
+    ELONA_CONFIG_ITEM(lang(u8"ポーズメニュー", u8"Pause/Menu"));
+    ELONA_CONFIG_ITEM(lang(u8"ヘルプ", u8"Help"));
+    ELONA_CONFIG_ITEM(lang(u8"キャラ情報", u8"Chara-sheet"));
+    ELONA_CONFIG_ITEM(lang(u8"装填", u8"Reload"));
+
+    ret.emplace_back(lang(u8"メッセージとログ", u8"Message&Log"), 440, 300);
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"ﾒｯｾｰｼﾞに分表示追加", u8"Add time info"),
+        config::instance().msgaddtime,
+        lang(u8"する", u8"Yes"),
+        lang(u8"しない", u8"No"));
+    ELONA_CONFIG_ITEM(lang(u8"過去のﾒｯｾｰｼﾞの透過", u8"Transparency"));
+
+    ret.emplace_back(lang(u8"言語(Language)", u8"Language"), 440, 300);
+    ELONA_CONFIG_ITEM_CHOICE(
+        lang(u8"言語*", u8"Language*"),
+        config::instance().language,
+        u8"Japanese",
+        u8"English");
+
+    ret.emplace_back(
+        lang(u8"拡張設定(Foobar)", u8"Ex setting(Foobar)"), 440, 300);
+    ELONA_CONFIG_ITEM_CHOICE(
+        lang(u8"ペットのHPバー", u8"Pets' HP bar"),
+        config::instance().hp_bar,
+        lang(u8"表示しない", u8"Don't show"),
+        lang(u8"左側に表示", u8"Show left side"),
+        lang(u8"右側に表示", u8"Show right side"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"紐のアイコン表示", u8"Leash icon"),
+        config::instance().leash_icon,
+        lang(u8"する", u8"Show"),
+        lang(u8"しない", u8"Don't show"));
+
+#undef ELONA_CONFIG_ITEM
+#undef ELONA_CONFIG_ITEM_YESNO
+#undef ELONA_CONFIG_ITEM_INFO
+#undef ELONA_CONFIG_ITEM_INTEGER
+#undef ELONA_CONFIG_ITEM_CHOICE
+
+    return ret;
+}
+
+
+
+} // namespace
+
 
 
 namespace elona
@@ -17,12 +368,14 @@ int submenu = 0;
 
 void set_option()
 {
-    int cfg_sound2 = 0;
-    int cfg_music2 = 0;
-    int cfg_fullscreen2 = 0;
-    int windoww2 = 0;
-    int windowh2 = 0;
-    int sel = 0;
+    int cfg_sound2 = config::instance().sound;
+    int cfg_music2 = config::instance().music;
+    int cfg_fullscreen2 = config::instance().fullscreen;
+    int windoww2 = windoww;
+    int windowh2 = windowh;
+
+    const auto config_menu_definitions = create_config_menu();
+
     listmax = 0;
     page = 0;
     pagesize = 18;
@@ -31,26 +384,15 @@ void set_option()
     cs_bk = -1;
     page_bk = 0;
     cs_bk2 = 0;
-    cfg_sound2 = cfg_sound;
-    cfg_music2 = cfg_music;
-    cfg_fullscreen2 = cfg_fullscreen;
-    windoww2 = windoww;
-    windowh2 = windowh;
-    if (mode == 10)
+
+    gsel(mode == 10 ? 2 : 4);
+    for (int i = 0; i < 8; ++i)
     {
-        sel = 2;
-    }
-    else
-    {
-        sel = 4;
-    }
-    gsel(sel);
-    for (int cnt = 0; cnt < 8; ++cnt)
-    {
-        pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(fs::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+        pos(i % 4 * 180, i / 4 * 300);
+        picload(filesystem::path(u8"./graphic/g"s + (i + 1) + u8".bmp"), 1);
     }
     gsel(0);
+
     if (mode == 0)
     {
         screenupdate = -1;
@@ -61,7 +403,7 @@ void set_option()
         gsel(4);
         gmode(0);
         pos(0, 0);
-        picload(fs::path(u8"./graphic/title.bmp"), 1);
+        picload(filesystem::path(u8"./graphic/title.bmp"), 1);
         gzoom(4, 0, 0, 800, 600, windoww, windowh);
         gsel(0);
         gmode(0);
@@ -69,238 +411,19 @@ void set_option()
         gcopy(4, 0, 0, windoww, windowh);
         gmode(2);
     }
-    if (submenu == 0)
+
+    const auto& menu_def = config_menu_definitions[submenu];
+    const auto menu_title = menu_def.title;
+    const auto width = menu_def.width;
+    const auto height = menu_def.height;
+
+    for (const auto& menu_item : menu_def.items)
     {
-        if (jp)
-        {
-            q = u8"オプション"s;
-            s(0) = u8"ゲームの設定"s;
-            s(1) = u8"画面と音の設定"s;
-            s(2) = u8"ネット機能の設定"s;
-            s(3) = u8"詳細な設定"s;
-            s(4) = u8"ゲームパッド"s;
-            s(5) = u8"メッセージとログ"s;
-            s(6) = u8"言語(Language)"s;
-            s(7) = "";
-        }
-        if (en)
-        {
-            q = u8"Option"s;
-            s(0) = u8"Game Setting"s;
-            s(1) = u8"Screen & Sound"s;
-            s(2) = u8"Network Setting"s;
-            s(3) = u8"Detailed Setting"s;
-            s(4) = u8"Game Pad"s;
-            s(5) = u8"Message & Log"s;
-            s(6) = u8"Language"s;
-            s(7) = "";
-        }
-        dx = 370;
-        dy = 270;
-    }
-    if (submenu == 1)
-    {
-        if (jp)
-        {
-            q = u8"ゲームの設定"s;
-            s(0) = u8"ノルンの冒険ガイド"s;
-            s(1) = u8"非好戦的NPCを無視"s;
-            s(2) = u8"zキーの割当て"s;
-            s(3) = u8"xキーの割当て"s;
-            s(4) = u8"走り始める歩数"s;
-            s(5) = u8"歩きの速さ"s;
-            s(6) = u8"攻撃の間隔"s;
-            s(7) = "";
-        }
-        if (en)
-        {
-            q = u8"Game Setting"s;
-            s(0) = u8"Extra Help"s;
-            s(1) = u8"Neutral Npcs"s;
-            s(2) = u8"Assign z key"s;
-            s(3) = u8"Assign x key"s;
-            s(4) = u8"Start Running After"s;
-            s(5) = u8"Walk Speed"s;
-            s(6) = u8"Attack Interval"s;
-            s(7) = "";
-        }
-        dx = 440;
-        dy = 340;
-    }
-    if (submenu == 2)
-    {
-        if (jp)
-        {
-            q = u8"画面と音の設定"s;
-            s(0) = u8"サウンドの再生*"s;
-            s(1) = u8"midiの再生*"s;
-            s(2) = u8"画面モード*"s;
-            s(3) = u8"画面の大きさ*"s;
-            s(4) = u8"スクロール"s;
-            s(5) = u8"主人公中心に描写"s;
-            s(6) = u8"心臓の音"s;
-            s(7) = u8"攻撃時アニメ"s;
-            s(8) = u8"天候エフェクト"s;
-            s(9) = u8"光源の描写"s;
-            s(10) = u8"アイテムの影描写"s;
-            s(11) = "";
-        }
-        if (en)
-        {
-            q = u8"Screen & Sound"s;
-            s(0) = u8"Sound*"s;
-            s(1) = u8"Music*"s;
-            s(2) = u8"Screen Mode*"s;
-            s(3) = u8"Screen Resolution*"s;
-            s(4) = u8"Smooth Scroll"s;
-            s(5) = u8"Always Center"s;
-            s(6) = u8"Heartbeat Sound"s;
-            s(7) = u8"Attack Animation"s;
-            s(8) = u8"Weather Effect"s;
-            s(9) = u8"Lighting"s;
-            s(10) = u8"object Shadow"s;
-            s(11) = "";
-        }
-        dx = 440;
-        dy = 370;
-    }
-    if (submenu == 3)
-    {
-        if (jp)
-        {
-            q = u8"ネット機能の設定"s;
-            s(0) = u8"ネットの使用"s;
-            s(1) = u8"定期的に接続"s;
-            s(2) = u8"チャットをフィルタ"s;
-            s(3) = "";
-        }
-        if (en)
-        {
-            q = u8"Network Setting"s;
-            s(0) = u8"Use Network"s;
-            s(1) = u8"Constantly Connect"s;
-            s(2) = u8"Filter Chat"s;
-            s(3) = "";
-        }
-        dx = 440;
-        dy = 300;
-    }
-    if (submenu == 4)
-    {
-        if (jp)
-        {
-            q = u8"詳細な設定"s;
-            s(0) = u8"走りの速さ"s;
-            s(1) = u8"numlockを自動制御"s;
-            s(2) = u8"タイトルの水の波紋"s;
-            s(3) = u8"画面の更新頻度"s;
-            s(4) = u8"走り時スクロール"s;
-            s(5) = u8"オートターンの挙動"s;
-            s(6) = u8"イベントの短縮"s;
-            s(7) = "";
-        }
-        if (en)
-        {
-            q = u8"Detailed Setting"s;
-            s(0) = u8"Run Speed"s;
-            s(1) = u8"Auto Numlock"s;
-            s(2) = u8"Title Water Effect"s;
-            s(3) = u8"Screen Refresh"s;
-            s(4) = u8"Scroll When Run"s;
-            s(5) = u8"Auto Turn Speed"s;
-            s(6) = u8"Skip Random Events"s;
-            s(7) = "";
-        }
-        dx = 440;
-        dy = 300;
-    }
-    if (submenu == 5)
-    {
-        if (jp)
-        {
-            q = u8"ゲームパッド"s;
-            s(0) = u8"ゲームパッド"s;
-            s(1) = u8"決定キー"s;
-            s(2) = u8"キャンセルキー"s;
-            s(3) = u8"所持品"s;
-            s(4) = u8"行動"s;
-            s(5) = u8"斜め移動(L)"s;
-            s(6) = u8"拾う(R)"s;
-            s(7) = u8"射撃(R)"s;
-            s(8) = u8"目標(L)"s;
-            s(9) = u8"ポーズメニュー"s;
-            s(10) = u8"ヘルプ"s;
-            s(11) = u8"キャラ情報"s;
-            s(12) = u8"装填"s;
-            s(13) = "";
-        }
-        if (en)
-        {
-            q = u8"Game Pad"s;
-            s(0) = u8"Game Pad"s;
-            s(1) = u8"Enter/Ok"s;
-            s(2) = u8"Cancel"s;
-            s(3) = u8"Inventory"s;
-            s(4) = u8"Action"s;
-            s(5) = u8"diagonal Move/(L)"s;
-            s(6) = u8"Pick/(R)"s;
-            s(7) = u8"Shoot/(R)"s;
-            s(8) = u8"Target/(L)"s;
-            s(9) = u8"Peuse/Menu"s;
-            s(10) = u8"Help"s;
-            s(11) = u8"Chara-sheet"s;
-            s(12) = u8"Reload"s;
-            s(13) = "";
-        }
-        dx = 440;
-        dy = 430;
-    }
-    if (submenu == 6)
-    {
-        if (jp)
-        {
-            q = u8"メッセージとログ"s;
-            s(0) = u8"ﾒｯｾｰｼﾞに分表示追加"s;
-            s(1) = u8"過去のﾒｯｾｰｼﾞの透過"s;
-            s(2) = "";
-        }
-        if (en)
-        {
-            q = u8"Message&Log"s;
-            s(0) = u8"Add time info"s;
-            s(1) = u8"Transparency"s;
-            s(2) = "";
-        }
-        dx = 440;
-        dy = 300;
-    }
-    if (submenu == 7)
-    {
-        if (jp)
-        {
-            q = u8"言語(Language)"s;
-            s(0) = u8"言語*"s;
-            s(1) = "";
-        }
-        if (en)
-        {
-            q = u8"Language"s;
-            s(0) = u8"Language*"s;
-            s(1) = "";
-        }
-        dx = 440;
-        dy = 300;
-    }
-    for (int cnt = 0; cnt < 20; ++cnt)
-    {
-        if (s(cnt) == ""s)
-        {
-            break;
-        }
-        list(0, listmax) = cnt;
-        listn(0, listmax) = s(cnt);
+        list(0, listmax) = listmax;
+        listn(0, listmax) = menu_item->name;
         ++listmax;
     }
+
     windowshadow = 1;
 
     bool reset_page = true;
@@ -308,28 +431,31 @@ void set_option()
     {
         if (reset_page)
         {
-            if (cfg_zkey == 0)
+            if (config::instance().zkey == 0)
             {
                 key_quick = u8"z"s;
                 key_zap = u8"Z"s;
             }
-            else if (cfg_zkey == 1)
+            else
             {
                 key_zap = u8"z"s;
                 key_quick = u8"Z"s;
             }
-            if (cfg_xkey == 0)
+
+            if (config::instance().xkey == 0)
             {
                 key_quickinv = u8"x"s;
                 key_inventory = u8"X"s;
             }
-            else if (cfg_xkey == 1)
+            else
             {
                 key_inventory = u8"x"s;
                 key_quickinv = u8"X"s;
             }
+
             cs_bk = -1;
             pagemax = (listmax - 1) / pagesize;
+
             if (page < 0)
             {
                 page = pagemax;
@@ -340,18 +466,24 @@ void set_option()
             }
             reset_page = false;
         }
-        s(0) = q;
+        s(0) = menu_title;
         s(1) = strhint3;
         pagesize = 0;
         if (mode == 1)
         {
             display_window(
-                (windoww - dx) / 2 + inf_screenx, winposy(dy, 1), dx, dy);
+                (windoww - width) / 2 + inf_screenx,
+                winposy(height, 1),
+                width,
+                height);
         }
         else
         {
             display_window(
-                (windoww - dx) / 2 + inf_screenx, winposy(dy) - 12, dx, dy);
+                (windoww - width) / 2 + inf_screenx,
+                winposy(height) - 12,
+                width,
+                height);
         }
         pagesize = listmax;
         display_topic(lang(u8"項目"s, u8"Menu"s), wx + 34, wy + 36);
@@ -409,7 +541,8 @@ void set_option()
                 list(1, cnt) = p(cnt);
             }
         }
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
+        cs_listbk();
         for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
         {
             p = pagesize * page + cnt;
@@ -429,7 +562,7 @@ void set_option()
             }
             if (submenu == 3)
             {
-                if (cfg_net == 0)
+                if (config::instance().net == 0)
                 {
                     if (cnt >= 1)
                     {
@@ -446,403 +579,81 @@ void set_option()
                 gcopy(3, 336, 336, 24, 24);
             }
             pos(wx + 250, wy + 66 + cnt * 19);
-            if (submenu == 1)
+            if (auto ptr = dynamic_cast<config_menu_item_yesno*>(
+                    config_menu_definitions[submenu].items[cnt].get()))
             {
-                if (cnt == 0)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"なし"s;
-                        s(1) = u8"あり"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Don't show"s;
-                        s(1) = u8"Show"s;
-                    }
-                    mes(s(cfg_extrahelp));
-                }
-                if (cnt == 1)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Attack"s;
-                        s(1) = u8"Ignore"s;
-                    }
-                    mes(s(cfg_ignoredislike));
-                }
-                if (cnt == 2)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"ｸｨｯｸﾒﾆｭｰ"s;
-                        s(1) = u8"道具を振る"s;
-                        s(2) = u8"割当なし"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Quick menu"s;
-                        s(1) = u8"Zap"s;
-                        s(2) = u8"Don't assign"s;
-                    }
-                    mes(s(cfg_zkey));
-                }
-                if (cnt == 3)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"ｸｲｯｸｲﾝﾍﾞﾝﾄﾘ"s;
-                        s(1) = u8"道具を調べる"s;
-                        s(2) = u8"割当なし"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Quick Inv"s;
-                        s(1) = u8"Identify"s;
-                        s(2) = u8"Don't assign"s;
-                    }
-                    mes(s(cfg_xkey));
-                }
+                mes(ptr->variable ? ptr->yes : ptr->no);
+            }
+            else if (
+                auto ptr = dynamic_cast<config_menu_item_info*>(
+                    config_menu_definitions[submenu].items[cnt].get()))
+            {
+                mes(ptr->info);
+            }
+            else if (
+                auto ptr = dynamic_cast<config_menu_item_integer*>(
+                    config_menu_definitions[submenu].items[cnt].get()))
+            {
+                mes(ptr->get_text());
+            }
+            else if (
+                auto ptr = dynamic_cast<config_menu_item_choice*>(
+                    config_menu_definitions[submenu].items[cnt].get()))
+            {
+                mes(ptr->get_text());
+            }
+            else if (submenu == 1)
+            {
                 if (cnt == 4)
                 {
-                    if (cfg_startrun >= 20)
+                    if (config::instance().startrun >= 20)
                     {
-                        if (jp)
-                        {
-                            mes(u8"走らない"s);
-                        }
-                        else
-                        {
-                            mes(u8"Dont't run"s);
-                        }
-                    }
-                    else if (jp)
-                    {
-                        mes(""s + (cfg_startrun + 1) + u8"歩目から"s);
+                        mes(lang(u8"走らない"s, u8"Don't run"s));
                     }
                     else
                     {
-                        mes(u8"After "s + (cfg_startrun + 1) + u8" steps"s);
+                        mes(lang(
+                            ""s + (config::instance().startrun + 1)
+                                + u8"歩目から"s,
+                            u8"After "s + (config::instance().startrun + 1)
+                                + u8" steps"s));
                     }
                 }
-                if (cnt == 5)
-                {
-                    mes(""s + cfg_walkwait + u8" wait"s);
-                }
-                if (cnt == 6)
-                {
-                    mes(""s + cfg_attackwait + u8" wait"s);
-                }
             }
-            if (submenu == 2)
+            else if (submenu == 2)
             {
                 if (cnt == 0)
                 {
-                    if (jp)
-                    {
-                        s(0) = u8"なし"s;
-                        s(1) = u8"direct sound"s;
-                        s(2) = u8"MCI"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"None"s;
-                        s(1) = u8"Direct sound"s;
-                        s(2) = u8"MCI"s;
-                    }
+                    s(0) = lang(u8"なし"s, u8"None"s);
+                    s(1) = lang(u8"direct sound"s, u8"Direct sound"s);
+                    s(2) = lang(u8"MCI"s, u8"MCI"s);
                     mes(s(cfg_sound2));
                 }
                 if (cnt == 1)
                 {
-                    if (jp)
-                    {
-                        s(0) = u8"なし"s;
-                        s(1) = u8"direct music"s;
-                        s(2) = u8"MCI"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"None"s;
-                        s(1) = u8"Direct music"s;
-                        s(2) = u8"MCI"s;
-                    }
+                    s(0) = lang(u8"なし"s, u8"None"s);
+                    s(1) = lang(u8"direct music"s, u8"Direct music"s);
+                    s(2) = lang(u8"MCI"s, u8"MCI"s);
                     mes(s(cfg_music2));
                 }
                 if (cnt == 2)
                 {
-                    if (jp)
-                    {
-                        s(0) = u8"ウィンドウ"s;
-                        s(1) = u8"フルスクリーン"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Window mode"s;
-                        s(1) = u8"Full screen"s;
-                    }
+                    s(0) = lang(u8"ウィンドウ"s, u8"Window mode"s);
+                    s(1) = lang(u8"フルスクリーン"s, u8"Full screen"s);
                     mes(s(cfg_fullscreen2));
                 }
                 if (cnt == 3)
                 {
                     mes(""s + windoww2 + u8" * "s + windowh2);
                 }
-                if (cnt == 4)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_scroll));
-                }
-                if (cnt == 5)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_alwayscenter));
-                }
-                if (cnt == 6)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"再生しない"s;
-                        s(1) = u8"再生する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Don't play"s;
-                        s(1) = u8"Play"s;
-                    }
-                    mes(s(cfg_heart));
-                }
-                if (cnt == 7)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"アニメなし"s;
-                        s(1) = u8"アニメあり"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_attackanime));
-                }
-                if (cnt == 8)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"アニメなし"s;
-                        s(1) = u8"アニメあり"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No animation"s;
-                        s(1) = u8"Always"s;
-                    }
-                    mes(s(cfg_env));
-                }
-                if (cnt == 9)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"高画質"s;
-                        s(1) = u8"低画質"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"High"s;
-                        s(1) = u8"Low"s;
-                    }
-                    mes(s(cfg_shadow));
-                }
-                if (cnt == 10)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"なし（高速）"s;
-                        s(1) = u8"あり（低速）"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No(Slow)"s;
-                        s(1) = u8"Yes(Fast)"s;
-                    }
-                    mes(s(cfg_objectshadow));
-                }
             }
-            if (submenu == 3)
+            else if (submenu == 5)
             {
                 if (cnt == 0)
                 {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_net));
-                }
-                if (cnt == 1)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_netwish));
-                }
-                if (cnt == 2)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_netchat));
-                }
-            }
-            if (submenu == 4)
-            {
-                if (cnt == 0)
-                {
-                    mes(""s + cfg_runwait + u8" wait"s);
-                }
-                if (cnt == 1)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_autonumlock));
-                }
-                if (cnt == 2)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"オフ(オンにはできません)"s;
-                        s(1) = u8"オフ(オンにはできません)"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No(unsupported)"s;
-                        s(1) = u8"No(unsupported)"s;
-                    }
-                    mes(s(0));
-                }
-                if (cnt == 3)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"オフ"s;
-                        s(1) = u8"オン"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(""s + cfg_scrsync + u8" wait"s);
-                }
-                if (cnt == 4)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_runscroll));
-                }
-                if (cnt == 5)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"普通"s;
-                        s(1) = u8"速め"s;
-                        s(2) = u8"省略"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Normal"s;
-                        s(1) = u8"High"s;
-                        s(2) = u8"Highest"s;
-                    }
-                    mes(s(cfg_autoturn));
-                }
-                if (cnt == 6)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_skiprandevents));
-                }
-            }
-            if (submenu == 5)
-            {
-                if (cnt == 0)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"使用しない"s;
-                        s(1) = u8"使用する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"Don't use"s;
-                        s(1) = u8"Use"s;
-                    }
-                    mes(s(cfg_joypad));
+                    s(0) = lang(u8"使用しない"s, u8"Don't use"s);
+                    s(1) = lang(u8"使用する"s, u8"Use"s);
+                    mes(s(config::instance().joypad));
                 }
                 else if (list(1, cnt) == -1)
                 {
@@ -853,34 +664,11 @@ void set_option()
                     mes(lang(u8"ボタン"s, u8"Button"s) + list(1, cnt));
                 }
             }
-            if (submenu == 6)
+            else if (submenu == 6)
             {
-                if (cnt == 0)
-                {
-                    if (jp)
-                    {
-                        s(0) = u8"しない"s;
-                        s(1) = u8"する"s;
-                    }
-                    else
-                    {
-                        s(0) = u8"No"s;
-                        s(1) = u8"Yes"s;
-                    }
-                    mes(s(cfg_msgaddtime));
-                }
                 if (cnt == 1)
                 {
-                    mes(""s + cfg_msgtrans * 10 + u8" %"s);
-                }
-            }
-            if (submenu == 7)
-            {
-                if (cnt == 0)
-                {
-                    s(0) = u8"Japanese"s;
-                    s(1) = u8"English"s;
-                    mes(s(cfg_language));
+                    mes(""s + config::instance().msgtrans * 10 + u8" %"s);
                 }
             }
         }
@@ -889,7 +677,7 @@ void set_option()
             if (submenu != 5)
             {
                 pos(wx + 40, wy + wh - 70);
-                font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+                font(12 + sizefix - en * 2);
                 if (jp)
                 {
                     mes(u8"* 印のついた項目は、ゲームの再起動後に適用されます"s);
@@ -903,7 +691,7 @@ void set_option()
         if (submenu == 5)
         {
             pos(wx + 40, wy + wh - 110);
-            font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+            font(12 + sizefix - en * 2);
             if (jp)
             {
                 mes(u8"ボタンを割り当てたい項目にカーソルをあわせて\nゲームパッドのボタンを押してください。(L),(R)の付いている\n項目は、メニュー画面でタブの移動に使われます。"s);
@@ -918,7 +706,7 @@ void set_option()
             cs_bk = cs;
         }
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         ELONA_GET_SELECTED_ITEM(p, cs = i);
@@ -1017,113 +805,114 @@ void set_option()
             {
                 if (cs == 0)
                 {
-                    cfg_extrahelp += p;
-                    if (cfg_extrahelp > 1)
+                    config::instance().extrahelp += p;
+                    if (config::instance().extrahelp > 1)
                     {
-                        cfg_extrahelp = 1;
+                        config::instance().extrahelp = 1;
                     }
-                    else if (cfg_extrahelp < 0)
+                    else if (config::instance().extrahelp < 0)
                     {
-                        cfg_extrahelp = 0;
+                        config::instance().extrahelp = 0;
                     }
                     snd(20);
-                    set_config(u8"extraHelp", cfg_extrahelp);
+                    set_config(u8"extraHelp", config::instance().extrahelp);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 1)
                 {
-                    cfg_ignoredislike += p;
-                    if (cfg_ignoredislike > 1)
+                    config::instance().ignoredislike += p;
+                    if (config::instance().ignoredislike > 1)
                     {
-                        cfg_ignoredislike = 1;
+                        config::instance().ignoredislike = 1;
                     }
-                    else if (cfg_ignoredislike < 0)
+                    else if (config::instance().ignoredislike < 0)
                     {
-                        cfg_ignoredislike = 0;
+                        config::instance().ignoredislike = 0;
                     }
                     snd(20);
-                    set_config(u8"ignoreDislike", cfg_ignoredislike);
+                    set_config(
+                        u8"ignoreDislike", config::instance().ignoredislike);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 2)
                 {
-                    cfg_zkey += p;
-                    if (cfg_zkey > 2)
+                    config::instance().zkey += p;
+                    if (config::instance().zkey > 2)
                     {
-                        cfg_zkey = 2;
+                        config::instance().zkey = 2;
                     }
-                    else if (cfg_zkey < 0)
+                    else if (config::instance().zkey < 0)
                     {
-                        cfg_zkey = 0;
+                        config::instance().zkey = 0;
                     }
                     snd(20);
-                    set_config(u8"zkey", cfg_zkey);
+                    set_config(u8"zkey", config::instance().zkey);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 3)
                 {
-                    cfg_xkey += p;
-                    if (cfg_xkey > 2)
+                    config::instance().xkey += p;
+                    if (config::instance().xkey > 2)
                     {
-                        cfg_xkey = 2;
+                        config::instance().xkey = 2;
                     }
-                    else if (cfg_xkey < 0)
+                    else if (config::instance().xkey < 0)
                     {
-                        cfg_xkey = 0;
+                        config::instance().xkey = 0;
                     }
                     snd(20);
-                    set_config(u8"xkey", cfg_xkey);
+                    set_config(u8"xkey", config::instance().xkey);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 4)
                 {
-                    cfg_startrun += p;
-                    if (cfg_startrun > 20)
+                    config::instance().startrun += p;
+                    if (config::instance().startrun > 20)
                     {
-                        cfg_startrun = 20;
+                        config::instance().startrun = 20;
                     }
-                    else if (cfg_startrun < 0)
+                    else if (config::instance().startrun < 0)
                     {
-                        cfg_startrun = 0;
+                        config::instance().startrun = 0;
                     }
                     snd(20);
-                    set_config(u8"startRun", cfg_startrun);
+                    set_config(u8"startRun", config::instance().startrun);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 5)
                 {
-                    cfg_walkwait += p;
-                    if (cfg_walkwait > 10)
+                    config::instance().walkwait += p;
+                    if (config::instance().walkwait > 10)
                     {
-                        cfg_walkwait = 10;
+                        config::instance().walkwait = 10;
                     }
-                    else if (cfg_walkwait < 1)
+                    else if (config::instance().walkwait < 1)
                     {
-                        cfg_walkwait = 1;
+                        config::instance().walkwait = 1;
                     }
                     snd(20);
-                    set_config(u8"walkWait", cfg_walkwait);
+                    set_config(u8"walkWait", config::instance().walkwait);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 6)
                 {
-                    cfg_attackwait += p;
-                    if (cfg_attackwait > 20)
+                    config::instance().attackwait += p;
+                    if (config::instance().attackwait > 20)
                     {
-                        cfg_attackwait = 20;
+                        config::instance().attackwait = 20;
                     }
-                    else if (cfg_attackwait < 1)
+                    else if (config::instance().attackwait < 1)
                     {
-                        cfg_attackwait = 1;
+                        config::instance().attackwait = 1;
                     }
                     snd(20);
-                    set_config(u8"attackWait", cfg_attackwait);
+                    set_config(u8"attackWait", config::instance().attackwait);
                     reset_page = true;
                     continue;
                 }
@@ -1180,113 +969,115 @@ void set_option()
                 }
                 if (cs == 4)
                 {
-                    cfg_scroll += p;
-                    if (cfg_scroll > 1)
+                    config::instance().scroll += p;
+                    if (config::instance().scroll > 1)
                     {
-                        cfg_scroll = 1;
+                        config::instance().scroll = 1;
                     }
-                    else if (cfg_scroll < 0)
+                    else if (config::instance().scroll < 0)
                     {
-                        cfg_scroll = 0;
+                        config::instance().scroll = 0;
                     }
                     snd(20);
-                    set_config(u8"scroll", cfg_scroll);
+                    set_config(u8"scroll", config::instance().scroll);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 5)
                 {
-                    cfg_alwayscenter += p;
-                    if (cfg_alwayscenter > 1)
+                    config::instance().alwayscenter += p;
+                    if (config::instance().alwayscenter > 1)
                     {
-                        cfg_alwayscenter = 1;
+                        config::instance().alwayscenter = 1;
                     }
-                    else if (cfg_alwayscenter < 0)
+                    else if (config::instance().alwayscenter < 0)
                     {
-                        cfg_alwayscenter = 0;
+                        config::instance().alwayscenter = 0;
                     }
                     snd(20);
-                    set_config(u8"alwaysCenter", cfg_alwayscenter);
+                    set_config(
+                        u8"alwaysCenter", config::instance().alwayscenter);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 6)
                 {
-                    cfg_heart += p;
-                    if (cfg_heart > 1)
+                    config::instance().heart += p;
+                    if (config::instance().heart > 1)
                     {
-                        cfg_heart = 1;
+                        config::instance().heart = 1;
                     }
-                    else if (cfg_heart < 0)
+                    else if (config::instance().heart < 0)
                     {
-                        cfg_heart = 0;
+                        config::instance().heart = 0;
                     }
                     snd(20);
-                    set_config(u8"heartbeat", cfg_heart);
+                    set_config(u8"heartbeat", config::instance().heart);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 7)
                 {
-                    cfg_attackanime += p;
-                    if (cfg_attackanime > 1)
+                    config::instance().attackanime += p;
+                    if (config::instance().attackanime > 1)
                     {
-                        cfg_attackanime = 1;
+                        config::instance().attackanime = 1;
                     }
-                    else if (cfg_attackanime < 0)
+                    else if (config::instance().attackanime < 0)
                     {
-                        cfg_attackanime = 0;
+                        config::instance().attackanime = 0;
                     }
                     snd(20);
-                    set_config(u8"attackAnime", cfg_attackanime);
+                    set_config(u8"attackAnime", config::instance().attackanime);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 8)
                 {
-                    cfg_env += p;
-                    if (cfg_env > 1)
+                    config::instance().env += p;
+                    if (config::instance().env > 1)
                     {
-                        cfg_env = 1;
+                        config::instance().env = 1;
                     }
-                    else if (cfg_env < 0)
+                    else if (config::instance().env < 0)
                     {
-                        cfg_env = 0;
+                        config::instance().env = 0;
                     }
                     snd(20);
-                    set_config(u8"envEffect", cfg_env);
+                    set_config(u8"envEffect", config::instance().env);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 9)
                 {
-                    cfg_shadow += p;
-                    if (cfg_shadow > 1)
+                    config::instance().shadow += p;
+                    if (config::instance().shadow > 1)
                     {
-                        cfg_shadow = 1;
+                        config::instance().shadow = 1;
                     }
-                    else if (cfg_shadow < 0)
+                    else if (config::instance().shadow < 0)
                     {
-                        cfg_shadow = 0;
+                        config::instance().shadow = 0;
                     }
                     snd(20);
-                    set_config(u8"shadow", cfg_shadow);
+                    set_config(u8"shadow", config::instance().shadow);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 10)
                 {
-                    cfg_objectshadow += p;
-                    if (cfg_objectshadow > 1)
+                    config::instance().objectshadow += p;
+                    if (config::instance().objectshadow > 1)
                     {
-                        cfg_objectshadow = 1;
+                        config::instance().objectshadow = 1;
                     }
-                    else if (cfg_objectshadow < 0)
+                    else if (config::instance().objectshadow < 0)
                     {
-                        cfg_objectshadow = 0;
+                        config::instance().objectshadow = 0;
                     }
                     snd(20);
-                    set_config(u8"objectShadow", cfg_objectshadow);
+                    set_config(
+                        u8"objectShadow", config::instance().objectshadow);
                     reset_page = true;
                     continue;
                 }
@@ -1338,49 +1129,49 @@ void set_option()
             {
                 if (cs == 0)
                 {
-                    cfg_net += p;
-                    if (cfg_net > 1)
+                    config::instance().net += p;
+                    if (config::instance().net > 1)
                     {
-                        cfg_net = 1;
+                        config::instance().net = 1;
                     }
-                    else if (cfg_net < 0)
+                    else if (config::instance().net < 0)
                     {
-                        cfg_net = 0;
+                        config::instance().net = 0;
                     }
                     snd(20);
-                    set_config(u8"net", cfg_net);
+                    set_config(u8"net", config::instance().net);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 1)
                 {
-                    cfg_netwish += p;
-                    if (cfg_netwish > 1)
+                    config::instance().netwish += p;
+                    if (config::instance().netwish > 1)
                     {
-                        cfg_netwish = 1;
+                        config::instance().netwish = 1;
                     }
-                    else if (cfg_netwish < 0)
+                    else if (config::instance().netwish < 0)
                     {
-                        cfg_netwish = 0;
+                        config::instance().netwish = 0;
                     }
                     snd(20);
-                    set_config(u8"netWish", cfg_netwish);
+                    set_config(u8"netWish", config::instance().netwish);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 2)
                 {
-                    cfg_netchat += p;
-                    if (cfg_netchat > 1)
+                    config::instance().netchat += p;
+                    if (config::instance().netchat > 1)
                     {
-                        cfg_netchat = 1;
+                        config::instance().netchat = 1;
                     }
-                    else if (cfg_netchat < 0)
+                    else if (config::instance().netchat < 0)
                     {
-                        cfg_netchat = 0;
+                        config::instance().netchat = 0;
                     }
                     snd(20);
-                    set_config(u8"netChat", cfg_netchat);
+                    set_config(u8"netChat", config::instance().netchat);
                     reset_page = true;
                     continue;
                 }
@@ -1389,33 +1180,33 @@ void set_option()
             {
                 if (cs == 0)
                 {
-                    cfg_runwait += p;
-                    if (cfg_runwait > 5)
+                    config::instance().runwait += p;
+                    if (config::instance().runwait > 5)
                     {
-                        cfg_runwait = 5;
+                        config::instance().runwait = 5;
                     }
-                    else if (cfg_runwait < 2)
+                    else if (config::instance().runwait < 2)
                     {
-                        cfg_runwait = 2;
+                        config::instance().runwait = 2;
                     }
                     snd(20);
-                    set_config(u8"runWait", cfg_runwait);
+                    set_config(u8"runWait", config::instance().runwait);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 1)
                 {
-                    cfg_autonumlock += p;
-                    if (cfg_autonumlock > 1)
+                    config::instance().autonumlock += p;
+                    if (config::instance().autonumlock > 1)
                     {
-                        cfg_autonumlock = 1;
+                        config::instance().autonumlock = 1;
                     }
-                    else if (cfg_autonumlock < 0)
+                    else if (config::instance().autonumlock < 0)
                     {
-                        cfg_autonumlock = 0;
+                        config::instance().autonumlock = 0;
                     }
                     snd(20);
-                    set_config(u8"autoNumlock", cfg_autonumlock);
+                    set_config(u8"autoNumlock", config::instance().autonumlock);
                     reset_page = true;
                     continue;
                 }
@@ -1428,65 +1219,66 @@ void set_option()
                 }
                 if (cs == 3)
                 {
-                    cfg_scrsync += p;
-                    if (cfg_scrsync > 25)
+                    config::instance().scrsync += p;
+                    if (config::instance().scrsync > 25)
                     {
-                        cfg_scrsync = 25;
+                        config::instance().scrsync = 25;
                     }
-                    else if (cfg_scrsync < 2)
+                    else if (config::instance().scrsync < 2)
                     {
-                        cfg_scrsync = 2;
+                        config::instance().scrsync = 2;
                     }
                     snd(20);
-                    set_config(u8"scr_sync", cfg_scrsync);
+                    set_config(u8"scr_sync", config::instance().scrsync);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 4)
                 {
-                    cfg_runscroll += p;
-                    if (cfg_runscroll > 1)
+                    config::instance().runscroll += p;
+                    if (config::instance().runscroll > 1)
                     {
-                        cfg_runscroll = 1;
+                        config::instance().runscroll = 1;
                     }
-                    else if (cfg_runscroll < 0)
+                    else if (config::instance().runscroll < 0)
                     {
-                        cfg_runscroll = 0;
+                        config::instance().runscroll = 0;
                     }
                     snd(20);
-                    set_config(u8"scroll_run", cfg_runscroll);
+                    set_config(u8"scroll_run", config::instance().runscroll);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 5)
                 {
-                    cfg_autoturn += p;
-                    if (cfg_autoturn > 2)
+                    config::instance().autoturn += p;
+                    if (config::instance().autoturn > 2)
                     {
-                        cfg_autoturn = 2;
+                        config::instance().autoturn = 2;
                     }
-                    else if (cfg_autoturn < 0)
+                    else if (config::instance().autoturn < 0)
                     {
-                        cfg_autoturn = 0;
+                        config::instance().autoturn = 0;
                     }
                     snd(20);
-                    set_config(u8"autoTurnType", cfg_autoturn);
+                    set_config(u8"autoTurnType", config::instance().autoturn);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 6)
                 {
-                    cfg_skiprandevents += p;
-                    if (cfg_skiprandevents > 1)
+                    config::instance().skiprandevents += p;
+                    if (config::instance().skiprandevents > 1)
                     {
-                        cfg_skiprandevents = 1;
+                        config::instance().skiprandevents = 1;
                     }
-                    else if (cfg_skiprandevents < 0)
+                    else if (config::instance().skiprandevents < 0)
                     {
-                        cfg_skiprandevents = 0;
+                        config::instance().skiprandevents = 0;
                     }
                     snd(20);
-                    set_config(u8"skipRandEvents", cfg_skiprandevents);
+                    set_config(
+                        u8"skipRandEvents", config::instance().skiprandevents);
                     reset_page = true;
                     continue;
                 }
@@ -1495,17 +1287,17 @@ void set_option()
             {
                 if (cs == 0)
                 {
-                    cfg_joypad += p;
-                    if (cfg_joypad > 1)
+                    config::instance().joypad += p;
+                    if (config::instance().joypad > 1)
                     {
-                        cfg_joypad = 1;
+                        config::instance().joypad = 1;
                     }
-                    else if (cfg_joypad < 0)
+                    else if (config::instance().joypad < 0)
                     {
-                        cfg_joypad = 0;
+                        config::instance().joypad = 0;
                     }
                     snd(20);
-                    set_config(u8"joypad", cfg_joypad);
+                    set_config(u8"joypad", config::instance().joypad);
                     reset_page = true;
                     continue;
                 }
@@ -1514,33 +1306,33 @@ void set_option()
             {
                 if (cs == 0)
                 {
-                    cfg_msgaddtime += p;
-                    if (cfg_msgaddtime > 1)
+                    config::instance().msgaddtime += p;
+                    if (config::instance().msgaddtime > 1)
                     {
-                        cfg_msgaddtime = 1;
+                        config::instance().msgaddtime = 1;
                     }
-                    else if (cfg_msgaddtime < 0)
+                    else if (config::instance().msgaddtime < 0)
                     {
-                        cfg_msgaddtime = 0;
+                        config::instance().msgaddtime = 0;
                     }
                     snd(20);
-                    set_config(u8"msg_addTime", cfg_msgaddtime);
+                    set_config(u8"msg_addTime", config::instance().msgaddtime);
                     reset_page = true;
                     continue;
                 }
                 if (cs == 1)
                 {
-                    cfg_msgtrans += p;
-                    if (cfg_msgtrans > 5)
+                    config::instance().msgtrans += p;
+                    if (config::instance().msgtrans > 5)
                     {
-                        cfg_msgtrans = 5;
+                        config::instance().msgtrans = 5;
                     }
-                    else if (cfg_msgtrans < 0)
+                    else if (config::instance().msgtrans < 0)
                     {
-                        cfg_msgtrans = 0;
+                        config::instance().msgtrans = 0;
                     }
                     snd(20);
-                    set_config(u8"msg_trans", cfg_msgtrans);
+                    set_config(u8"msg_trans", config::instance().msgtrans);
                     reset_page = true;
                     continue;
                 }
@@ -1549,17 +1341,52 @@ void set_option()
             {
                 if (cs == 0)
                 {
-                    cfg_language += p;
-                    if (cfg_language > 1)
+                    config::instance().language += p;
+                    if (config::instance().language > 1)
                     {
-                        cfg_language = 1;
+                        config::instance().language = 1;
                     }
-                    else if (cfg_language < 0)
+                    else if (config::instance().language < 0)
                     {
-                        cfg_language = 0;
+                        config::instance().language = 0;
                     }
                     snd(20);
-                    set_config(u8"language", cfg_language);
+                    set_config(u8"language", config::instance().language);
+                    reset_page = true;
+                    continue;
+                }
+            }
+            if (submenu == 8)
+            {
+                if (cs == 0)
+                {
+                    config::instance().hp_bar += p;
+                    if (config::instance().hp_bar > 2)
+                    {
+                        config::instance().hp_bar = 2;
+                    }
+                    else if (config::instance().hp_bar < 0)
+                    {
+                        config::instance().hp_bar = 0;
+                    }
+                    snd(20);
+                    set_config(u8"hpBar", config::instance().hp_bar);
+                    reset_page = true;
+                    continue;
+                }
+                if (cs == 1)
+                {
+                    config::instance().leash_icon += p;
+                    if (config::instance().leash_icon > 1)
+                    {
+                        config::instance().leash_icon = 1;
+                    }
+                    else if (config::instance().leash_icon < 0)
+                    {
+                        config::instance().leash_icon = 0;
+                    }
+                    snd(20);
+                    set_config(u8"leashIcon", config::instance().leash_icon);
                     reset_page = true;
                     continue;
                 }
@@ -1576,18 +1403,12 @@ void set_option()
             load_config();
             if (mode == 0)
             {
-                if (cfg_net)
+                if (config::instance().net)
                 {
                     initialize_server_info();
                 }
-                update_screen();
-                pc_turn(false);
             }
-            else
-            {
-                main_title_menu();
-                return;
-            }
+            return;
         }
     }
 }

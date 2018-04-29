@@ -4,12 +4,14 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "class.hpp"
+#include "config.hpp"
 #include "ctrl_file.hpp"
 #include "debug.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "fish.hpp"
+#include "foobar_save.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
@@ -23,12 +25,20 @@
 #include "snail/application.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
+#include "version.hpp"
+#include "wish.hpp"
 
 using namespace elona;
 
 
 namespace
 {
+
+int cs_posbk_x{};
+int cs_posbk_y{};
+int cs_posbk_w{};
+int cs_posbk_h{};
+
 
 
 std::string atbuff;
@@ -44,7 +54,7 @@ position_t gmes(
     bool shadow)
 {
     int font_size = 14;
-    font(lang(cfg_font1, cfg_font2), font_size - en * 2, 0);
+    font(font_size - en * 2);
 
     const auto message = text + u8"$end";
     int x = x_base;
@@ -84,24 +94,24 @@ position_t gmes(
             pos += instr(message, pos, u8">") + 1;
             if (tag == u8"emp1")
             {
-                font(lang(cfg_font1, cfg_font2), font_size - en * 2, 4);
+                font(font_size - en * 2, snail::font_t::style_t::underline);
                 text_color = {50, 50, 255};
             }
             else if (tag == u8"emp2")
             {
-                font(lang(cfg_font1, cfg_font2), font_size - en * 2, 1);
+                font(font_size - en * 2, snail::font_t::style_t::bold);
                 text_color = {40, 130, 40};
             }
             else if (tag == u8"title1")
             {
                 font_size = 12;
-                font(lang(cfg_font1, cfg_font2), font_size - en * 2, 1);
+                font(font_size - en * 2, snail::font_t::style_t::bold);
                 text_color = {100, 50, 50};
             }
             else if (tag == u8"def")
             {
                 font_size = 14;
-                font(lang(cfg_font1, cfg_font2), font_size - en * 2, 0);
+                font(font_size - en * 2);
                 text_color = text_color_base;
             }
             else if (tag == u8"p")
@@ -116,7 +126,7 @@ position_t gmes(
             }
             else if (tag == u8"b")
             {
-                font(lang(cfg_font1, cfg_font2), font_size - en * 2, 1);
+                font(font_size - en * 2, snail::font_t::style_t::bold);
             }
             else if (tag == u8"green")
             {
@@ -432,7 +442,6 @@ int evy = 0;
 int evtiles = 0;
 int evscrh = 0;
 int evscrw = 0;
-elona_vector2<int> cbitorg;
 int refreshmode = 0;
 int r3 = 0;
 int refdiff = 0;
@@ -466,7 +475,6 @@ elona_vector1<int> asettown;
 elona_vector1<int> moneybox;
 elona_vector1<int> isetbook;
 elona_vector1<int> rpsourcelist;
-int nooracle = 0;
 int cibk = 0;
 int fdmax = 0;
 elona_vector2<int> fdlist;
@@ -566,7 +574,6 @@ int tglocx = 0;
 int tglocy = 0;
 int dump_return = 0;
 int questteleport = 0;
-int wishfilter = 0;
 int refx = 0;
 int refy = 0;
 int csskill = 0;
@@ -596,7 +603,6 @@ int cun = 0;
 elona_vector1<int> unaiactsubfreq;
 elona_vector1<int> bmpbuff;
 std::string usertitle;
-elona_vector1<std::string> inputlog2;
 std::string dbm;
 int dbg_exitshowroom = 0;
 int dbg_freemove = 0;
@@ -1161,7 +1167,7 @@ void sndload(const std::string& prm_292, int prm_293)
 {
     if (prm_293 < 7)
     {
-        if (cfg_sound == 1)
+        if (config::instance().sound == 1)
         {
             DSLOADFNAME(prm_292, prm_293);
         }
@@ -1180,7 +1186,7 @@ void snd(int prm_296, int prm_297, int prm_298)
 {
     int sound_at_m18 = 0;
     int f_at_m18 = 0;
-    if (cfg_sound == 0)
+    if (config::instance().sound == 0)
     {
         return;
     }
@@ -1234,7 +1240,7 @@ void snd(int prm_296, int prm_297, int prm_298)
                 }
             }
         }
-        if (cfg_sound == 1)
+        if (config::instance().sound == 1)
         {
             DSLOADFNAME(soundfile(prm_296), sound_at_m18);
         }
@@ -1243,7 +1249,7 @@ void snd(int prm_296, int prm_297, int prm_298)
             mmload(soundfile(prm_296), sound_at_m18);
         }
     }
-    if (cfg_sound == 1)
+    if (config::instance().sound == 1)
     {
         DSPLAY(sound_at_m18, prm_297);
     }
@@ -1259,11 +1265,11 @@ void snd(int prm_296, int prm_297, int prm_298)
 void initialize_sound_file()
 {
     DIM2(soundlist, 6);
-    if (cfg_sound == 1)
+    if (config::instance().sound == 1)
     {
         cfg_svolume = DSGETMASTERVOLUME();
     }
-    folder = fs::path(u8"./sound/").generic_string();
+    folder = filesystem::path(u8"./sound/").generic_string();
     sndload(folder + u8"exitmap1.wav"s, 49);
     sndload(folder + u8"book1.wav"s, 59);
     sndload(folder + u8"write1.wav"s, 44);
@@ -1411,7 +1417,7 @@ void play_music()
     if (env != envwprev)
     {
         envwprev = env;
-        if (cfg_sound == 1)
+        if (config::instance().sound == 1)
         {
             if (env == 0)
             {
@@ -1468,7 +1474,7 @@ void play_music()
         envonly = 0;
         return;
     }
-    if (cfg_music == 0)
+    if (config::instance().music == 0)
     {
         return;
     }
@@ -1581,18 +1587,19 @@ void play_music()
     {
         musicprev = music;
         mmstop();
-        if (cfg_music == 1)
+        if (config::instance().music == 1)
         {
             DMSTOP();
-            DMLOADFNAME(fs::path(u8"./sound/gm_on.mid").generic_string(), 0);
+            DMLOADFNAME(
+                filesystem::path(u8"./sound/gm_on.mid").generic_string(), 0);
             DMPLAY(1, 0);
         }
         if (music != -1)
         {
-            musicfolder = fs::path(u8"./user/music/").generic_string();
+            musicfolder = filesystem::path(u8"./user/music/").generic_string();
             if (!fs::exists(musicfolder + musicfile(music)))
             {
-                musicfolder = fs::path(u8"./sound/").generic_string();
+                musicfolder = filesystem::path(u8"./sound/").generic_string();
                 if (!fs::exists(musicfolder + musicfile(music)))
                 {
                     return;
@@ -1609,7 +1616,7 @@ void play_music()
         }
         if (music != -1)
         {
-            if (cfg_music == 2 || mp3 == 1)
+            if (config::instance().music == 2 || mp3 == 1)
             {
                 mmload(musicfolder + musicfile(music), 0, musicloop == 65535);
                 mmplay(0);
@@ -1646,17 +1653,17 @@ void auto_turn(int delay)
         return;
 
     autoturn = 1;
-    if (cfg_autoturn == 0)
+    if (config::instance().autoturn == 0)
     {
         await(delay);
         ++scrturn;
     }
-    if (cfg_autoturn != 2 || firstautoturn == 1)
+    if (config::instance().autoturn != 2 || firstautoturn == 1)
     {
         screenupdate = -1;
         update_screen();
     }
-    if (cfg_autoturn == 0)
+    if (config::instance().autoturn == 0)
     {
         redraw();
     }
@@ -1920,7 +1927,7 @@ std::string txttargetlevel(int cc, int tc)
     {
         return lang(
             u8"負ける気はしない。",
-            cnven(he(tc)) + u8" " + is(tc) + u8" a easy opponent.");
+            cnven(he(tc)) + u8" " + is(tc) + u8" an easy opponent.");
     }
     else if (x / 3 < y)
     {
@@ -2551,11 +2558,11 @@ void finish_elona()
     int ieopen = 0;
     int ie_event = 0;
     int ie = 0;
-    if (cfg_music == 1)
+    if (config::instance().music == 1)
     {
         DMEND();
     }
-    if (cfg_sound == 1)
+    if (config::instance().sound == 1)
     {
         DSEND();
     }
@@ -2564,7 +2571,7 @@ void finish_elona()
         delcom(ie_event);
         delcom(ie);
     }
-    if (cfg_autonumlock)
+    if (config::instance().autonumlock)
     {
         keybd_event(144);
         keybd_event(144, 0, 2);
@@ -2581,7 +2588,7 @@ void finish_elona()
 
 void load_pcc_part(int cc, int body_part, const char* body_part_str)
 {
-    const auto filepath = fs::path(
+    const auto filepath = filesystem::path(
         "./graphic/pcc_"s + body_part_str + (pcc(body_part, cc) % 1000)
         + u8".bmp");
     if (!fs::exists(filepath))
@@ -3504,7 +3511,7 @@ void showcard2(int prm_425, int prm_426)
     elona_vector1<int> col_at_cardcontrol;
     std::string s_at_cardcontrol;
     int tx_at_cardcontrol = 0;
-    font(lang(cfg_font1, cfg_font2), 43 - en * 2, 1);
+    font(43 - en * 2, snail::font_t::style_t::bold);
     gmode(2, 64, 96);
     pos(card_at_cardcontrol(3, prm_425), card_at_cardcontrol(4, prm_425));
     if (card_at_cardcontrol(2, prm_425) == 1)
@@ -3604,7 +3611,7 @@ void showcard2(int prm_425, int prm_426)
         }
         else
         {
-            font(lang(cfg_font1, cfg_font2), 12 - en * 2, 0);
+            font(12 - en * 2);
         }
     }
     return;
@@ -3634,7 +3641,7 @@ void showcardpile()
             showcard2(cnt);
         }
     }
-    font(lang(cfg_font1, cfg_font2), 16 - en * 2, 1);
+    font(16 - en * 2, snail::font_t::style_t::bold);
     color(10, 10, 10);
     pos(pilex_at_cardcontrol + 8, piley_at_cardcontrol + 70);
     bmes(u8"X "s + pilestack_at_cardcontrol, 240, 240, 240);
@@ -3970,7 +3977,7 @@ void load_random_name_table()
     std::vector<std::string> lines;
     range::copy(
         fileutil::read_by_line{
-            fs::path(lang(u8"data/ndata.csv"s, u8"data/ndata-e.csv"s))},
+            filesystem::path(lang(u8"data/ndata.csv"s, u8"data/ndata-e.csv"s))},
         std::back_inserter(lines));
 
     SDIM3(randn1, 30, 20);
@@ -3992,7 +3999,7 @@ void load_random_title_table()
 {
     std::vector<std::string> lines;
     range::copy(
-        fileutil::read_by_line{fs::path(u8"data/name.csv"s)},
+        fileutil::read_by_line{filesystem::path(u8"data/name.csv"s)},
         std::back_inserter(lines));
 
     SDIM3(rn1, 15, lines.size());
@@ -5768,6 +5775,16 @@ void cutname(std::string& prm_541, int prm_542)
 
 
 
+void cs_listbk()
+{
+    if (cs_bk == -1)
+        return;
+    pos(cs_posbk_x, cs_posbk_y);
+    gcopy(3, 264, 96, cs_posbk_w, cs_posbk_h);
+}
+
+
+
 void cs_list(
     bool is_selected,
     const std::string& text,
@@ -5779,12 +5796,21 @@ void cs_list(
 {
     if (is_selected)
     {
-        // color(128, 192, 255);
-        // boxf(
-        //     x + 4 + x_offset,
-        //     y + 3,
-        //     x + 4 + x_offset + text.size() * 7 + 32,
-        //     y + 3 + 19);
+        const auto width = clamp(int(strlen_u(text)) * 7 + 32 + x_offset, 10, 480);
+
+        gsel(3);
+        pos(264, 96);
+        gcopy(0, x, y, width, 19);
+        gsel(0);
+
+        boxf(x, y, x + width, y + 19, {127, 191, 255, 63});
+        pos(x + width - 20, y + 4);
+        gcopy(3, 48, 360, 16, 16);
+
+        cs_posbk_x = x;
+        cs_posbk_y = y;
+        cs_posbk_w = width;
+        cs_posbk_h = 19;
     }
 
     switch (color_mode)
@@ -6730,23 +6756,22 @@ int cell_itemlist(int prm_625, int prm_626)
 
 
 
-int cell_itemoncell(int prm_627, int prm_628)
+// Returns pair of number of items and the last item on the cell.
+std::pair<int, int> cell_itemoncell(const position_t& pos)
 {
-    rtval(0) = 0;
-    rtval(1) = 0;
-    for (const auto& cnt : items(-1))
+    int number{};
+    int item{};
+
+    for (const auto& ci : items(-1))
     {
-        if (inv[cnt].number > 0)
+        if (inv[ci].number > 0 && inv[ci].position == pos)
         {
-            if (inv[cnt].position.x == prm_627
-                && inv[cnt].position.y == prm_628)
-            {
-                ++rtval;
-                rtval(1) = cnt;
-            }
+            ++number;
+            item = ci;
         }
     }
-    return rtval;
+
+    return std::make_pair(number, item);
 }
 
 
@@ -7376,7 +7401,7 @@ void display_customkey(const std::string& key, int x, int y)
 {
     gsel(3);
     gmode(0);
-    font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
+    font(15 - en * 2);
     pos(624, 30);
     gcopy(3, 0, 30, 24, 18);
     pos(629, 31);
@@ -7494,14 +7519,14 @@ void showscroll(const std::string& title, int x, int y, int width, int height)
         y + height - 69 - height % 8,
         x + width - 40,
         y + height - 69 - height % 8);
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+    font(12 + sizefix - en * 2);
     color(0, 0, 0);
     pos(x + 68, y + height - 63 - height % 8);
     mes(s);
     if (pagesize != 0)
     {
         s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
-        font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+        font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
         pos(x + width - strlen_u(s) * 7 - 40, y + height - 63 - height % 8);
         mes(s);
     }
@@ -7743,7 +7768,7 @@ void display_window2(
     gmode(2);
     pos(prm_662, prm_663);
     gcopy(prm_666, 0, 0, prm_664, prm_665);
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     if (s != ""s)
     {
         pos(prm_662 + prm_664 - strlen_u(s) * 7 - 140,
@@ -7801,21 +7826,21 @@ void display_window(
         prm_669 + prm_671 - 49 - prm_671 % 8,
         prm_668 + prm_670 - 40,
         prm_669 + prm_671 - 49 - prm_671 % 8);
-    font(lang(cfg_font1, cfg_font2), 15 + en - en * 2, 0);
+    font(15 + en - en * 2);
     color(0, 0, 0);
     pos(prm_668 + 45 * prm_670 / 200 + 34 - strlen_u(s) * 4
             + clamp(int(s(0).size() * 8 - 120), 0, 200) / 2,
         prm_669 + 4 + vfix);
     color(20, 10, 0);
     bmes(s, 255, 255, 255);
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+    font(12 + sizefix - en * 2);
     color(0, 0, 0);
     pos(prm_668 + 58 + prm_672, prm_669 + prm_671 - 43 - prm_671 % 8);
     mes(s(1));
     if (pagesize != 0)
     {
         s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
-        font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+        font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
         pos(prm_668 + prm_670 - strlen_u(s) * 7 - 40 - prm_673,
             prm_669 + prm_671 - 65 - prm_671 % 8);
         mes(s);
@@ -7831,7 +7856,7 @@ void display_window(
 
 void display_note(const std::string& prm_674, int prm_675)
 {
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     pos(wx + ww - strlen_u(prm_674) * 7 - 140 - prm_675, wy + wh - 65 - wh % 8);
     mes(prm_674);
     return;
@@ -7841,7 +7866,7 @@ void display_note(const std::string& prm_674, int prm_675)
 
 void display_topic(const std::string& prm_676, int prm_677, int prm_678, int)
 {
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     pos(prm_677, prm_678 + 7);
     gcopy(3, 120, 360, 24, 16);
     pos(prm_677 + 26, prm_678 + 8);
@@ -8150,22 +8175,6 @@ std::string cnv_str(
 
 
 
-void fix_wish(std::string& str)
-{
-    str = strutil::remove_str(str, u8"の剥製");
-    str = strutil::remove_str(str, u8"剥製");
-    str = strutil::remove_str(str, u8"のはく製");
-    str = strutil::remove_str(str, u8"はく製");
-    str = strutil::remove_str(str, u8"のカード");
-    str = strutil::remove_str(str, u8"カード");
-    str = strutil::remove_str(str, u8"card ");
-    str = strutil::remove_str(str, u8"figure ");
-    str = strutil::remove_str(str, u8"card");
-    str = strutil::remove_str(str, u8"figure");
-}
-
-
-
 void fix_input_chat(std::string& str)
 {
     cnv_str(str, u8" "s, u8"+"s);
@@ -8270,7 +8279,7 @@ void windowanime(
         nowindowanime = 0;
         return;
     }
-    if (cfg_windowanime == 0)
+    if (config::instance().windowanime == 0)
     {
         return;
     }
@@ -8321,7 +8330,7 @@ void windowanimecorner(
     int prm_736,
     int prm_737)
 {
-    if (cfg_windowanime == 0)
+    if (config::instance().windowanime == 0)
     {
         return;
     }
@@ -8366,7 +8375,7 @@ void showtitle(const std::string&, const std::string& prm_739, int prm_740, int)
 {
     int x_at_m106 = 0;
     int y_at_m106 = 0;
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+    font(12 + sizefix - en * 2);
     if (mode != 1)
     {
         x_at_m106 = prm_740 - 10;
@@ -8451,7 +8460,7 @@ void drawmenu(int prm_742)
     {
         return;
     }
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+    font(12 + sizefix - en * 2);
     window2(x_at_m107, y_at_m107, x_at_m107(1), 22, 5, 5);
     pos(x_at_m107 - 28, y_at_m107 - 8);
     gcopy(3, 64, 288, 50, 32);
@@ -9804,9 +9813,9 @@ int customtalk(int cc, int talk_type)
 
     bool use_external_file = false;
 
-    if (cbit(989, cc))
+    if (cdata[cc].has_custom_talk())
     {
-        const auto filepath = fs::path(u8"./user/talk") / cdatan(4, cc);
+        const auto filepath = filesystem::path(u8"./user/talk") / cdatan(4, cc);
         if (!fs::exists(filepath))
             return 0;
         range::copy(
@@ -10016,7 +10025,7 @@ void put_questtarget()
     {
         if (cdata[cnt].state == 1)
         {
-            cbitmod(970, cnt, 1);
+            cdata[cnt].is_quest_target() = true;
             cdata[cnt].relationship = -3;
         }
     }
@@ -10033,7 +10042,7 @@ int exist_questtarget()
     {
         if (cdata[cnt].state == 1)
         {
-            if (cbit(970, cnt) == 1)
+            if (cdata[cnt].is_quest_target() == 1)
             {
                 ++f_at_m119;
             }
@@ -10212,10 +10221,10 @@ void refreshspeed(int cc)
         cdata[0].current_speed = sdata(18, gdata_mount) * 100
             / clamp((100 + sdata(18, gdata_mount)
                      - sdata(10, gdata_mount) * 3 / 2 - sdata(301, 0) * 2
-                     - (cbit(22, gdata_mount) == 1) * 50),
+                     - (cdata[gdata_mount].is_suitable_for_mount() == 1) * 50),
                     100,
                     1000);
-        if (cbit(25, gdata_mount))
+        if (cdata[gdata_mount].is_unsuitable_for_mount())
         {
             cdata[0].current_speed /= 10;
         }
@@ -10289,19 +10298,19 @@ void ride_begin(int mount)
             + cdata[mount].current_speed + u8"→"s,
         u8"You ride "s + name(mount) + u8". ("s + name(mount) + u8"'s speed: "s
             + cdata[mount].current_speed + u8"->"s));
-    cbitmod(975, mount, 1);
+    cdata[mount].is_ridden() = true;
     map(cdata[mount].position.x, cdata[mount].position.y, 1) = 0;
     gdata_mount = mount;
     create_pcpic(0, true);
     rowactend(gdata_mount);
     refreshspeed(gdata_mount);
     txt(""s + cdata[mount].current_speed + u8") "s);
-    if (cbit(22, gdata_mount))
+    if (cdata[gdata_mount].is_suitable_for_mount())
     {
         txt(lang(
             u8"この生物は乗馬用にちょうどいい！"s, u8"You feel comfortable."s));
     }
-    else if (cbit(25, gdata_mount))
+    else if (cdata[gdata_mount].is_unsuitable_for_mount())
     {
         txt(lang(
             u8"この生物はあなたを乗せるには非力すぎる。"s,
@@ -10314,7 +10323,7 @@ void ride_begin(int mount)
 void ride_end()
 {
     int mount = gdata_mount;
-    cbitmod(975, mount, 0);
+    cdata[mount].is_ridden() = false;
     rowactend(mount);
     gdata_mount = 0;
     create_pcpic(0, true);
@@ -10520,7 +10529,7 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
     p3_at_m125 = cdata[tc_at_m125].state;
     hp_at_m125 = cdata[tc_at_m125].hp;
     cdata[prm_784].item_which_will_be_used = 0;
-    cbitmod(960, prm_784, 0);
+    cdata[prm_784].is_livestock() = false;
     const auto tmp = inv_getheader(prm_784);
     const auto invhead = tmp.first;
     const auto invrange = tmp.second;
@@ -10675,7 +10684,7 @@ void hostileaction(int prm_787, int prm_788)
         }
         customtalk(prm_788, 101);
     }
-    if (cbit(960, prm_788) == 1)
+    if (cdata[prm_788].is_livestock() == 1)
     {
         if (rnd(50) == 0)
         {
@@ -10683,7 +10692,7 @@ void hostileaction(int prm_787, int prm_788)
             txt(lang(u8"家畜は興奮した！"s, u8"Animals get excited!"s));
             for (int cnt = 0; cnt < 245; ++cnt)
             {
-                if (cbit(960, cnt) == 1)
+                if (cdata[cnt].is_livestock() == 1)
                 {
                     cdata[cnt].enemy_id = 0;
                     cdata[cnt].hate = 20;
@@ -11054,11 +11063,11 @@ void delbuff(int prm_805, int prm_806)
     }
     if (cdata[prm_805].buffs[prm_806].id == 16)
     {
-        cbitmod(973, prm_805, 0);
+        cdata[prm_805].is_sentenced_daeth() = false;
     }
     if (cdata[prm_805].buffs[prm_806].id == 18)
     {
-        cbitmod(980, prm_805, 0);
+        cdata[prm_805].is_contracting_with_reaper() = false;
     }
     cdata[prm_805].buffs[prm_806].id = 0;
     for (int cnt = prm_806, cnt_end = cnt + (16 - prm_806 - 1); cnt < cnt_end;
@@ -11100,7 +11109,7 @@ void animeload(int prm_807, int prm_808)
     {
         return;
     }
-    if (cfg_animewait == 0)
+    if (config::instance().animewait == 0)
     {
         return;
     }
@@ -11109,7 +11118,7 @@ void animeload(int prm_807, int prm_808)
     dx_at_m133 = (cdata[prm_808].position.x - scx) * inf_tiles + inf_screenx;
     dy_at_m133 = (cdata[prm_808].position.y - scy) * inf_tiles + inf_screeny;
     gsel(7);
-    picload(fs::path(u8"./graphic/anime"s + prm_807 + u8".bmp"));
+    picload(filesystem::path(u8"./graphic/anime"s + prm_807 + u8".bmp"));
     gsel(4);
     gmode(0);
     pos(0, 0);
@@ -11151,7 +11160,7 @@ void animeload(int prm_807, int prm_808)
         redraw();
         pos(dx_at_m133 - 24, dy_at_m133 - 40);
         gcopy(4, 0, 0, 96, 96);
-        await(cfg_animewait + i_at_m133(1));
+        await(config::instance().animewait + i_at_m133(1));
     }
     gmode(2);
     return;
@@ -11169,7 +11178,7 @@ void animeblood(int prm_809, int prm_810, int prm_811)
     {
         return;
     }
-    if (cfg_animewait == 0)
+    if (config::instance().animewait == 0)
     {
         return;
     }
@@ -11195,70 +11204,70 @@ void animeblood(int prm_809, int prm_810, int prm_811)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(fs::path(u8"./graphic/anime18.bmp"));
+        picload(filesystem::path(u8"./graphic/anime18.bmp"));
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 51)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(fs::path(u8"./graphic/anime19.bmp"));
+        picload(filesystem::path(u8"./graphic/anime19.bmp"));
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 50)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(fs::path(u8"./graphic/anime20.bmp"));
+        picload(filesystem::path(u8"./graphic/anime20.bmp"));
         dy_at_m133(1) = -20;
     }
     if (prm_811 == 56)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(fs::path(u8"./graphic/anime22.bmp"));
+        picload(filesystem::path(u8"./graphic/anime22.bmp"));
         dy_at_m133(1) = -24;
     }
     if (prm_811 == 53)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(fs::path(u8"./graphic/anime21.bmp"));
+        picload(filesystem::path(u8"./graphic/anime21.bmp"));
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 54)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(fs::path(u8"./graphic/anime23.bmp"));
+        picload(filesystem::path(u8"./graphic/anime23.bmp"));
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 57)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(fs::path(u8"./graphic/anime24.bmp"));
+        picload(filesystem::path(u8"./graphic/anime24.bmp"));
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 59)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(fs::path(u8"./graphic/anime25.bmp"));
+        picload(filesystem::path(u8"./graphic/anime25.bmp"));
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 58)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(fs::path(u8"./graphic/anime26.bmp"));
+        picload(filesystem::path(u8"./graphic/anime26.bmp"));
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 55 || prm_811 == 63)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(fs::path(u8"./graphic/anime27.bmp"));
+        picload(filesystem::path(u8"./graphic/anime27.bmp"));
         dy_at_m133(1) = -16;
     }
     gmode(2);
@@ -11298,7 +11307,7 @@ void animeblood(int prm_809, int prm_810, int prm_811)
         redraw();
         pos(dx_at_m133 - 48, dy_at_m133 - 56);
         gcopy(4, 0, 0, 144, 160);
-        await(cfg_animewait + 15 + (ele2_at_m133 != 0) * 20);
+        await(config::instance().animewait + 15 + (ele2_at_m133 != 0) * 20);
     }
     gmode(2);
     return;
@@ -11329,7 +11338,7 @@ void resistmod(int cc, int element, int delta)
             txt(lang(
                 name(cc) + u8"の身体に電気が走った。"s,
                 name(cc) + u8" "s + is(cc)
-                    + u8" struck by an electoric shock."s));
+                    + u8" struck by an electric shock."s));
             break;
         case 54:
             txt(lang(
@@ -11486,7 +11495,7 @@ void modcorrupt(int prm_815)
             txt(lang(
                 u8"エーテルの病が発症した。"s,
                 u8"The symptom of the Ether disease is shown up on you."s));
-            if (cfg_extrahelp)
+            if (config::instance().extrahelp)
             {
                 if (gdata(215) == 0)
                 {
@@ -11626,7 +11635,7 @@ void wet(int cc, int turns)
         txt(lang(
             name(cc) + u8"は濡れた。"s,
             name(cc) + u8" get"s + _s(cc) + u8" wet."s));
-        if (cbit(6, cc))
+        if (cdata[cc].is_invisible())
         {
             txt(lang(
                 name(cc) + u8"の姿があらわになった。"s,
@@ -11652,7 +11661,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
     }
     if (prm_819 == 4)
     {
-        if (cbit(9, prm_818) == 1)
+        if (cdata[prm_818].is_immune_to_blindness() == 1)
         {
             f_at_con = 0;
         }
@@ -11693,7 +11702,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
     }
     if (prm_819 == 5)
     {
-        if (cbit(8, prm_818) == 1)
+        if (cdata[prm_818].is_immune_to_confusion() == 1)
         {
             f_at_con = 0;
         }
@@ -11739,7 +11748,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
     }
     if (prm_819 == 3)
     {
-        if (cbit(12, prm_818) == 1)
+        if (cdata[prm_818].is_immune_to_paralyzation() == 1)
         {
             f_at_con = 0;
         }
@@ -11781,7 +11790,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
     }
     if (prm_819 == 1)
     {
-        if (cbit(13, prm_818) == 1)
+        if (cdata[prm_818].is_immune_to_poison() == 1)
         {
             f_at_con = 0;
         }
@@ -11823,7 +11832,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
     }
     if (prm_819 == 2)
     {
-        if (cbit(11, prm_818) == 1)
+        if (cdata[prm_818].is_immune_to_sleep() == 1)
         {
             f_at_con = 0;
         }
@@ -11865,7 +11874,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
     }
     if (prm_819 == 6)
     {
-        if (cbit(10, prm_818) == 1)
+        if (cdata[prm_818].is_immune_to_fear() == 1)
         {
             f_at_con = 0;
         }
@@ -13078,12 +13087,12 @@ int copy_chara(int prm_848)
             cdata_body_part(c_at_m139, i) / 10000 * 10000;
     }
     cdata[c_at_m139].original_relationship = -3;
-    cbitmod(967, c_at_m139, 0);
-    cbitmod(960, c_at_m139, 0);
-    cbitmod(961, c_at_m139, 0);
-    cbitmod(975, c_at_m139, 0);
-    cbitmod(981, c_at_m139, 1);
-    cbitmod(985, c_at_m139, 0);
+    cdata[c_at_m139].has_own_sprite() = false;
+    cdata[c_at_m139].is_livestock() = false;
+    cdata[c_at_m139].is_married() = false;
+    cdata[c_at_m139].is_ridden() = false;
+    cdata[c_at_m139].needs_refreshing_status() = true;
+    cdata[c_at_m139].is_hung_on_sand_bag() = false;
     return 1;
 }
 
@@ -13241,7 +13250,7 @@ void txteledmg(int type, int attacker, int target, int element)
             txt(lang(
                 name(target) + u8"は発狂して死んだ。"s,
                 name(target) + u8" lose"s + _s(target) + u8" "s + his(target)
-                    + u8" mind and commit"s + _s(target) + u8" a suicde."s));
+                    + u8" mind and commit"s + _s(target) + u8" a suicide."s));
         }
         break;
     case 59:
@@ -13499,17 +13508,17 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
     {
         if (ele_at_m141 != 60)
         {
-            if (cbit(26, prm_853))
+            if (cdata[prm_853].is_immune_to_elemental_damage())
             {
                 dmg_at_m141 = 0;
             }
         }
     }
-    if (cbit(28, prm_853))
+    if (cdata[prm_853].is_metal())
     {
         dmg_at_m141 = rnd(dmg_at_m141 / 10 + 2);
     }
-    if (cbit(980, prm_853))
+    if (cdata[prm_853].is_contracting_with_reaper())
     {
         if (cdata[prm_853].hp - dmg_at_m141 <= 0)
         {
@@ -13546,6 +13555,13 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         dmg_at_m141 = 0;
     }
     cdata[prm_853].hp -= dmg_at_m141;
+
+
+    if (is_in_fov(prm_853))
+    {
+        add_damage_popup(std::to_string(dmg_at_m141), prm_853, {0, 0, 0});
+    }
+
 
     if (ele_at_m141 == 56)
     {
@@ -13602,15 +13618,15 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 {
                     continue;
                 }
-                if (cbit(21, cnt) == 0)
+                if (cdata[cnt].has_lay_hand() == 0)
                 {
                     continue;
                 }
-                if (cbit(974, cnt) == 0)
+                if (cdata[cnt].is_lay_hand_available() == 0)
                 {
                     continue;
                 }
-                cbitmod(974, cnt, 0);
+                cdata[cnt].is_lay_hand_available() = false;
                 txtef(9);
                 txt(lang(
                     name(cnt)
@@ -13627,7 +13643,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 break;
             }
         }
-        else if (cbit(985, prm_853))
+        else if (cdata[prm_853].is_hung_on_sand_bag())
         {
             cdata[prm_853].hp = cdata[prm_853].max_hp;
         }
@@ -13759,7 +13775,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 if (cdata[prm_853].fear == 0)
                 {
-                    if (cbit(10, prm_853) == 0)
+                    if (cdata[prm_853].is_immune_to_fear() == 0)
                     {
                         if (dmg_at_m141 * 100 / cdata[prm_853].max_hp + 10
                             > rnd(200))
@@ -13892,9 +13908,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         {
             if (cdata[prm_853].max_hp / 4 > cdata[prm_853].hp)
             {
-                if (cfg_sound == 1)
+                if (config::instance().sound == 1)
                 {
-                    if (cfg_heart == 1)
+                    if (config::instance().heart == 1)
                     {
                         if (CHECKPLAY(32) == 0)
                         {
@@ -13904,16 +13920,16 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 }
             }
         }
-        if (cbit(18, prm_853))
+        if (cdata[prm_853].explodes())
         {
             if (rnd(3) == 0)
             {
-                cbitmod(972, prm_853, 1);
+                cdata[prm_853].will_explode_soon() = true;
                 txtef(9);
                 txt(lang(u8" *カチッ* "s, u8"*click*"s));
             }
         }
-        if (cbit(23, prm_853))
+        if (cdata[prm_853].splits())
         {
             if (gdata(809) != 1)
             {
@@ -13933,7 +13949,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 }
             }
         }
-        if (cbit(27, prm_853))
+        if (cdata[prm_853].splits2())
         {
             if (gdata(809) != 1)
             {
@@ -13960,7 +13976,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 }
             }
         }
-        if (cbit(32, prm_853))
+        if (cdata[prm_853].is_quick_tempered())
         {
             if (gdata(809) != 1)
             {
@@ -14228,13 +14244,13 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 txt(lang(
                     name(prm_853) + u8"は階段から転げ落ちて死んだ。"s,
-                    name(prm_853) + u8" trumble"s + _s(prm_853)
+                    name(prm_853) + u8" tumble"s + _s(prm_853)
                         + u8" from stairs and die"s + _s(prm_853) + u8"."s));
                 if (prm_853 == 0)
                 {
                     ndeathcause = lang(
                         u8"階段から転げ落ちて亡くなった。"s,
-                        u8"trumbled from stairs and died"s);
+                        u8"tumbled from stairs and died"s);
                 }
             }
             if (prm_855 == -8)
@@ -14439,7 +14455,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             cell_removechara(
                 cdata[prm_853].position.x, cdata[prm_853].position.y);
         }
-        if (cbit(983, prm_853))
+        if (cdata[prm_853].breaks_into_debris())
         {
             if (is_in_fov(prm_853))
             {
@@ -14480,12 +14496,12 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 modimp(prm_853, -10);
                 cdata[prm_853].state = 6;
                 cdata[prm_853].current_map = 0;
-                if (cbit(963, prm_853) == 1)
+                if (cdata[prm_853].is_escorted() == 1)
                 {
                     evadd(15, cdata[prm_853].id);
                     cdata[prm_853].state = 0;
                 }
-                if (cbit(971, prm_853) == 1)
+                if (cdata[prm_853].is_escorted_in_sub_quest() == 1)
                 {
                     cdata[prm_853].state = 0;
                 }
@@ -14513,7 +14529,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 exp_at_m141 /= 4;
             }
-            if (cbit(23, prm_853) || cbit(27, prm_853))
+            if (cdata[prm_853].splits() || cdata[prm_853].splits2())
             {
                 exp_at_m141 /= 20;
             }
@@ -14634,7 +14650,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                         || gdata_current_map == 42)
                     {
                         if (adata(20, gdata_current_map) == prm_853
-                            && cbit(976, prm_853) == 1)
+                            && cdata[prm_853].is_lord_of_dungeon() == 1)
                         {
                             evadd(5);
                         }
@@ -14654,7 +14670,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 else if (gdata_current_map == 42)
                 {
                     if (adata(20, gdata_current_map) == prm_853
-                        && cbit(976, prm_853) == 1)
+                        && cdata[prm_853].is_lord_of_dungeon() == 1)
                     {
                         evadd(5);
                     }
@@ -14712,7 +14728,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 snd(69);
             }
         }
-        if (cbit(19, prm_853) == 1)
+        if (cdata[prm_853].is_death_master() == 1)
         {
             txt(lang(
                 u8"死の宣告は無効になった。"s, u8"The death word breaks."s));
@@ -14759,7 +14775,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
 
 void end_dmghp()
 {
-    if (cbit(985, prm_853))
+    if (cdata[prm_853].is_hung_on_sand_bag())
     {
         if (is_in_fov(prm_853))
         {
@@ -14992,10 +15008,10 @@ void modheight(int cc, int delta)
 
 void cure_anorexia(int cc)
 {
-    if (cbit(986, cc) == 0)
+    if (cdata[cc].has_anorexia() == 0)
         return;
 
-    cbitmod(986, cc, 0);
+    cdata[cc].has_anorexia() = false;
     if (is_in_fov(cc) || cc < 16)
     {
         txt(lang(
@@ -15019,9 +15035,9 @@ void chara_vomit(int prm_876)
             name(prm_876) + u8"は吐いた。"s,
             name(prm_876) + u8" vomit"s + _s(prm_876) + u8"."s));
     }
-    if (cbit(978, prm_876))
+    if (cdata[prm_876].is_pregnant())
     {
-        cbitmod(978, prm_876, 0);
+        cdata[prm_876].is_pregnant() = false;
         if (is_in_fov(prm_876))
         {
             txt(lang(
@@ -15078,14 +15094,14 @@ void chara_vomit(int prm_876)
             }
         }
     }
-    if (cbit(986, prm_876) == 0)
+    if (cdata[prm_876].has_anorexia() == 0)
     {
         if ((prm_876 < 16 && cdata[prm_876].anorexia_count > 10)
             || (prm_876 >= 16 && rnd(4) == 0))
         {
             if (rnd(5) == 0)
             {
-                cbitmod(986, prm_876, 1);
+                cdata[prm_876].has_anorexia() = true;
                 if (is_in_fov(prm_876))
                 {
                     txt(lang(
@@ -15151,7 +15167,7 @@ void eatstatus(curse_state_t curse_state, int eater)
 
 int chara_anorexia(int prm_879)
 {
-    if (cbit(986, prm_879) == 0)
+    if (cdata[prm_879].has_anorexia() == 0)
     {
         return 0;
     }
@@ -15184,7 +15200,7 @@ int net_send(const std::string& prm_883, int prm_884)
 {
     std::string chattemp;
     std::string msg_at_m147;
-    if (cfg_net == 0)
+    if (config::instance().net == 0)
     {
         return 0;
     }
@@ -15263,7 +15279,7 @@ int net_read(int prm_885)
     std::string chat_ip_at_m147;
     chatnew = "";
     netbuf = "";
-    if (cfg_net == 0)
+    if (config::instance().net == 0)
     {
         return 0;
     }
@@ -15482,7 +15498,7 @@ int net_dllist(const std::string& prm_886, int prm_887)
     std::string s_at_m147;
     netinit();
     neturl(u8"http://homepage3.nifty.com/rfish/userfile/"s);
-    file_at_m147 = fs::path(u8"./user/net.tmp").generic_string();
+    file_at_m147 = filesystem::path(u8"./user/net.tmp").generic_string();
     if (fs::exists(file_at_m147))
     {
         elona_delete(file_at_m147);
@@ -15568,14 +15584,14 @@ int net_dllist(const std::string& prm_886, int prm_887)
 
 int net_dl(const std::string& prm_888, const std::string& prm_889)
 {
-    if (fs::exists(fs::path(u8"./user/"s + prm_889)))
+    if (fs::exists(filesystem::path(u8"./user/"s + prm_889)))
     {
-        elona_delete(fs::path(u8"./user/"s + prm_889));
+        elona_delete(filesystem::path(u8"./user/"s + prm_889));
     }
     neturl(u8"http://homepage3.nifty.com/rfish/userfile/"s);
-    netdlname(fs::path(u8"./user/"s + prm_889).generic_string());
+    netdlname(filesystem::path(u8"./user/"s + prm_889).generic_string());
     netload(prm_888);
-    if (!fs::exists(fs::path(u8"./user/"s + prm_889)))
+    if (!fs::exists(filesystem::path(u8"./user/"s + prm_889)))
     {
         return 0;
     }
@@ -15592,7 +15608,7 @@ void initialize_server_info()
     SDIM2(serverlist, 200);
     notesel(serverlist);
     int stat = net_read(4);
-    if (stat == 1 && cfg_serverlist == 0)
+    if (stat == 1 && config::instance().serverlist == 0)
     {
         serverlist = netbuf;
     }
@@ -15600,7 +15616,7 @@ void initialize_server_info()
     {
         {
             serverlist(0).clear();
-            std::ifstream in{fs::path(u8"./server.txt").native(),
+            std::ifstream in{filesystem::path(u8"./server.txt").native(),
                              std::ios::binary};
             std::string tmp;
             while (std::getline(in, tmp))
@@ -15615,7 +15631,7 @@ void initialize_server_info()
     cgiurl2 = strmid(netbuf, 0, p);
     cgiurl3 = strmid(netbuf, p + 1, instr(netbuf, p + 1, u8"%"s));
     {
-        std::ofstream out{fs::path(u8"./server.txt").native(),
+        std::ofstream out{filesystem::path(u8"./server.txt").native(),
                           std::ios::binary};
         out << serverlist(0) << std::endl;
     }
@@ -15665,7 +15681,7 @@ void label_1399()
         imeset(1);
     }
     inputlog = "";
-    input_number_or_text_dialog(80, windowh - inf_verh - 70, 38, 1);
+    input_text_dialog(80, windowh - inf_verh - 70, 38);
     imeset(0);
     if (inputlog == ""s)
     {
@@ -15697,7 +15713,7 @@ label_14001_internal:
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(fs::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+        picload(filesystem::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(0);
     listmax = 0;
@@ -15805,7 +15821,8 @@ label_1402_internal:
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
     gmode(2);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -15840,7 +15857,7 @@ label_1402_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, cs = i);
@@ -16032,7 +16049,7 @@ void screen_txtadv()
     gmode(2);
     for (int i = 0; i < 4; ++i)
     {
-        font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+        font(13 - en * 2);
         color(250, 250, 250);
         if (i == 0)
         {
@@ -16093,7 +16110,7 @@ void update_screen_hud()
         pos(inf_raderw + cnt * 47 + 148 + sx, inf_bary + 1);
         gcopy(3, cnt * 16, 376, 16, 16);
     }
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+    font(12 + sizefix - en * 2);
     pos(inf_raderw + 24, inf_bary + 3 + vfix - en);
     if (strlen_u(mdatan(0)) > size_t(16 - (maplevel() != ""s) * 4))
     {
@@ -16145,7 +16162,7 @@ void render_hud()
 {
     int ap3 = 0;
     int ap2 = 0;
-    font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
+    font(12 - en * 2, snail::font_t::style_t::bold);
     pos(inf_hpx, inf_hpy);
     gcopy(3, 312, 504, 104, 15);
     pos(inf_mpx, inf_mpy);
@@ -16193,7 +16210,7 @@ void render_hud()
     sy = inf_mpy - 8;
     pos(sx + 4, sy);
     bmes(""s + cdata[0].mp + u8"("s + cdata[0].max_mp + u8")"s, 255, 255, 255);
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+    font(13 - en * 2);
     sy = inf_bary + 2 + vfix;
     for (int cnt = 0; cnt < 10; ++cnt)
     {
@@ -16239,7 +16256,7 @@ void render_hud()
             mes(""s + cdata[0].dv + u8"/"s + cdata[0].pv);
         }
     }
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+    font(13 - en * 2);
     sy = inf_ver - 16;
     sx = windoww - 240;
     pos(sx, sy);
@@ -16639,7 +16656,7 @@ void render_hud()
         sy -= 20;
     }
 
-    if (autodig_enabled)
+    if (foobar_save.is_autodig_enabled)
     {
         pos(sx, sy);
         gcopy(3, 0, 416, 50 + en * 30, 15);
@@ -16718,7 +16735,15 @@ void render_hud()
             255);
         ++ap3;
     }
-    return;
+    if (config::instance().hp_bar)
+    {
+        show_hp_bar(
+            config::instance().hp_bar == 1 ? show_hp_bar_side::left_side
+                                           : show_hp_bar_side::right_side,
+            inf_clocky);
+    }
+
+    show_damage_popups(inf_ver);
 }
 
 
@@ -16729,22 +16754,22 @@ void label_1422()
     pos(0, 0);
     if (cdata[0].continuous_action_id == 5)
     {
-        picload(fs::path(u8"./graphic/anime1.bmp"));
+        picload(filesystem::path(u8"./graphic/anime1.bmp"));
     }
     if (cdata[0].continuous_action_id == 7)
     {
         if (rowactre)
         {
-            picload(fs::path(u8"./graphic/anime2.bmp"));
+            picload(filesystem::path(u8"./graphic/anime2.bmp"));
         }
     }
     if (cdata[0].continuous_action_id == 8)
     {
-        picload(fs::path(u8"./graphic/anime3.bmp"));
+        picload(filesystem::path(u8"./graphic/anime3.bmp"));
     }
     if (cdata[0].continuous_action_id == 9)
     {
-        picload(fs::path(u8"./graphic/anime4.bmp"));
+        picload(filesystem::path(u8"./graphic/anime4.bmp"));
     }
     gsel(0);
     return;
@@ -16778,7 +16803,7 @@ void label_1423()
     int w = 148;
     int h = 25;
     window2(sx, sy, w, h, 0, 5);
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
+    font(13 - en * 2, snail::font_t::style_t::bold);
     pos(sx + 43, sy + 6);
     bmes(u8"AUTO TURN"s, 235, 235, 235);
     pos(sx + 18, sy + 12);
@@ -16859,7 +16884,7 @@ void draw_caption()
 {
     int msgx = 0;
     gmode(0);
-    font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
+    font(16 - en * 2);
     color(245, 245, 245);
     msgx = 20;
     msgy = 30;
@@ -16928,7 +16953,7 @@ void label_1428()
         sy(0) = cdata[camera].position.y - scy;
         sy(1) = cdata[camera].position.y;
     }
-    if (cfg_alwayscenter)
+    if (config::instance().alwayscenter)
     {
         scx = sx + scx - inf_screenw / 2;
         scy = sy + scy - inf_screenh / 2;
@@ -16983,7 +17008,7 @@ void label_1429()
     sy(3) = cdata[0].position.y + 7;
     sy(4) = 7 - cdata[0].position.y;
     sx(3) = cdata[0].position.x - 7 - 2;
-    if (cfg_scroll)
+    if (config::instance().scroll)
     {
         repw(0) = inf_screenw + 2;
         repw(1) = scx - 1;
@@ -16997,11 +17022,11 @@ void label_1429()
         reph(0) = inf_screenh;
         reph(1) = scy;
     }
-    ly = 1 + (cfg_scroll == 0);
+    ly = 1 + (config::instance().scroll == 0);
     for (int cnt = reph(1), cnt_end = cnt + (reph); cnt < cnt_end; ++cnt)
     {
         sy = cnt;
-        lx = 1 + (cfg_scroll == 0);
+        lx = 1 + (config::instance().scroll == 0);
         if (sy < 0 || sy >= mdata(1))
         {
             for (int cnt = repw(1), cnt_end = cnt + (repw); cnt < cnt_end;
@@ -17211,7 +17236,7 @@ void label_1433()
         }
     }
     screendrawhack = 5;
-    if (cfg_env)
+    if (config::instance().env)
     {
         if (gdata_weather == 3)
         {
@@ -17408,7 +17433,7 @@ void label_1438()
     {
         return;
     }
-    scrollp = cfg_walkwait;
+    scrollp = config::instance().walkwait;
     if (mdata(6) == 1)
     {
         scrollp = 6;
@@ -17418,10 +17443,10 @@ void label_1438()
             scrollp = 9;
         }
     }
-    else if (keybd_wait > cfg_startrun)
+    else if (keybd_wait > config::instance().startrun)
     {
         scrollp = 3;
-        if (cfg_runscroll == 0)
+        if (config::instance().runscroll == 0)
         {
             return;
         }
@@ -18318,17 +18343,16 @@ void refresh_character(int cc)
     }
     else if (cdata[cc].id == 343)
     {
-        for (int i = 0; i < 30; ++i)
+        for (size_t i = 0; i < cdata[cc]._flags.size(); ++i)
         {
-            cdata(cc).flags[i] = userdata(40 + i, cdata[cc].cnpc_id);
+            cdata[cc]._flags[i] =
+                userdata(40 + i / (8 * sizeof(int)), cdata[cc].cnpc_id)
+                & (1 << (i % (8 * sizeof(int))));
         }
     }
     else
     {
-        for (int i = 0; i < 30; ++i)
-        {
-            cdata(cc).flags[i] = cbitorg(i, cdata[cc].id);
-        }
+        cdata[cc]._flags = the_character_db[cdata[cc].id]->_flags;
     }
     for (int cnt = 10; cnt < 20; ++cnt)
     {
@@ -18468,57 +18492,57 @@ void refresh_character(int cc)
                 }
                 if (rp2 == 32)
                 {
-                    cbitmod(5, cc, 1);
+                    cdata[cc].is_floating() = true;
                     continue;
                 }
                 if (rp2 == 35)
                 {
-                    cbitmod(7, cc, 1);
+                    cdata[cc].can_see_invisible() = true;
                     continue;
                 }
                 if (rp2 == 23)
                 {
-                    cbitmod(9, cc, 1);
+                    cdata[cc].is_immune_to_blindness() = true;
                     continue;
                 }
                 if (rp2 == 24)
                 {
-                    cbitmod(12, cc, 1);
+                    cdata[cc].is_immune_to_paralyzation() = true;
                     continue;
                 }
                 if (rp2 == 25)
                 {
-                    cbitmod(8, cc, 1);
+                    cdata[cc].is_immune_to_confusion() = true;
                     continue;
                 }
                 if (rp2 == 26)
                 {
-                    cbitmod(10, cc, 1);
+                    cdata[cc].is_immune_to_fear() = true;
                     continue;
                 }
                 if (rp2 == 27)
                 {
-                    cbitmod(11, cc, 1);
+                    cdata[cc].is_immune_to_sleep() = true;
                     continue;
                 }
                 if (rp2 == 28)
                 {
-                    cbitmod(13, cc, 1);
+                    cdata[cc].is_immune_to_poison() = true;
                     continue;
                 }
                 if (rp2 == 42)
                 {
-                    cbitmod(14, cc, 1);
+                    cdata[cc].can_digest_rotten_food() = true;
                     continue;
                 }
                 if (rp2 == 41)
                 {
-                    cbitmod(15, cc, 1);
+                    cdata[cc].is_protected_from_thieves() = true;
                     continue;
                 }
                 if (rp2 == 55)
                 {
-                    cbitmod(29, cc, 1);
+                    cdata[cc].cures_bleeding_quickly() = true;
                     continue;
                 }
                 if (rp2 == 52)
@@ -18565,7 +18589,7 @@ void refresh_character(int cc)
                 }
                 if (rp2 == 21 || rp2 == 45 || rp2 == 46 || rp2 == 47)
                 {
-                    cbitmod(24, cc, 1);
+                    cdata[cc].has_cursed_equipments() = true;
                     continue;
                 }
                 if (cc == 0)
@@ -18714,7 +18738,7 @@ void refresh_character(int cc)
     }
     refresh_burden_state();
     refreshspeed(cc);
-    cbitmod(981, cc, 0);
+    cdata[cc].needs_refreshing_status() = false;
 }
 
 
@@ -18895,7 +18919,7 @@ int try_to_cast_spell()
         {
             txt(lang(
                 name(cc) + u8"はマナを吸い取られた！"s,
-                name(cc) + your(cc) + u8" mana is absored."s));
+                name(cc) + your(cc) + u8" mana is absorbed."s));
         }
         if (cc == 0)
         {
@@ -19247,7 +19271,7 @@ void label_1520(int cc)
             cc,
             rnd(cdata[cc].hp * (1 + cdata[cc].bleeding / 4) / 100 + 3) + 1,
             -13);
-        healcon(cc, 9, 1 + cbit(29, cc) * 3);
+        healcon(cc, 9, 1 + cdata[cc].cures_bleeding_quickly() * 3);
         if (cdata[cc].bleeding > 0)
         {
             cdata[cc].emotion_icon = 109;
@@ -20763,9 +20787,9 @@ void initialize_character()
         gdata_initial_cart_limit = 80000;
         gdata_current_cart_limit = gdata_initial_cart_limit;
     }
-    if (cbit(21, rc))
+    if (cdata[rc].has_lay_hand())
     {
-        cbitmod(974, rc, 1);
+        cdata[rc].is_lay_hand_available() = true;
     }
     cm = 0;
     return;
@@ -20778,7 +20802,7 @@ void initialize_pc_character()
     cdata[0].quality = 2;
     cdata[0].relationship = 10;
     cdata[0].original_relationship = 10;
-    cbitmod(967, 0, 1);
+    cdata[0].has_own_sprite() = true;
     flt();
     itemcreate(0, 333, -1, -1, 0);
     inv[ci].number = 8;
@@ -20875,11 +20899,11 @@ void label_1539()
 
 void label_15380()
 {
-    cbitmod(972, rc, 0);
-    cbitmod(973, rc, 0);
-    cbitmod(978, rc, 0);
-    cbitmod(980, rc, 0);
-    cbitmod(986, rc, 0);
+    cdata[rc].will_explode_soon() = false;
+    cdata[rc].is_sentenced_daeth() = false;
+    cdata[rc].is_pregnant() = false;
+    cdata[rc].is_contracting_with_reaper() = false;
+    cdata[rc].has_anorexia() = false;
     cdata[rc].hp = cdata[rc].max_hp / 3;
     cdata[rc].mp = cdata[rc].max_mp / 3;
     cdata[rc].sp = cdata[rc].max_sp / 3;
@@ -20895,7 +20919,7 @@ void label_15380()
 
 void label_15390()
 {
-    cbitmod(980, rc, 0);
+    cdata[rc].is_contracting_with_reaper() = false;
     rowactend(rc);
     cdata[rc].poisoned = 0;
     cdata[rc].sleep = 0;
@@ -20979,7 +21003,7 @@ void clear_background_in_character_making()
 {
     gsel(4);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/void.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/void.bmp"), 1);
     gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gsel(0);
     gmode(0);
@@ -21337,7 +21361,7 @@ void initialize_set_of_random_generation()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{fs::path(u8"./data/book.txt").native(),
+        std::ifstream in{filesystem::path(u8"./data/book.txt").native(),
                          std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -21533,7 +21557,7 @@ void label_1573()
     {
         if (rc < 16)
         {
-            if (cbit(967, rc) == 1)
+            if (cdata[rc].has_own_sprite() == 1)
             {
                 create_pcpic(rc, true);
             }
@@ -21554,11 +21578,11 @@ void label_1573()
             return;
         }
     }
-    if (cbit(969, rc))
+    if (cdata[rc].is_contracting())
     {
         return;
     }
-    if (cbit(23, rc) || cbit(27, rc))
+    if (cdata[rc].splits() || cdata[rc].splits2())
     {
         if (rnd(6))
         {
@@ -21629,8 +21653,11 @@ void label_1573()
                         if (rnd(3))
                         {
                             txtef(9);
-                            txt(name(catitem) + u8"は"s + itemname(ci)
-                                + u8"をぺろぺろと舐めた。"s);
+                            txt(lang(
+                                name(catitem) + u8"は"s + itemname(ci)
+                                    + u8"をぺろぺろと舐めた。"s,
+                                name(catitem) + " licks " + itemname(ci)
+                                    + "."));
                             ibitmod(8, ci, 1);
                             reftype = the_item_db[inv[ci].id]->category;
                             encadd(
@@ -21664,7 +21691,8 @@ void label_1573()
         }
         inv[ci].number = 0;
     }
-    if (cdata[rc].quality >= 4 || rnd(20) == 0 || cbit(17, rc) == 1 || rc < 16)
+    if (cdata[rc].quality >= 4 || rnd(20) == 0 || cdata[rc].drops_gold() == 1
+        || rc < 16)
     {
         if (cdata[rc].gold > 0)
         {
@@ -21674,8 +21702,9 @@ void label_1573()
                 54,
                 cdata[rc].position.x,
                 cdata[rc].position.y,
-                cdata[rc].gold / (1 + 3 * (cbit(17, rc) == 0)));
-            cdata[rc].gold -= cdata[rc].gold / (1 + 3 * (cbit(17, rc) == 0));
+                cdata[rc].gold / (1 + 3 * (cdata[rc].drops_gold() == 0)));
+            cdata[rc].gold -=
+                cdata[rc].gold / (1 + 3 * (cdata[rc].drops_gold() == 0));
         }
     }
 
@@ -22032,8 +22061,8 @@ void label_1573()
         inv[ci].param1 = cdata[rc].shop_store_id;
         inv[ci].own_state = 2;
     }
-    if (rollanatomy == 1 || cdata[rc].quality >= 4 || 0 || cbit(960, rc) == 1
-        || 0)
+    if (rollanatomy == 1 || cdata[rc].quality >= 4 || 0
+        || cdata[rc].is_livestock() == 1 || 0)
     {
         flt();
         int stat =
@@ -22041,7 +22070,7 @@ void label_1573()
         if (stat != 0)
         {
             remain_make(ci, rc);
-            if (cbit(960, rc) == 1)
+            if (cdata[rc].is_livestock() == 1)
             {
                 if (sdata(161, 0) != 0)
                 {
@@ -22671,7 +22700,7 @@ void label_1580()
             item_identify(
                 inv[ci], identification_state_t::completely_identified);
             itemmemory(0, inv[ci].id) = 1;
-            if (cfg_hideautoidentify <= 1)
+            if (config::instance().hideautoidentify <= 1)
             {
                 txt(lang(
                     u8"バックパックの中の"s + s + u8"は"s + itemname(ci)
@@ -22686,7 +22715,7 @@ void label_1580()
         {
             if (p > rnd(p(1)))
             {
-                if (cfg_hideautoidentify == 0)
+                if (config::instance().hideautoidentify == 0)
                 {
                     txt(lang(
                         u8"バックパックの中の"s + itemname(ci) + u8"は"s
@@ -23247,7 +23276,7 @@ void lovemiracle(int prm_932)
 
 void eat_rotten_food()
 {
-    if (cbit(14, cc) == 1)
+    if (cdata[cc].can_digest_rotten_food() == 1)
     {
         txt(lang(
             u8"しかし、"s + name(cc) + u8"は何ともなかった。"s,
@@ -24846,14 +24875,14 @@ void get_pregnant()
         }
         return;
     }
-    if (cbit(978, tc) == 0)
+    if (cdata[tc].is_pregnant() == 0)
     {
         txtef(5);
         txt(lang(
             name(tc) + u8"は寄生された。"s,
             name(tc) + u8" get"s + _s(tc) + u8" pregnant."s));
         animeload(8, tc);
-        cbitmod(978, tc, 1);
+        cdata[tc].is_pregnant() = true;
     }
     return;
 }
@@ -25235,7 +25264,7 @@ int dist_town()
 
 void map_initcustom(const std::string& prm_934)
 {
-    fmapfile = fs::path(u8"./map/"s + prm_934).generic_string();
+    fmapfile = filesystem::path(u8"./map/"s + prm_934).generic_string();
     ctrl_file(5);
     map_tileset(mdata(12));
     nooracle = 1;
@@ -25298,7 +25327,7 @@ void map_reload(const std::string& prm_935)
 {
     int y_at_m166 = 0;
     int x_at_m166 = 0;
-    fmapfile = fs::path(u8"./map/"s + prm_935).generic_string();
+    fmapfile = filesystem::path(u8"./map/"s + prm_935).generic_string();
     ctrl_file(16);
     for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
     {
@@ -29082,7 +29111,8 @@ void use_house_board()
         for (int cnt = 0; cnt < 8; ++cnt)
         {
             pos(cnt % 4 * 180, cnt / 4 * 300);
-            picload(fs::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+            picload(
+                filesystem::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
         }
         gsel(0);
         snd(26);
@@ -29117,10 +29147,10 @@ void use_house_board()
         {
             x = wx + 45 + cnt / 2 * 190;
             y = wy + 68 + cnt % 2 * 18;
-            font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+            font(12 + sizefix - en * 2);
             pos(x, y);
             mes(s(cnt));
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
             for (int cnt = 0, cnt_end = cnt + (clamp(p(cnt) / 1000, 1, 10));
                  cnt < cnt_end;
                  ++cnt)
@@ -29129,7 +29159,7 @@ void use_house_board()
                 bmes(lang(u8"★"s, u8"*"s), 255, 255, 50);
             }
         }
-        font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+        font(12 + sizefix - en * 2);
         listmax = 10;
         sort_list_by_column1();
         for (int cnt = 0; cnt < 10; ++cnt)
@@ -29159,7 +29189,7 @@ void use_house_board()
         while (1)
         {
             redraw();
-            await(cfg_wait1);
+            await(config::instance().wait1);
             key_check();
             cursor_check();
             if (key == key_cancel)
@@ -29416,8 +29446,7 @@ void use_house_board()
             if (cdata[0].gold < calchirecost(tc) * 20)
             {
                 txt(lang(
-                    u8"お金が足りない…"s,
-                    u8"You dont't have enough money..."s));
+                    u8"お金が足りない…"s, u8"You don't have enough money..."s));
             }
             else
             {
@@ -29719,7 +29748,7 @@ void show_shop_log()
     {
         ctrl_file(4, u8"shoptmp.s2");
     }
-    if (fs::exists(fs::path(u8"./tmp") / u8"shop5.s2"))
+    if (fs::exists(filesystem::path(u8"./tmp") / u8"shop5.s2"))
     {
         ctrl_file(3, u8"shop5.s2");
     }
@@ -29780,7 +29809,7 @@ void show_shop_log()
     }
     if (sold == 0)
     {
-        if (cfg_hideshopresult == 0)
+        if (config::instance().hideshopresult == 0)
         {
             txt(lang(
                 u8"[店]"s + customer + u8"人が来客したが、"s + cdatan(0, worker)
@@ -29791,7 +29820,7 @@ void show_shop_log()
     }
     else
     {
-        if (cfg_hideshopresult <= 1)
+        if (config::instance().hideshopresult <= 1)
         {
             s = ""s + income + lang(u8"gold"s, u8" gold pieces"s);
             if (income(1) != 0)
@@ -30098,7 +30127,7 @@ void update_ranch()
         {
             continue;
         }
-        if (cbit(960, cnt) == 0)
+        if (cdata[cnt].is_livestock() == 0)
         {
             continue;
         }
@@ -30139,7 +30168,7 @@ void update_ranch()
             int stat = characreate(-1, dbid, 4 + rnd(11), 4 + rnd(8));
             if (stat != 0)
             {
-                cbitmod(960, rc, 1);
+                cdata[rc].is_livestock() = true;
                 ++livestock;
             }
         }
@@ -30151,7 +30180,7 @@ void update_ranch()
             {
                 continue;
             }
-            if (cbit(960, cnt) == 0)
+            if (cdata[cnt].is_livestock() == 0)
             {
                 continue;
             }
@@ -30552,7 +30581,7 @@ void exit_map()
     gdata(171) = 0;
     if (mdata(6) == 5)
     {
-        if (cfg_extrahelp)
+        if (config::instance().extrahelp)
         {
             if (gdata(201) == 0)
             {
@@ -30904,7 +30933,7 @@ void exit_map()
     else
     {
         label_1738();
-        if (fs::exists(fs::path(u8"./tmp/mdata_"s + mid + u8".s2")))
+        if (fs::exists(filesystem::path(u8"./tmp/mdata_"s + mid + u8".s2")))
         {
             ctrl_file(11);
         }
@@ -31034,7 +31063,7 @@ void label_1745()
                 {
                     continue;
                 }
-                if (cbit(964, cnt) == 1)
+                if (cdata[cnt].is_temporary() == 1)
                 {
                     if (rnd(2))
                     {
@@ -31092,7 +31121,7 @@ void label_1745()
                 {
                     continue;
                 }
-                if (cbit(964, cnt) == 1)
+                if (cdata[cnt].is_temporary() == 1)
                 {
                     cdata[cnt].state = 0;
                     map(cdata[cnt].position.x, cdata[cnt].position.y, 1) = 0;
@@ -31192,7 +31221,7 @@ void label_1746()
     if (mdata(2) != mtilefilecur)
     {
         pos(0, 0);
-        picload(fs::path(u8"./graphic/map"s + mdata(2) + u8".bmp"), 1);
+        picload(filesystem::path(u8"./graphic/map"s + mdata(2) + u8".bmp"), 1);
         mtilefilecur = mdata(2);
         initialize_map_chip();
     }
@@ -32555,7 +32584,7 @@ void label_1754()
         {
             if (cdata[0].nutrition < 5000)
             {
-                if (cbit(986, 0) == 0)
+                if (cdata[0].has_anorexia() == 0)
                 {
                     snd(18);
                     txt(lang(
@@ -32742,7 +32771,7 @@ void label_1755()
             if (stat != 0)
             {
                 cdata[rc].character_role = 3;
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
         }
         {
@@ -32751,7 +32780,7 @@ void label_1755()
             if (stat != 0)
             {
                 cdata[rc].character_role = 3;
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
         }
         {
@@ -32759,8 +32788,8 @@ void label_1755()
             int stat = characreate(-1, 174, 38, 19);
             if (stat != 0)
             {
-                cbitmod(991, rc, 1);
-                cbitmod(985, rc, 1);
+                cdata[rc].only_christmas() = true;
+                cdata[rc].is_hung_on_sand_bag() = true;
                 cdatan(0, rc) =
                     lang(u8"オパートスの信者"s, u8"Opatos Fanatic"s);
                 if (rnd(2))
@@ -32779,7 +32808,7 @@ void label_1755()
             int stat = characreate(-1, 347, 35, 19);
             if (stat != 0)
             {
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
         }
         {
@@ -32787,7 +32816,7 @@ void label_1755()
             int stat = characreate(-1, 347, 37, 18);
             if (stat != 0)
             {
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
         }
         {
@@ -32795,7 +32824,7 @@ void label_1755()
             int stat = characreate(-1, 347, 37, 21);
             if (stat != 0)
             {
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
         }
         {
@@ -32803,7 +32832,7 @@ void label_1755()
             int stat = characreate(-1, 347, 39, 20);
             if (stat != 0)
             {
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
         }
         {
@@ -32811,7 +32840,7 @@ void label_1755()
             int stat = characreate(-1, 347, 38, 21);
             if (stat != 0)
             {
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
         }
         {
@@ -32820,7 +32849,7 @@ void label_1755()
             if (stat != 0)
             {
                 cdata[rc].ai_calm = 3;
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
                 cdata[rc].character_role = 1002;
                 cdata[rc].shop_rank = 10;
                 cdatan(0, rc) = snfood(cdatan(0, rc));
@@ -32834,7 +32863,7 @@ void label_1755()
                 cdata[rc].ai_calm = 3;
                 cdata[rc].relationship = 0;
                 cdata[rc].original_relationship = 0;
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
                 cdata[rc].character_role = 1018;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = randomname();
@@ -32851,7 +32880,7 @@ void label_1755()
                 cdata[rc].ai_calm = 3;
                 cdata[rc].relationship = 0;
                 cdata[rc].original_relationship = 0;
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
                 cdata[rc].character_role = 1018;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = randomname();
@@ -32869,7 +32898,7 @@ void label_1755()
                 cdata[rc].character_role = 1007;
                 cdata[rc].shop_rank = 10;
                 cdatan(0, rc) = snblack(cdatan(0, rc));
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
         }
         {
@@ -32880,7 +32909,7 @@ void label_1755()
                 cdata[rc].ai_calm = 3;
                 cdata[rc].relationship = 0;
                 cdata[rc].original_relationship = 0;
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
                 cdata[rc].character_role = 1022;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = randomname();
@@ -32897,7 +32926,7 @@ void label_1755()
                 cdata[rc].ai_calm = 3;
                 cdata[rc].relationship = 0;
                 cdata[rc].original_relationship = 0;
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
                 cdata[rc].character_role = 1022;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = randomname();
@@ -32912,14 +32941,14 @@ void label_1755()
             int stat = characreate(-1, 349, -3, 0);
             if (stat != 0)
             {
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
             flt();
             {
                 int stat = characreate(-1, 350, -3, 0);
                 if (stat != 0)
                 {
-                    cbitmod(991, rc, 1);
+                    cdata[rc].only_christmas() = true;
                 }
             }
         }
@@ -32929,7 +32958,7 @@ void label_1755()
             int stat = characreate(-1, 326, -3, 0);
             if (stat != 0)
             {
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
         }
         for (int cnt = 0; cnt < 7; ++cnt)
@@ -32938,14 +32967,14 @@ void label_1755()
             int stat = characreate(-1, 335, -3, 0);
             if (stat != 0)
             {
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
             {
                 flt();
                 int stat = characreate(-1, 185, -3, 0);
                 if (stat != 0)
                 {
-                    cbitmod(991, rc, 1);
+                    cdata[rc].only_christmas() = true;
                 }
             }
             {
@@ -32953,7 +32982,7 @@ void label_1755()
                 int stat = characreate(-1, 274, -3, 0);
                 if (stat != 0)
                 {
-                    cbitmod(991, rc, 1);
+                    cdata[rc].only_christmas() = true;
                 }
             }
             {
@@ -32961,7 +32990,7 @@ void label_1755()
                 int stat = characreate(-1, 174, -3, 0);
                 if (stat != 0)
                 {
-                    cbitmod(991, rc, 1);
+                    cdata[rc].only_christmas() = true;
                 }
             }
         }
@@ -32971,14 +33000,14 @@ void label_1755()
             int stat = characreate(-1, 332, -3, 0);
             if (stat != 0)
             {
-                cbitmod(991, rc, 1);
+                cdata[rc].only_christmas() = true;
             }
             {
                 flt();
                 int stat = characreate(-1, 185, -3, 0);
                 if (stat != 0)
                 {
-                    cbitmod(991, rc, 1);
+                    cdata[rc].only_christmas() = true;
                 }
             }
         }
@@ -32987,7 +33016,7 @@ void label_1755()
     {
         for (int cnt = 57; cnt < 245; ++cnt)
         {
-            if (cbit(991, cnt) == 1)
+            if (cdata[cnt].only_christmas() == 1)
             {
                 chara_vanquish(cnt);
             }
@@ -33229,6 +33258,7 @@ label_1857_internal:
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
+    cs_listbk();
     f = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
@@ -33245,7 +33275,7 @@ label_1857_internal:
             if (invctrl == 0)
             {
                 get_required_craft_materials();
-                font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+                font(13 - en * 2);
                 s = lang(u8"必要スキル: "s, u8"Skill needed: "s);
                 if (matval == 178)
                 {
@@ -33304,7 +33334,7 @@ label_1857_internal:
         p(1) = ipicref(i);
         prepare_item_image(p(1), 0);
         s(1) = lang(u8"アイテム["s + s + u8"]"s, u8"Make ["s + s + u8"]"s);
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
         if (elona::stoi(listn(0, p)) == -1)
         {
             p(2) = 3;
@@ -33328,7 +33358,7 @@ label_1857_internal:
     {
         redraw();
     }
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -33432,7 +33462,7 @@ void craft_material_menu()
     }
     gsel(7);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/ie_scroll.bmp"));
+    picload(filesystem::path(u8"./graphic/ie_scroll.bmp"));
     gsel(0);
     snd(92);
     drawmenu();
@@ -33477,7 +33507,8 @@ label_1861_internal:
         }
         display_key(wx + 68, wy + 66 + cnt * 19 - 2, cnt);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -33502,7 +33533,7 @@ label_1861_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -33608,7 +33639,7 @@ void atxinit()
         gsel(4);
         gmode(0);
         pos(0, 0);
-        picload(fs::path(u8"./graphic/"s + atxbg + u8".bmp"), 1);
+        picload(filesystem::path(u8"./graphic/"s + atxbg + u8".bmp"), 1);
         pos(0, inf_msgh);
         gzoom(4, 0, 0, 240, 160, windoww, windowh - inf_verh - inf_msgh);
         gmode(2);
@@ -33708,7 +33739,7 @@ label_18671_internal:
         {
             s(1) = strmid(s, 1, 2);
             s = strmid(s, 3, s(0).size() - 3);
-            font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
+            font(16 - en * 2);
             color(250, 240, 230);
             if (s(1) == u8"BL"s)
             {
@@ -33725,7 +33756,7 @@ label_18671_internal:
         }
         else
         {
-            font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
+            font(16 - en * 2);
             color(250, 240, 230);
         }
         pos(170, cnt * 20 + 120 + txtadvmsgfix);
@@ -33769,7 +33800,8 @@ label_1868_internal:
     pos(x, y);
     gcopy(2, x, y, x(1), y(1));
     gmode(2);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -33794,7 +33826,7 @@ label_1868_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(rtval, snd(40));
@@ -33955,7 +33987,8 @@ void label_1872()
         noteinfo() * 20 + 120 + txtadvmsgfix + 16,
         170 + x(1),
         noteinfo() * 20 + 120 + txtadvmsgfix + 16 + 20 * listmax);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -34011,7 +34044,7 @@ void label_1873()
         {
             txt(lang(
                 u8"幾つかの戦利品がある。"s,
-                u8"There're some items you can aquire."s));
+                u8"There're some items you can acquire."s));
             screenupdate = -1;
             update_screen();
             invsubroutine = 1;
@@ -34656,7 +34689,7 @@ void label_1879()
             cardplayeradd(0, 220, 124);
             cardplayeradd(1, 220, 240);
         }
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 1);
+        font(14 - en * 2, snail::font_t::style_t::bold);
         color(255, 255, 255);
         pos(152, 154);
         mes(lang(u8"　親"s, u8"Dealer"s));
@@ -34973,7 +35006,7 @@ int modpiety(int prm_1035)
 
 void set_npc_religion()
 {
-    if (!cdata[tc].god_id.empty() || cbit(990, tc) || tc == 0)
+    if (!cdata[tc].god_id.empty() || cdata[tc].has_learned_words() || tc == 0)
     {
         return;
     }
@@ -34982,7 +35015,7 @@ void set_npc_religion()
     randomize();
     if (cdata[tc].god_id.empty() || rnd(4) == 0)
     {
-        cbitmod(990, tc, 1);
+        cdata[tc].has_learned_words() = true;
     }
     return;
 }
@@ -35254,10 +35287,10 @@ void get_god_description()
             u8"Offering: Corpses/Guns/Machinery<p>"s);
         buff += lang(
             u8"ボーナス: 器用 / 感覚 / 銃 / 治癒 / 探知 / 宝石細工 / 鍵開け / 大工<p>"s,
-            u8"Bonus   : DEX/PER/Gun/Jweller/Lockpick/Carpentry<p>"s);
+            u8"   Bonus: DEX/PER/Gun/Jeweller/Lockpick/Carpentry<p>"s);
         buff += lang(
             u8"特殊能力: マニの分解術(自動:罠からマテリアルを取り出す)<p>"s,
-            u8"Ability : Mani's decomposition (Passive: Extracts materials<br>from traps.)<p>"s);
+            u8" Ability: Mani's decomposition (Passive: Extract materials<br>from traps.)<p>"s);
     }
     if (inv[ci].param1 == 2)
     {
@@ -35268,10 +35301,10 @@ void get_god_description()
             lang(u8"　捧げ物: 死体 / 弓<p>"s, u8"Offering: Corpses/Bows<p>"s);
         buff += lang(
             u8"ボーナス: 感覚 / 速度 / 弓 / クロスボウ / 隠密 / 魔道具<p>"s,
-            u8"Bonus   : PER/SPD/Bow/Crossbow/Stealth/Magic Device<p>"s);
+            u8"   Bonus: PER/SPD/Bow/Crossbow/Stealth/Magic Device<p>"s);
         buff += lang(
             u8"特殊能力: ルルウィの憑依(スキル:瞬間的に高速になる)<p>"s,
-            u8"Ability : Lulwy's trick (Boosts your speed for a short time.)<p>"s);
+            u8" Ability: Lulwy's trick (Boost your speed for a short time.)<p>"s);
     }
     if (inv[ci].param1 == 3)
     {
@@ -35279,13 +35312,13 @@ void get_god_description()
             u8"イツパロトルは元素を司る神です。イツパロトルを信仰した者は、魔力を大気から吸収し、元素に対する保護を受けることができます。<p><p>"s,
             u8"Itzpalt is a god of elements. Those faithful to Itzpalt are<br>protected from elemental damages and learn to absorb mana from<br>their surroundings.<p>"s);
         buff +=
-            lang(u8"　捧げ物: 死体 / 杖<p>"s, u8"Offering: Corpses/Stavse<p>"s);
+            lang(u8"　捧げ物: 死体 / 杖<p>"s, u8"Offering: Corpses/Staves<p>"s);
         buff += lang(
             u8"ボーナス: 魔力 / 瞑想 / 火炎耐性 / 冷気耐性 / 電撃耐性<p>"s,
-            u8"Bonus   : MAG/Meditation/RES Fire/RES Cold/RES Lightning<p>"s);
+            u8"   Bonus: MAG/Meditation/RES Fire/RES Cold/RES Lightning<p>"s);
         buff += lang(
             u8"特殊能力: マナの抽出(スキル:周囲の空気からマナを吸い出す)<p>"s,
-            u8"Ability : Absorb mana (Absorbs mana from the air.)<p>"s);
+            u8" Ability: Absorb mana (Absorb mana from the air.)<p>"s);
     }
     if (inv[ci].param1 == 4)
     {
@@ -35296,10 +35329,10 @@ void get_god_description()
             lang(u8"　捧げ物: 死体 / 魚<p>"s, u8"Offering: Corpses/Fish<p>"s);
         buff += lang(
             u8"ボーナス: 魅力 / 運 / 回避 / 魔力の限界 / 釣り/ 鍵開け<p>"s,
-            u8"Bonus   : CHR/LUCK/Evasion/Magic Capacity/Fishing/Lockpick<p>"s);
+            u8"   Bonus: CHR/LUCK/Evasion/Magic Capacity/Fishing/Lockpick<p>"s);
         buff += lang(
             u8"特殊能力: エヘカトル流魔術(自動:マナの消費がランダムになる)<p>"s,
-            u8"Ability : Ehekatl school of magic (Passive: randomize casting mana<br>cost.)<p>"s);
+            u8" Ability: Ehekatl school of magic (Passive: Randomize casting mana<br>cost.)<p>"s);
     }
     if (inv[ci].param1 == 5)
     {
@@ -35310,10 +35343,10 @@ void get_god_description()
             lang(u8"　捧げ物: 死体 / 鉱石<p>"s, u8"Offering: Corpses/Ores<p>"s);
         buff += lang(
             u8"ボーナス: 腕力 / 耐久 / 盾 / 重量挙げ / 採掘 / 魔道具<p>"s,
-            u8"Bonus   : STR/END/Shield/Weight Lifting/Mining/Magic Device<p>"s);
+            u8"   Bonus: STR/CON/Shield/Weight Lifting/Mining/Magic Device<p>"s);
         buff += lang(
             u8"特殊能力: オパートスの甲殻(自動:受ける物理ダメージを減らす)<p>"s,
-            u8"Ability : Opatos' shell (Passive: Reduce any physical damage you<br>receive.)<p>"s);
+            u8" Ability: Opatos' shell (Passive: Reduce any physical damage you<br>receive.)<p>"s);
     }
     if (inv[ci].param1 == 6)
     {
@@ -35324,10 +35357,10 @@ void get_god_description()
             lang(u8"　捧げ物: 死体 / 鉱石<p>"s, u8"Offering: Corpses/Ores<p>"s);
         buff += lang(
             u8"ボーナス: 意思 / 治癒 / 瞑想 / 解剖学 / 料理 / 魔道具 / 魔力の限界<p>"s,
-            u8"Bonus   : WIL/Healing/Anatomy/Cooking/Magic Device/Magic Capacity<p>"s);
+            u8"   Bonus: WIL/Healing/Anatomy/Cooking/Magic Device/Magic Capacity<p>"s);
         buff += lang(
             u8"特殊能力: ジュアの祈り(スキル:失った体力を回復)<p>"s,
-            u8"Ability : Prayer of Jure (Heal yourself.)<p>"s);
+            u8" Ability: Prayer of Jure (Heal yourself.)<p>"s);
     }
     if (inv[ci].param1 == 7)
     {
@@ -35339,10 +35372,10 @@ void get_god_description()
             u8"Offering: Corpses/Vegetables<p>"s);
         buff += lang(
             u8"ボーナス: 感覚 / 器用 / 習得 / 栽培 / 錬金術 / 裁縫 / 読書<p>"s,
-            u8"Bonus   : PER/DEX/LER/Gardening/Alchemy/Tailoring/Literacy<p>"s);
+            u8"   Bonus: PER/DEX/LER/Gardening/Alchemy/Tailoring/Literacy<p>"s);
         buff += lang(
             u8"特殊能力: 生命の輪廻(自動：腐った作物から種を取り出す)<p>"s,
-            u8"Ability : Kumiromi's recycle (Passive: Extracts seeds from rotten foods.)<p>"s);
+            u8" Ability: Kumiromi's recycle (Passive: Extract seeds from rotten foods.)<p>"s);
     }
     return;
 }
@@ -35400,7 +35433,7 @@ void label_1886()
     gsel(4);
     gmode(0);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/bg_altar.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/bg_altar.bmp"), 1);
     pos(0, 0);
     gzoom(4, 0, 0, 600, 400, windoww, windowh - inf_verh);
     gsel(0);
@@ -35426,7 +35459,7 @@ label_1887_internal:
     window2((windoww - dx) / 2 + inf_screenx, winposy(dy), dx, dy, 4, 6);
     wx = (windoww - dx) / 2 + inf_screenx;
     wy = winposy(dy);
-    font(lang(cfg_font1, cfg_font2), 18 - en * 2, 1);
+    font(18 - en * 2, snail::font_t::style_t::bold);
     pos(wx + 20, wy + 20);
     bmes(
         lang(u8"《 "s, u8"< "s)
@@ -35437,7 +35470,8 @@ label_1887_internal:
         255);
     get_god_description();
     gmes(buff, wx + 23, wy + 60, dx - 60, {30, 30, 30}, true);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
         p = cnt;
@@ -35451,7 +35485,7 @@ label_1887_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(rtval, snd(40));
@@ -35672,7 +35706,7 @@ void pray()
                 dbid = 264;
                 txt(lang(
                     u8"この追放者は連続魔法を使えるようだ。"s,
-                    u8"This exile can cast several spells in a raw."s));
+                    u8"This exile can cast several spells in a row."s));
             }
             if (cdata[0].god_id == core_god::ehekatl)
             {
@@ -35693,7 +35727,7 @@ void pray()
                 dbid = 266;
                 txt(lang(
                     u8"この防衛者は致死ダメージを受けた仲間をレイハンドで回復できるようだ。レイハンドは眠るたびに再使用可能になる。"s,
-                    u8"This defender can use Lay on hand to heal a deadly wounded ally. The ability becomes re-useable after sleeping."s));
+                    u8"This defender can use Lay on hand to heal a mortally wounded ally. The ability becomes re-useable after sleeping."s));
             }
             if (cdata[0].god_id == core_god::kumiromi)
             {
@@ -36306,7 +36340,7 @@ label_1894_internal:
         s = lang(u8"野営跡の発見"s, u8"Camping Site"s);
         buff = lang(
             u8"あなたは何者かが野営した跡を見つけた。辺りには食べ残しやがらくたが散らばっている。もしかしたら、何か役に立つものがあるかもしれない。"s,
-            u8"You discover a camping site someone left behind. Chunks of leftovers and junks remain here. You may possibly find some usefull items."s);
+            u8"You discover a camping site someone left behind. Chunks of leftovers and junks remain here. You may possibly find some useful items."s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"調べる"s, u8"(Search)"s);
         ++listmax;
@@ -36336,7 +36370,7 @@ label_1894_internal:
         s = lang(u8"不気味な夢"s, u8"Creepy Dream"s);
         buff = lang(
             u8"あなたは不気味な夢をみた。陰気な幾つもの瞳があなたを凝視し、どこからともなく笑い声がこだました。「ケラケラケラ…ミツケタヨ…ケラケラ」あなたが二度寝返りをうった後、その夢は終わった。"s,
-            u8"In your dreams, several pairs of gloomy eyes stare at you and laughter seemingly from nowhere echos around you.  \"Keh-la keh-la keh-la I found you...I found you.. keh-la keh-la keh-la\" After tossing around a couple times, the dream is gone."s);
+            u8"In your dreams, several pairs of gloomy eyes stare at you and laughter seemingly from nowhere echoes around you.  \"Keh-la keh-la keh-la I found you...I found you.. keh-la keh-la keh-la\" After tossing around a couple times, the dream is gone."s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"おかしな夢だ"s, u8"Strange..."s);
         ++listmax;
@@ -36439,7 +36473,7 @@ label_1894_internal:
         break;
     case 8:
         p = rnd(cdata[0].gold / 8 + 1);
-        if (cbit(15, 0))
+        if (cdata[0].is_protected_from_thieves())
         {
             p = 0;
         }
@@ -36540,7 +36574,7 @@ label_1894_internal:
         s = lang(u8"自然治癒力の向上"s, u8"Regeneration"s);
         buff = lang(
             u8"身体が妙に火照ってあなたは目を覚ました。気がつくと、腕にあった傷跡が完全に消えていた。"s,
-            u8"Your entire body flushs. When you wake up, a scar in your arm is gone."s);
+            u8"Your entire body flushes. When you wake up, a scar in your arm is gone."s);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"よし"s, u8"Good."s);
         ++listmax;
@@ -36608,7 +36642,7 @@ label_1894_internal:
 
 int show_random_event_window(const std::string& file)
 {
-    if (cfg_skiprandevents)
+    if (config::instance().skiprandevents)
     {
         if (listmax <= 1)
         {
@@ -36639,7 +36673,7 @@ int show_random_event_window(const std::string& file)
     gsel(7);
     gmode(0);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/"s + file + u8".bmp"), 0);
+    picload(filesystem::path(u8"./graphic/"s + file + u8".bmp"), 0);
     tx = ginfo(12);
     ty = ginfo(13);
     gsel(0);
@@ -36662,18 +36696,19 @@ label_1897_internal:
     color(240, 230, 220);
     boxl(wx + 12, wy + 6, wx + tx + 12, wy + ty + 6);
     color(0, 0, 0);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     q = lang(u8"《 "s + s + u8" 》"s, u8" < "s + s + u8" > "s);
     pos(wx + 40, wy + 16);
     color(30, 20, 10);
     bmes(q, 245, 235, 225);
     color(0, 0, 0);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     color(30, 30, 30);
     pos(wx + 24, wy + ty + 20);
     mes(buff);
     color(0, 0, 0);
     keyrange = 0;
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -36684,7 +36719,7 @@ label_1897_internal:
         key_list(cnt) = key_select(cnt);
         ++keyrange;
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
         p = cnt;
@@ -36698,7 +36733,7 @@ label_1897_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(rtval, snd(40));
@@ -36777,7 +36812,7 @@ void label_1901()
 {
     invfile = 4;
     ctrl_file(4, u8"shoptmp.s2");
-    if (fs::exists(fs::path(u8"./tmp") / u8"shop4.s2"s))
+    if (fs::exists(filesystem::path(u8"./tmp") / u8"shop4.s2"s))
     {
         ctrl_file(3, u8"shop4.s2"s);
     }
@@ -36938,7 +36973,7 @@ void label_1901()
     ctrl_file(4, u8"shop"s + invfile + u8".s2");
     ctrl_file(3, u8"shoptmp.s2");
     mode = 0;
-    if (cfg_extrahelp)
+    if (config::instance().extrahelp)
     {
         if (gdata(216) == 0)
         {
@@ -37463,7 +37498,7 @@ void window_recipe2(int val0)
     gcopy(3, 960, 288, 480, 68);
     dx_at_m183 = x_at_m183 + w_at_m183 - 500;
     dy_at_m183 = 10;
-    font(lang(cfg_font1, cfg_font2), 15 - en * 2, 1);
+    font(15 - en * 2, snail::font_t::style_t::bold);
     s_at_m183 = ""s + rpsuccessrate(rpdiff(rpid, step, -1));
     pos(dx_at_m183 + 140, dy_at_m183);
     color(30, 30, 30);
@@ -37554,20 +37589,20 @@ void window_recipe_(
     {
         s_at_m184(1) += strhint3b;
     }
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+    font(12 + sizefix - en * 2);
     pos(prm_1051 + 25 + 0, prm_1052 + prm_1054 - 43 - prm_1054 % 8);
     mes(s_at_m184(1));
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     pos(prm_1051 + prm_1053 - strlen_u(s_at_m184) * 7 - 40 - xfix2_at_m184,
         prm_1052 + prm_1054 - 65 - prm_1054 % 8);
     mes(s_at_m184);
     dx_at_m184 = prm_1051 + 35;
     dy_at_m184 = y + 48;
-    font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
+    font(12 - en * 2, snail::font_t::style_t::bold);
     pos(dx_at_m184 - 10, dy_at_m184);
     mes(lang(u8"調合の手順"s, u8"Blending Procedure"s));
     dy_at_m184 = dy_at_m184 + 18;
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+    font(13 - en * 2);
     i_at_m184 = 1;
     pos(dx_at_m184 - 10, dy_at_m184 - 2);
     gfini(prm_1053 - 60, 17);
@@ -37649,7 +37684,7 @@ void window_recipe_(
     dy_at_m184 += 30;
     if (rppage == 0)
     {
-        font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
+        font(12 - en * 2, snail::font_t::style_t::bold);
         pos(dx_at_m184 - 10, dy_at_m184);
         mes(lang(
             rpname(rpid) + u8"のレシピ"s, u8"The recipe of "s + rpname(rpid)));
@@ -37657,7 +37692,7 @@ void window_recipe_(
         pos(dx_at_m184 - 10, dy_at_m184);
         mes(lang(u8"必要なスキル:"s, u8"Required Skills:"s));
         dy_at_m184 = dy_at_m184 + 18;
-        font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+        font(13 - en * 2);
         for (int cnt = 0; cnt < 5; ++cnt)
         {
             if (rpdata(10 + cnt * 2, rpid) == 0)
@@ -37683,7 +37718,7 @@ void window_recipe_(
             color(0, 0, 0);
         }
         dy_at_m184 += 50;
-        font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
+        font(12 - en * 2, snail::font_t::style_t::bold);
         pos(dx_at_m184 - 10, dy_at_m184);
         mes(lang(u8"必要な機材:"s, u8"Required equipment:"s));
         return;
@@ -37692,11 +37727,11 @@ void window_recipe_(
     {
         return;
     }
-    font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
+    font(12 - en * 2, snail::font_t::style_t::bold);
     pos(dx_at_m184 - 10, dy_at_m184);
     mes(itemname(prm_1050));
     dy_at_m184 += 20;
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+    font(13 - en * 2);
     if (inv[prm_1050].identification_state
         <= identification_state_t::partly_identified)
     {
@@ -37979,7 +38014,7 @@ void label_1922()
     rpid = 0;
     gsel(3);
     pos(960, 96);
-    picload(fs::path(u8"./graphic/deco_blend.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/deco_blend.bmp"), 1);
     gsel(0);
     clear_rprefmat();
 label_1923:
@@ -38115,7 +38150,7 @@ label_1925_internal:
         (windoww - 780) / 2 + inf_screenx, winposy(445), 380, 432, 74);
     display_topic(lang(u8"レシピの名称"s, u8"Name"s), wx + 28, wy + 30);
     s = ""s + listmax + u8" recipes"s;
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     pos(wx + 130, wy + wh - 65 - wh % 8);
     mes(s);
     keyrange = 0;
@@ -38148,7 +38183,8 @@ label_1925_internal:
         pos(wx + 317, wy + 60 + cnt * 19);
         gcopy(3, 64 + (4 - rpdiff(rpid, -1, -1) / 25) * 16, 624, 16, 16);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -38177,7 +38213,7 @@ label_1925_internal:
     pos(wx + 10, wy + wh - 100);
     gcopy(3, 960, 96, 80, 90);
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -38248,7 +38284,7 @@ label_1928_internal:
         (windoww - 780) / 2 + inf_screenx, winposy(445), 380, 432, 74);
     display_topic(lang(u8"アイテムの名称"s, u8"Name"s), wx + 28, wy + 30);
     s = ""s + listmax + u8" items"s;
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     pos(wx + 130, wy + wh - 65 - wh % 8);
     mes(s);
     keyrange = 0;
@@ -38268,7 +38304,8 @@ label_1928_internal:
             gfdec2(12, 14, 16);
         }
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -38320,7 +38357,7 @@ label_1928_internal:
     pos(wx + 10, wy + wh - 100);
     gcopy(3, 960, 96, 80, 90);
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -38577,7 +38614,7 @@ label_19341_internal:
                 {
                     txt(lang(
                         u8"調合に必要な材料が見つからない。"s,
-                        u8"A requied material cannot be found."s));
+                        u8"A required material cannot be found."s));
                     break;
                 }
                 label_1933();
@@ -38602,7 +38639,7 @@ label_19341_internal:
     {
         txt(lang(
             u8"調合に必要な材料が見つからない。"s,
-            u8"A requied material cannot be found."s));
+            u8"A required material cannot be found."s));
         rowactend(cc);
         return;
     }
@@ -38846,8 +38883,11 @@ std::string txtitemoncell(int prm_1055, int prm_1056)
 {
     elona_vector1<int> p_at_m185;
     elona_vector1<int> i_at_m185;
-    int stat = cell_itemoncell(prm_1055, prm_1056);
-    if (stat <= 3)
+    const auto item_info = cell_itemoncell({prm_1055, prm_1056});
+    const auto number = item_info.first;
+    const auto item = item_info.second;
+
+    if (number <= 3)
     {
         if (map(prm_1055, prm_1056, 5) < 0)
         {
@@ -38873,15 +38913,15 @@ std::string txtitemoncell(int prm_1055, int prm_1056)
         }
         else
         {
-            rtvaln = itemname(rtval(1));
+            rtvaln = itemname(item);
         }
-        if (inv[rtval(1)].own_state <= 0)
+        if (inv[item].own_state <= 0)
         {
             return lang(
                 rtvaln + u8"が落ちている。"s,
                 u8"You see "s + rtvaln + u8" here."s);
         }
-        else if (inv[rtval(1)].own_state == 3)
+        else if (inv[item].own_state == 3)
         {
             return lang(
                 rtvaln + u8"が設置されている。"s,
@@ -38897,8 +38937,8 @@ std::string txtitemoncell(int prm_1055, int prm_1056)
     else
     {
         return lang(
-            u8"ここには"s + rtval + u8"種類のアイテムがある。"s,
-            u8"There are "s + rtval + u8" items lying here."s);
+            u8"ここには"s + number + u8"種類のアイテムがある。"s,
+            u8"There are "s + number + u8" items lying here."s);
     }
 }
 
@@ -38910,7 +38950,7 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
     int i_at_m186 = 0;
     int p_at_m186 = 0;
     dy_at_m186 = 0;
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     if (prm_1059 == 0)
     {
         if (fov_los(
@@ -38934,7 +38974,8 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
     if (map(prm_1057, prm_1058, 1) != 0)
     {
         i_at_m186 = map(prm_1057, prm_1058, 1) - 1;
-        if (cbit(6, i_at_m186) == 0 || cbit(7, 0) || cdata[i_at_m186].wet)
+        if (cdata[i_at_m186].is_invisible() == 0 || cdata[0].can_see_invisible()
+            || cdata[i_at_m186].wet)
         {
             tc = i_at_m186;
             s = txttargetlevel(cc, tc);
@@ -39050,7 +39091,7 @@ int key_direction()
 
 void label_1942()
 {
-    if (cfg_extrahelp)
+    if (config::instance().extrahelp)
     {
         if (gdata(217) == 0)
         {
@@ -39080,7 +39121,7 @@ void label_1942()
         u8"You stepped into the gate. The gate disappears."s));
     --inv[ci].number;
     cell_refresh(inv[ci].position.x, inv[ci].position.y);
-    if (cfg_net == 0)
+    if (config::instance().net == 0)
     {
         if (jp)
         {
@@ -39109,13 +39150,13 @@ void label_1942()
         {
             txt(lang(
                 u8"ファイルの取得に失敗した。"s,
-                u8"Failed to retreive designated files."s));
+                u8"Failed to retrieve designated files."s));
             update_screen();
             pc_turn(false);
         }
     }
     userfile = u8"temp.eum"s;
-    bload(fs::path(u8"./user/"s + userfile), headtemp, 1024);
+    bload(filesystem::path(u8"./user/"s + userfile), headtemp, 1024);
     notesel(headtemp);
     noteget(s, 5);
     noteget(s(1), 6);
@@ -39146,14 +39187,15 @@ label_19431_internal:
     cc = 0;
     cs_bk = -1;
     SDIM2(headtemp, 1024);
-    const auto base_dir = fs::path("./user");
+    const auto base_dir = filesystem::path("./user");
     const auto pattern =
         comctrl == 1 ? std::regex{u8R"(.*\.ept)"} : std::regex{u8R"(.*\.eum)"};
     for (const auto& entry : filesystem::dir_entries{
              base_dir, filesystem::dir_entries::type::file, pattern})
     {
         const auto path = entry.path();
-        if (path == fs::path(u8"temp.enum") || path == fs::path(u8"temp.ept"))
+        if (path == filesystem::path(u8"temp.enum")
+            || path == filesystem::path(u8"temp.ept"))
             continue;
         bload(path, headtemp, 1024);
         notesel(headtemp);
@@ -39169,7 +39211,7 @@ label_19431_internal:
         ++listmax;
         noteunsel();
     }
-    if (cfg_net != 0)
+    if (config::instance().net != 0)
     {
         if (comctrl == 1)
         {
@@ -39244,7 +39286,8 @@ label_1945_internal:
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -39263,7 +39306,7 @@ label_1945_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -39277,7 +39320,7 @@ label_1945_internal:
                 u8"Selected item is incompatible."s));
             goto label_1944_internal;
         }
-        folder = fs::path(u8"./user/").generic_string();
+        folder = filesystem::path(u8"./user/").generic_string();
         if (listn(1, p) == u8"net"s)
         {
             if (comctrl == 1)
@@ -39326,7 +39369,7 @@ label_1945_internal:
             if (getkey(snail::key::backspace))
             {
                 userfile = listn(1, cs + pagesize * page);
-                if (!fs::exists(fs::path(u8"./user/"s + userfile)))
+                if (!fs::exists(filesystem::path(u8"./user/"s + userfile)))
                 {
                     goto label_1944_internal;
                 }
@@ -39337,7 +39380,7 @@ label_1945_internal:
                 rtval = show_prompt(promptx, prompty, 160);
                 if (rtval == 0)
                 {
-                    elona_delete(fs::path(u8"./user/"s + userfile));
+                    elona_delete(filesystem::path(u8"./user/"s + userfile));
                     goto label_19431_internal;
                 }
                 goto label_1944_internal;
@@ -39469,7 +39512,9 @@ label_1948_internal:
             {
                 break;
             }
-            if ((cbit(6, rc) == 0 || cbit(7, 0) || cdata[rc].wet) == 0)
+            if ((cdata[rc].is_invisible() == 0 || cdata[0].can_see_invisible()
+                 || cdata[rc].wet)
+                == 0)
             {
                 break;
             }
@@ -39522,7 +39567,7 @@ label_1948_internal:
     }
     txttargetnpc(tlocx, tlocy);
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     if (homemapmode == 1)
     {
@@ -39758,7 +39803,7 @@ label_1953_internal:
         screenupdate = -1;
         update_screen();
         keyrange = 0;
-        font(lang(cfg_font1, cfg_font2), 20 - en * 2, 1);
+        font(20 - en * 2, snail::font_t::style_t::bold);
         for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
         {
             p = pagesize * page + cnt;
@@ -39854,7 +39899,7 @@ label_1953_internal:
         render_hud();
         redraw();
     }
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     if (key == key_target)
@@ -39942,7 +39987,7 @@ label_1956_internal:
     }
     gmode(2);
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     int a{};
     stick(a);
     if (a == 256)
@@ -40028,12 +40073,12 @@ int ctrl_ally()
         }
         if (allyctrl != 1)
         {
-            if (cbit(963, cnt) == 1)
+            if (cdata[cnt].is_escorted() == 1)
             {
                 continue;
             }
         }
-        if (cbit(975, cnt))
+        if (cdata[cnt].is_ridden())
         {
             continue;
         }
@@ -40193,7 +40238,8 @@ label_1961_internal:
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -40353,7 +40399,7 @@ label_1961_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -40454,6 +40500,7 @@ label_1961_internal:
 
 void label_1964()
 {
+    // TODO: untranslated
     if (rc < 0)
     {
         rc = tc;
@@ -40511,7 +40558,7 @@ label_1965_internal:
     display_window((windoww - 400) / 2 + inf_screenx, winposy(448), 400, 448);
     s = u8"分析結果"s;
     display_topic(s, wx + 28, wy + 36);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -40526,7 +40573,7 @@ label_1965_internal:
     redraw();
 label_1966_internal:
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     p = -1;
@@ -40590,7 +40637,7 @@ void label_1968()
     windowanime(wx, wy, ww, wh, 10, 4);
     gsel(3);
     pos(960, 96);
-    picload(fs::path(u8"./graphic/deco_feat.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/deco_feat.bmp"), 1);
     gsel(0);
     windowshadow = 1;
     return;
@@ -40758,7 +40805,7 @@ label_196901_internal:
         }
         listn(0, cnt) = s;
     }
-    if (cbit(16, tc) == 1)
+    if (cdata[tc].is_incognito() == 1)
     {
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
@@ -40767,7 +40814,7 @@ label_196901_internal:
                    u8"You are disguising yourself."s);
         ++listmax;
     }
-    if (cbit(978, tc) == 1)
+    if (cdata[tc].is_pregnant() == 1)
     {
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
@@ -40775,7 +40822,7 @@ label_196901_internal:
             + lang(u8"あなたは寄生されている"s, u8"You are pregnant."s);
         ++listmax;
     }
-    if (cbit(986, tc) == 1)
+    if (cdata[tc].has_anorexia() == 1)
     {
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
@@ -40985,7 +41032,8 @@ label_1970_internal:
         s = cnven(cdatan(0, tc)) + lang(u8"の特性"s, u8"'s Trait"s);
     }
     display_note(s, 50);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -41049,7 +41097,7 @@ label_1970_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_INDEX(p);
@@ -41395,7 +41443,7 @@ label_1973_internal:
     }
     gsel(4);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/book.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/book.bmp"), 1);
     gsel(0);
     pos(wx, wy);
     gcopy(4, 0, 0, 736, 448);
@@ -41413,7 +41461,7 @@ label_1973_internal:
         {
             s(1) = strmid(s, 1, 2);
             s = strmid(s, 3, s(0).size() - 3);
-            font(lang(cfg_font1, cfg_font2), 10 + en - en * 2, 1);
+            font(10 + en - en * 2, snail::font_t::style_t::bold);
             color(0, 0, 200);
             if (s(1) == u8"QL"s)
             {
@@ -41430,24 +41478,24 @@ label_1973_internal:
             if (s(1) == u8"RE"s)
             {
                 color(100, 0, 0);
-                font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+                font(12 + sizefix - en * 2);
             }
             if (s(1) == u8"BL"s)
             {
                 color(0, 0, 100);
-                font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+                font(12 + sizefix - en * 2);
             }
         }
         else
         {
-            font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+            font(12 + sizefix - en * 2);
         }
         pos(x, y);
         mes(s);
         color(0, 0, 0);
         if (p % 20 == 0)
         {
-            font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+            font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
             pos(x + 90, y + 330);
             mes(u8"- "s + (p / 20 + 1) + u8" -"s);
             if (p % 40 == 20)
@@ -41462,7 +41510,7 @@ label_1973_internal:
     }
 label_1974_internal:
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     if (menucycle == 1)
@@ -41540,7 +41588,7 @@ label_1974_internal:
 
 void show_quest_board()
 {
-    if (cfg_extrahelp)
+    if (config::instance().extrahelp)
     {
         if (gdata(204) == 0)
         {
@@ -41600,7 +41648,7 @@ void show_quest_board()
     sort_list_by_column1();
     gsel(3);
     pos(960, 96);
-    picload(fs::path(u8"./graphic/deco_board.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/deco_board.bmp"), 1);
     gsel(0);
     gsel(4);
     fillbg(3, 960, 96, 128, 128);
@@ -41637,7 +41685,7 @@ label_1978_internal:
     pos(0, 0);
     gcopy(4, 0, 0, windoww, inf_ver);
     gmode(2);
-    font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
+    font(16 - en * 2);
     pos(wx + ww + 20, wy);
     bmes(u8"Page "s + (page + 1) + u8"/"s + (pagemax + 1), 255, 255, 255);
     keyrange = 0;
@@ -41656,6 +41704,7 @@ label_1978_internal:
         gfdec2(12, 14, 16);
         display_key(wx + 70, y - 2, cnt);
     }
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         y = wy + cnt * 120 + 20;
@@ -41668,7 +41717,7 @@ label_1978_internal:
         tc = qdata(0, rq);
         set_quest_data(0);
         p = pagesize * page + cnt;
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
         cs_list(cs == cnt, s(3), wx + 96, y - 1, 19);
         s(2) = u8"("s + nquestdate + u8")"s;
         pos(wx + 344, y + 2);
@@ -41704,7 +41753,7 @@ label_1978_internal:
             dy = 0;
             if (p > 5)
             {
-                font(lang(cfg_font1, cfg_font2), 10 - en * 2, 0);
+                font(10 - en * 2);
                 dy = -3;
             }
             for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
@@ -41719,7 +41768,7 @@ label_1978_internal:
             mes(lang(u8"★?"s, u8"$ x "s) + p);
         }
         color(0, 0, 0);
-        font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+        font(13 - en * 2);
         pos(wx + 20, y + 20);
         mes(buff);
     }
@@ -41728,7 +41777,7 @@ label_1978_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -41833,7 +41882,7 @@ int label_1980()
         {
             continue;
         }
-        if (cbit(971, cnt) == 1)
+        if (cdata[cnt].is_escorted_in_sub_quest() == 1)
         {
             continue;
         }
@@ -41890,7 +41939,8 @@ label_1982_internal:
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -41946,7 +41996,7 @@ label_1982_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -42037,7 +42087,8 @@ label_1986_internal:
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -42071,7 +42122,7 @@ label_1986_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -42180,7 +42231,8 @@ label_1990_internal:
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -42226,7 +42278,7 @@ label_1990_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -42257,34 +42309,6 @@ label_1990_internal:
 
 
 
-void fix_wish()
-{
-    if (debug::voldemort)
-    {
-        const auto pos = inputlog(0).find_first_not_of(u8"0123456789");
-        if (pos != std::string::npos)
-        {
-            inputlog = inputlog(0).substr(pos);
-        }
-    }
-    if (jp)
-    {
-        inputlog = strutil::remove_str(inputlog, u8",");
-        inputlog = strutil::remove_str(inputlog, u8" ");
-        inputlog = strutil::remove_str(inputlog, u8"　");
-    }
-    else
-    {
-        inputlog = strutil::to_lower(inputlog(0));
-    }
-    inputlog = strutil::remove_str(inputlog, lang(u8"アイテム", u8"item"));
-    inputlog = strutil::remove_str(inputlog, lang(u8"スキル", u8"skill "));
-    inputlog = strutil::remove_str(inputlog, lang(u8"スキル", u8"skill"));
-    return;
-}
-
-
-
 int select_alias(int val0)
 {
     cs = 0;
@@ -42303,7 +42327,7 @@ int select_alias(int val0)
                 (windoww - 400) / 2 + inf_screenx, winposy(458), 400, 458);
             display_topic(
                 lang(u8"異名の候補"s, u8"Alias List"s), wx + 28, wy + 30);
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
             for (int cnt = 0; cnt < 17; ++cnt)
             {
                 key_list(cnt) = key_select(cnt);
@@ -42331,7 +42355,7 @@ int select_alias(int val0)
             list(0, 0) = 0;
         }
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);
@@ -42359,639 +42383,6 @@ int select_alias(int val0)
             return 0;
         }
     }
-}
-
-
-
-void wish_end()
-{
-    s = lang(
-        cdatan(1, 0) + cdatan(0, 0) + u8"は狂喜して叫んだ。「"s + inputlog
-            + u8"！！」"s + txtcopy,
-        cdatan(1, 0) + u8" "s + cdatan(0, 0) + u8" goes wild with joy, \""s
-            + inputlog + u8"!!\" "s + cnven(txtcopy));
-    if (gdata_wizard == 0)
-    {
-        if (wishfilter == 0 || 0)
-        {
-            net_send(u8"wish"s + s);
-            wishfilter = 1;
-        }
-    }
-    return;
-}
-
-
-
-void wish_for_character()
-{
-    inputlog = strutil::remove_str(inputlog(0), u8"summon");
-    select_wished_character();
-    flt();
-    characreate(-1, dbid, cdata[0].position.x, cdata[0].position.y);
-    cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
-    txt(cdatan(0, rc) + " is summoned.");
-    wish_end();
-    return;
-}
-
-
-
-void what_do_you_wish_for()
-{
-    int wishid = 0;
-    txtcopy = "";
-    txtef(5);
-    txt(lang(u8"何を望む？"s, u8"What do you wish for? "s));
-    inputlog = "";
-    input_number_or_text_dialog(
-        (windoww - 290) / 2 + inf_screenx, winposy(90), 16, 0);
-    txt(lang(u8"「"s + inputlog + u8"！！」"s, u8"\""s + inputlog + u8"!!\""s));
-    msgtemp = "";
-    autosave = 1 * (gdata_current_map != 35);
-    tcopy = 1;
-    if (inputlog == ""s || inputlog == u8" "s)
-    {
-        txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-        return;
-    }
-    if (en)
-    {
-        inputlog = strutil::to_lower(inputlog(0));
-    }
-    snd(24);
-    if (strutil::contains(inputlog(0), u8"中の神")
-        || strutil::contains(inputlog(0), u8"god inside"s))
-    {
-        txt(lang(
-            u8"中の神も大変…あ…中の神なんているわけないじゃない！…ねえ、聞かなかったことにしてね。"s,
-            u8"There's no God inside."s));
-        wish_end();
-        return;
-    }
-    if (strutil::contains(inputlog(0), u8"中の人")
-        || strutil::contains(inputlog(0), u8"man inside"s))
-    {
-        txt(lang(u8"中の人も大変ね。"s, u8"There's no man inside."s));
-        wish_end();
-        return;
-    }
-    if (inputlog == u8"エヘカトル"s || inputlog == u8"ehekatl"s)
-    {
-        txt(lang(u8"「うみみゅみゅぁ！」"s, u8"\"Meeewmew!\""s));
-        flt();
-        characreate(-1, 331, cdata[0].position.x, cdata[0].position.y);
-        wish_end();
-        return;
-    }
-    if (inputlog == u8"ルルウィ"s || inputlog == u8"lulwy"s)
-    {
-        txt(lang(
-            u8"「アタシを呼びつけるとは生意気ね。」"s,
-            u8"\"You dare to call my name?\""s));
-        flt();
-        characreate(-1, 306, cdata[0].position.x, cdata[0].position.y);
-        wish_end();
-        return;
-    }
-    if (inputlog == u8"オパートス"s || inputlog == u8"opatos"s)
-    {
-        txt(lang(u8"工事中。"s, u8"\"Under construction.\""s));
-        flt();
-        characreate(-1, 338, cdata[0].position.x, cdata[0].position.y);
-        wish_end();
-        return;
-    }
-    if (inputlog == u8"クミロミ"s || inputlog == u8"kumiromi"s)
-    {
-        txt(lang(u8"工事中。"s, u8"\"Under construction.\""s));
-        flt();
-        characreate(-1, 339, cdata[0].position.x, cdata[0].position.y);
-        wish_end();
-        return;
-    }
-    if (inputlog == u8"マニ"s || inputlog == u8"mani"s)
-    {
-        txt(lang(u8"工事中。"s, u8"\"Under construction.\""s));
-        flt();
-        characreate(-1, 342, cdata[0].position.x, cdata[0].position.y);
-        wish_end();
-        return;
-    }
-    if (inputlog == u8"若さ"s || inputlog == u8"若返り"s || inputlog == u8"年"s
-        || inputlog == u8"美貌"s || inputlog == u8"youth"s
-        || inputlog == u8"age"s || inputlog == u8"beauty"s)
-    {
-        txt(lang(u8"ふぅん…そんな願いでいいんだ。"s, u8"A typical wish."s));
-        cdata[0].birth_year += 20;
-        if (cdata[0].birth_year + 12 > gdata_year)
-        {
-            cdata[0].birth_year = gdata_year - 12;
-        }
-        wish_end();
-        return;
-    }
-    if (inputlog == u8"通り名"s || inputlog == u8"異名"s || inputlog == u8"aka"s
-        || inputlog == u8"title"s || inputlog == u8"name"s
-        || inputlog == u8"alias"s)
-    {
-        if (gdata_wizard)
-        {
-            txt(lang(u8"だめよ。"s, u8"*laugh*"s));
-            wish_end();
-            return;
-        }
-        txt(lang(u8"新しい異名は？"s, u8"What's your new alias?"s));
-        int stat = select_alias(0);
-        if (stat == 1)
-        {
-            txt(lang(
-                u8"あなたの新しい異名は「"s + cmaka + u8"」。満足したかしら？"s,
-                u8"You will be known as <"s + cmaka + u8">."s));
-            msgtemp = cdatan(1, 0) + cdatan(0, 0) + u8"は今後"s + cmaka
-                + u8"と名乗ることにした。"s;
-            cdatan(1, 0) = cmaka;
-        }
-        else
-        {
-            txt(lang(
-                u8"あら、そのままでいいの？"s, u8"What a waste of a wish!"s));
-            msgtemp = u8"あら、そのままでいいの？"s;
-        }
-        wish_end();
-        return;
-    }
-    if (inputlog == u8"性転換"s || inputlog == u8"性"s || inputlog == u8"異性"s
-        || inputlog == u8"sex"s)
-    {
-        if (cdata[0].sex == 0)
-        {
-            cdata[0].sex = 1;
-        }
-        else
-        {
-            cdata[0].sex = 0;
-        }
-        txt(lang(
-            name(0) + u8"は"s + i18n::_(u8"ui", u8"sex", u8"_"s + cdata[0].sex)
-                + u8"になった！ …もう後戻りはできないわよ。"s,
-            name(0) + u8" become "s
-                + i18n::_(u8"ui", u8"sex", u8"_"s + cdata[0].sex) + u8"!"s));
-        wish_end();
-        return;
-    }
-    if (inputlog == u8"贖罪"s || inputlog == u8"redemption"s
-        || inputlog == u8"atonement"s)
-    {
-        if (cdata[0].karma >= 0)
-        {
-            txt(lang(
-                u8"…罪なんて犯してないじゃない。"s, u8"You aren't a sinner."s));
-            wish_end();
-            return;
-        }
-        modify_karma(0, cdata[0].karma / 2 * -1);
-        txt(lang(
-            u8"あら…都合のいいことを言うのね。"s,
-            u8"What a convenient wish!"s));
-        wish_end();
-        return;
-    }
-    if (inputlog == u8"死"s || inputlog == u8"death"s)
-    {
-        txt(lang(u8"それがお望みなら…"s, u8"If you wish so..."s));
-        dmghp(0, 99999, -11);
-        wish_end();
-        return;
-    }
-    if (inputlog == u8"仲間"s || inputlog == u8"friend"s
-        || inputlog == u8"company"s || inputlog == u8"ally"s)
-    {
-        evadd(12);
-        wish_end();
-        return;
-    }
-    if (inputlog == u8"金"s || inputlog == u8"金貨"s || inputlog == u8"富"s
-        || inputlog == u8"財産"s || inputlog == u8"money"s
-        || inputlog == u8"gold"s || inputlog == u8"wealth"s
-        || inputlog == u8"fortune"s)
-    {
-        txtef(5);
-        txt(lang(u8"金貨が降ってきた！"s, u8"Lots of gold pieces appear."s));
-        flt();
-        itemcreate(
-            -1,
-            54,
-            cdata[0].position.x,
-            cdata[0].position.y,
-            (cdata[0].level / 3 + 1) * 10000);
-        wish_end();
-        return;
-    }
-    if (inputlog == u8"メダル"s || inputlog == u8"小さなメダル"s
-        || inputlog == u8"ちいさなメダル"s || inputlog == u8"coin"s
-        || inputlog == u8"medal"s || inputlog == u8"small coin"s
-        || inputlog == u8"small medal"s)
-    {
-        txtef(5);
-        txt(lang(u8"小さなメダルが降ってきた！"s, u8"A small coin appears."s));
-        flt();
-        itemcreate(
-            -1, 622, cdata[0].position.x, cdata[0].position.y, 3 + rnd(3));
-        wish_end();
-        return;
-    }
-    if (inputlog == u8"プラチナ"s || inputlog == u8"プラチナ硬貨"s
-        || inputlog == u8"platina"s || inputlog == u8"platinum"s)
-    {
-        txtef(5);
-        txt(lang(
-            u8"プラチナ硬貨が降ってきた！"s, u8"Platinum pieces appear."s));
-        flt();
-        itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 5);
-        wish_end();
-        return;
-    }
-    if (inputlog == u8"名声"s || inputlog == u8"fame"s)
-    {
-        txtef(5);
-        txt(u8"fame +1,000,000");
-        cdata[0].fame += 1'000'000;
-        wish_end();
-        return;
-    }
-    if (strutil::contains(inputlog(0), lang(u8"スキル"s, u8"skill"s)))
-    {
-        goto label_1999_internal;
-    }
-    if (strutil::contains(inputlog(0), lang(u8"アイテム"s, u8"item"s)))
-    {
-        goto label_1998_internal;
-    }
-    if (strutil::contains(inputlog(0), lang(u8"カード"s, u8"card"s)))
-    {
-        wish_for_card();
-        return;
-    }
-    if (debug::voldemort)
-    {
-        if (strutil::contains(inputlog(0), u8"summon"))
-        {
-            wish_for_character();
-            return;
-        }
-    }
-    if (strutil::contains(inputlog(0), lang(u8"剥製"s, u8"figure"s))
-        || strutil::contains(inputlog(0), u8"はく製"s))
-    {
-        wish_for_figure();
-        return;
-    }
-    int number_of_items;
-label_1998_internal:
-    number_of_items = elona::stoi(inputlog(0));
-    fix_wish();
-    i = 0;
-    for (int cnt = 0, cnt_end = (length(ioriginalnameref)); cnt < cnt_end;
-         ++cnt)
-    {
-        if (cnt == 0)
-        {
-            continue;
-        }
-        if (cnt == 23)
-        {
-            continue;
-        }
-        if (cnt == 290)
-        {
-            continue;
-        }
-        if (cnt == 289)
-        {
-            continue;
-        }
-        if (cnt == 361)
-        {
-            continue;
-        }
-        p = 0;
-        int cnt2 = cnt;
-        if (ioriginalnameref(cnt) == inputlog)
-        {
-            p = 10000;
-        }
-        s = cnvitemname(cnt2);
-        if (en)
-        {
-            s = strutil::to_lower(s(0));
-        }
-        for (int cnt = 0, cnt_end = (inputlog(0).size()); cnt < cnt_end; ++cnt)
-        {
-            if (strutil::contains(s(0), strmid(inputlog, 0, cnt * (1 + jp))))
-            {
-                p = p + 50 * (cnt + 1) + rnd(15);
-            }
-        }
-        if (p != 0)
-        {
-            dblist(0, i) = cnt;
-            dblist(1, i) = p;
-            ++i;
-        }
-    }
-    if (i != 0)
-    {
-        while (1)
-        {
-            p(0) = 0;
-            p(1) = 0;
-            for (int cnt = 0, cnt_end = (i); cnt < cnt_end; ++cnt)
-            {
-                if (dblist(1, cnt) > p(1))
-                {
-                    p(0) = dblist(0, cnt);
-                    p(1) = dblist(1, cnt);
-                    wishid = cnt;
-                }
-            }
-            if (p == 0)
-            {
-                f = 0;
-                break;
-            }
-            flt(cdata[0].level + 10, 4);
-            if (p == 558 || p == 556 || p == 557 || p == 664)
-            {
-                fixlv = calcfixlv(3);
-            }
-            if (p == 630)
-            {
-                objfix = 2;
-            }
-            nostack = 1;
-            nooracle = 1;
-            itemcreate(-1, p, cdata[cc].position.x, cdata[cc].position.y, 0);
-            nooracle = 0;
-            if (ibit(5, ci) == 1 || inv[ci].quality == 6)
-            {
-                if (gdata_wizard == 0)
-                {
-                    dblist(1, wishid) = 0;
-                    inv[ci].number = 0;
-                    --itemmemory(1, inv[ci].id);
-                    cell_refresh(inv[ci].position.x, inv[ci].position.y);
-                    continue;
-                }
-            }
-            if (inv[ci].id == 54)
-            {
-                inv[ci].number = cdata[0].level * cdata[0].level * 50 + 20000;
-            }
-            if (inv[ci].id == 55)
-            {
-                inv[ci].number = 8 + rnd(5);
-            }
-            if (inv[ci].id == 602)
-            {
-                inv[ci].number = 0;
-                flt();
-                itemcreate(
-                    -1, 516, cdata[cc].position.x, cdata[cc].position.y, 3);
-                inv[ci].curse_state = curse_state_t::blessed;
-                txt(lang(u8"あ、それ在庫切れ。"s, u8"It's sold out."s));
-            }
-            if (the_item_db[inv[ci].id]->category == 52000
-                || the_item_db[inv[ci].id]->category == 53000)
-            {
-                inv[ci].number = 3 + rnd(2);
-                if (inv[ci].id == 559)
-                {
-                    inv[ci].number = 2 + rnd(2);
-                }
-                if (inv[ci].id == 502)
-                {
-                    inv[ci].number = 2;
-                }
-                if (inv[ci].id == 243)
-                {
-                    inv[ci].number = 1;
-                }
-                if (inv[ci].id == 621)
-                {
-                    inv[ci].number = 1;
-                }
-                if (inv[ci].id == 706)
-                {
-                    inv[ci].number = 1;
-                }
-                if (inv[ci].value >= 5000)
-                {
-                    inv[ci].number = 3;
-                }
-                if (inv[ci].value >= 10000)
-                {
-                    inv[ci].number = 2;
-                }
-                if (inv[ci].value >= 20000)
-                {
-                    inv[ci].number = 1;
-                }
-            }
-            if (debug::voldemort && number_of_items != 0)
-            {
-                inv[ci].number = number_of_items;
-            }
-            item_identify(
-                inv[ci], identification_state_t::completely_identified);
-            txt(lang(
-                u8"足元に"s + itemname(ci) + u8"が転がってきた。"s,
-                ""s + itemname(ci) + u8" appear"s + _s2(inv[ci].number)
-                    + u8"."s));
-            f = 1;
-            break;
-        }
-        if (f)
-        {
-            wish_end();
-            return;
-        }
-    }
-label_1999_internal:
-    fix_wish();
-    i = 0;
-    for (const auto& ability_data : the_ability_db)
-    {
-        const int id = ability_data.id;
-        const bool is_basic_attribute_excluding_life_and_mana =
-            10 <= id && id <= 19;
-        const bool is_skill = 100 <= id && id <= 399;
-
-        if (!is_basic_attribute_excluding_life_and_mana && !is_skill)
-        {
-            continue;
-        }
-
-        auto ability_name = i18n::_(u8"ability", std::to_string(id), u8"name");
-        int priority = 0;
-        if (ability_name == inputlog)
-        {
-            priority = 10'000;
-        }
-        if (en)
-        {
-            ability_name = strutil::to_lower(ability_name);
-        }
-        // Calculate similarity.
-        for (int i = 0; i < inputlog(0).size() / (1 + jp); ++i)
-        {
-            if (instr(ability_name, 0, strmid(inputlog, i * (1 + jp), 1 + jp))
-                != -1)
-            {
-                priority += 50 + rnd(15);
-            }
-        }
-
-        if (priority != 0)
-        {
-            dblist(0, i) = id;
-            dblist(1, i) = priority;
-            ++i;
-        }
-    }
-    if (i != 0)
-    {
-        p(0) = 0;
-        p(1) = 0;
-        for (int cnt = 0, cnt_end = (i); cnt < cnt_end; ++cnt)
-        {
-            if (dblist(1, cnt) > p(1))
-            {
-                p(0) = dblist(0, cnt);
-                p(1) = dblist(1, cnt);
-            }
-        }
-        if (i18n::_(u8"ability", std::to_string(p), u8"name") != ""s)
-        {
-            txtef(5);
-            if (sdata.get(p, 0).original_level == 0)
-            {
-                txt(lang(
-                    i18n::_(u8"ability", std::to_string(p), u8"name")
-                        + u8"の技術を会得した！"s,
-                    u8"You learn "s
-                        + i18n::_(u8"ability", std::to_string(p), u8"name")
-                        + u8"!"s));
-                skillgain(0, p, 1);
-            }
-            else
-            {
-                txt(lang(
-                    i18n::_(u8"ability", std::to_string(p), u8"name")
-                        + u8"が上昇した！"s,
-                    u8"Your "s
-                        + i18n::_(u8"ability", std::to_string(p), u8"name")
-                        + u8" skill improves!"s));
-                skillmod(p, 0, 1000);
-                modify_potential(0, p, 25);
-            }
-        }
-        else
-        {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-        }
-        wish_end();
-        return;
-    }
-    txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-    wish_end();
-    return;
-}
-
-
-
-void wish_for_card()
-{
-    select_wished_character();
-    flt();
-    characreate(56, dbid, -3, 0);
-    flt();
-    itemcreate(-1, 504, cdata[0].position.x, cdata[0].position.y, 0);
-    inv[ci].subname = cdata[56].id;
-    inv[ci].param1 = cdata[56].image;
-    chara_vanquish(56);
-    cell_refresh(cdata[0].position.x, cdata[0].position.y);
-    txt(lang(
-        u8"足元に"s + itemname(ci) + u8"が転がってきた。"s,
-        ""s + itemname(ci) + u8" appear"s + _s2(inv[ci].number)
-            + u8" from nowhere."s));
-    wish_end();
-    return;
-}
-
-
-
-void wish_for_figure()
-{
-    select_wished_character();
-    flt();
-    characreate(56, dbid, -3, 0);
-    flt();
-    itemcreate(-1, 503, cdata[0].position.x, cdata[0].position.y, 0);
-    inv[ci].subname = cdata[56].id;
-    inv[ci].param1 = cdata[56].image;
-    chara_vanquish(56);
-    cell_refresh(cdata[0].position.x, cdata[0].position.y);
-    txt(lang(
-        u8"足元に"s + itemname(ci) + u8"が転がってきた。"s,
-        ""s + itemname(ci) + u8" appear"s + _s2(inv[ci].number)
-            + u8" from nowhere."s));
-    wish_end();
-    return;
-}
-
-
-
-void select_wished_character()
-{
-    i = 0;
-    s2 = inputlog;
-    fix_wish(s2);
-    for (int cnt = 0; cnt < 800; ++cnt)
-    {
-        p = 0;
-        s = refchara_str(cnt, 2);
-        if (en)
-        {
-            s = strutil::to_lower(s(0));
-        }
-        if (strutil::contains(s(0), s2))
-        {
-            p = 1000 - (s(0).size() - s2.size()) * 10;
-        }
-        if (p != 0)
-        {
-            dblist(0, i) = cnt;
-            dblist(1, i) = p;
-            ++i;
-        }
-    }
-    p(0) = 0;
-    p(1) = 0;
-    for (int cnt = 0, cnt_end = (i); cnt < cnt_end; ++cnt)
-    {
-        if (dblist(1, cnt) > p(1))
-        {
-            p(0) = dblist(0, cnt);
-            p(1) = dblist(1, cnt);
-        }
-    }
-    dbid = p;
-    if (dbid == 0)
-    {
-        dbid = 37;
-    }
-    return;
 }
 
 
@@ -43183,7 +42574,7 @@ void label_2007()
     sort_list_by_column1();
     gsel(3);
     pos(960, 96);
-    picload(fs::path(u8"./graphic/deco_skill.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/deco_skill.bmp"), 1);
     gsel(0);
     windowshadow = 1;
 label_2008_internal:
@@ -43230,7 +42621,8 @@ label_2009_internal:
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -43274,7 +42666,7 @@ label_2009_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     commark(0) = page * 1000 + cs;
@@ -43409,7 +42801,7 @@ void do_give_command()
     {
         if (tc < 16)
         {
-            if (cbit(963, tc) == 0)
+            if (cdata[tc].is_escorted() == 0)
             {
                 label_2055();
                 return;
@@ -43460,9 +42852,9 @@ void do_interact_command()
             ELONA_APPEND_PROMPT(
                 lang(u8"攻撃する"s, u8"Attack"s), u8"null"s, ""s + 1);
         }
-        if (cbit(963, tc) == 0)
+        if (cdata[tc].is_escorted() == 0)
         {
-            if (cbit(971, tc) == 0)
+            if (cdata[tc].is_escorted_in_sub_quest() == 0)
             {
                 if (tc < 16)
                 {
@@ -43474,7 +42866,7 @@ void do_interact_command()
                     ELONA_APPEND_PROMPT(
                         lang(u8"何かを渡す"s, u8"Give"s), u8"null"s, ""s + 2);
                 }
-                if (cbit(960, tc) == 1)
+                if (cdata[tc].is_livestock() == 1)
                 {
                     ELONA_APPEND_PROMPT(
                         lang(u8"連れ出す"s, u8"Bring Out"s),
@@ -43484,7 +42876,7 @@ void do_interact_command()
                 if (tc < 16)
                 {
                     ELONA_APPEND_PROMPT(
-                        lang(u8"着替えさせる"s, u8"Appearence"s),
+                        lang(u8"着替えさせる"s, u8"Appearance"s),
                         u8"null"s,
                         ""s + 8);
                 }
@@ -43496,7 +42888,7 @@ void do_interact_command()
             lang(u8"口調を変える"s, u8"Change Tone"s), u8"null"s, ""s + 10);
         if (gdata_current_map != 35)
         {
-            if (cbit(985, tc))
+            if (cdata[tc].is_hung_on_sand_bag())
             {
                 ELONA_APPEND_PROMPT(
                     lang(u8"縄を解く"s, u8"Release"s), u8"null"s, ""s + 9);
@@ -43584,9 +42976,8 @@ void do_interact_command()
             u8"どんな言葉を教えようか。"s,
             u8"What sentence should "s + name(tc) + u8" learn? "s));
         inputlog = "";
-        input_number_or_text_dialog(
-            (windoww - 360) / 2 + inf_screenx, winposy(90), 20, 1);
-        cbitmod(989, tc, 0);
+        input_text_dialog((windoww - 360) / 2 + inf_screenx, winposy(90), 20);
+        cdata[tc].has_custom_talk() = false;
         if (inputlog == ""s)
         {
             cdatan(4, tc) = "";
@@ -43604,7 +42995,7 @@ void do_interact_command()
     {
         gsel(4);
         pos(0, 0);
-        picload(fs::path(u8"./graphic/face1.bmp"), 1);
+        picload(filesystem::path(u8"./graphic/face1.bmp"), 1);
         gsel(0);
         ccbk = cc;
         cc = tc;
@@ -43616,7 +43007,7 @@ void do_interact_command()
     if (p == 9)
     {
         snd(58);
-        cbitmod(985, tc, 0);
+        cdata[tc].is_hung_on_sand_bag() = false;
         txt(lang(
             name(tc) + u8"の縄を解いた。"s,
             u8"You release "s + name(tc) + u8"."s));
@@ -43640,8 +43031,7 @@ void call_npc()
         u8"What do you want to call "s + him(tc) + u8"? "s));
     inputlog = "";
     input_mode = 1;
-    input_number_or_text_dialog(
-        (windoww - 220) / 2 + inf_screenx, winposy(90), 12, 1);
+    input_text_dialog((windoww - 220) / 2 + inf_screenx, winposy(90), 12);
     if (inputlog == ""s)
     {
         txt(lang(u8"名前をつけるのはやめた。"s, u8"You changed your mind."s));
@@ -43649,7 +43039,7 @@ void call_npc()
     else
     {
         cdatan(0, tc) = ""s + inputlog;
-        cbitmod(977, tc, 1);
+        cdata[tc].has_own_name() = true;
         txt(lang(
             ""s + cdatan(0, tc) + u8"という名前で呼ぶことにした。"s,
             u8"You named "s + him(tc) + u8" "s + cdatan(0, tc) + u8"."s));
@@ -43666,7 +43056,7 @@ int change_npc_tone()
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(fs::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+        picload(filesystem::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(0);
     listmax = 0;
@@ -43678,7 +43068,7 @@ int change_npc_tone()
     list(0, 0) = -999;
     listn(0, 0) = lang(u8"デフォルトの口調"s, u8"Default Tone"s);
     ++listmax;
-    const auto base_dir = fs::path(u8"./user/talk");
+    const auto base_dir = filesystem::path(u8"./user/talk");
     for (const auto& entry :
          filesystem::dir_entries{base_dir,
                                  filesystem::dir_entries::type::file,
@@ -43732,7 +43122,8 @@ label_2016_internal:
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
     gmode(2);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -43749,7 +43140,7 @@ label_2016_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, cs = i);
@@ -43761,11 +43152,11 @@ label_2016_internal:
             name(tc) + u8" is somewhat different."s));
         if (p == -999)
         {
-            cbitmod(989, tc, 0);
+            cdata[tc].has_custom_talk() = false;
             cdatan(4, tc) = "";
             return 1;
         }
-        cbitmod(989, tc, 1);
+        cdata[tc].has_custom_talk() = true;
         cdatan(4, tc) = listn(0, p);
         return 1;
     }
@@ -43803,7 +43194,7 @@ int summon_cnpc()
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(fs::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+        picload(filesystem::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(0);
     listmax = 0;
@@ -43874,7 +43265,8 @@ label_2020_internal:
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
     gmode(2);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -43893,7 +43285,7 @@ label_2020_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, cs = i);
@@ -43907,8 +43299,8 @@ label_2020_internal:
                   u8" has been summoned to your world!"s));
         load_user_file(userfile);
         bcopy(
-            fs::path(u8"./user/"s + listn(1, listmax)),
-            fs::path(u8"./user/"s + listn(0, listmax) + u8".npc"s));
+            filesystem::path(u8"./user/"s + listn(1, listmax)),
+            filesystem::path(u8"./user/"s + listn(0, listmax) + u8".npc"s));
         load_cnpc_data();
         for (int cnt = 0; cnt < 245; ++cnt)
         {
@@ -43953,12 +43345,12 @@ void label_2022()
     snd(59);
     gsel(4);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/book.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/book.bmp"), 1);
     gsel(0);
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{fs::path(u8"./data/book.txt").native(),
+        std::ifstream in{filesystem::path(u8"./data/book.txt").native(),
                          std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -44008,28 +43400,28 @@ label_2023_internal:
         noteget(s, p);
         if (p == 0)
         {
-            font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+            font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
         }
         if (p == 1)
         {
-            font(lang(cfg_font1, cfg_font2), 10 + sizefix - en * 2, 0);
+            font(10 + sizefix - en * 2);
         }
         if (p > 2)
         {
-            font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+            font(12 + sizefix - en * 2);
         }
         pos(x, y);
         mes(s);
         if (p % 20 == 0)
         {
-            font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+            font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
             pos(x + 90, y + 330);
             mes(u8"- "s + (p / 20 + 1) + u8" -"s);
         }
     }
 label_2024_internal:
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     if (key == key_pageup)
@@ -44098,7 +43490,7 @@ void label_2027()
     sort_list_by_column1();
     gsel(3);
     pos(960, 96);
-    picload(fs::path(u8"./graphic/deco_spell.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/deco_spell.bmp"), 1);
     gsel(0);
     windowshadow = 1;
 label_2028_internal:
@@ -44119,7 +43511,7 @@ label_2029_internal:
     display_window((windoww - 720) / 2 + inf_screenx, winposy(438), 720, 438);
     display_topic(lang(u8"魔法の名称"s, u8"Name"s), wx + 28, wy + 36);
     display_topic(
-        lang(u8"消費MP(ｽﾄｯｸ) LV/成功"s, u8"Cost(Stock) Lv/Chance"s),
+        lang(u8"消費MP(ｽﾄｯｸ) Lv/成功"s, u8"Cost(Stock) Lv/Chance"s),
         wx + 220,
         wy + 36);
     display_topic(lang(u8"効果"s, u8"Effect"s), wx + 400, wy + 36);
@@ -44147,7 +43539,8 @@ label_2029_internal:
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -44193,7 +43586,7 @@ label_2029_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     commark(1) = page * 1000 + cs;
@@ -44687,7 +44080,7 @@ label_20331:
     }
     sort_list_by_column1();
     gsel(7);
-    picload(fs::path(u8"./graphic/ie_sheet.bmp"));
+    picload(filesystem::path(u8"./graphic/ie_sheet.bmp"));
     gsel(0);
     wx = (windoww - 700) / 2 + inf_screenx;
     wy = winposy(400) - 10;
@@ -44710,10 +44103,10 @@ label_20331:
     windowanime(wx, wy, ww, wh, 10, 4);
     gsel(4);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/face1.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/face1.bmp"), 1);
     if (cdata[cc].portrait < 0)
     {
-        s = fs::path(u8"./user/graphic/face"s).generic_string()
+        s = filesystem::path(u8"./user/graphic/face"s).generic_string()
             + std::abs((cdata[cc].portrait + 1)) + u8".bmp"s;
         if (cdata[cc].portrait != -1)
         {
@@ -44859,7 +44252,7 @@ label_2035_internal:
         }
         else
         {
-            s = fs::path(u8"./user/graphic/face"s).generic_string()
+            s = filesystem::path(u8"./user/graphic/face"s).generic_string()
                 + std::abs((cdata[cc].portrait + 1)) + u8".bmp"s;
             if (cdata[cc].portrait != -1)
             {
@@ -44871,7 +44264,7 @@ label_2035_internal:
             }
         }
         window2(wx + 557, wy + 23, 87, 120, 1, 10);
-        if (cbit(967, cc) == 1)
+        if (cdata[cc].has_own_sprite() == 1)
         {
             pos(wx + 596 + 22, wy + 86 + 24);
             gmode(2, 32, 48);
@@ -44891,7 +44284,7 @@ label_2035_internal:
                 chipc(2, i) / (1 + (chipc(3, i) > inf_tiles)),
                 inf_tiles);
         }
-        font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+        font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
         s(0) = lang(u8"レベル"s, u8"Level"s);
         s(1) = lang(u8"経験"s, u8"EXP"s);
         s(2) = lang(u8"必要値"s, u8"Next Lv"s);
@@ -44976,7 +44369,7 @@ label_2035_internal:
             mes(s(cnt));
             color(0, 0, 0);
         }
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
         s(0) = ""s + cdata[cc].level;
         s(1) = ""s + cdata[cc].experience;
         s(2) = ""s + cdata[cc].required_experience;
@@ -45083,7 +44476,7 @@ label_2035_internal:
         }
         label_2047(0);
         tc = cc;
-        font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+        font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
         color(20, 10, 0);
         pos(wx + 417, wy + 281 + p(2) * 16);
         mes(lang(u8"軽減"s, u8"Prot"s));
@@ -45095,7 +44488,7 @@ label_2035_internal:
         attackskill = 106;
         int evade = calc_evasion(tc);
         prot = calcattackdmg(2);
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
         pos(wx + 460 + en * 8, wy + 279 + p(2) * 16);
         mes(""s + (100 - 10000 / (prot + 100)) + u8"% + "s + protdice1 + u8"d"s
             + protdice2);
@@ -45172,10 +44565,10 @@ label_2035_internal:
                 u8"今は持続効果を受けていない"s,
                 u8"This character isn't currently blessed or hexed."s);
         }
-        font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+        font(13 - en * 2);
         pos(wx + 108, wy + 366);
         mes(s);
-        font(lang(cfg_font1, cfg_font2), 11 + sizefix * 2 - en * 2, 1);
+        font(11 + sizefix * 2 - en * 2, snail::font_t::style_t::bold);
         color(20, 10, 0);
         pos(wx + 70, wy + 369 - en * 3);
         mes(lang(u8"説明:"s, u8"Hint:"s));
@@ -45229,7 +44622,8 @@ label_2035_internal:
     }
     if (page > 0)
     {
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
+        cs_listbk();
         for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
         {
             p = pagesize * (page - 1) + cnt;
@@ -45321,15 +44715,15 @@ label_2035_internal:
             }
             else
             {
-                font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+                font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
                 cs_list(cs == cnt, listn(0, p), wx + 88, wy + 66 + cnt * 19);
-                font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+                font(14 - en * 2);
             }
         }
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     if (page == 0)
@@ -45598,7 +44992,7 @@ void label_2038(int val0)
             {
                 rtval(0) = 101;
                 rtval(1) = 0;
-                rtval(2) = cbit(967, cc);
+                rtval(2) = cdata[cc].has_own_sprite();
             }
             else
             {
@@ -45683,12 +45077,12 @@ int change_appearance()
     windowanime(wx, wy, ww, wh, 10, 7);
     gsel(4);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/face1.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/face1.bmp"), 1);
     buffer(7, 800, 112);
     boxf();
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        s = fs::path(u8"./user/graphic/face"s + (cnt + 1) + u8".bmp")
+        s = filesystem::path(u8"./user/graphic/face"s + (cnt + 1) + u8".bmp")
                 .generic_string();
         if (fs::exists(s))
         {
@@ -45698,7 +45092,7 @@ int change_appearance()
     }
     gsel(3);
     pos(960, 96);
-    picload(fs::path(u8"./graphic/deco_mirror.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/deco_mirror.bmp"), 1);
     gsel(0);
     windowshadow = 1;
 label_2040_internal:
@@ -45784,7 +45178,7 @@ label_2040_internal:
     }
 label_2041_internal:
     pagesize = 0;
-    s(0) = lang(u8"肖像の変更"s, u8"Appearence"s);
+    s(0) = lang(u8"肖像の変更"s, u8"Appearance"s);
     s(1) = lang(
         u8"左右キー [変更]  ｷｬﾝｾﾙ [閉じる]"s,
         u8"Right,left [Change]  Shift,Esc [Close]"s);
@@ -45825,7 +45219,7 @@ label_2041_internal:
                 112);
         }
     }
-    else if (cbit(967, cc) == 1)
+    else if (cdata[cc].has_own_sprite() == 1)
     {
         pos(wx + 280, wy + 130);
         gmode(2, 32, 48);
@@ -45840,7 +45234,8 @@ label_2041_internal:
         grotate(5, 0, 960, 0, chipc(2, i), chipc(3, i));
     }
     gmode(2);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = cnt;
@@ -45879,7 +45274,7 @@ label_2041_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     label_2038(cs);
@@ -45930,14 +45325,15 @@ label_2041_internal:
         }
         if (rtval == 101)
         {
-            cbitmod(967, cc, 1);
+            cdata[cc].has_own_sprite() = true;
             goto label_2041_internal;
         }
         if (rtval(1) == 0)
         {
             if (fs::exists(
-                    fs::path(u8"./graphic/pcc_"s).generic_string() + rtvaln
-                    + u8"_"s + (pcc(rtval, cc) % 1000 + 1) + u8".bmp"s))
+                    filesystem::path(u8"./graphic/pcc_"s).generic_string()
+                    + rtvaln + u8"_"s + (pcc(rtval, cc) % 1000 + 1)
+                    + u8".bmp"s))
             {
                 ++pcc(rtval, cc);
                 p = 1;
@@ -45962,15 +45358,16 @@ label_2041_internal:
         }
         if (rtval == 101)
         {
-            cbitmod(967, cc, 0);
+            cdata[cc].has_own_sprite() = false;
             goto label_2041_internal;
         }
         if (rtval(1) == 0)
         {
             if ((pcc(rtval, cc) % 1000 == 1 && rtval != 15)
                 || fs::exists(
-                       fs::path(u8"./graphic/pcc_"s).generic_string() + rtvaln
-                       + u8"_"s + (pcc(rtval, cc) % 1000 - 1) + u8".bmp"s))
+                       filesystem::path(u8"./graphic/pcc_"s).generic_string()
+                       + rtvaln + u8"_"s + (pcc(rtval, cc) % 1000 - 1)
+                       + u8".bmp"s))
             {
                 --pcc(rtval, cc);
                 p = 1;
@@ -46073,7 +45470,8 @@ int label_2044()
         gmode(2, 32, 48);
         grotate(10 + cc, f / 4 % 4 * 32, f / 16 % 4 * 48, 0, 48, 80);
         gmode(2);
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
+        cs_listbk();
         for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
         {
             p = cnt;
@@ -46104,7 +45502,7 @@ int label_2044()
             cs_bk = cs;
         }
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         if (cs != 0)
@@ -46190,7 +45588,7 @@ void label_2047(int val0)
 void label_2048(int val0)
 {
     tc = cc;
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     color(20, 10, 0);
     if (val0 == 0)
     {
@@ -46208,7 +45606,7 @@ void label_2048(int val0)
     attackvar = 0;
     int tohit = calc_accuracy(false);
     dmg = calcattackdmg(1);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     s(2) = ""s + dmgmulti;
     s = ""s + tohit + u8"%"s;
     if (val0 == 0)
@@ -46387,7 +45785,7 @@ void ctrl_inventory_equipment()
     windowanime(wx, wy, ww, wh, 10, 4);
     gsel(3);
     pos(960, 96);
-    picload(fs::path(u8"./graphic/deco_wear.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/deco_wear.bmp"), 1);
     gsel(0);
     windowshadow = 1;
 label_2051_internal:
@@ -46432,7 +45830,7 @@ label_2052_internal:
         + lang(u8" ダメージ修正:"s, u8" Damage Bonus:"s)
         + cdata[cc].damage_bonus + u8"  DV/PV:"s + cdata[cc].dv + u8"/"s
         + cdata[cc].pv);
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     gmode(2);
     keyrange = 0;
     f = 0;
@@ -46461,7 +45859,8 @@ label_2052_internal:
         pos(wx + 46, wy + 60 + cnt * 19 + 3);
         mes(q);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -46506,7 +45905,7 @@ label_2052_internal:
     }
     cs_bk = cs;
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -46656,9 +46055,12 @@ label_2052_internal:
 
 void do_get_command()
 {
+    const auto item_info = cell_itemoncell(cdata[0].position);
+    const auto number = item_info.first;
+    const auto item = item_info.second;
+
     if (map(cdata[0].position.x, cdata[0].position.y, 6) != 0
-        && gdata_current_map != 35
-        && cell_itemoncell(cdata[0].position.x, cdata[0].position.y) == 0)
+        && gdata_current_map != 35 && number == 0)
     {
         cell_featread(cdata[0].position.x, cdata[0].position.y);
         if (feat(1) == 29)
@@ -46724,7 +46126,7 @@ void do_get_command()
         }
     }
 
-    if (cell_itemoncell(cdata[0].position.x, cdata[0].position.y) == 0)
+    if (number == 0)
     {
         if ((mdata(6) == 3 || mdata(6) == 2)
             && chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 4)
@@ -46759,8 +46161,8 @@ void do_get_command()
         pc_turn(false);
     }
 
-    ci = rtval(1);
-    if (rtval > 1)
+    ci = item;
+    if (number > 1)
     {
         invctrl = 3;
         snd(100);
@@ -46911,70 +46313,6 @@ void savecycle()
 
 
 
-std::string trimdesc(const std::string& prm_1060, int prm_1061)
-{
-    std::string q_at_m187;
-    int p_at_m187 = 0;
-    q_at_m187 = prm_1060;
-    while (1)
-    {
-        await();
-        p_at_m187 = instr(q_at_m187, 0, u8"\t"s);
-        if (p_at_m187 != -1)
-        {
-            q_at_m187 = strmid(q_at_m187, 0, p_at_m187)
-                + strmid(q_at_m187, (p_at_m187 + 1), 999);
-            continue;
-        }
-        if (prm_1061 == 1)
-        {
-            p_at_m187 = instr(q_at_m187, 0, u8"\n"s);
-            if (p_at_m187 != -1)
-            {
-                q_at_m187 = strmid(q_at_m187, 0, p_at_m187)
-                    + strmid(q_at_m187, (p_at_m187 + 1), 999);
-                continue;
-            }
-            p_at_m187 = instr(q_at_m187, 0, u8"#"s);
-            if (p_at_m187 != -1)
-            {
-                q_at_m187 = strmid(q_at_m187, 0, p_at_m187);
-            }
-            if (jp)
-            {
-                if (strmid(q_at_m187, q_at_m187.size() - 3, 2) == u8"。"s)
-                {
-                    q_at_m187 = strmid(q_at_m187, 0, q_at_m187.size() - 3);
-                }
-            }
-            else
-            {
-                p_at_m187 = instr(q_at_m187, 0, u8","s);
-                if (p_at_m187 != -1)
-                {
-                    q_at_m187 = strmid(q_at_m187, 0, p_at_m187) + u8"."s
-                        + strmid(q_at_m187, (p_at_m187 + 1), 999);
-                    continue;
-                }
-            }
-        }
-        if (prm_1061 == 2)
-        {
-            p_at_m187 = instr(q_at_m187, 0, u8"#"s);
-            if (p_at_m187 != -1)
-            {
-                q_at_m187 = strmid(q_at_m187, 0, p_at_m187)
-                    + strmid(q_at_m187, (p_at_m187 + 1), 999);
-                continue;
-            }
-        }
-        break;
-    }
-    return q_at_m187;
-}
-
-
-
 void show_item_description()
 {
     int inhmax = 0;
@@ -46999,7 +46337,7 @@ void show_item_description()
     if (inv[ci].identification_state
         == identification_state_t::completely_identified)
     {
-        std::string buf = trimdesc(description(3), 1);
+        std::string buf = trim_item_description(description(3), true);
         if (buf != ""s)
         {
             list(0, p) = 7;
@@ -47205,31 +46543,37 @@ void show_item_description()
                 list(0, p) = 0;
                 listn(0, p) = "";
                 ++p;
-                std::string buf = trimdesc(description(cnt), 2);
+                std::string buf =
+                    trim_item_description(description(cnt), false);
                 notesel(buf);
                 for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
                 {
                     noteget(q, cnt);
-                    p(1) = 66;
-                    p(2) = 0;
-                    if (strlen_u(q) > size_t(p(1)))
+                    constexpr size_t max_width = 66;
+                    if (strlen_u(q) > max_width)
                     {
-                        for (int cnt = 0,
-                                 cnt_end = cnt + (q(0).size() / p(1) + 1);
-                             cnt < cnt_end;
-                             ++cnt)
+                        p(2) = 0;
+                        for (size_t i = 0; i < strlen_u(q) / max_width + 1; ++i)
                         {
-                            if (strmid(q, p(2) + p(1), 2) == u8"。"s
-                                || strmid(q, p(2) + p(1), 2) == u8"、"s)
+                            auto one_line = strutil::take_by_width(
+                                q(0).substr(p(2)), max_width);
+                            p(1) = one_line.size();
+                            if (strutil::starts_with(q, u8"。", p(1) + p(2)))
                             {
-                                p(1) += 2;
+                                one_line += u8"。";
+                                p(1) += std::strlen(u8"。");
+                            }
+                            if (strutil::starts_with(q, u8"、", p(1) + p(2)))
+                            {
+                                one_line += u8"、";
+                                p(1) += std::strlen(u8"、");
                             }
                             if (strmid(q, p(2), p(1)) == ""s)
                             {
                                 break;
                             }
                             list(0, p) = -1;
-                            listn(0, p) = strmid(q, p(2), p(1));
+                            listn(0, p) = one_line;
                             ++p;
                             p(2) += p(1);
                         }
@@ -47289,7 +46633,7 @@ label_2070_internal:
         {
             break;
         }
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
         color(0, 0, 0);
         pos(wx + 68, wy + 68 + cnt * 18);
         if (list(0, p) % 10000 == 1)
@@ -47318,11 +46662,11 @@ label_2070_internal:
         }
         if (list(0, p) == -1)
         {
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+            font(13 - en * 2);
         }
         if (list(0, p) == -2)
         {
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 2);
+            font(13 - en * 2, snail::font_t::style_t::italic);
             pos(wx + ww - strlen_u(listn(0, p)) * 6 - 80, wy + 68 + cnt * 18);
         }
         mes(listn(0, p));
@@ -47339,7 +46683,7 @@ label_2070_internal:
         }
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     if (key == key_pageup)
@@ -47594,9 +46938,9 @@ void label_2076()
             {
                 continue;
             }
-            if (cbit(6, cnt) == 1)
+            if (cdata[cnt].is_invisible() == 1)
             {
-                if (cbit(7, cc) == 0)
+                if (cdata[cc].can_see_invisible() == 0)
                 {
                     if (cdata[cnt].wet == 0)
                     {
@@ -47733,7 +47077,6 @@ void label_2079()
     {
         snd(20);
         set_option();
-        return;
     }
     update_screen();
     pc_turn(false);
@@ -48027,7 +47370,7 @@ void label_2084()
             fileext,
             17,
             filedsc,
-            fs::path(u8"./user"s).generic_string(),
+            filesystem::path(u8"./user"s).generic_string(),
             u8"default.eum"s);
         if (stat == 0)
         {
@@ -48093,7 +47436,7 @@ void label_2084()
                 fileext,
                 17,
                 filedsc,
-                fs::path(u8"./user"s).generic_string(),
+                filesystem::path(u8"./user"s).generic_string(),
                 u8"default.ept"s);
             if (stat == 0)
             {
@@ -48160,7 +47503,7 @@ void label_2084()
     }
     if (rtval == 5)
     {
-        exec(fs::path(u8"./user/export.txt").generic_string(), 16);
+        exec(filesystem::path(u8"./user/export.txt").generic_string(), 16);
     }
     return;
 }
@@ -48173,10 +47516,11 @@ void label_2085()
     access_class_info(2, cdatan(3, 0));
     buff = "";
     notesel(buff);
+    noteadd(latest_version.long_string());
     noteadd(
-        u8"Elona Version 1.22 キャラクター情報 "s + gdata_year + u8"年"s
-        + gdata_month + u8"月"s + gdata_day + u8"日 "s + gdata_hour + u8"時"s
-        + gdata_minute + u8"分  "s + mdatan(0));
+        u8"キャラクター情報 "s + gdata_year + u8"年"s + gdata_month + u8"月"s
+        + gdata_day + u8"日 "s + gdata_hour + u8"時"s + gdata_minute + u8"分  "s
+        + mdatan(0));
     noteadd(""s);
     noteadd(
         u8"  "s + fixtxt((""s + cdatan(1, 0) + cdatan(0, 0)), 34)
@@ -48370,7 +47714,7 @@ void label_2085()
             + u8" "s + calcage(cnt) + u8"歳"s + u8"  "s + cdata[cnt].height
             + u8"cm"s + u8" "s + cdata[cnt].weight + u8"kg"s);
         s = u8"レベル "s + cdata[cnt].level + u8" "s;
-        if (cbit(961, cnt) == 1)
+        if (cdata[cnt].is_married() == 1)
         {
             s += u8"婚約済み "s;
         }
@@ -48399,7 +47743,7 @@ void label_2085()
             noteadd(""s);
         }
     }
-    s = fs::path(u8"./save/"s + playerid + u8".txt").generic_string();
+    s = filesystem::path(u8"./save/"s + playerid + u8".txt").generic_string();
     {
         std::ofstream out{s, std::ios::binary};
         out << s(0) << std::endl;
@@ -48613,7 +47957,7 @@ void migrate_save_data()
                 adata(cnt, p) = 0;
             }
             for (const auto& entry : filesystem::dir_entries{
-                     fs::path(u8"./tmp"),
+                     filesystem::path(u8"./tmp"),
                      filesystem::dir_entries::type::file,
                      std::regex{u8R"(.*_)"s + std::to_string(p)
                                 + u8R"(_.*\..*)"}})
@@ -48662,7 +48006,7 @@ void migrate_save_data()
         return;
     }
     gdata_version = 1220;
-    cbitmod(967, 0, 1);
+    cdata[0].has_own_sprite() = true;
     initialize_recipememory();
     return;
 }
@@ -48821,7 +48165,7 @@ void load_user_file(const fs::path& file)
 {
     int zipsize = 0;
     p = 12;
-    folder = fs::path(u8"./user/").generic_string();
+    folder = filesystem::path(u8"./user/").generic_string();
     bload(folder + file.generic_string(), headtemp, 1024);
     label_2720();
     zipsize = fs::file_size(folder + file.generic_string());
@@ -49063,7 +48407,7 @@ void load_cnpc_data()
 {
     buff(0).clear();
     for (const auto& entry :
-         filesystem::dir_entries{fs::path(u8"./user"),
+         filesystem::dir_entries{filesystem::path(u8"./user"),
                                  filesystem::dir_entries::type::file,
                                  std::regex{u8R"(.*\.npc)"}})
     {
@@ -49083,7 +48427,7 @@ void load_cnpc_data()
     gdata(86) = 0;
     buffer(5, 1584, (25 + (usernpcmax / 33 + 1) * 2) * 48);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/character.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/character.bmp"), 1);
     gmode(0);
     func_1(buff, 1);
     tg = 0;
@@ -49092,7 +48436,7 @@ void load_cnpc_data()
         // TODO: Delete
         noteget(s, cnt);
         int cnt2 = tg;
-        unzip2(fs::path(u8"./user/").generic_string(), s);
+        unzip2(filesystem::path(u8"./user/").generic_string(), s);
         DIM2(bmpbuff, userdata(0, tg));
         SDIM2(txtbuff, userdata(1, tg));
         s = getnpctxt(u8"name."s, u8"unknown,unknown"s);
@@ -49190,7 +48534,7 @@ void load_cnpc_data()
     delete_temporary_npc_files();
     gsel(5);
     for (const auto& entry :
-         filesystem::dir_entries{fs::path(u8"./user/graphic"),
+         filesystem::dir_entries{filesystem::path(u8"./user/graphic"),
                                  filesystem::dir_entries::type::file,
                                  std::regex{u8R"(chara_.*\.bmp)"}})
     {
@@ -49216,7 +48560,11 @@ void create_new_cnpc()
     fileext = u8"txt"s;
     filedsc = u8"Custom Npc Text"s;
     int stat = _fdialog(
-        fileext, 16, filedsc, fs::path(u8"./user"s).generic_string(), ""s);
+        fileext,
+        16,
+        filedsc,
+        filesystem::path(u8"./user"s).generic_string(),
+        ""s);
     if (stat == 0)
     {
         return;
@@ -49237,7 +48585,11 @@ void create_new_cnpc()
     filedsc = u8"Bit Map File"s;
     {
         int stat = _fdialog(
-            fileext, 16, filedsc, fs::path(u8"./user"s).generic_string(), ""s);
+            fileext,
+            16,
+            filedsc,
+            filesystem::path(u8"./user"s).generic_string(),
+            ""s);
         if (stat == 0)
         {
             return;
@@ -49272,7 +48624,7 @@ void create_new_cnpc()
         dialog(u8"The name is too long."s);
         return;
     }
-    zipinit2(fs::path(u8"./user/"s).generic_string(), s + u8".npc");
+    zipinit2(filesystem::path(u8"./user/"s).generic_string(), s + u8".npc");
     zipadd2(u8"npc1.t"s);
     zipadd2(u8"npc2.t"s);
     zipadd2(u8"npc3.t"s);
@@ -49296,7 +48648,7 @@ void create_new_cnpc()
     txt(lang(
         name(rc) + u8"は興奮して襲い掛かってきた。"s,
         name(rc) + u8" is excited and attacks you."s));
-    folder = fs::path(u8"./user/").generic_string();
+    folder = filesystem::path(u8"./user/").generic_string();
     delete_temporary_user_files();
     return;
 }
@@ -49333,7 +48685,7 @@ void label_2108()
             {
                 if (cdata[cnt].state == 1)
                 {
-                    if (cbit(975, cnt) == 0)
+                    if (cdata[cnt].is_ridden() == 0)
                     {
                         list(0, cnt) = 1;
                     }
@@ -49373,14 +48725,14 @@ void label_2109(int n)
 void delete_temporary_npc_files()
 {
     for (const auto& entry :
-         filesystem::dir_entries{fs::path(u8"./user"),
+         filesystem::dir_entries{filesystem::path(u8"./user"),
                                  filesystem::dir_entries::type::file,
                                  std::regex{u8R"(_tmp_.*\.npc)"}})
     {
         elona_delete(entry.path());
     }
     for (const auto& entry :
-         filesystem::dir_entries{fs::path(u8"./user"),
+         filesystem::dir_entries{filesystem::path(u8"./user"),
                                  filesystem::dir_entries::type::file,
                                  std::regex{u8R"(!tmp.*\.npc)"}})
     {
@@ -49394,7 +48746,7 @@ void delete_temporary_npc_files()
 void delete_temporary_user_files()
 {
     for (const auto& entry :
-         filesystem::dir_entries{fs::path(u8"./user"),
+         filesystem::dir_entries{filesystem::path(u8"./user"),
                                  filesystem::dir_entries::type::file,
                                  std::regex{u8R"(.*\.t)"}})
     {
@@ -49409,13 +48761,13 @@ void load_save_data()
 {
     filemod = "";
     ctrl_file(10);
-    folder = fs::path(u8"./save/"s + playerid + u8"/").generic_string();
+    folder = filesystem::path(u8"./save/"s + playerid + u8"/").generic_string();
     notesel(buff);
     if (!fs::exists(folder + u8"filelist.txt"s))
     {
         buff(0).clear();
         for (const auto& entry :
-             filesystem::dir_entries{fs::path(folder(0)),
+             filesystem::dir_entries{filesystem::path(folder(0)),
                                      filesystem::dir_entries::type::file,
                                      std::regex{u8R"(.*\..*)"}})
         {
@@ -49438,7 +48790,7 @@ void load_save_data()
         noteget(s, cnt);
         if (strutil::contains(s(0), u8".s2"))
         {
-            bcopy(folder + s, fs::path(u8"./tmp/"s + s));
+            bcopy(folder + s, filesystem::path(u8"./tmp/"s + s));
         }
     }
     ctrl_file(7);
@@ -49446,7 +48798,7 @@ void load_save_data()
     set_item_info();
     for (int cnt = 0; cnt < 16; ++cnt)
     {
-        if (cbit(967, cnt) == 1 || cnt == 0)
+        if (cdata[cnt].has_own_sprite() == 1 || cnt == 0)
         {
             create_pcpic(cnt, true);
         }
@@ -49480,7 +48832,7 @@ void save_game()
     ctrl_file(4, u8"inv_"s + mid + u8".s2");
     save_f = 0;
     for (const auto& entry : filesystem::dir_entries{
-             fs::path(u8"./save"), filesystem::dir_entries::type::dir})
+             filesystem::path(u8"./save"), filesystem::dir_entries::type::dir})
     {
         if (entry.path().filename().generic_string() == playerid)
         {
@@ -49488,7 +48840,7 @@ void save_game()
             break;
         }
     }
-    auto file = fs::path(u8"./save") / playerid;
+    auto file = filesystem::path(u8"./save") / playerid;
     if (save_f == 0)
     {
         mkdir(file);
@@ -49509,11 +48861,11 @@ void save_game()
         save_s = strmid(save_s, 1, save_s.size());
         if (save_p == 0)
         {
-            bcopy(save_s, file / fs::path(save_s).filename());
+            bcopy(save_s, file / filesystem::path(save_s).filename());
         }
         else
         {
-            const auto path = file / fs::path(save_s).filename();
+            const auto path = file / filesystem::path(save_s).filename();
             if (fs::exists(path) && !fs::is_directory(path))
             {
                 elona_delete(path);
@@ -49524,7 +48876,7 @@ void save_game()
     filemod = "";
     buff(0).clear();
     for (const auto& entry :
-         filesystem::dir_entries{fs::path(u8"./tmp"),
+         filesystem::dir_entries{filesystem::path(u8"./tmp"),
                                  filesystem::dir_entries::type::file,
                                  std::regex{u8R"(.*\..*)"}})
     {
@@ -49534,7 +48886,8 @@ void save_game()
     notesel(buff);
     {
         std::ofstream out{
-            fs::path(u8"./save/"s + playerid + u8"/filelist.txt").native(),
+            filesystem::path(u8"./save/"s + playerid + u8"/filelist.txt")
+                .native(),
             std::ios::binary};
         out << buff(0) << std::endl;
     }
@@ -49565,7 +48918,7 @@ void main_menu_continue()
     cs_bk = -1;
     gsel(4);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/void.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/void.bmp"), 1);
     gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gsel(0);
     gmode(0);
@@ -49584,10 +48937,10 @@ void main_menu_continue()
     keyrange = 0;
     int save_data_count = 0;
     for (const auto& entry : filesystem::dir_entries{
-             fs::path(u8"./save"), filesystem::dir_entries::type::dir})
+             filesystem::path(u8"./save"), filesystem::dir_entries::type::dir})
     {
         s = entry.path().filename().generic_string();
-        const auto file = fs::path(u8"./save/"s + s + u8"/header.txt");
+        const auto file = filesystem::path(u8"./save/"s + s + u8"/header.txt");
         if (!fs::exists(file))
         {
             continue;
@@ -49616,26 +48969,27 @@ void main_menu_continue()
         }
         display_window(
             (windoww - 440) / 2 + inf_screenx, winposy(288, 1), 440, 288);
+        cs_listbk();
         for (int cnt = 0, cnt_end = save_data_count; cnt < cnt_end; ++cnt)
         {
             x = wx + 20;
             y = cnt * 40 + wy + 50;
             display_key(x + 20, y - 2, cnt);
-            font(lang(cfg_font1, cfg_font2), 11 - en * 2, 0);
+            font(11 - en * 2);
             pos(x + 48, y - 4);
             mes(listn(0, cnt));
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+            font(13 - en * 2);
             cs_list(cs == cnt, listn(1, cnt), x + 48, y + 8);
         }
         cs_bk = cs;
         if (save_data_count == 0)
         {
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
             pos(wx + 140, wy + 120);
             mes(u8"No save files found"s);
         }
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         p = -1;
@@ -49659,7 +49013,7 @@ void main_menu_continue()
         }
         if (ginfo(2) == 0)
         {
-            if (noteinfo() != 0)
+            if (save_data_count != 0)
             {
                 if (getkey(snail::key::backspace))
                 {
@@ -49722,7 +49076,7 @@ void main_menu_incarnate()
     cs_bk = -1;
     gsel(4);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/void.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/void.bmp"), 1);
     gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gsel(0);
     gmode(0);
@@ -49741,10 +49095,11 @@ void main_menu_incarnate()
     keyrange = 0;
     listmax = 0;
     for (const auto& entry : filesystem::dir_entries{
-             fs::path(u8"./save"), filesystem::dir_entries::type::dir})
+             filesystem::path(u8"./save"), filesystem::dir_entries::type::dir})
     {
         s = entry.path().filename().generic_string();
-        const auto file = fs::path(u8"./save/"s + s + u8"/gene_header.txt");
+        const auto file =
+            filesystem::path(u8"./save/"s + s + u8"/gene_header.txt");
         await();
         if (!fs::exists(file))
         {
@@ -49774,26 +49129,27 @@ void main_menu_incarnate()
         }
         display_window(
             (windoww - 440) / 2 + inf_screenx, winposy(288, 1), 440, 288);
+        cs_listbk();
         for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
         {
             x = wx + 20;
             y = cnt * 40 + wy + 50;
             display_key(x + 20, y - 2, cnt);
-            font(lang(cfg_font1, cfg_font2), 11 - en * 2, 0);
+            font(11 - en * 2);
             pos(x + 48, y - 4);
             mes(listn(0, cnt));
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+            font(13 - en * 2);
             cs_list(cs == cnt, listn(1, cnt), x + 48, y + 8);
         }
         cs_bk = cs;
         if (listmax == 0)
         {
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
             pos(wx + 140, wy + 120);
             mes(u8"No gene files found"s);
         }
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         p = -1;
@@ -49868,259 +49224,6 @@ void initialize_fovmap_and_fovlist()
             }
         }
     }
-    return;
-}
-
-
-
-void input_number_or_text_dialog(
-    int val0,
-    int val1,
-    int val2,
-    int val3,
-    int val4)
-{
-    int val5{};
-    int inputfail = 0;
-    int ime_esc = 0;
-label_21261_internal:
-    snd(26);
-    x = val0;
-    y = val1;
-    dx = val2 * 16 + 60;
-    font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
-    inputfail = 0;
-    SDIM1(inputlog2);
-    if (val4 != 0)
-    {
-        val5 = val4;
-        if (strlen_u(std::to_string(val5)) >= 3)
-        {
-            dx += std::to_string(val5).size() * 8;
-        }
-        pos(x + 24, y + 4);
-        gfini(dx - 42, 35);
-        gfdec(60, 60, 60);
-        while (1)
-        {
-            window2(x + 20, y, dx - 40, 36, 0, 2);
-            pos(x + dx / 2 - 56, y - 32);
-            gcopy(3, 128, 288, 128, 32);
-            pos(x + 28, y + 4);
-            gcopy(3, 312, 336, 24, 24);
-            pos(x + dx - 51, y + 4);
-            gcopy(3, 336, 336, 24, 24);
-            inputlog2 = ""s + elona::stoi(inputlog(0)) + u8"("s + val5 + u8")"s;
-            pos(x + dx - 70 - strlen_u(inputlog2) * 8 + 8, y + 11);
-            color(255, 255, 255);
-            mes(inputlog2);
-            color(0, 0, 0);
-            redraw();
-            await(cfg_wait1);
-            key_check();
-            if (key == key_enter)
-            {
-                f = 1;
-                break;
-            }
-            if (key == key_cancel)
-            {
-                if (val3 == 1)
-                {
-                    f = -1;
-                    break;
-                }
-            }
-            if (key == key_west)
-            {
-                snd(5);
-                --val4;
-                if (val4 < 1)
-                {
-                    val4 = val5;
-                }
-            }
-            if (key == key_east)
-            {
-                snd(5);
-                ++val4;
-                if (val4 > val5)
-                {
-                    val4 = 1;
-                }
-            }
-            if (key == key_south)
-            {
-                snd(5);
-                val4 = 1;
-            }
-            if (key == key_north)
-            {
-                snd(5);
-                val4 = val5;
-            }
-            inputlog = ""s + val4;
-        }
-        if (f == -1)
-        {
-            inputlog = "";
-            rtval = -1;
-        }
-        keywait = 1;
-        key = "";
-        rtval = 0;
-        return;
-    }
-    objmode(2, 0);
-    if (cfg_msg_box == 0)
-    {
-        pos(x + 4, y + 4);
-        mesbox(inputlog, dx - 8, 26, 1, val2 * (1 + en));
-    }
-    else
-    {
-        pos(x, y);
-        mesbox(inputlog, 600, 0, 5, val2 * (1 + en));
-        pos(x + 4, y + 4);
-        gfini(dx - 1, 35);
-        gfdec(60, 60, 60);
-        {
-            int stat = aplsel(u8"Elona ver 1.22"s);
-            if (stat == 1)
-            {
-                dialog(u8"Failed to get WINDOW ID"s, 1);
-                clrobj(1);
-                cfg_msg_box = 0;
-                goto label_21261_internal;
-            }
-        }
-        {
-            int stat = aplobj(""s, 1);
-            if (stat == 1)
-            {
-                dialog(u8"Failed to get OBJECT ID"s, 1);
-                clrobj(1);
-                cfg_msg_box = 0;
-                goto label_21261_internal;
-            }
-        }
-    }
-    notesel(inputlog);
-    p(1) = 2;
-    ime_esc = 0;
-    onkey_1();
-    for (int cnt = 0;; ++cnt)
-    {
-        if (ginfo(2) == 0)
-        {
-            objsel(1);
-        }
-        else
-        {
-            objprm(1, ""s);
-            inputlog = "";
-            await(100);
-            --cnt;
-            continue;
-        }
-        await(40);
-        window2(x, y, dx, 36, 0, 2);
-        pos(x + dx / 2 - 60, y - 32);
-        gcopy(3, 128, 288, 128, 32);
-        if (cfg_msg_box == 1)
-        {
-            pos(x + 8, y + 4);
-            if (imeget() != 0)
-            {
-                gcopy(3, 48, 336, 24, 24);
-            }
-            else
-            {
-                gcopy(3, 24, 336, 24, 24);
-            }
-            apledit(p(2), 2, 0);
-            if (p(2) > val2 * (1 + en) - 2)
-            {
-                pos(x + 8, y + 4);
-                gcopy(3, 72, 336, 24, 24);
-            }
-            if (cnt % 20 < 10)
-            {
-                p(1) = p(1) * 2;
-            }
-            else
-            {
-                p(1) = p(1) / 2;
-            }
-            apledit(p(2), 0);
-            p(4) = 0;
-            for (int cnt = 0, cnt_end = (p(2)); cnt < cnt_end; ++cnt)
-            {
-                p(3) = inputlog(0)[p(4)];
-                if ((p(3) >= 129 && p(3) <= 159)
-                    || (p(3) >= 224 && p(3) <= 252))
-                {
-                    p(4) += 2;
-                }
-                else
-                {
-                    p(4) += 1;
-                }
-            }
-            gmode(4, -1, -1, p(1) / 2 + 50);
-            pos(x + 34 + p(4) * 8, y + 5);
-            gcopy(3, 0, 336, 12, 24);
-            gmode(2);
-            color(255, 255, 255);
-            pos(x + 36, y + 9);
-            noteget(s, 0);
-            mes(s);
-            color(0, 0, 0);
-        }
-        if (strutil::contains(inputlog(0), u8"\n"))
-        {
-            rtval = 0;
-            break;
-        }
-        if (strutil::contains(inputlog(0), u8"\t"))
-        {
-            objprm(1, ""s);
-            inputlog = "";
-            if (val3 == 1)
-            {
-                ime_esc = 1;
-            }
-        }
-        redraw();
-        if (val3 == 1)
-        {
-            if (ime_esc == 1)
-            {
-                inputlog = "";
-                keywait = 1;
-                key = "";
-                break;
-            }
-        }
-    }
-    gmode(2);
-    clrobj(1);
-    if (inputfail)
-    {
-        cfg_msg_box = 0;
-        goto label_21261_internal;
-    }
-    if (input_mode == 1)
-    {
-        cnv_filestr(inputlog);
-    }
-    input_mode = 0;
-    if (en)
-    {
-        cnv_str(inputlog, u8"\""s, u8"'"s);
-    }
-    rm_crlf(inputlog);
-    onkey_0();
     return;
 }
 
@@ -50274,16 +49377,16 @@ void label_2134()
     buff = "";
     if (dbm == ""s)
     {
-        noteadd(
-            u8"Elona v1.22 Debug Console    Type \"?\" for help. Hit ESC to exit."s);
+        noteadd(latest_version.long_string());
+        noteadd(u8"Debug Console    Type \"?\" for help. Hit ESC to exit."s);
         noteadd(""s);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     objmode(2);
     pos(0, 24);
-    mesbox(dbm, 800, 576, 0);
+    mesbox(dbm);
     pos(0, 0);
-    mesbox(buff, 800, 24, 1);
+    mesbox(buff);
     objsel(2);
     while (1)
     {
@@ -50498,7 +49601,7 @@ void label_2144()
 void label_21452()
 {
 label_21451_internal:
-    if (cfg_scroll)
+    if (config::instance().scroll)
     {
         if (cc == 0)
         {
@@ -50526,8 +49629,8 @@ label_21451_internal:
         {
             if (feat(2) == 7)
             {
-                if ((cbit(5, cc) == 1 && cdata[cc].gravity == 0)
-                    || cbit(31, cc) == 1)
+                if ((cdata[cc].is_floating() == 1 && cdata[cc].gravity == 0)
+                    || cdata[cc].is_immune_to_mine() == 1)
                 {
                     return;
                 }
@@ -50680,7 +49783,7 @@ label_21451_internal:
                             u8"槍が地面から飛び出した。"s,
                             u8"Several spears fly out from the ground."s));
                     }
-                    if (cbit(5, cc) == 1 && cdata[cc].gravity == 0)
+                    if (cdata[cc].is_floating() == 1 && cdata[cc].gravity == 0)
                     {
                         if (is_in_fov(cc))
                         {
@@ -51616,7 +50719,7 @@ void continuous_action_others()
                     rowactend(cc);
                     txt(lang(
                         u8"突然ふたが閉まった！"s,
-                        u8"Suddenly, the iron maiden falls foward."s));
+                        u8"Suddenly, the iron maiden falls forward."s));
                     dmghp(cc, 9999, -18);
                     return;
                 }
@@ -51780,7 +50883,7 @@ void continuous_action_others()
                     {
                         txt(lang(
                             u8"対象が見当たらない。"s,
-                            u8"You loose the target."s));
+                            u8"You lose the target."s));
                         f = 0;
                     }
                 }
@@ -51981,7 +51084,7 @@ void label_2150()
     gsel(4);
     gmode(0);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/bg_night.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/bg_night.bmp"), 1);
     pos(0, 0);
     gzoom(4, 0, 0, 640, 480, windoww, windowh - inf_verh);
     gsel(0);
@@ -52035,7 +51138,7 @@ void label_2151()
         cdata[tc].mp = cdata[tc].max_mp;
         cdata[tc].sp = cdata[tc].max_sp;
         healcon(tc, 12, 7 + rnd(7));
-        if (cbit(986, tc))
+        if (cdata[tc].has_anorexia())
         {
             cdata[tc].anorexia_count -= rnd(6);
         }
@@ -52049,9 +51152,9 @@ void label_2151()
             cdata[tc].anorexia_count = 0;
         }
         healsan(tc, 10);
-        if (cbit(21, tc))
+        if (cdata[tc].has_lay_hand())
         {
-            cbitmod(974, tc, 1);
+            cdata[tc].is_lay_hand_available() = true;
         }
     }
     mode = 9;
@@ -52076,7 +51179,7 @@ void label_2151()
         tc = -1;
         for (int cnt = 1; cnt < 16; ++cnt)
         {
-            if (cbit(962, cnt) == 1)
+            if (cdata[cnt].has_made_gene() == 1)
             {
                 if (cdata[cnt].state == 1)
                 {
@@ -52096,7 +51199,7 @@ void label_2151()
             list(0, listmax) = 1;
             listn(0, listmax) = lang(u8"ふぅ"s, u8"Sweet."s);
             ++listmax;
-            cbitmod(962, tc, 0);
+            cdata[tc].has_made_gene() = false;
             show_random_event_window(u8"bg_re14");
             save_gene();
         }
@@ -52294,7 +51397,7 @@ void label_2153()
         {
             if (rnd(100) == 0)
             {
-                if (cbit(5, 0) == 0 || cdata[0].gravity > 0)
+                if (cdata[0].is_floating() == 0 || cdata[0].gravity > 0)
                 {
                     txtef(9);
                     if (jp)
@@ -52335,7 +51438,7 @@ void label_2153()
         }
         if (cdata[0].nutrition <= 2000)
         {
-            if (cbit(986, 0) == 0)
+            if (cdata[0].has_anorexia() == 0)
             {
                 snd(18);
                 txt(lang(
@@ -52353,7 +51456,7 @@ void label_2153()
         {
             if (rnd(100) == 0)
             {
-                if (cbit(5, 0) == 0 || cdata[0].gravity > 0)
+                if (cdata[0].is_floating() == 0 || cdata[0].gravity > 0)
                 {
                     txtef(9);
                     if (jp)
@@ -52490,7 +51593,7 @@ void label_2156()
         fishstat = 0;
         gsel(9);
         pos(0, 0);
-        picload(fs::path(u8"./graphic/fishing.bmp"));
+        picload(filesystem::path(u8"./graphic/fishing.bmp"));
         gsel(0);
         return;
     }
@@ -52518,7 +51621,7 @@ void label_2156()
                     ++scrturn;
                     update_screen();
                     redraw();
-                    await(cfg_wait1 * 2);
+                    await(config::instance().wait1 * 2);
                 }
                 if (rnd(3) == 0)
                 {
@@ -52541,7 +51644,7 @@ void label_2156()
                 ++scrturn;
                 update_screen();
                 redraw();
-                await(cfg_wait1 * 2);
+                await(config::instance().wait1 * 2);
             }
             if (rnd(10))
             {
@@ -52567,7 +51670,7 @@ void label_2156()
                 update_screen();
                 addefmap(fishx, fishy, 5, 2);
                 redraw();
-                await(cfg_wait1 * 2);
+                await(config::instance().wait1 * 2);
             }
             if (the_fish_db[fish]->difficulty >= rnd(sdata(185, 0) + 1))
             {
@@ -52593,7 +51696,7 @@ void label_2156()
                 ++scrturn;
                 update_screen();
                 redraw();
-                await(cfg_wait1 * 2);
+                await(config::instance().wait1 * 2);
             }
             snd(14 + rnd(2));
             fishanime = 0;
@@ -52984,7 +52087,7 @@ void label_2161()
         {
             cdata[cc].item_which_will_be_used = 0;
         }
-        if (cbit(987, cc))
+        if (cdata[cc].was_passed_item_by_you_just_now())
         {
             if (inv[ci].material == 35)
             {
@@ -53555,7 +52658,8 @@ int label_2168()
         efp = efp * (100 + p / 10) / 100;
     }
     rapidmagic = 0;
-    if (cbit(20, cc) && the_ability_db[efid]->sdataref1 == 2)
+    if (cdata[cc].can_cast_rapid_magic()
+        && the_ability_db[efid]->sdataref1 == 2)
     {
         rapidmagic = 1 + (rnd(3) != 0) + (rnd(2) != 0);
     }
@@ -53689,7 +52793,7 @@ int drink_well()
                     + lang(
                           u8"「手を伸ばせー」"s,
                           (u8" yells, "s + u8"\"G-Give me your hands!\""s)));
-                if (cbit(5, cc) == 1 && cdata[cc].gravity == 0)
+                if (cdata[cc].is_floating() == 1 && cdata[cc].gravity == 0)
                 {
                     txt(lang(
                         u8"しかしすぐに浮いてきた… "s,
@@ -54054,7 +53158,7 @@ int label_2174()
 {
     if (efid == 646)
     {
-        if (cbit(973, tc) == 1)
+        if (cdata[tc].is_sentenced_daeth() == 1)
         {
             if (cdata[cc].relationship == -3)
             {
@@ -54497,7 +53601,8 @@ void do_throw_command()
             if (inv[ci].id == 685)
             {
                 if (tc < 57 || cdata[tc].character_role != 0
-                    || cdata[tc].quality == 6 || cbit(976, tc) == 1)
+                    || cdata[tc].quality == 6
+                    || cdata[tc].is_lord_of_dungeon() == 1)
                 {
                     txt(lang(
                         u8"その生物には無効だ。"s,
@@ -54845,7 +53950,8 @@ int pick_up_item()
                 {
                     midbk = mid;
                     mid = ""s + 30 + u8"_"s + (100 + inv[ci].count);
-                    if (fs::exists(fs::path(u8"./tmp/mdata_"s + mid + u8".s2")))
+                    if (fs::exists(filesystem::path(
+                            u8"./tmp/mdata_"s + mid + u8".s2")))
                     {
                         ctrl_file(11);
                     }
@@ -55633,18 +54739,19 @@ void label_2203()
     {
         tc = cellchara;
         if (cdata[tc].relationship >= 10
-            || (cdata[tc].relationship == -1 && cfg_ignoredislike != 0)
+            || (cdata[tc].relationship == -1
+                && config::instance().ignoredislike != 0)
             || (cdata[tc].relationship == 0
                 && (adata(16, gdata_current_map) == 101
                     || adata(16, gdata_current_map) == 102 || key_shift)))
         {
-            if (cbit(985, tc) == 0)
+            if (cdata[tc].is_hung_on_sand_bag() == 0)
             {
                 if (mdata(6) == 1)
                 {
                     goto label_2204_internal;
                 }
-                if (cfg_scroll)
+                if (config::instance().scroll)
                 {
                     cdata[0].next_position.x = cdata[tc].position.x;
                     cdata[0].next_position.y = cdata[tc].position.y;
@@ -55661,7 +54768,7 @@ void label_2203()
                         if (cdata[tc].sleep == 0)
                         {
                             p = rnd(clamp(cdata[cc].gold, 0, 20) + 1);
-                            if (cbit(15, cc))
+                            if (cdata[cc].is_protected_from_thieves())
                             {
                                 p = 0;
                             }
@@ -55706,9 +54813,9 @@ void label_2203()
         if (cdata[tc].relationship <= -1)
         {
             cdata[0].enemy_id = tc;
-            if (cbit(6, tc) == 1)
+            if (cdata[tc].is_invisible() == 1)
             {
-                if (cbit(7, 0) == 0)
+                if (cdata[0].can_see_invisible() == 0)
                 {
                     if (cdata[tc].wet == 0)
                     {
@@ -55850,7 +54957,7 @@ void label_2203()
 
 void label_2205()
 {
-    if (cbit(975, cc))
+    if (cdata[cc].is_ridden())
     {
         turn_end();
         return;
@@ -56101,7 +55208,7 @@ void label_2205()
                 {
                     if (encounterlv < 5)
                     {
-                        valn += lang(u8"プチ級"s, u8"Puti Rank"s);
+                        valn += lang(u8"プチ級"s, u8"Putit Rank"s);
                         break;
                     }
                     if (encounterlv < 10)
@@ -56201,7 +55308,8 @@ void label_2206()
                     10,
                     dirsub,
                     rnd(2));
-                if (keybd_wait <= cfg_walkwait * cfg_startrun
+                if (keybd_wait <= config::instance().walkwait
+                            * config::instance().startrun
                     || cdata[0].turn % 2 == 0 || mdata(6) == 1)
                 {
                     snd(83 + foot % 3);
@@ -56228,7 +55336,7 @@ void label_2206()
                 txt(mapname(feat(2) + feat(3) * 100, true));
                 if (adata(16, feat(2) + feat(3) * 100) == 8)
                 {
-                    if (cfg_extrahelp)
+                    if (config::instance().extrahelp)
                     {
                         if (gdata(206) == 0)
                         {
@@ -56348,7 +55456,7 @@ void label_2206()
             }
             if (feat(1) >= 24 && feat(1) <= 28)
             {
-                if (cfg_extrahelp)
+                if (config::instance().extrahelp)
                 {
                     if (gdata(205) == 0)
                     {
@@ -56485,7 +55593,7 @@ void label_2207(int val0)
                 {
                     txt(lang(
                         u8"昇る階段は見つからない。"s,
-                        u8"There're no upstaris here."s));
+                        u8"There're no upstairs here."s));
                     update_screen();
                     pc_turn(false);
                 }
@@ -56801,9 +55909,10 @@ void do_open_command()
             }
         }
         ctrl_file(4, u8"shoptmp.s2");
-        if (fs::exists(fs::path(u8"./tmp/"s + u8"shop"s + invfile + u8".s2")))
+        if (fs::exists(
+                filesystem::path(u8"./tmp/"s + u8"shop"s + invfile + u8".s2")))
         {
-            ctrl_file(3, fs::path(u8"shop"s + invfile + u8".s2"));
+            ctrl_file(3, filesystem::path(u8"shop"s + invfile + u8".s2"));
         }
         else
         {
@@ -57211,7 +56320,7 @@ void open_new_year_gift()
         {
             txt(lang(
                 u8"これは素晴らしい贈り物だ！"s,
-                u8"This is truely a wonderful gift!"s));
+                u8"This is truly a wonderful gift!"s));
         }
         flt();
         itemcreate(
@@ -57516,7 +56625,8 @@ void try_to_melee_attack()
     ele = 0;
     if (cdata[cc].equipment_type & 1)
     {
-        if (clamp(int(std::sqrt(sdata(168, cc)) - 3), 1, 5) + cbit(30, cc) * 5
+        if (clamp(int(std::sqrt(sdata(168, cc)) - 3), 1, 5)
+                + cdata[cc].has_power_bash() * 5
             > rnd(100))
         {
             if (is_in_fov(cc))
@@ -57614,8 +56724,8 @@ label_22191_internal:
     if (attacknum > 1 || cc != 0)
     {
     }
-    expmodifer = 1 + cbit(985, tc) * 15 + cbit(23, tc) + cbit(27, tc)
-        + (gdata_current_map == 35);
+    expmodifer = 1 + cdata[tc].is_hung_on_sand_bag() * 15 + cdata[tc].splits()
+        + cdata[tc].splits2() + (gdata_current_map == 35);
     int hit = calcattackhit();
     i = 0;
     if (hit == 1)
@@ -57632,7 +56742,7 @@ label_22191_internal:
         attackdmg = dmg;
         if (cc == 0)
         {
-            if (cfg_attackanime)
+            if (config::instance().attackanime)
             {
                 aniref = dmg * 100 / cdata[tc].max_hp;
                 play_animation(12);
@@ -57882,7 +56992,7 @@ label_22191_internal:
             }
             if (attackskill == 107)
             {
-                s = lang(u8"鎌"s, u8"sythe"s);
+                s = lang(u8"鎌"s, u8"scythe"s);
                 if (tc >= 16)
                 {
                     gdata(809) = 2;
@@ -58111,6 +57221,7 @@ label_22191_internal:
                     name(cc) + u8" miss"s + _s(cc, true) + u8" "s + name(tc)
                         + u8"."s));
             }
+            add_damage_popup(u8"miss", tc, {0, 0, 0});
         }
     }
     if (hit == -2)
@@ -58136,6 +57247,7 @@ label_22191_internal:
                     name(tc) + u8" skillfully evade"s + _s(tc) + u8" "s
                         + name(cc) + u8"."s));
             }
+            add_damage_popup(u8"evade!!", tc, {0, 0, 0});
         }
     }
     if (tc == 0)
@@ -58412,7 +57524,7 @@ void label_2221()
                 {
                     txt(lang(
                         u8"まだだ、まだ遠い…"s,
-                        u8"Stll, still lying far ahead."s));
+                        u8"Still, still lying far ahead."s));
                     break;
                 }
                 txt(lang(
@@ -59314,9 +58426,9 @@ void do_use_command()
             if (cdata[tc].state == 1)
             {
                 gdata(94) = 0;
-                if (cbit(966, tc) == 1)
+                if (cdata[tc].has_been_used_stethoscope() == 1)
                 {
-                    cbitmod(966, tc, 0);
+                    cdata[tc].has_been_used_stethoscope() = false;
                     txt(lang(
                         name(tc) + u8"から聴診器を外した。"s,
                         u8"You no longer watch on "s + his(tc)
@@ -59336,7 +58448,7 @@ void do_use_command()
                     txtef(4);
                     txt(lang(u8"「キャー」"s, u8"\"Pervert!\""s));
                 }
-                cbitmod(966, tc, 1);
+                cdata[tc].has_been_used_stethoscope() = true;
                 turn_end();
                 return;
             }
@@ -59362,7 +58474,7 @@ void do_use_command()
                             u8"あなたは自分を紐でくくってみた…"s,
                             u8"You leash yourself..."s));
                     }
-                    else if (cbit(968, tc) == 0)
+                    else if (cdata[tc].is_leashed() == 0)
                     {
                         if (tc >= 16)
                         {
@@ -59380,7 +58492,7 @@ void do_use_command()
                                 goto label_2229_internal;
                             }
                         }
-                        cbitmod(968, tc, 1);
+                        cdata[tc].is_leashed() = true;
                         txt(lang(
                             u8"あなたは"s + name(tc)
                                 + u8"を紐でくくりつけた。"s,
@@ -59393,7 +58505,7 @@ void do_use_command()
                     }
                     else
                     {
-                        cbitmod(968, tc, 0);
+                        cdata[tc].is_leashed() = false;
                         txt(lang(
                             u8"あなたは"s + name(tc)
                                 + u8"にくくりつけた紐をほどいた。"s,
@@ -59450,7 +58562,7 @@ void do_use_command()
                             pc_turn(false);
                         }
                     }
-                    if (cbit(985, tc))
+                    if (cdata[tc].is_hung_on_sand_bag())
                     {
                         txt(lang(
                             u8"それは既に吊るされている。"s,
@@ -59466,7 +58578,7 @@ void do_use_command()
                     else
                     {
                         snd(58);
-                        cbitmod(985, tc, 1);
+                        cdata[tc].is_hung_on_sand_bag() = true;
                         txt(lang(
                             u8"あなたは"s + name(tc) + u8"を吊るした。"s,
                             u8"You hang up "s + name(tc) + u8"."s));
@@ -59563,7 +58675,7 @@ void do_use_command()
         }
         if (inv[ci].param1 >= 1000000000)
         {
-            txt(lang(u8"貯金箱は一杯だ。"s, u8"The money box if ull."s));
+            txt(lang(u8"貯金箱は一杯だ。"s, u8"The money box is full."s));
             update_screen();
             pc_turn(false);
         }
@@ -59667,7 +58779,7 @@ void do_use_command()
         txtef(5);
         txt(lang(
             u8"オパートス「フハハハ！間もなく、この地に変動が起こるであろう！」"s,
-            u8"A voice echos, "s
+            u8"A voice echoes, "s
                 + u8"\"Muwahahaha! I shall shake the land for you!\""s));
         goto label_2229_internal;
     case 34:
@@ -59677,7 +58789,7 @@ void do_use_command()
         txtef(5);
         txt(lang(
             u8"ジュア「べ、別にあんたのためにするんじゃないからね。バカっ！」"s,
-            u8"A voice echos, "s + u8"\"I-I'm not doing for you! Silly!\""s));
+            u8"A voice echoes, "s + u8"\"I-I'm not doing for you! Silly!\""s));
         efid = 637;
         efp = 5000;
         magic();
@@ -59690,7 +58802,7 @@ void do_use_command()
         txtef(5);
         txt(lang(
             u8"エヘカトル「呼んだ？呼んだ？」"s,
-            u8"A voice echos, "s + u8"\"Did you call me? Call me?\""s));
+            u8"A voice echoes, "s + u8"\"Did you call me? Call me?\""s));
         addbuff(tc, 19, 77, 2500);
         goto label_2229_internal;
     case 27:
@@ -59703,7 +58815,7 @@ void do_use_command()
         {
             txt(lang(
                 u8"ルルウィ「あさはかね。エーテルの風を止めてあげるとでも思ったの？」"s,
-                u8"A rather angry voice echos, "s
+                u8"A rather angry voice echoes, "s
                 u8"\"Listen my little slave. Did you really think I would turn a hand in this filthy wind for you?\""s));
             goto label_2229_internal;
         }
@@ -59733,7 +58845,7 @@ void do_use_command()
         }
         txt(lang(
             u8"ルルウィ「あらあら、定命の分際でそんなおねだりするの？ウフフ…今回は特別よ」"s,
-            u8"An impish voice echos, "s
+            u8"An impish voice echoes, "s
             u8"\"Ah you ask too much for a mortal. Still, it is hard to refuse a call from such a pretty slave like you.\""s));
         txt(lang(u8"天候が変わった。"s, u8"The weather changes."s));
         envonly = 1;
@@ -60120,7 +59232,7 @@ label_2229_internal:
 
 int label_2230()
 {
-    if (cbit(23, tc) || cbit(27, tc))
+    if (cdata[tc].splits() || cdata[tc].splits2())
     {
         return 0;
     }
@@ -60168,7 +59280,7 @@ int label_2231()
     {
         return -1;
     }
-    if (cbit(23, tc) || cbit(27, tc))
+    if (cdata[tc].splits() || cdata[tc].splits2())
     {
         return -1;
     }
@@ -60574,9 +59686,9 @@ void label_2241()
 {
     gsel(4);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/face1.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/face1.bmp"), 1);
     gsel(7);
-    picload(fs::path(u8"./graphic/ie_chat.bmp"));
+    picload(filesystem::path(u8"./graphic/ie_chat.bmp"));
     gsel(0);
     return;
 }
@@ -60588,7 +59700,7 @@ void speak_to_npc()
     keyhalt = 1;
     if (cdata[tc].character_role == 1005)
     {
-        if (cfg_extrahelp)
+        if (config::instance().extrahelp)
         {
             if (gdata(207) == 0)
             {
@@ -60608,7 +59720,7 @@ void speak_to_npc()
     }
     if (cdata[tc].character_role == 7)
     {
-        if (cfg_extrahelp)
+        if (config::instance().extrahelp)
         {
             if (gdata(208) == 0)
             {
@@ -60732,9 +59844,9 @@ void speak_to_npc()
         talk_end();
         return;
     }
-    if (cbit(982, tc))
+    if (cdata[tc].visited_just_now())
     {
-        cbitmod(982, tc, 0);
+        cdata[tc].visited_just_now() = false;
         label_2244();
         return;
     }
@@ -60918,7 +60030,7 @@ void label_2244()
         }
         if (cdata[tc].impression >= 100)
         {
-            if (cbit(984, tc) == 0)
+            if (cdata[tc].is_best_friend() == 0)
             {
                 if (inv_getfreeid(-1) != -1)
                 {
@@ -60939,7 +60051,7 @@ void label_2244()
                             return;
                         }
                     }
-                    cbitmod(984, tc, 1);
+                    cdata[tc].is_best_friend() = true;
                     flt();
                     itemcreate(
                         -1, 730, cdata[0].position.x, cdata[0].position.y, 0);
@@ -61078,7 +60190,7 @@ void label_2244()
                     buff = lang(
                         u8"よし、これで訓練は終わり"s + _da()
                             + u8"かなり潜在能力が伸びた"s + _yo(2),
-                        u8"Marverous! The traing is now complete. I think you've improved some potential."s);
+                        u8"Marvelous! The training is now complete. I think you've improved some potential."s);
                     tc = tc * 1 + 0;
                     list(0, listmax) = 0;
                     listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -61726,7 +60838,7 @@ void label_2244()
                 + u8"普段は一般の客には売らない格安の品を、特別に見せてあげ"s
                 + _ru() + u8"覚えておいて"s + _kure(3) + u8"、今日だけだ"s
                 + _yo(),
-            u8"This is your lucky day. I wouldn't normaly show my discounted goods to commoners but since I feel so good today..."s);
+            u8"This is your lucky day. I wouldn't normally show my discounted goods to commoners but since I feel so good today..."s);
         talk_window();
         if (chatval == 0)
         {
@@ -61800,7 +60912,7 @@ int give_potion_of_cure_corruption()
     if (stat == -1)
     {
         listmax = 0;
-        buff = lang(u8"うそつき！"s, u8"Lier!"s);
+        buff = lang(u8"うそつき！"s, u8"Liar!"s);
         tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
@@ -61991,7 +61103,7 @@ void label_2249()
         fade_out();
         gsel(4);
         pos(0, 0);
-        picload(fs::path(u8"./graphic/face1.bmp"), 1);
+        picload(filesystem::path(u8"./graphic/face1.bmp"), 1);
         gsel(0);
         cdata[0].blind = 0;
         txt(lang(u8" 夢…か… "s, u8"It was...a dream...?"s));
@@ -62253,7 +61365,7 @@ void label_2252()
             buff = lang(
                 u8"未完了の依頼が多すぎじゃない"s + _kana(1)
                     + u8"この仕事は、安心してまかせられない"s + _yo(),
-                u8"Hey, you've got quite a few unfinished contracts. See me again when you have fishined them."s);
+                u8"Hey, you've got quite a few unfinished contracts. See me again when you have finished them."s);
             talk_npc();
             return;
         }
@@ -62322,7 +61434,7 @@ void label_2252()
                         }
                         if (cdata[cnt].id == cdata[rc].id)
                         {
-                            if (cbit(963, cnt) == 1)
+                            if (cdata[cnt].is_escorted() == 1)
                             {
                                 f = 0;
                                 break;
@@ -62337,7 +61449,7 @@ void label_2252()
             }
             rc = 56;
             new_ally_joins();
-            cbitmod(963, rc, 1);
+            cdata[rc].is_escorted() = true;
             qdata(13, rq) = cdata[rc].id;
         }
         qdata(8, rq) = 1;
@@ -62626,7 +61738,8 @@ void talk_window()
     init_talk_window_and_show();
 label_2258_internal:
     show_talk_window();
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
     {
         if (cs == cnt)
@@ -62646,7 +61759,7 @@ label_2258_internal:
     }
     cs_bk = cs;
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     int a{};
@@ -62747,7 +61860,7 @@ void show_talk_window()
     }
     else
     {
-        s = fs::path(u8"./user/graphic/face"s).generic_string()
+        s = filesystem::path(u8"./user/graphic/face"s).generic_string()
             + std::abs((cdata[tc].portrait + 1)) + u8".bmp"s;
         if (!fs::exists(s) || cdata[tc].portrait == -1)
         {
@@ -62772,10 +61885,10 @@ void show_talk_window()
             gzoom(4, 0, 0, 80, 112, 80, 112);
         }
     }
-    font(lang(cfg_font1, cfg_font2), 10 - en * 2, 0);
+    font(10 - en * 2);
     display_topic(lang(u8"友好"s, u8"Impress"s), wx + 28, wy + 170);
     display_topic(lang(u8"興味"s, u8"Attract"s), wx + 28, wy + 215);
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 1);
+    font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     if (cdatan(1, tc) == ""s)
     {
         s = cdatan(0, tc) + u8" "s;
@@ -62815,7 +61928,7 @@ void show_talk_window()
     color(20, 10, 5);
     mes(s);
     color(0, 0, 0);
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+    font(13 - en * 2);
     if (chatval(2) == 1)
     {
         s = i18n::_(
@@ -62850,7 +61963,7 @@ void show_talk_window()
         pos(wx + 60, wy + 245);
         mes(u8"-"s);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     color(20, 10, 5);
     notesel(buff);
     for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
@@ -63872,7 +62985,7 @@ label_22711:
     curmenu = 0;
     gsel(3);
     pos(960, 96);
-    picload(fs::path(u8"./graphic/deco_politics.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/deco_politics.bmp"), 1);
     gsel(0);
     fillbg(3, 960, 96, 128, 128);
     render_hud();
@@ -63897,9 +63010,10 @@ label_2272_internal:
     keyrange = 0;
     int j0 = 0;
     int n = 0;
+    cs_listbk();
     if (adata(28, gdata_current_map) == 0 || gdata_current_dungeon_level != 1)
     {
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
         pos(wx + 40, wy + 50);
         mes(lang(
             u8"この場所には経済活動がない。"s,
@@ -63943,10 +63057,10 @@ label_2272_internal:
             key_list(cnt) = key_select(cnt);
             ++keyrange;
             display_key(x - 30, y + 21, cnt);
-            font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+            font(12 + sizefix - en * 2);
             pos(x - 2, y + jp * 2);
             bmes(cnven(popostname(p)), 255, 255, 255);
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
             if (podata(0 + cnt, city) == 0)
             {
                 s = lang(u8"不在"s, u8"Empty"s);
@@ -63960,7 +63074,7 @@ label_2272_internal:
         }
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -64077,13 +63191,13 @@ void label_2276()
     listmax = 2;
     gsel(3);
     pos(960, 96);
-    picload(fs::path(u8"./graphic/deco_politics.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/deco_politics.bmp"), 1);
     gsel(0);
     fillbg(3, 960, 96, 128, 128);
     render_hud();
     gsel(7);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/ie_scroll.bmp"));
+    picload(filesystem::path(u8"./graphic/ie_scroll.bmp"));
     gsel(0);
     windowshadow = 1;
     snd(92);
@@ -64107,7 +63221,7 @@ label_2277_internal:
 label_2278_internal:
     s = strhint2 + strhint3b;
     showscroll(s, wx, wy, ww, wh);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     if (adata(28, gdata_current_map) == 0 || gdata_current_dungeon_level != 1)
     {
         pos(wx + 40, wy + 60);
@@ -64123,7 +63237,7 @@ label_2278_internal:
                 lang(u8"街の概要"s, u8"Town Information"s), wx + 65, wy + 50);
             display_topic(
                 lang(u8"街の財政"s, u8"Town Finance"s), wx + 65, wy + 150);
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
             x = wx + 50;
             y = wy + 80;
             showeconomy(
@@ -64157,11 +63271,11 @@ label_2278_internal:
                 wy + 50);
             display_topic(
                 lang(u8"収支の詳細"s, u8"Finance Detail"s), wx + 65, wy + 200);
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
         }
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     if (menucycle == 1)
@@ -64238,6 +63352,7 @@ label_2278_internal:
 
 void label_2280()
 {
+    // TODO: untranslated
     listmax = 0;
     page = 0;
     pagesize = 13;
@@ -64266,13 +63381,13 @@ void label_2280()
 label_2281_internal:
     gsel(3);
     pos(960, 96);
-    picload(fs::path(u8"./graphic/deco_politics.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/deco_politics.bmp"), 1);
     gsel(0);
     fillbg(3, 960, 96, 128, 128);
     render_hud();
     gsel(7);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/ie_scroll.bmp"));
+    picload(filesystem::path(u8"./graphic/ie_scroll.bmp"));
     gsel(0);
     windowshadow = 1;
     snd(92);
@@ -64297,7 +63412,7 @@ label_2283_internal:
     s = strhint2 + strhint3b;
     showscroll(s, wx, wy, ww, wh);
     display_topic(lang(u8"法律"s, u8"Law"s), wx + 65, wy + 45);
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+    font(12 + sizefix - en * 2);
     pos(wx + 185, wy + 52);
     mes(lang(u8"国法"s, u8"Global"s));
     if (mdata(6) == 3)
@@ -64313,7 +63428,7 @@ label_2283_internal:
     pos(wx + 255, wy + 46);
     gmode(2);
     gcopy(3, 288, 360, 24, 24);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
@@ -64332,7 +63447,8 @@ label_2283_internal:
         }
         display_key(wx + 72, wy + 76 + cnt * 19 - 2, cnt);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -64352,7 +63468,7 @@ label_2283_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -64428,171 +63544,6 @@ label_2283_internal:
 
 
 
-void initialize_cbit_filters()
-{
-    DIM3(cbitorg, 30, 356);
-    HMMBITON(cbitorg(1, 351), 0);
-    HMMBITON(cbitorg(0, 3), 22);
-    HMMBITON(cbitorg(0, 4), 22);
-    HMMBITON(cbitorg(0, 286), 23);
-    HMMBITON(cbitorg(0, 285), 23);
-    HMMBITON(cbitorg(0, 287), 23);
-    HMMBITON(cbitorg(0, 327), 27);
-    HMMBITON(cbitorg(0, 327), 26);
-    HMMBITON(cbitorg(0, 9), 17);
-    HMMBITON(cbitorg(1, 349), 0);
-    HMMBITON(cbitorg(1, 348), 0);
-    HMMBITON(cbitorg(1, 347), 0);
-    HMMBITON(cbitorg(0, 11), 5);
-    HMMBITON(cbitorg(0, 237), 18);
-    HMMBITON(cbitorg(0, 244), 18);
-    HMMBITON(cbitorg(0, 245), 18);
-    HMMBITON(cbitorg(0, 321), 18);
-    HMMBITON(cbitorg(1, 281), 0);
-    HMMBITON(cbitorg(1, 298), 0);
-    HMMBITON(cbitorg(1, 25), 0);
-    HMMBITON(cbitorg(0, 42), 5);
-    HMMBITON(cbitorg(0, 43), 5);
-    HMMBITON(cbitorg(0, 44), 5);
-    HMMBITON(cbitorg(0, 307), 19);
-    HMMBITON(cbitorg(0, 308), 19);
-    HMMBITON(cbitorg(0, 50), 22);
-    HMMBITON(cbitorg(0, 51), 22);
-    HMMBITON(cbitorg(0, 52), 22);
-    HMMBITON(cbitorg(0, 53), 22);
-    HMMBITON(cbitorg(0, 54), 22);
-    HMMBITON(cbitorg(0, 55), 22);
-    HMMBITON(cbitorg(0, 56), 22);
-    HMMBITON(cbitorg(0, 57), 22);
-    HMMBITON(cbitorg(0, 58), 22);
-    HMMBITON(cbitorg(0, 59), 22);
-    HMMBITON(cbitorg(0, 60), 22);
-    HMMBITON(cbitorg(0, 63), 5);
-    HMMBITON(cbitorg(0, 64), 5);
-    HMMBITON(cbitorg(0, 312), 5);
-    HMMBITON(cbitorg(0, 313), 5);
-    HMMBITON(cbitorg(0, 65), 5);
-    HMMBITON(cbitorg(0, 65), 10);
-    HMMBITON(cbitorg(0, 66), 5);
-    HMMBITON(cbitorg(0, 66), 10);
-    HMMBITON(cbitorg(0, 67), 5);
-    HMMBITON(cbitorg(0, 67), 10);
-    HMMBITON(cbitorg(0, 315), 5);
-    HMMBITON(cbitorg(0, 315), 10);
-    HMMBITON(cbitorg(0, 316), 5);
-    HMMBITON(cbitorg(0, 316), 10);
-    HMMBITON(cbitorg(0, 314), 5);
-    HMMBITON(cbitorg(0, 314), 10);
-    HMMBITON(cbitorg(0, 68), 5);
-    HMMBITON(cbitorg(0, 81), 5);
-    HMMBITON(cbitorg(0, 82), 5);
-    HMMBITON(cbitorg(1, 83), 0);
-    HMMBITON(cbitorg(1, 84), 0);
-    HMMBITON(cbitorg(0, 85), 5);
-    HMMBITON(cbitorg(0, 86), 5);
-    HMMBITON(cbitorg(0, 87), 5);
-    HMMBITON(cbitorg(0, 91), 5);
-    HMMBITON(cbitorg(0, 92), 5);
-    HMMBITON(cbitorg(0, 257), 19);
-    HMMBITON(cbitorg(0, 106), 10);
-    HMMBITON(cbitorg(0, 107), 10);
-    HMMBITON(cbitorg(1, 109), 0);
-    HMMBITON(cbitorg(0, 110), 10);
-    HMMBITON(cbitorg(0, 111), 10);
-    HMMBITON(cbitorg(0, 112), 10);
-    HMMBITON(cbitorg(0, 113), 10);
-    HMMBITON(cbitorg(0, 117), 5);
-    HMMBITON(cbitorg(0, 118), 5);
-    HMMBITON(cbitorg(0, 118), 10);
-    HMMBITON(cbitorg(0, 132), 10);
-    HMMBITON(cbitorg(0, 133), 10);
-    HMMBITON(cbitorg(0, 134), 10);
-    HMMBITON(cbitorg(0, 135), 10);
-    HMMBITON(cbitorg(0, 136), 10);
-    HMMBITON(cbitorg(0, 137), 10);
-    HMMBITON(cbitorg(0, 138), 10);
-    HMMBITON(cbitorg(0, 150), 10);
-    HMMBITON(cbitorg(0, 151), 10);
-    HMMBITON(cbitorg(0, 152), 10);
-    HMMBITON(cbitorg(0, 164), 22);
-    HMMBITON(cbitorg(0, 229), 22);
-    HMMBITON(cbitorg(0, 165), 22);
-    HMMBITON(cbitorg(0, 225), 22);
-    HMMBITON(cbitorg(0, 166), 22);
-    HMMBITON(cbitorg(0, 176), 22);
-    HMMBITON(cbitorg(0, 249), 22);
-    HMMBITON(cbitorg(0, 211), 22);
-    HMMBITON(cbitorg(0, 180), 22);
-    HMMBITON(cbitorg(0, 182), 22);
-    HMMBITON(cbitorg(0, 186), 10);
-    HMMBITON(cbitorg(0, 187), 10);
-    HMMBITON(cbitorg(0, 188), 10);
-    HMMBITON(cbitorg(0, 345), 10);
-    HMMBITON(cbitorg(0, 345), 22);
-    HMMBITON(cbitorg(0, 346), 10);
-    HMMBITON(cbitorg(0, 346), 22);
-    HMMBITON(cbitorg(0, 341), 10);
-    HMMBITON(cbitorg(0, 341), 31);
-    HMMBITON(cbitorg(0, 258), 10);
-    HMMBITON(cbitorg(0, 189), 5);
-    HMMBITON(cbitorg(0, 189), 10);
-    HMMBITON(cbitorg(0, 190), 5);
-    HMMBITON(cbitorg(0, 190), 10);
-    HMMBITON(cbitorg(0, 191), 5);
-    HMMBITON(cbitorg(0, 191), 10);
-    HMMBITON(cbitorg(0, 201), 6);
-    HMMBITON(cbitorg(0, 197), 6);
-    HMMBITON(cbitorg(0, 198), 6);
-    HMMBITON(cbitorg(0, 199), 6);
-    HMMBITON(cbitorg(0, 199), 10);
-    HMMBITON(cbitorg(0, 200), 6);
-    HMMBITON(cbitorg(0, 200), 10);
-    HMMBITON(cbitorg(1, 301), 0);
-    HMMBITON(cbitorg(0, 214), 17);
-    HMMBITON(cbitorg(0, 215), 17);
-    HMMBITON(cbitorg(0, 217), 17);
-    HMMBITON(cbitorg(0, 216), 10);
-    HMMBITON(cbitorg(0, 218), 10);
-    HMMBITON(cbitorg(0, 220), 10);
-    HMMBITON(cbitorg(0, 250), 5);
-    HMMBITON(cbitorg(0, 250), 17);
-    HMMBITON(cbitorg(0, 260), 5);
-    HMMBITON(cbitorg(0, 261), 5);
-    HMMBITON(cbitorg(0, 262), 5);
-    HMMBITON(cbitorg(0, 263), 5);
-    HMMBITON(cbitorg(0, 263), 22);
-    HMMBITON(cbitorg(0, 264), 5);
-    HMMBITON(cbitorg(0, 264), 20);
-    HMMBITON(cbitorg(0, 265), 5);
-    HMMBITON(cbitorg(0, 266), 5);
-    HMMBITON(cbitorg(0, 266), 21);
-    HMMBITON(cbitorg(0, 267), 22);
-    HMMBITON(cbitorg(0, 276), 22);
-    HMMBITON(cbitorg(0, 275), 22);
-    HMMBITON(cbitorg(0, 268), 22);
-    HMMBITON(cbitorg(0, 277), 22);
-    HMMBITON(cbitorg(0, 288), 5);
-    HMMBITON(cbitorg(0, 288), 20);
-    HMMBITON(cbitorg(0, 290), 5);
-    HMMBITON(cbitorg(0, 290), 20);
-    HMMBITON(cbitorg(0, 318), 10);
-    HMMBITON(cbitorg(0, 323), 5);
-    HMMBITON(cbitorg(0, 324), 25);
-    HMMBITON(cbitorg(0, 324), 26);
-    HMMBITON(cbitorg(0, 325), 25);
-    HMMBITON(cbitorg(0, 325), 26);
-    HMMBITON(cbitorg(0, 328), 25);
-    HMMBITON(cbitorg(0, 328), 28);
-    HMMBITON(cbitorg(0, 328), 26);
-    HMMBITON(cbitorg(0, 328), 5);
-    HMMBITON(cbitorg(0, 329), 25);
-    HMMBITON(cbitorg(0, 329), 28);
-    HMMBITON(cbitorg(0, 329), 26);
-    HMMBITON(cbitorg(0, 329), 5);
-}
-
-
-
 int new_ally_joins()
 {
     f = get_freeally();
@@ -64608,11 +63559,11 @@ int new_ally_joins()
     cdata[rc].relationship = 10;
     cdata[rc].original_relationship = 10;
     cdata[rc].character_role = 0;
-    cbitmod(970, rc, 0);
-    cbitmod(979, rc, 0);
-    cbitmod(985, rc, 0);
-    cbitmod(964, rc, 0);
-    cbitmod(991, rc, 0);
+    cdata[rc].is_quest_target() = false;
+    cdata[rc].does_not_search_enemy() = false;
+    cdata[rc].is_hung_on_sand_bag() = false;
+    cdata[rc].is_temporary() = false;
+    cdata[rc].only_christmas() = false;
     snd(64);
     txtef(5);
     txt(lang(
@@ -64690,7 +63641,7 @@ void label_2662()
                     + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12)
             {
                 cdata[rc].period_of_contract = 0;
-                cbitmod(969, rc, 0);
+                cdata[rc].is_contracting() = false;
                 cdata[rc].relationship = 0;
                 txt(lang(
                     cdatan(0, rc) + u8"との契約期間が切れた。"s,
@@ -65735,7 +64686,7 @@ void failed_quest(int val0)
             txtef(8);
             txt(lang(
                 u8"あなたは重大な罪を犯した!"s,
-                u8"You comit a serious crime!"s));
+                u8"You commit a serious crime!"s));
             modify_karma(0, -20);
         }
         if (qdata(3, rq) == 1007)
@@ -65748,12 +64699,12 @@ void failed_quest(int val0)
             {
                 if (cnt != 0)
                 {
-                    if (cbit(963, cnt) == 1)
+                    if (cdata[cnt].is_escorted() == 1)
                     {
                         if (qdata(13, rq) == cdata[cnt].id)
                         {
                             tc = cnt;
-                            cbitmod(963, cnt, 0);
+                            cdata[cnt].is_escorted() = false;
                             if (cdata[tc].state == 1)
                             {
                                 if (qdata(4, rq) == 0)
@@ -65847,7 +64798,7 @@ void label_2677()
             if (enemylv > gdata_ex_arena_level)
             {
                 txt(lang(
-                    u8"EXバトルの撃破相手LVの記録を更新した(Lv"s
+                    u8"EXバトルの撃破相手Lvの記録を更新した(Lv"s
                         + gdata_ex_arena_level + u8" → "s + enemylv + u8" )"s,
                     u8"You've made a new record. (Lv"s + gdata_ex_arena_level
                         + u8" to "s + enemylv + u8" )"s));
@@ -65882,7 +64833,7 @@ void label_2677()
             txtef(3);
             txt(lang(
                 u8"名声値を"s + p + u8"失った。"s,
-                u8"You loose "s + p + u8" fame."s));
+                u8"You lose "s + p + u8" fame."s));
         }
     }
     return;
@@ -66074,7 +65025,7 @@ void do_play_scene()
     {
         gdata_played_scene = sceneid;
     }
-    if (cfg_story == 0 || (en == 1 && sceneid != 0))
+    if (config::instance().story == 0 || (en == 1 && sceneid != 0))
     {
         return;
     }
@@ -66243,7 +65194,7 @@ label_2682_internal:
     }
     if (s == u8"{se}"s)
     {
-        folder = fs::path(u8"./sound/").generic_string();
+        folder = filesystem::path(u8"./sound/").generic_string();
         sndload(folder + s(1), 28);
         snd(28);
         goto label_2682_internal;
@@ -66271,7 +65222,7 @@ label_2684_internal:
     gsel(4);
     gmode(0);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/"s + file + u8".bmp"), 1);
+    picload(filesystem::path(u8"./graphic/"s + file + u8".bmp"), 1);
     pos(0, y1);
     gzoom(4, 0, 0, 640, 480, windoww, y2 - y1);
     gmode(2);
@@ -66299,7 +65250,7 @@ label_2684_internal:
         await(1000);
         goto label_2681;
     }
-    font(lang(cfg_font1, cfg_font2), 16 - en * 2, 0);
+    font(16 - en * 2);
     x = 44;
     for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
@@ -66320,7 +65271,7 @@ label_2684_internal:
     {
         y = y1 + 28 + (9 - noteinfo() / 2 + cnt) * 20;
         noteget(s, cnt);
-        x = windoww / 2 - s(0).size() * 4;
+        x = windoww / 2 - strlen_u(s(0)) * 4;
         color(10, 10, 10);
         pos(x, y);
         bmes(s, 240, 240, 240);
@@ -66444,7 +65395,7 @@ int ai_check()
 void label_2687()
 {
     int searchfov = 0;
-    if (cbit(985, cc))
+    if (cdata[cc].is_hung_on_sand_bag())
     {
         if (is_in_fov(cc))
         {
@@ -66473,7 +65424,7 @@ void label_2687()
             {
                 if (mdata(6) != 1)
                 {
-                    if (cbit(968, cc))
+                    if (cdata[cc].is_leashed())
                     {
                         if (gdata_current_map != 40)
                         {
@@ -66494,7 +65445,7 @@ void label_2687()
                                 }
                                 if (rnd(4) == 0)
                                 {
-                                    cbitmod(968, cc, 0);
+                                    cdata[cc].is_leashed() = false;
                                     txtef(9);
                                     txt(lang(
                                         name(cc)
@@ -66514,7 +65465,7 @@ void label_2687()
             }
         }
     }
-    if (cbit(972, cc))
+    if (cdata[cc].will_explode_soon())
     {
         tlocx = cdata[cc].position.x;
         tlocy = cdata[cc].position.y;
@@ -66569,9 +65520,9 @@ void label_2687()
                 }
             }
         }
-        if (cbit(6, cdata[cc].enemy_id) == 1)
+        if (cdata[cdata[cc].enemy_id].is_invisible() == 1)
         {
-            if (cbit(7, cc) == 0)
+            if (cdata[cc].can_see_invisible() == 0)
             {
                 if (cdata[cdata[cc].enemy_id].wet == 0)
                 {
@@ -66720,7 +65671,7 @@ void label_2687()
     tc = cdata[cc].enemy_id;
     if (cdatan(4, cc) != ""s)
     {
-        if (cbit(989, cc) == 0)
+        if (cdata[cc].has_custom_talk() == 0)
         {
             if (rnd(30) == 0)
             {
@@ -66729,9 +65680,9 @@ void label_2687()
             }
         }
     }
-    else if (cdata[cc].can_talk != 0 || cbit(989, cc))
+    else if (cdata[cc].can_talk != 0 || cdata[cc].has_custom_talk())
     {
-        if (cbit(965, cc) == 0)
+        if (cdata[cc].is_silent() == 0)
         {
             if (cdata[cc].turn % 5 == 0)
             {
@@ -66873,11 +65824,12 @@ label_2689_internal:
             {
                 if (map(cdata[cc].position.x, cdata[cc].position.y, 4) != 0)
                 {
-                    int stat = cell_itemoncell(
-                        cdata[cc].position.x, cdata[cc].position.y);
-                    if (stat == 1)
+                    const auto item_info = cell_itemoncell(cdata[cc].position);
+                    const auto number = item_info.first;
+                    const auto item = item_info.second;
+                    if (number == 1)
                     {
-                        ci = rtval(1);
+                        ci = item;
                         p = the_item_db[inv[ci].id]->category;
                         if (cdata[cc].nutrition <= 6000)
                         {
@@ -66936,7 +65888,7 @@ label_2689_internal:
                 }
                 if (cdata[cc].current_map == gdata_current_map)
                 {
-                    if (cbit(969, cc) == 0)
+                    if (cdata[cc].is_contracting() == 0)
                     {
                         label_2690();
                         return;
@@ -67006,7 +65958,7 @@ label_2689_internal:
                 {
                     if (cdata[c].relationship > -3)
                     {
-                        if (cbit(979, c) == 0)
+                        if (cdata[c].does_not_search_enemy() == 0)
                         {
                             f = 1;
                             break;
@@ -67017,7 +65969,7 @@ label_2689_internal:
                 {
                     if (cdata[c].original_relationship <= -3)
                     {
-                        if (cbit(979, c) == 0)
+                        if (cdata[c].does_not_search_enemy() == 0)
                         {
                             f = 1;
                             break;
@@ -67027,7 +65979,7 @@ label_2689_internal:
             }
             if (f)
             {
-                if (cbit(979, cc) == 0)
+                if (cdata[cc].does_not_search_enemy() == 0)
                 {
                     cdata[cc].enemy_id = c;
                     cdata[cc].hate = 30;
@@ -67324,7 +66276,7 @@ label_2692_internal:
             {
                 if (cdata[cc].vision_flag != msync || rnd(5))
                 {
-                    if (cbit(986, cc) == 0)
+                    if (cdata[cc].has_anorexia() == 0)
                     {
                         cdata[cc].nutrition += 5000;
                     }
@@ -67338,7 +66290,7 @@ label_2692_internal:
                     flt(20);
                     p(0) = rnd(4);
                     p(1) = 0;
-                    if (p == 0 || cbit(986, cc))
+                    if (p == 0 || cdata[cc].has_anorexia())
                     {
                         flttypemajor = 57000;
                     }
@@ -67363,7 +66315,7 @@ label_2692_internal:
                         else
                         {
                             cdata[cc].item_which_will_be_used = ci;
-                            if (cbit(986, cc) == 0)
+                            if (cdata[cc].has_anorexia() == 0)
                             {
                                 cdata[cc].nutrition += 5000;
                             }
@@ -67660,7 +66612,7 @@ void label_2693(bool retreat)
         }
         else if (
             (cdata[cc].quality > 3 && cdata[cc].level > cdata[tc].level)
-            || cbit(985, tc))
+            || cdata[tc].is_hung_on_sand_bag())
         {
             if (cdata[cc].enemy_id != tc)
             {
@@ -68036,7 +66988,7 @@ void label_2696()
             if (cdata[cc].mp < cdata[cc].max_mp / 7)
             {
                 if (rnd(3) || cc < 16 || cdata[cc].quality >= 4
-                    || cbit(988, cc))
+                    || cdata[cc].cures_mp_frequently())
                 {
                     cdata[cc].mp += cdata[cc].level / 4 + 5;
                     turn_end();
@@ -68292,7 +67244,7 @@ label_2698:
     listn(0, 8) = s(p);
     t = 0;
 label_2699_internal:
-    font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+    font(12 + sizefix - en * 2);
     tx = 50;
     ty = windowh - 255;
     x(0) = 25;
@@ -68355,7 +67307,7 @@ label_2699_internal:
     }
     ++t;
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check(2);
     if (key == key_north)
     {
@@ -68461,13 +67413,13 @@ void show_ex_help()
 {
     gsel(3);
     pos(960, 96);
-    picload(fs::path(u8"./graphic/deco_help.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/deco_help.bmp"), 1);
     gsel(0);
     page = 0;
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{fs::path(u8"./data/exhelp.txt").native(),
+        std::ifstream in{filesystem::path(u8"./data/exhelp.txt").native(),
                          std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -68506,7 +67458,7 @@ void show_ex_help()
         gcopy(3, 960, 96, 48, 48);
         pos(wx + 10, wy + 42);
         gcopy(3, 960, 144, 96, 120);
-        font(lang(cfg_font1, cfg_font2), 16 - en * 2, 1);
+        font(16 - en * 2, snail::font_t::style_t::bold);
         pos(wx + 142, wy + 13);
         color(80, 60, 50);
         bmes(
@@ -68517,7 +67469,7 @@ void show_ex_help()
         color(0, 0, 0);
         tx = wx + 120;
         ty = wy + 55;
-        font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
+        font(15 - en * 2);
         {
             int y = ty;
             int cnt = 0;
@@ -68587,7 +67539,8 @@ void show_game_help()
         for (int cnt = 0; cnt < 8; ++cnt)
         {
             pos(cnt % 4 * 180, cnt / 4 * 300);
-            picload(fs::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+            picload(
+                filesystem::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
         }
         gsel(0);
     }
@@ -68600,7 +67553,7 @@ void show_game_help()
     {
         buff(0).clear();
         std::ifstream in{
-            fs::path(
+            filesystem::path(
                 u8"./data/"s + lang(u8"manual_JP.txt"s, u8"manual_ENG.txt"s))
                 .native(),
             std::ios::binary};
@@ -68718,10 +67671,10 @@ label_2705_internal:
         label_2702();
         for (int cnt = 0; cnt < 12; ++cnt)
         {
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+            font(13 - en * 2);
             pos(x + 38 + cnt / 6 * 290, y + 58 + cnt % 6 * 14);
             mes(s(cnt * 2));
-            font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
+            font(15 - en * 2);
             pos(x + 248 + cnt / 6 * 290, y + 57 + cnt % 6 * 14);
             mes(s(cnt * 2 + 1));
         }
@@ -68754,10 +67707,10 @@ label_2705_internal:
         label_2702();
         for (int cnt = 0; cnt < 12; ++cnt)
         {
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+            font(13 - en * 2);
             pos(x + 38 + cnt / 6 * 290, y + 170 + cnt % 6 * 14);
             mes(s(cnt * 2));
-            font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
+            font(15 - en * 2);
             pos(x + 248 + cnt / 6 * 290, y + 169 + cnt % 6 * 14);
             mes(s(cnt * 2 + 1));
         }
@@ -68776,10 +67729,10 @@ label_2705_internal:
         label_2702();
         for (int cnt = 0; cnt < 6; ++cnt)
         {
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+            font(13 - en * 2);
             pos(x + 38 + cnt / 3 * 290, y + 284 + cnt % 3 * 14);
             mes(s(cnt * 2));
-            font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
+            font(15 - en * 2);
             pos(x + 248 + cnt / 3 * 290, y + 283 + cnt % 3 * 14);
             mes(s(cnt * 2 + 1));
         }
@@ -68799,14 +67752,14 @@ label_2705_internal:
         label_2702();
         for (int cnt = 0; cnt < 6; ++cnt)
         {
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+            font(13 - en * 2);
             pos(x + 38 + cnt / 3 * 290, y + 356 + cnt % 3 * 14);
             mes(s(cnt * 2));
-            font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
+            font(15 - en * 2);
             pos(x + 248 + cnt / 3 * 290, y + 355 + cnt % 3 * 14);
             mes(s(cnt * 2 + 1));
         }
-        font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+        font(13 - en * 2);
         pos(x + 38, y + 408);
         mes(lang(
             u8"F8 マップのエクスポート  F9 インタフェース非表示  F11 キャラ情報の出力\nF12 コンソールの表示"s,
@@ -68816,7 +67769,7 @@ label_2705_internal:
     {
         s(1) = listn(0, pagesize * page_bk + cs_bk2);
         display_topic(s(1), wx + 206, wy + 36);
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
         p = list(0, pagesize * page_bk + cs_bk2);
         {
             int y = wy + 60;
@@ -68835,7 +67788,8 @@ label_2705_internal:
             }
         }
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -68852,7 +67806,7 @@ label_2705_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, cs = i);
@@ -68898,7 +67852,7 @@ void label_2707()
     pagesize = 0;
     gsel(7);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/ie_scroll.bmp"));
+    picload(filesystem::path(u8"./graphic/ie_scroll.bmp"));
     gsel(0);
     windowshadow = 1;
     snd(92);
@@ -68934,7 +67888,7 @@ void label_2707()
         s += u8"\n"s;
         buff += ""s + s;
     }
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+    font(13 - en * 2);
     i = 0;
     for (int cnt = 0; cnt < 20; ++cnt)
     {
@@ -68964,7 +67918,7 @@ void label_2707()
     }
     redraw();
 label_2708_internal:
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     if (menucycle == 1)
@@ -69104,7 +68058,7 @@ void label_2710()
 
     redraw();
 label_2711_internal:
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     if (menucycle == 1)
@@ -69175,7 +68129,7 @@ void label_2719()
     notesel(note_buff);
     {
         note_buff.clear();
-        std::ifstream in{fs::path(u8"./user/export.txt").native(),
+        std::ifstream in{filesystem::path(u8"./user/export.txt").native(),
                          std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -69327,10 +68281,10 @@ void play_scene()
     snd(59);
     gsel(4);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/book.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/book.bmp"), 1);
     gsel(7);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/g1.bmp"), 0);
+    picload(filesystem::path(u8"./graphic/g1.bmp"), 0);
     gsel(0);
     listmax = 0;
     page = 0;
@@ -69399,15 +68353,18 @@ label_2729_internal:
         ++keyrange;
         display_key(wx + 394, wy + 91 + cnt * 22 - 2, cnt);
     }
-    font(lang(cfg_font1, cfg_font2), 12 - en * 2, 6);
+    font(
+        12 - en * 2,
+        snail::font_t::style_t::italic | snail::font_t::style_t::underline);
     pos(wx + 90, wy + 50);
     mes(u8"Elona - Scene playback"s);
-    font(lang(cfg_font1, cfg_font2), 12 - en * 2, 0);
+    font(12 - en * 2);
     pos(wx + 390, wy + 50);
     mes(lang(
         u8"アンロックされたシーンを再生できます。\nシーンNoは連続していません。"s,
         u8"You can play the unlocked scenes."s));
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -69422,7 +68379,7 @@ label_2729_internal:
             wx + 424,
             wy + 91 + cnt * 22 - 1);
     }
-    font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
+    font(12 - en * 2, snail::font_t::style_t::bold);
     pos(wx + 500, wy + 375);
     mes(u8"- "s + (page + 1) + u8" -"s);
     if (page < pagemax)
@@ -69435,7 +68392,7 @@ label_2729_internal:
         cs_bk = cs;
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     ELONA_GET_SELECTED_ITEM(p, 0);
@@ -69833,7 +68790,7 @@ void label_2736()
         }
         if (gdata_weather == 4)
         {
-            if (cfg_extrahelp)
+            if (config::instance().extrahelp)
             {
                 if (gdata(211) == 0)
                 {
@@ -69851,7 +68808,7 @@ void label_2736()
         }
         if (gdata_weather == 2)
         {
-            if (cfg_extrahelp)
+            if (config::instance().extrahelp)
             {
                 if (gdata(212) == 0)
                 {
@@ -69869,7 +68826,7 @@ void label_2736()
         }
         if (gdata_weather == 1)
         {
-            if (cfg_extrahelp)
+            if (config::instance().extrahelp)
             {
                 if (gdata(213) == 0)
                 {
@@ -69924,7 +68881,7 @@ void label_2736()
     }
     if (gdata_continuous_active_hours >= 15)
     {
-        if (cfg_extrahelp)
+        if (config::instance().extrahelp)
         {
             if (gdata(209) == 0)
             {
@@ -69942,7 +68899,7 @@ void label_2736()
     }
     if (cdata[0].nutrition < 5000)
     {
-        if (cfg_extrahelp)
+        if (config::instance().extrahelp)
         {
             if (gdata(210) == 0)
             {
@@ -70160,7 +69117,7 @@ void pass_one_turn(bool label_2738_flg)
                     {
                         continue;
                     }
-                    if (cbit(971, cnt) == 1)
+                    if (cdata[cnt].is_escorted_in_sub_quest() == 1)
                     {
                         f = 1;
                     }
@@ -70260,7 +69217,7 @@ void pass_one_turn(bool label_2738_flg)
         ef = map(cdata[tc].position.x, cdata[tc].position.y, 8) - 1;
         if (mef(0, ef) == 3)
         {
-            if (cbit(5, tc) == 0 || cdata[tc].gravity > 0)
+            if (cdata[tc].is_floating() == 0 || cdata[tc].gravity > 0)
             {
                 if (sdata(63, tc) / 50 < 7)
                 {
@@ -70312,7 +69269,7 @@ void pass_one_turn(bool label_2738_flg)
         }
         if (mef(0, ef) == 6)
         {
-            if (cbit(5, tc) == 0 || cdata[tc].gravity > 0)
+            if (cdata[tc].is_floating() == 0 || cdata[tc].gravity > 0)
             {
                 if (is_in_fov(tc))
                 {
@@ -70519,11 +69476,11 @@ void pass_one_turn(bool label_2738_flg)
         {
             label_1577();
         }
-        if (cbit(24, cc))
+        if (cdata[cc].has_cursed_equipments())
         {
             label_1579();
         }
-        if (cbit(978, cc))
+        if (cdata[cc].is_pregnant())
         {
             label_1578();
         }
@@ -70626,7 +69583,7 @@ void pass_one_turn(bool label_2738_flg)
             }
         }
     }
-    if (cbit(981, cc))
+    if (cdata[cc].needs_refreshing_status())
     {
         refresh_character(cc);
     }
@@ -70728,7 +69685,7 @@ void turn_end()
         cdata[cc].nutrition -= 16;
         if (cdata[cc].nutrition < 6000)
         {
-            if (cbit(986, cc) == 0)
+            if (cdata[cc].has_anorexia() == 0)
             {
                 cdata[cc].nutrition = 6000;
             }
@@ -70926,7 +69883,7 @@ void pc_turn(bool label_2747_flg)
                 return;
             }
         label_2744_internal:
-            await(cfg_wait1);
+            await(config::instance().wait1);
             cdata[0].direction = 0;
             key_check();
             f = 0;
@@ -71022,7 +69979,8 @@ void pc_turn(bool label_2747_flg)
             efid = 408;
             magic();
         }
-        if (cbit(6, cdata[0].enemy_id) == 1 && cbit(7, 0) == 0
+        if (cdata[cdata[0].enemy_id].is_invisible() == 1
+            && cdata[0].can_see_invisible() == 0
             && cdata[cdata[0].enemy_id].wet == 0)
         {
             cdata[0].enemy_id = 0;
@@ -71050,13 +70008,13 @@ label_2747:
         return;
     }
     ++t;
-    if (t % cfg_scrsync == 1)
+    if (t % config::instance().scrsync == 1)
     {
         ++scrturn;
         label_1420();
     }
 
-    if (cfg_net && cfg_netwish && key == ""s)
+    if (config::instance().net && config::instance().netwish && key == ""s)
     {
         ++chatturn;
         if (chatturn % 250 == 1)
@@ -71070,7 +70028,7 @@ label_2747:
                 s(2) = strmid(s, 0, 4);
                 if (s(2) == u8"chat"s)
                 {
-                    if (cfg_netchat)
+                    if (config::instance().netchat)
                     {
                         continue;
                     }
@@ -71100,7 +70058,7 @@ label_2747:
         txt(s);
     }
 
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check(1);
 
     if (ginfo(2) != 0)
@@ -71212,6 +70170,7 @@ label_2747:
     }
     if (getkey(snail::key::f12))
     {
+        debug::voldemort = true;
         if (debug::voldemort)
         {
             gdata_wizard = 1;
@@ -71706,9 +70665,11 @@ label_2747:
 
     if (key == key_autodig)
     {
-        autodig_enabled = !autodig_enabled;
+        foobar_save.is_autodig_enabled = !foobar_save.is_autodig_enabled;
         txt(i18n::_(
-            u8"ui", u8"autodig", autodig_enabled ? u8"enabled" : u8"disabled"));
+            u8"ui",
+            u8"autodig",
+            foobar_save.is_autodig_enabled ? u8"enabled" : u8"disabled"));
         goto label_2747;
     }
 
@@ -71853,7 +70814,7 @@ label_2747:
         // Autodig
         int x = cdata[0].next_position.x;
         int y = cdata[0].next_position.y;
-        if (autodig_enabled)
+        if (foobar_save.is_autodig_enabled)
         {
             if (0 <= x && x < mdata(0) && 0 <= y && y < mdata(1)
                 && (chipm(7, map(x, y, 0)) & 4) && chipm(0, map(x, y, 0)) != 3
@@ -72020,7 +70981,7 @@ void conquer_lesimas()
     label_1442();
     gsel(4);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/void.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/void.bmp"), 1);
     pos(0, 0);
     gzoom(4, 0, 0, 640, 480, windoww, windowh);
     gsel(0);
@@ -72029,13 +70990,13 @@ void conquer_lesimas()
     gcopy(4, 0, 0, windoww, windowh);
     gsel(4);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/g1.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/g1.bmp"), 1);
     gsel(0);
     s = lang(
         ""s + cdatan(1, 0) + cdatan(0, 0)
             + u8"に祝福あれ！あなたは遂にレシマスの秘宝を手にいれた！"s,
         u8"Blessing to "s + cdatan(0, 0) + u8", "s + cdatan(1, 0)
-            + u8"! You've finally aquired the codex!"s);
+            + u8"! You've finally acquired the codex!"s);
     draw_caption();
     s(0) = lang(u8"*勝利*"s, u8"*Win*"s);
     s(1) = ""s + strhint3;
@@ -72052,7 +71013,7 @@ void conquer_lesimas()
     grotate(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
     gmode(2);
     display_topic(lang(u8"制覇までの軌跡"s, u8"Trace"s), wx + 28, wy + 40);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     pos(wx + 40, wy + 76);
     mes(lang(
         ""s + 517 + u8"年"s + 8 + u8"月"s + 12
@@ -72089,7 +71050,7 @@ void conquer_lesimas()
 
     while (1)
     {
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         if (key == key_cancel)
@@ -72136,8 +71097,7 @@ void pc_died()
     txt(lang(u8"さようなら… "s, u8"Good bye... "s));
     txt(lang(u8"遺言は？"s, u8"You leave a dying message."s));
     inputlog = "";
-    input_number_or_text_dialog(
-        (windoww - 310) / 2 + inf_screenx, winposy(90), 16, 1);
+    input_text_dialog((windoww - 310) / 2 + inf_screenx, winposy(90), 16);
     if (inputlog == ""s)
     {
         txtsetlastword();
@@ -72148,7 +71108,7 @@ void pc_died()
     }
     buff = "";
     notesel(buff);
-    const auto bone_filepath = fs::path(u8"./save/bone.txt");
+    const auto bone_filepath = filesystem::path(u8"./save/bone.txt");
     if (fs::exists(bone_filepath))
     {
         std::ifstream in{bone_filepath.native(), std::ios::binary};
@@ -72226,11 +71186,11 @@ void pc_died()
     }
     gsel(4);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/void.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/void.bmp"), 1);
     gsel(0);
     show_game_score_ranking();
     s = lang(
-        u8"あともう少しで埋葬される…"s, u8"You are about to be burried..."s);
+        u8"あともう少しで埋葬される…"s, u8"You are about to be buried..."s);
     draw_caption();
     ELONA_APPEND_PROMPT(
         lang(u8"這い上がる"s, u8"Crawl up"s), u8"a"s, ""s + promptmax);
@@ -72242,7 +71202,7 @@ void pc_died()
         show_game_score_ranking();
         s = lang(
             u8"あなたは埋められた。さようなら…（キーを押すと終了します）"s,
-            u8"You have been burried. Bye...(Hit any key to exit)"s);
+            u8"You have been buried. Bye...(Hit any key to exit)"s);
         draw_caption();
         redraw();
         press();
@@ -72277,7 +71237,7 @@ void show_game_score_ranking()
     gmode(2);
     x = 135;
     y = 134;
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     p = page - 4;
     if (p >= 80)
     {

@@ -118,6 +118,6 @@ sdl_mixer::~sdl_mixer()
 }
 
 
-} // namespace elona
-} // namespace snail
 } // namespace detail
+} // namespace snail
+} // namespace elona

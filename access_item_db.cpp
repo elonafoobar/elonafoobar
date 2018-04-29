@@ -3,6 +3,7 @@
 #include "elona.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "filesystem.hpp"
 #include "variables.hpp"
 
 

@@ -99,7 +99,7 @@ item_material['26'] = {
 }
 
 item_material['22'] = {
-  name = "perl",
+  name = "pearl",
   alias = "shining",
 }
 
