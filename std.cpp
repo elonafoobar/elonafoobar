@@ -1338,6 +1338,7 @@ void picload(const fs::path& filename, int mode)
     snail::application::instance().get_renderer().render_image(
         img, detail::current_tex_buffer().x, detail::current_tex_buffer().y);
 
+#if 0 // disable it temporarily
     if (filename.generic_string().find(u8"interface.bmp") != std::string::npos)
     {
         snail::basic_image ex{filename.parent_path() / u8"interface_ex.png"};
@@ -1351,6 +1352,7 @@ void picload(const fs::path& filename, int mode)
         snail::application::instance().get_renderer().render_image(
             ex3, 144, 752);
     }
+#endif
 
     snail::application::instance().get_renderer().set_blend_mode(save);
 }
