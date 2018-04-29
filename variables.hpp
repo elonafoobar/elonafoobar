@@ -166,6 +166,7 @@ ELONA_EXTERN(std::string key_quickinv);
 ELONA_EXTERN(std::string key_throw);
 ELONA_EXTERN(std::string key_esc);
 ELONA_EXTERN(int key_alt);
+ELONA_EXTERN(int key_ctrl);
 ELONA_EXTERN(std::string key_mode);
 ELONA_EXTERN(std::string key_ammo);
 ELONA_EXTERN(std::string key_mode2);
