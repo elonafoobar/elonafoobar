@@ -3,6 +3,7 @@
 #include "autopick.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
+#include "card.hpp"
 #include "character.hpp"
 #include "class.hpp"
 #include "config.hpp"
@@ -5838,6 +5839,7 @@ void cs_list(
         break;
     case 2: color(240, 240, 240); break;
     case 3: color(160, 10, 10); break;
+    case 4: color(128, 128, 128); break;
     default: break;
     }
 
@@ -59347,13 +59349,7 @@ void do_use_command()
         txt(lang(u8" *ピーーーー* "s, u8"*Peeeeeeeeeep* "s));
         make_sound(cdata[cc].position.x, cdata[cc].position.y, 10, 1, 1, cc);
         goto label_2229_internal;
-    case 37:
-        tcgdeck();
-        label_1746();
-        update_entire_screen();
-        txtnew();
-        txt(lang(u8"デッキをしまった。"s, u8"You put away the deck."s));
-        goto label_2229_internal;
+    case 37: show_card_collection(); goto label_2229_internal;
     }
 label_2229_internal:
     refresh_burden_state();
