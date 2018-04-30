@@ -46,6 +46,7 @@ set(CORE_SOURCES
     autopick.cpp
     buff.cpp
     calc.cpp
+    card.cpp
     cat.cpp
     cell_draw.cpp
     character.cpp

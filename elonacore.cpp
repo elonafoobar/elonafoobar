@@ -3,6 +3,7 @@
 #include "autopick.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
+#include "card.hpp"
 #include "character.hpp"
 #include "class.hpp"
 #include "config.hpp"
@@ -5838,6 +5839,7 @@ void cs_list(
         break;
     case 2: color(240, 240, 240); break;
     case 3: color(160, 10, 10); break;
+    case 4: color(128, 128, 128); break;
     default: break;
     }
 
@@ -46488,6 +46490,29 @@ void show_item_description()
                     + inv[ci].pv + u8"."s);
             ++p;
         }
+        if (inv[ci].id == 701)
+        {
+            int card_count{};
+            for (int i = 0; i < 1000; ++i)
+            {
+                if (card(0, i))
+                    ++card_count;
+            }
+            int npc_count{};
+            for (const auto& discord : the_character_db)
+            {
+                (void)discord;
+                ++npc_count;
+            }
+            const auto percentage = std::min(100 * card_count / npc_count, 100);
+            list(0, p) = 7;
+            listn(0, p) = lang(
+                u8"集めたカード: "s + card_count + u8"/" + npc_count + u8"("
+                    + percentage + u8"%)",
+                u8"Collected cards: "s + card_count + u8"/" + npc_count + u8"("
+                    + percentage + u8"%)");
+            ++p;
+        }
     }
     if (inv[ci].identification_state
         <= identification_state_t::partly_identified)
@@ -55964,6 +55989,15 @@ void do_open_command()
         ctrl_inventory();
         return;
     }
+    if (inv[ci].id == 701)
+    {
+        invctrl(0) = 24;
+        invctrl(1) = 8;
+        snd(100);
+        ctrl_inventory();
+        turn_end();
+        return;
+    }
     if (inv[ci].id == 600)
     {
         snd(22);
@@ -59315,32 +59349,7 @@ void do_use_command()
         txt(lang(u8" *ピーーーー* "s, u8"*Peeeeeeeeeep* "s));
         make_sound(cdata[cc].position.x, cdata[cc].position.y, 10, 1, 1, cc);
         goto label_2229_internal;
-    case 37:
-        tcgdeck();
-        label_1746();
-        update_entire_screen();
-        txtnew();
-        txt(lang(u8"デッキをしまった。"s, u8"You put away the deck."s));
-        goto label_2229_internal;
-    case 38:
-    {
-        int stat = inv_find(701, 0);
-        if (stat == -1)
-        {
-            txt(lang(
-                u8"デッキを所持していない。"s, u8"You don't have a deck."s));
-            update_screen();
-            pc_turn(false);
-        }
-    }
-        snd(71);
-        --inv[ci].number;
-        cell_refresh(inv[ci].position.x, inv[ci].position.y);
-        txt(lang(
-            itemname(ci, 1) + u8"をデッキに加えた。"s,
-            u8"You add "s + itemname(ci, 1) + u8" to your deck."s));
-        ++card(0, inv[ci].subname);
-        goto label_2229_internal;
+    case 37: show_card_collection(); goto label_2229_internal;
     }
 label_2229_internal:
     refresh_burden_state();
