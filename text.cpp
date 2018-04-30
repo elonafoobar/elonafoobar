@@ -3681,17 +3681,17 @@ std::string trim_item_description(const std::string& source, bool summary)
 }
 
 
-void generate_card_description(const item& card)
-{
-    constexpr auto kill_count_for_new_knowledge = 3;
 
-#define ELONA_CARD_ADD_DESCRIPTION(text) \
+#define ELONA_ADD_ITEM_DESCRIPTION(type, text) \
     do \
     { \
-        list(0, p) = 7; \
+        list(0, p) = (type); \
         listn(0, p) = (text); \
         ++p; \
     } while (0)
+void generate_card_description(const item& card)
+{
+    constexpr auto kill_count_for_new_knowledge = 3;
 
     const auto& data = *the_character_db[card.subname];
     const auto name =
@@ -3701,47 +3701,85 @@ void generate_card_description(const item& card)
 
     if (jp)
     {
-        ELONA_CARD_ADD_DESCRIPTION(name + u8"のカードだ");
+        ELONA_ADD_ITEM_DESCRIPTION(7, name + u8"のカードだ");
     }
     else
     {
-        ELONA_CARD_ADD_DESCRIPTION(u8"Card of " + name + u8".");
+        ELONA_ADD_ITEM_DESCRIPTION(7, u8"Card of " + name + u8".");
     }
 
     const auto kill_count = npcmemory(0, card.subname);
     if (jp)
     {
-        ELONA_CARD_ADD_DESCRIPTION(
+        ELONA_ADD_ITEM_DESCRIPTION(
+            7,
             u8"あなたはその生物を"s + kill_count + counter_word
-            + u8"殺している");
+                + u8"殺している");
     }
     else
     {
-        ELONA_CARD_ADD_DESCRIPTION(
+        ELONA_ADD_ITEM_DESCRIPTION(
+            7,
             u8"You have killed "s + kill_count + u8" this creature"
-            + _s2(kill_count) + u8".");
+                + _s2(kill_count) + u8".");
     }
 
     const size_t known_info = kill_count / kill_count_for_new_knowledge + 1;
     const auto descriptions = get_card_descriptions(data);
     for (size_t i = 0; i < std::min(known_info, descriptions.size()); ++i)
     {
-        ELONA_CARD_ADD_DESCRIPTION(descriptions[i]);
+        ELONA_ADD_ITEM_DESCRIPTION(7, descriptions[i]);
     }
     if (known_info < descriptions.size())
     {
         const auto rest = kill_count_for_new_knowledge
             - kill_count % kill_count_for_new_knowledge;
-        list(0, p) = 0;
-        listn(0, p) = lang(
-            u8"その生物に関する新たな知識を得るには、あと"s + rest
-                + counter_word + u8"の" + name + u8"を殺す必要がある",
-            u8"You have to kill another "s + rest + u8" this creature"
-                + _s2(kill_count) + u8" to gain knowledge.");
-        ++p;
+        ELONA_ADD_ITEM_DESCRIPTION(
+            0,
+            lang(
+                u8"その生物に関する新たな知識を得るには、あと"s + rest
+                    + counter_word + u8"の" + name + u8"を殺す必要がある",
+                u8"You have to kill another "s + rest + u8" this creature"
+                    + _s2(kill_count) + u8" to gain knowledge."));
     }
-#undef ELONA_CARD_ADD_DESCRIPTION
+
+    const auto flavor_text = i18n::_(
+        u8"character", std::to_string(card.subname), u8"card_description");
+    if (flavor_text.empty())
+        return;
+
+    ELONA_ADD_ITEM_DESCRIPTION(0, "");
+    const auto lines = strutil::split_lines(flavor_text);
+    for (size_t i = 0; i < lines.size(); ++i)
+    {
+        ELONA_ADD_ITEM_DESCRIPTION((i == lines.size() - 1) ? -2 : 0, lines[i]);
+    }
 }
+
+
+void generate_figure_description(const item& figure)
+{
+    auto flavor_text = i18n::_(
+        u8"character", std::to_string(figure.subname), u8"figure_description");
+    if (flavor_text.empty())
+    {
+        flavor_text = i18n::_(
+            u8"character",
+            std::to_string(figure.subname),
+            u8"card_description");
+    }
+
+    if (flavor_text.empty())
+        return;
+
+    ELONA_ADD_ITEM_DESCRIPTION(0, "");
+    const auto lines = strutil::split_lines(flavor_text);
+    for (size_t i = 0; i < lines.size(); ++i)
+    {
+        ELONA_ADD_ITEM_DESCRIPTION((i == lines.size() - 1) ? -2 : 0, lines[i]);
+    }
+}
+#undef ELONA_ADD_ITEM_DESCRIPTION
 
 
 

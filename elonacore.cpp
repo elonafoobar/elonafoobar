@@ -46367,6 +46367,14 @@ void show_item_description()
                 }
             }
         }
+        if (inv[ci].id == 504)
+        {
+            generate_card_description(inv[ci]);
+        }
+        else if (inv[ci].id == 503)
+        {
+            generate_figure_description(inv[ci]);
+        }
     }
     if (p == 0)
     {
