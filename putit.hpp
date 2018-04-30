@@ -282,7 +282,7 @@ template <
     size_t N,
     std::enable_if_t<
         std::is_base_of<iarchive_base, Archive>::value,
-        nullptr_t> = nullptr>
+        std::nullptr_t> = nullptr>
 void serialize(Archive& ar, std::bitset<N>& data)
 {
     std::string buf;
@@ -297,7 +297,7 @@ template <
     size_t N,
     std::enable_if_t<
         std::is_base_of<oarchive_base, Archive>::value,
-        nullptr_t> = nullptr>
+        std::nullptr_t> = nullptr>
 void serialize(Archive& ar, std::bitset<N>& data)
 {
     auto buf = data.to_string();
