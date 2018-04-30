@@ -298,7 +298,7 @@ label_20591:
             }
             if (invctrl == 15)
             {
-                if (reftype != 72000)
+                if (reftype != 72000 && inv[cnt].id != 701)
                 {
                     continue;
                 }
@@ -438,6 +438,25 @@ label_20591:
                         }
                     }
                     else if (inv[cnt].own_state != 4)
+                    {
+                        continue;
+                    }
+                }
+                else if (invctrl(1) == 8)
+                {
+                    if (inv[cnt].id != 504)
+                    {
+                        continue;
+                    }
+                    else if (inv[cnt].own_state != 0)
+                    {
+                        continue;
+                    }
+                    else if (inv[cnt].subname == 0)
+                    {
+                        continue;
+                    }
+                    else if (card(0, inv[cnt].subname))
                     {
                         continue;
                     }
@@ -1967,6 +1986,19 @@ label_2061_internal:
                     u8"You pay "s + itemname(ci) + u8"."s));
                 --inv[ci].number;
                 --gdata_left_bill;
+                refresh_burden_state();
+                screenupdate = -1;
+                update_screen();
+                goto label_20591;
+            }
+            if (invctrl(1) == 8)
+            {
+                snd(71);
+                --inv[ci].number;
+                txt(lang(
+                    itemname(ci, 1) + u8"をデッキに加えた。"s,
+                    u8"You add "s + itemname(ci, 1) + u8" to your deck."s));
+                ++card(0, inv[ci].subname);
                 refresh_burden_state();
                 screenupdate = -1;
                 update_screen();

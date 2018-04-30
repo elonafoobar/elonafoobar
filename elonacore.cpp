@@ -55964,6 +55964,15 @@ void do_open_command()
         ctrl_inventory();
         return;
     }
+    if (inv[ci].id == 701)
+    {
+        invctrl(0) = 24;
+        invctrl(1) = 8;
+        snd(100);
+        ctrl_inventory();
+        turn_end();
+        return;
+    }
     if (inv[ci].id == 600)
     {
         snd(22);
