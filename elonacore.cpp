@@ -46488,6 +46488,29 @@ void show_item_description()
                     + inv[ci].pv + u8"."s);
             ++p;
         }
+        if (inv[ci].id == 701)
+        {
+            int card_count{};
+            for (int i = 0; i < 1000; ++i)
+            {
+                if (card(0, i))
+                    ++card_count;
+            }
+            int npc_count{};
+            for (const auto& discord : the_character_db)
+            {
+                (void)discord;
+                ++npc_count;
+            }
+            const auto percentage = std::min(100 * card_count / npc_count, 100);
+            list(0, p) = 7;
+            listn(0, p) = lang(
+                u8"集めたカード: "s + card_count + u8"/" + npc_count + u8"("
+                    + percentage + u8"%)",
+                u8"Collected cards: "s + card_count + u8"/" + npc_count + u8"("
+                    + percentage + u8"%)");
+            ++p;
+        }
     }
     if (inv[ci].identification_state
         <= identification_state_t::partly_identified)
