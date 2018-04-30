@@ -130,10 +130,6 @@ label_20591:
             {
                 inv[cnt].function = 9;
             }
-            if (inv[cnt].id == 504)
-            {
-                inv[cnt].function = 38;
-            }
             if (inv[cnt].id >= 800 || inv[cnt].id < 0)
             {
                 dialog(

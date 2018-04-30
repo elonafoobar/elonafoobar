@@ -59322,25 +59322,6 @@ void do_use_command()
         txtnew();
         txt(lang(u8"デッキをしまった。"s, u8"You put away the deck."s));
         goto label_2229_internal;
-    case 38:
-    {
-        int stat = inv_find(701, 0);
-        if (stat == -1)
-        {
-            txt(lang(
-                u8"デッキを所持していない。"s, u8"You don't have a deck."s));
-            update_screen();
-            pc_turn(false);
-        }
-    }
-        snd(71);
-        --inv[ci].number;
-        cell_refresh(inv[ci].position.x, inv[ci].position.y);
-        txt(lang(
-            itemname(ci, 1) + u8"をデッキに加えた。"s,
-            u8"You add "s + itemname(ci, 1) + u8" to your deck."s));
-        ++card(0, inv[ci].subname);
-        goto label_2229_internal;
     }
 label_2229_internal:
     refresh_burden_state();

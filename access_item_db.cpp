@@ -2094,12 +2094,6 @@ int access_item_db(int dbmode)
             return -1;
         }
         break;
-    case 504:
-        if (dbmode == 3)
-        {
-            inv[ci].function = 38;
-        }
-        break;
     case 502:
         if (dbmode == 13)
         {
