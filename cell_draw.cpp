@@ -1,4 +1,5 @@
 #include "character.hpp"
+#include "config.hpp"
 #include "debug.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
@@ -96,7 +97,8 @@ void render_shadow_low(int light)
         const auto y = pos.second;
         if (slight(x + 2, y + 2) >= 1000)
         {
-            elona::pos(x * inf_tiles + inf_screenx, y * inf_tiles + inf_screeny);
+            elona::pos(
+                x * inf_tiles + inf_screenx, y * inf_tiles + inf_screeny);
             gcopy(3, 144, 752);
         }
     }
@@ -805,7 +807,7 @@ void cell_draw()
                         }
                         else
                         {
-                            if (cfg_objectshadow && chipi(6, p_))
+                            if (config::instance().objectshadow && chipi(6, p_))
                             {
                                 gmode(2, chipi(2, p_), chipi(3, p_), 70);
                                 if (chipi(3, p_) == inf_tiles)
@@ -870,8 +872,10 @@ void cell_draw()
                 {
                     if (p_ == 528 || p_ == 531)
                     {
-                        cell_itemoncell(x_, y);
-                        prepare_item_image(p_, i_, inv[rtval(1)].param1);
+                        prepare_item_image(
+                            p_,
+                            i_,
+                            inv[cell_itemoncell({x_, y}).second].param1);
                     }
                     else
                     {
@@ -885,7 +889,7 @@ void cell_draw()
                     }
                     else
                     {
-                        if (cfg_objectshadow && chipi(6, p_))
+                        if (config::instance().objectshadow && chipi(6, p_))
                         {
                             gmode(2, chipi(2, p_), chipi(3, p_), 80);
                             if (chipi(3, p_) == inf_tiles)
@@ -944,10 +948,11 @@ void cell_draw()
             {
                 const int c_ = map(x_, y, 1) - 1;
                 if (c_ != 0 && is_in_fov(c_)
-                    && (cbit(6, c_) == 0 || cbit(7, 0) == 1
+                    && (cdata[c_].is_invisible() == 0
+                        || cdata[0].can_see_invisible() == 1
                         || cdata[c_].wet != 0))
                 {
-                    if (cbit(967, c_) == 1)
+                    if (cdata[c_].has_own_sprite() == 1)
                     {
                         if (mdata(6) == 1)
                         {
@@ -1015,7 +1020,7 @@ void cell_draw()
                     {
                         const int col_ = cdata[c_].image / 1000;
                         p_ = cdata[c_].image % 1000;
-                        if (cbit(985, c_))
+                        if (cdata[c_].is_hung_on_sand_bag())
                         {
                             gmode(2, 48, 96, 80);
                             pos(dx_ + 26 - 11, dy_ - 32 + 11);
@@ -1094,15 +1099,15 @@ void cell_draw()
                                 draw_emo(c_, dx_ + 4, dy_ - chipc(4, p_) - 16);
                             }
                         }
-                        if (cbit(985, c_))
+                        if (cdata[c_].is_hung_on_sand_bag())
                         {
                             pos(dx_, dy_ - 26);
                             gcopy(1, 96, 768, 48, 48);
                             chipc(4, p_) -= 24;
                         }
                     }
-                    if (cbit(966, c_) == 1 || gdata(94) == c_
-                        || debug::voldemort)
+                    if (cdata[c_].has_been_used_stethoscope() == 1
+                        || gdata(94) == c_ || debug::voldemort)
                     {
                         draw_hp_bar(c_, dx_, dy_);
                     }
@@ -1200,7 +1205,7 @@ void cell_draw()
     // Work around
     light_ *= 1.3;
 
-    if (cfg_shadow != 0)
+    if (config::instance().shadow != 0)
     {
         render_shadow_low(light_);
     }

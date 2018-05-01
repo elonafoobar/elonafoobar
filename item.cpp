@@ -738,7 +738,7 @@ int item_separate(int ci)
             inv[ci].number = 1;
             txt(lang(
                 u8"何かが地面に落ちて消えた…"s,
-                u8"Something falls to the ground and desappear..."s));
+                u8"Something falls to the ground and disappear..."s));
             return ci;
         }
     }
