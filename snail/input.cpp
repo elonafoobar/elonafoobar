@@ -328,6 +328,13 @@ void input::set_key_repeat(int initial_key_wait, int key_wait) noexcept
 
 
 
+bool input::is_ime_active() const
+{
+    return _is_ime_active;
+}
+
+
+
 void input::_update()
 {
     for (auto&& key : _keys)
@@ -380,6 +387,18 @@ void input::_handle_event(const ::SDL_KeyboardEvent& event)
 void input::_handle_event(const ::SDL_TextInputEvent& event)
 {
     _text = event.text;
+
+    if (_is_ime_active) // event.text is IME-translated.
+    {
+        _keys[static_cast<size_t>(snail::key::enter)]._release();
+        _is_ime_active = false;
+    }
+}
+
+
+void input::_handle_event(const ::SDL_TextEditingEvent& event)
+{
+    _is_ime_active = true;
 }
 
 

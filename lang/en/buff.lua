@@ -107,7 +107,7 @@ buff['13'] = {
 buff['14'] = {
   name = "Lulwy's Trick",
   message_0 = "repeat",
-  message_1 = "the name of Lulwy.",
+  message_1 = " the name of Lulwy.",
   description = function(self, power)
     return "Increases speed by " .. self._effect(power)
   end,
@@ -117,7 +117,7 @@ buff['15'] = {
   message_0 = "start",
   message_1 = " to disguise.",
   description = function(self, power)
-    return "Grants new identify"
+    return "Grants new identity"
   end,
 }
 buff['16'] = {

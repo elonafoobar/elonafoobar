@@ -3,10 +3,35 @@ cmake_minimum_required(VERSION 3.0)
 
 
 # Project
-project(ElonaFoobar VERSION 0.1.0) # FIXME
+project(ElonaFoobar VERSION 0.2.0)
 
 
-# C++17 or later
+# Versioning
+
+# Get commit hash from Git
+find_package(Git)
+if(NOT GIT_FOUND)
+    message(FATAL_ERROR "Git not Found")
+endif()
+execute_process(
+    COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+    OUTPUT_VARIABLE PROJECT_VERSION_REVISION
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+
+# Get date and time
+string(TIMESTAMP PROJECT_VERSION_TIMESTAMP UTC)
+
+# Get platform
+set(PROJECT_VERSION_PLATFORM "${CMAKE_SYSTEM}")
+
+# Versioning file
+configure_file("${PROJECT_SOURCE_DIR}/version.cpp.in" "${PROJECT_BINARY_DIR}/version.cpp")
+
+
+# C++14 or later
 enable_language(CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -18,8 +43,10 @@ set(CORE_SOURCES
     access_character_info.cpp
     access_item_db.cpp
     animation.cpp
+    autopick.cpp
     buff.cpp
     calc.cpp
+    card.cpp
     cat.cpp
     cell_draw.cpp
     character.cpp
@@ -32,6 +59,7 @@ set(CORE_SOURCES
     elonacore.cpp
     filesystem.cpp
     fish.cpp
+    foobar_save.cpp
     get_card_info.cpp
     get_random_item_id.cpp
     get_random_npc_id.cpp
@@ -59,6 +87,8 @@ set(CORE_SOURCES
     text.cpp
     trait.cpp
     variables.cpp
+    wish.cpp
+    ${PROJECT_BINARY_DIR}/version.cpp
 )
 
 

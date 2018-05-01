@@ -3,6 +3,7 @@
 #include "elona.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "filesystem.hpp"
 #include "variables.hpp"
 
 
@@ -2091,12 +2092,6 @@ int access_item_db(int dbmode)
             efp = 100;
             read_scroll();
             return -1;
-        }
-        break;
-    case 504:
-        if (dbmode == 3)
-        {
-            inv[ci].function = 38;
         }
         break;
     case 502:

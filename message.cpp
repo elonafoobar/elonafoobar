@@ -1,4 +1,5 @@
 #include "character.hpp"
+#include "config.hpp"
 #include "elona.hpp"
 #include "map.hpp"
 #include "variables.hpp"
@@ -7,17 +8,76 @@
 
 namespace elona
 {
-
-
-int msglen = 0;
+size_t message_width{};
 int tcontinue_at_txtfunc = 0;
 int tcolfix_at_txtfunc = 0;
 int p_at_txtfunc = 0;
+} // namespace elona
+
+
+namespace
+{
+
+
+void msg_write(std::string& message)
+{
+    constexpr const auto musical_note = u8"♪";
+
+    for (auto pos = message.find(musical_note); pos != std::string::npos;
+         pos = message.find(musical_note))
+    {
+        const auto symbol_type =
+            elona::stoi(message.substr(pos + std::strlen(musical_note), 1));
+        if (jp && symbol_type == 0)
+        {
+            break;
+        }
+        message = message.substr(0, pos) + u8"  "
+            + message.substr(
+                  pos + std::strlen(musical_note) + (symbol_type != 0));
+        elona::pos(
+            (message_width + pos) * inf_mesfont / 2 + inf_msgx + 7 + en * 3,
+            (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
+        gmode(2);
+        gcopy(3, 600 + symbol_type * 24, 360, 16, 16);
+    }
+
+    elona::color(tcol_at_txtfunc(0), tcol_at_txtfunc(1), tcol_at_txtfunc(2));
+    elona::pos(
+        message_width * inf_mesfont / 2 + inf_msgx + 6,
+        (inf_msgline - 1) * inf_msgspace + inf_msgy + 6);
+    font(inf_mesfont - en * 2);
+    mes(message);
+    elona::color(0, 0, 0);
+}
+
+
+
+void clear_log_panel()
+{
+    gsel(8);
+    gmode(0);
+    pos(0, msgline % inf_maxlog * inf_msgspace);
+    gcopy(
+        0,
+        inf_msgx,
+        inf_msgy + 5 + inf_msgspace * 3 + en * 3,
+        windoww - inf_msgx,
+        inf_msgspace);
+    gsel(0);
+}
+
+
+} // namespace
+
+
+
+namespace elona
+{
 
 
 void key_check(int prm_299)
 {
-    int key_ctrl = 0;
     int p_at_m19 = 0;
     int a_at_m19 = 0;
     int f_at_m19 = 0;
@@ -40,9 +100,9 @@ void key_check(int prm_299)
     }
     if (msgalert == 1)
     {
-        if (cfg_alert > 1)
+        if (config::instance().alert > 1)
         {
-            for (int i = 0; i < cfg_alert; ++i)
+            for (int i = 0; i < config::instance().alert; ++i)
             {
                 await(10);
                 bool any_key_pressed = false;
@@ -64,6 +124,11 @@ void key_check(int prm_299)
                     for (int i = 0; i < 10; ++i)
                     {
                         if (getkey(snail::key(int(snail::key::key_0) + i)))
+                        {
+                            any_key_pressed = true;
+                            break;
+                        }
+                        if (getkey(snail::key(int(snail::key::keypad_0) + i)))
                         {
                             any_key_pressed = true;
                             break;
@@ -91,6 +156,29 @@ void key_check(int prm_299)
         key = keylog;
         keylog = "";
         objprm(0, ""s);
+    }
+    {
+        // Experimental implementation
+        if (getkey(snail::key::keypad_0))
+            key = "0 ";
+        else if (getkey(snail::key::keypad_1))
+            key = "1 ";
+        else if (getkey(snail::key::keypad_2))
+            key = "2 ";
+        else if (getkey(snail::key::keypad_3))
+            key = "3 ";
+        else if (getkey(snail::key::keypad_4))
+            key = "4 ";
+        else if (getkey(snail::key::keypad_5))
+            key = "5 ";
+        else if (getkey(snail::key::keypad_6))
+            key = "6 ";
+        else if (getkey(snail::key::keypad_7))
+            key = "7 ";
+        else if (getkey(snail::key::keypad_8))
+            key = "8 ";
+        else if (getkey(snail::key::keypad_9))
+            key = "9 ";
     }
     mousel = 0;
     f_at_m19 = 0;
@@ -163,7 +251,7 @@ void key_check(int prm_299)
         keywait = 0;
         key_shift = 0;
     }
-    if (cfg_joypad)
+    if (config::instance().joypad)
     {
         j_at_m19 = 0;
         DIGETJOYSTATE(j_at_m19, 0);
@@ -389,16 +477,17 @@ void key_check(int prm_299)
         {
             if (keybd_attacking != 0)
             {
-                if (keybd_wait % cfg_attackwait != 0)
+                if (keybd_wait % config::instance().attackwait != 0)
                 {
                     key = ""s;
                 }
             }
-            else if (cfg_scroll == 0)
+            else if (config::instance().scroll == 0)
             {
-                if (keybd_wait < cfg_walkwait * cfg_startrun)
+                if (keybd_wait
+                    < config::instance().walkwait * config::instance().startrun)
                 {
-                    if (keybd_wait % cfg_walkwait != 0)
+                    if (keybd_wait % config::instance().walkwait != 0)
                     {
                         key = "";
                     }
@@ -408,7 +497,7 @@ void key_check(int prm_299)
                     running = 1;
                     if (keybd_wait < 100000)
                     {
-                        if (keybd_wait % cfg_runwait != 0)
+                        if (keybd_wait % config::instance().runwait != 0)
                         {
                             key = ""s;
                         }
@@ -425,11 +514,11 @@ void key_check(int prm_299)
                     }
                 }
             }
-            else if (keybd_wait > cfg_startrun)
+            else if (keybd_wait > config::instance().startrun)
             {
-                if (cfg_runscroll == 0)
+                if (config::instance().runscroll == 0)
                 {
-                    if (keybd_wait % cfg_runwait != 0)
+                    if (keybd_wait % config::instance().runwait != 0)
                     {
                         key = "";
                     }
@@ -564,49 +653,6 @@ void bmes(const std::string& str, int r, int g, int b)
 
 
 
-void msg_write(std::string& prm_307)
-{
-    int msglen_ = jp ? msglen / 1.5 : msglen;
-    int mp_at_txtfunc = 0;
-    int mark_at_txtfunc = 0;
-    for (int cnt = 0; cnt < 1; ++cnt)
-    {
-        mp_at_txtfunc = instr(prm_307, 0, u8"♪"s);
-        if (mp_at_txtfunc != -1)
-        {
-            mark_at_txtfunc =
-                elona::stoi(strmid(prm_307, mp_at_txtfunc + 2, 1));
-            if (jp)
-            {
-                if (mark_at_txtfunc == 0)
-                {
-                    break;
-                }
-            }
-            prm_307 = strmid(prm_307, 0, mp_at_txtfunc) + u8"  "s
-                + strmid(prm_307,
-                         (mp_at_txtfunc + 2 + (mark_at_txtfunc != 0)),
-                         9999);
-            pos((msglen_ + mp_at_txtfunc) * inf_mesfont / 2 + inf_msgx + 7
-                    + en * 3,
-                (inf_msgline - 1) * inf_msgspace + inf_msgy + 5);
-            gmode(2);
-            gcopy(3, 600 + mark_at_txtfunc * 24, 360, 16, 16);
-            --cnt;
-            continue;
-        }
-    }
-    color(tcol_at_txtfunc(0), tcol_at_txtfunc(1), tcol_at_txtfunc(2));
-    pos(msglen_ * inf_mesfont / 2 + inf_msgx + 6,
-        (inf_msgline - 1) * inf_msgspace + inf_msgy + 6);
-    font(lang(cfg_font1, cfg_font2), inf_mesfont - en * 2, 0);
-    mes(prm_307);
-    color(0, 0, 0);
-    return;
-}
-
-
-
 void txtcontinue()
 {
     tcontinue_at_txtfunc = 1;
@@ -692,27 +738,11 @@ void txtef(int prm_308)
 
 
 
-void msg_newlog()
-{
-    gsel(8);
-    gmode(0);
-    pos(0, msgline % inf_maxlog * inf_msgspace);
-    gcopy(
-        0,
-        inf_msgx,
-        inf_msgy + 5 + inf_msgspace * 3 + en * 3,
-        windoww - inf_msgx,
-        inf_msgspace);
-    gsel(0);
-    return;
-}
-
-
-
 void msg_newline()
 {
-    msg_newlog();
-    msglen = 0;
+    clear_log_panel();
+
+    message_width = 0;
     ++msgline;
     if (msgline >= inf_maxlog)
     {
@@ -760,7 +790,7 @@ void txtnew()
         if (strlen_u(msg(msgline % inf_maxlog)) > 4)
         {
             msg_newline();
-            msglen = 2;
+            message_width = 2;
         }
     }
     return;
@@ -782,7 +812,6 @@ void msg_clear()
 
 void txt_conv()
 {
-
     if (msgtemp(0).empty())
         return;
 
@@ -798,10 +827,10 @@ void txt_conv()
         {
             msg_newline();
             tnew = 0;
-            if (cfg_msgtrans)
+            if (config::instance().msgtrans)
             {
                 p_at_txtfunc = (windoww - inf_msgx) / 192;
-                gmode(4, -1, -1, cfg_msgtrans * 20);
+                gmode(4, -1, -1, config::instance().msgtrans * 20);
                 for (int i = 0; i < p_at_txtfunc + 1; ++i)
                 {
                     if (i == p_at_txtfunc)
@@ -816,13 +845,13 @@ void txt_conv()
                     gcopy(3, 496, 536, x_at_txtfunc, inf_msgspace * 3);
                 }
             }
-            if (cfg_msgaddtime)
+            if (config::instance().msgaddtime)
             {
                 msgtemp(0) = u8"["s + gdata_minute + u8"] " + msgtemp(0);
             }
             else
             {
-                msglen = 2;
+                message_width = 2;
             }
         }
     }
@@ -834,8 +863,6 @@ void txt_conv()
         msgtempprev = msgtemp(0);
         msgdup = 0;
     }
-
-    int inf_maxmsglen_ = inf_maxmsglen * 1.5;
 
     if (jp)
     {
@@ -853,53 +880,47 @@ void txt_conv()
             }
         }
 
-        int len = 0;
+        size_t width{};
         while (1)
         {
-            len = msgtemp(0).size();
-            if (msglen + 4 > inf_maxmsglen_ && !msgtemp(0).empty())
+            width = strlen_u(msgtemp(0));
+            if (message_width + 4 > inf_maxmsglen && !msgtemp(0).empty())
             {
                 msg_newline();
             }
-            if (msglen + len > inf_maxmsglen_)
+            if (message_width + width > inf_maxmsglen)
             {
-                int p2 = 0;
+                size_t len{};
+                size_t wdt{};
                 while (1)
                 {
-                    const uint8_t c = msgtemp(0)[p2];
-                    if (c <= 0x7F)
-                        p2 += 1;
-                    else if (c >= 0xc2 && c <= 0xdf)
-                        p2 += 2;
-                    else if (c >= 0xe0 && c <= 0xef)
-                        p2 += 3;
-                    else if (c >= 0xf0 && c <= 0xf7)
-                        p2 += 4;
-                    else if (c >= 0xf8 && c <= 0xfb)
-                        p2 += 5;
-                    else if (c >= 0xfc && c <= 0xfd)
-                        p2 += 6;
-                    else
-                        p2 += 1;
-                    if (p2 + msglen > inf_maxmsglen_)
+                    const auto byte = strutil::byte_count(msgtemp(0)[len]);
+                    wdt += byte == 1 ? 1 : 2;
+                    len += byte;
+                    if (wdt + message_width > inf_maxmsglen)
                     {
-                        if (p2 + msglen > inf_maxmsglen_ + 2)
+                        if (wdt + message_width > inf_maxmsglen + 2)
                         {
                             break;
                         }
-                        const auto m = strmid(msgtemp(0), p2, 3);
-                        if (m != u8"。" && m != u8"、" && m != u8"」"
-                            && m != u8"』" && m != u8"！" && m != u8"？"
-                            && m != u8"…")
+                        if (!strutil::starts_with(msgtemp(0), u8"。", len)
+                            && !strutil::starts_with(msgtemp(0), u8"、", len)
+                            && !strutil::starts_with(msgtemp(0), u8"」", len)
+                            && !strutil::starts_with(msgtemp(0), u8"』", len)
+                            && !strutil::starts_with(msgtemp(0), u8"！", len)
+                            && !strutil::starts_with(msgtemp(0), u8"？", len)
+                            && !strutil::starts_with(msgtemp(0), u8"…", len))
                         {
                             break;
                         }
                     }
                 }
-                auto m = strmid(msgtemp(0), 0, p2);
+                if (len >= msgtemp(0).size())
+                    len = msgtemp(0).size();
+                auto m = msgtemp(0).substr(0, len);
                 msg(msgline % inf_maxlog) += m;
                 msg_write(m);
-                msgtemp(0) = strmid(msgtemp(0), p2, len - p2);
+                msgtemp(0) = msgtemp(0).substr(len);
                 if (msgtemp(0).empty() || msgtemp(0) == u8" ")
                 {
                     break;
@@ -911,7 +932,7 @@ void txt_conv()
         }
         msg(msgline % inf_maxlog) += msgtemp(0);
         msg_write(msgtemp(0));
-        msglen += len;
+        message_width += width;
     }
     else
     {
@@ -945,7 +966,7 @@ void txt_conv()
             {
                 break;
             }
-            if (msglen + p_at_txtfunc > inf_maxmsglen)
+            if (message_width + p_at_txtfunc > inf_maxmsglen)
             {
                 msg_newline();
                 continue;
@@ -953,13 +974,13 @@ void txt_conv()
             auto mst = strmid(msgtemp(0), 0, p_at_txtfunc);
             msg(msgline % inf_maxlog) += mst;
             msg_write(mst);
-            msglen += p_at_txtfunc;
+            message_width += p_at_txtfunc;
             msgtemp(0) = strmid(
                 msgtemp(0), p_at_txtfunc, msgtemp(0).size() - p_at_txtfunc);
         }
         msg(msgline % inf_maxlog) += msgtemp(0);
         msg_write(msgtemp(0));
-        msglen += msgtemp(0).size();
+        message_width += msgtemp(0).size();
     }
 }
 
@@ -976,7 +997,8 @@ std::string name(int cc)
         return lang(u8"何か"s, u8"something"s);
     }
     if (cdata[0].blind != 0
-        || (cbit(6, cc) == 1 && cbit(7, 0) == 0 && cdata[cc].wet == 0))
+        || (cdata[cc].is_invisible() == 1 && cdata[0].can_see_invisible() == 0
+            && cdata[cc].wet == 0))
     {
         return lang(u8"何か"s, u8"something"s);
     }
@@ -987,7 +1009,7 @@ std::string name(int cc)
         {
             return cdatan(0, cc);
         }
-        if (cbit(977, cc) == 0)
+        if (cdata[cc].has_own_name() == 0)
         {
             return u8"the "s + cdatan(0, cc);
         }

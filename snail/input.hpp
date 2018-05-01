@@ -241,6 +241,7 @@ public:
 
     void set_key_repeat(int initial_key_wait, int key_wait) noexcept;
 
+    bool is_ime_active() const;
 
     std::string get_text()
     {
@@ -259,6 +260,7 @@ public:
     void _update();
     void _handle_event(const ::SDL_KeyboardEvent& event);
     void _handle_event(const ::SDL_TextInputEvent& event);
+    void _handle_event(const ::SDL_TextEditingEvent& event);
 
 
 private:
@@ -266,6 +268,7 @@ private:
     int _initial_key_wait = 30; // frame
     int _key_wait = 5; // frame
     std::string _text;
+    bool _is_ime_active{};
 
     input() = default;
 };

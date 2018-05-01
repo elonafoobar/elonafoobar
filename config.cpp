@@ -41,55 +41,47 @@ struct config_base
 
 
 
-struct config_integer : public config_base
+// TODO: rename
+template <typename T>
+struct config_value : public config_base
 {
-    config_integer(const std::string& name, std::function<void(int)> callback)
-        : name(name)
-        , callback(callback)
-    {
-    }
-
-
-    virtual ~config_integer() = default;
-
-
-    virtual void set(const picojson::object& options) override
-    {
-        callback(options.at(name).get<int64_t>());
-    }
-
-
-private:
-    std::string name;
-    std::function<void(int)> callback;
-};
-
-
-
-struct config_string : public config_base
-{
-    config_string(
+    config_value(
         const std::string& name,
-        std::function<void(const std::string&)> callback)
+        const T& default_value,
+        std::function<void(const T&)> callback)
         : name(name)
+        , default_value(default_value)
         , callback(callback)
     {
     }
 
 
-    virtual ~config_string() = default;
+    virtual ~config_value() = default;
 
 
     virtual void set(const picojson::object& options) override
     {
-        callback(options.at(name).get<std::string>());
+        const auto itr = options.find(name);
+        if (itr == std::end(options) || !itr->second.template is<T>())
+        {
+            callback(default_value);
+        }
+        else
+        {
+            callback(options.at(name).template get<T>());
+        }
     }
 
 
 private:
     std::string name;
-    std::function<void(const std::string&)> callback;
+    T default_value;
+    std::function<void(const T&)> callback;
 };
+
+
+using config_integer = config_value<int64_t>;
+using config_string = config_value<std::string>;
 
 
 
@@ -97,8 +89,10 @@ struct config_key : public config_base
 {
     config_key(
         const std::string& name,
+        const std::string& default_value,
         std::function<void(const std::string&, int)> callback)
         : name(name)
+        , default_value(default_value)
         , callback(callback)
     {
     }
@@ -109,12 +103,22 @@ struct config_key : public config_base
 
     virtual void set(const picojson::object& options) override
     {
-        callback(options.at(name).get<std::string>(), 0 /* TODO */);
+        const auto itr = options.find(name);
+        if (itr == std::end(options) || !itr->second.template is<std::string>())
+        {
+            callback(default_value, 0 /* TODO */);
+        }
+        else
+        {
+            callback(
+                options.at(name).template get<std::string>(), 0 /* TODO */);
+        }
     }
 
 
 private:
     std::string name;
+    std::string default_value;
     std::function<void(const std::string&, int)> callback;
 };
 
@@ -124,8 +128,10 @@ struct config_key_sequence : public config_base
 {
     config_key_sequence(
         const std::string& name,
+        const std::vector<std::string>& default_value,
         std::function<void(const std::vector<std::string>&)> callback)
         : name(name)
+        , default_value(default_value)
         , callback(callback)
     {
     }
@@ -136,18 +142,31 @@ struct config_key_sequence : public config_base
 
     virtual void set(const picojson::object& options) override
     {
-        const auto keys = options.at(name).get<picojson::array>();
-        std::vector<std::string> keys_;
-        range::transform(
-            keys, std::back_inserter(keys_), [](const picojson::value& key) {
-                return key.get<std::string>();
-            });
-        callback(keys_);
+        const auto itr = options.find(name);
+        if (itr == std::end(options)
+            || !itr->second.template is<picojson::array>())
+        {
+            callback(default_value);
+        }
+        else
+        {
+            // FIXME: check type of each element.
+            const auto keys = options.at(name).get<picojson::array>();
+            std::vector<std::string> keys_;
+            range::transform(
+                keys,
+                std::back_inserter(keys_),
+                [](const picojson::value& key) {
+                    return key.get<std::string>();
+                });
+            callback(keys_);
+        }
     }
 
 
 private:
     std::string name;
+    std::vector<std::string> default_value;
     std::function<void(const std::vector<std::string>&)> callback;
 };
 
@@ -161,8 +180,6 @@ namespace elona
 {
 
 
-int cfg_extraclass;
-
 
 void load_config()
 {
@@ -170,355 +187,486 @@ void load_config()
     std::unique_ptr<config_base> config_list[] = {
         std::make_unique<config_integer>(
             u8"alert_wait",
-            [&](auto value) { cfg_alert = value; }),
+            50,
+            [&](auto value) { config::instance().alert = value; }),
         std::make_unique<config_integer>(
             u8"anime_wait",
-            [&](auto value) { cfg_animewait = value; }),
+            20,
+            [&](auto value) { config::instance().animewait = value; }),
         std::make_unique<config_integer>(
             u8"ignoreDislike",
-            [&](auto value) { cfg_ignoredislike = value; }),
+            1,
+            [&](auto value) { config::instance().ignoredislike = value; }),
         std::make_unique<config_integer>(
             u8"wait1",
-            [&](auto value) { cfg_wait1 = value; }),
+            30,
+            [&](auto value) { config::instance().wait1 = value; }),
         std::make_unique<config_string>(
             u8"font1",
-            [&](auto value) { cfg_font1 = std::string{value}; }),
+            "",
+            [&](auto value) { config::instance().font1 = std::string{value}; }),
         std::make_unique<config_string>(
             u8"font2",
-            [&](auto value) { cfg_font2 = std::string{value}; }),
+            "",
+            [&](auto value) { config::instance().font2 = std::string{value}; }),
         std::make_unique<config_integer>(
             u8"fontVfix1",
+            -1,
             [&](auto value) { vfix = value; }),
         std::make_unique<config_integer>(
             u8"fontSfix1",
+            1,
             [&](auto value) { sizefix = value; }),
         std::make_unique<config_integer>(
             u8"story",
-            [&](auto value) { cfg_story = value; }),
+            1,
+            [&](auto value) { config::instance().story = value; }),
         std::make_unique<config_integer>(
             u8"heartbeat",
-            [&](auto value) { cfg_heart = value; }),
+            1,
+            [&](auto value) { config::instance().heart = value; }),
         std::make_unique<config_integer>(
             u8"extraHelp",
-            [&](auto value) { cfg_extrahelp = value; }),
+            1,
+            [&](auto value) { config::instance().extrahelp = value; }),
+        std::make_unique<config_integer>(
+            u8"hpBar",
+            2,
+            [&](auto value) { config::instance().hp_bar = value; }),
+        std::make_unique<config_integer>(
+            u8"leashIcon",
+            1,
+            [&](auto value) { config::instance().leash_icon = value; }),
         std::make_unique<config_integer>(
             u8"alwaysCenter",
-            [&](auto value) { cfg_alwayscenter = value; }),
+            1,
+            [&](auto value) { config::instance().alwayscenter = value; }),
         std::make_unique<config_integer>(
             u8"scroll",
-            [&](auto value) { cfg_scroll = value; }),
+            1,
+            [&](auto value) { config::instance().scroll = value; }),
         std::make_unique<config_integer>(
             u8"startRun",
-            [&](auto value) { cfg_startrun = value; }),
+            2,
+            [&](auto value) { config::instance().startrun = value; }),
         std::make_unique<config_integer>(
             u8"walkWait",
-            [&](auto value) { cfg_walkwait = value; }),
+            5,
+            [&](auto value) { config::instance().walkwait = value; }),
         std::make_unique<config_integer>(
             u8"runWait",
-            [&](auto value) { cfg_runwait = value; }),
+            2,
+            [&](auto value) { config::instance().runwait = value; }),
         std::make_unique<config_integer>(
             u8"autoTurnType",
-            [&](auto value) { cfg_autoturn = value; }),
+            0,
+            [&](auto value) { config::instance().autoturn = value; }),
         std::make_unique<config_integer>(
             u8"autoNumlock",
-            [&](auto value) { cfg_autonumlock = value; }),
+            1,
+            [&](auto value) { config::instance().autonumlock = value; }),
         std::make_unique<config_integer>(
             u8"attackWait",
-            [&](auto value) { cfg_attackwait = value; }),
+            4,
+            [&](auto value) { config::instance().attackwait = value; }),
         std::make_unique<config_integer>(
             u8"attackAnime",
-            [&](auto value) { cfg_attackanime = value; }),
+            1,
+            [&](auto value) { config::instance().attackanime = value; }),
         std::make_unique<config_integer>(
             u8"envEffect",
-            [&](auto value) { cfg_env = value; }),
+            1,
+            [&](auto value) { config::instance().env = value; }),
         std::make_unique<config_integer>(
             u8"titleEffect",
+            1,
             [&](auto) { /* Unsupported option */ }),
         std::make_unique<config_integer>(
             u8"net",
-            [&](auto value) { cfg_net = value; }),
+            1,
+            [&](auto value) { config::instance().net = value; }),
         std::make_unique<config_integer>(
             u8"netWish",
-            [&](auto value) { cfg_netwish = value; }),
+            1,
+            [&](auto value) { config::instance().netwish = value; }),
         std::make_unique<config_integer>(
             u8"netChat",
-            [&](auto value) { cfg_netchat = value; }),
+            1,
+            [&](auto value) { config::instance().netchat = value; }),
         std::make_unique<config_integer>(
             u8"serverList",
-            [&](auto value) { cfg_serverlist = value; }),
+            0,
+            [&](auto value) { config::instance().serverlist = value; }),
         std::make_unique<config_integer>(
             u8"shadow",
-            [&](auto value) { cfg_shadow = value; }),
+            0,
+            [&](auto value) { config::instance().shadow = value; }),
         std::make_unique<config_integer>(
             u8"objectShadow",
-            [&](auto value) { cfg_objectshadow = value; }),
+            1,
+            [&](auto value) { config::instance().objectshadow = value; }),
         std::make_unique<config_integer>(
             u8"windowAnime",
-            [&](auto value) { cfg_windowanime = value; }),
+            0,
+            [&](auto value) { config::instance().windowanime = value; }),
         std::make_unique<config_integer>(
             u8"hide_autoIdentify",
-            [&](auto value) { cfg_hideautoidentify = value; }),
+            0,
+            [&](auto value) { config::instance().hideautoidentify = value; }),
         std::make_unique<config_integer>(
             u8"hide_shopResult",
-            [&](auto value) { cfg_hideshopresult = value; }),
+            0,
+            [&](auto value) { config::instance().hideshopresult = value; }),
         std::make_unique<config_integer>(
             u8"msg_trans",
-            [&](auto value) { cfg_msgtrans = value; }),
+            4,
+            [&](auto value) { config::instance().msgtrans = value; }),
         std::make_unique<config_integer>(
             u8"msg_addTime",
-            [&](auto value) { cfg_msgaddtime = value; }),
+            0,
+            [&](auto value) { config::instance().msgaddtime = value; }),
         std::make_unique<config_key>(
             u8"key_cancel",
+            u8"\\",
             [&](auto value, auto jk) {
                 key_cancel = std::string{value};
                 jkey(jk) = std::string{value};
             }),
         std::make_unique<config_key>(
             u8"key_esc",
+            u8"^",
             [&](auto value, auto jk) {
                 key_esc = std::string{value};
                 jkey(jk) = std::string{value};
             }),
         std::make_unique<config_key>(
             u8"key_alter",
+            u8"[",
             [&](auto value, auto jk) {
                 key_alter = std::string{value};
                 jkey(jk) = std::string{value};
             }),
         std::make_unique<config_string>(
             u8"key_north",
+            u8"8 ",
             [&](auto value) { key_north = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_south",
+            u8"2 ",
             [&](auto value) { key_south = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_west",
+            u8"4 ",
             [&](auto value) { key_west = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_east",
+            u8"6 ",
             [&](auto value) { key_east = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_northwest",
+            u8"7 ",
             [&](auto value) { key_northwest = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_northeast",
+            u8"9 ",
             [&](auto value) { key_northeast = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_southwest",
+            u8"1 ",
             [&](auto value) { key_southwest = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_southeast",
+            u8"3 ",
             [&](auto value) { key_southeast = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_wait",
+            u8"5 ",
             [&](auto value) { key_wait = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_inventory",
+            u8"X",
             [&](auto value) { key_inventory = std::string{value}; }),
         std::make_unique<config_key>(
             u8"key_help",
+            u8"?",
             [&](auto value, auto jk) {
                 key_help = std::string{value};
                 jkey(jk) = std::string{value};
             }),
         std::make_unique<config_string>(
             u8"key_msglog",
+            u8"/",
             [&](auto value) { key_msglog = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_pageup",
+            u8"+",
             [&](auto value) { key_pageup = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_pagedown",
+            u8"-",
             [&](auto value) { key_pagedown = std::string{value}; }),
         std::make_unique<config_key>(
             u8"key_get",
+            u8"g",
             [&](auto value, auto jk) {
                 key_get = std::string{value};
                 jkey(jk) = std::string{value};
             }),
         std::make_unique<config_string>(
             u8"key_get2",
+            u8"0",
             [&](auto value) { key_get2 = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_drop",
+            u8"d",
             [&](auto value) { key_drop = std::string{value}; }),
         std::make_unique<config_key>(
             u8"key_charainfo",
+            u8"c",
             [&](auto value, auto jk) {
                 key_charainfo = std::string{value};
                 jkey(jk) = std::string{value};
             }),
         std::make_unique<config_key>(
             u8"key_enter",
+            u8" ",
             [&](auto value, auto jk) {
                 key_enter = std::string{value};
                 jkey(jk) = std::string{value};
             }),
         std::make_unique<config_string>(
             u8"key_eat",
+            u8"e",
             [&](auto value) { key_eat = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_wear",
+            u8"w",
             [&](auto value) { key_wear = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_cast",
+            u8"v",
             [&](auto value) { key_cast = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_drink",
+            u8"q",
             [&](auto value) { key_drink = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_read",
+            u8"r",
             [&](auto value) { key_read = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_zap",
+            u8"z",
             [&](auto value) { key_zap = std::string{value}; }),
         std::make_unique<config_key>(
             u8"key_fire",
+            u8"f",
             [&](auto value, auto jk) {
                 key_fire = std::string{value};
                 jkey(jk) = std::string{value};
             }),
         std::make_unique<config_string>(
             u8"key_goDown",
+            u8">",
             [&](auto value) { key_godown = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_goUp",
+            u8"<",
             [&](auto value) { key_goup = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_save",
+            u8"S",
             [&](auto value) { key_save = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_search",
+            u8"s",
             [&](auto value) { key_search = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_interact",
+            u8"i",
             [&](auto value) { key_interact = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_identify",
+            u8"x",
             [&](auto value) { key_identify = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_skill",
+            u8"a",
             [&](auto value) { key_skill = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_close",
+            u8"c",
             [&](auto value) { key_close = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_rest",
+            u8"R",
             [&](auto value) { key_rest = std::string{value}; }),
         std::make_unique<config_key>(
             u8"key_target",
+            u8"*",
             [&](auto value, auto jk) {
                 key_target = std::string{value};
                 jkey(jk) = std::string{value};
             }),
         std::make_unique<config_string>(
             u8"key_dig",
+            u8"D",
             [&](auto value) { key_dig = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_use",
+            u8"t",
             [&](auto value) { key_use = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_bash",
+            u8"b",
             [&](auto value) { key_bash = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_open",
+            u8"o",
             [&](auto value) { key_open = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_dip",
+            u8"B",
             [&](auto value) { key_dip = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_pray",
+            u8"p",
             [&](auto value) { key_pray = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_offer",
+            u8"O",
             [&](auto value) { key_offer = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_journal",
+            u8"j",
             [&](auto value) { key_journal = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_material",
+            u8"m",
             [&](auto value) { key_material = std::string{value}; }),
         std::make_unique<config_key>(
             u8"key_quick",
+            u8"z",
             [&](auto value, auto jk) {
                 key_quick = std::string{value};
                 jkey(jk) = std::string{value};
             }),
         std::make_unique<config_string>(
             u8"key_trait",
+            u8"F",
             [&](auto value) { key_trait = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_look",
+            u8"l",
             [&](auto value) { key_look = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_give",
+            u8"G",
             [&](auto value) { key_give = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_throw",
+            u8"T",
             [&](auto value) { key_throw = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_mode",
+            u8"z",
             [&](auto value) { key_mode = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_mode2",
+            u8"*",
             [&](auto value) { key_mode2 = std::string{value}; }),
         std::make_unique<config_key>(
             u8"key_ammo",
+            u8"A",
             [&](auto value, auto jk) {
                 key_ammo = std::string{value};
                 jkey(jk) = std::string{value};
             }),
         std::make_unique<config_key>(
             u8"key_quickinv",
+            u8"x",
             [&](auto value, auto jk) {
                 key_quickinv = std::string{value};
                 jkey(jk) = std::string{value};
             }),
         std::make_unique<config_string>(
             u8"key_quicksave",
+            u8"F1",
             [&](auto value) { key_quicksave = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_quickload",
+            u8"F2",
             [&](auto value) { key_quickload = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_autodig",
+            u8"H",
             [&](auto value) { key_autodig = std::string{value}; }),
         std::make_unique<config_integer>(
             u8"zkey",
-            [&](auto value) { cfg_zkey = value; }),
+            0,
+            [&](auto value) { config::instance().zkey = value; }),
         std::make_unique<config_integer>(
             u8"xkey",
-            [&](auto value) { cfg_xkey = value; }),
+            0,
+            [&](auto value) { config::instance().xkey = value; }),
         std::make_unique<config_integer>(
             u8"scr_sync",
-            [&](auto value) { cfg_scrsync = value; }),
+            2,
+            [&](auto value) { config::instance().scrsync = value; }),
         std::make_unique<config_integer>(
             u8"scroll_run",
-            [&](auto value) { cfg_runscroll = value; }),
+            1,
+            [&](auto value) { config::instance().runscroll = value; }),
         std::make_unique<config_integer>(
             u8"skipRandEvents",
-            [&](auto value) { cfg_skiprandevents = value; }),
+            0,
+            [&](auto value) { config::instance().skiprandevents = value; }),
         std::make_unique<config_key_sequence>(
             u8"key_set",
+            std::vector<std::string>{
+                u8"a",
+                u8"b",
+                u8"c",
+                u8"d",
+                u8"e",
+                u8"f",
+                u8"g",
+                u8"h",
+                u8"i",
+                u8"j",
+                u8"k",
+                u8"l",
+                u8"m",
+                u8"n",
+                u8"o",
+                u8"p",
+                u8"q",
+                u8"r",
+                u8"s",
+            },
             [&](const auto& values) {
                 for_each_with_index(
                     std::begin(values),
                     std::end(values),
                     [&](auto index, auto value) { key_select(index) = value; });
             }),
+        std::make_unique<config_integer>(
+            u8"use_autopick",
+            1,
+            [&](auto value) { config::instance().use_autopick = value; }),
     };
 
     picojson::value value;
 
     {
-        std::ifstream file{fs::path(u8"./config.json").native(),
+        std::ifstream file{filesystem::path(u8"./config.json").native(),
                            std::ios::binary};
         if (!file)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
                 + filesystem::make_preferred_path_in_utf8(
-                      fs::path(u8"./config.json"))};
+                      filesystem::path(u8"./config.json"))};
         }
 
         file >> value;
@@ -533,51 +681,51 @@ void load_config()
     key_prev = key_northwest;
     key_next = key_northeast;
 
-    if (cfg_zkey == 0)
+    if (config::instance().zkey == 0)
     {
         key_quick = u8"z"s;
         key_zap = u8"Z"s;
     }
-    else if (cfg_zkey == 1)
+    else if (config::instance().zkey == 1)
     {
         key_zap = u8"z"s;
         key_quick = u8"Z"s;
     }
-    if (cfg_xkey == 0)
+    if (config::instance().xkey == 0)
     {
         key_quickinv = u8"x"s;
         key_inventory = u8"X"s;
     }
-    else if (cfg_xkey == 1)
+    else if (config::instance().xkey == 1)
     {
         key_inventory = u8"x"s;
         key_quickinv = u8"X"s;
     }
-    if (cfg_scrsync == 0)
+    if (config::instance().scrsync == 0)
     {
-        cfg_scrsync = 3;
+        config::instance().scrsync = 3;
     }
-    if (cfg_walkwait == 0)
+    if (config::instance().walkwait == 0)
     {
-        cfg_walkwait = 5;
+        config::instance().walkwait = 5;
     }
-    if (cfg_runwait < 1)
+    if (config::instance().runwait < 1)
     {
-        cfg_runwait = 1;
+        config::instance().runwait = 1;
     }
-    if (cfg_attackwait < 1)
+    if (config::instance().attackwait < 1)
     {
-        cfg_attackwait = 1;
+        config::instance().attackwait = 1;
     }
-    if (cfg_startrun >= 20)
+    if (config::instance().startrun >= 20)
     {
-        cfg_startrun = 1000;
+        config::instance().startrun = 1000;
     }
 
-    if (cfg_language == -1)
+    if (config::instance().language == -1)
     {
         buffer(4);
-        picload(fs::path(u8"./graphic/lang.bmp"));
+        picload(filesystem::path(u8"./graphic/lang.bmp"));
         gsel(0);
         gmode(0);
         p = 0;
@@ -617,10 +765,10 @@ void load_config()
             }
         }
 
-        cfg_language = p;
+        config::instance().language = p;
         set_config(u8"language", p);
     }
-    if (cfg_language == 0)
+    if (config::instance().language == 0)
     {
         jp = 1;
         vfix = 0;
@@ -654,29 +802,29 @@ void set_config(const std::string& key, int value)
     picojson::value options;
 
     {
-        std::ifstream file{fs::path(u8"./config.json").native(),
+        std::ifstream file{filesystem::path(u8"./config.json").native(),
                            std::ios::binary};
         if (!file)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
                 + filesystem::make_preferred_path_in_utf8(
-                      fs::path(u8"./config.json"))};
+                      filesystem::path(u8"./config.json"))};
         }
         file >> options;
     }
 
-    options.get(key) = picojson::value{int64_t{value}};
+    options.get<picojson::object>()[key] = picojson::value{int64_t{value}};
 
     {
-        std::ofstream file{fs::path(u8"./config.json").native(),
+        std::ofstream file{filesystem::path(u8"./config.json").native(),
                            std::ios::binary};
         if (!file)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
                 + filesystem::make_preferred_path_in_utf8(
-                      fs::path(u8"./config.json"))};
+                      filesystem::path(u8"./config.json"))};
         }
         options.serialize(std::ostream_iterator<char>(file), true);
     }
@@ -689,29 +837,29 @@ void set_config(const std::string& key, const std::string& value)
     picojson::value options;
 
     {
-        std::ifstream file{fs::path(u8"./config.json").native(),
+        std::ifstream file{filesystem::path(u8"./config.json").native(),
                            std::ios::binary};
         if (!file)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
                 + filesystem::make_preferred_path_in_utf8(
-                      fs::path(u8"./config.json"))};
+                      filesystem::path(u8"./config.json"))};
         }
         file >> options;
     }
 
-    options.get(key) = picojson::value{value};
+    options.get<picojson::object>()[key] = picojson::value{value};
 
     {
-        std::ofstream file{fs::path(u8"./config.json").native(),
+        std::ofstream file{filesystem::path(u8"./config.json").native(),
                            std::ios::binary};
         if (!file)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
                 + filesystem::make_preferred_path_in_utf8(
-                      fs::path(u8"./config.json"))};
+                      filesystem::path(u8"./config.json"))};
         }
         options.serialize(std::ostream_iterator<char>(file), true);
     }
@@ -724,30 +872,30 @@ void set_config(const std::string& key, const std::string& value1, int value2)
     picojson::value options;
 
     {
-        std::ifstream file{fs::path(u8"./config.json").native(),
+        std::ifstream file{filesystem::path(u8"./config.json").native(),
                            std::ios::binary};
         if (!file)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
                 + filesystem::make_preferred_path_in_utf8(
-                      fs::path(u8"./config.json"))};
+                      filesystem::path(u8"./config.json"))};
         }
         file >> options;
     }
 
-    options.get(key) = picojson::value{value1};
+    options.get<picojson::object>()[key] = picojson::value{value1};
     (void)value2; // TODO
 
     {
-        std::ofstream file{fs::path(u8"./config.json").native(),
+        std::ofstream file{filesystem::path(u8"./config.json").native(),
                            std::ios::binary};
         if (!file)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
                 + filesystem::make_preferred_path_in_utf8(
-                      fs::path(u8"./config.json"))};
+                      filesystem::path(u8"./config.json"))};
         }
         options.serialize(std::ostream_iterator<char>(file), true);
     }
@@ -757,77 +905,72 @@ void set_config(const std::string& key, const std::string& value1, int value2)
 
 void load_config2()
 {
-    key_select(0) = u8"a"s;
-    key_select(1) = u8"b"s;
-    key_select(2) = u8"c"s;
-    key_select(3) = u8"d"s;
-    key_select(4) = u8"e"s;
-    key_select(5) = u8"f"s;
-    key_select(6) = u8"g"s;
-    key_select(7) = u8"h"s;
-    key_select(8) = u8"i"s;
-    key_select(9) = u8"j"s;
-    key_select(10) = u8"k"s;
-    key_select(11) = u8"l"s;
-    key_select(12) = u8"m"s;
-    key_select(13) = u8"n"s;
-    key_select(14) = u8"o"s;
-    key_select(15) = u8"p"s;
-    key_select(16) = u8"q"s;
-    key_select(17) = u8"r"s;
-    key_select(18) = u8"s"s;
-
     std::unique_ptr<config_base> config_list[] = {
         std::make_unique<config_integer>(
-            u8"language", [&](auto value) { cfg_language = value; }),
+            u8"language",
+            -1,
+            [&](auto value) { config::instance().language = value; }),
         std::make_unique<config_integer>(
-            u8"fullscreen", [&](auto value) { cfg_fullscreen = value; }),
+            u8"fullscreen",
+            0,
+            [&](auto value) { config::instance().fullscreen = value; }),
         std::make_unique<config_integer>(
-            u8"music", [&](auto value) { cfg_music = value; }),
+            u8"music",
+            1,
+            [&](auto value) { config::instance().music = value; }),
         std::make_unique<config_integer>(
-            u8"sound", [&](auto value) { cfg_sound = value; }),
+            u8"sound",
+            1,
+            [&](auto value) { config::instance().sound = value; }),
         std::make_unique<config_integer>(
-            u8"extraRace", [&](auto value) { cfg_extrarace = value; }),
+            u8"extraRace",
+            0,
+            [&](auto value) { config::instance().extrarace = value; }),
         std::make_unique<config_integer>(
-            u8"extraClass", [&](auto value) { cfg_extraclass = value; }),
+            u8"extraClass",
+            0,
+            [&](auto value) { config::instance().extraclass = value; }),
         std::make_unique<config_integer>(
-            u8"joypad", [&](auto value) { cfg_joypad = value; }),
+            u8"joypad",
+            1,
+            [&](auto value) { config::instance().joypad = value; }),
         std::make_unique<config_integer>(
-            u8"msg_box", [&](auto value) { cfg_msg_box = value; }),
+            u8"msgLine", 4, [&](auto value) { inf_msgline = value; }),
         std::make_unique<config_integer>(
-            u8"msgLine", [&](auto value) { inf_msgline = value; }),
+            u8"tileSize", 48, [&](auto value) { inf_tiles = value; }),
         std::make_unique<config_integer>(
-            u8"tileSize", [&](auto value) { inf_tiles = value; }),
+            u8"fontSize", 14, [&](auto value) { inf_mesfont = value; }),
         std::make_unique<config_integer>(
-            u8"fontSize", [&](auto value) { inf_mesfont = value; }),
+            u8"infVerType", 1, [&](auto value) { inf_vertype = value; }),
         std::make_unique<config_integer>(
-            u8"infVerType", [&](auto value) { inf_vertype = value; }),
+            u8"windowX", 0, [&](auto value) { windowx = value; }),
         std::make_unique<config_integer>(
-            u8"windowX", [&](auto value) { windowx = value; }),
+            u8"windowY", 0, [&](auto value) { windowy = value; }),
         std::make_unique<config_integer>(
-            u8"windowY", [&](auto value) { windowy = value; }),
+            u8"windowW", 800, [&](auto value) { windoww = value; }),
         std::make_unique<config_integer>(
-            u8"windowW", [&](auto value) { windoww = value; }),
+            u8"windowH", 600, [&](auto value) { windowh = value; }),
         std::make_unique<config_integer>(
-            u8"windowH", [&](auto value) { windowh = value; }),
+            u8"clockX", 0, [&](auto value) { inf_clockx = value; }),
         std::make_unique<config_integer>(
-            u8"clockX", [&](auto value) { inf_clockx = value; }),
+            u8"clockW", 120, [&](auto value) { inf_clockw = value; }),
         std::make_unique<config_integer>(
-            u8"clockW", [&](auto value) { inf_clockw = value; }),
-        std::make_unique<config_integer>(
-            u8"clockH", [&](auto value) { inf_clockh = value; }),
+            u8"clockH", 96, [&](auto value) { inf_clockh = value; }),
         std::make_unique<config_string>(
-            u8"defLoadFolder", [&](auto value) { defload = value; }),
+            u8"defLoadFolder", "", [&](auto value) { defload = value; }),
         std::make_unique<config_integer>(
-            u8"charamake_wiz", [&](auto value) { cfg_wizard = value; }),
+            u8"charamake_wiz",
+            0,
+            [&](auto value) { config::instance().wizard = value; }),
     };
 
-    std::ifstream file{fs::path(u8"./config.json").native(), std::ios::binary};
+    std::ifstream file{filesystem::path(u8"./config.json").native(),
+                       std::ios::binary};
     if (!file)
     {
         throw config_loading_error{u8"Failed to open: "s
                                    + filesystem::make_preferred_path_in_utf8(
-                                         fs::path(u8"./config.json"))};
+                                         filesystem::path(u8"./config.json"))};
     }
 
     picojson::value value;

@@ -15,6 +15,7 @@
 #include "enums.hpp"
 #include "macro_gdata.hpp"
 #include "snail/color.hpp"
+#include "snail/font.hpp"
 #include "snail/input.hpp"
 #include "util.hpp"
 
@@ -78,7 +79,7 @@ struct elona_vector1
 
     operator fs::path()
     {
-        return fs::path(storage.at(0));
+        return filesystem::path(storage.at(0));
     }
 
 
@@ -86,7 +87,7 @@ struct elona_vector1
         typename U,
         std::enable_if_t<
             std::is_same<T, std::string>::value && std::is_same<U, int>::value,
-            nullptr_t> = nullptr>
+            std::nullptr_t> = nullptr>
     T& operator+=(const U& x)
     {
         return storage.at(0) += std::to_string(x);
@@ -98,7 +99,7 @@ struct elona_vector1
         std::enable_if_t<
             !std::is_same<T, std::string>::value
                 || !std::is_same<U, int>::value,
-            nullptr_t> = nullptr>
+            std::nullptr_t> = nullptr>
     T& operator+=(const U& x)
     {
         return storage.at(0) += x;
@@ -400,7 +401,9 @@ int dialog(const std::string& message, int = 0);
 void exec(const std::string&, int);
 
 
-void font(const std::string& name, int size, int style);
+void font(
+    int size,
+    snail::font_t::style_t style = snail::font_t::style_t::regular);
 
 void gcopy(
     int window_id,
@@ -440,7 +443,8 @@ void gzoom(
     int src_width,
     int src_height,
     int dst_width,
-    int dst_height);
+    int dst_height,
+    bool blend = false);
 
 
 int instr(const std::string& str, size_t pos, const std::string pattern);
@@ -506,12 +510,7 @@ void mes(const std::string& text);
 
 void mes(int n);
 
-void mesbox(
-    std::string& buffer,
-    int width,
-    int height,
-    int style,
-    int max_input_size = -1);
+void mesbox(std::string& buffer);
 
 void mkdir(const fs::path& path);
 

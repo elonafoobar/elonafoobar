@@ -154,5 +154,14 @@ int item_material_db::lookup_metal(int x, int y)
 }
 
 
+std::vector<int> item_material_db::get_material_ids()
+{
+    std::vector<int> ret;
+    range::transform(storage, std::back_inserter(ret), [](const auto& pair) {
+        return pair.first;
+    });
+}
+
+
 
 } // namespace elona

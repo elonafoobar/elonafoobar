@@ -3,6 +3,7 @@
 #include "buff.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "config.hpp"
 #include "ctrl_file.hpp"
 #include "debug.hpp"
 #include "elona.hpp"
@@ -14,6 +15,7 @@
 #include "map.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
+#include "wish.hpp"
 
 
 namespace elona
@@ -148,8 +150,8 @@ int magic()
                 }
                 goto the_end;
             }
+            if (const auto damage = calc_skill_damage(efid, cc, efp))
             {
-                const auto damage = calc_skill_damage(efid, cc, efp);
                 dice1 = damage->dice_x;
                 dice2 = damage->dice_y;
                 bonus = damage->damage_bonus;
@@ -279,7 +281,7 @@ int magic()
                             name(cc) + u8" explode"s + _s(cc) + u8"."s));
                 }
             label_2177_internal:
-                cbitmod(972, cc, 0);
+                cdata[cc].will_explode_soon() = false;
                 range_ = the_ability_db[efid]->sdataref3 % 1000 + 1;
                 if (debug::voldemort && cc == 0)
                 {
@@ -434,7 +436,7 @@ int magic()
                                                 + u8"."s));
                                     }
                                 }
-                                if (cbit(18, tc))
+                                if (cdata[tc].explodes())
                                 {
                                     chainbomblist(chainbomb) = tc;
                                     ++chainbomb;
@@ -877,7 +879,7 @@ int magic()
                     }
                     p = rnd(cdata[tc].gold / 10 + 1);
                     if (rnd(sdata(13, tc)) > rnd(sdata(12, cc) * 4)
-                        || cbit(15, tc) == 1)
+                        || cdata[tc].is_protected_from_thieves() == 1)
                     {
                         txt(lang(
                             name(tc) + u8"は自分の財布を守った。"s,
@@ -1210,7 +1212,7 @@ label_2181_internal:
         snd(59);
         gsel(4);
         pos(0, 0);
-        picload(fs::path(u8"./graphic/paper.bmp"), 1);
+        picload(filesystem::path(u8"./graphic/paper.bmp"), 1);
         gsel(0);
         ww = 400;
         wh = 300;
@@ -1236,7 +1238,7 @@ label_2181_internal:
                     if (y == inv[ci].param2)
                     {
                         pos(sx, sy);
-                        font(lang(cfg_font1, cfg_font2), 40 - en * 2, 2);
+                        font(40 - en * 2, snail::font_t::style_t::italic);
                         color(255, 20, 20);
                         mes(lang(u8"○"s, u8"O"s));
                         color(0, 0, 0);
@@ -1401,9 +1403,9 @@ label_2181_internal:
                 u8"酸が"s + name(tc) + u8"を溶かした。"s,
                 u8"The sulfuric acid melts "s + name(tc) + u8"."s));
         }
-        if (cbit(978, tc))
+        if (cdata[tc].is_pregnant())
         {
-            cbitmod(978, tc, 0);
+            cdata[tc].is_pregnant() = false;
             if (is_in_fov(tc))
             {
                 txt(lang(
@@ -1587,7 +1589,8 @@ label_2181_internal:
                 u8"You can only ride an ally."s));
             break;
         }
-        if (cbit(963, tc) == 1 || cbit(971, tc) == 1)
+        if (cdata[tc].is_escorted() == 1
+            || cdata[tc].is_escorted_in_sub_quest() == 1)
         {
             txt(lang(
                 u8"護衛対象には騎乗できない。"s,
@@ -2372,7 +2375,7 @@ label_2181_internal:
                         }
                         else
                         {
-                            s = lang(u8"さらに、"s, u8"Futhermore, "s);
+                            s = lang(u8"さらに、"s, u8"Furthermore, "s);
                         }
                         skillgain(0, p, 1, 200);
                         txtef(2);
@@ -3052,9 +3055,9 @@ label_2181_internal:
                 name(tc) + u8"は毒を浴びた！"s,
                 name(tc) + u8" "s + is(tc) + u8" hit by poison!"s));
         }
-        if (cbit(978, tc))
+        if (cdata[tc].is_pregnant())
         {
-            cbitmod(978, tc, 0);
+            cdata[tc].is_pregnant() = false;
             if (is_in_fov(tc))
             {
                 txt(lang(
@@ -3098,7 +3101,7 @@ label_2181_internal:
         {
             txt(lang(
                 name(tc) + u8"は甘い液体を浴びた！"s,
-                u8"Strange sweet liquid splashs onto "s + name(tc) + u8"!"s));
+                u8"Strange sweet liquid splashes onto "s + name(tc) + u8"!"s));
         }
         dmgcon(tc, 2, efp);
         break;
@@ -3221,7 +3224,7 @@ label_2181_internal:
         }
         if (f == 0)
         {
-            txt(lang(u8"何も起こらなかったようだ。"s, u8"Nothing happenes."s));
+            txt(lang(u8"何も起こらなかったようだ。"s, u8"Nothing happens."s));
             obvious = 0;
         }
         else
@@ -3300,7 +3303,7 @@ label_2181_internal:
             f = 0;
         }
         if (cdata[tc].quality >= 4 || cdata[tc].character_role != 0
-            || cbit(976, tc) == 1)
+            || cdata[tc].is_lord_of_dungeon() == 1)
         {
             f = -1;
         }
@@ -3846,7 +3849,8 @@ label_2181_internal:
             f = 0;
         }
         if (cdata[tc].quality >= 4 || cdata[tc].character_role != 0
-            || cbit(963, tc) == 1 || cbit(976, tc) == 1)
+            || cdata[tc].is_escorted() == 1
+            || cdata[tc].is_lord_of_dungeon() == 1)
         {
             f = -1;
         }
@@ -3864,7 +3868,7 @@ label_2181_internal:
             characreate(56, 0, -3, 0);
             relocate_chara(56, tc, 1);
             cdata[tc].enemy_id = cc;
-            cbitmod(970, tc, 0);
+            cdata[tc].is_quest_target() = false;
             check_quest();
         }
         else if (f == 0)
@@ -4155,7 +4159,7 @@ label_2181_internal:
             {
                 continue;
             }
-            if (cbit(31, cnt))
+            if (cdata[cnt].is_immune_to_mine())
             {
                 continue;
             }
@@ -4312,7 +4316,7 @@ label_2181_internal:
         txtef(8);
         txt(lang(
             name(cc) + u8"に睨まれ、あなたはエーテルに侵食された。"s,
-            name(cc) + u8" gazes you. Your Ether Disease deteriorates."s));
+            name(cc) + u8" gazes at you. Your Ether Disease deteriorates."s));
         modcorrupt(100);
         break;
     case 638:
@@ -4381,7 +4385,8 @@ label_2181_internal:
         {
             txt(lang(
                 name(cc) + u8"は"s + name(tc) + u8"を睨み付けた。"s,
-                name(cc) + u8" gaze"s + _s(cc) + u8" "s + name(tc) + u8"."s));
+                name(cc) + u8" gaze"s + _s(cc) + u8" at "s + name(tc)
+                    + u8"."s));
         }
         dmgmp(tc, rnd(20) + 1);
         break;
@@ -4517,7 +4522,8 @@ label_2181_internal:
             u8"You summon 4 dimensional pocket."s));
         invfile = 8;
         ctrl_file(4, u8"shoptmp.s2");
-        if (fs::exists(fs::path(u8"./tmp/"s + u8"shop" + invfile + u8".s2")))
+        if (fs::exists(
+                filesystem::path(u8"./tmp/"s + u8"shop" + invfile + u8".s2")))
         {
             ctrl_file(3, u8"shop"s + invfile + u8".s2");
         }

@@ -1,6 +1,7 @@
 #include "ability.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "config.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
@@ -128,10 +129,6 @@ label_20591:
             if (inv[cnt].id == 488)
             {
                 inv[cnt].function = 9;
-            }
-            if (inv[cnt].id == 504)
-            {
-                inv[cnt].function = 38;
             }
             if (inv[cnt].id >= 800 || inv[cnt].id < 0)
             {
@@ -301,7 +298,7 @@ label_20591:
             }
             if (invctrl == 15)
             {
-                if (reftype != 72000)
+                if (reftype != 72000 && inv[cnt].id != 701)
                 {
                     continue;
                 }
@@ -441,6 +438,25 @@ label_20591:
                         }
                     }
                     else if (inv[cnt].own_state != 4)
+                    {
+                        continue;
+                    }
+                }
+                else if (invctrl(1) == 8)
+                {
+                    if (inv[cnt].id != 504)
+                    {
+                        continue;
+                    }
+                    else if (inv[cnt].own_state != 0)
+                    {
+                        continue;
+                    }
+                    else if (inv[cnt].subname == 0)
+                    {
+                        continue;
+                    }
+                    else if (card(0, inv[cnt].subname))
                     {
                         continue;
                     }
@@ -705,7 +721,7 @@ label_20591:
     }
     gsel(3);
     pos(960, 96);
-    picload(fs::path(u8"./graphic/deco_inv.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/deco_inv.bmp"), 1);
     gsel(0);
     if (returnfromidentify == 0)
     {
@@ -781,7 +797,7 @@ label_2060_internal:
     }
     if (menucycle == 1)
     {
-        font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+        font(12 + sizefix - en * 2);
         y = 34;
         x = windoww - 650 + 156;
         window2(x, y, 475, 22, 5, 5);
@@ -934,9 +950,9 @@ label_2061_internal:
         int h = 102;
         window(x + 4, y + 4, w, h - h % 8, 0, -1);
         window(x, y, w, h - h % 8, 0, 0);
-        font(lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0);
+        font(12 + en - en * 2);
         pos(x + 16, y + 17);
-        mes(u8"Dv:"s + cdata[tc].dv + u8" Pv:"s + cdata[tc].pv);
+        mes(u8"DV:"s + cdata[tc].dv + u8" PV:"s + cdata[tc].pv);
         pos(x + 16, y + 35);
         mes(lang(u8"装備重量:"s, u8"EquipWt:"s)
             + cnvweight(cdata[tc].sum_of_equipment_weight) + ""s
@@ -964,9 +980,8 @@ label_2061_internal:
             pos(x, y);
             mes(""s + i18n::_(u8"ui", u8"body_part", u8"_"s + (p / 10000)));
             color(0, 0, 0);
-            x +=
-                (i18n::_(u8"ui", u8"body_part", u8"_"s + (p / 10000)).size()
-                 + 1)
+            x += (i18n::_(u8"ui", u8"body_part", u8"_"s + (p / 10000)).size()
+                  + 1)
                 * 6;
         }
     }
@@ -987,7 +1002,8 @@ label_2061_internal:
             gfdec2(12, 14, 16);
         }
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
+    cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;
@@ -1065,7 +1081,7 @@ label_2061_internal:
     {
         if (showresist == 0)
         {
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+            font(13 - en * 2);
             gmode(2);
             pos(wx + 340, wy + 32);
             gcopy(3, 0, 392, 24, 24);
@@ -1074,7 +1090,7 @@ label_2061_internal:
         }
     }
     redraw();
-    await(cfg_wait1);
+    await(config::instance().wait1);
     key_check();
     cursor_check();
     invmark(invctrl) = page * 1000 + cs;
@@ -1149,11 +1165,9 @@ label_2061_internal:
                     u8"How many? (1 to "s + inv[ci].number + u8")"s));
                 display_msg(screenmsgy, 1);
                 inputlog = ""s + inv[ci].number;
-                input_number_or_text_dialog(
+                input_number_dialog(
                     (windoww - 200) / 2 + inf_screenx,
                     winposy(60),
-                    8,
-                    1,
                     inv[ci].number);
                 in = elona::stoi(inputlog(0));
                 if (in > inv[ci].number)
@@ -1304,11 +1318,9 @@ label_2061_internal:
                 }
                 display_msg(screenmsgy, 2);
                 inputlog = ""s + inv[ci].number;
-                input_number_or_text_dialog(
+                input_number_dialog(
                     (windoww - 200) / 2 + inf_screenx,
                     winposy(60),
-                    8,
-                    1,
                     inv[ci].number);
                 in = elona::stoi(inputlog(0));
                 if (in > inv[ci].number)
@@ -1629,7 +1641,7 @@ label_2061_internal:
                     txt(lang(
                         u8"「そんな得体の知れないものはいらない"s + _yo()
                             + u8"」"s,
-                        u8"\"I dont't want it. It's too creepy.\""s));
+                        u8"\"I don't want it. It's too creepy.\""s));
                     goto label_2060_internal;
                 }
                 if (is_cursed(inv[ci].curse_state))
@@ -1677,7 +1689,7 @@ label_2061_internal:
                     {
                         f = 0;
                     }
-                    if (cbit(978, tc))
+                    if (cdata[tc].is_pregnant())
                     {
                         if (inv[ci].id == 262 || inv[ci].id == 519
                             || inv[ci].id == 392)
@@ -1974,6 +1986,19 @@ label_2061_internal:
                     u8"You pay "s + itemname(ci) + u8"."s));
                 --inv[ci].number;
                 --gdata_left_bill;
+                refresh_burden_state();
+                screenupdate = -1;
+                update_screen();
+                goto label_20591;
+            }
+            if (invctrl(1) == 8)
+            {
+                snd(71);
+                --inv[ci].number;
+                txt(lang(
+                    itemname(ci, 1) + u8"をデッキに加えた。"s,
+                    u8"You add "s + itemname(ci, 1) + u8" to your deck."s));
+                ++card(0, inv[ci].subname);
                 refresh_burden_state();
                 screenupdate = -1;
                 update_screen();
