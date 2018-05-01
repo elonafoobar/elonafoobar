@@ -1,6 +1,6 @@
 #include "random.hpp"
-#include "elona.hpp"
 #include <algorithm>
+#include "elona.hpp"
 
 
 namespace elona
@@ -45,8 +45,7 @@ void exrand_rnd(int& result, int max)
 
 int rnd(int n)
 {
-    std::uniform_int_distribution<> dist{0,
-                                         clamp(n - 1, 0, (1 << 16) - 1)};
+    std::uniform_int_distribution<> dist{0, clamp(n - 1, 0, (1 << 16) - 1)};
     return dist(detail::random_engine);
 }
 

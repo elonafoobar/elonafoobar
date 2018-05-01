@@ -404,7 +404,7 @@ ability['402'] = {
   enchantment_description = "",
 }
 ability['403'] = {
-  name = "Cure of Jua",
+  name = "Cure of Jure",
   description = "Heal self",
   enchantment_description = "",
 }
@@ -660,7 +660,7 @@ ability['430'] = {
 }
 ability['439'] = {
   name = "Restore Body",
-  description = "Restore phisical",
+  description = "Restore physical",
   enchantment_description = "",
 }
 ability['440'] = {

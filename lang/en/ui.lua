@@ -25,7 +25,7 @@ ui.impression = {
   _5 = "Friend",
   _6 = "Fellow",
   _7 = "Soul Mate",
-  _8 = " *Love*",
+  _8 = "*Love*",
 }
 ui.weather = {
   _0 = "",
@@ -178,7 +178,7 @@ ui.quality = {
   _6 = "special",
 }
 ui.resistance = {
-  _0 = "Criticaly Weak",
+  _0 = "Critically Weak",
   _1 = "Weak",
   _2 = "No Resist",
   _3 = "Little",
@@ -320,11 +320,11 @@ ui.random_ring = {
 
 
 ui.cheer_up_message = {
-  _1 = "Larneire cheers, \"Way to go!\"",
+  _1 = "Larnneire cheers, \"Way to go!\"",
   _2 = "Lomias grins, \"Go for it.\"",
   _3 = "Kumiromi worries, \"Are you...okay..?\"",
   _4 = "Lulwy sneers, \"You're tougher than I thought, little kitty.\"",
-  _5 = "Larneire cries, \"No...before it is too late...\"",
+  _5 = "Larnneire cries, \"No...before it is too late...\"",
   _6 = "Lomias grins, \"Tt hasn't even started yet... hasn't it?\"",
   _7 = "Lulwy warns you, \"Have a rest, kitty. If you are broken, you're no use to me.\"",
   _8 = "Lulwy laughs, \"I guess there's no use warning you. Alright. Do as you please, kitty.\"",
@@ -336,6 +336,21 @@ ui.autodig = {
   mode = "Autodig",
   enabled = "You enable autodig.",
   disabled = "You disable autodig.",
+}
+
+ui.autopick = {
+  do_you_really_pick_up = function(_, item_name)
+    return "Do you really pick " .. item_name .. " up?"
+  end,
+  do_you_really_destroy = function(_, item_name)
+    return "Do you really destroy " .. item_name .. "?"
+  end,
+  destroyed = function(_, item_name)
+    return "" .. item_name .. " is destroyed."
+  end,
+  do_you_really_open = function(_, item_name)
+    return "Do you really open " .. item_name .. "?"
+  end,
 }
 
 

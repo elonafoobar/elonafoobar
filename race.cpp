@@ -177,7 +177,7 @@ int access_race_info(int dbmode, const std::string& dbidn)
 
     if (data->is_made_of_rock)
     {
-        cbitmod(983, rc, 1);
+        cdata[rc].breaks_into_debris() = true;
     }
 
     {

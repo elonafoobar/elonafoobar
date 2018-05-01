@@ -1,4 +1,5 @@
 #include "ability.hpp"
+#include "autopick.hpp"
 #include "buff.hpp"
 #include "cat.hpp"
 #include "character.hpp"
@@ -8,6 +9,7 @@
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "fish.hpp"
+#include "foobar_save.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
@@ -19,6 +21,7 @@
 #include "range.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
+#include "version.hpp"
 
 #include <iostream>
 
@@ -64,7 +67,7 @@ void main_loop()
 
 void load_musiclist()
 {
-    const auto filepath = fs::path(u8"./user/music/musiclist.txt");
+    const auto filepath = filesystem::path(u8"./user/music/musiclist.txt");
     if (!fs::exists(filepath))
         return;
 
@@ -93,8 +96,8 @@ void backup_config_files()
 
     for (const auto& from_to : files)
     {
-        const auto from_path = fs::path(from_to.first);
-        const auto to_path = fs::path(from_to.second);
+        const auto from_path = filesystem::path(from_to.first);
+        const auto to_path = filesystem::path(from_to.second);
         if (!fs::exists(to_path))
         {
             fs::copy_file(from_path, to_path);
@@ -127,7 +130,7 @@ void initialize_elona()
     time_warn = timeGetTime() / 1000;
     time_begin = timeGetTime() / 1000;
 
-    mesbox(keylog, 0, 0, 1, 10);
+    mesbox(keylog);
 
     backup_config_files();
 
@@ -146,7 +149,7 @@ void initialize_elona()
     i18n::load(jp ? u8"jp" : u8"en");
 
     initialize_ui_constants();
-    if (cfg_fullscreen)
+    if (config::instance().fullscreen)
     {
         chgdisp(1, windoww, windowh);
         bgscr(0, windoww, windowh, 0, 0);
@@ -160,13 +163,13 @@ void initialize_elona()
     boxf();
     redraw();
     buffer(3, 1440, 800);
-    picload(fs::path(u8"./graphic/interface.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/interface.bmp"), 1);
     buffer(4, windoww, windowh);
     buffer(8, windoww, windowh);
     gsel(0);
-    folder = fs::path(u8"./user/graphic/").generic_string();
+    folder = filesystem::path(u8"./user/graphic/").generic_string();
     buffer(1, 1584, 1200);
-    picload(fs::path(u8"./graphic/item.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/item.bmp"), 1);
     if (inf_tiles != 48)
     {
         pos(0, 0);
@@ -336,7 +339,7 @@ void initialize_elona()
 
     gsel(3);
     gmode(0);
-    font(lang(cfg_font1, cfg_font2), 15 - en * 2, 0);
+    font(15 - en * 2);
     for (int i = 0; i < 18; ++i)
     {
         pos(i * 24 + 72, 30);
@@ -361,7 +364,7 @@ void initialize_elona()
     notesel(buffboard);
     {
         buffboard(0).clear();
-        std::ifstream in{fs::path(u8"./data/board.txt").native(),
+        std::ifstream in{filesystem::path(u8"./data/board.txt").native(),
                          std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -383,7 +386,6 @@ void initialize_elona()
     delete_temporary_npc_files();
     delete_temporary_user_files();
     initialize_character_filters();
-    initialize_cbit_filters();
     initialize_item_chip();
     initialize_building_daga();
     initialize_adata();
@@ -404,20 +406,20 @@ void initialize_elona()
     initialize_nefia_names();
     initialize_home_adata();
     load_cnpc_data();
-    if (cfg_music == 1 && DMINIT() == 0)
+    if (config::instance().music == 1 && DMINIT() == 0)
     {
-        cfg_music = 2;
+        config::instance().music = 2;
     }
-    if (cfg_sound == 1 && DSINIT() == 0)
+    if (config::instance().sound == 1 && DSINIT() == 0)
     {
-        cfg_sound = 2;
+        config::instance().sound = 2;
     }
-    if (cfg_joypad == 1)
+    if (config::instance().joypad == 1)
     {
         DIINIT();
         if (DIGETJOYNUM() == 0)
         {
-            cfg_joypad = 0;
+            config::instance().joypad = 0;
         }
     }
     initialize_sound_file();
@@ -531,7 +533,7 @@ void initialize_elona()
     invicon(28) = -1;
     invicon(29) = -1;
 
-    if (cfg_autonumlock)
+    if (config::instance().autonumlock)
     {
         // TODO
         // if NumLock key is pressed, send an event to release the key.
@@ -550,10 +552,11 @@ void start_elona()
     quickpage = 1;
     if (defload != ""s)
     {
-        if (!fs::exists(fs::path(u8"./save/"s + defload + u8"/header.txt")))
+        if (!fs::exists(
+                filesystem::path(u8"./save/"s + defload + u8"/header.txt")))
         {
-            if (fs::exists(
-                    fs::path(u8"./save/sav_"s + defload + u8"/header.txt")))
+            if (fs::exists(filesystem::path(
+                    u8"./save/sav_"s + defload + u8"/header.txt")))
             {
                 defload = u8"sav_"s + defload;
             }
@@ -713,7 +716,7 @@ int cat_cbitmod(lua_State* L)
     int cc = luaL_checknumber(L, 2);
     int flag = luaL_checknumber(L, 3);
 
-    cbitmod(id, cc, flag);
+    cdata[cc]._flags[id] = flag;
 
     return 0;
 }
@@ -740,7 +743,9 @@ int run()
     the_race_db.initialize();
     the_trait_db.initialize();
 
-    title(u8"Elona ver 1.22"s);
+    foobar_save.initialize();
+
+    title(u8"Elona Foobar version "s + latest_version.short_string());
     try
     {
         initialize_elona();
@@ -775,27 +780,37 @@ void main_title_menu()
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(fs::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+        picload(filesystem::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(4);
     gmode(0);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/title.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/title.bmp"), 1);
     gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gmode(2);
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+    font(13 - en * 2);
     color(255, 255, 255);
     pos(20, 20);
     mes(u8"Elona version 1.22  Developed by Noa"s);
     color(0, 0, 0);
+    color(255, 255, 255);
     pos(20, 38);
+    mes(u8"  Variant Foobar version "s + latest_version.short_string()
+        + u8"  Developed by KI");
+    color(0, 0, 0);
     if (jp)
     {
+        color(255, 255, 255);
+        pos(20, 56);
         mes(u8"Contributor MSL / View the credits for more"s);
+        color(0, 0, 0);
     }
     else
     {
+        color(255, 255, 255);
+        pos(20, 56);
         mes(u8"Contributor f1r3fly, Sunstrike, Schmidt, Elvenspirit / View the credits for more"s);
+        color(0, 0, 0);
     }
     if (jp)
     {
@@ -842,7 +857,7 @@ void main_title_menu()
     }
     gsel(3);
     pos(960, 96);
-    picload(fs::path(u8"./graphic/deco_title.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/deco_title.bmp"), 1);
     gsel(0);
     gmode(0);
     pos(0, 0);
@@ -851,7 +866,7 @@ void main_title_menu()
 
     while (1)
     {
-        if (cfg_autonumlock)
+        if (config::instance().autonumlock)
         {
             // TODO
             // if NumLock key is pressed, send an event to release the key.
@@ -877,6 +892,7 @@ void main_title_menu()
                 f = 2;
             }
         }
+        cs_listbk();
         for (int cnt = 0; cnt < 6; ++cnt)
         {
             x = wx + 40;
@@ -884,21 +900,21 @@ void main_title_menu()
             display_customkey(key_list(cnt), x, y);
             if (jp)
             {
-                font(lang(cfg_font1, cfg_font2), 11 - en * 2, 0);
+                font(11 - en * 2);
                 pos(x + 40, y - 4);
                 mes(s(cnt * 2));
-                font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+                font(13 - en * 2);
                 cs_list(cs == cnt, s(cnt * 2 + 1), x + 40, y + 8);
             }
             else
             {
-                font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+                font(14 - en * 2);
                 cs_list(cs == cnt, s(cnt), x + 40, y + 1);
             }
         }
         cs_bk = cs;
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         if (key == u8"b"s)
@@ -929,6 +945,7 @@ void main_title_menu()
         {
             snd(20);
             set_option();
+            main_title_menu();
             return;
         }
         if (key == u8"f"s)
@@ -945,7 +962,7 @@ void main_title_menu()
 
 void main_menu_new_game()
 {
-    if (cfg_wizard)
+    if (config::instance().wizard)
     {
         gdata_wizard = 1;
     }
@@ -958,20 +975,20 @@ void main_menu_new_game()
     cm = 1;
     gsel(4);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/void.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/void.bmp"), 1);
     gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gsel(2);
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(fs::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+        picload(filesystem::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(3);
     pos(960, 96);
-    picload(fs::path(u8"./graphic/deco_cm.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/deco_cm.bmp"), 1);
     gsel(0);
     if (range::distance(filesystem::dir_entries{
-            fs::path(u8"./save"), filesystem::dir_entries::type::dir})
+            filesystem::path(u8"./save"), filesystem::dir_entries::type::dir})
         >= 5)
     {
         keyrange = 0;
@@ -988,7 +1005,7 @@ void main_menu_new_game()
         {
             key_check();
             cursor_check();
-            await(cfg_wait1);
+            await(config::instance().wait1);
             if (key != ""s)
             {
                 main_title_menu();
@@ -1018,7 +1035,7 @@ void character_making_select_race()
         u8"やあ、待っていたよ。早速旅の支度をしようか。"s,
         u8"Welcome traveler, I've been looking for you."s);
     draw_caption();
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
+    font(13 - en * 2, snail::font_t::style_t::bold);
     pos(20, windowh - 20);
     mes(u8"Press F1 to show help."s);
     if (geneuse != ""s)
@@ -1033,7 +1050,7 @@ void character_making_select_race()
         list(0, listmax) = 0;
         ++listmax;
     }
-    if (cfg_extrarace)
+    if (config::instance().extrarace)
     {
         for (const auto& race : the_race_db.get_available_races(true))
         {
@@ -1090,7 +1107,7 @@ void character_making_select_race()
                 lang(u8"選択できる種族"s, u8"Race"s), wx + 28, wy + 30);
             display_topic(
                 lang(u8"種族の説明"s, u8"Detail"s), wx + 188, wy + 30);
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
             for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
             {
                 p = page * pagesize + cnt;
@@ -1112,7 +1129,7 @@ void character_making_select_race()
             show_race_or_class_info(0, 0);
         }
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         ELONA_GET_SELECTED_INDEX(p);
@@ -1175,7 +1192,7 @@ void character_making_select_sex(bool label_1548_flg)
     gmode(2);
     s = lang(u8"男性と女性に能力の違いはない。"s, u8"What's your gender?"s);
     draw_caption();
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
+    font(13 - en * 2, snail::font_t::style_t::bold);
     pos(20, windowh - 20);
     mes(u8"Press F1 to show help."s);
     if (geneuse != ""s)
@@ -1200,7 +1217,7 @@ void character_making_select_sex(bool label_1548_flg)
         display_topic(lang(u8"性別の候補"s, u8"Gender"s), wx + 28, wy + 30);
         listn(0, 0) = cnven(i18n::_(u8"ui", u8"male"));
         listn(0, 1) = cnven(i18n::_(u8"ui", u8"female"));
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
         for (int cnt = 0; cnt < 2; ++cnt)
         {
             key_list(cnt) = key_select(cnt);
@@ -1211,7 +1228,7 @@ void character_making_select_sex(bool label_1548_flg)
         }
         cs_bk = cs;
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         if (key == key_select(0))
@@ -1259,7 +1276,7 @@ void character_making_select_class(bool label_1551_flg)
         u8"職業や種族は、初期の能力だけでなく、成長の方向性に影響するんだ。"s,
         u8"Your class and race determine growth rate of your skills and attributes."s);
     draw_caption();
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
+    font(13 - en * 2, snail::font_t::style_t::bold);
     pos(20, windowh - 20);
     mes(u8"Press F1 to show help."s);
     if (geneuse != ""s)
@@ -1273,7 +1290,7 @@ void character_making_select_class(bool label_1551_flg)
         listn(1, listmax) = class_.get().id;
         ++listmax;
     }
-    if (cfg_extraclass)
+    if (config::instance().extraclass)
     {
         for (const auto& class_ : the_class_db.get_available_classes(true))
         {
@@ -1310,7 +1327,7 @@ void character_making_select_class(bool label_1551_flg)
                 lang(u8"選択できる職業"s, u8"Class"s), wx + 28, wy + 30);
             display_topic(
                 lang(u8"職業の説明"s, u8"Detail"s), wx + 188, wy + 30);
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
             for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
             {
                 key_list(cnt) = key_select(cnt);
@@ -1334,7 +1351,7 @@ void character_making_select_class(bool label_1551_flg)
             show_race_or_class_info(0, 1);
             redraw();
         }
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         ELONA_GET_SELECTED_INDEX(p);
@@ -1385,7 +1402,7 @@ void character_making_role_attributes(bool label_1554_flg)
                 u8"死にたくないなら、ある程度の能力は必要だね。"s,
                 u8"You should prepare well, if you want to survive long enough in Irva."s);
             draw_caption();
-            font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
+            font(13 - en * 2, snail::font_t::style_t::bold);
             pos(20, windowh - 20);
             mes(u8"Press F1 to show help."s);
             if (geneuse != ""s)
@@ -1447,12 +1464,12 @@ void character_making_role_attributes(bool label_1554_flg)
         grotate(2, 0, 0, 0, x, y);
         gmode(2);
         display_topic(lang(u8"能力"s, u8"Attributes"s), wx + 28, wy + 30);
-        font(lang(cfg_font1, cfg_font2), 12 + sizefix - en * 2, 0);
+        font(12 + sizefix - en * 2);
         pos(wx + 175, wy + 52);
         mes(lang(
             u8"ロックされた能力は\n変化しません"s,
             u8"Locked items will\nnot change."s));
-        font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
+        font(13 - en * 2, snail::font_t::style_t::bold);
         pos(wx + 180, wy + 84);
         mes(lang(u8"残りロック: "s, u8"Locks left: "s) + cmlock(8));
         for (int cnt = 0; cnt < 10; ++cnt)
@@ -1461,9 +1478,9 @@ void character_making_role_attributes(bool label_1554_flg)
             keyrange = cnt + 1;
             pos(wx + 38, wy + 66 + cnt * 23 - 2);
             gcopy(3, cnt * 24 + 72, 30, 24, 18);
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
             cs_list(cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 23 - 1);
-            font(lang(cfg_font1, cfg_font2), 15 - en * 2, 1);
+            font(15 - en * 2, snail::font_t::style_t::bold);
             if (cnt >= 2)
             {
                 pos(wx + 198, wy + 76 + cnt * 23);
@@ -1473,7 +1490,7 @@ void character_making_role_attributes(bool label_1554_flg)
                 mes(""s + list(0, cnt) / 1000000);
                 if (cmlock(cnt - 2) == 1)
                 {
-                    font(lang(cfg_font1, cfg_font2), 12 - en * 2, 1);
+                    font(12 - en * 2, snail::font_t::style_t::bold);
                     pos(wx + 240, wy + 66 + cnt * 23 + 2);
                     color(20, 20, 140);
                     mes(u8"Locked!"s);
@@ -1483,7 +1500,7 @@ void character_making_role_attributes(bool label_1554_flg)
         }
         cs_bk = cs;
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);
@@ -1549,7 +1566,7 @@ void character_making_select_feats_and_alias(bool label_1558_flg)
             u8"フィートとは、君の持っている有益な特徴だ。3つまで選べるよ。"s,
             u8"Choose your feats wisely."s);
         draw_caption();
-        font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
+        font(13 - en * 2, snail::font_t::style_t::bold);
         pos(20, windowh - 20);
         mes(u8"Press F1 to show help."s);
         if (geneuse != ""s)
@@ -1579,7 +1596,7 @@ void character_making_select_feats_and_alias(bool label_1558_flg)
         u8"有名になると、名前とは別の通り名で呼ばれることがあるらしい。"s,
         u8"Choose your Alias."s);
     draw_caption();
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
+    font(13 - en * 2, snail::font_t::style_t::bold);
     pos(20, windowh - 20);
     mes(u8"Press F1 to show help."s);
     if (geneuse != ""s)
@@ -1612,7 +1629,7 @@ void character_making_select_feats_and_alias(bool label_1558_flg)
             gmode(2);
             display_topic(
                 lang(u8"異名の候補"s, u8"Alias List"s), wx + 28, wy + 30);
-            font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+            font(14 - en * 2);
             for (int cnt = 0; cnt < 17; ++cnt)
             {
                 key_list(cnt) = key_select(cnt);
@@ -1641,7 +1658,7 @@ void character_making_select_feats_and_alias(bool label_1558_flg)
             list(0, 0) = 0;
         }
         redraw();
-        await(cfg_wait1);
+        await(config::instance().wait1);
         key_check();
         cursor_check();
         ELONA_GET_SELECTED_INDEX_THIS_PAGE(p);
@@ -1691,7 +1708,7 @@ void character_making_final_phase()
             u8"君の見た目を知っておきたいな。まあ、後からいつでも変えられるけどね。"s,
             u8"What you look like? Don't worry, you can change them later."s);
         draw_caption();
-        font(lang(cfg_font1, cfg_font2), 13 - en * 2, 1);
+        font(13 - en * 2, snail::font_t::style_t::bold);
         pos(20, windowh - 20);
         mes(u8"Press F1 to show help."s);
         if (geneuse != ""s)
@@ -1699,7 +1716,7 @@ void character_making_final_phase()
             pos(20, windowh - 36);
             mes(u8"Gene from "s + geneuse);
         }
-        cbitmod(967, 0, 1);
+        cdata[0].has_own_sprite() = true;
         int stat = change_appearance();
         if (stat == 0)
         {
@@ -1801,15 +1818,15 @@ void character_making_final_phase()
     {
         inputlog = "";
         input_mode = 1;
-        input_number_or_text_dialog(
-            (windoww - 230) / 2 + inf_screenx, winposy(120), 10, 0);
+        input_text_dialog(
+            (windoww - 230) / 2 + inf_screenx, winposy(120), 10, false);
         cmname = ""s + inputlog;
         if (cmname == ""s || cmname == u8" "s)
         {
             cmname = randomname();
         }
         playerid = u8"sav_"s + cmname;
-        const auto save_dir = fs::path(u8"./save");
+        const auto save_dir = filesystem::path(u8"./save");
         if (range::any_of(
                 filesystem::dir_entries{save_dir,
                                         filesystem::dir_entries::type::dir},
@@ -1877,18 +1894,18 @@ void show_race_or_class_info(int CNT, int val0)
         grotate(5, 0, 960, 0, chipc(2, ref1) * 2, chipc(3, ref1) * 2);
         gmode(2);
     }
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     tx = wx + 230;
     ty = wy + 62;
     talk_conv(buff, 60 + en * 2);
     pos(tx - 20, ty);
     mes(buff);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     tx = wx + 200;
     ty = wy + 166;
     display_topic(lang(u8"能力ボーナス"s, u8"Attribute Bonus"s), tx, ty);
     ty += 34;
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     if (jp)
     {
         s(0) = u8"皆無"s;
@@ -1988,7 +2005,7 @@ void show_race_or_class_info(int CNT, int val0)
     ty = wy + 260;
     display_topic(lang(u8"獲得技能"s, u8"Trained Skill"s), tx, ty);
     ty += 34;
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     r = 0;
     s = lang(u8"武器の専門  "s, u8"Proficient in "s);
     for (int cnt = 100; cnt < 150; ++cnt)
@@ -2054,10 +2071,12 @@ void show_race_or_class_info(int CNT, int val0)
 
 void initialize_game()
 {
+    autopick::instance().load(playerid);
+
     mtilefilecur = -1;
     firstturn = 1;
     msgtemp = u8"  Lafrontier presents Elona ver 1.22. Welcome traveler! "s;
-    if (cfg_net)
+    if (config::instance().net)
     {
         initialize_server_info();
     }
@@ -2347,7 +2366,7 @@ void initialize_game()
             flttypemajor = 32000;
             itemcreate(0, -1, -1, -1, 0);
         }
-        cbitmod(20, 0, 1);
+        cdata[0].can_cast_rapid_magic() = true;
         mode = 0;
         refresh_burden_state();
         for (int cnt = 0; cnt < 55; ++cnt)

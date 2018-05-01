@@ -24,7 +24,7 @@ god.mani = {
     "\"Oh, someone comes to me finally. Devote yourself to my tasks, you'll be rewarded greatly, maybe.\"",
   },
   betray = {
-    "\"Great, a trator.\"",
+    "\"Great, a traitor.\"",
   },
   take_over = {
     "\"Well done. After all, you might be useful than I thought.\"",
@@ -51,7 +51,7 @@ god.lulwy = {
   random = {
     "\"Pathetic pigs.\"",
     "\"Mani? Say that name again and I'll mince you, kitty.\"",
-    "\"I've teared the former servant limb from limb to feed the sylphs. I just didn't like his hair style. Ahaha!\"",
+    "\"I've torn the former servant limb from limb to feed the sylphs. I just didn't like his hair style. Ahaha!\"",
     "\"My children are the voices of the wind, never tied to anything.\"",
   },
   kill = {
@@ -101,9 +101,9 @@ god.itzpalt = {
     "\"You mortals will never understand the pain we hold.\"",
     "\"My name is Itzpalt. I am the origin of elements, the king that bears the earliest flame and the master of all the Gods.\"",
     "\"My name is Itzpalt. I am the origin of elements, the king that bears the earliest flame and the master of all the Gods.\"",
-    "\"God's war never end. In times to come, you shall be a warrior of my faction.\"",
-    "\"God's war never end. In times to come, you shall be a warrior of my faction.\"",
-    "\"God's war never end. In times to come, you shall be a warrior of my faction.\"",
+    "\"The god's war never ends. In times to come, you shall be a warrior of my faction.\"",
+    "\"The god's war never ends. In times to come, you shall be a warrior of my faction.\"",
+    "\"The god's war never ends. In times to come, you shall be a warrior of my faction.\"",
   },
   kill = {
     "\"Impressive.\"",
@@ -111,7 +111,7 @@ god.itzpalt = {
     "\"Chant my name proudly. Flame and eternal rest for the dead.\"",
   },
   night = {
-    "\"Relieve your fatigue. May the eternal flame protects you from filthy beings that crawl in the shroud of night.\"",
+    "\"Relieve your fatigue. May the eternal flame protect you from filthy beings that crawl in the shroud of night.\"",
   },
   welcome = {
     "\"And so the mortal returns. You shall serve me again.\"",
@@ -129,7 +129,7 @@ god.itzpalt = {
     "\"You shall pay a painful price for your foolish try.\"",
   },
   offer = {
-    "\"I appriciate it, mortal.\"",
+    "\"I appreciate it, mortal.\"",
   },
   receive_gift = {
     "\"To answer your loyalty, you shall have this reward.\"",
@@ -283,16 +283,16 @@ god.kumiromi = {
     "\"...are you satisfied now?\"",
   },
   night = {
-    "\"Good night...May a bright sprout brought forth tomorrow... \"",
+    "\"Good night...May a bright sprout bring forth tomorrow... \"",
   },
   welcome = {
     "\"Welcome back...I was...waiting for you.\"",
   },
   believe = {
-    "\"Welcome...I have...expectations on you...\"",
+    "\"Welcome...I have...expectations of you...\"",
   },
   betray = {
-    "\"A trator...I can't...tolerate....\"",
+    "\"A traitor...I can't...tolerate....\"",
   },
   take_over = {
     "\"Good work...truly...\"",

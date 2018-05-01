@@ -574,7 +574,7 @@ void set_item_info()
     }
     else
     {
-        iknownnameref(677) = u8"holy rance"s;
+        iknownnameref(677) = u8"holy lance"s;
     }
     icolref(677) = 0;
     if (jp)
@@ -592,7 +592,7 @@ void set_item_info()
     }
     else
     {
-        iknownnameref(675) = u8"harvest sythe"s;
+        iknownnameref(675) = u8"harvest scythe"s;
     }
     icolref(675) = 2;
     if (jp)
@@ -2400,7 +2400,7 @@ void set_item_info()
     }
     else
     {
-        iknownnameref(63) = u8"sythe that sings death"s;
+        iknownnameref(63) = u8"scythe that sings death"s;
     }
     icolref(63) = 3;
     iknownnameref(62) = ioriginalnameref(62);

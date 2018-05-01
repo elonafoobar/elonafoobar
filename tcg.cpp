@@ -1,3 +1,4 @@
+#include "config.hpp"
 #include "ctrl_file.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
@@ -204,8 +205,7 @@ void cpisenemy()
 std::string cnvrare(int prm_990)
 {
     s_at_tcg = "";
-    for (int cnt = 0, cnt_end = (clamp(5 - prm_990 / 20, 1, 5));
-         cnt < cnt_end;
+    for (int cnt = 0, cnt_end = (clamp(5 - prm_990 / 20, 1, 5)); cnt < cnt_end;
          ++cnt)
     {
         s_at_tcg += u8"*"s;
@@ -554,7 +554,7 @@ void tcgdraw()
         ++t_at_tcg;
         label_1825();
         anime_at_tcg = 0;
-        font(lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0);
+        font(12 + en - en * 2);
         color(255, 255, 255);
         gmode(2);
         for (int cnt = 0; cnt < 2; ++cnt)
@@ -567,7 +567,7 @@ void tcgdraw()
             mes(""s + cpdata_at_tcg(7, cnt) + u8"/"s + cpdata_at_tcg(8, cnt));
         }
         color(0, 0, 0);
-        font(lang(cfg_font1, cfg_font2), 13 + en - en * 2, 0);
+        font(13 + en - en * 2);
         for (int cnt = 0, cnt_end = (maxcard_at_tcg); cnt < cnt_end; ++cnt)
         {
             c_at_tcg = maxcard_at_tcg - cnt - 1;
@@ -637,7 +637,7 @@ void tcgdraw()
             }
             tcgdrawcard(c_at_tcg);
         }
-        font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+        font(14 - en * 2);
         color(255, 255, 255);
         gmode(2);
         if (cursor_at_tcg)
@@ -712,7 +712,7 @@ void tcgdraw()
             --efllist_at_tcg(4, cnt);
             if (efllist_at_tcg(0, cnt) == 1)
             {
-                font(lang(cfg_font1, cfg_font2), 20 - en * 2, 1);
+                font(20 - en * 2, snail::font_t::style_t::bold);
                 pos(efllist_at_tcg(5, cnt) + 11,
                     efllist_at_tcg(6, cnt) + efllist_at_tcg(4, cnt) / 3 + 21);
                 mes(std::abs(efllist_at_tcg(1, cnt)));
@@ -721,21 +721,19 @@ void tcgdraw()
                     efllist_at_tcg(6, cnt) + efllist_at_tcg(4, cnt) / 3 + 20);
                 mes(std::abs(efllist_at_tcg(1, cnt)));
                 color(0, 0, 0);
-                font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+                font(13 - en * 2);
                 gmode(5, -1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
                 pos(efllist_at_tcg(5, cnt) - 12, efllist_at_tcg(6, cnt) + 10);
                 gcopy(
                     7,
-                    64
-                        * clamp(
-                              (10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
+                    64 * clamp((10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
                     360,
                     48,
                     64);
             }
             if (efllist_at_tcg(0, cnt) == 2)
             {
-                font(lang(cfg_font1, cfg_font2), 20 - en * 2, 1);
+                font(20 - en * 2, snail::font_t::style_t::bold);
                 pos(efllist_at_tcg(2, cnt) + 31,
                     efllist_at_tcg(3, cnt) + efllist_at_tcg(4, cnt) / 3 + 26);
                 mes(std::abs(efllist_at_tcg(1, cnt)));
@@ -744,23 +742,19 @@ void tcgdraw()
                     efllist_at_tcg(3, cnt) + efllist_at_tcg(4, cnt) / 3 + 25);
                 mes(std::abs(efllist_at_tcg(1, cnt)));
                 color(0, 0, 0);
-                font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+                font(13 - en * 2);
                 gmode(5, -1, -1, (efllist_at_tcg(4, cnt) - 30) * 8);
                 pos(efllist_at_tcg(5, cnt), efllist_at_tcg(6, cnt) + 24);
                 gcopy(
                     7,
-                    64
-                        * clamp(
-                              (10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
+                    64 * clamp((10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
                     416,
                     64,
                     64);
                 pos(efllist_at_tcg(2, cnt), efllist_at_tcg(3, cnt) + 24);
                 gcopy(
                     7,
-                    64
-                        * clamp(
-                              (10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
+                    64 * clamp((10 - (efllist_at_tcg(4, cnt) - 30) / 3), 0, 8),
                     416,
                     64,
                     64);
@@ -1648,15 +1642,15 @@ void tcginit()
     selectmode_at_tcg = -1;
     gsel(3);
     pos(960, 96);
-    picload(fs::path(u8"./graphic/deco_card.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/deco_card.bmp"), 1);
     gsel(7);
-    picload(fs::path(u8"./graphic/interface2.bmp"));
+    picload(filesystem::path(u8"./graphic/interface2.bmp"));
     gsel(2);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/card0.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/card0.bmp"), 1);
     gsel(4);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/bg_card.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/bg_card.bmp"), 1);
     label_1826();
     tcgdrawbg();
     return;
@@ -1773,8 +1767,8 @@ void tcgdeck()
         for (int cnt = 0; cnt < 5; ++cnt)
         {
             s_at_tcg(cnt) += lang(u8"のデッキ"s, u8" Deck"s);
-            file_at_tcg =
-                fs::path(u8"./tmp/deck_"s).generic_string() + cnt + u8".s2"s;
+            file_at_tcg = filesystem::path(u8"./tmp/deck_"s).generic_string()
+                + cnt + u8".s2"s;
             if (!fs::exists(file_at_tcg))
             {
                 s_at_tcg(cnt) += lang(u8" (新規作成)"s, u8" (New)"s);
@@ -1800,7 +1794,7 @@ void tcgdeck()
         }
         DIM2(deck, 1000);
         curdeck = rtval;
-        if (fs::exists(fs::path(u8"./tmp/deck_"s + curdeck + u8".s2")))
+        if (fs::exists(filesystem::path(u8"./tmp/deck_"s + curdeck + u8".s2")))
         {
             ELONA_APPEND_PROMPT(
                 lang(u8"デッキの構築"s, u8"Edit Deck"s),
@@ -2116,9 +2110,9 @@ void label_1823()
     int m_at_tcg = 0;
     gsel(4);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/bg_card.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/bg_card.bmp"), 1);
     gmode(2);
-    font(lang(cfg_font1, cfg_font2), 14 - en * 2, 0);
+    font(14 - en * 2);
     color(255, 255, 255);
     for (int cnt = 0; cnt < 2; ++cnt)
     {
@@ -2201,7 +2195,7 @@ void label_1823()
 
 void label_1824()
 {
-    font(lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0);
+    font(12 + en - en * 2);
     gmode(2);
     for (int cnt = 0, cnt_end = (cfmax_at_tcg); cnt < cnt_end; ++cnt)
     {
@@ -2231,7 +2225,7 @@ void label_1824()
             gcopy(7, 288, 96, 24, 24);
         }
     }
-    font(lang(cfg_font1, cfg_font2), 13 + en - en * 2, 0);
+    font(13 + en - en * 2);
     for (int cnt = 0; cnt < 24; ++cnt)
     {
         p_at_tcg = page_at_tcg * 8 + cnt;
@@ -2272,7 +2266,7 @@ void label_1824()
         card_at_tcg(3, c_at_tcg) = y_at_tcg;
         tcgdrawcard(c_at_tcg, 1);
     }
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+    font(13 - en * 2);
     color(255, 255, 255);
     pos(basex_at_tcg + 160, basey_at_tcg + 510);
     mes(lang(
@@ -2294,7 +2288,7 @@ void label_1825()
     gmode(0);
     pos(basex_at_tcg, basey_at_tcg);
     gcopy(4, 0, 0, basew_at_tcg, baseh_at_tcg);
-    font(lang(cfg_font1, cfg_font2), 13 - en * 2, 0);
+    font(13 - en * 2);
     gmode(2);
     pos(basex_at_tcg + 20, basey_at_tcg + 22);
     if (cardmode_at_tcg != 0 || ct_at_tcg == player_at_tcg)
@@ -2405,7 +2399,7 @@ void label_1825()
         pos(basex_at_tcg + 24, basey_at_tcg + 240);
         mes(s_at_tcg);
     }
-    font(lang(cfg_font1, cfg_font2), 12 + en - en * 2, 0);
+    font(12 + en - en * 2);
     pos(basex_at_tcg + 146, basey_at_tcg + 545);
     mes(helpmsg_at_tcg);
     return;
@@ -2454,7 +2448,7 @@ void label_1828()
 {
     gsel(4);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/bg_card.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/bg_card.bmp"), 1);
     gsel(0);
     DIM3(dlist_at_tcg, 2, 400);
     DIM2(cflist_at_tcg, 10);
@@ -2706,7 +2700,8 @@ label_1830_internal:
             rtval = show_prompt(basex_at_tcg + 420, basey_at_tcg + 230, 240);
             if (rtval == 0)
             {
-                ctrl_file(23, fs::path(u8"./tmp/deck_"s + curdeck + u8".s2"));
+                ctrl_file(
+                    23, filesystem::path(u8"./tmp/deck_"s + curdeck + u8".s2"));
             }
             else
             {
@@ -2730,7 +2725,7 @@ int label_1835()
 {
     gsel(4);
     pos(0, 0);
-    picload(fs::path(u8"./graphic/bg_card.bmp"), 1);
+    picload(filesystem::path(u8"./graphic/bg_card.bmp"), 1);
     label_1826();
     return rtval_at_tcg;
 }
@@ -3074,8 +3069,8 @@ void label_1840()
             }
             if (cnt == 1)
             {
-                y_at_tcg(cnt) = card_at_tcg(3, cc_at_tcg) + 60
-                    + clamp(p_at_tcg * 3, 0, 16);
+                y_at_tcg(cnt) =
+                    card_at_tcg(3, cc_at_tcg) + 60 + clamp(p_at_tcg * 3, 0, 16);
             }
             if (cnt == 2)
             {

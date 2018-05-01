@@ -1,4 +1,4 @@
-race.kobolt = {
+race.kobold = {
   name = "コボルト",
   description = "",
 }

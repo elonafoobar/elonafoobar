@@ -52,6 +52,8 @@ public:
     int lookup_leather(int x, int y);
     int lookup_metal(int x, int y);
 
+    std::vector<int> get_material_ids();
+
     void define(lua_State* L);
 };
 

@@ -102,7 +102,7 @@ private:
     }
 
 
-    void push(nullptr_t)
+    void push(std::nullptr_t)
     {
         lua_pushnil(ptr());
     }
@@ -111,7 +111,9 @@ private:
 
     template <
         typename T,
-        std::enable_if_t<std::is_same<T, nullptr_t>::value, nullptr_t> = nullptr>
+        std::enable_if_t<
+            std::is_same<T, std::nullptr_t>::value,
+            std::nullptr_t> = nullptr>
     T to_cpp_type(int index)
     {
         (void)index;
@@ -121,7 +123,8 @@ private:
 #define ELONA_DEFINE_TO_CPP_TYPE(type, function) \
     template < \
         typename T, \
-        std::enable_if_t<std::is_same<T, type>::value, nullptr_t> = nullptr> \
+        std::enable_if_t<std::is_same<T, type>::value, std::nullptr_t> = \
+            nullptr> \
     T to_cpp_type(int index) \
     { \
         return function(ptr(), index); \
@@ -231,8 +234,7 @@ public:
 
     void initialize()
     {
-        cat::global.load(
-            fs::path(u8"../data") / fs::path(traits_type::filename));
+        cat::global.load(filesystem::path(u8"../data") / traits_type::filename);
 
         auto L = cat::global.ptr();
 
