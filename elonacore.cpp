@@ -18347,7 +18347,7 @@ void refresh_character(int cc)
     }
     else if (cdata[cc].id == 343)
     {
-        for (size_t i = 0; i < cdata[cc]._flags.size(); ++i)
+        for (size_t i = 0; i < 32 * 30; ++i)
         {
             cdata[cc]._flags[i] =
                 userdata(40 + i / (8 * sizeof(int)), cdata[cc].cnpc_id)
@@ -18356,7 +18356,10 @@ void refresh_character(int cc)
     }
     else
     {
-        cdata[cc]._flags = the_character_db[cdata[cc].id]->_flags;
+        for (size_t i = 0; i < 32 * 30; ++i)
+        {
+            cdata[cc]._flags[i] = the_character_db[cdata[cc].id]->_flags[i];
+        }
     }
     for (int cnt = 10; cnt < 20; ++cnt)
     {
