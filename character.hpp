@@ -21,7 +21,7 @@
     }
 
 #define ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS \
-    std::bitset<sizeof(int) * 8 * 30> _flags; \
+    std::bitset<sizeof(int) * 8 * 50> _flags; \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(is_floating, 5) \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(is_invisible, 6) \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(can_see_invisible, 7) \
@@ -81,7 +81,7 @@
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(cures_mp_frequently, 988) \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(has_custom_talk, 989) \
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(has_learned_words, 990) \
-    ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(only_christmas, 991) \
+    ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(only_christmas, 991)
 
 
 namespace elona

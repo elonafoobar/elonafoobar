@@ -195,7 +195,10 @@ void character::clear()
 
 void character::clear_flags()
 {
-    _flags.reset();
+    for (size_t i = 0; i < 32 * 30; ++i)
+    {
+        _flags[i] = false;
+    }
 }
 
 
