@@ -55388,7 +55388,10 @@ void proc_autopick()
         }
         if (did_something && !op.sound.empty())
         {
-            DSLOADFNAME((filesystem::path(u8"sound") / op.sound).native(), 15);
+            DSLOADFNAME(
+                filesystem::to_narrow_path(
+                    filesystem::path(u8"sound") / op.sound),
+                15);
             DSPLAY(15, 0);
         }
     }
