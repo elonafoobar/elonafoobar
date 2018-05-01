@@ -63,21 +63,21 @@ fs::path get_executable_path()
         size_t buf_size = sizeof(buf);
         if (GetModuleFileName(nullptr, buf, buf_size) == 0)
         {
-            throw 0; // TODO
+            throw std::runtime_error(u8"Error: fail to get excutable path");
         }
 #elif defined(ELONA_OS_MACOS)
         char buf[PATH_MAX + 1];
         uint32_t buf_size = sizeof(buf);
         if (_NSGetExecutablePath(buf, &buf_size) != 0)
         {
-            throw 0; // TODO
+            throw std::runtime_error(u8"Error: fail to get excutable path");
         }
 #elif defined(ELONA_OS_LINUX)
         char buf[PATH_MAX + 1];
         size_t buf_size = sizeof(buf);
         if (readlink("/proc/self/exe", buf, buf_size) == -1)
         {
-            throw 0; // TODO
+            throw std::runtime_error(u8"Error: fail to get excutable path");
         }
 #else
 #error Unsupported OS
@@ -112,11 +112,11 @@ std::string to_narrow_path(const fs::path& path)
 
     int needed_length = get_needed_buffer_size(wide_c_str);
     if (needed_length == 0)
-        throw "TODO";
+        throw std::runtime_error(u8"Error: in to_narrow_path()");
     auto buffer = std::make_unique<char[]>(needed_length);
     int used_length = utf16_to_ansi(wide_c_str, buffer.get(), needed_length);
     if (used_length == 0)
-        throw "TODO";
+        throw std::runtime_error(u8"Error: in to_narrow_path()");
 
     return std::string{buffer.get()};
 #else

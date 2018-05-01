@@ -340,7 +340,9 @@ void bload(const fs::path& filename, std::string& data, int size, int)
     std::ifstream in{filename.native(), std::ios::binary};
     if (!in)
     {
-        throw 0;
+        throw std::runtime_error(
+            u8"Error: fail to read "
+            + filesystem::make_preferred_path_in_utf8(filename));
     }
     auto buf = read_binary(in, size).first;
     data = std::string{buf.get(), static_cast<size_t>(size)};
@@ -353,7 +355,9 @@ void bload(const fs::path& filename, int& data, int size, int)
     std::ifstream in{filename.native(), std::ios::binary};
     if (!in)
     {
-        throw 0;
+        throw std::runtime_error(
+            u8"Error: fail to read "
+            + filesystem::make_preferred_path_in_utf8(filename));
     }
     auto buf = read_binary(in, size).first;
     data = *reinterpret_cast<int*>(buf.get());
@@ -370,7 +374,9 @@ void bload(const fs::path& filename, elona_vector1<int>& data, int size, int)
     std::ifstream in{filename.native(), std::ios::binary};
     if (!in)
     {
-        throw 0;
+        throw std::runtime_error(
+            u8"Error: fail to read "
+            + filesystem::make_preferred_path_in_utf8(filename));
     }
     auto buf = read_binary(in, size).first;
     for (size_t i = 0; i < length(data); ++i)
@@ -389,7 +395,9 @@ void bsave(const fs::path& filename, const std::string& data)
     std::ofstream out{filename.native(), std::ios::binary};
     if (!out)
     {
-        throw 0;
+        throw std::runtime_error(
+            u8"Error: fail to write "
+            + filesystem::make_preferred_path_in_utf8(filename));
     }
     out.write(reinterpret_cast<const char*>(data.c_str()), data.size());
 }

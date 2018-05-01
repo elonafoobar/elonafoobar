@@ -8077,7 +8077,9 @@ void arrayfile_write(const std::string& fmode_str, const fs::path& filepath)
     std::ofstream out{filepath.native(), std::ios::binary};
     if (!out)
     {
-        throw "TODO";
+        throw std::runtime_error(
+            u8"Error: fail to write "
+            + filesystem::make_preferred_path_in_utf8(filepath));
     }
 
     if (fmode_str == u8"qname"s)
@@ -9853,7 +9855,7 @@ int customtalk(int cc, int talk_type)
             [&](const auto& line) { return strutil::contains(line, tag); });
         if (start_text == std::end(talk_file_buffer))
         {
-            throw "TODO";
+            throw std::runtime_error(u8"Error: fail to load custom talk");
         }
         const auto end_text = std::find_if(
             std::next(start_text),
@@ -9861,7 +9863,7 @@ int customtalk(int cc, int talk_type)
             [](const auto& line) { return strutil::contains(line, u8"%"); });
         if (end_text == std::end(talk_file_buffer))
         {
-            throw "TODO";
+            throw std::runtime_error(u8"Error: fail to load custom talk");
         }
 
         // Example:
@@ -9872,7 +9874,7 @@ int customtalk(int cc, int talk_type)
         const auto number_of_lines_plus_1 = std::distance(start_text, end_text);
         if (number_of_lines_plus_1 == 1)
         {
-            throw "TODO";
+            throw std::runtime_error(u8"Error: fail to load custom talk");
         }
         else
         {

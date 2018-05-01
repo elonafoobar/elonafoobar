@@ -55,7 +55,7 @@ void class_db::define(lua_State* L)
 {
     const char* id = luaL_checkstring(L, -2);
     if (!id)
-        throw 0;
+        throw std::runtime_error(u8"Error: fail to load class data");
 
     ELONA_CAT_DB_FIELD_INTEGER(ordering, 0);
     ELONA_CAT_DB_FIELD_BOOLEAN(is_extra, true);
