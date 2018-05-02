@@ -137,14 +137,9 @@ target_link_libraries(${PROJECT_NAME} ${SDL2_MIXER_LIBRARIES})
 
 
 
-# My libraries
-add_subdirectory(snail)
-target_link_libraries(${PROJECT_NAME} snail)
-
-
-
 # Compiler options
 if(MSVC)
+    add_definitions("-D_UNICODE")
     set(CMAKE_CXX_FLAGS "/W4 /source-charset:utf-8 /MT /EHsc")
 else()
     set(CMAKE_CXX_FLAGS "-Wall -Wextra")
@@ -156,3 +151,9 @@ if(MSVC)
 else()
     set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DDEBUG")
 endif()
+
+
+
+# My libraries
+add_subdirectory(snail)
+target_link_libraries(${PROJECT_NAME} snail)
