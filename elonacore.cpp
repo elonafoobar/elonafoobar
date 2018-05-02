@@ -1266,126 +1266,133 @@ void initialize_sound_file()
         cfg_svolume = DSGETMASTERVOLUME();
     }
     folder = filesystem::path(u8"./sound/").generic_string();
-    sndload(folder + u8"exitmap1.wav"s, 49);
-    sndload(folder + u8"book1.wav"s, 59);
-    sndload(folder + u8"write1.wav"s, 44);
-    sndload(folder + u8"pop1.wav"s, 1);
-    sndload(folder + u8"kill1.wav"s, 8);
-    sndload(folder + u8"kill2.wav"s, 9);
-    sndload(folder + u8"trap1.wav"s, 70);
-    sndload(folder + u8"more1.wav"s, 10);
-    sndload(folder + u8"getgold1.wav"s, 11);
-    sndload(folder + u8"paygold1.wav"s, 12);
-    sndload(folder + u8"equip1.wav"s, 13);
-    sndload(folder + u8"get1.wav"s, 14);
-    sndload(folder + u8"get2.wav"s, 15);
-    sndload(folder + u8"drop1.wav"s, 16);
-    sndload(folder + u8"drink1.wav"s, 17);
-    sndload(folder + u8"eat1.wav"s, 18);
-    sndload(folder + u8"spend1.wav"s, 19);
-    sndload(folder + u8"ding1.wav"s, 60);
-    sndload(folder + u8"ding3.wav"s, 61);
-    sndload(folder + u8"dead1.wav"s, 50);
-    sndload(folder + u8"ok1.wav"s, 20);
-    sndload(folder + u8"dig1.wav"s, 52);
-    sndload(folder + u8"bash1.wav"s, 73);
-    sndload(folder + u8"complete1.wav"s, 51);
-    sndload(folder + u8"alert1.wav"s, 21);
-    sndload(folder + u8"locked1.wav"s, 22);
-    sndload(folder + u8"chest1.wav"s, 23);
-    sndload(folder + u8"ding2.wav"s, 24);
-    sndload(folder + u8"cook1.wav"s, 25);
-    sndload(folder + u8"pop2.wav"s, 26);
-    sndload(folder + u8"fail1.wav"s, 27);
-    sndload(folder + u8"build1.wav"s, 58);
-    sndload(folder + u8"bow1.wav"s, 29);
-    sndload(folder + u8"atk1.wav"s, 2);
-    sndload(folder + u8"atk2.wav"s, 3);
-    sndload(folder + u8"gun1.wav"s, 30);
-    sndload(folder + u8"throw1.wav"s, 31);
-    sndload(folder + u8"heart1.wav"s, 32);
-    sndload(folder + u8"heal1.wav"s, 33);
-    sndload(folder + u8"teleport1.wav"s, 72);
-    sndload(folder + u8"ball1.wav"s, 34);
-    sndload(folder + u8"breath1.wav"s, 35);
-    sndload(folder + u8"bolt1.wav"s, 37);
-    sndload(folder + u8"arrow1.wav"s, 36);
-    sndload(folder + u8"curse1.wav"s, 38);
-    sndload(folder + u8"pop3.wav"s, 39);
-    sndload(folder + u8"chime.wav"s, 53);
-    sndload(folder + u8"laser1.wav"s, 42);
-    sndload(folder + u8"web.wav"s, 68);
-    sndload(folder + u8"cheer.wav"s, 69);
-    sndload(folder + u8"door1.wav"s, 48);
-    sndload(folder + u8"crush1.wav"s, 45);
-    sndload(folder + u8"crush2.wav"s, 47);
-    sndload(folder + u8"fire1.wav"s, 6);
-    sndload(folder + u8"snow.wav"s, 86);
-    sndload(folder + u8"fish_cast.wav"s, 87);
-    sndload(folder + u8"fish_get.wav"s, 88);
-    sndload(folder + u8"fish_fight.wav"s, 89);
-    sndload(folder + u8"ammo.wav"s, 90);
-    sndload(folder + u8"throw2.wav"s, 91);
-    sndload(folder + u8"foot1a.wav"s, 81);
-    sndload(folder + u8"foot2a.wav"s, 83);
-    sndload(folder + u8"foot1b.wav"s, 82);
-    sndload(folder + u8"foot2b.wav"s, 84);
-    sndload(folder + u8"foot2c.wav"s, 85);
-    sndload(folder + u8"click1.wav"s, 40);
-    sndload(folder + u8"get3.wav"s, 41);
-    sndload(folder + u8"card1.wav"s, 71);
-    sndload(folder + u8"water.wav"s, 57);
-    sndload(folder + u8"water2.wav"s, 46);
-    sndload(folder + u8"dig2.wav"s, 54);
-    sndload(folder + u8"bush1.wav"s, 55);
-    sndload(folder + u8"gasha.wav"s, 56);
-    sndload(folder + u8"cursor1.wav"s, 5);
-    sndload(folder + u8"pop4.wav"s, 62);
-    sndload(folder + u8"punish1.wav"s, 63);
-    sndload(folder + u8"pray1.wav"s, 64);
-    sndload(folder + u8"offer1.wav"s, 65);
-    sndload(folder + u8"fizzle.wav"s, 66);
-    sndload(folder + u8"door2.wav"s, 67);
-    sndload(folder + u8"foot.wav"s, 43);
-    sndload(folder + u8"miss.wav"s, 4);
-    sndload(folder + u8"night.wav"s, 74);
-    sndload(folder + u8"bg_rain.wav"s, 75);
-    sndload(folder + u8"bg_thunder.wav"s, 76);
-    sndload(folder + u8"bg_wind.wav"s, 77);
-    sndload(folder + u8"bg_sea.wav"s, 78);
-    sndload(folder + u8"bg_town.wav"s, 79);
-    sndload(folder + u8"bg_fire.wav"s, 80);
-    sndload(folder + u8"scroll.wav"s, 92);
-    sndload(folder + u8"log.wav"s, 93);
-    sndload(folder + u8"chara.wav"s, 94);
-    sndload(folder + u8"wear.wav"s, 95);
-    sndload(folder + u8"feat.wav"s, 96);
-    sndload(folder + u8"port.wav"s, 97);
-    sndload(folder + u8"unpop1.wav"s, 98);
-    sndload(folder + u8"chat.wav"s, 99);
-    sndload(folder + u8"inv.wav"s, 100);
-    sndload(folder + u8"skill.wav"s, 101);
-    sndload(folder + u8"spell.wav"s, 102);
-    sndload(folder + u8"dice.wav"s, 103);
-    sndload(folder + u8"vomit.wav"s, 104);
-    sndload(folder + u8"atksword.wav"s, 105);
-    sndload(folder + u8"atk_ice.wav"s, 106);
-    sndload(folder + u8"atk_elec.wav"s, 107);
-    sndload(folder + u8"atk_fire.wav"s, 108);
-    sndload(folder + u8"atk_hell.wav"s, 109);
-    sndload(folder + u8"atk_poison.wav"s, 110);
-    sndload(folder + u8"atk_nerve.wav"s, 111);
-    sndload(folder + u8"atk_sound.wav"s, 112);
-    sndload(folder + u8"atk_mind.wav"s, 113);
-    sndload(folder + u8"atk_chaos.wav"s, 114);
-    sndload(folder + u8"atk_dark.wav"s, 115);
-    sndload(folder + u8"curse2.wav"s, 116);
-    sndload(folder + u8"curse3.wav"s, 117);
-    sndload(folder + u8"enc.wav"s, 118);
-    sndload(folder + u8"enc2.wav"s, 119);
-    sndload(folder + u8"pray2.wav"s, 120);
-    sndload(folder + u8"offer2.wav"s, 121);
-    return;
+
+    const std::pair<const char*, int> se_list[] = {
+        {u8"exitmap1.wav", 49},
+        {u8"book1.wav", 59},
+        {u8"write1.wav", 44},
+        {u8"pop1.wav", 1},
+        {u8"kill1.wav", 8},
+        {u8"kill2.wav", 9},
+        {u8"trap1.wav", 70},
+        {u8"more1.wav", 10},
+        {u8"getgold1.wav", 11},
+        {u8"paygold1.wav", 12},
+        {u8"equip1.wav", 13},
+        {u8"get1.wav", 14},
+        {u8"get2.wav", 15},
+        {u8"drop1.wav", 16},
+        {u8"drink1.wav", 17},
+        {u8"eat1.wav", 18},
+        {u8"spend1.wav", 19},
+        {u8"ding1.wav", 60},
+        {u8"ding3.wav", 61},
+        {u8"dead1.wav", 50},
+        {u8"ok1.wav", 20},
+        {u8"dig1.wav", 52},
+        {u8"bash1.wav", 73},
+        {u8"complete1.wav", 51},
+        {u8"alert1.wav", 21},
+        {u8"locked1.wav", 22},
+        {u8"chest1.wav", 23},
+        {u8"ding2.wav", 24},
+        {u8"cook1.wav", 25},
+        {u8"pop2.wav", 26},
+        {u8"fail1.wav", 27},
+        {u8"build1.wav", 58},
+        {u8"bow1.wav", 29},
+        {u8"atk1.wav", 2},
+        {u8"atk2.wav", 3},
+        {u8"gun1.wav", 30},
+        {u8"throw1.wav", 31},
+        {u8"heart1.wav", 32},
+        {u8"heal1.wav", 33},
+        {u8"teleport1.wav", 72},
+        {u8"ball1.wav", 34},
+        {u8"breath1.wav", 35},
+        {u8"bolt1.wav", 37},
+        {u8"arrow1.wav", 36},
+        {u8"curse1.wav", 38},
+        {u8"pop3.wav", 39},
+        {u8"chime.wav", 53},
+        {u8"laser1.wav", 42},
+        {u8"web.wav", 68},
+        {u8"cheer.wav", 69},
+        {u8"door1.wav", 48},
+        {u8"crush1.wav", 45},
+        {u8"crush2.wav", 47},
+        {u8"fire1.wav", 6},
+        {u8"snow.wav", 86},
+        {u8"fish_cast.wav", 87},
+        {u8"fish_get.wav", 88},
+        {u8"fish_fight.wav", 89},
+        {u8"ammo.wav", 90},
+        {u8"throw2.wav", 91},
+        {u8"foot1a.wav", 81},
+        {u8"foot2a.wav", 83},
+        {u8"foot1b.wav", 82},
+        {u8"foot2b.wav", 84},
+        {u8"foot2c.wav", 85},
+        {u8"click1.wav", 40},
+        {u8"get3.wav", 41},
+        {u8"card1.wav", 71},
+        {u8"water.wav", 57},
+        {u8"water2.wav", 46},
+        {u8"dig2.wav", 54},
+        {u8"bush1.wav", 55},
+        {u8"gasha.wav", 56},
+        {u8"cursor1.wav", 5},
+        {u8"pop4.wav", 62},
+        {u8"punish1.wav", 63},
+        {u8"pray1.wav", 64},
+        {u8"offer1.wav", 65},
+        {u8"fizzle.wav", 66},
+        {u8"door2.wav", 67},
+        {u8"foot.wav", 43},
+        {u8"miss.wav", 4},
+        {u8"night.wav", 74},
+        {u8"bg_rain.wav", 75},
+        {u8"bg_thunder.wav", 76},
+        {u8"bg_wind.wav", 77},
+        {u8"bg_sea.wav", 78},
+        {u8"bg_town.wav", 79},
+        {u8"bg_fire.wav", 80},
+        {u8"scroll.wav", 92},
+        {u8"log.wav", 93},
+        {u8"chara.wav", 94},
+        {u8"wear.wav", 95},
+        {u8"feat.wav", 96},
+        {u8"port.wav", 97},
+        {u8"unpop1.wav", 98},
+        {u8"chat.wav", 99},
+        {u8"inv.wav", 100},
+        {u8"skill.wav", 101},
+        {u8"spell.wav", 102},
+        {u8"dice.wav", 103},
+        {u8"vomit.wav", 104},
+        {u8"atksword.wav", 105},
+        {u8"atk_ice.wav", 106},
+        {u8"atk_elec.wav", 107},
+        {u8"atk_fire.wav", 108},
+        {u8"atk_hell.wav", 109},
+        {u8"atk_poison.wav", 110},
+        {u8"atk_nerve.wav", 111},
+        {u8"atk_sound.wav", 112},
+        {u8"atk_mind.wav", 113},
+        {u8"atk_chaos.wav", 114},
+        {u8"atk_dark.wav", 115},
+        {u8"curse2.wav", 116},
+        {u8"curse3.wav", 117},
+        {u8"enc.wav", 118},
+        {u8"enc2.wav", 119},
+        {u8"pray2.wav", 120},
+        {u8"offer2.wav", 121},
+    };
+
+    for (const auto& se : se_list)
+    {
+        sndload(folder + se.first, se.second);
+    }
 }
 
 
