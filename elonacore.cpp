@@ -19,6 +19,7 @@
 #include "item.hpp"
 #include "item_db.hpp"
 #include "item_material.hpp"
+#include "log.hpp"
 #include "macro.hpp"
 #include "main.hpp"
 #include "map.hpp"
@@ -1265,7 +1266,7 @@ void initialize_sound_file()
     {
         cfg_svolume = DSGETMASTERVOLUME();
     }
-    folder = filesystem::path(u8"./sound/").generic_string();
+    const auto folder = filesystem::path(u8"./sound");
 
     const std::pair<const char*, int> se_list[] = {
         {u8"exitmap1.wav", 49},
@@ -1391,7 +1392,7 @@ void initialize_sound_file()
 
     for (const auto& se : se_list)
     {
-        sndload(folder + se.first, se.second);
+        sndload((folder / se.first).generic_string(), se.second);
     }
 }
 
@@ -39291,7 +39292,7 @@ label_1945_internal:
                 u8"Selected item is incompatible."s));
             goto label_1944_internal;
         }
-        folder = filesystem::path(u8"./user/").generic_string();
+        const auto folder = filesystem::path(u8"./user/").generic_string();
         if (listn(1, p) == u8"net"s)
         {
             if (comctrl == 1)
@@ -47596,9 +47597,9 @@ void migrate_save_data()
                 {
                     p3 = p - 100 + 300;
                 }
-                file_cnv = folder + u8"/"s + strmid(file, 0, (p1 + 1)) + p3
-                    + strmid(file, (p1 + p2 + 1), 20);
-                file = folder + u8"/"s + file;
+                file_cnv = (filesystem::path(u8"tmp") / ((strmid(file, 0, (p1 + 1)) + p3)
+                    + strmid(file, (p1 + p2 + 1), 20))).generic_string();
+                file = (filesystem::path(u8"tmp") / file).generic_string();
                 bcopy(file, file_cnv(0));
                 fileadd(file_cnv);
                 elona_delete(file);
@@ -47762,160 +47763,6 @@ void save_gene()
 
 
 
-void zipadd(const std::string& prm_1062)
-{
-    p = 12;
-    len = fs::file_size(folder + prm_1062) + p * 2;
-    lenhead = lensum;
-    lensum += len;
-    SDIM2(ziptmp1, p);
-    ziptmp1 += prm_1062;
-    SDIM2(ziptmp2, p);
-    ziptmp2 += std::to_string(len);
-    memexpand(filebuff, lensum);
-    memcpy_(filebuff, ziptmp1, p, lenhead);
-    memcpy_(filebuff, ziptmp2, p, lenhead + p);
-    SDIM2(filetemp, len - p * 2);
-    bload(folder + prm_1062, filetemp, 0, 0);
-    memcpy_(filebuff, filetemp, len - p * 2, lenhead + p * 2);
-    return;
-}
-
-
-
-void load_user_file(const fs::path& file)
-{
-    int zipsize = 0;
-    p = 12;
-    folder = filesystem::path(u8"./user/").generic_string();
-    bload(folder + file.generic_string(), headtemp, 1024);
-    label_2720();
-    zipsize = fs::file_size(folder + file.generic_string());
-    SDIM2(filebuff, zipsize);
-    bload(folder + file.generic_string(), filebuff, zipsize);
-    lenhead = 1024;
-    for (int cnt = 0; cnt < 10000; ++cnt)
-    {
-        SDIM2(ziptmp1, p);
-        SDIM2(ziptmp2, p);
-        memcpy_(ziptmp1, filebuff, p, 0, lenhead);
-        memcpy_(ziptmp2, filebuff, p, 0, lenhead + p);
-        len = elona::stoi(ziptmp2(0));
-        SDIM2(filetemp, len - p * 2);
-        memcpy_(filetemp, filebuff, len - p * 2, 0, lenhead + p * 2);
-        bsave(folder + ziptmp1, filetemp);
-        lenhead += len;
-        if (lenhead >= zipsize)
-        {
-            break;
-        }
-    }
-    return;
-}
-
-
-
-void zipinit2(const std::string& prm_1063, const std::string& prm_1064)
-{
-    lensum_at_m188 = 0;
-    zipfolder_at_m188 = prm_1063;
-    zipfinalfile_at_m188 = prm_1064;
-    SDIM1(filebuff_at_m188);
-    return;
-}
-
-
-
-void zipadd2(const std::string& prm_1065)
-{
-    p_at_m188(0) = 50;
-    p_at_m188(1) = 40;
-    p_at_m188(2) = 10;
-    len_at_m188 = fs::file_size(zipfolder_at_m188 + prm_1065) + p_at_m188;
-    lenhead_at_m188 = lensum_at_m188;
-    lensum_at_m188 += len_at_m188;
-    SDIM2(ziptmp1_at_m188, p_at_m188(1));
-    ziptmp1_at_m188 += prm_1065;
-    SDIM2(ziptmp2_at_m188, p_at_m188(2));
-    ziptmp2_at_m188 += std::to_string(len_at_m188);
-    memexpand(filebuff_at_m188, lensum_at_m188);
-    memcpy_(filebuff_at_m188, ziptmp1_at_m188, p_at_m188(1), lenhead_at_m188);
-    memcpy_(
-        filebuff_at_m188,
-        ziptmp2_at_m188,
-        p_at_m188(2),
-        lenhead_at_m188 + p_at_m188(1));
-    SDIM2(filetemp_at_m188, len_at_m188 - p_at_m188);
-    bload(zipfolder_at_m188 + prm_1065, filetemp_at_m188, 0, 0);
-    memcpy_(
-        filebuff_at_m188,
-        filetemp_at_m188,
-        len_at_m188 - p_at_m188,
-        lenhead_at_m188 + p_at_m188);
-    return;
-}
-
-
-
-void zipend2()
-{
-    bsave(zipfolder_at_m188 + zipfinalfile_at_m188, filebuff_at_m188);
-    return;
-}
-
-
-
-void unzip2(const std::string& prm_1066, const std::string& prm_1067)
-{
-    int zipsize_at_m188 = 0;
-    p_at_m188(0) = 50;
-    p_at_m188(1) = 40;
-    p_at_m188(2) = 10;
-    zipsize_at_m188 = fs::file_size(prm_1066 + prm_1067);
-    SDIM2(filebuff_at_m188, zipsize_at_m188);
-    bload(prm_1066 + prm_1067, filebuff_at_m188, zipsize_at_m188);
-    lenhead_at_m188 = 0;
-    for (int cnt = 0; cnt < 10000; ++cnt)
-    {
-        SDIM2(ziptmp1_at_m188, p_at_m188(1));
-        SDIM2(ziptmp2_at_m188, p_at_m188(2));
-        memcpy_(
-            ziptmp1_at_m188,
-            filebuff_at_m188,
-            p_at_m188(1),
-            0,
-            lenhead_at_m188);
-        memcpy_(
-            ziptmp2_at_m188,
-            filebuff_at_m188,
-            p_at_m188(2),
-            0,
-            lenhead_at_m188 + p_at_m188(1));
-        len_at_m188 = elona::stoi(ziptmp2_at_m188(0));
-        if (len_at_m188 == 0)
-        {
-            break;
-        }
-        SDIM2(filetemp_at_m188, len_at_m188 - p_at_m188);
-        memcpy_(
-            filetemp_at_m188,
-            filebuff_at_m188,
-            len_at_m188 - p_at_m188,
-            0,
-            lenhead_at_m188 + p_at_m188);
-        bsave(prm_1066 + ziptmp1_at_m188, filetemp_at_m188);
-        lenhead_at_m188 += len_at_m188;
-        if (lenhead_at_m188 >= zipsize_at_m188)
-        {
-            break;
-        }
-    }
->>>>>>> Refactor ctrl_file() a little bit
-    return;
-}
-
-
-
 std::string getnpctxt(const std::string& prm_1068, const std::string& prm_1069)
 {
     int p_at_m189 = 0;
@@ -48030,13 +47877,13 @@ void load_save_data()
 {
     filemod = "";
     ctrl_file(file_operation_t::_10);
-    folder = filesystem::path(u8"./save/"s + playerid + u8"/").generic_string();
+    const auto folder = filesystem::path(u8"./save/"s + playerid + u8"/").generic_string();
     notesel(buff);
     if (!fs::exists(folder + u8"filelist.txt"s))
     {
         buff(0).clear();
         for (const auto& entry :
-             filesystem::dir_entries{filesystem::path(folder(0)),
+             filesystem::dir_entries{filesystem::path(folder),
                                      filesystem::dir_entries::type::file,
                                      std::regex{u8R"(.*\..*)"}})
         {
@@ -64531,7 +64378,7 @@ label_2682_internal:
     }
     if (s == u8"{se}"s)
     {
-        folder = filesystem::path(u8"./sound/").generic_string();
+        const auto folder = filesystem::path(u8"./sound/").generic_string();
         sndload(folder + s(1), 28);
         snd(28);
         goto label_2682_internal;

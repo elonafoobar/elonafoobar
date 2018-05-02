@@ -99,7 +99,6 @@ ELONA_EXTERN(elona_vector1<std::string> filemod);
 ELONA_EXTERN(elona_vector1<std::string> filter_creature);
 ELONA_EXTERN(elona_vector1<std::string> filtern);
 ELONA_EXTERN(elona_vector1<std::string> fltnrace);
-ELONA_EXTERN(elona_vector1<std::string> folder);
 ELONA_EXTERN(elona_vector1<std::string> gdatan);
 ELONA_EXTERN(elona_vector1<std::string> giftn);
 ELONA_EXTERN(elona_vector1<std::string> ialphanameref);

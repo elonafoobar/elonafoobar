@@ -15,6 +15,7 @@
 #include "item.hpp"
 #include "item_db.hpp"
 #include "item_material.hpp"
+#include "log.hpp"
 #include "macro.hpp"
 #include "main.hpp"
 #include "race.hpp"
@@ -125,6 +126,33 @@ void check_double_launching()
 
 
 
+void load_character_sprite()
+{
+    usernpcmax = 0;
+    DIM3(userdata, 70, 1);
+    SDIM4(userdatan, 40, 10, 1);
+    SDIM1(untaglist);
+    gdata(86) = 0;
+    buffer(5, 1584, (25 + (usernpcmax / 33 + 1) * 2) * 48);
+    pos(0, 0);
+    picload(filesystem::path(u8"./graphic/character.bmp"), 1);
+    gmode(0);
+    gsel(5);
+    for (const auto& entry :
+         filesystem::dir_entries{filesystem::path(u8"./user/graphic"),
+                                 filesystem::dir_entries::type::file,
+                                 std::regex{u8R"(chara_.*\.bmp)"}})
+    {
+        const auto file = entry.path().filename().generic_string();
+        p = elona::stoi(strmid(file, 6, instr(file, 6, u8"."s)));
+        pos(p % 33 * inf_tiles, p / 33 * inf_tiles);
+        picload(entry.path(), 1);
+    }
+    gsel(0);
+}
+
+
+
 void initialize_elona()
 {
     time_warn = timeGetTime() / 1000;
@@ -196,7 +224,6 @@ void initialize_elona()
     DIM2(invctrl, 2);
     SDIM4(promptl, 50, 3, 20);
     SDIM3(description, 1000, 3);
-    SDIM2(folder, 1000);
     SDIM1(msgtempprev);
     DIM3(mef, 9, 200);
     DIM3(adata, 40, 500);
@@ -402,6 +429,7 @@ void initialize_elona()
     initialize_recipe();
     initialize_nefia_names();
     initialize_home_adata();
+    load_character_sprite();
     if (config::instance().music == 1 && DMINIT() == 0)
     {
         config::instance().music = 2;

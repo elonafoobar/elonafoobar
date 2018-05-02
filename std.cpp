@@ -11,6 +11,7 @@
 
 #include "config.hpp"
 #include "elona.hpp"
+#include "log.hpp"
 #include "util.hpp"
 #include "variables.hpp"
 
