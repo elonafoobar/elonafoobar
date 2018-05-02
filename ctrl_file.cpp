@@ -1128,7 +1128,7 @@ void fmode_23_24(bool read, const fs::path& filepath)
 }
 
 
-void fmode_18_17(bool read, const fs::path& file)
+void fmode_17(const fs::path& file)
 {
     folder = filesystem::path(u8"./tmp/").generic_string();
     if (!fs::exists(file.generic_string() + u8"cdata_"s + mid + u8".s2"s))
@@ -1138,7 +1138,7 @@ void fmode_18_17(bool read, const fs::path& file)
 
     {
         const auto filepath = folder + u8"cdata_"s + mid + u8".s2"s;
-        if (read)
+        if (true)
         {
             load(filepath, cdata, 57, 245);
         }
@@ -1151,7 +1151,7 @@ void fmode_18_17(bool read, const fs::path& file)
 
     {
         const auto filepath = folder + u8"sdata_"s + mid + u8".s2"s;
-        if (read)
+        if (true)
         {
             std::ifstream in{filepath, std::ios::binary};
             putit::binary_iarchive ar{in};
@@ -1178,7 +1178,7 @@ void fmode_18_17(bool read, const fs::path& file)
         }
     }
 
-    arrayfile(read, u8"cdatan2", folder + u8"cdatan_"s + mid + u8".s2");
+    arrayfile(true, u8"cdatan2", folder + u8"cdatan_"s + mid + u8".s2");
 }
 
 
@@ -1302,8 +1302,7 @@ void ctrl_file(int mode, const fs::path& filepath)
     case 3: fmode_4_3(mode == 3, filepath); break;
     case 23:
     case 24: fmode_23_24(mode == 24, filepath); break;
-    case 18:
-    case 17: fmode_18_17(mode == 17, filepath); break;
+    case 17: fmode_17(filepath); break;
     case 10: fmode_10(); break;
     case 9: fmode_9(); break;
     case 11:
