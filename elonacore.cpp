@@ -48893,11 +48893,11 @@ void save_game()
         save_s = strmid(save_s, 1, save_s.size());
         if (save_p == 0)
         {
-            bcopy(save_s, file / filesystem::path(save_s).filename());
+            bcopy(save_s, file / fs::path(save_s).filename());
         }
         else
         {
-            const auto path = file / filesystem::path(save_s).filename();
+            const auto path = file / fs::path(save_s).filename();
             if (fs::exists(path) && !fs::is_directory(path))
             {
                 elona_delete(path);
@@ -56074,7 +56074,7 @@ void do_open_command()
         if (fs::exists(
                 filesystem::path(u8"./tmp/"s + u8"shop"s + invfile + u8".s2")))
         {
-            ctrl_file(3, filesystem::path(u8"shop"s + invfile + u8".s2"));
+            ctrl_file(3, fs::path(u8"shop"s + invfile + u8".s2"));
         }
         else
         {
