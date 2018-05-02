@@ -1160,21 +1160,20 @@ void evadd(int prm_289, int prm_290, int prm_291)
 
 
 
-void sndload(const std::string& prm_292, int prm_293)
+void sndload(const fs::path& filepath, int prm_293)
 {
     if (prm_293 < 7)
     {
         if (config::instance().sound == 1)
         {
-            DSLOADFNAME(prm_292, prm_293);
+            DSLOADFNAME(filepath, prm_293);
         }
         else
         {
-            mmload(prm_292, prm_293);
+            mmload(filepath, prm_293);
         }
     }
-    soundfile(prm_293) = prm_292;
-    return;
+    soundfile[prm_293] = filepath;
 }
 
 
@@ -1239,11 +1238,11 @@ void snd(int prm_296, int prm_297, int prm_298)
         }
         if (config::instance().sound == 1)
         {
-            DSLOADFNAME(soundfile(prm_296), sound_at_m18);
+            DSLOADFNAME(soundfile[prm_296], sound_at_m18);
         }
         else
         {
-            mmload(soundfile(prm_296), sound_at_m18);
+            mmload(soundfile[prm_296], sound_at_m18);
         }
     }
     if (config::instance().sound == 1)
@@ -1305,7 +1304,7 @@ void initialize_sound_file()
         {u8"atk2.wav", 3},
         {u8"gun1.wav", 30},
         {u8"throw1.wav", 31},
-        {u8"heart1.wav", 32},
+        {u8"Heart1.wav", 32},
         {u8"heal1.wav", 33},
         {u8"teleport1.wav", 72},
         {u8"ball1.wav", 34},
@@ -1391,7 +1390,7 @@ void initialize_sound_file()
 
     for (const auto& se : se_list)
     {
-        sndload((filesystem::dir::sound() / se.first).generic_string(), se.second);
+        sndload(filesystem::dir::sound() / se.first, se.second);
     }
 }
 
@@ -1593,7 +1592,7 @@ void play_music()
         {
             DMSTOP();
             DMLOADFNAME(
-                (filesystem::dir::sound() / u8"gm_on.mid").generic_string(), 0);
+                filesystem::dir::sound() / u8"gm_on.mid", 0);
             DMPLAY(1, 0);
         }
         fs::path music_dir;
@@ -1626,7 +1625,7 @@ void play_music()
             }
             else
             {
-                DMLOADFNAME((music_dir / musicfile(music)).generic_string(), 0);
+                DMLOADFNAME(music_dir / musicfile(music), 0);
                 DMPLAY(musicloop, 0);
             }
         }
@@ -54460,7 +54459,7 @@ void proc_autopick()
         }
         if (did_something && !op.sound.empty())
         {
-            DSLOADFNAME((filesystem::dir::sound() / op.sound).generic_string(), 15);
+            DSLOADFNAME(filesystem::dir::sound() / op.sound, 15);
             DSPLAY(15, 0);
         }
     }
@@ -64360,7 +64359,7 @@ label_2682_internal:
     }
     if (s == u8"{se}"s)
     {
-        sndload((filesystem::dir::sound() / s(1)).generic_string(), 28);
+        sndload(filesystem::dir::sound() / s(1), 28);
         snd(28);
         goto label_2682_internal;
     }

@@ -161,5 +161,12 @@ std::string to_narrow_path(const fs::path& path)
 }
 
 
+std::string to_utf8_path(const fs::path& path)
+{
+    return boost::locale::conv::utf_to_utf<char>(path.native());
+}
+
+
+
 } // namespace filesystem
 } // namespace elona

@@ -508,7 +508,7 @@ void mesbox(std::string& buffer);
 
 void mkdir(const fs::path& path);
 
-void mmload(const std::string& file, int id, int mode = 0);
+void mmload(const fs::path& filepath, int id, int mode = 0);
 
 void mmplay(int id);
 
@@ -611,7 +611,7 @@ void DSEND();
 void DSRELEASE(int);
 
 
-void DSLOADFNAME(const std::string& filename, int id);
+void DSLOADFNAME(const fs::path& filepath, int id);
 
 void DSPLAY(int, int);
 
@@ -629,7 +629,7 @@ int DMINIT();
 void DMEND();
 
 
-void DMLOADFNAME(const std::string&, int);
+void DMLOADFNAME(const fs::path& filepath, int);
 
 void DMPLAY(int, int);
 

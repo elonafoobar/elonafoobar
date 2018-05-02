@@ -1143,9 +1143,9 @@ void mkdir(const fs::path& path)
 
 
 
-void mmload(const std::string& file, int id, int mode)
+void mmload(const fs::path& filepath, int id, int mode)
 {
-    (void)file;
+    (void)filepath;
     (void)id;
     (void)mode;
 }
@@ -1754,7 +1754,7 @@ void DSRELEASE(int)
 
 
 
-void DSLOADFNAME(const std::string& filename, int channel)
+void DSLOADFNAME(const fs::path& filepath, int channel)
 {
     if (mixer_detail::chunks.find(channel) != std::end(mixer_detail::chunks))
     {
@@ -1762,7 +1762,7 @@ void DSLOADFNAME(const std::string& filename, int channel)
             Mix_FreeChunk(mixer_detail::chunks[channel]);
     }
     auto chunk = snail::detail::enforce_mixer(
-        Mix_LoadWAV(filesystem::to_narrow_path(filename).c_str()));
+        Mix_LoadWAV(filesystem::to_utf8_path(filepath).c_str()));
     mixer_detail::chunks[channel] = chunk;
 }
 
@@ -1826,13 +1826,13 @@ void DMEND()
 }
 
 
-void DMLOADFNAME(const std::string& filename, int)
+void DMLOADFNAME(const fs::path& filepath, int)
 {
     if (mixer_detail::music)
         ::Mix_FreeMusic(mixer_detail::music);
 
     mixer_detail::music = snail::detail::enforce_mixer(
-        Mix_LoadMUS(filesystem::to_narrow_path(filename).c_str()));
+        Mix_LoadMUS(filesystem::to_utf8_path(filepath).c_str()));
 }
 
 

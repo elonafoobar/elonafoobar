@@ -359,7 +359,7 @@ void initialize_elona()
     SDIM2(playerheader, 100);
     artifactlocation.clear();
     SDIM1(newsbuff);
-    SDIM3(soundfile, 30, 122);
+    soundfile.resize(122);
     SDIM3(musicfile, 30, 97);
     DIM3(slight, inf_screenw + 4, inf_screenh + 4);
 
