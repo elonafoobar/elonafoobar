@@ -167,7 +167,6 @@ void initialize_elona()
     buffer(4, windoww, windowh);
     buffer(8, windoww, windowh);
     gsel(0);
-    folder = filesystem::path(u8"./user/graphic/").generic_string();
     buffer(1, 1584, 1200);
     picload(filesystem::path(u8"./graphic/item.bmp"), 1);
     if (inf_tiles != 48)
