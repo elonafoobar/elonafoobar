@@ -243,9 +243,6 @@ void talk_npc()
             41,
             lang(u8"チームバトル"s, u8"I want to register my team. [Team]"s));
         ELONA_APPEND_RESPONSE(
-            49,
-            lang(u8"EXバトル"s, u8"I want to see extra teams. [Ex Battle]"s));
-        ELONA_APPEND_RESPONSE(
             42, lang(u8"成績を聞く"s, u8"Tell me my scores."s));
     }
     if (cdata[tc].character_role == 18)
@@ -896,28 +893,13 @@ void talk_npc()
         talk_end();
         return;
     }
-    if (chatval == 40 || chatval == 41 || chatval == 49)
+    if (chatval == 40 || chatval == 41)
     {
-        arenaimport = 0;
         gdata(74) = calcfame(
             0,
             (220 - gdata(121) / 50)
                     * (50 + clamp(adata(23, gdata_current_map), 0, 50)) / 100
                 + 2);
-        if (chatval == 49)
-        {
-            comctrl = 1;
-            int stat = label_19432();
-            if (stat == 0)
-            {
-                buff = lang(
-                    u8"用があるときは声をかけて"s + _kure(),
-                    u8"Alright. Call me if you changed your mind."s);
-                talk_npc();
-                return;
-            }
-            arenaimport = 1;
-        }
         listmax = 0;
         if (chatval == 40)
         {
@@ -936,20 +918,6 @@ void talk_npc()
             arenaop(1) = 2;
             arenaop(2) = (100 - gdata(121) / 100) / 2 + 1;
             arenaop(1) = rnd(7) + 2;
-            buff = lang(""s + arenaop(1) +
-                    u8"人同士のチームバトルで、対戦相手はレベル"s + arenaop(2) +
-                    u8"以下の相手複数"s + _da() + u8"挑戦する"s + _noka(1),
-                u8"It's a "s + arenaop(1) + u8" vs "s + arenaop(1) +
-                    u8" match. The opponent's group is formed by the pets less than "s +
-                    arenaop(2) + u8" levels. What you say?"s);
-        }
-        if (chatval == 49)
-        {
-            arenaop(0) = 1;
-            arenaop(1) = 2;
-            arenaop(2) = rtval(1);
-            enemylv = rtval(1);
-            arenaop(1) = rtval;
             buff = lang(""s + arenaop(1) +
                     u8"人同士のチームバトルで、対戦相手はレベル"s + arenaop(2) +
                     u8"以下の相手複数"s + _da() + u8"挑戦する"s + _noka(1),
