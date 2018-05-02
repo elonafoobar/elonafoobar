@@ -1816,7 +1816,8 @@ void tcgdeck()
             }
             if (rtval == 0)
             {
-                ctrl_file(24);
+                ctrl_file(
+                    24, filesystem::path(u8"./tmp/deck_"s + curdeck + u8".s2"));
             }
         }
         decksizebk_at_tcg = gdata(830 + curdeck);
