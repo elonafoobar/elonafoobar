@@ -1128,10 +1128,10 @@ void fmode_23_24(bool read, const fs::path& filepath)
 }
 
 
-void fmode_17(const fs::path& file)
+void fmode_17()
 {
     folder = filesystem::path(u8"./tmp/").generic_string();
-    if (!fs::exists(file.generic_string() + u8"cdata_"s + mid + u8".s2"s))
+    if (!fs::exists(folder + u8"cdata_"s + mid + u8".s2"s))
     {
         return;
     }
@@ -1302,7 +1302,7 @@ void ctrl_file(int mode, const fs::path& filepath)
     case 3: fmode_4_3(mode == 3, filepath); break;
     case 23:
     case 24: fmode_23_24(mode == 24, filepath); break;
-    case 17: fmode_17(filepath); break;
+    case 17: fmode_17(); break;
     case 10: fmode_10(); break;
     case 9: fmode_9(); break;
     case 11:
