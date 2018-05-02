@@ -312,6 +312,11 @@ void boxf(int x1, int y1, int x2, int y2, const snail::color& color)
         snail::application::instance().get_renderer().set_blend_mode(
             snail::blend_mode_t::none);
     }
+    else
+    {
+        snail::application::instance().get_renderer().set_blend_mode(
+            snail::blend_mode_t::blend);
+    }
     snail::application::instance().get_renderer().fill_rect(
         x1, y1, x2 - x1, y2 - y1);
     detail::current_tex_buffer().color.a = save_alpha;
