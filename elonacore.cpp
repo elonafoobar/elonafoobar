@@ -22830,7 +22830,7 @@ int do_create_item(int slot, int x, int y)
 
     item_delete(ci);
 
-    if (slot == -1 && mode != 6)
+    if (slot == -1 && mode != 6 && mode != 9)
     {
         bool ok = false;
         for (int i = 0; i < 100; ++i)
