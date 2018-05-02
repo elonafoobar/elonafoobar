@@ -71,6 +71,7 @@ set(CORE_SOURCES
     item.cpp
     item_db.cpp
     item_material.cpp
+    log.cpp
     magic.cpp
     main.cpp
     map.cpp

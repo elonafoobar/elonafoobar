@@ -599,7 +599,7 @@ int cat_get_field(lua_State* L)
 
     auto self = static_cast<cat::userdata<Class>*>(lua_touserdata(L, 1))->ptr();
     if (!self)
-        throw 0; // TODO
+        throw std::runtime_error(u8"Error: in cat_get_field()");
 
     if (argc == 1) // only "self"
     {
@@ -627,7 +627,7 @@ int cat_get_field_with_index(lua_State* L)
 
     auto self = static_cast<cat::userdata<Class>*>(lua_touserdata(L, 1))->ptr();
     if (!self)
-        throw 0; // TODO
+        throw std::runtime_error(u8"Error: in cat_get_field_with_index()");
     auto index = luaL_checkinteger(L, 2);
 
     if (argc == 2) // "self" and index
