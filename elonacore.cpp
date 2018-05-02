@@ -43921,10 +43921,10 @@ label_20331:
             + std::abs((cdata[cc].portrait + 1)) + u8".bmp"s;
         if (cdata[cc].portrait != -1)
         {
-            if (fs::exists(s))
+            if (fs::exists(s(0)))
             {
                 pos(0, 0);
-                picload(s, 1);
+                picload(s(0), 1);
             }
         }
     }
@@ -44067,7 +44067,7 @@ label_2035_internal:
                 + std::abs((cdata[cc].portrait + 1)) + u8".bmp"s;
             if (cdata[cc].portrait != -1)
             {
-                if (fs::exists(s))
+                if (fs::exists(s(0)))
                 {
                     pos(wx + 560, wy + 27);
                     gzoom(4, 0, 0, 80, 112, 80, 112);
@@ -44895,10 +44895,10 @@ int change_appearance()
     {
         s = filesystem::path(u8"./user/graphic/face"s + (cnt + 1) + u8".bmp")
                 .generic_string();
-        if (fs::exists(s))
+        if (fs::exists(s(0)))
         {
             pos(cnt * 80, 0);
-            picload(s, 1);
+            picload(s(0), 1);
         }
     }
     gsel(3);
@@ -47592,7 +47592,7 @@ void migrate_save_data()
                 file_cnv = folder + u8"/"s + strmid(file, 0, (p1 + 1)) + p3
                     + strmid(file, (p1 + p2 + 1), 20);
                 file = folder + u8"/"s + file;
-                bcopy(file, file_cnv);
+                bcopy(file, file_cnv(0));
                 fileadd(file_cnv);
                 elona_delete(file);
                 fileadd(file, 1);
@@ -61054,7 +61054,7 @@ void show_talk_window()
     {
         s = filesystem::path(u8"./user/graphic/face"s).generic_string()
             + std::abs((cdata[tc].portrait + 1)) + u8".bmp"s;
-        if (!fs::exists(s) || cdata[tc].portrait == -1)
+        if (!fs::exists(s(0)) || cdata[tc].portrait == -1)
         {
             p(0) = cdata[tc].image % 1000;
             p(1) = cdata[tc].image / 1000;
@@ -61069,7 +61069,7 @@ void show_talk_window()
             {
                 gsel(4);
                 pos(0, 0);
-                picload(s, 1);
+                picload(s(0), 1);
                 gsel(0);
                 chatpicloaded = 1;
             }

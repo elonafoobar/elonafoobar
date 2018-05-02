@@ -77,12 +77,6 @@ struct elona_vector1
     }
 
 
-    operator fs::path()
-    {
-        return filesystem::path(storage.at(0));
-    }
-
-
     template <
         typename U,
         std::enable_if_t<
