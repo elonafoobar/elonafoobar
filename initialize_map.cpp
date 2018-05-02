@@ -208,45 +208,6 @@ label_1741_internal:
             evadd(4);
         }
     }
-    if (adata(16, gdata_current_map) == 35)
-    {
-        load_user_file(userfile);
-        ctrl_file(19);
-        for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
-        {
-            y = cnt;
-            for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
-            {
-                x = cnt;
-                map(x, y, 1) = 0;
-            }
-        }
-        importmode = 0;
-        ctrl_file(21);
-        mdata(10) = 0;
-        mdata(7) = 0;
-        mdata(15) = 0;
-        mdata(6) = 7;
-        mdata(9) = 10000;
-        gdata(73) = 3;
-        for (const auto& cnt : items(-1))
-        {
-            if (inv[cnt].id >= maxitemid - 2
-                || size_t(inv[cnt].id) > length(ioriginalnameref))
-            {
-                inv[cnt].number = 0;
-                cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
-                continue;
-            }
-            if (inv[cnt].number > 0)
-            {
-                inv[cnt].own_state = 5;
-            }
-        }
-        delete_temporary_user_files();
-        evadd(19);
-        map_placeplayer();
-    }
     if (adata(16, gdata_current_map) == 101)
     {
         map_initcustom(u8"museum_1"s);
@@ -854,43 +815,33 @@ label_1741_internal:
         }
         map_placeplayer();
         petarenawin = 0;
-        if (arenaimport == 1)
+        for (int cnt = 0, cnt_end = (arenaop(1)); cnt < cnt_end; ++cnt)
         {
-            load_user_file(userfile);
-            importmode = 1;
-            ctrl_file(21);
-            delete_temporary_user_files();
-        }
-        else
-        {
-            for (int cnt = 0, cnt_end = (arenaop(1)); cnt < cnt_end; ++cnt)
+            flt(arenaop(2), calcfixlv(3));
+            characreate(-1, 0, -3, 0);
+            map(cdata[rc].position.x, cdata[rc].position.y, 1) = 0;
+            f = 1;
+            if (arenaop == 0)
             {
-                flt(arenaop(2), calcfixlv(3));
-                characreate(-1, 0, -3, 0);
-                map(cdata[rc].position.x, cdata[rc].position.y, 1) = 0;
-                f = 1;
-                if (arenaop == 0)
-                {
-                    if (cdata[rc].level < arenaop(2) / 2)
-                    {
-                        f = 0;
-                    }
-                }
-                if (cdata[rc].relationship != -3)
+                if (cdata[rc].level < arenaop(2) / 2)
                 {
                     f = 0;
                 }
-                if (f == 0)
-                {
-                    chara_vanquish(rc);
-                    --cnt;
-                    continue;
-                }
-                map_placearena(rc, 1);
-                if (cnt == 0)
-                {
-                    enemyteam = rc;
-                }
+            }
+            if (cdata[rc].relationship != -3)
+            {
+                f = 0;
+            }
+            if (f == 0)
+            {
+                chara_vanquish(rc);
+                --cnt;
+                continue;
+            }
+            map_placearena(rc, 1);
+            if (cnt == 0)
+            {
+                enemyteam = rc;
             }
         }
         for (int cnt = 57; cnt < 245; ++cnt)
@@ -2960,10 +2911,6 @@ label_1744_internal:
             levelexitby = 4;
             goto label_17401;
         }
-    }
-    if (gdata_current_map == 35)
-    {
-        load_cnpc_data();
     }
     label_1745();
     gdata_other_character_count = 0;

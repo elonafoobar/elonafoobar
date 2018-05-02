@@ -383,8 +383,6 @@ void initialize_elona()
     SDIM1(filtern);
     SDIM1(filter_creature);
     SDIM2(netbuf, 20000);
-    delete_temporary_npc_files();
-    delete_temporary_user_files();
     initialize_character_filters();
     initialize_item_chip();
     initialize_building_daga();
@@ -405,7 +403,6 @@ void initialize_elona()
     initialize_recipe();
     initialize_nefia_names();
     initialize_home_adata();
-    load_cnpc_data();
     if (config::instance().music == 1 && DMINIT() == 0)
     {
         config::instance().music = 2;
