@@ -394,7 +394,7 @@ void set_option()
     for (int i = 0; i < 8; ++i)
     {
         pos(i % 4 * 180, i / 4 * 300);
-        picload(filesystem::path(u8"./graphic/g"s + (i + 1) + u8".bmp"), 1);
+        picload(filesystem::dir::graphic() / (u8"g"s + (i + 1) + u8".bmp"), 1);
     }
     gsel(0);
 
@@ -408,7 +408,7 @@ void set_option()
         gsel(4);
         gmode(0);
         pos(0, 0);
-        picload(filesystem::path(u8"./graphic/title.bmp"), 1);
+        picload(filesystem::dir::graphic() / u8"title.bmp", 1);
         gzoom(4, 0, 0, 800, 600, windoww, windowh);
         gsel(0);
         gmode(0);

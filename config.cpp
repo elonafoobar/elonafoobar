@@ -659,14 +659,14 @@ void load_config()
     picojson::value value;
 
     {
-        std::ifstream file{filesystem::path(u8"./config.json").native(),
+        std::ifstream file{(filesystem::dir::exe() / u8"config.json").native(),
                            std::ios::binary};
         if (!file)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
                 + filesystem::make_preferred_path_in_utf8(
-                      filesystem::path(u8"./config.json"))};
+                      filesystem::dir::exe() / u8"config.json")};
         }
 
         file >> value;
@@ -725,7 +725,7 @@ void load_config()
     if (config::instance().language == -1)
     {
         buffer(4);
-        picload(filesystem::path(u8"./graphic/lang.bmp"));
+        picload(filesystem::dir::graphic() / u8"lang.bmp");
         gsel(0);
         gmode(0);
         p = 0;
@@ -802,14 +802,14 @@ void set_config(const std::string& key, int value)
     picojson::value options;
 
     {
-        std::ifstream file{filesystem::path(u8"./config.json").native(),
+        std::ifstream file{(filesystem::dir::exe() / u8"config.json").native(),
                            std::ios::binary};
         if (!file)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
                 + filesystem::make_preferred_path_in_utf8(
-                      filesystem::path(u8"./config.json"))};
+                      filesystem::dir::exe() / u8"config.json")};
         }
         file >> options;
     }
@@ -817,14 +817,14 @@ void set_config(const std::string& key, int value)
     options.get<picojson::object>()[key] = picojson::value{int64_t{value}};
 
     {
-        std::ofstream file{filesystem::path(u8"./config.json").native(),
+        std::ofstream file{(filesystem::dir::exe() / u8"config.json").native(),
                            std::ios::binary};
         if (!file)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
                 + filesystem::make_preferred_path_in_utf8(
-                      filesystem::path(u8"./config.json"))};
+                      filesystem::dir::exe() / u8"config.json")};
         }
         options.serialize(std::ostream_iterator<char>(file), true);
     }
@@ -837,14 +837,14 @@ void set_config(const std::string& key, const std::string& value)
     picojson::value options;
 
     {
-        std::ifstream file{filesystem::path(u8"./config.json").native(),
+        std::ifstream file{(filesystem::dir::exe() / u8"config.json").native(),
                            std::ios::binary};
         if (!file)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
                 + filesystem::make_preferred_path_in_utf8(
-                      filesystem::path(u8"./config.json"))};
+                      filesystem::dir::exe() / u8"config.json")};
         }
         file >> options;
     }
@@ -852,14 +852,14 @@ void set_config(const std::string& key, const std::string& value)
     options.get<picojson::object>()[key] = picojson::value{value};
 
     {
-        std::ofstream file{filesystem::path(u8"./config.json").native(),
+        std::ofstream file{(filesystem::dir::exe() / u8"config.json").native(),
                            std::ios::binary};
         if (!file)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
                 + filesystem::make_preferred_path_in_utf8(
-                      filesystem::path(u8"./config.json"))};
+                      filesystem::dir::exe() / u8"config.json")};
         }
         options.serialize(std::ostream_iterator<char>(file), true);
     }
@@ -872,14 +872,14 @@ void set_config(const std::string& key, const std::string& value1, int value2)
     picojson::value options;
 
     {
-        std::ifstream file{filesystem::path(u8"./config.json").native(),
+        std::ifstream file{(filesystem::dir::exe() / u8"config.json").native(),
                            std::ios::binary};
         if (!file)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
                 + filesystem::make_preferred_path_in_utf8(
-                      filesystem::path(u8"./config.json"))};
+                      filesystem::dir::exe() / u8"config.json")};
         }
         file >> options;
     }
@@ -888,14 +888,14 @@ void set_config(const std::string& key, const std::string& value1, int value2)
     (void)value2; // TODO
 
     {
-        std::ofstream file{filesystem::path(u8"./config.json").native(),
+        std::ofstream file{(filesystem::dir::exe() / u8"config.json").native(),
                            std::ios::binary};
         if (!file)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
                 + filesystem::make_preferred_path_in_utf8(
-                      filesystem::path(u8"./config.json"))};
+                      filesystem::dir::exe() / u8"config.json")};
         }
         options.serialize(std::ostream_iterator<char>(file), true);
     }
@@ -964,13 +964,13 @@ void load_config2()
             [&](auto value) { config::instance().wizard = value; }),
     };
 
-    std::ifstream file{filesystem::path(u8"./config.json").native(),
+    std::ifstream file{(filesystem::dir::exe() / u8"config.json").native(),
                        std::ios::binary};
     if (!file)
     {
         throw config_loading_error{u8"Failed to open: "s
                                    + filesystem::make_preferred_path_in_utf8(
-                                         filesystem::path(u8"./config.json"))};
+                                         filesystem::dir::exe() / u8"config.json")};
     }
 
     picojson::value value;

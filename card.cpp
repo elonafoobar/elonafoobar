@@ -29,7 +29,7 @@ void show_card_collection()
     windowanime(wx, wy, ww, wh, 10, 4);
     gsel(3);
     pos(960, 96);
-    picload(filesystem::path(u8"graphic") / u8"deco_feat.bmp", 1);
+    picload(filesystem::dir::graphic() / u8"deco_feat.bmp", 1);
     gsel(0);
     windowshadow = 1;
 

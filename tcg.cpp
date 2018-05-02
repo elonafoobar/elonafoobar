@@ -1642,15 +1642,15 @@ void tcginit()
     selectmode_at_tcg = -1;
     gsel(3);
     pos(960, 96);
-    picload(filesystem::path(u8"./graphic/deco_card.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"deco_card.bmp", 1);
     gsel(7);
-    picload(filesystem::path(u8"./graphic/interface2.bmp"));
+    picload(filesystem::dir::graphic() / u8"interface2.bmp");
     gsel(2);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/card0.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"card0.bmp", 1);
     gsel(4);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/bg_card.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"bg_card.bmp", 1);
     label_1826();
     tcgdrawbg();
     return;
@@ -1739,7 +1739,6 @@ void calcdecksize()
 
 void tcgdeck()
 {
-    std::string file_at_tcg;
     maxcard_at_tcg = 1000;
     tcginit();
     cardmode_at_tcg = 1;
@@ -1767,9 +1766,8 @@ void tcgdeck()
         for (int cnt = 0; cnt < 5; ++cnt)
         {
             s_at_tcg(cnt) += lang(u8"のデッキ"s, u8" Deck"s);
-            file_at_tcg = filesystem::path(u8"./tmp/deck_"s).generic_string()
-                + cnt + u8".s2"s;
-            if (!fs::exists(file_at_tcg))
+            const auto deck_filepath = filesystem::dir::tmp() / (u8"deck_"s + cnt + u8".s2");
+            if (!fs::exists(deck_filepath))
             {
                 s_at_tcg(cnt) += lang(u8" (新規作成)"s, u8" (New)"s);
             }
@@ -1794,7 +1792,7 @@ void tcgdeck()
         }
         DIM2(deck, 1000);
         curdeck = rtval;
-        if (fs::exists(filesystem::path(u8"./tmp/deck_"s + curdeck + u8".s2")))
+        if (fs::exists(filesystem::dir::tmp() / (u8"deck_"s + curdeck + u8".s2")))
         {
             ELONA_APPEND_PROMPT(
                 lang(u8"デッキの構築"s, u8"Edit Deck"s),
@@ -1818,7 +1816,7 @@ void tcgdeck()
             {
                 ctrl_file(
                     file_operation2_t::_24,
-                    filesystem::path(u8"./tmp/deck_"s + curdeck + u8".s2"));
+                    filesystem::dir::tmp() / (u8"deck_"s + curdeck + u8".s2"));
             }
         }
         decksizebk_at_tcg = gdata(830 + curdeck);
@@ -2112,7 +2110,7 @@ void label_1823()
     int m_at_tcg = 0;
     gsel(4);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/bg_card.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"bg_card.bmp", 1);
     gmode(2);
     font(14 - en * 2);
     color(255, 255, 255);
@@ -2450,7 +2448,7 @@ void label_1828()
 {
     gsel(4);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/bg_card.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"bg_card.bmp", 1);
     gsel(0);
     DIM3(dlist_at_tcg, 2, 400);
     DIM2(cflist_at_tcg, 10);
@@ -2704,7 +2702,7 @@ label_1830_internal:
             {
                 ctrl_file(
                     file_operation2_t::_23,
-                    filesystem::path(u8"./tmp/deck_"s + curdeck + u8".s2"));
+                    filesystem::dir::tmp() / (u8"deck_"s + curdeck + u8".s2"));
             }
             else
             {
@@ -2728,7 +2726,7 @@ int label_1835()
 {
     gsel(4);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/bg_card.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"bg_card.bmp", 1);
     label_1826();
     return rtval_at_tcg;
 }

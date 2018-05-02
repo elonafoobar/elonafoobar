@@ -721,7 +721,7 @@ label_20591:
     }
     gsel(3);
     pos(960, 96);
-    picload(filesystem::path(u8"./graphic/deco_inv.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"deco_inv.bmp", 1);
     gsel(0);
     if (returnfromidentify == 0)
     {

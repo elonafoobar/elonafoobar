@@ -1212,7 +1212,7 @@ label_2181_internal:
         snd(59);
         gsel(4);
         pos(0, 0);
-        picload(filesystem::path(u8"./graphic/paper.bmp"), 1);
+        picload(filesystem::dir::graphic() / u8"paper.bmp", 1);
         gsel(0);
         ww = 400;
         wh = 300;
@@ -4523,7 +4523,7 @@ label_2181_internal:
         invfile = 8;
         ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
         if (fs::exists(
-                filesystem::path(u8"./tmp/"s + u8"shop" + invfile + u8".s2")))
+                filesystem::dir::tmp() / (u8"shop"s + invfile + u8".s2")))
         {
             ctrl_file(file_operation2_t::_3, u8"shop"s + invfile + u8".s2");
         }

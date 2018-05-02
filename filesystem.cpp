@@ -89,6 +89,42 @@ namespace filesystem
 {
 
 
+namespace dir
+{
+
+
+#define ELONA_DEFINE_PREDEFINED_DIR(func_name, path_name) \
+    fs::path func_name() \
+    { \
+        return filesystem::path(path_name); \
+    }
+
+ELONA_DEFINE_PREDEFINED_DIR(exe, "")
+ELONA_DEFINE_PREDEFINED_DIR(data, "data")
+ELONA_DEFINE_PREDEFINED_DIR(graphic, "graphic")
+ELONA_DEFINE_PREDEFINED_DIR(map, "map")
+ELONA_DEFINE_PREDEFINED_DIR(save, "save")
+ELONA_DEFINE_PREDEFINED_DIR(sound, "sound")
+ELONA_DEFINE_PREDEFINED_DIR(tmp, "tmp")
+ELONA_DEFINE_PREDEFINED_DIR(user, "user")
+
+#undef ELONA_DEFINE_PREDEFINED_DIR
+
+
+fs::path save(const std::string& player_id)
+{
+#if USE_UTF16_AS_FILEPATH
+    return save() / boost::locale::conv::utf_to_utf<wchar_t>(player_id);
+#else
+    return save() / player_id;
+#endif
+}
+
+
+} // namespace dir
+
+
+
 fs::path path(const std::string& str)
 {
     return get_executable_path() / str;

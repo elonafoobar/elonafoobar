@@ -22,6 +22,23 @@ namespace filesystem
 fs::path path(const std::string&);
 
 
+// Pre-defined directories.
+namespace dir
+{
+
+fs::path exe();
+fs::path data();
+fs::path graphic();
+fs::path map();
+fs::path save();
+fs::path save(const std::string& player_id);
+fs::path sound();
+fs::path tmp();
+fs::path user();
+
+}
+
+
 
 struct dir_entries
 {
