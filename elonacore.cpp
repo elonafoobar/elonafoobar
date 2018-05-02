@@ -25268,7 +25268,7 @@ int dist_town()
 void map_initcustom(const std::string& prm_934)
 {
     fmapfile = filesystem::path(u8"./map/"s + prm_934).generic_string();
-    ctrl_file(5);
+    ctrl_file(file_operation_t::_5);
     map_tileset(mdata(12));
     nooracle = 1;
     for (int cnt = 0; cnt < 400; ++cnt)
@@ -25331,7 +25331,7 @@ void map_reload(const std::string& prm_935)
     int y_at_m166 = 0;
     int x_at_m166 = 0;
     fmapfile = filesystem::path(u8"./map/"s + prm_935).generic_string();
-    ctrl_file(16);
+    ctrl_file(file_operation_t::_16);
     for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
     {
         y_at_m166 = cnt;
@@ -28808,7 +28808,7 @@ void build_new_building()
         initialize_home_adata();
         midbk = mid;
         mid = ""s + 7 + u8"_"s + 101;
-        ctrl_file(12);
+        ctrl_file(file_operation_t::_12);
         mid = midbk;
         label_1749();
         levelexitby = 2;
@@ -28824,7 +28824,7 @@ void build_new_building()
         exit_map();
         return;
     }
-    ctrl_file(13);
+    ctrl_file(file_operation_t::_13);
     p = area;
     adata(1, p) = cdata[0].position.x;
     adata(2, p) = cdata[0].position.y;
@@ -29623,8 +29623,8 @@ void show_shop_log()
     }
     if (gdata_current_map != area)
     {
-        ctrl_file(4, u8"shoptmp.s2");
-        ctrl_file(3, u8"inv_"s + mid + u8".s2");
+        ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
+        ctrl_file(file_operation2_t::_3, u8"inv_"s + mid + u8".s2");
     }
     mode = 6;
     dblistmax = 0;
@@ -29745,15 +29745,15 @@ void show_shop_log()
     mode = 0;
     if (gdata_current_map != area)
     {
-        ctrl_file(4, u8"inv_"s + mid + u8".s2");
+        ctrl_file(file_operation2_t::_4, u8"inv_"s + mid + u8".s2");
     }
     else
     {
-        ctrl_file(4, u8"shoptmp.s2");
+        ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
     }
     if (fs::exists(filesystem::path(u8"./tmp") / u8"shop5.s2"))
     {
-        ctrl_file(3, u8"shop5.s2");
+        ctrl_file(file_operation2_t::_3, u8"shop5.s2");
     }
     else
     {
@@ -29850,8 +29850,8 @@ void show_shop_log()
         modrank(5, 30, 2);
     }
     mode = 0;
-    ctrl_file(4, u8"shop5.s2");
-    ctrl_file(3, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::_4, u8"shop5.s2");
+    ctrl_file(file_operation2_t::_3, u8"shoptmp.s2");
     return;
 }
 
@@ -30938,7 +30938,7 @@ void exit_map()
         label_1738();
         if (fs::exists(filesystem::path(u8"./tmp/mdata_"s + mid + u8".s2")))
         {
-            ctrl_file(11);
+            ctrl_file(file_operation_t::_11);
         }
         for (int cnt = 57; cnt < 245; ++cnt)
         {
@@ -30986,8 +30986,8 @@ void label_1739()
             map(cnt, y, 7) = 0;
         }
     }
-    ctrl_file(2);
-    ctrl_file(4, u8"inv_"s + mid + u8".s2");
+    ctrl_file(file_operation_t::_2);
+    ctrl_file(file_operation2_t::_4, u8"inv_"s + mid + u8".s2");
     return;
 }
 
@@ -32345,7 +32345,7 @@ int label_1753()
         }
         p = cnt;
         area = p;
-        ctrl_file(13);
+        ctrl_file(file_operation_t::_13);
         adata(0, p) = 20 + rnd(4);
         adata(16, p) = 8;
         adata(15, p) = 133;
@@ -33672,7 +33672,7 @@ void atxinit()
 
 void begintempinv()
 {
-    ctrl_file(4, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
     for (const auto& cnt : items(-1))
     {
         inv[cnt].number = 0;
@@ -33684,7 +33684,7 @@ void begintempinv()
 
 void exittempinv()
 {
-    ctrl_file(3, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::_3, u8"shoptmp.s2");
     return;
 }
 
@@ -36814,10 +36814,10 @@ int calcincome(int prm_1036)
 void label_1901()
 {
     invfile = 4;
-    ctrl_file(4, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
     if (fs::exists(filesystem::path(u8"./tmp") / u8"shop4.s2"s))
     {
-        ctrl_file(3, u8"shop4.s2"s);
+        ctrl_file(file_operation2_t::_3, u8"shop4.s2"s);
     }
     else
     {
@@ -36973,8 +36973,8 @@ void label_1901()
                 u8"You don't have to pay tax until you hit level 6."s));
         }
     }
-    ctrl_file(4, u8"shop"s + invfile + u8".s2");
-    ctrl_file(3, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::_4, u8"shop"s + invfile + u8".s2");
+    ctrl_file(file_operation2_t::_3, u8"shoptmp.s2");
     mode = 0;
     if (config::instance().extrahelp)
     {
@@ -45929,7 +45929,7 @@ void do_get_command()
             adata(16, area) = 0;
             removeworker(area);
             label_1749();
-            ctrl_file(13);
+            ctrl_file(file_operation_t::_13);
             snd(58);
             txt(lang(u8"建物を撤去した。"s, u8"You remove the building."s));
             turn_end();
@@ -47643,7 +47643,7 @@ void label_2090()
 
 void get_inheritance()
 {
-    ctrl_file(4, u8"shop3.s2");
+    ctrl_file(file_operation2_t::_4, u8"shop3.s2");
     p = 0;
     i = 0;
     for (int cnt = 0; cnt < 600; ++cnt)
@@ -47689,7 +47689,7 @@ void get_inheritance()
 
 void load_gene_files()
 {
-    ctrl_file(15);
+    ctrl_file(file_operation_t::_15);
     DIM2(spell, 200);
     DIM2(spact, 500);
     for (int cnt = 0; cnt < 245; ++cnt)
@@ -47750,7 +47750,160 @@ void load_gene_files()
 
 void save_gene()
 {
-    ctrl_file(14);
+    ctrl_file(file_operation_t::_14);
+}
+
+
+
+void zipadd(const std::string& prm_1062)
+{
+    p = 12;
+    len = fs::file_size(folder + prm_1062) + p * 2;
+    lenhead = lensum;
+    lensum += len;
+    SDIM2(ziptmp1, p);
+    ziptmp1 += prm_1062;
+    SDIM2(ziptmp2, p);
+    ziptmp2 += std::to_string(len);
+    memexpand(filebuff, lensum);
+    memcpy_(filebuff, ziptmp1, p, lenhead);
+    memcpy_(filebuff, ziptmp2, p, lenhead + p);
+    SDIM2(filetemp, len - p * 2);
+    bload(folder + prm_1062, filetemp, 0, 0);
+    memcpy_(filebuff, filetemp, len - p * 2, lenhead + p * 2);
+    return;
+}
+
+
+
+void load_user_file(const fs::path& file)
+{
+    int zipsize = 0;
+    p = 12;
+    folder = filesystem::path(u8"./user/").generic_string();
+    bload(folder + file.generic_string(), headtemp, 1024);
+    label_2720();
+    zipsize = fs::file_size(folder + file.generic_string());
+    SDIM2(filebuff, zipsize);
+    bload(folder + file.generic_string(), filebuff, zipsize);
+    lenhead = 1024;
+    for (int cnt = 0; cnt < 10000; ++cnt)
+    {
+        SDIM2(ziptmp1, p);
+        SDIM2(ziptmp2, p);
+        memcpy_(ziptmp1, filebuff, p, 0, lenhead);
+        memcpy_(ziptmp2, filebuff, p, 0, lenhead + p);
+        len = elona::stoi(ziptmp2(0));
+        SDIM2(filetemp, len - p * 2);
+        memcpy_(filetemp, filebuff, len - p * 2, 0, lenhead + p * 2);
+        bsave(folder + ziptmp1, filetemp);
+        lenhead += len;
+        if (lenhead >= zipsize)
+        {
+            break;
+        }
+    }
+    return;
+}
+
+
+
+void zipinit2(const std::string& prm_1063, const std::string& prm_1064)
+{
+    lensum_at_m188 = 0;
+    zipfolder_at_m188 = prm_1063;
+    zipfinalfile_at_m188 = prm_1064;
+    SDIM1(filebuff_at_m188);
+    return;
+}
+
+
+
+void zipadd2(const std::string& prm_1065)
+{
+    p_at_m188(0) = 50;
+    p_at_m188(1) = 40;
+    p_at_m188(2) = 10;
+    len_at_m188 = fs::file_size(zipfolder_at_m188 + prm_1065) + p_at_m188;
+    lenhead_at_m188 = lensum_at_m188;
+    lensum_at_m188 += len_at_m188;
+    SDIM2(ziptmp1_at_m188, p_at_m188(1));
+    ziptmp1_at_m188 += prm_1065;
+    SDIM2(ziptmp2_at_m188, p_at_m188(2));
+    ziptmp2_at_m188 += std::to_string(len_at_m188);
+    memexpand(filebuff_at_m188, lensum_at_m188);
+    memcpy_(filebuff_at_m188, ziptmp1_at_m188, p_at_m188(1), lenhead_at_m188);
+    memcpy_(
+        filebuff_at_m188,
+        ziptmp2_at_m188,
+        p_at_m188(2),
+        lenhead_at_m188 + p_at_m188(1));
+    SDIM2(filetemp_at_m188, len_at_m188 - p_at_m188);
+    bload(zipfolder_at_m188 + prm_1065, filetemp_at_m188, 0, 0);
+    memcpy_(
+        filebuff_at_m188,
+        filetemp_at_m188,
+        len_at_m188 - p_at_m188,
+        lenhead_at_m188 + p_at_m188);
+    return;
+}
+
+
+
+void zipend2()
+{
+    bsave(zipfolder_at_m188 + zipfinalfile_at_m188, filebuff_at_m188);
+    return;
+}
+
+
+
+void unzip2(const std::string& prm_1066, const std::string& prm_1067)
+{
+    int zipsize_at_m188 = 0;
+    p_at_m188(0) = 50;
+    p_at_m188(1) = 40;
+    p_at_m188(2) = 10;
+    zipsize_at_m188 = fs::file_size(prm_1066 + prm_1067);
+    SDIM2(filebuff_at_m188, zipsize_at_m188);
+    bload(prm_1066 + prm_1067, filebuff_at_m188, zipsize_at_m188);
+    lenhead_at_m188 = 0;
+    for (int cnt = 0; cnt < 10000; ++cnt)
+    {
+        SDIM2(ziptmp1_at_m188, p_at_m188(1));
+        SDIM2(ziptmp2_at_m188, p_at_m188(2));
+        memcpy_(
+            ziptmp1_at_m188,
+            filebuff_at_m188,
+            p_at_m188(1),
+            0,
+            lenhead_at_m188);
+        memcpy_(
+            ziptmp2_at_m188,
+            filebuff_at_m188,
+            p_at_m188(2),
+            0,
+            lenhead_at_m188 + p_at_m188(1));
+        len_at_m188 = elona::stoi(ziptmp2_at_m188(0));
+        if (len_at_m188 == 0)
+        {
+            break;
+        }
+        SDIM2(filetemp_at_m188, len_at_m188 - p_at_m188);
+        memcpy_(
+            filetemp_at_m188,
+            filebuff_at_m188,
+            len_at_m188 - p_at_m188,
+            0,
+            lenhead_at_m188 + p_at_m188);
+        bsave(prm_1066 + ziptmp1_at_m188, filetemp_at_m188);
+        lenhead_at_m188 += len_at_m188;
+        if (lenhead_at_m188 >= zipsize_at_m188)
+        {
+            break;
+        }
+    }
+>>>>>>> Refactor ctrl_file() a little bit
     return;
 }
 
@@ -47869,7 +48022,7 @@ void create_cnpc()
 void load_save_data()
 {
     filemod = "";
-    ctrl_file(10);
+    ctrl_file(file_operation_t::_10);
     folder = filesystem::path(u8"./save/"s + playerid + u8"/").generic_string();
     notesel(buff);
     if (!fs::exists(folder + u8"filelist.txt"s))
@@ -47902,7 +48055,7 @@ void load_save_data()
             bcopy(folder + s, filesystem::path(u8"./tmp/"s + s));
         }
     }
-    ctrl_file(7);
+    ctrl_file(file_operation_t::_7);
     migrate_save_data();
     set_item_info();
     for (int cnt = 0; cnt < 16; ++cnt)
@@ -47937,8 +48090,8 @@ void save_game()
         update_screen();
         return;
     }
-    ctrl_file(2);
-    ctrl_file(4, u8"inv_"s + mid + u8".s2");
+    ctrl_file(file_operation_t::_2);
+    ctrl_file(file_operation2_t::_4, u8"inv_"s + mid + u8".s2");
     save_f = 0;
     for (const auto& entry : filesystem::dir_entries{
              filesystem::path(u8"./save"), filesystem::dir_entries::type::dir})
@@ -47981,7 +48134,7 @@ void save_game()
             }
         }
     }
-    ctrl_file(8);
+    ctrl_file(file_operation_t::_8);
     filemod = "";
     buff(0).clear();
     for (const auto& entry :
@@ -48162,7 +48315,7 @@ void main_menu_continue()
                     if (rtval == 0)
                     {
                         snd(20);
-                        ctrl_file(9);
+                        ctrl_file(file_operation_t::_9);
                     }
                     main_menu_continue();
                     return;
@@ -53062,7 +53215,7 @@ int pick_up_item()
                     if (fs::exists(filesystem::path(
                             u8"./tmp/mdata_"s + mid + u8".s2")))
                     {
-                        ctrl_file(11);
+                        ctrl_file(file_operation_t::_11);
                     }
                     mid = midbk;
                     inv[ci].count = 0;
@@ -55147,11 +55300,12 @@ void do_open_command()
                 pc_turn(false);
             }
         }
-        ctrl_file(4, u8"shoptmp.s2");
+        ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
         if (fs::exists(
                 filesystem::path(u8"./tmp/"s + u8"shop"s + invfile + u8".s2")))
         {
-            ctrl_file(3, fs::path(u8"shop"s + invfile + u8".s2"));
+            ctrl_file(
+                file_operation2_t::_3, fs::path(u8"shop"s + invfile + u8".s2"));
         }
         else
         {
@@ -55195,8 +55349,8 @@ void do_open_command()
         {
             refweight = inv_weight(-1) + 2500;
         }
-        ctrl_file(4, u8"shop"s + invfile + u8".s2");
-        ctrl_file(3, u8"shoptmp.s2");
+        ctrl_file(file_operation2_t::_4, u8"shop"s + invfile + u8".s2");
+        ctrl_file(file_operation2_t::_3, u8"shoptmp.s2");
         if (refweight != 0)
         {
             inv[invcontainer(1)].weight = refweight;
@@ -61183,7 +61337,7 @@ void label_2262()
         }
     }
     mode = 6;
-    ctrl_file(4, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
     if (cdata[tc].shop_store_id == 0)
     {
         if (cdata[tc].character_role == 1010
@@ -61207,7 +61361,7 @@ void label_2262()
     }
     else
     {
-        ctrl_file(3, u8"shop"s + invfile + u8".s2");
+        ctrl_file(file_operation2_t::_3, u8"shop"s + invfile + u8".s2");
     }
     invfile = cdata[tc].shop_store_id;
     load_shoptmp();
@@ -61219,8 +61373,8 @@ void label_2262()
 void sell_item()
 {
     mode = 6;
-    ctrl_file(4, u8"shoptmp.s2");
-    ctrl_file(3, u8"shop"s + invfile + u8".s2");
+    ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::_3, u8"shop"s + invfile + u8".s2");
     shoptrade = 0;
     if (tc > 0)
     {
@@ -61237,8 +61391,8 @@ void sell_item()
 
 void load_shoptmp()
 {
-    ctrl_file(4, u8"shop"s + invfile + u8".s2");
-    ctrl_file(3, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::_4, u8"shop"s + invfile + u8".s2");
+    ctrl_file(file_operation2_t::_3, u8"shoptmp.s2");
     mode = 0;
     return;
 }
@@ -69145,7 +69299,7 @@ label_2747:
                 dbg_revealmap = 1;
                 ++gdata_current_dungeon_level;
                 txt(u8"lv:"s + gdata_current_dungeon_level);
-                ctrl_file(11);
+                ctrl_file(file_operation_t::_11);
                 mode = 2;
                 levelexitby = 4;
                 initialize_map();

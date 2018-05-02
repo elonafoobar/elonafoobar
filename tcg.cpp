@@ -1817,7 +1817,8 @@ void tcgdeck()
             if (rtval == 0)
             {
                 ctrl_file(
-                    24, filesystem::path(u8"./tmp/deck_"s + curdeck + u8".s2"));
+                    file_operation2_t::_24,
+                    filesystem::path(u8"./tmp/deck_"s + curdeck + u8".s2"));
             }
         }
         decksizebk_at_tcg = gdata(830 + curdeck);
@@ -2702,7 +2703,8 @@ label_1830_internal:
             if (rtval == 0)
             {
                 ctrl_file(
-                    23, filesystem::path(u8"./tmp/deck_"s + curdeck + u8".s2"));
+                    file_operation2_t::_23,
+                    filesystem::path(u8"./tmp/deck_"s + curdeck + u8".s2"));
             }
             else
             {

@@ -167,7 +167,7 @@ void save(const fs::path& filepath, T& data, size_t begin, size_t end)
 
 
 
-void fmode_8_7(bool read)
+void fmode_7_8(bool read)
 {
     folder = filesystem::path(u8"./save/"s + playerid + u8"/").generic_string();
     if (!read)
@@ -677,7 +677,7 @@ void fmode_14_15(bool read)
 }
 
 
-void fmode_2_1(bool read)
+void fmode_1_2(bool read)
 {
     std::string filepath;
     folder = filesystem::path(u8"./tmp/").generic_string();
@@ -801,7 +801,7 @@ void fmode_16()
 }
 
 
-void fmode_6_5(bool read)
+void fmode_5_6(bool read)
 {
     if (read)
     {
@@ -856,7 +856,7 @@ void fmode_6_5(bool read)
 }
 
 
-void fmode_4_3(bool read, const fs::path& file)
+void fmode_3_4(bool read, const fs::path& file)
 {
     const auto path = filesystem::path(u8"./tmp") / file;
     if (read)
@@ -958,10 +958,10 @@ void fmode_9()
 }
 
 
-void fmode_11_12(int fmode)
+void fmode_11_12(file_operation_t file_operation)
 {
     std::string filepath;
-    if (fmode == 12)
+    if (file_operation == file_operation_t::_12)
     {
         if (!fs::exists(filesystem::path(u8"./tmp/mdata_"s + mid + u8".s2")))
         {
@@ -976,7 +976,7 @@ void fmode_11_12(int fmode)
     }
     elona_delete(filepath);
     fileadd(filepath, 1);
-    if (fmode == 11)
+    if (file_operation == file_operation_t::_11)
     {
         filepath = filesystem::path(u8"./tmp/cdata_"s + mid + u8".s2")
                        .generic_string();
@@ -1035,33 +1035,58 @@ namespace elona
 {
 
 
-void ctrl_file(int mode, const fs::path& filepath)
+void ctrl_file(file_operation_t file_operation)
 {
     notesel(filemod);
     gdata_play_time = gdata_play_time + timeGetTime() / 1000 - time_begin;
     time_begin = timeGetTime() / 1000;
 
-    switch (mode)
+    switch (file_operation)
     {
-    case 8:
-    case 7: fmode_8_7(mode == 7); break;
-    case 14:
-    case 15: fmode_14_15(mode == 15); break;
-    case 2:
-    case 1: fmode_2_1(mode == 1); break;
-    case 16: fmode_16(); break;
-    case 6:
-    case 5: fmode_6_5(mode == 5); break;
-    case 4:
-    case 3: fmode_4_3(mode == 3, filepath); break;
-    case 23:
-    case 24: fmode_23_24(mode == 24, filepath); break;
-    case 17: fmode_17(); break;
-    case 10: fmode_10(); break;
-    case 9: fmode_9(); break;
-    case 11:
-    case 12: fmode_11_12(mode); break;
-    case 13: fmode_13(); break;
+    case file_operation_t::_1:
+    case file_operation_t::_2:
+        fmode_1_2(file_operation == file_operation_t::_1);
+        break;
+    case file_operation_t::_5:
+    case file_operation_t::_6:
+        fmode_5_6(file_operation == file_operation_t::_5);
+        break;
+    case file_operation_t::_7:
+    case file_operation_t::_8:
+        fmode_7_8(file_operation == file_operation_t::_7);
+        break;
+    case file_operation_t::_9: fmode_9(); break;
+    case file_operation_t::_10: fmode_10(); break;
+    case file_operation_t::_11:
+    case file_operation_t::_12: fmode_11_12(file_operation); break;
+    case file_operation_t::_13: fmode_13(); break;
+    case file_operation_t::_14:
+    case file_operation_t::_15:
+        fmode_14_15(file_operation == file_operation_t::_15);
+        break;
+    case file_operation_t::_17: fmode_17(); break;
+    case file_operation_t::_16: fmode_16(); break;
+    default: assert(0);
+    }
+}
+
+
+void ctrl_file(file_operation2_t file_operation, const fs::path& filepath)
+{
+    notesel(filemod);
+    gdata_play_time = gdata_play_time + timeGetTime() / 1000 - time_begin;
+    time_begin = timeGetTime() / 1000;
+
+    switch (file_operation)
+    {
+    case file_operation2_t::_3:
+    case file_operation2_t::_4:
+        fmode_3_4(file_operation == file_operation2_t::_3, filepath);
+        break;
+    case file_operation2_t::_23:
+    case file_operation2_t::_24:
+        fmode_23_24(file_operation == file_operation2_t::_24, filepath);
+        break;
     default: assert(0);
     }
 }
