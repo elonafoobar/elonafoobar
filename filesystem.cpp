@@ -44,16 +44,6 @@ int utf16_to_ansi(const wchar_t* from, char* to, int buffer_size)
 #endif
 
 
-} // namespace
-
-
-
-namespace elona
-{
-namespace filesystem
-{
-
-
 
 fs::path get_executable_path()
 {
@@ -87,6 +77,16 @@ fs::path get_executable_path()
 
     return cache;
 }
+
+
+} // namespace
+
+
+
+namespace elona
+{
+namespace filesystem
+{
 
 
 fs::path path(const std::string& str)
