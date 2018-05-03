@@ -44,16 +44,6 @@ int utf16_to_ansi(const wchar_t* from, char* to, int buffer_size)
 #endif
 
 
-} // namespace
-
-
-
-namespace elona
-{
-namespace filesystem
-{
-
-
 
 fs::path get_executable_path()
 {
@@ -63,21 +53,21 @@ fs::path get_executable_path()
         size_t buf_size = sizeof(buf);
         if (GetModuleFileName(nullptr, buf, buf_size) == 0)
         {
-            throw 0; // TODO
+            throw std::runtime_error(u8"Error: fail to get excutable path");
         }
 #elif defined(ELONA_OS_MACOS)
         char buf[PATH_MAX + 1];
         uint32_t buf_size = sizeof(buf);
         if (_NSGetExecutablePath(buf, &buf_size) != 0)
         {
-            throw 0; // TODO
+            throw std::runtime_error(u8"Error: fail to get excutable path");
         }
 #elif defined(ELONA_OS_LINUX)
         char buf[PATH_MAX + 1];
         size_t buf_size = sizeof(buf);
         if (readlink("/proc/self/exe", buf, buf_size) == -1)
         {
-            throw 0; // TODO
+            throw std::runtime_error(u8"Error: fail to get excutable path");
         }
 #else
 #error Unsupported OS
@@ -89,10 +79,61 @@ fs::path get_executable_path()
 }
 
 
+} // namespace
+
+
+
+namespace elona
+{
+namespace filesystem
+{
+
+
+namespace dir
+{
+
+
+#define ELONA_DEFINE_PREDEFINED_DIR(func_name, path_name) \
+    fs::path func_name() \
+    { \
+        return filesystem::path(path_name); \
+    }
+
+ELONA_DEFINE_PREDEFINED_DIR(exe, "")
+ELONA_DEFINE_PREDEFINED_DIR(data, "data")
+ELONA_DEFINE_PREDEFINED_DIR(graphic, "graphic")
+ELONA_DEFINE_PREDEFINED_DIR(map, "map")
+ELONA_DEFINE_PREDEFINED_DIR(save, "save")
+ELONA_DEFINE_PREDEFINED_DIR(sound, "sound")
+ELONA_DEFINE_PREDEFINED_DIR(tmp, "tmp")
+ELONA_DEFINE_PREDEFINED_DIR(user, "user")
+
+#undef ELONA_DEFINE_PREDEFINED_DIR
+
+
+fs::path save(const std::string& player_id)
+{
+    return save() / u8path(player_id);
+}
+
+
+} // namespace dir
+
+
+
 fs::path path(const std::string& str)
 {
-    return get_executable_path() / str;
+    return get_executable_path() / u8path(str);
 }
+
+
+
+fs::path u8path(const std::string& str)
+{
+    return boost::locale::conv::utf_to_utf<fs::path::string_type::value_type>(
+        str);
+}
+
 
 
 std::string make_preferred_path_in_utf8(const fs::path& path)
@@ -112,17 +153,24 @@ std::string to_narrow_path(const fs::path& path)
 
     int needed_length = get_needed_buffer_size(wide_c_str);
     if (needed_length == 0)
-        throw "TODO";
+        throw std::runtime_error(u8"Error: in to_narrow_path()");
     auto buffer = std::make_unique<char[]>(needed_length);
     int used_length = utf16_to_ansi(wide_c_str, buffer.get(), needed_length);
     if (used_length == 0)
-        throw "TODO";
+        throw std::runtime_error(u8"Error: in to_narrow_path()");
 
     return std::string{buffer.get()};
 #else
     return path.native();
 #endif
 }
+
+
+std::string to_utf8_path(const fs::path& path)
+{
+    return boost::locale::conv::utf_to_utf<char>(path.native());
+}
+
 
 
 } // namespace filesystem

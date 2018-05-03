@@ -62,7 +62,7 @@ basic_image::basic_image(
     const optional<color>& keycolor)
 {
     auto surface = detail::enforce_img(
-        ::IMG_Load(filesystem::to_narrow_path(filepath).c_str()));
+        ::IMG_Load(filesystem::to_utf8_path(filepath).c_str()));
 
     if (keycolor)
     {

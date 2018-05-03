@@ -1126,7 +1126,7 @@ void talk_unique()
             fade_out();
             gsel(4);
             pos(0, 0);
-            picload(filesystem::path(u8"./graphic/face1.bmp"), 1);
+            picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
             gsel(0);
             listmax = 0;
             buff = lang(
@@ -1327,7 +1327,7 @@ void talk_unique()
             fade_out();
             gsel(4);
             pos(0, 0);
-            picload(filesystem::path(u8"./graphic/face1.bmp"), 1);
+            picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
             gsel(0);
             listmax = 0;
             buff = lang(

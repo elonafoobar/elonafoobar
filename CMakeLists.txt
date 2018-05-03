@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.0)
 
 
 # Project
-project(ElonaFoobar VERSION 0.2.0)
+project(ElonaFoobar VERSION 0.2.1)
 
 
 # Versioning
@@ -71,6 +71,7 @@ set(CORE_SOURCES
     item.cpp
     item_db.cpp
     item_material.cpp
+    log.cpp
     magic.cpp
     main.cpp
     map.cpp
@@ -136,14 +137,9 @@ target_link_libraries(${PROJECT_NAME} ${SDL2_MIXER_LIBRARIES})
 
 
 
-# My libraries
-add_subdirectory(snail)
-target_link_libraries(${PROJECT_NAME} snail)
-
-
-
 # Compiler options
 if(MSVC)
+    add_definitions("-D_UNICODE")
     set(CMAKE_CXX_FLAGS "/W4 /source-charset:utf-8 /MT /EHsc")
 else()
     set(CMAKE_CXX_FLAGS "-Wall -Wextra")
@@ -155,3 +151,9 @@ if(MSVC)
 else()
     set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DDEBUG")
 endif()
+
+
+
+# My libraries
+add_subdirectory(snail)
+target_link_libraries(${PROJECT_NAME} snail)
