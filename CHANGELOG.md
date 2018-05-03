@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
+## [0.2.1] - 2018-05-03
+
+### Added
+
+- Dump error log and some information to runtime/log.txt.
+
+### Deleted
+
+- Remove support of vanilla's custom file format.
+  - It is temporary. Of course, it will be implemented again.
+
+### Fixed
+
+- [vanilla] Fix employees' vanishing when building your home.
+- [vanilla] Fix freeze when failing to create rewards at casino.
+- Fix selected text being filled with black.
+- Fix some library were not Unicode version.
+- Fix some of save data being stored in wrong folder.
+- Fix save folder's mojibake.
+- Fix crashes if downloaded folder contains non-ASCII character.
+
+
+
 ## [0.2.0] - 2018-05-01
 
 ### Added
