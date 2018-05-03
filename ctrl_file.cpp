@@ -513,13 +513,12 @@ void fmode_7_8(bool read)
 
 void fmode_14_15(bool read)
 {
-    std::string filepath;
     const auto dir = read ? filesystem::dir::save(geneuse) : filesystem::dir::tmp();
     if (!read)
     {
         playerheader =
             cdatan(0, 0) + u8"(Lv" + cdata[0].level + u8")の遺伝子";
-        filepath = (dir / u8"gene_header.txt").generic_string();
+        const auto filepath = dir / u8"gene_header.txt";
         bsave(filepath, playerheader);
         fileadd(filepath);
     }
@@ -535,7 +534,7 @@ void fmode_14_15(bool read)
         }
         else
         {
-            fileadd(filepath.generic_string());
+            fileadd(filepath);
             save(filepath, cdata, 0, 57);
         }
     }
@@ -559,7 +558,7 @@ void fmode_14_15(bool read)
         }
         else
         {
-            fileadd(filepath.generic_string());
+            fileadd(filepath);
             std::ofstream out{filepath.native(), std::ios::binary};
             putit::binary_oarchive ar{out};
             for (int cc = 0; cc < 57; ++cc)
@@ -583,7 +582,7 @@ void fmode_14_15(bool read)
         }
         else
         {
-            fileadd(filepath.generic_string());
+            fileadd(filepath);
             save_v1(filepath, spell, 0, 200);
         }
     }
@@ -599,7 +598,7 @@ void fmode_14_15(bool read)
         }
         else
         {
-            fileadd(filepath.generic_string());
+            fileadd(filepath);
             save(filepath, inv, 0, 1320);
         }
     }
@@ -615,7 +614,7 @@ void fmode_14_15(bool read)
         }
         else
         {
-            fileadd(filepath.generic_string());
+            fileadd(filepath);
             save_v1(filepath, spact, 0, 500);
         }
     }
@@ -631,7 +630,7 @@ void fmode_14_15(bool read)
         }
         else
         {
-            fileadd(filepath.generic_string());
+            fileadd(filepath);
             save_v1(filepath, mat, 0, 400);
         }
     }
@@ -647,7 +646,7 @@ void fmode_14_15(bool read)
         }
         else
         {
-            fileadd(filepath.generic_string());
+            fileadd(filepath);
             save_v2(filepath, card, 0, 100, 0, 40);
         }
     }
@@ -663,7 +662,7 @@ void fmode_14_15(bool read)
         }
         else
         {
-            fileadd(filepath.generic_string());
+            fileadd(filepath);
             save_v1(filepath, genetemp, 0, 1000);
         }
     }
@@ -672,7 +671,6 @@ void fmode_14_15(bool read)
 
 void fmode_1_2(bool read)
 {
-    std::string filepath;
     const auto dir = filesystem::dir::tmp();
 
     {
@@ -683,7 +681,7 @@ void fmode_1_2(bool read)
         }
         else
         {
-            fileadd(filepath.generic_string());
+            fileadd(filepath);
             save_v1(filepath, mdata, 0, 100);
         }
     }
@@ -699,7 +697,7 @@ void fmode_1_2(bool read)
         }
         else
         {
-            fileadd(filepath.generic_string());
+            fileadd(filepath);
             save_v3(filepath, map, 0, mdata(0), 0, mdata(1), 0, 10);
         }
     }
@@ -712,7 +710,7 @@ void fmode_1_2(bool read)
         }
         else
         {
-            fileadd(filepath.generic_string());
+            fileadd(filepath);
             save(filepath, cdata, 57, 245);
         }
     }
@@ -733,7 +731,7 @@ void fmode_1_2(bool read)
         }
         else
         {
-            fileadd(filepath.generic_string());
+            fileadd(filepath);
             std::ofstream out{filepath.native(), std::ios::binary};
             putit::binary_oarchive ar{out};
             for (int cc = 57; cc < 245; ++cc)
@@ -768,7 +766,7 @@ void fmode_1_2(bool read)
         }
         else
         {
-            fileadd(filepath.generic_string());
+            fileadd(filepath);
             save_v2(filepath, mef, 0, 9, 0, 200);
         }
     }
@@ -858,7 +856,7 @@ void fmode_3_4(bool read, const fs::path& filename)
     }
     else
     {
-        fileadd(filepath.generic_string());
+        fileadd(filepath);
         save(filepath, inv, 1320, 5480);
     }
 }
@@ -869,7 +867,7 @@ void fmode_23_24(bool read, const fs::path& filepath)
 {
     if (read)
     {
-        fileadd(filepath.generic_string());
+        fileadd(filepath);
         save_v1(filepath, deck, 0, 1000);
     }
     else
@@ -894,7 +892,7 @@ void fmode_17()
         }
         else
         {
-            fileadd(filepath.generic_string());
+            fileadd(filepath);
             save(filepath, cdata, 57, 245);
         }
     }
@@ -915,7 +913,7 @@ void fmode_17()
         }
         else
         {
-            fileadd(filepath.generic_string());
+            fileadd(filepath);
             std::ofstream out{filepath.native(), std::ios::binary};
             putit::binary_oarchive ar{out};
             for (int cc = 57; cc < 245; ++cc)
@@ -964,31 +962,31 @@ void fmode_11_12(file_operation_t file_operation)
         return;
 
     elona_delete(filepath);
-    fileadd(filepath.generic_string(), 1);
+    fileadd(filepath, 1);
     if (file_operation == file_operation_t::_11)
     {
         filepath = filesystem::dir::tmp() / (u8"cdata_"s + mid + u8".s2");
         elona_delete(filepath);
-        fileadd(filepath.generic_string(), 1);
+        fileadd(filepath, 1);
         filepath = filesystem::dir::tmp() / (u8"sdata_"s + mid + u8".s2");
         elona_delete(filepath);
-        fileadd(filepath.generic_string(), 1);
+        fileadd(filepath, 1);
         filepath = filesystem::dir::tmp() / (u8"cdatan_"s + mid + u8".s2");
         elona_delete(filepath);
-        fileadd(filepath.generic_string(), 1);
+        fileadd(filepath, 1);
         filepath = filesystem::dir::tmp() / (u8"inv_"s + mid + u8".s2");
         elona_delete(filepath);
-        fileadd(filepath.generic_string(), 1);
+        fileadd(filepath, 1);
     }
     filepath = filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2");
     elona_delete(filepath);
-    fileadd(filepath.generic_string(), 1);
+    fileadd(filepath, 1);
     filepath = filesystem::dir::tmp() / (u8"mdatan_"s + mid + u8".s2");
     elona_delete(filepath);
-    fileadd(filepath.generic_string(), 1);
+    fileadd(filepath, 1);
     filepath = filesystem::dir::tmp() / (u8"mef_"s + mid + u8".s2");
     elona_delete(filepath);
-    fileadd(filepath.generic_string(), 1);
+    fileadd(filepath, 1);
 }
 
 
@@ -1004,7 +1002,7 @@ void fmode_13()
              std::regex{u8R"(.*_)"s + area + u8R"(_.*\..*)"}))
     {
         elona_delete(entry.path());
-        fileadd(entry.path().generic_string(), 1);
+        fileadd(entry.path(), 1);
     }
 }
 

@@ -900,7 +900,7 @@ void eqrandweaponmage(int = 0);
 void equipinfo(int = 0, int = 0, int = 0);
 void evadd(int = 0, int = 0, int = 0);
 void exittempinv();
-void fileadd(const std::string&, int = 0);
+void fileadd(const fs::path& filepath, int = 0);
 void fillbg(int = 0, int = 0, int = 0, int = 0, int = 0);
 void fix_input_chat(std::string&);
 void fix_input_chat2(std::string&);

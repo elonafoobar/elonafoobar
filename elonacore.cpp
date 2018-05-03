@@ -7940,40 +7940,25 @@ void page_load()
 
 
 
-void fileadd(const std::string& prm_692, int prm_693)
+void fileadd(const fs::path& filepath, int prm_693)
 {
-    char mark_a;
-    char mark_b;
-    if (prm_693 == 0)
-    {
-        mark_a = '*';
-        mark_b = '#';
-    }
-    else
-    {
-        mark_a = '#';
-        mark_b = '*';
-    }
+    const auto mark_a = prm_693 ? '#' : '*';
+    const auto mark_b = prm_693 ? '*' : '#';
+
+    const auto filepath_ = filesystem::to_utf8_path(filepath);
     notesel(filemod);
-    int p_at_m98 = instr(filemod, 0, prm_692);
-    if (p_at_m98 != -1)
+    const auto pos = filemod(0).find(filepath_);
+    if (pos != std::string::npos)
     {
-        if (strmid(filemod, p_at_m98 - 1, 1)[0] == mark_b)
+        if (filemod(0)[pos - 1] == mark_b)
         {
-            filemod(0)[p_at_m98 - 1] = mark_a;
+            filemod(0)[pos - 1] = mark_a;
         }
         noteunsel();
         return;
     }
-    if (prm_693 != 0)
-    {
-        noteadd(std::string{mark_a} + prm_692);
-        noteunsel();
-        return;
-    }
-    noteadd(std::string{mark_a} + prm_692);
+    noteadd(mark_a + filepath_);
     noteunsel();
-    return;
 }
 
 
@@ -8133,7 +8118,7 @@ void arrayfile_write(const std::string& fmode_str, const fs::path& filepath)
 
     if (elona_export == 0)
     {
-        fileadd(filepath.generic_string());
+        fileadd(filepath);
     }
 }
 
@@ -47517,7 +47502,6 @@ void label_2088()
 
 void migrate_save_data()
 {
-    elona_vector1<std::string> file_cnv;
     int p1 = 0;
     int p3 = 0;
     if (gdata_version != 1220)
@@ -47564,7 +47548,6 @@ void migrate_save_data()
         for (int cnt = 100; cnt < 200; ++cnt)
         {
             p = cnt;
-            SDIM1(file_cnv);
             for (int cnt = 0; cnt < 40; ++cnt)
             {
                 adata(cnt, p) = 0;
@@ -47586,13 +47569,13 @@ void migrate_save_data()
                 {
                     p3 = p - 100 + 300;
                 }
-                file_cnv = (filesystem::dir::tmp() / ((strmid(file, 0, (p1 + 1)) + p3)
-                    + strmid(file, (p1 + p2 + 1), 20))).generic_string();
-                file = (filesystem::dir::tmp() / file).generic_string();
-                bcopy(file, file_cnv(0));
+                const auto file_cnv = filesystem::dir::tmp() / ((strmid(file, 0, (p1 + 1)) + p3)
+                    + strmid(file, (p1 + p2 + 1), 20));
+                const auto file_ = filesystem::dir::tmp() / file;
+                bcopy(file_, file_cnv);
                 fileadd(file_cnv);
-                elona_delete(file);
-                fileadd(file, 1);
+                elona_delete(file_);
+                fileadd(file_, 1);
             }
         }
         for (int cnt = 0; cnt < 500; ++cnt)
