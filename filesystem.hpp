@@ -19,9 +19,28 @@ namespace filesystem
 {
 
 
-fs::path get_executable_path();
+// Pre-defined directories.
+namespace dir
+{
+
+fs::path exe();
+fs::path data();
+fs::path graphic();
+fs::path map();
+fs::path save();
+fs::path save(const std::string& player_id);
+fs::path sound();
+fs::path tmp();
+fs::path user();
+
+} // namespace dir
+
 
 fs::path path(const std::string&);
+fs::path u8path(const std::string&);
+std::string make_preferred_path_in_utf8(const fs::path& path);
+std::string to_narrow_path(const fs::path& path);
+std::string to_utf8_path(const fs::path& path);
 
 
 
@@ -138,7 +157,8 @@ struct dir_entries
                     case type::all: break;
                     }
                     return !std::regex_match(
-                        itr->path().filename().generic_string(), pattern);
+                        filesystem::to_utf8_path(itr->path().filename()),
+                        pattern);
                 }};
     }
 
@@ -154,12 +174,6 @@ private:
     const type entry_type;
     const std::regex pattern;
 };
-
-
-
-std::string make_preferred_path_in_utf8(const fs::path& path);
-
-std::string to_narrow_path(const fs::path& path);
 
 
 

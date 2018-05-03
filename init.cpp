@@ -15,6 +15,7 @@
 #include "item.hpp"
 #include "item_db.hpp"
 #include "item_material.hpp"
+#include "log.hpp"
 #include "macro.hpp"
 #include "main.hpp"
 #include "race.hpp"
@@ -67,7 +68,7 @@ void main_loop()
 
 void load_musiclist()
 {
-    const auto filepath = filesystem::path(u8"./user/music/musiclist.txt");
+    const auto filepath = filesystem::dir::user() / u8"music/musiclist.txt";
     if (!fs::exists(filepath))
         return;
 
@@ -125,6 +126,33 @@ void check_double_launching()
 
 
 
+void load_character_sprite()
+{
+    usernpcmax = 0;
+    DIM3(userdata, 70, 1);
+    SDIM4(userdatan, 40, 10, 1);
+    SDIM1(untaglist);
+    gdata(86) = 0;
+    buffer(5, 1584, (25 + (usernpcmax / 33 + 1) * 2) * 48);
+    pos(0, 0);
+    picload(filesystem::dir::graphic() / u8"character.bmp", 1);
+    gmode(0);
+    gsel(5);
+    for (const auto& entry :
+         filesystem::dir_entries{filesystem::dir::user() / u8"graphic",
+                                 filesystem::dir_entries::type::file,
+                                 std::regex{u8R"(chara_.*\.bmp)"}})
+    {
+        const auto file = filesystem::to_utf8_path(entry.path().filename());
+        p = elona::stoi(strmid(file, 6, instr(file, 6, u8"."s)));
+        pos(p % 33 * inf_tiles, p / 33 * inf_tiles);
+        picload(entry.path(), 1);
+    }
+    gsel(0);
+}
+
+
+
 void initialize_elona()
 {
     time_warn = timeGetTime() / 1000;
@@ -163,13 +191,12 @@ void initialize_elona()
     boxf();
     redraw();
     buffer(3, 1440, 800);
-    picload(filesystem::path(u8"./graphic/interface.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"interface.bmp", 1);
     buffer(4, windoww, windowh);
     buffer(8, windoww, windowh);
     gsel(0);
-    folder = filesystem::path(u8"./user/graphic/").generic_string();
     buffer(1, 1584, 1200);
-    picload(filesystem::path(u8"./graphic/item.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"item.bmp", 1);
     if (inf_tiles != 48)
     {
         pos(0, 0);
@@ -197,7 +224,6 @@ void initialize_elona()
     DIM2(invctrl, 2);
     SDIM4(promptl, 50, 3, 20);
     SDIM3(description, 1000, 3);
-    SDIM2(folder, 1000);
     SDIM1(msgtempprev);
     DIM3(mef, 9, 200);
     DIM3(adata, 40, 500);
@@ -333,7 +359,7 @@ void initialize_elona()
     SDIM2(playerheader, 100);
     artifactlocation.clear();
     SDIM1(newsbuff);
-    SDIM3(soundfile, 30, 122);
+    soundfile.resize(122);
     SDIM3(musicfile, 30, 97);
     DIM3(slight, inf_screenw + 4, inf_screenh + 4);
 
@@ -352,7 +378,7 @@ void initialize_elona()
     gsel(0);
     gmode(2);
     text_set();
-    ctrl_file(10);
+    ctrl_file(file_operation_t::_10);
     tc = 0;
     tcol_at_txtfunc(0) = 255;
     tcol_at_txtfunc(1) = 255;
@@ -364,7 +390,7 @@ void initialize_elona()
     notesel(buffboard);
     {
         buffboard(0).clear();
-        std::ifstream in{filesystem::path(u8"./data/board.txt").native(),
+        std::ifstream in{(filesystem::dir::data() / u8"board.txt").native(),
                          std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -403,6 +429,7 @@ void initialize_elona()
     initialize_recipe();
     initialize_nefia_names();
     initialize_home_adata();
+    load_character_sprite();
     if (config::instance().music == 1 && DMINIT() == 0)
     {
         config::instance().music = 2;
@@ -549,11 +576,10 @@ void start_elona()
     quickpage = 1;
     if (defload != ""s)
     {
-        if (!fs::exists(
-                filesystem::path(u8"./save/"s + defload + u8"/header.txt")))
+        if (!fs::exists(filesystem::dir::save(defload) / u8"header.txt"))
         {
-            if (fs::exists(filesystem::path(
-                    u8"./save/sav_"s + defload + u8"/header.txt")))
+            if (fs::exists(
+                    filesystem::dir::save(u8"sav_" + defload) / u8"header.txt"))
             {
                 defload = u8"sav_"s + defload;
             }
@@ -777,12 +803,13 @@ void main_title_menu()
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(filesystem::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+        picload(
+            filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(4);
     gmode(0);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/title.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"title.bmp", 1);
     gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gmode(2);
     font(13 - en * 2);
@@ -854,7 +881,7 @@ void main_title_menu()
     }
     gsel(3);
     pos(960, 96);
-    picload(filesystem::path(u8"./graphic/deco_title.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"deco_title.bmp", 1);
     gsel(0);
     gmode(0);
     pos(0, 0);
@@ -972,20 +999,21 @@ void main_menu_new_game()
     cm = 1;
     gsel(4);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/void.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
     gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gsel(2);
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(filesystem::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+        picload(
+            filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(3);
     pos(960, 96);
-    picload(filesystem::path(u8"./graphic/deco_cm.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"deco_cm.bmp", 1);
     gsel(0);
     if (range::distance(filesystem::dir_entries{
-            filesystem::path(u8"./save"), filesystem::dir_entries::type::dir})
+            filesystem::dir::save(), filesystem::dir_entries::type::dir})
         >= 5)
     {
         keyrange = 0;
@@ -1823,12 +1851,12 @@ void character_making_final_phase()
             cmname = randomname();
         }
         playerid = u8"sav_"s + cmname;
-        const auto save_dir = filesystem::path(u8"./save");
         if (range::any_of(
-                filesystem::dir_entries{save_dir,
+                filesystem::dir_entries{filesystem::dir::save(),
                                         filesystem::dir_entries::type::dir},
                 [&](const auto& entry) {
-                    return entry.path().filename().generic_string() == playerid;
+                    return filesystem::to_utf8_path(entry.path().filename())
+                        == playerid;
                 }))
         {
             gmode(0);

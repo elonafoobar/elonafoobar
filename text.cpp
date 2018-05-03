@@ -226,7 +226,7 @@ void txtsetlastword()
 {
     std::vector<std::string> last_words;
     range::copy(
-        fileutil::read_by_line{filesystem::path(u8"./user")
+        fileutil::read_by_line{filesystem::dir::user()
                                / lang(u8"lastwords.txt", u8"lastwords-e.txt")},
         std::back_inserter(last_words));
     lastword = choice(last_words);
@@ -1450,7 +1450,7 @@ void parse_talk_file()
     if (noteinfo() <= 1)
     {
         buff(0).clear();
-        std::ifstream in{filesystem::path(u8"./data/talk.txt").native(),
+        std::ifstream in{(filesystem::dir::data() / u8"talk.txt").native(),
                          std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -1476,7 +1476,7 @@ void read_talk_file(const std::string& valn)
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{filesystem::path(u8"./data/talk.txt").native(),
+        std::ifstream in{(filesystem::dir::data() / u8"talk.txt").native(),
                          std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -1497,7 +1497,7 @@ void get_npc_talk()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{filesystem::path(u8"./data/talk.txt").native(),
+        std::ifstream in{(filesystem::dir::data() / u8"talk.txt").native(),
                          std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))

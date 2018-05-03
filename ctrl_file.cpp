@@ -167,18 +167,19 @@ void save(const fs::path& filepath, T& data, size_t begin, size_t end)
 
 
 
-void fmode_8_7(bool read)
+void fmode_7_8(bool read)
 {
-    folder = filesystem::path(u8"./save/"s + playerid + u8"/").generic_string();
+    const auto dir = filesystem::dir::save(playerid);
+
     if (!read)
     {
-        playerheader = ""s + cdatan(0, 0) + u8" Lv:"s + cdata[0].level + u8" "s
-            + mdatan(0);
-        bsave(folder + u8"header.txt"s, playerheader);
+        playerheader =
+            cdatan(0, 0) + u8" Lv:" + cdata[0].level + u8" " + mdatan(0);
+        bsave(dir / u8"header.txt", playerheader);
     }
 
     {
-        const auto filepath = folder + u8"gdata.s1";
+        const auto filepath = dir / u8"gdata.s1";
         if (read)
         {
             if (fs::exists(filepath))
@@ -193,26 +194,26 @@ void fmode_8_7(bool read)
     }
 
     {
-        const auto filepath = folder + u8"foobar_save.s1";
+        const auto filepath = dir / u8"foobar_save.s1";
         if (read)
         {
             if (fs::exists(filepath))
             {
-                std::ifstream in{filepath, std::ios::binary};
+                std::ifstream in{filepath.native(), std::ios::binary};
                 putit::binary_iarchive ar{in};
                 ar.load(foobar_save);
             }
         }
         else
         {
-            std::ofstream out{filepath, std::ios::binary};
+            std::ofstream out{filepath.native(), std::ios::binary};
             putit::binary_oarchive ar{out};
             ar.save(foobar_save);
         }
     }
 
     {
-        const auto filepath = folder + u8"cdata.s1";
+        const auto filepath = dir / u8"cdata.s1";
         if (read)
         {
             if (fs::exists(filepath))
@@ -227,12 +228,12 @@ void fmode_8_7(bool read)
     }
 
     {
-        const auto filepath = folder + u8"sdata.s1";
+        const auto filepath = dir / u8"sdata.s1";
         if (read)
         {
             if (fs::exists(filepath))
             {
-                std::ifstream in{filepath, std::ios::binary};
+                std::ifstream in{filepath.native(), std::ios::binary};
                 putit::binary_iarchive ar{in};
                 for (int cc = 0; cc < 57; ++cc)
                 {
@@ -245,7 +246,7 @@ void fmode_8_7(bool read)
         }
         else
         {
-            std::ofstream out{filepath, std::ios::binary};
+            std::ofstream out{filepath.native(), std::ios::binary};
             putit::binary_oarchive ar{out};
             for (int cc = 0; cc < 57; ++cc)
             {
@@ -258,7 +259,7 @@ void fmode_8_7(bool read)
     }
 
     {
-        const auto filepath = folder + u8"spell.s1";
+        const auto filepath = dir / u8"spell.s1";
         if (read)
         {
             if (fs::exists(filepath))
@@ -273,7 +274,7 @@ void fmode_8_7(bool read)
     }
 
     {
-        const auto filepath = folder + u8"inv.s1";
+        const auto filepath = dir / u8"inv.s1";
         if (read)
         {
             if (fs::exists(filepath))
@@ -288,7 +289,7 @@ void fmode_8_7(bool read)
     }
 
     {
-        const auto filepath = folder + u8"kitem.s1";
+        const auto filepath = dir / u8"kitem.s1";
         if (read)
         {
             if (fs::exists(filepath))
@@ -303,7 +304,7 @@ void fmode_8_7(bool read)
     }
 
     {
-        const auto filepath = folder + u8"knpc.s1";
+        const auto filepath = dir / u8"knpc.s1";
         if (read)
         {
             if (fs::exists(filepath))
@@ -318,7 +319,7 @@ void fmode_8_7(bool read)
     }
 
     {
-        const auto filepath = folder + u8"adata.s1";
+        const auto filepath = dir / u8"adata.s1";
         if (read)
         {
             if (fs::exists(filepath))
@@ -333,7 +334,7 @@ void fmode_8_7(bool read)
     }
 
     {
-        const auto filepath = folder + u8"spact.s1";
+        const auto filepath = dir / u8"spact.s1";
         if (read)
         {
             if (fs::exists(filepath))
@@ -348,7 +349,7 @@ void fmode_8_7(bool read)
     }
 
     {
-        const auto filepath = folder + u8"qdata.s1";
+        const auto filepath = dir / u8"qdata.s1";
         if (read)
         {
             if (fs::exists(filepath))
@@ -363,7 +364,7 @@ void fmode_8_7(bool read)
     }
 
     {
-        const auto filepath = folder + u8"mat.s1";
+        const auto filepath = dir / u8"mat.s1";
         if (read)
         {
             if (fs::exists(filepath))
@@ -378,7 +379,7 @@ void fmode_8_7(bool read)
     }
 
     {
-        const auto filepath = folder + u8"trait.s1";
+        const auto filepath = dir / u8"trait.s1";
         if (read)
         {
             if (fs::exists(filepath))
@@ -393,7 +394,7 @@ void fmode_8_7(bool read)
     }
 
     {
-        const auto filepath = folder + u8"pcc.s1";
+        const auto filepath = dir / u8"pcc.s1";
         if (read)
         {
             if (fs::exists(filepath))
@@ -408,7 +409,7 @@ void fmode_8_7(bool read)
     }
 
     {
-        const auto filepath = folder + u8"card.s1";
+        const auto filepath = dir / u8"card.s1";
         if (read)
         {
             if (fs::exists(filepath))
@@ -423,7 +424,7 @@ void fmode_8_7(bool read)
     }
 
     {
-        const auto filepath = folder + u8"krecipe.s1";
+        const auto filepath = dir / u8"krecipe.s1";
         if (read)
         {
             if (fs::exists(filepath))
@@ -441,10 +442,10 @@ void fmode_8_7(bool read)
     }
 
     {
-        const auto filepath = folder + u8"art.log"s;
+        const auto filepath = dir / u8"art.log";
         if (!read)
         {
-            std::ofstream out{filepath, std::ios::binary};
+            std::ofstream out{filepath.native(), std::ios::binary};
             range::for_each(artifactlocation, [&](const auto& line) {
                 out << line << std::endl;
             });
@@ -459,17 +460,17 @@ void fmode_8_7(bool read)
     }
 
     {
-        const auto filepath = folder + u8"news.log"s;
+        const auto filepath = dir / u8"news.log";
         notesel(newsbuff);
         if (!read)
         {
-            std::ofstream out{filepath, std::ios::binary};
+            std::ofstream out{filepath.native(), std::ios::binary};
             out << newsbuff(0) << std::endl;
         }
         if (read)
         {
             newsbuff(0).clear();
-            std::ifstream in{filepath, std::ios::binary};
+            std::ifstream in{filepath.native(), std::ios::binary};
             std::string tmp;
             while (std::getline(in, tmp))
             {
@@ -478,33 +479,33 @@ void fmode_8_7(bool read)
         }
     }
 
-    arrayfile(read, u8"cdatan1", folder + u8"cdatan.s1");
-    arrayfile(read, u8"qname", folder + u8"qname.s1");
-    arrayfile(read, u8"gdatan", folder + u8"gdatan.s1");
+    arrayfile(read, u8"cdatan1", dir / u8"cdatan.s1");
+    arrayfile(read, u8"qname", dir / u8"qname.s1");
+    arrayfile(read, u8"gdatan", dir / u8"gdatan.s1");
     if (!read)
     {
-        bsave(folder + u8"evnum.s1"s, evnum);
-        bsave(folder + u8"evdata1.s1"s, evdata1);
-        bsave(folder + u8"evdata2.s1"s, evdata2);
-        bsave(folder + u8"evlist.s1"s, evlist);
+        bsave(dir / u8"evnum.s1", evnum);
+        bsave(dir / u8"evdata1.s1", evdata1);
+        bsave(dir / u8"evdata2.s1", evdata2);
+        bsave(dir / u8"evlist.s1", evlist);
     }
     else
     {
-        if (fs::exists(folder + u8"evnum.s1"s))
+        if (fs::exists(dir / u8"evnum.s1"))
         {
-            bload(folder + u8"evnum.s1"s, evnum);
+            bload(dir / u8"evnum.s1", evnum);
         }
-        if (fs::exists(folder + u8"evdata1.s1"s))
+        if (fs::exists(dir / u8"evdata1.s1"))
         {
-            bload(folder + u8"evdata1.s1"s, evdata1);
+            bload(dir / u8"evdata1.s1", evdata1);
         }
-        if (fs::exists(folder + u8"evdata2.s1"s))
+        if (fs::exists(dir / u8"evdata2.s1"))
         {
-            bload(folder + u8"evdata2.s1"s, evdata2);
+            bload(dir / u8"evdata2.s1", evdata2);
         }
-        if (fs::exists(folder + u8"evlist.s1"s))
+        if (fs::exists(dir / u8"evlist.s1"))
         {
-            bload(folder + u8"evlist.s1"s, evlist);
+            bload(dir / u8"evlist.s1", evlist);
         }
     }
 }
@@ -512,27 +513,18 @@ void fmode_8_7(bool read)
 
 void fmode_14_15(bool read)
 {
-    std::string filepath;
+    const auto dir =
+        read ? filesystem::dir::save(geneuse) : filesystem::dir::tmp();
     if (!read)
     {
-        folder = filesystem::path(u8"./tmp/").generic_string();
-    }
-    if (read)
-    {
-        folder =
-            filesystem::path(u8"./save/"s + geneuse + u8"/").generic_string();
-    }
-    if (!read)
-    {
-        playerheader =
-            ""s + cdatan(0, 0) + u8"(Lv"s + cdata[0].level + u8")の遺伝子"s;
-        filepath = folder + u8"gene_header.txt"s;
+        playerheader = cdatan(0, 0) + u8"(Lv" + cdata[0].level + u8")の遺伝子";
+        const auto filepath = dir / u8"gene_header.txt";
         bsave(filepath, playerheader);
         fileadd(filepath);
     }
 
     {
-        const auto filepath = folder + u8"g_cdata.s1"s;
+        const auto filepath = dir / u8"g_cdata.s1";
         if (read)
         {
             if (fs::exists(filepath))
@@ -548,12 +540,12 @@ void fmode_14_15(bool read)
     }
 
     {
-        const auto filepath = folder + u8"g_sdata.s1"s;
+        const auto filepath = dir / u8"g_sdata.s1";
         if (read)
         {
             if (fs::exists(filepath))
             {
-                std::ifstream in{filepath, std::ios::binary};
+                std::ifstream in{filepath.native(), std::ios::binary};
                 putit::binary_iarchive ar{in};
                 for (int cc = 0; cc < 57; ++cc)
                 {
@@ -566,8 +558,8 @@ void fmode_14_15(bool read)
         }
         else
         {
-            fileadd(""s + filepath);
-            std::ofstream out{filepath, std::ios::binary};
+            fileadd(filepath);
+            std::ofstream out{filepath.native(), std::ios::binary};
             putit::binary_oarchive ar{out};
             for (int cc = 0; cc < 57; ++cc)
             {
@@ -580,7 +572,7 @@ void fmode_14_15(bool read)
     }
 
     {
-        const auto filepath = folder + u8"g_spell.s1"s;
+        const auto filepath = dir / u8"g_spell.s1";
         if (read)
         {
             if (fs::exists(filepath))
@@ -590,13 +582,13 @@ void fmode_14_15(bool read)
         }
         else
         {
-            fileadd(""s + filepath);
+            fileadd(filepath);
             save_v1(filepath, spell, 0, 200);
         }
     }
 
     {
-        const auto filepath = folder + u8"g_inv.s1"s;
+        const auto filepath = dir / u8"g_inv.s1";
         if (read)
         {
             if (fs::exists(filepath))
@@ -612,7 +604,7 @@ void fmode_14_15(bool read)
     }
 
     {
-        const auto filepath = folder + u8"g_spact.s1"s;
+        const auto filepath = dir / u8"g_spact.s1";
         if (read)
         {
             if (fs::exists(filepath))
@@ -622,13 +614,13 @@ void fmode_14_15(bool read)
         }
         else
         {
-            fileadd(""s + filepath);
+            fileadd(filepath);
             save_v1(filepath, spact, 0, 500);
         }
     }
 
     {
-        const auto filepath = folder + u8"g_mat.s1"s;
+        const auto filepath = dir / u8"g_mat.s1";
         if (read)
         {
             if (fs::exists(filepath))
@@ -638,13 +630,13 @@ void fmode_14_15(bool read)
         }
         else
         {
-            fileadd(""s + filepath);
+            fileadd(filepath);
             save_v1(filepath, mat, 0, 400);
         }
     }
 
     {
-        const auto filepath = folder + u8"g_card.s1"s;
+        const auto filepath = dir / u8"g_card.s1";
         if (read)
         {
             if (fs::exists(filepath))
@@ -654,13 +646,13 @@ void fmode_14_15(bool read)
         }
         else
         {
-            fileadd(""s + filepath);
+            fileadd(filepath);
             save_v2(filepath, card, 0, 100, 0, 40);
         }
     }
 
     {
-        const auto filepath = folder + u8"g_genetemp.s1"s;
+        const auto filepath = dir / u8"g_genetemp.s1";
         if (read)
         {
             if (fs::exists(filepath))
@@ -670,33 +662,32 @@ void fmode_14_15(bool read)
         }
         else
         {
-            fileadd(""s + filepath);
+            fileadd(filepath);
             save_v1(filepath, genetemp, 0, 1000);
         }
     }
 }
 
 
-void fmode_2_1(bool read)
+void fmode_1_2(bool read)
 {
-    std::string filepath;
-    folder = filesystem::path(u8"./tmp/").generic_string();
+    const auto dir = filesystem::dir::tmp();
 
     {
-        const auto filepath = folder + u8"mdata_"s + mid + u8".s2"s;
+        const auto filepath = dir / (u8"mdata_"s + mid + u8".s2");
         if (read)
         {
             load_v1(filepath, mdata, 0, 100);
         }
         else
         {
-            fileadd(""s + filepath);
+            fileadd(filepath);
             save_v1(filepath, mdata, 0, 100);
         }
     }
 
     {
-        const auto filepath = folder + u8"map_"s + mid + u8".s2"s;
+        const auto filepath = dir / (u8"map_"s + mid + u8".s2");
         if (read)
         {
             DIM4(map, mdata(0), mdata(1), 10);
@@ -706,13 +697,13 @@ void fmode_2_1(bool read)
         }
         else
         {
-            fileadd(""s + filepath);
+            fileadd(filepath);
             save_v3(filepath, map, 0, mdata(0), 0, mdata(1), 0, 10);
         }
     }
 
     {
-        const auto filepath = folder + u8"cdata_"s + mid + u8".s2"s;
+        const auto filepath = dir / (u8"cdata_"s + mid + u8".s2");
         if (read)
         {
             load(filepath, cdata, 57, 245);
@@ -725,10 +716,10 @@ void fmode_2_1(bool read)
     }
 
     {
-        const auto filepath = folder + u8"sdata_"s + mid + u8".s2"s;
+        const auto filepath = dir / (u8"sdata_"s + mid + u8".s2");
         if (read)
         {
-            std::ifstream in{filepath, std::ios::binary};
+            std::ifstream in{filepath.native(), std::ios::binary};
             putit::binary_iarchive ar{in};
             for (int cc = 57; cc < 245; ++cc)
             {
@@ -740,8 +731,8 @@ void fmode_2_1(bool read)
         }
         else
         {
-            fileadd(""s + filepath);
-            std::ofstream out{filepath, std::ios::binary};
+            fileadd(filepath);
+            std::ofstream out{filepath.native(), std::ios::binary};
             putit::binary_oarchive ar{out};
             for (int cc = 57; cc < 245; ++cc)
             {
@@ -754,7 +745,7 @@ void fmode_2_1(bool read)
     }
 
     {
-        const auto filepath = folder + u8"mef_"s + mid + u8".s2"s;
+        const auto filepath = dir / (u8"mef_"s + mid + u8".s2");
         if (read)
         {
             if (mdata(21) == 0)
@@ -775,13 +766,13 @@ void fmode_2_1(bool read)
         }
         else
         {
-            fileadd(""s + filepath);
+            fileadd(filepath);
             save_v2(filepath, mef, 0, 9, 0, 200);
         }
     }
 
-    arrayfile(read, u8"cdatan2", folder + u8"cdatan_"s + mid + u8".s2");
-    arrayfile(read, u8"mdatan", folder + u8"mdatan_"s + mid + u8".s2");
+    arrayfile(read, u8"cdatan2", dir / (u8"cdatan_"s + mid + u8".s2"));
+    arrayfile(read, u8"mdatan", dir / (u8"mdatan_"s + mid + u8".s2"));
 }
 
 
@@ -801,7 +792,7 @@ void fmode_16()
 }
 
 
-void fmode_6_5(bool read)
+void fmode_5_6(bool read)
 {
     if (read)
     {
@@ -856,17 +847,17 @@ void fmode_6_5(bool read)
 }
 
 
-void fmode_4_3(bool read, const fs::path& file)
+void fmode_3_4(bool read, const fs::path& filename)
 {
-    const auto path = filesystem::path(u8"./tmp") / file;
+    const auto filepath = filesystem::dir::tmp() / filename;
     if (read)
     {
-        load(path, inv, 1320, 5480);
+        load(filepath, inv, 1320, 5480);
     }
     else
     {
-        fileadd(path.generic_string());
-        save(path, inv, 1320, 5480);
+        fileadd(filepath);
+        save(filepath, inv, 1320, 5480);
     }
 }
 
@@ -876,7 +867,7 @@ void fmode_23_24(bool read, const fs::path& filepath)
 {
     if (read)
     {
-        fileadd(filepath.generic_string());
+        fileadd(filepath);
         save_v1(filepath, deck, 0, 1000);
     }
     else
@@ -888,14 +879,13 @@ void fmode_23_24(bool read, const fs::path& filepath)
 
 void fmode_17()
 {
-    folder = filesystem::path(u8"./tmp/").generic_string();
-    if (!fs::exists(folder + u8"cdata_"s + mid + u8".s2"s))
-    {
+    const auto dir = filesystem::dir::tmp();
+
+    if (!fs::exists(dir / (u8"cdata_"s + mid + u8".s2")))
         return;
-    }
 
     {
-        const auto filepath = folder + u8"cdata_"s + mid + u8".s2"s;
+        const auto filepath = dir / (u8"cdata_"s + mid + u8".s2");
         if (true)
         {
             load(filepath, cdata, 57, 245);
@@ -908,10 +898,10 @@ void fmode_17()
     }
 
     {
-        const auto filepath = folder + u8"sdata_"s + mid + u8".s2"s;
+        const auto filepath = dir / (u8"sdata_"s + mid + u8".s2");
         if (true)
         {
-            std::ifstream in{filepath, std::ios::binary};
+            std::ifstream in{filepath.native(), std::ios::binary};
             putit::binary_iarchive ar{in};
             for (int cc = 57; cc < 245; ++cc)
             {
@@ -923,8 +913,8 @@ void fmode_17()
         }
         else
         {
-            fileadd(""s + filepath);
-            std::ofstream out{filepath, std::ios::binary};
+            fileadd(filepath);
+            std::ofstream out{filepath.native(), std::ios::binary};
             putit::binary_oarchive ar{out};
             for (int cc = 57; cc < 245; ++cc)
             {
@@ -936,14 +926,14 @@ void fmode_17()
         }
     }
 
-    arrayfile(true, u8"cdatan2", folder + u8"cdatan_"s + mid + u8".s2");
+    arrayfile(true, u8"cdatan2", dir / (u8"cdatan_"s + mid + u8".s2"));
 }
 
 
 void fmode_10()
 {
     for (const auto& entry : filesystem::dir_entries(
-             filesystem::path(u8"./tmp"),
+             filesystem::dir::tmp(),
              filesystem::dir_entries::type::file,
              std::regex{u8R"(.*\..*)"}))
     {
@@ -954,57 +944,47 @@ void fmode_10()
 
 void fmode_9()
 {
-    elona_delete(filesystem::path(u8"./save/"s + playerid));
+    elona_delete(filesystem::dir::save(playerid));
 }
 
 
-void fmode_11_12(int fmode)
+void fmode_11_12(file_operation_t file_operation)
 {
-    std::string filepath;
-    if (fmode == 12)
+    if (file_operation == file_operation_t::_12)
     {
-        if (!fs::exists(filesystem::path(u8"./tmp/mdata_"s + mid + u8".s2")))
+        if (!fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
         {
             return;
         }
     }
-    filepath =
-        filesystem::path(u8"./tmp/map_"s + mid + u8".s2").generic_string();
+    auto filepath = filesystem::dir::tmp() / (u8"map_"s + mid + u8".s2");
     if (!fs::exists(filepath))
-    {
         return;
-    }
+
     elona_delete(filepath);
     fileadd(filepath, 1);
-    if (fmode == 11)
+    if (file_operation == file_operation_t::_11)
     {
-        filepath = filesystem::path(u8"./tmp/cdata_"s + mid + u8".s2")
-                       .generic_string();
+        filepath = filesystem::dir::tmp() / (u8"cdata_"s + mid + u8".s2");
         elona_delete(filepath);
         fileadd(filepath, 1);
-        filepath = filesystem::path(u8"./tmp/sdata_"s + mid + u8".s2")
-                       .generic_string();
+        filepath = filesystem::dir::tmp() / (u8"sdata_"s + mid + u8".s2");
         elona_delete(filepath);
         fileadd(filepath, 1);
-        filepath = filesystem::path(u8"./tmp/cdatan_"s + mid + u8".s2")
-                       .generic_string();
+        filepath = filesystem::dir::tmp() / (u8"cdatan_"s + mid + u8".s2");
         elona_delete(filepath);
         fileadd(filepath, 1);
-        filepath =
-            filesystem::path(u8"./tmp/inv_"s + mid + u8".s2").generic_string();
+        filepath = filesystem::dir::tmp() / (u8"inv_"s + mid + u8".s2");
         elona_delete(filepath);
         fileadd(filepath, 1);
     }
-    filepath =
-        filesystem::path(u8"./tmp/mdata_"s + mid + u8".s2").generic_string();
+    filepath = filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2");
     elona_delete(filepath);
     fileadd(filepath, 1);
-    filepath =
-        filesystem::path(u8"./tmp/mdatan_"s + mid + u8".s2").generic_string();
+    filepath = filesystem::dir::tmp() / (u8"mdatan_"s + mid + u8".s2");
     elona_delete(filepath);
     fileadd(filepath, 1);
-    filepath =
-        filesystem::path(u8"./tmp/mef_"s + mid + u8".s2").generic_string();
+    filepath = filesystem::dir::tmp() / (u8"mef_"s + mid + u8".s2");
     elona_delete(filepath);
     fileadd(filepath, 1);
 }
@@ -1017,12 +997,12 @@ void fmode_13()
         adata(i, area) = 0;
     }
     for (const auto& entry : filesystem::dir_entries(
-             filesystem::path(u8"./tmp"),
+             filesystem::dir::tmp(),
              filesystem::dir_entries::type::file,
              std::regex{u8R"(.*_)"s + area + u8R"(_.*\..*)"}))
     {
         elona_delete(entry.path());
-        fileadd(entry.path().generic_string(), 1);
+        fileadd(entry.path(), 1);
     }
 }
 
@@ -1035,33 +1015,58 @@ namespace elona
 {
 
 
-void ctrl_file(int mode, const fs::path& filepath)
+void ctrl_file(file_operation_t file_operation)
 {
     notesel(filemod);
     gdata_play_time = gdata_play_time + timeGetTime() / 1000 - time_begin;
     time_begin = timeGetTime() / 1000;
 
-    switch (mode)
+    switch (file_operation)
     {
-    case 8:
-    case 7: fmode_8_7(mode == 7); break;
-    case 14:
-    case 15: fmode_14_15(mode == 15); break;
-    case 2:
-    case 1: fmode_2_1(mode == 1); break;
-    case 16: fmode_16(); break;
-    case 6:
-    case 5: fmode_6_5(mode == 5); break;
-    case 4:
-    case 3: fmode_4_3(mode == 3, filepath); break;
-    case 23:
-    case 24: fmode_23_24(mode == 24, filepath); break;
-    case 17: fmode_17(); break;
-    case 10: fmode_10(); break;
-    case 9: fmode_9(); break;
-    case 11:
-    case 12: fmode_11_12(mode); break;
-    case 13: fmode_13(); break;
+    case file_operation_t::_1:
+    case file_operation_t::_2:
+        fmode_1_2(file_operation == file_operation_t::_1);
+        break;
+    case file_operation_t::_5:
+    case file_operation_t::_6:
+        fmode_5_6(file_operation == file_operation_t::_5);
+        break;
+    case file_operation_t::_7:
+    case file_operation_t::_8:
+        fmode_7_8(file_operation == file_operation_t::_7);
+        break;
+    case file_operation_t::_9: fmode_9(); break;
+    case file_operation_t::_10: fmode_10(); break;
+    case file_operation_t::_11:
+    case file_operation_t::_12: fmode_11_12(file_operation); break;
+    case file_operation_t::_13: fmode_13(); break;
+    case file_operation_t::_14:
+    case file_operation_t::_15:
+        fmode_14_15(file_operation == file_operation_t::_15);
+        break;
+    case file_operation_t::_17: fmode_17(); break;
+    case file_operation_t::_16: fmode_16(); break;
+    default: assert(0);
+    }
+}
+
+
+void ctrl_file(file_operation2_t file_operation, const fs::path& filepath)
+{
+    notesel(filemod);
+    gdata_play_time = gdata_play_time + timeGetTime() / 1000 - time_begin;
+    time_begin = timeGetTime() / 1000;
+
+    switch (file_operation)
+    {
+    case file_operation2_t::_3:
+    case file_operation2_t::_4:
+        fmode_3_4(file_operation == file_operation2_t::_3, filepath);
+        break;
+    case file_operation2_t::_23:
+    case file_operation2_t::_24:
+        fmode_23_24(file_operation == file_operation2_t::_24, filepath);
+        break;
     default: assert(0);
     }
 }

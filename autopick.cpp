@@ -20,12 +20,14 @@ void autopick::load(const std::string& player_id)
 {
     clear();
 
-    for (const auto directory : {"save/"s + player_id, "save"s, ""s})
+    for (const auto directory : {filesystem::dir::save(player_id),
+                                 filesystem::dir::save(),
+                                 filesystem::dir::exe()})
     {
         for (const auto filename :
              {u8"autopick", u8"autopick.txt", u8"autopick.txt.txt"})
         {
-            const auto filepath = filesystem::path(directory) / filename;
+            const auto filepath = directory / filename;
             bool file_exists = try_load(filepath);
             if (file_exists)
                 break;

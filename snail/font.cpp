@@ -16,7 +16,7 @@ font_t::font_t(const fs::path& filepath, int size, style_t style)
     , _style(style)
     , _ptr(
           detail::enforce_ttf(::TTF_OpenFont(
-              filesystem::to_narrow_path(filepath).c_str(),
+              filesystem::to_utf8_path(filepath).c_str(),
               size)),
           ::TTF_CloseFont)
 {

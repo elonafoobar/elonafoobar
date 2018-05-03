@@ -64,13 +64,13 @@ label_17401:
         ""s + gdata_current_map + u8"_"s + (100 + gdata_current_dungeon_level);
     if (mode == 3)
     {
-        ctrl_file(1);
-        ctrl_file(3, u8"inv_"s + mid + u8".s2");
+        ctrl_file(file_operation_t::_1);
+        ctrl_file(file_operation2_t::_3, u8"inv_"s + mid + u8".s2");
         goto label_1744_internal;
     }
     if (getkey(snail::key::backspace))
     {
-        if (fs::exists(filesystem::path(u8"./tmp/mdata_"s + mid + u8".s2")))
+        if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
         {
             int stat = dialog(
                 lang(
@@ -79,13 +79,13 @@ label_17401:
                 3);
             if (stat == 6)
             {
-                ctrl_file(11);
+                ctrl_file(file_operation_t::_11);
             }
         }
     }
-    if (fs::exists(filesystem::path(u8"./tmp/mdata_"s + mid + u8".s2")))
+    if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
     {
-        ctrl_file(1);
+        ctrl_file(file_operation_t::_1);
         if (mdata(7) == 0)
         {
             goto label_1741_internal;
@@ -99,7 +99,7 @@ label_17401:
                 goto label_1741_internal;
             }
         }
-        ctrl_file(3, u8"inv_"s + mid + u8".s2");
+        ctrl_file(file_operation2_t::_3, u8"inv_"s + mid + u8".s2");
         if (mode == 2)
         {
             map_placeplayer();
@@ -913,7 +913,7 @@ label_1741_internal:
             }
             else
             {
-                ctrl_file(3, u8"inv_"s + mid + u8".s2");
+                ctrl_file(file_operation2_t::_3, u8"inv_"s + mid + u8".s2");
                 for (const auto& cnt : items(-1))
                 {
                     if (inv[cnt].number == 0)
@@ -924,7 +924,7 @@ label_1741_internal:
                     inv[cnt].position.y = mdata(1) / 2;
                     cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
                 }
-                ctrl_file(17);
+                ctrl_file(file_operation_t::_17);
                 for (int cnt = 57; cnt < 245; ++cnt)
                 {
                     cdata[cnt].position.x = mdata(0) / 2;

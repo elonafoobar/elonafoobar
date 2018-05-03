@@ -1212,7 +1212,7 @@ label_2181_internal:
         snd(59);
         gsel(4);
         pos(0, 0);
-        picload(filesystem::path(u8"./graphic/paper.bmp"), 1);
+        picload(filesystem::dir::graphic() / u8"paper.bmp", 1);
         gsel(0);
         ww = 400;
         wh = 300;
@@ -4521,11 +4521,11 @@ label_2181_internal:
             u8"あなたは四次元のポケットを召喚した。"s,
             u8"You summon 4 dimensional pocket."s));
         invfile = 8;
-        ctrl_file(4, u8"shoptmp.s2");
+        ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
         if (fs::exists(
-                filesystem::path(u8"./tmp/"s + u8"shop" + invfile + u8".s2")))
+                filesystem::dir::tmp() / (u8"shop"s + invfile + u8".s2")))
         {
-            ctrl_file(3, u8"shop"s + invfile + u8".s2");
+            ctrl_file(file_operation2_t::_3, u8"shop"s + invfile + u8".s2");
         }
         else
         {
@@ -4544,8 +4544,8 @@ label_2181_internal:
         snd(100);
         ctrl_inventory();
         invcontainer = 0;
-        ctrl_file(4, u8"shop"s + invfile + u8".s2");
-        ctrl_file(3, u8"shoptmp.s2");
+        ctrl_file(file_operation2_t::_4, u8"shop"s + invfile + u8".s2");
+        ctrl_file(file_operation2_t::_3, u8"shoptmp.s2");
         mode = 0;
         break;
     }

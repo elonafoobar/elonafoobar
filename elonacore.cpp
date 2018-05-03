@@ -19,6 +19,7 @@
 #include "item.hpp"
 #include "item_db.hpp"
 #include "item_material.hpp"
+#include "log.hpp"
 #include "macro.hpp"
 #include "main.hpp"
 #include "map.hpp"
@@ -1159,21 +1160,20 @@ void evadd(int prm_289, int prm_290, int prm_291)
 
 
 
-void sndload(const std::string& prm_292, int prm_293)
+void sndload(const fs::path& filepath, int prm_293)
 {
     if (prm_293 < 7)
     {
         if (config::instance().sound == 1)
         {
-            DSLOADFNAME(prm_292, prm_293);
+            DSLOADFNAME(filepath, prm_293);
         }
         else
         {
-            mmload(prm_292, prm_293);
+            mmload(filepath, prm_293);
         }
     }
-    soundfile(prm_293) = prm_292;
-    return;
+    soundfile[prm_293] = filepath;
 }
 
 
@@ -1238,11 +1238,11 @@ void snd(int prm_296, int prm_297, int prm_298)
         }
         if (config::instance().sound == 1)
         {
-            DSLOADFNAME(soundfile(prm_296), sound_at_m18);
+            DSLOADFNAME(soundfile[prm_296], sound_at_m18);
         }
         else
         {
-            mmload(soundfile(prm_296), sound_at_m18);
+            mmload(soundfile[prm_296], sound_at_m18);
         }
     }
     if (config::instance().sound == 1)
@@ -1265,127 +1265,74 @@ void initialize_sound_file()
     {
         cfg_svolume = DSGETMASTERVOLUME();
     }
-    folder = filesystem::path(u8"./sound/").generic_string();
-    sndload(folder + u8"exitmap1.wav"s, 49);
-    sndload(folder + u8"book1.wav"s, 59);
-    sndload(folder + u8"write1.wav"s, 44);
-    sndload(folder + u8"pop1.wav"s, 1);
-    sndload(folder + u8"kill1.wav"s, 8);
-    sndload(folder + u8"kill2.wav"s, 9);
-    sndload(folder + u8"trap1.wav"s, 70);
-    sndload(folder + u8"more1.wav"s, 10);
-    sndload(folder + u8"getgold1.wav"s, 11);
-    sndload(folder + u8"paygold1.wav"s, 12);
-    sndload(folder + u8"equip1.wav"s, 13);
-    sndload(folder + u8"get1.wav"s, 14);
-    sndload(folder + u8"get2.wav"s, 15);
-    sndload(folder + u8"drop1.wav"s, 16);
-    sndload(folder + u8"drink1.wav"s, 17);
-    sndload(folder + u8"eat1.wav"s, 18);
-    sndload(folder + u8"spend1.wav"s, 19);
-    sndload(folder + u8"ding1.wav"s, 60);
-    sndload(folder + u8"ding3.wav"s, 61);
-    sndload(folder + u8"dead1.wav"s, 50);
-    sndload(folder + u8"ok1.wav"s, 20);
-    sndload(folder + u8"dig1.wav"s, 52);
-    sndload(folder + u8"bash1.wav"s, 73);
-    sndload(folder + u8"complete1.wav"s, 51);
-    sndload(folder + u8"alert1.wav"s, 21);
-    sndload(folder + u8"locked1.wav"s, 22);
-    sndload(folder + u8"chest1.wav"s, 23);
-    sndload(folder + u8"ding2.wav"s, 24);
-    sndload(folder + u8"cook1.wav"s, 25);
-    sndload(folder + u8"pop2.wav"s, 26);
-    sndload(folder + u8"fail1.wav"s, 27);
-    sndload(folder + u8"build1.wav"s, 58);
-    sndload(folder + u8"bow1.wav"s, 29);
-    sndload(folder + u8"atk1.wav"s, 2);
-    sndload(folder + u8"atk2.wav"s, 3);
-    sndload(folder + u8"gun1.wav"s, 30);
-    sndload(folder + u8"throw1.wav"s, 31);
-    sndload(folder + u8"heart1.wav"s, 32);
-    sndload(folder + u8"heal1.wav"s, 33);
-    sndload(folder + u8"teleport1.wav"s, 72);
-    sndload(folder + u8"ball1.wav"s, 34);
-    sndload(folder + u8"breath1.wav"s, 35);
-    sndload(folder + u8"bolt1.wav"s, 37);
-    sndload(folder + u8"arrow1.wav"s, 36);
-    sndload(folder + u8"curse1.wav"s, 38);
-    sndload(folder + u8"pop3.wav"s, 39);
-    sndload(folder + u8"chime.wav"s, 53);
-    sndload(folder + u8"laser1.wav"s, 42);
-    sndload(folder + u8"web.wav"s, 68);
-    sndload(folder + u8"cheer.wav"s, 69);
-    sndload(folder + u8"door1.wav"s, 48);
-    sndload(folder + u8"crush1.wav"s, 45);
-    sndload(folder + u8"crush2.wav"s, 47);
-    sndload(folder + u8"fire1.wav"s, 6);
-    sndload(folder + u8"snow.wav"s, 86);
-    sndload(folder + u8"fish_cast.wav"s, 87);
-    sndload(folder + u8"fish_get.wav"s, 88);
-    sndload(folder + u8"fish_fight.wav"s, 89);
-    sndload(folder + u8"ammo.wav"s, 90);
-    sndload(folder + u8"throw2.wav"s, 91);
-    sndload(folder + u8"foot1a.wav"s, 81);
-    sndload(folder + u8"foot2a.wav"s, 83);
-    sndload(folder + u8"foot1b.wav"s, 82);
-    sndload(folder + u8"foot2b.wav"s, 84);
-    sndload(folder + u8"foot2c.wav"s, 85);
-    sndload(folder + u8"click1.wav"s, 40);
-    sndload(folder + u8"get3.wav"s, 41);
-    sndload(folder + u8"card1.wav"s, 71);
-    sndload(folder + u8"water.wav"s, 57);
-    sndload(folder + u8"water2.wav"s, 46);
-    sndload(folder + u8"dig2.wav"s, 54);
-    sndload(folder + u8"bush1.wav"s, 55);
-    sndload(folder + u8"gasha.wav"s, 56);
-    sndload(folder + u8"cursor1.wav"s, 5);
-    sndload(folder + u8"pop4.wav"s, 62);
-    sndload(folder + u8"punish1.wav"s, 63);
-    sndload(folder + u8"pray1.wav"s, 64);
-    sndload(folder + u8"offer1.wav"s, 65);
-    sndload(folder + u8"fizzle.wav"s, 66);
-    sndload(folder + u8"door2.wav"s, 67);
-    sndload(folder + u8"foot.wav"s, 43);
-    sndload(folder + u8"miss.wav"s, 4);
-    sndload(folder + u8"night.wav"s, 74);
-    sndload(folder + u8"bg_rain.wav"s, 75);
-    sndload(folder + u8"bg_thunder.wav"s, 76);
-    sndload(folder + u8"bg_wind.wav"s, 77);
-    sndload(folder + u8"bg_sea.wav"s, 78);
-    sndload(folder + u8"bg_town.wav"s, 79);
-    sndload(folder + u8"bg_fire.wav"s, 80);
-    sndload(folder + u8"scroll.wav"s, 92);
-    sndload(folder + u8"log.wav"s, 93);
-    sndload(folder + u8"chara.wav"s, 94);
-    sndload(folder + u8"wear.wav"s, 95);
-    sndload(folder + u8"feat.wav"s, 96);
-    sndload(folder + u8"port.wav"s, 97);
-    sndload(folder + u8"unpop1.wav"s, 98);
-    sndload(folder + u8"chat.wav"s, 99);
-    sndload(folder + u8"inv.wav"s, 100);
-    sndload(folder + u8"skill.wav"s, 101);
-    sndload(folder + u8"spell.wav"s, 102);
-    sndload(folder + u8"dice.wav"s, 103);
-    sndload(folder + u8"vomit.wav"s, 104);
-    sndload(folder + u8"atksword.wav"s, 105);
-    sndload(folder + u8"atk_ice.wav"s, 106);
-    sndload(folder + u8"atk_elec.wav"s, 107);
-    sndload(folder + u8"atk_fire.wav"s, 108);
-    sndload(folder + u8"atk_hell.wav"s, 109);
-    sndload(folder + u8"atk_poison.wav"s, 110);
-    sndload(folder + u8"atk_nerve.wav"s, 111);
-    sndload(folder + u8"atk_sound.wav"s, 112);
-    sndload(folder + u8"atk_mind.wav"s, 113);
-    sndload(folder + u8"atk_chaos.wav"s, 114);
-    sndload(folder + u8"atk_dark.wav"s, 115);
-    sndload(folder + u8"curse2.wav"s, 116);
-    sndload(folder + u8"curse3.wav"s, 117);
-    sndload(folder + u8"enc.wav"s, 118);
-    sndload(folder + u8"enc2.wav"s, 119);
-    sndload(folder + u8"pray2.wav"s, 120);
-    sndload(folder + u8"offer2.wav"s, 121);
-    return;
+
+    const std::pair<const char*, int> se_list[] = {
+        {u8"exitmap1.wav", 49},   {u8"book1.wav", 59},
+        {u8"write1.wav", 44},     {u8"pop1.wav", 1},
+        {u8"kill1.wav", 8},       {u8"kill2.wav", 9},
+        {u8"trap1.wav", 70},      {u8"more1.wav", 10},
+        {u8"getgold1.wav", 11},   {u8"paygold1.wav", 12},
+        {u8"equip1.wav", 13},     {u8"get1.wav", 14},
+        {u8"get2.wav", 15},       {u8"drop1.wav", 16},
+        {u8"drink1.wav", 17},     {u8"eat1.wav", 18},
+        {u8"spend1.wav", 19},     {u8"ding1.wav", 60},
+        {u8"ding3.wav", 61},      {u8"dead1.wav", 50},
+        {u8"ok1.wav", 20},        {u8"dig1.wav", 52},
+        {u8"bash1.wav", 73},      {u8"complete1.wav", 51},
+        {u8"alert1.wav", 21},     {u8"locked1.wav", 22},
+        {u8"chest1.wav", 23},     {u8"ding2.wav", 24},
+        {u8"cook1.wav", 25},      {u8"pop2.wav", 26},
+        {u8"fail1.wav", 27},      {u8"build1.wav", 58},
+        {u8"bow1.wav", 29},       {u8"atk1.wav", 2},
+        {u8"atk2.wav", 3},        {u8"gun1.wav", 30},
+        {u8"throw1.wav", 31},     {u8"Heart1.wav", 32},
+        {u8"heal1.wav", 33},      {u8"teleport1.wav", 72},
+        {u8"ball1.wav", 34},      {u8"breath1.wav", 35},
+        {u8"bolt1.wav", 37},      {u8"arrow1.wav", 36},
+        {u8"curse1.wav", 38},     {u8"pop3.wav", 39},
+        {u8"chime.wav", 53},      {u8"laser1.wav", 42},
+        {u8"web.wav", 68},        {u8"cheer.wav", 69},
+        {u8"door1.wav", 48},      {u8"crush1.wav", 45},
+        {u8"crush2.wav", 47},     {u8"fire1.wav", 6},
+        {u8"snow.wav", 86},       {u8"fish_cast.wav", 87},
+        {u8"fish_get.wav", 88},   {u8"fish_fight.wav", 89},
+        {u8"ammo.wav", 90},       {u8"throw2.wav", 91},
+        {u8"foot1a.wav", 81},     {u8"foot2a.wav", 83},
+        {u8"foot1b.wav", 82},     {u8"foot2b.wav", 84},
+        {u8"foot2c.wav", 85},     {u8"click1.wav", 40},
+        {u8"get3.wav", 41},       {u8"card1.wav", 71},
+        {u8"water.wav", 57},      {u8"water2.wav", 46},
+        {u8"dig2.wav", 54},       {u8"bush1.wav", 55},
+        {u8"gasha.wav", 56},      {u8"cursor1.wav", 5},
+        {u8"pop4.wav", 62},       {u8"punish1.wav", 63},
+        {u8"pray1.wav", 64},      {u8"offer1.wav", 65},
+        {u8"fizzle.wav", 66},     {u8"door2.wav", 67},
+        {u8"foot.wav", 43},       {u8"miss.wav", 4},
+        {u8"night.wav", 74},      {u8"bg_rain.wav", 75},
+        {u8"bg_thunder.wav", 76}, {u8"bg_wind.wav", 77},
+        {u8"bg_sea.wav", 78},     {u8"bg_town.wav", 79},
+        {u8"bg_fire.wav", 80},    {u8"scroll.wav", 92},
+        {u8"log.wav", 93},        {u8"chara.wav", 94},
+        {u8"wear.wav", 95},       {u8"feat.wav", 96},
+        {u8"port.wav", 97},       {u8"unpop1.wav", 98},
+        {u8"chat.wav", 99},       {u8"inv.wav", 100},
+        {u8"skill.wav", 101},     {u8"spell.wav", 102},
+        {u8"dice.wav", 103},      {u8"vomit.wav", 104},
+        {u8"atksword.wav", 105},  {u8"atk_ice.wav", 106},
+        {u8"atk_elec.wav", 107},  {u8"atk_fire.wav", 108},
+        {u8"atk_hell.wav", 109},  {u8"atk_poison.wav", 110},
+        {u8"atk_nerve.wav", 111}, {u8"atk_sound.wav", 112},
+        {u8"atk_mind.wav", 113},  {u8"atk_chaos.wav", 114},
+        {u8"atk_dark.wav", 115},  {u8"curse2.wav", 116},
+        {u8"curse3.wav", 117},    {u8"enc.wav", 118},
+        {u8"enc2.wav", 119},      {u8"pray2.wav", 120},
+        {u8"offer2.wav", 121},
+    };
+
+    for (const auto& se : se_list)
+    {
+        sndload(filesystem::dir::sound() / se.first, se.second);
+    }
 }
 
 
@@ -1395,7 +1342,6 @@ void play_music()
     int env = 0;
     int envwprev = 0;
     int musicprev = 0;
-    std::string musicfolder;
     int mp3 = 0;
     env = 0;
     if (gdata_weather == 3)
@@ -1586,17 +1532,17 @@ void play_music()
         if (config::instance().music == 1)
         {
             DMSTOP();
-            DMLOADFNAME(
-                filesystem::path(u8"./sound/gm_on.mid").generic_string(), 0);
+            DMLOADFNAME(filesystem::dir::sound() / u8"gm_on.mid", 0);
             DMPLAY(1, 0);
         }
+        fs::path music_dir;
         if (music != -1)
         {
-            musicfolder = filesystem::path(u8"./user/music/").generic_string();
-            if (!fs::exists(musicfolder + musicfile(music)))
+            music_dir = filesystem::dir::user() / u8"music";
+            if (!fs::exists(music_dir / musicfile(music)))
             {
-                musicfolder = filesystem::path(u8"./sound/").generic_string();
-                if (!fs::exists(musicfolder + musicfile(music)))
+                music_dir = filesystem::dir::sound();
+                if (!fs::exists(music_dir / musicfile(music)))
                 {
                     return;
                 }
@@ -1614,12 +1560,12 @@ void play_music()
         {
             if (config::instance().music == 2 || mp3 == 1)
             {
-                mmload(musicfolder + musicfile(music), 0, musicloop == 65535);
+                mmload(music_dir / musicfile(music), 0, musicloop == 65535);
                 mmplay(0);
             }
             else
             {
-                DMLOADFNAME(musicfolder + musicfile(music), 0);
+                DMLOADFNAME(music_dir / musicfile(music), 0);
                 DMPLAY(musicloop, 0);
             }
         }
@@ -2584,9 +2530,8 @@ void finish_elona()
 
 void load_pcc_part(int cc, int body_part, const char* body_part_str)
 {
-    const auto filepath = filesystem::path(
-        "./graphic/pcc_"s + body_part_str + (pcc(body_part, cc) % 1000)
-        + u8".bmp");
+    const auto filepath = filesystem::dir::graphic()
+        / (u8"pcc_"s + body_part_str + (pcc(body_part, cc) % 1000) + u8".bmp");
     if (!fs::exists(filepath))
         return;
 
@@ -3972,8 +3917,8 @@ void load_random_name_table()
 {
     std::vector<std::string> lines;
     range::copy(
-        fileutil::read_by_line{
-            filesystem::path(lang(u8"data/ndata.csv"s, u8"data/ndata-e.csv"s))},
+        fileutil::read_by_line{filesystem::dir::data()
+                               / lang(u8"ndata.csv", u8"ndata-e.csv")},
         std::back_inserter(lines));
 
     SDIM3(randn1, 30, 20);
@@ -3995,7 +3940,7 @@ void load_random_title_table()
 {
     std::vector<std::string> lines;
     range::copy(
-        fileutil::read_by_line{filesystem::path(u8"data/name.csv"s)},
+        fileutil::read_by_line{filesystem::dir::data() / u8"name.csv"},
         std::back_inserter(lines));
 
     SDIM3(rn1, 15, lines.size());
@@ -7934,40 +7879,26 @@ void page_load()
 
 
 
-void fileadd(const std::string& prm_692, int prm_693)
+void fileadd(const fs::path& filepath, int prm_693)
 {
-    char mark_a;
-    char mark_b;
-    if (prm_693 == 0)
-    {
-        mark_a = '*';
-        mark_b = '#';
-    }
-    else
-    {
-        mark_a = '#';
-        mark_b = '*';
-    }
+    const auto mark_a = prm_693 ? '#' : '*';
+    const auto mark_b = prm_693 ? '*' : '#';
+
+    const auto filename = filesystem::to_utf8_path(filepath.filename());
     notesel(filemod);
-    int p_at_m98 = instr(filemod, 0, prm_692);
-    if (p_at_m98 != -1)
+    const auto pos = filemod(0).find(filename);
+    if (pos != std::string::npos)
     {
-        if (strmid(filemod, p_at_m98 - 1, 1)[0] == mark_b)
+        if (filemod(0)[pos - 1] == mark_b)
         {
-            filemod(0)[p_at_m98 - 1] = mark_a;
+            filemod(0)[pos - 1] = mark_a;
         }
         noteunsel();
         return;
     }
-    if (prm_693 != 0)
-    {
-        noteadd(std::string{mark_a} + prm_692);
-        noteunsel();
-        return;
-    }
-    noteadd(std::string{mark_a} + prm_692);
+    ELONA_LOG("fileadd(" << mark_a << "): " << filename);
+    noteadd(mark_a + filename);
     noteunsel();
-    return;
 }
 
 
@@ -8127,7 +8058,7 @@ void arrayfile_write(const std::string& fmode_str, const fs::path& filepath)
 
     if (elona_export == 0)
     {
-        fileadd(filepath.generic_string());
+        fileadd(filepath);
     }
 }
 
@@ -9815,7 +9746,8 @@ int customtalk(int cc, int talk_type)
 
     if (cdata[cc].has_custom_talk())
     {
-        const auto filepath = filesystem::path(u8"./user/talk") / cdatan(4, cc);
+        const auto filepath =
+            filesystem::dir::user() / u8"talk" / cdatan(4, cc);
         if (!fs::exists(filepath))
             return 0;
         range::copy(
@@ -11118,7 +11050,7 @@ void animeload(int prm_807, int prm_808)
     dx_at_m133 = (cdata[prm_808].position.x - scx) * inf_tiles + inf_screenx;
     dy_at_m133 = (cdata[prm_808].position.y - scy) * inf_tiles + inf_screeny;
     gsel(7);
-    picload(filesystem::path(u8"./graphic/anime"s + prm_807 + u8".bmp"));
+    picload(filesystem::dir::graphic() / (u8"anime"s + prm_807 + u8".bmp"));
     gsel(4);
     gmode(0);
     pos(0, 0);
@@ -11204,70 +11136,70 @@ void animeblood(int prm_809, int prm_810, int prm_811)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(filesystem::path(u8"./graphic/anime18.bmp"));
+        picload(filesystem::dir::graphic() / u8"anime18.bmp");
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 51)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(filesystem::path(u8"./graphic/anime19.bmp"));
+        picload(filesystem::dir::graphic() / u8"anime19.bmp");
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 50)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(filesystem::path(u8"./graphic/anime20.bmp"));
+        picload(filesystem::dir::graphic() / u8"anime20.bmp");
         dy_at_m133(1) = -20;
     }
     if (prm_811 == 56)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(filesystem::path(u8"./graphic/anime22.bmp"));
+        picload(filesystem::dir::graphic() / u8"anime22.bmp");
         dy_at_m133(1) = -24;
     }
     if (prm_811 == 53)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(filesystem::path(u8"./graphic/anime21.bmp"));
+        picload(filesystem::dir::graphic() / u8"anime21.bmp");
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 54)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(filesystem::path(u8"./graphic/anime23.bmp"));
+        picload(filesystem::dir::graphic() / u8"anime23.bmp");
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 57)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(filesystem::path(u8"./graphic/anime24.bmp"));
+        picload(filesystem::dir::graphic() / u8"anime24.bmp");
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 59)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(filesystem::path(u8"./graphic/anime25.bmp"));
+        picload(filesystem::dir::graphic() / u8"anime25.bmp");
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 58)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(filesystem::path(u8"./graphic/anime26.bmp"));
+        picload(filesystem::dir::graphic() / u8"anime26.bmp");
         dy_at_m133(1) = -16;
     }
     if (prm_811 == 55 || prm_811 == 63)
     {
         ele2_at_m133 = 1;
         gsel(7);
-        picload(filesystem::path(u8"./graphic/anime27.bmp"));
+        picload(filesystem::dir::graphic() / u8"anime27.bmp");
         dy_at_m133(1) = -16;
     }
     gmode(2);
@@ -15498,7 +15430,7 @@ int net_dllist(const std::string& prm_886, int prm_887)
     std::string s_at_m147;
     netinit();
     neturl(u8"http://homepage3.nifty.com/rfish/userfile/"s);
-    file_at_m147 = filesystem::path(u8"./user/net.tmp").generic_string();
+    file_at_m147 = (filesystem::dir::user() / u8"net.tmp").generic_string();
     if (fs::exists(file_at_m147))
     {
         elona_delete(file_at_m147);
@@ -15584,14 +15516,14 @@ int net_dllist(const std::string& prm_886, int prm_887)
 
 int net_dl(const std::string& prm_888, const std::string& prm_889)
 {
-    if (fs::exists(filesystem::path(u8"./user/"s + prm_889)))
+    if (fs::exists(filesystem::dir::user() / prm_889))
     {
-        elona_delete(filesystem::path(u8"./user/"s + prm_889));
+        elona_delete(filesystem::dir::user() / prm_889);
     }
     neturl(u8"http://homepage3.nifty.com/rfish/userfile/"s);
-    netdlname(filesystem::path(u8"./user/"s + prm_889).generic_string());
+    netdlname((filesystem::dir::user() / prm_889).generic_string());
     netload(prm_888);
-    if (!fs::exists(filesystem::path(u8"./user/"s + prm_889)))
+    if (!fs::exists(filesystem::dir::user() / u8"user" / prm_889))
     {
         return 0;
     }
@@ -15616,7 +15548,7 @@ void initialize_server_info()
     {
         {
             serverlist(0).clear();
-            std::ifstream in{filesystem::path(u8"./server.txt").native(),
+            std::ifstream in{(filesystem::dir::exe() / u8"server.txt").native(),
                              std::ios::binary};
             std::string tmp;
             while (std::getline(in, tmp))
@@ -15631,7 +15563,7 @@ void initialize_server_info()
     cgiurl2 = strmid(netbuf, 0, p);
     cgiurl3 = strmid(netbuf, p + 1, instr(netbuf, p + 1, u8"%"s));
     {
-        std::ofstream out{filesystem::path(u8"./server.txt").native(),
+        std::ofstream out{(filesystem::dir::exe() / u8"./server.txt").native(),
                           std::ios::binary};
         out << serverlist(0) << std::endl;
     }
@@ -15713,7 +15645,8 @@ label_14001_internal:
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(filesystem::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+        picload(
+            filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(0);
     listmax = 0;
@@ -16754,22 +16687,22 @@ void label_1422()
     pos(0, 0);
     if (cdata[0].continuous_action_id == 5)
     {
-        picload(filesystem::path(u8"./graphic/anime1.bmp"));
+        picload(filesystem::dir::graphic() / u8"anime1.bmp");
     }
     if (cdata[0].continuous_action_id == 7)
     {
         if (rowactre)
         {
-            picload(filesystem::path(u8"./graphic/anime2.bmp"));
+            picload(filesystem::dir::graphic() / u8"anime2.bmp");
         }
     }
     if (cdata[0].continuous_action_id == 8)
     {
-        picload(filesystem::path(u8"./graphic/anime3.bmp"));
+        picload(filesystem::dir::graphic() / u8"anime3.bmp");
     }
     if (cdata[0].continuous_action_id == 9)
     {
-        picload(filesystem::path(u8"./graphic/anime4.bmp"));
+        picload(filesystem::dir::graphic() / u8"anime4.bmp");
     }
     gsel(0);
     return;
@@ -21006,7 +20939,7 @@ void clear_background_in_character_making()
 {
     gsel(4);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/void.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
     gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gsel(0);
     gmode(0);
@@ -21364,7 +21297,7 @@ void initialize_set_of_random_generation()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{filesystem::path(u8"./data/book.txt").native(),
+        std::ifstream in{(filesystem::dir::data() / u8"book.txt").native(),
                          std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -25267,8 +25200,8 @@ int dist_town()
 
 void map_initcustom(const std::string& prm_934)
 {
-    fmapfile = filesystem::path(u8"./map/"s + prm_934).generic_string();
-    ctrl_file(5);
+    fmapfile = (filesystem::dir::map() / prm_934).generic_string();
+    ctrl_file(file_operation_t::_5);
     map_tileset(mdata(12));
     nooracle = 1;
     for (int cnt = 0; cnt < 400; ++cnt)
@@ -25330,8 +25263,8 @@ void map_reload(const std::string& prm_935)
 {
     int y_at_m166 = 0;
     int x_at_m166 = 0;
-    fmapfile = filesystem::path(u8"./map/"s + prm_935).generic_string();
-    ctrl_file(16);
+    fmapfile = (filesystem::dir::map() / prm_935).generic_string();
+    ctrl_file(file_operation_t::_16);
     for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
     {
         y_at_m166 = cnt;
@@ -28808,7 +28741,7 @@ void build_new_building()
         initialize_home_adata();
         midbk = mid;
         mid = ""s + 7 + u8"_"s + 101;
-        ctrl_file(12);
+        ctrl_file(file_operation_t::_12);
         mid = midbk;
         label_1749();
         levelexitby = 2;
@@ -28824,7 +28757,7 @@ void build_new_building()
         exit_map();
         return;
     }
-    ctrl_file(13);
+    ctrl_file(file_operation_t::_13);
     p = area;
     adata(1, p) = cdata[0].position.x;
     adata(2, p) = cdata[0].position.y;
@@ -29115,7 +29048,8 @@ void use_house_board()
         {
             pos(cnt % 4 * 180, cnt / 4 * 300);
             picload(
-                filesystem::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+                filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"),
+                1);
         }
         gsel(0);
         snd(26);
@@ -29623,8 +29557,8 @@ void show_shop_log()
     }
     if (gdata_current_map != area)
     {
-        ctrl_file(4, u8"shoptmp.s2");
-        ctrl_file(3, u8"inv_"s + mid + u8".s2");
+        ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
+        ctrl_file(file_operation2_t::_3, u8"inv_"s + mid + u8".s2");
     }
     mode = 6;
     dblistmax = 0;
@@ -29745,15 +29679,15 @@ void show_shop_log()
     mode = 0;
     if (gdata_current_map != area)
     {
-        ctrl_file(4, u8"inv_"s + mid + u8".s2");
+        ctrl_file(file_operation2_t::_4, u8"inv_"s + mid + u8".s2");
     }
     else
     {
-        ctrl_file(4, u8"shoptmp.s2");
+        ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
     }
-    if (fs::exists(filesystem::path(u8"./tmp") / u8"shop5.s2"))
+    if (fs::exists(filesystem::dir::tmp() / u8"shop5.s2"))
     {
-        ctrl_file(3, u8"shop5.s2");
+        ctrl_file(file_operation2_t::_3, u8"shop5.s2");
     }
     else
     {
@@ -29850,8 +29784,8 @@ void show_shop_log()
         modrank(5, 30, 2);
     }
     mode = 0;
-    ctrl_file(4, u8"shop5.s2");
-    ctrl_file(3, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::_4, u8"shop5.s2");
+    ctrl_file(file_operation2_t::_3, u8"shoptmp.s2");
     return;
 }
 
@@ -30936,9 +30870,9 @@ void exit_map()
     else
     {
         label_1738();
-        if (fs::exists(filesystem::path(u8"./tmp/mdata_"s + mid + u8".s2")))
+        if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
         {
-            ctrl_file(11);
+            ctrl_file(file_operation_t::_11);
         }
         for (int cnt = 57; cnt < 245; ++cnt)
         {
@@ -30986,8 +30920,8 @@ void label_1739()
             map(cnt, y, 7) = 0;
         }
     }
-    ctrl_file(2);
-    ctrl_file(4, u8"inv_"s + mid + u8".s2");
+    ctrl_file(file_operation_t::_2);
+    ctrl_file(file_operation2_t::_4, u8"inv_"s + mid + u8".s2");
     return;
 }
 
@@ -31224,7 +31158,8 @@ void label_1746()
     if (mdata(2) != mtilefilecur)
     {
         pos(0, 0);
-        picload(filesystem::path(u8"./graphic/map"s + mdata(2) + u8".bmp"), 1);
+        picload(
+            filesystem::dir::graphic() / (u8"map"s + mdata(2) + u8".bmp"), 1);
         mtilefilecur = mdata(2);
         initialize_map_chip();
     }
@@ -32345,7 +32280,7 @@ int label_1753()
         }
         p = cnt;
         area = p;
-        ctrl_file(13);
+        ctrl_file(file_operation_t::_13);
         adata(0, p) = 20 + rnd(4);
         adata(16, p) = 8;
         adata(15, p) = 133;
@@ -33465,7 +33400,7 @@ void craft_material_menu()
     }
     gsel(7);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/ie_scroll.bmp"));
+    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp");
     gsel(0);
     snd(92);
     drawmenu();
@@ -33642,7 +33577,7 @@ void atxinit()
         gsel(4);
         gmode(0);
         pos(0, 0);
-        picload(filesystem::path(u8"./graphic/"s + atxbg + u8".bmp"), 1);
+        picload(filesystem::dir::graphic() / (atxbg + u8".bmp"s), 1);
         pos(0, inf_msgh);
         gzoom(4, 0, 0, 240, 160, windoww, windowh - inf_verh - inf_msgh);
         gmode(2);
@@ -33672,7 +33607,7 @@ void atxinit()
 
 void begintempinv()
 {
-    ctrl_file(4, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
     for (const auto& cnt : items(-1))
     {
         inv[cnt].number = 0;
@@ -33684,7 +33619,7 @@ void begintempinv()
 
 void exittempinv()
 {
-    ctrl_file(3, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::_3, u8"shoptmp.s2");
     return;
 }
 
@@ -35436,7 +35371,7 @@ void label_1886()
     gsel(4);
     gmode(0);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/bg_altar.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"bg_altar.bmp", 1);
     pos(0, 0);
     gzoom(4, 0, 0, 600, 400, windoww, windowh - inf_verh);
     gsel(0);
@@ -36676,7 +36611,7 @@ int show_random_event_window(const std::string& file)
     gsel(7);
     gmode(0);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/"s + file + u8".bmp"), 0);
+    picload(filesystem::dir::graphic() / (u8""s + file + u8".bmp"), 0);
     tx = ginfo(12);
     ty = ginfo(13);
     gsel(0);
@@ -36814,10 +36749,10 @@ int calcincome(int prm_1036)
 void label_1901()
 {
     invfile = 4;
-    ctrl_file(4, u8"shoptmp.s2");
-    if (fs::exists(filesystem::path(u8"./tmp") / u8"shop4.s2"s))
+    ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
+    if (fs::exists(filesystem::dir::tmp() / u8"shop4.s2"s))
     {
-        ctrl_file(3, u8"shop4.s2"s);
+        ctrl_file(file_operation2_t::_3, u8"shop4.s2"s);
     }
     else
     {
@@ -36973,8 +36908,8 @@ void label_1901()
                 u8"You don't have to pay tax until you hit level 6."s));
         }
     }
-    ctrl_file(4, u8"shop"s + invfile + u8".s2");
-    ctrl_file(3, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::_4, u8"shop"s + invfile + u8".s2");
+    ctrl_file(file_operation2_t::_3, u8"shoptmp.s2");
     mode = 0;
     if (config::instance().extrahelp)
     {
@@ -38017,7 +37952,7 @@ void label_1922()
     rpid = 0;
     gsel(3);
     pos(960, 96);
-    picload(filesystem::path(u8"./graphic/deco_blend.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"deco_blend.bmp", 1);
     gsel(0);
     clear_rprefmat();
 label_1923:
@@ -39151,11 +39086,12 @@ label_19431_internal:
     cc = 0;
     cs_bk = -1;
     SDIM2(headtemp, 1024);
-    const auto base_dir = filesystem::path("./user");
     const auto pattern =
         comctrl == 1 ? std::regex{u8R"(.*\.ept)"} : std::regex{u8R"(.*\.eum)"};
-    for (const auto& entry : filesystem::dir_entries{
-             base_dir, filesystem::dir_entries::type::file, pattern})
+    for (const auto& entry :
+         filesystem::dir_entries{filesystem::dir::user(),
+                                 filesystem::dir_entries::type::file,
+                                 pattern})
     {
         const auto path = entry.path();
         if (path == filesystem::path(u8"temp.enum")
@@ -39169,9 +39105,10 @@ label_19431_internal:
         list(0, listmax) = listmax;
         list(1, listmax) = 0;
         list(2, listmax) = elona::stoi(s(2));
-        listn(0, listmax) = u8"("s + path.filename().generic_string() + u8") "s
+        listn(0, listmax) = u8"("s
+            + filesystem::make_preferred_path_in_utf8(path.filename()) + u8") "s
             + s + u8" "s + s(1);
-        listn(1, listmax) = path.filename().generic_string();
+        listn(1, listmax) = filesystem::to_utf8_path(path.filename());
         ++listmax;
         noteunsel();
     }
@@ -39284,7 +39221,6 @@ label_1945_internal:
                 u8"Selected item is incompatible."s));
             goto label_1944_internal;
         }
-        folder = filesystem::path(u8"./user/").generic_string();
         if (listn(1, p) == u8"net"s)
         {
             if (comctrl == 1)
@@ -39310,7 +39246,7 @@ label_1945_internal:
         {
             userfile = listn(1, p);
         }
-        bload(folder + userfile, headtemp, 1024);
+        bload(filesystem::dir::user() / userfile, headtemp, 1024);
         notesel(headtemp);
         noteget(s, 5);
         noteget(s(1), 6);
@@ -40601,7 +40537,7 @@ void label_1968()
     windowanime(wx, wy, ww, wh, 10, 4);
     gsel(3);
     pos(960, 96);
-    picload(filesystem::path(u8"./graphic/deco_feat.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"deco_feat.bmp", 1);
     gsel(0);
     windowshadow = 1;
     return;
@@ -41407,7 +41343,7 @@ label_1973_internal:
     }
     gsel(4);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/book.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"book.bmp", 1);
     gsel(0);
     pos(wx, wy);
     gcopy(4, 0, 0, 736, 448);
@@ -41612,7 +41548,7 @@ void show_quest_board()
     sort_list_by_column1();
     gsel(3);
     pos(960, 96);
-    picload(filesystem::path(u8"./graphic/deco_board.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"deco_board.bmp", 1);
     gsel(0);
     gsel(4);
     fillbg(3, 960, 96, 128, 128);
@@ -42538,7 +42474,7 @@ void label_2007()
     sort_list_by_column1();
     gsel(3);
     pos(960, 96);
-    picload(filesystem::path(u8"./graphic/deco_skill.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"deco_skill.bmp", 1);
     gsel(0);
     windowshadow = 1;
 label_2008_internal:
@@ -42959,7 +42895,7 @@ void do_interact_command()
     {
         gsel(4);
         pos(0, 0);
-        picload(filesystem::path(u8"./graphic/face1.bmp"), 1);
+        picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
         gsel(0);
         ccbk = cc;
         cc = tc;
@@ -43020,7 +42956,8 @@ int change_npc_tone()
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(filesystem::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+        picload(
+            filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(0);
     listmax = 0;
@@ -43032,7 +42969,7 @@ int change_npc_tone()
     list(0, 0) = -999;
     listn(0, 0) = lang(u8"デフォルトの口調"s, u8"Default Tone"s);
     ++listmax;
-    const auto base_dir = filesystem::path(u8"./user/talk");
+    const auto base_dir = filesystem::dir::user() / u8"talk";
     for (const auto& entry :
          filesystem::dir_entries{base_dir,
                                  filesystem::dir_entries::type::file,
@@ -43040,7 +42977,7 @@ int change_npc_tone()
     {
         list(0, listmax) = listmax;
         listn(0, listmax) =
-            fs::relative(entry.path(), base_dir).generic_string();
+            filesystem::to_utf8_path(fs::relative(entry.path(), base_dir));
         ++listmax;
     }
     windowshadow = 1;
@@ -43156,12 +43093,12 @@ void label_2022()
     snd(59);
     gsel(4);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/book.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"book.bmp", 1);
     gsel(0);
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{filesystem::path(u8"./data/book.txt").native(),
+        std::ifstream in{(filesystem::dir::data() / u8"book.txt").native(),
                          std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -43301,7 +43238,7 @@ void label_2027()
     sort_list_by_column1();
     gsel(3);
     pos(960, 96);
-    picload(filesystem::path(u8"./graphic/deco_spell.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"deco_spell.bmp", 1);
     gsel(0);
     windowshadow = 1;
 label_2028_internal:
@@ -43891,7 +43828,7 @@ label_20331:
     }
     sort_list_by_column1();
     gsel(7);
-    picload(filesystem::path(u8"./graphic/ie_sheet.bmp"));
+    picload(filesystem::dir::graphic() / u8"ie_sheet.bmp");
     gsel(0);
     wx = (windoww - 700) / 2 + inf_screenx;
     wy = winposy(400) - 10;
@@ -43914,17 +43851,17 @@ label_20331:
     windowanime(wx, wy, ww, wh, 10, 4);
     gsel(4);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/face1.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
     if (cdata[cc].portrait < 0)
     {
-        s = filesystem::path(u8"./user/graphic/face"s).generic_string()
-            + std::abs((cdata[cc].portrait + 1)) + u8".bmp"s;
+        const auto filepath = filesystem::dir::user() / u8"graphic"
+            / (u8"face"s + std::abs(cdata[cc].portrait + 1) + u8".bmp");
         if (cdata[cc].portrait != -1)
         {
-            if (fs::exists(s))
+            if (fs::exists(filepath))
             {
                 pos(0, 0);
-                picload(s, 1);
+                picload(filepath, 1);
             }
         }
     }
@@ -44063,11 +44000,11 @@ label_2035_internal:
         }
         else
         {
-            s = filesystem::path(u8"./user/graphic/face"s).generic_string()
-                + std::abs((cdata[cc].portrait + 1)) + u8".bmp"s;
+            const auto filepath = filesystem::dir::user() / u8"graphic"
+                / (u8"face"s + std::abs(cdata[cc].portrait + 1) + u8".bmp");
             if (cdata[cc].portrait != -1)
             {
-                if (fs::exists(s))
+                if (fs::exists(filepath))
                 {
                     pos(wx + 560, wy + 27);
                     gzoom(4, 0, 0, 80, 112, 80, 112);
@@ -44888,22 +44825,22 @@ int change_appearance()
     windowanime(wx, wy, ww, wh, 10, 7);
     gsel(4);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/face1.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
     buffer(7, 800, 112);
     boxf();
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        s = filesystem::path(u8"./user/graphic/face"s + (cnt + 1) + u8".bmp")
-                .generic_string();
-        if (fs::exists(s))
+        const auto filepath = filesystem::dir::user() / u8"graphic"
+            / (u8"face"s + (cnt + 1) + u8".bmp");
+        if (fs::exists(filepath))
         {
             pos(cnt * 80, 0);
-            picload(s, 1);
+            picload(filepath, 1);
         }
     }
     gsel(3);
     pos(960, 96);
-    picload(filesystem::path(u8"./graphic/deco_mirror.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"deco_mirror.bmp", 1);
     gsel(0);
     windowshadow = 1;
 label_2040_internal:
@@ -45142,9 +45079,9 @@ label_2041_internal:
         if (rtval(1) == 0)
         {
             if (fs::exists(
-                    filesystem::path(u8"./graphic/pcc_"s).generic_string()
-                    + rtvaln + u8"_"s + (pcc(rtval, cc) % 1000 + 1)
-                    + u8".bmp"s))
+                    filesystem::dir::graphic()
+                    / (u8"pcc_"s + rtvaln + u8"_" + (pcc(rtval, cc) % 1000 + 1)
+                       + u8".bmp")))
             {
                 ++pcc(rtval, cc);
                 p = 1;
@@ -45176,9 +45113,9 @@ label_2041_internal:
         {
             if ((pcc(rtval, cc) % 1000 == 1 && rtval != 15)
                 || fs::exists(
-                       filesystem::path(u8"./graphic/pcc_"s).generic_string()
-                       + rtvaln + u8"_"s + (pcc(rtval, cc) % 1000 - 1)
-                       + u8".bmp"s))
+                       filesystem::dir::graphic()
+                       / (u8"pcc_"s + rtvaln + u8"_"s
+                          + (pcc(rtval, cc) % 1000 - 1) + u8".bmp"s)))
             {
                 --pcc(rtval, cc);
                 p = 1;
@@ -45596,7 +45533,7 @@ void ctrl_inventory_equipment()
     windowanime(wx, wy, ww, wh, 10, 4);
     gsel(3);
     pos(960, 96);
-    picload(filesystem::path(u8"./graphic/deco_wear.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"deco_wear.bmp", 1);
     gsel(0);
     windowshadow = 1;
 label_2051_internal:
@@ -45929,7 +45866,7 @@ void do_get_command()
             adata(16, area) = 0;
             removeworker(area);
             label_1749();
-            ctrl_file(13);
+            ctrl_file(file_operation_t::_13);
             snd(58);
             txt(lang(u8"建物を撤去した。"s, u8"You remove the building."s));
             turn_end();
@@ -47359,13 +47296,10 @@ void label_2085()
             noteadd(""s);
         }
     }
-    s = filesystem::path(u8"./save/"s + playerid + u8".txt").generic_string();
-    {
-        std::ofstream out{s, std::ios::binary};
-        out << s(0) << std::endl;
-    }
-    exec(s, 16);
-    return;
+    std::ofstream out{
+        (filesystem::dir::save() / (playerid + u8".txt")).native(),
+        std::ios::binary};
+    out << s(0) << std::endl;
 }
 
 
@@ -47520,7 +47454,6 @@ void label_2088()
 
 void migrate_save_data()
 {
-    elona_vector1<std::string> file_cnv;
     int p1 = 0;
     int p3 = 0;
     if (gdata_version != 1220)
@@ -47567,20 +47500,19 @@ void migrate_save_data()
         for (int cnt = 100; cnt < 200; ++cnt)
         {
             p = cnt;
-            SDIM1(file_cnv);
             for (int cnt = 0; cnt < 40; ++cnt)
             {
                 adata(cnt, p) = 0;
             }
             for (const auto& entry : filesystem::dir_entries{
-                     filesystem::path(u8"./tmp"),
+                     filesystem::dir::tmp(),
                      filesystem::dir_entries::type::file,
                      std::regex{u8R"(.*_)"s + std::to_string(p)
                                 + u8R"(_.*\..*)"}})
             {
-                std::string file = entry.path().filename().generic_string();
-                p1 = instr(file, 0, u8"_"s);
-                p2 = instr(file, p1 + 1, u8"_"s);
+                const auto file = entry.path().filename();
+                p1 = instr(filesystem::to_utf8_path(file), 0, u8"_"s);
+                p2 = instr(filesystem::to_utf8_path(file), p1 + 1, u8"_"s);
                 if (p >= 150)
                 {
                     p3 = p - 150 + 450;
@@ -47589,13 +47521,18 @@ void migrate_save_data()
                 {
                     p3 = p - 100 + 300;
                 }
-                file_cnv = folder + u8"/"s + strmid(file, 0, (p1 + 1)) + p3
-                    + strmid(file, (p1 + p2 + 1), 20);
-                file = folder + u8"/"s + file;
-                bcopy(file, file_cnv);
+                const auto file_cnv = filesystem::dir::tmp()
+                    / ((strmid(filesystem::to_utf8_path(file), 0, (p1 + 1))
+                        + p3)
+                       + strmid(
+                             filesystem::to_utf8_path(file),
+                             (p1 + p2 + 1),
+                             20));
+                const auto file_ = filesystem::dir::tmp() / file;
+                bcopy(file_, file_cnv);
                 fileadd(file_cnv);
-                elona_delete(file);
-                fileadd(file, 1);
+                elona_delete(file_);
+                fileadd(file_, 1);
             }
         }
         for (int cnt = 0; cnt < 500; ++cnt)
@@ -47643,7 +47580,7 @@ void label_2090()
 
 void get_inheritance()
 {
-    ctrl_file(4, u8"shop3.s2");
+    ctrl_file(file_operation2_t::_4, u8"shop3.s2");
     p = 0;
     i = 0;
     for (int cnt = 0; cnt < 600; ++cnt)
@@ -47689,7 +47626,7 @@ void get_inheritance()
 
 void load_gene_files()
 {
-    ctrl_file(15);
+    ctrl_file(file_operation_t::_15);
     DIM2(spell, 200);
     DIM2(spact, 500);
     for (int cnt = 0; cnt < 245; ++cnt)
@@ -47750,8 +47687,7 @@ void load_gene_files()
 
 void save_gene()
 {
-    ctrl_file(14);
-    return;
+    ctrl_file(file_operation_t::_14);
 }
 
 
@@ -47868,41 +47804,46 @@ void create_cnpc()
 
 void load_save_data()
 {
+    ELONA_LOG("Load save data: " << playerid);
+
     filemod = "";
-    ctrl_file(10);
-    folder = filesystem::path(u8"./save/"s + playerid + u8"/").generic_string();
-    notesel(buff);
-    if (!fs::exists(folder + u8"filelist.txt"s))
+    ctrl_file(file_operation_t::_10);
+    const auto save_dir = filesystem::dir::save(playerid);
+    buff(0).clear();
+    if (!fs::exists(save_dir / u8"filelist.txt"))
     {
-        buff(0).clear();
+        ELONA_LOG("Load save data: from directory");
         for (const auto& entry :
-             filesystem::dir_entries{filesystem::path(folder(0)),
+             filesystem::dir_entries{save_dir,
                                      filesystem::dir_entries::type::file,
                                      std::regex{u8R"(.*\..*)"}})
         {
-            buff += entry.path().filename().generic_string();
-            buff += '\n';
+            buff += filesystem::to_utf8_path(entry.path().filename()) + '\n';
         }
     }
     else
     {
-        buff(0).clear();
-        std::ifstream in{folder + u8"filelist.txt"s, std::ios::binary};
+        ELONA_LOG("Load save data: from filelist.txt");
+        std::ifstream in{(save_dir / u8"filelist.txt").native(),
+                         std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
-            buff(0) += tmp + '\n';
+            buff(0) +=
+                filesystem::to_utf8_path(filesystem::path(tmp).filename())
+                + '\n';
         }
     }
+    notesel(buff);
     for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         noteget(s, cnt);
         if (strutil::contains(s(0), u8".s2"))
         {
-            bcopy(folder + s, filesystem::path(u8"./tmp/"s + s));
+            bcopy(save_dir / s(0), filesystem::dir::tmp() / s(0));
         }
     }
-    ctrl_file(7);
+    ctrl_file(file_operation_t::_7);
     migrate_save_data();
     set_item_info();
     for (int cnt = 0; cnt < 16; ++cnt)
@@ -47925,9 +47866,9 @@ void load_save_data()
 
 void save_game()
 {
+    ELONA_LOG("Save game: " << playerid);
+
     int save_f = 0;
-    std::string save_s;
-    int save_p = 0;
     if (gdata_current_map == 35)
     {
         txtef(3);
@@ -47937,70 +47878,63 @@ void save_game()
         update_screen();
         return;
     }
-    ctrl_file(2);
-    ctrl_file(4, u8"inv_"s + mid + u8".s2");
+    ctrl_file(file_operation_t::_2);
+    ctrl_file(file_operation2_t::_4, u8"inv_"s + mid + u8".s2");
     save_f = 0;
     for (const auto& entry : filesystem::dir_entries{
-             filesystem::path(u8"./save"), filesystem::dir_entries::type::dir})
+             filesystem::dir::save(), filesystem::dir_entries::type::dir})
     {
-        if (entry.path().filename().generic_string() == playerid)
+        if (filesystem::to_utf8_path(entry.path().filename()) == playerid)
         {
             save_f = 1;
             break;
         }
     }
-    auto file = filesystem::path(u8"./save") / playerid;
+    const auto save_dir = filesystem::dir::save(playerid);
     if (save_f == 0)
     {
-        mkdir(file);
+        mkdir(save_dir);
     }
-    file += u8"/"s;
     notesel(filemod);
     for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
+        std::string save_s;
         noteget(save_s, cnt);
-        if (strmid(save_s, 0, 1) == u8"*"s)
+        if (save_s.empty())
+            continue;
+        const auto save_p = save_s.front() == '*';
+        save_s = save_s.substr(1);
+        const auto path = save_dir / filesystem::u8path(save_s);
+        if (save_p)
         {
-            save_p = 0;
+            bcopy(filesystem::dir::tmp() / filesystem::u8path(save_s), path);
         }
         else
         {
-            save_p = 1;
-        }
-        save_s = strmid(save_s, 1, save_s.size());
-        if (save_p == 0)
-        {
-            bcopy(save_s, file / fs::path(save_s).filename());
-        }
-        else
-        {
-            const auto path = file / fs::path(save_s).filename();
             if (fs::exists(path) && !fs::is_directory(path))
             {
                 elona_delete(path);
             }
         }
     }
-    ctrl_file(8);
+    ctrl_file(file_operation_t::_8);
     filemod = "";
     buff(0).clear();
     for (const auto& entry :
-         filesystem::dir_entries{filesystem::path(u8"./tmp"),
+         filesystem::dir_entries{filesystem::dir::tmp(),
                                  filesystem::dir_entries::type::file,
                                  std::regex{u8R"(.*\..*)"}})
     {
-        buff += entry.path().filename().generic_string();
-        buff += '\n';
+        buff += filesystem::to_utf8_path(entry.path().filename()) + '\n';
     }
     notesel(buff);
     {
         std::ofstream out{
-            filesystem::path(u8"./save/"s + playerid + u8"/filelist.txt")
-                .native(),
+            (filesystem::dir::save(playerid) / u8"filelist.txt").native(),
             std::ios::binary};
         out << buff(0) << std::endl;
     }
-    return;
+    ELONA_LOG("Save game: finish");
 }
 
 
@@ -48027,7 +47961,7 @@ void main_menu_continue()
     cs_bk = -1;
     gsel(4);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/void.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
     gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gsel(0);
     gmode(0);
@@ -48046,15 +47980,15 @@ void main_menu_continue()
     keyrange = 0;
     int save_data_count = 0;
     for (const auto& entry : filesystem::dir_entries{
-             filesystem::path(u8"./save"), filesystem::dir_entries::type::dir})
+             filesystem::dir::save(), filesystem::dir_entries::type::dir})
     {
-        s = entry.path().filename().generic_string();
-        const auto file = filesystem::path(u8"./save/"s + s + u8"/header.txt");
-        if (!fs::exists(file))
+        s = filesystem::to_utf8_path(entry.path().filename());
+        const auto header_filepath = filesystem::dir::save(s) / u8"header.txt";
+        if (!fs::exists(header_filepath))
         {
             continue;
         }
-        bload(file, playerheader);
+        bload(header_filepath, playerheader);
         list(0, save_data_count) = save_data_count;
         listn(0, save_data_count) = s;
         listn(1, save_data_count) = ""s + playerheader;
@@ -48162,7 +48096,7 @@ void main_menu_continue()
                     if (rtval == 0)
                     {
                         snd(20);
-                        ctrl_file(9);
+                        ctrl_file(file_operation_t::_9);
                     }
                     main_menu_continue();
                     return;
@@ -48185,7 +48119,7 @@ void main_menu_incarnate()
     cs_bk = -1;
     gsel(4);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/void.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
     gzoom(4, 0, 0, 800, 600, windoww, windowh);
     gsel(0);
     gmode(0);
@@ -48204,17 +48138,17 @@ void main_menu_incarnate()
     keyrange = 0;
     listmax = 0;
     for (const auto& entry : filesystem::dir_entries{
-             filesystem::path(u8"./save"), filesystem::dir_entries::type::dir})
+             filesystem::dir::save(), filesystem::dir_entries::type::dir})
     {
-        s = entry.path().filename().generic_string();
-        const auto file =
-            filesystem::path(u8"./save/"s + s + u8"/gene_header.txt");
+        s = filesystem::to_utf8_path(entry.path().filename());
+        const auto gene_header_filepath =
+            filesystem::dir::save(s) / u8"gene_header.txt";
         await();
-        if (!fs::exists(file))
+        if (!fs::exists(gene_header_filepath))
         {
             continue;
         }
-        bload(file, playerheader);
+        bload(gene_header_filepath, playerheader);
         list(0, listmax) = listmax;
         listn(0, listmax) = s;
         listn(1, listmax) = ""s + playerheader;
@@ -50193,7 +50127,7 @@ void label_2150()
     gsel(4);
     gmode(0);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/bg_night.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"bg_night.bmp", 1);
     pos(0, 0);
     gzoom(4, 0, 0, 640, 480, windoww, windowh - inf_verh);
     gsel(0);
@@ -50702,7 +50636,7 @@ void label_2156()
         fishstat = 0;
         gsel(9);
         pos(0, 0);
-        picload(filesystem::path(u8"./graphic/fishing.bmp"));
+        picload(filesystem::dir::graphic() / u8"fishing.bmp");
         gsel(0);
         return;
     }
@@ -53059,10 +52993,11 @@ int pick_up_item()
                 {
                     midbk = mid;
                     mid = ""s + 30 + u8"_"s + (100 + inv[ci].count);
-                    if (fs::exists(filesystem::path(
-                            u8"./tmp/mdata_"s + mid + u8".s2")))
+                    if (fs::exists(
+                            filesystem::dir::tmp()
+                            / (u8"mdata_"s + mid + u8".s2")))
                     {
-                        ctrl_file(11);
+                        ctrl_file(file_operation_t::_11);
                     }
                     mid = midbk;
                     inv[ci].count = 0;
@@ -54467,10 +54402,7 @@ void proc_autopick()
         }
         if (did_something && !op.sound.empty())
         {
-            DSLOADFNAME(
-                filesystem::to_narrow_path(
-                    filesystem::path(u8"sound") / op.sound),
-                15);
+            DSLOADFNAME(filesystem::dir::sound() / op.sound, 15);
             DSPLAY(15, 0);
         }
     }
@@ -55147,11 +55079,11 @@ void do_open_command()
                 pc_turn(false);
             }
         }
-        ctrl_file(4, u8"shoptmp.s2");
+        ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
         if (fs::exists(
-                filesystem::path(u8"./tmp/"s + u8"shop"s + invfile + u8".s2")))
+                filesystem::dir::tmp() / (u8"shop"s + invfile + u8".s2")))
         {
-            ctrl_file(3, fs::path(u8"shop"s + invfile + u8".s2"));
+            ctrl_file(file_operation2_t::_3, u8"shop"s + invfile + u8".s2");
         }
         else
         {
@@ -55195,8 +55127,8 @@ void do_open_command()
         {
             refweight = inv_weight(-1) + 2500;
         }
-        ctrl_file(4, u8"shop"s + invfile + u8".s2");
-        ctrl_file(3, u8"shoptmp.s2");
+        ctrl_file(file_operation2_t::_4, u8"shop"s + invfile + u8".s2");
+        ctrl_file(file_operation2_t::_3, u8"shoptmp.s2");
         if (refweight != 0)
         {
             inv[invcontainer(1)].weight = refweight;
@@ -58878,9 +58810,9 @@ void label_2241()
 {
     gsel(4);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/face1.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
     gsel(7);
-    picload(filesystem::path(u8"./graphic/ie_chat.bmp"));
+    picload(filesystem::dir::graphic() / u8"ie_chat.bmp");
     gsel(0);
     return;
 }
@@ -60295,7 +60227,7 @@ void label_2249()
         fade_out();
         gsel(4);
         pos(0, 0);
-        picload(filesystem::path(u8"./graphic/face1.bmp"), 1);
+        picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
         gsel(0);
         cdata[0].blind = 0;
         txt(lang(u8" 夢…か… "s, u8"It was...a dream...?"s));
@@ -61052,9 +60984,9 @@ void show_talk_window()
     }
     else
     {
-        s = filesystem::path(u8"./user/graphic/face"s).generic_string()
-            + std::abs((cdata[tc].portrait + 1)) + u8".bmp"s;
-        if (!fs::exists(s) || cdata[tc].portrait == -1)
+        const auto portrait_filepath = filesystem::dir::user()
+            / (u8"graphic/face"s + std::abs(cdata[tc].portrait + 1) + u8".bmp");
+        if (!fs::exists(portrait_filepath) || cdata[tc].portrait == -1)
         {
             p(0) = cdata[tc].image % 1000;
             p(1) = cdata[tc].image / 1000;
@@ -61069,7 +61001,7 @@ void show_talk_window()
             {
                 gsel(4);
                 pos(0, 0);
-                picload(s, 1);
+                picload(portrait_filepath, 1);
                 gsel(0);
                 chatpicloaded = 1;
             }
@@ -61183,7 +61115,7 @@ void label_2262()
         }
     }
     mode = 6;
-    ctrl_file(4, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
     if (cdata[tc].shop_store_id == 0)
     {
         if (cdata[tc].character_role == 1010
@@ -61207,7 +61139,7 @@ void label_2262()
     }
     else
     {
-        ctrl_file(3, u8"shop"s + invfile + u8".s2");
+        ctrl_file(file_operation2_t::_3, u8"shop"s + invfile + u8".s2");
     }
     invfile = cdata[tc].shop_store_id;
     load_shoptmp();
@@ -61219,8 +61151,8 @@ void label_2262()
 void sell_item()
 {
     mode = 6;
-    ctrl_file(4, u8"shoptmp.s2");
-    ctrl_file(3, u8"shop"s + invfile + u8".s2");
+    ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::_3, u8"shop"s + invfile + u8".s2");
     shoptrade = 0;
     if (tc > 0)
     {
@@ -61237,8 +61169,8 @@ void sell_item()
 
 void load_shoptmp()
 {
-    ctrl_file(4, u8"shop"s + invfile + u8".s2");
-    ctrl_file(3, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::_4, u8"shop"s + invfile + u8".s2");
+    ctrl_file(file_operation2_t::_3, u8"shoptmp.s2");
     mode = 0;
     return;
 }
@@ -62177,7 +62109,7 @@ label_22711:
     curmenu = 0;
     gsel(3);
     pos(960, 96);
-    picload(filesystem::path(u8"./graphic/deco_politics.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"deco_politics.bmp", 1);
     gsel(0);
     fillbg(3, 960, 96, 128, 128);
     render_hud();
@@ -62383,13 +62315,13 @@ void label_2276()
     listmax = 2;
     gsel(3);
     pos(960, 96);
-    picload(filesystem::path(u8"./graphic/deco_politics.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"deco_politics.bmp", 1);
     gsel(0);
     fillbg(3, 960, 96, 128, 128);
     render_hud();
     gsel(7);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/ie_scroll.bmp"));
+    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp");
     gsel(0);
     windowshadow = 1;
     snd(92);
@@ -62573,13 +62505,13 @@ void label_2280()
 label_2281_internal:
     gsel(3);
     pos(960, 96);
-    picload(filesystem::path(u8"./graphic/deco_politics.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"deco_politics.bmp", 1);
     gsel(0);
     fillbg(3, 960, 96, 128, 128);
     render_hud();
     gsel(7);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/ie_scroll.bmp"));
+    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp");
     gsel(0);
     windowshadow = 1;
     snd(92);
@@ -64370,8 +64302,7 @@ label_2682_internal:
     }
     if (s == u8"{se}"s)
     {
-        folder = filesystem::path(u8"./sound/").generic_string();
-        sndload(folder + s(1), 28);
+        sndload(filesystem::dir::sound() / s(1), 28);
         snd(28);
         goto label_2682_internal;
     }
@@ -64398,7 +64329,7 @@ label_2684_internal:
     gsel(4);
     gmode(0);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/"s + file + u8".bmp"), 1);
+    picload(filesystem::dir::graphic() / (u8""s + file + u8".bmp"), 1);
     pos(0, y1);
     gzoom(4, 0, 0, 640, 480, windoww, y2 - y1);
     gmode(2);
@@ -66589,13 +66520,13 @@ void show_ex_help()
 {
     gsel(3);
     pos(960, 96);
-    picload(filesystem::path(u8"./graphic/deco_help.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"deco_help.bmp", 1);
     gsel(0);
     page = 0;
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{filesystem::path(u8"./data/exhelp.txt").native(),
+        std::ifstream in{(filesystem::dir::data() / u8"exhelp.txt").native(),
                          std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -66716,7 +66647,8 @@ void show_game_help()
         {
             pos(cnt % 4 * 180, cnt / 4 * 300);
             picload(
-                filesystem::path(u8"./graphic/g"s + (cnt + 1) + u8".bmp"), 1);
+                filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"),
+                1);
         }
         gsel(0);
     }
@@ -66728,11 +66660,10 @@ void show_game_help()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{
-            filesystem::path(
-                u8"./data/"s + lang(u8"manual_JP.txt"s, u8"manual_ENG.txt"s))
-                .native(),
-            std::ios::binary};
+        std::ifstream in{(filesystem::dir::data()
+                          / lang(u8"manual_JP.txt", u8"manual_ENG.txt"))
+                             .native(),
+                         std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -67028,7 +66959,7 @@ void label_2707()
     pagesize = 0;
     gsel(7);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/ie_scroll.bmp"));
+    picload(filesystem::dir::graphic() / u8"ie_scroll.bmp");
     gsel(0);
     windowshadow = 1;
     snd(92);
@@ -67335,10 +67266,10 @@ void play_scene()
     snd(59);
     gsel(4);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/book.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"book.bmp", 1);
     gsel(7);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/g1.bmp"), 0);
+    picload(filesystem::dir::graphic() / u8"g1.bmp", 0);
     gsel(0);
     listmax = 0;
     page = 0;
@@ -69145,7 +69076,7 @@ label_2747:
                 dbg_revealmap = 1;
                 ++gdata_current_dungeon_level;
                 txt(u8"lv:"s + gdata_current_dungeon_level);
-                ctrl_file(11);
+                ctrl_file(file_operation_t::_11);
                 mode = 2;
                 levelexitby = 4;
                 initialize_map();
@@ -70028,7 +69959,7 @@ void conquer_lesimas()
     label_1442();
     gsel(4);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/void.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
     pos(0, 0);
     gzoom(4, 0, 0, 640, 480, windoww, windowh);
     gsel(0);
@@ -70037,7 +69968,7 @@ void conquer_lesimas()
     gcopy(4, 0, 0, windoww, windowh);
     gsel(4);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/g1.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"g1.bmp", 1);
     gsel(0);
     s = lang(
         ""s + cdatan(1, 0) + cdatan(0, 0)
@@ -70155,7 +70086,7 @@ void pc_died()
     }
     buff = "";
     notesel(buff);
-    const auto bone_filepath = filesystem::path(u8"./save/bone.txt");
+    const auto bone_filepath = filesystem::dir::save() / u8"bone.txt";
     if (fs::exists(bone_filepath))
     {
         std::ifstream in{bone_filepath.native(), std::ios::binary};
@@ -70233,7 +70164,7 @@ void pc_died()
     }
     gsel(4);
     pos(0, 0);
-    picload(filesystem::path(u8"./graphic/void.bmp"), 1);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
     gsel(0);
     show_game_score_ranking();
     s = lang(

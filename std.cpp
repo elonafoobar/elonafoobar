@@ -11,6 +11,7 @@
 
 #include "config.hpp"
 #include "elona.hpp"
+#include "log.hpp"
 #include "util.hpp"
 #include "variables.hpp"
 
@@ -287,6 +288,7 @@ void axobj(int, const std::string&, int, int)
 
 void bcopy(const fs::path& from, const fs::path& to)
 {
+    ELONA_LOG("Copy file: from " << from << " to " << to);
     fs::copy_file(from, to, fs::copy_option::overwrite_if_exists);
 }
 
@@ -1142,9 +1144,9 @@ void mkdir(const fs::path& path)
 
 
 
-void mmload(const std::string& file, int id, int mode)
+void mmload(const fs::path& filepath, int id, int mode)
 {
-    (void)file;
+    (void)filepath;
     (void)id;
     (void)mode;
 }
@@ -1328,18 +1330,18 @@ void pget(int x, int y)
 
 
 
-void picload(const fs::path& filename, int mode)
+void picload(const fs::path& filepath, int mode)
 {
     optional<snail::color> keycolor = snail::color{0, 0, 0};
-    if (filename.generic_string().find("pcc") != std::string::npos)
+    if (filesystem::to_utf8_path(filepath).find(u8"pcc") != std::string::npos)
     {
         keycolor = snail::color(43, 133, 133);
     }
-    if (filename.generic_string().find("bg") != std::string::npos)
+    if (filesystem::to_utf8_path(filepath).find(u8"bg") != std::string::npos)
     {
         keycolor = none;
     }
-    snail::basic_image img{filename, keycolor};
+    snail::basic_image img{filepath, keycolor};
     if (mode == 0)
     {
         buffer(detail::current_buffer, img.width(), img.height());
@@ -1352,16 +1354,16 @@ void picload(const fs::path& filename, int mode)
         img, detail::current_tex_buffer().x, detail::current_tex_buffer().y);
 
 #if 0 // disable it temporarily
-    if (filename.generic_string().find(u8"interface.bmp") != std::string::npos)
+    if (filesystem::to_utf8_path(filepath).find(u8"interface.bmp") != std::string::npos)
     {
-        snail::basic_image ex{filename.parent_path() / u8"interface_ex.png"};
+        snail::basic_image ex{filepath.parent_path() / u8"interface_ex.png"};
         snail::application::instance().get_renderer().render_image(ex, 0, 656);
-        snail::basic_image ex2{filename.parent_path() / u8"interface_ex2.png"};
+        snail::basic_image ex2{filepath.parent_path() / u8"interface_ex2.png"};
         snail::application::instance().get_renderer().render_image(
             ex2, 144, 656);
         snail::application::instance().get_renderer().render_image(
             ex2, 144, 704);
-        snail::basic_image ex3{filename.parent_path() / u8"interface_ex3.png"};
+        snail::basic_image ex3{filepath.parent_path() / u8"interface_ex3.png"};
         snail::application::instance().get_renderer().render_image(
             ex3, 144, 752);
     }
@@ -1753,7 +1755,7 @@ void DSRELEASE(int)
 
 
 
-void DSLOADFNAME(const std::string& filename, int channel)
+void DSLOADFNAME(const fs::path& filepath, int channel)
 {
     if (mixer_detail::chunks.find(channel) != std::end(mixer_detail::chunks))
     {
@@ -1761,7 +1763,7 @@ void DSLOADFNAME(const std::string& filename, int channel)
             Mix_FreeChunk(mixer_detail::chunks[channel]);
     }
     auto chunk = snail::detail::enforce_mixer(
-        Mix_LoadWAV(filesystem::to_narrow_path(filename).c_str()));
+        Mix_LoadWAV(filesystem::to_utf8_path(filepath).c_str()));
     mixer_detail::chunks[channel] = chunk;
 }
 
@@ -1825,13 +1827,13 @@ void DMEND()
 }
 
 
-void DMLOADFNAME(const std::string& filename, int)
+void DMLOADFNAME(const fs::path& filepath, int)
 {
     if (mixer_detail::music)
         ::Mix_FreeMusic(mixer_detail::music);
 
     mixer_detail::music = snail::detail::enforce_mixer(
-        Mix_LoadMUS(filesystem::to_narrow_path(filename).c_str()));
+        Mix_LoadMUS(filesystem::to_utf8_path(filepath).c_str()));
 }
 
 

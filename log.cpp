@@ -16,7 +16,7 @@ std::ofstream out;
 
 void initialize()
 {
-    detail::out.open(filesystem::path(u8"log.txt").native());
+    detail::out.open((filesystem::dir::exe() / u8"log.txt").native());
 }
 
 
