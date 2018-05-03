@@ -345,6 +345,11 @@ std::vector<config_menu> create_config_menu()
         config::instance().use_autopick,
         lang(u8"使う", u8"On"),
         lang(u8"使わない", u8"Off"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"オートセーブ", u8"Autosave"),
+        config::instance().autosave,
+        lang(u8"有効", u8"On"),
+        lang(u8"無効", u8"Off"));
 
 #undef ELONA_CONFIG_ITEM
 #undef ELONA_CONFIG_ITEM_YESNO
@@ -1409,6 +1414,22 @@ void set_option()
                     snd(20);
                     set_config(
                         u8"use_autopick", config::instance().use_autopick);
+                    reset_page = true;
+                    continue;
+                }
+                if (cs == 3)
+                {
+                    config::instance().autosave += p;
+                    if (config::instance().autosave > 1)
+                    {
+                        config::instance().autosave = 1;
+                    }
+                    else if (config::instance().autosave < 0)
+                    {
+                        config::instance().autosave = 0;
+                    }
+                    snd(20);
+                    set_config(u8"autosave", config::instance().autosave);
                     reset_page = true;
                     continue;
                 }
