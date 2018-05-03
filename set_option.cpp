@@ -1407,7 +1407,8 @@ void set_option()
                         config::instance().use_autopick = 0;
                     }
                     snd(20);
-                    set_config(u8"use_autopick", config::instance().use_autopick);
+                    set_config(
+                        u8"use_autopick", config::instance().use_autopick);
                     reset_page = true;
                     continue;
                 }

@@ -968,9 +968,10 @@ void load_config2()
                        std::ios::binary};
     if (!file)
     {
-        throw config_loading_error{u8"Failed to open: "s
-                                   + filesystem::make_preferred_path_in_utf8(
-                                         filesystem::dir::exe() / u8"config.json")};
+        throw config_loading_error{
+            u8"Failed to open: "s
+            + filesystem::make_preferred_path_in_utf8(
+                  filesystem::dir::exe() / u8"config.json")};
     }
 
     picojson::value value;

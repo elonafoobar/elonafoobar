@@ -1267,124 +1267,65 @@ void initialize_sound_file()
     }
 
     const std::pair<const char*, int> se_list[] = {
-        {u8"exitmap1.wav", 49},
-        {u8"book1.wav", 59},
-        {u8"write1.wav", 44},
-        {u8"pop1.wav", 1},
-        {u8"kill1.wav", 8},
-        {u8"kill2.wav", 9},
-        {u8"trap1.wav", 70},
-        {u8"more1.wav", 10},
-        {u8"getgold1.wav", 11},
-        {u8"paygold1.wav", 12},
-        {u8"equip1.wav", 13},
-        {u8"get1.wav", 14},
-        {u8"get2.wav", 15},
-        {u8"drop1.wav", 16},
-        {u8"drink1.wav", 17},
-        {u8"eat1.wav", 18},
-        {u8"spend1.wav", 19},
-        {u8"ding1.wav", 60},
-        {u8"ding3.wav", 61},
-        {u8"dead1.wav", 50},
-        {u8"ok1.wav", 20},
-        {u8"dig1.wav", 52},
-        {u8"bash1.wav", 73},
-        {u8"complete1.wav", 51},
-        {u8"alert1.wav", 21},
-        {u8"locked1.wav", 22},
-        {u8"chest1.wav", 23},
-        {u8"ding2.wav", 24},
-        {u8"cook1.wav", 25},
-        {u8"pop2.wav", 26},
-        {u8"fail1.wav", 27},
-        {u8"build1.wav", 58},
-        {u8"bow1.wav", 29},
-        {u8"atk1.wav", 2},
-        {u8"atk2.wav", 3},
-        {u8"gun1.wav", 30},
-        {u8"throw1.wav", 31},
-        {u8"Heart1.wav", 32},
-        {u8"heal1.wav", 33},
-        {u8"teleport1.wav", 72},
-        {u8"ball1.wav", 34},
-        {u8"breath1.wav", 35},
-        {u8"bolt1.wav", 37},
-        {u8"arrow1.wav", 36},
-        {u8"curse1.wav", 38},
-        {u8"pop3.wav", 39},
-        {u8"chime.wav", 53},
-        {u8"laser1.wav", 42},
-        {u8"web.wav", 68},
-        {u8"cheer.wav", 69},
-        {u8"door1.wav", 48},
-        {u8"crush1.wav", 45},
-        {u8"crush2.wav", 47},
-        {u8"fire1.wav", 6},
-        {u8"snow.wav", 86},
-        {u8"fish_cast.wav", 87},
-        {u8"fish_get.wav", 88},
-        {u8"fish_fight.wav", 89},
-        {u8"ammo.wav", 90},
-        {u8"throw2.wav", 91},
-        {u8"foot1a.wav", 81},
-        {u8"foot2a.wav", 83},
-        {u8"foot1b.wav", 82},
-        {u8"foot2b.wav", 84},
-        {u8"foot2c.wav", 85},
-        {u8"click1.wav", 40},
-        {u8"get3.wav", 41},
-        {u8"card1.wav", 71},
-        {u8"water.wav", 57},
-        {u8"water2.wav", 46},
-        {u8"dig2.wav", 54},
-        {u8"bush1.wav", 55},
-        {u8"gasha.wav", 56},
-        {u8"cursor1.wav", 5},
-        {u8"pop4.wav", 62},
-        {u8"punish1.wav", 63},
-        {u8"pray1.wav", 64},
-        {u8"offer1.wav", 65},
-        {u8"fizzle.wav", 66},
-        {u8"door2.wav", 67},
-        {u8"foot.wav", 43},
-        {u8"miss.wav", 4},
-        {u8"night.wav", 74},
-        {u8"bg_rain.wav", 75},
-        {u8"bg_thunder.wav", 76},
-        {u8"bg_wind.wav", 77},
-        {u8"bg_sea.wav", 78},
-        {u8"bg_town.wav", 79},
-        {u8"bg_fire.wav", 80},
-        {u8"scroll.wav", 92},
-        {u8"log.wav", 93},
-        {u8"chara.wav", 94},
-        {u8"wear.wav", 95},
-        {u8"feat.wav", 96},
-        {u8"port.wav", 97},
-        {u8"unpop1.wav", 98},
-        {u8"chat.wav", 99},
-        {u8"inv.wav", 100},
-        {u8"skill.wav", 101},
-        {u8"spell.wav", 102},
-        {u8"dice.wav", 103},
-        {u8"vomit.wav", 104},
-        {u8"atksword.wav", 105},
-        {u8"atk_ice.wav", 106},
-        {u8"atk_elec.wav", 107},
-        {u8"atk_fire.wav", 108},
-        {u8"atk_hell.wav", 109},
-        {u8"atk_poison.wav", 110},
-        {u8"atk_nerve.wav", 111},
-        {u8"atk_sound.wav", 112},
-        {u8"atk_mind.wav", 113},
-        {u8"atk_chaos.wav", 114},
-        {u8"atk_dark.wav", 115},
-        {u8"curse2.wav", 116},
-        {u8"curse3.wav", 117},
-        {u8"enc.wav", 118},
-        {u8"enc2.wav", 119},
-        {u8"pray2.wav", 120},
+        {u8"exitmap1.wav", 49},   {u8"book1.wav", 59},
+        {u8"write1.wav", 44},     {u8"pop1.wav", 1},
+        {u8"kill1.wav", 8},       {u8"kill2.wav", 9},
+        {u8"trap1.wav", 70},      {u8"more1.wav", 10},
+        {u8"getgold1.wav", 11},   {u8"paygold1.wav", 12},
+        {u8"equip1.wav", 13},     {u8"get1.wav", 14},
+        {u8"get2.wav", 15},       {u8"drop1.wav", 16},
+        {u8"drink1.wav", 17},     {u8"eat1.wav", 18},
+        {u8"spend1.wav", 19},     {u8"ding1.wav", 60},
+        {u8"ding3.wav", 61},      {u8"dead1.wav", 50},
+        {u8"ok1.wav", 20},        {u8"dig1.wav", 52},
+        {u8"bash1.wav", 73},      {u8"complete1.wav", 51},
+        {u8"alert1.wav", 21},     {u8"locked1.wav", 22},
+        {u8"chest1.wav", 23},     {u8"ding2.wav", 24},
+        {u8"cook1.wav", 25},      {u8"pop2.wav", 26},
+        {u8"fail1.wav", 27},      {u8"build1.wav", 58},
+        {u8"bow1.wav", 29},       {u8"atk1.wav", 2},
+        {u8"atk2.wav", 3},        {u8"gun1.wav", 30},
+        {u8"throw1.wav", 31},     {u8"Heart1.wav", 32},
+        {u8"heal1.wav", 33},      {u8"teleport1.wav", 72},
+        {u8"ball1.wav", 34},      {u8"breath1.wav", 35},
+        {u8"bolt1.wav", 37},      {u8"arrow1.wav", 36},
+        {u8"curse1.wav", 38},     {u8"pop3.wav", 39},
+        {u8"chime.wav", 53},      {u8"laser1.wav", 42},
+        {u8"web.wav", 68},        {u8"cheer.wav", 69},
+        {u8"door1.wav", 48},      {u8"crush1.wav", 45},
+        {u8"crush2.wav", 47},     {u8"fire1.wav", 6},
+        {u8"snow.wav", 86},       {u8"fish_cast.wav", 87},
+        {u8"fish_get.wav", 88},   {u8"fish_fight.wav", 89},
+        {u8"ammo.wav", 90},       {u8"throw2.wav", 91},
+        {u8"foot1a.wav", 81},     {u8"foot2a.wav", 83},
+        {u8"foot1b.wav", 82},     {u8"foot2b.wav", 84},
+        {u8"foot2c.wav", 85},     {u8"click1.wav", 40},
+        {u8"get3.wav", 41},       {u8"card1.wav", 71},
+        {u8"water.wav", 57},      {u8"water2.wav", 46},
+        {u8"dig2.wav", 54},       {u8"bush1.wav", 55},
+        {u8"gasha.wav", 56},      {u8"cursor1.wav", 5},
+        {u8"pop4.wav", 62},       {u8"punish1.wav", 63},
+        {u8"pray1.wav", 64},      {u8"offer1.wav", 65},
+        {u8"fizzle.wav", 66},     {u8"door2.wav", 67},
+        {u8"foot.wav", 43},       {u8"miss.wav", 4},
+        {u8"night.wav", 74},      {u8"bg_rain.wav", 75},
+        {u8"bg_thunder.wav", 76}, {u8"bg_wind.wav", 77},
+        {u8"bg_sea.wav", 78},     {u8"bg_town.wav", 79},
+        {u8"bg_fire.wav", 80},    {u8"scroll.wav", 92},
+        {u8"log.wav", 93},        {u8"chara.wav", 94},
+        {u8"wear.wav", 95},       {u8"feat.wav", 96},
+        {u8"port.wav", 97},       {u8"unpop1.wav", 98},
+        {u8"chat.wav", 99},       {u8"inv.wav", 100},
+        {u8"skill.wav", 101},     {u8"spell.wav", 102},
+        {u8"dice.wav", 103},      {u8"vomit.wav", 104},
+        {u8"atksword.wav", 105},  {u8"atk_ice.wav", 106},
+        {u8"atk_elec.wav", 107},  {u8"atk_fire.wav", 108},
+        {u8"atk_hell.wav", 109},  {u8"atk_poison.wav", 110},
+        {u8"atk_nerve.wav", 111}, {u8"atk_sound.wav", 112},
+        {u8"atk_mind.wav", 113},  {u8"atk_chaos.wav", 114},
+        {u8"atk_dark.wav", 115},  {u8"curse2.wav", 116},
+        {u8"curse3.wav", 117},    {u8"enc.wav", 118},
+        {u8"enc2.wav", 119},      {u8"pray2.wav", 120},
         {u8"offer2.wav", 121},
     };
 
@@ -1591,8 +1532,7 @@ void play_music()
         if (config::instance().music == 1)
         {
             DMSTOP();
-            DMLOADFNAME(
-                filesystem::dir::sound() / u8"gm_on.mid", 0);
+            DMLOADFNAME(filesystem::dir::sound() / u8"gm_on.mid", 0);
             DMPLAY(1, 0);
         }
         fs::path music_dir;
@@ -2590,9 +2530,8 @@ void finish_elona()
 
 void load_pcc_part(int cc, int body_part, const char* body_part_str)
 {
-    const auto filepath = filesystem::dir::graphic() / (
-        u8"pcc_"s + body_part_str + (pcc(body_part, cc) % 1000)
-        + u8".bmp");
+    const auto filepath = filesystem::dir::graphic()
+        / (u8"pcc_"s + body_part_str + (pcc(body_part, cc) % 1000) + u8".bmp");
     if (!fs::exists(filepath))
         return;
 
@@ -3978,8 +3917,8 @@ void load_random_name_table()
 {
     std::vector<std::string> lines;
     range::copy(
-        fileutil::read_by_line{
-            filesystem::dir::data() / lang(u8"ndata.csv", u8"ndata-e.csv")},
+        fileutil::read_by_line{filesystem::dir::data()
+                               / lang(u8"ndata.csv", u8"ndata-e.csv")},
         std::back_inserter(lines));
 
     SDIM3(randn1, 30, 20);
@@ -9807,7 +9746,8 @@ int customtalk(int cc, int talk_type)
 
     if (cdata[cc].has_custom_talk())
     {
-        const auto filepath = filesystem::dir::user() / u8"talk" / cdatan(4, cc);
+        const auto filepath =
+            filesystem::dir::user() / u8"talk" / cdatan(4, cc);
         if (!fs::exists(filepath))
             return 0;
         range::copy(
@@ -15583,7 +15523,7 @@ int net_dl(const std::string& prm_888, const std::string& prm_889)
     neturl(u8"http://homepage3.nifty.com/rfish/userfile/"s);
     netdlname((filesystem::dir::user() / prm_889).generic_string());
     netload(prm_888);
-    if (!fs::exists(filesystem::dir::user() / u8"user" /  prm_889))
+    if (!fs::exists(filesystem::dir::user() / u8"user" / prm_889))
     {
         return 0;
     }
@@ -15705,7 +15645,8 @@ label_14001_internal:
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"), 1);
+        picload(
+            filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(0);
     listmax = 0;
@@ -29107,7 +29048,8 @@ void use_house_board()
         {
             pos(cnt % 4 * 180, cnt / 4 * 300);
             picload(
-                filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"), 1);
+                filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"),
+                1);
         }
         gsel(0);
         snd(26);
@@ -31216,7 +31158,8 @@ void label_1746()
     if (mdata(2) != mtilefilecur)
     {
         pos(0, 0);
-        picload(filesystem::dir::graphic() / (u8"map"s + mdata(2) + u8".bmp"), 1);
+        picload(
+            filesystem::dir::graphic() / (u8"map"s + mdata(2) + u8".bmp"), 1);
         mtilefilecur = mdata(2);
         initialize_map_chip();
     }
@@ -39145,8 +39088,10 @@ label_19431_internal:
     SDIM2(headtemp, 1024);
     const auto pattern =
         comctrl == 1 ? std::regex{u8R"(.*\.ept)"} : std::regex{u8R"(.*\.eum)"};
-    for (const auto& entry : filesystem::dir_entries{
-            filesystem::dir::user(), filesystem::dir_entries::type::file, pattern})
+    for (const auto& entry :
+         filesystem::dir_entries{filesystem::dir::user(),
+                                 filesystem::dir_entries::type::file,
+                                 pattern})
     {
         const auto path = entry.path();
         if (path == filesystem::path(u8"temp.enum")
@@ -39160,7 +39105,8 @@ label_19431_internal:
         list(0, listmax) = listmax;
         list(1, listmax) = 0;
         list(2, listmax) = elona::stoi(s(2));
-        listn(0, listmax) = u8"("s + filesystem::make_preferred_path_in_utf8(path.filename()) + u8") "s
+        listn(0, listmax) = u8"("s
+            + filesystem::make_preferred_path_in_utf8(path.filename()) + u8") "s
             + s + u8" "s + s(1);
         listn(1, listmax) = filesystem::to_utf8_path(path.filename());
         ++listmax;
@@ -43010,7 +42956,8 @@ int change_npc_tone()
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"), 1);
+        picload(
+            filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(0);
     listmax = 0;
@@ -43029,7 +42976,8 @@ int change_npc_tone()
                                  std::regex{u8R"(.*\.txt)"}})
     {
         list(0, listmax) = listmax;
-        listn(0, listmax) = filesystem::to_utf8_path(fs::relative(entry.path(), base_dir));
+        listn(0, listmax) =
+            filesystem::to_utf8_path(fs::relative(entry.path(), base_dir));
         ++listmax;
     }
     windowshadow = 1;
@@ -43906,7 +43854,8 @@ label_20331:
     picload(filesystem::dir::graphic() / u8"face1.bmp", 1);
     if (cdata[cc].portrait < 0)
     {
-        const auto filepath = filesystem::dir::user() / u8"graphic" / (u8"face"s + std::abs(cdata[cc].portrait + 1) + u8".bmp");
+        const auto filepath = filesystem::dir::user() / u8"graphic"
+            / (u8"face"s + std::abs(cdata[cc].portrait + 1) + u8".bmp");
         if (cdata[cc].portrait != -1)
         {
             if (fs::exists(filepath))
@@ -44051,7 +44000,8 @@ label_2035_internal:
         }
         else
         {
-            const auto filepath = filesystem::dir::user() / u8"graphic" / (u8"face"s + std::abs(cdata[cc].portrait + 1) + u8".bmp");
+            const auto filepath = filesystem::dir::user() / u8"graphic"
+                / (u8"face"s + std::abs(cdata[cc].portrait + 1) + u8".bmp");
             if (cdata[cc].portrait != -1)
             {
                 if (fs::exists(filepath))
@@ -44880,7 +44830,8 @@ int change_appearance()
     boxf();
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        const auto filepath = filesystem::dir::user() / u8"graphic" / (u8"face"s + (cnt + 1) + u8".bmp");
+        const auto filepath = filesystem::dir::user() / u8"graphic"
+            / (u8"face"s + (cnt + 1) + u8".bmp");
         if (fs::exists(filepath))
         {
             pos(cnt * 80, 0);
@@ -45128,9 +45079,9 @@ label_2041_internal:
         if (rtval(1) == 0)
         {
             if (fs::exists(
-                    filesystem::dir::graphic() / (u8"pcc_"s + rtvaln + u8"_"
-                    + (pcc(rtval, cc) % 1000 + 1)
-                    + u8".bmp")))
+                    filesystem::dir::graphic()
+                    / (u8"pcc_"s + rtvaln + u8"_" + (pcc(rtval, cc) % 1000 + 1)
+                       + u8".bmp")))
             {
                 ++pcc(rtval, cc);
                 p = 1;
@@ -45162,9 +45113,9 @@ label_2041_internal:
         {
             if ((pcc(rtval, cc) % 1000 == 1 && rtval != 15)
                 || fs::exists(
-                       filesystem::dir::graphic() / (u8"pcc_"s
-                       + rtvaln + u8"_"s + (pcc(rtval, cc) % 1000 - 1)
-                       + u8".bmp"s)))
+                       filesystem::dir::graphic()
+                       / (u8"pcc_"s + rtvaln + u8"_"s
+                          + (pcc(rtval, cc) % 1000 - 1) + u8".bmp"s)))
             {
                 --pcc(rtval, cc);
                 p = 1;
@@ -47345,7 +47296,9 @@ void label_2085()
             noteadd(""s);
         }
     }
-    std::ofstream out{(filesystem::dir::save() / (playerid + u8".txt")).native(), std::ios::binary};
+    std::ofstream out{
+        (filesystem::dir::save() / (playerid + u8".txt")).native(),
+        std::ios::binary};
     out << s(0) << std::endl;
 }
 
@@ -47568,8 +47521,13 @@ void migrate_save_data()
                 {
                     p3 = p - 100 + 300;
                 }
-                const auto file_cnv = filesystem::dir::tmp() / ((strmid(filesystem::to_utf8_path(file), 0, (p1 + 1)) + p3)
-                    + strmid(filesystem::to_utf8_path(file), (p1 + p2 + 1), 20));
+                const auto file_cnv = filesystem::dir::tmp()
+                    / ((strmid(filesystem::to_utf8_path(file), 0, (p1 + 1))
+                        + p3)
+                       + strmid(
+                             filesystem::to_utf8_path(file),
+                             (p1 + p2 + 1),
+                             20));
                 const auto file_ = filesystem::dir::tmp() / file;
                 bcopy(file_, file_cnv);
                 fileadd(file_cnv);
@@ -47866,11 +47824,14 @@ void load_save_data()
     else
     {
         ELONA_LOG("Load save data: from filelist.txt");
-        std::ifstream in{(save_dir / u8"filelist.txt").native(), std::ios::binary};
+        std::ifstream in{(save_dir / u8"filelist.txt").native(),
+                         std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
-            buff(0) += filesystem::to_utf8_path(filesystem::path(tmp).filename()) + '\n';
+            buff(0) +=
+                filesystem::to_utf8_path(filesystem::path(tmp).filename())
+                + '\n';
         }
     }
     notesel(buff);
@@ -47968,7 +47929,8 @@ void save_game()
     }
     notesel(buff);
     {
-        std::ofstream out{(filesystem::dir::save(playerid) / u8"filelist.txt").native(),
+        std::ofstream out{
+            (filesystem::dir::save(playerid) / u8"filelist.txt").native(),
             std::ios::binary};
         out << buff(0) << std::endl;
     }
@@ -48179,7 +48141,8 @@ void main_menu_incarnate()
              filesystem::dir::save(), filesystem::dir_entries::type::dir})
     {
         s = filesystem::to_utf8_path(entry.path().filename());
-        const auto gene_header_filepath = filesystem::dir::save(s) / u8"gene_header.txt";
+        const auto gene_header_filepath =
+            filesystem::dir::save(s) / u8"gene_header.txt";
         await();
         if (!fs::exists(gene_header_filepath))
         {
@@ -53030,8 +52993,9 @@ int pick_up_item()
                 {
                     midbk = mid;
                     mid = ""s + 30 + u8"_"s + (100 + inv[ci].count);
-                    if (fs::exists(filesystem::dir::tmp() /
-                            (u8"mdata_"s + mid + u8".s2")))
+                    if (fs::exists(
+                            filesystem::dir::tmp()
+                            / (u8"mdata_"s + mid + u8".s2")))
                     {
                         ctrl_file(file_operation_t::_11);
                     }
@@ -55119,8 +55083,7 @@ void do_open_command()
         if (fs::exists(
                 filesystem::dir::tmp() / (u8"shop"s + invfile + u8".s2")))
         {
-            ctrl_file(
-                file_operation2_t::_3, u8"shop"s + invfile + u8".s2");
+            ctrl_file(file_operation2_t::_3, u8"shop"s + invfile + u8".s2");
         }
         else
         {
@@ -61021,7 +60984,8 @@ void show_talk_window()
     }
     else
     {
-        const auto portrait_filepath = filesystem::dir::user() / (u8"graphic/face"s + std::abs(cdata[tc].portrait + 1) + u8".bmp");
+        const auto portrait_filepath = filesystem::dir::user()
+            / (u8"graphic/face"s + std::abs(cdata[tc].portrait + 1) + u8".bmp");
         if (!fs::exists(portrait_filepath) || cdata[tc].portrait == -1)
         {
             p(0) = cdata[tc].image % 1000;
@@ -66683,7 +66647,8 @@ void show_game_help()
         {
             pos(cnt % 4 * 180, cnt / 4 * 300);
             picload(
-                filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"), 1);
+                filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"),
+                1);
         }
         gsel(0);
     }
@@ -66695,10 +66660,10 @@ void show_game_help()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{
-            (filesystem::dir::data() / lang(u8"manual_JP.txt", u8"manual_ENG.txt"))
-                .native(),
-            std::ios::binary};
+        std::ifstream in{(filesystem::dir::data()
+                          / lang(u8"manual_JP.txt", u8"manual_ENG.txt"))
+                             .native(),
+                         std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {

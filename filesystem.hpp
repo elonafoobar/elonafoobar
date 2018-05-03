@@ -33,7 +33,7 @@ fs::path sound();
 fs::path tmp();
 fs::path user();
 
-}
+} // namespace dir
 
 
 fs::path path(const std::string&);
@@ -157,7 +157,8 @@ struct dir_entries
                     case type::all: break;
                     }
                     return !std::regex_match(
-                        filesystem::to_utf8_path(itr->path().filename()), pattern);
+                        filesystem::to_utf8_path(itr->path().filename()),
+                        pattern);
                 }};
     }
 

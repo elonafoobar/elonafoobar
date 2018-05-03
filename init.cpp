@@ -578,7 +578,8 @@ void start_elona()
     {
         if (!fs::exists(filesystem::dir::save(defload) / u8"header.txt"))
         {
-            if (fs::exists(filesystem::dir::save(u8"sav_" + defload) / u8"header.txt"))
+            if (fs::exists(
+                    filesystem::dir::save(u8"sav_" + defload) / u8"header.txt"))
             {
                 defload = u8"sav_"s + defload;
             }
@@ -802,7 +803,8 @@ void main_title_menu()
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"), 1);
+        picload(
+            filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(4);
     gmode(0);
@@ -1003,7 +1005,8 @@ void main_menu_new_game()
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"), 1);
+        picload(
+            filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(3);
     pos(960, 96);
@@ -1852,7 +1855,8 @@ void character_making_final_phase()
                 filesystem::dir_entries{filesystem::dir::save(),
                                         filesystem::dir_entries::type::dir},
                 [&](const auto& entry) {
-                    return filesystem::to_utf8_path(entry.path().filename()) == playerid;
+                    return filesystem::to_utf8_path(entry.path().filename())
+                        == playerid;
                 }))
         {
             gmode(0);

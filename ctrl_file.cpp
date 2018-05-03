@@ -173,8 +173,8 @@ void fmode_7_8(bool read)
 
     if (!read)
     {
-        playerheader = cdatan(0, 0) + u8" Lv:" + cdata[0].level + u8" "
-            + mdatan(0);
+        playerheader =
+            cdatan(0, 0) + u8" Lv:" + cdata[0].level + u8" " + mdatan(0);
         bsave(dir / u8"header.txt", playerheader);
     }
 
@@ -513,11 +513,11 @@ void fmode_7_8(bool read)
 
 void fmode_14_15(bool read)
 {
-    const auto dir = read ? filesystem::dir::save(geneuse) : filesystem::dir::tmp();
+    const auto dir =
+        read ? filesystem::dir::save(geneuse) : filesystem::dir::tmp();
     if (!read)
     {
-        playerheader =
-            cdatan(0, 0) + u8"(Lv" + cdata[0].level + u8")の遺伝子";
+        playerheader = cdatan(0, 0) + u8"(Lv" + cdata[0].level + u8")の遺伝子";
         const auto filepath = dir / u8"gene_header.txt";
         bsave(filepath, playerheader);
         fileadd(filepath);

@@ -20,7 +20,9 @@ void autopick::load(const std::string& player_id)
 {
     clear();
 
-    for (const auto directory : {filesystem::dir::save(player_id), filesystem::dir::save(), filesystem::dir::exe()})
+    for (const auto directory : {filesystem::dir::save(player_id),
+                                 filesystem::dir::save(),
+                                 filesystem::dir::exe()})
     {
         for (const auto filename :
              {u8"autopick", u8"autopick.txt", u8"autopick.txt.txt"})

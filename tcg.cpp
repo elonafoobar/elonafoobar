@@ -1766,7 +1766,8 @@ void tcgdeck()
         for (int cnt = 0; cnt < 5; ++cnt)
         {
             s_at_tcg(cnt) += lang(u8"のデッキ"s, u8" Deck"s);
-            const auto deck_filepath = filesystem::dir::tmp() / (u8"deck_"s + cnt + u8".s2");
+            const auto deck_filepath =
+                filesystem::dir::tmp() / (u8"deck_"s + cnt + u8".s2");
             if (!fs::exists(deck_filepath))
             {
                 s_at_tcg(cnt) += lang(u8" (新規作成)"s, u8" (New)"s);
@@ -1792,7 +1793,8 @@ void tcgdeck()
         }
         DIM2(deck, 1000);
         curdeck = rtval;
-        if (fs::exists(filesystem::dir::tmp() / (u8"deck_"s + curdeck + u8".s2")))
+        if (fs::exists(
+                filesystem::dir::tmp() / (u8"deck_"s + curdeck + u8".s2")))
         {
             ELONA_APPEND_PROMPT(
                 lang(u8"デッキの構築"s, u8"Edit Deck"s),

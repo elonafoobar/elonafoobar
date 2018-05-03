@@ -15,4 +15,4 @@ void foobar_save_t::initialize()
 }
 
 
-}
+} // namespace elona
