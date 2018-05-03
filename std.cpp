@@ -288,6 +288,7 @@ void axobj(int, const std::string&, int, int)
 
 void bcopy(const fs::path& from, const fs::path& to)
 {
+    ELONA_LOG("Copy file: from " << from << " to " << to);
     fs::copy_file(from, to, fs::copy_option::overwrite_if_exists);
 }
 
@@ -1329,18 +1330,18 @@ void pget(int x, int y)
 
 
 
-void picload(const fs::path& filename, int mode)
+void picload(const fs::path& filepath, int mode)
 {
     optional<snail::color> keycolor = snail::color{0, 0, 0};
-    if (filename.generic_string().find("pcc") != std::string::npos)
+    if (filesystem::to_utf8_path(filepath).find(u8"pcc") != std::string::npos)
     {
         keycolor = snail::color(43, 133, 133);
     }
-    if (filename.generic_string().find("bg") != std::string::npos)
+    if (filesystem::to_utf8_path(filepath).find(u8"bg") != std::string::npos)
     {
         keycolor = none;
     }
-    snail::basic_image img{filename, keycolor};
+    snail::basic_image img{filepath, keycolor};
     if (mode == 0)
     {
         buffer(detail::current_buffer, img.width(), img.height());
@@ -1353,16 +1354,16 @@ void picload(const fs::path& filename, int mode)
         img, detail::current_tex_buffer().x, detail::current_tex_buffer().y);
 
 #if 0 // disable it temporarily
-    if (filename.generic_string().find(u8"interface.bmp") != std::string::npos)
+    if (filesystem::to_utf8_path(filepath).find(u8"interface.bmp") != std::string::npos)
     {
-        snail::basic_image ex{filename.parent_path() / u8"interface_ex.png"};
+        snail::basic_image ex{filepath.parent_path() / u8"interface_ex.png"};
         snail::application::instance().get_renderer().render_image(ex, 0, 656);
-        snail::basic_image ex2{filename.parent_path() / u8"interface_ex2.png"};
+        snail::basic_image ex2{filepath.parent_path() / u8"interface_ex2.png"};
         snail::application::instance().get_renderer().render_image(
             ex2, 144, 656);
         snail::application::instance().get_renderer().render_image(
             ex2, 144, 704);
-        snail::basic_image ex3{filename.parent_path() / u8"interface_ex3.png"};
+        snail::basic_image ex3{filepath.parent_path() / u8"interface_ex3.png"};
         snail::application::instance().get_renderer().render_image(
             ex3, 144, 752);
     }

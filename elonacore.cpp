@@ -1620,7 +1620,7 @@ void play_music()
         {
             if (config::instance().music == 2 || mp3 == 1)
             {
-                mmload((music_dir / musicfile(music)).generic_string(), 0, musicloop == 65535);
+                mmload(music_dir / musicfile(music), 0, musicloop == 65535);
                 mmplay(0);
             }
             else
@@ -7945,9 +7945,9 @@ void fileadd(const fs::path& filepath, int prm_693)
     const auto mark_a = prm_693 ? '#' : '*';
     const auto mark_b = prm_693 ? '*' : '#';
 
-    const auto filepath_ = filesystem::to_utf8_path(filepath);
+    const auto filename = filesystem::to_utf8_path(filepath.filename());
     notesel(filemod);
-    const auto pos = filemod(0).find(filepath_);
+    const auto pos = filemod(0).find(filename);
     if (pos != std::string::npos)
     {
         if (filemod(0)[pos - 1] == mark_b)
@@ -7957,7 +7957,8 @@ void fileadd(const fs::path& filepath, int prm_693)
         noteunsel();
         return;
     }
-    noteadd(mark_a + filepath_);
+    ELONA_LOG("fileadd(" << mark_a << "): " << filename);
+    noteadd(mark_a + filename);
     noteunsel();
 }
 
@@ -39159,9 +39160,9 @@ label_19431_internal:
         list(0, listmax) = listmax;
         list(1, listmax) = 0;
         list(2, listmax) = elona::stoi(s(2));
-        listn(0, listmax) = u8"("s + path.filename().generic_string() + u8") "s
+        listn(0, listmax) = u8"("s + filesystem::make_preferred_path_in_utf8(path.filename()) + u8") "s
             + s + u8" "s + s(1);
-        listn(1, listmax) = path.filename().generic_string();
+        listn(1, listmax) = filesystem::to_utf8_path(path.filename());
         ++listmax;
         noteunsel();
     }
@@ -39274,7 +39275,6 @@ label_1945_internal:
                 u8"Selected item is incompatible."s));
             goto label_1944_internal;
         }
-        const auto folder = filesystem::path(u8"./user/").generic_string();
         if (listn(1, p) == u8"net"s)
         {
             if (comctrl == 1)
@@ -39300,7 +39300,7 @@ label_1945_internal:
         {
             userfile = listn(1, p);
         }
-        bload(folder + userfile, headtemp, 1024);
+        bload(filesystem::dir::user() / userfile, headtemp, 1024);
         notesel(headtemp);
         noteget(s, 5);
         noteget(s(1), 6);
@@ -43029,8 +43029,7 @@ int change_npc_tone()
                                  std::regex{u8R"(.*\.txt)"}})
     {
         list(0, listmax) = listmax;
-        listn(0, listmax) =
-            fs::relative(entry.path(), base_dir).generic_string();
+        listn(0, listmax) = filesystem::to_utf8_path(fs::relative(entry.path(), base_dir));
         ++listmax;
     }
     windowshadow = 1;
@@ -47558,9 +47557,9 @@ void migrate_save_data()
                      std::regex{u8R"(.*_)"s + std::to_string(p)
                                 + u8R"(_.*\..*)"}})
             {
-                std::string file = entry.path().filename().generic_string();
-                p1 = instr(file, 0, u8"_"s);
-                p2 = instr(file, p1 + 1, u8"_"s);
+                const auto file = entry.path().filename();
+                p1 = instr(filesystem::to_utf8_path(file), 0, u8"_"s);
+                p2 = instr(filesystem::to_utf8_path(file), p1 + 1, u8"_"s);
                 if (p >= 150)
                 {
                     p3 = p - 150 + 450;
@@ -47569,8 +47568,8 @@ void migrate_save_data()
                 {
                     p3 = p - 100 + 300;
                 }
-                const auto file_cnv = filesystem::dir::tmp() / ((strmid(file, 0, (p1 + 1)) + p3)
-                    + strmid(file, (p1 + p2 + 1), 20));
+                const auto file_cnv = filesystem::dir::tmp() / ((strmid(filesystem::to_utf8_path(file), 0, (p1 + 1)) + p3)
+                    + strmid(filesystem::to_utf8_path(file), (p1 + p2 + 1), 20));
                 const auto file_ = filesystem::dir::tmp() / file;
                 bcopy(file_, file_cnv);
                 fileadd(file_cnv);
@@ -47847,32 +47846,34 @@ void create_cnpc()
 
 void load_save_data()
 {
+    ELONA_LOG("Load save data: " << playerid);
+
     filemod = "";
     ctrl_file(file_operation_t::_10);
     const auto save_dir = filesystem::dir::save(playerid);
-    notesel(buff);
+    buff(0).clear();
     if (!fs::exists(save_dir / u8"filelist.txt"))
     {
-        buff(0).clear();
+        ELONA_LOG("Load save data: from directory");
         for (const auto& entry :
              filesystem::dir_entries{save_dir,
                                      filesystem::dir_entries::type::file,
                                      std::regex{u8R"(.*\..*)"}})
         {
-            buff += entry.path().filename().generic_string();
-            buff += '\n';
+            buff += filesystem::to_utf8_path(entry.path().filename()) + '\n';
         }
     }
     else
     {
-        buff(0).clear();
+        ELONA_LOG("Load save data: from filelist.txt");
         std::ifstream in{(save_dir / u8"filelist.txt").native(), std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
-            buff(0) += tmp + '\n';
+            buff(0) += filesystem::to_utf8_path(filesystem::path(tmp).filename()) + '\n';
         }
     }
+    notesel(buff);
     for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
         noteget(s, cnt);
@@ -47904,9 +47905,9 @@ void load_save_data()
 
 void save_game()
 {
+    ELONA_LOG("Save game: " << playerid);
+
     int save_f = 0;
-    std::string save_s;
-    int save_p = 0;
     if (gdata_current_map == 35)
     {
         txtef(3);
@@ -47922,7 +47923,7 @@ void save_game()
     for (const auto& entry : filesystem::dir_entries{
              filesystem::dir::save(), filesystem::dir_entries::type::dir})
     {
-        if (entry.path().filename().generic_string() == playerid)
+        if (filesystem::to_utf8_path(entry.path().filename()) == playerid)
         {
             save_f = 1;
             break;
@@ -47936,23 +47937,19 @@ void save_game()
     notesel(filemod);
     for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
     {
+        std::string save_s;
         noteget(save_s, cnt);
-        if (strmid(save_s, 0, 1) == u8"*"s)
+        if (save_s.empty())
+            continue;
+        const auto save_p = save_s.front() == '*';
+        save_s = save_s.substr(1);
+        const auto path = save_dir / filesystem::u8path(save_s);
+        if (save_p)
         {
-            save_p = 0;
+            bcopy(filesystem::dir::tmp() / filesystem::u8path(save_s), path);
         }
         else
         {
-            save_p = 1;
-        }
-        save_s = strmid(save_s, 1, save_s.size());
-        if (save_p == 0)
-        {
-            bcopy(save_s, save_dir / fs::path(save_s).filename());
-        }
-        else
-        {
-            const auto path = save_dir / fs::path(save_s).filename();
             if (fs::exists(path) && !fs::is_directory(path))
             {
                 elona_delete(path);
@@ -47967,8 +47964,7 @@ void save_game()
                                  filesystem::dir_entries::type::file,
                                  std::regex{u8R"(.*\..*)"}})
     {
-        buff += entry.path().filename().generic_string();
-        buff += '\n';
+        buff += filesystem::to_utf8_path(entry.path().filename()) + '\n';
     }
     notesel(buff);
     {
@@ -47976,7 +47972,7 @@ void save_game()
             std::ios::binary};
         out << buff(0) << std::endl;
     }
-    return;
+    ELONA_LOG("Save game: finish");
 }
 
 
@@ -48024,7 +48020,7 @@ void main_menu_continue()
     for (const auto& entry : filesystem::dir_entries{
              filesystem::dir::save(), filesystem::dir_entries::type::dir})
     {
-        s = entry.path().filename().generic_string();
+        s = filesystem::to_utf8_path(entry.path().filename());
         const auto header_filepath = filesystem::dir::save(s) / u8"header.txt";
         if (!fs::exists(header_filepath))
         {
@@ -48182,7 +48178,7 @@ void main_menu_incarnate()
     for (const auto& entry : filesystem::dir_entries{
              filesystem::dir::save(), filesystem::dir_entries::type::dir})
     {
-        s = entry.path().filename().generic_string();
+        s = filesystem::to_utf8_path(entry.path().filename());
         const auto gene_header_filepath = filesystem::dir::save(s) / u8"gene_header.txt";
         await();
         if (!fs::exists(gene_header_filepath))

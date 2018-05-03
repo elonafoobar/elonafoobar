@@ -113,11 +113,7 @@ ELONA_DEFINE_PREDEFINED_DIR(user, "user")
 
 fs::path save(const std::string& player_id)
 {
-#if USE_UTF16_AS_FILEPATH
-    return save() / boost::locale::conv::utf_to_utf<wchar_t>(player_id);
-#else
-    return save() / player_id;
-#endif
+    return save() / u8path(player_id);
 }
 
 
@@ -127,8 +123,17 @@ fs::path save(const std::string& player_id)
 
 fs::path path(const std::string& str)
 {
-    return get_executable_path() / str;
+    return get_executable_path() / u8path(str);
 }
+
+
+
+fs::path u8path(const std::string& str)
+{
+    return boost::locale::conv::utf_to_utf<fs::path::string_type::value_type>(
+        str);
+}
+
 
 
 std::string make_preferred_path_in_utf8(const fs::path& path)

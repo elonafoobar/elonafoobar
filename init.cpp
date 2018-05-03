@@ -143,7 +143,7 @@ void load_character_sprite()
                                  filesystem::dir_entries::type::file,
                                  std::regex{u8R"(chara_.*\.bmp)"}})
     {
-        const auto file = entry.path().filename().generic_string();
+        const auto file = filesystem::to_utf8_path(entry.path().filename());
         p = elona::stoi(strmid(file, 6, instr(file, 6, u8"."s)));
         pos(p % 33 * inf_tiles, p / 33 * inf_tiles);
         picload(entry.path(), 1);
@@ -1852,7 +1852,7 @@ void character_making_final_phase()
                 filesystem::dir_entries{filesystem::dir::save(),
                                         filesystem::dir_entries::type::dir},
                 [&](const auto& entry) {
-                    return entry.path().filename().generic_string() == playerid;
+                    return filesystem::to_utf8_path(entry.path().filename()) == playerid;
                 }))
         {
             gmode(0);

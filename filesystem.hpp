@@ -19,9 +19,6 @@ namespace filesystem
 {
 
 
-fs::path path(const std::string&);
-
-
 // Pre-defined directories.
 namespace dir
 {
@@ -37,6 +34,13 @@ fs::path tmp();
 fs::path user();
 
 }
+
+
+fs::path path(const std::string&);
+fs::path u8path(const std::string&);
+std::string make_preferred_path_in_utf8(const fs::path& path);
+std::string to_narrow_path(const fs::path& path);
+std::string to_utf8_path(const fs::path& path);
 
 
 
@@ -153,7 +157,7 @@ struct dir_entries
                     case type::all: break;
                     }
                     return !std::regex_match(
-                        itr->path().filename().generic_string(), pattern);
+                        filesystem::to_utf8_path(itr->path().filename()), pattern);
                 }};
     }
 
@@ -169,12 +173,6 @@ private:
     const type entry_type;
     const std::regex pattern;
 };
-
-
-
-std::string make_preferred_path_in_utf8(const fs::path& path);
-std::string to_narrow_path(const fs::path& path);
-std::string to_utf8_path(const fs::path& path);
 
 
 
