@@ -7,3 +7,10 @@ bak/
 *.a
 bin/
 runtime/
+/version.cpp
+/*.vcxproj
+/*.sln
+/*.filters
+/build/
+/deps/include/
+/deps/lib/

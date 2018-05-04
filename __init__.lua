@@ -1,3 +1,4 @@
+print("yo")
 local function merge(a, b)
   for k, v in pairs(b) do
     if type(v) == 'table' then

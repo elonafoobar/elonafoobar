@@ -99,16 +99,69 @@ add_executable(${PROJECT_NAME} ${CORE_SOURCES})
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
-
-if (WIN32)
-  #set(CMAKE_EXE_LINKER_FLAGS "/SUBSYSTEM:WINDOWS /LIBPATH:${Boost_LIBRARY_DIRS}")
-  #set(BOOST_LIBRARYDIR ${BOOST_ROOT}/lib64-msvc-14.1/)
-  set(Boost_USE_STATIC_LIBS ON)
-  #set(Boost_MULTITHREADED ON)
-  set(Boost_USE_STATIC_RUNTIME ON)
-  #add_definitions(-DBOOST_ALL_NO_LIB)
+# If a CMake prefix was not provided, assume dependencies are in "./deps"
+if("${CMAKE_PREFIX_PATH}" STREQUAL "")
+  get_filename_component(CMAKE_PREFIX_PATH "${CMAKE_CURRENT_LIST_DIR}/deps" ABSOLUTE)
+  message("No dependency prefix provided, using ${CMAKE_PREFIX_PATH}")
+else()
+  message("Using provided dependency prefix ${CMAKE_PREFIX_PATH}")
 endif()
 
+
+# Copy folders
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy_directory
+                   "${CMAKE_CURRENT_SOURCE_DIR}/runtime"
+                   "$<TARGET_FILE_DIR:${PROJECT_NAME}>/runtime")
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy_directory
+                   "${CMAKE_CURRENT_SOURCE_DIR}/data"
+                   "$<TARGET_FILE_DIR:${PROJECT_NAME}>/data")
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy_directory
+                   "${CMAKE_CURRENT_SOURCE_DIR}/lang"
+                   "$<TARGET_FILE_DIR:${PROJECT_NAME}>/lang")
+
+
+# Copy files
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                   "${CMAKE_CURRENT_SOURCE_DIR}/__init__.lua"
+                   $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+
+# Copy assets from Elona 1.22 if they are present
+if(EXISTS "${CMAKE_PREFIX_PATH}/elona")
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                     COMMAND ${CMAKE_COMMAND} -E copy_directory
+                     "${CMAKE_PREFIX_PATH}/elona/graphic"
+                     "${CMAKE_PREFIX_PATH}/elona/sound"
+                     "${CMAKE_PREFIX_PATH}/elona/user"
+                     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/runtime")
+  message("Elona 1.22 distribution found.")
+else()
+  message(WARNING "Elona 1.22 distribution not found at ${CMAKE_PREFIX_PATH}/elona. The game cannot be run without assets. Please manually copy the 'graphic', 'sound' and 'user' directories from Elona 1.22 to the 'runtime' directory of the ElonaFoobar output path after building.")
+endif()
+
+if(WIN32)
+  # Force FindBoost to look for libraries with -mt-sgd
+  set(Boost_USE_STATIC_LIBS ON)
+  set(Boost_USE_STATIC_RUNTIME ON)
+
+  # Set default project to be run when using Visual Studio
+  set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
+
+  # Specify dynamic libraries to copy to output folder after build
+  file(GLOB copy_sources "${CMAKE_PREFIX_PATH}/lib/*${CMAKE_SHARED_LIBRARY_SUFFIX}")
+  set(copy_dest "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
+  message("Will copy libraries to ${copy_dest}")
+
+  # Perform the copy
+  foreach(copy_source ${copy_sources})
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                       COMMAND ${CMAKE_COMMAND} -E
+                           copy_if_different ${copy_source} $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+  endforeach()
+endif()
 
 # Thirdparty libraries
 find_package(Boost REQUIRED COMPONENTS system filesystem locale)
@@ -146,7 +199,6 @@ include_directories(${SDL2_MIXER_INCLUDE_DIR})
 target_link_libraries(${PROJECT_NAME} ${SDL2_MIXER_LIBRARIES})
 
 
-
 # Compiler options
 if(MSVC)
     add_definitions("-D_UNICODE")
@@ -157,11 +209,10 @@ endif()
 
 # Compiler options(debug build)
 if(MSVC)
-    set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
+    set(CMAKE_CXX_FLAGS_DEBUG "/MTd /ZI /Od")
 else()
     set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DDEBUG")
 endif()
-
 
 
 # My libraries
