@@ -5,7 +5,6 @@ cmake_minimum_required(VERSION 3.0)
 # Project
 project(ElonaFoobar VERSION 0.2.2)
 
-
 # Versioning
 
 # Get commit hash from Git
@@ -99,43 +98,75 @@ add_executable(${PROJECT_NAME} ${CORE_SOURCES})
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
+if (WIN32)
+  #set(CMAKE_EXE_LINKER_FLAGS "/SUBSYSTEM:WINDOWS /LIBPATH:${Boost_LIBRARY_DIRS}")
+  set(BOOST_LIBRARYDIR ${BOOST_ROOT}/lib64-msvc-14.1/)
+  set(Boost_USE_STATIC_LIBS ON)
+  set(Boost_MULTITHREADED ON)
+  set(Boost_USE_STATIC_RUNTIME ON)
+  add_definitions(-DBOOST_ALL_NO_LIB)
+endif()
 
 # Thirdparty libraries
 find_package(Boost REQUIRED COMPONENTS system filesystem locale)
-include_directories(${Boost_INCLUDE_DIRS})
-target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
+if(Boost_FOUND)
+  include_directories(${Boost_INCLUDE_DIRS})
 
-if(NOT DEFINED LUA_INCLUDE_DIR OR NOT DEFINED LUA_LIBRARIES)
-    find_package(lua REQUIRED)
+  target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
+  message(" Found ${Boost_LIBRARIES}")
 endif()
-include_directories(${LUA_INCLUDE_DIR})
-target_link_libraries(${PROJECT_NAME} ${LUA_LIBRARIES})
+
+find_package(Lua REQUIRED)
+if(Lua_FOUND)
+  target_link_libraries(${PROJECT_NAME} ${LUA_LIBRARY})
+  include_directories(${LUA_INCLUDE_DIR})
+  message("  ${LUA_INTERPRETER_TYPE} found")
+else()
+  message(FATAL_ERROR "Error: Lua library not found, it is required to build")
+endif()
 
 if(NOT DEFINED SDL2_INCLUDE_DIR OR NOT DEFINED SDL2_LIBRARIES)
-    find_package(SDL2 REQUIRED)
+  find_package(SDL2 REQUIRED)
+  if(SDL2_FOUND)
+    include_directories(${SDL2_INCLUDE_DIR})
+    if(SDLMAIN_LIBRARY STREQUAL "")
+      message(FATAL_ERROR "Error: SDL was found but SDLmain was not")
+      message("Make sure the path is correctly defined or set the environment variable SDL2DIR to the correct location")
+    endif()
+    # No need to specify sdlmain separately, the FindSDL.cmake file will take care of that. If not we get an error about it
+    target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY})
+    message("  SDL2 found")
+  else()
+    message(FATAL_ERROR "Error: SDL2 library not found, it is required to build. Make sure the path is correctly defined or set the environment variable SDL2DIR to the correct location")
+  endif()
 endif()
-include_directories(${SDL2_INCLUDE_DIR})
-target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES})
 
-if(NOT DEFINED SDL2_IMAGE_INCLUDE_DIR OR NOT DEFINED SDL2_IMAGE_LIBRARIES)
-    find_package(SDL2_image REQUIRED)
+find_package(SDL2_image REQUIRED)
+if(SDL2_IMAGE_FOUND)
+  target_link_libraries(${PROJECT_NAME} ${SDL2_IMAGE_LIBRARIES})
+  include_directories(${SDL2_IMAGE_INCLUDE_DIR})
+  message("  SDL2_image found")
+else()
+  message(FATAL_ERROR "Error: SDL2_image library not found")
 endif()
-include_directories(${SDL2_IMAGE_INCLUDE_DIR})
-target_link_libraries(${PROJECT_NAME} ${SDL2_IMAGE_LIBRARIES})
 
-if(NOT DEFINED SDL2_TTF_INCLUDE_DIR OR NOT DEFINED SDL2_TTF_LIBRARIES)
-    find_package(SDL2_ttf REQUIRED)
+find_package(SDL2_ttf REQUIRED)
+if(SDL2_TTF_FOUND)
+  target_link_libraries(${PROJECT_NAME} ${SDL2_TTF_LIBRARIES})
+  include_directories(${SDL2_TTF_INCLUDE_DIR})
+  message("  SDL2_ttf found")
+else()
+  message(FATAL_ERROR "Error: SDL2_ttf library not found")
 endif()
-include_directories(${SDL2_TTF_INCLUDE_DIR})
-target_link_libraries(${PROJECT_NAME} ${SDL2_TTF_LIBRARIES})
 
-if(NOT DEFINED SDL2_MIXER_INCLUDE_DIR OR NOT DEFINED SDL2_MIXER_LIBRARIES)
-    find_package(SDL2_mixer REQUIRED)
+find_package(SDL2_mixer REQUIRED)
+if(SDL2_MIXER_FOUND)
+  target_link_libraries(${PROJECT_NAME} ${SDL2_MIXER_LIBRARIES})
+  include_directories(${SDL2_MIXER_INCLUDE_DIR})
+  message("  SDL2_mixer found")
+else()
+  message(FATAL_ERROR "Error: SDL2_mixer library not found")
 endif()
-include_directories(${SDL2_MIXER_INCLUDE_DIR})
-target_link_libraries(${PROJECT_NAME} ${SDL2_MIXER_LIBRARIES})
-
-
 
 # Compiler options
 if(MSVC)
@@ -147,12 +178,10 @@ endif()
 
 # Compiler options(debug build)
 if(MSVC)
-    set(CMAKE_CXX_FLAGS_DEBUG "")
+    set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
 else()
     set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DDEBUG")
 endif()
-
-
 
 # My libraries
 add_subdirectory(snail)

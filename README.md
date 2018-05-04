@@ -41,13 +41,36 @@
 * `clang-format`, `find` and `xargs`(Optional)
 
 
+### Extra dependencies for Windows
+
+* Visual Studio 2017
+* CMake
+
 ## Steps
 
-### On macOS
+### OSX/Linux
 
 1. `cd path/to/ElonaFoobar; make`
 
-### On Windows
+### Windows
+
+1. Download the versions of the libraries below and unpack them to the `deps` folder. Only the library versions listed below have been tested.
+- Boost 1.66
+- Lua 5.3.1
+- SDL2 2.0.8
+- SDL2_image 2.0.3
+- SDL2_ttf 2.0.14
+- SDL2_mixer 2.0.8
+2. Run the following commands.
+
+```
+setenv.bat
+mkdir build
+cd build
+cmake .. -G "Visual Studio 15 Win64" -DBoost_USE_STATIC_LIBS=ON
+cmake --build .
+```
+
 
 1. See Makefile and comment out CMake's options.
 1. `cd path/to/ElonaFoobar; make`
