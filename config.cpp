@@ -495,7 +495,7 @@ void load_config()
             [&](auto value) { key_skill = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_close",
-            u8"c",
+            u8"C",
             [&](auto value) { key_close = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_rest",
