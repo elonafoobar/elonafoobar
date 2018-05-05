@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
+## [0.2.2] - 2018-05-05
+
+### Added
+
+- Disable autosave.
+  - You can enable autosave again from option menu.
+- Update README.md to fit current state.
+- Add README-jp.md, Japanese version README.
+
+### Fixed
+
+- [vanilla] Fix not being able to leave the cave if you die in the cave without leaving there.
+- Fix default value of `key_close` is "c", same as `key_charainfo`.
+- Fix these crashes:
+  - Crash when wizard's dream happens during sleeping.
+  - Crash when reading uncursed/blessed scrolls of wonder.
+  - Crash when hearing adventurer's favorite skill.
+  - Crash when trying to train skill from adventurer.
+  - Crash when eating the corpse of \<Little Sister\>.
+  - Crash when speaking to trainer.
+  - Crash when reading scrolls of growth.
+  - Crash when reading scrolls of gain attribute.
+
+
+
 ## [0.2.1] - 2018-05-03
 
 ### Added
