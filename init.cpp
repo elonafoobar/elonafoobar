@@ -2420,6 +2420,8 @@ void initialize_game()
         gdata_current_dungeon_level = 1;
         gdata_entrance_type = 4;
         gdata_version = 1220;
+        gdata_home_scale = 0;
+        initialize_adata();
         gdata_weather = 3;
         gdata_hours_until_weather_changes = 6;
         for (int cnt = 0; cnt < 20; ++cnt)

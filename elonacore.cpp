@@ -14841,7 +14841,7 @@ int advfavoriteskill(int prm_868)
     while (1)
     {
         rtval(i_at_m145) = rnd(300) + 100;
-        if (the_ability_db[rtval(i_at_m145)]->related_basic_attribute == 0)
+        if (!the_ability_db[rtval(i_at_m145)])
         {
             continue;
         }
@@ -24153,7 +24153,8 @@ void apply_general_eating_effect()
             }
             for (int cnt = 100; cnt < 400; ++cnt)
             {
-                if (the_ability_db[cnt]->related_basic_attribute == 0
+                if (!the_ability_db[cnt]
+                    || the_ability_db[cnt]->related_basic_attribute == 0
                     || sdata.get(cnt, cc).original_level == 0)
                 {
                     continue;
@@ -43796,7 +43797,7 @@ label_20331:
         }
         else if (sdata(cnt, cc) == 0)
         {
-            if (the_ability_db[cnt]->related_basic_attribute != 0)
+            if (the_ability_db[cnt])
             {
                 f = 1;
             }
@@ -68812,7 +68813,8 @@ void pc_turn(bool label_2747_flg)
         if (autosave)
         {
             autosave = 0;
-            if (gdata_wizard == 0 && gdata_current_map != 40)
+            if (gdata_wizard == 0 && gdata_current_map != 40
+                && config::instance().autosave)
             {
                 snd(44);
                 save_game();
