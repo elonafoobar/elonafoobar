@@ -139,7 +139,7 @@ if(EXISTS "${CMAKE_PREFIX_PATH}/elona")
                      "$<TARGET_FILE_DIR:${PROJECT_NAME}>/runtime")
   message("Elona 1.22 distribution found.")
 else()
-  message(WARNING "Elona 1.22 distribution not found at ${CMAKE_PREFIX_PATH}/elona. The game cannot be run without assets. Please manually copy the 'graphic', 'sound' and 'user' directories from Elona 1.22 to the 'runtime' directory of the ElonaFoobar output path after building.")
+  message(WARNING "Elona 1.22 distribution not found at ${CMAKE_PREFIX_PATH}/elona. The game cannot be run without assets. Please manually copy the 'graphic', 'map', 'original', 'sound' and 'user' directories from Elona 1.22 to the 'runtime' directory of the ElonaFoobar output path after building.")
 endif()
 
 if(WIN32)
@@ -164,7 +164,7 @@ if(WIN32)
 endif()
 
 # Thirdparty libraries
-find_package(Boost REQUIRED COMPONENTS system filesystem locale)
+find_package(Boost REQUIRED COMPONENTS system filesystem locale zlib iostreams)
 include_directories(${Boost_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 

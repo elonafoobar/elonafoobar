@@ -684,7 +684,7 @@ void play_animation_19()
     gcopy(0, 0, 0, windoww, windowh);
     gsel(0);
     am = 0;
-    for (int cnt = 0; cnt < 245; ++cnt)
+    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {

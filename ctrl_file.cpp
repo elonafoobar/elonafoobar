@@ -25,8 +25,7 @@ void load_v1(
 {
     std::ifstream in{filepath.native(), std::ios::binary};
 	if (in.fail()) {
-		//throw std::runtime_error(u8"Could not open file at "s + filepath.string());
-		return;
+		throw std::runtime_error(u8"Could not open file at "s + filepath.string());
 	}
     putit::binary_iarchive ar(in);
     for (size_t i = begin; i < end; ++i)
@@ -116,8 +115,7 @@ void load_v3(
 {
     std::ifstream in{filepath.native(), std::ios::binary};
 	if (in.fail()) {
-		// We're creating a map for the first time, so return (the index will be all zeros).
-		return;
+		throw std::runtime_error(u8"Could not open file at "s + filepath.string());
 	}
     putit::binary_iarchive ar{in};
     for (size_t k = k_begin; k < k_end; ++k)
@@ -735,12 +733,12 @@ void fmode_1_2(bool read)
         const auto filepath = dir / (u8"cdata_"s + mid + u8".s2");
         if (read)
         {
-            load(filepath, cdata, 57, 245);
+            load(filepath, cdata, 57, ELONA_MAX_CHARACTERS);
         }
         else
         {
             fileadd(filepath);
-            save(filepath, cdata, 57, 245);
+            save(filepath, cdata, 57, ELONA_MAX_CHARACTERS);
         }
     }
 
@@ -750,7 +748,7 @@ void fmode_1_2(bool read)
         {
             std::ifstream in{filepath.native(), std::ios::binary};
             putit::binary_iarchive ar{in};
-            for (int cc = 57; cc < 245; ++cc)
+            for (int cc = 57; cc < ELONA_MAX_CHARACTERS; ++cc)
             {
                 for (int i = 0; i < 600; ++i)
                 {
@@ -763,7 +761,7 @@ void fmode_1_2(bool read)
             fileadd(filepath);
             std::ofstream out{filepath.native(), std::ios::binary};
             putit::binary_oarchive ar{out};
-            for (int cc = 57; cc < 245; ++cc)
+            for (int cc = 57; cc < ELONA_MAX_CHARACTERS; ++cc)
             {
                 for (int i = 0; i < 600; ++i)
                 {
@@ -917,12 +915,12 @@ void fmode_17()
         const auto filepath = dir / (u8"cdata_"s + mid + u8".s2");
         if (true)
         {
-            load(filepath, cdata, 57, 245);
+            load(filepath, cdata, 57, ELONA_MAX_CHARACTERS);
         }
         else
         {
             fileadd(filepath);
-            save(filepath, cdata, 57, 245);
+            save(filepath, cdata, 57, ELONA_MAX_CHARACTERS);
         }
     }
 
@@ -932,7 +930,7 @@ void fmode_17()
         {
             std::ifstream in{filepath.native(), std::ios::binary};
             putit::binary_iarchive ar{in};
-            for (int cc = 57; cc < 245; ++cc)
+            for (int cc = 57; cc < ELONA_MAX_CHARACTERS; ++cc)
             {
                 for (int i = 0; i < 600; ++i)
                 {
@@ -945,7 +943,7 @@ void fmode_17()
             fileadd(filepath);
             std::ofstream out{filepath.native(), std::ios::binary};
             putit::binary_oarchive ar{out};
-            for (int cc = 57; cc < 245; ++cc)
+            for (int cc = 57; cc < ELONA_MAX_CHARACTERS; ++cc)
             {
                 for (int i = 0; i < 600; ++i)
                 {

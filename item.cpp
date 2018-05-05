@@ -331,7 +331,7 @@ std::vector<int> itemlist(int owner, int id)
 
 int itemusingfind(int ci, bool disallow_pc)
 {
-    for (int cnt = 0; cnt < 245; ++cnt)
+    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {

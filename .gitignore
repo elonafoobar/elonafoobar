@@ -11,6 +11,7 @@ runtime/
 /*.vcxproj
 /*.sln
 /*.filters
-/build/
-/deps/include/
-/deps/lib/
+deps/include/
+deps/lib/
+deps/elona/
+CMakeFiles/

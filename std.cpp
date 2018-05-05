@@ -780,7 +780,7 @@ int ginfo(int type)
     case 21: return 0; // resolution y
     case 22: return detail::current_tex_buffer().x; // current position x
     case 23: return detail::current_tex_buffer().y; // current position y
-    default: assert(0);
+	default: throw new std::exception("Bad ginfo type");
     }
 }
 

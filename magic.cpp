@@ -730,7 +730,7 @@ int magic()
             case 7:
                 if (cc == 0)
                 {
-                    if (gdata_other_character_count + 100 >= 188)
+                    if (gdata_other_character_count + 100 >= ELONA_MAX_OTHER_CHARACTERS)
                     {
                         txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
                         obvious = 0;
@@ -4095,7 +4095,7 @@ label_2181_internal:
     case 631:
         txtef(4);
         txt(lang(u8"スウォーム！"s, u8"Swarm!"s));
-        for (int cnt = 0; cnt < 245; ++cnt)
+        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cc].state != 1)
             {
@@ -4149,7 +4149,7 @@ label_2181_internal:
         }
         break;
     case 466:
-        for (int cnt = 0; cnt < 245; ++cnt)
+        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].state != 1)
             {
@@ -4184,7 +4184,7 @@ label_2181_internal:
         txt(lang(u8"うみみゃぁ！"s, u8"Mewmewmew!"s));
         animode = 0;
         play_animation(19);
-        for (int cnt = 0; cnt < 245; ++cnt)
+        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cc].state != 1)
             {
@@ -4238,7 +4238,7 @@ label_2181_internal:
                 name(cc) + u8"は仲間を鼓舞した。"s,
                 name(cc) + u8" cheer"s + _s(cc) + u8"."s));
         }
-        for (int cnt = 0; cnt < 245; ++cnt)
+        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].state != 1)
             {

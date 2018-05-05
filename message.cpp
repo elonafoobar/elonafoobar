@@ -1051,7 +1051,7 @@ std::string npcn(int cc)
 
 std::string _s(int cc, bool need_e)
 {
-    if (cc < 0 || cc >= 245)
+    if (cc < 0 || cc >= ELONA_MAX_CHARACTERS)
     {
         if (need_e)
         {
@@ -1108,7 +1108,7 @@ std::string is2(int n)
 
 std::string is(int cc)
 {
-    if (cc < 0 || cc >= 245)
+    if (cc < 0 || cc >= ELONA_MAX_CHARACTERS)
     {
         return u8"is"s;
     }
@@ -1123,7 +1123,7 @@ std::string is(int cc)
 
 std::string have(int cc)
 {
-    if (cc < 0 || cc >= 245)
+    if (cc < 0 || cc >= ELONA_MAX_CHARACTERS)
     {
         return u8"has"s;
     }
@@ -1174,7 +1174,7 @@ std::string he(int cc, int prm_321)
             return u8"she"s;
         }
     }
-    if (cc < 0 || cc >= 245)
+    if (cc < 0 || cc >= ELONA_MAX_CHARACTERS)
     {
         return u8"it"s;
     }
@@ -1227,7 +1227,7 @@ std::string his(int cc, int prm_323)
             return u8"her"s;
         }
     }
-    if (cc < 0 || cc >= 245)
+    if (cc < 0 || cc >= ELONA_MAX_CHARACTERS)
     {
         return u8"its"s;
     }
@@ -1272,7 +1272,7 @@ std::string him(int cc, int prm_325)
             return u8"her"s;
         }
     }
-    if (cc < 0 || cc >= 245)
+    if (cc < 0 || cc >= ELONA_MAX_CHARACTERS)
     {
         return u8"it"s;
     }
@@ -1295,7 +1295,7 @@ std::string him(int cc, int prm_325)
 
 std::string your(int x)
 {
-    if (x < 0 || x >= 245)
+    if (x < 0 || x >= ELONA_MAX_CHARACTERS)
     {
         return u8"'s"s;
     }
@@ -1310,7 +1310,7 @@ std::string your(int x)
 
 std::string yourself(int x)
 {
-    if (x < 0 || x >= 245)
+    if (x < 0 || x >= ELONA_MAX_CHARACTERS)
     {
         return u8"itself"s;
     }

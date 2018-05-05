@@ -55,7 +55,6 @@ void main_loop()
         try
         {
             turn_begin();
-            break;
         }
         catch (elona_turn_sequence&)
         {
@@ -234,7 +233,7 @@ void initialize_elona()
     DIM2(mdatatmp, 100);
     DIM2(mdata, 100);
     SDIM3(mdatan, 20, 2);
-    SDIM4(cdatan, 40, 10, 245);
+    SDIM4(cdatan, 40, 10, ELONA_MAX_CHARACTERS);
     SDIM2(s1, 1000);
     DIM2(spell, 200);
     DIM2(spact, 500);
@@ -775,7 +774,7 @@ int run()
     }
     catch (elona_turn_sequence&)
     {
-        main_loop();
+		main_loop();
     }
     return 0;
 }

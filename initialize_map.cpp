@@ -110,8 +110,8 @@ label_1741_internal:
     if (mapupdate == 1)
     {
         maxnpcbk = 0;
-        DIM3(rolebk, 2, 245);
-        for (int cnt = 0; cnt < 245; ++cnt)
+        DIM3(rolebk, 2, ELONA_MAX_CHARACTERS);
+        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].state == 0)
             {
@@ -147,7 +147,7 @@ label_1741_internal:
         }
     }
     mdata(3) = 0;
-    for (int cnt = 57; cnt < 245; ++cnt)
+    for (int cnt = 57; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         cdata[cnt].state = 0;
     }
@@ -844,7 +844,7 @@ label_1741_internal:
                 enemyteam = rc;
             }
         }
-        for (int cnt = 57; cnt < 245; ++cnt)
+        for (int cnt = 57; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].relationship == -3)
             {
@@ -925,7 +925,7 @@ label_1741_internal:
                     cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
                 }
                 ctrl_file(file_operation_t::_17);
-                for (int cnt = 57; cnt < 245; ++cnt)
+                for (int cnt = 57; cnt < ELONA_MAX_CHARACTERS; ++cnt)
                 {
                     cdata[cnt].position.x = mdata(0) / 2;
                     cdata[cnt].position.y = mdata(1) / 2;
@@ -1588,7 +1588,7 @@ label_1741_internal:
             gdata_entrance_type = 8;
             map_placeplayer();
             listmax = 0;
-            for (int cnt = 57; cnt < 245; ++cnt)
+            for (int cnt = 57; cnt < ELONA_MAX_CHARACTERS; ++cnt)
             {
                 if (cdata[cnt].state == 1)
                 {
@@ -2616,7 +2616,7 @@ label_1741_internal:
             label_1749();
         }
         mapupdate = 0;
-        for (int cnt = 0; cnt < 245; ++cnt)
+        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].state == 0)
             {
@@ -2777,7 +2777,7 @@ label_1742_internal:
                 map(cnt, y, 1) = 0;
             }
         }
-        for (int cnt = 0; cnt < 245; ++cnt)
+        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             rc = cnt;
             cdata[rc].was_passed_item_by_you_just_now() = false;
@@ -2914,7 +2914,7 @@ label_1744_internal:
     }
     label_1745();
     gdata_other_character_count = 0;
-    for (int cnt = 0; cnt < 245; ++cnt)
+    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         cdata[cnt].turn_cost = 0;
         if (cdata[cnt].id == 343)
@@ -3324,7 +3324,7 @@ label_1744_internal:
     }
     if (adata(16, gdata_current_map) == 31)
     {
-        for (int cnt = 0; cnt < 245; ++cnt)
+        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].is_livestock() == 1)
             {

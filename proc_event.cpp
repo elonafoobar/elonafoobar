@@ -626,7 +626,7 @@ void proc_event()
         break;
     case 17:
         i = 0;
-        for (int cc = 1; cc < 245; ++cc)
+        for (int cc = 1; cc < ELONA_MAX_CHARACTERS; ++cc)
         {
             if (cdata[cc].state != 1)
                 continue;
@@ -668,7 +668,7 @@ void proc_event()
         if (gdata_number_of_waiting_guests != 0)
         {
             tc = 0;
-            for (int cc = 0; cc < 245; ++cc)
+            for (int cc = 0; cc < ELONA_MAX_CHARACTERS; ++cc)
             {
                 if (cdata[cc].state != 1)
                     continue;
@@ -928,7 +928,7 @@ void proc_event()
         txt(lang(
             u8"けたたましい警報が鳴り響いた！"s,
             u8"*beeeeeep!* An alarm sounds loudly!"s));
-        for (int cc = 57; cc < 245; ++cc)
+        for (int cc = 57; cc < ELONA_MAX_CHARACTERS; ++cc)
         {
             if (cdata[cc].state == 1)
             {
