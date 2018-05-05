@@ -125,7 +125,6 @@ void check_double_launching()
 }
 
 
-
 void load_character_sprite()
 {
     usernpcmax = 0;

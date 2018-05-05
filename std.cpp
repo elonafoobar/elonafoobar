@@ -14,7 +14,10 @@
 #include "log.hpp"
 #include "util.hpp"
 #include "variables.hpp"
-
+#include "defines.hpp"
+#if defined(ELONA_OS_WINDOWS)
+#include <windows.h> // MessageBoxA
+#endif
 
 namespace
 {
@@ -526,12 +529,51 @@ void elona_delete(const fs::path& filename)
     fs::remove_all(filename);
 }
 
-
-
-int dialog(const std::string& message, int)
+std::wstring get_utf16(const std::string &str)
 {
-    (void)message;
-    return 0;
+	if (str.empty()) return std::wstring();
+	int sz = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), 0, 0);
+	std::wstring res(sz, 0);
+	MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), &res[0], sz);
+	return res;
+}
+
+int dialog(const std::string& message, int option)
+{
+	UINT type = MB_ICONINFORMATION;
+	int ret = 0;
+	if (option == 1 || option == 3) {
+		type = MB_ICONWARNING;
+	}
+	std::wstring message_wstr = get_utf16(message);
+	switch (option)
+	{
+	case 0: // Info, OK
+	case 1: // Warning, OK
+#if defined(ELONA_OS_WINDOWS)
+		MessageBoxW(NULL, message_wstr.c_str(), L"Message", MB_OK | type);
+#endif
+		return DIALOG_OK;
+	case 2: // Info, Yes/No
+	case 3: // Warning, Yes/No
+#if defined(ELONA_OS_WINDOWS)
+		ret = MessageBoxW(NULL, message_wstr.c_str(), L"Message", MB_YESNO | type);
+		if (ret == IDYES) {
+			return DIALOG_YES;
+		}
+		else {
+			return DIALOG_NO;
+		}
+#else
+		return DIALOG_YES;
+#endif
+	case 16: // Open file dialog
+	case 17: // Save as dialog
+	case 32: // Color selection
+	case 33: // Color selection with matrix
+	default:
+		return 0;
+	}
 }
 
 
@@ -1693,8 +1735,18 @@ int aplobj(const std::string&, int)
 
 
 
-void apledit(int, int, int)
+void apledit(int &out, int kind, int column_no)
 {
+	if (kind == 0) {
+		// Current position of cursor
+		out = static_cast<int>(inputlog(0).length());
+	}
+	else if (kind == 1) {
+		// Total number of columns
+	}
+	else if (kind == 2) {
+		// Number of characters at column "column_no"
+	}
 }
 
 
