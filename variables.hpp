@@ -412,6 +412,7 @@ ELONA_EXTERN(int msgline);
 ELONA_EXTERN(int msync);
 ELONA_EXTERN(int mtilefilecur);
 ELONA_EXTERN(int music);
+ELONA_EXTERN(int musicloop);
 ELONA_EXTERN(int mutex_handle);
 ELONA_EXTERN(int nostack);
 ELONA_EXTERN(int novoidlv);

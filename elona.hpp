@@ -604,37 +604,6 @@ void apledit(int&, int, int = 0);
 
 void func_2(int, int, int, int, int, int);
 
-int DSINIT();
-
-void DSEND();
-
-void DSRELEASE(int);
-
-
-void DSLOADFNAME(const fs::path& filepath, int id);
-
-void DSPLAY(int, int);
-
-void DSSTOP(int);
-
-void DSSETVOLUME(int, int);
-
-
-int DSGETMASTERVOLUME();
-
-int CHECKPLAY(int id);
-
-int DMINIT();
-
-void DMEND();
-
-
-void DMLOADFNAME(const fs::path& filepath, int);
-
-void DMPLAY(int, int);
-
-void DMSTOP();
-
 void DIINIT();
 
 int DIGETJOYNUM();

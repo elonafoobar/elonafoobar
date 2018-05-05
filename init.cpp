@@ -20,6 +20,7 @@
 #include "main.hpp"
 #include "race.hpp"
 #include "range.hpp"
+#include "audio.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
 #include "version.hpp"
