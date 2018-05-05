@@ -92,12 +92,18 @@ set(CORE_SOURCES
     ${PROJECT_BINARY_DIR}/version.cpp
 )
 
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
+
+# Create macOS .app bundle
+if(APPLE)
+  set(MACOSX_BUNDLE_ICON_FILE ElonaFoobar.icns)
+  set_source_files_properties(${CMAKE_MODULE_PATH}/ElonaFoobar.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+  set(CORE_SOURCES ${CORE_SOURCES} ${CMAKE_MODULE_PATH}/ElonaFoobar.icns)
+endif()
 
 # Executable
-add_executable(${PROJECT_NAME} ${CORE_SOURCES})
+add_executable(${PROJECT_NAME} WIN32 MACOSX_BUNDLE ${CORE_SOURCES})
 
-
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
 # If a CMake prefix was not provided, assume dependencies are in "./deps"
 if("${CMAKE_PREFIX_PATH}" STREQUAL "")
@@ -164,12 +170,17 @@ if(WIN32)
 endif()
 
 # Thirdparty libraries
-find_package(Boost REQUIRED COMPONENTS system filesystem locale zlib iostreams)
+if(MSVC)
+    # boost_zlib isn't picked up on Windows unless explicitly declared
+    find_package(Boost REQUIRED COMPONENTS system filesystem locale iostreams zlib)
+else()
+    find_package(Boost REQUIRED COMPONENTS system filesystem locale iostreams)
+endif()
 include_directories(${Boost_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 
 if(NOT DEFINED LUA_INCLUDE_DIR OR NOT DEFINED LUA_LIBRARIES)
-    find_package(lua REQUIRED)
+    find_package(Lua REQUIRED)
 endif()
 include_directories(${LUA_INCLUDE_DIR})
 target_link_libraries(${PROJECT_NAME} ${LUA_LIBRARIES})
@@ -198,8 +209,9 @@ endif()
 include_directories(${SDL2_MIXER_INCLUDE_DIR})
 target_link_libraries(${PROJECT_NAME} ${SDL2_MIXER_LIBRARIES})
 
-
 # Compiler options
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_14)
+
 if(MSVC)
     add_definitions("-D_UNICODE")
     set(CMAKE_CXX_FLAGS "/W4 /source-charset:utf-8 /MT /EHsc")
@@ -218,3 +230,25 @@ endif()
 # My libraries
 add_subdirectory(snail)
 target_link_libraries(${PROJECT_NAME} snail)
+
+
+SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/ElonaFoobar")
+IF(APPLE)
+  SET(plugin_dest_dir ElonaFoobar.app/Contents/MacOS)
+  SET(qtconf_dest_dir ElonaFoobar.app/Contents/Resources)
+  SET(APPS "\${CMAKE_INSTALL_PREFIX}/ElonaFoobar.app")
+ENDIF(APPLE)
+IF(WIN32)
+  SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/ElonaFoobar.exe")
+ENDIF(WIN32)
+
+INSTALL(TARGETS ElonaFoobar
+    BUNDLE DESTINATION . COMPONENT Runtime
+    RUNTIME DESTINATION bin COMPONENT Runtime)
+
+SET(DIRS ${LINK_DIRECTORIES})
+
+INSTALL(CODE "
+    include(BundleUtilities)
+    fixup_bundle(\"${APPS}\" \"\" \"${DIRS}\")
+    " COMPONENT Runtime)

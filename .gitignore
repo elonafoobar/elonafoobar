@@ -6,7 +6,6 @@ bak/
 *.o
 *.a
 bin/
-runtime/
 /version.cpp
 /*.vcxproj
 /*.sln

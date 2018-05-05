@@ -529,6 +529,7 @@ void elona_delete(const fs::path& filename)
     fs::remove_all(filename);
 }
 
+#if defined(ELONA_OS_WINDOWS)
 std::wstring get_utf16(const std::string &str)
 {
 	if (str.empty()) return std::wstring();
@@ -538,8 +539,7 @@ std::wstring get_utf16(const std::string &str)
 	return res;
 }
 
-int dialog(const std::string& message, int option)
-{
+int dialog_windows(const std::string& message, int option) {
 	UINT type = MB_ICONINFORMATION;
 	int ret = 0;
 	if (option == 1 || option == 3) {
@@ -550,13 +550,10 @@ int dialog(const std::string& message, int option)
 	{
 	case 0: // Info, OK
 	case 1: // Warning, OK
-#if defined(ELONA_OS_WINDOWS)
 		MessageBoxW(NULL, message_wstr.c_str(), L"Message", MB_OK | type);
-#endif
 		return DIALOG_OK;
 	case 2: // Info, Yes/No
 	case 3: // Warning, Yes/No
-#if defined(ELONA_OS_WINDOWS)
 		ret = MessageBoxW(NULL, message_wstr.c_str(), L"Message", MB_YESNO | type);
 		if (ret == IDYES) {
 			return DIALOG_YES;
@@ -564,9 +561,6 @@ int dialog(const std::string& message, int option)
 		else {
 			return DIALOG_NO;
 		}
-#else
-		return DIALOG_YES;
-#endif
 	case 16: // Open file dialog
 	case 17: // Save as dialog
 	case 32: // Color selection
@@ -574,6 +568,23 @@ int dialog(const std::string& message, int option)
 	default:
 		return 0;
 	}
+}
+#elif defined(ELONA_OS_MACOS)
+int dialog_macos(const std::string& message, int option) {
+    std::cout << message << std::endl;
+    return 1;
+}
+#endif
+
+int dialog(const std::string& message, int option)
+{
+#if defined(ELONA_OS_WINDOWS)
+    return dialog_windows(message, option);
+#elif defined(ELONA_OS_MACOS)
+    return dialog_macos(message, option);
+#else
+    return 0;
+#endif
 }
 
 
@@ -780,7 +791,7 @@ int ginfo(int type)
     case 21: return 0; // resolution y
     case 22: return detail::current_tex_buffer().x; // current position x
     case 23: return detail::current_tex_buffer().y; // current position y
-	default: throw new std::exception("Bad ginfo type");
+	default: throw new std::logic_error("Bad ginfo type");
     }
 }
 

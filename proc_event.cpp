@@ -928,7 +928,7 @@ void proc_event()
         txt(lang(
             u8"けたたましい警報が鳴り響いた！"s,
             u8"*beeeeeep!* An alarm sounds loudly!"s));
-        for (int cc = 57; cc < ELONA_MAX_CHARACTERS; ++cc)
+        for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS; ++cc)
         {
             if (cdata[cc].state == 1)
             {
