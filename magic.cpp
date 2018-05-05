@@ -2367,7 +2367,7 @@ label_2181_internal:
                 }
                 if (!is_cursed(efstatus))
                 {
-                    if (the_ability_db[p]->related_basic_attribute != 0)
+                    if (the_ability_db[p])
                     {
                         if (cnt2 == 0)
                         {
@@ -2482,7 +2482,7 @@ label_2181_internal:
         {
             await();
             p = rnd(300) + 100;
-            if (the_ability_db[p]->related_basic_attribute != 0)
+            if (the_ability_db[p])
             {
                 if (!is_cursed(efstatus))
                 {
@@ -2596,7 +2596,7 @@ label_2181_internal:
             {
                 await();
                 p = rnd(300) + 100;
-                if (the_ability_db[p]->related_basic_attribute != 0)
+                if (the_ability_db[p])
                 {
                     if (sdata.get(p, tc).original_level == 0)
                     {
