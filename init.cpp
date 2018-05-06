@@ -55,6 +55,7 @@ void main_loop()
         try
         {
             turn_begin();
+            break;
         }
         catch (elona_turn_sequence&)
         {
@@ -123,6 +124,21 @@ void check_double_launching()
     return;
 }
 
+void initialize_directories()
+{
+	const boost::filesystem::path paths[] = {
+		filesystem::dir::save(),
+		filesystem::dir::tmp()
+	};
+
+	for (const auto& path : paths)
+	{
+		if (!fs::exists(path)) {
+			fs::create_directory(path);
+		}
+	}
+
+}
 
 void load_character_sprite()
 {
@@ -161,6 +177,8 @@ void initialize_elona()
     backup_config_files();
 
     check_double_launching();
+
+    initialize_directories();
 
     SDIM3(s, 160, 40);
     DIM2(p, 100);
@@ -774,7 +792,7 @@ int run()
     }
     catch (elona_turn_sequence&)
     {
-		main_loop();
+        main_loop();
     }
     return 0;
 }

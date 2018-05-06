@@ -147,7 +147,7 @@ label_1741_internal:
         }
     }
     mdata(3) = 0;
-    for (int cnt = 57; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         cdata[cnt].state = 0;
     }
@@ -844,7 +844,7 @@ label_1741_internal:
                 enemyteam = rc;
             }
         }
-        for (int cnt = 57; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].relationship == -3)
             {
@@ -925,7 +925,7 @@ label_1741_internal:
                     cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
                 }
                 ctrl_file(file_operation_t::_17);
-                for (int cnt = 57; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+                for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
                 {
                     cdata[cnt].position.x = mdata(0) / 2;
                     cdata[cnt].position.y = mdata(1) / 2;
@@ -1588,7 +1588,7 @@ label_1741_internal:
             gdata_entrance_type = 8;
             map_placeplayer();
             listmax = 0;
-            for (int cnt = 57; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+            for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
             {
                 if (cdata[cnt].state == 1)
                 {

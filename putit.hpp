@@ -29,8 +29,8 @@ public:
         : in(in)
         , memory(new char[sizeof(long long)])
     {
-		fin.push(boost::iostreams::gzip_decompressor());
-		fin.push(in);
+        fin.push(boost::iostreams::gzip_decompressor());
+        fin.push(in);
     }
 
 
@@ -108,8 +108,8 @@ public:
     binary_oarchive(std::ostream& out)
         : out(out)
     {
-		fout.push(boost::iostreams::gzip_compressor());
-		fout.push(out);
+        fout.push(boost::iostreams::gzip_compressor());
+        fout.push(out);
     }
 
 
