@@ -68813,8 +68813,7 @@ void pc_turn(bool label_2747_flg)
         if (autosave)
         {
             autosave = 0;
-            if (gdata_wizard == 0 && gdata_current_map != 40
-                && config::instance().autosave)
+            if (gdata_wizard == 0 && gdata_current_map != 40)
             {
                 snd(44);
                 save_game();

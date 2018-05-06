@@ -7,4 +7,3 @@ bak/
 *.a
 bin/
 runtime/
-deps/*

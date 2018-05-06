@@ -208,6 +208,11 @@ struct read_by_line
             return n != other.n;
         }
 
+        bool operator==(const iterator& other) const
+        {
+            return n == other.n;
+        }
+
 
         size_t line_number() const noexcept
         {

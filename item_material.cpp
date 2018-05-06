@@ -160,6 +160,7 @@ std::vector<int> item_material_db::get_material_ids()
     range::transform(storage, std::back_inserter(ret), [](const auto& pair) {
         return pair.first;
     });
+    return ret;
 }
 
 
