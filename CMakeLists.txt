@@ -228,6 +228,11 @@ else()
     set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DDEBUG")
 endif()
 
+# Force GCC to output warnings about undefined symbols
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    string(APPEND CMAKE_SHARED_LINKER_FLAGS " -Wl,--no-undefined")
+endif()
+
 
 # My libraries
 add_subdirectory(snail)

@@ -1,6 +1,5 @@
 #!/bin/bash
 
-export CXX="g++-4.8" CC="gcc-4.8" BOOST_TOOLSET=gcc
 export DOWNLOAD_ROOT="$HOME/download"; if [ ! -d "$DOWNLOAD_ROOT" ]; then mkdir -p "$DOWNLOAD_ROOT"; fi
 export BOOST_DOWNLOAD_URL="https://dl.bintray.com/boostorg/release/1.66.0/source/boost_1_66_0.tar.gz"
 export BOOST_ROOT="$TRAVIS_BUILD_DIR/../boost"

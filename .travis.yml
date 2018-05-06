@@ -5,7 +5,7 @@ matrix:
     include:
         - os: linux
           sudo: required
-          compiler: gcc
+          compiler: gcc-7
           addons:
               apt:
                   sources:
@@ -25,18 +25,38 @@ cache:
         - $HOME/download
 
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then 
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       brew update &&
       brew upgrade cmake boost &&
       brew install sdl2 sdl2_ttf sdl2_image sdl2_mixer lua;
     fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then . "$TRAVIS_BUILD_DIR/.travis/before_install.sh"; fi 
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+       export CC="gcc-7";
+       export CXX="g++-7";
+       gcc -v && g++ -v;
+    fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then . "$TRAVIS_BUILD_DIR/.travis/before_install.sh"; fi
 
 install:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+       export CC="gcc-7";
+       export CXX="g++-7";
+       gcc -v && g++ -v;
+    fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then . "$TRAVIS_BUILD_DIR/.travis/install.sh"; fi
 
-script: 
-  - make
+script:
+  - cd "$TRAVIS_BUILD_DIR"
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+       export CC="gcc-7";
+       export CXX="g++-7";
+       export LD_LIBRARY_PATH="/usr/lib:$LD_LIBRARY_PATH";
+       export LD_RUN_PATH="/usr/lib:$LD_RUN_PATH";
+       export CMAKE_ARGS="$CMAKE_ARGS -DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=TRUE";
+       gcc -v && g++ -v;
+    fi
+  - env
+  - make VERBOSE=1
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ccache --show-stats; fi
 
 notifications:
