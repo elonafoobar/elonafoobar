@@ -130,6 +130,8 @@ IF(CMAKE_SIZEOF_VOID_P EQUAL 8)
 		PATH_SUFFIXES lib64 lib
 		lib/x64
 		x86_64-w64-mingw32/lib
+		/usr/local/lib/SDL2
+		/usr/lib/SDL2
 		PATHS
 		/sw
 		/opt/local
@@ -145,6 +147,8 @@ ELSE(CMAKE_SIZEOF_VOID_P EQUAL 8)
 		PATH_SUFFIXES lib
 		lib/x86
 		i686-w64-mingw32/lib
+		/usr/local/lib/SDL2
+		/usr/lib/SDL2
 		PATHS
 		/sw
 		/opt/local
