@@ -17,7 +17,7 @@ namespace i18n
 void load(const std::string& language)
 {
     for (auto&& entry : filesystem::dir_entries{
-             filesystem::path(u8"../lang") / language,
+             filesystem::path(u8"lang") / language,
              filesystem::dir_entries::type::file,
          })
     {

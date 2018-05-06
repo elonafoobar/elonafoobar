@@ -94,13 +94,6 @@ set(CORE_SOURCES
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
-# Create macOS .app bundle
-if(APPLE)
-  set(MACOSX_BUNDLE_ICON_FILE ElonaFoobar.icns)
-  set_source_files_properties(${CMAKE_MODULE_PATH}/ElonaFoobar.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
-  set(CORE_SOURCES ${CORE_SOURCES} ${CMAKE_MODULE_PATH}/ElonaFoobar.icns)
-endif()
-
 # Executable
 add_executable(${PROJECT_NAME} WIN32 MACOSX_BUNDLE ${CORE_SOURCES})
 
@@ -118,7 +111,8 @@ endif()
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
                    "${CMAKE_CURRENT_SOURCE_DIR}/runtime"
-                   "$<TARGET_FILE_DIR:${PROJECT_NAME}>/runtime")
+                   "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
+
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
                    "${CMAKE_CURRENT_SOURCE_DIR}/data"
@@ -129,23 +123,31 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
                    "$<TARGET_FILE_DIR:${PROJECT_NAME}>/lang")
 
 
-# Copy files
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                   COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                   "${CMAKE_CURRENT_SOURCE_DIR}/__init__.lua"
-                   $<TARGET_FILE_DIR:${PROJECT_NAME}>)
-
 # Copy assets from Elona 1.22 if they are present
 if(EXISTS "${CMAKE_PREFIX_PATH}/elona")
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
                      COMMAND ${CMAKE_COMMAND} -E copy_directory
                      "${CMAKE_PREFIX_PATH}/elona/graphic"
+                     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/graphic")
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                     COMMAND ${CMAKE_COMMAND} -E copy_directory
+                     "${CMAKE_PREFIX_PATH}/elona/map"
+                     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/map")
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                     COMMAND ${CMAKE_COMMAND} -E copy_directory
+                     "${CMAKE_PREFIX_PATH}/elona/original"
+                     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/original")
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                     COMMAND ${CMAKE_COMMAND} -E copy_directory
                      "${CMAKE_PREFIX_PATH}/elona/sound"
+                     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/sound")
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                     COMMAND ${CMAKE_COMMAND} -E copy_directory
                      "${CMAKE_PREFIX_PATH}/elona/user"
-                     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/runtime")
+                     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/user")
   message("Elona 1.22 distribution found.")
 else()
-  message(WARNING "Elona 1.22 distribution not found at ${CMAKE_PREFIX_PATH}/elona. The game cannot be run without assets. Please manually copy the 'graphic', 'map', 'original', 'sound' and 'user' directories from Elona 1.22 to the 'runtime' directory of the ElonaFoobar output path after building.")
+  message(WARNING "Elona 1.22 distribution not found at ${CMAKE_PREFIX_PATH}/elona. The game cannot be run without assets. Please manually copy the 'graphic', 'map', 'original', 'sound' and 'user' directories from Elona 1.22 to the ElonaFoobar output path after building.")
 endif()
 
 if(WIN32)
@@ -232,6 +234,7 @@ add_subdirectory(snail)
 target_link_libraries(${PROJECT_NAME} snail)
 
 
+# Create macOS .app bundle
 SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/ElonaFoobar")
 IF(APPLE)
   SET(plugin_dest_dir ElonaFoobar.app/Contents/MacOS)
