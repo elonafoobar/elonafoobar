@@ -309,7 +309,6 @@ ELONA_EXTERN(curse_state_t efstatus);
 ELONA_EXTERN(int egg);
 ELONA_EXTERN(int egolv);
 ELONA_EXTERN(int ele);
-ELONA_EXTERN(int elep);
 ELONA_EXTERN(int elona_export);
 ELONA_EXTERN(int en);
 ELONA_EXTERN(int encounter);
