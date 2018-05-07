@@ -770,50 +770,9 @@ label_2181_internal:
         break;
     case 406:
     case 407:
-        if (is_cursed(efstatus))
-        {
-            if (is_in_fov(tc))
-            {
-                txt(lang(
-                    name(tc) + u8"は悪魔が笑う声を聞いた。"s,
-                    name(tc) + u8" hear"s + _s(tc) + u8" devils laugh."s));
-            }
-            goto label_2183_internal;
-        }
-        p = 0;
-        for (int cnt = 0; cnt < 16; ++cnt)
-        {
-            i = 16 - cnt - 1;
-            if (efid == 406)
-            {
-                if (p >= 1)
-                {
-                    break;
-                }
-            }
-            if (the_buff_db[cdata[tc].buffs[i].id]->type
-                != buff_data::type_t::hex)
-            {
-                continue;
-            }
-            if (cdata[tc].buffs[i].id == 13)
-            {
-                continue;
-            }
-            if (cdata[tc].buffs[i].id == 0)
-            {
-                continue;
-            }
-            if (rnd(efp * 2 + 1) > rnd(cdata[tc].buffs[i].power + 1))
-            {
-                delbuff(tc, i);
-                ++p;
-                --cnt;
-                continue;
-            }
-        }
-        addbuff(tc, 10, efp, 5 + efp / 30);
-        animeload(11, tc);
+        // TODO no idea
+        bool flag = efid == 406;
+        magic_unknown_1(flag);
         break;
     case 1120:
         magic_aura();
@@ -824,314 +783,20 @@ label_2181_internal:
     case 632:
     case 454:
     case 1144:
-        if (tc != 0)
-        {
-            // attempt to cast change creature
-            goto label_2184_internal;
-        }
-        if (efid == 632)
-        {
-            txt(lang(
-                name(cc) + u8"は"s + name(tc)
-                    + u8"を気の狂いそうな眼差しで見た。"s,
-                name(cc) + u8" cast"s + _s(cc) + u8" an insane glance on "s
-                    + name(tc) + u8"."s));
-            if (rnd(3))
-            {
-                break;
-            }
-        }
-        if (tc != 0)
-        {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-            break;
-        }
-        if (encfind(tc, 33) != -1)
-        {
-            if (rnd(5))
-            {
-                txt(lang(
-                    u8"あなたは変異を受け付けなかった。"s,
-                    u8"You resist the threat of mutation."s));
-                break;
-            }
-        }
-    label_2182_internal:
-        f = 0;
-        p = 1;
-        if (efid == 1144)
-        {
-            p = 2 + rnd(3);
-        }
-        for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
-        {
-            for (int cnt = 0; cnt < 100; ++cnt)
-            {
-                int tid = rnd(45);
-                int stat = get_trait_info(0, tid);
-                if (stat == 0 || traitref != 1)
-                {
-                    continue;
-                }
-                if (rnd(2))
-                {
-                    p = 1;
-                }
-                else
-                {
-                    p = -1;
-                }
-                if (trait(tid) >= traitref(2))
-                {
-                    p = -1;
-                }
-                if (trait(tid) <= traitref(1))
-                {
-                    p = 1;
-                }
-                if (is_cursed(efstatus))
-                {
-                    if (p == 1)
-                    {
-                        continue;
-                    }
-                }
-                else if (p == -1)
-                {
-                    if (efstatus == curse_state_t::blessed)
-                    {
-                        if (rnd(3) == 0)
-                        {
-                            continue;
-                        }
-                    }
-                    if (efid == 1144)
-                    {
-                        continue;
-                    }
-                }
-                trait(tid) += p;
-                txt(lang(u8"あなたは変容した！ "s, u8"You mutate."s));
-                if (p > 0)
-                {
-                    txtef(2);
-                    txt(traitrefn(0));
-                }
-                else
-                {
-                    txtef(3);
-                    txt(traitrefn(1));
-                }
-                animeload(8, 0);
-                f = 1;
-                break;
-            }
-        }
-        if (f == 0)
-        {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-            obvious = 0;
-        }
-        refresh_character(0);
+        mutation_t type = static_cast<mutation_t>(efid);
+        magic_mutate(type);
         break;
     case 1121:
-        if (tc != 0)
-        {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-            break;
-        }
-        if (is_cursed(efstatus))
-        {
-            if (is_in_fov(tc))
-            {
-                txt(lang(u8"これは呪われている！"s, u8"It's cursed!"s));
-            }
-            goto label_2182_internal;
-        }
-        f = 0;
-        for (int cnt = 0,
-                 cnt_end = cnt
-                 + (1 + (efstatus == curse_state_t::blessed)
-                    + (!is_cursed(efstatus)) + rnd(2));
-             cnt < cnt_end;
-             ++cnt)
-        {
-            for (int cnt = 0; cnt < 100; ++cnt)
-            {
-                int tid = rnd(217);
-                int stat = get_trait_info(0, tid);
-                if (stat == 0 || traitref != 1)
-                {
-                    continue;
-                }
-                if (trait(tid) == 0)
-                {
-                    continue;
-                }
-                if (trait(tid) > 0)
-                {
-                    p = -1;
-                }
-                if (trait(tid) < 0)
-                {
-                    p = 1;
-                }
-                trait(tid) = 0;
-                txt(lang(
-                    u8"あなたは元の自分に近づいた気がした。"s,
-                    u8"You are now one step closer to yourself."s));
-                if (p > 0)
-                {
-                    txtef(2);
-                    txt(traitrefn(0));
-                }
-                else
-                {
-                    txtef(3);
-                    txt(traitrefn(1));
-                }
-                f = 1;
-                break;
-            }
-        }
-        if (f == 0)
-        {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-            obvious = 0;
-        }
-        refresh_character(0);
+        magic_cure_mutation();
         break;
     case 411:
-        if (cc != 0)
-        {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-            obvious = 0;
-            break;
-        }
-        invsubroutine = 1;
-        invctrl = 13;
-        snd(100);
-        ctrl_inventory();
+        magic_unknown_2();
         break;
     case 461:
         magic_resurrection();
         break;
     case 412:
-        if (efstatus == curse_state_t::none)
-        {
-            if (is_in_fov(tc))
-            {
-                txt(lang(
-                    name(tc) + u8"の装備品は白い光に包まれた。"s,
-                    name(tc) + u8" "s + your(tc)
-                        + u8" equipment are surrounded by a white aura."s));
-            }
-        }
-        if (efstatus == curse_state_t::blessed)
-        {
-            if (is_in_fov(tc))
-            {
-                txt(lang(
-                    name(tc) + u8"は聖なる光に包み込まれた。"s,
-                    name(tc) + u8" "s + is(tc)
-                        + u8" surrounded by a holy aura."s));
-            }
-        }
-        if (is_cursed(efstatus))
-        {
-            if (is_in_fov(tc))
-            {
-                txt(lang(
-                    name(tc) + u8"は悪魔が笑う声を聞いた。"s,
-                    name(tc) + u8" hear"s + _s(tc) + u8" devils laugh."s));
-            }
-            goto label_2183_internal;
-        }
-        p(1) = 0;
-        p(2) = 0;
-        for (const auto& cnt : items(tc))
-        {
-            if (inv[cnt].number == 0)
-            {
-                continue;
-            }
-            if (!is_cursed(inv[cnt].curse_state))
-            {
-                continue;
-            }
-            ci = cnt;
-            p = 0;
-            if (inv[ci].curse_state == curse_state_t::cursed)
-            {
-                p = rnd(200) + 1;
-            }
-            if (inv[ci].curse_state == curse_state_t::doomed)
-            {
-                p = rnd(1000) + 1;
-            }
-            if (efstatus == curse_state_t::blessed)
-            {
-                p = p / 2 + 1;
-            }
-            else if (inv[ci].body_part == 0)
-            {
-                continue;
-            }
-            if (p != 0)
-            {
-                if (efp >= p)
-                {
-                    ++p(1);
-                    inv[ci].curse_state = curse_state_t::none;
-                    item_stack(tc, ci, 1);
-                }
-                else
-                {
-                    ++p(2);
-                }
-            }
-        }
-        if (efstatus == curse_state_t::blessed)
-        {
-            if (p(1) != 0)
-            {
-                if (is_in_fov(tc))
-                {
-                    txt(lang(
-                        u8"幾つかのアイテムが浄化された。"s,
-                        u8"The aura uncurses some "s + his(tc) + u8" stuff."s));
-                }
-            }
-        }
-        else if (p(1) != 0)
-        {
-            if (is_in_fov(tc))
-            {
-                txt(lang(
-                    u8"身に付けている装備の幾つかが浄化された。"s,
-                    u8"The aura uncurses some of "s + his(tc)
-                        + u8" equipment."s));
-            }
-        }
-        if (p(2) != 0)
-        {
-            if (is_in_fov(tc))
-            {
-                txt(lang(
-                    u8"幾つかのアイテムは抵抗した。"s,
-                    u8"Several items resist the aura and remain cursed."s));
-            }
-        }
-        if (p(1) == 0 && p(2) == 0)
-        {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-            obvious = 0;
-        }
-        else
-        {
-            animeload(10, tc);
-        }
-        refresh_character(tc);
+        magic_vanquish_curse();
         break;
     case 413:
         magic_oracle();
@@ -1169,7 +834,8 @@ label_2181_internal:
         break;
     case 430:
     case 429:
-        magic_mapping();
+        bool is_sense_object = efid == 430;
+        magic_mapping(is_sense_object);
         break;
     case 658:
         magic_vorpal();
@@ -1207,12 +873,10 @@ label_2181_internal:
         magic_potion_numbness();
         break;
     case 1112:
-        // TODO real name?
-        magic_sweet_liquid();
+        magic_juice();
         break;
     case 645:
     case 1114:
-    label_2183_internal:
         bool is_attack = efid == 645;
         magic_curse(is_attack);
         break;
@@ -1224,8 +888,8 @@ label_2181_internal:
     case 1123:
     case 1122:
     case 1137:
-        // TODO
-        magic_diary();
+        ally_t type = static_cast<ally_t>(efid);
+        magic_ally(type);
         break;
     case 435:
         magic_domination();
@@ -1236,7 +900,8 @@ label_2181_internal:
     case 634:
     case 456:
         // TODO
-        magic_place_effect();
+        ground_effect_t type = static_cast<ground_effect_t>(efid);
+        magic_place_ground_effect(type);
         break;
     case 1145:
         magic_create_artifact();
@@ -1246,7 +911,8 @@ label_2181_internal:
         break;
     case 21:
     case 1127:
-        magic_reconstruct_artifact();
+        bool flag = efid == 1127; // TODO real name?
+        magic_reconstruct_artifact(flag);
         break;
     case 1128:
         magic_deed_of_inheritance();
@@ -1266,7 +932,6 @@ label_2181_internal:
         magic_draw_charge();
         break;
     case 628:
-    label_2184_internal:
         magic_change_creature();
         break;
     case 1140:
@@ -1306,11 +971,8 @@ label_2181_internal:
         break;
     case 638:
     case 648:
-        if (efid == 648)
-        {
-            magic_insult();
-        }
-        dmgcon(tc, 7, 200);
+        bool is_insult = efid == 648;
+        magic_aggro();
         break;
     case 652:
         magic_gaze();
@@ -2505,6 +2167,55 @@ bool magic_fish()
     return true;
 }
 
+void magic_unknown_a(bool flag)
+{
+    if (is_cursed(efstatus))
+    {
+        if (is_in_fov(tc))
+        {
+            txt(lang(
+                    name(tc) + u8"は悪魔が笑う声を聞いた。"s,
+                    name(tc) + u8" hear"s + _s(tc) + u8" devils laugh."s));
+        }
+        magic_curse(false);
+        return;
+    }
+    p = 0;
+    for (int cnt = 0; cnt < 16; ++cnt)
+    {
+        i = 16 - cnt - 1;
+        if (flag)
+        {
+            if (p >= 1)
+            {
+                break;
+            }
+        }
+        if (the_buff_db[cdata[tc].buffs[i].id]->type
+            != buff_data::type_t::hex)
+        {
+            continue;
+        }
+        if (cdata[tc].buffs[i].id == 13)
+        {
+            continue;
+        }
+        if (cdata[tc].buffs[i].id == 0)
+        {
+            continue;
+        }
+        if (rnd(efp * 2 + 1) > rnd(cdata[tc].buffs[i].power + 1))
+        {
+            delbuff(tc, i);
+            ++p;
+            --cnt;
+            continue;
+        }
+    }
+    addbuff(tc, 10, efp, 5 + efp / 30);
+    animeload(11, tc);
+}
+
 void magic_aura()
 {
     txtef(5);
@@ -2668,6 +2379,207 @@ void magic_flying()
     refresh_character(cc);
 }
 
+void magic_mutate(mutation_t type)
+{
+    if (tc != 0)
+    {
+        magic_change_creature();
+        break;
+    }
+    if (type == mutation_t::insane_glance)
+    {
+        txt(lang(
+                name(cc) + u8"は"s + name(tc)
+                + u8"を気の狂いそうな眼差しで見た。"s,
+                name(cc) + u8" cast"s + _s(cc) + u8" an insane glance on "s
+                + name(tc) + u8"."s));
+        if (rnd(3))
+        {
+            break;
+        }
+    }
+    if (tc != 0)
+    {
+        txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+        break;
+    }
+    if (encfind(tc, 33) != -1)
+    {
+        if (rnd(5))
+        {
+            txt(lang(
+                    u8"あなたは変異を受け付けなかった。"s,
+                    u8"You resist the threat of mutation."s));
+            break;
+        }
+    }
+    magic_do_mutation(type);
+}
+
+void magic_do_mutation(mutation_t type)
+{
+    f = 0;
+    p = 1;
+    if (efid == 1144)
+    {
+        p = 2 + rnd(3);
+    }
+    for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
+    {
+        for (int cnt = 0; cnt < 100; ++cnt)
+        {
+            int tid = rnd(45);
+            int stat = get_trait_info(0, tid);
+            if (stat == 0 || traitref != 1)
+            {
+                continue;
+            }
+            if (rnd(2))
+            {
+                p = 1;
+            }
+            else
+            {
+                p = -1;
+            }
+            if (trait(tid) >= traitref(2))
+            {
+                p = -1;
+            }
+            if (trait(tid) <= traitref(1))
+            {
+                p = 1;
+            }
+            if (is_cursed(efstatus))
+            {
+                if (p == 1)
+                {
+                    continue;
+                }
+            }
+            else if (p == -1)
+            {
+                if (efstatus == curse_state_t::blessed)
+                {
+                    if (rnd(3) == 0)
+                    {
+                        continue;
+                    }
+                }
+                if (efid == 1144)
+                {
+                    continue;
+                }
+            }
+            trait(tid) += p;
+            txt(lang(u8"あなたは変容した！ "s, u8"You mutate."s));
+            if (p > 0)
+            {
+                txtef(2);
+                txt(traitrefn(0));
+            }
+            else
+            {
+                txtef(3);
+                txt(traitrefn(1));
+            }
+            animeload(8, 0);
+            f = 1;
+            break;
+        }
+    }
+    if (f == 0)
+    {
+        txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+        obvious = 0;
+    }
+    refresh_character(0);
+}
+
+void magic_cure_mutation()
+{
+    if (tc != 0)
+    {
+        txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+        return;
+    }
+    if (is_cursed(efstatus))
+    {
+        if (is_in_fov(tc))
+        {
+            txt(lang(u8"これは呪われている！"s, u8"It's cursed!"s));
+        }
+        magic_do_mutation(mutation_t::cursed_cure_mutation);
+        return;
+    }
+    f = 0;
+    for (int cnt = 0,
+             cnt_end = cnt
+             + (1 + (efstatus == curse_state_t::blessed)
+                + (!is_cursed(efstatus)) + rnd(2));
+         cnt < cnt_end;
+         ++cnt)
+    {
+        for (int cnt = 0; cnt < 100; ++cnt)
+        {
+            int tid = rnd(217);
+            int stat = get_trait_info(0, tid);
+            if (stat == 0 || traitref != 1)
+            {
+                continue;
+            }
+            if (trait(tid) == 0)
+            {
+                continue;
+            }
+            if (trait(tid) > 0)
+            {
+                p = -1;
+            }
+            if (trait(tid) < 0)
+            {
+                p = 1;
+            }
+            trait(tid) = 0;
+            txt(lang(
+                    u8"あなたは元の自分に近づいた気がした。"s,
+                    u8"You are now one step closer to yourself."s));
+            if (p > 0)
+            {
+                txtef(2);
+                txt(traitrefn(0));
+            }
+            else
+            {
+                txtef(3);
+                txt(traitrefn(1));
+            }
+            f = 1;
+            break;
+        }
+    }
+    if (f == 0)
+    {
+        txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+        obvious = 0;
+    }
+    refresh_character(0);
+}
+
+void magic_unknown_2()
+{
+    if (cc != 0)
+    {
+        txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+        obvious = 0;
+        break;
+    }
+    invsubroutine = 1;
+    invctrl = 13;
+    snd(100);
+    ctrl_inventory();
+}
+
 void magic_resurrection()
 {
     if (mdata(6) == 1)
@@ -2735,6 +2647,126 @@ void magic_resurrection()
             modify_karma(0, 2);
         }
     }
+}
+
+void magic_vanquish_curse()
+{
+    if (efstatus == curse_state_t::none)
+    {
+        if (is_in_fov(tc))
+        {
+            txt(lang(
+                    name(tc) + u8"の装備品は白い光に包まれた。"s,
+                    name(tc) + u8" "s + your(tc)
+                    + u8" equipment are surrounded by a white aura."s));
+        }
+    }
+    if (efstatus == curse_state_t::blessed)
+    {
+        if (is_in_fov(tc))
+        {
+            txt(lang(
+                    name(tc) + u8"は聖なる光に包み込まれた。"s,
+                    name(tc) + u8" "s + is(tc)
+                    + u8" surrounded by a holy aura."s));
+        }
+    }
+    if (is_cursed(efstatus))
+    {
+        if (is_in_fov(tc))
+        {
+            txt(lang(
+                    name(tc) + u8"は悪魔が笑う声を聞いた。"s,
+                    name(tc) + u8" hear"s + _s(tc) + u8" devils laugh."s));
+        }
+        magic_curse(false);
+        return;
+    }
+    p(1) = 0;
+    p(2) = 0;
+    for (const auto& cnt : items(tc))
+    {
+        if (inv[cnt].number == 0)
+        {
+            continue;
+        }
+        if (!is_cursed(inv[cnt].curse_state))
+        {
+            continue;
+        }
+        ci = cnt;
+        p = 0;
+        if (inv[ci].curse_state == curse_state_t::cursed)
+        {
+            p = rnd(200) + 1;
+        }
+        if (inv[ci].curse_state == curse_state_t::doomed)
+        {
+            p = rnd(1000) + 1;
+        }
+        if (efstatus == curse_state_t::blessed)
+        {
+            p = p / 2 + 1;
+        }
+        else if (inv[ci].body_part == 0)
+        {
+            continue;
+        }
+        if (p != 0)
+        {
+            if (efp >= p)
+            {
+                ++p(1);
+                inv[ci].curse_state = curse_state_t::none;
+                item_stack(tc, ci, 1);
+            }
+            else
+            {
+                ++p(2);
+            }
+        }
+    }
+    if (efstatus == curse_state_t::blessed)
+    {
+        if (p(1) != 0)
+        {
+            if (is_in_fov(tc))
+            {
+                txt(lang(
+                        u8"幾つかのアイテムが浄化された。"s,
+                        u8"The aura uncurses some "s + his(tc) + u8" stuff."s));
+            }
+        }
+    }
+    else if (p(1) != 0)
+    {
+        if (is_in_fov(tc))
+        {
+            txt(lang(
+                    u8"身に付けている装備の幾つかが浄化された。"s,
+                    u8"The aura uncurses some of "s + his(tc)
+                    + u8" equipment."s));
+        }
+    }
+    if (p(2) != 0)
+    {
+        if (is_in_fov(tc))
+        {
+            txt(lang(
+                    u8"幾つかのアイテムは抵抗した。"s,
+                    u8"Several items resist the aura and remain cursed."s));
+        }
+    }
+    if (p(1) == 0 && p(2) == 0)
+    {
+        txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+        obvious = 0;
+    }
+    else
+    {
+        animeload(10, tc);
+    }
+    refresh_character(tc);
 }
 
 void magic_oracle()
@@ -3178,7 +3210,7 @@ void magic_vanquish()
     chara_vanquish(tc);
 }
 
-void magic_mapping()
+void magic_mapping(bool is_sense_object)
 {
     if (tc >= 16)
     {
@@ -3187,7 +3219,7 @@ void magic_mapping()
         return;
     }
     p = 1;
-    if (efid == 430)
+    if (is_sense_object)
     {
         p = 2;
     }
@@ -3202,29 +3234,29 @@ void magic_mapping()
                 p = dist(cdata[tc].position.x, cdata[tc].position.y, x, y);
                 if (is_cursed(efstatus))
                 {
-                    if (efid == 429)
-                    {
-                        map(x, y, 2) = tile_default;
-                    }
-                    if (efid == 430)
+                    if (is_sense_object)
                     {
                         map(x, y, 5) = 0;
+                    }
+                    else
+                    {
+                        map(x, y, 2) = tile_default;
                     }
                     continue;
                 }
                 if (p < 7 || rnd(efp + 1) > rnd(p * 8 + 1)
                     || efstatus == curse_state_t::blessed)
                 {
-                    if (efid == 429)
-                    {
-                        map(x, y, 2) = map(x, y, 0);
-                    }
-                    if (efid == 430)
+                    if (is_sense_object)
                     {
                         if (map(x, y, 6) != 0 || map(x, y, 5) != 0)
                         {
                             map(x, y, 2) = map(x, y, 0);
                         }
+                    }
+                    else
+                    {
+                        map(x, y, 2) = map(x, y, 0);
                     }
                 }
             }
@@ -3238,17 +3270,17 @@ void magic_mapping()
     }
     else
     {
-        if (efid == 429)
-        {
-            txt(lang(
-                    name(tc) + u8"は周囲の地形を察知した。"s,
-                    name(tc) + u8" sense"s + _s(tc) + u8" nearby locations."s));
-        }
-        if (efid == 430)
+        if (is_sense_object)
         {
             txt(lang(
                     name(tc) + u8"周囲の物質を感知した。"s,
                     name(tc) + u8" sense"s + _s(tc) + u8" nearby objects."s));
+        }
+        else
+        {
+            txt(lang(
+                    name(tc) + u8"は周囲の地形を察知した。"s,
+                    name(tc) + u8" sense"s + _s(tc) + u8" nearby locations."s));
         }
     }
     animeload(10, tc);
@@ -3561,7 +3593,7 @@ void magic_potion_numbness()
     dmgcon(tc, 3, efp);
 }
 
-void magic_sweet_liquid()
+void magic_juice()
 {
     if (is_in_fov(tc))
     {
@@ -3702,7 +3734,7 @@ void magic_resistmod()
     refresh_character(tc);
 }
 
-void magic_diary()
+void magic_ally(ally_t type)
 {
     if (cc != 0 && cc < 16)
     {
@@ -3715,21 +3747,21 @@ void magic_diary()
     {
         fltn(u8"man"s);
     }
-    if (efid == 1138)
+    if (type == ally_t::younger_cat_sister)
     {
         txt(lang(
                  u8"なんと、あなたには生き別れた血の繋がっていないぬこの妹がいた！"s,
                  u8"How...! You suddenly get a younger cat sister!"s));
         p = 210;
     }
-    if (efid == 1123)
+    if (type == ally_t::younger_sister)
     {
         txt(lang(
                  u8"なんと、あなたには生き別れた血の繋がっていない妹がいた！"s,
                  u8"How...! You suddenly get a younger sister!"s));
         p = 176;
     }
-    if (efid == 1137)
+    if (type == ally_t::young_lady)
     {
         txt(lang(
                  u8"お嬢さんが空から降ってきた！"s,
@@ -3796,9 +3828,9 @@ void magic_domination()
     }
 }
 
-void magic_place_effect()
+void magic_place_ground_effect(ground_effect_t type)
 {
-    if (efid == 436)
+    if (type == ground_effect_t::web)
     {
         p(0) = 3;
         p(1) = 2 + rnd((efp / 50 + 1));
@@ -3806,7 +3838,7 @@ void magic_place_effect()
                  u8"蜘蛛の巣が辺りを覆った。"s,
                  u8"The ground is covered with thick webbing."s));
     }
-    if (efid == 437)
+    if (type == ground_effect_t::fog)
     {
         txt(lang(
                  u8"辺りを濃い霧が覆った。"s,
@@ -3814,14 +3846,14 @@ void magic_place_effect()
         p(0) = 3;
         p(1) = 2 + rnd((efp / 50 + 1));
     }
-    if (efid == 455)
+    if (type == ground_effect_t::acid)
     {
         txt(lang(
                  u8"酸の水溜りが発生した。"s, u8"Acid puddles are generated."s));
         p(0) = 2;
         p(1) = 2 + rnd((efp / 50 + 1));
     }
-    if (efid == 456)
+    if (type == ground_effect_t::fire)
     {
         txt(lang(
                  u8"火柱が発生した。"s,
@@ -3829,7 +3861,7 @@ void magic_place_effect()
         p(0) = 2;
         p(1) = 2 + rnd((efp / 50 + 1));
     }
-    if (efid == 634)
+    if (type == ground_effect_t::ether)
     {
         txt(lang(u8"エーテルの霧が発生した。"s, u8"Ether mist spreads."s));
         p(0) = 2;
@@ -3865,24 +3897,24 @@ void magic_place_effect()
                 continue;
             }
         }
-        if (efid == 634)
+        if (type == ground_effect_type::ether)
         {
             addmef(x, y, 4, 20, rnd(4) + 2, efp, cc);
         }
-        if (efid == 455)
+        if (type == ground_effect_type::acid)
         {
             addmef(x, y, 3, 19, rnd(10) + 5, efp, cc);
         }
-        if (efid == 456)
+        if (type == ground_effect_type::fire)
         {
             addmef(x, y, 5, 24, rnd(10) + 5, efp, cc);
             mapitem_fire(x, y);
         }
-        if (efid == 436)
+        if (type == ground_effect_type::web)
         {
             addmef(x, y, 1, 11, -1, efp * 2);
         }
-        if (efid == 437)
+        if (type == ground_effect_type::fog)
         {
             addmef(x, y, 2, 30, 8 + rnd((15 + efp / 25)), efp);
         }
@@ -3991,7 +4023,7 @@ void magic_superior_material()
     autosave = 1 * (gdata_current_map != 35);
 }
 
-void magic_reconstruct_artifact()
+void magic_reconstruct_artifact(bool flag)
 {
     if (cc != 0)
     {
@@ -4009,7 +4041,7 @@ void magic_reconstruct_artifact()
     }
     if (inv[ci].quality == 5 || ibit(10, ci) == 1)
     {
-        if (efid == 1127)
+        if (flag)
         {
             f = 0;
         }
@@ -4445,7 +4477,7 @@ void magic_wall_creation(bool create_door)
         {
             if (homemapmode == 0)
             {
-                if (efid != 457)
+                if (!create_door)
                 {
                     f = 0;
                 }
@@ -4809,6 +4841,15 @@ void magic_insult()
                 u8"\"Get off me.\""s);
         }
     }
+}
+
+void magic_aggro(bool is_insult)
+{
+    if (is_insult)
+    {
+        magic_insult();
+    }
+    dmgcon(tc, 7, 200);
 }
 
 void magic_gaze()
