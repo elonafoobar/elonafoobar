@@ -30,7 +30,37 @@ enum class efsource_t : int
 
 struct magic_data
 {
-    skill_damage damage = { 0, 0, 0, 0, 0 };
+    magic_data(int efid, int cc) : efid(efid), cc(cc)
+    {
+        damage = { 0, 0, 0, 0, 0 };
+        efp = 0;
+        tc = 0;
+        ci = 0;
+        tlocx = 0;
+        tlocy = 0;
+        efsource = efsource_t::none;
+        efstatus = curse_state_t::none;
+    }
+    magic_data(int efid, int cc, int tc) : efid(efid), cc(cc), tc(tc)
+    {
+        damage = { 0, 0, 0, 0, 0 };
+        efp = 0;
+        ci = 0;
+        tlocx = 0;
+        tlocy = 0;
+        efsource = efsource_t::none;
+        efstatus = curse_state_t::none;
+    }
+    magic_data(int efid, int cc, int tc, int efp) : efid(efid), cc(cc), tc(tc), efp(efp)
+    {
+        damage = { 0, 0, 0, 0, 0 };
+        ci = 0;
+        tlocx = 0;
+        tlocy = 0;
+        efsource = efsource_t::none;
+        efstatus = curse_state_t::none;
+    }
+    skill_damage damage;
     int efid;
     int efp;
     int cc;
@@ -67,6 +97,34 @@ enum class sdataref1_t : int
 
 namespace elona
 {
+
+
+magic_result magic(int efid, int cc)
+{
+    magic_data data = {};
+    data.efid = efid;
+    data.cc = cc;
+    return magic(data);
+}
+
+magic_result magic(int efid, int cc, int tc)
+{
+    magic_data data = {};
+    data.efid = efid;
+    data.cc = cc;
+    data.tc = tc;
+    return magic(data);
+}
+
+magic_result magic(int efid, int cc, int tc, int efp)
+{
+    magic_data data = {};
+    data.efid = efid;
+    data.cc = cc;
+    data.tc = tc;
+    data.efp = efp;
+    return magic(data);
+}
 
 magic_result magic(magic_data m)
 {
@@ -213,7 +271,7 @@ the_end:
     efstatus = curse_state_t::none;
     efsource = 0;
     tc = result.selected_target;
-    f = result.succeeded;
+    f = result.succeeded ?: 1 : 0;
     return result;
 }
 
@@ -311,7 +369,7 @@ void handle_general_magic(const magic_data& m, magic_result& result)
     case 407:
         // TODO no idea
         bool is_vanquish = efid == 406;
-        magic_remove_hex(m, result,is_vanquish);
+        magic_remove_hex(m, result, is_vanquish);
         break;
     case 1120:
         magic_aura(m, result);
@@ -323,7 +381,7 @@ void handle_general_magic(const magic_data& m, magic_result& result)
     case 454:
     case 1144:
         mutation_t type = static_cast<mutation_t>(efid);
-        magic_mutate(m, result,type);
+        magic_mutate(m, result, type);
         break;
     case 1121:
         magic_cure_mutation(m, result);
@@ -678,7 +736,7 @@ void magic_bolt(const magic_data& m, magic_result& result)
                         }
                     }
                 }
-                dmg = roll(m.damage.dice_y, m.damage.dice_y, m.damage.damage_bonus);
+                dmg = m.damage.roll();
                 int stat = calcmagiccontrol(m.cc, result.selected_target);
                 if (stat == 1)
                 {
@@ -1330,7 +1388,7 @@ void magic_breath(const magic_data& m, magic_result& result)
             result.selected_target = map(dx, dy, 1) - 1;
             if (m.cc != result.selected_target)
             {
-                dmg = roll(m.damage.dice_x, m.damage.dice_y, m.damage.damage_bonus);
+                dmg = m.damage.roll();
                 if (is_in_fov(result.selected_target))
                 {
                     if (result.selected_target >= 16)
@@ -1383,7 +1441,7 @@ void magic_insanity(const magic_data& m, magic_result& result)
             + u8" sick at entrails caught in "s + name(m.cc) + your(m.cc)
             + u8" tentacles."s);
     }
-    damage_insanity(m.tc, rnd(roll(m.damage.dice_x, m.damage.dice_y, m.damage.damage_bonus) + 1));
+    damage_insanity(m.tc, rnd(m.damage.roll() + 1));
 }
 
 void magic_treasure_map(const magic_data& m, magic_result& result)
@@ -2314,7 +2372,7 @@ void magic_do_heal(const magic_data& m)
     }
     for (int cnt = 0, cnt_end = (subloop); cnt < cnt_end; ++cnt)
     {
-        healhp(m.tc(cnt), roll(m.damage.dice_x, m.damage.dice_y, m.damage.damage_bonus));
+        healhp(m.tc(cnt), m.damage.roll());
         healcon(m.tc(cnt), 6);
         healcon(m.tc(cnt), 1, 50);
         healcon(m.tc(cnt), 5, 50);
@@ -2432,19 +2490,19 @@ void magic_disassembly(const magic_data& m, magic_result& result)
 
 void magic_touch_of_fear(const magic_data& m, magic_result& result)
 {
-    dmghp(m.tc, roll(m.damage.dice_x, m.damage.dice_y, m.damage.damage_bonus), m.cc, m.damage.element, m.damage.element_power);
+    dmghp(m.tc, m.damage.roll(), m.cc, m.damage.element, m.damage.element_power);
     dmgcon(m.tc, 6, m.damage.element_power);
 }
 
 void magic_touch_of_sleep(const magic_data& m, magic_result& result)
 {
-    dmghp(m.m.tc, roll(m.damage.dice_x, m.damage.dice_y, m.damage.damage_bonus), m.cc, m.damage.element, m.damage.element_power);
+    dmghp(m.m.tc, m.damage.roll(), m.cc, m.damage.element, m.damage.element_power);
     dmgcon(m.tc, 2, m.damage.element_power);
 }
 
 void magic_hunger(const magic_data& m, magic_result& result)
 {
-    dmghp(m.tc, roll(m.damage.dice_x, m.damage.dice_y, m.damage.damage_bonus), m.cc, m.damage.element, m.damage.element_power);
+    dmghp(m.tc, m.damage.roll(), m.cc, m.damage.element, m.damage.element_power);
     cdata[m.tc].nutrition -= 800;
     if (is_in_fov(m.tc))
     {
@@ -2459,7 +2517,7 @@ void magic_hunger(const magic_data& m, magic_result& result)
 
 void magic_weaken(const magic_data& m, magic_result& result)
 {
-    dmghp(m.tc, roll(m.damage.dice_x, m.damage.dice_y, m.damage.damage_bonus), m.cc, m.damage.element, m.damage.element_power);
+    dmghp(m.tc, m.damage.roll(), m.cc, m.damage.element, m.damage.element_power);
     p = rnd(10);
     if ((cdata[m.tc].quality >= 4 && rnd(4))
         || encfind(m.tc, 60010 + p) != -1)
@@ -3703,7 +3761,7 @@ void magic_restore_mana(const magic_data& m, magic_result& result)
 
 void magic_absorb_mana(const magic_data& m, magic_result& result)
 {
-    healmp(tc, roll(m.damage.dice_x, m.damage.dice_y, m.damage.damage_bonus));
+    healmp(tc, m.damage.roll());
     if (is_in_fov(tc))
     {
         txt(lang(

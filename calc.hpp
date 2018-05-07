@@ -19,6 +19,10 @@ struct skill_damage
     int damage_bonus;
     int element;
     int element_power;
+
+    int roll() {
+        return roll(dice_x, dice_y, damage_bonus);
+    }
 };
 struct magic_data
 {
