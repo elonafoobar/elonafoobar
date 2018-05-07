@@ -48595,7 +48595,7 @@ void label_2144()
 
 
 
-void label_21452()
+void activate_trap()
 {
 label_21451_internal:
     if (config::instance().scroll)
@@ -52471,41 +52471,6 @@ int label_2175()
 }
 
 
-
-void label_2187()
-{
-    int subloop = 0;
-    subloop = 1;
-    if (gdata_mount != 0)
-    {
-        if (tc == gdata_mount || tc == 0)
-        {
-            subloop = 2;
-            if (tc == gdata_mount)
-            {
-                tc(1) = 0;
-            }
-            else
-            {
-                tc(1) = gdata_mount;
-            }
-        }
-    }
-    for (int cnt = 0, cnt_end = (subloop); cnt < cnt_end; ++cnt)
-    {
-        healhp(tc(cnt), roll(dice1, dice2, bonus));
-        healcon(tc(cnt), 6);
-        healcon(tc(cnt), 1, 50);
-        healcon(tc(cnt), 5, 50);
-        healcon(tc(cnt), 7, 30);
-        healcon(tc(cnt), 9, 20);
-        healsan(tc(cnt), 1);
-    }
-    return;
-}
-
-
-
 void label_2188()
 {
     cdata[tc].poisoned = 0;
@@ -54058,7 +54023,7 @@ void label_2205()
             }
         }
     }
-    label_21452();
+    activate_trap();
     p = map(cdata[cc].position.x, cdata[cc].position.y, 0);
     if (chipm(0, p) == 3)
     {

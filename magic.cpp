@@ -32,7 +32,6 @@ int magic()
     int tcprev = 0;
     int telex = 0;
     int teley = 0;
-    int efidprev = 0;
     int ccprev = 0;
     int fltbk = 0;
     int valuebk = 0;
@@ -155,166 +154,34 @@ int magic()
                 dmghp(tc, dmg, cc, ele, elep);
                 goto the_end;
             case 4:
-                if (efid == 400)
-                {
-                    if (is_in_fov(tc))
-                    {
-                        txt(lang(
-                            name(tc) + u8"の傷はふさがった。"s,
-                            name(tc) + u8" "s + is(tc)
-                                + u8" slightly healed."s));
-                    }
-                }
-                if (efid == 401 || efid == 405)
-                {
-                    if (is_in_fov(tc))
-                    {
-                        txt(lang(
-                            name(tc) + u8"は回復した。"s,
-                            name(tc) + u8" "s + is(tc) + u8" healed."s));
-                    }
-                }
-                if (efid == 402)
-                {
-                    if (is_in_fov(tc))
-                    {
-                        txt(lang(
-                            name(tc) + u8"の身体に生命力がみなぎった。"s,
-                            name(tc) + u8" "s + is(tc)
-                                + u8" greatly healed."s));
-                    }
-                }
-                if (efid == 403)
-                {
-                    if (is_in_fov(tc))
-                    {
-                        txt(lang(
-                            name(tc) + u8"は完全に回復した。"s,
-                            name(tc) + u8" "s + is(tc)
-                                + u8" completely healed."s));
-                    }
-                }
-                label_2187();
-                if (efstatus == curse_state_t::blessed)
-                {
-                    healcon(tc, 12, 5 + rnd(5));
-                }
-                sickifcursed(efstatus, tc, 3);
-                play_animation(5);
+                heal_t type = static_cast<heal_t>(efid);
+                magic_heal(type);
                 goto the_end;
             case 6:
                 if (cdata[cc].special_attack_type != 0)
                 {
-                    if (is_in_fov(cc))
-                    {
-                        if (cc == 0)
-                        {
-                            txt(lang(
-                                name(cc) + u8"は"s
-                                    + i18n::_(
-                                          u8"ability",
-                                          std::to_string(efid),
-                                          u8"name")
-                                    + u8"の"s
-                                    + i18n::_(
-                                          u8"ui",
-                                          u8"cast_style",
-                                          u8"_"s
-                                              + cdata[cc].special_attack_type),
-                                name(cc) + u8" cast "s
-                                    + i18n::_(
-                                          u8"ability",
-                                          std::to_string(efid),
-                                          u8"name")
-                                    + u8"."s));
-                        }
-                        else
-                        {
-                            txt(lang(
-                                name(cc) + u8"は"s
-                                    + i18n::_(
-                                          u8"ui",
-                                          u8"cast_style",
-                                          u8"_"s
-                                              + cdata[cc].special_attack_type),
-                                name(cc) + ""s
-                                    + i18n::_(
-                                          u8"ui",
-                                          u8"cast_style",
-                                          u8"_"s
-                                              + cdata[cc]
-                                                    .special_attack_type)));
-                        }
-                    }
+                    magic_special_attack();
                 }
                 else if (efid == 601)
                 {
-                    if (is_in_fov(cc))
-                    {
-                        if (tc >= 16)
-                        {
-                            gdata(809) = 2;
-                            txt(lang(
-                                aln(cc) + name(tc) + u8"の血を吸い"s,
-                                name(cc) + u8" suck"s + _s(cc) + u8" "s
-                                    + name(tc) + your(tc) + u8" blood and"s));
-                        }
-                        else
-                        {
-                            txt(lang(
-                                name(cc) + u8"に血を吸われた。"s,
-                                name(cc) + u8" suck"s + _s(cc) + u8" "s
-                                    + name(tc) + your(tc) + u8" blood."s));
-                        }
-                    }
+                    magic_suck_blood(); // TODO not sure if correct
                 }
                 else if (is_in_fov(cc))
                 {
-                    if (tc >= 16)
-                    {
-                        gdata(809) = 2;
-                        txt(lang(
-                            aln(cc) + name(tc) + u8"を"s + elename(ele)
-                                + _melee(2, cdata[cc].melee_attack_type)
-                                + u8"で"s
-                                + _melee(0, cdata[cc].melee_attack_type),
-                            name(cc) + u8" touch"s + _s(cc) + u8" "s + name(tc)
-                                + u8" with "s + his(cc) + u8" "s + elename(ele)
-                                + u8" "s
-                                + _melee(2, cdata[cc].melee_attack_type)
-                                + u8" and"s));
-                    }
-                    else
-                    {
-                        txt(lang(
-                            name(tc) + u8"は"s + name(cc) + u8"に"s
-                                + elename(ele)
-                                + _melee(2, cdata[cc].melee_attack_type)
-                                + u8"で"s
-                                + _melee(1, cdata[cc].melee_attack_type),
-                            name(cc) + u8" touch"s + _s(cc) + u8" "s + name(tc)
-                                + u8" with "s + his(cc) + u8" "s + elename(ele)
-                                + u8" "s
-                                + _melee(2, cdata[cc].melee_attack_type)
-                                + u8"."s));
-                    }
+                    magic_touch();
                 }
                 if (efid == 660)
                 {
-                    txt(lang(
-                        u8"「余分な機能は削除してしまえ」"s, u8"\"Delete.\""s));
-                    cdata[tc].hp = cdata[tc].max_hp / 12 + 1;
+                    magic_disassembly();
                     goto the_end;
                 }
                 if (efid == 617)
                 {
-                    dmghp(tc, roll(dice1, dice2, bonus), cc, ele, elep);
-                    dmgcon(tc, 6, elep);
+                    magic_touch_of_fear();
                 }
                 if (efid == 618)
                 {
-                    dmghp(tc, roll(dice1, dice2, bonus), cc, ele, elep);
-                    dmgcon(tc, 2, elep);
+                    magic_touch_of_sleep();
                 }
                 if (efid == 614)
                 {
@@ -326,6 +193,7 @@ int magic()
                 }
                 goto the_end;
             case 7:
+<<<<<<< HEAD
                 if (cc == 0)
                 {
                     if (gdata_other_character_count + 100
@@ -408,195 +276,13 @@ int magic()
                         u8"魔法でモンスターが召喚された。"s,
                         u8"Several monsters come out from a portal."s));
                 }
+=======
+                summon_t type = static_cast<summon_t>(efid);
+                magic_summon(type);
+>>>>>>> refactor even more magics
                 goto the_end;
             case 5:
-                tcprev = tc;
-                if (gdata_mount != 0)
-                {
-                    if (gdata_mount == tc)
-                    {
-                        goto the_end;
-                    }
-                }
-                if (efid == 408)
-                {
-                    tc = cc;
-                }
-                if (efid == 619)
-                {
-                    telex = cdata[tc].position.x;
-                    teley = cdata[tc].position.y;
-                    tc = cc;
-                }
-                if (efid == 620)
-                {
-                    telex = cdata[cc].position.x;
-                    teley = cdata[cc].position.y;
-                }
-                if (efid == 409 || efid == 635)
-                {
-                    if (map(tlocx, tlocy, 1) == 0)
-                    {
-                        txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-                        obvious = 0;
-                        goto the_end;
-                    }
-                    tc = map(tlocx, tlocy, 1) - 1;
-                }
-                if (gdata_current_map == 40 || mdata(6) == 1
-                    || gdata_current_map == 37 || gdata_current_map == 41)
-                {
-                    if (is_in_fov(tc))
-                    {
-                        txt(lang(
-                            u8"魔法の力がテレポートを防いだ。"s,
-                            u8"Magical field prevents teleportation."s));
-                    }
-                    goto the_end;
-                }
-                if (efid != 619 && encfind(tc, 22) != -1)
-                {
-                    if (is_in_fov(tc))
-                    {
-                        txt(lang(
-                            u8"魔法の力がテレポートを防いだ。"s,
-                            u8"Magical field prevents teleportation."s));
-                    }
-                    goto the_end;
-                }
-                if (efid == 635)
-                {
-                    if (tc == cc)
-                    {
-                        if (is_in_fov(tc))
-                        {
-                            txt(lang(
-                                u8"魔法の力がテレポートを防いだ。"s,
-                                u8"Magical field prevents teleportation."s));
-                        }
-                        goto the_end;
-                    }
-                    p = rnd(cdata[tc].gold / 10 + 1);
-                    if (rnd(sdata(13, tc)) > rnd(sdata(12, cc) * 4)
-                        || cdata[tc].is_protected_from_thieves() == 1)
-                    {
-                        txt(lang(
-                            name(tc) + u8"は自分の財布を守った。"s,
-                            name(tc) + u8" guard"s + _s(tc) + u8" "s + his(tc)
-                                + u8" wallet from a thief."s));
-                        p = 0;
-                    }
-                    if (p != 0)
-                    {
-                        snd(12);
-                        cdata[tc].gold -= p;
-                        txt(lang(
-                            name(cc) + u8"は"s + name(tc) + u8"から"s + p
-                                + u8"枚の金貨を奪った。"s,
-                            name(cc) + u8" steal"s + _s(cc) + u8" "s + p
-                                + u8" gold pieces from "s + name(tc) + u8"."s));
-                        cdata[cc].gold += p;
-                    }
-                    tc = cc;
-                    if (gdata_mount != 0)
-                    {
-                        if (gdata_mount == tc)
-                        {
-                            goto the_end;
-                        }
-                    }
-                }
-                if (is_in_fov(tc))
-                {
-                    snd(72);
-                }
-                tx = cdata[tc].position.x;
-                ty = cdata[tc].position.y;
-                efidprev = efid;
-                for (int cnt = 0; cnt < 200; ++cnt)
-                {
-                    if (efidprev == 410 || efidprev == 627)
-                    {
-                        p(0) = -1;
-                        p(1) = 1;
-                        cdata[tc].next_position.x = cdata[tc].position.x
-                            + (3 - cnt / 70 + rnd(5)) * p(rnd(2));
-                        cdata[tc].next_position.y = cdata[tc].position.y
-                            + (3 - cnt / 70 + rnd(5)) * p(rnd(2));
-                    }
-                    else if (efidprev == 619)
-                    {
-                        cdata[tc].next_position.x =
-                            telex + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
-                        cdata[tc].next_position.y =
-                            teley + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
-                    }
-                    else if (efidprev == 620)
-                    {
-                        cdata[tc].next_position.x =
-                            telex + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
-                        cdata[tc].next_position.y =
-                            teley + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
-                    }
-                    else
-                    {
-                        cdata[tc].next_position.x = rnd(mdata(0) - 2) + 1;
-                        cdata[tc].next_position.y = rnd(mdata(1) - 2) + 1;
-                    }
-                    cell_check(
-                        cdata[tc].next_position.x, cdata[tc].next_position.y);
-                    if (cellaccess == 1)
-                    {
-                        if (efidprev == 619)
-                        {
-                            if (is_in_fov(cc))
-                            {
-                                txt(lang(
-                                    name(cc) + u8"は"s + cdatan(0, tcprev)
-                                        + u8"の元に移動した。"s,
-                                    name(cc) + u8" teleport"s + _s(cc)
-                                        + u8" toward "s + cdatan(0, tcprev)
-                                        + u8"."s));
-                            }
-                        }
-                        else if (efidprev == 620)
-                        {
-                            if (is_in_fov(cc))
-                            {
-                                txt(lang(
-                                    name(tc) + u8"は引き寄せられた。"s,
-                                    name(tc) + u8" "s + is(tc) + u8" drawn."s));
-                            }
-                        }
-                        else if (is_in_fov(cc))
-                        {
-                            if (efidprev == 635)
-                            {
-                                txt(lang(
-                                    u8"泥棒は笑って逃げた。"s,
-                                    u8"A thief escapes laughing."s));
-                            }
-                            else
-                            {
-                                txt(lang(
-                                    name(tc) + u8"は突然消えた。"s,
-                                    u8"Suddenly, "s + name(tc) + u8" disappear"s
-                                        + _s(tc) + u8"."s));
-                            }
-                        }
-                        rowactend(cc);
-                        ccprev = cc;
-                        cc = tc;
-                        label_21452();
-                        cc = ccprev;
-                        if (tc == 0)
-                        {
-                            update_screen();
-                        }
-                        break;
-                    }
-                }
-                tc = tcprev;
+                magic_teleport();
                 goto the_end;
             case 8:
                 int stat = get_route(
@@ -771,8 +457,8 @@ label_2181_internal:
     case 406:
     case 407:
         // TODO no idea
-        bool flag = efid == 406;
-        magic_unknown_1(flag);
+        bool is_vanquish = efid == 406;
+        magic_remove_hex(is_vanquish);
         break;
     case 1120:
         magic_aura();
@@ -790,7 +476,7 @@ label_2181_internal:
         magic_cure_mutation();
         break;
     case 411:
-        magic_unknown_2();
+        magic_identify();
         break;
     case 461:
         magic_resurrection();
@@ -1233,7 +919,7 @@ void magic_aoe()
                                      name(tc) + u8" "s + is(tc)
                                      + u8" healed."s));
                         }
-                        label_2187();
+                        magic_do_heal();
                     }
                     continue;
                 }
@@ -1393,6 +1079,276 @@ void magic_aoe()
         }
     }
     cc = ccbk;
+}
+
+void magic_summon(summon_t type)
+{
+    if (cc == 0)
+    {
+        if (gdata_other_character_count + 100 >= ELONA_MAX_OTHER_CHARACTERS)
+        {
+            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            obvious = 0;
+            goto the_end;
+        }
+    }
+    p = 3;
+    efp = (efp / 25 + efp * efp / 10000 + cdata[cc].level) / 2;
+    if (efp < 1)
+    {
+        efp = 1;
+    }
+    switch(type)
+    {
+    case summon_t::pawn:
+        efp = 15 + rnd(8);
+        break;
+    case summon_t::cat:
+        efp = 2 + rnd(18);
+        break;
+    case summon_t::fire:
+        efp = 15 + rnd(15);
+        break;
+    case summon_t::yeek:
+        efp = 5 + rnd(12);
+        break;
+    case summon_t::other:
+        p = 10;
+        break;
+    }
+    for (int cnt = 0, cnt_end = (1 + rnd(p)); cnt < cnt_end; ++cnt)
+    {
+        flt(calcobjlv(efp), 2);
+        dbid = 0;
+        switch(type)
+        {
+        case summon_t::wild:
+            fltn(u8"wild"s);
+            break;
+        case summon_t::fire:
+            fltn(u8"fire"s);
+            break;
+        case summon_t::pawn:
+            fltn(u8"pawn"s);
+            break;
+        case summon_t::cat:
+            fltn(u8"cat"s);
+            break;
+        case summon_t::yeek:
+            fltn(u8"yeek"s);
+            break;
+        case summon_t::other:
+            dbid = 176;
+            break;
+        }
+        characreate(
+            -1, dbid, cdata[tc].position.x, cdata[tc].position.y);
+        if (type != summon_t::other)
+        {
+            if (cdata[rc].id == cdata[cc].id)
+            {
+                chara_vanquish(rc);
+                --cnt;
+                continue;
+            }
+        }
+    }
+    if (is_in_fov(cc))
+    {
+        txt(lang(
+                u8"魔法でモンスターが召喚された。"s,
+                u8"Several monsters come out from a portal."s));
+    }
+}
+
+void magic_teleport(teleport_t type)
+{
+    tcprev = tc;
+    if (gdata_mount != 0)
+    {
+        if (gdata_mount == tc)
+        {
+            return;
+        }
+    }
+    if (type == teleport_t::self)
+    {
+        tc = cc;
+    }
+    if (type == teleport_t::toward)
+    {
+        telex = cdata[tc].position.x;
+        teley = cdata[tc].position.y;
+        tc = cc;
+    }
+    if (type == teleport_t::drawn)
+    {
+        telex = cdata[cc].position.x;
+        teley = cdata[cc].position.y;
+    }
+    if (type == teleport_t::other || type == teleport_t::thief)
+    {
+        if (map(tlocx, tlocy, 1) == 0)
+        {
+            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            obvious = 0;
+            return;
+        }
+        tc = map(tlocx, tlocy, 1) - 1;
+    }
+    if (gdata_current_map == 40 || mdata(6) == 1
+        || gdata_current_map == 37 || gdata_current_map == 41)
+    {
+        if (is_in_fov(tc))
+        {
+            txt(lang(
+                    u8"魔法の力がテレポートを防いだ。"s,
+                    u8"Magical field prevents teleportation."s));
+        }
+        return;
+    }
+    if (type != teleport_t::toward && encfind(tc, 22) != -1)
+    {
+        if (is_in_fov(tc))
+        {
+            txt(lang(
+                    u8"魔法の力がテレポートを防いだ。"s,
+                    u8"Magical field prevents teleportation."s));
+        }
+        return;
+    }
+    if (type == teleport_t::thief)
+    {
+        if (tc == cc)
+        {
+            if (is_in_fov(tc))
+            {
+                txt(lang(
+                        u8"魔法の力がテレポートを防いだ。"s,
+                        u8"Magical field prevents teleportation."s));
+            }
+            return;
+        }
+        p = rnd(cdata[tc].gold / 10 + 1);
+        if (rnd(sdata(13, tc)) > rnd(sdata(12, cc) * 4)
+            || cdata[tc].is_protected_from_thieves() == 1)
+        {
+            txt(lang(
+                    name(tc) + u8"は自分の財布を守った。"s,
+                    name(tc) + u8" guard"s + _s(tc) + u8" "s + his(tc)
+                    + u8" wallet from a thief."s));
+            p = 0;
+        }
+        if (p != 0)
+        {
+            snd(12);
+            cdata[tc].gold -= p;
+            txt(lang(
+                    name(cc) + u8"は"s + name(tc) + u8"から"s + p
+                    + u8"枚の金貨を奪った。"s,
+                    name(cc) + u8" steal"s + _s(cc) + u8" "s + p
+                    + u8" gold pieces from "s + name(tc) + u8"."s));
+            cdata[cc].gold += p;
+        }
+        tc = cc;
+        if (gdata_mount != 0)
+        {
+            if (gdata_mount == tc)
+            {
+                return;
+            }
+        }
+    }
+    if (is_in_fov(tc))
+    {
+        snd(72);
+    }
+    tx = cdata[tc].position.x;
+    ty = cdata[tc].position.y;
+    for (int cnt = 0; cnt < 200; ++cnt)
+    {
+        if (type == teleport_t::self_short || type == teleport_t::dimensional_move)
+        {
+            p(0) = -1;
+            p(1) = 1;
+            cdata[tc].next_position.x = cdata[tc].position.x
+                + (3 - cnt / 70 + rnd(5)) * p(rnd(2));
+            cdata[tc].next_position.y = cdata[tc].position.y
+                + (3 - cnt / 70 + rnd(5)) * p(rnd(2));
+        }
+        else if (type == teleport_t::toward)
+        {
+            cdata[tc].next_position.x =
+                telex + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
+            cdata[tc].next_position.y =
+                teley + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
+        }
+        else if (type == teleport_t::drawn)
+        {
+            cdata[tc].next_position.x =
+                telex + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
+            cdata[tc].next_position.y =
+                teley + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
+        }
+        else
+        {
+            cdata[tc].next_position.x = rnd(mdata(0) - 2) + 1;
+            cdata[tc].next_position.y = rnd(mdata(1) - 2) + 1;
+        }
+        cell_check(
+            cdata[tc].next_position.x, cdata[tc].next_position.y);
+        if (cellaccess == 1)
+        {
+            if (type == teleport_t::toward)
+            {
+                if (is_in_fov(cc))
+                {
+                    txt(lang(
+                            name(cc) + u8"は"s + cdatan(0, tcprev)
+                            + u8"の元に移動した。"s,
+                            name(cc) + u8" teleport"s + _s(cc)
+                            + u8" toward "s + cdatan(0, tcprev)
+                            + u8"."s));
+                }
+            }
+            else if (type == teleport_t::drawn)
+            {
+                if (is_in_fov(cc))
+                {
+                    txt(lang(
+                            name(tc) + u8"は引き寄せられた。"s,
+                            name(tc) + u8" "s + is(tc) + u8" drawn."s));
+                }
+            }
+            else if (is_in_fov(cc))
+            {
+                if (type == teleport_t::thief)
+                {
+                    txt(lang(
+                            u8"泥棒は笑って逃げた。"s,
+                            u8"A thief escapes laughing."s));
+                }
+                else
+                {
+                    txt(lang(
+                            name(tc) + u8"は突然消えた。"s,
+                            u8"Suddenly, "s + name(tc) + u8" disappear"s
+                            + _s(tc) + u8"."s));
+                }
+            }
+            rowactend(cc);
+            ccprev = cc;
+            cc = tc;
+            activate_trap();
+            cc = ccprev;
+            if (tc == 0)
+            {
+                update_screen();
+            }
+            break;
+        }
+    }
+    tc = tcprev;
 }
 
 void magic_insanity()
@@ -2167,7 +2123,7 @@ bool magic_fish()
     return true;
 }
 
-void magic_unknown_a(bool flag)
+void magic_remove_hex(bool is_vanquish)
 {
     if (is_cursed(efstatus))
     {
@@ -2184,7 +2140,7 @@ void magic_unknown_a(bool flag)
     for (int cnt = 0; cnt < 16; ++cnt)
     {
         i = 16 - cnt - 1;
-        if (flag)
+        if (is_vanquish)
         {
             if (p >= 1)
             {
@@ -2264,6 +2220,206 @@ void magic_create_material()
         }
         matgetmain(p, 1);
     }
+}
+
+void magic_heal(heal_t type)
+{
+    if (type == heal_t::light)
+    {
+        if (is_in_fov(tc))
+        {
+            txt(lang(
+                    name(tc) + u8"の傷はふさがった。"s,
+                    name(tc) + u8" "s + is(tc)
+                    + u8" slightly healed."s));
+        }
+    }
+    if (type == heal_t::critical || efid == type == heal_t::healing_touch)
+    {
+        if (is_in_fov(tc))
+        {
+            txt(lang(
+                    name(tc) + u8"は回復した。"s,
+                    name(tc) + u8" "s + is(tc) + u8" healed."s));
+        }
+    }
+    if (type == heal_t::cure_of_eris)
+    {
+        if (is_in_fov(tc))
+        {
+            txt(lang(
+                    name(tc) + u8"の身体に生命力がみなぎった。"s,
+                    name(tc) + u8" "s + is(tc)
+                    + u8" greatly healed."s));
+        }
+    }
+    if (type == heal_t::cure_of_jure)
+    {
+        if (is_in_fov(tc))
+        {
+            txt(lang(
+                    name(tc) + u8"は完全に回復した。"s,
+                    name(tc) + u8" "s + is(tc)
+                    + u8" completely healed."s));
+        }
+    }
+    magic_do_heal();
+    if (efstatus == curse_state_t::blessed)
+    {
+        healcon(tc, 12, 5 + rnd(5));
+    }
+    sickifcursed(efstatus, tc, 3);
+    play_animation(5);
+}
+
+void magic_do_heal()
+{
+    int subloop = 0;
+    subloop = 1;
+    if (gdata_mount != 0)
+    {
+        if (tc == gdata_mount || tc == 0)
+        {
+            subloop = 2;
+            if (tc == gdata_mount)
+            {
+                tc(1) = 0;
+            }
+            else
+            {
+                tc(1) = gdata_mount;
+            }
+        }
+    }
+    for (int cnt = 0, cnt_end = (subloop); cnt < cnt_end; ++cnt)
+    {
+        healhp(tc(cnt), roll(dice1, dice2, bonus));
+        healcon(tc(cnt), 6);
+        healcon(tc(cnt), 1, 50);
+        healcon(tc(cnt), 5, 50);
+        healcon(tc(cnt), 7, 30);
+        healcon(tc(cnt), 9, 20);
+        healsan(tc(cnt), 1);
+    }
+    return;
+}
+
+void magic_special_attack()
+{
+    if (is_in_fov(cc))
+    {
+        if (cc == 0)
+        {
+            txt(lang(
+                    name(cc) + u8"は"s
+                    + i18n::_(
+                        u8"ability",
+                        std::to_string(efid),
+                        u8"name")
+                    + u8"の"s
+                    + i18n::_(
+                        u8"ui",
+                        u8"cast_style",
+                        u8"_"s
+                        + cdata[cc].special_attack_type),
+                    name(cc) + u8" cast "s
+                    + i18n::_(
+                        u8"ability",
+                        std::to_string(efid),
+                        u8"name")
+                    + u8"."s));
+        }
+        else
+        {
+            txt(lang(
+                    name(cc) + u8"は"s
+                    + i18n::_(
+                        u8"ui",
+                        u8"cast_style",
+                        u8"_"s
+                        + cdata[cc].special_attack_type),
+                    name(cc) + ""s
+                    + i18n::_(
+                        u8"ui",
+                        u8"cast_style",
+                        u8"_"s
+                        + cdata[cc]
+                        .special_attack_type)));
+        }
+    }
+}
+
+void magic_suck_blood()
+{
+    if (is_in_fov(cc))
+    {
+        if (tc >= 16)
+        {
+            gdata(809) = 2;
+            txt(lang(
+                    aln(cc) + name(tc) + u8"の血を吸い"s,
+                    name(cc) + u8" suck"s + _s(cc) + u8" "s
+                    + name(tc) + your(tc) + u8" blood and"s));
+        }
+        else
+        {
+            txt(lang(
+                    name(cc) + u8"に血を吸われた。"s,
+                    name(cc) + u8" suck"s + _s(cc) + u8" "s
+                    + name(tc) + your(tc) + u8" blood."s));
+        }
+    }
+}
+
+void magic_touch()
+{
+    if (tc >= 16)
+    {
+        gdata(809) = 2;
+        txt(lang(
+                aln(cc) + name(tc) + u8"を"s + elename(ele)
+                + _melee(2, cdata[cc].melee_attack_type)
+                + u8"で"s
+                + _melee(0, cdata[cc].melee_attack_type),
+                name(cc) + u8" touch"s + _s(cc) + u8" "s + name(tc)
+                + u8" with "s + his(cc) + u8" "s + elename(ele)
+                + u8" "s
+                + _melee(2, cdata[cc].melee_attack_type)
+                + u8" and"s));
+    }
+    else
+    {
+        txt(lang(
+                name(tc) + u8"は"s + name(cc) + u8"に"s
+                + elename(ele)
+                + _melee(2, cdata[cc].melee_attack_type)
+                + u8"で"s
+                + _melee(1, cdata[cc].melee_attack_type),
+                name(cc) + u8" touch"s + _s(cc) + u8" "s + name(tc)
+                + u8" with "s + his(cc) + u8" "s + elename(ele)
+                + u8" "s
+                + _melee(2, cdata[cc].melee_attack_type)
+                + u8"."s));
+    }
+}
+
+void magic_disassembly()
+{
+    txt(lang(
+            u8"「余分な機能は削除してしまえ」"s, u8"\"Delete.\""s));
+    cdata[tc].hp = cdata[tc].max_hp / 12 + 1;
+}
+
+void magic_touch_of_fear()
+{
+    dmghp(tc, roll(dice1, dice2, bonus), cc, ele, elep);
+    dmgcon(tc, 6, elep);
+}
+
+void magic_touch_of_sleep()
+{
+    dmghp(tc, roll(dice1, dice2, bonus), cc, ele, elep);
+    dmgcon(tc, 2, elep);
 }
 
 void magic_hunger()
@@ -2566,7 +2722,7 @@ void magic_cure_mutation()
     refresh_character(0);
 }
 
-void magic_unknown_2()
+void magic_identify()
 {
     if (cc != 0)
     {
@@ -4785,6 +4941,15 @@ void magic_corrupt_player()
 }
 
 
+void magic_aggro(bool is_insult)
+{
+    if (is_insult)
+    {
+        magic_insult();
+    }
+    dmgcon(tc, 7, 200);
+}
+
 void magic_insult()
 {
     if (is_in_fov(tc))
@@ -4841,15 +5006,6 @@ void magic_insult()
                 u8"\"Get off me.\""s);
         }
     }
-}
-
-void magic_aggro(bool is_insult)
-{
-    if (is_insult)
-    {
-        magic_insult();
-    }
-    dmgcon(tc, 7, 200);
 }
 
 void magic_gaze()
