@@ -1986,7 +1986,8 @@ label_2181_internal:
             {
                 int tid = rnd(45);
                 int stat = get_trait_info(0, tid);
-                if (stat == 0 || traitref != 1)
+                if (stat == 0
+                    || the_trait_db[tid]->type != trait_data::type_t::mutation)
                 {
                     continue;
                 }
@@ -1998,11 +1999,11 @@ label_2181_internal:
                 {
                     p = -1;
                 }
-                if (trait(tid) >= traitref(2))
+                if (trait(tid) >= the_trait_db[tid]->max)
                 {
                     p = -1;
                 }
-                if (trait(tid) <= traitref(1))
+                if (trait(tid) <= the_trait_db[tid]->min)
                 {
                     p = 1;
                 }
@@ -2032,12 +2033,12 @@ label_2181_internal:
                 if (p > 0)
                 {
                     txtef(2);
-                    txt(traitrefn(0));
+                    txt(i18n::_(u8"trait", std::to_string(tid), u8"message_positive"));
                 }
                 else
                 {
                     txtef(3);
-                    txt(traitrefn(1));
+                    txt(i18n::_(u8"trait", std::to_string(tid), u8"message_negative"));
                 }
                 animeload(8, 0);
                 f = 1;
@@ -2077,7 +2078,8 @@ label_2181_internal:
             {
                 int tid = rnd(217);
                 int stat = get_trait_info(0, tid);
-                if (stat == 0 || traitref != 1)
+                if (stat == 0
+                    || the_trait_db[tid]->type != trait_data::type_t::mutation)
                 {
                     continue;
                 }
@@ -2100,12 +2102,12 @@ label_2181_internal:
                 if (p > 0)
                 {
                     txtef(2);
-                    txt(traitrefn(0));
+                    txt(i18n::_(u8"trait", std::to_string(tid), u8"message_positive"));
                 }
                 else
                 {
                     txtef(3);
-                    txt(traitrefn(1));
+                    txt(i18n::_(u8"trait", std::to_string(tid), u8"message_negative"));
                 }
                 f = 1;
                 break;

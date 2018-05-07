@@ -976,7 +976,6 @@ int randattb()
 
 void clear_trait_data()
 {
-    DIM2(traitref, 10);
     SDIM3(traitrefn, 80, 9);
     SDIM3(traitrefn2, 20, 6);
     return;
@@ -11463,11 +11462,13 @@ void modcorrupt(int prm_815)
                 await();
                 int tid = rnd(17) + 200;
                 int stat = get_trait_info(0, tid);
-                if (stat == 0 || traitref != 3)
+                if (stat == 0
+                    || the_trait_db[tid]->type
+                        != trait_data::type_t::ether_disease)
                 {
                     continue;
                 }
-                if (trait(tid) <= traitref(1))
+                if (trait(tid) <= the_trait_db[tid]->min)
                 {
                     continue;
                 }
@@ -11479,7 +11480,7 @@ void modcorrupt(int prm_815)
                     u8"あなたはエーテルに侵食された。"s,
                     u8"Your disease is getting worse."s));
                 txtef(3);
-                txt(traitrefn(1));
+                txt(i18n::_(u8"trait", std::to_string(tid), u8"message_negative"));
                 if (tid == 203)
                 {
                     body = 9;
@@ -11532,7 +11533,9 @@ void modcorrupt(int prm_815)
                     }
                 }
                 int stat = get_trait_info(0, tid);
-                if (stat == 0 || traitref != 3)
+                if (stat == 0
+                    || the_trait_db[tid]->type
+                        != trait_data::type_t::ether_disease)
                 {
                     continue;
                 }
@@ -11546,7 +11549,7 @@ void modcorrupt(int prm_815)
                     u8"あなたのエーテルの侵食はやわらいだ。"s,
                     u8"The symptoms of the Ether disease seem to calm down."s));
                 txtef(2);
-                txt(traitrefn(0));
+                txt(i18n::_(u8"trait", std::to_string(tid), u8"message_positive"));
                 break;
             }
         }
@@ -24050,7 +24053,7 @@ void apply_general_eating_effect()
                         {
                             get_trait_info(0, 41);
                             txtef(2);
-                            txt(traitrefn(0));
+                            txt(i18n::_(u8"trait", u8"41", u8"message_positive"));
                             trait(41) = 1;
                         }
                     }
@@ -40571,7 +40574,7 @@ label_196901_internal:
         }
         if (stat == 1)
         {
-            if (traitref == 0)
+            if (the_trait_db[cnt]->type == trait_data::type_t::feat)
             {
                 if (gdata_acquirable_feat_count > 0)
                 {
@@ -40632,13 +40635,13 @@ label_196901_internal:
         s = "";
         if (list(1, cnt) < 10000)
         {
-            if (trait(tid) < traitref(2))
+            if (trait(tid) < the_trait_db[tid]->max)
             {
-                s = traitrefn2(trait(tid));
+                s = i18n::_(u8"trait", std::to_string(tid), u8"name", u8"_"s + trait(tid));
             }
             else
             {
-                s = traitrefn2(traitref(2) - 1) + u8"(MAX)"s;
+                s = i18n::_(u8"trait", std::to_string(tid), u8"name", u8"_"s + (the_trait_db[tid]->max - 1)) + u8"(MAX)";
             }
             if (featrq == -1)
             {
@@ -40658,51 +40661,8 @@ label_196901_internal:
         {
             pos(wx + 45, wy + 61 + cnt * 19);
             x = 70;
-            if (traitref == 0)
-            {
-                if (jp)
-                {
-                    s = u8"[フィート]"s;
-                }
-                else
-                {
-                    s = u8"[Feat]"s;
-                }
-            }
-            if (traitref == 1)
-            {
-                if (jp)
-                {
-                    s = u8"[変異]"s;
-                }
-                else
-                {
-                    s = u8"[Mutation]"s;
-                }
-            }
-            if (traitref == 2)
-            {
-                if (jp)
-                {
-                    s = u8"[先天]"s;
-                }
-                else
-                {
-                    s = u8"[Race]"s;
-                }
-            }
-            if (traitref == 3)
-            {
-                if (jp)
-                {
-                    s = u8"[ｴｰﾃﾙ病]"s;
-                }
-                else
-                {
-                    s = u8"[Disease]"s;
-                }
-            }
-            s += traitrefn(2 + std::abs(trait(tid)));
+            std::cout << tid << ":" << trait(tid) << std::endl;
+            s = the_trait_db.get_prefix(tid) + the_trait_db.get_description(tid, trait(tid));
         }
         listn(0, cnt) = s;
     }
@@ -40954,10 +40914,12 @@ label_1970_internal:
                 -1);
             continue;
         }
+        int trait_icon{};
         if (list(1, p) != 99999)
         {
             int stat = get_trait_info(0, i);
             featrq = stat;
+            trait_icon = int(the_trait_db[i]->type);
             if (trait(i) == 0)
             {
             }
@@ -40972,7 +40934,7 @@ label_1970_internal:
         }
         else
         {
-            traitref = 5;
+            trait_icon = 5;
         }
         if (list(1, p) < 10000)
         {
@@ -40984,12 +40946,12 @@ label_1970_internal:
             pos(wx + 45, wy + 61 + cnt * 19);
             x = 70;
         }
-        gcopy(3, 384 + traitref * 24, 336, 24, 24);
+        gcopy(3, 384 + trait_icon * 24, 336, 24, 24);
         cs_list(cs == cnt, listn(0, p), wx + x, wy + 66 + cnt * 19 - 1, 0, -1);
         if (list(1, p) < 10000)
         {
             pos(wx + 270, wy + 66 + cnt * 19 + 2);
-            mes(traitrefn(2));
+            mes(i18n::_(u8"trait", std::to_string(list(0, p)), u8"how_to_acquire"));
         }
         color(0, 0, 0);
     }
@@ -41012,7 +40974,7 @@ label_1970_internal:
                 {
                     int tid = list(0, p);
                     get_trait_info(0, tid);
-                    if (traitref(2) <= trait(tid))
+                    if (the_trait_db[tid]->max <= trait(tid))
                     {
                         if (mode != 1)
                         {
