@@ -126,18 +126,16 @@ void check_double_launching()
 
 void initialize_directories()
 {
-	const boost::filesystem::path paths[] = {
-		filesystem::dir::save(),
-		filesystem::dir::tmp()
-	};
+    const boost::filesystem::path paths[] = {filesystem::dir::save(),
+                                             filesystem::dir::tmp()};
 
-	for (const auto& path : paths)
-	{
-		if (!fs::exists(path)) {
-			fs::create_directory(path);
-		}
-	}
-
+    for (const auto& path : paths)
+    {
+        if (!fs::exists(path))
+        {
+            fs::create_directory(path);
+        }
+    }
 }
 
 void load_character_sprite()

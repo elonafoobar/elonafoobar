@@ -3,8 +3,8 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-#include <boost/iostreams/filtering_stream.hpp>
 #include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/filtering_stream.hpp>
 
 namespace elona
 {
@@ -96,7 +96,7 @@ public:
 
 private:
     std::istream& in;
-	boost::iostreams::filtering_istream fin;
+    boost::iostreams::filtering_istream fin;
     std::unique_ptr<char[]> memory;
 };
 
@@ -143,7 +143,7 @@ public:
 
 private:
     std::ostream& out;
-	boost::iostreams::filtering_ostream fout;
+    boost::iostreams::filtering_ostream fout;
 };
 
 

@@ -1084,7 +1084,8 @@ void generatemoney(int cc)
 void calccosthire()
 {
     int cost{};
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
+         ++cnt)
     {
         if (cdata[cnt].character_role == 0)
             continue;
@@ -1489,7 +1490,8 @@ int calcscore()
 void calcpartyscore()
 {
     int score = 0;
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
+         ++cnt)
     {
         if (cdata[cnt].state != 1)
         {
@@ -1524,7 +1526,8 @@ void calcpartyscore()
 void calcpartyscore2()
 {
     int score{};
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
+         ++cnt)
     {
         if (cdata[cnt].state != 1)
         {

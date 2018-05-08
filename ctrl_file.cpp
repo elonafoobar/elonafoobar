@@ -24,8 +24,10 @@ void load_v1(
     size_t end)
 {
     std::ifstream in{filepath.native(), std::ios::binary};
-    if (in.fail()) {
-        throw std::runtime_error(u8"Could not open file at "s + filepath.string());
+    if (in.fail())
+    {
+        throw std::runtime_error(
+            u8"Could not open file at "s + filepath.string());
     }
     putit::binary_iarchive ar(in);
     for (size_t i = begin; i < end; ++i)
@@ -43,8 +45,10 @@ void save_v1(
     size_t end)
 {
     std::ofstream out{filepath.native(), std::ios::binary};
-    if (out.fail()) {
-        throw std::runtime_error(u8"Could not open file at "s + filepath.string());
+    if (out.fail())
+    {
+        throw std::runtime_error(
+            u8"Could not open file at "s + filepath.string());
     }
     putit::binary_oarchive ar(out);
     for (size_t i = begin; i < end; ++i)
@@ -64,8 +68,10 @@ void load_v2(
     size_t j_end)
 {
     std::ifstream in{filepath.native(), std::ios::binary};
-    if (in.fail()) {
-        throw std::runtime_error(u8"Could not open file at "s + filepath.string());
+    if (in.fail())
+    {
+        throw std::runtime_error(
+            u8"Could not open file at "s + filepath.string());
     }
     putit::binary_iarchive ar{in};
     for (size_t j = j_begin; j < j_end; ++j)
@@ -88,8 +94,10 @@ void save_v2(
     size_t j_end)
 {
     std::ofstream out{filepath.native(), std::ios::binary};
-    if (out.fail()) {
-        throw std::runtime_error(u8"Could not open file at "s + filepath.string());
+    if (out.fail())
+    {
+        throw std::runtime_error(
+            u8"Could not open file at "s + filepath.string());
     }
     putit::binary_oarchive ar{out};
     for (size_t j = j_begin; j < j_end; ++j)
@@ -114,8 +122,10 @@ void load_v3(
     size_t k_end)
 {
     std::ifstream in{filepath.native(), std::ios::binary};
-    if (in.fail()) {
-        throw std::runtime_error(u8"Could not open file at "s + filepath.string());
+    if (in.fail())
+    {
+        throw std::runtime_error(
+            u8"Could not open file at "s + filepath.string());
     }
     putit::binary_iarchive ar{in};
     for (size_t k = k_begin; k < k_end; ++k)
@@ -143,8 +153,10 @@ void save_v3(
     size_t k_end)
 {
     std::ofstream out{filepath.native(), std::ios::binary};
-    if (out.fail()) {
-        throw std::runtime_error(u8"Could not open file at "s + filepath.string());
+    if (out.fail())
+    {
+        throw std::runtime_error(
+            u8"Could not open file at "s + filepath.string());
     }
     putit::binary_oarchive ar{out};
     for (size_t k = k_begin; k < k_end; ++k)
@@ -164,8 +176,10 @@ template <typename T>
 void load(const fs::path& filepath, T& data, size_t begin, size_t end)
 {
     std::ifstream in{filepath.native(), std::ios::binary};
-    if (in.fail()) {
-        throw std::runtime_error(u8"Could not open file at "s + filepath.string());
+    if (in.fail())
+    {
+        throw std::runtime_error(
+            u8"Could not open file at "s + filepath.string());
     }
     putit::binary_iarchive ar{in};
     for (size_t i = begin; i < end; ++i)
@@ -179,8 +193,10 @@ template <typename T>
 void save(const fs::path& filepath, T& data, size_t begin, size_t end)
 {
     std::ofstream out{filepath.native(), std::ios::binary};
-    if (out.fail()) {
-        throw std::runtime_error(u8"Could not open file at "s + filepath.string());
+    if (out.fail())
+    {
+        throw std::runtime_error(
+            u8"Could not open file at "s + filepath.string());
     }
     putit::binary_oarchive ar{out};
     for (size_t i = begin; i < end; ++i)
@@ -194,7 +210,8 @@ void save(const fs::path& filepath, T& data, size_t begin, size_t end)
 void fmode_7_8(bool read)
 {
     const auto dir = filesystem::dir::save(playerid);
-    if (!fs::exists(dir)) {
+    if (!fs::exists(dir))
+    {
         fs::create_directory(dir);
     }
 
@@ -733,12 +750,20 @@ void fmode_1_2(bool read)
         const auto filepath = dir / (u8"cdata_"s + mid + u8".s2");
         if (read)
         {
-            load(filepath, cdata, ELONA_MAX_PARTY_CHARACTERS, ELONA_MAX_CHARACTERS);
+            load(
+                filepath,
+                cdata,
+                ELONA_MAX_PARTY_CHARACTERS,
+                ELONA_MAX_CHARACTERS);
         }
         else
         {
             fileadd(filepath);
-            save(filepath, cdata, ELONA_MAX_PARTY_CHARACTERS, ELONA_MAX_CHARACTERS);
+            save(
+                filepath,
+                cdata,
+                ELONA_MAX_PARTY_CHARACTERS,
+                ELONA_MAX_CHARACTERS);
         }
     }
 
@@ -748,7 +773,8 @@ void fmode_1_2(bool read)
         {
             std::ifstream in{filepath.native(), std::ios::binary};
             putit::binary_iarchive ar{in};
-            for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS; ++cc)
+            for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS;
+                 ++cc)
             {
                 for (int i = 0; i < 600; ++i)
                 {
@@ -761,7 +787,8 @@ void fmode_1_2(bool read)
             fileadd(filepath);
             std::ofstream out{filepath.native(), std::ios::binary};
             putit::binary_oarchive ar{out};
-            for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS; ++cc)
+            for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS;
+                 ++cc)
             {
                 for (int i = 0; i < 600; ++i)
                 {
@@ -915,12 +942,20 @@ void fmode_17()
         const auto filepath = dir / (u8"cdata_"s + mid + u8".s2");
         if (true)
         {
-            load(filepath, cdata, ELONA_MAX_PARTY_CHARACTERS, ELONA_MAX_CHARACTERS);
+            load(
+                filepath,
+                cdata,
+                ELONA_MAX_PARTY_CHARACTERS,
+                ELONA_MAX_CHARACTERS);
         }
         else
         {
             fileadd(filepath);
-            save(filepath, cdata, ELONA_MAX_PARTY_CHARACTERS, ELONA_MAX_CHARACTERS);
+            save(
+                filepath,
+                cdata,
+                ELONA_MAX_PARTY_CHARACTERS,
+                ELONA_MAX_CHARACTERS);
         }
     }
 
@@ -930,7 +965,8 @@ void fmode_17()
         {
             std::ifstream in{filepath.native(), std::ios::binary};
             putit::binary_iarchive ar{in};
-            for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS; ++cc)
+            for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS;
+                 ++cc)
             {
                 for (int i = 0; i < 600; ++i)
                 {
@@ -943,7 +979,8 @@ void fmode_17()
             fileadd(filepath);
             std::ofstream out{filepath.native(), std::ios::binary};
             putit::binary_oarchive ar{out};
-            for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS; ++cc)
+            for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS;
+                 ++cc)
             {
                 for (int i = 0; i < 600; ++i)
                 {

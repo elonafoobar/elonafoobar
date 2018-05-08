@@ -1,9 +1,9 @@
+#include <iostream>
 #include <stdexcept>
 #include <SDL.h>
+#include "defines.hpp"
 #include "log.hpp"
 #include "version.hpp"
-#include <iostream>
-#include "defines.hpp"
 #if defined(ELONA_OS_WINDOWS)
 #include <windows.h> // OutputDebugStringA
 #endif
@@ -12,14 +12,15 @@ namespace elona
 {
 int run();
 
-void report_error(const char* what) {
+void report_error(const char* what)
+{
 #if defined(ELONA_OS_WINDOWS)
-	OutputDebugStringA(what);
-	MessageBoxA(NULL, what, "Error", MB_OK | MB_ICONSTOP);
+    OutputDebugStringA(what);
+    MessageBoxA(NULL, what, "Error", MB_OK | MB_ICONSTOP);
 #endif
-	ELONA_LOG(what);
+    ELONA_LOG(what);
 }
-}
+} // namespace elona
 
 
 
@@ -38,10 +39,10 @@ int main(int argc, char** argv)
     }
     catch (std::exception& e)
     {
-		report_error(e.what());
+        report_error(e.what());
     }
     catch (...)
     {
-		report_error(u8"Error occurred for some reason.");
+        report_error(u8"Error occurred for some reason.");
     }
 }
