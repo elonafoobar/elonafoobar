@@ -14,6 +14,7 @@
 #include "map_cell.hpp"
 #include "menu.hpp"
 #include "shop.hpp"
+#include "status_ailment.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -2290,7 +2291,7 @@ talk_result_t talk_unique()
             s = chara_refstr(cdata[tc].id, 8);
             if (!strutil::contains(s(0), u8"/man/"))
             {
-                dmgcon(tcbk, 11, 1000);
+                dmgcon(tcbk, status_ailment_t::insane, 1000);
                 f = 1;
                 modify_karma(0, 2);
             }

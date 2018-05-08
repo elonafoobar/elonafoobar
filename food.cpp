@@ -14,6 +14,7 @@
 #include "itemgen.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
+#include "status_ailment.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
 
@@ -292,8 +293,8 @@ void eat_rotten_food()
         ++fdmax;
     }
     nutrition = 1000;
-    dmgcon(cc, 3, 100);
-    dmgcon(cc, 5, 200);
+    dmgcon(cc, status_ailment_t::paralyzed, 100);
+    dmgcon(cc, status_ailment_t::confused, 200);
     return;
 }
 
@@ -412,7 +413,7 @@ void chara_vomit(int prm_876)
         skillmod(11, prm_876, -75);
         skillmod(17, prm_876, -100);
     }
-    dmgcon(prm_876, 7, 100);
+    dmgcon(prm_876, status_ailment_t::dimmed, 100);
     modweight(prm_876, -(1 + rnd(5)));
     if (cdata[prm_876].nutrition <= 0)
     {
@@ -483,7 +484,7 @@ void sickifcursed(curse_state_t curse_state, int drinker, int prm_882)
                 name(drinker) + u8"は気分が悪くなった。"s,
                 name(drinker) + u8" feel"s + _s(drinker) + u8" grumpy."s));
         }
-        dmgcon(drinker, 12, 200);
+        dmgcon(drinker, status_ailment_t::sick, 200);
     }
 }
 
@@ -1271,7 +1272,7 @@ void apply_general_eating_effect()
                         u8"これは人肉だ…うぇぇ！"s,
                         u8"Eeeek! It's human flesh!"s));
                     damage_insanity(cc, 15);
-                    dmgcon(cc, 11, 150);
+                    dmgcon(cc, status_ailment_t::insane, 150);
                     if (trait(41) == 0)
                     {
                         if (rnd(5) == 0)
@@ -1484,7 +1485,7 @@ void apply_general_eating_effect()
             modify_karma(0, -10);
             lovemiracle(cc);
         }
-        dmgcon(cc, 7, 500);
+        dmgcon(cc, status_ailment_t::dimmed, 500);
         cdata[cc].emotion_icon = 317;
     }
     for (int cnt = 0; cnt < 15; ++cnt)
@@ -1612,7 +1613,7 @@ void eating_effect_eat_iron()
             u8"It's too hard! "s + name(cc) + your(cc)
                 + u8" stomach screams."s));
     }
-    dmgcon(cc, 7, 200);
+    dmgcon(cc, status_ailment_t::dimmed, 200);
     return;
 }
 
@@ -1628,7 +1629,7 @@ void eating_effect_insanity()
             u8"It tastes really, really strange."s));
     }
     damage_insanity(cc, 25);
-    dmgcon(cc, 11, 500);
+    dmgcon(cc, status_ailment_t::insane, 500);
     return;
 }
 
@@ -1721,7 +1722,7 @@ void eating_effect_insanity2()
     }
     resistmod(cc, 54, 50);
     damage_insanity(cc, 200);
-    dmgcon(cc, 11, 1000);
+    dmgcon(cc, status_ailment_t::insane, 1000);
     return;
 }
 
@@ -1764,7 +1765,7 @@ void eating_effect_eat_poisonous_one()
         txtef(8);
         txt(lang(u8"これは有毒だ！"s, u8"Argh! It's poisonous!"s));
     }
-    dmgcon(cc, 1, 100);
+    dmgcon(cc, status_ailment_t::poisoned, 100);
     return;
 }
 
@@ -1838,7 +1839,7 @@ void eating_effect_insanity3()
             u8"Something is wrong with "s + name(cc) + your(cc)
                 + u8" stomach..."s));
     }
-    dmgcon(cc, 5, 200);
+    dmgcon(cc, status_ailment_t::confused, 200);
     return;
 }
 
@@ -1886,7 +1887,7 @@ void eating_effect_chaos()
             name(cc) + u8"の胃は混沌で満たされた。"s,
             name(cc) + u8" "s + is(cc) + u8" shaken by a chaotic power."s));
     }
-    dmgcon(cc, 5, 300);
+    dmgcon(cc, status_ailment_t::confused, 300);
     return;
 }
 
@@ -1901,7 +1902,7 @@ void eating_effect_lightning()
             name(cc) + u8"の神経に電流が走った。"s,
             name(cc) + your(cc) + u8" nerve is damaged."s));
     }
-    dmgcon(cc, 3, 300);
+    dmgcon(cc, status_ailment_t::paralyzed, 300);
     return;
 }
 

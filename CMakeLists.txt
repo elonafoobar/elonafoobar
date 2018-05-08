@@ -105,6 +105,7 @@ set(CORE_SOURCES
     set_item_info.cpp
     set_option.cpp
     shop.cpp
+    status_ailment.cpp
     std.cpp
     talk.cpp
     talk_npc.cpp
