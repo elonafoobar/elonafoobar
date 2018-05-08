@@ -1244,9 +1244,6 @@ label_2061_internal:
                             u8"The container cannot hold cargos"s));
                         goto label_2060_internal;
                     }
-                }
-                if (invctrl(1) == 5)
-                {
                     if (!actionsp(0, 10))
                     {
                         txt(lang(

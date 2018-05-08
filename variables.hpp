@@ -3,6 +3,7 @@
 #include "magic.hpp"
 #include "access_item_db.hpp"
 #include "calc.hpp"
+#include "enums.hpp"
 
 
 #ifdef ELONA_DEFINE_GLOBAL_INSTANCE
@@ -311,7 +312,7 @@ ELONA_EXTERN(efsource_t efsource);
 //ELONA_EXTERN(curse_state_t efstatus);
 ELONA_EXTERN(int egg);
 ELONA_EXTERN(int egolv);
-ELONA_EXTERN(int ele);
+//ELONA_EXTERN(int ele);
 ELONA_EXTERN(int elona_export);
 ELONA_EXTERN(int en);
 ELONA_EXTERN(int encounter);
@@ -420,7 +421,7 @@ ELONA_EXTERN(int novoidlv);
 ELONA_EXTERN(int nowindowanime);
 ELONA_EXTERN(int objfix);
 ELONA_EXTERN(int objlv);
-ELONA_EXTERN(int obvious);
+//ELONA_EXTERN(int obvious);
 ELONA_EXTERN(int oc);
 ELONA_EXTERN(int orgdmg);
 ELONA_EXTERN(int p2);
@@ -585,7 +586,7 @@ int discsetmc();
 int dist(int = 0, int = 0, int = 0, int = 0);
 int dist_town();
 int dmgcon(int = 0, int = 0, int = 0);
-int dmghp(int = 0, int = 0, int = 0, int = 0, int = 0);
+int dmghp(int = 0, int = 0, int = 0, element_t = element_t::none, int = 0);
 void dmgmp(int, int);
 void damage_insanity(int, int);
 void dmgsp(int, int);
@@ -681,12 +682,12 @@ int label_2143();
 int decode_book(int, int);
 int read_normal_book();
 int cast_spell(int);
-int do_cast_spell(int);
-int drink_potion(int, int);
+magic_result do_cast_spell(int);
+magic_result drink_potion(int, int);
 int drink_well();
-int read_scroll(int, int);
-int zap_rod(int, int);
-int label_2174();
+magic_result read_scroll(int, int);
+magic_result zap_rod(int, int);
+magic_result do_ability(int);
 magic_result query_magic_location(magic_data& data);
 int pick_up_item();
 int drop_item();
@@ -731,7 +732,7 @@ int randomencp(int = 0);
 int randskill();
 int relationbetween(int, int);
 int relocate_chara(int = 0, int = 0, int = 0);
-int roll(skill_damage);
+int roll(const skill_damage&);
 int roll(int, int, int);
 int roll_max(int, int, int);
 int roundmargin(int = 0, int = 0);
@@ -782,7 +783,6 @@ std::string cnvrank(int = 0);
 std::string cnvrare(int = 0);
 std::string cnvweight(int = 0);
 std::string does(int = 0);
-std::string elename(int = 0);
 std::string fixtxt(const std::string&, int = 0);
 std::string fltname(int = 0);
 std::string foodname(int, const std::string&, int = 0, int = 0);
@@ -1190,7 +1190,7 @@ void list_adventurers();
 void do_short_cut();
 void do_dig_command();
 void label_2005();
-void label_2006();
+void do_pc_ability_command(int);
 void label_2007();
 void do_give_command();
 void do_interact_command();
@@ -1266,7 +1266,7 @@ void do_read_commad();
 void do_eat_command();
 void do_drink_command();
 void do_zap_command();
-void do_bash();
+void do_bash(int, int);
 void label_2203();
 void label_2205();
 void proc_item_on_ground();

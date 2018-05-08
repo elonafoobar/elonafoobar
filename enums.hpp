@@ -29,4 +29,23 @@ enum class identification_state_t
 };
 
 
+enum class element_t : int
+{
+    none = 0,
+    burning = 50,
+    icy = 51,
+    electric = 52,
+    psychic = 54,
+    numb = 58,
+    shivering = 57,
+    poisonous = 55,
+    infernal = 56,
+    chaotic = 59,
+    gloomy = 53,
+    cut = 61,
+    ether = 62,
+    acid = 63,
+    vorpal = 658,
+};
+
 } // namespace elona

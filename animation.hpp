@@ -1,5 +1,6 @@
 #pragma once
 
+#include "enums.hpp"
 
 
 namespace elona
@@ -33,7 +34,7 @@ enum class animation_type
 };
 
 
-void play_animation(int);
+void play_animation(int, element_t = element_t::none);
 
 
 extern int FIXME_dig_animation_x;
