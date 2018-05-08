@@ -64,7 +64,7 @@ enum class mutation_t : int
     insane_glance = 632,
     mutation = 454,
     cursed_cure_mutation = 1121,
-    evolution = 1144, // TODO not sure
+    evolution = 1144,
 };
 
 enum class ally_t : int
@@ -254,7 +254,7 @@ void magic_corrupt_player(const magic_data&, magic_result&);
 void magic_aggro(const magic_data&, magic_result&, bool is_insult);
 void magic_insult(const magic_data&, magic_result&);
 void magic_gaze(const magic_data&, magic_result&);
-void magic_surround_in_flames(const magic_data&, magic_result&);
+void magic_molotov(const magic_data&, magic_result&);
 void magic_loot(const magic_data&, magic_result&);
 void magic_fall_down(const magic_data&, magic_result&);
 void magic_four_dimensional_pocket(const magic_data&, magic_result&);

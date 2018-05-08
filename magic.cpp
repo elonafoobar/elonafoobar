@@ -501,10 +501,10 @@ void handle_general_magic(const magic_data& m, magic_result& result)
         break;
     case 1133:
     {
-        magic_surround_in_flames(m, result);
+        magic_molotov(m, result);
         result.turn_passed = false;
-    }
         //return 0;
+    }
         break;
     case 651:
         magic_loot(m, result);
@@ -5054,7 +5054,7 @@ void magic_gaze(const magic_data& m, magic_result& result)
     dmgmp(m.tc, rnd(20) + 1);
 }
 
-void magic_surround_in_flames(const magic_data& m, magic_result& result)
+void magic_molotov(const magic_data& m, magic_result& result)
 {
     if (is_in_fov(m.tc))
     {

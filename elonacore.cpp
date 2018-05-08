@@ -52009,7 +52009,6 @@ int cast_spell(int efid)
     return 0;
 }
 
-// TODO clean up
 magic_result do_cast_spell(int efid)
 {
     magic_data data(efid, cc, tc, calcspellpower(efid, cc));
@@ -52199,7 +52198,6 @@ magic_result do_cast_spell(int efid)
     {
         result = magic(data);
     }
-    // TODO return result
     result.turn_passed = true;
     return result;
 }
@@ -52239,7 +52237,6 @@ magic_result query_magic_location(magic_data& data)
             data.tc = 0;
             txt(lang(u8"どの方向？"s, u8"Which direction?"s));
             update_screen();
-            // TODO return tlocx, tlocy
             optional<position_t> dir = ask_direction();
             if (!dir)
             {
@@ -52794,7 +52791,7 @@ void do_throw_command(position_t pos)
                 effect_power,
                 cc,
                 inv[ci].id,
-                static_cast<int>(inv[ci].curse_state), // TODO
+                static_cast<int>(inv[ci].curse_state), // TODO refactor to take curse_state_t
                 inv[ci].color);
             turn_end();
             return;
@@ -55617,9 +55614,8 @@ int label_2217()
         for (int cnt = 0; cnt < 3; ++cnt)
         {
             can_do_ranged_attack();
-            ele = 0;
             extraattack = 0;
-            // TODO set ele
+            // element type will start off as 'none', so nothing needs to be passed.
             do_physical_attack();
             if (cdata[tc].state != 1)
             {
@@ -55640,8 +55636,6 @@ int label_2217()
         for (int cnt = 0; cnt < 10; ++cnt)
         {
             can_do_ranged_attack();
-            ele = 0;
-            // TODO set ele
             label_2076();
             if (listmax == 0)
             {
@@ -55665,6 +55659,7 @@ int label_2217()
                 continue;
             }
             extraattack = 0;
+            // element type will start off as 'none', so nothing needs to be passed.
             do_physical_attack();
         }
     }
