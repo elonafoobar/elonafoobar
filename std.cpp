@@ -14,7 +14,10 @@
 #include "log.hpp"
 #include "util.hpp"
 #include "variables.hpp"
-
+#include "defines.hpp"
+#if defined(ELONA_OS_WINDOWS)
+#include <windows.h> // MessageBoxA
+#endif
 
 namespace
 {
@@ -526,12 +529,62 @@ void elona_delete(const fs::path& filename)
     fs::remove_all(filename);
 }
 
-
-
-int dialog(const std::string& message, int)
+#if defined(ELONA_OS_WINDOWS)
+std::wstring get_utf16(const std::string &str)
 {
-    (void)message;
+	if (str.empty()) return std::wstring();
+	int sz = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), 0, 0);
+	std::wstring res(sz, 0);
+	MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), &res[0], sz);
+	return res;
+}
+
+int dialog_windows(const std::string& message, int option) {
+	UINT type = MB_ICONINFORMATION;
+	int ret = 0;
+	if (option == 1 || option == 3) {
+		type = MB_ICONWARNING;
+	}
+	std::wstring message_wstr = get_utf16(message);
+	switch (option)
+	{
+	case 0: // Info, OK
+	case 1: // Warning, OK
+		MessageBoxW(NULL, message_wstr.c_str(), L"Message", MB_OK | type);
+		return DIALOG_OK;
+	case 2: // Info, Yes/No
+	case 3: // Warning, Yes/No
+		ret = MessageBoxW(NULL, message_wstr.c_str(), L"Message", MB_YESNO | type);
+		if (ret == IDYES) {
+			return DIALOG_YES;
+		}
+		else {
+			return DIALOG_NO;
+		}
+	case 16: // Open file dialog
+	case 17: // Save as dialog
+	case 32: // Color selection
+	case 33: // Color selection with matrix
+	default:
+		return 0;
+	}
+}
+#elif defined(ELONA_OS_MACOS)
+int dialog_macos(const std::string& message, int option) {
+    std::cout << message << std::endl;
+    return 1;
+}
+#endif
+
+int dialog(const std::string& message, int option)
+{
+#if defined(ELONA_OS_WINDOWS)
+    return dialog_windows(message, option);
+#elif defined(ELONA_OS_MACOS)
+    return dialog_macos(message, option);
+#else
     return 0;
+#endif
 }
 
 
@@ -738,7 +791,7 @@ int ginfo(int type)
     case 21: return 0; // resolution y
     case 22: return detail::current_tex_buffer().x; // current position x
     case 23: return detail::current_tex_buffer().y; // current position y
-    default: assert(0);
+	default: throw new std::logic_error("Bad ginfo type");
     }
 }
 
@@ -1693,8 +1746,18 @@ int aplobj(const std::string&, int)
 
 
 
-void apledit(int, int, int)
+void apledit(int &out, int kind, int column_no)
 {
+	if (kind == 0) {
+		// Current position of cursor
+		out = static_cast<int>(inputlog(0).length());
+	}
+	else if (kind == 1) {
+		// Total number of columns
+	}
+	else if (kind == 2) {
+		// Number of characters at column "column_no"
+	}
 }
 
 

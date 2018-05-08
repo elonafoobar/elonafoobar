@@ -3,7 +3,8 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-
+#include <boost/iostreams/filtering_stream.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
 
 namespace elona
 {
@@ -28,6 +29,8 @@ public:
         : in(in)
         , memory(new char[sizeof(long long)])
     {
+        fin.push(boost::iostreams::gzip_decompressor());
+        fin.push(in);
     }
 
 
@@ -54,7 +57,7 @@ public:
         char* buf;
         buf = memory.get();
 
-        in.read(buf, sizeof(T));
+        fin.read(buf, sizeof(T));
         data = *reinterpret_cast<T*>(buf);
     }
 
@@ -68,7 +71,7 @@ public:
         char* buf;
         buf = new char[sizeof(T)];
 
-        in.read(buf, sizeof(T));
+        fin.read(buf, sizeof(T));
         data = *reinterpret_cast<T*>(buf);
 
         delete[] buf;
@@ -81,7 +84,7 @@ public:
     {
         char* buf = new char[sizeof(T) * size];
 
-        in.read(buf, sizeof(T) * size);
+        fin.read(buf, sizeof(T) * size);
         for (size_t i = 0; i < size; ++i)
         {
             data[i] = reinterpret_cast<T*>(buf)[i];
@@ -93,6 +96,7 @@ public:
 
 private:
     std::istream& in;
+	boost::iostreams::filtering_istream fin;
     std::unique_ptr<char[]> memory;
 };
 
@@ -104,6 +108,8 @@ public:
     binary_oarchive(std::ostream& out)
         : out(out)
     {
+        fout.push(boost::iostreams::gzip_compressor());
+        fout.push(out);
     }
 
 
@@ -124,19 +130,20 @@ public:
     template <typename T>
     void primitive(const T& data)
     {
-        out.write(reinterpret_cast<const char*>(&data), sizeof(data));
+        fout.write(reinterpret_cast<const char*>(&data), sizeof(data));
     }
 
 
     template <typename T>
     void primitive_array(const T* data, size_t size)
     {
-        out.write(reinterpret_cast<const char*>(data), sizeof(T) * size);
+        fout.write(reinterpret_cast<const char*>(data), sizeof(T) * size);
     }
 
 
 private:
     std::ostream& out;
+	boost::iostreams::filtering_ostream fout;
 };
 
 

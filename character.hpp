@@ -10,6 +10,9 @@
 #include "range.hpp"
 
 
+#define ELONA_MAX_CHARACTERS 245
+#define ELONA_MAX_PARTY_CHARACTERS 57
+#define ELONA_MAX_OTHER_CHARACTERS 188
 
 #define ELONA_CHARACTER_DEFINE_FLAG_ACCESSOR(name, n) \
     bool name() const \

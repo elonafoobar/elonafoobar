@@ -20,7 +20,6 @@ public:
     int attackanime;
     int attackwait;
     int autonumlock;
-    int autosave;
     int autoturn;
     int env;
     int extraclass;

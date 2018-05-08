@@ -1,6 +1,7 @@
 #include "ability.hpp"
 #include "cat.hpp"
 #include "range.hpp"
+#include "character.hpp"
 
 using namespace elona;
 
@@ -40,7 +41,7 @@ void ability_db::define(lua_State* L)
 
 
 skill_data::skill_data()
-    : storage(245, std::vector<ability>(600))
+    : storage(ELONA_MAX_CHARACTERS, std::vector<ability>(600))
 {
 }
 

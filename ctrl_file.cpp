@@ -24,6 +24,9 @@ void load_v1(
     size_t end)
 {
     std::ifstream in{filepath.native(), std::ios::binary};
+    if (in.fail()) {
+        throw std::runtime_error(u8"Could not open file at "s + filepath.string());
+    }
     putit::binary_iarchive ar(in);
     for (size_t i = begin; i < end; ++i)
     {
@@ -40,6 +43,9 @@ void save_v1(
     size_t end)
 {
     std::ofstream out{filepath.native(), std::ios::binary};
+    if (out.fail()) {
+        throw std::runtime_error(u8"Could not open file at "s + filepath.string());
+    }
     putit::binary_oarchive ar(out);
     for (size_t i = begin; i < end; ++i)
     {
@@ -58,6 +64,9 @@ void load_v2(
     size_t j_end)
 {
     std::ifstream in{filepath.native(), std::ios::binary};
+    if (in.fail()) {
+        throw std::runtime_error(u8"Could not open file at "s + filepath.string());
+    }
     putit::binary_iarchive ar{in};
     for (size_t j = j_begin; j < j_end; ++j)
     {
@@ -79,6 +88,9 @@ void save_v2(
     size_t j_end)
 {
     std::ofstream out{filepath.native(), std::ios::binary};
+    if (out.fail()) {
+        throw std::runtime_error(u8"Could not open file at "s + filepath.string());
+    }
     putit::binary_oarchive ar{out};
     for (size_t j = j_begin; j < j_end; ++j)
     {
@@ -102,6 +114,9 @@ void load_v3(
     size_t k_end)
 {
     std::ifstream in{filepath.native(), std::ios::binary};
+    if (in.fail()) {
+        throw std::runtime_error(u8"Could not open file at "s + filepath.string());
+    }
     putit::binary_iarchive ar{in};
     for (size_t k = k_begin; k < k_end; ++k)
     {
@@ -128,6 +143,9 @@ void save_v3(
     size_t k_end)
 {
     std::ofstream out{filepath.native(), std::ios::binary};
+    if (out.fail()) {
+        throw std::runtime_error(u8"Could not open file at "s + filepath.string());
+    }
     putit::binary_oarchive ar{out};
     for (size_t k = k_begin; k < k_end; ++k)
     {
@@ -146,6 +164,9 @@ template <typename T>
 void load(const fs::path& filepath, T& data, size_t begin, size_t end)
 {
     std::ifstream in{filepath.native(), std::ios::binary};
+    if (in.fail()) {
+        throw std::runtime_error(u8"Could not open file at "s + filepath.string());
+    }
     putit::binary_iarchive ar{in};
     for (size_t i = begin; i < end; ++i)
     {
@@ -158,6 +179,9 @@ template <typename T>
 void save(const fs::path& filepath, T& data, size_t begin, size_t end)
 {
     std::ofstream out{filepath.native(), std::ios::binary};
+    if (out.fail()) {
+        throw std::runtime_error(u8"Could not open file at "s + filepath.string());
+    }
     putit::binary_oarchive ar{out};
     for (size_t i = begin; i < end; ++i)
     {
@@ -170,6 +194,9 @@ void save(const fs::path& filepath, T& data, size_t begin, size_t end)
 void fmode_7_8(bool read)
 {
     const auto dir = filesystem::dir::save(playerid);
+    if (!fs::exists(dir)) {
+        fs::create_directory(dir);
+    }
 
     if (!read)
     {
@@ -218,12 +245,12 @@ void fmode_7_8(bool read)
         {
             if (fs::exists(filepath))
             {
-                load(filepath, cdata, 0, 57);
+                load(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
             }
         }
         else
         {
-            save(filepath, cdata, 0, 57);
+            save(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
         }
     }
 
@@ -235,7 +262,7 @@ void fmode_7_8(bool read)
             {
                 std::ifstream in{filepath.native(), std::ios::binary};
                 putit::binary_iarchive ar{in};
-                for (int cc = 0; cc < 57; ++cc)
+                for (int cc = 0; cc < ELONA_MAX_PARTY_CHARACTERS; ++cc)
                 {
                     for (int i = 0; i < 600; ++i)
                     {
@@ -248,7 +275,7 @@ void fmode_7_8(bool read)
         {
             std::ofstream out{filepath.native(), std::ios::binary};
             putit::binary_oarchive ar{out};
-            for (int cc = 0; cc < 57; ++cc)
+            for (int cc = 0; cc < ELONA_MAX_PARTY_CHARACTERS; ++cc)
             {
                 for (int i = 0; i < 600; ++i)
                 {
@@ -529,13 +556,13 @@ void fmode_14_15(bool read)
         {
             if (fs::exists(filepath))
             {
-                load(filepath, cdata, 0, 57);
+                load(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
             }
         }
         else
         {
             fileadd(filepath);
-            save(filepath, cdata, 0, 57);
+            save(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
         }
     }
 
@@ -547,7 +574,7 @@ void fmode_14_15(bool read)
             {
                 std::ifstream in{filepath.native(), std::ios::binary};
                 putit::binary_iarchive ar{in};
-                for (int cc = 0; cc < 57; ++cc)
+                for (int cc = 0; cc < ELONA_MAX_PARTY_CHARACTERS; ++cc)
                 {
                     for (int i = 0; i < 600; ++i)
                     {
@@ -561,7 +588,7 @@ void fmode_14_15(bool read)
             fileadd(filepath);
             std::ofstream out{filepath.native(), std::ios::binary};
             putit::binary_oarchive ar{out};
-            for (int cc = 0; cc < 57; ++cc)
+            for (int cc = 0; cc < ELONA_MAX_PARTY_CHARACTERS; ++cc)
             {
                 for (int i = 0; i < 600; ++i)
                 {
@@ -706,12 +733,12 @@ void fmode_1_2(bool read)
         const auto filepath = dir / (u8"cdata_"s + mid + u8".s2");
         if (read)
         {
-            load(filepath, cdata, 57, 245);
+            load(filepath, cdata, ELONA_MAX_PARTY_CHARACTERS, ELONA_MAX_CHARACTERS);
         }
         else
         {
             fileadd(filepath);
-            save(filepath, cdata, 57, 245);
+            save(filepath, cdata, ELONA_MAX_PARTY_CHARACTERS, ELONA_MAX_CHARACTERS);
         }
     }
 
@@ -721,7 +748,7 @@ void fmode_1_2(bool read)
         {
             std::ifstream in{filepath.native(), std::ios::binary};
             putit::binary_iarchive ar{in};
-            for (int cc = 57; cc < 245; ++cc)
+            for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS; ++cc)
             {
                 for (int i = 0; i < 600; ++i)
                 {
@@ -734,7 +761,7 @@ void fmode_1_2(bool read)
             fileadd(filepath);
             std::ofstream out{filepath.native(), std::ios::binary};
             putit::binary_oarchive ar{out};
-            for (int cc = 57; cc < 245; ++cc)
+            for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS; ++cc)
             {
                 for (int i = 0; i < 600; ++i)
                 {
@@ -821,7 +848,7 @@ void fmode_5_6(bool read)
         if (read)
         {
             DIM4(map, mdata(0), mdata(1), 10);
-            DIM3(mapsync, mdata(0), mdata(1));
+            DIM3(mapsync, mdata(0), mdata(1)); // TODO length_exception
             load_v3(filepath, map, 0, mdata(0), 0, mdata(1), 0, 10);
         }
         else
@@ -888,12 +915,12 @@ void fmode_17()
         const auto filepath = dir / (u8"cdata_"s + mid + u8".s2");
         if (true)
         {
-            load(filepath, cdata, 57, 245);
+            load(filepath, cdata, ELONA_MAX_PARTY_CHARACTERS, ELONA_MAX_CHARACTERS);
         }
         else
         {
             fileadd(filepath);
-            save(filepath, cdata, 57, 245);
+            save(filepath, cdata, ELONA_MAX_PARTY_CHARACTERS, ELONA_MAX_CHARACTERS);
         }
     }
 
@@ -903,7 +930,7 @@ void fmode_17()
         {
             std::ifstream in{filepath.native(), std::ios::binary};
             putit::binary_iarchive ar{in};
-            for (int cc = 57; cc < 245; ++cc)
+            for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS; ++cc)
             {
                 for (int i = 0; i < 600; ++i)
                 {
@@ -916,7 +943,7 @@ void fmode_17()
             fileadd(filepath);
             std::ofstream out{filepath.native(), std::ios::binary};
             putit::binary_oarchive ar{out};
-            for (int cc = 57; cc < 245; ++cc)
+            for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS; ++cc)
             {
                 for (int i = 0; i < 600; ++i)
                 {

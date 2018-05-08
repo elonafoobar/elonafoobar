@@ -208,6 +208,11 @@ struct read_by_line
             return n != other.n;
         }
 
+        bool operator==(const iterator& other) const
+        {
+            return n == other.n;
+        }
+
 
         size_t line_number() const noexcept
         {
@@ -225,6 +230,10 @@ struct read_by_line
     read_by_line(const fs::path& filepath)
         : in(filepath.native())
     {
+        if (!fs::exists(filepath)) {
+            using namespace std::literals::string_literals;
+            throw std::runtime_error(u8"Could not open file "s + filepath.string());
+        }
     }
 
 

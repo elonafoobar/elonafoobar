@@ -124,7 +124,21 @@ void check_double_launching()
     return;
 }
 
+void initialize_directories()
+{
+	const boost::filesystem::path paths[] = {
+		filesystem::dir::save(),
+		filesystem::dir::tmp()
+	};
 
+	for (const auto& path : paths)
+	{
+		if (!fs::exists(path)) {
+			fs::create_directory(path);
+		}
+	}
+
+}
 
 void load_character_sprite()
 {
@@ -163,6 +177,8 @@ void initialize_elona()
     backup_config_files();
 
     check_double_launching();
+
+    initialize_directories();
 
     SDIM3(s, 160, 40);
     DIM2(p, 100);
@@ -235,7 +251,7 @@ void initialize_elona()
     DIM2(mdatatmp, 100);
     DIM2(mdata, 100);
     SDIM3(mdatan, 20, 2);
-    SDIM4(cdatan, 40, 10, 245);
+    SDIM4(cdatan, 40, 10, ELONA_MAX_CHARACTERS);
     SDIM2(s1, 1000);
     DIM2(spell, 200);
     DIM2(spact, 500);

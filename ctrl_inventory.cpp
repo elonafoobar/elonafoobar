@@ -1660,7 +1660,7 @@ label_2061_internal:
                     {
                         f = 0;
                     }
-                    if (inv[ci].id == 16 || inv[ci].id == 245)
+                    if (inv[ci].id == 16 || inv[ci].id == ELONA_MAX_CHARACTERS)
                     {
                         f = 0;
                     }

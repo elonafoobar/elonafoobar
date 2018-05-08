@@ -203,7 +203,7 @@ void character::clear_flags()
 
 
 cdata_t::cdata_t()
-    : storage(245)
+    : storage(ELONA_MAX_CHARACTERS)
 {
 }
 

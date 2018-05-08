@@ -5791,7 +5791,7 @@ void cs_list(
 
 void go_hostile()
 {
-    for (int cc = 57; cc < 245; ++cc)
+    for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS; ++cc)
     {
         if (cdata[cc].character_role == 14 || cdata[cc].character_role == 16
             || cdata[cc].character_role == 1010)
@@ -7967,7 +7967,7 @@ void arrayfile_read(const std::string& fmode_str, const fs::path& filepath)
         else
             lines.resize(188 * 10);
         auto itr = std::begin(lines);
-        for (int i = 57; i < 245; ++i)
+        for (int i = ELONA_MAX_PARTY_CHARACTERS; i < ELONA_MAX_CHARACTERS; ++i)
         {
             for (int j = 0; j < 10; ++j)
             {
@@ -8040,7 +8040,7 @@ void arrayfile_write(const std::string& fmode_str, const fs::path& filepath)
     }
     else if (fmode_str == u8"cdatan2"s)
     {
-        for (int i = 57; i < 245; ++i)
+        for (int i = ELONA_MAX_PARTY_CHARACTERS; i < ELONA_MAX_CHARACTERS; ++i)
         {
             for (int j = 0; j < 10; ++j)
             {
@@ -9842,7 +9842,7 @@ int customtalk(int cc, int talk_type)
 int findchara(int prm_766)
 {
     p_at_m117 = 0;
-    for (int cnt = 57; cnt < 245; ++cnt)
+    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         if (cdata[cnt].state != 2)
         {
@@ -9953,7 +9953,7 @@ void modimp(int cc, int delta)
 
 void put_questtarget()
 {
-    for (int cnt = 57; cnt < 245; ++cnt)
+    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         if (cdata[cnt].state == 1)
         {
@@ -9970,7 +9970,7 @@ int exist_questtarget()
 {
     int f_at_m119 = 0;
     f_at_m119 = 0;
-    for (int cnt = 57; cnt < 245; ++cnt)
+    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         if (cdata[cnt].state == 1)
         {
@@ -10096,7 +10096,7 @@ void check_quest()
         if (gdata(71) == 1)
         {
             p_at_m119 = 0;
-            for (int cnt = 57; cnt < 245; ++cnt)
+            for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
             {
                 if (cdata[cnt].state == 1)
                 {
@@ -10302,7 +10302,7 @@ void make_sound(
     int prm_781,
     int prm_782)
 {
-    for (int cnt = 1; cnt < 245; ++cnt)
+    for (int cnt = 1; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {
@@ -10355,7 +10355,7 @@ void make_sound(
 int get_freechara()
 {
     f_at_m125 = -1;
-    for (int cnt = 57; cnt < 245; ++cnt)
+    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         if (cdata[cnt].state == 0)
         {
@@ -10426,7 +10426,7 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
     if (tc_at_m125 == -1)
     {
         f_at_m125 = 0;
-        for (int cnt = 57; cnt < 245; ++cnt)
+        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].state == 0)
             {
@@ -10439,7 +10439,7 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
         {
             for (int cnt = 0;; ++cnt)
             {
-                tc_at_m125 = 57 + rnd(188);
+                tc_at_m125 = ELONA_MAX_PARTY_CHARACTERS + rnd(ELONA_MAX_OTHER_CHARACTERS);
                 if (cdata[cnt].state == 1)
                 {
                     if (cdata[cnt].character_role == 0)
@@ -10622,7 +10622,7 @@ void hostileaction(int prm_787, int prm_788)
         {
             txtef(3);
             txt(lang(u8"家畜は興奮した！"s, u8"Animals get excited!"s));
-            for (int cnt = 0; cnt < 245; ++cnt)
+            for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
             {
                 if (cdata[cnt].is_livestock() == 1)
                 {
@@ -10655,7 +10655,7 @@ void rowact_check(int prm_789)
 
 void rowact_item(int prm_790)
 {
-    for (int cnt = 0; cnt < 245; ++cnt)
+    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {
@@ -10687,7 +10687,7 @@ void wake_up()
 {
     if (gdata_hour >= 7 && gdata_hour <= 22)
     {
-        for (int cnt = 57; cnt < 245; ++cnt)
+        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].sleep > 0)
             {
@@ -10705,7 +10705,7 @@ void wake_up()
 
 void incognitobegin()
 {
-    for (int cnt = 16; cnt < 245; ++cnt)
+    for (int cnt = 16; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {
@@ -10736,7 +10736,7 @@ void incognitobegin()
 
 void incognitoend()
 {
-    for (int cnt = 16; cnt < 245; ++cnt)
+    for (int cnt = 16; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {
@@ -12961,7 +12961,7 @@ int copy_chara(int prm_848)
     int y_at_m139 = 0;
     int x_at_m139 = 0;
     c_at_m139 = 0;
-    for (int cnt = 57; cnt < 245; ++cnt)
+    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         if (cdata[cnt].state == 0)
         {
@@ -14664,7 +14664,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         {
             txt(lang(
                 u8"死の宣告は無効になった。"s, u8"The death word breaks."s));
-            for (int cnt = 0; cnt < 245; ++cnt)
+            for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
             {
                 if (cdata[cnt].state != 1)
                 {
@@ -17066,7 +17066,7 @@ void label_1433()
     screendrawhack = 3;
     if (gdata_current_map == 40)
     {
-        for (int cnt = 0; cnt < 245; ++cnt)
+        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].state != 1)
             {
@@ -18632,7 +18632,7 @@ void refresh_character(int cc)
     {
         cdata[cc].max_hp = 1;
     }
-    if (cc >= 57 || 0)
+    if (cc >= ELONA_MAX_PARTY_CHARACTERS || false)
     {
         cdata[cc].dv = cdata[cc].level / 2
             + cdata[cc].dv * cdata[cc].dv_correction_value / 100
@@ -20546,7 +20546,7 @@ int do_create_character()
 {
     if (rc == -1)
     {
-        for (int cnt = 57; cnt < 245; ++cnt)
+        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].state == 0)
             {
@@ -22274,7 +22274,7 @@ void label_1576()
         + gdata_year * 24 * 30 * 12;
     for (int cnt = 0; cnt < 246; ++cnt)
     {
-        if (cnt == 245)
+        if (cnt == ELONA_MAX_CHARACTERS)
         {
             p = -1;
         }
@@ -28936,7 +28936,7 @@ void use_house_board()
     if (gdata_current_map == 7)
     {
         p = 0;
-        for (int cnt = 57; cnt < 245; ++cnt)
+        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].state == 1 || cdata[cnt].state == 2)
             {
@@ -29270,7 +29270,7 @@ void use_house_board()
     case 6:
         txtnew();
         p = 0;
-        for (int cnt = 57; cnt < 245; ++cnt)
+        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].state == 1 || cdata[cnt].state == 2)
             {
@@ -29360,7 +29360,7 @@ void use_house_board()
                 randomize();
                 cdata[rc].shop_rank = rnd(15) + 1;
             }
-            for (int cnt = 57; cnt < 245; ++cnt)
+            for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
             {
                 if (cnt == rc)
                 {
@@ -29399,7 +29399,7 @@ void use_house_board()
                 snd(64);
             }
         }
-        for (int cnt = 0; cnt < 245; ++cnt)
+        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].state == 10)
             {
@@ -29659,7 +29659,7 @@ void show_shop_log()
         }
         if (area == gdata_current_map)
         {
-            for (int cnt = 0; cnt < 245; ++cnt)
+            for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
             {
                 if (cdata[cnt].state != 1)
                 {
@@ -30059,7 +30059,7 @@ void update_ranch()
 {
     worker = getworker(gdata_current_map);
     livestock = 0;
-    for (int cnt = 0; cnt < 245; ++cnt)
+    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {
@@ -30112,7 +30112,7 @@ void update_ranch()
         }
     label_1734_internal:
         egg = 0;
-        for (int cnt = 0; cnt < 245; ++cnt)
+        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].state != 1)
             {
@@ -30875,7 +30875,7 @@ void exit_map()
         {
             ctrl_file(file_operation_t::_11);
         }
-        for (int cnt = 57; cnt < 245; ++cnt)
+        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].state != 0)
             {
@@ -30993,7 +30993,7 @@ void label_1745()
                     }
                 }
             }
-            for (int cnt = 57; cnt < 245; ++cnt)
+            for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
             {
                 rc = cnt;
                 label_1539();
@@ -31053,7 +31053,7 @@ void label_1745()
         }
         if (adata(16, gdata_current_map) == 7)
         {
-            for (int cnt = 57; cnt < 245; ++cnt)
+            for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
             {
                 if (cdata[cnt].state != 1)
                 {
@@ -31097,7 +31097,7 @@ void label_1745()
             }
             if (mdata(6) == 3 || mdata(6) == 2 || gdata_current_map == 7)
             {
-                for (int cnt = 57; cnt < 245; ++cnt)
+                for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
                 {
                     if (cdata[cnt].state != 1)
                     {
@@ -32542,7 +32542,7 @@ void label_1754()
         else if (mdata(9) == 1000000)
         {
             mdata(9) = 10000;
-            for (int cnt = 0; cnt < 245; ++cnt)
+            for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
             {
                 cdata[cnt].turn_cost = 0;
             }
@@ -32953,7 +32953,7 @@ void label_1755()
     }
     else
     {
-        for (int cnt = 57; cnt < 245; ++cnt)
+        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].only_christmas() == 1)
             {
@@ -36157,7 +36157,7 @@ label_1894_internal:
         for (int cnt = 0; cnt < 20; ++cnt)
         {
             p = rnd(gdata_other_character_count + 1) + 57;
-            if (p >= 245)
+            if (p >= ELONA_MAX_CHARACTERS)
             {
                 --cnt;
                 continue;
@@ -41746,7 +41746,7 @@ int label_1980()
     cs = 0;
     cc = 0;
     cs_bk = -1;
-    for (int cnt = 0; cnt < 245; ++cnt)
+    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         if (allyctrl == 2)
         {
@@ -46680,7 +46680,7 @@ void label_2076()
     listmax = 0;
     for (int cnt = 0; cnt < 2; ++cnt)
     {
-        for (int cnt = 0; cnt < 245; ++cnt)
+        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].state != 1)
             {
@@ -47419,7 +47419,7 @@ void remove_card_and_figures()
 
 void label_2088()
 {
-    for (int cnt = 0; cnt < 245; ++cnt)
+    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         if (cdata[cnt].state == 1)
         {
@@ -47630,7 +47630,7 @@ void load_gene_files()
     ctrl_file(file_operation_t::_15);
     DIM2(spell, 200);
     DIM2(spact, 500);
-    for (int cnt = 0; cnt < 245; ++cnt)
+    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         cdata[cnt].state = 0;
     }
@@ -47676,7 +47676,7 @@ void load_gene_files()
         inv[cnt].body_part = 0;
         item_copy(cnt, inv_getfreeid(-1));
     }
-    for (int cnt = 0; cnt < 245; ++cnt)
+    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         del_chara(cnt);
     }
@@ -48926,7 +48926,7 @@ void label_2146()
         {
             gold = 0;
             make_sound(cdata[cc].position.x, cdata[cc].position.y, 5, 1, 1, cc);
-            for (int cnt = 0; cnt < 245; ++cnt)
+            for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
             {
                 if (cdata[cnt].state != 1)
                 {
@@ -49804,7 +49804,7 @@ void continuous_action_others()
                 i = i * 5 / 10;
             }
             make_sound(cdata[0].position.x, cdata[0].position.y, 5, 8);
-            for (int cnt = 16; cnt < 245; ++cnt)
+            for (int cnt = 16; cnt < ELONA_MAX_CHARACTERS; ++cnt)
             {
                 if (cdata[cnt].state != 1)
                 {
@@ -50165,7 +50165,7 @@ void label_2151()
     }
     gmode(2);
     cc = 0;
-    for (int cnt = 0; cnt < 57; ++cnt)
+    for (int cnt = 0; cnt < ELONA_MAX_PARTY_CHARACTERS; ++cnt)
     {
         tc = cnt;
         cdata[tc].wet = 0;
@@ -52206,7 +52206,7 @@ int label_2174()
         {
             if (cdata[cc].relationship == -3)
             {
-                for (int cnt = 0; cnt < 57; ++cnt)
+                for (int cnt = 0; cnt < ELONA_MAX_PARTY_CHARACTERS; ++cnt)
                 {
                     if (cdata[cnt].state == 1)
                     {
@@ -52644,7 +52644,7 @@ void do_throw_command()
                 u8"It hits "s + name(tc) + u8"!"s));
             if (inv[ci].id == 685)
             {
-                if (tc < 57 || cdata[tc].character_role != 0
+                if (tc < ELONA_MAX_PARTY_CHARACTERS || cdata[tc].character_role != 0
                     || cdata[tc].quality == 6
                     || cdata[tc].is_lord_of_dungeon() == 1)
                 {
@@ -63190,7 +63190,7 @@ void supply_new_equipment()
 
 void label_2669()
 {
-    for (int cnt = 57; cnt < 245; ++cnt)
+    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         if (cdata[cnt].state == 0)
         {
@@ -63319,7 +63319,7 @@ int label_2672()
         i = -1;
         for (int cnt = 0; cnt < 300; ++cnt)
         {
-            int n = rnd(188) + 57;
+            int n = rnd(ELONA_MAX_OTHER_CHARACTERS) + ELONA_MAX_PARTY_CHARACTERS;
             if (n == qdata(0, rq))
             {
                 continue;
@@ -65487,7 +65487,7 @@ label_2692_internal:
         {
             if (rnd(10) == 0)
             {
-                for (int cnt = 57; cnt < 97; ++cnt)
+                for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < 97; ++cnt)
                 {
                     if (cdata[cnt].state != 1)
                     {
@@ -67540,7 +67540,7 @@ void turn_begin()
     }
     if (update_turn_cost)
     {
-        for (int cnt = 0; cnt < 245; ++cnt)
+        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].state != 1)
             {
@@ -68026,25 +68026,25 @@ void pass_one_turn(bool label_2738_flg)
     int ef = 0;
     if (label_2738_flg)
     {
-        if (ct >= 245)
+		while (ct < ELONA_MAX_CHARACTERS) {
+			if (cdata[ct].state != 1)
+			{
+				++ct;
+				continue;
+			}
+			if (cdata[ct].turn_cost >= mdata(9))
+			{
+				cdata[ct].turn_cost -= mdata(9);
+				break;
+			}
+			else
+			{
+				++ct;
+			}
+		}
+        if (ct >= ELONA_MAX_CHARACTERS)
         {
-            throw elona_turn_sequence{};
-        }
-        if (cdata[ct].state != 1)
-        {
-            ++ct;
-            pass_one_turn();
-            return;
-        }
-        if (cdata[ct].turn_cost >= mdata(9))
-        {
-            cdata[ct].turn_cost -= mdata(9);
-        }
-        else
-        {
-            ++ct;
-            pass_one_turn();
-            return;
+			throw elona_turn_sequence{};
         }
     }
     cc = ct;
@@ -68328,7 +68328,7 @@ void pass_one_turn(bool label_2738_flg)
         {
             if (cc != 0)
             {
-                for (int cnt = 0; cnt < 245; ++cnt)
+                for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
                 {
                     if (cdata[cnt].state != 1)
                     {
@@ -68813,8 +68813,7 @@ void pc_turn(bool label_2747_flg)
         if (autosave)
         {
             autosave = 0;
-            if (gdata_wizard == 0 && gdata_current_map != 40
-                && config::instance().autosave)
+            if (gdata_wizard == 0 && gdata_current_map != 40)
             {
                 snd(44);
                 save_game();
