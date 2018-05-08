@@ -92,8 +92,9 @@ contents in this repository. Note that images, sounds and fonts are not included
 * cmake/FindXXX.cmake: see cmake/LICENSE.
 
 
+
 <!-- Badges -->
-[appveyor-build-status]: https://ci.appveyor.com/project/ElonaFoobar/ElonaFoobar/branch/develop
-[appveyor-build-status-svg]: https://ci.appveyor.com/api/projects/status/202ruwla6pyqklfv?svg=true
+[appveyor-build-status]: https://ci.appveyor.com/project/ki-foobar/elonafoobar-onee4/branch/develop
+[appveyor-build-status-svg]: https://ci.appveyor.com/api/projects/status/jqhbtdkx86lool4t/branch/develop?svg=true
 [travis-build-status]: https://travis-ci.org/ElonaFoobar/ElonaFoobar?branch=develop
 [travis-build-status-svg]: https://travis-ci.org/ElonaFoobar/ElonaFoobar.svg?branch=develop
