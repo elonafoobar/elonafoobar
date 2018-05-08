@@ -1,4 +1,5 @@
 #include "ability.hpp"
+#include "access_item_db.hpp"
 #include "animation.hpp"
 #include "autopick.hpp"
 #include "buff.hpp"
@@ -22,6 +23,7 @@
 #include "log.hpp"
 #include "macro.hpp"
 #include "main.hpp"
+#include "magic.hpp"
 #include "map.hpp"
 #include "race.hpp"
 #include "random.hpp"
@@ -177,7 +179,7 @@ position_t gmes(
 
 
 
-int ask_direction_to_close()
+optional<std::tuple<int, int>> ask_direction_to_close()
 {
     int number_of_doors{};
     position_t pos;
@@ -201,7 +203,7 @@ int ask_direction_to_close()
     {
         x = pos.x;
         y = pos.y;
-        return 1;
+        return std::make_tuple(x, y);
     }
 
     txt(lang(u8"何を閉める？"s, u8"Which door do you want to close? "s));
@@ -608,7 +610,7 @@ int movy = 0;
 int digx = 0;
 int digy = 0;
 int npccostmp = 0;
-int noeffect = 0;
+//int noeffect = 0;
 int inumbk = 0;
 int dirsub = 0;
 int ri = 0;
@@ -5272,7 +5274,7 @@ void change_item_material()
     }
     originalvalue = inv[ci].value * 100 / the_item_material_db[p]->value;
     dbid = inv[ci].id;
-    access_item_db(10);
+    access_item_db(item_db_t::fixmaterial);
     inv[ci].value = originalvalue;
     if (fixmaterial != 0)
     {
@@ -17931,7 +17933,7 @@ void gain_level(int cc)
     {
         label_1455(cc);
     }
-    label_1456(cc);
+    refresh_required_exp(cc);
     refresh_character(cc);
 }
 
@@ -17959,7 +17961,7 @@ void label_1455(int cc)
 
 
 
-void label_1456(int cc)
+void refresh_required_exp(int cc)
 {
     cdata[cc].required_experience = clamp(cdata[cc].level, 1, 200)
             * (clamp(cdata[cc].level, 1, 200) + 1)
@@ -20642,7 +20644,7 @@ void initialize_character()
         - rnd((cdata[rc].height / 5 + 1));
     cdata[rc].weight =
         cdata[rc].height * cdata[rc].height * (rnd(6) + 18) / 10000;
-    label_1456(rc);
+    refresh_required_exp(rc);
     label_1512(rc);
     if (cdata[rc].portrait == 0)
     {
@@ -22790,8 +22792,8 @@ int do_create_item(int slot, int x, int y)
         dbid = 501;
     }
 
-    access_item_db(3);
-    access_item_db(2);
+    access_item_db(item_db_t::initialize);
+    access_item_db(item_db_t::charge_level);
 
     inv[ci].color = icolref(inv[ci].id);
     if (inv[ci].color == 1)
@@ -41597,7 +41599,6 @@ label_1978_internal:
         tc = qdata(0, p);
         rq = p;
         client = tc;
-        efid = 619;
         magic(619, cc, tc);
         tc = client;
         questteleport = 1;
@@ -42210,10 +42211,10 @@ void do_short_cut()
         ctrl_inventory();
         return;
     }
-    efid = gdata(40 + sc);
+    int efid = gdata(40 + sc);
     if (efid >= 300 && efid < 400)
     {
-        label_2006();
+        label_2006(efid);
         return;
     }
     if (efid >= 600)
@@ -42239,7 +42240,7 @@ void do_short_cut()
                 pc_turn(false);
             }
         }
-        label_2006();
+        label_2006(efid);
         return;
     }
     if (efid >= 400)
@@ -42263,7 +42264,7 @@ void do_short_cut()
             update_screen();
             pc_turn(false);
         }
-        label_2026();
+        do_cast_spell_on_self(efid);
         return;
     }
     pc_turn(false);
@@ -42275,13 +42276,15 @@ void do_dig_command()
 {
     txt(lang(
         u8"どの方向を掘る？ "s, u8"Which direction do you want to dig? "s));
-    int stat = ask_direction();
-    if (stat == 0)
+    optional<std::tuple<int, int>> dir = ask_direction();
+    if (!dir)
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
         pc_turn(false);
     }
+    int x = std::get<0>(*dir);
+    int y = std::get<1>(*dir);
     refx = x;
     refy = y;
     tlocx = x;
@@ -42316,22 +42319,24 @@ void label_2005()
     txt(lang(
         u8"どの方向に体当たりする？ "s,
         u8"Which direction do you want to bash? "s));
-    int stat = ask_direction();
-    if (stat == 0)
+    optional<std::tuple<int, int>> dir = ask_direction();
+    if (!dir)
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
         pc_turn(false);
     }
-    label_2201();
+    int x = std::get<0>(*dir);
+    int y = std::get<1>(*dir);
+    do_bash(x, y);
     return;
 }
 
 
 
-void label_2006()
+void label_2006(int efid)
 {
-    int stat = label_2174();
+    int stat = label_2174(efid);
     if (stat == 0)
     {
         update_screen();
@@ -42477,10 +42482,9 @@ label_2009_internal:
     if (p != -1)
     {
         menucycle = 0;
-        efid = p;
         screenupdate = -1;
         update_screen();
-        label_2006();
+        label_2006(p);
         return;
     }
     if (key == u8"sc"s)
@@ -42578,13 +42582,15 @@ void do_give_command()
 {
     txt(lang(u8"どの方向に？ "s, u8"Which direction? "s));
     update_screen();
-    int stat = ask_direction();
-    if (stat == 0)
+    optional<std::tuple<int, int>> dir = ask_direction();
+    if (!dir)
     {
         txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
         pc_turn(false);
     }
+    int x = std::get<0>(*dir);
+    int y = std::get<1>(*dir);
     tc = map(x, y, 1);
     if (tc == 0)
     {
@@ -42627,13 +42633,15 @@ void do_interact_command()
 {
     txt(lang(
         u8"操作する対象の方向は？"s, u8"Choose the direction of the target."s));
-    int stat = ask_direction();
-    if (stat == 0)
+    optional<std::tuple<int, int>> dir = ask_direction();
+    if (!dir)
     {
         txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
         pc_turn(false);
     }
+    int x = std::get<0>(*dir);
+    int y = std::get<1>(*dir);
     tc = map(x, y, 1);
     if (tc == 0)
     {
@@ -43103,10 +43111,10 @@ label_2024_internal:
 
 
 
-void label_2026()
+void do_cast_spell_on_self(int efid)
 {
     tc = cc;
-    int stat = label_2167();
+    int stat = cast_spell(efid);
     if (stat == 0)
     {
         pc_turn(false);
@@ -43245,8 +43253,7 @@ label_2029_internal:
     if (p != -1)
     {
         menucycle = 0;
-        efid = p;
-        label_2026();
+        do_cast_spell_on_self(p);
         return;
     }
     if (key == u8"sc"s)
@@ -45048,7 +45055,7 @@ label_2041_internal:
 
 
 
-int label_2044()
+int do_customize_appearance()
 {
     create_pcpic(cc, true);
     snd(26);
@@ -45983,8 +45990,8 @@ void show_item_description()
     reftype = the_item_db[inv[ci].id]->category;
     getinheritance(ci, inhlist, inhmax);
     dbid = inv[ci].id;
-    access_item_db(2);
-    access_item_db(17);
+    access_item_db(item_db_t::charge_level);
+    access_item_db(item_db_t::identified);
     if (inv[ci].identification_state
         == identification_state_t::completely_identified)
     {
@@ -48175,7 +48182,7 @@ void initialize_fovmap_and_fovlist()
 
 
 
-int ask_direction()
+optional<std::tuple<int, int>> ask_direction()
 {
     snd(26);
     gsel(4);
@@ -48301,16 +48308,14 @@ label_2128_internal:
             x = cdata[0].position.x;
             y = cdata[0].position.y;
             keyhalt = 1;
-            return 0;
+            return none_t;
         }
         if (x == cdata[0].position.x && y == cdata[0].position.y)
         {
-            return 0;
+            return none_t;
         }
-        tlocx = x;
-        tlocy = y;
         keyhalt = 1;
-        return 1;
+        return std::make_tuple(x, y);
     }
     goto label_2128_internal;
 }
@@ -48365,7 +48370,7 @@ void label_2136()
 
 
 
-int efstatusfix(int doomed, int cursed, int none, int blessed)
+int efstatusfix(curse_state_t efstatus, int doomed, int cursed, int none, int blessed)
 {
     switch (efstatus)
     {
@@ -48647,7 +48652,7 @@ label_21451_internal:
                     label_2222();
                     snd(70);
                 }
-                efsource = 5;
+                efsource = efsource_t::trap;
                 if (is_in_fov(cc))
                 {
                     txt(lang(
@@ -48777,7 +48782,7 @@ label_21451_internal:
                     cell_featset(movx, movy, 0);
                     dmghp(cc, 100 + rnd(200), -1);
                 }
-                efsource = 0;
+                efsource = efsource_t::none;
             }
         }
     }
@@ -51159,7 +51164,7 @@ void label_2162()
 
 
 
-int decode_book()
+int decode_book(int efid, int efp)
 {
     int cibkread = 0;
     if (cdata[cc].continuous_action_id == 0)
@@ -51432,21 +51437,22 @@ int calcmagiccontrol(int prm_1076, int prm_1077)
 
 
 
-int drink_potion()
+int drink_potion(int efid, int efp)
 {
     tc = cc;
-    efsource = 4;
+    magic_data data(efid, cc, tc, efp);
+    data.efsource = efsource_t::potion;
     if (potionspill || potionthrow)
     {
         if (potionthrow)
         {
-            efp = efp * potionthrow / 100;
-            efstatus = inv[ci].curse_state;
+            data.efp = efp * potionthrow / 100;
+            data.efstatus = inv[ci].curse_state;
         }
     }
     else
     {
-        efstatus = inv[ci].curse_state;
+        data.efstatus = inv[ci].curse_state;
         if (is_in_fov(tc))
         {
             snd(17);
@@ -51456,7 +51462,7 @@ int drink_potion()
                     + u8"."s));
         }
     }
-    magic();
+    magic_result result = magic(data);
     if (potionspill || potionthrow)
     {
         potionspill = 0;
@@ -51464,7 +51470,7 @@ int drink_potion()
     }
     else
     {
-        if (obvious == 1)
+        if (result.obvious)
         {
             if (tc == 0)
             {
@@ -51546,8 +51552,7 @@ int drink_well()
         {
             if (rnd(2) == 0)
             {
-                efid = 1113;
-                magic();
+                magic(1113, cc, cc);
                 break;
             }
         }
@@ -51556,37 +51561,27 @@ int drink_well()
             p = rnd(5);
             if (p == 0)
             {
-                efid = 1112;
-                efp = 100;
-                magic();
+                magic(1112, cc, cc, 100);
                 break;
             }
             if (p == 1)
             {
-                efid = 1110;
-                efp = 100;
-                magic();
+                magic(1110, cc, cc, 100);
                 break;
             }
             if (p == 2)
             {
-                efid = 1111;
-                efp = 100;
-                magic();
+                magic(1111, cc, cc, 100);
                 break;
             }
             if (p == 3)
             {
-                efid = 1109;
-                efp = 100;
-                magic();
+                magic(1109, cc, cc, 100);
                 break;
             }
             if (p == 4)
             {
-                efid = 1108;
-                efp = 100;
-                magic();
+                magic(1108, cc, cc, 100);
                 break;
             }
         }
@@ -51644,14 +51639,12 @@ int drink_well()
         }
         if (p > 33)
         {
-            efid = 1113;
-            magic();
+            magic(1113, cc, cc);
             break;
         }
         if (p > 20)
         {
-            efid = 454;
-            magic();
+            magic(454, cc, cc);
             break;
         }
         if (p == 0)
@@ -51665,8 +51658,7 @@ int drink_well()
                 break;
             }
             ++gdata_wish_count;
-            efid = 441;
-            magic();
+            magic(441, cc, cc);
             break;
         }
         if (cc == 0)
@@ -51714,40 +51706,41 @@ int drink_well()
 int read_scroll()
 {
     tc = cc;
-    tlocx = cdata[cc].position.x;
-    tlocy = cdata[cc].position.y;
-    efstatus = inv[ci].curse_state;
-    efsource = 2;
-    if (cdata[cc].blind != 0)
+    magic_data data(efid, cc, tc, efp)
+    data.tlocx = cdata[data.cc].position.x;
+    data.tlocy = cdata[data.cc].position.y;
+    data.efstatus = inv[ci].curse_state;
+    data.efsource = efsource_t::scroll;
+    if (cdata[data.cc].blind != 0)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(data.cc))
         {
             txt(lang(
-                name(cc) + u8"は何も見えない。"s,
-                name(cc) + u8" can see nothing."s));
+                name(data.cc) + u8"は何も見えない。"s,
+                name(data.cc) + u8" can see nothing."s));
         }
-        efsource = 0;
+        efsource = efsource_t::none;
         return 0;
     }
-    if (cdata[cc].dimmed != 0 || cdata[cc].confused != 0)
+    if (cdata[data.cc].dimmed != 0 || cdata[data.cc].confused != 0)
     {
         if (rnd(4) != 0)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(data.cc))
             {
                 txt(lang(
-                    name(cc) + u8"はふらふらした。"s,
-                    name(cc) + u8" stagger"s + _s(cc) + u8"."s));
+                    name(data.cc) + u8"はふらふらした。"s,
+                    name(data.cc) + u8" stagger"s + _s(data.cc) + u8"."s));
             }
-            efsource = 0;
+            efsource = efsource_t::none;
             return 0;
         }
     }
-    if (is_in_fov(cc))
+    if (is_in_fov(data.cc))
     {
         txt(lang(
-            npcn(cc) + itemname(ci, 1) + u8"を読んだ。"s,
-            name(cc) + u8" read"s + _s(cc) + u8" "s + itemname(ci, 1)
+            npcn(data.cc) + itemname(ci, 1) + u8"を読んだ。"s,
+            name(data.cc) + u8" read"s + _s(data.cc) + u8" "s + itemname(ci, 1)
                 + u8"."s));
     }
     if (inv[ci].id != 621)
@@ -51761,12 +51754,12 @@ int read_scroll()
         {
             refresh_burden_state();
         }
-        skillexp(150, cc, 25, 2);
+        skillexp(150, data.cc, 25, 2);
     }
-    magic();
-    if (cc == 0)
+    magic_result result = magic(data);
+    if (data.cc == 0)
     {
-        if (obvious == 1)
+        if (result.obvious == 1)
         {
             item_identify(inv[ci], identification_state_t::partly_identified);
         }
@@ -51776,11 +51769,12 @@ int read_scroll()
 
 
 
-int label_2172()
+int zap_rod(int efid, int efp)
 {
+    magic_data data(efid, cc, tc, efp);
     if (inv[ci].count <= 0)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(data.cc))
         {
             txt(lang(
                 itemname(ci, 1) + u8"を振った。"s,
@@ -51789,24 +51783,24 @@ int label_2172()
         }
         return 0;
     }
-    efstatus = inv[ci].curse_state;
-    if (efstatus == curse_state_t::blessed)
+    data.efstatus = inv[ci].curse_state;
+    if (data.efstatus == curse_state_t::blessed)
     {
-        efstatus = curse_state_t::none;
+        data.efstatus = curse_state_t::none;
     }
-    efsource = 1;
-    int stat = label_2175();
+    data.efsource = efsource_t::rod;
+    int stat = query_magic_location();
     if (stat == 0)
     {
-        efsource = 0;
+        efsource = efsource_t::none;
         return 0;
     }
-    if (efid >= 400 && efid < 467)
+    if (data.efid >= 400 && data.efid < 467)
     {
-        if ((stat == 0 && the_ability_db[efid]->sdataref3 / 1000 * 1000 == 2000)
+        if ((stat == 0 && the_ability_db[data.efid]->sdataref3 / 1000 * 1000 == 2000)
             || noeffect == 1)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(data.cc))
             {
                 txt(lang(
                     itemname(ci, 1) + u8"を振った。"s,
@@ -51816,19 +51810,19 @@ int label_2172()
             goto label_2173_internal;
         }
     }
-    if (is_in_fov(cc))
+    if (is_in_fov(data.cc))
     {
         txt(lang(
             itemname(ci, 1) + u8"を振った。"s,
             u8"You zap "s + itemname(ci, 1) + u8"."s));
     }
-    efp = efp
-        * (100 + sdata(174, cc) * 10 + sdata(16, cc) / 2 + sdata(13, cc) / 2)
+    data.efp = data.efp
+        * (100 + sdata(174, data.cc) * 10 + sdata(16, data.cc) / 2 + sdata(13, data.cc) / 2)
         / 100;
-    if (efid >= 400 && efid < 467)
+    if (data.efid >= 400 && data.efid < 467)
     {
         f = 0;
-        int skill = sdata(174, cc) * 20 + 100;
+        int skill = sdata(174, data.cc) * 20 + 100;
         if (inv[ci].curse_state == curse_state_t::blessed)
         {
             skill = skill * 125 / 100;
@@ -51841,7 +51835,7 @@ int label_2172()
         {
             f = 1;
         }
-        if (rnd((the_ability_db[efid]->sdataref4 + 1)) / 2 <= skill)
+        if (rnd((the_ability_db[data.efid]->sdataref4 + 1)) / 2 <= skill)
         {
             f = 1;
         }
@@ -51854,27 +51848,27 @@ int label_2172()
     {
         f = 0;
     }
-    if (f == 1 || inv[ci].id == 290 || cc != 0)
+    if (f == 1 || inv[ci].id == 290 || data.cc != 0)
     {
-        magic();
-        if (cc == 0)
+        magic_result result = magic(data);
+        if (data.cc == 0)
         {
-            if (obvious == 1)
+            if (result.obvious == 1)
             {
                 item_identify(
                     inv[ci], identification_state_t::partly_identified);
             }
         }
-        label_1469(cc);
+        label_1469(data.cc);
     }
-    else if (is_in_fov(cc))
+    else if (is_in_fov(data.cc))
     {
         txt(lang(
-            name(cc) + u8"は杖をうまく使えなかった。"s,
-            name(cc) + u8" fail to use the power of the rod."s));
+            name(data.cc) + u8"は杖をうまく使えなかった。"s,
+            name(data.cc) + u8" fail to use the power of the rod."s));
     }
 label_2173_internal:
-    efsource = 0;
+    efsource = efsource_t::none;
     if (inv[ci].number == 0)
     {
         if (ci >= 5080)
@@ -51892,11 +51886,13 @@ label_2173_internal:
 
 int label_2174()
 {
-    if (efid == 646)
+    magic_data data(efid, cc, tc);
+    magic_result result = {};
+    if (data.efid == 646)
     {
         if (cdata[tc].is_sentenced_daeth() == 1)
         {
-            if (cdata[cc].relationship == -3)
+            if (cdata[data.cc].relationship == -3)
             {
                 for (int cnt = 0; cnt < ELONA_MAX_PARTY_CHARACTERS; ++cnt)
                 {
@@ -51904,43 +51900,45 @@ int label_2174()
                     {
                         if (cdata[cnt].relationship == 10)
                         {
-                            cdata[cc].enemy_id = cnt;
+                            cdata[data.cc].enemy_id = cnt;
                             break;
                         }
                     }
                 }
             }
-            return 0;
+            result.turn_passed = false;
+            return result;
         }
     }
     {
-        int stat = label_2175();
-        if (stat == 0)
+        result = query_magic_location(data);
+        if (!result.turn_passed)
         {
-            return 0;
+            return result;
         }
     }
-    if (the_ability_db[efid]->sdataref3 / 1000 * 1000 != 3000
-        && the_ability_db[efid]->sdataref3 / 1000 * 1000 != 10000)
+    if (the_ability_db[data.efid]->sdataref3 / 1000 * 1000 != 3000
+        && the_ability_db[data.efid]->sdataref3 / 1000 * 1000 != 10000)
     {
-        if (cdata[cc].confused != 0 || cdata[cc].blind != 0)
+        if (cdata[data.cc].confused != 0 || cdata[data.cc].blind != 0)
         {
             if (rnd(5) == 0)
             {
-                if (is_in_fov(cc))
+                if (is_in_fov(data.cc))
                 {
                     txt(lang(
-                        name(cc) + u8"は頭を振った。"s,
-                        name(cc) + u8" shake"s + _s(cc) + u8" "s + his(cc)
+                        name(data.cc) + u8"は頭を振った。"s,
+                        name(data.cc) + u8" shake"s + _s(data.cc) + u8" "s + his(data.cc)
                             + u8" head."s));
                 }
-                return 1;
+                result.turn_passed = true;
+                return result;
             }
         }
     }
-    if (efid >= 600)
+    if (data.efid >= 600)
     {
-        if (cc == 0)
+        if (data.cc == 0)
         {
             if (cdata[0].sp < 50)
             {
@@ -51949,46 +51947,42 @@ int label_2174()
                     txt(lang(
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
-                    dmgsp(0, the_ability_db[efid]->cost / 2 + 1);
-                    return 1;
+                    dmgsp(0, the_ability_db[data.efid]->cost / 2 + 1);
+                    result.turn_passed = true;
+                    return result;
                 }
             }
             dmgsp(
                 0,
-                rnd(the_ability_db[efid]->cost / 2 + 1)
-                    + the_ability_db[efid]->cost / 2 + 1);
-            skillexp(the_ability_db[efid]->related_basic_attribute, cc, 25);
+                rnd(the_ability_db[data.efid]->cost / 2 + 1)
+                    + the_ability_db[data.efid]->cost / 2 + 1);
+            skillexp(the_ability_db[data.efid]->related_basic_attribute, data.cc, 25);
         }
     }
-    efp = calcspellpower(efid, cc);
-    if (noeffect == 1)
+    data.efp = calcspellpower(data.efid, data.cc);
+    if (result.noeffect)
     {
-        if (efid != 300)
+        if (data.efid != 300)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-            return 1;
+            result.turn_passed = true;
+            return result;
         }
     }
-    {
-        int stat = magic();
-        if (stat == 0)
-        {
-            return 0;
-        }
-    }
-    return 1;
+    result = magic(data);
+    return result;
 }
 
 
 
 
-int label_2167()
+int cast_spell(int efid)
 {
     int spellbk = 0;
     spellbk = efid;
     ccbk = cc;
-    int stat = label_2168();
-    if (stat == 1)
+    magic_result result = do_cast_spell(int efid);
+    if (result.turn_passed)
     {
         cc = ccbk;
         r2 = spellbk;
@@ -51999,9 +51993,10 @@ int label_2167()
 }
 
 // TODO clean up
-magic_result label_2168()
+magic_result do_cast_spell(int efid)
 {
     magic_data data = {};
+    magic_result result = {};
     int mp = 0;
     data.efid = efid;
     data.cc = cc;
@@ -52021,18 +52016,18 @@ magic_result label_2168()
             if (rtval != 0)
             {
                 update_screen();
-                efsource = 0;
+                efsource = efsource::none;
                 return 0;
             }
         }
         screenupdate = -1;
         update_screen();
     }
-    int stat = label_2175(data, result);
-    if (stat == 0)
+    result = query_magic_location(data);
+    if (!result.turn_passed)
     {
         efsource = efsource_t::none;
-        return 0;
+        return result;
     }
     if (data.cc != 0)
     {
@@ -52041,12 +52036,12 @@ magic_result label_2168()
             if (cdata[data.cc].relationship == 10 || gdata_current_map == 40)
             {
                 efsource = efsource_t::none;
-                return 0;
+                return result;
             }
             if (gdata_play_turns % 10 > 4)
             {
                 efsource = efsource_t::none;
-                return 0;
+                return result;
             }
         }
     }
@@ -52072,7 +52067,8 @@ magic_result label_2168()
         if (cdata[data.cc].state != 1)
         {
             efsource = efsource_t::none;
-            return 1;
+            result.turn_passed = true;
+            return result;
         }
     }
     if (cdata[data.cc].confused != 0 || cdata[data.cc].dimmed != 0)
@@ -52089,7 +52085,8 @@ magic_result label_2168()
         if (stat == 0)
         {
             efsource = efsource_t::none;
-            return 1;
+            result.turn_passed = 1;
+            return result;
         }
     }
     else if (is_in_fov(data.cc))
@@ -52132,7 +52129,8 @@ magic_result label_2168()
                 u8"The mist of silence interrupts a spell."s));
         }
         efsource = efsource_t::none;
-        return 1;
+        result.turn_passed = true;
+        return result;
     }
     if (rnd(100) >= calcspellfail(data.efid, data.cc))
     {
@@ -52144,13 +52142,15 @@ magic_result label_2168()
             play_animation(8);
         }
         efsource = efsource_t::none;
-        return 1;
+        result.turn_passed = true;
+        return result;
     }
     if (noeffect == 1)
     {
         txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
         efsource = efsource_t::none;
-        return 1;
+        result.turn_passed = true;
+        return result;
     }
     data.efp = calcspellpower(data.efid, data.cc);
     p = encfind(data.cc, 34);
@@ -52190,18 +52190,18 @@ magic_result label_2168()
     }
     else
     {
-        magic(data);
+        result = magic(data);
     }
     // TODO return result
-    return 1;
+    result.turn_passed = true;
+    return result;
 }
 
 
 
-// TODO return magic_result
-int label_2175(magic_data& data, magic_result& result)
+magic_result query_magic_location(magic_data& data)
 {
-    noeffect = 0;
+    magic_result result { true, true, false, true, 0 }
     if (data.efid > 661)
     {
         data.tc = data.cc;
@@ -52231,18 +52231,19 @@ int label_2175(magic_data& data, magic_result& result)
             txt(lang(u8"どの方向？"s, u8"Which direction?"s));
             update_screen();
             // TODO return tlocx, tlocy
-            int stat = ask_direction();
-            data.tlocx = tlocx;
-            data.tlocy = tlocy;
-            if (stat == 0)
+            optional<std::tuple<int, int>> dir = ask_direction();
+            if (!dir)
             {
-                return 0;
+                result.turn_passed = false;
+                return result;
             }
+            data.tlocx = std::get<0>(*dir);
+            data.tlocy = std::get<1>(*dir);
             if (map(data.tlocx, data.tlocy, 1) == 0)
             {
-                noeffect = 1;
-                result.obvious = 0;
-                return 1;
+                result.noeffect = true;
+                result.obvious = false;
+                return result;
             }
             data.tc = map(data.tlocx, data.tlocy, 1) - 1;
         }
@@ -52418,13 +52419,15 @@ int label_2175(magic_data& data, magic_result& result)
                     u8"Which direction do you want to zap the wand? "s));
             }
             update_screen();
-            int stat = ask_direction();
-            if (stat == 0)
+            optional<std::tuple<int, int>> dir = ask_direction();
+            if (!dir)
             {
                 txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
                 result.obvious = 0;
                 return 0;
             }
+            data.tlocx = std::get<0>(*dir);
+            data.tlocy = std::get<1>(*dir);
         }
     }
     return 1;
@@ -52452,7 +52455,7 @@ void label_2188()
 
 
 
-void do_throw_command()
+void do_throw_command(int tlocx, int tlocy)
 {
     int ccthrowpotion = 0;
     if (is_in_fov(cc))
@@ -52663,7 +52666,7 @@ void do_throw_command()
                 potionthrow = 100;
                 cc = tc;
                 dbid = inv[ci].id;
-                access_item_db(15);
+                access_item_db(item_db_t::drink);
                 cc = ccthrowpotion;
                 turn_end();
                 return;
@@ -52730,16 +52733,16 @@ void do_throw_command()
                 turn_end();
                 return;
             }
-            efp = 50 + sdata(111, cc) * 10;
+            int effect_power = 50 + sdata(111, cc) * 10;
             if (inv[ci].id == 392)
             {
-                addmef(tlocx, tlocy, 3, 19, rnd(15) + 5, efp, cc);
+                addmef(tlocx, tlocy, 3, 19, rnd(15) + 5, effect_power, cc);
                 turn_end();
                 return;
             }
             if (inv[ci].id == 577)
             {
-                addmef(tlocx, tlocy, 5, 24, rnd(15) + 25, efp, cc);
+                addmef(tlocx, tlocy, 5, 24, rnd(15) + 25, effect_power, cc);
                 mapitem_fire(tlocx, tlocy);
                 turn_end();
                 return;
@@ -52750,7 +52753,7 @@ void do_throw_command()
                 6,
                 27,
                 -1,
-                efp,
+                effect_power,
                 cc,
                 inv[ci].id,
                 static_cast<int>(inv[ci].curse_state), // TODO
@@ -52908,14 +52911,14 @@ int pick_up_item()
                 if (inv[ci].count > 0)
                 {
                     dbid = inv[ci].id;
-                    access_item_db(14);
+                    item_db_result result = access_item_db(item_db_t::zap);
                     txt(lang(
                         u8"あなたは"s + itemname(ci)
                             + u8"から魔力を吸い取った。"s,
                         u8"You absorb magic from "s + itemname(ci) + u8"."s));
-                    if (efid >= 400 && efid < 467)
+                    if (result.efid >= 400 && result.efid < 467)
                     {
-                        spell(efid - 400) += inv[ci].count * 5 * inv[ci].number;
+                        spell(result.efid - 400) += inv[ci].count * 5 * inv[ci].number;
                     }
                     else
                     {
@@ -53314,10 +53317,9 @@ void do_read_commad()
             return;
         }
     }
-    efid = 0;
     dbid = inv[ci].id;
-    access_item_db(13);
-    if (efid == 1115)
+    magic_data data = access_item_db(item_db_t::read);
+    if (data.efid == 1115)
     {
         build_new_building();
         return;
@@ -53372,7 +53374,7 @@ void do_eat_command()
 void do_drink_command()
 {
     dbid = inv[ci].id;
-    access_item_db(15);
+    access_item_db(item_db_t::drink);
     turn_end();
     return;
 }
@@ -53382,8 +53384,8 @@ void do_drink_command()
 void do_zap_command()
 {
     dbid = inv[ci].id;
-    access_item_db(14);
-    int stat = label_2172();
+    item_db_result result = access_item_db(item_db_t::zap);
+    int stat = zap_rod(result.efid, result.efp);
     if (stat == 0)
     {
         update_screen();
@@ -53395,7 +53397,7 @@ void do_zap_command()
 
 
 
-void label_2201()
+void do_bash(int x, int y)
 {
     if (map(x, y, 5) != 0)
     {
@@ -53556,17 +53558,11 @@ void label_2201()
                 }
                 if (rnd(4) == 0)
                 {
-                    tc = cc;
-                    efid = 1109;
-                    efp = 200;
-                    magic();
+                    magic(1109, cc, cc, 200);
                 }
                 if (rnd(3) == 0)
                 {
-                    tc = cc;
-                    efid = 1110;
-                    efp = 200;
-                    magic();
+                    magic(1110, cc, cc, 200);
                 }
                 if (rnd(3) == 0)
                 {
@@ -53928,7 +53924,7 @@ void label_2205()
         {
             x = dx;
             y = dy;
-            label_2201();
+            do_bash(x, y);
             return;
         }
     }
@@ -55068,11 +55064,9 @@ void open_box()
     ri = ci;
     if (inv[ri].id == 394)
     {
-        tc = cc;
-        efid = 1117;
-        efp = 100 + inv[ri].param1 * 10;
+        int power = 100 + inv[ri].param1 * 10;
         inv[ri].param1 = 0;
-        magic();
+        magic(1117, cc, cc, power);
         return;
     }
     p = 3 + rnd(5);
@@ -55282,10 +55276,7 @@ void open_new_year_gift()
                 u8"中には呪いの手紙が入っていた。"s,
                 u8"You find a cursed letter inside."s));
         }
-        efid = 1114;
-        efp = 1000;
-        tc = 0;
-        magic();
+        magic(1114, cc, 0, 1000);
         return;
     }
     if (inv[ri].param3 < 200)
@@ -55489,13 +55480,15 @@ void try_to_open_locked_door()
 
 void do_close_command()
 {
-    int stat = ask_direction_to_close();
-    if (stat == 0)
+    optional<std::tuple<int, int>> dir = ask_direction_to_close();
+    if (!dir)
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
         pc_turn(false);
     }
+    int x = std::get<0>(*dir);
+    int y = std::get<1>(*dir);
     cell_featread(x, y);
     if (feat(1) != 20)
     {
@@ -55625,11 +55618,10 @@ int label_2217()
     }
     if (ammoproc == 1)
     {
-        tlocx = ammox;
-        tlocy = ammoy;
-        efid = 460;
-        efp = sdata(attackskill, cc) * 8 + 10;
-        magic();
+        magic_data data(460, cc, tc, sdata(attackskill, cc) * 8 + 10);
+        data.tlocx = ammox;
+        data.tlocy = ammoy;
+        magic(data);
     }
     attackvar = 0;
     ammoproc = -1;
@@ -56213,9 +56205,9 @@ label_22191_internal:
                 }
                 if (attackdmg > cdata[tc].max_hp / 10)
                 {
-                    cc = tc;
-                    tlocx = cdata[cc].position.x;
-                    tlocy = cdata[cc].position.y;
+                    magic_data data(455, cc, cc);
+                    data.tlocx = cdata[cc].position.x;
+                    data.tlocy = cdata[cc].position.y;
                     if (p == 63)
                     {
                         if (is_in_fov(tc))
@@ -56225,9 +56217,8 @@ label_22191_internal:
                                 u8"酸が飛び散った。"s,
                                 u8"Acids spread over the ground."s));
                         }
-                        efid = 455;
-                        efp = cdata[tc].damage_reaction_info / 1000;
-                        magic();
+                        data.efp = cdata[tc].damage_reaction_info / 1000;
+                        magic(data);
                         break;
                     }
                 }
@@ -56477,14 +56468,14 @@ void label_2220()
                 }
                 p = encprocref(5, enc);
                 enc = encprocref(0, enc);
-                tlocx = cdata[tc].position.x;
-                tlocy = cdata[tc].position.y;
                 if (rnd(100) < p)
                 {
-                    efid = enc;
-                    efp = inv[cw].enchantments[cnt].power
-                        + sdata(attackskill, cc) * 10;
-                    magic();
+                    magic_data data(enc, cc, tc,
+                                    inv[cw].enchantments[cnt].power
+                                    + sdata(attackskill, cc) * 10);
+                    data.tlocx = cdata[data.tc].position.x;
+                    data.tlocy = cdata[data.tc].position.y;
+                    magic(data);
                 }
                 tc = tcbk;
                 continue;
@@ -57363,10 +57354,12 @@ void do_use_command()
     case 19:
         txt(lang(u8"誰を対象にする？"s, u8"Make up who?"s));
         {
-            int stat = ask_direction();
+            optional<std::tuple<int, int>> dir = ask_direction();
             f = 0;
-            if (stat != 0)
+            if (dir)
             {
+                int x = std::get<0>(*dir);
+                int y = std::get<1>(*dir);
                 if (map(x, y, 1) > 0)
                 {
                     tc = map(x, y, 1) - 1;
@@ -57376,7 +57369,7 @@ void do_use_command()
                         update_screen();
                         ccbk = cc;
                         cc = tc;
-                        label_2044();
+                        do_customize_appearance();
                         cc = ccbk;
                         f = 1;
                     }
@@ -57391,16 +57384,13 @@ void do_use_command()
         pc_turn(false);
         break;
     case 15:
-        efid = 184;
-        magic();
+        magic(184, cc, tc);
         goto label_2229_internal;
     case 16:
-        efid = 185;
-        magic();
+        magic(185, cc, tc);
         goto label_2229_internal;
     case 17:
-        efid = 183;
-        magic();
+        magic(183, cc, tc);
         goto label_2229_internal;
     case 14:
         if (cc == 0)
@@ -57737,9 +57727,7 @@ void do_use_command()
         inv[ci].weight += 100;
         goto label_2229_internal;
     case 20:
-        efid = 458;
-        efp = 400;
-        magic();
+        magic(458, cc, tc, 400);
         goto label_2229_internal;
     case 47:
         txt(lang(u8"それは鈍く輝いた。"s, u8"It glows dully."s));
@@ -57773,9 +57761,7 @@ void do_use_command()
             itemname(ci, 1) + u8"を振った。"s,
             u8"You swing "s + itemname(ci, 1) + u8"."s));
         snd(58);
-        efid = 49;
-        efp = 100;
-        magic();
+        magic(49, cc, tc, 100);
         goto label_2229_internal;
     case 21:
         txt(lang(
@@ -57785,9 +57771,7 @@ void do_use_command()
         --inv[ci].number;
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
         fixmaterial = inv[ci].material;
-        efid = 21;
-        efp = 500;
-        magic();
+        magic(21, cc, tc, 500);
         goto label_2229_internal;
     case 25:
         txt(lang(
@@ -57795,9 +57779,7 @@ void do_use_command()
             u8"You hold "s + itemname(ci, 1) + u8" up high."s));
         --inv[ci].number;
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
-        efid = 637;
-        efp = 500;
-        magic();
+        magic(637, cc, tc, 500);
         goto label_2229_internal;
     case 26:
         txt(lang(
@@ -57819,9 +57801,7 @@ void do_use_command()
         txt(lang(
             u8"ジュア「べ、別にあんたのためにするんじゃないからね。バカっ！」"s,
             u8"A voice echoes, "s + u8"\"I-I'm not doing for you! Silly!\""s));
-        efid = 637;
-        efp = 5000;
-        magic();
+        magic(637, cc, tc, 5000);
         goto label_2229_internal;
     case 43:
         txt(lang(
@@ -57945,11 +57925,9 @@ void do_use_command()
         txt(lang(
             itemname(ci, 1) + u8"を始動させた。"s,
             u8"You activate "s + itemname(ci, 1) + u8"."s));
-        efid = inv[ci].param1;
-        efp = inv[ci].param2;
-        tc = cc;
-        efstatus = curse_state_t::none;
-        magic();
+        magic_data data(inv[ci].param1, cc, cc, inv[ci].param2);
+        data.efstatus = curse_state_t::none;
+        magic(data);
         goto label_2229_internal;
     case 41:
         if (gdata_next_level_minus_one_kumiromis_experience_becomes_available
@@ -59335,10 +59313,7 @@ void label_2244()
                     name(tc)
                         + u8"は色々なものが詰まった袋を、あなたに手渡した。"s,
                     name(tc) + u8" gives you a bag full of materials."s));
-                efid = 1117;
-                efp = 100;
-                tc = 0;
-                magic();
+                magic(1117, cc, 0, 100);
                 talk_end();
                 return;
             }
@@ -64443,9 +64418,7 @@ void label_2687()
                                             + u8" the leash."s));
                                 }
                             }
-                            tc = 0;
-                            efid = 619;
-                            magic();
+                            magic(619, cc, 0);
                             turn_end();
                             return;
                         }
@@ -64456,10 +64429,10 @@ void label_2687()
     }
     if (cdata[cc].will_explode_soon())
     {
-        tlocx = cdata[cc].position.x;
-        tlocy = cdata[cc].position.y;
-        efid = 644;
-        magic();
+        magic_data data(644, cc, tc);
+        data.tlocx = cdata[cc].position.x;
+        data.tlocy = cdata[cc].position.y;
+        magic(data);
         turn_end();
         return;
     }
@@ -64713,7 +64686,7 @@ void label_2687()
             {
                 x = cdata[0].position.x;
                 y = cdata[0].position.y;
-                label_2201();
+                do_bash(x, y);
                 return;
             }
         }
@@ -64724,11 +64697,11 @@ void label_2687()
         {
             if (cdata[cc].mp > 0 || rnd(5) == 0)
             {
-                efid = cdata[cc].ai_heal;
+                int efid = cdata[cc].ai_heal;
                 if (efid >= 400 && efid < 467)
                 {
                     npccostmp = 1;
-                    int stat = label_2167();
+                    int stat = cast_spell();
                     if (stat == 1)
                     {
                         turn_end();
@@ -65165,7 +65138,7 @@ label_2692_internal:
                                                 lang(
                                                     u8"「くらえー！」"s,
                                                     u8"\"Eat this!\""s));
-                                            do_throw_command();
+                                            do_throw_command(tlocx, tlocy);
                                             return;
                                         }
                                     }
@@ -65196,7 +65169,7 @@ label_2692_internal:
                                     {
                                         tlocx = inv[ti].position.x;
                                         tlocy = inv[ti].position.y;
-                                        do_throw_command();
+                                        do_throw_command(tlocx, tlocy);
                                         return;
                                     }
                                 }
@@ -65253,7 +65226,7 @@ label_2692_internal:
                                             u8"\"Watch out!\""s),
                                         lang(
                                             u8"「避けてー」"s, u8"\"Scut!\""s));
-                                    do_throw_command();
+                                    do_throw_command(tlocx, tlocy);
                                     return;
                                 }
                             }
@@ -65324,8 +65297,7 @@ label_2692_internal:
         {
             if (rnd(5) == 0)
             {
-                efid = 183;
-                magic();
+                magic(183, cc, tc);
                 turn_end();
                 return;
             }
@@ -65357,7 +65329,7 @@ label_2692_internal:
                                         u8"「なめくじだ！」"s, u8"\"Snail!\""s),
                                     lang(u8"「殺す！」"s, u8"\"Kill!\""s));
                             }
-                            do_throw_command();
+                            do_throw_command(tlocx, tlocy);
                             return;
                         }
                     }
@@ -65923,7 +65895,7 @@ void label_2696()
                         }
                         if (stat == 1)
                         {
-                            do_throw_command();
+                            do_throw_command(tlocx, tlocy);
                             return;
                         }
                         turn_end();
@@ -65973,7 +65945,7 @@ void label_2696()
     {
         if (act < 467)
         {
-            efid = act;
+            int efid = act;
             if (cdata[cc].mp < cdata[cc].max_mp / 7)
             {
                 if (rnd(3) || cc < 16 || cdata[cc].quality >= 4
@@ -65985,7 +65957,7 @@ void label_2696()
                 }
             }
             npccostmp = 1;
-            int stat = label_2167();
+            int stat = cast_spell(efid);
             if (stat == 1)
             {
                 turn_end();
@@ -65995,8 +65967,8 @@ void label_2696()
     }
     if (act >= 600)
     {
-        efid = act;
-        int stat = label_2174();
+        int efid = act;
+        int stat = label_2174(efid);
         if (stat == 1)
         {
             turn_end();
@@ -68154,7 +68126,7 @@ void pass_one_turn(bool label_2738_flg)
                 potionspill = 1;
                 efstatus = static_cast<curse_state_t>(mef(8, ef)); // TODO
                 dbid = mef(7, ef);
-                access_item_db(15);
+                access_item_db(item_db_t::drink);
                 if (cdata[tc].state == 0)
                 {
                     check_kill(mef(6, ef), tc);
@@ -68836,7 +68808,7 @@ void pc_turn(bool label_2747_flg)
                 && the_item_db[inv[ci].id]->category == 52000)
             {
                 dbid = inv[ci].id;
-                access_item_db(15);
+                access_item_db(item_db_t::drink);
             }
         }
         if (trait(214) != 0 && rnd(250) == 0 && mdata(6) != 1)

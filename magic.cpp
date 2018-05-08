@@ -18,83 +18,6 @@
 #include "variables.hpp"
 #include "wish.hpp"
 
-enum class efsource_t : int
-{
-    none = 0,
-    rod = 1,
-    scroll = 2,
-    magic = 3,
-    potion = 4,
-    trap = 5,
-}
-
-struct magic_data
-{
-    magic_data(int efid, int cc) : efid(efid), cc(cc)
-    {
-        damage = { 0, 0, 0, 0, 0 };
-        efp = 0;
-        tc = 0;
-        ci = 0;
-        tlocx = 0;
-        tlocy = 0;
-        efsource = efsource_t::none;
-        efstatus = curse_state_t::none;
-    }
-    magic_data(int efid, int cc, int tc) : efid(efid), cc(cc), tc(tc)
-    {
-        damage = { 0, 0, 0, 0, 0 };
-        efp = 0;
-        ci = 0;
-        tlocx = 0;
-        tlocy = 0;
-        efsource = efsource_t::none;
-        efstatus = curse_state_t::none;
-    }
-    magic_data(int efid, int cc, int tc, int efp) : efid(efid), cc(cc), tc(tc), efp(efp)
-    {
-        damage = { 0, 0, 0, 0, 0 };
-        ci = 0;
-        tlocx = 0;
-        tlocy = 0;
-        efsource = efsource_t::none;
-        efstatus = curse_state_t::none;
-    }
-    skill_damage damage;
-    int efid;
-    int efp;
-    int cc;
-    int tc;
-    int ci;
-    int tlocx;
-    int tlocy;
-    efsource_t efsource;
-    curse_state_t efstatus;
-};
-// TODO potionspill potionthrow
-
-struct magic_result
-{
-    bool turn_passed;
-    bool succeeded;
-    bool obvious;        // did the magic autoidentify the type of item it came from?
-    int selected_target; // actual target the magic selected
-};
-
-enum class sdataref1_t : int
-{
-    none = 0,
-    bolt = 1,
-    arrow = 2,
-    aoe = 3,
-    heal = 4,
-    special = 6,
-    summon = 7,
-    teleport = 5,
-    breath = 8,
-    melee = 10,
-};
-
 namespace elona
 {
 
@@ -128,7 +51,7 @@ magic_result magic(int efid, int cc, int tc, int efp)
 
 magic_result magic(magic_data m)
 {
-    magic_result result { true, true, true, m.tc };
+    magic_result result { true, true, false, true, m.tc };
     int efcibk = 0;
     bool is_negative_effect = false;
     efcibk = ci;
@@ -167,11 +90,11 @@ magic_result magic(magic_data m)
             }
             if (is_negative_effect == false)
             {
-                m.efp = power_up_if_blessed(m.efp);
+                power_up_if_blessed(m);
             }
             else
             {
-                m.efp = power_up_if_cursed(m.efp);
+                power_up_if_cursed(m);
             }
             if (result.succeeded)
             {
@@ -182,84 +105,86 @@ magic_result magic(magic_data m)
             {
                 m.damage = damage;
             }
-            if (cc == 0)
+            if (m.cc == 0)
             {
                 if (trait(165))
                 {
-                    if (m.ele == 50 || m.ele == 51 || m.ele == 52)
+                    if (m.ele == element_t::burning
+                        || m.ele == element_t::icy
+                        || m.ele == element_t::electric)
                     {
-                        dice2 = dice2 * 125 / 100;
+                        m.damage.dice_y = m.damage.dice_y * 125 / 100;
                     }
                 }
             }
             if (rapidmagic)
             {
-                m.efp = magic_apply_rapidmagic(m.efp);
+                magic_apply_rapidmagic(m);
             }
             switch (the_ability_db[m.efid]->sdataref1)
             {
             case sdataref1_t::melee:
-                magic_melee(data, result);
+                magic_melee(m, result);
                 goto the_end;
             case sdataref1_t::bolt:
-                magic_bolt(data, result);
+                magic_bolt(m, result);
                 goto the_end;
             case sdataref1_t::aoe:
-                magic_aoe(data, result);
+                magic_aoe(m, result);
                 goto the_end;
             case sdataref1_t::arrow:
-                magic_arrow(data, result);
+                magic_arrow(m, result);
                 goto the_end;
             case sdataref1_t::heal:
-                heal_t type = static_cast<heal_t>(efid);
+                heal_t type = static_cast<heal_t>(m.efid);
                 magic_heal(type);
                 goto the_end;
             case sdataref1_t::special:
-                if (cdata[cc].special_attack_type != 0)
+                if (cdata[m.cc].special_attack_type != 0)
                 {
-                    magic_special_attack();
+                    magic_special_attack(m, result);
                 }
-                else if (efid == 601)
+                else if (m.efid == 601)
                 {
-                    magic_suck_blood(); // TODO not sure if correct
+                    magic_suck_blood(m, result); // TODO not sure if correct
                 }
-                else if (is_in_fov(cc))
+                else if (is_in_fov(m.cc))
                 {
-                    magic_touch();
+                    magic_touch(m, result);
                 }
-                switch(efid) {
+                switch(m.efid) {
                 case 660:
-                    magic_disassembly();
+                    magic_disassembly(m, result);
                     break;
                 case 617:
-                    magic_touch_of_fear();
+                    magic_touch_of_fear(m, result);
                     break;
                 case 618:
-                    magic_touch_of_sleep();
+                    magic_touch_of_sleep(m, result);
                     break;
                 case 614:
-                    magic_hunger();
+                    magic_hunger(m, result);
                     break;
                 case 613:
-                    magic_weaken();
+                    magic_weaken(m, result);
                     break;
                 }
                 goto the_end;
             case sdataref1_t::summon:
-                summon_t type = static_cast<summon_t>(efid);
+                summon_t type = static_cast<summon_t>(m.efid);
                 magic_summon(type);
                 goto the_end;
             case sdataref1_t::teleport:
-                magic_teleport();
+                magic_teleport(m, result);
                 goto the_end;
             case sdataref1_t::breath:
-                magic_breath();
+                magic_breath(m, result);
                 goto the_end;
             }
         }
         else
         {
-            efp = power_up_if_blessed(efp);
+            power_up_if_blessed(m);
         }
     }
 
@@ -269,38 +194,34 @@ the_end:
     // TODO until everything is de-globalized
     ci = efcibk;
     efstatus = curse_state_t::none;
-    efsource = 0;
+    efsource = efsource_t::none;
     tc = result.selected_target;
     f = result.succeeded ?: 1 : 0;
     return result;
 }
 
-int power_up_if_blessed(int efp)
+void power_up_if_blessed(magic_data& m)
 {
-    if (efstatus == curse_state_t::blessed)
+    if (m.efstatus == curse_state_t::blessed)
     {
-        efp = efp * 150 / 100;
+        m.efp = m.efp * 150 / 100;
     }
-    if (is_cursed(efstatus))
+    if (is_cursed(m.efstatus))
     {
-        efp = 50;
+        m.efp = 50;
     }
-
-    return efp;
 }
 
-int power_up_if_cursed(int efp)
+void power_up_if_cursed(magic_data& m)
 {
-    if (efstatus == curse_state_t::blessed)
+    if (m.efstatus == curse_state_t::blessed)
     {
-        efp = 50;
+        m.efp = 50;
     }
-    if (is_cursed(efstatus))
+    if (is_cursed(m.efstatus))
     {
-        efp = efp * 150 / 100;
+        m.efp = m.efp * 150 / 100;
     }
-
-    return efp;
 }
 
 void handle_general_magic(const magic_data& m, magic_result& result)
@@ -368,7 +289,7 @@ void handle_general_magic(const magic_data& m, magic_result& result)
     case 406:
     case 407:
         // TODO no idea
-        bool is_vanquish = efid == 406;
+        bool is_vanquish = m.efid == 406;
         magic_remove_hex(m, result, is_vanquish);
         break;
     case 1120:
@@ -380,7 +301,7 @@ void handle_general_magic(const magic_data& m, magic_result& result)
     case 632:
     case 454:
     case 1144:
-        mutation_t type = static_cast<mutation_t>(efid);
+        mutation_t type = static_cast<mutation_t>(m.efid);
         magic_mutate(m, result, type);
         break;
     case 1121:
@@ -431,7 +352,7 @@ void handle_general_magic(const magic_data& m, magic_result& result)
         break;
     case 430:
     case 429:
-        bool is_sense_object = efid == 430;
+        bool is_sense_object = m.efid == 430;
         magic_mapping(m, result, is_sense_object);
         break;
     case 658:
@@ -439,7 +360,7 @@ void handle_general_magic(const magic_data& m, magic_result& result)
         break;
     case 440:
     case 439:
-        bool is_restore_body = efid == 439;
+        bool is_restore_body = m.efid == 439;
         magic_restore(m, result, is_restore_body);
         break;
     case 441:
@@ -475,7 +396,7 @@ void handle_general_magic(const magic_data& m, magic_result& result)
         break;
     case 645:
     case 1114:
-        bool is_attack = efid == 645;
+        bool is_attack = m.efid == 645;
         magic_curse(m, result, is_attack);
         break;
     case 1118:
@@ -486,7 +407,7 @@ void handle_general_magic(const magic_data& m, magic_result& result)
     case 1123:
     case 1122:
     case 1137:
-        ally_t type = static_cast<ally_t>(efid);
+        ally_t type = static_cast<ally_t>(m.efid);
         magic_ally(m, result, type);
         break;
     case 435:
@@ -498,7 +419,7 @@ void handle_general_magic(const magic_data& m, magic_result& result)
     case 634:
     case 456:
         // TODO
-        ground_effect_t type = static_cast<ground_effect_t>(efid);
+        ground_effect_t type = static_cast<ground_effect_t>(m.efid);
         magic_place_ground_effect(m, result, type);
         break;
     case 1145:
@@ -509,7 +430,7 @@ void handle_general_magic(const magic_data& m, magic_result& result)
         break;
     case 21:
     case 1127:
-        bool flag = efid == 1127; // TODO real name?
+        bool flag = m.efid == 1127; // TODO real name?
         magic_reconstruct_artifact(m, result, flag);
         break;
     case 1128:
@@ -517,12 +438,12 @@ void handle_general_magic(const magic_data& m, magic_result& result)
         break;
     case 1124:
     case 1125:
-        bool is_armor = efid == 1125;
+        bool is_armor = m.efid == 1125;
         magic_enchant(m, result, is_armor);
         break;
     case 630:
     case 1129:
-        bool is_fill_charge = efid == 630;
+        bool is_fill_charge = m.efid == 630;
         magic_recharge(m, result, is_fill_charge);
         break;
     case 629:
@@ -539,7 +460,7 @@ void handle_general_magic(const magic_data& m, magic_result& result)
         break;
     case 457:
     case 438:
-        bool create_door = efid == 457;
+        bool create_door = m.efid == 457;
         magic_wall_creation(m, result, create_door);
         break;
     case 631:
@@ -568,7 +489,7 @@ void handle_general_magic(const magic_data& m, magic_result& result)
         break;
     case 638:
     case 648:
-        bool is_insult = efid == 648;
+        bool is_insult = m.efid == 648;
         magic_aggro(m, result, is_insult);
         break;
     case 652:
@@ -656,13 +577,12 @@ void magic_add_buff(const magic_data& m, magic_result& result)
 }
 
 
-int magic_apply_rapidmagic(int efp)
+void magic_apply_rapidmagic(magic_data& m)
 {
-    efp = efp / 2 + 1;
-    dice1 = dice1 / 2 + 1;
-    dice2 = dice2 / 2 + 1;
-    bonus = bonus / 2 + 1;
-    return efp;
+    m.efp = m.efp / 2 + 1;
+    m.damage.dice_x = m.damage.damage_dice_x / 2 + 1;
+    m.damage.dice_y = m.damage.damage_dice_y / 2 + 1;
+    m.damage.damage_bonus = m.damage.damage_bonus / 2 + 1;
 }
 
 void magic_melee(const magic_data& m, magic_result& result)
@@ -783,7 +703,7 @@ void magic_aoe(const magic_data& m, magic_result& result)
     skill_damage current_damage = m.damage;
 
     ccbk = m.cc;
-    if (efid == 644)
+    if (m.efid == 644)
     {
         stxt(
              current_cc,
@@ -837,7 +757,7 @@ void magic_aoe(const magic_data& m, magic_result& result)
                     continue;
                 }
                 chara_hit = map(dx, dy, 1) - 1;
-                if (efid == 404)
+                if (m.efid == 404)
                 {
                     result.succeeded = false;
                     if (current_cc == 0 || cdata[current_cc].relationship >= 0)
@@ -865,7 +785,7 @@ void magic_aoe(const magic_data& m, magic_result& result)
                     }
                     continue;
                 }
-                if (efid == 637)
+                if (m.efid == 637)
                 {
                     result.succeeded = false;
                     if (current_cc == 0 || cdata[current_cc].relationship >= 0)
@@ -1004,7 +924,7 @@ void magic_aoe(const magic_data& m, magic_result& result)
                          current_cc,
                          lang(
                               name(current_cc) + u8"は誘爆した。"s,
-                              name(current_cc) + u8" explode"s + _s(cc)
+                              name(current_cc) + u8" explode"s + _s(current_cc)
                               + u8"."s));
                     chain_triggered = true;
                     break;
@@ -1017,6 +937,7 @@ void magic_aoe(const magic_data& m, magic_result& result)
             }
         }
     }
+    // TODO remove?
     cc = ccbk;
 }
 
@@ -1024,7 +945,7 @@ void magic_arrow(const magic_data& m, magic_result& result)
 {
     play_animation(1);
     dmg = roll(m.damage.dice_y, m.damage.dice_x, m.damage.damage_bonus);
-    if (is_in_fov(tc))
+    if (is_in_fov(m.tc))
     {
         if (m.tc >= 16)
         {
@@ -1046,7 +967,6 @@ void magic_arrow(const magic_data& m, magic_result& result)
 
 void magic_summon(const magic_data& m, magic_result& result, summon_t type)
 {
-    int adjusted_power = efp;
     if (m.cc == 0)
     {
         if (gdata_other_character_count + 100 >= ELONA_MAX_OTHER_CHARACTERS)
@@ -1057,7 +977,8 @@ void magic_summon(const magic_data& m, magic_result& result, summon_t type)
         }
     }
     p = 3;
-    adjusted_power = (efp / 25 + efp * efp / 10000 + cdata[m.cc].level) / 2;
+    int adjusted_power;
+    adjusted_power = (m.efp / 25 + m.efp * m.efp / 10000 + cdata[m.cc].level) / 2;
     if (adjusted_power < 1)
     {
         adjusted_power = 1;
@@ -1175,7 +1096,7 @@ void magic_teleport(const magic_data& m, magic_result& result, teleport_t type)
         }
         return;
     }
-    if (type != teleport_t::toward && encfind(tc, 22) != -1)
+    if (type != teleport_t::toward && encfind(m.tc, 22) != -1)
     {
         if (is_in_fov(result.selected_target))
         {
@@ -1454,7 +1375,7 @@ void magic_treasure_map(const magic_data& m, magic_result& result)
                 u8"You need to read it while you are in the global map."s));
         return;
     }
-    if (is_cursed(efstatus))
+    if (is_cursed(m.efstatus))
     {
         if (rnd(5) == 0)
         {
@@ -1673,7 +1594,7 @@ void magic_milk(const magic_data& m, magic_result& result)
     {
         modheight(m.tc, (rnd(5) + 1) * -1);
     }
-    cdata[m.tc].nutrition += 1000 * (efp / 100);
+    cdata[m.tc].nutrition += 1000 * (m.efp / 100);
     if (m.tc == 0)
     {
         // TODO de-globalize
@@ -1687,7 +1608,7 @@ void magic_alcohol(const magic_data& m, magic_result& result)
 {
     if (is_in_fov(m.tc))
     {
-        if (is_cursed(efstatus))
+        if (is_cursed(m.efstatus))
         {
             txtef(9);
             txt(lang(u8"「うぃっ…」"s, u8"*Hic*"s),
@@ -1732,11 +1653,11 @@ void magic_acid(const magic_data& m, magic_result& result)
         {
             txt(lang(
                      name(m.tc) + u8"の体内のエイリアンは溶けた。"s,
-                     name(m.tc) + your(tc) + u8" alien children melt in "s
+                     name(m.tc) + your(m.tc) + u8" alien children melt in "s
                      + his(m.tc) + u8" stomach."s));
         }
     }
-    dmghp(m.tc, m.efp * efstatusfix(500, 400, 100, 50) / 1000, -15, 63, m.efp);
+    dmghp(m.tc, m.efp * efstatusfix(m.efstatus, 500, 400, 100, 50) / 1000, -15, 63, m.efp);
 }
 
 void magic_water(const magic_data& m, magic_result& result)
@@ -2238,7 +2159,7 @@ void magic_remove_hex(const magic_data& m, magic_result& result, bool is_vanquis
         {
             continue;
         }
-        if (rnd(efp * 2 + 1) > rnd(cdata[m.tc].buffs[i].power + 1))
+        if (rnd(m.efp * 2 + 1) > rnd(cdata[m.tc].buffs[i].power + 1))
         {
             delbuff(m.tc, i);
             ++p;
@@ -2284,7 +2205,7 @@ void magic_create_material(const magic_data& m, magic_result& result)
     autosave = 1 * (gdata_current_map != 35);
     for (int cnt = 0,
              cnt_end =
-             (rnd(3) + 3 + (efstatus == curse_state_t::blessed) * 6);
+             (rnd(3) + 3 + (m.efstatus == curse_state_t::blessed) * 6);
          cnt < cnt_end;
          ++cnt)
     {
@@ -2562,7 +2483,7 @@ void magic_flying(const magic_data& m, magic_result& result)
         {
             autosave = 1 * (gdata_current_map != 35);
             animeload(8, m.cc);
-            if (!is_cursed(efstatus))
+            if (!is_cursed(m.efstatus))
             {
                 if (inv[ci].weight > 0)
                 {
@@ -2573,12 +2494,12 @@ void magic_flying(const magic_data& m, magic_result& result)
                     if (inv[ci].pv > 0)
                     {
                         inv[ci].pv -= inv[ci].pv / 10 + 1
-                            + (efstatus != curse_state_t::blessed);
+                            + (m.efstatus != curse_state_t::blessed);
                     }
                     if (inv[ci].damage_bonus > 0)
                     {
                         inv[ci].damage_bonus -= inv[ci].damage_bonus / 10
-                            + 1 + (efstatus != curse_state_t::blessed);
+                            + 1 + (m.efstatus != curse_state_t::blessed);
                     }
                 }
                 txt(lang(
@@ -2654,7 +2575,7 @@ void magic_do_mutation(const magic_data& m, magic_result& result, mutation_t typ
 {
     result.succeeded = false;
     p = 1;
-    if (efid == 1144)
+    if (m.efid == 1144)
     {
         p = 2 + rnd(3);
     }
@@ -2684,7 +2605,7 @@ void magic_do_mutation(const magic_data& m, magic_result& result, mutation_t typ
             {
                 p = 1;
             }
-            if (is_cursed(efstatus))
+            if (is_cursed(m.efstatus))
             {
                 if (p == 1)
                 {
@@ -2693,14 +2614,14 @@ void magic_do_mutation(const magic_data& m, magic_result& result, mutation_t typ
             }
             else if (p == -1)
             {
-                if (efstatus == curse_state_t::blessed)
+                if (m.efstatus == curse_state_t::blessed)
                 {
                     if (rnd(3) == 0)
                     {
                         continue;
                     }
                 }
-                if (efid == 1144)
+                if (m.efid == 1144)
                 {
                     continue;
                 }
@@ -2732,14 +2653,14 @@ void magic_do_mutation(const magic_data& m, magic_result& result, mutation_t typ
 
 void magic_cure_mutation(const magic_data& m, magic_result& result)
 {
-    if (tc != 0)
+    if (m.tc != 0)
     {
         txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
         return;
     }
-    if (is_cursed(efstatus))
+    if (is_cursed(m.efstatus))
     {
-        if (is_in_fov(tc))
+        if (is_in_fov(m.tc))
         {
             txt(lang(u8"これは呪われている！"s, u8"It's cursed!"s));
         }
@@ -2749,8 +2670,8 @@ void magic_cure_mutation(const magic_data& m, magic_result& result)
     result.succeeded = false;
     for (int cnt = 0,
              cnt_end = cnt
-             + (1 + (efstatus == curse_state_t::blessed)
-                + (!is_cursed(efstatus)) + rnd(2));
+             + (1 + (m.efstatus == curse_state_t::blessed)
+                + (!is_cursed(m.efstatus)) + rnd(2));
          cnt < cnt_end;
          ++cnt)
     {
@@ -2822,7 +2743,7 @@ void magic_resurrection(const magic_data& m, magic_result& result)
         obvious = 0;
         break;
     }
-    if (is_cursed(efstatus))
+    if (is_cursed(m.efstatus))
     {
         txt(lang(
                 u8"冥界から死霊が呼び出された！"s,
@@ -2847,11 +2768,11 @@ void magic_resurrection(const magic_data& m, magic_result& result)
         }
         if (bonus < rnd(100))
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(m.cc))
             {
                 txt(lang(
-                        name(cc) + u8"の力は冥界に及ばなかった。"s,
-                        name(cc) + your(cc)
+                        name(m.cc) + u8"の力は冥界に及ばなかった。"s,
+                        name(m.cc) + your(m.cc)
                         + u8" prayer doesn't reach the underworld."s));
             }
             break;
@@ -2859,8 +2780,8 @@ void magic_resurrection(const magic_data& m, magic_result& result)
         rc = stat;
     }
     label_1538();
-    cxinit = cdata[cc].position.x;
-    cyinit = cdata[cc].position.y;
+    cxinit = cdata[m.cc].position.x;
+    cyinit = cdata[m.cc].position.y;
     place_character();
     cdata[rc].current_map = 0;
     txtef(5);
@@ -2873,7 +2794,7 @@ void magic_resurrection(const magic_data& m, magic_result& result)
     play_animation(19);
     snd(120);
     cdata[rc].emotion_icon = 317;
-    if (cc == 0)
+    if (m.cc == 0)
     {
         modimp(rc, 15);
         if (rc >= 16)
@@ -2885,40 +2806,40 @@ void magic_resurrection(const magic_data& m, magic_result& result)
 
 void magic_vanquish_curse(const magic_data& m, magic_result& result)
 {
-    if (efstatus == curse_state_t::none)
+    if (m.efstatus == curse_state_t::none)
     {
-        if (is_in_fov(tc))
+        if (is_in_fov(m.tc))
         {
             txt(lang(
-                    name(tc) + u8"の装備品は白い光に包まれた。"s,
-                    name(tc) + u8" "s + your(tc)
+                    name(m.tc) + u8"の装備品は白い光に包まれた。"s,
+                    name(m.tc) + u8" "s + your(m.tc)
                     + u8" equipment are surrounded by a white aura."s));
         }
     }
-    if (efstatus == curse_state_t::blessed)
+    if (m.efstatus == curse_state_t::blessed)
     {
-        if (is_in_fov(tc))
+        if (is_in_fov(m.tc))
         {
             txt(lang(
-                    name(tc) + u8"は聖なる光に包み込まれた。"s,
-                    name(tc) + u8" "s + is(tc)
+                    name(m.tc) + u8"は聖なる光に包み込まれた。"s,
+                    name(m.tc) + u8" "s + is(m.tc)
                     + u8" surrounded by a holy aura."s));
         }
     }
-    if (is_cursed(efstatus))
+    if (is_cursed(m.efstatus))
     {
-        if (is_in_fov(tc))
+        if (is_in_fov(m.tc))
         {
             txt(lang(
-                    name(tc) + u8"は悪魔が笑う声を聞いた。"s,
-                    name(tc) + u8" hear"s + _s(tc) + u8" devils laugh."s));
+                    name(m.tc) + u8"は悪魔が笑う声を聞いた。"s,
+                    name(m.tc) + u8" hear"s + _s(m.tc) + u8" devils laugh."s));
         }
         magic_curse(false);
         return;
     }
     p(1) = 0;
     p(2) = 0;
-    for (const auto& cnt : items(tc))
+    for (const auto& cnt : items(m.tc))
     {
         if (inv[cnt].number == 0)
         {
@@ -2938,7 +2859,7 @@ void magic_vanquish_curse(const magic_data& m, magic_result& result)
         {
             p = rnd(1000) + 1;
         }
-        if (efstatus == curse_state_t::blessed)
+        if (m.efstatus == curse_state_t::blessed)
         {
             p = p / 2 + 1;
         }
@@ -2948,11 +2869,11 @@ void magic_vanquish_curse(const magic_data& m, magic_result& result)
         }
         if (p != 0)
         {
-            if (efp >= p)
+            if (m.efp >= p)
             {
                 ++p(1);
                 inv[ci].curse_state = curse_state_t::none;
-                item_stack(tc, ci, 1);
+                item_stack(m.tc, ci, 1);
             }
             else
             {
@@ -2960,31 +2881,31 @@ void magic_vanquish_curse(const magic_data& m, magic_result& result)
             }
         }
     }
-    if (efstatus == curse_state_t::blessed)
+    if (m.efstatus == curse_state_t::blessed)
     {
         if (p(1) != 0)
         {
-            if (is_in_fov(tc))
+            if (is_in_fov(m.tc))
             {
                 txt(lang(
                         u8"幾つかのアイテムが浄化された。"s,
-                        u8"The aura uncurses some "s + his(tc) + u8" stuff."s));
+                        u8"The aura uncurses some "s + his(m.tc) + u8" stuff."s));
             }
         }
     }
     else if (p(1) != 0)
     {
-        if (is_in_fov(tc))
+        if (is_in_fov(m.tc))
         {
             txt(lang(
                     u8"身に付けている装備の幾つかが浄化された。"s,
-                    u8"The aura uncurses some of "s + his(tc)
+                    u8"The aura uncurses some of "s + his(m.tc)
                     + u8" equipment."s));
         }
     }
     if (p(2) != 0)
     {
-        if (is_in_fov(tc))
+        if (is_in_fov(m.tc))
         {
             txt(lang(
                     u8"幾つかのアイテムは抵抗した。"s,
@@ -2998,19 +2919,19 @@ void magic_vanquish_curse(const magic_data& m, magic_result& result)
     }
     else
     {
-        animeload(10, tc);
+        animeload(10, m.tc);
     }
-    refresh_character(tc);
+    refresh_character(m.tc);
 }
 
 void magic_oracle(const magic_data& m, magic_result& result)
 {
-    if (tc >= 16)
+    if (m.tc >= 16)
     {
         txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
         return;
     }
-    if (is_cursed(efstatus))
+    if (is_cursed(m.efstatus))
     {
         artifactlocation.clear();
         txt(lang(
@@ -3034,14 +2955,14 @@ void magic_oracle(const magic_data& m, magic_result& result)
 
 void magic_gain_spell(const magic_data& m, magic_result& result)
 {
-    if (tc != 0)
+    if (m.tc != 0)
     {
         txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
         obvious = 0;
         return;
     }
     result.succeeded = false;
-    for (int cnt = 0, cnt_end = (1 + (efstatus == curse_state_t::blessed));
+    for (int cnt = 0, cnt_end = (1 + (m.efstatus == curse_state_t::blessed));
          cnt < cnt_end;
          ++cnt)
     {
@@ -3057,7 +2978,7 @@ void magic_gain_spell(const magic_data& m, magic_result& result)
                     continue;
                 }
             }
-            if (!is_cursed(efstatus))
+            if (!is_cursed(m.efstatus))
             {
                 if (the_ability_db[p])
                 {
@@ -3125,33 +3046,33 @@ void magic_gain_spell(const magic_data& m, magic_result& result)
 
 void magic_descent(const magic_data& m, magic_result& result)
 {
-    if (efstatus == curse_state_t::blessed)
+    if (m.efstatus == curse_state_t::blessed)
     {
-        cdata[tc].experience = cdata[tc].required_experience;
+        cdata[m.tc].experience = cdata[m.tc].required_experience;
         r2 = 0;
-        gain_level(tc);
-        if (is_in_fov(tc))
+        gain_level(m.tc);
+        if (is_in_fov(m.tc))
         {
             snd(60);
         }
     }
     else
     {
-        if (cdata[tc].level <= 1)
+        if (cdata[m.tc].level <= 1)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
             return;
         }
-        --cdata[tc].level;
-        cdata[tc].experience = 0;
-        label_1456(tc);
+        --cdata[m.tc].level;
+        cdata[m.tc].experience = 0;
+        refresh_required_exp(m.tc);
         txtef(8);
         txt(lang(
-                name(tc) + u8"のレベルが下がった…"s,
-                name(tc) + u8" lose"s + _s(tc) + u8" a level..."s));
+                name(m.tc) + u8"のレベルが下がった…"s,
+                name(m.tc) + u8" lose"s + _s(m.tc) + u8" a level..."s));
     }
-    if (is_cursed(efstatus))
+    if (is_cursed(m.efstatus))
     {
         txt(lang(u8"これは呪われている！"s, u8"It's cursed!"s));
         for (int cnt = 10; cnt < 50; ++cnt)
@@ -3160,16 +3081,16 @@ void magic_descent(const magic_data& m, magic_result& result)
             {
                 if (cnt <= 17)
                 {
-                    if (sdata(cnt, tc) != 0)
+                    if (sdata(cnt, m.tc) != 0)
                     {
-                        skillexp(cnt, tc, -1000);
+                        skillexp(cnt, m.tc, -1000);
                     }
                 }
             }
         }
-        animeload(8, tc);
+        animeload(8, m.tc);
     }
-    refresh_character(tc);
+    refresh_character(m.tc);
 }
 
 void magic_gain_attribute(const magic_data& m, magic_result& result)
@@ -3180,26 +3101,26 @@ void magic_gain_attribute(const magic_data& m, magic_result& result)
         p = rnd(300) + 100;
         if (the_ability_db[p])
         {
-            if (!is_cursed(efstatus))
+            if (!is_cursed(m.efstatus))
             {
-                if (cnt < efstatusfix(0, 0, 100, 2000))
+                if (cnt < efstatusfix(m.efstatus, 0, 0, 100, 2000))
                 {
-                    if (sdata(p, tc) != 0)
+                    if (sdata(p, m.tc) != 0)
                     {
                         continue;
                     }
                 }
-                skillgain(tc, p, 1);
-                if (is_in_fov(tc))
+                skillgain(m.tc, p, 1);
+                if (is_in_fov(m.tc))
                 {
                     snd(24);
                     txtef(2);
                     txt(lang(
-                            ""s + name(tc) + u8"は"s
+                            ""s + name(m.tc) + u8"は"s
                             + i18n::_(
                                 u8"ability", std::to_string(p), u8"name")
                             + u8"の技術を獲得した！"s,
-                            name(tc) + u8" gain"s + _s(tc) + u8" a skill of "s
+                            name(m.tc) + u8" gain"s + _s(m.tc) + u8" a skill of "s
                             + i18n::_(
                                 u8"ability", std::to_string(p), u8"name")
                             + u8"!"s));
@@ -3208,21 +3129,21 @@ void magic_gain_attribute(const magic_data& m, magic_result& result)
             }
             else
             {
-                if (sdata(p, tc) == 0)
+                if (sdata(p, m.tc) == 0)
                 {
                     continue;
                 }
-                if (is_in_fov(tc))
+                if (is_in_fov(m.tc))
                 {
                     snd(38);
                     txt(lang(u8"これは呪われている！"s, u8"It's cursed!"s));
                 }
-                skillexp(p, tc, -1000);
+                skillexp(p, m.tc, -1000);
                 break;
             }
         }
     }
-    refresh_character(tc);
+    refresh_character(m.tc);
     autosave = 1 * (gdata_current_map != 35);
 }
 
@@ -3240,7 +3161,7 @@ void magic_faith(const magic_data& m, magic_result& result)
         obvious = 0;
         return;
     }
-    if (is_cursed(efstatus))
+    if (is_cursed(m.efstatus))
     {
         txt(lang(
                 u8"あなたの神はあなたの信仰に疑問を抱いた。"s,
@@ -3264,7 +3185,7 @@ void magic_faith(const magic_data& m, magic_result& result)
                 u8"You feel as if "s
                 + i18n::_(u8"god", cdata[0].god_id, u8"name")
                 + u8" is watching you."s));
-        if (efstatus == curse_state_t::blessed)
+        if (m.efstatus == curse_state_t::blessed)
         {
             txt(lang(
                     u8"空から三つ葉のクローバーがふってきた。"s,
@@ -3278,7 +3199,7 @@ void magic_faith(const magic_data& m, magic_result& result)
         skillexp(
             181,
             0,
-            1000 + (efstatus == curse_state_t::blessed) * 750,
+            1000 + (m.efstatus == curse_state_t::blessed) * 750,
             6,
             1000);
     }
@@ -3287,7 +3208,7 @@ void magic_faith(const magic_data& m, magic_result& result)
 
 void magic_gain_skill_potential(const magic_data& m, magic_result& result)
 {
-    for (int cnt = 0, cnt_end = (1 + (efstatus == curse_state_t::blessed));
+    for (int cnt = 0, cnt_end = (1 + (m.efstatus == curse_state_t::blessed));
          cnt < cnt_end;
          ++cnt)
     {
@@ -3298,12 +3219,12 @@ void magic_gain_skill_potential(const magic_data& m, magic_result& result)
             p = rnd(300) + 100;
             if (the_ability_db[p])
             {
-                if (sdata.get(p, tc).original_level == 0)
+                if (sdata.get(p, m.tc).original_level == 0)
                 {
                     continue;
                 }
                 modify_potential(
-                    tc, p, efp * efstatusfix(-4, -2, 5, 5) / 100);
+                    m.tc, p, m.efp * efstatusfix(m.efstatus, -4, -2, 5, 5) / 100);
                 if (cnt2 == 0)
                 {
                     s = lang(""s, u8"The "s);
@@ -3312,20 +3233,20 @@ void magic_gain_skill_potential(const magic_data& m, magic_result& result)
                 {
                     s = lang(u8"さらに"s, u8"Furthermore, the "s);
                 }
-                if (!is_cursed(efstatus))
+                if (!is_cursed(m.efstatus))
                 {
-                    if (is_in_fov(tc))
+                    if (is_in_fov(m.tc))
                     {
                         snd(24);
                         txtef(2);
                         txt(lang(
-                                s + ""s + name(tc) + u8"の"s
+                                s + ""s + name(m.tc) + u8"の"s
                                 + i18n::_(
                                     u8"ability",
                                     std::to_string(p),
                                     u8"name")
                                 + u8"の技術の潜在能力が上昇した。"s,
-                                s + u8"potential of "s + name(tc) + your(tc)
+                                s + u8"potential of "s + name(m.tc) + your(m.tc)
                                 + u8" "s
                                 + i18n::_(
                                     u8"ability",
@@ -3334,16 +3255,16 @@ void magic_gain_skill_potential(const magic_data& m, magic_result& result)
                                 + u8" skill increases."s));
                     }
                 }
-                else if (is_in_fov(tc))
+                else if (is_in_fov(m.tc))
                 {
                     snd(117);
                     txtef(3);
                     txt(lang(
-                            ""s + name(tc) + u8"の"s
+                            ""s + name(m.tc) + u8"の"s
                             + i18n::_(
                                 u8"ability", std::to_string(p), u8"name")
                             + u8"の技術の潜在能力が減少した。"s,
-                            u8"The potential of "s + name(tc) + your(tc)
+                            u8"The potential of "s + name(m.tc) + your(m.tc)
                             + u8" "s
                             + i18n::_(
                                 u8"ability", std::to_string(p), u8"name")
@@ -3353,14 +3274,14 @@ void magic_gain_skill_potential(const magic_data& m, magic_result& result)
             }
         }
     }
-    refresh_character(tc);
+    refresh_character(m.tc);
     autosave = 1 * (gdata_current_map != 35);
 }
 
 void magic_gain_skill_exp(const magic_data& m, magic_result& result)
 {
     i = rnd(10) + 10;
-    skillexp(i, tc, efstatusfix(-2000, -2000, -1000, -250));
+    skillexp(i, tc, efstatusfix(m.efstatus, -2000, -2000, -1000, -250));
     play_animation(6);
     refresh_character(tc);
 }
@@ -3371,8 +3292,8 @@ void magic_hermes_blood(const magic_data& m, magic_result& result)
             name(tc) + u8"の血は沸きあがるように熱くなった。"s,
             name(tc) + your(tc) + u8" blood burns and a new strength fills "s
             + his(tc) + u8" body!"s));
-    skillexp(18, tc, efstatusfix(-4000, -1000, 8000, 12000));
-    if (efstatus == curse_state_t::blessed)
+    skillexp(18, tc, efstatusfix(m.efstatus, -4000, -1000, 8000, 12000));
+    if (m.efstatus == curse_state_t::blessed)
     {
         modify_potential(tc, 18, 15);
         txtef(2);
@@ -3383,7 +3304,7 @@ void magic_hermes_blood(const magic_data& m, magic_result& result)
 
 void magic_gain_potential(const magic_data& m, magic_result& result)
 {
-    if (efstatus == curse_state_t::blessed)
+    if (m.efstatus == curse_state_t::blessed)
     {
         for (int cnt = 10; cnt < 18; ++cnt)
         {
@@ -3402,7 +3323,7 @@ void magic_gain_potential(const magic_data& m, magic_result& result)
     {
         i = rnd(8) + 10;
         const auto valn = i18n::_(u8"ability", std::to_string(i), u8"name");
-        if (efstatus == curse_state_t::none)
+        if (m.efstatus == curse_state_t::none)
         {
             txt(lang(
                     name(tc) + u8"の"s + valn + u8"の潜在能力が上昇した。"s,
@@ -3466,7 +3387,7 @@ void magic_mapping(const magic_data& m, magic_result& result, bool is_sense_obje
             {
                 x = cnt;
                 p = dist(cdata[tc].position.x, cdata[tc].position.y, x, y);
-                if (is_cursed(efstatus))
+                if (is_cursed(m.efstatus))
                 {
                     if (is_sense_object)
                     {
@@ -3478,8 +3399,8 @@ void magic_mapping(const magic_data& m, magic_result& result, bool is_sense_obje
                     }
                     continue;
                 }
-                if (p < 7 || rnd(efp + 1) > rnd(p * 8 + 1)
-                    || efstatus == curse_state_t::blessed)
+                if (p < 7 || rnd(m.efp + 1) > rnd(p * 8 + 1)
+                    || m.efstatus == curse_state_t::blessed)
                 {
                     if (is_sense_object)
                     {
@@ -3496,7 +3417,7 @@ void magic_mapping(const magic_data& m, magic_result& result, bool is_sense_obje
             }
         }
     }
-    if (is_cursed(efstatus))
+    if (is_cursed(m.efstatus))
     {
         txt(lang(
                 u8"あれ…？あなたは軽い記憶障害を受けた。"s,
@@ -3524,33 +3445,33 @@ void magic_mapping(const magic_data& m, magic_result& result, bool is_sense_obje
 
 void magic_vorpal(const magic_data& m, magic_result& result)
 {
-    if (cdata[tc].hp > cdata[tc].max_hp / 8)
+    if (cdata[m.tc].hp > cdata[m.tc].max_hp / 8)
     {
         return;
     }
-    if (is_in_fov(tc))
+    if (is_in_fov(m.tc))
     {
         snd(105);
         txtef(3);
         txt(lang(u8" *ブシュッ* "s, u8"*Gash*"s));
-        if (tc >= 16)
+        if (m.tc >= 16)
         {
             gdata(809) = 2;
             txt3rd = 1;
             txt(lang(
-                    name(cc) + u8"は"s + name(tc) + u8"の首をちょんぎり"s,
-                    name(cc) + u8" cut"s + _s(cc) + u8" "s + name(tc) + your(tc)
+                    name(m.cc) + u8"は"s + name(m.tc) + u8"の首をちょんぎり"s,
+                    name(m.cc) + u8" cut"s + _s(m.cc) + u8" "s + name(m.tc) + your(m.tc)
                     + u8" head and"s));
         }
         else
         {
             txt(lang(
-                    name(cc) + u8"は"s + name(tc) + u8"の首をちょんぎった。"s,
-                    name(cc) + u8" cut"s + _s(cc) + u8" "s + name(tc) + your(tc)
+                    name(m.cc) + u8"は"s + name(m.tc) + u8"の首をちょんぎった。"s,
+                    name(m.cc) + u8" cut"s + _s(m.cc) + u8" "s + name(m.tc) + your(m.tc)
                     + u8" head."s));
         }
     }
-    dmghp(tc, cdata[tc].max_hp, cc, 658);
+    dmghp(m.tc, cdata[m.tc].max_hp, m.cc, 658);
 }
 
 void magic_restore(const magic_data& m, magic_result& result, bool is_restore_body)
@@ -3559,7 +3480,7 @@ void magic_restore(const magic_data& m, magic_result& result, bool is_restore_bo
     {
         if (is_in_fov(tc))
         {
-            if (is_cursed(efstatus))
+            if (is_cursed(m.efstatus))
             {
                 snd(117);
                 txt(lang(
@@ -3573,7 +3494,7 @@ void magic_restore(const magic_data& m, magic_result& result, bool is_restore_bo
                         name(tc) + your(tc) + u8" body is restored."s));
                 animeload(10, tc);
             }
-            if (efstatus == curse_state_t::blessed)
+            if (m.efstatus == curse_state_t::blessed)
             {
                 txt(lang(
                         u8"さらに、"s + name(tc) + u8"の肉体は強化された。"s,
@@ -3593,7 +3514,7 @@ void magic_restore(const magic_data& m, magic_result& result, bool is_restore_bo
     {
         if (is_in_fov(tc))
         {
-            if (is_cursed(efstatus))
+            if (is_cursed(m.efstatus))
             {
                 snd(117);
                 txt(lang(
@@ -3607,7 +3528,7 @@ void magic_restore(const magic_data& m, magic_result& result, bool is_restore_bo
                         name(tc) + your(tc) + u8" spirit is restored."s));
                 animeload(10, tc);
             }
-            if (efstatus == curse_state_t::blessed)
+            if (m.efstatus == curse_state_t::blessed)
             {
                 txt(lang(
                         u8"さらに、"s + name(tc) + u8"の精神は強化された。"s,
@@ -3630,7 +3551,7 @@ void magic_restore(const magic_data& m, magic_result& result, bool is_restore_bo
             break;
         }
         const auto attr = p(cnt) - 10;
-        if (is_cursed(efstatus))
+        if (is_cursed(m.efstatus))
         {
             if (cdata[tc].quality <= 3)
             {
@@ -3643,7 +3564,7 @@ void magic_restore(const magic_data& m, magic_result& result, bool is_restore_bo
         {
             cdata[tc].attr_adjs[attr] = 0;
         }
-        if (efstatus == curse_state_t::blessed)
+        if (m.efstatus == curse_state_t::blessed)
         {
             cdata[tc].attr_adjs[attr] =
                 sdata.get(p(cnt), tc).original_level / 10 + 5;
@@ -3706,7 +3627,7 @@ void magic_escape(const magic_data& m, magic_result& result)
         }
         gdata_destination_map = gdata(850);
         gdata_destination_dungeon_level = 1;
-        if (is_cursed(efstatus))
+        if (is_cursed(m.efstatus))
         {
             if (rnd(3) == 0)
             {
@@ -3736,7 +3657,7 @@ void magic_return(const magic_data& m, magic_result& result)
     else
     {
         label_2081();
-        if (is_cursed(efstatus))
+        if (is_cursed(m.efstatus))
         {
             if (rnd(3) == 0)
             {
@@ -3749,118 +3670,118 @@ void magic_return(const magic_data& m, magic_result& result)
 
 void magic_restore_mana(const magic_data& m, magic_result& result)
 {
-    healmp(tc, efp / 2 + rnd((efp / 2 + 1)));
-    if (is_in_fov(tc))
+    healmp(m.tc, m.efp / 2 + rnd((m.efp / 2 + 1)));
+    if (is_in_fov(m.tc))
     {
         txt(lang(
-                name(tc) + u8"のマナが回復した。"s,
-                name(tc) + your(tc) + u8" mana is restored."s));
+                name(m.tc) + u8"のマナが回復した。"s,
+                name(m.tc) + your(m.tc) + u8" mana is restored."s));
         play_animation(5);
     }
 }
 
 void magic_absorb_mana(const magic_data& m, magic_result& result)
 {
-    healmp(tc, m.damage.roll());
-    if (is_in_fov(tc))
+    healmp(m.tc, m.damage.roll());
+    if (is_in_fov(m.tc))
     {
         txt(lang(
-                name(tc) + u8"は周囲からマナを吸い取った。"s,
-                name(tc) + u8" absorb"s + _s(tc) + u8" mana from the air."s));
+                name(m.tc) + u8"は周囲からマナを吸い取った。"s,
+                name(m.tc) + u8" absorb"s + _s(m.tc) + u8" mana from the air."s));
         play_animation(5);
     }
 }
 
 void magic_poison(const magic_data& m, magic_result& result)
 {
-    if (is_in_fov(tc))
+    if (is_in_fov(m.tc))
     {
         txt(lang(
-                name(tc) + u8"は毒を浴びた！"s,
-                name(tc) + u8" "s + is(tc) + u8" hit by poison!"s));
+                name(m.tc) + u8"は毒を浴びた！"s,
+                name(m.tc) + u8" "s + is(m.tc) + u8" hit by poison!"s));
     }
-    if (cdata[tc].is_pregnant())
+    if (cdata[m.tc].is_pregnant())
     {
-        cdata[tc].is_pregnant() = false;
-        if (is_in_fov(tc))
+        cdata[m.tc].is_pregnant() = false;
+        if (is_in_fov(m.tc))
         {
             txt(lang(
-                    name(tc) + u8"の体内のエイリアンは溶けた。"s,
-                    name(tc) + your(tc) + u8" alien children melt in "s
-                    + his(tc) + u8" stomach."s));
+                    name(m.tc) + u8"の体内のエイリアンは溶けた。"s,
+                    name(m.tc) + your(m.tc) + u8" alien children melt in "s
+                    + his(m.tc) + u8" stomach."s));
         }
     }
-    dmgcon(tc, 1, efp);
+    dmgcon(m.tc, 1, m.efp);
 }
 
 void magic_dye(const magic_data& m, magic_result& result)
 {
-    if (is_in_fov(tc))
+    if (is_in_fov(m.tc))
     {
         txt(lang(
-                name(tc) + u8"は墨を浴びた！"s,
-                u8"Ink squirts into "s + name(tc) + your(tc) + u8" face!"s));
+                name(m.tc) + u8"は墨を浴びた！"s,
+                u8"Ink squirts into "s + name(m.tc) + your(m.tc) + u8" face!"s));
     }
-    dmgcon(tc, 4, efp);
+    dmgcon(m.tc, 4, m.efp);
 }
 
 void magic_foul(const magic_data& m, magic_result& result)
 {
-    if (is_in_fov(tc))
+    if (is_in_fov(m.tc))
     {
         txt(lang(
-                name(tc) + u8"はひどい頭痛におそわれた！"s,
-                u8"A foul stench floods "s + name(tc) + your(tc)
+                name(m.tc) + u8"はひどい頭痛におそわれた！"s,
+                u8"A foul stench floods "s + name(m.tc) + your(m.tc)
                 + u8" nostrils!"s));
     }
-    dmgcon(tc, 5, efp);
+    dmgcon(m.tc, 5, m.efp);
 }
 
 void magic_potion_numbness(const magic_data& m, magic_result& result)
 {
-    if (is_in_fov(tc))
+    if (is_in_fov(m.tc))
     {
         txt(lang(
-                name(tc) + u8"は痺れた！"s,
-                name(tc) + u8" get"s + _s(tc) + u8" numbness!"s));
+                name(m.tc) + u8"は痺れた！"s,
+                name(m.tc) + u8" get"s + _s(m.tc) + u8" numbness!"s));
     }
-    dmgcon(tc, 3, efp);
+    dmgcon(m.tc, 3, m.efp);
 }
 
 void magic_juice(const magic_data& m, magic_result& result)
 {
-    if (is_in_fov(tc))
+    if (is_in_fov(m.tc))
     {
         txt(lang(
-                name(tc) + u8"は甘い液体を浴びた！"s,
-                u8"Strange sweet liquid splashes onto "s + name(tc) + u8"!"s));
+                name(m.tc) + u8"は甘い液体を浴びた！"s,
+                u8"Strange sweet liquid splashes onto "s + name(m.tc) + u8"!"s));
     }
-    dmgcon(tc, 2, efp);
+    dmgcon(m.tc, 2, m.efp);
 }
 
 void magic_curse(const magic_data& m, magic_result& result, bool is_attack)
 {
     if (is_attack)
     {
-        if (is_in_fov(tc))
+        if (is_in_fov(m.tc))
         {
             txt(lang(
-                     name(cc) + u8"は"s + name(tc)
+                     name(m.cc) + u8"は"s + name(m.tc)
                      + u8"を指差して呪いの言葉を呟いた。"s,
-                     name(cc) + u8" point"s + _s(cc) + u8" "s + name(tc)
-                     + u8" and mutter"s + _s(cc) + u8" a curse."s));
+                     name(m.cc) + u8" point"s + _s(m.cc) + u8" "s + name(m.tc)
+                     + u8" and mutter"s + _s(m.cc) + u8" a curse."s));
         }
     }
-    p = 75 + sdata(19, tc);
-    if (encfind(tc, 43) != -1)
+    p = 75 + sdata(19, m.tc);
+    if (encfind(m.tc, 43) != -1)
     {
-        p += encfind(tc, 43) / 2;
+        p += encfind(m.tc, 43) / 2;
     }
-    if (rnd(p) > efp / 2 + (is_cursed(efstatus)) * 100)
+    if (rnd(p) > m.efp / 2 + (is_cursed(m.efstatus)) * 100)
     {
         break;
     }
-    if (tc < 16)
+    if (m.tc < 16)
     {
         if (rnd(3))
         {
@@ -3876,11 +3797,11 @@ void magic_curse(const magic_data& m, magic_result& result, bool is_attack)
     i = 0;
     for (int cnt = 100; cnt < 130; ++cnt)
     {
-        if (cdata_body_part(tc, cnt) % 10000 == 0)
+        if (cdata_body_part(m.tc, cnt) % 10000 == 0)
         {
             continue;
         }
-        p(i) = cdata_body_part(tc, cnt) % 10000 - 1;
+        p(i) = cdata_body_part(m.tc, cnt) % 10000 - 1;
         if (inv[p(i)].curse_state == curse_state_t::blessed)
         {
             if (rnd(10))
@@ -3894,7 +3815,7 @@ void magic_curse(const magic_data& m, magic_result& result, bool is_attack)
     {
         for (int cnt = 0; cnt < 200; ++cnt)
         {
-            p = get_random_inv(tc);
+            p = get_random_inv(m.tc);
             if (inv[p].number == 0)
             {
                 continue;
@@ -3922,16 +3843,16 @@ void magic_curse(const magic_data& m, magic_result& result, bool is_attack)
         {
             inv[i].curse_state = curse_state_t::cursed;
         }
-        if (is_in_fov(tc))
+        if (is_in_fov(m.tc))
         {
             txt(lang(
-                     name(tc) + u8"の"s + valn + u8"は黒く輝いた。"s,
-                     name(tc) + your(tc) + u8" "s + valn + u8" glows black."s));
+                     name(m.tc) + u8"の"s + valn + u8"は黒く輝いた。"s,
+                     name(m.tc) + your(m.tc) + u8" "s + valn + u8" glows black."s));
         }
-        refresh_character(tc);
+        refresh_character(m.tc);
         snd(117);
-        animeload(14, tc);
-        item_stack(tc, i, 1);
+        animeload(14, m.tc);
+        item_stack(m.tc, i, 1);
     }
     else
     {
@@ -3950,7 +3871,7 @@ void magic_resistmod(const magic_data& m, magic_result& result)
         {
             ++f;
             resistmod(tc, p, 50 * -1);
-            if (f >= efp / 100)
+            if (f >= m.efp / 100)
             {
                 break;
             }
@@ -4010,6 +3931,7 @@ void magic_ally(const magic_data& m, magic_result& result, ally_t type)
 
 void magic_domination(const magic_data& m, magic_result& result)
 {
+    int adjusted_power = m.efp;
     if (cc != 0 || tc == 0 || cdata[tc].relationship == 10)
     {
         txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
@@ -4030,10 +3952,10 @@ void magic_domination(const magic_data& m, magic_result& result)
         int stat = inv_find(663, cc);
         if (stat != -1)
         {
-            efp = efp * 3 / 2;
+            adjusted_power = adjusted_power * 3 / 2;
         }
     }
-    if (rnd(efp / 15 + 5) < cdata[tc].level)
+    if (rnd(adjusted_power / 15 + 5) < cdata[tc].level)
     {
         result.succeeded = false;
     }
@@ -4067,7 +3989,7 @@ void magic_place_ground_effect(const magic_data& m, magic_result& result, ground
     if (type == ground_effect_t::web)
     {
         p(0) = 3;
-        p(1) = 2 + rnd((efp / 50 + 1));
+        p(1) = 2 + rnd((m.efp / 50 + 1));
         txt(lang(
                  u8"蜘蛛の巣が辺りを覆った。"s,
                  u8"The ground is covered with thick webbing."s));
@@ -4078,14 +4000,14 @@ void magic_place_ground_effect(const magic_data& m, magic_result& result, ground
                  u8"辺りを濃い霧が覆った。"s,
                  u8"The air is wrapped in a dense fog."s));
         p(0) = 3;
-        p(1) = 2 + rnd((efp / 50 + 1));
+        p(1) = 2 + rnd((m.efp / 50 + 1));
     }
     if (type == ground_effect_t::acid)
     {
         txt(lang(
                  u8"酸の水溜りが発生した。"s, u8"Acid puddles are generated."s));
         p(0) = 2;
-        p(1) = 2 + rnd((efp / 50 + 1));
+        p(1) = 2 + rnd((m.efp / 50 + 1));
     }
     if (type == ground_effect_t::fire)
     {
@@ -4093,13 +4015,13 @@ void magic_place_ground_effect(const magic_data& m, magic_result& result, ground
                  u8"火柱が発生した。"s,
                  u8"Walls of fire come out from the ground."s));
         p(0) = 2;
-        p(1) = 2 + rnd((efp / 50 + 1));
+        p(1) = 2 + rnd((m.efp / 50 + 1));
     }
     if (type == ground_effect_t::ether)
     {
         txt(lang(u8"エーテルの霧が発生した。"s, u8"Ether mist spreads."s));
         p(0) = 2;
-        p(1) = 1 + rnd((efp / 100 + 2));
+        p(1) = 1 + rnd((m.efp / 100 + 2));
     }
     snd(68);
     for (int cnt = 0, cnt_end = (p(1)); cnt < cnt_end; ++cnt)
@@ -4133,24 +4055,24 @@ void magic_place_ground_effect(const magic_data& m, magic_result& result, ground
         }
         if (type == ground_effect_type::ether)
         {
-            addmef(x, y, 4, 20, rnd(4) + 2, efp, cc);
+            addmef(x, y, 4, 20, rnd(4) + 2, m.efp, cc);
         }
         if (type == ground_effect_type::acid)
         {
-            addmef(x, y, 3, 19, rnd(10) + 5, efp, cc);
+            addmef(x, y, 3, 19, rnd(10) + 5, m.efp, cc);
         }
         if (type == ground_effect_type::fire)
         {
-            addmef(x, y, 5, 24, rnd(10) + 5, efp, cc);
+            addmef(x, y, 5, 24, rnd(10) + 5, m.efp, cc);
             mapitem_fire(x, y);
         }
         if (type == ground_effect_type::web)
         {
-            addmef(x, y, 1, 11, -1, efp * 2);
+            addmef(x, y, 1, 11, -1, m.efp * 2);
         }
         if (type == ground_effect_type::fog)
         {
-            addmef(x, y, 2, 30, 8 + rnd((15 + efp / 25)), efp);
+            addmef(x, y, 2, 30, 8 + rnd((15 + m.efp / 25)), m.efp);
         }
     }
 }
@@ -4285,7 +4207,7 @@ void magic_reconstruct_artifact(const magic_data& m, magic_result& result, bool 
     {
         if (inv[ci].quality == 6)
         {
-            if (efp < 350)
+            if (m.efp < 350)
             {
                 txt(lang(
                          u8"アーティファクトの再生成にはパワーが足りない。"s,
@@ -4306,7 +4228,7 @@ void magic_reconstruct_artifact(const magic_data& m, magic_result& result, bool 
         else
         {
             animeload(8, cc);
-            if (efp <= 50)
+            if (m.efp <= 50)
             {
                 if (rnd(3) == 0)
                 {
@@ -4314,8 +4236,8 @@ void magic_reconstruct_artifact(const magic_data& m, magic_result& result, bool 
                 }
             }
             s = itemname(ci, 1, 1);
-            objlv = efp / 10;
-            objfix = efp / 100;
+            objlv = m.efp / 10;
+            objfix = m.efp / 100;
             randomize();
             change_item_material();
             txt(lang(
@@ -4350,7 +4272,7 @@ void magic_deed_of_inheritance(const magic_data& m, magic_result& result)
         return;
     }
     snd(24);
-    p = rnd((efp + 1)) / 100 + 1;
+    p = rnd((m.efp + 1)) / 100 + 1;
     gdata_rights_to_succeed_to += p;
     txtef(5);
     txt(lang(
@@ -4386,7 +4308,7 @@ void magic_enchant(const magic_data& m, magic_result& result, bool is_armor)
         int stat = ctrl_inventory();
         if (stat == 1)
         {
-            if (inv[ci].enhancement < efp / 100)
+            if (inv[ci].enhancement < m.efp / 100)
             {
                 snd(24);
                 txt(lang(
@@ -4443,7 +4365,7 @@ void magic_recharge(const magic_data& m, magic_result& result, bool is_fill_char
         if (stat == 1)
         {
             dbid = inv[ci].id;
-            access_item_db(2);
+            access_item_db(item_db_t::charge_level);
             if (ichargelevel < 1 || inv[ci].id == 290 || inv[ci].id == 480
                 || inv[ci].id == 289 || inv[ci].id == 732
                 || (inv[ci].id == 687 && inv[ci].param2 != 0))
@@ -4456,7 +4378,9 @@ void magic_recharge(const magic_data& m, magic_result& result, bool is_fill_char
             result.succeeded = true;
             if (inv[ci].count > ichargelevel)
             {
-                f = -1;
+                // TODO is this equivalent?
+                //f = -1;
+                result.succeeded = false;
             }
             if (f == -1)
             {
@@ -4465,7 +4389,7 @@ void magic_recharge(const magic_data& m, magic_result& result, bool is_fill_char
                          itemname(ci) + u8" cannot be recharged anymore."s));
                 return;
             }
-            if (rnd(efp / 25 + 1) == 0)
+            if (rnd(m.efp / 25 + 1) == 0)
             {
                 result.succeeded = false;
             }
@@ -4539,7 +4463,7 @@ void magic_draw_charge(const magic_data& m, magic_result& result)
         if (stat == 1)
         {
             dbid = inv[ci].id;
-            access_item_db(2);
+            access_item_db(item_db_t::charge_level);
             for (int cnt = 0; cnt < 1; ++cnt)
             {
                 if (ichargelevel == 1)
@@ -4589,7 +4513,7 @@ void magic_change_creature(const magic_data& m, magic_result& result)
         break;
     }
     result.succeeded = true;
-    if (efp / 10 + 10 < cdata[tc].level)
+    if (m.efp / 10 + 10 < cdata[tc].level)
     {
         result.succeeded = false;
     }
@@ -4665,7 +4589,7 @@ void magic_change_material(const magic_data& m, magic_result& result)
         for (int cnt = 0;; ++cnt)
         {
             await();
-            flt(calcobjlv(efp / 10) + 5, calcfixlv(3));
+            flt(calcobjlv(m.efp / 10) + 5, calcfixlv(3));
             if (cnt < 10)
             {
                 flttypemajor = fltbk;
@@ -4740,7 +4664,7 @@ void magic_wall_creation(const magic_data& m, magic_result& result, bool create_
                 return;
             }
             txt(lang(u8"扉が出現した。"s, u8"A door appears."s));
-            cell_featset(x, y, tile_doorclosed, 21, rnd(efp / 10 + 1));
+            cell_featset(x, y, tile_doorclosed, 21, rnd(m.efp / 10 + 1));
             if (chipm(7, map(x, y, 0)) & 4)
             {
                 map(x, y, 0) = tile_tunnel;

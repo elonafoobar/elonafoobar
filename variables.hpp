@@ -1,5 +1,7 @@
 #include "elona.hpp"
 #include "position.hpp"
+#include "magic.hpp"
+#include "access_item_db.hpp"
 
 
 #ifdef ELONA_DEFINE_GLOBAL_INSTANCE
@@ -304,7 +306,7 @@ ELONA_EXTERN(int dy);
 ELONA_EXTERN(int efcancel);
 //ELONA_EXTERN(int efid);
 //ELONA_EXTERN(int efp);
-//ELONA_EXTERN(int efsource);
+ELONA_EXTERN(efsource_t efsource);
 //ELONA_EXTERN(curse_state_t efstatus);
 ELONA_EXTERN(int egg);
 ELONA_EXTERN(int egolv);
@@ -586,7 +588,7 @@ int dmghp(int = 0, int = 0, int = 0, int = 0, int = 0);
 void dmgmp(int, int);
 void damage_insanity(int, int);
 void dmgsp(int, int);
-int efstatusfix(int = 0, int = 0, int = 0, int = 0);
+int efstatusfix(curse_state_t, int = 0, int = 0, int = 0, int = 0); // TODO move
 int eleinfo(int = 0, int = 0);
 int encadd(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
 int encfind(int = 0, int = 0);
@@ -630,7 +632,6 @@ int itemcreate(int = 0, int = 0, int = 0, int = 0, int = 0);
 int itemfind(int = 0, int = 0, int = 0);
 int itemusingfind(int, bool = false);
 int key_direction();
-int access_item_db(int);
 int get_required_craft_materials();
 int voting_box();
 int try_to_cast_spell();
@@ -667,26 +668,25 @@ int select_alias(int);
 int change_npc_tone();
 int show_character_sheet();
 int change_appearance();
-int label_2044();
+int do_customize_appearance();
 int ctrl_inventory();
 int label_2072();
 int label_2073();
 int can_do_ranged_attack();
 int label_2080();
 int label_2083();
-int ask_direction();
+optional<std::tuple<int, int>> ask_direction();
 int label_2143();
 int decode_book();
 int read_normal_book();
-int label_2167();
-int label_2168();
+int cast_spell();
+int do_cast_spell();
 int drink_potion();
 int drink_well();
 int read_scroll();
-int label_2172();
+int zap_rod();
 int label_2174();
-int label_2175();
-int magic();
+int query_magic_location();
 int pick_up_item();
 int drop_item();
 int equip_item(int);
@@ -1009,7 +1009,7 @@ void refresh_speed_correction_value();
 void gain_new_body_part(int);
 void gain_level(int);
 void label_1455(int);
-void label_1456(int);
+void refresh_required_exp(int);
 void label_1457();
 void label_1458();
 void label_1459(int);
@@ -1194,7 +1194,7 @@ void do_give_command();
 void do_interact_command();
 void call_npc();
 void label_2022();
-void label_2026();
+void do_cast_spell_on_self(int);
 void label_2027();
 void label_2031();
 void label_2032();
@@ -1264,7 +1264,7 @@ void do_read_commad();
 void do_eat_command();
 void do_drink_command();
 void do_zap_command();
-void label_2201();
+void do_bash();
 void label_2203();
 void label_2205();
 void label_2206();

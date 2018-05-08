@@ -6,14 +6,13 @@
 #include "item_db.hpp"
 #include "variables.hpp"
 
-
-
 namespace elona
 {
 
 
-int access_item_db(int dbmode)
+item_db_result access_item_db(int dbmode)
 {
+    item_db_result result = { false, false, 0, 0 };
     const auto info = the_item_db[dbid];
     if (info)
     {
@@ -29,13 +28,13 @@ int access_item_db(int dbmode)
             inv[ci].dv = info->dv;
             inv[ci].material = info->material;
             if (dbmode == 10)
-                return 0;
+                return result;
         }
         else if (dbmode == 2)
         {
             ichargelevel = info->chargelevel;
             reftype = info->category;
-            return 0;
+            return result;
         }
         else if (dbmode == 17)
         {
@@ -50,12 +49,13 @@ int access_item_db(int dbmode)
             {
                 description(3) = info->description_en;
             }
-            return 0;
+            return result;
         }
     }
     else
     {
-        return -999;
+        //return -999;
+        return result;
     }
 
     if (dbmode == 3)
@@ -111,7 +111,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::lulwy;
+            result.is_offerable = [0].god_id == core_god::lulwy;
+            return result;
         }
         break;
     case 787:
@@ -136,8 +137,9 @@ int access_item_db(int dbmode)
     case 783:
         if (dbmode == 13)
         {
-            decode_book();
-            return -1;
+            // TODO huh?
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 781:
@@ -193,19 +195,19 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 15)
         {
-            efid = 1147;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.efid = 1147;
+            result.efp = 100;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 770:
         if (dbmode == 15)
         {
-            efid = 1146;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.efid = 1146;
+            result.efp = 100;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 767:
@@ -309,7 +311,7 @@ int access_item_db(int dbmode)
         if (dbmode == 13)
         {
             read_normal_book();
-            return -1;
+            return result;
         }
         break;
     case 746:
@@ -365,7 +367,7 @@ int access_item_db(int dbmode)
         if (dbmode == 13)
         {
             read_normal_book();
-            return -1;
+            return result;
         }
         break;
     case 741:
@@ -432,19 +434,19 @@ int access_item_db(int dbmode)
     case 737:
         if (dbmode == 13)
         {
-            efid = 1145;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.efid = 1145;
+            result.efp = 100;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 736:
         if (dbmode == 15)
         {
-            efid = 1116;
-            efp = 250;
-            drink_potion();
-            return -1;
+            result.efid = 1116;
+            result.efp = 250;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 735:
@@ -470,10 +472,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 464;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 464;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 731:
@@ -484,10 +486,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 463;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 463;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 730:
@@ -683,17 +685,17 @@ int access_item_db(int dbmode)
     case 712:
         if (dbmode == 13)
         {
-            efid = 1115;
-            return -1;
+            result.efid = 1115; // creates building
+            return result;
         }
         break;
     case 711:
         if (dbmode == 15)
         {
-            efid = 1144;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.efid = 1144;
+            result.efp = 100;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 710:
@@ -704,28 +706,28 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 462;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 462;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 709:
         if (dbmode == 13)
         {
-            efid = 462;
-            efp = 1500;
-            read_scroll();
-            return -1;
+            result.efid = 462;
+            result.efp = 1500;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 708:
         if (dbmode == 13)
         {
-            efid = 461;
-            efp = 2500;
-            read_scroll();
-            return -1;
+            result.efid = 461;
+            result.efp = 2500;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 707:
@@ -744,10 +746,10 @@ int access_item_db(int dbmode)
     case 706:
         if (dbmode == 15)
         {
-            efid = 1143;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.efid = 1143;
+            result.efp = 100;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 705:
@@ -768,10 +770,10 @@ int access_item_db(int dbmode)
     case 704:
         if (dbmode == 15)
         {
-            efid = 1130;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.efid = 1130;
+            result.efp = 100;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 703:
@@ -799,7 +801,7 @@ int access_item_db(int dbmode)
         {
             menucycle = 1;
             show_city_chart();
-            return -1;
+            return result;
         }
         break;
     case 699:
@@ -811,10 +813,10 @@ int access_item_db(int dbmode)
     case 698:
         if (dbmode == 15)
         {
-            efid = 1142;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.efid = 1142;
+            result.efp = 100;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 697:
@@ -825,10 +827,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 459;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 459;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 696:
@@ -839,10 +841,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 460;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 460;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 695:
@@ -909,8 +911,9 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            decode_book();
-            return -1;
+            // TODO huh?
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 686:
@@ -1163,7 +1166,7 @@ int access_item_db(int dbmode)
         if (dbmode == 13)
         {
             read_normal_book();
-            return -1;
+            return result;
         }
         break;
     case 667:
@@ -1240,10 +1243,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 418;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 418;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 655:
@@ -1264,7 +1267,7 @@ int access_item_db(int dbmode)
         if (dbmode == 15)
         {
             drink_well();
-            return -1;
+            return result;
         }
         break;
     case 648:
@@ -1303,10 +1306,10 @@ int access_item_db(int dbmode)
     case 638:
         if (dbmode == 13)
         {
-            efid = 1141;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.efid = 1141;
+            result.efp = 100;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 637:
@@ -1340,10 +1343,10 @@ int access_item_db(int dbmode)
     case 632:
         if (dbmode == 13)
         {
-            efid = 1140;
-            efp = 150;
-            read_scroll();
-            return -1;
+            result.efid = 1140;
+            result.efp = 150;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 630:
@@ -1368,10 +1371,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 458;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 458;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 627:
@@ -1402,10 +1405,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 15)
         {
-            efid = 1139;
-            efp = 500;
-            drink_potion();
-            return -1;
+            result.efid = 1139;
+            result.efp = 500;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 625:
@@ -1421,10 +1424,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 1137;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.efid = 1137;
+            result.efp = 100;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 623:
@@ -1434,10 +1437,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 1138;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.efid = 1138;
+            result.efp = 100;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 622:
@@ -1449,19 +1452,19 @@ int access_item_db(int dbmode)
     case 621:
         if (dbmode == 13)
         {
-            efid = 1136;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.efid = 1136;
+            result.efp = 100;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 620:
         if (dbmode == 15)
         {
-            efid = 1135;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.efid = 1135;
+            result.efp = 100;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 618:
@@ -1472,7 +1475,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = [0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 616:
@@ -1521,7 +1525,7 @@ int access_item_db(int dbmode)
         if (dbmode == 15)
         {
             drink_well();
-            return -1;
+            return result;
         }
         break;
     case 600:
@@ -1549,10 +1553,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 15)
         {
-            efid = 1103;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.efid = 1103;
+            result.efp = 100;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 583:
@@ -1570,10 +1574,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 457;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 457;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 581:
@@ -1584,9 +1588,9 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 457;
-            efp = 100;
-            return -1;
+            result.efid = 457;
+            result.efp = 100;
+            return result;
         }
         break;
     case 578:
@@ -1598,10 +1602,10 @@ int access_item_db(int dbmode)
     case 577:
         if (dbmode == 15)
         {
-            efid = 1133;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.efid = 1133;
+            result.efp = 100;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 576:
@@ -1613,10 +1617,10 @@ int access_item_db(int dbmode)
     case 574:
         if (dbmode == 15)
         {
-            efid = 1101;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.efid = 1101;
+            result.efp = 100;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 573:
@@ -1629,8 +1633,8 @@ int access_item_db(int dbmode)
     case 572:
         if (dbmode == 13)
         {
-            efid = 1115;
-            return -1;
+            result.efid = 1115; // creates building
+            return result;
         }
         break;
     case 571:
@@ -1647,9 +1651,9 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 456;
-            efp = 100;
-            return -1;
+            result.efid = 456;
+            result.efp = 100;
+            return result;
         }
         break;
     case 569:
@@ -1660,10 +1664,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 456;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 456;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 568:
@@ -1683,10 +1687,10 @@ int access_item_db(int dbmode)
     case 566:
         if (dbmode == 15)
         {
-            efid = 1116;
-            efp = 250;
-            drink_potion();
-            return -1;
+            result.efid = 1116;
+            result.efp = 250;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 565:
@@ -1697,9 +1701,9 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 455;
-            efp = 100;
-            return -1;
+            result.efid = 455;
+            result.efp = 100;
+            return result;
         }
         break;
     case 564:
@@ -1710,10 +1714,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 455;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 455;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 563:
@@ -1724,7 +1728,7 @@ int access_item_db(int dbmode)
         if (dbmode == 13)
         {
             read_normal_book();
-            return -1;
+            return result;
         }
         break;
     case 562:
@@ -1742,10 +1746,10 @@ int access_item_db(int dbmode)
     case 559:
         if (dbmode == 15)
         {
-            efid = 1131;
-            efp = 200;
-            drink_potion();
-            return -1;
+            result.efid = 1131;
+            result.efp = 200;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 558:
@@ -1787,7 +1791,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = [0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 553:
@@ -1797,7 +1802,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = [0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 552:
@@ -1816,9 +1822,9 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 405;
-            efp = 100;
-            return -1;
+            result.efid = 405;
+            result.efp = 100;
+            return result;
         }
         break;
     case 550:
@@ -1829,19 +1835,19 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 405;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 405;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 549:
         if (dbmode == 13)
         {
-            efid = 404;
-            efp = 400;
-            read_scroll();
-            return -1;
+            result.efid = 404;
+            result.efp = 400;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 548:
@@ -1852,10 +1858,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 404;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 404;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 546:
@@ -1866,10 +1872,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 438;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 438;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 545:
@@ -1880,9 +1886,9 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 438;
-            efp = 100;
-            return -1;
+            result.efid = 438;
+            result.efp = 100;
+            return result;
         }
         break;
     case 544:
@@ -1895,15 +1901,15 @@ int access_item_db(int dbmode)
     case 543:
         if (dbmode == 13)
         {
-            efid = 1115;
-            return -1;
+            result.efid = 1115;
+            return result;
         }
         break;
     case 542:
         if (dbmode == 13)
         {
-            efid = 1115;
-            return -1;
+            result.efid = 1115;
+            return result;
         }
         break;
     case 526:
@@ -1920,8 +1926,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 1115;
-            return -1;
+            result.efid = 1115;
+            return result;
         }
         break;
     case 521:
@@ -1931,8 +1937,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 1115;
-            return -1;
+            result.efid = 1115;
+            return result;
         }
         break;
     case 520:
@@ -1946,10 +1952,10 @@ int access_item_db(int dbmode)
     case 519:
         if (dbmode == 15)
         {
-            efid = 1108;
-            efp = 150;
-            drink_potion();
-            return -1;
+            result.efid = 1108;
+            result.efp = 150;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 518:
@@ -1960,9 +1966,9 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 1132;
-            efp = 100;
-            return -1;
+            result.efid = 1132;
+            result.efp = 100;
+            return result;
         }
         break;
     case 517:
@@ -1973,27 +1979,27 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 628;
-            efp = 100;
-            return -1;
+            result.efid = 628;
+            result.efp = 100;
+            return result;
         }
         break;
     case 516:
         if (dbmode == 15)
         {
-            efid = 1103;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.efid = 1103;
+            result.efp = 100;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 515:
         if (dbmode == 13)
         {
-            efid = 1129;
-            efp = 300;
-            read_scroll();
-            return -1;
+            result.efid = 1129;
+            result.efp = 300;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 514:
@@ -2029,7 +2035,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = [0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 511:
@@ -2039,46 +2046,46 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 1128;
-            efp = inv[ci].param1;
-            read_scroll();
-            return -1;
+            result.efid = 1128;
+            result.efp = inv[ci].param1;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 509:
         if (dbmode == 13)
         {
-            efid = 1125;
-            efp = 400;
-            read_scroll();
-            return -1;
+            result.efid = 1125;
+            result.efp = 400;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 508:
         if (dbmode == 13)
         {
-            efid = 1125;
-            efp = 200;
-            read_scroll();
-            return -1;
+            result.efid = 1125;
+            result.efp = 200;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 507:
         if (dbmode == 13)
         {
-            efid = 1124;
-            efp = 400;
-            read_scroll();
-            return -1;
+            result.efid = 1124;
+            result.efp = 400;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 506:
         if (dbmode == 13)
         {
-            efid = 1124;
-            efp = 200;
-            read_scroll();
-            return -1;
+            result.efid = 1124;
+            result.efp = 200;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 505:
@@ -2088,37 +2095,37 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 1123;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.efid = 1123;
+            result.efp = 100;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 502:
         if (dbmode == 13)
         {
-            efid = 1127;
-            efp = 350;
-            read_scroll();
-            return -1;
+            result.efid = 1127;
+            result.efp = 350;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 501:
         if (dbmode == 13)
         {
-            efid = 1127;
-            efp = 180;
-            read_scroll();
-            return -1;
+            result.efid = 1127;
+            result.efp = 180;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 500:
         if (dbmode == 13)
         {
-            efid = 1127;
-            efp = 10;
-            read_scroll();
-            return -1;
+            result.efid = 1127;
+            result.efp = 10;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 499:
@@ -2146,43 +2153,50 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = [0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 495:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = [0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 494:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = [0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 492:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = [0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 491:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = [0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 490:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = [0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 489:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = [0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 488:
@@ -2192,19 +2206,22 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = [0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 487:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = [0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 486:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = [0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 485:
@@ -2215,9 +2232,9 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 436;
-            efp = 100;
-            return -1;
+            result.efid = 436;
+            result.efp = 100;
+            return result;
         }
         break;
     case 484:
@@ -2228,10 +2245,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 436;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 436;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 483:
@@ -2247,7 +2264,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::lulwy;
+            result.is_offerable = [0].god_id == core_god::lulwy;
+            return result;
         }
         break;
     case 481:
@@ -2258,10 +2276,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 435;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 435;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 480:
@@ -2272,18 +2290,18 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 435;
-            efp = 100;
-            return -1;
+            result.efid = 435;
+            result.efp = 100;
+            return result;
         }
         break;
     case 479:
         if (dbmode == 13)
         {
-            efid = 1122;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.efid = 1122;
+            result.efp = 100;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 478:
@@ -2336,55 +2354,55 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 454;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 454;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 433:
         if (dbmode == 15)
         {
-            efid = 1121;
-            efp = 200;
-            drink_potion();
-            return -1;
+            result.efid = 1121;
+            result.efp = 200;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 432:
         if (dbmode == 15)
         {
-            efid = 454;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.efid = 454;
+            result.efp = 100;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 431:
         if (dbmode == 13)
         {
-            efid = 1107;
-            efp = 300;
-            read_scroll();
-            return -1;
+            result.efid = 1107;
+            result.efp = 300;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 430:
         if (dbmode == 13)
         {
-            efid = 1119;
-            efp = 500;
-            read_scroll();
-            return -1;
+            result.efid = 1119;
+            result.efp = 500;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 429:
         if (dbmode == 15)
         {
-            efid = 1118;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.efid = 1118;
+            result.efp = 100;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 428:
@@ -2436,7 +2454,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = [0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 420:
@@ -2446,7 +2465,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = [0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 419:
@@ -2456,7 +2476,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = [0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 418:
@@ -2466,7 +2487,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = [0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 417:
@@ -2476,7 +2498,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = [0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 412:
@@ -2487,18 +2510,18 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 412;
-            efp = 100;
-            return -1;
+            result.efid = 412;
+            result.efp = 100;
+            return result;
         }
         break;
     case 411:
         if (dbmode == 13)
         {
-            efid = 430;
-            efp = 500;
-            read_scroll();
-            return -1;
+            result.efid = 430;
+            result.efp = 500;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 410:
@@ -2509,10 +2532,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 430;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 430;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 409:
@@ -2584,10 +2607,10 @@ int access_item_db(int dbmode)
     case 398:
         if (dbmode == 13)
         {
-            efid = 453;
-            efp = 250;
-            read_scroll();
-            return -1;
+            result.efid = 453;
+            result.efp = 250;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 397:
@@ -2598,10 +2621,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 453;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 453;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 396:
@@ -2612,19 +2635,19 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 452;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 452;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 395:
         if (dbmode == 13)
         {
-            efid = 1117;
-            efp = 250;
-            read_scroll();
-            return -1;
+            result.efid = 1117;
+            result.efp = 250;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 393:
@@ -2636,10 +2659,10 @@ int access_item_db(int dbmode)
     case 392:
         if (dbmode == 15)
         {
-            efid = 1116;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.efid = 1116;
+            result.efp = 100;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 391:
@@ -2650,36 +2673,36 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 621;
-            efp = 100;
-            return -1;
+            result.efid = 621;
+            result.efp = 100;
+            return result;
         }
         break;
     case 390:
         if (dbmode == 13)
         {
-            efid = 621;
-            efp = 250;
-            read_scroll();
-            return -1;
+            result.efid = 621;
+            result.efp = 250;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 389:
         if (dbmode == 13)
         {
-            efid = 407;
-            efp = 300;
-            read_scroll();
-            return -1;
+            result.efid = 407;
+            result.efp = 300;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 388:
         if (dbmode == 13)
         {
-            efid = 406;
-            efp = 300;
-            read_scroll();
-            return -1;
+            result.efid = 406;
+            result.efp = 300;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 387:
@@ -2690,10 +2713,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 407;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 407;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 386:
@@ -2704,10 +2727,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 406;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 406;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 385:
@@ -2718,18 +2741,18 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 407;
-            efp = 100;
-            return -1;
+            result.efid = 407;
+            result.efp = 100;
+            return result;
         }
         break;
     case 384:
         if (dbmode == 13)
         {
-            efid = 451;
-            efp = 250;
-            read_scroll();
-            return -1;
+            result.efid = 451;
+            result.efp = 250;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 383:
@@ -2740,19 +2763,19 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 451;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 451;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 382:
         if (dbmode == 15)
         {
-            efid = 449;
-            efp = 250;
-            drink_potion();
-            return -1;
+            result.efid = 449;
+            result.efp = 250;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 381:
@@ -2763,10 +2786,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 450;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 450;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 380:
@@ -2777,19 +2800,19 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 449;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 449;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 379:
         if (dbmode == 15)
         {
-            efid = 448;
-            efp = 250;
-            drink_potion();
-            return -1;
+            result.efid = 448;
+            result.efp = 250;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 378:
@@ -2800,10 +2823,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 448;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 448;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 377:
@@ -2814,27 +2837,27 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 446;
-            efp = 100;
-            return -1;
+            result.efid = 446;
+            result.efp = 100;
+            return result;
         }
         break;
     case 376:
         if (dbmode == 15)
         {
-            efid = 447;
-            efp = 400;
-            drink_potion();
-            return -1;
+            result.efid = 447;
+            result.efp = 400;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 375:
         if (dbmode == 15)
         {
-            efid = 446;
-            efp = 250;
-            drink_potion();
-            return -1;
+            result.efid = 446;
+            result.efp = 250;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 374:
@@ -2845,10 +2868,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 447;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 447;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 373:
@@ -2859,19 +2882,19 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 446;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 446;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 372:
         if (dbmode == 15)
         {
-            efid = 445;
-            efp = 250;
-            drink_potion();
-            return -1;
+            result.efid = 445;
+            result.efp = 250;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 371:
@@ -2882,19 +2905,19 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 445;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 445;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 370:
         if (dbmode == 15)
         {
-            efid = 444;
-            efp = 300;
-            drink_potion();
-            return -1;
+            result.efid = 444;
+            result.efp = 300;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 369:
@@ -2905,19 +2928,19 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 444;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 444;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 368:
         if (dbmode == 15)
         {
-            efid = 443;
-            efp = 400;
-            drink_potion();
-            return -1;
+            result.efid = 443;
+            result.efp = 400;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 367:
@@ -2928,10 +2951,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 443;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 443;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 366:
@@ -2942,9 +2965,9 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 443;
-            efp = 100;
-            return -1;
+            result.efid = 443;
+            result.efp = 100;
+            return result;
         }
         break;
     case 365:
@@ -2955,37 +2978,37 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 442;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 442;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 364:
         if (dbmode == 15)
         {
-            efid = 442;
-            efp = 200;
-            drink_potion();
-            return -1;
+            result.efid = 442;
+            result.efp = 200;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 363:
         if (dbmode == 13)
         {
-            efid = 412;
-            efp = 2500;
-            read_scroll();
-            return -1;
+            result.efid = 412;
+            result.efp = 2500;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 362:
         if (dbmode == 13)
         {
-            efid = 411;
-            efp = 2000;
-            read_scroll();
-            return -1;
+            result.efid = 411;
+            result.efp = 2000;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 360:
@@ -3127,7 +3150,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = [0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 353:
@@ -3138,7 +3162,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = [0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 352:
@@ -3149,7 +3174,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = [0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 351:
@@ -3160,7 +3186,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = [0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 350:
@@ -3171,7 +3198,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = [0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 349:
@@ -3182,7 +3210,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = [0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 348:
@@ -3193,7 +3222,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = [0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 347:
@@ -3204,7 +3234,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = [0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 346:
@@ -3215,7 +3246,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = [0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 345:
@@ -3226,7 +3258,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = [0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 344:
@@ -3236,8 +3269,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 1115;
-            return -1;
+            result.efid = 1115;
+            return result;
         }
         break;
     case 343:
@@ -3365,9 +3398,9 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 441;
-            efp = 100;
-            return -1;
+            result.efid = 441;
+            result.efp = 100;
+            return result;
         }
         break;
     case 289:
@@ -3378,46 +3411,46 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 441;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 441;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 288:
         if (dbmode == 13)
         {
-            efid = 1114;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.efid = 1114;
+            result.efp = 100;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 287:
         if (dbmode == 15)
         {
-            efid = 1113;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.efid = 1113;
+            result.efp = 100;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 286:
         if (dbmode == 15)
         {
-            efid = 440;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.efid = 440;
+            result.efp = 100;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 285:
         if (dbmode == 15)
         {
-            efid = 439;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.efid = 439;
+            result.efp = 100;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 272:
@@ -3428,10 +3461,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 433;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 433;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 271:
@@ -3442,10 +3475,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 434;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 434;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 270:
@@ -3456,10 +3489,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 432;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 432;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 269:
@@ -3470,10 +3503,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 431;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 431;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 268:
@@ -3484,10 +3517,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 423;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 423;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 267:
@@ -3498,10 +3531,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 422;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 422;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 266:
@@ -3518,10 +3551,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 416;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 416;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 264:
@@ -3532,10 +3565,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 417;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 417;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 263:
@@ -3546,19 +3579,19 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 415;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 415;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 262:
         if (dbmode == 15)
         {
-            efid = 1108;
-            efp = 200;
-            drink_potion();
-            return -1;
+            result.efid = 1108;
+            result.efp = 200;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 261:
@@ -3569,7 +3602,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = [0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 260:
@@ -3600,10 +3634,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 414;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 414;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 256:
@@ -3631,10 +3665,10 @@ int access_item_db(int dbmode)
     case 253:
         if (dbmode == 15)
         {
-            efid = 1102;
-            efp = 200;
-            drink_potion();
-            return -1;
+            result.efid = 1102;
+            result.efp = 200;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 252:
@@ -3645,10 +3679,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 403;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 403;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 251:
@@ -3659,10 +3693,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 402;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 402;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 250:
@@ -3673,10 +3707,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 401;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 401;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 249:
@@ -3687,10 +3721,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 400;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 400;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 248:
@@ -3701,10 +3735,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 428;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 428;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 247:
@@ -3715,10 +3749,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 413;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 413;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 246:
@@ -3729,55 +3763,55 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 429;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 429;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 245:
         if (dbmode == 13)
         {
-            efid = 408;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.efid = 408;
+            result.efp = 100;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 244:
         if (dbmode == 13)
         {
-            efid = 1104;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.efid = 1104;
+            result.efp = 100;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 243:
         if (dbmode == 13)
         {
-            efid = 1105;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.efid = 1105;
+            result.efp = 100;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 242:
         if (dbmode == 13)
         {
-            efid = 429;
-            efp = 500;
-            read_scroll();
-            return -1;
+            result.efid = 429;
+            result.efp = 500;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 236:
         if (dbmode == 13)
         {
-            efid = 428;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.efid = 428;
+            result.efp = 100;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 235:
@@ -3811,7 +3845,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = [0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 230:
@@ -3821,7 +3856,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::lulwy;
+            result.is_offerable = [0].god_id == core_god::lulwy;
+            return result;
         }
         break;
     case 229:
@@ -3831,7 +3867,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::itzpalt;
+            result.is_offerable = [0].god_id == core_god::itzpalt;
+            return result;
         }
         break;
     case 228:
@@ -3890,7 +3927,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::itzpalt;
+            result.is_offerable = [0].god_id == core_god::itzpalt;
+            return result;
         }
         break;
     case 211:
@@ -3911,10 +3949,10 @@ int access_item_db(int dbmode)
     case 209:
         if (dbmode == 13)
         {
-            efid = 412;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.efid = 412;
+            result.efp = 100;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 207:
@@ -3960,10 +3998,10 @@ int access_item_db(int dbmode)
     case 205:
         if (dbmode == 15)
         {
-            efid = 1102;
-            efp = 500;
-            drink_potion();
-            return -1;
+            result.efid = 1102;
+            result.efp = 500;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 204:
@@ -3985,9 +4023,9 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 401;
-            efp = 100;
-            return -1;
+            result.efid = 401;
+            result.efp = 100;
+            return result;
         }
         break;
     case 202:
@@ -3998,9 +4036,9 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 429;
-            efp = 100;
-            return -1;
+            result.efid = 429;
+            result.efp = 100;
+            return result;
         }
         break;
     case 201:
@@ -4011,7 +4049,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = [0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 200:
@@ -4022,7 +4061,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = [0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 199:
@@ -4033,7 +4073,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = [0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 198:
@@ -4044,7 +4085,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = [0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 197:
@@ -4082,7 +4124,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = [0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 192:
@@ -4105,7 +4148,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = [0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 188:
@@ -4116,7 +4160,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = [0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 187:
@@ -4126,7 +4171,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = [0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 186:
@@ -4137,7 +4183,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = [0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 185:
@@ -4148,7 +4195,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = [0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 184:
@@ -4194,7 +4242,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = [0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 178:
@@ -4219,9 +4268,9 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 447;
-            efp = 100;
-            return -1;
+            result.efid = 447;
+            result.efp = 100;
+            return result;
         }
         break;
     case 175:
@@ -4232,9 +4281,9 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 421;
-            efp = 100;
-            return -1;
+            result.efid = 421;
+            result.efp = 100;
+            return result;
         }
         break;
     case 174:
@@ -4251,7 +4300,7 @@ int access_item_db(int dbmode)
         if (dbmode == 15)
         {
             drink_well();
-            return -1;
+            return result;
         }
         break;
     case 161:
@@ -4308,9 +4357,9 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 402;
-            efp = 100;
-            return -1;
+            result.efid = 402;
+            result.efp = 100;
+            return result;
         }
         break;
     case 123:
@@ -4321,9 +4370,9 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 420;
-            efp = 100;
-            return -1;
+            result.efid = 420;
+            result.efp = 100;
+            return result;
         }
         break;
     case 122:
@@ -4334,9 +4383,9 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 419;
-            efp = 100;
-            return -1;
+            result.efid = 419;
+            result.efp = 100;
+            return result;
         }
         break;
     case 121:
@@ -4347,9 +4396,9 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 424;
-            efp = 100;
-            return -1;
+            result.efid = 424;
+            result.efp = 100;
+            return result;
         }
         break;
     case 120:
@@ -4360,9 +4409,9 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 414;
-            efp = 100;
-            return -1;
+            result.efid = 414;
+            result.efp = 100;
+            return result;
         }
         break;
     case 119:
@@ -4373,9 +4422,9 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 400;
-            efp = 100;
-            return -1;
+            result.efid = 400;
+            result.efp = 100;
+            return result;
         }
         break;
     case 118:
@@ -4386,10 +4435,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 424;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 424;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 116:
@@ -4400,10 +4449,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 410;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 410;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 112:
@@ -4421,7 +4470,7 @@ int access_item_db(int dbmode)
         if (dbmode == 15)
         {
             drink_well();
-            return -1;
+            return result;
         }
         break;
     case 102:
@@ -4471,28 +4520,28 @@ int access_item_db(int dbmode)
     case 76:
         if (dbmode == 15)
         {
-            efid = 403;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.efid = 403;
+            result.efp = 100;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 75:
         if (dbmode == 15)
         {
-            efid = 402;
-            efp = 300;
-            drink_potion();
-            return -1;
+            result.efid = 402;
+            result.efp = 300;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 74:
         if (dbmode == 15)
         {
-            efid = 402;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.efid = 402;
+            result.efp = 100;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 73:
@@ -4510,46 +4559,46 @@ int access_item_db(int dbmode)
     case 72:
         if (dbmode == 15)
         {
-            efid = 401;
-            efp = 400;
-            drink_potion();
-            return -1;
+            result.efid = 401;
+            result.efp = 400;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 71:
         if (dbmode == 15)
         {
-            efid = 401;
-            efp = 300;
-            drink_potion();
-            return -1;
+            result.efid = 401;
+            result.efp = 300;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 70:
         if (dbmode == 15)
         {
-            efid = 401;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.efid = 401;
+            result.efp = 100;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 69:
         if (dbmode == 15)
         {
-            efid = 400;
-            efp = 300;
-            drink_potion();
-            return -1;
+            result.efid = 400;
+            result.efp = 300;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 68:
         if (dbmode == 15)
         {
-            efid = 400;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.efid = 400;
+            result.efp = 100;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 64:
@@ -4613,7 +4662,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = [0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 59:
@@ -4629,7 +4679,8 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::lulwy;
+            result.is_offerable = [0].god_id == core_god::lulwy;
+            return result;
         }
         break;
     case 57:
@@ -4671,64 +4722,73 @@ int access_item_db(int dbmode)
     case 44:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
+            result.is_offerable = [0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
+            return result;
         }
         break;
     case 42:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
+            result.is_offerable = [0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
+            return result;
         }
         break;
     case 41:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
+            result.is_offerable = [0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
+            return result;
         }
         break;
     case 40:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
+            result.is_offerable = [0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
+            return result;
         }
         break;
     case 39:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
+            result.is_offerable = [0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
+            return result;
         }
         break;
     case 38:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
+            result.is_offerable = [0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
+            return result;
         }
         break;
     case 37:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
+            result.is_offerable = [0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
+            return result;
         }
         break;
     case 36:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
+            result.is_offerable = [0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
+            return result;
         }
         break;
     case 35:
         if (dbmode == 16 && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
+            result.is_offerable = [0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
+            return result;
         }
         break;
     case 34:
@@ -4739,10 +4799,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 421;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 421;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 33:
@@ -4753,10 +4813,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 420;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 420;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 32:
@@ -4767,63 +4827,63 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 419;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 419;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 31:
         if (dbmode == 15)
         {
-            efid = 1102;
-            efp = 300;
-            drink_potion();
-            return -1;
+            result.efid = 1102;
+            result.efp = 300;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 30:
         if (dbmode == 15)
         {
-            efid = 1112;
-            efp = 200;
-            drink_potion();
-            return -1;
+            result.efid = 1112;
+            result.efp = 200;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 29:
         if (dbmode == 15)
         {
-            efid = 1110;
-            efp = 200;
-            drink_potion();
-            return -1;
+            result.efid = 1110;
+            result.efp = 200;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 28:
         if (dbmode == 15)
         {
-            efid = 1109;
-            efp = 150;
-            drink_potion();
-            return -1;
+            result.efid = 1109;
+            result.efp = 150;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 27:
         if (dbmode == 15)
         {
-            efid = 1111;
-            efp = 200;
-            drink_potion();
-            return -1;
+            result.efid = 1111;
+            result.efp = 200;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 26:
         if (dbmode == 15)
         {
-            efid = 1130;
-            drink_potion();
-            return -1;
+            result.efid = 1130;
+            drink_potion(result.efid, result.efp);
+            return result;
         }
         break;
     case 25:
@@ -4835,7 +4895,7 @@ int access_item_db(int dbmode)
         {
             inv[ci].param1 = 2;
             read_normal_book();
-            return -1;
+            return result;
         }
         break;
     case 24:
@@ -4846,7 +4906,7 @@ int access_item_db(int dbmode)
         if (dbmode == 13)
         {
             read_normal_book();
-            return -1;
+            return result;
         }
         break;
     case 23:
@@ -4858,7 +4918,7 @@ int access_item_db(int dbmode)
         {
             inv[ci].param1 = 1;
             read_normal_book();
-            return -1;
+            return result;
         }
         break;
     case 22:
@@ -4869,10 +4929,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 412;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 412;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 21:
@@ -4883,10 +4943,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 411;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 411;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 20:
@@ -4897,10 +4957,10 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            efid = 408;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.efid = 408;
+            result.efp = 100;
+            decode_book(result.efid, result.efp);
+            return result;
         }
         break;
     case 19:
@@ -4911,9 +4971,9 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 409;
-            efp = 100;
-            return -1;
+            result.efid = 409;
+            result.efp = 100;
+            return result;
         }
         break;
     case 18:
@@ -4924,45 +4984,45 @@ int access_item_db(int dbmode)
         }
         if (dbmode == 14)
         {
-            efid = 411;
-            efp = 100;
-            return -1;
+            result.efid = 411;
+            result.efp = 100;
+            return result;
         }
         break;
     case 17:
         if (dbmode == 13)
         {
-            efid = 458;
-            efp = 300;
-            read_scroll();
-            return -1;
+            result.efid = 458;
+            result.efp = 300;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 16:
         if (dbmode == 13)
         {
-            efid = 408;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.efid = 408;
+            result.efp = 100;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 15:
         if (dbmode == 13)
         {
-            efid = 413;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.efid = 413;
+            result.efp = 100;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 14:
         if (dbmode == 13)
         {
-            efid = 411;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.efid = 411;
+            result.efp = 100;
+            read_scroll(result.efid, result.efp);
+            return result;
         }
         break;
     case 6:
@@ -5000,7 +5060,7 @@ int access_item_db(int dbmode)
     default: break;
     }
 
-    return 0;
+    return result;
 }
 
 
