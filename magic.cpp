@@ -185,7 +185,6 @@ magic_result magic(magic_data m)
 
 the_end:
     // TODO until everything is de-globalized
-    efsource = efsource_t::none;
     tc = result.selected_target;
     f = result.succeeded ? 1 : 0;
     tlocx = m.tlocx;
@@ -953,7 +952,7 @@ void magic_aoe(const magic_data& m, magic_result& result)
 void magic_arrow(const magic_data& m, magic_result& result)
 {
     play_animation(1, m.damage.element);
-    dmg = roll(m.damage.dice_y, m.damage.dice_x, m.damage.damage_bonus);
+    dmg = roll(m.damage);
     if (is_in_fov(m.tc))
     {
         if (m.tc >= 16)

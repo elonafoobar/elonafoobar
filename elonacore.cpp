@@ -48645,7 +48645,10 @@ label_21451_internal:
                     label_2222();
                     snd(70);
                 }
-                efsource = efsource_t::trap;
+
+                // This doesn't seem to be checked for anywhere.
+                // efsource = efsource_t::trap;
+
                 if (is_in_fov(cc))
                 {
                     txt(lang(
@@ -48775,7 +48778,6 @@ label_21451_internal:
                     cell_featset(movx, movy, 0);
                     dmghp(cc, 100 + rnd(200), -1);
                 }
-                efsource = efsource_t::none;
             }
         }
     }
@@ -51457,7 +51459,7 @@ magic_result drink_potion(int efid, int efp, potion_consume_t consumed, optional
         {
             // potionthrow was always either 100 or 0
             int potionthrow = 100;
-            data.efp = efp * potionthrow / 100;
+            data.efp = data.efp * potionthrow / 100;
             data.efstatus = inv[ci].curse_state;
         }
         else
@@ -51469,12 +51471,12 @@ magic_result drink_potion(int efid, int efp, potion_consume_t consumed, optional
     else
     {
         data.efstatus = inv[ci].curse_state;
-        if (is_in_fov(tc))
+        if (is_in_fov(data.tc))
         {
             snd(17);
             txt(lang(
                 npcn(tc) + itemname(ci, 1) + u8"を飲み干した。"s,
-                name(tc) + u8" drink"s + _s(tc) + u8" "s + itemname(ci, 1)
+                name(tc) + u8" drink"s + _s(data.tc) + u8" "s + itemname(ci, 1)
                     + u8"."s));
         }
     }
@@ -51483,7 +51485,7 @@ magic_result drink_potion(int efid, int efp, potion_consume_t consumed, optional
     {
         if (result.obvious)
         {
-            if (tc == 0)
+            if (data.tc == 0)
             {
                 item_identify(
                     inv[ci], identification_state_t::partly_identified);
@@ -51494,19 +51496,19 @@ magic_result drink_potion(int efid, int efp, potion_consume_t consumed, optional
         {
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
         }
-        else if (tc == 0)
+        else if (data.tc == 0)
         {
             refresh_burden_state();
         }
     }
-    cdata[tc].nutrition += 150;
-    if (tc < 16)
+    cdata[data.tc].nutrition += 150;
+    if (data.tc < 16)
     {
-        if (cdata[tc].nutrition > 12000)
+        if (cdata[data.tc].nutrition > 12000)
         {
             if (rnd(5) == 0)
             {
-                chara_vomit(tc);
+                chara_vomit(data.tc);
             }
         }
     }
@@ -51731,7 +51733,6 @@ magic_result read_scroll(int efid, int efp)
                 name(data.cc) + u8"は何も見えない。"s,
                 name(data.cc) + u8" can see nothing."s));
         }
-        efsource = efsource_t::none;
         result.turn_passed = false;
         return result;
     }
@@ -51745,7 +51746,6 @@ magic_result read_scroll(int efid, int efp)
                     name(data.cc) + u8"はふらふらした。"s,
                     name(data.cc) + u8" stagger"s + _s(data.cc) + u8"."s));
             }
-            efsource = efsource_t::none;
             result.turn_passed = false;
             return result;
         }
@@ -51809,7 +51809,6 @@ magic_result zap_rod(int efid, int efp)
     result = query_magic_location(data);
     if (!result.turn_passed)
     {
-        efsource = efsource_t::none;
         return result;
     }
     if (data.efid >= 400 && data.efid < 467)
@@ -51885,7 +51884,6 @@ magic_result zap_rod(int efid, int efp)
             name(data.cc) + u8" fail to use the power of the rod."s));
     }
 label_2173_internal:
-    efsource = efsource_t::none;
     if (inv[ci].number == 0)
     {
         if (ci >= 5080)
@@ -52041,7 +52039,6 @@ magic_result do_cast_spell(int efid)
     result = query_magic_location(data);
     if (!result.turn_passed)
     {
-        efsource = efsource_t::none;
         return result;
     }
     if (data.cc != 0)
@@ -52050,13 +52047,11 @@ magic_result do_cast_spell(int efid)
         {
             if (cdata[data.cc].relationship == 10 || gdata_current_map == 40)
             {
-                efsource = efsource_t::none;
                 result.turn_passed = false;
                 return result;
             }
             if (gdata_play_turns % 10 > 4)
             {
-                efsource = efsource_t::none;
                 result.turn_passed = false;
                 return result;
             }
@@ -52083,7 +52078,6 @@ magic_result do_cast_spell(int efid)
         dmgmp(data.cc, mp);
         if (cdata[data.cc].state != 1)
         {
-            efsource = efsource_t::none;
             result.turn_passed = true;
             return result;
         }
@@ -52101,7 +52095,6 @@ magic_result do_cast_spell(int efid)
         int stat = try_to_cast_spell();
         if (stat == 0)
         {
-            efsource = efsource_t::none;
             result.turn_passed = true;
             return result;
         }
@@ -52145,7 +52138,6 @@ magic_result do_cast_spell(int efid)
                 u8"沈黙の霧が詠唱を阻止した。"s,
                 u8"The mist of silence interrupts a spell."s));
         }
-        efsource = efsource_t::none;
         result.turn_passed = true;
         return result;
     }
@@ -52158,14 +52150,12 @@ magic_result do_cast_spell(int efid)
                 name(data.cc) + u8" fail"s + _s(data.cc) + u8" to cast a spell."s));
             play_animation(8);
         }
-        efsource = efsource_t::none;
         result.turn_passed = true;
         return result;
     }
     if (result.noeffect == 1)
     {
         txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-        efsource = efsource_t::none;
         result.turn_passed = true;
         return result;
     }

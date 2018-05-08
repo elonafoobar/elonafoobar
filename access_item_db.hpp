@@ -3,7 +3,7 @@
 namespace elona
 {
 
-enum class item_db_t : int // TODO rename to dbmode_t
+enum class item_db_t : int // TODO rename to item_db_query_t
 {
     charge_level = 2,
     initialize = 3,

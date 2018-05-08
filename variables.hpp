@@ -306,7 +306,6 @@ ELONA_EXTERN(double dmgmulti);
 ELONA_EXTERN(int dropval);
 ELONA_EXTERN(int dy);
 ELONA_EXTERN(int efcancel);
-ELONA_EXTERN(efsource_t efsource);
 ELONA_EXTERN(int egg);
 ELONA_EXTERN(int egolv);
 ELONA_EXTERN(int elona_export);
