@@ -24,12 +24,6 @@ namespace elona
 {
 
 
-magic_result magic(int efid, int cc)
-{
-    magic_data data(efid, cc);
-    return magic(data);
-}
-
 magic_result magic(int efid, int cc, int tc)
 {
     magic_data data(efid, cc, tc);
@@ -5226,6 +5220,19 @@ void magic_four_dimensional_pocket(const magic_data& m, magic_result& result)
     ctrl_file(file_operation2_t::_4, u8"shop"s + invfile + u8".s2");
     ctrl_file(file_operation2_t::_3, u8"shoptmp.s2");
     mode = 0;
+}
+
+
+int efstatusfix(curse_state_t efstatus, int doomed, int cursed, int none, int blessed)
+{
+    switch (efstatus)
+    {
+    case curse_state_t::doomed: return doomed;
+    case curse_state_t::cursed: return cursed;
+    case curse_state_t::none: return none;
+    case curse_state_t::blessed: return blessed;
+    default: assert(0);
+    }
 }
 
 std::string elename(const magic_data& m)

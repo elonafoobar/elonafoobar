@@ -182,7 +182,7 @@ position_t gmes(
 
 
 
-optional<std::tuple<int, int>> ask_direction_to_close()
+optional<position_t> ask_direction_to_close()
 {
     int number_of_doors{};
     position_t pos;
@@ -206,7 +206,7 @@ optional<std::tuple<int, int>> ask_direction_to_close()
     {
         x = pos.x;
         y = pos.y;
-        return std::make_tuple(x, y);
+        return pos;
     }
 
     txt(lang(u8"何を閉める？"s, u8"Which door do you want to close? "s));
@@ -612,7 +612,6 @@ int movy = 0;
 int digx = 0;
 int digy = 0;
 int npccostmp = 0;
-//int noeffect = 0;
 int inumbk = 0;
 int dirsub = 0;
 int ri = 0;
@@ -28972,7 +28971,7 @@ void use_house_board()
             }
             else
             {
-                magic(438, cc);
+                magic(438, cc, cc); // create wall
             }
             tlocinitx = tlocx;
             tlocinity = tlocy;
@@ -42287,15 +42286,15 @@ void do_dig_command()
 {
     txt(lang(
         u8"どの方向を掘る？ "s, u8"Which direction do you want to dig? "s));
-    optional<std::tuple<int, int>> dir = ask_direction();
+    optional<position_t> dir = ask_direction();
     if (!dir)
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
         pc_turn(false);
     }
-    int x = std::get<0>(*dir);
-    int y = std::get<1>(*dir);
+    int x = (*dir).x;
+    int y = (*dir).y;
     refx = x;
     refy = y;
     tlocx = x;
@@ -42330,15 +42329,15 @@ void label_2005()
     txt(lang(
         u8"どの方向に体当たりする？ "s,
         u8"Which direction do you want to bash? "s));
-    optional<std::tuple<int, int>> dir = ask_direction();
+    optional<position_t> dir = ask_direction();
     if (!dir)
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
         pc_turn(false);
     }
-    int x = std::get<0>(*dir);
-    int y = std::get<1>(*dir);
+    int x = (*dir).x;
+    int y = (*dir).y;
     do_bash(x, y);
     return;
 }
@@ -42593,15 +42592,15 @@ void do_give_command()
 {
     txt(lang(u8"どの方向に？ "s, u8"Which direction? "s));
     update_screen();
-    optional<std::tuple<int, int>> dir = ask_direction();
+    optional<position_t> dir = ask_direction();
     if (!dir)
     {
         txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
         pc_turn(false);
     }
-    int x = std::get<0>(*dir);
-    int y = std::get<1>(*dir);
+    int x = (*dir).x;
+    int y = (*dir).y;
     tc = map(x, y, 1);
     if (tc == 0)
     {
@@ -42644,15 +42643,15 @@ void do_interact_command()
 {
     txt(lang(
         u8"操作する対象の方向は？"s, u8"Choose the direction of the target."s));
-    optional<std::tuple<int, int>> dir = ask_direction();
+    optional<position_t> dir = ask_direction();
     if (!dir)
     {
         txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
         pc_turn(false);
     }
-    int x = std::get<0>(*dir);
-    int y = std::get<1>(*dir);
+    int x = (*dir).x;
+    int y = (*dir).y;
     tc = map(x, y, 1);
     if (tc == 0)
     {
@@ -48193,7 +48192,7 @@ void initialize_fovmap_and_fovlist()
 
 
 
-optional<std::tuple<int, int>> ask_direction()
+optional<position_t> ask_direction()
 {
     snd(26);
     gsel(4);
@@ -48244,7 +48243,7 @@ label_2128_internal:
     if (key == key_wait || key == key_enter)
     {
         keyhalt = 1;
-        return std::make_tuple(x, y);
+        return position_t{ x, y };
     }
     if (key == key_north)
     {
@@ -48324,7 +48323,7 @@ label_2128_internal:
             return none;
         }
         keyhalt = 1;
-        return std::make_tuple(x, y);
+        return position_t{ x, y };
     }
     goto label_2128_internal;
 }
@@ -48376,21 +48375,6 @@ void label_2136()
     }
     pc_turn(false);
 }
-
-
-
-int efstatusfix(curse_state_t efstatus, int doomed, int cursed, int none, int blessed)
-{
-    switch (efstatus)
-    {
-    case curse_state_t::doomed: return doomed;
-    case curse_state_t::cursed: return cursed;
-    case curse_state_t::none: return none;
-    case curse_state_t::blessed: return blessed;
-    default: assert(0);
-    }
-}
-
 
 
 int label_2143()
@@ -52266,14 +52250,14 @@ magic_result query_magic_location(magic_data& data)
             txt(lang(u8"どの方向？"s, u8"Which direction?"s));
             update_screen();
             // TODO return tlocx, tlocy
-            optional<std::tuple<int, int>> dir = ask_direction();
+            optional<position_t> dir = ask_direction();
             if (!dir)
             {
                 result.turn_passed = false;
                 return result;
             }
-            data.tlocx = std::get<0>(*dir);
-            data.tlocy = std::get<1>(*dir);
+            data.tlocx = (*dir).x;
+            data.tlocy = (*dir).y;
             if (map(data.tlocx, data.tlocy, 1) == 0)
             {
                 result.noeffect = true;
@@ -52473,7 +52457,7 @@ magic_result query_magic_location(magic_data& data)
                     u8"Which direction do you want to zap the wand? "s));
             }
             update_screen();
-            optional<std::tuple<int, int>> dir = ask_direction();
+            optional<position_t> dir = ask_direction();
             if (!dir)
             {
                 txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
@@ -52481,8 +52465,8 @@ magic_result query_magic_location(magic_data& data)
                 result.turn_passed = false;
                 return result;
             }
-            data.tlocx = std::get<0>(*dir);
-            data.tlocy = std::get<1>(*dir);
+            data.tlocx = (*dir).x;
+            data.tlocy = (*dir).y;
         }
     }
     result.turn_passed = true;
@@ -55561,15 +55545,15 @@ void try_to_open_locked_door()
 
 void do_close_command()
 {
-    optional<std::tuple<int, int>> dir = ask_direction_to_close();
+    optional<position_t> dir = ask_direction_to_close();
     if (!dir)
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
         pc_turn(false);
     }
-    int x = std::get<0>(*dir);
-    int y = std::get<1>(*dir);
+    int x = (*dir).x;
+    int y = (*dir).y;
     cell_featread(x, y);
     if (feat(1) != 20)
     {
@@ -57442,12 +57426,12 @@ void do_use_command()
     case 19:
         txt(lang(u8"誰を対象にする？"s, u8"Make up who?"s));
         {
-            optional<std::tuple<int, int>> dir = ask_direction();
+            optional<position_t> dir = ask_direction();
             f = 0;
             if (dir)
             {
-                int x = std::get<0>(*dir);
-                int y = std::get<1>(*dir);
+                int x = (*dir).x;
+                int y = (*dir).y;
                 if (map(x, y, 1) > 0)
                 {
                     tc = map(x, y, 1) - 1;
@@ -57534,15 +57518,15 @@ void do_use_command()
         txt(lang(u8"何に聴診器を当てる？"s, u8"Auscultate who?"s));
         update_screen();
         {
-            optional<std::tuple<int, int>> dir = ask_direction();
+            optional<position_t> dir = ask_direction();
             if (!dir)
             {
                 txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
                 update_screen();
                 pc_turn(false);
             }
-            int x = std::get<0>(*dir);
-            int y = std::get<1>(*dir);
+            int x = (*dir).x;
+            int y = (*dir).y;
         }
         tc = map(x, y, 1) - 1;
         if (tc == 0)
@@ -57592,12 +57576,12 @@ void do_use_command()
         txt(lang(u8"誰を紐で結ぶ？"s, u8"Leash who?"s));
         update_screen();
         {
-            optional<std::tuple<int, int>> dir = ask_direction();
+            optional<position_t> dir = ask_direction();
             f = 0;
             if (dir)
             {
-                int x = std::get<0>(*dir);
-                int y = std::get<1>(*dir);
+                int x = (*dir).x;
+                int y = (*dir).y;
                 if (map(x, y, 1) > 0)
                 {
                     tc = map(x, y, 1) - 1;
@@ -57671,12 +57655,12 @@ void do_use_command()
         txt(lang(u8"誰を吊るす？"s, u8"Hang who?"s));
         update_screen();
         {
-            optional<std::tuple<int, int>> dir = ask_direction();
+            optional<position_t> dir = ask_direction();
             f = 0;
             if (dir)
             {
-                int x = std::get<0>(*dir);
-                int y = std::get<1>(*dir);
+                int x = (*dir).x;
+                int y = (*dir).y;
                 if (map(x, y, 1) > 0)
                 {
                     tc = map(x, y, 1) - 1;
@@ -68908,7 +68892,7 @@ void pc_turn(bool label_2747_flg)
         }
         if (trait(214) != 0 && rnd(250) == 0 && mdata(6) != 1)
         {
-            magic(408, cc);
+            magic(408, cc, cc); // teleport self
         }
         if (cdata[cdata[0].enemy_id].is_invisible() == 1
             && cdata[0].can_see_invisible() == 0

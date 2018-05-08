@@ -150,7 +150,6 @@ struct magic_result
     int selected_target; // actual target the magic selected
 };
 
-magic_result magic(int efid, int cc);
 magic_result magic(int efid, int cc, int tc);
 magic_result magic(int efid, int cc, int tc, int efp);
 magic_result magic(magic_data m);
@@ -260,5 +259,6 @@ void magic_loot(const magic_data&, magic_result&);
 void magic_fall_down(const magic_data&, magic_result&);
 void magic_four_dimensional_pocket(const magic_data&, magic_result&);
 
+int efstatusfix(curse_state_t, int = 0, int = 0, int = 0, int = 0);
 std::string elename(const magic_data&);
 }

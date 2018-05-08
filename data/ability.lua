@@ -1097,7 +1097,7 @@ ability['621'] = {
   sdataref3 = 3000,
   sdataref4 = 700,
 }
-ability['601'] = { -- suck_blood
+ability['601'] = {
   related_basic_attribute = 12,
   sdataref1 = 6,
   cost = 7,
@@ -1230,7 +1230,7 @@ ability['613'] = {
   sdataref3 = 8000,
   sdataref4 = 0,
 }
-ability['614'] = { -- hunger
+ability['614'] = {
   related_basic_attribute = 16,
   sdataref1 = 6,
   cost = 10,
@@ -1286,7 +1286,7 @@ ability['658'] = {
   sdataref3 = 2001,
   sdataref4 = 0,
 }
-ability['660'] = { -- delete unneeded feature
+ability['660'] = {
   related_basic_attribute = 15,
   sdataref1 = 6,
   cost = 10,
