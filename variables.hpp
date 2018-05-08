@@ -2,6 +2,7 @@
 #include "position.hpp"
 #include "magic.hpp"
 #include "access_item_db.hpp"
+#include "calc.hpp"
 
 
 #ifdef ELONA_DEFINE_GLOBAL_INSTANCE
@@ -669,7 +670,7 @@ int change_npc_tone();
 int show_character_sheet();
 int change_appearance();
 int do_customize_appearance();
-int ctrl_inventory();
+int ctrl_inventory(int = 0);
 int label_2072();
 int label_2073();
 int can_do_ranged_attack();
@@ -677,16 +678,16 @@ int label_2080();
 int label_2083();
 optional<std::tuple<int, int>> ask_direction();
 int label_2143();
-int decode_book();
+int decode_book(int, int);
 int read_normal_book();
-int cast_spell();
-int do_cast_spell();
-int drink_potion();
+int cast_spell(int);
+int do_cast_spell(int);
+int drink_potion(int, int);
 int drink_well();
-int read_scroll();
-int zap_rod();
+int read_scroll(int, int);
+int zap_rod(int, int);
 int label_2174();
-int query_magic_location();
+magic_result query_magic_location(magic_data& data);
 int pick_up_item();
 int drop_item();
 int equip_item(int);
@@ -730,6 +731,7 @@ int randomencp(int = 0);
 int randskill();
 int relationbetween(int, int);
 int relocate_chara(int = 0, int = 0, int = 0);
+int roll(skill_damage);
 int roll(int, int, int);
 int roll_max(int, int, int);
 int roundmargin(int = 0, int = 0);
@@ -1267,7 +1269,7 @@ void do_zap_command();
 void do_bash();
 void label_2203();
 void label_2205();
-void label_2206();
+void proc_item_on_ground();
 void label_2207(int);
 void do_open_command();
 void open_box();

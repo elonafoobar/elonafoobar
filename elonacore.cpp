@@ -51219,11 +51219,11 @@ int decode_book(int efid, int efp)
         ci = cdata[cc].continuous_action_item;
         cibkread = ci;
         label_1458();
-        if (inv[ci].id == 783)
+        if (inv[ci].id == 783) // recipe
         {
             return 0;
         }
-        if (inv[ci].id == 687)
+        if (inv[ci].id == 687) // ancient book
         {
             r2 =
                 50 + inv[ci].param1 * 50 + inv[ci].param1 * inv[ci].param1 * 20;
@@ -51279,7 +51279,7 @@ int decode_book(int efid, int efp)
             npcn(cc) + itemname(ci, 1) + u8"を読み終えた。"s,
             name(cc) + u8" "s + have(cc) + u8" finished reading the book."s));
     }
-    if (inv[ci].id == 783)
+    if (inv[ci].id == 783) // recipe
     {
         if (inv[ci].param1 == 0)
         {
@@ -51300,7 +51300,7 @@ int decode_book(int efid, int efp)
         rowactend(cc);
         return 1;
     }
-    if (inv[ci].id == 687)
+    if (inv[ci].id == 687) // ancient book
     {
         item_identify(inv[ci], identification_state_t::completely_identified);
         txt(lang(
@@ -51327,7 +51327,7 @@ int decode_book(int efid, int efp)
         }
     }
     item_identify(inv[ci], identification_state_t::partly_identified);
-    if (inv[ci].id != 687)
+    if (inv[ci].id != 687) // ancient book
     {
         --inv[ci].count;
         if (inv[ci].count < 0)
@@ -51703,7 +51703,7 @@ int drink_well()
 
 
 
-int read_scroll()
+int read_scroll(int efid, int efp)
 {
     tc = cc;
     magic_data data(efid, cc, tc, efp)
@@ -53306,7 +53306,7 @@ void label_2196(int cc)
 
 void do_read_commad()
 {
-    if (inv[ci].id == 783)
+    if (inv[ci].id == 783) // recipe
     {
         if (inv[ci].subname == 0)
         {
@@ -53718,7 +53718,7 @@ void label_2203()
                         cdata[tc].continuous_action_turn = 0;
                     }
                 }
-                label_2206();
+                proc_item_on_ground();
                 turn_end();
                 return;
             }
@@ -53994,7 +53994,7 @@ void label_2205()
             wet(cc, 20);
         }
     }
-    label_2206();
+    proc_item_on_ground();
     if (mdata(6) == 1)
     {
         if (cc == 0)
@@ -54286,7 +54286,7 @@ void proc_autopick()
 
 
 
-void label_2206()
+void proc_item_on_ground()
 {
     if (cc == 0)
     {
@@ -54853,7 +54853,7 @@ int unlock_box(int difficulty)
 void do_open_command()
 {
     int refweight = 0;
-    if (inv[ci].id == 361)
+    if (inv[ci].id == 361) // shopkeeper's trunk
     {
         modify_karma(0, -10);
         invctrl(0) = 22;
@@ -54866,7 +54866,7 @@ void do_open_command()
         turn_end();
         return;
     }
-    if (inv[ci].id == 560)
+    if (inv[ci].id == 560) // delivery chest
     {
         invctrl(0) = 24;
         invctrl(1) = 0;
@@ -54874,7 +54874,7 @@ void do_open_command()
         ctrl_inventory();
         return;
     }
-    if (inv[ci].id == 616)
+    if (inv[ci].id == 616) // tax box
     {
         invctrl(0) = 24;
         invctrl(1) = 2;
@@ -54882,7 +54882,7 @@ void do_open_command()
         ctrl_inventory();
         return;
     }
-    if (inv[ci].id == 701)
+    if (inv[ci].id == 701) // deck
     {
         invctrl(0) = 24;
         invctrl(1) = 8;
@@ -54891,7 +54891,7 @@ void do_open_command()
         turn_end();
         return;
     }
-    if (inv[ci].id == 600)
+    if (inv[ci].id == 600) // giant's shackle
     {
         snd(22);
         txt(lang(u8"足枷を外した。"s, u8"You unlock the shackle."s));
@@ -54925,7 +54925,7 @@ void do_open_command()
     {
         invfile = inv[ci].count;
         invcontainer(1) = ci;
-        if (inv[ci].id == 641)
+        if (inv[ci].id == 641) // cooler box
         {
             refweight = -1;
         }

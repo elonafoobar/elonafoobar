@@ -19,20 +19,6 @@ struct skill_damage
     int damage_bonus;
     int element;
     int element_power;
-
-    int roll() {
-        return roll(dice_x, dice_y, damage_bonus);
-    }
-};
-struct magic_data
-{
-    effect_t efid;
-    int efp;
-    int cc;
-    int tc;
-    int ci;
-    int tlocx;
-    int tlocy;
 };
 optional<skill_damage> calc_skill_damage(int, int, int);
 int calcobjlv(int = 0);

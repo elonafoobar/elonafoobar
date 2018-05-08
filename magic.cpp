@@ -656,7 +656,7 @@ void magic_bolt(const magic_data& m, magic_result& result)
                         }
                     }
                 }
-                dmg = m.damage.roll();
+                dmg = roll(damage);
                 int stat = calcmagiccontrol(m.cc, result.selected_target);
                 if (stat == 1)
                 {
@@ -836,7 +836,7 @@ void magic_aoe(const magic_data& m, magic_result& result)
                 }
                 if (current_cc != chara_hit)
                 {
-                    dmg = roll(current_damage.dice_x, current_damage.dice_y, current_damage.damage_bonus) * 100
+                    dmg = roll(current_damage) * 100
                         / (75 + dist(current_tlocx, current_tlocy, dx, dy) * 25);
                     int stat = calcmagiccontrol(current_cc, chara_hit);
                     if (stat == 1)
@@ -1309,7 +1309,7 @@ void magic_breath(const magic_data& m, magic_result& result)
             result.selected_target = map(dx, dy, 1) - 1;
             if (m.cc != result.selected_target)
             {
-                dmg = m.damage.roll();
+                dmg = roll(damage);
                 if (is_in_fov(result.selected_target))
                 {
                     if (result.selected_target >= 16)
@@ -1362,7 +1362,7 @@ void magic_insanity(const magic_data& m, magic_result& result)
             + u8" sick at entrails caught in "s + name(m.cc) + your(m.cc)
             + u8" tentacles."s);
     }
-    damage_insanity(m.tc, rnd(m.damage.roll() + 1));
+    damage_insanity(m.tc, rnd(roll(damage) + 1));
 }
 
 void magic_treasure_map(const magic_data& m, magic_result& result)
@@ -2293,7 +2293,7 @@ void magic_do_heal(const magic_data& m)
     }
     for (int cnt = 0, cnt_end = (subloop); cnt < cnt_end; ++cnt)
     {
-        healhp(m.tc(cnt), m.damage.roll());
+        healhp(m.tc(cnt), roll(damage));
         healcon(m.tc(cnt), 6);
         healcon(m.tc(cnt), 1, 50);
         healcon(m.tc(cnt), 5, 50);
@@ -2411,19 +2411,19 @@ void magic_disassembly(const magic_data& m, magic_result& result)
 
 void magic_touch_of_fear(const magic_data& m, magic_result& result)
 {
-    dmghp(m.tc, m.damage.roll(), m.cc, m.damage.element, m.damage.element_power);
+    dmghp(m.tc, roll(damage), m.cc, m.damage.element, m.damage.element_power);
     dmgcon(m.tc, 6, m.damage.element_power);
 }
 
 void magic_touch_of_sleep(const magic_data& m, magic_result& result)
 {
-    dmghp(m.m.tc, m.damage.roll(), m.cc, m.damage.element, m.damage.element_power);
+    dmghp(m.m.tc, roll(damage), m.cc, m.damage.element, m.damage.element_power);
     dmgcon(m.tc, 2, m.damage.element_power);
 }
 
 void magic_hunger(const magic_data& m, magic_result& result)
 {
-    dmghp(m.tc, m.damage.roll(), m.cc, m.damage.element, m.damage.element_power);
+    dmghp(m.tc, roll(damage), m.cc, m.damage.element, m.damage.element_power);
     cdata[m.tc].nutrition -= 800;
     if (is_in_fov(m.tc))
     {
@@ -2438,7 +2438,7 @@ void magic_hunger(const magic_data& m, magic_result& result)
 
 void magic_weaken(const magic_data& m, magic_result& result)
 {
-    dmghp(m.tc, m.damage.roll(), m.cc, m.damage.element, m.damage.element_power);
+    dmghp(m.tc, roll(damage), m.cc, m.damage.element, m.damage.element_power);
     p = rnd(10);
     if ((cdata[m.tc].quality >= 4 && rnd(4))
         || encfind(m.tc, 60010 + p) != -1)
@@ -2730,9 +2730,9 @@ void magic_identify(const magic_data& m, magic_result& result)
         break;
     }
     invsubroutine = 1;
-    invctrl = 13;
+    invctrl = 13; // identify
     snd(100);
-    ctrl_inventory();
+    ctrl_inventory(m.efp);
 }
 
 void magic_resurrection(const magic_data& m, magic_result& result)
@@ -3682,7 +3682,7 @@ void magic_restore_mana(const magic_data& m, magic_result& result)
 
 void magic_absorb_mana(const magic_data& m, magic_result& result)
 {
-    healmp(m.tc, m.damage.roll());
+    healmp(m.tc, roll(damage));
     if (is_in_fov(m.tc))
     {
         txt(lang(
@@ -5184,7 +5184,7 @@ void magic_four_dimensional_pocket(const magic_data& m, magic_result& result)
     invcontainer = clamp(m.efp / 10 + 10, 10, 300);
     mode = 6;
     snd(100);
-    ctrl_inventory();
+    ctrl_inventory(m.efp);
     invcontainer = 0;
     ctrl_file(file_operation2_t::_4, u8"shop"s + invfile + u8".s2");
     ctrl_file(file_operation2_t::_3, u8"shoptmp.s2");

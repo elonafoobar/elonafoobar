@@ -19,7 +19,7 @@ namespace elona
 void pc_turn(bool = true);
 
 
-int ctrl_inventory()
+int ctrl_inventory(int efp)
 {
     int mainweapon = 0;
     int countequip = 0;
@@ -1222,8 +1222,10 @@ label_2061_internal:
                         goto label_2060_internal;
                     }
                 }
-                if (invctrl(1) == 5)
+                if (invctrl(1) == 5) // four dimensional pocket
                 {
+                    // efp is set when opening four dimensional pocket.
+
                     if (inv[ci].weight >= efp * 100)
                     {
                         snd(27);

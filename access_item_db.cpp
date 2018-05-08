@@ -111,7 +111,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::lulwy;
+            result.is_offerable =cdata[0].god_id == core_god::lulwy;
             return result;
         }
         break;
@@ -137,8 +137,8 @@ item_db_result access_item_db(int dbmode)
     case 783:
         if (dbmode == 13)
         {
-            // TODO huh?
-            decode_book(result.efid, result.efp);
+            // recipes don't have efid/efp
+            decode_book(0, 0);
             return result;
         }
         break;
@@ -911,8 +911,8 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 13)
         {
-            // TODO huh?
-            decode_book(result.efid, result.efp);
+            // ancient books don't have efid/efp
+            decode_book(0, 0);
             return result;
         }
         break;
@@ -1475,7 +1475,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::ehekatl;
+            result.is_offerable =cdata[0].god_id == core_god::ehekatl;
             return result;
         }
         break;
@@ -1791,7 +1791,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::kumiromi;
+            result.is_offerable =cdata[0].god_id == core_god::kumiromi;
             return result;
         }
         break;
@@ -1802,7 +1802,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::kumiromi;
+            result.is_offerable =cdata[0].god_id == core_god::kumiromi;
             return result;
         }
         break;
@@ -2035,7 +2035,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::mani;
+            result.is_offerable =cdata[0].god_id == core_god::mani;
             return result;
         }
         break;
@@ -2153,49 +2153,49 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::mani;
+            result.is_offerable =cdata[0].god_id == core_god::mani;
             return result;
         }
         break;
     case 495:
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::mani;
+            result.is_offerable =cdata[0].god_id == core_god::mani;
             return result;
         }
         break;
     case 494:
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::mani;
+            result.is_offerable =cdata[0].god_id == core_god::mani;
             return result;
         }
         break;
     case 492:
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::mani;
+            result.is_offerable =cdata[0].god_id == core_god::mani;
             return result;
         }
         break;
     case 491:
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::mani;
+            result.is_offerable =cdata[0].god_id == core_god::mani;
             return result;
         }
         break;
     case 490:
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::mani;
+            result.is_offerable =cdata[0].god_id == core_god::mani;
             return result;
         }
         break;
     case 489:
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::mani;
+            result.is_offerable =cdata[0].god_id == core_god::mani;
             return result;
         }
         break;
@@ -2206,21 +2206,21 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::mani;
+            result.is_offerable =cdata[0].god_id == core_god::mani;
             return result;
         }
         break;
     case 487:
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::mani;
+            result.is_offerable =cdata[0].god_id == core_god::mani;
             return result;
         }
         break;
     case 486:
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::mani;
+            result.is_offerable =cdata[0].god_id == core_god::mani;
             return result;
         }
         break;
@@ -2264,7 +2264,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::lulwy;
+            result.is_offerable =cdata[0].god_id == core_god::lulwy;
             return result;
         }
         break;
@@ -2454,7 +2454,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::kumiromi;
+            result.is_offerable =cdata[0].god_id == core_god::kumiromi;
             return result;
         }
         break;
@@ -2465,7 +2465,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::kumiromi;
+            result.is_offerable =cdata[0].god_id == core_god::kumiromi;
             return result;
         }
         break;
@@ -2476,7 +2476,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::kumiromi;
+            result.is_offerable =cdata[0].god_id == core_god::kumiromi;
             return result;
         }
         break;
@@ -2487,7 +2487,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::kumiromi;
+            result.is_offerable =cdata[0].god_id == core_god::kumiromi;
             return result;
         }
         break;
@@ -2498,7 +2498,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::kumiromi;
+            result.is_offerable =cdata[0].god_id == core_god::kumiromi;
             return result;
         }
         break;
@@ -3150,7 +3150,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::ehekatl;
+            result.is_offerable =cdata[0].god_id == core_god::ehekatl;
             return result;
         }
         break;
@@ -3162,7 +3162,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::ehekatl;
+            result.is_offerable =cdata[0].god_id == core_god::ehekatl;
             return result;
         }
         break;
@@ -3174,7 +3174,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::ehekatl;
+            result.is_offerable =cdata[0].god_id == core_god::ehekatl;
             return result;
         }
         break;
@@ -3186,7 +3186,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::ehekatl;
+            result.is_offerable =cdata[0].god_id == core_god::ehekatl;
             return result;
         }
         break;
@@ -3198,7 +3198,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::ehekatl;
+            result.is_offerable =cdata[0].god_id == core_god::ehekatl;
             return result;
         }
         break;
@@ -3210,7 +3210,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::ehekatl;
+            result.is_offerable =cdata[0].god_id == core_god::ehekatl;
             return result;
         }
         break;
@@ -3222,7 +3222,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::ehekatl;
+            result.is_offerable =cdata[0].god_id == core_god::ehekatl;
             return result;
         }
         break;
@@ -3234,7 +3234,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::ehekatl;
+            result.is_offerable =cdata[0].god_id == core_god::ehekatl;
             return result;
         }
         break;
@@ -3246,7 +3246,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::ehekatl;
+            result.is_offerable =cdata[0].god_id == core_god::ehekatl;
             return result;
         }
         break;
@@ -3258,7 +3258,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::ehekatl;
+            result.is_offerable =cdata[0].god_id == core_god::ehekatl;
             return result;
         }
         break;
@@ -3602,7 +3602,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::ehekatl;
+            result.is_offerable =cdata[0].god_id == core_god::ehekatl;
             return result;
         }
         break;
@@ -3845,7 +3845,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::mani;
+            result.is_offerable =cdata[0].god_id == core_god::mani;
             return result;
         }
         break;
@@ -3856,7 +3856,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::lulwy;
+            result.is_offerable =cdata[0].god_id == core_god::lulwy;
             return result;
         }
         break;
@@ -3867,7 +3867,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::itzpalt;
+            result.is_offerable =cdata[0].god_id == core_god::itzpalt;
             return result;
         }
         break;
@@ -3927,7 +3927,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::itzpalt;
+            result.is_offerable =cdata[0].god_id == core_god::itzpalt;
             return result;
         }
         break;
@@ -4012,7 +4012,8 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            return 1;
+            result.is_offerable = true;
+            return result;
         }
         break;
     case 203:
@@ -4049,7 +4050,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::kumiromi;
+            result.is_offerable =cdata[0].god_id == core_god::kumiromi;
             return result;
         }
         break;
@@ -4061,7 +4062,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::kumiromi;
+            result.is_offerable =cdata[0].god_id == core_god::kumiromi;
             return result;
         }
         break;
@@ -4073,7 +4074,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::kumiromi;
+            result.is_offerable =cdata[0].god_id == core_god::kumiromi;
             return result;
         }
         break;
@@ -4085,7 +4086,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::kumiromi;
+            result.is_offerable =cdata[0].god_id == core_god::kumiromi;
             return result;
         }
         break;
@@ -4124,7 +4125,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::kumiromi;
+            result.is_offerable =cdata[0].god_id == core_god::kumiromi;
             return result;
         }
         break;
@@ -4148,7 +4149,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::kumiromi;
+            result.is_offerable =cdata[0].god_id == core_god::kumiromi;
             return result;
         }
         break;
@@ -4160,7 +4161,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::kumiromi;
+            result.is_offerable =cdata[0].god_id == core_god::kumiromi;
             return result;
         }
         break;
@@ -4171,7 +4172,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::kumiromi;
+            result.is_offerable =cdata[0].god_id == core_god::kumiromi;
             return result;
         }
         break;
@@ -4183,7 +4184,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::kumiromi;
+            result.is_offerable =cdata[0].god_id == core_god::kumiromi;
             return result;
         }
         break;
@@ -4195,7 +4196,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::kumiromi;
+            result.is_offerable =cdata[0].god_id == core_god::kumiromi;
             return result;
         }
         break;
@@ -4242,7 +4243,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::kumiromi;
+            result.is_offerable =cdata[0].god_id == core_god::kumiromi;
             return result;
         }
         break;
@@ -4662,7 +4663,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::mani;
+            result.is_offerable =cdata[0].god_id == core_god::mani;
             return result;
         }
         break;
@@ -4679,7 +4680,7 @@ item_db_result access_item_db(int dbmode)
         }
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::lulwy;
+            result.is_offerable =cdata[0].god_id == core_god::lulwy;
             return result;
         }
         break;
@@ -4722,7 +4723,8 @@ item_db_result access_item_db(int dbmode)
     case 44:
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::jure
+            result.is_offerable =
+                cdata[0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
             return result;
         }
@@ -4730,7 +4732,8 @@ item_db_result access_item_db(int dbmode)
     case 42:
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::jure
+            result.is_offerable =
+                cdata[0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
             return result;
         }
@@ -4738,7 +4741,8 @@ item_db_result access_item_db(int dbmode)
     case 41:
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::jure
+            result.is_offerable =
+                cdata[0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
             return result;
         }
@@ -4746,7 +4750,8 @@ item_db_result access_item_db(int dbmode)
     case 40:
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::jure
+            result.is_offerable =
+                cdata[0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
             return result;
         }
@@ -4754,7 +4759,8 @@ item_db_result access_item_db(int dbmode)
     case 39:
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::jure
+            result.is_offerable =
+                cdata[0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
             return result;
         }
@@ -4762,7 +4768,8 @@ item_db_result access_item_db(int dbmode)
     case 38:
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::jure
+            result.is_offerable =
+                cdata[0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
             return result;
         }
@@ -4770,7 +4777,8 @@ item_db_result access_item_db(int dbmode)
     case 37:
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::jure
+            result.is_offerable =
+                cdata[0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
             return result;
         }
@@ -4778,7 +4786,8 @@ item_db_result access_item_db(int dbmode)
     case 36:
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::jure
+            result.is_offerable =
+                cdata[0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
             return result;
         }
@@ -4786,7 +4795,8 @@ item_db_result access_item_db(int dbmode)
     case 35:
         if (dbmode == 16 && dbspec == 12)
         {
-            result.is_offerable = [0].god_id == core_god::jure
+            result.is_offerable =
+                cdata[0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
             return result;
         }

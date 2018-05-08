@@ -1,5 +1,5 @@
 # Change this variable to point to your Boost installation.
-BOOST_DIR = E:\build\boost_1_66_0
+BOOST_DIR = E:\build\SDK\boost_1_66_0
 
 BIN_DIR = bin
 PROGRAM = $(BIN_DIR)\ElonaFoobar.exe

@@ -1,4 +1,5 @@
 #pragma once
+#include "calc.hpp"
 
 enum class efsource_t : int
 {
@@ -8,7 +9,7 @@ enum class efsource_t : int
     magic = 3,
     potion = 4,
     trap = 5,
-}
+};
 
 struct magic_data
 {
@@ -42,6 +43,7 @@ struct magic_data
         efsource = efsource_t::none;
         efstatus = curse_state_t::none;
     }
+
     skill_damage damage;
     int efid;
     int efp;
@@ -111,7 +113,7 @@ enum class heal_t : int
     cure_of_eris = 402,
     cure_of_jure = 403,
     healing_touch = 405
-}
+};
 
 enum class teleport_t : int
 {
@@ -122,7 +124,7 @@ enum class teleport_t : int
     drawn = 620,
     dimensional_move = 627,
     thief = 635,
-}
+};
 
 enum class mutation_t : int
 {

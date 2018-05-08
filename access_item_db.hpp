@@ -10,7 +10,7 @@ enum class item_db_t : int
     drink = 15,
     is_offerable = 16,
     identified = 17,
-}
+};
 
 struct item_db_result
 {
