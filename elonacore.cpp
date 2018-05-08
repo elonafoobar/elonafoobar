@@ -51813,7 +51813,9 @@ magic_result zap_rod(int efid, int efp)
     }
     if (data.efid >= 400 && data.efid < 467)
     {
-        if ((stat == 0 && the_ability_db[data.efid]->sdataref3 / 1000 * 1000 == 2000)
+        // BUG first condition of the following if will never be
+        // reached, because !result.turn_passed was already checked for above.
+        if ((!result.turn_passed && the_ability_db[data.efid]->sdataref3 / 1000 * 1000 == 2000)
             || result.noeffect == 1)
         {
             if (is_in_fov(data.cc))
