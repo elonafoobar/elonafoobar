@@ -82,6 +82,7 @@ set(CORE_SOURCES
     random.cpp
     set_item_info.cpp
     set_option.cpp
+    status_ailment.cpp
     std.cpp
     talk_npc.cpp
     talk_unique.cpp
