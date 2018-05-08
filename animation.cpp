@@ -279,7 +279,7 @@ void play_animation_17_2(int animeid, int anicol, int anisound)
 
 
 
-void play_animation_0(int anicol, int anisound)
+void play_animation_0(int anicol, int anisound, int efid)
 {
     prepare_item_image(3, anicol);
     snd(37);
@@ -1023,7 +1023,7 @@ int FIXME_dig_animation_y;
 
 
 
-void play_animation(int animeid, element_t ele)
+void play_animation(int animeid, element_t ele, optional<int> efid)
 {
     if (mode == 9)
         return;
@@ -1056,7 +1056,7 @@ void play_animation(int animeid, element_t ele)
     case 3: play_animation_3(anicol, anisound); break;
     case 17:
     case 2: play_animation_17_2(animeid, anicol, anisound); break;
-    case 0: play_animation_0(anicol, anisound); break;
+    case 0: play_animation_0(anicol, anisound, *efid); break;
     case 15: play_animation_15(); break;
     case 111:
     case 110:

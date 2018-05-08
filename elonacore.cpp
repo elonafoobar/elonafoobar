@@ -33,6 +33,9 @@
 #include "version.hpp"
 #include "wish.hpp"
 
+#include <boost/utility/in_place_factory.hpp>
+#include <cassert>
+
 using namespace elona;
 
 
@@ -573,7 +576,6 @@ elona_vector1<std::string> headtemp;
 std::string username;
 int mousex = 0;
 int mousey = 0;
-int findlocmode = 0;
 int tgloc = 0;
 int tglocx = 0;
 int tglocy = 0;
@@ -6483,7 +6485,7 @@ int route_info(int& prm_612, int& prm_613, int prm_614)
 
 
 
-int breath_list()
+int breath_list(int efid)
 {
     int breathw = 0;
     DIM3(breathlist, 2, 100);
@@ -6492,7 +6494,7 @@ int breath_list()
     dx = cdata[cc].position.x;
     dy = cdata[cc].position.y;
     for (int cnt = 0,
-             cnt_end = cnt + (the_ability_db[efid]->sdataref3 % 1000 + 1); // TODO
+             cnt_end = cnt + (the_ability_db[efid]->sdataref3 % 1000 + 1);
          cnt < cnt_end;
          ++cnt)
     {
@@ -18127,14 +18129,6 @@ void label_1470(int cc)
 }
 
 
-
-void label_1471(int cc)
-{
-    skillexp(165, cc, 10 + the_ability_db[efid]->sdataref4 / 5); // TODO
-}
-
-
-
 void label_1472(int skill)
 {
     skillexp(skill, 0, 50 + r2 * 20);
@@ -28964,11 +28958,13 @@ void use_house_board()
         while (1)
         {
             await();
-            int stat = target_position();
-            if (stat == -1)
+            optional<position_t> pos = target_position(false);
+            if (!pos)
             {
                 break;
             }
+            tlocx = (*pos).x;
+            tlocy = (*pos).y;
             if ((chipm(7, tile) & 4) == 0)
             {
                 map(tlocx, tlocy, 0) = tile;
@@ -29107,11 +29103,13 @@ void use_house_board()
             cdatan(0, tc) + u8"をどこに移動させる？"s,
             u8"Where do you want to move "s + cdatan(0, tc) + u8"?"s));
         {
-            int stat = target_position();
-            if (stat == -1)
+            optional<position_t> pos = target_position(false);
+            if (!pos)
             {
                 goto label_1717_internal;
             }
+            tlocx = (*pos).x;
+            tlocy = (*pos).y;
         }
         if (chipm(7, map(tlocx, tlocy, 0)) & 4 || map(tlocx, tlocy, 1) != 0)
         {
@@ -39224,9 +39222,16 @@ label_1945_internal:
 }
 
 
-
-int target_position()
+optional<position_t> target_position(bool free_select)
 {
+    bool ignored = true;
+    return target_position(free_select, ignored);
+}
+
+// Returns none if the user cancels.
+optional<position_t> target_position(bool free_select, bool& can_see)
+{
+    int tlocx, tlocxy;
     if (tlocinitx != 0 || tlocinity != 0)
     {
         tlocx = tlocinitx;
@@ -39463,7 +39468,7 @@ label_1948_internal:
             }
         }
     }
-    if (findlocmode == 1)
+    if (free_select)
     {
         if (rc == -1)
         {
@@ -39518,7 +39523,7 @@ label_1948_internal:
     }
     if (key == key_enter)
     {
-        if (findlocmode == 1)
+        if (free_select)
         {
             if (cansee == 0 || chipm(7, map(tlocx, tlocy, 0)) & 4)
             {
@@ -39557,7 +39562,8 @@ label_1948_internal:
         }
         tlocinitx = 0;
         tlocinity = 0;
-        return cansee;
+        can_see = cansee == 1 ? true : false;
+        return position_t{ tlocx, tlocy };
     }
     if (key == key_cancel)
     {
@@ -39565,7 +39571,7 @@ label_1948_internal:
         tlocinity = 0;
         scposval = 0;
         update_screen();
-        return -1;
+        return none;
     }
     goto label_1948_internal;
 }
@@ -51172,7 +51178,7 @@ int decode_book(int efid, int efp)
     int cibkread = 0;
     if (cdata[cc].continuous_action_id == 0)
     {
-        if (inv[ci].id == 687)
+        if (inv[ci].id == 687) // ancient book
         {
             if (inv[ci].param2 != 0)
             {
@@ -51234,6 +51240,7 @@ int decode_book(int efid, int efp)
         }
         else
         {
+            assert(efid != -1);
             r2 = the_ability_db[efid]->sdataref4;
             r3 = efid;
         }
@@ -51316,6 +51323,7 @@ int decode_book(int efid, int efp)
     }
     else
     {
+        // gain experience in the spell
         skillgain(
             cc,
             efid,
@@ -51323,7 +51331,10 @@ int decode_book(int efid, int efp)
             (rnd(51) + 50) * (90 + sdata(165, cc) + (sdata(165, cc) > 0) * 20)
                     / clamp((100 + spell((efid - 400)) / 2), 50, 1000)
                 + 1);
-        label_1471(0);
+
+        // gain experience in memorization
+        skillexp(165, 0, 10 + the_ability_db[efid]->sdataref4 / 5);
+
         if (itemmemory(2, inv[ci].id) == 0)
         {
             itemmemory(2, inv[ci].id) = 1;
@@ -51440,18 +51451,35 @@ int calcmagiccontrol(int prm_1076, int prm_1077)
 
 
 
-magic_result drink_potion(int efid, int efp)
+magic_result drink_potion(int efid, int efp, potion_consume_t consumed, optional<curse_state_t> spilt_curse_state)
 {
+    magic_result result = {};
+    if(efid == -1)
+    {
+        // Temporary hack to get the around the fact that access_item_db might call drink_well()
+        // When this happens efid is set to -1.
+        // In all other cases efid is set.
+        int stat = drink_well();
+        result.turn_passed = stat == 1 ? true : false;
+        return result;
+    }
     tc = cc;
     magic_data data(efid, cc, tc, efp);
-    magic_result result = {};
     data.efsource = efsource_t::potion;
-    if (potionspill || potionthrow)
+    data.potion_consume_type = boost::in_place(consumed);
+    if (consumed != potion_consume_t::drunk)
     {
-        if (potionthrow)
+        if (consumed == potion_consume_t::thrown)
         {
+            // potionthrow was always either 100 or 0
+            int potionthrow = 100;
             data.efp = efp * potionthrow / 100;
             data.efstatus = inv[ci].curse_state;
+        }
+        else
+        {
+            // should have been set by pass_one_turn
+            data.efstatus = *spilt_curse_state;
         }
     }
     else
@@ -51467,12 +51495,7 @@ magic_result drink_potion(int efid, int efp)
         }
     }
     result = magic(data);
-    if (potionspill || potionthrow)
-    {
-        potionspill = 0;
-        potionthrow = 0;
-    }
-    else
+    if(consumed == potion_consume_t::drunk)
     {
         if (result.obvious)
         {
@@ -52307,10 +52330,11 @@ magic_result query_magic_location(magic_data& data)
             }
             else
             {
-                int stat = target_position();
-                if (stat != 1)
+                bool can_see;
+                optional<position_t> pos = target_position(false, can_see);
+                if (!pos || !can_see)
                 {
-                    if (stat == 0)
+                    if (!can_see)
                     {
                         txt(lang(
                             u8"その場所は見えない。"s,
@@ -52321,6 +52345,9 @@ magic_result query_magic_location(magic_data& data)
                     result.turn_passed = false;
                     return result;
                 }
+                // TODO de-globalize
+                tlocx = (*pos).x;
+                tlocy = (*pos).y;
             }
         }
         else
@@ -52484,9 +52511,12 @@ void label_2188()
 
 
 
-void do_throw_command(int tlocx, int tlocy)
+void do_throw_command(position_t pos)
 {
-    int ccthrowpotion = 0;
+    // TODO de-globalize
+    tlocx = pos.x;
+    tlocy = pos.y;
+
     if (is_in_fov(cc))
     {
         txt(lang(
@@ -52691,11 +52721,16 @@ void do_throw_command(int tlocx, int tlocy)
                 {
                     hostileaction(cc, tc);
                 }
+
+                int ccthrowpotion = 0;
+
                 ccthrowpotion = cc;
-                potionthrow = 100;
                 cc = tc;
                 dbid = inv[ci].id;
-                access_item_db(item_db_t::drink);
+
+                item_db_result result = access_item_db(item_db_t::drink);
+                drink_potion(result.efid, result.efp, potion_consume_t::thrown);
+
                 cc = ccthrowpotion;
                 turn_end();
                 return;
@@ -53348,11 +53383,27 @@ void do_read_commad()
     }
     dbid = inv[ci].id;
     item_db_result result = access_item_db(item_db_t::read);
-    if (result.efid == 1115)
+
+    switch(result.read_item)
     {
+    case read_item_t::normal_book:
+        read_normal_book();
+        break;
+    case read_item_t::decodable_book:
+        decode_book(result.efid, result.efp);
+        break;
+    case read_item_t::scroll:
+        read_scroll(result.efid, result.efp);
+        break;
+    case read_item_t::deed:
+        assert(result.efid == 1115);
         build_new_building();
-        return;
+        break;
+    case read_item_t::none:
+    default:
+        assert(0);
     }
+
     turn_end();
     return;
 }
@@ -53403,7 +53454,8 @@ void do_eat_command()
 void do_drink_command()
 {
     dbid = inv[ci].id;
-    access_item_db(item_db_t::drink);
+    item_db_result result = access_item_db(item_db_t::drink);
+    drink_potion(result.efid, result.efp, potion_consume_t::drunk);
     turn_end();
     return;
 }
@@ -65186,7 +65238,7 @@ label_2692_internal:
                                                 lang(
                                                     u8"「くらえー！」"s,
                                                     u8"\"Eat this!\""s));
-                                            do_throw_command(tlocx, tlocy);
+                                            do_throw_command(cdata[gdata_fire_giant].position);
                                             return;
                                         }
                                     }
@@ -65215,9 +65267,7 @@ label_2692_internal:
                                     int stat = itemcreate(cc, 587, -1, -1, 0);
                                     if (stat == 1)
                                     {
-                                        tlocx = inv[ti].position.x;
-                                        tlocy = inv[ti].position.y;
-                                        do_throw_command(tlocx, tlocy);
+                                        do_throw_command(inv[ti].position);
                                         return;
                                     }
                                 }
@@ -65256,8 +65306,6 @@ label_2692_internal:
                                 int stat = itemcreate(cc, 587, -1, -1, 0);
                                 if (stat == 1)
                                 {
-                                    tlocx = cdata[0].position.x;
-                                    tlocy = cdata[0].position.y;
                                     txtef(9);
                                     txt(lang(u8" *クスクス* "s, u8"*grin*"s),
                                         lang(
@@ -65274,7 +65322,7 @@ label_2692_internal:
                                             u8"\"Watch out!\""s),
                                         lang(
                                             u8"「避けてー」"s, u8"\"Scut!\""s));
-                                    do_throw_command(tlocx, tlocy);
+                                    do_throw_command(cdata[0].position);
                                     return;
                                 }
                             }
@@ -65364,8 +65412,6 @@ label_2692_internal:
                 {
                     if (cdatan(2, 0) == u8"snail"s)
                     {
-                        tlocx = cdata[0].position.x;
-                        tlocy = cdata[0].position.y;
                         flt();
                         int stat = itemcreate(cc, 698, -1, -1, 0);
                         if (stat == 1)
@@ -65377,7 +65423,7 @@ label_2692_internal:
                                         u8"「なめくじだ！」"s, u8"\"Snail!\""s),
                                     lang(u8"「殺す！」"s, u8"\"Kill!\""s));
                             }
-                            do_throw_command(tlocx, tlocy);
+                            do_throw_command(cdata[0].position);
                             return;
                         }
                     }
@@ -65897,8 +65943,6 @@ void label_2696()
                             cdata[tc].position.x,
                             cdata[tc].position.y))
                     {
-                        tlocx = cdata[tc].position.x;
-                        tlocy = cdata[tc].position.y;
                         int stat = 0;
                         if (act == -9999)
                         {
@@ -65943,7 +65987,7 @@ void label_2696()
                         }
                         if (stat == 1)
                         {
-                            do_throw_command(tlocx, tlocy);
+                            do_throw_command(cdata[tc].position);
                             return;
                         }
                         turn_end();
@@ -68171,10 +68215,12 @@ void pass_one_turn(bool label_2738_flg)
                         hostileaction(0, tc);
                     }
                 }
-                potionspill = 1;
-                efstatus = static_cast<curse_state_t>(mef(8, ef)); // TODO
+                curse_state_t efstatus = static_cast<curse_state_t>(mef(8, ef));
                 dbid = mef(7, ef);
-                access_item_db(item_db_t::drink);
+
+                item_db_result result = access_item_db(item_db_t::drink);
+                drink_potion(result.efid, result.efp, potion_consume_t::spilt, efstatus);
+
                 if (cdata[tc].state == 0)
                 {
                     check_kill(mef(6, ef), tc);
@@ -68856,7 +68902,8 @@ void pc_turn(bool label_2747_flg)
                 && the_item_db[inv[ci].id]->category == 52000)
             {
                 dbid = inv[ci].id;
-                access_item_db(item_db_t::drink);
+                item_db_result result = access_item_db(item_db_t::drink);
+                drink_potion(result.efid, result.efp, potion_consume_t::drunk);
             }
         }
         if (trait(214) != 0 && rnd(250) == 0 && mdata(6) != 1)
@@ -69470,9 +69517,13 @@ label_2747:
     }
     if (key == key_target)
     {
-        findlocmode = 1;
-        target_position();
-        findlocmode = 0;
+        optional<position_t> pos = target_position(true); // free select
+        if(pos)
+        {
+            // TODO de-globalize
+            tlocx = (*pos).x;
+            tlocy = (*pos).y;
+        }
         goto label_2747;
     }
     if (key == key_fire)
@@ -69525,7 +69576,13 @@ label_2747:
         }
         else
         {
-            target_position();
+            optional<position_t> pos = target_position(false);
+            if(pos)
+            {
+                // TODO de-globalize
+                tlocx = (*pos).x;
+                tlocy = (*pos).y;
+            }
             goto label_2747;
         }
     }

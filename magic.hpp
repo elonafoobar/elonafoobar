@@ -85,7 +85,14 @@ enum ground_effect_t : int
     ether = 634,
 };
 
-struct magic_data
+enum potion_consume_t
+{
+    drunk,
+    thrown,
+    spilt
+};
+
+struct magic_data // TODO name members better
 {
     skill_damage damage;
     int efid;
@@ -97,6 +104,7 @@ struct magic_data
     int tlocy;
     efsource_t efsource;
     curse_state_t efstatus;
+    optional<potion_consume_t> potion_consume_type; // only used in magic_love_potion()
 
     magic_data(int efid, int cc) : efid(efid), cc(cc)
     {
@@ -108,6 +116,7 @@ struct magic_data
         tlocy = 0;
         efsource = efsource_t::none;
         efstatus = curse_state_t::none;
+        potion_consume_type = none;
     }
     magic_data(int efid, int cc, int tc) : efid(efid), cc(cc), tc(tc)
     {
@@ -118,6 +127,7 @@ struct magic_data
         tlocy = 0;
         efsource = efsource_t::none;
         efstatus = curse_state_t::none;
+        potion_consume_type = none;
     }
     magic_data(int efid, int cc, int tc, int efp) : efid(efid), cc(cc), tc(tc), efp(efp)
     {
@@ -127,6 +137,7 @@ struct magic_data
         tlocy = 0;
         efsource = efsource_t::none;
         efstatus = curse_state_t::none;
+        potion_consume_type = none;
     }
 };
 
@@ -200,8 +211,8 @@ void magic_gain_spell(const magic_data&, magic_result&);
 void magic_descent(const magic_data&, magic_result&);
 void magic_gain_attribute(const magic_data&, magic_result&);
 void magic_faith(const magic_data&, magic_result&);
-void magic_gain_skill_potential(const magic_data&, magic_result&);
-void magic_gain_skill_exp(const magic_data&, magic_result&);
+void magic_growth(const magic_data&, magic_result&);
+void magic_failed_altar_takeover(const magic_data&, magic_result&);
 void magic_hermes_blood(const magic_data&, magic_result&);
 void magic_gain_potential(const magic_data&, magic_result&);
 void magic_vanquish(const magic_data&, magic_result&);
@@ -215,23 +226,23 @@ void magic_restore_mana(const magic_data&, magic_result&);
 void magic_absorb_mana(const magic_data&, magic_result&);
 void magic_poison(const magic_data&, magic_result&);
 void magic_dye(const magic_data&, magic_result&);
-void magic_foul(const magic_data&, magic_result&);
+void magic_confusion(const magic_data&, magic_result&);
 void magic_potion_numbness(const magic_data&, magic_result&);
 void magic_juice(const magic_data&, magic_result&);
 void magic_curse(const magic_data&, magic_result&, bool is_attack);
-void magic_resistmod(const magic_data&, magic_result&);
+void magic_weaken_resistance(const magic_data&, magic_result&);
 void magic_ally(const magic_data&, magic_result&, ally_t type);
 void magic_domination(const magic_data&, magic_result&);
 void magic_place_ground_effect(const magic_data&, magic_result&, ground_effect_t type);
 void magic_create_artifact(const magic_data&, magic_result&);
 void magic_superior_material(const magic_data&, magic_result&);
-void magic_reconstruct_artifact(const magic_data&, magic_result&, bool flag);
+void magic_change_material(const magic_data&, magic_result&, bool flag);
 void magic_deed_of_inheritance(const magic_data&, magic_result&);
 void magic_enchant(const magic_data&, magic_result&, bool is_armor);
 void magic_recharge(const magic_data&, magic_result&, bool is_fill_charge);
 void magic_draw_charge(const magic_data&, magic_result&);
 void magic_change_creature(const magic_data&, magic_result&);
-void magic_change_material(const magic_data&, magic_result&);
+void magic_alchemy(const magic_data&, magic_result&);
 void magic_wall_creation(const magic_data&, magic_result&, bool create_door);
 void magic_swarm(const magic_data&, magic_result&);
 void magic_drop_item(const magic_data&, magic_result&);

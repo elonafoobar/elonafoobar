@@ -1,6 +1,7 @@
 #pragma once
 
 #include "enums.hpp"
+#include "optional.hpp"
 
 
 namespace elona
@@ -34,7 +35,8 @@ enum class animation_type
 };
 
 
-void play_animation(int, element_t = element_t::none);
+// efid is only needed for animation type 0 (bolt)
+void play_animation(int, element_t = element_t::none, optional<int> efid = none);
 
 
 extern int FIXME_dig_animation_x;

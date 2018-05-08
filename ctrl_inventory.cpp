@@ -1,4 +1,5 @@
 #include "ability.hpp"
+#include "access_item_db.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "config.hpp"
@@ -2097,14 +2098,15 @@ label_2061_internal:
         if (invctrl == 26)
         {
             savecycle();
-            int stat = target_position();
-            if (stat != 1)
+            bool can_see = false;
+            optional<position_t> pos = target_position(false, can_see);
+            if (!pos || !can_see)
             {
-                if (stat == 0)
+                if (!can_see)
                 {
                     txt(lang(
-                        u8"その場所は見えない。"s,
-                        u8"You can't see the location."s));
+                            u8"その場所は見えない。"s,
+                            u8"You can't see the location."s));
                     update_screen();
                 }
                 pc_turn(false);
@@ -2117,7 +2119,7 @@ label_2061_internal:
                 update_screen();
                 pc_turn(false);
             }
-            do_throw_command();
+            do_throw_command(*pos);
             return 0;
         }
         if (invctrl == 27)

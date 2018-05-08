@@ -1,5 +1,6 @@
 #include "magic.hpp"
 #include "ability.hpp"
+#include "access_item_db.hpp"
 #include "animation.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
@@ -17,8 +18,6 @@
 #include "trait.hpp"
 #include "variables.hpp"
 #include "wish.hpp"
-
-#include <boost/utility/in_place_factory.hpp>
 
 
 namespace elona
@@ -45,10 +44,9 @@ magic_result magic(int efid, int cc, int tc, int efp)
 
 magic_result magic(magic_data m)
 {
+    assert(m.efid != -1);
     magic_result result { true, true, false, true, m.tc };
-    int efcibk = 0;
     bool is_negative_effect = false;
-    efcibk = ci;
     efcancel = 0;
 
     bool from_item = m.efsource == efsource_t::potion
@@ -193,10 +191,11 @@ magic_result magic(magic_data m)
 
 the_end:
     // TODO until everything is de-globalized
-    ci = efcibk;
     efsource = efsource_t::none;
     tc = result.selected_target;
     f = result.succeeded ? 1 : 0;
+    tlocx = m.tlocx;
+    tlocy = m.tlocy;
     return result;
 }
 
@@ -325,20 +324,16 @@ void handle_general_magic(const magic_data& m, magic_result& result)
         magic_descent(m, result);
         break;
     case 1105:
-        // TODO not sure
         magic_gain_attribute(m, result);
         break;
     case 1107:
-        // TODO not sure
         magic_faith(m, result);
         break;
     case 1119:
-        // TODO real name?
-        magic_gain_skill_potential(m, result);
+        magic_growth(m, result);
         break;
     case 1106:
-        // TODO real name?
-        magic_gain_skill_exp(m, result);
+        magic_failed_altar_takeover(m, result);
         break;
     case 1139:
         magic_hermes_blood(m, result);
@@ -388,8 +383,7 @@ void handle_general_magic(const magic_data& m, magic_result& result)
         magic_dye(m, result);
         break;
     case 1109:
-        // TODO real name?
-        magic_foul(m, result);
+        magic_confusion(m, result);
         break;
     case 1110:
         magic_potion_numbness(m, result);
@@ -405,8 +399,7 @@ void handle_general_magic(const magic_data& m, magic_result& result)
     }
         break;
     case 1118:
-        // TODO real name?
-        magic_resistmod(m, result);
+        magic_weaken_resistance(m, result);
         break;
     case 1138:
     case 1123:
@@ -425,7 +418,6 @@ void handle_general_magic(const magic_data& m, magic_result& result)
     case 455:
     case 634:
     case 456:
-        // TODO
     {
         ground_effect_t type = static_cast<ground_effect_t>(m.efid);
         magic_place_ground_effect(m, result, type);
@@ -440,8 +432,8 @@ void handle_general_magic(const magic_data& m, magic_result& result)
     case 21:
     case 1127:
     {
-        bool flag = m.efid == 1127; // TODO real name?
-        magic_reconstruct_artifact(m, result, flag);
+        bool is_material_kit = m.efid == 21;
+        magic_change_material(m, result, is_material_kit);
     }
         break;
     case 1128:
@@ -471,7 +463,7 @@ void handle_general_magic(const magic_data& m, magic_result& result)
         magic_flying(m, result);
         break;
     case 1132:
-        magic_change_material(m, result);
+        magic_alchemy(m, result);
         break;
     case 457:
     case 438:
@@ -632,7 +624,7 @@ void magic_bolt(const magic_data& m, magic_result& result)
         return;
     }
 
-    play_animation(0, m.damage.element);
+    play_animation(0, m.damage.element, m.efid);
     dx = cdata[m.cc].position.x;
     dy = cdata[m.cc].position.y;
     for (int cnt = 0; cnt < 20; ++cnt)
@@ -1292,7 +1284,7 @@ void magic_breath(const magic_data& m, magic_result& result)
     }
     dx = cdata[m.cc].position.x;
     dy = cdata[m.cc].position.y;
-    breath_list();
+    breath_list(m.efid);
     play_animation(3, m.damage.element);
     for (int cnt = 0, cnt_end = (maxbreath); cnt < cnt_end; ++cnt)
     {
@@ -1528,15 +1520,17 @@ void magic_love_potion(const magic_data& m, magic_result& result)
         return;
     }
     cdata[m.tc].emotion_icon = 317;
-    if (potionspill || potionthrow)
-    {
-        txt(lang(
-                 name(m.tc) + u8"は恋の予感がした。"s,
-                 name(m.tc) + u8" sense"s + _s(m.tc) + u8" a sigh of love,"s));
-        modimp(m.tc, clamp(m.efp / 15, 0, 15));
-        dmgcon(m.tc, 7, 100);
-        lovemiracle(m.tc);
-        return;
+    if(m.potion_consume_type) {
+        if (*m.potion_consume_type != potion_consume_t::drunk)
+        {
+            txt(lang(
+                     name(m.tc) + u8"は恋の予感がした。"s,
+                     name(m.tc) + u8" sense"s + _s(m.tc) + u8" a sigh of love,"s));
+            modimp(m.tc, clamp(m.efp / 15, 0, 15));
+            dmgcon(m.tc, 7, 100);
+            lovemiracle(m.tc);
+            return;
+        }
     }
     if (m.tc == 0)
     {
@@ -3234,7 +3228,7 @@ void magic_faith(const magic_data& m, magic_result& result)
     refresh_character(tc);
 }
 
-void magic_gain_skill_potential(const magic_data& m, magic_result& result)
+void magic_growth(const magic_data& m, magic_result& result)
 {
     for (int cnt = 0, cnt_end = (1 + (m.efstatus == curse_state_t::blessed));
          cnt < cnt_end;
@@ -3306,7 +3300,7 @@ void magic_gain_skill_potential(const magic_data& m, magic_result& result)
     autosave = 1 * (gdata_current_map != 35);
 }
 
-void magic_gain_skill_exp(const magic_data& m, magic_result& result)
+void magic_failed_altar_takeover(const magic_data& m, magic_result& result)
 {
     i = rnd(10) + 10;
     skillexp(i, tc, efstatusfix(m.efstatus, -2000, -2000, -1000, -250));
@@ -3753,7 +3747,7 @@ void magic_dye(const magic_data& m, magic_result& result)
     dmgcon(m.tc, 4, m.efp);
 }
 
-void magic_foul(const magic_data& m, magic_result& result)
+void magic_confusion(const magic_data& m, magic_result& result)
 {
     if (is_in_fov(m.tc))
     {
@@ -3889,7 +3883,7 @@ void magic_curse(const magic_data& m, magic_result& result, bool is_attack)
     }
 }
 
-void magic_resistmod(const magic_data& m, magic_result& result)
+void magic_weaken_resistance(const magic_data& m, magic_result& result)
 {
     result.succeeded = false;
     for (int cnt = 0; cnt < 10; ++cnt)
@@ -4147,6 +4141,9 @@ void magic_create_artifact(const magic_data& m, magic_result& result)
 // TODO fix efcibk
 void magic_superior_material(const magic_data& m, magic_result& result)
 {
+    int efcibk = 0;
+    efcibk = ci;
+
     if (cc != 0)
     {
         txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
@@ -4206,9 +4203,11 @@ void magic_superior_material(const magic_data& m, magic_result& result)
     --inv[ci].number;
     cell_refresh(inv[ci].position.x, inv[ci].position.y);
     autosave = 1 * (gdata_current_map != 35);
+
+    ci = efcibk;
 }
 
-void magic_reconstruct_artifact(const magic_data& m, magic_result& result, bool flag)
+void magic_change_material(const magic_data& m, magic_result& result, bool is_material_kit)
 {
     if (cc != 0)
     {
@@ -4226,7 +4225,7 @@ void magic_reconstruct_artifact(const magic_data& m, magic_result& result, bool 
     }
     if (inv[ci].quality == 5 || ibit(10, ci) == 1)
     {
-        if (flag)
+        if (!is_material_kit)
         {
             result.succeeded = false;
         }
@@ -4583,7 +4582,7 @@ void magic_change_creature(const magic_data& m, magic_result& result)
     }
 }
 
-void magic_change_material(const magic_data& m, magic_result& result)
+void magic_alchemy(const magic_data& m, magic_result& result)
 {
     int fltbk = 0;
     int valuebk = 0;

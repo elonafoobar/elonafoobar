@@ -4,6 +4,7 @@
 #include "character.hpp"
 #include "config.hpp"
 #include "elona.hpp"
+#include "enums.hpp"
 #include "item.hpp"
 #include "random.hpp"
 #include "variables.hpp"
@@ -794,12 +795,14 @@ void proc_event()
         tlocx = evdata1(evnum - (evnum != 0) * 1);
         tlocy = evdata2(evnum - (evnum != 0) * 1);
         range_ = 31;
-        ele = 59;
-        aniref = range_;
-        anix = tlocx;
-        aniy = tlocy;
-        play_animation(17);
-        update_screen();
+        {
+            element_t ele = element_t::chaotic;
+            aniref = range_;
+            anix = tlocx;
+            aniy = tlocy;
+            play_animation(17, ele);
+            update_screen();
+        }
         for (int i = 0; i < range_ * 2 + 1; ++i)
         {
             dy = tlocy - range_ + i;

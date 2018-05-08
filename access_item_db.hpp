@@ -1,6 +1,9 @@
 #pragma once
 
-enum class item_db_t : int
+namespace elona
+{
+
+enum class item_db_t : int // TODO rename to dbmode_t
 {
     charge_level = 2,
     initialize = 3,
@@ -12,13 +15,25 @@ enum class item_db_t : int
     identified = 17,
 };
 
+enum class read_item_t
+{
+    none,
+    normal_book,
+    decodable_book,
+    scroll,
+    deed,
+};
+
 struct item_db_result
 {
     bool error;
     bool is_offerable;
-    int efid;
-    int efp;
+    read_item_t read_item;
+    int efid; // TODO name better
+    int efp; // TODO name better
 };
 
 
 item_db_result access_item_db(item_db_t);
+
+}
