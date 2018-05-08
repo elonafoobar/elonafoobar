@@ -353,7 +353,7 @@ int magic()
                                         name(tc) + u8" "s + is(tc)
                                             + u8" healed."s));
                                 }
-                                label_2187();
+                                heal_rider_and_mount();
                             }
                             continue;
                         }
@@ -567,7 +567,7 @@ int magic()
                                 + u8" completely healed."s));
                     }
                 }
-                label_2187();
+                heal_rider_and_mount();
                 if (efstatus == curse_state_t::blessed)
                 {
                     healcon(tc, 12, 5 + rnd(5));
@@ -991,7 +991,7 @@ int magic()
                         rowactend(cc);
                         ccprev = cc;
                         cc = tc;
-                        label_21452();
+                        proc_trap();
                         cc = ccprev;
                         if (tc == 0)
                         {
@@ -1362,7 +1362,7 @@ label_2181_internal:
         cdata[tc].nutrition += 1000 * (efp / 100);
         if (tc == 0)
         {
-            label_2162();
+            show_eating_message();
         }
         eatstatus(efstatus, tc);
         animeload(15, tc);
@@ -1697,7 +1697,7 @@ label_2181_internal:
                 rnd(the_ability_db[efid]->cost / 2 + 1)
                     + the_ability_db[efid]->cost / 2 + 1);
         }
-        label_2146();
+        continuous_action_perform();
         break;
     case 184:
         if (sdata(184, 0) == 0)
@@ -1901,7 +1901,7 @@ label_2181_internal:
         txt(lang(
             name(tc) + u8"は黄金の輝きに包まれた！"s,
             u8"A golden aura wraps "s + name(tc) + u8"!"s));
-        label_2188();
+        heal_completely();
         play_animation(5);
         break;
     case 1117:
@@ -2454,7 +2454,7 @@ label_2181_internal:
             }
             --cdata[tc].level;
             cdata[tc].experience = 0;
-            label_1456(tc);
+            update_required_experience(tc);
             txtef(8);
             txt(lang(
                 name(tc) + u8"のレベルが下がった…"s,
@@ -3020,7 +3020,7 @@ label_2181_internal:
         }
         else
         {
-            label_2081();
+            try_to_return();
             if (is_cursed(efstatus))
             {
                 if (rnd(3) == 0)

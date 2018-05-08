@@ -2953,7 +2953,7 @@ label_1744_internal:
     msync = 1;
     label_1746();
     label_1439();
-    label_1428();
+    update_scrolling_info();
     if (mdata(6) == 3)
     {
         label_2671();
@@ -3316,7 +3316,7 @@ label_1744_internal:
     }
     if (mdata(7) == 1)
     {
-        label_1576();
+        foods_get_rotten();
     }
     if (adata(16, gdata_current_map) == 102)
     {
@@ -3324,11 +3324,11 @@ label_1744_internal:
     }
     if (adata(16, gdata_current_map) == 101)
     {
-        label_1728();
+        cakc_museum_rank();
     }
     if (gdata_current_map == 7)
     {
-        label_1730();
+        calc_home_rank();
     }
     if (adata(16, gdata_current_map) == 31)
     {
