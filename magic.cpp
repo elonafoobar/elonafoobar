@@ -2945,7 +2945,7 @@ label_2181_internal:
     case 441:
         what_do_you_wish_for();
         screenupdate = -1;
-        label_1416();
+        update_screen();
         break;
     case 1141:
         if (tc != 0)

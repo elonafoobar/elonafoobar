@@ -985,7 +985,6 @@ void end_dmghp();
 void initialize_server_info();
 void label_1399();
 void initialize_ui_constants();
-void label_1416();
 void update_entire_screen();
 void update_screen_hud();
 void update_minimap();

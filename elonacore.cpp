@@ -15060,15 +15060,6 @@ void initialize_ui_constants()
 
 
 
-void label_1416()
-{
-    gmode(2);
-    update_screen();
-    return;
-}
-
-
-
 void update_entire_screen()
 {
     update_screen_hud();
@@ -42082,7 +42073,7 @@ turn_result_t call_npc()
             ""s + cdatan(0, tc) + u8"という名前で呼ぶことにした。"s,
             u8"You named "s + him(tc) + u8" "s + cdatan(0, tc) + u8"."s));
     }
-    label_1416();
+    update_screen();
     return turn_result_t::pc_turn_user_error;
 }
 
