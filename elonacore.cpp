@@ -9842,7 +9842,8 @@ int customtalk(int cc, int talk_type)
 int findchara(int prm_766)
 {
     p_at_m117 = 0;
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
+         ++cnt)
     {
         if (cdata[cnt].state != 2)
         {
@@ -9953,7 +9954,8 @@ void modimp(int cc, int delta)
 
 void put_questtarget()
 {
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
+         ++cnt)
     {
         if (cdata[cnt].state == 1)
         {
@@ -9970,7 +9972,8 @@ int exist_questtarget()
 {
     int f_at_m119 = 0;
     f_at_m119 = 0;
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
+         ++cnt)
     {
         if (cdata[cnt].state == 1)
         {
@@ -10096,7 +10099,9 @@ void check_quest()
         if (gdata(71) == 1)
         {
             p_at_m119 = 0;
-            for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+            for (int cnt = ELONA_MAX_PARTY_CHARACTERS;
+                 cnt < ELONA_MAX_CHARACTERS;
+                 ++cnt)
             {
                 if (cdata[cnt].state == 1)
                 {
@@ -10355,7 +10360,8 @@ void make_sound(
 int get_freechara()
 {
     f_at_m125 = -1;
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
+         ++cnt)
     {
         if (cdata[cnt].state == 0)
         {
@@ -10426,7 +10432,8 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
     if (tc_at_m125 == -1)
     {
         f_at_m125 = 0;
-        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
+             ++cnt)
         {
             if (cdata[cnt].state == 0)
             {
@@ -10439,7 +10446,8 @@ int relocate_chara(int prm_784, int prm_785, int prm_786)
         {
             for (int cnt = 0;; ++cnt)
             {
-                tc_at_m125 = ELONA_MAX_PARTY_CHARACTERS + rnd(ELONA_MAX_OTHER_CHARACTERS);
+                tc_at_m125 = ELONA_MAX_PARTY_CHARACTERS
+                    + rnd(ELONA_MAX_OTHER_CHARACTERS);
                 if (cdata[cnt].state == 1)
                 {
                     if (cdata[cnt].character_role == 0)
@@ -10687,7 +10695,8 @@ void wake_up()
 {
     if (gdata_hour >= 7 && gdata_hour <= 22)
     {
-        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
+             ++cnt)
         {
             if (cdata[cnt].sleep > 0)
             {
@@ -12961,7 +12970,8 @@ int copy_chara(int prm_848)
     int y_at_m139 = 0;
     int x_at_m139 = 0;
     c_at_m139 = 0;
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
+         ++cnt)
     {
         if (cdata[cnt].state == 0)
         {
@@ -20546,7 +20556,8 @@ int do_create_character()
 {
     if (rc == -1)
     {
-        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
+             ++cnt)
         {
             if (cdata[cnt].state == 0)
             {
@@ -28936,7 +28947,8 @@ void use_house_board()
     if (gdata_current_map == 7)
     {
         p = 0;
-        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
+             ++cnt)
         {
             if (cdata[cnt].state == 1 || cdata[cnt].state == 2)
             {
@@ -29270,7 +29282,8 @@ void use_house_board()
     case 6:
         txtnew();
         p = 0;
-        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
+             ++cnt)
         {
             if (cdata[cnt].state == 1 || cdata[cnt].state == 2)
             {
@@ -29360,7 +29373,9 @@ void use_house_board()
                 randomize();
                 cdata[rc].shop_rank = rnd(15) + 1;
             }
-            for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+            for (int cnt = ELONA_MAX_PARTY_CHARACTERS;
+                 cnt < ELONA_MAX_CHARACTERS;
+                 ++cnt)
             {
                 if (cnt == rc)
                 {
@@ -30875,7 +30890,8 @@ void exit_map()
         {
             ctrl_file(file_operation_t::_11);
         }
-        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
+             ++cnt)
         {
             if (cdata[cnt].state != 0)
             {
@@ -30993,7 +31009,9 @@ void label_1745()
                     }
                 }
             }
-            for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+            for (int cnt = ELONA_MAX_PARTY_CHARACTERS;
+                 cnt < ELONA_MAX_CHARACTERS;
+                 ++cnt)
             {
                 rc = cnt;
                 label_1539();
@@ -31053,7 +31071,9 @@ void label_1745()
         }
         if (adata(16, gdata_current_map) == 7)
         {
-            for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+            for (int cnt = ELONA_MAX_PARTY_CHARACTERS;
+                 cnt < ELONA_MAX_CHARACTERS;
+                 ++cnt)
             {
                 if (cdata[cnt].state != 1)
                 {
@@ -31097,7 +31117,9 @@ void label_1745()
             }
             if (mdata(6) == 3 || mdata(6) == 2 || gdata_current_map == 7)
             {
-                for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+                for (int cnt = ELONA_MAX_PARTY_CHARACTERS;
+                     cnt < ELONA_MAX_CHARACTERS;
+                     ++cnt)
                 {
                     if (cdata[cnt].state != 1)
                     {
@@ -32953,7 +32975,8 @@ void label_1755()
     }
     else
     {
-        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
+             ++cnt)
         {
             if (cdata[cnt].only_christmas() == 1)
             {
@@ -52644,8 +52667,8 @@ void do_throw_command()
                 u8"It hits "s + name(tc) + u8"!"s));
             if (inv[ci].id == 685)
             {
-                if (tc < ELONA_MAX_PARTY_CHARACTERS || cdata[tc].character_role != 0
-                    || cdata[tc].quality == 6
+                if (tc < ELONA_MAX_PARTY_CHARACTERS
+                    || cdata[tc].character_role != 0 || cdata[tc].quality == 6
                     || cdata[tc].is_lord_of_dungeon() == 1)
                 {
                     txt(lang(
@@ -63190,7 +63213,8 @@ void supply_new_equipment()
 
 void label_2669()
 {
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
+         ++cnt)
     {
         if (cdata[cnt].state == 0)
         {
@@ -63319,7 +63343,8 @@ int label_2672()
         i = -1;
         for (int cnt = 0; cnt < 300; ++cnt)
         {
-            int n = rnd(ELONA_MAX_OTHER_CHARACTERS) + ELONA_MAX_PARTY_CHARACTERS;
+            int n =
+                rnd(ELONA_MAX_OTHER_CHARACTERS) + ELONA_MAX_PARTY_CHARACTERS;
             if (n == qdata(0, rq))
             {
                 continue;
@@ -68026,25 +68051,26 @@ void pass_one_turn(bool label_2738_flg)
     int ef = 0;
     if (label_2738_flg)
     {
-		while (ct < ELONA_MAX_CHARACTERS) {
-			if (cdata[ct].state != 1)
-			{
-				++ct;
-				continue;
-			}
-			if (cdata[ct].turn_cost >= mdata(9))
-			{
-				cdata[ct].turn_cost -= mdata(9);
-				break;
-			}
-			else
-			{
-				++ct;
-			}
-		}
+        while (ct < ELONA_MAX_CHARACTERS)
+        {
+            if (cdata[ct].state != 1)
+            {
+                ++ct;
+                continue;
+            }
+            if (cdata[ct].turn_cost >= mdata(9))
+            {
+                cdata[ct].turn_cost -= mdata(9);
+                break;
+            }
+            else
+            {
+                ++ct;
+            }
+        }
         if (ct >= ELONA_MAX_CHARACTERS)
         {
-			throw elona_turn_sequence{};
+            throw elona_turn_sequence{};
         }
     }
     cc = ct;

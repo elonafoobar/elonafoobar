@@ -23,10 +23,12 @@ void engine::initialize()
 
 void engine::load(const fs::path& filepath)
 {
-	std::string filepath_str = filesystem::to_narrow_path(filepath);
-	if (luaL_dofile(ptr(), filepath_str.c_str()) != 0) {
-		throw std::runtime_error(u8"Could not load lua script at "s + filepath_str + u8"."s);
-	}
+    std::string filepath_str = filesystem::to_narrow_path(filepath);
+    if (luaL_dofile(ptr(), filepath_str.c_str()) != 0)
+    {
+        throw std::runtime_error(
+            u8"Could not load lua script at "s + filepath_str + u8"."s);
+    }
 }
 
 

@@ -1,7 +1,7 @@
 #include "ability.hpp"
 #include "cat.hpp"
-#include "range.hpp"
 #include "character.hpp"
+#include "range.hpp"
 
 using namespace elona;
 

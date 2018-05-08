@@ -230,9 +230,11 @@ struct read_by_line
     read_by_line(const fs::path& filepath)
         : in(filepath.native())
     {
-        if (!fs::exists(filepath)) {
+        if (!fs::exists(filepath))
+        {
             using namespace std::literals::string_literals;
-            throw std::runtime_error(u8"Could not open file "s + filepath.string());
+            throw std::runtime_error(
+                u8"Could not open file "s + filepath.string());
         }
     }
 

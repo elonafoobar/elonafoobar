@@ -785,9 +785,9 @@ using namespace elona;
 #define SDIM3(a, b, c) (a).allocate_and_clear(c)
 #define SDIM4(a, b, c, d) (a).allocate_and_clear(c, d)
 
-#define DIALOG_OK  1
+#define DIALOG_OK 1
 #define DIALOG_YES 6
-#define DIALOG_NO  7
+#define DIALOG_NO 7
 
 
 // For basic_string literal suffix.
