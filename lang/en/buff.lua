@@ -3,7 +3,7 @@ buff['1'] = {
   message_0 = "begin",
   message_1 = " to shine.",
   description = function(self, power)
-    return "Increases PV by " .. self._effect(power)) .. "/RES+ fear"
+    return "Increases PV by " .. self._effect(power) .. "/RES+ fear"
   end,
 }
 buff['2'] = {
