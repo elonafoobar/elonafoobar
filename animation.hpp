@@ -35,8 +35,8 @@ enum class animation_type
 };
 
 
-// efid is only needed for animation type 0 (bolt)
-void play_animation(int, element_t = element_t::none, optional<int> efid = none);
+// effect_id is only needed for animation type 0 (bolt)
+void play_animation(int, element_t = element_t::none, optional<int> effect_id = none);
 
 
 extern int FIXME_dig_animation_x;

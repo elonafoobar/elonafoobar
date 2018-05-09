@@ -3,7 +3,7 @@
 namespace elona
 {
 
-enum class item_db_t : int // TODO rename to item_db_query_t
+enum class item_db_query_t : int // TODO rename to item_db_query_t
 {
     charge_level = 2,
     initialize = 3,
@@ -29,11 +29,11 @@ struct item_db_result
     bool error;
     bool is_offerable;
     read_item_t read_item;
-    int efid; // TODO name better
-    int efp; // TODO name better
+    int effect_id;
+    int effect_power;
 };
 
 
-item_db_result access_item_db(item_db_t);
+item_db_result access_item_db(item_db_query_t);
 
 }

@@ -1,11 +1,12 @@
 #pragma once
 #include "calc.hpp"
 #include "enums.hpp"
+#include "position.hpp"
 
 namespace elona
 {
 
-enum class efsource_t : int
+enum class effect_source_t : int
 {
     none = 0,
     rod = 1,
@@ -15,7 +16,7 @@ enum class efsource_t : int
     trap = 5,
 };
 
-enum class sdataref1_t : int
+enum class magic_type_t : int
 {
     none = 0,
     bolt = 1,
@@ -92,51 +93,33 @@ enum potion_consume_t
     spilt
 };
 
-struct magic_data // TODO name members better
+struct magic_data
 {
     skill_damage damage;
-    int efid;
-    int efp;
-    int cc;
-    int tc;
+    int effect_id;
+    int power;
+    int caster;
+	int target;
     int ci;
-    int tlocx;
-    int tlocy;
-    efsource_t efsource;
-    curse_state_t efstatus;
+	position_t target_loc;
+    effect_source_t effect_source;
+    curse_state_t curse_state;
     optional<potion_consume_t> potion_consume_type; // only used in magic_love_potion()
 
-    magic_data(int efid, int cc) : efid(efid), cc(cc)
-    {
-        damage = {};
-        efp = 0;
-        tc = 0;
-        ci = 0;
-        tlocx = 0;
-        tlocy = 0;
-        efsource = efsource_t::none;
-        efstatus = curse_state_t::none;
-        potion_consume_type = none;
-    }
-    magic_data(int efid, int cc, int tc) : efid(efid), cc(cc), tc(tc)
-    {
-        damage = {};
-        efp = 0;
-        ci = 0;
-        tlocx = 0;
-        tlocy = 0;
-        efsource = efsource_t::none;
-        efstatus = curse_state_t::none;
-        potion_consume_type = none;
-    }
-    magic_data(int efid, int cc, int tc, int efp) : efid(efid), cc(cc), tc(tc), efp(efp)
+    magic_data(int effect_id, int caster) 
+		: magic_data(effect_id, caster, 0, 0) {}
+
+    magic_data(int effect_id, int caster, int target) 
+		: magic_data(effect_id, caster, target, 0) {}
+
+    magic_data(int effect_id, int caster, int target, int power)
+		: effect_id(effect_id), caster(caster), target(target), power(power)
     {
         damage = {};
         ci = 0;
-        tlocx = 0;
-        tlocy = 0;
-        efsource = efsource_t::none;
-        efstatus = curse_state_t::none;
+		target_loc = position_t{ 0, 0 };
+        effect_source = effect_source_t::none;
+        curse_state = curse_state_t::none;
         potion_consume_type = none;
     }
 };
@@ -150,8 +133,8 @@ struct magic_result
     int selected_target; // actual target the magic selected
 };
 
-magic_result magic(int efid, int cc, int tc);
-magic_result magic(int efid, int cc, int tc, int efp);
+magic_result magic(int effect_id, int caster, int target);
+magic_result magic(int effect_id, int caster, int target, int effect_power);
 magic_result magic(magic_data m);
 
 void handle_general_magic(const magic_data&, magic_result&);
@@ -171,7 +154,7 @@ void magic_insanity(const magic_data&, magic_result&);
 void magic_treasure_map(const magic_data&, magic_result&);
 void magic_love_potion(const magic_data&, magic_result&);
 void magic_pregnancy(const magic_data&, magic_result&);
-void magic_examine_self(const magic_data&, magic_result&);
+void magic_mirror(const magic_data&, magic_result&);
 void magic_milk(const magic_data&, magic_result&);
 void magic_alcohol(const magic_data&, magic_result&);
 void magic_acid(const magic_data&, magic_result&);
@@ -189,14 +172,12 @@ void magic_remove_hex(const magic_data&, magic_result&, bool is_vanquish);
 void magic_aura(const magic_data&, magic_result&);
 void magic_create_material(const magic_data&, magic_result&);
 void magic_heal(const magic_data&, magic_result&, heal_t type);
-void magic_do_heal(const magic_data&);
-void magic_special_attack(const magic_data&, magic_result&);
-void magic_suck_blood(const magic_data&, magic_result&);
-void magic_touch(const magic_data&, magic_result&);
+void magic_effect_heal(const magic_data&);
 void magic_disassembly(const magic_data&, magic_result&);
 void magic_touch_of_fear(const magic_data&, magic_result&);
 void magic_touch_of_sleep(const magic_data&, magic_result&);
 void magic_hunger(const magic_data&, magic_result&);
+void magic_suck_blood(const magic_data&, magic_result&);
 void magic_weaken(const magic_data&, magic_result&);
 void magic_flying(const magic_data&, magic_result&);
 void magic_mutate(const magic_data&, magic_result&, mutation_t type);
@@ -258,6 +239,12 @@ void magic_molotov(const magic_data&, magic_result&);
 void magic_loot(const magic_data&, magic_result&);
 void magic_fall_down(const magic_data&, magic_result&);
 void magic_four_dimensional_pocket(const magic_data&, magic_result&);
+
+void magic_announce_special_attack(const magic_data&);
+void magic_announce_suck_blood(const magic_data&);
+void magic_announce_touch(const magic_data&);
+
+void magic_effect_holy_aura(int);
 
 int efstatusfix(curse_state_t, int = 0, int = 0, int = 0, int = 0);
 std::string elename(const magic_data&);

@@ -20,7 +20,7 @@ namespace elona
 void pc_turn(bool = true);
 
 
-int ctrl_inventory(int efp)
+int ctrl_inventory(int effect_power)
 {
     int mainweapon = 0;
     int countequip = 0;
@@ -340,7 +340,7 @@ label_20591:
             {
                 dbid = inv[cnt].id;
                 dbspec = 12;
-                item_db_result result = access_item_db(item_db_t::is_offerable);
+                item_db_result result = access_item_db(item_db_query_t::is_offerable);
                 if (!result.is_offerable)
                 {
                     continue;
@@ -1225,16 +1225,16 @@ label_2061_internal:
                 }
                 if (invctrl(1) == 5) // four dimensional pocket
                 {
-                    // efp is set when opening four dimensional pocket.
+                    // effect_power is set when opening four dimensional pocket.
 
-                    if (inv[ci].weight >= efp * 100)
+                    if (inv[ci].weight >= effect_power * 100)
                     {
                         snd(27);
                         txt(lang(
-                            u8"重さが"s + cnvweight(efp * 100)
+                            u8"重さが"s + cnvweight(effect_power * 100)
                                 + u8"以上の物は入らない。"s,
                             u8"The container can only hold items weight less than "s
-                                + cnvweight(efp * 100) + u8"."s));
+                                + cnvweight(effect_power * 100) + u8"."s));
                         goto label_2060_internal;
                     }
                     if (inv[ci].weight <= 0)
@@ -1773,7 +1773,7 @@ label_2061_internal:
         {
             screenupdate = -1;
             update_screen();
-            const auto result = item_identify(inv[ci], efp);
+            const auto result = item_identify(inv[ci], effect_power);
             if (result == identification_state_t::unidentified)
             {
                 txt(lang(
