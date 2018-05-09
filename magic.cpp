@@ -107,7 +107,8 @@ magic_result magic(magic_data m)
             {
                 magic_apply_rapidmagic(m);
             }
-            switch (the_ability_db[m.efid]->sdataref1)
+            sdataref1_t sdataref = static_cast<sdataref1_t>(the_ability_db[m.efid]->sdataref1); // TODO refactor abilities
+            switch (sdataref)
             {
             case sdataref1_t::melee:
                 magic_melee(m, result);
@@ -2590,7 +2591,7 @@ void magic_do_mutation(const magic_data& m, magic_result& result, mutation_t typ
 {
     result.succeeded = false;
     p = 1;
-    if (m.efid == 1144)
+    if (type == mutation_t::evolution)
     {
         p = 2 + rnd(3);
     }
