@@ -286,6 +286,12 @@ bool input::is_pressed(key k) const
     if (!_keys[static_cast<size_t>(k)].is_pressed())
         return false;
 
+    // Trying to repeat a modifier key will cause the modifier to be pressed repeatedly.
+    // For the case of shift this causes the cancel action to constantly fire.
+    // We want to treat modifiers as held instead of trying to repeat them.
+    if(is_modifier(k))
+        return true;
+
     const auto repeat = _keys[static_cast<size_t>(k)].repeat();
     if (repeat == 0)
     {

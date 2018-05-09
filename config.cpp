@@ -274,6 +274,14 @@ void load_config()
             1,
             [&](auto value) { config::instance().attackanime = value; }),
         std::make_unique<config_integer>(
+            u8"initialKeyWait",
+            10,
+            [&](auto value) { config::instance().initialkeywait = value; }),
+        std::make_unique<config_integer>(
+            u8"keyWait",
+            5,
+            [&](auto value) { config::instance().keywait = value; }),
+        std::make_unique<config_integer>(
             u8"envEffect",
             1,
             [&](auto value) { config::instance().env = value; }),

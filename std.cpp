@@ -1552,7 +1552,7 @@ void title(const std::string& title_str)
         1000));
     snail::application::instance().register_finalizer(
         []() { ::SDL_DestroyTexture(detail::tmp_buffer); });
-    snail::input::instance().set_key_repeat(7, 0);
+    snail::input::instance().set_key_repeat(10, 3);
     snail::application::instance().register_finalizer(
         [&]() { font_detail::font_cache.clear(); });
     buffer(0, 800, 600);
