@@ -28766,8 +28766,7 @@ turn_result_t build_new_building()
         txt(lang(u8"新しい家を建てた！ "s, u8"You've built a new house!"s));
         msg_halt();
         snd(49);
-        exit_map();
-        return;
+        return turn_result_t::exit_map;
     }
     ctrl_file(file_operation_t::_13);
     p = area;
@@ -28867,7 +28866,7 @@ void initialize_home_adata()
 
 
 
-void use_house_board()
+turn_result_t use_house_board()
 {
     int cxbk = 0;
     int cybk = 0;
@@ -29428,8 +29427,7 @@ label_1722_internal:
     tlocinity = 0;
     screenupdate = -1;
     update_screen();
-    use_house_board();
-    return;
+    return turn_result_t::use_house_board;
 }
 
 
@@ -30526,7 +30524,7 @@ void monster_respawn()
 
 
 
-void exit_map()
+turn_result_t exit_map()
 {
     int fixstart = 0;
     gdata_left_minutes_of_executing_quest = 0;
@@ -30899,8 +30897,7 @@ void exit_map()
         }
     }
     mode = 2;
-    initialize_map();
-    return;
+    return turn_result_t::initialize_map;
 }
 
 
@@ -33406,7 +33403,7 @@ label_1857_internal:
 
 menu_result craft_material_menu()
 {
-    menu_result result = { false, turn_result_t::none };
+    menu_result result = { false, false, turn_result_t::none };
     listmax = 0;
     page = 0;
     pagesize = 15;
@@ -33532,7 +33529,7 @@ label_1861_internal:
                 }
                 if (curmenu == 1)
                 {
-                    result.turn_result = turn_result_t::ctrl_inventory_equipment;
+                    result.turn_result = turn_result_t::equipment_menu;
                     return result;
                 }
                 if (curmenu == 2)
@@ -35559,8 +35556,7 @@ turn_result_t pray()
         txt(lang(
             name(0) + u8"は神を信仰していないが、試しに祈ってみた。"s,
             u8"You don't believe in God."s));
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     txtnew();
     txt(lang(u8"あなたの神に祈りを乞う？"s, u8"Really pray to your God?"s));
@@ -35582,8 +35578,7 @@ turn_result_t pray()
                 + u8"はあなたに無関心だ。"s,
             i18n::_(u8"god", cdata[0].god_id, u8"name")
                 + u8" is indifferent to you."s));
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     animode = 100;
     play_animation(19);
@@ -35644,8 +35639,7 @@ turn_result_t pray()
                 {
                     ++gdata_god_rank;
                 }
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
             flt();
             dbid = 0;
@@ -35806,8 +35800,7 @@ turn_result_t pray()
         }
         ++gdata_god_rank;
     }
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
@@ -38070,7 +38063,6 @@ label_1923:
         txt(lang(
             u8"どのレシピを使う？"s, u8"Which recipe do you want to use?"s));
         goto label_1924_internal;
-        return;
     }
     rppage = 1;
     {
@@ -38079,7 +38071,6 @@ label_1923:
     }
     sort_list_by_column1();
     goto label_1927_internal;
-    return;
 label_1924_internal:
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -38192,7 +38183,6 @@ label_1925_internal:
             snd(1);
             ++page;
             goto label_1924_internal;
-            return;
         }
     }
     if (key == key_pagedown)
@@ -38202,7 +38192,6 @@ label_1925_internal:
             snd(1);
             --page;
             goto label_1924_internal;
-            return;
         }
     }
     if (key == key_cancel)
@@ -40527,7 +40516,7 @@ label_1966_internal:
 
 menu_result feat_menu()
 {
-    turn_result_t result = traits_menu(); // TODO
+    deco_traits_menu();
     return feat_menu_internal();
 }
 
@@ -40540,7 +40529,7 @@ menu_result label_1969()
 
 
 
-turn_result_t traits_menu()
+void deco_traits_menu()
 {
     listmax = 0;
     page = 0;
@@ -40561,14 +40550,13 @@ turn_result_t traits_menu()
     picload(filesystem::dir::graphic() / u8"deco_feat.bmp", 1);
     gsel(0);
     windowshadow = 1;
-    return;
 }
 
 
 
 menu_result feat_menu_internal()
 {
-    menu_result result = { false, turn_result_t::none };
+    menu_result result = { false, false, turn_result_t::none };
     int featrq = 0;
 label_196901_internal:
     listmax = 0;
@@ -41099,7 +41087,7 @@ label_1970_internal:
                 }
                 if (curmenu == 1)
                 {
-                    result.turn_result = turn_result_t::ctrl_inventory_equipment;
+                    result.turn_result = turn_result_t::equipment_menu;
                     return result;
                 }
                 if (curmenu == 2)
@@ -41182,9 +41170,9 @@ label_1970_internal:
         if (getkey(snail::key::f1))
         {
             show_game_help();
-            result.succeeded = true;
+            result.succeeded = false;
+            result.feat_menu_flag = true; // TODO simplify
             return result;
-            // return -1; // TODO
         }
     }
     goto label_1970_internal;
@@ -41194,7 +41182,7 @@ label_1970_internal:
 
 menu_result update_journal()
 {
-    menu_result result = { false, turn_result_t::none };
+    menu_result result = { false, false, turn_result_t::none };
     curmenu = 1;
     listmax = 0;
     page = 99;
@@ -41470,7 +41458,7 @@ label_1974_internal:
                 update_screen();
                 if (curmenu == 0)
                 {
-                    result.turn_result = turn_result_t::do_message_log;
+                    result.turn_result = turn_result_t::message_log_menu;
                     return result;
                 }
                 if (curmenu == 1)
@@ -42337,8 +42325,7 @@ turn_result_t do_short_cut()
     efid = gdata(40 + sc);
     if (efid >= 300 && efid < 400)
     {
-        do_use_magic();
-        return;
+        return do_use_magic();
     }
     if (efid >= 600)
     {
@@ -42413,7 +42400,7 @@ turn_result_t do_dig_command()
         if (tlocy == cdata[0].position.y)
         {
             rowactre = 0;
-            label_2158();
+            spot_digging();
             return turn_result_t::turn_end;
         }
     }
@@ -42598,8 +42585,7 @@ label_2009_internal:
         efid = p;
         screenupdate = -1;
         update_screen();
-        do_use_magic();
-        return;
+        return do_use_magic();
     }
     if (key == u8"sc"s)
     {
@@ -42729,7 +42715,7 @@ turn_result_t do_give_command()
         invctrl = 10;
         snd(100);
         menu_result mr = ctrl_inventory();
-        assert(mr.turn_result != turn_result::none);
+        assert(mr.turn_result != turn_result_t::none);
         return mr.turn_result;
     }
     txt(i18n::_(u8"ui", u8"invalid_target"));
@@ -43356,8 +43342,7 @@ label_2029_internal:
     {
         menucycle = 0;
         efid = p;
-        do_cast_command();
-        return;
+        return do_cast_command();
     }
     if (key == u8"sc"s)
     {
@@ -43739,7 +43724,7 @@ void label_2032()
 
 menu_result show_character_sheet()
 {
-    menu_result result = { false, turn_result_t::none };
+    menu_result result = { false, false, turn_result_t::none };
     int cs_buff = 0;
     int returnfromportrait = 0;
     int cs_buffmax = 0;
@@ -44651,15 +44636,18 @@ label_2035_internal:
                 }
                 if (curmenu == 1)
                 {
-                    return ctrl_inventory_equipment(); // TODO
+                    result.turn_result = turn_result_t::equipment_menu;
+                    return result;
                 }
                 if (curmenu == 2)
                 {
-                    return feat_menu(); // TODO
+                    result.turn_result = turn_result_t::feat_menu;
+                    return result;
                 }
                 if (curmenu == 3)
                 {
-                    return craft_material_menu(); // TODO
+                    result.turn_result = turn_result_t::craft_material_menu;
+                    return result;
                 }
             }
         }
@@ -44670,7 +44658,8 @@ label_2035_internal:
         if (csctrl == 0)
         {
             update_screen();
-            return turn_result_t::pc_turn_false;
+            result.turn_result = turn_result_t::pc_turn_false;
+            return result;
         }
         else
         {
@@ -45478,9 +45467,9 @@ void equip_melee_weapon()
 
 
 
-menu_result ctrl_inventory_equipment()
+menu_result equipment_menu()
 {  
-    menu_result result = { false, turn_result_t::none };
+    menu_result result = { false, false, turn_result_t::none };
     int cs_prev = 0;
     int mainhand = 0;
     cc = 0;
@@ -45718,7 +45707,7 @@ label_2052_internal:
             returnfromidentify = 0;
             screenupdate = -1;
             update_screen();
-            result.turn_result = turn_result_t::ctrl_inventory_equipment;
+            result.turn_result = turn_result_t::equipment_menu;
             return result;
         }
     }
@@ -45768,7 +45757,7 @@ label_2052_internal:
                 }
                 if (curmenu == 1)
                 {
-                    result.turn_result = turn_result_t::ctrl_inventory_equipment;
+                    result.turn_result = turn_result_t::equipment_menu;
                     return result;
                 }
                 if (curmenu == 2)
@@ -46848,8 +46837,7 @@ turn_result_t do_exit_command()
             update_screen();
         }
         await(300);
-        finish_elona();
-        return;
+        return turn_result_t::finish_elona;
     }
     if (rtval == 2)
     {
@@ -46991,7 +46979,7 @@ void label_2081()
 
 
 
-void label_2082()
+turn_result_t do_gatcha()
 {
     int tmat = 0;
     screenupdate = -1;
@@ -47040,8 +47028,7 @@ void label_2082()
                 u8"You don't have "s + matname(tmat) + u8"."s));
         }
     }
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
@@ -47946,7 +47933,7 @@ void save_game()
 
 
 
-void label_2114()
+turn_result_t do_enter_strange_gate()
 {
     snd(49);
     gdata_previous_map2 = gdata_current_map;
@@ -47956,8 +47943,7 @@ void label_2114()
     gdata_destination_map = 35;
     gdata_destination_dungeon_level = 1;
     levelexitby = 2;
-    exit_map();
-    return;
+    return turn_result_t::exit_map;
 }
 
 
@@ -48445,8 +48431,7 @@ turn_result_t do_debug_console()
         stick(a);
         if (a == 128)
         {
-            do_exit_debug_console();
-            return;
+            return do_exit_debug_console();
         }
     }
 }
@@ -48642,7 +48627,6 @@ void label_2144()
     {
         txt(lang(u8"罠を解除した。"s, u8"You disarm the trap."s));
     }
-    return;
 }
 
 
@@ -48698,7 +48682,7 @@ label_21451_internal:
                 {
                     refx = movx;
                     refy = movy;
-                    label_2222();
+                    discover_trap();
                     feat(0) = tile_trap;
                 }
             }
@@ -48738,7 +48722,7 @@ label_21451_internal:
                 {
                     refx = movx;
                     refy = movy;
-                    label_2222();
+                    discover_trap();
                 }
             }
             else
@@ -48747,7 +48731,7 @@ label_21451_internal:
                 {
                     refx = movx;
                     refy = movy;
-                    label_2222();
+                    discover_trap();
                     snd(70);
                 }
                 efsource = 5;
@@ -50625,7 +50609,7 @@ void label_2155()
 
 
 
-void label_2156()
+void spot_fishing()
 {
     int fishstat = 0;
     if (cdata[cc].continuous_action_id == 0)
@@ -50767,7 +50751,7 @@ void label_2156()
 
 
 
-void label_2157()
+void spot_material()
 {
     if (cdata[cc].continuous_action_id == 0)
     {
@@ -50788,7 +50772,7 @@ void label_2157()
 
 
 
-void label_2158()
+void spot_digging()
 {
     if (cdata[cc].continuous_action_id == 0)
     {
@@ -50906,7 +50890,7 @@ void label_2158()
 
 
 
-void label_2159()
+void spot_mining_or_wall()
 {
     int countdig = 0;
     if (cdata[cc].continuous_action_id == 0)
@@ -50992,7 +50976,7 @@ void label_2159()
                 cell_featread(refx, refy);
                 if (feat(1) == 22)
                 {
-                    label_2223();
+                    discover_hidden_path();
                 }
             }
             map(refx, refy, 0) = tile_tunnel;
@@ -52656,24 +52640,21 @@ turn_result_t do_throw_command()
                     txt(lang(
                         u8"その生物には無効だ。"s,
                         u8"The creature can't be captured."s));
-                    turn_end();
-                    return;
+                    return turn_result_t::turn_end;
                 }
                 if (cdata[tc].level > inv[ci].param2)
                 {
                     txt(lang(
                         u8"その生物を捕獲するには、より高レベルのモンスターボールが必要だ。"s,
                         u8"Power level of the ball is not enough to capture the creature."s));
-                    turn_end();
-                    return;
+                    return turn_result_t::turn_end;
                 }
                 if (cdata[tc].hp > cdata[tc].max_hp / 10)
                 {
                     txt(lang(
                         u8"捕獲するためにはもっと弱らせる必要がある。"s,
                         u8"You need to weaken the creature to capture it."s));
-                    turn_end();
-                    return;
+                    return turn_result_t::turn_end;
                 }
                 txtef(2);
                 txt(lang(
@@ -52690,8 +52671,7 @@ turn_result_t do_throw_command()
                 if (cdata[tc].id != 319 || tc < 16)
                 {
                     txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-                    turn_end();
-                    return;
+                    return turn_result_t::turn_end;
                 }
                 if (gdata_current_map == 6 || gdata_current_map == 40
                     || gdata_current_map == 35)
@@ -52699,8 +52679,7 @@ turn_result_t do_throw_command()
                     txt(lang(
                         u8"この場所では効果がない。"s,
                         u8"This doesn't work in this area."s));
-                    turn_end();
-                    return;
+                    return turn_result_t::turn_end;
                 }
                 rc = tc;
                 new_ally_joins();
@@ -52708,8 +52687,7 @@ turn_result_t do_throw_command()
             chara_vanquish(tc);
             check_quest();
         }
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (the_item_db[inv[ci].id]->category == 52000 || inv[ci].id == 772)
     {
@@ -52756,8 +52734,7 @@ turn_result_t do_throw_command()
                                 lang(u8"「むむっ」"s, u8"*grin*"s));
                         }
                     }
-                    turn_end();
-                    return;
+                    return turn_result_t::turn_end;
                 }
                 if (inv[ci].id == 772)
                 {
@@ -52778,8 +52755,7 @@ turn_result_t do_throw_command()
                         }
                         cdata[tc].furious += rnd(10) + 5;
                     }
-                    turn_end();
-                    return;
+                    return turn_result_t::turn_end;
                 }
                 if (tc >= 16)
                 {
@@ -52791,8 +52767,7 @@ turn_result_t do_throw_command()
                 dbid = inv[ci].id;
                 access_item_db(15);
                 cc = ccthrowpotion;
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
             if (inv[ci].id == 587)
             {
@@ -52821,8 +52796,7 @@ turn_result_t do_throw_command()
                     if (f == 1)
                     {
                         cell_refresh(tlocx, tlocy);
-                        turn_end();
-                        return;
+                        return turn_result_t::turn_end;
                     }
                 }
             }
@@ -52830,8 +52804,7 @@ turn_result_t do_throw_command()
             {
                 if (chipm(0, map(tlocx, tlocy, 0)) == 4)
                 {
-                    turn_end();
-                    return;
+                    return turn_result_t::turn_end;
                 }
                 if (is_in_fov({tlocx, tlocy}))
                 {
@@ -52853,22 +52826,19 @@ turn_result_t do_throw_command()
                     txtef(4);
                     txt(lang(u8" *ぷちゅ* "s, u8"*crumble*"s));
                 }
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
             efp = 50 + sdata(111, cc) * 10;
             if (inv[ci].id == 392)
             {
                 addmef(tlocx, tlocy, 3, 19, rnd(15) + 5, efp, cc);
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
             if (inv[ci].id == 577)
             {
                 addmef(tlocx, tlocy, 5, 24, rnd(15) + 25, efp, cc);
                 mapitem_fire(tlocx, tlocy);
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
             addmef(
                 tlocx,
@@ -52881,8 +52851,7 @@ turn_result_t do_throw_command()
                 inv[ci].id,
                 static_cast<int>(inv[ci].curse_state), // TODO
                 inv[ci].color);
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
     }
     if (is_in_fov({tlocx, tlocy}))
@@ -52897,8 +52866,7 @@ turn_result_t do_throw_command()
         flt();
         itemcreate(-1, 54, tlocx, tlocy, inv[ci].param1);
     }
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
@@ -52915,8 +52883,7 @@ turn_result_t do_pray_command()
             return turn_result_t::turn_end;
         }
     }
-    pray();
-    return;
+    return pray();
 }
 
 
@@ -53940,8 +53907,7 @@ turn_result_t do_movement_command()
                     snd(49);
                     --gdata_current_dungeon_level;
                     levelexitby = 4;
-                    exit_map();
-                    return;
+                    return turn_result_t::exit_map;
                 }
                 return turn_result_t::pc_turn_false;
             }
@@ -53957,15 +53923,13 @@ turn_result_t do_movement_command()
         if (cellfeat == 23)
         {
             snd(99);
-            show_quest_board();
-            return;
+            return show_quest_board();
         }
         if (cellfeat == 31)
         {
             snd(99);
             voting_box();
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
         if (cellfeat == 33)
         {
@@ -54374,7 +54338,8 @@ void proc_autopick()
                 }
             }
             elona::ci = ci;
-            return do_open_command();
+            // TODO should the result be used?
+            turn_result_t turn_result = do_open_command();
         }
         if (did_something && !op.sound.empty())
         {
@@ -54790,15 +54755,13 @@ turn_result_t change_level_by_stairs(int val0)
                 cdata[cc].position.y,
                 tile_downstairs,
                 11);
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
         snd(22);
         txt(lang(
             u8"鍵のかかった扉が行く手を塞いでいる。"s,
             u8"The door is locked. It seems you need a specific key to unlock the door."s));
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (adata(16, gdata_current_map) == 8)
     {
@@ -54854,8 +54817,7 @@ turn_result_t change_level_by_stairs(int val0)
             int stat = label_19432();
             if (stat == 1)
             {
-                label_2114();
-                return;
+                return do_enter_strange_gate();
             }
             else
             {
@@ -55573,14 +55535,14 @@ turn_result_t try_to_open_locked_door()
 
 
 
-void do_close_command()
+turn_result_t do_close_command()
 {
     int stat = ask_direction_to_close();
     if (stat == 0)
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
-                        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_false;
     }
     cell_featread(x, y);
     if (feat(1) != 20)
@@ -55589,7 +55551,7 @@ void do_close_command()
             u8"その方向に閉められるものはない。"s,
             u8"There's nothing to close."s));
         update_screen();
-                        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_false;
     }
     if (map(x, y, 1) != 0)
     {
@@ -55597,12 +55559,11 @@ void do_close_command()
             u8"何かが邪魔で閉められない。"s,
             u8"There's something on the floor."s));
         update_screen();
-                        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_false;
     }
     cell_featset(x, y, tile_doorclosed, 21, -1, -1);
     txt(lang(name(cc) + u8"は扉を閉めた。"s, name(cc) + u8" close the door."s));
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
@@ -56604,7 +56565,7 @@ void label_2220()
 
 
 
-void do_search_command()
+turn_result_t do_search_command()
 {
     ++msgdup;
     txt(lang(
@@ -56700,7 +56661,7 @@ void do_search_command()
                             int stat = try_to_reveal();
                             if (stat == 1)
                             {
-                                label_2222();
+                                discover_trap();
                                 txt(lang(
                                     u8"罠を発見した。"s,
                                     u8"You discover a trap."s));
@@ -56712,7 +56673,7 @@ void do_search_command()
                         int stat = try_to_reveal();
                         if (stat == 1 || 0)
                         {
-                            label_2223();
+                            discover_hidden_path();
                             txt(lang(
                                 u8"隠れた通路を発見した。"s,
                                 u8"You discover a hidden path."s));
@@ -56781,32 +56742,31 @@ void do_search_command()
         rowactre(2) = cdata[cc].position.y;
         if (feat(1) == 24)
         {
-            label_2158();
+            spot_digging();
         }
         if (feat(1) == 27)
         {
-            label_2158();
+            spot_digging();
         }
         if (feat(1) == 26)
         {
-            label_2156();
+            spot_fishing();
         }
         if (feat(1) == 25)
         {
-            label_2159();
+            spot_mining_or_wall();
         }
         if (feat(1) == 28)
         {
-            label_2157();
+            spot_material();
         }
     }
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
 
-void label_2222()
+void discover_trap()
 {
     cell_featset(refx, refy, tile_trap, -1, -1);
     return;
@@ -56814,7 +56774,7 @@ void label_2222()
 
 
 
-void label_2223()
+void discover_hidden_path()
 {
     map(refx, refy, 0) = tile_tunnel;
     cell_featset(refx, refy, 0, 0);
@@ -56830,14 +56790,13 @@ turn_result_t do_dig_after_sp_check()
         txt(lang(
             u8"疲れ過ぎて無理だ。"s, u8"You are too exhausted to do that."s));
         update_screen();
-                        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_false;
     }
     rowactre = 0;
     digx = tlocx;
     digy = tlocy;
-    label_2159();
-    turn_end();
-    return;
+    spot_mining_or_wall();
+    return turn_result_t::turn_end;
 }
 
 
@@ -56902,8 +56861,7 @@ turn_result_t do_dip_command()
             inv[ci].count = rnd(10) + 15;
             inv[ci].param4 = inv[cidip].param1;
         }
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     snd(17);
     if (the_item_db[inv[cidip].id]->category == 52000)
@@ -56923,16 +56881,14 @@ turn_result_t do_dip_command()
                 {
                     txt(lang(
                         u8"井戸は汚れた。"s, u8"The holy well is polluted."s));
-                    turn_end();
-                    return;
+                    return turn_result_t::turn_end;
                 }
                 if (inv[ci].param3 >= 20)
                 {
                     txt(lang(
                         itemname(ci) + u8"は完全に枯れている。"s,
                         itemname(ci) + u8" is completely dry."s));
-                    turn_end();
-                    return;
+                    return turn_result_t::turn_end;
                 }
                 txt(lang(
                     itemname(ci) + u8"は一瞬輝いた。"s,
@@ -56945,8 +56901,7 @@ turn_result_t do_dip_command()
                 {
                     inv[ci].param1 += rnd(3);
                 }
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
             else
             {
@@ -56958,8 +56913,7 @@ turn_result_t do_dip_command()
                     txt(lang(
                         u8"あっ！空き瓶を井戸に落としてしまった…"s,
                         u8"Ops! You drop the empty bottle into the well..."s));
-                    turn_end();
-                    return;
+                    return turn_result_t::turn_end;
                 }
                 if (inv[ci].id == 602)
                 {
@@ -56985,8 +56939,7 @@ turn_result_t do_dip_command()
                     itemname(ci, 1) + u8"を手に入れた。"s,
                     u8"You get "s + itemname(ci, 1) + u8"."s));
                 item_stack(0, ci, 1);
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
         }
     }
@@ -57005,8 +56958,7 @@ turn_result_t do_dip_command()
                 dipcursed(ci);
             }
             ibitmod(14, ci, 1);
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
     }
     if (inv[cidip].id == 620)
@@ -57024,8 +56976,7 @@ turn_result_t do_dip_command()
                 dipcursed(ci);
             }
             ibitmod(6, ci, 1);
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
     }
     if (inv[cidip].id == 519)
@@ -57052,8 +57003,7 @@ turn_result_t do_dip_command()
         {
             create_pcpic(cc, true);
         }
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (inv[cidip].id == 566)
     {
@@ -57082,8 +57032,7 @@ turn_result_t do_dip_command()
                 itemname(ci) + u8" gain"s + _s2(in) + u8" acidproof."s));
         }
         item_num(cidip, -1);
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (inv[cidip].id == 736)
     {
@@ -57117,8 +57066,7 @@ turn_result_t do_dip_command()
                 itemname(ci) + u8" gain"s + _s2(in) + u8" fireproof."s));
         }
         item_num(cidip, -1);
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (inv[cidip].id == 516)
     {
@@ -57132,8 +57080,7 @@ turn_result_t do_dip_command()
                     + u8" silvery."s));
             inv[ci].curse_state = curse_state_t::blessed;
             refresh_character(cc);
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
         if (is_cursed(inv[cidip].curse_state))
         {
@@ -57144,13 +57091,11 @@ turn_result_t do_dip_command()
                     + u8" wrapped by a dark aura."s));
             inv[ci].curse_state = curse_state_t::cursed;
             refresh_character(cc);
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
     }
     txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
@@ -57193,13 +57138,11 @@ turn_result_t do_use_command()
     }
     if (the_item_db[inv[ci].id]->subcategory == 58500)
     {
-        do_plant();
-        return;
+        return do_plant();
     }
     if (the_item_db[inv[ci].id]->subcategory == 59500)
     {
-        crafting_menu();
-        return;
+        return crafting_menu();
     }
     if (the_item_db[inv[ci].id]->subcategory == 60004)
     {
@@ -57211,21 +57154,18 @@ turn_result_t do_use_command()
         }
         gdata(91) = 100;
         continuous_action_others();
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (inv[ci].id == 413 || inv[ci].id == 414)
     {
-        label_2082();
-        return;
+        return do_gatcha();
     }
     if (inv[ci].id == 312 || inv[ci].id == 313 || inv[ci].id == 314
         || inv[ci].id == 315)
     {
         atxid = 1;
         label_1866();
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (inv[ci].function == 1 || inv[ci].function == 2 || inv[ci].function == 3
         || inv[ci].function == 4)
@@ -57234,8 +57174,7 @@ turn_result_t do_use_command()
         snd(26);
         invctrl = 0;
         label_18552();
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (ibit(10, ci))
     {
@@ -57440,12 +57379,11 @@ turn_result_t do_use_command()
             txt(lang(
                 u8"それはここでは使えない。"s, u8"You can't use it here."s));
             update_screen();
-                            return turn_result_t::pc_turn_false;
+            return turn_result_t::pc_turn_false;
         }
         screenupdate = -1;
         update_screen();
-        use_house_board();
-        return;
+        return turn_result_t::use_house_board;
     case 19:
         txt(lang(u8"誰を対象にする？"s, u8"Make up who?"s));
         {
@@ -57528,8 +57466,7 @@ turn_result_t do_use_command()
         int stat = label_2083();
         if (stat == 1)
         {
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
         else
         {
@@ -57547,7 +57484,7 @@ turn_result_t do_use_command()
             {
                 txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
                 update_screen();
-                                return turn_result_t::pc_turn_false;
+                return turn_result_t::pc_turn_false;
             }
         }
         tc = map(x, y, 1) - 1;
@@ -57555,8 +57492,7 @@ turn_result_t do_use_command()
         {
             txt(lang(u8" *ドクン ドクン* "s, u8"You blush."s));
             gdata(94) = 0;
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
         if (tc > 0 && tc < 16)
         {
@@ -57570,8 +57506,7 @@ turn_result_t do_use_command()
                         name(tc) + u8"から聴診器を外した。"s,
                         u8"You no longer watch on "s + his(tc)
                             + u8" health."s));
-                    turn_end();
-                    return;
+                    return turn_result_t::turn_end;
                 }
                 txt(lang(
                     u8"あなたは"s + name(tc) + u8"に聴診器を当てた。"s,
@@ -57586,13 +57521,12 @@ turn_result_t do_use_command()
                     txt(lang(u8"「キャー」"s, u8"\"Pervert!\""s));
                 }
                 cdata[tc].has_been_used_stethoscope() = true;
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
         }
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
-                        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_false;
         break;
     case 23:
         txt(lang(u8"誰を紐で結ぶ？"s, u8"Leash who?"s));
@@ -57752,8 +57686,7 @@ turn_result_t do_use_command()
     case 10:
         screenupdate = -1;
         update_screen();
-        play_scene();
-        return;
+        return turn_result_t::play_scene;
     case 7:
         if (inv[ci].own_state != 3)
         {
@@ -57773,12 +57706,11 @@ turn_result_t do_use_command()
                         u8"You can't build it here."s));
                 }
                 update_screen();
-                                return turn_result_t::pc_turn_false;
+                return turn_result_t::pc_turn_false;
             }
             gdata(91) = 101;
             continuous_action_others();
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
         if (adata(16, gdata_current_map) == 8)
         {
@@ -57849,8 +57781,7 @@ turn_result_t do_use_command()
             int stat = label_19432();
             if (stat == 1)
             {
-                label_2114();
-                return;
+                return do_enter_strange_gate();
             }
         }
         goto label_2229_internal;
@@ -58075,8 +58006,7 @@ turn_result_t do_use_command()
         rtval = show_prompt(promptx, prompty, 160);
         if (rtval != 0)
         {
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
         dmghp(0, 99999, -20);
         goto label_2229_internal;
@@ -58147,8 +58077,7 @@ turn_result_t do_use_command()
             int stat = ctrl_ally();
             if (stat == -1)
             {
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
             rc = stat;
         }
@@ -58161,8 +58090,7 @@ turn_result_t do_use_command()
             int stat = ctrl_ally();
             if (stat == -1)
             {
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
             tc = stat;
         }
@@ -58177,8 +58105,7 @@ turn_result_t do_use_command()
         rtval = show_prompt(promptx, prompty, 160);
         if (rtval != 0)
         {
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
         txtnew();
         txtef(5);
@@ -58314,8 +58241,7 @@ turn_result_t do_use_command()
     }
 label_2229_internal:
     refresh_burden_state();
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
@@ -58517,8 +58443,7 @@ turn_result_t do_plant()
         inv[ci].material,
         feat(3));
     skillexp(180, 0, 300);
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
@@ -61996,7 +61921,7 @@ void initialize_economy()
         if (gdata_current_map != bkdata(0)
             || gdata_current_dungeon_level != bkdata(1))
         {
-            initialize_map();
+            initialize_map(); // TODO occurs outside of main loop
         }
         p = adata(28, cnt);
         if (initeco)
@@ -62054,7 +61979,7 @@ void initialize_economy()
     gdata(79) = 1;
     mode = 3;
     mapsubroutine = 1;
-    initialize_map();
+    initialize_map(); // TODO occurs outside of main loop
     initeco = 0;
     msgtemp = "";
     return;
@@ -63262,7 +63187,6 @@ void label_2671()
             }
         }
     }
-    return;
 }
 
 
@@ -63745,7 +63669,7 @@ void label_2674()
 
 
 
-void label_2675()
+turn_result_t pc_died_during_immediate_quest()
 {
     rc = 0;
     label_1540();
@@ -63753,8 +63677,7 @@ void label_2675()
     skillexp(15, 0, -500);
     levelexitby = 4;
     gdata_current_dungeon_level = 0;
-    exit_map();
-    return;
+    return turn_result_t::exit_map;
 }
 
 
@@ -64632,8 +64555,7 @@ turn_result_t npc_turn()
                         lang(u8"「頭を使えよ」"s, u8"\"Good fighting.\""s),
                         lang(u8"「きゃー」"s, u8"\"Yeeee!\""s));
                 }
-                proc_misc_npc_map_events();
-                return;
+                return proc_misc_npc_map_events();
             }
         }
         cdata[cc].hate = 100;
@@ -64698,8 +64620,7 @@ turn_result_t npc_turn()
                 {
                     petarenawin = 2;
                 }
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
         }
     }
@@ -64796,8 +64717,7 @@ turn_result_t npc_turn()
             {
                 x = cdata[0].position.x;
                 y = cdata[0].position.y;
-                do_bash();
-                return;
+                return do_bash();
             }
         }
     }
@@ -64814,8 +64734,7 @@ turn_result_t npc_turn()
                     int stat = label_2167();
                     if (stat == 1)
                     {
-                        turn_end();
-                        return;
+                        return turn_result_t::turn_end;
                     }
                 }
                 else if (efid >= 600)
@@ -64823,8 +64742,7 @@ turn_result_t npc_turn()
                     int stat = label_2174();
                     if (stat == 1)
                     {
-                        turn_end();
-                        return;
+                        return turn_result_t::turn_end;
                     }
                 }
             }
@@ -64832,7 +64750,7 @@ turn_result_t npc_turn()
     }
     if (cdata[cc].item_which_will_be_used == 0)
     {
-        goto label_2689_internal;.
+        goto label_2689_internal;
     }
     ci = cdata[cc].item_which_will_be_used;
     if (inv[ci].number == 0)
@@ -64850,19 +64768,16 @@ turn_result_t npc_turn()
         {
             if (cdata[cc].relationship != 10 || cdata[cc].nutrition <= 6000)
             {
-                do_eat_command();
-                return;
+                return do_eat_command();
             }
         }
         if (category == 52000)
         {
-            do_drink_command();
-            return;
+            return do_drink_command();
         }
         if (category == 53000)
         {
-            do_read_commad();
-            return;
+            return do_read_commad();
         }
     }
     cdata[cc].item_which_will_be_used = 0;
@@ -64878,16 +64793,14 @@ label_2689_internal:
         {
             if (rnd(10) > 2)
             {
-                proc_misc_npc_map_events();
-                return;
+                return proc_misc_npc_map_events();
             }
         }
         if (cdata[cc].confused != 0)
         {
             if (rnd(10) > 3)
             {
-                proc_misc_npc_map_events();
-                return;
+                return proc_misc_npc_map_events();
             }
         }
         if (cdata[cc].relationship == 10)
@@ -64911,8 +64824,7 @@ label_2689_internal:
                                 {
                                     if (!is_cursed(inv[ci].curse_state))
                                     {
-                                        do_eat_command();
-                                        return;
+                                        return do_eat_command();
                                     }
                                 }
                             }
@@ -64926,8 +64838,7 @@ label_2689_internal:
                                         {
                                             if (inv[ci].id != 602)
                                             {
-                                                do_drink_command();
-                                                return;
+                                                return do_drink_command();
                                             }
                                         }
                                     }
@@ -64948,8 +64859,7 @@ label_2689_internal:
                                             int stat = pick_up_item();
                                             if (stat == 1)
                                             {
-                                                turn_end();
-                                                return;
+                                                return turn_result_t::turn_end;
                                             }
                                         }
                                     }
@@ -64962,26 +64872,22 @@ label_2689_internal:
                 {
                     if (cdata[cc].is_contracting() == 0)
                     {
-                        proc_misc_npc_map_events();
-                        return;
+                        return proc_misc_npc_map_events();
                     }
                 }
                 if (distance > 2 || rnd(3))
                 {
-                    proc_ally_town_training();
-                    return;
+                    return proc_ally_town_training();
                 }
                 else
                 {
-                    proc_misc_npc_map_events();
-                    return;
+                    return proc_misc_npc_map_events();
                 }
             }
         }
         if (cdata[cc].fear != 0)
         {
-            proc_ally_town_training(true);
-            return;
+            return proc_ally_town_training(true);
         }
         if (cdata[cc].blind != 0)
         {
@@ -64994,12 +64900,10 @@ label_2689_internal:
         {
             if (rnd(100) < cdata[cc].ai_move)
             {
-                proc_ally_town_training();
-                return;
+                return proc_ally_town_training();
             }
         }
-        proc_ai_basic();
-        return;
+        return proc_ai_basic();
     }
     if (cdata[cc].turn % 10 == 1)
     {
@@ -65087,13 +64991,11 @@ turn_result_t proc_misc_npc_map_events()
             cdata[tc].position.y,
             cdata[cc].position.x,
             cdata[cc].position.y);
-        proc_ally_town_training();
-        return;
+        return proc_ally_town_training();
     }
     if (rnd(5) != 0)
     {
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (cdata[cc].drunk != 0)
     {
@@ -65246,8 +65148,7 @@ label_2692_internal:
                                                 lang(
                                                     u8"「くらえー！」"s,
                                                     u8"\"Eat this!\""s));
-                                            do_throw_command();
-                                            return;
+                                            return do_throw_command();
                                         }
                                     }
                                 }
@@ -65277,8 +65178,7 @@ label_2692_internal:
                                     {
                                         tlocx = inv[ti].position.x;
                                         tlocy = inv[ti].position.y;
-                                        do_throw_command();
-                                        return;
+                                        return do_throw_command();
                                     }
                                 }
                             }
@@ -65305,8 +65205,7 @@ label_2692_internal:
                                             name(cc) + u8" make"s + _s(cc)
                                                 + u8" "s + itemname(ci)
                                                 + u8"!"s));
-                                        turn_end();
-                                        return;
+                                        return turn_result_t::turn_end;
                                     }
                                 }
                             }
@@ -65334,8 +65233,7 @@ label_2692_internal:
                                             u8"\"Watch out!\""s),
                                         lang(
                                             u8"「避けてー」"s, u8"\"Scut!\""s));
-                                    do_throw_command();
-                                    return;
+                                    return do_throw_command();
                                 }
                             }
                         }
@@ -65407,8 +65305,7 @@ label_2692_internal:
             {
                 efid = 183;
                 magic();
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
         }
         if (cdata[cc].id == 320 || cdata[cc].id == 280)
@@ -65438,8 +65335,7 @@ label_2692_internal:
                                         u8"「なめくじだ！」"s, u8"\"Snail!\""s),
                                     lang(u8"「殺す！」"s, u8"\"Kill!\""s));
                             }
-                            do_throw_command();
-                            return;
+                            return do_throw_command();
                         }
                     }
                 }
@@ -65492,14 +65388,12 @@ label_2692_internal:
                     {
                         cdata[cc].enemy_id = 0;
                         label_2147();
-                        turn_end();
-                        return;
+                        return turn_result_t::turn_end;
                     }
                 }
                 if (distance < 6)
                 {
-                    proc_ally_town_training();
-                    return;
+                    return proc_ally_town_training();
                 }
             }
         }
@@ -65550,12 +65444,10 @@ label_2692_internal:
         cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
         if (cellaccess == 1)
         {
-            proc_movement_event();
-            return;
+            return proc_movement_event();
         }
     }
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
@@ -65704,8 +65596,7 @@ turn_result_t proc_ally_town_training(bool retreat)
                         rowactend(tc);
                     }
                 }
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
         }
     }
@@ -65739,8 +65630,7 @@ turn_result_t proc_ally_town_training(bool retreat)
                                                 name(cc) + u8" crush"s + _s(cc)
                                                     + u8" the wall!"s));
                                         }
-                                        turn_end();
-                                        return;
+                                        return turn_result_t::turn_end;
                                     }
                                 }
                             }
@@ -65757,16 +65647,14 @@ turn_result_t proc_ally_town_training(bool retreat)
             int stat = label_2694();
             if (stat == 1)
             {
-                proc_movement_event();
-                return;
+                return proc_movement_event();
             }
         }
         {
             int stat = label_2695();
             if (stat == 1)
             {
-                proc_movement_event();
-                return;
+                return proc_movement_event();
             }
         }
     }
@@ -65776,16 +65664,14 @@ turn_result_t proc_ally_town_training(bool retreat)
             int stat = label_2695();
             if (stat == 1)
             {
-                proc_movement_event();
-                return;
+                return proc_movement_event();
             }
         }
         {
             int stat = label_2694();
             if (stat == 1)
             {
-                proc_movement_event();
-                return;
+                return proc_movement_event();
             }
         }
     }
@@ -65796,8 +65682,7 @@ turn_result_t proc_ally_town_training(bool retreat)
         cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
         if (cellaccess == 1)
         {
-            proc_movement_event();
-            return;
+            return proc_movement_event();
         }
     }
     else
@@ -65832,8 +65717,7 @@ turn_result_t proc_ally_town_training(bool retreat)
             cdata[cc]._205 = cdata[tc].position.x;
         }
     }
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
@@ -66999,7 +66883,7 @@ label_2708_internal:
                 update_screen();
                 if (curmenu == 0)
                 {
-                    return turn_result_t::do_message_log;
+                    return turn_result_t::message_log_menu;
                 }
                 if (curmenu == 1)
                 {
@@ -67022,7 +66906,7 @@ label_2708_internal:
 
 
 
-turn_result_t do_message_log()
+turn_result_t message_log_menu()
 {
     curmenu = 0;
     windowshadow = 1;
@@ -67136,7 +67020,7 @@ label_2711_internal:
                 update_screen();
                 if (curmenu == 0)
                 {
-                    return turn_result_t::do_message_log;
+                    return turn_result_t::message_log_menu;
                 }
                 if (curmenu == 1)
                 {
@@ -67356,23 +67240,21 @@ label_2729_internal:
 }
 
 
-void turn_wrapper()
+bool turn_wrapper()
 {
+    bool finished = false;
     turn_result_t result = turn_begin();
-    while (result != turn_result_t::none)
+    while (!finished)
     {
         switch (result)
         {
-        case turn_result_t::pc_died:
-            pc_died();
-            result = turn_result_t::none;
+            // Turn lifecycle
+
+        case turn_result_t::turn_begin:
+            result = turn_begin();
             break;
-        case turn_result_t::exit_map:
-            exit_map();
-            result = turn_result_t::none;
-            break;
-        case turn_result_t::play_scene:
-            result = play_scene();
+        case turn_result_t::turn_end:
+            result = turn_end();
             break;
         case turn_result_t::pass_one_turn:
             result = pass_turns(true);
@@ -67380,23 +67262,78 @@ void turn_wrapper()
         case turn_result_t::pass_one_turn_false:
             result = pass_turns(false);
             break;
+        case turn_result_t::pc_turn:
+            result = pc_turn();
+            break;
+        case turn_result_t::npc_turn:
+            result = npc_turn();
+            break;
         case turn_result_t::pc_turn_false:
-            result =                 return turn_result_t::pc_turn_false;
+            result = pc_turn(false);
+            break;
+        case turn_result_t::pc_died:
+            result = pc_died();
             break;
         case turn_result_t::initialize_map:
-            initialize_map();
-            result = turn_result_t::none;
+            result = initialize_map();
             break;
-        case turn_result_t::turn_begin:
-            result = turn_begin();
+        case turn_result_t::exit_map:
+            result = exit_map();
             break;
-        case turn_result_t::turn_end:
-            result = turn_end();
+        case turn_result_t::play_scene:
+            result = play_scene();
+            break;
+        case turn_result_t::finish_elona:
+            finish_elona();
+            finished = true;
+            break;
+
+            // Menus
+
+        case turn_result_t::messages_menu:
+            result = messages_menu();
+            break;
+        case turn_result_t::message_log_menu:
+            result = message_log_menu();
+            break;
+        case turn_result_t::use_house_board:
+            result = use_house_board();
+            break;
+        case turn_result_t::skill_list_menu:
+            result = skill_list_menu();
+            break;
+
+            // Nested menus
+            // These can either show another menu or return a boolean result.
+
+        case turn_result_t::update_journal:
+            result = update_journal().turn_result;
+            break;
+        case turn_result_t::craft_material_menu:
+            result = craft_material_menu().turn_result;
+            break;
+        case turn_result_t::show_character_sheet:
+            result = show_character_sheet().turn_result;
+            break;
+        case turn_result_t::ctrl_inventory:
+            result = ctrl_inventory().turn_result;
+            break;
+        case turn_result_t::equipment_menu:
+            result = equipment_menu().turn_result;
+            break;
+        case turn_result_t::feat_menu:
+            result = feat_menu().turn_result;
+            break;
+
+        case turn_result_t::all_turns_finished:
+            result = turn_result_t::turn_begin;
             break;
         case turn_result_t::none:
+            assert(0);
             break;
         }
     }
+    return finished;
 }
 
 turn_result_t pass_turns(bool time)
@@ -67416,15 +67353,12 @@ turn_result_t pass_turns(bool time)
             case turn_result_t::pass_one_turn_false:
                 time = false;
                 break;
-            case turn_result_t::none:
-                assert(0);
-                break;
             default:
                 return result;
         }
         result = pass_one_turn(time);
     }
-    return turn_result_t::none;
+    return turn_result_t::all_turns_finished;
 }
 
 turn_result_t turn_begin()
@@ -68476,22 +68410,22 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         if (cdata[cc].continuous_action_id == 7)
         {
             auto_turn(40);
-            label_2156();
+            spot_fishing();
         }
         if (cdata[cc].continuous_action_id == 5)
         {
             auto_turn(15);
-            label_2159();
+            spot_mining_or_wall();
         }
         if (cdata[cc].continuous_action_id == 8)
         {
             auto_turn(15);
-            label_2157();
+            spot_material();
         }
         if (cdata[cc].continuous_action_id == 9)
         {
             auto_turn(15);
-            label_2158();
+            spot_digging();
         }
         if (cdata[cc].continuous_action_id == 4)
         {
@@ -68570,11 +68504,11 @@ turn_result_t pass_one_turn(bool label_2738_flg)
     {
         if (ct == 0)
         {
-            return pc_turn();
+            return turn_result_t::pc_turn;
         }
         else
         {
-            return npc_turn();
+            return turn_result_t::npc_turn;
         }
     }
     return turn_result_t::pass_one_turn;
@@ -69273,7 +69207,11 @@ label_2747:
 
     if (key != ""s)
     {
-        return check_angband();
+        const auto angband_result = check_angband();
+        if (angband_result)
+        {
+            return *angband_result;
+        }
     }
     if (key == key_quick)
     {
@@ -69433,35 +69371,25 @@ label_2747:
         {
             invctrl = 17;
             snd(100);
-            menu_result mr = ctrl_inventory();
-            assert(mr.turn_result != turn_result_t::none);
-            return mr.turn_result;
+            return turn_result_t::ctrl_inventory;
         }
     }
     if (key == key_charainfo)
     {
         csctrl = 0;
-        menu_result mr = show_character_sheet();
-        assert(mr.turn_result != turn_result_t::none);
-        return mr.turn_result;
+        return turn_result_t::show_character_sheet;
     }
     if (key == key_material)
     {
-        menu_result mr = craft_material_menu();
-        assert(mr.turn_result != turn_result_t::none);
-        return mr.turn_result;
+        return turn_result_t::craft_material_menu;
     }
     if (key == key_trait)
     {
-        menu_result mr = feat_menu();
-        assert(mr.turn_result != turn_result_t::none);
-        return mr.turn_result;
+        return turn_result_t::feat_menu;
     }
     if (key == key_wear)
     {
-        menu_result mr = ctrl_inventory_equipment();
-        assert(mr.turn_result != turn_result_t::none);
-        return mr.turn_result;
+        return turn_result_t::equipment_menu;
     }
     if (key == key_cast)
     {
@@ -69496,18 +69424,16 @@ label_2747:
         else
         {
             snd(101);
-            return skill_list_menu();
+            return turn_result_t::skill_list_menu;
         }
     }
     if (key == key_msglog)
     {
-        return do_message_log();
+        return turn_result_t::message_log_menu;
     }
     if (key == key_journal)
     {
-        menu_result mr = update_journal();
-        assert(mr.turn_result != turn_result_t::none);
-        return mr.turn_result;
+        return turn_result_t::update_journal;
     }
     menucycle = 0;
     if (key == key_offer)
@@ -69579,8 +69505,7 @@ label_2747:
         }
         else
         {
-            do_fire_command();
-            return;
+            return do_fire_command();
         }
     }
     if (key == key_give)
@@ -69819,10 +69744,10 @@ label_2747:
 
 
 
-turn_result_t check_angband()
+optional<turn_result_t> check_angband()
 {
     if (gdata_angband_flag == -1 || mdata(6) == 1)
-        return;
+        return none;
 
     switch (gdata_angband_flag)
     {
@@ -69855,14 +69780,14 @@ turn_result_t check_angband()
             }
             gdata_angband_flag = -1;
             update_screen();
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
         break;
     default: break;
     }
 
     gdata_angband_flag = 0;
+    return none;
 }
 
 
@@ -70033,7 +69958,7 @@ void play_the_last_scene_again()
 
 
 
-void pc_died()
+turn_result_t pc_died()
 {
     cc = 0;
     snd(50);
@@ -70041,8 +69966,7 @@ void pc_died()
     update_screen();
     if (gdata_executing_immediate_quest_type)
     {
-        label_2675();
-        return;
+        return pc_died_during_immediate_quest();
     }
     txt(lang(u8"さようなら… "s, u8"Good bye... "s));
     txt(lang(u8"遺言は？"s, u8"You leave a dying message."s));
@@ -70156,8 +70080,7 @@ void pc_died()
         draw_caption();
         redraw();
         press();
-        finish_elona();
-        return;
+        return turn_result_t::finish_elona;
     }
     s = u8"dead"s
         + lang(
@@ -70172,8 +70095,7 @@ void pc_died()
     screenupdate = -1;
     update_entire_screen();
     levelexitby = 3;
-    exit_map();
-    return;
+    return turn_result_t::exit_map;
 }
 
 

@@ -11,11 +11,7 @@
 namespace elona
 {
 
-
-void pc_turn(bool = true);
-
-
-void initialize_map()
+turn_result_t initialize_map()
 {
     int maxnpcbk = 0;
     elona_vector2<int> rolebk;
@@ -2959,7 +2955,7 @@ label_1744_internal:
     }
     if (mode == 11)
     {
-        return;
+        return turn_result_t::turn_begin; // TODO did not recurse before
     }
     if (gdata_main_quest_flag == 9)
     {
@@ -3225,18 +3221,17 @@ label_1744_internal:
             update_screen();
             if (evnum == 0)
             {
-                pc_turn(false);
+                return turn_result_t::pc_turn_false;
             }
             else
             {
-                turn_begin();
-                return;
+                return turn_result_t::turn_begin;
             }
         }
         else
         {
             mapsubroutine = 0;
-            return;
+            return turn_result_t::turn_begin; // TODO did not recurse before
         }
     }
     wake_up();
@@ -3486,8 +3481,7 @@ label_1744_internal:
                     + u8" minites."s));
         }
     }
-    turn_begin();
-    return;
+    return turn_result_t::turn_begin;
 }
 
 

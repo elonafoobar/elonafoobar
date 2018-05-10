@@ -52,14 +52,10 @@ void main_loop()
 {
     while (1)
     {
-        try
+        bool finished = turn_wrapper();
+        if (finished)
         {
-            turn_begin();
             break;
-        }
-        catch (elona_turn_sequence&)
-        {
-            // Ignore this exception.
         }
     }
 }
@@ -783,15 +779,10 @@ int run()
     foobar_save.initialize();
 
     title(u8"Elona Foobar version "s + latest_version.short_string());
-    try
-    {
-        initialize_elona();
-        start_elona();
-    }
-    catch (elona_turn_sequence&)
-    {
-        main_loop();
-    }
+
+    initialize_elona();
+    start_elona();
+
     return 0;
 }
 
@@ -1613,14 +1604,14 @@ void character_making_select_feats_and_alias(bool label_1558_flg)
             pos(20, windowh - 36);
             mes(u8"Gene from "s + geneuse);
         }
-        int stat = feat_menu();
+        menu_result result = feat_menu();
         clear_background_in_character_making();
-        if (stat == -1)
+        if (result.feat_menu_flag)
         {
-            character_making_select_feats_and_alias();
+            character_making_select_feats_and_alias(); // TODO remove recursion
             return;
         }
-        if (stat == 0)
+        if (!result.succeeded)
         {
             character_making_role_attributes(false);
         }
@@ -1807,8 +1798,8 @@ void character_making_final_phase()
             csctrl = 1;
             menucycle = 0;
             {
-                int stat = show_character_sheet();
-                if (stat == 0)
+                menu_result result = show_character_sheet();
+                if (!result.succeeded)
                 {
                     nowindowanime = 1;
                     clear_background_in_character_making();
@@ -2461,7 +2452,7 @@ void initialize_game()
     }
     initialize_fovmap_and_fovlist();
     initialize_map();
-    return;
+    main_loop(); // TODO correct?
 }
 
 

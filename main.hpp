@@ -49,10 +49,6 @@ inline int _fdialog(
     return 0;
 }
 
-struct elona_turn_sequence
-{
-};
-
 
 } // namespace elona
 

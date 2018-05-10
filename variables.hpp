@@ -1,6 +1,7 @@
 #include "elona.hpp"
 #include "position.hpp"
 #include "enums.hpp"
+#include "optional.hpp"
 
 
 #ifdef ELONA_DEFINE_GLOBAL_INSTANCE
@@ -14,7 +15,8 @@ namespace elona
 
 struct menu_result
 {
-   bool succeeded;
+   bool succeeded; // true if stat was 1, false if it was 0
+   bool feat_menu_flag; // true if feat_menu_internal returned -1
    turn_result_t turn_result;
 };
 
@@ -674,7 +676,7 @@ int show_hire_menu();
 int show_spell_writer_menu();
 int select_alias(int);
 int change_npc_tone();
-turn_result_t show_character_sheet();
+menu_result show_character_sheet();
 int change_appearance();
 int label_2044();
 menu_result ctrl_inventory();
@@ -1109,7 +1111,7 @@ void initialize_random_nefia_rdtype10();
 void initialize_home_mdata();
 turn_result_t build_new_building();
 void initialize_home_adata();
-void use_house_board();
+turn_result_t use_house_board();
 void label_1723();
 void label_1724();
 void show_shop_log();
@@ -1121,10 +1123,10 @@ void label_1730();
 void update_ranch();
 void set_character_generation_filter();
 void monster_respawn();
-void exit_map();
+turn_result_t exit_map();
 void label_1738();
 void label_1739();
-void initialize_map();
+turn_result_t initialize_map();
 void label_1745();
 void label_1746();
 void label_1748();
@@ -1189,7 +1191,8 @@ void label_1955();
 void label_1958();
 void label_1964();
 menu_result feat_menu();
-turn_result_t traits_menu();
+menu_result feat_menu_internal();
+void deco_traits_menu();
 menu_result label_1969();
 menu_result update_journal();
 turn_result_t show_quest_board();
@@ -1211,7 +1214,7 @@ void label_2038(int);
 void label_2047(int);
 void label_2048(int);
 void equip_melee_weapon();
-menu_result ctrl_inventory_equipment();
+menu_result equipment_menu();
 turn_result_t do_get_command();
 turn_result_t try_interact_with_npc();
 void sort_list_by_column1();
@@ -1223,7 +1226,7 @@ turn_result_t do_rest_command();
 void label_2078();
 turn_result_t do_exit_command();
 void label_2081();
-void label_2082();
+turn_result_t do_gatcha();
 void label_2085();
 turn_result_t do_change_ammo_type();
 void remove_card_and_figures();
@@ -1238,7 +1241,7 @@ void create_new_cnpc();
 void label_2109(int);
 void load_save_data();
 void save_game();
-void label_2114();
+turn_result_t do_enter_strange_gate();
 void main_title_menu();
 void main_menu_continue();
 void main_menu_incarnate();
@@ -1257,10 +1260,10 @@ void do_rest();
 void label_2153();
 void label_2154();
 void label_2155();
-void label_2156();
-void label_2157();
-void label_2158();
-void label_2159();
+void spot_fishing();
+void spot_material();
+void spot_digging();
+void spot_mining_or_wall();
 void label_2160();
 void label_2161();
 void label_2162();
@@ -1283,13 +1286,13 @@ turn_result_t do_open_command();
 void open_box();
 void open_new_year_gift();
 turn_result_t try_to_open_locked_door();
-void do_close_command();
+turn_result_t do_close_command();
 void try_to_melee_attack();
 void do_physical_attack();
 void label_2220();
 turn_result_t do_search_command();
-void label_2222();
-void label_2223();
+void discover_trap();
+void discover_hidden_path();
 turn_result_t do_dig_after_sp_check();
 turn_result_t do_dip_command();
 turn_result_t do_use_command();
@@ -1341,7 +1344,7 @@ void label_2670();
 void label_2671();
 void label_2673();
 void label_2674();
-void label_2675();
+turn_result_t pc_died_during_immediate_quest();
 void failed_quest(int);
 void label_2677();
 void hunt_all_targets();
@@ -1357,23 +1360,23 @@ void show_ex_help();
 void label_2702();
 void show_game_help();
 turn_result_t messages_menu();
-turn_result_t do_message_log();
+turn_result_t message_log_menu();
 void initialize_jkey();
 void label_2720();
 void set_option();
 turn_result_t play_scene();
 void initialize_game();
-void turn_wrapper();
+bool turn_wrapper();
 turn_result_t pass_turns(bool);
 turn_result_t turn_begin();
 void label_2735();
 void label_2736();
 void label_27412();
 turn_result_t turn_end();
-turn_result_t check_angband();
+optional<turn_result_t> check_angband();
 void conquer_lesimas();
 void play_the_last_scene_again();
-void pc_died();
+turn_result_t pc_died();
 void show_game_score_ranking();
 void proc_event();
 void lenfix(std::string&, int = 0);

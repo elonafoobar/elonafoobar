@@ -19,7 +19,7 @@ namespace elona
 
 menu_result ctrl_inventory()
 {
-    menu_result result = { false, turn_result_t::none };
+    menu_result result = { false, false, turn_result_t::none };
     int mainweapon = 0;
     int countequip = 0;
     int showmoney = 0;
@@ -1524,7 +1524,7 @@ label_2061_internal:
                 equip_melee_weapon();
             }
             menucycle = 1;
-            result.turn_result = turn_result_t::ctrl_inventory_equipment;
+            result.turn_result = turn_result_t::equipment_menu;
             return result;
         }
         if (invctrl == 7)
@@ -1781,14 +1781,14 @@ label_2061_internal:
         {
             screenupdate = -1;
             update_screen();
-            const auto result = item_identify(inv[ci], efp);
-            if (result == identification_state_t::unidentified)
+            const auto identify_result = item_identify(inv[ci], efp);
+            if (identify_result == identification_state_t::unidentified)
             {
                 txt(lang(
                     u8"新しい知識は得られなかった。より上位の鑑定で調べる必要がある。"s,
                     u8"You need higher identification to gain new knowledge."s));
             }
-            else if (result != identification_state_t::completely_identified)
+            else if (identify_result != identification_state_t::completely_identified)
             {
                 txt(lang(
                     u8"それは"s + itemname(ci, inv[ci].number)
@@ -2354,7 +2354,7 @@ label_2061_internal:
             screenupdate = -1;
             update_screen();
             menucycle = 1;
-            result.turn_result = turn_result_t::ctrl_inventory_equipment;
+            result.turn_result = turn_result_t::equipment_menu;
             return result;
         }
         if (invctrl == 11 || invctrl == 12 || invctrl == 22 || invctrl == 28)

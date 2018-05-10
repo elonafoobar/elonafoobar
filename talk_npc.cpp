@@ -14,7 +14,7 @@ namespace elona
 {
 
 
-void talk_npc()
+void talk_npc() // TODO remove recursion
 {
     int tcchat = 0;
     listmax = 0;
@@ -749,8 +749,8 @@ void talk_npc()
         }
         invctrl(0) = 20;
         invctrl(1) = 0;
-        int stat = ctrl_inventory();
-        if (stat == 0)
+        menu_result result = ctrl_inventory();
+        if (!result.succeeded)
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
             talk_npc();
