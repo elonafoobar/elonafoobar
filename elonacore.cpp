@@ -34554,7 +34554,7 @@ void label_1878()
         label_1879();
         return;
     }
-    label_1878();
+    label_1878(); // TODO this can recurse infinitely.
     return;
 }
 
@@ -58806,57 +58806,22 @@ void speak_to_npc()
     }
     if (evid() == 16)
     {
-        talk_finish_escort();
+        talk_wrapper(talk_result_t::talk_finish_escort);
         return;
     }
     if (cdata[tc].sleep != 0)
     {
-        listmax = 0;
-        buff = u8"("s + name(tc)
-            + lang(u8"はぐっすり眠っている…"s, u8" is sleeping."s) + u8")"s;
-        tc = tc * 1 + 0;
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"bye");
-        ++listmax;
-        chatesc = 1;
-        talk_window();
-        if (scenemode)
-        {
-            if (scene_cut == 1)
-            {
-                talk_end();
-                return;
-            }
-        }
-        talk_end();
+        talk_wrapper(talk_result_t::talk_sleeping);
         return;
     }
     if (cdata[tc].continuous_action_id)
     {
-        listmax = 0;
-        buff = u8"("s + name(tc)
-            + lang(u8"はお取り込み中だ…"s, u8" is in the middle of something."s)
-            + u8")"s;
-        tc = tc * 1 + 0;
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::_(u8"ui", u8"bye");
-        ++listmax;
-        chatesc = 1;
-        talk_window();
-        if (scenemode)
-        {
-            if (scene_cut == 1)
-            {
-                talk_end();
-                return;
-            }
-        }
-        talk_end();
+        talk_wrapper(talk_result_t::talk_busy);
         return;
     }
     if (tc == 0)
     {
-        talk_end();
+        talk_wrapper(talk_result_t::talk_end);
         return;
     }
     if (cdata[tc].visited_just_now())
@@ -58907,6 +58872,49 @@ talk_result_t talk_more()
     return talk_result_t::talk_end;
 }
 
+
+talk_result_t talk_sleeping()
+{
+    listmax = 0;
+    buff = u8"("s + name(tc)
+        + lang(u8"はぐっすり眠っている…"s, u8" is sleeping."s) + u8")"s;
+    tc = tc * 1 + 0;
+    list(0, listmax) = 0;
+    listn(0, listmax) = i18n::_(u8"ui", u8"bye");
+    ++listmax;
+    chatesc = 1;
+    talk_window();
+    if (scenemode)
+    {
+        if (scene_cut == 1)
+        {
+            return talk_result_t::talk_end;
+        }
+    }
+    return talk_result_t::talk_end;
+}
+
+talk_result_t talk_busy()
+{
+    listmax = 0;
+    buff = u8"("s + name(tc)
+        + lang(u8"はお取り込み中だ…"s, u8" is in the middle of something."s)
+        + u8")"s;
+    tc = tc * 1 + 0;
+    list(0, listmax) = 0;
+    listn(0, listmax) = i18n::_(u8"ui", u8"bye");
+    ++listmax;
+    chatesc = 1;
+    talk_window();
+    if (scenemode)
+    {
+        if (scene_cut == 1)
+        {
+            return talk_result_t::talk_end;
+        }
+    }
+    return talk_result_t::talk_end;
+}
 
 
 talk_result_t talk_house_visitor()
@@ -59852,7 +59860,7 @@ talk_result_t talk_house_visitor()
 
 
 
-int give_potion_of_cure_corruption()
+bool talk_give_potion_of_cure_corruption()
 {
     list(0, listmax) = 1;
     listn(0, listmax) = lang(
@@ -59865,7 +59873,7 @@ int give_potion_of_cure_corruption()
     talk_window();
     if (chatval != 1)
     {
-        return 0;
+        return false;
     }
     int stat = inv_find(559, 0);
     if (stat == -1)
@@ -59882,11 +59890,10 @@ int give_potion_of_cure_corruption()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return 0;
+                return false;
             }
         }
-        return 0;
+        return false;
     }
     --inv[stat].number;
     txt(lang(u8"エーテル抗体を1本渡した。"s, u8"You give her a potion."s));
@@ -59906,11 +59913,10 @@ int give_potion_of_cure_corruption()
     {
         if (scene_cut == 1)
         {
-            talk_end();
-            return 0;
+            return false;
         }
     }
-    return 1;
+    return true;
 }
 
 
@@ -60239,7 +60245,7 @@ talk_result_t talk_game_begin()
 
 
 
-void talk_finish_escort()
+talk_result_t talk_finish_escort()
 {
     listmax = 0;
     buff = lang(
@@ -60255,12 +60261,10 @@ void talk_finish_escort()
     {
         if (scene_cut == 1)
         {
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
     }
-    talk_end();
-    return;
+    return talk_result_t::talk_end;
 }
 
 

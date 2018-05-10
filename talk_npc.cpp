@@ -32,6 +32,15 @@ void talk_wrapper(talk_result_t initial)
         case talk_result_t::talk_house_visitor:
             result = talk_house_visitor();
             break;
+        case talk_result_t::talk_sleeping:
+            result = talk_sleeping();
+            break;
+        case talk_result_t::talk_busy:
+            result = talk_busy();
+            break;
+        case talk_result_t::talk_finish_escort:
+            result = talk_finish_escort();
+            break;
         case talk_result_t::talk_game_begin:
             result = talk_game_begin();
             break;

@@ -9,6 +9,9 @@ enum class talk_result_t
     talk_unique,
     talk_quest_giver,
     talk_house_visitor,
+    talk_sleeping,
+    talk_busy,
+    talk_finish_escort,
     talk_game_begin,
     talk_end
 };
