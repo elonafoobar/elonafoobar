@@ -47955,8 +47955,6 @@ turn_result_t do_enter_strange_gate()
     return turn_result_t::exit_map;
 }
 
-
-
 main_menu_result_t main_menu_continue()
 {
     cs = 0;
@@ -48111,7 +48109,7 @@ main_menu_result_t main_menu_continue()
 
 
 
-void main_menu_incarnate()
+main_menu_result_t main_menu_incarnate()
 {
     cs = 0;
     cs_bk = -1;
@@ -48207,15 +48205,14 @@ void main_menu_incarnate()
             snd(20);
             geneuse = listn(0, p);
             playerid = listn(0, p);
-            main_menu_new_game();
-            return;
+            return main_menu_result_t::main_menu_new_game;
         }
         if (key == key_cancel)
         {
-            main_title_menu();
-            return;
+            return main_menu_result_t::main_title_menu;
         }
     }
+    return main_menu_result_t::main_title_menu;
 }
 
 

@@ -1244,6 +1244,8 @@ void label_2109(int);
 void load_save_data();
 void save_game();
 turn_result_t do_enter_strange_gate();
+void main_title_loop();
+main_menu_result_t main_menu_wrapper(main_menu_result_t);
 main_menu_result_t main_title_menu();
 main_menu_result_t main_menu_continue();
 main_menu_result_t main_menu_incarnate();

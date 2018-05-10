@@ -608,41 +608,11 @@ void start_elona()
             mode = 3;
             music = 0;
             initialize_game();
-            main_loop(); // TODO
+            main_loop();
             return;
         }
     }
-    main_title_wrapper();
-}
-
-void main_title_wrapper()
-{
-    main_title_menu_result result = main_title_menu();
-    bool finished = false;
-    while(!finished)
-    {
-        switch(result)
-        {
-        case main_title_menu_result_t::main_title_menu:
-            result = main_title_menu();
-            break;
-        case main_title_menu_result_t::initialize_game:
-            initialize_game();
-            finished = true;
-            break;
-        case main_title_menu_result_t::finish_elona:
-            finish_elona();
-            finished = true;
-            break;
-        default:
-            assert(0);
-            break;
-        }
-    }
-
-    if(result == main_title_menu_result_t::initialize_game) {
-        main_loop(); // TODO
-    }
+    main_title_loop();
 }
 
 
@@ -652,8 +622,6 @@ void main_title_wrapper()
 
 namespace elona
 {
-
-
 
 template <typename Class, typename T, T Class::*Pointer>
 int cat_get_field(lua_State* L)
@@ -1062,10 +1030,10 @@ main_menu_result_t main_menu_wrapper(main_menu_result_t initial)
             result = character_making_role_attributes(false);
             break;
         case main_menu_result_t::character_making_select_feats_and_alias:
-            result = character_making_feats_and_alias();
+            result = character_making_select_feats_and_alias();
             break;
         case main_menu_result_t::character_making_select_feats_and_alias_false:
-            result = character_making_feats_and_alias(false);
+            result = character_making_select_feats_and_alias(false);
             break;
         case main_menu_result_t::character_making_final_phase:
             result = character_making_final_phase();
@@ -1380,7 +1348,7 @@ main_menu_result_t character_making_select_sex(bool label_1548_flg)
 
 
 
-void character_making_select_class(bool label_1551_flg)
+main_menu_result_t character_making_select_class(bool label_1551_flg)
 {
     if (label_1551_flg)
     {
@@ -2537,7 +2505,37 @@ void initialize_game()
     }
     initialize_fovmap_and_fovlist();
     initialize_map();
-    main_loop(); // TODO correct?
+}
+
+
+void main_title_loop()
+{
+    main_menu_result_t result = main_title_menu();
+    bool finished = false;
+    while(!finished)
+    {
+        switch(result)
+        {
+        case main_menu_result_t::main_title_menu:
+            result = main_title_menu();
+            break;
+        case main_menu_result_t::initialize_game:
+            initialize_game();
+            finished = true;
+            break;
+        case main_menu_result_t::finish_elona:
+            finish_elona();
+            finished = true;
+            break;
+        default:
+            assert(0);
+            break;
+        }
+    }
+
+    if(result == main_menu_result_t::initialize_game) {
+        main_loop();
+    }
 }
 
 
