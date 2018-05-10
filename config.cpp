@@ -662,6 +662,10 @@ void load_config()
             u8"use_autopick",
             1,
             [&](auto value) { config::instance().use_autopick = value; }),
+        std::make_unique<config_integer>(
+            u8"autosave",
+            0,
+            [&](auto value) { config::instance().autosave = value; }),
     };
 
     picojson::value value;
