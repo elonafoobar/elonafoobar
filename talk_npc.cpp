@@ -1,3 +1,4 @@
+#include "talk.hpp"
 #include "ability.hpp"
 #include "calc.hpp"
 #include "character.hpp"
@@ -13,8 +14,40 @@
 namespace elona
 {
 
+void talk_wrapper(talk_result_t initial)
+{
+    talk_result_t result = initial;
+    bool finished = false;
+    while(!finished) {
+        switch(result) {
+        case talk_result_t::talk_npc:
+            result = talk_npc();
+            break;
+        case talk_result_t::talk_unique:
+            result = talk_unique();
+            break;
+        case talk_result_t::talk_quest_giver:
+            result = talk_quest_giver();
+            break;
+        case talk_result_t::talk_house_visitor:
+            result = talk_house_visitor();
+            break;
+        case talk_result_t::talk_game_begin:
+            result = talk_game_begin();
+            break;
+        case talk_result_t::talk_end:
+            talk_end();
+            finished = true;
+            break;
+        default:
+            assert(0);
+            break;
+        }
+    }
+}
 
-void talk_npc() // TODO remove recursion
+
+talk_result_t talk_npc()
 {
     int tcchat = 0;
     listmax = 0;
@@ -520,8 +553,7 @@ void talk_npc() // TODO remove recursion
                             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                             chatesc = 1;
                             ELONA_TALK_SCENE_CUT();
-                            talk_npc();
-                            return;
+                            return talk_result_t::talk_npc;
                         }
                     }
                 }
@@ -531,8 +563,7 @@ void talk_npc() // TODO remove recursion
     if (chatval == 1)
     {
         buff = "";
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 10)
     {
@@ -543,8 +574,7 @@ void talk_npc() // TODO remove recursion
         update_screen();
         cs = 0;
         buff = "";
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 11)
     {
@@ -556,29 +586,25 @@ void talk_npc() // TODO remove recursion
         update_screen();
         cs = 0;
         buff = "";
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 12)
     {
-        label_2255();
-        return;
+        return talk_invest();
     }
     if (chatval == 13)
     {
         if (cdata[0].gold < calcmealvalue())
         {
             buff = i18n::_(u8"ui", u8"no_gold");
-            talk_npc();
-            return;
+            return talk_result_t::talk_npc;
         }
         if (cdata[0].nutrition >= 15000)
         {
             buff = lang(
                 u8"腹が減っているようにはみえない"s + _yo(),
                 u8"You don't seem that hungry."s);
-            talk_npc();
-            return;
+            return talk_result_t::talk_npc;
         }
         snd(12);
         cdata[0].gold -= calcmealvalue();
@@ -590,16 +616,14 @@ void talk_npc() // TODO remove recursion
             lang(u8"あなたは舌鼓をうった。"s, u8"You smack your lips."s));
         label_2162();
         chara_anorexia(0);
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval >= 14 && chatval < 17)
     {
         if (cdata[0].gold < calcidentifyvalue(chatval - 14))
         {
             buff = i18n::_(u8"ui", u8"no_gold");
-            talk_npc();
-            return;
+            return talk_result_t::talk_npc;
         }
         p = 0;
         for (const auto& cnt : items(0))
@@ -619,8 +643,7 @@ void talk_npc() // TODO remove recursion
             buff = lang(
                 u8"鑑定するアイテムはないみたい"s + _da(),
                 u8"Your items have already been identified."s);
-            talk_npc();
-            return;
+            return talk_result_t::talk_npc;
         }
         if (chatval == 15)
         {
@@ -671,8 +694,7 @@ void talk_npc() // TODO remove recursion
             if (efcancel == 1)
             {
                 buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
-                talk_npc();
-                return;
+                return talk_result_t::talk_npc;
             }
             if (idtresult == identification_state_t::completely_identified)
             {
@@ -689,29 +711,25 @@ void talk_npc() // TODO remove recursion
             cdata[0].gold -= calcidentifyvalue(chatval - 14);
         }
         snd(12);
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 17)
     {
         csctrl = 2;
-        label_2254();
-        return;
+        return talk_trainer();
     }
     if (chatval == 18)
     {
         list_adventurers();
         buff = lang(u8"お目当ての情報は見つかった"s + _kana(), u8"Done?"s);
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 19)
     {
         if (cdata[0].gold < calcrestorecost())
         {
             buff = i18n::_(u8"ui", u8"no_gold");
-            talk_npc();
-            return;
+            return talk_result_t::talk_npc;
         }
         snd(12);
         cdata[0].gold -= calcrestorecost();
@@ -731,10 +749,9 @@ void talk_npc() // TODO remove recursion
             magic();
         }
         tc = tcbk;
-        label_2241();
+        talk_start();
         buff = lang(u8"治療が完了し"s + _ta(), u8"Done treatment. Take care!"s);
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 20)
     {
@@ -753,12 +770,10 @@ void talk_npc() // TODO remove recursion
         if (!result.succeeded)
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
-            talk_npc();
-            return;
+            return talk_result_t::talk_npc;
         }
         buff = lang(_thanks(2), u8"Thanks!"s);
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 21 || chatval == 22)
     {
@@ -771,8 +786,7 @@ void talk_npc() // TODO remove recursion
                 txt(lang(
                     u8"降りるスペースがない。"s,
                     u8"There's no place to get off."s));
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             cell_setchara(gdata_mount, rtval, rtval(1));
             txt(lang(
@@ -795,8 +809,7 @@ void talk_npc() // TODO remove recursion
                 buff = lang(
                     u8"残念だが、今日の試合はもう終了し"s + _ta(),
                     u8"The game is over today. Come again tomorrow."s);
-                talk_npc();
-                return;
+                return talk_result_t::talk_npc;
             }
             randomize(adata(24, gdata_current_map));
             exrand_randomize(adata(24, gdata_current_map));
@@ -845,8 +858,7 @@ void talk_npc() // TODO remove recursion
                 buff = lang(
                     u8"残念だが、今日の試合はもう終了し"s + _ta(),
                     u8"The game is over today. Come again tomorrow."s);
-                talk_npc();
-                return;
+                return talk_result_t::talk_npc;
             }
             arenaop(0) = 1;
             arenaop(1) = (100 - gdata(120) / 100) / 2 + 1;
@@ -865,8 +877,7 @@ void talk_npc() // TODO remove recursion
             buff = lang(
                 u8"用があるときは声をかけて"s + _kure(),
                 u8"Alright. Call me if you changed your mind."s);
-            talk_npc();
-            return;
+            return talk_result_t::talk_npc;
         }
         if (arenaop == 0)
         {
@@ -890,8 +901,7 @@ void talk_npc() // TODO remove recursion
         gdata_destination_dungeon_level = 1;
         levelexitby = 2;
         chatteleport = 1;
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     }
     if (chatval == 40 || chatval == 41)
     {
@@ -934,8 +944,7 @@ void talk_npc() // TODO remove recursion
             buff = lang(
                 u8"用があるときは声をかけて"s + _kure(),
                 u8"Alright. Call me if you changed your mind."s);
-            talk_npc();
-            return;
+            return talk_result_t::talk_npc;
         }
         DIM2(followerexist, 16);
         for (int cnt = 0; cnt < 16; ++cnt)
@@ -949,8 +958,7 @@ void talk_npc() // TODO remove recursion
             buff = lang(
                 u8"用があるときは声をかけて"s + _kure(),
                 u8"Alright. Call me if you changed your mind."s);
-            talk_npc();
-            return;
+            return talk_result_t::talk_npc;
         }
         gdata_executing_immediate_quest_type = 2;
         gdata(71) = 0;
@@ -964,8 +972,7 @@ void talk_npc() // TODO remove recursion
         gdata_destination_dungeon_level = 1;
         levelexitby = 2;
         chatteleport = 1;
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     }
     if (chatval == 42)
     {
@@ -973,8 +980,7 @@ void talk_npc() // TODO remove recursion
                 u8"5連勝,20連勝毎にボーナスを与え"s + _ru(),
             u8"Your winning streak has reached "s + adata(23, gdata_current_map) +
                 u8" matches now. Keep the audience excited. You get nice bonus at every 5th and 20th wins in a row."s);
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 23)
     {
@@ -982,13 +988,11 @@ void talk_npc() // TODO remove recursion
                 u8"5連勝,20連勝毎にボーナスを与え"s + _ru(),
             u8"Your winning streak has reached "s + adata(22, gdata_current_map) +
                 u8" matches now. Keep the audience excited. You get nice bonus at every 5th and 20th wins in a row."s);
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 24)
     {
-        label_2252();
-        return;
+        return talk_result_t::talk_quest_giver;
     }
     if (chatval == 25)
     {
@@ -1007,8 +1011,7 @@ void talk_npc() // TODO remove recursion
         set_quest_data(3);
         complete_quest();
         refresh_burden_state();
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 26)
     {
@@ -1027,14 +1030,12 @@ void talk_npc() // TODO remove recursion
         set_quest_data(3);
         complete_quest();
         refresh_burden_state();
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 30)
     {
         csctrl = 3;
-        label_2254();
-        return;
+        return talk_trainer();
     }
     if (chatval == 31)
     {
@@ -1050,12 +1051,10 @@ void talk_npc() // TODO remove recursion
         if (chatval != 1)
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
-            talk_npc();
-            return;
+            return talk_result_t::talk_npc;
         }
         go_hostile();
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     }
     if (chatval == 32)
     {
@@ -1108,8 +1107,7 @@ void talk_npc() // TODO remove recursion
         }
         refresh_burden_state();
         buff = "";
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 33)
     {
@@ -1123,8 +1121,7 @@ void talk_npc() // TODO remove recursion
                 buff = lang(
                     u8"そいつは呼び戻す必要はないよう"s + _da(),
                     u8"Huh? You don't need to do that."s);
-                talk_npc();
-                return;
+                return talk_result_t::talk_npc;
             }
             listmax = 0;
             buff = lang(
@@ -1159,8 +1156,7 @@ void talk_npc() // TODO remove recursion
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
         }
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 34)
     {
@@ -1175,8 +1171,7 @@ void talk_npc() // TODO remove recursion
         map(cdata[tc].position.x, cdata[tc].position.y, 1) = 0;
         cdata[tc].state = 7;
         cdata[tc].current_map = 0;
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     }
     if (chatval == 35)
     {
@@ -1197,12 +1192,10 @@ void talk_npc() // TODO remove recursion
                 u8"You abandoned "s + name(tc) + u8"..."s));
             map(cdata[tc].position.x, cdata[tc].position.y, 1) = 0;
             del_chara(tc);
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         buff = "";
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 36 || chatval == 57)
     {
@@ -1256,8 +1249,7 @@ void talk_npc() // TODO remove recursion
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
         }
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 37)
     {
@@ -1303,8 +1295,7 @@ void talk_npc() // TODO remove recursion
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
         }
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 38)
     {
@@ -1313,8 +1304,7 @@ void talk_npc() // TODO remove recursion
             buff = lang(
                 u8"("s + name(tc) + u8"はやんわりと断った)"s,
                 u8"("s + name(tc) + u8" gently refuses your proposal. )"s);
-            talk_npc();
-            return;
+            return talk_result_t::talk_npc;
         }
         cdata[tc].is_married() = true;
         listmax = 0;
@@ -1325,8 +1315,7 @@ void talk_npc() // TODO remove recursion
         ELONA_TALK_SCENE_CUT();
         marry = tc;
         evadd(13);
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     }
     if (chatval == 39)
     {
@@ -1338,8 +1327,7 @@ void talk_npc() // TODO remove recursion
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         listmax = 0;
         buff = lang(u8"いやん、あなたったら…"s, u8"*blush*"s);
@@ -1352,8 +1340,7 @@ void talk_npc() // TODO remove recursion
         {
             gdata(98) = tc;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     }
     if (chatval == 43)
     {
@@ -1375,8 +1362,7 @@ void talk_npc() // TODO remove recursion
         levelexitby = 2;
         chatteleport = 1;
         snd(49);
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     }
     if (chatval == 44)
     {
@@ -1397,12 +1383,10 @@ void talk_npc() // TODO remove recursion
                 u8"You dismiss "s + name(tc) + u8"."s));
             chara_vanquish(tc);
             calccosthire();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         buff = "";
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 45)
     {
@@ -1450,8 +1434,7 @@ void talk_npc() // TODO remove recursion
                 + _da(),
             u8"Hey, I've come up a good idea! \""s + mdatan(0)
                 + u8"\", doesn't it sound so charming?"s);
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 46)
     {
@@ -1460,8 +1443,7 @@ void talk_npc() // TODO remove recursion
             buff = lang(
                 u8"その程度の罪なら自分でなんとかしなさい。"s,
                 u8"You karma isn't that low. Come back after you have committed more crimes!"s);
-            talk_npc();
-            return;
+            return talk_result_t::talk_npc;
         }
         listmax = 0;
         buff = lang(
@@ -1488,8 +1470,7 @@ void talk_npc() // TODO remove recursion
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
         }
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 47)
     {
@@ -1520,7 +1501,7 @@ void talk_npc() // TODO remove recursion
                 snd(26);
                 show_character_sheet();
                 cc = 0;
-                label_2241();
+                talk_start();
                 buff = "";
             }
             else
@@ -1533,8 +1514,7 @@ void talk_npc() // TODO remove recursion
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
         }
         tc = tcchat;
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 48)
     {
@@ -1554,8 +1534,7 @@ void talk_npc() // TODO remove recursion
                 + u8")"s;
             cdata[tc].is_silent() = false;
         }
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 50)
     {
@@ -1592,8 +1571,7 @@ void talk_npc() // TODO remove recursion
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
         }
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 51)
     {
@@ -1603,8 +1581,7 @@ void talk_npc() // TODO remove recursion
                 _kimi(3) + u8"の仲間になれと？あまりにも力の差がありすぎる"s
                     + _na(),
                 u8"Huh? You are no match for me."s);
-            talk_npc();
-            return;
+            return talk_result_t::talk_npc;
         }
         if (cdata[tc].impression >= 200 && cdata[tc].hire_count > 2)
         {
@@ -1623,8 +1600,7 @@ void talk_npc() // TODO remove recursion
                     u8"これ以上仲間を連れて行けないよう"s + _da()
                         + u8"人数を調整してまた来て"s + _kure(),
                     u8"It seems your party is already full. Come see me again when you're ready."s);
-                talk_npc();
-                return;
+                return talk_result_t::talk_npc;
             }
             rc = tc;
             new_ally_joins();
@@ -1633,14 +1609,12 @@ void talk_npc() // TODO remove recursion
             cdata[tc].impression = 100;
             rc = oc;
             create_adventurer();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         buff = lang(
             _kimi(3) + u8"の仲間になれと？悪い"s + _ga(3) + u8"お断り"s + _da(),
             u8"Huh? What made you think I'd want to join you? I don't even know you well."s);
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 52)
     {
@@ -1671,8 +1645,7 @@ void talk_npc() // TODO remove recursion
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
         }
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 53)
     {
@@ -1686,8 +1659,7 @@ void talk_npc() // TODO remove recursion
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         label_2081();
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     }
     if (chatval == 54)
     {
@@ -1696,8 +1668,7 @@ void talk_npc() // TODO remove recursion
             buff = lang(
                 u8"充填する必要はないみたい"s + _da(),
                 u8"Reload what? You don't have any ammo in your inventory."s);
-            talk_npc();
-            return;
+            return talk_result_t::talk_npc;
         }
         buff = lang(
             u8"そう"s + _dana(3) + u8"、全ての矢弾を補充すると"s
@@ -1722,8 +1693,7 @@ void talk_npc() // TODO remove recursion
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
         }
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 55)
     {
@@ -1732,8 +1702,7 @@ void talk_npc() // TODO remove recursion
         invctrl = 0;
         show_spell_writer_menu();
         buff = "";
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 56)
     {
@@ -1746,8 +1715,7 @@ void talk_npc() // TODO remove recursion
         if (chatval != 1)
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
-            talk_npc();
-            return;
+            return talk_result_t::talk_npc;
         }
         listmax = 0;
         buff = lang(u8"いく"s + _yo(2), u8"Okay, no turning back now!"s);
@@ -1756,8 +1724,7 @@ void talk_npc() // TODO remove recursion
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         label_2147();
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     }
     if (chatval == 58)
     {
@@ -1765,8 +1732,7 @@ void talk_npc() // TODO remove recursion
         {
             evadd(25);
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     }
     if (chatval == 59)
     {
@@ -1778,8 +1744,7 @@ void talk_npc() // TODO remove recursion
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         buff = "";
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (chatval == 60)
     {
@@ -1798,8 +1763,7 @@ void talk_npc() // TODO remove recursion
         if (chatval != 1)
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
-            talk_npc();
-            return;
+            return talk_result_t::talk_npc;
         }
         snd(12);
         cdata[cc].gold -= sexvalue;
@@ -1814,8 +1778,7 @@ void talk_npc() // TODO remove recursion
         tc = 0;
         label_2147();
         cc = 0;
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     }
     if (chatval == 61)
     {
@@ -1851,8 +1814,7 @@ void talk_npc() // TODO remove recursion
         if (chatval <= 0)
         {
             buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
-            talk_npc();
-            return;
+            return talk_result_t::talk_npc;
         }
         gdata_destination_map = adata(30, chatval);
         gdata_destination_dungeon_level = 1;
@@ -1863,8 +1825,7 @@ void talk_npc() // TODO remove recursion
         gdata_pc_home_y = adata(2, chatval);
         fixtransfermap = 1;
         chatteleport = 1;
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     }
     if (chatval >= 10000)
     {
@@ -1953,8 +1914,7 @@ void talk_npc() // TODO remove recursion
             break;
         }
         buff = s;
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     if (evid() == 11)
     {
@@ -1962,8 +1922,7 @@ void talk_npc() // TODO remove recursion
         chatteleport = 1;
         snd(49);
     }
-    talk_end();
-    return;
+    return talk_result_t::talk_end;
 }
 
 

@@ -2,6 +2,7 @@
 #include "position.hpp"
 #include "enums.hpp"
 #include "optional.hpp"
+#include "talk.hpp"
 
 
 #ifdef ELONA_DEFINE_GLOBAL_INSTANCE
@@ -1302,18 +1303,16 @@ void label_2234(int = 0);
 void label_2235(int);
 void label_2236();
 void do_steal_command();
-void label_2241();
+void talk_start();
 void speak_to_npc();
-void label_2243();
-void label_2244();
-void talk_unique();
-void label_2249();
-void label_2250();
-void talk_npc();
-void label_2252();
-void label_2253();
-void label_2254();
-void label_2255();
+talk_result_t talk_more();
+talk_result_t talk_house_visitor();
+talk_result_t talk_game_begin();
+void talk_finish_escort();
+talk_result_t talk_quest_giver();
+talk_result_t talk_accepted_quest();
+talk_result_t talk_trainer();
+talk_result_t talk_invest();
 void talk_end();
 void talk_window();
 void reset_talk_variables();

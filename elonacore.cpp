@@ -45468,7 +45468,7 @@ void equip_melee_weapon()
 
 
 menu_result equipment_menu()
-{  
+{
     menu_result result = { false, false, turn_result_t::none };
     int cs_prev = 0;
     int mainhand = 0;
@@ -58697,7 +58697,7 @@ int tradecheck(int prm_1081)
 
 
 
-void label_2241()
+void talk_start()
 {
     gsel(4);
     pos(0, 0);
@@ -58786,10 +58786,10 @@ void speak_to_npc()
         invfile = cdata[tc].shop_store_id;
         label_2262();
     }
-    label_2241();
+    talk_start();
     if (scenemode == 1)
     {
-        label_2243();
+        talk_more();
         return;
     }
     chatval(1) = 0;
@@ -58801,12 +58801,12 @@ void speak_to_npc()
     }
     if (evid() == 2)
     {
-        label_2249();
+        talk_wrapper(talk_result_t::talk_game_begin);
         return;
     }
     if (evid() == 16)
     {
-        label_2250();
+        talk_finish_escort();
         return;
     }
     if (cdata[tc].sleep != 0)
@@ -58862,8 +58862,7 @@ void speak_to_npc()
     if (cdata[tc].visited_just_now())
     {
         cdata[tc].visited_just_now() = false;
-        label_2244();
-        return;
+        talk_wrapper(talk_result_t::talk_house_visitor);
     }
     if (chatval(1) != 0)
     {
@@ -58871,7 +58870,7 @@ void speak_to_npc()
         {
             if (tc >= 16)
             {
-                talk_unique();
+                talk_wrapper(talk_result_t::talk_unique);
                 return;
             }
         }
@@ -58879,17 +58878,16 @@ void speak_to_npc()
     if (questteleport == 1)
     {
         questteleport = 0;
-        label_2252();
+        talk_wrapper(talk_result_t::talk_quest_giver);
         return;
     }
     buff = "";
-    talk_npc();
-    return;
+    talk_wrapper(talk_result_t::talk_npc);
 }
 
 
 
-void label_2243()
+talk_result_t talk_more()
 {
     listmax = 0;
     buff = buff;
@@ -58903,17 +58901,15 @@ void label_2243()
     {
         if (scene_cut == 1)
         {
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
     }
-    talk_end();
-    return;
+    return talk_result_t::talk_end;
 }
 
 
 
-void label_2244()
+talk_result_t talk_house_visitor()
 {
     listmax = 0;
     cc = 0;
@@ -58935,8 +58931,7 @@ void label_2244()
             {
                 if (scene_cut == 1)
                 {
-                    talk_end();
-                    return;
+                    return talk_result_t::talk_end;
                 }
             }
             listmax = 0;
@@ -58953,8 +58948,7 @@ void label_2244()
             {
                 if (scene_cut == 1)
                 {
-                    talk_end();
-                    return;
+                    return talk_result_t::talk_end;
                 }
             }
             flt();
@@ -58967,8 +58961,7 @@ void label_2244()
             txt(lang(
                 name(tc) + u8"は"s + itemname(ci, 1) + u8"を置いていった。"s,
                 name(tc) + u8" throws you "s + itemname(ci, 1) + u8"."s));
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (cdata[tc].impression < 25)
         {
@@ -58986,8 +58979,7 @@ void label_2244()
             {
                 if (scene_cut == 1)
                 {
-                    talk_end();
-                    return;
+                    return talk_result_t::talk_end;
                 }
             }
             txt(lang(
@@ -59040,8 +59032,7 @@ void label_2244()
                     update_screen();
                 }
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (cdata[tc].impression >= 100)
         {
@@ -59062,8 +59053,7 @@ void label_2244()
                     {
                         if (scene_cut == 1)
                         {
-                            talk_end();
-                            return;
+                            return talk_result_t::talk_end;
                         }
                     }
                     cdata[tc].is_best_friend() = true;
@@ -59158,12 +59148,10 @@ void label_2244()
                     {
                         if (scene_cut == 1)
                         {
-                            talk_end();
-                            return;
+                            return talk_result_t::talk_end;
                         }
                     }
-                    talk_end();
-                    return;
+                    return talk_result_t::talk_end;
                 }
                 snd(12);
                 if (chatval == 1)
@@ -59186,8 +59174,7 @@ void label_2244()
                     {
                         if (scene_cut == 1)
                         {
-                            talk_end();
-                            return;
+                            return talk_result_t::talk_end;
                         }
                     }
                 }
@@ -59216,13 +59203,11 @@ void label_2244()
                     {
                         if (scene_cut == 1)
                         {
-                            talk_end();
-                            return;
+                            return talk_result_t::talk_end;
                         }
                     }
                 }
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         if (rnd(5) == 0)
@@ -59244,8 +59229,7 @@ void label_2244()
                 {
                     if (scene_cut == 1)
                     {
-                        talk_end();
-                        return;
+                        return talk_result_t::talk_end;
                     }
                 }
                 if (inv_getfreeid(-1) == -1)
@@ -59273,8 +59257,7 @@ void label_2244()
                         u8"You receive "s + itemname(ci, 1) + u8"."s));
                     snd(14);
                 }
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         if (rnd(4) == 0)
@@ -59296,8 +59279,7 @@ void label_2244()
                 {
                     if (scene_cut == 1)
                     {
-                        talk_end();
-                        return;
+                        return talk_result_t::talk_end;
                     }
                 }
                 if (inv_getfreeid(0) == -1)
@@ -59315,8 +59297,7 @@ void label_2244()
                         u8"You receive "s + itemname(ci, 1) + u8"."s));
                     snd(14);
                 }
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         if (rnd(5) == 0)
@@ -59338,8 +59319,7 @@ void label_2244()
                 {
                     if (scene_cut == 1)
                     {
-                        talk_end();
-                        return;
+                        return talk_result_t::talk_end;
                     }
                 }
                 txt(lang(
@@ -59350,8 +59330,7 @@ void label_2244()
                 efp = 100;
                 tc = 0;
                 magic();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         if (rnd(8) == 0)
@@ -59374,12 +59353,10 @@ void label_2244()
             {
                 if (scene_cut == 1)
                 {
-                    talk_end();
-                    return;
+                    return talk_result_t::talk_end;
                 }
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (rnd(10) == 0)
         {
@@ -59403,12 +59380,10 @@ void label_2244()
             {
                 if (scene_cut == 1)
                 {
-                    talk_end();
-                    return;
+                    return talk_result_t::talk_end;
                 }
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (rnd(3) == 0)
         {
@@ -59431,8 +59406,7 @@ void label_2244()
                 {
                     if (scene_cut == 1)
                     {
-                        talk_end();
-                        return;
+                        return talk_result_t::talk_end;
                     }
                 }
                 txt(lang(
@@ -59440,8 +59414,7 @@ void label_2244()
                     u8"You hold an amusing conversation with "s + name(tc)
                         + u8"!"s));
                 modimp(tc, 10);
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         if (rnd(3) == 0)
@@ -59460,8 +59433,7 @@ void label_2244()
             {
                 if (scene_cut == 1)
                 {
-                    talk_end();
-                    return;
+                    return talk_result_t::talk_end;
                 }
             }
             snd(17);
@@ -59479,8 +59451,7 @@ void label_2244()
             dmgcon(tc, 8, 1000);
             dmgcon(cc, 8, 1000);
             modimp(tc, 15);
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         listmax = 0;
         buff = lang(
@@ -59496,12 +59467,10 @@ void label_2244()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 2005:
         if (gdata_last_month_when_trainer_visited == gdata_month)
         {
@@ -59519,12 +59488,10 @@ void label_2244()
             {
                 if (scene_cut == 1)
                 {
-                    talk_end();
-                    return;
+                    return talk_result_t::talk_end;
                 }
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         plat = 3;
         gdata_last_month_when_trainer_visited = gdata_month;
@@ -59613,12 +59580,10 @@ void label_2244()
             {
                 if (scene_cut == 1)
                 {
-                    talk_end();
-                    return;
+                    return talk_result_t::talk_end;
                 }
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         cdata[0].platinum_coin -= plat;
         snd(61);
@@ -59645,12 +59610,10 @@ void label_2244()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 2002:
         listmax = 0;
         buff = lang(
@@ -59666,12 +59629,10 @@ void label_2244()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 2000:
         if (cdata[0].gold > 0)
         {
@@ -59711,12 +59672,10 @@ void label_2244()
             {
                 if (scene_cut == 1)
                 {
-                    talk_end();
-                    return;
+                    return talk_result_t::talk_end;
                 }
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         listmax = 0;
         buff = lang(u8"ケチ！"s, u8"You're so cheap!"s);
@@ -59730,12 +59689,10 @@ void label_2244()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 2001:
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"いい"s, u8"Yes."s);
@@ -59761,13 +59718,11 @@ void label_2244()
             {
                 if (scene_cut == 1)
                 {
-                    talk_end();
-                    return;
+                    return talk_result_t::talk_end;
                 }
             }
             label_2147();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         listmax = 0;
         buff = lang(u8"ふん！"s, u8"Hump!"s);
@@ -59781,12 +59736,10 @@ void label_2244()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 2006:
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"いい"s, u8"Yes."s);
@@ -59812,13 +59765,11 @@ void label_2244()
             {
                 if (scene_cut == 1)
                 {
-                    talk_end();
-                    return;
+                    return talk_result_t::talk_end;
                 }
             }
             label_2147();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         listmax = 0;
         buff = lang(u8"ふん！"s, u8"Hump!"s);
@@ -59832,12 +59783,10 @@ void label_2244()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 2003:
         list(0, listmax) = 0;
         listn(0, listmax) = lang(u8"買いたい"s, u8"I want to buy something."s);
@@ -59864,8 +59813,7 @@ void label_2244()
             update_screen();
             cs = 0;
             buff = "";
-            label_2244();
-            return;
+            return talk_result_t::talk_house_visitor;
         }
         if (chatval == 1)
         {
@@ -59877,8 +59825,7 @@ void label_2244()
             update_screen();
             cs = 0;
             buff = "";
-            label_2244();
-            return;
+            return talk_result_t::talk_house_visitor;
         }
         listmax = 0;
         buff = lang(
@@ -59894,16 +59841,13 @@ void label_2244()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         cdata[tc].character_role = 2002;
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     }
-    talk_end();
-    return;
+    return talk_result_t::talk_end;
 }
 
 
@@ -59971,7 +59915,7 @@ int give_potion_of_cure_corruption()
 
 
 
-void label_2249()
+talk_result_t talk_game_begin()
 {
     if (lomiaseaster)
     {
@@ -59990,8 +59934,7 @@ void label_2249()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         listmax = 0;
@@ -60006,8 +59949,7 @@ void label_2249()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         update_screen();
@@ -60037,8 +59979,7 @@ void label_2249()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         listmax = 0;
@@ -60055,8 +59996,7 @@ void label_2249()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         listmax = 0;
@@ -60073,8 +60013,7 @@ void label_2249()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         listmax = 0;
@@ -60091,8 +60030,7 @@ void label_2249()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         listmax = 0;
@@ -60109,8 +60047,7 @@ void label_2249()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         await(1500);
@@ -60144,8 +60081,7 @@ void label_2249()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         listmax = 0;
@@ -60161,8 +60097,7 @@ void label_2249()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         listmax = 0;
@@ -60178,8 +60113,7 @@ void label_2249()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         listmax = 0;
@@ -60195,8 +60129,7 @@ void label_2249()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         listmax = 0;
@@ -60212,8 +60145,7 @@ void label_2249()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
     }
@@ -60232,8 +60164,7 @@ void label_2249()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         listmax = 0;
@@ -60249,8 +60180,7 @@ void label_2249()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         listmax = 0;
@@ -60266,8 +60196,7 @@ void label_2249()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         listmax = 0;
@@ -60283,8 +60212,7 @@ void label_2249()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         listmax = 0;
@@ -60300,20 +60228,18 @@ void label_2249()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
     }
     mdata(13) = 67;
     play_music();
-    talk_unique();
-    return;
+    return talk_result_t::talk_unique;
 }
 
 
 
-void label_2250()
+void talk_finish_escort()
 {
     listmax = 0;
     buff = lang(
@@ -60339,15 +60265,14 @@ void label_2250()
 
 
 
-void label_2252()
+talk_result_t talk_quest_giver()
 {
     if (qdata(8, rq) == 1)
     {
         buff = lang(
             u8"頼んでいた依頼は順調"s + _kana(1),
             u8"What about my contract? Is everything alright? "s);
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     set_quest_data(1);
     listmax = 0;
@@ -60381,8 +60306,7 @@ void label_2252()
                 u8"未完了の依頼が多すぎじゃない"s + _kana(1)
                     + u8"この仕事は、安心してまかせられない"s + _yo(),
                 u8"Hey, you've got quite a few unfinished contracts. See me again when you have finished them."s);
-            talk_npc();
-            return;
+            return talk_result_t::talk_npc;
         }
         for (int cnt = 0; cnt < 5; ++cnt)
         {
@@ -60409,8 +60333,7 @@ void label_2252()
                     u8"どうやらバックパックが一杯のよう"s + _da()
                         + u8"持ち物を整理してまた来て"s + _kure(),
                     u8"It seems your backpack is already full. Come see me again when you're ready."s);
-                talk_npc();
-                return;
+                return talk_result_t::talk_npc;
             }
         }
         if (qdata(3, rq) == 1007)
@@ -60422,8 +60345,7 @@ void label_2252()
                     u8"これ以上仲間を連れて行けないよう"s + _da()
                         + u8"人数を調整してまた来て"s + _kure(),
                     u8"It seems your party is already full. Come see me again when you're ready."s);
-                talk_npc();
-                return;
+                return talk_result_t::talk_npc;
             }
             for (int cnt = 0;; ++cnt)
             {
@@ -60470,8 +60392,7 @@ void label_2252()
         qdata(8, rq) = 1;
         if (qdata(9, rq) == -1)
         {
-            label_2253();
-            return;
+            return talk_accepted_quest();
         }
         buff = lang(
             _thanks() + u8"期待してい"s + _ru(),
@@ -60497,13 +60418,12 @@ void label_2252()
     {
         buff = lang(u8"冷やかし"s + _ka(1), u8"You kidding? "s);
     }
-    talk_npc();
-    return;
+    return talk_result_t::talk_npc;
 }
 
 
 
-void label_2253()
+talk_result_t talk_accepted_quest()
 {
     if (qdata(3, rq) == 1001 || qdata(3, rq) == 1010)
     {
@@ -60522,8 +60442,7 @@ void label_2253()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
     }
@@ -60544,8 +60463,7 @@ void label_2253()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
     }
@@ -60565,8 +60483,7 @@ void label_2253()
         {
             if (scene_cut == 1)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
     }
@@ -60582,25 +60499,23 @@ void label_2253()
     gdata_destination_dungeon_level = 1;
     levelexitby = 2;
     chatteleport = 1;
-    talk_end();
-    return;
+    return talk_result_t::talk_end;
 }
 
 
 
-void label_2254()
+talk_result_t talk_trainer()
 {
     tcbk = tc;
     menucycle = 0;
     show_character_sheet();
-    label_2241();
+    talk_start();
     if (csskill == -1)
     {
         buff = lang(
             u8"訓練が必要なときは、声をかけて"s + _kure(),
             u8"Come see me again when you need more training."s);
-        talk_npc();
-        return;
+        return talk_result_t::talk_npc;
     }
     listmax = 0;
     if (csctrl == 2)
@@ -60677,13 +60592,12 @@ void label_2254()
             u8"訓練が必要なときは、声をかけて"s + _kure(),
             u8"Come see me again when you need more training."s);
     }
-    talk_npc();
-    return;
+    return talk_result_t::talk_npc;
 }
 
 
 
-void label_2255()
+talk_result_t talk_invest()
 {
     listmax = 0;
     buff = lang(
@@ -60718,8 +60632,7 @@ void label_2255()
     {
         calccosthire();
     }
-    talk_npc();
-    return;
+    return talk_result_t::talk_npc;
 }
 
 
