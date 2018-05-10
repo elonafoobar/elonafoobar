@@ -1508,7 +1508,7 @@ talk_result_t talk_npc()
                 cc = rc;
                 csctrl = 4;
                 snd(26);
-                show_character_sheet();
+                menu_character_sheet();
                 cc = 0;
                 talk_start();
                 buff = "";

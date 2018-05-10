@@ -1014,25 +1014,25 @@ main_menu_result_t main_menu_wrapper(main_menu_result_t initial)
         case main_menu_result_t::character_making_select_sex:
             result = character_making_select_sex();
             break;
-        case main_menu_result_t::character_making_select_sex_false:
+        case main_menu_result_t::character_making_select_sex_looped:
             result = character_making_select_sex(false);
             break;
         case main_menu_result_t::character_making_select_class:
             result = character_making_select_class();
             break;
-        case main_menu_result_t::character_making_select_class_false:
+        case main_menu_result_t::character_making_select_class_looped:
             result = character_making_select_class(false);
             break;
         case main_menu_result_t::character_making_role_attributes:
             result = character_making_role_attributes();
             break;
-        case main_menu_result_t::character_making_role_attributes_false:
+        case main_menu_result_t::character_making_role_attributes_looped:
             result = character_making_role_attributes(false);
             break;
         case main_menu_result_t::character_making_select_feats_and_alias:
             result = character_making_select_feats_and_alias();
             break;
-        case main_menu_result_t::character_making_select_feats_and_alias_false:
+        case main_menu_result_t::character_making_select_feats_and_alias_looped:
             result = character_making_select_feats_and_alias(false);
             break;
         case main_menu_result_t::character_making_final_phase:
@@ -1270,9 +1270,9 @@ main_menu_result_t character_making_select_race()
 
 
 
-main_menu_result_t character_making_select_sex(bool label_1548_flg)
+main_menu_result_t character_making_select_sex(bool advanced_to_next_menu)
 {
-    if (label_1548_flg)
+    if (advanced_to_next_menu)
     {
         snd(102);
     }
@@ -1341,16 +1341,16 @@ main_menu_result_t character_making_select_sex(bool label_1548_flg)
         if (getkey(snail::key::f1))
         {
             show_game_help();
-            return main_menu_result_t::character_making_select_sex_false;
+            return main_menu_result_t::character_making_select_sex_looped;
         }
     }
 }
 
 
 
-main_menu_result_t character_making_select_class(bool label_1551_flg)
+main_menu_result_t character_making_select_class(bool advanced_to_next_menu)
 {
-    if (label_1551_flg)
+    if (advanced_to_next_menu)
     {
         snd(20);
     }
@@ -1452,23 +1452,23 @@ main_menu_result_t character_making_select_class(bool label_1551_flg)
         }
         if (key == key_cancel)
         {
-            return main_menu_result_t::character_making_select_sex_false;
+            return main_menu_result_t::character_making_select_sex_looped;
         }
         if (getkey(snail::key::f1))
         {
             show_game_help();
-            return main_menu_result_t::character_making_select_sex_false;
+            return main_menu_result_t::character_making_select_sex_looped;
         }
     }
 }
 
 
 
-main_menu_result_t character_making_role_attributes(bool label_1554_flg)
+main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
 {
     elona_vector1<int> cmlock;
     bool minimum{};
-    if (label_1554_flg)
+    if (advanced_to_next_menu)
     {
         snd(101);
         DIM2(cmlock, 10);
@@ -1626,21 +1626,21 @@ main_menu_result_t character_making_role_attributes(bool label_1554_flg)
         }
         if (key == key_cancel)
         {
-            return main_menu_result_t::character_making_select_class_false;
+            return main_menu_result_t::character_making_select_class_looped;
         }
         if (getkey(snail::key::f1))
         {
             show_game_help();
-            return main_menu_result_t::character_making_role_attributes_false;
+            return main_menu_result_t::character_making_role_attributes_looped;
         }
     }
 }
 
 
 
-main_menu_result_t character_making_select_feats_and_alias(bool label_1558_flg)
+main_menu_result_t character_making_select_feats_and_alias(bool is_choosing_feat)
 {
-    if (label_1558_flg)
+    if (is_choosing_feat)
     {
         gdata_acquirable_feat_count = 3;
         DIM2(trait, 500);
@@ -1662,15 +1662,15 @@ main_menu_result_t character_making_select_feats_and_alias(bool label_1558_flg)
             pos(20, windowh - 36);
             mes(u8"Gene from "s + geneuse);
         }
-        menu_result result = feat_menu();
+        menu_result result = menu_feats();
         clear_background_in_character_making();
-        if (result.feat_menu_flag)
+        if (result.pressed_f1)
         {
             return main_menu_result_t::character_making_select_feats_and_alias;
         }
         if (!result.succeeded)
         {
-            return main_menu_result_t::character_making_role_attributes_false;
+            return main_menu_result_t::character_making_role_attributes_looped;
         }
     }
     pagemax = 0;
@@ -1770,7 +1770,7 @@ main_menu_result_t character_making_select_feats_and_alias(bool label_1558_flg)
         if (getkey(snail::key::f1))
         {
             show_game_help();
-            return main_menu_result_t::character_making_select_feats_and_alias_false;
+            return main_menu_result_t::character_making_select_feats_and_alias_looped;
         }
     }
 }
@@ -1853,7 +1853,7 @@ main_menu_result_t character_making_final_phase()
             csctrl = 1;
             menucycle = 0;
             {
-                menu_result result = show_character_sheet();
+                menu_result result = menu_character_sheet();
                 if (!result.succeeded)
                 {
                     nowindowanime = 1;

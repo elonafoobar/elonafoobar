@@ -3221,7 +3221,7 @@ label_1744_internal:
             update_screen();
             if (evnum == 0)
             {
-                return turn_result_t::pc_turn_false;
+                return turn_result_t::pc_turn_user_error;
             }
             else
             {

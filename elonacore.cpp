@@ -28710,7 +28710,7 @@ turn_result_t build_new_building()
             u8"それはワールドマップでしか使えない。"s,
             u8"You can only use it in the world map."s));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     cell_featread(cdata[0].position.x, cdata[0].position.y);
     if (feat(0) != 0)
@@ -28718,7 +28718,7 @@ turn_result_t build_new_building()
         txt(lang(
             u8"その場所には建てられない。"s, u8"You can't build it here."s));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     area = -1;
     for (int cnt = 300; cnt < 450; ++cnt)
@@ -28735,7 +28735,7 @@ turn_result_t build_new_building()
             u8"もうこれ以上建物は建てられない。"s,
             u8"You can't build a building anymore."s));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     txt(lang(u8"本当にこの場所に建設する？ "s, u8"Really build it here? "s));
     ELONA_YES_NO_PROMPT();
@@ -28743,7 +28743,7 @@ turn_result_t build_new_building()
     if (rtval != 0)
     {
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     if (inv[ci].id == 344)
     {
@@ -28866,7 +28866,7 @@ void initialize_home_adata()
 
 
 
-turn_result_t use_house_board()
+turn_result_t show_house_board()
 {
     int cxbk = 0;
     int cybk = 0;
@@ -28879,7 +28879,7 @@ turn_result_t use_house_board()
             u8"ここはあなたの家ではない。"s,
             u8"You can only use it in your home."s));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     p(0) = 0;
     p(1) = 0;
@@ -29011,7 +29011,7 @@ turn_result_t use_house_board()
     if (stat == -1)
     {
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     rtval = stat;
     switch (rtval)
@@ -29427,7 +29427,7 @@ label_1722_internal:
     tlocinity = 0;
     screenupdate = -1;
     update_screen();
-    return turn_result_t::use_house_board;
+    return turn_result_t::show_house_board;
 }
 
 
@@ -33401,7 +33401,7 @@ label_1857_internal:
 
 
 
-menu_result craft_material_menu()
+menu_result menu_materials()
 {
     menu_result result = { false, false, turn_result_t::none };
     listmax = 0;
@@ -33524,22 +33524,22 @@ label_1861_internal:
                 if (curmenu == 0)
                 {
                     csctrl = 0;
-                    result.turn_result = turn_result_t::show_character_sheet;
+                    result.turn_result = turn_result_t::menu_character_sheet;
                     return result;
                 }
                 if (curmenu == 1)
                 {
-                    result.turn_result = turn_result_t::equipment_menu;
+                    result.turn_result = turn_result_t::menu_equipment;
                     return result;
                 }
                 if (curmenu == 2)
                 {
-                    result.turn_result = turn_result_t::feat_menu;
+                    result.turn_result = turn_result_t::menu_feats;
                     return result;
                 }
                 if (curmenu == 3)
                 {
-                    result.turn_result = turn_result_t::craft_material_menu;
+                    result.turn_result = turn_result_t::menu_materials;
                     return result;
                 }
             }
@@ -33566,7 +33566,7 @@ label_1861_internal:
     if (key == key_cancel)
     {
         update_screen();
-        result.turn_result = turn_result_t::pc_turn_false;
+        result.turn_result = turn_result_t::pc_turn_user_error;
         return result;
     }
     goto label_1861_internal;
@@ -35574,7 +35574,7 @@ turn_result_t pray()
     if (rtval != 0)
     {
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     txt(lang(
         i18n::_(u8"god", cdata[0].god_id, u8"name") + u8"に祈った。"s,
@@ -38207,7 +38207,7 @@ label_1925_internal:
     {
         screenupdate = 0;
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     goto label_1925_internal;
 label_1927_internal:
@@ -39061,7 +39061,7 @@ turn_result_t step_into_gate()
                     show_ex_help();
                     screenupdate = -1;
                     update_screen();
-                    return turn_result_t::pc_turn_false;
+                    return turn_result_t::pc_turn_user_error;
                 }
             }
         }
@@ -39082,7 +39082,7 @@ turn_result_t step_into_gate()
         u8"ネット機能をONにする必要がある。"s,
         u8"You have to turn on network setting."s));
     update_screen();
-    return turn_result_t::pc_turn_false;
+    return turn_result_t::pc_turn_user_error;
 }
 
 
@@ -39694,7 +39694,7 @@ turn_result_t do_look_command()
             u8"視界内にターゲットは存在しない。"s,
             u8"You look around and find nothing."s));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     cs = 0;
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
@@ -39834,7 +39834,7 @@ label_1953_internal:
             name(p) + u8"をターゲットにした。"s,
             u8"You target "s + name(p) + u8"."s));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     if (key == key_pageup)
     {
@@ -39857,7 +39857,7 @@ label_1953_internal:
     if (key == key_cancel)
     {
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     goto label_1953_internal;
 }
@@ -40523,17 +40523,17 @@ label_1966_internal:
 
 
 
-menu_result feat_menu()
+menu_result menu_feats()
 {
     deco_traits_menu();
-    return feat_menu_internal();
+    return menu_feats_internal();
 }
 
 
 
 menu_result label_1969()
 {
-    return feat_menu_internal();
+    return menu_feats_internal();
 }
 
 
@@ -40563,7 +40563,7 @@ void deco_traits_menu()
 
 
 
-menu_result feat_menu_internal()
+menu_result menu_feats_internal()
 {
     menu_result result = { false, false, turn_result_t::none };
     int featrq = 0;
@@ -41091,22 +41091,22 @@ label_1970_internal:
                 if (curmenu == 0)
                 {
                     csctrl = 0;
-                    result.turn_result = turn_result_t::show_character_sheet;
+                    result.turn_result = turn_result_t::menu_character_sheet;
                     return result;
                 }
                 if (curmenu == 1)
                 {
-                    result.turn_result = turn_result_t::equipment_menu;
+                    result.turn_result = turn_result_t::menu_equipment;
                     return result;
                 }
                 if (curmenu == 2)
                 {
-                    result.turn_result = turn_result_t::feat_menu;
+                    result.turn_result = turn_result_t::menu_feats;
                     return result;
                 }
                 if (curmenu == 3)
                 {
-                    result.turn_result = turn_result_t::craft_material_menu;
+                    result.turn_result = turn_result_t::menu_materials;
                     return result;
                 }
             }
@@ -41171,7 +41171,7 @@ label_1970_internal:
             return result;
         }
         update_screen();
-        result.turn_result = turn_result_t::pc_turn_false;
+        result.turn_result = turn_result_t::pc_turn_user_error;
         return result;
     }
     if (mode == 1)
@@ -41180,7 +41180,7 @@ label_1970_internal:
         {
             show_game_help();
             result.succeeded = false;
-            result.feat_menu_flag = true; // TODO simplify
+            result.pressed_f1 = true; // TODO simplify
             return result;
         }
     }
@@ -41189,7 +41189,7 @@ label_1970_internal:
 
 
 
-menu_result update_journal()
+menu_result menu_journal()
 {
     menu_result result = { false, false, turn_result_t::none };
     curmenu = 1;
@@ -41467,17 +41467,17 @@ label_1974_internal:
                 update_screen();
                 if (curmenu == 0)
                 {
-                    result.turn_result = turn_result_t::message_log_menu;
+                    result.turn_result = turn_result_t::show_message_log;
                     return result;
                 }
                 if (curmenu == 1)
                 {
-                    result.turn_result = turn_result_t::update_journal;
+                    result.turn_result = turn_result_t::menu_journal;
                     return result;
                 }
                 if (curmenu == 2)
                 {
-                    result.turn_result = turn_result_t::messages_menu;
+                    result.turn_result = turn_result_t::show_chat_history;
                     return result;
                 }
             }
@@ -41505,7 +41505,7 @@ label_1974_internal:
     {
         menucycle = 0;
         update_screen();
-        result.turn_result = turn_result_t::pc_turn_false;
+        result.turn_result = turn_result_t::pc_turn_user_error;
         return result;
     }
     goto label_1974_internal;
@@ -42320,7 +42320,7 @@ turn_result_t do_short_cut()
             u8"そのキーにはショートカットが割り当てられていない。"s,
             u8"The key is unassigned."s));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     if (gdata(40 + sc) >= 10000)
     {
@@ -42346,7 +42346,7 @@ turn_result_t do_short_cut()
                 u8"You can't do that while you're in a global area."s));
             display_msg();
             redraw();
-            return turn_result_t::pc_turn_false;
+            return turn_result_t::pc_turn_user_error;
         }
         if (efid < 661)
         {
@@ -42356,7 +42356,7 @@ turn_result_t do_short_cut()
                     u8"もうその行動はできない。"s,
                     u8"You can't use this shortcut any more."s));
                 update_screen();
-                return turn_result_t::pc_turn_false;
+                return turn_result_t::pc_turn_user_error;
             }
         }
         return do_use_magic();
@@ -42371,7 +42371,7 @@ turn_result_t do_short_cut()
                 u8"You can't do that while you're in a global area."s));
             display_msg();
             redraw();
-            return turn_result_t::pc_turn_false;
+            return turn_result_t::pc_turn_user_error;
         }
         if (spell(efid - 400) <= 0)
         {
@@ -42380,11 +42380,11 @@ turn_result_t do_short_cut()
                 u8"その魔法はもう使えない。"s,
                 u8"You can't use that spell anymore."s));
             update_screen();
-            return turn_result_t::pc_turn_false;
+            return turn_result_t::pc_turn_user_error;
         }
         return do_cast_command();
     }
-    return turn_result_t::pc_turn_false;
+    return turn_result_t::pc_turn_user_error;
 }
 
 
@@ -42398,7 +42398,7 @@ turn_result_t do_dig_command()
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     refx = x;
     refy = y;
@@ -42418,7 +42418,7 @@ turn_result_t do_dig_command()
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     screenupdate = -1;
     update_screen();
@@ -42437,7 +42437,7 @@ turn_result_t do_bash_command()
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     return do_bash();
 }
@@ -42450,14 +42450,14 @@ turn_result_t do_use_magic()
     if (stat == 0)
     {
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     return turn_result_t::turn_end;
 }
 
 
 
-turn_result_t skill_list_menu()
+turn_result_t show_skill_list()
 {
     listmax = 0;
     page = 0;
@@ -42647,12 +42647,12 @@ label_2009_internal:
                 if (curmenu == 0)
                 {
                     snd(102);
-                    return turn_result_t::spell_list_menu;
+                    return turn_result_t::show_spell_list;
                 }
                 if (curmenu == 1)
                 {
                     snd(101);
-                    return turn_result_t::skill_list_menu;
+                    return turn_result_t::show_skill_list;
                 }
             }
         }
@@ -42678,7 +42678,7 @@ label_2009_internal:
     if (key == key_cancel)
     {
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     goto label_2009_internal;
 }
@@ -42694,14 +42694,14 @@ turn_result_t do_give_command()
     {
         txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     tc = map(x, y, 1);
     if (tc == 0)
     {
         txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     tc -= 1;
     if (tc == 0)
@@ -42729,7 +42729,7 @@ turn_result_t do_give_command()
     }
     txt(i18n::_(u8"ui", u8"invalid_target"));
     update_screen();
-    return turn_result_t::pc_turn_false;
+    return turn_result_t::pc_turn_user_error;
 }
 
 
@@ -42743,14 +42743,14 @@ turn_result_t do_interact_command()
     {
         txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     tc = map(x, y, 1);
     if (tc == 0)
     {
         txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     tc -= 1;
     txt(lang(
@@ -42819,7 +42819,7 @@ turn_result_t do_interact_command()
         if (stat == -1)
         {
             update_screen();
-            return turn_result_t::pc_turn_false;
+            return turn_result_t::pc_turn_user_error;
         }
         rtval = stat;
     }
@@ -42875,9 +42875,9 @@ turn_result_t do_interact_command()
         csctrl = 4;
         snd(26);
         cc = tc;
-        show_character_sheet();
+        menu_character_sheet();
         cc = 0;
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     if (p == 7)
     {
@@ -42898,7 +42898,7 @@ turn_result_t do_interact_command()
             txt(""s + cdatan(4, tc));
         }
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     if (p == 8)
     {
@@ -42911,7 +42911,7 @@ turn_result_t do_interact_command()
         change_appearance();
         cc = ccbk;
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     if (p == 9)
     {
@@ -42928,7 +42928,7 @@ turn_result_t do_interact_command()
         change_npc_tone();
     }
     update_screen();
-    return turn_result_t::pc_turn_false;
+    return turn_result_t::pc_turn_user_error;
 }
 
 
@@ -42954,7 +42954,7 @@ turn_result_t call_npc()
             u8"You named "s + him(tc) + u8" "s + cdatan(0, tc) + u8"."s));
     }
     label_1416();
-    return turn_result_t::pc_turn_false;
+    return turn_result_t::pc_turn_user_error;
 }
 
 
@@ -43215,14 +43215,14 @@ turn_result_t do_cast_command()
     int stat = label_2167();
     if (stat == 0)
     {
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     return turn_result_t::turn_end;
 }
 
 
 
-turn_result_t spell_list_menu()
+turn_result_t show_spell_list()
 {
     listmax = 0;
     page = 0;
@@ -43404,12 +43404,12 @@ label_2029_internal:
                 if (curmenu == 0)
                 {
                     snd(102);
-                    return turn_result_t::spell_list_menu;
+                    return turn_result_t::show_spell_list;
                 }
                 if (curmenu == 1)
                 {
                     snd(101);
-                    return turn_result_t::skill_list_menu;
+                    return turn_result_t::show_skill_list;
                 }
             }
         }
@@ -43435,7 +43435,7 @@ label_2029_internal:
     if (key == key_cancel)
     {
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     goto label_2029_internal;
 }
@@ -43731,7 +43731,7 @@ void label_2032()
 
 
 
-menu_result show_character_sheet()
+menu_result menu_character_sheet()
 {
     menu_result result = { false, false, turn_result_t::none };
     int cs_buff = 0;
@@ -44645,17 +44645,17 @@ label_2035_internal:
                 }
                 if (curmenu == 1)
                 {
-                    result.turn_result = turn_result_t::equipment_menu;
+                    result.turn_result = turn_result_t::menu_equipment;
                     return result;
                 }
                 if (curmenu == 2)
                 {
-                    result.turn_result = turn_result_t::feat_menu;
+                    result.turn_result = turn_result_t::menu_feats;
                     return result;
                 }
                 if (curmenu == 3)
                 {
-                    result.turn_result = turn_result_t::craft_material_menu;
+                    result.turn_result = turn_result_t::menu_materials;
                     return result;
                 }
             }
@@ -44667,7 +44667,7 @@ label_2035_internal:
         if (csctrl == 0)
         {
             update_screen();
-            result.turn_result = turn_result_t::pc_turn_false;
+            result.turn_result = turn_result_t::pc_turn_user_error;
             return result;
         }
         else
@@ -45476,7 +45476,7 @@ void equip_melee_weapon()
 
 
 
-menu_result equipment_menu()
+menu_result menu_equipment()
 {
     menu_result result = { false, false, turn_result_t::none };
     int cs_prev = 0;
@@ -45716,7 +45716,7 @@ label_2052_internal:
             returnfromidentify = 0;
             screenupdate = -1;
             update_screen();
-            result.turn_result = turn_result_t::equipment_menu;
+            result.turn_result = turn_result_t::menu_equipment;
             return result;
         }
     }
@@ -45761,22 +45761,22 @@ label_2052_internal:
                 if (curmenu == 0)
                 {
                     csctrl = 0;
-                    result.turn_result = turn_result_t::show_character_sheet;
+                    result.turn_result = turn_result_t::menu_character_sheet;
                     return result;
                 }
                 if (curmenu == 1)
                 {
-                    result.turn_result = turn_result_t::equipment_menu;
+                    result.turn_result = turn_result_t::menu_equipment;
                     return result;
                 }
                 if (curmenu == 2)
                 {
-                    result.turn_result = turn_result_t::feat_menu;
+                    result.turn_result = turn_result_t::menu_feats;
                     return result;
                 }
                 if (curmenu == 3)
                 {
-                    result.turn_result = turn_result_t::craft_material_menu;
+                    result.turn_result = turn_result_t::menu_materials;
                     return result;
                 }
             }
@@ -45805,7 +45805,7 @@ label_2052_internal:
         menucycle = 0;
         create_pcpic(cc, true);
         update_screen();
-        result.turn_result = turn_result_t::pc_turn_false;
+        result.turn_result = turn_result_t::pc_turn_user_error;
         return result;
     }
     goto label_2052_internal;
@@ -45843,7 +45843,7 @@ turn_result_t do_get_command()
                 txt(lang(
                     u8"バックパックが一杯だ。"s, u8"Your inventory is full."s));
                 update_screen();
-                return turn_result_t::pc_turn_false;
+                return turn_result_t::pc_turn_user_error;
             }
             label_2236();
             label_2235(
@@ -45868,7 +45868,7 @@ turn_result_t do_get_command()
             if (rtval != 0)
             {
                 update_screen();
-                return turn_result_t::pc_turn_false;
+                return turn_result_t::pc_turn_user_error;
             }
             area = feat(2) + feat(3) * 100;
             map(cdata[0].position.x, cdata[0].position.y, 6) = 0;
@@ -45912,7 +45912,7 @@ turn_result_t do_get_command()
         ++msgdup;
         txt(lang(u8"あなたは空気をつかんだ。"s, u8"You grasp at the air."s));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
 
     ci = item;
@@ -45944,7 +45944,7 @@ turn_result_t do_get_command()
                 lang(u8"それは拾えない。"s, u8"It's not yours."s));
         }
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     in = inv[ci].number;
 
@@ -45956,7 +45956,7 @@ turn_result_t do_get_command()
     else
     {
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
 }
 
@@ -45970,7 +45970,7 @@ turn_result_t try_interact_with_npc()
             name(tc) + u8"は忙しい。"s,
             name(tc) + u8" "s + is(tc) + u8" busy now."s));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     menucycle = 1;
     invally = 1;
@@ -46587,7 +46587,7 @@ turn_result_t do_fire_command()
     int stat = label_2072();
     if (stat == 0)
     {
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     tc = cdata[0].enemy_id;
     if (cdata[tc].relationship >= 0)
@@ -46595,7 +46595,7 @@ turn_result_t do_fire_command()
         int stat = label_2073();
         if (stat == 0)
         {
-            return turn_result_t::pc_turn_false;
+            return turn_result_t::pc_turn_user_error;
         }
     }
     {
@@ -46607,7 +46607,7 @@ turn_result_t do_fire_command()
                 u8"射撃用の道具を装備していない。"s,
                 u8"You need to equip a firing weapon."s));
             update_screen();
-            return turn_result_t::pc_turn_false;
+            return turn_result_t::pc_turn_user_error;
         }
         if (stat == -2)
         {
@@ -46616,7 +46616,7 @@ turn_result_t do_fire_command()
                 u8"矢/弾丸を装備する必要がある。"s,
                 u8"You need to equip ammos or arrows."s));
             update_screen();
-            return turn_result_t::pc_turn_false;
+            return turn_result_t::pc_turn_user_error;
         }
         if (stat == -3)
         {
@@ -46625,7 +46625,7 @@ turn_result_t do_fire_command()
                 u8"矢/弾丸の種類が適していない。"s,
                 u8"You're equipped with wrong type of ammos."s));
             update_screen();
-            return turn_result_t::pc_turn_false;
+            return turn_result_t::pc_turn_user_error;
         }
     }
     label_2217();
@@ -46854,7 +46854,7 @@ turn_result_t do_exit_command()
         set_option();
     }
     update_screen();
-    return turn_result_t::pc_turn_false;
+    return turn_result_t::pc_turn_user_error;
 }
 
 
@@ -47327,7 +47327,7 @@ turn_result_t do_change_ammo_type()
     if (f == 0)
     {
         txt(lang(u8"矢弾を装備していない。"s, u8"You need to equip an ammo."s));
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     listmax = 0;
     cs = -1;
@@ -47360,7 +47360,7 @@ turn_result_t do_change_ammo_type()
         txt(lang(
             itemname(ci) + u8"は切り替えに対応していない。"s,
             itemname(ci) + u8" isn't capable of changing ammos."s));
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     snd(90);
     ++cs;
@@ -47400,7 +47400,7 @@ turn_result_t do_change_ammo_type()
         }
         txt(u8" "s + s);
     }
-    return turn_result_t::pc_turn_false;
+    return turn_result_t::pc_turn_user_error;
 }
 
 
@@ -47998,7 +47998,7 @@ main_menu_result_t main_menu_continue()
     }
     windowshadow = 1;
 
-    while (1)
+    while (true)
     {
         if (jp)
         {
@@ -48450,7 +48450,7 @@ turn_result_t do_exit_debug_console()
         levelexitby = 4;
         return turn_result_t::exit_map;
     }
-    return turn_result_t::pc_turn_false;
+    return turn_result_t::pc_turn_user_error;
 }
 
 
@@ -53427,14 +53427,14 @@ turn_result_t do_eat_command()
         if (stat == 0)
         {
             update_screen();
-            return turn_result_t::pc_turn_false;
+            return turn_result_t::pc_turn_user_error;
         }
         if (itemusingfind(ci) > 0)
         {
             txt(lang(
                 u8"そのアイテムは他の誰かが使用中だ。"s,
                 u8"Someone else is using the item."s));
-            return turn_result_t::pc_turn_false;
+            return turn_result_t::pc_turn_user_error;
         }
     }
     else if (itemusingfind(ci) != -1)
@@ -53476,7 +53476,7 @@ turn_result_t do_zap_command()
     if (stat == 0)
     {
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     return turn_result_t::turn_end;
 }
@@ -53536,7 +53536,7 @@ turn_result_t do_bash()
                     int stat = label_2073();
                     if (stat == 0)
                     {
-                        return turn_result_t::pc_turn_false;
+                        return turn_result_t::pc_turn_user_error;
                     }
                 }
             }
@@ -53738,7 +53738,7 @@ turn_result_t do_movement_command()
         ++msgdup;
         txt(lang(u8"潰れていて動けない！ "s, u8"You carry too much to move!"s));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     if (cellchara != -1 && cellchara != 0)
     {
@@ -53811,7 +53811,7 @@ turn_result_t do_movement_command()
         {
             if (cdata[tc].relationship >= -2 || keybd_wait >= 40)
             {
-                return turn_result_t::pc_turn_false;
+                return turn_result_t::pc_turn_user_error;
             }
         }
         if (cdata[tc].relationship <= -1)
@@ -53873,7 +53873,7 @@ turn_result_t do_movement_command()
                 && map(cdata[cc].next_position.x, cdata[cc].next_position.y, 0)
                     < 363)
             {
-                return turn_result_t::pc_turn_false;
+                return turn_result_t::pc_turn_user_error;
             }
         }
         return proc_movement_event();
@@ -53911,7 +53911,7 @@ turn_result_t do_movement_command()
                     levelexitby = 4;
                     return turn_result_t::exit_map;
                 }
-                return turn_result_t::pc_turn_false;
+                return turn_result_t::pc_turn_user_error;
             }
         }
     }
@@ -53925,7 +53925,7 @@ turn_result_t do_movement_command()
         if (cellfeat == 23)
         {
             snd(99);
-            return show_quest_board();
+            return turn_result_t::show_quest_board;
         }
         if (cellfeat == 31)
         {
@@ -53937,7 +53937,7 @@ turn_result_t do_movement_command()
         {
             menucycle = 1;
             show_city_chart();
-            return turn_result_t::pc_turn_false;
+            return turn_result_t::pc_turn_user_error;
         }
     }
     if (cdata[0].confused != 0)
@@ -53946,7 +53946,7 @@ turn_result_t do_movement_command()
         txt(lang(u8" *ごつん* "s, u8"*bump*"s));
         update_screen();
     }
-    return turn_result_t::pc_turn_false;
+    return turn_result_t::pc_turn_user_error;
 }
 
 
@@ -54593,7 +54593,7 @@ turn_result_t change_level_by_stairs(int val0)
         txt(lang(
             u8"デバッグ中はその操作はできない。"s,
             u8"You can't perform the action while in the debug mode."s));
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     int stat = item_find(631, 3, -1);
     if (stat != -1)
@@ -54618,7 +54618,7 @@ turn_result_t change_level_by_stairs(int val0)
             if (rtval != 0)
             {
                 update_screen();
-                return turn_result_t::pc_turn_false;
+                return turn_result_t::pc_turn_user_error;
             }
             txt(lang(u8"まっくらだ！"s, u8"It's dark here!"s));
             cdata[0].blind += 2;
@@ -54637,7 +54637,7 @@ turn_result_t change_level_by_stairs(int val0)
                     txt(lang(
                         u8"これ以上降りられない。"s,
                         u8"You can't go down any more."s));
-                    return turn_result_t::pc_turn_false;
+                    return turn_result_t::pc_turn_user_error;
                 }
                 else
                 {
@@ -54655,7 +54655,7 @@ turn_result_t change_level_by_stairs(int val0)
                     txt(lang(
                         u8"これ以上昇れない。"s,
                         u8"You can't go up any more."s));
-                    return turn_result_t::pc_turn_false;
+                    return turn_result_t::pc_turn_user_error;
                 }
                 else
                 {
@@ -54676,7 +54676,7 @@ turn_result_t change_level_by_stairs(int val0)
                         u8"降りる階段は見つからない。"s,
                         u8"There're no downstairs here."s));
                     update_screen();
-                    return turn_result_t::pc_turn_false;
+                    return turn_result_t::pc_turn_user_error;
                 }
                 else
                 {
@@ -54687,7 +54687,7 @@ turn_result_t change_level_by_stairs(int val0)
                         txt(lang(
                             u8"階段は不思議なバリアで塞がれている。"s,
                             u8"The path is blocked by a strange barrier."s));
-                        return turn_result_t::pc_turn_false;
+                        return turn_result_t::pc_turn_user_error;
                     }
                 }
             }
@@ -54699,7 +54699,7 @@ turn_result_t change_level_by_stairs(int val0)
                         u8"昇る階段は見つからない。"s,
                         u8"There're no upstairs here."s));
                     update_screen();
-                                    return turn_result_t::pc_turn_false;
+                                    return turn_result_t::pc_turn_user_error;
                 }
                 else
                 {
@@ -54779,7 +54779,7 @@ turn_result_t change_level_by_stairs(int val0)
                 if (rtval != 0)
                 {
                     update_screen();
-                    return turn_result_t::pc_turn_false;
+                    return turn_result_t::pc_turn_user_error;
                 }
             }
         }
@@ -54823,7 +54823,7 @@ turn_result_t change_level_by_stairs(int val0)
             }
             else
             {
-                return turn_result_t::pc_turn_false;
+                return turn_result_t::pc_turn_user_error;
             }
         }
     }
@@ -55001,7 +55001,7 @@ turn_result_t do_open_command()
                     u8"それは家の中でのみ使用できる。"s,
                     u8"You can only use it at your home."s));
                 update_screen();
-                return turn_result_t::pc_turn_false;
+                return turn_result_t::pc_turn_user_error;
             }
         }
         if (inv[ci].count == 5)
@@ -55012,7 +55012,7 @@ turn_result_t do_open_command()
                     u8"それは店の中でのみ使用できる。"s,
                     u8"You can only use it at your shop"s));
                 update_screen();
-                return turn_result_t::pc_turn_false;
+                return turn_result_t::pc_turn_user_error;
             }
         }
         ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
@@ -55544,7 +55544,7 @@ turn_result_t do_close_command()
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     cell_featread(x, y);
     if (feat(1) != 20)
@@ -55553,7 +55553,7 @@ turn_result_t do_close_command()
             u8"その方向に閉められるものはない。"s,
             u8"There's nothing to close."s));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     if (map(x, y, 1) != 0)
     {
@@ -55561,7 +55561,7 @@ turn_result_t do_close_command()
             u8"何かが邪魔で閉められない。"s,
             u8"There's something on the floor."s));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     cell_featset(x, y, tile_doorclosed, 21, -1, -1);
     txt(lang(name(cc) + u8"は扉を閉めた。"s, name(cc) + u8" close the door."s));
@@ -56792,7 +56792,7 @@ turn_result_t do_dig_after_sp_check()
         txt(lang(
             u8"疲れ過ぎて無理だ。"s, u8"You are too exhausted to do that."s));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     rowactre = 0;
     digx = tlocx;
@@ -57121,7 +57121,7 @@ turn_result_t do_use_command()
                 u8"This item will be useable again at "s
                     + cnvdate(inv[ci].count) + u8"."s));
             update_screen();
-            return turn_result_t::pc_turn_false;
+            return turn_result_t::pc_turn_user_error;
         }
         item_separate(ci);
         inv[ci].count = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
@@ -57133,7 +57133,7 @@ turn_result_t do_use_command()
         {
             txt(lang(u8"それはもう使えない。"s, u8"It's out of charge."s));
             update_screen();
-            return turn_result_t::pc_turn_false;
+            return turn_result_t::pc_turn_user_error;
         }
         item_separate(ci);
         --inv[ci].count;
@@ -57152,7 +57152,7 @@ turn_result_t do_use_command()
         {
             txt(lang(u8"まだ眠たくない。"s, u8"You don't feel sleepy yet."s));
             update_screen();
-                            return turn_result_t::pc_turn_false;
+                            return turn_result_t::pc_turn_user_error;
         }
         gdata(91) = 100;
         continuous_action_others();
@@ -57276,7 +57276,7 @@ turn_result_t do_use_command()
         }
         refresh_character(cc);
         update_screen();
-                        return turn_result_t::pc_turn_false;
+                        return turn_result_t::pc_turn_user_error;
     }
     switch (inv[ci].function)
     {
@@ -57287,12 +57287,12 @@ turn_result_t do_use_command()
         {
             txt(lang(u8"ここでは使えない。"s, u8"You can't place it here."s));
             update_screen();
-                            return turn_result_t::pc_turn_false;
+                            return turn_result_t::pc_turn_user_error;
         }
         if (map(x, y, 6) != 0)
         {
             txt(lang(u8"ここには置けない。"s, u8"You can't place it here."s));
-                            return turn_result_t::pc_turn_false;
+                            return turn_result_t::pc_turn_user_error;
         }
         --inv[ci].number;
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
@@ -57307,7 +57307,7 @@ turn_result_t do_use_command()
                 u8"床に置かないと使えない。"s,
                 u8"You need to put it on the ground."s));
             update_screen();
-                            return turn_result_t::pc_turn_false;
+                            return turn_result_t::pc_turn_user_error;
         }
         txt(lang(
             u8"あなたは"s + itemname(ci, 1) + u8"に座った。"s,
@@ -57381,11 +57381,11 @@ turn_result_t do_use_command()
             txt(lang(
                 u8"それはここでは使えない。"s, u8"You can't use it here."s));
             update_screen();
-            return turn_result_t::pc_turn_false;
+            return turn_result_t::pc_turn_user_error;
         }
         screenupdate = -1;
         update_screen();
-        return turn_result_t::use_house_board;
+        return turn_result_t::show_house_board;
     case 19:
         txt(lang(u8"誰を対象にする？"s, u8"Make up who?"s));
         {
@@ -57414,7 +57414,7 @@ turn_result_t do_use_command()
             txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         }
         update_screen();
-                        return turn_result_t::pc_turn_false;
+                        return turn_result_t::pc_turn_user_error;
         break;
     case 15:
         efid = 184;
@@ -57435,7 +57435,7 @@ turn_result_t do_use_command()
             {
                 txt(lang(u8"雪が足りない…"s, u8"You need more snow."s));
                 update_screen();
-                                return turn_result_t::pc_turn_false;
+                                return turn_result_t::pc_turn_user_error;
             }
             removeitem(ci, 5);
         }
@@ -57473,7 +57473,7 @@ turn_result_t do_use_command()
         else
         {
             update_screen();
-                            return turn_result_t::pc_turn_false;
+                            return turn_result_t::pc_turn_user_error;
         }
     }
         goto label_2229_internal;
@@ -57486,7 +57486,7 @@ turn_result_t do_use_command()
             {
                 txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
                 update_screen();
-                return turn_result_t::pc_turn_false;
+                return turn_result_t::pc_turn_user_error;
             }
         }
         tc = map(x, y, 1) - 1;
@@ -57528,7 +57528,7 @@ turn_result_t do_use_command()
         }
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
         break;
     case 23:
         txt(lang(u8"誰を紐で結ぶ？"s, u8"Leash who?"s));
@@ -57606,7 +57606,7 @@ turn_result_t do_use_command()
                 u8"このエリアでは使えない。"s,
                 u8"You cant use it in this area."s));
             update_screen();
-                            return turn_result_t::pc_turn_false;
+                            return turn_result_t::pc_turn_user_error;
         }
         txt(lang(u8"誰を吊るす？"s, u8"Hang who?"s));
         update_screen();
@@ -57623,7 +57623,7 @@ turn_result_t do_use_command()
                         txt(lang(
                             u8"もっと弱らせないと吊るせない。"s,
                             u8"The target needs to be weakened."s));
-                                        return turn_result_t::pc_turn_false;
+                                        return turn_result_t::pc_turn_user_error;
                     }
                     if (tc != 0)
                     {
@@ -57632,7 +57632,7 @@ turn_result_t do_use_command()
                             txt(lang(
                                 u8"仲間を吊るすなんてとんでもない！"s,
                                 u8"Hanging your ally is a brutal idea!"s));
-                                            return turn_result_t::pc_turn_false;
+                                            return turn_result_t::pc_turn_user_error;
                         }
                     }
                     if (cdata[tc].is_hung_on_sand_bag())
@@ -57640,7 +57640,7 @@ turn_result_t do_use_command()
                         txt(lang(
                             u8"それは既に吊るされている。"s,
                             u8"It's already hanged up."s));
-                                        return turn_result_t::pc_turn_false;
+                                        return turn_result_t::pc_turn_user_error;
                     }
                     if (tc == 0)
                     {
@@ -57708,7 +57708,7 @@ turn_result_t do_use_command()
                         u8"You can't build it here."s));
                 }
                 update_screen();
-                return turn_result_t::pc_turn_false;
+                return turn_result_t::pc_turn_user_error;
             }
             gdata(91) = 101;
             continuous_action_others();
@@ -57728,7 +57728,7 @@ turn_result_t do_use_command()
                     if (rtval != 0)
                     {
                         update_screen();
-                                        return turn_result_t::pc_turn_false;
+                                        return turn_result_t::pc_turn_user_error;
                     }
                 }
             }
@@ -57742,13 +57742,13 @@ turn_result_t do_use_command()
             txt(lang(
                 u8"金貨が足りない…"s, u8"You count your coins and sigh..."s));
             update_screen();
-                            return turn_result_t::pc_turn_false;
+                            return turn_result_t::pc_turn_user_error;
         }
         if (inv[ci].param1 >= 1000000000)
         {
             txt(lang(u8"貯金箱は一杯だ。"s, u8"The money box is full."s));
             update_screen();
-                            return turn_result_t::pc_turn_false;
+                            return turn_result_t::pc_turn_user_error;
         }
         item_separate(ci);
         snd(12);
@@ -57904,7 +57904,7 @@ turn_result_t do_use_command()
         {
             txt(lang(u8"ここでは使えない。"s, u8"You can't place it here."s));
             update_screen();
-                            return turn_result_t::pc_turn_false;
+                            return turn_result_t::pc_turn_user_error;
         }
         if (cdata[0].position.x != 33 || cdata[0].position.y != 16)
         {
@@ -57918,7 +57918,7 @@ turn_result_t do_use_command()
                 if (rtval != 0)
                 {
                     update_screen();
-                                    return turn_result_t::pc_turn_false;
+                                    return turn_result_t::pc_turn_user_error;
                 }
             }
         }
@@ -57979,7 +57979,7 @@ turn_result_t do_use_command()
                 u8"Kumiromi talks to you, "s
                 u8"\"No...you aren't...experienced enough...for this...\""s));
             update_screen();
-                            return turn_result_t::pc_turn_false;
+                            return turn_result_t::pc_turn_user_error;
         }
         snd(64);
         gdata_next_level_minus_one_kumiromis_experience_becomes_available += 10;
@@ -58205,7 +58205,7 @@ turn_result_t do_use_command()
         cc = rc;
         csctrl = 4;
         snd(26);
-        show_character_sheet();
+        menu_character_sheet();
         cc = 0;
         goto label_2229_internal;
     case 35:
@@ -58401,14 +58401,14 @@ turn_result_t do_plant()
         txt(lang(
             u8"この場所には埋められない。"s, u8"You can't plant it here."s));
         update_screen();
-                        return turn_result_t::pc_turn_false;
+                        return turn_result_t::pc_turn_user_error;
     }
     if (map(cdata[cc].position.x, cdata[cc].position.y, 6) != 0)
     {
         txt(lang(
             u8"この場所には埋められない。"s, u8"You can't plant it here."s));
         update_screen();
-                        return turn_result_t::pc_turn_false;
+                        return turn_result_t::pc_turn_user_error;
     }
     int val0;
     if (chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 2)
@@ -60514,7 +60514,7 @@ talk_result_t talk_trainer()
 {
     tcbk = tc;
     menucycle = 0;
-    show_character_sheet();
+    menu_character_sheet();
     talk_start();
     if (csskill == -1)
     {
@@ -66697,7 +66697,7 @@ label_2705_internal:
 
 
 
-turn_result_t messages_menu()
+turn_result_t show_chat_history()
 {
     curmenu = 2;
     key_list(0) = key_enter;
@@ -66802,15 +66802,15 @@ label_2708_internal:
                 update_screen();
                 if (curmenu == 0)
                 {
-                    return turn_result_t::message_log_menu;
+                    return turn_result_t::show_message_log;
                 }
                 if (curmenu == 1)
                 {
-                    return turn_result_t::update_journal;
+                    return turn_result_t::menu_journal;
                 }
                 if (curmenu == 2)
                 {
-                    return turn_result_t::messages_menu;
+                    return turn_result_t::show_chat_history;
                 }
             }
         }
@@ -66818,14 +66818,14 @@ label_2708_internal:
     if (key != ""s)
     {
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     goto label_2708_internal;
 }
 
 
 
-turn_result_t message_log_menu()
+turn_result_t show_message_log()
 {
     curmenu = 0;
     windowshadow = 1;
@@ -66939,15 +66939,15 @@ label_2711_internal:
                 update_screen();
                 if (curmenu == 0)
                 {
-                    return turn_result_t::message_log_menu;
+                    return turn_result_t::show_message_log;
                 }
                 if (curmenu == 1)
                 {
-                    return turn_result_t::update_journal;
+                    return turn_result_t::menu_journal;
                 }
                 if (curmenu == 2)
                 {
-                    return turn_result_t::messages_menu;
+                    return turn_result_t::show_chat_history;
                 }
             }
         }
@@ -66955,7 +66955,7 @@ label_2711_internal:
     if (key != ""s)
     {
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     goto label_2711_internal;
 }
@@ -67153,7 +67153,7 @@ label_2729_internal:
     {
         play_music();
         update_screen();
-        return turn_result_t::pc_turn_false;
+        return turn_result_t::pc_turn_user_error;
     }
     goto label_2729_internal;
 }
@@ -67178,7 +67178,7 @@ bool turn_wrapper()
         case turn_result_t::pass_one_turn:
             result = pass_turns(true);
             break;
-        case turn_result_t::pass_one_turn_false:
+        case turn_result_t::pass_one_turn_freeze_time:
             result = pass_turns(false);
             break;
         case turn_result_t::pc_turn:
@@ -67187,7 +67187,7 @@ bool turn_wrapper()
         case turn_result_t::npc_turn:
             result = npc_turn();
             break;
-        case turn_result_t::pc_turn_false:
+        case turn_result_t::pc_turn_user_error:
             result = pc_turn(false);
             break;
         case turn_result_t::pc_died:
@@ -67207,47 +67207,53 @@ bool turn_wrapper()
             finished = true;
             break;
 
-            // Menus
+            // Menus that don't return success status
 
-        case turn_result_t::messages_menu:
-            result = messages_menu();
+        case turn_result_t::show_chat_history:
+            result = show_chat_history();
             break;
-        case turn_result_t::message_log_menu:
-            result = message_log_menu();
+        case turn_result_t::show_message_log:
+            result = show_message_log();
             break;
-        case turn_result_t::use_house_board:
-            result = use_house_board();
+        case turn_result_t::show_house_board:
+            result = show_house_board();
             break;
-        case turn_result_t::skill_list_menu:
-            result = skill_list_menu();
+        case turn_result_t::show_quest_board:
+            result = show_quest_board();
+            break;
+        case turn_result_t::show_skill_list:
+            result = show_skill_list();
+            break;
+        case turn_result_t::show_spell_list:
+            result = show_spell_list();
             break;
 
-            // Nested menus
-            // These can either show another menu or return a boolean result.
+            // Menus with a success status
 
-        case turn_result_t::update_journal:
-            result = update_journal().turn_result;
+        case turn_result_t::menu_journal:
+            result = menu_journal().turn_result;
             break;
-        case turn_result_t::craft_material_menu:
-            result = craft_material_menu().turn_result;
+        case turn_result_t::menu_materials:
+            result = menu_materials().turn_result;
             break;
-        case turn_result_t::show_character_sheet:
-            result = show_character_sheet().turn_result;
+        case turn_result_t::menu_character_sheet:
+            result = menu_character_sheet().turn_result;
+            break;
+        case turn_result_t::menu_equipment:
+            result = menu_equipment().turn_result;
+            break;
+        case turn_result_t::menu_feats:
+            result = menu_feats().turn_result;
             break;
         case turn_result_t::ctrl_inventory:
             result = ctrl_inventory().turn_result;
-            break;
-        case turn_result_t::equipment_menu:
-            result = equipment_menu().turn_result;
-            break;
-        case turn_result_t::feat_menu:
-            result = feat_menu().turn_result;
             break;
 
         case turn_result_t::all_turns_finished:
             result = turn_result_t::turn_begin;
             break;
         case turn_result_t::none:
+        default:
             assert(0);
             break;
         }
@@ -67269,7 +67275,7 @@ turn_result_t pass_turns(bool time)
             case turn_result_t::pass_one_turn:
                 time = true;
                 break;
-            case turn_result_t::pass_one_turn_false:
+            case turn_result_t::pass_one_turn_freeze_time:
                 time = false;
                 break;
             default:
@@ -68537,7 +68543,7 @@ turn_result_t turn_end()
             }
             txtef(9);
             txt(u8" *tick* "s);
-            return turn_result_t::pass_one_turn_false;
+            return turn_result_t::pass_one_turn_freeze_time;
         }
     }
     return turn_result_t::pass_one_turn;
@@ -69296,19 +69302,19 @@ label_2747:
     if (key == key_charainfo)
     {
         csctrl = 0;
-        return turn_result_t::show_character_sheet;
+        return turn_result_t::menu_character_sheet;
     }
     if (key == key_material)
     {
-        return turn_result_t::craft_material_menu;
+        return turn_result_t::menu_materials;
     }
     if (key == key_trait)
     {
-        return turn_result_t::feat_menu;
+        return turn_result_t::menu_feats;
     }
     if (key == key_wear)
     {
-        return turn_result_t::equipment_menu;
+        return turn_result_t::menu_equipment;
     }
     if (key == key_cast)
     {
@@ -69325,7 +69331,7 @@ label_2747:
         else
         {
             snd(102);
-            return spell_list_menu();
+            return turn_result_t::show_spell_list;
         }
     }
     if (key == key_skill)
@@ -69343,16 +69349,16 @@ label_2747:
         else
         {
             snd(101);
-            return turn_result_t::skill_list_menu;
+            return turn_result_t::show_skill_list;
         }
     }
     if (key == key_msglog)
     {
-        return turn_result_t::message_log_menu;
+        return turn_result_t::show_message_log;
     }
     if (key == key_journal)
     {
-        return turn_result_t::update_journal;
+        return turn_result_t::menu_journal;
     }
     menucycle = 0;
     if (key == key_offer)
@@ -69676,7 +69682,7 @@ optional<turn_result_t> check_angband()
             txt(lang(u8"え…", u8"What..."));
             ++gdata_angband_flag;
             update_screen();
-            return turn_result_t::pc_turn_false;
+            return turn_result_t::pc_turn_user_error;
         }
         break;
     case 1:
@@ -69685,7 +69691,7 @@ optional<turn_result_t> check_angband()
             txt(lang(u8"まさか…", u8"No...no..."));
             ++gdata_angband_flag;
             update_screen();
-            return turn_result_t::pc_turn_false;
+            return turn_result_t::pc_turn_user_error;
         }
         break;
     case 2:
