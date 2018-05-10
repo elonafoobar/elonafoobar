@@ -5,7 +5,6 @@
 #include "variables.hpp"
 
 
-
 namespace elona
 {
 size_t message_width{};

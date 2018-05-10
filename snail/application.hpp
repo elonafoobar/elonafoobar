@@ -40,7 +40,6 @@ public:
         return _height;
     }
 
-
     const std::string& title() const noexcept
     {
         return _title;

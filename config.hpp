@@ -33,7 +33,9 @@ public:
     int hideshopresult;
     int hp_bar;
     int ignoredislike;
+    int initialkeywait;
     int joypad;
+    int keywait;
     int language;
     int leash_icon;
     int msgaddtime;
