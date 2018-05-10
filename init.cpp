@@ -608,11 +608,41 @@ void start_elona()
             mode = 3;
             music = 0;
             initialize_game();
+            main_loop(); // TODO
             return;
         }
     }
-    main_title_menu();
-    return;
+    main_title_wrapper();
+}
+
+void main_title_wrapper()
+{
+    main_title_menu_result result = main_title_menu();
+    bool finished = false;
+    while(!finished)
+    {
+        switch(result)
+        {
+        case main_title_menu_result_t::main_title_menu:
+            result = main_title_menu();
+            break;
+        case main_title_menu_result_t::initialize_game:
+            initialize_game();
+            finished = true;
+            break;
+        case main_title_menu_result_t::finish_elona:
+            finish_elona();
+            finished = true;
+            break;
+        default:
+            assert(0);
+            break;
+        }
+    }
+
+    if(result == main_title_menu_result_t::initialize_game) {
+        main_loop(); // TODO
+    }
 }
 
 
@@ -788,7 +818,7 @@ int run()
 
 
 
-void main_title_menu()
+main_menu_result_t main_title_menu()
 {
     mode = 10;
     lomiaseaster = 0;
@@ -950,20 +980,17 @@ void main_title_menu()
         {
             snd(20);
             geneuse = "";
-            main_menu_new_game();
-            return;
+            return main_menu_wrapper(main_menu_result_t::main_menu_new_game);
         }
         if (key == u8"a"s)
         {
             snd(20);
-            main_menu_continue();
-            return;
+            return main_menu_wrapper(main_menu_result_t::main_menu_continue);
         }
         if (key == u8"c"s)
         {
             snd(20);
-            main_menu_incarnate();
-            return;
+            return main_menu_wrapper(main_menu_result_t::main_menu_incarnate);
         }
         if (key == u8"d"s)
         {
@@ -974,22 +1001,96 @@ void main_title_menu()
         {
             snd(20);
             set_option();
-            main_title_menu();
-            return;
+            return main_menu_wrapper(main_menu_result_t::main_title_menu);
         }
         if (key == u8"f"s)
         {
             snd(20);
             await(400);
-            finish_elona();
-            return;
+            return main_menu_wrapper(main_menu_result_t::finish_elona);
         }
     }
 }
 
+main_menu_result_t main_menu_wrapper(main_menu_result_t initial)
+{
+    main_menu_result_t result = initial;
+    bool finished = false;
+    bool game_initialized = false;
+    while(!finished)
+    {
+        switch(result)
+        {
+            // Main menu
+
+        case main_menu_result_t::main_menu_incarnate:
+            result = main_menu_incarnate();
+            break;
+        case main_menu_result_t::main_menu_continue:
+            result = main_menu_continue();
+            break;
+        case main_menu_result_t::main_menu_new_game:
+            result = main_menu_new_game();
+            break;
+        case main_menu_result_t::main_title_menu:
+            // Loop back to the start.
+            result = main_menu_result_t::main_title_menu;
+            finished = true;
+            break;
+
+            // Character making
+
+        case main_menu_result_t::character_making_select_race:
+            result = character_making_select_race();
+            break;
+        case main_menu_result_t::character_making_select_sex:
+            result = character_making_select_sex();
+            break;
+        case main_menu_result_t::character_making_select_sex_false:
+            result = character_making_select_sex(false);
+            break;
+        case main_menu_result_t::character_making_select_class:
+            result = character_making_select_class();
+            break;
+        case main_menu_result_t::character_making_select_class_false:
+            result = character_making_select_class(false);
+            break;
+        case main_menu_result_t::character_making_role_attributes:
+            result = character_making_role_attributes();
+            break;
+        case main_menu_result_t::character_making_role_attributes_false:
+            result = character_making_role_attributes(false);
+            break;
+        case main_menu_result_t::character_making_select_feats_and_alias:
+            result = character_making_feats_and_alias();
+            break;
+        case main_menu_result_t::character_making_select_feats_and_alias_false:
+            result = character_making_feats_and_alias(false);
+            break;
+        case main_menu_result_t::character_making_final_phase:
+            result = character_making_final_phase();
+            break;
+
+            // Finished initializing, start the game.
+
+        case main_menu_result_t::initialize_game:
+            result = main_menu_result_t::initialize_game;
+            finished = true;
+            break;
+        case main_menu_result_t::finish_elona:
+            result = main_menu_result_t::finish_elona;
+            finished = true;
+        default:
+            assert(0);
+            break;
+        }
+    }
+    return result;
+}
 
 
-void main_menu_new_game()
+
+main_menu_result_t main_menu_new_game()
 {
     if (config::instance().wizard)
     {
@@ -1038,20 +1139,17 @@ void main_menu_new_game()
             await(config::instance().wait1);
             if (key != ""s)
             {
-                main_title_menu();
-                return;
+                return main_menu_result_t::main_title_menu;
             }
         }
-        main_title_menu();
-        return;
+        return main_menu_result_t::main_title_menu;
     }
-    character_making_select_race();
-    return;
+    return main_menu_result_t::character_making_select_race;
 }
 
 
 
-void character_making_select_race()
+main_menu_result_t character_making_select_race()
 {
     cs = 0;
     cs_bk = -1;
@@ -1168,8 +1266,7 @@ void character_making_select_race()
             cmrace(0) = listn(1, p);
             cmrace(1) = listn(0, p);
             access_race_info(11, cmrace);
-            character_making_select_sex();
-            return;
+            return main_menu_result_t::character_making_select_sex;
         }
         if (key == key_pageup)
         {
@@ -1193,21 +1290,19 @@ void character_making_select_race()
         }
         if (key == key_cancel)
         {
-            main_title_menu();
-            return;
+            return main_menu_result_t::main_title_menu;
         }
         if (getkey(snail::key::f1))
         {
             show_game_help();
-            character_making_select_race();
-            return;
+            return main_menu_result_t::character_making_select_race;
         }
     }
 }
 
 
 
-void character_making_select_sex(bool label_1548_flg)
+main_menu_result_t character_making_select_sex(bool label_1548_flg)
 {
     if (label_1548_flg)
     {
@@ -1264,24 +1359,21 @@ void character_making_select_sex(bool label_1548_flg)
         if (key == key_select(0))
         {
             cmsex = 0;
-            character_making_select_class();
-            return;
+            return main_menu_result_t::character_making_select_class;
         }
         if (key == key_select(1))
         {
             cmsex = 1;
-            character_making_select_class();
-            return;
+            return main_menu_result_t::character_making_select_class;
         }
         if (key == key_cancel)
         {
-            main_menu_new_game();
-            return;
+            return main_menu_result_t::main_menu_new_game;
         }
         if (getkey(snail::key::f1))
         {
             show_game_help();
-            character_making_select_sex(false);
+            return main_menu_result_t::character_making_select_sex_false;
         }
     }
 }
@@ -1388,24 +1480,23 @@ void character_making_select_class(bool label_1551_flg)
         if (p != -1)
         {
             cmclass = listn(1, p);
-            character_making_role_attributes();
-            return;
+            return main_menu_result_t::character_making_role_attributes;
         }
         if (key == key_cancel)
         {
-            character_making_select_sex(false);
+            return main_menu_result_t::character_making_select_sex_false;
         }
         if (getkey(snail::key::f1))
         {
             show_game_help();
-            character_making_select_class(false);
+            return main_menu_result_t::character_making_select_sex_false;
         }
     }
 }
 
 
 
-void character_making_role_attributes(bool label_1554_flg)
+main_menu_result_t character_making_role_attributes(bool label_1554_flg)
 {
     elona_vector1<int> cmlock;
     bool minimum{};
@@ -1459,8 +1550,8 @@ void character_making_role_attributes(bool label_1554_flg)
                             rnd(sdata.get(cnt, rc).original_level / 2 + 1);
                     }
                     cmstats(cnt - 10) =
-                        sdata.get(cnt, rc).original_level * 1'000'000
-                        + sdata.get(cnt, rc).experience * 1'000
+                        //         sdata.get(cnt, rc).original_level * 1'000'000
+                        +// sdata.get(cnt, rc).experience * 1'000
                         + sdata.get(cnt, rc).potential;
                 }
             }
@@ -1544,8 +1635,7 @@ void character_making_role_attributes(bool label_1554_flg)
             }
             if (p == 1)
             {
-                character_making_select_feats_and_alias();
-                return;
+                return main_menu_result_t::character_making_select_feats_and_alias;
             }
             if (cmlock(p - 2) != 0)
             {
@@ -1568,19 +1658,19 @@ void character_making_role_attributes(bool label_1554_flg)
         }
         if (key == key_cancel)
         {
-            character_making_select_class(false);
+            return main_menu_result_t::character_making_select_class_false;
         }
         if (getkey(snail::key::f1))
         {
             show_game_help();
-            character_making_role_attributes(false);
+            return main_menu_result_t::character_making_role_attributes_false;
         }
     }
 }
 
 
 
-void character_making_select_feats_and_alias(bool label_1558_flg)
+main_menu_result_t character_making_select_feats_and_alias(bool label_1558_flg)
 {
     if (label_1558_flg)
     {
@@ -1608,12 +1698,11 @@ void character_making_select_feats_and_alias(bool label_1558_flg)
         clear_background_in_character_making();
         if (result.feat_menu_flag)
         {
-            character_making_select_feats_and_alias(); // TODO remove recursion
-            return;
+            return main_menu_result_t::character_making_select_feats_and_alias;
         }
         if (!result.succeeded)
         {
-            character_making_role_attributes(false);
+            return main_menu_result_t::character_making_role_attributes_false;
         }
     }
     pagemax = 0;
@@ -1703,26 +1792,24 @@ void character_making_select_feats_and_alias(bool label_1558_flg)
             else
             {
                 cmaka = listn(0, p);
-                character_making_final_phase();
-                return;
+                return main_menu_result_t::character_making_final_phase;
             }
         }
         if (key == key_cancel)
         {
-            character_making_select_feats_and_alias();
-            return;
+            return main_menu_result_t::character_making_select_feats_and_alias;
         }
         if (getkey(snail::key::f1))
         {
             show_game_help();
-            character_making_select_feats_and_alias(false);
+            return main_menu_result_t::character_making_select_feats_and_alias_false;
         }
     }
 }
 
 
 
-void character_making_final_phase()
+main_menu_result_t character_making_final_phase()
 {
     int cmportrait = 0;
     std::string cmname;
@@ -1833,8 +1920,7 @@ void character_making_final_phase()
     if (rtval == 2)
     {
         nowindowanime = 0;
-        main_menu_new_game();
-        return;
+        return main_menu_result_t::main_menu_new_game;
     }
     gmode(0);
     pos(0, 100);
@@ -1894,8 +1980,7 @@ void character_making_final_phase()
     }
     await(250);
     mode = 5;
-    initialize_game();
-    return;
+    return main_menu_result_t::initialize_game;
 }
 
 

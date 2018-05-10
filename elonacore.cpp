@@ -47957,7 +47957,7 @@ turn_result_t do_enter_strange_gate()
 
 
 
-void main_menu_continue()
+main_menu_result_t main_menu_continue()
 {
     cs = 0;
     cs_bk = -1;
@@ -48053,8 +48053,7 @@ void main_menu_continue()
             await(200);
             mode = 3;
             music = 0;
-            initialize_game();
-            return;
+            return main_menu_result_t::initialize_game;
         }
         if (ginfo(2) == 0)
         {
@@ -48079,8 +48078,7 @@ void main_menu_continue()
                     rtval = show_prompt(promptx, prompty, 200);
                     if (rtval != 0)
                     {
-                        main_menu_continue();
-                        return;
+                        return main_menu_result_t::main_menu_continue;
                     }
                     if (jp)
                     {
@@ -48100,15 +48098,13 @@ void main_menu_continue()
                         snd(20);
                         ctrl_file(file_operation_t::_9);
                     }
-                    main_menu_continue();
-                    return;
+                    return main_menu_result_t::main_menu_continue;
                 }
             }
         }
         if (key == key_cancel)
         {
-            main_title_menu();
-            return;
+            return main_menu_result_t::main_title_menu;
         }
     }
 }
