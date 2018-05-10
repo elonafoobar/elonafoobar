@@ -33647,7 +33647,7 @@ void exittempinv()
 
 
 
-void label_1866()
+void casino_dealer()
 {
     begintempinv();
     atxthrough = 0;
@@ -33659,7 +33659,7 @@ void label_1866()
     SDIM3(atxinfon, 80, 5);
     if (atxid == 2)
     {
-        label_1874();
+        casino_random_site();
         return;
     }
     if (atxid == 1)
@@ -33667,23 +33667,23 @@ void label_1866()
         txt(lang(u8"ディーラーに話しかけた。"s, u8"You talk to the dealer."s));
         music = 77;
         play_music();
-        label_1878();
+        casino_wrapper();
         return;
     }
     if (atxid == 4)
     {
         music = 77;
         play_music();
-        label_1878();
+        casino_wrapper();
         return;
     }
-    label_1873();
+    casino_acquire_items();
     return;
 }
 
 
 
-void label_18672()
+void casino_choose_card()
 {
 label_18671_internal:
     screenupdate = -1;
@@ -33986,7 +33986,7 @@ void label_1872()
 
 
 
-void label_1873()
+void casino_acquire_items()
 {
     mtilefilecur = -1;
     label_1746();
@@ -34024,7 +34024,7 @@ void label_1873()
 
 
 
-void label_1874()
+void casino_random_site()
 {
     int atxrefval1 = 0;
     atxap = 10;
@@ -34159,7 +34159,7 @@ label_1875:
     chatesc = 3;
     txtadvmsgfix = 0;
     txtadvscreenupdate = 1;
-    label_18672();
+    casino_choose_card();
     if (rtval == 1)
     {
         goto label_1876_internal;
@@ -34264,7 +34264,7 @@ label_1876_internal:
         chatesc = 1;
         txtadvmsgfix = 0;
         txtadvscreenupdate = 1;
-        label_18672();
+        casino_choose_card();
         atxinit();
         if (rtval == 1)
         {
@@ -34435,7 +34435,7 @@ label_1876_internal:
         chatesc = 1;
         txtadvmsgfix = 0;
         txtadvscreenupdate = 1;
-        label_18672();
+        casino_choose_card();
         atxinit();
         goto label_1875;
     }
@@ -34490,15 +34490,24 @@ void label_1877()
     chatesc = 0;
     txtadvmsgfix = 0;
     txtadvscreenupdate = 1;
-    label_18672();
-    label_1873();
+    casino_choose_card();
+    casino_acquire_items();
     return;
 }
 
 
-
-void label_1878()
+void casino_wrapper()
 {
+    bool finished = false;
+    while(!finished)
+    {
+        finished = casino_start();
+    }
+}
+
+bool casino_start()
+{
+    bool finished = false;
     atxbg = u8"bg14"s;
     mattile = -1;
     atxinfon(0) = lang(
@@ -34543,24 +34552,26 @@ void label_1878()
     chatesc = 0;
     txtadvmsgfix = 0;
     txtadvscreenupdate = 1;
-    label_18672();
+    casino_choose_card();
     if (rtval == 0)
     {
-        label_1873();
-        return;
+        casino_acquire_items();
+        return true;
     }
-    if (rtval == 1)
+    else if (rtval == 1)
     {
-        label_1879();
-        return;
+        while(!finished)
+        {
+            finished = casino_blackjack();
+        }
+        return false;
     }
-    label_1878(); // TODO this can recurse infinitely.
-    return;
+    return true;
 }
 
 
 
-void label_1879()
+bool casino_blackjack()
 {
     int stake = 0;
     int winrow = 0;
@@ -34617,11 +34628,10 @@ void label_1879()
     chatesc = 0;
     txtadvmsgfix = 0;
     txtadvscreenupdate = 1;
-    label_18672();
+    casino_choose_card();
     if (rtval == 0)
     {
-        label_1878();
-        return;
+        return false;
     }
     stake = rtval;
     winrow = 0;
@@ -34751,7 +34761,7 @@ void label_1879()
             chatesc = -1;
             txtadvmsgfix = 240;
             txtadvscreenupdate = 0;
-            label_18672();
+            casino_choose_card();
             if (winner == 0)
             {
                 break;
@@ -34779,7 +34789,7 @@ void label_1879()
         chatesc = -1;
         txtadvmsgfix = 240;
         txtadvscreenupdate = 0;
-        label_18672();
+        casino_choose_card();
         if (rtval == 0)
         {
             opencard2(cpblackcard(0));
@@ -34846,7 +34856,7 @@ void label_1879()
                 chatesc = -1;
                 txtadvmsgfix = 0;
                 txtadvscreenupdate = 1;
-                label_18672();
+                casino_choose_card();
                 break;
             }
         }
@@ -34916,11 +34926,10 @@ void label_1879()
         chatesc = 0;
         txtadvmsgfix = 0;
         txtadvscreenupdate = 1;
-        label_18672();
+        casino_choose_card();
         winrow = 0;
     }
-    label_1879();
-    return;
+    return true;
 }
 
 
@@ -57164,7 +57173,7 @@ turn_result_t do_use_command()
         || inv[ci].id == 315)
     {
         atxid = 1;
-        label_1866();
+        casino_dealer();
         return turn_result_t::turn_end;
     }
     if (inv[ci].function == 1 || inv[ci].function == 2 || inv[ci].function == 3
