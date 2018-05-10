@@ -10,17 +10,16 @@
 #include "item_db.hpp"
 #include "macro.hpp"
 #include "variables.hpp"
+#include "enums.hpp"
 
 
 namespace elona
 {
 
 
-void pc_turn(bool = true);
-
-
-int ctrl_inventory()
+menu_result ctrl_inventory()
 {
+    menu_result result = { false, turn_result_t::none };
     int mainweapon = 0;
     int countequip = 0;
     int showmoney = 0;
@@ -614,18 +613,22 @@ label_20591:
         if (invsubroutine == 1)
         {
             invsubroutine = 0;
-            return 0;
+            result.succeeded = false;
+            return result;
         }
         update_screen();
-        pc_turn(false);
+        result.turn_result = turn_result_t::pc_turn_false;
+        result.succeeded = false; // TODO
+        return result;
     }
     sort_list_by_column1();
     if (invctrl == 3)
     {
         if (listmax == 0)
         {
-            turn_end();
-            return 0;
+            result.succeeded = false;
+            result.turn_result = turn_result_t::turn_end;
+            return result;
         }
     }
     if (returnfromidentify == 0)
@@ -768,7 +771,8 @@ label_2060_internal:
             }
             invsc = 0;
             update_screen();
-            pc_turn(false);
+            result.turn_result = turn_result_t::pc_turn_false;
+            return result;
         }
         invsc = 0;
         if (mdata(6) == 1)
@@ -779,8 +783,8 @@ label_2060_internal:
                 txt(lang(
                     u8"その行為は、ワールドマップにいる間はできない。"s,
                     u8"You can't do that while you're in a global area."s));
-                update_screen();
-                pc_turn(false);
+                result.turn_result = turn_result_t::pc_turn_false;
+                return result;
             }
         }
         goto label_2062_internal;
@@ -1192,8 +1196,8 @@ label_2061_internal:
                 ++dropcontinue;
                 goto label_20591;
             }
-            turn_end();
-            return 0;
+            result.turn_result = turn_result_t::turn_end;
+            return result;
         }
         if (invctrl == 3 || invctrl == 11 || invctrl == 12 || invctrl == 22
             || (invctrl == 24 && (invctrl(1) == 3 || invctrl(1) == 5)))
@@ -1297,7 +1301,8 @@ label_2061_internal:
                         lang(u8"それは拾えない。"s, u8"It's not yours."s));
                 }
                 update_screen();
-                pc_turn(false);
+                result.turn_result = turn_result_t::pc_turn_false;
+                return result;
             }
             page_save();
             if (mode == 6 && inv[ci].number > 1 && invctrl != 22)
@@ -1409,8 +1414,8 @@ label_2061_internal:
             }
             if (stat == -1)
             {
-                turn_end();
-                return 0;
+                result.turn_result = turn_result_t::turn_end;
+                return result;
             }
             if (invctrl == 22)
             {
@@ -1431,7 +1436,8 @@ label_2061_internal:
                 {
                     ++gdata_gift_count_of_little_sister;
                     invsubroutine = 0;
-                    return 1;
+                    result.succeeded = true;
+                    return result;
                 }
             }
             screenupdate = -1;
@@ -1463,10 +1469,11 @@ label_2061_internal:
                         u8"まだ腹は減っていない。"s,
                         u8"Your stomach can't digest any more."s));
                 update_screen();
-                pc_turn(false);
+                result.turn_result = turn_result_t::pc_turn_false;
+                return result;
             }
-            do_eat_command();
-            return 0;
+            result.turn_result = do_eat_command();
+            return result;
         }
         if (invctrl == 6)
         {
@@ -1517,32 +1524,32 @@ label_2061_internal:
                 equip_melee_weapon();
             }
             menucycle = 1;
-            ctrl_inventory_equipment();
-            return 0;
+            result.turn_result = turn_result_t::ctrl_inventory_equipment;
+            return result;
         }
         if (invctrl == 7)
         {
             screenupdate = -1;
             update_screen();
             savecycle();
-            do_read_commad();
-            return 0;
+            result.turn_result = do_read_commad();
+            return result;
         }
         if (invctrl == 8)
         {
             screenupdate = -1;
             update_screen();
             savecycle();
-            do_drink_command();
-            return 0;
+            result.turn_result = do_drink_command();
+            return result;
         }
         if (invctrl == 9)
         {
             screenupdate = -1;
             update_screen();
             savecycle();
-            do_zap_command();
-            return 0;
+            result.turn_result = do_zap_command();
+            return result;
         }
         if (invctrl == 10)
         {
@@ -1588,7 +1595,8 @@ label_2061_internal:
                 modimp(tc, giftvalue(inv[ci].param4));
                 cdata[tc].emotion_icon = 317;
                 update_screen();
-                pc_turn(false);
+                result.turn_result = turn_result_t::pc_turn_false;
+                return result;
             }
             f = 0;
             p = sdata(10, tc) * 500 + sdata(11, tc) * 500
@@ -1759,8 +1767,8 @@ label_2061_internal:
                     goto label_20591;
                 }
                 update_screen();
-                turn_end();
-                return 0;
+                result.turn_result = turn_result_t::turn_end;
+                return result;
             }
             snd(27);
             txt(lang(
@@ -1798,28 +1806,30 @@ label_2061_internal:
             }
             item_stack(0, ci, 1);
             invsubroutine = 0;
-            return 1;
+            result.succeeded = true;
+            return result;
         }
         if (invctrl == 14)
         {
             savecycle();
-            do_use_command();
-            return 0;
+            result.turn_result = do_use_command();
+            return result;
         }
         if (invctrl == 16)
         {
             screenupdate = -1;
             update_screen();
             invsubroutine = 0;
-            return 1;
+            result.succeeded = true;
+            return result;
         }
         if (invctrl == 15)
         {
             screenupdate = -1;
             update_screen();
             savecycle();
-            do_open_command();
-            return 0;
+            result.turn_result = do_open_command();
+            return result;
         }
         if (invctrl == 17)
         {
@@ -1834,8 +1844,8 @@ label_2061_internal:
         {
             screenupdate = -1;
             update_screen();
-            do_dip_command();
-            return 0;
+            result.turn_result = do_dip_command();
+            return result;
         }
         if (invctrl == 19)
         {
@@ -1850,8 +1860,8 @@ label_2061_internal:
             screenupdate = -1;
             update_screen();
             savecycle();
-            offer();
-            return 0;
+            result.turn_result = offer();
+            return result;
         }
         if (invctrl == 20)
         {
@@ -1906,13 +1916,15 @@ label_2061_internal:
             refresh_character(tc);
             refresh_burden_state();
             invsubroutine = 0;
-            return 1;
+            result.succeeded = true;
+            return result;
         }
         if (invctrl == 23)
         {
             item_separate(ci);
             invsubroutine = 0;
-            return 1;
+            result.succeeded = true;
+            return result;
         }
         if (invctrl == 24)
         {
@@ -2108,7 +2120,8 @@ label_2061_internal:
                         u8"You can't see the location."s));
                     update_screen();
                 }
-                pc_turn(false);
+                result.turn_result = turn_result_t::pc_turn_false;
+                return result;
             }
             if (chipm(7, map(tlocx, tlocy, 0)) & 4)
             {
@@ -2116,16 +2129,18 @@ label_2061_internal:
                     u8"そこには投げられない。"s,
                     u8"The location is blocked."s));
                 update_screen();
-                pc_turn(false);
+                result.turn_result = turn_result_t::pc_turn_false;
+                return result;
             }
-            do_throw_command();
-            return 0;
+            result.turn_result = do_throw_command();
+            return result;
         }
         if (invctrl == 27)
         {
             do_steal_command();
             invsubroutine = 0;
-            return 1;
+            result.succeeded = true;
+            return result;
         }
         if (invctrl == 28)
         {
@@ -2331,20 +2346,22 @@ label_2061_internal:
         if (invsubroutine == 1)
         {
             invsubroutine = 0;
-            return 0;
+            result.succeeded = false;
+            return result;
         }
         if (invctrl == 6)
         {
             screenupdate = -1;
             update_screen();
             menucycle = 1;
-            ctrl_inventory_equipment();
-            return 0;
+            result.turn_result = turn_result_t::ctrl_inventory_equipment;
+            return result;
         }
         if (invctrl == 11 || invctrl == 12 || invctrl == 22 || invctrl == 28)
         {
             load_shoptmp();
-            return 0;
+            result.succeeded = false;
+            return result;
         }
         if (invally == 1)
         {
@@ -2353,12 +2370,13 @@ label_2061_internal:
         if (dropcontinue)
         {
             dropcontinue = 0;
-            turn_end();
-            return 0;
+            result.turn_result = turn_result_t::turn_end;
+            return result;
         }
         screenupdate = 0;
         update_screen();
-        pc_turn(false);
+        result.turn_result = turn_result_t::pc_turn_false;
+        return result;
     }
     if (invctrl == 5 || invctrl == 7 || invctrl == 8 || invctrl == 9
         || invctrl == 14 || invctrl == 15 || invctrl == 26)

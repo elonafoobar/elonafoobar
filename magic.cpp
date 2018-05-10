@@ -2154,7 +2154,7 @@ label_2181_internal:
         }
         allyctrl = 2;
         {
-            int stat = label_1980();
+            int stat = show_hire_menu();
             if (stat == -1)
             {
                 txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));

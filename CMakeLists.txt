@@ -223,7 +223,7 @@ endif()
 
 # Compiler options(debug build)
 if(MSVC)
-    set(CMAKE_CXX_FLAGS_DEBUG "/MTd /ZI /Od")
+    set(CMAKE_CXX_FLAGS_DEBUG "/MP8 /MTd /ZI /Od")
 else()
     set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DDEBUG")
 endif()

@@ -28702,7 +28702,7 @@ void initialize_home_mdata()
 
 
 
-void build_new_building()
+turn_result_t build_new_building()
 {
     if (mdata(6) != 1)
     {
@@ -28710,7 +28710,7 @@ void build_new_building()
             u8"それはワールドマップでしか使えない。"s,
             u8"You can only use it in the world map."s));
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     cell_featread(cdata[0].position.x, cdata[0].position.y);
     if (feat(0) != 0)
@@ -28718,7 +28718,7 @@ void build_new_building()
         txt(lang(
             u8"その場所には建てられない。"s, u8"You can't build it here."s));
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     area = -1;
     for (int cnt = 300; cnt < 450; ++cnt)
@@ -28735,7 +28735,7 @@ void build_new_building()
             u8"もうこれ以上建物は建てられない。"s,
             u8"You can't build a building anymore."s));
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     txt(lang(u8"本当にこの場所に建設する？ "s, u8"Really build it here? "s));
     ELONA_YES_NO_PROMPT();
@@ -28743,7 +28743,7 @@ void build_new_building()
     if (rtval != 0)
     {
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     if (inv[ci].id == 344)
     {
@@ -28835,8 +28835,7 @@ void build_new_building()
     label_1749();
     --inv[ci].number;
     cell_refresh(inv[ci].position.x, inv[ci].position.y);
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
@@ -28881,7 +28880,7 @@ void use_house_board()
             u8"ここはあなたの家ではない。"s,
             u8"You can only use it in your home."s));
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     p(0) = 0;
     p(1) = 0;
@@ -29013,7 +29012,7 @@ void use_house_board()
     if (stat == -1)
     {
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     rtval = stat;
     switch (rtval)
@@ -29154,7 +29153,7 @@ void use_house_board()
         txt(lang(u8"誰を移動させる？"s, u8"Move who?"s));
         allyctrl = 0;
         {
-            int stat = label_1980();
+            int stat = show_hire_menu();
             if (stat == -1)
             {
                 goto label_1722_internal;
@@ -29391,7 +29390,7 @@ void use_house_board()
         txtnew();
         txt(lang(u8"誰を雇用する？"s, u8"Who do you want to hire?"s));
         allyctrl = 1;
-        int stat = label_1980();
+        int stat = show_hire_menu();
         if (stat != -1)
         {
             tc = stat;
@@ -33405,8 +33404,9 @@ label_1857_internal:
 
 
 
-void craft_material_menu()
+menu_result craft_material_menu()
 {
+    menu_result result = { false, turn_result_t::none };
     listmax = 0;
     page = 0;
     pagesize = 15;
@@ -33527,23 +33527,23 @@ label_1861_internal:
                 if (curmenu == 0)
                 {
                     csctrl = 0;
-                    show_character_sheet();
-                    return;
+                    result.turn_result = turn_result_t::show_character_sheet;
+                    return result;
                 }
                 if (curmenu == 1)
                 {
-                    ctrl_inventory_equipment();
-                    return;
+                    result.turn_result = turn_result_t::ctrl_inventory_equipment;
+                    return result;
                 }
                 if (curmenu == 2)
                 {
-                    feat_menu();
-                    return;
+                    result.turn_result = turn_result_t::feat_menu;
+                    return result;
                 }
                 if (curmenu == 3)
                 {
-                    craft_material_menu();
-                    return;
+                    result.turn_result = turn_result_t::craft_material_menu;
+                    return result;
                 }
             }
         }
@@ -33569,7 +33569,8 @@ label_1861_internal:
     if (key == key_cancel)
     {
         update_screen();
-        pc_turn(false);
+        result.turn_result = turn_result_t::pc_turn_false;
+        return result;
     }
     goto label_1861_internal;
 }
@@ -35551,7 +35552,7 @@ void switch_religion()
 
 
 
-void pray()
+turn_result_t pray()
 {
     if (cdata[0].god_id.empty())
     {
@@ -35568,7 +35569,7 @@ void pray()
     if (rtval != 0)
     {
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     txt(lang(
         i18n::_(u8"god", cdata[0].god_id, u8"name") + u8"に祈った。"s,
@@ -35811,15 +35812,14 @@ void pray()
 
 
 
-void offer()
+turn_result_t offer()
 {
     if (cdata[0].god_id.empty())
     {
         txt(lang(
             u8"あなたは神を信仰していないが、試しに捧げてみた。"s,
             u8"You don't believe in God."s));
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     rowact_item(ci);
     item_separate(ci);
@@ -35839,8 +35839,7 @@ void offer()
     }
     else
     {
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (inv[ci].id == 204)
     {
@@ -35972,8 +35971,7 @@ void offer()
         cdata[0].praying_point += i * 7;
     }
     removeitem(ci, inv[ci].number);
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
@@ -37969,7 +37967,7 @@ void initialize_recipe()
 
 
 
-void label_1922()
+turn_result_t crafting_menu()
 {
     elona_vector1<int> blendchecklist;
     step = -1;
@@ -38025,8 +38023,7 @@ label_1923:
                 rpref(2) = rpdata(1, rpid);
                 rpref(3) = rpdiff(rpid, step, -1);
                 label_19342();
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
             if (rtval == 2)
             {
@@ -38212,7 +38209,7 @@ label_1925_internal:
     {
         screenupdate = 0;
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     goto label_1925_internal;
 label_1927_internal:
@@ -39051,7 +39048,7 @@ int key_direction()
 
 
 
-void label_1942()
+turn_result_t step_into_gate()
 {
     if (config::instance().extrahelp)
     {
@@ -39066,7 +39063,7 @@ void label_1942()
                     show_ex_help();
                     screenupdate = -1;
                     update_screen();
-                    pc_turn(false);
+                    return turn_result_t::pc_turn_false;
                 }
             }
         }
@@ -39087,7 +39084,7 @@ void label_1942()
         u8"ネット機能をONにする必要がある。"s,
         u8"You have to turn on network setting."s));
     update_screen();
-    pc_turn(false);
+    return turn_result_t::pc_turn_false;
 }
 
 
@@ -39686,7 +39683,7 @@ label_1948_internal:
 
 
 
-void label_1951()
+turn_result_t do_look_command()
 {
     page = 0;
     pagesize = 16;
@@ -39699,7 +39696,7 @@ void label_1951()
             u8"視界内にターゲットは存在しない。"s,
             u8"You look around and find nothing."s));
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     cs = 0;
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
@@ -39839,7 +39836,7 @@ label_1953_internal:
             name(p) + u8"をターゲットにした。"s,
             u8"You target "s + name(p) + u8"."s));
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     if (key == key_pageup)
     {
@@ -39862,7 +39859,7 @@ label_1953_internal:
     if (key == key_cancel)
     {
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     goto label_1953_internal;
 }
@@ -40528,22 +40525,22 @@ label_1966_internal:
 
 
 
-int feat_menu()
+menu_result feat_menu()
 {
-    label_1968();
-    return label_196902();
+    turn_result_t result = traits_menu(); // TODO
+    return feat_menu_internal();
 }
 
 
 
-int label_1969()
+menu_result label_1969()
 {
-    return label_196902();
+    return feat_menu_internal();
 }
 
 
 
-void label_1968()
+turn_result_t traits_menu()
 {
     listmax = 0;
     page = 0;
@@ -40569,8 +40566,9 @@ void label_1968()
 
 
 
-int label_196902()
+menu_result feat_menu_internal()
 {
+    menu_result result = { false, turn_result_t::none };
     int featrq = 0;
 label_196901_internal:
     listmax = 0;
@@ -40789,7 +40787,8 @@ label_196901_internal:
     if (dump_return == 1)
     {
         dump_return = 0;
-        return 0;
+        result.succeeded = false;
+        return result;
     }
     xnotesel(buff);
     buff = "";
@@ -41054,7 +41053,8 @@ label_1970_internal:
                     {
                         if (gdata_acquirable_feat_count == 0)
                         {
-                            return 1;
+                            result.succeeded = true;
+                            return result;
                         }
                     }
                     else
@@ -41094,23 +41094,23 @@ label_1970_internal:
                 if (curmenu == 0)
                 {
                     csctrl = 0;
-                    show_character_sheet();
-                    return 0;
+                    result.turn_result = turn_result_t::show_character_sheet;
+                    return result;
                 }
                 if (curmenu == 1)
                 {
-                    ctrl_inventory_equipment();
-                    return 0;
+                    result.turn_result = turn_result_t::ctrl_inventory_equipment;
+                    return result;
                 }
                 if (curmenu == 2)
                 {
-                    feat_menu();
-                    return 0;
+                    result.turn_result = turn_result_t::feat_menu;
+                    return result;
                 }
                 if (curmenu == 3)
                 {
-                    craft_material_menu();
-                    return 0;
+                    result.turn_result = turn_result_t::craft_material_menu;
+                    return result;
                 }
             }
         }
@@ -41170,17 +41170,21 @@ label_1970_internal:
     {
         if (mode == 1)
         {
-            return 0;
+            result.succeeded = false;
+            return result;
         }
         update_screen();
-        pc_turn(false);
+        result.turn_result = turn_result_t::pc_turn_false;
+        return result;
     }
     if (mode == 1)
     {
         if (getkey(snail::key::f1))
         {
             show_game_help();
-            return -1;
+            result.succeeded = true;
+            return result;
+            // return -1; // TODO
         }
     }
     goto label_1970_internal;
@@ -41188,8 +41192,9 @@ label_1970_internal:
 
 
 
-void update_journal()
+menu_result update_journal()
 {
+    menu_result result = { false, turn_result_t::none };
     curmenu = 1;
     listmax = 0;
     page = 99;
@@ -41465,18 +41470,18 @@ label_1974_internal:
                 update_screen();
                 if (curmenu == 0)
                 {
-                    label_2710();
-                    return;
+                    result.turn_result = turn_result_t::do_message_log;
+                    return result;
                 }
                 if (curmenu == 1)
                 {
-                    update_journal();
-                    return;
+                    result.turn_result = turn_result_t::update_journal;
+                    return result;
                 }
                 if (curmenu == 2)
                 {
-                    label_2707();
-                    return;
+                    result.turn_result = turn_result_t::messages_menu;
+                    return result;
                 }
             }
         }
@@ -41503,14 +41508,15 @@ label_1974_internal:
     {
         menucycle = 0;
         update_screen();
-        pc_turn(false);
+        result.turn_result = turn_result_t::pc_turn_false;
+        return result;
     }
     goto label_1974_internal;
 }
 
 
 
-void show_quest_board()
+turn_result_t show_quest_board()
 {
     if (config::instance().extrahelp)
     {
@@ -41566,8 +41572,7 @@ void show_quest_board()
         txt(lang(
             u8"新しい依頼は掲示されていないようだ。"s,
             u8"It seems there are no new notices."s));
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     sort_list_by_column1();
     gsel(3);
@@ -41726,11 +41731,9 @@ label_1978_internal:
         if (chatteleport == 1)
         {
             chatteleport = 0;
-            exit_map();
-            return;
+            return turn_result_t::exit_map;
         }
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (key == key_pageup)
     {
@@ -41752,15 +41755,14 @@ label_1978_internal:
     }
     if (key == key_cancel)
     {
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     goto label_1978_internal;
 }
 
 
 
-int label_1980()
+int show_hire_menu()
 {
     snd(26);
     listmax = 0;
@@ -41955,7 +41957,7 @@ label_1982_internal:
 
 
 
-int label_1984()
+int show_spell_writer_menu()
 {
     snd(26);
     listmax = 0;
@@ -42311,7 +42313,7 @@ int select_alias(int val0)
 
 
 
-void do_short_cut()
+turn_result_t do_short_cut()
 {
     menucycle = 0;
     if (gdata(40 + sc) == 0)
@@ -42321,20 +42323,21 @@ void do_short_cut()
             u8"そのキーにはショートカットが割り当てられていない。"s,
             u8"The key is unassigned."s));
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     if (gdata(40 + sc) >= 10000)
     {
         invsc = gdata((40 + sc)) % 10000;
         invctrl(0) = gdata((40 + sc)) / 10000;
         invctrl(1) = 0;
-        ctrl_inventory();
-        return;
+        menu_result mr = ctrl_inventory();
+        assert(mr.turn_result != turn_result_t::none);
+        return mr.turn_result;
     }
     efid = gdata(40 + sc);
     if (efid >= 300 && efid < 400)
     {
-        label_2006();
+        do_use_magic();
         return;
     }
     if (efid >= 600)
@@ -42347,7 +42350,7 @@ void do_short_cut()
                 u8"You can't do that while you're in a global area."s));
             display_msg();
             redraw();
-            pc_turn(false);
+            return turn_result_t::pc_turn_false;
         }
         if (efid < 661)
         {
@@ -42357,11 +42360,10 @@ void do_short_cut()
                     u8"もうその行動はできない。"s,
                     u8"You can't use this shortcut any more."s));
                 update_screen();
-                pc_turn(false);
+                return turn_result_t::pc_turn_false;
             }
         }
-        label_2006();
-        return;
+        return do_use_magic();
     }
     if (efid >= 400)
     {
@@ -42373,7 +42375,7 @@ void do_short_cut()
                 u8"You can't do that while you're in a global area."s));
             display_msg();
             redraw();
-            pc_turn(false);
+            return turn_result_t::pc_turn_false;
         }
         if (spell(efid - 400) <= 0)
         {
@@ -42382,17 +42384,16 @@ void do_short_cut()
                 u8"その魔法はもう使えない。"s,
                 u8"You can't use that spell anymore."s));
             update_screen();
-            pc_turn(false);
+            return turn_result_t::pc_turn_false;
         }
-        label_2026();
-        return;
+        return do_cast_command();
     }
-    pc_turn(false);
+    return turn_result_t::pc_turn_false;
 }
 
 
 
-void do_dig_command()
+turn_result_t do_dig_command()
 {
     txt(lang(
         u8"どの方向を掘る？ "s, u8"Which direction do you want to dig? "s));
@@ -42401,7 +42402,7 @@ void do_dig_command()
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     refx = x;
     refy = y;
@@ -42413,8 +42414,7 @@ void do_dig_command()
         {
             rowactre = 0;
             label_2158();
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
     }
     if ((chipm(7, map(x, y, 0)) & 4) == 0 || chipm(0, map(x, y, 0)) == 3
@@ -42422,17 +42422,16 @@ void do_dig_command()
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     screenupdate = -1;
     update_screen();
-    label_2224();
-    return;
+    return do_dig_after_sp_check();
 }
 
 
 
-void label_2005()
+turn_result_t do_bash_command()
 {
     txt(lang(
         u8"どの方向に体当たりする？ "s,
@@ -42442,29 +42441,27 @@ void label_2005()
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
-    label_2201();
-    return;
+    return do_bash();
 }
 
 
 
-void label_2006()
+turn_result_t do_use_magic()
 {
     int stat = label_2174();
     if (stat == 0)
     {
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
 
-void label_2007()
+turn_result_t skill_list_menu()
 {
     listmax = 0;
     page = 0;
@@ -42601,7 +42598,7 @@ label_2009_internal:
         efid = p;
         screenupdate = -1;
         update_screen();
-        label_2006();
+        do_use_magic();
         return;
     }
     if (key == u8"sc"s)
@@ -42655,14 +42652,12 @@ label_2009_internal:
                 if (curmenu == 0)
                 {
                     snd(102);
-                    label_2027();
-                    return;
+                    return turn_result_t::spell_list_menu;
                 }
                 if (curmenu == 1)
                 {
                     snd(101);
-                    label_2007();
-                    return;
+                    return turn_result_t::skill_list_menu;
                 }
             }
         }
@@ -42688,14 +42683,14 @@ label_2009_internal:
     if (key == key_cancel)
     {
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     goto label_2009_internal;
 }
 
 
 
-void do_give_command()
+turn_result_t do_give_command()
 {
     txt(lang(u8"どの方向に？ "s, u8"Which direction? "s));
     update_screen();
@@ -42704,14 +42699,14 @@ void do_give_command()
     {
         txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     tc = map(x, y, 1);
     if (tc == 0)
     {
         txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     tc -= 1;
     if (tc == 0)
@@ -42727,24 +42722,24 @@ void do_give_command()
         {
             if (cdata[tc].is_escorted() == 0)
             {
-                label_2055();
-                return;
+                return try_interact_with_npc();
             }
         }
         update_screen();
         invctrl = 10;
         snd(100);
-        ctrl_inventory();
-        return;
+        menu_result mr = ctrl_inventory();
+        assert(mr.turn_result != turn_result::none);
+        return mr.turn_result;
     }
     txt(i18n::_(u8"ui", u8"invalid_target"));
     update_screen();
-    pc_turn(false);
+    return turn_result_t::pc_turn_false;
 }
 
 
 
-void do_interact_command()
+turn_result_t do_interact_command()
 {
     txt(lang(
         u8"操作する対象の方向は？"s, u8"Choose the direction of the target."s));
@@ -42753,14 +42748,14 @@ void do_interact_command()
     {
         txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     tc = map(x, y, 1);
     if (tc == 0)
     {
         txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     tc -= 1;
     txt(lang(
@@ -42829,7 +42824,7 @@ void do_interact_command()
         if (stat == -1)
         {
             update_screen();
-            pc_turn(false);
+            return turn_result_t::pc_turn_false;
         }
         rtval = stat;
     }
@@ -42842,48 +42837,43 @@ void do_interact_command()
         if (chatteleport == 1)
         {
             chatteleport = 0;
-            exit_map();
-            return;
+            return turn_result_t::exit_map;
         }
         else
         {
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
     }
     if (p == 1)
     {
         update_screen();
         try_to_melee_attack();
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (p == 2)
     {
         update_screen();
         invctrl = 10;
         snd(100);
-        ctrl_inventory();
-        return;
+        menu_result mr = ctrl_inventory();
+        assert(mr.turn_result != turn_result_t::none);
+        return mr.turn_result;
     }
     if (p == 3)
     {
         update_screen();
-        call_npc();
-        return;
+        return call_npc();
     }
     if (p == 4)
     {
-        label_2055();
-        return;
+        return try_interact_with_npc();
     }
     if (p == 5)
     {
         rc = tc;
         new_ally_joins();
         update_screen();
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (p == 6)
     {
@@ -42892,7 +42882,7 @@ void do_interact_command()
         cc = tc;
         show_character_sheet();
         cc = 0;
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     if (p == 7)
     {
@@ -42913,7 +42903,7 @@ void do_interact_command()
             txt(""s + cdatan(4, tc));
         }
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     if (p == 8)
     {
@@ -42926,7 +42916,7 @@ void do_interact_command()
         change_appearance();
         cc = ccbk;
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     if (p == 9)
     {
@@ -42943,12 +42933,12 @@ void do_interact_command()
         change_npc_tone();
     }
     update_screen();
-    pc_turn(false);
+    return turn_result_t::pc_turn_false;
 }
 
 
 
-void call_npc()
+turn_result_t call_npc()
 {
     txt(lang(
         name(tc) + u8"を何と呼ぶ？ "s,
@@ -42969,7 +42959,7 @@ void call_npc()
             u8"You named "s + him(tc) + u8" "s + cdatan(0, tc) + u8"."s));
     }
     label_1416();
-    pc_turn(false);
+    return turn_result_t::pc_turn_false;
 }
 
 
@@ -43224,21 +43214,20 @@ label_2024_internal:
 
 
 
-void label_2026()
+turn_result_t do_cast_command()
 {
     tc = cc;
     int stat = label_2167();
     if (stat == 0)
     {
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
 
-void label_2027()
+turn_result_t spell_list_menu()
 {
     listmax = 0;
     page = 0;
@@ -43367,7 +43356,7 @@ label_2029_internal:
     {
         menucycle = 0;
         efid = p;
-        label_2026();
+        do_cast_command();
         return;
     }
     if (key == u8"sc"s)
@@ -43421,14 +43410,12 @@ label_2029_internal:
                 if (curmenu == 0)
                 {
                     snd(102);
-                    label_2027();
-                    return;
+                    return turn_result_t::spell_list_menu;
                 }
                 if (curmenu == 1)
                 {
                     snd(101);
-                    label_2007();
-                    return;
+                    return turn_result_t::skill_list_menu;
                 }
             }
         }
@@ -43454,7 +43441,7 @@ label_2029_internal:
     if (key == key_cancel)
     {
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     goto label_2029_internal;
 }
@@ -43750,8 +43737,9 @@ void label_2032()
 
 
 
-int show_character_sheet()
+menu_result show_character_sheet()
 {
+    menu_result result = { false, turn_result_t::none };
     int cs_buff = 0;
     int returnfromportrait = 0;
     int cs_buffmax = 0;
@@ -44567,11 +44555,13 @@ label_2035_internal:
         if (key == key_enter)
         {
             snd(103);
-            return 0;
+            result.succeeded = false;
+            return result;
         }
         if (key == key_cancel)
         {
-            return 1;
+            result.succeeded = true;
+            return result;
         }
         goto label_2035_internal;
     }
@@ -44594,7 +44584,8 @@ label_2035_internal:
                 screenupdate = -1;
                 update_screen();
                 tc = tcbk;
-                return 0;
+                result.succeeded = false;
+                return result;
             }
             if (cdata[0].skill_bonus < 1 || p < 0 || p < 100)
             {
@@ -44660,18 +44651,15 @@ label_2035_internal:
                 }
                 if (curmenu == 1)
                 {
-                    ctrl_inventory_equipment();
-                    return 0;
+                    return ctrl_inventory_equipment(); // TODO
                 }
                 if (curmenu == 2)
                 {
-                    feat_menu();
-                    return 0;
+                    return feat_menu(); // TODO
                 }
                 if (curmenu == 3)
                 {
-                    craft_material_menu();
-                    return 0;
+                    return craft_material_menu(); // TODO
                 }
             }
         }
@@ -44682,14 +44670,15 @@ label_2035_internal:
         if (csctrl == 0)
         {
             update_screen();
-            pc_turn(false);
+            return turn_result_t::pc_turn_false;
         }
         else
         {
             screenupdate = -1;
             update_screen();
             tc = tcbk;
-            return 0;
+            result.succeeded = false;
+            return result;
         }
     }
     goto label_2035_internal;
@@ -45485,13 +45474,13 @@ void equip_melee_weapon()
             }
         }
     }
-    return;
 }
 
 
 
-void ctrl_inventory_equipment()
-{
+menu_result ctrl_inventory_equipment()
+{  
+    menu_result result = { false, turn_result_t::none };
     int cs_prev = 0;
     int mainhand = 0;
     cc = 0;
@@ -45714,8 +45703,8 @@ label_2052_internal:
         menucycle = 0;
         invctrl = 6;
         snd(100);
-        ctrl_inventory();
-        return;
+        result.turn_result = turn_result_t::ctrl_inventory;
+        return result;
     }
     if (key == key_identify)
     {
@@ -45729,8 +45718,8 @@ label_2052_internal:
             returnfromidentify = 0;
             screenupdate = -1;
             update_screen();
-            ctrl_inventory_equipment();
-            return;
+            result.turn_result = turn_result_t::ctrl_inventory_equipment;
+            return result;
         }
     }
     if (key == key_mode)
@@ -45774,23 +45763,23 @@ label_2052_internal:
                 if (curmenu == 0)
                 {
                     csctrl = 0;
-                    show_character_sheet();
-                    return;
+                    result.turn_result = turn_result_t::show_character_sheet;
+                    return result;
                 }
                 if (curmenu == 1)
                 {
-                    ctrl_inventory_equipment();
-                    return;
+                    result.turn_result = turn_result_t::ctrl_inventory_equipment;
+                    return result;
                 }
                 if (curmenu == 2)
                 {
-                    feat_menu();
-                    return;
+                    result.turn_result = turn_result_t::feat_menu;
+                    return result;
                 }
                 if (curmenu == 3)
                 {
-                    craft_material_menu();
-                    return;
+                    result.turn_result = turn_result_t::craft_material_menu;
+                    return result;
                 }
             }
         }
@@ -45818,14 +45807,15 @@ label_2052_internal:
         menucycle = 0;
         create_pcpic(cc, true);
         update_screen();
-        pc_turn(false);
+        result.turn_result = turn_result_t::pc_turn_false;
+        return result;
     }
     goto label_2052_internal;
 }
 
 
 
-void do_get_command()
+turn_result_t do_get_command()
 {
     const auto item_info = cell_itemoncell(cdata[0].position);
     const auto number = item_info.first;
@@ -45841,23 +45831,21 @@ void do_get_command()
             {
                 txt(lang(u8"芽を摘み取った。"s, u8"You nip a young plant."s));
                 map(cdata[0].position.x, cdata[0].position.y, 6) = 0;
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
             if (feat == tile_plant + 3)
             {
                 txt(lang(
                     u8"枯れた草を摘み取った。"s, u8"You nip a dead plant."s));
                 map(cdata[0].position.x, cdata[0].position.y, 6) = 0;
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
             if (!inv_getspace(0))
             {
                 txt(lang(
                     u8"バックパックが一杯だ。"s, u8"Your inventory is full."s));
                 update_screen();
-                pc_turn(false);
+                return turn_result_t::pc_turn_false;
             }
             label_2236();
             label_2235(
@@ -45869,8 +45857,7 @@ void do_get_command()
                 autosave = 1 * (gdata_current_map != 35);
             }
             refresh_burden_state();
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
         if (mdata(6) == 1 && feat(1) == 15 && feat(2) + feat(3) * 100 >= 300
             && feat(2) + feat(3) * 100 < 450)
@@ -45883,7 +45870,7 @@ void do_get_command()
             if (rtval != 0)
             {
                 update_screen();
-                pc_turn(false);
+                return turn_result_t::pc_turn_false;
             }
             area = feat(2) + feat(3) * 100;
             map(cdata[0].position.x, cdata[0].position.y, 6) = 0;
@@ -45893,8 +45880,7 @@ void do_get_command()
             ctrl_file(file_operation_t::_13);
             snd(58);
             txt(lang(u8"建物を撤去した。"s, u8"You remove the building."s));
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
     }
 
@@ -45910,8 +45896,7 @@ void do_get_command()
             {
                 txt(lang(
                     u8"疲労し過ぎて失敗した！"s, u8"You are too exhausted!"s));
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
             flt();
             {
@@ -45924,13 +45909,12 @@ void do_get_command()
                     item_stack(0, ci, 1);
                 }
             }
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
         ++msgdup;
         txt(lang(u8"あなたは空気をつかんだ。"s, u8"You grasp at the air."s));
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
 
     ci = item;
@@ -45938,8 +45922,9 @@ void do_get_command()
     {
         invctrl = 3;
         snd(100);
-        ctrl_inventory();
-        return;
+        menu_result mr = ctrl_inventory();
+        assert(mr.turn_result != turn_result_t::none);
+        return mr.turn_result;
     }
     if ((inv[ci].own_state > 0 && inv[ci].own_state < 3)
         || inv[ci].own_state == 5)
@@ -45961,26 +45946,25 @@ void do_get_command()
                 lang(u8"それは拾えない。"s, u8"It's not yours."s));
         }
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     in = inv[ci].number;
 
     int stat = pick_up_item();
     if (stat == 1 || stat == -1)
     {
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     else
     {
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
 }
 
 
 
-void label_2055()
+turn_result_t try_interact_with_npc()
 {
     if (cdata[tc].continuous_action_turn != 0)
     {
@@ -45988,14 +45972,15 @@ void label_2055()
             name(tc) + u8"は忙しい。"s,
             name(tc) + u8" "s + is(tc) + u8" busy now."s));
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     menucycle = 1;
     invally = 1;
     invctrl = 10;
     snd(100);
-    ctrl_inventory();
-    return;
+    menu_result mr = ctrl_inventory();
+    assert(mr.turn_result != turn_result_t::none);
+    return mr.turn_result;
 }
 
 
@@ -46598,13 +46583,13 @@ int label_2073()
 
 
 
-void label_2074()
+turn_result_t do_fire_command()
 {
     cc = 0;
     int stat = label_2072();
     if (stat == 0)
     {
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     tc = cdata[0].enemy_id;
     if (cdata[tc].relationship >= 0)
@@ -46612,7 +46597,7 @@ void label_2074()
         int stat = label_2073();
         if (stat == 0)
         {
-            pc_turn(false);
+            return turn_result_t::pc_turn_false;
         }
     }
     {
@@ -46624,7 +46609,7 @@ void label_2074()
                 u8"射撃用の道具を装備していない。"s,
                 u8"You need to equip a firing weapon."s));
             update_screen();
-            pc_turn(false);
+            return turn_result_t::pc_turn_false;
         }
         if (stat == -2)
         {
@@ -46633,7 +46618,7 @@ void label_2074()
                 u8"矢/弾丸を装備する必要がある。"s,
                 u8"You need to equip ammos or arrows."s));
             update_screen();
-            pc_turn(false);
+            return turn_result_t::pc_turn_false;
         }
         if (stat == -3)
         {
@@ -46642,12 +46627,11 @@ void label_2074()
                 u8"矢/弾丸の種類が適していない。"s,
                 u8"You're equipped with wrong type of ammos."s));
             update_screen();
-            pc_turn(false);
+            return turn_result_t::pc_turn_false;
         }
     }
     label_2217();
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
@@ -46801,11 +46785,10 @@ void label_2076()
 
 
 
-void label_2077()
+turn_result_t do_rest_command()
 {
-    label_2152();
-    turn_end();
-    return;
+    do_rest();
+    return turn_result_t::turn_end;
 }
 
 
@@ -46826,7 +46809,7 @@ void label_2078()
 
 
 
-void label_2079()
+turn_result_t do_exit_command()
 {
     txtnew();
     if (gdata_current_map == 35)
@@ -46874,7 +46857,7 @@ void label_2079()
         set_option();
     }
     update_screen();
-    pc_turn(false);
+    return turn_result_t::pc_turn_false;
 }
 
 
@@ -47328,7 +47311,7 @@ void label_2085()
 
 
 
-void label_2086()
+turn_result_t do_change_ammo_type()
 {
     f = 0;
     for (int cnt = 0; cnt < 30; ++cnt)
@@ -47348,7 +47331,7 @@ void label_2086()
     if (f == 0)
     {
         txt(lang(u8"矢弾を装備していない。"s, u8"You need to equip an ammo."s));
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     listmax = 0;
     cs = -1;
@@ -47381,7 +47364,7 @@ void label_2086()
         txt(lang(
             itemname(ci) + u8"は切り替えに対応していない。"s,
             itemname(ci) + u8" isn't capable of changing ammos."s));
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     snd(90);
     ++cs;
@@ -47421,7 +47404,7 @@ void label_2086()
         }
         txt(u8" "s + s);
     }
-    pc_turn(false);
+    return turn_result_t::pc_turn_false;
 }
 
 
@@ -48438,7 +48421,7 @@ label_2128_internal:
 
 
 
-void label_2134()
+turn_result_t do_debug_console()
 {
     notesel(dbm);
     buff = "";
@@ -48462,7 +48445,7 @@ void label_2134()
         stick(a);
         if (a == 128)
         {
-            label_2136();
+            do_exit_debug_console();
             return;
         }
     }
@@ -48470,7 +48453,7 @@ void label_2134()
 
 
 
-void label_2136()
+turn_result_t do_exit_debug_console()
 {
     clrobj(1);
     clrobj(2);
@@ -48478,10 +48461,9 @@ void label_2136()
     {
         dbg_exitshowroom = 0;
         levelexitby = 4;
-        exit_map();
-        return;
+        return turn_result_t::exit_map;
     }
-    pc_turn(false);
+    return turn_result_t::pc_turn_false;
 }
 
 
@@ -50345,7 +50327,7 @@ void label_2151()
 
 
 
-void label_2152()
+void do_rest()
 {
     if (cdata[cc].continuous_action_id == 0)
     {
@@ -52596,7 +52578,7 @@ void label_2188()
 
 
 
-void do_throw_command()
+turn_result_t do_throw_command()
 {
     int ccthrowpotion = 0;
     if (is_in_fov(cc))
@@ -52921,7 +52903,7 @@ void do_throw_command()
 
 
 
-void label_2190()
+turn_result_t do_pray_command()
 {
     int stat = item_find(60002);
     if (stat != -1)
@@ -52930,8 +52912,7 @@ void label_2190()
         if (core_god::int2godid(inv[ci].param1) != cdata[0].god_id)
         {
             label_1886();
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
     }
     pray();
@@ -53445,7 +53426,7 @@ void label_2196(int cc)
 
 
 
-void do_read_commad()
+turn_result_t do_read_commad()
 {
     if (inv[ci].id == 783)
     {
@@ -53454,8 +53435,7 @@ void do_read_commad()
             txt(lang(
                 u8"最後に調合したアイテムを、レシピに加えることができる。(まだ未実装)"s,
                 u8"You can add a recipe of the item you previously created.(Not implemented yet)"s));
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
     }
     efid = 0;
@@ -53463,16 +53443,14 @@ void do_read_commad()
     access_item_db(13);
     if (efid == 1115)
     {
-        build_new_building();
-        return;
+        return build_new_building();
     }
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
 
-void do_eat_command()
+turn_result_t do_eat_command()
 {
     if (cc == 0)
     {
@@ -53480,14 +53458,14 @@ void do_eat_command()
         if (stat == 0)
         {
             update_screen();
-            pc_turn(false);
+            return turn_result_t::pc_turn_false;
         }
         if (itemusingfind(ci) > 0)
         {
             txt(lang(
                 u8"そのアイテムは他の誰かが使用中だ。"s,
                 u8"Someone else is using the item."s));
-            pc_turn(false);
+            return turn_result_t::pc_turn_false;
         }
     }
     else if (itemusingfind(ci) != -1)
@@ -53507,23 +53485,21 @@ void do_eat_command()
     }
     cdata[cc].emotion_icon = 116;
     label_2160();
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
 
-void do_drink_command()
+turn_result_t do_drink_command()
 {
     dbid = inv[ci].id;
     access_item_db(15);
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
 
-void do_zap_command()
+turn_result_t do_zap_command()
 {
     dbid = inv[ci].id;
     access_item_db(14);
@@ -53531,15 +53507,14 @@ void do_zap_command()
     if (stat == 0)
     {
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
 
-void label_2201()
+turn_result_t do_bash()
 {
     if (map(x, y, 5) != 0)
     {
@@ -53556,8 +53531,7 @@ void label_2201()
                 txt(lang(
                     u8"もう実はないようだ… "s,
                     u8"It seems there are no fruits left on the tree."s));
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
             --inv[ci].param1;
             if (inv[ci].param1 <= 0)
@@ -53578,8 +53552,7 @@ void label_2201()
                 itemname(ci, 1) + u8"が降ってきた。"s,
                 itemname(ci, 1) + u8" falls down from the tree."s));
             item_stack(-1, ci);
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
     }
     if (map(x, y, 1) != 0)
@@ -53594,7 +53567,7 @@ void label_2201()
                     int stat = label_2073();
                     if (stat == 0)
                     {
-                        pc_turn(false);
+                        return turn_result_t::pc_turn_false;
                     }
                 }
             }
@@ -53641,8 +53614,7 @@ void label_2201()
             cdata[tc].emotion_icon = 418;
         }
         cdata[tc].sleep = 0;
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (map(x, y, 6) != 0)
     {
@@ -53665,8 +53637,7 @@ void label_2201()
                 snd(45);
                 play_animation(14);
             }
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
         if (feat(1) == 21)
         {
@@ -53686,8 +53657,7 @@ void label_2201()
                     skillexp(10, cc, (feat(2) - sdata(10, cc)) * 15);
                 }
                 cell_featset(x, y, 0, 0, 0, 0);
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
             else
             {
@@ -53742,8 +53712,7 @@ void label_2201()
                         }
                     }
                 }
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
         }
     }
@@ -53751,13 +53720,12 @@ void label_2201()
         name(cc) + u8"は空気に体当たりした。"s,
         name(cc) + u8" bash"s + _s(cc) + u8" up the air."s));
     snd(4);
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
 
-void label_2203()
+turn_result_t do_movement_command()
 {
     f = 0;
     if (cdata[cc].dimmed != 0)
@@ -53801,7 +53769,7 @@ void label_2203()
         ++msgdup;
         txt(lang(u8"潰れていて動けない！ "s, u8"You carry too much to move!"s));
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     if (cellchara != -1 && cellchara != 0)
     {
@@ -53867,15 +53835,14 @@ void label_2203()
                     }
                 }
                 label_2206();
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
         }
         if (running)
         {
             if (cdata[tc].relationship >= -2 || keybd_wait >= 40)
             {
-                pc_turn(false);
+                return turn_result_t::pc_turn_false;
             }
         }
         if (cdata[tc].relationship <= -1)
@@ -53897,18 +53864,15 @@ void label_2203()
                 keybd_attacking = 1;
             }
             try_to_melee_attack();
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
         speak_to_npc();
         if (chatteleport == 1)
         {
             chatteleport = 0;
-            exit_map();
-            return;
+            return turn_result_t::exit_map;
         }
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     else
     {
@@ -53940,11 +53904,10 @@ void label_2203()
                 && map(cdata[cc].next_position.x, cdata[cc].next_position.y, 0)
                     < 363)
             {
-                pc_turn(false);
+                return turn_result_t::pc_turn_false;
             }
         }
-        label_2205();
-        return;
+        return proc_movement_event();
     }
     if (gdata_current_dungeon_level == 1 || mdata(6) == 6)
     {
@@ -53980,7 +53943,7 @@ void label_2203()
                     exit_map();
                     return;
                 }
-                pc_turn(false);
+                return turn_result_t::pc_turn_false;
             }
         }
     }
@@ -53988,8 +53951,7 @@ void label_2203()
     {
         if (cellfeat == 21)
         {
-            label_2205();
-            return;
+            return proc_movement_event();
         }
         keyhalt = 1;
         if (cellfeat == 23)
@@ -54009,7 +53971,7 @@ void label_2203()
         {
             menucycle = 1;
             show_city_chart();
-            pc_turn(false);
+            return turn_result_t::pc_turn_false;
         }
     }
     if (cdata[0].confused != 0)
@@ -54018,17 +53980,16 @@ void label_2203()
         txt(lang(u8" *ごつん* "s, u8"*bump*"s));
         update_screen();
     }
-    pc_turn(false);
+    return turn_result_t::pc_turn_false;
 }
 
 
 
-void label_2205()
+turn_result_t proc_movement_event()
 {
     if (cdata[cc].is_ridden())
     {
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     dx = cdata[cc].next_position.x;
     dy = cdata[cc].next_position.y;
@@ -54065,15 +54026,13 @@ void label_2205()
         cell_featread(dx, dy);
         if (feat(1) == 21)
         {
-            try_to_open_locked_door();
-            return;
+            return try_to_open_locked_door();
         }
         if (feat(1) == 30)
         {
             x = dx;
             y = dy;
-            label_2201();
-            return;
+            return do_bash();
         }
     }
     if (map(cdata[cc].position.x, cdata[cc].position.y, 8) != 0)
@@ -54105,8 +54064,7 @@ void label_2205()
                             name(cc) + u8" "s + is(cc)
                                 + u8" caught in a cobweb."s));
                     }
-                    turn_end();
-                    return;
+                    return turn_result_t::turn_end;
                 }
             }
         }
@@ -54119,8 +54077,7 @@ void label_2205()
             {
                 label_2153();
                 keybd_wait = 1;
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
             else
             {
@@ -54223,8 +54180,7 @@ void label_2205()
                     encounterlv = 1;
                 }
                 levelexitby = 4;
-                exit_map();
-                return;
+                return turn_result_t::exit_map;
             }
             if (encounter == 3)
             {
@@ -54237,15 +54193,13 @@ void label_2205()
                 gdata_previous_x = cdata[0].position.x;
                 gdata_previous_y = cdata[0].position.y;
                 levelexitby = 4;
-                exit_map();
-                return;
+                return turn_result_t::exit_map;
             }
             if (encounter == 2)
             {
                 encounterlv = 10 + rnd(100);
                 levelexitby = 4;
-                exit_map();
-                return;
+                return turn_result_t::exit_map;
             }
             if (encounter == 1)
             {
@@ -54305,14 +54259,12 @@ void label_2205()
                 txt(lang(u8"襲撃だ！"s, u8"Ambush!"s) + valn);
                 msg_halt();
                 levelexitby = 4;
-                exit_map();
-                return;
+                return turn_result_t::exit_map;
             }
             encounter = 0;
         }
     }
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
@@ -54422,12 +54374,13 @@ void proc_autopick()
                 }
             }
             elona::ci = ci;
-            do_open_command();
+            return do_open_command();
         }
         if (did_something && !op.sound.empty())
         {
             DSLOADFNAME(filesystem::dir::sound() / op.sound, 15);
             DSPLAY(15, 0);
+            return;
         }
     }
 }
@@ -54665,7 +54618,7 @@ void label_2206()
 
 
 
-void label_2207(int val0)
+turn_result_t change_level_by_stairs(int val0)
 {
     int movelevelbystairs = 0;
     if (dbg_freemove)
@@ -54673,7 +54626,7 @@ void label_2207(int val0)
         txt(lang(
             u8"デバッグ中はその操作はできない。"s,
             u8"You can't perform the action while in the debug mode."s));
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     int stat = item_find(631, 3, -1);
     if (stat != -1)
@@ -54681,8 +54634,7 @@ void label_2207(int val0)
         if (mdata(6) == 3 || mdata(6) == 2)
         {
             ci = stat;
-            label_1942();
-            return;
+            return step_into_gate();
         }
     }
     cell_featread(cdata[cc].position.x, cdata[cc].position.y);
@@ -54699,12 +54651,11 @@ void label_2207(int val0)
             if (rtval != 0)
             {
                 update_screen();
-                pc_turn(false);
+                return turn_result_t::pc_turn_false;
             }
             txt(lang(u8"まっくらだ！"s, u8"It's dark here!"s));
             cdata[0].blind += 2;
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
     }
     if (gdata_current_map == 7)
@@ -54719,7 +54670,7 @@ void label_2207(int val0)
                     txt(lang(
                         u8"これ以上降りられない。"s,
                         u8"You can't go down any more."s));
-                    pc_turn(false);
+                    return turn_result_t::pc_turn_false;
                 }
                 else
                 {
@@ -54737,7 +54688,7 @@ void label_2207(int val0)
                     txt(lang(
                         u8"これ以上昇れない。"s,
                         u8"You can't go up any more."s));
-                    pc_turn(false);
+                    return turn_result_t::pc_turn_false;
                 }
                 else
                 {
@@ -54758,7 +54709,7 @@ void label_2207(int val0)
                         u8"降りる階段は見つからない。"s,
                         u8"There're no downstairs here."s));
                     update_screen();
-                    pc_turn(false);
+                    return turn_result_t::pc_turn_false;
                 }
                 else
                 {
@@ -54769,7 +54720,7 @@ void label_2207(int val0)
                         txt(lang(
                             u8"階段は不思議なバリアで塞がれている。"s,
                             u8"The path is blocked by a strange barrier."s));
-                        pc_turn(false);
+                        return turn_result_t::pc_turn_false;
                     }
                 }
             }
@@ -54781,7 +54732,7 @@ void label_2207(int val0)
                         u8"昇る階段は見つからない。"s,
                         u8"There're no upstairs here."s));
                     update_screen();
-                    pc_turn(false);
+                                    return turn_result_t::pc_turn_false;
                 }
                 else
                 {
@@ -54863,7 +54814,7 @@ void label_2207(int val0)
                 if (rtval != 0)
                 {
                     update_screen();
-                    pc_turn(false);
+                    return turn_result_t::pc_turn_false;
                 }
             }
         }
@@ -54891,8 +54842,7 @@ void label_2207(int val0)
             }
             if (cdata[0].state == 0)
             {
-                turn_begin();
-                return;
+                return turn_result_t::turn_begin;
             }
         }
     }
@@ -54909,14 +54859,13 @@ void label_2207(int val0)
             }
             else
             {
-                pc_turn(false);
+                return turn_result_t::pc_turn_false;
             }
         }
     }
     snd(49);
     levelexitby = 4;
-    exit_map();
-    return;
+    return turn_result_t::exit_map;
 }
 
 
@@ -54998,7 +54947,7 @@ int unlock_box(int difficulty)
 
 
 
-void do_open_command()
+turn_result_t do_open_command()
 {
     int refweight = 0;
     if (inv[ci].id == 361)
@@ -55011,24 +54960,25 @@ void do_open_command()
         sell_item();
         screenupdate = -1;
         update_screen();
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (inv[ci].id == 560)
     {
         invctrl(0) = 24;
         invctrl(1) = 0;
         snd(100);
-        ctrl_inventory();
-        return;
+        menu_result mr = ctrl_inventory();
+        assert(mr.turn_result != turn_result_t::none);
+        return mr.turn_result;
     }
     if (inv[ci].id == 616)
     {
         invctrl(0) = 24;
         invctrl(1) = 2;
         snd(100);
-        ctrl_inventory();
-        return;
+        menu_result mr = ctrl_inventory();
+        assert(mr.turn_result != turn_result_t::none);
+        return mr.turn_result;
     }
     if (inv[ci].id == 701)
     {
@@ -55036,8 +54986,7 @@ void do_open_command()
         invctrl(1) = 8;
         snd(100);
         ctrl_inventory();
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (inv[ci].id == 600)
     {
@@ -55066,8 +55015,7 @@ void do_open_command()
                 }
             }
         }
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (inv[ci].count != 0)
     {
@@ -55089,7 +55037,7 @@ void do_open_command()
                     u8"それは家の中でのみ使用できる。"s,
                     u8"You can only use it at your home."s));
                 update_screen();
-                pc_turn(false);
+                return turn_result_t::pc_turn_false;
             }
         }
         if (inv[ci].count == 5)
@@ -55100,7 +55048,7 @@ void do_open_command()
                     u8"それは店の中でのみ使用できる。"s,
                     u8"You can only use it at your shop"s));
                 update_screen();
-                pc_turn(false);
+                return turn_result_t::pc_turn_false;
             }
         }
         ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
@@ -55160,8 +55108,7 @@ void do_open_command()
         }
         update_screen();
         mode = 0;
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     item_separate(ci);
     if (inv[ci].param1 != 0)
@@ -55173,8 +55120,7 @@ void do_open_command()
             {
                 screenupdate = -1;
                 update_screen();
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
         }
     }
@@ -55196,8 +55142,7 @@ void do_open_command()
     }
     screenupdate = -1;
     update_screen();
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
@@ -55544,7 +55489,7 @@ void open_new_year_gift()
 
 
 
-void try_to_open_locked_door()
+turn_result_t try_to_open_locked_door()
 {
     cell_featread(dx, dy);
     if (feat == tile_doorclosed4 && feat(2) > 0)
@@ -55557,15 +55502,13 @@ void try_to_open_locked_door()
                 screenupdate = -1;
                 update_screen();
                 await(100);
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
             feat(2) = 0;
         }
         else
         {
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
     }
     if (feat(2) > 0)
@@ -55625,8 +55568,7 @@ void try_to_open_locked_door()
     {
         await(100);
     }
-    turn_end();
-    return;
+    return turn_result_t::turn_end;
 }
 
 
@@ -55638,7 +55580,7 @@ void do_close_command()
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
-        pc_turn(false);
+                        return turn_result_t::pc_turn_false;
     }
     cell_featread(x, y);
     if (feat(1) != 20)
@@ -55647,7 +55589,7 @@ void do_close_command()
             u8"その方向に閉められるものはない。"s,
             u8"There's nothing to close."s));
         update_screen();
-        pc_turn(false);
+                        return turn_result_t::pc_turn_false;
     }
     if (map(x, y, 1) != 0)
     {
@@ -55655,7 +55597,7 @@ void do_close_command()
             u8"何かが邪魔で閉められない。"s,
             u8"There's something on the floor."s));
         update_screen();
-        pc_turn(false);
+                        return turn_result_t::pc_turn_false;
     }
     cell_featset(x, y, tile_doorclosed, 21, -1, -1);
     txt(lang(name(cc) + u8"は扉を閉めた。"s, name(cc) + u8" close the door."s));
@@ -56662,7 +56604,7 @@ void label_2220()
 
 
 
-void label_2221()
+void do_search_command()
 {
     ++msgdup;
     txt(lang(
@@ -56881,14 +56823,14 @@ void label_2223()
 
 
 
-void label_2224()
+turn_result_t do_dig_after_sp_check()
 {
     if (cdata[cc].sp < 0)
     {
         txt(lang(
             u8"疲れ過ぎて無理だ。"s, u8"You are too exhausted to do that."s));
         update_screen();
-        pc_turn(false);
+                        return turn_result_t::pc_turn_false;
     }
     rowactre = 0;
     digx = tlocx;
@@ -56940,7 +56882,7 @@ void dipcursed(int prm_1078, int)
 
 
 
-void do_dip_command()
+turn_result_t do_dip_command()
 {
     if (inv[cidip].id == 617)
     {
@@ -57213,7 +57155,7 @@ void do_dip_command()
 
 
 
-void do_use_command()
+turn_result_t do_use_command()
 {
     screenupdate = -1;
     update_screen();
@@ -57232,7 +57174,7 @@ void do_use_command()
                 u8"This item will be useable again at "s
                     + cnvdate(inv[ci].count) + u8"."s));
             update_screen();
-            pc_turn(false);
+            return turn_result_t::pc_turn_false;
         }
         item_separate(ci);
         inv[ci].count = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
@@ -57244,19 +57186,19 @@ void do_use_command()
         {
             txt(lang(u8"それはもう使えない。"s, u8"It's out of charge."s));
             update_screen();
-            pc_turn(false);
+            return turn_result_t::pc_turn_false;
         }
         item_separate(ci);
         --inv[ci].count;
     }
     if (the_item_db[inv[ci].id]->subcategory == 58500)
     {
-        label_2232();
+        do_plant();
         return;
     }
     if (the_item_db[inv[ci].id]->subcategory == 59500)
     {
-        label_1922();
+        crafting_menu();
         return;
     }
     if (the_item_db[inv[ci].id]->subcategory == 60004)
@@ -57265,7 +57207,7 @@ void do_use_command()
         {
             txt(lang(u8"まだ眠たくない。"s, u8"You don't feel sleepy yet."s));
             update_screen();
-            pc_turn(false);
+                            return turn_result_t::pc_turn_false;
         }
         gdata(91) = 100;
         continuous_action_others();
@@ -57393,7 +57335,7 @@ void do_use_command()
         }
         refresh_character(cc);
         update_screen();
-        pc_turn(false);
+                        return turn_result_t::pc_turn_false;
     }
     switch (inv[ci].function)
     {
@@ -57404,12 +57346,12 @@ void do_use_command()
         {
             txt(lang(u8"ここでは使えない。"s, u8"You can't place it here."s));
             update_screen();
-            pc_turn(false);
+                            return turn_result_t::pc_turn_false;
         }
         if (map(x, y, 6) != 0)
         {
             txt(lang(u8"ここには置けない。"s, u8"You can't place it here."s));
-            pc_turn(false);
+                            return turn_result_t::pc_turn_false;
         }
         --inv[ci].number;
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
@@ -57424,7 +57366,7 @@ void do_use_command()
                 u8"床に置かないと使えない。"s,
                 u8"You need to put it on the ground."s));
             update_screen();
-            pc_turn(false);
+                            return turn_result_t::pc_turn_false;
         }
         txt(lang(
             u8"あなたは"s + itemname(ci, 1) + u8"に座った。"s,
@@ -57498,7 +57440,7 @@ void do_use_command()
             txt(lang(
                 u8"それはここでは使えない。"s, u8"You can't use it here."s));
             update_screen();
-            pc_turn(false);
+                            return turn_result_t::pc_turn_false;
         }
         screenupdate = -1;
         update_screen();
@@ -57532,7 +57474,7 @@ void do_use_command()
             txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         }
         update_screen();
-        pc_turn(false);
+                        return turn_result_t::pc_turn_false;
         break;
     case 15:
         efid = 184;
@@ -57553,7 +57495,7 @@ void do_use_command()
             {
                 txt(lang(u8"雪が足りない…"s, u8"You need more snow."s));
                 update_screen();
-                pc_turn(false);
+                                return turn_result_t::pc_turn_false;
             }
             removeitem(ci, 5);
         }
@@ -57592,7 +57534,7 @@ void do_use_command()
         else
         {
             update_screen();
-            pc_turn(false);
+                            return turn_result_t::pc_turn_false;
         }
     }
         goto label_2229_internal;
@@ -57605,7 +57547,7 @@ void do_use_command()
             {
                 txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
                 update_screen();
-                pc_turn(false);
+                                return turn_result_t::pc_turn_false;
             }
         }
         tc = map(x, y, 1) - 1;
@@ -57650,7 +57592,7 @@ void do_use_command()
         }
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
-        pc_turn(false);
+                        return turn_result_t::pc_turn_false;
         break;
     case 23:
         txt(lang(u8"誰を紐で結ぶ？"s, u8"Leash who?"s));
@@ -57728,7 +57670,7 @@ void do_use_command()
                 u8"このエリアでは使えない。"s,
                 u8"You cant use it in this area."s));
             update_screen();
-            pc_turn(false);
+                            return turn_result_t::pc_turn_false;
         }
         txt(lang(u8"誰を吊るす？"s, u8"Hang who?"s));
         update_screen();
@@ -57745,7 +57687,7 @@ void do_use_command()
                         txt(lang(
                             u8"もっと弱らせないと吊るせない。"s,
                             u8"The target needs to be weakened."s));
-                        pc_turn(false);
+                                        return turn_result_t::pc_turn_false;
                     }
                     if (tc != 0)
                     {
@@ -57754,7 +57696,7 @@ void do_use_command()
                             txt(lang(
                                 u8"仲間を吊るすなんてとんでもない！"s,
                                 u8"Hanging your ally is a brutal idea!"s));
-                            pc_turn(false);
+                                            return turn_result_t::pc_turn_false;
                         }
                     }
                     if (cdata[tc].is_hung_on_sand_bag())
@@ -57762,7 +57704,7 @@ void do_use_command()
                         txt(lang(
                             u8"それは既に吊るされている。"s,
                             u8"It's already hanged up."s));
-                        pc_turn(false);
+                                        return turn_result_t::pc_turn_false;
                     }
                     if (tc == 0)
                     {
@@ -57831,7 +57773,7 @@ void do_use_command()
                         u8"You can't build it here."s));
                 }
                 update_screen();
-                pc_turn(false);
+                                return turn_result_t::pc_turn_false;
             }
             gdata(91) = 101;
             continuous_action_others();
@@ -57852,7 +57794,7 @@ void do_use_command()
                     if (rtval != 0)
                     {
                         update_screen();
-                        pc_turn(false);
+                                        return turn_result_t::pc_turn_false;
                     }
                 }
             }
@@ -57866,13 +57808,13 @@ void do_use_command()
             txt(lang(
                 u8"金貨が足りない…"s, u8"You count your coins and sigh..."s));
             update_screen();
-            pc_turn(false);
+                            return turn_result_t::pc_turn_false;
         }
         if (inv[ci].param1 >= 1000000000)
         {
             txt(lang(u8"貯金箱は一杯だ。"s, u8"The money box is full."s));
             update_screen();
-            pc_turn(false);
+                            return turn_result_t::pc_turn_false;
         }
         item_separate(ci);
         snd(12);
@@ -58029,7 +57971,7 @@ void do_use_command()
         {
             txt(lang(u8"ここでは使えない。"s, u8"You can't place it here."s));
             update_screen();
-            pc_turn(false);
+                            return turn_result_t::pc_turn_false;
         }
         if (cdata[0].position.x != 33 || cdata[0].position.y != 16)
         {
@@ -58043,7 +57985,7 @@ void do_use_command()
                 if (rtval != 0)
                 {
                     update_screen();
-                    pc_turn(false);
+                                    return turn_result_t::pc_turn_false;
                 }
             }
         }
@@ -58104,7 +58046,7 @@ void do_use_command()
                 u8"Kumiromi talks to you, "s
                 u8"\"No...you aren't...experienced enough...for this...\""s));
             update_screen();
-            pc_turn(false);
+                            return turn_result_t::pc_turn_false;
         }
         snd(64);
         gdata_next_level_minus_one_kumiromis_experience_becomes_available += 10;
@@ -58522,7 +58464,7 @@ int label_2231()
 
 
 
-void label_2232()
+turn_result_t do_plant()
 {
     screenupdate = -1;
     update_screen();
@@ -58531,14 +58473,14 @@ void label_2232()
         txt(lang(
             u8"この場所には埋められない。"s, u8"You can't plant it here."s));
         update_screen();
-        pc_turn(false);
+                        return turn_result_t::pc_turn_false;
     }
     if (map(cdata[cc].position.x, cdata[cc].position.y, 6) != 0)
     {
         txt(lang(
             u8"この場所には埋められない。"s, u8"You can't plant it here."s));
         update_screen();
-        pc_turn(false);
+                        return turn_result_t::pc_turn_false;
     }
     int val0;
     if (chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 2)
@@ -64525,7 +64467,7 @@ int ai_check()
 
 
 
-void label_2687()
+turn_result_t npc_turn()
 {
     int searchfov = 0;
     if (cdata[cc].is_hung_on_sand_bag())
@@ -64546,8 +64488,7 @@ void label_2687()
             }
         }
         cdata[cc].hate = 0;
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (is_in_fov(cc) == 0)
     {
@@ -64590,8 +64531,7 @@ void label_2687()
                             tc = 0;
                             efid = 619;
                             magic();
-                            turn_end();
-                            return;
+                            return turn_result_t::turn_end;
                         }
                     }
                 }
@@ -64604,8 +64544,7 @@ void label_2687()
         tlocy = cdata[cc].position.y;
         efid = 644;
         magic();
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (cdata[cc].relationship >= 10)
     {
@@ -64693,7 +64632,7 @@ void label_2687()
                         lang(u8"「頭を使えよ」"s, u8"\"Good fighting.\""s),
                         lang(u8"「きゃー」"s, u8"\"Yeeee!\""s));
                 }
-                label_2690();
+                proc_misc_npc_map_events();
                 return;
             }
         }
@@ -64857,7 +64796,7 @@ void label_2687()
             {
                 x = cdata[0].position.x;
                 y = cdata[0].position.y;
-                label_2201();
+                do_bash();
                 return;
             }
         }
@@ -64893,7 +64832,7 @@ void label_2687()
     }
     if (cdata[cc].item_which_will_be_used == 0)
     {
-        goto label_2689_internal;
+        goto label_2689_internal;.
     }
     ci = cdata[cc].item_which_will_be_used;
     if (inv[ci].number == 0)
@@ -64939,7 +64878,7 @@ label_2689_internal:
         {
             if (rnd(10) > 2)
             {
-                label_2690();
+                proc_misc_npc_map_events();
                 return;
             }
         }
@@ -64947,7 +64886,7 @@ label_2689_internal:
         {
             if (rnd(10) > 3)
             {
-                label_2690();
+                proc_misc_npc_map_events();
                 return;
             }
         }
@@ -65023,44 +64962,43 @@ label_2689_internal:
                 {
                     if (cdata[cc].is_contracting() == 0)
                     {
-                        label_2690();
+                        proc_misc_npc_map_events();
                         return;
                     }
                 }
                 if (distance > 2 || rnd(3))
                 {
-                    label_2693();
+                    proc_ally_town_training();
                     return;
                 }
                 else
                 {
-                    label_2690();
+                    proc_misc_npc_map_events();
                     return;
                 }
             }
         }
         if (cdata[cc].fear != 0)
         {
-            label_2693(true);
+            proc_ally_town_training(true);
             return;
         }
         if (cdata[cc].blind != 0)
         {
             if (rnd(3))
             {
-                label_2690();
-                return;
+                return proc_misc_npc_map_events();
             }
         }
         if (distance != cdata[cc].ai_dist)
         {
             if (rnd(100) < cdata[cc].ai_move)
             {
-                label_2693();
+                proc_ally_town_training();
                 return;
             }
         }
-        label_2696();
+        proc_ai_basic();
         return;
     }
     if (cdata[cc].turn % 10 == 1)
@@ -65134,13 +65072,12 @@ label_2689_internal:
             }
         }
     }
-    label_2690();
-    return;
+    return proc_misc_npc_map_events();
 }
 
 
 
-void label_2690()
+turn_result_t proc_misc_npc_map_events()
 {
     if (cdata[cc].ai_calm == 4)
     {
@@ -65150,7 +65087,7 @@ void label_2690()
             cdata[tc].position.y,
             cdata[cc].position.x,
             cdata[cc].position.y);
-        label_2693();
+        proc_ally_town_training();
         return;
     }
     if (rnd(5) != 0)
@@ -65561,7 +65498,7 @@ label_2692_internal:
                 }
                 if (distance < 6)
                 {
-                    label_2693();
+                    proc_ally_town_training();
                     return;
                 }
             }
@@ -65571,8 +65508,7 @@ label_2692_internal:
         cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
         if (cellaccess == 1)
         {
-            label_2205();
-            return;
+            return proc_movement_event();
         }
     }
     if (cdata[cc].ai_calm == 1)
@@ -65582,8 +65518,7 @@ label_2692_internal:
         cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
         if (cellaccess == 1)
         {
-            label_2205();
-            return;
+            return proc_movement_event();
         }
     }
     if (cdata[cc].ai_calm == 2)
@@ -65615,7 +65550,7 @@ label_2692_internal:
         cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
         if (cellaccess == 1)
         {
-            label_2205();
+            proc_movement_event();
             return;
         }
     }
@@ -65625,7 +65560,7 @@ label_2692_internal:
 
 
 
-void label_2693(bool retreat)
+turn_result_t proc_ally_town_training(bool retreat)
 {
     if (mdata(6) == 3)
     {
@@ -65701,8 +65636,7 @@ void label_2693(bool retreat)
     if (tc == cc)
     {
         cdata[cc].enemy_id = 0;
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (cdata[cc]._203 <= 0)
     {
@@ -65730,8 +65664,7 @@ void label_2693(bool retreat)
     cell_check(x, y);
     if (cellaccess == 1)
     {
-        label_2205();
-        return;
+        return proc_movement_event();
     }
     if (cellchara != -1)
     {
@@ -65740,8 +65673,7 @@ void label_2693(bool retreat)
         {
             cdata[cc].enemy_id = tc;
             cdata[cc].hate += 4;
-            label_2696();
-            return;
+            return proc_ai_basic();
         }
         else if (
             (cdata[cc].quality > 3 && cdata[cc].level > cdata[tc].level)
@@ -65825,7 +65757,7 @@ void label_2693(bool retreat)
             int stat = label_2694();
             if (stat == 1)
             {
-                label_2205();
+                proc_movement_event();
                 return;
             }
         }
@@ -65833,7 +65765,7 @@ void label_2693(bool retreat)
             int stat = label_2695();
             if (stat == 1)
             {
-                label_2205();
+                proc_movement_event();
                 return;
             }
         }
@@ -65844,7 +65776,7 @@ void label_2693(bool retreat)
             int stat = label_2695();
             if (stat == 1)
             {
-                label_2205();
+                proc_movement_event();
                 return;
             }
         }
@@ -65852,7 +65784,7 @@ void label_2693(bool retreat)
             int stat = label_2694();
             if (stat == 1)
             {
-                label_2205();
+                proc_movement_event();
                 return;
             }
         }
@@ -65864,7 +65796,7 @@ void label_2693(bool retreat)
         cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
         if (cellaccess == 1)
         {
-            label_2205();
+            proc_movement_event();
             return;
         }
     }
@@ -65996,7 +65928,7 @@ int label_2695()
 
 
 
-void label_2696()
+turn_result_t proc_ai_basic()
 {
     if (tc == 0)
     {
@@ -66067,11 +65999,9 @@ void label_2696()
                         }
                         if (stat == 1)
                         {
-                            do_throw_command();
-                            return;
+                            return do_throw_command();
                         }
-                        turn_end();
-                        return;
+                        return turn_result_t::turn_end;
                     }
                 }
             }
@@ -66084,13 +66014,11 @@ void label_2696()
         cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
         if (cellaccess == 1)
         {
-            label_2205();
-            return;
+            return proc_movement_event();
         }
         else
         {
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
     }
     if (act == -2)
@@ -66107,8 +66035,7 @@ void label_2696()
                 if (stat == 1)
                 {
                     label_2217();
-                    turn_end();
-                    return;
+                    return turn_result_t::turn_end;
                 }
             }
         }
@@ -66124,16 +66051,14 @@ void label_2696()
                     || cdata[cc].cures_mp_frequently())
                 {
                     cdata[cc].mp += cdata[cc].level / 4 + 5;
-                    turn_end();
-                    return;
+                    return turn_result_t::turn_end;
                 }
             }
             npccostmp = 1;
             int stat = label_2167();
             if (stat == 1)
             {
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
         }
     }
@@ -66143,8 +66068,7 @@ void label_2696()
         int stat = label_2174();
         if (stat == 1)
         {
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
     }
     if (act == -3)
@@ -66167,20 +66091,17 @@ void label_2696()
                     if (stat == 1)
                     {
                         label_2217();
-                        turn_end();
-                        return;
+                        return turn_result_t::turn_end;
                     }
                 }
             }
         }
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (distance == 1)
     {
         try_to_melee_attack();
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (distance < 6)
     {
@@ -66194,8 +66115,7 @@ void label_2696()
             if (stat == 1)
             {
                 label_2217();
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
         }
     }
@@ -66203,8 +66123,7 @@ void label_2696()
     {
         if (rnd(3) == 0)
         {
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
     }
     if (rnd(5) == 0)
@@ -66213,13 +66132,11 @@ void label_2696()
     }
     if (rnd(100) < cdata[cc].ai_move)
     {
-        label_2693();
-        return;
+        return proc_ally_town_training();
     }
     else
     {
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
 }
 
@@ -66977,7 +66894,7 @@ label_2705_internal:
 
 
 
-void label_2707()
+turn_result_t messages_menu()
 {
     curmenu = 2;
     key_list(0) = key_enter;
@@ -67082,18 +66999,15 @@ label_2708_internal:
                 update_screen();
                 if (curmenu == 0)
                 {
-                    label_2710();
-                    return;
+                    return turn_result_t::do_message_log;
                 }
                 if (curmenu == 1)
                 {
-                    update_journal();
-                    return;
+                    return turn_result_t::update_journal;
                 }
                 if (curmenu == 2)
                 {
-                    label_2707();
-                    return;
+                    return turn_result_t::messages_menu;
                 }
             }
         }
@@ -67101,14 +67015,14 @@ label_2708_internal:
     if (key != ""s)
     {
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     goto label_2708_internal;
 }
 
 
 
-void label_2710()
+turn_result_t do_message_log()
 {
     curmenu = 0;
     windowshadow = 1;
@@ -67222,18 +67136,15 @@ label_2711_internal:
                 update_screen();
                 if (curmenu == 0)
                 {
-                    label_2710();
-                    return;
+                    return turn_result_t::do_message_log;
                 }
                 if (curmenu == 1)
                 {
-                    update_journal();
-                    return;
+                    return turn_result_t::update_journal;
                 }
                 if (curmenu == 2)
                 {
-                    label_2707();
-                    return;
+                    return turn_result_t::messages_menu;
                 }
             }
         }
@@ -67241,7 +67152,7 @@ label_2711_internal:
     if (key != ""s)
     {
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     goto label_2711_internal;
 }
@@ -67287,7 +67198,7 @@ int cnvjkey(const std::string& prm_1092)
 
 
 
-void play_scene()
+turn_result_t play_scene()
 {
     snd(59);
     gsel(4);
@@ -67415,8 +67326,7 @@ label_2729_internal:
         update_entire_screen();
         txtnew();
         txt(lang(u8"シーンの再生を終えた。"s, u8"The scene has been played."s));
-        play_scene();
-        return;
+        return turn_result_t::play_scene;
     }
     if (key == key_pageup)
     {
@@ -67440,14 +67350,84 @@ label_2729_internal:
     {
         play_music();
         update_screen();
-        pc_turn(false);
+        return turn_result_t::pc_turn_false;
     }
     goto label_2729_internal;
 }
 
 
+void turn_wrapper()
+{
+    turn_result_t result = turn_begin();
+    while (result != turn_result_t::none)
+    {
+        switch (result)
+        {
+        case turn_result_t::pc_died:
+            pc_died();
+            result = turn_result_t::none;
+            break;
+        case turn_result_t::exit_map:
+            exit_map();
+            result = turn_result_t::none;
+            break;
+        case turn_result_t::play_scene:
+            result = play_scene();
+            break;
+        case turn_result_t::pass_one_turn:
+            result = pass_turns(true);
+            break;
+        case turn_result_t::pass_one_turn_false:
+            result = pass_turns(false);
+            break;
+        case turn_result_t::pc_turn_false:
+            result =                 return turn_result_t::pc_turn_false;
+            break;
+        case turn_result_t::initialize_map:
+            initialize_map();
+            result = turn_result_t::none;
+            break;
+        case turn_result_t::turn_begin:
+            result = turn_begin();
+            break;
+        case turn_result_t::turn_end:
+            result = turn_end();
+            break;
+        case turn_result_t::none:
+            break;
+        }
+    }
+}
 
-void turn_begin()
+turn_result_t pass_turns(bool time)
+{
+    bool finished = false;
+    turn_result_t result = pass_one_turn(time);
+    while (!finished)
+    {
+        switch (result)
+        {
+            case turn_result_t::all_turns_finished:
+                finished = true;
+                break;
+            case turn_result_t::pass_one_turn:
+                time = true;
+                break;
+            case turn_result_t::pass_one_turn_false:
+                time = false;
+                break;
+            case turn_result_t::none:
+                assert(0);
+                break;
+            default:
+                return result;
+        }
+        result = pass_one_turn(time);
+    }
+    return turn_result_t::none;
+}
+
+turn_result_t turn_begin()
 {
     int turncost = 0;
     int spd = 0;
@@ -67542,16 +67522,13 @@ void turn_begin()
         if (chatteleport == 1)
         {
             chatteleport = 0;
-            exit_map();
-            return;
+            return turn_result_t::exit_map;
         }
-        turn_begin();
-        return;
+        return turn_result_t::turn_begin;
     }
     if (cdata[0].state != 1)
     {
-        pc_died();
-        return;
+        return turn_result_t::pc_died;
     }
 
     bool update_turn_cost = true;
@@ -67623,7 +67600,7 @@ void turn_begin()
             label_2736();
         }
     }
-    pass_one_turn();
+    return turn_result_t::pass_one_turn;
 }
 
 
@@ -68041,12 +68018,11 @@ void label_2736()
             proc_random_event();
         }
     }
-    return;
 }
 
 
 
-void pass_one_turn(bool label_2738_flg)
+turn_result_t pass_one_turn(bool label_2738_flg)
 {
     int ef = 0;
     if (label_2738_flg)
@@ -68070,7 +68046,7 @@ void pass_one_turn(bool label_2738_flg)
         }
         if (ct >= ELONA_MAX_CHARACTERS)
         {
-            throw elona_turn_sequence{};
+            return turn_result_t::all_turns_finished;
         }
     }
     cc = ct;
@@ -68176,8 +68152,7 @@ void pass_one_turn(bool label_2738_flg)
                 msg_halt();
                 update_screen();
                 levelexitby = 2;
-                exit_map();
-                return;
+                return turn_result_t::exit_map;
             }
             goto label_2740_internal;
         }
@@ -68185,8 +68160,7 @@ void pass_one_turn(bool label_2738_flg)
         label_1754();
         if (cdata[0].state != 1)
         {
-            pc_died();
-            return;
+            return turn_result_t::pc_died;
         }
         if (gdata_weather == 1)
         {
@@ -68345,8 +68319,7 @@ void pass_one_turn(bool label_2738_flg)
             syfix = 0;
             update_screen();
         }
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (cdata[cc].drunk != 0)
     {
@@ -68437,8 +68410,7 @@ void pass_one_turn(bool label_2738_flg)
         if (rnd(60) == 0)
         {
             chara_vomit(cc);
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
     }
     if (cdata[cc].stops_continuous_action_if_damaged == 1)
@@ -68524,19 +68496,17 @@ void pass_one_turn(bool label_2738_flg)
         if (cdata[cc].continuous_action_id == 4)
         {
             auto_turn(5);
-            label_2152();
+            do_rest();
         }
         if (cdata[cc].continuous_action_id == 1)
         {
             auto_turn(100);
-            do_eat_command();
-            return;
+            return do_eat_command();
         }
         if (cdata[cc].continuous_action_id == 2)
         {
             auto_turn(25);
-            do_read_commad();
-            return;
+            return do_read_commad();
         }
         if (cdata[cc].continuous_action_id == 11)
         {
@@ -68576,13 +68546,11 @@ void pass_one_turn(bool label_2738_flg)
         if (cdata[cc].continuous_action_id == 3)
         {
             label_2153();
-            label_2205();
-            return;
+            return proc_movement_event();
         }
         if (cdata[cc].continuous_action_turn > 0)
         {
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
         rowactend(cc);
         if (cc == 0)
@@ -68590,8 +68558,7 @@ void pass_one_turn(bool label_2738_flg)
             if (chatteleport == 1)
             {
                 chatteleport = 0;
-                exit_map();
-                return;
+                return turn_result_t::exit_map;
             }
         }
     }
@@ -68603,17 +68570,14 @@ void pass_one_turn(bool label_2738_flg)
     {
         if (ct == 0)
         {
-            pc_turn();
-            return;
+            return pc_turn();
         }
         else
         {
-            label_2687();
-            return;
+            return npc_turn();
         }
     }
-    pass_one_turn();
-    return;
+    return turn_result_t::pass_one_turn;
 }
 
 
@@ -68649,13 +68613,12 @@ label_27411_internal:
 
 
 
-void turn_end()
+turn_result_t turn_end()
 {
     cc = ct;
     if (cdata[cc].state != 1)
     {
-        pass_one_turn();
-        return;
+        return turn_result_t::pass_one_turn;
     }
     hear = 0;
     label_1520(cc);
@@ -68721,16 +68684,15 @@ void turn_end()
             }
             txtef(9);
             txt(u8" *tick* "s);
-            pass_one_turn(false);
+            return turn_result_t::pass_one_turn_false;
         }
     }
-    pass_one_turn();
-    return;
+    return turn_result_t::pass_one_turn;
 }
 
 
 
-void pc_turn(bool label_2747_flg)
+turn_result_t pc_turn(bool label_2747_flg)
 {
     if (label_2747_flg)
     {
@@ -68757,8 +68719,7 @@ void pc_turn(bool label_2747_flg)
         }
         if (cdata[0].state != 1)
         {
-            pc_died();
-            return;
+            return turn_result_t::pc_died;
         }
         if (gdata(30))
         {
@@ -68891,8 +68852,7 @@ void pc_turn(bool label_2747_flg)
                         continue;
                     cdata[cc].state = followerexist(cc);
                 }
-                exit_map();
-                return;
+                return turn_result_t::exit_map;
             }
         label_2744_internal:
             await(config::instance().wait1);
@@ -68964,15 +68924,13 @@ void pc_turn(bool label_2747_flg)
                 if (rtval == 0)
                 {
                     petarenawin = 2;
-                    turn_end();
-                    return;
+                    return turn_result_t::turn_end;
                 }
                 goto label_2744_internal;
             }
             if (key != key_cancel && key != ""s)
             {
-                turn_end();
-                return;
+                return turn_result_t::turn_end;
             }
             goto label_2744_internal;
         }
@@ -69016,8 +68974,7 @@ label_2747:
     if (gdata(808))
     {
         txt(lang(u8"装備を変更した。"s, u8"You change your equipment."s));
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     ++t;
     if (t % config::instance().scrsync == 1)
@@ -69083,8 +69040,7 @@ label_2747:
         if (getkey(snail::key::f5))
         {
             what_do_you_wish_for();
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
         if (getkey(snail::key::f6))
         {
@@ -69093,8 +69049,7 @@ label_2747:
             label_2736();
             dbg_skipevent = 0;
             mode = 0;
-            turn_end();
-            return;
+            return turn_result_t::turn_end;
         }
         if (getkey(snail::key::f7))
         {
@@ -69106,8 +69061,7 @@ label_2747:
                 ctrl_file(file_operation_t::_11);
                 mode = 2;
                 levelexitby = 4;
-                initialize_map();
-                return;
+                return turn_result_t::initialize_map;
             }
         }
     }
@@ -69127,8 +69081,7 @@ label_2747:
         firstturn = 1;
         load_save_data();
         mode = 3;
-        initialize_map();
-        return;
+        return turn_result_t::initialize_map;
     }
 
     if (getkey(snail::key::f3))
@@ -69136,8 +69089,7 @@ label_2747:
         tcgmain();
         label_1746();
         update_entire_screen();
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (getkey(snail::key::f9))
     {
@@ -69188,8 +69140,7 @@ label_2747:
             }
             goto label_2747;
         }
-        label_2134();
-        return;
+        return do_debug_console();
     }
     if (key == ""s)
     {
@@ -69322,25 +69273,25 @@ label_2747:
 
     if (key != ""s)
     {
-        check_angband();
+        return check_angband();
     }
     if (key == key_quick)
     {
-        show_quick_menu();
+        show_quick_menu(); // TODO verify it still works.
         update_screen();
     }
     if (key == u8"sc"s)
     {
-        do_short_cut();
-        return;
+        return do_short_cut();
     }
     menucycle = 1;
     if (key == key_quickinv)
     {
         invctrl = lastctrl;
         snd(100);
-        ctrl_inventory();
-        return;
+        menu_result mr = ctrl_inventory();
+        assert(mr.turn_result != turn_result_t::none);
+        return mr.turn_result;
     }
     if (key == key_throw)
     {
@@ -69358,16 +69309,18 @@ label_2747:
         {
             invctrl = 26;
             snd(100);
-            ctrl_inventory();
-            return;
+            menu_result mr = ctrl_inventory();
+            assert(mr.turn_result != turn_result_t::none);
+            return mr.turn_result;
         }
     }
     if (key == key_inventory)
     {
         invctrl = 1;
         snd(100);
-        ctrl_inventory();
-        return;
+        menu_result mr = ctrl_inventory();
+        assert(mr.turn_result != turn_result_t::none);
+        return mr.turn_result;
     }
     if (key == key_drop)
     {
@@ -69385,30 +69338,34 @@ label_2747:
         {
             invctrl = 2;
             snd(100);
-            ctrl_inventory();
-            return;
+            menu_result mr = ctrl_inventory();
+            assert(mr.turn_result != turn_result_t::none);
+            return mr.turn_result;
         }
     }
     if (key == key_eat)
     {
         invctrl = 5;
         snd(100);
-        ctrl_inventory();
-        return;
+        menu_result mr = ctrl_inventory();
+        assert(mr.turn_result != turn_result_t::none);
+        return mr.turn_result;
     }
     if (key == key_read)
     {
         invctrl = 7;
         snd(100);
-        ctrl_inventory();
-        return;
+        menu_result mr = ctrl_inventory();
+        assert(mr.turn_result != turn_result_t::none);
+        return mr.turn_result;
     }
     if (key == key_drink)
     {
         invctrl = 8;
         snd(100);
-        ctrl_inventory();
-        return;
+        menu_result mr = ctrl_inventory();
+        assert(mr.turn_result != turn_result_t::none);
+        return mr.turn_result;
     }
     if (key == key_zap)
     {
@@ -69426,16 +69383,18 @@ label_2747:
         {
             invctrl = 9;
             snd(100);
-            ctrl_inventory();
-            return;
+            menu_result mr = ctrl_inventory();
+            assert(mr.turn_result != turn_result_t::none);
+            return mr.turn_result;
         }
     }
     if (key == key_use)
     {
         invctrl = 14;
         snd(100);
-        ctrl_inventory();
-        return;
+        menu_result mr = ctrl_inventory();
+        assert(mr.turn_result != turn_result_t::none);
+        return mr.turn_result;
     }
     if (key == key_open)
     {
@@ -69453,8 +69412,9 @@ label_2747:
         {
             invctrl = 15;
             snd(100);
-            ctrl_inventory();
-            return;
+            menu_result mr = ctrl_inventory();
+            assert(mr.turn_result != turn_result_t::none);
+            return mr.turn_result;
         }
     }
     if (key == key_dip)
@@ -69473,30 +69433,35 @@ label_2747:
         {
             invctrl = 17;
             snd(100);
-            ctrl_inventory();
-            return;
+            menu_result mr = ctrl_inventory();
+            assert(mr.turn_result != turn_result_t::none);
+            return mr.turn_result;
         }
     }
     if (key == key_charainfo)
     {
         csctrl = 0;
-        show_character_sheet();
-        return;
+        menu_result mr = show_character_sheet();
+        assert(mr.turn_result != turn_result_t::none);
+        return mr.turn_result;
     }
     if (key == key_material)
     {
-        craft_material_menu();
-        return;
+        menu_result mr = craft_material_menu();
+        assert(mr.turn_result != turn_result_t::none);
+        return mr.turn_result;
     }
     if (key == key_trait)
     {
-        feat_menu();
-        return;
+        menu_result mr = feat_menu();
+        assert(mr.turn_result != turn_result_t::none);
+        return mr.turn_result;
     }
     if (key == key_wear)
     {
-        ctrl_inventory_equipment();
-        return;
+        menu_result mr = ctrl_inventory_equipment();
+        assert(mr.turn_result != turn_result_t::none);
+        return mr.turn_result;
     }
     if (key == key_cast)
     {
@@ -69513,8 +69478,7 @@ label_2747:
         else
         {
             snd(102);
-            label_2027();
-            return;
+            return spell_list_menu();
         }
     }
     if (key == key_skill)
@@ -69532,19 +69496,18 @@ label_2747:
         else
         {
             snd(101);
-            label_2007();
-            return;
+            return skill_list_menu();
         }
     }
     if (key == key_msglog)
     {
-        label_2710();
-        return;
+        return do_message_log();
     }
     if (key == key_journal)
     {
-        update_journal();
-        return;
+        menu_result mr = update_journal();
+        assert(mr.turn_result != turn_result_t::none);
+        return mr.turn_result;
     }
     menucycle = 0;
     if (key == key_offer)
@@ -69563,8 +69526,9 @@ label_2747:
         {
             invctrl = 19;
             snd(100);
-            ctrl_inventory();
-            return;
+            menu_result mr = ctrl_inventory();
+            assert(mr.turn_result != turn_result_t::none);
+            return mr.turn_result;
         }
     }
     if (key == key_help)
@@ -69575,8 +69539,7 @@ label_2747:
     }
     if (key == key_rest)
     {
-        label_2077();
-        return;
+        return do_rest_command();
     }
     if (key == key_interact)
     {
@@ -69592,8 +69555,7 @@ label_2747:
         }
         else
         {
-            do_interact_command();
-            return;
+            return do_interact_command();
         }
     }
     if (key == key_target)
@@ -69617,7 +69579,7 @@ label_2747:
         }
         else
         {
-            label_2074();
+            do_fire_command();
             return;
         }
     }
@@ -69635,21 +69597,18 @@ label_2747:
         }
         else
         {
-            do_give_command();
-            return;
+            return do_give_command();
         }
     }
     if (key == key_get || key == key_get2)
     {
-        do_get_command();
-        return;
+        return do_get_command();
     }
     if (key == key_look)
     {
         if (mdata(6) != 1)
         {
-            label_1951();
-            return;
+            return do_look_command();
         }
         else
         {
@@ -69659,13 +69618,11 @@ label_2747:
     }
     if (key == key_save || key_escape == 1)
     {
-        label_2079();
-        return;
+        return do_exit_command();
     }
     if (key == key_dig)
     {
-        do_dig_command();
-        return;
+        return do_dig_command();
     }
 
     if (key == key_autodig)
@@ -69692,14 +69649,12 @@ label_2747:
         }
         else
         {
-            label_2005();
-            return;
+            return do_bash_command();
         }
     }
     if (key == key_search)
     {
-        label_2221();
-        return;
+        return do_search_command();
     }
     if (key == key_close)
     {
@@ -69715,8 +69670,7 @@ label_2747:
         }
         else
         {
-            do_close_command();
-            return;
+            return do_close_command();
         }
     }
     if (key == key_pray)
@@ -69733,14 +69687,12 @@ label_2747:
         }
         else
         {
-            label_2190();
-            return;
+            return do_pray_command();
         }
     }
     if (key == key_ammo)
     {
-        label_2086();
-        return;
+        return do_change_ammo_type();
     }
     if (key_tab)
     {
@@ -69831,27 +69783,22 @@ label_2747:
                 tlocy = y;
                 screenupdate = -1;
                 update_screen();
-                label_2224();
-                return;
+                return do_dig_after_sp_check();
             }
         }
-        label_2203();
-        return;
+        return do_movement_command();
     }
     if (key == key_godown)
     {
-        label_2207(1);
-        return;
+        return change_level_by_stairs(1);
     }
     if (key == key_goup)
     {
-        label_2207(2);
-        return;
+        return change_level_by_stairs(2);
     }
     if (key == key_wait)
     {
-        turn_end();
-        return;
+        return turn_result_t::turn_end;
     }
     if (key == key_enter)
     {
@@ -69872,7 +69819,7 @@ label_2747:
 
 
 
-void check_angband()
+turn_result_t check_angband()
 {
     if (gdata_angband_flag == -1 || mdata(6) == 1)
         return;
@@ -69885,8 +69832,7 @@ void check_angband()
             txt(lang(u8"え…", u8"What..."));
             ++gdata_angband_flag;
             update_screen();
-            pc_turn(false);
-            return;
+            return turn_result_t::pc_turn_false;
         }
         break;
     case 1:
@@ -69895,8 +69841,7 @@ void check_angband()
             txt(lang(u8"まさか…", u8"No...no..."));
             ++gdata_angband_flag;
             update_screen();
-            pc_turn(false);
-            return;
+            return turn_result_t::pc_turn_false;
         }
         break;
     case 2:

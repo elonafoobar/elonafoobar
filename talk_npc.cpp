@@ -1730,7 +1730,7 @@ void talk_npc()
         screenupdate = -1;
         update_screen();
         invctrl = 0;
-        label_1984();
+        show_spell_writer_menu();
         buff = "";
         talk_npc();
         return;
