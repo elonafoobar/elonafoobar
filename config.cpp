@@ -274,6 +274,14 @@ void load_config()
             1,
             [&](auto value) { config::instance().attackanime = value; }),
         std::make_unique<config_integer>(
+            u8"initialKeyWait",
+            10,
+            [&](auto value) { config::instance().initialkeywait = value; }),
+        std::make_unique<config_integer>(
+            u8"keyWait",
+            5,
+            [&](auto value) { config::instance().keywait = value; }),
+        std::make_unique<config_integer>(
             u8"envEffect",
             1,
             [&](auto value) { config::instance().env = value; }),
@@ -654,6 +662,10 @@ void load_config()
             u8"use_autopick",
             1,
             [&](auto value) { config::instance().use_autopick = value; }),
+        std::make_unique<config_integer>(
+            u8"autosave",
+            0,
+            [&](auto value) { config::instance().autosave = value; }),
     };
 
     picojson::value value;
@@ -668,6 +680,7 @@ void load_config()
                 + filesystem::make_preferred_path_in_utf8(
                       filesystem::dir::exe() / u8"config.json")};
         }
+        fileutil::skip_bom(file);
 
         file >> value;
     }
@@ -811,6 +824,7 @@ void set_config(const std::string& key, int value)
                 + filesystem::make_preferred_path_in_utf8(
                       filesystem::dir::exe() / u8"config.json")};
         }
+        fileutil::skip_bom(file);
         file >> options;
     }
 
@@ -846,6 +860,7 @@ void set_config(const std::string& key, const std::string& value)
                 + filesystem::make_preferred_path_in_utf8(
                       filesystem::dir::exe() / u8"config.json")};
         }
+        fileutil::skip_bom(file);
         file >> options;
     }
 
@@ -881,6 +896,7 @@ void set_config(const std::string& key, const std::string& value1, int value2)
                 + filesystem::make_preferred_path_in_utf8(
                       filesystem::dir::exe() / u8"config.json")};
         }
+        fileutil::skip_bom(file);
         file >> options;
     }
 
@@ -974,6 +990,7 @@ void load_config2()
                   filesystem::dir::exe() / u8"config.json")};
     }
 
+    fileutil::skip_bom(file);
     picojson::value value;
     file >> value;
 

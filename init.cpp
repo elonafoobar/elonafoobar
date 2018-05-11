@@ -134,6 +134,13 @@ void initialize_directories()
     }
 }
 
+void initialize_keywait()
+{
+    snail::input::instance().set_key_repeat(
+        elona::config::instance().initialkeywait,
+        elona::config::instance().keywait);
+}
+
 void load_character_sprite()
 {
     usernpcmax = 0;
@@ -183,6 +190,8 @@ void initialize_elona()
     initialize_jkey();
     load_config2();
     load_config();
+
+    initialize_keywait();
 
     i18n::load(jp ? u8"jp" : u8"en");
 

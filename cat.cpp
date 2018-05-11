@@ -26,8 +26,9 @@ void engine::load(const fs::path& filepath)
     std::string filepath_str = filesystem::to_narrow_path(filepath);
     if (luaL_dofile(ptr(), filepath_str.c_str()) != 0)
     {
+        const char* error_msg = lua_tostring(ptr(), -1);
         throw std::runtime_error(
-            u8"Could not load lua script at "s + filepath_str + u8"."s);
+            u8"Error when loading Lua script:\n"s + std::string(error_msg));
     }
 }
 
