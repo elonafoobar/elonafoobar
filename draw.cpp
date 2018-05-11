@@ -309,14 +309,20 @@ void show_damage_popups(int inf_ver)
         if (gdata(20) != 40)
         {
             if (!is_in_fov(cc.position))
+            {
+                ++damage_popup.frame;
                 continue;
+            }
             if (dist(
                     cdata[0].position.x,
                     cdata[0].position.y,
                     cc.position.x,
                     cc.position.y)
                 > cdata[0].vision_distance / 2)
+            {
+                ++damage_popup.frame;
                 continue;
+            }
         }
         int mondmgpos{};
         for (auto&& damage_popup2 : damage_popups)
