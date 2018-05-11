@@ -148,14 +148,7 @@ void sndload(const fs::path& filepath, int prm_293)
 {
     if (prm_293 < 7)
     {
-        if (config::instance().sound == 1)
-        {
-            DSLOADFNAME(filepath, prm_293);
-        }
-        else
-        {
-            mmload(filepath, prm_293);
-        }
+        DSLOADFNAME(filepath, prm_293);
     }
     soundfile[prm_293] = filepath;
 }
@@ -165,10 +158,7 @@ void sndload(const fs::path& filepath, int prm_293)
 void initialize_sound_file()
 {
     DIM2(soundlist, 6);
-    if (config::instance().sound == 1)
-    {
-        cfg_svolume = DSGETMASTERVOLUME();
-    }
+    cfg_svolume = DSGETMASTERVOLUME();
 
     const std::pair<const char*, int> se_list[] = {
         {u8"exitmap1.wav", 49},   {u8"book1.wav", 59},
@@ -245,10 +235,9 @@ void snd(int prm_296, int prm_297, int prm_298)
 {
     int sound_at_m18 = 0;
     int f_at_m18 = 0;
-    if (config::instance().sound == 0)
-    {
+    if (!config::instance().sound)
         return;
-    }
+
     sound_at_m18 = prm_296;
     if (sound_at_m18 > 7)
     {
@@ -299,24 +288,9 @@ void snd(int prm_296, int prm_297, int prm_298)
                 }
             }
         }
-        if (config::instance().sound == 1)
-        {
-            DSLOADFNAME(soundfile[prm_296], sound_at_m18);
-        }
-        else
-        {
-            mmload(soundfile[prm_296], sound_at_m18);
-        }
+        DSLOADFNAME(soundfile[prm_296], sound_at_m18);
     }
-    if (config::instance().sound == 1)
-    {
-        DSPLAY(sound_at_m18, prm_297);
-    }
-    else
-    {
-        mmplay(sound_at_m18);
-    }
-    return;
+    DSPLAY(sound_at_m18, prm_297);
 }
 
 
@@ -343,7 +317,7 @@ void play_music()
     if (env != envwprev)
     {
         envwprev = env;
-        if (config::instance().sound == 1)
+        if (config::instance().sound)
         {
             if (env == 0)
             {

@@ -458,10 +458,7 @@ void initialize_elona()
     {
         config::instance().music = 2;
     }
-    if (config::instance().sound == 1 && DSINIT() == 0)
-    {
-        config::instance().sound = 2;
-    }
+    DSINIT();
     if (config::instance().joypad == 1)
     {
         DIINIT();

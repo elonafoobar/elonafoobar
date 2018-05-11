@@ -2085,7 +2085,7 @@ void finish_elona()
     {
         DMEND();
     }
-    if (config::instance().sound == 1)
+    if (config::instance().sound)
     {
         DSEND();
     }
@@ -13431,7 +13431,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         {
             if (cdata[prm_853].max_hp / 4 > cdata[prm_853].hp)
             {
-                if (config::instance().sound == 1)
+                if (config::instance().sound)
                 {
                     if (config::instance().heart == 1)
                     {
