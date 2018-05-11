@@ -3,6 +3,7 @@
 #include "character.hpp"
 #include "config.hpp"
 #include "draw.hpp"
+#include "enums.hpp"
 #include "elona.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
@@ -278,7 +279,7 @@ void play_animation_17_2(int animeid, int anicol, int anisound)
 
 
 
-void play_animation_0(int anicol, int anisound)
+void play_animation_0(int anicol, int anisound, int effect_id)
 {
     prepare_item_image(3, anicol);
     snd(37);
@@ -312,7 +313,7 @@ void play_animation_0(int anicol, int anisound)
                 continue;
             }
             if (dist(anidx, anidy, cdata[cc].position.x, cdata[cc].position.y)
-                > the_ability_db[efid]->sdataref3 % 1000 + 1)
+                > the_ability_db[effect_id]->sdataref3 % 1000 + 1)
             {
                 ap(cnt) = -2;
                 ap(20) = 4;
@@ -1022,7 +1023,7 @@ int FIXME_dig_animation_y;
 
 
 
-void play_animation(int animeid)
+void play_animation(int animeid, element_t ele, optional<int> effect_id)
 {
     if (mode == 9)
         return;
@@ -1040,8 +1041,9 @@ void play_animation(int animeid)
     int anisound = 0;
     if (animeid < 4)
     {
-        anicol = eleinfo(ele, 0);
-        anisound = eleinfo(ele, 1);
+        int idx = static_cast<int>(ele);
+        anicol = eleinfo(idx, 0);
+        anisound = eleinfo(idx, 1);
     }
 
     switch (animeid)
@@ -1054,7 +1056,7 @@ void play_animation(int animeid)
     case 3: play_animation_3(anicol, anisound); break;
     case 17:
     case 2: play_animation_17_2(animeid, anicol, anisound); break;
-    case 0: play_animation_0(anicol, anisound); break;
+    case 0: play_animation_0(anicol, anisound, *effect_id); break;
     case 15: play_animation_15(); break;
     case 111:
     case 110:

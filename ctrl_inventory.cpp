@@ -1,4 +1,5 @@
 #include "ability.hpp"
+#include "access_item_db.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "config.hpp"
@@ -19,7 +20,7 @@ namespace elona
 void pc_turn(bool = true);
 
 
-int ctrl_inventory()
+int ctrl_inventory(int effect_power)
 {
     int mainweapon = 0;
     int countequip = 0;
@@ -339,8 +340,8 @@ label_20591:
             {
                 dbid = inv[cnt].id;
                 dbspec = 12;
-                int is_offerable = access_item_db(16);
-                if (is_offerable == 0)
+                item_db_result result = access_item_db(item_db_query_t::is_offerable);
+                if (!result.is_offerable)
                 {
                     continue;
                 }
@@ -1222,16 +1223,18 @@ label_2061_internal:
                         goto label_2060_internal;
                     }
                 }
-                if (invctrl(1) == 5)
+                if (invctrl(1) == 5) // four dimensional pocket
                 {
-                    if (inv[ci].weight >= efp * 100)
+                    // effect_power is set when opening four dimensional pocket.
+
+                    if (inv[ci].weight >= effect_power * 100)
                     {
                         snd(27);
                         txt(lang(
-                            u8"重さが"s + cnvweight(efp * 100)
+                            u8"重さが"s + cnvweight(effect_power * 100)
                                 + u8"以上の物は入らない。"s,
                             u8"The container can only hold items weight less than "s
-                                + cnvweight(efp * 100) + u8"."s));
+                                + cnvweight(effect_power * 100) + u8"."s));
                         goto label_2060_internal;
                     }
                     if (inv[ci].weight <= 0)
@@ -1242,9 +1245,6 @@ label_2061_internal:
                             u8"The container cannot hold cargos"s));
                         goto label_2060_internal;
                     }
-                }
-                if (invctrl(1) == 5)
-                {
                     if (!actionsp(0, 10))
                     {
                         txt(lang(
@@ -1773,7 +1773,7 @@ label_2061_internal:
         {
             screenupdate = -1;
             update_screen();
-            const auto result = item_identify(inv[ci], efp);
+            const auto result = item_identify(inv[ci], effect_power);
             if (result == identification_state_t::unidentified)
             {
                 txt(lang(
@@ -2098,14 +2098,15 @@ label_2061_internal:
         if (invctrl == 26)
         {
             savecycle();
-            int stat = target_position();
-            if (stat != 1)
+            bool can_see = false;
+            optional<position_t> pos = target_position(false, can_see);
+            if (!pos || !can_see)
             {
-                if (stat == 0)
+                if (!can_see)
                 {
                     txt(lang(
-                        u8"その場所は見えない。"s,
-                        u8"You can't see the location."s));
+                            u8"その場所は見えない。"s,
+                            u8"You can't see the location."s));
                     update_screen();
                 }
                 pc_turn(false);
@@ -2118,7 +2119,7 @@ label_2061_internal:
                 update_screen();
                 pc_turn(false);
             }
-            do_throw_command();
+            do_throw_command(*pos);
             return 0;
         }
         if (invctrl == 27)

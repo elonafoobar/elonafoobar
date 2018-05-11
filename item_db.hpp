@@ -50,8 +50,6 @@ struct item_data
     std::string rffilter;
 };
 
-
-
 class item_db;
 
 

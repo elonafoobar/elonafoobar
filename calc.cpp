@@ -4,6 +4,7 @@
 #include "character.hpp"
 #include "debug.hpp"
 #include "elona.hpp"
+#include "enums.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
@@ -88,147 +89,147 @@ optional<skill_damage> calc_skill_damage(int skill, int cc, int power)
 
     switch (skill)
     {
-    case 412: return skill_damage{0, 1, x * power * 5 / 100, 0, 0};
+    case 412: return skill_damage{0, 1, x * power * 5 / 100, element_t::none, 0};
     case 461:
         return skill_damage{
-            0, 1, clamp((x * 5 + power) / 20 + 40, 40, 100), 0, 0};
-    case 411: return skill_damage{0, 1, x * power * 10 / 100, 0, 0};
+            0, 1, clamp((x * 5 + power) / 20 + 40, 40, 100), element_t::none, 0};
+    case 411: return skill_damage{0, 1, x * power * 10 / 100, element_t::none, 0};
     case 400:
-        return skill_damage{1 + x / 30, power / 40 + 5 + 1, power / 30, 0, 0};
+        return skill_damage{1 + x / 30, power / 40 + 5 + 1, power / 30, element_t::none, 0};
     case 401:
-        return skill_damage{2 + x / 26, power / 25 + 5 + 1, power / 15, 0, 0};
+        return skill_damage{2 + x / 26, power / 25 + 5 + 1, power / 15, element_t::none, 0};
     case 405:
-        return skill_damage{2 + x / 22, power / 18 + 5 + 1, power / 10, 0, 0};
+        return skill_damage{2 + x / 22, power / 18 + 5 + 1, power / 10, element_t::none, 0};
     case 402:
-        return skill_damage{3 + x / 15, power / 12 + 5 + 1, power / 6, 0, 0};
+        return skill_damage{3 + x / 15, power / 12 + 5 + 1, power / 6, element_t::none, 0};
     case 403:
-        return skill_damage{5 + x / 10, power / 7 + 5 + 1, power / 2, 0, 0};
-    case 406: return skill_damage{0, 1, x * 5 + power * 2, 0, 0};
-    case 407: return skill_damage{0, 1, x * 5 + power * 3 / 2, 0, 0};
+        return skill_damage{5 + x / 10, power / 7 + 5 + 1, power / 2, element_t::none, 0};
+    case 406: return skill_damage{0, 1, x * 5 + power * 2, element_t::none, 0};
+    case 407: return skill_damage{0, 1, x * 5 + power * 3 / 2, element_t::none, 0};
     case 623:
         return skill_damage{
-            1 + x / 10, cdata[cc].piety_point / 70 + 1 + 1, 0, 0, 0};
+            1 + x / 10, cdata[cc].piety_point / 70 + 1 + 1, 0, element_t::none, 0};
     case 624:
         return skill_damage{
-            1 + x / 20, cdata[cc].piety_point / 140 + 1 + 1, 0, 0, 0};
+            1 + x / 20, cdata[cc].piety_point / 140 + 1 + 1, 0, element_t::none, 0};
     case 414:
         return skill_damage{power / 125 + 2 + x / 50,
                             power / 60 + 9 + 1,
                             0,
-                            60,
+                            element_t::magic,
                             100 + power / 4};
     case 459:
         return skill_damage{power / 100 + 3 + x / 25,
                             power / 40 + 12 + 1,
                             0,
-                            60,
+                            element_t::magic,
                             100 + power / 4};
     case 418:
         return skill_damage{power / 80 + 1 + x / 18,
                             power / 25 + 8 + 1,
                             0,
-                            53,
+                            element_t::gloomy,
                             200 + power / 3};
     case 415:
         return skill_damage{power / 70 + 1 + x / 18,
                             power / 25 + 8 + 1,
                             0,
-                            56,
+                            element_t::infernal,
                             200 + power / 3};
     case 417:
         return skill_damage{power / 70 + 1 + x / 18,
                             power / 25 + 8 + 1,
                             0,
-                            59,
+                            element_t::chaotic,
                             200 + power / 3};
     case 416:
         return skill_damage{power / 70 + 1 + x / 18,
                             power / 25 + 8 + 1,
                             0,
-                            58,
+                            element_t::numb,
                             200 + power / 3};
     case 419:
         return skill_damage{power / 50 + 1 + x / 20,
                             power / 26 + 4 + 1,
                             0,
-                            51,
+                            element_t::icy,
                             180 + power / 4};
     case 420:
         return skill_damage{power / 50 + 1 + x / 20,
                             power / 26 + 4 + 1,
                             0,
-                            50,
+                            element_t::burning,
                             180 + power / 4};
     case 421:
         return skill_damage{power / 50 + 1 + x / 20,
                             power / 26 + 4 + 1,
                             0,
-                            52,
+                            element_t::electric,
                             180 + power / 4};
     case 422:
         return skill_damage{power / 50 + 1 + x / 20,
                             power / 25 + 4 + 1,
                             0,
-                            53,
+                            element_t::gloomy,
                             180 + power / 4};
     case 423:
         return skill_damage{power / 50 + 1 + x / 20,
                             power / 25 + 4 + 1,
                             0,
-                            54,
+                            element_t::psychic,
                             180 + power / 4};
     case 431:
         return skill_damage{power / 100 + 1 + x / 20,
                             power / 15 + 2 + 1,
                             0,
-                            51,
+                            element_t::icy,
                             150 + power / 5};
     case 432:
         return skill_damage{power / 100 + 1 + x / 20,
                             power / 15 + 2 + 1,
                             0,
-                            50,
+                            element_t::burning,
                             150 + power / 5};
     case 433:
         return skill_damage{power / 80 + 1 + x / 20,
                             power / 12 + 2 + 1,
                             0,
-                            59,
+                            element_t::chaotic,
                             150 + power / 5};
     case 434:
         return skill_damage{power / 80 + 1 + x / 20,
                             power / 12 + 2 + 1,
                             0,
-                            57,
+                            element_t::shivering,
                             150 + power / 5};
     case 460:
         return skill_damage{
-            power / 100 + 1 + x / 25, power / 18 + 2 + 1, 0, 60, 100};
+            power / 100 + 1 + x / 25, power / 18 + 2 + 1, 0, element_t::magic, 100};
     case 404:
-        return skill_damage{x / 20 + 3, power / 15 + 5 + 1, power / 10, 0, 0};
-    case 644: return skill_damage{1 + x / 25, 15 + x / 5 + 1, 1, 0, 0};
-    case 601: return skill_damage{1 + x / 15, 7, x / 4, 56, 200};
-    case 612: return skill_damage{1 + x / 20, 7, x / 15, 0, 0};
-    case 602: return skill_damage{1 + x / 15, 8, x / 8, 50, 100};
-    case 603: return skill_damage{1 + x / 15, 8, x / 8, 51, 100};
-    case 604: return skill_damage{1 + x / 15, 8, x / 8, 52, 100};
-    case 605: return skill_damage{1 + x / 15, 8, x / 8, 53, 100};
-    case 606: return skill_damage{1 + x / 15, 8, x / 8, 59, 100};
-    case 608: return skill_damage{1 + x / 15, 8, x / 8, 56, 100};
-    case 610: return skill_damage{1 + x / 15, 8, x / 8, 55, 100};
-    case 607: return skill_damage{1 + x / 15, 8, x / 8, 57, 100};
-    case 609: return skill_damage{1 + x / 15, 8, x / 8, 58, 100};
-    case 611: return skill_damage{1 + x / 15, 8, x / 8, 54, 100};
-    case 613: return skill_damage{1 + x / 10, 4, 1, 0, 0};
-    case 614: return skill_damage{1 + x / 10, 4, 1, 0, 0};
-    case 617: return skill_damage{1 + x / 10, 4, 0, 0, 100 + x * 2};
-    case 618: return skill_damage{1 + x / 10, 4, 0, 0, 100 + x * 3};
-    case 615: return skill_damage{1 + x / 10, 5, 0, 55, x * 4 + 20};
-    case 616: return skill_damage{1 + x / 10, 5, 0, 58, x * 4 + 20};
-    case 636: return skill_damage{1 + x / 20, 11, 1, 0, 0};
+        return skill_damage{x / 20 + 3, power / 15 + 5 + 1, power / 10, element_t::none, 0};
+    case 644: return skill_damage{1 + x / 25, 15 + x / 5 + 1, 1, element_t::none, 0};
+    case 601: return skill_damage{1 + x / 15, 7, x / 4, element_t::infernal, 200};
+    case 612: return skill_damage{1 + x / 20, 7, x / 15, element_t::none, 0};
+    case 602: return skill_damage{1 + x / 15, 8, x / 8, element_t::burning, 100};
+    case 603: return skill_damage{1 + x / 15, 8, x / 8, element_t::icy, 100};
+    case 604: return skill_damage{1 + x / 15, 8, x / 8, element_t::electric, 100};
+    case 605: return skill_damage{1 + x / 15, 8, x / 8, element_t::gloomy, 100};
+    case 606: return skill_damage{1 + x / 15, 8, x / 8, element_t::chaotic, 100};
+    case 608: return skill_damage{1 + x / 15, 8, x / 8, element_t::infernal, 100};
+    case 610: return skill_damage{1 + x / 15, 8, x / 8, element_t::poisonous, 100};
+    case 607: return skill_damage{1 + x / 15, 8, x / 8, element_t::shivering, 100};
+    case 609: return skill_damage{1 + x / 15, 8, x / 8, element_t::numb, 100};
+    case 611: return skill_damage{1 + x / 15, 8, x / 8, element_t::psychic, 100};
+    case 613: return skill_damage{1 + x / 10, 4, 1, element_t::none, 0};
+    case 614: return skill_damage{1 + x / 10, 4, 1, element_t::none, 0};
+    case 617: return skill_damage{1 + x / 10, 4, 0, element_t::none, 100 + x * 2};
+    case 618: return skill_damage{1 + x / 10, 4, 0, element_t::none, 100 + x * 3};
+    case 615: return skill_damage{1 + x / 10, 5, 0, element_t::poisonous, x * 4 + 20};
+    case 616: return skill_damage{1 + x / 10, 5, 0, element_t::numb, x * 4 + 20};
+    case 636: return skill_damage{1 + x / 20, 11, 1, element_t::none, 0};
     case 655:
         return skill_damage{
-            power / 80 + 1, power / 8 + 2 + 1, 0, 57, 150 + power / 2};
+            power / 80 + 1, power / 8 + 2 + 1, 0, element_t::shivering, 150 + power / 2};
     default: return none;
     }
 }
@@ -921,7 +922,7 @@ int calcitemvalue(int ci, int situation)
     if (ibit(4, ci) == 1)
     {
         dbid = inv[ci].id;
-        access_item_db(2);
+        access_item_db(item_db_query_t::charge_level);
         if (inv[ci].count < 0)
         {
             ret = ret / 10;

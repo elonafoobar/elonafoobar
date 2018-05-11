@@ -1,4 +1,5 @@
 #include <unordered_map>
+#include "access_item_db.hpp"
 #include "character.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
@@ -6,18 +7,17 @@
 #include "item_db.hpp"
 #include "variables.hpp"
 
-
-
 namespace elona
 {
 
 
-int access_item_db(int dbmode)
+item_db_result access_item_db(item_db_query_t dbmode)
 {
+    item_db_result result = { false, false, read_item_t::none, -1, 0 }; // default to returning invalid effect_id
     const auto info = the_item_db[dbid];
     if (info)
     {
-        if (dbmode == 10 || dbmode == 3)
+        if (dbmode == item_db_query_t::fixmaterial || dbmode == item_db_query_t::initialize)
         {
             inv[ci].value = info->value;
             inv[ci].weight = info->weight;
@@ -28,16 +28,16 @@ int access_item_db(int dbmode)
             inv[ci].pv = info->pv;
             inv[ci].dv = info->dv;
             inv[ci].material = info->material;
-            if (dbmode == 10)
-                return 0;
+            if (dbmode == item_db_query_t::fixmaterial)
+                return result;
         }
-        else if (dbmode == 2)
+        else if (dbmode == item_db_query_t::charge_level)
         {
             ichargelevel = info->chargelevel;
             reftype = info->category;
-            return 0;
+            return result;
         }
-        else if (dbmode == 17)
+        else if (dbmode == item_db_query_t::identified)
         {
             if (jp)
             {
@@ -50,15 +50,16 @@ int access_item_db(int dbmode)
             {
                 description(3) = info->description_en;
             }
-            return 0;
+            return result;
         }
     }
     else
     {
-        return -999;
+        //return -999;
+        return result;
     }
 
-    if (dbmode == 3)
+    if (dbmode == item_db_query_t::initialize)
     {
         // Common initialization
         inv[ci].id = dbid;
@@ -73,13 +74,13 @@ int access_item_db(int dbmode)
     switch (dbid)
     {
     case 792:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 8;
         }
         break;
     case 791:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 100;
             fixeditemenc(0) = 57;
@@ -93,67 +94,69 @@ int access_item_db(int dbmode)
         }
         break;
     case 790:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 15;
         }
         break;
     case 789:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 15;
         }
         break;
     case 788:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 108;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::lulwy;
+            result.is_offerable = cdata[0].god_id == core_god::lulwy;
+            return result;
         }
         break;
     case 787:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 5;
             inv[ci].param3 = 720;
         }
         break;
     case 786:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 4;
         }
         break;
     case 785:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 1;
         }
         break;
     case 783:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            decode_book();
-            return -1;
+            // recipes don't have effect_id/effect_power
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 781:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 101;
         }
         break;
     case 778:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 44;
         }
         break;
     case 777:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 26;
             ibitmod(5, ci, 1);
@@ -163,7 +166,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 776:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 26;
             ibitmod(5, ci, 1);
@@ -173,49 +176,47 @@ int access_item_db(int dbmode)
         }
         break;
     case 775:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
             inv[ci].param2 = 8;
         }
         break;
     case 772:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 2000;
             inv[ci].param3 = 32;
         }
         break;
     case 771:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             fixlv = 6;
         }
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1147;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.effect_id = 1147;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 770:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1146;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.effect_id = 1146;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 767:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 0;
         }
         break;
     case 761:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 183;
             fixeditemenc(0) = 60;
@@ -228,7 +229,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 760:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 49;
             ibitmod(5, ci, 1);
@@ -237,13 +238,13 @@ int access_item_db(int dbmode)
         }
         break;
     case 759:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 100;
         }
         break;
     case 758:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 110;
             fixeditemenc(0) = 35;
@@ -255,7 +256,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 757:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             fixeditemenc(0) = 59;
             fixeditemenc(1) = 100;
@@ -274,26 +275,26 @@ int access_item_db(int dbmode)
         }
         break;
     case 756:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 7;
         }
         break;
     case 755:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 6;
         }
         break;
     case 749:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 48;
             ibitmod(5, ci, 1);
         }
         break;
     case 748:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 47;
             ibitmod(5, ci, 1);
@@ -301,19 +302,19 @@ int access_item_db(int dbmode)
         }
         break;
     case 747:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 1;
             inv[ci].param2 = rnd(4) + 1;
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            read_normal_book();
-            return -1;
+            result.read_item = read_item_t::normal_book;
+            return result;
         }
         break;
     case 746:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 30;
             ibitmod(5, ci, 1);
@@ -324,7 +325,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 745:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 30;
             ibitmod(5, ci, 1);
@@ -335,7 +336,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 744:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 30;
             ibitmod(5, ci, 1);
@@ -346,7 +347,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 743:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 30;
             ibitmod(5, ci, 1);
@@ -357,19 +358,19 @@ int access_item_db(int dbmode)
         }
         break;
     case 742:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
             fixlv = 6;
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            read_normal_book();
-            return -1;
+            result.read_item = read_item_t::normal_book;
+            return result;
         }
         break;
     case 741:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 100;
             fixeditemenc(0) = 20050;
@@ -387,7 +388,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 740:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             fixeditemenc(0) = 56;
             fixeditemenc(1) = 100;
@@ -402,7 +403,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 739:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 107;
             fixeditemenc(0) = 80002;
@@ -424,31 +425,30 @@ int access_item_db(int dbmode)
         }
         break;
     case 738:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 6;
         }
         break;
     case 737:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1145;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.effect_id = 1145;
+            result.effect_power = 100;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 736:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1116;
-            efp = 250;
-            drink_potion();
-            return -1;
+            result.effect_id = 1116;
+            result.effect_power = 250;
+            return result;
         }
         break;
     case 735:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 107;
             fixeditemenc(0) = 80025;
@@ -457,47 +457,47 @@ int access_item_db(int dbmode)
         }
         break;
     case 733:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 45;
         }
         break;
     case 732:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 464;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 464;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 731:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 463;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 463;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 730:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
         }
         break;
     case 728:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             fixeditemenc(0) = 55;
             fixeditemenc(1) = 100;
@@ -512,7 +512,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 727:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 168;
             fixeditemenc(0) = 54;
@@ -526,7 +526,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 726:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 168;
             fixeditemenc(0) = 30183;
@@ -542,7 +542,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 725:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 111;
             fixeditemenc(0) = 70059;
@@ -558,13 +558,13 @@ int access_item_db(int dbmode)
         }
         break;
     case 724:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
         }
         break;
     case 723:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             fixeditemenc(0) = 50;
             fixeditemenc(1) = 600;
@@ -577,7 +577,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 722:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             fixeditemenc(0) = 51;
             fixeditemenc(1) = 600;
@@ -590,7 +590,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 721:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 43;
             ibitmod(5, ci, 1);
@@ -600,13 +600,13 @@ int access_item_db(int dbmode)
         }
         break;
     case 720:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 200;
         }
         break;
     case 719:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 100;
             fixeditemenc(0) = 44;
@@ -622,7 +622,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 718:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 111;
             fixeditemenc(0) = 40;
@@ -642,13 +642,13 @@ int access_item_db(int dbmode)
         }
         break;
     case 717:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 42;
         }
         break;
     case 716:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 111;
             ibitmod(5, ci, 1);
@@ -657,13 +657,13 @@ int access_item_db(int dbmode)
         }
         break;
     case 715:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 41;
         }
         break;
     case 714:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 111;
             fixeditemenc(0) = 80024;
@@ -672,7 +672,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 713:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 111;
             fixeditemenc(0) = 70061;
@@ -681,55 +681,55 @@ int access_item_db(int dbmode)
         }
         break;
     case 712:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1115;
-            return -1;
+            result.effect_id = 1115;
+            result.read_item = read_item_t::deed;
+            return result;
         }
         break;
     case 711:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1144;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.effect_id = 1144;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 710:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 462;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 462;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 709:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 462;
-            efp = 1500;
-            read_scroll();
-            return -1;
+            result.effect_id = 462;
+            result.effect_power = 1500;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 708:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 461;
-            efp = 2500;
-            read_scroll();
-            return -1;
+            result.effect_id = 461;
+            result.effect_power = 2500;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 707:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 183;
             fixeditemenc(0) = 49;
@@ -742,16 +742,15 @@ int access_item_db(int dbmode)
         }
         break;
     case 706:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1143;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.effect_id = 1143;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 705:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             fixeditemenc(0) = 48;
             fixeditemenc(1) = 100;
@@ -766,22 +765,21 @@ int access_item_db(int dbmode)
         }
         break;
     case 704:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1130;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.effect_id = 1130;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 703:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 39;
         }
         break;
     case 702:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
             inv[ci].param2 = 4;
@@ -789,64 +787,63 @@ int access_item_db(int dbmode)
         }
         break;
     case 701:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 37;
         }
         break;
     case 700:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
             menucycle = 1;
             show_city_chart();
-            return -1;
+            return result;
         }
         break;
     case 699:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
         }
         break;
     case 698:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1142;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.effect_id = 1142;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 697:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 459;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 459;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 696:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 460;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 460;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 695:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 102;
             fixeditemenc(0) = 44;
@@ -858,7 +855,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 693:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 183;
             inv[ci].function = 17;
@@ -866,7 +863,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 692:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 183;
             inv[ci].function = 17;
@@ -874,7 +871,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 691:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 183;
             inv[ci].function = 17;
@@ -882,7 +879,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 690:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 183;
             inv[ci].function = 17;
@@ -890,31 +887,32 @@ int access_item_db(int dbmode)
         }
         break;
     case 689:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 36;
         }
         break;
     case 688:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 35;
         }
         break;
     case 687:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            decode_book();
-            return -1;
+            // ancient books don't have effect_id/effect_power
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 686:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 34;
             ibitmod(5, ci, 1);
@@ -924,20 +922,20 @@ int access_item_db(int dbmode)
         }
         break;
     case 685:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 33;
         }
         break;
     case 684:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 32;
             ibitmod(5, ci, 1);
         }
         break;
     case 683:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 30;
             ibitmod(5, ci, 1);
@@ -949,7 +947,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 682:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 31;
             ibitmod(5, ci, 1);
@@ -959,7 +957,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 681:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 30;
             ibitmod(5, ci, 1);
@@ -971,7 +969,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 680:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 30;
             ibitmod(5, ci, 1);
@@ -983,7 +981,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 679:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 103;
             fixeditemenc(0) = 39;
@@ -1003,7 +1001,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 678:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 101;
             fixeditemenc(0) = 41;
@@ -1023,7 +1021,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 677:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 104;
             fixeditemenc(0) = 80023;
@@ -1043,7 +1041,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 676:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 105;
             fixeditemenc(0) = 80000;
@@ -1067,7 +1065,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 675:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 107;
             fixeditemenc(0) = 30184;
@@ -1091,7 +1089,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 674:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 110;
             fixeditemenc(0) = 80017;
@@ -1109,7 +1107,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 673:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 108;
             fixeditemenc(0) = 80014;
@@ -1127,7 +1125,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 672:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 29;
             ibitmod(5, ci, 1);
@@ -1135,7 +1133,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 671:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 28;
             ibitmod(5, ci, 1);
@@ -1143,37 +1141,37 @@ int access_item_db(int dbmode)
         }
         break;
     case 670:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 7;
         }
         break;
     case 669:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 7;
         }
         break;
     case 668:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 1;
             inv[ci].param2 = rnd(4) + 1;
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            read_normal_book();
-            return -1;
+            result.read_item = read_item_t::normal_book;
+            return result;
         }
         break;
     case 667:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 7;
         }
         break;
     case 666:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 27;
             ibitmod(5, ci, 1);
@@ -1183,7 +1181,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 665:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 26;
             ibitmod(5, ci, 1);
@@ -1193,7 +1191,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 664:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             fixeditemenc(0) = 10018;
             fixeditemenc(1) = 400 + rnd((rnd(1000) + 1));
@@ -1201,14 +1199,14 @@ int access_item_db(int dbmode)
         }
         break;
     case 663:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
             fixlv = 6;
         }
         break;
     case 662:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
             inv[ci].param2 = 7;
@@ -1216,7 +1214,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 661:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             fixeditemenc(0) = 43;
             fixeditemenc(1) = 100;
@@ -1233,21 +1231,21 @@ int access_item_db(int dbmode)
         }
         break;
     case 660:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 5 + rnd(5) - rnd(5);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 418;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 418;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 655:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
             inv[ci].param2 = 7;
@@ -1255,45 +1253,45 @@ int access_item_db(int dbmode)
         }
         break;
     case 654:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 160;
         }
         break;
     case 650:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            drink_well();
-            return -1;
+            //drink_well();
+            return result;
         }
         break;
     case 648:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 44;
         }
         break;
     case 643:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 130;
         }
         break;
     case 641:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
             fixlv = 6;
         }
         break;
     case 640:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 25;
         }
         break;
     case 639:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
             inv[ci].param2 = 7;
@@ -1301,35 +1299,35 @@ int access_item_db(int dbmode)
         }
         break;
     case 638:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1141;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.effect_id = 1141;
+            result.effect_power = 100;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 637:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
             fixlv = 6;
         }
         break;
     case 635:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 24;
         }
         break;
     case 634:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 23;
         }
         break;
     case 633:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 111;
             fixeditemenc(0) = 70054;
@@ -1338,22 +1336,22 @@ int access_item_db(int dbmode)
         }
         break;
     case 632:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1140;
-            efp = 150;
-            read_scroll();
-            return -1;
+            result.effect_id = 1140;
+            result.effect_power = 150;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 630:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 21;
         }
         break;
     case 629:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 20;
             inv[ci].count = 4 + rnd(4) - rnd(4);
@@ -1361,21 +1359,21 @@ int access_item_db(int dbmode)
         }
         break;
     case 628:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 458;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 458;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 627:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             fixeditemenc(0) = 25;
             fixeditemenc(1) = 100;
@@ -1396,360 +1394,355 @@ int access_item_db(int dbmode)
         }
         break;
     case 626:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
         }
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1139;
-            efp = 500;
-            drink_potion();
-            return -1;
+            result.effect_id = 1139;
+            result.effect_power = 500;
+            return result;
         }
         break;
     case 625:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
         }
         break;
     case 624:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1137;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.effect_id = 1137;
+            result.effect_power = 100;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 623:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1138;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.effect_id = 1138;
+            result.effect_power = 100;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 622:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
         }
         break;
     case 621:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1136;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.effect_id = 1136;
+            result.effect_power = 100;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 620:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1135;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.effect_id = 1135;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 618:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = cdata[0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 616:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
         }
         break;
     case 615:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
         }
         break;
     case 613:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 180;
         }
         break;
     case 611:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 8;
         }
         break;
     case 606:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 15;
             inv[ci].param1 = 225;
         }
         break;
     case 603:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 44;
             ibitmod(5, ci, 1);
         }
         break;
     case 602:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 100;
         }
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            drink_well();
-            return -1;
+            //drink_well();
+            return result;
         }
         break;
     case 600:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
         }
         break;
     case 598:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 6;
         }
         break;
     case 597:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 6;
         }
         break;
     case 587:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 14;
         }
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1103;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.effect_id = 1103;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 583:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 13;
             inv[ci].param1 = 100;
         }
         break;
     case 582:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 457;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 457;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 581:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 6 + rnd(6) - rnd(6);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 457;
-            efp = 100;
-            return -1;
+            result.effect_id = 457;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 578:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 11;
         }
         break;
     case 577:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1133;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.effect_id = 1133;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 576:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 10;
         }
         break;
     case 574:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1101;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.effect_id = 1101;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 573:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 8000;
             inv[ci].param3 = 240;
         }
         break;
     case 572:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1115;
-            return -1;
+            result.effect_id = 1115;
+            result.read_item = read_item_t::deed;
+            return result;
         }
         break;
     case 571:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 5;
         }
         break;
     case 570:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 456;
-            efp = 100;
-            return -1;
+            result.effect_id = 456;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 569:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 456;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 456;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 568:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 12 + rnd(12) - rnd(12);
             ibitmod(4, ci, 1);
         }
         break;
     case 567:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 12 + rnd(12) - rnd(12);
             ibitmod(4, ci, 1);
         }
         break;
     case 566:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1116;
-            efp = 250;
-            drink_potion();
-            return -1;
+            result.effect_id = 1116;
+            result.effect_power = 250;
+            return result;
         }
         break;
     case 565:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 455;
-            efp = 100;
-            return -1;
+            result.effect_id = 455;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 564:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 455;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 455;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 563:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 0;
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            read_normal_book();
-            return -1;
+            result.read_item = read_item_t::normal_book;
+            return result;
         }
         break;
     case 562:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 8;
         }
         break;
     case 560:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
         }
         break;
     case 559:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1131;
-            efp = 200;
-            drink_potion();
-            return -1;
+            result.effect_id = 1131;
+            result.effect_power = 200;
+            return result;
         }
         break;
     case 558:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             fixeditemenc(0) = 31;
             fixeditemenc(1) = 100;
@@ -1759,7 +1752,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 557:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             fixeditemenc(0) = 30;
             fixeditemenc(1) = 100;
@@ -1767,7 +1760,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 556:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             fixeditemenc(0) = 29;
             fixeditemenc(1) = 500;
@@ -1775,33 +1768,35 @@ int access_item_db(int dbmode)
         }
         break;
     case 555:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 7;
         }
         break;
     case 554:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 1;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = cdata[0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 553:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 1;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = cdata[0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 552:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             fixeditemenc(0) = 32;
             fixeditemenc(1) = 100;
@@ -1809,134 +1804,138 @@ int access_item_db(int dbmode)
         }
         break;
     case 551:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 405;
-            efp = 100;
-            return -1;
+            result.effect_id = 405;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 550:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 405;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 405;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 549:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 404;
-            efp = 400;
-            read_scroll();
-            return -1;
+            result.effect_id = 404;
+            result.effect_power = 400;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 548:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 404;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 404;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 546:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 438;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 438;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 545:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 7 + rnd(7) - rnd(7);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 438;
-            efp = 100;
-            return -1;
+            result.effect_id = 438;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 544:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 6;
             inv[ci].param1 = discsetmc();
         }
         break;
     case 543:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1115;
-            return -1;
+            result.effect_id = 1115;
+            result.read_item = read_item_t::deed;
+            return result;
         }
         break;
     case 542:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1115;
-            return -1;
+            result.effect_id = 1115;
+            result.read_item = read_item_t::deed;
+            return result;
         }
         break;
     case 526:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = rnd(5) + 2;
             inv[ci].param2 = isetfruit(rnd(length(isetfruit)));
         }
         break;
     case 522:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 1;
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1115;
-            return -1;
+            result.effect_id = 1115;
+            result.read_item = read_item_t::deed;
+            return result;
         }
         break;
     case 521:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 1;
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1115;
-            return -1;
+            result.effect_id = 1115;
+            result.read_item = read_item_t::deed;
+            return result;
         }
         break;
     case 520:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             fixeditemenc(0) = 32;
             fixeditemenc(1) = 100;
@@ -1944,60 +1943,58 @@ int access_item_db(int dbmode)
         }
         break;
     case 519:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1108;
-            efp = 150;
-            drink_potion();
-            return -1;
+            result.effect_id = 1108;
+            result.effect_power = 150;
+            return result;
         }
         break;
     case 518:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 1132;
-            efp = 100;
-            return -1;
+            result.effect_id = 1132;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 517:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 628;
-            efp = 100;
-            return -1;
+            result.effect_id = 628;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 516:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1103;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.effect_id = 1103;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 515:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1129;
-            efp = 300;
-            read_scroll();
-            return -1;
+            result.effect_id = 1129;
+            result.effect_power = 300;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 514:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 110;
             fixeditemenc(0) = 80003;
@@ -2017,979 +2014,984 @@ int access_item_db(int dbmode)
         }
         break;
     case 513:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 110;
         }
         break;
     case 512:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 110;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = cdata[0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 511:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 100 + rnd(200);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1128;
-            efp = inv[ci].param1;
-            read_scroll();
-            return -1;
+            result.effect_id = 1128;
+            result.effect_power = inv[ci].param1;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 509:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1125;
-            efp = 400;
-            read_scroll();
-            return -1;
+            result.effect_id = 1125;
+            result.effect_power = 400;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 508:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1125;
-            efp = 200;
-            read_scroll();
-            return -1;
+            result.effect_id = 1125;
+            result.effect_power = 200;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 507:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1124;
-            efp = 400;
-            read_scroll();
-            return -1;
+            result.effect_id = 1124;
+            result.effect_power = 400;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 506:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1124;
-            efp = 200;
-            read_scroll();
-            return -1;
+            result.effect_id = 1124;
+            result.effect_power = 200;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 505:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             ibitmod(5, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1123;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.effect_id = 1123;
+            result.effect_power = 100;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 502:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1127;
-            efp = 350;
-            read_scroll();
-            return -1;
+            result.effect_id = 1127;
+            result.effect_power = 350;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 501:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1127;
-            efp = 180;
-            read_scroll();
-            return -1;
+            result.effect_id = 1127;
+            result.effect_power = 180;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 500:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1127;
-            efp = 10;
-            read_scroll();
-            return -1;
+            result.effect_id = 1127;
+            result.effect_power = 10;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 499:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 7;
         }
         break;
     case 498:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 6;
         }
         break;
     case 497:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 5;
         }
         break;
     case 496:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 110;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = cdata[0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 495:
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = cdata[0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 494:
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = cdata[0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 492:
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = cdata[0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 491:
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = cdata[0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 490:
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = cdata[0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 489:
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = cdata[0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 488:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 9;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = cdata[0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 487:
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = cdata[0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 486:
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = cdata[0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 485:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 436;
-            efp = 100;
-            return -1;
+            result.effect_id = 436;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 484:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 436;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 436;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 483:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 109;
         }
         break;
     case 482:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 109;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::lulwy;
+            result.is_offerable = cdata[0].god_id == core_god::lulwy;
+            return result;
         }
         break;
     case 481:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 435;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 435;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 480:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 435;
-            efp = 100;
-            return -1;
+            result.effect_id = 435;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 479:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1122;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.effect_id = 1122;
+            result.effect_power = 100;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 478:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 5;
         }
         break;
     case 454:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 168;
         }
         break;
     case 453:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 168;
         }
         break;
     case 452:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 168;
         }
         break;
     case 451:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 168;
         }
         break;
     case 450:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 168;
         }
         break;
     case 449:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 168;
         }
         break;
     case 434:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 454;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 454;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 433:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1121;
-            efp = 200;
-            drink_potion();
-            return -1;
+            result.effect_id = 1121;
+            result.effect_power = 200;
+            return result;
         }
         break;
     case 432:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 454;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.effect_id = 454;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 431:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1107;
-            efp = 300;
-            read_scroll();
-            return -1;
+            result.effect_id = 1107;
+            result.effect_power = 300;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 430:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1119;
-            efp = 500;
-            read_scroll();
-            return -1;
+            result.effect_id = 1119;
+            result.effect_power = 500;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 429:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1118;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.effect_id = 1118;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 428:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 0;
         }
         break;
     case 427:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 7;
         }
         break;
     case 426:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 3;
         }
         break;
     case 425:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 6;
         }
         break;
     case 424:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 3;
         }
         break;
     case 423:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 4;
         }
         break;
     case 422:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 1;
         }
         break;
     case 421:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 1;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = cdata[0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 420:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 1;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = cdata[0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 419:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 1;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = cdata[0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 418:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 1;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = cdata[0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 417:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 1;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = cdata[0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 412:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 412;
-            efp = 100;
-            return -1;
+            result.effect_id = 412;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 411:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 430;
-            efp = 500;
-            read_scroll();
-            return -1;
+            result.effect_id = 430;
+            result.effect_power = 500;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 410:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 430;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 430;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 409:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 5;
         }
         break;
     case 408:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 1;
         }
         break;
     case 407:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 2;
         }
         break;
     case 406:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 0;
         }
         break;
     case 405:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 3;
         }
         break;
     case 404:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 0;
         }
         break;
     case 403:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 3;
         }
         break;
     case 402:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 5;
         }
         break;
     case 401:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 4;
         }
         break;
     case 400:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 2;
         }
         break;
     case 399:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 1;
         }
         break;
     case 398:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 453;
-            efp = 250;
-            read_scroll();
-            return -1;
+            result.effect_id = 453;
+            result.effect_power = 250;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 397:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 5 + rnd(5) - rnd(5);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 453;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 453;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 396:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 452;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 452;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 395:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1117;
-            efp = 250;
-            read_scroll();
-            return -1;
+            result.effect_id = 1117;
+            result.effect_power = 250;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 393:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 3;
         }
         break;
     case 392:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1116;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.effect_id = 1116;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 391:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 621;
-            efp = 100;
-            return -1;
+            result.effect_id = 621;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 390:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 621;
-            efp = 250;
-            read_scroll();
-            return -1;
+            result.effect_id = 621;
+            result.effect_power = 250;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 389:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 407;
-            efp = 300;
-            read_scroll();
-            return -1;
+            result.effect_id = 407;
+            result.effect_power = 300;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 388:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 406;
-            efp = 300;
-            read_scroll();
-            return -1;
+            result.effect_id = 406;
+            result.effect_power = 300;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 387:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 407;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 407;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 386:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 406;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 406;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 385:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 6 + rnd(6) - rnd(6);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 407;
-            efp = 100;
-            return -1;
+            result.effect_id = 407;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 384:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 451;
-            efp = 250;
-            read_scroll();
-            return -1;
+            result.effect_id = 451;
+            result.effect_power = 250;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 383:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 451;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 451;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 382:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 449;
-            efp = 250;
-            drink_potion();
-            return -1;
+            result.effect_id = 449;
+            result.effect_power = 250;
+            return result;
         }
         break;
     case 381:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 450;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 450;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 380:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 449;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 449;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 379:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 448;
-            efp = 250;
-            drink_potion();
-            return -1;
+            result.effect_id = 448;
+            result.effect_power = 250;
+            return result;
         }
         break;
     case 378:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 5 + rnd(5) - rnd(5);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 448;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 448;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 377:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 446;
-            efp = 100;
-            return -1;
+            result.effect_id = 446;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 376:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 447;
-            efp = 400;
-            drink_potion();
-            return -1;
+            result.effect_id = 447;
+            result.effect_power = 400;
+            return result;
         }
         break;
     case 375:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 446;
-            efp = 250;
-            drink_potion();
-            return -1;
+            result.effect_id = 446;
+            result.effect_power = 250;
+            return result;
         }
         break;
     case 374:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 447;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 447;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 373:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 446;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 446;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 372:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 445;
-            efp = 250;
-            drink_potion();
-            return -1;
+            result.effect_id = 445;
+            result.effect_power = 250;
+            return result;
         }
         break;
     case 371:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 445;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 445;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 370:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 444;
-            efp = 300;
-            drink_potion();
-            return -1;
+            result.effect_id = 444;
+            result.effect_power = 300;
+            return result;
         }
         break;
     case 369:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 444;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 444;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 368:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 443;
-            efp = 400;
-            drink_potion();
-            return -1;
+            result.effect_id = 443;
+            result.effect_power = 400;
+            return result;
         }
         break;
     case 367:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 443;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 443;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 366:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 7 + rnd(7) - rnd(7);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 443;
-            efp = 100;
-            return -1;
+            result.effect_id = 443;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 365:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 5 + rnd(5) - rnd(5);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 442;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 442;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 364:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 442;
-            efp = 200;
-            drink_potion();
-            return -1;
+            result.effect_id = 442;
+            result.effect_power = 200;
+            return result;
         }
         break;
     case 363:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 412;
-            efp = 2500;
-            read_scroll();
-            return -1;
+            result.effect_id = 412;
+            result.effect_power = 2500;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 362:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 411;
-            efp = 2000;
-            read_scroll();
-            return -1;
+            result.effect_id = 411;
+            result.effect_power = 2000;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 360:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             fixeditemenc(0) = 41;
             fixeditemenc(1) = 100;
@@ -3010,7 +3012,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 359:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 104;
             fixeditemenc(0) = 40;
@@ -3028,7 +3030,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 358:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 105;
             fixeditemenc(0) = 80002;
@@ -3050,7 +3052,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 357:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             fixeditemenc(0) = 42;
             fixeditemenc(1) = 100;
@@ -3075,7 +3077,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 356:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 103;
             fixeditemenc(0) = 38;
@@ -3097,7 +3099,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 355:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             fixeditemenc(0) = 39;
             fixeditemenc(1) = 150;
@@ -3120,508 +3122,516 @@ int access_item_db(int dbmode)
         }
         break;
     case 354:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = cdata[0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 353:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = cdata[0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 352:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = cdata[0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 351:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = cdata[0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 350:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = cdata[0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 349:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = cdata[0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 348:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = cdata[0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 347:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = cdata[0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 346:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = cdata[0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 345:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 6000;
             inv[ci].param3 = 4;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = cdata[0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 344:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 1;
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1115;
-            return -1;
+            result.effect_id = 1115;
+            result.read_item = read_item_t::deed;
+            return result;
         }
         break;
     case 343:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 22;
         }
         break;
     case 342:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 16;
             inv[ci].param1 = 60;
         }
         break;
     case 334:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 44;
         }
         break;
     case 333:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 3;
         }
         break;
     case 330:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 44;
         }
         break;
     case 328:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 17;
             inv[ci].param1 = 150;
         }
         break;
     case 327:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 44;
         }
         break;
     case 325:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 130;
         }
         break;
     case 322:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 19;
         }
         break;
     case 319:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 0;
         }
         break;
     case 310:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 130;
         }
         break;
     case 309:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 19;
         }
         break;
     case 307:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 130;
         }
         break;
     case 306:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 15;
             inv[ci].param1 = 200;
         }
         break;
     case 305:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 130;
         }
         break;
     case 304:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 100;
         }
         break;
     case 303:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 120;
         }
         break;
     case 299:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 19;
         }
         break;
     case 297:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 150;
         }
         break;
     case 290:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 1 + rnd(1) - rnd(1);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 441;
-            efp = 100;
-            return -1;
+            result.effect_id = 441;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 289:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 1 + rnd(1) - rnd(1);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 441;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 441;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 288:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1114;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.effect_id = 1114;
+            result.effect_power = 100;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 287:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1113;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.effect_id = 1113;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 286:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 440;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.effect_id = 440;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 285:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 439;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.effect_id = 439;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 272:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 433;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 433;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 271:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 434;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 434;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 270:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 432;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 432;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 269:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 431;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 431;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 268:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 423;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 423;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 267:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 422;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 422;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 266:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 101;
         }
         break;
     case 265:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 416;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 416;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 264:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 417;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 417;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 263:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 415;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 415;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 262:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1108;
-            efp = 200;
-            drink_potion();
-            return -1;
+            result.effect_id = 1108;
+            result.effect_power = 200;
+            return result;
         }
         break;
     case 261:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 6000;
             inv[ci].param3 = 6;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::ehekatl;
+            result.is_offerable = cdata[0].god_id == core_god::ehekatl;
+            return result;
         }
         break;
     case 260:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 7000;
             inv[ci].param3 = 240;
         }
         break;
     case 259:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 5000;
             inv[ci].param3 = 24;
         }
         break;
     case 258:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 3;
         }
         break;
     case 257:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 5 + rnd(5) - rnd(5);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 414;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 414;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 256:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 15;
             inv[ci].param1 = 80;
         }
         break;
     case 255:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 15;
             inv[ci].param1 = 40;
         }
         break;
     case 254:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 183;
             inv[ci].function = 17;
@@ -3629,272 +3639,275 @@ int access_item_db(int dbmode)
         }
         break;
     case 253:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1102;
-            efp = 200;
-            drink_potion();
-            return -1;
+            result.effect_id = 1102;
+            result.effect_power = 200;
+            return result;
         }
         break;
     case 252:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 403;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 403;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 251:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 402;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 402;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 250:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 401;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 401;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 249:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 5 + rnd(5) - rnd(5);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 400;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 400;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 248:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 3 + rnd(3) - rnd(3);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 428;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 428;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 247:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 2 + rnd(2) - rnd(2);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 413;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 413;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 246:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 429;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 429;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 245:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 408;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.effect_id = 408;
+            result.effect_power = 100;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 244:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1104;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.effect_id = 1104;
+            result.effect_power = 100;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 243:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 1105;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.effect_id = 1105;
+            result.effect_power = 100;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 242:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 429;
-            efp = 500;
-            read_scroll();
-            return -1;
+            result.effect_id = 429;
+            result.effect_power = 500;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 236:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 428;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.effect_id = 428;
+            result.effect_power = 100;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 235:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 104;
         }
         break;
     case 234:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 102;
         }
         break;
     case 233:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 3;
         }
         break;
     case 232:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 100;
         }
         break;
     case 231:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 110;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = cdata[0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 230:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 108;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::lulwy;
+            result.is_offerable = cdata[0].god_id == core_god::lulwy;
+            return result;
         }
         break;
     case 229:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 105;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::itzpalt;
+            result.is_offerable = cdata[0].god_id == core_god::itzpalt;
+            return result;
         }
         break;
     case 228:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 104;
         }
         break;
     case 227:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 103;
         }
         break;
     case 226:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 102;
         }
         break;
     case 225:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 101;
         }
         break;
     case 224:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 100;
         }
         break;
     case 223:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 15;
             inv[ci].param1 = 60;
         }
         break;
     case 219:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 46;
         }
         break;
     case 213:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 104;
         }
         break;
     case 212:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 105;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::itzpalt;
+            result.is_offerable = cdata[0].god_id == core_god::itzpalt;
+            return result;
         }
         break;
     case 211:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 107;
             fixeditemenc(0) = 80025;
@@ -3903,22 +3916,22 @@ int access_item_db(int dbmode)
         }
         break;
     case 210:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 111;
         }
         break;
     case 209:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 412;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.effect_id = 412;
+            result.effect_power = 100;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 207:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 108;
             fixeditemenc(0) = 80001;
@@ -3940,7 +3953,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 206:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 101;
             fixeditemenc(0) = 80000;
@@ -3958,492 +3971,503 @@ int access_item_db(int dbmode)
         }
         break;
     case 205:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1102;
-            efp = 500;
-            drink_potion();
-            return -1;
+            result.effect_id = 1102;
+            result.effect_power = 500;
+            return result;
         }
         break;
     case 204:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 1000;
             inv[ci].param3 = 4;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return 1;
+            result.is_offerable = true;
+            return result;
         }
         break;
     case 203:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 401;
-            efp = 100;
-            return -1;
+            result.effect_id = 401;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 202:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 9 + rnd(9) - rnd(9);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 429;
-            efp = 100;
-            return -1;
+            result.effect_id = 429;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 201:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 2000;
             inv[ci].param3 = 2;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = cdata[0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 200:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 2000;
             inv[ci].param3 = 72;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = cdata[0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 199:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 2000;
             inv[ci].param3 = 72;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = cdata[0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 198:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 2000;
             inv[ci].param3 = 72;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = cdata[0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 197:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 3000;
             inv[ci].param3 = 12;
         }
         break;
     case 196:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 3000;
             inv[ci].param3 = 8;
         }
         break;
     case 195:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 3000;
             inv[ci].param3 = 12;
         }
         break;
     case 194:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 3000;
             inv[ci].param3 = 8;
         }
         break;
     case 193:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 2000;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = cdata[0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 192:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 3000;
             inv[ci].param3 = 16;
         }
         break;
     case 191:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 4000;
         }
         break;
     case 190:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 2000;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = cdata[0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 188:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 2000;
             inv[ci].param3 = 72;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = cdata[0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 187:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 2000;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = cdata[0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 186:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 2000;
             inv[ci].param3 = 72;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = cdata[0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 185:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 2000;
             inv[ci].param3 = 72;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = cdata[0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 184:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 3000;
             inv[ci].param3 = 8;
         }
         break;
     case 183:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 3000;
             inv[ci].param3 = 16;
         }
         break;
     case 182:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 3000;
             inv[ci].param3 = 12;
         }
         break;
     case 181:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 3000;
             inv[ci].param3 = 16;
         }
         break;
     case 180:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 3000;
             inv[ci].param3 = 16;
         }
         break;
     case 179:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 2000;
             inv[ci].param3 = 48;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::kumiromi;
+            result.is_offerable = cdata[0].god_id == core_god::kumiromi;
+            return result;
         }
         break;
     case 178:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 3000;
             inv[ci].param3 = 72;
         }
         break;
     case 177:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 3000;
             inv[ci].param3 = 72;
         }
         break;
     case 176:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 447;
-            efp = 100;
-            return -1;
+            result.effect_id = 447;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 175:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 10 + rnd(10) - rnd(10);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 421;
-            efp = 100;
-            return -1;
+            result.effect_id = 421;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 174:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 110;
         }
         break;
     case 173:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 100;
         }
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            drink_well();
-            return -1;
+            //drink_well();
+            return result;
         }
         break;
     case 161:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 1;
         }
         break;
     case 160:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 4;
         }
         break;
     case 155:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 15;
             inv[ci].param1 = 100;
         }
         break;
     case 154:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 15;
             inv[ci].param1 = 100;
         }
         break;
     case 153:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 15;
             inv[ci].param1 = 100;
         }
         break;
     case 142:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 15;
             inv[ci].param1 = 200;
         }
         break;
     case 127:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 2;
         }
         break;
     case 125:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 402;
-            efp = 100;
-            return -1;
+            result.effect_id = 402;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 123:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 10 + rnd(10) - rnd(10);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 420;
-            efp = 100;
-            return -1;
+            result.effect_id = 420;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 122:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 419;
-            efp = 100;
-            return -1;
+            result.effect_id = 419;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 121:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 424;
-            efp = 100;
-            return -1;
+            result.effect_id = 424;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 120:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 10 + rnd(10) - rnd(10);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 414;
-            efp = 100;
-            return -1;
+            result.effect_id = 414;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 119:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 400;
-            efp = 100;
-            return -1;
+            result.effect_id = 400;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 118:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 424;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 424;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 116:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 410;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 410;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 112:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 15;
             inv[ci].param1 = 150;
         }
         break;
     case 109:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param2 = 100;
         }
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            drink_well();
-            return -1;
+            //drink_well();
+            return result;
         }
         break;
     case 102:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 44;
         }
         break;
     case 101:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 44;
         }
         break;
     case 92:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 44;
         }
         break;
     case 88:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 183;
             inv[ci].function = 17;
@@ -4451,52 +4475,49 @@ int access_item_db(int dbmode)
         }
         break;
     case 81:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 44;
         }
         break;
     case 80:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 100;
         }
         break;
     case 77:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].function = 44;
         }
         break;
     case 76:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 403;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.effect_id = 403;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 75:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 402;
-            efp = 300;
-            drink_potion();
-            return -1;
+            result.effect_id = 402;
+            result.effect_power = 300;
+            return result;
         }
         break;
     case 74:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 402;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.effect_id = 402;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 73:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 100;
             fixeditemenc(0) = 37;
@@ -4508,52 +4529,47 @@ int access_item_db(int dbmode)
         }
         break;
     case 72:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 401;
-            efp = 400;
-            drink_potion();
-            return -1;
+            result.effect_id = 401;
+            result.effect_power = 400;
+            return result;
         }
         break;
     case 71:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 401;
-            efp = 300;
-            drink_potion();
-            return -1;
+            result.effect_id = 401;
+            result.effect_power = 300;
+            return result;
         }
         break;
     case 70:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 401;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.effect_id = 401;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 69:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 400;
-            efp = 300;
-            drink_potion();
-            return -1;
+            result.effect_id = 400;
+            result.effect_power = 300;
+            return result;
         }
         break;
     case 68:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 400;
-            efp = 100;
-            drink_potion();
-            return -1;
+            result.effect_id = 400;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 64:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 100;
             fixeditemenc(0) = 36;
@@ -4575,7 +4591,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 63:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 107;
             fixeditemenc(0) = 32;
@@ -4595,45 +4611,47 @@ int access_item_db(int dbmode)
         }
         break;
     case 62:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 110;
         }
         break;
     case 61:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 108;
         }
         break;
     case 60:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 110;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::mani;
+            result.is_offerable = cdata[0].god_id == core_god::mani;
+            return result;
         }
         break;
     case 59:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 168;
         }
         break;
     case 58:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 108;
         }
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::lulwy;
+            result.is_offerable = cdata[0].god_id == core_god::lulwy;
+            return result;
         }
         break;
     case 57:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 100;
             fixeditemenc(0) = 39;
@@ -4651,7 +4669,7 @@ int access_item_db(int dbmode)
         }
         break;
     case 56:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 100;
             fixeditemenc(0) = 40;
@@ -4669,304 +4687,316 @@ int access_item_db(int dbmode)
         }
         break;
     case 44:
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
+            result.is_offerable =
+                cdata[0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
+            return result;
         }
         break;
     case 42:
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
+            result.is_offerable =
+                cdata[0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
+            return result;
         }
         break;
     case 41:
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
+            result.is_offerable =
+                cdata[0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
+            return result;
         }
         break;
     case 40:
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
+            result.is_offerable =
+                cdata[0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
+            return result;
         }
         break;
     case 39:
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
+            result.is_offerable =
+                cdata[0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
+            return result;
         }
         break;
     case 38:
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
+            result.is_offerable =
+                cdata[0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
+            return result;
         }
         break;
     case 37:
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
+            result.is_offerable =
+                cdata[0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
+            return result;
         }
         break;
     case 36:
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
+            result.is_offerable =
+                cdata[0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
+            return result;
         }
         break;
     case 35:
-        if (dbmode == 16 && dbspec == 12)
+        if (dbmode == item_db_query_t::is_offerable && dbspec == 12)
         {
-            return cdata[0].god_id == core_god::jure
+            result.is_offerable =
+                cdata[0].god_id == core_god::jure
                 || cdata[0].god_id == core_god::opatos;
+            return result;
         }
         break;
     case 34:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 421;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 421;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 33:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 420;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 420;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 32:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 419;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 419;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 31:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1102;
-            efp = 300;
-            drink_potion();
-            return -1;
+            result.effect_id = 1102;
+            result.effect_power = 300;
+            return result;
         }
         break;
     case 30:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1112;
-            efp = 200;
-            drink_potion();
-            return -1;
+            result.effect_id = 1112;
+            result.effect_power = 200;
+            return result;
         }
         break;
     case 29:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1110;
-            efp = 200;
-            drink_potion();
-            return -1;
+            result.effect_id = 1110;
+            result.effect_power = 200;
+            return result;
         }
         break;
     case 28:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1109;
-            efp = 150;
-            drink_potion();
-            return -1;
+            result.effect_id = 1109;
+            result.effect_power = 150;
+            return result;
         }
         break;
     case 27:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1111;
-            efp = 200;
-            drink_potion();
-            return -1;
+            result.effect_id = 1111;
+            result.effect_power = 200;
+            return result;
         }
         break;
     case 26:
-        if (dbmode == 15)
+        if (dbmode == item_db_query_t::drink)
         {
-            efid = 1130;
-            drink_potion();
-            return -1;
+            result.effect_id = 1130;
+            return result;
         }
         break;
     case 25:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 2;
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
             inv[ci].param1 = 2;
-            read_normal_book();
-            return -1;
+            result.read_item = read_item_t::normal_book;
+            return result;
         }
         break;
     case 24:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 0;
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            read_normal_book();
-            return -1;
+            result.read_item = read_item_t::normal_book;
+            return result;
         }
         break;
     case 23:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].param1 = 1;
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
             inv[ci].param1 = 1;
-            read_normal_book();
-            return -1;
+            result.read_item = read_item_t::normal_book;
+            return result;
         }
         break;
     case 22:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 412;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 412;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 21:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 4 + rnd(4) - rnd(4);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 411;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 411;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 20:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 5 + rnd(5) - rnd(5);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 408;
-            efp = 100;
-            decode_book();
-            return -1;
+            result.effect_id = 408;
+            result.effect_power = 100;
+            result.read_item = read_item_t::decodable_book;
+            return result;
         }
         break;
     case 19:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 12 + rnd(12) - rnd(12);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 409;
-            efp = 100;
-            return -1;
+            result.effect_id = 409;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 18:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].count = 8 + rnd(8) - rnd(8);
             ibitmod(4, ci, 1);
         }
-        if (dbmode == 14)
+        if (dbmode == item_db_query_t::zap)
         {
-            efid = 411;
-            efp = 100;
-            return -1;
+            result.effect_id = 411;
+            result.effect_power = 100;
+            return result;
         }
         break;
     case 17:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 458;
-            efp = 300;
-            read_scroll();
-            return -1;
+            result.effect_id = 458;
+            result.effect_power = 300;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 16:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 408;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.effect_id = 408;
+            result.effect_power = 100;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 15:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 413;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.effect_id = 413;
+            result.effect_power = 100;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 14:
-        if (dbmode == 13)
+        if (dbmode == item_db_query_t::read)
         {
-            efid = 411;
-            efp = 100;
-            read_scroll();
-            return -1;
+            result.effect_id = 411;
+            result.effect_power = 100;
+            result.read_item = read_item_t::scroll;
+            return result;
         }
         break;
     case 6:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             fixeditemenc(0) = 33;
             fixeditemenc(1) = 100;
@@ -4974,25 +5004,25 @@ int access_item_db(int dbmode)
         }
         break;
     case 4:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 103;
         }
         break;
     case 3:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 102;
         }
         break;
     case 2:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 101;
         }
         break;
     case 1:
-        if (dbmode == 3)
+        if (dbmode == item_db_query_t::initialize)
         {
             inv[ci].skill = 100;
         }
@@ -5000,7 +5030,7 @@ int access_item_db(int dbmode)
     default: break;
     }
 
-    return 0;
+    return result;
 }
 
 

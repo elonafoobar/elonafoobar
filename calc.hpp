@@ -2,6 +2,8 @@
 
 #include <string>
 #include "optional.hpp"
+#include "enums.hpp"
+#include "access_item_db.hpp"
 
 
 namespace elona
@@ -17,9 +19,10 @@ struct skill_damage
     int dice_x;
     int dice_y;
     int damage_bonus;
-    int element;
+    element_t element;
     int element_power;
 };
+
 optional<skill_damage> calc_skill_damage(int, int, int);
 int calcobjlv(int = 0);
 int calcfixlv(int = 0);

@@ -45,4 +45,6 @@ int main(int argc, char** argv)
     {
         report_error(u8"Error occurred for some reason.");
     }
+
+    return 0;
 }

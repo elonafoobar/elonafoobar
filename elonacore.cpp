@@ -1,4 +1,5 @@
 #include "ability.hpp"
+#include "access_item_db.hpp"
 #include "animation.hpp"
 #include "autopick.hpp"
 #include "buff.hpp"
@@ -22,6 +23,7 @@
 #include "log.hpp"
 #include "macro.hpp"
 #include "main.hpp"
+#include "magic.hpp"
 #include "map.hpp"
 #include "race.hpp"
 #include "random.hpp"
@@ -30,6 +32,9 @@
 #include "variables.hpp"
 #include "version.hpp"
 #include "wish.hpp"
+
+#include <boost/utility/in_place_factory.hpp>
+#include <cassert>
 
 using namespace elona;
 
@@ -177,7 +182,7 @@ position_t gmes(
 
 
 
-int ask_direction_to_close()
+optional<position_t> ask_direction_to_close()
 {
     int number_of_doors{};
     position_t pos;
@@ -201,7 +206,7 @@ int ask_direction_to_close()
     {
         x = pos.x;
         y = pos.y;
-        return 1;
+        return pos;
     }
 
     txt(lang(u8"何を閉める？"s, u8"Which door do you want to close? "s));
@@ -571,7 +576,6 @@ elona_vector1<std::string> headtemp;
 std::string username;
 int mousex = 0;
 int mousey = 0;
-int findlocmode = 0;
 int tgloc = 0;
 int tglocx = 0;
 int tglocy = 0;
@@ -608,7 +612,6 @@ int movy = 0;
 int digx = 0;
 int digy = 0;
 int npccostmp = 0;
-int noeffect = 0;
 int inumbk = 0;
 int dirsub = 0;
 int ri = 0;
@@ -1742,76 +1745,6 @@ void text_set()
     strblank = lang("", u8" "s);
 }
 
-
-
-std::string elename(int prm_348)
-{
-    if (efid == 614)
-    {
-        return lang(u8"飢えた"s, u8"starving"s);
-    }
-    if (efid == 613)
-    {
-        return lang(u8"腐った"s, u8"rotten"s);
-    }
-    if (efid == 617)
-    {
-        return lang(u8"恐ろしい"s, u8"fearful"s);
-    }
-    if (efid == 618)
-    {
-        return lang(u8"柔らかい"s, u8"silky"s);
-    }
-    if (prm_348 == 50)
-    {
-        return lang(u8"燃える"s, u8"burning"s);
-    }
-    if (prm_348 == 51)
-    {
-        return lang(u8"冷たい"s, u8"icy"s);
-    }
-    if (prm_348 == 52)
-    {
-        return lang(u8"放電する"s, u8"electric"s);
-    }
-    if (prm_348 == 54)
-    {
-        return lang(u8"霊的な"s, u8"psychic"s);
-    }
-    if (prm_348 == 58)
-    {
-        return lang(u8"痺れる"s, u8"numb"s);
-    }
-    if (prm_348 == 57)
-    {
-        return lang(u8"震える"s, u8"shivering"s);
-    }
-    if (prm_348 == 55)
-    {
-        return lang(u8"毒の"s, u8"poisonous"s);
-    }
-    if (prm_348 == 56)
-    {
-        return lang(u8"地獄の"s, u8"infernal"s);
-    }
-    if (prm_348 == 59)
-    {
-        return lang(u8"混沌の"s, u8"chaotic"s);
-    }
-    if (prm_348 == 53)
-    {
-        return lang(u8"暗黒の"s, u8"gloomy"s);
-    }
-    if (prm_348 == 61)
-    {
-        return lang(u8"出血の"s, u8"cut"s);
-    }
-    if (prm_348 == 62)
-    {
-        return lang(u8"エーテルの"s, u8"ether"s);
-    }
-    return u8"?"s;
-}
 
 
 
@@ -5342,7 +5275,7 @@ void change_item_material()
     }
     originalvalue = inv[ci].value * 100 / the_item_material_db[p]->value;
     dbid = inv[ci].id;
-    access_item_db(10);
+    access_item_db(item_db_query_t::fixmaterial);
     inv[ci].value = originalvalue;
     if (fixmaterial != 0)
     {
@@ -6551,7 +6484,7 @@ int route_info(int& prm_612, int& prm_613, int prm_614)
 
 
 
-int breath_list()
+int breath_list(int cc, int effect_id)
 {
     int breathw = 0;
     DIM3(breathlist, 2, 100);
@@ -6560,7 +6493,7 @@ int breath_list()
     dx = cdata[cc].position.x;
     dy = cdata[cc].position.y;
     for (int cnt = 0,
-             cnt_end = cnt + (the_ability_db[efid]->sdataref3 % 1000 + 1);
+             cnt_end = cnt + (the_ability_db[effect_id]->sdataref3 % 1000 + 1);
          cnt < cnt_end;
          ++cnt)
     {
@@ -7847,6 +7780,10 @@ int roll(int x, int y, int z)
     return ret + z;
 }
 
+int roll(const skill_damage& damage)
+{
+    return roll(damage.dice_x, damage.dice_y, damage.damage_bonus);
+}
 
 
 int roll_max(int x, int y, int z)
@@ -13373,8 +13310,9 @@ void txteledmg(int type, int attacker, int target, int element)
 
 
 
-int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
+int dmghp(int prm_853, int prm_854, int prm_855, element_t prm_856, int prm_857)
 {
+    int ele = static_cast<int>(prm_856);
     int ele_at_m141 = 0;
     int c3_at_m141 = 0;
     int r_at_m141 = 0;
@@ -13384,7 +13322,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
     elona_vector1<int> p_at_m141;
     int exp_at_m141 = 0;
     elona::prm_853 = prm_853;
-    ele_at_m141 = prm_856;
+    ele_at_m141 = ele;
     if (txt3rd == 0)
     {
         c3_at_m141 = prm_855;
@@ -18001,7 +17939,7 @@ void gain_level(int cc)
     {
         label_1455(cc);
     }
-    label_1456(cc);
+    refresh_required_exp(cc);
     refresh_character(cc);
 }
 
@@ -18029,7 +17967,7 @@ void label_1455(int cc)
 
 
 
-void label_1456(int cc)
+void refresh_required_exp(int cc)
 {
     cdata[cc].required_experience = clamp(cdata[cc].level, 1, 200)
             * (clamp(cdata[cc].level, 1, 200) + 1)
@@ -18181,14 +18119,6 @@ void label_1470(int cc)
 {
     skillexp(185, cc, 100);
 }
-
-
-
-void label_1471(int cc)
-{
-    skillexp(165, cc, 10 + the_ability_db[efid]->sdataref4 / 5);
-}
-
 
 
 void label_1472(int skill)
@@ -18918,9 +18848,7 @@ int try_to_cast_spell()
             name(cc) + u8"は奇妙な力に捻じ曲げられた！"s,
             u8"A dimension door opens in front of you."s));
     }
-    tc = cc;
-    efid = 408;
-    magic();
+    magic(408, cc, cc);
     return 0;
 }
 
@@ -20707,7 +20635,7 @@ void initialize_character()
         - rnd((cdata[rc].height / 5 + 1));
     cdata[rc].weight =
         cdata[rc].height * cdata[rc].height * (rnd(6) + 18) / 10000;
-    label_1456(rc);
+    refresh_required_exp(rc);
     label_1512(rc);
     if (cdata[rc].portrait == 0)
     {
@@ -22402,9 +22330,7 @@ void label_1577()
     {
         if (rnd(10 - clamp(cdata[cc].curse_power / 10, 0, 9)) == 0)
         {
-            efid = 408;
-            tc = cc;
-            magic();
+            magic(408, cc, cc);
             return;
         }
     }
@@ -22517,9 +22443,7 @@ void label_1579()
                               1,
                               25))
                     {
-                        efid = 408;
-                        tc = cc;
-                        magic();
+                        magic(408, cc, tc);
                         continue;
                     }
                 }
@@ -22859,8 +22783,8 @@ int do_create_item(int slot, int x, int y)
         dbid = 501;
     }
 
-    access_item_db(3);
-    access_item_db(2);
+    access_item_db(item_db_query_t::initialize);
+    access_item_db(item_db_query_t::charge_level);
 
     inv[ci].color = icolref(inv[ci].id);
     if (inv[ci].color == 1)
@@ -23278,9 +23202,7 @@ void eat_rotten_food()
     return;
 }
 
-
-
-void cook()
+void cook(int cc)
 {
     snd(25);
     item_separate(ci);
@@ -24797,13 +24719,13 @@ void eating_effect_pregnant()
             u8"Something gets into "s + name(cc) + your(cc) + u8" body."s));
     }
     tc = cc;
-    get_pregnant();
+    get_pregnant(cc, tc);
     return;
 }
 
 
 
-void get_pregnant()
+void get_pregnant(int cc, int tc)
 {
     if (encfind(tc, 48) != -1)
     {
@@ -29026,11 +28948,13 @@ void use_house_board()
         while (1)
         {
             await();
-            int stat = target_position();
-            if (stat == -1)
+            optional<position_t> pos = target_position(false);
+            if (!pos)
             {
                 break;
             }
+            tlocx = (*pos).x;
+            tlocy = (*pos).y;
             if ((chipm(7, tile) & 4) == 0)
             {
                 map(tlocx, tlocy, 0) = tile;
@@ -29038,8 +28962,7 @@ void use_house_board()
             }
             else
             {
-                efid = 438;
-                magic();
+                magic(438, cc, cc); // create wall
             }
             tlocinitx = tlocx;
             tlocinity = tlocy;
@@ -29170,11 +29093,13 @@ void use_house_board()
             cdatan(0, tc) + u8"をどこに移動させる？"s,
             u8"Where do you want to move "s + cdatan(0, tc) + u8"?"s));
         {
-            int stat = target_position();
-            if (stat == -1)
+            optional<position_t> pos = target_position(false);
+            if (!pos)
             {
                 goto label_1717_internal;
             }
+            tlocx = (*pos).x;
+            tlocy = (*pos).y;
         }
         if (chipm(7, map(tlocx, tlocy, 0)) & 4 || map(tlocx, tlocy, 1) != 0)
         {
@@ -35482,10 +35407,7 @@ void label_1888()
                     + u8" is enraged."s));
             txtgod(cdata[0].god_id, 1);
             redraw();
-            efid = 622;
-            efp = 10000;
-            tc = 0;
-            magic();
+            magic(622, cc, 0, 10000);
             snd(63);
             mode = 0;
             await(500);
@@ -35580,14 +35502,8 @@ void pray()
     animode = 100;
     play_animation(19);
     snd(120);
-    efid = 1120;
-    efp = 100;
-    tc = 0;
-    magic();
-    efid = 451;
-    efp = 200;
-    tc = 0;
-    magic();
+    magic(1120, cc, 0, 100);
+    magic(451, cc, 0, 200);
     cdata[0].praying_point = 0;
     cdata[0].piety_point = cdata[0].piety_point * 85 / 100;
     if (gdata_god_rank % 2 == 1)
@@ -35973,26 +35889,16 @@ void offer()
 
 void label_1892()
 {
-    efid = 1114;
-    efp = 500;
-    tc = 0;
-    magic();
+    magic(1114, cc, 0, 500);
     if (rnd(2))
     {
-        efid = 622;
-        efp = 250;
-        tc = 0;
-        magic();
+        magic(622, cc, 0, 250);
         snd(63);
     }
     if (rnd(2))
     {
-        efid = 1106;
-        efp = 100;
-        tc = 0;
-        magic();
+        magic(1106, cc, 0, 100);
     }
-    return;
 }
 
 
@@ -36240,9 +36146,7 @@ label_1894_internal:
         show_random_event_window(u8"bg_re8");
         break;
     case 24:
-        efid = 1113;
-        tc = 0;
-        magic();
+        magic(1113, cc, 0);
         s = lang(u8"才能の開花"s, u8"Your Potential"s);
         buff = lang(
             u8"突然あなたの才能は開花した！"s,
@@ -36268,20 +36172,14 @@ label_1894_internal:
         buff = lang(
             u8"石ころにつまずいて転んだ拍子に、あなたは幾つかのマテリアルを見つけた。"s,
             u8"You stumble over a stone and find some materials on the ground. "s);
-        efid = 1117;
-        efp = 100;
-        tc = 0;
-        magic();
+        magic(1117, cc, 0, 100);
         list(0, listmax) = 1;
         listn(0, listmax) = lang(u8"よし"s, u8"Nice."s);
         ++listmax;
         show_random_event_window(u8"bg_re3");
         break;
     case 23:
-        efid = 1117;
-        efp = 200;
-        tc = 0;
-        magic();
+        magic(1117, cc, 0, 200);
         s = lang(u8"夢の中の収穫"s, u8"Dream Harvest"s);
         buff = lang(
             u8"夢の中で、あなたはのんきにマテリアルを採取していた"s,
@@ -36318,10 +36216,7 @@ label_1894_internal:
         break;
     case 4:
         snd(116);
-        efid = 1118;
-        efp = 100;
-        tc = 0;
-        magic();
+        magic(1118, cc, 0, 100);
         s = lang(u8"不気味な夢"s, u8"Creepy Dream"s);
         buff = lang(
             u8"あなたは不気味な夢をみた。陰気な幾つもの瞳があなたを凝視し、どこからともなく笑い声がこだました。「ケラケラケラ…ミツケタヨ…ケラケラ」あなたが二度寝返りをうった後、その夢は終わった。"s,
@@ -36333,10 +36228,7 @@ label_1894_internal:
         break;
     case 22:
         snd(116);
-        efid = 454;
-        efp = 100;
-        tc = 0;
-        magic();
+        magic(454, cc, 0, 100);
         s = lang(u8"怪物の夢"s, u8"Monster Dream"s);
         buff = lang(
             u8"あなたは怪物と戦っていた。醜い化け物に斬りかかろうとした時、怪物は悲鳴をあげた。「オレハオマエダ！オマエハオレダ！」あなたは自分の呻き声に起こされた。"s,
@@ -36408,9 +36300,7 @@ label_1894_internal:
             }
             if (f)
             {
-                efid = 1114;
-                efp = 200;
-                magic();
+                magic(1114, cc, tc, 200);
             }
             else if (evid() == -1)
             {
@@ -36497,10 +36387,7 @@ label_1894_internal:
         }
         break;
     case 2:
-        efid = 1104;
-        efp = 100;
-        tc = 0;
-        magic();
+        magic(1104, cc, 0, 100);
         s = lang(u8"魔法使いの夢"s, u8"Wizard's Dream"s);
         buff = lang(
             u8"夢の中であなたは赤い髪の魔術師に出会った。「誰じゃ、お主は？ふむ、間違った者の夢に現れてしまったようじゃ。すまぬな。お詫びといってはなんじゃが…」魔法使いは指をくるりと回した。あなたは軽い頭痛を覚えた。"s,
@@ -36511,10 +36398,7 @@ label_1894_internal:
         show_random_event_window(u8"bg_re6");
         break;
     case 3:
-        efid = 1119;
-        efp = 100;
-        tc = 0;
-        magic();
+        magic(1119, cc, 0, 100);
         s = lang(u8"成長のきざし"s, u8"Development"s);
         buff = lang(
             u8"長年の鍛錬の成果が実ったようだ。なかなか眠りにつけず考えごとをしていたあなたは、ふと、自らの技術に関する新しいアイデアを思いついた。"s,
@@ -36573,10 +36457,7 @@ label_1894_internal:
         show_random_event_window(u8"bg_re1");
         break;
     case 17:
-        efid = 451;
-        efp = 800;
-        tc = 0;
-        magic();
+        magic(451, cc, 0, 800);
         s = lang(u8"辻プリースト"s, u8"Wandering Priest"s);
         buff = lang(
             u8"突然、向かいからやって来た一人の神官が、すれ違いざまにあなたに魔法をかけた。「ノープロブレム」"s,
@@ -39331,9 +39212,16 @@ label_1945_internal:
 }
 
 
-
-int target_position()
+optional<position_t> target_position(bool free_select)
 {
+    bool ignored = true;
+    return target_position(free_select, ignored);
+}
+
+// Returns none if the user cancels.
+optional<position_t> target_position(bool free_select, bool& can_see)
+{
+    int tlocx, tlocxy;
     if (tlocinitx != 0 || tlocinity != 0)
     {
         tlocx = tlocinitx;
@@ -39353,9 +39241,9 @@ int target_position()
         scposval = 1;
         if (cdata[0].enemy_id == 0)
         {
-            label_2072();
+            auto_pick_enemy_id(cc);
         }
-        label_2076();
+        auto_pick_ranged_target(cc);
         if (listmax == 0)
         {
             txt(lang(
@@ -39570,7 +39458,7 @@ label_1948_internal:
             }
         }
     }
-    if (findlocmode == 1)
+    if (free_select)
     {
         if (rc == -1)
         {
@@ -39625,7 +39513,7 @@ label_1948_internal:
     }
     if (key == key_enter)
     {
-        if (findlocmode == 1)
+        if (free_select)
         {
             if (cansee == 0 || chipm(7, map(tlocx, tlocy, 0)) & 4)
             {
@@ -39664,7 +39552,8 @@ label_1948_internal:
         }
         tlocinitx = 0;
         tlocinity = 0;
-        return cansee;
+        can_see = cansee == 1 ? true : false;
+        return position_t{ tlocx, tlocy };
     }
     if (key == key_cancel)
     {
@@ -39672,19 +39561,19 @@ label_1948_internal:
         tlocinity = 0;
         scposval = 0;
         update_screen();
-        return -1;
+        return none;
     }
     goto label_1948_internal;
 }
 
 
 
-void label_1951()
+void do_look_command(int cc)
 {
     page = 0;
     pagesize = 16;
     cs_bk = -1;
-    label_2076();
+    auto_pick_ranged_target(cc);
     if (listmax == 0)
     {
         ++msgdup;
@@ -40415,7 +40304,7 @@ label_1961_internal:
 
 
 
-void label_1964()
+void mirror_menu()
 {
     // TODO: untranslated
     if (rc < 0)
@@ -41711,8 +41600,7 @@ label_1978_internal:
         tc = qdata(0, p);
         rq = p;
         client = tc;
-        efid = 619;
-        magic();
+        magic(619, cc, tc);
         tc = client;
         questteleport = 1;
         speak_to_npc();
@@ -42324,13 +42212,13 @@ void do_short_cut()
         ctrl_inventory();
         return;
     }
-    efid = gdata(40 + sc);
-    if (efid >= 300 && efid < 400)
+    int effect_id = gdata(40 + sc);
+    if (effect_id >= 300 && effect_id < 400)
     {
-        label_2006();
+        do_pc_ability_command(effect_id);
         return;
     }
-    if (efid >= 600)
+    if (effect_id >= 600)
     {
         if (mdata(6) == 1)
         {
@@ -42342,9 +42230,9 @@ void do_short_cut()
             redraw();
             pc_turn(false);
         }
-        if (efid < 661)
+        if (effect_id < 661)
         {
-            if (spact(efid - 600) == 0)
+            if (spact(effect_id - 600) == 0)
             {
                 txt(lang(
                     u8"もうその行動はできない。"s,
@@ -42353,10 +42241,10 @@ void do_short_cut()
                 pc_turn(false);
             }
         }
-        label_2006();
+        do_pc_ability_command(effect_id);
         return;
     }
-    if (efid >= 400)
+    if (effect_id >= 400)
     {
         if (mdata(6) == 1)
         {
@@ -42368,7 +42256,7 @@ void do_short_cut()
             redraw();
             pc_turn(false);
         }
-        if (spell(efid - 400) <= 0)
+        if (spell(effect_id - 400) <= 0)
         {
             ++msgdup;
             txt(lang(
@@ -42377,7 +42265,7 @@ void do_short_cut()
             update_screen();
             pc_turn(false);
         }
-        label_2026();
+        do_cast_spell_on_self(effect_id);
         return;
     }
     pc_turn(false);
@@ -42389,13 +42277,15 @@ void do_dig_command()
 {
     txt(lang(
         u8"どの方向を掘る？ "s, u8"Which direction do you want to dig? "s));
-    int stat = ask_direction();
-    if (stat == 0)
+    optional<position_t> dir = ask_direction();
+    if (!dir)
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
         pc_turn(false);
     }
+    int x = (*dir).x;
+    int y = (*dir).y;
     refx = x;
     refy = y;
     tlocx = x;
@@ -42430,23 +42320,25 @@ void label_2005()
     txt(lang(
         u8"どの方向に体当たりする？ "s,
         u8"Which direction do you want to bash? "s));
-    int stat = ask_direction();
-    if (stat == 0)
+    optional<position_t> dir = ask_direction();
+    if (!dir)
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
         pc_turn(false);
     }
-    label_2201();
+    int x = (*dir).x;
+    int y = (*dir).y;
+    do_bash(x, y);
     return;
 }
 
 
 
-void label_2006()
+void do_pc_ability_command(int effect_id)
 {
-    int stat = label_2174();
-    if (stat == 0)
+    magic_result result = do_ability(effect_id);
+    if (!result.turn_passed)
     {
         update_screen();
         pc_turn(false);
@@ -42591,10 +42483,9 @@ label_2009_internal:
     if (p != -1)
     {
         menucycle = 0;
-        efid = p;
         screenupdate = -1;
         update_screen();
-        label_2006();
+        do_pc_ability_command(p);
         return;
     }
     if (key == u8"sc"s)
@@ -42692,13 +42583,15 @@ void do_give_command()
 {
     txt(lang(u8"どの方向に？ "s, u8"Which direction? "s));
     update_screen();
-    int stat = ask_direction();
-    if (stat == 0)
+    optional<position_t> dir = ask_direction();
+    if (!dir)
     {
         txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
         pc_turn(false);
     }
+    int x = (*dir).x;
+    int y = (*dir).y;
     tc = map(x, y, 1);
     if (tc == 0)
     {
@@ -42741,13 +42634,15 @@ void do_interact_command()
 {
     txt(lang(
         u8"操作する対象の方向は？"s, u8"Choose the direction of the target."s));
-    int stat = ask_direction();
-    if (stat == 0)
+    optional<position_t> dir = ask_direction();
+    if (!dir)
     {
         txt(i18n::_(u8"ui", u8"invalid_target"));
         update_screen();
         pc_turn(false);
     }
+    int x = (*dir).x;
+    int y = (*dir).y;
     tc = map(x, y, 1);
     if (tc == 0)
     {
@@ -42847,7 +42742,7 @@ void do_interact_command()
     if (p == 1)
     {
         update_screen();
-        try_to_melee_attack();
+        try_to_melee_attack(element_t::none);
         turn_end();
         return;
     }
@@ -43217,10 +43112,10 @@ label_2024_internal:
 
 
 
-void label_2026()
+void do_cast_spell_on_self(int effect_id)
 {
     tc = cc;
-    int stat = label_2167();
+    int stat = cast_spell(effect_id);
     if (stat == 0)
     {
         pc_turn(false);
@@ -43359,8 +43254,7 @@ label_2029_internal:
     if (p != -1)
     {
         menucycle = 0;
-        efid = p;
-        label_2026();
+        do_cast_spell_on_self(p);
         return;
     }
     if (key == u8"sc"s)
@@ -43471,13 +43365,13 @@ void label_2031()
         dice1 = damage->dice_x;
         dice2 = damage->dice_y;
         bonus = damage->damage_bonus;
-        ele = damage->element;
-        elep = damage->element_power;
+        element_t ele = damage->element;
+        //int elep = damage->element_power;
         if (cc == 0)
         {
             if (trait(165) != 0)
             {
-                if (ele == 50 || ele == 51 || ele == 52)
+                if (ele == element_t::burning || ele == element_t::icy || ele == element_t::electric)
                 {
                     dice2 = dice2 * 125 / 100;
                 }
@@ -45162,7 +45056,7 @@ label_2041_internal:
 
 
 
-int label_2044()
+int do_customize_appearance()
 {
     create_pcpic(cc, true);
     snd(26);
@@ -46097,8 +45991,8 @@ void show_item_description()
     reftype = the_item_db[inv[ci].id]->category;
     getinheritance(ci, inhlist, inhmax);
     dbid = inv[ci].id;
-    access_item_db(2);
-    access_item_db(17);
+    access_item_db(item_db_query_t::charge_level);
+    access_item_db(item_db_query_t::identified);
     if (inv[ci].identification_state
         == identification_state_t::completely_identified)
     {
@@ -46502,7 +46396,7 @@ label_2070_internal:
 
 
 
-int label_2072()
+int auto_pick_enemy_id(int cc)
 {
     if (cdata[cdata[cc].enemy_id].state != 1)
     {
@@ -46514,7 +46408,7 @@ int label_2072()
     }
     if (cdata[cc].enemy_id == 0)
     {
-        label_2076();
+        auto_pick_ranged_target(cc);
         if (listmax != 0)
         {
             f = 0;
@@ -46594,7 +46488,7 @@ int label_2073()
 void label_2074()
 {
     cc = 0;
-    int stat = label_2072();
+    int stat = auto_pick_enemy_id(cc);
     if (stat == 0)
     {
         pc_turn(false);
@@ -46691,7 +46585,7 @@ int can_do_ranged_attack()
 
 
 
-void label_2076()
+void auto_pick_ranged_target(int cc)
 {
     listmax = 0;
     for (int cnt = 0; cnt < 2; ++cnt)
@@ -48289,7 +48183,7 @@ void initialize_fovmap_and_fovlist()
 
 
 
-int ask_direction()
+optional<position_t> ask_direction()
 {
     snd(26);
     gsel(4);
@@ -48339,10 +48233,8 @@ label_2128_internal:
     }
     if (key == key_wait || key == key_enter)
     {
-        tlocx = x;
-        tlocy = y;
         keyhalt = 1;
-        return 1;
+        return position_t{ x, y };
     }
     if (key == key_north)
     {
@@ -48415,16 +48307,14 @@ label_2128_internal:
             x = cdata[0].position.x;
             y = cdata[0].position.y;
             keyhalt = 1;
-            return 0;
+            return none;
         }
         if (x == cdata[0].position.x && y == cdata[0].position.y)
         {
-            return 0;
+            return none;
         }
-        tlocx = x;
-        tlocy = y;
         keyhalt = 1;
-        return 1;
+        return position_t{ x, y };
     }
     goto label_2128_internal;
 }
@@ -48476,21 +48366,6 @@ void label_2136()
     }
     pc_turn(false);
 }
-
-
-
-int efstatusfix(int doomed, int cursed, int none, int blessed)
-{
-    switch (efstatus)
-    {
-    case curse_state_t::doomed: return doomed;
-    case curse_state_t::cursed: return cursed;
-    case curse_state_t::none: return none;
-    case curse_state_t::blessed: return blessed;
-    default: assert(0);
-    }
-}
-
 
 
 int label_2143()
@@ -48658,7 +48533,7 @@ void label_2144()
 
 
 
-void label_21452()
+void activate_trap(int cc)
 {
 label_21451_internal:
     if (config::instance().scroll)
@@ -48761,7 +48636,10 @@ label_21451_internal:
                     label_2222();
                     snd(70);
                 }
-                efsource = 5;
+
+                // This doesn't seem to be checked for anywhere.
+                // effect_source = efsource_t::trap;
+
                 if (is_in_fov(cc))
                 {
                     txt(lang(
@@ -48891,7 +48769,6 @@ label_21451_internal:
                     cell_featset(movx, movy, 0);
                     dmghp(cc, 100 + rnd(200), -1);
                 }
-                efsource = 0;
             }
         }
     }
@@ -48900,7 +48777,7 @@ label_21451_internal:
 
 
 
-void label_2146()
+void do_performance(int cc)
 {
     int performtips = 0;
     if (cdata[cc].continuous_action_id == 0)
@@ -50447,7 +50324,7 @@ void label_2153()
                     name(cc) + u8" "s + have(cc) + u8" finished eating "s
                         + itemname(ci, 1) + u8"."s));
             }
-            label_2161();
+            do_eaten_effect(cc);
         }
     }
     if (gdata_weather == 2
@@ -50636,7 +50513,7 @@ void label_2155()
 
 
 
-void label_2156()
+void fishing(int cc)
 {
     int fishstat = 0;
     if (cdata[cc].continuous_action_id == 0)
@@ -51108,14 +50985,14 @@ void label_2160()
             name(cc) + u8" "s + have(cc) + u8" finished eating "s
                 + itemname(ci, 1) + u8"."s));
     }
-    label_2161();
+    do_eaten_effect(cc);
     rowactend(cc);
     return;
 }
 
 
 
-void label_2161()
+void do_eaten_effect(int cc)
 {
     cieat = ci;
     apply_general_eating_effect();
@@ -51273,12 +51150,12 @@ void label_2162()
 
 
 
-int decode_book()
+int decode_book(int effect_id, int effect_power)
 {
     int cibkread = 0;
     if (cdata[cc].continuous_action_id == 0)
     {
-        if (inv[ci].id == 687)
+        if (inv[ci].id == 687) // ancient book
         {
             if (inv[ci].param2 != 0)
             {
@@ -51309,7 +51186,7 @@ int decode_book()
         }
         else
         {
-            p = the_ability_db[efid]->sdataref4;
+            p = the_ability_db[effect_id]->sdataref4;
         }
         cdata[cc].continuous_action_turn = p / (2 + sdata(150, 0)) + 1;
         cdata[cc].continuous_action_item = ci;
@@ -51328,11 +51205,11 @@ int decode_book()
         ci = cdata[cc].continuous_action_item;
         cibkread = ci;
         label_1458();
-        if (inv[ci].id == 783)
+        if (inv[ci].id == 783) // recipe
         {
             return 0;
         }
-        if (inv[ci].id == 687)
+        if (inv[ci].id == 687) // ancient book
         {
             r2 =
                 50 + inv[ci].param1 * 50 + inv[ci].param1 * inv[ci].param1 * 20;
@@ -51340,8 +51217,9 @@ int decode_book()
         }
         else
         {
-            r2 = the_ability_db[efid]->sdataref4;
-            r3 = efid;
+            assert(effect_id != -1);
+            r2 = the_ability_db[effect_id]->sdataref4;
+            r3 = effect_id;
         }
         if (inv[ci].curse_state == curse_state_t::blessed)
         {
@@ -51388,7 +51266,7 @@ int decode_book()
             npcn(cc) + itemname(ci, 1) + u8"を読み終えた。"s,
             name(cc) + u8" "s + have(cc) + u8" finished reading the book."s));
     }
-    if (inv[ci].id == 783)
+    if (inv[ci].id == 783) // recipe
     {
         if (inv[ci].param1 == 0)
         {
@@ -51409,7 +51287,7 @@ int decode_book()
         rowactend(cc);
         return 1;
     }
-    if (inv[ci].id == 687)
+    if (inv[ci].id == 687) // ancient book
     {
         item_identify(inv[ci], identification_state_t::completely_identified);
         txt(lang(
@@ -51422,21 +51300,25 @@ int decode_book()
     }
     else
     {
+        // gain experience in the spell
         skillgain(
             cc,
-            efid,
+            effect_id,
             1,
             (rnd(51) + 50) * (90 + sdata(165, cc) + (sdata(165, cc) > 0) * 20)
-                    / clamp((100 + spell((efid - 400)) / 2), 50, 1000)
+                    / clamp((100 + spell((effect_id - 400)) / 2), 50, 1000)
                 + 1);
-        label_1471(0);
+
+        // gain experience in memorization
+        skillexp(165, 0, 10 + the_ability_db[effect_id]->sdataref4 / 5);
+
         if (itemmemory(2, inv[ci].id) == 0)
         {
             itemmemory(2, inv[ci].id) = 1;
         }
     }
     item_identify(inv[ci], identification_state_t::partly_identified);
-    if (inv[ci].id != 687)
+    if (inv[ci].id != 687) // ancient book
     {
         --inv[ci].count;
         if (inv[ci].count < 0)
@@ -51545,252 +51427,56 @@ int calcmagiccontrol(int prm_1076, int prm_1077)
 
 
 
-int label_2167()
+
+magic_result drink_potion(int effect_id, int effect_power, potion_consume_t consumed, optional<curse_state_t> spilt_curse_state)
 {
-    int spellbk = 0;
-    spellbk = efid;
-    ccbk = cc;
-    int stat = label_2168();
-    if (stat == 1)
+    magic_result result = {};
+    if(effect_id == -1)
     {
-        cc = ccbk;
-        r2 = spellbk;
-        gain_skill_experience_casting(cc);
-        return 1;
+        // Temporary hack to get the around the fact that access_item_db might call drink_well()
+        // When this happens effect_id is set to -1.
+        // In all other cases effect_id is set.
+        int stat = drink_well();
+        result.turn_passed = stat == 1 ? true : false;
+        return result;
     }
-    return 0;
-}
-
-
-
-int label_2168()
-{
-    int mp = 0;
-    efsource = 3;
-    efstatus = curse_state_t::none;
-    efp = calcspellpower(efid, cc);
-    if (cc == 0)
+    tc = cc;
+    magic_data data(effect_id, cc, tc, effect_power);
+    data.effect_source = effect_source_t::potion;
+    data.potion_consume_type = boost::in_place(consumed);
+    if (consumed != potion_consume_t::drunk)
     {
-        if (calcspellcostmp(efid, cc) > cdata[cc].mp)
+        if (consumed == potion_consume_t::thrown)
         {
-            txt(lang(
-                u8"マナが足りないが、それでも詠唱を試みる？"s,
-                u8"You are going to over-cast the spell. Are you sure?"s));
-            ELONA_YES_NO_PROMPT();
-            rtval = show_prompt(promptx, prompty, 160);
-            if (rtval != 0)
-            {
-                update_screen();
-                efsource = 0;
-                return 0;
-            }
-        }
-        screenupdate = -1;
-        update_screen();
-    }
-    int stat = label_2175();
-    if (stat == 0)
-    {
-        efsource = 0;
-        return 0;
-    }
-    if (cc != 0)
-    {
-        if (the_ability_db[efid]->sdataref1 == 7)
-        {
-            if (cdata[cc].relationship == 10 || gdata_current_map == 40)
-            {
-                efsource = 0;
-                return 0;
-            }
-            if (gdata_play_turns % 10 > 4)
-            {
-                efsource = 0;
-                return 0;
-            }
-        }
-    }
-    if (cc == 0 || (cc != 0 && npccostmp == 1))
-    {
-        if (cc == 0)
-        {
-            spell(efid - 400) -= calcspellcoststock(efid, cc);
-            if (spell(efid - 400) < 0)
-            {
-                spell(efid - 400) = 0;
-            }
-        }
-        mp = calcspellcostmp(efid, cc);
-        if (cc == 0)
-        {
-            if (cdata[0].god_id == core_god::ehekatl)
-            {
-                mp = rnd(mp * 140 / 100 + 1) + 1;
-            }
-        }
-        dmgmp(cc, mp);
-        if (cdata[cc].state != 1)
-        {
-            efsource = 0;
-            return 1;
-        }
-    }
-    if (cdata[cc].confused != 0 || cdata[cc].dimmed != 0)
-    {
-        if (is_in_fov(cc))
-        {
-            txt(lang(
-                name(cc) + u8"は混乱しながらも魔法の詠唱を試みた。"s,
-                name(cc) + u8" try"s + _s(cc)
-                    + u8" to cast a spell in confusion."s));
-        }
-        int stat = try_to_cast_spell();
-        if (stat == 0)
-        {
-            efsource = 0;
-            return 1;
-        }
-    }
-    else if (is_in_fov(cc))
-    {
-        if (cc == 0)
-        {
-            txt(lang(
-                name(cc) + u8"は"s
-                    + i18n::_(u8"ability", std::to_string(efid), u8"name")
-                    + u8"の"s
-                    + i18n::_(
-                          u8"ui",
-                          u8"cast_style",
-                          u8"_"s + cdata[cc].special_attack_type),
-                name(cc) + u8" cast "s
-                    + i18n::_(u8"ability", std::to_string(efid), u8"name")
-                    + u8"."s));
+            // potionthrow was always either 100 or 0
+            int potionthrow = 100;
+            data.power = data.power * potionthrow / 100;
+            data.curse_state = inv[ci].curse_state;
         }
         else
         {
-            txt(lang(
-                name(cc) + u8"は"s
-                    + i18n::_(
-                          u8"ui",
-                          u8"cast_style",
-                          u8"_"s + cdata[cc].special_attack_type),
-                name(cc) + ""s
-                    + i18n::_(
-                          u8"ui",
-                          u8"cast_style",
-                          u8"_"s + cdata[cc].special_attack_type)));
-        }
-    }
-    if (findbuff(cc, 2) != -1)
-    {
-        if (is_in_fov(cc))
-        {
-            txt(lang(
-                u8"沈黙の霧が詠唱を阻止した。"s,
-                u8"The mist of silence interrupts a spell."s));
-        }
-        efsource = 0;
-        return 1;
-    }
-    if (rnd(100) >= calcspellfail(efid, cc))
-    {
-        if (is_in_fov(cc))
-        {
-            txt(lang(
-                name(cc) + u8"は詠唱に失敗した。"s,
-                name(cc) + u8" fail"s + _s(cc) + u8" to cast a spell."s));
-            play_animation(8);
-        }
-        efsource = 0;
-        return 1;
-    }
-    if (noeffect == 1)
-    {
-        txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-        efsource = 0;
-        return 1;
-    }
-    efp = calcspellpower(efid, cc);
-    p = encfind(cc, 34);
-    if (p != -1)
-    {
-        efp = efp * (100 + p / 10) / 100;
-    }
-    rapidmagic = 0;
-    if (cdata[cc].can_cast_rapid_magic()
-        && the_ability_db[efid]->sdataref1 == 2)
-    {
-        rapidmagic = 1 + (rnd(3) != 0) + (rnd(2) != 0);
-    }
-    if (rapidmagic)
-    {
-        for (int cnt = 0, cnt_end = (rapidmagic); cnt < cnt_end; ++cnt)
-        {
-            magic();
-            if (cdata[tc].state != 1)
-            {
-                int stat = label_2072();
-                if (stat == 0)
-                {
-                    break;
-                }
-                else
-                {
-                    tc = cdata[cc].enemy_id;
-                    if (relationbetween(cc, tc) != -3)
-                    {
-                        break;
-                    }
-                }
-            }
-        }
-        rapidmagic = 0;
-    }
-    else
-    {
-        magic();
-    }
-    return 1;
-}
-
-
-
-int drink_potion()
-{
-    tc = cc;
-    efsource = 4;
-    if (potionspill || potionthrow)
-    {
-        if (potionthrow)
-        {
-            efp = efp * potionthrow / 100;
-            efstatus = inv[ci].curse_state;
+            // should have been set by pass_one_turn
+            data.curse_state = *spilt_curse_state;
         }
     }
     else
     {
-        efstatus = inv[ci].curse_state;
-        if (is_in_fov(tc))
+        data.curse_state = inv[ci].curse_state;
+        if (is_in_fov(data.target))
         {
             snd(17);
             txt(lang(
                 npcn(tc) + itemname(ci, 1) + u8"を飲み干した。"s,
-                name(tc) + u8" drink"s + _s(tc) + u8" "s + itemname(ci, 1)
+                name(tc) + u8" drink"s + _s(data.target) + u8" "s + itemname(ci, 1)
                     + u8"."s));
         }
     }
-    magic();
-    if (potionspill || potionthrow)
+    result = magic(data);
+    if(consumed == potion_consume_t::drunk)
     {
-        potionspill = 0;
-        potionthrow = 0;
-    }
-    else
-    {
-        if (obvious == 1)
+        if (result.obvious)
         {
-            if (tc == 0)
+            if (data.target == 0)
             {
                 item_identify(
                     inv[ci], identification_state_t::partly_identified);
@@ -51801,23 +51487,24 @@ int drink_potion()
         {
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
         }
-        else if (tc == 0)
+        else if (data.target == 0)
         {
             refresh_burden_state();
         }
     }
-    cdata[tc].nutrition += 150;
-    if (tc < 16)
+    cdata[data.target].nutrition += 150;
+    if (data.target < 16)
     {
-        if (cdata[tc].nutrition > 12000)
+        if (cdata[data.target].nutrition > 12000)
         {
             if (rnd(5) == 0)
             {
-                chara_vomit(tc);
+                chara_vomit(data.target);
             }
         }
     }
-    return 1;
+    result.turn_passed = true;
+    return result;
 }
 
 
@@ -51870,8 +51557,7 @@ int drink_well()
         {
             if (rnd(2) == 0)
             {
-                efid = 1113;
-                magic();
+                magic(1113, cc, cc);
                 break;
             }
         }
@@ -51880,37 +51566,27 @@ int drink_well()
             p = rnd(5);
             if (p == 0)
             {
-                efid = 1112;
-                efp = 100;
-                magic();
+                magic(1112, cc, cc, 100);
                 break;
             }
             if (p == 1)
             {
-                efid = 1110;
-                efp = 100;
-                magic();
+                magic(1110, cc, cc, 100);
                 break;
             }
             if (p == 2)
             {
-                efid = 1111;
-                efp = 100;
-                magic();
+                magic(1111, cc, cc, 100);
                 break;
             }
             if (p == 3)
             {
-                efid = 1109;
-                efp = 100;
-                magic();
+                magic(1109, cc, cc, 100);
                 break;
             }
             if (p == 4)
             {
-                efid = 1108;
-                efp = 100;
-                magic();
+                magic(1108, cc, cc, 100);
                 break;
             }
         }
@@ -51951,7 +51627,7 @@ int drink_well()
                     name(cc) + u8" swallow"s + _s(cc) + u8" something bad."s));
             }
             tc = cc;
-            get_pregnant();
+            get_pregnant(cc, tc);
             break;
         }
         if (p > 35)
@@ -51968,14 +51644,12 @@ int drink_well()
         }
         if (p > 33)
         {
-            efid = 1113;
-            magic();
+            magic(1113, cc, cc);
             break;
         }
         if (p > 20)
         {
-            efid = 454;
-            magic();
+            magic(454, cc, cc);
             break;
         }
         if (p == 0)
@@ -51989,8 +51663,7 @@ int drink_well()
                 break;
             }
             ++gdata_wish_count;
-            efid = 441;
-            magic();
+            magic(441, cc, cc);
             break;
         }
         if (cc == 0)
@@ -52035,43 +51708,43 @@ int drink_well()
 
 
 
-int read_scroll()
+magic_result read_scroll(int effect_id, int effect_power)
 {
-    tc = cc;
-    tlocx = cdata[cc].position.x;
-    tlocy = cdata[cc].position.y;
-    efstatus = inv[ci].curse_state;
-    efsource = 2;
-    if (cdata[cc].blind != 0)
+    magic_data data(effect_id, cc, cc, effect_power);
+    magic_result result = {};
+    data.target_loc = cdata[data.caster].position;
+    data.curse_state = inv[ci].curse_state;
+    data.effect_source = effect_source_t::scroll;
+    if (cdata[data.caster].blind != 0)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(data.caster))
         {
             txt(lang(
-                name(cc) + u8"は何も見えない。"s,
-                name(cc) + u8" can see nothing."s));
+                name(data.caster) + u8"は何も見えない。"s,
+                name(data.caster) + u8" can see nothing."s));
         }
-        efsource = 0;
-        return 0;
+        result.turn_passed = false;
+        return result;
     }
-    if (cdata[cc].dimmed != 0 || cdata[cc].confused != 0)
+    if (cdata[data.caster].dimmed != 0 || cdata[data.caster].confused != 0)
     {
         if (rnd(4) != 0)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(data.caster))
             {
                 txt(lang(
-                    name(cc) + u8"はふらふらした。"s,
-                    name(cc) + u8" stagger"s + _s(cc) + u8"."s));
+                    name(data.caster) + u8"はふらふらした。"s,
+                    name(data.caster) + u8" stagger"s + _s(data.caster) + u8"."s));
             }
-            efsource = 0;
-            return 0;
+            result.turn_passed = false;
+            return result;
         }
     }
-    if (is_in_fov(cc))
+    if (is_in_fov(data.caster))
     {
         txt(lang(
-            npcn(cc) + itemname(ci, 1) + u8"を読んだ。"s,
-            name(cc) + u8" read"s + _s(cc) + u8" "s + itemname(ci, 1)
+            npcn(data.caster) + itemname(ci, 1) + u8"を読んだ。"s,
+            name(data.caster) + u8" read"s + _s(data.caster) + u8" "s + itemname(ci, 1)
                 + u8"."s));
     }
     if (inv[ci].id != 621)
@@ -52085,52 +51758,57 @@ int read_scroll()
         {
             refresh_burden_state();
         }
-        skillexp(150, cc, 25, 2);
+        skillexp(150, data.caster, 25, 2);
     }
-    magic();
-    if (cc == 0)
+    result = magic(data);
+    if (data.caster == 0)
     {
-        if (obvious == 1)
+        if (result.obvious == 1)
         {
             item_identify(inv[ci], identification_state_t::partly_identified);
         }
     }
-    return 1;
+    result.turn_passed = true;
+    return result;
 }
 
 
 
-int label_2172()
+magic_result zap_rod(int effect_id, int effect_power)
 {
+    magic_data data(effect_id, cc, tc, effect_power);
+    magic_result result = {};
     if (inv[ci].count <= 0)
     {
-        if (is_in_fov(cc))
+        if (is_in_fov(data.caster))
         {
             txt(lang(
                 itemname(ci, 1) + u8"を振った。"s,
                 u8"You zap "s + itemname(ci, 1) + u8"."s));
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
         }
-        return 0;
+        result.turn_passed = false;
+        return result;
     }
-    efstatus = inv[ci].curse_state;
-    if (efstatus == curse_state_t::blessed)
+    data.curse_state = inv[ci].curse_state;
+    if (data.curse_state == curse_state_t::blessed)
     {
-        efstatus = curse_state_t::none;
+        data.curse_state = curse_state_t::none;
     }
-    efsource = 1;
-    int stat = label_2175();
-    if (stat == 0)
+    data.effect_source = effect_source_t::rod;
+    result = query_magic_location(data);
+    if (!result.turn_passed)
     {
-        efsource = 0;
-        return 0;
+        return result;
     }
-    if (efid >= 400 && efid < 467)
+    if (data.effect_id >= 400 && data.effect_id < 467)
     {
-        if ((stat == 0 && the_ability_db[efid]->sdataref3 / 1000 * 1000 == 2000)
-            || noeffect == 1)
+        // BUG first condition of the following if will never be
+        // reached, because !result.turn_passed was already checked for above.
+        if ((!result.turn_passed && the_ability_db[data.effect_id]->sdataref3 / 1000 * 1000 == 2000)
+            || result.noeffect == 1)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(data.caster))
             {
                 txt(lang(
                     itemname(ci, 1) + u8"を振った。"s,
@@ -52140,19 +51818,19 @@ int label_2172()
             goto label_2173_internal;
         }
     }
-    if (is_in_fov(cc))
+    if (is_in_fov(data.caster))
     {
         txt(lang(
             itemname(ci, 1) + u8"を振った。"s,
             u8"You zap "s + itemname(ci, 1) + u8"."s));
     }
-    efp = efp
-        * (100 + sdata(174, cc) * 10 + sdata(16, cc) / 2 + sdata(13, cc) / 2)
+    data.power = data.power
+        * (100 + sdata(174, data.caster) * 10 + sdata(16, data.caster) / 2 + sdata(13, data.caster) / 2)
         / 100;
-    if (efid >= 400 && efid < 467)
+    if (data.effect_id >= 400 && data.effect_id < 467)
     {
         f = 0;
-        int skill = sdata(174, cc) * 20 + 100;
+        int skill = sdata(174, data.caster) * 20 + 100;
         if (inv[ci].curse_state == curse_state_t::blessed)
         {
             skill = skill * 125 / 100;
@@ -52165,7 +51843,7 @@ int label_2172()
         {
             f = 1;
         }
-        if (rnd((the_ability_db[efid]->sdataref4 + 1)) / 2 <= skill)
+        if (rnd((the_ability_db[data.effect_id]->sdataref4 + 1)) / 2 <= skill)
         {
             f = 1;
         }
@@ -52178,49 +51856,52 @@ int label_2172()
     {
         f = 0;
     }
-    if (f == 1 || inv[ci].id == 290 || cc != 0)
+    if (f == 1 || inv[ci].id == 290 || data.caster != 0)
     {
-        magic();
-        if (cc == 0)
+        magic_result result = magic(data);
+        if (data.caster == 0)
         {
-            if (obvious == 1)
+            if (result.obvious == 1)
             {
                 item_identify(
                     inv[ci], identification_state_t::partly_identified);
             }
         }
-        label_1469(cc);
+        label_1469(data.caster);
     }
-    else if (is_in_fov(cc))
+    else if (is_in_fov(data.caster))
     {
         txt(lang(
-            name(cc) + u8"は杖をうまく使えなかった。"s,
-            name(cc) + u8" fail to use the power of the rod."s));
+            name(data.caster) + u8"は杖をうまく使えなかった。"s,
+            name(data.caster) + u8" fail to use the power of the rod."s));
     }
 label_2173_internal:
-    efsource = 0;
     if (inv[ci].number == 0)
     {
         if (ci >= 5080)
         {
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
-            return 1;
+            result.turn_passed = true;
+            return result;
         }
     }
     item_separate(ci);
     --inv[ci].count;
-    return 1;
+    result.turn_passed = true;
+    return result;
 }
 
 
 
-int label_2174()
+magic_result do_ability(int effect_id)
 {
-    if (efid == 646)
+    magic_data data(effect_id, cc, tc);
+    magic_result result = {};
+    if (data.effect_id == 646)
     {
         if (cdata[tc].is_sentenced_daeth() == 1)
         {
-            if (cdata[cc].relationship == -3)
+            if (cdata[data.caster].relationship == -3)
             {
                 for (int cnt = 0; cnt < ELONA_MAX_PARTY_CHARACTERS; ++cnt)
                 {
@@ -52228,43 +51909,45 @@ int label_2174()
                     {
                         if (cdata[cnt].relationship == 10)
                         {
-                            cdata[cc].enemy_id = cnt;
+                            cdata[data.caster].enemy_id = cnt;
                             break;
                         }
                     }
                 }
             }
-            return 0;
+            result.turn_passed = false;
+            return result;
         }
     }
     {
-        int stat = label_2175();
-        if (stat == 0)
+        result = query_magic_location(data);
+        if (!result.turn_passed)
         {
-            return 0;
+            return result;
         }
     }
-    if (the_ability_db[efid]->sdataref3 / 1000 * 1000 != 3000
-        && the_ability_db[efid]->sdataref3 / 1000 * 1000 != 10000)
+    if (the_ability_db[data.effect_id]->sdataref3 / 1000 * 1000 != 3000
+        && the_ability_db[data.effect_id]->sdataref3 / 1000 * 1000 != 10000)
     {
-        if (cdata[cc].confused != 0 || cdata[cc].blind != 0)
+        if (cdata[data.caster].confused != 0 || cdata[data.caster].blind != 0)
         {
             if (rnd(5) == 0)
             {
-                if (is_in_fov(cc))
+                if (is_in_fov(data.caster))
                 {
                     txt(lang(
-                        name(cc) + u8"は頭を振った。"s,
-                        name(cc) + u8" shake"s + _s(cc) + u8" "s + his(cc)
+                        name(data.caster) + u8"は頭を振った。"s,
+                        name(data.caster) + u8" shake"s + _s(data.caster) + u8" "s + his(data.caster)
                             + u8" head."s));
                 }
-                return 1;
+                result.turn_passed = true;
+                return result;
             }
         }
     }
-    if (efid >= 600)
+    if (data.effect_id >= 600)
     {
-        if (cc == 0)
+        if (data.caster == 0)
         {
             if (cdata[0].sp < 50)
             {
@@ -52273,107 +51956,321 @@ int label_2174()
                     txt(lang(
                         u8"疲労し過ぎて失敗した！"s,
                         u8"You are too exhausted!"s));
-                    dmgsp(0, the_ability_db[efid]->cost / 2 + 1);
-                    return 1;
+                    dmgsp(0, the_ability_db[data.effect_id]->cost / 2 + 1);
+                    result.turn_passed = true;
+                    return result;
                 }
             }
             dmgsp(
                 0,
-                rnd(the_ability_db[efid]->cost / 2 + 1)
-                    + the_ability_db[efid]->cost / 2 + 1);
-            skillexp(the_ability_db[efid]->related_basic_attribute, cc, 25);
+                rnd(the_ability_db[data.effect_id]->cost / 2 + 1)
+                    + the_ability_db[data.effect_id]->cost / 2 + 1);
+            skillexp(the_ability_db[data.effect_id]->related_basic_attribute, data.caster, 25);
         }
     }
-    efp = calcspellpower(efid, cc);
-    if (noeffect == 1)
+    data.power = calcspellpower(data.effect_id, data.caster);
+    if (result.noeffect)
     {
-        if (efid != 300)
+        if (data.effect_id != 300)
         {
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
-            return 1;
+            result.turn_passed = true;
+            return result;
         }
     }
-    {
-        int stat = magic();
-        if (stat == 0)
-        {
-            return 0;
-        }
-    }
-    return 1;
+    result = magic(data);
+    return result;
 }
 
 
 
-int label_2175()
+
+int cast_spell(int effect_id)
 {
-    noeffect = 0;
-    if (efid > 661)
+    int spellbk = 0;
+    spellbk = effect_id;
+    ccbk = cc;
+    magic_result result = do_cast_spell(effect_id);
+    if (result.turn_passed)
     {
-        tc = cc;
+        cc = ccbk;
+        r2 = spellbk;
+        gain_skill_experience_casting(cc);
         return 1;
     }
-    tg = the_ability_db[efid]->sdataref3 / 1000 * 1000;
-    if (efsource == 1)
+    return 0;
+}
+
+magic_result do_cast_spell(int effect_id)
+{
+    magic_data data(effect_id, cc, tc, calcspellpower(effect_id, cc));
+    magic_result result = {};
+    int mp = 0;
+    data.effect_source = effect_source_t::magic;
+    data.curse_state = curse_state_t::none;
+    if (data.caster == 0)
+    {
+        if (calcspellcostmp(data.effect_id, data.caster) > cdata[data.caster].mp)
+        {
+            txt(lang(
+                u8"マナが足りないが、それでも詠唱を試みる？"s,
+                u8"You are going to over-cast the spell. Are you sure?"s));
+            ELONA_YES_NO_PROMPT();
+            rtval = show_prompt(promptx, prompty, 160);
+            if (rtval != 0)
+            {
+                update_screen();
+                result.turn_passed = false;
+                return result;
+            }
+        }
+        screenupdate = -1;
+        update_screen();
+    }
+    result = query_magic_location(data);
+    if (!result.turn_passed)
+    {
+        return result;
+    }
+    if (data.caster != 0)
+    {
+        if (the_ability_db[data.effect_id]->sdataref1 == 7)
+        {
+            if (cdata[data.caster].relationship == 10 || gdata_current_map == 40)
+            {
+                result.turn_passed = false;
+                return result;
+            }
+            if (gdata_play_turns % 10 > 4)
+            {
+                result.turn_passed = false;
+                return result;
+            }
+        }
+    }
+    if (data.caster == 0 || (data.caster != 0 && npccostmp == 1))
+    {
+        if (data.caster == 0)
+        {
+            spell(data.effect_id - 400) -= calcspellcoststock(data.effect_id, data.caster);
+            if (spell(data.effect_id - 400) < 0)
+            {
+                spell(data.effect_id - 400) = 0;
+            }
+        }
+        mp = calcspellcostmp(data.effect_id, data.caster);
+        if (data.caster == 0)
+        {
+            if (cdata[0].god_id == core_god::ehekatl)
+            {
+                mp = rnd(mp * 140 / 100 + 1) + 1;
+            }
+        }
+        dmgmp(data.caster, mp);
+        if (cdata[data.caster].state != 1)
+        {
+            result.turn_passed = true;
+            return result;
+        }
+    }
+    if (cdata[data.caster].confused != 0 || cdata[data.caster].dimmed != 0)
+    {
+        if (is_in_fov(data.caster))
+        {
+            txt(lang(
+                name(data.caster) + u8"は混乱しながらも魔法の詠唱を試みた。"s,
+                name(data.caster) + u8" try"s + _s(data.caster)
+                    + u8" to cast a spell in confusion."s));
+        }
+        // TODO de-globalize
+        int stat = try_to_cast_spell();
+        if (stat == 0)
+        {
+            result.turn_passed = true;
+            return result;
+        }
+    }
+    else if (is_in_fov(data.caster))
+    {
+        if (data.caster == 0)
+        {
+            txt(lang(
+                name(data.caster) + u8"は"s
+                    + i18n::_(u8"ability", std::to_string(data.effect_id), u8"name")
+                    + u8"の"s
+                    + i18n::_(
+                          u8"ui",
+                          u8"cast_style",
+                          u8"_"s + cdata[data.caster].special_attack_type),
+                name(data.caster) + u8" cast "s
+                    + i18n::_(u8"ability", std::to_string(data.effect_id), u8"name")
+                    + u8"."s));
+        }
+        else
+        {
+            txt(lang(
+                name(data.caster) + u8"は"s
+                    + i18n::_(
+                          u8"ui",
+                          u8"cast_style",
+                          u8"_"s + cdata[data.caster].special_attack_type),
+                name(data.caster) + ""s
+                    + i18n::_(
+                          u8"ui",
+                          u8"cast_style",
+                          u8"_"s + cdata[data.caster].special_attack_type)));
+        }
+    }
+    if (findbuff(data.caster, 2) != -1)
+    {
+        if (is_in_fov(data.caster))
+        {
+            txt(lang(
+                u8"沈黙の霧が詠唱を阻止した。"s,
+                u8"The mist of silence interrupts a spell."s));
+        }
+        result.turn_passed = true;
+        return result;
+    }
+    if (rnd(100) >= calcspellfail(data.effect_id, data.caster))
+    {
+        if (is_in_fov(data.caster))
+        {
+            txt(lang(
+                name(data.caster) + u8"は詠唱に失敗した。"s,
+                name(data.caster) + u8" fail"s + _s(data.caster) + u8" to cast a spell."s));
+            play_animation(8);
+        }
+        result.turn_passed = true;
+        return result;
+    }
+    if (result.noeffect == 1)
+    {
+        txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+        result.turn_passed = true;
+        return result;
+    }
+    data.power = calcspellpower(data.effect_id, data.caster);
+    p = encfind(data.caster, 34);
+    if (p != -1)
+    {
+        data.power = data.power * (100 + p / 10) / 100;
+    }
+    rapidmagic = 0;
+    if (cdata[data.caster].can_cast_rapid_magic()
+        && the_ability_db[data.effect_id]->sdataref1 == 2)
+    {
+        rapidmagic = 1 + (rnd(3) != 0) + (rnd(2) != 0);
+    }
+    if (rapidmagic)
+    {
+        for (int cnt = 0, cnt_end = (rapidmagic); cnt < cnt_end; ++cnt)
+        {
+            magic(data);
+            if (cdata[data.target].state != 1)
+            {
+                int stat = auto_pick_enemy_id(data.caster);
+                if (stat == 0)
+                {
+                    break;
+                }
+                else
+                {
+                    data.target = cdata[data.caster].enemy_id;
+                    if (relationbetween(data.caster, data.target) != -3)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+        rapidmagic = 0;
+    }
+    else
+    {
+        result = magic(data);
+    }
+    result.turn_passed = true;
+    return result;
+}
+
+
+
+magic_result query_magic_location(magic_data& data)
+{
+    magic_result result { true, true, false, true, 0 };
+    if (data.effect_id > 661)
+    {
+        data.target = data.caster;
+        result.turn_passed = true;
+        return result;
+    }
+    tg = the_ability_db[data.effect_id]->sdataref3 / 1000 * 1000;
+    if (data.effect_source == effect_source_t::rod)
     {
         if (tg == 3000)
         {
             tg = 8000;
         }
     }
-    if (the_ability_db[efid]->sdataref1 == 7)
+    if (the_ability_db[data.effect_id]->sdataref1 == 7)
     {
-        if (cc == 0)
+        if (data.caster == 0)
         {
-            tc = 0;
-            return 1;
+            data.target = 0;
+            result.turn_passed = true;
+            return result;
         }
     }
     if (tg == 8000)
     {
-        if (cc == 0)
+        if (data.caster == 0)
         {
-            tc = 0;
+            data.target = 0;
             txt(lang(u8"どの方向？"s, u8"Which direction?"s));
             update_screen();
-            int stat = ask_direction();
-            if (stat == 0)
+            optional<position_t> dir = ask_direction();
+            if (!dir)
             {
-                return 0;
+                result.turn_passed = false;
+                return result;
             }
-            if (map(tlocx, tlocy, 1) == 0)
+            data.target_loc = *dir;
+            if (map(data.target_loc.x, data.target_loc.y, 1) == 0)
             {
-                noeffect = 1;
-                obvious = 0;
-                return 1;
+                result.noeffect = true;
+                result.obvious = false;
+                result.turn_passed = true;
+                return result;
             }
-            tc = map(tlocx, tlocy, 1) - 1;
+            data.target = map(data.target_loc.x, data.target_loc.y, 1) - 1;
         }
         else
         {
             if (dist(
-                    cdata[tc].position.x,
-                    cdata[tc].position.y,
-                    cdata[cc].position.x,
-                    cdata[cc].position.y)
-                > the_ability_db[efid]->sdataref3 % 1000 + 1)
+                    cdata[data.target].position.x,
+                    cdata[data.target].position.y,
+                    cdata[data.caster].position.x,
+                    cdata[data.caster].position.y)
+                > the_ability_db[data.effect_id]->sdataref3 % 1000 + 1)
             {
-                return 0;
+                result.turn_passed = false;
+                return result;
             }
-            tlocx = cdata[tc].position.x;
-            tlocy = cdata[tc].position.y;
+            data.target_loc = cdata[data.target].position;
         }
-        return 1;
+        result.turn_passed = true;
+        return result;
     }
-    if (tg == 7000 || (tg == 9000 && tgloc == 1 && cc == 0))
+    if (tg == 7000 || (tg == 9000 && tgloc == 1 && data.caster == 0))
     {
-        if (cc == 0)
+        if (data.caster == 0)
         {
             if (tg == 9000)
             {
                 if (int stat = fov_los(
-                                   cdata[cc].position.x,
-                                   cdata[cc].position.y,
+                                   cdata[data.caster].position.x,
+                                   cdata[data.caster].position.y,
                                    tglocx,
                                    tglocy)
                         == 0)
@@ -52385,130 +52282,143 @@ int label_2175()
                             u8"You can't see the location."s));
                         update_screen();
                     }
-                    obvious = 0;
-                    return 0;
+                    result.obvious = false;
+                    result.turn_passed = false;
+                    return result;
                 }
-                tlocx = tglocx;
-                tlocy = tglocy;
+                data.target_loc.x = tglocx;
+                data.target_loc.y = tglocy;
             }
             else
             {
-                int stat = target_position();
-                if (stat != 1)
+                bool can_see;
+                optional<position_t> pos = target_position(false, can_see);
+                if (!pos || !can_see)
                 {
-                    if (stat == 0)
+                    if (!can_see)
                     {
                         txt(lang(
                             u8"その場所は見えない。"s,
                             u8"You can't see the location."s));
                         update_screen();
                     }
-                    obvious = 0;
-                    return 0;
+                    result.obvious = 0;
+                    result.turn_passed = false;
+                    return result;
                 }
+                // TODO de-globalize
+                tlocx = (*pos).x;
+                tlocy = (*pos).y;
             }
         }
         else
         {
             if (fov_los(
-                    cdata[tc].position.x,
-                    cdata[tc].position.y,
-                    cdata[cc].position.x,
-                    cdata[cc].position.y)
+                    cdata[data.target].position.x,
+                    cdata[data.target].position.y,
+                    cdata[data.caster].position.x,
+                    cdata[data.caster].position.y)
                 == 0)
             {
-                return 0;
+                result.turn_passed = false;
+                return result;
             }
-            tlocx = cdata[tc].position.x;
-            tlocy = cdata[tc].position.y;
+            data.target_loc = cdata[data.target].position;
         }
-        return 1;
+        result.turn_passed = true;
+        return result;
     }
     if (tg == 3000 || tg == 10000)
     {
         if (cc != 0)
         {
-            if (the_ability_db[efid]->sdataref1 == 3)
+            if (the_ability_db[data.effect_id]->sdataref1 == 3)
             {
                 if (dist(
-                        cdata[tc].position.x,
-                        cdata[tc].position.y,
-                        cdata[cc].position.x,
-                        cdata[cc].position.y)
-                    > the_ability_db[efid]->sdataref3 % 1000 + 1)
+                        cdata[data.target].position.x,
+                        cdata[data.target].position.y,
+                        cdata[data.caster].position.x,
+                        cdata[data.caster].position.y)
+                    > the_ability_db[data.effect_id]->sdataref3 % 1000 + 1)
                 {
-                    return 0;
+                    result.turn_passed = false;
+                    return result;
                 }
                 if (fov_los(
-                        cdata[cc].position.x,
-                        cdata[cc].position.y,
-                        cdata[tc].position.x,
-                        cdata[tc].position.y)
+                        cdata[data.caster].position.x,
+                        cdata[data.caster].position.y,
+                        cdata[data.target].position.x,
+                        cdata[data.target].position.y)
                     == 0)
                 {
-                    return 0;
+                    result.turn_passed = false;
+                    return result;
                 }
             }
         }
-        tc = cc;
-        tlocx = cdata[cc].position.x;
-        tlocy = cdata[cc].position.y;
-        return 1;
+        data.target = data.caster;
+        data.target_loc = cdata[data.caster].position;
+        result.turn_passed = true;
+        return result;
     }
     if (tg == 2000 || tg == 6000 || tg == 9000)
     {
-        if (cc == 0)
+        if (data.caster == 0)
         {
-            int stat = label_2072();
+            int stat = auto_pick_enemy_id(data.caster);
             if (stat == 0)
             {
-                obvious = 0;
-                return 0;
+                result.obvious = false;
+                result.turn_passed = false;
+                return result;
             }
-            tc = cdata[0].enemy_id;
-            if (cdata[tc].relationship >= 0)
+            data.target = cdata[0].enemy_id;
+            if (cdata[data.target].relationship >= 0)
             {
                 int stat = label_2073();
                 if (stat == 0)
                 {
-                    obvious = 0;
-                    return 0;
+                    result.obvious = false;
+                    result.turn_passed = false;
+                    return result;
                 }
             }
         }
         if (dist(
-                cdata[tc].position.x,
-                cdata[tc].position.y,
-                cdata[cc].position.x,
-                cdata[cc].position.y)
-            > the_ability_db[efid]->sdataref3 % 1000 + 1)
+                cdata[data.target].position.x,
+                cdata[data.target].position.y,
+                cdata[data.caster].position.x,
+                cdata[data.caster].position.y)
+            > the_ability_db[data.effect_id]->sdataref3 % 1000 + 1)
         {
-            if (cc == 0)
+            if (data.caster == 0)
             {
                 ++msgdup;
                 txt(lang(u8"射程距離外だ。"s, u8"It's out of range."s));
                 update_screen();
             }
-            return 0;
+            result.turn_passed = false;
+            return result;
         }
         if (fov_los(
-                cdata[cc].position.x,
-                cdata[cc].position.y,
-                cdata[tc].position.x,
-                cdata[tc].position.y)
+                cdata[data.caster].position.x,
+                cdata[data.caster].position.y,
+                cdata[data.target].position.x,
+                cdata[data.target].position.y)
             == 0)
         {
-            return 0;
+            result.turn_passed = false;
+            return result;
         }
-        tlocx = cdata[tc].position.x;
-        tlocy = cdata[tc].position.y;
-        return 1;
+        data.target_loc = cdata[data.target].position;
+        result.turn_passed = true;
+        return result;
     }
     if (tg == 5000)
     {
-        if (cc == 0)
+        if (data.caster == 0)
         {
-            if (efsource == 3)
+            if (data.effect_source == effect_source_t::magic)
             {
                 txt(lang(
                     u8"どの方向に唱える？ "s,
@@ -52521,77 +52431,29 @@ int label_2175()
                     u8"Which direction do you want to zap the wand? "s));
             }
             update_screen();
-            int stat = ask_direction();
-            if (stat == 0)
+            optional<position_t> dir = ask_direction();
+            if (!dir)
             {
                 txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
-                obvious = 0;
-                return 0;
+                result.obvious = false;
+                result.turn_passed = false;
+                return result;
             }
+            data.target_loc = *dir;
         }
     }
-    return 1;
+    result.turn_passed = true;
+    return result;
 }
 
 
 
-void label_2187()
+void do_throw_command(position_t pos)
 {
-    int subloop = 0;
-    subloop = 1;
-    if (gdata_mount != 0)
-    {
-        if (tc == gdata_mount || tc == 0)
-        {
-            subloop = 2;
-            if (tc == gdata_mount)
-            {
-                tc(1) = 0;
-            }
-            else
-            {
-                tc(1) = gdata_mount;
-            }
-        }
-    }
-    for (int cnt = 0, cnt_end = (subloop); cnt < cnt_end; ++cnt)
-    {
-        healhp(tc(cnt), roll(dice1, dice2, bonus));
-        healcon(tc(cnt), 6);
-        healcon(tc(cnt), 1, 50);
-        healcon(tc(cnt), 5, 50);
-        healcon(tc(cnt), 7, 30);
-        healcon(tc(cnt), 9, 20);
-        healsan(tc(cnt), 1);
-    }
-    return;
-}
+    // TODO de-globalize
+    tlocx = pos.x;
+    tlocy = pos.y;
 
-
-
-void label_2188()
-{
-    cdata[tc].poisoned = 0;
-    cdata[tc].sleep = 0;
-    cdata[tc].confused = 0;
-    cdata[tc].blind = 0;
-    cdata[tc].paralyzed = 0;
-    cdata[tc].choked = 0;
-    cdata[tc].dimmed = 0;
-    cdata[tc].drunk = 0;
-    cdata[tc].bleeding = 0;
-    gdata_continuous_active_hours = 0;
-    cdata[tc].hp = cdata[tc].max_hp;
-    cdata[tc].mp = cdata[tc].max_mp;
-    cdata[tc].sp = cdata[tc].max_sp;
-    return;
-}
-
-
-
-void do_throw_command()
-{
-    int ccthrowpotion = 0;
     if (is_in_fov(cc))
     {
         txt(lang(
@@ -52796,11 +52658,16 @@ void do_throw_command()
                 {
                     hostileaction(cc, tc);
                 }
+
+                int ccthrowpotion = 0;
+
                 ccthrowpotion = cc;
-                potionthrow = 100;
                 cc = tc;
                 dbid = inv[ci].id;
-                access_item_db(15);
+
+                item_db_result result = access_item_db(item_db_query_t::drink);
+                drink_potion(result.effect_id, result.effect_power, potion_consume_t::thrown);
+
                 cc = ccthrowpotion;
                 turn_end();
                 return;
@@ -52867,16 +52734,16 @@ void do_throw_command()
                 turn_end();
                 return;
             }
-            efp = 50 + sdata(111, cc) * 10;
+            int effect_power = 50 + sdata(111, cc) * 10;
             if (inv[ci].id == 392)
             {
-                addmef(tlocx, tlocy, 3, 19, rnd(15) + 5, efp, cc);
+                addmef(tlocx, tlocy, 3, 19, rnd(15) + 5, effect_power, cc);
                 turn_end();
                 return;
             }
             if (inv[ci].id == 577)
             {
-                addmef(tlocx, tlocy, 5, 24, rnd(15) + 25, efp, cc);
+                addmef(tlocx, tlocy, 5, 24, rnd(15) + 25, effect_power, cc);
                 mapitem_fire(tlocx, tlocy);
                 turn_end();
                 return;
@@ -52887,10 +52754,10 @@ void do_throw_command()
                 6,
                 27,
                 -1,
-                efp,
+                effect_power,
                 cc,
                 inv[ci].id,
-                static_cast<int>(inv[ci].curse_state), // TODO
+                static_cast<int>(inv[ci].curse_state), // TODO refactor to take curse_state_t
                 inv[ci].color);
             turn_end();
             return;
@@ -53045,14 +52912,14 @@ int pick_up_item()
                 if (inv[ci].count > 0)
                 {
                     dbid = inv[ci].id;
-                    access_item_db(14);
+                    item_db_result result = access_item_db(item_db_query_t::zap);
                     txt(lang(
                         u8"あなたは"s + itemname(ci)
                             + u8"から魔力を吸い取った。"s,
                         u8"You absorb magic from "s + itemname(ci) + u8"."s));
-                    if (efid >= 400 && efid < 467)
+                    if (result.effect_id >= 400 && result.effect_id < 467)
                     {
-                        spell(efid - 400) += inv[ci].count * 5 * inv[ci].number;
+                        spell(result.effect_id - 400) += inv[ci].count * 5 * inv[ci].number;
                     }
                     else
                     {
@@ -53440,7 +53307,7 @@ void label_2196(int cc)
 
 void do_read_commad()
 {
-    if (inv[ci].id == 783)
+    if (inv[ci].id == 783) // recipe
     {
         if (inv[ci].subname == 0)
         {
@@ -53451,14 +53318,29 @@ void do_read_commad()
             return;
         }
     }
-    efid = 0;
     dbid = inv[ci].id;
-    access_item_db(13);
-    if (efid == 1115)
+    item_db_result result = access_item_db(item_db_query_t::read);
+
+    switch(result.read_item)
     {
+    case read_item_t::normal_book:
+        read_normal_book();
+        break;
+    case read_item_t::decodable_book:
+        decode_book(result.effect_id, result.effect_power);
+        break;
+    case read_item_t::scroll:
+        read_scroll(result.effect_id, result.effect_power);
+        break;
+    case read_item_t::deed:
+        assert(result.effect_id == 1115);
         build_new_building();
-        return;
+        break;
+    case read_item_t::none:
+    default:
+        assert(0);
     }
+
     turn_end();
     return;
 }
@@ -53509,7 +53391,8 @@ void do_eat_command()
 void do_drink_command()
 {
     dbid = inv[ci].id;
-    access_item_db(15);
+    item_db_result result = access_item_db(item_db_query_t::drink);
+    drink_potion(result.effect_id, result.effect_power, potion_consume_t::drunk);
     turn_end();
     return;
 }
@@ -53519,9 +53402,9 @@ void do_drink_command()
 void do_zap_command()
 {
     dbid = inv[ci].id;
-    access_item_db(14);
-    int stat = label_2172();
-    if (stat == 0)
+    item_db_result idb_result = access_item_db(item_db_query_t::zap);
+    magic_result result = zap_rod(idb_result.effect_id, idb_result.effect_power);
+    if (!result.turn_passed)
     {
         update_screen();
         pc_turn(false);
@@ -53532,7 +53415,7 @@ void do_zap_command()
 
 
 
-void label_2201()
+void do_bash(int x, int y)
 {
     if (map(x, y, 5) != 0)
     {
@@ -53693,17 +53576,11 @@ void label_2201()
                 }
                 if (rnd(4) == 0)
                 {
-                    tc = cc;
-                    efid = 1109;
-                    efp = 200;
-                    magic();
+                    magic(1109, cc, cc, 200);
                 }
                 if (rnd(3) == 0)
                 {
-                    tc = cc;
-                    efid = 1110;
-                    efp = 200;
-                    magic();
+                    magic(1110, cc, cc, 200);
                 }
                 if (rnd(3) == 0)
                 {
@@ -53859,7 +53736,7 @@ void label_2203()
                         cdata[tc].continuous_action_turn = 0;
                     }
                 }
-                label_2206();
+                proc_item_on_ground();
                 turn_end();
                 return;
             }
@@ -53889,7 +53766,7 @@ void label_2203()
                 keybd_wait = 1;
                 keybd_attacking = 1;
             }
-            try_to_melee_attack();
+            try_to_melee_attack(element_t::none);
             turn_end();
             return;
         }
@@ -54065,7 +53942,7 @@ void label_2205()
         {
             x = dx;
             y = dy;
-            label_2201();
+            do_bash(x, y);
             return;
         }
     }
@@ -54121,7 +53998,7 @@ void label_2205()
             }
         }
     }
-    label_21452();
+    activate_trap(cc);
     p = map(cdata[cc].position.x, cdata[cc].position.y, 0);
     if (chipm(0, p) == 3)
     {
@@ -54135,7 +54012,7 @@ void label_2205()
             wet(cc, 20);
         }
     }
-    label_2206();
+    proc_item_on_ground();
     if (mdata(6) == 1)
     {
         if (cc == 0)
@@ -54427,7 +54304,7 @@ void proc_autopick()
 
 
 
-void label_2206()
+void proc_item_on_ground()
 {
     if (cc == 0)
     {
@@ -54994,7 +54871,7 @@ int unlock_box(int difficulty)
 void do_open_command()
 {
     int refweight = 0;
-    if (inv[ci].id == 361)
+    if (inv[ci].id == 361) // shopkeeper's trunk
     {
         modify_karma(0, -10);
         invctrl(0) = 22;
@@ -55007,7 +54884,7 @@ void do_open_command()
         turn_end();
         return;
     }
-    if (inv[ci].id == 560)
+    if (inv[ci].id == 560) // delivery chest
     {
         invctrl(0) = 24;
         invctrl(1) = 0;
@@ -55015,7 +54892,7 @@ void do_open_command()
         ctrl_inventory();
         return;
     }
-    if (inv[ci].id == 616)
+    if (inv[ci].id == 616) // tax box
     {
         invctrl(0) = 24;
         invctrl(1) = 2;
@@ -55023,7 +54900,7 @@ void do_open_command()
         ctrl_inventory();
         return;
     }
-    if (inv[ci].id == 701)
+    if (inv[ci].id == 701) // deck
     {
         invctrl(0) = 24;
         invctrl(1) = 8;
@@ -55032,7 +54909,7 @@ void do_open_command()
         turn_end();
         return;
     }
-    if (inv[ci].id == 600)
+    if (inv[ci].id == 600) // giant's shackle
     {
         snd(22);
         txt(lang(u8"足枷を外した。"s, u8"You unlock the shackle."s));
@@ -55066,7 +54943,7 @@ void do_open_command()
     {
         invfile = inv[ci].count;
         invcontainer(1) = ci;
-        if (inv[ci].id == 641)
+        if (inv[ci].id == 641) // cooler box
         {
             refweight = -1;
         }
@@ -55205,11 +55082,9 @@ void open_box()
     ri = ci;
     if (inv[ri].id == 394)
     {
-        tc = cc;
-        efid = 1117;
-        efp = 100 + inv[ri].param1 * 10;
+        int power = 100 + inv[ri].param1 * 10;
         inv[ri].param1 = 0;
-        magic();
+        magic(1117, cc, cc, power);
         return;
     }
     p = 3 + rnd(5);
@@ -55419,10 +55294,7 @@ void open_new_year_gift()
                 u8"中には呪いの手紙が入っていた。"s,
                 u8"You find a cursed letter inside."s));
         }
-        efid = 1114;
-        efp = 1000;
-        tc = 0;
-        magic();
+        magic(1114, cc, 0, 1000);
         return;
     }
     if (inv[ri].param3 < 200)
@@ -55626,13 +55498,15 @@ void try_to_open_locked_door()
 
 void do_close_command()
 {
-    int stat = ask_direction_to_close();
-    if (stat == 0)
+    optional<position_t> dir = ask_direction_to_close();
+    if (!dir)
     {
         txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         update_screen();
         pc_turn(false);
     }
+    int x = (*dir).x;
+    int y = (*dir).y;
     cell_featread(x, y);
     if (feat(1) != 20)
     {
@@ -55664,7 +55538,8 @@ int label_2217()
     int ammoy = 0;
     attackrange = 1;
     attacknum = 0;
-    ele = 0;
+    element_t ele = element_t::none;
+    // TODO is elep set?
     ammoproc = -1;
     ammox = cdata[tc].position.x;
     ammoy = cdata[tc].position.y;
@@ -55706,12 +55581,11 @@ int label_2217()
         for (int cnt = 0; cnt < 3; ++cnt)
         {
             can_do_ranged_attack();
-            ele = 0;
             extraattack = 0;
-            do_physical_attack();
+            do_physical_attack(element_t::none);
             if (cdata[tc].state != 1)
             {
-                int stat = label_2072();
+                int stat = auto_pick_enemy_id(cc);
                 if (stat == 0)
                 {
                     break;
@@ -55728,8 +55602,7 @@ int label_2217()
         for (int cnt = 0; cnt < 10; ++cnt)
         {
             can_do_ranged_attack();
-            ele = 0;
-            label_2076();
+            auto_pick_ranged_target(cc);
             if (listmax == 0)
             {
                 break;
@@ -55752,21 +55625,20 @@ int label_2217()
                 continue;
             }
             extraattack = 0;
-            do_physical_attack();
+            do_physical_attack(element_t::none);
         }
     }
     else
     {
         extraattack = 0;
-        do_physical_attack();
+        do_physical_attack(ele);
     }
     if (ammoproc == 1)
     {
-        tlocx = ammox;
-        tlocy = ammoy;
-        efid = 460;
-        efp = sdata(attackskill, cc) * 8 + 10;
-        magic();
+        magic_data data(460, cc, tc, sdata(attackskill, cc) * 8 + 10);
+        data.target_loc.x = ammox;
+        data.target_loc.y = ammoy;
+        magic(data);
     }
     attackvar = 0;
     ammoproc = -1;
@@ -55775,7 +55647,7 @@ int label_2217()
 
 
 
-void try_to_melee_attack()
+void try_to_melee_attack(element_t ele, int elep)
 {
     if (cc != 0)
     {
@@ -55810,7 +55682,7 @@ void try_to_melee_attack()
     attackrange = 0;
     attackskill = 106;
     ammo = -1;
-    ele = 0;
+    ele = element_t::none;
     if (cdata[cc].equipment_type & 1)
     {
         if (clamp(int(std::sqrt(sdata(168, cc)) - 3), 1, 5)
@@ -55851,13 +55723,13 @@ void try_to_melee_attack()
             attackskill = inv[cw].skill;
             ++attacknum;
             extraattack = 0;
-            do_physical_attack();
+            do_physical_attack(ele, elep);
         }
     }
     if (attackskill == 106)
     {
         extraattack = 0;
-        do_physical_attack();
+        do_physical_attack(ele, elep);
     }
     attackvar = 0;
     return;
@@ -55865,7 +55737,7 @@ void try_to_melee_attack()
 
 
 
-void do_physical_attack()
+void do_physical_attack(element_t ele, int elep)
 {
     int attackdmg;
     int expmodifer = 0;
@@ -55907,7 +55779,7 @@ label_22191_internal:
     if (attackrange == 1)
     {
         aniref = cw;
-        play_animation(attackskill);
+        play_animation(attackskill, ele);
     }
     if (attacknum > 1 || cc != 0)
     {
@@ -55974,7 +55846,7 @@ label_22191_internal:
         {
             if (cdata[cc].element_of_unarmed_attack != 0)
             {
-                ele = cdata[cc].element_of_unarmed_attack / 100000;
+                ele = static_cast<element_t>(cdata[cc].element_of_unarmed_attack / 100000);
                 elep = cdata[cc].element_of_unarmed_attack % 100000;
             }
         }
@@ -56288,19 +56160,20 @@ label_22191_internal:
                     cc,
                     attackdmg * cdata[tc].cut_counterattack / 100 + 1,
                     tc,
-                    61,
+                    element_t::cut,
                     100);
             }
         }
         if (cdata[tc].damage_reaction_info != 0)
         {
             p = cdata[tc].damage_reaction_info % 1000;
+            ele = static_cast<element_t>(p(0));
             ccbk = cc;
             for (int cnt = 0; cnt < 1; ++cnt)
             {
                 if (attackrange == 0)
                 {
-                    if (p == 61)
+                    if (ele == element_t::cut)
                     {
                         if (is_in_fov(cc))
                         {
@@ -56314,11 +56187,11 @@ label_22191_internal:
                             cc,
                             clamp(attackdmg / 10, 1, cdata[tc].max_hp / 10),
                             tc,
-                            p,
+                            ele,
                             cdata[tc].damage_reaction_info / 1000);
                         break;
                     }
-                    if (p == 62)
+                    if (ele == element_t::ether)
                     {
                         if (is_in_fov(cc))
                         {
@@ -56333,11 +56206,11 @@ label_22191_internal:
                             cc,
                             clamp(attackdmg / 10, 1, cdata[tc].max_hp / 10),
                             tc,
-                            p,
+                            ele,
                             cdata[tc].damage_reaction_info / 1000);
                         break;
                     }
-                    if (p == 63)
+                    if (ele == element_t::acid)
                     {
                         if (attackskill != 106)
                         {
@@ -56350,9 +56223,8 @@ label_22191_internal:
                 }
                 if (attackdmg > cdata[tc].max_hp / 10)
                 {
-                    cc = tc;
-                    tlocx = cdata[cc].position.x;
-                    tlocy = cdata[cc].position.y;
+                    magic_data data(455, cc, cc);
+                    data.target_loc = cdata[cc].position;
                     if (p == 63)
                     {
                         if (is_in_fov(tc))
@@ -56362,9 +56234,8 @@ label_22191_internal:
                                 u8"酸が飛び散った。"s,
                                 u8"Acids spread over the ground."s));
                         }
-                        efid = 455;
-                        efp = cdata[tc].damage_reaction_info / 1000;
-                        magic();
+                        data.power = cdata[tc].damage_reaction_info / 1000;
+                        magic(data);
                         break;
                     }
                 }
@@ -56465,7 +56336,7 @@ label_22191_internal:
             }
         }
     }
-    ele = 0;
+    ele = element_t::none;
     if (extraattack == 0)
     {
         if (attackrange)
@@ -56580,7 +56451,7 @@ void label_2220()
                 {
                     continue;
                 }
-                ele = enc;
+                element_t ele = static_cast<element_t>(enc);
                 if (cdata[tc].state != 1)
                 {
                     continue;
@@ -56614,14 +56485,13 @@ void label_2220()
                 }
                 p = encprocref(5, enc);
                 enc = encprocref(0, enc);
-                tlocx = cdata[tc].position.x;
-                tlocy = cdata[tc].position.y;
                 if (rnd(100) < p)
                 {
-                    efid = enc;
-                    efp = inv[cw].enchantments[cnt].power
-                        + sdata(attackskill, cc) * 10;
-                    magic();
+                    magic_data data(enc, cc, tc,
+                                    inv[cw].enchantments[cnt].power
+                                    + sdata(attackskill, cc) * 10);
+                    data.target_loc = cdata[data.target].position;
+                    magic(data);
                 }
                 tc = tcbk;
                 continue;
@@ -56641,12 +56511,13 @@ void label_2220()
     {
         if (cdata[tc].state == 1)
         {
+            element_t ele = static_cast<element_t>(rnd(11) + 50);
             gdata(809) = 1;
             dmghp(
                 tc,
                 orgdmg * 2 / 3,
                 cc,
-                rnd(11) + 50,
+                ele,
                 sdata(attackskill, cc) * 10 + 100);
         }
     }
@@ -56840,7 +56711,7 @@ void label_2221()
         }
         if (feat(1) == 26)
         {
-            label_2156();
+            fishing(cc);
         }
         if (feat(1) == 25)
         {
@@ -57500,10 +57371,12 @@ void do_use_command()
     case 19:
         txt(lang(u8"誰を対象にする？"s, u8"Make up who?"s));
         {
-            int stat = ask_direction();
+            optional<position_t> dir = ask_direction();
             f = 0;
-            if (stat != 0)
+            if (dir)
             {
+                int x = (*dir).x;
+                int y = (*dir).y;
                 if (map(x, y, 1) > 0)
                 {
                     tc = map(x, y, 1) - 1;
@@ -57513,7 +57386,7 @@ void do_use_command()
                         update_screen();
                         ccbk = cc;
                         cc = tc;
-                        label_2044();
+                        do_customize_appearance();
                         cc = ccbk;
                         f = 1;
                     }
@@ -57528,16 +57401,13 @@ void do_use_command()
         pc_turn(false);
         break;
     case 15:
-        efid = 184;
-        magic();
+        magic(184, cc, tc);
         goto label_2229_internal;
     case 16:
-        efid = 185;
-        magic();
+        magic(185, cc, tc);
         goto label_2229_internal;
     case 17:
-        efid = 183;
-        magic();
+        magic(183, cc, tc);
         goto label_2229_internal;
     case 14:
         if (cc == 0)
@@ -57593,13 +57463,15 @@ void do_use_command()
         txt(lang(u8"何に聴診器を当てる？"s, u8"Auscultate who?"s));
         update_screen();
         {
-            int stat = ask_direction();
-            if (stat == 0)
+            optional<position_t> dir = ask_direction();
+            if (!dir)
             {
                 txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
                 update_screen();
                 pc_turn(false);
             }
+            int x = (*dir).x;
+            int y = (*dir).y;
         }
         tc = map(x, y, 1) - 1;
         if (tc == 0)
@@ -57649,10 +57521,12 @@ void do_use_command()
         txt(lang(u8"誰を紐で結ぶ？"s, u8"Leash who?"s));
         update_screen();
         {
-            int stat = ask_direction();
+            optional<position_t> dir = ask_direction();
             f = 0;
-            if (stat != 0)
+            if (dir)
             {
+                int x = (*dir).x;
+                int y = (*dir).y;
                 if (map(x, y, 1) > 0)
                 {
                     tc = map(x, y, 1) - 1;
@@ -57726,10 +57600,12 @@ void do_use_command()
         txt(lang(u8"誰を吊るす？"s, u8"Hang who?"s));
         update_screen();
         {
-            int stat = ask_direction();
+            optional<position_t> dir = ask_direction();
             f = 0;
-            if (stat != 0)
+            if (dir)
             {
+                int x = (*dir).x;
+                int y = (*dir).y;
                 if (map(x, y, 1) > 0)
                 {
                     tc = map(x, y, 1) - 1;
@@ -57874,9 +57750,7 @@ void do_use_command()
         inv[ci].weight += 100;
         goto label_2229_internal;
     case 20:
-        efid = 458;
-        efp = 400;
-        magic();
+        magic(458, cc, tc, 400);
         goto label_2229_internal;
     case 47:
         txt(lang(u8"それは鈍く輝いた。"s, u8"It glows dully."s));
@@ -57910,9 +57784,7 @@ void do_use_command()
             itemname(ci, 1) + u8"を振った。"s,
             u8"You swing "s + itemname(ci, 1) + u8"."s));
         snd(58);
-        efid = 49;
-        efp = 100;
-        magic();
+        magic(49, cc, tc, 100);
         goto label_2229_internal;
     case 21:
         txt(lang(
@@ -57922,9 +57794,7 @@ void do_use_command()
         --inv[ci].number;
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
         fixmaterial = inv[ci].material;
-        efid = 21;
-        efp = 500;
-        magic();
+        magic(21, cc, tc, 500);
         goto label_2229_internal;
     case 25:
         txt(lang(
@@ -57932,9 +57802,7 @@ void do_use_command()
             u8"You hold "s + itemname(ci, 1) + u8" up high."s));
         --inv[ci].number;
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
-        efid = 637;
-        efp = 500;
-        magic();
+        magic(637, cc, tc, 500);
         goto label_2229_internal;
     case 26:
         txt(lang(
@@ -57956,9 +57824,7 @@ void do_use_command()
         txt(lang(
             u8"ジュア「べ、別にあんたのためにするんじゃないからね。バカっ！」"s,
             u8"A voice echoes, "s + u8"\"I-I'm not doing for you! Silly!\""s));
-        efid = 637;
-        efp = 5000;
-        magic();
+        magic(637, cc, tc, 5000);
         goto label_2229_internal;
     case 43:
         txt(lang(
@@ -58082,11 +57948,11 @@ void do_use_command()
         txt(lang(
             itemname(ci, 1) + u8"を始動させた。"s,
             u8"You activate "s + itemname(ci, 1) + u8"."s));
-        efid = inv[ci].param1;
-        efp = inv[ci].param2;
-        tc = cc;
-        efstatus = curse_state_t::none;
-        magic();
+        {
+            magic_data data(inv[ci].param1, cc, cc, inv[ci].param2);
+            data.curse_state = curse_state_t::none;
+            magic(data);
+        }
         goto label_2229_internal;
     case 41:
         if (gdata_next_level_minus_one_kumiromis_experience_becomes_available
@@ -59472,10 +59338,7 @@ void label_2244()
                     name(tc)
                         + u8"は色々なものが詰まった袋を、あなたに手渡した。"s,
                     name(tc) + u8" gives you a bag full of materials."s));
-                efid = 1117;
-                efp = 100;
-                tc = 0;
-                magic();
+                magic(1117, cc, 0, 100);
                 talk_end();
                 return;
             }
@@ -63874,13 +63737,17 @@ void failed_quest(int val0)
                                             u8" "s + name(tc) +
                                             u8" pours a bottole of molotov cocktail over "s +
                                             him(tc) + u8"self."s);
+
+                                    // TODO not sure where effect_power is being set before here...
+                                    int effect_power = 100;
+
                                     addmef(
                                         cdata[0].position.x,
                                         cdata[0].position.y,
                                         5,
                                         24,
                                         rnd(15) + 25,
-                                        efp,
+                                        effect_power,
                                         0);
                                     mapitem_fire(
                                         cdata[tc].position.x,
@@ -64580,9 +64447,7 @@ void label_2687()
                                             + u8" the leash."s));
                                 }
                             }
-                            tc = 0;
-                            efid = 619;
-                            magic();
+                            magic(619, cc, 0);
                             turn_end();
                             return;
                         }
@@ -64593,10 +64458,9 @@ void label_2687()
     }
     if (cdata[cc].will_explode_soon())
     {
-        tlocx = cdata[cc].position.x;
-        tlocy = cdata[cc].position.y;
-        efid = 644;
-        magic();
+        magic_data data(644, cc, tc);
+        data.target_loc = cdata[cc].position;
+        magic(data);
         turn_end();
         return;
     }
@@ -64850,7 +64714,7 @@ void label_2687()
             {
                 x = cdata[0].position.x;
                 y = cdata[0].position.y;
-                label_2201();
+                do_bash(x, y);
                 return;
             }
         }
@@ -64861,21 +64725,21 @@ void label_2687()
         {
             if (cdata[cc].mp > 0 || rnd(5) == 0)
             {
-                efid = cdata[cc].ai_heal;
-                if (efid >= 400 && efid < 467)
+                int effect_id = cdata[cc].ai_heal;
+                if (effect_id >= 400 && effect_id < 467)
                 {
                     npccostmp = 1;
-                    int stat = label_2167();
+                    int stat = cast_spell(effect_id);
                     if (stat == 1)
                     {
                         turn_end();
                         return;
                     }
                 }
-                else if (efid >= 600)
+                else if (effect_id >= 600)
                 {
-                    int stat = label_2174();
-                    if (stat == 1)
+                    magic_result result = do_ability(effect_id);
+                    if (result.turn_passed)
                     {
                         turn_end();
                         return;
@@ -65302,7 +65166,7 @@ label_2692_internal:
                                                 lang(
                                                     u8"「くらえー！」"s,
                                                     u8"\"Eat this!\""s));
-                                            do_throw_command();
+                                            do_throw_command(cdata[gdata_fire_giant].position);
                                             return;
                                         }
                                     }
@@ -65331,9 +65195,7 @@ label_2692_internal:
                                     int stat = itemcreate(cc, 587, -1, -1, 0);
                                     if (stat == 1)
                                     {
-                                        tlocx = inv[ti].position.x;
-                                        tlocy = inv[ti].position.y;
-                                        do_throw_command();
+                                        do_throw_command(inv[ti].position);
                                         return;
                                     }
                                 }
@@ -65372,8 +65234,6 @@ label_2692_internal:
                                 int stat = itemcreate(cc, 587, -1, -1, 0);
                                 if (stat == 1)
                                 {
-                                    tlocx = cdata[0].position.x;
-                                    tlocy = cdata[0].position.y;
                                     txtef(9);
                                     txt(lang(u8" *クスクス* "s, u8"*grin*"s),
                                         lang(
@@ -65390,7 +65250,7 @@ label_2692_internal:
                                             u8"\"Watch out!\""s),
                                         lang(
                                             u8"「避けてー」"s, u8"\"Scut!\""s));
-                                    do_throw_command();
+                                    do_throw_command(cdata[0].position);
                                     return;
                                 }
                             }
@@ -65461,8 +65321,7 @@ label_2692_internal:
         {
             if (rnd(5) == 0)
             {
-                efid = 183;
-                magic();
+                magic(183, cc, tc);
                 turn_end();
                 return;
             }
@@ -65481,8 +65340,6 @@ label_2692_internal:
                 {
                     if (cdatan(2, 0) == u8"snail"s)
                     {
-                        tlocx = cdata[0].position.x;
-                        tlocy = cdata[0].position.y;
                         flt();
                         int stat = itemcreate(cc, 698, -1, -1, 0);
                         if (stat == 1)
@@ -65494,7 +65351,7 @@ label_2692_internal:
                                         u8"「なめくじだ！」"s, u8"\"Snail!\""s),
                                     lang(u8"「殺す！」"s, u8"\"Kill!\""s));
                             }
-                            do_throw_command();
+                            do_throw_command(cdata[0].position);
                             return;
                         }
                     }
@@ -66014,8 +65871,6 @@ void label_2696()
                             cdata[tc].position.x,
                             cdata[tc].position.y))
                     {
-                        tlocx = cdata[tc].position.x;
-                        tlocy = cdata[tc].position.y;
                         int stat = 0;
                         if (act == -9999)
                         {
@@ -66060,7 +65915,7 @@ void label_2696()
                         }
                         if (stat == 1)
                         {
-                            do_throw_command();
+                            do_throw_command(cdata[tc].position);
                             return;
                         }
                         turn_end();
@@ -66110,7 +65965,7 @@ void label_2696()
     {
         if (act < 467)
         {
-            efid = act;
+            int effect_id = act;
             if (cdata[cc].mp < cdata[cc].max_mp / 7)
             {
                 if (rnd(3) || cc < 16 || cdata[cc].quality >= 4
@@ -66122,7 +65977,7 @@ void label_2696()
                 }
             }
             npccostmp = 1;
-            int stat = label_2167();
+            int stat = cast_spell(effect_id);
             if (stat == 1)
             {
                 turn_end();
@@ -66132,9 +65987,9 @@ void label_2696()
     }
     if (act >= 600)
     {
-        efid = act;
-        int stat = label_2174();
-        if (stat == 1)
+        int effect_id = act;
+        magic_result result = do_ability(effect_id);
+        if (result.turn_passed)
         {
             turn_end();
             return;
@@ -66144,7 +65999,7 @@ void label_2696()
     {
         if (distance == 1)
         {
-            try_to_melee_attack();
+            try_to_melee_attack(element_t::none);
         }
         else if (rnd(3) == 0 || cc < 16)
         {
@@ -66171,7 +66026,7 @@ void label_2696()
     }
     if (distance == 1)
     {
-        try_to_melee_attack();
+        try_to_melee_attack(element_t::none);
         turn_end();
         return;
     }
@@ -68200,10 +68055,7 @@ void pass_one_turn(bool label_2738_flg)
                 {
                     if (rnd(2000) == 0)
                     {
-                        efid = 454;
-                        efp = 100;
-                        tc = cc;
-                        magic();
+                        magic(454, cc, cc, 100);
                     }
                 }
             }
@@ -68241,7 +68093,7 @@ void pass_one_turn(bool label_2738_flg)
                         }
                     }
                     int stat = dmghp(
-                        tc, rnd(mef(5, ef) / 25 + 5) + 1, -15, 63, mef(5, ef));
+                        tc, rnd(mef(5, ef) / 25 + 5) + 1, -15, element_t::acid, mef(5, ef));
                     if (stat == 0)
                     {
                         check_kill(mef(6, ef), tc);
@@ -68266,7 +68118,7 @@ void pass_one_turn(bool label_2738_flg)
                 }
             }
             int stat =
-                dmghp(tc, rnd(mef(5, ef) / 15 + 5) + 1, -9, 50, mef(5, ef));
+                dmghp(tc, rnd(mef(5, ef) / 15 + 5) + 1, -9, element_t::burning, mef(5, ef));
             if (stat == 0)
             {
                 check_kill(mef(6, ef), tc);
@@ -68291,10 +68143,12 @@ void pass_one_turn(bool label_2738_flg)
                         hostileaction(0, tc);
                     }
                 }
-                potionspill = 1;
-                efstatus = static_cast<curse_state_t>(mef(8, ef)); // TODO
+                curse_state_t efstatus = static_cast<curse_state_t>(mef(8, ef));
                 dbid = mef(7, ef);
-                access_item_db(15);
+
+                item_db_result result = access_item_db(item_db_query_t::drink);
+                drink_potion(result.effect_id, result.effect_power, potion_consume_t::spilt, efstatus);
+
                 if (cdata[tc].state == 0)
                 {
                     check_kill(mef(6, ef), tc);
@@ -68497,7 +68351,7 @@ void pass_one_turn(bool label_2738_flg)
         if (cdata[cc].continuous_action_id == 7)
         {
             auto_turn(40);
-            label_2156();
+            fishing(cc);
         }
         if (cdata[cc].continuous_action_id == 5)
         {
@@ -68564,7 +68418,7 @@ void pass_one_turn(bool label_2738_flg)
         if (cdata[cc].continuous_action_id == 6)
         {
             auto_turn(40);
-            label_2146();
+            do_performance(cc);
         }
         if (cdata[cc].continuous_action_id == 3)
         {
@@ -68977,13 +68831,13 @@ void pc_turn(bool label_2747_flg)
                 && the_item_db[inv[ci].id]->category == 52000)
             {
                 dbid = inv[ci].id;
-                access_item_db(15);
+                item_db_result result = access_item_db(item_db_query_t::drink);
+                drink_potion(result.effect_id, result.effect_power, potion_consume_t::drunk);
             }
         }
         if (trait(214) != 0 && rnd(250) == 0 && mdata(6) != 1)
         {
-            efid = 408;
-            magic();
+            magic(408, cc, cc); // teleport self
         }
         if (cdata[cdata[0].enemy_id].is_invisible() == 1
             && cdata[0].can_see_invisible() == 0
@@ -69592,9 +69446,13 @@ label_2747:
     }
     if (key == key_target)
     {
-        findlocmode = 1;
-        target_position();
-        findlocmode = 0;
+        optional<position_t> pos = target_position(true); // free select
+        if(pos)
+        {
+            // TODO de-globalize
+            tlocx = (*pos).x;
+            tlocy = (*pos).y;
+        }
         goto label_2747;
     }
     if (key == key_fire)
@@ -69642,12 +69500,18 @@ label_2747:
     {
         if (mdata(6) != 1)
         {
-            label_1951();
+            do_look_command(cc);
             return;
         }
         else
         {
-            target_position();
+            optional<position_t> pos = target_position(false);
+            if(pos)
+            {
+                // TODO de-globalize
+                tlocx = (*pos).x;
+                tlocy = (*pos).y;
+            }
             goto label_2747;
         }
     }
