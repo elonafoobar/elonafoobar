@@ -330,7 +330,7 @@ void show_damage_popups(int inf_ver)
         std::remove_if(
             std::begin(damage_popups),
             std::end(damage_popups),
-            [](const auto& d) { return d.frame > 50; }),
+            [](const auto& d) { return d.frame > 20; }),
         std::end(damage_popups));
 }
 
