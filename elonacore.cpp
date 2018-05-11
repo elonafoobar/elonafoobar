@@ -35558,7 +35558,7 @@ void switch_religion()
 
 
 
-turn_result_t pray()
+turn_result_t do_pray()
 {
     if (cdata[0].god_id.empty())
     {
@@ -35814,7 +35814,7 @@ turn_result_t pray()
 
 
 
-turn_result_t offer()
+turn_result_t do_offer()
 {
     if (cdata[0].god_id.empty())
     {
@@ -41179,8 +41179,7 @@ label_1970_internal:
         if (getkey(snail::key::f1))
         {
             show_game_help();
-            result.succeeded = false;
-            result.pressed_f1 = true; // TODO simplify
+            result.pressed_f1 = true;
             return result;
         }
     }
@@ -52885,7 +52884,7 @@ turn_result_t do_pray_command()
             return turn_result_t::turn_end;
         }
     }
-    return pray();
+    return do_pray();
 }
 
 
@@ -53395,7 +53394,7 @@ void label_2196(int cc)
 
 
 
-turn_result_t do_read_commad()
+turn_result_t do_read_command()
 {
     if (inv[ci].id == 783)
     {
@@ -54340,14 +54339,12 @@ void proc_autopick()
                 }
             }
             elona::ci = ci;
-            // TODO should the result be used?
             turn_result_t turn_result = do_open_command();
         }
         if (did_something && !op.sound.empty())
         {
             DSLOADFNAME(filesystem::dir::sound() / op.sound, 15);
             DSPLAY(15, 0);
-            return;
         }
     }
 }
@@ -54585,7 +54582,7 @@ void label_2206()
 
 
 
-turn_result_t change_level_by_stairs(int val0)
+turn_result_t do_use_stairs_command(int val0)
 {
     int movelevelbystairs = 0;
     if (dbg_freemove)
@@ -54699,7 +54696,7 @@ turn_result_t change_level_by_stairs(int val0)
                         u8"昇る階段は見つからない。"s,
                         u8"There're no upstairs here."s));
                     update_screen();
-                                    return turn_result_t::pc_turn_user_error;
+                    return turn_result_t::pc_turn_user_error;
                 }
                 else
                 {
@@ -57152,7 +57149,7 @@ turn_result_t do_use_command()
         {
             txt(lang(u8"まだ眠たくない。"s, u8"You don't feel sleepy yet."s));
             update_screen();
-                            return turn_result_t::pc_turn_user_error;
+            return turn_result_t::pc_turn_user_error;
         }
         gdata(91) = 100;
         continuous_action_others();
@@ -57276,7 +57273,7 @@ turn_result_t do_use_command()
         }
         refresh_character(cc);
         update_screen();
-                        return turn_result_t::pc_turn_user_error;
+        return turn_result_t::pc_turn_user_error;
     }
     switch (inv[ci].function)
     {
@@ -57287,12 +57284,12 @@ turn_result_t do_use_command()
         {
             txt(lang(u8"ここでは使えない。"s, u8"You can't place it here."s));
             update_screen();
-                            return turn_result_t::pc_turn_user_error;
+            return turn_result_t::pc_turn_user_error;
         }
         if (map(x, y, 6) != 0)
         {
             txt(lang(u8"ここには置けない。"s, u8"You can't place it here."s));
-                            return turn_result_t::pc_turn_user_error;
+            return turn_result_t::pc_turn_user_error;
         }
         --inv[ci].number;
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
@@ -57307,7 +57304,7 @@ turn_result_t do_use_command()
                 u8"床に置かないと使えない。"s,
                 u8"You need to put it on the ground."s));
             update_screen();
-                            return turn_result_t::pc_turn_user_error;
+            return turn_result_t::pc_turn_user_error;
         }
         txt(lang(
             u8"あなたは"s + itemname(ci, 1) + u8"に座った。"s,
@@ -57414,7 +57411,7 @@ turn_result_t do_use_command()
             txt(lang(u8"それは無理だ。"s, u8"It's impossible."s));
         }
         update_screen();
-                        return turn_result_t::pc_turn_user_error;
+        return turn_result_t::pc_turn_user_error;
         break;
     case 15:
         efid = 184;
@@ -57435,7 +57432,7 @@ turn_result_t do_use_command()
             {
                 txt(lang(u8"雪が足りない…"s, u8"You need more snow."s));
                 update_screen();
-                                return turn_result_t::pc_turn_user_error;
+                return turn_result_t::pc_turn_user_error;
             }
             removeitem(ci, 5);
         }
@@ -57473,7 +57470,7 @@ turn_result_t do_use_command()
         else
         {
             update_screen();
-                            return turn_result_t::pc_turn_user_error;
+            return turn_result_t::pc_turn_user_error;
         }
     }
         goto label_2229_internal;
@@ -57623,7 +57620,7 @@ turn_result_t do_use_command()
                         txt(lang(
                             u8"もっと弱らせないと吊るせない。"s,
                             u8"The target needs to be weakened."s));
-                                        return turn_result_t::pc_turn_user_error;
+                        return turn_result_t::pc_turn_user_error;
                     }
                     if (tc != 0)
                     {
@@ -57632,7 +57629,7 @@ turn_result_t do_use_command()
                             txt(lang(
                                 u8"仲間を吊るすなんてとんでもない！"s,
                                 u8"Hanging your ally is a brutal idea!"s));
-                                            return turn_result_t::pc_turn_user_error;
+                            return turn_result_t::pc_turn_user_error;
                         }
                     }
                     if (cdata[tc].is_hung_on_sand_bag())
@@ -57640,7 +57637,7 @@ turn_result_t do_use_command()
                         txt(lang(
                             u8"それは既に吊るされている。"s,
                             u8"It's already hanged up."s));
-                                        return turn_result_t::pc_turn_user_error;
+                        return turn_result_t::pc_turn_user_error;
                     }
                     if (tc == 0)
                     {
@@ -57728,7 +57725,7 @@ turn_result_t do_use_command()
                     if (rtval != 0)
                     {
                         update_screen();
-                                        return turn_result_t::pc_turn_user_error;
+                        return turn_result_t::pc_turn_user_error;
                     }
                 }
             }
@@ -57742,13 +57739,13 @@ turn_result_t do_use_command()
             txt(lang(
                 u8"金貨が足りない…"s, u8"You count your coins and sigh..."s));
             update_screen();
-                            return turn_result_t::pc_turn_user_error;
+            return turn_result_t::pc_turn_user_error;
         }
         if (inv[ci].param1 >= 1000000000)
         {
             txt(lang(u8"貯金箱は一杯だ。"s, u8"The money box is full."s));
             update_screen();
-                            return turn_result_t::pc_turn_user_error;
+            return turn_result_t::pc_turn_user_error;
         }
         item_separate(ci);
         snd(12);
@@ -57904,7 +57901,7 @@ turn_result_t do_use_command()
         {
             txt(lang(u8"ここでは使えない。"s, u8"You can't place it here."s));
             update_screen();
-                            return turn_result_t::pc_turn_user_error;
+            return turn_result_t::pc_turn_user_error;
         }
         if (cdata[0].position.x != 33 || cdata[0].position.y != 16)
         {
@@ -57918,7 +57915,7 @@ turn_result_t do_use_command()
                 if (rtval != 0)
                 {
                     update_screen();
-                                    return turn_result_t::pc_turn_user_error;
+                    return turn_result_t::pc_turn_user_error;
                 }
             }
         }
@@ -57979,7 +57976,7 @@ turn_result_t do_use_command()
                 u8"Kumiromi talks to you, "s
                 u8"\"No...you aren't...experienced enough...for this...\""s));
             update_screen();
-                            return turn_result_t::pc_turn_user_error;
+            return turn_result_t::pc_turn_user_error;
         }
         snd(64);
         gdata_next_level_minus_one_kumiromis_experience_becomes_available += 10;
@@ -58791,7 +58788,7 @@ void speak_to_npc()
     talk_start();
     if (scenemode == 1)
     {
-        talk_more();
+        talk_wrapper(talk_result_t::talk_more);
         return;
     }
     chatval(1) = 0;
@@ -61840,7 +61837,7 @@ void initialize_economy()
         if (gdata_current_map != bkdata(0)
             || gdata_current_dungeon_level != bkdata(1))
         {
-            initialize_map(); // TODO occurs outside of main loop
+            initialize_map();
         }
         p = adata(28, cnt);
         if (initeco)
@@ -61898,7 +61895,7 @@ void initialize_economy()
     gdata(79) = 1;
     mode = 3;
     mapsubroutine = 1;
-    initialize_map(); // TODO occurs outside of main loop
+    initialize_map();
     initeco = 0;
     msgtemp = "";
     return;
@@ -64696,7 +64693,7 @@ turn_result_t npc_turn()
         }
         if (category == 53000)
         {
-            return do_read_commad();
+            return do_read_command();
         }
     }
     cdata[cc].item_which_will_be_used = 0;
@@ -68365,7 +68362,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         if (cdata[cc].continuous_action_id == 2)
         {
             auto_turn(25);
-            return do_read_commad();
+            return do_read_command();
         }
         if (cdata[cc].continuous_action_id == 11)
         {
@@ -69140,7 +69137,7 @@ label_2747:
     }
     if (key == key_quick)
     {
-        show_quick_menu(); // TODO verify it still works.
+        show_quick_menu();
         update_screen();
     }
     if (key == u8"sc"s)
@@ -69640,11 +69637,11 @@ label_2747:
     }
     if (key == key_godown)
     {
-        return change_level_by_stairs(1);
+        return do_use_stairs_command(1);
     }
     if (key == key_goup)
     {
-        return change_level_by_stairs(2);
+        return do_use_stairs_command(2);
     }
     if (key == key_wait)
     {

@@ -618,7 +618,6 @@ label_20591:
         }
         update_screen();
         result.turn_result = turn_result_t::pc_turn_user_error;
-        result.succeeded = false; // TODO
         return result;
     }
     sort_list_by_column1();
@@ -626,7 +625,6 @@ label_20591:
     {
         if (listmax == 0)
         {
-            result.succeeded = false;
             result.turn_result = turn_result_t::turn_end;
             return result;
         }
@@ -783,6 +781,7 @@ label_2060_internal:
                 txt(lang(
                     u8"その行為は、ワールドマップにいる間はできない。"s,
                     u8"You can't do that while you're in a global area."s));
+                update_screen();
                 result.turn_result = turn_result_t::pc_turn_user_error;
                 return result;
             }
@@ -1532,7 +1531,7 @@ label_2061_internal:
             screenupdate = -1;
             update_screen();
             savecycle();
-            result.turn_result = do_read_commad();
+            result.turn_result = do_read_command();
             return result;
         }
         if (invctrl == 8)
@@ -1860,7 +1859,7 @@ label_2061_internal:
             screenupdate = -1;
             update_screen();
             savecycle();
-            result.turn_result = offer();
+            result.turn_result = do_offer();
             return result;
         }
         if (invctrl == 20)

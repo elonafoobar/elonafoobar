@@ -13,6 +13,7 @@ enum class talk_result_t
     talk_busy,
     talk_finish_escort,
     talk_game_begin,
+    talk_more,
     talk_end
 };
 
