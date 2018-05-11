@@ -11,6 +11,9 @@ namespace
 {
 
 
+// TODO: it should be configurable.
+constexpr size_t max_damage_popups = 20; // compatible with oomEx
+
 struct damage_popup_t
 {
     int frame;
@@ -270,12 +273,25 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
 }
 
 
+
 void add_damage_popup(
     const std::string& text,
     int character,
     const snail::color& color)
 {
-    damage_popups.emplace_back(text, character, color);
+    if (damage_popups.size() == max_damage_popups)
+    {
+        // Substitute a new damage popup for popup whose frame is the maximum.
+        auto oldest = std::max_element(
+            std::begin(damage_popups),
+            std::end(damage_popups),
+            [](const auto& a, const auto& b) { return a.frame < b.frame; });
+        *oldest = damage_popup_t{text, character, color};
+    }
+    else
+    {
+        damage_popups.emplace_back(text, character, color);
+    }
 }
 
 
