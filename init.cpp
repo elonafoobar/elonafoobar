@@ -50,7 +50,7 @@ namespace
 
 void main_loop()
 {
-    while (1)
+    while (true)
     {
         bool finished = turn_wrapper();
         if (finished)
@@ -1527,8 +1527,8 @@ main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
                             rnd(sdata.get(cnt, rc).original_level / 2 + 1);
                     }
                     cmstats(cnt - 10) =
-                        //         sdata.get(cnt, rc).original_level * 1'000'000
-                        +// sdata.get(cnt, rc).experience * 1'000
+                        sdata.get(cnt, rc).original_level * 1'000'000
+                        + sdata.get(cnt, rc).experience * 1'000
                         + sdata.get(cnt, rc).potential;
                 }
             }

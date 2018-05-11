@@ -2955,7 +2955,8 @@ label_1744_internal:
     }
     if (mode == 11)
     {
-        return turn_result_t::turn_begin; // TODO did not recurse before
+        // This result will be ignored by the caller.
+        return turn_result_t::turn_begin;
     }
     if (gdata_main_quest_flag == 9)
     {
@@ -3231,7 +3232,8 @@ label_1744_internal:
         else
         {
             mapsubroutine = 0;
-            return turn_result_t::turn_begin; // TODO did not recurse before
+            // This result will be ignored by the caller.
+            return turn_result_t::turn_begin;
         }
     }
     wake_up();
