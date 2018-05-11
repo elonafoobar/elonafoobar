@@ -279,6 +279,12 @@ void add_damage_popup(
 }
 
 
+void clear_damage_popups()
+{
+    damage_popups.clear();
+}
+
+
 void show_damage_popups(int inf_ver)
 {
     for (auto&& damage_popup : damage_popups)
