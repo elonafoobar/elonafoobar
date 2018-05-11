@@ -1,3 +1,4 @@
+#include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "elona.hpp"

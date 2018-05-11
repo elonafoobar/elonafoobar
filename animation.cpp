@@ -1,5 +1,6 @@
 #include "animation.hpp"
 #include "ability.hpp"
+#include "audio.hpp"
 #include "character.hpp"
 #include "config.hpp"
 #include "draw.hpp"
@@ -185,7 +186,7 @@ void play_animation_3(int anicol, int anisound)
     }
     if (anisound)
     {
-        snd(anisound, 0, 1);
+        snd(anisound, false, true);
     }
 }
 
@@ -272,7 +273,7 @@ void play_animation_17_2(int animeid, int anicol, int anisound)
     }
     if (anisound)
     {
-        snd(anisound, 0, 1);
+        snd(anisound, false, true);
     }
 }
 
@@ -372,7 +373,7 @@ void play_animation_0(int anicol, int anisound)
     }
     if (anisound)
     {
-        snd(anisound, 0, 1);
+        snd(anisound, false, true);
     }
 }
 
@@ -509,7 +510,7 @@ void play_animation_ranged_attack(int animeid, int anicol, int anisound)
     }
     if (anisound)
     {
-        snd(anisound, 0, 1);
+        snd(anisound, false, true);
     }
 }
 

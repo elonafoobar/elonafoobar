@@ -10,6 +10,14 @@ namespace
 {
 
 constexpr int max_volume = MIX_MAX_VOLUME;
+
+
+std::vector<fs::path> soundfile;
+std::vector<int> soundlist;
+
+
+std::unordered_map<int, Mix_Chunk*> chunks;
+Mix_Music* played_music = nullptr;
 }
 
 
@@ -17,22 +25,11 @@ namespace elona
 {
 
 
-elona_vector1<int> soundlist;
-
-
-namespace mixer_detail
-{
-std::unordered_map<int, Mix_Chunk*> chunks;
-Mix_Music* music = nullptr;
-} // namespace mixer_detail
-
-
-
 int DSINIT()
 {
     Mix_AllocateChannels(16);
     snail::application::instance().register_finalizer([&]() {
-        for (const auto& pair : mixer_detail::chunks)
+        for (const auto& pair : chunks)
         {
             if (pair.second)
                 ::Mix_FreeChunk(pair.second);
@@ -45,21 +42,21 @@ int DSINIT()
 
 void DSLOADFNAME(const fs::path& filepath, int channel)
 {
-    if (mixer_detail::chunks.find(channel) != std::end(mixer_detail::chunks))
+    if (chunks.find(channel) != std::end(chunks))
     {
-        if (mixer_detail::chunks[channel])
-            Mix_FreeChunk(mixer_detail::chunks[channel]);
+        if (chunks[channel])
+            Mix_FreeChunk(chunks[channel]);
     }
     auto chunk = snail::detail::enforce_mixer(
         Mix_LoadWAV(filesystem::to_utf8_path(filepath).c_str()));
-    mixer_detail::chunks[channel] = chunk;
+    chunks[channel] = chunk;
 }
 
 
 
-void DSPLAY(int channel, int loop)
+void DSPLAY(int channel, bool loop)
 {
-    Mix_PlayChannel(-1, mixer_detail::chunks[channel], loop ? -1 : 0);
+    Mix_PlayChannel(-1, chunks[channel], loop ? -1 : 0);
 }
 
 
@@ -73,7 +70,7 @@ void DSSTOP(int channel)
 
 void DSSETVOLUME(int channel, int volume)
 {
-    if (const auto chunk = mixer_detail::chunks[channel])
+    if (const auto chunk = chunks[channel])
     {
         Mix_VolumeChunk(chunk, volume);
     }
@@ -91,8 +88,8 @@ int CHECKPLAY(int channel)
 int DMINIT()
 {
     snail::application::instance().register_finalizer([&]() {
-        if (mixer_detail::music)
-            ::Mix_FreeMusic(mixer_detail::music);
+        if (played_music)
+            ::Mix_FreeMusic(played_music);
     });
     return 1;
 }
@@ -101,10 +98,10 @@ int DMINIT()
 
 void DMLOADFNAME(const fs::path& filepath, int)
 {
-    if (mixer_detail::music)
-        ::Mix_FreeMusic(mixer_detail::music);
+    if (played_music)
+        ::Mix_FreeMusic(played_music);
 
-    mixer_detail::music = snail::detail::enforce_mixer(
+    played_music = snail::detail::enforce_mixer(
         Mix_LoadMUS(filesystem::to_utf8_path(filepath).c_str()));
 }
 
@@ -113,7 +110,7 @@ void DMLOADFNAME(const fs::path& filepath, int)
 void DMPLAY(int loop, int)
 {
     snail::detail::enforce_mixer(
-        Mix_PlayMusic(mixer_detail::music, loop ? -1 : 1));
+        Mix_PlayMusic(played_music, loop ? -1 : 1));
 }
 
 
@@ -121,10 +118,10 @@ void DMPLAY(int loop, int)
 void DMSTOP()
 {
     ::Mix_HaltMusic();
-    if (mixer_detail::music)
+    if (played_music)
     {
-        ::Mix_FreeMusic(mixer_detail::music);
-        mixer_detail::music = nullptr;
+        ::Mix_FreeMusic(played_music);
+        played_music = nullptr;
     }
 }
 
@@ -143,7 +140,8 @@ void sndload(const fs::path& filepath, int prm_293)
 
 void initialize_sound_file()
 {
-    DIM2(soundlist, 6);
+    soundfile.resize(122);
+    soundlist.resize(6);
 
     const std::pair<const char*, int> se_list[] = {
         {u8"exitmap1.wav", 49},   {u8"book1.wav", 59},
@@ -216,28 +214,28 @@ void initialize_sound_file()
 
 
 
-void snd(int prm_296, int prm_297, int prm_298)
+void snd(int sound_id, bool loop, bool prm_298)
 {
     int sound_at_m18 = 0;
     int f_at_m18 = 0;
     if (!config::instance().sound)
         return;
 
-    sound_at_m18 = prm_296;
+    sound_at_m18 = sound_id;
     if (sound_at_m18 > 7)
     {
-        if (prm_297)
+        if (loop)
         {
             sound_at_m18 = 13;
-            if (prm_296 == 78)
+            if (sound_id == 78)
             {
                 sound_at_m18 = 14;
             }
-            if (prm_296 == 79)
+            if (sound_id == 79)
             {
                 sound_at_m18 = 15;
             }
-            if (prm_296 == 80)
+            if (sound_id == 80)
             {
                 sound_at_m18 = 16;
             }
@@ -252,7 +250,7 @@ void snd(int prm_296, int prm_297, int prm_298)
                 {
                     if (CHECKPLAY(cnt))
                     {
-                        if (soundlist(cnt - 7) == sound_at_m18)
+                        if (soundlist[cnt - 7] == sound_at_m18)
                         {
                             sound_at_m18 = cnt;
                             f_at_m18 = 1;
@@ -268,25 +266,24 @@ void snd(int prm_296, int prm_297, int prm_298)
                     if (CHECKPLAY(cnt) == 0)
                     {
                         sound_at_m18 = cnt;
-                        soundlist(cnt - 7) = sound_at_m18;
+                        soundlist[cnt - 7] = sound_at_m18;
                     }
                 }
             }
         }
-        DSLOADFNAME(soundfile[prm_296], sound_at_m18);
+        DSLOADFNAME(soundfile[sound_id], sound_at_m18);
     }
-    DSPLAY(sound_at_m18, prm_297);
+    DSPLAY(sound_at_m18, loop);
 }
 
 
 
-void play_music()
+void play_music(int music_id)
 {
-    int env = 0;
-    int envwprev = 0;
-    int musicprev = 0;
-    int mp3 = 0;
-    env = 0;
+    int envwprev{};
+    int musicprev{};
+    int env{};
+
     if (gdata_weather == 3)
     {
         env = 75;
@@ -310,7 +307,7 @@ void play_music()
             }
             else
             {
-                snd(env, 1);
+                snd(env, true);
             }
         }
     }
@@ -328,7 +325,7 @@ void play_music()
     }
     if (gdata_current_map == 11)
     {
-        snd(78, 1);
+        snd(78, true);
     }
     else
     {
@@ -336,7 +333,7 @@ void play_music()
     }
     if (mdata(6) == 3)
     {
-        snd(79, 1);
+        snd(79, true);
     }
     else
     {
@@ -344,7 +341,7 @@ void play_music()
     }
     if (mdata(20) == 1)
     {
-        snd(80, 1);
+        snd(80, true);
     }
     else
     {
@@ -359,27 +356,27 @@ void play_music()
     {
         return;
     }
-    if (music == 0)
+    if (music_id == 0)
     {
         if (adata(0, gdata_current_map) == 4)
         {
-            music = musicprev;
+            music_id = musicprev;
         }
         if (adata(0, gdata_current_map) == 3)
         {
-            music = 51;
+            music_id = 51;
         }
         if (adata(0, gdata_current_map) == 5)
         {
-            music = 67;
+            music_id = 67;
         }
         if (mdata(13) != 0)
         {
-            music = mdata(13);
+            music_id = mdata(13);
         }
         if (adata(0, gdata_current_map) >= 20)
         {
-            music = 55 + gdata_hour % 6;
+            music_id = 55 + gdata_hour % 6;
         }
         if (adata(16, gdata_current_map) == 8
             || adata(16, gdata_current_map) == 42)
@@ -388,7 +385,7 @@ void play_music()
             {
                 if (adata(20, gdata_current_map) != -1)
                 {
-                    music = 62;
+                    music_id = 62;
                 }
             }
         }
@@ -396,65 +393,65 @@ void play_music()
         {
             if (gdata_executing_immediate_quest_type == 1001)
             {
-                music = 76;
+                music_id = 76;
             }
             if (gdata_executing_immediate_quest_type == 1006)
             {
-                music = 75;
+                music_id = 75;
             }
             if (gdata_executing_immediate_quest_type == 1009)
             {
-                music = 77;
+                music_id = 77;
             }
             if (gdata_executing_immediate_quest_type == 1008)
             {
-                music = 62;
+                music_id = 62;
             }
             if (gdata_executing_immediate_quest_type == 1010)
             {
-                music = 73;
+                music_id = 73;
             }
         }
         if (gdata_current_map == 6)
         {
-            music = 73;
+            music_id = 73;
         }
         if (gdata_current_map == 25)
         {
-            music = 75;
+            music_id = 75;
         }
         if (gdata_current_map == 11)
         {
-            music = 52;
+            music_id = 52;
         }
         if (gdata_current_map == 36)
         {
-            music = 52;
+            music_id = 52;
         }
         if (gdata_current_map == 12)
         {
-            music = 75;
+            music_id = 75;
         }
         if (gdata_current_map == 14)
         {
-            music = 53;
+            music_id = 53;
         }
         if (gdata_current_map == 15)
         {
-            music = 54;
+            music_id = 54;
         }
         if (gdata_current_map == 21)
         {
-            music = 83;
+            music_id = 83;
         }
         if (gdata_current_map == 33)
         {
-            music = 85;
+            music_id = 85;
         }
     }
-    if (music == 0 || adata(0, gdata_current_map) == 1)
+    if (music_id == 0 || adata(0, gdata_current_map) == 1)
     {
-        music = 86 + gdata_day % 3;
+        music_id = 86 + gdata_day % 3;
     }
     if (musicloop == 1)
     {
@@ -464,9 +461,9 @@ void play_music()
     {
         musicloop = 65535;
     }
-    if (musicprev != music || music == 91)
+    if (musicprev != music_id || music_id == 91)
     {
-        musicprev = music;
+        musicprev = music_id;
         mmstop();
         if (config::instance().music == 1)
         {
@@ -474,44 +471,33 @@ void play_music()
             DMLOADFNAME(filesystem::dir::sound() / u8"gm_on.mid", 0);
             DMPLAY(1, 0);
         }
-        fs::path music_dir;
-        if (music != -1)
+        if (music_id != -1)
         {
-            music_dir = filesystem::dir::user() / u8"music";
-            if (!fs::exists(music_dir / musicfile(music)))
+            auto music_dir = filesystem::dir::user() / u8"music";
+            if (!fs::exists(music_dir / musicfile(music_id)))
             {
                 music_dir = filesystem::dir::sound();
-                if (!fs::exists(music_dir / musicfile(music)))
+                if (!fs::exists(music_dir / musicfile(music_id)))
                 {
                     return;
                 }
             }
-            if (strutil::contains(musicfile(music), u8".mp3"))
+
+            const auto is_mp3 = strutil::contains(musicfile(music_id), u8".mp3");
+
+            if (config::instance().music == 2 || is_mp3)
             {
-                mp3 = 1;
-            }
-            else
-            {
-                mp3 = 0;
-            }
-        }
-        if (music != -1)
-        {
-            if (config::instance().music == 2 || mp3 == 1)
-            {
-                mmload(music_dir / musicfile(music), 0, musicloop == 65535);
+                mmload(music_dir / musicfile(music_id), 0, musicloop == 65535);
                 mmplay(0);
             }
             else
             {
-                DMLOADFNAME(music_dir / musicfile(music), 0);
+                DMLOADFNAME(music_dir / musicfile(music_id), 0);
                 DMPLAY(musicloop, 0);
             }
         }
     }
-    music = 0;
     musicloop = 0;
-    return;
 }
 
 

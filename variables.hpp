@@ -193,7 +193,6 @@ ELONA_EXTERN(elona_vector1<std::string> rn2);
 ELONA_EXTERN(elona_vector1<std::string> rtvaln);
 ELONA_EXTERN(elona_vector1<std::string> s1);
 ELONA_EXTERN(elona_vector1<std::string> s);
-ELONA_EXTERN(std::vector<fs::path> soundfile);
 ELONA_EXTERN(elona_vector1<std::string> traitrefn2);
 ELONA_EXTERN(elona_vector1<std::string> traitrefn);
 ELONA_EXTERN(elona_vector1<std::string> untaglist);
@@ -341,7 +340,6 @@ ELONA_EXTERN(int ghelp);
 ELONA_EXTERN(int gold);
 ELONA_EXTERN(int grown);
 ELONA_EXTERN(int header);
-ELONA_EXTERN(int hear);
 ELONA_EXTERN(int hire);
 ELONA_EXTERN(int homemapmode);
 ELONA_EXTERN(int hour_played);
@@ -411,7 +409,6 @@ ELONA_EXTERN(int msgkeep);
 ELONA_EXTERN(int msgline);
 ELONA_EXTERN(int msync);
 ELONA_EXTERN(int mtilefilecur);
-ELONA_EXTERN(int music);
 ELONA_EXTERN(int musicloop);
 ELONA_EXTERN(int mutex_handle);
 ELONA_EXTERN(int nostack);
@@ -939,8 +936,6 @@ void initialize_post_data();
 void initialize_building_daga();
 void clear_trait_data();
 void gain_race_feat();
-void initialize_sound_file();
-void play_music();
 void initialize_nefia_names();
 void initialize_picfood();
 void replace_tags_in_quest_board();
@@ -1434,8 +1429,6 @@ void skillinit(int = 0, int = 0, int = 0);
 std::string snarmor(const std::string&);
 std::string snbakery(const std::string&);
 std::string snblack(const std::string&);
-void snd(int = 0, int = 0, int = 0);
-void sndload(const fs::path& filepath, int = 0);
 std::string snfish(const std::string&);
 std::string snfood(const std::string&);
 std::string sngeneral(const std::string&);
@@ -1502,11 +1495,6 @@ template <typename... Args>
 void txt(Args&&... args)
 {
     std::vector<std::string> text{txt_tostr(args)...};
-    if (hear != 0)
-    {
-        snd(hear);
-        hear = 0;
-    }
     msgtemp = text[rnd(text.size())];
     txt_conv();
     tcol_at_txtfunc(0) = 255;

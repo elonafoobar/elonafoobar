@@ -383,7 +383,6 @@ void initialize_elona()
     SDIM2(playerheader, 100);
     artifactlocation.clear();
     SDIM1(newsbuff);
-    soundfile.resize(122);
     SDIM3(musicfile, 30, 97);
     DIM3(slight, inf_screenw + 4, inf_screenh + 4);
 
@@ -617,7 +616,6 @@ void start_elona()
         {
             playerid = defload;
             mode = 3;
-            music = 0;
             initialize_game();
             return;
         }
@@ -808,8 +806,7 @@ void main_title_menu()
 {
     mode = 10;
     lomiaseaster = 0;
-    music = 65;
-    play_music();
+    play_music(65);
     cs = 0;
     cs_bk = -1;
     keyrange = 6;

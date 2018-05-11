@@ -1,5 +1,6 @@
 #include "ability.hpp"
 #include "animation.hpp"
+#include "audio.hpp"
 #include "autopick.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
@@ -26,7 +27,6 @@
 #include "race.hpp"
 #include "random.hpp"
 #include "snail/application.hpp"
-#include "audio.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
 #include "version.hpp"
@@ -13565,7 +13565,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         se_at_m141 = eleinfo(ele_at_m141, 1);
         if (se_at_m141)
         {
-            snd(se_at_m141, 0, 1);
+            snd(se_at_m141, false, true);
         }
         txtef(3);
         if (prm_855 >= 0)
@@ -13976,14 +13976,14 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 x = cdata[prm_853].position.x;
                 y = cdata[prm_853].position.y;
-                snd(45, 0, 1);
+                snd(45, false, true);
                 animeblood(prm_853, 1, ele_at_m141);
             }
             spillfrag(cdata[prm_853].position.x, cdata[prm_853].position.y, 3);
         }
         else
         {
-            snd(8 + rnd(2), 0, 1);
+            snd(8 + rnd(2), false, true);
             animeblood(prm_853, 0, ele_at_m141);
             spillblood(cdata[prm_853].position.x, cdata[prm_853].position.y, 4);
         }
@@ -33233,15 +33233,13 @@ void label_1866()
     if (atxid == 1)
     {
         txt(lang(u8"ディーラーに話しかけた。"s, u8"You talk to the dealer."s));
-        music = 77;
-        play_music();
+        play_music(77);
         label_1878();
         return;
     }
     if (atxid == 4)
     {
-        music = 77;
-        play_music();
+        play_music(77);
         label_1878();
         return;
     }
@@ -47640,7 +47638,6 @@ void main_menu_continue()
             snd(20);
             await(200);
             mode = 3;
-            music = 0;
             initialize_game();
             return;
         }
@@ -49743,8 +49740,7 @@ void label_2151()
     }
     label_2150();
     musicloop = 1;
-    music = 78;
-    play_music();
+    play_music(78);
     msg_halt();
     for (int cnt = 0; cnt < 20; ++cnt)
     {
@@ -57362,16 +57358,18 @@ void do_use_command()
         }
         goto label_2229_internal;
     case 6:
+    {
         txt(lang(
-            itemname(ci, 1) + u8"再生した。"s,
+            itemname(ci, 1) + u8"を再生した。"s,
             u8"You play "s + itemname(ci, 1) + u8"."s));
-        music = inv[ci].param1 + 50 + 1;
-        if (music >= 91)
+        auto music = inv[ci].param1 + 50 + 1;
+        if (music > 90)
         {
             music = 90;
         }
         mdata(13) = music;
-        play_music();
+        play_music(music);
+    }
         goto label_2229_internal;
     case 10:
         screenupdate = -1;
@@ -63543,9 +63541,8 @@ void label_2677()
 
 void hunt_all_targets()
 {
-    music = 74;
     musicloop = 1;
-    play_music();
+    play_music(74);
     gdata(73) = 3;
     if (gdata_executing_immediate_quest_type == 1)
     {
@@ -63863,7 +63860,7 @@ label_2682_internal:
     }
     if (s == u8"{mc}"s)
     {
-        music = -1;
+        auto music = -1;
         if (s(1) == u8"mcUnrest2"s)
         {
             music = 84;
@@ -63883,12 +63880,11 @@ label_2682_internal:
         if (music == -1)
         {
             musicfile(91) = s(1);
-            music = 91;
-            play_music();
+            play_music(91);
         }
         else
         {
-            play_music();
+            play_music(music);
         }
         goto label_2682_internal;
     }
@@ -68223,7 +68219,6 @@ void turn_end()
         pass_one_turn();
         return;
     }
-    hear = 0;
     label_1520(cc);
     if (cc == 0)
     {
@@ -69493,8 +69488,7 @@ void conquer_lesimas()
 {
     std::string wincomment;
     snd(51);
-    music = -1;
-    play_music();
+    play_music(-1);
     txt(lang(
         u8"信じられない！あなたはネフィアの迷宮「レシマス」を制覇した！"s,
         u8"Unbelievable! You conquered Lesimas!"s));
@@ -69515,8 +69509,7 @@ void conquer_lesimas()
         txt(u8"「お前がここに辿り着くことは」台座から、何かの声が聞こえる。"s);
         flt();
         characreate(-1, 23, cdata[0].position.x, cdata[0].position.y);
-        music = 69;
-        play_music();
+        play_music(69);
         msg_halt();
         msg_clear();
         txt(u8"「決まっていたことなのだ…遅かれ早かれな」"s);
@@ -69548,8 +69541,7 @@ void conquer_lesimas()
         msg_halt();
     }
     mode = 0;
-    music = 71;
-    play_music();
+    play_music(71);
     label_1442();
     gsel(4);
     pos(0, 0);

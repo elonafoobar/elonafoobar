@@ -1,5 +1,6 @@
 #include "ability.hpp"
 #include "animation.hpp"
+#include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "config.hpp"
@@ -180,8 +181,7 @@ void proc_event()
         new_ally_joins();
         break;
     case 13:
-        music = 80;
-        play_music();
+        play_music(80);
         s = lang(u8"結婚"s, u8"Marriage"s);
         buff = lang(u8"長い交際の末、遂にあなたと"s + name(marry) +
                 u8"は固い絆で結ばれた。婚儀の後、あなたの元に幾つか祝儀品が届けられた。"s,
@@ -266,8 +266,7 @@ void proc_event()
                 + u8"."s));
         break;
     case 5:
-        music = 64;
-        play_music();
+        play_music(64);
         snd(51);
         flt(0, calcfixlv());
         flttypemajor = 54000;
