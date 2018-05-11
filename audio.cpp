@@ -1,9 +1,16 @@
 #include "audio.hpp"
 #include <unordered_map>
-#include "snail/application.hpp"
 #include "config.hpp"
 #include "elona.hpp"
+#include "snail/application.hpp"
 #include "variables.hpp"
+
+
+namespace
+{
+
+constexpr int max_volume = MIX_MAX_VOLUME;
+}
 
 
 namespace elona
@@ -11,7 +18,6 @@ namespace elona
 
 
 elona_vector1<int> soundlist;
-int cfg_svolume = 0;
 
 
 namespace mixer_detail
@@ -65,15 +71,12 @@ void DSSTOP(int channel)
 
 
 
-void DSSETVOLUME(int, int)
+void DSSETVOLUME(int channel, int volume)
 {
-}
-
-
-
-int DSGETMASTERVOLUME()
-{
-    return 100;
+    if (const auto chunk = mixer_detail::chunks[channel])
+    {
+        Mix_VolumeChunk(chunk, volume);
+    }
 }
 
 
@@ -141,7 +144,6 @@ void sndload(const fs::path& filepath, int prm_293)
 void initialize_sound_file()
 {
     DIM2(soundlist, 6);
-    cfg_svolume = DSGETMASTERVOLUME();
 
     const std::pair<const char*, int> se_list[] = {
         {u8"exitmap1.wav", 49},   {u8"book1.wav", 59},
@@ -314,15 +316,15 @@ void play_music()
     }
     if (mdata(14) == 2)
     {
-        DSSETVOLUME(13, cfg_svolume * 8 / 10);
+        DSSETVOLUME(13, max_volume * 0.8);
     }
     else if (gdata_current_dungeon_level == 1 || gdata_current_map == 30)
     {
-        DSSETVOLUME(13, cfg_svolume * 2 / 10);
+        DSSETVOLUME(13, max_volume * 0.2);
     }
     else
     {
-        DSSETVOLUME(13, 0);
+        DSSETVOLUME(13, max_volume);
     }
     if (gdata_current_map == 11)
     {

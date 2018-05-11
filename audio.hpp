@@ -21,7 +21,6 @@ void DSLOADFNAME(const fs::path& filepath, int id);
 void DSPLAY(int, int);
 void DSSTOP(int);
 void DSSETVOLUME(int, int);
-int DSGETMASTERVOLUME();
 int CHECKPLAY(int id);
 
 int DMINIT();
