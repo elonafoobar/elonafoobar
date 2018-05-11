@@ -41180,7 +41180,7 @@ label_1970_internal:
         {
             show_game_help();
             result.succeeded = false;
-            result.pressed_f1 = true; // TODO simplify
+            result.pressed_f1 = true;
             return result;
         }
     }
@@ -47066,7 +47066,7 @@ int label_2083()
 
 
 
-void label_2085()
+void dump_player_info()
 {
     cc = 0;
     access_class_info(2, cdatan(3, 0));
@@ -47307,7 +47307,7 @@ void label_2085()
 
 
 
-turn_result_t do_change_ammo_type()
+turn_result_t do_change_ammo_command()
 {
     f = 0;
     for (int cnt = 0; cnt < 30; ++cnt)
@@ -54585,7 +54585,7 @@ void label_2206()
 
 
 
-turn_result_t change_level_by_stairs(int val0)
+turn_result_t do_use_stairs_command(int val0)
 {
     int movelevelbystairs = 0;
     if (dbg_freemove)
@@ -68551,9 +68551,9 @@ turn_result_t turn_end()
 
 
 
-turn_result_t pc_turn(bool label_2747_flg)
+turn_result_t pc_turn(bool advance_time)
 {
-    if (label_2747_flg)
+    if (advance_time)
     {
         if (gdata_catches_god_signal)
         {
@@ -68980,7 +68980,7 @@ label_2747:
     }
     if (getkey(snail::key::f11))
     {
-        label_2085();
+        dump_player_info();
         await(500);
         goto label_2747;
     }
@@ -69140,7 +69140,7 @@ label_2747:
     }
     if (key == key_quick)
     {
-        show_quick_menu(); // TODO verify it still works.
+        show_quick_menu();
         update_screen();
     }
     if (key == u8"sc"s)
@@ -69542,7 +69542,7 @@ label_2747:
     }
     if (key == key_ammo)
     {
-        return do_change_ammo_type();
+        return do_change_ammo_command();
     }
     if (key_tab)
     {
@@ -69640,11 +69640,11 @@ label_2747:
     }
     if (key == key_godown)
     {
-        return change_level_by_stairs(1);
+        return do_use_stairs_command(1);
     }
     if (key == key_goup)
     {
-        return change_level_by_stairs(2);
+        return do_use_stairs_command(2);
     }
     if (key == key_wait)
     {
