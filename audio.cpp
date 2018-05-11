@@ -18,6 +18,10 @@ std::vector<int> soundlist;
 
 std::unordered_map<int, Mix_Chunk*> chunks;
 Mix_Music* played_music = nullptr;
+
+
+int envwprev{};
+int musicprev{};
 }
 
 
@@ -280,8 +284,6 @@ void snd(int sound_id, bool loop, bool prm_298)
 
 void play_music(int music_id)
 {
-    int envwprev{};
-    int musicprev{};
     int env{};
 
     if (gdata_weather == 3)
