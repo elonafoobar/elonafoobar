@@ -37,18 +37,6 @@ int DSINIT()
 
 
 
-void DSEND()
-{
-}
-
-
-
-void DSRELEASE(int)
-{
-}
-
-
-
 void DSLOADFNAME(const fs::path& filepath, int channel)
 {
     if (mixer_detail::chunks.find(channel) != std::end(mixer_detail::chunks))
@@ -106,11 +94,6 @@ int DMINIT()
     return 1;
 }
 
-
-
-void DMEND()
-{
-}
 
 
 void DMLOADFNAME(const fs::path& filepath, int)
@@ -322,7 +305,6 @@ void play_music()
             if (env == 0)
             {
                 DSSTOP(13);
-                DSRELEASE(13);
             }
             else
             {
@@ -349,7 +331,6 @@ void play_music()
     else
     {
         DSSTOP(14);
-        DSRELEASE(14);
     }
     if (mdata(6) == 3)
     {
@@ -358,7 +339,6 @@ void play_music()
     else
     {
         DSSTOP(15);
-        DSRELEASE(15);
     }
     if (mdata(20) == 1)
     {
@@ -367,7 +347,6 @@ void play_music()
     else
     {
         DSSTOP(16);
-        DSRELEASE(16);
     }
     if (envonly == 1)
     {

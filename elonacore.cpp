@@ -2081,14 +2081,6 @@ void finish_elona()
     int ieopen = 0;
     int ie_event = 0;
     int ie = 0;
-    if (config::instance().music == 1)
-    {
-        DMEND();
-    }
-    if (config::instance().sound)
-    {
-        DSEND();
-    }
     if (ieopen)
     {
         delcom(ie_event);
