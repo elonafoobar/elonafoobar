@@ -44,6 +44,9 @@ void talk_wrapper(talk_result_t initial)
         case talk_result_t::talk_game_begin:
             result = talk_game_begin();
             break;
+        case talk_result_t::talk_more:
+            result = talk_more();
+            break;
         case talk_result_t::talk_end:
             talk_end();
             finished = true;
