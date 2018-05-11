@@ -680,6 +680,7 @@ void load_config()
                 + filesystem::make_preferred_path_in_utf8(
                       filesystem::dir::exe() / u8"config.json")};
         }
+        fileutil::skip_bom(file);
 
         file >> value;
     }
@@ -823,6 +824,7 @@ void set_config(const std::string& key, int value)
                 + filesystem::make_preferred_path_in_utf8(
                       filesystem::dir::exe() / u8"config.json")};
         }
+        fileutil::skip_bom(file);
         file >> options;
     }
 
@@ -858,6 +860,7 @@ void set_config(const std::string& key, const std::string& value)
                 + filesystem::make_preferred_path_in_utf8(
                       filesystem::dir::exe() / u8"config.json")};
         }
+        fileutil::skip_bom(file);
         file >> options;
     }
 
@@ -893,6 +896,7 @@ void set_config(const std::string& key, const std::string& value1, int value2)
                 + filesystem::make_preferred_path_in_utf8(
                       filesystem::dir::exe() / u8"config.json")};
         }
+        fileutil::skip_bom(file);
         file >> options;
     }
 
@@ -986,6 +990,7 @@ void load_config2()
                   filesystem::dir::exe() / u8"config.json")};
     }
 
+    fileutil::skip_bom(file);
     picojson::value value;
     file >> value;
 
