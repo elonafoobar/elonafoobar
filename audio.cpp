@@ -12,6 +12,17 @@ namespace
 constexpr int max_volume = MIX_MAX_VOLUME;
 
 
+// Channels:
+// 0-6: reserved for SEs used very frequently
+// 7: temporary(default)
+// 8-12: temporary
+// 13-16: reserved for weather effect
+
+constexpr int max_channels = 17;
+constexpr int temporary_channels_head = 7;
+constexpr int temporary_channels_size = 6;
+
+
 std::vector<fs::path> soundfile;
 std::vector<int> soundlist;
 
@@ -30,8 +41,8 @@ namespace elona
 
 int DSINIT()
 {
-    Mix_AllocateChannels(17);
-    chunks.resize(17);
+    Mix_AllocateChannels(max_channels);
+    chunks.resize(max_channels);
     snail::application::instance().register_finalizer([&]() {
         for (const auto& chunk : chunks)
         {
@@ -130,7 +141,7 @@ void DMSTOP()
 
 void sndload(const fs::path& filepath, int prm_293)
 {
-    if (prm_293 < 7)
+    if (prm_293 < temporary_channels_head)
     {
         DSLOADFNAME(filepath, prm_293);
     }
@@ -142,7 +153,7 @@ void sndload(const fs::path& filepath, int prm_293)
 void initialize_sound_file()
 {
     soundfile.resize(122);
-    soundlist.resize(6);
+    soundlist.resize(temporary_channels_size);
 
     const std::pair<const char*, int> se_list[] = {
         {u8"exitmap1.wav", 49},   {u8"book1.wav", 59},
@@ -221,7 +232,7 @@ void snd(int sound_id, bool loop, bool allow_duplicate)
         return;
 
     int channel = sound_id;
-    if (channel > 7)
+    if (channel > temporary_channels_head)
     {
         if (loop)
         {
@@ -235,13 +246,16 @@ void snd(int sound_id, bool loop, bool allow_duplicate)
         }
         else
         {
-            channel = 7;
+            channel = temporary_channels_head;
             bool found{};
             if (!allow_duplicate)
             {
-                for (int i = 7; i < 13; ++i)
+                for (int i = temporary_channels_head;
+                     i < temporary_channels_head + temporary_channels_size;
+                     ++i)
                 {
-                    if (CHECKPLAY(i) && soundlist[i - 7] == sound_id)
+                    if (CHECKPLAY(i)
+                        && soundlist[i - temporary_channels_head] == sound_id)
                     {
                         channel = i;
                         found = true;
@@ -251,12 +265,14 @@ void snd(int sound_id, bool loop, bool allow_duplicate)
             }
             if (!found)
             {
-                for (int i = 7; i < 13; ++i)
+                for (int i = temporary_channels_head;
+                     i < temporary_channels_head + temporary_channels_size;
+                     ++i)
                 {
                     if (!CHECKPLAY(i))
                     {
                         channel = i;
-                        soundlist[i - 7] = sound_id;
+                        soundlist[i - temporary_channels_head] = sound_id;
                     }
                 }
             }
