@@ -341,6 +341,13 @@ bool input::is_ime_active() const
 
 
 
+void input::inactivate_ime()
+{
+    _is_ime_active = false;
+}
+
+
+
 void input::_update()
 {
     for (auto&& key : _keys)
