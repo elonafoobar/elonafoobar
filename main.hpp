@@ -12,8 +12,6 @@ void update_screen();
 void show_race_or_class_info(int, int);
 
 extern int prm_518;
-extern int prm_818;
-extern int prm_820;
 extern int prm_853;
 
 extern int tmp_at_m172;

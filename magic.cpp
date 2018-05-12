@@ -14,6 +14,7 @@
 #include "item_db.hpp"
 #include "macro.hpp"
 #include "map.hpp"
+#include "status_ailment.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
 #include "wish.hpp"
@@ -352,7 +353,7 @@ int magic()
                                         name(tc) + u8" "s + is(tc)
                                             + u8" healed."s));
                                 }
-                                label_2187();
+                                heal_rider_and_mount();
                             }
                             continue;
                         }
@@ -566,7 +567,7 @@ int magic()
                                 + u8" completely healed."s));
                     }
                 }
-                label_2187();
+                heal_rider_and_mount();
                 if (efstatus == curse_state_t::blessed)
                 {
                     healcon(tc, 12, 5 + rnd(5));
@@ -681,11 +682,11 @@ int magic()
                 dmghp(tc, roll(dice1, dice2, bonus), cc, ele, elep);
                 if (efid == 617)
                 {
-                    dmgcon(tc, 6, elep);
+                    dmgcon(tc, status_ailment_t::fear, elep);
                 }
                 if (efid == 618)
                 {
-                    dmgcon(tc, 2, elep);
+                    dmgcon(tc, status_ailment_t::sleep, elep);
                 }
                 if (efid == 614)
                 {
@@ -990,7 +991,7 @@ int magic()
                         rowactend(cc);
                         ccprev = cc;
                         cc = tc;
-                        label_21452();
+                        proc_trap();
                         cc = ccprev;
                         if (tc == 0)
                         {
@@ -1282,7 +1283,7 @@ label_2181_internal:
                 name(tc) + u8"は恋の予感がした。"s,
                 name(tc) + u8" sense"s + _s(tc) + u8" a sigh of love,"s));
             modimp(tc, clamp(efp / 15, 0, 15));
-            dmgcon(tc, 7, 100);
+            dmgcon(tc, status_ailment_t::dimmed, 100);
             lovemiracle(tc);
             break;
         }
@@ -1299,7 +1300,7 @@ label_2181_internal:
             lovemiracle(tc);
             modimp(tc, clamp(efp / 4, 0, 25));
         }
-        dmgcon(tc, 7, 500);
+        dmgcon(tc, status_ailment_t::dimmed, 500);
         break;
     case 654:
         if (is_in_fov(tc))
@@ -1361,7 +1362,7 @@ label_2181_internal:
         cdata[tc].nutrition += 1000 * (efp / 100);
         if (tc == 0)
         {
-            label_2162();
+            show_eating_message();
         }
         eatstatus(efstatus, tc);
         animeload(15, tc);
@@ -1391,7 +1392,7 @@ label_2181_internal:
                     lang(u8"「んまっ♪」"s, u8"\"Awesome.\""s));
             }
         }
-        dmgcon(tc, 8, efp);
+        dmgcon(tc, status_ailment_t::drunk, efp);
         eatstatus(efstatus, tc);
         break;
     case 1116:
@@ -1696,7 +1697,7 @@ label_2181_internal:
                 rnd(the_ability_db[efid]->cost / 2 + 1)
                     + the_ability_db[efid]->cost / 2 + 1);
         }
-        label_2146();
+        continuous_action_perform();
         break;
     case 184:
         if (sdata(184, 0) == 0)
@@ -1900,7 +1901,7 @@ label_2181_internal:
         txt(lang(
             name(tc) + u8"は黄金の輝きに包まれた！"s,
             u8"A golden aura wraps "s + name(tc) + u8"!"s));
-        label_2188();
+        heal_completely();
         play_animation(5);
         break;
     case 1117:
@@ -2453,7 +2454,7 @@ label_2181_internal:
             }
             --cdata[tc].level;
             cdata[tc].experience = 0;
-            label_1456(tc);
+            update_required_experience(tc);
             txtef(8);
             txt(lang(
                 name(tc) + u8"のレベルが下がった…"s,
@@ -2944,7 +2945,7 @@ label_2181_internal:
     case 441:
         what_do_you_wish_for();
         screenupdate = -1;
-        label_1416();
+        update_screen();
         break;
     case 1141:
         if (tc != 0)
@@ -3019,7 +3020,7 @@ label_2181_internal:
         }
         else
         {
-            label_2081();
+            try_to_return();
             if (is_cursed(efstatus))
             {
                 if (rnd(3) == 0)
@@ -3068,7 +3069,7 @@ label_2181_internal:
                         + his(tc) + u8" stomach."s));
             }
         }
-        dmgcon(tc, 1, efp);
+        dmgcon(tc, status_ailment_t::poisoned, efp);
         break;
     case 1111:
         if (is_in_fov(tc))
@@ -3077,7 +3078,7 @@ label_2181_internal:
                 name(tc) + u8"は墨を浴びた！"s,
                 u8"Ink squirts into "s + name(tc) + your(tc) + u8" face!"s));
         }
-        dmgcon(tc, 4, efp);
+        dmgcon(tc, status_ailment_t::blinded, efp);
         break;
     case 1109:
         if (is_in_fov(tc))
@@ -3087,7 +3088,7 @@ label_2181_internal:
                 u8"A foul stench floods "s + name(tc) + your(tc)
                     + u8" nostrils!"s));
         }
-        dmgcon(tc, 5, efp);
+        dmgcon(tc, status_ailment_t::confused, efp);
         break;
     case 1110:
         if (is_in_fov(tc))
@@ -3096,7 +3097,7 @@ label_2181_internal:
                 name(tc) + u8"は痺れた！"s,
                 name(tc) + u8" get"s + _s(tc) + u8" numbness!"s));
         }
-        dmgcon(tc, 3, efp);
+        dmgcon(tc, status_ailment_t::paralyzed, efp);
         break;
     case 1112:
         if (is_in_fov(tc))
@@ -3105,7 +3106,7 @@ label_2181_internal:
                 name(tc) + u8"は甘い液体を浴びた！"s,
                 u8"Strange sweet liquid splashes onto "s + name(tc) + u8"!"s));
         }
-        dmgcon(tc, 2, efp);
+        dmgcon(tc, status_ailment_t::sleep, efp);
         break;
     case 645:
     case 1114:
@@ -4380,7 +4381,7 @@ label_2181_internal:
                 }
             }
         }
-        dmgcon(tc, 7, 200);
+        dmgcon(tc, status_ailment_t::dimmed, 200);
         break;
     case 652:
         if (is_in_fov(tc))

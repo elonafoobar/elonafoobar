@@ -7,6 +7,7 @@
 #include "item.hpp"
 #include "item_db.hpp"
 #include "macro.hpp"
+#include "status_ailment.hpp"
 #include "variables.hpp"
 
 
@@ -2282,7 +2283,7 @@ talk_result_t talk_unique()
             s = refchara_str(cdata[tc].id, 8);
             if (!strutil::contains(s(0), u8"/man/"))
             {
-                dmgcon(tcbk, 11, 1000);
+                dmgcon(tcbk, status_ailment_t::insane, 1000);
                 f = 1;
                 modify_karma(0, 2);
             }

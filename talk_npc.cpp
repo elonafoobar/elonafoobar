@@ -627,7 +627,7 @@ talk_result_t talk_npc()
         txt(lang(u8"なかなか美味しかった。"s, u8"It was tasty."s),
             lang(u8"悪くない。"s, u8"Not bad at all."s),
             lang(u8"あなたは舌鼓をうった。"s, u8"You smack your lips."s));
-        label_2162();
+        show_eating_message();
         chara_anorexia(0);
         return talk_result_t::talk_npc;
     }
@@ -1158,7 +1158,7 @@ talk_result_t talk_npc()
                         + _dozo(),
                     u8"("s + name(tc) + u8" brings "s + name(rc)
                         + u8" from the stable.) There you go."s);
-                label_1537();
+                revive_character();
             }
             else
             {
@@ -1671,7 +1671,7 @@ talk_result_t talk_npc()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        label_2081();
+        try_to_return();
         return talk_result_t::talk_end;
     }
     if (chatval == 54)
@@ -1736,7 +1736,7 @@ talk_result_t talk_npc()
         ELONA_APPEND_RESPONSE(0, lang(u8"うふふ"s, u8"Come on!"s));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        label_2147();
+        continuous_action_sex();
         return talk_result_t::talk_end;
     }
     if (chatval == 58)
@@ -1789,7 +1789,7 @@ talk_result_t talk_npc()
         ELONA_TALK_SCENE_CUT();
         cc = tc;
         tc = 0;
-        label_2147();
+        continuous_action_sex();
         cc = 0;
         return talk_result_t::talk_end;
     }
