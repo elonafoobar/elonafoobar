@@ -25,6 +25,7 @@ void add_damage_popup(
     const std::string& text,
     int character,
     const snail::color& color);
+void clear_damage_popups();
 void show_damage_popups(int inf_ver);
 
 

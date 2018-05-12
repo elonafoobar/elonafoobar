@@ -11,6 +11,9 @@ namespace
 {
 
 
+// TODO: it should be configurable.
+constexpr size_t max_damage_popups = 20; // compatible with oomEx
+
 struct damage_popup_t
 {
     int frame;
@@ -270,12 +273,31 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
 }
 
 
+
 void add_damage_popup(
     const std::string& text,
     int character,
     const snail::color& color)
 {
-    damage_popups.emplace_back(text, character, color);
+    if (damage_popups.size() == max_damage_popups)
+    {
+        // Substitute a new damage popup for popup whose frame is the maximum.
+        auto oldest = std::max_element(
+            std::begin(damage_popups),
+            std::end(damage_popups),
+            [](const auto& a, const auto& b) { return a.frame < b.frame; });
+        *oldest = damage_popup_t{text, character, color};
+    }
+    else
+    {
+        damage_popups.emplace_back(text, character, color);
+    }
+}
+
+
+void clear_damage_popups()
+{
+    damage_popups.clear();
 }
 
 
@@ -287,14 +309,20 @@ void show_damage_popups(int inf_ver)
         if (gdata(20) != 40)
         {
             if (!is_in_fov(cc.position))
+            {
+                ++damage_popup.frame;
                 continue;
+            }
             if (dist(
                     cdata[0].position.x,
                     cdata[0].position.y,
                     cc.position.x,
                     cc.position.y)
                 > cdata[0].vision_distance / 2)
+            {
+                ++damage_popup.frame;
                 continue;
+            }
         }
         int mondmgpos{};
         for (auto&& damage_popup2 : damage_popups)
@@ -330,7 +358,7 @@ void show_damage_popups(int inf_ver)
         std::remove_if(
             std::begin(damage_popups),
             std::end(damage_popups),
-            [](const auto& d) { return d.frame > 50; }),
+            [](const auto& d) { return d.frame > 20; }),
         std::end(damage_popups));
 }
 
