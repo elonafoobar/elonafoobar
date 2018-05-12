@@ -1710,8 +1710,8 @@ label_2181_internal:
         invctrl = 16;
         snd(100);
         {
-            int stat = ctrl_inventory();
-            if (stat == 0)
+            menu_result result = ctrl_inventory();
+            if (!result.succeeded)
             {
                 return 0;
             }
@@ -1846,7 +1846,7 @@ label_2181_internal:
         item_separate(ci);
         --inv[ci].count;
         rowactre = 0;
-        label_2156();
+        spot_fishing();
         break;
     case 406:
     case 407:
@@ -2155,7 +2155,7 @@ label_2181_internal:
         }
         allyctrl = 2;
         {
-            int stat = label_1980();
+            int stat = show_hire_menu();
             if (stat == -1)
             {
                 txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
@@ -3472,8 +3472,8 @@ label_2181_internal:
         invctrl(1) = 7;
         snd(100);
         {
-            int stat = ctrl_inventory();
-            f = stat;
+            menu_result result = ctrl_inventory();
+            f = result.succeeded ? 1 : 0;
         }
         if (inv[ci].quality >= 4 || ibit(10, ci) == 1)
         {
@@ -3534,8 +3534,8 @@ label_2181_internal:
         invctrl(1) = 0;
         snd(100);
         {
-            int stat = ctrl_inventory();
-            f = stat;
+            menu_result result = ctrl_inventory();
+            f = result.succeeded ? 1 : 0;
         }
         if (inv[ci].quality == 5 || ibit(10, ci) == 1)
         {
@@ -3644,8 +3644,8 @@ label_2181_internal:
         }
         snd(100);
         {
-            int stat = ctrl_inventory();
-            if (stat == 1)
+            menu_result result = ctrl_inventory();
+            if (result.succeeded)
             {
                 if (inv[ci].enhancement < efp / 100)
                 {
@@ -3699,8 +3699,8 @@ label_2181_internal:
         invctrl(1) = 3;
         snd(100);
         {
-            int stat = ctrl_inventory();
-            if (stat == 1)
+            menu_result result = ctrl_inventory();
+            if (result.succeeded)
             {
                 dbid = inv[ci].id;
                 access_item_db(2);
@@ -3793,8 +3793,8 @@ label_2181_internal:
         invctrl(1) = 5;
         snd(100);
         {
-            int stat = ctrl_inventory();
-            if (stat == 1)
+            menu_result result = ctrl_inventory();
+            if (result.succeeded)
             {
                 dbid = inv[ci].id;
                 access_item_db(2);
@@ -3898,8 +3898,8 @@ label_2181_internal:
         invctrl(1) = 6;
         snd(100);
         {
-            int stat = ctrl_inventory();
-            if (stat == 1)
+            menu_result result = ctrl_inventory();
+            if (result.succeeded)
             {
                 autosave = 1 * (gdata_current_map != 35);
                 animeload(8, cc);
@@ -3965,8 +3965,8 @@ label_2181_internal:
         invctrl(1) = 4;
         snd(100);
         {
-            int stat = ctrl_inventory();
-            f = stat;
+            menu_result result = ctrl_inventory();
+            f = result.succeeded ? 1 : 0;
         }
         if (f)
         {

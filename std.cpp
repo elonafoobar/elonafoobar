@@ -2032,7 +2032,7 @@ void onkey_1()
 
 void end()
 {
-    std::exit(0);
+
 }
 
 

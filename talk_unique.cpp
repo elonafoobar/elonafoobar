@@ -1,3 +1,4 @@
+#include "talk.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
@@ -14,7 +15,7 @@ namespace elona
 {
 
 
-void talk_unique()
+talk_result_t talk_unique()
 {
     listmax = 0;
     switch (chatval(1))
@@ -29,8 +30,7 @@ void talk_unique()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         gdata_main_quest_flag = 170;
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 23:
         if (evid() == 1)
         {
@@ -90,8 +90,7 @@ void talk_unique()
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 28:
@@ -101,8 +100,7 @@ void talk_unique()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 29:
         if (cdata[0].fame < 20000)
         {
@@ -113,8 +111,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_nightmare == 1000)
         {
@@ -126,8 +123,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_nightmare == 0)
         {
@@ -160,8 +156,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -177,8 +172,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_nightmare = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_nightmare == 1 || gdata_nightmare == 2)
         {
@@ -196,8 +190,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -216,8 +209,7 @@ void talk_unique()
             gdata_destination_dungeon_level = 5;
             levelexitby = 2;
             chatteleport = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_nightmare == 3)
         {
@@ -251,11 +243,9 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_nightmare = 1000;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 30:
         if (gdata_putit_attacks == 1000)
         {
@@ -267,8 +257,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_putit_attacks == 0)
         {
@@ -296,8 +285,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -313,8 +301,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_putit_attacks = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_putit_attacks == 1)
         {
@@ -326,8 +313,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_putit_attacks == 2)
         {
@@ -359,8 +345,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_putit_attacks = 1000;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 31:
@@ -374,8 +359,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_thieves_hideout == 0)
         {
@@ -405,8 +389,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -423,8 +406,7 @@ void talk_unique()
             ELONA_TALK_SCENE_CUT();
             gdata_thieves_hideout = 1;
             cell_featset(48, 5, tile_downstairs, 11, 4);
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_thieves_hideout == 1)
         {
@@ -436,8 +418,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_thieves_hideout == 2)
         {
@@ -472,8 +453,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_thieves_hideout = 1000;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 33:
@@ -542,8 +522,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
         if (chatval == 2)
         {
@@ -563,8 +542,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
         if (chatval == 3)
         {
@@ -576,11 +554,9 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 34:
         if (chatflag == 0)
         {
@@ -722,8 +698,7 @@ void talk_unique()
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_end();
-                    return;
+                    return talk_result_t::talk_end;
                 }
                 listmax = 0;
                 buff = lang(u8"上出来だ。"s, u8"Well done."s);
@@ -771,8 +746,7 @@ void talk_unique()
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 gdata_tutorial_flag = 8;
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             if (gdata_tutorial_flag == 8)
             {
@@ -829,8 +803,7 @@ void talk_unique()
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 gdata_tutorial_flag = -1;
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             if (gdata_tutorial_flag == -1)
             {
@@ -866,8 +839,7 @@ void talk_unique()
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             gdata_tutorial_flag = 1;
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
         if (chatval == 2)
         {
@@ -884,8 +856,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             listmax = 0;
             buff = lang(""s + cdatan(0, 0) +
@@ -961,8 +932,7 @@ void talk_unique()
                 ELONA_TALK_SCENE_CUT();
             }
             gdata_tutorial_flag = 2;
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
         if (chatval == 4)
         {
@@ -997,8 +967,7 @@ void talk_unique()
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             gdata_tutorial_flag = 5;
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
         if (chatval == 5)
         {
@@ -1045,8 +1014,7 @@ void talk_unique()
                 u8"Something is put on the ground."s));
             gdata_tutorial_flag = 6;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 79:
         if (gdata_main_quest_flag == 200)
         {
@@ -1058,8 +1026,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_main_quest_flag < 90)
         {
@@ -1083,8 +1050,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 80:
         if (gdata_main_quest_flag >= 60)
         {
@@ -1096,8 +1062,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_main_quest_flag == 50)
         {
@@ -1109,8 +1074,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_main_quest_flag == 40)
         {
@@ -1157,8 +1121,7 @@ void talk_unique()
             txt(lang(
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
         break;
     case 139:
@@ -1217,8 +1180,7 @@ void talk_unique()
                 cdatan(0, tc) + u8"は静かに息絶えた…"s,
                 cdatan(0, tc) + u8" dies silently..."s));
             chara_vanquish(tc);
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 142:
@@ -1259,8 +1221,7 @@ void talk_unique()
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_main_quest_flag == 120)
         {
@@ -1310,8 +1271,7 @@ void talk_unique()
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             gdata_main_quest_flag = 125;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_main_quest_flag == 105)
         {
@@ -1368,8 +1328,7 @@ void talk_unique()
                 u8"レシマス17階の鍵を受け取った。ジャーナルが更新された。"s,
                 u8"You receive a key of Lesimas 17th level. Your journal has been updated."s));
             gdata_main_quest_flag = 110;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_main_quest_flag >= 60)
         {
@@ -1445,8 +1404,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             if (chatval == 5)
             {
@@ -1468,8 +1426,7 @@ void talk_unique()
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_unique();
-                    return;
+                    return talk_result_t::talk_unique;
                 }
                 if (gdata_main_quest_flag >= 110)
                 {
@@ -1481,8 +1438,7 @@ void talk_unique()
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_unique();
-                    return;
+                    return talk_result_t::talk_unique;
                 }
                 listmax = 0;
                 buff = lang(
@@ -1494,8 +1450,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             if (chatval == 3)
             {
@@ -1523,8 +1478,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             if (chatval == 2)
             {
@@ -1552,8 +1506,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             if (chatval == 1)
             {
@@ -1581,11 +1534,9 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_main_quest_flag == 50)
         {
@@ -1612,8 +1563,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             listmax = 0;
             buff = lang(
@@ -1654,8 +1604,7 @@ void talk_unique()
                 u8"レシマス4階の鍵を受け取った。ジャーナルが更新された。"s,
                 u8"You receive a key of Lesimas 4th level. Your journal has been updated."s));
             gdata_main_quest_flag = 60;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 146:
@@ -1738,8 +1687,7 @@ void talk_unique()
                 cdatan(0, tc) + u8"は自ら命を絶った…"s,
                 cdatan(0, tc) + u8" kills himself..."s));
             chara_vanquish(tc);
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 208:
@@ -1753,11 +1701,9 @@ void talk_unique()
             invctrl = 1;
             snd(26);
             label_18552();
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 209:
         ELONA_APPEND_RESPONSE(
             2, lang(u8"小さなメダル"s, u8"I have some small medals."s));
@@ -1784,8 +1730,7 @@ void talk_unique()
             screenupdate = -1;
             update_screen();
             cs = 0;
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
         if (chatval == 3)
         {
@@ -1819,8 +1764,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             txtnew();
             txt(lang(
@@ -1838,11 +1782,9 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 221:
         if (gdata_pael_and_her_mom == 1000)
         {
@@ -1856,8 +1798,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             listmax = 0;
             buff = lang(
@@ -1867,8 +1808,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 1001)
         {
@@ -1880,8 +1820,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 1002)
         {
@@ -1893,19 +1832,17 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 0)
         {
             buff = lang(
                 u8"おかあさんがひどい病気で…お医者さんはエーテル病だから手に負えないって…"s,
                 u8"Mommy is really sick... but the doctor said she has the ether plague and he can't do anything..."s);
-            int stat = give_potion_of_cure_corruption();
-            if (stat == 0)
+            bool stat = talk_give_potion_of_cure_corruption();
+            if (!stat)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -1913,8 +1850,7 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata_pael_and_her_mom = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 1 || gdata_pael_and_her_mom == 3)
         {
@@ -1926,8 +1862,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 5 || gdata_pael_and_her_mom == 7)
         {
@@ -1940,8 +1875,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 2 || gdata_pael_and_her_mom == 4)
         {
@@ -1949,11 +1883,10 @@ void talk_unique()
                     u8"さん。おかげで、おかあさんの身体も良くなっています。でもまだ、もとどおりに元気になるには時間がかかるみたいなの…"s,
                 u8"Ah, hi "s + cdatan(0, 0) +
                     u8". Thanks to you Mommy's been getting better! But... it still looks like she needs more time before she's really healthy."s);
-            int stat = give_potion_of_cure_corruption();
-            if (stat == 0)
+            bool stat = talk_give_potion_of_cure_corruption();
+            if (!stat)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -1961,19 +1894,18 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             ++gdata_pael_and_her_mom;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 6)
         {
             buff = lang(
                 u8"おかあさん、最近すごく調子いいの！お医者さんも、もう大丈夫だろうって。最近は、近所の子供達もお見舞いに来てくれるんだよ。はやく、おかあさんやみんなと遊びたいな〜。"s,
                 u8"Mommy looks a lot better these days! The doctor said she's gonna be okay. Even the other kids have come to visit her in the past few weeks. I want mommy to be able to play with us soon..."s);
-            int stat = give_potion_of_cure_corruption();
-            if (stat == 0)
+
+            bool stat = talk_give_potion_of_cure_corruption();
+            if (!stat)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -1981,8 +1913,7 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             ++gdata_pael_and_her_mom;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 8)
         {
@@ -1990,11 +1921,10 @@ void talk_unique()
                     u8"さん…おかあさんが…！おかあさんが…急に具合が悪くなって…身体がおかしくなって…あぁ…神様…"s,
                 ""s + cdatan(0, 0) +
                     u8"! It's mommy... something's wrong! Suddenly she started acting strange and... now her body is changing and... oh gods..."s);
-            int stat = give_potion_of_cure_corruption();
-            if (stat == 0)
+            bool stat = talk_give_potion_of_cure_corruption();
+            if (!stat)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -2002,8 +1932,7 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             ++gdata_pael_and_her_mom;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 9)
         {
@@ -2015,8 +1944,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 10)
         {
@@ -2028,8 +1956,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 222:
@@ -2041,8 +1968,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 10)
         {
@@ -2128,8 +2054,7 @@ void talk_unique()
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_end();
-                    return;
+                    return talk_result_t::talk_end;
                 }
                 listmax = 0;
                 buff = lang(
@@ -2139,8 +2064,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         if (gdata_pael_and_her_mom == 1000)
@@ -2183,8 +2107,7 @@ void talk_unique()
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 evadd(20, tc);
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             if (chatval == 2)
             {
@@ -2203,8 +2126,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             listmax = 0;
             buff = lang(
@@ -2214,8 +2136,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom > 7)
         {
@@ -2227,8 +2148,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom > 5)
         {
@@ -2241,8 +2161,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom > 3)
         {
@@ -2254,8 +2173,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         listmax = 0;
         buff = lang(
@@ -2265,8 +2183,7 @@ void talk_unique()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 223:
         if (gdata_wife_collector == 0)
         {
@@ -2288,8 +2205,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -2305,8 +2221,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_wife_collector = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_wife_collector == 1 || gdata_wife_collector == 1000)
         {
@@ -2325,8 +2240,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             allyctrl = 1;
             int stat = ctrl_ally();
@@ -2338,8 +2252,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             rc = stat;
             if (cdata[rc].is_married() == 0)
@@ -2352,8 +2265,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             listmax = 0;
             buff = lang(
@@ -2432,8 +2344,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 224:
@@ -2448,8 +2359,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_novice_knight == 0)
         {
@@ -2468,8 +2378,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -2485,8 +2394,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_novice_knight = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_novice_knight == 1)
         {
@@ -2498,8 +2406,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_novice_knight == 2)
         {
@@ -2529,8 +2436,7 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata_novice_knight = 1000;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 225:
@@ -2542,8 +2448,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (get_freeally() != 0)
         {
@@ -2561,13 +2466,11 @@ void talk_unique()
             new_ally_joins();
             cdata[rc].is_escorted_in_sub_quest() = true;
             refresh_character(rc);
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         else
         {
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 226:
@@ -2580,8 +2483,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_puppys_cave == 0)
         {
@@ -2600,8 +2502,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -2617,8 +2518,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_puppys_cave = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_puppys_cave == 1)
         {
@@ -2630,8 +2530,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             listmax = 0;
             buff = lang(
@@ -2663,8 +2562,7 @@ void talk_unique()
             flt();
             characreate(-1, 225, 31, 4);
             cdata[rc].character_role = 3;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 227:
@@ -2678,8 +2576,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_cat_house == 0)
         {
@@ -2698,8 +2595,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -2716,8 +2612,7 @@ void talk_unique()
             ELONA_TALK_SCENE_CUT();
             gdata_cat_house = 1;
             cell_featset(23, 22, tile_downstairs, 11, 3);
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_cat_house == 1)
         {
@@ -2729,8 +2624,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_cat_house == 2)
         {
@@ -2763,8 +2657,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_cat_house = 1000;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 231:
@@ -2778,8 +2671,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (cdata[0].fame < 5000)
         {
@@ -2791,8 +2683,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_defense_line == 0)
         {
@@ -2824,8 +2715,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -2841,8 +2731,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_defense_line = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_defense_line == 1 || gdata_defense_line == 2)
         {
@@ -2860,8 +2749,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -2882,8 +2770,7 @@ void talk_unique()
             gdata_destination_dungeon_level = 4;
             levelexitby = 2;
             chatteleport = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_defense_line == 3)
         {
@@ -2913,11 +2800,9 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_defense_line = 1000;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 243:
         if (gdata_kamikaze_attack == 1000)
         {
@@ -2931,8 +2816,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_kamikaze_attack == 0)
         {
@@ -2954,8 +2838,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -2971,8 +2854,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_kamikaze_attack = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_kamikaze_attack == 1 || gdata_kamikaze_attack == 2)
         {
@@ -2990,8 +2872,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -3012,8 +2893,7 @@ void talk_unique()
             gdata_destination_dungeon_level = 25;
             levelexitby = 2;
             chatteleport = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_kamikaze_attack == 3)
         {
@@ -3043,11 +2923,9 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_kamikaze_attack = 1000;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 247:
         if (gdata_mias_dream == 1000)
         {
@@ -3059,8 +2937,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_mias_dream == 0)
         {
@@ -3082,8 +2959,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -3099,8 +2975,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_mias_dream = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_mias_dream == 1)
         {
@@ -3114,8 +2989,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             if (jp)
             {
@@ -3157,8 +3031,7 @@ void talk_unique()
             cdata[rc].relationship = -1;
             cdata[rc].original_relationship = -1;
             cdata[rc].character_role = 3;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 252:
@@ -3172,8 +3045,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_rare_books == 0 || gdata_rare_books == 1)
         {
@@ -3217,8 +3089,7 @@ void talk_unique()
                     u8"ジャーナルが更新された。"s,
                     u8"Your journal has been updated."s));
                 gdata_rare_books = 1;
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             p(0) = 0;
             p(1) = 0;
@@ -3254,8 +3125,7 @@ void talk_unique()
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_end();
-                    return;
+                    return talk_result_t::talk_end;
                 }
                 p(0) = 0;
                 p(1) = 0;
@@ -3350,8 +3220,7 @@ void talk_unique()
                     u8"Your journal has been updated."s));
                 gdata_rare_books = 1000;
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 253:
@@ -3365,8 +3234,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (cdata[0].fame < 3000)
         {
@@ -3378,8 +3246,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pyramid_trial == 0)
         {
@@ -3412,8 +3279,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -3437,8 +3303,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_pyramid_trial = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 259:
@@ -3520,8 +3385,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -3555,8 +3419,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         txt(lang(
             u8"何かが足元に転がってきた。"s,
@@ -3573,8 +3436,7 @@ void talk_unique()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 279:
         if (gdata_ambitious_scientist >= 1000)
         {
@@ -3586,8 +3448,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_ambitious_scientist == 0)
         {
@@ -3608,8 +3469,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             flt();
             nostack = 1;
@@ -3632,8 +3492,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_ambitious_scientist = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_ambitious_scientist >= 1 && gdata_ambitious_scientist <= 5)
         {
@@ -3717,8 +3576,7 @@ void talk_unique()
                 u8"Your journal has been updated."s));
             gdata_ambitious_scientist = 1000;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 280:
         if (gdata_sewer_sweeping == 1000)
         {
@@ -3730,8 +3588,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_sewer_sweeping == 0)
         {
@@ -3756,8 +3613,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -3774,8 +3630,7 @@ void talk_unique()
             ELONA_TALK_SCENE_CUT();
             gdata_sewer_sweeping = 1;
             cell_featset(18, 45, tile_downstairs, 11, 20);
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_sewer_sweeping == 1)
         {
@@ -3787,8 +3642,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_sewer_sweeping == 2)
         {
@@ -3822,8 +3676,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_sewer_sweeping = 1000;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 290:
@@ -3854,8 +3707,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             if (chatval == 1)
             {
@@ -3892,8 +3744,7 @@ void talk_unique()
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_unique();
-                    return;
+                    return talk_result_t::talk_unique;
                 }
                 if (gdata_mages_guild_quota > 0)
                 {
@@ -3905,8 +3756,7 @@ void talk_unique()
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_unique();
-                    return;
+                    return talk_result_t::talk_unique;
                 }
                 listmax = 0;
                 buff = lang(
@@ -3953,8 +3803,7 @@ void talk_unique()
                 cdata[tc].initial_position.x = 4;
                 cdata[tc].initial_position.y = 20;
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         cell_movechara(tc, 4, 20);
         cdata[tc].initial_position.x = 4;
@@ -3997,8 +3846,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
         if (chatval == 2)
         {
@@ -4012,8 +3860,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             gdata_mages_guild_quota2 = 0;
             flt(51 - gdata(128) / 200);
@@ -4053,11 +3900,9 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 294:
         if (gdata_belongs_to_thieves_guild == 0)
         {
@@ -4086,8 +3931,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             if (chatval == 1)
             {
@@ -4115,8 +3959,7 @@ void talk_unique()
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_unique();
-                    return;
+                    return talk_result_t::talk_unique;
                 }
                 if (gdata_left_bill <= 4)
                 {
@@ -4128,8 +3971,7 @@ void talk_unique()
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_unique();
-                    return;
+                    return talk_result_t::talk_unique;
                 }
                 listmax = 0;
                 buff = lang(
@@ -4176,8 +4018,7 @@ void talk_unique()
                 cdata[tc].initial_position.x = 17;
                 cdata[tc].initial_position.y = 17;
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         cell_movechara(tc, 17, 17);
         cdata[tc].initial_position.x = 17;
@@ -4220,8 +4061,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
         if (chatval == 2)
         {
@@ -4235,8 +4075,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             gdata_thieves_guild_quota2 = 0;
             flt(51 - gdata(128) / 200);
@@ -4276,11 +4115,9 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 297:
         if (gdata_belongs_to_fighters_guild == 0)
         {
@@ -4309,8 +4146,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             if (chatval == 1)
             {
@@ -4362,8 +4198,7 @@ void talk_unique()
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_unique();
-                    return;
+                    return talk_result_t::talk_unique;
                 }
                 if (gdata_fighters_guild_quota > 0)
                 {
@@ -4381,8 +4216,7 @@ void talk_unique()
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_unique();
-                    return;
+                    return talk_result_t::talk_unique;
                 }
                 listmax = 0;
                 buff = lang(
@@ -4429,8 +4263,7 @@ void talk_unique()
                 cdata[tc].initial_position.x = 29;
                 cdata[tc].initial_position.y = 2;
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         cell_movechara(tc, 29, 2);
         cdata[tc].initial_position.x = 29;
@@ -4493,8 +4326,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
         if (chatval == 2)
         {
@@ -4508,8 +4340,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             gdata_fighters_guild_quota2 = 0;
             flt(51 - gdata(128) / 200, calcfixlv(3));
@@ -4549,11 +4380,9 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 301:
         if (gdata_minotaur_king == 1000)
         {
@@ -4565,8 +4394,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_minotaur_king == 0)
         {
@@ -4587,8 +4415,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -4605,8 +4432,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_minotaur_king = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_minotaur_king == 1)
         {
@@ -4618,8 +4444,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_minotaur_king == 2)
         {
@@ -4652,8 +4477,7 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata_minotaur_king = 1000;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 302:
@@ -4668,8 +4492,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         ELONA_APPEND_RESPONSE(1, lang(u8"返り討ちにする"s, u8"Try me."s));
         ELONA_APPEND_RESPONSE(0, lang(u8"降参する"s, u8"I surrender."s));
@@ -4711,8 +4534,7 @@ void talk_unique()
             levelexitby = 4;
             chatteleport = 1;
             snd(49);
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         listmax = 0;
         buff = lang(
@@ -4723,8 +4545,7 @@ void talk_unique()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 322:
         if (gdata_little_sister == 0)
         {
@@ -4748,8 +4569,7 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata_little_sister = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_little_sister > 0)
         {
@@ -4879,8 +4699,7 @@ void talk_unique()
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
                 }
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             if (chatval == 2)
             {
@@ -4898,8 +4717,7 @@ void talk_unique()
                 txt(lang(
                     u8"何かが足元に転がってきた。"s,
                     u8"Something is put on the ground."s));
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             if (chatval == 3)
             {
@@ -4927,8 +4745,7 @@ void talk_unique()
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 345:
@@ -4965,8 +4782,7 @@ void talk_unique()
                 rc = tc;
                 new_ally_joins();
                 gdata_blue_capsule_drug = 0;
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             listmax = 0;
             buff = lang(u8"まあ、いいさ。"s, u8"If you say so."s);
@@ -4974,8 +4790,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         {
             int stat = inv_find(771, 0);
@@ -5003,8 +4818,7 @@ void talk_unique()
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
                     ++gdata_blue_capsule_drug;
-                    talk_end();
-                    return;
+                    return talk_result_t::talk_end;
                 }
             }
         }
@@ -5015,8 +4829,7 @@ void talk_unique()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 348:
         if (gdata_current_map != 33 || adata(29, gdata_current_map) == 0)
         {
@@ -5032,8 +4845,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         ELONA_APPEND_RESPONSE(
             1,
@@ -5073,8 +4885,7 @@ void talk_unique()
                     -1, 767, cdata[0].position.x, cdata[0].position.y, 0);
                 cdata[0].god_id = core_god::int2godid(6);
                 switch_religion();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         listmax = 0;
@@ -5083,8 +4894,7 @@ void talk_unique()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     }
 
     listmax = 0;
@@ -5094,8 +4904,7 @@ void talk_unique()
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
-    talk_end();
-    return;
+    return talk_result_t::talk_end;
 }
 
 

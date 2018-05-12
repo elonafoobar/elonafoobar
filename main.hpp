@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-
+#include "enums.hpp"
 
 namespace elona
 {
@@ -29,12 +29,12 @@ extern double r_at_m133;
 
 
 
-void character_making_select_sex(bool = true);
-void character_making_select_class(bool = true);
-void character_making_role_attributes(bool = true);
-void character_making_select_feats_and_alias(bool = true);
-void pc_turn(bool = true);
-void pass_one_turn(bool = true);
+main_menu_result_t character_making_select_sex(bool = true);
+main_menu_result_t character_making_select_class(bool = true);
+main_menu_result_t character_making_role_attributes(bool = true);
+main_menu_result_t character_making_select_feats_and_alias(bool = true);
+turn_result_t pc_turn(bool = true);
+turn_result_t pass_one_turn(bool = true);
 
 int access_character_info();
 
@@ -48,12 +48,6 @@ inline int _fdialog(
 {
     return 0;
 }
-
-
-
-struct elona_turn_sequence
-{
-};
 
 
 } // namespace elona

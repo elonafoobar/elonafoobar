@@ -13,11 +13,7 @@
 namespace elona
 {
 
-
-void pc_turn(bool = true);
-
-
-void initialize_map()
+turn_result_t initialize_map()
 {
     int maxnpcbk = 0;
     elona_vector2<int> rolebk;
@@ -2964,7 +2960,8 @@ label_1744_internal:
     }
     if (mode == 11)
     {
-        return;
+        // This result will be ignored by the caller.
+        return turn_result_t::turn_begin;
     }
     if (gdata_main_quest_flag == 9)
     {
@@ -3230,18 +3227,18 @@ label_1744_internal:
             update_screen();
             if (evnum == 0)
             {
-                pc_turn(false);
+                return turn_result_t::pc_turn_user_error;
             }
             else
             {
-                turn_begin();
-                return;
+                return turn_result_t::turn_begin;
             }
         }
         else
         {
             mapsubroutine = 0;
-            return;
+            // This result will be ignored by the caller.
+            return turn_result_t::turn_begin;
         }
     }
     wake_up();
@@ -3491,8 +3488,7 @@ label_1744_internal:
                     + u8" minites."s));
         }
     }
-    turn_begin();
-    return;
+    return turn_result_t::turn_begin;
 }
 
 

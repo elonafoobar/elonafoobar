@@ -370,10 +370,6 @@ std::vector<config_menu> create_config_menu()
 namespace elona
 {
 
-
-void pc_turn(bool = true);
-
-
 int submenu = 0;
 
 

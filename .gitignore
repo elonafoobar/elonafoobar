@@ -14,3 +14,7 @@ deps/include/
 deps/lib/
 deps/elona/
 CMakeFiles/
+snail/Debug
+snail/snail.dir
+snail/snail.vcxproj*
+cmake_install.cmake
