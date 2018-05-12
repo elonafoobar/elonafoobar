@@ -957,17 +957,17 @@ main_menu_result_t main_title_menu()
         {
             snd(20);
             geneuse = "";
-            return main_menu_wrapper(main_menu_result_t::main_menu_new_game);
+            return main_menu_result_t::main_menu_new_game;
         }
         if (key == u8"a"s)
         {
             snd(20);
-            return main_menu_wrapper(main_menu_result_t::main_menu_continue);
+            return main_menu_result_t::main_menu_continue;
         }
         if (key == u8"c"s)
         {
             snd(20);
-            return main_menu_wrapper(main_menu_result_t::main_menu_incarnate);
+            return main_menu_result_t::main_menu_incarnate;
         }
         if (key == u8"d"s)
         {
@@ -978,20 +978,21 @@ main_menu_result_t main_title_menu()
         {
             snd(20);
             set_option();
-            return main_menu_wrapper(main_menu_result_t::main_title_menu);
+            return main_menu_result_t::main_title_menu;
         }
         if (key == u8"f"s)
         {
             snd(20);
             await(400);
-            return main_menu_wrapper(main_menu_result_t::finish_elona);
+            return main_menu_result_t::finish_elona;
         }
     }
 }
 
-main_menu_result_t main_menu_wrapper(main_menu_result_t initial)
+main_menu_result_t main_menu_wrapper()
 {
-    main_menu_result_t result = initial;
+    // Start off in the title menu.
+    main_menu_result_t result = main_title_menu();
     bool finished = false;
     bool game_initialized = false;
     while(!finished)
@@ -1057,6 +1058,7 @@ main_menu_result_t main_menu_wrapper(main_menu_result_t initial)
         case main_menu_result_t::finish_elona:
             result = main_menu_result_t::finish_elona;
             finished = true;
+            break;
         default:
             assert(0);
             break;
@@ -1064,7 +1066,6 @@ main_menu_result_t main_menu_wrapper(main_menu_result_t initial)
     }
     return result;
 }
-
 
 
 main_menu_result_t main_menu_new_game()
@@ -2519,14 +2520,14 @@ void initialize_game()
 
 void main_title_loop()
 {
-    main_menu_result_t result = main_title_menu();
+    main_menu_result_t result = main_menu_wrapper();
     bool finished = false;
     while(!finished)
     {
         switch(result)
         {
         case main_menu_result_t::main_title_menu:
-            result = main_title_menu();
+            result = main_menu_wrapper();
             break;
         case main_menu_result_t::initialize_game:
             initialize_game();
