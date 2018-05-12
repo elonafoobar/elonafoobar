@@ -1,5 +1,6 @@
 #include "wish.hpp"
 #include "ability.hpp"
+#include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "debug.hpp"

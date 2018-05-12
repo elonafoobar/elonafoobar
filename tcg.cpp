@@ -1,3 +1,4 @@
+#include "audio.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"
 #include "elona.hpp"

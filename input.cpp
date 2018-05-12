@@ -1,4 +1,5 @@
 #include "input.hpp"
+#include "audio.hpp"
 #include "config.hpp"
 #include "elona.hpp"
 #include "variables.hpp"
