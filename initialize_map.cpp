@@ -3,6 +3,7 @@
 #include "character.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"
+#include "draw.hpp"
 #include "elona.hpp"
 #include "item.hpp"
 #include "variables.hpp"
@@ -18,6 +19,9 @@ turn_result_t initialize_map()
     int maxmedal = 0;
     elona_vector2<int> medalbk;
     int noaggrorefresh = 0;
+
+    clear_damage_popups();
+
 label_17401:
     mapupdate = 0;
     if (gdata_current_dungeon_level > adata(10, gdata_current_map))

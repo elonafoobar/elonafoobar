@@ -155,6 +155,19 @@ namespace fileutil
 {
 
 
+inline void skip_bom(std::istream& in)
+{
+    assert(in.tellg() == std::istream::pos_type(0));
+
+    const auto first = in.get();
+    const auto second = in.get();
+    const auto third = in.get();
+    if (first != 0xef || second != 0xbb || third != 0xbf)
+        in.seekg(0); // Not BOM
+}
+
+
+
 // Note: the line number is 1-based.
 // Note: the line does not contains a line break.
 struct read_by_line
@@ -228,14 +241,15 @@ struct read_by_line
 
 
     read_by_line(const fs::path& filepath)
-        : in(filepath.native())
     {
-        if (!fs::exists(filepath))
+        in.open(filepath.native());
+        if (!in)
         {
-            using namespace std::literals::string_literals;
             throw std::runtime_error(
-                u8"Could not open file "s + filepath.string());
+                u8"Could not open file "
+                + filesystem::make_preferred_path_in_utf8(filepath));
         }
+        skip_bom(in);
     }
 
 

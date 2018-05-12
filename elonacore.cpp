@@ -18149,13 +18149,6 @@ void label_1466(int cc)
 
 
 
-void label_1467(int cc, int experience)
-{
-    skillexp(183, cc, experience, 0, 0);
-}
-
-
-
 void label_1468(int cc)
 {
     if (cdata[0].inventory_weight_type == 0)
@@ -49338,7 +49331,7 @@ void label_2146()
     int experience = cdata[cc].quality_of_performance - sdata(183, cc) + 50;
     if (experience > 0)
     {
-        label_1467(0, experience);
+        skillexp(183, cc, experience, 0, 0);
     }
     return;
 }
@@ -68656,7 +68649,8 @@ turn_result_t pc_turn(bool label_2747_flg)
         if (autosave)
         {
             autosave = 0;
-            if (gdata_wizard == 0 && gdata_current_map != 40)
+            if (gdata_wizard == 0 && gdata_current_map != 40
+                && config::instance().autosave)
             {
                 snd(44);
                 save_game();
