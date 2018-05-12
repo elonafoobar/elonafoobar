@@ -15,14 +15,13 @@ constexpr int max_volume = MIX_MAX_VOLUME;
 std::vector<fs::path> soundfile;
 std::vector<int> soundlist;
 
-
-std::unordered_map<int, Mix_Chunk*> chunks;
-Mix_Music* played_music = nullptr;
-
+std::vector<Mix_Chunk*> chunks;
 
 int envwprev{};
 int musicprev{};
-}
+
+Mix_Music* played_music = nullptr;
+} // namespace
 
 
 namespace elona
@@ -32,11 +31,12 @@ namespace elona
 int DSINIT()
 {
     Mix_AllocateChannels(16);
+    chunks.resize(16);
     snail::application::instance().register_finalizer([&]() {
-        for (const auto& pair : chunks)
+        for (const auto& chunk : chunks)
         {
-            if (pair.second)
-                ::Mix_FreeChunk(pair.second);
+            if (chunk)
+                ::Mix_FreeChunk(chunk);
         }
     });
     return 1;
@@ -46,11 +46,9 @@ int DSINIT()
 
 void DSLOADFNAME(const fs::path& filepath, int channel)
 {
-    if (chunks.find(channel) != std::end(chunks))
-    {
-        if (chunks[channel])
-            Mix_FreeChunk(chunks[channel]);
-    }
+    if (auto chunk = chunks[channel])
+        Mix_FreeChunk(chunk);
+
     auto chunk = snail::detail::enforce_mixer(
         Mix_LoadWAV(filesystem::to_utf8_path(filepath).c_str()));
     chunks[channel] = chunk;
@@ -60,7 +58,7 @@ void DSLOADFNAME(const fs::path& filepath, int channel)
 
 void DSPLAY(int channel, bool loop)
 {
-    Mix_PlayChannel(-1, chunks[channel], loop ? -1 : 0);
+    Mix_PlayChannel(channel, chunks[channel], loop ? -1 : 0);
 }
 
 
@@ -82,9 +80,9 @@ void DSSETVOLUME(int channel, int volume)
 
 
 
-int CHECKPLAY(int channel)
+bool CHECKPLAY(int channel)
 {
-    return Mix_Playing(channel) ? 1 : 0;
+    return Mix_Playing(channel);
 }
 
 
@@ -113,8 +111,7 @@ void DMLOADFNAME(const fs::path& filepath, int)
 
 void DMPLAY(int loop, int)
 {
-    snail::detail::enforce_mixer(
-        Mix_PlayMusic(played_music, loop ? -1 : 1));
+    snail::detail::enforce_mixer(Mix_PlayMusic(played_music, loop ? -1 : 1));
 }
 
 
@@ -218,66 +215,55 @@ void initialize_sound_file()
 
 
 
-void snd(int sound_id, bool loop, bool prm_298)
+void snd(int sound_id, bool loop, bool allow_duplicate)
 {
-    int sound_at_m18 = 0;
-    int f_at_m18 = 0;
     if (!config::instance().sound)
         return;
 
-    sound_at_m18 = sound_id;
-    if (sound_at_m18 > 7)
+    int channel = sound_id;
+    if (channel > 7)
     {
         if (loop)
         {
-            sound_at_m18 = 13;
-            if (sound_id == 78)
+            switch (sound_id)
             {
-                sound_at_m18 = 14;
-            }
-            if (sound_id == 79)
-            {
-                sound_at_m18 = 15;
-            }
-            if (sound_id == 80)
-            {
-                sound_at_m18 = 16;
+            case 78: channel = 14; break;
+            case 79: channel = 15; break;
+            case 80: channel = 16; break;
+            default: channel = 13; break;
             }
         }
         else
         {
-            sound_at_m18 = 7;
-            f_at_m18 = 0;
-            if (prm_298)
+            channel = 7;
+            bool found{};
+            if (!allow_duplicate)
             {
-                for (int cnt = 7; cnt < 13; ++cnt)
+                for (int i = 7; i < 13; ++i)
                 {
-                    if (CHECKPLAY(cnt))
+                    if (CHECKPLAY(i) && soundlist[i - 7] == sound_id)
                     {
-                        if (soundlist[cnt - 7] == sound_at_m18)
-                        {
-                            sound_at_m18 = cnt;
-                            f_at_m18 = 1;
-                            break;
-                        }
+                        channel = i;
+                        found = true;
+                        break;
                     }
                 }
             }
-            if (f_at_m18 == 0)
+            if (!found)
             {
-                for (int cnt = 7; cnt < 13; ++cnt)
+                for (int i = 7; i < 13; ++i)
                 {
-                    if (CHECKPLAY(cnt) == 0)
+                    if (!CHECKPLAY(i))
                     {
-                        sound_at_m18 = cnt;
-                        soundlist[cnt - 7] = sound_at_m18;
+                        channel = i;
+                        soundlist[i - 7] = sound_id;
                     }
                 }
             }
         }
-        DSLOADFNAME(soundfile[sound_id], sound_at_m18);
+        DSLOADFNAME(soundfile[sound_id], channel);
     }
-    DSPLAY(sound_at_m18, loop);
+    DSPLAY(channel, loop);
 }
 
 
@@ -485,7 +471,8 @@ void play_music(int music_id)
                 }
             }
 
-            const auto is_mp3 = strutil::contains(musicfile(music_id), u8".mp3");
+            const auto is_mp3 =
+                strutil::contains(musicfile(music_id), u8".mp3");
 
             if (config::instance().music == 2 || is_mp3)
             {

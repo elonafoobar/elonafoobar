@@ -186,7 +186,7 @@ void play_animation_3(int anicol, int anisound)
     }
     if (anisound)
     {
-        snd(anisound, false, true);
+        snd(anisound, false, false);
     }
 }
 
@@ -273,7 +273,7 @@ void play_animation_17_2(int animeid, int anicol, int anisound)
     }
     if (anisound)
     {
-        snd(anisound, false, true);
+        snd(anisound, false, false);
     }
 }
 
@@ -373,7 +373,7 @@ void play_animation_0(int anicol, int anisound)
     }
     if (anisound)
     {
-        snd(anisound, false, true);
+        snd(anisound, false, false);
     }
 }
 
@@ -510,7 +510,7 @@ void play_animation_ranged_attack(int animeid, int anicol, int anisound)
     }
     if (anisound)
     {
-        snd(anisound, false, true);
+        snd(anisound, false, false);
     }
 }
 

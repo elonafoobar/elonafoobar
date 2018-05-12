@@ -13427,7 +13427,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 {
                     if (config::instance().heart == 1)
                     {
-                        if (CHECKPLAY(32) == 0)
+                        if (!CHECKPLAY(32))
                         {
                             snd(32);
                         }
@@ -13565,7 +13565,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         se_at_m141 = eleinfo(ele_at_m141, 1);
         if (se_at_m141)
         {
-            snd(se_at_m141, false, true);
+            snd(se_at_m141, false, false);
         }
         txtef(3);
         if (prm_855 >= 0)
@@ -13976,14 +13976,14 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 x = cdata[prm_853].position.x;
                 y = cdata[prm_853].position.y;
-                snd(45, false, true);
+                snd(45, false, false);
                 animeblood(prm_853, 1, ele_at_m141);
             }
             spillfrag(cdata[prm_853].position.x, cdata[prm_853].position.y, 3);
         }
         else
         {
-            snd(8 + rnd(2), false, true);
+            snd(8 + rnd(2), false, false);
             animeblood(prm_853, 0, ele_at_m141);
             spillblood(cdata[prm_853].position.x, cdata[prm_853].position.y, 4);
         }
