@@ -30,8 +30,8 @@ namespace elona
 
 int DSINIT()
 {
-    Mix_AllocateChannels(16);
-    chunks.resize(16);
+    Mix_AllocateChannels(17);
+    chunks.resize(17);
     snail::application::instance().register_finalizer([&]() {
         for (const auto& chunk : chunks)
         {
