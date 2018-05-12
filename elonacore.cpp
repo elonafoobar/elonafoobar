@@ -47058,7 +47058,7 @@ int label_2083()
 
 
 
-void label_2085()
+void dump_player_info()
 {
     cc = 0;
     access_class_info(2, cdatan(3, 0));
@@ -47299,7 +47299,7 @@ void label_2085()
 
 
 
-turn_result_t do_change_ammo_type()
+turn_result_t do_change_ammo_command()
 {
     f = 0;
     for (int cnt = 0; cnt < 30; ++cnt)
@@ -68541,9 +68541,9 @@ turn_result_t turn_end()
 
 
 
-turn_result_t pc_turn(bool label_2747_flg)
+turn_result_t pc_turn(bool advance_time)
 {
-    if (label_2747_flg)
+    if (advance_time)
     {
         if (gdata_catches_god_signal)
         {
@@ -68971,7 +68971,7 @@ label_2747:
     }
     if (getkey(snail::key::f11))
     {
-        label_2085();
+        dump_player_info();
         await(500);
         goto label_2747;
     }
@@ -69533,7 +69533,7 @@ label_2747:
     }
     if (key == key_ammo)
     {
-        return do_change_ammo_type();
+        return do_change_ammo_command();
     }
     if (key_tab)
     {

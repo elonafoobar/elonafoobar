@@ -29,7 +29,7 @@
         { \
             if (scene_cut == 1) \
             { \
-                return talk_result_t::talk_end;         \
+                return talk_result_t::talk_end; \
             } \
         } \
     } while (0)
