@@ -1,3 +1,4 @@
+#include "audio.hpp"
 #include "config.hpp"
 #include "elona.hpp"
 #include "macro.hpp"
@@ -630,9 +631,8 @@ void set_option()
             {
                 if (cnt == 0)
                 {
-                    s(0) = lang(u8"なし"s, u8"None"s);
-                    s(1) = lang(u8"direct sound"s, u8"Direct sound"s);
-                    s(2) = lang(u8"MCI"s, u8"MCI"s);
+                    s(0) = lang(u8"なし"s, u8"Off"s);
+                    s(1) = lang(u8"あり"s, u8"On"s);
                     mes(s(cfg_sound2));
                 }
                 if (cnt == 1)
@@ -928,9 +928,9 @@ void set_option()
                 if (cs == 0)
                 {
                     cfg_sound2 += p;
-                    if (cfg_sound2 > 2)
+                    if (cfg_sound2 > 1)
                     {
-                        cfg_sound2 = 2;
+                        cfg_sound2 = 1;
                     }
                     else if (cfg_sound2 < 0)
                     {
