@@ -697,7 +697,6 @@ int label_2231();
 bool talk_give_potion_of_cure_corruption();
 int new_ally_joins();
 int label_2664();
-int inv_getfreeid_force();
 int label_2672();
 int label_2694();
 int label_2695();
@@ -1442,6 +1441,7 @@ void windowanime(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
 void windowanimecorner(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
 void cs_listbk();
 void cs_list(bool, const std::string&, int, int, int = 0, int = 0, int = 0);
+void make_dish(int = 0, int = 0);
 
 template <typename T>
 void txt()

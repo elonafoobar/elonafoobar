@@ -31,8 +31,6 @@ item::item()
 {
 }
 
-
-
 void item::clear()
 {
     item tmp;
@@ -66,14 +64,10 @@ bool item::almost_equals(const item& other, bool ignore_position)
         && range::equal(enchantments, other.enchantments);
 }
 
-
-
 inventory::inventory()
     : storage(5480)
 {
 }
-
-
 
 int ibit(size_t type, int ci)
 {
@@ -111,67 +105,6 @@ range::iota<int> items(int owner)
     const auto tmp = inv_getheader(owner);
     return {tmp.first, tmp.first + tmp.second};
 }
-
-
-
-int get_random_inv(int owner)
-{
-    const auto tmp = inv_getheader(owner);
-    return tmp.first + rnd(tmp.second);
-}
-
-
-
-std::pair<int, int> inv_getheader(int owner)
-{
-    if (owner == 0)
-    {
-        return {0, 200};
-    }
-    else if (owner == -1)
-    {
-        return {5080, 400};
-    }
-    else
-    {
-        return {200 + 20 * (owner - 1), 20};
-    }
-}
-
-
-
-int inv_getowner(int inv_id)
-{
-    if (inv_id < 200)
-    {
-        return 0;
-    }
-    if (inv_id >= 5080)
-    {
-        return -1;
-    }
-    return (inv_id - 200) / 20 + 1;
-}
-
-
-
-int inv_find(int id, int owner)
-{
-    for (const auto& cnt : items(owner))
-    {
-        if (inv[cnt].number == 0)
-        {
-            continue;
-        }
-        if (inv[cnt].id == id)
-        {
-            return cnt;
-        }
-    }
-    return -1; // Not found
-}
-
-
 
 int item_find(int prm_476, int prm_477, int prm_478)
 {
@@ -549,155 +482,6 @@ void item_delete(int ci)
     inv(ci).clear();
 }
 
-
-
-bool inv_getspace(int owner)
-{
-    for (const auto& cnt : items(owner))
-    {
-        if (inv[cnt].number == 0)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
-
-
-int inv_sum(int owner)
-{
-    int n{};
-    for (const auto& cnt : items(owner))
-    {
-        if (inv[cnt].number != 0)
-        {
-            ++n;
-        }
-    }
-    return n;
-}
-
-
-
-void item_compress(int owner)
-{
-    int number_of_deleted_items{};
-    for (int i = 0; i < 100; ++i)
-    {
-        int threshold = 200 * (i * i + 1);
-        for (const auto& cnt : items(owner))
-        {
-            if (inv[cnt].number != 0)
-            {
-                if (!ibit(5, cnt) && inv[cnt].value < threshold)
-                {
-                    inv[cnt].number = 0;
-                    ++number_of_deleted_items;
-                    if (inv[cnt].position.x >= 0
-                        && inv[cnt].position.x < mdata(0)
-                        && inv[cnt].position.y >= 0
-                        && inv[cnt].position.y < mdata(1))
-                    {
-                        cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
-                    }
-                }
-            }
-            if (number_of_deleted_items > 10)
-            {
-                break;
-            }
-        }
-        if (number_of_deleted_items > 10)
-        {
-            break;
-        }
-    }
-
-    int slot = -1;
-    for (const auto& cnt : items(owner))
-    {
-        if (inv[cnt].number == 0)
-        {
-            slot = cnt;
-            break;
-        }
-    }
-
-    if (slot == -1)
-    {
-        while (1)
-        {
-            int ci = get_random_inv(owner);
-            if (!ibit(5, ci))
-            {
-                inv[ci].number = 0;
-                if (mode != 6)
-                {
-                    if (inv[ci].position.x >= 0 && inv[ci].position.x < mdata(0)
-                        && inv[ci].position.y >= 0
-                        && inv[ci].position.y < mdata(1))
-                    {
-                        cell_refresh(inv[ci].position.x, inv[ci].position.y);
-                    }
-                }
-                break;
-            }
-        }
-    }
-}
-
-
-
-int inv_getfreeid(int owner)
-{
-    int slot = -1;
-    for (const auto& cnt : items(owner))
-    {
-        if (inv[cnt].number == 0)
-        {
-            slot = cnt;
-            break;
-        }
-    }
-    if (slot == -1)
-    {
-        if (owner == -1 && mode != 6)
-        {
-            txt(lang(
-                u8"アイテム情報が多すぎる！幾つかのアイテムは破壊された。"s,
-                u8"Too many item data! Some items in this area are destroyed."s));
-            item_compress(owner);
-        }
-    }
-    return slot;
-}
-
-
-
-int inv_weight(int owner)
-{
-    int weight{};
-    if (owner == 0)
-    {
-        gdata_cargo_weight = 0;
-    }
-    for (const auto& cnt : items(owner))
-    {
-        if (inv[cnt].number != 0)
-        {
-            if (inv[cnt].weight >= 0)
-            {
-                weight += inv[cnt].weight * inv[cnt].number;
-            }
-            else if (owner == 0)
-            {
-                gdata_cargo_weight += -inv[cnt].weight * inv[cnt].number;
-            }
-        }
-    }
-    return weight;
-}
 
 
 
@@ -1673,21 +1457,6 @@ void remain_make(int ci, int cc)
 }
 
 
-
-void make_dish(int ci, int type)
-{
-    inv[ci].image = picfood(type, inv[ci].param1 / 1000);
-    inv[ci].weight = 500;
-    inv[ci].param2 = type;
-    if (inv[ci].material == 35 && inv[ci].param3 >= 0)
-    {
-        inv[ci].param3 = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-            + gdata_year * 24 * 30 * 12 + 72;
-    }
-}
-
-
-
 int item_stack(int inventory_id, int ci, int show_message)
 {
     if (inv[ci].quality == 6 && the_item_db[inv[ci].id]->category < 50000)
@@ -2209,6 +1978,201 @@ void mapitem_cold(int prm_846, int prm_847)
 }
 
 
+
+int get_random_inv(int owner)
+{
+    const auto tmp = inv_getheader(owner);
+    return tmp.first + rnd(tmp.second);
+}
+
+std::pair<int, int> inv_getheader(int owner)
+{
+    if (owner == 0)
+    {
+        return {0, 200};
+    }
+    else if (owner == -1)
+    {
+        return {5080, 400};
+    }
+    else
+    {
+        return {200 + 20 * (owner - 1), 20};
+    }
+}
+
+
+
+int inv_getowner(int inv_id)
+{
+    if (inv_id < 200)
+    {
+        return 0;
+    }
+    if (inv_id >= 5080)
+    {
+        return -1;
+    }
+    return (inv_id - 200) / 20 + 1;
+}
+
+
+
+int inv_find(int id, int owner)
+{
+    for (const auto& cnt : items(owner))
+    {
+        if (inv[cnt].number == 0)
+        {
+            continue;
+        }
+        if (inv[cnt].id == id)
+        {
+            return cnt;
+        }
+    }
+    return -1; // Not found
+}
+
+bool inv_getspace(int owner)
+{
+    for (const auto& cnt : items(owner))
+    {
+        if (inv[cnt].number == 0)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+int inv_sum(int owner)
+{
+    int n{};
+    for (const auto& cnt : items(owner))
+    {
+        if (inv[cnt].number != 0)
+        {
+            ++n;
+        }
+    }
+    return n;
+}
+
+void inv_compress(int owner)
+{
+    int number_of_deleted_items{};
+    for (int i = 0; i < 100; ++i)
+    {
+        int threshold = 200 * (i * i + 1);
+        for (const auto& cnt : items(owner))
+        {
+            if (inv[cnt].number != 0)
+            {
+                if (!ibit(5, cnt) && inv[cnt].value < threshold)
+                {
+                    inv[cnt].number = 0;
+                    ++number_of_deleted_items;
+                    if (inv[cnt].position.x >= 0
+                        && inv[cnt].position.x < mdata(0)
+                        && inv[cnt].position.y >= 0
+                        && inv[cnt].position.y < mdata(1))
+                    {
+                        cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
+                    }
+                }
+            }
+            if (number_of_deleted_items > 10)
+            {
+                break;
+            }
+        }
+        if (number_of_deleted_items > 10)
+        {
+            break;
+        }
+    }
+
+    int slot = -1;
+    for (const auto& cnt : items(owner))
+    {
+        if (inv[cnt].number == 0)
+        {
+            slot = cnt;
+            break;
+        }
+    }
+
+    if (slot == -1)
+    {
+        while (1)
+        {
+            int ci = get_random_inv(owner);
+            if (!ibit(5, ci))
+            {
+                inv[ci].number = 0;
+                if (mode != 6)
+                {
+                    if (inv[ci].position.x >= 0 && inv[ci].position.x < mdata(0)
+                        && inv[ci].position.y >= 0
+                        && inv[ci].position.y < mdata(1))
+                    {
+                        cell_refresh(inv[ci].position.x, inv[ci].position.y);
+                    }
+                }
+                break;
+            }
+        }
+    }
+}
+
+int inv_getfreeid(int owner)
+{
+    int slot = -1;
+    for (const auto& cnt : items(owner))
+    {
+        if (inv[cnt].number == 0)
+        {
+            slot = cnt;
+            break;
+        }
+    }
+    if (slot == -1)
+    {
+        if (owner == -1 && mode != 6)
+        {
+            txt(lang(
+                u8"アイテム情報が多すぎる！幾つかのアイテムは破壊された。"s,
+                u8"Too many item data! Some items in this area are destroyed."s));
+            inv_compress(owner);
+        }
+    }
+    return slot;
+}
+
+int inv_weight(int owner)
+{
+    int weight{};
+    if (owner == 0)
+    {
+        gdata_cargo_weight = 0;
+    }
+    for (const auto& cnt : items(owner))
+    {
+        if (inv[cnt].number != 0)
+        {
+            if (inv[cnt].weight >= 0)
+            {
+                weight += inv[cnt].weight * inv[cnt].number;
+            }
+            else if (owner == 0)
+            {
+                gdata_cargo_weight += -inv[cnt].weight * inv[cnt].number;
+            }
+        }
+    }
+    return weight;
+}
 
 
 

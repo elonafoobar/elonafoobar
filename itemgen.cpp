@@ -519,7 +519,7 @@ void label_1581()
             {
                 break;
             }
-            encadd(
+            enchantment_add(
                 ci,
                 fixeditemenc(cnt * 2),
                 fixeditemenc(cnt * 2 + 1),
@@ -663,7 +663,7 @@ void change_item_material()
     fixlv = inv[ci].quality;
     for (auto e : the_item_material_db[p]->enchantments)
     {
-        encremove(ci, e.id, e.power);
+        enchantment_remove(ci, e.id, e.power);
     }
     originalvalue = inv[ci].value * 100 / the_item_material_db[p]->value;
     dbid = inv[ci].id;
@@ -759,7 +759,7 @@ void set_material_specific_attributes()
     p = inv[ci].material;
     for (auto e : the_item_material_db[p]->enchantments)
     {
-        encadd(ci, e.id, e.power, 0, 1);
+        enchantment_add(ci, e.id, e.power, 0, 1);
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {

@@ -19297,10 +19297,10 @@ void label_1573()
                                     + "."));
                             ibitmod(8, ci, 1);
                             reftype = the_item_db[inv[ci].id]->category;
-                            encadd(
+                            enchantment_add(
                                 ci,
-                                randomenc(randomenclv(rnd(4))),
-                                randomencp());
+                                enchantment_generate(enchantment_gen_level(rnd(4))),
+                                enchantment_gen_p());
                             animeload(8, rc);
                         }
                     }
@@ -20541,7 +20541,17 @@ void cook()
     return;
 }
 
-
+void make_dish(int ci, int type)
+{
+    inv[ci].image = picfood(type, inv[ci].param1 / 1000);
+    inv[ci].weight = 500;
+    inv[ci].param2 = type;
+    if (inv[ci].material == 35 && inv[ci].param3 >= 0)
+    {
+        inv[ci].param3 = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
+            + gdata_year * 24 * 30 * 12 + 72;
+    }
+}
 
 void apply_general_eating_effect()
 {
@@ -34063,7 +34073,7 @@ void label_1901()
             }
             if (p == -1)
             {
-                item_compress(-1);
+                inv_compress(-1);
             }
             flt();
             itemcreate(-1, 615, -1, -1, 0);
@@ -35669,7 +35679,7 @@ void label_1933()
                     {
                         break;
                     }
-                    encadd(
+                    enchantment_add(
                         ci,
                         rpdata(50 + cnt * 2, rpid),
                         rpdata(51 + cnt * 2, rpid),
@@ -41654,7 +41664,7 @@ label_2035_internal:
                         i = i / 5;
                     }
                     s = "";
-                    putenclv(i);
+                    enchantment_print_level(i);
                     pos(wx + 282, wy + 66 + cnt * 19 + 2);
                     mes(s);
                 }
@@ -54395,8 +54405,8 @@ turn_result_t do_use_command()
             {
                 randomize(inv[ci].subname + inv[ci].param1 * 10 + cnt);
                 exrand_randomize(inv[ci].subname + inv[ci].param1 * 10 + cnt);
-                int stat = encadd(
-                    ci, randomenc(randomenclv(4)), randomencp(), 0, 0, 1);
+                int stat = enchantment_add(
+                    ci, enchantment_generate(enchantment_gen_level(4)), enchantment_gen_p(), 0, 0, 1);
                 if (stat != 0)
                 {
                     if (rtval == 34)
@@ -54434,7 +54444,7 @@ turn_result_t do_use_command()
                 }
                 else
                 {
-                    encadd(ci, list(0, rtval), list(1, rtval), 0, 1);
+                    enchantment_add(ci, list(0, rtval), list(1, rtval), 0, 1);
                 }
                 txtef(2);
                 txt(lang(
@@ -54447,7 +54457,7 @@ turn_result_t do_use_command()
                     txt(lang(
                         u8"その力は次第に脅威になっている。"s,
                         u8"Its power is becoming a threat."s));
-                    int stat = encadd(ci, 45, 50);
+                    int stat = enchantment_add(ci, 45, 50);
                     if (stat == 0)
                     {
                         inv[ci].enchantments[14].id = 0;
