@@ -2,6 +2,7 @@
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "command.hpp"
 #include "config.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
@@ -1860,7 +1861,7 @@ label_2061_internal:
             screenupdate = -1;
             update_screen();
             savecycle();
-            result.turn_result = do_offer();
+            result.turn_result = do_offer_command();
             return result;
         }
         if (invctrl == 20)
@@ -2137,7 +2138,7 @@ label_2061_internal:
         }
         if (invctrl == 27)
         {
-            do_steal_command();
+            start_stealing();
             invsubroutine = 0;
             result.succeeded = true;
             return result;

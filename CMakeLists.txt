@@ -52,6 +52,7 @@ set(CORE_SOURCES
     cell_draw.cpp
     character.cpp
     class.cpp
+    command.cpp
     config.cpp
     ctrl_file.cpp
     ctrl_inventory.cpp
