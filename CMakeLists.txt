@@ -58,6 +58,7 @@ set(CORE_SOURCES
     debug.cpp
     draw.cpp
     elonacore.cpp
+    event.cpp
     filesystem.cpp
     fish.cpp
     foobar_save.cpp
@@ -76,6 +77,8 @@ set(CORE_SOURCES
     magic.cpp
     main.cpp
     map.cpp
+    map_cell.cpp
+    mef.cpp
     message.cpp
     proc_event.cpp
     race.cpp

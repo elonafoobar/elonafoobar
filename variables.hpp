@@ -1,3 +1,5 @@
+#pragma once
+
 #include "elona.hpp"
 #include "position.hpp"
 #include "enums.hpp"
@@ -25,6 +27,14 @@ ELONA_EXTERN(int anic);
 ELONA_EXTERN(elona_vector1<int> ap);
 ELONA_EXTERN(int wishfilter);
 ELONA_EXTERN(int nooracle);
+
+// mef.cpp
+ELONA_EXTERN(elona_vector2<int> mef);
+ELONA_EXTERN(elona_vector2<int> mefsubref);
+
+// map_cell.cpp
+ELONA_EXTERN(int cellchara);
+ELONA_EXTERN(int cellfeat);
 
 ELONA_EXTERN(elona_vector1<int> _randcolor);
 ELONA_EXTERN(elona_vector1<int> aniref);
@@ -228,8 +238,6 @@ ELONA_EXTERN(elona_vector1<int> eqring1);
 ELONA_EXTERN(elona_vector2<int> itemmemory);
 ELONA_EXTERN(elona_vector2<int> list);
 ELONA_EXTERN(elona_vector2<int> mapsync);
-ELONA_EXTERN(elona_vector2<int> mef);
-ELONA_EXTERN(elona_vector2<int> mefsubref);
 ELONA_EXTERN(elona_vector2<int> npcmemory);
 ELONA_EXTERN(elona_vector2<int> pcc);
 ELONA_EXTERN(elona_vector2<int> picfood);
@@ -571,10 +579,6 @@ int cargocheck();
 int carmor(int = 0);
 int cbreeder(int = 0);
 int cdbit(int = 0, int = 0);
-int cell_featread(int = 0, int = 0, int = 0);
-int cell_findspace(int = 0, int = 0, int = 0);
-int cell_itemlist(int = 0, int = 0);
-std::pair<int, int> cell_itemoncell(const position_t& pos);
 int chara_anorexia(int = 0);
 bool chara_unequip(int);
 int characreate(int = 0, int = 0, int = 0, int = 0);
@@ -604,8 +608,6 @@ bool encfindspec(int = 0, int = 0);
 int encflt(int = 0, int = 0);
 int eqweaponheavy();
 int eqweaponlight();
-int evfind(int = 0);
-int evid();
 int exist_questtarget();
 int findally(int = 0);
 int findbuff(int = 0, int = 0);
@@ -826,17 +828,6 @@ std::string yourself(int = 0);
 void actionproc();
 void addbuilding(int = 0, int = 0, int = 0, int = 0);
 void addefmap(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
-void addmef(
-    int = 0,
-    int = 0,
-    int = 0,
-    int = 0,
-    int = 0,
-    int = 0,
-    int = 0,
-    int = 0,
-    int = 0,
-    int = 0);
 void addnews(int = 0, int = 0, int = 0, const std::string& = "");
 void addnews2(const std::string&, int = 0);
 void addnewstopic(const std::string&, const std::string&);
@@ -857,15 +848,7 @@ void cardplayeradd(int = 0, int = 0, int = 0);
 void cardplayerinit(int = 0, int = 0);
 void cardpos(int = 0, int = 0);
 void cdbitmod(int = 0, int = 0, int = 0);
-void cell_check(int = 0, int = 0);
 void cell_draw();
-void cell_featclear(int = 0, int = 0);
-void cell_featset(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
-void cell_movechara(int = 0, int = 0, int = 0);
-void cell_refresh(int = 0, int = 0);
-void cell_removechara(int = 0, int = 0);
-void cell_setchara(int = 0, int = 0, int = 0);
-void cell_swap(int = 0, int = 0, int = 0, int = 0);
 void chara_preparepic(int = 0, int = 0);
 void chara_vanquish(int = 0);
 void chara_vomit(int = 0);
@@ -888,7 +871,6 @@ void cutname(std::string&, int = 0);
 void del_chara(int = 0);
 void delbottomcard(int = 0);
 void delbuff(int = 0, int = 0);
-void delmef(int = 0);
 void dipcursed(int = 0, int = 0);
 void display_customkey(const std::string&, int, int);
 void display_key(int = 0, int = 0, int = 0);
@@ -907,7 +889,6 @@ void egoadd(int = 0, int = 0);
 void encremove(int = 0, int = 0, int = 0);
 void eqrandweaponmage(int = 0);
 void equipinfo(int = 0, int = 0, int = 0);
-void evadd(int = 0, int = 0, int = 0);
 void exittempinv();
 void fileadd(const fs::path& filepath, int = 0);
 void fillbg(int = 0, int = 0, int = 0, int = 0, int = 0);
@@ -1377,7 +1358,6 @@ void conquer_lesimas();
 void play_the_last_scene_again();
 turn_result_t pc_died();
 void show_game_score_ranking();
-void proc_event();
 void lenfix(std::string&, int = 0);
 void lovemiracle(int = 0);
 void make_dish(int = 0, int = 0);

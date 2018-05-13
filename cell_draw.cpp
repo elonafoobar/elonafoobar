@@ -5,6 +5,7 @@
 #include "elona.hpp"
 #include "item.hpp"
 #include "map.hpp"
+#include "map_cell.hpp"
 #include "variables.hpp"
 
 using namespace elona;
