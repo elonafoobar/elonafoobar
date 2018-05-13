@@ -26,6 +26,10 @@ ELONA_EXTERN(elona_vector1<int> ap);
 ELONA_EXTERN(int wishfilter);
 ELONA_EXTERN(int nooracle);
 
+// fov.cpp
+ELONA_EXTERN(elona_vector2<int> route);
+ELONA_EXTERN(int maxroute);
+
 ELONA_EXTERN(elona_vector1<int> _randcolor);
 ELONA_EXTERN(elona_vector1<int> aniref);
 ELONA_EXTERN(elona_vector1<int> anix);
@@ -612,11 +616,9 @@ int findbuff(int = 0, int = 0);
 int findchara(int = 0);
 int findunid(const std::string&);
 int fltsetdungeon();
-int fov_los(int = 0, int = 0, int = 0, int = 0);
 int gameover();
 int get_freeally();
 int get_freechara();
-int get_route(int = 0, int = 0, int = 0, int = 0);
 int getdecksum(int = 0);
 int getholdersum(int = 0);
 int getspotsum(int = 0);

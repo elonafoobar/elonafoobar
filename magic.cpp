@@ -8,6 +8,7 @@
 #include "ctrl_file.hpp"
 #include "debug.hpp"
 #include "elona.hpp"
+#include "fov.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"

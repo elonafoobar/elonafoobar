@@ -3,6 +3,7 @@
 #include "debug.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
+#include "fov.hpp"
 #include "item.hpp"
 #include "map.hpp"
 #include "variables.hpp"
