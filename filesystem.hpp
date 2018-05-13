@@ -42,6 +42,8 @@ std::string make_preferred_path_in_utf8(const fs::path& path);
 std::string to_narrow_path(const fs::path& path);
 std::string to_utf8_path(const fs::path& path);
 
+std::string normalize_as_filename(const std::string&);
+
 
 
 struct dir_entries

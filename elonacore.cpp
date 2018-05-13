@@ -3616,34 +3616,11 @@ void arrayfile(
 
 
 
-std::string cnv_str(
-    std::string& prm_696,
-    const std::string& prm_697,
-    const std::string& prm_698)
-{
-    std::string s3_at_m100;
-    int p_at_m100 = 0;
-    while (1)
-    {
-        s3_at_m100 = strutil::to_lower(prm_696);
-        p_at_m100 = instr(s3_at_m100, 0, prm_697);
-        if (p_at_m100 == -1)
-        {
-            break;
-        }
-        prm_696 = strmid(prm_696, 0, p_at_m100) + lang(prm_698, prm_698)
-            + strmid(prm_696, (p_at_m100 + prm_697.size()), 300);
-    }
-    return prm_696;
-}
-
-
-
 void fix_input_chat(std::string& str)
 {
-    cnv_str(str, u8" "s, u8"+"s);
-    cnv_str(str, u8"%"s, u8"per"s);
-    cnv_str(str, u8"&"s, u8"and"s);
+    str = strutil::replace(str, u8" ", u8"+");
+    str = strutil::replace(str, u8"%", u8"per");
+    str = strutil::replace(str, u8"&", u8"and");
     str = strutil::remove_str(str, u8"<");
     str = strutil::remove_str(str, u8">");
 }
@@ -3652,22 +3629,22 @@ void fix_input_chat(std::string& str)
 
 void fix_input_chat2(std::string& str)
 {
-    cnv_str(str, u8"fucking"s, u8"nyoro~n"s);
-    cnv_str(str, u8"fuck"s, u8"nyou talk funny"s);
+    str = strutil::replace(str, u8"fucking", u8"nyoro~n");
+    str = strutil::replace(str, u8"fuck", u8"nyou talk funny");
 }
 
 
 
 void cnv_filestr(std::string& str)
 {
-    cnv_str(str, u8"\""s, u8"_"s);
-    cnv_str(str, u8"\\"s, u8"_"s);
-    cnv_str(str, u8"<"s, u8"_"s);
-    cnv_str(str, u8">"s, u8"_"s);
-    cnv_str(str, u8"/"s, u8"_"s);
-    cnv_str(str, u8"?"s, u8"_"s);
-    cnv_str(str, u8"|"s, u8"_"s);
-    cnv_str(str, u8"*"s, u8"_"s);
+    str = strutil::replace(str, u8"\"", u8"_");
+    str = strutil::replace(str, u8"\\", u8"_");
+    str = strutil::replace(str, u8"<", u8"_");
+    str = strutil::replace(str, u8">", u8"_");
+    str = strutil::replace(str, u8"/", u8"_");
+    str = strutil::replace(str, u8"?", u8"_");
+    str = strutil::replace(str, u8"|", u8"_");
+    str = strutil::replace(str, u8"*", u8"_");
 }
 
 
@@ -17471,7 +17448,6 @@ turn_result_t call_npc()
         name(tc) + u8"を何と呼ぶ？ "s,
         u8"What do you want to call "s + him(tc) + u8"? "s));
     inputlog = "";
-    input_mode = 1;
     input_text_dialog((windoww - 220) / 2 + inf_screenx, winposy(90), 12);
     if (inputlog == ""s)
     {
@@ -29277,7 +29253,7 @@ label_2747:
                 }
                 if (en)
                 {
-                    cnv_str(s(1), u8"&quot;"s, u8"\""s);
+                    s(1) = strutil::replace(s(1), u8"&quot;", u8"\"");
                 }
                 txtef(6);
                 txt(""s + s(1));

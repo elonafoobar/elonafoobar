@@ -794,9 +794,8 @@ main_menu_result_t character_making_final_phase()
     while (1)
     {
         inputlog = "";
-        input_mode = 1;
         input_text_dialog(
-            (windoww - 230) / 2 + inf_screenx, winposy(120), 10, false);
+            (windoww - 230) / 2 + inf_screenx, winposy(120), 10, false, true);
         cmname = ""s + inputlog;
         if (cmname == ""s || cmname == u8" "s)
         {
