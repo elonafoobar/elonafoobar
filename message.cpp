@@ -3,6 +3,7 @@
 #include "config.hpp"
 #include "elona.hpp"
 #include "map.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 

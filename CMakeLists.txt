@@ -51,6 +51,7 @@ set(CORE_SOURCES
     cat.cpp
     cell_draw.cpp
     character.cpp
+    character_making.cpp
     class.cpp
     config.cpp
     ctrl_file.cpp
@@ -75,7 +76,9 @@ set(CORE_SOURCES
     log.cpp
     magic.cpp
     main.cpp
+    main_menu.cpp
     map.cpp
+    menu.cpp
     message.cpp
     proc_event.cpp
     race.cpp
@@ -88,6 +91,7 @@ set(CORE_SOURCES
     tcg.cpp
     text.cpp
     trait.cpp
+    ui.cpp
     variables.cpp
     wish.cpp
     ${PROJECT_BINARY_DIR}/version.cpp
