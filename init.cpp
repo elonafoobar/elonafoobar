@@ -1,6 +1,7 @@
 #include "ability.hpp"
 #include "autopick.hpp"
 #include "buff.hpp"
+#include "building.hpp"
 #include "cat.hpp"
 #include "character.hpp"
 #include "class.hpp"

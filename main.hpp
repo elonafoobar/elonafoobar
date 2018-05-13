@@ -36,8 +36,6 @@ main_menu_result_t character_making_select_feats_and_alias(bool = true);
 turn_result_t pc_turn(bool = true);
 turn_result_t pass_one_turn(bool = true);
 
-int access_character_info();
-
 
 inline int _fdialog(
     std::string&,

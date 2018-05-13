@@ -497,6 +497,7 @@ extern cdata_t cdata;
 
 
 void initialize_character_filters();
+void set_character_generation_filter();
 
 
 

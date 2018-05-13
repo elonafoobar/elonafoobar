@@ -1,5 +1,6 @@
 #include "ability.hpp"
 #include "audio.hpp"
+#include "building.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "config.hpp"
@@ -3320,11 +3321,11 @@ label_1744_internal:
     }
     if (adata(16, gdata_current_map) == 102)
     {
-        label_1726();
+        update_shop();
     }
     if (adata(16, gdata_current_map) == 101)
     {
-        label_1728();
+        update_museum();
     }
     if (gdata_current_map == 7)
     {
