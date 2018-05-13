@@ -26,7 +26,7 @@ talk_result_t talk_unique()
         listmax = 0;
         buff = lang(
             u8"ここまで辿り着くとはな…どうやら《混沌》は、自ら創りしネフィアの安定さえも望まぬらしい。しかし、私とてここで死ぬつもりなどないのだ。"s,
-            u8"So you've made it this far. Event_Idently, <Chaos> wants no poise even within their own creation...Nefia. Well, it seems they have left me no choice but to whip you!"s);
+            u8"So you've made it this far. Evidently, <Chaos> wants no poise even within their own creation...Nefia. Well, it seems they have left me no choice but to whip you!"s);
         tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
