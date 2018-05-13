@@ -8,6 +8,7 @@
 #include "ctrl_file.hpp"
 #include "debug.hpp"
 #include "elona.hpp"
+#include "food.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
@@ -4478,7 +4479,7 @@ label_2181_internal:
                     + u8"!"s));
         }
         healhp(cc, cdata[cc].max_hp / 3);
-        label_2161();
+        continuous_action_eating_finish();
         refresh_burden_state();
         break;
     case 464:
