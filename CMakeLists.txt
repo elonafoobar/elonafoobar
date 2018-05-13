@@ -45,6 +45,7 @@ set(CORE_SOURCES
     animation.cpp
     audio.cpp
     autopick.cpp
+    blending.cpp
     buff.cpp
     calc.cpp
     card.cpp
@@ -55,6 +56,7 @@ set(CORE_SOURCES
     config.cpp
     ctrl_file.cpp
     ctrl_inventory.cpp
+    crafting.cpp
     debug.cpp
     draw.cpp
     elonacore.cpp

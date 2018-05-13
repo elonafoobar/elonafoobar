@@ -2,6 +2,7 @@
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "crafting.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
@@ -1700,7 +1701,7 @@ talk_result_t talk_unique()
         {
             invctrl = 1;
             snd(26);
-            label_18552();
+            crafting_menu();
             return talk_result_t::talk_unique;
         }
         return talk_result_t::talk_end;
