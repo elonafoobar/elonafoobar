@@ -76,6 +76,7 @@ set(CORE_SOURCES
     magic.cpp
     main.cpp
     map.cpp
+    mapgen.cpp
     message.cpp
     proc_event.cpp
     race.cpp
