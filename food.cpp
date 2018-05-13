@@ -1,6 +1,7 @@
 #include "food.hpp"
 #include "ability.hpp"
 #include "audio.hpp"
+#include "buff.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "elona.hpp"
@@ -290,6 +291,197 @@ void eat_rotten_food()
     dmgcon(cc, 5, 200);
     return;
 }
+
+
+
+void cure_anorexia(int cc)
+{
+    if (cdata[cc].has_anorexia() == 0)
+        return;
+
+    cdata[cc].has_anorexia() = false;
+    if (is_in_fov(cc) || cc < 16)
+    {
+        txt(lang(
+            name(cc) + u8"の拒食症は治った。"s,
+            name(cc) + u8" manage"s + _s(cc)
+                + u8" to recover from anorexia."s));
+        snd(65);
+    }
+}
+
+
+
+void chara_vomit(int prm_876)
+{
+    int p_at_m146 = 0;
+    ++cdata[prm_876].anorexia_count;
+    if (is_in_fov(prm_876))
+    {
+        snd(104);
+        txt(lang(
+            name(prm_876) + u8"は吐いた。"s,
+            name(prm_876) + u8" vomit"s + _s(prm_876) + u8"."s));
+    }
+    if (cdata[prm_876].is_pregnant())
+    {
+        cdata[prm_876].is_pregnant() = false;
+        if (is_in_fov(prm_876))
+        {
+            txt(lang(
+                name(prm_876) + u8"は体内のエイリアンを吐き出した！"s,
+                name(prm_876) + u8" spit"s + _s(prm_876)
+                    + u8" alien children from "s + his(prm_876) + u8" body!"s));
+        }
+    }
+    if (cdata[prm_876].buffs[0].id != 0)
+    {
+        for (int cnt = 0; cnt < 16; ++cnt)
+        {
+            if (cdata[prm_876].buffs[cnt].id == 0)
+            {
+                break;
+            }
+            if (the_buff_db[cdata[prm_876].buffs[cnt].id]->type
+                == buff_data::type_t::food)
+            {
+                delbuff(prm_876, cnt);
+                --cnt;
+                continue;
+            }
+        }
+    }
+    if (mdata(6) != 1)
+    {
+        p_at_m146 = 2;
+        for (const auto& cnt : items(-1))
+        {
+            if (inv[cnt].number > 0)
+            {
+                if (inv[cnt].id == 704)
+                {
+                    ++p_at_m146;
+                }
+            }
+        }
+        if (rnd(p_at_m146 * p_at_m146 * p_at_m146) == 0 || prm_876 == 0)
+        {
+            flt();
+            int stat = itemcreate(
+                -1,
+                704,
+                cdata[prm_876].position.x,
+                cdata[prm_876].position.y,
+                0);
+            if (stat != 0)
+            {
+                if (prm_876 != 0)
+                {
+                    inv[ci].subname = cdata[prm_876].id;
+                }
+            }
+        }
+    }
+    if (cdata[prm_876].has_anorexia() == 0)
+    {
+        if ((prm_876 < 16 && cdata[prm_876].anorexia_count > 10)
+            || (prm_876 >= 16 && rnd(4) == 0))
+        {
+            if (rnd(5) == 0)
+            {
+                cdata[prm_876].has_anorexia() = true;
+                if (is_in_fov(prm_876))
+                {
+                    txt(lang(
+                        name(prm_876) + u8"は拒食症になった。"s,
+                        name(prm_876) + u8" develop"s + _s(prm_876)
+                            + u8" anorexia."s));
+                    snd(65);
+                }
+            }
+        }
+    }
+    else
+    {
+        skillmod(10, prm_876, -50);
+        skillmod(11, prm_876, -75);
+        skillmod(17, prm_876, -100);
+    }
+    dmgcon(prm_876, 7, 100);
+    modweight(prm_876, -(1 + rnd(5)));
+    if (cdata[prm_876].nutrition <= 0)
+    {
+        dmghp(prm_876, 9999, -3);
+    }
+    cdata[prm_876].nutrition -= 3000;
+    return;
+}
+
+
+
+void eatstatus(curse_state_t curse_state, int eater)
+{
+    if (cdata[eater].state != 1)
+        return;
+
+    if (is_cursed(curse_state))
+    {
+        cdata[eater].nutrition -= 1500;
+        if (is_in_fov(eater))
+        {
+            txt(lang(
+                name(eater) + u8"は嫌な感じがした。"s,
+                name(eater) + u8" feel"s + _s(eater) + u8" bad."s));
+        }
+        chara_vomit(eater);
+    }
+    else if (curse_state == curse_state_t::blessed)
+    {
+        if (is_in_fov(eater))
+        {
+            txt(lang(
+                name(eater) + u8"は良い予感がした。"s,
+                name(eater) + u8" feel"s + _s(eater) + u8" good."s));
+        }
+        if (rnd(5) == 0)
+        {
+            addbuff(eater, 19, 100, 500 + rnd(500));
+        }
+        healsan(eater, 2);
+    }
+}
+
+
+
+int chara_anorexia(int prm_879)
+{
+    if (cdata[prm_879].has_anorexia() == 0)
+    {
+        return 0;
+    }
+    chara_vomit(prm_879);
+    return 1;
+}
+
+
+
+void sickifcursed(curse_state_t curse_state, int drinker, int prm_882)
+{
+    if (!is_cursed(curse_state))
+        return;
+
+    if (rnd(prm_882) == 0)
+    {
+        if (is_in_fov(drinker))
+        {
+            txt(lang(
+                name(drinker) + u8"は気分が悪くなった。"s,
+                name(drinker) + u8" feel"s + _s(drinker) + u8" grumpy."s));
+        }
+        dmgcon(drinker, 12, 200);
+    }
+}
+
 
 
 
