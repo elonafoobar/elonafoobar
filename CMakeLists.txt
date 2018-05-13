@@ -42,6 +42,7 @@ set(CORE_SOURCES
     ability.cpp
     access_character_info.cpp
     access_item_db.cpp
+    ai.cpp
     animation.cpp
     audio.cpp
     autopick.cpp
