@@ -58,6 +58,7 @@ set(CORE_SOURCES
     debug.cpp
     draw.cpp
     elonacore.cpp
+    enchantment.cpp
     filesystem.cpp
     fish.cpp
     foobar_save.cpp
@@ -72,6 +73,7 @@ set(CORE_SOURCES
     item.cpp
     item_db.cpp
     item_material.cpp
+    itemgen.cpp
     log.cpp
     magic.cpp
     main.cpp

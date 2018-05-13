@@ -156,6 +156,37 @@ identification_state_t item_identify(item& ci, int power);
 
 range::iota<int> items(int owner);
 int get_random_inv(int owner);
+void itemname_additional_info();
+void item_checkknown(int = 0);
+int inv_find(int = 0, int = 0);
+int inv_getfreeid(int = 0);
+int inv_getowner(int = 0);
+bool inv_getspace(int);
+int inv_sum(int = 0);
+int inv_weight(int = 0);
+void item_compress(int);
+void item_copy(int = 0, int = 0);
+
+void item_acid(int = 0, int = 0);
+void item_delete(int = 0);
+void item_exchange(int = 0, int = 0);
+void item_num(int = 0, int = 0);
+void itemturn(int = 0);
+int itemfind(int = 0, int = 0, int = 0);
+int itemusingfind(int, bool = false);
+
+int item_cold(int = 0, int = 0);
+int item_fire(int = 0, int = 0);
+
+// TODO move to more appropriate place
+void mapitem_cold(int = 0, int = 0);
+void mapitem_fire(int = 0, int = 0);
+void make_dish(int = 0, int = 0);
+
+// TODO
+int item_find(int = 0, int = 0, int = 0);
+int item_separate(int);
+int item_stack(int = 0, int = 0, int = 0);
 
 
 } // namespace elona

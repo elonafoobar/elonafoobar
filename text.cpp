@@ -1,5 +1,6 @@
 #include "character.hpp"
 #include "elona.hpp"
+#include "enchantment.hpp"
 #include "i18n.hpp"
 #include "random.hpp"
 #include "variables.hpp"

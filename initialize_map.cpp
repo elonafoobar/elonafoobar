@@ -7,6 +7,7 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "item.hpp"
+#include "itemgen.hpp"
 #include "variables.hpp"
 
 

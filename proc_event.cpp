@@ -6,6 +6,7 @@
 #include "config.hpp"
 #include "elona.hpp"
 #include "item.hpp"
+#include "itemgen.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 

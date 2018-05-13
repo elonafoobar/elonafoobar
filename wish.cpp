@@ -8,6 +8,7 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "itemgen.hpp"
 #include "optional.hpp"
 #include "variables.hpp"
 
