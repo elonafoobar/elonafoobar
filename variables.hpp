@@ -1,3 +1,5 @@
+#pragma once
+
 #include "elona.hpp"
 #include "position.hpp"
 #include "enums.hpp"
@@ -25,6 +27,23 @@ ELONA_EXTERN(int anic);
 ELONA_EXTERN(elona_vector1<int> ap);
 ELONA_EXTERN(int wishfilter);
 ELONA_EXTERN(int nooracle);
+
+// TEMP: each block denotes globals and the first source file(s) that
+// referenced them outside elonacore.cpp
+
+// casino.cpp / casino_card.cpp
+ELONA_EXTERN(int atxthrough);
+ELONA_EXTERN(std::string atxbg);
+ELONA_EXTERN(std::string atxbgbk);
+ELONA_EXTERN(elona_vector1<std::string> atxinfon);
+ELONA_EXTERN(elona_vector1<int> atxid);
+ELONA_EXTERN(int atxlv);
+ELONA_EXTERN(int nojoker);
+ELONA_EXTERN(elona_vector1<int> fsetwear);
+ELONA_EXTERN(elona_vector1<int> fsetitem);
+ELONA_EXTERN(int txtadvscreenupdate);
+ELONA_EXTERN(elona_vector2<int> matref);
+ELONA_EXTERN(elona_vector1<std::string> matname);
 
 // fov.cpp
 ELONA_EXTERN(elona_vector2<int> route);
@@ -586,9 +605,6 @@ int clientguide(int = 0);
 int cnvjkey(const std::string&);
 int convertartifact(int = 0, int = 0);
 int copy_chara(int = 0);
-int cpblackcard(int = 0);
-int cpcardnum(int = 0);
-int cpscore(int = 0);
 int create_card(int = 0, int = 0);
 int customtalk(int = 0, int = 0);
 int direction(int = 0, int = 0, int = 0, int = 0);
@@ -713,7 +729,6 @@ int inv_getfreeid_force();
 int label_2672();
 int label_2694();
 int label_2695();
-int lastcard(int = 0);
 int map_barrel(int = 0, int = 0);
 int map_connectroom();
 int map_createroom(int = 0);
@@ -729,7 +744,6 @@ int net_dl(const std::string&, const std::string&);
 int net_dllist(const std::string&, int = 0);
 int net_read(int = 0);
 int net_send(const std::string&, int = 0);
-int opencard2(int = 0, int = 0);
 int pileremain();
 int prodcheck();
 int putcard(int = 0, int = 0);
@@ -747,12 +761,10 @@ int roll_max(int, int, int);
 int roundmargin(int = 0, int = 0);
 int route_info(int&, int&, int = 0);
 int rpdiff(int = 0, int = 0, int = 0);
-int servecard(int = 0);
 int skillexp(int = 0, int = 0, int = 0, int = 0, int = 0);
 int skillmod(int = 0, int = 0, int = 0);
 int talk_conv(std::string&, int = 0);
 int tradecheck(int = 0);
-int trashcard(int = 0);
 int winposy(int = 0, int = 0);
 int zentohan(const std::string&, std::string&, int = 0);
 std::string _aru(int = 0);
@@ -855,8 +867,6 @@ void calcdecksize();
 void calcdomain();
 void calcstartattb(int = 0);
 void cardhelp(const std::string&, int = 0);
-void cardplayeradd(int = 0, int = 0, int = 0);
-void cardplayerinit(int = 0, int = 0);
 void cardpos(int = 0, int = 0);
 void cdbitmod(int = 0, int = 0, int = 0);
 void cell_check(int = 0, int = 0);
@@ -931,7 +941,6 @@ void hostileaction(int = 0, int = 0);
 void imeset(int = 0);
 void incognitobegin();
 void incognitoend();
-void initcard(int = 0, int = 0, int = 0);
 std::pair<int, int> inv_getheader(int);
 void item_acid(int = 0, int = 0);
 void item_checkknown(int = 0);
@@ -1157,17 +1166,6 @@ void label_18462();
 void label_1848();
 void label_18552();
 menu_result menu_materials();
-void casino_dealer();
-void casino_choose_card();
-void label_1870();
-void label_1871();
-void label_1872();
-void casino_acquire_items();
-void casino_random_site();
-void label_1877();
-void casino_wrapper();
-bool casino_start();
-bool casino_blackjack();
 void set_npc_religion();
 void apply_god_blessing(int);
 void get_god_description();
@@ -1435,10 +1433,6 @@ void rowactend(int = 0);
 void saccard(int = 0, int = 0);
 void savecycle();
 void setunid(int = 0, int = 0);
-void showcard();
-void showcard2(int = 0, int = 0);
-void showcardholder();
-void showcardpile();
 void showeconomy(int, int, const std::string&, int = 0, int = 0);
 void showscroll(const std::string&, int, int, int, int);
 void showtitle(const std::string&, const std::string&, int = 0, int = 0);
