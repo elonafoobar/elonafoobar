@@ -5199,7 +5199,7 @@ label_1978_internal:
         magic();
         tc = client;
         questteleport = 1;
-        speak_to_npc();
+        talk_to_npc();
         if (chatteleport == 1)
         {
             chatteleport = 0;

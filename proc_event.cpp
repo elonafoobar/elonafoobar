@@ -119,7 +119,7 @@ void proc_event()
         break;
     case 2:
         tc = findchara(34);
-        speak_to_npc();
+        talk_to_npc();
         break;
     case 24:
         initeco = 1;
@@ -127,15 +127,15 @@ void proc_event()
         break;
     case 3:
         tc = findchara(2);
-        speak_to_npc();
+        talk_to_npc();
         break;
     case 11:
         tc = findchara(1);
-        speak_to_npc();
+        talk_to_npc();
         break;
     case 23:
         tc = findchara(302);
-        speak_to_npc();
+        talk_to_npc();
         gdata(171) = 23;
         break;
     case 12:
@@ -320,7 +320,7 @@ void proc_event()
             u8"あなたは無事に護衛の任務を終えた。"s,
             u8"You complete the escort."s));
         tc = evdata2(evnum - (evnum != 0) * 1);
-        speak_to_npc();
+        talk_to_npc();
         rq = evdata1(evnum - (evnum != 0) * 1);
         complete_quest();
         chara_vanquish(evdata2(evnum - (evnum != 0) * 1));
@@ -606,7 +606,7 @@ void proc_event()
                 gdata(35) = cdata[c].direction;
             }
         }
-        speak_to_npc();
+        talk_to_npc();
         break;
     case 30:
         i = 0;
@@ -680,7 +680,7 @@ void proc_event()
             }
             if (tc != 0)
             {
-                speak_to_npc();
+                talk_to_npc();
             }
         }
         break;

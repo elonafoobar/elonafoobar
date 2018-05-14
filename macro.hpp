@@ -24,7 +24,7 @@
 #define ELONA_TALK_SCENE_CUT() \
     do \
     { \
-        talk_window(); \
+        talk_window_query(); \
         if (scenemode) \
         { \
             if (scene_cut == 1) \

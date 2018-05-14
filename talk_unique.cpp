@@ -8,6 +8,7 @@
 #include "item.hpp"
 #include "item_db.hpp"
 #include "macro.hpp"
+#include "shop.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -147,7 +148,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"貴様に金になる仕事をやろう。ザナンのある機関からの要望で、実験のデータをとるために被験者が必要なのだ。俺に言わせれば、被験者というより『生贄』だがな。生き延びて戻ってくれば、老後を遊んで暮らせるだけの報酬はくれてやる。どうするかこの場で決めろ。"s,
                 u8"You wanna make some quick cash? I've got a request from the organization of Zanan. They need a test subject in order to get some experimental data. Or perhaps \"sacrifice\" would be a more appropriate term. *If* you survive, I'll pay you enough to party until you waste away. Make your decision quickly."s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -183,7 +184,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"フッ。よく逃げ出さずに戻ってきたな。準備はいいか。"s,
                 u8"So, are you ready?"s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -276,7 +277,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"最近、朝起きると私のぬいぐるみがぼろぼろになっているの。夜中に起きてこっそり見張ってたらね、なんとプチ…プチがぬいぐるみ食べてるのよ！どうも隣の家の窓を伝って、私の家に入ってくるみたいなの。冒険者さん、お願いだから、ちょっと行って退治してきてくれない？"s,
                 u8"Recently, when I wake in the morning my stuffed toys are always chewed up. So I stayed up last night and secretly watched. You know what I found? Putits were chewing up my stuffed animals! I'm pretty sure they're getting into my house through the window to the neighbor's place. I beg of you adventurer, won't you eradicate the Putits for me?"s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -380,7 +381,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"ちょっとお時間いいですか？バーの酒樽が度々盗まれて、店長困ってるんです。もし手が空いていたら、助けてくださいな。盗みを働いている輩の目星はついています。きっと、ヴェルニースを拠点に活動している、こそ泥の集団です！拠点は確か墓の方にあったはずですよ。"s,
                 u8"Excuse me, do you have a moment? The kegs from the bar have been stolen, and the manager is really put out. If you're not busy, could you help out? It was those thugs, I'm sure of it. They've certainly set up a base inside Vernis. With all the mud they leave behind, they're most likely hanging out near the gravesite."s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -473,7 +474,7 @@ talk_result_t talk_unique()
         buff = lang(
             u8"無事に意識が戻ってよかったわ。あなたを最初に見たときは、もう手遅れかと思ったほどだもの。"s,
             u8"I'm glad you got well again. I thought you were a goner until just a few minutes ago."s);
-        talk_window();
+        talk_window_query();
         if (chatval == 1)
         {
             listmax = 0;
@@ -820,7 +821,7 @@ talk_result_t talk_unique()
                         u8"わが家から出て行ってほしい"s,
                         u8"Get out of my house!"s));
             }
-            talk_window();
+            talk_window_query();
         }
         if (chatval == 1)
         {
@@ -1363,7 +1364,7 @@ talk_result_t talk_unique()
             }
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
-            talk_window();
+            talk_window_query();
             if (chatval == 6)
             {
                 listmax = 0;
@@ -1554,7 +1555,7 @@ talk_result_t talk_unique()
                     u8"I will gladly pledge my strength to Palmia."s));
             ELONA_APPEND_RESPONSE(0, lang(u8"断る"s, u8"I'm not interested."s));
             chatesc = 1;
-            talk_window();
+            talk_window_query();
             if (chatval == 0)
             {
                 listmax = 0;
@@ -1697,7 +1698,7 @@ talk_result_t talk_unique()
         buff = lang(
             u8"見て分からんか、わしゃ忙しいんじゃ。用があるなら手短にな。"s,
             u8"Don't you see I'm busy!"s);
-        talk_window();
+        talk_window_query();
         if (chatval == 1)
         {
             invctrl = 1;
@@ -1715,7 +1716,7 @@ talk_result_t talk_unique()
         buff = lang(
             u8"ほほう、客人とはこれまた珍しい。暖かい飯でも馳走してさしあげたいが、あいにくと今日の飯番はガロクでの。あやつの作る料理は自らの作品に似て、なんとも無骨で味気ない。とても客人に楽しんでもらえる代物じゃないのう。まぁ、せっかくこんな辺境の地にまで、やって来なさったんだ。何か用件があれば、話だけは聞こうじゃないか。"s,
             u8"Oh oh, what we got, talk about rare! A traveler? I would have given you a feast if it were not Garok that handles today's dinner. You know, his cooking is as loutish as his creations. Oh well, you've come all the way here, what can I do for you?"s);
-        talk_window();
+        talk_window_query();
         if (chatval == 2)
         {
             listmax = 0;
@@ -1728,7 +1729,7 @@ talk_result_t talk_unique()
             ELONA_TALK_SCENE_CUT();
             invctrl = 28;
             invfile = cdata[tc].shop_store_id;
-            sell_item();
+            shop_sell_item();
             screenupdate = -1;
             update_screen();
             cs = 0;
@@ -1757,7 +1758,7 @@ talk_result_t talk_unique()
             }
             ELONA_APPEND_RESPONSE(0, lang(u8"断る"s, u8"I think not."s));
             chatesc = 1;
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2038,7 +2039,7 @@ talk_result_t talk_unique()
                 }
                 ELONA_APPEND_RESPONSE(0, lang(u8"お元気で"s, u8"Take care."s));
                 chatesc = 1;
-                talk_window();
+                talk_window_query();
                 if (chatval == 2)
                 {
                     int stat = inv_find(559, 0);
@@ -2097,7 +2098,7 @@ talk_result_t talk_unique()
             ELONA_APPEND_RESPONSE(
                 0, lang(u8"希望はまだある"s, u8"There's still hope."s));
             chatesc = 1;
-            talk_window();
+            talk_window_query();
             if (chatval == 1)
             {
                 listmax = 0;
@@ -2196,7 +2197,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"俺を誰だか知らないだと？この街で一番の色男、ラファエロ様だよ。俺が狙った女は、例えパルミアの王妃だろうとイチコロさ。だがな、最近はどうも恋の駆け引きみたいなのに、飽き飽きしちまった。本音をいや、無条件で俺に仕えてくれる女が欲しいんだよ。で、お前の嫁を俺によこさないか？礼はするぜ。"s,
                 u8"Don't you know who I am? I am, by far, without question, doubtlessly and unabashedly, the sexiest man in this town -- if not the whole of North Tyris. I can have any woman I desire. I could even take the princess of Palmia if I wanted. Yet, strange as it sounds, lately I've grown tired of the game. Honestly, I want a woman who will serve me unconditionally and never complain. Why don't you let me keep one of your wives? You'd have my thanks. "s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2233,7 +2234,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"どれどれ、お前さんの嫁を吟味させてもらおうか！"s,
                 u8"Which one? Who have you brought for me to inspect?"s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2371,7 +2372,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"イィッック！やめて！くるなぁー！イィーック！ハ…失礼しました。あなた…見たところ強そうですね。私に力を貸してくれませんか？騎士昇格のための試験で、イークの首領を討伐しなければならないんです。私には、荷が重い使命ですよ…イーク…うわあああ…ダメだ…思い出しただけでも膝が震える…お願いです。私の代わりに倒してきてください。"s,
                 u8"Yeeeck! Nooo! Don't!! Get away from me!! Yeeeee-eeeck! Hump, oh....excuse me. You...you look like a skilled adventurer. Could you give me your hand? I need to slay the head of Yeek to be promoted to the rank of knight. The duty is too heavy for me....yeeee-eeck! No...! Hump...I don't want to recall anything anymore. Please do this duty for me."s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2458,7 +2459,7 @@ talk_result_t talk_unique()
         }
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         buff = lang(u8"くぅうううん。"s, u8"Woof!"s);
-        talk_window();
+        talk_window_query();
         if (chatval == 1)
         {
             txt(lang(
@@ -2495,7 +2496,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"はうっ。ポピーがいなくなっちゃった…また、あの洞窟に迷い込んじゃったのかな？どうしよう、お父さんは今いそがしくて相手にしてもらえないし…あ、冒険者さん、ポピーを探してきてよ〜。ポピー？ポピーは子犬だよ。私の一番のお友達なの。"s,
                 u8"Oh no, Poppy has disappeared again... He probably got lost in that cave again. Now what do I do, Papa is too busy to deal with this... Oh, Adventurer, go and find Poppy for me. Poppy? He's my puppy, and my best friend."s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2588,7 +2589,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"あなた、猫は大丈夫ですか？いえね、私は猫が大の苦手なんですが、こともあろうに、私の家に大量の猫が住み着いてしまったんですよ。そこで冒険者さん達に猫の退治を依頼しているものの、何故か誰も帰ってこない…いったい、家の中はどうなってるんでしょうか。あなた、もしよかったら見てきてくれませんか？"s,
                 u8"Hey you, are you..uh...alright with cats? Well, those filthy...they creatures took over my house. I've been asking adventurers to clean up the cats from my house ever since but none returned. What's happening in my house? You...can you take a look inside my house?"s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2706,7 +2707,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"私はジューアの解放軍の大佐、ギルバートと申す。軍といっても国軍ではないが、イェルスの犬に占拠された各地のジューア自治区を、解放してまわっておるのだ。その我が軍が、パルミア国境でイェルスの強力な防衛線の前に苦戦しておる。最新鋭の武装を持つ奴らに対し、我らは剣に頼るのみ。このままでは、全滅する恐れさえあるのだ。どうか、貴殿の力、貸してもらえぬか？"s,
                 u8"I am colonel of the Juere Liberation Army, Gilbert. We're not the true national army, but even so we fully intend to free the Juere Territories from their occupation by those Yerles dogs. However, our army is having a hard time breaking through their strong front lines on the Palmia border. We only have our swords against their advanced weapons, after all. If things go on like they are, our army might be totally annihalated. So I ask you, will you lend us your power?"s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2742,7 +2743,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"準備はいいかな？"s,
                 u8"Are your preparations complete, then?"s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2831,7 +2832,7 @@ talk_result_t talk_unique()
                 lang(
                     u8"やめておこう"s,
                     u8"That sounds... dangerous. No thanks."s));
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2865,7 +2866,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"準備はよろしいですか？あなたは、パルミア軍が撤退するまでの間、どうにかカミカゼ特攻隊の猛撃に耐え、時間稼ぎをして下さい。"s,
                 u8"Are you ready to go? We need you to hold off the suicide squadron's onslaught and buy time for the Palmian army to retreat."s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2950,7 +2951,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"るんるんるん♪ねっこねっここっねこっ♪ふ〜んふ〜ん♪お〜冒険者さんだ〜。お仕事お疲れ様でありますぅ。冒険者さんは、シルバーキャット見たことありますかぁ？シルバーにゃんことお風呂できゃっきゃするのが、ミーアの夢なんですっ！う〜。ねっこねっここっねこ♪ふ〜んふ〜ん♪"s,
                 u8"Nyobody knyows the touble Mia's seen, nyobody knyows Mia's Tru-bull. Nuah? Adventurer? Nyou find silver cat for me?"s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -3270,7 +3271,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"私宛にね、面白い手紙が届いたんですよ。送り主はピラミッドの主『ツェン』。そして、内容は私にピラミッドへの挑戦権を与えると。…しかし、私は危険な罠に自ら陥るほど愚かではない。あなたにこの挑戦状を譲りましょう。むろん、タダではない。金貨20000枚でいかがですか？"s,
                 u8"I have received a very strange letter. The sender calls himself Tsen, lord of the Pyramid. He has sent me an invitation to enter his pyramid... However, I am not foolish enough to barge into such a trap. I'll turn this invitation over to you. Of course, I won't let you have it for nothing. 20,000 gold and it's yours."s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -3376,7 +3377,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"あたし達は他人の血を吸って生きるのよ。憎しみや妬み、執着、悪意が、この街では力になる。外の世界では疎まれ軽蔑される弱き者達が、自分に与えられた能力をはじめて認めてもらえる、ダルフィはそんな街。ねえ、あなたもこっちの世界に来る気はない？"s,
                 u8"It's so simple, we live by feeding off of others. Spite, hatred, wickedness, and unrelenting cutthroat vigor are the only strengths you can rely on in this town. The outside world looks down on our lot, so we will make the outside world recognize our might. Say, stranger, why don't you join me in my world?"s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -3412,7 +3413,7 @@ talk_result_t talk_unique()
         buff = lang(
             u8"ねえ、核爆弾買う？金貨12000枚よ。"s,
             u8"Here, you need a nuke. Only 12000 gold pieces."s);
-        talk_window();
+        talk_window_query();
         if (chatval != 1)
         {
             listmax = 0;
@@ -3460,7 +3461,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"おうおう、良いところに来た。猫の手も借りたいほど忙しいのじゃ。今わしは遺伝子操作の研究をしておってな、成功すればなんと、二体の生物を合成させて、より強力な種を造りだすことができるのじゃ！最後の段階として、5体の実験体が必要じゃが、ちょっと取ってきてはくれまいか？報酬として、今使っている試作機をくれてやってもよいぞ。"s,
                 u8"Oh oh oh! You've come at *just* the right time. I'm so busy I'd take help from a cat if I had to. I'm doing research in the most remarkable field of genetic engineering. You see, I can take two living creatures and combine them to produce an even stronger creature! Is that not the most amazing thing you've ever heard? I need five test subjects for the final stage of the experiment. Won't you go get some for me? I'll reward you with the gene splicing machine I'm building."s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -3606,7 +3607,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"俺はルミエストの清掃を生涯の使命とし、この道十年のベテラン掃除屋バルザックだ。街道に落ちているどんな小さなゴミも見逃さないプロ魂を持つが、そんなプライドも傷つけられちまった。下水道にとんでもない化け物が住みついて、もう俺の手には負えないぜ。お前なら、俺の気持ちを汲み取って、退治に出向いてくれるな？"s,
                 u8"I'm Balzak, a well known pro garage man who has been cleaning the roads of Lumiest for 10 years. I've never missed a single garbage that messes the beautiful town of Lumiest. But my days are over. Foul creatures now nest in the sewer and sick smells spread everywhere. Adventurer, you are my only hope. Kill them, kill them for my sake!"s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -3698,7 +3699,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"止まれ…この階段の先は魔術士ギルドの管轄だ。ギルドメンバー以外の者が入ることはできない…"s,
                 u8"Halt...the stairs lead to the Mages Guild office. Only the members of the guild are allowed to enter."s);
-            talk_window();
+            talk_window_query();
             if (chatval == 2)
             {
                 listmax = 0;
@@ -3826,7 +3827,7 @@ talk_result_t talk_unique()
                 + cdatan(0, 0) + u8"…どうぞ中にお入り下さい。"s,
             u8"Welcome to the Mages Guild, "s + ranktitle(8) + u8" "s
                 + cdatan(0, 0) + u8"... Please come in."s);
-        talk_window();
+        talk_window_query();
         if (chatval == 1)
         {
             gdata_mages_guild_quota2 = 1;
@@ -3922,7 +3923,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"止まれ…この階段の先は盗賊ギルドの管轄だ。ギルドメンバー以外の者が入ることはできない…"s,
                 u8"Halt...the stairs lead to the Thieves Guild office. Only the members of the guild are allowed to enter."s);
-            talk_window();
+            talk_window_query();
             if (chatval == 2)
             {
                 listmax = 0;
@@ -4041,7 +4042,7 @@ talk_result_t talk_unique()
                 + u8"…どうぞ中にお入り下さい。"s,
             u8"Welcome to the Thieves Guild, "s + ranktitle(8) + u8" "s
                 + cdatan(0, 0) + u8"... Please come in."s);
-        talk_window();
+        talk_window_query();
         if (chatval == 1)
         {
             gdata_thieves_guild_quota2 = 1;
@@ -4137,7 +4138,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"止まれ…この階段の先は戦士ギルドの管轄だ。ギルドメンバー以外の者が入ることはできない…"s,
                 u8"Halt...the stairs lead to the Fighters Guild office. Only the members of the guild are allowed to enter."s);
-            talk_window();
+            talk_window_query();
             if (chatval == 2)
             {
                 listmax = 0;
@@ -4286,7 +4287,7 @@ talk_result_t talk_unique()
                 + u8"…どうぞ中にお入り下さい。"s,
             u8"Welcome to the Fighters Guild, "s + ranktitle(8) + u8" "s
                 + cdatan(0, 0) + u8"... Please come in."s);
-        talk_window();
+        talk_window_query();
         if (chatval == 1)
         {
             while (1)
@@ -4406,7 +4407,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"困った…困ったぞ。そこのおぬし、良いところに来た。実はヨウィンがミノタウロスの軍による侵攻の危機にさらされておるのだ。ヨウィンの村長とは親しくしておって、一軍を討伐に向かわせたいのだが、今は何やら不穏な空気がパルミアを包んでいる。城から離れるわけにはいかないのだ。そこで、冒険者のおぬしに依頼したい。ミノタウロスを退治してきてはくれぬか？報酬はもちろん用意しよう。"s,
                 u8"What do I do about this... You, over there... You couldn't have gotten here a moment too soon. Yowyn is in great danger of being destroyed by the minotaur legion. The mayor of Yowyn is a close friend of mine and I don't want to leave him out in the cold. I want to send a detachment to reinforce him but I can't. The current political climate in Palmia is too volatile and the troops must remain in the castle. That's why I'm asking an adventurer like you. Will you attack the minotaur's camp for me? I will reward you handsomely if you do this."s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -4508,7 +4509,7 @@ talk_result_t talk_unique()
                 cdata[0].gold / 5 +
                 u8" gold pieces and your cargos. Quite fortunate indeed."s);
         chatesc = 0;
-        talk_window();
+        talk_window_query();
         if (chatval == 0)
         {
             snd(12);
@@ -4597,7 +4598,7 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"リトルたちを、終わりのない苦痛から解放するべきだという人もいる。でも、大抵の人間はあの子達の力が欲しくて殺すのよ。そう、確かにリトルの肉は人の肉体を進化させる。それでも、私はあの子たちを救う別の道があることを信じているの。…そして覚えておいて。もしあなたがリトルの命を奪うようなことがあれば、いつかその酬いを受ける時がくるから。"s,
                 u8"Many people feel we need to free these girls from their never-ending oppression, but there are also scumbags that would murder them for their own personal gain. That's right; they say eating the girls' flesh will evolve the human body. I know there must be a better way to help them... don't forget that. Remember that if you take their lives, you will eventually get what's coming to you. "s);
-            talk_window();
+            talk_window_query();
             if (chatval == 1)
             {
                 p = gdata_kill_count_of_little_sister;
@@ -4760,7 +4761,7 @@ talk_result_t talk_unique()
             ELONA_APPEND_RESPONSE(
                 0, lang(u8"別に乗りたくない"s, u8"Not really."s));
             chatesc = 1;
-            talk_window();
+            talk_window_query();
             if (chatval == 1)
             {
                 f = get_freeally();
@@ -4804,7 +4805,7 @@ talk_result_t talk_unique()
                 ELONA_APPEND_RESPONSE(1, lang(u8"譲る"s, u8"Take it."s));
                 ELONA_APPEND_RESPONSE(0, lang(u8"断る"s, u8"Nope."s));
                 chatesc = 1;
-                talk_window();
+                talk_window_query();
                 if (chatval == 1)
                 {
                     int stat = inv_find(771, 0);
@@ -4859,7 +4860,7 @@ talk_result_t talk_unique()
             u8"ジュア教団では、ただ今他の神からの乗り換えキャンペーン実施中だ！聖夜祭の期間中なら、改宗によるペナルティは払わなくていいよ。さらになんと、今なら無料で数量限定のジュア様の抱き枕も付けちゃうよ！お客さん、このチャンスを見逃す手はないよ。"s,
             u8"We are running a special campaign to help you join our religion! Be a brother of Jure today and win free body pillow of Jure! During the festival, you won't have to pay penalty to convert your religion neither. So what are you waiting? Sign up now!"s);
         chatesc = 1;
-        talk_window();
+        talk_window_query();
         if (chatval == 1)
         {
             ELONA_APPEND_RESPONSE(1, lang(u8"はい"s, u8"Yes."s));
@@ -4868,7 +4869,7 @@ talk_result_t talk_unique()
                 u8"よし、本当に改宗していいね？"s,
                 u8"Okie, just making sure. Do you really want to convert your religion?"s);
             chatesc = 1;
-            talk_window();
+            talk_window_query();
             if (chatval == 1)
             {
                 listmax = 0;
