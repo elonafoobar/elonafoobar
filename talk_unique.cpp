@@ -8,6 +8,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "itemgen.hpp"
 #include "macro.hpp"
 #include "map_cell.hpp"
 #include "ui.hpp"

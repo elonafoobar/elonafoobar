@@ -18,6 +18,8 @@ void eat_rotten_food();
 
 void cook();
 
+void make_dish(int, int);
+
 void apply_general_eating_effect();
 void eating_effect_eat_iron();
 void eating_effect_insanity();

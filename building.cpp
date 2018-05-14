@@ -9,6 +9,7 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
+#include "itemgen.hpp"
 #include "item_db.hpp"
 #include "macro.hpp"
 #include "map.hpp"

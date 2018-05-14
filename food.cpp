@@ -10,6 +10,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "itemgen.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "trait.hpp"
@@ -545,6 +546,20 @@ void cook()
     }
     refresh_burden_state();
     return;
+}
+
+
+
+void make_dish(int ci, int type)
+{
+    inv[ci].image = picfood(type, inv[ci].param1 / 1000);
+    inv[ci].weight = 500;
+    inv[ci].param2 = type;
+    if (inv[ci].material == 35 && inv[ci].param3 >= 0)
+    {
+        inv[ci].param3 = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
+            + gdata_year * 24 * 30 * 12 + 72;
+    }
 }
 
 
