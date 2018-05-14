@@ -49,6 +49,8 @@ set(CORE_SOURCES
     building.cpp
     calc.cpp
     card.cpp
+    casino.cpp
+    casino_card.cpp
     cat.cpp
     cell_draw.cpp
     character.cpp
@@ -62,6 +64,7 @@ set(CORE_SOURCES
     filesystem.cpp
     fish.cpp
     foobar_save.cpp
+    fov.cpp
     get_card_info.cpp
     get_random_item_id.cpp
     get_random_npc_id.cpp

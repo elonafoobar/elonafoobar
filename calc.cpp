@@ -4,6 +4,7 @@
 #include "character.hpp"
 #include "debug.hpp"
 #include "elona.hpp"
+#include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
