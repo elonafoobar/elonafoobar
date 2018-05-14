@@ -4,6 +4,7 @@
 #include "character.hpp"
 #include "event.hpp"
 #include "fov.hpp"
+#include "item.hpp"
 #include "map.hpp"
 #include "variables.hpp"
 

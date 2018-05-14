@@ -7,6 +7,7 @@
 #include "elona.hpp"
 #include "event.hpp"
 #include "item.hpp"
+#include "itemgen.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
 #include "random.hpp"

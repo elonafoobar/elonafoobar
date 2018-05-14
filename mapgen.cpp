@@ -5,6 +5,7 @@
 #include "elona.hpp"
 #include "enums.hpp"
 #include "item.hpp"
+#include "itemgen.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
 #include "variables.hpp"

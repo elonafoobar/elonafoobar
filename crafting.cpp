@@ -4,6 +4,8 @@
 #include "calc.hpp"
 #include "draw.hpp"
 #include "config.hpp"
+#include "item.hpp"
+#include "itemgen.hpp"
 #include "macro.hpp"
 #include "ui.hpp"
 #include "variables.hpp"

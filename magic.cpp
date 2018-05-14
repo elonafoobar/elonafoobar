@@ -8,12 +8,14 @@
 #include "ctrl_file.hpp"
 #include "debug.hpp"
 #include "elona.hpp"
+#include "enchantment.hpp"
 #include "food.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "itemgen.hpp"
 #include "macro.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
@@ -3502,10 +3504,10 @@ label_2181_internal:
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
             randomize(inv[efcibk].param1);
-            encadd(
+            enchantment_add(
                 ci,
-                randomenc(randomenclv(egolv)),
-                randomencp() + (fixlv == 5) * 100 + (ibit(15, ci) == 1) * 100,
+                enchantment_generate(enchantment_gen_level(egolv)),
+                enchantment_gen_p() + (fixlv == 5) * 100 + (ibit(15, ci) == 1) * 100,
                 20 - (fixlv == 5) * 10 - (ibit(15, ci) == 1) * 20);
         }
         randomize();
