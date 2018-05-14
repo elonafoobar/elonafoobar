@@ -1,6 +1,9 @@
 #include "quest.hpp"
+#include "ability.hpp"
 #include "audio.hpp"
+#include "calc.hpp"
 #include "character.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
 #include "variables.hpp"
 
@@ -8,6 +11,8 @@ namespace elona
 {
 
 enum class turn_result_t;
+
+int rewardfix = 0;
 
 int quest_is_return_forbidden()
 {

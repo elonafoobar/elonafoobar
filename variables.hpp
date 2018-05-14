@@ -101,6 +101,17 @@ ELONA_EXTERN(elona_vector1<int> rpsourcelist);
 ELONA_EXTERN(int prodtype);
 ELONA_EXTERN(elona_vector2<int> matspot);
 
+// quest.cpp
+ELONA_EXTERN(elona_vector1<int> fsetcollect);
+ELONA_EXTERN(elona_vector1<int> asettown);
+ELONA_EXTERN(elona_vector1<int> fsetdeliver);
+ELONA_EXTERN(elona_vector1<int> fsetsupply);
+ELONA_EXTERN(elona_vector1<int> fsetmagic);
+ELONA_EXTERN(elona_vector1<int> fsetarmor);
+ELONA_EXTERN(elona_vector1<int> fsetweapon);
+ELONA_EXTERN(elona_vector1<int> fsetrewardsupply);
+
+
 ELONA_EXTERN(elona_vector1<int> _randcolor);
 ELONA_EXTERN(elona_vector1<int> aniref);
 ELONA_EXTERN(elona_vector1<int> anix);

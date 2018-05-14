@@ -7,6 +7,7 @@
 #include "elona.hpp"
 #include "item.hpp"
 #include "random.hpp"
+#include "quest.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
