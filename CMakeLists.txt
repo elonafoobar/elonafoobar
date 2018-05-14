@@ -64,6 +64,7 @@ set(CORE_SOURCES
     debug.cpp
     draw.cpp
     elonacore.cpp
+    event.cpp
     filesystem.cpp
     fish.cpp
     food.cpp
@@ -85,7 +86,9 @@ set(CORE_SOURCES
     main.cpp
     main_menu.cpp
     map.cpp
+    map_cell.cpp
     mapgen.cpp
+    mef.cpp
     menu.cpp
     message.cpp
     proc_event.cpp
