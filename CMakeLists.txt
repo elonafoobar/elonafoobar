@@ -66,6 +66,7 @@ set(CORE_SOURCES
     elonacore.cpp
     filesystem.cpp
     fish.cpp
+    food.cpp
     foobar_save.cpp
     fov.cpp
     get_card_info.cpp

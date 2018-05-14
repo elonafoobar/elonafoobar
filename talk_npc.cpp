@@ -4,6 +4,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "elona.hpp"
+#include "food.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
