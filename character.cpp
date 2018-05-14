@@ -2,6 +2,7 @@
 #include <cassert>
 #include <type_traits>
 #include "cat.hpp"
+#include "calc.hpp"
 #include "elona.hpp"
 #include "range.hpp"
 #include "variables.hpp"
@@ -567,5 +568,206 @@ void initialize_character_filters()
     filter_creature(353) = u8"/man/";
 }
 
+void set_character_generation_filter()
+{
+    dbid = 0;
+    if (gdata_current_map == 21)
+    {
+        flt(calcobjlv(10), calcfixlv(2));
+        fltn(u8"sf"s);
+        return;
+    }
+    if (mdata(6) == 3 || mdata(6) == 2)
+    {
+        flt(calcobjlv(10), calcfixlv(2));
+        fltselect = 5;
+        if (gdata_current_dungeon_level == 1)
+        {
+            if (gdata_current_map == 12)
+            {
+                if (rnd(2))
+                {
+                    dbid = 269;
+                    return;
+                }
+            }
+            if (gdata_current_map == 33)
+            {
+                if (rnd(3) == 0)
+                {
+                    dbid = 270;
+                    return;
+                }
+            }
+            if (gdata_current_map == 14)
+            {
+                if (rnd(3) == 0)
+                {
+                    dbid = 271;
+                    return;
+                }
+                else if (rnd(2) == 0)
+                {
+                    dbid = 335;
+                    return;
+                }
+            }
+            if (gdata_current_map == 36)
+            {
+                if (rnd(3) == 0)
+                {
+                    dbid = 272;
+                    return;
+                }
+            }
+            if (gdata_current_map == 5)
+            {
+                if (rnd(2))
+                {
+                    dbid = 273;
+                    return;
+                }
+            }
+            if (gdata_current_map == 15)
+            {
+                if (rnd(3) == 0)
+                {
+                    dbid = 274;
+                    return;
+                }
+            }
+        }
+        if (gdata_current_map == 36)
+        {
+            if (gdata_current_dungeon_level == 3)
+            {
+                dbid = 289;
+            }
+        }
+        if (gdata_current_map == 14)
+        {
+            if (gdata_current_dungeon_level == 3)
+            {
+                dbid = 293;
+            }
+        }
+        if (gdata_current_map == 11)
+        {
+            if (gdata_current_dungeon_level == 3)
+            {
+                dbid = 295;
+            }
+        }
+        return;
+    }
+    if (gdata_current_map == 3)
+    {
+        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+        if (gdata_current_dungeon_level < 4)
+        {
+            if (objlv > 5)
+            {
+                objlv = 5;
+            }
+        }
+        return;
+    }
+    if (gdata_current_map == 42)
+    {
+        flt(calcobjlv(gdata_current_dungeon_level % 50 + 5), calcfixlv(2));
+        return;
+    }
+    if (gdata_current_map == 19)
+    {
+        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+        return;
+    }
+    if (gdata_current_map == 17)
+    {
+        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+        fltn(u8"undead"s);
+        return;
+    }
+    if (gdata_current_map == 16)
+    {
+        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+        fltn(u8"fire"s);
+        return;
+    }
+    if (gdata_current_map == 18)
+    {
+        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+        if (rnd(2) == 0)
+        {
+            fltn(u8"man"s);
+        }
+        return;
+    }
+    if (gdata_current_map == 37)
+    {
+        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+        flttypemajor = 13;
+        return;
+    }
+    if (gdata_current_map == 10 || gdata_current_map == 20)
+    {
+        flt(calcobjlv(20), calcfixlv(2));
+        fltselect = 4;
+        return;
+    }
+    if (gdata_current_map == 13)
+    {
+        if (gdata_executing_immediate_quest_type >= 1000)
+        {
+            flt(calcobjlv(qdata(5, gdata_executing_immediate_quest) + 1),
+                calcfixlv(2));
+        }
+        if (gdata_executing_immediate_quest_type == 1006)
+        {
+            fltn(u8"wild"s);
+            objlv = clamp(objlv / 4, 1, 8);
+        }
+        return;
+    }
+    if (adata(16, gdata_current_map) == 28)
+    {
+        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+        if (rnd(2))
+        {
+            fltn(u8"yeek"s);
+        }
+        return;
+    }
+    if (adata(16, gdata_current_map) == 38)
+    {
+        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+        if (rnd(2))
+        {
+            fltn(u8"mino"s);
+        }
+        return;
+    }
+    if (mdata(6) >= 20)
+    {
+        flt(calcobjlv(gdata_current_dungeon_level), calcfixlv(2));
+        return;
+    }
+    if (adata(16, gdata_current_map) == 101
+        || adata(16, gdata_current_map) == 102)
+    {
+        flt(calcobjlv(100), calcfixlv(2));
+        if (rnd(1))
+        {
+            fltselect = 5;
+        }
+        else
+        {
+            fltselect = 7;
+        }
+        return;
+    }
+    flt(calcobjlv(cdata[0].level), calcfixlv(2));
+    return;
+}
 
 } // namespace elona

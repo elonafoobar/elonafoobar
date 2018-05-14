@@ -46,6 +46,7 @@ set(CORE_SOURCES
     audio.cpp
     autopick.cpp
     buff.cpp
+    building.cpp
     calc.cpp
     card.cpp
     casino.cpp

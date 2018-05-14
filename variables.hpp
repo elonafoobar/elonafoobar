@@ -49,6 +49,15 @@ ELONA_EXTERN(elona_vector1<std::string> matname);
 ELONA_EXTERN(elona_vector2<int> route);
 ELONA_EXTERN(int maxroute);
 
+// building.cpp
+ELONA_EXTERN(int tlocinitx);
+ELONA_EXTERN(int tlocinity);
+ELONA_EXTERN(elona_vector1<int> isethirerole);
+ELONA_EXTERN(elona_vector1<int> isethire);
+ELONA_EXTERN(elona_vector1<int> income);
+ELONA_EXTERN(elona_vector2<std::string> rankn);
+ELONA_EXTERN(int renewmulti);
+
 ELONA_EXTERN(elona_vector1<int> _randcolor);
 ELONA_EXTERN(elona_vector1<int> aniref);
 ELONA_EXTERN(elona_vector1<int> anix);
@@ -1116,19 +1125,7 @@ void initialize_random_nefia_rdtype9();
 void label_1709();
 void initialize_random_nefia_rdtype10();
 void initialize_home_mdata();
-turn_result_t build_new_building();
-void initialize_home_adata();
 turn_result_t show_house_board();
-void label_1723();
-void label_1724();
-void show_shop_log();
-void label_1726();
-void label_1727(bool);
-void label_1728();
-void label_1729(int);
-void label_1730();
-void update_ranch();
-void set_character_generation_filter();
 void monster_respawn();
 turn_result_t exit_map();
 void label_1738();
@@ -1480,6 +1477,7 @@ void windowanime(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
 void windowanimecorner(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
 void cs_listbk();
 void cs_list(bool, const std::string&, int, int, int = 0, int = 0, int = 0);
+int access_character_info();
 
 template <typename T>
 void txt()
