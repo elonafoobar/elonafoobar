@@ -4,10 +4,13 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "debug.hpp"
+#include "event.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "itemgen.hpp"
+#include "map_cell.hpp"
 #include "optional.hpp"
 #include "variables.hpp"
 
@@ -350,7 +353,7 @@ bool grant_special_wishing(const std::string& wish)
         wish == u8"仲間" || wish == u8"friend" || wish == u8"company"
         || wish == u8"ally")
     {
-        evadd(12);
+        event_add(12);
     }
     else if (
         wish == u8"金" || wish == u8"金貨" || wish == u8"富" || wish == u8"財産"

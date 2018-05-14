@@ -5,12 +5,15 @@
 #include "config.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
+#include "enchantment.hpp"
 #include "enums.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
+#include "itemgen.hpp"
 #include "item_db.hpp"
 #include "macro.hpp"
+#include "map_cell.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -1535,7 +1538,7 @@ void label_1933()
                     {
                         break;
                     }
-                    encadd(
+                    enchantment_add(
                         ci,
                         rpdata(50 + cnt * 2, rpid),
                         rpdata(51 + cnt * 2, rpid),

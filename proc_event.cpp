@@ -5,7 +5,11 @@
 #include "character.hpp"
 #include "config.hpp"
 #include "elona.hpp"
+#include "event.hpp"
 #include "item.hpp"
+#include "itemgen.hpp"
+#include "map_cell.hpp"
+#include "mef.hpp"
 #include "random.hpp"
 #include "quest.hpp"
 #include "ui.hpp"
@@ -18,7 +22,7 @@ namespace elona
 
 void proc_event()
 {
-    switch (evid())
+    switch (event_id())
     {
     case 8: quest_all_targets_killed(); break;
     case 14:
@@ -825,7 +829,7 @@ void proc_event()
                     }
                     if (rnd(10) == 0 || f == 1)
                     {
-                        addmef(dx, dy, 5, 24, rnd(15) + 20, 50);
+                        mef_add(dx, dy, 5, 24, rnd(15) + 20, 50);
                     }
                     if (map(dx, dy, 1) != 0)
                     {
@@ -881,7 +885,7 @@ void proc_event()
                 x = rnd(mdata(0));
                 y = rnd(mdata(1));
             }
-            addmef(
+            mef_add(
                 x,
                 y,
                 5,

@@ -2,6 +2,7 @@
 #include "character.hpp"
 #include "class.hpp"
 #include "elona.hpp"
+#include "food.hpp"
 #include "i18n.hpp"
 #include "race.hpp"
 #include "variables.hpp"

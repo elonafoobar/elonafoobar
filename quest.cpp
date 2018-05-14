@@ -3,8 +3,11 @@
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "event.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "itemgen.hpp"
+#include "mef.hpp"
 #include "variables.hpp"
 
 namespace elona
@@ -190,7 +193,7 @@ void quest_check()
             }
             if (p_at_m119 == 0)
             {
-                evadd(8);
+                event_add(8);
             }
             else
             {
@@ -204,7 +207,7 @@ void quest_check()
         {
             if (findchara(qdata(12, gdata_executing_immediate_quest)) == 0)
             {
-                evadd(8);
+                event_add(8);
             }
         }
     }
@@ -1115,7 +1118,7 @@ void quest_failed(int val0)
                                             u8" "s + name(tc) +
                                             u8" pours a bottole of molotov cocktail over "s +
                                             him(tc) + u8"self."s);
-                                    addmef(
+                                    mef_add(
                                         cdata[0].position.x,
                                         cdata[0].position.y,
                                         5,
