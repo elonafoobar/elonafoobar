@@ -28,5 +28,6 @@ void add_damage_popup(
 void clear_damage_popups();
 void show_damage_popups(int inf_ver);
 
+void draw_emo(int = 0, int = 0, int = 0);
 
 } // namespace elona

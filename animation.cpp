@@ -9,6 +9,7 @@
 #include "item.hpp"
 #include "item_db.hpp"
 #include "map.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 using namespace elona;

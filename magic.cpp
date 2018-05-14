@@ -16,6 +16,7 @@
 #include "macro.hpp"
 #include "map.hpp"
 #include "trait.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 #include "wish.hpp"
 
