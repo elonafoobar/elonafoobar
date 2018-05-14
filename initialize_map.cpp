@@ -8,6 +8,8 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "item.hpp"
+#include "map.hpp"
+#include "mapgen.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
