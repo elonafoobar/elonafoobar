@@ -134,6 +134,12 @@ ELONA_EXTERN(elona_vector2<int> encammoref);
 ELONA_EXTERN(elona_vector1<int> isetbook);
 ELONA_EXTERN(elona_vector1<int> moneybox);
 
+// ai.cpp
+ELONA_EXTERN(elona_vector1<int> isetthrowpotionminor);
+ELONA_EXTERN(elona_vector1<int> isetthrowpotionmajor);
+ELONA_EXTERN(elona_vector1<int> isetthrowpotiongreater);
+ELONA_EXTERN(int npccostmp);
+
 ELONA_EXTERN(elona_vector1<int> _randcolor);
 ELONA_EXTERN(elona_vector1<int> aniref);
 ELONA_EXTERN(elona_vector1<int> anix);
@@ -662,7 +668,6 @@ bool actionsp(int, int);
 int addbuff(int = 0, int = 0, int = 0, int = 0);
 int advfavoriteskill(int = 0);
 int advfavoritestat(int = 0);
-int ai_check();
 int breath_list();
 int calcincome(int = 0);
 int calcmagiccontrol(int = 0, int = 0);
@@ -1217,9 +1222,6 @@ void complete_quest();
 void do_play_scene();
 void label_2685();
 turn_result_t npc_turn();
-turn_result_t proc_misc_npc_map_events();
-turn_result_t proc_ally_town_training(bool = false);
-turn_result_t proc_ai_basic();
 void initialize_game();
 bool turn_wrapper();
 turn_result_t pass_turns(bool);
