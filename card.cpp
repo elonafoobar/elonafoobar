@@ -5,6 +5,7 @@
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 #include <iostream>

@@ -8,6 +8,7 @@
 #include "item.hpp"
 #include "item_db.hpp"
 #include "macro.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 

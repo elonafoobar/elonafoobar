@@ -13,6 +13,7 @@
 #include "macro.hpp"
 #include "map.hpp"
 #include "race.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 namespace elona
