@@ -15,6 +15,7 @@
 #include "item_db.hpp"
 #include "macro.hpp"
 #include "map.hpp"
+#include "quest.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
 #include "wish.hpp"
@@ -2963,7 +2964,7 @@ label_2181_internal:
         }
         else
         {
-            int stat = label_2080();
+            int stat = quest_is_return_forbidden();
             if (stat == 1)
             {
                 txt(lang(
@@ -3314,7 +3315,7 @@ label_2181_internal:
         {
             rc = tc;
             new_ally_joins();
-            check_quest();
+            quest_check();
         }
         else if (f == 0)
         {
@@ -3872,7 +3873,7 @@ label_2181_internal:
             relocate_chara(56, tc, 1);
             cdata[tc].enemy_id = cc;
             cdata[tc].is_quest_target() = false;
-            check_quest();
+            quest_check();
         }
         else if (f == 0)
         {
