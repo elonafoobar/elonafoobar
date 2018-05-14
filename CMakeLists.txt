@@ -48,6 +48,8 @@ set(CORE_SOURCES
     buff.cpp
     calc.cpp
     card.cpp
+    casino.cpp
+    casino_card.cpp
     cat.cpp
     cell_draw.cpp
     character.cpp
