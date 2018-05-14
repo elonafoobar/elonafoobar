@@ -1,7 +1,9 @@
 #include "item.hpp"
 #include <iostream>
 #include <type_traits>
+#include "blending.hpp"
 #include "character.hpp"
+#include "crafting.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "item_db.hpp"

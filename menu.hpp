@@ -43,7 +43,7 @@ menu_result label_1969();
 menu_result menu_journal();
 turn_result_t show_quest_board();
 void list_adventurers();
-turn_result_t crafting_menu();
+turn_result_t blending_menu();
 menu_result menu_equipment();
 int show_hire_menu();
 int show_spell_writer_menu();
