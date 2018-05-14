@@ -5,11 +5,13 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "elona.hpp"
+#include "event.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "map.hpp"
+#include "map_cell.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
 
@@ -1490,7 +1492,7 @@ void apply_general_eating_effect()
         }
         if (enc == 37)
         {
-            evadd(18, cc);
+            event_add(18, cc);
             continue;
         }
         if (enc == 40)

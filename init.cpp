@@ -10,6 +10,7 @@
 #include "ctrl_file.hpp"
 #include "crafting.hpp"
 #include "elona.hpp"
+#include "event.hpp"
 #include "filesystem.hpp"
 #include "fish.hpp"
 #include "foobar_save.hpp"
@@ -22,6 +23,7 @@
 #include "macro.hpp"
 #include "main.hpp"
 #include "main_menu.hpp"
+#include "mef.hpp"
 #include "race.hpp"
 #include "range.hpp"
 #include "audio.hpp"
@@ -235,7 +237,7 @@ void initialize_elona()
     SDIM4(promptl, 50, 3, 20);
     SDIM3(description, 1000, 3);
     SDIM1(msgtempprev);
-    DIM3(mef, 9, 200);
+    DIM3(mef, 9, MEF_MAX);
     DIM3(adata, 40, 500);
     DIM3(qdata, 20, 500);
     SDIM3(qname, 40, 500);
@@ -1114,8 +1116,8 @@ void initialize_game()
         }
         create_all_adventurers();
         mode = 2;
-        evadd(2);
-        evadd(24);
+        event_add(2);
+        event_add(24);
         sceneid = 0;
         do_play_scene();
     }

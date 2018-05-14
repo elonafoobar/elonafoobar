@@ -5,6 +5,8 @@
 #include "elona.hpp"
 #include "enums.hpp"
 #include "item.hpp"
+#include "map_cell.hpp"
+#include "mef.hpp"
 #include "variables.hpp"
 
 namespace elona
@@ -65,7 +67,7 @@ void map_initialize()
     }
     DIM4(map, mdata(0), mdata(1), 10);
     DIM3(mapsync, mdata(0), mdata(1));
-    DIM3(mef, 9, 200);
+    DIM3(mef, 9, MEF_MAX);
     map_tileset(mdata(12));
     return;
 }
@@ -1553,7 +1555,7 @@ int map_web(int prm_977, int prm_978, int prm_979)
         {
             if (map(dx_at_m170, dy_at_m170, 6) == 0)
             {
-                addmef(dx_at_m170, dy_at_m170, 1, 11, -1, prm_979);
+                mef_add(dx_at_m170, dy_at_m170, 1, 11, -1, prm_979);
                 return 1;
             }
         }

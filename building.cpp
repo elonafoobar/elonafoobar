@@ -12,6 +12,7 @@
 #include "item_db.hpp"
 #include "macro.hpp"
 #include "map.hpp"
+#include "map_cell.hpp"
 #include "race.hpp"
 #include "ui.hpp"
 #include "variables.hpp"

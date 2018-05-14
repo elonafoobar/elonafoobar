@@ -17,6 +17,7 @@
 #include "debug.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
+#include "event.hpp"
 #include "filesystem.hpp"
 #include "fish.hpp"
 #include "foobar_save.hpp"
@@ -31,7 +32,9 @@
 #include "macro.hpp"
 #include "main.hpp"
 #include "map.hpp"
+#include "map_cell.hpp"
 #include "mapgen.hpp"
+#include "mef.hpp"
 #include "menu.hpp"
 #include "race.hpp"
 #include "random.hpp"
@@ -171,7 +174,6 @@ double r_at_m133;
 elona_vector1<int> ranknorma;
 elona_vector2<int> bdref;
 int f_at_m14 = 0;
-int evproc = 0;
 int plat = 0;
 elona_vector1<std::string> tname;
 elona_vector2<int> encref;
@@ -190,10 +192,6 @@ int lv_at_m77 = 0;
 int exp_at_m77 = 0;
 int growth_at_m77 = 0;
 int lvchange_at_m77 = 0;
-int i_at_m79 = 0;
-int cellchara = 0;
-int cellfeat = 0;
-int tc_at_m81 = 0;
 int pagebk = 0;
 int csprev = 0;
 int pagesaved = 0;
@@ -804,56 +802,6 @@ int findunid(const std::string& prm_285)
         }
     }
     return f_at_m14;
-}
-
-
-
-int evid()
-{
-    if (evnum <= 0)
-    {
-        return -1;
-    }
-    return evlist(evnum - 1);
-}
-
-
-
-int evfind(int prm_288)
-{
-    int f_at_m17 = 0;
-    f_at_m17 = 0;
-    for (int cnt = 0, cnt_end = (evnum); cnt < cnt_end; ++cnt)
-    {
-        if (evlist(cnt) == prm_288)
-        {
-            f_at_m17 = 1;
-        }
-    }
-    return f_at_m17;
-}
-
-
-
-void evadd(int prm_289, int prm_290, int prm_291)
-{
-    if (evproc)
-    {
-        evlist(evnum) = evlist(evnum - 1);
-        evdata1(evnum) = evdata1(evnum - 1);
-        evdata2(evnum) = evdata2(evnum - 1);
-        evlist(evnum - 1) = prm_289;
-        evdata1(evnum - 1) = prm_290;
-        evdata2(evnum - 1) = prm_291;
-    }
-    else
-    {
-        evlist(evnum) = prm_289;
-        evdata1(evnum) = prm_290;
-        evdata2(evnum) = prm_291;
-    }
-    ++evnum;
-    return;
 }
 
 
@@ -1993,19 +1941,7 @@ void initialize_map_chip()
 
 void initialize_item_chip()
 {
-    DIM3(mefsubref, 6, 6);
-    mefsubref(0, 1) = 144;
-    mefsubref(1, 1) = 624;
-    mefsubref(0, 2) = 272;
-    mefsubref(1, 2) = 624;
-    mefsubref(2, 2) = 1;
-    mefsubref(0, 3) = 304;
-    mefsubref(1, 3) = 624;
-    mefsubref(2, 3) = 1;
-    mefsubref(0, 4) = 368;
-    mefsubref(1, 4) = 624;
-    mefsubref(0, 5) = 464;
-    mefsubref(1, 5) = 624;
+    initialize_mef();
     SDIM3(tname, 16, 11);
     tname(1) = lang(u8"日干し岩"s, u8"a dryrock"s);
     tname(2) = lang(u8"畑"s, u8"a field"s);
@@ -4833,274 +4769,6 @@ int getworker(int map_id, int prm_579)
 
 
 
-void removeworker(int map_id)
-{
-    for (int i = 1; i < 16; ++i)
-    {
-        if (cdata[i].current_map == map_id)
-        {
-            cdata[i].current_map = 0;
-        }
-    }
-}
-
-
-
-void delmef(int prm_581)
-{
-    if (mef(0, prm_581) == 7)
-    {
-        evadd(21, mef(2, prm_581), mef(3, prm_581));
-    }
-    map(mef(2, prm_581), mef(3, prm_581), 8) = 0;
-    mef(0, prm_581) = 0;
-    i_at_m79 = 199;
-    for (int cnt = 0, cnt_end = (200 - prm_581); cnt < cnt_end; ++cnt)
-    {
-        if (mef(0, i_at_m79) != 0)
-        {
-            for (int cnt = 0; cnt < 9; ++cnt)
-            {
-                mef(cnt, prm_581) = mef(cnt, i_at_m79);
-            }
-            map(mef(2, i_at_m79), mef(3, i_at_m79), 8) = prm_581 + 1;
-            mef(0, i_at_m79) = 0;
-            break;
-        }
-        --i_at_m79;
-    }
-    return;
-}
-
-
-
-void addmef(
-    int prm_582,
-    int prm_583,
-    int prm_584,
-    int prm_585,
-    int prm_586,
-    int prm_587,
-    int prm_588,
-    int prm_589,
-    int prm_590,
-    int prm_591)
-{
-    int p_at_m79 = 0;
-    p_at_m79 = map(prm_582, prm_583, 0);
-    if (prm_584 == 5)
-    {
-        if (chipm(0, p_at_m79) == 3)
-        {
-            return;
-        }
-    }
-    if (map(prm_582, prm_583, 8) != 0)
-    {
-        i_at_m79 = map(prm_582, prm_583, 8) - 1;
-    }
-    else
-    {
-        i_at_m79 = -1;
-        for (int cnt = 0; cnt < 200; ++cnt)
-        {
-            if (mef(0, cnt) == 0)
-            {
-                i_at_m79 = cnt;
-                break;
-            }
-        }
-        if (i_at_m79 == -1)
-        {
-            i_at_m79 = rnd(200);
-            map(mef(2, i_at_m79), mef(3, i_at_m79), 8) = 0;
-        }
-    }
-    mef(0, i_at_m79) = prm_584;
-    mef(1, i_at_m79) = prm_585 + prm_591 * 10000;
-    mef(2, i_at_m79) = prm_582;
-    mef(3, i_at_m79) = prm_583;
-    mef(4, i_at_m79) = prm_586;
-    mef(5, i_at_m79) = prm_587;
-    mef(6, i_at_m79) = prm_588;
-    mef(7, i_at_m79) = prm_589;
-    mef(8, i_at_m79) = prm_590;
-    map(prm_582, prm_583, 8) = i_at_m79 + 1;
-    return;
-}
-
-
-
-void cell_featset(
-    int prm_592,
-    int prm_593,
-    int prm_594,
-    int prm_595,
-    int prm_596,
-    int prm_597)
-{
-    elona_vector1<int> feat_at_m80;
-    if (prm_594 != -1)
-    {
-        feat_at_m80 = prm_594;
-    }
-    else
-    {
-        feat_at_m80 = map(prm_592, prm_593, 6) % 1000;
-    }
-    if (prm_595 != -1)
-    {
-        feat_at_m80(1) = prm_595;
-    }
-    else
-    {
-        feat_at_m80(1) = map(prm_592, prm_593, 6) / 1000 % 100;
-    }
-    if (prm_596 != -1)
-    {
-        feat_at_m80(2) = prm_596;
-    }
-    else
-    {
-        feat_at_m80(2) = map(prm_592, prm_593, 6) / 100000 % 100;
-    }
-    if (prm_597 != -1)
-    {
-        feat_at_m80(3) = prm_597;
-    }
-    else
-    {
-        feat_at_m80(3) = map(prm_592, prm_593, 6) / 10000000;
-    }
-    map(prm_592, prm_593, 6) = feat_at_m80 + feat_at_m80(1) * 1000
-        + feat_at_m80(2) * 100000 + feat_at_m80(3) * 10000000;
-    return;
-}
-
-
-
-int cell_featread(int prm_598, int prm_599, int)
-{
-    feat(0) = map(prm_598, prm_599, 6) % 1000;
-    feat(1) = map(prm_598, prm_599, 6) / 1000 % 100;
-    feat(2) = map(prm_598, prm_599, 6) / 100000 % 100;
-    feat(3) = map(prm_598, prm_599, 6) / 10000000;
-    return 0;
-}
-
-
-
-void cell_featclear(int prm_601, int prm_602)
-{
-    map(prm_601, prm_602, 6) = 0;
-    return;
-}
-
-
-
-void cell_check(int prm_603, int prm_604)
-{
-    cellaccess = 1;
-    cellchara = -1;
-    cellfeat = -1;
-    if (prm_603 < 0 || prm_603 >= mdata(0) || prm_604 < 0
-        || prm_604 >= mdata(1))
-    {
-        cellaccess = 0;
-        return;
-    }
-    if (map(prm_603, prm_604, 1) != 0)
-    {
-        cellchara = map(prm_603, prm_604, 1) - 1;
-        cellaccess = 0;
-    }
-    if (map(prm_603, prm_604, 6) != 0)
-    {
-        cellfeat = map(prm_603, prm_604, 6) / 1000 % 100;
-        if (chipm(7, map(prm_603, prm_604, 6) % 1000) & 4)
-        {
-            cellaccess = 0;
-        }
-    }
-    if (chipm(7, map(prm_603, prm_604, 0)) & 4)
-    {
-        cellaccess = 0;
-    }
-    return;
-}
-
-
-
-void cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
-{
-    int x2_at_m81 = 0;
-    int y2_at_m81 = 0;
-    if (gdata_mount != 0)
-    {
-        if (gdata_mount == prm_605 || gdata_mount == prm_606)
-        {
-            return;
-        }
-    }
-    tc_at_m81 = prm_606;
-    if (tc_at_m81 == -1)
-    {
-        if (map(prm_607, prm_608, 1) != 0)
-        {
-            tc_at_m81 = map(prm_607, prm_608, 1) - 1;
-        }
-    }
-    if (tc_at_m81 != -1)
-    {
-        map(cdata[prm_605].position.x, cdata[prm_605].position.y, 1) =
-            tc_at_m81 + 1;
-        x2_at_m81 = cdata[tc_at_m81].position.x;
-        y2_at_m81 = cdata[tc_at_m81].position.y;
-        cdata[tc_at_m81].position.x = cdata[prm_605].position.x;
-        cdata[tc_at_m81].position.y = cdata[prm_605].position.y;
-    }
-    else
-    {
-        map(cdata[prm_605].position.x, cdata[prm_605].position.y, 1) = 0;
-        x2_at_m81 = prm_607;
-        y2_at_m81 = prm_608;
-    }
-    map(x2_at_m81, y2_at_m81, 1) = prm_605 + 1;
-    cdata[prm_605].position.x = x2_at_m81;
-    cdata[prm_605].position.y = y2_at_m81;
-    if (prm_605 == 0 || tc_at_m81 == 0)
-    {
-        if (gdata_mount)
-        {
-            cdata[gdata_mount].position.x = cdata[0].position.x;
-            cdata[gdata_mount].position.y = cdata[0].position.y;
-        }
-    }
-    return;
-}
-
-
-
-void cell_movechara(int cc, int x, int y)
-{
-    if (map(x, y, 1) != 0)
-    {
-        if (map(x, y, 1) - 1 == cc)
-        {
-            return;
-        }
-        cell_swap(cc, tc_at_m81);
-    }
-    else
-    {
-        map(cdata[cc].position.x, cdata[cc].position.y, 1) = 0;
-        cdata[cc].position = {x, y};
-        map(x, y, 1) = cc + 1;
-    }
-}
-
-
-
 int route_info(int& prm_612, int& prm_613, int prm_614)
 {
     if (route(0, prm_614 % maxroute) == 1)
@@ -5269,45 +4937,6 @@ void chara_preparepic(int prm_618, int prm_619)
     return;
 }
 
-
-
-int cell_itemlist(int prm_625, int prm_626)
-{
-    listmax = 0;
-    for (const auto& cnt : items(-1))
-    {
-        if (inv[cnt].number > 0)
-        {
-            if (inv[cnt].position.x == prm_625
-                && inv[cnt].position.y == prm_626)
-            {
-                list(0, listmax) = cnt;
-                ++listmax;
-            }
-        }
-    }
-    return rtval;
-}
-
-
-
-// Returns pair of number of items and the last item on the cell.
-std::pair<int, int> cell_itemoncell(const position_t& pos)
-{
-    int number{};
-    int item{};
-
-    for (const auto& ci : items(-1))
-    {
-        if (inv[ci].number > 0 && inv[ci].position == pos)
-        {
-            ++number;
-            item = ci;
-        }
-    }
-
-    return std::make_pair(number, item);
-}
 
 
 
@@ -6767,7 +6396,7 @@ void check_quest()
             }
             if (p_at_m119 == 0)
             {
-                evadd(8);
+                event_add(8);
             }
             else
             {
@@ -6781,7 +6410,7 @@ void check_quest()
         {
             if (findchara(qdata(12, gdata_executing_immediate_quest)) == 0)
             {
-                evadd(8);
+                event_add(8);
             }
         }
     }
@@ -7419,67 +7048,6 @@ void incognitoend()
         }
     }
     return;
-}
-
-
-
-void cell_setchara(int cc, int x, int y)
-{
-    map(x, y, 1) = cc + 1;
-    cdata[cc].position = position_t{x, y};
-}
-
-
-
-void cell_removechara(int x, int y)
-{
-    map(x, y, 1) = 0;
-}
-
-
-
-int cell_findspace(int prm_796, int prm_797, int prm_798)
-{
-    int f_at_m130 = 0;
-    int dy_at_m130 = 0;
-    int dx_at_m130 = 0;
-    f_at_m130 = 0;
-    for (int cnt = 0, cnt_end = (prm_798 * 2 + 1); cnt < cnt_end; ++cnt)
-    {
-        dy_at_m130 = prm_797 + cnt - 1;
-        if (dy_at_m130 < 0 || dy_at_m130 >= mdata(1))
-        {
-            continue;
-        }
-        for (int cnt = 0, cnt_end = (prm_798 * 2 + 1); cnt < cnt_end; ++cnt)
-        {
-            dx_at_m130 = prm_796 + cnt - 1;
-            if (dx_at_m130 < 0 || dx_at_m130 >= mdata(0))
-            {
-                continue;
-            }
-            if (map(dx_at_m130, dy_at_m130, 1) != 0)
-            {
-                continue;
-            }
-            if (chipm(7, map(dx_at_m130, dy_at_m130, 0)) & 4)
-            {
-                continue;
-            }
-            if (chipm(7, map(dx_at_m130, dy_at_m130, 6) % 1000) & 4)
-            {
-                continue;
-            }
-            rtval(0) = dx_at_m130;
-            rtval(1) = dy_at_m130;
-            f_at_m130 = 1;
-        }
-        if (f_at_m130)
-        {
-            break;
-        }
-    }
-    return f_at_m130;
 }
 
 
@@ -9458,7 +9026,7 @@ void mapitem_fire(int prm_842, int prm_843)
         {
             if (map(prm_842, prm_843, 8) == 0)
             {
-                addmef(prm_842, prm_843, 5, 24, rnd(10) + 5, 100, cc);
+                mef_add(prm_842, prm_843, 5, 24, rnd(10) + 5, 100, cc);
             }
         }
         cell_refresh(prm_842, prm_843);
@@ -10182,9 +9750,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         gdata(30) = 0;
         if (cdata[prm_853].hp < 0)
         {
-            if (evid() != -1)
+            if (event_id() != -1)
             {
-                if (evid() != 21)
+                if (event_id() != 21)
                 {
                     cdata[prm_853].hp = 1;
                 }
@@ -11030,7 +10598,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         }
         if (prm_855 == -9 || ele_at_m141 == 50)
         {
-            addmef(
+            mef_add(
                 cdata[prm_853].position.x,
                 cdata[prm_853].position.y,
                 5,
@@ -11097,7 +10665,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 cdata[prm_853].current_map = 0;
                 if (cdata[prm_853].is_escorted() == 1)
                 {
-                    evadd(15, cdata[prm_853].id);
+                    event_add(15, cdata[prm_853].id);
                     cdata[prm_853].state = 0;
                 }
                 if (cdata[prm_853].is_escorted_in_sub_quest() == 1)
@@ -11153,7 +10721,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 {
                     if (cdata[prm_853].id == 2)
                     {
-                        evadd(1);
+                        event_add(1);
                     }
                     if (cdata[prm_853].id == 141)
                     {
@@ -11224,7 +10792,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     }
                     if (cdata[prm_853].id == 318)
                     {
-                        evadd(
+                        event_add(
                             27,
                             cdata[prm_853].position.x,
                             cdata[prm_853].position.y);
@@ -11251,14 +10819,14 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                         if (adata(20, gdata_current_map) == prm_853
                             && cdata[prm_853].is_lord_of_dungeon() == 1)
                         {
-                            evadd(5);
+                            event_add(5);
                         }
                     }
                     if (cdata[prm_853].id == 331)
                     {
                         if (rnd(4) == 0)
                         {
-                            evadd(
+                            event_add(
                                 28,
                                 cdata[prm_853].position.x,
                                 cdata[prm_853].position.y);
@@ -11271,7 +10839,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     if (adata(20, gdata_current_map) == prm_853
                         && cdata[prm_853].is_lord_of_dungeon() == 1)
                     {
-                        evadd(5);
+                        event_add(5);
                     }
                 }
             }
@@ -15531,7 +15099,7 @@ void label_1540()
         traveldone = 0;
         if (gdata_executing_immediate_quest_type == 0)
         {
-            evadd(6);
+            event_add(6);
         }
     }
     if (cdata[rc].character_role == 1)
@@ -17843,6 +17411,19 @@ void get_pregnant()
 
 
 
+void removeworker(int map_id)
+{
+    for (int i = 1; i < 16; ++i)
+    {
+        if (cdata[i].current_map == map_id)
+        {
+            cdata[i].current_map = 0;
+        }
+    }
+}
+
+
+
 turn_result_t show_house_board()
 {
     txtnew();
@@ -18335,7 +17916,7 @@ turn_result_t exit_map()
         {
             gdata_entrance_type = adata(3, gdata_current_map);
         }
-        if (evfind(6))
+        if (event_find(6))
         {
             msgtemp += lang(
                 u8"あなたは家まで運ばれた。"s,
@@ -22084,9 +21665,9 @@ label_1894_internal:
                 efp = 200;
                 magic();
             }
-            else if (evid() == -1)
+            else if (event_id() == -1)
             {
-                evadd(26);
+                event_add(26);
             }
         }
         s = lang(u8"呪いのつぶやき"s, u8"Cursed Whispering"s);
@@ -26090,7 +25671,7 @@ void label_2088()
         adata(10, gdata_current_map) = 10;
         adata(12, gdata_current_map) = 1;
         mdata(8) = 1;
-        evadd(17);
+        event_add(17);
         calccosthire();
     }
     return;
@@ -31007,16 +30588,16 @@ turn_result_t do_throw_command()
             efp = 50 + sdata(111, cc) * 10;
             if (inv[ci].id == 392)
             {
-                addmef(tlocx, tlocy, 3, 19, rnd(15) + 5, efp, cc);
+                mef_add(tlocx, tlocy, 3, 19, rnd(15) + 5, efp, cc);
                 return turn_result_t::turn_end;
             }
             if (inv[ci].id == 577)
             {
-                addmef(tlocx, tlocy, 5, 24, rnd(15) + 25, efp, cc);
+                mef_add(tlocx, tlocy, 5, 24, rnd(15) + 25, efp, cc);
                 mapitem_fire(tlocx, tlocy);
                 return turn_result_t::turn_end;
             }
-            addmef(
+            mef_add(
                 tlocx,
                 tlocy,
                 6,
@@ -32175,36 +31756,10 @@ turn_result_t proc_movement_event()
     }
     if (map(cdata[cc].position.x, cdata[cc].position.y, 8) != 0)
     {
-        i = map(cdata[cc].position.x, cdata[cc].position.y, 8) - 1;
-        if (mef(0, i) == 1)
+        bool turn_ended = mef_proc_from_movement(cc);
+        if (turn_ended)
         {
-            if (cdatan(2, cc) != u8"spider"s)
-            {
-                if (rnd(mef(5, i) + 25) < rnd(sdata(10, cc) + sdata(12, cc) + 1)
-                    || cdata[cc].weight > 100)
-                {
-                    if (is_in_fov(cc))
-                    {
-                        txt(lang(
-                            name(cc) + u8"は蜘蛛の巣を振り払った。"s,
-                            name(cc) + u8" destroy"s + _s(cc)
-                                + u8" the cobweb."s));
-                    }
-                    delmef(i);
-                }
-                else
-                {
-                    mef(5, i) = mef(5, i) * 3 / 4;
-                    if (is_in_fov(cc))
-                    {
-                        txt(lang(
-                            name(cc) + u8"は蜘蛛の巣にひっかかった。"s,
-                            name(cc) + u8" "s + is(cc)
-                                + u8" caught in a cobweb."s));
-                    }
-                    return turn_result_t::turn_end;
-                }
-            }
+            return turn_result_t::turn_end;
         }
     }
     if (mdata(6) == 1)
@@ -33494,7 +33049,7 @@ void open_new_year_gift()
                 {
                     continue;
                 }
-                addmef(tlocx, tlocy, 5, 24, rnd(15) + 20, 50, 0);
+                mef_add(tlocx, tlocy, 5, 24, rnd(15) + 20, 50, 0);
                 mapitem_fire(tlocx, tlocy);
             }
             return;
@@ -33970,20 +33525,10 @@ label_22191_internal:
     }
     if (map(cdata[tc].position.x, cdata[tc].position.y, 8) != 0)
     {
-        i = map(cdata[tc].position.x, cdata[tc].position.y, 8) - 1;
-        if (mef(0, i) == 2)
+        bool return_now = mef_proc_from_physical_attack(tc);
+        if(return_now)
         {
-            if (rnd(2) == 0)
-            {
-                if (is_in_fov(cc))
-                {
-                    txt(lang(
-                        name(cc) + u8"は霧の中の幻影を攻撃した。"s,
-                        name(cc) + u8" attack"s + _s(cc)
-                            + u8" an illusion in the mist."s));
-                }
-                return;
-            }
+            return;
         }
     }
     if (attackrange == 1)
@@ -34602,7 +34147,7 @@ void label_2220()
         {
             if (rnd(66) == 0)
             {
-                evadd(18, cc);
+                event_add(18, cc);
             }
             continue;
         }
@@ -36100,7 +35645,7 @@ turn_result_t do_use_command()
             u8"原子爆弾を設置した。逃げろォー！"s,
             u8"You set up the nuke...now run!!"s));
         snd(58);
-        addmef(cdata[cc].position.x, cdata[cc].position.y, 7, 632, 10, 100, cc);
+        mef_add(cdata[cc].position.x, cdata[cc].position.y, 7, 632, 10, 100, cc);
         goto label_2229_internal;
     case 48:
         if (gdata_current_map != 35 || usermapid == 0)
@@ -36973,12 +36518,12 @@ void speak_to_npc()
         chatval(1) = cdata[tc].id;
         chatval(2) = 0;
     }
-    if (evid() == 2)
+    if (event_id() == 2)
     {
         talk_wrapper(talk_result_t::talk_game_begin);
         return;
     }
-    if (evid() == 16)
+    if (event_id() == 16)
     {
         talk_wrapper(talk_result_t::talk_finish_escort);
         return;
@@ -37197,7 +36742,7 @@ talk_result_t talk_house_visitor()
                     aniy = tlocy;
                     play_animation(15);
                     cc = ccbk;
-                    addmef(tlocx, tlocy, 5, 24, rnd(15) + 20, 50, tc);
+                    mef_add(tlocx, tlocy, 5, 24, rnd(15) + 20, 50, tc);
                     mapitem_fire(tlocx, tlocy);
                 }
             }
@@ -41265,7 +40810,7 @@ void failed_quest(int val0)
                                             u8" "s + name(tc) +
                                             u8" pours a bottole of molotov cocktail over "s +
                                             him(tc) + u8"self."s);
-                                    addmef(
+                                    mef_add(
                                         cdata[0].position.x,
                                         cdata[0].position.y,
                                         5,
@@ -43674,100 +43219,17 @@ turn_result_t turn_begin()
 {
     int turncost = 0;
     int spd = 0;
-    sound = 0;
     ct = 0;
-    for (int cnt = 0; cnt < 200; ++cnt)
-    {
-        if (mef(0, cnt) == 0)
-        {
-            break;
-        }
-        if (mef(0, cnt) == 5)
-        {
-            if (mdata(14) == 2)
-            {
-                if (mdata(6) != 1)
-                {
-                    if (gdata_weather == 3 || gdata_weather == 4)
-                    {
-                        delmef(cnt);
-                        continue;
-                    }
-                    dx = mef(2, cnt);
-                    dy = mef(3, cnt);
-                    i = mef(6, cnt);
-                    p = 0;
-                    if (rnd(35) == 0)
-                    {
-                        p = 3;
-                        if (dist(
-                                dx,
-                                dy,
-                                cdata[0].position.x,
-                                cdata[0].position.y)
-                            < 6)
-                        {
-                            sound = 6;
-                        }
-                    }
-                    for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
-                    {
-                        x = rnd(2) + dx - rnd(2);
-                        y = rnd(2) + dy - rnd(2);
-                        if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
-                        {
-                            f = 0;
-                            continue;
-                        }
-                        if (chipm(7, map(x, y, 0)) & 4)
-                        {
-                            map(x, y, 0) = 37;
-                            cnt = 0 - 1;
-                            continue;
-                        }
-                        addmef(x, y, 5, 24, rnd(15) + 20, 50, i);
-                        mapitem_fire(x, y);
-                    }
-                }
-            }
-        }
-        if (mef(0, cnt) == 7)
-        {
-            txtef(3);
-            txt(lang(u8" *"s, u8"*"s) + mef(4, cnt) + lang(u8"* "s, u8"*"s));
-        }
-        if (mef(4, cnt) != -1)
-        {
-            --mef(4, cnt);
-            if (mef(4, cnt) == 0)
-            {
-                delmef(cnt);
-            }
-        }
-    }
-    if (sound != 0)
-    {
-        snd(sound);
-    }
+    mef_update();
     gspd = cdata[0].current_speed * (100 + cdata[0].speed_percentage) / 100;
     if (gspd < 10)
     {
         gspd = 10;
     }
     turncost = (mdata(9) - cdata[0].turn_cost) / gspd + 1;
-    if (evnum != 0)
+    if (event_was_set())
     {
-        evproc = 1;
-        proc_event();
-        evproc = 0;
-        --evnum;
-        evlist(evnum) = 0;
-        if (chatteleport == 1)
-        {
-            chatteleport = 0;
-            return turn_result_t::exit_map;
-        }
-        return turn_result_t::turn_begin;
+        return event_start_proc(); // TODO avoid evnum side effect
     }
     if (cdata[0].state != 1)
     {
@@ -43832,7 +43294,7 @@ turn_result_t turn_begin()
             if (gdata_left_minutes_of_executing_quest <= 0)
             {
                 gdata_left_minutes_of_executing_quest = 0;
-                evadd(14);
+                event_add(14);
             }
         }
         gdata_second = gdata_second % 60;
@@ -44178,7 +43640,7 @@ void label_2736()
             }
         }
         snd(74);
-        evadd(10);
+        event_add(10);
         gdata_play_days += gdata_hour / 24;
         gdata_day += gdata_hour / 24;
         gdata_hour = gdata_hour % 24;
@@ -44265,7 +43727,6 @@ void label_2736()
 
 turn_result_t pass_one_turn(bool label_2738_flg)
 {
-    int ef = 0;
     if (label_2738_flg)
     {
         while (ct < ELONA_MAX_CHARACTERS)
@@ -44337,7 +43798,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                     u8"Strange power prevents you from returning."s));
                 goto label_2740_internal;
             }
-            if (gdata_is_returning_or_escaping <= 0 && evnum == 0)
+            if (gdata_is_returning_or_escaping <= 0 && !event_was_set())
             {
                 f = 0;
                 for (int cnt = 1; cnt < 16; ++cnt)
@@ -44441,89 +43902,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
     tc = cc;
     if (map(cdata[tc].position.x, cdata[tc].position.y, 8) != 0)
     {
-        ef = map(cdata[tc].position.x, cdata[tc].position.y, 8) - 1;
-        if (mef(0, ef) == 3)
-        {
-            if (cdata[tc].is_floating() == 0 || cdata[tc].gravity > 0)
-            {
-                if (sdata(63, tc) / 50 < 7)
-                {
-                    if (is_in_fov(tc))
-                    {
-                        snd(46);
-                        txt(lang(
-                            name(tc) + u8"は酸に焼かれた。"s,
-                            name(tc) + u8" melt"s + _s(tc) + u8"."s));
-                    }
-                    if (mef(6, ef) == 0)
-                    {
-                        if (tc != 0)
-                        {
-                            hostileaction(0, tc);
-                        }
-                    }
-                    int stat = dmghp(
-                        tc, rnd(mef(5, ef) / 25 + 5) + 1, -15, 63, mef(5, ef));
-                    if (stat == 0)
-                    {
-                        check_kill(mef(6, ef), tc);
-                    }
-                }
-            }
-        }
-        if (mef(0, ef) == 5)
-        {
-            if (is_in_fov(tc))
-            {
-                snd(6);
-                txt(lang(
-                    name(tc) + u8"は燃えた。"s,
-                    name(tc) + u8" "s + is(tc) + u8" burnt."s));
-            }
-            if (mef(6, ef) == 0)
-            {
-                if (tc != 0)
-                {
-                    hostileaction(0, tc);
-                }
-            }
-            int stat =
-                dmghp(tc, rnd(mef(5, ef) / 15 + 5) + 1, -9, 50, mef(5, ef));
-            if (stat == 0)
-            {
-                check_kill(mef(6, ef), tc);
-            }
-        }
-        if (mef(0, ef) == 6)
-        {
-            if (cdata[tc].is_floating() == 0 || cdata[tc].gravity > 0)
-            {
-                if (is_in_fov(tc))
-                {
-                    snd(46);
-                    txt(lang(
-                        name(tc) + u8"は地面の液体を浴びた。"s,
-                        name(tc) + u8" step"s + _s(tc) + u8" in the pool."s));
-                }
-                wet(tc, 25);
-                if (mef(6, ef) == 0)
-                {
-                    if (tc != 0)
-                    {
-                        hostileaction(0, tc);
-                    }
-                }
-                potionspill = 1;
-                efstatus = static_cast<curse_state_t>(mef(8, ef)); // TODO
-                dbid = mef(7, ef);
-                access_item_db(15);
-                if (cdata[tc].state == 0)
-                {
-                    check_kill(mef(6, ef), tc);
-                }
-                delmef(ef);
-            }
-        }
+        mef_proc(tc);
     }
     if (cdata[cc].buffs[0].id != 0)
     {
