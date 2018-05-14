@@ -8,6 +8,7 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "item.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 

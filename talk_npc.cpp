@@ -9,6 +9,7 @@
 #include "item_db.hpp"
 #include "quest.hpp"
 #include "macro.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 

@@ -4,6 +4,7 @@
 #include "elona.hpp"
 #include "fov.hpp"
 #include "map.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 

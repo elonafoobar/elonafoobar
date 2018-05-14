@@ -17,6 +17,7 @@
 #include "map.hpp"
 #include "quest.hpp"
 #include "trait.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 #include "wish.hpp"
 

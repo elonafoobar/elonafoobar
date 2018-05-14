@@ -45,6 +45,7 @@ set(CORE_SOURCES
     animation.cpp
     audio.cpp
     autopick.cpp
+    blending.cpp
     buff.cpp
     building.cpp
     calc.cpp
@@ -54,10 +55,12 @@ set(CORE_SOURCES
     cat.cpp
     cell_draw.cpp
     character.cpp
+    character_making.cpp
     class.cpp
     config.cpp
     ctrl_file.cpp
     ctrl_inventory.cpp
+    crafting.cpp
     debug.cpp
     draw.cpp
     elonacore.cpp
@@ -79,7 +82,9 @@ set(CORE_SOURCES
     log.cpp
     magic.cpp
     main.cpp
+    main_menu.cpp
     map.cpp
+    menu.cpp
     message.cpp
     proc_event.cpp
     quest.cpp
@@ -93,6 +98,7 @@ set(CORE_SOURCES
     tcg.cpp
     text.cpp
     trait.cpp
+    ui.cpp
     variables.cpp
     wish.cpp
     ${PROJECT_BINARY_DIR}/version.cpp
