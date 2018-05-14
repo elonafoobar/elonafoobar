@@ -84,6 +84,7 @@ set(CORE_SOURCES
     main.cpp
     main_menu.cpp
     map.cpp
+    mapgen.cpp
     menu.cpp
     message.cpp
     proc_event.cpp

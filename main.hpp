@@ -16,8 +16,6 @@ extern int prm_818;
 extern int prm_820;
 extern int prm_853;
 
-extern int tmp_at_m172;
-
 extern elona_vector1<int> inhlist;
 
 extern int i_at_m68;
