@@ -58,6 +58,7 @@ set(CORE_SOURCES
     character.cpp
     character_making.cpp
     class.cpp
+    command.cpp
     config.cpp
     ctrl_file.cpp
     ctrl_inventory.cpp

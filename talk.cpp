@@ -10,6 +10,7 @@
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "mef.hpp"
+#include "menu.hpp"
 #include "quest.hpp"
 #include "shop.hpp"
 #include "ui.hpp"

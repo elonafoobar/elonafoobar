@@ -58,4 +58,6 @@ int ctrl_ally();
 void label_2022();
 int change_npc_tone();
 
+menu_result ctrl_inventory();
+
 } // namespace elona

@@ -154,6 +154,7 @@ identification_state_t item_identify(item& ci, identification_state_t level);
 identification_state_t item_identify(item& ci, int power);
 
 range::iota<int> items(int owner);
+std::vector<int> itemlist(int owner, int id);
 void itemname_additional_info();
 
 void item_checkknown(int = 0);

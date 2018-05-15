@@ -21,6 +21,7 @@
 #include "quest.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
+#include "menu.hpp"
 #include "trait.hpp"
 #include "ui.hpp"
 #include "variables.hpp"

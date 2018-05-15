@@ -2,6 +2,7 @@
 #include "config.hpp"
 #include "elona.hpp"
 #include "macro.hpp"
+#include "menu.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 

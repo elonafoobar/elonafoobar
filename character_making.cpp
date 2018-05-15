@@ -8,6 +8,7 @@
 #include "input.hpp"
 #include "macro.hpp"
 #include "main_menu.hpp"
+#include "menu.hpp"
 #include "race.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
