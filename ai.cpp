@@ -3,6 +3,7 @@
 #include "animation.hpp"
 #include "audio.hpp"
 #include "character.hpp"
+#include "character_status.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "itemgen.hpp"
@@ -369,7 +370,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
                             break;
                         }
                     }
-                    refresh_character(cc);
+                    chara_refresh(cc);
                 }
             }
         }

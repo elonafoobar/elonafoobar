@@ -395,7 +395,7 @@ void map_placecharaonentrance(int prm_936, int prm_937, int prm_938)
     cxinit = x_at_m167;
     cyinit = y_at_m167;
     rc = prm_936;
-    place_character();
+    chara_place();
     return;
 }
 
@@ -415,7 +415,7 @@ void map_placearena(int prm_939, int prm_940)
         cxinit = x;
         cyinit = y;
         rc = prm_939;
-        place_character();
+        chara_place();
         if (prm_940 == 0)
         {
             if (cdata[prm_939].position.x >= 13
@@ -480,7 +480,7 @@ void map_placeplayer()
                 cxinit = cdata[cnt].initial_position.x;
                 cyinit = cdata[cnt].initial_position.y;
                 rc = cnt;
-                place_character();
+                chara_place();
                 continue;
             }
         }
@@ -2052,8 +2052,8 @@ void generate_random_nefia()
                 flttypemajor = fltsetdungeon();
                 itemcreate(-1, 0, rnd(rw) + rx, rnd(rh) + ry, 0);
             }
-            set_character_generation_filter();
-            int stat = characreate(-1, 0, rnd(rw) + rx, rnd(rh) + ry);
+            chara_set_generation_filter();
+            int stat = chara_create(-1, 0, rnd(rw) + rx, rnd(rh) + ry);
             if (stat == 1)
             {
                 if (gdata_current_dungeon_level > 3)
@@ -2069,7 +2069,7 @@ void generate_random_nefia()
                             {
                                 flt(cdata[rc].level, calcfixlv(2));
                                 flttypemajor = creaturepack;
-                                characreate(-1, 0, rnd(rw) + rx, rnd(rh) + ry);
+                                chara_create(-1, 0, rnd(rw) + rx, rnd(rh) + ry);
                             }
                             break;
                         }
@@ -2100,8 +2100,8 @@ void generate_random_nefia()
                              ++cnt)
                         {
                             rdx3 = cnt;
-                            set_character_generation_filter();
-                            characreate(-1, 0, rdx3, rdy3);
+                            chara_set_generation_filter();
+                            chara_create(-1, 0, rdx3, rdy3);
                         }
                     }
                     if (rdtype != 2)
@@ -2146,8 +2146,8 @@ void generate_random_nefia()
     }
     for (int cnt = 0, cnt_end = (mobdensity); cnt < cnt_end; ++cnt)
     {
-        set_character_generation_filter();
-        characreate(-1, 0, -3, 0);
+        chara_set_generation_filter();
+        chara_create(-1, 0, -3, 0);
     }
     for (int cnt = 0, cnt_end = (itemdensity); cnt < cnt_end; ++cnt)
     {
@@ -2185,7 +2185,7 @@ void generate_random_nefia()
         if (rnd(15 + gdata_kill_count_of_little_sister * 2) == 0)
         {
             flt();
-            characreate(-1, 318, -3, 0);
+            chara_create(-1, 318, -3, 0);
         }
     }
     if (adata(16, gdata_current_map) == 3)
@@ -2233,8 +2233,8 @@ void initialize_random_nefia_rdtype6()
     mdata(10) = 0;
     for (int cnt = 0, cnt_end = (10 + rnd(6)); cnt < cnt_end; ++cnt)
     {
-        set_character_generation_filter();
-        int stat = characreate(-1, 0, -3, 0);
+        chara_set_generation_filter();
+        int stat = chara_create(-1, 0, -3, 0);
         if (stat != 0)
         {
             cdata[rc].relationship = -3;
@@ -2364,8 +2364,8 @@ int initialize_quest_map_crop()
     mdata(10) = 15;
     for (int cnt = 0; cnt < 30; ++cnt)
     {
-        set_character_generation_filter();
-        characreate(-1, 0, -3, 0);
+        chara_set_generation_filter();
+        chara_create(-1, 0, -3, 0);
     }
     return 1;
 }
@@ -2900,7 +2900,7 @@ int initialize_quest_map_party()
             flt(roomdiff * 5, calcfixlv(2));
             initlv = roomdiff * 7 + rnd(5);
             dbid = list(rnd(3), roomdiff);
-            characreate(-1, dbid, rnd(rw) + rx, rnd(rh) + ry);
+            chara_create(-1, dbid, rnd(rw) + rx, rnd(rh) + ry);
             cdata[rc].character_role = 3;
             cdata[rc].relationship = -1;
             cdata[rc].original_relationship = -1;
@@ -2933,29 +2933,29 @@ int initialize_quest_map_party()
         itemcreate(-1, p(rnd(9)), x, y, 0);
     }
     flt();
-    characreate(-1, 29, -3, 0);
+    chara_create(-1, 29, -3, 0);
     cdata[rc].character_role = 3;
     cdata[rc].relationship = -1;
     cdata[rc].original_relationship = -1;
     flt();
-    characreate(-1, 231, -3, 0);
+    chara_create(-1, 231, -3, 0);
     cdata[rc].character_role = 3;
     cdata[rc].relationship = -1;
     cdata[rc].original_relationship = -1;
     flt();
-    characreate(-1, 31, -3, 0);
+    chara_create(-1, 31, -3, 0);
     cdata[rc].character_role = 3;
     cdata[rc].relationship = -1;
     cdata[rc].original_relationship = -1;
     flt();
-    characreate(-1, 247, -3, 0);
+    chara_create(-1, 247, -3, 0);
     cdata[rc].character_role = 3;
     cdata[rc].relationship = -1;
     cdata[rc].original_relationship = -1;
     if (rnd(10) == 0)
     {
         flt();
-        characreate(-1, 34, -3, 0);
+        chara_create(-1, 34, -3, 0);
         cdata[rc].character_role = 3;
         cdata[rc].relationship = -1;
         cdata[rc].original_relationship = -1;
@@ -2963,7 +2963,7 @@ int initialize_quest_map_party()
     if (rnd(10) == 0)
     {
         flt();
-        characreate(-1, 28, -3, 0);
+        chara_create(-1, 28, -3, 0);
         cdata[rc].character_role = 3;
         cdata[rc].relationship = -1;
         cdata[rc].original_relationship = -1;
@@ -2971,7 +2971,7 @@ int initialize_quest_map_party()
     if (rnd(10) == 0)
     {
         flt();
-        characreate(-1, 223, -3, 0);
+        chara_create(-1, 223, -3, 0);
         cdata[rc].character_role = 3;
         cdata[rc].relationship = -1;
         cdata[rc].original_relationship = -1;
@@ -2979,7 +2979,7 @@ int initialize_quest_map_party()
     if (rnd(10) == 0)
     {
         flt();
-        characreate(-1, 252, -3, 0);
+        chara_create(-1, 252, -3, 0);
         cdata[rc].character_role = 3;
         cdata[rc].relationship = -1;
         cdata[rc].original_relationship = -1;
@@ -2987,7 +2987,7 @@ int initialize_quest_map_party()
     if (rnd(10) == 0)
     {
         flt();
-        characreate(-1, 322, -3, 0);
+        chara_create(-1, 322, -3, 0);
         cdata[rc].character_role = 3;
         cdata[rc].relationship = -1;
         cdata[rc].original_relationship = -1;
@@ -3021,7 +3021,7 @@ void initialize_quest_map_town()
         flt();
         initlv = qdata(5, gdata_executing_immediate_quest);
         fixlv = 5;
-        characreate(-1, qdata(12, gdata_executing_immediate_quest), -3, 0);
+        chara_create(-1, qdata(12, gdata_executing_immediate_quest), -3, 0);
         cdata[rc].relationship = -3;
         cdata[rc].original_relationship = -3;
         qdata(13, gdata_executing_immediate_quest) = rc;
@@ -3033,7 +3033,7 @@ void initialize_quest_map_town()
             flt();
             initlv = qdata(5, gdata_executing_immediate_quest) * 3 / 2;
             fixlv = 1;
-            characreate(-1, qdata(12, gdata_executing_immediate_quest), -3, 0);
+            chara_create(-1, qdata(12, gdata_executing_immediate_quest), -3, 0);
             cdata[rc].relationship = -3;
             cdata[rc].original_relationship = -3;
         }
@@ -3830,7 +3830,7 @@ void map_initcustom(const std::string& prm_934)
         if (cmapdata(4, cnt) == 1)
         {
             flt();
-            characreate(
+            chara_create(
                 -1, cmapdata(0, cnt), cmapdata(1, cnt), cmapdata(2, cnt));
         }
         if (cmapdata(4, cnt) == 2)

@@ -42,6 +42,7 @@ set(CORE_SOURCES
     ability.cpp
     access_character_info.cpp
     access_item_db.cpp
+    adventurer.cpp
     ai.cpp
     animation.cpp
     audio.cpp
@@ -57,6 +58,7 @@ set(CORE_SOURCES
     cell_draw.cpp
     character.cpp
     character_making.cpp
+    character_status.cpp
     class.cpp
     config.cpp
     ctrl_file.cpp
@@ -66,6 +68,7 @@ set(CORE_SOURCES
     draw.cpp
     elonacore.cpp
     enchantment.cpp
+    equipment.cpp
     event.cpp
     filesystem.cpp
     fish.cpp

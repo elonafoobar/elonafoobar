@@ -3,6 +3,7 @@
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "character_status.hpp"
 #include "config.hpp"
 #include "elona.hpp"
 #include "event.hpp"
@@ -88,7 +89,7 @@ void proc_event()
     case 1:
         conquer_lesimas();
         flt();
-        characreate(-1, 23, cdata[0].position.x, cdata[0].position.y);
+        chara_create(-1, 23, cdata[0].position.x, cdata[0].position.y);
         break;
     case 27:
         if (gdata_current_map == 35)
@@ -96,7 +97,7 @@ void proc_event()
             break;
         }
         flt();
-        characreate(
+        chara_create(
             -1,
             319,
             evdata1(evnum - (evnum != 0) * 1),
@@ -115,14 +116,14 @@ void proc_event()
         msg_halt();
         play_animation(21);
         flt();
-        characreate(
+        chara_create(
             -1,
             336,
             evdata1(evnum - (evnum != 0) * 1),
             evdata2(evnum - (evnum != 0) * 1));
         break;
     case 2:
-        tc = findchara(34);
+        tc = chara_find(34);
         speak_to_npc();
         break;
     case 24:
@@ -130,15 +131,15 @@ void proc_event()
         initialize_economy();
         break;
     case 3:
-        tc = findchara(2);
+        tc = chara_find(2);
         speak_to_npc();
         break;
     case 11:
-        tc = findchara(1);
+        tc = chara_find(1);
         speak_to_npc();
         break;
     case 23:
-        tc = findchara(302);
+        tc = chara_find(302);
         speak_to_npc();
         gdata(171) = 23;
         break;
@@ -182,7 +183,7 @@ void proc_event()
         flt();
         initlv = cdata[0].level * 2 / 3 + 1;
         novoidlv = 1;
-        characreate(-1, p, cdata[cc].position.x, cdata[cc].position.y);
+        chara_create(-1, p, cdata[cc].position.x, cdata[cc].position.y);
         new_ally_joins();
         break;
     case 13:
@@ -224,7 +225,7 @@ void proc_event()
         flt();
         fixlv = 4;
         initlv = gdata_current_dungeon_level / 4;
-        characreate(-1, c, -3, 0);
+        chara_create(-1, c, -3, 0);
         cdata[rc].is_lord_of_dungeon() = true;
         cdata[rc].relationship = -3;
         cdata[rc].original_relationship = -3;
@@ -242,10 +243,10 @@ void proc_event()
     case 4:
         while (1)
         {
-            set_character_generation_filter();
+            chara_set_generation_filter();
             fixlv = 4;
             initlv = gdata_current_dungeon_level + rnd(5);
-            int stat = characreate(-1, 0, -3, 0);
+            int stat = chara_create(-1, 0, -3, 0);
             if (stat == 0)
             {
                 continue;
@@ -369,7 +370,7 @@ void proc_event()
         txt(lang(u8"金貨を幾らか失った…"s, u8"You lost some money."s));
         cdata[0].gold -= cdata[0].gold / 3;
         decfame(0, 10);
-        refresh_character(0);
+        chara_refresh(0);
         autosave = 1 * (gdata_current_map != 35);
         break;
     case 20:
@@ -384,7 +385,7 @@ void proc_event()
             cdata[evdata1(evnum - (evnum != 0) * 1)].position.y,
             4);
         gdata_pael_and_her_mom = 1001;
-        tc = findchara(221);
+        tc = chara_find(221);
         if (tc != 0)
         {
             if (cdata[tc].state == 1)
@@ -411,7 +412,7 @@ void proc_event()
         break;
     case 25:
         --gdata_number_of_waiting_guests;
-        if (get_freechara() == -1)
+        if (chara_get_free_slot() == -1)
         {
             txt(lang(
                 u8"ゲストは行方不明になった。"s, u8"The guest lost his way."s));
@@ -427,37 +428,37 @@ void proc_event()
                 {
                     if (rnd(3))
                     {
-                        characreate(-1, 333, -3, 0);
+                        chara_create(-1, 333, -3, 0);
                         cdata[rc].character_role = 2005;
                         break;
                     }
                 }
                 if (rnd(10) == 0)
                 {
-                    characreate(-1, 334, -3, 0);
+                    chara_create(-1, 334, -3, 0);
                     cdata[rc].character_role = 2006;
                     break;
                 }
                 if (rnd(10) == 0)
                 {
-                    characreate(-1, 1, -3, 0);
+                    chara_create(-1, 1, -3, 0);
                     cdata[rc].character_role = 2003;
                     cdata[rc].shop_rank = clamp(cdata[0].fame / 100, 20, 100);
                     break;
                 }
                 if (rnd(4) == 0)
                 {
-                    characreate(-1, 9, -3, 0);
+                    chara_create(-1, 9, -3, 0);
                     cdata[rc].character_role = 2000;
                     break;
                 }
                 if (rnd(4) == 0)
                 {
-                    characreate(-1, 174, -3, 0);
+                    chara_create(-1, 174, -3, 0);
                     cdata[rc].character_role = 2001;
                     break;
                 }
-                characreate(-1, 16, -3, 0);
+                chara_create(-1, 16, -3, 0);
                 cdata[rc].character_role = 2002;
                 break;
             }
@@ -519,7 +520,7 @@ void proc_event()
             rc = tc;
             cxinit = cdata[0].position.x;
             cyinit = cdata[0].position.y;
-            place_character();
+            chara_place();
         }
         cdata[tc].visited_just_now() = true;
         i = 0;
@@ -640,7 +641,7 @@ void proc_event()
                     || cdata[cc].current_map == gdata_current_map)
                 {
                     cdata[cc].emotion_icon = 2006;
-                    int stat = customtalk(cc, 104);
+                    int stat = chara_custom_talk(cc, 104);
                     if (stat == 0)
                     {
                         ++i;
@@ -904,7 +905,7 @@ void proc_event()
                 {
                     fltnrace = u8"giant"s;
                 }
-                int stat = characreate(-1, 0, x, y);
+                int stat = chara_create(-1, 0, x, y);
                 if (stat != 0)
                 {
                     cdata[rc].is_temporary() = true;
@@ -951,7 +952,7 @@ void proc_event()
         {
             flt();
             initlv = cdata[0].level;
-            characreate(-1, 215, cdata[0].position.x, cdata[0].position.y);
+            chara_create(-1, 215, cdata[0].position.x, cdata[0].position.y);
         }
         break;
     }

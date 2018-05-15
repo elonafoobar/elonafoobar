@@ -4,6 +4,7 @@
 #include "buff.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "character_status.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"
 #include "debug.hpp"
@@ -731,7 +732,7 @@ int magic()
                                 name(tc) + u8"は弱くなった。"s,
                                 name(tc) + u8" "s + is(tc) + u8" weakened."s));
                         }
-                        refresh_character(tc);
+                        chara_refresh(tc);
                     }
                 }
                 goto the_end;
@@ -800,7 +801,7 @@ int magic()
                     {
                         dbid = 176;
                     }
-                    characreate(
+                    chara_create(
                         -1, dbid, cdata[tc].position.x, cdata[tc].position.y);
                     if (efid != 643)
                     {
@@ -1277,7 +1278,7 @@ label_2181_internal:
                     u8"This love potion is cursed. "s + name(tc) + u8" look"s
                         + _s(tc) + u8" at "s + name(0)
                         + u8" with a contemptuous glance."s));
-                modimp(tc, -15);
+                chara_mod_impression(tc, -15);
             }
             obvious = 0;
             break;
@@ -1288,7 +1289,7 @@ label_2181_internal:
             txt(lang(
                 name(tc) + u8"は恋の予感がした。"s,
                 name(tc) + u8" sense"s + _s(tc) + u8" a sigh of love,"s));
-            modimp(tc, clamp(efp / 15, 0, 15));
+            chara_mod_impression(tc, clamp(efp / 15, 0, 15));
             dmgcon(tc, 7, 100);
             lovemiracle(tc);
             break;
@@ -1304,7 +1305,7 @@ label_2181_internal:
                 name(tc) + u8" give"s + _s(tc) + u8" "s + name(0)
                     + u8" the eye."s));
             lovemiracle(tc);
-            modimp(tc, clamp(efp / 4, 0, 25));
+            chara_mod_impression(tc, clamp(efp / 4, 0, 25));
         }
         dmgcon(tc, 7, 500);
         break;
@@ -2058,7 +2059,7 @@ label_2181_internal:
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
         }
-        refresh_character(0);
+        chara_refresh(0);
         break;
     case 1121:
         if (tc != 0)
@@ -2125,7 +2126,7 @@ label_2181_internal:
             txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
             obvious = 0;
         }
-        refresh_character(0);
+        chara_refresh(0);
         break;
     case 411:
         if (cc != 0)
@@ -2155,7 +2156,7 @@ label_2181_internal:
             {
                 flt(calcobjlv(cdata[0].level), calcfixlv(3));
                 fltn(u8"undead"s);
-                characreate(-1, 0, cdata[0].position.x, cdata[0].position.y);
+                chara_create(-1, 0, cdata[0].position.x, cdata[0].position.y);
             }
             obvious = 0;
             break;
@@ -2185,7 +2186,7 @@ label_2181_internal:
         label_1538();
         cxinit = cdata[cc].position.x;
         cyinit = cdata[cc].position.y;
-        place_character();
+        chara_place();
         cdata[rc].current_map = 0;
         txtef(5);
         txt(cnven(cdatan(0, rc))
@@ -2199,7 +2200,7 @@ label_2181_internal:
         cdata[rc].emotion_icon = 317;
         if (cc == 0)
         {
-            modimp(rc, 15);
+            chara_mod_impression(rc, 15);
             if (rc >= 16)
             {
                 modify_karma(0, 2);
@@ -2321,7 +2322,7 @@ label_2181_internal:
         {
             animeload(10, tc);
         }
-        refresh_character(tc);
+        chara_refresh(tc);
         break;
     case 413:
         if (tc >= 16)
@@ -2484,7 +2485,7 @@ label_2181_internal:
             }
             animeload(8, tc);
         }
-        refresh_character(tc);
+        chara_refresh(tc);
         break;
     case 1105:
         for (int cnt = 0;; ++cnt)
@@ -2535,7 +2536,7 @@ label_2181_internal:
                 }
             }
         }
-        refresh_character(tc);
+        chara_refresh(tc);
         autosave = 1 * (gdata_current_map != 35);
         break;
     case 1107:
@@ -2593,7 +2594,7 @@ label_2181_internal:
                 6,
                 1000);
         }
-        refresh_character(tc);
+        chara_refresh(tc);
         break;
     case 1119:
         for (int cnt = 0, cnt_end = (1 + (efstatus == curse_state_t::blessed));
@@ -2662,14 +2663,14 @@ label_2181_internal:
                 }
             }
         }
-        refresh_character(tc);
+        chara_refresh(tc);
         autosave = 1 * (gdata_current_map != 35);
         break;
     case 1106:
         i = rnd(10) + 10;
         skillexp(i, tc, efstatusfix(-2000, -2000, -1000, -250));
         play_animation(6);
-        refresh_character(tc);
+        chara_refresh(tc);
         break;
     case 1139:
         txt(lang(
@@ -2683,7 +2684,7 @@ label_2181_internal:
             txtef(2);
             txt(lang(u8"あつつ！"s, u8"It really burns!"s));
         }
-        refresh_character(tc);
+        chara_refresh(tc);
         break;
     case 1113:
         if (efstatus == curse_state_t::blessed)
@@ -2946,7 +2947,7 @@ label_2181_internal:
                     sdata.get(p(cnt), tc).original_level / 10 + 5;
             }
         }
-        refresh_character(tc);
+        chara_refresh(tc);
         break;
     case 441:
         what_do_you_wish_for();
@@ -3205,7 +3206,7 @@ label_2181_internal:
                     name(tc) + u8"の"s + valn + u8"は黒く輝いた。"s,
                     name(tc) + your(tc) + u8" "s + valn + u8" glows black."s));
             }
-            refresh_character(tc);
+            chara_refresh(tc);
             snd(117);
             animeload(14, tc);
             item_stack(tc, i, 1);
@@ -3240,7 +3241,7 @@ label_2181_internal:
         {
             snd(38);
         }
-        refresh_character(tc);
+        chara_refresh(tc);
         break;
     case 1138:
     case 1123:
@@ -3279,7 +3280,7 @@ label_2181_internal:
             p = 211;
         }
         novoidlv = 1;
-        characreate(56, p, -3, 0);
+        chara_create(56, p, -3, 0);
         rc = 56;
         new_ally_joins();
         break;
@@ -3520,7 +3521,7 @@ label_2181_internal:
                 cdata_body_part(cc, equip) / 10000 * 10000 + ci + 1;
             inv[ci].body_part = equip;
         }
-        refresh_character(cc);
+        chara_refresh(cc);
         fixmaterial = 0;
         objfix = 0;
         ci = efcibk;
@@ -3607,7 +3608,7 @@ label_2181_internal:
                 cdata_body_part(cc, equip) / 10000 * 10000 + ci + 1;
             inv[ci].body_part = equip;
         }
-        refresh_character(cc);
+        chara_refresh(cc);
         fixmaterial = 0;
         objfix = 0;
         break;
@@ -3670,7 +3671,7 @@ label_2181_internal:
                         itemname(ci) + u8" resist"s + _s2(inv[ci].number)
                             + u8"."s));
                 }
-                refresh_character(cc);
+                chara_refresh(cc);
             }
             else
             {
@@ -3874,8 +3875,8 @@ label_2181_internal:
                 name(tc) + u8"は変化した。"s,
                 name(tc) + u8" change"s + _s(tc) + u8"."s));
             flt(calcobjlv(cdata[tc].level + 3), 2);
-            characreate(56, 0, -3, 0);
-            relocate_chara(56, tc, 1);
+            chara_create(56, 0, -3, 0);
+            chara_relocate(56, tc, 1);
             cdata[tc].enemy_id = cc;
             cdata[tc].is_quest_target() = false;
             check_quest();
@@ -3958,7 +3959,7 @@ label_2181_internal:
                 obvious = 0;
             }
         }
-        refresh_character(cc);
+        chara_refresh(cc);
         break;
     case 1132:
         if (cc != 0)

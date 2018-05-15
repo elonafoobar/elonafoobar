@@ -3,10 +3,12 @@
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "character_status.hpp"
 #include "class.hpp"
 #include "config.hpp"
 #include "draw.hpp"
 #include "enchantment.hpp"
+#include "equipment.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
@@ -3008,7 +3010,7 @@ label_2052_internal:
                 goto label_2051_internal;
             }
             unequip_item(cc);
-            refresh_character(cc);
+            chara_refresh(cc);
             snd(13);
             txtnew();
             txt(lang(
@@ -4525,7 +4527,7 @@ label_1970_internal:
                     cs = -10000 + tid;
                     snd(61);
                     ++trait(tid);
-                    refresh_character(tc);
+                    chara_refresh(tc);
                     if (mode == 1)
                     {
                         if (gdata_acquirable_feat_count == 0)
@@ -6969,7 +6971,7 @@ void label_1964()
     snd(26);
     buff = "";
     notesel(buff);
-    del_chara(56);
+    chara_delete(56);
     cdata[56].piety_point = cdata[0].piety_point;
     cdata[56].god_id = cdata[0].god_id;
     for (int cnt = 0; cnt < 600; ++cnt)
@@ -6988,7 +6990,7 @@ void label_1964()
         }
     }
     refreshmode = 1;
-    refresh_character(0);
+    chara_refresh(0);
     refreshmode = 0;
     buff += u8"\n"s;
     buff += u8"<title1>◆ 特徴と特殊状態による能力の恩恵<def>\n"s;

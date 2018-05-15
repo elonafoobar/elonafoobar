@@ -5,6 +5,7 @@
 #include "config.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
+#include "equipment.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
@@ -1492,7 +1493,7 @@ label_2061_internal:
                 }
             }
             equip_item(cc);
-            refresh_character(cc);
+            chara_refresh(cc);
             screenupdate = -1;
             update_screen();
             snd(13);
@@ -1593,7 +1594,7 @@ label_2061_internal:
                     u8"「え、これを"s + _ore(3) + u8"にくれるの"s + _ka(1) + ""s
                         + _thanks(2) + u8"」"s,
                     u8"\"Thank you!\""s));
-                modimp(tc, giftvalue(inv[ci].param4));
+                chara_mod_impression(tc, giftvalue(inv[ci].param4));
                 cdata[tc].emotion_icon = 317;
                 update_screen();
                 result.turn_result = turn_result_t::pc_turn_user_error;
@@ -1722,7 +1723,7 @@ label_2061_internal:
                     txt(lang(
                         name(tc) + u8"は顔を赤らめた。"s,
                         name(tc) + u8" blushes."s));
-                    modimp(tc, 15);
+                    chara_mod_impression(tc, 15);
                     cdata[tc].emotion_icon = 317;
                 }
                 if (inv[ci].id == 620)
@@ -1743,7 +1744,7 @@ label_2061_internal:
                         lang(
                             name(tc) + u8"「ガード！ガード！ガード！」"s,
                             u8"\"Guard! Guard! Guard!\""s));
-                    modimp(tc, -20);
+                    chara_mod_impression(tc, -20);
                     cdata[tc].emotion_icon = 318;
                     --inv[ci].number;
                     refresh_burden_state();
@@ -1755,13 +1756,13 @@ label_2061_internal:
                 item_stack(tc, ti, 1);
                 ci = ti;
                 rc = tc;
-                set_item_which_will_be_used();
+                chara_set_item_which_will_be_used();
                 wear_most_valuable_equipment_for_all_body_parts();
                 if (tc < 16)
                 {
                     create_pcpic(tc, true);
                 }
-                refresh_character(tc);
+                chara_refresh(tc);
                 refresh_burden_state();
                 if (invally == 1)
                 {
@@ -1914,7 +1915,7 @@ label_2061_internal:
                 supply_new_equipment();
             }
             inv_getfreeid_force();
-            refresh_character(tc);
+            chara_refresh(tc);
             refresh_burden_state();
             invsubroutine = 0;
             result.succeeded = true;
@@ -2067,7 +2068,7 @@ label_2061_internal:
                     name(tc) + u8" swallows "s + itemname(ci, 1)
                         + u8" angrily."s));
                 snd(65);
-                modimp(tc, -20);
+                chara_mod_impression(tc, -20);
                 cdata[tc].emotion_icon = 318;
                 --inv[ci].number;
                 goto label_20591;
@@ -2104,7 +2105,7 @@ label_2061_internal:
             {
                 create_pcpic(tc, true);
             }
-            refresh_character(tc);
+            chara_refresh(tc);
             refresh_burden_state();
             goto label_20591;
         }

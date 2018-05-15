@@ -121,7 +121,7 @@ main_menu_result_t character_making_select_race()
             }
             cs_bk = cs;
             pos(wx + 200, wy + 66);
-            del_chara(0);
+            chara_delete(0);
             access_race_info(3, listn(1, page * pagesize + cs));
             access_race_info(11, listn(1, page * pagesize + cs));
             show_race_or_class_info(0, 0);
@@ -333,7 +333,7 @@ main_menu_result_t character_making_select_class(bool advanced_to_next_menu)
             }
             cs_bk = cs;
             pos(wx + 200, wy + 66);
-            del_chara(0);
+            chara_delete(0);
             access_class_info(3, listn(1, cs));
             access_class_info(11, listn(1, cs));
             show_race_or_class_info(0, 1);
@@ -395,7 +395,7 @@ main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
                 pos(20, windowh - 36);
                 mes(u8"Gene from "s + geneuse);
             }
-            del_chara(0);
+            chara_delete(0);
             access_race_info(3, cmrace);
             access_class_info(3, cmclass);
             cdata[rc].level = 1;
@@ -723,7 +723,7 @@ main_menu_result_t character_making_final_phase()
                 u8"決定ｷｰを押すことで、生い立ちをリロールできる。"s,
                 u8"Hit the enter key to reroll your personal history."s);
             draw_caption();
-            del_chara(0);
+            chara_delete(0);
             access_race_info(3, cmrace);
             access_class_info(3, cmclass);
             cdatan(0, rc) = u8"????"s;

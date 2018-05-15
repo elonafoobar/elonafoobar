@@ -2,6 +2,7 @@
 #include "ability.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
+#include "character.hpp"
 #include "draw.hpp"
 #include "config.hpp"
 #include "item.hpp"
@@ -1283,7 +1284,7 @@ label_1857_internal:
             u8"You producted "s + itemname(ci, 1) + u8"."s));
         r2 = matuse;
         label_1472(matval);
-        refresh_character(0);
+        chara_refresh(0);
         render_hud();
         page_save();
         goto label_18551_internal;

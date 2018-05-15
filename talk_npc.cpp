@@ -1,8 +1,10 @@
 #include "talk.hpp"
 #include "ability.hpp"
+#include "adventurer.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "character_status.hpp"
 #include "elona.hpp"
 #include "event.hpp"
 #include "food.hpp"
@@ -71,7 +73,7 @@ talk_result_t talk_npc()
     if (buff == ""s)
     {
         get_npc_talk();
-        int stat = customtalk(tc, 106);
+        int stat = chara_custom_talk(tc, 106);
         if (stat)
         {
             replace_tags_in_quest_board();
@@ -88,11 +90,11 @@ talk_result_t talk_npc()
                         {
                             if (rnd(sdata(17, 0) + 1) > 10)
                             {
-                                modimp(tc, rnd(3));
+                                chara_mod_impression(tc, rnd(3));
                             }
                             else
                             {
-                                modimp(tc, rnd(3) * -1);
+                                chara_mod_impression(tc, rnd(3) * -1);
                             }
                         }
                     }
@@ -146,7 +148,7 @@ talk_result_t talk_npc()
     }
     if (cdata[tc].character_role == 17)
     {
-        if (get_freeally() != 0)
+        if (chara_get_free_slot_ally() != 0)
         {
             ELONA_APPEND_RESPONSE(
                 36, lang(u8"奴隷を買う"s, u8"I want to buy a slave."s));
@@ -156,7 +158,7 @@ talk_result_t talk_npc()
     }
     if (cdata[tc].character_role == 22)
     {
-        if (get_freeally() != 0)
+        if (chara_get_free_slot_ally() != 0)
         {
             ELONA_APPEND_RESPONSE(
                 57, lang(u8"馬を買う"s, u8"I want to buy a horse."s));
@@ -531,7 +533,7 @@ talk_result_t talk_npc()
     {
         if (gdata_pael_and_her_mom == 1000)
         {
-            rc = findchara(222);
+            rc = chara_find(222);
             if (rc != 0)
             {
                 if (cdata[rc].state == 1)
@@ -846,7 +848,7 @@ talk_result_t talk_npc()
                 minlevel = arenaop(1) / 3 * 2;
                 flt(arenaop(1));
                 fixlv = arenaop(2);
-                characreate(56, 0, -3, 0);
+                chara_create(56, 0, -3, 0);
                 if (cmshade)
                 {
                     continue;
@@ -863,7 +865,7 @@ talk_result_t talk_npc()
             }
             arenaop(1) = cdata[rc].id;
             buff = lang(
-                u8"今日の対戦相手は"s + refchara_str(cdata[rc].id, 2) + _da()
+                u8"今日の対戦相手は"s + chara_refstr(cdata[rc].id, 2) + _da()
                     + u8"挑戦する"s + _noka(1),
                 u8"You got "s + cdatan(0, rc) + u8" today. What'ya say?"s);
         }
@@ -1019,7 +1021,7 @@ talk_result_t talk_npc()
         inv[ti].number = 1;
         ci = ti;
         rc = tc;
-        set_item_which_will_be_used();
+        chara_set_item_which_will_be_used();
         rq = deliver;
         --inv[deliver(1)].number;
         txt(lang(
@@ -1039,7 +1041,7 @@ talk_result_t talk_npc()
         cdata[tc].was_passed_item_by_you_just_now() = true;
         ci = ti;
         rc = tc;
-        set_item_which_will_be_used();
+        chara_set_item_which_will_be_used();
         --inv[supply].number;
         txt(lang(
             itemname(supply, 1) + u8"を手渡した。"s,
@@ -1208,7 +1210,7 @@ talk_result_t talk_npc()
                 ""s + name(tc) + u8"と別れた…"s,
                 u8"You abandoned "s + name(tc) + u8"..."s));
             map(cdata[tc].position.x, cdata[tc].position.y, 1) = 0;
-            del_chara(tc);
+            chara_delete(tc);
             return talk_result_t::talk_end;
         }
         buff = "";
@@ -1228,7 +1230,7 @@ talk_result_t talk_npc()
             {
                 fltn(u8"horse"s);
             }
-            characreate(56, 0, -3, 0);
+            chara_create(56, 0, -3, 0);
             if (cdata[56].level == 0)
             {
                 chara_vanquish(56);
@@ -1300,7 +1302,7 @@ talk_result_t talk_npc()
                 {
                     event_add(15, cdata[rc].id);
                 }
-                del_chara(rc);
+                chara_delete(rc);
                 buff = lang(_thanks(2), u8"Thanks!"s);
             }
             else
@@ -1610,7 +1612,7 @@ talk_result_t talk_npc()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            f = get_freeally();
+            f = chara_get_free_slot_ally();
             if (f == 0)
             {
                 buff = lang(
@@ -1650,7 +1652,7 @@ talk_result_t talk_npc()
             snd(11);
             cdata[0].gold += 50000;
             gdata_pael_and_her_mom = 1002;
-            rc = findchara(222);
+            rc = chara_find(222);
             cdata[rc].ai_calm = 3;
             cdata[rc].relationship = 0;
             cdata[rc].initial_position.x = 48;
