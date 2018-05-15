@@ -7,6 +7,7 @@ enum class turn_result_t;
 
 void initialize_home_adata();
 turn_result_t build_new_building();
+void addbuilding(int = 0, int = 0, int = 0, int = 0);
 void start_home_map_mode();
 void show_home_value();
 void show_shop_log();

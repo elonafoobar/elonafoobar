@@ -51,6 +51,8 @@ ELONA_EXTERN(elona_vector1<int> isethire);
 ELONA_EXTERN(elona_vector1<int> income);
 ELONA_EXTERN(elona_vector2<std::string> rankn);
 ELONA_EXTERN(int renewmulti);
+ELONA_EXTERN(elona_vector2<int> bdref);
+
 
 // ui.cpp
 ELONA_EXTERN(int inf_clockarrowx);
@@ -124,6 +126,27 @@ ELONA_EXTERN(elona_vector1<int> isetdeed);
 
 // talk.cpp
 ELONA_EXTERN(elona_vector2<std::string> actor);
+
+// mef.cpp
+ELONA_EXTERN(elona_vector2<int> mef);
+ELONA_EXTERN(elona_vector2<int> mefsubref);
+
+// map_cell.cpp
+ELONA_EXTERN(int cellchara);
+ELONA_EXTERN(int cellfeat);
+
+// enchantment.cpp
+ELONA_EXTERN(elona_vector2<int> encammoref);
+
+// item.hpp/itemgen.hpp
+ELONA_EXTERN(elona_vector1<int> isetbook);
+ELONA_EXTERN(elona_vector1<int> moneybox);
+
+// ai.cpp
+ELONA_EXTERN(elona_vector1<int> isetthrowpotionminor);
+ELONA_EXTERN(elona_vector1<int> isetthrowpotionmajor);
+ELONA_EXTERN(elona_vector1<int> isetthrowpotiongreater);
+ELONA_EXTERN(int npccostmp);
 
 ELONA_EXTERN(elona_vector1<int> _randcolor);
 ELONA_EXTERN(elona_vector1<int> aniref);
@@ -327,8 +350,6 @@ ELONA_EXTERN(elona_vector1<int> eqring1);
 ELONA_EXTERN(elona_vector2<int> itemmemory);
 ELONA_EXTERN(elona_vector2<int> list);
 ELONA_EXTERN(elona_vector2<int> mapsync);
-ELONA_EXTERN(elona_vector2<int> mef);
-ELONA_EXTERN(elona_vector2<int> mefsubref);
 ELONA_EXTERN(elona_vector2<int> npcmemory);
 ELONA_EXTERN(elona_vector2<int> pcc);
 ELONA_EXTERN(elona_vector2<int> picfood);
@@ -655,7 +676,6 @@ bool actionsp(int, int);
 int addbuff(int = 0, int = 0, int = 0, int = 0);
 int advfavoriteskill(int = 0);
 int advfavoritestat(int = 0);
-int ai_check();
 int breath_list();
 int calcincome(int = 0);
 int calcmagiccontrol(int = 0, int = 0);
@@ -668,10 +688,6 @@ int cargocheck();
 int carmor(int = 0);
 int cbreeder(int = 0);
 int cdbit(int = 0, int = 0);
-int cell_featread(int = 0, int = 0, int = 0);
-int cell_findspace(int = 0, int = 0, int = 0);
-int cell_itemlist(int = 0, int = 0);
-std::pair<int, int> cell_itemoncell(const position_t& pos);
 bool chara_unequip(int);
 int characreate(int = 0, int = 0, int = 0, int = 0);
 int convertartifact(int = 0, int = 0);
@@ -688,14 +704,8 @@ void damage_insanity(int, int);
 void dmgsp(int, int);
 int efstatusfix(int = 0, int = 0, int = 0, int = 0);
 int eleinfo(int = 0, int = 0);
-int encadd(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
-int encfind(int = 0, int = 0);
-bool encfindspec(int = 0, int = 0);
-int encflt(int = 0, int = 0);
 int eqweaponheavy();
 int eqweaponlight();
-int evfind(int = 0);
-int evid();
 int exist_questtarget();
 int findally(int = 0);
 int findbuff(int = 0, int = 0);
@@ -714,20 +724,6 @@ int getworker(int = 0, int = 0);
 int iequiploc(int = 0);
 int imeget();
 int implevel(int = 0);
-int inv_find(int = 0, int = 0);
-int inv_getfreeid(int = 0);
-int inv_getowner(int = 0);
-bool inv_getspace(int);
-int inv_sum(int = 0);
-int inv_weight(int = 0);
-int item_cold(int = 0, int = 0);
-int item_find(int = 0, int = 0, int = 0);
-int item_fire(int = 0, int = 0);
-int item_separate(int);
-int item_stack(int = 0, int = 0, int = 0);
-int itemcreate(int = 0, int = 0, int = 0, int = 0, int = 0);
-int itemfind(int = 0, int = 0, int = 0);
-int itemusingfind(int, bool = false);
 int key_direction();
 int access_item_db(int);
 int voting_box();
@@ -737,7 +733,6 @@ int can_evade_trap();
 int try_to_disarm_trap();
 int try_to_perceive_npc(int);
 int do_create_character();
-int do_create_item(int, int, int);
 int initialize_world_map();
 int label_1753();
 int get_card_info();
@@ -779,7 +774,6 @@ int label_2230();
 int label_2231();
 int new_ally_joins();
 int label_2664();
-int inv_getfreeid_force();
 int label_2672();
 int label_2694();
 int label_2695();
@@ -803,9 +797,6 @@ int putcard(int = 0, int = 0);
 int randattb();
 int random_material(int = 0, int = 0);
 int randomele();
-int randomenc(int = 0);
-int randomenclv(int = 0);
-int randomencp(int = 0);
 int randskill();
 int relationbetween(int, int);
 int relocate_chara(int = 0, int = 0, int = 0);
@@ -886,19 +877,7 @@ std::string txtskillchange(int, int, bool);
 std::string your(int);
 std::string yourself(int = 0);
 void actionproc();
-void addbuilding(int = 0, int = 0, int = 0, int = 0);
 void addefmap(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
-void addmef(
-    int = 0,
-    int = 0,
-    int = 0,
-    int = 0,
-    int = 0,
-    int = 0,
-    int = 0,
-    int = 0,
-    int = 0,
-    int = 0);
 void addnews(int = 0, int = 0, int = 0, const std::string& = "");
 void addnews2(const std::string&, int = 0);
 void addnewstopic(const std::string&, const std::string&);
@@ -917,15 +896,7 @@ void calcstartattb(int = 0);
 void cardhelp(const std::string&, int = 0);
 void cardpos(int = 0, int = 0);
 void cdbitmod(int = 0, int = 0, int = 0);
-void cell_check(int = 0, int = 0);
 void cell_draw();
-void cell_featclear(int = 0, int = 0);
-void cell_featset(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
-void cell_movechara(int = 0, int = 0, int = 0);
-void cell_refresh(int = 0, int = 0);
-void cell_removechara(int = 0, int = 0);
-void cell_setchara(int = 0, int = 0, int = 0);
-void cell_swap(int = 0, int = 0, int = 0, int = 0);
 void chara_preparepic(int = 0, int = 0);
 void chara_vanquish(int = 0);
 void check_kill(int = 0, int = 0);
@@ -945,16 +916,12 @@ void cutname(std::string&, int = 0);
 void del_chara(int = 0);
 void delbottomcard(int = 0);
 void delbuff(int = 0, int = 0);
-void delmef(int = 0);
 void dipcursed(int = 0, int = 0);
 void dmgcard(int = 0, int = 0);
 void dmgplayer(int = 0, int = 0);
 void efllistadd(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
-void egoadd(int = 0, int = 0);
-void encremove(int = 0, int = 0, int = 0);
 void eqrandweaponmage(int = 0);
 void equipinfo(int = 0, int = 0, int = 0);
-void evadd(int = 0, int = 0, int = 0);
 void exittempinv();
 void fileadd(const fs::path& filepath, int = 0);
 void fix_input_chat(std::string&);
@@ -976,15 +943,7 @@ void imeset(int = 0);
 void incognitobegin();
 void incognitoend();
 std::pair<int, int> inv_getheader(int);
-void item_acid(int = 0, int = 0);
-void item_checkknown(int = 0);
-void item_compress(int);
-void item_copy(int = 0, int = 0);
-void item_delete(int = 0);
-void item_exchange(int = 0, int = 0);
-void item_num(int = 0, int = 0);
 std::vector<int> itemlist(int, int);
-void itemturn(int = 0);
 void key_check(int = 0);
 void keyrelease();
 void initialize_rankn();
@@ -1011,20 +970,8 @@ void initialize_item_chip();
 void load_random_name_table();
 void load_random_title_table();
 std::string cheer_up_message(int);
-void initialize_enchantment_data();
 void get_enchantment_description(int, int, int, bool = false);
-void initialize_ego_data();
-void add_enchantments_depending_on_ego();
-void add_enchantment_by_fixed_ego();
-void add_enchantments();
 void initialize_item_material_data();
-void initialize_item_material();
-void determine_item_material();
-void change_item_material();
-void apply_item_material();
-void set_material_specific_attributes();
-void itemname_additional_info();
-void get_random_item_id();
 void set_item_info();
 void label_1346();
 void end_dmghp();
@@ -1075,8 +1022,6 @@ void label_1577();
 void label_1578();
 void label_1579();
 void label_1580();
-void label_1581();
-void label_1583();
 void get_pregnant();
 void initialize_cell_object_data();
 void generate_random_nefia();
@@ -1256,9 +1201,6 @@ void complete_quest();
 void do_play_scene();
 void label_2685();
 turn_result_t npc_turn();
-turn_result_t proc_misc_npc_map_events();
-turn_result_t proc_ally_town_training(bool = false);
-turn_result_t proc_ai_basic();
 void initialize_game();
 bool turn_wrapper();
 turn_result_t pass_turns(bool);
@@ -1272,14 +1214,10 @@ void conquer_lesimas();
 void play_the_last_scene_again();
 turn_result_t pc_died();
 void show_game_score_ranking();
-void proc_event();
 void lenfix(std::string&, int = 0);
 void lovemiracle(int = 0);
-void make_dish(int = 0, int = 0);
 void make_sound(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
 void makecardlist();
-void mapitem_cold(int = 0, int = 0);
-void mapitem_fire(int = 0, int = 0);
 void matdelmain(int = 0, int = 0);
 void matgetmain(int = 0, int = 0, int = 0);
 void modcorrupt(int = 0);
@@ -1298,7 +1236,6 @@ void page_load();
 void page_save();
 void press(bool = false);
 void put_questtarget();
-void putenclv(int = 0);
 void refreshspeed(int = 0);
 void remain_make(int = 0, int = 0);
 void removeitem(int, int);
@@ -1328,7 +1265,6 @@ std::string sninn(const std::string&);
 std::string snmagic(const std::string&);
 std::string sntrade(const std::string&);
 std::string sntrainer(const std::string&);
-void sortenc(int = 0);
 void spillblood(int = 0, int = 0, int = 0);
 void spillfrag(int = 0, int = 0, int = 0);
 void stxt(int, const std::string&);

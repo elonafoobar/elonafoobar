@@ -5,6 +5,7 @@
 #include "ctrl_file.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "itemgen.hpp"
 #include "variables.hpp"
 
 namespace elona
@@ -845,6 +846,23 @@ void label_2267()
         trate(cnt) += rnd(15) - rnd(15);
     }
     randomize();
+    return;
+}
+
+void shop_sell_item()
+{
+    mode = 6;
+    ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
+    ctrl_file(file_operation2_t::_3, u8"shop"s + invfile + u8".s2");
+    shoptrade = 0;
+    if (tc > 0)
+    {
+        if (cdata[tc].character_role == 1009)
+        {
+            shoptrade = 1;
+        }
+    }
+    ctrl_inventory();
     return;
 }
 

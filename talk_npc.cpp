@@ -4,11 +4,13 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "elona.hpp"
+#include "event.hpp"
 #include "food.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "macro.hpp"
+#include "map_cell.hpp"
 #include "shop.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -364,7 +366,7 @@ talk_result_t talk_npc()
         {
             if (tc >= 16)
             {
-                if (evid() == -1)
+                if (event_id() == -1)
                 {
                     ELONA_APPEND_RESPONSE(
                         56,
@@ -377,7 +379,7 @@ talk_result_t talk_npc()
     }
     if (cdata[tc].id == 335)
     {
-        if (evid() == -1)
+        if (event_id() == -1)
         {
             ELONA_APPEND_RESPONSE(
                 60, lang(u8"暗い場所に移ろう"s, u8"I'll buy you."s));
@@ -518,7 +520,7 @@ talk_result_t talk_npc()
             {
                 if ((cdata[tc].character_role < 2000
                      || cdata[tc].character_role >= 3000)
-                    && evid() == -1)
+                    && event_id() == -1)
                 {
                     ELONA_APPEND_RESPONSE(
                         44, lang(u8"解雇する"s, u8"You are fired."s));
@@ -1297,7 +1299,7 @@ talk_result_t talk_npc()
                 }
                 if (cdata[rc].is_escorted() == 1)
                 {
-                    evadd(15, cdata[rc].id);
+                    event_add(15, cdata[rc].id);
                 }
                 del_chara(rc);
                 buff = lang(_thanks(2), u8"Thanks!"s);
@@ -1330,7 +1332,7 @@ talk_result_t talk_npc()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         marry = tc;
-        evadd(13);
+        event_add(13);
         return talk_result_t::talk_end;
     }
     if (chatval == 39)
@@ -1746,7 +1748,7 @@ talk_result_t talk_npc()
     {
         if (gdata_left_turns_of_timestop == 0)
         {
-            evadd(25);
+            event_add(25);
         }
         return talk_result_t::talk_end;
     }
@@ -1932,7 +1934,7 @@ talk_result_t talk_npc()
         buff = s;
         return talk_result_t::talk_npc;
     }
-    if (evid() == 11)
+    if (event_id() == 11)
     {
         levelexitby = 4;
         chatteleport = 1;

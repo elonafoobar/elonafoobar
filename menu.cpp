@@ -6,6 +6,7 @@
 #include "class.hpp"
 #include "config.hpp"
 #include "draw.hpp"
+#include "enchantment.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
@@ -2579,7 +2580,7 @@ label_2035_internal:
                         i = i / 5;
                     }
                     s = "";
-                    putenclv(i);
+                    enchantment_print_level(i);
                     pos(wx + 282, wy + 66 + cnt * 19 + 2);
                     mes(s);
                 }

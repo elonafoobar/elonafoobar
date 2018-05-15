@@ -1,4 +1,5 @@
 #include "ability.hpp"
+#include "ai.hpp"
 #include "animation.hpp"
 #include "audio.hpp"
 #include "autopick.hpp"
@@ -17,6 +18,8 @@
 #include "debug.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
+#include "enchantment.hpp"
+#include "event.hpp"
 #include "filesystem.hpp"
 #include "fish.hpp"
 #include "foobar_save.hpp"
@@ -27,11 +30,14 @@
 #include "item.hpp"
 #include "item_db.hpp"
 #include "item_material.hpp"
+#include "itemgen.hpp"
 #include "log.hpp"
 #include "macro.hpp"
 #include "main.hpp"
 #include "map.hpp"
+#include "map_cell.hpp"
 #include "mapgen.hpp"
+#include "mef.hpp"
 #include "menu.hpp"
 #include "race.hpp"
 #include "random.hpp"
@@ -170,30 +176,13 @@ double r_at_m133;
 
 
 elona_vector1<int> ranknorma;
-elona_vector2<int> bdref;
 int f_at_m14 = 0;
-int evproc = 0;
 elona_vector1<std::string> tname;
-elona_vector2<int> encref;
-elona_vector2<int> enclist;
-elona_vector2<int> encammoref;
-elona_vector1<int> p_at_m47;
-int enc_at_m48 = 0;
-int encp_at_m48 = 0;
-int p_at_m48 = 0;
-elona_vector2<int> egoenc;
-elona_vector2<int> egoref;
-elona_vector1<int> egolist;
-int maxegominorn = 0;
 int i_at_m66 = 0;
 int lv_at_m77 = 0;
 int exp_at_m77 = 0;
 int growth_at_m77 = 0;
 int lvchange_at_m77 = 0;
-int i_at_m79 = 0;
-int cellchara = 0;
-int cellfeat = 0;
-int tc_at_m81 = 0;
 int pagebk = 0;
 int csprev = 0;
 int pagesaved = 0;
@@ -212,13 +201,6 @@ int res_at_con = 0;
 int p_at_con = 0;
 int dx_at_m136 = 0;
 int dy_at_m136 = 0;
-int ci_at_m138 = 0;
-int p_at_m138 = 0;
-int max_at_m138 = 0;
-int ti_at_m138 = 0;
-elona_vector1<int> list_at_m138;
-int f_at_m138 = 0;
-int a_at_m138 = 0;
 int dmg_at_m141 = 0;
 int rtdmg = 0;
 std::string ndeathcause;
@@ -254,15 +236,10 @@ elona_vector1<int> fsetplantunknown;
 elona_vector1<int> fsetremain;
 elona_vector1<int> fsetbarrel;
 elona_vector1<int> fsetcollect;
-elona_vector1<int> isetthrowpotionminor;
-elona_vector1<int> isetthrowpotionmajor;
-elona_vector1<int> isetthrowpotiongreater;
 elona_vector1<int> isetgiftminor;
 elona_vector1<int> isetgiftmajor;
 elona_vector1<int> isetgiftgrand;
 elona_vector1<int> asettown;
-elona_vector1<int> moneybox;
-elona_vector1<int> isetbook;
 int cibk = 0;
 int usermapid = 0;
 int n_at_m174 = 0;
@@ -304,7 +281,6 @@ int movx = 0;
 int movy = 0;
 int digx = 0;
 int digy = 0;
-int npccostmp = 0;
 int noeffect = 0;
 int inumbk = 0;
 int dirsub = 0;
@@ -312,7 +288,6 @@ int ri = 0;
 int attackitem = 0;
 int extraattack = 0;
 int rewardfix = 0;
-int blockedbychara = 0;
 int ct = 0;
 
 
@@ -799,56 +774,6 @@ int findunid(const std::string& prm_285)
         }
     }
     return f_at_m14;
-}
-
-
-
-int evid()
-{
-    if (evnum <= 0)
-    {
-        return -1;
-    }
-    return evlist(evnum - 1);
-}
-
-
-
-int evfind(int prm_288)
-{
-    int f_at_m17 = 0;
-    f_at_m17 = 0;
-    for (int cnt = 0, cnt_end = (evnum); cnt < cnt_end; ++cnt)
-    {
-        if (evlist(cnt) == prm_288)
-        {
-            f_at_m17 = 1;
-        }
-    }
-    return f_at_m17;
-}
-
-
-
-void evadd(int prm_289, int prm_290, int prm_291)
-{
-    if (evproc)
-    {
-        evlist(evnum) = evlist(evnum - 1);
-        evdata1(evnum) = evdata1(evnum - 1);
-        evdata2(evnum) = evdata2(evnum - 1);
-        evlist(evnum - 1) = prm_289;
-        evdata1(evnum - 1) = prm_290;
-        evdata2(evnum - 1) = prm_291;
-    }
-    else
-    {
-        evlist(evnum) = prm_289;
-        evdata1(evnum) = prm_290;
-        evdata2(evnum) = prm_291;
-    }
-    ++evnum;
-    return;
 }
 
 
@@ -1988,19 +1913,7 @@ void initialize_map_chip()
 
 void initialize_item_chip()
 {
-    DIM3(mefsubref, 6, 6);
-    mefsubref(0, 1) = 144;
-    mefsubref(1, 1) = 624;
-    mefsubref(0, 2) = 272;
-    mefsubref(1, 2) = 624;
-    mefsubref(2, 2) = 1;
-    mefsubref(0, 3) = 304;
-    mefsubref(1, 3) = 624;
-    mefsubref(2, 3) = 1;
-    mefsubref(0, 4) = 368;
-    mefsubref(1, 4) = 624;
-    mefsubref(0, 5) = 464;
-    mefsubref(1, 5) = 624;
+    initialize_mef();
     SDIM3(tname, 16, 11);
     tname(1) = lang(u8"日干し岩"s, u8"a dryrock"s);
     tname(2) = lang(u8"畑"s, u8"a field"s);
@@ -2706,1383 +2619,6 @@ int randomele()
         }
     }
     return p_at_m45;
-}
-
-
-
-void putenclv(int prm_448)
-{
-    for (int cnt = 0, cnt_end = (std::abs(prm_448) + 1); cnt < cnt_end; ++cnt)
-    {
-        if (cnt > 4)
-        {
-            s += u8"+"s;
-            break;
-        }
-        s += lang(u8"*"s, u8"#"s);
-    }
-    return;
-}
-
-
-
-int encflt(int prm_449, int prm_450)
-{
-    if (prm_450 == 2)
-    {
-        if ((prm_449 >= 12000 && prm_449 < 24000) == 0)
-        {
-            return 0;
-        }
-        else
-        {
-            return 1;
-        }
-    }
-    if (prm_450 == 1)
-    {
-        if ((prm_449 >= 30000 && prm_449 < 50000) == 0)
-        {
-            return 0;
-        }
-        else
-        {
-            return 1;
-        }
-    }
-    if (prm_450 == 3)
-    {
-        if ((prm_449 >= 12000 && prm_449 < 24000) == 1 || prm_449 == 10000)
-        {
-            return 1;
-        }
-        else
-        {
-            return 0;
-        }
-    }
-    if (prm_449 == prm_450)
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-}
-
-
-
-void initialize_enchantment_data()
-{
-    DIM3(encref, 8, 62);
-    DIM3(enclist, 2, 62);
-    DIM3(encammoref, 3, 6);
-    SDIM2(ammoname, 6);
-    encammoref(0, 0) = 30;
-    encammoref(1, 0) = 70;
-    encammoref(2, 0) = 1;
-    encammoref(0, 1) = 5;
-    encammoref(1, 1) = 15;
-    encammoref(2, 1) = 10;
-    encammoref(0, 3) = 20;
-    encammoref(1, 3) = 35;
-    encammoref(2, 3) = 2;
-    encammoref(0, 2) = 15;
-    encammoref(1, 2) = 30;
-    encammoref(2, 2) = 2;
-    encammoref(0, 4) = 2;
-    encammoref(1, 4) = 5;
-    encammoref(2, 4) = 25;
-    encammoref(0, 5) = 2;
-    encammoref(1, 5) = 5;
-    encammoref(2, 5) = 15;
-    ammoname(0) = lang(u8"連射弾"s, u8"rapid ammo"s);
-    ammoname(1) = lang(u8"炸裂弾"s, u8"explosive ammo"s);
-    ammoname(2) = lang(u8"貫通弾"s, u8"piercing ammo"s);
-    ammoname(3) = lang(u8"魔弾"s, u8"magic ammo"s);
-    ammoname(4) = lang(u8"時止弾"s, u8"time stop ammo"s);
-    ammoname(5) = lang(u8"バースト"s, u8"burst ammo"s);
-    encref(0, 21) = -1;
-    encref(1, 21) = 50;
-    encref(2, 21) = 75;
-    encref(3, 21) = 0;
-    encref(0, 45) = -1;
-    encref(1, 45) = 50;
-    encref(2, 45) = 100;
-    encref(3, 45) = 0;
-    encref(0, 46) = -1;
-    encref(1, 46) = 50;
-    encref(2, 46) = 100;
-    encref(3, 46) = 0;
-    encref(0, 47) = -1;
-    encref(1, 47) = 50;
-    encref(2, 47) = 50;
-    encref(3, 47) = 0;
-    encref(0, 56) = 0;
-    encref(1, 56) = 200;
-    encref(2, 56) = 30;
-    encref(3, 56) = 0;
-    encref(0, 59) = 0;
-    encref(1, 59) = 200;
-    encref(2, 59) = 30;
-    encref(3, 59) = 0;
-    encref(0, 3) = 0;
-    encref(1, 3) = 120;
-    encref(2, 3) = 4500;
-    encref(3, 3) = 0;
-    encref(0, 6) = 0;
-    encref(1, 6) = 120;
-    encref(2, 6) = 4500;
-    encref(3, 6) = 0;
-    encref(0, 7) = 1;
-    encref(1, 7) = 120;
-    encref(2, 7) = 300;
-    encref(3, 7) = 10000;
-    encref(4, 7) = 24000;
-    encref(0, 9) = 1;
-    encref(1, 9) = 120;
-    encref(2, 9) = 50000;
-    encref(3, 9) = 25000;
-    encref(0, 23) = 1;
-    encref(1, 23) = 120;
-    encref(2, 23) = 400;
-    encref(3, 23) = 0;
-    encref(0, 1) = 1;
-    encref(1, 1) = 120;
-    encref(2, 1) = 3000;
-    encref(3, 1) = 0;
-    encref(0, 22) = 1;
-    encref(1, 22) = 150;
-    encref(2, 22) = 150;
-    encref(3, 22) = 0;
-    encref(0, 25) = 1;
-    encref(1, 25) = 120;
-    encref(2, 25) = 400;
-    encref(3, 25) = 0;
-    encref(0, 2) = 2;
-    encref(1, 2) = 150;
-    encref(2, 2) = 2500;
-    encref(3, 2) = 0;
-    encref(0, 24) = 2;
-    encref(1, 24) = 120;
-    encref(2, 24) = 300;
-    encref(3, 24) = 0;
-    encref(0, 26) = 1;
-    encref(1, 26) = 120;
-    encref(2, 26) = 600;
-    encref(3, 26) = 0;
-    encref(0, 27) = 1;
-    encref(1, 27) = 120;
-    encref(2, 27) = 600;
-    encref(3, 27) = 0;
-    encref(0, 28) = 2;
-    encref(1, 28) = 120;
-    encref(2, 28) = 500;
-    encref(3, 28) = 0;
-    encref(0, 29) = 3;
-    encref(1, 29) = 200;
-    encref(2, 29) = 25;
-    encref(3, 29) = 18000;
-    encref(0, 30) = 3;
-    encref(1, 30) = 200;
-    encref(2, 30) = 25;
-    encref(3, 30) = 20000;
-    encref(0, 31) = 2;
-    encref(1, 31) = 200;
-    encref(2, 31) = 40;
-    encref(3, 31) = 32000;
-    encref(0, 48) = 1;
-    encref(1, 48) = 120;
-    encref(2, 48) = 300;
-    encref(3, 48) = 0;
-    encref(0, 50) = 3;
-    encref(1, 50) = 180;
-    encref(2, 50) = 150;
-    encref(3, 50) = 32000;
-    encref(4, 50) = 34000;
-    encref(0, 51) = 3;
-    encref(1, 51) = 180;
-    encref(2, 51) = 150;
-    encref(3, 51) = 32000;
-    encref(4, 51) = 34000;
-    encref(0, 32) = 1;
-    encref(1, 32) = 130;
-    encref(2, 32) = 250;
-    encref(3, 32) = 0;
-    encref(0, 55) = 3;
-    encref(1, 55) = 130;
-    encref(2, 55) = 40;
-    encref(3, 55) = 19000;
-    encref(4, 55) = 34000;
-    encref(0, 33) = 3;
-    encref(1, 33) = 160;
-    encref(2, 33) = 200;
-    encref(3, 33) = 0;
-    encref(0, 34) = 3;
-    encref(1, 34) = 170;
-    encref(2, 34) = 250;
-    encref(3, 34) = 10000;
-    encref(0, 57) = 2;
-    encref(1, 57) = 170;
-    encref(2, 57) = 200;
-    encref(3, 57) = 10000;
-    encref(4, 57) = 24000;
-    encref(0, 58) = 2;
-    encref(1, 58) = 170;
-    encref(2, 58) = 200;
-    encref(3, 58) = 10000;
-    encref(4, 58) = 24000;
-    encref(0, 52) = 1;
-    encref(1, 52) = 140;
-    encref(2, 52) = 750;
-    encref(3, 52) = 14000;
-    encref(0, 53) = 2;
-    encref(1, 53) = 160;
-    encref(2, 53) = 500;
-    encref(3, 53) = 14000;
-    encref(0, 54) = 3;
-    encref(1, 54) = 180;
-    encref(2, 54) = 250;
-    encref(3, 54) = 14000;
-    encref(4, 54) = 16000;
-    encref(0, 35) = 2;
-    encref(1, 35) = 170;
-    encref(2, 35) = 100;
-    encref(3, 35) = 12000;
-    encref(4, 35) = 32000;
-    encref(0, 44) = 99;
-    encref(1, 44) = 300;
-    encref(2, 44) = 10000;
-    encref(3, 44) = 10000;
-    encref(4, 44) = 34000;
-    encref(0, 42) = 99;
-    encref(1, 42) = 300;
-    encref(2, 42) = 2000;
-    encref(3, 42) = 0;
-    encref(0, 36) = 99;
-    encref(1, 36) = 450;
-    encref(2, 36) = 1000;
-    encref(3, 36) = 10000;
-    encref(4, 36) = 24000;
-    encref(0, 38) = 99;
-    encref(1, 38) = 450;
-    encref(2, 38) = 1000;
-    encref(3, 38) = 10000;
-    encref(4, 38) = 24000;
-    encref(0, 37) = 99;
-    encref(1, 37) = 100;
-    encref(2, 37) = 1000;
-    encref(3, 37) = 10000;
-    encref(4, 37) = 24000;
-    encref(0, 39) = 99;
-    encref(1, 39) = 500;
-    encref(2, 39) = 500;
-    encref(3, 39) = 10000;
-    encref(4, 39) = 22000;
-    encref(0, 40) = 99;
-    encref(1, 40) = 550;
-    encref(2, 40) = 500;
-    encref(3, 40) = 10000;
-    encref(4, 40) = 24000;
-    encref(0, 41) = 99;
-    encref(1, 41) = 300;
-    encref(2, 41) = 1500;
-    encref(3, 41) = 0;
-    encref(0, 43) = 99;
-    encref(1, 43) = 150;
-    encref(2, 43) = 2000;
-    encref(3, 43) = 0;
-    encref(0, 8) = 99;
-    encref(1, 8) = 300;
-    encref(2, 8) = 15000;
-    encref(3, 8) = 0;
-    encref(0, 49) = 100;
-    encref(1, 49) = 120;
-    encref(2, 49) = 300;
-    encref(3, 49) = 60000;
-    encref(0, 60) = 100;
-    encref(1, 60) = 120;
-    encref(2, 60) = 300;
-    encref(3, 60) = 60000;
-    encref(0, 61) = 2;
-    encref(1, 61) = 170;
-    encref(2, 61) = 150;
-    encref(3, 61) = 10000;
-    encref(4, 61) = 24000;
-    DIM3(encprocref, 6, 26);
-    encprocref(0, 0) = 450;
-    encprocref(1, 0) = 2000;
-    encprocref(2, 0) = 1000;
-    encprocref(3, 0) = 10000;
-    encprocref(4, 0) = 24000;
-    encprocref(5, 0) = 10;
-    encprocref(0, 1) = 620;
-    encprocref(1, 1) = 2000;
-    encprocref(2, 1) = 6000;
-    encprocref(3, 1) = 24000;
-    encprocref(4, 1) = 0;
-    encprocref(5, 1) = 50;
-    encprocref(0, 2) = 452;
-    encprocref(1, 2) = 2000;
-    encprocref(2, 2) = 1000;
-    encprocref(3, 2) = 10000;
-    encprocref(4, 2) = 24000;
-    encprocref(5, 2) = 10;
-    encprocref(0, 3) = 434;
-    encprocref(1, 3) = 2000;
-    encprocref(2, 3) = 800;
-    encprocref(3, 3) = 10000;
-    encprocref(4, 3) = 24000;
-    encprocref(5, 3) = 12;
-    encprocref(0, 4) = 433;
-    encprocref(1, 4) = 2000;
-    encprocref(2, 4) = 600;
-    encprocref(3, 4) = 10000;
-    encprocref(4, 4) = 24000;
-    encprocref(5, 4) = 12;
-    encprocref(0, 5) = 625;
-    encprocref(1, 5) = 3000;
-    encprocref(2, 5) = 400;
-    encprocref(3, 5) = 10000;
-    encprocref(4, 5) = 24000;
-    encprocref(5, 5) = 2;
-    encprocref(0, 6) = 627;
-    encprocref(1, 6) = 3000;
-    encprocref(2, 6) = 1000;
-    encprocref(3, 6) = 10000;
-    encprocref(4, 6) = 24000;
-    encprocref(5, 6) = 50;
-    encprocref(0, 7) = 619;
-    encprocref(1, 7) = 2000;
-    encprocref(2, 7) = 4000;
-    encprocref(3, 7) = 24000;
-    encprocref(4, 7) = 0;
-    encprocref(5, 7) = 50;
-    encprocref(0, 8) = 604;
-    encprocref(1, 8) = 2000;
-    encprocref(2, 8) = 1000;
-    encprocref(3, 8) = 10000;
-    encprocref(4, 8) = 24000;
-    encprocref(5, 8) = 15;
-    encprocref(0, 9) = 609;
-    encprocref(1, 9) = 2000;
-    encprocref(2, 9) = 1000;
-    encprocref(3, 9) = 10000;
-    encprocref(4, 9) = 24000;
-    encprocref(5, 9) = 15;
-    encprocref(0, 10) = 608;
-    encprocref(1, 10) = 2000;
-    encprocref(2, 10) = 1000;
-    encprocref(3, 10) = 10000;
-    encprocref(4, 10) = 24000;
-    encprocref(5, 10) = 15;
-    encprocref(0, 11) = 453;
-    encprocref(1, 11) = 3000;
-    encprocref(2, 11) = 1000;
-    encprocref(3, 11) = 10000;
-    encprocref(4, 11) = 24000;
-    encprocref(5, 11) = 4;
-    encprocref(0, 12) = 451;
-    encprocref(1, 12) = 3000;
-    encprocref(2, 12) = 1000;
-    encprocref(3, 12) = 10000;
-    encprocref(4, 12) = 24000;
-    encprocref(5, 12) = 4;
-    encprocref(0, 13) = 448;
-    encprocref(1, 13) = 3000;
-    encprocref(2, 13) = 1000;
-    encprocref(3, 13) = 10000;
-    encprocref(4, 13) = 24000;
-    encprocref(5, 13) = 4;
-    encprocref(0, 14) = 446;
-    encprocref(1, 14) = 3000;
-    encprocref(2, 14) = 400;
-    encprocref(3, 14) = 10000;
-    encprocref(4, 14) = 24000;
-    encprocref(5, 14) = 1;
-    encprocref(0, 15) = 444;
-    encprocref(1, 15) = 3000;
-    encprocref(2, 15) = 1000;
-    encprocref(3, 15) = 10000;
-    encprocref(4, 15) = 24000;
-    encprocref(5, 15) = 3;
-    encprocref(0, 16) = 442;
-    encprocref(1, 16) = 3000;
-    encprocref(2, 16) = 1000;
-    encprocref(3, 16) = 10000;
-    encprocref(4, 16) = 24000;
-    encprocref(5, 16) = 2;
-    encprocref(0, 17) = 443;
-    encprocref(1, 17) = 2000;
-    encprocref(2, 17) = 800;
-    encprocref(3, 17) = 10000;
-    encprocref(4, 17) = 24000;
-    encprocref(5, 17) = 10;
-    encprocref(0, 18) = 436;
-    encprocref(1, 18) = 2000;
-    encprocref(2, 18) = 1000;
-    encprocref(3, 18) = 10000;
-    encprocref(4, 18) = 24000;
-    encprocref(5, 18) = 10;
-    encprocref(0, 19) = 421;
-    encprocref(1, 19) = 2000;
-    encprocref(2, 19) = 1000;
-    encprocref(3, 19) = 10000;
-    encprocref(4, 19) = 24000;
-    encprocref(5, 19) = 15;
-    encprocref(0, 20) = 422;
-    encprocref(1, 20) = 2000;
-    encprocref(2, 20) = 1000;
-    encprocref(3, 20) = 10000;
-    encprocref(4, 20) = 24000;
-    encprocref(5, 20) = 15;
-    encprocref(0, 21) = 423;
-    encprocref(1, 21) = 2000;
-    encprocref(2, 21) = 1000;
-    encprocref(3, 21) = 10000;
-    encprocref(4, 21) = 24000;
-    encprocref(5, 21) = 15;
-    encprocref(0, 22) = 419;
-    encprocref(1, 22) = 2000;
-    encprocref(2, 22) = 1000;
-    encprocref(3, 22) = 10000;
-    encprocref(4, 22) = 24000;
-    encprocref(5, 22) = 15;
-    encprocref(0, 23) = 404;
-    encprocref(1, 23) = 3000;
-    encprocref(2, 23) = 800;
-    encprocref(3, 23) = 10000;
-    encprocref(4, 23) = 24000;
-    encprocref(5, 23) = 2;
-    encprocref(0, 24) = 655;
-    encprocref(1, 24) = 2000;
-    encprocref(2, 24) = 200;
-    encprocref(3, 24) = 10000;
-    encprocref(4, 24) = 24000;
-    encprocref(5, 24) = 90;
-    encprocref(0, 25) = 658;
-    encprocref(1, 25) = 2000;
-    encprocref(2, 25) = 1000;
-    encprocref(3, 25) = 10000;
-    encprocref(4, 25) = 0;
-    encprocref(5, 25) = 100;
-    return;
-}
-
-
-
-int randomenc(int prm_451)
-{
-    int sum_at_m47 = 0;
-    int max_at_m47 = 0;
-    int i_at_m47 = 0;
-    sum_at_m47 = 0;
-    max_at_m47 = 0;
-    for (int cnt = 0; cnt < 62; ++cnt)
-    {
-        if (encref(0, cnt) > prm_451)
-        {
-            continue;
-        }
-        if (prm_451 >= 0)
-        {
-            if (encref(0, cnt) < 0)
-            {
-                continue;
-            }
-        }
-        if (encref(3, cnt) != 0)
-        {
-            if (encflt(reftype, encref(3, cnt)) == 0)
-            {
-                if (encref(4, cnt) == 0)
-                {
-                    continue;
-                }
-                else if (encflt(reftype, encref(4, cnt)) == 0)
-                {
-                    continue;
-                }
-            }
-        }
-        sum_at_m47 += encref(2, cnt);
-        enclist(0, max_at_m47) = cnt;
-        enclist(1, max_at_m47) = sum_at_m47;
-        ++max_at_m47;
-    }
-    if (max_at_m47 == 0)
-    {
-        return 0;
-    }
-    i_at_m47 = 0;
-    exrand_rnd(p_at_m47, sum_at_m47);
-    for (int cnt = 0, cnt_end = (max_at_m47); cnt < cnt_end; ++cnt)
-    {
-        if (p_at_m47 < enclist(1, cnt))
-        {
-            i_at_m47 = enclist(0, cnt);
-            break;
-        }
-    }
-    return i_at_m47;
-}
-
-
-
-int randomenclv(int prm_452)
-{
-    int enclv_at_m47 = 0;
-    enclv_at_m47 = clamp(prm_452, 0, 4);
-    enclv_at_m47 = rnd(enclv_at_m47 + 1);
-    return enclv_at_m47;
-}
-
-
-
-int randomencp(int prm_453)
-{
-    int encp_at_m47 = 0;
-    encp_at_m47 = rnd(rnd(500 + (trait(163) != 0) * 50) + 1) + 1;
-    if (prm_453 != 0)
-    {
-        encp_at_m47 = encp_at_m47 * prm_453 / 100;
-    }
-    return encp_at_m47;
-}
-
-
-
-void sortenc(int prm_454)
-{
-    int f_at_m47 = 0;
-    int cnt2_at_m47 = 0;
-    while (1)
-    {
-        f_at_m47 = 0;
-        for (int cnt = 0; cnt < 14; ++cnt)
-        {
-            cnt2_at_m47 = cnt + 1;
-            if (inv[prm_454].enchantments[cnt].id
-                < inv[prm_454].enchantments[cnt2_at_m47].id)
-            {
-                p_at_m47(0) = inv[prm_454].enchantments[cnt].id;
-                p_at_m47(1) = inv[prm_454].enchantments[cnt].power;
-                inv[prm_454].enchantments[cnt].id =
-                    inv[prm_454].enchantments[cnt2_at_m47].id;
-                inv[prm_454].enchantments[cnt2_at_m47].id = p_at_m47;
-                inv[prm_454].enchantments[cnt].power =
-                    inv[prm_454].enchantments[cnt2_at_m47].power;
-                inv[prm_454].enchantments[cnt2_at_m47].power = p_at_m47(1);
-                f_at_m47 = 1;
-            }
-        }
-        if (f_at_m47 == 0)
-        {
-            break;
-        }
-    }
-    return;
-}
-
-
-
-void encremove(int prm_455, int prm_456, int prm_457)
-{
-    if (prm_456 == 0)
-    {
-        return;
-    }
-    if (prm_456 >= 10000)
-    {
-        enc_at_m48 = prm_456 / 10000;
-    }
-    else
-    {
-        enc_at_m48 = prm_456;
-    }
-    enc_at_m48 = prm_456;
-    encp_at_m48 = prm_457;
-    for (int cnt = 0; cnt < 15; ++cnt)
-    {
-        if (inv[prm_455].enchantments[cnt].id == enc_at_m48)
-        {
-            inv[prm_455].enchantments[cnt].power -= encp_at_m48;
-            if (inv[prm_455].enchantments[cnt].power == 0)
-            {
-                inv[prm_455].enchantments[cnt].id = 0;
-            }
-            break;
-        }
-    }
-    if (prm_456 < 10000)
-    {
-        p_at_m48 = prm_456;
-    }
-    else
-    {
-        p_at_m48 = prm_456 / 10000;
-    }
-    inv[prm_455].value = inv[prm_455].value * 100 / encref(1, p_at_m48);
-    sortenc(prm_455);
-    return;
-}
-
-
-
-int encadd(
-    int prm_458,
-    int prm_459,
-    int prm_460,
-    int prm_461,
-    int prm_462,
-    int prm_463,
-    int prm_464)
-{
-    int sum_at_m48 = 0;
-    int max_at_m48 = 0;
-    int i_at_m48 = 0;
-    if (prm_459 == 0)
-    {
-        return 0;
-    }
-    if (prm_459 >= 10000)
-    {
-        enc_at_m48 = prm_459 / 10000;
-    }
-    else
-    {
-        enc_at_m48 = prm_459;
-    }
-    if (prm_464 == 0)
-    {
-        if (encref(3, enc_at_m48) != 0)
-        {
-            if (encflt(reftype, encref(3, enc_at_m48)) == 0)
-            {
-                if (encref(4, enc_at_m48) == 0)
-                {
-                    return 0;
-                }
-                else if (encflt(reftype, encref(4, enc_at_m48)) == 0)
-                {
-                    return 0;
-                }
-            }
-        }
-        else if (reftype == 25000)
-        {
-            if (prm_462 == 0)
-            {
-                return 0;
-            }
-        }
-    }
-    enc_at_m48 = prm_459;
-    encp_at_m48 = prm_460;
-    if (enc_at_m48 < 20)
-    {
-        if (enc_at_m48 == 1)
-        {
-            enc_at_m48 = rnd(10) + 10;
-            enc_at_m48 += 10000;
-            if (prm_461 != 0)
-            {
-                if (rnd(100) < prm_461)
-                {
-                    encp_at_m48 = prm_460 * -2;
-                }
-            }
-        }
-        if (enc_at_m48 == 2)
-        {
-            enc_at_m48 = randomele();
-            enc_at_m48 += 20000;
-            if (prm_461 != 0)
-            {
-                if (rnd(100) < prm_461)
-                {
-                    encp_at_m48 = prm_460 * -2;
-                }
-            }
-        }
-        if (enc_at_m48 == 3)
-        {
-            enc_at_m48 = rnd(40) + 150;
-            enc_at_m48 += 30000;
-            if (prm_461 != 0)
-            {
-                if (rnd(100) < prm_461)
-                {
-                    encp_at_m48 = prm_460 * -2;
-                }
-            }
-        }
-        if (enc_at_m48 == 6)
-        {
-            enc_at_m48 = rnd(10) + 10;
-            enc_at_m48 += 60000;
-        }
-        if (enc_at_m48 == 7)
-        {
-            enc_at_m48 = randomele();
-            enc_at_m48 += 70000;
-        }
-        if (enc_at_m48 == 8)
-        {
-            sum_at_m48 = 0;
-            max_at_m48 = 0;
-            for (int cnt = 0; cnt < 26; ++cnt)
-            {
-                if (encprocref(3, cnt) != 0)
-                {
-                    if (encflt(reftype, encprocref(3, cnt)) == 0)
-                    {
-                        if (encprocref(4, cnt) == 0)
-                        {
-                            continue;
-                        }
-                        else if (encflt(reftype, encprocref(4, cnt)) == 0)
-                        {
-                            continue;
-                        }
-                    }
-                }
-                sum_at_m48 += encprocref(2, cnt);
-                enclist(0, max_at_m48) = cnt;
-                enclist(1, max_at_m48) = sum_at_m48;
-                ++max_at_m48;
-            }
-            if (max_at_m48 == 0)
-            {
-                return 0;
-            }
-            i_at_m48 = 0;
-            exrand_rnd(p_at_m48, sum_at_m48);
-            for (int cnt = 0, cnt_end = (max_at_m48); cnt < cnt_end; ++cnt)
-            {
-                if (p_at_m48 < enclist(1, cnt))
-                {
-                    i_at_m48 = enclist(0, cnt);
-                    break;
-                }
-            }
-            enc_at_m48 = 80000 + i_at_m48;
-        }
-        if (enc_at_m48 == 9)
-        {
-            enc_at_m48 = rnd(rnd(6) + 1);
-            encp_at_m48 =
-                clamp(encp_at_m48, 0, 500) * encammoref(1, enc_at_m48) / 500
-                + encammoref(0, enc_at_m48);
-            enc_at_m48 += 90000;
-            encp_at_m48 += encp_at_m48 * 1000;
-        }
-    }
-    i_at_m48 = -1;
-    for (int cnt = 0; cnt < 15; ++cnt)
-    {
-        if (inv[prm_458].enchantments[cnt].id == enc_at_m48)
-        {
-            i_at_m48 = cnt;
-            continue;
-        }
-        if (i_at_m48 == -1)
-        {
-            if (inv[prm_458].enchantments[cnt].id == 0)
-            {
-                i_at_m48 = cnt;
-            }
-        }
-    }
-    if (i_at_m48 == -1)
-    {
-        return 0;
-    }
-    if (inv[prm_458].enchantments[i_at_m48].id == enc_at_m48)
-    {
-        if (reftype == 25000)
-        {
-            return 0;
-        }
-        if (!prm_462)
-        {
-            encp_at_m48 /= 2;
-        }
-    }
-    if (prm_463)
-    {
-        rtval(0) = enc_at_m48;
-        rtval(1) = encp_at_m48;
-        return 0;
-    }
-    if (inv[prm_458].enchantments[i_at_m48].id == enc_at_m48)
-    {
-        encp_at_m48 += inv[prm_458].enchantments[i_at_m48].power;
-    }
-    inv[prm_458].enchantments[i_at_m48].id = enc_at_m48;
-    inv[prm_458].enchantments[i_at_m48].power = encp_at_m48;
-    if (prm_459 < 10000)
-    {
-        p_at_m48 = prm_459;
-    }
-    else
-    {
-        p_at_m48 = prm_459 / 10000;
-    }
-    if (inv[prm_458].value * encref(1, p_at_m48) / 100 > 0)
-    {
-        inv[prm_458].value = inv[prm_458].value * encref(1, p_at_m48) / 100;
-    }
-    sortenc(prm_458);
-    return 1;
-}
-
-
-
-void egoadd(int prm_465, int prm_466)
-{
-    for (int cnt = 0; cnt < 10; ++cnt)
-    {
-        if (egoenc(cnt * 2, prm_466) == 0)
-        {
-            break;
-        }
-        encadd(
-            prm_465,
-            egoenc(cnt * 2, prm_466),
-            randomencp(egoenc(cnt * 2 + 1, prm_466)));
-    }
-    return;
-}
-
-
-
-void initialize_ego_data()
-{
-    SDIM1(egoname);
-    DIM3(egoenc, 20, 11);
-    DIM3(egoref, 2, 11);
-    DIM2(egolist, 11);
-    egoname(1) = lang(u8"静寂の"s, u8"of silence"s);
-    egoref(0, 1) = 0;
-    egoref(1, 1) = 1;
-    p = 1;
-    egoenc(0, p) = 30157;
-    egoenc(1, p) = 100;
-    egoenc(2, p) = 22;
-    egoenc(3, p) = 100;
-    egoname(6) = lang(u8"耐盲目の"s, u8"of resist blind"s);
-    egoref(0, 6) = 1;
-    egoref(1, 6) = 1;
-    p = 6;
-    egoenc(0, p) = 23;
-    egoenc(1, p) = 100;
-    egoname(8) = lang(u8"耐混乱の"s, u8"of resist confusion"s);
-    egoref(0, 8) = 1;
-    egoref(1, 8) = 1;
-    p = 8;
-    egoenc(0, p) = 25;
-    egoenc(1, p) = 100;
-    egoname(0) = lang(u8"烈火の"s, u8"of fire"s);
-    egoref(0, 0) = 1;
-    egoref(1, 0) = 3;
-    p = 0;
-    egoenc(0, p) = 20050;
-    egoenc(1, p) = 150;
-    egoenc(2, p) = 70050;
-    egoenc(3, p) = 150;
-    egoname(2) = lang(u8"氷結の"s, u8"of cold"s);
-    egoref(0, 2) = 1;
-    egoref(1, 2) = 3;
-    p = 2;
-    egoenc(0, p) = 20051;
-    egoenc(1, p) = 150;
-    egoenc(2, p) = 70051;
-    egoenc(3, p) = 150;
-    egoname(3) = lang(u8"稲妻の"s, u8"of lightning"s);
-    egoref(0, 3) = 1;
-    egoref(1, 3) = 3;
-    p = 3;
-    egoenc(0, p) = 20052;
-    egoenc(1, p) = 150;
-    egoenc(2, p) = 70052;
-    egoenc(3, p) = 150;
-    egoname(5) = lang(u8"癒し手の"s, u8"of healing"s);
-    egoref(0, 5) = 1;
-    egoref(1, 5) = 1;
-    p = 5;
-    egoenc(0, p) = 30154;
-    egoenc(1, p) = 100;
-    egoname(7) = lang(u8"耐麻痺の"s, u8"of resist paralysis"s);
-    egoref(0, 7) = 2;
-    egoref(1, 7) = 1;
-    p = 7;
-    egoenc(0, p) = 24;
-    egoenc(1, p) = 100;
-    egoname(9) = lang(u8"耐恐怖の"s, u8"of resist fear"s);
-    egoref(0, 9) = 0;
-    egoref(1, 9) = 1;
-    p = 9;
-    egoenc(0, p) = 26;
-    egoenc(1, p) = 100;
-    egoname(10) = lang(u8"睡眠防止の"s, u8"of resist sleep"s);
-    egoref(0, 10) = 0;
-    egoref(1, 10) = 1;
-    p = 10;
-    egoenc(0, p) = 27;
-    egoenc(1, p) = 100;
-    egoname(4) = lang(u8"防衛者の"s, u8"of defender"s);
-    egoref(0, 4) = 3;
-    egoref(1, 4) = 10000;
-    p = 4;
-    egoenc(0, p) = 20050;
-    egoenc(1, p) = 100;
-    egoenc(2, p) = 20051;
-    egoenc(3, p) = 100;
-    egoenc(4, p) = 20052;
-    egoenc(5, p) = 100;
-    egominorn(0) = lang(u8"唄う"s, u8"singing"s);
-    egominorn(1) = lang(u8"召使の"s, u8"servant's"s);
-    egominorn(2) = lang(u8"従者の"s, u8"follower's"s);
-    egominorn(3) = lang(u8"呻く"s, u8"howling"s);
-    egominorn(4) = lang(u8"輝く"s, u8"glowing"s);
-    egominorn(5) = lang(u8"異彩の"s, u8"conspicuous"s);
-    egominorn(6) = lang(u8"魔力を帯びた"s, u8"magical"s);
-    egominorn(7) = lang(u8"闇を砕く"s, u8"enchanted"s);
-    egominorn(8) = lang(u8"強力な"s, u8"mighty"s);
-    egominorn(9) = lang(u8"頼れる"s, u8"trustworthy"s);
-    maxegominorn = length(egominorn);
-    return;
-}
-
-
-
-void add_enchantments_depending_on_ego()
-{
-    for (int cnt = 0, cnt_end = (rnd(rnd(5) + 1) + 1); cnt < cnt_end; ++cnt)
-    {
-        encadd(ci, randomenc(randomenclv(egolv)), randomencp(), 8);
-    }
-    inv[ci].subname = 20000 + rnd(maxegominorn);
-    return;
-}
-
-
-
-void add_enchantment_by_fixed_ego()
-{
-    p = 0;
-    for (int cnt = 0; cnt < 11; ++cnt)
-    {
-        if (egoref(0, cnt) != egolv)
-        {
-            continue;
-        }
-        if (egoref(1, cnt) != 0)
-        {
-            if (encflt(reftype, egoref(1, cnt)) == 0)
-            {
-                continue;
-            }
-        }
-        egolist(p) = cnt;
-        ++p;
-    }
-    if (p == 0)
-    {
-        return;
-    }
-    p = egolist(rnd(p));
-    inv[ci].subname = 10000 + p;
-    egoadd(ci, p);
-    if (rnd(2) == 0)
-    {
-        encadd(ci, randomenc(randomenclv(egolv)), randomencp(), 20);
-    }
-    if (rnd(4) == 0)
-    {
-        encadd(ci, randomenc(randomenclv(egolv)), randomencp(), 25);
-    }
-    return;
-}
-
-
-
-void add_enchantments()
-{
-    if (reftype == 25000)
-    {
-        inv[ci].count = -1;
-    }
-    if (fixlv <= 2)
-    {
-        return;
-    }
-    if (fixlv == 6)
-    {
-        egolv = 4;
-    }
-    else
-    {
-        egolv = rnd(clamp(rnd(objlv / 10 + 3), 0, 4) + 1);
-        inv[ci].value = inv[ci].value * 3;
-        inv[ci].difficulty_of_identification =
-            50 + rnd((std::abs((fixlv - 2)) * 100 + 100));
-    }
-    if (reftypeminor == 10006)
-    {
-        for (int cnt = 0; cnt < 1; ++cnt)
-        {
-            if (rnd(10) == 0)
-            {
-                encadd(ci, 34, randomencp());
-            }
-            if (rnd(10) == 0)
-            {
-                encadd(ci, 10016, randomencp());
-            }
-            if (rnd(10) == 0)
-            {
-                encadd(ci, 30172, randomencp());
-                break;
-            }
-            if (rnd(10) == 0)
-            {
-                encadd(ci, 10003, randomencp());
-                break;
-            }
-            if (rnd(10) == 0)
-            {
-                encadd(ci, 30164, randomencp());
-                break;
-            }
-        }
-    }
-    if (fixlv < 4)
-    {
-        if (rnd(2))
-        {
-            add_enchantments_depending_on_ego();
-        }
-        else
-        {
-            add_enchantment_by_fixed_ego();
-        }
-    }
-    if (fixlv == 4 || fixlv == 5)
-    {
-        inv[ci].subname = 40000 + rnd(30000);
-        if (fixlv == 5 || (fixlv == 4 && rnd(10) == 0))
-        {
-            encadd(ci, randomenc(99), randomencp());
-        }
-        if (rnd(100) == 0 || 0)
-        {
-            if (reftype == 24000 || reftype == 10000)
-            {
-                ibitmod(10, ci, 1);
-                inv[ci].param1 = 1;
-                return;
-            }
-        }
-        if (fixlv == 4)
-        {
-            p = rnd(rnd(rnd(10) + 1) + 3) + 3;
-        }
-        if (fixlv == 5)
-        {
-            p = rnd(rnd(rnd(10) + 1) + 3) + 6;
-        }
-        if (p > 11)
-        {
-            if (reftype == 10000 || reftype == 24000)
-            {
-                if (rnd(10) == 0)
-                {
-                    ibitmod(15, ci, 1);
-                    encadd(ci, randomenc(99), randomencp());
-                    inv[ci].curse_state = curse_state_t::blessed;
-                }
-            }
-        }
-        for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
-        {
-            encadd(
-                ci,
-                randomenc(randomenclv(egolv)),
-                randomencp() + (fixlv == 5) * 100 + (ibit(15, ci) == 1) * 100,
-                20 - (fixlv == 5) * 10 - (ibit(15, ci) == 1) * 20);
-        }
-    }
-    if (fixlv == 6)
-    {
-        for (int cnt = 0, cnt_end = (rnd(3)); cnt < cnt_end; ++cnt)
-        {
-            encadd(ci, randomenc(randomenclv(egolv)), randomencp(), 10);
-        }
-    }
-    if (is_cursed(inv[ci].curse_state))
-    {
-        encadd(
-            ci,
-            randomenc(randomenclv(egolv)),
-            clamp(randomencp(), 250, 10000)
-                * (125 + (inv[ci].curse_state == curse_state_t::doomed) * 25)
-                / 100);
-        for (int cnt = 0,
-                 cnt_end = cnt
-                 + (1 + (inv[ci].curse_state == curse_state_t::doomed)
-                    + rnd(2));
-             cnt < cnt_end;
-             ++cnt)
-        {
-            if (rnd(3) == 0)
-            {
-                encadd(ci, 2, randomencp() * 3 / 2, 100);
-                continue;
-            }
-            if (rnd(3) == 0)
-            {
-                encadd(ci, 1, randomencp() * 5 / 2, 100);
-                continue;
-            }
-            encadd(ci, randomenc(-1), randomencp());
-        }
-    }
-    return;
-}
-
-
-
-void initialize_item_material()
-{
-    determine_item_material();
-    apply_item_material();
-    return;
-}
-
-
-
-void determine_item_material()
-{
-    int mtlv = 0;
-    if (cm)
-    {
-        mtlv = cdata[rc].level / 15 + 1;
-    }
-    else
-    {
-        mtlv = rnd((objlv + 1)) / 10 + 1;
-    }
-    if (inv[ci].id == 630)
-    {
-        mtlv = rnd(mtlv + 1);
-        if (rnd(3))
-        {
-            inv[ci].material = 1000;
-        }
-        else
-        {
-            inv[ci].material = 1001;
-        }
-    }
-    p = rnd(100);
-    for (int cnt = 0; cnt < 1; ++cnt)
-    {
-        if (p < 5)
-        {
-            p = 3;
-            break;
-        }
-        if (p < 25)
-        {
-            p = 2;
-            break;
-        }
-        if (p < 55)
-        {
-            p = 1;
-            break;
-        }
-        p = 0;
-    }
-    if (mode == 1)
-    {
-        mtlv = 0;
-        p = 0;
-    }
-    if (mtlv >= 5)
-    {
-        mtlv = 4;
-    }
-    mtlv = clamp(rnd(mtlv + 1) + objfix, 0, 4);
-    objfix = 0;
-    if (reftype == 60000)
-    {
-        if (rnd(2) == 0)
-        {
-            inv[ci].material = 1000;
-        }
-        else
-        {
-            inv[ci].material = 1001;
-        }
-    }
-    if (inv[ci].material == 1000)
-    {
-        if (rnd(10) != 0)
-        {
-            inv[ci].material = the_item_material_db.lookup_metal(p, mtlv);
-        }
-        else
-        {
-            inv[ci].material = the_item_material_db.lookup_leather(p, mtlv);
-        }
-    }
-    if (inv[ci].material == 1001)
-    {
-        if (rnd(10) != 0)
-        {
-            inv[ci].material = the_item_material_db.lookup_leather(p, mtlv);
-        }
-        else
-        {
-            inv[ci].material = the_item_material_db.lookup_metal(p, mtlv);
-        }
-    }
-    if (rnd(25) == 0)
-    {
-        inv[ci].material = 35;
-    }
-    return;
-}
-
-
-
-void change_item_material()
-{
-    int originalvalue = 0;
-    inv[ci].color = 0;
-    p = inv[ci].material;
-    reftype = the_item_db[inv[ci].id]->category;
-    fixlv = inv[ci].quality;
-    for (auto e : the_item_material_db[p]->enchantments)
-    {
-        encremove(ci, e.id, e.power);
-    }
-    originalvalue = inv[ci].value * 100 / the_item_material_db[p]->value;
-    dbid = inv[ci].id;
-    access_item_db(10);
-    inv[ci].value = originalvalue;
-    if (fixmaterial != 0)
-    {
-        inv[ci].material = fixmaterial;
-        fixmaterial = 0;
-    }
-    else
-    {
-        determine_item_material();
-    }
-    apply_item_material();
-    label_1583();
-    refresh_character(cc);
-    return;
-}
-
-
-
-void apply_item_material()
-{
-    if (reftype == 60000)
-    {
-        if (inv[ci].material == 3 || inv[ci].material == 16
-            || inv[ci].material == 21 || inv[ci].material == 2)
-        {
-            inv[ci].material = 43;
-        }
-    }
-    p = inv[ci].material;
-    inv[ci].weight = inv[ci].weight * the_item_material_db[p]->weight / 100;
-    if (reftype == 60000)
-    {
-        inv[ci].value += the_item_material_db[p]->value * 2;
-    }
-    else
-    {
-        inv[ci].value = inv[ci].value * the_item_material_db[p]->value / 100;
-    }
-    if (inv[ci].color == 0)
-    {
-        inv[ci].color = the_item_material_db[p]->color;
-    }
-    p(1) = 120;
-    p(2) = 80;
-    if (fixlv == 1)
-    {
-        p(1) = 150;
-        p(2) = 80;
-    }
-    if (fixlv == 3)
-    {
-        p(1) = 100;
-        p(2) = 70;
-    }
-    if (fixlv >= 4)
-    {
-        p(1) = 80;
-        p(2) = 70;
-    }
-    if (inv[ci].hit_bonus != 0)
-    {
-        inv[ci].hit_bonus = the_item_material_db[p]->hit_bonus
-            * inv[ci].hit_bonus * 9 / (p(1) - rnd(30));
-    }
-    if (inv[ci].damage_bonus != 0)
-    {
-        inv[ci].damage_bonus = the_item_material_db[p]->damage_bonus
-            * inv[ci].damage_bonus * 5 / (p(1) - rnd(30));
-    }
-    if (inv[ci].dv != 0)
-    {
-        inv[ci].dv =
-            the_item_material_db[p]->dv * inv[ci].dv * 7 / (p(1) - rnd(30));
-    }
-    if (inv[ci].pv != 0)
-    {
-        inv[ci].pv =
-            the_item_material_db[p]->pv * inv[ci].pv * 9 / (p(1) - rnd(30));
-    }
-    if (inv[ci].dice_y != 0)
-    {
-        inv[ci].dice_y =
-            inv[ci].dice_y * the_item_material_db[p]->dice_y / (p(1) + rnd(25));
-    }
-    set_material_specific_attributes();
-    return;
-}
-
-
-
-void set_material_specific_attributes()
-{
-    p = inv[ci].material;
-    for (auto e : the_item_material_db[p]->enchantments)
-    {
-        encadd(ci, e.id, e.power, 0, 1);
-    }
-    for (int cnt = 0; cnt < 10; ++cnt)
-    {
-        if (the_item_material_db[p]->fireproof)
-        {
-            ibitmod(1, ci, 1);
-        }
-        if (the_item_material_db[p]->acidproof)
-        {
-            ibitmod(2, ci, 1);
-        }
-    }
-    return;
 }
 
 
@@ -4828,274 +3364,6 @@ int getworker(int map_id, int prm_579)
 
 
 
-void removeworker(int map_id)
-{
-    for (int i = 1; i < 16; ++i)
-    {
-        if (cdata[i].current_map == map_id)
-        {
-            cdata[i].current_map = 0;
-        }
-    }
-}
-
-
-
-void delmef(int prm_581)
-{
-    if (mef(0, prm_581) == 7)
-    {
-        evadd(21, mef(2, prm_581), mef(3, prm_581));
-    }
-    map(mef(2, prm_581), mef(3, prm_581), 8) = 0;
-    mef(0, prm_581) = 0;
-    i_at_m79 = 199;
-    for (int cnt = 0, cnt_end = (200 - prm_581); cnt < cnt_end; ++cnt)
-    {
-        if (mef(0, i_at_m79) != 0)
-        {
-            for (int cnt = 0; cnt < 9; ++cnt)
-            {
-                mef(cnt, prm_581) = mef(cnt, i_at_m79);
-            }
-            map(mef(2, i_at_m79), mef(3, i_at_m79), 8) = prm_581 + 1;
-            mef(0, i_at_m79) = 0;
-            break;
-        }
-        --i_at_m79;
-    }
-    return;
-}
-
-
-
-void addmef(
-    int prm_582,
-    int prm_583,
-    int prm_584,
-    int prm_585,
-    int prm_586,
-    int prm_587,
-    int prm_588,
-    int prm_589,
-    int prm_590,
-    int prm_591)
-{
-    int p_at_m79 = 0;
-    p_at_m79 = map(prm_582, prm_583, 0);
-    if (prm_584 == 5)
-    {
-        if (chipm(0, p_at_m79) == 3)
-        {
-            return;
-        }
-    }
-    if (map(prm_582, prm_583, 8) != 0)
-    {
-        i_at_m79 = map(prm_582, prm_583, 8) - 1;
-    }
-    else
-    {
-        i_at_m79 = -1;
-        for (int cnt = 0; cnt < 200; ++cnt)
-        {
-            if (mef(0, cnt) == 0)
-            {
-                i_at_m79 = cnt;
-                break;
-            }
-        }
-        if (i_at_m79 == -1)
-        {
-            i_at_m79 = rnd(200);
-            map(mef(2, i_at_m79), mef(3, i_at_m79), 8) = 0;
-        }
-    }
-    mef(0, i_at_m79) = prm_584;
-    mef(1, i_at_m79) = prm_585 + prm_591 * 10000;
-    mef(2, i_at_m79) = prm_582;
-    mef(3, i_at_m79) = prm_583;
-    mef(4, i_at_m79) = prm_586;
-    mef(5, i_at_m79) = prm_587;
-    mef(6, i_at_m79) = prm_588;
-    mef(7, i_at_m79) = prm_589;
-    mef(8, i_at_m79) = prm_590;
-    map(prm_582, prm_583, 8) = i_at_m79 + 1;
-    return;
-}
-
-
-
-void cell_featset(
-    int prm_592,
-    int prm_593,
-    int prm_594,
-    int prm_595,
-    int prm_596,
-    int prm_597)
-{
-    elona_vector1<int> feat_at_m80;
-    if (prm_594 != -1)
-    {
-        feat_at_m80 = prm_594;
-    }
-    else
-    {
-        feat_at_m80 = map(prm_592, prm_593, 6) % 1000;
-    }
-    if (prm_595 != -1)
-    {
-        feat_at_m80(1) = prm_595;
-    }
-    else
-    {
-        feat_at_m80(1) = map(prm_592, prm_593, 6) / 1000 % 100;
-    }
-    if (prm_596 != -1)
-    {
-        feat_at_m80(2) = prm_596;
-    }
-    else
-    {
-        feat_at_m80(2) = map(prm_592, prm_593, 6) / 100000 % 100;
-    }
-    if (prm_597 != -1)
-    {
-        feat_at_m80(3) = prm_597;
-    }
-    else
-    {
-        feat_at_m80(3) = map(prm_592, prm_593, 6) / 10000000;
-    }
-    map(prm_592, prm_593, 6) = feat_at_m80 + feat_at_m80(1) * 1000
-        + feat_at_m80(2) * 100000 + feat_at_m80(3) * 10000000;
-    return;
-}
-
-
-
-int cell_featread(int prm_598, int prm_599, int)
-{
-    feat(0) = map(prm_598, prm_599, 6) % 1000;
-    feat(1) = map(prm_598, prm_599, 6) / 1000 % 100;
-    feat(2) = map(prm_598, prm_599, 6) / 100000 % 100;
-    feat(3) = map(prm_598, prm_599, 6) / 10000000;
-    return 0;
-}
-
-
-
-void cell_featclear(int prm_601, int prm_602)
-{
-    map(prm_601, prm_602, 6) = 0;
-    return;
-}
-
-
-
-void cell_check(int prm_603, int prm_604)
-{
-    cellaccess = 1;
-    cellchara = -1;
-    cellfeat = -1;
-    if (prm_603 < 0 || prm_603 >= mdata(0) || prm_604 < 0
-        || prm_604 >= mdata(1))
-    {
-        cellaccess = 0;
-        return;
-    }
-    if (map(prm_603, prm_604, 1) != 0)
-    {
-        cellchara = map(prm_603, prm_604, 1) - 1;
-        cellaccess = 0;
-    }
-    if (map(prm_603, prm_604, 6) != 0)
-    {
-        cellfeat = map(prm_603, prm_604, 6) / 1000 % 100;
-        if (chipm(7, map(prm_603, prm_604, 6) % 1000) & 4)
-        {
-            cellaccess = 0;
-        }
-    }
-    if (chipm(7, map(prm_603, prm_604, 0)) & 4)
-    {
-        cellaccess = 0;
-    }
-    return;
-}
-
-
-
-void cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
-{
-    int x2_at_m81 = 0;
-    int y2_at_m81 = 0;
-    if (gdata_mount != 0)
-    {
-        if (gdata_mount == prm_605 || gdata_mount == prm_606)
-        {
-            return;
-        }
-    }
-    tc_at_m81 = prm_606;
-    if (tc_at_m81 == -1)
-    {
-        if (map(prm_607, prm_608, 1) != 0)
-        {
-            tc_at_m81 = map(prm_607, prm_608, 1) - 1;
-        }
-    }
-    if (tc_at_m81 != -1)
-    {
-        map(cdata[prm_605].position.x, cdata[prm_605].position.y, 1) =
-            tc_at_m81 + 1;
-        x2_at_m81 = cdata[tc_at_m81].position.x;
-        y2_at_m81 = cdata[tc_at_m81].position.y;
-        cdata[tc_at_m81].position.x = cdata[prm_605].position.x;
-        cdata[tc_at_m81].position.y = cdata[prm_605].position.y;
-    }
-    else
-    {
-        map(cdata[prm_605].position.x, cdata[prm_605].position.y, 1) = 0;
-        x2_at_m81 = prm_607;
-        y2_at_m81 = prm_608;
-    }
-    map(x2_at_m81, y2_at_m81, 1) = prm_605 + 1;
-    cdata[prm_605].position.x = x2_at_m81;
-    cdata[prm_605].position.y = y2_at_m81;
-    if (prm_605 == 0 || tc_at_m81 == 0)
-    {
-        if (gdata_mount)
-        {
-            cdata[gdata_mount].position.x = cdata[0].position.x;
-            cdata[gdata_mount].position.y = cdata[0].position.y;
-        }
-    }
-    return;
-}
-
-
-
-void cell_movechara(int cc, int x, int y)
-{
-    if (map(x, y, 1) != 0)
-    {
-        if (map(x, y, 1) - 1 == cc)
-        {
-            return;
-        }
-        cell_swap(cc, tc_at_m81);
-    }
-    else
-    {
-        map(cdata[cc].position.x, cdata[cc].position.y, 1) = 0;
-        cdata[cc].position = {x, y};
-        map(x, y, 1) = cc + 1;
-    }
-}
-
-
-
 int route_info(int& prm_612, int& prm_613, int prm_614)
 {
     if (route(0, prm_614 % maxroute) == 1)
@@ -5264,45 +3532,6 @@ void chara_preparepic(int prm_618, int prm_619)
     return;
 }
 
-
-
-int cell_itemlist(int prm_625, int prm_626)
-{
-    listmax = 0;
-    for (const auto& cnt : items(-1))
-    {
-        if (inv[cnt].number > 0)
-        {
-            if (inv[cnt].position.x == prm_625
-                && inv[cnt].position.y == prm_626)
-            {
-                list(0, listmax) = cnt;
-                ++listmax;
-            }
-        }
-    }
-    return rtval;
-}
-
-
-
-// Returns pair of number of items and the last item on the cell.
-std::pair<int, int> cell_itemoncell(const position_t& pos)
-{
-    int number{};
-    int item{};
-
-    for (const auto& ci : items(-1))
-    {
-        if (inv[ci].number > 0 && inv[ci].position == pos)
-        {
-            ++number;
-            item = ci;
-        }
-    }
-
-    return std::make_pair(number, item);
-}
 
 
 
@@ -6762,7 +4991,7 @@ void check_quest()
             }
             if (p_at_m119 == 0)
             {
-                evadd(8);
+                event_add(8);
             }
             else
             {
@@ -6776,7 +5005,7 @@ void check_quest()
         {
             if (findchara(qdata(12, gdata_executing_immediate_quest)) == 0)
             {
-                evadd(8);
+                event_add(8);
             }
         }
     }
@@ -7414,67 +5643,6 @@ void incognitoend()
         }
     }
     return;
-}
-
-
-
-void cell_setchara(int cc, int x, int y)
-{
-    map(x, y, 1) = cc + 1;
-    cdata[cc].position = position_t{x, y};
-}
-
-
-
-void cell_removechara(int x, int y)
-{
-    map(x, y, 1) = 0;
-}
-
-
-
-int cell_findspace(int prm_796, int prm_797, int prm_798)
-{
-    int f_at_m130 = 0;
-    int dy_at_m130 = 0;
-    int dx_at_m130 = 0;
-    f_at_m130 = 0;
-    for (int cnt = 0, cnt_end = (prm_798 * 2 + 1); cnt < cnt_end; ++cnt)
-    {
-        dy_at_m130 = prm_797 + cnt - 1;
-        if (dy_at_m130 < 0 || dy_at_m130 >= mdata(1))
-        {
-            continue;
-        }
-        for (int cnt = 0, cnt_end = (prm_798 * 2 + 1); cnt < cnt_end; ++cnt)
-        {
-            dx_at_m130 = prm_796 + cnt - 1;
-            if (dx_at_m130 < 0 || dx_at_m130 >= mdata(0))
-            {
-                continue;
-            }
-            if (map(dx_at_m130, dy_at_m130, 1) != 0)
-            {
-                continue;
-            }
-            if (chipm(7, map(dx_at_m130, dy_at_m130, 0)) & 4)
-            {
-                continue;
-            }
-            if (chipm(7, map(dx_at_m130, dy_at_m130, 6) % 1000) & 4)
-            {
-                continue;
-            }
-            rtval(0) = dx_at_m130;
-            rtval(1) = dy_at_m130;
-            f_at_m130 = 1;
-        }
-        if (f_at_m130)
-        {
-            break;
-        }
-    }
-    return f_at_m130;
 }
 
 
@@ -9138,483 +7306,6 @@ void check_kill(int prm_836, int prm_837)
 
 
 
-void item_acid(int prm_838, int prm_839)
-{
-    int body_at_m138 = 0;
-    if (prm_839 != -1)
-    {
-        ci_at_m138 = prm_839;
-    }
-    else
-    {
-        ci_at_m138 = -1;
-        for (int i = 0; i < 30; ++i)
-        {
-            body_at_m138 = cdata_body_part(prm_838, i) / 10000;
-            if (body_at_m138 == 0)
-            {
-                break;
-            }
-            p_at_m138 = cdata_body_part(prm_838, i) % 10000 - 1;
-            if (p_at_m138 == -1)
-            {
-                continue;
-            }
-            if (rnd(clamp(30, 1, 30)) == 0)
-            {
-                if (inv[p_at_m138].enhancement > -4)
-                {
-                    ci_at_m138 = p_at_m138;
-                    break;
-                }
-            }
-        }
-    }
-    if (ci_at_m138 == -1)
-    {
-        return;
-    }
-    if (the_item_db[inv[ci_at_m138].id]->category >= 50000)
-    {
-        return;
-    }
-    if (ibit(1, ci_at_m138) == 0)
-    {
-        txtef(8);
-        txt(lang(
-            name(prm_838) + u8"の"s + itemname(ci_at_m138)
-                + u8"は酸で傷ついた。"s,
-            name(prm_838) + your(prm_838) + u8" "s + itemname(ci_at_m138, 0, 1)
-                + u8" is damaged by acid."s));
-        --inv[ci_at_m138].enhancement;
-    }
-    else
-    {
-        txt(lang(
-            name(prm_838) + u8"の"s + itemname(ci_at_m138)
-                + u8"は酸では傷つかない。"s,
-            name(prm_838) + your(prm_838) + u8" "s + itemname(ci_at_m138, 0, 1)
-                + u8" is immune to acid."s));
-    }
-    return;
-}
-
-
-
-int item_fire(int prm_840, int prm_841)
-{
-    max_at_m138 = 0;
-    ti_at_m138 = -1;
-    if (prm_841 != -1)
-    {
-        list_at_m138(0) = prm_841;
-        ++max_at_m138;
-    }
-    if (prm_840 != -1)
-    {
-        if (sdata(50, prm_840) / 50 >= 6 || cdata[prm_840].quality >= 4)
-        {
-            return 0;
-        }
-        for (const auto& cnt : items(prm_840))
-        {
-            if (inv[cnt].number == 0)
-            {
-                continue;
-            }
-            if (inv[cnt].id == 567)
-            {
-                if (ti_at_m138 == -1)
-                {
-                    ti_at_m138 = cnt;
-                    item_separate(ti_at_m138);
-                }
-                continue;
-            }
-            if (prm_841 == -1)
-            {
-                list_at_m138(max_at_m138) = cnt;
-                ++max_at_m138;
-            }
-        }
-    }
-    if (max_at_m138 == 0)
-    {
-        return 0;
-    }
-    f_at_m138 = 0;
-    for (int cnt = 0; cnt < 3; ++cnt)
-    {
-        ci_at_m138 = list_at_m138(rnd(max_at_m138));
-        if (inv[ci_at_m138].number <= 0)
-        {
-            continue;
-        }
-        rowact_item(ci_at_m138);
-        if (ibit(2, ci_at_m138) == 0)
-        {
-            if (ibit(5, ci_at_m138) == 0)
-            {
-                a_at_m138 = the_item_db[inv[ci_at_m138].id]->category;
-                if (a_at_m138 == 57000)
-                {
-                    if (inv[ci_at_m138].param2 == 0)
-                    {
-                        if (prm_840 == -1)
-                        {
-                            if (is_in_fov(inv[ci_at_m138].position))
-                            {
-                                txtef(11);
-                                txt(lang(
-                                    u8"地面の"s
-                                        + itemname(
-                                              ci_at_m138,
-                                              inv[ci_at_m138].number)
-                                        + u8"はこんがりと焼き上がった。"s,
-                                    itemname(ci_at_m138, inv[ci_at_m138].number)
-                                        + u8" on the ground get"s
-                                        + _s2(inv[ci_at_m138].number)
-                                        + u8" perfectly broiled."s));
-                            }
-                        }
-                        if (prm_840 != -1)
-                        {
-                            if (is_in_fov(prm_840))
-                            {
-                                txtef(11);
-                                txt(lang(
-                                    name(prm_840) + u8"の"s
-                                        + itemname(
-                                              ci_at_m138,
-                                              inv[ci_at_m138].number)
-                                        + u8"はこんがりと焼き上がった。"s,
-                                    name(prm_840) + your(prm_840) + u8" "s
-                                        + itemname(
-                                              ci_at_m138,
-                                              inv[ci_at_m138].number,
-                                              1)
-                                        + u8" get"s
-                                        + _s2(inv[ci_at_m138].number)
-                                        + u8" perfectly broiled."s));
-                            }
-                        }
-                        make_dish(ci_at_m138, rnd(5) + 1);
-                        f_at_m138 = 1;
-                        continue;
-                    }
-                }
-                if (a_at_m138 == 72000 || a_at_m138 == 59000
-                    || a_at_m138 == 68000 || inv[ci_at_m138].quality >= 4)
-                {
-                    continue;
-                }
-                if (inv[ci_at_m138].body_part != 0)
-                {
-                    if (rnd(2))
-                    {
-                        continue;
-                    }
-                }
-                if (a_at_m138 != 56000 && a_at_m138 != 80000
-                    && a_at_m138 != 55000 && a_at_m138 != 53000
-                    && a_at_m138 != 54000)
-                {
-                    if (rnd(4))
-                    {
-                        continue;
-                    }
-                    if (prm_840 != -1)
-                    {
-                        if (rnd(4))
-                        {
-                            continue;
-                        }
-                    }
-                }
-                if (ti_at_m138 != -1)
-                {
-                    if (inv[ti_at_m138].number > 0)
-                    {
-                        if (is_in_fov(prm_840))
-                        {
-                            txt(lang(
-                                itemname(ti_at_m138, 1) + u8"が"s
-                                    + name(prm_840)
-                                    + u8"の持ち物を炎から守った。"s,
-                                itemname(ti_at_m138, 1) + u8" protects "s
-                                    + name(prm_840) + your(prm_840)
-                                    + u8" stuff from fire."s));
-                        }
-                        if (inv[ti_at_m138].count > 0)
-                        {
-                            --inv[ti_at_m138].count;
-                        }
-                        else if (rnd(20) == 0)
-                        {
-                            --inv[ti_at_m138].number;
-                            if (is_in_fov(prm_840))
-                            {
-                                txt(lang(
-                                    itemname(ti_at_m138, 1)
-                                        + u8"は灰と化した。"s,
-                                    itemname(ti_at_m138, 1)
-                                        + u8" turns to dust."s));
-                                break;
-                            }
-                        }
-                        continue;
-                    }
-                }
-                p_at_m138 = rnd(inv[ci_at_m138].number) / 2 + 1;
-                if (prm_840 != -1)
-                {
-                    if (inv[ci_at_m138].body_part != 0)
-                    {
-                        if (is_in_fov(prm_840))
-                        {
-                            txtef(8);
-                            txt(lang(
-                                name(prm_840) + u8"の装備している"s
-                                    + itemname(ci_at_m138, p_at_m138)
-                                    + u8"は灰と化した。"s,
-                                itemname(ci_at_m138, p_at_m138) + u8" "s
-                                    + name(prm_840) + u8" equip"s + _s(prm_840)
-                                    + u8" turn"s + _s2(p_at_m138)
-                                    + u8" to dust."s));
-                        }
-                        cdata_body_part(prm_840, inv[ci_at_m138].body_part) =
-                            cdata_body_part(prm_840, inv[ci_at_m138].body_part)
-                            / 10000 * 10000;
-                        inv[ci_at_m138].body_part = 0;
-                        refresh_character(prm_840);
-                    }
-                    else if (is_in_fov(prm_840))
-                    {
-                        txtef(8);
-                        txt(lang(
-                            name(prm_840) + u8"の"s
-                                + itemname(ci_at_m138, p_at_m138)
-                                + u8"は灰と化した。"s,
-                            name(prm_840) + your(prm_840) + u8" "s
-                                + itemname(ci_at_m138, p_at_m138, 1)
-                                + u8" turn"s + _s2(p_at_m138)
-                                + u8" to dust."s));
-                    }
-                }
-                else if (is_in_fov(inv[ci_at_m138].position))
-                {
-                    txtef(8);
-                    txt(lang(
-                        u8"地面の"s + itemname(ci_at_m138, p_at_m138)
-                            + u8"は灰と化した。"s,
-                        itemname(ci_at_m138, p_at_m138)
-                            + u8" on the ground turn"s + _s(p_at_m138)
-                            + u8" to dust."s));
-                }
-                inv[ci_at_m138].number -= p_at_m138;
-                cell_refresh(
-                    inv[ci_at_m138].position.x, inv[ci_at_m138].position.y);
-                f_at_m138 = 1;
-            }
-        }
-    }
-    refresh_burden_state();
-    return f_at_m138;
-}
-
-
-
-void mapitem_fire(int prm_842, int prm_843)
-{
-    if (map(prm_842, prm_843, 4) == 0)
-    {
-        return;
-    }
-    ci_at_m138 = -1;
-    for (const auto& cnt : items(-1))
-    {
-        if (inv[cnt].number == 0)
-        {
-            continue;
-        }
-        if (inv[cnt].position.x == prm_842)
-        {
-            if (inv[cnt].position.y == prm_843)
-            {
-                ci_at_m138 = cnt;
-                break;
-            }
-        }
-    }
-    if (ci_at_m138 != -1)
-    {
-        int stat = item_fire(-1, ci_at_m138);
-        if (stat == 1)
-        {
-            if (map(prm_842, prm_843, 8) == 0)
-            {
-                addmef(prm_842, prm_843, 5, 24, rnd(10) + 5, 100, cc);
-            }
-        }
-        cell_refresh(prm_842, prm_843);
-    }
-    return;
-}
-
-
-
-int item_cold(int prm_844, int prm_845)
-{
-    std::string s_at_m138;
-    max_at_m138 = 0;
-    ti_at_m138 = -1;
-    if (prm_845 != -1)
-    {
-        list_at_m138(0) = prm_845;
-        ++max_at_m138;
-    }
-    if (prm_844 != -1)
-    {
-        if (sdata(51, prm_844) / 50 >= 6 || cdata[prm_844].quality >= 4)
-        {
-            return 0;
-        }
-        for (const auto& cnt : items(prm_844))
-        {
-            if (inv[cnt].number == 0)
-            {
-                continue;
-            }
-            if (inv[cnt].id == 568)
-            {
-                if (ti_at_m138 == -1)
-                {
-                    ti_at_m138 = cnt;
-                    item_separate(ti_at_m138);
-                }
-                continue;
-            }
-            if (prm_845 == -1)
-            {
-                list_at_m138(max_at_m138) = cnt;
-                ++max_at_m138;
-            }
-        }
-    }
-    if (max_at_m138 == 0)
-    {
-        return 0;
-    }
-    f_at_m138 = 0;
-    for (int cnt = 0; cnt < 2; ++cnt)
-    {
-        ci_at_m138 = list_at_m138(rnd(max_at_m138));
-        if (inv[ci_at_m138].number <= 0)
-        {
-            continue;
-        }
-        rowact_item(ci_at_m138);
-        if (ibit(5, ci_at_m138) == 0)
-        {
-            a_at_m138 = the_item_db[inv[ci_at_m138].id]->category;
-            if (prm_844 == -1)
-            {
-                s_at_m138 = "";
-            }
-            else
-            {
-                s_at_m138 = name(prm_844) + lang(u8"の"s, your(prm_844));
-            }
-            if (a_at_m138 == 72000 || a_at_m138 == 59000 || a_at_m138 == 68000)
-            {
-                continue;
-            }
-            if (inv[ci_at_m138].quality >= 4 || inv[ci_at_m138].body_part != 0)
-            {
-                continue;
-            }
-            if (a_at_m138 != 52000)
-            {
-                if (rnd(30))
-                {
-                    continue;
-                }
-            }
-            if (ti_at_m138 != -1)
-            {
-                if (inv[ti_at_m138].number > 0)
-                {
-                    txt(lang(
-                        itemname(ti_at_m138, 1) + u8"が"s + name(prm_844)
-                            + u8"の持ち物を冷気から守った。"s,
-                        itemname(ti_at_m138, 1) + u8" protects "s
-                            + name(prm_844) + your(prm_844)
-                            + u8" stuff from cold."s));
-                    if (inv[ti_at_m138].count > 0)
-                    {
-                        --inv[ti_at_m138].count;
-                    }
-                    else if (rnd(20) == 0)
-                    {
-                        txt(lang(
-                            itemname(ti_at_m138, 1) + u8"は粉々に砕けた。"s,
-                            itemname(ti_at_m138, 1)
-                                + u8" is broken to pieces."s));
-                        --inv[ti_at_m138].number;
-                        break;
-                    }
-                    continue;
-                }
-            }
-            p_at_m138 = rnd(inv[ci_at_m138].number) / 2 + 1;
-            txtef(8);
-            txt(lang(
-                s_at_m138 + itemname(ci_at_m138, p_at_m138)
-                    + u8"は粉々に砕けた。"s,
-                s_at_m138 + itemname(ci_at_m138, p_at_m138) + u8" break"s
-                    + _s2(p_at_m138) + u8" to pieces."s));
-            inv[ci_at_m138].number -= p_at_m138;
-            f_at_m138 = 1;
-        }
-    }
-    refresh_burden_state();
-    return f_at_m138;
-}
-
-
-
-void mapitem_cold(int prm_846, int prm_847)
-{
-    if (map(prm_846, prm_847, 4) == 0)
-    {
-        return;
-    }
-    ci_at_m138 = -1;
-    for (const auto& cnt : items(-1))
-    {
-        if (inv[cnt].number == 0)
-        {
-            continue;
-        }
-        if (inv[cnt].position.x == prm_846)
-        {
-            if (inv[cnt].position.y == prm_847)
-            {
-                ci_at_m138 = cnt;
-                break;
-            }
-        }
-    }
-    if (ci_at_m138 != -1)
-    {
-        item_cold(-1, ci_at_m138);
-        cell_refresh(prm_846, prm_847);
-    }
-    return;
-}
-
-
-
 int copy_chara(int prm_848)
 {
     int c_at_m139 = 0;
@@ -10177,9 +7868,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         gdata(30) = 0;
         if (cdata[prm_853].hp < 0)
         {
-            if (evid() != -1)
+            if (event_id() != -1)
             {
-                if (evid() != 21)
+                if (event_id() != 21)
                 {
                     cdata[prm_853].hp = 1;
                 }
@@ -11025,7 +8716,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         }
         if (prm_855 == -9 || ele_at_m141 == 50)
         {
-            addmef(
+            mef_add(
                 cdata[prm_853].position.x,
                 cdata[prm_853].position.y,
                 5,
@@ -11092,7 +8783,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 cdata[prm_853].current_map = 0;
                 if (cdata[prm_853].is_escorted() == 1)
                 {
-                    evadd(15, cdata[prm_853].id);
+                    event_add(15, cdata[prm_853].id);
                     cdata[prm_853].state = 0;
                 }
                 if (cdata[prm_853].is_escorted_in_sub_quest() == 1)
@@ -11148,7 +8839,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 {
                     if (cdata[prm_853].id == 2)
                     {
-                        evadd(1);
+                        event_add(1);
                     }
                     if (cdata[prm_853].id == 141)
                     {
@@ -11219,7 +8910,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     }
                     if (cdata[prm_853].id == 318)
                     {
-                        evadd(
+                        event_add(
                             27,
                             cdata[prm_853].position.x,
                             cdata[prm_853].position.y);
@@ -11246,14 +8937,14 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                         if (adata(20, gdata_current_map) == prm_853
                             && cdata[prm_853].is_lord_of_dungeon() == 1)
                         {
-                            evadd(5);
+                            event_add(5);
                         }
                     }
                     if (cdata[prm_853].id == 331)
                     {
                         if (rnd(4) == 0)
                         {
-                            evadd(
+                            event_add(
                                 28,
                                 cdata[prm_853].position.x,
                                 cdata[prm_853].position.y);
@@ -11266,7 +8957,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     if (adata(20, gdata_current_map) == prm_853
                         && cdata[prm_853].is_lord_of_dungeon() == 1)
                     {
-                        evadd(5);
+                        event_add(5);
                     }
                 }
             }
@@ -15526,7 +13217,7 @@ void label_1540()
         traveldone = 0;
         if (gdata_executing_immediate_quest_type == 0)
         {
-            evadd(6);
+            event_add(6);
         }
     }
     if (cdata[rc].character_role == 1)
@@ -16197,10 +13888,10 @@ void label_1573()
                                     + "."));
                             ibitmod(8, ci, 1);
                             reftype = the_item_db[inv[ci].id]->category;
-                            encadd(
+                            enchantment_add(
                                 ci,
-                                randomenc(randomenclv(rnd(4))),
-                                randomencp());
+                                enchantment_generate(enchantment_gen_level(rnd(4))),
+                                enchantment_gen_p());
                             animeload(8, rc);
                         }
                     }
@@ -17276,500 +14967,6 @@ void label_1580()
 
 
 
-void label_1581()
-{
-    if (reftype < 60000)
-    {
-        if (rnd(12) == 0)
-        {
-            inv[ci].curse_state = curse_state_t::blessed;
-        }
-        if (rnd(13) == 0)
-        {
-            inv[ci].curse_state = curse_state_t::cursed;
-            if (the_item_db[inv[ci].id]->category < 50000)
-            {
-                if (rnd(4) == 0)
-                {
-                    inv[ci].curse_state = curse_state_t::doomed;
-                }
-            }
-        }
-    }
-    if (cm || mode == 1 || inv[ci].quality == 6)
-    {
-        inv[ci].curse_state = curse_state_t::none;
-    }
-    if (reftype < 50000 || (reftype == 60000 && rnd(5) == 0))
-    {
-        if (inv[ci].material >= 1000 || reftype == 60000)
-        {
-            initialize_item_material();
-        }
-        else
-        {
-            set_material_specific_attributes();
-        }
-    }
-    if (fixeditemenc != 0)
-    {
-        for (int cnt = 0; cnt < 10; ++cnt)
-        {
-            if (fixeditemenc(cnt * 2) == 0)
-            {
-                break;
-            }
-            encadd(
-                ci,
-                fixeditemenc(cnt * 2),
-                fixeditemenc(cnt * 2 + 1),
-                0,
-                0,
-                0,
-                1);
-        }
-    }
-    if (reftype < 52000)
-    {
-        add_enchantments();
-    }
-    else if (inv[ci].quality != 6)
-    {
-        inv[ci].quality = 2;
-    }
-    return;
-}
-
-
-
-int do_create_item(int slot, int x, int y)
-{
-    if ((slot == 0 || slot == -1) && fixlv < 5)
-    {
-        if (sdata(19, 0) > rnd(5000))
-        {
-            ++fixlv;
-        }
-    }
-
-    ci = inv_getfreeid(slot);
-    if (ci == -1)
-        return 0;
-
-    item_delete(ci);
-
-    if (slot == -1 && mode != 6 && mode != 9)
-    {
-        bool ok = false;
-        for (int i = 0; i < 100; ++i)
-        {
-            if (x == -1)
-            {
-                sx = rnd(mdata(0) - 2) + 2;
-                sy = rnd(mdata(1) - 2) + 2;
-                if (map(sx, sy, 4) != 0)
-                {
-                    continue;
-                }
-            }
-            else
-            {
-                if (i == 0)
-                {
-                    sx = x;
-                    sy = y;
-                }
-                else
-                {
-                    sx = x + rnd(i + 1) - rnd(i + 1);
-                    sy = y + rnd(i + 1) - rnd(i + 1);
-                }
-                if (sx < 0 || sy < 0 || sx > mdata(0) - 1 || sy > mdata(1) - 1)
-                {
-                    continue;
-                }
-            }
-            if (x != -1 && i == 0)
-            {
-                ok = true;
-                inv[ci].position.x = sx;
-                inv[ci].position.y = sy;
-                break;
-            }
-            if (map(sx, sy, 6) != 0)
-            {
-                if (map(sx, sy, 6) / 1000 % 100 == 22
-                    || map(sx, sy, 6) / 1000 % 100 == 20
-                    || map(sx, sy, 6) / 1000 % 100 == 21)
-                {
-                    continue;
-                }
-            }
-            if ((chipm(7, map(sx, sy, 0)) & 4) == 0)
-            {
-                ok = true;
-                inv[ci].position.x = sx;
-                inv[ci].position.y = sy;
-                break;
-            }
-        }
-        if (!ok)
-            return 0;
-    }
-
-    if (dbid == -1)
-    {
-        if (fltselect == 0 && mode != 6)
-        {
-            if (fixlv == 3)
-            {
-                if (rnd(1000) == 0)
-                {
-                    fltselect = 2;
-                }
-            }
-            if (fixlv == 4)
-            {
-                if (rnd(100) == 0)
-                {
-                    fltselect = 2;
-                }
-            }
-        }
-        dbmode = 1;
-        get_random_item_id();
-        if (dbid == 25)
-        {
-            if (fltselect == 2)
-            {
-                fixlv = 4;
-            }
-            objlv += 10;
-            fltselect = 0;
-            dbmode = 1;
-            get_random_item_id();
-        }
-    }
-
-    if (dbid == 25 && flttypemajor == 60002)
-    {
-        dbid = 501;
-    }
-
-    access_item_db(3);
-    access_item_db(2);
-
-    inv[ci].color = icolref(inv[ci].id);
-    if (inv[ci].color == 1)
-    {
-        inv[ci].color = randcolor(rnd(length(randcolor)));
-    }
-    if (inv[ci].id == 519)
-    {
-        inv[ci].color = rnd(21);
-    }
-    if (inv[ci].id == 24 && inv[ci].param1 == 0)
-    {
-        inv[ci].param1 = isetbook(rnd(length(isetbook)));
-    }
-    if (inv[ci].id == 563 && inv[ci].param1 == 0)
-    {
-        inv[ci].param1 = randskill();
-    }
-    if (inv[ci].id == 783)
-    {
-        inv[ci].subname = rpsourcelist(rnd(length(rpsourcelist)));
-        inv[ci].param1 = 1;
-    }
-
-    ++itemmemory(1, dbid);
-
-    inv[ci].quality = fixlv;
-    if (fixlv == 6 && mode != 6 && nooracle == 0)
-    {
-        int owner = inv_getowner(ci);
-        if (owner != -1)
-        {
-            if (cdata[owner].character_role == 13)
-            {
-                artifactlocation.push_back(lang(
-                    iknownnameref(inv[ci].id) + u8"は"s + gdata_year + u8"年"s
-                        + gdata_month + u8"月に"s
-                        + mapname(cdata[owner].current_map) + u8"の"s
-                        + cdatan(0, owner) + u8"の手に渡った。"s,
-                    cnven(iknownnameref(inv[ci].id)) + u8" was held by "s
-                        + cdatan(0, owner) + u8" at "s
-                        + mapname(cdata[owner].current_map) + u8" in "s
-                        + gdata_day + u8"/"s + gdata_month + u8", "s
-                        + gdata_year + u8". "s));
-            }
-            else
-            {
-                owner = -1;
-            }
-        }
-        if (owner == -1)
-        {
-            artifactlocation.push_back(lang(
-                iknownnameref(inv[ci].id) + u8"は"s + gdata_year + u8"年"s
-                    + gdata_month + u8"月に"s + mdatan(0) + u8"で生成された。"s,
-                cnven(iknownnameref(inv[ci].id)) + u8" was created at "s
-                    + mdatan(0) + u8" in "s + gdata_day + u8"/"s + gdata_month
-                    + u8", "s + gdata_year + u8". "s));
-        }
-    }
-
-    if (inv[ci].id == 617)
-    {
-        inv[ci].param1 = rnd(6);
-        inv[ci].image = 385 + inv[ci].param1;
-        inv[ci].value = inv[ci].param1 * inv[ci].param1 * 500 + 200;
-    }
-
-    if (inv[ci].id == 344)
-    {
-        inv[ci].param1 = rnd(5) + 1;
-        if (mode != 6)
-        {
-            inv[ci].param1 = 2;
-        }
-        inv[ci].subname = inv[ci].param1;
-        inv[ci].value = 5000
-            + 4500 * inv[ci].param1 * inv[ci].param1 * inv[ci].param1
-            + inv[ci].param1 * 20000;
-        if (inv[ci].param1 == 5)
-        {
-            inv[ci].value *= 2;
-        }
-    }
-
-    if (inv[ci].id == 54)
-    {
-        inv[ci].number = calcinitgold(slot);
-        if (inv[ci].quality == 3)
-        {
-            inv[ci].number = inv[ci].number * 2;
-        }
-        if (inv[ci].quality >= 4)
-        {
-            inv[ci].number = inv[ci].number * 4;
-        }
-        if (slot >= 0)
-        {
-            cdata[slot].gold += inv[ci].number;
-            inv[ci].number = 0;
-            return 1;
-        }
-    }
-
-    if (inv[ci].id == 729)
-    {
-        inv[ci].param4 = rnd(rnd(rnd(length(giftvalue)) + 1) + 1);
-        inv[ci].value = inv[ci].param4 * 2500 + 500;
-    }
-
-    if (inv[ci].id == 578)
-    {
-        inv[ci].param2 = rnd(rnd(length(moneybox)) + 1);
-        inv[ci].value =
-            inv[ci].param2 * inv[ci].param2 * inv[ci].param2 * 1000 + 1000;
-    }
-
-    if (inv[ci].id == 685)
-    {
-        inv[ci].param2 = rnd(objlv + 1) + 1;
-        inv[ci].value =
-            2000 + inv[ci].param2 * inv[ci].param2 + inv[ci].param2 * 100;
-    }
-
-    if (inv[ci].id == 630)
-    {
-        determine_item_material();
-        apply_item_material();
-    }
-
-    if (inv[ci].id == 687)
-    {
-        inv[ci].param1 = rnd(rnd(clamp(objlv / 2, 1, 15)) + 1);
-    }
-
-    if (inv[ci].id == 667)
-    {
-        ibitmod(17, ci, 1);
-    }
-
-    if (inv[ci].id == 641)
-    {
-        ++gdata_next_inventory_serial_id;
-        inv[ci].count = gdata_next_inventory_serial_id;
-    }
-
-    if (inv[ci].id == 510)
-    {
-        inv[ci].count = 3;
-    }
-
-    if (inv[ci].id == 561)
-    {
-        inv[ci].count = 5;
-    }
-
-    if (inv[ci].id == 547)
-    {
-        inv[ci].count = 4;
-    }
-
-    if (inv[ci].id == 579)
-    {
-        inv[ci].count = 6;
-    }
-
-    if (reftype == 72000)
-    {
-        inv[ci].param1 =
-            gdata_current_dungeon_level * (gdata_current_map != 30) + 5;
-        if (inv[ci].id == 283)
-        {
-            inv[ci].param1 = (rnd(10) + 1) * (cdata[0].level / 10 + 1);
-        }
-        if (inv[ci].id == 415 || inv[ci].id == 416)
-        {
-            inv[ci].param1 = cdata[0].level;
-        }
-        inv[ci].param2 = rnd(
-            std::abs(gdata_current_dungeon_level) * (gdata_current_map != 30)
-            + 1);
-        if (inv[ci].id == 284 || inv[ci].id == 283)
-        {
-            inv[ci].param2 = rnd(15);
-        }
-        inv[ci].param3 = rnd(30000);
-        if (inv[ci].id == 734)
-        {
-            inv[ci].param2 = rnd(rnd(100) + 1) + 1;
-            inv[ci].value = inv[ci].param2 * 25 + 150;
-            initnum = rnd(8);
-        }
-    }
-
-    if (reftype == 57000 && inv[ci].param1 != 0)
-    {
-        if (mode == 6)
-        {
-            if (rnd(2) == 0)
-            {
-                inv[ci].param2 = 0;
-            }
-            else
-            {
-                inv[ci].param2 = 3 + rnd(3);
-            }
-        }
-        if (inv[ci].param2 != 0)
-        {
-            inv[ci].image = picfood(inv[ci].param2, inv[ci].param1 / 1000);
-        }
-        if (inv[ci].material == 35)
-        {
-            inv[ci].param3 += gdata_hour + gdata_day * 24
-                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12;
-        }
-    }
-
-    label_1581();
-    if (reftype == 60000)
-    {
-        if (rnd(3) == 0)
-        {
-            inv[ci].subname = rnd(rnd(12) + 1);
-        }
-        else
-        {
-            inv[ci].subname = 0;
-        }
-    }
-
-    if (mode == 6)
-    {
-        inv[ci].identification_state =
-            identification_state_t::completely_identified;
-    }
-    if (reftype == 68000 || reftype == 69000 || inv[ci].id == 622
-        || inv[ci].id == 724 || inv[ci].id == 730 || inv[ci].id == 615)
-    {
-        inv[ci].curse_state = curse_state_t::none;
-        inv[ci].identification_state =
-            identification_state_t::completely_identified;
-    }
-    if (reftype == 92000)
-    {
-        inv[ci].identification_state =
-            identification_state_t::completely_identified;
-        inv[ci].curse_state = curse_state_t::none;
-        itemmemory(0, inv[ci].id) = 1;
-    }
-    if (reftype == 62000 || reftype == 64000 || reftype == 77000)
-    {
-        inv[ci].curse_state = curse_state_t::none;
-    }
-    if (mode != 6)
-    {
-        if (reftype < 50000)
-        {
-            if (rnd(sdata(162, 0) + 1) > 5)
-            {
-                inv[ci].identification_state =
-                    identification_state_t::almost_identified;
-            }
-        }
-    }
-
-    label_1583();
-
-    itemturn(ci);
-
-    if (initnum != 0)
-    {
-        inv[ci].number = initnum;
-    }
-
-    if (nostack == 1)
-    {
-        nostack = 0;
-    }
-    else
-    {
-        int stat = item_stack(slot, ci);
-        if (stat == 1)
-        {
-            ci = ti;
-            return 1;
-        }
-    }
-
-    if (slot == -1)
-    {
-        cell_refresh(inv[ci].position.x, inv[ci].position.y);
-    }
-    return 1;
-}
-
-
-
-void label_1583()
-{
-    if (reftype == 60000)
-    {
-        if (inv[ci].subname != 0)
-        {
-            inv[ci].value = inv[ci].value * (80 + inv[ci].subname * 20) / 100;
-        }
-    }
-    return;
-}
-
-
-
 void lovemiracle(int prm_932)
 {
     if (rnd(2) || prm_932 == 0)
@@ -17834,6 +15031,19 @@ void get_pregnant()
         cdata[tc].is_pregnant() = true;
     }
     return;
+}
+
+
+
+void removeworker(int map_id)
+{
+    for (int i = 1; i < 16; ++i)
+    {
+        if (cdata[i].current_map == map_id)
+        {
+            cdata[i].current_map = 0;
+        }
+    }
 }
 
 
@@ -18330,7 +15540,7 @@ turn_result_t exit_map()
         {
             gdata_entrance_type = adata(3, gdata_current_map);
         }
-        if (evfind(6))
+        if (event_find(6))
         {
             msgtemp += lang(
                 u8"あなたは家まで運ばれた。"s,
@@ -22079,9 +19289,9 @@ label_1894_internal:
                 efp = 200;
                 magic();
             }
-            else if (evid() == -1)
+            else if (event_id() == -1)
             {
-                evadd(26);
+                event_add(26);
             }
         }
         s = lang(u8"呪いのつぶやき"s, u8"Cursed Whispering"s);
@@ -22530,7 +19740,7 @@ void label_1901()
             }
             if (p == -1)
             {
-                item_compress(-1);
+                inv_compress(-1);
             }
             flt();
             itemcreate(-1, 615, -1, -1, 0);
@@ -26085,7 +23295,7 @@ void label_2088()
         adata(10, gdata_current_map) = 10;
         adata(12, gdata_current_map) = 1;
         mdata(8) = 1;
-        evadd(17);
+        event_add(17);
         calccosthire();
     }
     return;
@@ -31002,16 +28212,16 @@ turn_result_t do_throw_command()
             efp = 50 + sdata(111, cc) * 10;
             if (inv[ci].id == 392)
             {
-                addmef(tlocx, tlocy, 3, 19, rnd(15) + 5, efp, cc);
+                mef_add(tlocx, tlocy, 3, 19, rnd(15) + 5, efp, cc);
                 return turn_result_t::turn_end;
             }
             if (inv[ci].id == 577)
             {
-                addmef(tlocx, tlocy, 5, 24, rnd(15) + 25, efp, cc);
+                mef_add(tlocx, tlocy, 5, 24, rnd(15) + 25, efp, cc);
                 mapitem_fire(tlocx, tlocy);
                 return turn_result_t::turn_end;
             }
-            addmef(
+            mef_add(
                 tlocx,
                 tlocy,
                 6,
@@ -32170,36 +29380,10 @@ turn_result_t proc_movement_event()
     }
     if (map(cdata[cc].position.x, cdata[cc].position.y, 8) != 0)
     {
-        i = map(cdata[cc].position.x, cdata[cc].position.y, 8) - 1;
-        if (mef(0, i) == 1)
+        bool turn_ended = mef_proc_from_movement(cc);
+        if (turn_ended)
         {
-            if (cdatan(2, cc) != u8"spider"s)
-            {
-                if (rnd(mef(5, i) + 25) < rnd(sdata(10, cc) + sdata(12, cc) + 1)
-                    || cdata[cc].weight > 100)
-                {
-                    if (is_in_fov(cc))
-                    {
-                        txt(lang(
-                            name(cc) + u8"は蜘蛛の巣を振り払った。"s,
-                            name(cc) + u8" destroy"s + _s(cc)
-                                + u8" the cobweb."s));
-                    }
-                    delmef(i);
-                }
-                else
-                {
-                    mef(5, i) = mef(5, i) * 3 / 4;
-                    if (is_in_fov(cc))
-                    {
-                        txt(lang(
-                            name(cc) + u8"は蜘蛛の巣にひっかかった。"s,
-                            name(cc) + u8" "s + is(cc)
-                                + u8" caught in a cobweb."s));
-                    }
-                    return turn_result_t::turn_end;
-                }
-            }
+            return turn_result_t::turn_end;
         }
     }
     if (mdata(6) == 1)
@@ -33489,7 +30673,7 @@ void open_new_year_gift()
                 {
                     continue;
                 }
-                addmef(tlocx, tlocy, 5, 24, rnd(15) + 20, 50, 0);
+                mef_add(tlocx, tlocy, 5, 24, rnd(15) + 20, 50, 0);
                 mapitem_fire(tlocx, tlocy);
             }
             return;
@@ -33965,20 +31149,10 @@ label_22191_internal:
     }
     if (map(cdata[tc].position.x, cdata[tc].position.y, 8) != 0)
     {
-        i = map(cdata[tc].position.x, cdata[tc].position.y, 8) - 1;
-        if (mef(0, i) == 2)
+        bool return_now = mef_proc_from_physical_attack(tc);
+        if(return_now)
         {
-            if (rnd(2) == 0)
-            {
-                if (is_in_fov(cc))
-                {
-                    txt(lang(
-                        name(cc) + u8"は霧の中の幻影を攻撃した。"s,
-                        name(cc) + u8" attack"s + _s(cc)
-                            + u8" an illusion in the mist."s));
-                }
-                return;
-            }
+            return;
         }
     }
     if (attackrange == 1)
@@ -34597,7 +31771,7 @@ void label_2220()
         {
             if (rnd(66) == 0)
             {
-                evadd(18, cc);
+                event_add(18, cc);
             }
             continue;
         }
@@ -35372,8 +32546,8 @@ turn_result_t do_use_command()
             {
                 randomize(inv[ci].subname + inv[ci].param1 * 10 + cnt);
                 exrand_randomize(inv[ci].subname + inv[ci].param1 * 10 + cnt);
-                int stat = encadd(
-                    ci, randomenc(randomenclv(4)), randomencp(), 0, 0, 1);
+                int stat = enchantment_add(
+                    ci, enchantment_generate(enchantment_gen_level(4)), enchantment_gen_p(), 0, 0, 1);
                 if (stat != 0)
                 {
                     if (rtval == 34)
@@ -35411,7 +32585,7 @@ turn_result_t do_use_command()
                 }
                 else
                 {
-                    encadd(ci, list(0, rtval), list(1, rtval), 0, 1);
+                    enchantment_add(ci, list(0, rtval), list(1, rtval), 0, 1);
                 }
                 txtef(2);
                 txt(lang(
@@ -35424,7 +32598,7 @@ turn_result_t do_use_command()
                     txt(lang(
                         u8"その力は次第に脅威になっている。"s,
                         u8"Its power is becoming a threat."s));
-                    int stat = encadd(ci, 45, 50);
+                    int stat = enchantment_add(ci, 45, 50);
                     if (stat == 0)
                     {
                         inv[ci].enchantments[14].id = 0;
@@ -36095,7 +33269,7 @@ turn_result_t do_use_command()
             u8"原子爆弾を設置した。逃げろォー！"s,
             u8"You set up the nuke...now run!!"s));
         snd(58);
-        addmef(cdata[cc].position.x, cdata[cc].position.y, 7, 632, 10, 100, cc);
+        mef_add(cdata[cc].position.x, cdata[cc].position.y, 7, 632, 10, 100, cc);
         goto label_2229_internal;
     case 48:
         if (gdata_current_map != 35 || usermapid == 0)
@@ -36785,50 +33959,6 @@ void do_steal_command()
     continuous_action_others();
     return;
 }
-
-
-
-void shop_sell_item()
-{
-    mode = 6;
-    ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
-    ctrl_file(file_operation2_t::_3, u8"shop"s + invfile + u8".s2");
-    shoptrade = 0;
-    if (tc > 0)
-    {
-        if (cdata[tc].character_role == 1009)
-        {
-            shoptrade = 1;
-        }
-    }
-    ctrl_inventory();
-    return;
-}
-
-
-void addbuilding(int prm_1082, int prm_1083, int prm_1084, int prm_1085)
-{
-    int p_at_m194 = 0;
-    p_at_m194 = -1;
-    for (int cnt = 0; cnt < 10; ++cnt)
-    {
-        if (bddata(0, prm_1082, cnt) == 0)
-        {
-            p_at_m194 = cnt;
-            break;
-        }
-    }
-    if (p_at_m194 == -1)
-    {
-        return;
-    }
-    bddata(0, prm_1082, p_at_m194) = prm_1083;
-    bddata(1, prm_1082, p_at_m194) = prm_1084;
-    bddata(2, prm_1082, p_at_m194) = prm_1085;
-    bddata(3, prm_1082, p_at_m194) = bdref(0, prm_1083) + 363;
-    return;
-}
-
 
 
 void initialize_economy()
@@ -38117,7 +35247,7 @@ void failed_quest(int val0)
                                             u8" "s + name(tc) +
                                             u8" pours a bottole of molotov cocktail over "s +
                                             him(tc) + u8"self."s);
-                                    addmef(
+                                    mef_add(
                                         cdata[0].position.x,
                                         cdata[0].position.y,
                                         5,
@@ -38687,78 +35817,6 @@ void label_2685()
 
 
 
-int ai_check()
-{
-    for (int cnt = 0; cnt < 3; ++cnt)
-    {
-        if (dir == 2)
-        {
-            cdata[cc].next_position.x = cdata[cc].position.x + 1;
-            cdata[cc].next_position.y = dirchk(cnt, p) + cdata[cc].position.y;
-        }
-        if (dir == 1)
-        {
-            cdata[cc].next_position.x = cdata[cc].position.x - 1;
-            cdata[cc].next_position.y = dirchk(cnt, p) + cdata[cc].position.y;
-        }
-        if (dir == 3)
-        {
-            cdata[cc].next_position.y = cdata[cc].position.y - 1;
-            cdata[cc].next_position.x = dirchk(cnt, p) + cdata[cc].position.x;
-        }
-        if (dir == 0)
-        {
-            cdata[cc].next_position.y = cdata[cc].position.y + 1;
-            cdata[cc].next_position.x = dirchk(cnt, p) + cdata[cc].position.x;
-        }
-        cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
-        if (cellaccess == 1)
-        {
-            break;
-        }
-        if (cellchara != -1)
-        {
-            if (cdata[cc].relationship == 10)
-            {
-                if (cdata[cellchara].relationship == -3)
-                {
-                    cdata[cc].enemy_id = cellchara;
-                }
-                else
-                {
-                    blockedbychara = 1;
-                }
-            }
-            if (cdata[cc].relationship == -3)
-            {
-                if (cdata[cellchara].relationship == 10)
-                {
-                    cdata[cc].enemy_id = cellchara;
-                }
-                else
-                {
-                    blockedbychara = 1;
-                }
-            }
-        }
-        if (cellfeat != -1)
-        {
-            if (cellfeat == 21)
-            {
-                cellaccess = 1;
-                break;
-            }
-        }
-    }
-    if (cellaccess == 1)
-    {
-        return 1;
-    }
-    return 0;
-}
-
-
-
 turn_result_t npc_turn()
 {
     int searchfov = 0;
@@ -38924,7 +35982,7 @@ turn_result_t npc_turn()
                         lang(u8"「頭を使えよ」"s, u8"\"Good fighting.\""s),
                         lang(u8"「きゃー」"s, u8"\"Yeeee!\""s));
                 }
-                return proc_misc_npc_map_events();
+                return ai_proc_misc_map_events();
             }
         }
         cdata[cc].hate = 100;
@@ -39162,14 +36220,14 @@ label_2689_internal:
         {
             if (rnd(10) > 2)
             {
-                return proc_misc_npc_map_events();
+                return ai_proc_misc_map_events();
             }
         }
         if (cdata[cc].confused != 0)
         {
             if (rnd(10) > 3)
             {
-                return proc_misc_npc_map_events();
+                return ai_proc_misc_map_events();
             }
         }
         if (cdata[cc].relationship == 10)
@@ -39241,38 +36299,38 @@ label_2689_internal:
                 {
                     if (cdata[cc].is_contracting() == 0)
                     {
-                        return proc_misc_npc_map_events();
+                        return ai_proc_misc_map_events();
                     }
                 }
                 if (distance > 2 || rnd(3))
                 {
-                    return proc_ally_town_training();
+                    return proc_npc_movement_event();
                 }
                 else
                 {
-                    return proc_misc_npc_map_events();
+                    return ai_proc_misc_map_events();
                 }
             }
         }
         if (cdata[cc].fear != 0)
         {
-            return proc_ally_town_training(true);
+            return proc_npc_movement_event(true);
         }
         if (cdata[cc].blind != 0)
         {
             if (rnd(3))
             {
-                return proc_misc_npc_map_events();
+                return ai_proc_misc_map_events();
             }
         }
         if (distance != cdata[cc].ai_dist)
         {
             if (rnd(100) < cdata[cc].ai_move)
             {
-                return proc_ally_town_training();
+                return proc_npc_movement_event();
             }
         }
-        return proc_ai_basic();
+        return ai_proc_basic();
     }
     if (cdata[cc].turn % 10 == 1)
     {
@@ -39345,1052 +36403,7 @@ label_2689_internal:
             }
         }
     }
-    return proc_misc_npc_map_events();
-}
-
-
-
-turn_result_t proc_misc_npc_map_events()
-{
-    if (cdata[cc].ai_calm == 4)
-    {
-        tc = 0;
-        distance = dist(
-            cdata[tc].position.x,
-            cdata[tc].position.y,
-            cdata[cc].position.x,
-            cdata[cc].position.y);
-        return proc_ally_town_training();
-    }
-    if (rnd(5) != 0)
-    {
-        return turn_result_t::turn_end;
-    }
-    if (cdata[cc].drunk != 0)
-    {
-        if (is_in_fov(cc))
-        {
-            if (cdatan(2, cc) == u8"cat"s)
-            {
-                if (cdata[cc].drunk < 5)
-                {
-                    cdata[cc].drunk += 40;
-                }
-            label_2691_internal:
-                if (jp)
-                {
-                    if (rnd(3) == 0)
-                    {
-                        txt(u8"「米さ米種だろ♪」"s,
-                            u8"「飲ま飲まイェイ！！」"s,
-                            u8"「飲ま飲ま飲まイェイ！！」"s);
-                        goto label_2692_internal;
-                    }
-                    if (rnd(4) == 0)
-                    {
-                        txt(u8"「字ベロ♪指♪ラマ♪ｸﾏｰ!!して♪パンチラ♪」"s,
-                            u8"「アロー♪アーロン♪スゲェ♪ピカソ♪算段ビーフ♪」"s,
-                            u8"「キスすごい肉♪脱線してんの♪さらに肉♪」"s);
-                        goto label_2692_internal;
-                    }
-                    if (rnd(4) == 0)
-                    {
-                        txt(u8"「キープダルシム♪アゴスタディーイェイ♪並フェイスで大きい筆入れ♪」"s,
-                            u8"「ハロー♪猿ー♪すげー♪うん入る♪」"s);
-                        goto label_2692_internal;
-                    }
-                    if (rnd(4) == 0)
-                    {
-                        txtef(4);
-                        txt(u8" *ﾋﾟﾛﾘ〜ﾋﾟﾛﾘ〜* "s);
-                        goto label_2692_internal;
-                    }
-                    txt(u8"「マイアヒー♪」"s,
-                        u8"「マイアフゥー♪」"s,
-                        u8"「マイアホー♪」"s);
-                    goto label_2692_internal;
-                }
-                else
-                {
-                    if (rnd(2) == 0)
-                    {
-                        txt(u8"\"Vrei sa pleci dar♪\""s,
-                            u8"\"Numa numa yay!!\""s,
-                            u8"\"Numa numa numa yay!!\""s);
-                        goto label_2692_internal;
-                    }
-                    txt(u8"\"Mai-Ya-Hi♪\""s,
-                        u8"\"Mai-Ya-Hoo♪\""s,
-                        u8"\"Mai-Ya-Ha Ma Mi A♪\""s);
-                    goto label_2692_internal;
-                }
-                goto label_2691_internal;
-            }
-        }
-    }
-label_2692_internal:
-    if (cc > 16)
-    {
-        if (mdata(6) == 3 || mdata(6) == 2)
-        {
-            if (gdata_hour >= 22 || gdata_hour < 7)
-            {
-                if (cdata[cc].continuous_action_id == 0)
-                {
-                    if (rnd(100) == 0)
-                    {
-                        dmgcon(cc, 2, 4000);
-                    }
-                }
-            }
-        }
-    }
-    if (cdata[cc].item_which_will_be_used == 0)
-    {
-        if (cdata[cc].relationship != 10)
-        {
-            if (gdata_current_map == 13)
-            {
-                if (gdata_executing_immediate_quest_type == 1009)
-                {
-                    if (rnd(30) == 0)
-                    {
-                        flt(20);
-                        if (rnd(4) == 0)
-                        {
-                            flttypemajor = 57000;
-                        }
-                        else
-                        {
-                            flttypemajor = 52000;
-                            if (rnd(8))
-                            {
-                                flttypeminor = 52002;
-                            }
-                        }
-                        int stat = itemcreate(cc, 0, -1, -1, 0);
-                        if (stat == 1)
-                        {
-                            cdata[cc].item_which_will_be_used = ci;
-                        }
-                    }
-                }
-            }
-            if (gdata_current_map == 33 || gdata_current_map == 29)
-            {
-                if (cdata[cc].id == 35 || cdata[cc].id == 211)
-                {
-                    if (is_in_fov(cc))
-                    {
-                        if (chipm(
-                                0,
-                                map(cdata[cc].position.x,
-                                    cdata[cc].position.y,
-                                    0))
-                            == 4)
-                        {
-                            if (rnd(4) == 0)
-                            {
-                                if (cdata[gdata_fire_giant].state == 1)
-                                {
-                                    if (is_in_fov(gdata_fire_giant))
-                                    {
-                                        flt();
-                                        int stat =
-                                            itemcreate(cc, 587, -1, -1, 0);
-                                        if (stat == 1)
-                                        {
-                                            tlocx = cdata[gdata_fire_giant]
-                                                        .position.x;
-                                            tlocy = cdata[gdata_fire_giant]
-                                                        .position.y;
-                                            txtef(9);
-                                            txt(lang(
-                                                    u8"「化け物め！」"s,
-                                                    u8"\"Filthy monster!\""s),
-                                                lang(
-                                                    u8"「くたばれっ」"s,
-                                                    u8"\"Go to hell!\""s),
-                                                lang(
-                                                    u8"「退治してやるぅ！」"s,
-                                                    u8"\"I'll get rid of you.\""s),
-                                                lang(
-                                                    u8"「くらえー！」"s,
-                                                    u8"\"Eat this!\""s));
-                                            return do_throw_command();
-                                        }
-                                    }
-                                }
-                            }
-                            if (rnd(12) == 0)
-                            {
-                                bool found_snowman{};
-                                for (const auto& cnt : itemlist(-1, 541))
-                                {
-                                    ti = cnt;
-                                    if (inv[ti].position.x >= scx
-                                        && inv[ti].position.x
-                                            < scx + inf_screenw
-                                        && inv[ti].position.y >= scy
-                                        && inv[ti].position.y
-                                            < scy + inf_screenh)
-                                    {
-                                        found_snowman = true;
-                                        break;
-                                    }
-                                }
-                                if (found_snowman)
-                                {
-                                    flt();
-                                    int stat = itemcreate(cc, 587, -1, -1, 0);
-                                    if (stat == 1)
-                                    {
-                                        tlocx = inv[ti].position.x;
-                                        tlocy = inv[ti].position.y;
-                                        return do_throw_command();
-                                    }
-                                }
-                            }
-                            if (rnd(10) == 0)
-                            {
-                                if (map(cdata[cc].position.x,
-                                        cdata[cc].position.y,
-                                        4)
-                                    == 0)
-                                {
-                                    flt();
-                                    int stat = itemcreate(
-                                        -1,
-                                        541,
-                                        cdata[cc].position.x,
-                                        cdata[cc].position.y,
-                                        0);
-                                    if (stat == 1)
-                                    {
-                                        snd(86);
-                                        txt(lang(
-                                            name(cc) + u8"は"s + itemname(ci)
-                                                + u8"を作った！"s,
-                                            name(cc) + u8" make"s + _s(cc)
-                                                + u8" "s + itemname(ci)
-                                                + u8"!"s));
-                                        return turn_result_t::turn_end;
-                                    }
-                                }
-                            }
-                            if (rnd(12) == 0)
-                            {
-                                flt();
-                                int stat = itemcreate(cc, 587, -1, -1, 0);
-                                if (stat == 1)
-                                {
-                                    tlocx = cdata[0].position.x;
-                                    tlocy = cdata[0].position.y;
-                                    txtef(9);
-                                    txt(lang(u8" *クスクス* "s, u8"*grin*"s),
-                                        lang(
-                                            u8"「えいっ」"s,
-                                            u8"\"Fire in the hole!\""s),
-                                        lang(
-                                            u8"「うりゃ」"s,
-                                            u8"\"Tee-hee-hee!\""s),
-                                        lang(
-                                            u8"「くらえー！」"s,
-                                            u8"\"Eat this!\""s),
-                                        lang(
-                                            u8"「危ないっ！」"s,
-                                            u8"\"Watch out!\""s),
-                                        lang(
-                                            u8"「避けてー」"s, u8"\"Scut!\""s));
-                                    return do_throw_command();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if (cdata[cc].nutrition <= 6000)
-            {
-                if (cdata[cc].vision_flag != msync || rnd(5))
-                {
-                    if (cdata[cc].has_anorexia() == 0)
-                    {
-                        cdata[cc].nutrition += 5000;
-                    }
-                    else
-                    {
-                        cdata[cc].nutrition -= 3000;
-                    }
-                }
-                else
-                {
-                    flt(20);
-                    p(0) = rnd(4);
-                    p(1) = 0;
-                    if (p == 0 || cdata[cc].has_anorexia())
-                    {
-                        flttypemajor = 57000;
-                    }
-                    if (p == 1)
-                    {
-                        flttypemajor = 52000;
-                    }
-                    if (p == 2 || p == 3)
-                    {
-                        flttypeminor = 52002;
-                    }
-                    int stat = itemcreate(cc, p(1), -1, -1, 0);
-                    if (stat == 1)
-                    {
-                        if (inv[ci].id == 577)
-                        {
-                            if (rnd(5) == 0)
-                            {
-                                inv[ci].number = 0;
-                            }
-                        }
-                        else
-                        {
-                            cdata[cc].item_which_will_be_used = ci;
-                            if (cdata[cc].has_anorexia() == 0)
-                            {
-                                cdata[cc].nutrition += 5000;
-                            }
-                            else
-                            {
-                                cdata[cc].nutrition -= 3000;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    if (cdata[cc].ai_calm == 5)
-    {
-        if (cdata[cc].id == 326)
-        {
-            if (rnd(5) == 0)
-            {
-                efid = 183;
-                magic();
-                return turn_result_t::turn_end;
-            }
-        }
-        if (cdata[cc].id == 320 || cdata[cc].id == 280)
-        {
-            if (is_in_fov(cc))
-            {
-                tc = 0;
-                distance = dist(
-                    cdata[tc].position.x,
-                    cdata[tc].position.y,
-                    cdata[cc].position.x,
-                    cdata[cc].position.y);
-                if (distance < 8)
-                {
-                    if (cdatan(2, 0) == u8"snail"s)
-                    {
-                        tlocx = cdata[0].position.x;
-                        tlocy = cdata[0].position.y;
-                        flt();
-                        int stat = itemcreate(cc, 698, -1, -1, 0);
-                        if (stat == 1)
-                        {
-                            if (is_in_fov(cc))
-                            {
-                                txtef(9);
-                                txt(lang(
-                                        u8"「なめくじだ！」"s, u8"\"Snail!\""s),
-                                    lang(u8"「殺す！」"s, u8"\"Kill!\""s));
-                            }
-                            return do_throw_command();
-                        }
-                    }
-                }
-            }
-        }
-        if (cdata[cc].id == 335 || cdata[cc].id == 352)
-        {
-            if (rnd(10) == 0)
-            {
-                for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < 97; ++cnt)
-                {
-                    if (cdata[cnt].state != 1)
-                    {
-                        continue;
-                    }
-                    if (rnd(3) == 0)
-                    {
-                        continue;
-                    }
-                    if (dist(
-                            cdata[cc].position.x,
-                            cdata[cc].position.y,
-                            cdata[cnt].position.x,
-                            cdata[cnt].position.y)
-                        < 6)
-                    {
-                        if (fov_los(
-                                cdata[cc].position.x,
-                                cdata[cc].position.y,
-                                cdata[cnt].position.x,
-                                cdata[cnt].position.y))
-                        {
-                            cdata[cc].enemy_id = cnt;
-                            tc = cnt;
-                            break;
-                        }
-                    }
-                }
-            }
-            distance = dist(
-                cdata[tc].position.x,
-                cdata[tc].position.y,
-                cdata[cc].position.x,
-                cdata[cc].position.y);
-            if (tc != 0)
-            {
-                if (distance == 1)
-                {
-                    if (cdata[tc].continuous_action_id == 0)
-                    {
-                        cdata[cc].enemy_id = 0;
-                        label_2147();
-                        return turn_result_t::turn_end;
-                    }
-                }
-                if (distance < 6)
-                {
-                    return proc_ally_town_training();
-                }
-            }
-        }
-        cdata[cc].next_position.x = rnd(3) - 1 + cdata[cc].position.x;
-        cdata[cc].next_position.y = rnd(3) - 1 + cdata[cc].position.y;
-        cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
-        if (cellaccess == 1)
-        {
-            return proc_movement_event();
-        }
-    }
-    if (cdata[cc].ai_calm == 1)
-    {
-        cdata[cc].next_position.x = rnd(3) - 1 + cdata[cc].position.x;
-        cdata[cc].next_position.y = rnd(3) - 1 + cdata[cc].position.y;
-        cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
-        if (cellaccess == 1)
-        {
-            return proc_movement_event();
-        }
-    }
-    if (cdata[cc].ai_calm == 2)
-    {
-        if (mdata(8) == 1
-            && dist(
-                   cdata[cc].position.x,
-                   cdata[cc].position.y,
-                   cdata[cc].initial_position.x,
-                   cdata[cc].initial_position.y)
-                > 2)
-        {
-            cdata[cc].next_position.x = cdata[cc].position.x
-                + rnd(2)
-                    * ((cdata[cc].position.x > cdata[cc].initial_position.x)
-                           * -1
-                       + (cdata[cc].position.x < cdata[cc].initial_position.x));
-            cdata[cc].next_position.y = cdata[cc].position.y
-                + rnd(2)
-                    * ((cdata[cc].position.y > cdata[cc].initial_position.y)
-                           * -1
-                       + (cdata[cc].position.y < cdata[cc].initial_position.y));
-        }
-        else
-        {
-            cdata[cc].next_position.x = rnd(3) - 1 + cdata[cc].position.x;
-            cdata[cc].next_position.y = rnd(3) - 1 + cdata[cc].position.y;
-        }
-        cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
-        if (cellaccess == 1)
-        {
-            return proc_movement_event();
-        }
-    }
-    return turn_result_t::turn_end;
-}
-
-
-
-turn_result_t proc_ally_town_training(bool retreat)
-{
-    if (mdata(6) == 3)
-    {
-        if (cc < 16)
-        {
-            if (rnd(100) == 0)
-            {
-                sell(0) = 0;
-                sell(1) = 0;
-                for (const auto& cnt : items(cc))
-                {
-                    if (inv[cnt].number == 0)
-                    {
-                        continue;
-                    }
-                    int category = the_item_db[inv[cnt].id]->category;
-                    if (category == 77000)
-                    {
-                        p = inv[cnt].value * inv[cnt].number;
-                        sell += inv[cnt].number;
-                        sell(1) += p;
-                        inv[cnt].number = 0;
-                        cdata[cc].gold += p;
-                    }
-                }
-                if (sell != 0)
-                {
-                    txtef(9);
-                    txt(lang(
-                        name(cc) + u8"は"s + sell
-                            + u8"個のアイテムを売りさばき"s + sell(1)
-                            + u8"goldを稼いだ。"s,
-                        name(cc) + u8" sells "s + sell + u8" items and earns "s
-                            + sell(1) + u8" gold pieces."s));
-                }
-            }
-            if (rnd(100) == 0)
-            {
-                if (cdata[cc].gold >= cdata[cc].level * 500)
-                {
-                    cdata[cc].gold -= cdata[cc].level * 500;
-                    snd(61);
-                    txtef(9);
-                    txt(lang(
-                        cdatan(0, cc) + u8"は訓練所に通い潜在能力を伸ばした！"s,
-                        cdatan(0, cc) + u8" visits a trainer and develops "s
-                            + his(cc) + u8" potential!"s));
-                    for (int cnt = 0; cnt < 4; ++cnt)
-                    {
-                        while (1)
-                        {
-                            if (rnd(4) == 0)
-                            {
-                                p = rnd(8) + 10;
-                            }
-                            else
-                            {
-                                p = rnd(300) + 100;
-                            }
-                            if (sdata.get(p, cc).original_level == 0)
-                            {
-                                continue;
-                            }
-                            modify_potential(cc, p, 4);
-                            break;
-                        }
-                    }
-                    refresh_character(cc);
-                }
-            }
-        }
-    }
-    if (tc == cc)
-    {
-        cdata[cc].enemy_id = 0;
-        return turn_result_t::turn_end;
-    }
-    if (cdata[cc]._203 <= 0)
-    {
-        cdata[cc]._205 = cdata[tc].position.x;
-        cdata[cc]._206 = cdata[tc].position.y;
-        if (retreat || cdata[cc].ai_dist > distance)
-        {
-            cdata[cc]._205 = cdata[cc].position.x
-                + (cdata[cc].position.x - cdata[tc].position.x);
-            cdata[cc]._206 = cdata[cc].position.y
-                + (cdata[cc].position.y - cdata[tc].position.y);
-        }
-    }
-    else
-    {
-        --cdata[cc]._203;
-    }
-    blockedbychara = 0;
-    cdata[cc].next_position.x = (cdata[cc]._205 > cdata[cc].position.x)
-        - (cdata[cc]._205 < cdata[cc].position.x) + cdata[cc].position.x;
-    cdata[cc].next_position.y = (cdata[cc]._206 > cdata[cc].position.y)
-        - (cdata[cc]._206 < cdata[cc].position.y) + cdata[cc].position.y;
-    x = cdata[cc].next_position.x;
-    y = cdata[cc].next_position.y;
-    cell_check(x, y);
-    if (cellaccess == 1)
-    {
-        return proc_movement_event();
-    }
-    if (cellchara != -1)
-    {
-        tc = cellchara;
-        if (relationbetween(cc, tc) == -3)
-        {
-            cdata[cc].enemy_id = tc;
-            cdata[cc].hate += 4;
-            return proc_ai_basic();
-        }
-        else if (
-            (cdata[cc].quality > 3 && cdata[cc].level > cdata[tc].level)
-            || cdata[tc].is_hung_on_sand_bag())
-        {
-            if (cdata[cc].enemy_id != tc)
-            {
-                cell_swap(cc, tc);
-                if (is_in_fov(cc))
-                {
-                    txt(lang(
-                        name(cc) + u8"は"s + name(tc) + u8"を押しのけた。"s,
-                        name(cc) + u8" displace"s + _s(cc) + u8" "s + name(tc)
-                            + u8"."s));
-                }
-                if (cdata[tc].continuous_action_id == 1)
-                {
-                    if (cdata[tc].continuous_action_turn > 0)
-                    {
-                        if (is_in_fov(cc))
-                        {
-                            txt(lang(
-                                name(tc) + u8"は"s + name(cc)
-                                    + u8"を睨み付けた。"s,
-                                name(tc) + u8" glare"s + _s(tc) + u8" "s
-                                    + name(cc) + u8"."s));
-                        }
-                        rowactend(tc);
-                    }
-                }
-                return turn_result_t::turn_end;
-            }
-        }
-    }
-    if (cc > 16)
-    {
-        if (cdata[cc].quality > 3)
-        {
-            if (cdata[cc].relationship <= -2)
-            {
-                if (x >= 0)
-                {
-                    if (x < mdata(0))
-                    {
-                        if (y >= 0)
-                        {
-                            if (y < mdata(1))
-                            {
-                                if (chipm(7, map(x, y, 0)) & 4)
-                                {
-                                    if (rnd(4) == 0)
-                                    {
-                                        map(x, y, 0) = tile_tunnel;
-                                        snd(45);
-                                        play_animation(14);
-                                        spillfrag(x, y, 2);
-                                        if (is_in_fov(cc))
-                                        {
-                                            txt(lang(
-                                                name(cc)
-                                                    + u8"は壁を破壊した！"s,
-                                                name(cc) + u8" crush"s + _s(cc)
-                                                    + u8" the wall!"s));
-                                        }
-                                        return turn_result_t::turn_end;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    if (std::abs(cdata[cc]._205 - cdata[cc].position.x)
-        >= std::abs(cdata[cc]._206 - cdata[cc].position.y))
-    {
-        {
-            int stat = label_2694();
-            if (stat == 1)
-            {
-                return proc_movement_event();
-            }
-        }
-        {
-            int stat = label_2695();
-            if (stat == 1)
-            {
-                return proc_movement_event();
-            }
-        }
-    }
-    else
-    {
-        {
-            int stat = label_2695();
-            if (stat == 1)
-            {
-                return proc_movement_event();
-            }
-        }
-        {
-            int stat = label_2694();
-            if (stat == 1)
-            {
-                return proc_movement_event();
-            }
-        }
-    }
-    if (cdata[cc]._203 > 0)
-    {
-        cdata[cc].next_position.x = rnd(3) - 1 + cdata[cc].position.x;
-        cdata[cc].next_position.y = rnd(3) - 1 + cdata[cc].position.y;
-        cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
-        if (cellaccess == 1)
-        {
-            return proc_movement_event();
-        }
-    }
-    else
-    {
-        if (blockedbychara == 1)
-        {
-            cdata[cc]._203 = 3;
-        }
-        else
-        {
-            cdata[cc]._203 = 6;
-        }
-        dir = dir(1 + rnd(2));
-        if (dir == 1)
-        {
-            cdata[cc]._205 = cdata[cc].position.x - 6;
-            cdata[cc]._206 = cdata[tc].position.y;
-        }
-        if (dir == 2)
-        {
-            cdata[cc]._205 = cdata[cc].position.x + 6;
-            cdata[cc]._206 = cdata[tc].position.y;
-        }
-        if (dir == 3)
-        {
-            cdata[cc]._206 = cdata[cc].position.y - 6;
-            cdata[cc]._205 = cdata[tc].position.x;
-        }
-        if (dir == 0)
-        {
-            cdata[cc]._206 = cdata[cc].position.y + 6;
-            cdata[cc]._205 = cdata[tc].position.x;
-        }
-    }
-    return turn_result_t::turn_end;
-}
-
-
-
-int label_2694()
-{
-    if (cdata[cc]._205 > cdata[cc].position.x)
-    {
-        if (cdata[cc]._206 > cdata[cc].position.y)
-        {
-            p = 1;
-        }
-        else
-        {
-            p = 0;
-        }
-        dir(0) = 2;
-        dir(1) = 0;
-        dir(2) = 3;
-        int stat = ai_check();
-        if (stat == 1)
-        {
-            return 1;
-        }
-    }
-    if (cdata[cc]._205 < cdata[cc].position.x)
-    {
-        if (cdata[cc]._206 < cdata[cc].position.y)
-        {
-            p = 0;
-        }
-        else
-        {
-            p = 1;
-        }
-        dir(0) = 1;
-        dir(1) = 0;
-        dir(2) = 3;
-        int stat = ai_check();
-        if (stat == 1)
-        {
-            return 1;
-        }
-    }
-    return 0;
-}
-
-
-
-int label_2695()
-{
-    if (cdata[cc]._206 > cdata[cc].position.y)
-    {
-        if (cdata[cc]._205 > cdata[cc].position.x)
-        {
-            p = 1;
-        }
-        else
-        {
-            p = 0;
-        }
-        dir(0) = 0;
-        dir(1) = 1;
-        dir(2) = 2;
-        int stat = ai_check();
-        if (stat == 1)
-        {
-            return 1;
-        }
-    }
-    if (cdata[cc]._206 < cdata[cc].position.y)
-    {
-        if (cdata[cc]._205 > cdata[cc].position.x)
-        {
-            p = 0;
-        }
-        else
-        {
-            p = 1;
-        }
-        dir(0) = 3;
-        dir(1) = 1;
-        dir(2) = 2;
-        int stat = ai_check();
-        if (stat == 1)
-        {
-            return 1;
-        }
-    }
-    return 0;
-}
-
-
-
-turn_result_t proc_ai_basic()
-{
-    if (tc == 0)
-    {
-        pcattacker = cc;
-    }
-    int act = choice(cdata[cc].normal_actions);
-    if (cdata[cc].ai_act_sub_freq != 0)
-    {
-        if (cdata[cc].ai_act_sub_freq > rnd(100))
-        {
-            if (!cdata[cc].special_actions.empty())
-            {
-                act = choice(cdata[cc].special_actions);
-            }
-            if (act >= -10000 && act < -9995)
-            {
-                if (distance < 8)
-                {
-                    if (fov_los(
-                            cdata[cc].position.x,
-                            cdata[cc].position.y,
-                            cdata[tc].position.x,
-                            cdata[tc].position.y))
-                    {
-                        tlocx = cdata[tc].position.x;
-                        tlocy = cdata[tc].position.y;
-                        int stat = 0;
-                        if (act == -9999)
-                        {
-                            flt();
-                            flttypemajor = 52000;
-                            stat = itemcreate(
-                                cc,
-                                isetthrowpotionminor(
-                                    rnd(length(isetthrowpotionminor))),
-                                -1,
-                                -1,
-                                0);
-                        }
-                        if (act == -9998)
-                        {
-                            flt();
-                            flttypemajor = 52000;
-                            stat = itemcreate(
-                                cc,
-                                isetthrowpotionmajor(
-                                    rnd(length(isetthrowpotionmajor))),
-                                -1,
-                                -1,
-                                0);
-                        }
-                        if (act == -9997)
-                        {
-                            flt();
-                            flttypemajor = 52000;
-                            stat = itemcreate(
-                                cc,
-                                isetthrowpotiongreater(
-                                    rnd(length(isetthrowpotiongreater))),
-                                -1,
-                                -1,
-                                0);
-                        }
-                        if (act == -9996)
-                        {
-                            flt();
-                            stat = itemcreate(cc, 698, -1, -1, 0);
-                        }
-                        if (stat == 1)
-                        {
-                            return do_throw_command();
-                        }
-                        return turn_result_t::turn_end;
-                    }
-                }
-            }
-        }
-    }
-    if (act == -4)
-    {
-        cdata[cc].next_position.x = rnd(3) - 1 + cdata[cc].position.x;
-        cdata[cc].next_position.y = rnd(3) - 1 + cdata[cc].position.y;
-        cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
-        if (cellaccess == 1)
-        {
-            return proc_movement_event();
-        }
-        else
-        {
-            return turn_result_t::turn_end;
-        }
-    }
-    if (act == -2)
-    {
-        if (distance < 6)
-        {
-            if (fov_los(
-                    cdata[cc].position.x,
-                    cdata[cc].position.y,
-                    cdata[tc].position.x,
-                    cdata[tc].position.y))
-            {
-                int stat = can_do_ranged_attack();
-                if (stat == 1)
-                {
-                    label_2217();
-                    return turn_result_t::turn_end;
-                }
-            }
-        }
-    }
-    if (act >= 400)
-    {
-        if (act < 467)
-        {
-            efid = act;
-            if (cdata[cc].mp < cdata[cc].max_mp / 7)
-            {
-                if (rnd(3) || cc < 16 || cdata[cc].quality >= 4
-                    || cdata[cc].cures_mp_frequently())
-                {
-                    cdata[cc].mp += cdata[cc].level / 4 + 5;
-                    return turn_result_t::turn_end;
-                }
-            }
-            npccostmp = 1;
-            int stat = label_2167();
-            if (stat == 1)
-            {
-                return turn_result_t::turn_end;
-            }
-        }
-    }
-    if (act >= 600)
-    {
-        efid = act;
-        int stat = label_2174();
-        if (stat == 1)
-        {
-            return turn_result_t::turn_end;
-        }
-    }
-    if (act == -3)
-    {
-        if (distance == 1)
-        {
-            try_to_melee_attack();
-        }
-        else if (rnd(3) == 0 || cc < 16)
-        {
-            if (distance < 6)
-            {
-                if (fov_los(
-                        cdata[cc].position.x,
-                        cdata[cc].position.y,
-                        cdata[tc].position.x,
-                        cdata[tc].position.y))
-                {
-                    int stat = can_do_ranged_attack();
-                    if (stat == 1)
-                    {
-                        label_2217();
-                        return turn_result_t::turn_end;
-                    }
-                }
-            }
-        }
-        return turn_result_t::turn_end;
-    }
-    if (distance == 1)
-    {
-        try_to_melee_attack();
-        return turn_result_t::turn_end;
-    }
-    if (distance < 6)
-    {
-        if (fov_los(
-                cdata[cc].position.x,
-                cdata[cc].position.y,
-                cdata[tc].position.x,
-                cdata[tc].position.y))
-        {
-            int stat = can_do_ranged_attack();
-            if (stat == 1)
-            {
-                label_2217();
-                return turn_result_t::turn_end;
-            }
-        }
-    }
-    if (cdata[cc].ai_dist <= distance)
-    {
-        if (rnd(3) == 0)
-        {
-            return turn_result_t::turn_end;
-        }
-    }
-    if (rnd(5) == 0)
-    {
-        --cdata[cc].hate;
-    }
-    if (rnd(100) < cdata[cc].ai_move)
-    {
-        return proc_ally_town_training();
-    }
-    else
-    {
-        return turn_result_t::turn_end;
-    }
+    return ai_proc_misc_map_events();
 }
 
 
@@ -40526,100 +36539,17 @@ turn_result_t turn_begin()
 {
     int turncost = 0;
     int spd = 0;
-    sound = 0;
     ct = 0;
-    for (int cnt = 0; cnt < 200; ++cnt)
-    {
-        if (mef(0, cnt) == 0)
-        {
-            break;
-        }
-        if (mef(0, cnt) == 5)
-        {
-            if (mdata(14) == 2)
-            {
-                if (mdata(6) != 1)
-                {
-                    if (gdata_weather == 3 || gdata_weather == 4)
-                    {
-                        delmef(cnt);
-                        continue;
-                    }
-                    dx = mef(2, cnt);
-                    dy = mef(3, cnt);
-                    i = mef(6, cnt);
-                    p = 0;
-                    if (rnd(35) == 0)
-                    {
-                        p = 3;
-                        if (dist(
-                                dx,
-                                dy,
-                                cdata[0].position.x,
-                                cdata[0].position.y)
-                            < 6)
-                        {
-                            sound = 6;
-                        }
-                    }
-                    for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
-                    {
-                        x = rnd(2) + dx - rnd(2);
-                        y = rnd(2) + dy - rnd(2);
-                        if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
-                        {
-                            f = 0;
-                            continue;
-                        }
-                        if (chipm(7, map(x, y, 0)) & 4)
-                        {
-                            map(x, y, 0) = 37;
-                            cnt = 0 - 1;
-                            continue;
-                        }
-                        addmef(x, y, 5, 24, rnd(15) + 20, 50, i);
-                        mapitem_fire(x, y);
-                    }
-                }
-            }
-        }
-        if (mef(0, cnt) == 7)
-        {
-            txtef(3);
-            txt(lang(u8" *"s, u8"*"s) + mef(4, cnt) + lang(u8"* "s, u8"*"s));
-        }
-        if (mef(4, cnt) != -1)
-        {
-            --mef(4, cnt);
-            if (mef(4, cnt) == 0)
-            {
-                delmef(cnt);
-            }
-        }
-    }
-    if (sound != 0)
-    {
-        snd(sound);
-    }
+    mef_update();
     gspd = cdata[0].current_speed * (100 + cdata[0].speed_percentage) / 100;
     if (gspd < 10)
     {
         gspd = 10;
     }
     turncost = (mdata(9) - cdata[0].turn_cost) / gspd + 1;
-    if (evnum != 0)
+    if (event_was_set())
     {
-        evproc = 1;
-        proc_event();
-        evproc = 0;
-        --evnum;
-        evlist(evnum) = 0;
-        if (chatteleport == 1)
-        {
-            chatteleport = 0;
-            return turn_result_t::exit_map;
-        }
-        return turn_result_t::turn_begin;
+        return event_start_proc(); // TODO avoid evnum side effect
     }
     if (cdata[0].state != 1)
     {
@@ -40684,7 +36614,7 @@ turn_result_t turn_begin()
             if (gdata_left_minutes_of_executing_quest <= 0)
             {
                 gdata_left_minutes_of_executing_quest = 0;
-                evadd(14);
+                event_add(14);
             }
         }
         gdata_second = gdata_second % 60;
@@ -41030,7 +36960,7 @@ void label_2736()
             }
         }
         snd(74);
-        evadd(10);
+        event_add(10);
         gdata_play_days += gdata_hour / 24;
         gdata_day += gdata_hour / 24;
         gdata_hour = gdata_hour % 24;
@@ -41117,7 +37047,6 @@ void label_2736()
 
 turn_result_t pass_one_turn(bool label_2738_flg)
 {
-    int ef = 0;
     if (label_2738_flg)
     {
         while (ct < ELONA_MAX_CHARACTERS)
@@ -41189,7 +37118,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                     u8"Strange power prevents you from returning."s));
                 goto label_2740_internal;
             }
-            if (gdata_is_returning_or_escaping <= 0 && evnum == 0)
+            if (gdata_is_returning_or_escaping <= 0 && !event_was_set())
             {
                 f = 0;
                 for (int cnt = 1; cnt < 16; ++cnt)
@@ -41293,89 +37222,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
     tc = cc;
     if (map(cdata[tc].position.x, cdata[tc].position.y, 8) != 0)
     {
-        ef = map(cdata[tc].position.x, cdata[tc].position.y, 8) - 1;
-        if (mef(0, ef) == 3)
-        {
-            if (cdata[tc].is_floating() == 0 || cdata[tc].gravity > 0)
-            {
-                if (sdata(63, tc) / 50 < 7)
-                {
-                    if (is_in_fov(tc))
-                    {
-                        snd(46);
-                        txt(lang(
-                            name(tc) + u8"は酸に焼かれた。"s,
-                            name(tc) + u8" melt"s + _s(tc) + u8"."s));
-                    }
-                    if (mef(6, ef) == 0)
-                    {
-                        if (tc != 0)
-                        {
-                            hostileaction(0, tc);
-                        }
-                    }
-                    int stat = dmghp(
-                        tc, rnd(mef(5, ef) / 25 + 5) + 1, -15, 63, mef(5, ef));
-                    if (stat == 0)
-                    {
-                        check_kill(mef(6, ef), tc);
-                    }
-                }
-            }
-        }
-        if (mef(0, ef) == 5)
-        {
-            if (is_in_fov(tc))
-            {
-                snd(6);
-                txt(lang(
-                    name(tc) + u8"は燃えた。"s,
-                    name(tc) + u8" "s + is(tc) + u8" burnt."s));
-            }
-            if (mef(6, ef) == 0)
-            {
-                if (tc != 0)
-                {
-                    hostileaction(0, tc);
-                }
-            }
-            int stat =
-                dmghp(tc, rnd(mef(5, ef) / 15 + 5) + 1, -9, 50, mef(5, ef));
-            if (stat == 0)
-            {
-                check_kill(mef(6, ef), tc);
-            }
-        }
-        if (mef(0, ef) == 6)
-        {
-            if (cdata[tc].is_floating() == 0 || cdata[tc].gravity > 0)
-            {
-                if (is_in_fov(tc))
-                {
-                    snd(46);
-                    txt(lang(
-                        name(tc) + u8"は地面の液体を浴びた。"s,
-                        name(tc) + u8" step"s + _s(tc) + u8" in the pool."s));
-                }
-                wet(tc, 25);
-                if (mef(6, ef) == 0)
-                {
-                    if (tc != 0)
-                    {
-                        hostileaction(0, tc);
-                    }
-                }
-                potionspill = 1;
-                efstatus = static_cast<curse_state_t>(mef(8, ef)); // TODO
-                dbid = mef(7, ef);
-                access_item_db(15);
-                if (cdata[tc].state == 0)
-                {
-                    check_kill(mef(6, ef), tc);
-                }
-                delmef(ef);
-            }
-        }
+        mef_proc(tc);
     }
     if (cdata[cc].buffs[0].id != 0)
     {

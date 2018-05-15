@@ -5,8 +5,11 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "config.hpp"
+#include "event.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "itemgen.hpp"
+#include "mef.hpp"
 #include "shop.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -119,12 +122,12 @@ void talk_to_npc()
         chatval(1) = cdata[tc].id;
         chatval(2) = 0;
     }
-    if (evid() == 2)
+    if (event_id() == 2)
     {
         talk_wrapper(talk_result_t::talk_game_begin);
         return;
     }
-    if (evid() == 16)
+    if (event_id() == 16)
     {
         talk_wrapper(talk_result_t::talk_finish_escort);
         return;
@@ -343,7 +346,7 @@ talk_result_t talk_house_visitor()
                     aniy = tlocy;
                     play_animation(15);
                     cc = ccbk;
-                    addmef(tlocx, tlocy, 5, 24, rnd(15) + 20, 50, tc);
+                    mef_add(tlocx, tlocy, 5, 24, rnd(15) + 20, 50, tc);
                     mapitem_fire(tlocx, tlocy);
                 }
             }

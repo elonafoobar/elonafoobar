@@ -5,6 +5,9 @@
 #include "position.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "itemgen.hpp"
+#include "map_cell.hpp"
+#include "mef.hpp"
 #include "variables.hpp"
 
 
@@ -29,10 +32,7 @@ void map_reload(const std::string& prm_935)
             map(cnt, y_at_m166, 9) = 0;
         }
     }
-    for (int cnt = 0; cnt < 200; ++cnt)
-    {
-        mef(0, cnt) = 0;
-    }
+    mef_clear_all();
     for (const auto& cnt : items(-1))
     {
         if (inv[cnt].number > 0)

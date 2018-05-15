@@ -42,6 +42,7 @@ set(CORE_SOURCES
     ability.cpp
     access_character_info.cpp
     access_item_db.cpp
+    ai.cpp
     animation.cpp
     audio.cpp
     autopick.cpp
@@ -64,6 +65,8 @@ set(CORE_SOURCES
     debug.cpp
     draw.cpp
     elonacore.cpp
+    enchantment.cpp
+    event.cpp
     filesystem.cpp
     fish.cpp
     food.cpp
@@ -80,12 +83,15 @@ set(CORE_SOURCES
     item.cpp
     item_db.cpp
     item_material.cpp
+    itemgen.cpp
     log.cpp
     magic.cpp
     main.cpp
     main_menu.cpp
     map.cpp
+    map_cell.cpp
     mapgen.cpp
+    mef.cpp
     menu.cpp
     message.cpp
     proc_event.cpp
