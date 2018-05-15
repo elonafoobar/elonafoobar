@@ -7,7 +7,23 @@
 #include "foobar_save.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
+#include "item.hpp"
 #include "variables.hpp"
+
+
+namespace
+{
+
+int cs_posbk_x{};
+int cs_posbk_y{};
+int cs_posbk_w{};
+int cs_posbk_h{};
+int x2_at_m105 = 0;
+int y2_at_m105 = 0;
+
+}
+
+
 
 namespace elona
 {
@@ -2218,5 +2234,543 @@ void clear_background_in_character_making()
     gmode(2);
     return;
 }
+
+
+
+void draw_scroll(int x, int y, int width, int height)
+{
+    int x3 = width + x - width % 8 - 64;
+    int y3 = height + y - height % 8 - 64;
+
+    for (int i = 0; i < width / 8; ++i)
+    {
+        if (i < 8)
+        {
+            if (i == 0)
+            {
+                pos(x, y);
+                gcopy(7, 0, 0, 64, 48);
+                pos(x, y3);
+                gcopy(7, 0, 144, 64, 48);
+            }
+            continue;
+        }
+        if (i < width / 8 - 8)
+        {
+            pos(i * 8 + x, y);
+            gcopy(7, (i - 8) % 18 * 8 + 64, 0, 8, 48);
+            pos(i * 8 + x, y3);
+            gcopy(7, (i - 8) % 18 * 8 + 64, 144, 8, 48);
+            continue;
+        }
+        pos(x3, y);
+        gcopy(7, 208, 0, 64, 48);
+        pos(x3, y3);
+        gcopy(7, 208, 144, 64, 48);
+        break;
+    }
+
+    for (int i = 0; i < height / 8 - 14; ++i)
+    {
+        for (int j = 0; j < width / 8; ++j)
+        {
+            if (j == 0)
+            {
+                pos(x, i * 8 + y + 48);
+                gcopy(7, 0, i % 12 * 8 + 48, 64, 8);
+                continue;
+            }
+            if (j < width / 8 - 15)
+            {
+                pos(j * 8 + x + 56, i * 8 + y + 48);
+                gcopy(7, j % 18 * 8 + 64, i % 12 * 8 + 48, 8, 8);
+                continue;
+            }
+            pos(x3, i * 8 + y + 48);
+            gcopy(7, 208, i % 12 * 8 + 48, 64, 8);
+            break;
+        }
+    }
+}
+
+
+
+void cs_listbk()
+{
+    if (cs_bk == -1)
+        return;
+    pos(cs_posbk_x, cs_posbk_y);
+    gcopy(3, 264, 96, cs_posbk_w, cs_posbk_h);
+}
+
+
+
+void cs_list(
+    bool is_selected,
+    const std::string& text,
+    int x,
+    int y,
+    int x_offset,
+    int color_mode,
+    int ci)
+{
+    if (is_selected)
+    {
+        const auto width =
+            clamp(int(strlen_u(text)) * 7 + 32 + x_offset, 10, 480);
+
+        gsel(3);
+        pos(264, 96);
+        gcopy(0, x, y, width, 19);
+        gsel(0);
+
+        boxf(x, y, x + width, y + 19, {127, 191, 255, 63});
+        pos(x + width - 20, y + 4);
+        gcopy(3, 48, 360, 16, 16);
+
+        cs_posbk_x = x;
+        cs_posbk_y = y;
+        cs_posbk_w = width;
+        cs_posbk_h = 19;
+    }
+
+    switch (color_mode)
+    {
+    case 0: color(10, 10, 10); break;
+    case 1:
+        color(0, 0, 0);
+        if (inv[ci].identification_state
+            == identification_state_t::completely_identified)
+        {
+            switch (inv[ci].curse_state)
+            {
+            case curse_state_t::doomed: color(100, 10, 100); break;
+            case curse_state_t::cursed: color(150, 10, 10); break;
+            case curse_state_t::none: color(10, 40, 120); break;
+            case curse_state_t::blessed: color(10, 110, 30); break;
+            }
+        }
+        if (ibit(13, ci))
+        {
+            color(120, 80, 0);
+        }
+        break;
+    case 2: color(240, 240, 240); break;
+    case 3: color(160, 10, 10); break;
+    case 4: color(128, 128, 128); break;
+    default: break;
+    }
+
+    pos(x + 4 + x_offset, y + 3);
+    mes(text);
+    color(0, 0, 0);
+}
+
+
+
+void showscroll(const std::string& title, int x, int y, int width, int height)
+{
+    if (windowshadow != 0)
+    {
+        gmode(6, -1, -1, 80);
+        draw_scroll(x + 3, y + 3, width, height);
+        windowshadow = 0;
+        gmode(2);
+    }
+    draw_scroll(x, y, width, height);
+
+    if (title.empty())
+        return;
+
+    pos(x + 40, y + height - 67 - height % 8);
+    gcopy(3, 96, 360, 24, 16);
+    color(194, 173, 161);
+    line(
+        x + 60,
+        y + height - 68 - height % 8,
+        x + width - 40,
+        y + height - 68 - height % 8);
+    color(224, 213, 191);
+    line(
+        x + 60,
+        y + height - 69 - height % 8,
+        x + width - 40,
+        y + height - 69 - height % 8);
+    font(12 + sizefix - en * 2);
+    color(0, 0, 0);
+    pos(x + 68, y + height - 63 - height % 8);
+    mes(s);
+    if (pagesize != 0)
+    {
+        s = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
+        font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
+        pos(x + width - strlen_u(s) * 7 - 40, y + height - 63 - height % 8);
+        mes(s);
+    }
+}
+
+
+
+void window(
+    int prm_650,
+    int prm_651,
+    int prm_652,
+    int prm_653,
+    int,
+    int prm_655)
+{
+    int dx_at_m92 = 0;
+    int dy_at_m92 = 0;
+    int x3_at_m92 = 0;
+    int y3_at_m92 = 0;
+    int p_at_m92 = 0;
+    int cnt2_at_m92 = 0;
+    if (prm_655 == -1)
+    {
+        gmode(6, -1, -1, 80);
+    }
+    else
+    {
+        gmode(2);
+    }
+    dx_at_m92 = 0;
+    dy_at_m92 = 48;
+    x3_at_m92 = prm_652 + prm_650 - prm_652 % 8 - 64;
+    y3_at_m92 = prm_653 + prm_651 - prm_653 % 8 - 64;
+    if (y3_at_m92 < prm_651 + 14)
+    {
+        y3_at_m92 = prm_651 + 14;
+    }
+    for (int cnt = 0, cnt_end = (prm_652 / 8); cnt < cnt_end; ++cnt)
+    {
+        if (cnt < 8)
+        {
+            if (cnt == 0)
+            {
+                pos(prm_650, prm_651);
+                gcopy(3, dx_at_m92, dy_at_m92, 64, 48);
+                pos(prm_650, y3_at_m92);
+                gcopy(3, dx_at_m92, dy_at_m92 + 144, 64, 48);
+            }
+            continue;
+        }
+        if (cnt < prm_652 / 8 - 8)
+        {
+            pos(cnt * 8 + prm_650, prm_651);
+            gcopy(3, (cnt - 8) % 18 * 8 + dx_at_m92 + 36, dy_at_m92, 8, 48);
+            pos(cnt * 8 + prm_650, y3_at_m92);
+            gcopy(
+                3, (cnt - 8) % 18 * 8 + dx_at_m92 + 54, dy_at_m92 + 144, 8, 48);
+            continue;
+        }
+        pos(x3_at_m92, prm_651);
+        gcopy(3, dx_at_m92 + 208, dy_at_m92, 56, 48);
+        pos(x3_at_m92, y3_at_m92);
+        gcopy(3, dx_at_m92 + 208, dy_at_m92 + 144, 56, 48);
+        break;
+    }
+    p_at_m92 = prm_653 / 8 - 14;
+    if (p_at_m92 < 0)
+    {
+        p_at_m92 = 0;
+    }
+    for (int cnt = 0, cnt_end = (p_at_m92); cnt < cnt_end; ++cnt)
+    {
+        cnt2_at_m92 = cnt;
+        for (int cnt = 0, cnt_end = (prm_652 / 8); cnt < cnt_end; ++cnt)
+        {
+            if (cnt == 0)
+            {
+                pos(prm_650, cnt2_at_m92 * 8 + prm_651 + 48);
+                gcopy(
+                    3, dx_at_m92, cnt2_at_m92 % 12 * 8 + dy_at_m92 + 48, 64, 8);
+                continue;
+            }
+            if (cnt < prm_652 / 8 - 15)
+            {
+                pos(cnt * 8 + prm_650 + 56, cnt2_at_m92 * 8 + prm_651 + 48);
+                gcopy(
+                    3,
+                    cnt % 18 * 8 + dx_at_m92 + 64,
+                    cnt2_at_m92 % 12 * 8 + dy_at_m92 + 48,
+                    8,
+                    8);
+                continue;
+            }
+            pos(x3_at_m92, cnt2_at_m92 * 8 + prm_651 + 48);
+            gcopy(
+                3,
+                dx_at_m92 + 208,
+                cnt2_at_m92 % 12 * 8 + dy_at_m92 + 48,
+                56,
+                8);
+            break;
+        }
+    }
+    gmode(2);
+    return;
+}
+
+
+
+void window2(
+    int prm_656,
+    int prm_657,
+    int prm_658,
+    int prm_659,
+    int prm_660,
+    int prm_661)
+{
+    int dx_at_m93 = 0;
+    int dy_at_m93 = 0;
+    int x2_at_m93 = 0;
+    int y2_at_m93 = 0;
+    int x3_at_m93 = 0;
+    int y3_at_m93 = 0;
+    int p_at_m93 = 0;
+    dx_at_m93 = 0;
+    dy_at_m93 = 240;
+    x2_at_m93 = prm_658;
+    y2_at_m93 = prm_659;
+    if (x2_at_m93 < 32)
+    {
+        x2_at_m93 = 32;
+    }
+    if (y2_at_m93 < 24)
+    {
+        y2_at_m93 = 24;
+    }
+    x3_at_m93 = prm_656 + x2_at_m93 / 16 * 16 - 16;
+    y3_at_m93 = prm_657 + y2_at_m93 / 16 * 16 - 16;
+    if (prm_661 == 0)
+    {
+        pos(prm_656 + 4, prm_657 + 4);
+        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
+    }
+    if (prm_661 == 1)
+    {
+        pos(prm_656 + 4, prm_657 + 4);
+        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
+        pos(prm_656 + 4, prm_657 + 4);
+        gfini(x2_at_m93 - 4, y2_at_m93 - 4);
+        gfdec2(195, 205, 195);
+    }
+    if (prm_661 == 2)
+    {
+        pos(prm_656 + 4, prm_657 + 4);
+        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
+        pos(prm_656 + 4, prm_657 + 4);
+        gfini(x2_at_m93 - 4, y2_at_m93 - 4);
+        gfdec2(210, 215, 205);
+    }
+    if (prm_661 == 3)
+    {
+        pos(prm_656 + 4, prm_657 + 4);
+        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
+        pos(prm_656 + 4, prm_657 + 4);
+        gfini(x2_at_m93 - 4, y2_at_m93 - 4);
+        gfdec2(10, 13, 16);
+    }
+    if (prm_661 == 4)
+    {
+        pos(prm_656 + 4, prm_657 + 4);
+        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
+        pos(prm_656 + 4, prm_657 + 4);
+        gfini(x2_at_m93 - 4, y2_at_m93 - 4);
+        gfdec2(195, 205, 195);
+    }
+    if (prm_661 == 6)
+    {
+        pos(prm_656 + x2_at_m93 / 2, prm_657 + y2_at_m93 / 2);
+        gmode(4, 228, 144, 180);
+        grotate(3, 24, 72, 0, x2_at_m93 - 4, y2_at_m93 - 4);
+    }
+    gmode(2, 16, 16);
+    for (int cnt = 0, cnt_end = (x2_at_m93 / 16 - 2); cnt < cnt_end; ++cnt)
+    {
+        pos(cnt * 16 + prm_656 + 16, prm_657);
+        gcopy(3, prm_660 * 48 + dx_at_m93 + 16, dy_at_m93);
+        pos(cnt * 16 + prm_656 + 16, prm_657 + y2_at_m93 - 16);
+        gcopy(3, prm_660 * 48 + dx_at_m93 + 16, dy_at_m93 + 32);
+    }
+    pos(x3_at_m93, prm_657);
+    gcopy(3, prm_660 * 48 + dx_at_m93 + 16, dy_at_m93, x2_at_m93 % 16, 16);
+    pos(x3_at_m93, prm_657 + y2_at_m93 - 16);
+    gcopy(3, prm_660 * 48 + dx_at_m93 + 16, dy_at_m93 + 32, x2_at_m93 % 16, 16);
+    p_at_m93 = y2_at_m93 / 16 - 2;
+    if (p_at_m93 < 0)
+    {
+        p_at_m93 = 0;
+    }
+    for (int cnt = 0, cnt_end = (p_at_m93); cnt < cnt_end; ++cnt)
+    {
+        pos(prm_656, cnt * 16 + prm_657 + 16);
+        gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93 + 16);
+        pos(prm_656 + x2_at_m93 - 16, cnt * 16 + prm_657 + 16);
+        gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93 + 16);
+    }
+    pos(prm_656, y3_at_m93);
+    gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93 + 16, 16, y2_at_m93 % 16);
+    pos(prm_656 + x2_at_m93 - 16, y3_at_m93);
+    gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93 + 16, 16, y2_at_m93 % 16);
+    pos(prm_656, prm_657);
+    gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93);
+    pos(prm_656, prm_657 + y2_at_m93 - 16);
+    gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93 + 32);
+    pos(prm_656 + x2_at_m93 - 16, prm_657);
+    gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93);
+    pos(prm_656 + x2_at_m93 - 16, prm_657 + y2_at_m93 - 16);
+    gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93 + 32);
+    if (prm_661 == 5)
+    {
+        pos(prm_656 + 2, prm_657 + 2);
+        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 4, y2_at_m93 - 5);
+        pos(prm_656 + 2, prm_657 + 2);
+        gfini(x2_at_m93 - 4, y2_at_m93 - 4);
+        gfdec2(195, 205, 195);
+    }
+    return;
+}
+
+
+
+void windowanime(
+    int prm_726,
+    int prm_727,
+    int prm_728,
+    int prm_729,
+    int prm_730,
+    int prm_731)
+{
+    int cenx_at_m105 = 0;
+    int ceny_at_m105 = 0;
+    if (nowindowanime)
+    {
+        nowindowanime = 0;
+        return;
+    }
+    if (config::instance().windowanime == 0)
+    {
+        return;
+    }
+    gsel(prm_731);
+    gmode(0);
+    pos(0, 0);
+    gcopy(0, prm_726, prm_727, prm_728, prm_729);
+    gsel(0);
+    gmode(0);
+    x2_at_m105 = prm_728 / 2;
+    y2_at_m105 = prm_729 / 2;
+    cenx_at_m105 = prm_726 + x2_at_m105;
+    ceny_at_m105 = prm_727 + y2_at_m105;
+    for (int cnt = 1, cnt_end = cnt + (prm_730 - 1); cnt < cnt_end; ++cnt)
+    {
+        color(30, 30, 30);
+        boxl(
+            cenx_at_m105 - x2_at_m105 / prm_730 * cnt,
+            ceny_at_m105 - y2_at_m105 / prm_730 * cnt,
+            cenx_at_m105 + x2_at_m105 / prm_730 * cnt,
+            ceny_at_m105 + y2_at_m105 / prm_730 * cnt);
+        color(240, 240, 240);
+        boxl(
+            cenx_at_m105 - x2_at_m105 / prm_730 * cnt - 1,
+            ceny_at_m105 - y2_at_m105 / prm_730 * cnt - 1,
+            cenx_at_m105 + x2_at_m105 / prm_730 * cnt - 1,
+            ceny_at_m105 + y2_at_m105 / prm_730 * cnt - 1);
+        color(0, 0, 0);
+        redraw();
+        if (cnt != prm_730 - 1)
+        {
+            await(15);
+        }
+        pos(prm_726, prm_727);
+        gcopy(prm_731, 0, 0, prm_728, prm_729);
+    }
+    gmode(2);
+    return;
+}
+
+
+
+void windowanimecorner(
+    int prm_732,
+    int prm_733,
+    int prm_734,
+    int prm_735,
+    int prm_736,
+    int prm_737)
+{
+    if (config::instance().windowanime == 0)
+    {
+        return;
+    }
+    gsel(prm_737);
+    gmode(0);
+    pos(0, 0);
+    gcopy(0, prm_732, prm_733, prm_734, prm_735);
+    gsel(0);
+    gmode(0);
+    x2_at_m105 = prm_734 - prm_732;
+    y2_at_m105 = prm_735 - prm_733;
+    for (int cnt = 1, cnt_end = cnt + (prm_736); cnt < cnt_end; ++cnt)
+    {
+        color(30, 30, 30);
+        boxl(
+            prm_732 + prm_734,
+            prm_733 + prm_735,
+            prm_732 + prm_734 - (prm_734 - prm_732) / prm_736 * cnt,
+            prm_733 + prm_735 - (prm_735 - prm_733) / prm_736 * cnt);
+        color(240, 240, 240);
+        boxl(
+            prm_732 + prm_734 - 1,
+            prm_733 + prm_735 - 1,
+            prm_732 + prm_734 - (prm_734 - prm_732) / prm_736 * cnt - 1,
+            prm_733 + prm_735 - (prm_735 - prm_733) / prm_736 * cnt - 1);
+        color(0, 0, 0);
+        redraw();
+        if (cnt != prm_736)
+        {
+            await(15);
+        }
+        pos(prm_732, prm_733);
+        gcopy(prm_737, 0, 0, prm_734, prm_735);
+    }
+    gmode(2);
+    return;
+}
+
+
+
+void showtitle(const std::string&, const std::string& prm_739, int prm_740, int)
+{
+    int x_at_m106 = 0;
+    int y_at_m106 = 0;
+    font(12 + sizefix - en * 2);
+    if (mode != 1)
+    {
+        x_at_m106 = prm_740 - 10;
+        y_at_m106 = 0;
+    }
+    else
+    {
+        x_at_m106 = 240;
+        y_at_m106 = windowh - 16;
+    }
+    for (int cnt = 0, cnt_end = ((windoww - x_at_m106 - 8) / 192 + 1);
+         cnt < cnt_end;
+         ++cnt)
+    {
+        pos(x_at_m106 + 8 + cnt * 192, y_at_m106);
+        gcopy(3, 496, 581, 192, 18);
+    }
+    gmode(2);
+    pos(x_at_m106, y_at_m106 + (mode != 1));
+    gcopy(3, 96, 360, 24, 16);
+    pos(x_at_m106 + 32, y_at_m106 + 1 + jp);
+    bmes(prm_739, 250, 250, 250);
+    return;
+}
+
+
 
 } // namespace elona
