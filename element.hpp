@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 
 
 namespace elona
@@ -24,6 +26,14 @@ enum class element_t
     ehter = 62,
     acid = 63,
 };
+
+
+int randomele();
+std::string elename(int prm_348);
+int eleinfo(int prm_754, int prm_755);
+void resistmod(int cc, int element, int delta);
+void txteledmg(int type, int attacker, int target, int element);
+
 
 
 } // namespace elona

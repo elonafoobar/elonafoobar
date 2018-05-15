@@ -68,6 +68,7 @@ set(CORE_SOURCES
     debug.cpp
     dmgheal.cpp
     draw.cpp
+    element.cpp
     elonacore.cpp
     enchantment.cpp
     equipment.cpp
