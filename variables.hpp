@@ -162,6 +162,11 @@ ELONA_EXTERN(int movy);
 ELONA_EXTERN(int dbg_freemove);
 ELONA_EXTERN(int ri);
 
+// dmgheal.cpp
+ELONA_EXTERN(std::string ndeathcause);
+ELONA_EXTERN(int catitem);
+ELONA_EXTERN(int rollanatomy);
+ELONA_EXTERN(int rtdmg);
 
 ELONA_EXTERN(elona_vector1<int> _randcolor);
 ELONA_EXTERN(elona_vector1<int> aniref);

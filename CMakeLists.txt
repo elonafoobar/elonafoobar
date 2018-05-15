@@ -66,6 +66,7 @@ set(CORE_SOURCES
     ctrl_inventory.cpp
     crafting.cpp
     debug.cpp
+    dmgheal.cpp
     draw.cpp
     elonacore.cpp
     enchantment.cpp
