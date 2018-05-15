@@ -51,6 +51,8 @@ ELONA_EXTERN(elona_vector1<int> isethire);
 ELONA_EXTERN(elona_vector1<int> income);
 ELONA_EXTERN(elona_vector2<std::string> rankn);
 ELONA_EXTERN(int renewmulti);
+ELONA_EXTERN(elona_vector2<int> bdref);
+
 
 // ui.cpp
 ELONA_EXTERN(int inf_clockarrowx);
@@ -128,6 +130,12 @@ ELONA_EXTERN(int rdtry);
 // food.cpp
 ELONA_EXTERN(int enc);
 ELONA_EXTERN(int enc2);
+
+// shop.cpp
+ELONA_EXTERN(elona_vector1<int> isetdeed);
+
+// talk.cpp
+ELONA_EXTERN(elona_vector2<std::string> actor);
 
 // mef.cpp
 ELONA_EXTERN(elona_vector2<int> mef);
@@ -692,7 +700,6 @@ int cbreeder(int = 0);
 int cdbit(int = 0, int = 0);
 bool chara_unequip(int);
 int characreate(int = 0, int = 0, int = 0, int = 0);
-int clientguide(int = 0);
 int convertartifact(int = 0, int = 0);
 int copy_chara(int = 0);
 int create_card(int = 0, int = 0);
@@ -773,7 +780,6 @@ int unlock_box(int);
 int label_2217();
 int label_2230();
 int label_2231();
-bool talk_give_potion_of_cure_corruption();
 int new_ally_joins();
 int label_2664();
 int label_2672();
@@ -809,7 +815,6 @@ int route_info(int&, int&, int = 0);
 int skillexp(int = 0, int = 0, int = 0, int = 0, int = 0);
 int skillmod(int = 0, int = 0, int = 0);
 int talk_conv(std::string&, int = 0);
-int tradecheck(int = 0);
 int winposy(int = 0, int = 0);
 int zentohan(const std::string&, std::string&, int = 0);
 std::string _aru(int = 0);
@@ -880,7 +885,6 @@ std::string txtskillchange(int, int, bool);
 std::string your(int);
 std::string yourself(int = 0);
 void actionproc();
-void addbuilding(int = 0, int = 0, int = 0, int = 0);
 void addefmap(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
 void addnews(int = 0, int = 0, int = 0, const std::string& = "");
 void addnews2(const std::string&, int = 0);
@@ -1178,31 +1182,6 @@ void label_2234(int = 0);
 void label_2235(int);
 void label_2236();
 void do_steal_command();
-void talk_start();
-void speak_to_npc();
-talk_result_t talk_more();
-talk_result_t talk_sleeping();
-talk_result_t talk_busy();
-talk_result_t talk_house_visitor();
-talk_result_t talk_game_begin();
-talk_result_t talk_finish_escort();
-talk_result_t talk_quest_giver();
-talk_result_t talk_accepted_quest();
-talk_result_t talk_trainer();
-talk_result_t talk_invest();
-void talk_end();
-void talk_window();
-void reset_talk_variables();
-void init_talk_window_and_show();
-void init_talk_window();
-void show_talk_window();
-void show_talk_window();
-void label_2262();
-void sell_item();
-void load_shoptmp();
-void label_2265();
-void label_2266();
-void label_2267();
 void initialize_economy();
 void get_random_npc_id();
 void create_all_adventurers();

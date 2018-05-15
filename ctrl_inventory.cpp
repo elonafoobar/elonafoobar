@@ -5,14 +5,15 @@
 #include "config.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
+#include "enums.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "macro.hpp"
+#include "shop.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
-#include "enums.hpp"
 
 
 namespace elona
@@ -2360,7 +2361,7 @@ label_2061_internal:
         }
         if (invctrl == 11 || invctrl == 12 || invctrl == 22 || invctrl == 28)
         {
-            load_shoptmp();
+            shop_load_shoptmp();
             result.succeeded = false;
             return result;
         }

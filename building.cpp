@@ -185,6 +185,29 @@ turn_result_t build_new_building()
     return turn_result_t::turn_end;
 }
 
+void addbuilding(int prm_1082, int prm_1083, int prm_1084, int prm_1085)
+{
+    int p_at_m194 = 0;
+    p_at_m194 = -1;
+    for (int cnt = 0; cnt < 10; ++cnt)
+    {
+        if (bddata(0, prm_1082, cnt) == 0)
+        {
+            p_at_m194 = cnt;
+            break;
+        }
+    }
+    if (p_at_m194 == -1)
+    {
+        return;
+    }
+    bddata(0, prm_1082, p_at_m194) = prm_1083;
+    bddata(1, prm_1082, p_at_m194) = prm_1084;
+    bddata(2, prm_1082, p_at_m194) = prm_1085;
+    bddata(3, prm_1082, p_at_m194) = bdref(0, prm_1083) + 363;
+    return;
+}
+
 void prompt_hiring()
 {
     txtnew();
