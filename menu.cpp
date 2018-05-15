@@ -4,6 +4,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "class.hpp"
+#include "command.hpp"
 #include "config.hpp"
 #include "draw.hpp"
 #include "enchantment.hpp"

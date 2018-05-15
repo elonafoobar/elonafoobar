@@ -3,6 +3,7 @@
 #include "animation.hpp"
 #include "audio.hpp"
 #include "character.hpp"
+#include "command.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "itemgen.hpp"

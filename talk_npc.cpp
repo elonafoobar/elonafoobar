@@ -12,6 +12,7 @@
 #include "quest.hpp"
 #include "macro.hpp"
 #include "map_cell.hpp"
+#include "menu.hpp"
 #include "shop.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
