@@ -5,9 +5,11 @@
 #include "config.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
+#include "fov.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "map.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 using namespace elona;

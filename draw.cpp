@@ -3,6 +3,7 @@
 #include "character.hpp"
 #include "config.hpp"
 #include "elona.hpp"
+#include "fov.hpp"
 #include "map.hpp"
 #include "variables.hpp"
 
@@ -361,6 +362,14 @@ void show_damage_popups(int inf_ver)
             [](const auto& d) { return d.frame > 20; }),
         std::end(damage_popups));
 }
+
+void draw_emo(int cc, int x, int y)
+{
+    gmode(2, 16, 16);
+    pos(x + 16, y);
+    gcopy(3, 32 + cdata[cc].emotion_icon % 100 * 16, 608);
+}
+
 
 
 

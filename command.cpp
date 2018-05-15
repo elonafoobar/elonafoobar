@@ -2,18 +2,27 @@
 #include "ability.hpp"
 #include "animation.hpp"
 #include "audio.hpp"
-#include "card.hpp"
-#include "config.hpp"
 #include "calc.hpp"
-#include "ctrl_file.hpp"
+#include "card.hpp"
 #include "character.hpp"
+#include "config.hpp"
+#include "crafting.hpp"
+#include "ctrl_file.hpp"
+#include "enchantment.hpp"
+#include "food.hpp"
+#include "fov.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "itemgen.hpp"
 #include "macro.hpp"
 #include "map.hpp"
+#include "map_cell.hpp"
+#include "mef.hpp"
+#include "menu.hpp"
 #include "snail/application.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 namespace elona
@@ -800,16 +809,16 @@ turn_result_t do_throw_command()
             efp = 50 + sdata(111, cc) * 10;
             if (inv[ci].id == 392)
             {
-                addmef(tlocx, tlocy, 3, 19, rnd(15) + 5, efp, cc);
+                mef_add(tlocx, tlocy, 3, 19, rnd(15) + 5, efp, cc);
                 return turn_result_t::turn_end;
             }
             if (inv[ci].id == 577)
             {
-                addmef(tlocx, tlocy, 5, 24, rnd(15) + 25, efp, cc);
+                mef_add(tlocx, tlocy, 5, 24, rnd(15) + 25, efp, cc);
                 mapitem_fire(tlocx, tlocy);
                 return turn_result_t::turn_end;
             }
-            addmef(
+            mef_add(
                 tlocx,
                 tlocy,
                 6,
@@ -1607,7 +1616,7 @@ turn_result_t do_use_command()
     }
     if (the_item_db[inv[ci].id]->subcategory == 59500)
     {
-        return crafting_menu();
+        return blending_menu();
     }
     if (the_item_db[inv[ci].id]->subcategory == 60004)
     {
@@ -1638,7 +1647,7 @@ turn_result_t do_use_command()
         prodtype = inv[ci].function;
         snd(26);
         invctrl = 0;
-        label_18552();
+        crafting_menu();
         return turn_result_t::turn_end;
     }
     if (ibit(10, ci))
@@ -1670,8 +1679,8 @@ turn_result_t do_use_command()
             {
                 randomize(inv[ci].subname + inv[ci].param1 * 10 + cnt);
                 exrand_randomize(inv[ci].subname + inv[ci].param1 * 10 + cnt);
-                int stat = encadd(
-                    ci, randomenc(randomenclv(4)), randomencp(), 0, 0, 1);
+                int stat = enchantment_add(
+                    ci, enchantment_generate(enchantment_gen_level(4)), enchantment_gen_p(), 0, 0, 1);
                 if (stat != 0)
                 {
                     if (rtval == 34)
@@ -1709,7 +1718,7 @@ turn_result_t do_use_command()
                 }
                 else
                 {
-                    encadd(ci, list(0, rtval), list(1, rtval), 0, 1);
+                    enchantment_add(ci, list(0, rtval), list(1, rtval), 0, 1);
                 }
                 txtef(2);
                 txt(lang(
@@ -1722,7 +1731,7 @@ turn_result_t do_use_command()
                     txt(lang(
                         u8"その力は次第に脅威になっている。"s,
                         u8"Its power is becoming a threat."s));
-                    int stat = encadd(ci, 45, 50);
+                    int stat = enchantment_add(ci, 45, 50);
                     if (stat == 0)
                     {
                         inv[ci].enchantments[14].id = 0;
@@ -2393,7 +2402,7 @@ turn_result_t do_use_command()
             u8"原子爆弾を設置した。逃げろォー！"s,
             u8"You set up the nuke...now run!!"s));
         snd(58);
-        addmef(cdata[cc].position.x, cdata[cc].position.y, 7, 632, 10, 100, cc);
+        mef_add(cdata[cc].position.x, cdata[cc].position.y, 7, 632, 10, 100, cc);
         goto label_2229_internal;
     case 48:
         if (gdata_current_map != 35 || usermapid == 0)
@@ -3467,7 +3476,7 @@ turn_result_t do_eat_command()
         }
     }
     cdata[cc].emotion_icon = 116;
-    label_2160();
+    continuous_action_eating();
     return turn_result_t::turn_end;
 }
 

@@ -1,5 +1,6 @@
 #include "character.hpp"
 #include "elona.hpp"
+#include "enchantment.hpp"
 #include "i18n.hpp"
 #include "random.hpp"
 #include "variables.hpp"
@@ -2937,7 +2938,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                             u8"has which deteriorates your "s + skill_name
                                 + u8"."s)
                         + u8" ["s;
-                    putenclv(power / 50);
+                    enchantment_print_level(power / 50);
                     s += u8"]"s;
                 }
                 else
@@ -2960,7 +2961,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                             u8"has essential nutrients to enhance your "s
                                 + skill_name + u8"."s)
                         + u8" ["s;
-                    putenclv(power / 50);
+                    enchantment_print_level(power / 50);
                     s += u8"]"s;
                 }
                 else
@@ -3003,7 +3004,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                 }
             }
             s += u8" ["s;
-            putenclv(power / 100);
+            enchantment_print_level(power / 100);
             s += u8"]"s;
             break;
         case 3:
@@ -3036,7 +3037,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                 }
             }
             s += u8" ["s;
-            putenclv((power / 50 + 1) / 5);
+            enchantment_print_level((power / 50 + 1) / 5);
             s += u8"]"s;
             break;
         case 6:
@@ -3051,7 +3052,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                                   u8"ability", std::to_string(sid), u8"name")
                             + u8" faster."s)
                     + u8" ["s;
-                putenclv(power / 50);
+                enchantment_print_level(power / 50);
                 s += u8"]"s;
             }
             else
@@ -3078,7 +3079,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                         + u8" damage."s);
             }
             s += u8" ["s;
-            putenclv(power / 100);
+            enchantment_print_level(power / 100);
             s += u8"]"s;
             break;
         case 8:
@@ -3091,7 +3092,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                     + i18n::_(u8"ability", std::to_string(sid), u8"name")
                     + u8"."s);
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
             break;
         case 9:
@@ -3121,7 +3122,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3135,7 +3136,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3149,7 +3150,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3163,7 +3164,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3219,7 +3220,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 100);
+            enchantment_print_level(power / 100);
             s += u8"]"s;
         }
         break;
@@ -3260,7 +3261,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3282,7 +3283,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3301,7 +3302,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3317,7 +3318,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3333,7 +3334,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3349,7 +3350,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3365,7 +3366,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3379,7 +3380,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 100);
+            enchantment_print_level(power / 100);
             s += u8"]"s;
         }
         break;
@@ -3394,7 +3395,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3416,7 +3417,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3432,7 +3433,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3448,7 +3449,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3473,7 +3474,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3489,7 +3490,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3515,7 +3516,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;

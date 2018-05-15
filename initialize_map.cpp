@@ -1,12 +1,19 @@
 #include "ability.hpp"
 #include "audio.hpp"
+#include "building.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
+#include "event.hpp"
 #include "item.hpp"
+#include "itemgen.hpp"
+#include "map.hpp"
+#include "map_cell.hpp"
+#include "mapgen.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 
@@ -207,7 +214,7 @@ label_1741_internal:
         generate_random_nefia();
         if (gdata_current_dungeon_level == adata(10, gdata_current_map))
         {
-            evadd(4);
+            event_add(4);
         }
     }
     if (adata(16, gdata_current_map) == 101)
@@ -468,7 +475,7 @@ label_1741_internal:
         cdata[rc].ai_calm = 3;
         mdata(13) = 79;
         map_placeplayer();
-        evadd(30);
+        event_add(30);
     }
     if (gdata_current_map == 43 || gdata_current_map == 45)
     {
@@ -2231,7 +2238,7 @@ label_1741_internal:
                 cdatan(0, rc) += u8" Lv"s + cdata[rc].level;
             }
             gdatan(1) = random_title(2);
-            evadd(23);
+            event_add(23);
         }
         if (encounter == 3)
         {
@@ -2272,7 +2279,7 @@ label_1741_internal:
                 r2 = 1;
                 gain_level(rc);
             }
-            evadd(11);
+            event_add(11);
             for (int cnt = 0, cnt_end = (6 + rnd(6)); cnt < cnt_end; ++cnt)
             {
                 flt();
@@ -2322,7 +2329,7 @@ label_1741_internal:
         }
         if (gdata(186) <= gdata_current_dungeon_level)
         {
-            evadd(29);
+            event_add(29);
         }
         else
         {
@@ -2343,7 +2350,7 @@ label_1741_internal:
                 mdatan(0) = lang(u8"レシマス最深層"s, u8"The Depth"s);
                 if (gdata_main_quest_flag < 170)
                 {
-                    evadd(3);
+                    event_add(3);
                 }
                 x = 16;
                 y = 13;
@@ -3138,21 +3145,21 @@ label_1744_internal:
     {
         if (gdata_current_dungeon_level == 3)
         {
-            evadd(22, gdata_belongs_to_mages_guild);
+            event_add(22, gdata_belongs_to_mages_guild);
         }
     }
     if (adata(16, gdata_current_map) == 14)
     {
         if (gdata_current_dungeon_level == 3)
         {
-            evadd(22, gdata_belongs_to_thieves_guild);
+            event_add(22, gdata_belongs_to_thieves_guild);
         }
     }
     if (adata(16, gdata_current_map) == 11)
     {
         if (gdata_current_dungeon_level == 3)
         {
-            evadd(22, gdata_belongs_to_fighters_guild);
+            event_add(22, gdata_belongs_to_fighters_guild);
         }
     }
     if (gdata_current_map == 5)
@@ -3166,7 +3173,7 @@ label_1744_internal:
         if (gdata_has_not_been_to_vernis == 0)
         {
             gdata_has_not_been_to_vernis = 1;
-            evadd(12);
+            event_add(12);
         }
     }
     if (gdata_current_map == 15)
@@ -3294,7 +3301,7 @@ label_1744_internal:
                                 {
                                     if (qdata(12, cnt2) == gdata_current_map)
                                     {
-                                        evadd(16, cnt2, cnt);
+                                        event_add(16, cnt2, cnt);
                                         cdata[cnt].is_escorted() = false;
                                         break;
                                     }
@@ -3320,11 +3327,11 @@ label_1744_internal:
     }
     if (adata(16, gdata_current_map) == 102)
     {
-        label_1726();
+        update_shop();
     }
     if (adata(16, gdata_current_map) == 101)
     {
-        label_1728();
+        update_museum();
     }
     if (gdata_current_map == 7)
     {

@@ -2,11 +2,17 @@
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "crafting.hpp"
 #include "elona.hpp"
+#include "event.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "itemgen.hpp"
 #include "macro.hpp"
+#include "map_cell.hpp"
+#include "menu.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 
@@ -32,7 +38,7 @@ talk_result_t talk_unique()
         gdata_main_quest_flag = 170;
         return talk_result_t::talk_end;
     case 23:
-        if (evid() == 1)
+        if (event_id() == 1)
         {
             if (jp)
             {
@@ -1700,7 +1706,7 @@ talk_result_t talk_unique()
         {
             invctrl = 1;
             snd(26);
-            label_18552();
+            crafting_menu();
             return talk_result_t::talk_unique;
         }
         return talk_result_t::talk_end;
@@ -2106,7 +2112,7 @@ talk_result_t talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                evadd(20, tc);
+                event_add(20, tc);
                 return talk_result_t::talk_end;
             }
             if (chatval == 2)

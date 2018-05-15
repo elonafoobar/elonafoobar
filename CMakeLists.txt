@@ -42,26 +42,37 @@ set(CORE_SOURCES
     ability.cpp
     access_character_info.cpp
     access_item_db.cpp
+    ai.cpp
     animation.cpp
     audio.cpp
     autopick.cpp
+    blending.cpp
     buff.cpp
+    building.cpp
     calc.cpp
     card.cpp
+    casino.cpp
+    casino_card.cpp
     cat.cpp
     cell_draw.cpp
     character.cpp
+    character_making.cpp
     class.cpp
     command.cpp
     config.cpp
     ctrl_file.cpp
     ctrl_inventory.cpp
+    crafting.cpp
     debug.cpp
     draw.cpp
     elonacore.cpp
+    enchantment.cpp
+    event.cpp
     filesystem.cpp
     fish.cpp
+    food.cpp
     foobar_save.cpp
+    fov.cpp
     get_card_info.cpp
     get_random_item_id.cpp
     get_random_npc_id.cpp
@@ -73,10 +84,16 @@ set(CORE_SOURCES
     item.cpp
     item_db.cpp
     item_material.cpp
+    itemgen.cpp
     log.cpp
     magic.cpp
     main.cpp
+    main_menu.cpp
     map.cpp
+    map_cell.cpp
+    mapgen.cpp
+    mef.cpp
+    menu.cpp
     message.cpp
     proc_event.cpp
     race.cpp
@@ -89,6 +106,7 @@ set(CORE_SOURCES
     tcg.cpp
     text.cpp
     trait.cpp
+    ui.cpp
     variables.cpp
     wish.cpp
     ${PROJECT_BINARY_DIR}/version.cpp

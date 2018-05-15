@@ -8,13 +8,21 @@
 #include "ctrl_file.hpp"
 #include "debug.hpp"
 #include "elona.hpp"
+#include "enchantment.hpp"
+#include "food.hpp"
+#include "fov.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "itemgen.hpp"
 #include "macro.hpp"
 #include "map.hpp"
+#include "map_cell.hpp"
+#include "mef.hpp"
+#include "menu.hpp"
 #include "trait.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 #include "wish.hpp"
 
@@ -3402,24 +3410,24 @@ label_2181_internal:
             }
             if (efid == 634)
             {
-                addmef(x, y, 4, 20, rnd(4) + 2, efp, cc);
+                mef_add(x, y, 4, 20, rnd(4) + 2, efp, cc);
             }
             if (efid == 455)
             {
-                addmef(x, y, 3, 19, rnd(10) + 5, efp, cc);
+                mef_add(x, y, 3, 19, rnd(10) + 5, efp, cc);
             }
             if (efid == 456)
             {
-                addmef(x, y, 5, 24, rnd(10) + 5, efp, cc);
+                mef_add(x, y, 5, 24, rnd(10) + 5, efp, cc);
                 mapitem_fire(x, y);
             }
             if (efid == 436)
             {
-                addmef(x, y, 1, 11, -1, efp * 2);
+                mef_add(x, y, 1, 11, -1, efp * 2);
             }
             if (efid == 437)
             {
-                addmef(x, y, 2, 30, 8 + rnd((15 + efp / 25)), efp);
+                mef_add(x, y, 2, 30, 8 + rnd((15 + efp / 25)), efp);
             }
         }
         break;
@@ -3497,10 +3505,10 @@ label_2181_internal:
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
             randomize(inv[efcibk].param1);
-            encadd(
+            enchantment_add(
                 ci,
-                randomenc(randomenclv(egolv)),
-                randomencp() + (fixlv == 5) * 100 + (ibit(15, ci) == 1) * 100,
+                enchantment_generate(enchantment_gen_level(egolv)),
+                enchantment_gen_p() + (fixlv == 5) * 100 + (ibit(15, ci) == 1) * 100,
                 20 - (fixlv == 5) * 10 - (ibit(15, ci) == 1) * 20);
         }
         randomize();
@@ -4222,7 +4230,7 @@ label_2181_internal:
                 }
                 if (rnd(40) == 0)
                 {
-                    addmef(dx, dy, 5, 24, rnd(4) + 3, 50);
+                    mef_add(dx, dy, 5, 24, rnd(4) + 3, 50);
                 }
                 if (map(dx, dy, 1) != 0)
                 {
@@ -4399,7 +4407,7 @@ label_2181_internal:
                 name(tc) + u8"は炎に包まれた。"s,
                 name(tc) + u8" "s + is(tc) + u8" surrounded by flames."s));
         }
-        addmef(
+        mef_add(
             cdata[tc].position.x,
             cdata[tc].position.y,
             5,
@@ -4478,7 +4486,7 @@ label_2181_internal:
                     + u8"!"s));
         }
         healhp(cc, cdata[cc].max_hp / 3);
-        label_2161();
+        continuous_action_eating_finish();
         refresh_burden_state();
         break;
     case 464:
