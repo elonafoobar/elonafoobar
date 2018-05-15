@@ -11,6 +11,7 @@
 #include "map_cell.hpp"
 #include "mef.hpp"
 #include "random.hpp"
+#include "quest.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -23,7 +24,7 @@ void proc_event()
 {
     switch (event_id())
     {
-    case 8: hunt_all_targets(); break;
+    case 8: quest_all_targets_killed(); break;
     case 14:
         switch (gdata_executing_immediate_quest_type)
         {
@@ -326,7 +327,7 @@ void proc_event()
         tc = evdata2(evnum - (evnum != 0) * 1);
         speak_to_npc();
         rq = evdata1(evnum - (evnum != 0) * 1);
-        complete_quest();
+        quest_complete();
         chara_vanquish(evdata2(evnum - (evnum != 0) * 1));
         break;
     case 15:
@@ -336,7 +337,7 @@ void proc_event()
                 && qdata(13, i) == evdata1(evnum - (evnum != 0) * 1))
             {
                 rq = i;
-                failed_quest(qdata(3, rq));
+                quest_failed(qdata(3, rq));
                 break;
             }
         }
@@ -404,7 +405,7 @@ void proc_event()
         screenupdate = -1;
         update_entire_screen();
         break;
-    case 10: label_2673(); break;
+    case 10: quest_check_all_for_failed(); break;
     case 19:
         txtef(6);
         txt(""s + usermsg);

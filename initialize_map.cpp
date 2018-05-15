@@ -9,6 +9,7 @@
 #include "elona.hpp"
 #include "event.hpp"
 #include "item.hpp"
+#include "quest.hpp"
 #include "itemgen.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
@@ -1084,7 +1085,7 @@ label_1741_internal:
                 characreate(-1, 39, -3, 0);
                 cdata[rc].character_role = 4;
             }
-            label_2669();
+            quest_on_map_initialize();
             for (int cnt = 0; cnt < 20; ++cnt)
             {
                 dbid = 0;
@@ -1287,7 +1288,7 @@ label_1741_internal:
             characreate(-1, 77, -3, 0);
             cdata[rc].character_role = 14;
         }
-        label_2669();
+        quest_on_map_initialize();
         for (int cnt = 0; cnt < 25; ++cnt)
         {
             dbid = 0;
@@ -1407,7 +1408,7 @@ label_1741_internal:
                 characreate(-1, 77, -3, 0);
                 cdata[rc].character_role = 14;
             }
-            label_2669();
+            quest_on_map_initialize();
             for (int cnt = 0; cnt < 25; ++cnt)
             {
                 dbid = 0;
@@ -1466,7 +1467,7 @@ label_1741_internal:
             mdata(13) = 61;
             mdata(17) = 1;
             mdatan(0) = lang(u8"ルミエスト下水道"s, u8"The Sewer"s);
-            put_questtarget();
+            quest_place_target();
             gdata_entrance_type = 1;
             map_placeplayer();
         }
@@ -1564,7 +1565,7 @@ label_1741_internal:
                 characreate(-1, 77, -3, 0);
                 cdata[rc].character_role = 14;
             }
-            label_2669();
+            quest_on_map_initialize();
             for (int cnt = 0; cnt < 15; ++cnt)
             {
                 dbid = 0;
@@ -1582,7 +1583,7 @@ label_1741_internal:
             mdata(13) = 61;
             mdata(17) = 1;
             mdatan(0) = lang(u8"タムの猫屋敷"s, u8"Cat Mansion"s);
-            put_questtarget();
+            quest_place_target();
             map_placeplayer();
         }
         if (gdata_current_dungeon_level == 4)
@@ -1596,7 +1597,7 @@ label_1741_internal:
             mdata(17) = 1;
             mdata(7) = 0;
             mdatan(0) = lang(u8"防衛線"s, u8"Battle Field"s);
-            put_questtarget();
+            quest_place_target();
             gdata_entrance_type = 8;
             map_placeplayer();
             listmax = 0;
@@ -1732,7 +1733,7 @@ label_1741_internal:
             characreate(-1, 77, rnd(32), rnd(mdata(1)));
             cdata[rc].character_role = 14;
         }
-        label_2669();
+        quest_on_map_initialize();
         for (int cnt = 0; cnt < 8; ++cnt)
         {
             set_character_generation_filter();
@@ -1870,7 +1871,7 @@ label_1741_internal:
             flt();
             characreate(-1, 72, 7, 6);
             cdata[rc].character_role = 4;
-            label_2669();
+            quest_on_map_initialize();
             for (int cnt = 0; cnt < 20; ++cnt)
             {
                 set_character_generation_filter();
@@ -2047,7 +2048,7 @@ label_1741_internal:
                 characreate(-1, 77, -3, 0);
                 cdata[rc].character_role = 14;
             }
-            label_2669();
+            quest_on_map_initialize();
             for (int cnt = 0; cnt < 25; ++cnt)
             {
                 dbid = 0;
@@ -2065,7 +2066,7 @@ label_1741_internal:
             mdata(13) = 61;
             mdata(17) = 1;
             mdatan(0) = lang(u8"スライムの坑道"s, u8"The Mine"s);
-            put_questtarget();
+            quest_place_target();
             map_placeplayer();
         }
         if (gdata_current_dungeon_level == 4)
@@ -2078,7 +2079,7 @@ label_1741_internal:
             mdata(13) = 61;
             mdata(17) = 1;
             mdatan(0) = lang(u8"盗賊の隠れ家"s, u8"Robber's Hideout"s);
-            put_questtarget();
+            quest_place_target();
             map_placeplayer();
         }
         if (gdata_current_dungeon_level == 5)
@@ -2091,7 +2092,7 @@ label_1741_internal:
             mdata(13) = 61;
             mdata(17) = 1;
             mdatan(0) = lang(u8"生体兵器実験場"s, u8"Test Site"s);
-            put_questtarget();
+            quest_place_target();
             gdata_entrance_type = 7;
             mapstartx = 6;
             mapstarty = 27;
@@ -2963,7 +2964,7 @@ label_1744_internal:
     label_1428();
     if (mdata(6) == 3)
     {
-        label_2671();
+        quest_refresh_list();
     }
     if (mode == 11)
     {

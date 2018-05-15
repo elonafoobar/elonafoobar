@@ -2179,6 +2179,29 @@ int inv_weight(int owner)
     return weight;
 }
 
+int inv_getfreeid_force()
+{
+    p = inv_getfreeid(tc);
+    if (p != -1)
+    {
+        return p;
+    }
+    for (int cnt = 0; cnt < 100; ++cnt)
+    {
+        p = rnd(invrange) + invhead;
+        if (inv[p].body_part == 0)
+        {
+            inv[p].number = 0;
+            if (cdata[tc].item_which_will_be_used == p)
+            {
+                cdata[tc].item_which_will_be_used = 0;
+            }
+            break;
+        }
+    }
+    return p;
+}
+
 
 
 } // namespace elona

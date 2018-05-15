@@ -9,6 +9,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "quest.hpp"
 #include "macro.hpp"
 #include "map_cell.hpp"
 #include "ui.hpp"
@@ -74,7 +75,7 @@ talk_result_t talk_npc()
         int stat = customtalk(tc, 106);
         if (stat)
         {
-            replace_tags_in_quest_board();
+            text_replace_tags_in_quest_board();
         }
         if (cdata[tc].interest > 0)
         {
@@ -446,8 +447,8 @@ talk_result_t talk_npc()
         }
         if (qdata(8, rq) == 3)
         {
-            set_quest_data(3);
-            complete_quest();
+            quest_set_data(3);
+            quest_complete();
         }
         else if (qdata(14, rq) == 3 && qdata(8, rq) == 1)
         {
@@ -1025,8 +1026,8 @@ talk_result_t talk_npc()
         txt(lang(
             itemname(deliver(1), 1) + u8"を手渡した。"s,
             u8"You hand over "s + itemname(deliver(1), 1) + u8"."s));
-        set_quest_data(3);
-        complete_quest();
+        quest_set_data(3);
+        quest_complete();
         refresh_burden_state();
         return talk_result_t::talk_npc;
     }
@@ -1044,8 +1045,8 @@ talk_result_t talk_npc()
         txt(lang(
             itemname(supply, 1) + u8"を手渡した。"s,
             u8"You hand over "s + itemname(supply, 1) + u8"."s));
-        set_quest_data(3);
-        complete_quest();
+        quest_set_data(3);
+        quest_complete();
         refresh_burden_state();
         return talk_result_t::talk_npc;
     }

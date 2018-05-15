@@ -95,6 +95,7 @@ set(CORE_SOURCES
     menu.cpp
     message.cpp
     proc_event.cpp
+    quest.cpp
     race.cpp
     random.cpp
     set_item_info.cpp

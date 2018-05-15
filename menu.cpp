@@ -13,6 +13,7 @@
 #include "item_db.hpp"
 #include "macro.hpp"
 #include "menu.hpp"
+#include "quest.hpp"
 #include "trait.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -4703,7 +4704,7 @@ menu_result menu_journal()
     }
     noteadd(u8" - Quest - "s);
     noteadd(""s);
-    update_main_quest_journal();
+    quest_update_main_quest_journal();
     for (int cnt = 0, cnt_end = (gdata_number_of_existing_quests);
          cnt < cnt_end;
          ++cnt)
@@ -4713,7 +4714,7 @@ menu_result menu_journal()
             continue;
         }
         rq = cnt;
-        set_quest_data(2);
+        quest_set_data(2);
     }
     append_subquest_journal(0);
     for (int cnt = 0,
@@ -5007,7 +5008,7 @@ turn_result_t show_quest_board()
             }
         }
     }
-    label_2671();
+    quest_refresh_list();
     listmax = 0;
     page = 0;
     pagesize = 4;
@@ -5116,7 +5117,7 @@ label_1978_internal:
         }
         rq = list(0, p);
         tc = qdata(0, rq);
-        set_quest_data(0);
+        quest_set_data(0);
         p = pagesize * page + cnt;
         font(14 - en * 2);
         cs_list(cs == cnt, s(3), wx + 96, y - 1, 19);
