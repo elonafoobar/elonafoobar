@@ -3,6 +3,7 @@
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "character_status.hpp"
 #include "debug.hpp"
 #include "event.hpp"
 #include "i18n.hpp"
@@ -172,7 +173,7 @@ int select_wished_character(const std::string& input)
     for (int i = 0; i < 800; ++i)
     {
         int similarity{};
-        auto name = refchara_str(i, 2);
+        auto name = chara_refstr(i, 2);
         if (en)
         {
             name = to_lower(name);
@@ -196,7 +197,7 @@ void wish_for_character()
     inputlog = strutil::remove_str(inputlog, u8"summon");
     dbid = select_wished_character(inputlog);
     flt();
-    characreate(-1, dbid, cdata[0].position.x, cdata[0].position.y);
+    chara_create(-1, dbid, cdata[0].position.x, cdata[0].position.y);
     cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
     txt(cdatan(0, rc) + " is summoned.");
 }
@@ -206,7 +207,7 @@ void wish_for_card()
 {
     dbid = select_wished_character(inputlog);
     flt();
-    characreate(56, dbid, -3, 0);
+    chara_create(56, dbid, -3, 0);
     flt();
     itemcreate(-1, 504, cdata[0].position.x, cdata[0].position.y, 0);
     inv[ci].subname = cdata[56].id;
@@ -224,7 +225,7 @@ void wish_for_figure()
 {
     dbid = select_wished_character(inputlog);
     flt();
-    characreate(56, dbid, -3, 0);
+    chara_create(56, dbid, -3, 0);
     flt();
     itemcreate(-1, 503, cdata[0].position.x, cdata[0].position.y, 0);
     inv[ci].subname = cdata[56].id;
@@ -257,7 +258,7 @@ bool grant_special_wishing(const std::string& wish)
     {
         txt(lang(u8"「うみみゅみゅぁ！」", u8"\"Meeewmew!\""));
         flt();
-        characreate(-1, 331, cdata[0].position.x, cdata[0].position.y);
+        chara_create(-1, 331, cdata[0].position.x, cdata[0].position.y);
     }
     else if (wish == u8"ルルウィ" || wish == u8"lulwy")
     {
@@ -265,25 +266,25 @@ bool grant_special_wishing(const std::string& wish)
             u8"「アタシを呼びつけるとは生意気ね。」",
             u8"\"You dare to call my name?\""));
         flt();
-        characreate(-1, 306, cdata[0].position.x, cdata[0].position.y);
+        chara_create(-1, 306, cdata[0].position.x, cdata[0].position.y);
     }
     else if (wish == u8"オパートス" || wish == u8"opatos")
     {
         txt(lang(u8"工事中。", u8"\"Under construction.\""));
         flt();
-        characreate(-1, 338, cdata[0].position.x, cdata[0].position.y);
+        chara_create(-1, 338, cdata[0].position.x, cdata[0].position.y);
     }
     else if (wish == u8"クミロミ" || wish == u8"kumiromi")
     {
         txt(lang(u8"工事中。", u8"\"Under construction.\""));
         flt();
-        characreate(-1, 339, cdata[0].position.x, cdata[0].position.y);
+        chara_create(-1, 339, cdata[0].position.x, cdata[0].position.y);
     }
     else if (wish == u8"マニ" || wish == u8"mani")
     {
         txt(lang(u8"工事中。", u8"\"Under construction.\""));
         flt();
-        characreate(-1, 342, cdata[0].position.x, cdata[0].position.y);
+        chara_create(-1, 342, cdata[0].position.x, cdata[0].position.y);
     }
     else if (
         wish == u8"若さ" || wish == u8"若返り" || wish == u8"年"

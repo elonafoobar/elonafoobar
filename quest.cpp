@@ -3,6 +3,7 @@
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "character_status.hpp"
 #include "event.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
@@ -205,7 +206,7 @@ void quest_check()
         }
         if (gdata_executing_immediate_quest_type == 1008)
         {
-            if (findchara(qdata(12, gdata_executing_immediate_quest)) == 0)
+            if (chara_find(qdata(12, gdata_executing_immediate_quest)) == 0)
             {
                 event_add(8);
             }
@@ -329,7 +330,7 @@ void quest_set_data(int val0)
     {
         s = u8"%CONQUER"s;
         parse_quest_board_text(val0);
-        s(4) = refchara_str(qdata(12, rq), 2);
+        s(4) = chara_refstr(qdata(12, rq), 2);
         if (qdata(12, rq) == 343)
         {
             s(4) = lang(u8"正体不明の存在"s, u8"unknown monster"s);
@@ -341,7 +342,7 @@ void quest_set_data(int val0)
     {
         s = u8"%HUNTEX"s;
         parse_quest_board_text(val0);
-        s(4) = refchara_str(qdata(12, rq), 2);
+        s(4) = chara_refstr(qdata(12, rq), 2);
         s(10) = ""s + qdata(5, rq) * 3 / 2;
         s(6) = lang(u8"全ての敵の殲滅"s, u8"Eliminate monsters"s);
     }
@@ -618,7 +619,7 @@ int quest_generate()
             for (int cnt = 0; cnt < 50; ++cnt)
             {
                 flt(qdata(5, rq), 2);
-                characreate(56, 0, -3, 0);
+                chara_create(56, 0, -3, 0);
                 if (cmshade)
                 {
                     continue;
@@ -654,7 +655,7 @@ int quest_generate()
             for (int cnt = 0; cnt < 50; ++cnt)
             {
                 flt(qdata(5, rq), 2);
-                characreate(56, 0, -3, 0);
+                chara_create(56, 0, -3, 0);
                 if (cmshade)
                 {
                     continue;

@@ -2,6 +2,7 @@
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "character_status.hpp"
 #include "crafting.hpp"
 #include "elona.hpp"
 #include "event.hpp"
@@ -694,7 +695,7 @@ talk_result_t talk_unique()
             }
             if (gdata_tutorial_flag == 6)
             {
-                p = findchara(3);
+                p = chara_find(3);
                 if (p != 0)
                 {
                     listmax = 0;
@@ -850,10 +851,10 @@ talk_result_t talk_unique()
         }
         if (chatval == 2)
         {
-            tc = findchara(33);
+            tc = chara_find(33);
             if (tc == 0 || cdata[tc].state != 1)
             {
-                tc = findchara(34);
+                tc = chara_find(34);
                 hostileaction(0, tc);
                 listmax = 0;
                 buff = lang(
@@ -878,8 +879,8 @@ talk_result_t talk_unique()
             buff = lang(
                 u8"ああ、わかった。パルミアまでは長い旅路だ。一時であれ休息をとれて良かったのかも知れないな。"s,
                 u8"Yes. Palmia is still far away. Perhaps, It was fortunate that we could have a little rest before everything begins."s);
-            tc = tc * (findchara(34) == 0)
-                + (findchara(34) != 0) * findchara(34);
+            tc = tc * (chara_find(34) == 0)
+                + (chara_find(34) != 0) * chara_find(34);
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
@@ -888,13 +889,13 @@ talk_result_t talk_unique()
                 u8"また巡り会う時まで、"s + cdatan(1, 0)
                     + u8"、あなたに風の加護のあらんことを。"s,
                 u8"Farewell..until we meet again. May the blessing of Lulwy be with you."s);
-            tc = tc * (findchara(33) == 0)
-                + (findchara(33) != 0) * findchara(33);
+            tc = tc * (chara_find(33) == 0)
+                + (chara_find(33) != 0) * chara_find(33);
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            chara_vanquish(findchara(33));
-            chara_vanquish(findchara(34));
+            chara_vanquish(chara_find(33));
+            chara_vanquish(chara_find(34));
             txt(lang(
                 u8"二人は荷物をまとめ洞窟を後にした。"s,
                 u8"Lomias and Larnneire leave the cave."s));
@@ -1009,7 +1010,7 @@ talk_result_t talk_unique()
             for (int cnt = 0; cnt < 3; ++cnt)
             {
                 flt();
-                characreate(-1, 3, cdata[0].position.x, cdata[0].position.y);
+                chara_create(-1, 3, cdata[0].position.x, cdata[0].position.y);
                 cdata[rc].does_not_search_enemy() = true;
             }
             flt();
@@ -2286,7 +2287,7 @@ talk_result_t talk_unique()
             ELONA_TALK_SCENE_CUT();
             tcbk = tc;
             tc = rc;
-            s = refchara_str(cdata[tc].id, 8);
+            s = chara_refstr(cdata[tc].id, 8);
             if (!strutil::contains(s(0), u8"/man/"))
             {
                 dmgcon(tcbk, 11, 1000);
@@ -2457,7 +2458,7 @@ talk_result_t talk_unique()
             ELONA_TALK_SCENE_CUT();
             return talk_result_t::talk_end;
         }
-        if (get_freeally() != 0)
+        if (chara_get_free_slot_ally() != 0)
         {
             ELONA_APPEND_RESPONSE(1, lang(u8"連れて行く"s, u8"I'll take you"s));
         }
@@ -2472,7 +2473,7 @@ talk_result_t talk_unique()
             rc = tc;
             new_ally_joins();
             cdata[rc].is_escorted_in_sub_quest() = true;
-            refresh_character(rc);
+            chara_refresh(rc);
             return talk_result_t::talk_end;
         }
         else
@@ -2529,7 +2530,7 @@ talk_result_t talk_unique()
         }
         if (gdata_puppys_cave == 1)
         {
-            if (findally(225) == -1)
+            if (chara_find_ally(225) == -1)
             {
                 listmax = 0;
                 buff = lang(u8"ポピーまだ〜？"s, u8"Where's Poppy?"s);
@@ -2565,9 +2566,9 @@ talk_result_t talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata_puppys_cave = 1000;
-            chara_vanquish(findally(225));
+            chara_vanquish(chara_find_ally(225));
             flt();
-            characreate(-1, 225, 31, 4);
+            chara_create(-1, 225, 31, 4);
             cdata[rc].character_role = 3;
             return talk_result_t::talk_end;
         }
@@ -2986,7 +2987,7 @@ talk_result_t talk_unique()
         }
         if (gdata_mias_dream == 1)
         {
-            if (findally(246) == -1)
+            if (chara_find_ally(246) == -1)
             {
                 listmax = 0;
                 buff = lang(
@@ -3034,7 +3035,7 @@ talk_result_t talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata_mias_dream = 1000;
-            relocate_chara(findally(246), -1);
+            chara_relocate(chara_find_ally(246), -1);
             cdata[rc].relationship = -1;
             cdata[rc].original_relationship = -1;
             cdata[rc].character_role = 3;
@@ -4176,7 +4177,7 @@ talk_result_t talk_unique()
                     while (1)
                     {
                         flt(10);
-                        characreate(56, 0, -3, 0);
+                        chara_create(56, 0, -3, 0);
                         if (the_character_db[cdata[56].id]->rarity / 1000 < 70)
                         {
                             continue;
@@ -4195,11 +4196,11 @@ talk_result_t talk_unique()
                     gdata_fighters_guild_target = cdata[56].id;
                     chara_vanquish(56);
                     listmax = 0;
-                    buff = lang(""s + refchara_str(gdata_fighters_guild_target, 2) + u8"を"s +
+                    buff = lang(""s + chara_refstr(gdata_fighters_guild_target, 2) + u8"を"s +
                             gdata_fighters_guild_quota +
                             u8"匹討伐するのが、お前に課せられた試験だ。ノルマを達成したら、私に報告したまえ。"s,
                         u8"The task given to you is this. Find and slay "s +
-                            gdata_fighters_guild_quota + u8" "s + refchara_str(gdata_fighters_guild_target, 2) +
+                            gdata_fighters_guild_quota + u8" "s + chara_refstr(gdata_fighters_guild_target, 2) +
                             u8". When you complete this, talk to me again"s);
                     tc = tc * 1 + 0;
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
@@ -4212,12 +4213,12 @@ talk_result_t talk_unique()
                     listmax = 0;
                     buff = lang(
                         u8"どうした？試験の内容は伝えたはずだ。"s
-                            + refchara_str(gdata_fighters_guild_target, 2)
+                            + chara_refstr(gdata_fighters_guild_target, 2)
                             + u8"をあと"s + gdata_fighters_guild_quota
                             + u8"匹討伐してからまた来なさい。"s,
                         u8"You still need to slay "s
                             + gdata_fighters_guild_quota + u8" more "s
-                            + refchara_str(gdata_fighters_guild_target, 2)
+                            + chara_refstr(gdata_fighters_guild_target, 2)
                             + u8"."s);
                     tc = tc * 1 + 0;
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
@@ -4297,7 +4298,7 @@ talk_result_t talk_unique()
             while (1)
             {
                 flt(cdata[0].level + 10);
-                characreate(56, 0, -3, 0);
+                chara_create(56, 0, -3, 0);
                 if (the_character_db[cdata[56].id]->rarity / 1000 < 70)
                 {
                     continue;
@@ -4324,10 +4325,10 @@ talk_result_t talk_unique()
             listmax = 0;
             buff = lang(
                 u8"良い心がけです。あなたにランク昇格のためのノルマを与えましょう。"s +
-                    refchara_str(gdata_fighters_guild_target, 2) + u8"をあと"s + gdata_fighters_guild_quota +
+                    chara_refstr(gdata_fighters_guild_target, 2) + u8"をあと"s + gdata_fighters_guild_quota +
                     u8"匹討伐してからまた来なさい。昇進のための審査会に報告してあげましょう。"s,
                 u8"There's a task for you. Go find and slay "s + gdata_fighters_guild_quota +
-                    u8" "s + refchara_str(gdata_fighters_guild_target, 2) +
+                    u8" "s + chara_refstr(gdata_fighters_guild_target, 2) +
                     u8". Then we will think about your promotion."s);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
@@ -4590,7 +4591,7 @@ talk_result_t talk_unique()
                 lang(
                     u8"捕獲玉を補充したい"s,
                     u8"I need to replenish my supply of little balls."s));
-            if (findally(319) != -1)
+            if (chara_find_ally(319) != -1)
             {
                 ELONA_APPEND_RESPONSE(
                     3,
@@ -4741,7 +4742,7 @@ talk_result_t talk_unique()
                         + gdata_save_count_of_little_sister
                         + u8" times and killed "s
                         + gdata_kill_count_of_little_sister + u8" times."s));
-                chara_vanquish(findally(319));
+                chara_vanquish(chara_find_ally(319));
                 snd(51);
                 listmax = 0;
                 buff = lang(
@@ -4768,7 +4769,7 @@ talk_result_t talk_unique()
             talk_window_query();
             if (chatval == 1)
             {
-                f = get_freeally();
+                f = chara_get_free_slot_ally();
                 if (f == 0)
                 {
                     listmax = 0;

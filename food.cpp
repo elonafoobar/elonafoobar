@@ -4,6 +4,7 @@
 #include "buff.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "character_status.hpp"
 #include "elona.hpp"
 #include "event.hpp"
 #include "fov.hpp"
@@ -85,7 +86,7 @@ void continuous_action_eating_finish()
     }
     if (chara_unequip(ci))
     {
-        refresh_character(cc);
+        chara_refresh(cc);
     }
     --inv[ci].number;
     if (ci >= 5080)
@@ -142,7 +143,7 @@ void continuous_action_eating_finish()
                             modify_karma(0, -1);
                         }
                     }
-                    modimp(tc, -25);
+                    chara_mod_impression(tc, -25);
                     return;
                 }
             }
@@ -786,7 +787,7 @@ void apply_general_eating_effect()
                 {
                     if (inv[ci].id == 204)
                     {
-                        s = refchara_str(inv[ci].subname, 8);
+                        s = chara_refstr(inv[ci].subname, 8);
                         if (strutil::contains(s(0), u8"/man/"))
                         {
                             txt(lang(u8"ウマイ！"s, u8"Delicious!"s));
@@ -1253,7 +1254,7 @@ void apply_general_eating_effect()
     }
     if (inv[ci].id == 204)
     {
-        s = refchara_str(inv[ci].subname, 8);
+        s = chara_refstr(inv[ci].subname, 8);
         if (cc == 0)
         {
             if (strutil::contains(s(0), u8"/man/"))
@@ -1479,7 +1480,7 @@ void apply_general_eating_effect()
                           (u8"gasps "s
                            + u8"\"Uh..uh..What is this feeling...\""s)));
             cdata[cc].emotion_icon = 317;
-            modimp(cc, 30);
+            chara_mod_impression(cc, 30);
             modify_karma(0, -10);
             lovemiracle(cc);
         }
