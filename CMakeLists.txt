@@ -100,7 +100,9 @@ set(CORE_SOURCES
     random.cpp
     set_item_info.cpp
     set_option.cpp
+    shop.cpp
     std.cpp
+    talk.cpp
     talk_npc.cpp
     talk_unique.cpp
     tcg.cpp
