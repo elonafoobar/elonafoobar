@@ -2,6 +2,7 @@
 #include "ability.hpp"
 #include "animation.hpp"
 #include "audio.hpp"
+#include "buff.hpp"
 #include "calc.hpp"
 #include "card.hpp"
 #include "character.hpp"
@@ -2328,7 +2329,7 @@ turn_result_t do_use_command()
         txt(lang(
             u8"エヘカトル「呼んだ？呼んだ？」"s,
             u8"A voice echoes, "s + u8"\"Did you call me? Call me?\""s));
-        addbuff(tc, 19, 77, 2500);
+        buff_add(tc, 19, 77, 2500);
         goto label_2229_internal;
     case 27:
         txt(lang(

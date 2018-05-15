@@ -92,4 +92,10 @@ extern buff_db the_buff_db;
 
 
 
+int buff_find(int prm_799, int prm_800);
+int buff_add(int prm_801, int prm_802, int prm_803, int prm_804);
+void buff_delete(int prm_805, int prm_806);
+
+
+
 } // namespace elona

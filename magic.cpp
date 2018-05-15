@@ -117,7 +117,7 @@ int magic()
                         }
                     }
                 }
-                addbuff(tc, p, efp, calc_buff_duration(p, efp));
+                buff_add(tc, p, efp, calc_buff_duration(p, efp));
                 if (efid == 447)
                 {
                     if (efstatus == curse_state_t::blessed)
@@ -1896,13 +1896,13 @@ label_2181_internal:
             }
             if (rnd(efp * 2 + 1) > rnd(cdata[tc].buffs[i].power + 1))
             {
-                delbuff(tc, i);
+                buff_delete(tc, i);
                 ++p;
                 --cnt;
                 continue;
             }
         }
-        addbuff(tc, 10, efp, 5 + efp / 30);
+        buff_add(tc, 10, efp, 5 + efp / 30);
         animeload(11, tc);
         break;
     case 1120:
@@ -4291,9 +4291,9 @@ label_2181_internal:
                     name(tc) + u8"は興奮した！"s,
                     name(tc) + u8" "s + is(tc) + u8" excited!"s));
             }
-            addbuff(tc, 5, sdata(17, cc) * 5 + 50, 15);
-            addbuff(tc, 7, sdata(17, cc) * 5 + 100, 60);
-            addbuff(tc, 18, 1500, 30);
+            buff_add(tc, 5, sdata(17, cc) * 5 + 50, 15);
+            buff_add(tc, 7, sdata(17, cc) * 5 + 100, 60);
+            buff_add(tc, 18, 1500, 30);
         }
         break;
     case 1131:
