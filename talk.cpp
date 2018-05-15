@@ -1951,7 +1951,7 @@ talk_result_t talk_invest()
     {
         snd(12);
         cdata[0].gold -= calcinvestvalue();
-        label_1466(0);
+        gain_investing_experience(0);
         cdata[tc].shop_rank += rnd(2) + 2;
         buff = lang(_thanks(2), u8"Thanks!"s);
     }
