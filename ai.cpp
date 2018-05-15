@@ -12,6 +12,7 @@
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "random.hpp"
+#include "status_ailment.hpp"
 #include "variables.hpp"
 
 namespace elona
@@ -746,7 +747,7 @@ label_2692_internal:
                 {
                     if (rnd(100) == 0)
                     {
-                        dmgcon(cc, 2, 4000);
+                        dmgcon(cc, status_ailment_t::sleep, 4000);
                     }
                 }
             }

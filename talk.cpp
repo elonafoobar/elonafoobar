@@ -15,6 +15,7 @@
 #include "menu.hpp"
 #include "quest.hpp"
 #include "shop.hpp"
+#include "status_ailment.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -783,8 +784,8 @@ talk_result_t talk_house_visitor()
                 lang(u8"「ふぅ」"s, u8"\"Whew!\""s),
                 lang(u8"「たまらないわ」"s, u8"\"I'm revived!\""s),
                 lang(u8"「んまっ♪」"s, u8"\"Awesome.\""s));
-            dmgcon(tc, 8, 1000);
-            dmgcon(cc, 8, 1000);
+            dmgcon(tc, status_ailment_t::drunk, 1000);
+            dmgcon(cc, status_ailment_t::drunk, 1000);
             chara_mod_impression(tc, 15);
             return talk_result_t::talk_end;
         }

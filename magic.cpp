@@ -19,10 +19,11 @@
 #include "itemgen.hpp"
 #include "macro.hpp"
 #include "map.hpp"
-#include "quest.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
 #include "menu.hpp"
+#include "quest.hpp"
+#include "status_ailment.hpp"
 #include "trait.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -691,11 +692,11 @@ int magic()
                 dmghp(tc, roll(dice1, dice2, bonus), cc, ele, elep);
                 if (efid == 617)
                 {
-                    dmgcon(tc, 6, elep);
+                    dmgcon(tc, status_ailment_t::fear, elep);
                 }
                 if (efid == 618)
                 {
-                    dmgcon(tc, 2, elep);
+                    dmgcon(tc, status_ailment_t::sleep, elep);
                 }
                 if (efid == 614)
                 {
@@ -1292,7 +1293,7 @@ label_2181_internal:
                 name(tc) + u8"は恋の予感がした。"s,
                 name(tc) + u8" sense"s + _s(tc) + u8" a sigh of love,"s));
             chara_mod_impression(tc, clamp(efp / 15, 0, 15));
-            dmgcon(tc, 7, 100);
+            dmgcon(tc, status_ailment_t::dimmed, 100);
             lovemiracle(tc);
             break;
         }
@@ -1309,7 +1310,7 @@ label_2181_internal:
             lovemiracle(tc);
             chara_mod_impression(tc, clamp(efp / 4, 0, 25));
         }
-        dmgcon(tc, 7, 500);
+        dmgcon(tc, status_ailment_t::dimmed, 500);
         break;
     case 654:
         if (is_in_fov(tc))
@@ -1401,7 +1402,7 @@ label_2181_internal:
                     lang(u8"「んまっ♪」"s, u8"\"Awesome.\""s));
             }
         }
-        dmgcon(tc, 8, efp);
+        dmgcon(tc, status_ailment_t::drunk, efp);
         eatstatus(efstatus, tc);
         break;
     case 1116:
@@ -3078,7 +3079,7 @@ label_2181_internal:
                         + his(tc) + u8" stomach."s));
             }
         }
-        dmgcon(tc, 1, efp);
+        dmgcon(tc, status_ailment_t::poisoned, efp);
         break;
     case 1111:
         if (is_in_fov(tc))
@@ -3087,7 +3088,7 @@ label_2181_internal:
                 name(tc) + u8"は墨を浴びた！"s,
                 u8"Ink squirts into "s + name(tc) + your(tc) + u8" face!"s));
         }
-        dmgcon(tc, 4, efp);
+        dmgcon(tc, status_ailment_t::blinded, efp);
         break;
     case 1109:
         if (is_in_fov(tc))
@@ -3097,7 +3098,7 @@ label_2181_internal:
                 u8"A foul stench floods "s + name(tc) + your(tc)
                     + u8" nostrils!"s));
         }
-        dmgcon(tc, 5, efp);
+        dmgcon(tc, status_ailment_t::confused, efp);
         break;
     case 1110:
         if (is_in_fov(tc))
@@ -3106,7 +3107,7 @@ label_2181_internal:
                 name(tc) + u8"は痺れた！"s,
                 name(tc) + u8" get"s + _s(tc) + u8" numbness!"s));
         }
-        dmgcon(tc, 3, efp);
+        dmgcon(tc, status_ailment_t::paralyzed, efp);
         break;
     case 1112:
         if (is_in_fov(tc))
@@ -3115,7 +3116,7 @@ label_2181_internal:
                 name(tc) + u8"は甘い液体を浴びた！"s,
                 u8"Strange sweet liquid splashes onto "s + name(tc) + u8"!"s));
         }
-        dmgcon(tc, 2, efp);
+        dmgcon(tc, status_ailment_t::sleep, efp);
         break;
     case 645:
     case 1114:
@@ -4390,7 +4391,7 @@ label_2181_internal:
                 }
             }
         }
-        dmgcon(tc, 7, 200);
+        dmgcon(tc, status_ailment_t::dimmed, 200);
         break;
     case 652:
         if (is_in_fov(tc))
