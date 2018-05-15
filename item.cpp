@@ -775,7 +775,7 @@ void itemname_additional_info()
             if (inv[prm_518].own_state != 4)
             {
                 s_ += lang(""s, u8" of "s)
-                    + refchara_str(inv[prm_518].subname, 2);
+                    + chara_refstr(inv[prm_518].subname, 2);
                 if (jp)
                 {
                     s_ += u8"の"s;
@@ -817,8 +817,8 @@ void itemname_additional_info()
                 return;
             }
             s_ += lang(
-                ""s + refchara_str(inv[prm_518].subname, 2) + u8"の"s,
-                u8" of "s + refchara_str(inv[prm_518].subname, 2));
+                ""s + chara_refstr(inv[prm_518].subname, 2) + u8"の"s,
+                u8" of "s + chara_refstr(inv[prm_518].subname, 2));
         }
     }
     if (inv[prm_518].id == 672)
@@ -1329,7 +1329,7 @@ label_0313_internal:
         }
         else
         {
-            s_ += u8" ("s + refchara_str(inv[prm_518].subname, 2) + u8")"s;
+            s_ += u8" ("s + chara_refstr(inv[prm_518].subname, 2) + u8")"s;
         }
     }
     if (inv[prm_518].id == 734)
@@ -1761,7 +1761,7 @@ int item_fire(int prm_840, int prm_841)
                             cdata_body_part(prm_840, inv[ci_at_m138].body_part)
                             / 10000 * 10000;
                         inv[ci_at_m138].body_part = 0;
-                        refresh_character(prm_840);
+                        chara_refresh(prm_840);
                     }
                     else if (is_in_fov(prm_840))
                     {

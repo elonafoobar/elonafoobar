@@ -248,7 +248,7 @@ void prompt_hiring()
         dbid = isethire(hire);
         randomize(gdata_day + cnt);
         flt(20);
-        int stat = characreate(-1, dbid, -3, 0);
+        int stat = chara_create(-1, dbid, -3, 0);
         if (stat == 0)
         {
             continue;
@@ -1235,7 +1235,7 @@ int cbreeder(int prm_984)
 {
     std::string s_at_m173;
     int p_at_m173 = 0;
-    s_at_m173 = refchara_str(cdata[prm_984].id, 8);
+    s_at_m173 = chara_refstr(cdata[prm_984].id, 8);
     p_at_m173 = the_race_db[cdatan(2, prm_984)]->breed_power;
     p_at_m173 = p_at_m173 * 100 / (100 + cdata[prm_984].level * 5);
     return p_at_m173;
@@ -1289,7 +1289,7 @@ void update_ranch()
             dbid = 176;
         }
         {
-            int stat = characreate(-1, dbid, 4 + rnd(11), 4 + rnd(8));
+            int stat = chara_create(-1, dbid, 4 + rnd(11), 4 + rnd(8));
             if (stat != 0)
             {
                 cdata[rc].is_livestock() = true;

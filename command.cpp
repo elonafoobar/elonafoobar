@@ -5,6 +5,7 @@
 #include "calc.hpp"
 #include "card.hpp"
 #include "character.hpp"
+#include "character_status.hpp"
 #include "config.hpp"
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
@@ -1557,7 +1558,7 @@ turn_result_t do_dip_command()
                 itemname(ci) + u8" shine"s + _s2(inv[ci].number)
                     + u8" silvery."s));
             inv[ci].curse_state = curse_state_t::blessed;
-            refresh_character(cc);
+            chara_refresh(cc);
             return turn_result_t::turn_end;
         }
         if (is_cursed(inv[cidip].curse_state))
@@ -1568,7 +1569,7 @@ turn_result_t do_dip_command()
                 itemname(ci) + u8" "s + is2(inv[ci].number)
                     + u8" wrapped by a dark aura."s));
             inv[ci].curse_state = curse_state_t::cursed;
-            refresh_character(cc);
+            chara_refresh(cc);
             return turn_result_t::turn_end;
         }
     }
@@ -1748,7 +1749,7 @@ turn_result_t do_use_command()
             randomize();
             exrand_randomize();
         }
-        refresh_character(cc);
+        chara_refresh(cc);
         update_screen();
         return turn_result_t::pc_turn_user_error;
     }
@@ -1935,7 +1936,7 @@ turn_result_t do_use_command()
             gdata_torch = 0;
             txt(lang(u8"松明を消した。"s, u8"You put out the fire."s));
         }
-        refresh_character(0);
+        chara_refresh(0);
         goto label_2229_internal;
     case 9:
     {
@@ -2434,7 +2435,7 @@ turn_result_t do_use_command()
             u8"あなたは新たなフィートを獲得した！"s,
             u8"You gain a new feat."s));
         animeload(10, 0);
-        refresh_character(cc);
+        chara_refresh(cc);
         goto label_2229_internal;
     case 30:
         txt(lang(
@@ -2495,7 +2496,7 @@ turn_result_t do_use_command()
                 u8"モンスターボールは空っぽだ。"s, u8"This ball is empty."s));
             goto label_2229_internal;
         }
-        if (get_freeally() == 0)
+        if (chara_get_free_slot_ally() == 0)
         {
             txt(lang(
                 u8"仲間はこれ以上増やせない。"s, u8"Your party is full."s));
@@ -2508,7 +2509,7 @@ turn_result_t do_use_command()
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
         flt();
         novoidlv = 1;
-        characreate(56, inv[ci].subname, -3, 0);
+        chara_create(56, inv[ci].subname, -3, 0);
         rc = 56;
         new_ally_joins();
         goto label_2229_internal;
@@ -2775,7 +2776,7 @@ turn_result_t do_open_command()
                 {
                     if (cdata[gdata_fire_giant].state == 1)
                     {
-                        tc = findchara(203);
+                        tc = chara_find(203);
                         if (tc != 0)
                         {
                             txtef(9);

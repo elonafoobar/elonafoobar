@@ -739,7 +739,7 @@ foodname(int type, const std::string& prm_374, int rank, int character_id)
         }
         else
         {
-            ingredient = refchara_str(character_id, 2);
+            ingredient = chara_refstr(character_id, 2);
         }
         switch (rank)
         {
@@ -900,7 +900,7 @@ foodname(int type, const std::string& prm_374, int rank, int character_id)
         }
         else
         {
-            ingredient = refchara_str(character_id, 2);
+            ingredient = chara_refstr(character_id, 2);
         }
         switch (rank)
         {
@@ -2407,10 +2407,10 @@ void append_subquest_journal(int val0)
         if (p == 1)
         {
             s1 = lang(u8"戦士ギルドに加入するには、"s +
-                    refchara_str(gdata_fighters_guild_target, 2) + u8"をあと"s + gdata_fighters_guild_quota +
+                    chara_refstr(gdata_fighters_guild_target, 2) + u8"をあと"s + gdata_fighters_guild_quota +
                     u8"匹討伐してから、カプールのギルドの番人に話しかける必要がある。"s,
                 u8"To join the Fighters Guild, I need to slay "s + gdata_fighters_guild_quota +
-                    u8" more "s + refchara_str(gdata_fighters_guild_target, 2) +
+                    u8" more "s + chara_refstr(gdata_fighters_guild_target, 2) +
                     u8" and talk to the guild guard in Port Kapul."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
@@ -2463,10 +2463,10 @@ void append_subquest_journal(int val0)
         if (p == 1)
         {
             s1 = lang(u8"戦士ギルドのランクを上げるためには、"s +
-                    refchara_str(gdata_fighters_guild_target, 2) + u8"をあと"s + gdata_fighters_guild_quota +
+                    chara_refstr(gdata_fighters_guild_target, 2) + u8"をあと"s + gdata_fighters_guild_quota +
                     u8"匹討伐してから、カプールのギルドの番人に話しかける必要がある。"s,
                 u8"To raise the rank in the Fighters Guild, I need to slay "s +
-                    gdata_fighters_guild_quota + u8" more "s + refchara_str(gdata_fighters_guild_target, 2) +
+                    gdata_fighters_guild_quota + u8" more "s + chara_refstr(gdata_fighters_guild_target, 2) +
                     u8" and talk to the guild guard in Port Kapul."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;

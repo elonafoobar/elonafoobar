@@ -371,6 +371,4 @@ void draw_emo(int cc, int x, int y)
 }
 
 
-
-
 } // namespace elona

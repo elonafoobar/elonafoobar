@@ -973,7 +973,7 @@ std::string rpmatname(int prm_1037)
             return s_at_m177;
         }
         s_at_m177 =
-            refchara_str(p_at_m177, 2) + lang(u8"の死体"s, u8" corpse"s);
+            chara_refstr(p_at_m177, 2) + lang(u8"の死体"s, u8" corpse"s);
         return s_at_m177;
     }
     return s_at_m177;
@@ -1495,7 +1495,7 @@ int label_1932()
         }
         if (chara_unequip(rpref(10 + cnt * 2)))
         {
-            refresh_character(0);
+            chara_refresh(0);
         }
         cell_refresh(
             inv[rpref(10 + cnt * 2)].position.x,
@@ -1889,7 +1889,7 @@ void label_1935()
     {
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
     }
-    refresh_character(0);
+    chara_refresh(0);
     return;
 }
 
