@@ -201,7 +201,7 @@ struct MessageBox
                 std::unique_ptr<char, decltype(&::SDL_free)> text_ptr{
                     ::SDL_GetClipboardText(), ::SDL_free};
 
-                buffer += strutil::replace_crlf(text_ptr.get());
+                buffer += strutil::replace(text_ptr.get(), u8"\r\n", u8"\n");
             }
         }
     }

@@ -1,6 +1,7 @@
 #include "filesystem.hpp"
 #include <boost/locale.hpp>
 #include "defines.hpp"
+#include "util.hpp"
 
 #if defined(ELONA_OS_WINDOWS)
 // For WideCharToMultiByte().
@@ -169,6 +170,36 @@ std::string to_narrow_path(const fs::path& path)
 std::string to_utf8_path(const fs::path& path)
 {
     return boost::locale::conv::utf_to_utf<char>(path.native());
+}
+
+
+
+std::string normalize_as_filename(const std::string& str)
+{
+    std::string ret{str};
+
+    for (const auto invalid_char : {
+             '"',
+             '\\',
+             '<',
+             '>',
+             '/',
+             '?',
+             '|',
+             '*',
+             ':',
+             '.',
+         })
+    {
+        ret =
+            strutil::replace(ret, std::string{invalid_char}, std::string{'_'});
+    }
+    if (!ret.empty() && ret.back() == ' ')
+    {
+        ret = ret.substr(0, ret.size() - 1);
+    }
+
+    return ret;
 }
 
 

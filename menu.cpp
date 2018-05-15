@@ -954,7 +954,7 @@ turn_result_t show_chat_history()
         noteget(s, cnt);
         if (en)
         {
-            cnv_str(s, u8"&quot;"s, u8"\""s);
+            s = strutil::replace(s, u8"&quot;", u8"\"");
         }
         if (s == ""s)
         {
@@ -4315,12 +4315,12 @@ label_196901_internal:
         {
             if (jp)
             {
-                cnv_str(listn(0, cnt), u8"あなた"s, he(tc, 1));
+                listn(0, cnt) = strutil::replace(listn(0, cnt), u8"あなた", he(tc, 1));
             }
             if (en)
             {
-                cnv_str(listn(0, cnt), u8" your"s, his(tc, 1));
-                cnv_str(listn(0, cnt), u8" you"s, him(tc, 1));
+                listn(0, cnt) = strutil::replace(listn(0, cnt), u8" your", his(tc, 1));
+                listn(0, cnt) = strutil::replace(listn(0, cnt), u8" you", him(tc, 1));
             }
         }
     }

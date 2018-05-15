@@ -664,7 +664,6 @@ bool process_wish()
     txtef(5);
     txt(lang(u8"何を望む？", u8"What do you wish for? "));
 
-    inputlog = "";
     input_text_dialog(
         (windoww - 290) / 2 + inf_screenx, winposy(90), 16, false);
 
