@@ -1283,7 +1283,7 @@ label_1857_internal:
             itemname(ci, 1) + u8"を製造した。"s,
             u8"You producted "s + itemname(ci, 1) + u8"."s));
         r2 = matuse;
-        label_1472(matval);
+        gain_crafting_experience(matval);
         chara_refresh(0);
         render_hud();
         page_save();

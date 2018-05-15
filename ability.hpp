@@ -107,4 +107,26 @@ private:
 extern skill_data sdata;
 
 
+
+
+int skillexp(int id, int cc, int experience, int prm_572 = 0, int prm_573 = 0);
+int skillmod(int id, int cc, int experience);
+void gain_digging_experience();
+void gain_literacy_experience();
+void gain_negotiation_experience(int cc);
+void gain_lock_picking_experience(int cc);
+void gain_detection_experience(int cc);
+void gain_casting_experience(int cc);
+void gain_mana_capacity_experience(int cc);
+void gain_healing_and_meditation_experience(int cc);
+void gain_stealth_experience(int cc);
+void gain_investing_experience(int cc);
+void gain_weight_lifting_experience(int cc);
+void gain_magic_device_experience(int cc);
+void gain_fishing_experience(int cc);
+void gain_memorization_experience(int cc);
+void gain_crafting_experience(int skill);
+void gain_disarm_trap_experience();
+
+
 } // namespace elona

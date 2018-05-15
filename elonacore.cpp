@@ -183,10 +183,6 @@ double r_at_m133;
 elona_vector1<int> ranknorma;
 int f_at_m14 = 0;
 elona_vector1<std::string> tname;
-int lv_at_m77 = 0;
-int exp_at_m77 = 0;
-int growth_at_m77 = 0;
-int lvchange_at_m77 = 0;
 int pagebk = 0;
 int csprev = 0;
 int pagesaved = 0;
@@ -2632,248 +2628,6 @@ void skillgain(int cc, int id, int initial_level, int stock)
     }
     sdata.get(id, cc).original_level = clamp(lv, 0, 2000);
     chara_refresh(cc);
-}
-
-
-
-int skillmod(int id, int cc, int experience)
-{
-    lv_at_m77 = sdata.get(id, cc).original_level;
-    exp_at_m77 = sdata.get(id, cc).experience + experience;
-    growth_at_m77 = sdata.get(id, cc).potential;
-    if (growth_at_m77 == 0)
-    {
-        return 0;
-    }
-    if (exp_at_m77 >= 1000)
-    {
-        lvchange_at_m77 = exp_at_m77 / 1000;
-        lv_at_m77 += lvchange_at_m77;
-        exp_at_m77 = exp_at_m77 % 1000;
-        for (int cnt = 0, cnt_end = (lvchange_at_m77); cnt < cnt_end; ++cnt)
-        {
-            growth_at_m77 = growth_at_m77 * 0.9;
-            if (growth_at_m77 < 1)
-            {
-                growth_at_m77 = 1;
-            }
-        }
-        sdata.get(id, cc).original_level = clamp(lv_at_m77, 0, 2000);
-        sdata.get(id, cc).experience = exp_at_m77;
-        sdata.get(id, cc).potential = growth_at_m77;
-        if (is_in_fov(cc))
-        {
-            if (cc == 0 || cc < 16)
-            {
-                snd(61);
-                txtef(2);
-            }
-            txt(txtskillchange(id, cc, true));
-        }
-        chara_refresh(cc);
-        return 1;
-    }
-    if (exp_at_m77 < 0)
-    {
-        lvchange_at_m77 = -exp_at_m77 / 1000 + 1;
-        exp_at_m77 = 1000 + exp_at_m77 % 1000;
-        if (lv_at_m77 - lvchange_at_m77 < 1)
-        {
-            lvchange_at_m77 = lv_at_m77 - 1;
-            if (lv_at_m77 == 1)
-            {
-                if (lvchange_at_m77 == 0)
-                {
-                    exp_at_m77 = 0;
-                }
-            }
-        }
-        lv_at_m77 -= lvchange_at_m77;
-        for (int cnt = 0, cnt_end = (lvchange_at_m77); cnt < cnt_end; ++cnt)
-        {
-            growth_at_m77 = int(growth_at_m77 * 1.1) + 1;
-            if (growth_at_m77 > 400)
-            {
-                growth_at_m77 = 400;
-            }
-        }
-        sdata.get(id, cc).original_level = clamp(lv_at_m77, 0, 2000);
-        sdata.get(id, cc).experience = exp_at_m77;
-        sdata.get(id, cc).potential = growth_at_m77;
-        if (cc == 0 || cc < 16)
-        {
-            if (is_in_fov(cc))
-            {
-                if (lvchange_at_m77 != 0)
-                {
-                    txtef(3);
-                    txt(txtskillchange(id, cc, false));
-                }
-            }
-        }
-        chara_refresh(cc);
-        return 1;
-    }
-    sdata.get(id, cc).original_level = clamp(lv_at_m77, 0, 2000);
-    sdata.get(id, cc).experience = exp_at_m77;
-    sdata.get(id, cc).potential = growth_at_m77;
-    return 0;
-}
-
-
-
-int skillexp(int id, int cc, int experience, int prm_572, int prm_573)
-{
-    int exp2_at_m77 = 0;
-    if (sdata.get(id, cc).original_level == 0)
-    {
-        return 0;
-    }
-    if (experience == 0)
-    {
-        return 0;
-    }
-    if (the_ability_db[id]->related_basic_attribute != 0)
-    {
-        skillexp(
-            the_ability_db[id]->related_basic_attribute,
-            cc,
-            experience / (2 + prm_572));
-    }
-    lv_at_m77 = sdata.get(id, cc).original_level;
-    growth_at_m77 = sdata.get(id, cc).potential;
-    if (growth_at_m77 == 0)
-    {
-        return 0;
-    }
-    if (experience > 0)
-    {
-        exp_at_m77 = experience * growth_at_m77 / (100 + lv_at_m77 * 15);
-        if (id >= 10)
-        {
-            if (id <= 19)
-            {
-                if (cdata[cc].growth_buffs[id - 10] > 0)
-                {
-                    exp_at_m77 = exp_at_m77
-                        * (100 + cdata[cc].growth_buffs[id - 10]) / 100;
-                }
-            }
-        }
-        if (exp_at_m77 == 0)
-        {
-            if (rnd(lv_at_m77 / 10 + 1) == 0)
-            {
-                exp_at_m77 = 1;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-    }
-    else
-    {
-        exp_at_m77 = experience;
-    }
-    if (gdata_current_map == 35)
-    {
-        exp_at_m77 /= 5;
-    }
-    if (exp_at_m77 > 0)
-    {
-        if (id >= 100)
-        {
-            if (prm_573 != 1000)
-            {
-                exp2_at_m77 = rnd(cdata[cc].required_experience * exp_at_m77
-                                      / 1000 / (cdata[cc].level + prm_573)
-                                  + 1)
-                    + rnd(2);
-                cdata[cc].experience += exp2_at_m77;
-                if (cc == 0)
-                {
-                    gdata_sleep_experience += exp2_at_m77;
-                }
-            }
-        }
-    }
-    exp_at_m77 += sdata.get(id, cc).experience;
-    if (exp_at_m77 >= 1000)
-    {
-        lvchange_at_m77 = exp_at_m77 / 1000;
-        exp_at_m77 = exp_at_m77 % 1000;
-        lv_at_m77 += lvchange_at_m77;
-        for (int cnt = 0, cnt_end = (lvchange_at_m77); cnt < cnt_end; ++cnt)
-        {
-            growth_at_m77 = growth_at_m77 * 0.9;
-            if (growth_at_m77 < 1)
-            {
-                growth_at_m77 = 1;
-            }
-        }
-        sdata.get(id, cc).original_level = clamp(lv_at_m77, 0, 2000);
-        sdata.get(id, cc).experience = exp_at_m77;
-        sdata.get(id, cc).potential = growth_at_m77;
-        if (is_in_fov(cc))
-        {
-            if (cc == 0 || cc < 16)
-            {
-                snd(61);
-                txtef(2);
-                msgalert = 1;
-            }
-            txt(txtskillchange(id, cc, true));
-        }
-        chara_refresh(cc);
-        return 1;
-    }
-    if (exp_at_m77 < 0)
-    {
-        lvchange_at_m77 = -exp_at_m77 / 1000 + 1;
-        exp_at_m77 = 1000 + exp_at_m77 % 1000;
-        if (lv_at_m77 - lvchange_at_m77 < 1)
-        {
-            lvchange_at_m77 = lv_at_m77 - 1;
-            if (lv_at_m77 == 1)
-            {
-                if (lvchange_at_m77 == 0)
-                {
-                    exp_at_m77 = 0;
-                }
-            }
-        }
-        lv_at_m77 -= lvchange_at_m77;
-        for (int cnt = 0, cnt_end = (lvchange_at_m77); cnt < cnt_end; ++cnt)
-        {
-            growth_at_m77 = int(growth_at_m77 * 1.1) + 1;
-            if (growth_at_m77 > 400)
-            {
-                growth_at_m77 = 400;
-            }
-        }
-        sdata.get(id, cc).original_level = clamp(lv_at_m77, 0, 2000);
-        sdata.get(id, cc).experience = exp_at_m77;
-        sdata.get(id, cc).potential = growth_at_m77;
-        if (is_in_fov(cc))
-        {
-            if (cc == 0 || cc < 16)
-            {
-                if (lvchange_at_m77 != 0)
-                {
-                    msgalert = 1;
-                    txtef(3);
-                    txt(txtskillchange(id, cc, false));
-                }
-            }
-        }
-        chara_refresh(cc);
-        return 1;
-    }
-    sdata.get(id, cc).original_level = clamp(lv_at_m77, 0, 2000);
-    sdata.get(id, cc).experience = exp_at_m77;
-    sdata.get(id, cc).potential = growth_at_m77;
-    return 0;
 }
 
 
@@ -7631,7 +7385,7 @@ void dmgmp(int cc, int delta)
     }
     if (cdata[cc].mp < 0)
     {
-        gain_skill_experience_mana_capacity(cc);
+        gain_mana_capacity_experience(cc);
         int damage = -cdata[cc].mp * 400 / (100 + sdata(164, cc) * 10);
         if (cc == 0)
         {
@@ -8627,159 +8381,6 @@ void gain_new_body_part(int cc)
 
 
 
-void label_1457()
-{
-    skillexp(163, 0, 100);
-    return;
-}
-
-
-
-void label_1458()
-{
-    skillexp(150, 0, 15, 10, 100);
-    return;
-}
-
-
-
-void label_1459(int cc)
-{
-    if (r2 >= (sdata(156, cc) + 10) * (sdata(156, cc) + 10))
-    {
-        skillexp(
-            156, cc, clamp(r2 * r2 / (sdata(156, cc) * 5 + 10), 10, 1000), 10);
-    }
-}
-
-
-
-void gain_skill_experience_lock_picking(int cc)
-{
-    skillexp(158, cc, 100);
-}
-
-
-
-void gain_skill_experience_detection(int cc)
-{
-    skillexp(159, cc, gdata_current_dungeon_level * 2 + 20);
-}
-
-
-
-void gain_skill_experience_casting(int cc)
-{
-    if (cc == 0)
-    {
-        skillexp(r2, cc, the_ability_db[r2]->cost * 4 + 20, 4, 5);
-        skillexp(172, cc, the_ability_db[r2]->cost + 10, 5);
-    }
-    else
-    {
-        skillexp(172, cc, the_ability_db[r2]->cost + 10, 5);
-    }
-}
-
-
-
-void gain_skill_experience_mana_capacity(int cc)
-{
-    skillexp(164, cc, std::abs(cdata[cc].mp) * 200 / (cdata[cc].max_mp + 1));
-}
-
-
-
-void label_1464(int cc)
-{
-    if (cdata[cc].hp != cdata[cc].max_hp)
-    {
-        if (sdata(154, cc) < sdata(11, cc))
-        {
-            skillexp(154, cc, 5 + sdata(154, cc) / 5, 1000);
-        }
-    }
-    if (cdata[cc].mp != cdata[cc].max_mp)
-    {
-        if (sdata(155, cc) < sdata(16, cc))
-        {
-            skillexp(155, cc, 5 + sdata(155, cc) / 5, 1000);
-        }
-    }
-}
-
-
-
-void label_1465(int cc)
-{
-    if (mdata(6) == 1)
-    {
-        if (rnd(20))
-        {
-            return;
-        }
-    }
-    skillexp(157, cc, 2, 0, 1000);
-}
-
-
-
-void label_1466(int cc)
-{
-    skillexp(160, cc, 600);
-}
-
-
-
-void label_1468(int cc)
-{
-    if (cdata[0].inventory_weight_type == 0)
-    {
-        return;
-    }
-    if (mdata(6) == 1)
-    {
-        if (rnd(20))
-        {
-            return;
-        }
-    }
-    skillexp(153, cc, 4, 0, 1000);
-}
-
-
-
-void label_1469(int cc)
-{
-    if (cc == 0)
-    {
-        skillexp(174, cc, 40);
-    }
-}
-
-
-
-void label_1470(int cc)
-{
-    skillexp(185, cc, 100);
-}
-
-
-
-void label_1471(int cc)
-{
-    skillexp(165, cc, 10 + the_ability_db[efid]->sdataref4 / 5);
-}
-
-
-
-void label_1472(int skill)
-{
-    skillexp(skill, 0, 50 + r2 * 20);
-}
-
-
-
 std::string cnveqweight(int cc)
 {
     int id = chara_armor_class(cc);
@@ -8996,7 +8597,7 @@ int try_to_reveal()
     if (rnd(sdata(159, cc) * 15 + 20 + sdata(13, cc))
         > rnd(gdata_current_dungeon_level * 8 + 60))
     {
-        gain_skill_experience_detection(cc);
+        gain_detection_experience(cc);
         return 1;
     }
     return 0;
@@ -9022,14 +8623,6 @@ int can_evade_trap()
         return 1;
     }
     return 0;
-}
-
-
-
-void gain_disarm_trap_experience()
-{
-    skillexp(175, cc, 50);
-    return;
 }
 
 
@@ -21852,7 +21445,7 @@ void spot_fishing()
             fishanime = 0;
             rowactend(cc);
             label_2155();
-            label_1470(0);
+            gain_fishing_experience(0);
             cdata[0].emotion_icon = 306;
         }
         if (rnd(10) == 0)
@@ -22132,7 +21725,7 @@ void spot_mining_or_wall()
                     u8"何かを見つけた。"s,
                     u8"You found something out of crushed heaps of rock."s));
             }
-            label_1457();
+            gain_digging_experience();
             rowactend(cc);
         }
         else if (cdata[cc].turn % 5 == 0)
@@ -22209,7 +21802,7 @@ int decode_book()
     {
         ci = cdata[cc].continuous_action_item;
         cibkread = ci;
-        label_1458();
+        gain_literacy_experience();
         if (inv[ci].id == 783)
         {
             return 0;
@@ -22311,7 +21904,7 @@ int decode_book()
             (rnd(51) + 50) * (90 + sdata(165, cc) + (sdata(165, cc) > 0) * 20)
                     / clamp((100 + spell((efid - 400)) / 2), 50, 1000)
                 + 1);
-        label_1471(0);
+        gain_memorization_experience(0);
         if (itemmemory(2, inv[ci].id) == 0)
         {
             itemmemory(2, inv[ci].id) = 1;
@@ -22437,7 +22030,7 @@ int label_2167()
     {
         cc = ccbk;
         r2 = spellbk;
-        gain_skill_experience_casting(cc);
+        gain_casting_experience(cc);
         return 1;
     }
     return 0;
@@ -23071,7 +22664,7 @@ int label_2172()
                     inv[ci], identification_state_t::partly_identified);
             }
         }
-        label_1469(cc);
+        gain_magic_device_experience(cc);
     }
     else if (is_in_fov(cc))
     {
@@ -23762,7 +23355,7 @@ int pick_up_item()
         else
         {
             r2 = sellgold;
-            label_1459(0);
+            gain_negotiation_experience(0);
         }
     }
     else
@@ -24861,7 +24454,7 @@ int unlock_box(int difficulty)
         return 0;
     }
     txt(lang(u8"開錠に成功した。"s, u8"You successfully unlock it."s));
-    gain_skill_experience_lock_picking(cc);
+    gain_lock_picking_experience(cc);
     return 1;
 }
 
@@ -25251,7 +24844,7 @@ turn_result_t try_to_open_locked_door()
     {
         if (feat(2) > 0)
         {
-            gain_skill_experience_lock_picking(cc);
+            gain_lock_picking_experience(cc);
         }
         cell_featset(dx, dy, tile_dooropen, 20, 0, -1);
         if (is_in_fov(cc))
@@ -28420,17 +28013,17 @@ turn_result_t pass_one_turn(bool label_2738_flg)
             {
                 if (cdata[cnt].state == 1)
                 {
-                    label_1464(cnt);
+                    gain_healing_and_meditation_experience(cnt);
                 }
             }
         }
         if (p == 2)
         {
-            label_1465(0);
+            gain_stealth_experience(0);
         }
         if (p == 3)
         {
-            label_1468(0);
+            gain_weight_lifting_experience(0);
         }
         if (p == 4)
         {
