@@ -4443,218 +4443,6 @@ void incognitoend()
 
 
 
-int findbuff(int prm_799, int prm_800)
-{
-    int f_at_m131 = 0;
-    f_at_m131 = -1;
-    for (int cnt = 0; cnt < 16; ++cnt)
-    {
-        if (cdata[prm_799].buffs[cnt].id == 0)
-        {
-            break;
-        }
-        if (cdata[prm_799].buffs[cnt].id == prm_800)
-        {
-            f_at_m131 = cnt;
-            break;
-        }
-    }
-    return f_at_m131;
-}
-
-
-
-int addbuff(int prm_801, int prm_802, int prm_803, int prm_804)
-{
-    int p_at_m132 = 0;
-    int fixeddur_at_m132 = 0;
-    int f_at_m132 = 0;
-    if (prm_804 <= 0)
-    {
-        return 0;
-    }
-    p_at_m132 = -1;
-    for (int cnt = 0; cnt < 16; ++cnt)
-    {
-        if (cdata[prm_801].buffs[cnt].id == prm_802)
-        {
-            if (cdata[prm_801].buffs[cnt].turns < prm_804)
-            {
-                p_at_m132 = cnt;
-                break;
-            }
-            else
-            {
-                p_at_m132 = -2;
-                break;
-            }
-        }
-        if (cdata[prm_801].buffs[cnt].id == 0)
-        {
-            p_at_m132 = cnt;
-            break;
-        }
-    }
-    if (p_at_m132 == -1)
-    {
-        p_at_m132 = rnd(16);
-    }
-    if (p_at_m132 == -2)
-    {
-        if (is_in_fov(prm_801))
-        {
-            txt(lang(
-                u8"しかし、効果はなかった。"s,
-                u8"But it produces no effect."s));
-            return 0;
-        }
-    }
-    fixeddur_at_m132 = prm_804;
-    if (the_buff_db[prm_802]->type == buff_data::type_t::hex)
-    {
-        f_at_m132 = 0;
-        if (sdata(60, prm_801) / 2 > rnd(prm_803 * 2 + 100))
-        {
-            f_at_m132 = 1;
-        }
-        if (prm_803 * 3 < sdata(60, prm_801))
-        {
-            f_at_m132 = 1;
-        }
-        if (prm_803 / 3 > sdata(60, prm_801))
-        {
-            f_at_m132 = 0;
-        }
-        if (cdata[prm_801].quality > 3)
-        {
-            if (rnd(4))
-            {
-                f_at_m132 = 1;
-            }
-            else
-            {
-                fixeddur_at_m132 = prm_804 / 5 + 1;
-            }
-        }
-        if (cdata[prm_801].quality >= 4)
-        {
-            if (prm_802 == 16)
-            {
-                f_at_m132 = 1;
-            }
-        }
-        if (findbuff(prm_801, 10) != -1)
-        {
-            if (cdata[prm_801].buffs[findbuff(prm_801, 10)].power + 50
-                    > prm_803 * 5 / 2
-                || rnd(cdata[prm_801].buffs[findbuff(prm_801, 10)].power + 50)
-                    > rnd(prm_803 + 1))
-            {
-                txt(lang(
-                    u8"ホーリーヴェイルが呪いを防いだ。"s,
-                    u8"The holy veil repels the hex."s));
-                return 0;
-            }
-        }
-        if (f_at_m132 == 1)
-        {
-            if (is_in_fov(prm_801))
-            {
-                txt(lang(
-                    name(prm_801) + u8"は抵抗した。"s,
-                    name(prm_801) + u8" resist"s + _s(prm_801)
-                        + u8" the hex."s));
-            }
-            return 0;
-        }
-        if (cc == 0)
-        {
-            hostileaction(0, prm_801);
-        }
-    }
-    if (the_buff_db[prm_802]->type != buff_data::type_t::food
-        && is_in_fov(prm_801))
-    {
-        txt(lang(
-            name(prm_801)
-                + i18n::_(u8"buff", std::to_string(prm_802), u8"message_0"),
-            name(prm_801) + u8" "s
-                + i18n::_(u8"buff", std::to_string(prm_802), u8"message_0")
-                + _s(prm_801)
-                + i18n::_(u8"buff", std::to_string(prm_802), u8"message_1")));
-    }
-    cdata[prm_801].buffs[p_at_m132].id = prm_802;
-    cdata[prm_801].buffs[p_at_m132].power = prm_803;
-    cdata[prm_801].buffs[p_at_m132].turns = fixeddur_at_m132;
-    chara_refresh(prm_801);
-    return 0;
-}
-
-
-
-void delbuff(int prm_805, int prm_806)
-{
-    if (prm_805 == 0)
-    {
-        txtef(8);
-        txt(lang(
-            ""s
-                + i18n::_(
-                      u8"buff",
-                      std::to_string(cdata[prm_805].buffs[prm_806].id),
-                      u8"name")
-                + u8"の効果が切れた。"s,
-            u8"The effect of "s
-                + i18n::_(
-                      u8"buff",
-                      std::to_string(cdata[prm_805].buffs[prm_806].id),
-                      u8"name")
-                + u8" ends."s));
-    }
-    if (cdata[prm_805].buffs[prm_806].id == 15)
-    {
-        if (prm_805 == 0)
-        {
-            incognitoend();
-        }
-    }
-    if (cdata[prm_805].buffs[prm_806].id == 16)
-    {
-        cdata[prm_805].is_sentenced_daeth() = false;
-    }
-    if (cdata[prm_805].buffs[prm_806].id == 18)
-    {
-        cdata[prm_805].is_contracting_with_reaper() = false;
-    }
-    cdata[prm_805].buffs[prm_806].id = 0;
-    for (int cnt = prm_806, cnt_end = cnt + (16 - prm_806 - 1); cnt < cnt_end;
-         ++cnt)
-    {
-        if (cdata[prm_805].buffs[cnt].id == 0)
-        {
-            if (cdata[prm_805].buffs[cnt + 1].id != 0)
-            {
-                cdata[prm_805].buffs[cnt].id = cdata[prm_805].buffs[cnt + 1].id;
-                cdata[prm_805].buffs[cnt].power =
-                    cdata[prm_805].buffs[cnt + 1].power;
-                cdata[prm_805].buffs[cnt].turns =
-                    cdata[prm_805].buffs[cnt + 1].turns;
-                cdata[prm_805].buffs[cnt + 1].id = 0;
-                cdata[prm_805].buffs[cnt + 1].power = 0;
-                cdata[prm_805].buffs[cnt + 1].turns = 0;
-            }
-            else
-            {
-                break;
-            }
-        }
-    }
-    chara_refresh(prm_805);
-    return;
-}
-
-
-
 void animeload(int prm_807, int prm_808)
 {
     elona_vector1<int> i_at_m133;
@@ -5081,7 +4869,7 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         {
             f_at_con = 0;
         }
-        if (findbuff(prm_818, 7) != -1)
+        if (buff_find(prm_818, 7) != -1)
         {
             f_at_con = 0;
         }
@@ -5253,11 +5041,11 @@ int dmgcon(int prm_818, int prm_819, int prm_820)
         {
             f_at_con = 0;
         }
-        if (findbuff(prm_818, 1) != -1)
+        if (buff_find(prm_818, 1) != -1)
         {
             f_at_con = 0;
         }
-        if (findbuff(prm_818, 7) != -1)
+        if (buff_find(prm_818, 7) != -1)
         {
             f_at_con = 0;
         }
@@ -6345,7 +6133,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         if (cdata[prm_853].hp - dmg_at_m141 <= 0)
         {
             if (clamp(
-                    25 + cdata[prm_853].buffs[findbuff(prm_853, 18)].power / 17,
+                    25 + cdata[prm_853].buffs[buff_find(prm_853, 18)].power / 17,
                     25,
                     80)
                 >= rnd(100))
@@ -7569,7 +7357,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     }
                     if (cdata[p_at_m141].buffs[cnt].id == 16)
                     {
-                        delbuff(p_at_m141, cnt);
+                        buff_delete(p_at_m141, cnt);
                         --cnt;
                         continue;
                     }
@@ -9604,7 +9392,7 @@ void label_15390()
             {
                 continue;
             }
-            delbuff(rc, cnt);
+            buff_delete(rc, cnt);
             --cnt;
             continue;
         }
@@ -15646,7 +15434,7 @@ label_1894_internal:
         show_random_event_window(u8"bg_re15");
         break;
     case 20:
-        addbuff(tc, 19, 777, 1500);
+        buff_add(tc, 19, 777, 1500);
         s = lang(u8"幸運の日"s, u8"Lucky Day"s);
         buff = lang(u8"うみみゃぁ！"s, u8"Mewmewmew!"s);
         list(0, listmax) = 1;
@@ -22564,7 +22352,7 @@ int label_2168()
                           u8"_"s + cdata[cc].special_attack_type)));
         }
     }
-    if (findbuff(cc, 2) != -1)
+    if (buff_find(cc, 2) != -1)
     {
         if (is_in_fov(cc))
         {
@@ -28572,7 +28360,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                 {
                     dmghp(cc, 9999, -11);
                 }
-                delbuff(cc, cnt);
+                buff_delete(cc, cnt);
                 --cnt;
                 continue;
             }

@@ -350,7 +350,7 @@ void chara_vomit(int prm_876)
             if (the_buff_db[cdata[prm_876].buffs[cnt].id]->type
                 == buff_data::type_t::food)
             {
-                delbuff(prm_876, cnt);
+                buff_delete(prm_876, cnt);
                 --cnt;
                 continue;
             }
@@ -450,7 +450,7 @@ void eatstatus(curse_state_t curse_state, int eater)
         }
         if (rnd(5) == 0)
         {
-            addbuff(eater, 19, 100, 500 + rnd(500));
+            buff_add(eater, 19, 100, 500 + rnd(500));
         }
         healsan(eater, 2);
     }
@@ -1586,7 +1586,7 @@ void apply_general_eating_effect()
                                   u8"ability", std::to_string(enc), u8"name")
                             + u8" enters a period of rapid growth."s));
                 }
-                addbuff(
+                buff_add(
                     cc,
                     20 + (enc - 10),
                     (inv[ci].enchantments[cnt].power / 50 + 1) * 5
