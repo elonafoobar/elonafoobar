@@ -1237,8 +1237,6 @@ void setunid(int = 0, int = 0);
 void showcard();
 void showcardholder();
 void showcardpile();
-void showscroll(const std::string&, int, int, int, int);
-void showtitle(const std::string&, const std::string&, int = 0, int = 0);
 void sickifcursed(curse_state_t, int, int);
 void skillgain(int = 0, int = 0, int = 0, int = 0);
 void skillinit(int = 0, int = 0, int = 0);
@@ -1276,12 +1274,6 @@ std::string txttargetlevel(int, int);
 void txttargetnpc(int = 0, int = 0, int = 0);
 void wake_up();
 void wet(int = 0, int = 0);
-void window(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
-void window2(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
-void windowanime(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
-void windowanimecorner(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
-void cs_listbk();
-void cs_list(bool, const std::string&, int, int, int = 0, int = 0, int = 0);
 void cell_draw();
 
 template <typename T>

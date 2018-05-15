@@ -48,4 +48,46 @@ void label_1445();
 void label_1446();
 void clear_background_in_character_making();
 
+void draw_scroll(int x, int y, int width, int height);
+void cs_listbk();
+void cs_list(
+    bool is_selected,
+    const std::string& text,
+    int x,
+    int y,
+    int x_offset = 0,
+    int color_mode = 0,
+    int ci = 0);
+void showscroll(const std::string& title, int x, int y, int width, int height);
+void window(
+    int prm_650 = 0,
+    int prm_651 = 0,
+    int prm_652 = 0,
+    int prm_653 = 0,
+    int = 0,
+    int prm_655 = 0);
+void window2(
+    int prm_656 = 0,
+    int prm_657 = 0,
+    int prm_658 = 0,
+    int prm_659 = 0,
+    int prm_660 = 0,
+    int prm_661 = 0);
+void windowanime(
+    int prm_726 = 0,
+    int prm_727 = 0,
+    int prm_728 = 0,
+    int prm_729 = 0,
+    int prm_730 = 0,
+    int prm_731 = 0);
+void windowanimecorner(
+    int prm_732 = 0,
+    int prm_733 = 0,
+    int prm_734 = 0,
+    int prm_735 = 0,
+    int prm_736 = 0,
+    int prm_737 = 0);
+void showtitle(const std::string&, const std::string& prm_739, int prm_740 = 0, int = 0);
+
+
 }
