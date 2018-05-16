@@ -1351,7 +1351,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             skillexp(161, prm_855, 10 + rollanatomy * 4);
         }
         rc = prm_853;
-        label_1573();
+        character_drops_item();
         if (gdata_current_map == 40)
         {
             if (rnd(5) == 0)

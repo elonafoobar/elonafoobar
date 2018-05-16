@@ -349,7 +349,7 @@ void supply_new_equipment()
 
 
 
-void label_1530()
+void supply_initial_equipments()
 {
     elona_vector1<int> eqhelm;
     elona_vector1<int> eqshield;

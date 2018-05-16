@@ -2350,7 +2350,7 @@ label_2035_internal:
             mes(s(cnt));
             color(0, 0, 0);
         }
-        label_2047(0);
+        append_accuracy_info(0);
         tc = cc;
         font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
         color(20, 10, 0);
@@ -3310,7 +3310,7 @@ label_1861_internal:
     goto label_1861_internal;
 }
 
-void label_2038(int val0)
+void set_pcc_info(int val0)
 {
     rtval = -2;
     if (page == 0)
@@ -3626,7 +3626,7 @@ label_2041_internal:
         {
             break;
         }
-        label_2038(cnt);
+        set_pcc_info(cnt);
         s = listn(0, p);
         if (rtval >= 0)
         {
@@ -3660,7 +3660,7 @@ label_2041_internal:
     await(config::instance().wait1);
     key_check();
     cursor_check();
-    label_2038(cs);
+    set_pcc_info(cs);
     p = 0;
     if (rtval == -2)
     {
@@ -3915,7 +3915,7 @@ int label_2044()
     }
 }
 
-void label_2047(int val0)
+void append_accuracy_info(int val0)
 {
     p(1) = 0;
     p(2) = 0;
@@ -3944,25 +3944,25 @@ void label_2047(int val0)
             ++p(1);
             s(1) = lang(u8"武器"s, u8"Melee"s) + p(1);
             ++attacknum;
-            label_2048(val0);
+            show_weapon_dice(val0);
         }
     }
     if (attackskill == 106)
     {
         s(1) = lang(u8"格闘"s, u8"Unarmed"s);
-        label_2048(val0);
+        show_weapon_dice(val0);
     }
     attacknum = 0;
     int stat = can_do_ranged_attack();
     if (stat == 1)
     {
         s(1) = lang(u8"射撃"s, u8"Dist"s);
-        label_2048(val0);
+        show_weapon_dice(val0);
     }
     return;
 }
 
-void label_2048(int val0)
+void show_weapon_dice(int val0)
 {
     tc = cc;
     font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
@@ -5922,12 +5922,12 @@ label_2272_internal:
                 }
                 if (curmenu == 1)
                 {
-                    label_2276();
+                    show_economy_window();
                     return;
                 }
                 if (curmenu == 2)
                 {
-                    label_2280();
+                    show_politics_window();
                     return;
                 }
             }
@@ -5986,7 +5986,7 @@ void showeconomy(
     return;
 }
 
-void label_2276()
+void show_economy_window()
 {
     curmenu = 1;
     key_list(0) = key_enter;
@@ -6115,12 +6115,12 @@ label_2278_internal:
                 }
                 if (curmenu == 1)
                 {
-                    label_2276();
+                    show_economy_window();
                     return;
                 }
                 if (curmenu == 2)
                 {
-                    label_2280();
+                    show_politics_window();
                     return;
                 }
             }
@@ -6152,7 +6152,7 @@ label_2278_internal:
     goto label_2278_internal;
 }
 
-void label_2280()
+void show_politics_window()
 {
     // TODO: untranslated
     listmax = 0;
@@ -6307,12 +6307,12 @@ label_2283_internal:
                 }
                 if (curmenu == 1)
                 {
-                    label_2276();
+                    show_economy_window();
                     return;
                 }
                 if (curmenu == 2)
                 {
-                    label_2280();
+                    show_politics_window();
                     return;
                 }
             }
@@ -6344,7 +6344,7 @@ label_2283_internal:
     goto label_2283_internal;
 }
 
-void label_1886()
+void begin_to_believe_god()
 {
     cs = 0;
     page = 0;
@@ -6800,7 +6800,7 @@ label_1961_internal:
                 {
                     tc = i;
                     {
-                        int stat = label_2231();
+                        int stat = transplant_body_parts();
                         if (stat == -1)
                         {
                             s = lang(u8"なし"s, u8"None"s);
@@ -6812,7 +6812,7 @@ label_1961_internal:
                     }
                     s += u8"/"s;
                     {
-                        int stat = label_2230();
+                        int stat = gain_skills_by_geen_engineering();
                         if (stat == 0)
                         {
                             s += lang(u8"なし"s, u8"None"s);

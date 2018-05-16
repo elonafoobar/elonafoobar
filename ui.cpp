@@ -249,15 +249,15 @@ void update_screen()
     {
         sxfix = 0;
         syfix = 0;
-        label_1428();
-        label_1429();
+        update_scrolling_info();
+        update_slight();
         label_1433();
     }
     screendrawhack = 10;
     render_hud();
     if (autoturn == 1)
     {
-        label_1423();
+        render_autoturn_animation();
     }
     else
     {
@@ -371,7 +371,7 @@ void update_minimap()
             sx = cnt;
             if (map(sx, sy, 2) == map(sx, sy, 0))
             {
-                label_1440();
+                draw_minimap_pixel();
             }
         }
     }
@@ -976,7 +976,7 @@ void render_hud()
     show_damage_popups(inf_ver);
 }
 
-void label_1422()
+void load_continuous_action_animation()
 {
     gsel(9);
     pos(0, 0);
@@ -1003,11 +1003,11 @@ void label_1422()
     return;
 }
 
-void label_1423()
+void render_autoturn_animation()
 {
     if (racount == 0)
     {
-        label_1422();
+        load_continuous_action_animation();
     }
     if (msgtemp != ""s
         || (cdata[0].continuous_action_id == 7 && rowactre == 0
@@ -1021,7 +1021,7 @@ void label_1423()
     {
         if (rowactre == 0)
         {
-            label_1446();
+            render_fishing_animation();
         }
     }
     sx = windoww - 156;
@@ -1142,7 +1142,7 @@ void draw_caption()
     return;
 }
 
-void label_1428()
+void update_scrolling_info()
 {
     if (scposval == 0)
     {
@@ -1218,7 +1218,7 @@ void label_1428()
     return;
 }
 
-void label_1429()
+void update_slight()
 {
     int ly = 0;
     int lx = 0;
@@ -1317,7 +1317,7 @@ void label_1429()
                                 if (map(sx, sy, 2) != map(sx, sy, 0))
                                 {
                                     map(sx, sy, 2) = map(sx, sy, 0);
-                                    label_1440();
+                                    draw_minimap_pixel();
                                 }
                                 map(sx, sy, 5) = map(sx, sy, 4);
                                 ++lx;
@@ -1458,25 +1458,25 @@ void label_1433()
     {
         if (gdata_weather == 3)
         {
-            label_1434();
+            render_weather_effect_rain();
         }
         if (gdata_weather == 4)
         {
-            label_1435();
+            render_weather_effect_hard_rain();
         }
         if (gdata_weather == 2)
         {
-            label_1436();
+            render_weather_effect_snow();
         }
         if (gdata_weather == 1)
         {
-            label_1437();
+            render_weather_effect_etherwind();
         }
     }
     return;
 }
 
-void label_1434()
+void render_weather_effect_rain()
 {
     if (mdata(14) != 2)
     {
@@ -1520,7 +1520,7 @@ void label_1434()
     return;
 }
 
-void label_1435()
+void render_weather_effect_hard_rain()
 {
     if (mdata(14) != 2)
     {
@@ -1564,7 +1564,7 @@ void label_1435()
     return;
 }
 
-void label_1436()
+void render_weather_effect_snow()
 {
     if (mdata(14) != 2)
     {
@@ -1599,7 +1599,7 @@ void label_1436()
     return;
 }
 
-void label_1437()
+void render_weather_effect_etherwind()
 {
     if (mdata(14) != 2)
     {
@@ -1666,7 +1666,7 @@ void label_1438()
     scxbk2 = scx;
     scybk2 = scy;
     scroll = 1;
-    label_1428();
+    update_scrolling_info();
     scroll = 0;
     scxbk = scx;
     scybk = scy;
@@ -1736,7 +1736,7 @@ void label_1439()
     return;
 }
 
-void label_1440()
+void draw_minimap_pixel()
 {
     sy(1) = 84 * sy / mdata(1);
     sx(1) = 120 * sx / mdata(0);
@@ -1786,7 +1786,7 @@ void label_1442()
     return;
 }
 
-void label_1443()
+void animation_fade_in()
 {
     for (int cnt = 0; cnt < 30; ++cnt)
     {
@@ -1849,7 +1849,7 @@ void label_1445()
 }
 
 
-void label_1446()
+void render_fishing_animation()
 {
     elona_vector1<int> fishdir;
     int sx2 = 0;

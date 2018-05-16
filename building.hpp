@@ -17,13 +17,13 @@ void prompt_hiring();
 void prompt_move_ally();
 void prompt_ally_staying();
 
-void label_1723();
+void prepare_hourse_board_tiles();
 void update_shop_and_report();
 void update_shop();
-void label_1727(bool);
+void calc_collection_value(bool);
 void update_museum();
-void label_1729(int);
-void label_1730();
+void calc_hairloom_value(int);
+void calc_home_rank();
 void update_ranch();
 
 } // namespace elona

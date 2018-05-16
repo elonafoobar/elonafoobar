@@ -400,7 +400,7 @@ int do_create_item(int slot, int x, int y)
         }
     }
 
-    label_1581();
+    init_item_quality_curse_state_material_and_equipments();
     if (reftype == 60000)
     {
         if (rnd(3) == 0)
@@ -448,7 +448,7 @@ int do_create_item(int slot, int x, int y)
         }
     }
 
-    label_1583();
+    calc_furniture_value();
 
     itemturn(ci);
 
@@ -478,7 +478,7 @@ int do_create_item(int slot, int x, int y)
     return 1;
 }
 
-void label_1581()
+void init_item_quality_curse_state_material_and_equipments()
 {
     if (reftype < 60000)
     {
@@ -542,7 +542,7 @@ void label_1581()
     return;
 }
 
-void label_1583()
+void calc_furniture_value()
 {
     if (reftype == 60000)
     {
@@ -681,7 +681,7 @@ void change_item_material()
         determine_item_material();
     }
     apply_item_material();
-    label_1583();
+    calc_furniture_value();
     chara_refresh(cc);
     return;
 }

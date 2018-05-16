@@ -18,7 +18,7 @@ void shop_refresh_on_talk()
     {
         if (cdata[tc].character_role == 1009)
         {
-            label_2267();
+            calc_trade_goods_price();
         }
     }
     mode = 6;
@@ -599,7 +599,7 @@ void shop_refresh()
         {
             flttypemajor = 60000;
         }
-        label_2266();
+        calc_number_of_items_sold_at_shop();
         inv[ci].number = rnd(rtval) + 1;
         if (cdata[tc].character_role == 1009)
         {
@@ -702,7 +702,7 @@ void shop_refresh()
     return;
 }
 
-void label_2266()
+void calc_number_of_items_sold_at_shop()
 {
     p = the_item_db[inv[ci].id]->category;
     i = the_item_db[inv[ci].id]->rarity / 1000;
@@ -766,7 +766,7 @@ void label_2266()
     return;
 }
 
-void label_2267()
+void calc_trade_goods_price()
 {
     DIM2(trate, 8);
     for (int cnt = 0; cnt < 8; ++cnt)

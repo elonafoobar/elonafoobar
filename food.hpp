@@ -13,7 +13,7 @@ void chara_vomit(int = 0);
 void eatstatus(curse_state_t, int);
 void sickifcursed(curse_state_t, int, int);
 void cure_anorexia(int = 0);
-void label_2162();
+void show_eating_message();
 void eat_rotten_food();
 
 void cook();

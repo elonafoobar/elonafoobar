@@ -359,7 +359,7 @@ void start_home_map_mode()
     int cxbk = cdata[0].position.x;
     int cybk = cdata[0].position.y;
     homemapmode = 1;
-    label_1723();
+    prepare_hourse_board_tiles();
     txtnew();
     txt(lang(
             u8"マウスの左クリックでタイルの敷設、右クリックでタイルの取得、移動キーでスクリーン移動、決定キーでタイル一覧、キャンセルキーで終了。"s,
@@ -423,7 +423,7 @@ void show_home_value()
     pos(wx + ww / 4, wy + wh / 2);
     grotate(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
     gmode(2);
-    label_1730();
+    calc_home_rank();
     s(0) = lang(u8"基本."s, u8"Base"s);
     s(1) = lang(u8"家具."s, u8"Deco"s);
     s(2) = lang(u8"家宝."s, u8"Heir"s);
@@ -623,7 +623,7 @@ void try_extend_shop()
     }
 }
 
-void label_1723()
+void prepare_hourse_board_tiles()
 {
     p = 0;
     gsel(2);
@@ -1018,7 +1018,7 @@ void update_shop()
     return;
 }
 
-void label_1727(bool val0)
+void calc_collection_value(bool val0)
 {
     rc = 56;
     fixlv = 2;
@@ -1074,7 +1074,7 @@ void update_museum()
             continue;
         }
         dbid = inv[cnt].subname;
-        label_1727(inv[cnt].id != 503);
+        calc_collection_value(inv[cnt].id != 503);
         if (inv[cnt].id == 503)
         {
             rankcur += rtval;
@@ -1114,7 +1114,7 @@ void update_museum()
 }
 
 
-void label_1729(int val0)
+void calc_hairloom_value(int val0)
 {
     int category = the_item_db[inv[val0].id]->category;
     if (category == 60000)
@@ -1157,7 +1157,7 @@ void label_1729(int val0)
     return;
 }
 
-void label_1730()
+void calc_home_rank()
 {
     if (gdata_current_dungeon_level != 1)
     {
@@ -1183,7 +1183,7 @@ void label_1730()
         {
             continue;
         }
-        label_1729(cnt);
+        calc_hairloom_value(cnt);
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {
