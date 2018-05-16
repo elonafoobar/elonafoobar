@@ -5,6 +5,7 @@
 #include "filesystem.hpp"
 #include "foobar_save.hpp"
 #include "item.hpp"
+#include "log.hpp"
 #include "mef.hpp"
 #include "putit.hpp"
 #include "variables.hpp"
@@ -15,6 +16,186 @@ using namespace elona;
 
 namespace
 {
+
+
+
+void arrayfile_read(const std::string& fmode_str, const fs::path& filepath)
+{
+    std::vector<std::string> lines;
+    if (fs::exists(filepath))
+    {
+        range::copy(
+            fileutil::read_by_line{filepath}, std::back_inserter(lines));
+    }
+
+    if (fmode_str == u8"qname"s)
+    {
+        lines.resize(500);
+        auto itr = std::begin(lines);
+        for (int i = 0; i < 500; ++i)
+        {
+            qname(i) = *itr;
+            ++itr;
+        }
+    }
+    else if (fmode_str == u8"gdatan"s)
+    {
+        lines.resize(50);
+        auto itr = std::begin(lines);
+        for (int i = 0; i < 50; ++i)
+        {
+            gdatan(i) = *itr;
+            ++itr;
+        }
+    }
+    else if (fmode_str == u8"mdatan"s)
+    {
+        lines.resize(2);
+        auto itr = std::begin(lines);
+        for (int i = 0; i < 2; ++i)
+        {
+            mdatan(i) = *itr;
+            ++itr;
+        }
+    }
+    else if (fmode_str == u8"cdatan1"s)
+    {
+        if (lines.size() <= 57 * 10 / 2)
+            lines.resize(57 * 10 / 2);
+        else
+            lines.resize(57 * 10);
+        auto itr = std::begin(lines);
+        for (int i = 0; i < 57; ++i)
+        {
+            for (int j = 0; j < 10; ++j)
+            {
+                if (lines.size() <= 57 * 10 / 2 && j >= 10 / 2)
+                    break;
+                cdatan(j, i) = *itr;
+                ++itr;
+            }
+        }
+    }
+    else if (fmode_str == u8"cdatan2"s)
+    {
+        if (lines.size() <= 188 * 10 / 2)
+            lines.resize(188 * 10 / 2);
+        else
+            lines.resize(188 * 10);
+        auto itr = std::begin(lines);
+        for (int i = ELONA_MAX_PARTY_CHARACTERS; i < ELONA_MAX_CHARACTERS; ++i)
+        {
+            for (int j = 0; j < 10; ++j)
+            {
+                if (lines.size() <= 188 * 10 / 2 && j >= 10 / 2)
+                    break;
+                cdatan(j, i) = *itr;
+                ++itr;
+            }
+        }
+    }
+    else if (fmode_str == u8"cdatan3"s)
+    {
+        if (lines.size() <= 10 / 2)
+            lines.resize(10 / 2);
+        else
+            lines.resize(10);
+        auto itr = std::begin(lines);
+        for (int j = 0; j < 10; ++j)
+        {
+            if (lines.size() < 10 / 2 && j >= 10 / 2)
+                break;
+            cdatan(j, tg) = *itr;
+            ++itr;
+        }
+    }
+}
+
+
+
+void arrayfile_write(const std::string& fmode_str, const fs::path& filepath)
+{
+    std::ofstream out{filepath.native(), std::ios::binary};
+    if (!out)
+    {
+        throw std::runtime_error(
+            u8"Error: fail to write "
+            + filesystem::make_preferred_path_in_utf8(filepath));
+    }
+
+    if (fmode_str == u8"qname"s)
+    {
+        for (int i = 0; i < 500; ++i)
+        {
+            out << qname(i) << std::endl;
+        }
+    }
+    else if (fmode_str == u8"gdatan"s)
+    {
+        for (int i = 0; i < 50; ++i)
+        {
+            out << gdatan(i) << std::endl;
+        }
+    }
+    else if (fmode_str == u8"mdatan"s)
+    {
+        for (int i = 0; i < 2; ++i)
+        {
+            out << mdatan(i) << std::endl;
+        }
+    }
+    else if (fmode_str == u8"cdatan1"s)
+    {
+        for (int i = 0; i < 57; ++i)
+        {
+            for (int j = 0; j < 10; ++j)
+            {
+                out << cdatan(j, i) << std::endl;
+            }
+        }
+    }
+    else if (fmode_str == u8"cdatan2"s)
+    {
+        for (int i = ELONA_MAX_PARTY_CHARACTERS; i < ELONA_MAX_CHARACTERS; ++i)
+        {
+            for (int j = 0; j < 10; ++j)
+            {
+                out << cdatan(j, i) << std::endl;
+            }
+        }
+    }
+    else if (fmode_str == u8"cdatan3"s)
+    {
+        for (int j = 0; j < 10; ++j)
+        {
+            out << cdatan(j, tg) << std::endl;
+        }
+    }
+
+    if (elona_export == 0)
+    {
+        fileadd(filepath);
+    }
+}
+
+
+
+void arrayfile(
+    bool fread,
+    const std::string& fmode_str,
+    const fs::path& filepath)
+{
+    if (!fread)
+    {
+        arrayfile_write(fmode_str, filepath);
+    }
+    else
+    {
+        arrayfile_read(fmode_str, filepath);
+    }
+
+    elona_export = 0;
+}
 
 
 template <typename T>
@@ -1134,6 +1315,30 @@ void ctrl_file(file_operation2_t file_operation, const fs::path& filepath)
         break;
     default: assert(0);
     }
+}
+
+
+
+void fileadd(const fs::path& filepath, int prm_693)
+{
+    const auto mark_a = prm_693 ? '#' : '*';
+    const auto mark_b = prm_693 ? '*' : '#';
+
+    const auto filename = filesystem::to_utf8_path(filepath.filename());
+    notesel(filemod);
+    const auto pos = filemod(0).find(filename);
+    if (pos != std::string::npos)
+    {
+        if (filemod(0)[pos - 1] == mark_b)
+        {
+            filemod(0)[pos - 1] = mark_a;
+        }
+        noteunsel();
+        return;
+    }
+    ELONA_LOG("fileadd(" << mark_a << "): " << filename);
+    noteadd(mark_a + filename);
+    noteunsel();
 }
 
 
