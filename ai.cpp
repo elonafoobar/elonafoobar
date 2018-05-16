@@ -1064,7 +1064,7 @@ label_2692_internal:
                     if (cdata[tc].continuous_action_id == 0)
                     {
                         cdata[cc].enemy_id = 0;
-                        label_2147();
+                        continuous_action_sex();
                         return turn_result_t::turn_end;
                     }
                 }

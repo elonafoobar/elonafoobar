@@ -1608,7 +1608,7 @@ label_19341_internal:
         {
             mode = 12;
             ++gdata_hour;
-            label_2736();
+            weather_changes();
             render_hud();
             if (cnt % 5 == 0)
             {

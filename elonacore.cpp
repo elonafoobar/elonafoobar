@@ -563,15 +563,15 @@ void initialize_character()
         - rnd((cdata[rc].height / 5 + 1));
     cdata[rc].weight =
         cdata[rc].height * cdata[rc].height * (rnd(6) + 18) / 10000;
-    label_1456(rc);
-    label_1512(rc);
+    update_required_experience(rc);
+    init_character_skills(rc);
     if (cdata[rc].portrait == 0)
     {
         cdata[rc].portrait = rnd(32);
     }
     cdata[rc].personality = rnd(4);
     cdata[rc].talk_type = rnd(7);
-    label_1530();
+    supply_initial_equipments();
     chara_refresh(rc);
     ++gdata_other_character_count;
     cdata[rc].hp = cdata[rc].max_hp;
@@ -4023,7 +4023,7 @@ void initialize_server_info()
 
 
 
-void label_1399()
+void show_chat_dialog()
 {
     int chatdeny = 0;
     if (chatdeny == 1)
@@ -4118,7 +4118,7 @@ label_14001_internal:
             }
             list(1, cnt) = 1000000 - list(1, cnt);
         }
-        label_2057();
+        sort_list_and_listn_by_column1();
     }
     else
     {
@@ -4133,7 +4133,7 @@ label_14001_internal:
             }
             list(1, cnt) = rnd(10000);
         }
-        label_2057();
+        sort_list_and_listn_by_column1();
         if (listmax > pagesize)
         {
             listmax = pagesize;
@@ -4811,7 +4811,7 @@ void get_hungry(int cc)
 
 
 
-void label_1520(int cc)
+void proc_turn_end(int cc)
 {
     int regen = 0;
     regen = 1;
@@ -5189,7 +5189,7 @@ void refresh_burden_state()
 
 
 
-void label_1537()
+void revive_character()
 {
     label_1538();
     cxinit = cdata[0].position.x;
@@ -5716,7 +5716,7 @@ void initialize_set_of_random_generation()
 
 
 
-void label_1573()
+void character_drops_item()
 {
     int lootrich = 0;
     if (rc == 0)
@@ -6643,7 +6643,7 @@ void label_1573()
 
 
 
-void label_1576()
+void food_gets_rotten()
 {
     i = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
         + gdata_year * 24 * 30 * 12;
@@ -6762,7 +6762,7 @@ void label_1576()
 
 
 
-void label_1577()
+void damage_by_cursed_equipments()
 {
     if (rnd(4) == 0)
     {
@@ -6806,7 +6806,7 @@ void label_1577()
 
 
 
-void label_1578()
+void proc_pregnant()
 {
     if (rnd(15) == 0)
     {
@@ -6863,7 +6863,7 @@ void label_1578()
 
 
 
-void label_1579()
+void proc_negative_equipments()
 {
     for (int i = 0; i < 30; ++i)
     {
@@ -6983,7 +6983,7 @@ void label_1579()
 
 
 
-void label_1580()
+void auto_identify()
 {
     if (cdata[0].confused != 0 || cdata[0].sleep != 0 || cdata[0].paralyzed != 0
         || cdata[0].choked != 0)
@@ -7566,7 +7566,7 @@ turn_result_t exit_map()
             {
                 gdata_pc_home_x = adata(1, gdata_current_map);
                 gdata_pc_home_y = adata(2, gdata_current_map);
-                label_2735();
+                weather_changes_by_location();
             }
         }
         if (gdata_current_map == 41)
@@ -7628,7 +7628,7 @@ turn_result_t exit_map()
             msgtemp += lang(
                 u8"あなたは家まで運ばれた。"s,
                 u8"You were delivered to your home."s);
-            label_2735();
+            weather_changes_by_location();
         }
         else if (adata(0, gdata_previous_map) == 1)
         {
@@ -7932,7 +7932,7 @@ void label_1745()
                                 {
                                     break;
                                 }
-                                label_2233(chipm(0, map(x, y, 0)) == 2 ? 1 : 0);
+                                grow_plant(chipm(0, map(x, y, 0)) == 2 ? 1 : 0);
                             }
                             cell_featset(
                                 cnt, y, feat, feat(1), feat(2), feat(3));
@@ -9377,7 +9377,7 @@ void label_1754()
                         u8"シェルターの貯蔵食品を食べた。"s,
                         u8"You eat stored food."s));
                     cdata[cc].nutrition += 5000;
-                    label_2162();
+                    show_eating_message();
                 }
             }
             if (gdata_continuous_active_hours >= 15)
@@ -10255,7 +10255,7 @@ label_1894_internal:
             txt(lang(u8"なかなか美味しかった。"s, u8"It was tasty."s),
                 lang(u8"悪くない。"s, u8"Not bad at all."s),
                 lang(u8"あなたは舌鼓をうった。"s, u8"You smack your lips."s));
-            label_2162();
+            show_eating_message();
             chara_anorexia(0);
         }
         break;
@@ -10630,7 +10630,7 @@ label_1894_internal:
     }
 
     cc = 0;
-    label_1422();
+    load_continuous_action_animation();
     return 1;
 }
 
@@ -10804,7 +10804,7 @@ int calcincome(int prm_1036)
 
 
 
-void label_1901()
+void supply_income()
 {
     invfile = 4;
     ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
@@ -12378,7 +12378,7 @@ void sort_list_by_column1()
 
 
 
-void label_2057()
+void sort_list_and_listn_by_column1()
 {
     if (listmax < 1)
     {
@@ -13109,7 +13109,7 @@ void prompt_stop_continuous_action()
 
 
 
-void label_2081()
+void try_to_return()
 {
     int stat = quest_is_return_forbidden();
     if (stat == 1)
@@ -13388,7 +13388,7 @@ void dump_player_info()
         noteadd(s + s((1 + cnt)));
     }
     noteadd(""s);
-    label_2047(1);
+    append_accuracy_info(1);
     tc = 0;
     attackskill = 106;
     int evade = calc_evasion(tc);
@@ -14341,7 +14341,7 @@ int efstatusfix(int doomed, int cursed, int none, int blessed)
 
 
 
-int label_2143()
+int search_material_spot()
 {
     if (map(cdata[0].position.x, cdata[0].position.y, 6) == 0)
     {
@@ -14481,7 +14481,7 @@ int label_2143()
 
 
 
-void label_2144()
+void disarm_trap()
 {
     cell_featset(movx, movy, 0);
     if (cdata[cc].god_id == core_god::mani)
@@ -14505,7 +14505,7 @@ void label_2144()
 
 
 
-void label_21452()
+void proc_trap()
 {
 label_21451_internal:
     if (config::instance().scroll)
@@ -14571,7 +14571,7 @@ label_21451_internal:
                         int stat = try_to_disarm_trap();
                         if (stat == 1)
                         {
-                            label_2144();
+                            disarm_trap();
                             return;
                         }
                         else
@@ -14747,7 +14747,7 @@ label_21451_internal:
 
 
 
-void label_2146()
+void continuous_action_perform()
 {
     int performtips = 0;
     if (cdata[cc].continuous_action_id == 0)
@@ -15218,7 +15218,7 @@ void label_2146()
 
 
 
-void label_2147()
+void continuous_action_sex()
 {
     int sexhost = 0;
     if (cdata[cc].continuous_action_id == 0)
@@ -16068,7 +16068,7 @@ void label_2151()
     for (int cnt = 0, cnt_end = (timeslept); cnt < cnt_end; ++cnt)
     {
         ++gdata_hour;
-        label_2736();
+        weather_changes();
         if (mode != 9)
         {
             label_2150();
@@ -16351,7 +16351,7 @@ void label_2153()
                     u8"空腹のあまり、あなたは積もっている雪を腹にかきこんだ。"s,
                     u8"You are too hungry. You chow down snow."s));
                 cdata[cc].nutrition += 5000;
-                label_2162();
+                show_eating_message();
                 dmgcon(0, status_ailment_t::dimmed, 1000);
             }
         }
@@ -16422,7 +16422,7 @@ void label_2153()
 
 
 
-void label_2154()
+void select_random_fish()
 {
     if (rowactre != 0)
     {
@@ -16466,7 +16466,7 @@ void label_2154()
 
 
 
-void label_2155()
+void get_fish()
 {
     flt();
     itemcreate(0, the_fish_db[fish]->item_id, -1, -1, 0);
@@ -16505,7 +16505,7 @@ void spot_fishing()
     }
     if (rowactre != 0)
     {
-        label_2143();
+        search_material_spot();
         return;
     }
     if (cdata[cc].continuous_action_turn > 0)
@@ -16513,7 +16513,7 @@ void spot_fishing()
         if (rnd(5) == 0)
         {
             fishstat = 1;
-            label_2154();
+            select_random_fish();
         }
         if (fishstat == 1)
         {
@@ -16607,7 +16607,7 @@ void spot_fishing()
             snd(14 + rnd(2));
             fishanime = 0;
             rowactend(cc);
-            label_2155();
+            get_fish();
             gain_fishing_experience(0);
             cdata[0].emotion_icon = 306;
         }
@@ -16636,7 +16636,7 @@ void spot_material()
     }
     if (rowactre != 0)
     {
-        label_2143();
+        search_material_spot();
         return;
     }
     rowactend(cc);
@@ -16665,7 +16665,7 @@ void spot_digging()
     }
     if (rowactre != 0)
     {
-        label_2143();
+        search_material_spot();
         return;
     }
     if (cdata[cc].continuous_action_turn > 0)
@@ -16792,7 +16792,7 @@ void spot_mining_or_wall()
     }
     if (rowactre != 0)
     {
-        label_2143();
+        search_material_spot();
         return;
     }
     if (cdata[cc].continuous_action_turn > 0)
@@ -18173,7 +18173,7 @@ int label_2175()
 
 
 
-void label_2187()
+void heal_both_rider_and_mount()
 {
     int subloop = 0;
     subloop = 1;
@@ -18207,7 +18207,7 @@ void label_2187()
 
 
 
-void label_2188()
+void heal_completely()
 {
     cdata[tc].poisoned = 0;
     cdata[tc].sleep = 0;
@@ -18572,7 +18572,7 @@ int pick_up_item()
         {
             if (mode == 0)
             {
-                label_1730();
+                calc_home_rank();
             }
         }
         refresh_burden_state();
@@ -18653,7 +18653,7 @@ int drop_item()
     {
         if (mode == 0)
         {
-            label_1730();
+            calc_home_rank();
         }
     }
     if (inv[ti].id == 255)
@@ -18709,7 +18709,7 @@ void unequip_item(int cc)
 
 
 
-void label_2196(int cc)
+void lost_body_part(int cc)
 {
     for (int cnt = 100; cnt < 130; ++cnt)
     {
@@ -19014,7 +19014,7 @@ turn_result_t proc_movement_event()
             }
         }
     }
-    label_21452();
+    proc_trap();
     p = map(cdata[cc].position.x, cdata[cc].position.y, 0);
     if (chipm(0, p) == 3)
     {
@@ -20659,7 +20659,7 @@ label_22191_internal:
         }
         if (attackskill != 106)
         {
-            label_2220();
+            proc_weapon_enchantments();
         }
         if (cdata[tc].cut_counterattack > 0)
         {
@@ -20869,7 +20869,7 @@ label_22191_internal:
 
 
 
-void label_2220()
+void proc_weapon_enchantments()
 {
     for (int cnt = 0; cnt < 15; ++cnt)
     {
@@ -21111,7 +21111,7 @@ void dipcursed(int prm_1078, int)
 
 
 
-int label_2230()
+int gain_skills_by_geen_engineering()
 {
     if (cdata[tc].splits() || cdata[tc].splits2())
     {
@@ -21153,7 +21153,7 @@ int label_2230()
 
 
 
-int label_2231()
+int transplant_body_parts()
 {
     int dbmax = 0;
     s(1) = chara_refstr(cdata[tc].id, 8);
@@ -21285,7 +21285,7 @@ turn_result_t do_plant()
     feat(0) = tile_plant;
     feat(1) = 29;
     feat(2) = inv[ci].material;
-    label_2234(val0);
+    try_to_grow_plant(val0);
     if (val0)
     {
         s = u8"畑に"s;
@@ -21313,7 +21313,7 @@ turn_result_t do_plant()
 
 
 
-void label_2233(int val0)
+void grow_plant(int val0)
 {
     --feat(3);
     if (feat(3) % 50 == 0)
@@ -21325,7 +21325,7 @@ void label_2233(int val0)
         else
         {
             ++feat;
-            label_2234(val0);
+            try_to_grow_plant(val0);
         }
     }
     return;
@@ -21333,7 +21333,7 @@ void label_2233(int val0)
 
 
 
-void label_2234(int val0)
+void try_to_grow_plant(int val0)
 {
     feat(3) = 4 + rnd(5);
     p = 10;
@@ -21377,7 +21377,7 @@ void label_2234(int val0)
 
 
 
-void label_2235(int val)
+void harvest_plant(int val)
 {
     p = 15;
     if (feat(2) == 41)
@@ -21410,7 +21410,7 @@ void label_2235(int val)
         return;
     }
     feat = tile_plant;
-    label_2234();
+    try_to_grow_plant();
     cell_featset(
         cdata[cc].position.x,
         cdata[cc].position.y,
@@ -21711,7 +21711,7 @@ label_2682_internal:
         gsel(4);
         boxf();
         gsel(0);
-        label_1443();
+        animation_fade_in();
         goto label_2682_internal;
     }
     if (s == u8"{fadein}"s)
@@ -21897,7 +21897,7 @@ void label_2685()
     gsel(4);
     boxf();
     gsel(0);
-    label_1443();
+    animation_fade_in();
     scenemode = 0;
     msgtemp = msgtempprev;
     msgtempprev = "";
@@ -22683,7 +22683,7 @@ turn_result_t turn_begin()
         }
         if (gdata_play_turns % 10 == 1)
         {
-            label_1580();
+            auto_identify();
         }
         gdata_minute += gdata_second / 60;
         if (gdata_left_minutes_of_executing_quest > 0)
@@ -22711,13 +22711,13 @@ turn_result_t turn_begin()
         {
             gdata_hour += gdata_minute / 60;
             gdata_minute = gdata_minute % 60;
-            label_2736();
+            weather_changes();
         }
     }
     return turn_result_t::pass_one_turn;
 }
 
-void label_2735()
+void weather_changes_by_location()
 {
     if (gdata_weather == 2)
     {
@@ -22746,7 +22746,7 @@ void label_2735()
 
 
 
-void label_2736()
+void weather_changes()
 {
     if (adata(16, gdata_current_map) == 101)
     {
@@ -22754,7 +22754,7 @@ void label_2736()
     }
     if (gdata_current_map == 7)
     {
-        label_1730();
+        calc_home_rank();
     }
     if (mdata(6) == 1)
     {
@@ -22762,7 +22762,7 @@ void label_2736()
         gdata_pc_home_y = cdata[0].position.y;
     }
     --gdata_hours_until_weather_changes;
-    label_2735();
+    weather_changes_by_location();
     if (gdata_hours_until_weather_changes < 0)
     {
         gdata_hours_until_weather_changes = rnd(22) + 2;
@@ -22950,7 +22950,7 @@ void label_2736()
     }
     label_1746();
     label_2662();
-    label_1576();
+    food_gets_rotten();
     if (mdata(6) == 1)
     {
         if (rnd(3) == 0)
@@ -23073,7 +23073,7 @@ void label_2736()
         }
         if (gdata_day == 1 || gdata_day == 15)
         {
-            label_1901();
+            supply_income();
         }
         if (gdata_pael_and_her_mom == 1 || gdata_pael_and_her_mom == 3
             || gdata_pael_and_her_mom == 5 || gdata_pael_and_her_mom == 7
@@ -23487,15 +23487,15 @@ turn_result_t pass_one_turn(bool label_2738_flg)
     {
         if (cdata[cc].curse_power != 0)
         {
-            label_1577();
+            damage_by_cursed_equipments();
         }
         if (cdata[cc].has_cursed_equipments())
         {
-            label_1579();
+            proc_negative_equipments();
         }
         if (cdata[cc].is_pregnant())
         {
-            label_1578();
+            proc_pregnant();
         }
     }
     if (cdata[cc].continuous_action_id != 0)
@@ -23540,7 +23540,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         if (cdata[cc].continuous_action_id == 11)
         {
             auto_turn(50);
-            label_2147();
+            continuous_action_sex();
         }
         if (cdata[cc].continuous_action_id == 10)
         {
@@ -23570,7 +23570,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         if (cdata[cc].continuous_action_id == 6)
         {
             auto_turn(40);
-            label_2146();
+            continuous_action_perform();
         }
         if (cdata[cc].continuous_action_id == 3)
         {
@@ -23649,7 +23649,7 @@ turn_result_t turn_end()
     {
         return turn_result_t::pass_one_turn;
     }
-    label_1520(cc);
+    proc_turn_end(cc);
     if (cc == 0)
     {
         chatturn = 10;
@@ -24075,7 +24075,7 @@ label_2747:
         {
             dbg_skipevent = 1;
             ++gdata_hour;
-            label_2736();
+            weather_changes();
             dbg_skipevent = 0;
             mode = 0;
             return turn_result_t::turn_end;
@@ -24125,8 +24125,8 @@ label_2747:
         gmode(2);
         sxfix = 0;
         syfix = 0;
-        label_1428();
-        label_1429();
+        update_scrolling_info();
+        update_slight();
         label_1433();
         p = windoww / 192;
         for (int i = 0; i < p + 1; ++i)
@@ -24716,7 +24716,7 @@ label_2747:
     }
     if (key_tab)
     {
-        label_1399();
+        show_chat_dialog();
         update_screen();
         goto label_2747;
     }
@@ -24952,7 +24952,7 @@ void conquer_lesimas()
     pos(0, 0);
     gzoom(4, 0, 0, 640, 480, windoww, windowh);
     gsel(0);
-    label_1443();
+    animation_fade_in();
     pos(0, 0);
     gcopy(4, 0, 0, windoww, windowh);
     gsel(4);

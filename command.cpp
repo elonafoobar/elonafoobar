@@ -495,7 +495,7 @@ turn_result_t do_search_command()
                 {
                     movx = cdata[cc].position.x;
                     movy = cdata[cc].position.y;
-                    label_2144();
+                    disarm_trap();
                 }
             }
         }
@@ -537,7 +537,7 @@ turn_result_t do_pray_command()
         ci = stat;
         if (core_god::int2godid(inv[ci].param1) != cdata[0].god_id)
         {
-            label_1886();
+            begin_to_believe_god();
             return turn_result_t::turn_end;
         }
     }
@@ -2535,7 +2535,7 @@ turn_result_t do_use_command()
         if (feat == tile_plant + 3)
         {
             feat = tile_plant + 1;
-            label_2234();
+            try_to_grow_plant();
             txt(lang(u8"枯れた植物に生命が宿った。"s, u8"The plant revives."s));
         }
         else
@@ -2597,7 +2597,7 @@ turn_result_t do_use_command()
         anic = rc;
         play_animation(20);
         {
-            int stat = label_2231();
+            int stat = transplant_body_parts();
             if (stat != -1)
             {
                 cdata_body_part(rc, stat) = rtval * 10000;
@@ -2613,7 +2613,7 @@ turn_result_t do_use_command()
             }
         }
         {
-            int stat = label_2230();
+            int stat = gain_skills_by_geen_engineering();
             if (stat != 0)
             {
                 for (int cnt = 0; cnt < 2; ++cnt)
@@ -3594,7 +3594,7 @@ turn_result_t do_get_command()
                 return turn_result_t::pc_turn_user_error;
             }
             label_2236();
-            label_2235(
+            harvest_plant(
                 chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 2
                     ? 1
                     : 0);

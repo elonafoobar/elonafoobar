@@ -96,17 +96,17 @@ void modcorrupt(int prm_815)
                 if (tid == 203)
                 {
                     body = 9;
-                    label_2196(0);
+                    lost_body_part(0);
                 }
                 if (tid == 205)
                 {
                     body = 3;
-                    label_2196(0);
+                    lost_body_part(0);
                 }
                 if (tid == 206)
                 {
                     body = 2;
-                    label_2196(0);
+                    lost_body_part(0);
                 }
                 break;
             }
@@ -312,15 +312,15 @@ void gain_level(int cc)
     }
     if (cc >= 16)
     {
-        label_1455(cc);
+        grow_primary_skills(cc);
     }
-    label_1456(cc);
+    update_required_experience(cc);
     chara_refresh(cc);
 }
 
 
 
-void label_1455(int cc)
+void grow_primary_skills(int cc)
 {
     for (int cnt = 10; cnt < 20; ++cnt)
     {
@@ -342,7 +342,7 @@ void label_1455(int cc)
 
 
 
-void label_1456(int cc)
+void update_required_experience(int cc)
 {
     cdata[cc].required_experience = clamp(cdata[cc].level, 1, 200)
             * (clamp(cdata[cc].level, 1, 200) + 1)

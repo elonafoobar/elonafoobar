@@ -130,7 +130,7 @@ void skillinit(int id, int cc, int initial_level)
 
 
 
-void label_1512(int cc)
+void init_character_skills(int cc)
 {
     for (int cnt = 50; cnt < 61; ++cnt)
     {
