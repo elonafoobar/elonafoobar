@@ -12,6 +12,7 @@
 #include "item_db.hpp"
 #include "itemgen.hpp"
 #include "map_cell.hpp"
+#include "network.hpp"
 #include "optional.hpp"
 #include "variables.hpp"
 
