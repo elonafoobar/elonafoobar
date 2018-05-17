@@ -55,6 +55,7 @@ The following is ideal; not all of these are being regarded at the moment.
 - For data types that can be expanded with new members dynamically, like item IDs, use integers for legacy code or strings for new code with mods.
   + Ideally all such IDs should use strings, to give a uniform interface.
 - Avoid the usage of raw pointers unless absolutely necessary (which, in the current state of the code, is never).
+- Avoid `new` and `delete`. The game currently uses only about `80MB` of RAM, so heap allocations shouldn't be that helpful.
 - Pass references to objects to modify them inside a method.
 - Use `const` where appropriate (arguments, methods, etc.) to make it clear what is being modified.
 - If you come across behavior that is correct but surprises you, be sure to leave a comment noting it, and bring it up in the respective PR.
