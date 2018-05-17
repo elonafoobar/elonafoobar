@@ -56,7 +56,7 @@ These shouldn't be used in new code, but are useful for figuring out what things
 - `mode` - global integer that changes the behavior of functions like `ctrl_inventory()` for querying the player's inventory, and various other things (there are lots of these, because HSP has no notion of local variables)
 - `f` - global success/failure flag - 1 for success, 0 for failure
 - `p` - global variable used for just about anything (indices, integer enumerations...). It's actually an integer array.
-- `rtval` - global integer return value (HSP is weird)
+- `rtval` - global integer or array return value (HSP is weird)
 - `fset<...>` - arrays of filter categories for quickly generating e.g. equipment, magic items, valuables like gems, etc.
 - `flttypemajor/flttypeminor/fixlv` - item generation global variables.
 - `dbid` - global integer ID for looking up item definitions for various purposes.
