@@ -20,10 +20,6 @@ extern int i_at_m68;
 extern double r_at_m133;
 
 
-turn_result_t pc_turn(bool = true);
-turn_result_t pass_one_turn(bool = true);
-
-
 inline int _fdialog(
     std::string&,
     int,

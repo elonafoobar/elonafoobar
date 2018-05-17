@@ -28,6 +28,7 @@ void set_option();
 turn_result_t play_scene();
 
 turn_result_t show_spell_list();
+turn_result_t show_skill_list();
 void label_2031();
 void label_2032();
 menu_result menu_character_sheet();

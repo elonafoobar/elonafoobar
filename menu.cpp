@@ -1568,6 +1568,236 @@ label_2029_internal:
     goto label_2029_internal;
 }
 
+
+
+turn_result_t show_skill_list()
+{
+    listmax = 0;
+    page = 0;
+    pagesize = 16;
+    cs = 0;
+    cc = 0;
+    cs_bk = -1;
+    cs = commark(0) % 1000;
+    page = commark(0) / 1000;
+    curmenu = 1;
+    for (int cnt = 300; cnt < 400; ++cnt)
+    {
+        if (sdata(cnt, cc) > 0)
+        {
+            list(0, listmax) = cnt;
+            list(1, listmax) =
+                the_ability_db[cnt]->related_basic_attribute * 1000 + cnt;
+            ++listmax;
+        }
+    }
+    for (int cnt = 0; cnt < 61; ++cnt)
+    {
+        if (spact(cnt) != 0)
+        {
+            list(0, listmax) = cnt + 600;
+            list(1, listmax) =
+                the_ability_db[cnt + 600]->related_basic_attribute * 1000 + cnt;
+            ++listmax;
+        }
+    }
+    sort_list_by_column1();
+    gsel(3);
+    pos(960, 96);
+    picload(filesystem::dir::graphic() / u8"deco_skill.bmp", 1);
+    gsel(0);
+    windowshadow = 1;
+label_2008_internal:
+    cs_bk = -1;
+    pagemax = (listmax - 1) / pagesize;
+    if (page < 0)
+    {
+        page = pagemax;
+    }
+    else if (page > pagemax)
+    {
+        page = 0;
+    }
+    drawmenu(1);
+label_2009_internal:
+    s(0) = lang(u8"能力の発動"s, u8"Skill"s);
+    s(1) = strhint2 + strhint3 + strhint7;
+    display_window(
+        (windoww - 600) / 2 + inf_screenx, winposy(438), 600, 438, 0, 60);
+    display_topic(lang(u8"能力の名称"s, u8"Name"s), wx + 28, wy + 36);
+    display_topic(lang(u8"コスト"s, u8"Cost"s), wx + 220, wy + 36);
+    display_topic(lang(u8"能力の効果"s, u8"Detail"s), wx + 320, wy + 36);
+    pos(wx + 46, wy - 16);
+    gcopy(3, 960, 48, 48, 48);
+    pos(wx + ww - 78, wy + wh - 165);
+    gcopy(3, 960, 96, 72, 144);
+    pos(wx + ww - 168, wy);
+    gcopy(3, 1032, 96, 102, 48);
+    keyrange = 0;
+    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
+    {
+        p = pagesize * page + cnt;
+        if (p >= listmax)
+        {
+            break;
+        }
+        key_list(cnt) = key_select(cnt);
+        ++keyrange;
+        if (cnt % 2 == 0)
+        {
+            pos(wx + 70, wy + 66 + cnt * 19);
+            gfini(490, 18);
+            gfdec2(12, 14, 16);
+        }
+        display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
+    }
+    font(14 - en * 2);
+    cs_listbk();
+    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
+    {
+        p = pagesize * page + cnt;
+        if (p >= listmax)
+        {
+            break;
+        }
+        i = list(0, p);
+        pos(wx + 40, wy + 74 + cnt * 19);
+        gmode(2, inf_tiles, inf_tiles);
+        grotate(
+            1,
+            (the_ability_db[list(0, p)]->related_basic_attribute - 10)
+                * inf_tiles,
+            672,
+            0,
+            inf_tiles,
+            inf_tiles);
+        s = "";
+        for (int cnt = 0; cnt < 20; ++cnt)
+        {
+            if (gdata(40 + cnt) == list(0, p))
+            {
+                s = u8"{"s + cnt + u8"}"s;
+            }
+        }
+        cs_list(
+            cs == cnt,
+            i18n::_(u8"ability", std::to_string(list(0, p)), u8"name") + s,
+            wx + 84,
+            wy + 66 + cnt * 19 - 1);
+        s = ""s + the_ability_db[list(0, p)]->cost + u8" Sp"s;
+        pos(wx + 288 - strlen_u(s) * 7, wy + 66 + cnt * 19 + 2);
+        mes(s);
+        label_2031();
+        pos(wx + 325, wy + 66 + cnt * 19 + 2);
+        mes(strmid(s, 0, 34));
+    }
+    if (keyrange != 0)
+    {
+        cs_bk = cs;
+    }
+    redraw();
+    await(config::instance().wait1);
+    key_check();
+    cursor_check();
+    commark(0) = page * 1000 + cs;
+    ELONA_GET_SELECTED_ITEM(p, 0);
+    if (p != -1)
+    {
+        menucycle = 0;
+        efid = p;
+        screenupdate = -1;
+        update_screen();
+        return do_use_magic();
+    }
+    if (key == u8"sc"s)
+    {
+        snd(20);
+        p = list(0, pagesize * page + cs);
+        if (gdata(40 + sc) == p)
+        {
+            gdata(40 + sc) = 0;
+            goto label_2008_internal;
+        }
+        for (int cnt = 0; cnt < 20; ++cnt)
+        {
+            if (gdata(40 + cnt) == p)
+            {
+                gdata(40 + cnt) = 0;
+            }
+        }
+        gdata(40 + sc) = p;
+        txt(lang(
+            u8"{"s + sc + u8"}キーにショートカットを割り当てた。"s,
+            u8"You have assigned the shortcut to {"s + sc + u8"} key."s));
+        display_msg(inf_screeny + inf_tiles);
+        goto label_2008_internal;
+    }
+    if (menucycle == 1)
+    {
+        if (key == key_next || key == key_prev)
+        {
+            p = curmenu;
+            if (key == key_next)
+            {
+                ++curmenu;
+                if (curmenu > 1)
+                {
+                    curmenu = 0;
+                }
+            }
+            if (key == key_prev)
+            {
+                --curmenu;
+                if (curmenu < 0)
+                {
+                    curmenu = 1;
+                }
+            }
+            if (p != curmenu)
+            {
+                screenupdate = -1;
+                update_screen();
+                if (curmenu == 0)
+                {
+                    snd(102);
+                    return turn_result_t::show_spell_list;
+                }
+                if (curmenu == 1)
+                {
+                    snd(101);
+                    return turn_result_t::show_skill_list;
+                }
+            }
+        }
+    }
+    if (key == key_pageup)
+    {
+        if (pagemax != 0)
+        {
+            snd(1);
+            ++page;
+            goto label_2008_internal;
+        }
+    }
+    if (key == key_pagedown)
+    {
+        if (pagemax != 0)
+        {
+            snd(1);
+            --page;
+            goto label_2008_internal;
+        }
+    }
+    if (key == key_cancel)
+    {
+        update_screen();
+        return turn_result_t::pc_turn_user_error;
+    }
+    goto label_2009_internal;
+}
+
+
+
 void label_2031()
 {
     s = "";

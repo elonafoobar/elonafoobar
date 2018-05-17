@@ -168,6 +168,17 @@ ELONA_EXTERN(int catitem);
 ELONA_EXTERN(int rollanatomy);
 ELONA_EXTERN(int rtdmg);
 
+// turn_sequence.cpp
+ELONA_EXTERN(int pcnoise);
+ELONA_EXTERN(int chatturn);
+ELONA_EXTERN(int tgloc);
+ELONA_EXTERN(std::string chatnew);
+ELONA_EXTERN(int dbg_skipevent);
+ELONA_EXTERN(int findlocmode);
+ELONA_EXTERN(int dirsub);
+ELONA_EXTERN(int mousex);
+ELONA_EXTERN(int mousey);
+
 ELONA_EXTERN(elona_vector1<int> _randcolor);
 ELONA_EXTERN(elona_vector1<int> aniref);
 ELONA_EXTERN(elona_vector1<int> anix);
