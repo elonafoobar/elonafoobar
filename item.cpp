@@ -2064,7 +2064,7 @@ int inv_sum(int owner)
     return n;
 }
 
-void inv_compress(int owner)
+int inv_compress(int owner)
 {
     int number_of_deleted_items{};
     for (int i = 0; i < 100; ++i)
@@ -2110,49 +2110,40 @@ void inv_compress(int owner)
 
     if (slot == -1)
     {
-        while (1)
+        // Destroy 1 existing item forcely.
+        slot = get_random_inv(owner);
+        inv[slot].number = 0;
+        if (mode != 6)
         {
-            int ci = get_random_inv(owner);
-            if (!ibit(5, ci))
+            if (inv[slot].position.x >= 0 && inv[slot].position.x < mdata(0)
+                && inv[slot].position.y >= 0
+                && inv[slot].position.y < mdata(1))
             {
-                inv[ci].number = 0;
-                if (mode != 6)
-                {
-                    if (inv[ci].position.x >= 0 && inv[ci].position.x < mdata(0)
-                        && inv[ci].position.y >= 0
-                        && inv[ci].position.y < mdata(1))
-                    {
-                        cell_refresh(inv[ci].position.x, inv[ci].position.y);
-                    }
-                }
-                break;
+                cell_refresh(inv[slot].position.x, inv[slot].position.y);
             }
         }
     }
+
+    return slot;
 }
 
 int inv_getfreeid(int owner)
 {
-    int slot = -1;
     for (const auto& cnt : items(owner))
     {
         if (inv[cnt].number == 0)
         {
-            slot = cnt;
-            break;
+            return cnt;
         }
     }
-    if (slot == -1)
+    if (owner == -1 && mode != 6)
     {
-        if (owner == -1 && mode != 6)
-        {
-            txt(lang(
-                u8"アイテム情報が多すぎる！幾つかのアイテムは破壊された。"s,
-                u8"Too many item data! Some items in this area are destroyed."s));
-            inv_compress(owner);
-        }
+        txt(lang(
+            u8"アイテム情報が多すぎる！幾つかのアイテムは破壊された。"s,
+            u8"Too many item data! Some items in this area are destroyed."s));
+        return inv_compress(owner);
     }
-    return slot;
+    return -1;
 }
 
 int inv_weight(int owner)

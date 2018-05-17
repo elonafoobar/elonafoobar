@@ -158,7 +158,7 @@ std::vector<int> itemlist(int owner, int id);
 void itemname_additional_info();
 
 void item_checkknown(int = 0);
-void inv_compress(int);
+int inv_compress(int);
 void item_copy(int = 0, int = 0);
 void item_acid(int = 0, int = 0);
 void item_delete(int = 0);
