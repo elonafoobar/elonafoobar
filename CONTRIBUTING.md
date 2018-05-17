@@ -56,7 +56,7 @@ The following is ideal; not all of these are being regarded at the moment.
 - Prefer `enum class` to raw integers for internal enumerations.
 - For data types that can be expanded with new members dynamically, like item IDs, use integers for legacy code or strings for new code with mods.
   + Ideally all such IDs should use strings, to give a uniform interface.
-- Avoid the usage of raw pointers unless absolutely necessary (which, in the current state of the code, is never).
+- Avoid the usage of raw pointers unless absolutely necessary (which, in the current state of the code, is never). The rationale for this is none of the code currently checks for null pointers as a valid argument, instead relying on integer variables like `character.state` for existence (which are zeroed out when the character is deleted). Any code that introduces pointer arguments would have to also ensure their validity.
 - Avoid `new` and `delete` for game-related things. They aren't currently used there.
 - Pass references to objects to modify them inside a method.
 - Use `const` where appropriate (arguments, methods, etc.) to make it clear what is being modified.
