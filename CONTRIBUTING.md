@@ -85,7 +85,7 @@ These shouldn't be used in new code, but are useful for figuring out what things
 - `gdata` - miscellaneous global variables array (see `macro_gdata.hpp`)
 - `mdata` - global map metadata array, like width/height (`mdata(0)/mdata(1)`), global map/local map (`mdata(2)`) and tileset (`mdata(12)`)
 - `adata` - global map metadata array for things like quest completion, indexed by `(data_type, map_id)`
-- `map` - the actual tile data of the map, indexed by `(x, y, data_type)`. A `data_type` of `0` is the wall/floor state
+- `map` - the actual tile data of the map, indexed by `(x, y, data_type)`. A `data_type` of `0` is the wall/floor state.
 - `cc` - global current character index into `cdata` for the character whose turn it is, the target of an action to a single character, etc. If this isn't passed in, it was implicitly set elsewhere.
 - `tc` - global target character index into `cdata` for spell targets, etc.
 - `ci` - global current item index into `inv`
