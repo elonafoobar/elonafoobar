@@ -50,7 +50,7 @@ The following is ideal; not all of these are being regarded at the moment.
 - Use names that make sense in English. Instead of `dmghp`, use `damage_hp`.
 - Use `#pragma once` inside headers.
 - Everything goes into the `elona` namespace. For major sections of the code, like the Lua functionality, an additional namespace could be added. For game logic, only `elona` should suffice.
-- Avoid introducing new global variables in `variables.hpp` (there are already too many). If you absolutely must, consider encapsulating it inside an existing global variable.
+- Avoid introducing new global variables in `variables.hpp` (there are already too many). If you absolutely must, consider encapsulating them inside an existing global variable.
 - Prefer `enum class` to raw integers for internal enumerations.
 - For data types that can be expanded with new members dynamically, like item IDs, use integers for legacy code or strings for new code with mods.
   + Ideally all such IDs should use strings, to give a uniform interface.
