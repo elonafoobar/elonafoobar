@@ -16,6 +16,7 @@
 #include "item_db.hpp"
 #include "macro.hpp"
 #include "menu.hpp"
+#include "network.hpp"
 #include "quest.hpp"
 #include "trait.hpp"
 #include "ui.hpp"

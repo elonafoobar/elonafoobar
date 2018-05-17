@@ -3,6 +3,7 @@
 #include "elona.hpp"
 #include "macro.hpp"
 #include "menu.hpp"
+#include "network.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 

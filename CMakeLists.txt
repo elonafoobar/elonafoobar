@@ -100,6 +100,7 @@ set(CORE_SOURCES
     mef.cpp
     menu.cpp
     message.cpp
+    network.cpp
     proc_event.cpp
     quest.cpp
     race.cpp
