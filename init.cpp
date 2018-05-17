@@ -10,6 +10,7 @@
 #include "config.hpp"
 #include "ctrl_file.hpp"
 #include "crafting.hpp"
+#include "draw.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
 #include "event.hpp"
