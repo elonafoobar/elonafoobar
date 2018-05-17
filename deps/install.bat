@@ -17,14 +17,6 @@ copy SDL2-2.0.8\include\* .\include > nul
 copy SDL2-2.0.8\lib\x64\* .\lib > nul
 rd /s /q SDL2-2.0.8
 
-echo Downloading SDL2_image...
-powershell -Command "(New-Object Net.WebClient).DownloadFile('http://www.libsdl.org/projects/SDL_image/release/SDL2_image-devel-2.0.3-VC.zip', 'SDL2_image-devel-2.0.3-VC.zip')"
-
-7z x SDL2_image-devel-2.0.3-VC.zip > nul
-copy SDL2_image-2.0.3\include\* .\include > nul
-copy SDL2_image-2.0.3\lib\x64\* .\lib > nul
-rd /s /q SDL2_image-2.0.3
-
 echo Downloading SDL2_mixer...
 powershell -Command "(New-Object Net.WebClient).DownloadFile('http://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-devel-2.0.2-VC.zip', 'SDL2_mixer-devel-2.0.2-VC.zip')"
 
@@ -40,6 +32,14 @@ powershell -Command "(New-Object Net.WebClient).DownloadFile('https://www.libsdl
 copy SDL2_ttf-2.0.14\include\* .\include > nul
 copy SDL2_ttf-2.0.14\lib\x64\* .\lib > nul
 rd /s /q SDL2_ttf-2.0.14
+
+echo Downloading SDL2_image...
+powershell -Command "(New-Object Net.WebClient).DownloadFile('http://www.libsdl.org/projects/SDL_image/release/SDL2_image-devel-2.0.3-VC.zip', 'SDL2_image-devel-2.0.3-VC.zip')"
+
+7z x SDL2_image-devel-2.0.3-VC.zip > nul
+copy SDL2_image-2.0.3\include\* .\include > nul
+copy SDL2_image-2.0.3\lib\x64\* .\lib > nul
+rd /s /q SDL2_image-2.0.3
 
 echo Downloading lua...
 powershell -Command "(New-Object Net.WebClient).DownloadFile('http://downloads.sourceforge.net/luabinaries/lua-5.3.4_Win64_vc14_lib.zip', 'lua-5.3.4_Win64_vc14_lib.zip')"
