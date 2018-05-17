@@ -115,6 +115,7 @@ set(CORE_SOURCES
     tcg.cpp
     text.cpp
     trait.cpp
+    turn_sequence.cpp
     ui.cpp
     variables.cpp
     wish.cpp
