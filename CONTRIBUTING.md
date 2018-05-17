@@ -94,7 +94,7 @@ These shouldn't be used in new code, but are useful for figuring out what things
 - `rtval` - global integer return value (HSP is weird)
 - `fset<...>` - arrays of filter categories for quickly generating e.g. equipment, magic items, valuables like gems, etc.
 - `flttypemajor/flttypeminor/fixlv` - item generation global variables.
-- `dbid` - integer ID for looking up item definitions for various purposes.
+- `dbid` - global integer ID for looking up item definitions for various purposes.
 - `inf_<...>` - UI constants.
 
 ### Functions
