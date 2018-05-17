@@ -7,6 +7,7 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "config.hpp"
+#include "draw.hpp"
 #include "event.hpp"
 #include "i18n.hpp"
 #include "item.hpp"

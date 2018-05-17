@@ -168,6 +168,9 @@ ELONA_EXTERN(int catitem);
 ELONA_EXTERN(int rollanatomy);
 ELONA_EXTERN(int rtdmg);
 
+// draw.cpp
+ELONA_EXTERN(elona_vector1<std::string> tname);
+
 ELONA_EXTERN(elona_vector1<int> _randcolor);
 ELONA_EXTERN(elona_vector1<int> aniref);
 ELONA_EXTERN(elona_vector1<int> anix);
@@ -706,7 +709,6 @@ int cbreeder(int = 0);
 int cdbit(int = 0, int = 0);
 void initialize_character();
 void initialize_pc_character();
-void chara_preparepic(int = 0, int = 0);
 int convertartifact(int = 0, int = 0);
 int create_card(int = 0, int = 0);
 int direction(int = 0, int = 0, int = 0, int = 0);
@@ -900,7 +902,6 @@ void cnvbonus(int = 0, int = 0);
 void cpflip();
 void cpisenemy();
 void cpisme();
-void create_pcpic(int, bool);
 void csfix();
 void cslinedown();
 void cslineup();
@@ -950,8 +951,6 @@ void append_subquest_journal(int);
 void append_quest_item_journal();
 void parse_quest_board_text(int);
 void initialize_cloud_data();
-void initialize_map_chip();
-void initialize_item_chip();
 void load_random_name_table();
 void load_random_title_table();
 std::string cheer_up_message(int);
