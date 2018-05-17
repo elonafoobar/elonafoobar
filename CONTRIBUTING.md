@@ -36,9 +36,10 @@ In all commits, the C++ source code should be formatted by `clang-format`.
 We use Git flow. See http://nvie.com/posts/a-successful-git-branching-model/ for details, and we recommend this tool: https://github.com/nvie/gitflow.
 
 
-# Code format
-## C++
+# Coding style
 The following is ideal; not all of these are being regarded at the moment.
+
+## C++
 
 - C++ source files use `.cpp`, header files use `.hpp`.
 - Try to keep source files below 5,000SLoC. This makes a high-level overview of pieces of related functionality easier to parse.
