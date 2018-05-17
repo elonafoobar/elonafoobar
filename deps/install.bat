@@ -7,7 +7,7 @@ if errorlevel 1 (
     EXIT /B
 )
 
-mkdir include lib > nul
+mkdir include lib > nul 2>&1
 
 echo Downloading SDL2...
 powershell -Command "(New-Object Net.WebClient).DownloadFile('http://www.libsdl.org/release/SDL2-devel-2.0.8-VC.zip', 'SDL2-devel-2.0.8-VC.zip')"
