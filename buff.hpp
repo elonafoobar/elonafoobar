@@ -84,7 +84,7 @@ extern buff_db the_buff_db;
 // 21  "耐久の成長", "Grow Endurance"
 // 22  "器用の成長", "Grow Dexterity"
 // 23  "感覚の成長", "Grow Perception"
-// 24  "学習の成長", "Grow Learning"
+// 24  "習得の成長", "Grow Learning"
 // 25  "意思の成長", "Grow Will"
 // 26  "魔力の成長", "Grow Magic"
 // 27  "魅力の成長", "Grow Charisma"

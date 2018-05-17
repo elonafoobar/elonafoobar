@@ -405,7 +405,7 @@ void get_god_description()
             u8"ボーナス: 魔力 / 瞑想 / 火炎耐性 / 冷気耐性 / 電撃耐性<p>"s,
             u8"   Bonus: MAG/Meditation/RES Fire/RES Cold/RES Lightning<p>"s);
         buff += lang(
-            u8"特殊能力: マナの抽出(スキル:周囲の空気からマナを吸い出す)<p>"s,
+            u8"特殊能力: 魔力の吸収(スキル:周囲の空気からマナを吸い出す)<p>"s,
             u8" Ability: Absorb mana (Absorb mana from the air.)<p>"s);
     }
     if (inv[ci].param1 == 4)
@@ -430,7 +430,7 @@ void get_god_description()
         buff +=
             lang(u8"　捧げ物: 死体 / 鉱石<p>"s, u8"Offering: Corpses/Ores<p>"s);
         buff += lang(
-            u8"ボーナス: 腕力 / 耐久 / 盾 / 重量挙げ / 採掘 / 魔道具<p>"s,
+            u8"ボーナス: 筋力 / 耐久 / 盾 / 重量挙げ / 採掘 / 魔道具<p>"s,
             u8"   Bonus: STR/CON/Shield/Weight Lifting/Mining/Magic Device<p>"s);
         buff += lang(
             u8"特殊能力: オパートスの甲殻(自動:受ける物理ダメージを減らす)<p>"s,

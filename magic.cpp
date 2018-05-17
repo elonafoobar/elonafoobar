@@ -2817,7 +2817,7 @@ label_2181_internal:
             if (efid == 430)
             {
                 txt(lang(
-                    name(tc) + u8"周囲の物質を感知した。"s,
+                    name(tc) + u8"は周囲の物質を感知した。"s,
                     name(tc) + u8" sense"s + _s(tc) + u8" nearby objects."s));
             }
         }
@@ -3627,7 +3627,7 @@ label_2181_internal:
         gdata_rights_to_succeed_to += p;
         txtef(5);
         txt(lang(
-            u8"あなたは遺産相続人として認められた(+"s + p + u8")"s,
+            u8"あなたは遺産相続人として認められた(+"s + p + u8")。"s,
             u8"You claim the right of succession. (+"s + p + u8")"s));
         txt(lang(
             u8"今やあなたは"s + gdata_rights_to_succeed_to
@@ -3763,7 +3763,7 @@ label_2181_internal:
                         p = 1;
                     }
                     txt(lang(
-                        itemname(ci) + u8"は充填された(+"s + p + u8")"s,
+                        itemname(ci) + u8"は充填された(+"s + p + u8")。"s,
                         itemname(ci) + u8" "s + is2(inv[ci].number)
                             + u8" recharged by +"s + p + u8"."s));
                     inv[ci].count += p;
