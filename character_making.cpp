@@ -14,12 +14,21 @@
 #include "ui.hpp"
 #include "variables.hpp"
 
-namespace elona
-{
 
+namespace
+{
 elona_vector1<std::string> cmrace;
 std::string cmclass;
 elona_vector1<int> cmstats;
+elona_vector1<int> cmlock;
+}
+
+
+
+namespace elona
+{
+
+
 
 main_menu_result_t character_making_select_race()
 {
@@ -362,9 +371,10 @@ main_menu_result_t character_making_select_class(bool advanced_to_next_menu)
     }
 }
 
+
+
 main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
 {
-    elona_vector1<int> cmlock;
     bool minimum{};
     if (advanced_to_next_menu)
     {
