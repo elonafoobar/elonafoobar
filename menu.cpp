@@ -4683,9 +4683,7 @@ label_1970_internal:
                 cs == cnt,
                 listn(0, p),
                 wx + 114,
-                wy + 66 + cnt * 19 - 1,
-                0,
-                -1);
+                wy + 66 + cnt * 19 - 1);
             continue;
         }
         if (list(1, p) != 99999)
@@ -4719,7 +4717,7 @@ label_1970_internal:
             x = 70;
         }
         gcopy(3, 384 + traitref * 24, 336, 24, 24);
-        cs_list(cs == cnt, listn(0, p), wx + x, wy + 66 + cnt * 19 - 1, 0, -1);
+        cs_list(cs == cnt, listn(0, p), wx + x, wy + 66 + cnt * 19 - 1);
         if (list(1, p) < 10000)
         {
             pos(wx + 270, wy + 66 + cnt * 19 + 2);
