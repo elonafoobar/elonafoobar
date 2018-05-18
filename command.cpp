@@ -1244,7 +1244,6 @@ label_1953_internal:
                                             * (sy + inf_tiles - windowh
                                                + inf_verh));
                         }
-                        await();
                     }
                 }
                 sx = x * inf_tiles + inf_screenx;

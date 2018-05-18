@@ -6644,7 +6644,6 @@ void label_1750()
         {
             for (int cnt = 0;; ++cnt)
             {
-                await();
                 dx = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata(0));
                 dy = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata(1));
                 x = adata(1, p) + rnd(dx) - rnd(dx);
@@ -19784,7 +19783,6 @@ void do_play_scene()
     }
     scidx += s(0).size();
 label_2681:
-    await();
     int a{};
     stick(a, 128);
     if (a == 128)

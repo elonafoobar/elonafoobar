@@ -73,7 +73,6 @@ void modcorrupt(int prm_815)
             }
             for (int cnt = 0; cnt < 100000; ++cnt)
             {
-                await();
                 int tid = rnd(17) + 200;
                 int stat = get_trait_info(0, tid);
                 if (stat == 0 || traitref != 3)
@@ -134,7 +133,6 @@ void modcorrupt(int prm_815)
             cnt2_at_m134 = cnt;
             for (int cnt = 0; cnt < 100000; ++cnt)
             {
-                await();
                 int tid = rnd(17) + 200;
                 if (cnt == 0)
                 {

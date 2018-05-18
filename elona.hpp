@@ -351,7 +351,7 @@ DEFINE_CMP(<=)
 
 
 
-void await(int msec = 0);
+void await(int msec);
 
 // CANNOT BE IMPLEMENTED
 void axobj(int, const std::string&, int, int);

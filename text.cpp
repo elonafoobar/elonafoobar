@@ -3595,7 +3595,6 @@ void text_replace_tags_in_quest_text()
 {
     for (int cnt = 0; cnt < 20; ++cnt)
     {
-        await();
         p(0) = instr(buff, 0, u8"{"s);
         p(1) = instr(buff, p, u8"}"s);
         p(2) = buff(0).size();

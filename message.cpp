@@ -962,7 +962,6 @@ void txt_conv()
         msgtemp(0) += u8" ";
         while (1)
         {
-            await();
             p_at_txtfunc = instr(msgtemp(0), 0, u8" ") + 1;
             if (p_at_txtfunc == 0)
             {

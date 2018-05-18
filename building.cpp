@@ -369,7 +369,7 @@ void start_home_map_mode()
     tile = 0;
     while (1)
     {
-        await();
+        await(10);
         int stat = target_position();
         if (stat == -1)
         {
