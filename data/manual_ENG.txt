@@ -1,0 +1,818 @@
+This manual is translated by f1r3fly and updated by Aquillion. 
+
+This manual is designed to be referenced in-game.  As such, if you find <command> symbols such as brackets or other decorative symbols, please ignore them, as they are used by the game.
+
+{} For Beginners
+
+With the default key setup, you move your character via the numeric
+keypad. To run, hold shift while moving.
+
+When navigating menus, space bar approves choices while shift cancels.
+
+There are three context menus: 'z' brings up the quick menu, 'x' brings
+up the item menu, and 'c' brings up the character menu.  
+
+Press the corresponding direction on the numeric keypad to select an
+action in the quick menu.  You can cycle between tabs in the item and
+character menus by pushing 7 or 9 on the numeric keypad.
+
+To pick up an item, push 0 on the numeric keypad.  To target a creature
+for ranged attacks or spells, press * on the numeric keypad.
+
+{} For Advanced Players
+
+Each action has been assigned a corresponding key (see the <emp1>Key List<def> for a
+full list).  For example, you can eat by pressing the 'e' key.  
+
+You can assign hotkeys for spells, skills and usable items. To do so,
+highlight what you want to set a hotkey for and press 0-9 on the
+keyboard.  You can add additional hotkeys by pressing CTRL then 0-9.  To
+use the hotkey while playing, press 0-9 (or SHIFT and 0-9 for the hotkeys
+you created with CTRL).
+
+To force diagonal-only movement, hold the ALT key.
+
+{} Character Creation
+
+The choices you make during character creation influence several things. 
+Your race, class, abilities, and the initial values of your skills
+influence your starting gear.  Your rate of skill-growth is also
+determined by your initial skill value; the higher the initial skill
+level, the faster you'll gain in that skill.
+
+There are many types of skills, most of which you'll learn later on. 
+Skills learned outside of character creation will have a growth rate much
+slower than those picked in character creation.  This doesn't mean that
+you can't pick a fighter class and be skilled with magic--while it's more
+efficient to start out as a mage if you want to cast spells, with
+practice, even a fighter can become a skilled caster.
+
+Gender and character name have no influence on character statistics.
+
+The growth-rate of your <emp1>abilities<def> is not affected by your statistics, so
+trying to max out your stats at character creation is not necessary
+(though it may make overcoming the early parts of the game a bit easier).
+
+{} Abilities
+
+<emp1>STR<def>: Strength influences your maximum HP, bonus to close-combat damage,
+and the amount of weight you can carry.
+<emp1>CON<def>: Constitution influences your maximum HP, stamina, and the amount of
+weight you can carry.
+<emp1>DEX<def>: Dexterity influences your chances to hit an enemy and provides a
+bonus to damage reduction.
+<emp1>PER<def>: Perception influences your ability to evade attacks, bonus to ranged
+damage, and chance to land a critical hit.
+<emp1>LER<def>: Learning influences your maximum MP and your rate of skill growth.
+<emp1>WIL<def>: Willpower influences your maximum MP, HP, and stamina.
+<emp1>MAG<def>: Magic influences your maximum MP.
+<emp1>CHR<def>: Charm influences the way NPCs react to your character.
+
+In addition, the above abilities have influences on skills and spells as
+well as events.  The corresponding ability for a spell or skill can be
+found to the left of its name in the form of its symbol. (For example,
+most weapon skills have a pair of crossed swords to the left of them).
+
+There are also abilities such as <emp1>Life<def>, <emp1>Mana<def>, <emp1>Speed<def>, <emp1>Luck<def>, and <emp1>Stamina<def>,
+but these do not grow like the above stats do.
+
+{} Skills
+
+Your character's skill ranks will increase through usage, training, and
+the spending of bonus points.
+
+Some skills consume Stamina Points (SP) when used.  The loss of SP
+results in increased fatigue, reduced speed, and an increased chance of
+skill failure.  Resting recovers SP.  SP is not listed on the character
+screen.  
+
+There are some skills that require items to use.  For example,
+performance requires an instrument, cooking requires cooking equipment
+and something to cook, and fishing requires a fishing rod.
+
+There are items that give skill bonuses.  Items will say this in their
+description, and have a [*] symbol next to them.  For every * listed, the
+skill will be increased by 1-5.
+
+{} Skill Gain
+
+When a skill is used, your experience value for that skill is increased. 
+When it reaches a certain amount, the skill levels up.  The amount that
+the skill increases is dependent upon your skill's growth-rate.  This
+allows skills to raise through repeated use; the skill's related
+attribute can raise through repeated use as well.
+  
+Additionally, when you level up, you will gain HP and bonus points; the
+amount of bonus points you gain is dependent upon your learning
+attribute.  These can be spent to increase your skills.  
+
+When navigating the character menu, you'll see a percentage next to your
+skill rank.  This is the speed with which the skill will increase through
+use.  For instance, a skill with (200%) will increase twice as fast as a
+skill which would rise at the normal rate (100%).  Your skill and
+attribute growth rates are determined during character creation.
+
+When your skill value rises, your skill's rate of growth will decrease. 
+You can increase it with certain herbs and training at training camps.
+
+The maximum skill value is 2000.
+
+
+{} Learning Skills
+
+To learn new skills, speak to any city's trainer.  They require platinum
+coins in exchange for teaching you new skills or enhancing the ones you
+already know.
+
+The amount of platinum coins required varies, depending on the skill and
+the rating of the skill you want to enhance.
+
+{} Magic
+
+In order to use magic, you must first learn spells from magical
+spellbooks.  
+
+Success in learning a spell is determined by the spell's power along with
+your character's <emp1>Learning<def> and <emp1>Magic<def> abilities.  You can attempt to learn
+a spell with low ability scores, but unfortunate accidents may occur.
+
+When you successfully finish reading a spellbook, your stock of magic in
+that spell increases.  Every time you cast a spell, the stock decreases
+by the amount of mana required to cast it.  For example, a caster with 5
+stock left in a spell that costs 5 mana can only cast the spell once, as
+casting the spell will deplete the caster's magical stock.  He will have
+to re-read the book to get more stock in the spell.
+
+Your magic skill can increase by casting spells, but you will always have
+to re-read your spellbooks to recover magic stocks. (???)
+
+{} Resistance
+
+Your resistance is how well you can resist a certain type of attack. If
+you are hit by a damage type which you are resistant to, the damage will
+be dramatically reduced.  It also helps in resisting status effects; for
+instance, resistance to darkness reduces your chance of being blinded. 
+Resistance to nerve paralysis reduces your chance of being paralyzed, and
+so on.  If you are highly resistant to magic, it will take a more
+powerful curse to curse you.
+
+Your resistances are primarily raised by equipment, but there are feats
+that raise them as well.
+
+	
+{} Feats & Mutations
+
+While you are adventuring, there may be times when your character
+changes--for good or ill.  Useful changes come in the form of feats while
+harmful changes may come in the form of mutations.  
+
+If it is not a special mutation, it can be cured--a typical cure is a
+medicine of cure mutation.  
+
+If you acquire a feat, then it is permanent.  You can gain feats during
+character creation and after leveling up.
+
+
+{} Curses & Blessings
+
+Both items and creatures can be cursed or blessed.
+
+For items, a blessing will give a +1 bonus to a weapon's damage and a +2
+to PV if the item is a piece of protective gear. Cursed items give
+various bad effects.  Curses can be lifted through the use of a remove
+curse scroll.
+
+For creatures, blessings and curses last over a fixed period of time. 
+Curses may lower defensive power or hinder casting, for example.  A
+blessing can do the exact opposite, providing strength or increasing the
+recovery of MP.  
+
+While blessed or cursed, an icon can be found at the bottom right of the
+screen.  The number on the icon indicates how many moves the curse or
+blessing will last.
+
+{} Abnormal States
+
+While adventuring you will come across many abnormal states.
+
+When you suffer an abnormal state, you will see an icon at the bottom
+left corner of the screen which will stay until the abnormal state is
+gone--its duration is unknown.
+
+Below are some typical abnormal states:
+
+Poison: You will receive damage every turn.
+Confusion: You will suffer from unstable movement and spellcasting will
+be more difficult.
+Blind: Your sight will become extremely narrow.
+Drunk: Similar to confusion, but you will be more vulnerable to enemy
+attack.
+
+Many abnormal states can be cured through the use of magic or potions.
+
+
+{} Weapons & Armor (1)
+
+The numerical value is displayed at the end of a weapon or piece of
+armor's name.
+
+For an iron gauntlet (1,2) [3,4], the (1,2) refers to the respective
+to-hit and damage bonus, while the [3,4] refers to the DV and PV bonus
+gained while wearing it.  For more information, see the help section '<emp1>DV
+& PV<def>.'
+
+For an iron sword (3d4+5) (6), the 3d4 stands for three four-sided dice,
+12 being the maximum basic-damage of this weapon.  The +5 is a damage
+bonus.  The (6) is a to-hit bonus.  These bonuses are applied only when
+attacking with the weapon.
+
+{} Weapons & Armor (2)
+
+When a weapon or piece of defensive gear is strengthened, a +1, +2, or
+more can be found at the end of their name.
+
+For weapons, whenever the numerical value increases by one, they receive
+a +1 damage bonus.
+
+Blessed weapons receive a +1 damage bonus.
+
+For armor, when the numerical value is increased by one, the PV is raised
+by 2.
+
+Blessed armor receives a +2 PV bonus.
+
+There also exists equipment that will increase abilities and/or raise
+resistances.  You can verify this by examining these items with the 'X'
+key.
+
+Weapons with a penetration percentage ignore that much of the enemy's
+armor; for instance, 60% penetration ignores 60% of the enemy's armor.
+
+
+{} Fighting Styles
+
+Shield Fighter:
+When using a shield, you can only use one weapon, but you gain a bonus to
+your PV depending on your skill with a shield.
+
+Two-handed Weapon Fighter:
+When wielding a weapon with two hands, your to-hit bonus and damage bonus
+increase slightly.  If the weapon is designed for two-handed use and you
+are skilled with two-handed weapons, your to-hit and damage bonuses will
+increase even more.
+
+Dual-weapon Fighter:
+When wielding two weapons, you will be more effective when the heavier
+weapon is equipped in your main hand (above) and the lighter in your off
+hand.  You will receive a to-hit penalty based on the weight of the
+weapons and your two-weapons skill.
+
+{} Ranged Weapons
+
+The effective range for each ranged weapon differs based on its type. 
+Most of the time, the farther away your target is, the harder it is to
+hit them and the less damage you will do.  The maximum range and damage
+based on range is given below.
+Arms Covered 1  2  3  4  5  6  7  8  9 10
+------------------------------------------
+  Short Bow  07-10-10-08-06-04
+   Long Bow  05-09-10-09-08-08-07-06-05-04
+   Crossbow  08-10-09-08-07-06-05-04
+   Throwing  06-10-07-04
+      Rifle  10-09-07-05-03
+    Shotgun  10-06-03
+Machine Gun  08-10-10-09-08-07-04
+ Photon Gun  10-10-10-10-10-10-10-5
+------------------------------------------
+For instance, when your distance is 1 -- the enemy is right next to you
+-- and you fire a longbow, the weapon's distance modifier is 05, or 50%.
+At a distance of three tiles, your damage modifier is 10, or 100% of
+your basic damage.  For best attack power with the longbow, you must
+keep your distance, which you can verify with the look ('l') command.
+
+
+
+{} DV, PV & More
+
+DV(defense value): As this increases, your chance to evade is raised.  It
+influences your evasion, which can be found on your character sheet.
+
+PV(protection value): As this increases, the damage you receive
+decreases.  It influences your protection percentage, which can be found
+on your character sheet.
+
+Hit %: This is your to-hit percentage.  The higher this is, the more
+likely you are to hit your target.  You will find this on your character
+sheet to the right of your Melee1, Melee2, and Dist combat rolls.
+
+Damage Roll:  This is the amount of damage your equipped weapons can do. 
+It will be in the form of xdy, x being the number of dice, y being the
+number of sides, e.g. 2d5 is two five-sided dice. You will find this on
+your character sheet to the of Melee1, Melee2, and Dist.
+
+Damage Magnification: This is the amount your damage is magnified by when
+you damage a creature, for example "x2.0". Your damage magnification is
+based off of your skill with the weapon and your abilities. This is
+immediately after your damage rolls on your character sheet. 
+
+{} Equipment Weight
+
+There are three types of armor: Light, Medium, and Heavy.  
+
+When equipped, the weight of these, along with the weight of your
+equipped weapons, is factored into the total weight carried of your
+character.
+
+The type of armor worn has a direct result on the success ratio of
+spellcasting.  The heavier the armor, the harder it is to successfully
+cast a spell.  
+
+Though your chances to cast while wearing heavy or medium armor can be
+improved by having a good rating in the armor's related skills, the
+success chance is still lower than it would be for one wearing light
+armor.
+
+
+{} Meals
+
+Food is a necessity for survival in Elonia; you will periodically have to
+eat during your adventure to avoid the adverse affects of hunger.
+
+As you grow hungrier, your speed will decrease.  If you continue without
+eating, your character will eventually starve to death.
+
+Aside from filling your belly, food also affects your character's growth.
+For example, meat helps increase physical abilities, while vegetables
+help increase mental abilities.  Herbs, on the other hand, can increase
+your degree of skill growth. (???)
+
+If food is cooked, its positive effect can increase based on the level of
+success with which it was cooked, as well as the food's freshness. (???)
+
+You can also eat meat which comes from the creatures you kill.  The
+effects in this case can be different depending on the type of monster's
+meat you're eating.  Some can harm you, while others can give you
+tolerances or other useful effects.
+
+If you have a cart with food inside of it, your character will eat it
+whenever they become hungry while traveling the world map.
+
+{} Gods & Faith
+
+During your adventure, you may find a god's altar.  While at the altar,
+you can pray to the god it belongs to, raising your faith rating with
+that deity.  Be careful, though-- if you pray to a different god, you'll
+anger the god you started out worshipping.
+
+Being on good terms with your god can also net you bonuses to your
+abilities, skills, and special abilities.  The types of benefits you gain
+from worship are different for each god.
+
+
+{} Offerings & Prayer
+
+If you worship a god, you can pray to it.  You can be granted a complete
+recovery, but this requires a certain amount of <emp1>faith<def>.  
+
+Faith is gained by giving offerings to your god--the amount you gain is
+based on the type and value of the item.  The maximum amount of faith you
+can have is determined by your faith skill, which can be raised by
+frequent offerings and prayer.
+
+
+{} Rest & Sleep
+
+When you've lost HP and MP, it's possible to recover more quickly by
+resting with the 'R' key.  It's important to note that time advances
+automatically while resting.  Aside from regaining HP and MP, you will
+recover from fatigue.
+
+You will also be required to sleep; you will know when you're tired and
+need to sleep when an icon at the bottom left of the screen appears.  As
+your character becomes more and more tired, you will gradually gain more
+fatigue and your natural regeneration of HP and MP will be penalized.
+
+To sleep, use a sleeping bag or bed when 'sleepy' or 'needs sleep' is
+displayed at the lower left corner of the screen.  You can also sleep by
+resting when you need sleep.
+
+While sleeping, you can gain bonuses based on your experience level. 
+These bonuses can come in the form of attributes, skills, spells, and
+more.  Take care to sleep in some form of bedding, however, as sleeping
+without it will result in gaining only half the usual benefits. 
+
+{} Weather
+
+Rain, snow, and Ether Wind will hinder your movement as you travel in
+Elona.  Rain will cause status effects which can slow you down, but your
+rate of movement isn't affected.  When it snows, your movement speed is
+three times slower--be careful when you travel during this weather, as
+time will progress faster.
+
+During an Ether Windstorm, several things happen.  The types of monsters
+mutate due to the effects of the magical ether, and will be far more
+powerful than they were before.  You, too, can mutate.  The effects are
+instant and can be both a benefit and a detriment to your health.
+
+To avoid the effects of the Ether Wind, you need to leave the outdoors
+and find proper indoor shelter.  You can speak to an innkeeper to take
+you to a <emp1>shelter<def> (or enter your own, if you possess one).  While in the
+shelter, time will pass at a very high rate while you rest.  There is
+ample food in every shelter, so you don't need to worry about your food
+supply while resting in one.  
+
+You can also find shelter in your home or a dungeon, but time will pass
+at the normal rate, so it may be a while before the storm passes.
+
+{} Ether Exposure
+
+Prolonged exposure to ether wind will eventually give you an ether-based
+disease.  Disease progression is divided into 20 stages.  As the disease
+progresses, you will gain disease- or mutation-based traits found on the
+feats tab of your character screen.  The progress of the disease may be
+accelerated by some items and the attacks of some creatures.  These
+effects can be cured by the use of magic.
+
+{} Companions
+
+When you first enter a town, you can choose your first companion.  You
+can interact with your companion by pushing the 'i' key.  
+
+The interaction menu allows you to talk to your companion--you can send
+them back to town, abandon them, and more--and exchange items with them
+as well.
+
+If your companion is sent back to town or dies, you can speak to the
+bartender in any city to bring them back for a fee.
+
+Your campanions will grow just like you; they gain abilities and skills
+through repetition, and the type of meals they eat affect them as well. 
+Your companions won't die of starvation, but if you'd like to strengthen
+your companion, it's a good idea to give them something to eat once in a
+while.
+
+{} Investment
+
+If you can afford it, you can invest your coins in stores.  Doing so will
+raise the store's level, which increases its inventory as well as the
+quality of its goods.  Investing takes a lot of money--choose your
+investments wisely.
+
+
+{} Identification
+
+During your travels you will come across many items that need to be
+identified in order to reveal their hidden properties.  Item
+identification can be done several ways.
+
+You can gauge the item's quality by simply carrying it in your backpack
+for a while until you get a hunch as to how good it is (this will be
+displayed in the item's title as bad, good, great, etc.).
+
+You can get your items identified by a town's wizard.  For a fee, the
+wizard can <emp1>identify<def> single items or all of the unidentified items you're
+carrying.  Depending on the item's power and the power of the wizard
+examining it, a more in-depth examination may be required; this more
+expensive form of identification can only be carried out on single items
+and can be done by having the wizard <emp1>investigate<def> the item.
+
+Items can also be identified through the use of magic.
+
+
+{} Death
+
+You die when your HP drops below 0.  When you die, some of your
+belongings will drop to the ground and you will lose money.  For
+characters level 5 and above, there is also a 25% chance that your skills
+will decrease by <emp1>.5<def>.
+
+Additionally, the majority of the items which you lose upon death will be
+left at the exact spot of your death.  The probability of dropping your
+equipment dying on the local map is lower.
+
+Your score is dropped to 1/10th of what it was every time you die; unless
+you're going for a high score, this isn't a big deal.
+
+{} Owning Buildings
+
+It is possible to own a multitude of buildings in Elona. To do this,
+purchase a title deed at a store (you can find many for sale at the
+embassy north of Palmia).  Once you have the deed, go to the world map
+and read it while standing on the tile where you want the building
+placed.
+
+There are several types of buildings--you can tell what they are by the
+name on the deed.  Storage buildings provide room to house many items,
+while ranches can produce lots of food.  You can also place a store. 
+These buildings are not required for victory, but can be a great help to
+any adventurer when properly used.
+
+To increase the productivity of item-producing buildings, you can assign
+companions to work at them.  For example, a clerk is necessary to run a
+store.  You can assign a companion to work at the store while you
+continue your adventures.  Note that these 'working companions' still
+count towards your total number of companions.
+	
+{} Auto-turn
+
+The game skips your turns automatically when you cannot act personally
+(eating, mining, sleeping, paralyzed, etc.).  These automatic turns speed
+up time while they occur; where it may take many turns to sleep normally,
+auto-turns increase the rate of time progression so that sleeping doesn't
+take very long.
+
+
+{} Spot Sampling
+
+On both local and world maps, random sampling spots may be produced. 
+When standing on a sampling spot, you can press 's' or spacebar to
+collect <emp1>materials<def> from it.
+
+Each type of sampling spot has a skill associated with it; familiarity
+with the associated skill will increase the likelihood of successfully
+extracting materials.
+
+{} Materials & Crafting
+
+There are many materials in Elona.  Materials found through searching,
+random events, and sampling spots can be used for production and
+mini-games.  Many production skills use materials to produce items.  
+
+Materials cannot be bought or sold, and they have no weight.  To see what
+materials you're carrying, push the 'M' key.
+
+To produce items, use the tool associated with the production skill.  You
+will then see a list of items to craft and their requirements below.  If
+the materials at the bottom of the window are listed in blue, then you
+have enough materials to craft the item.
+	
+{} The World Map
+
+While traveling the world map, time passes over ten time faster than in
+the local map.  Try and keep your routes as short as possible; cutting
+corners can shave off hours and even days from long journeys.  The
+shorter your travel time, the less food you need--if you run out, you'll
+starve.
+
+To enter the local map, press space bar.  You'll enter whatever tile
+you're standing on in the world map: forests, caves, cities, etc.  You
+can also perform spot sampling while on the world map.  Note that you may
+have to enter the local map to use some items.
+
+While you are traveling the world map, events will occur.  When ambushed
+by enemies, the farther you are from town, the more powerful your enemies
+will be.  If you travel on a highway, however, the enemy strength and
+encounter ratio will decrease substantially.
+
+{} Saved Maps
+
+Depending on the type of local map (dungeon, city, random area, etc.) the
+map area will either be constant, such as with towns or placed buildings,
+or it will change every time you enter it, like the Puppy Cave.
+
+You can leave items in your own personal buildings, but if you leave them
+in towns, there's a good chance they'll be gone when you return. 
+Artifacts which are left behind in town will disappear, but will be
+generated again elsewhere.
+
+
+{} Random Areas
+
+Over time, certain areas such as forests, caves, forts, towers, and other
+areas will randomly appear on the world map, the main dungeons randomly
+generated.  At the bottom of these dungeons is a lord, a powerful enemy,
+which will yield greater loot and medals when defeated.
+
+Prior to entering a random area, you'll see an approximate danger level
+next to its name.  This level is the estimated strength of the enemies
+within on the entry-floor of the dungeon; they grow in strength as you
+descend.  If the danger level is at or above your level, you might want
+to consider coming back to the dungeon when you're stronger.
+	
+{} Requests
+
+Requests are sub-quests which, upon completion, increase your reputation
+value based on its degree of difficulty.  To accept a request, you can
+either speak to the NPC issuing the request, or go to the town bulletin
+board which lists the requests of all townspeople.
+
+Each quest has a time limit--some a few hours, others a few weeks.  If
+you do not solve the quest within that time, you will fail.  The time
+limit is in parenthesis on the message board listing, while the NPC who
+is giving the request will specify it.
+
+The degree of difficulty is listed on the message board as well, in the
+form of <emp1>colorized $<def>'s, ranging from a single green <emp1>$<def> to multiple red <emp1>$<def>'s.
+ The higher the difficulty, the shorter the deadline, the harder the
+task, and the greater the reward.  Be wary of accepting requests you're
+not sure you can complete--you can suffer a large reputation decrease,
+and may even become a criminal because of it!
+
+
+{} Trade
+
+Trade goods can be purchased from the trade good vendor in every pub. 
+Each town has various prices depending on the supply and demand of the
+item.  You can make a nice profit by selling many items of high demand to
+a town that lacks them.  When you purchase trade goods (denoted by 'a
+cargo of'), the cargo will go into your cart, which is designed to carry
+trade goods only.  You won't be burdened by what's in your cart, but you
+cannot use the items inside dungeons.  To view what's in your cart, look
+at your character sheet screen.
+
+{} Adventurers
+
+There are many other adventurers who live and work in North Tyris.  You
+can chat with them, as well as buy and sell items.
+
+{} Fame & Karma
+
+Fame represents how well-known you are across the lands of Elona as an
+adventurer.  The higher your fame, the more difficult--and in turn, the
+more rewarding--NPC requests will be.
+
+Karma measures your conduct.  When you do good things, such as
+accomplishing quests, returning wallets, etc. it will rise.  If you
+perform negative acts, like stealing or failing to fulfill a request,
+your karma will drop.  Be careful--if your carma drops too low, you will
+become a criminal, and will be attacked by guards!
+
+{} Rank & Salary
+
+There are several types of ranks, such as your arena rank, your pet arena
+rank, and your adventurer rank, all of which can be found in your
+<emp1>journal<def>.  Specific actions can cause your ranks to rise, such as victory
+in the arena as a contestant or a pet trainer, or conquering a dungeon.  
+
+As you rank values increase, you will gain different titles.  As your
+titles grow, so will your salary.
+
+Every 1st and 15th of the month is payday; you will receive gold and
+goods based on your rank and titles.  You will also receive a bill for
+your property tax and various other services associated with owning land.
+To pay your bill, take the invoice out of your salary box and bring it
+to the embassy north of Palmia.  You can then open the tax box and put
+the invoice within it.  Make sure you have enough gold in your inventory,
+or else you won't be able to pay the bill.
+
+{} Marriage & Genes
+
+When your friendship with a companion reaches a certain degree, you can
+get married.  Once married, you and your spouse can create a gene by
+selecting the "let's make a gene" dialogue option after you reach a
+sleepy state.  
+
+Once you get a gene, you have the option to start over as your child,
+allowing you to inherit your current character's equipment and some
+bonuses. You can read more this in the '<emp1>transition<def>' section.
+
+You can increase your friendship with a companion by having it do battle
+alongside you, as well as giving it engagement rings and necklaces.
+
+{} Transition
+
+If you retain a gene, you can go to the title game menu and select
+'Inherit,' enabling you to create a new character who starts with the
+inherited posessions of your previous character, as well as some bonuses.
+Inherited items require an heir-deed to be claimed.  You can retrieve
+these items from the heir trunk in the starting house.
+
+{} Wishes
+
+In extremely rare cases you may encounter the chance to wish for
+something.  You'll know this because a text-prompt will appear, asking
+you what you want to wish for.  Type in whatever you want to acquire, the
+name of an item, skill, or companion--make sure you're putting in the
+exact name, or else you won't get anything!  
+
+If you want a skill, type in 'skill' and th name of the skill.
+(IE. 'skill tactics' or 'tactics skill')
+When 'skill' is included, the game checks skill list first rather
+than item list.
+
+If you want a companion, just type in "companion" or "ally".
+
+{} Troubleshooting
+
+Q: Nothing happens when I use the numeric keypad.
+A: This might happen when you hold down the shift key while using the
+numeric keypad.  This often occurs when someone has the numlock on;
+please turn off numlock when playing.
+
+Q: What's with these items with a 0 amount?
+A: The area is bugged--if you can identify the cause, please report it. 
+To fix the 0-count, try dropping and picking up the item.
+
+Q: I'm stuck in the showroom.
+A: Press F12 to display the console window and type <emp1>exitroom<def>.
+
+{} Tips (1)
+
+You can <emp1>use<def> gashapon and casino machines, as well as many other objects. 
+Try experimenting with the use function when you come across an
+unfamiliar object.
+
+As you learn in a tutorial, space key is a very useful key.
+
+You must be on the shore in order to fish.  You also need bait; <emp1>mix<def> the
+bait with your fishing rod.
+
+If an enemy has an artifact equipped, it'll drop when you kill it.
+
+If you use the <emp1>mix<def> command with a well, you'll eventually be able to fill
+it up so that you can use it again.
+
+You can sell the remains of creatures (skins, hearts, etc.) at shops for
+a good price.
+
+The success of your crafting / performing skills is influenced by the
+quality and material of the tools used.
+
+
+{} Tips (2)
+
+Arena results will be separately saved in every city that has an arena.
+
+Important NPCs, such as citizens and shopkeepers, revive after a fixed
+period of time passes.
+
+There is no suicide key.
+
+The damage reduction of Opatos is 10% (seperate from the PV reduction.)
+
+The resistance bonus from resistance-granting equipment stacks. But the
+sum of the bonuses shown might seem strange, since a single [*] actually
+ranges from 1 to 5. (ie. *(2)+**(5+2) = **(5+4) ). 
+
+Bash fruit trees to reap their rewards.
+
+A blessed item is always better, regardless of item type.
+ 
+There's no point in owning multiple museums.
+
+When you fail a delivery quest, you will lose a great deal of karma.
+
+
+{} Tips (3)
+
+The effects of weapons which raise your magic power do not overlap; the
+higher one is applied.
+
+Creating fires in the streets and forests is strictly prohibited.  In
+case of a fire, you should flee the scene immediately and go back after
+it rains.
+
+Blankets can protect your equipment from certain ruinous-effects, but
+when they do, there's a chance that they can be destroyed.
+
+The force of a thrown potion depends on your strength and throwing skill.
+
+You'll have a greater chance of success picking pockets between 7pm and
+7am.  Characters that are asleep will not be aware of your actions.
+
+It is possible to add random last words to lastwords.txt.
+
+It is said that the Lana hotspring can heal even madnesss.
+
+Body parts can't be obtained from human genes when using a gene machine.
+
+{} Console
+
+To get to the console, make sure you don't have any game windows open and
+press F12.  The console is available primarily for the purpose of
+debugging, particularly when you can't do anything in-game.  The main
+commands are as follows:
+
+<emp1>wizard<def>
+This will enable Wizard Mode. Once your character enters Wizard Mode, no
+going back.
+
+<emp1>freemove<def>
+On the world map, you can use this command to move anywhere.  However, if
+you move into a building, a restart is required.
+
+<emp1>exitroom<def>
+This will remove you from the showroom.
+
+<emp1>removequest<def>
+Ends all the quests you have.
+
+{} Credits
+
+Special thanks to f1r3fly, for translating this manual.
+
+Special thanks to Brad, for sending me lists of English corrections.
+
+Special thanks to Aquillion, for updating f1r3fly's manual.
+
+Special thanks to Sunstrike, for translating quest dialogs.
+
+Special thanks to Lord Nightmare, for translating game text.
+
+Special thanks to Schmidt, for translating in-game books.
+
+Thanks to everyone else who has found and submitted bug reports in the
+forums.
+
+Most of Elona's graphics and sounds are freelance material. A very warm
+thank you goes to the authors of all materials used.
