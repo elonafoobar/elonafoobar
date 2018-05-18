@@ -354,6 +354,7 @@ std::vector<config_menu> create_config_menu()
         config::instance().autosave,
         lang(u8"有効", u8"On"),
         lang(u8"無効", u8"Off"));
+    ELONA_CONFIG_ITEM(lang(u8"入荷頻度", u8"Restock Interval"));
 
 #undef ELONA_CONFIG_ITEM
 #undef ELONA_CONFIG_ITEM_YESNO
@@ -678,6 +679,21 @@ void set_option()
                 if (cnt == 1)
                 {
                     mes(""s + config::instance().msgtrans * 10 + u8" %"s);
+                }
+            }
+            else if (submenu == 8)
+            {
+                if (cnt == 4)
+                {
+                    const auto value = config::instance().restock_interval;
+                    if (value)
+                    {
+                        mes(std::to_string(value) + lang(u8"日", u8" day" + _s2(value)));
+                    }
+                    else
+                    {
+                        mes(lang(u8"毎回更新", u8"Every time"));
+                    }
                 }
             }
         }
@@ -1429,6 +1445,22 @@ void set_option()
                     }
                     snd(20);
                     set_config(u8"autosave", config::instance().autosave);
+                    reset_page = true;
+                    continue;
+                }
+                if (cs == 4)
+                {
+                    config::instance().restock_interval += p;
+                    if (config::instance().restock_interval > 10)
+                    {
+                        config::instance().restock_interval = 10;
+                    }
+                    else if (config::instance().restock_interval < 0)
+                    {
+                        config::instance().restock_interval = 0;
+                    }
+                    snd(20);
+                    set_config(u8"restock_interval", config::instance().restock_interval);
                     reset_page = true;
                     continue;
                 }

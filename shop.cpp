@@ -2,6 +2,7 @@
 #include "ability.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "config.hpp"
 #include "ctrl_file.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
@@ -696,10 +697,18 @@ void shop_refresh()
             inv[ci].value = inv[ci].value * 3 / 2;
         }
     }
-    cdata[tc].time_to_restore = gdata_hour + gdata_day * 24
-        + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12
-        + 168 * (1 + (cdata[tc].character_role == 1009));
-    return;
+    if (config::instance().restock_interval)
+    {
+        cdata[tc].time_to_restore = gdata_hour + gdata_day * 24
+            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12
+            + 24 * config::instance().restock_interval;
+    }
+    else
+    {
+        cdata[tc].time_to_restore = gdata_hour + gdata_day * 24
+            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12
+            - 1;
+    }
 }
 
 void calc_number_of_items_sold_at_shop()

@@ -254,6 +254,10 @@ void load_config()
             5,
             [&](auto value) { config::instance().walkwait = value; }),
         std::make_unique<config_integer>(
+            u8"restock_interval",
+            3,
+            [&](auto value) { config::instance().restock_interval = value; }),
+        std::make_unique<config_integer>(
             u8"runWait",
             2,
             [&](auto value) { config::instance().runwait = value; }),
