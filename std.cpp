@@ -1497,6 +1497,20 @@ void stick(int& out, int allow_repeat_keys)
     // out += check_key_pressed(8,  /* Mouse left */,  false);
     // out += check_key_pressed(9,  /* Mouse right */, false);
     out += check_key_pressed(10, snail::key::tab, false);
+
+    if (allow_repeat_keys == 15)
+    {
+        if (out & 1 || out & 4)
+        {
+            out |= 2 * snail::input::instance().is_pressed_exactly(snail::key::up);
+            out |= 8 * snail::input::instance().is_pressed_exactly(snail::key::down);
+        }
+        if (out & 2 || out & 8)
+        {
+            out |= 1 * snail::input::instance().is_pressed_exactly(snail::key::left);
+            out |= 4 * snail::input::instance().is_pressed_exactly(snail::key::right);
+        }
+    }
 }
 
 
