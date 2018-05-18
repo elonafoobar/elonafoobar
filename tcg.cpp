@@ -1,5 +1,7 @@
+#include "audio.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"
+#include "draw.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "input.hpp"
@@ -364,7 +366,7 @@ void makecardlist()
 
 
 
-void cardhelp(const std::string& prm_992, int prm_993)
+void cardhelp(const std::string& prm_992, int prm_993 = 0)
 {
     int helpdur_at_tcg = 0;
     int dur_at_tcg = 0;

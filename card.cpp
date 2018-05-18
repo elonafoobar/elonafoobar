@@ -1,9 +1,12 @@
 #include "card.hpp"
+#include "audio.hpp"
 #include "character.hpp"
 #include "config.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "itemgen.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 #include <iostream>

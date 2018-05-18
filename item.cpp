@@ -1,11 +1,18 @@
 #include "item.hpp"
 #include <iostream>
 #include <type_traits>
+#include "ability.hpp"
+#include "blending.hpp"
 #include "character.hpp"
+#include "crafting.hpp"
 #include "elona.hpp"
+#include "food.hpp"
+#include "fov.hpp"
 #include "i18n.hpp"
 #include "item_db.hpp"
 #include "main.hpp"
+#include "map.hpp"
+#include "mef.hpp"
 #include "variables.hpp"
 
 
@@ -15,14 +22,19 @@ namespace elona
 
 inventory inv;
 
+int ci_at_m138 = 0;
+int p_at_m138 = 0;
+int max_at_m138 = 0;
+int ti_at_m138 = 0;
+elona_vector1<int> list_at_m138;
+int f_at_m138 = 0;
+int a_at_m138 = 0;
 
 
 item::item()
     : enchantments(15)
 {
 }
-
-
 
 void item::clear()
 {
@@ -57,14 +69,10 @@ bool item::almost_equals(const item& other, bool ignore_position)
         && range::equal(enchantments, other.enchantments);
 }
 
-
-
 inventory::inventory()
     : storage(5480)
 {
 }
-
-
 
 int ibit(size_t type, int ci)
 {
@@ -97,85 +105,11 @@ int a_ = 0;
 int skip_ = 0;
 
 
-int itemcreate(int slot, int id, int x, int y, int number)
-{
-    if (flttypeminor != 0)
-    {
-        flttypemajor = 0;
-    }
-    dbid = id == 0 ? -1 : id;
-    initnum = number;
-    return do_create_item(slot, x, y);
-}
-
-
-
 range::iota<int> items(int owner)
 {
     const auto tmp = inv_getheader(owner);
     return {tmp.first, tmp.first + tmp.second};
 }
-
-
-
-int get_random_inv(int owner)
-{
-    const auto tmp = inv_getheader(owner);
-    return tmp.first + rnd(tmp.second);
-}
-
-
-
-std::pair<int, int> inv_getheader(int owner)
-{
-    if (owner == 0)
-    {
-        return {0, 200};
-    }
-    else if (owner == -1)
-    {
-        return {5080, 400};
-    }
-    else
-    {
-        return {200 + 20 * (owner - 1), 20};
-    }
-}
-
-
-
-int inv_getowner(int inv_id)
-{
-    if (inv_id < 200)
-    {
-        return 0;
-    }
-    if (inv_id >= 5080)
-    {
-        return -1;
-    }
-    return (inv_id - 200) / 20 + 1;
-}
-
-
-
-int inv_find(int id, int owner)
-{
-    for (const auto& cnt : items(owner))
-    {
-        if (inv[cnt].number == 0)
-        {
-            continue;
-        }
-        if (inv[cnt].id == id)
-        {
-            return cnt;
-        }
-    }
-    return -1; // Not found
-}
-
-
 
 int item_find(int prm_476, int prm_477, int prm_478)
 {
@@ -331,7 +265,7 @@ std::vector<int> itemlist(int owner, int id)
 
 int itemusingfind(int ci, bool disallow_pc)
 {
-    for (int cnt = 0; cnt < 245; ++cnt)
+    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {
@@ -553,155 +487,6 @@ void item_delete(int ci)
     inv(ci).clear();
 }
 
-
-
-bool inv_getspace(int owner)
-{
-    for (const auto& cnt : items(owner))
-    {
-        if (inv[cnt].number == 0)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
-
-
-int inv_sum(int owner)
-{
-    int n{};
-    for (const auto& cnt : items(owner))
-    {
-        if (inv[cnt].number != 0)
-        {
-            ++n;
-        }
-    }
-    return n;
-}
-
-
-
-void item_compress(int owner)
-{
-    int number_of_deleted_items{};
-    for (int i = 0; i < 100; ++i)
-    {
-        int threshold = 200 * (i * i + 1);
-        for (const auto& cnt : items(owner))
-        {
-            if (inv[cnt].number != 0)
-            {
-                if (!ibit(5, cnt) && inv[cnt].value < threshold)
-                {
-                    inv[cnt].number = 0;
-                    ++number_of_deleted_items;
-                    if (inv[cnt].position.x >= 0
-                        && inv[cnt].position.x < mdata(0)
-                        && inv[cnt].position.y >= 0
-                        && inv[cnt].position.y < mdata(1))
-                    {
-                        cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
-                    }
-                }
-            }
-            if (number_of_deleted_items > 10)
-            {
-                break;
-            }
-        }
-        if (number_of_deleted_items > 10)
-        {
-            break;
-        }
-    }
-
-    int slot = -1;
-    for (const auto& cnt : items(owner))
-    {
-        if (inv[cnt].number == 0)
-        {
-            slot = cnt;
-            break;
-        }
-    }
-
-    if (slot == -1)
-    {
-        while (1)
-        {
-            int ci = get_random_inv(owner);
-            if (!ibit(5, ci))
-            {
-                inv[ci].number = 0;
-                if (mode != 6)
-                {
-                    if (inv[ci].position.x >= 0 && inv[ci].position.x < mdata(0)
-                        && inv[ci].position.y >= 0
-                        && inv[ci].position.y < mdata(1))
-                    {
-                        cell_refresh(inv[ci].position.x, inv[ci].position.y);
-                    }
-                }
-                break;
-            }
-        }
-    }
-}
-
-
-
-int inv_getfreeid(int owner)
-{
-    int slot = -1;
-    for (const auto& cnt : items(owner))
-    {
-        if (inv[cnt].number == 0)
-        {
-            slot = cnt;
-            break;
-        }
-    }
-    if (slot == -1)
-    {
-        if (owner == -1 && mode != 6)
-        {
-            txt(lang(
-                u8"アイテム情報が多すぎる！幾つかのアイテムは破壊された。"s,
-                u8"Too many item data! Some items in this area are destroyed."s));
-            item_compress(owner);
-        }
-    }
-    return slot;
-}
-
-
-
-int inv_weight(int owner)
-{
-    int weight{};
-    if (owner == 0)
-    {
-        gdata_cargo_weight = 0;
-    }
-    for (const auto& cnt : items(owner))
-    {
-        if (inv[cnt].number != 0)
-        {
-            if (inv[cnt].weight >= 0)
-            {
-                weight += inv[cnt].weight * inv[cnt].number;
-            }
-            else if (owner == 0)
-            {
-                gdata_cargo_weight += -inv[cnt].weight * inv[cnt].number;
-            }
-        }
-    }
-    return weight;
-}
 
 
 
@@ -990,7 +775,7 @@ void itemname_additional_info()
             if (inv[prm_518].own_state != 4)
             {
                 s_ += lang(""s, u8" of "s)
-                    + refchara_str(inv[prm_518].subname, 2);
+                    + chara_refstr(inv[prm_518].subname, 2);
                 if (jp)
                 {
                     s_ += u8"の"s;
@@ -1032,8 +817,8 @@ void itemname_additional_info()
                 return;
             }
             s_ += lang(
-                ""s + refchara_str(inv[prm_518].subname, 2) + u8"の"s,
-                u8" of "s + refchara_str(inv[prm_518].subname, 2));
+                ""s + chara_refstr(inv[prm_518].subname, 2) + u8"の"s,
+                u8" of "s + chara_refstr(inv[prm_518].subname, 2));
         }
     }
     if (inv[prm_518].id == 672)
@@ -1544,7 +1329,7 @@ label_0313_internal:
         }
         else
         {
-            s_ += u8" ("s + refchara_str(inv[prm_518].subname, 2) + u8")"s;
+            s_ += u8" ("s + chara_refstr(inv[prm_518].subname, 2) + u8")"s;
         }
     }
     if (inv[prm_518].id == 734)
@@ -1677,21 +1462,6 @@ void remain_make(int ci, int cc)
 }
 
 
-
-void make_dish(int ci, int type)
-{
-    inv[ci].image = picfood(type, inv[ci].param1 / 1000);
-    inv[ci].weight = 500;
-    inv[ci].param2 = type;
-    if (inv[ci].material == 35 && inv[ci].param3 >= 0)
-    {
-        inv[ci].param3 = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-            + gdata_year * 24 * 30 * 12 + 72;
-    }
-}
-
-
-
 int item_stack(int inventory_id, int ci, int show_message)
 {
     if (inv[ci].quality == 6 && the_item_db[inv[ci].id]->category < 50000)
@@ -1741,6 +1511,686 @@ int item_stack(int inventory_id, int ci, int show_message)
     }
 
     return did_stack;
+}
+
+void item_acid(int prm_838, int prm_839)
+{
+    int body_at_m138 = 0;
+    if (prm_839 != -1)
+    {
+        ci_at_m138 = prm_839;
+    }
+    else
+    {
+        ci_at_m138 = -1;
+        for (int i = 0; i < 30; ++i)
+        {
+            body_at_m138 = cdata_body_part(prm_838, i) / 10000;
+            if (body_at_m138 == 0)
+            {
+                break;
+            }
+            p_at_m138 = cdata_body_part(prm_838, i) % 10000 - 1;
+            if (p_at_m138 == -1)
+            {
+                continue;
+            }
+            if (rnd(clamp(30, 1, 30)) == 0)
+            {
+                if (inv[p_at_m138].enhancement > -4)
+                {
+                    ci_at_m138 = p_at_m138;
+                    break;
+                }
+            }
+        }
+    }
+    if (ci_at_m138 == -1)
+    {
+        return;
+    }
+    if (the_item_db[inv[ci_at_m138].id]->category >= 50000)
+    {
+        return;
+    }
+    if (ibit(1, ci_at_m138) == 0)
+    {
+        txtef(8);
+        txt(lang(
+            name(prm_838) + u8"の"s + itemname(ci_at_m138)
+                + u8"は酸で傷ついた。"s,
+            name(prm_838) + your(prm_838) + u8" "s + itemname(ci_at_m138, 0, 1)
+                + u8" is damaged by acid."s));
+        --inv[ci_at_m138].enhancement;
+    }
+    else
+    {
+        txt(lang(
+            name(prm_838) + u8"の"s + itemname(ci_at_m138)
+                + u8"は酸では傷つかない。"s,
+            name(prm_838) + your(prm_838) + u8" "s + itemname(ci_at_m138, 0, 1)
+                + u8" is immune to acid."s));
+    }
+    return;
+}
+
+
+
+int item_fire(int prm_840, int prm_841)
+{
+    max_at_m138 = 0;
+    ti_at_m138 = -1;
+    if (prm_841 != -1)
+    {
+        list_at_m138(0) = prm_841;
+        ++max_at_m138;
+    }
+    if (prm_840 != -1)
+    {
+        if (sdata(50, prm_840) / 50 >= 6 || cdata[prm_840].quality >= 4)
+        {
+            return 0;
+        }
+        for (const auto& cnt : items(prm_840))
+        {
+            if (inv[cnt].number == 0)
+            {
+                continue;
+            }
+            if (inv[cnt].id == 567)
+            {
+                if (ti_at_m138 == -1)
+                {
+                    ti_at_m138 = cnt;
+                    item_separate(ti_at_m138);
+                }
+                continue;
+            }
+            if (prm_841 == -1)
+            {
+                list_at_m138(max_at_m138) = cnt;
+                ++max_at_m138;
+            }
+        }
+    }
+    if (max_at_m138 == 0)
+    {
+        return 0;
+    }
+    f_at_m138 = 0;
+    for (int cnt = 0; cnt < 3; ++cnt)
+    {
+        ci_at_m138 = list_at_m138(rnd(max_at_m138));
+        if (inv[ci_at_m138].number <= 0)
+        {
+            continue;
+        }
+        rowact_item(ci_at_m138);
+        if (ibit(2, ci_at_m138) == 0)
+        {
+            if (ibit(5, ci_at_m138) == 0)
+            {
+                a_at_m138 = the_item_db[inv[ci_at_m138].id]->category;
+                if (a_at_m138 == 57000)
+                {
+                    if (inv[ci_at_m138].param2 == 0)
+                    {
+                        if (prm_840 == -1)
+                        {
+                            if (is_in_fov(inv[ci_at_m138].position))
+                            {
+                                txtef(11);
+                                txt(lang(
+                                    u8"地面の"s
+                                        + itemname(
+                                              ci_at_m138,
+                                              inv[ci_at_m138].number)
+                                        + u8"はこんがりと焼き上がった。"s,
+                                    itemname(ci_at_m138, inv[ci_at_m138].number)
+                                        + u8" on the ground get"s
+                                        + _s2(inv[ci_at_m138].number)
+                                        + u8" perfectly broiled."s));
+                            }
+                        }
+                        if (prm_840 != -1)
+                        {
+                            if (is_in_fov(prm_840))
+                            {
+                                txtef(11);
+                                txt(lang(
+                                    name(prm_840) + u8"の"s
+                                        + itemname(
+                                              ci_at_m138,
+                                              inv[ci_at_m138].number)
+                                        + u8"はこんがりと焼き上がった。"s,
+                                    name(prm_840) + your(prm_840) + u8" "s
+                                        + itemname(
+                                              ci_at_m138,
+                                              inv[ci_at_m138].number,
+                                              1)
+                                        + u8" get"s
+                                        + _s2(inv[ci_at_m138].number)
+                                        + u8" perfectly broiled."s));
+                            }
+                        }
+                        make_dish(ci_at_m138, rnd(5) + 1);
+                        f_at_m138 = 1;
+                        continue;
+                    }
+                }
+                if (a_at_m138 == 72000 || a_at_m138 == 59000
+                    || a_at_m138 == 68000 || inv[ci_at_m138].quality >= 4)
+                {
+                    continue;
+                }
+                if (inv[ci_at_m138].body_part != 0)
+                {
+                    if (rnd(2))
+                    {
+                        continue;
+                    }
+                }
+                if (a_at_m138 != 56000 && a_at_m138 != 80000
+                    && a_at_m138 != 55000 && a_at_m138 != 53000
+                    && a_at_m138 != 54000)
+                {
+                    if (rnd(4))
+                    {
+                        continue;
+                    }
+                    if (prm_840 != -1)
+                    {
+                        if (rnd(4))
+                        {
+                            continue;
+                        }
+                    }
+                }
+                if (ti_at_m138 != -1)
+                {
+                    if (inv[ti_at_m138].number > 0)
+                    {
+                        if (is_in_fov(prm_840))
+                        {
+                            txt(lang(
+                                itemname(ti_at_m138, 1) + u8"が"s
+                                    + name(prm_840)
+                                    + u8"の持ち物を炎から守った。"s,
+                                itemname(ti_at_m138, 1) + u8" protects "s
+                                    + name(prm_840) + your(prm_840)
+                                    + u8" stuff from fire."s));
+                        }
+                        if (inv[ti_at_m138].count > 0)
+                        {
+                            --inv[ti_at_m138].count;
+                        }
+                        else if (rnd(20) == 0)
+                        {
+                            --inv[ti_at_m138].number;
+                            if (is_in_fov(prm_840))
+                            {
+                                txt(lang(
+                                    itemname(ti_at_m138, 1)
+                                        + u8"は灰と化した。"s,
+                                    itemname(ti_at_m138, 1)
+                                        + u8" turns to dust."s));
+                                break;
+                            }
+                        }
+                        continue;
+                    }
+                }
+                p_at_m138 = rnd(inv[ci_at_m138].number) / 2 + 1;
+                if (prm_840 != -1)
+                {
+                    if (inv[ci_at_m138].body_part != 0)
+                    {
+                        if (is_in_fov(prm_840))
+                        {
+                            txtef(8);
+                            txt(lang(
+                                name(prm_840) + u8"の装備している"s
+                                    + itemname(ci_at_m138, p_at_m138)
+                                    + u8"は灰と化した。"s,
+                                itemname(ci_at_m138, p_at_m138) + u8" "s
+                                    + name(prm_840) + u8" equip"s + _s(prm_840)
+                                    + u8" turn"s + _s2(p_at_m138)
+                                    + u8" to dust."s));
+                        }
+                        cdata_body_part(prm_840, inv[ci_at_m138].body_part) =
+                            cdata_body_part(prm_840, inv[ci_at_m138].body_part)
+                            / 10000 * 10000;
+                        inv[ci_at_m138].body_part = 0;
+                        chara_refresh(prm_840);
+                    }
+                    else if (is_in_fov(prm_840))
+                    {
+                        txtef(8);
+                        txt(lang(
+                            name(prm_840) + u8"の"s
+                                + itemname(ci_at_m138, p_at_m138)
+                                + u8"は灰と化した。"s,
+                            name(prm_840) + your(prm_840) + u8" "s
+                                + itemname(ci_at_m138, p_at_m138, 1)
+                                + u8" turn"s + _s2(p_at_m138)
+                                + u8" to dust."s));
+                    }
+                }
+                else if (is_in_fov(inv[ci_at_m138].position))
+                {
+                    txtef(8);
+                    txt(lang(
+                        u8"地面の"s + itemname(ci_at_m138, p_at_m138)
+                            + u8"は灰と化した。"s,
+                        itemname(ci_at_m138, p_at_m138)
+                            + u8" on the ground turn"s + _s(p_at_m138)
+                            + u8" to dust."s));
+                }
+                inv[ci_at_m138].number -= p_at_m138;
+                cell_refresh(
+                    inv[ci_at_m138].position.x, inv[ci_at_m138].position.y);
+                f_at_m138 = 1;
+            }
+        }
+    }
+    refresh_burden_state();
+    return f_at_m138;
+}
+
+int item_cold(int prm_844, int prm_845)
+{
+    std::string s_at_m138;
+    max_at_m138 = 0;
+    ti_at_m138 = -1;
+    if (prm_845 != -1)
+    {
+        list_at_m138(0) = prm_845;
+        ++max_at_m138;
+    }
+    if (prm_844 != -1)
+    {
+        if (sdata(51, prm_844) / 50 >= 6 || cdata[prm_844].quality >= 4)
+        {
+            return 0;
+        }
+        for (const auto& cnt : items(prm_844))
+        {
+            if (inv[cnt].number == 0)
+            {
+                continue;
+            }
+            if (inv[cnt].id == 568)
+            {
+                if (ti_at_m138 == -1)
+                {
+                    ti_at_m138 = cnt;
+                    item_separate(ti_at_m138);
+                }
+                continue;
+            }
+            if (prm_845 == -1)
+            {
+                list_at_m138(max_at_m138) = cnt;
+                ++max_at_m138;
+            }
+        }
+    }
+    if (max_at_m138 == 0)
+    {
+        return 0;
+    }
+    f_at_m138 = 0;
+    for (int cnt = 0; cnt < 2; ++cnt)
+    {
+        ci_at_m138 = list_at_m138(rnd(max_at_m138));
+        if (inv[ci_at_m138].number <= 0)
+        {
+            continue;
+        }
+        rowact_item(ci_at_m138);
+        if (ibit(5, ci_at_m138) == 0)
+        {
+            a_at_m138 = the_item_db[inv[ci_at_m138].id]->category;
+            if (prm_844 == -1)
+            {
+                s_at_m138 = "";
+            }
+            else
+            {
+                s_at_m138 = name(prm_844) + lang(u8"の"s, your(prm_844));
+            }
+            if (a_at_m138 == 72000 || a_at_m138 == 59000 || a_at_m138 == 68000)
+            {
+                continue;
+            }
+            if (inv[ci_at_m138].quality >= 4 || inv[ci_at_m138].body_part != 0)
+            {
+                continue;
+            }
+            if (a_at_m138 != 52000)
+            {
+                if (rnd(30))
+                {
+                    continue;
+                }
+            }
+            if (ti_at_m138 != -1)
+            {
+                if (inv[ti_at_m138].number > 0)
+                {
+                    txt(lang(
+                        itemname(ti_at_m138, 1) + u8"が"s + name(prm_844)
+                            + u8"の持ち物を冷気から守った。"s,
+                        itemname(ti_at_m138, 1) + u8" protects "s
+                            + name(prm_844) + your(prm_844)
+                            + u8" stuff from cold."s));
+                    if (inv[ti_at_m138].count > 0)
+                    {
+                        --inv[ti_at_m138].count;
+                    }
+                    else if (rnd(20) == 0)
+                    {
+                        txt(lang(
+                            itemname(ti_at_m138, 1) + u8"は粉々に砕けた。"s,
+                            itemname(ti_at_m138, 1)
+                                + u8" is broken to pieces."s));
+                        --inv[ti_at_m138].number;
+                        break;
+                    }
+                    continue;
+                }
+            }
+            p_at_m138 = rnd(inv[ci_at_m138].number) / 2 + 1;
+            txtef(8);
+            txt(lang(
+                s_at_m138 + itemname(ci_at_m138, p_at_m138)
+                    + u8"は粉々に砕けた。"s,
+                s_at_m138 + itemname(ci_at_m138, p_at_m138) + u8" break"s
+                    + _s2(p_at_m138) + u8" to pieces."s));
+            inv[ci_at_m138].number -= p_at_m138;
+            f_at_m138 = 1;
+        }
+    }
+    refresh_burden_state();
+    return f_at_m138;
+}
+
+void mapitem_fire(int prm_842, int prm_843)
+{
+    if (map(prm_842, prm_843, 4) == 0)
+    {
+        return;
+    }
+    ci_at_m138 = -1;
+    for (const auto& cnt : items(-1))
+    {
+        if (inv[cnt].number == 0)
+        {
+            continue;
+        }
+        if (inv[cnt].position.x == prm_842)
+        {
+            if (inv[cnt].position.y == prm_843)
+            {
+                ci_at_m138 = cnt;
+                break;
+            }
+        }
+    }
+    if (ci_at_m138 != -1)
+    {
+        int stat = item_fire(-1, ci_at_m138);
+        if (stat == 1)
+        {
+            if (map(prm_842, prm_843, 8) == 0)
+            {
+                mef_add(prm_842, prm_843, 5, 24, rnd(10) + 5, 100, cc);
+            }
+        }
+        cell_refresh(prm_842, prm_843);
+    }
+    return;
+}
+
+void mapitem_cold(int prm_846, int prm_847)
+{
+    if (map(prm_846, prm_847, 4) == 0)
+    {
+        return;
+    }
+    ci_at_m138 = -1;
+    for (const auto& cnt : items(-1))
+    {
+        if (inv[cnt].number == 0)
+        {
+            continue;
+        }
+        if (inv[cnt].position.x == prm_846)
+        {
+            if (inv[cnt].position.y == prm_847)
+            {
+                ci_at_m138 = cnt;
+                break;
+            }
+        }
+    }
+    if (ci_at_m138 != -1)
+    {
+        item_cold(-1, ci_at_m138);
+        cell_refresh(prm_846, prm_847);
+    }
+    return;
+}
+
+
+
+int get_random_inv(int owner)
+{
+    const auto tmp = inv_getheader(owner);
+    return tmp.first + rnd(tmp.second);
+}
+
+std::pair<int, int> inv_getheader(int owner)
+{
+    if (owner == 0)
+    {
+        return {0, 200};
+    }
+    else if (owner == -1)
+    {
+        return {5080, 400};
+    }
+    else
+    {
+        return {200 + 20 * (owner - 1), 20};
+    }
+}
+
+
+
+int inv_getowner(int inv_id)
+{
+    if (inv_id < 200)
+    {
+        return 0;
+    }
+    if (inv_id >= 5080)
+    {
+        return -1;
+    }
+    return (inv_id - 200) / 20 + 1;
+}
+
+
+
+int inv_find(int id, int owner)
+{
+    for (const auto& cnt : items(owner))
+    {
+        if (inv[cnt].number == 0)
+        {
+            continue;
+        }
+        if (inv[cnt].id == id)
+        {
+            return cnt;
+        }
+    }
+    return -1; // Not found
+}
+
+bool inv_getspace(int owner)
+{
+    for (const auto& cnt : items(owner))
+    {
+        if (inv[cnt].number == 0)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+int inv_sum(int owner)
+{
+    int n{};
+    for (const auto& cnt : items(owner))
+    {
+        if (inv[cnt].number != 0)
+        {
+            ++n;
+        }
+    }
+    return n;
+}
+
+int inv_compress(int owner)
+{
+    int number_of_deleted_items{};
+    for (int i = 0; i < 100; ++i)
+    {
+        int threshold = 200 * (i * i + 1);
+        for (const auto& cnt : items(owner))
+        {
+            if (inv[cnt].number != 0)
+            {
+                if (!ibit(5, cnt) && inv[cnt].value < threshold)
+                {
+                    inv[cnt].number = 0;
+                    ++number_of_deleted_items;
+                    if (inv[cnt].position.x >= 0
+                        && inv[cnt].position.x < mdata(0)
+                        && inv[cnt].position.y >= 0
+                        && inv[cnt].position.y < mdata(1))
+                    {
+                        cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
+                    }
+                }
+            }
+            if (number_of_deleted_items > 10)
+            {
+                break;
+            }
+        }
+        if (number_of_deleted_items > 10)
+        {
+            break;
+        }
+    }
+
+    int slot = -1;
+    for (const auto& cnt : items(owner))
+    {
+        if (inv[cnt].number == 0)
+        {
+            slot = cnt;
+            break;
+        }
+    }
+
+    if (slot == -1)
+    {
+        // Destroy 1 existing item forcely.
+        slot = get_random_inv(owner);
+        inv[slot].number = 0;
+        if (mode != 6)
+        {
+            if (inv[slot].position.x >= 0 && inv[slot].position.x < mdata(0)
+                && inv[slot].position.y >= 0
+                && inv[slot].position.y < mdata(1))
+            {
+                cell_refresh(inv[slot].position.x, inv[slot].position.y);
+            }
+        }
+    }
+
+    return slot;
+}
+
+int inv_getfreeid(int owner)
+{
+    for (const auto& cnt : items(owner))
+    {
+        if (inv[cnt].number == 0)
+        {
+            return cnt;
+        }
+    }
+    if (owner == -1 && mode != 6)
+    {
+        txt(lang(
+            u8"アイテム情報が多すぎる！幾つかのアイテムは破壊された。"s,
+            u8"Too many item data! Some items in this area are destroyed."s));
+        return inv_compress(owner);
+    }
+    return -1;
+}
+
+int inv_weight(int owner)
+{
+    int weight{};
+    if (owner == 0)
+    {
+        gdata_cargo_weight = 0;
+    }
+    for (const auto& cnt : items(owner))
+    {
+        if (inv[cnt].number != 0)
+        {
+            if (inv[cnt].weight >= 0)
+            {
+                weight += inv[cnt].weight * inv[cnt].number;
+            }
+            else if (owner == 0)
+            {
+                gdata_cargo_weight += -inv[cnt].weight * inv[cnt].number;
+            }
+        }
+    }
+    return weight;
+}
+
+int inv_getfreeid_force()
+{
+    p = inv_getfreeid(tc);
+    if (p != -1)
+    {
+        return p;
+    }
+    for (int cnt = 0; cnt < 100; ++cnt)
+    {
+        p = rnd(invrange) + invhead;
+        if (inv[p].body_part == 0)
+        {
+            inv[p].number = 0;
+            if (cdata[tc].item_which_will_be_used == p)
+            {
+                cdata[tc].item_which_will_be_used = 0;
+            }
+            break;
+        }
+    }
+    return p;
 }
 
 

@@ -40,6 +40,7 @@ enum class file_operation2_t
 
 void ctrl_file(file_operation_t file_operation);
 void ctrl_file(file_operation2_t file_operation, const fs::path& filepath);
+void fileadd(const fs::path& filepath, int prm_693 = 0);
 
 
 } // namespace elona

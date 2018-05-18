@@ -3,6 +3,7 @@
 #include <string>
 #include <unordered_map>
 #include "cat.hpp"
+#include "enums.hpp"
 
 
 namespace elona
@@ -103,6 +104,17 @@ extern god_db the_god_db;
 
 
 void txtgod(const god_id_t& id, int type);
+int modpiety(int prm_1035);
+void set_npc_religion();
+void apply_god_blessing(int cc);
+void get_god_description();
+void label_1888();
+void switch_religion();
+turn_result_t do_pray();
+turn_result_t do_offer();
+
+
+
 
 
 } // namespace elona

@@ -1,10 +1,21 @@
+#include "talk.hpp"
+#include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "character_status.hpp"
+#include "crafting.hpp"
 #include "elona.hpp"
+#include "event.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "itemgen.hpp"
 #include "macro.hpp"
+#include "map_cell.hpp"
+#include "menu.hpp"
+#include "shop.hpp"
+#include "status_ailment.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 
@@ -13,7 +24,7 @@ namespace elona
 {
 
 
-void talk_unique()
+talk_result_t talk_unique()
 {
     listmax = 0;
     switch (chatval(1))
@@ -28,10 +39,9 @@ void talk_unique()
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
         gdata_main_quest_flag = 170;
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 23:
-        if (evid() == 1)
+        if (event_id() == 1)
         {
             if (jp)
             {
@@ -89,8 +99,7 @@ void talk_unique()
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 28:
@@ -100,8 +109,7 @@ void talk_unique()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 29:
         if (cdata[0].fame < 20000)
         {
@@ -112,8 +120,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_nightmare == 1000)
         {
@@ -125,8 +132,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_nightmare == 0)
         {
@@ -148,7 +154,7 @@ void talk_unique()
             buff = lang(
                 u8"貴様に金になる仕事をやろう。ザナンのある機関からの要望で、実験のデータをとるために被験者が必要なのだ。俺に言わせれば、被験者というより『生贄』だがな。生き延びて戻ってくれば、老後を遊んで暮らせるだけの報酬はくれてやる。どうするかこの場で決めろ。"s,
                 u8"You wanna make some quick cash? I've got a request from the organization of Zanan. They need a test subject in order to get some experimental data. Or perhaps \"sacrifice\" would be a more appropriate term. *If* you survive, I'll pay you enough to party until you waste away. Make your decision quickly."s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -159,8 +165,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -176,8 +181,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_nightmare = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_nightmare == 1 || gdata_nightmare == 2)
         {
@@ -186,7 +190,7 @@ void talk_unique()
             buff = lang(
                 u8"フッ。よく逃げ出さずに戻ってきたな。準備はいいか。"s,
                 u8"So, are you ready?"s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -195,8 +199,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -215,8 +218,7 @@ void talk_unique()
             gdata_destination_dungeon_level = 5;
             levelexitby = 2;
             chatteleport = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_nightmare == 3)
         {
@@ -250,11 +252,9 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_nightmare = 1000;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 30:
         if (gdata_putit_attacks == 1000)
         {
@@ -266,8 +266,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_putit_attacks == 0)
         {
@@ -284,7 +283,7 @@ void talk_unique()
             buff = lang(
                 u8"最近、朝起きると私のぬいぐるみがぼろぼろになっているの。夜中に起きてこっそり見張ってたらね、なんとプチ…プチがぬいぐるみ食べてるのよ！どうも隣の家の窓を伝って、私の家に入ってくるみたいなの。冒険者さん、お願いだから、ちょっと行って退治してきてくれない？"s,
                 u8"Recently, when I wake in the morning my stuffed toys are always chewed up. So I stayed up last night and secretly watched. You know what I found? Putits were chewing up my stuffed animals! I'm pretty sure they're getting into my house through the window to the neighbor's place. I beg of you adventurer, won't you eradicate the Putits for me?"s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -295,8 +294,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -312,8 +310,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_putit_attacks = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_putit_attacks == 1)
         {
@@ -325,8 +322,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_putit_attacks == 2)
         {
@@ -358,8 +354,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_putit_attacks = 1000;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 31:
@@ -373,8 +368,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_thieves_hideout == 0)
         {
@@ -393,7 +387,7 @@ void talk_unique()
             buff = lang(
                 u8"ちょっとお時間いいですか？バーの酒樽が度々盗まれて、店長困ってるんです。もし手が空いていたら、助けてくださいな。盗みを働いている輩の目星はついています。きっと、ヴェルニースを拠点に活動している、こそ泥の集団です！拠点は確か墓の方にあったはずですよ。"s,
                 u8"Excuse me, do you have a moment? The kegs from the bar have been stolen, and the manager is really put out. If you're not busy, could you help out? It was those thugs, I'm sure of it. They've certainly set up a base inside Vernis. With all the mud they leave behind, they're most likely hanging out near the gravesite."s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -404,8 +398,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -422,8 +415,7 @@ void talk_unique()
             ELONA_TALK_SCENE_CUT();
             gdata_thieves_hideout = 1;
             cell_featset(48, 5, tile_downstairs, 11, 4);
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_thieves_hideout == 1)
         {
@@ -435,8 +427,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_thieves_hideout == 2)
         {
@@ -471,8 +462,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_thieves_hideout = 1000;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 33:
@@ -490,7 +480,7 @@ void talk_unique()
         buff = lang(
             u8"無事に意識が戻ってよかったわ。あなたを最初に見たときは、もう手遅れかと思ったほどだもの。"s,
             u8"I'm glad you got well again. I thought you were a goner until just a few minutes ago."s);
-        talk_window();
+        talk_window_query();
         if (chatval == 1)
         {
             listmax = 0;
@@ -541,8 +531,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
         if (chatval == 2)
         {
@@ -562,8 +551,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
         if (chatval == 3)
         {
@@ -575,11 +563,9 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 34:
         if (chatflag == 0)
         {
@@ -710,7 +696,7 @@ void talk_unique()
             }
             if (gdata_tutorial_flag == 6)
             {
-                p = findchara(3);
+                p = chara_find(3);
                 if (p != 0)
                 {
                     listmax = 0;
@@ -721,8 +707,7 @@ void talk_unique()
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_end();
-                    return;
+                    return talk_result_t::talk_end;
                 }
                 listmax = 0;
                 buff = lang(u8"上出来だ。"s, u8"Well done."s);
@@ -770,8 +755,7 @@ void talk_unique()
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 gdata_tutorial_flag = 8;
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             if (gdata_tutorial_flag == 8)
             {
@@ -828,8 +812,7 @@ void talk_unique()
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
                 gdata_tutorial_flag = -1;
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             if (gdata_tutorial_flag == -1)
             {
@@ -844,7 +827,7 @@ void talk_unique()
                         u8"わが家から出て行ってほしい"s,
                         u8"Get out of my house!"s));
             }
-            talk_window();
+            talk_window_query();
         }
         if (chatval == 1)
         {
@@ -865,15 +848,14 @@ void talk_unique()
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             gdata_tutorial_flag = 1;
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
         if (chatval == 2)
         {
-            tc = findchara(33);
+            tc = chara_find(33);
             if (tc == 0 || cdata[tc].state != 1)
             {
-                tc = findchara(34);
+                tc = chara_find(34);
                 hostileaction(0, tc);
                 listmax = 0;
                 buff = lang(
@@ -883,8 +865,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             listmax = 0;
             buff = lang(""s + cdatan(0, 0) +
@@ -899,8 +880,8 @@ void talk_unique()
             buff = lang(
                 u8"ああ、わかった。パルミアまでは長い旅路だ。一時であれ休息をとれて良かったのかも知れないな。"s,
                 u8"Yes. Palmia is still far away. Perhaps, It was fortunate that we could have a little rest before everything begins."s);
-            tc = tc * (findchara(34) == 0)
-                + (findchara(34) != 0) * findchara(34);
+            tc = tc * (chara_find(34) == 0)
+                + (chara_find(34) != 0) * chara_find(34);
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
@@ -909,13 +890,13 @@ void talk_unique()
                 u8"また巡り会う時まで、"s + cdatan(1, 0)
                     + u8"、あなたに風の加護のあらんことを。"s,
                 u8"Farewell..until we meet again. May the blessing of Lulwy be with you."s);
-            tc = tc * (findchara(33) == 0)
-                + (findchara(33) != 0) * findchara(33);
+            tc = tc * (chara_find(33) == 0)
+                + (chara_find(33) != 0) * chara_find(33);
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            chara_vanquish(findchara(33));
-            chara_vanquish(findchara(34));
+            chara_vanquish(chara_find(33));
+            chara_vanquish(chara_find(34));
             txt(lang(
                 u8"二人は荷物をまとめ洞窟を後にした。"s,
                 u8"Lomias and Larnneire leave the cave."s));
@@ -960,8 +941,7 @@ void talk_unique()
                 ELONA_TALK_SCENE_CUT();
             }
             gdata_tutorial_flag = 2;
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
         if (chatval == 4)
         {
@@ -996,8 +976,7 @@ void talk_unique()
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             gdata_tutorial_flag = 5;
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
         if (chatval == 5)
         {
@@ -1032,7 +1011,7 @@ void talk_unique()
             for (int cnt = 0; cnt < 3; ++cnt)
             {
                 flt();
-                characreate(-1, 3, cdata[0].position.x, cdata[0].position.y);
+                chara_create(-1, 3, cdata[0].position.x, cdata[0].position.y);
                 cdata[rc].does_not_search_enemy() = true;
             }
             flt();
@@ -1044,8 +1023,7 @@ void talk_unique()
                 u8"Something is put on the ground."s));
             gdata_tutorial_flag = 6;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 79:
         if (gdata_main_quest_flag == 200)
         {
@@ -1057,8 +1035,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_main_quest_flag < 90)
         {
@@ -1082,8 +1059,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 80:
         if (gdata_main_quest_flag >= 60)
         {
@@ -1095,8 +1071,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_main_quest_flag == 50)
         {
@@ -1108,8 +1083,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_main_quest_flag == 40)
         {
@@ -1156,8 +1130,7 @@ void talk_unique()
             txt(lang(
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
         break;
     case 139:
@@ -1216,8 +1189,7 @@ void talk_unique()
                 cdatan(0, tc) + u8"は静かに息絶えた…"s,
                 cdatan(0, tc) + u8" dies silently..."s));
             chara_vanquish(tc);
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 142:
@@ -1258,8 +1230,7 @@ void talk_unique()
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_main_quest_flag == 120)
         {
@@ -1309,8 +1280,7 @@ void talk_unique()
                 u8"何かが足元に転がってきた。"s,
                 u8"Something is put on the ground."s));
             gdata_main_quest_flag = 125;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_main_quest_flag == 105)
         {
@@ -1367,8 +1337,7 @@ void talk_unique()
                 u8"レシマス17階の鍵を受け取った。ジャーナルが更新された。"s,
                 u8"You receive a key of Lesimas 17th level. Your journal has been updated."s));
             gdata_main_quest_flag = 110;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_main_quest_flag >= 60)
         {
@@ -1401,7 +1370,7 @@ void talk_unique()
             }
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
-            talk_window();
+            talk_window_query();
             if (chatval == 6)
             {
                 listmax = 0;
@@ -1444,8 +1413,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             if (chatval == 5)
             {
@@ -1467,8 +1435,7 @@ void talk_unique()
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_unique();
-                    return;
+                    return talk_result_t::talk_unique;
                 }
                 if (gdata_main_quest_flag >= 110)
                 {
@@ -1480,8 +1447,7 @@ void talk_unique()
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_unique();
-                    return;
+                    return talk_result_t::talk_unique;
                 }
                 listmax = 0;
                 buff = lang(
@@ -1493,8 +1459,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             if (chatval == 3)
             {
@@ -1522,8 +1487,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             if (chatval == 2)
             {
@@ -1551,8 +1515,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             if (chatval == 1)
             {
@@ -1580,11 +1543,9 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_main_quest_flag == 50)
         {
@@ -1600,7 +1561,7 @@ void talk_unique()
                     u8"I will gladly pledge my strength to Palmia."s));
             ELONA_APPEND_RESPONSE(0, lang(u8"断る"s, u8"I'm not interested."s));
             chatesc = 1;
-            talk_window();
+            talk_window_query();
             if (chatval == 0)
             {
                 listmax = 0;
@@ -1611,8 +1572,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             listmax = 0;
             buff = lang(
@@ -1653,8 +1613,7 @@ void talk_unique()
                 u8"レシマス4階の鍵を受け取った。ジャーナルが更新された。"s,
                 u8"You receive a key of Lesimas 4th level. Your journal has been updated."s));
             gdata_main_quest_flag = 60;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 146:
@@ -1737,8 +1696,7 @@ void talk_unique()
                 cdatan(0, tc) + u8"は自ら命を絶った…"s,
                 cdatan(0, tc) + u8" kills himself..."s));
             chara_vanquish(tc);
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 208:
@@ -1746,17 +1704,15 @@ void talk_unique()
         buff = lang(
             u8"見て分からんか、わしゃ忙しいんじゃ。用があるなら手短にな。"s,
             u8"Don't you see I'm busy!"s);
-        talk_window();
+        talk_window_query();
         if (chatval == 1)
         {
             invctrl = 1;
             snd(26);
-            label_18552();
-            talk_unique();
-            return;
+            crafting_menu();
+            return talk_result_t::talk_unique;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 209:
         ELONA_APPEND_RESPONSE(
             2, lang(u8"小さなメダル"s, u8"I have some small medals."s));
@@ -1766,7 +1722,7 @@ void talk_unique()
         buff = lang(
             u8"ほほう、客人とはこれまた珍しい。暖かい飯でも馳走してさしあげたいが、あいにくと今日の飯番はガロクでの。あやつの作る料理は自らの作品に似て、なんとも無骨で味気ない。とても客人に楽しんでもらえる代物じゃないのう。まぁ、せっかくこんな辺境の地にまで、やって来なさったんだ。何か用件があれば、話だけは聞こうじゃないか。"s,
             u8"Oh oh, what we got, talk about rare! A traveler? I would have given you a feast if it were not Garok that handles today's dinner. You know, his cooking is as loutish as his creations. Oh well, you've come all the way here, what can I do for you?"s);
-        talk_window();
+        talk_window_query();
         if (chatval == 2)
         {
             listmax = 0;
@@ -1779,12 +1735,11 @@ void talk_unique()
             ELONA_TALK_SCENE_CUT();
             invctrl = 28;
             invfile = cdata[tc].shop_store_id;
-            sell_item();
+            shop_sell_item();
             screenupdate = -1;
             update_screen();
             cs = 0;
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
         if (chatval == 3)
         {
@@ -1809,7 +1764,7 @@ void talk_unique()
             }
             ELONA_APPEND_RESPONSE(0, lang(u8"断る"s, u8"I think not."s));
             chatesc = 1;
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -1818,8 +1773,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             txtnew();
             txt(lang(
@@ -1837,11 +1791,9 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 221:
         if (gdata_pael_and_her_mom == 1000)
         {
@@ -1855,8 +1807,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             listmax = 0;
             buff = lang(
@@ -1866,8 +1817,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 1001)
         {
@@ -1879,8 +1829,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 1002)
         {
@@ -1892,19 +1841,17 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 0)
         {
             buff = lang(
                 u8"おかあさんがひどい病気で…お医者さんはエーテル病だから手に負えないって…"s,
                 u8"Mommy is really sick... but the doctor said she has the ether plague and he can't do anything..."s);
-            int stat = give_potion_of_cure_corruption();
-            if (stat == 0)
+            bool stat = talk_give_potion_of_cure_corruption();
+            if (!stat)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -1912,8 +1859,7 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata_pael_and_her_mom = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 1 || gdata_pael_and_her_mom == 3)
         {
@@ -1925,8 +1871,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 5 || gdata_pael_and_her_mom == 7)
         {
@@ -1939,8 +1884,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 2 || gdata_pael_and_her_mom == 4)
         {
@@ -1948,11 +1892,10 @@ void talk_unique()
                     u8"さん。おかげで、おかあさんの身体も良くなっています。でもまだ、もとどおりに元気になるには時間がかかるみたいなの…"s,
                 u8"Ah, hi "s + cdatan(0, 0) +
                     u8". Thanks to you Mommy's been getting better! But... it still looks like she needs more time before she's really healthy."s);
-            int stat = give_potion_of_cure_corruption();
-            if (stat == 0)
+            bool stat = talk_give_potion_of_cure_corruption();
+            if (!stat)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -1960,19 +1903,18 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             ++gdata_pael_and_her_mom;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 6)
         {
             buff = lang(
                 u8"おかあさん、最近すごく調子いいの！お医者さんも、もう大丈夫だろうって。最近は、近所の子供達もお見舞いに来てくれるんだよ。はやく、おかあさんやみんなと遊びたいな〜。"s,
                 u8"Mommy looks a lot better these days! The doctor said she's gonna be okay. Even the other kids have come to visit her in the past few weeks. I want mommy to be able to play with us soon..."s);
-            int stat = give_potion_of_cure_corruption();
-            if (stat == 0)
+
+            bool stat = talk_give_potion_of_cure_corruption();
+            if (!stat)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -1980,8 +1922,7 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             ++gdata_pael_and_her_mom;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 8)
         {
@@ -1989,11 +1930,10 @@ void talk_unique()
                     u8"さん…おかあさんが…！おかあさんが…急に具合が悪くなって…身体がおかしくなって…あぁ…神様…"s,
                 ""s + cdatan(0, 0) +
                     u8"! It's mommy... something's wrong! Suddenly she started acting strange and... now her body is changing and... oh gods..."s);
-            int stat = give_potion_of_cure_corruption();
-            if (stat == 0)
+            bool stat = talk_give_potion_of_cure_corruption();
+            if (!stat)
             {
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -2001,8 +1941,7 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             ++gdata_pael_and_her_mom;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 9)
         {
@@ -2014,8 +1953,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 10)
         {
@@ -2027,8 +1965,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 222:
@@ -2040,8 +1977,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom == 10)
         {
@@ -2109,7 +2045,7 @@ void talk_unique()
                 }
                 ELONA_APPEND_RESPONSE(0, lang(u8"お元気で"s, u8"Take care."s));
                 chatesc = 1;
-                talk_window();
+                talk_window_query();
                 if (chatval == 2)
                 {
                     int stat = inv_find(559, 0);
@@ -2127,8 +2063,7 @@ void talk_unique()
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_end();
-                    return;
+                    return talk_result_t::talk_end;
                 }
                 listmax = 0;
                 buff = lang(
@@ -2138,8 +2073,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         if (gdata_pael_and_her_mom == 1000)
@@ -2170,7 +2104,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(
                 0, lang(u8"希望はまだある"s, u8"There's still hope."s));
             chatesc = 1;
-            talk_window();
+            talk_window_query();
             if (chatval == 1)
             {
                 listmax = 0;
@@ -2181,9 +2115,8 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                evadd(20, tc);
-                talk_end();
-                return;
+                event_add(20, tc);
+                return talk_result_t::talk_end;
             }
             if (chatval == 2)
             {
@@ -2202,8 +2135,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             listmax = 0;
             buff = lang(
@@ -2213,8 +2145,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom > 7)
         {
@@ -2226,8 +2157,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom > 5)
         {
@@ -2240,8 +2170,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pael_and_her_mom > 3)
         {
@@ -2253,8 +2182,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         listmax = 0;
         buff = lang(
@@ -2264,8 +2192,7 @@ void talk_unique()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 223:
         if (gdata_wife_collector == 0)
         {
@@ -2276,7 +2203,7 @@ void talk_unique()
             buff = lang(
                 u8"俺を誰だか知らないだと？この街で一番の色男、ラファエロ様だよ。俺が狙った女は、例えパルミアの王妃だろうとイチコロさ。だがな、最近はどうも恋の駆け引きみたいなのに、飽き飽きしちまった。本音をいや、無条件で俺に仕えてくれる女が欲しいんだよ。で、お前の嫁を俺によこさないか？礼はするぜ。"s,
                 u8"Don't you know who I am? I am, by far, without question, doubtlessly and unabashedly, the sexiest man in this town -- if not the whole of North Tyris. I can have any woman I desire. I could even take the princess of Palmia if I wanted. Yet, strange as it sounds, lately I've grown tired of the game. Honestly, I want a woman who will serve me unconditionally and never complain. Why don't you let me keep one of your wives? You'd have my thanks. "s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2287,8 +2214,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -2304,8 +2230,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_wife_collector = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_wife_collector == 1 || gdata_wife_collector == 1000)
         {
@@ -2315,7 +2240,7 @@ void talk_unique()
             buff = lang(
                 u8"どれどれ、お前さんの嫁を吟味させてもらおうか！"s,
                 u8"Which one? Who have you brought for me to inspect?"s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2324,8 +2249,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             allyctrl = 1;
             int stat = ctrl_ally();
@@ -2337,8 +2261,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             rc = stat;
             if (cdata[rc].is_married() == 0)
@@ -2351,8 +2274,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             listmax = 0;
             buff = lang(
@@ -2366,10 +2288,10 @@ void talk_unique()
             ELONA_TALK_SCENE_CUT();
             tcbk = tc;
             tc = rc;
-            s = refchara_str(cdata[tc].id, 8);
+            s = chara_refstr(cdata[tc].id, 8);
             if (!strutil::contains(s(0), u8"/man/"))
             {
-                dmgcon(tcbk, 11, 1000);
+                dmgcon(tcbk, status_ailment_t::insane, 1000);
                 f = 1;
                 modify_karma(0, 2);
             }
@@ -2431,8 +2353,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 224:
@@ -2447,8 +2368,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_novice_knight == 0)
         {
@@ -2458,7 +2378,7 @@ void talk_unique()
             buff = lang(
                 u8"イィッック！やめて！くるなぁー！イィーック！ハ…失礼しました。あなた…見たところ強そうですね。私に力を貸してくれませんか？騎士昇格のための試験で、イークの首領を討伐しなければならないんです。私には、荷が重い使命ですよ…イーク…うわあああ…ダメだ…思い出しただけでも膝が震える…お願いです。私の代わりに倒してきてください。"s,
                 u8"Yeeeck! Nooo! Don't!! Get away from me!! Yeeeee-eeeck! Hump, oh....excuse me. You...you look like a skilled adventurer. Could you give me your hand? I need to slay the head of Yeek to be promoted to the rank of knight. The duty is too heavy for me....yeeee-eeck! No...! Hump...I don't want to recall anything anymore. Please do this duty for me."s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2467,8 +2387,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -2484,8 +2403,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_novice_knight = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_novice_knight == 1)
         {
@@ -2497,8 +2415,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_novice_knight == 2)
         {
@@ -2528,8 +2445,7 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata_novice_knight = 1000;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 225:
@@ -2541,16 +2457,15 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
-        if (get_freeally() != 0)
+        if (chara_get_free_slot_ally() != 0)
         {
             ELONA_APPEND_RESPONSE(1, lang(u8"連れて行く"s, u8"I'll take you"s));
         }
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         buff = lang(u8"くぅうううん。"s, u8"Woof!"s);
-        talk_window();
+        talk_window_query();
         if (chatval == 1)
         {
             txt(lang(
@@ -2559,14 +2474,12 @@ void talk_unique()
             rc = tc;
             new_ally_joins();
             cdata[rc].is_escorted_in_sub_quest() = true;
-            refresh_character(rc);
-            talk_end();
-            return;
+            chara_refresh(rc);
+            return talk_result_t::talk_end;
         }
         else
         {
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 226:
@@ -2579,8 +2492,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_puppys_cave == 0)
         {
@@ -2590,7 +2502,7 @@ void talk_unique()
             buff = lang(
                 u8"はうっ。ポピーがいなくなっちゃった…また、あの洞窟に迷い込んじゃったのかな？どうしよう、お父さんは今いそがしくて相手にしてもらえないし…あ、冒険者さん、ポピーを探してきてよ〜。ポピー？ポピーは子犬だよ。私の一番のお友達なの。"s,
                 u8"Oh no, Poppy has disappeared again... He probably got lost in that cave again. Now what do I do, Papa is too busy to deal with this... Oh, Adventurer, go and find Poppy for me. Poppy? He's my puppy, and my best friend."s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2599,8 +2511,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -2616,12 +2527,11 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_puppys_cave = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_puppys_cave == 1)
         {
-            if (findally(225) == -1)
+            if (chara_find_ally(225) == -1)
             {
                 listmax = 0;
                 buff = lang(u8"ポピーまだ〜？"s, u8"Where's Poppy?"s);
@@ -2629,8 +2539,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             listmax = 0;
             buff = lang(
@@ -2658,12 +2567,11 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata_puppys_cave = 1000;
-            chara_vanquish(findally(225));
+            chara_vanquish(chara_find_ally(225));
             flt();
-            characreate(-1, 225, 31, 4);
+            chara_create(-1, 225, 31, 4);
             cdata[rc].character_role = 3;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 227:
@@ -2677,8 +2585,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_cat_house == 0)
         {
@@ -2688,7 +2595,7 @@ void talk_unique()
             buff = lang(
                 u8"あなた、猫は大丈夫ですか？いえね、私は猫が大の苦手なんですが、こともあろうに、私の家に大量の猫が住み着いてしまったんですよ。そこで冒険者さん達に猫の退治を依頼しているものの、何故か誰も帰ってこない…いったい、家の中はどうなってるんでしょうか。あなた、もしよかったら見てきてくれませんか？"s,
                 u8"Hey you, are you..uh...alright with cats? Well, those filthy...they creatures took over my house. I've been asking adventurers to clean up the cats from my house ever since but none returned. What's happening in my house? You...can you take a look inside my house?"s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2697,8 +2604,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -2715,8 +2621,7 @@ void talk_unique()
             ELONA_TALK_SCENE_CUT();
             gdata_cat_house = 1;
             cell_featset(23, 22, tile_downstairs, 11, 3);
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_cat_house == 1)
         {
@@ -2728,8 +2633,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_cat_house == 2)
         {
@@ -2762,8 +2666,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_cat_house = 1000;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 231:
@@ -2777,8 +2680,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (cdata[0].fame < 5000)
         {
@@ -2790,8 +2692,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_defense_line == 0)
         {
@@ -2812,7 +2713,7 @@ void talk_unique()
             buff = lang(
                 u8"私はジューアの解放軍の大佐、ギルバートと申す。軍といっても国軍ではないが、イェルスの犬に占拠された各地のジューア自治区を、解放してまわっておるのだ。その我が軍が、パルミア国境でイェルスの強力な防衛線の前に苦戦しておる。最新鋭の武装を持つ奴らに対し、我らは剣に頼るのみ。このままでは、全滅する恐れさえあるのだ。どうか、貴殿の力、貸してもらえぬか？"s,
                 u8"I am colonel of the Juere Liberation Army, Gilbert. We're not the true national army, but even so we fully intend to free the Juere Territories from their occupation by those Yerles dogs. However, our army is having a hard time breaking through their strong front lines on the Palmia border. We only have our swords against their advanced weapons, after all. If things go on like they are, our army might be totally annihalated. So I ask you, will you lend us your power?"s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2823,8 +2724,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -2840,8 +2740,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_defense_line = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_defense_line == 1 || gdata_defense_line == 2)
         {
@@ -2850,7 +2749,7 @@ void talk_unique()
             buff = lang(
                 u8"準備はいいかな？"s,
                 u8"Are your preparations complete, then?"s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2859,8 +2758,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -2881,8 +2779,7 @@ void talk_unique()
             gdata_destination_dungeon_level = 4;
             levelexitby = 2;
             chatteleport = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_defense_line == 3)
         {
@@ -2912,11 +2809,9 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_defense_line = 1000;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 243:
         if (gdata_kamikaze_attack == 1000)
         {
@@ -2930,8 +2825,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_kamikaze_attack == 0)
         {
@@ -2944,7 +2838,7 @@ void talk_unique()
                 lang(
                     u8"やめておこう"s,
                     u8"That sounds... dangerous. No thanks."s));
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2953,8 +2847,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -2970,8 +2863,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_kamikaze_attack = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_kamikaze_attack == 1 || gdata_kamikaze_attack == 2)
         {
@@ -2980,7 +2872,7 @@ void talk_unique()
             buff = lang(
                 u8"準備はよろしいですか？あなたは、パルミア軍が撤退するまでの間、どうにかカミカゼ特攻隊の猛撃に耐え、時間稼ぎをして下さい。"s,
                 u8"Are you ready to go? We need you to hold off the suicide squadron's onslaught and buy time for the Palmian army to retreat."s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -2989,8 +2881,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -3011,8 +2902,7 @@ void talk_unique()
             gdata_destination_dungeon_level = 25;
             levelexitby = 2;
             chatteleport = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_kamikaze_attack == 3)
         {
@@ -3042,11 +2932,9 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_kamikaze_attack = 1000;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 247:
         if (gdata_mias_dream == 1000)
         {
@@ -3058,8 +2946,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_mias_dream == 0)
         {
@@ -3070,7 +2957,7 @@ void talk_unique()
             buff = lang(
                 u8"るんるんるん♪ねっこねっここっねこっ♪ふ〜んふ〜ん♪お〜冒険者さんだ〜。お仕事お疲れ様でありますぅ。冒険者さんは、シルバーキャット見たことありますかぁ？シルバーにゃんことお風呂できゃっきゃするのが、ミーアの夢なんですっ！う〜。ねっこねっここっねこ♪ふ〜んふ〜ん♪"s,
                 u8"Nyobody knyows the touble Mia's seen, nyobody knyows Mia's Tru-bull. Nuah? Adventurer? Nyou find silver cat for me?"s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -3081,8 +2968,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -3098,12 +2984,11 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_mias_dream = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_mias_dream == 1)
         {
-            if (findally(246) == -1)
+            if (chara_find_ally(246) == -1)
             {
                 listmax = 0;
                 buff = lang(
@@ -3113,8 +2998,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             if (jp)
             {
@@ -3152,12 +3036,11 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata_mias_dream = 1000;
-            relocate_chara(findally(246), -1);
+            chara_relocate(chara_find_ally(246), -1);
             cdata[rc].relationship = -1;
             cdata[rc].original_relationship = -1;
             cdata[rc].character_role = 3;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 252:
@@ -3171,8 +3054,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_rare_books == 0 || gdata_rare_books == 1)
         {
@@ -3216,8 +3098,7 @@ void talk_unique()
                     u8"ジャーナルが更新された。"s,
                     u8"Your journal has been updated."s));
                 gdata_rare_books = 1;
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             p(0) = 0;
             p(1) = 0;
@@ -3253,8 +3134,7 @@ void talk_unique()
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_end();
-                    return;
+                    return talk_result_t::talk_end;
                 }
                 p(0) = 0;
                 p(1) = 0;
@@ -3349,8 +3229,7 @@ void talk_unique()
                     u8"Your journal has been updated."s));
                 gdata_rare_books = 1000;
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 253:
@@ -3364,8 +3243,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (cdata[0].fame < 3000)
         {
@@ -3377,8 +3255,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_pyramid_trial == 0)
         {
@@ -3400,7 +3277,7 @@ void talk_unique()
             buff = lang(
                 u8"私宛にね、面白い手紙が届いたんですよ。送り主はピラミッドの主『ツェン』。そして、内容は私にピラミッドへの挑戦権を与えると。…しかし、私は危険な罠に自ら陥るほど愚かではない。あなたにこの挑戦状を譲りましょう。むろん、タダではない。金貨20000枚でいかがですか？"s,
                 u8"I have received a very strange letter. The sender calls himself Tsen, lord of the Pyramid. He has sent me an invitation to enter his pyramid... However, I am not foolish enough to barge into such a trap. I'll turn this invitation over to you. Of course, I won't let you have it for nothing. 20,000 gold and it's yours."s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -3411,8 +3288,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -3436,8 +3312,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_pyramid_trial = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 259:
@@ -3508,7 +3383,7 @@ void talk_unique()
             buff = lang(
                 u8"あたし達は他人の血を吸って生きるのよ。憎しみや妬み、執着、悪意が、この街では力になる。外の世界では疎まれ軽蔑される弱き者達が、自分に与えられた能力をはじめて認めてもらえる、ダルフィはそんな街。ねえ、あなたもこっちの世界に来る気はない？"s,
                 u8"It's so simple, we live by feeding off of others. Spite, hatred, wickedness, and unrelenting cutthroat vigor are the only strengths you can rely on in this town. The outside world looks down on our lot, so we will make the outside world recognize our might. Say, stranger, why don't you join me in my world?"s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -3519,8 +3394,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -3545,7 +3419,7 @@ void talk_unique()
         buff = lang(
             u8"ねえ、核爆弾買う？金貨12000枚よ。"s,
             u8"Here, you need a nuke. Only 12000 gold pieces."s);
-        talk_window();
+        talk_window_query();
         if (chatval != 1)
         {
             listmax = 0;
@@ -3554,8 +3428,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         txt(lang(
             u8"何かが足元に転がってきた。"s,
@@ -3572,8 +3445,7 @@ void talk_unique()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 279:
         if (gdata_ambitious_scientist >= 1000)
         {
@@ -3585,8 +3457,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_ambitious_scientist == 0)
         {
@@ -3596,7 +3467,7 @@ void talk_unique()
             buff = lang(
                 u8"おうおう、良いところに来た。猫の手も借りたいほど忙しいのじゃ。今わしは遺伝子操作の研究をしておってな、成功すればなんと、二体の生物を合成させて、より強力な種を造りだすことができるのじゃ！最後の段階として、5体の実験体が必要じゃが、ちょっと取ってきてはくれまいか？報酬として、今使っている試作機をくれてやってもよいぞ。"s,
                 u8"Oh oh oh! You've come at *just* the right time. I'm so busy I'd take help from a cat if I had to. I'm doing research in the most remarkable field of genetic engineering. You see, I can take two living creatures and combine them to produce an even stronger creature! Is that not the most amazing thing you've ever heard? I need five test subjects for the final stage of the experiment. Won't you go get some for me? I'll reward you with the gene splicing machine I'm building."s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -3607,8 +3478,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             flt();
             nostack = 1;
@@ -3631,8 +3501,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_ambitious_scientist = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_ambitious_scientist >= 1 && gdata_ambitious_scientist <= 5)
         {
@@ -3716,8 +3585,7 @@ void talk_unique()
                 u8"Your journal has been updated."s));
             gdata_ambitious_scientist = 1000;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 280:
         if (gdata_sewer_sweeping == 1000)
         {
@@ -3729,8 +3597,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_sewer_sweeping == 0)
         {
@@ -3746,7 +3613,7 @@ void talk_unique()
             buff = lang(
                 u8"俺はルミエストの清掃を生涯の使命とし、この道十年のベテラン掃除屋バルザックだ。街道に落ちているどんな小さなゴミも見逃さないプロ魂を持つが、そんなプライドも傷つけられちまった。下水道にとんでもない化け物が住みついて、もう俺の手には負えないぜ。お前なら、俺の気持ちを汲み取って、退治に出向いてくれるな？"s,
                 u8"I'm Balzak, a well known pro garage man who has been cleaning the roads of Lumiest for 10 years. I've never missed a single garbage that messes the beautiful town of Lumiest. But my days are over. Foul creatures now nest in the sewer and sick smells spread everywhere. Adventurer, you are my only hope. Kill them, kill them for my sake!"s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -3755,8 +3622,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -3773,8 +3639,7 @@ void talk_unique()
             ELONA_TALK_SCENE_CUT();
             gdata_sewer_sweeping = 1;
             cell_featset(18, 45, tile_downstairs, 11, 20);
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_sewer_sweeping == 1)
         {
@@ -3786,8 +3651,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_sewer_sweeping == 2)
         {
@@ -3821,8 +3685,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_sewer_sweeping = 1000;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 290:
@@ -3842,7 +3705,7 @@ void talk_unique()
             buff = lang(
                 u8"止まれ…この階段の先は魔術士ギルドの管轄だ。ギルドメンバー以外の者が入ることはできない…"s,
                 u8"Halt...the stairs lead to the Mages Guild office. Only the members of the guild are allowed to enter."s);
-            talk_window();
+            talk_window_query();
             if (chatval == 2)
             {
                 listmax = 0;
@@ -3853,8 +3716,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             if (chatval == 1)
             {
@@ -3891,8 +3753,7 @@ void talk_unique()
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_unique();
-                    return;
+                    return talk_result_t::talk_unique;
                 }
                 if (gdata_mages_guild_quota > 0)
                 {
@@ -3904,8 +3765,7 @@ void talk_unique()
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_unique();
-                    return;
+                    return talk_result_t::talk_unique;
                 }
                 listmax = 0;
                 buff = lang(
@@ -3952,8 +3812,7 @@ void talk_unique()
                 cdata[tc].initial_position.x = 4;
                 cdata[tc].initial_position.y = 20;
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         cell_movechara(tc, 4, 20);
         cdata[tc].initial_position.x = 4;
@@ -3974,7 +3833,7 @@ void talk_unique()
                 + cdatan(0, 0) + u8"…どうぞ中にお入り下さい。"s,
             u8"Welcome to the Mages Guild, "s + ranktitle(8) + u8" "s
                 + cdatan(0, 0) + u8"... Please come in."s);
-        talk_window();
+        talk_window_query();
         if (chatval == 1)
         {
             gdata_mages_guild_quota2 = 1;
@@ -3996,8 +3855,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
         if (chatval == 2)
         {
@@ -4011,8 +3869,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             gdata_mages_guild_quota2 = 0;
             flt(51 - gdata(128) / 200);
@@ -4052,11 +3909,9 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 294:
         if (gdata_belongs_to_thieves_guild == 0)
         {
@@ -4074,7 +3929,7 @@ void talk_unique()
             buff = lang(
                 u8"止まれ…この階段の先は盗賊ギルドの管轄だ。ギルドメンバー以外の者が入ることはできない…"s,
                 u8"Halt...the stairs lead to the Thieves Guild office. Only the members of the guild are allowed to enter."s);
-            talk_window();
+            talk_window_query();
             if (chatval == 2)
             {
                 listmax = 0;
@@ -4085,8 +3940,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             if (chatval == 1)
             {
@@ -4114,8 +3968,7 @@ void talk_unique()
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_unique();
-                    return;
+                    return talk_result_t::talk_unique;
                 }
                 if (gdata_left_bill <= 4)
                 {
@@ -4127,8 +3980,7 @@ void talk_unique()
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_unique();
-                    return;
+                    return talk_result_t::talk_unique;
                 }
                 listmax = 0;
                 buff = lang(
@@ -4175,8 +4027,7 @@ void talk_unique()
                 cdata[tc].initial_position.x = 17;
                 cdata[tc].initial_position.y = 17;
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         cell_movechara(tc, 17, 17);
         cdata[tc].initial_position.x = 17;
@@ -4197,7 +4048,7 @@ void talk_unique()
                 + u8"…どうぞ中にお入り下さい。"s,
             u8"Welcome to the Thieves Guild, "s + ranktitle(8) + u8" "s
                 + cdatan(0, 0) + u8"... Please come in."s);
-        talk_window();
+        talk_window_query();
         if (chatval == 1)
         {
             gdata_thieves_guild_quota2 = 1;
@@ -4219,8 +4070,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
         if (chatval == 2)
         {
@@ -4234,8 +4084,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             gdata_thieves_guild_quota2 = 0;
             flt(51 - gdata(128) / 200);
@@ -4275,11 +4124,9 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 297:
         if (gdata_belongs_to_fighters_guild == 0)
         {
@@ -4297,7 +4144,7 @@ void talk_unique()
             buff = lang(
                 u8"止まれ…この階段の先は戦士ギルドの管轄だ。ギルドメンバー以外の者が入ることはできない…"s,
                 u8"Halt...the stairs lead to the Fighters Guild office. Only the members of the guild are allowed to enter."s);
-            talk_window();
+            talk_window_query();
             if (chatval == 2)
             {
                 listmax = 0;
@@ -4308,8 +4155,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             if (chatval == 1)
             {
@@ -4332,7 +4178,7 @@ void talk_unique()
                     while (1)
                     {
                         flt(10);
-                        characreate(56, 0, -3, 0);
+                        chara_create(56, 0, -3, 0);
                         if (the_character_db[cdata[56].id]->rarity / 1000 < 70)
                         {
                             continue;
@@ -4351,37 +4197,35 @@ void talk_unique()
                     gdata_fighters_guild_target = cdata[56].id;
                     chara_vanquish(56);
                     listmax = 0;
-                    buff = lang(""s + refchara_str(gdata_fighters_guild_target, 2) + u8"を"s +
+                    buff = lang(""s + chara_refstr(gdata_fighters_guild_target, 2) + u8"を"s +
                             gdata_fighters_guild_quota +
                             u8"匹討伐するのが、お前に課せられた試験だ。ノルマを達成したら、私に報告したまえ。"s,
                         u8"The task given to you is this. Find and slay "s +
-                            gdata_fighters_guild_quota + u8" "s + refchara_str(gdata_fighters_guild_target, 2) +
+                            gdata_fighters_guild_quota + u8" "s + chara_refstr(gdata_fighters_guild_target, 2) +
                             u8". When you complete this, talk to me again"s);
                     tc = tc * 1 + 0;
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_unique();
-                    return;
+                    return talk_result_t::talk_unique;
                 }
                 if (gdata_fighters_guild_quota > 0)
                 {
                     listmax = 0;
                     buff = lang(
                         u8"どうした？試験の内容は伝えたはずだ。"s
-                            + refchara_str(gdata_fighters_guild_target, 2)
+                            + chara_refstr(gdata_fighters_guild_target, 2)
                             + u8"をあと"s + gdata_fighters_guild_quota
                             + u8"匹討伐してからまた来なさい。"s,
                         u8"You still need to slay "s
                             + gdata_fighters_guild_quota + u8" more "s
-                            + refchara_str(gdata_fighters_guild_target, 2)
+                            + chara_refstr(gdata_fighters_guild_target, 2)
                             + u8"."s);
                     tc = tc * 1 + 0;
                     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
-                    talk_unique();
-                    return;
+                    return talk_result_t::talk_unique;
                 }
                 listmax = 0;
                 buff = lang(
@@ -4428,8 +4272,7 @@ void talk_unique()
                 cdata[tc].initial_position.x = 29;
                 cdata[tc].initial_position.y = 2;
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         cell_movechara(tc, 29, 2);
         cdata[tc].initial_position.x = 29;
@@ -4450,13 +4293,13 @@ void talk_unique()
                 + u8"…どうぞ中にお入り下さい。"s,
             u8"Welcome to the Fighters Guild, "s + ranktitle(8) + u8" "s
                 + cdatan(0, 0) + u8"... Please come in."s);
-        talk_window();
+        talk_window_query();
         if (chatval == 1)
         {
             while (1)
             {
                 flt(cdata[0].level + 10);
-                characreate(56, 0, -3, 0);
+                chara_create(56, 0, -3, 0);
                 if (the_character_db[cdata[56].id]->rarity / 1000 < 70)
                 {
                     continue;
@@ -4483,17 +4326,16 @@ void talk_unique()
             listmax = 0;
             buff = lang(
                 u8"良い心がけです。あなたにランク昇格のためのノルマを与えましょう。"s +
-                    refchara_str(gdata_fighters_guild_target, 2) + u8"をあと"s + gdata_fighters_guild_quota +
+                    chara_refstr(gdata_fighters_guild_target, 2) + u8"をあと"s + gdata_fighters_guild_quota +
                     u8"匹討伐してからまた来なさい。昇進のための審査会に報告してあげましょう。"s,
                 u8"There's a task for you. Go find and slay "s + gdata_fighters_guild_quota +
-                    u8" "s + refchara_str(gdata_fighters_guild_target, 2) +
+                    u8" "s + chara_refstr(gdata_fighters_guild_target, 2) +
                     u8". Then we will think about your promotion."s);
             tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_unique();
-            return;
+            return talk_result_t::talk_unique;
         }
         if (chatval == 2)
         {
@@ -4507,8 +4349,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_unique();
-                return;
+                return talk_result_t::talk_unique;
             }
             gdata_fighters_guild_quota2 = 0;
             flt(51 - gdata(128) / 200, calcfixlv(3));
@@ -4548,11 +4389,9 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 301:
         if (gdata_minotaur_king == 1000)
         {
@@ -4564,8 +4403,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_minotaur_king == 0)
         {
@@ -4575,7 +4413,7 @@ void talk_unique()
             buff = lang(
                 u8"困った…困ったぞ。そこのおぬし、良いところに来た。実はヨウィンがミノタウロスの軍による侵攻の危機にさらされておるのだ。ヨウィンの村長とは親しくしておって、一軍を討伐に向かわせたいのだが、今は何やら不穏な空気がパルミアを包んでいる。城から離れるわけにはいかないのだ。そこで、冒険者のおぬしに依頼したい。ミノタウロスを退治してきてはくれぬか？報酬はもちろん用意しよう。"s,
                 u8"What do I do about this... You, over there... You couldn't have gotten here a moment too soon. Yowyn is in great danger of being destroyed by the minotaur legion. The mayor of Yowyn is a close friend of mine and I don't want to leave him out in the cold. I want to send a detachment to reinforce him but I can't. The current political climate in Palmia is too volatile and the troops must remain in the castle. That's why I'm asking an adventurer like you. Will you attack the minotaur's camp for me? I will reward you handsomely if you do this."s);
-            talk_window();
+            talk_window_query();
             if (chatval != 1)
             {
                 listmax = 0;
@@ -4586,8 +4424,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             snd(44);
             txtef(2);
@@ -4604,8 +4441,7 @@ void talk_unique()
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
             gdata_minotaur_king = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_minotaur_king == 1)
         {
@@ -4617,8 +4453,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_minotaur_king == 2)
         {
@@ -4651,8 +4486,7 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata_minotaur_king = 1000;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 302:
@@ -4667,8 +4501,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         ELONA_APPEND_RESPONSE(1, lang(u8"返り討ちにする"s, u8"Try me."s));
         ELONA_APPEND_RESPONSE(0, lang(u8"降参する"s, u8"I surrender."s));
@@ -4682,7 +4515,7 @@ void talk_unique()
                 cdata[0].gold / 5 +
                 u8" gold pieces and your cargos. Quite fortunate indeed."s);
         chatesc = 0;
-        talk_window();
+        talk_window_query();
         if (chatval == 0)
         {
             snd(12);
@@ -4710,8 +4543,7 @@ void talk_unique()
             levelexitby = 4;
             chatteleport = 1;
             snd(49);
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         listmax = 0;
         buff = lang(
@@ -4722,8 +4554,7 @@ void talk_unique()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 322:
         if (gdata_little_sister == 0)
         {
@@ -4747,8 +4578,7 @@ void talk_unique()
                 u8"ジャーナルが更新された。"s,
                 u8"Your journal has been updated."s));
             gdata_little_sister = 1;
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         if (gdata_little_sister > 0)
         {
@@ -4762,7 +4592,7 @@ void talk_unique()
                 lang(
                     u8"捕獲玉を補充したい"s,
                     u8"I need to replenish my supply of little balls."s));
-            if (findally(319) != -1)
+            if (chara_find_ally(319) != -1)
             {
                 ELONA_APPEND_RESPONSE(
                     3,
@@ -4774,7 +4604,7 @@ void talk_unique()
             buff = lang(
                 u8"リトルたちを、終わりのない苦痛から解放するべきだという人もいる。でも、大抵の人間はあの子達の力が欲しくて殺すのよ。そう、確かにリトルの肉は人の肉体を進化させる。それでも、私はあの子たちを救う別の道があることを信じているの。…そして覚えておいて。もしあなたがリトルの命を奪うようなことがあれば、いつかその酬いを受ける時がくるから。"s,
                 u8"Many people feel we need to free these girls from their never-ending oppression, but there are also scumbags that would murder them for their own personal gain. That's right; they say eating the girls' flesh will evolve the human body. I know there must be a better way to help them... don't forget that. Remember that if you take their lives, you will eventually get what's coming to you. "s);
-            talk_window();
+            talk_window_query();
             if (chatval == 1)
             {
                 p = gdata_kill_count_of_little_sister;
@@ -4878,8 +4708,7 @@ void talk_unique()
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
                 }
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             if (chatval == 2)
             {
@@ -4897,8 +4726,7 @@ void talk_unique()
                 txt(lang(
                     u8"何かが足元に転がってきた。"s,
                     u8"Something is put on the ground."s));
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             if (chatval == 3)
             {
@@ -4915,7 +4743,7 @@ void talk_unique()
                         + gdata_save_count_of_little_sister
                         + u8" times and killed "s
                         + gdata_kill_count_of_little_sister + u8" times."s));
-                chara_vanquish(findally(319));
+                chara_vanquish(chara_find_ally(319));
                 snd(51);
                 listmax = 0;
                 buff = lang(
@@ -4926,8 +4754,7 @@ void talk_unique()
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
             }
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         break;
     case 345:
@@ -4940,10 +4767,10 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(
                 0, lang(u8"別に乗りたくない"s, u8"Not really."s));
             chatesc = 1;
-            talk_window();
+            talk_window_query();
             if (chatval == 1)
             {
-                f = get_freeally();
+                f = chara_get_free_slot_ally();
                 if (f == 0)
                 {
                     listmax = 0;
@@ -4964,8 +4791,7 @@ void talk_unique()
                 rc = tc;
                 new_ally_joins();
                 gdata_blue_capsule_drug = 0;
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
             listmax = 0;
             buff = lang(u8"まあ、いいさ。"s, u8"If you say so."s);
@@ -4973,8 +4799,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         {
             int stat = inv_find(771, 0);
@@ -4986,7 +4811,7 @@ void talk_unique()
                 ELONA_APPEND_RESPONSE(1, lang(u8"譲る"s, u8"Take it."s));
                 ELONA_APPEND_RESPONSE(0, lang(u8"断る"s, u8"Nope."s));
                 chatesc = 1;
-                talk_window();
+                talk_window_query();
                 if (chatval == 1)
                 {
                     int stat = inv_find(771, 0);
@@ -5002,8 +4827,7 @@ void talk_unique()
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
                     ++gdata_blue_capsule_drug;
-                    talk_end();
-                    return;
+                    return talk_result_t::talk_end;
                 }
             }
         }
@@ -5014,8 +4838,7 @@ void talk_unique()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     case 348:
         if (gdata_current_map != 33 || adata(29, gdata_current_map) == 0)
         {
@@ -5031,8 +4854,7 @@ void talk_unique()
             ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
-            talk_end();
-            return;
+            return talk_result_t::talk_end;
         }
         ELONA_APPEND_RESPONSE(
             1,
@@ -5044,7 +4866,7 @@ void talk_unique()
             u8"ジュア教団では、ただ今他の神からの乗り換えキャンペーン実施中だ！聖夜祭の期間中なら、改宗によるペナルティは払わなくていいよ。さらになんと、今なら無料で数量限定のジュア様の抱き枕も付けちゃうよ！お客さん、このチャンスを見逃す手はないよ。"s,
             u8"We are running a special campaign to help you join our religion! Be a brother of Jure today and win free body pillow of Jure! During the festival, you won't have to pay penalty to convert your religion neither. So what are you waiting? Sign up now!"s);
         chatesc = 1;
-        talk_window();
+        talk_window_query();
         if (chatval == 1)
         {
             ELONA_APPEND_RESPONSE(1, lang(u8"はい"s, u8"Yes."s));
@@ -5053,7 +4875,7 @@ void talk_unique()
                 u8"よし、本当に改宗していいね？"s,
                 u8"Okie, just making sure. Do you really want to convert your religion?"s);
             chatesc = 1;
-            talk_window();
+            talk_window_query();
             if (chatval == 1)
             {
                 listmax = 0;
@@ -5072,8 +4894,7 @@ void talk_unique()
                     -1, 767, cdata[0].position.x, cdata[0].position.y, 0);
                 cdata[0].god_id = core_god::int2godid(6);
                 switch_religion();
-                talk_end();
-                return;
+                return talk_result_t::talk_end;
             }
         }
         listmax = 0;
@@ -5082,8 +4903,7 @@ void talk_unique()
         ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
-        talk_end();
-        return;
+        return talk_result_t::talk_end;
     }
 
     listmax = 0;
@@ -5093,8 +4913,7 @@ void talk_unique()
     ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
-    talk_end();
-    return;
+    return talk_result_t::talk_end;
 }
 
 

@@ -1,11 +1,19 @@
 #include "ability.hpp"
 #include "animation.hpp"
+#include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "character_status.hpp"
 #include "config.hpp"
 #include "elona.hpp"
+#include "event.hpp"
 #include "item.hpp"
+#include "itemgen.hpp"
+#include "map_cell.hpp"
+#include "mef.hpp"
 #include "random.hpp"
+#include "quest.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 
@@ -15,9 +23,9 @@ namespace elona
 
 void proc_event()
 {
-    switch (evid())
+    switch (event_id())
     {
-    case 8: hunt_all_targets(); break;
+    case 8: quest_all_targets_killed(); break;
     case 14:
         switch (gdata_executing_immediate_quest_type)
         {
@@ -82,7 +90,7 @@ void proc_event()
     case 1:
         conquer_lesimas();
         flt();
-        characreate(-1, 23, cdata[0].position.x, cdata[0].position.y);
+        chara_create(-1, 23, cdata[0].position.x, cdata[0].position.y);
         break;
     case 27:
         if (gdata_current_map == 35)
@@ -90,7 +98,7 @@ void proc_event()
             break;
         }
         flt();
-        characreate(
+        chara_create(
             -1,
             319,
             evdata1(evnum - (evnum != 0) * 1),
@@ -109,31 +117,31 @@ void proc_event()
         msg_halt();
         play_animation(21);
         flt();
-        characreate(
+        chara_create(
             -1,
             336,
             evdata1(evnum - (evnum != 0) * 1),
             evdata2(evnum - (evnum != 0) * 1));
         break;
     case 2:
-        tc = findchara(34);
-        speak_to_npc();
+        tc = chara_find(34);
+        talk_to_npc();
         break;
     case 24:
         initeco = 1;
         initialize_economy();
         break;
     case 3:
-        tc = findchara(2);
-        speak_to_npc();
+        tc = chara_find(2);
+        talk_to_npc();
         break;
     case 11:
-        tc = findchara(1);
-        speak_to_npc();
+        tc = chara_find(1);
+        talk_to_npc();
         break;
     case 23:
-        tc = findchara(302);
-        speak_to_npc();
+        tc = chara_find(302);
+        talk_to_npc();
         gdata(171) = 23;
         break;
     case 12:
@@ -176,12 +184,11 @@ void proc_event()
         flt();
         initlv = cdata[0].level * 2 / 3 + 1;
         novoidlv = 1;
-        characreate(-1, p, cdata[cc].position.x, cdata[cc].position.y);
+        chara_create(-1, p, cdata[cc].position.x, cdata[cc].position.y);
         new_ally_joins();
         break;
     case 13:
-        music = 80;
-        play_music();
+        play_music(80);
         s = lang(u8"結婚"s, u8"Marriage"s);
         buff = lang(u8"長い交際の末、遂にあなたと"s + name(marry) +
                 u8"は固い絆で結ばれた。婚儀の後、あなたの元に幾つか祝儀品が届けられた。"s,
@@ -219,7 +226,7 @@ void proc_event()
         flt();
         fixlv = 4;
         initlv = gdata_current_dungeon_level / 4;
-        characreate(-1, c, -3, 0);
+        chara_create(-1, c, -3, 0);
         cdata[rc].is_lord_of_dungeon() = true;
         cdata[rc].relationship = -3;
         cdata[rc].original_relationship = -3;
@@ -237,10 +244,10 @@ void proc_event()
     case 4:
         while (1)
         {
-            set_character_generation_filter();
+            chara_set_generation_filter();
             fixlv = 4;
             initlv = gdata_current_dungeon_level + rnd(5);
-            int stat = characreate(-1, 0, -3, 0);
+            int stat = chara_create(-1, 0, -3, 0);
             if (stat == 0)
             {
                 continue;
@@ -266,8 +273,7 @@ void proc_event()
                 + u8"."s));
         break;
     case 5:
-        music = 64;
-        play_music();
+        play_music(64);
         snd(51);
         flt(0, calcfixlv());
         flttypemajor = 54000;
@@ -320,9 +326,9 @@ void proc_event()
             u8"あなたは無事に護衛の任務を終えた。"s,
             u8"You complete the escort."s));
         tc = evdata2(evnum - (evnum != 0) * 1);
-        speak_to_npc();
+        talk_to_npc();
         rq = evdata1(evnum - (evnum != 0) * 1);
-        complete_quest();
+        quest_complete();
         chara_vanquish(evdata2(evnum - (evnum != 0) * 1));
         break;
     case 15:
@@ -332,7 +338,7 @@ void proc_event()
                 && qdata(13, i) == evdata1(evnum - (evnum != 0) * 1))
             {
                 rq = i;
-                failed_quest(qdata(3, rq));
+                quest_failed(qdata(3, rq));
                 break;
             }
         }
@@ -365,7 +371,7 @@ void proc_event()
         txt(lang(u8"金貨を幾らか失った…"s, u8"You lost some money."s));
         cdata[0].gold -= cdata[0].gold / 3;
         decfame(0, 10);
-        refresh_character(0);
+        chara_refresh(0);
         autosave = 1 * (gdata_current_map != 35);
         break;
     case 20:
@@ -380,7 +386,7 @@ void proc_event()
             cdata[evdata1(evnum - (evnum != 0) * 1)].position.y,
             4);
         gdata_pael_and_her_mom = 1001;
-        tc = findchara(221);
+        tc = chara_find(221);
         if (tc != 0)
         {
             if (cdata[tc].state == 1)
@@ -400,14 +406,14 @@ void proc_event()
         screenupdate = -1;
         update_entire_screen();
         break;
-    case 10: label_2673(); break;
+    case 10: quest_check_all_for_failed(); break;
     case 19:
         txtef(6);
         txt(""s + usermsg);
         break;
     case 25:
         --gdata_number_of_waiting_guests;
-        if (get_freechara() == -1)
+        if (chara_get_free_slot() == -1)
         {
             txt(lang(
                 u8"ゲストは行方不明になった。"s, u8"The guest lost his way."s));
@@ -423,37 +429,37 @@ void proc_event()
                 {
                     if (rnd(3))
                     {
-                        characreate(-1, 333, -3, 0);
+                        chara_create(-1, 333, -3, 0);
                         cdata[rc].character_role = 2005;
                         break;
                     }
                 }
                 if (rnd(10) == 0)
                 {
-                    characreate(-1, 334, -3, 0);
+                    chara_create(-1, 334, -3, 0);
                     cdata[rc].character_role = 2006;
                     break;
                 }
                 if (rnd(10) == 0)
                 {
-                    characreate(-1, 1, -3, 0);
+                    chara_create(-1, 1, -3, 0);
                     cdata[rc].character_role = 2003;
                     cdata[rc].shop_rank = clamp(cdata[0].fame / 100, 20, 100);
                     break;
                 }
                 if (rnd(4) == 0)
                 {
-                    characreate(-1, 9, -3, 0);
+                    chara_create(-1, 9, -3, 0);
                     cdata[rc].character_role = 2000;
                     break;
                 }
                 if (rnd(4) == 0)
                 {
-                    characreate(-1, 174, -3, 0);
+                    chara_create(-1, 174, -3, 0);
                     cdata[rc].character_role = 2001;
                     break;
                 }
-                characreate(-1, 16, -3, 0);
+                chara_create(-1, 16, -3, 0);
                 cdata[rc].character_role = 2002;
                 break;
             }
@@ -515,7 +521,7 @@ void proc_event()
             rc = tc;
             cxinit = cdata[0].position.x;
             cyinit = cdata[0].position.y;
-            place_character();
+            chara_place();
         }
         cdata[tc].visited_just_now() = true;
         i = 0;
@@ -606,7 +612,7 @@ void proc_event()
                 gdata(35) = cdata[c].direction;
             }
         }
-        speak_to_npc();
+        talk_to_npc();
         break;
     case 30:
         i = 0;
@@ -626,7 +632,7 @@ void proc_event()
         break;
     case 17:
         i = 0;
-        for (int cc = 1; cc < 245; ++cc)
+        for (int cc = 1; cc < ELONA_MAX_CHARACTERS; ++cc)
         {
             if (cdata[cc].state != 1)
                 continue;
@@ -636,7 +642,7 @@ void proc_event()
                     || cdata[cc].current_map == gdata_current_map)
                 {
                     cdata[cc].emotion_icon = 2006;
-                    int stat = customtalk(cc, 104);
+                    int stat = chara_custom_talk(cc, 104);
                     if (stat == 0)
                     {
                         ++i;
@@ -668,7 +674,7 @@ void proc_event()
         if (gdata_number_of_waiting_guests != 0)
         {
             tc = 0;
-            for (int cc = 0; cc < 245; ++cc)
+            for (int cc = 0; cc < ELONA_MAX_CHARACTERS; ++cc)
             {
                 if (cdata[cc].state != 1)
                     continue;
@@ -680,7 +686,7 @@ void proc_event()
             }
             if (tc != 0)
             {
-                speak_to_npc();
+                talk_to_npc();
             }
         }
         break;
@@ -824,7 +830,7 @@ void proc_event()
                     }
                     if (rnd(10) == 0 || f == 1)
                     {
-                        addmef(dx, dy, 5, 24, rnd(15) + 20, 50);
+                        mef_add(dx, dy, 5, 24, rnd(15) + 20, 50);
                     }
                     if (map(dx, dy, 1) != 0)
                     {
@@ -880,7 +886,7 @@ void proc_event()
                 x = rnd(mdata(0));
                 y = rnd(mdata(1));
             }
-            addmef(
+            mef_add(
                 x,
                 y,
                 5,
@@ -900,7 +906,7 @@ void proc_event()
                 {
                     fltnrace = u8"giant"s;
                 }
-                int stat = characreate(-1, 0, x, y);
+                int stat = chara_create(-1, 0, x, y);
                 if (stat != 0)
                 {
                     cdata[rc].is_temporary() = true;
@@ -928,7 +934,8 @@ void proc_event()
         txt(lang(
             u8"けたたましい警報が鳴り響いた！"s,
             u8"*beeeeeep!* An alarm sounds loudly!"s));
-        for (int cc = 57; cc < 245; ++cc)
+        for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS;
+             ++cc)
         {
             if (cdata[cc].state == 1)
             {
@@ -946,7 +953,7 @@ void proc_event()
         {
             flt();
             initlv = cdata[0].level;
-            characreate(-1, 215, cdata[0].position.x, cdata[0].position.y);
+            chara_create(-1, 215, cdata[0].position.x, cdata[0].position.y);
         }
         break;
     }

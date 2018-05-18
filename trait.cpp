@@ -1012,7 +1012,7 @@ int get_trait_info(int traitmode, int tid)
                     u8"あなたの腕はとてもたるんでいる[筋力-6]"s,
                     u8"Your arms are very thin. [STR-6]"s);
                 traitrefn(5) = lang(
-                    u8"あなたの腕には筋肉がない[腕力-9]"s,
+                    u8"あなたの腕には筋肉がない[筋力-9]"s,
                     u8"Your arms are just decorative. [STR-9]"s);
             }
             traitrefn(0) = lang(

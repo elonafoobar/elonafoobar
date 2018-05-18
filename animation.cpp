@@ -1,12 +1,15 @@
 #include "animation.hpp"
 #include "ability.hpp"
+#include "audio.hpp"
 #include "character.hpp"
 #include "config.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
+#include "fov.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "map.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 using namespace elona;
@@ -168,6 +171,7 @@ void play_animation_3(int anicol, int anisound)
                     pos((anidx - scx) * inf_tiles + inf_screenx + inf_tiles / 2,
                         (anidy - scy) * inf_tiles + inf_screeny + 16);
                     gmode(2, inf_tiles, inf_tiles);
+                    set_color_mod(255 - c_col(0, anicol), 255 - c_col(1, anicol), 255 - c_col(2, anicol), 7);
                     grotate(
                         7,
                         cnt2 * 48,
@@ -177,6 +181,7 @@ void play_animation_3(int anicol, int anisound)
                             cdata[cc].position.y - tlocy),
                         inf_tiles,
                         inf_tiles);
+                    set_color_mod(255, 255, 255, 7);
                 }
             }
         }
@@ -185,7 +190,7 @@ void play_animation_3(int anicol, int anisound)
     }
     if (anisound)
     {
-        snd(anisound, 0, 1);
+        snd(anisound, false, false);
     }
 }
 
@@ -248,7 +253,9 @@ void play_animation_17_2(int animeid, int anicol, int anisound)
                         pos(sx * inf_tiles + inf_screenx,
                             sy * inf_tiles + inf_screeny);
                         gmode(2, 48, 48);
+                        set_color_mod(255 - c_col(0, anicol), 255 - c_col(1, anicol), 255 - c_col(2, anicol), 7);
                         gcopy(7, anip * 48, 96, 48, 48);
+                        set_color_mod(255, 255, 255, 7);
                     }
                 }
             }
@@ -272,7 +279,7 @@ void play_animation_17_2(int animeid, int anicol, int anisound)
     }
     if (anisound)
     {
-        snd(anisound, 0, 1);
+        snd(anisound, false, false);
     }
 }
 
@@ -353,6 +360,7 @@ void play_animation_0(int anicol, int anisound)
                     {
                         pos(ax(cnt), ay(cnt));
                         gmode(2, inf_tiles, inf_tiles);
+                        set_color_mod(255 - c_col(0, anicol), 255 - c_col(1, anicol), 255 - c_col(2, anicol), 7);
                         grotate(
                             7,
                             ap(cnt) * 48,
@@ -362,6 +370,7 @@ void play_animation_0(int anicol, int anisound)
                                 cdata[cc].position.y - tlocy),
                             48,
                             48);
+                        set_color_mod(255, 255, 255, 7);
                     }
                 }
             }
@@ -372,7 +381,7 @@ void play_animation_0(int anicol, int anisound)
     }
     if (anisound)
     {
-        snd(anisound, 0, 1);
+        snd(anisound, false, false);
     }
 }
 
@@ -509,7 +518,7 @@ void play_animation_ranged_attack(int animeid, int anicol, int anisound)
     }
     if (anisound)
     {
-        snd(anisound, 0, 1);
+        snd(anisound, false, false);
     }
 }
 
@@ -684,7 +693,7 @@ void play_animation_19()
     gcopy(0, 0, 0, windoww, windowh);
     gsel(0);
     am = 0;
-    for (int cnt = 0; cnt < 245; ++cnt)
+    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         if (cdata[cnt].state != 1)
         {

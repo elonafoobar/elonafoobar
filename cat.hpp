@@ -234,7 +234,7 @@ public:
 
     void initialize()
     {
-        cat::global.load(filesystem::path(u8"../data") / traits_type::filename);
+        cat::global.load(filesystem::path(u8"data") / traits_type::filename);
 
         auto L = cat::global.ptr();
 

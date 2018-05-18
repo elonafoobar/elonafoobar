@@ -1,27 +1,37 @@
 #include "ability.hpp"
+#include "audio.hpp"
+#include "building.hpp"
 #include "calc.hpp"
 #include "character.hpp"
+#include "character_status.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"
+#include "draw.hpp"
 #include "elona.hpp"
+#include "event.hpp"
 #include "item.hpp"
+#include "quest.hpp"
+#include "itemgen.hpp"
+#include "map.hpp"
+#include "map_cell.hpp"
+#include "mapgen.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 
 namespace elona
 {
 
-
-void pc_turn(bool = true);
-
-
-void initialize_map()
+turn_result_t initialize_map()
 {
     int maxnpcbk = 0;
     elona_vector2<int> rolebk;
     int maxmedal = 0;
     elona_vector2<int> medalbk;
     int noaggrorefresh = 0;
+
+    clear_damage_popups();
+
 label_17401:
     mapupdate = 0;
     if (gdata_current_dungeon_level > adata(10, gdata_current_map))
@@ -110,8 +120,8 @@ label_1741_internal:
     if (mapupdate == 1)
     {
         maxnpcbk = 0;
-        DIM3(rolebk, 2, 245);
-        for (int cnt = 0; cnt < 245; ++cnt)
+        DIM3(rolebk, 2, ELONA_MAX_CHARACTERS);
+        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].state == 0)
             {
@@ -147,7 +157,8 @@ label_1741_internal:
         }
     }
     mdata(3) = 0;
-    for (int cnt = 57; cnt < 245; ++cnt)
+    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
+         ++cnt)
     {
         cdata[cnt].state = 0;
     }
@@ -205,7 +216,7 @@ label_1741_internal:
         generate_random_nefia();
         if (gdata_current_dungeon_level == adata(10, gdata_current_map))
         {
-            evadd(4);
+            event_add(4);
         }
     }
     if (adata(16, gdata_current_map) == 101)
@@ -300,7 +311,7 @@ label_1741_internal:
         for (int cnt = 0; cnt < 0; ++cnt)
         {
             flt();
-            characreate(-1, 0, cdata[0].position.x, cdata[0].position.y + 5);
+            chara_create(-1, 0, cdata[0].position.x, cdata[0].position.y + 5);
         }
         for (int cnt = 0; cnt < 100; ++cnt)
         {
@@ -308,7 +319,7 @@ label_1741_internal:
             y = rnd(mdata(1));
         }
         flt();
-        characreate(-1, 41, cdata[0].position.x, cdata[0].position.y);
+        chara_create(-1, 41, cdata[0].position.x, cdata[0].position.y);
         cdata[rc].character_role = 22;
         cdata[rc].is_livestock() = true;
     }
@@ -320,8 +331,8 @@ label_1741_internal:
         map_placeplayer();
         for (int cnt = 0, cnt_end = (mdata(10) / 2); cnt < cnt_end; ++cnt)
         {
-            set_character_generation_filter();
-            characreate(-1, 0, -3, 0);
+            chara_set_generation_filter();
+            chara_create(-1, 0, -3, 0);
         }
     }
     if (gdata_current_map == 41)
@@ -370,8 +381,8 @@ label_1741_internal:
         map_placeplayer();
         for (int cnt = 0, cnt_end = (mdata(10) / 2); cnt < cnt_end; ++cnt)
         {
-            set_character_generation_filter();
-            characreate(-1, 0, -3, 0);
+            chara_set_generation_filter();
+            chara_create(-1, 0, -3, 0);
         }
     }
     if (gdata_current_map == 32)
@@ -379,34 +390,34 @@ label_1741_internal:
         map_initcustom(u8"office_1"s);
         mdata(10) = 0;
         flt();
-        characreate(-1, 173, 9, 2);
+        chara_create(-1, 173, 9, 2);
         cdata[rc].character_role = 1012;
         cdata[rc].shop_rank = 10;
         flt();
-        characreate(-1, 173, 15, 2);
+        chara_create(-1, 173, 15, 2);
         cdata[rc].character_role = 1012;
         cdata[rc].shop_rank = 10;
         flt();
-        characreate(-1, 173, 21, 2);
+        chara_create(-1, 173, 21, 2);
         cdata[rc].character_role = 1013;
         cdata[rc].shop_rank = 10;
         flt();
-        characreate(-1, 173, 3, 2);
+        chara_create(-1, 173, 3, 2);
         cdata[rc].character_role = 1013;
         cdata[rc].shop_rank = 10;
         for (int cnt = 0; cnt < 3; ++cnt)
         {
             flt();
-            characreate(-1, 16, -3, 0);
+            chara_create(-1, 16, -3, 0);
             cdata[rc].character_role = 4;
             flt();
-            characreate(-1, 39, -3, 0);
+            chara_create(-1, 39, -3, 0);
             cdata[rc].character_role = 4;
         }
         for (int cnt = 0; cnt < 4; ++cnt)
         {
             flt();
-            characreate(-1, 77, 3 + cnt * 6, 9);
+            chara_create(-1, 77, 3 + cnt * 6, 9);
             cdata[rc].character_role = 14;
         }
         mdata(13) = 79;
@@ -417,107 +428,107 @@ label_1741_internal:
         map_initcustom(u8"test2"s);
         mdata(10) = 0;
         flt();
-        characreate(-1, 1, 7, 23);
+        chara_create(-1, 1, 7, 23);
         cdata[rc].character_role = 1006;
         cdata[rc].shop_rank = 10;
         cdatan(0, rc) = sngeneral(cdatan(0, rc));
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 1, 5, 17);
+        chara_create(-1, 1, 5, 17);
         cdata[rc].character_role = 1009;
         cdata[rc].shop_rank = 12;
         cdatan(0, rc) = sntrade(cdatan(0, rc));
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 1, 16, 19);
+        chara_create(-1, 1, 16, 19);
         cdata[rc].character_role = 1005;
         cdata[rc].shop_rank = 8;
         cdatan(0, rc) = sninn(cdatan(0, rc));
         flt();
-        characreate(-1, 70, 17, 13);
+        chara_create(-1, 70, 17, 13);
         cdata[rc].character_role = 9;
         flt();
-        characreate(-1, 353, 7, 3);
+        chara_create(-1, 353, 7, 3);
         cdata[rc].character_role = 23;
         for (int cnt = 0; cnt < 2; ++cnt)
         {
             flt();
-            characreate(-1, 9, -3, 0);
+            chara_create(-1, 9, -3, 0);
             flt();
-            characreate(-1, 159, -3, 0);
+            chara_create(-1, 159, -3, 0);
             cdata[rc].relationship = -1;
             cdata[rc].original_relationship = -1;
             flt();
-            characreate(-1, 160, -3, 0);
+            chara_create(-1, 160, -3, 0);
             cdata[rc].relationship = -1;
             cdata[rc].original_relationship = -1;
             flt();
-            characreate(-1, 161, -3, 0);
+            chara_create(-1, 161, -3, 0);
             cdata[rc].relationship = -1;
             cdata[rc].original_relationship = -1;
         }
         flt();
-        characreate(-1, 77, 5, 7);
+        chara_create(-1, 77, 5, 7);
         cdata[rc].character_role = 14;
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 77, 8, 7);
+        chara_create(-1, 77, 8, 7);
         cdata[rc].character_role = 14;
         cdata[rc].ai_calm = 3;
         mdata(13) = 79;
         map_placeplayer();
-        evadd(30);
+        event_add(30);
     }
     if (gdata_current_map == 43 || gdata_current_map == 45)
     {
         map_initcustom(u8"station-nt1"s);
         mdata(10) = 0;
         flt();
-        characreate(-1, 1, 7, 23);
+        chara_create(-1, 1, 7, 23);
         cdata[rc].character_role = 1006;
         cdata[rc].shop_rank = 10;
         cdatan(0, rc) = sngeneral(cdatan(0, rc));
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 1, 5, 17);
+        chara_create(-1, 1, 5, 17);
         cdata[rc].character_role = 1009;
         cdata[rc].shop_rank = 12;
         cdatan(0, rc) = sntrade(cdatan(0, rc));
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 1, 16, 19);
+        chara_create(-1, 1, 16, 19);
         cdata[rc].character_role = 1005;
         cdata[rc].shop_rank = 8;
         cdatan(0, rc) = sninn(cdatan(0, rc));
         flt();
-        characreate(-1, 70, 17, 13);
+        chara_create(-1, 70, 17, 13);
         cdata[rc].character_role = 9;
         flt();
-        characreate(-1, 353, 7, 3);
+        chara_create(-1, 353, 7, 3);
         cdata[rc].character_role = 23;
         for (int cnt = 0; cnt < 2; ++cnt)
         {
             flt();
-            characreate(-1, 9, -3, 0);
+            chara_create(-1, 9, -3, 0);
             flt();
-            characreate(-1, 159, -3, 0);
+            chara_create(-1, 159, -3, 0);
             cdata[rc].relationship = -1;
             cdata[rc].original_relationship = -1;
             flt();
-            characreate(-1, 160, -3, 0);
+            chara_create(-1, 160, -3, 0);
             cdata[rc].relationship = -1;
             cdata[rc].original_relationship = -1;
             flt();
-            characreate(-1, 161, -3, 0);
+            chara_create(-1, 161, -3, 0);
             cdata[rc].relationship = -1;
             cdata[rc].original_relationship = -1;
         }
         flt();
-        characreate(-1, 77, 5, 7);
+        chara_create(-1, 77, 5, 7);
         cdata[rc].character_role = 14;
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 77, 8, 7);
+        chara_create(-1, 77, 8, 7);
         cdata[rc].character_role = 14;
         cdata[rc].ai_calm = 3;
         mdata(13) = 79;
@@ -528,66 +539,66 @@ label_1741_internal:
         map_initcustom(u8"inn1"s);
         mdata(10) = 0;
         flt();
-        characreate(-1, 1, 19, 10);
+        chara_create(-1, 1, 19, 10);
         cdata[rc].character_role = 1005;
         cdata[rc].shop_rank = 8;
         cdatan(0, rc) = sninn(cdatan(0, rc));
         flt();
-        characreate(-1, 351, 26, 16);
+        chara_create(-1, 351, 26, 16);
         cdata[rc].character_role = 3;
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 35, 25, 15);
+        chara_create(-1, 35, 25, 15);
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 35, 25, 17);
+        chara_create(-1, 35, 25, 17);
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 35, 27, 18);
+        chara_create(-1, 35, 27, 18);
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 35, 27, 16);
+        chara_create(-1, 35, 27, 16);
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 35, 26, 17);
+        chara_create(-1, 35, 26, 17);
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 352, 4, 3);
+        chara_create(-1, 352, 4, 3);
         cdata[rc].character_role = 3;
         flt();
-        characreate(-1, 271, 4, 2);
+        chara_create(-1, 271, 4, 2);
         flt();
-        characreate(-1, 269, 3, 3);
+        chara_create(-1, 269, 3, 3);
         flt();
-        characreate(-1, 272, 4, 4);
+        chara_create(-1, 272, 4, 4);
         flt();
-        characreate(-1, 274, 5, 4);
+        chara_create(-1, 274, 5, 4);
         flt();
-        characreate(-1, 239, 24, 3);
+        chara_create(-1, 239, 24, 3);
         flt();
-        characreate(-1, 239, 26, 4);
+        chara_create(-1, 239, 26, 4);
         flt();
-        characreate(-1, 239, 25, 5);
+        chara_create(-1, 239, 25, 5);
         flt();
-        characreate(-1, 239, 25, 9);
+        chara_create(-1, 239, 25, 9);
         flt();
-        characreate(-1, 326, 12, 9);
+        chara_create(-1, 326, 12, 9);
         for (int cnt = 0; cnt < 2; ++cnt)
         {
             flt();
-            characreate(-1, 9, -3, 0);
+            chara_create(-1, 9, -3, 0);
             flt();
-            characreate(-1, 159, -3, 0);
+            chara_create(-1, 159, -3, 0);
             cdata[rc].relationship = -1;
             cdata[rc].original_relationship = -1;
             flt();
-            characreate(-1, 36, -3, 0);
+            chara_create(-1, 36, -3, 0);
             cdata[rc].relationship = -1;
             cdata[rc].original_relationship = -1;
             flt();
-            characreate(-1, 8, -3, 0);
+            chara_create(-1, 8, -3, 0);
             flt();
-            characreate(-1, 185, -3, 0);
+            chara_create(-1, 185, -3, 0);
         }
         mdata(13) = 79;
         map_placeplayer();
@@ -597,16 +608,16 @@ label_1741_internal:
         map_initcustom(u8"smith0"s);
         mdata(10) = 0;
         flt();
-        characreate(-1, 208, 17, 11);
+        chara_create(-1, 208, 17, 11);
         cdata[rc].character_role = 3;
         flt();
-        characreate(-1, 209, 8, 16);
+        chara_create(-1, 209, 8, 16);
         cdata[rc].character_role = 1016;
         cdata[rc].shop_rank = 100;
         for (int cnt = 0; cnt < 5; ++cnt)
         {
             flt();
-            characreate(-1, 164, -3, 0);
+            chara_create(-1, 164, -3, 0);
             cdata[rc].character_role = 3;
         }
         mdata(13) = 79;
@@ -624,18 +635,18 @@ label_1741_internal:
             inv[ci].param2 = 4;
         }
         flt();
-        characreate(-1, 249, 12, 6);
+        chara_create(-1, 249, 12, 6);
         cdata[rc].character_role = 1019;
         for (int cnt = 0; cnt < 6; ++cnt)
         {
             flt();
-            characreate(-1, 211, -3, 0);
+            chara_create(-1, 211, -3, 0);
             cdata[rc].character_role = 3;
         }
         for (int cnt = 0; cnt < 8; ++cnt)
         {
             flt();
-            characreate(-1, 246, -3, 0);
+            chara_create(-1, 246, -3, 0);
             cdata[rc].character_role = 3;
         }
         map_placeplayer();
@@ -649,29 +660,29 @@ label_1741_internal:
         inv[ci].param1 = 1;
         inv[ci].own_state = 1;
         flt();
-        characreate(-1, 173, 9, 16);
+        chara_create(-1, 173, 9, 16);
         cdata[rc].character_role = 1011;
         cdata[rc].shop_rank = 10;
         flt();
-        characreate(-1, 173, 9, 8);
+        chara_create(-1, 173, 9, 8);
         cdata[rc].character_role = 1011;
         cdata[rc].shop_rank = 10;
         flt();
-        characreate(-1, 322, 28, 7);
+        chara_create(-1, 322, 28, 7);
         cdata[rc].character_role = 3;
         for (int cnt = 0; cnt < 4; ++cnt)
         {
             flt();
-            characreate(-1, 171, -3, 0);
+            chara_create(-1, 171, -3, 0);
             cdata[rc].character_role = 4;
             flt();
-            characreate(-1, 172, -3, 0);
+            chara_create(-1, 172, -3, 0);
             cdata[rc].character_role = 4;
         }
         for (int cnt = 0, cnt_end = (mdata(10) / 2); cnt < cnt_end; ++cnt)
         {
-            set_character_generation_filter();
-            characreate(-1, 0, -3, 0);
+            chara_set_generation_filter();
+            chara_create(-1, 0, -3, 0);
         }
         mdata(13) = 79;
         map_placeplayer();
@@ -681,57 +692,57 @@ label_1741_internal:
         map_initcustom(u8"highmountain"s);
         mdata(10) = 20;
         flt();
-        characreate(-1, 41, 21, 23);
+        chara_create(-1, 41, 21, 23);
         cdata[rc].character_role = 21;
         flt();
-        characreate(-1, 1, 9, 44);
+        chara_create(-1, 1, 9, 44);
         cdata[rc].character_role = 1017;
         cdata[rc].shop_rank = 5;
         cdatan(0, rc) = lang(
             u8"染色店の"s + cdatan(0, rc),
             sncnv(cdatan(0, rc)) + u8"the dye vendor"s);
         flt();
-        characreate(-1, 1, 13, 37);
+        chara_create(-1, 1, 13, 37);
         cdata[rc].character_role = 1018;
         cdata[rc].shop_rank = 30;
         cdatan(0, rc) = lang(
             u8"おみやげ屋の"s + cdatan(0, rc),
             sncnv(cdatan(0, rc)) + u8"the souvenir vendor"s);
         flt();
-        characreate(-1, 70, 24, 48);
+        chara_create(-1, 70, 24, 48);
         cdata[rc].character_role = 9;
         flt();
-        characreate(-1, 239, 7, 36);
+        chara_create(-1, 239, 7, 36);
         flt();
-        characreate(-1, 239, 9, 38);
+        chara_create(-1, 239, 9, 38);
         flt();
-        characreate(-1, 239, 6, 33);
+        chara_create(-1, 239, 6, 33);
         flt();
-        characreate(-1, 239, 3, 33);
+        chara_create(-1, 239, 3, 33);
         flt();
-        characreate(-1, 239, 8, 31);
+        chara_create(-1, 239, 8, 31);
         flt();
-        characreate(-1, 239, 4, 36);
+        chara_create(-1, 239, 4, 36);
         for (int cnt = 0; cnt < 7; ++cnt)
         {
             flt();
-            characreate(-1, 16, -3, 0);
+            chara_create(-1, 16, -3, 0);
             cdata[rc].character_role = 4;
             flt();
-            characreate(-1, 39, -3, 0);
+            chara_create(-1, 39, -3, 0);
             cdata[rc].character_role = 4;
             flt();
-            characreate(-1, 239, -3, 0);
+            chara_create(-1, 239, -3, 0);
         }
         for (int cnt = 0; cnt < 15; ++cnt)
         {
             flt();
-            characreate(-1, 239, -3, 0);
+            chara_create(-1, 239, -3, 0);
         }
         for (int cnt = 0, cnt_end = (mdata(10) / 2); cnt < cnt_end; ++cnt)
         {
-            set_character_generation_filter();
-            characreate(-1, 0, -3, 0);
+            chara_set_generation_filter();
+            chara_create(-1, 0, -3, 0);
         }
         mdata(13) = 79;
         map_placeplayer();
@@ -758,7 +769,7 @@ label_1741_internal:
         if (arenaop == 0)
         {
             fixlv = arenaop(2);
-            characreate(
+            chara_create(
                 -1,
                 arenaop(1),
                 cdata[0].position.x - 1,
@@ -774,7 +785,7 @@ label_1741_internal:
             for (int cnt = 0, cnt_end = (3 + rnd(4)); cnt < cnt_end; ++cnt)
             {
                 flt(arenaop(1), 2);
-                characreate(
+                chara_create(
                     -1, 0, cdata[0].position.x - 1, cdata[0].position.y - 5);
                 cdata[rc].relationship = -3;
                 cdata[rc].original_relationship = -3;
@@ -818,7 +829,7 @@ label_1741_internal:
         for (int cnt = 0, cnt_end = (arenaop(1)); cnt < cnt_end; ++cnt)
         {
             flt(arenaop(2), calcfixlv(3));
-            characreate(-1, 0, -3, 0);
+            chara_create(-1, 0, -3, 0);
             map(cdata[rc].position.x, cdata[rc].position.y, 1) = 0;
             f = 1;
             if (arenaop == 0)
@@ -844,7 +855,8 @@ label_1741_internal:
                 enemyteam = rc;
             }
         }
-        for (int cnt = 57; cnt < 245; ++cnt)
+        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
+             ++cnt)
         {
             if (cdata[cnt].relationship == -3)
             {
@@ -858,7 +870,7 @@ label_1741_internal:
         mdata(10) = 0;
         mdata(13) = 63;
         flt();
-        characreate(-1, 175, 12, 14);
+        chara_create(-1, 175, 12, 14);
         map_placeplayer();
     }
     if (gdata_current_map == 23)
@@ -867,7 +879,7 @@ label_1741_internal:
         mdata(10) = 0;
         mdata(13) = 63;
         flt();
-        characreate(-1, 177, 12, 14);
+        chara_create(-1, 177, 12, 14);
         map_placeplayer();
     }
     if (gdata_current_map == 24)
@@ -876,7 +888,7 @@ label_1741_internal:
         mdata(13) = 63;
         mdata(10) = 0;
         flt();
-        characreate(-1, 178, 12, 14);
+        chara_create(-1, 178, 12, 14);
         map_placeplayer();
     }
     if (gdata_current_map == 7)
@@ -893,10 +905,10 @@ label_1741_internal:
             {
                 mdata(20) = 1;
                 flt();
-                characreate(-1, 33, 18, 10);
+                chara_create(-1, 33, 18, 10);
                 cdata[rc].character_role = 3;
                 flt();
-                characreate(-1, 34, 16, 11);
+                chara_create(-1, 34, 16, 11);
                 cdata[rc].character_role = 3;
                 flt();
                 itemcreate(-1, 510, 6, 10, 0);
@@ -925,7 +937,9 @@ label_1741_internal:
                     cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
                 }
                 ctrl_file(file_operation_t::_17);
-                for (int cnt = 57; cnt < 245; ++cnt)
+                for (int cnt = ELONA_MAX_PARTY_CHARACTERS;
+                     cnt < ELONA_MAX_CHARACTERS;
+                     ++cnt)
                 {
                     cdata[cnt].position.x = mdata(0) / 2;
                     cdata[cnt].position.y = mdata(1) / 2;
@@ -936,31 +950,31 @@ label_1741_internal:
             if (gdata_home_scale == 5)
             {
                 flt();
-                characreate(-1, 1, 31, 20);
+                chara_create(-1, 1, 31, 20);
                 cdata[rc].character_role = 1006;
                 cdata[rc].shop_rank = 10;
                 cdatan(0, rc) = sngeneral(cdatan(0, rc));
                 flt();
-                characreate(-1, 1, 9, 20);
+                chara_create(-1, 1, 9, 20);
                 cdata[rc].character_role = 1001;
                 cdata[rc].shop_rank = 12;
                 cdatan(0, rc) = snarmor(cdatan(0, rc));
                 flt();
-                characreate(-1, 1, 4, 20);
+                chara_create(-1, 1, 4, 20);
                 cdata[rc].character_role = 1008;
                 cdata[rc].shop_rank = 10;
                 cdatan(0, rc) = sngoods(cdatan(0, rc));
                 flt();
-                characreate(-1, 41, 4, 11);
+                chara_create(-1, 41, 4, 11);
                 cdata[rc].character_role = 5;
                 flt();
-                characreate(-1, 70, 30, 11);
+                chara_create(-1, 70, 30, 11);
                 cdata[rc].character_role = 9;
                 flt();
-                characreate(-1, 74, 30, 4);
+                chara_create(-1, 74, 30, 4);
                 cdata[rc].character_role = 12;
                 flt();
-                characreate(-1, 41, 4, 4);
+                chara_create(-1, 41, 4, 4);
                 cdata[rc].character_role = 1004;
                 cdata[rc].shop_rank = 11;
                 cdatan(0, rc) = snmagic(cdatan(0, rc));
@@ -1000,84 +1014,84 @@ label_1741_internal:
             map_placeplayer();
             mdata(15) = 0;
             flt();
-            characreate(-1, 253, 23, 14);
+            chara_create(-1, 253, 23, 14);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 259, 13, 18);
+            chara_create(-1, 259, 13, 18);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 294, 16, 17);
+            chara_create(-1, 294, 16, 17);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 1, 10, 17);
+            chara_create(-1, 1, 10, 17);
             cdata[rc].character_role = 1009;
             cdata[rc].shop_rank = 12;
             cdatan(0, rc) = sntrade(cdatan(0, rc));
             flt();
-            characreate(-1, 70, 15, 15);
+            chara_create(-1, 70, 15, 15);
             cdata[rc].character_role = 9;
             flt();
-            characreate(-1, 1, 13, 3);
+            chara_create(-1, 1, 13, 3);
             cdata[rc].character_role = 1006;
             cdata[rc].shop_rank = 10;
             cdatan(0, rc) = sngeneral(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 29, 23);
+            chara_create(-1, 1, 29, 23);
             cdata[rc].character_role = 1005;
             cdata[rc].shop_rank = 8;
             cdatan(0, rc) = sninn(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 26, 7);
+            chara_create(-1, 1, 26, 7);
             cdata[rc].character_role = 1008;
             cdata[rc].shop_rank = 10;
             cdatan(0, rc) = sngoods(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 30, 4);
+            chara_create(-1, 1, 30, 4);
             cdata[rc].character_role = 1007;
             cdata[rc].shop_rank = 10;
             cdatan(0, rc) = snblack(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 29, 4);
+            chara_create(-1, 1, 29, 4);
             cdata[rc].character_role = 17;
             cdatan(0, rc) = lang(u8"謎の奴隷商人"s, u8"The slave master"s);
             flt();
-            characreate(-1, 1, 10, 6);
+            chara_create(-1, 1, 10, 6);
             cdata[rc].character_role = 1001;
             cdata[rc].shop_rank = 12;
             cdatan(0, rc) = snarmor(cdatan(0, rc));
             flt();
-            characreate(-1, 73, 7, 15);
+            chara_create(-1, 73, 7, 15);
             cdata[rc].character_role = 10;
             flt();
-            characreate(-1, 38, 9, 18);
+            chara_create(-1, 38, 9, 18);
             cdata[rc].character_role = 6;
             cdatan(0, rc) = lang(
                 u8"ダルフィ"s + cdatan(0, rc), cdatan(0, rc) + u8" of Derphy"s);
             flt();
-            characreate(-1, 40, 13, 18);
+            chara_create(-1, 40, 13, 18);
             cdata[rc].character_role = 7;
             cdatan(0, rc) = sntrainer(cdatan(0, rc));
             flt();
-            characreate(-1, 41, 5, 26);
+            chara_create(-1, 41, 5, 26);
             cdata[rc].character_role = 5;
             flt();
-            characreate(-1, 69, 3, 28);
+            chara_create(-1, 69, 3, 28);
             cdata[rc].character_role = 8;
             for (int cnt = 0; cnt < 4; ++cnt)
             {
                 flt();
-                characreate(-1, 16, -3, 0);
+                chara_create(-1, 16, -3, 0);
                 cdata[rc].character_role = 4;
                 flt();
-                characreate(-1, 39, -3, 0);
+                chara_create(-1, 39, -3, 0);
                 cdata[rc].character_role = 4;
             }
-            label_2669();
+            quest_on_map_initialize();
             for (int cnt = 0; cnt < 20; ++cnt)
             {
                 dbid = 0;
-                set_character_generation_filter();
-                characreate(-1, dbid, -3, 0);
+                chara_set_generation_filter();
+                chara_create(-1, dbid, -3, 0);
             }
         }
         if (gdata_current_dungeon_level == 3)
@@ -1092,27 +1106,27 @@ label_1741_internal:
             mdatan(0) = lang(u8"盗賊ギルド"s, u8"Thieves Guild"s);
             map_placeplayer();
             flt();
-            characreate(-1, 292, 21, 9);
+            chara_create(-1, 292, 21, 9);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 40, 3, 6);
+            chara_create(-1, 40, 3, 6);
             cdata[rc].character_role = 7;
             cdatan(0, rc) = sntrainer(cdatan(0, rc));
             flt();
-            characreate(-1, 41, 3, 12);
+            chara_create(-1, 41, 3, 12);
             cdata[rc].character_role = 5;
             flt();
-            characreate(-1, 1, 5, 18);
+            chara_create(-1, 1, 5, 18);
             cdata[rc].character_role = 1007;
             cdata[rc].shop_rank = 10;
             cdatan(0, rc) = snblack(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 27, 13);
+            chara_create(-1, 1, 27, 13);
             cdata[rc].character_role = 1007;
             cdata[rc].shop_rank = 10;
             cdatan(0, rc) = snblack(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 21, 19);
+            chara_create(-1, 1, 21, 19);
             cdata[rc].character_role = 1021;
             cdata[rc].shop_rank = 10;
             cdatan(0, rc) = lang(
@@ -1121,7 +1135,7 @@ label_1741_internal:
             for (int cnt = 0; cnt < 16; ++cnt)
             {
                 flt();
-                characreate(-1, 293, -3, 0);
+                chara_create(-1, 293, -3, 0);
             }
         }
     }
@@ -1132,155 +1146,155 @@ label_1741_internal:
         map_placeplayer();
         mdata(15) = 0;
         flt();
-        characreate(-1, 70, 42, 27);
+        chara_create(-1, 70, 42, 27);
         cdata[rc].character_role = 9;
         flt();
-        characreate(-1, 74, 34, 3);
+        chara_create(-1, 74, 34, 3);
         cdata[rc].character_role = 12;
         flt();
-        characreate(-1, 73, 22, 31);
+        chara_create(-1, 73, 22, 31);
         cdata[rc].character_role = 10;
         flt();
-        characreate(-1, 142, 5, 15);
+        chara_create(-1, 142, 5, 15);
         cdata[rc].character_role = 3;
         flt();
-        characreate(-1, 247, 41, 11);
+        chara_create(-1, 247, 41, 11);
         cdata[rc].character_role = 3;
         flt();
-        characreate(-1, 301, 5, 6);
+        chara_create(-1, 301, 5, 6);
         cdata[rc].character_role = 3;
         flt();
-        characreate(-1, 320, 24, 6);
+        chara_create(-1, 320, 24, 6);
         cdata[rc].character_role = 3;
         flt();
-        characreate(-1, 320, 15, 22);
+        chara_create(-1, 320, 15, 22);
         cdata[rc].character_role = 3;
         flt();
-        characreate(-1, 326, 15, 22);
+        chara_create(-1, 326, 15, 22);
         cdata[rc].character_role = 3;
         if (gdata_mias_dream == 1000)
         {
             flt();
-            characreate(-1, 246, 42, 11);
+            chara_create(-1, 246, 42, 11);
             cdata[rc].character_role = 3;
         }
         flt();
-        characreate(-1, 1, 48, 18);
+        chara_create(-1, 1, 48, 18);
         cdata[rc].character_role = 1006;
         cdata[rc].shop_rank = 10;
         cdatan(0, rc) = sngeneral(cdatan(0, rc));
         flt();
-        characreate(-1, 1, 30, 17);
+        chara_create(-1, 1, 30, 17);
         cdata[rc].character_role = 1005;
         cdata[rc].shop_rank = 8;
         cdatan(0, rc) = sninn(cdatan(0, rc));
         flt();
-        characreate(-1, 1, 48, 3);
+        chara_create(-1, 1, 48, 3);
         cdata[rc].character_role = 1008;
         cdata[rc].shop_rank = 8;
         cdatan(0, rc) = sngoods(cdatan(0, rc));
         flt();
-        characreate(-1, 1, 42, 17);
+        chara_create(-1, 1, 42, 17);
         cdata[rc].character_role = 1001;
         cdata[rc].shop_rank = 12;
         cdatan(0, rc) = snarmor(cdatan(0, rc));
         flt();
-        characreate(-1, 1, 11, 14);
+        chara_create(-1, 1, 11, 14);
         cdata[rc].character_role = 1003;
         cdata[rc].shop_rank = 9;
         cdatan(0, rc) = snbakery(cdatan(0, rc));
         cdata[rc].image = 138;
         flt();
-        characreate(-1, 41, 41, 3);
+        chara_create(-1, 41, 41, 3);
         cdata[rc].character_role = 1004;
         cdata[rc].shop_rank = 11;
         cdatan(0, rc) = snmagic(cdatan(0, rc));
         flt();
-        characreate(-1, 1, 41, 28);
+        chara_create(-1, 1, 41, 28);
         cdata[rc].character_role = 1009;
         cdata[rc].shop_rank = 12;
         cdatan(0, rc) = sntrade(cdatan(0, rc));
         flt();
-        characreate(-1, 79, 7, 2);
+        chara_create(-1, 79, 7, 2);
         cdata[rc].character_role = 15;
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 80, 6, 2);
+        chara_create(-1, 80, 6, 2);
         cdata[rc].character_role = 15;
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 38, 49, 11);
+        chara_create(-1, 38, 49, 11);
         cdata[rc].character_role = 6;
         cdatan(0, rc) = lang(
             u8"パルミア市街地の"s + cdatan(0, rc),
             cdatan(0, rc) + u8" of Palmia city"s);
         flt();
-        characreate(-1, 40, 30, 27);
+        chara_create(-1, 40, 30, 27);
         cdata[rc].character_role = 7;
         cdatan(0, rc) = sntrainer(cdatan(0, rc));
         flt();
-        characreate(-1, 41, 32, 27);
+        chara_create(-1, 41, 32, 27);
         cdata[rc].character_role = 5;
         flt();
-        characreate(-1, 69, 29, 28);
+        chara_create(-1, 69, 29, 28);
         cdata[rc].character_role = 8;
         flt();
-        characreate(-1, 77, 16, 5);
+        chara_create(-1, 77, 16, 5);
         cdata[rc].character_role = 14;
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 77, 16, 9);
+        chara_create(-1, 77, 16, 9);
         cdata[rc].character_role = 14;
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 77, 5, 3);
+        chara_create(-1, 77, 5, 3);
         cdata[rc].character_role = 14;
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 77, 8, 3);
+        chara_create(-1, 77, 8, 3);
         cdata[rc].character_role = 14;
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 77, 35, 14);
+        chara_create(-1, 77, 35, 14);
         cdata[rc].character_role = 14;
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 77, 38, 14);
+        chara_create(-1, 77, 38, 14);
         cdata[rc].character_role = 14;
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 77, 29, 2);
+        chara_create(-1, 77, 29, 2);
         cdata[rc].character_role = 14;
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 77, 19, 18);
+        chara_create(-1, 77, 19, 18);
         cdata[rc].character_role = 14;
         cdata[rc].ai_calm = 3;
         flt();
-        characreate(-1, 77, 22, 18);
+        chara_create(-1, 77, 22, 18);
         cdata[rc].character_role = 14;
         cdata[rc].ai_calm = 3;
         for (int cnt = 0; cnt < 5; ++cnt)
         {
             flt();
-            characreate(-1, 16, -3, 0);
+            chara_create(-1, 16, -3, 0);
             cdata[rc].character_role = 4;
             flt();
-            characreate(-1, 39, -3, 0);
+            chara_create(-1, 39, -3, 0);
             cdata[rc].character_role = 4;
         }
         for (int cnt = 0; cnt < 4; ++cnt)
         {
             flt();
-            characreate(-1, 77, -3, 0);
+            chara_create(-1, 77, -3, 0);
             cdata[rc].character_role = 14;
         }
-        label_2669();
+        quest_on_map_initialize();
         for (int cnt = 0; cnt < 25; ++cnt)
         {
             dbid = 0;
-            set_character_generation_filter();
-            characreate(-1, dbid, -3, 0);
+            chara_set_generation_filter();
+            chara_create(-1, dbid, -3, 0);
         }
     }
     if (gdata_current_map == 36)
@@ -1296,111 +1310,111 @@ label_1741_internal:
                 cell_featset(18, 45, tile_downstairs, 11, 20);
             }
             flt();
-            characreate(-1, 252, 12, 24);
+            chara_create(-1, 252, 12, 24);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 280, 21, 3);
+            chara_create(-1, 280, 21, 3);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 290, 5, 20);
+            chara_create(-1, 290, 5, 20);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 320, 28, 29);
+            chara_create(-1, 320, 28, 29);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 326, 41, 19);
+            chara_create(-1, 326, 41, 19);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 326, 32, 43);
+            chara_create(-1, 326, 32, 43);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 326, 29, 28);
+            chara_create(-1, 326, 29, 28);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 326, 16, 45);
+            chara_create(-1, 326, 16, 45);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 326, 13, 24);
+            chara_create(-1, 326, 13, 24);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 70, 41, 42);
+            chara_create(-1, 70, 41, 42);
             cdata[rc].character_role = 9;
             flt();
-            characreate(-1, 74, 10, 16);
+            chara_create(-1, 74, 10, 16);
             cdata[rc].character_role = 12;
             flt();
-            characreate(-1, 1, 47, 30);
+            chara_create(-1, 1, 47, 30);
             cdata[rc].character_role = 1006;
             cdata[rc].shop_rank = 10;
             cdatan(0, rc) = sngeneral(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 24, 47);
+            chara_create(-1, 1, 24, 47);
             cdata[rc].character_role = 1005;
             cdata[rc].shop_rank = 8;
             cdatan(0, rc) = sninn(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 37, 30);
+            chara_create(-1, 1, 37, 30);
             cdata[rc].character_role = 1001;
             cdata[rc].shop_rank = 12;
             cdatan(0, rc) = snarmor(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 37, 12);
+            chara_create(-1, 1, 37, 12);
             cdata[rc].character_role = 1003;
             cdata[rc].shop_rank = 9;
             cdatan(0, rc) = snbakery(cdatan(0, rc));
             cdata[rc].image = 138;
             flt();
-            characreate(-1, 41, 6, 15);
+            chara_create(-1, 41, 6, 15);
             cdata[rc].character_role = 1004;
             cdata[rc].shop_rank = 11;
             cdatan(0, rc) = snmagic(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 33, 43);
+            chara_create(-1, 1, 33, 43);
             cdata[rc].character_role = 1009;
             cdata[rc].shop_rank = 12;
             cdatan(0, rc) = sntrade(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 47, 12);
+            chara_create(-1, 1, 47, 12);
             cdata[rc].character_role = 1014;
             cdata[rc].shop_rank = 5;
             cdatan(0, rc) = snfish(cdatan(0, rc));
             flt();
-            characreate(-1, 38, 3, 38);
+            chara_create(-1, 38, 3, 38);
             cdata[rc].character_role = 6;
             cdatan(0, rc) = lang(
                 u8"ルミエストの"s + cdatan(0, rc),
                 cdatan(0, rc) + u8" of Lumiest"s);
             flt();
-            characreate(-1, 40, 21, 28);
+            chara_create(-1, 40, 21, 28);
             cdata[rc].character_role = 7;
             cdatan(0, rc) = sntrainer(cdatan(0, rc));
             flt();
-            characreate(-1, 41, 21, 30);
+            chara_create(-1, 41, 21, 30);
             cdata[rc].character_role = 5;
             flt();
-            characreate(-1, 69, 23, 38);
+            chara_create(-1, 69, 23, 38);
             cdata[rc].character_role = 8;
             for (int cnt = 0; cnt < 6; ++cnt)
             {
                 flt();
-                characreate(-1, 16, -3, 0);
+                chara_create(-1, 16, -3, 0);
                 cdata[rc].character_role = 4;
                 flt();
-                characreate(-1, 39, -3, 0);
+                chara_create(-1, 39, -3, 0);
                 cdata[rc].character_role = 4;
             }
             for (int cnt = 0; cnt < 7; ++cnt)
             {
                 flt();
-                characreate(-1, 77, -3, 0);
+                chara_create(-1, 77, -3, 0);
                 cdata[rc].character_role = 14;
             }
-            label_2669();
+            quest_on_map_initialize();
             for (int cnt = 0; cnt < 25; ++cnt)
             {
                 dbid = 0;
-                set_character_generation_filter();
-                characreate(-1, dbid, -3, 0);
+                chara_set_generation_filter();
+                chara_create(-1, dbid, -3, 0);
             }
         }
         if (gdata_current_dungeon_level == 3)
@@ -1415,33 +1429,33 @@ label_1741_internal:
             mdatan(0) = lang(u8"魔術士ギルド"s, u8"Mages Guild"s);
             map_placeplayer();
             flt();
-            characreate(-1, 288, 24, 3);
+            chara_create(-1, 288, 24, 3);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 41, 27, 8);
+            chara_create(-1, 41, 27, 8);
             cdata[rc].character_role = 1020;
             cdatan(0, rc) = lang(
                 u8"魔法書作家の"s + cdatan(0, rc),
                 sncnv(cdatan(0, rc)) + u8"the spell writer"s);
             flt();
-            characreate(-1, 41, 22, 8);
+            chara_create(-1, 41, 22, 8);
             cdata[rc].character_role = 1004;
             cdata[rc].shop_rank = 11;
             cdatan(0, rc) = snmagic(cdatan(0, rc));
             flt();
-            characreate(-1, 74, 3, 9);
+            chara_create(-1, 74, 3, 9);
             cdata[rc].character_role = 12;
             flt();
-            characreate(-1, 40, 12, 6);
+            chara_create(-1, 40, 12, 6);
             cdata[rc].character_role = 7;
             cdatan(0, rc) = sntrainer(cdatan(0, rc));
             flt();
-            characreate(-1, 41, 3, 3);
+            chara_create(-1, 41, 3, 3);
             cdata[rc].character_role = 5;
             for (int cnt = 0; cnt < 16; ++cnt)
             {
                 flt();
-                characreate(-1, 289, -3, 0);
+                chara_create(-1, 289, -3, 0);
             }
         }
         if (gdata_current_dungeon_level == 20)
@@ -1454,7 +1468,7 @@ label_1741_internal:
             mdata(13) = 61;
             mdata(17) = 1;
             mdatan(0) = lang(u8"ルミエスト下水道"s, u8"The Sewer"s);
-            put_questtarget();
+            quest_place_target();
             gdata_entrance_type = 1;
             map_placeplayer();
         }
@@ -1472,92 +1486,92 @@ label_1741_internal:
                 cell_featset(23, 22, tile_downstairs, 11, 3);
             }
             flt();
-            characreate(-1, 224, 3, 17);
+            chara_create(-1, 224, 3, 17);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 227, 26, 11);
+            chara_create(-1, 227, 26, 11);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 231, 14, 20);
+            chara_create(-1, 231, 14, 20);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 1, 11, 5);
+            chara_create(-1, 1, 11, 5);
             cdata[rc].character_role = 1006;
             cdata[rc].shop_rank = 10;
             cdatan(0, rc) = sngeneral(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 25, 8);
+            chara_create(-1, 1, 25, 8);
             cdata[rc].character_role = 1005;
             cdata[rc].shop_rank = 8;
             cdatan(0, rc) = sninn(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 7, 8);
+            chara_create(-1, 1, 7, 8);
             cdata[rc].character_role = 1008;
             cdata[rc].shop_rank = 8;
             cdatan(0, rc) = sngoods(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 14, 14);
+            chara_create(-1, 1, 14, 14);
             cdata[rc].character_role = 1009;
             cdata[rc].shop_rank = 12;
             cdatan(0, rc) = sntrade(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 35, 18);
+            chara_create(-1, 1, 35, 18);
             cdata[rc].character_role = 22;
             cdatan(0, rc) = lang(
                 u8"馬屋の"s + cdatan(0, rc),
                 sncnv(cdatan(0, rc)) + u8"the horse master"s);
             flt();
-            characreate(-1, 267, 33, 16);
+            chara_create(-1, 267, 33, 16);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 267, 37, 19);
+            chara_create(-1, 267, 37, 19);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 268, 34, 19);
+            chara_create(-1, 268, 34, 19);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 268, 38, 16);
+            chara_create(-1, 268, 38, 16);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 38, 3, 4);
+            chara_create(-1, 38, 3, 4);
             cdata[rc].character_role = 6;
             cdatan(0, rc) = lang(
                 u8"ヨウィンの"s + cdatan(0, rc),
                 cdatan(0, rc) + u8" of Yowyn"s);
             flt();
-            characreate(-1, 40, 20, 14);
+            chara_create(-1, 40, 20, 14);
             cdata[rc].character_role = 7;
             cdatan(0, rc) = sntrainer(cdatan(0, rc));
             flt();
-            characreate(-1, 41, 24, 16);
+            chara_create(-1, 41, 24, 16);
             cdata[rc].character_role = 5;
             flt();
-            characreate(-1, 69, 26, 16);
+            chara_create(-1, 69, 26, 16);
             cdata[rc].character_role = 8;
             flt();
-            characreate(-1, 213, 14, 12);
+            chara_create(-1, 213, 14, 12);
             cdata[rc].character_role = 3;
             for (int cnt = 0; cnt < 2; ++cnt)
             {
                 flt();
-                characreate(-1, 16, -3, 0);
+                chara_create(-1, 16, -3, 0);
                 cdata[rc].character_role = 4;
                 flt();
-                characreate(-1, 39, -3, 0);
+                chara_create(-1, 39, -3, 0);
                 cdata[rc].character_role = 4;
             }
             for (int cnt = 0; cnt < 3; ++cnt)
             {
                 flt();
-                characreate(-1, 77, -3, 0);
+                chara_create(-1, 77, -3, 0);
                 cdata[rc].character_role = 14;
             }
-            label_2669();
+            quest_on_map_initialize();
             for (int cnt = 0; cnt < 15; ++cnt)
             {
                 dbid = 0;
-                set_character_generation_filter();
-                characreate(-1, dbid, -3, 0);
+                chara_set_generation_filter();
+                chara_create(-1, dbid, -3, 0);
             }
         }
         if (gdata_current_dungeon_level == 3)
@@ -1570,7 +1584,7 @@ label_1741_internal:
             mdata(13) = 61;
             mdata(17) = 1;
             mdatan(0) = lang(u8"タムの猫屋敷"s, u8"Cat Mansion"s);
-            put_questtarget();
+            quest_place_target();
             map_placeplayer();
         }
         if (gdata_current_dungeon_level == 4)
@@ -1584,11 +1598,13 @@ label_1741_internal:
             mdata(17) = 1;
             mdata(7) = 0;
             mdatan(0) = lang(u8"防衛線"s, u8"Battle Field"s);
-            put_questtarget();
+            quest_place_target();
             gdata_entrance_type = 8;
             map_placeplayer();
             listmax = 0;
-            for (int cnt = 57; cnt < 245; ++cnt)
+            for (int cnt = ELONA_MAX_PARTY_CHARACTERS;
+                 cnt < ELONA_MAX_CHARACTERS;
+                 ++cnt)
             {
                 if (cdata[cnt].state == 1)
                 {
@@ -1602,7 +1618,7 @@ label_1741_internal:
             for (int cnt = 0; cnt < 30; ++cnt)
             {
                 flt();
-                characreate(-1, 233 + 2 * (cnt > 22), 11, 16);
+                chara_create(-1, 233 + 2 * (cnt > 22), 11, 16);
                 cdata[rc].relationship = 10;
                 cdata[rc].original_relationship = 10;
                 cdata[rc].hate = 100;
@@ -1621,115 +1637,115 @@ label_1741_internal:
         map_placeplayer();
         mdata(15) = 0;
         flt();
-        characreate(-1, 202, 46, 18);
+        chara_create(-1, 202, 46, 18);
         gdata_fire_giant = rc;
         cdata[rc].character_role = 3;
         flt();
-        characreate(-1, 203, 47, 18);
+        chara_create(-1, 203, 47, 18);
         cdata[rc].character_role = 1015;
         flt();
-        characreate(-1, 35, 47, 20);
+        chara_create(-1, 35, 47, 20);
         cdata[rc].character_role = 3;
         flt();
-        characreate(-1, 35, 45, 19);
+        chara_create(-1, 35, 45, 19);
         cdata[rc].character_role = 3;
         flt();
-        characreate(-1, 35, 49, 20);
+        chara_create(-1, 35, 49, 20);
         cdata[rc].character_role = 3;
         flt();
-        characreate(-1, 326, 28, 22);
+        chara_create(-1, 326, 28, 22);
         cdata[rc].character_role = 3;
         flt();
-        characreate(-1, 221, 19, 3);
+        chara_create(-1, 221, 19, 3);
         cdata[rc].character_role = 3;
         if (gdata_pael_and_her_mom != 1001)
         {
             flt();
-            characreate(-1, 222, 19, 2);
+            chara_create(-1, 222, 19, 2);
             cdata[rc].character_role = 3;
         }
         flt();
-        characreate(-1, 70, 40, 33);
+        chara_create(-1, 70, 40, 33);
         cdata[rc].character_role = 9;
         flt();
-        characreate(-1, 74, 44, 6);
+        chara_create(-1, 74, 44, 6);
         cdata[rc].character_role = 12;
         flt();
-        characreate(-1, 206, 44, 3);
+        chara_create(-1, 206, 44, 3);
         cdata[rc].character_role = 19;
         flt();
-        characreate(-1, 1, 19, 31);
+        chara_create(-1, 1, 19, 31);
         cdata[rc].character_role = 1001;
         cdata[rc].shop_rank = 12;
         cdatan(0, rc) = snarmor(cdatan(0, rc));
         flt();
-        characreate(-1, 1, 11, 31);
+        chara_create(-1, 1, 11, 31);
         cdata[rc].character_role = 1006;
         cdata[rc].shop_rank = 10;
         cdatan(0, rc) = sngeneral(cdatan(0, rc));
         flt();
-        characreate(-1, 1, 38, 34);
+        chara_create(-1, 1, 38, 34);
         cdata[rc].character_role = 1005;
         cdata[rc].shop_rank = 8;
         cdatan(0, rc) = sninn(cdatan(0, rc));
         flt();
-        characreate(-1, 1, 5, 27);
+        chara_create(-1, 1, 5, 27);
         cdata[rc].character_role = 1003;
         cdata[rc].shop_rank = 9;
         cdatan(0, rc) = snbakery(cdatan(0, rc));
         cdata[rc].image = 138;
         flt();
-        characreate(-1, 41, 56, 5);
+        chara_create(-1, 41, 56, 5);
         cdata[rc].character_role = 1004;
         cdata[rc].shop_rank = 11;
         cdatan(0, rc) = snmagic(cdatan(0, rc));
         flt();
-        characreate(-1, 1, 39, 35);
+        chara_create(-1, 1, 39, 35);
         cdata[rc].character_role = 1009;
         cdata[rc].shop_rank = 12;
         cdatan(0, rc) = sntrade(cdatan(0, rc));
         flt();
-        characreate(-1, 38, 5, 18);
+        chara_create(-1, 38, 5, 18);
         cdata[rc].character_role = 6;
         cdatan(0, rc) = lang(
             u8"ノイエルの"s + cdatan(0, rc), cdatan(0, rc) + u8" of Noyel"s);
         flt();
-        characreate(-1, 40, 18, 20);
+        chara_create(-1, 40, 18, 20);
         cdata[rc].character_role = 7;
         cdatan(0, rc) = sntrainer(cdatan(0, rc));
         flt();
-        characreate(-1, 41, 4, 33);
+        chara_create(-1, 41, 4, 33);
         cdata[rc].character_role = 5;
         flt();
-        characreate(-1, 69, 6, 33);
+        chara_create(-1, 69, 6, 33);
         cdata[rc].character_role = 8;
         for (int cnt = 0; cnt < 3; ++cnt)
         {
             flt();
-            characreate(-1, 16, rnd(32), rnd(mdata(1)));
+            chara_create(-1, 16, rnd(32), rnd(mdata(1)));
             cdata[rc].character_role = 4;
             flt();
-            characreate(-1, 39, rnd(32), rnd(mdata(1)));
+            chara_create(-1, 39, rnd(32), rnd(mdata(1)));
             cdata[rc].character_role = 4;
         }
         for (int cnt = 0; cnt < 3; ++cnt)
         {
             flt();
-            characreate(-1, 77, rnd(32), rnd(mdata(1)));
+            chara_create(-1, 77, rnd(32), rnd(mdata(1)));
             cdata[rc].character_role = 14;
         }
-        label_2669();
+        quest_on_map_initialize();
         for (int cnt = 0; cnt < 8; ++cnt)
         {
-            set_character_generation_filter();
-            characreate(-1, 35, rnd(11) + 25, rnd(5) + 15);
+            chara_set_generation_filter();
+            chara_create(-1, 35, rnd(11) + 25, rnd(5) + 15);
             cdata[rc].character_role = 3;
         }
         for (int cnt = 0; cnt < 20; ++cnt)
         {
             dbid = 0;
-            set_character_generation_filter();
-            characreate(-1, dbid, rnd(55), rnd(mdata(1)));
+            chara_set_generation_filter();
+            chara_create(-1, dbid, rnd(55), rnd(mdata(1)));
         }
     }
     if (gdata_current_map == 11)
@@ -1741,126 +1757,126 @@ label_1741_internal:
             map_placeplayer();
             mdata(15) = 0;
             flt();
-            characreate(-1, 223, 15, 18);
+            chara_create(-1, 223, 15, 18);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 243, 36, 27);
+            chara_create(-1, 243, 36, 27);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 279, 5, 26);
+            chara_create(-1, 279, 5, 26);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 297, 29, 3);
+            chara_create(-1, 297, 29, 3);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 320, 24, 21);
+            chara_create(-1, 320, 24, 21);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 320, 12, 26);
+            chara_create(-1, 320, 12, 26);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 320, 8, 11);
+            chara_create(-1, 320, 8, 11);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 326, 8, 14);
+            chara_create(-1, 326, 8, 14);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 1, 16, 17);
+            chara_create(-1, 1, 16, 17);
             cdata[rc].character_role = 1009;
             cdata[rc].shop_rank = 12;
             cdatan(0, rc) = sntrade(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 23, 7);
+            chara_create(-1, 1, 23, 7);
             cdata[rc].character_role = 1001;
             cdata[rc].shop_rank = 12;
             cdatan(0, rc) = snarmor(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 32, 14);
+            chara_create(-1, 1, 32, 14);
             cdata[rc].character_role = 1006;
             cdata[rc].shop_rank = 10;
             cdatan(0, rc) = sngeneral(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 22, 14);
+            chara_create(-1, 1, 22, 14);
             cdata[rc].character_role = 1008;
             cdata[rc].shop_rank = 10;
             cdatan(0, rc) = sngoods(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 16, 25);
+            chara_create(-1, 1, 16, 25);
             cdata[rc].character_role = 1007;
             cdata[rc].shop_rank = 10;
             cdatan(0, rc) = snblack(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 17, 28);
+            chara_create(-1, 1, 17, 28);
             cdata[rc].character_role = 1002;
             cdata[rc].shop_rank = 10;
             cdatan(0, rc) = snfood(cdatan(0, rc));
             flt();
-            characreate(-1, 41, 22, 22);
+            chara_create(-1, 41, 22, 22);
             cdata[rc].character_role = 1004;
             cdata[rc].shop_rank = 11;
             cdatan(0, rc) = snmagic(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 35, 3);
+            chara_create(-1, 1, 35, 3);
             cdata[rc].character_role = 1005;
             cdata[rc].shop_rank = 8;
             cdatan(0, rc) = sninn(cdatan(0, rc));
             flt();
-            characreate(-1, 70, 15, 15);
+            chara_create(-1, 70, 15, 15);
             cdata[rc].character_role = 9;
             flt();
-            characreate(-1, 73, 26, 3);
+            chara_create(-1, 73, 26, 3);
             cdata[rc].character_role = 10;
             flt();
-            characreate(-1, 179, 25, 4);
+            chara_create(-1, 179, 25, 4);
             cdata[rc].character_role = 11;
             flt();
-            characreate(-1, 38, 8, 12);
+            chara_create(-1, 38, 8, 12);
             cdata[rc].character_role = 6;
             cdatan(0, rc) = lang(
                 u8"ポート・カプールの"s + cdatan(0, rc),
                 cdatan(0, rc) + u8" of Port Kapul"s);
             flt();
-            characreate(-1, 40, 16, 4);
+            chara_create(-1, 40, 16, 4);
             cdata[rc].character_role = 7;
             cdatan(0, rc) = sntrainer(cdatan(0, rc));
             flt();
-            characreate(-1, 41, 14, 4);
+            chara_create(-1, 41, 14, 4);
             cdata[rc].character_role = 5;
             flt();
-            characreate(-1, 69, 17, 5);
+            chara_create(-1, 69, 17, 5);
             cdata[rc].character_role = 8;
             flt();
-            characreate(-1, 74, 27, 11);
+            chara_create(-1, 74, 27, 11);
             cdata[rc].character_role = 12;
             for (int cnt = 0; cnt < 2; ++cnt)
             {
                 flt();
-                characreate(-1, 16, -3, 0);
+                chara_create(-1, 16, -3, 0);
                 cdata[rc].character_role = 4;
                 flt();
-                characreate(-1, 39, -3, 0);
+                chara_create(-1, 39, -3, 0);
                 cdata[rc].character_role = 4;
             }
             for (int cnt = 0; cnt < 4; ++cnt)
             {
                 flt();
-                characreate(-1, 71, -3, 0);
+                chara_create(-1, 71, -3, 0);
                 cdata[rc].character_role = 4;
             }
             for (int cnt = 0; cnt < 5; ++cnt)
             {
                 flt();
-                characreate(-1, 76, -3, 0);
+                chara_create(-1, 76, -3, 0);
                 cdata[rc].character_role = 14;
             }
             flt();
-            characreate(-1, 72, 7, 6);
+            chara_create(-1, 72, 7, 6);
             cdata[rc].character_role = 4;
-            label_2669();
+            quest_on_map_initialize();
             for (int cnt = 0; cnt < 20; ++cnt)
             {
-                set_character_generation_filter();
-                characreate(-1, 0, -3, 0);
+                chara_set_generation_filter();
+                chara_create(-1, 0, -3, 0);
             }
         }
         if (gdata_current_dungeon_level == 3)
@@ -1875,27 +1891,27 @@ label_1741_internal:
             mdatan(0) = lang(u8"戦士ギルド"s, u8"Fighters Guild"s);
             map_placeplayer();
             flt();
-            characreate(-1, 291, 27, 4);
+            chara_create(-1, 291, 27, 4);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 74, 28, 10);
+            chara_create(-1, 74, 28, 10);
             cdata[rc].character_role = 12;
             flt();
-            characreate(-1, 40, 15, 10);
+            chara_create(-1, 40, 15, 10);
             cdata[rc].character_role = 7;
             cdatan(0, rc) = sntrainer(cdatan(0, rc));
             flt();
-            characreate(-1, 41, 14, 18);
+            chara_create(-1, 41, 14, 18);
             cdata[rc].character_role = 5;
             flt();
-            characreate(-1, 1, 29, 15);
+            chara_create(-1, 1, 29, 15);
             cdata[rc].character_role = 1001;
             cdata[rc].shop_rank = 12;
             cdatan(0, rc) = snarmor(cdatan(0, rc));
             for (int cnt = 0; cnt < 16; ++cnt)
             {
                 flt();
-                characreate(-1, 295, -3, 0);
+                chara_create(-1, 295, -3, 0);
             }
         }
         if (gdata_current_dungeon_level == 25)
@@ -1915,7 +1931,7 @@ label_1741_internal:
             for (int cnt = 0; cnt < 10; ++cnt)
             {
                 flt();
-                characreate(-1, 204, cdata[0].position.x, cdata[0].position.y);
+                chara_create(-1, 204, cdata[0].position.x, cdata[0].position.y);
                 cdata[rc].relationship = 10;
                 cdata[rc].original_relationship = 10;
             }
@@ -1935,110 +1951,110 @@ label_1741_internal:
                 cell_featset(48, 5, tile_downstairs, 11, 4);
             }
             flt();
-            characreate(-1, 28, 39, 3);
+            chara_create(-1, 28, 39, 3);
             flt();
-            characreate(-1, 29, 42, 23);
+            chara_create(-1, 29, 42, 23);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 30, 24, 5);
+            chara_create(-1, 30, 24, 5);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 31, 40, 24);
+            chara_create(-1, 31, 40, 24);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 32, 40, 25);
+            chara_create(-1, 32, 40, 25);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 226, 30, 5);
+            chara_create(-1, 226, 30, 5);
             cdata[rc].character_role = 3;
             flt();
-            characreate(-1, 326, 42, 24);
+            chara_create(-1, 326, 42, 24);
             cdata[rc].character_role = 3;
             if (gdata_puppys_cave == 1000)
             {
                 flt();
-                characreate(-1, 225, 31, 4);
+                chara_create(-1, 225, 31, 4);
                 cdata[rc].character_role = 3;
             }
             flt();
-            characreate(-1, 1, 47, 9);
+            chara_create(-1, 1, 47, 9);
             cdata[rc].character_role = 1014;
             cdata[rc].shop_rank = 5;
             cdatan(0, rc) = snfish(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 14, 12);
+            chara_create(-1, 1, 14, 12);
             cdata[rc].character_role = 1001;
             cdata[rc].shop_rank = 12;
             cdatan(0, rc) = snarmor(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 39, 27);
+            chara_create(-1, 1, 39, 27);
             cdata[rc].character_role = 1009;
             cdata[rc].shop_rank = 12;
             cdatan(0, rc) = sntrade(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 10, 15);
+            chara_create(-1, 1, 10, 15);
             cdata[rc].character_role = 1006;
             cdata[rc].shop_rank = 10;
             cdatan(0, rc) = sngeneral(cdatan(0, rc));
             flt();
-            characreate(-1, 41, 7, 26);
+            chara_create(-1, 41, 7, 26);
             cdata[rc].character_role = 1004;
             cdata[rc].shop_rank = 11;
             cdatan(0, rc) = snmagic(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 14, 25);
+            chara_create(-1, 1, 14, 25);
             cdata[rc].character_role = 1005;
             cdata[rc].shop_rank = 8;
             cdatan(0, rc) = sninn(cdatan(0, rc));
             flt();
-            characreate(-1, 1, 22, 26);
+            chara_create(-1, 1, 22, 26);
             cdata[rc].character_role = 1003;
             cdata[rc].shop_rank = 9;
             cdatan(0, rc) = snbakery(cdatan(0, rc));
             cdata[rc].image = 138;
             flt();
-            characreate(-1, 41, 28, 16);
+            chara_create(-1, 41, 28, 16);
             cdata[rc].character_role = 5;
             flt();
-            characreate(-1, 70, 38, 27);
+            chara_create(-1, 70, 38, 27);
             cdata[rc].character_role = 9;
             flt();
-            characreate(-1, 74, 6, 25);
+            chara_create(-1, 74, 6, 25);
             cdata[rc].character_role = 12;
             flt();
-            characreate(-1, 38, 10, 7);
+            chara_create(-1, 38, 10, 7);
             cdata[rc].character_role = 6;
             cdatan(0, rc) = lang(
                 u8"ヴェルニースの"s + cdatan(0, rc),
                 cdatan(0, rc) + u8" of Vernis"s);
             flt();
-            characreate(-1, 40, 27, 16);
+            chara_create(-1, 40, 27, 16);
             cdata[rc].character_role = 7;
             cdatan(0, rc) = sntrainer(cdatan(0, rc));
             flt();
-            characreate(-1, 69, 25, 16);
+            chara_create(-1, 69, 25, 16);
             cdata[rc].character_role = 8;
             for (int cnt = 0; cnt < 4; ++cnt)
             {
                 flt();
-                characreate(-1, 16, -3, 0);
+                chara_create(-1, 16, -3, 0);
                 cdata[rc].character_role = 4;
                 flt();
-                characreate(-1, 39, -3, 0);
+                chara_create(-1, 39, -3, 0);
                 cdata[rc].character_role = 4;
             }
             for (int cnt = 0; cnt < 4; ++cnt)
             {
                 flt();
-                characreate(-1, 77, -3, 0);
+                chara_create(-1, 77, -3, 0);
                 cdata[rc].character_role = 14;
             }
-            label_2669();
+            quest_on_map_initialize();
             for (int cnt = 0; cnt < 25; ++cnt)
             {
                 dbid = 0;
-                set_character_generation_filter();
-                characreate(-1, dbid, -3, 0);
+                chara_set_generation_filter();
+                chara_create(-1, dbid, -3, 0);
             }
         }
         if (gdata_current_dungeon_level == 3)
@@ -2051,7 +2067,7 @@ label_1741_internal:
             mdata(13) = 61;
             mdata(17) = 1;
             mdatan(0) = lang(u8"スライムの坑道"s, u8"The Mine"s);
-            put_questtarget();
+            quest_place_target();
             map_placeplayer();
         }
         if (gdata_current_dungeon_level == 4)
@@ -2064,7 +2080,7 @@ label_1741_internal:
             mdata(13) = 61;
             mdata(17) = 1;
             mdatan(0) = lang(u8"盗賊の隠れ家"s, u8"Robber's Hideout"s);
-            put_questtarget();
+            quest_place_target();
             map_placeplayer();
         }
         if (gdata_current_dungeon_level == 5)
@@ -2077,7 +2093,7 @@ label_1741_internal:
             mdata(13) = 61;
             mdata(17) = 1;
             mdatan(0) = lang(u8"生体兵器実験場"s, u8"Test Site"s);
-            put_questtarget();
+            quest_place_target();
             gdata_entrance_type = 7;
             mapstartx = 6;
             mapstarty = 27;
@@ -2205,9 +2221,9 @@ label_1741_internal:
         {
             for (int cnt = 0, cnt_end = (mdata(10) + 1); cnt < cnt_end; ++cnt)
             {
-                set_character_generation_filter();
+                chara_set_generation_filter();
                 flt();
-                characreate(-1, 0, -3, 0);
+                chara_create(-1, 0, -3, 0);
             }
         }
         if (encounter == 4)
@@ -2215,16 +2231,16 @@ label_1741_internal:
             mdata(10) = 0;
             flt();
             initlv = encounterlv;
-            characreate(-1, 302, cdata[0].position.x, cdata[0].position.y);
+            chara_create(-1, 302, cdata[0].position.x, cdata[0].position.y);
             for (int cnt = 0, cnt_end = (6 + rnd(6)); cnt < cnt_end; ++cnt)
             {
                 flt();
                 initlv = encounterlv + rnd(10);
-                characreate(-1, 303 + rnd(3), 14, 11);
+                chara_create(-1, 303 + rnd(3), 14, 11);
                 cdatan(0, rc) += u8" Lv"s + cdata[rc].level;
             }
             gdatan(1) = random_title(2);
-            evadd(23);
+            event_add(23);
         }
         if (encounter == 3)
         {
@@ -2239,7 +2255,7 @@ label_1741_internal:
             for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
             {
                 flt(qdata(5, rq), 3);
-                int stat = characreate(
+                int stat = chara_create(
                     -1, 0, cdata[0].position.x, cdata[0].position.y);
                 if (stat != 0)
                 {
@@ -2252,7 +2268,7 @@ label_1741_internal:
         if (encounter == 2)
         {
             flt();
-            characreate(-1, 1, 10, 11);
+            chara_create(-1, 1, 10, 11);
             cdata[rc].character_role = 1010;
             cdata[rc].shop_rank = encounterlv;
             cdatan(0, rc) = lang(
@@ -2265,12 +2281,12 @@ label_1741_internal:
                 r2 = 1;
                 gain_level(rc);
             }
-            evadd(11);
+            event_add(11);
             for (int cnt = 0, cnt_end = (6 + rnd(6)); cnt < cnt_end; ++cnt)
             {
                 flt();
                 initlv = encounterlv + rnd(10);
-                characreate(-1, 159 + rnd(3), 14, 11);
+                chara_create(-1, 159 + rnd(3), 14, 11);
                 cdata[rc].character_role = 16;
                 cdatan(0, rc) += u8" Lv"s + cdata[rc].level;
             }
@@ -2294,12 +2310,12 @@ label_1741_internal:
                 }
                 if (cnt < 4)
                 {
-                    characreate(
+                    chara_create(
                         -1, 0, cdata[0].position.x, cdata[0].position.y);
                 }
                 else
                 {
-                    characreate(-1, 0, -3, 0);
+                    chara_create(-1, 0, -3, 0);
                 }
                 cdata[rc].hate = 30;
             }
@@ -2315,7 +2331,7 @@ label_1741_internal:
         }
         if (gdata(186) <= gdata_current_dungeon_level)
         {
-            evadd(29);
+            event_add(29);
         }
         else
         {
@@ -2336,7 +2352,7 @@ label_1741_internal:
                 mdatan(0) = lang(u8"レシマス最深層"s, u8"The Depth"s);
                 if (gdata_main_quest_flag < 170)
                 {
-                    evadd(3);
+                    event_add(3);
                 }
                 x = 16;
                 y = 13;
@@ -2346,12 +2362,12 @@ label_1741_internal:
                 if (npcmemory(0, 2) == 0)
                 {
                     flt();
-                    characreate(-1, 2, 16, 6);
+                    chara_create(-1, 2, 16, 6);
                 }
                 else if (npcmemory(0, 23) == 0)
                 {
                     flt();
-                    characreate(-1, 23, 16, 6);
+                    chara_create(-1, 23, 16, 6);
                 }
                 break;
             }
@@ -2360,13 +2376,13 @@ label_1741_internal:
         }
         if (gdata_current_dungeon_level == 3)
         {
-            characreate(-1, 139, cdata[0].position.x, cdata[0].position.y);
+            chara_create(-1, 139, cdata[0].position.x, cdata[0].position.y);
             cdata[rc].character_role = 3;
             cdata[rc].ai_calm = 3;
         }
         if (gdata_current_dungeon_level == 17)
         {
-            characreate(-1, 146, cdata[0].position.x, cdata[0].position.y);
+            chara_create(-1, 146, cdata[0].position.x, cdata[0].position.y);
             cdata[rc].character_role = 3;
             cdata[rc].ai_calm = 3;
         }
@@ -2434,10 +2450,10 @@ label_1741_internal:
         {
             if (gdata_puppys_cave < 2)
             {
-                if (findally(225) == -1)
+                if (chara_find_ally(225) == -1)
                 {
                     flt();
-                    characreate(-1, 225, -3, 0);
+                    chara_create(-1, 225, -3, 0);
                     cdata[rc].does_not_search_enemy() = true;
                 }
             }
@@ -2451,7 +2467,7 @@ label_1741_internal:
             if (gdata_minotaur_king < 2)
             {
                 flt();
-                characreate(-1, 300, -3, 0);
+                chara_create(-1, 300, -3, 0);
             }
         }
     }
@@ -2463,21 +2479,21 @@ label_1741_internal:
             if (gdata_novice_knight < 2)
             {
                 flt();
-                characreate(-1, 242, -3, 0);
+                chara_create(-1, 242, -3, 0);
                 tc = rc;
                 for (int cnt = 0; cnt < 5; ++cnt)
                 {
                     flt();
-                    characreate(
+                    chara_create(
                         -1, 240, cdata[tc].position.x, cdata[tc].position.y);
                 }
                 for (int cnt = 0; cnt < 10; ++cnt)
                 {
                     flt();
-                    characreate(
+                    chara_create(
                         -1, 238, cdata[tc].position.x, cdata[tc].position.y);
                     flt();
-                    characreate(
+                    chara_create(
                         -1, 237, cdata[tc].position.x, cdata[tc].position.y);
                 }
             }
@@ -2493,8 +2509,8 @@ label_1741_internal:
             map_placeplayer();
             for (int cnt = 0, cnt_end = (mdata(10) + 1); cnt < cnt_end; ++cnt)
             {
-                set_character_generation_filter();
-                characreate(-1, 0, -3, 0);
+                chara_set_generation_filter();
+                chara_create(-1, 0, -3, 0);
             }
         }
         if (gdata_current_dungeon_level == 21)
@@ -2553,7 +2569,6 @@ label_1741_internal:
                         {
                             for (int cnt = 0;; ++cnt)
                             {
-                                await();
                                 dx = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata(0));
                                 dy = clamp(rnd(cnt / 4 + 1) + 1, 1, mdata(1));
                                 x = adata(1, p) + rnd(dx) - rnd(dx);
@@ -2616,7 +2631,7 @@ label_1741_internal:
             label_1749();
         }
         mapupdate = 0;
-        for (int cnt = 0; cnt < 245; ++cnt)
+        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].state == 0)
             {
@@ -2697,12 +2712,12 @@ label_1742_internal:
         {
             cxinit = cdata[0].position.x;
             cyinit = cdata[0].position.y;
-            place_character();
+            chara_place();
         }
         else
         {
             cxinit = -1;
-            place_character();
+            chara_place();
             cdata[rc].hp = cdata[rc].max_hp;
             cdata[rc].mp = cdata[rc].max_mp;
         }
@@ -2777,7 +2792,7 @@ label_1742_internal:
                 map(cnt, y, 1) = 0;
             }
         }
-        for (int cnt = 0; cnt < 245; ++cnt)
+        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             rc = cnt;
             cdata[rc].was_passed_item_by_you_just_now() = false;
@@ -2914,7 +2929,7 @@ label_1744_internal:
     }
     label_1745();
     gdata_other_character_count = 0;
-    for (int cnt = 0; cnt < 245; ++cnt)
+    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         cdata[cnt].turn_cost = 0;
         if (cdata[cnt].id == 343)
@@ -2946,14 +2961,15 @@ label_1744_internal:
     msync = 1;
     label_1746();
     label_1439();
-    label_1428();
+    update_scrolling_info();
     if (mdata(6) == 3)
     {
-        label_2671();
+        quest_refresh_list();
     }
     if (mode == 11)
     {
-        return;
+        // This result will be ignored by the caller.
+        return turn_result_t::turn_begin;
     }
     if (gdata_main_quest_flag == 9)
     {
@@ -3116,7 +3132,7 @@ label_1744_internal:
     }
     if (adata(16, gdata_current_map) == 33)
     {
-        tc = findchara(222);
+        tc = chara_find(222);
         if (tc != 0)
         {
             if (gdata_pael_and_her_mom >= 10)
@@ -3130,21 +3146,21 @@ label_1744_internal:
     {
         if (gdata_current_dungeon_level == 3)
         {
-            evadd(22, gdata_belongs_to_mages_guild);
+            event_add(22, gdata_belongs_to_mages_guild);
         }
     }
     if (adata(16, gdata_current_map) == 14)
     {
         if (gdata_current_dungeon_level == 3)
         {
-            evadd(22, gdata_belongs_to_thieves_guild);
+            event_add(22, gdata_belongs_to_thieves_guild);
         }
     }
     if (adata(16, gdata_current_map) == 11)
     {
         if (gdata_current_dungeon_level == 3)
         {
-            evadd(22, gdata_belongs_to_fighters_guild);
+            event_add(22, gdata_belongs_to_fighters_guild);
         }
     }
     if (gdata_current_map == 5)
@@ -3158,7 +3174,7 @@ label_1744_internal:
         if (gdata_has_not_been_to_vernis == 0)
         {
             gdata_has_not_been_to_vernis = 1;
-            evadd(12);
+            event_add(12);
         }
     }
     if (gdata_current_map == 15)
@@ -3219,18 +3235,18 @@ label_1744_internal:
             update_screen();
             if (evnum == 0)
             {
-                pc_turn(false);
+                return turn_result_t::pc_turn_user_error;
             }
             else
             {
-                turn_begin();
-                return;
+                return turn_result_t::turn_begin;
             }
         }
         else
         {
             mapsubroutine = 0;
-            return;
+            // This result will be ignored by the caller.
+            return turn_result_t::turn_begin;
         }
     }
     wake_up();
@@ -3245,13 +3261,13 @@ label_1744_internal:
     {
         if (gdata_main_quest_flag != 0)
         {
-            if (findchara(33) != 0)
+            if (chara_find(33) != 0)
             {
-                chara_vanquish(findchara(33));
+                chara_vanquish(chara_find(33));
             }
-            if (findchara(34) != 0)
+            if (chara_find(34) != 0)
             {
-                chara_vanquish(findchara(34));
+                chara_vanquish(chara_find(34));
             }
         }
     }
@@ -3259,9 +3275,9 @@ label_1744_internal:
     {
         if (gdata_main_quest_flag >= 90)
         {
-            if (findchara(80) != 0)
+            if (chara_find(80) != 0)
             {
-                chara_vanquish(findchara(80));
+                chara_vanquish(chara_find(80));
             }
         }
     }
@@ -3286,7 +3302,7 @@ label_1744_internal:
                                 {
                                     if (qdata(12, cnt2) == gdata_current_map)
                                     {
-                                        evadd(16, cnt2, cnt);
+                                        event_add(16, cnt2, cnt);
                                         cdata[cnt].is_escorted() = false;
                                         break;
                                     }
@@ -3308,23 +3324,23 @@ label_1744_internal:
     }
     if (mdata(7) == 1)
     {
-        label_1576();
+        food_gets_rotten();
     }
     if (adata(16, gdata_current_map) == 102)
     {
-        label_1726();
+        update_shop();
     }
     if (adata(16, gdata_current_map) == 101)
     {
-        label_1728();
+        update_museum();
     }
     if (gdata_current_map == 7)
     {
-        label_1730();
+        calc_home_rank();
     }
     if (adata(16, gdata_current_map) == 31)
     {
-        for (int cnt = 0; cnt < 245; ++cnt)
+        for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
         {
             if (cdata[cnt].is_livestock() == 1)
             {
@@ -3470,18 +3486,17 @@ label_1744_internal:
             txtef(9);
             txt(lang(
                 ""s + gdata_left_minutes_of_executing_quest + u8"分以内に、"s
-                    + refchara_str(
+                    + chara_refstr(
                           qdata(12, gdata_executing_immediate_quest), 2)
                     + u8"を討伐しなければならない。"s,
                 u8"You have to slay "s
-                    + refchara_str(
+                    + chara_refstr(
                           qdata(12, gdata_executing_immediate_quest), 2)
                     + u8" within "s + gdata_left_minutes_of_executing_quest
                     + u8" minites."s));
         }
     }
-    turn_begin();
-    return;
+    return turn_result_t::turn_begin;
 }
 
 

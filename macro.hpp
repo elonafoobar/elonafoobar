@@ -24,13 +24,12 @@
 #define ELONA_TALK_SCENE_CUT() \
     do \
     { \
-        talk_window(); \
+        talk_window_query(); \
         if (scenemode) \
         { \
             if (scene_cut == 1) \
             { \
-                talk_end(); \
-                return; \
+                return talk_result_t::talk_end; \
             } \
         } \
     } while (0)

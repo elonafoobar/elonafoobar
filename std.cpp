@@ -10,11 +10,14 @@
 #include "snail/application.hpp"
 
 #include "config.hpp"
+#include "defines.hpp"
 #include "elona.hpp"
 #include "log.hpp"
 #include "util.hpp"
 #include "variables.hpp"
-
+#if defined(ELONA_OS_WINDOWS)
+#include <windows.h> // MessageBoxA
+#endif
 
 namespace
 {
@@ -198,7 +201,7 @@ struct MessageBox
                 std::unique_ptr<char, decltype(&::SDL_free)> text_ptr{
                     ::SDL_GetClipboardText(), ::SDL_free};
 
-                buffer += strutil::replace_crlf(text_ptr.get());
+                buffer += strutil::replace(text_ptr.get(), u8"\r\n", u8"\n");
             }
         }
     }
@@ -526,12 +529,68 @@ void elona_delete(const fs::path& filename)
     fs::remove_all(filename);
 }
 
-
-
-int dialog(const std::string& message, int)
+#if defined(ELONA_OS_WINDOWS)
+std::wstring get_utf16(const std::string& str)
 {
-    (void)message;
+    if (str.empty())
+        return std::wstring();
+    int sz = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), 0, 0);
+    std::wstring res(sz, 0);
+    MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), &res[0], sz);
+    return res;
+}
+
+int dialog_windows(const std::string& message, int option)
+{
+    UINT type = MB_ICONINFORMATION;
+    int ret = 0;
+    if (option == 1 || option == 3)
+    {
+        type = MB_ICONWARNING;
+    }
+    std::wstring message_wstr = get_utf16(message);
+    switch (option)
+    {
+    case 0: // Info, OK
+    case 1: // Warning, OK
+        MessageBoxW(NULL, message_wstr.c_str(), L"Message", MB_OK | type);
+        return DIALOG_OK;
+    case 2: // Info, Yes/No
+    case 3: // Warning, Yes/No
+        ret = MessageBoxW(
+            NULL, message_wstr.c_str(), L"Message", MB_YESNO | type);
+        if (ret == IDYES)
+        {
+            return DIALOG_YES;
+        }
+        else
+        {
+            return DIALOG_NO;
+        }
+    case 16: // Open file dialog
+    case 17: // Save as dialog
+    case 32: // Color selection
+    case 33: // Color selection with matrix
+    default: return 0;
+    }
+}
+#elif defined(ELONA_OS_MACOS)
+int dialog_macos(const std::string& message, int option)
+{
+    std::cout << message << std::endl;
+    return 1;
+}
+#endif
+
+int dialog(const std::string& message, int option)
+{
+#if defined(ELONA_OS_WINDOWS)
+    return dialog_windows(message, option);
+#elif defined(ELONA_OS_MACOS)
+    return dialog_macos(message, option);
+#else
     return 0;
+#endif
 }
 
 
@@ -738,7 +797,7 @@ int ginfo(int type)
     case 21: return 0; // resolution y
     case 22: return detail::current_tex_buffer().x; // current position x
     case 23: return detail::current_tex_buffer().y; // current position y
-    default: assert(0);
+    default: throw new std::logic_error("Bad ginfo type");
     }
 }
 
@@ -1217,8 +1276,7 @@ void noteadd(const std::string& text, int index, int overwrite)
     {
         index = lines.size();
     }
-
-    if (size_t(index) >= lines.size())
+    else if (size_t(index) >= lines.size())
     {
         lines.resize(index + 1);
     }
@@ -1439,6 +1497,20 @@ void stick(int& out, int allow_repeat_keys)
     // out += check_key_pressed(8,  /* Mouse left */,  false);
     // out += check_key_pressed(9,  /* Mouse right */, false);
     out += check_key_pressed(10, snail::key::tab, false);
+
+    if (allow_repeat_keys == 15)
+    {
+        if (out & 1 || out & 4)
+        {
+            out |= 2 * snail::input::instance().is_pressed_exactly(snail::key::up);
+            out |= 8 * snail::input::instance().is_pressed_exactly(snail::key::down);
+        }
+        if (out & 2 || out & 8)
+        {
+            out |= 1 * snail::input::instance().is_pressed_exactly(snail::key::left);
+            out |= 4 * snail::input::instance().is_pressed_exactly(snail::key::right);
+        }
+    }
 }
 
 
@@ -1493,7 +1565,7 @@ void title(const std::string& title_str)
         1000));
     snail::application::instance().register_finalizer(
         []() { ::SDL_DestroyTexture(detail::tmp_buffer); });
-    snail::input::instance().set_key_repeat(7, 0);
+    snail::input::instance().set_key_repeat(10, 3);
     snail::application::instance().register_finalizer(
         [&]() { font_detail::font_cache.clear(); });
     buffer(0, 800, 600);
@@ -1693,8 +1765,21 @@ int aplobj(const std::string&, int)
 
 
 
-void apledit(int, int, int)
+void apledit(int& out, int kind, int column_no)
 {
+    if (kind == 0)
+    {
+        // Current position of cursor
+        out = static_cast<int>(inputlog(0).length());
+    }
+    else if (kind == 1)
+    {
+        // Total number of columns
+    }
+    else if (kind == 2)
+    {
+        // Number of characters at column "column_no"
+    }
 }
 
 
@@ -1715,144 +1800,6 @@ void memcpy_(
     for (int i = 0; i < size; ++i)
     {
         dst[i + dst_offset] = src[i + src_offset];
-    }
-}
-
-
-
-namespace mixer_detail
-{
-
-std::unordered_map<int, Mix_Chunk*> chunks;
-}
-
-
-
-int DSINIT()
-{
-    Mix_AllocateChannels(16);
-    snail::application::instance().register_finalizer([&]() {
-        for (const auto& pair : mixer_detail::chunks)
-        {
-            if (pair.second)
-                ::Mix_FreeChunk(pair.second);
-        }
-    });
-    return 1;
-}
-
-
-
-void DSEND()
-{
-}
-
-
-
-void DSRELEASE(int)
-{
-}
-
-
-
-void DSLOADFNAME(const fs::path& filepath, int channel)
-{
-    if (mixer_detail::chunks.find(channel) != std::end(mixer_detail::chunks))
-    {
-        if (mixer_detail::chunks[channel])
-            Mix_FreeChunk(mixer_detail::chunks[channel]);
-    }
-    auto chunk = snail::detail::enforce_mixer(
-        Mix_LoadWAV(filesystem::to_utf8_path(filepath).c_str()));
-    mixer_detail::chunks[channel] = chunk;
-}
-
-
-
-void DSPLAY(int channel, int loop)
-{
-    Mix_PlayChannel(-1, mixer_detail::chunks[channel], loop ? -1 : 0);
-}
-
-
-
-void DSSTOP(int channel)
-{
-    Mix_HaltChannel(channel);
-}
-
-
-
-void DSSETVOLUME(int, int)
-{
-}
-
-
-
-int DSGETMASTERVOLUME()
-{
-    return 100;
-}
-
-
-
-int CHECKPLAY(int channel)
-{
-    return Mix_Playing(channel) ? 1 : 0;
-}
-
-
-
-namespace mixer_detail
-{
-
-Mix_Music* music = nullptr;
-}
-
-
-
-int DMINIT()
-{
-    snail::application::instance().register_finalizer([&]() {
-        if (mixer_detail::music)
-            ::Mix_FreeMusic(mixer_detail::music);
-    });
-    return 1;
-}
-
-
-
-void DMEND()
-{
-}
-
-
-void DMLOADFNAME(const fs::path& filepath, int)
-{
-    if (mixer_detail::music)
-        ::Mix_FreeMusic(mixer_detail::music);
-
-    mixer_detail::music = snail::detail::enforce_mixer(
-        Mix_LoadMUS(filesystem::to_utf8_path(filepath).c_str()));
-}
-
-
-
-void DMPLAY(int loop, int)
-{
-    snail::detail::enforce_mixer(
-        Mix_PlayMusic(mixer_detail::music, loop ? -1 : 1));
-}
-
-
-
-void DMSTOP()
-{
-    ::Mix_HaltMusic();
-    if (mixer_detail::music)
-    {
-        ::Mix_FreeMusic(mixer_detail::music);
-        mixer_detail::music = nullptr;
     }
 }
 
@@ -2098,7 +2045,7 @@ void onkey_1()
 
 void end()
 {
-    std::exit(0);
+
 }
 
 

@@ -185,7 +185,7 @@ buff['23'] = {
   end,
 }
 buff['24'] = {
-  name = "学習の成長",
+  name = "習得の成長",
   message_0 = "",
   message_1 = "",
   description = function(self, power)

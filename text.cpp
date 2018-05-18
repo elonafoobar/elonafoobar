@@ -1,5 +1,6 @@
 #include "character.hpp"
 #include "elona.hpp"
+#include "enchantment.hpp"
 #include "i18n.hpp"
 #include "random.hpp"
 #include "variables.hpp"
@@ -738,7 +739,7 @@ foodname(int type, const std::string& prm_374, int rank, int character_id)
         }
         else
         {
-            ingredient = refchara_str(character_id, 2);
+            ingredient = chara_refstr(character_id, 2);
         }
         switch (rank)
         {
@@ -899,7 +900,7 @@ foodname(int type, const std::string& prm_374, int rank, int character_id)
         }
         else
         {
-            ingredient = refchara_str(character_id, 2);
+            ingredient = chara_refstr(character_id, 2);
         }
         switch (rank)
         {
@@ -1424,25 +1425,6 @@ std::string replace_tag(const std::string source)
 }
 
 
-void replace_tags_in_quest_board()
-{
-    while (1)
-    {
-        const int p0 = instr(buff, 0, u8"{"s);
-        const int p1 = instr(buff, p0, u8"}"s);
-        const int p2 = buff(0).size();
-        if (p0 == -1)
-        {
-            break;
-        }
-        const auto tag = strmid(buff, p0 + 1, p1 - 1);
-        const auto head = strmid(buff, 0, p0);
-        const auto tail = strmid(buff, p0 + p1 + 1, p2 - p1 - p0);
-        buff = head + replace_tag(tag) + tail;
-    }
-}
-
-
 
 void parse_talk_file()
 {
@@ -1464,7 +1446,7 @@ void parse_talk_file()
     p = rnd(noteinfo());
     noteget(s, p);
     buff = s;
-    replace_tags_in_quest_board();
+    text_replace_tags_in_quest_board();
     return;
 }
 
@@ -1631,7 +1613,7 @@ std::string fltname(int category)
 
 
 
-void update_main_quest_journal()
+void quest_update_main_quest_journal()
 {
     noteadd(lang(u8"@QM[メインクエスト]"s, u8"@QM[Main Quest]"s));
     if (gdata_main_quest_flag >= 0 && gdata_main_quest_flag < 30)
@@ -2425,10 +2407,10 @@ void append_subquest_journal(int val0)
         if (p == 1)
         {
             s1 = lang(u8"戦士ギルドに加入するには、"s +
-                    refchara_str(gdata_fighters_guild_target, 2) + u8"をあと"s + gdata_fighters_guild_quota +
+                    chara_refstr(gdata_fighters_guild_target, 2) + u8"をあと"s + gdata_fighters_guild_quota +
                     u8"匹討伐してから、カプールのギルドの番人に話しかける必要がある。"s,
                 u8"To join the Fighters Guild, I need to slay "s + gdata_fighters_guild_quota +
-                    u8" more "s + refchara_str(gdata_fighters_guild_target, 2) +
+                    u8" more "s + chara_refstr(gdata_fighters_guild_target, 2) +
                     u8" and talk to the guild guard in Port Kapul."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
@@ -2481,10 +2463,10 @@ void append_subquest_journal(int val0)
         if (p == 1)
         {
             s1 = lang(u8"戦士ギルドのランクを上げるためには、"s +
-                    refchara_str(gdata_fighters_guild_target, 2) + u8"をあと"s + gdata_fighters_guild_quota +
+                    chara_refstr(gdata_fighters_guild_target, 2) + u8"をあと"s + gdata_fighters_guild_quota +
                     u8"匹討伐してから、カプールのギルドの番人に話しかける必要がある。"s,
                 u8"To raise the rank in the Fighters Guild, I need to slay "s +
-                    gdata_fighters_guild_quota + u8" more "s + refchara_str(gdata_fighters_guild_target, 2) +
+                    gdata_fighters_guild_quota + u8" more "s + chara_refstr(gdata_fighters_guild_target, 2) +
                     u8" and talk to the guild guard in Port Kapul."s);
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
@@ -2937,7 +2919,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                             u8"has which deteriorates your "s + skill_name
                                 + u8"."s)
                         + u8" ["s;
-                    putenclv(power / 50);
+                    enchantment_print_level(power / 50);
                     s += u8"]"s;
                 }
                 else
@@ -2960,7 +2942,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                             u8"has essential nutrients to enhance your "s
                                 + skill_name + u8"."s)
                         + u8" ["s;
-                    putenclv(power / 50);
+                    enchantment_print_level(power / 50);
                     s += u8"]"s;
                 }
                 else
@@ -3003,7 +2985,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                 }
             }
             s += u8" ["s;
-            putenclv(power / 100);
+            enchantment_print_level(power / 100);
             s += u8"]"s;
             break;
         case 3:
@@ -3036,7 +3018,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                 }
             }
             s += u8" ["s;
-            putenclv((power / 50 + 1) / 5);
+            enchantment_print_level((power / 50 + 1) / 5);
             s += u8"]"s;
             break;
         case 6:
@@ -3051,7 +3033,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                                   u8"ability", std::to_string(sid), u8"name")
                             + u8" faster."s)
                     + u8" ["s;
-                putenclv(power / 50);
+                enchantment_print_level(power / 50);
                 s += u8"]"s;
             }
             else
@@ -3078,7 +3060,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                         + u8" damage."s);
             }
             s += u8" ["s;
-            putenclv(power / 100);
+            enchantment_print_level(power / 100);
             s += u8"]"s;
             break;
         case 8:
@@ -3091,7 +3073,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                     + i18n::_(u8"ability", std::to_string(sid), u8"name")
                     + u8"."s);
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
             break;
         case 9:
@@ -3121,7 +3103,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3135,7 +3117,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3149,7 +3131,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3163,7 +3145,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3219,7 +3201,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 100);
+            enchantment_print_level(power / 100);
             s += u8"]"s;
         }
         break;
@@ -3260,7 +3242,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3282,7 +3264,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3301,7 +3283,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3317,7 +3299,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3333,7 +3315,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3349,7 +3331,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3365,7 +3347,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3379,7 +3361,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 100);
+            enchantment_print_level(power / 100);
             s += u8"]"s;
         }
         break;
@@ -3394,7 +3376,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3416,7 +3398,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3432,7 +3414,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3448,7 +3430,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3473,7 +3455,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3489,7 +3471,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3515,7 +3497,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         else
         {
             s += u8" ["s;
-            putenclv(power / 50);
+            enchantment_print_level(power / 50);
             s += u8"]"s;
         }
         break;
@@ -3589,6 +3571,177 @@ std::string trim_item_description(const std::string& source, bool summary)
     }
 
     return ret;
+}
+
+void text_replace_tags_in_quest_board()
+{
+    while (1)
+    {
+        const int p0 = instr(buff, 0, u8"{"s);
+        const int p1 = instr(buff, p0, u8"}"s);
+        const int p2 = buff(0).size();
+        if (p0 == -1)
+        {
+            break;
+        }
+        const auto tag = strmid(buff, p0 + 1, p1 - 1);
+        const auto head = strmid(buff, 0, p0);
+        const auto tail = strmid(buff, p0 + p1 + 1, p2 - p1 - p0);
+        buff = head + replace_tag(tag) + tail;
+    }
+}
+
+void text_replace_tags_in_quest_text()
+{
+    for (int cnt = 0; cnt < 20; ++cnt)
+    {
+        p(0) = instr(buff, 0, u8"{"s);
+        p(1) = instr(buff, p, u8"}"s);
+        p(2) = buff(0).size();
+        if (p == -1)
+        {
+            break;
+        }
+        s(0) = strmid(buff, p + 1, p(1) - 1);
+        s(1) = strmid(buff, 0, p);
+        s(2) = strmid(buff, p + p(1) + 1, p(2) - p(1) - p);
+        for (int cnt = 0; cnt < 1; ++cnt)
+        {
+            if (s == u8"client"s)
+            {
+                s = s(12);
+                break;
+            }
+            if (s == u8"map"s)
+            {
+                s = s(11);
+                break;
+            }
+            if (s == u8"ref"s)
+            {
+                s = s(10);
+                break;
+            }
+            if (s == u8"you"s)
+            {
+                s = _kimi(3);
+                break;
+            }
+            if (s == u8"me"s)
+            {
+                s = _ore(3);
+                break;
+            }
+            if (s == u8"reward"s)
+            {
+                s = s(5);
+                break;
+            }
+            if (s == u8"objective"s)
+            {
+                s = s(4);
+                break;
+            }
+            if (s == u8"deadline"s)
+            {
+                s = nquestdate;
+                break;
+            }
+            if (s == u8"player"s)
+            {
+                s = cdatan(0, 0);
+                break;
+            }
+            if (s == u8"aka"s)
+            {
+                s = cdatan(1, 0);
+                break;
+            }
+            if (s == u8"npc"s)
+            {
+                s = cdatan(0, tc);
+                break;
+            }
+            if (s == u8"ある"s)
+            {
+                s = _aru(3);
+                break;
+            }
+            if (s == u8"う"s)
+            {
+                s = _u(3);
+                break;
+            }
+            if (s == u8"か"s)
+            {
+                s = _ka(3);
+                break;
+            }
+            if (s == u8"が"s)
+            {
+                s = _ga(3);
+                break;
+            }
+            if (s == u8"かな"s)
+            {
+                s = _kana(3);
+                break;
+            }
+            if (s == u8"だ"s)
+            {
+                s = _da(3);
+                break;
+            }
+            if (s == u8"よ"s)
+            {
+                s = _yo(3);
+                break;
+            }
+            if (s == u8"た"s)
+            {
+                s = _ta(3);
+                break;
+            }
+            if (s == u8"だな"s)
+            {
+                s = _dana(3);
+                break;
+            }
+            if (s == u8"だろ"s)
+            {
+                s = _daro(3);
+                break;
+            }
+            if (s == u8"たのむ"s)
+            {
+                s = _tanomu(3);
+                break;
+            }
+            if (s == u8"る"s)
+            {
+                s = _ru(3);
+                break;
+            }
+            if (s == u8"のだ"s)
+            {
+                s = _nda(3);
+                break;
+            }
+            if (s == u8"な"s)
+            {
+                s = _na(3);
+                break;
+            }
+            if (s == u8"くれ"s)
+            {
+                s = _kure(3);
+                break;
+            }
+            s = u8"Unknown Code"s;
+        }
+        buff = s(1) + s + s(2);
+    }
+    return;
 }
 
 

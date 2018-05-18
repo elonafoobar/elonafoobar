@@ -129,17 +129,14 @@ inline std::string take_by_width(const std::string& str, size_t width)
 
 
 
-inline std::string replace_crlf(const std::string& str)
+inline std::string replace(const std::string& str, const std::string& from, const std::string& to)
 {
-    constexpr const auto crlf = u8"\r\n";
-    constexpr const auto lf = u8"\n";
-
     auto ret{str};
     std::string::size_type pos{};
-    while ((pos = ret.find(crlf, pos)) != std::string::npos)
+    while ((pos = ret.find(from, pos)) != std::string::npos)
     {
-        ret.replace(pos, std::strlen(crlf), lf);
-        pos += std::strlen(lf);
+        ret.replace(pos, from.size(), to);
+        pos += to.size();
     }
 
     return ret;
@@ -153,6 +150,19 @@ inline std::string replace_crlf(const std::string& str)
 
 namespace fileutil
 {
+
+
+inline void skip_bom(std::istream& in)
+{
+    assert(in.tellg() == std::istream::pos_type(0));
+
+    const auto first = in.get();
+    const auto second = in.get();
+    const auto third = in.get();
+    if (first != 0xef || second != 0xbb || third != 0xbf)
+        in.seekg(0); // Not BOM
+}
+
 
 
 // Note: the line number is 1-based.
@@ -208,6 +218,11 @@ struct read_by_line
             return n != other.n;
         }
 
+        bool operator==(const iterator& other) const
+        {
+            return n == other.n;
+        }
+
 
         size_t line_number() const noexcept
         {
@@ -223,8 +238,15 @@ struct read_by_line
 
 
     read_by_line(const fs::path& filepath)
-        : in(filepath.native())
     {
+        in.open(filepath.native());
+        if (!in)
+        {
+            throw std::runtime_error(
+                u8"Could not open file "
+                + filesystem::make_preferred_path_in_utf8(filepath));
+        }
+        skip_bom(in);
     }
 
 

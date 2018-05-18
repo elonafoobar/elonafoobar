@@ -84,11 +84,17 @@ extern buff_db the_buff_db;
 // 21  "耐久の成長", "Grow Endurance"
 // 22  "器用の成長", "Grow Dexterity"
 // 23  "感覚の成長", "Grow Perception"
-// 24  "学習の成長", "Grow Learning"
+// 24  "習得の成長", "Grow Learning"
 // 25  "意思の成長", "Grow Will"
 // 26  "魔力の成長", "Grow Magic"
 // 27  "魅力の成長", "Grow Charisma"
 // 28  "速度の成長", "Grow Speed"
+
+
+
+int buff_find(int prm_799, int prm_800);
+int buff_add(int prm_801, int prm_802, int prm_803, int prm_804);
+void buff_delete(int prm_805, int prm_806);
 
 
 
