@@ -2369,7 +2369,6 @@ label_2181_internal:
             int cnt2 = cnt;
             for (int cnt = 0; cnt < 2000; ++cnt)
             {
-                await();
                 p = rnd(67) + 400;
                 if (p == 441)
                 {
@@ -2493,7 +2492,6 @@ label_2181_internal:
     case 1105:
         for (int cnt = 0;; ++cnt)
         {
-            await();
             p = rnd(300) + 100;
             if (the_ability_db[p])
             {
@@ -2607,7 +2605,6 @@ label_2181_internal:
             int cnt2 = cnt;
             while (1)
             {
-                await();
                 p = rnd(300) + 100;
                 if (the_ability_db[p])
                 {
@@ -3995,7 +3992,6 @@ label_2181_internal:
             inv[ci].number = 0;
             for (int cnt = 0;; ++cnt)
             {
-                await();
                 flt(calcobjlv(efp / 10) + 5, calcfixlv(3));
                 if (cnt < 10)
                 {

@@ -528,7 +528,6 @@ main_menu_result_t main_menu_incarnate()
         s = filesystem::to_utf8_path(entry.path().filename());
         const auto gene_header_filepath =
             filesystem::dir::save(s) / u8"gene_header.txt";
-        await();
         if (!fs::exists(gene_header_filepath))
         {
             continue;
