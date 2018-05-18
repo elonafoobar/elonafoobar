@@ -7015,7 +7015,7 @@ label_1961_internal:
             {
                 if (adata(16, gdata_current_map) == 102)
                 {
-                    s = u8"   "s + sdata(17, i) + u8" / " + s + sdata(156, i);
+                    s = u8"   "s + sdata(17, i) + u8" / " + sdata(156, i);
                 }
                 if (adata(16, gdata_current_map) == 31)
                 {
