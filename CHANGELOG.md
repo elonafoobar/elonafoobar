@@ -7,6 +7,44 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
+## [0.2.3] - 2018-05-19
+
+### Added
+
+- You can now change some options in game.
+  - Extra Race/Class
+  - Animation Wait/Alert Wait
+  - Initial Key Wait/Key Wait
+- You can change how frequently shopkeepers restock their items.
+  - 0-10 days(default: 3 days). If you set 0, sold items are updated every time you talk to the shopkeeper.
+
+### Fixed
+
+- Fix gaining performance experience by bard's performance.
+- Fix being unable to read text file in UTF-8 with BOM.
+- Fix performance hit by too many damage popups.
+  - Limit the maximum number of popups like oomEx.
+- Fix remaining of damage popups if you leave map.
+- Fix some SEs not being played.
+- Fix that BGM is re-played at the beginning sometimes.
+- Fix stack overflow when PC is slow and there are many NPCs.
+- Fix crash when trying to create PC whose name is invalid as file name/folder name.
+  - Invalid name is now converted to valid name automatically.
+- Fix infinite loop when inventory is filled with precious items and items are destroyed.
+- Fix crash when items are destroyed.
+- Fix typo in Japanese.
+- Fix crash when opining journal.
+- Fix too many blank lines in journal.
+- Fix being unable to cancel number input prompt.
+- Fix effect of ball/bolt spells not reflecting their element's color.
+- Fix going back to stats roll menu resets lock count.
+- Fix slow down in the front of quest board.
+- Fix mojibake of in-game help in Japanese.
+- Fix glitch about your pets' stats at PC's shop.
+- Fix being unable to dig walls if your mining skill is low.
+
+
+
 ## [0.2.2] - 2018-05-05
 
 ### Added
