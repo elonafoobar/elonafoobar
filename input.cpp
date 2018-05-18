@@ -173,7 +173,7 @@ void input_number_dialog(int x, int y, int max_number)
     int number = max_number;
     if (strlen_u(std::to_string(max_number)) >= 3)
     {
-        dx += std::to_string(max_number).size() * 8;
+        dx += strlen_u(std::to_string(max_number)) * 8;
     }
     pos(x + 24, y + 4);
     gfini(dx - 42, 35);
@@ -198,6 +198,11 @@ void input_number_dialog(int x, int y, int max_number)
         if (key == key_enter)
         {
             f = 1;
+            break;
+        }
+        if (key == key_cancel)
+        {
+            f = -1;
             break;
         }
         if (key == key_west)
