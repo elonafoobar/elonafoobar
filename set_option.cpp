@@ -176,12 +176,22 @@ std::vector<config_menu> create_config_menu()
     ELONA_CONFIG_ITEM(lang(u8"言語(Language)", u8"Language"));
     ELONA_CONFIG_ITEM(lang(u8"拡張設定(Foobar)", u8"Ex setting(Foobar)"));
 
-    ret.emplace_back(lang(u8"ゲームの設定", u8"Game Setting"), 440, 340);
+    ret.emplace_back(lang(u8"ゲームの設定", u8"Game Setting"), 440, 400);
     ELONA_CONFIG_ITEM_YESNO(
         lang(u8"ノルンの冒険ガイド", u8"Extra Help"),
         config::instance().extrahelp,
         lang(u8"あり", u8"Show"),
         lang(u8"なし", u8"Don't show"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"Extra種族", u8"Extra Race"),
+        config::instance().extrarace,
+        lang(u8"あり", u8"On"),
+        lang(u8"なし", u8"Off"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"Extra職業", u8"Extra Class"),
+        config::instance().extraclass,
+        lang(u8"あり", u8"On"),
+        lang(u8"なし", u8"Off"));
     ELONA_CONFIG_ITEM_YESNO(
         lang(u8"非好戦的NPCを無視", u8"Neutral Npcs"),
         config::instance().ignoredislike,
@@ -207,6 +217,22 @@ std::vector<config_menu> create_config_menu()
     ELONA_CONFIG_ITEM_INTEGER(
         lang(u8"攻撃の間隔", u8"Attack Interval"),
         config::instance().attackwait,
+        u8"{} wait");
+    ELONA_CONFIG_ITEM_INTEGER(
+        lang(u8"アニメウェイト", u8"Animation Wait"),
+        config::instance().animewait,
+        u8"{} wait");
+    ELONA_CONFIG_ITEM_INTEGER(
+        lang(u8"アラートウェイト", u8"Alert Wait"),
+        config::instance().alert,
+        u8"{} wait");
+    ELONA_CONFIG_ITEM_INTEGER(
+        lang(u8"キーウェイト(初回)", u8"Initial Key Wait"),
+        config::instance().initialkeywait,
+        u8"{} wait");
+    ELONA_CONFIG_ITEM_INTEGER(
+        lang(u8"キーウェイト", u8"Key Wait"),
+        config::instance().keywait,
         u8"{} wait");
 
     ret.emplace_back(lang(u8"画面と音の設定", u8"Screen & Sound"), 440, 370);
@@ -614,7 +640,7 @@ void set_option()
             }
             else if (submenu == 1)
             {
-                if (cnt == 4)
+                if (cnt == 6)
                 {
                     if (config::instance().startrun >= 20)
                     {
@@ -830,6 +856,38 @@ void set_option()
                 }
                 if (cs == 1)
                 {
+                    config::instance().extrarace += p;
+                    if (config::instance().extrarace > 1)
+                    {
+                        config::instance().extrarace = 1;
+                    }
+                    else if (config::instance().extrarace < 0)
+                    {
+                        config::instance().extrarace = 0;
+                    }
+                    snd(20);
+                    set_config(u8"extraRace", config::instance().extrarace);
+                    reset_page = true;
+                    continue;
+                }
+                if (cs == 2)
+                {
+                    config::instance().extraclass += p;
+                    if (config::instance().extraclass > 1)
+                    {
+                        config::instance().extraclass = 1;
+                    }
+                    else if (config::instance().extraclass < 0)
+                    {
+                        config::instance().extraclass = 0;
+                    }
+                    snd(20);
+                    set_config(u8"extraClass", config::instance().extraclass);
+                    reset_page = true;
+                    continue;
+                }
+                if (cs == 3)
+                {
                     config::instance().ignoredislike += p;
                     if (config::instance().ignoredislike > 1)
                     {
@@ -845,7 +903,7 @@ void set_option()
                     reset_page = true;
                     continue;
                 }
-                if (cs == 2)
+                if (cs == 4)
                 {
                     config::instance().zkey += p;
                     if (config::instance().zkey > 2)
@@ -861,7 +919,7 @@ void set_option()
                     reset_page = true;
                     continue;
                 }
-                if (cs == 3)
+                if (cs == 5)
                 {
                     config::instance().xkey += p;
                     if (config::instance().xkey > 2)
@@ -877,7 +935,7 @@ void set_option()
                     reset_page = true;
                     continue;
                 }
-                if (cs == 4)
+                if (cs == 6)
                 {
                     config::instance().startrun += p;
                     if (config::instance().startrun > 20)
@@ -893,7 +951,7 @@ void set_option()
                     reset_page = true;
                     continue;
                 }
-                if (cs == 5)
+                if (cs == 7)
                 {
                     config::instance().walkwait += p;
                     if (config::instance().walkwait > 10)
@@ -909,7 +967,7 @@ void set_option()
                     reset_page = true;
                     continue;
                 }
-                if (cs == 6)
+                if (cs == 8)
                 {
                     config::instance().attackwait += p;
                     if (config::instance().attackwait > 20)
@@ -922,6 +980,70 @@ void set_option()
                     }
                     snd(20);
                     set_config(u8"attackWait", config::instance().attackwait);
+                    reset_page = true;
+                    continue;
+                }
+                if (cs == 9)
+                {
+                    config::instance().animewait += p;
+                    if (config::instance().animewait > 30)
+                    {
+                        config::instance().animewait = 30;
+                    }
+                    else if (config::instance().animewait < 0)
+                    {
+                        config::instance().animewait = 0;
+                    }
+                    snd(20);
+                    set_config(u8"anime_wait", config::instance().animewait);
+                    reset_page = true;
+                    continue;
+                }
+                if (cs == 10)
+                {
+                    config::instance().alert += p;
+                    if (config::instance().alert > 50)
+                    {
+                        config::instance().alert = 50;
+                    }
+                    else if (config::instance().alert < 0)
+                    {
+                        config::instance().alert = 0;
+                    }
+                    snd(20);
+                    set_config(u8"alert_wait", config::instance().alert);
+                    reset_page = true;
+                    continue;
+                }
+                if (cs == 11)
+                {
+                    config::instance().initialkeywait += p;
+                    if (config::instance().initialkeywait > 20)
+                    {
+                        config::instance().initialkeywait = 20;
+                    }
+                    else if (config::instance().initialkeywait < 0)
+                    {
+                        config::instance().initialkeywait = 0;
+                    }
+                    snd(20);
+                    set_config(u8"initialKeyWait", config::instance().initialkeywait);
+                    reset_page = true;
+                    continue;
+                }
+                if (cs == 12)
+                {
+                    config::instance().keywait += p;
+                    if (config::instance().keywait > 20)
+                    {
+                        config::instance().keywait = 20;
+                    }
+                    else if (config::instance().keywait < 0)
+                    {
+                        config::instance().keywait = 0;
+                    }
+                    snd(20);
+                    set_config(u8"keyWait", config::instance().keywait);
                     reset_page = true;
                     continue;
                 }
@@ -1450,6 +1572,7 @@ void set_option()
                     initialize_server_info();
                 }
             }
+            snail::input::instance().set_key_repeat(config::instance().initialkeywait, config::instance().keywait);
             return;
         }
     }
