@@ -1276,8 +1276,7 @@ void noteadd(const std::string& text, int index, int overwrite)
     {
         index = lines.size();
     }
-
-    if (size_t(index) >= lines.size())
+    else if (size_t(index) >= lines.size())
     {
         lines.resize(index + 1);
     }
