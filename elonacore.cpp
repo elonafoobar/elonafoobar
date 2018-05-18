@@ -14903,7 +14903,8 @@ void spot_digging()
 
 void spot_mining_or_wall()
 {
-    int countdig = 0;
+    static int countdig{};
+
     if (cdata[cc].continuous_action_id == 0)
     {
         cdata[cc].continuous_action_id = 5;
