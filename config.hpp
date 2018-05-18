@@ -46,6 +46,7 @@ public:
     int netchat;
     int netwish;
     int objectshadow;
+    int restock_interval;
     int runscroll;
     int runwait;
     int scroll;
