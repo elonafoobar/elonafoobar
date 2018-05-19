@@ -17,6 +17,18 @@ build:
 configuration:
   - Debug
 
+
+# for master branch
+for:
+-
+  branches:
+    only:
+      - master
+
+  configuration:
+    - Release
+
+
 branches:
   except:
     - /pr\/.+/
@@ -69,7 +81,12 @@ build_script:
 
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
-  - mv build\Debug build\ElonaFoobar
+  - mv build\%CONFIGURATION% build\ElonaFoobar
+  - mv CHANGELOG*.md build\ElonaFoobar
+  - mv README*.md build\ElonaFoobar
+  - mv LICENSE build\ElonaFoobar
+  - del build\ElonaFoobar\*.ilk
+  - del build\ElonaFoobar\*.pdb
   - 7z a ElonaFoobar-windows.zip "%APPVEYOR_BUILD_FOLDER%\build\ElonaFoobar"
 
 artifacts:
