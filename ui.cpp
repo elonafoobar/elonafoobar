@@ -2324,7 +2324,11 @@ void cs_list(
         gcopy(0, x, y, width, 19);
         gsel(0);
 
+        const auto colorbk_r = ginfo(16);
+        const auto colorbk_g = ginfo(17);
+        const auto colorbk_b = ginfo(18);
         boxf(x, y, x + width, y + 19, {127, 191, 255, 63});
+        color(colorbk_r, colorbk_g, colorbk_b);
         pos(x + width - 20, y + 4);
         gcopy(3, 48, 360, 16, 16);
 
@@ -2358,7 +2362,9 @@ void cs_list(
     case 2: color(240, 240, 240); break;
     case 3: color(160, 10, 10); break;
     case 4: color(128, 128, 128); break;
-    default: break;
+    default:
+        // Use current color.
+        break;
     }
 
     pos(x + 4 + x_offset, y + 3);

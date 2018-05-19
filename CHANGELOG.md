@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
+## [0.2.4] - 2018-05-20
+
+### Fixed
+
+- Fix save data being gzip-compressed.
+- Fix traits not being colored in trait menu.
+
+
+
 ## [0.2.3] - 2018-05-19
 
 ### Added
