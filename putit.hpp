@@ -25,11 +25,13 @@ class oarchive_base
 class binary_iarchive : public iarchive_base
 {
 public:
-    binary_iarchive(std::istream& in)
-        : in(in)
-        , memory(new char[sizeof(long long)])
+    binary_iarchive(std::istream& in, bool gzip = false)
+        : memory(new char[sizeof(long long)])
     {
-        fin.push(boost::iostreams::gzip_decompressor());
+        if (gzip)
+        {
+            fin.push(boost::iostreams::gzip_decompressor());
+        }
         fin.push(in);
     }
 
@@ -95,7 +97,6 @@ public:
 
 
 private:
-    std::istream& in;
     boost::iostreams::filtering_istream fin;
     std::unique_ptr<char[]> memory;
 };
@@ -105,10 +106,12 @@ private:
 class binary_oarchive : public oarchive_base
 {
 public:
-    binary_oarchive(std::ostream& out)
-        : out(out)
+    binary_oarchive(std::ostream& out, bool gzip = false)
     {
-        fout.push(boost::iostreams::gzip_compressor());
+        if (gzip)
+        {
+            fout.push(boost::iostreams::gzip_compressor());
+        }
         fout.push(out);
     }
 
@@ -142,7 +145,6 @@ public:
 
 
 private:
-    std::ostream& out;
     boost::iostreams::filtering_ostream fout;
 };
 

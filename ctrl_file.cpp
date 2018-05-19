@@ -203,7 +203,8 @@ void load_v1(
     const fs::path& filepath,
     elona_vector1<T>& data,
     size_t begin,
-    size_t end)
+    size_t end,
+    bool gzip = false)
 {
     std::ifstream in{filepath.native(), std::ios::binary};
     if (in.fail())
@@ -211,7 +212,7 @@ void load_v1(
         throw std::runtime_error(
             u8"Could not open file at "s + filepath.string());
     }
-    putit::binary_iarchive ar(in);
+    putit::binary_iarchive ar(in, gzip);
     for (size_t i = begin; i < end; ++i)
     {
         ar.load(data(i));
@@ -224,7 +225,8 @@ void save_v1(
     const fs::path& filepath,
     elona_vector1<T>& data,
     size_t begin,
-    size_t end)
+    size_t end,
+    bool gzip = false)
 {
     std::ofstream out{filepath.native(), std::ios::binary};
     if (out.fail())
@@ -232,7 +234,7 @@ void save_v1(
         throw std::runtime_error(
             u8"Could not open file at "s + filepath.string());
     }
-    putit::binary_oarchive ar(out);
+    putit::binary_oarchive ar(out, gzip);
     for (size_t i = begin; i < end; ++i)
     {
         ar.save(data(i));
@@ -247,7 +249,8 @@ void load_v2(
     size_t i_begin,
     size_t i_end,
     size_t j_begin,
-    size_t j_end)
+    size_t j_end,
+    bool gzip = false)
 {
     std::ifstream in{filepath.native(), std::ios::binary};
     if (in.fail())
@@ -255,7 +258,7 @@ void load_v2(
         throw std::runtime_error(
             u8"Could not open file at "s + filepath.string());
     }
-    putit::binary_iarchive ar{in};
+    putit::binary_iarchive ar{in, gzip};
     for (size_t j = j_begin; j < j_end; ++j)
     {
         for (size_t i = i_begin; i < i_end; ++i)
@@ -273,7 +276,8 @@ void save_v2(
     size_t i_begin,
     size_t i_end,
     size_t j_begin,
-    size_t j_end)
+    size_t j_end,
+    bool gzip = false)
 {
     std::ofstream out{filepath.native(), std::ios::binary};
     if (out.fail())
@@ -281,7 +285,7 @@ void save_v2(
         throw std::runtime_error(
             u8"Could not open file at "s + filepath.string());
     }
-    putit::binary_oarchive ar{out};
+    putit::binary_oarchive ar{out, gzip};
     for (size_t j = j_begin; j < j_end; ++j)
     {
         for (size_t i = i_begin; i < i_end; ++i)
@@ -301,7 +305,8 @@ void load_v3(
     size_t j_begin,
     size_t j_end,
     size_t k_begin,
-    size_t k_end)
+    size_t k_end,
+    bool gzip = false)
 {
     std::ifstream in{filepath.native(), std::ios::binary};
     if (in.fail())
@@ -309,7 +314,7 @@ void load_v3(
         throw std::runtime_error(
             u8"Could not open file at "s + filepath.string());
     }
-    putit::binary_iarchive ar{in};
+    putit::binary_iarchive ar{in, gzip};
     for (size_t k = k_begin; k < k_end; ++k)
     {
         for (size_t j = j_begin; j < j_end; ++j)
@@ -332,7 +337,8 @@ void save_v3(
     size_t j_begin,
     size_t j_end,
     size_t k_begin,
-    size_t k_end)
+    size_t k_end,
+    bool gzip = false)
 {
     std::ofstream out{filepath.native(), std::ios::binary};
     if (out.fail())
@@ -340,7 +346,7 @@ void save_v3(
         throw std::runtime_error(
             u8"Could not open file at "s + filepath.string());
     }
-    putit::binary_oarchive ar{out};
+    putit::binary_oarchive ar{out, gzip};
     for (size_t k = k_begin; k < k_end; ++k)
     {
         for (size_t j = j_begin; j < j_end; ++j)
@@ -1017,14 +1023,14 @@ void fmode_16()
 {
     DIM3(cmapdata, 5, 400);
 
-    load_v3(fmapfile + u8".map", map, 0, mdata(0), 0, mdata(1), 0, 3);
+    load_v3(fmapfile + u8".map", map, 0, mdata(0), 0, mdata(1), 0, 3, true);
 
     const auto filepath = fmapfile + u8".obj"s;
     if (!fs::exists(filepath))
     {
         return;
     }
-    load_v2(filepath, cmapdata, 0, 5, 0, 400);
+    load_v2(filepath, cmapdata, 0, 5, 0, 400, true);
 }
 
 
@@ -1040,7 +1046,7 @@ void fmode_5_6(bool read)
         const auto filepath = fmapfile + u8".idx"s;
         if (read)
         {
-            load_v1(filepath, mdatatmp, 0, 100);
+            load_v1(filepath, mdatatmp, 0, 100, true);
             for (int j = 0; j < 5; ++j)
             {
                 mdata(j) = mdatatmp(j);
@@ -1048,7 +1054,7 @@ void fmode_5_6(bool read)
         }
         else
         {
-            save_v1(filepath, mdata, 0, 100);
+            save_v1(filepath, mdata, 0, 100, true);
         }
     }
 
@@ -1058,11 +1064,11 @@ void fmode_5_6(bool read)
         {
             DIM4(map, mdata(0), mdata(1), 10);
             DIM3(mapsync, mdata(0), mdata(1)); // TODO length_exception
-            load_v3(filepath, map, 0, mdata(0), 0, mdata(1), 0, 10);
+            load_v3(filepath, map, 0, mdata(0), 0, mdata(1), 0, 10, true);
         }
         else
         {
-            save_v3(filepath, map, 0, mdata(0), 0, mdata(1), 0, 10);
+            save_v3(filepath, map, 0, mdata(0), 0, mdata(1), 0, 10, true);
         }
     }
 
@@ -1072,12 +1078,12 @@ void fmode_5_6(bool read)
         {
             if (fs::exists(filepath))
             {
-                load_v2(filepath, cmapdata, 0, 5, 0, 400);
+                load_v2(filepath, cmapdata, 0, 5, 0, 400, true);
             }
         }
         else
         {
-            save_v2(filepath, cmapdata, 0, 5, 0, 400);
+            save_v2(filepath, cmapdata, 0, 5, 0, 400, true);
         }
     }
 }
