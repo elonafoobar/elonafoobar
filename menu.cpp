@@ -4686,6 +4686,7 @@ label_1970_internal:
                 wy + 66 + cnt * 19 - 1);
             continue;
         }
+        int text_color{};
         if (list(1, p) != 99999)
         {
             int stat = get_trait_info(0, i);
@@ -4695,11 +4696,11 @@ label_1970_internal:
             }
             else if (trait(i) > 0)
             {
-                color(0, 0, 200);
+                text_color = 1;
             }
             else
             {
-                color(200, 0, 0);
+                text_color = 2;
             }
         }
         else
@@ -4717,13 +4718,38 @@ label_1970_internal:
             x = 70;
         }
         gcopy(3, 384 + traitref * 24, 336, 24, 24);
-        cs_list(cs == cnt, listn(0, p), wx + x, wy + 66 + cnt * 19 - 1);
+        switch (text_color)
+        {
+        case 0:
+            color(10, 10, 10);
+            break;
+        case 1:
+            color(0, 0, 200);
+            break;
+        case 2:
+            color(200, 0, 0);
+            break;
+        }
+        cs_list(cs == cnt, listn(0, p), wx + x, wy + 66 + cnt * 19 - 1, 0, -1);
+        color(0, 0, 0);
         if (list(1, p) < 10000)
         {
             pos(wx + 270, wy + 66 + cnt * 19 + 2);
+            switch (text_color)
+            {
+            case 0:
+                color(10, 10, 10);
+                break;
+            case 1:
+                color(0, 0, 200);
+                break;
+            case 2:
+                color(200, 0, 0);
+                break;
+            }
             mes(traitrefn(2));
+            color(0, 0, 0);
         }
-        color(0, 0, 0);
     }
     if (keyrange != 0)
     {
