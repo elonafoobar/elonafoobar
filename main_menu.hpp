@@ -29,4 +29,4 @@ main_menu_result_t main_title_menu();
 main_menu_result_t main_menu_continue();
 main_menu_result_t main_menu_incarnate();
 
-}
+} // namespace elona

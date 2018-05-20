@@ -1,13 +1,13 @@
 #include "adventurer.hpp"
+#include <string>
 #include "ability.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "equipment.hpp"
 #include "item.hpp"
-#include "itemgen.hpp"
 #include "item_db.hpp"
+#include "itemgen.hpp"
 #include "variables.hpp"
-#include <string>
 
 namespace elona
 {

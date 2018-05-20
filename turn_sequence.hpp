@@ -20,4 +20,4 @@ turn_result_t pc_turn(bool advance_time = true);
 
 
 
-}
+} // namespace elona

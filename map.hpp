@@ -1,7 +1,7 @@
 #pragma once
 
-#include "elona.hpp"
 #include <string>
+#include "elona.hpp"
 
 
 namespace elona

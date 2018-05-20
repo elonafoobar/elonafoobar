@@ -15,4 +15,4 @@ void gain_level(int);
 void grow_primary_skills(int);
 void update_required_experience(int);
 
-}
+} // namespace elona

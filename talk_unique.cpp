@@ -1,4 +1,3 @@
-#include "talk.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
@@ -15,6 +14,7 @@
 #include "menu.hpp"
 #include "shop.hpp"
 #include "status_ailment.hpp"
+#include "talk.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 

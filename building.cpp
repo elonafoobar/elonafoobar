@@ -9,8 +9,8 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
-#include "itemgen.hpp"
 #include "item_db.hpp"
+#include "itemgen.hpp"
 #include "macro.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
@@ -226,8 +226,8 @@ void prompt_hiring()
     if (p >= gdata_home_scale + 2)
     {
         txt(lang(
-                u8"家はすでに人であふれかえっている。"s,
-                u8"You already have too many guests in your home."s));
+            u8"家はすでに人であふれかえっている。"s,
+            u8"You already have too many guests in your home."s));
         return;
     }
     for (int cnt = 0; cnt < 10; ++cnt)
@@ -303,8 +303,7 @@ void prompt_hiring()
             randomize();
             cdata[rc].shop_rank = rnd(15) + 1;
         }
-        for (int cnt = ELONA_MAX_PARTY_CHARACTERS;
-             cnt < ELONA_MAX_CHARACTERS;
+        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
              ++cnt)
         {
             if (cnt == rc)
@@ -329,7 +328,7 @@ void prompt_hiring()
         if (cdata[0].gold < calchirecost(tc) * 20)
         {
             txt(lang(
-                    u8"お金が足りない…"s, u8"You don't have enough money..."s));
+                u8"お金が足りない…"s, u8"You don't have enough money..."s));
         }
         else
         {
@@ -339,8 +338,8 @@ void prompt_hiring()
             cdata[tc].state = 1;
             txtef(2);
             txt(lang(
-                    cdatan(0, tc) + u8"を家に迎えた。"s,
-                    u8"You hire "s + cdatan(0, tc) + u8"."s));
+                cdatan(0, tc) + u8"を家に迎えた。"s,
+                u8"You hire "s + cdatan(0, tc) + u8"."s));
             snd(64);
         }
     }
@@ -362,8 +361,8 @@ void start_home_map_mode()
     prepare_hourse_board_tiles();
     txtnew();
     txt(lang(
-            u8"マウスの左クリックでタイルの敷設、右クリックでタイルの取得、移動キーでスクリーン移動、決定キーでタイル一覧、キャンセルキーで終了。"s,
-            u8"Left click to place the tile, right click to pick the tile under your mouse cursor, movement keys to move current position, hit the enter key to show the list of tiles, hit the cancel key to exit."s));
+        u8"マウスの左クリックでタイルの敷設、右クリックでタイルの取得、移動キーでスクリーン移動、決定キーでタイル一覧、キャンセルキーで終了。"s,
+        u8"Left click to place the tile, right click to pick the tile under your mouse cursor, movement keys to move current position, hit the enter key to show the list of tiles, hit the cancel key to exit."s));
     tlocinitx = cdata[0].position.x;
     tlocinity = cdata[0].position.y;
     tile = 0;
@@ -400,8 +399,7 @@ void show_home_value()
     {
         pos(cnt % 4 * 180, cnt / 4 * 300);
         picload(
-            filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"),
-            1);
+            filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"), 1);
     }
     gsel(0);
     snd(26);
@@ -411,11 +409,9 @@ void show_home_value()
     s(0) = lang(u8"家の情報"s, u8"Home Value"s);
     s(1) = lang(u8"決定ｷｰ,"s, u8"Enter key,"s) + strhint3;
     windowshadow = 1;
-    display_window(
-        (windoww - 440) / 2 + inf_screenx, winposy(360), 440, 360);
+    display_window((windoww - 440) / 2 + inf_screenx, winposy(360), 440, 360);
     display_topic(lang(u8"価値"s, u8"Value"s), wx + 28, wy + 36);
-    display_topic(
-        lang(u8"家宝ランク"s, u8"Heirloom Rank"s), wx + 28, wy + 106);
+    display_topic(lang(u8"家宝ランク"s, u8"Heirloom Rank"s), wx + 28, wy + 106);
     ++cmbg;
     x = ww / 5 * 2;
     y = wh - 80;
@@ -475,23 +471,24 @@ void show_home_value()
         mes(itemname(p));
     }
 
-        while (1)
+    while (1)
+    {
+        redraw();
+        await(config::instance().wait1);
+        key_check();
+        cursor_check();
+        if (key == key_cancel)
         {
-            redraw();
-            await(config::instance().wait1);
-            key_check();
-            cursor_check();
-            if (key == key_cancel)
-            {
-                break;
-            }
+            break;
         }
+    }
 }
 
 void prompt_move_ally()
 {
     int tchome = 0;
-    while(true) {
+    while (true)
+    {
 
         txtnew();
         txt(lang(u8"誰を移動させる？"s, u8"Move who?"s));
@@ -563,17 +560,17 @@ void prompt_ally_staying()
                 {
                     cdata[c].current_map = 0;
                     txt(lang(
-                            cdatan(0, c) + u8"の滞在を取り消した。"s,
-                            cdatan(0, c) + u8" "s + is(c)
+                        cdatan(0, c) + u8"の滞在を取り消した。"s,
+                        cdatan(0, c) + u8" "s + is(c)
                             + u8" no longer staying at your home."s));
                 }
                 else
                 {
                     removeworker(gdata_current_map);
                     txt(lang(
-                            cdatan(0, c) + u8"を役目から外した。"s,
-                            u8"You remove "s + cdatan(0, c) + u8" from "s
-                            + his(c) + u8" job."s));
+                        cdatan(0, c) + u8"を役目から外した。"s,
+                        u8"You remove "s + cdatan(0, c) + u8" from "s + his(c)
+                            + u8" job."s));
                 }
             }
             else
@@ -583,16 +580,16 @@ void prompt_ally_staying()
                     cdata[c].initial_position.x = cdata[c].position.x;
                     cdata[c].initial_position.y = cdata[c].position.y;
                     txt(lang(
-                            cdatan(0, c) + u8"を滞在させた。"s,
-                            cdatan(0, c) + u8" stay"s + _s(c)
+                        cdatan(0, c) + u8"を滞在させた。"s,
+                        cdatan(0, c) + u8" stay"s + _s(c)
                             + u8" at your home now."s));
                 }
                 else
                 {
                     removeworker(gdata_current_map);
                     txt(lang(
-                            cdatan(0, c) + u8"を任命した。"s,
-                            cdatan(0, c) + u8" take"s + _s(c)
+                        cdatan(0, c) + u8"を任命した。"s,
+                        cdatan(0, c) + u8" take"s + _s(c)
                             + u8" charge of the job now."s));
                 }
                 cdata[c].current_map = gdata_current_map;
@@ -606,8 +603,7 @@ void try_extend_shop()
     txtnew();
     if (cdata[0].gold < calcshopreform())
     {
-        txt(lang(
-                u8"お金が足りない…"s, u8"You don't have enough money..."s));
+        txt(lang(u8"お金が足りない…"s, u8"You don't have enough money..."s));
     }
     else
     {
@@ -616,9 +612,9 @@ void try_extend_shop()
         mdata(18) = clamp(mdata(18) + 10, 1, 400);
         txtef(2);
         txt(lang(
-                u8"店を拡張した！これからは"s + mdata(18)
+            u8"店を拡張した！これからは"s + mdata(18)
                 + u8"個のアイテムを陳列できる。"s,
-                u8"You extend your shop! You can display max of "s + mdata(18)
+            u8"You extend your shop! You can display max of "s + mdata(18)
                 + u8" items now!"s));
     }
 }

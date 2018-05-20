@@ -2,12 +2,12 @@
 #include "character.hpp"
 #include "ctrl_file.hpp"
 #include "elona.hpp"
-#include "position.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "itemgen.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
+#include "position.hpp"
 #include "variables.hpp"
 
 

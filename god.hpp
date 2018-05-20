@@ -115,6 +115,4 @@ turn_result_t do_offer();
 
 
 
-
-
 } // namespace elona

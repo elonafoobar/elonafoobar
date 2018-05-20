@@ -232,7 +232,8 @@ enum class key
 
 inline bool is_modifier(key k)
 {
-    switch(k) {
+    switch (k)
+    {
     case key::ctrl:
     case key::ctrl_l:
     case key::ctrl_r:
@@ -244,10 +245,8 @@ inline bool is_modifier(key k)
     case key::gui_r:
     case key::alt:
     case key::alt_l:
-    case key::alt_r:
-        return true;
-    default:
-        return false;
+    case key::alt_r: return true;
+    default: return false;
     }
 }
 

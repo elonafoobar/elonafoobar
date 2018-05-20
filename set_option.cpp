@@ -714,7 +714,8 @@ void set_option()
                     const auto value = config::instance().restock_interval;
                     if (value)
                     {
-                        mes(std::to_string(value) + lang(u8"日", u8" day" + _s2(value)));
+                        mes(std::to_string(value)
+                            + lang(u8"日", u8" day" + _s2(value)));
                     }
                     else
                     {
@@ -1043,7 +1044,8 @@ void set_option()
                         config::instance().initialkeywait = 0;
                     }
                     snd(20);
-                    set_config(u8"initialKeyWait", config::instance().initialkeywait);
+                    set_config(
+                        u8"initialKeyWait", config::instance().initialkeywait);
                     reset_page = true;
                     continue;
                 }
@@ -1582,7 +1584,9 @@ void set_option()
                         config::instance().restock_interval = 0;
                     }
                     snd(20);
-                    set_config(u8"restock_interval", config::instance().restock_interval);
+                    set_config(
+                        u8"restock_interval",
+                        config::instance().restock_interval);
                     reset_page = true;
                     continue;
                 }
@@ -1604,7 +1608,8 @@ void set_option()
                     initialize_server_info();
                 }
             }
-            snail::input::instance().set_key_repeat(config::instance().initialkeywait, config::instance().keywait);
+            snail::input::instance().set_key_repeat(
+                config::instance().initialkeywait, config::instance().keywait);
             return;
         }
     }

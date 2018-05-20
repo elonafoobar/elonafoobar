@@ -3,8 +3,8 @@
 #include "blending.hpp"
 #include "config.hpp"
 #include "elona.hpp"
-#include "variables.hpp"
 #include "ui.hpp"
+#include "variables.hpp"
 
 
 
@@ -247,7 +247,12 @@ void input_number_dialog(int x, int y, int max_number)
 
 
 
-void input_text_dialog(int x, int y, int val2, bool is_cancelable, bool as_filename)
+void input_text_dialog(
+    int x,
+    int y,
+    int val2,
+    bool is_cancelable,
+    bool as_filename)
 {
     int ime_esc = 0;
 

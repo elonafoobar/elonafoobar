@@ -14,8 +14,8 @@
 #include "item.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
-#include "status_ailment.hpp"
 #include "quest.hpp"
+#include "status_ailment.hpp"
 #include "variables.hpp"
 
 
@@ -154,7 +154,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         if (cdata[prm_853].hp - dmg_at_m141 <= 0)
         {
             if (clamp(
-                    25 + cdata[prm_853].buffs[buff_find(prm_853, 18)].power / 17,
+                    25
+                        + cdata[prm_853].buffs[buff_find(prm_853, 18)].power
+                            / 17,
                     25,
                     80)
                 >= rnd(100))
@@ -446,23 +448,38 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 if (rnd(10) < prm_857 / 75 + 4)
                 {
-                    dmgcon(prm_853, status_ailment_t::blinded, rnd(prm_857 / 3 * 2 + 1));
+                    dmgcon(
+                        prm_853,
+                        status_ailment_t::blinded,
+                        rnd(prm_857 / 3 * 2 + 1));
                 }
                 if (rnd(20) < prm_857 / 50 + 4)
                 {
-                    dmgcon(prm_853, status_ailment_t::paralyzed, rnd(prm_857 / 3 * 2 + 1));
+                    dmgcon(
+                        prm_853,
+                        status_ailment_t::paralyzed,
+                        rnd(prm_857 / 3 * 2 + 1));
                 }
                 if (rnd(20) < prm_857 / 50 + 4)
                 {
-                    dmgcon(prm_853, status_ailment_t::confused, rnd(prm_857 / 3 * 2 + 1));
+                    dmgcon(
+                        prm_853,
+                        status_ailment_t::confused,
+                        rnd(prm_857 / 3 * 2 + 1));
                 }
                 if (rnd(20) < prm_857 / 50 + 4)
                 {
-                    dmgcon(prm_853, status_ailment_t::poisoned, rnd(prm_857 / 3 * 2 + 1));
+                    dmgcon(
+                        prm_853,
+                        status_ailment_t::poisoned,
+                        rnd(prm_857 / 3 * 2 + 1));
                 }
                 if (rnd(20) < prm_857 / 50 + 4)
                 {
-                    dmgcon(prm_853, status_ailment_t::sleep, rnd(prm_857 / 3 * 2 + 1));
+                    dmgcon(
+                        prm_853,
+                        status_ailment_t::sleep,
+                        rnd(prm_857 / 3 * 2 + 1));
                 }
             }
             if (ele_at_m141 == 52)
@@ -1532,4 +1549,4 @@ bool actionsp(int cc, int sp)
 
 
 
-}
+} // namespace elona

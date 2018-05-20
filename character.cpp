@@ -2138,8 +2138,6 @@ int chara_armor_class(int cc)
 
 
 
-
-
 std::string chara_refstr(int prm_0258, int prm_0259)
 {
     dbmode = 16;

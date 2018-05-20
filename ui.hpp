@@ -1,7 +1,7 @@
 #pragma once
 
-#include "snail/application.hpp"
 #include <string>
+#include "snail/application.hpp"
 
 namespace elona
 {
@@ -87,7 +87,11 @@ void windowanimecorner(
     int prm_735 = 0,
     int prm_736 = 0,
     int prm_737 = 0);
-void showtitle(const std::string&, const std::string& prm_739, int prm_740 = 0, int = 0);
+void showtitle(
+    const std::string&,
+    const std::string& prm_739,
+    int prm_740 = 0,
+    int = 0);
 
 
-}
+} // namespace elona

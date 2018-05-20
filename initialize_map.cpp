@@ -10,11 +10,11 @@
 #include "elona.hpp"
 #include "event.hpp"
 #include "item.hpp"
-#include "quest.hpp"
 #include "itemgen.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "mapgen.hpp"
+#include "quest.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 

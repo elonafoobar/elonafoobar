@@ -102,9 +102,6 @@ int ask_direction_to_close()
 
 
 
-
-
-
 } // namespace
 
 
@@ -4341,7 +4338,8 @@ void character_drops_item()
                             reftype = the_item_db[inv[ci].id]->category;
                             enchantment_add(
                                 ci,
-                                enchantment_generate(enchantment_gen_level(rnd(4))),
+                                enchantment_generate(
+                                    enchantment_gen_level(rnd(4))),
                                 enchantment_gen_p());
                             animeload(8, rc);
                         }
@@ -5646,24 +5644,12 @@ turn_result_t show_house_board()
     rtval = stat;
     switch (rtval)
     {
-    case 0:
-        start_home_map_mode();
-        break;
-    case 2:
-        show_home_value();
-        break;
-    case 3:
-        prompt_move_ally();
-        break;
-    case 4:
-        prompt_ally_staying();
-        break;
-    case 5:
-        try_extend_shop();
-        break;
-    case 6:
-        prompt_hiring();
-        break;
+    case 0: start_home_map_mode(); break;
+    case 2: show_home_value(); break;
+    case 3: prompt_move_ally(); break;
+    case 4: prompt_ally_staying(); break;
+    case 5: try_extend_shop(); break;
+    case 6: prompt_hiring(); break;
     }
     tlocinitx = 0;
     tlocinity = 0;
@@ -12761,7 +12747,10 @@ label_21451_internal:
                             u8"墨が噴き出した。"s,
                             u8"Gallons of ink spreads."s));
                     }
-                    dmgcon(cc, status_ailment_t::blinded, 100 + gdata_current_dungeon_level * 2);
+                    dmgcon(
+                        cc,
+                        status_ailment_t::blinded,
+                        100 + gdata_current_dungeon_level * 2);
                 }
                 if (feat(2) == 6)
                 {
@@ -12771,7 +12760,10 @@ label_21451_internal:
                             u8"刺激的な匂いがただよう。"s,
                             u8"Stimulative gas spreads."s));
                     }
-                    dmgcon(cc, status_ailment_t::paralyzed, 100 + gdata_current_dungeon_level * 2);
+                    dmgcon(
+                        cc,
+                        status_ailment_t::paralyzed,
+                        100 + gdata_current_dungeon_level * 2);
                 }
                 if (feat(2) == 5)
                 {
@@ -12781,7 +12773,10 @@ label_21451_internal:
                             u8"臭い匂いがたちこめた。"s,
                             u8"Smelly gas spreads."s));
                     }
-                    dmgcon(cc, status_ailment_t::confused, 100 + gdata_current_dungeon_level * 2);
+                    dmgcon(
+                        cc,
+                        status_ailment_t::confused,
+                        100 + gdata_current_dungeon_level * 2);
                 }
                 if (feat(2) == 3)
                 {
@@ -12853,7 +12848,10 @@ label_21451_internal:
                             u8"毒ガスが噴き出した。"s,
                             u8"Poisonous gas spreads."s));
                     }
-                    dmgcon(cc, status_ailment_t::poisoned, 100 + gdata_current_dungeon_level * 2);
+                    dmgcon(
+                        cc,
+                        status_ailment_t::poisoned,
+                        100 + gdata_current_dungeon_level * 2);
                 }
                 if (feat(2) == 2)
                 {
@@ -12863,7 +12861,10 @@ label_21451_internal:
                             u8"催眠ガスが噴き出した。"s,
                             u8"Sleeping gas spreads."s));
                     }
-                    dmgcon(cc, status_ailment_t::sleep, 100 + gdata_current_dungeon_level * 2);
+                    dmgcon(
+                        cc,
+                        status_ailment_t::sleep,
+                        100 + gdata_current_dungeon_level * 2);
                 }
                 if (feat(2) == 7)
                 {
@@ -18356,7 +18357,10 @@ void try_to_melee_attack()
                         + u8" with "s + his(cc) + u8" shield."s));
             }
             dmghp(tc, rnd(sdata(168, cc)) + 1, cc);
-            dmgcon(tc, status_ailment_t::dimmed, 50 + int(std::sqrt(sdata(168, cc))) * 15);
+            dmgcon(
+                tc,
+                status_ailment_t::dimmed,
+                50 + int(std::sqrt(sdata(168, cc))) * 15);
             cdata[tc].paralyzed += rnd(3);
         }
     }
@@ -18420,7 +18424,7 @@ label_22191_internal:
     if (map(cdata[tc].position.x, cdata[tc].position.y, 8) != 0)
     {
         bool return_now = mef_proc_from_physical_attack(tc);
-        if(return_now)
+        if (return_now)
         {
             return;
         }
@@ -19404,14 +19408,14 @@ turn_result_t do_plant()
         txt(lang(
             u8"この場所には埋められない。"s, u8"You can't plant it here."s));
         update_screen();
-                        return turn_result_t::pc_turn_user_error;
+        return turn_result_t::pc_turn_user_error;
     }
     if (map(cdata[cc].position.x, cdata[cc].position.y, 6) != 0)
     {
         txt(lang(
             u8"この場所には埋められない。"s, u8"You can't plant it here."s));
         update_screen();
-                        return turn_result_t::pc_turn_user_error;
+        return turn_result_t::pc_turn_user_error;
     }
     int val0;
     if (chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 2)

@@ -21,7 +21,7 @@ elona_vector1<std::string> cmrace;
 std::string cmclass;
 elona_vector1<int> cmstats;
 elona_vector1<int> cmlock;
-}
+} // namespace
 
 
 
@@ -511,7 +511,8 @@ main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
             }
             if (p == 1)
             {
-                return main_menu_result_t::character_making_select_feats_and_alias;
+                return main_menu_result_t::
+                    character_making_select_feats_and_alias;
             }
             if (cmlock(p - 2) != 0)
             {
@@ -544,7 +545,8 @@ main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
     }
 }
 
-main_menu_result_t character_making_select_feats_and_alias(bool is_choosing_feat)
+main_menu_result_t character_making_select_feats_and_alias(
+    bool is_choosing_feat)
 {
     if (is_choosing_feat)
     {
@@ -676,7 +678,8 @@ main_menu_result_t character_making_select_feats_and_alias(bool is_choosing_feat
         if (getkey(snail::key::f1))
         {
             show_game_help();
-            return main_menu_result_t::character_making_select_feats_and_alias_looped;
+            return main_menu_result_t::
+                character_making_select_feats_and_alias_looped;
         }
     }
 }

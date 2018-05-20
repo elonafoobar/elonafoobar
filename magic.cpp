@@ -3508,7 +3508,8 @@ label_2181_internal:
             enchantment_add(
                 ci,
                 enchantment_generate(enchantment_gen_level(egolv)),
-                enchantment_gen_p() + (fixlv == 5) * 100 + (ibit(15, ci) == 1) * 100,
+                enchantment_gen_p() + (fixlv == 5) * 100
+                    + (ibit(15, ci) == 1) * 100,
                 20 - (fixlv == 5) * 10 - (ibit(15, ci) == 1) * 20);
         }
         randomize();

@@ -513,7 +513,6 @@ void quest_on_map_initialize()
 
 
 
-
 void quest_refresh_list()
 {
     for (int cnt = 0, cnt_end = (gdata_number_of_existing_quests);

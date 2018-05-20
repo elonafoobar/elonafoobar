@@ -34,7 +34,7 @@
 namespace elona
 {
 
- // TODO organize by order in pc_turn()
+// TODO organize by order in pc_turn()
 
 turn_result_t do_give_command()
 {
@@ -1685,7 +1685,12 @@ turn_result_t do_use_command()
                 randomize(inv[ci].subname + inv[ci].param1 * 10 + cnt);
                 exrand_randomize(inv[ci].subname + inv[ci].param1 * 10 + cnt);
                 int stat = enchantment_add(
-                    ci, enchantment_generate(enchantment_gen_level(4)), enchantment_gen_p(), 0, 0, 1);
+                    ci,
+                    enchantment_generate(enchantment_gen_level(4)),
+                    enchantment_gen_p(),
+                    0,
+                    0,
+                    1);
                 if (stat != 0)
                 {
                     if (rtval == 34)
@@ -2083,7 +2088,7 @@ turn_result_t do_use_command()
                 u8"このエリアでは使えない。"s,
                 u8"You cant use it in this area."s));
             update_screen();
-                            return turn_result_t::pc_turn_user_error;
+            return turn_result_t::pc_turn_user_error;
         }
         txt(lang(u8"誰を吊るす？"s, u8"Hang who?"s));
         update_screen();
@@ -2407,7 +2412,8 @@ turn_result_t do_use_command()
             u8"原子爆弾を設置した。逃げろォー！"s,
             u8"You set up the nuke...now run!!"s));
         snd(58);
-        mef_add(cdata[cc].position.x, cdata[cc].position.y, 7, 632, 10, 100, cc);
+        mef_add(
+            cdata[cc].position.x, cdata[cc].position.y, 7, 632, 10, 100, cc);
         goto label_2229_internal;
     case 48:
         if (gdata_current_map != 35 || usermapid == 0)

@@ -29,4 +29,4 @@ int initialize_random_nefia_rdtype2();
 int initialize_random_nefia_rdtype3();
 int initialize_quest_map_party();
 
-}
+} // namespace elona

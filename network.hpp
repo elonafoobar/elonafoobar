@@ -20,4 +20,4 @@ int voting_box();
 
 
 
-}
+} // namespace elona

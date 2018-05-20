@@ -475,8 +475,6 @@ int enchantment_filter(int prm_449, int prm_450)
 
 
 
-
-
 int enchantment_generate(int prm_451)
 {
     int sum_at_m47 = 0;
@@ -669,7 +667,8 @@ int enchantment_add(
                 {
                     return 0;
                 }
-                else if (enchantment_filter(reftype, encref(4, enc_at_m48)) == 0)
+                else if (
+                    enchantment_filter(reftype, encref(4, enc_at_m48)) == 0)
                 {
                     return 0;
                 }
@@ -747,7 +746,9 @@ int enchantment_add(
                         {
                             continue;
                         }
-                        else if (enchantment_filter(reftype, encprocref(4, cnt)) == 0)
+                        else if (
+                            enchantment_filter(reftype, encprocref(4, cnt))
+                            == 0)
                         {
                             continue;
                         }
@@ -849,7 +850,11 @@ void add_enchantments_depending_on_ego()
 {
     for (int cnt = 0, cnt_end = (rnd(rnd(5) + 1) + 1); cnt < cnt_end; ++cnt)
     {
-        enchantment_add(ci, enchantment_generate(enchantment_gen_level(egolv)), enchantment_gen_p(), 8);
+        enchantment_add(
+            ci,
+            enchantment_generate(enchantment_gen_level(egolv)),
+            enchantment_gen_p(),
+            8);
     }
     inv[ci].subname = 20000 + rnd(maxegominorn);
     return;
@@ -885,11 +890,19 @@ void add_enchantment_by_fixed_ego()
     ego_add(ci, p);
     if (rnd(2) == 0)
     {
-        enchantment_add(ci, enchantment_generate(enchantment_gen_level(egolv)), enchantment_gen_p(), 20);
+        enchantment_add(
+            ci,
+            enchantment_generate(enchantment_gen_level(egolv)),
+            enchantment_gen_p(),
+            20);
     }
     if (rnd(4) == 0)
     {
-        enchantment_add(ci, enchantment_generate(enchantment_gen_level(egolv)), enchantment_gen_p(), 25);
+        enchantment_add(
+            ci,
+            enchantment_generate(enchantment_gen_level(egolv)),
+            enchantment_gen_p(),
+            25);
     }
     return;
 }
@@ -988,7 +1001,8 @@ void add_enchantments()
                 if (rnd(10) == 0)
                 {
                     ibitmod(15, ci, 1);
-                    enchantment_add(ci, enchantment_generate(99), enchantment_gen_p());
+                    enchantment_add(
+                        ci, enchantment_generate(99), enchantment_gen_p());
                     inv[ci].curse_state = curse_state_t::blessed;
                 }
             }
@@ -998,7 +1012,8 @@ void add_enchantments()
             enchantment_add(
                 ci,
                 enchantment_generate(enchantment_gen_level(egolv)),
-                enchantment_gen_p() + (fixlv == 5) * 100 + (ibit(15, ci) == 1) * 100,
+                enchantment_gen_p() + (fixlv == 5) * 100
+                    + (ibit(15, ci) == 1) * 100,
                 20 - (fixlv == 5) * 10 - (ibit(15, ci) == 1) * 20);
         }
     }
@@ -1006,7 +1021,11 @@ void add_enchantments()
     {
         for (int cnt = 0, cnt_end = (rnd(3)); cnt < cnt_end; ++cnt)
         {
-            enchantment_add(ci, enchantment_generate(enchantment_gen_level(egolv)), enchantment_gen_p(), 10);
+            enchantment_add(
+                ci,
+                enchantment_generate(enchantment_gen_level(egolv)),
+                enchantment_gen_p(),
+                10);
         }
     }
     if (is_cursed(inv[ci].curse_state))
@@ -1039,7 +1058,6 @@ void add_enchantments()
     }
     return;
 }
-
 
 
 

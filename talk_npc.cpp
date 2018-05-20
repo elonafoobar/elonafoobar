@@ -1,4 +1,3 @@
-#include "talk.hpp"
 #include "ability.hpp"
 #include "adventurer.hpp"
 #include "audio.hpp"
@@ -11,11 +10,12 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
-#include "quest.hpp"
 #include "macro.hpp"
 #include "map_cell.hpp"
 #include "menu.hpp"
+#include "quest.hpp"
 #include "shop.hpp"
+#include "talk.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -28,42 +28,30 @@ void talk_wrapper(talk_result_t initial)
 {
     talk_result_t result = initial;
     bool finished = false;
-    while(!finished) {
-        switch(result) {
-        case talk_result_t::talk_npc:
-            result = talk_npc();
-            break;
-        case talk_result_t::talk_unique:
-            result = talk_unique();
-            break;
+    while (!finished)
+    {
+        switch (result)
+        {
+        case talk_result_t::talk_npc: result = talk_npc(); break;
+        case talk_result_t::talk_unique: result = talk_unique(); break;
         case talk_result_t::talk_quest_giver:
             result = talk_quest_giver();
             break;
         case talk_result_t::talk_house_visitor:
             result = talk_house_visitor();
             break;
-        case talk_result_t::talk_sleeping:
-            result = talk_sleeping();
-            break;
-        case talk_result_t::talk_busy:
-            result = talk_busy();
-            break;
+        case talk_result_t::talk_sleeping: result = talk_sleeping(); break;
+        case talk_result_t::talk_busy: result = talk_busy(); break;
         case talk_result_t::talk_finish_escort:
             result = talk_finish_escort();
             break;
-        case talk_result_t::talk_game_begin:
-            result = talk_game_begin();
-            break;
-        case talk_result_t::talk_more:
-            result = talk_more();
-            break;
+        case talk_result_t::talk_game_begin: result = talk_game_begin(); break;
+        case talk_result_t::talk_more: result = talk_more(); break;
         case talk_result_t::talk_end:
             talk_end();
             finished = true;
             break;
-        default:
-            assert(0);
-            break;
+        default: assert(0); break;
         }
     }
 }
