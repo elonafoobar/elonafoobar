@@ -28,7 +28,12 @@ int show_prompt(
 
 void input_number_dialog(int x, int y, int max_number);
 
-void input_text_dialog(int x, int y, int val2, bool is_cancelable = true, bool as_filename = false);
+void input_text_dialog(
+    int x,
+    int y,
+    int val2,
+    bool is_cancelable = true,
+    bool as_filename = false);
 
 
 } // namespace elona

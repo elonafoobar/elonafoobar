@@ -1,9 +1,9 @@
 #include "equipment.hpp"
 #include "adventurer.hpp"
 #include "calc.hpp"
-#include "class.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "class.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "itemgen.hpp"
@@ -345,7 +345,6 @@ void supply_new_equipment()
     }
     return;
 }
-
 
 
 

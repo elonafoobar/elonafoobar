@@ -1,7 +1,7 @@
 #pragma once
-#include "enums.hpp"
-#include "elona.hpp"
 #include <string>
+#include "elona.hpp"
+#include "enums.hpp"
 
 namespace elona
 {
@@ -22,4 +22,4 @@ int blendmatnum(int = 0, int = 0);
 void window_recipe2(int = 0);
 int blendlist(elona_vector2<int>&, int);
 
-}
+} // namespace elona

@@ -398,10 +398,10 @@ void load_pcc_part(int cc, int body_part, const char* body_part_str)
     gmode(2);
     pos(0, 0);
     set_color_mod(
-            255 - c_col(0, pcc(body_part, cc) / 1000),
-            255 - c_col(1, pcc(body_part, cc) / 1000),
-            255 - c_col(2, pcc(body_part, cc) / 1000),
-            10 + cc);
+        255 - c_col(0, pcc(body_part, cc) / 1000),
+        255 - c_col(1, pcc(body_part, cc) / 1000),
+        255 - c_col(2, pcc(body_part, cc) / 1000),
+        10 + cc);
     gcopy(10 + cc, 256, 0, 128, 198);
     set_color_mod(255, 255, 255, 10 + cc);
 }

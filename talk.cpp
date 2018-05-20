@@ -1259,7 +1259,8 @@ talk_result_t talk_game_begin()
         buff = lang(
             u8"この洞窟…雨をしのぐにはちょうどいいわ。ロミアス、危険がないか奥を調べて来て。"s,
             u8"This cave...it's a good place to keep out the rain. Lomias, check the inner chamber to be sure there is no danger lurking here."s);
-        tc = tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
+        tc =
+            tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1274,7 +1275,8 @@ talk_result_t talk_game_begin()
         }
         listmax = 0;
         buff = lang(u8"わかった。ここで待っていろ"s, u8"Okay. Wait here."s);
-        tc = tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
+        tc =
+            tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1304,7 +1306,8 @@ talk_result_t talk_game_begin()
         buff = lang(
             u8"…今の音は？ …ロミアス、大丈夫？"s,
             u8"...what was that sound? ...Lomias, are you alright?"s);
-        tc = tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
+        tc =
+            tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1321,7 +1324,8 @@ talk_result_t talk_game_begin()
         buff = lang(
             u8"ああ、問題ない。どうやらこの洞窟は昔、誰かが住んでいたようだな。奥を見て来たが、今はもう使われていないようだ。"s,
             u8"It's nothing. Looks like this cave is long abandoned. It's a good place to stay."s);
-        tc = tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
+        tc =
+            tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1338,7 +1342,8 @@ talk_result_t talk_game_begin()
         buff = lang(
             u8"そう、ならば都合がいいわ。…あら、あなた何を持っているの？ …キャーッ、プチじゃない！"s,
             u8"I see, that's convenient for us...wait Lomias, what arey you carrying?...Argh! Putits!"s);
-        tc = tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
+        tc =
+            tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1355,7 +1360,8 @@ talk_result_t talk_game_begin()
         buff = lang(
             u8"こいつらか？心配する必要はない。以前、人間にペットとして飼われていたのだろう、ふふ…私によくなついているようだ。"s,
             u8"Don't worry. It appears these putits had been kept as pets by someone. They are kind of...cute."s);
-        tc = tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
+        tc =
+            tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1372,7 +1378,8 @@ talk_result_t talk_game_begin()
         buff = lang(
             u8"うふ！あなたにも優しいところがあるのね。…来て。どうやら怪我人が意識を取り戻したみたいよ。"s,
             u8"Huh, sounds like even you have a soft spot...Come here, the injured is about to wake up."s);
-        tc = tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
+        tc =
+            tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1406,7 +1413,8 @@ talk_result_t talk_game_begin()
         listmax = 0;
         buff =
             u8"…意識が…もう戻ったのか？ 驚いたな。君の回復を待つために、我々の急を要する旅がいつまで中断されるのか、気を揉んでいたのだが。"s;
-        tc = tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
+        tc =
+            tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1454,7 +1462,8 @@ talk_result_t talk_game_begin()
         listmax = 0;
         buff =
             u8"ロミアス、喋りすぎよ。たとえ意識の朦朧とした怪我人が相手だとしても。"s;
-        tc = tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
+        tc =
+            tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1470,7 +1479,8 @@ talk_result_t talk_game_begin()
         listmax = 0;
         buff = u8"…そうだな。私の悪い癖だ、わかってはいる。…さて、"s
             + cdatan(0, 0) + u8"といったな、"s;
-        tc = tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
+        tc =
+            tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1489,7 +1499,8 @@ talk_result_t talk_game_begin()
         listmax = 0;
         buff =
             u8"...you...you're awake already? Remarkable. I was beginning to worry that nursing a lowly adventurer would bring our urgent travel to a halt."s;
-        tc = tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
+        tc =
+            tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1537,7 +1548,8 @@ talk_result_t talk_game_begin()
         listmax = 0;
         buff =
             u8"You talk too much Lomias, even though the one injured before you is still dazed."s;
-        tc = tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
+        tc =
+            tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1553,7 +1565,8 @@ talk_result_t talk_game_begin()
         listmax = 0;
         buff = u8"...yes, it's a bad habit of mine. Well, "s + cdatan(0, 0)
             + u8"..."s;
-        tc = tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
+        tc =
+            tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -2190,7 +2203,9 @@ void talk_window_show()
     if (chatval(2) == 1)
     {
         s = i18n::_(
-            u8"ui", u8"impression", u8"_"s + chara_impression_level(cdata[tc].impression));
+            u8"ui",
+            u8"impression",
+            u8"_"s + chara_impression_level(cdata[tc].impression));
         if (cdata[tc].impression < 150)
         {
             s(1) = ""s + cdata[tc].impression;
@@ -2288,7 +2303,6 @@ int talk_guide_quest_client(int)
 
 
 
-
 int talk_check_trade(int prm_1081)
 {
     j_at_m193 = 0;
@@ -2314,4 +2328,4 @@ int talk_check_trade(int prm_1081)
 }
 
 
-}
+} // namespace elona

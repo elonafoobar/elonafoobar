@@ -1,5 +1,6 @@
 #include "ability.hpp"
 #include "adventurer.hpp"
+#include "audio.hpp"
 #include "autopick.hpp"
 #include "blending.hpp"
 #include "buff.hpp"
@@ -8,8 +9,8 @@
 #include "character.hpp"
 #include "class.hpp"
 #include "config.hpp"
-#include "ctrl_file.hpp"
 #include "crafting.hpp"
+#include "ctrl_file.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
@@ -31,7 +32,6 @@
 #include "network.hpp"
 #include "race.hpp"
 #include "range.hpp"
-#include "audio.hpp"
 #include "trait.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -1144,9 +1144,9 @@ void main_title_loop()
 {
     main_menu_result_t result = main_menu_wrapper();
     bool finished = false;
-    while(!finished)
+    while (!finished)
     {
-        switch(result)
+        switch (result)
         {
         case main_menu_result_t::main_title_menu:
             result = main_menu_wrapper();
@@ -1159,13 +1159,12 @@ void main_title_loop()
             finish_elona();
             finished = true;
             break;
-        default:
-            assert(0);
-            break;
+        default: assert(0); break;
         }
     }
 
-    if(result == main_menu_result_t::initialize_game) {
+    if (result == main_menu_result_t::initialize_game)
+    {
         main_loop();
     }
 }

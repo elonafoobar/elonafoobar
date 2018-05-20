@@ -1,8 +1,8 @@
 #include "turn_sequence.hpp"
-#include "buff.hpp"
 #include "ability.hpp"
-#include "audio.hpp"
 #include "ai.hpp"
+#include "audio.hpp"
+#include "buff.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "command.hpp"
@@ -641,39 +641,19 @@ bool turn_wrapper()
         {
             // Turn lifecycle
 
-        case turn_result_t::turn_begin:
-            result = turn_begin();
-            break;
-        case turn_result_t::turn_end:
-            result = turn_end();
-            break;
-        case turn_result_t::pass_one_turn:
-            result = pass_turns(true);
-            break;
+        case turn_result_t::turn_begin: result = turn_begin(); break;
+        case turn_result_t::turn_end: result = turn_end(); break;
+        case turn_result_t::pass_one_turn: result = pass_turns(true); break;
         case turn_result_t::pass_one_turn_freeze_time:
             result = pass_turns(false);
             break;
-        case turn_result_t::pc_turn:
-            result = pc_turn();
-            break;
-        case turn_result_t::npc_turn:
-            result = npc_turn();
-            break;
-        case turn_result_t::pc_turn_user_error:
-            result = pc_turn(false);
-            break;
-        case turn_result_t::pc_died:
-            result = pc_died();
-            break;
-        case turn_result_t::initialize_map:
-            result = initialize_map();
-            break;
-        case turn_result_t::exit_map:
-            result = exit_map();
-            break;
-        case turn_result_t::play_scene:
-            result = play_scene();
-            break;
+        case turn_result_t::pc_turn: result = pc_turn(); break;
+        case turn_result_t::npc_turn: result = npc_turn(); break;
+        case turn_result_t::pc_turn_user_error: result = pc_turn(false); break;
+        case turn_result_t::pc_died: result = pc_died(); break;
+        case turn_result_t::initialize_map: result = initialize_map(); break;
+        case turn_result_t::exit_map: result = exit_map(); break;
+        case turn_result_t::play_scene: result = play_scene(); break;
         case turn_result_t::finish_elona:
             finish_elona();
             finished = true;
@@ -693,9 +673,7 @@ bool turn_wrapper()
         case turn_result_t::show_quest_board:
             result = show_quest_board();
             break;
-        case turn_result_t::show_skill_list:
-            result = show_skill_list();
-            break;
+        case turn_result_t::show_skill_list: result = show_skill_list(); break;
         case turn_result_t::show_spell_list:
             result = show_spell_list();
             break;
@@ -725,9 +703,7 @@ bool turn_wrapper()
             result = turn_result_t::turn_begin;
             break;
         case turn_result_t::none:
-        default:
-            assert(0);
-            break;
+        default: assert(0); break;
         }
     }
     return finished;
@@ -741,17 +717,10 @@ turn_result_t pass_turns(bool time)
     {
         switch (result)
         {
-            case turn_result_t::all_turns_finished:
-                finished = true;
-                break;
-            case turn_result_t::pass_one_turn:
-                time = true;
-                break;
-            case turn_result_t::pass_one_turn_freeze_time:
-                time = false;
-                break;
-            default:
-                return result;
+        case turn_result_t::all_turns_finished: finished = true; break;
+        case turn_result_t::pass_one_turn: time = true; break;
+        case turn_result_t::pass_one_turn_freeze_time: time = false; break;
+        default: return result;
         }
         result = pass_one_turn(time);
     }
@@ -2557,4 +2526,4 @@ label_2747:
 }
 
 
-}
+} // namespace elona

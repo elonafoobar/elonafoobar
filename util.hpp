@@ -129,7 +129,8 @@ inline std::string take_by_width(const std::string& str, size_t width)
 
 
 
-inline std::string replace(const std::string& str, const std::string& from, const std::string& to)
+inline std::string
+replace(const std::string& str, const std::string& from, const std::string& to)
 {
     auto ret{str};
     std::string::size_type pos{};

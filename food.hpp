@@ -50,4 +50,4 @@ void eating_effect_will();
 void eating_effect_quick();
 void eating_effect_pregnant();
 
-}
+} // namespace elona

@@ -1,7 +1,7 @@
 #include "mapgen.hpp"
 #include "calc.hpp"
-#include "ctrl_file.hpp"
 #include "character.hpp"
+#include "ctrl_file.hpp"
 #include "elona.hpp"
 #include "enums.hpp"
 #include "item.hpp"

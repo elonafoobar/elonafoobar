@@ -1367,8 +1367,8 @@ turn_result_t show_spell_list()
         if (spell(cnt) > 0)
         {
             list(0, listmax) = cnt + 400;
-            list(1, listmax) =
-                the_ability_db[400 + cnt]->related_basic_attribute; // TODO coupling
+            list(1, listmax) = the_ability_db[400 + cnt]
+                                   ->related_basic_attribute; // TODO coupling
             ++listmax;
         }
     }
@@ -2086,7 +2086,7 @@ void label_2032()
 
 menu_result menu_character_sheet()
 {
-    menu_result result = { false, false, turn_result_t::none };
+    menu_result result = {false, false, turn_result_t::none};
     int cs_buff = 0;
     int returnfromportrait = 0;
     int cs_buffmax = 0;
@@ -3037,7 +3037,7 @@ label_2035_internal:
 
 menu_result menu_equipment()
 {
-    menu_result result = { false, false, turn_result_t::none };
+    menu_result result = {false, false, turn_result_t::none};
     int cs_prev = 0;
     int mainhand = 0;
     cc = 0;
@@ -3372,7 +3372,7 @@ label_2052_internal:
 
 menu_result menu_materials()
 {
-    menu_result result = { false, false, turn_result_t::none };
+    menu_result result = {false, false, turn_result_t::none};
     listmax = 0;
     page = 0;
     pagesize = 15;
@@ -4280,7 +4280,7 @@ void deco_traits_menu()
 
 menu_result menu_feats_internal()
 {
-    menu_result result = { false, false, turn_result_t::none };
+    menu_result result = {false, false, turn_result_t::none};
     int featrq = 0;
 label_196901_internal:
     listmax = 0;
@@ -4546,12 +4546,15 @@ label_196901_internal:
         {
             if (jp)
             {
-                listn(0, cnt) = strutil::replace(listn(0, cnt), u8"あなた", he(tc, 1));
+                listn(0, cnt) =
+                    strutil::replace(listn(0, cnt), u8"あなた", he(tc, 1));
             }
             if (en)
             {
-                listn(0, cnt) = strutil::replace(listn(0, cnt), u8" your", his(tc, 1));
-                listn(0, cnt) = strutil::replace(listn(0, cnt), u8" you", him(tc, 1));
+                listn(0, cnt) =
+                    strutil::replace(listn(0, cnt), u8" your", his(tc, 1));
+                listn(0, cnt) =
+                    strutil::replace(listn(0, cnt), u8" you", him(tc, 1));
             }
         }
     }
@@ -4679,11 +4682,7 @@ label_1970_internal:
         i = list(0, p);
         if (i < 0)
         {
-            cs_list(
-                cs == cnt,
-                listn(0, p),
-                wx + 114,
-                wy + 66 + cnt * 19 - 1);
+            cs_list(cs == cnt, listn(0, p), wx + 114, wy + 66 + cnt * 19 - 1);
             continue;
         }
         int text_color{};
@@ -4720,15 +4719,9 @@ label_1970_internal:
         gcopy(3, 384 + traitref * 24, 336, 24, 24);
         switch (text_color)
         {
-        case 0:
-            color(10, 10, 10);
-            break;
-        case 1:
-            color(0, 0, 200);
-            break;
-        case 2:
-            color(200, 0, 0);
-            break;
+        case 0: color(10, 10, 10); break;
+        case 1: color(0, 0, 200); break;
+        case 2: color(200, 0, 0); break;
         }
         cs_list(cs == cnt, listn(0, p), wx + x, wy + 66 + cnt * 19 - 1, 0, -1);
         color(0, 0, 0);
@@ -4737,15 +4730,9 @@ label_1970_internal:
             pos(wx + 270, wy + 66 + cnt * 19 + 2);
             switch (text_color)
             {
-            case 0:
-                color(10, 10, 10);
-                break;
-            case 1:
-                color(0, 0, 200);
-                break;
-            case 2:
-                color(200, 0, 0);
-                break;
+            case 0: color(10, 10, 10); break;
+            case 1: color(0, 0, 200); break;
+            case 2: color(200, 0, 0); break;
             }
             mes(traitrefn(2));
             color(0, 0, 0);
@@ -4928,7 +4915,7 @@ label_1970_internal:
 menu_result menu_journal()
 {
 
-    menu_result result = { false, false, turn_result_t::none };
+    menu_result result = {false, false, turn_result_t::none};
     curmenu = 1;
     page = 99;
     pagesize = 40;
@@ -7559,4 +7546,4 @@ label_2024_internal:
     goto label_2024_internal;
 }
 
-}
+} // namespace elona

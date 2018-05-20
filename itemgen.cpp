@@ -8,8 +8,8 @@
 #include "item_db.hpp"
 #include "item_material.hpp"
 #include "map_cell.hpp"
-#include "variables.hpp"
 #include "random.hpp"
+#include "variables.hpp"
 
 namespace elona
 {

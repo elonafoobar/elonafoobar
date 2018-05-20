@@ -490,7 +490,6 @@ void sickifcursed(curse_state_t curse_state, int drinker, int prm_882)
 
 
 
-
 void cook()
 {
     snd(25);

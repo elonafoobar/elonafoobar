@@ -706,8 +706,7 @@ void shop_refresh()
     else
     {
         cdata[tc].time_to_restore = gdata_hour + gdata_day * 24
-            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12
-            - 1;
+            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 - 1;
     }
 }
 

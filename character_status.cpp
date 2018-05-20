@@ -356,5 +356,4 @@ void update_required_experience(int cc)
 
 
 
-
 } // namespace elona

@@ -648,4 +648,4 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
 }
 
 
-}
+} // namespace elona

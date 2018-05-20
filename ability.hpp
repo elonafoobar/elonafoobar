@@ -108,7 +108,6 @@ extern skill_data sdata;
 
 
 
-
 int skillexp(int id, int cc, int experience, int prm_572 = 0, int prm_573 = 0);
 int skillmod(int id, int cc, int experience);
 void gain_digging_experience();

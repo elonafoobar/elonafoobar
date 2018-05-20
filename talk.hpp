@@ -44,4 +44,4 @@ void talk_wrapper(talk_result_t);
 talk_result_t talk_npc();
 talk_result_t talk_unique();
 
-}
+} // namespace elona

@@ -15,4 +15,4 @@ void casino_wrapper();
 bool casino_start();
 bool casino_blackjack();
 
-}
+} // namespace elona

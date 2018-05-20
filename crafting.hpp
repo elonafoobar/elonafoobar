@@ -8,4 +8,4 @@ void crafting_menu();
 int get_required_craft_materials();
 int prodcheck();
 
-}
+} // namespace elona

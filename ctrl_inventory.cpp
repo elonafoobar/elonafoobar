@@ -24,7 +24,7 @@ namespace elona
 
 menu_result ctrl_inventory()
 {
-    menu_result result = { false, false, turn_result_t::none };
+    menu_result result = {false, false, turn_result_t::none};
     int mainweapon = 0;
     int countequip = 0;
     int showmoney = 0;
@@ -1792,7 +1792,9 @@ label_2061_internal:
                     u8"新しい知識は得られなかった。より上位の鑑定で調べる必要がある。"s,
                     u8"You need higher identification to gain new knowledge."s));
             }
-            else if (identify_result != identification_state_t::completely_identified)
+            else if (
+                identify_result
+                != identification_state_t::completely_identified)
             {
                 txt(lang(
                     u8"それは"s + itemname(ci, inv[ci].number)

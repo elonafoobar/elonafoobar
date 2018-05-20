@@ -858,7 +858,7 @@ void label_1877()
 void casino_wrapper()
 {
     bool finished = false;
-    while(!finished)
+    while (!finished)
     {
         finished = casino_start();
     }
@@ -919,7 +919,7 @@ bool casino_start()
     }
     else if (rtval == 1)
     {
-        while(!finished)
+        while (!finished)
         {
             finished = casino_blackjack();
         }
