@@ -154,6 +154,12 @@ void application::handle_event(const ::SDL_Event& event)
     case SDL_MOUSEBUTTONDOWN:
         // Mouse::instance()._handle_event(event.button);
         break;
+    case SDL_WINDOWEVENT:
+        if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST)
+        {
+            input::instance().inactivate_ime();
+        }
+        break;
     case SDL_KEYUP:
     case SDL_KEYDOWN: input::instance()._handle_event(event.key); break;
     case SDL_TEXTINPUT: input::instance()._handle_event(event.text); break;

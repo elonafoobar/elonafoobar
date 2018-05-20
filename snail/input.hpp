@@ -261,6 +261,7 @@ public:
     void set_key_repeat(int initial_key_wait, int key_wait) noexcept;
 
     bool is_ime_active() const;
+    void inactivate_ime();
 
     std::string get_text()
     {
