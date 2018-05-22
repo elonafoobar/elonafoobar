@@ -28,6 +28,8 @@ The following is ideal; not all of these are being regarded at the moment.
 - Module/Table names should use `CamelCase`. Method names and variables should use `snake_case`. Classes exported from C++ should use `CamelCase` prefixed with `Lua`, like `LuaCharacter`.
 - Anything related to the core API should go into a table inside the root `Elona` table.
 - Limit the amount of things in the global namespace as much as possible.
+- Methods that mutate the state of a C++ reference object should be defined as methods, like `character:damage_hp(100)`. Methods that do not modify a C++ reference object should be defined as functions in modules, like `Chara.is_ally(chara)`.
+  + Methods that do not take a corresponding object as an argument, like map-related functions (whether or not they mutate anything) should also be defined as functions in modules.
 - Constants should go into tables organized inside `Elona.Defines`.
 - You can shorten the amount of typing by declaring local "imports" like `local Enums = Elona.Defines.Enums`.
 - Be sure to document all public API methods/classes/definitions/etc., to make it easier for modders to understand how to use them. Remember that modders aren't necessarily programmers. Documentation for Lua uses the [LDoc](https://stevedonovan.github.io/ldoc/manual/doc.md.html) syntax.
