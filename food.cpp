@@ -541,6 +541,7 @@ void cook()
             + u8"を作った。"s,
         u8"You cook "s + s + u8" with "s + itemname(cooktool, 1)
             + u8" and make "s + itemname(ci, 1) + u8"."s));
+    item_stack(0, ci, 1);
     int rank = inv[ci].param2;
     if (rank > 2)
     {
