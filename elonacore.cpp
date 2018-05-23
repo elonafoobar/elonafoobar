@@ -11347,6 +11347,7 @@ turn_result_t do_gatcha()
             {
                 p = 416;
             }
+            flt();
             int stat = itemcreate(
                 -1, p, cdata[cc].position.x, cdata[cc].position.y, 0);
             if (stat != 0)

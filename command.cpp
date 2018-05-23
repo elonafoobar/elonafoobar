@@ -460,6 +460,7 @@ turn_result_t do_search_command()
                                 u8"なんと小さなメダルを見つけた！"s,
                                 u8"You find a small coin!"s));
                             map(x, y, 6) = 0;
+                            flt();
                             itemcreate(-1, 622, x, y, 0);
                         }
                         else
