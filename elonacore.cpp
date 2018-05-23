@@ -16535,7 +16535,7 @@ int pick_up_item()
                             + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12;
                     }
                 }
-                else if (inv[ti].param3 != 0)
+                else if (inv[ti].param3 != 0 && inv[ti].material == 35)
                 {
                     inv[ti].param3 = gdata_hour + gdata_day * 24
                         + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12
