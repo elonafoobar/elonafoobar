@@ -16711,6 +16711,7 @@ int drop_item()
     inv[ci].position.y = cdata[cc].position.y;
     itemturn(ci);
     int stat = item_stack(-1, ci);
+    const auto tibk = ti; // TODO: refactor
     if (stat == 0 || dropval == 0)
     {
         ti = inv_getfreeid(-1);
@@ -16742,7 +16743,7 @@ int drop_item()
             u8"You drop "s + itemname(ti, in) + u8"."s));
     }
     refresh_burden_state();
-    if (inv[ti].id == 516)
+    if (inv[tibk].id == 516)
     {
         int stat = item_find(60002, 0);
         if (stat != -1)
@@ -16750,10 +16751,10 @@ int drop_item()
             p = stat;
             if (core_god::int2godid(inv[p].param1) == cdata[cc].god_id)
             {
-                if (inv[ti].curse_state != curse_state_t::blessed)
+                if (inv[tibk].curse_state != curse_state_t::blessed)
                 {
                     snd(64);
-                    inv[ti].curse_state = curse_state_t::blessed;
+                    inv[tibk].curse_state = curse_state_t::blessed;
                     txtef(2);
                     txt(lang(
                         u8"水は祝福を受けた。"s, u8"The water is blessed."s));
