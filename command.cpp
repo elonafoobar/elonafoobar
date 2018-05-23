@@ -3361,41 +3361,40 @@ turn_result_t do_movement_command()
         }
         return proc_movement_event();
     }
-    if (gdata_current_dungeon_level == 1 || mdata(6) == 6)
+    if (mdata(6) == 6
+        || (gdata_current_dungeon_level == 1 && mdata(6) != 1
+            && (mdata(6) < 20 || 23 < mdata(6))))
     {
-        if (mdata(6) != 1)
+        if (cdata[cc].next_position.x < 0
+            || cdata[cc].next_position.x > mdata(0) - 1
+            || cdata[cc].next_position.y < 0
+            || cdata[cc].next_position.y > mdata(1) - 1)
         {
-            if (cdata[cc].next_position.x < 0
-                || cdata[cc].next_position.x > mdata(0) - 1
-                || cdata[cc].next_position.y < 0
-                || cdata[cc].next_position.y > mdata(1) - 1)
+            txt(lang(
+                mdatan(0) + u8"を去る？ "s,
+                u8"Do you want to leave "s + mdatan(0) + u8"? "s));
+            if (mdata(6) == 7)
             {
-                txt(lang(
-                    mdatan(0) + u8"を去る？ "s,
-                    u8"Do you want to leave "s + mdatan(0) + u8"? "s));
-                if (mdata(6) == 7)
+                if (gdata(73) != 3)
                 {
-                    if (gdata(73) != 3)
-                    {
-                        txt(lang(
-                            u8"注意！現在のクエストは失敗に終わってしまう。"s,
-                            u8"Warning! You are going to abandon your current quest."s));
-                    }
+                    txt(lang(
+                        u8"注意！現在のクエストは失敗に終わってしまう。"s,
+                        u8"Warning! You are going to abandon your current quest."s));
                 }
-                ELONA_YES_NO_PROMPT();
-                rtval = show_prompt(promptx, prompty, 160);
-                update_screen();
-                if (rtval == 0)
-                {
-                    gdata(60) = cdata[0].position.x;
-                    gdata(61) = cdata[0].position.y;
-                    snd(49);
-                    --gdata_current_dungeon_level;
-                    levelexitby = 4;
-                    return turn_result_t::exit_map;
-                }
-                return turn_result_t::pc_turn_user_error;
             }
+            ELONA_YES_NO_PROMPT();
+            rtval = show_prompt(promptx, prompty, 160);
+            update_screen();
+            if (rtval == 0)
+            {
+                gdata(60) = cdata[0].position.x;
+                gdata(61) = cdata[0].position.y;
+                snd(49);
+                --gdata_current_dungeon_level;
+                levelexitby = 4;
+                return turn_result_t::exit_map;
+            }
+            return turn_result_t::pc_turn_user_error;
         }
     }
     if (cellfeat != -1)
