@@ -767,11 +767,11 @@ int calcattackdmg(int prm_894)
                 txt(lang(u8" *ズバシュッ* "s, u8"*vopal*"s));
             }
         }
-        if (ammoproc == 0)
+        if (ammoprocbk == 0)
         {
             damage /= 2;
         }
-        if (ammoproc == 5)
+        if (ammoprocbk == 5)
         {
             damage /= 3;
         }

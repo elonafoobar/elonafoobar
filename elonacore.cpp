@@ -18168,7 +18168,7 @@ turn_result_t try_to_open_locked_door()
 
 
 
-int label_2217()
+void do_ranged_attack()
 {
     int ammox = 0;
     int ammoy = 0;
@@ -18176,6 +18176,7 @@ int label_2217()
     attacknum = 0;
     ele = 0;
     ammoproc = -1;
+    ammoprocbk = -1;
     ammox = cdata[tc].position.x;
     ammoy = cdata[tc].position.y;
     attackitem = cw;
@@ -18202,7 +18203,7 @@ int label_2217()
                                 u8"You are too exhausted!"s));
                             dmgsp(0, encammoref(2, ammoproc) / 2 + 1);
                             ammoproc = -1;
-                            return 1;
+                            return;
                         }
                     }
                     dmgsp(0, rnd(encammoref(2, ammoproc) + 1));
@@ -18213,6 +18214,7 @@ int label_2217()
     }
     if (ammoproc == 0)
     {
+        ammoprocbk = ammoproc;
         for (int cnt = 0; cnt < 3; ++cnt)
         {
             can_do_ranged_attack();
@@ -18235,6 +18237,7 @@ int label_2217()
     }
     else if (ammoproc == 5)
     {
+        ammoprocbk = ammoproc;
         for (int cnt = 0; cnt < 10; ++cnt)
         {
             can_do_ranged_attack();
@@ -18280,7 +18283,7 @@ int label_2217()
     }
     attackvar = 0;
     ammoproc = -1;
-    return 0;
+    ammoprocbk = -1;
 }
 
 
@@ -18302,7 +18305,7 @@ void try_to_melee_attack()
                     int stat = can_do_ranged_attack();
                     if (stat == 1)
                     {
-                        label_2217();
+                        do_ranged_attack();
                     }
                 }
             }

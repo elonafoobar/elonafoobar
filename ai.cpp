@@ -198,7 +198,7 @@ turn_result_t ai_proc_basic()
                 int stat = can_do_ranged_attack();
                 if (stat == 1)
                 {
-                    label_2217();
+                    do_ranged_attack();
                     return turn_result_t::turn_end;
                 }
             }
@@ -254,7 +254,7 @@ turn_result_t ai_proc_basic()
                     int stat = can_do_ranged_attack();
                     if (stat == 1)
                     {
-                        label_2217();
+                        do_ranged_attack();
                         return turn_result_t::turn_end;
                     }
                 }
@@ -278,7 +278,7 @@ turn_result_t ai_proc_basic()
             int stat = can_do_ranged_attack();
             if (stat == 1)
             {
-                label_2217();
+                do_ranged_attack();
                 return turn_result_t::turn_end;
             }
         }

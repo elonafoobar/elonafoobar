@@ -1439,6 +1439,7 @@ void chara_refresh(int cc)
                 {
                     cdata[cc].extra_shot +=
                         inv[rp].enchantments[cnt].power / 15;
+                    cdata[cc].extra_shot = 100;
                     continue;
                 }
                 if (rp2 == 21 || rp2 == 45 || rp2 == 46 || rp2 == 47)

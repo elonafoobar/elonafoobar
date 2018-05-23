@@ -3565,7 +3565,7 @@ turn_result_t do_fire_command()
             return turn_result_t::pc_turn_user_error;
         }
     }
-    label_2217();
+    do_ranged_attack();
     return turn_result_t::turn_end;
 }
 
