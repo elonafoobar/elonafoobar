@@ -1104,23 +1104,6 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             cell_removechara(
                 cdata[prm_853].position.x, cdata[prm_853].position.y);
         }
-        if (cdata[prm_853].breaks_into_debris())
-        {
-            if (is_in_fov(prm_853))
-            {
-                x = cdata[prm_853].position.x;
-                y = cdata[prm_853].position.y;
-                snd(45, false, false);
-                animeblood(prm_853, 1, ele_at_m141);
-            }
-            spillfrag(cdata[prm_853].position.x, cdata[prm_853].position.y, 3);
-        }
-        else
-        {
-            snd(8 + rnd(2), false, false);
-            animeblood(prm_853, 0, ele_at_m141);
-            spillblood(cdata[prm_853].position.x, cdata[prm_853].position.y, 4);
-        }
         if (cdata[prm_853].character_role == 0)
         {
             cdata[prm_853].state = 0;
@@ -1155,6 +1138,27 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     cdata[prm_853].state = 0;
                 }
             }
+        }
+        if (prm_853 == 0)
+        {
+            cell_draw();
+        }
+        if (cdata[prm_853].breaks_into_debris())
+        {
+            if (is_in_fov(prm_853))
+            {
+                x = cdata[prm_853].position.x;
+                y = cdata[prm_853].position.y;
+                snd(45, false, false);
+                animeblood(prm_853, 1, ele_at_m141);
+            }
+            spillfrag(cdata[prm_853].position.x, cdata[prm_853].position.y, 3);
+        }
+        else
+        {
+            snd(8 + rnd(2), false, false);
+            animeblood(prm_853, 0, ele_at_m141);
+            spillblood(cdata[prm_853].position.x, cdata[prm_853].position.y, 4);
         }
         if (prm_853 == 0)
         {
