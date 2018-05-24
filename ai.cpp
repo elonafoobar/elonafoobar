@@ -934,7 +934,6 @@ label_2692_internal:
                 {
                     flt(20);
                     p(0) = rnd(4);
-                    p(1) = 0;
                     if (p == 0 || cdata[cc].has_anorexia())
                     {
                         flttypemajor = 57000;
@@ -947,8 +946,8 @@ label_2692_internal:
                     {
                         flttypeminor = 52002;
                     }
-                    int stat = itemcreate(cc, p(1), -1, -1, 0);
-                    if (stat == 1)
+                    int stat = itemcreate(cc, 0, -1, -1, 0);
+                    if (stat == 1 && the_item_db[inv[ci].id]->is_drinkable)
                     {
                         if (inv[ci].id == 577)
                         {
