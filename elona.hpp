@@ -13,7 +13,7 @@
 #include <string>
 #include <unordered_map>
 #include "enums.hpp"
-#include "macro_gdata.hpp"
+#include "gdata.hpp"
 #include "snail/color.hpp"
 #include "snail/font.hpp"
 #include "snail/input.hpp"

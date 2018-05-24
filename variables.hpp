@@ -1,7 +1,6 @@
 #pragma once
 
 #include "elona.hpp"
-#include "enums.hpp"
 #include "optional.hpp"
 #include "position.hpp"
 #include "talk.hpp"

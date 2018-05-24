@@ -976,6 +976,9 @@ void chara_place()
                 name(rc) + u8"は何かに潰されて息絶えた。"s,
                 name(rc) + u8" is killed."s));
             cdata[rc].state = 0;
+            // Exclude town residents because they occupy character slots even
+            // if they are dead.
+            modify_crowd_density(rc, -1);
         }
         if (cdata[rc].character_role != 0)
         {
@@ -1845,6 +1848,7 @@ void chara_vanquish(int cc)
     cdata[cc].state = 0;
     cdata[cc].character_role = 0;
     quest_check();
+    modify_crowd_density(cc, 1);
 }
 
 int chara_copy(int prm_848)
@@ -1919,6 +1923,8 @@ int chara_copy(int prm_848)
     cdata[c_at_m139].is_ridden() = false;
     cdata[c_at_m139].needs_refreshing_status() = true;
     cdata[c_at_m139].is_hung_on_sand_bag() = false;
+
+    modify_crowd_density(c_at_m139, 1);
     return 1;
 }
 
@@ -2091,6 +2097,14 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
     rc = tc_at_m125;
     wear_most_valuable_equipment_for_all_body_parts();
     chara_refresh(tc_at_m125);
+    if (tc_at_m125 < 57)
+    {
+        modify_crowd_density(prm_784, -1);
+    }
+    if (prm_784 < 57)
+    {
+        modify_crowd_density(tc_at_m125, 1);
+    }
     return prm_784;
 }
 

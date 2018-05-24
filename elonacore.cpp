@@ -27,7 +27,6 @@
 #include "event.hpp"
 #include "filesystem.hpp"
 #include "fish.hpp"
-#include "foobar_save.hpp"
 #include "food.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
@@ -491,7 +490,7 @@ void initialize_character()
     cdata[rc].talk_type = rnd(7);
     supply_initial_equipments();
     chara_refresh(rc);
-    ++gdata_other_character_count;
+    modify_crowd_density(rc, 1);
     cdata[rc].hp = cdata[rc].max_hp;
     cdata[rc].mp = cdata[rc].max_mp;
     cdata[rc].sp = cdata[rc].max_sp;
@@ -5627,7 +5626,7 @@ void monster_respawn()
     if (adata(16, gdata_current_map) == 101
         || adata(16, gdata_current_map) == 102)
     {
-        if (gdata_other_character_count < mdata(10) / 2)
+        if (gdata_crowd_density < mdata(10) / 2)
         {
             if (rnd(2) == 0)
             {
@@ -5640,7 +5639,7 @@ void monster_respawn()
     {
         return;
     }
-    if (gdata_other_character_count < mdata(10) / 4)
+    if (gdata_crowd_density < mdata(10) / 4)
     {
         if (rnd(2) == 0)
         {
@@ -5648,7 +5647,7 @@ void monster_respawn()
             chara_create(-1, dbid, -2, 0);
         }
     }
-    if (gdata_other_character_count < mdata(10) / 2)
+    if (gdata_crowd_density < mdata(10) / 2)
     {
         if (rnd(4) == 0)
         {
@@ -5656,7 +5655,7 @@ void monster_respawn()
             chara_create(-1, dbid, -2, 0);
         }
     }
-    if (gdata_other_character_count < mdata(10))
+    if (gdata_crowd_density < mdata(10))
     {
         if (rnd(8) == 0)
         {
@@ -7518,7 +7517,7 @@ void label_1754()
         {
             if (cdata[gdata_fire_giant].state == 1)
             {
-                if (gdata_other_character_count < 30)
+                if (gdata_crowd_density < 70)
                 {
                     if (rnd(4) == 0)
                     {
@@ -7540,8 +7539,8 @@ void label_1754()
     {
         if (qdata(8, gdata_executing_immediate_quest) != 3)
         {
-            if (gdata_other_character_count
-                < gdata_left_minutes_of_executing_quest / 600)
+            if (gdata_crowd_density
+                < gdata_left_minutes_of_executing_quest / 60)
             {
                 dbid = 0;
                 if (rnd(4) == 0)
@@ -7725,7 +7724,7 @@ void label_1754()
     }
     if (adata(16, gdata_current_map) == 101)
     {
-        if (gdata_other_character_count > 0)
+        if (gdata_crowd_density > 0)
         {
             if (rnd(25) == 0)
             {
@@ -7808,7 +7807,7 @@ void label_1754()
     }
     if (adata(16, gdata_current_map) == 102)
     {
-        if (gdata_other_character_count > 0)
+        if (gdata_crowd_density > 0)
         {
             if (rnd(25) == 0)
             {
@@ -8538,7 +8537,7 @@ label_1894_internal:
     case 15:
         for (int cnt = 0; cnt < 20; ++cnt)
         {
-            p = rnd(gdata_other_character_count + 1) + 57;
+            p = rnd(gdata_crowd_density + 1) + 57;
             if (p >= ELONA_MAX_CHARACTERS)
             {
                 --cnt;

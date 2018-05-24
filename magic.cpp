@@ -743,8 +743,7 @@ int magic()
             case 7:
                 if (cc == 0)
                 {
-                    if (gdata_other_character_count + 100
-                        >= ELONA_MAX_OTHER_CHARACTERS)
+                    if (gdata_crowd_density + 100 >= ELONA_MAX_OTHER_CHARACTERS)
                     {
                         txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
                         obvious = 0;

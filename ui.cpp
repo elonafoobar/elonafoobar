@@ -4,7 +4,6 @@
 #include "character.hpp"
 #include "config.hpp"
 #include "draw.hpp"
-#include "foobar_save.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"

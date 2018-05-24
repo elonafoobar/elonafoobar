@@ -17,7 +17,6 @@
 #include "event.hpp"
 #include "filesystem.hpp"
 #include "fish.hpp"
-#include "foobar_save.hpp"
 #include "i18n.hpp"
 #include "init.hpp"
 #include "input.hpp"

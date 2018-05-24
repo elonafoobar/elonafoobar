@@ -3,7 +3,6 @@
 #include "character.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
-#include "foobar_save.hpp"
 #include "item.hpp"
 #include "log.hpp"
 #include "mef.hpp"

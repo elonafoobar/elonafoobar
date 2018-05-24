@@ -12,7 +12,6 @@
 #include "dmgheal.hpp"
 #include "elona.hpp"
 #include "event.hpp"
-#include "foobar_save.hpp"
 #include "food.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"

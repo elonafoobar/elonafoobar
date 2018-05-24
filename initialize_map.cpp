@@ -2932,7 +2932,7 @@ label_1744_internal:
         }
     }
     label_1745();
-    gdata_other_character_count = 0;
+    gdata_crowd_density = 0;
     for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         cdata[cnt].turn_cost = 0;
@@ -2947,12 +2947,9 @@ label_1744_internal:
             cdata[cnt].hate = 0;
         }
         cdata[cnt].vision_flag = 0;
-        if (cnt > 57)
+        if (cdata[cnt].state != 0)
         {
-            if (cdata[cnt].state != 0)
-            {
-                ++gdata_other_character_count;
-            }
+            modify_crowd_density(cnt, 1);
         }
     }
     cdata[0].current_map = gdata_current_map;

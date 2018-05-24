@@ -1341,7 +1341,12 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     u8"You feel sad for a moment."s));
             }
         }
-        --gdata_other_character_count;
+        if (cdata[prm_853].state == 0)
+        {
+            // Exclude town residents because they occupy character slots even
+            // if they are dead.
+            modify_crowd_density(prm_853, -1);
+        }
         if (gdata_mount)
         {
             if (prm_853 == gdata_mount)
