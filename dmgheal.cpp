@@ -794,8 +794,8 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 }
             }
             ndeathcause = lang(
-                cdatan(0, cc) + u8"に殺された。"s,
-                u8"was killed by "s + cdatan(0, cc));
+                cdatan(0, prm_855) + u8"に殺された。"s,
+                u8"was killed by "s + cdatan(0, prm_855));
         }
         else
         {
