@@ -1598,15 +1598,14 @@ void chara_refresh(int cc)
 
 int relationbetween(int c1, int c2)
 {
-    (void)c2;
     if (cdata[c1].relationship >= -2)
     {
-        if (cdata[c1].relationship <= -3)
+        if (cdata[c2].relationship <= -3)
         {
             return -3;
         }
     }
-    else if (cdata[c1].relationship >= -2)
+    else if (cdata[c2].relationship >= -2)
     {
         return -3;
     }
