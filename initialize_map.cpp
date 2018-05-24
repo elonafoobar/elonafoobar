@@ -2939,6 +2939,7 @@ label_1744_internal:
         if (cdata[cnt].id == 343)
         {
             getunid(cnt);
+            chara_refresh(cnt);
         }
         if (noaggrorefresh == 0)
         {
