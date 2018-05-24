@@ -1219,14 +1219,7 @@ void chara_refresh(int cc)
     cdata[cc].equipment_type = 0;
     attacknum = 0;
     cdata[cc].rate_to_pierce = 0;
-    if (sdata(186, cc))
-    {
-        cdata[cc].rate_of_critical_hit = int(std::sqrt(sdata(186, cc))) + 2;
-    }
-    else
-    {
-        cdata[cc].rate_of_critical_hit = 0;
-    }
+    cdata[cc].rate_of_critical_hit = 0;
     cdata[cc].curse_power = 0;
     cdata[cc].extra_attack = 0;
     cdata[cc].extra_shot = 0;
@@ -1585,6 +1578,10 @@ void chara_refresh(int cc)
     if (cdata[cc].equipment_type & 4)
     {
         cdata[cc].extra_attack += int(std::sqrt(sdata(166, cc))) * 3 / 2 + 4;
+    }
+    if (sdata(186, cc))
+    {
+        cdata[cc].rate_of_critical_hit += int(std::sqrt(sdata(186, cc))) + 2;
     }
     if (cdata[cc].rate_of_critical_hit > 30)
     {
