@@ -1949,12 +1949,6 @@ void chara_delete(int prm_783)
 int chara_relocate(int prm_784, int prm_785, int prm_786)
 {
     int tc_at_m125 = 0;
-    int x_at_m125 = 0;
-    int y_at_m125 = 0;
-    int p1_at_m125 = 0;
-    int p2_at_m125 = 0;
-    int p3_at_m125 = 0;
-    int hp_at_m125 = 0;
     int p_at_m125 = 0;
     int invrangecc_at_m125 = 0;
     int cnt2_at_m125 = 0;
@@ -1995,15 +1989,26 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
             chara_vanquish(tc_at_m125);
         }
     }
+
+    // Backups for changing
+    position_t position;
+    position_t initial_position;
+    int relationship;
+    int original_relationship;
+    int hate;
+    int enemy_id;
+    int hp;
     if (prm_786 == 1)
     {
-        x_at_m125 = cdata[tc_at_m125].position.x;
-        y_at_m125 = cdata[tc_at_m125].position.y;
+        // Change
+        position = cdata[tc_at_m125].position;
+        initial_position = cdata[tc_at_m125].initial_position;
+        relationship = cdata[tc_at_m125].relationship;
+        original_relationship = cdata[tc_at_m125].original_relationship;
+        hate = cdata[tc_at_m125].hate;
+        enemy_id = cdata[tc_at_m125].enemy_id;
+        hp = cdata[tc_at_m125].hp;
     }
-    p1_at_m125 = cdata[tc_at_m125].relationship;
-    p2_at_m125 = cdata[tc_at_m125].hate;
-    p3_at_m125 = cdata[tc_at_m125].state;
-    hp_at_m125 = cdata[tc_at_m125].hp;
     cdata[prm_784].item_which_will_be_used = 0;
     cdata[prm_784].is_livestock() = false;
     const auto tmp = inv_getheader(prm_784);
@@ -2048,13 +2053,14 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
     }
     if (prm_786 == 1)
     {
+        // Change
         cdata[tc_at_m125].state = 1;
-        cdata[tc_at_m125].position.x = x_at_m125;
-        cdata[tc_at_m125].position.y = y_at_m125;
-        cdata[tc_at_m125].relationship = p1_at_m125;
-        cdata[tc_at_m125].hate = p2_at_m125;
-        cdata[tc_at_m125].hp = hp_at_m125;
-        cdata[tc_at_m125].state = p3_at_m125;
+        cdata[tc_at_m125].position = position;
+        cdata[tc_at_m125].initial_position = initial_position;
+        cdata[tc_at_m125].relationship = relationship;
+        cdata[tc_at_m125].original_relationship = original_relationship;
+        cdata[tc_at_m125].hate = hate;
+        cdata[tc_at_m125].hp = hp;
         map(cdata[tc_at_m125].position.x, cdata[tc_at_m125].position.y, 1) =
             tc_at_m125 + 1;
     }
