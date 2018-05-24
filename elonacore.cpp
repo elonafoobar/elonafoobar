@@ -1842,15 +1842,8 @@ void fixaiact(int prm_753)
 
 void refreshspeed(int cc)
 {
-    if (cdata[cc].speed_correction_value == 0)
-    {
-        cdata[cc].current_speed = sdata(18, cc);
-    }
-    else
-    {
-        cdata[cc].current_speed = sdata(18, cc)
-            * clamp((100 - cdata[cc].speed_correction_value), 0, 100) / 100;
-    }
+    cdata[cc].current_speed = sdata(18, cc)
+        * clamp((100 - cdata[cc].speed_correction_value), 0, 100) / 100;
     if (cdata[cc].current_speed < 10)
     {
         cdata[cc].current_speed = 10;
@@ -1862,10 +1855,15 @@ void refreshspeed(int cc)
 
     if (gdata_mount != 0)
     {
-        cdata[0].current_speed = sdata(18, gdata_mount) * 100
-            / clamp((100 + sdata(18, gdata_mount)
-                     - sdata(10, gdata_mount) * 3 / 2 - sdata(301, 0) * 2
-                     - (cdata[gdata_mount].is_suitable_for_mount() == 1) * 50),
+        const auto mount_speed = sdata(18, gdata_mount)
+            * clamp(100 - cdata[gdata_mount].speed_correction_value, 0, 100)
+            / 100;
+
+        cdata[0].current_speed = mount_speed * 100
+            / clamp(100 + mount_speed - sdata(10, gdata_mount) * 3 / 2
+                        - sdata(301, 0) * 2
+                        - (cdata[gdata_mount].is_suitable_for_mount() == 1)
+                            * 50,
                     100,
                     1000);
         if (cdata[gdata_mount].is_unsuitable_for_mount())
@@ -1875,7 +1873,7 @@ void refreshspeed(int cc)
         if (gdata_mount == cc)
         {
             cdata[cc].current_speed =
-                clamp(sdata(10, cc) + sdata(301, 0), 10, sdata(18, cc));
+                clamp(sdata(10, cc) + sdata(301, 0), 10, mount_speed);
             return;
         }
     }
