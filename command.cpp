@@ -1398,6 +1398,13 @@ turn_result_t do_dip_command()
                         u8"Ops! You drop the empty bottle into the well..."s));
                     return turn_result_t::turn_end;
                 }
+                if (inv_getfreeid(0) == -1)
+                {
+                    txt(lang(
+                        u8"バックパックが一杯だ。"s,
+                        u8"Your inventory is full."s));
+                    return turn_result_t::turn_end;
+                }
                 if (inv[ci].id == 602)
                 {
                     --gdata_holy_well_count;

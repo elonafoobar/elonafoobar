@@ -1848,6 +1848,12 @@ void label_1935()
                 u8"Ops! You drop the empty bottle into the well..."s));
             break;
         }
+        if (inv_getfreeid(0) == -1)
+        {
+            txt(lang(
+                u8"バックパックが一杯だ。"s, u8"Your inventory is full."s));
+            break;
+        }
         cibk = ci;
         if (inv[ci].id == 602)
         {
