@@ -1925,6 +1925,7 @@ int chara_copy(int prm_848)
     cdata[c_at_m139].is_hung_on_sand_bag() = false;
 
     modify_crowd_density(c_at_m139, 1);
+    ++npcmemory(1, cdata[c_at_m139].id);
     return 1;
 }
 
