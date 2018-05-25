@@ -84,7 +84,7 @@ ELONA_EXTERN(elona_vector3<int> pochart);
 ELONA_EXTERN(elona_vector2<int> podata);
 ELONA_EXTERN(elona_vector1<std::string> popostname);
 ELONA_EXTERN(int refreshmode);
-ELONA_EXTERN(int questteleport);
+ELONA_EXTERN(bool quest_teleport);
 ELONA_EXTERN(int gspdorg);
 ELONA_EXTERN(int gspd);
 ELONA_EXTERN(elona_vector2<int> fovlist);

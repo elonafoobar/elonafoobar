@@ -98,7 +98,7 @@ void talk_to_npc()
             txt(lang(
                 name(tc) + u8"は耳を貸さない。"s,
                 name(tc) + u8" won't listen."s));
-            questteleport = 0;
+            quest_teleport = false;
             update_screen();
             return;
         }
@@ -169,9 +169,9 @@ void talk_to_npc()
             }
         }
     }
-    if (questteleport == 1)
+    if (quest_teleport)
     {
-        questteleport = 0;
+        quest_teleport = false;
         talk_wrapper(talk_result_t::talk_quest_giver);
         return;
     }
@@ -1985,7 +1985,7 @@ talk_result_t talk_invest()
 
 void talk_end()
 {
-    questteleport = 0;
+    quest_teleport = false;
     if (scenemode == 0)
     {
         screenupdate = -1;

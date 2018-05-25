@@ -5434,15 +5434,18 @@ label_1978_internal:
         {
             goto label_1977_internal;
         }
-        // TODO move the below somewhere else to decouple questteleport
+        // TODO move the below somewhere else to decouple quest_teleport
         tc = qdata(0, p);
         rq = p;
         client = tc;
         efid = 619;
         magic();
         tc = client;
-        questteleport = 1;
-        talk_to_npc();
+        if (cdata[0].state == 1)
+        {
+            quest_teleport = true;
+            talk_to_npc();
+        }
         if (chatteleport == 1)
         {
             chatteleport = 0;
