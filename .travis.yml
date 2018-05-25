@@ -56,9 +56,22 @@ script:
        gcc -v && g++ -v;
     fi
   - env
+  - cd deps
+  - wget --no-verbose "http://ylvania.style.coocan.jp/file/elona122.zip"
+  - unzip elona122.zip
+  - rm elona122.zip
+  - cd ..
   - make VERBOSE=1
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ccache --show-stats; fi
-  - bin/test_runner
+  - pwd
+  - ls
+  - cd ElonaFoobar
+  - pwd
+  - ls
+  - cd bin
+  - pwd
+  - ls
+  - ./test_runner
 
 notifications:
     email: false
