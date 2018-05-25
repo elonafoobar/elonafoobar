@@ -1938,6 +1938,17 @@ label_2061_internal:
         }
         if (invctrl == 23)
         {
+            if (invctrl(1) == 4)
+            {
+                if (ibit(13, ci))
+                {
+                    snd(27);
+                    txt(lang(
+                        u8"それはあなたの大事なものだ。<調べる>メニューから解除できる。"s,
+                        u8"It's set as no-drop. You can reset it from the <examine> menu."s));
+                    goto label_2060_internal;
+                }
+            }
             item_separate(ci);
             invsubroutine = 0;
             result.succeeded = true;

@@ -904,10 +904,18 @@ label_1928_internal:
     }
     if (p != -1)
     {
-        snd(17);
         ci = p;
+        if (ibit(13, ci))
+        {
+            snd(27);
+            txt(lang(
+                u8"それはあなたの大事なものだ。<調べる>メニューから解除できる。"s,
+                u8"It's set as no-drop. You can reset it from the <examine> menu."s));
+            goto label_1928_internal;
+        }
         rpref(10 + step * 2 + 0) = ci;
         rpref(10 + step * 2 + 1) = inv[ci].id;
+        snd(17);
         txt(lang(
             itemname(ci) + u8"を選んだ。"s,
             u8"You add "s + itemname(ci) + u8"."s));
