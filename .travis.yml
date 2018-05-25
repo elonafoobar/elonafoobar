@@ -15,6 +15,7 @@ matrix:
                       - cmake
                       - liblua5.2-dev
                       - zlib1g-dev
+                      - xvfb
                         # Boost and SDL2 library versions provided are too old, they must be compiled manually.
         - os: osx
           compiler: clang
@@ -54,6 +55,8 @@ script:
        export LD_RUN_PATH="/usr/lib:$LD_RUN_PATH";
        export CMAKE_ARGS="$CMAKE_ARGS -DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=TRUE";
        gcc -v && g++ -v;
+       export DISPLAY=':99.0';
+       Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &;
     fi
   - env
   - cd deps
