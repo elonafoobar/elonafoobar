@@ -195,9 +195,10 @@ label_20591:
             }
             if (inv[cnt].body_part != 0)
             {
-                if (mainweapon == -1)
+                if (reftype == 10000)
                 {
-                    if (reftype == 10000)
+                    if (mainweapon == -1
+                        || inv[cnt].body_part < inv[mainweapon].body_part)
                     {
                         mainweapon = cnt;
                     }
