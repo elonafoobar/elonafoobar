@@ -534,14 +534,6 @@ bool wish_for_item(const std::string& input)
             || the_item_db[inv[ci].id]->category == 53000)
         {
             inv[ci].number = 3 + rnd(2);
-            switch (inv[ci].id)
-            {
-            case 559: inv[ci].number = 2 + rnd(2); break;
-            case 502: inv[ci].number = 2; break;
-            case 243: inv[ci].number = 1; break;
-            case 621: inv[ci].number = 1; break;
-            case 706: inv[ci].number = 1; break;
-            }
             if (inv[ci].value >= 20000)
             {
                 inv[ci].number = 1;
@@ -553,6 +545,14 @@ bool wish_for_item(const std::string& input)
             else if (inv[ci].value >= 5000)
             {
                 inv[ci].number = 3;
+            }
+            switch (inv[ci].id)
+            {
+            case 559: inv[ci].number = 2 + rnd(2); break;
+            case 502: inv[ci].number = 2; break;
+            case 243: inv[ci].number = 1; break;
+            case 621: inv[ci].number = 1; break;
+            case 706: inv[ci].number = 1; break;
             }
         }
         if (debug::voldemort && number_of_items != 0)
