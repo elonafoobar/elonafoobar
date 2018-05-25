@@ -76,8 +76,10 @@ build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
   - mkdir build
   - cd build
-  - cmake -DCMAKE_PREFIX_PATH=%PREFIX% %CMAKE_ARGS% ..
+  - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DWITH_TESTS=ON %CMAKE_ARGS% ..
   - cmake --build .
+  - cd %CONFIGURATION%
+  - test_runner.exe
 
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
@@ -87,6 +89,8 @@ after_build:
   - mv LICENSE build\ElonaFoobar
   - del build\ElonaFoobar\*.ilk
   - del build\ElonaFoobar\*.pdb
+  - del build\ElonaFoobar\ElonaFoobar.lib
+  - rd /q /s build\ElonaFoobar\tests
   - 7z a ElonaFoobar-windows.zip "%APPVEYOR_BUILD_FOLDER%\build\ElonaFoobar"
 
 artifacts:

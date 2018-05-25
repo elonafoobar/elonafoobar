@@ -9,7 +9,6 @@
 #include "../init.hpp"
 #include "../item.hpp"
 #include "../itemgen.hpp"
-#include "../lua.hpp"
 #include "../testing.hpp"
 #include "../variables.hpp"
 
@@ -135,14 +134,4 @@ TEST_CASE("Test foobar save data compatibility", "[C++: Serialization]")
 {
     load_previous_savefile();
     REQUIRE(elona::foobar_save.is_autodig_enabled == 0);
-}
-
-TEST_CASE("Ensure struct sizes are unchanged", "[C++: Serialization]")
-{
-    // Just to be sure nothing was accidentally changed.
-    // This test can be changed so long as we are aware of the implications.
-    REQUIRE(sizeof(character) == 872);
-    REQUIRE(sizeof(item) == 160);
-    REQUIRE(sizeof(ability) == 16);
-    REQUIRE(sizeof(foobar_save) == 120);
 }
