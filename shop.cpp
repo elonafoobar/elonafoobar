@@ -68,7 +68,7 @@ void shop_refresh()
     {
         inv[cnt].number = 0;
     }
-    p = 20 + cdata[tc].shop_rank / 2;
+    p = std::min(80, 20 + cdata[tc].shop_rank / 2);
     if (cdata[tc].character_role == 1007)
     {
         p = 6 + cdata[tc].shop_rank / 10;
@@ -88,10 +88,6 @@ void shop_refresh()
     if (cdata[tc].character_role == 1018)
     {
         p /= 2;
-    }
-    if (p > 80)
-    {
-        p = 80;
     }
     for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
     {
