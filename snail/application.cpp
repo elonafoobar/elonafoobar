@@ -41,7 +41,7 @@ void application::initialize(int width, int height, const std::string& title)
         height,
         window::shown));
     _renderer.reset(new renderer(
-        *_window, renderer::accelerated | renderer::present_vsync));
+        *_window, 0));
     ::SDL_StartTextInput();
 }
 

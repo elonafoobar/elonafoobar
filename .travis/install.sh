@@ -12,6 +12,7 @@ export CMAKE_ARGS="$CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=/usr"
 
 cd "$DOWNLOAD_ROOT"
 export SDL2DIR=/usr
+export SDL2DIR=/usr
 
 # SDL2
 if [ ! -f "$DOWNLOAD_ROOT/SDL2-2.0.8" ]; then
@@ -53,3 +54,10 @@ pushd SDL2_image-2.0.3
     sudo make install
 popd
 
+# Lua
+if [ ! -f "$DOWNLOAD_ROOT/lua-5.3.4" ]; then
+    curl -L https://www.lua.org/ftp/lua-5.3.4.tar.gz | tar xz
+fi
+pushd lua-5.3.4
+    sudo make linux install
+popd
