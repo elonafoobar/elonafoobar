@@ -1672,9 +1672,20 @@ label_2061_internal:
                     {
                         f = 0;
                     }
-                    if (inv[ci].id == 16 || inv[ci].id == ELONA_MAX_CHARACTERS)
+                    // scroll of teleport/treasure map/deeds
+                    switch (inv[ci].id)
                     {
-                        f = 0;
+                    case 16:
+                    case 245:
+                    case 621:
+                    case 344:
+                    case 521:
+                    case 522:
+                    case 542:
+                    case 543:
+                    case 572:
+                    case 712: f = 0; break;
+                    default: break;
                     }
                 }
                 if (reftype == 52000)
