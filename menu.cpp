@@ -4503,42 +4503,38 @@ label_196901_internal:
         result.succeeded = false;
         return result;
     }
-    xnotesel(buff);
-    buff = "";
+    std::vector<std::string> traits_by_enchantments;
     for (int i = 0; i < 30; ++i)
     {
         if (cdata_body_part(tc, i) % 10000 != 0)
         {
             ci = cdata_body_part(tc, i) % 10000 - 1;
-            int cnt = 0;
-            for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
+            for (const auto& enc : inv[ci].enchantments)
             {
-                if (inv[ci].enchantments[cnt].id == 0)
-                {
+                if (enc.id == 0)
                     break;
-                }
-                get_enchantment_description(
-                    inv[ci].enchantments[cnt].id,
-                    inv[ci].enchantments[cnt].power,
-                    0,
-                    true);
-                if (s == ""s)
+                get_enchantment_description(enc.id, enc.power, 0, true);
+                if (!s(0).empty())
                 {
-                    continue;
+                    traits_by_enchantments.push_back(s);
                 }
-                xnoteadd(s);
             }
         }
     }
-    notesel(buff);
-    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
+    std::sort(
+        std::begin(traits_by_enchantments), std::end(traits_by_enchantments));
+    traits_by_enchantments.erase(
+        std::unique(
+            std::begin(traits_by_enchantments),
+            std::end(traits_by_enchantments)),
+        std::end(traits_by_enchantments));
+    for (const auto& trait : traits_by_enchantments)
     {
-        noteget(s, cnt);
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
         listn(0, listmax) =
             lang(his(tc, 1) + u8"装備は"s, cnven(his(tc, 1)) + u8" equipment "s)
-            + s;
+            + trait;
         ++listmax;
     }
     if (tc != 0)

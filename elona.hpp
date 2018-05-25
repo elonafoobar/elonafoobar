@@ -580,11 +580,6 @@ void exrand_rnd(int& resul, int max);
 
 void func_1(const std::string&, int);
 
-void xnotesel(std::string&);
-
-
-void xnoteadd(const std::string&);
-
 void gfini(int width, int height);
 
 void gfdec(int r, int g, int b);
