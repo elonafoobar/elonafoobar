@@ -4,6 +4,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "dmgheal.hpp"
 #include "debug.hpp"
 #include "event.hpp"
 #include "i18n.hpp"

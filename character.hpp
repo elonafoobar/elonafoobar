@@ -195,7 +195,9 @@ struct character
 {
     character();
 
-
+    // NOTE: Don't add new fields unless you add them to serialization, which
+    // will break save compatibility.
+    int idx = -1;
     int state = 0;
     position_t position;
     position_t next_position;

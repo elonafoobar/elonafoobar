@@ -2,6 +2,7 @@
 #include <stdexcept>
 #include <SDL.h>
 #include "defines.hpp"
+#include "init.hpp"
 #include "log.hpp"
 #include "version.hpp"
 #if defined(ELONA_OS_WINDOWS)
@@ -10,7 +11,6 @@
 
 namespace elona
 {
-int run();
 
 void report_error(const char* what)
 {
@@ -18,7 +18,7 @@ void report_error(const char* what)
     OutputDebugStringA(what);
     MessageBoxA(NULL, what, "Error", MB_OK | MB_ICONSTOP);
 #endif
-    ELONA_LOG(what);
+    ELONA_LOG("Error: " << what);
 }
 } // namespace elona
 
@@ -40,6 +40,7 @@ int main(int argc, char** argv)
     catch (std::exception& e)
     {
         report_error(e.what());
+        throw e;
     }
     catch (...)
     {

@@ -37,6 +37,10 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
+# Options
+option(WITH_TESTS "Enable building test executable" OFF)
+
+
 # Source files
 set(CORE_SOURCES
     ability.cpp
@@ -92,7 +96,6 @@ set(CORE_SOURCES
     itemgen.cpp
     log.cpp
     magic.cpp
-    main.cpp
     main_menu.cpp
     map.cpp
     map_cell.cpp
@@ -114,6 +117,7 @@ set(CORE_SOURCES
     talk_npc.cpp
     talk_unique.cpp
     tcg.cpp
+    testing.cpp
     text.cpp
     trait.cpp
     turn_sequence.cpp
@@ -126,8 +130,10 @@ set(CORE_SOURCES
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
 # Executable
-add_executable(${PROJECT_NAME} WIN32 MACOSX_BUNDLE ${CORE_SOURCES})
-
+add_library(${PROJECT_NAME} ${CORE_SOURCES})
+add_executable(${PROJECT_NAME}_bin WIN32 MACOSX_BUNDLE main.cpp)
+target_link_libraries(${PROJECT_NAME}_bin ${PROJECT_NAME})
+set_target_properties(${PROJECT_NAME}_bin PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
 
 # If a CMake prefix was not provided, assume dependencies are in "./deps"
 if("${CMAKE_PREFIX_PATH}" STREQUAL "")
@@ -269,6 +275,9 @@ endif()
 add_subdirectory(snail)
 target_link_libraries(${PROJECT_NAME} snail)
 
+INSTALL(TARGETS ElonaFoobar_bin
+    BUNDLE DESTINATION . COMPONENT Runtime
+    RUNTIME DESTINATION bin COMPONENT Runtime)
 
 # Create macOS .app bundle
 SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/ElonaFoobar")
@@ -281,13 +290,30 @@ IF(WIN32)
   SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/ElonaFoobar.exe")
 ENDIF(WIN32)
 
-INSTALL(TARGETS ElonaFoobar
-    BUNDLE DESTINATION . COMPONENT Runtime
-    RUNTIME DESTINATION bin COMPONENT Runtime)
-
 SET(DIRS ${LINK_DIRECTORIES})
 
 INSTALL(CODE "
     include(BundleUtilities)
     fixup_bundle(\"${APPS}\" \"\" \"${DIRS}\")
     " COMPONENT Runtime)
+
+# Testing
+if(WITH_TESTS)
+  set (CATCH_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/catch2})
+  add_library(Catch INTERFACE)
+  target_include_directories(Catch INTERFACE ${CATCH_INCLUDE_DIR})
+
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                     COMMAND ${CMAKE_COMMAND} -E copy_directory
+                     "${CMAKE_CURRENT_SOURCE_DIR}/tests/data"
+                     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/tests/data")
+
+  # Test sources
+  set(TEST_SOURCES
+    tests/tests.cpp
+    tests/serialization.cpp
+    )
+  add_executable(test_runner ${TEST_SOURCES})
+  target_link_libraries(test_runner Catch)
+  target_link_libraries(test_runner ${PROJECT_NAME})
+endif()

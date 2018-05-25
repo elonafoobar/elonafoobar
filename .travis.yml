@@ -58,6 +58,7 @@ script:
   - env
   - make VERBOSE=1
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ccache --show-stats; fi
+  - bin/test_runner
 
 notifications:
     email: false

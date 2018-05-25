@@ -18,3 +18,6 @@ snail/Debug
 snail/snail.dir
 snail/snail.vcxproj*
 cmake_install.cmake
+GPATH
+GRTAGS
+GTAGS

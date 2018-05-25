@@ -854,6 +854,7 @@ main_menu_result_t character_making_final_phase()
     }
     await(250);
     mode = 5;
+    cdata[0].idx = 0;
     return main_menu_result_t::initialize_game;
 }
 

@@ -44,10 +44,13 @@ int DSINIT()
     Mix_AllocateChannels(max_channels);
     chunks.resize(max_channels);
     snail::application::instance().register_finalizer([&]() {
-        for (const auto& chunk : chunks)
+        if(!config::instance().is_test)
         {
-            if (chunk)
-                ::Mix_FreeChunk(chunk);
+            for (const auto& chunk : chunks)
+            {
+                if (chunk)
+                    ::Mix_FreeChunk(chunk);
+            }
         }
     });
     return 1;
@@ -101,7 +104,7 @@ bool CHECKPLAY(int channel)
 int DMINIT()
 {
     snail::application::instance().register_finalizer([&]() {
-        if (played_music)
+        if (!config::instance().is_test && played_music)
             ::Mix_FreeMusic(played_music);
     });
     return 1;

@@ -57,6 +57,8 @@ extern ability_db the_ability_db;
 
 struct ability
 {
+    // NOTE: Don't add new fields unless you add them to serialization, which
+    // will break save compatibility.
     int current_level = 0;
     int original_level = 0;
     int experience = 0;

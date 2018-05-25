@@ -788,20 +788,18 @@ void chara_set_generation_filter()
 
 int chara_get_free_slot()
 {
-    f_at_m125 = -1;
+    int rc = -1;
     for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
          ++cnt)
     {
         if (cdata[cnt].state == 0)
         {
-            f_at_m125 = cnt;
+            rc = cnt;
             break;
         }
     }
-    return f_at_m125;
+    return rc;
 }
-
-
 
 int chara_get_free_slot_ally()
 {
@@ -995,20 +993,11 @@ void chara_place()
 }
 
 
-
 int chara_create_internal()
 {
     if (rc == -1)
     {
-        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-             ++cnt)
-        {
-            if (cdata[cnt].state == 0)
-            {
-                rc = cnt;
-                break;
-            }
-        }
+        rc = chara_get_free_slot();
         if (rc == -1)
         {
             rc = 56;
@@ -1106,6 +1095,7 @@ int chara_create_internal()
         cdata[rc].image = 280;
     }
     cdata[rc].quality = fixlv;
+    cdata[rc].idx = rc;
     initialize_character();
     rtval = rc;
     return 1;

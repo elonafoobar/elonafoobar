@@ -81,6 +81,7 @@ int do_create_item(int slot, int x, int y)
         return 0;
 
     item_delete(ci);
+    inv[ci].idx = ci;
 
     if (slot == -1 && mode != 6 && mode != 9)
     {

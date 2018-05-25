@@ -9,6 +9,7 @@
 #include "config.hpp"
 #include "ctrl_file.hpp"
 #include "debug.hpp"
+#include "dmgheal.hpp"
 #include "elona.hpp"
 #include "event.hpp"
 #include "foobar_save.hpp"
@@ -1796,7 +1797,8 @@ label_2747:
         msg_newline();
         msgtemp = u8"  "s;
         firstturn = 1;
-        load_save_data();
+        const auto save_dir = filesystem::dir::save(playerid);
+        load_save_data(save_dir);
         mode = 3;
         return turn_result_t::initialize_map;
     }

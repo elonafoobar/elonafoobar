@@ -2100,6 +2100,10 @@ label_1741_internal:
             map_placeplayer();
         }
     }
+    if (gdata_current_map == 9999)
+    {
+        generate_debug_map();
+    }
     if (gdata_current_map == 2)
     {
         mdata(0) = 34;

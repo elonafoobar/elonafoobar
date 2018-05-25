@@ -10,6 +10,7 @@
 #include "config.hpp"
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
+#include "dmgheal.hpp"
 #include "draw.hpp"
 #include "enchantment.hpp"
 #include "food.hpp"

@@ -19,6 +19,7 @@
 #include "fish.hpp"
 #include "foobar_save.hpp"
 #include "i18n.hpp"
+#include "init.hpp"
 #include "input.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
@@ -166,7 +167,210 @@ void load_character_sprite()
 
 
 
-void initialize_elona()
+void start_elona()
+{
+    gdata_year = 517;
+    gdata_month = 8;
+    gdata_day = 12;
+    gdata_hour = 16;
+    gdata_minute = 10;
+    quickpage = 1;
+    if (config::instance().noadebug)
+    {
+        mode = 4;
+        initialize_game();
+        main_loop();
+        return;
+    }
+    else if (defload != ""s)
+    {
+        if (!fs::exists(filesystem::dir::save(defload) / u8"header.txt"))
+        {
+            if (fs::exists(
+                    filesystem::dir::save(u8"sav_" + defload) / u8"header.txt"))
+            {
+                defload = u8"sav_"s + defload;
+            }
+            else
+            {
+                defload = "";
+            }
+        }
+        if (defload == ""s)
+        {
+            dialog(u8"Invalid defLoadFolder. name"s);
+        }
+        else
+        {
+            playerid = defload;
+            mode = 3;
+            initialize_game();
+            main_loop();
+            return;
+        }
+    }
+    main_title_loop();
+}
+
+
+
+} // namespace
+
+
+namespace elona
+{
+
+template <typename Class, typename T, T Class::*Pointer>
+int cat_get_field(lua_State* L)
+{
+    const int argc = lua_gettop(L);
+
+    auto self = static_cast<cat::userdata<Class>*>(lua_touserdata(L, 1))->ptr();
+    if (!self)
+        throw std::runtime_error(u8"Error: in cat_get_field()");
+
+    if (argc == 1) // only "self"
+    {
+        // Get
+        // push(self->*Pointer); TODO
+        lua_pushinteger(L, self->*Pointer);
+        return 1;
+    }
+    else
+    {
+        // Set
+        // self->*Pointer = to_cpp_type<T>(2); TODO
+        self->*Pointer = luaL_checkinteger(L, 2);
+        return 0;
+    }
+}
+
+
+
+// TODO DRY
+template <typename Class, typename T, std::vector<T> Class::*Pointer>
+int cat_get_field_with_index(lua_State* L)
+{
+    const int argc = lua_gettop(L);
+
+    auto self = static_cast<cat::userdata<Class>*>(lua_touserdata(L, 1))->ptr();
+    if (!self)
+        throw std::runtime_error(u8"Error: in cat_get_field_with_index()");
+    auto index = luaL_checkinteger(L, 2);
+
+    if (argc == 2) // "self" and index
+    {
+        // Get
+        // push(self->*Pointer); TODO
+        lua_pushinteger(L, (self->*Pointer)[index]);
+        return 1;
+    }
+    else
+    {
+        // Set
+        // self->*Pointer = to_cpp_type<T>(3); TODO
+        (self->*Pointer)[index] = luaL_checkinteger(L, 3);
+        return 0;
+    }
+}
+
+
+
+const luaL_Reg cdata_functions[] = {
+    {u8"pv", &cat_get_field<character, int, &character::pv>},
+    {u8"fear", &cat_get_field<character, int, &character::fear>},
+    {u8"confused", &cat_get_field<character, int, &character::confused>},
+    {u8"dv", &cat_get_field<character, int, &character::dv>},
+    {u8"hit_bonus", &cat_get_field<character, int, &character::hit_bonus>},
+    {u8"growth_buffs",
+     &cat_get_field_with_index<character, int, &character::growth_buffs>},
+    {nullptr, nullptr},
+};
+
+
+const luaL_Reg sdata_functions[] = {
+    {u8"current_level", &cat_get_field<ability, int, &ability::current_level>},
+    {u8"original_level",
+     &cat_get_field<ability, int, &ability::original_level>},
+    {u8"experience", &cat_get_field<ability, int, &ability::experience>},
+    {u8"potential", &cat_get_field<ability, int, &ability::potential>},
+    {nullptr, nullptr},
+};
+
+
+
+void export_to_cat_world(lua_State* L)
+{
+#define DEFINE(name) \
+    luaL_newmetatable(L, u8"elona__" #name); \
+    lua_pushvalue(L, -1); \
+    lua_setfield(L, -2, u8"__index"); \
+    luaL_setfuncs(L, name##_functions, 0); \
+    lua_pop(L, 1);
+
+    DEFINE(cdata);
+    DEFINE(sdata);
+
+#undef DEFINE
+}
+
+
+int cat_cdata(lua_State* L)
+{
+    int cc = luaL_checknumber(L, 1);
+
+    cat::userdata<character>::push_new(L, &cdata(cc));
+    luaL_setmetatable(L, "elona__cdata");
+
+    return 1;
+}
+
+
+int cat_sdata(lua_State* L)
+{
+    int id = luaL_checknumber(L, 1);
+    int cc = luaL_checknumber(L, 2);
+
+    cat::userdata<ability>::push_new(L, &sdata.get(id, cc));
+    luaL_setmetatable(L, "elona__sdata");
+
+    return 1;
+}
+
+
+int cat_cbitmod(lua_State* L)
+{
+    int id = luaL_checknumber(L, 1);
+    int cc = luaL_checknumber(L, 2);
+    int flag = luaL_checknumber(L, 3);
+
+    cdata[cc]._flags[id] = flag;
+
+    return 0;
+}
+
+void initialize_cat_db()
+{
+    cat::global.initialize();
+
+    export_to_cat_world(cat::global.ptr());
+    cat::global.register_function(u8"cdata", cat_cdata);
+    cat::global.register_function(u8"sdata", cat_sdata);
+    cat::global.register_function(u8"cbitmod", cat_cbitmod);
+
+
+    the_ability_db.initialize();
+    the_buff_db.initialize();
+    the_character_db.initialize();
+    the_class_db.initialize();
+    the_fish_db.initialize();
+    the_item_db.initialize();
+    the_item_material_db.initialize();
+    the_race_db.initialize();
+    the_trait_db.initialize();
+}
+
+void initialize_config(const fs::path& config_file)
 {
     time_warn = timeGetTime() / 1000;
     time_begin = timeGetTime() / 1000;
@@ -179,6 +383,8 @@ void initialize_elona()
 
     initialize_directories();
 
+    // The config setup routine needs these variables allocated to
+    // handle the language selection menu.
     SDIM3(s, 160, 40);
     DIM2(p, 100);
     DIM2(rtval, 10);
@@ -186,9 +392,13 @@ void initialize_elona()
     SDIM3(key_select, 2, 20);
     SDIM2(buff, 10000);
     initialize_jkey();
-    load_config2();
-    load_config();
 
+    load_config2(config_file);
+    load_config(config_file);
+}
+
+void initialize_elona()
+{
     initialize_keywait();
 
     i18n::load(jp ? u8"jp" : u8"en");
@@ -575,213 +785,355 @@ void initialize_elona()
     }
 }
 
-
-
-void start_elona()
-{
-    gdata_year = 517;
-    gdata_month = 8;
-    gdata_day = 12;
-    gdata_hour = 16;
-    gdata_minute = 10;
-    quickpage = 1;
-    if (defload != ""s)
-    {
-        if (!fs::exists(filesystem::dir::save(defload) / u8"header.txt"))
-        {
-            if (fs::exists(
-                    filesystem::dir::save(u8"sav_" + defload) / u8"header.txt"))
-            {
-                defload = u8"sav_"s + defload;
-            }
-            else
-            {
-                defload = "";
-            }
-        }
-        if (defload == ""s)
-        {
-            dialog(u8"Invalid defLoadFolder. name"s);
-        }
-        else
-        {
-            playerid = defload;
-            mode = 3;
-            initialize_game();
-            main_loop();
-            return;
-        }
-    }
-    main_title_loop();
-}
-
-
-
-} // namespace
-
-
-namespace elona
-{
-
-template <typename Class, typename T, T Class::*Pointer>
-int cat_get_field(lua_State* L)
-{
-    const int argc = lua_gettop(L);
-
-    auto self = static_cast<cat::userdata<Class>*>(lua_touserdata(L, 1))->ptr();
-    if (!self)
-        throw std::runtime_error(u8"Error: in cat_get_field()");
-
-    if (argc == 1) // only "self"
-    {
-        // Get
-        // push(self->*Pointer); TODO
-        lua_pushinteger(L, self->*Pointer);
-        return 1;
-    }
-    else
-    {
-        // Set
-        // self->*Pointer = to_cpp_type<T>(2); TODO
-        self->*Pointer = luaL_checkinteger(L, 2);
-        return 0;
-    }
-}
-
-
-
-// TODO DRY
-template <typename Class, typename T, std::vector<T> Class::*Pointer>
-int cat_get_field_with_index(lua_State* L)
-{
-    const int argc = lua_gettop(L);
-
-    auto self = static_cast<cat::userdata<Class>*>(lua_touserdata(L, 1))->ptr();
-    if (!self)
-        throw std::runtime_error(u8"Error: in cat_get_field_with_index()");
-    auto index = luaL_checkinteger(L, 2);
-
-    if (argc == 2) // "self" and index
-    {
-        // Get
-        // push(self->*Pointer); TODO
-        lua_pushinteger(L, (self->*Pointer)[index]);
-        return 1;
-    }
-    else
-    {
-        // Set
-        // self->*Pointer = to_cpp_type<T>(3); TODO
-        (self->*Pointer)[index] = luaL_checkinteger(L, 3);
-        return 0;
-    }
-}
-
-
-
-const luaL_Reg cdata_functions[] = {
-    {u8"pv", &cat_get_field<character, int, &character::pv>},
-    {u8"fear", &cat_get_field<character, int, &character::fear>},
-    {u8"confused", &cat_get_field<character, int, &character::confused>},
-    {u8"dv", &cat_get_field<character, int, &character::dv>},
-    {u8"hit_bonus", &cat_get_field<character, int, &character::hit_bonus>},
-    {u8"growth_buffs",
-     &cat_get_field_with_index<character, int, &character::growth_buffs>},
-    {nullptr, nullptr},
-};
-
-
-const luaL_Reg sdata_functions[] = {
-    {u8"current_level", &cat_get_field<ability, int, &ability::current_level>},
-    {u8"original_level",
-     &cat_get_field<ability, int, &ability::original_level>},
-    {u8"experience", &cat_get_field<ability, int, &ability::experience>},
-    {u8"potential", &cat_get_field<ability, int, &ability::potential>},
-    {nullptr, nullptr},
-};
-
-
-
-void export_to_cat_world(lua_State* L)
-{
-#define DEFINE(name) \
-    luaL_newmetatable(L, u8"elona__" #name); \
-    lua_pushvalue(L, -1); \
-    lua_setfield(L, -2, u8"__index"); \
-    luaL_setfuncs(L, name##_functions, 0); \
-    lua_pop(L, 1);
-
-    DEFINE(cdata);
-    DEFINE(sdata);
-
-#undef DEFINE
-}
-
-
-int cat_cdata(lua_State* L)
-{
-    int cc = luaL_checknumber(L, 1);
-
-    cat::userdata<character>::push_new(L, &cdata(cc));
-    luaL_setmetatable(L, "elona__cdata");
-
-    return 1;
-}
-
-
-int cat_sdata(lua_State* L)
-{
-    int id = luaL_checknumber(L, 1);
-    int cc = luaL_checknumber(L, 2);
-
-    cat::userdata<ability>::push_new(L, &sdata.get(id, cc));
-    luaL_setmetatable(L, "elona__sdata");
-
-    return 1;
-}
-
-
-int cat_cbitmod(lua_State* L)
-{
-    int id = luaL_checknumber(L, 1);
-    int cc = luaL_checknumber(L, 2);
-    int flag = luaL_checknumber(L, 3);
-
-    cdata[cc]._flags[id] = flag;
-
-    return 0;
-}
-
-
 int run()
 {
-    cat::global.initialize();
-
-
-    export_to_cat_world(cat::global.ptr());
-    cat::global.register_function(u8"cdata", cat_cdata);
-    cat::global.register_function(u8"sdata", cat_sdata);
-    cat::global.register_function(u8"cbitmod", cat_cbitmod);
-
-
-    the_ability_db.initialize();
-    the_buff_db.initialize();
-    the_character_db.initialize();
-    the_class_db.initialize();
-    the_fish_db.initialize();
-    the_item_db.initialize();
-    the_item_material_db.initialize();
-    the_race_db.initialize();
-    the_trait_db.initialize();
+    initialize_cat_db();
 
     foobar_save.initialize();
 
     title(u8"Elona Foobar version "s + latest_version.short_string());
 
+    initialize_config(filesystem::dir::exe() / u8"config.json");
     initialize_elona();
     start_elona();
 
     return 0;
+}
+
+void initialize_debug_globals()
+{
+    for (int cnt = 0; cnt < 9; ++cnt)
+    {
+        gdata(120 + cnt) = 5000;
+    }
+    gdata_version = 1220;
+    gdata(41) = 424;
+    gdata(42) = 300;
+    gdata(43) = 631;
+    gdata_next_inventory_serial_id = 1000;
+    gdata_next_shelter_serial_id = 100;
+    gdata_pc_home_x = 22;
+    gdata_pc_home_y = 21;
+    gdata_previous_map = -1;
+    gdata_random_seed = rnd(800) + 2;
+    gdata(9) = rnd(200) + 2;
+    gdata_current_map = 4;
+    gdata_current_dungeon_level = 0;
+    gdata_entrance_type = 7;
+    mapstartx = 22;
+    mapstarty = 21;
+    gdata_current_map = 5;
+    gdata_current_dungeon_level = 1;
+    gdata_entrance_type = 7;
+    mapstartx = 10;
+    mapstarty = 23;
+    initlv = 50;
+    rc = 0;
+    flt(100);
+    chara_create(0, 84, -3, 0);
+    initialize_pc_character();
+    gdata_year = 517;
+    gdata_month = 12;
+    gdata_day = 30;
+    gdata_hour = 1;
+    gdata_minute = 10;
+    gdata_played_scene = 50;
+    gdata_has_not_been_to_vernis = 1;
+    adata(30, 7) = 4;
+    gdata(850) = adata(30, gdata_current_map);
+    gdata_acquirable_feat_count = 2;
+    gdata_save_count_of_little_sister = 1000;
+    gdata_rights_to_succeed_to = 1000;
+    gdata_home_scale = 0;
+    gdata_number_of_waiting_guests = 2;
+    gdata_charge_power = 1000;
+    cdata[0].god_id = core_god::int2godid(2);
+    cdata[0].piety_point = 1000;
+    cdata[0].praying_point = 1000;
+    gdata_pael_and_her_mom = 1000;
+    cdata[0].gold += 1000000;
+    cdata[0].platinum_coin = 30;
+    cdata[0].fame = 65000;
+    gdata_main_quest_flag = 100;
+    chara_refresh(0);
+
+    cdata[0].can_cast_rapid_magic() = true;
+    mode = 0;
+    refresh_burden_state();
+    for (int cnt = 0; cnt < 55; ++cnt)
+    {
+        mat(cnt) = 200;
+    }
+    create_all_adventurers();
+    create_pcpic(0, true);
+    cdatan(1, 0) = random_title();
+    cdatan(0, 0) = randomname();
+}
+
+void initialize_noa_items()
+{
+    flt();
+    itemcreate(0, 284, -1, -1, 0);
+    inv[ci].number = 20;
+    inv[ci].curse_state = curse_state_t::blessed;
+    flt();
+    itemcreate(0, 127, -1, -1, 0);
+    inv[ci].number = 20;
+    inv[ci].curse_state = curse_state_t::blessed;
+    flt();
+    itemcreate(0, 617, -1, -1, 0);
+    inv[ci].number = 20;
+    flt();
+    itemcreate(0, 671, -1, -1, 0);
+    inv[ci].number = 10;
+    flt();
+    itemcreate(0, 749, -1, -1, 0);
+    inv[ci].number = 10;
+    flt();
+    itemcreate(0, 748, -1, -1, 0);
+    inv[ci].number = 10;
+    flt();
+    itemcreate(0, 601, -1, -1, 0);
+    inv[ci].number = 10;
+    flt();
+    itemcreate(0, 342, -1, -1, 0);
+    inv[ci].number = 12;
+    flt();
+    itemcreate(0, 343, -1, -1, 0);
+    inv[ci].number = 50;
+    flt();
+    itemcreate(0, 519, -1, -1, 0);
+    inv[ci].number = 50;
+    inv[ci].color = 4;
+    flt();
+    itemcreate(0, 622, -1, -1, 0);
+    inv[ci].number = 50000;
+    flt();
+    itemcreate(0, 603, -1, -1, 0);
+    inv[ci].number = 5;
+    flt();
+    itemcreate(0, 620, -1, -1, 0);
+    inv[ci].number = 5;
+    flt();
+    itemcreate(0, 736, -1, -1, 0);
+    inv[ci].number = 5;
+    flt();
+    itemcreate(0, 566, -1, -1, 0);
+    inv[ci].number = 5;
+    flt();
+    itemcreate(0, 516, -1, -1, 0);
+    inv[ci].number = 5;
+    inv[ci].curse_state = curse_state_t::blessed;
+    flt();
+    itemcreate(0, 262, -1, -1, 0);
+    inv[ci].number = 5;
+    flt();
+    itemcreate(0, 632, -1, -1, 0);
+    inv[ci].number = 10;
+    inv[ci].curse_state = curse_state_t::cursed;
+    flt();
+    itemcreate(0, 632, -1, -1, 0);
+    inv[ci].number = 10;
+    inv[ci].curse_state = curse_state_t::none;
+    flt();
+    itemcreate(0, 204, -1, -1, 0);
+    inv[ci].subname = 330;
+    inv[ci].number = 10;
+    flt();
+    itemcreate(0, 636, -1, -1, 0);
+    inv[ci].number = 3;
+    inv[ci].curse_state = curse_state_t::none;
+    flt();
+    itemcreate(0, 342, -1, -1, 0);
+    inv[ci].count = 100;
+    flt();
+    itemcreate(0, 350, -1, -1, 0);
+    inv[ci].number = 20;
+    flt();
+    itemcreate(0, 707, -1, -1, 0);
+    flt();
+    itemcreate(0, 719, -1, -1, 0);
+    flt();
+    itemcreate(0, 666, -1, -1, 0);
+    flt();
+    itemcreate(0, 686, -1, -1, 0);
+    flt();
+    itemcreate(0, 721, -1, -1, 0);
+    flt();
+    itemcreate(0, 772, -1, -1, 0);
+    flt();
+    itemcreate(0, 773, -1, -1, 0);
+    flt();
+    itemcreate(0, 774, -1, -1, 0);
+    flt();
+    itemcreate(0, 775, -1, -1, 0);
+    flt();
+    itemcreate(0, 776, -1, -1, 0);
+    flt();
+    itemcreate(0, 777, -1, -1, 0);
+    flt();
+    itemcreate(0, 778, -1, -1, 0);
+    flt();
+    itemcreate(0, 779, -1, -1, 0);
+    flt();
+    itemcreate(0, 780, -1, -1, 0);
+    flt();
+    itemcreate(0, 781, -1, -1, 0);
+    flt();
+    itemcreate(0, 782, -1, -1, 0);
+    flt();
+    itemcreate(0, 784, -1, -1, 0);
+    flt();
+    itemcreate(0, 785, -1, -1, 0);
+    inv[ci].number = 10;
+    flt();
+    itemcreate(0, 786, -1, -1, 0);
+    inv[ci].number = 10;
+    flt();
+    itemcreate(0, 787, -1, -1, 0);
+    flt();
+    itemcreate(0, 788, -1, -1, 0);
+    flt();
+    itemcreate(0, 789, -1, -1, 0);
+    flt();
+    itemcreate(0, 790, -1, -1, 0);
+    flt();
+    itemcreate(0, 791, -1, -1, 0);
+    flt();
+    itemcreate(0, 792, -1, -1, 0);
+    flt();
+    itemcreate(0, 260, -1, -1, 0);
+    inv[ci].number = 100;
+    gdata(41) = 140789;
+    gdata(42) = 140790;
+    for (int cnt = 0; cnt < 1200; ++cnt)
+    {
+        recipememory(cnt) = 1;
+    }
+    flt();
+    itemcreate(0, 783, -1, -1, 0);
+    flt();
+    itemcreate(0, 783, -1, -1, 0);
+    flt();
+    itemcreate(0, 783, -1, -1, 0);
+    inv[ci].subname = 1187;
+    flt();
+    itemcreate(0, 783, -1, -1, 0);
+    inv[ci].subname = 955;
+    itemcreate(0, 672, -1, -1, 0);
+    inv[ci].param1 = 164;
+    flt();
+    itemcreate(0, 566, -1, -1, 0);
+    inv[ci].number = 10;
+    inv[ci].curse_state = curse_state_t::blessed;
+    flt();
+    itemcreate(0, 566, -1, -1, 0);
+    inv[ci].number = 10;
+    inv[ci].curse_state = curse_state_t::cursed;
+    flt();
+    itemcreate(0, 566, -1, -1, 0);
+    inv[ci].number = 10;
+    flt();
+    itemcreate(0, 55, -1, -1, 0);
+    inv[ci].number = 10;
+    flt();
+    itemcreate(0, 385, -1, -1, 0);
+    inv[ci].number = 10;
+    flt();
+    itemcreate(0, 672, -1, -1, 0);
+    inv[ci].number = 10;
+    inv[ci].param1 = 169;
+    flt();
+    itemcreate(0, 672, -1, -1, 0);
+    inv[ci].number = 10;
+    inv[ci].param1 = 162;
+    flt();
+    itemcreate(0, 771, -1, -1, 0);
+    inv[ci].number = 100;
+    flt();
+    itemcreate(0, 761, -1, -1, 0);
+    flt();
+    itemcreate(0, 769, -1, -1, 0);
+    flt();
+    itemcreate(0, 763, -1, -1, 0);
+    flt();
+    itemcreate(0, 764, -1, -1, 0);
+    flt();
+    itemcreate(0, 768, -1, -1, 0);
+    flt();
+    itemcreate(0, 766, -1, -1, 0);
+    flt();
+    {
+        int stat = itemcreate(0, 752, -1, -1, 0);
+        if (stat != 0)
+        {
+            inv[ci].param3 = 240;
+            inv[ci].number = 50;
+        }
+    }
+    flt();
+    {
+        int stat = itemcreate(0, 755, -1, -1, 0);
+        if (stat != 0)
+        {
+            inv[ci].param3 = 240;
+            inv[ci].number = 50;
+        }
+    }
+    flt();
+    {
+        int stat = itemcreate(0, 756, -1, -1, 0);
+        if (stat != 0)
+        {
+            inv[ci].param3 = 240;
+            inv[ci].number = 50;
+        }
+    }
+    for (int cnt = 0; cnt < 40; ++cnt)
+    {
+        flt(50, 5);
+        flttypemajor = 56000;
+        itemcreate(0, -1, -1, -1, 0);
+        flt(50, 5);
+        flttypemajor = 34000;
+        itemcreate(0, -1, -1, -1, 0);
+        flt(50, 5);
+        flttypemajor = 32000;
+        itemcreate(0, -1, -1, -1, 0);
+    }
+}
+
+
+void initialize_world()
+{
+    gdata_year = 517;
+    gdata_month = 8;
+    gdata_day = 12;
+    gdata_hour = 1;
+    gdata_minute = 10;
+    gdata_pc_home_x = 22;
+    gdata_pc_home_y = 21;
+    gdata_previous_map = -1;
+    gdata(850) = 4;
+    ghelp = 1;
+    gdata_current_map = 7;
+    gdata_current_dungeon_level = 1;
+    gdata_entrance_type = 4;
+    gdata_version = 1220;
+    gdata_home_scale = 0;
+    initialize_adata();
+    gdata_weather = 3;
+    gdata_hours_until_weather_changes = 6;
+    for (int cnt = 0; cnt < 20; ++cnt)
+    {
+        gdata(120 + cnt) = 10000;
+    }
+}
+
+void initialize_testbed()
+{
+    gdata_current_map = 9999;
+    gdata_current_dungeon_level = 2;
 }
 
 void initialize_game()
@@ -797,327 +1149,14 @@ void initialize_game()
     }
     if (mode == 4)
     {
-        for (int cnt = 0; cnt < 9; ++cnt)
-        {
-            gdata(120 + cnt) = 5000;
-        }
-        gdata_version = 1220;
-        gdata(41) = 424;
-        gdata(42) = 300;
-        gdata(43) = 631;
-        gdata_next_inventory_serial_id = 1000;
-        gdata_next_shelter_serial_id = 100;
         playerid = u8"sav_noa"s;
-        gdata_pc_home_x = 22;
-        gdata_pc_home_y = 21;
-        gdata_previous_map = -1;
-        gdata_random_seed = rnd(800) + 2;
-        gdata(9) = rnd(200) + 2;
-        gdata_current_map = 4;
-        gdata_current_dungeon_level = 0;
-        gdata_entrance_type = 7;
-        mapstartx = 22;
-        mapstarty = 21;
-        gdata_current_map = 5;
-        gdata_current_dungeon_level = 1;
-        gdata_entrance_type = 7;
-        mapstartx = 10;
-        mapstarty = 23;
-        initlv = 50;
-        rc = 0;
-        flt(100);
-        chara_create(0, 84, -3, 0);
-        initialize_pc_character();
-        gdata_year = 517;
-        gdata_month = 12;
-        gdata_day = 30;
-        gdata_hour = 1;
-        gdata_minute = 10;
-        gdata_played_scene = 50;
-        gdata_has_not_been_to_vernis = 1;
-        adata(30, 7) = 4;
-        gdata(850) = adata(30, gdata_current_map);
-        gdata_acquirable_feat_count = 2;
-        gdata_save_count_of_little_sister = 1000;
-        gdata_rights_to_succeed_to = 1000;
-        gdata_home_scale = 0;
-        gdata_number_of_waiting_guests = 2;
-        gdata_charge_power = 1000;
-        cdata[0].god_id = core_god::int2godid(2);
-        cdata[0].piety_point = 1000;
-        cdata[0].praying_point = 1000;
-        gdata_pael_and_her_mom = 1000;
-        cdata[0].gold += 1000000;
-        cdata[0].platinum_coin = 30;
-        cdata[0].fame = 65000;
-        gdata_main_quest_flag = 100;
-        chara_refresh(0);
-        flt();
-        itemcreate(0, 284, -1, -1, 0);
-        inv[ci].number = 20;
-        inv[ci].curse_state = curse_state_t::blessed;
-        flt();
-        itemcreate(0, 127, -1, -1, 0);
-        inv[ci].number = 20;
-        inv[ci].curse_state = curse_state_t::blessed;
-        flt();
-        itemcreate(0, 617, -1, -1, 0);
-        inv[ci].number = 20;
-        flt();
-        itemcreate(0, 671, -1, -1, 0);
-        inv[ci].number = 10;
-        flt();
-        itemcreate(0, 749, -1, -1, 0);
-        inv[ci].number = 10;
-        flt();
-        itemcreate(0, 748, -1, -1, 0);
-        inv[ci].number = 10;
-        flt();
-        itemcreate(0, 601, -1, -1, 0);
-        inv[ci].number = 10;
-        flt();
-        itemcreate(0, 342, -1, -1, 0);
-        inv[ci].number = 12;
-        flt();
-        itemcreate(0, 343, -1, -1, 0);
-        inv[ci].number = 50;
-        flt();
-        itemcreate(0, 519, -1, -1, 0);
-        inv[ci].number = 50;
-        inv[ci].color = 4;
-        flt();
-        itemcreate(0, 622, -1, -1, 0);
-        inv[ci].number = 50000;
-        flt();
-        itemcreate(0, 603, -1, -1, 0);
-        inv[ci].number = 5;
-        flt();
-        itemcreate(0, 620, -1, -1, 0);
-        inv[ci].number = 5;
-        flt();
-        itemcreate(0, 736, -1, -1, 0);
-        inv[ci].number = 5;
-        flt();
-        itemcreate(0, 566, -1, -1, 0);
-        inv[ci].number = 5;
-        flt();
-        itemcreate(0, 516, -1, -1, 0);
-        inv[ci].number = 5;
-        inv[ci].curse_state = curse_state_t::blessed;
-        flt();
-        itemcreate(0, 262, -1, -1, 0);
-        inv[ci].number = 5;
-        flt();
-        itemcreate(0, 632, -1, -1, 0);
-        inv[ci].number = 10;
-        inv[ci].curse_state = curse_state_t::cursed;
-        flt();
-        itemcreate(0, 632, -1, -1, 0);
-        inv[ci].number = 10;
-        inv[ci].curse_state = curse_state_t::none;
-        flt();
-        itemcreate(0, 204, -1, -1, 0);
-        inv[ci].subname = 330;
-        inv[ci].number = 10;
-        flt();
-        itemcreate(0, 636, -1, -1, 0);
-        inv[ci].number = 3;
-        inv[ci].curse_state = curse_state_t::none;
-        flt();
-        itemcreate(0, 342, -1, -1, 0);
-        inv[ci].count = 100;
-        flt();
-        itemcreate(0, 350, -1, -1, 0);
-        inv[ci].number = 20;
-        flt();
-        itemcreate(0, 707, -1, -1, 0);
-        flt();
-        itemcreate(0, 719, -1, -1, 0);
-        flt();
-        itemcreate(0, 666, -1, -1, 0);
-        flt();
-        itemcreate(0, 686, -1, -1, 0);
-        flt();
-        itemcreate(0, 721, -1, -1, 0);
-        flt();
-        itemcreate(0, 772, -1, -1, 0);
-        flt();
-        itemcreate(0, 773, -1, -1, 0);
-        flt();
-        itemcreate(0, 774, -1, -1, 0);
-        flt();
-        itemcreate(0, 775, -1, -1, 0);
-        flt();
-        itemcreate(0, 776, -1, -1, 0);
-        flt();
-        itemcreate(0, 777, -1, -1, 0);
-        flt();
-        itemcreate(0, 778, -1, -1, 0);
-        flt();
-        itemcreate(0, 779, -1, -1, 0);
-        flt();
-        itemcreate(0, 780, -1, -1, 0);
-        flt();
-        itemcreate(0, 781, -1, -1, 0);
-        flt();
-        itemcreate(0, 782, -1, -1, 0);
-        flt();
-        itemcreate(0, 784, -1, -1, 0);
-        flt();
-        itemcreate(0, 785, -1, -1, 0);
-        inv[ci].number = 10;
-        flt();
-        itemcreate(0, 786, -1, -1, 0);
-        inv[ci].number = 10;
-        flt();
-        itemcreate(0, 787, -1, -1, 0);
-        flt();
-        itemcreate(0, 788, -1, -1, 0);
-        flt();
-        itemcreate(0, 789, -1, -1, 0);
-        flt();
-        itemcreate(0, 790, -1, -1, 0);
-        flt();
-        itemcreate(0, 791, -1, -1, 0);
-        flt();
-        itemcreate(0, 792, -1, -1, 0);
-        flt();
-        itemcreate(0, 260, -1, -1, 0);
-        inv[ci].number = 100;
-        gdata(41) = 140789;
-        gdata(42) = 140790;
-        for (int cnt = 0; cnt < 1200; ++cnt)
-        {
-            recipememory(cnt) = 1;
-        }
-        flt();
-        itemcreate(0, 783, -1, -1, 0);
-        flt();
-        itemcreate(0, 783, -1, -1, 0);
-        flt();
-        itemcreate(0, 783, -1, -1, 0);
-        inv[ci].subname = 1187;
-        flt();
-        itemcreate(0, 783, -1, -1, 0);
-        inv[ci].subname = 955;
-        itemcreate(0, 672, -1, -1, 0);
-        inv[ci].param1 = 164;
-        flt();
-        itemcreate(0, 566, -1, -1, 0);
-        inv[ci].number = 10;
-        inv[ci].curse_state = curse_state_t::blessed;
-        flt();
-        itemcreate(0, 566, -1, -1, 0);
-        inv[ci].number = 10;
-        inv[ci].curse_state = curse_state_t::cursed;
-        flt();
-        itemcreate(0, 566, -1, -1, 0);
-        inv[ci].number = 10;
-        flt();
-        itemcreate(0, 55, -1, -1, 0);
-        inv[ci].number = 10;
-        flt();
-        itemcreate(0, 385, -1, -1, 0);
-        inv[ci].number = 10;
-        flt();
-        itemcreate(0, 672, -1, -1, 0);
-        inv[ci].number = 10;
-        inv[ci].param1 = 169;
-        flt();
-        itemcreate(0, 672, -1, -1, 0);
-        inv[ci].number = 10;
-        inv[ci].param1 = 162;
-        flt();
-        itemcreate(0, 771, -1, -1, 0);
-        inv[ci].number = 100;
-        flt();
-        itemcreate(0, 761, -1, -1, 0);
-        flt();
-        itemcreate(0, 769, -1, -1, 0);
-        flt();
-        itemcreate(0, 763, -1, -1, 0);
-        flt();
-        itemcreate(0, 764, -1, -1, 0);
-        flt();
-        itemcreate(0, 768, -1, -1, 0);
-        flt();
-        itemcreate(0, 766, -1, -1, 0);
-        flt();
-        {
-            int stat = itemcreate(0, 752, -1, -1, 0);
-            if (stat != 0)
-            {
-                inv[ci].param3 = 240;
-                inv[ci].number = 50;
-            }
-        }
-        flt();
-        {
-            int stat = itemcreate(0, 755, -1, -1, 0);
-            if (stat != 0)
-            {
-                inv[ci].param3 = 240;
-                inv[ci].number = 50;
-            }
-        }
-        flt();
-        {
-            int stat = itemcreate(0, 756, -1, -1, 0);
-            if (stat != 0)
-            {
-                inv[ci].param3 = 240;
-                inv[ci].number = 50;
-            }
-        }
-        for (int cnt = 0; cnt < 40; ++cnt)
-        {
-            flt(50, 5);
-            flttypemajor = 56000;
-            itemcreate(0, -1, -1, -1, 0);
-            flt(50, 5);
-            flttypemajor = 34000;
-            itemcreate(0, -1, -1, -1, 0);
-            flt(50, 5);
-            flttypemajor = 32000;
-            itemcreate(0, -1, -1, -1, 0);
-        }
-        cdata[0].can_cast_rapid_magic() = true;
-        mode = 0;
-        refresh_burden_state();
-        for (int cnt = 0; cnt < 55; ++cnt)
-        {
-            mat(cnt) = 200;
-        }
-        create_all_adventurers();
-        create_pcpic(0, true);
-        cdatan(1, 0) = random_title();
-        cdatan(0, 0) = randomname();
+        initialize_debug_globals();
+        initialize_noa_items();
         mode = 2;
     }
     if (mode == 5)
     {
-        gdata_year = 517;
-        gdata_month = 8;
-        gdata_day = 12;
-        gdata_hour = 1;
-        gdata_minute = 10;
-        gdata_pc_home_x = 22;
-        gdata_pc_home_y = 21;
-        gdata_previous_map = -1;
-        gdata(850) = 4;
-        ghelp = 1;
-        gdata_current_map = 7;
-        gdata_current_dungeon_level = 1;
-        gdata_entrance_type = 4;
-        gdata_version = 1220;
-        gdata_home_scale = 0;
-        initialize_adata();
-        gdata_weather = 3;
-        gdata_hours_until_weather_changes = 6;
-        for (int cnt = 0; cnt < 20; ++cnt)
-        {
-            gdata(120 + cnt) = 10000;
-        }
+        initialize_world();
         create_all_adventurers();
         mode = 2;
         event_add(2);
@@ -1133,12 +1172,12 @@ void initialize_game()
     }
     if (mode == 3)
     {
-        load_save_data();
+        const auto save_dir = filesystem::dir::save(playerid);
+        load_save_data(save_dir);
     }
     initialize_fovmap_and_fovlist();
     initialize_map();
 }
-
 
 void main_title_loop()
 {

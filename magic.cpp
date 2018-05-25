@@ -8,6 +8,7 @@
 #include "config.hpp"
 #include "ctrl_file.hpp"
 #include "debug.hpp"
+#include "dmgheal.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
 #include "food.hpp"
