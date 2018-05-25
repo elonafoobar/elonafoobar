@@ -560,6 +560,7 @@ void shop_refresh()
                 continue;
             }
         }
+        nostack = 1;
         int stat = itemcreate(-1, dbid, -1, -1, 0);
         if (stat == 0)
         {
