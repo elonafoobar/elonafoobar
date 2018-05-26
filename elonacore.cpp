@@ -4913,6 +4913,7 @@ void character_drops_item()
         {
             flt(cdata[rc].level, 2);
             flttypemajor = 92000;
+            nostack = 1;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
             if (inv[ci].value < 800)
             {
