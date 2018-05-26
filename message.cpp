@@ -12,7 +12,7 @@ namespace elona
 {
 size_t message_width{};
 int tcontinue_at_txtfunc = 0;
-int tcolfix_at_txtfunc = 0;
+bool fix_text_color;
 int p_at_txtfunc = 0;
 } // namespace elona
 
@@ -730,15 +730,8 @@ void txtef(int prm_308)
     tcol_at_txtfunc(0) = 255 - c_col(0, prm_308);
     tcol_at_txtfunc(1) = 255 - c_col(1, prm_308);
     tcol_at_txtfunc(2) = 255 - c_col(2, prm_308);
-    if (prm_308 == 5)
-    {
-        tcolfix_at_txtfunc = 1;
-    }
-    else
-    {
-        tcolfix_at_txtfunc = 0;
-    }
-    return;
+
+    fix_text_color = prm_308 == 5;
 }
 
 
@@ -873,15 +866,11 @@ void txt_conv()
     {
         if (msgtemp(0).find(u8"「") != std::string::npos)
         {
-            if (tcolfix_at_txtfunc == 0)
+            if (!fix_text_color)
             {
                 tcol_at_txtfunc(0) = 210;
                 tcol_at_txtfunc(1) = 250;
                 tcol_at_txtfunc(2) = 160;
-            }
-            else
-            {
-                tcolfix_at_txtfunc = 0;
             }
         }
 
@@ -945,15 +934,11 @@ void txt_conv()
         {
             if (strutil::contains(msgtemp(0), u8"\""))
             {
-                if (tcolfix_at_txtfunc == 0)
+                if (!fix_text_color)
                 {
                     tcol_at_txtfunc(0) = 210;
                     tcol_at_txtfunc(1) = 250;
                     tcol_at_txtfunc(2) = 160;
-                }
-                else
-                {
-                    tcolfix_at_txtfunc = 0;
                 }
             }
             msgtemp(0)[0] = std::toupper(msgtemp(0)[0]);
@@ -986,6 +971,8 @@ void txt_conv()
         msg_write(msgtemp(0));
         message_width += msgtemp(0).size();
     }
+
+    fix_text_color = false;
 }
 
 
