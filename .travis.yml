@@ -72,10 +72,7 @@ script:
   - cd ..
   - make tests VERBOSE=1
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ccache --show-stats; fi
-  - cd bin
-  - pwd
-  - ls
-  - ./test_runner
+  - ./ElonaFoobar
 
 notifications:
     email: false
