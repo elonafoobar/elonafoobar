@@ -699,7 +699,7 @@ int quest_generate()
                 break;
             }
         }
-        p = qdata(1, qdata(12, rq));
+        p = qdata(12, rq);
         if (qdata(4, rq) == 0)
         {
             rewardfix = 140
