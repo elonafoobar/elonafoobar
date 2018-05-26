@@ -6769,7 +6769,8 @@ int ctrl_ally()
         }
         if (allyctrl != 1)
         {
-            if (cdata[cnt].is_escorted() == 1)
+            if (cdata[cnt].is_escorted()
+                || cdata[cnt].is_escorted_in_sub_quest())
             {
                 continue;
             }

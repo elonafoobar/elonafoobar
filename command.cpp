@@ -67,7 +67,8 @@ turn_result_t do_give_command()
     {
         if (tc < 16)
         {
-            if (cdata[tc].is_escorted() == 0)
+            if (!cdata[tc].is_escorted()
+                && !cdata[tc].is_escorted_in_sub_quest())
             {
                 return try_interact_with_npc();
             }
