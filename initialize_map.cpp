@@ -2726,6 +2726,7 @@ label_1742_internal:
             cdata[rc].hp = cdata[rc].max_hp;
             cdata[rc].mp = cdata[rc].max_mp;
         }
+        chara_refresh(cnt);
     }
     if (mdata(7) == 1)
     {
