@@ -2146,6 +2146,15 @@ int chara_armor_class(int cc)
 
 
 
+bool belong_to_same_team(const character& c1, const character& c2)
+{
+    return (c1.relationship >= 0 && c2.relationship >= 0)
+        || (c1.relationship == -1 && c2.relationship == -1)
+        || (c1.relationship <= -2 && c2.relationship <= -2);
+}
+
+
+
 std::string chara_refstr(int prm_0258, int prm_0259)
 {
     dbmode = 16;

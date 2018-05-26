@@ -15266,10 +15266,7 @@ int calcmagiccontrol(int prm_1076, int prm_1077)
 {
     if (sdata(188, prm_1076) != 0)
     {
-        if ((cdata[prm_1076].relationship >= 0
-             && cdata[prm_1077].relationship >= 0)
-            || (cdata[prm_1076].relationship <= -1
-                && cdata[prm_1077].relationship <= -1))
+        if (belong_to_same_team(cdata[prm_1076], cdata[prm_1077]))
         {
             if (sdata(188, prm_1076) * 5 > rnd(dmg + 1))
             {

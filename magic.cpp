@@ -4119,7 +4119,7 @@ label_2181_internal:
             {
                 continue;
             }
-            if (cnt <= 16)
+            if (belong_to_same_team(cdata[cc], cdata[cnt]))
             {
                 continue;
             }
