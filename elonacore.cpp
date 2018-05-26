@@ -5690,6 +5690,11 @@ turn_result_t exit_map()
             }
         }
     }
+    if (mdata(6) == 7)
+    {
+        rq = gdata_executing_immediate_quest;
+        quest_exit_map();
+    }
     msg_newline();
     msgtemp = u8"  "s;
     if (gdata_current_map == 35 || gdata_current_map == 6
@@ -5861,8 +5866,6 @@ turn_result_t exit_map()
     }
     if (mdata(6) == 7)
     {
-        rq = gdata_executing_immediate_quest;
-        quest_exit_map();
         gdata_current_map = gdata_previous_map2;
         gdata_current_dungeon_level = gdata_previous_dungeon_level;
         mapstartx = gdata_previous_x;
