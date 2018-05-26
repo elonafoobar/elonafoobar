@@ -1797,7 +1797,7 @@ label_2747:
         msg_newline();
         msgtemp = u8"  "s;
         firstturn = 1;
-        const auto save_dir = filesystem::dir::save(playerid);
+        const auto save_dir = filesystem::dir::save();
         load_save_data(save_dir);
         mode = 3;
         return turn_result_t::initialize_map;

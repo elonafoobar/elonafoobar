@@ -3,6 +3,7 @@
 #include <vector>
 #include "../lib/noncopyable.hpp"
 #include "detail/sdl.hpp"
+#include "hsp.hpp"
 
 
 namespace elona
@@ -32,7 +33,7 @@ public:
 
 
 private:
-    using time = decltype(::SDL_GetTicks());
+    using time = decltype(snail::hsp::timeGetTime());
 
     int _fps;
     int _frame_count = 0; // [0, fps)

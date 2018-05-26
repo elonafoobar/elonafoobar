@@ -1,20 +1,11 @@
 #pragma once
 
 #include "filesystem.hpp"
-#include "lib/noncopyable.hpp"
 
 
 
 namespace elona
 {
-
-
-class sound : lib::noncopyable
-{
-public:
-private:
-};
-
 
 int DSINIT();
 void DSLOADFNAME(const fs::path& filepath, int id);

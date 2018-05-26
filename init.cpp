@@ -1172,7 +1172,7 @@ void initialize_game()
     }
     if (mode == 3)
     {
-        const auto save_dir = filesystem::dir::save(playerid);
+        const fs::path& save_dir = filesystem::dir::save();
         load_save_data(save_dir);
     }
     initialize_fovmap_and_fovlist();

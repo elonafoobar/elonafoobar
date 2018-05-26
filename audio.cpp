@@ -4,6 +4,7 @@
 #include "elona.hpp"
 #include "snail/application.hpp"
 #include "variables.hpp"
+#include "snail/audio.hpp"
 
 
 namespace
@@ -26,12 +27,9 @@ constexpr int temporary_channels_size = 6;
 std::vector<fs::path> soundfile;
 std::vector<int> soundlist;
 
-std::vector<Mix_Chunk*> chunks;
-
 int envwprev{};
 int musicprev{};
 
-Mix_Music* played_music = nullptr;
 } // namespace
 
 
@@ -41,103 +39,70 @@ namespace elona
 
 int DSINIT()
 {
-    Mix_AllocateChannels(max_channels);
-    chunks.resize(max_channels);
-    snail::application::instance().register_finalizer([&]() {
-        if(!config::instance().is_test)
-        {
-            for (const auto& chunk : chunks)
-            {
-                if (chunk)
-                    ::Mix_FreeChunk(chunk);
-            }
-        }
-    });
-    return 1;
+    return snail::audio::DSINIT();
 }
 
 
 
 void DSLOADFNAME(const fs::path& filepath, int channel)
 {
-    if (auto chunk = chunks[channel])
-        Mix_FreeChunk(chunk);
-
-    auto chunk = snail::detail::enforce_mixer(
-        Mix_LoadWAV(filesystem::to_utf8_path(filepath).c_str()));
-    chunks[channel] = chunk;
+    snail::audio::DSLOADFNAME(filesystem::to_utf8_path(filepath), channel);
 }
 
 
 
 void DSPLAY(int channel, bool loop)
 {
-    Mix_PlayChannel(channel, chunks[channel], loop ? -1 : 0);
+    snail::audio::DSPLAY(channel, loop);
 }
 
 
 
 void DSSTOP(int channel)
 {
-    Mix_HaltChannel(channel);
+    snail::audio::DSSTOP(channel);
 }
 
 
 
 void DSSETVOLUME(int channel, int volume)
 {
-    if (const auto chunk = chunks[channel])
-    {
-        Mix_VolumeChunk(chunk, volume);
-    }
+    snail::audio::DSSETVOLUME(channel, volume);
 }
 
 
 
 bool CHECKPLAY(int channel)
 {
-    return Mix_Playing(channel);
+    return snail::audio::CHECKPLAY(channel);
 }
 
 
 
 int DMINIT()
 {
-    snail::application::instance().register_finalizer([&]() {
-        if (!config::instance().is_test && played_music)
-            ::Mix_FreeMusic(played_music);
-    });
-    return 1;
+    return snail::audio::DMINIT();
 }
 
 
 
 void DMLOADFNAME(const fs::path& filepath, int)
 {
-    if (played_music)
-        ::Mix_FreeMusic(played_music);
-
-    played_music = snail::detail::enforce_mixer(
-        Mix_LoadMUS(filesystem::to_utf8_path(filepath).c_str()));
+    snail::audio::DMLOADFNAME(filesystem::to_utf8_path(filepath), 0);
 }
 
 
 
 void DMPLAY(int loop, int)
 {
-    snail::detail::enforce_mixer(Mix_PlayMusic(played_music, loop ? -1 : 1));
+    snail::audio::DMPLAY(loop, 0);
 }
 
 
 
 void DMSTOP()
 {
-    ::Mix_HaltMusic();
-    if (played_music)
-    {
-        ::Mix_FreeMusic(played_music);
-        played_music = nullptr;
-    }
+    snail::audio::DMSTOP();
 }
 
 

@@ -2319,6 +2319,7 @@ label_2034_internal:
                 + lang(u8"スキルトラック"s, u8"Track Skill"s) + u8"]"s;
         }
     }
+    color(0, 0, 0);
     showtitle(s, s, 236, 1);
 label_2035_internal:
     s = "";
