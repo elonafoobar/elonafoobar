@@ -1003,7 +1003,10 @@ turn_result_t do_offer_command()
             + u8" on the altar and mutter the name of "s
             + i18n::_(u8"god", cdata[0].god_id, u8"name") + u8"."s));
     snd(121);
+    const auto tcbk = tc(0);
+    tc = 0;
     play_animation(7);
+    tc = tcbk;
     int stat = item_find(60002);
     if (stat != -1)
     {
