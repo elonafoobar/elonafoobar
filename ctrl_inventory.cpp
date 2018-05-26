@@ -1823,6 +1823,7 @@ label_2061_internal:
                         + u8"."s));
             }
             item_stack(0, ci, 1);
+            refresh_burden_state();
             invsubroutine = 0;
             result.succeeded = true;
             return result;
