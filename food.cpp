@@ -753,7 +753,10 @@ void apply_general_eating_effect()
         }
         nutrition = 3500;
     }
-    nutrition = nutrition * (100 + inv[ci].param2 * 15) / 100;
+    if (the_item_db[inv[ci].id]->category == 57000)
+    {
+        nutrition = nutrition * (100 + inv[ci].param2 * 15) / 100;
+    }
     for (int cnt = 0, cnt_end = (fdmax); cnt < cnt_end; ++cnt)
     {
         if (fdlist(1, cnt) > 0)
