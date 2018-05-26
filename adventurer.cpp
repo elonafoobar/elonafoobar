@@ -287,8 +287,8 @@ void label_2662()
         }
         if (rnd(2000) == 0)
         {
-            cdata[rc].experience +=
-                cdata[rc].level * cdata[rc].level * cdata[rc].level * 5;
+            cdata[rc].experience += clamp(cdata[rc].level, 1, 1000)
+                * clamp(cdata[rc].level, 1, 1000) * 100;
             int fame = rnd(cdata[rc].level * cdata[rc].level / 20 + 10) + 10;
             cdata[rc].fame += fame;
             addnews(4, rc, fame);
