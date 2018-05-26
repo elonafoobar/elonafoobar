@@ -3,6 +3,7 @@
 #include "elona.hpp"
 #include "optional.hpp"
 #include "position.hpp"
+#include "random.hpp"
 #include "talk.hpp"
 
 

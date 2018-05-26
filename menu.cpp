@@ -18,6 +18,7 @@
 #include "menu.hpp"
 #include "network.hpp"
 #include "quest.hpp"
+#include "random.hpp"
 #include "trait.hpp"
 #include "ui.hpp"
 #include "variables.hpp"

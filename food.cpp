@@ -15,6 +15,7 @@
 #include "itemgen.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
+#include "random.hpp"
 #include "status_ailment.hpp"
 #include "trait.hpp"
 #include "variables.hpp"

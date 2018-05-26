@@ -7,6 +7,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 

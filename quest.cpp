@@ -10,6 +10,7 @@
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "mef.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 namespace elona

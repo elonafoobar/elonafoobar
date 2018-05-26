@@ -5,6 +5,7 @@
 #include "food.hpp"
 #include "i18n.hpp"
 #include "race.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 

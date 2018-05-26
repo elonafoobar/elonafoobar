@@ -8,6 +8,7 @@
 #include "item_db.hpp"
 #include "itemgen.hpp"
 #include "menu.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 namespace elona

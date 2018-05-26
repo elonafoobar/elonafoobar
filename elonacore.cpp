@@ -14566,8 +14566,7 @@ void select_random_fish()
     fish = 1;
     if (dbsum != 0)
     {
-        int dbtmp;
-        exrand_rnd(dbtmp, dbsum);
+        const auto dbtmp = rnd(dbsum);
         for (int cnt = 0, cnt_end = (dbmax); cnt < cnt_end; ++cnt)
         {
             if (dblist(1, cnt) > dbtmp)

@@ -15,6 +15,7 @@
 #include "mef.hpp"
 #include "menu.hpp"
 #include "quest.hpp"
+#include "random.hpp"
 #include "shop.hpp"
 #include "status_ailment.hpp"
 #include "ui.hpp"

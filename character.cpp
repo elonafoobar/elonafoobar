@@ -15,6 +15,7 @@
 #include "item_db.hpp"
 #include "map_cell.hpp"
 #include "quest.hpp"
+#include "random.hpp"
 #include "range.hpp"
 #include "trait.hpp"
 #include "variables.hpp"

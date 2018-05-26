@@ -15,6 +15,7 @@
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "race.hpp"
+#include "random.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 

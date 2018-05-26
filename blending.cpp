@@ -14,6 +14,7 @@
 #include "itemgen.hpp"
 #include "macro.hpp"
 #include "map_cell.hpp"
+#include "random.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 

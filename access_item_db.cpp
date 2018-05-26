@@ -4,6 +4,7 @@
 #include "filesystem.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 

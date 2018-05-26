@@ -14,6 +14,7 @@
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "mapgen.hpp"
+#include "random.hpp"
 #include "quest.hpp"
 #include "ui.hpp"
 #include "variables.hpp"

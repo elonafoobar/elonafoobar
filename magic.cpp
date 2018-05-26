@@ -24,6 +24,7 @@
 #include "mef.hpp"
 #include "menu.hpp"
 #include "quest.hpp"
+#include "random.hpp"
 #include "status_ailment.hpp"
 #include "trait.hpp"
 #include "ui.hpp"

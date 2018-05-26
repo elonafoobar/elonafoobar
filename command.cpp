@@ -27,6 +27,7 @@
 #include "menu.hpp"
 #include "network.hpp"
 #include "quest.hpp"
+#include "random.hpp"
 #include "shop.hpp"
 #include "snail/application.hpp"
 #include "ui.hpp"
@@ -1680,7 +1681,6 @@ turn_result_t do_use_command()
                 itemname(ci) + u8"は十分に血を吸い成長できる！"s,
                 itemname(ci) + u8" sucked enough blood and ready to grow!"s));
             randomize(inv[ci].subname);
-            exrand_randomize(inv[ci].subname);
             if (inv[ci].param1 >= 4 + rnd(12))
             {
                 txt(lang(
@@ -1693,7 +1693,6 @@ turn_result_t do_use_command()
             for (int cnt = 0; cnt < 3; ++cnt)
             {
                 randomize(inv[ci].subname + inv[ci].param1 * 10 + cnt);
-                exrand_randomize(inv[ci].subname + inv[ci].param1 * 10 + cnt);
                 int stat = enchantment_add(
                     ci,
                     enchantment_generate(enchantment_gen_level(4)),
@@ -1745,7 +1744,6 @@ turn_result_t do_use_command()
                     itemname(ci) + u8"は嬉しげに震えた。"s,
                     itemname(ci) + u8" vibrates as if she is pleased."s));
                 randomize(inv[ci].subname);
-                exrand_randomize(inv[ci].subname);
                 if (inv[ci].param1 >= 4 + rnd(12))
                 {
                     txt(lang(
@@ -1764,7 +1762,6 @@ turn_result_t do_use_command()
                 ++inv[ci].param1;
             }
             randomize();
-            exrand_randomize();
         }
         chara_refresh(cc);
         update_screen();

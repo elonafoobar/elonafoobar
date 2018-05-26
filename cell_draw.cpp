@@ -7,6 +7,7 @@
 #include "item.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 using namespace elona;

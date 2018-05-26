@@ -31,6 +31,7 @@
 #include "mef.hpp"
 #include "network.hpp"
 #include "race.hpp"
+#include "random.hpp"
 #include "range.hpp"
 #include "trait.hpp"
 #include "ui.hpp"

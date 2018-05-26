@@ -15,6 +15,7 @@
 #include "map_cell.hpp"
 #include "network.hpp"
 #include "optional.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 
