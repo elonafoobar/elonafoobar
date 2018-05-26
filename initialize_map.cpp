@@ -3431,6 +3431,10 @@ label_1744_internal:
                 {
                     continue;
                 }
+                if (cnt != 0 && cdata[cnt].current_map)
+                {
+                    continue;
+                }
                 ++p;
                 cdata[cnt].experience += exp;
             }
