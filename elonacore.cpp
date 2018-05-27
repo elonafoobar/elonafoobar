@@ -6629,13 +6629,6 @@ void label_1750()
                 break;
             }
         }
-        if ((33 > map(adata(1, cnt), adata(2, cnt), 0)
-             || map(adata(1, cnt), adata(2, cnt), 0) >= 66)
-            && chipm(0, map(adata(1, cnt), adata(2, cnt), 0)) != 4
-            && chipm(1, map(adata(1, cnt), adata(2, cnt), 0)) != 9)
-        {
-            map(adata(1, cnt), adata(2, cnt), 0) = 33;
-        }
         cell_featset(
             adata(1, cnt),
             adata(2, cnt),
