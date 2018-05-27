@@ -311,7 +311,7 @@ void prompt_hiring()
             {
                 continue;
             }
-            if (cdatan(0, cnt) == cdatan(0, rc))
+            if (cdata[cnt].state != 0 && cdatan(0, cnt) == cdatan(0, rc))
             {
                 chara_vanquish(rc);
             }
