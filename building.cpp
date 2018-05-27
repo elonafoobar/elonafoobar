@@ -734,7 +734,7 @@ void show_shop_log()
     {
         txt(lang(
             u8"[店]店には店番がいない。"s,
-            u8"[Shop]You shop doesn't have a shopkeeper."s));
+            u8"[Shop]Your shop doesn't have a shopkeeper."s));
         return;
     }
     sold = 0;
@@ -906,6 +906,7 @@ void show_shop_log()
         {
             flt(list(0, cnt2), list(1, cnt2));
             flttypemajor = elona::stoi(listn(0, cnt2));
+            nostack = 1;
             int stat = itemcreate(-1, 0, -1, -1, 0);
             if (stat == 0)
             {
@@ -914,6 +915,7 @@ void show_shop_log()
             }
             if (inv[ci].value > elona::stoi(listn(1, cnt2)) * 2)
             {
+                item_stack(-1, ci);
                 f = 1;
                 break;
             }
