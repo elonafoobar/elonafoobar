@@ -93,14 +93,15 @@ after_build:
   - mv LICENSE bin\ElonaFoobar
   - del bin\ElonaFoobar\*.ilk
   - del bin\ElonaFoobar\*.pdb
-  - del bin\ElonaFoobar\ElonaFoobar.lib
   - rd /q /s bin\ElonaFoobar\graphic
   - rd /q /s bin\ElonaFoobar\map
   - rd /q /s bin\ElonaFoobar\original
   - rd /q /s bin\ElonaFoobar\sound
   - rd /q /s bin\ElonaFoobar\user
   - rd /q /s bin\ElonaFoobar\tests
-  - 7z a ElonaFoobar-windows.zip "%APPVEYOR_BIN_FOLDER%\bin\ElonaFoobar"
+  - rd /q /s bin\ElonaFoobar\tmp
+  - cd bin
+  - 7z a ElonaFoobar-windows.zip ElonaFoobar
 
 artifacts:
   - path: ElonaFoobar-windows.zip
