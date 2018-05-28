@@ -87,20 +87,20 @@ build_script:
 
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
-  - mv build\%CONFIGURATION% build\ElonaFoobar
-  - mv CHANGELOG*.md build\ElonaFoobar
-  - mv README*.md build\ElonaFoobar
-  - mv LICENSE build\ElonaFoobar
-  - del build\ElonaFoobar\*.ilk
-  - del build\ElonaFoobar\*.pdb
-  - del build\ElonaFoobar\ElonaFoobar.lib
-  - rd /q /s build\ElonaFoobar\graphic
-  - rd /q /s build\ElonaFoobar\map
-  - rd /q /s build\ElonaFoobar\original
-  - rd /q /s build\ElonaFoobar\sound
-  - rd /q /s build\ElonaFoobar\user
-  - rd /q /s build\ElonaFoobar\tests
-  - 7z a ElonaFoobar-windows.zip "%APPVEYOR_BUILD_FOLDER%\build\ElonaFoobar"
+  - mv bin\%CONFIGURATION% bin\ElonaFoobar
+  - mv CHANGELOG*.md bin\ElonaFoobar
+  - mv README*.md bin\ElonaFoobar
+  - mv LICENSE bin\ElonaFoobar
+  - del bin\ElonaFoobar\*.ilk
+  - del bin\ElonaFoobar\*.pdb
+  - del bin\ElonaFoobar\ElonaFoobar.lib
+  - rd /q /s bin\ElonaFoobar\graphic
+  - rd /q /s bin\ElonaFoobar\map
+  - rd /q /s bin\ElonaFoobar\original
+  - rd /q /s bin\ElonaFoobar\sound
+  - rd /q /s bin\ElonaFoobar\user
+  - rd /q /s bin\ElonaFoobar\tests
+  - 7z a ElonaFoobar-windows.zip "%APPVEYOR_BIN_FOLDER%\bin\ElonaFoobar"
 
 artifacts:
   - path: ElonaFoobar-windows.zip
