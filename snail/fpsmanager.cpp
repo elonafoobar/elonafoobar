@@ -1,4 +1,6 @@
 #include "fpsmanager.hpp"
+#include "detail/sdl.hpp"
+#include "hsp.hpp"
 #include <numeric>
 
 
@@ -56,12 +58,12 @@ void fps_manager::wait()
         }
         else
         {
-            duration_to_wait = _t0 + 1000 - ::SDL_GetTicks();
+            duration_to_wait = _t0 + 1000 - hsp::timeGetTime();
         }
     }
     else
     {
-        duration_to_wait = _t0 + _frame_count * 1000 / fps() - ::SDL_GetTicks();
+        duration_to_wait = _t0 + _frame_count * 1000 / fps() - hsp::timeGetTime();
     }
 
     if (duration_to_wait > 0)
@@ -69,7 +71,7 @@ void fps_manager::wait()
         ::SDL_Delay(duration_to_wait);
     }
 
-    const auto now = ::SDL_GetTicks();
+    const auto now = hsp::timeGetTime();
 
     if (_frame_count == 0)
     {

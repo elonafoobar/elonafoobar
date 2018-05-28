@@ -37,6 +37,17 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
+# Options
+option(WITH_TESTS "Build test executable" OFF)
+
+if(WITH_TESTS)
+  SET(SNAIL_HEADLESS ON CACHE BOOL "Snail headless")
+  add_definitions(-DSNAIL_RENDERER_HEADLESS)
+else(WITH_TESTS)
+  SET(SNAIL_HEADLESS OFF CACHE BOOL "Snail SDL")
+  add_definitions(-DSNAIL_RENDERER_SDL)
+endif(WITH_TESTS)
+
 # Source files
 set(CORE_SOURCES
     ability.cpp
@@ -92,7 +103,6 @@ set(CORE_SOURCES
     itemgen.cpp
     log.cpp
     magic.cpp
-    main.cpp
     main_menu.cpp
     map.cpp
     map_cell.cpp
@@ -114,6 +124,7 @@ set(CORE_SOURCES
     talk_npc.cpp
     talk_unique.cpp
     tcg.cpp
+    testing.cpp
     text.cpp
     trait.cpp
     turn_sequence.cpp
@@ -125,8 +136,25 @@ set(CORE_SOURCES
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
+
 # Executable
-add_executable(${PROJECT_NAME} WIN32 MACOSX_BUNDLE ${CORE_SOURCES})
+if(WITH_TESTS)
+  set (CATCH_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/catch2})
+  add_library(Catch INTERFACE)
+  target_include_directories(Catch INTERFACE ${CATCH_INCLUDE_DIR})
+
+  # Test sources
+  set(TEST_SOURCES
+    tests/tests.cpp
+    tests/serialization.cpp
+    ${CORE_SOURCES}
+    )
+
+  add_executable(${PROJECT_NAME} ${TEST_SOURCES})
+  target_link_libraries(${PROJECT_NAME} Catch)
+else(WITH_TESTS)
+  add_executable(${PROJECT_NAME} WIN32 MACOSX_BUNDLE ${CORE_SOURCES} main.cpp)
+endif(WITH_TESTS)
 
 
 # If a CMake prefix was not provided, assume dependencies are in "./deps"
@@ -267,8 +295,17 @@ endif()
 
 # My libraries
 add_subdirectory(snail)
-target_link_libraries(${PROJECT_NAME} snail)
 
+if(WITH_TESTS)
+  target_link_libraries(${PROJECT_NAME} snail_headless)
+else(WITH_TESTS)
+  target_link_libraries(${PROJECT_NAME} snail)
+endif(WITH_TESTS)
+
+
+INSTALL(TARGETS ElonaFoobar
+    BUNDLE DESTINATION . COMPONENT Runtime
+    RUNTIME DESTINATION bin COMPONENT Runtime)
 
 # Create macOS .app bundle
 SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/ElonaFoobar")
@@ -281,13 +318,16 @@ IF(WIN32)
   SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/ElonaFoobar.exe")
 ENDIF(WIN32)
 
-INSTALL(TARGETS ElonaFoobar
-    BUNDLE DESTINATION . COMPONENT Runtime
-    RUNTIME DESTINATION bin COMPONENT Runtime)
-
 SET(DIRS ${LINK_DIRECTORIES})
 
 INSTALL(CODE "
     include(BundleUtilities)
     fixup_bundle(\"${APPS}\" \"\" \"${DIRS}\")
     " COMPONENT Runtime)
+
+if(WITH_TESTS)
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                     COMMAND ${CMAKE_COMMAND} -E copy_directory
+                     "${CMAKE_CURRENT_SOURCE_DIR}/tests/data"
+                     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/tests/data")
+endif(WITH_TESTS)

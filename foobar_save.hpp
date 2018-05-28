@@ -9,6 +9,8 @@ namespace elona
 
 struct foobar_save_t
 {
+    // NOTE: Don't add new fields unless you add them to serialization, which
+    // will break save compatibility.
     bool is_autodig_enabled{};
     version_t version;
 
@@ -19,6 +21,7 @@ struct foobar_save_t
     template <typename Archive>
     void serialize(Archive& ar)
     {
+        // WARNING: Changing this will break save compatibility!
         ar(is_autodig_enabled);
     }
 };

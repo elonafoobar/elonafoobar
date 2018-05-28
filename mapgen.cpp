@@ -1724,6 +1724,32 @@ void map_makedoor()
 }
 
 
+void generate_debug_map()
+{
+    mdata(0) = 50; // width
+    mdata(1) = 50; // height
+    mdata(2) = 1; // world map or local
+    mdata(9) = 10000; // time passed per turn
+    mdata(10) = mdata(0) * mdata(1) / 100;
+    mdata(12) = 3; // tileset
+    mdata(15) = 0;
+    map_initialize();
+
+    for (int y = 0; y < mdata(1); ++y)
+    {
+        for (int x = 0; x < mdata(0); ++x)
+        {
+            map(x, y, 0) = 3;
+        }
+    }
+
+    mdatan(0) = lang(u8"デバッグマップ", u8"Debug Map");
+    map_converttile();
+
+    mapstartx = 25;
+    mapstarty = 25;
+    map_placeplayer();
+}
 
 void generate_random_nefia()
 {

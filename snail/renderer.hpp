@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include "../lib/noncopyable.hpp"
 #include "blend_mode.hpp"
 #include "color.hpp"
 #include "detail/sdl.hpp"
@@ -19,7 +18,7 @@ namespace snail
 
 
 
-class renderer : public lib::noncopyable
+class renderer
 {
 public:
     enum flag_t
@@ -47,6 +46,7 @@ public:
         bottom,
     };
 
+    ~renderer();
 
     text_alignment_t text_alignment() const noexcept
     {
@@ -93,23 +93,12 @@ public:
 
     void set_draw_color(const color&);
 
+    ::SDL_Texture* render_target();
 
-    ::SDL_Texture* render_target()
-    {
-        return ::SDL_GetRenderTarget(ptr());
-    }
+    void set_render_target(::SDL_Texture* texture);
 
 
-    void set_render_target(::SDL_Texture* texture)
-    {
-        return detail::enforce_sdl(::SDL_SetRenderTarget(ptr(), texture));
-    }
-
-
-    ::SDL_Renderer* ptr()
-    {
-        return _ptr.get();
-    }
+    ::SDL_Renderer* ptr();
 
 
     renderer(window& target_window, int flag);
@@ -188,13 +177,11 @@ public:
         int dst_width,
         int dst_height);
 
-
 private:
     text_alignment_t _text_alignment = text_alignment_t::left;
     text_baseline_t _text_baseline = text_baseline_t::top;
     font_t _font;
     blend_mode_t _blend_mode = blend_mode_t::blend;
-    std::unique_ptr<::SDL_Renderer, decltype(&::SDL_DestroyRenderer)> _ptr;
 };
 
 

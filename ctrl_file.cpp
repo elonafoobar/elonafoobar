@@ -395,9 +395,8 @@ void save(const fs::path& filepath, T& data, size_t begin, size_t end)
 
 
 
-void fmode_7_8(bool read)
+void fmode_7_8(bool read, const fs::path& dir)
 {
-    const auto dir = filesystem::dir::save(playerid);
     if (!fs::exists(dir))
     {
         fs::create_directory(dir);
@@ -451,6 +450,9 @@ void fmode_7_8(bool read)
             if (fs::exists(filepath))
             {
                 load(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
+                for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++) {
+                    cdata[index].index = index;
+                }
             }
         }
         else
@@ -512,6 +514,10 @@ void fmode_7_8(bool read)
             if (fs::exists(filepath))
             {
                 load(filepath, inv, 0, 1320);
+                for(int index = 0; index < 1320; index++)
+                {
+                    inv[index].index = index;
+                }
             }
         }
         else
@@ -762,6 +768,9 @@ void fmode_14_15(bool read)
             if (fs::exists(filepath))
             {
                 load(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
+                for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++) {
+                    cdata[index].index = index;
+                }
             }
         }
         else
@@ -826,6 +835,10 @@ void fmode_14_15(bool read)
             if (fs::exists(filepath))
             {
                 load(filepath, inv, 0, 1320);
+                for(int index = 0; index < 1320; index++)
+                {
+                    inv[index].index = index;
+                }
             }
         }
         else
@@ -943,6 +956,9 @@ void fmode_1_2(bool read)
                 cdata,
                 ELONA_MAX_PARTY_CHARACTERS,
                 ELONA_MAX_CHARACTERS);
+            for (int index = ELONA_MAX_PARTY_CHARACTERS; index < ELONA_MAX_CHARACTERS; index++) {
+                cdata[index].index = index;
+            }
         }
         else
         {
@@ -1095,6 +1111,10 @@ void fmode_3_4(bool read, const fs::path& filename)
     if (read)
     {
         load(filepath, inv, 1320, 5480);
+        for(int index = 1320; index < 5480; index++)
+        {
+            inv[index].index = index;
+        }
     }
     else
     {
@@ -1135,6 +1155,9 @@ void fmode_17()
                 cdata,
                 ELONA_MAX_PARTY_CHARACTERS,
                 ELONA_MAX_CHARACTERS);
+            for (int index = ELONA_MAX_PARTY_CHARACTERS; index < ELONA_MAX_CHARACTERS; index++) {
+                cdata[index].index = index;
+            }
         }
         else
         {
@@ -1283,10 +1306,6 @@ void ctrl_file(file_operation_t file_operation)
     case file_operation_t::_6:
         fmode_5_6(file_operation == file_operation_t::_5);
         break;
-    case file_operation_t::_7:
-    case file_operation_t::_8:
-        fmode_7_8(file_operation == file_operation_t::_7);
-        break;
     case file_operation_t::_9: fmode_9(); break;
     case file_operation_t::_10: fmode_10(); break;
     case file_operation_t::_11:
@@ -1314,6 +1333,10 @@ void ctrl_file(file_operation2_t file_operation, const fs::path& filepath)
     case file_operation2_t::_3:
     case file_operation2_t::_4:
         fmode_3_4(file_operation == file_operation2_t::_3, filepath);
+        break;
+    case file_operation2_t::_7:
+    case file_operation2_t::_8:
+        fmode_7_8(file_operation == file_operation2_t::_7, filepath);
         break;
     case file_operation2_t::_23:
     case file_operation2_t::_24:

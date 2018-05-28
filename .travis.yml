@@ -13,11 +13,17 @@ matrix:
                   packages:
                       - g++-7
                       - cmake
-                      - liblua5.2-dev
                       - zlib1g-dev
-                        # Boost and SDL2 library versions provided are too old, they must be compiled manually.
+                      - xvfb
+                        # Boost, Lua and SDL2 library versions provided are too old, they must be compiled manually.
         - os: osx
           compiler: clang
+
+env:
+  global:
+    - SDL_VIDEODRIVER=dummy
+    - SDL_AUDIODRIVER=disk
+    - MAKEFLAGS=-j8
 
 cache:
     directories:
@@ -54,10 +60,21 @@ script:
        export LD_RUN_PATH="/usr/lib:$LD_RUN_PATH";
        export CMAKE_ARGS="$CMAKE_ARGS -DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=TRUE";
        gcc -v && g++ -v;
+       export DISPLAY=':99.0';
+       export AUDIODEV=null;
+       Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
     fi
   - env
-  - make VERBOSE=1
+  - cd deps
+  - wget --no-verbose "http://ylvania.style.coocan.jp/file/elona122.zip"
+  - unzip -qq elona122.zip
+  - rm elona122.zip
+  - cd ..
+  - make clean
+  - make tests VERBOSE=1
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ccache --show-stats; fi
+  - bin/ElonaFoobar
 
 notifications:
     email: false
+

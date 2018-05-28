@@ -14,6 +14,8 @@ namespace elona
 // FIXME
 struct enc_t
 {
+    // NOTE: Don't add new fields unless you add them to serialization, which
+    // will break save compatibility.
     int id = 0;
     int power = 0;
 
@@ -26,6 +28,7 @@ struct enc_t
     template <typename Archive>
     void serialize(Archive& ar)
     {
+        // WARNING: Changing this will break save compatibility!
         ar(id);
         ar(power);
     }
@@ -36,6 +39,14 @@ struct item
 {
     item();
 
+    // NOTE: Don't add new fields unless you add them to serialization, which
+    // will break save compatibility.
+
+    // Index of this item into the global cdata array.
+    // Used for communicating with legacy code that takes integer index arguments.
+    // New code should pass item& instead.
+    // Not serialized; set on creation and load.
+    int index = -1;
 
     int number = 0;
     int value = 0;
@@ -82,6 +93,7 @@ struct item
     template <typename Archive>
     void serialize(Archive& ar)
     {
+        // WARNING: Changing this will break save compatibility!
         ar(number);
         ar(value);
         ar(image);

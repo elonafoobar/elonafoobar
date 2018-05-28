@@ -19,6 +19,7 @@
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
 #include "debug.hpp"
+#include "dmgheal.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
@@ -62,45 +63,7 @@ using namespace elona;
 namespace
 {
 
-
-
 std::string atbuff;
-
-
-
-int ask_direction_to_close()
-{
-    int number_of_doors{};
-    position_t pos;
-    for (int dy = -1; dy <= 1; ++dy)
-    {
-        for (int dx = -1; dx <= 1; ++dx)
-        {
-            if (dy == 0 && dx == 0)
-                continue;
-            int x = cdata[0].position.x + dx;
-            int y = cdata[0].position.y + dy;
-            cell_featread(x, y);
-            if (feat(1) == 20 && map(x, y, 1) == 0)
-            {
-                ++number_of_doors;
-                pos = {x, y};
-            }
-        }
-    }
-    if (number_of_doors == 1)
-    {
-        x = pos.x;
-        y = pos.y;
-        return 1;
-    }
-
-    txt(lang(u8"何を閉める？"s, u8"Which door do you want to close? "s));
-    update_screen();
-    return ask_direction();
-}
-
-
 
 } // namespace
 
@@ -6060,15 +6023,21 @@ turn_result_t exit_map()
     }
     if (mdata(7) == 1)
     {
-        label_1739();
+        // This map should be saved.
+        save_map_local_data();
     }
     else
     {
-        label_1738();
+        // This is a tempory map, so wipe its data (shelter, special quest instance)
+        prepare_charas_for_map_unload();
+
+        // delete all map-local data
         if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
         {
             ctrl_file(file_operation_t::_11);
         }
+
+        // forget about all NPCs that were here
         for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
              ++cnt)
         {
@@ -6084,13 +6053,16 @@ turn_result_t exit_map()
 
 
 
-void label_1738()
+void prepare_charas_for_map_unload()
 {
+    // interrupt continuous actions
     for (int cnt = 0; cnt < 57; ++cnt)
     {
         rowactend(cnt);
         cdata[cnt].item_which_will_be_used = 0;
     }
+
+    // remove living adventurers from the map and set their states
     for (int cnt = 16; cnt < 55; ++cnt)
     {
         if (cdata[cnt].state == 1)
@@ -6099,25 +6071,26 @@ void label_1738()
             cdata[cnt].state = 3;
         }
     }
-    return;
 }
 
 
 
-void label_1739()
+void save_map_local_data()
 {
-    label_1738();
-    for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+    prepare_charas_for_map_unload();
+    for (int y = 0; y < mdata(1); ++y)
     {
-        y = cnt;
-        for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+        for (int x = 0; x < mdata(0); ++x)
         {
-            map(cnt, y, 7) = 0;
+            map(x, y, 7) = 0;
         }
     }
+
+    // write map data and characters/skill data local to this map
     ctrl_file(file_operation_t::_2);
+
+    // write data for items/character inventories local to this map
     ctrl_file(file_operation2_t::_4, u8"inv_"s + mid + u8".s2");
-    return;
 }
 
 
@@ -12061,13 +12034,13 @@ void create_cnpc()
 
 
 
-void load_save_data()
+void load_save_data(const fs::path& base_save_dir)
 {
     ELONA_LOG("Load save data: " << playerid);
 
     filemod = "";
     ctrl_file(file_operation_t::_10);
-    const auto save_dir = filesystem::dir::save(playerid);
+    const auto save_dir = base_save_dir / filesystem::u8path(playerid);
     buff(0).clear();
     if (!fs::exists(save_dir / u8"filelist.txt"))
     {
@@ -12102,7 +12075,8 @@ void load_save_data()
             bcopy(save_dir / s(0), filesystem::dir::tmp() / s(0));
         }
     }
-    ctrl_file(file_operation_t::_7);
+    ELONA_LOG("asd " << save_dir);
+    ctrl_file(file_operation2_t::_7, save_dir);
     migrate_save_data();
     set_item_info();
     for (int cnt = 0; cnt < 16; ++cnt)
@@ -12122,8 +12096,12 @@ void load_save_data()
 }
 
 
-
 void save_game()
+{
+    save_game(filesystem::dir::save());
+}
+
+void save_game(const fs::path& base_save_dir)
 {
     ELONA_LOG("Save game: " << playerid);
 
@@ -12141,7 +12119,7 @@ void save_game()
     ctrl_file(file_operation2_t::_4, u8"inv_"s + mid + u8".s2");
     save_f = 0;
     for (const auto& entry : filesystem::dir_entries{
-             filesystem::dir::save(), filesystem::dir_entries::type::dir})
+             base_save_dir, filesystem::dir_entries::type::dir})
     {
         if (filesystem::to_utf8_path(entry.path().filename()) == playerid)
         {
@@ -12149,7 +12127,7 @@ void save_game()
             break;
         }
     }
-    const auto save_dir = filesystem::dir::save(playerid);
+    const auto save_dir = base_save_dir / filesystem::u8path(playerid);
     if (save_f == 0)
     {
         mkdir(save_dir);
@@ -12176,7 +12154,7 @@ void save_game()
             }
         }
     }
-    ctrl_file(file_operation_t::_8);
+    ctrl_file(file_operation2_t::_8, save_dir);
     filemod = "";
     buff(0).clear();
     for (const auto& entry :
@@ -12189,7 +12167,7 @@ void save_game()
     notesel(buff);
     {
         std::ofstream out{
-            (filesystem::dir::save(playerid) / u8"filelist.txt").native(),
+            (save_dir / u8"filelist.txt").native(),
             std::ios::binary};
         out << buff(0) << std::endl;
     }
@@ -19701,7 +19679,7 @@ void initialize_economy()
             }
             podata(200, p) = podata(100, p) * 5 + rnd(1000);
         }
-        label_1739();
+        save_map_local_data();
     }
     gdata_current_map = bkdata(0);
     gdata_current_dungeon_level = bkdata(1);
