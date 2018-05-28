@@ -74,18 +74,15 @@ before_build:
 
 build_script:
   - chcp 65001
-  - cd %APPVEYOR_BUILD_FOLDER%
-  - cd deps
+  - cd %PREFIX%
   - appveyor DownloadFile http://ylvania.style.coocan.jp/file/elona122.zip
   - 7z x elona122.zip > nul
-  - cd ..
-  - mkdir build
-  - cd build
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - mkdir bin
+  - cd bin
   - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DWITH_TESTS=ON %CMAKE_ARGS% ..
   - cmake --build .
   - cd %CONFIGURATION%
-  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-
   - ElonaFoobar.exe
 
 after_build:
