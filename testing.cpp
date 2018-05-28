@@ -2,6 +2,7 @@
 #include "config.hpp"
 #include "foobar_save.hpp"
 #include "init.hpp"
+#include "log.hpp"
 #include "variables.hpp"
 #include "version.hpp"
 
@@ -47,6 +48,8 @@ void start_in_debug_map()
 
 void pre_init()
 {
+    log::initialize();
+
     initialize_cat_db();
 
     foobar_save.initialize();

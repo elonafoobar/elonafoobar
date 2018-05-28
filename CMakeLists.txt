@@ -41,8 +41,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 option(WITH_TESTS "Build test executable" OFF)
 
 if(WITH_TESTS)
+  SET(SNAIL_HEADLESS ON CACHE BOOL "Snail headless")
   add_definitions(-DSNAIL_RENDERER_HEADLESS)
 else(WITH_TESTS)
+  SET(SNAIL_HEADLESS OFF CACHE BOOL "Snail SDL")
   add_definitions(-DSNAIL_RENDERER_SDL)
 endif(WITH_TESTS)
 

@@ -1,13 +1,13 @@
-option(HEADLESS "Don't render anything" OFF)
+option(SNAIL_HEADLESS "Don't render anything" OFF)
 
 # Library
-if(HEADLESS)
+if(SNAIL_HEADLESS)
   set(LIBRARY_NAME snail_headless)
   add_definitions(-DSNAIL_RENDERER_HEADLESS)
-else(HEADLESS)
+else(SNAIL_HEADLESS)
   set(LIBRARY_NAME snail)
   add_definitions(-DSNAIL_RENDERER_SDL)
-endif(HEADLESS)
+endif(SNAIL_HEADLESS)
 
 # Source files
 set(SNAIL_SOURCES

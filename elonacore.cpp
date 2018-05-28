@@ -12075,6 +12075,7 @@ void load_save_data(const fs::path& base_save_dir)
             bcopy(save_dir / s(0), filesystem::dir::tmp() / s(0));
         }
     }
+    ELONA_LOG("asd " << save_dir);
     ctrl_file(file_operation2_t::_7, save_dir);
     migrate_save_data();
     set_item_info();

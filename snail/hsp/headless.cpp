@@ -54,7 +54,7 @@ void buffer(int, int, int)
 {
 }
 
-void color(int)
+void color(int, int, int)
 {
 }
 
