@@ -283,6 +283,12 @@ a a a a a a a a a a a a a a a a a a a a
 */
 bool input::is_pressed(key k) const
 {
+#if defined(SNAIL_RENDERER_HEADLESS)
+    if(k == key::enter) {
+        return true;
+    }
+#endif
+
     if (!_keys[static_cast<size_t>(k)].is_pressed())
         return false;
 

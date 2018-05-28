@@ -1,3 +1,5 @@
+#include <iostream>
+
 namespace elona
 {
 namespace snail
@@ -10,8 +12,9 @@ int timeGetTime()
     return 0;
 }
 
-void mes(const std::string&)
+void mes(const std::string& message)
 {
+    std::cout << message << std::endl;
 }
 
 void mesbox(std::string&)

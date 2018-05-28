@@ -38,15 +38,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 # Options
-option(WITH_TESTS "Build test executable" OFF)
+option(WITH_TESTS "Build test executable" "NONE")
 
-if(WITH_TESTS)
+if((WITH_TESTS STREQUAL "TEST") OR (WITH_TESTS STREQUAL "BENCH"))
   SET(SNAIL_HEADLESS ON CACHE BOOL "Snail headless")
   add_definitions(-DSNAIL_RENDERER_HEADLESS)
-else(WITH_TESTS)
+else()
   SET(SNAIL_HEADLESS OFF CACHE BOOL "Snail SDL")
   add_definitions(-DSNAIL_RENDERER_SDL)
-endif(WITH_TESTS)
+endif()
 
 # Source files
 set(CORE_SOURCES
@@ -138,7 +138,7 @@ set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
 
 # Executable
-if(WITH_TESTS)
+if(WITH_TESTS STREQUAL "TEST")
   set (CATCH_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/catch2})
   add_library(Catch INTERFACE)
   target_include_directories(Catch INTERFACE ${CATCH_INCLUDE_DIR})
@@ -152,9 +152,20 @@ if(WITH_TESTS)
 
   add_executable(${PROJECT_NAME} ${TEST_SOURCES})
   target_link_libraries(${PROJECT_NAME} Catch)
-else(WITH_TESTS)
+elseif(WITH_TESTS STREQUAL "BENCH")
+  add_subdirectory(thirdparty/hayai)
+
+  # Benchmark sources
+  set(BENCH_SOURCES
+    bench/ai.cpp
+    ${CORE_SOURCES}
+    )
+
+  add_executable(${PROJECT_NAME} ${BENCH_SOURCES})
+  target_link_libraries(${PROJECT_NAME} hayai_main ${LIB_TIMING})
+else()
   add_executable(${PROJECT_NAME} WIN32 MACOSX_BUNDLE ${CORE_SOURCES} main.cpp)
-endif(WITH_TESTS)
+endif()
 
 
 # If a CMake prefix was not provided, assume dependencies are in "./deps"
@@ -296,7 +307,7 @@ endif()
 # My libraries
 add_subdirectory(snail)
 
-if(WITH_TESTS)
+if((WITH_TESTS STREQUAL "TEST") OR (WITH_TESTS STREQUAL "BENCH"))
   target_link_libraries(${PROJECT_NAME} snail_headless)
 else(WITH_TESTS)
   target_link_libraries(${PROJECT_NAME} snail)
@@ -325,9 +336,9 @@ INSTALL(CODE "
     fixup_bundle(\"${APPS}\" \"\" \"${DIRS}\")
     " COMPONENT Runtime)
 
-if(WITH_TESTS)
+if(WITH_TESTS STREQUAL "TEST")
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
                      COMMAND ${CMAKE_COMMAND} -E copy_directory
                      "${CMAKE_CURRENT_SOURCE_DIR}/tests/data"
                      "$<TARGET_FILE_DIR:${PROJECT_NAME}>/tests/data")
-endif(WITH_TESTS)
+endif()
