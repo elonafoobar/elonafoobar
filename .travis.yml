@@ -70,6 +70,7 @@ script:
   - unzip -qq elona122.zip
   - rm elona122.zip
   - cd ..
+  - make clean
   - make tests VERBOSE=1
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ccache --show-stats; fi
   - bin/ElonaFoobar
