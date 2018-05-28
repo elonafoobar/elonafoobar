@@ -1095,7 +1095,7 @@ int chara_create_internal()
         cdata[rc].image = 280;
     }
     cdata[rc].quality = fixlv;
-    cdata[rc].idx = rc;
+    cdata[rc].index = rc;
     initialize_character();
     rtval = rc;
     return 1;

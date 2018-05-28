@@ -450,8 +450,8 @@ void fmode_7_8(bool read, const fs::path& dir)
             if (fs::exists(filepath))
             {
                 load(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
-                for (int idx = 0; idx < ELONA_MAX_PARTY_CHARACTERS; idx++) {
-                    cdata[idx].idx = idx;
+                for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++) {
+                    cdata[index].index = index;
                 }
             }
         }
@@ -514,9 +514,9 @@ void fmode_7_8(bool read, const fs::path& dir)
             if (fs::exists(filepath))
             {
                 load(filepath, inv, 0, 1320);
-                for(int idx = 0; idx < 1320; idx++)
+                for(int index = 0; index < 1320; index++)
                 {
-                    inv[idx].idx = idx;
+                    inv[index].index = index;
                 }
             }
         }
@@ -768,8 +768,8 @@ void fmode_14_15(bool read)
             if (fs::exists(filepath))
             {
                 load(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
-                for (int idx = 0; idx < ELONA_MAX_PARTY_CHARACTERS; idx++) {
-                    cdata[idx].idx = idx;
+                for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++) {
+                    cdata[index].index = index;
                 }
             }
         }
@@ -835,9 +835,9 @@ void fmode_14_15(bool read)
             if (fs::exists(filepath))
             {
                 load(filepath, inv, 0, 1320);
-                for(int idx = 0; idx < 1320; idx++)
+                for(int index = 0; index < 1320; index++)
                 {
-                    inv[idx].idx = idx;
+                    inv[index].index = index;
                 }
             }
         }
@@ -956,8 +956,8 @@ void fmode_1_2(bool read)
                 cdata,
                 ELONA_MAX_PARTY_CHARACTERS,
                 ELONA_MAX_CHARACTERS);
-            for (int idx = ELONA_MAX_PARTY_CHARACTERS; idx < ELONA_MAX_CHARACTERS; idx++) {
-                cdata[idx].idx = idx;
+            for (int index = ELONA_MAX_PARTY_CHARACTERS; index < ELONA_MAX_CHARACTERS; index++) {
+                cdata[index].index = index;
             }
         }
         else
@@ -1111,9 +1111,9 @@ void fmode_3_4(bool read, const fs::path& filename)
     if (read)
     {
         load(filepath, inv, 1320, 5480);
-        for(int idx = 1320; idx < 5480; idx++)
+        for(int index = 1320; index < 5480; index++)
         {
-            inv[idx].idx = idx;
+            inv[index].index = index;
         }
     }
     else
@@ -1155,8 +1155,8 @@ void fmode_17()
                 cdata,
                 ELONA_MAX_PARTY_CHARACTERS,
                 ELONA_MAX_CHARACTERS);
-            for (int idx = ELONA_MAX_PARTY_CHARACTERS; idx < ELONA_MAX_CHARACTERS; idx++) {
-                cdata[idx].idx = idx;
+            for (int index = ELONA_MAX_PARTY_CHARACTERS; index < ELONA_MAX_CHARACTERS; index++) {
+                cdata[index].index = index;
             }
         }
         else

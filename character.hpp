@@ -197,7 +197,13 @@ struct character
 
     // NOTE: Don't add new fields unless you add them to serialization, which
     // will break save compatibility.
-    int idx = -1;
+
+    // Index of this character into the global cdata array.
+    // Used for communicating with legacy code that takes integer index arguments.
+    // New code should pass character& instead.
+    // Not serialized; set on creation and load.
+    int index = -1;
+
     int state = 0;
     position_t position;
     position_t next_position;
