@@ -425,8 +425,8 @@ turn_result_t proc_npc_movement_event(bool retreat)
         {
             if (cdata[cc].enemy_id != tc)
             {
-                cell_swap(cc, tc);
-                if (is_in_fov(cc))
+                const auto did_swap = cell_swap(cc, tc);
+                if (did_swap && is_in_fov(cc))
                 {
                     txt(lang(
                         name(cc) + u8"は"s + name(tc) + u8"を押しのけた。"s,

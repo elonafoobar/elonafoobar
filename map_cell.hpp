@@ -18,6 +18,6 @@ void cell_movechara(int = 0, int = 0, int = 0);
 void cell_refresh(int = 0, int = 0);
 void cell_removechara(int = 0, int = 0);
 void cell_setchara(int = 0, int = 0, int = 0);
-void cell_swap(int = 0, int = 0, int = 0, int = 0);
+bool cell_swap(int = 0, int = 0, int = 0, int = 0);
 
 } // namespace elona
