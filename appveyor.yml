@@ -73,6 +73,7 @@ before_build:
     %NEEDDEPENDS% copy SDL2_image-2.0.3\lib\x64\* %PREFIX%\lib > nul
 
 build_script:
+  - chcp 65001
   - cd %APPVEYOR_BUILD_FOLDER%
   - cd deps
   - appveyor DownloadFile http://ylvania.style.coocan.jp/file/elona122.zip

@@ -55,9 +55,9 @@ pushd SDL2_image-2.0.3
 popd
 
 # Lua
-if [ ! -f "$DOWNLOAD_ROOT/lua-5.3.4" ]; then
-    curl -L https://www.lua.org/ftp/lua-5.3.4.tar.gz | tar xz
-fi
+curl -L https://www.lua.org/ftp/lua-5.3.4.tar.gz | tar xz
 pushd lua-5.3.4
-    sudo make linux install
+    make clean
+    make linux
+    sudo make install
 popd
