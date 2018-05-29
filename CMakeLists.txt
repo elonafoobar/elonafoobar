@@ -168,6 +168,8 @@ elseif(WITH_TESTS STREQUAL "BENCH")
   # Benchmark sources
   set(BENCH_SOURCES
     bench/ai.cpp
+    bench/generate.cpp
+    bench/lua_callbacks.cpp
     bench/magic.cpp
     bench/util.cpp
     ${CORE_SOURCES}
@@ -312,6 +314,10 @@ if(MSVC)
     set(CMAKE_CXX_FLAGS_DEBUG "/MP8 /MTd /ZI /Od")
 else()
     set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DDEBUG")
+endif()
+
+if(WITH_TESTS STREQUAL "BENCH")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
 endif()
 
 # Force GCC to output warnings about undefined symbols

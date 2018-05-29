@@ -68,8 +68,8 @@ void pre_init()
     initialize_config(fs::path("tests/data/config.json"));
     config::instance().is_test = true;
 
-    lua::lua.scan_all_mods(filesystem::dir::mods());
-    lua::lua.load_core_mod(filesystem::dir::mods());
+    //lua::lua.scan_all_mods(filesystem::dir::mods());
+    //lua::lua.load_core_mod(filesystem::dir::mods());
 
     configure_lua();
 }
