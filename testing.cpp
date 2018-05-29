@@ -12,7 +12,7 @@ namespace testing
 {
 
 const fs::path save_dir("tests/data/save");
-const std::string player_id = "sav_ruin";
+const std::string player_id = "sav_testbed";
 
 void load_previous_savefile()
 {

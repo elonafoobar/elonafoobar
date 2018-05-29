@@ -58,6 +58,7 @@ public:
     int skiprandevents;
     int sound;
     int startrun;
+    std::string startup_script;
     int story;
     int wait1;
     int walkwait;

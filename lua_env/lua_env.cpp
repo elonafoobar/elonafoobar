@@ -260,17 +260,6 @@ void lua_env::run_startup_script(const std::string& name)
                               filesystem::dir::data() / "script"s / name),
         script_mod->env);
 
-    // The startup script is special since everything is deferred until the map loads.
-    // So, re-run the map/character initialization things to pick up new init hooks loaded by the startup script.
-    // The following shouldn't cause any significant changes in behavior.
-    this->get_event_manager().run_callbacks<event_kind_t::game_initialized>();
-    this->get_event_manager().run_callbacks<event_kind_t::map_initialized>();
-    for (int chara_id = 0; chara_id < ELONA_MAX_CHARACTERS; chara_id++) {
-        if(elona::cdata[chara_id].state != 0)
-        {
-            on_chara_creation(elona::cdata[chara_id]);
-        }
-    }
     ELONA_LOG("Loaded startup script " << name);
 
     this->mods.emplace("script", std::move(script_mod));

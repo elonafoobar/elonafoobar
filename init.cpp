@@ -185,6 +185,13 @@ void start_elona()
         main_loop();
         return;
     }
+    else if (config::instance().startup_script != ""s)
+    {
+        mode = 6;
+        initialize_game();
+        main_loop();
+        return;
+    }
     else if (defload != ""s)
     {
         if (!fs::exists(filesystem::dir::save(defload) / u8"header.txt"))
@@ -1166,6 +1173,19 @@ void initialize_game()
         event_add(24);
         sceneid = 0;
         do_play_scene();
+    }
+    if (mode == 6)
+    {
+        playerid = u8"sav_testbed"s;
+        initialize_debug_globals();
+        initialize_testbed();
+        if(config::instance().startup_script != ""s)
+        {
+            lua::lua.run_startup_script(config::instance().startup_script);
+        }
+        break;
+
+        mode = 2;
     }
     if (mode == 2)
     {
