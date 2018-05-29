@@ -84,6 +84,12 @@ build_script:
   - cmake --build .
   - cd %CONFIGURATION%
   - ElonaFoobar.exe
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - rd /q /s bin
+  - mkdir bin
+  - cd bin
+  - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DWITH_TESTS=OFF %CMAKE_ARGS% ..
+  - cmake --build .
 
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
@@ -98,10 +104,8 @@ after_build:
   - rd /q /s bin\ElonaFoobar\original
   - rd /q /s bin\ElonaFoobar\sound
   - rd /q /s bin\ElonaFoobar\user
-  - rd /q /s bin\ElonaFoobar\tests
-  - rd /q /s bin\ElonaFoobar\tmp
   - cd bin
   - 7z a ElonaFoobar-windows.zip ElonaFoobar
 
 artifacts:
-  - path: ElonaFoobar-windows.zip
+  - path: bin\ElonaFoobar-windows.zip
