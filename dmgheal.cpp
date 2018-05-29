@@ -1414,6 +1414,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             }
         }
         end_dmghp();
+
+        chara_killed(cdata[target]); // Run Lua callbacks.
+
         return 0;
     }
     end_dmghp();

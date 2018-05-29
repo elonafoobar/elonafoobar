@@ -7,6 +7,7 @@
 #include "draw.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "lua_env/lua_env.hpp"
 #include "macro.hpp"
 #include "main_menu.hpp"
 #include "menu.hpp"
@@ -855,6 +856,7 @@ main_menu_result_t character_making_final_phase()
     await(250);
     mode = 5;
     cdata[0].index = 0;
+    lua::lua.on_chara_creation(cdata[0]);
     return main_menu_result_t::initialize_game;
 }
 

@@ -976,10 +976,12 @@ void chara_place()
                 name(rc) + u8"は何かに潰されて息絶えた。"s,
                 name(rc) + u8" is killed."s));
             cdata[rc].state = 0;
+            chara_killed(cdata[rc]);
         }
         if (cdata[rc].character_role != 0)
         {
             cdata[rc].state = 2;
+            chara_killed(cdata[rc]);
         }
         if (cdata[rc].character_role == 13)
         {
@@ -987,6 +989,7 @@ void chara_place()
             cdata[rc].time_to_revive = gdata_hour + gdata_day * 24
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24
                 + rnd(12);
+            chara_killed(cdata[rc]);
         }
     }
     return;
@@ -1097,6 +1100,9 @@ int chara_create_internal()
     cdata[rc].quality = fixlv;
     cdata[rc].index = rc;
     initialize_character();
+
+    lua::lua.on_chara_creation(cdata[rc]);
+
     rtval = rc;
     return 1;
 }
@@ -1924,19 +1930,57 @@ int chara_copy(int prm_848)
     return 1;
 }
 
-
-void chara_delete(int prm_783)
+void chara_killed(character& chara)
 {
-    for (const auto& cnt : items(prm_783))
+    // Regardless of whether or not this character will revive, run
+    // the character killed callback.
+    auto handle = lua::lua.get_handle_manager().get_chara_handle(chara);
+    lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::character_killed>(handle);
+
+    if(chara.state == 0)
+    {
+        // This character slot is invalid, and can be overwritten by
+        // newly created characters at any time. Run any Lua callbacks
+        // to clean up character things.
+        lua::lua.on_chara_removal(chara);
+    }
+    else if(chara.state == 2 || chara.state == 4)
+    {
+        // This character revives.
+    }
+    else
+    {
+        assert(0);
+    }
+}
+
+void chara_delete(int cc)
+{
+    int state = cdata[cc].state;
+    if(cc != -1 && cdata[cc].idx != -1 && state != 0)
+    {
+        // This character slot was previously occupied and is
+        // currently valid. If the state were 0, then chara_killed
+        // would have been called to run the chara removal handler for
+        // the Lua state. We'll have to run it now.
+        lua::lua.on_chara_removal(cdata[cc]);
+    }
+    else
+    {
+        // This character slot is invalid, so the removal callback
+        // must have been ran already.
+    }
+
+    for (const auto& cnt : items(cc))
     {
         inv[cnt].number = 0;
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        cdatan(cnt, prm_783) = "";
+        cdatan(cnt, cc) = "";
     }
-    sdata.clear(prm_783);
-    cdata(prm_783).clear();
+    sdata.clear(cc);
+    cdata(cc).clear();
     return;
 }
 
