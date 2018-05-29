@@ -42,11 +42,11 @@ $(PROGRAM): FORCE
 
 
 $(TEST_RUNNER):
-	cd $(BIN_DIR) & cmake .. $(CMAKE_ARGS) -DWITH_TESTS=TEST  & cmake --build .
+	cd $(BIN_DIR) & cmake .. $(CMAKE_ARGS) -DWITH_TESTS=TEST & cmake --build .
 
 
 $(BENCH_RUNNER):
-	cd $(BIN_DIR) & cmake .. $(CMAKE_ARGS) -DWITH_TESTS=BENCH  & cmake --build .
+	cd $(BIN_DIR) & cmake .. $(CMAKE_ARGS) -DWITH_TESTS=BENCH --config Release & cmake --build .
 
 
 clean: FORCE

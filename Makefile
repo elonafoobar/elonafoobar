@@ -37,7 +37,7 @@ $(TEST_RUNNER):
 
 
 $(BENCH_RUNNER):
-	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DWITH_TESTS=BENCH; make
+	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DWITH_TESTS=BENCH --config Release; make
 
 
 clean: FORCE
