@@ -611,6 +611,9 @@ void keyrelease()
 
 void press(bool only_enter_of_cancel)
 {
+    if (config::instance().is_test)
+        return;
+
     while (1)
     {
         await(20);
@@ -816,6 +819,11 @@ void txt_conv()
 {
     if (msgtemp(0).empty())
         return;
+
+    if (config::instance().is_test) {
+        std::cout << msgtemp(0) << std::endl;
+        return;
+    }
 
     if (tcopy)
     {

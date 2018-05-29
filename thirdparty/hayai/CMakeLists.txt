@@ -26,8 +26,11 @@ set_target_properties(hayai_main PROPERTIES
 )
 
 if(MSVC)
+    add_definitions("-D_UNICODE")
+    set(CMAKE_CXX_FLAGS "/W4 /source-charset:utf-8 /MT /EHsc")
     set(CMAKE_CXX_FLAGS_DEBUG "/MP8 /MTd /ZI /Od")
 else()
+    set(CMAKE_CXX_FLAGS "-Wall -Wextra")
     set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DDEBUG")
 endif()
 

@@ -14,7 +14,6 @@ int timeGetTime()
 
 void mes(const std::string& message)
 {
-    std::cout << message << std::endl;
 }
 
 void mesbox(std::string&)
