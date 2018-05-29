@@ -33,7 +33,7 @@ $(PROGRAM): FORCE
 
 
 $(TEST_RUNNER):
-	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DWITH_TESTS=TEST; make
+	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DWITH_TESTS=TESTS; make
 
 
 $(BENCH_RUNNER):
