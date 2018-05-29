@@ -10,6 +10,7 @@ void post_run();
 
 /***
  * Sets world state to a clean base for testing:
+ * - Resets Lua mod state and reloads the core mod.
  * - Wipes and reinitializes everything.
  * - Runs game initialization.
  */

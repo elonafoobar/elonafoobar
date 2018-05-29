@@ -3,6 +3,7 @@
 #include "foobar_save.hpp"
 #include "init.hpp"
 #include "log.hpp"
+#include "lua_env/lua_env.hpp"
 #include "variables.hpp"
 #include "version.hpp"
 
@@ -46,11 +47,19 @@ void start_in_debug_map()
     initialize_map();
 }
 
+void configure_lua()
+{
+    sol::table Testing = lua::lua.get_state()->create_named_table("Testing");
+    Testing.set_function("start_in_debug_map", start_in_debug_map);
+    Testing.set_function("reset_state", reset_state);
+}
+
 void pre_init()
 {
     log::initialize();
 
     initialize_cat_db();
+    configure_lua();
 
     foobar_save.initialize();
 
@@ -58,6 +67,11 @@ void pre_init()
 
     initialize_config(fs::path("tests/data/config.json"));
     config::instance().is_test = true;
+
+    lua::lua.scan_all_mods(filesystem::dir::mods());
+    lua::lua.load_core_mod(filesystem::dir::mods());
+
+    configure_lua();
 }
 
 void post_run()
@@ -68,6 +82,10 @@ void post_run()
 
 void reset_state()
 {
+    lua::lua.clear(); // Unload character/item data while they're still available.
+    lua::lua.scan_all_mods(filesystem::dir::mods());
+    lua::lua.load_core_mod(filesystem::dir::mods());
+    configure_lua();
     initialize_elona();
 }
 
