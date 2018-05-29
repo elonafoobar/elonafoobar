@@ -38,9 +38,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 # Options
-option(WITH_TESTS "Build test executable" "NONE")
+option(WITH_TESTS "Build test executable (TESTS or BENCH)" "NONE")
 
-if((WITH_TESTS STREQUAL "TEST") OR (WITH_TESTS STREQUAL "BENCH"))
+if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
   SET(SNAIL_HEADLESS ON CACHE BOOL "Snail headless")
   add_definitions(-DSNAIL_RENDERER_HEADLESS)
 else()
@@ -138,7 +138,7 @@ set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
 
 # Executable
-if(WITH_TESTS STREQUAL "TEST")
+if(WITH_TESTS STREQUAL "TESTS")
   set (CATCH_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/catch2})
   add_library(Catch INTERFACE)
   target_include_directories(Catch INTERFACE ${CATCH_INCLUDE_DIR})
@@ -309,11 +309,11 @@ endif()
 # My libraries
 add_subdirectory(snail)
 
-if((WITH_TESTS STREQUAL "TEST") OR (WITH_TESTS STREQUAL "BENCH"))
+if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
   target_link_libraries(${PROJECT_NAME} snail_headless)
-else(WITH_TESTS)
+else()
   target_link_libraries(${PROJECT_NAME} snail)
-endif(WITH_TESTS)
+endif()
 
 
 INSTALL(TARGETS ElonaFoobar
@@ -338,7 +338,7 @@ INSTALL(CODE "
     fixup_bundle(\"${APPS}\" \"\" \"${DIRS}\")
     " COMPONENT Runtime)
 
-if((WITH_TESTS STREQUAL "TEST") OR (WITH_TESTS STREQUAL "BENCH"))
+if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
                      COMMAND ${CMAKE_COMMAND} -E copy_directory
                      "${CMAKE_CURRENT_SOURCE_DIR}/tests/data"
