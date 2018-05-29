@@ -158,6 +158,8 @@ elseif(WITH_TESTS STREQUAL "BENCH")
   # Benchmark sources
   set(BENCH_SOURCES
     bench/ai.cpp
+    bench/magic.cpp
+    bench/util.cpp
     ${CORE_SOURCES}
     )
 

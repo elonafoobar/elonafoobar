@@ -820,11 +820,6 @@ void txt_conv()
     if (msgtemp(0).empty())
         return;
 
-    if (config::instance().is_test) {
-        std::cout << msgtemp(0) << std::endl;
-        return;
-    }
-
     if (tcopy)
     {
         tcopy = 0;
