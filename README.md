@@ -90,7 +90,12 @@ contents in this repository. Note that images, sounds and fonts are not included
 
 * picojson: see thirdparty/picojson/LICENSE.
 * Catch2: see thirdparty/catch2/LICENSE.
+* sol2: see thirdparty/sol2/LICENSE.
 * cmake/FindXXX.cmake: see cmake/LICENSE.
+
+## Lua libraries
+
+* [inspect.lua](https://github.com/kikito/inspect.lua) (MIT)
 
 
 

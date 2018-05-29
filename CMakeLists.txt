@@ -131,6 +131,11 @@ set(CORE_SOURCES
     ui.cpp
     variables.cpp
     wish.cpp
+    lua_env/event_manager.cpp
+    lua_env/handle_manager.cpp
+    lua_env/lua_env.cpp
+    lua_env/lua_api.cpp
+    lua_env/lua_store.cpp
     ${PROJECT_BINARY_DIR}/version.cpp
 )
 

@@ -47,5 +47,17 @@ clean: FORCE
 format: FORCE
 	$(FIND) . \( -name "*.cpp" -or -name "*.hpp" \) -print0 | $(XARGS) -0 $(FORMAT) -i
 
+ldoc:
+	mkdir -p $(BIN_DIR)/doc
+	cp doc/README.md $(BIN_DIR)/doc/readme.md
+	cp doc/ldoc.css $(BIN_DIR)/doc/ldoc.css
+	cp -r doc/examples $(BIN_DIR)/doc/examples
+	cp doc/uikit.min.css $(BIN_DIR)/doc/uikit.min.css
+	cp doc/red_putit.png $(BIN_DIR)/doc/red_putit.png
+	cd $(BIN_DIR) && ldoc -c ../doc/config.ld -l ../doc -s ../doc ../doc/api/
+
+luacheck:
+	luacheck --version
+	luacheck mods/
 
 rebuild: clean build
