@@ -80,7 +80,7 @@ build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
   - mkdir bin
   - cd bin
-  - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DWITH_TESTS=ON %CMAKE_ARGS% ..
+  - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DWITH_TESTS=TEST %CMAKE_ARGS% ..
   - cmake --build .
   - cd %CONFIGURATION%
   - ElonaFoobar.exe
