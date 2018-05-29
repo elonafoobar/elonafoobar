@@ -245,6 +245,7 @@ ELONA_EXTERN(elona_vector1<int> tcol_at_txtfunc);
 ELONA_EXTERN(elona_vector1<int> tile);
 ELONA_EXTERN(elona_vector1<int> tile_default);
 ELONA_EXTERN(elona_vector1<int> tile_fog);
+ELONA_EXTERN(elona_vector1<int> tile_room);
 ELONA_EXTERN(elona_vector1<int> tile_tunnel);
 ELONA_EXTERN(elona_vector1<int> tile_wall);
 ELONA_EXTERN(elona_vector1<int> trait);

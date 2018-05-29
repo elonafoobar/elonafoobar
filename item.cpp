@@ -10,6 +10,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item_db.hpp"
+#include "lua_env/lua_env.hpp"
 #include "main.hpp"
 #include "map.hpp"
 #include "mef.hpp"
@@ -486,7 +487,7 @@ void item_exchange(int a, int b)
 // set to 0, which is in many more places.
 void item_delete(int ci)
 {
-    if(inv[ci].idx != -1)
+    if(inv[ci].index != -1)
     {
         // This item slot was previously occupied, but the item is now
         // invalid.

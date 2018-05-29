@@ -13,6 +13,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "lua_env/lua_env.hpp"
 #include "map_cell.hpp"
 #include "quest.hpp"
 #include "range.hpp"
@@ -1599,6 +1600,12 @@ void chara_refresh(int cc)
     refresh_burden_state();
     refreshspeed(cc);
     cdata[cc].needs_refreshing_status() = false;
+
+    auto handle = lua::lua.get_handle_manager().get_chara_handle(cdata[cc]);
+    if(handle != sol::lua_nil)
+    {
+        lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::character_refreshed>(handle);
+    }
 }
 
 int relationbetween(int c1, int c2)
@@ -1957,7 +1964,7 @@ void chara_killed(character& chara)
 void chara_delete(int cc)
 {
     int state = cdata[cc].state;
-    if(cc != -1 && cdata[cc].idx != -1 && state != 0)
+    if(cc != -1 && cdata[cc].index != -1 && state != 0)
     {
         // This character slot was previously occupied and is
         // currently valid. If the state were 0, then chara_killed

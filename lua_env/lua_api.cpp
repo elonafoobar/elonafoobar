@@ -108,12 +108,12 @@ bool Chara::is_alive(const lua_character_handle handle)
 
 bool Chara::is_player(const lua_character_handle handle)
 {
-    return conv_chara(handle).idx == 0;
+    return conv_chara(handle).index == 0;
 }
 
 bool Chara::is_ally(const lua_character_handle handle)
 {
-    return !Chara::is_player(handle) && conv_chara(handle).idx <= 16;
+    return !Chara::is_player(handle) && conv_chara(handle).index <= 16;
 }
 
 bool Chara::flag(const lua_character_handle handle, int flag)
@@ -239,8 +239,8 @@ void Magic::cast(lua_character_handle caster,
 
     try
     {
-        elona::cc = conv_chara(caster).idx;
-        elona::tc = conv_chara(target).idx;
+        elona::cc = conv_chara(caster).index;
+        elona::tc = conv_chara(target).index;
         elona::efid = effect_id;
         elona::efp = effect_power;
         elona::magic();
@@ -428,7 +428,7 @@ bool FOV::los_xy(int fx, int fy, int tx, int ty)
 
 bool FOV::you_see(const lua_character_handle handle)
 {
-    return elona::is_in_fov(conv_chara(handle).idx);
+    return elona::is_in_fov(conv_chara(handle).index);
 }
 
 bool FOV::you_see_pos(const position_t& pos)
@@ -523,7 +523,7 @@ sol::optional<lua_item_handle> Item::create_xy(int x, int y, int id, int number)
 
 bool Item::has_enchantment(const lua_item_handle handle, int id)
 {
-    return elona::encfindspec(conv_item(handle).idx, id);
+    return elona::encfindspec(conv_item(handle).index, id);
 }
 
 void Item::bind(sol::table& Elona)
@@ -583,7 +583,7 @@ void Debug::dump_characters()
     for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         if(elona::cdata[cnt].state != 0)
-            ELONA_LOG(elona::cdata[cnt].idx << ") Name: " << elona::name(cnt) <<
+            ELONA_LOG(elona::cdata[cnt].index << ") Name: " << elona::name(cnt) <<
                       ", Pos: " << elona::cdata[cnt].position);
     }
 }
@@ -594,7 +594,7 @@ void Debug::dump_items()
     for (const auto& cnt : items(-1))
     {
         if(elona::inv[cnt].number != 0)
-            ELONA_LOG(elona::inv[cnt].idx <<") Name: " << elona::itemname(cnt) <<
+            ELONA_LOG(elona::inv[cnt].index <<") Name: " << elona::itemname(cnt) <<
                       ", Pos: "   << elona::inv[cnt].position <<
                       ", Curse: " << static_cast<int>(elona::inv[cnt].curse_state) <<
                       ", Ident: " << static_cast<int>(elona::inv[cnt].identification_state) <<
@@ -630,23 +630,23 @@ void set_flag(character&, int, bool);
 void LuaCharacter::damage_hp(character& self, int amount)
 {
     assert(amount > 0); // TODO does this need verification?
-    elona::dmghp(self.idx, amount, -11); // TODO defaults to unseen hand
+    elona::dmghp(self.index, amount, -11); // TODO defaults to unseen hand
 }
 
 void LuaCharacter::apply_ailment(character& self, status_ailment_t ailment, int power)
 {
     assert(power > 0); // TODO does this need verification?
-    elona::dmgcon(self.idx, ailment, power);
+    elona::dmgcon(self.index, ailment, power);
 }
 
 bool LuaCharacter::recruit_as_ally(character& self)
 {
     // can't use Chara methods because they take a handle...
-    if(self.state == 0 || (self.idx != 0 && self.idx <= 16) || self.idx == 0)
+    if(self.state == 0 || (self.index != 0 && self.index <= 16) || self.index == 0)
     {
         return false;
     }
-    elona::rc = self.idx;
+    elona::rc = self.index;
     return new_ally_joins() == 1;
 }
 
@@ -683,13 +683,13 @@ void init_usertypes(lua_env& lua)
                                         "max_sp", sol::readonly(&character::max_sp),
                                         "shop_rank", &character::shop_rank,
                                         "character_role", &character::character_role,
-                                        "idx", sol::readonly(&character::idx),
+                                        "index", sol::readonly(&character::index),
                                         "position", &character::position
         );
     lua.get_state()->new_usertype<item>( "LuaItem",
                                      "curse_state", &item::curse_state,
                                      "identify_state", &item::identification_state,
-                                     "idx", sol::readonly(&item::idx),
+                                     "index", sol::readonly(&item::index),
                                      "position", &item::position,
                                      "number", &item::number
         );

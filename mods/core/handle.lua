@@ -105,7 +105,7 @@ function Handle.create_chara_handle(cpp_ref)
     }
 
     setmetatable(handle, chara_mt)
-    Handle.CharaHandles[cpp_ref.idx] = handle
+    Handle.CharaHandles[cpp_ref.index] = handle
     return handle
 end
 
@@ -116,45 +116,45 @@ function Handle.create_item_handle(cpp_ref)
     }
 
     setmetatable(handle, item_mt)
-    Handle.ItemHandles[cpp_ref.idx] = handle
+    Handle.ItemHandles[cpp_ref.index] = handle
     return handle
 end
 
 
 function Handle.remove_chara_handle(cpp_ref)
-    local handle = Handle.CharaHandles[cpp_ref.idx];
+    local handle = Handle.CharaHandles[cpp_ref.index];
     handle.cpp_ref = nil
     handle.is_valid = false
-    Handle.CharaHandles[cpp_ref.idx] = nil
+    Handle.CharaHandles[cpp_ref.index] = nil
 end
 
 function Handle.remove_item_handle(cpp_ref)
-    local handle = Handle.ItemHandles[cpp_ref.idx];
+    local handle = Handle.ItemHandles[cpp_ref.index];
 
     handle.cpp_ref = nil
     handle.is_valid = false
-    Handle.ItemHandles[cpp_ref.idx] = nil
+    Handle.ItemHandles[cpp_ref.index] = nil
 end
 
 
 function Handle.assert_chara_valid(cpp_ref)
-   local handle = Handle.CharaHandles[cpp_ref.idx];
+   local handle = Handle.CharaHandles[cpp_ref.index];
    assert(handle.is_valid)
 end
 
 function Handle.assert_item_valid(cpp_ref)
-   local handle = Handle.ItemHandles[cpp_ref.idx];
+   local handle = Handle.ItemHandles[cpp_ref.index];
    assert(handle.is_valid)
 end
 
 
 function Handle.assert_chara_invalid(cpp_ref)
-   local handle = Handle.CharaHandles[cpp_ref.idx];
+   local handle = Handle.CharaHandles[cpp_ref.index];
    assert(handle == nil or not handle.is_valid)
 end
 
 function Handle.assert_item_invalid(cpp_ref)
-   local handle = Handle.ItemHandles[cpp_ref.idx];
+   local handle = Handle.ItemHandles[cpp_ref.index];
    assert(handle == nil or not handle.is_valid)
 end
 

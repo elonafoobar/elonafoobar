@@ -1,3 +1,4 @@
+#include "init.hpp"
 #include "ability.hpp"
 #include "adventurer.hpp"
 #include "audio.hpp"
@@ -19,13 +20,13 @@
 #include "fish.hpp"
 #include "foobar_save.hpp"
 #include "i18n.hpp"
-#include "init.hpp"
 #include "input.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "item_material.hpp"
 #include "itemgen.hpp"
 #include "log.hpp"
+#include "lua_env/lua_env.hpp"
 #include "macro.hpp"
 #include "main.hpp"
 #include "main_menu.hpp"
@@ -49,6 +50,8 @@ namespace
 
 void main_loop()
 {
+    lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::game_initialized>();
+
     while (true)
     {
         bool finished = turn_wrapper();
@@ -805,6 +808,10 @@ int run()
 
     initialize_config(filesystem::dir::exe() / u8"config.json");
     initialize_elona();
+
+    lua::lua.scan_all_mods(filesystem::dir::mods());
+    lua::lua.load_core_mod(filesystem::dir::mods());
+
     start_elona();
 
     return 0;
@@ -1183,8 +1190,6 @@ void initialize_game()
         {
             lua::lua.run_startup_script(config::instance().startup_script);
         }
-        break;
-
         mode = 2;
     }
     if (mode == 2)
