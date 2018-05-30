@@ -452,7 +452,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
             }
         }
     }
-    if (cc > 16)
+    if (cc >= 16)
     {
         if (cdata[cc].quality > 3)
         {
@@ -737,7 +737,7 @@ turn_result_t ai_proc_misc_map_events()
         }
     }
 label_2692_internal:
-    if (cc > 16)
+    if (cc >= 16)
     {
         if (mdata(6) == 3 || mdata(6) == 2)
         {

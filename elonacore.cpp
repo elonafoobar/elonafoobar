@@ -2541,7 +2541,7 @@ void check_kill(int prm_836, int prm_837)
     {
         if (prm_836 == 0 || cdata[prm_836].relationship >= 10)
         {
-            if (prm_837 > 16)
+            if (prm_837 >= 16)
             {
                 ++gdata_kill_count;
                 if (cdata[prm_837].id == gdata_fighters_guild_target)
@@ -12641,7 +12641,7 @@ label_21451_internal:
                 }
                 if (feat(3) != 0)
                 {
-                    if (cc > 16)
+                    if (cc >= 16)
                     {
                         return;
                     }

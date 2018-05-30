@@ -279,7 +279,7 @@ turn_result_t npc_turn()
     {
         if (cc != gdata_fire_giant)
         {
-            if (cc > 16)
+            if (cc >= 16)
             {
                 if (gdata_released_fire_giant != 0)
                 {
@@ -1476,7 +1476,7 @@ turn_result_t pc_turn(bool advance_time)
             cell_check(cdata[cc].position.x + 1, cdata[cc].position.y);
             if (cellaccess != gdata(33))
             {
-                if (cellchara > 16 || cellchara == -1)
+                if (cellchara >= 16 || cellchara == -1)
                 {
                     gdata(30) = 0;
                 }
@@ -1484,7 +1484,7 @@ turn_result_t pc_turn(bool advance_time)
             cell_check(cdata[cc].position.x - 1, cdata[cc].position.y);
             if (cellaccess != gdata(31))
             {
-                if (cellchara > 16 || cellchara == -1)
+                if (cellchara >= 16 || cellchara == -1)
                 {
                     gdata(30) = 0;
                 }
@@ -1492,7 +1492,7 @@ turn_result_t pc_turn(bool advance_time)
             cell_check(cdata[cc].position.x, cdata[cc].position.y + 1);
             if (cellaccess != gdata(34))
             {
-                if (cellchara > 16 || cellchara == -1)
+                if (cellchara >= 16 || cellchara == -1)
                 {
                     gdata(30) = 0;
                 }
@@ -1500,7 +1500,7 @@ turn_result_t pc_turn(bool advance_time)
             cell_check(cdata[cc].position.x, cdata[cc].position.y - 1);
             if (cellaccess != gdata(32))
             {
-                if (cellchara > 16 || cellchara == -1)
+                if (cellchara >= 16 || cellchara == -1)
                 {
                     gdata(30) = 0;
                 }
@@ -1508,7 +1508,7 @@ turn_result_t pc_turn(bool advance_time)
             cell_check(cdata[0].next_position.x, cdata[0].next_position.y);
             if (cellaccess == 0)
             {
-                if (cellchara > 16 || cellchara == -1)
+                if (cellchara >= 16 || cellchara == -1)
                 {
                     gdata(30) = 0;
                 }
