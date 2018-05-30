@@ -1,0 +1,35 @@
+--- Functions for working with characters.
+--  @usage local Chara = Elona.require("Chara")
+module "Chara"
+
+--- Checks if a character is alive.
+-- @tparam LuaCharacter character (const) LuaCharacter a character
+-- @treturn bool true if the character is alive
+function is_alive(character) end
+
+--- Checks if a character is the player (has index 0).
+-- @tparam LuaCharacter character (const) a character
+-- @treturn bool true if the character is the player
+function is_player(character) end
+
+--- Checks if a character is a member of the player's party (has index < 16 and != 0).
+-- @tparam LuaCharacter character (const) a character
+-- @treturn bool true if the character is in the player's party
+function is_ally(character) end
+
+--- Returns a reference to the player. They might not be alive.
+-- @treturn LuaCharacter (mut) a reference to the player
+function player() end
+
+--- Attempts to create a character at a given position.
+--- Returns the character if creation succeeded, nil otherwise.
+-- @tparam LuaPosition position (const) position to create the character at
+-- @tparam num id the character prototype id
+-- @treturn[1] LuaCharacter the created character
+-- @treturn[2] nil
+function create(position, id) end
+
+--- Gets a flag on a character.
+-- @tparam LuaCharacter chara (const) the character to get the flag from
+-- @tparam Enums.CharaFlag flag the flag to get
+function flag(chara, flag) end

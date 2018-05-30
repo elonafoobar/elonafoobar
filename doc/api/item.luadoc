@@ -1,0 +1,19 @@
+--- Functions for working with items.
+--  @usage local Item = Elona.require("Item")
+module "Item"
+
+--- Attempts to create an item of the given quantity at a position.
+--- Returns the item stack if it was created, nil otherwise.
+-- @function create
+-- @tparam LuaPosition position (const) position to create the item at
+-- @tparam num id the item prototype id
+-- @tparam num number the number of items to create
+-- @treturn[1] LuaItem the created item stack
+-- @treturn[2] nil
+function create(position, id, number) end
+
+--- Checks if an item has an enchantment.
+-- @tparam LuaItem item (const) an item
+-- @tparam num id the id of the enchantment
+-- @treturn bool true if the item has the enchantment
+function has_enchantment(item, id) end

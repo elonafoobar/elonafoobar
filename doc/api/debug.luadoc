@@ -1,0 +1,13 @@
+--- Functions for debugging scripts. These should be left out when making releases of mods.
+--  @usage local Debug = Elona.require("Debug")
+module "Debug"
+
+--- Logs a message to log.txt.
+-- @tparam string message the message to log
+function log(message) end
+
+--- Dumps all characters to the log.
+function dump_characters() end
+
+--- Dumps all items to the log.
+function dump_items() end

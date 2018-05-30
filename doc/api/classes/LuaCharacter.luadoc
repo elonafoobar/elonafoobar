@@ -1,0 +1,58 @@
+--- Represents a character.
+-- @classmod LuaCharacter
+
+--- [R] The index of this character in the global characters array.
+-- @tfield num idx
+
+--- [RW] The character's position.
+-- @tfield LuaPosition position
+
+--- [R] The character's current HP.
+-- @tfield num hp
+
+--- [R] The character's maximum HP.
+-- @tfield num max_hp
+
+--- [R] The character's current MP.
+-- @tfield num mp
+
+--- [R] The character's maximum MP.
+-- @tfield num max_mp
+
+--- [R] The character's current stamina.
+-- @tfield num sp
+
+--- [R] The character's maximum stamina.
+-- @tfield num max_sp
+
+--- [RW] The shop rank of this character. Used only if they are a shopkeeper.
+-- @tfield num shop_rank
+
+--- [RW] The role this character takes on.
+-- @tfield num character_role
+
+--- Damages this character.
+-- @tparam num amount the amount to damage
+-- @usage local chara = Chara.player()
+--chara:damage(100)
+function damage_hp(amount) end
+
+--- Applies a status ailment to this character.
+-- @tparam Enums.StatusAilment ailment the kind of status ailment
+-- @tparam num power the power of the status ailment
+-- @usage local chara = Chara.player()
+--chara:apply_ailment(Enums.StatusAilment.Blinded, 100)
+function apply_ailment(ailment, power) end
+
+--- Attempts to recruit this character as an ally of the player.
+--- This will only work if the character isn't already an ally, isn't
+--- the player, is alive and the player has a free party slot.
+-- @treturn bool true if the character was recruited successfully
+function recruit_as_ally() end
+
+--- Sets a flag on a character.
+-- @tparam Enums.CharaFlag flag the flag to set
+-- @tparam bool value the flag's new value
+-- @usage local chara = Chara.player()
+--chara:set_flag(Enums.CharaFlag.IsFloating, true)
+function set_flag(flag, value) end

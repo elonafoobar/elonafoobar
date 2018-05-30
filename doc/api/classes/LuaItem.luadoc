@@ -1,0 +1,17 @@
+--- Represents an item.
+-- @classmod LuaItem
+
+--- [R] The index of this item in the global items array.
+-- @tfield num idx
+
+--- [RW] The item's position.
+-- @tfield LuaPosition position
+
+--- [RW] The number of items represented by this item.
+-- @tfield num number
+
+--- [RW] The curse state of this item.
+-- @tfield Enums.CurseState curse_state
+
+--- [RW] The identification state of this item.
+-- @tfield Enums.IdentifyState identify_state
