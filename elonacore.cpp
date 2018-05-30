@@ -15391,7 +15391,9 @@ int label_2168()
                 name(cc) + u8" try"s + _s(cc)
                     + u8" to cast a spell in confusion."s));
         }
+        const auto tcbk = tc(0);
         int stat = try_to_cast_spell();
+        tc = tcbk;
         if (stat == 0)
         {
             efsource = 0;
