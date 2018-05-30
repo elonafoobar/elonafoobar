@@ -12494,6 +12494,7 @@ int search_material_spot()
     if (feat(1) == 27)
     {
         atxlv += sdata(161, 0) / 3;
+        atxspot = 16;
     }
     if (feat(1) == 26)
     {
