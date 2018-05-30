@@ -14946,7 +14946,7 @@ void spot_mining_or_wall()
                 }
             }
         }
-        if (f == 1 || gdata_tutorial_flag == 2)
+        if (f == 1 || (gdata_tutorial_flag == 2 && gdata_current_map == 7))
         {
             rtval = 0;
             if (rnd(5) == 0)
