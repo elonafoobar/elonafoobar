@@ -12862,7 +12862,8 @@ label_21451_internal:
 
 void continuous_action_perform()
 {
-    int performtips = 0;
+    static int performtips;
+
     if (cdata[cc].continuous_action_id == 0)
     {
         if (is_in_fov(cc))
@@ -12877,7 +12878,10 @@ void continuous_action_perform()
         cdata[cc].continuous_action_item = ci;
         cdata[cc].quality_of_performance = 40;
         cdata[cc].tip_gold = 0;
-        performtips = 0;
+        if (cc == 0)
+        {
+            performtips = 0;
+        }
         return;
     }
     if (cdata[cc].continuous_action_turn > 0)
