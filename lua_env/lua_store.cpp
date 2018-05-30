@@ -77,7 +77,7 @@ void store::set(std::string key, const sol::object &val)
 
 store::object store::serialize_userdata(const sol::object &val)
 {
-    store::object obj = sol::nil;
+    store::object obj = sol::lua_nil;
 
     // Characters and items will be stored in handle tables already.
     // There is no need to serialize them.
