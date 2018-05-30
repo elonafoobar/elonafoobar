@@ -683,13 +683,13 @@ void LuaCharacter::set_flag(character& self, int flag, bool value)
     self._flags[flag] = value ? 1 : 0;
 }
 
-void LuaCharacter::gain_skill_exp(character& self, int skill, int exp)
+void LuaCharacter::gain_skill_exp(character& self, int skill, int amount)
 {
     if(skill < 0 || skill >= 600)
     {
         return;
     }
-    elona::skillmod(skill, self.index, exp);
+    elona::skillmod(skill, self.index, amount);
 }
 
 

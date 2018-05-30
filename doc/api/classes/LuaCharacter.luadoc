@@ -56,3 +56,8 @@ function recruit_as_ally() end
 -- @usage local chara = Chara.player()
 --chara:set_flag(Enums.CharaFlag.IsFloating, true)
 function set_flag(flag, value) end
+
+--- Makes a character gain experience in a skill.
+-- @tparam num id the skill id
+-- @tparam num amount the amount of experience
+function gain_skill_exp(id, amount) end
