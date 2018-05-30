@@ -140,6 +140,11 @@ stds.elona = {
                     "create"
                  },
               },
+              Skill = {
+                 fields = {
+                    "level"
+                 },
+              },
               GUI = {
                  fields = {
                     "txt"

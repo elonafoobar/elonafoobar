@@ -1,5 +1,6 @@
 #include "lua_env.hpp"
 
+#include "../ability.hpp"
 #include "../character.hpp"
 #include "../dmgheal.hpp"
 #include "../enchantment.hpp"
@@ -534,6 +535,28 @@ void Item::bind(sol::table& Elona)
 }
 
 
+namespace Skill {
+int level(int, const lua_character_handle);
+
+void bind(sol::table& Elona);
+}
+
+int Skill::level(int skill, const lua_character_handle handle)
+{
+    if(skill < 0 || skill >= 600)
+    {
+        return -1;
+    }
+    return elona::sdata(skill, conv_chara(handle).index);
+}
+
+void Skill::bind(sol::table& Elona)
+{
+    sol::table Skill = Elona.create_named("Skill");
+    Skill.set_function("level", Skill::level);
+}
+
+
 namespace GUI {
 void txt(const std::string&);
 void txt_color(int);
@@ -625,6 +648,7 @@ void damage_hp(character&, int);
 void apply_ailment(character&, status_ailment_t, int);
 bool recruit_as_ally(character&);
 void set_flag(character&, int, bool);
+void gain_skill_exp(character&, int, int);
 }
 
 void LuaCharacter::damage_hp(character& self, int amount)
@@ -659,6 +683,15 @@ void LuaCharacter::set_flag(character& self, int flag, bool value)
     self._flags[flag] = value ? 1 : 0;
 }
 
+void LuaCharacter::gain_skill_exp(character& self, int skill, int exp)
+{
+    if(skill < 0 || skill >= 600)
+    {
+        return;
+    }
+    elona::skillmod(skill, self.index, exp);
+}
+
 
 /***
  * Set up usertype tables in Sol so we can call methods with them.
@@ -675,6 +708,7 @@ void init_usertypes(lua_env& lua)
                                         "apply_ailment", &LuaCharacter::apply_ailment,
                                         "recruit_as_ally", &LuaCharacter::recruit_as_ally,
                                         "set_flag", &LuaCharacter::set_flag,
+                                        "gain_skill_exp", &LuaCharacter::gain_skill_exp,
                                         "hp", sol::readonly(&character::hp),
                                         "max_hp", sol::readonly(&character::max_hp),
                                         "mp", sol::readonly(&character::mp),
@@ -815,8 +849,9 @@ api_manager::api_manager(lua_env* lua)
     World::bind(core);
     FOV::bind(core);
     Magic::bind(core);
-    Item::bind(core);
     Rand::bind(core);
+    Item::bind(core);
+    Skill::bind(core);
     GUI::bind(core);
     Map::bind(core);
     Debug::bind(core);

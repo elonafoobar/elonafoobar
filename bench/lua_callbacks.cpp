@@ -46,7 +46,8 @@ local Event = Elona.require("Event")
 local GUI = Elona.require("GUI")
 local function my_func(chara)
   for i=1, 100 do
-    GUI.txt(tostring(i))
+    GUI.txt(tostring(chara.hp))
+    chara:damage_hp(0)
   end
 end
 

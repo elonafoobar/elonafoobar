@@ -2,6 +2,7 @@ require "tests/lua/support/minctest"
 
 local Chara = Elona.require("Chara")
 local Enums = Elona.require("Enums")
+local Skill = Elona.require("Skill")
 
 lrun("test LuaCharacter:damage_hp", function()
         Testing.start_in_debug_map()
@@ -37,6 +38,17 @@ lrun("test LuaCharacter:set_flag", function()
         player:set_flag(Enums.CharaFlag.IsFloating, true)
 
         lequal(Chara.flag(player, Enums.CharaFlag.IsFloating), true)
+end)
+
+lrun("test LuaCharacter:gain_skill_exp", function()
+        Testing.start_in_debug_map()
+
+        local putit = Chara.create(0, 0, 3)
+        lequal(Skill.level(10, putit), 4)
+
+        putit:gain_skill_exp(10, 10000)
+
+        lequal(Skill.level(10, putit), 14)
 end)
 
 assert(lresults())

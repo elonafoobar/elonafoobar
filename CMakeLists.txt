@@ -151,6 +151,7 @@ if(WITH_TESTS STREQUAL "TESTS")
   # Test sources
   set(TEST_SOURCES
     tests/tests.cpp
+    tests/lua_api.cpp
     tests/lua_callbacks.cpp
     tests/lua_handles.cpp
     tests/lua_mods.cpp

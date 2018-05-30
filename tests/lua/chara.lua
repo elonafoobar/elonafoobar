@@ -48,7 +48,7 @@ lrun("test Chara.player", function()
         Testing.start_in_debug_map()
 
         local player = Chara.player()
-        lequal(player.idx, 0)
+        lequal(player.index, 0)
 end)
 
 lrun("test Chara.create", function()
