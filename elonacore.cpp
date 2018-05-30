@@ -17065,8 +17065,8 @@ turn_result_t do_bash()
 turn_result_t proc_movement_event()
 {
     auto handle = lua::lua.get_handle_manager().get_chara_handle(cdata[cc]);
-    assert(handle != sol::lua_nil);
-    lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::character_moved>(handle);
+    if(handle != sol::nil)
+        lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::character_moved>(handle);
 
     if (cdata[cc].is_ridden())
     {

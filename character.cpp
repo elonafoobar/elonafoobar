@@ -1951,7 +1951,7 @@ void chara_killed(character& chara)
         // to clean up character things.
         lua::lua.on_chara_removal(chara);
     }
-    else if(chara.state == 2 || chara.state == 4)
+    else if(chara.state == 2 || chara.state == 4 || chara.state == 6)
     {
         // This character revives.
     }

@@ -1101,7 +1101,7 @@ void fmode_5_6(bool read)
     }
 
     {
-        const auto filepath = fmapfile + u8".index"s;
+        const auto filepath = fmapfile + u8".idx"s;
         if (read)
         {
             load_v1(filepath, mdatatmp, 0, 100, true);
