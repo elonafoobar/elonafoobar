@@ -365,3 +365,14 @@ if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
                      "${CMAKE_CURRENT_SOURCE_DIR}/tests/data"
                      "$<TARGET_FILE_DIR:${PROJECT_NAME}>/tests/data")
 endif()
+
+if(WITH_TESTS STREQUAL "TESTS")
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                     COMMAND ${CMAKE_COMMAND} -E copy_directory
+                     "${CMAKE_CURRENT_SOURCE_DIR}/tests/lua"
+                     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/tests/lua")
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                     COMMAND ${CMAKE_COMMAND} -E copy_directory
+                     "${CMAKE_CURRENT_SOURCE_DIR}/tests/lua/classes"
+                     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/tests/lua/classes")
+endif()
