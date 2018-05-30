@@ -15671,8 +15671,12 @@ int drink_well()
         if (p > 55)
         {
             flt();
-            itemcreate(-1, 54, cdata[cc].position.x, cdata[cc].position.y, 0);
-            inv[ci].number = rnd(sdata(159, cc) / 2 * 50 + 100) + 1;
+            itemcreate(
+                -1,
+                54,
+                cdata[cc].position.x,
+                cdata[cc].position.y,
+                rnd(sdata(159, cc) / 2 * 50 + 100) + 1);
             txt(lang(
                 name(cc) + u8"は水の中に金貨を見つけた。"s,
                 name(cc) + u8" find"s + _s(cc)
