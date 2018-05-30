@@ -44,10 +44,9 @@ public:
             elona::lua::lua.run_in_mod("core", R"(
 local Event = Elona.require("Event")
 local GUI = Elona.require("GUI")
-local function my_func(chara)
+local function my_func()
   for i=1, 100 do
-    GUI.txt(tostring(chara.hp))
-    chara:damage_hp(0)
+    GUI.txt(tostring(chara))
   end
 end
 
