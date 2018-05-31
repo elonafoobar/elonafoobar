@@ -184,10 +184,10 @@ int magic()
             }
             if (rapidmagic)
             {
-                efp = efp / 2 + 1;
-                dice1 = dice1 / 2 + 1;
-                dice2 = dice2 / 2 + 1;
-                bonus = bonus / 2 + 1;
+                elep = elep * 4 / 5 + 1;
+                dice1 = dice1 * 4 / 5 + 1;
+                dice2 = dice2 * 4 / 5 + 1;
+                bonus = bonus * 4 / 5 + 1;
             }
             switch (the_ability_db[efid]->sdataref1)
             {
