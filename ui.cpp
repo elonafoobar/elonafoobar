@@ -444,7 +444,7 @@ void render_hud()
     sy = inf_bary + 2 + vfix;
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        sx = inf_raderw + cnt * 47 + 168;
+        sx = inf_raderw + cnt * 47 + 168 - 2;
         if (cnt < 8)
         {
             if (cdata[0].attr_adjs[cnt] < 0)
@@ -456,7 +456,7 @@ void render_hud()
                 color(0, 0, 0);
             }
             pos(sx, sy);
-            gcopy(3, 0, 440, 24, 16);
+            gcopy(3, 0, 440, 28, 16);
             mes(sdata(10 + cnt, 0)); // TODO coupling
             color(0, 0, 0);
         }
