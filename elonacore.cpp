@@ -13896,14 +13896,11 @@ void continuous_action_others()
     if (gdata(91) == 105)
     {
         tg = inv_getowner(ci);
-        if (tg != -1)
+        if ((tg != -1 && cdata[tg].state != 1) || inv[ci].number <= 0)
         {
-            if (cdata[tg].state != 1)
-            {
-                txt(lang(u8"行動を中断した。"s, u8"You abort stealing."s));
-                rowactend(cc);
-                return;
-            }
+            txt(lang(u8"行動を中断した。"s, u8"You abort stealing."s));
+            rowactend(cc);
+            return;
         }
         in = 1;
         if (inv[ci].id == 54)
