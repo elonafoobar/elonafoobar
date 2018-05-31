@@ -36,6 +36,11 @@ module "Event.EventKind"
 -- @event CharaRefreshed
 -- @tfield LuaCharacter chara the character that was refreshed
 
+--- Fired after a character is hurt.
+-- @event CharaRefreshed
+-- @tfield LuaCharacter chara the character that was hurt
+-- @tfield num amount the amount of damage
+
 --- Fired after a character was killed. This might not remove the
 --- character, because they might revive at some later time (like NPCs
 --- in towns). As such, you shouldn't remove the character's data from

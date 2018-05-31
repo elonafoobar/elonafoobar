@@ -17,6 +17,6 @@ function cast(caster, effect_id, effect_power, target_location) end
 -- @tparam num effect_id the spell ID
 -- @tparam num effect_power the power of the spell
 -- @usage local caster = Chara.player()
---local target = Chara.create(5, 5, 3)
+--local target = Chara.create(0, 0, 3)
 --Elona.Magic.cast(caster, target, 414, 100) -- Magic missile
 function cast(caster, target, effect_id, effect_power) end

@@ -21,6 +21,18 @@ handle_manager::handle_manager(lua_env* lua)
 
     this->lua->get_state()->set("is_test", config::instance().is_test);
     this->lua->get_state()->safe_script(R"(Handle = require "mods/core/handle")", this->handle_env);
+
+    bind(*lua);
+}
+
+void handle_manager::bind(lua_env& lua)
+{
+    sol::table core = lua.get_api_manager().get_api_table();
+    sol::table Chara = core["Chara"];
+    sol::table Item = core["Item"];
+
+    Chara.set("iter_all", handle_env["Handle"]["iter_charas"]);
+    Item.set("iter_all", handle_env["Handle"]["iter_items"]);
 }
 
 void handle_manager::create_chara_handle(character& chara)

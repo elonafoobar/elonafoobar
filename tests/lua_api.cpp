@@ -28,11 +28,6 @@ assert(type(Rand.coinflip) == "function")
 )"));
 }
 
-TEST_CASE("Test that all core API tables are read-only", "[Lua: API]")
-{
-    lua_testcase("api_readonly.lua");
-}
-
 TEST_CASE("Core API: Chara", "[Lua: API]")
 {
     lua_testcase("chara.lua");

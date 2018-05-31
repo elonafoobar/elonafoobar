@@ -4,3 +4,4 @@
 Elona.core.Debug.inspect = require "mods/core/inspect"
 Elona.core.Iter = require "mods/core/iter"
 Elona.core.ReadOnly = require "mods/core/readonly"
+Elona.core.table = require "mods/core/table"

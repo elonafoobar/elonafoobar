@@ -36,6 +36,7 @@ enum class event_kind_t : unsigned
     item_removed,
 
     character_refreshed,
+    character_damaged,
 
     // Triggered when a character is killed, regardless of revive type.
     character_killed,

@@ -27,6 +27,7 @@ void init_event_kinds(sol::table& Event)
 
         "CharaRefreshed", event_kind_t::character_refreshed,
 
+        "CharaDamaged", event_kind_t::character_damaged,
         "CharaKilled", event_kind_t::character_killed,
 
         "CharaMoved", event_kind_t::character_moved,

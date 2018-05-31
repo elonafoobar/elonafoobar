@@ -99,12 +99,14 @@ void bind(sol::table& Elona);
 
 bool Chara::is_alive(const lua_character_handle handle)
 {
-    bool is_valid = handle["is_valid"];
-    if(!is_valid)
+    try
+    {
+        return conv_chara(handle).state == 1;
+    }
+    catch (...)
     {
         return false;
     }
-    return conv_chara(handle).state == 1;
 }
 
 bool Chara::is_player(const lua_character_handle handle)
@@ -499,6 +501,7 @@ namespace Item {
 sol::optional<lua_item_handle> create(const position_t&, int, int);
 sol::optional<lua_item_handle> create_xy(int, int, int, int);
 bool has_enchantment(const lua_item_handle, int);
+void remove(lua_item_handle);
 
 void bind(sol::table& Elona);
 }
@@ -527,10 +530,16 @@ bool Item::has_enchantment(const lua_item_handle handle, int id)
     return elona::encfindspec(conv_item(handle).index, id);
 }
 
+void Item::remove(lua_item_handle handle)
+{
+    elona::item_remove(conv_item(handle));
+}
+
 void Item::bind(sol::table& Elona)
 {
     sol::table Item = Elona.create_named("Item");
     Item.set_function("create", sol::overload(Item::create, Item::create_xy));
+    Item.set_function("remove", Item::remove);
     Item.set_function("has_enchantment", Item::has_enchantment);
 }
 
@@ -665,6 +674,7 @@ void damage_hp(character&, int);
 void apply_ailment(character&, status_ailment_t, int);
 bool recruit_as_ally(character&);
 void set_flag(character&, int, bool);
+void gain_skill(character&, int, int);
 void gain_skill_exp(character&, int, int);
 }
 
@@ -700,6 +710,15 @@ void LuaCharacter::set_flag(character& self, int flag, bool value)
     self._flags[flag] = value ? 1 : 0;
 }
 
+void LuaCharacter::gain_skill(character& self, int skill, int initial_level)
+{
+    if(skill < 0 || skill >= 600)
+    {
+        return;
+    }
+    elona::skillgain(self.index, skill, initial_level);
+}
+
 void LuaCharacter::gain_skill_exp(character& self, int skill, int amount)
 {
     if(skill < 0 || skill >= 600)
@@ -725,6 +744,7 @@ void init_usertypes(lua_env& lua)
                                         "apply_ailment", &LuaCharacter::apply_ailment,
                                         "recruit_as_ally", &LuaCharacter::recruit_as_ally,
                                         "set_flag", &LuaCharacter::set_flag,
+                                        "gain_skill", &LuaCharacter::gain_skill,
                                         "gain_skill_exp", &LuaCharacter::gain_skill_exp,
                                         "hp", sol::readonly(&character::hp),
                                         "max_hp", sol::readonly(&character::max_hp),
@@ -735,14 +755,17 @@ void init_usertypes(lua_env& lua)
                                         "shop_rank", &character::shop_rank,
                                         "character_role", &character::character_role,
                                         "index", sol::readonly(&character::index),
-                                        "position", &character::position
+                                        "id", sol::readonly(&character::id),
+                                        "position", &character::position,
+                                        "name", sol::property([](character& c) { return elona::cdatan(0, c.index); })
         );
     lua.get_state()->new_usertype<item>( "LuaItem",
                                      "curse_state", &item::curse_state,
                                      "identify_state", &item::identification_state,
                                      "index", sol::readonly(&item::index),
                                      "position", &item::position,
-                                     "number", &item::number
+                                     "number", &item::number,
+                                     "id", &item::id
         );
 }
 

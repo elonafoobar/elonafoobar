@@ -159,4 +159,28 @@ function Handle.assert_item_invalid(cpp_ref)
 end
 
 
+local function iter (a, i)
+   local v = a[i]
+   while not (v and rawget(a[i], "is_valid")) do
+      i = i + 1
+      v = a[i]
+      if i >= #a then
+         return nil
+      end
+   end
+   i = i + 1
+   return i, v
+end
+
+function Handle.iter_charas()
+   local handles = Handle.CharaHandles
+   return iter, handles, 0
+end
+
+function Handle.iter_items()
+   local handles = Handle.ItemHandles
+   return iter, handles, 0
+end
+
+
 return Handle

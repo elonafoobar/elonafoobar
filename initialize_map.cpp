@@ -2974,8 +2974,6 @@ label_1744_internal:
     label_1439();
     update_scrolling_info();
 
-    lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::map_initialized>();
-
     if (mdata(6) == 3)
     {
         quest_refresh_list();

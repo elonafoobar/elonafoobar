@@ -1,4 +1,5 @@
 {
     "font1": "Kochi Gothic.ttf",
-    "font2": "Bitstream Sans Vera Mono.ttf"
+    "font2": "Bitstream Sans Vera Mono.ttf",
+    "startup_script": "all_magic.lua"
 }

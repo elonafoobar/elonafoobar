@@ -62,6 +62,8 @@ public:
      */
     void clear_map_local_handles();
 private:
+    void bind(lua_env&);
+
     std::set<int> chara_handles;
     std::set<int> item_handles;
 
