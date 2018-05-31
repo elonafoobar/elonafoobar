@@ -12982,7 +12982,10 @@ void continuous_action_perform()
                 {
                     p = cdata[cc].quality_of_performance
                             * cdata[cc].quality_of_performance
-                            * (100 + inv[ci].param1 / 5) / 100 / 1000
+                            * (100
+                               + inv[cdata[cc].continuous_action_item].param1
+                                   / 5)
+                            / 100 / 1000
                         + rnd(10);
                     p = clamp(
                         cdata[tc].gold * clamp(p(0), 1, 100) / 125,
@@ -13030,7 +13033,7 @@ void continuous_action_perform()
                         cdata[cc].quality_of_performance -= p;
                     }
                 }
-                if (encfindspec(ci, 60))
+                if (encfindspec(cdata[cc].continuous_action_item, 60))
                 {
                     if (rnd(15) == 0)
                     {
@@ -13096,7 +13099,9 @@ void continuous_action_perform()
                                     {
                                         continue;
                                     }
-                                    if (encfindspec(ci, 49))
+                                    if (encfindspec(
+                                            cdata[cc].continuous_action_item,
+                                            49))
                                     {
                                         flt(calcobjlv(
                                                 cdata[cc].quality_of_performance
@@ -13252,8 +13257,8 @@ void continuous_action_perform()
     }
     if (cdata[cc].quality_of_performance > 40)
     {
-        cdata[cc].quality_of_performance =
-            cdata[cc].quality_of_performance * (100 + inv[ci].param1 / 5) / 100;
+        cdata[cc].quality_of_performance = cdata[cc].quality_of_performance
+            * (100 + inv[cdata[cc].continuous_action_item].param1 / 5) / 100;
     }
     if (cdata[cc].tip_gold != 0)
     {
