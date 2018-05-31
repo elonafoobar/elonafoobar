@@ -3482,7 +3482,10 @@ label_2181_internal:
         snd(100);
         {
             menu_result result = ctrl_inventory();
-            f = result.succeeded ? 1 : 0;
+            if (!result.succeeded)
+            {
+                break;
+            }
         }
         if (inv[ci].quality >= 4 || ibit(10, ci) == 1)
         {
