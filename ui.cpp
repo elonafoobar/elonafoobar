@@ -1015,8 +1015,8 @@ void render_autoturn_animation()
     {
         label_1433();
         msgtemp = "";
+        render_hud();
     }
-    render_hud();
     if (cdata[0].continuous_action_id == 7)
     {
         if (rowactre == 0)
