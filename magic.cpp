@@ -842,6 +842,10 @@ int magic()
                     telex = cdata[tc].position.x;
                     teley = cdata[tc].position.y;
                     tc = cc;
+                    if (gdata_mount != 0 && gdata_mount == tc)
+                    {
+                        goto the_end;
+                    }
                 }
                 if (efid == 620)
                 {
