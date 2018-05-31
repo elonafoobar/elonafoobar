@@ -1,6 +1,7 @@
 BIN_DIR := bin
 PROGRAM := $(BIN_DIR)/ElonaFoobar
 TEST_RUNNER := $(BIN_DIR)/test_runner
+BENCH_RUNNER := $(BIN_DIR)/bench_runner
 
 FORMAT := clang-format
 FIND := find
@@ -20,6 +21,9 @@ build: $(BIN_DIR) $(PROGRAM)
 tests: $(BIN_DIR) $(TEST_RUNNER)
 
 
+bench: $(BIN_DIR) $(BENCH_RUNNER)
+
+
 $(BIN_DIR):
 	$(MKDIR) $(BIN_DIR)
 
@@ -29,7 +33,11 @@ $(PROGRAM): FORCE
 
 
 $(TEST_RUNNER):
-	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DWITH_TESTS=ON; make
+	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DWITH_TESTS=TESTS; make
+
+
+$(BENCH_RUNNER):
+	cd $(BIN_DIR); cmake .. $(CMAKE_ARGS) -DWITH_TESTS=BENCH --config Release; make
 
 
 clean: FORCE

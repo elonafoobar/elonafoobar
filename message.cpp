@@ -611,6 +611,9 @@ void keyrelease()
 
 void press(bool only_enter_of_cancel)
 {
+    if (config::instance().is_test)
+        return;
+
     while (1)
     {
         await(20);

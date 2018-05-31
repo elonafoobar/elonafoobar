@@ -8,13 +8,15 @@ matrix:
           compiler: gcc-7
           addons:
               apt:
+                  config:
+                    retries: true
+                  update: true
                   sources:
                       - ubuntu-toolchain-r-test
                   packages:
                       - g++-7
                       - cmake
                       - zlib1g-dev
-                      - xvfb
                         # Boost, Lua and SDL2 library versions provided are too old, they must be compiled manually.
         - os: osx
           compiler: clang
@@ -60,9 +62,7 @@ script:
        export LD_RUN_PATH="/usr/lib:$LD_RUN_PATH";
        export CMAKE_ARGS="$CMAKE_ARGS -DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=TRUE";
        gcc -v && g++ -v;
-       export DISPLAY=':99.0';
        export AUDIODEV=null;
-       Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
     fi
   - env
   - cd deps
@@ -72,9 +72,8 @@ script:
   - cd ..
   - make clean
   - make tests VERBOSE=1
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ccache --show-stats; fi
   - bin/ElonaFoobar
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ccache --show-stats; fi
 
 notifications:
     email: false
-
