@@ -805,9 +805,9 @@ int magic()
                     {
                         dbid = 176;
                     }
-                    chara_create(
+                    const auto success = chara_create(
                         -1, dbid, cdata[tc].position.x, cdata[tc].position.y);
-                    if (efid != 643)
+                    if (success && efid != 643)
                     {
                         if (cdata[rc].id == cdata[cc].id)
                         {
