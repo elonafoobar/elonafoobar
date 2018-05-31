@@ -173,6 +173,7 @@ void item_checkknown(int = 0);
 int inv_compress(int);
 void item_copy(int = 0, int = 0);
 void item_acid(int = 0, int = 0);
+void item_remove(item&);
 void item_delete(int = 0);
 void item_exchange(int = 0, int = 0);
 void item_num(int = 0, int = 0);

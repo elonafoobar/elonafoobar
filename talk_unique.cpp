@@ -4529,7 +4529,7 @@ talk_result_t talk_unique()
                         txt(lang(
                             itemname(cnt) + u8"を渡した。"s,
                             u8"You hand over "s + itemname(cnt) + u8"."s));
-                        inv[cnt].number = 0;
+                        item_remove(inv[cnt]);
                     }
                 }
             }
@@ -4673,7 +4673,7 @@ talk_result_t talk_unique()
                             {
                                 if (inv[ci].quality < 4)
                                 {
-                                    inv[ci].number = 0;
+                                    item_remove(inv[ci]);
                                 }
                             }
                         }

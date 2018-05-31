@@ -237,7 +237,7 @@ void supply_new_equipment()
             }
             if (inv[ci].number != 0)
             {
-                inv[ci].number = 0;
+                item_remove(inv[ci]);
                 f = 1;
                 break;
             }
@@ -973,7 +973,7 @@ void supply_initial_equipments()
                     {
                         if (cnt < 14)
                         {
-                            inv[ci].number = 0;
+                            item_remove(inv[ci]);
                             continue;
                         }
                     }
@@ -1001,7 +1001,7 @@ void supply_initial_equipments()
                             {
                                 if (cnt < 14)
                                 {
-                                    inv[ci].number = 0;
+                                    item_remove(inv[ci]);
                                     continue;
                                 }
                             }
@@ -1012,7 +1012,7 @@ void supply_initial_equipments()
                             {
                                 if (cnt < 14)
                                 {
-                                    inv[ci].number = 0;
+                                    item_remove(inv[ci]);
                                     continue;
                                 }
                             }
@@ -1048,7 +1048,7 @@ void supply_initial_equipments()
                             {
                                 if (cnt < 14)
                                 {
-                                    inv[ci].number = 0;
+                                    item_remove(inv[ci]);
                                     continue;
                                 }
                             }

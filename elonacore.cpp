@@ -3717,7 +3717,8 @@ int convertartifact(int prm_930, int prm_931)
     {
         flt(the_item_db[inv[prm_930].id]->level, 4);
         flttypeminor = the_item_db[inv[prm_930].id]->subcategory;
-        inv[prm_930].number = 0;
+        item_remove(inv[prm_930]);
+
         itemcreate(
             inv_getowner(prm_930),
             0,
@@ -4171,7 +4172,7 @@ void character_drops_item()
             }
             if (f)
             {
-                inv[ci].number = 0;
+                item_remove(inv[ci]);
                 continue;
             }
             inv[ci].position.x = cdata[rc].position.x;
@@ -4187,7 +4188,7 @@ void character_drops_item()
                 item_copy(ci, ti);
                 inv[ti].own_state = -2;
             }
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
         }
         cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
         create_pcpic(0, true);
@@ -4330,7 +4331,7 @@ void character_drops_item()
             }
             item_copy(ci, ti);
         }
-        inv[ci].number = 0;
+        item_remove(inv[ci]);
     }
     if (cdata[rc].quality >= 4 || rnd(20) == 0 || cdata[rc].drops_gold() == 1
         || rc < 16)
@@ -6154,7 +6155,7 @@ void label_1745()
                         }
                         if (inv[cnt].own_state == 0)
                         {
-                            inv[cnt].number = 0;
+                            item_remove(inv[cnt]);
                             cell_refresh(
                                 inv[cnt].position.x, inv[cnt].position.y);
                         }
@@ -6311,7 +6312,7 @@ void label_1745()
                                 if (inv[ci].weight <= 0
                                     || inv[ci].weight >= 4000)
                                 {
-                                    inv[ci].number = 0;
+                                    item_remove(inv[ci]);
                                 }
                             }
                         }
@@ -7841,7 +7842,8 @@ void label_1755()
         {
             continue;
         }
-        inv[cnt].number = 0;
+        item_remove(inv[cnt]);
+
         cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
     }
     if (adata(29, gdata_current_map) == 1)
@@ -8323,7 +8325,7 @@ void begintempinv()
     ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
     for (const auto& cnt : items(-1))
     {
-        inv[cnt].number = 0;
+        item_remove(inv[cnt]);
     }
     return;
 }
@@ -9142,7 +9144,7 @@ void supply_income()
     {
         for (const auto& cnt : items(-1))
         {
-            inv[cnt].number = 0;
+            item_remove(inv[cnt]);
         }
     }
     mode = 6;
@@ -11641,7 +11643,7 @@ void remove_card_and_figures()
     {
         if (inv[cnt].id == 504 || inv[cnt].id == 503)
         {
-            inv[cnt].number = 0;
+            item_remove(inv[cnt]);
         }
     }
     return;
@@ -11872,7 +11874,7 @@ void load_gene_files()
     cdata(0).clear();
     for (const auto& cnt : items(-1))
     {
-        inv[cnt].number = 0;
+        item_remove(inv[cnt]);
     }
     for (const auto& cnt : items(0))
     {
@@ -14007,7 +14009,7 @@ void continuous_action_others()
         if (inv[ci].id == 54)
         {
             snd(11);
-            inv[ti].number = 0;
+            item_remove(inv[ti]);
             cdata[0].gold += in;
         }
         else
@@ -16359,7 +16361,7 @@ int pick_up_item()
             snd(11);
             ti = ci;
             in = inv[ci].number;
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             msgkeep = 1;
             txt(lang(
                 name(cc) + u8"は"s + itemname(ti, in) + u8"を拾った。"s,
@@ -17410,7 +17412,7 @@ void proc_autopick()
             }
             snd(45);
             txt(i18n::fmt(u8"ui", u8"autopick", u8"destroyed")(itemname(ci)));
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             cell_refresh(x, y);
             map(x, y, 5) = map(x, y, 4);
             break;

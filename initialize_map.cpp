@@ -168,7 +168,7 @@ label_1741_internal:
     }
     for (int cnt = 1320; cnt < 5480; ++cnt)
     {
-        inv[cnt].number = 0;
+        item_remove(inv[cnt]);
     }
     DIM2(mdata, 100);
     mdata(11) = gdata_current_dungeon_level;

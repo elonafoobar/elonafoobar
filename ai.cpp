@@ -326,7 +326,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
                         p = inv[cnt].value * inv[cnt].number;
                         sell += inv[cnt].number;
                         sell(1) += p;
-                        inv[cnt].number = 0;
+                        item_remove(inv[cnt]);
                         cdata[cc].gold += p;
                     }
                 }
@@ -954,7 +954,7 @@ label_2692_internal:
                         {
                             if (rnd(5) == 0)
                             {
-                                inv[ci].number = 0;
+                                item_remove(inv[ci]);
                             }
                         }
                         else

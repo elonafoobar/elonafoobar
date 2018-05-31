@@ -889,7 +889,7 @@ void show_shop_log()
     {
         for (const auto& cnt : items(-1))
         {
-            inv[cnt].number = 0;
+            item_remove(inv[cnt]);
         }
     }
     mode = 6;
@@ -918,7 +918,7 @@ void show_shop_log()
             }
             else
             {
-                inv[ci].number = 0;
+                item_remove(inv[ci]);
                 if (cnt == 3)
                 {
                     f = 0;

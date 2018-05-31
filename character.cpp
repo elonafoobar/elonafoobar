@@ -1980,7 +1980,7 @@ void chara_delete(int cc)
 
     for (const auto& cnt : items(cc))
     {
-        inv[cnt].number = 0;
+        item_remove(inv[cnt]);
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {

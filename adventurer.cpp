@@ -328,7 +328,7 @@ int label_2664()
             {
                 cdata[rc].item_which_will_be_used = 0;
             }
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             f = 1;
             break;
         }

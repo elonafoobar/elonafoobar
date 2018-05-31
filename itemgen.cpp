@@ -283,7 +283,7 @@ int do_create_item(int slot, int x, int y)
         if (slot >= 0)
         {
             cdata[slot].gold += inv[ci].number;
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             return 1;
         }
     }

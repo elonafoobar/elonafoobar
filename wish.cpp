@@ -507,7 +507,7 @@ bool wish_for_item(const std::string& input)
             {
                 // Remove this item and retry.
                 selector.remove(id);
-                inv[ci].number = 0;
+                item_remove(inv[ci]);
                 --itemmemory(1, inv[ci].id);
                 cell_refresh(inv[ci].position.x, inv[ci].position.y);
                 continue;
@@ -524,7 +524,7 @@ bool wish_for_item(const std::string& input)
         }
         else if (inv[ci].id == 602)
         {
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             flt();
             itemcreate(-1, 516, cdata[cc].position.x, cdata[cc].position.y, 3);
             inv[ci].curse_state = curse_state_t::blessed;
