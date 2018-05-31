@@ -34,6 +34,14 @@ bool is_in_fov(int cc)
 
 int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
 {
+    if (prm_629 < 0 || mdata(0) <= prm_629 || prm_630 < 0 || mdata(1) <= prm_630
+        || prm_631 < 0 || mdata(0) <= prm_631 || prm_632 < 0
+        || mdata(1) <= prm_632)
+    {
+        // Out of range
+        return 0;
+    }
+
     dy_at_modfov = prm_632 - prm_630;
     dx_at_modfov = prm_631 - prm_629;
     ay_at_modfov = std::abs(dy_at_modfov);
