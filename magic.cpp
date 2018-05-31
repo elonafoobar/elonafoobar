@@ -4396,6 +4396,16 @@ label_2181_internal:
                 }
             }
         }
+        if (efid == 638)
+        {
+            if (is_in_fov(tc))
+            {
+                txt(lang(
+                    name(cc) + u8"は"s + name(tc) + u8"を睨み付けた。"s,
+                    name(cc) + u8" gaze"s + _s(cc) + u8" at "s + name(tc)
+                        + u8"."s));
+            }
+        }
         dmgcon(tc, status_ailment_t::dimmed, 200);
         break;
     case 652:
