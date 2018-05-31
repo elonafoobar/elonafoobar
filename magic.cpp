@@ -869,7 +869,7 @@ int magic()
                     }
                     goto the_end;
                 }
-                if (efid != 619 && encfind(tc, 22) != -1)
+                if (efid != 619 && efid != 635 && encfind(tc, 22) != -1)
                 {
                     if (is_in_fov(tc))
                     {
@@ -881,7 +881,7 @@ int magic()
                 }
                 if (efid == 635)
                 {
-                    if (tc == cc)
+                    if (encfind(cc, 22) != -1)
                     {
                         if (is_in_fov(tc))
                         {
