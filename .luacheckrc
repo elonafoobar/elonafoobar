@@ -95,6 +95,7 @@ stds.elona = {
         -- @Elona@: The core Elona API.
         Elona = {
            fields = {
+              "require",
               Rand = {
                  fields = {
                     "rnd", "one_in", "coinflip"

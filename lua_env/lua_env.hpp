@@ -53,7 +53,7 @@ struct mod_info
         // Whitelist functions that are safe for usage in user-written scripts.
         // This list can be expanded.
         static const std::string safe_functions[] = {
-            "assert", "type", "pairs", "ipairs", "next", "print", "tostring"
+            "assert", "type", "pairs", "ipairs", "next", "print", "tostring", "error"
         };
 
         for(const std::string& function_name : safe_functions)

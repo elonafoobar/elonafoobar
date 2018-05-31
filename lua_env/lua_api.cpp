@@ -589,6 +589,7 @@ void GUI::bind(sol::table& Elona)
 namespace Debug
 {
 void log(const std::string&);
+void report_error(const std::string&);
 void dump_characters();
 void dump_items();
 
@@ -598,6 +599,21 @@ void bind(sol::table& Elona);
 void Debug::log(const std::string& message)
 {
     ELONA_LOG(message);
+}
+
+void Debug::report_error(const std::string& message)
+{
+    std::istringstream sstream(message);
+    std::string line;
+
+    GUI::txt_color(3);
+    GUI::txt("Script error: ");
+    while (getline(sstream, line, '\n')) {
+        GUI::txt_color(3);
+        GUI::txt(line + "  ");
+    }
+
+    ELONA_LOG("Script error: " << message);
 }
 
 void Debug::dump_characters()
@@ -629,6 +645,7 @@ void Debug::bind(sol::table& Elona)
 {
     sol::table Debug = Elona.create_named("Debug");
     Debug.set_function("log", Debug::log);
+    Debug.set_function("report_error", Debug::report_error);
     Debug.set_function("dump_characters", Debug::dump_characters);
     Debug.set_function("dump_items", Debug::dump_items);
 }
@@ -765,71 +782,77 @@ void init_enums(sol::table& Elona)
         "Room", tile_kind_t::room,
         "Fog", tile_kind_t::fog
         );
-    Enums["CharaFlag"] = Enums.create_with(
+    sol::table CharaFlag = Enums.create_named("CharaFlag");
+    std::map<std::string, int> chara_flags = {
         // Intrinsic flags (reset on every character refresh)
-        "IsFloating", 5,
-        "IsInvisible", 6,
-        "CanSeeInvisible", 7,
-        "IsImmuneToConfusion", 8,
-        "IsImmuneToBlindness", 9,
-        "IsImmuneToFear", 10,
-        "IsImmuneToSleep", 11,
-        "IsImmuneToParalyzation", 12,
-        "IsImmuneToPoison", 13,
-        "CanDigestRottenFood", 14,
-        "IsProtectedFromThieves", 15,
-        "IsIncognito", 16,
-        "DropsGold", 17,
-        "Explodes", 18,
-        "IsDeathMaster", 19,
-        "CanCastRapidMagic", 20,
-        "HasLayHand", 21,
-        "IsSuitableForMount", 22,
-        "Splits", 23,
-        "HasCursedEquipments", 24,
-        "IsUnsuitableForMount", 25,
-        "IsImmuneToElementalDamage", 26,
-        "Splits2", 27,
-        "IsMetal", 28,
-        "CuresBleedingQuickly", 29,
-        "HasPowerBash", 30,
-        "IsImmuneToMine", 31,
-        "IsQuickTempered", 32,
+        {"IsFloating", 5},
+        {"IsInvisible", 6},
+        {"CanSeeInvisible", 7},
+        {"IsImmuneToConfusion", 8},
+        {"IsImmuneToBlindness", 9},
+        {"IsImmuneToFear", 10},
+        {"IsImmuneToSleep", 11},
+        {"IsImmuneToParalyzation", 12},
+        {"IsImmuneToPoison", 13},
+        {"CanDigestRottenFood", 14},
+        {"IsProtectedFromThieves", 15},
+        {"IsIncognito", 16},
+        {"DropsGold", 17},
+        {"Explodes", 18},
+        {"IsDeathMaster", 19},
+        {"CanCastRapidMagic", 20},
+        {"HasLayHand", 21},
+        {"IsSuitableForMount", 22},
+        {"Splits", 23},
+        {"HasCursedEquipments", 24},
+        {"IsUnsuitableForMount", 25},
+        {"IsImmuneToElementalDamage", 26},
+        {"Splits2", 27},
+        {"IsMetal", 28},
+        {"CuresBleedingQuickly", 29},
+        {"HasPowerBash", 30},
+        {"IsImmuneToMine", 31},
+        {"IsQuickTempered", 32},
 
         // Mutable flags
-        "IsLivestock", 960,
-        "IsMarried", 961,
-        "HasMadeGene", 962,
-        "IsEscorted", 963,
-        "IsTemporary", 964,
-        "IsSilent", 965,
-        "HasBeenUsedStethoscope", 966,
-        "HasOwnSprite", 967,
-        "IsLeashed", 968,
-        "IsContracting", 969,
-        "IsQuestTarget", 970,
-        "IsEscortedInSubQuest", 971,
-        "WillExplodeSoon", 972,
-        "IsSentencedDaeth", 973,
-        "IsLayHandAvailable", 974,
-        "IsRidden", 975,
-        "IsLordOfDungeon", 976,
-        "HasOwnName", 977,
-        "IsPregnant", 978,
-        "DoesNotSearchEnemy", 979,
-        "IsContractingWithReaper", 980,
-        "NeedsRefreshingStatus", 981,
-        "VisitedJustNow", 982,
-        "BreaksIntoDebris", 983,
-        "IsBestFriend", 984,
-        "IsHungOnSandBag", 985,
-        "HasAnorexia", 986,
-        "WasPassedItemByYouJustNow", 987,
-        "CuresMpFrequently", 988,
-        "HasCustomTalk", 989,
-        "HasLearnedWords", 990,
-        "OnlyChristmas", 991
-        );
+        {"IsLivestock", 960},
+        {"IsMarried", 961},
+        {"HasMadeGene", 962},
+        {"IsEscorted", 963},
+        {"IsTemporary", 964},
+        {"IsSilent", 965},
+        {"HasBeenUsedStethoscope", 966},
+        {"HasOwnSprite", 967},
+        {"IsLeashed", 968},
+        {"IsContracting", 969},
+        {"IsQuestTarget", 970},
+        {"IsEscortedInSubQuest", 971},
+        {"WillExplodeSoon", 972},
+        {"IsSentencedDaeth", 973},
+        {"IsLayHandAvailable", 974},
+        {"IsRidden", 975},
+        {"IsLordOfDungeon", 976},
+        {"HasOwnName", 977},
+        {"IsPregnant", 978},
+        {"DoesNotSearchEnemy", 979},
+        {"IsContractingWithReaper", 980},
+        {"NeedsRefreshingStatus", 981},
+        {"VisitedJustNow", 982},
+        {"BreaksIntoDebris", 983},
+        {"IsBestFriend", 984},
+        {"IsHungOnSandBag", 985},
+        {"HasAnorexia", 986},
+        {"WasPassedItemByYouJustNow", 987},
+        {"CuresMpFrequently", 988},
+        {"HasCustomTalk", 989},
+        {"HasLearnedWords", 990},
+        {"OnlyChristmas", 991},
+    };
+
+    for(const auto& pair : chara_flags)
+    {
+        CharaFlag.set(pair.first, pair.second);
+    }
 }
 
 

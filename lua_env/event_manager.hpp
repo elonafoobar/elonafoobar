@@ -76,6 +76,8 @@ public:
     const_iterator begin() const { return functions.begin(); }
     const_iterator end() const { return functions.end(); }
 
+    void set_error_handler(sol::function error_handler) { this->error_handler_ = error_handler; }
+
     /***
      * Adds a callback to the callback list.
      *
@@ -98,7 +100,7 @@ public:
             if(!result.valid())
             {
                 sol::error err = result;
-                std::cerr << "Script error: " << err.what() << std::endl;
+                error_handler_(err.what());
                 return;
             }
         }
@@ -115,7 +117,7 @@ public:
             if(!result.valid())
             {
                 sol::error err = result;
-                std::cerr << "Script error: " << err.what() << std::endl;
+                error_handler_(err.what());
                 return none;
             }
             else
@@ -128,6 +130,7 @@ public:
     }
 private:
     callback_container functions;
+    sol::function error_handler_;
 };
 
 /***

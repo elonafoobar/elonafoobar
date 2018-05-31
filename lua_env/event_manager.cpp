@@ -15,17 +15,15 @@ void init_event_kinds(sol::table& Event)
         "CharaCreated", event_kind_t::character_created,
         "ItemCreated", event_kind_t::item_created,
 
-        // TODO implement
         // "CharaInitialized", event_kind_t::character_initialized,
-        // TODO implement
         // "ItemInitialized", event_kind_t::item_initialized,
         "MapInitialized", event_kind_t::map_initialized,
         "GameInitialized", event_kind_t::game_initialized,
 
-        // TODO trigger everywhere chara.state is set to 0
         "CharaRemoved", event_kind_t::character_removed,
-        // TODO trigger everywhere item.number is set to 0
-        "ItemRemoved", event_kind_t::item_removed,
+
+        // TODO there are many edge cases to work out, like dropping items, copying items...
+        // "ItemRemoved", event_kind_t::item_removed,
 
         "CharaRefreshed", event_kind_t::character_refreshed,
 
@@ -66,10 +64,13 @@ event_manager::event_manager(lua_env* lua)
 void event_manager::init_events()
 {
     unsigned event_count = static_cast<unsigned>(event_kind_t::COUNT);
+    sol::function error_handler = lua->get_api_manager().get_api_table()["Debug"]["report_error"];
     for(unsigned i = 0; i < event_count; i++)
     {
         event_kind_t event_kind = static_cast<event_kind_t>(i);
-        events[event_kind] = callbacks();
+        callbacks cb;
+        cb.set_error_handler(error_handler);
+        events[event_kind] = std::move(cb);
     }
 }
 
