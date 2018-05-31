@@ -175,9 +175,9 @@ void initialize_ui_constants()
     inf_raderx = 1;
     inf_raderw = 136;
     inf_screenw = windoww / inf_tiles + (windoww % inf_tiles != 0);
-    if (windowh > 768)
+    if (windowh > 1200)
     {
-        windowh = 768;
+        windowh = 1200;
     }
     inf_screenh = (windowh - inf_verh) / inf_tiles;
     if ((windowh - inf_verh) % inf_tiles != 0)
@@ -1224,10 +1224,10 @@ void update_slight()
     int lx = 0;
     slight.clear();
     ++msync;
-    sy(2) = cdata[0].position.y - 7;
-    sy(3) = cdata[0].position.y + 7;
-    sy(4) = 7 - cdata[0].position.y;
-    sx(3) = cdata[0].position.x - 7 - 2;
+    sy(2) = cdata[0].position.y - 17 / 2;
+    sy(3) = cdata[0].position.y + 17 / 2;
+    sy(4) = 17 / 2 - cdata[0].position.y;
+    sx(3) = cdata[0].position.x - 17 / 2;
     if (config::instance().scroll)
     {
         repw(0) = inf_screenw + 2;
@@ -1296,10 +1296,10 @@ void update_slight()
             {
                 if (sy < sy(3))
                 {
-                    sx(2) = fovlist(0, sy + sy(4)) + sx(3);
+                    sx(2) = fovlist[sy + sy(4)][0] + sx(3);
                     if (sx >= sx(2))
                     {
-                        if (sx < fovlist(1, sy + sy(4)) + sx(3))
+                        if (sx < fovlist[sy + sy(4)][1] + sx(3))
                         {
                             if (fov_los(
                                     cdata[0].position.x,
