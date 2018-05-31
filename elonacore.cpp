@@ -14240,7 +14240,10 @@ void label_2151()
     msg_halt();
     play_music();
     autosave = 1 * (gdata_current_map != 35);
-    return;
+    if (adata(16, gdata_current_map) == 102)
+    {
+        update_shop();
+    }
 }
 
 
