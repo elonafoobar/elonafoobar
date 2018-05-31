@@ -12588,13 +12588,6 @@ label_21451_internal:
                 {
                     return;
                 }
-                if (feat(3) != 0)
-                {
-                    if (cc >= 16)
-                    {
-                        return;
-                    }
-                }
             }
             if (feat(0) != tile_trap && cc == 0)
             {
