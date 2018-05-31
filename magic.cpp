@@ -724,7 +724,7 @@ int magic()
                     if (p != -1)
                     {
                         i = sdata.get(10 + p, tc).original_level
-                            - cdata[tc].attr_adjs[p];
+                            + cdata[tc].attr_adjs[p];
                         if (i > 0)
                         {
                             i = i * efp / 2000 + 1;
