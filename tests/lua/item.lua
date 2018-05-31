@@ -28,4 +28,27 @@ lrun("test Item.has_enchantment", function()
         lequal(Item.has_enchantment(item, 20), false)
 end)
 
+local function tally()
+   local count = 0
+   for _, item in Item.iter(5080, 5480) do
+      count = count + 1
+   end
+   return count
+end
+
+lrun("test Item.iter", function()
+        Testing.start_in_debug_map()
+
+        Item.create(0, 0, 792, 3)
+        Item.create(0, 1, 792, 3)
+
+        local count = tally()
+        lequal(count, 2)
+
+        Item.create(0, 2, 792, 3)
+
+        local count = tally()
+        lequal(count, 3)
+end)
+
 assert(lresults())

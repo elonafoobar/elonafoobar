@@ -16,11 +16,6 @@ namespace lua
 
 lua_env lua;
 
-// TODO wrap all table editing methods in their own functions
-// TODO make everything less messy
-// TODO move api to separate source file
-// TODO make things immutable where they need to be
-
 lua_env::lua_env()
 {
     lua = std::make_shared<sol::state>();
@@ -149,9 +144,6 @@ void lua_env::on_item_removal(item& item)
 
 void lua_env::load_mod(const fs::path& path, mod_info& mod)
 {
-    // create character/item/map/global tables
-    // run various mod loading stages (like defining custom fields for all prototypes in the game?)
-    // evaluate init.lua to load defines
     auto result = this->lua->safe_script_file(filesystem::make_preferred_path_in_utf8(path / mod.name / "init.lua"), mod.env);
     if (!result.valid())
     {
@@ -159,9 +151,6 @@ void lua_env::load_mod(const fs::path& path, mod_info& mod)
         report_error(err);
         throw new std::runtime_error("Failed initializing mod "s + mod.name);
     }
-    // determine mod overrides inside .json files
-    // merge overrides, new things, and locale configs into global database
-    // add reference to global API table as Elona so the mod can use it
 }
 
 void lua_env::scan_all_mods(const fs::path& mods_dir)
@@ -208,14 +197,9 @@ void lua_env::load_core_mod(const fs::path& mods_dir)
         throw new std::runtime_error("Core mod was not found. Does \"mods/core\" exist?");
     }
 
-    // Load the core mod before any others, because there is a need
-    // for things on the Lua side to be made read-only after the core
-    // mod is loaded.
+    // Load the core mod before any others. The core API table will be
+    // modified in-place by the Lua API code.
     api_mgr->load_core(*this, mods_dir);
-    stage = mod_loading_stage_t::core_mod_loaded;
-
-    // lua->safe_script(R"(Elona = Elona.ReadOnly.make_read_only(Elona))");
-
     stage = mod_loading_stage_t::core_mod_loaded;
 }
 
@@ -300,8 +284,6 @@ void lua_env::clear()
     stage = mod_loading_stage_t::not_started;
 }
 
-// TODO expects mods to use unique names. Figure out a way to clear
-// everything Lua related easily and safely.
 void lua_env::load_mod_from_script(const std::string& name, const std::string& script)
 {
     if(stage < mod_loading_stage_t::core_mod_loaded)

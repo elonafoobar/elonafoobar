@@ -485,7 +485,7 @@ void item_exchange(int a, int b)
 void item_remove(item& i)
 {
     i.number = 0;
-    // lua::lua.on_item_removal(i);
+    lua::lua.on_item_removal(i);
 }
 
 // TODO this only runs after an invalid item slot is replaced by a new

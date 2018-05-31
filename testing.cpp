@@ -82,6 +82,8 @@ void post_run()
 
 void reset_state()
 {
+    srand(static_cast<unsigned int>(std::time(0)));
+
     lua::lua.clear(); // Unload character/item data while they're still available.
     lua::lua.scan_all_mods(filesystem::dir::mods());
     lua::lua.load_core_mod(filesystem::dir::mods());

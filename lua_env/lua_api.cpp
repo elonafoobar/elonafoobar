@@ -99,14 +99,12 @@ void bind(sol::table& Elona);
 
 bool Chara::is_alive(const lua_character_handle handle)
 {
-    try
-    {
-        return conv_chara(handle).state == 1;
-    }
-    catch (...)
+    bool is_valid = handle["is_valid"];
+    if(!is_valid)
     {
         return false;
     }
+    return conv_chara(handle).state == 1;
 }
 
 bool Chara::is_player(const lua_character_handle handle)
@@ -765,7 +763,8 @@ void init_usertypes(lua_env& lua)
                                      "index", sol::readonly(&item::index),
                                      "position", &item::position,
                                      "number", &item::number,
-                                     "id", &item::id
+                                     "id", &item::id,
+                                     "name", sol::property([](item& i) { return elona::itemname(i.index); })
         );
 }
 
@@ -917,6 +916,7 @@ sol::optional<sol::table> api_manager::try_find_api(const std::string& module_na
         return sol::nullopt;
     }
     sol::optional<sol::table> result = (*table)[module_name];
+
     return result;
 }
 

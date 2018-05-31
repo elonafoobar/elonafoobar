@@ -19,7 +19,11 @@ handle_manager::handle_manager(lua_env* lua)
                                         sol::create,
                                         this->lua->get_state()->globals());
 
+    // Prevent printing of errors when running tests (many tests
+    // expect handles to be invalid)
     this->lua->get_state()->set("is_test", config::instance().is_test);
+
+    // Load the Lua chunk for storing handles.
     this->lua->get_state()->safe_script(R"(Handle = require "mods/core/handle")", this->handle_env);
 
     bind(*lua);
@@ -31,8 +35,12 @@ void handle_manager::bind(lua_env& lua)
     sol::table Chara = core["Chara"];
     sol::table Item = core["Item"];
 
-    Chara.set("iter_all", handle_env["Handle"]["iter_charas"]);
-    Item.set("iter_all", handle_env["Handle"]["iter_items"]);
+    // Add iterating methods implemented in Lua.
+    // TODO: See if this can be migrated to Sol's iteration scheme
+    // (last time I tried it didn't work because of "not a valid
+    // container" errors)
+    Chara.set("iter", handle_env["Handle"]["iter_charas"]);
+    Item.set("iter", handle_env["Handle"]["iter_items"]);
 }
 
 void handle_manager::create_chara_handle(character& chara)

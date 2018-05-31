@@ -160,26 +160,31 @@ end
 
 
 local function iter (a, i)
-   local v = a[i]
-   while not (v and rawget(a[i], "is_valid")) do
-      i = i + 1
-      v = a[i]
-      if i >= #a then
+   local v = a.handles[i]
+   while not (v and rawget(a.handles[i], "is_valid")) do
+      if i >= a.to then
          return nil
       end
+      i = i + 1
+      v = a.handles[i]
    end
    i = i + 1
    return i, v
 end
 
-function Handle.iter_charas()
-   local handles = Handle.CharaHandles
-   return iter, handles, 0
+
+-- These functions exist in the separate handle environment because I
+-- couldn't quite figure out how to make a valid custom C++/Lua
+-- iterator with Sol that returns Lua table references as values.
+
+-- Chara.iter(from, to)
+function Handle.iter_charas(from, to)
+   return iter, {handles=Handle.CharaHandles, to=to}, from
 end
 
-function Handle.iter_items()
-   local handles = Handle.ItemHandles
-   return iter, handles, 0
+-- Item.iter(from, to)
+function Handle.iter_items(from, to)
+   return iter, {handles=Handle.ItemHandles, to=to}, from
 end
 
 
