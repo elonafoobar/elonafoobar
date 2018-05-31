@@ -493,7 +493,7 @@ void play_animation_ranged_attack(int animeid, int anicol, int anisound)
         snd(36);
     }
     ax = (cdata[cc].position.x - scx) * inf_tiles;
-    ay = (cdata[cc].position.y - scy) * inf_tiles - 12;
+    ay = (cdata[cc].position.y - scy) * inf_tiles + inf_screeny + 8;
     ap = dist(
              cdata[cc].position.x,
              cdata[cc].position.y,
