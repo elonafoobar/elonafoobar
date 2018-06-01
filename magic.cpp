@@ -653,6 +653,15 @@ int magic()
                         }
                     }
                 }
+                else if (efid == 660)
+                {
+                    if (is_in_fov(cc))
+                    {
+                        txt(lang(
+                            u8"「余分な機能は削除してしまえ」"s,
+                            u8"\"Delete.\""s));
+                    }
+                }
                 else if (is_in_fov(cc))
                 {
                     if (tc >= 16)
@@ -686,8 +695,6 @@ int magic()
                 }
                 if (efid == 660)
                 {
-                    txt(lang(
-                        u8"「余分な機能は削除してしまえ」"s, u8"\"Delete.\""s));
                     cdata[tc].hp = cdata[tc].max_hp / 12 + 1;
                     goto the_end;
                 }
