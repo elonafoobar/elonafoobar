@@ -193,6 +193,14 @@ public:
      */
     void on_item_removal(item&);
 
+    /***
+     * Clears and reset the Lua state to directly after loading the
+     * core mod.
+     *
+     * Used when modifying startup scripts.
+     */
+    void reload();
+
 
     //********** Individual API manager retrieval methods **********//
 

@@ -245,6 +245,10 @@ void lua_env::run_startup_script(const std::string& name)
         script_mod->env);
 
     ELONA_LOG("Loaded startup script " << name);
+    txtef(8);
+    txt(lang(u8"スクリプト"s + config::instance().startup_script + u8"が読み込まれました。"s,
+             u8"Loaded script "s + config::instance().startup_script + u8". "s));
+    txtnew();
 
     this->mods.emplace("script", std::move(script_mod));
 }
@@ -256,6 +260,13 @@ void lua_env::clear_mod_stores()
         auto& mod = pair.second;
         mod->store->clear();
     }
+}
+
+void lua_env::reload()
+{
+    clear(); // Unload character/item handles while they're still available.
+    scan_all_mods(filesystem::dir::mods());
+    load_core_mod(filesystem::dir::mods());
 }
 
 

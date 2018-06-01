@@ -673,6 +673,7 @@ void apply_ailment(character&, status_ailment_t, int);
 bool recruit_as_ally(character&);
 void set_flag(character&, int, bool);
 void gain_skill(character&, int, int);
+void gain_skill_stock(character&, int, int, int);
 void gain_skill_exp(character&, int, int);
 }
 
@@ -691,6 +692,7 @@ void LuaCharacter::apply_ailment(character& self, status_ailment_t ailment, int 
 bool LuaCharacter::recruit_as_ally(character& self)
 {
     // can't use Chara methods because they take a handle...
+    // TODO: DRY (would need to be far-reaching)
     if(self.state == 0 || (self.index != 0 && self.index <= 16) || self.index == 0)
     {
         return false;
@@ -710,11 +712,16 @@ void LuaCharacter::set_flag(character& self, int flag, bool value)
 
 void LuaCharacter::gain_skill(character& self, int skill, int initial_level)
 {
+    LuaCharacter::gain_skill_stock(self, skill, initial_level, 0);
+}
+
+void LuaCharacter::gain_skill_stock(character& self, int skill, int initial_level, int initial_stock)
+{
     if(skill < 0 || skill >= 600)
     {
         return;
     }
-    elona::skillgain(self.index, skill, initial_level);
+    elona::skillgain(self.index, skill, initial_level, initial_stock);
 }
 
 void LuaCharacter::gain_skill_exp(character& self, int skill, int amount)
@@ -742,7 +749,7 @@ void init_usertypes(lua_env& lua)
                                         "apply_ailment", &LuaCharacter::apply_ailment,
                                         "recruit_as_ally", &LuaCharacter::recruit_as_ally,
                                         "set_flag", &LuaCharacter::set_flag,
-                                        "gain_skill", &LuaCharacter::gain_skill,
+                                        "gain_skill", sol::overload(&LuaCharacter::gain_skill, &LuaCharacter::gain_skill_stock),
                                         "gain_skill_exp", &LuaCharacter::gain_skill_exp,
                                         "hp", sol::readonly(&character::hp),
                                         "max_hp", sol::readonly(&character::max_hp),
@@ -764,6 +771,7 @@ void init_usertypes(lua_env& lua)
                                      "position", &item::position,
                                      "number", &item::number,
                                      "id", &item::id,
+                                     "count", &item::count,
                                      "name", sol::property([](item& i) { return elona::itemname(i.index); })
         );
 }
@@ -804,7 +812,10 @@ void init_enums(sol::table& Elona)
         "Room", tile_kind_t::room,
         "Fog", tile_kind_t::fog
         );
+
+    // This table is too big to be defined using create_with.
     sol::table CharaFlag = Enums.create_named("CharaFlag");
+
     std::map<std::string, int> chara_flags = {
         // Intrinsic flags (reset on every character refresh)
         {"IsFloating", 5},

@@ -16,7 +16,7 @@ local rods = {581, 570, 565, 551, 545, 518, 517, 485, 480, 412, 391,
 local all = table.merge(table.deepcopy(potions), table.deepcopy(rods), true)
 
 local potion_switcher = 241
-local rod_switcher = 220
+local rod_switcher = 186
 
 local function make_sandbag(x, y, chara_id)
    Item.create(x, y, 733, 1)
@@ -26,10 +26,15 @@ local function make_sandbag(x, y, chara_id)
 end
 
 local function make_item_variants(x, y, item_id)
-   for _, curse_state in ipairs(Enums.CurseState) do
+   for _, curse_state in pairs({Enums.CurseState.Blessed,
+                                Enums.CurseState.None,
+                                Enums.CurseState.Cursed}) do
       local item = Item.create(x, y, item_id, 1)
       item.curse_state = curse_state
       item.identify_state = Enums.IdentifyState.Completely
+      item.count = 999
+      GUI.txt_color(4)
+      GUI.txt(item.index .. ", ")
    end
 end
 
@@ -49,15 +54,24 @@ local function switch_item_type(chara)
 
    for i, item in Item.iter(5080, 5480) do
       if table.find(all, function(id) return item.id == id end) then
-         GUI.txt(item.name .. ", ")
+         GUI.txt_color(3)
+         GUI.txt(item.index .. ", ")
          Item.remove(item)
       end
    end
 
    for i, id in ipairs(list) do
-      local x = (i / 5) + 12
-      local y = (i % 5) + 25
+      local x = (i / 5) + 21
+      local y = (i % 5) + 23
       make_item_variants(x, y, id)
+   end
+end
+
+local function gain_all_spells()
+   for spell_id=400, 466 do
+      if spell_id ~= 426 and spell_id ~= 427 then
+         Chara.player():gain_skill(spell_id, 100, 10000);
+      end
    end
 end
 
@@ -65,10 +79,16 @@ local function setup()
    Store.potion_chara = make_sandbag(23, 28, potion_switcher)
    Store.rod_chara = make_sandbag(27, 28, rod_switcher)
 
-   Store.test_chara = make_sandbag(25, 23, 34)
+   Store.test_chara = make_sandbag(25, 22, 34)
 
    -- TODO add docs
    Chara.player():gain_skill_exp(14, 999999)
+   Chara.player():gain_skill_exp(155, 999999)
+   Chara.player():gain_skill_exp(174, 999999)
+   Chara.player():gain_skill(164, 9999)
+   Chara.player():gain_skill(172, 9999)
+   Chara.player():gain_skill(188, 9999)
+   gain_all_spells()
 end
 
 Event.register(Event.EventKind.MapInitialized, setup)

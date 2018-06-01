@@ -16,8 +16,7 @@ using namespace elona::testing;
 TEST_CASE("Test that _MOD_NAME is defined", "[Lua: Mods]")
 {
     elona::lua::lua_env lua;
-    lua.scan_all_mods(elona::filesystem::dir::mods());
-    lua.load_core_mod(elona::filesystem::dir::mods());
+    lua.reload();
 
     REQUIRE_NOTHROW(lua.load_mod_from_script("my_mod", ""));
 
@@ -27,8 +26,7 @@ TEST_CASE("Test that _MOD_NAME is defined", "[Lua: Mods]")
 TEST_CASE("Test that sandboxing removes unsafe functions", "[Lua: Mods]")
 {
     elona::lua::lua_env lua;
-    lua.scan_all_mods(elona::filesystem::dir::mods());
-    lua.load_core_mod(elona::filesystem::dir::mods());
+    lua.reload();
 
     REQUIRE_NOTHROW(lua.load_mod_from_script("my_mod", ""));
 
@@ -56,8 +54,7 @@ TEST_CASE("Test that sandboxing removes unsafe functions", "[Lua: Mods]")
 TEST_CASE("Test no access to os/io", "[Lua: Mods]")
 {
     elona::lua::lua_env lua;
-    lua.scan_all_mods(elona::filesystem::dir::mods());
-    lua.load_core_mod(elona::filesystem::dir::mods());
+    lua.reload();
 
     REQUIRE_NOTHROW(lua.load_mod_from_script("my_mod", ""));
 
@@ -68,8 +65,7 @@ TEST_CASE("Test no access to os/io", "[Lua: Mods]")
 TEST_CASE("Test usage of store in mod", "[Lua: Mods]")
 {
     elona::lua::lua_env lua;
-    lua.scan_all_mods(elona::filesystem::dir::mods());
-    lua.load_core_mod(elona::filesystem::dir::mods());
+    lua.reload();
 
     REQUIRE_NOTHROW(lua.load_mod_from_script("test", "Store.thing = 1"));
 
@@ -82,8 +78,7 @@ TEST_CASE("Test usage of store in mod", "[Lua: Mods]")
 TEST_CASE("Test invalid usage of store in main state", "[Lua: Mods]")
 {
     elona::lua::lua_env lua;
-    lua.scan_all_mods(elona::filesystem::dir::mods());
-    lua.load_core_mod(elona::filesystem::dir::mods());
+    lua.reload();
 
     REQUIRE_NOTHROW(lua.load_mod_from_script("test", "Store.thing = 1"));
 
@@ -95,8 +90,7 @@ TEST_CASE("Test invalid usage of store in main state", "[Lua: Mods]")
 TEST_CASE("Test modification of store inside callback", "[Lua: Mods]")
 {
     elona::lua::lua_env lua;
-    lua.scan_all_mods(elona::filesystem::dir::mods());
-    lua.load_core_mod(elona::filesystem::dir::mods());
+    lua.reload();
 
     REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
@@ -123,8 +117,7 @@ Event.register(Event.EventKind.AllTurnsFinished, my_turn_handler)
 TEST_CASE("Test isolation of mod environments", "[Lua: Mods]")
 {
     elona::lua::lua_env lua;
-    lua.scan_all_mods(elona::filesystem::dir::mods());
-    lua.load_core_mod(elona::filesystem::dir::mods());
+    lua.reload();
 
     REQUIRE_NOTHROW(lua.load_mod_from_script("first", R"(Store.thing = 42)"));
     REQUIRE_NOTHROW(lua.load_mod_from_script("second", R"(Store.thing = "dood")"));
@@ -142,8 +135,7 @@ TEST_CASE("Test isolation of mod environments", "[Lua: Mods]")
 TEST_CASE("Test complex nested table assignment", "[Lua: Mods]")
 {
     elona::lua::lua_env lua;
-    lua.scan_all_mods(elona::filesystem::dir::mods());
-    lua.load_core_mod(elona::filesystem::dir::mods());
+    lua.reload();
 
     REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
