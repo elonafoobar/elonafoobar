@@ -60,13 +60,14 @@ public:
     void init(sol::state &state);
 
     /***
-     * Creates an API binding to the Store usertype on the given environment
+     * Creates an API binding to the Store usertype, for use in an
+     * environment.
      *
      * This does not automatically provide a reference to the store.
      * It needs to be set after this function is called (see the
      * constructor of mod_info in lua_env).
      */
-    void init(sol::state &state, sol::environment& env);
+    void init_no_attach(sol::state &state);
 private:
 
     /***

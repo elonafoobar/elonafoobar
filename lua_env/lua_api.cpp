@@ -90,6 +90,7 @@ bool is_alive(const lua_character_handle);
 bool is_player(const lua_character_handle);
 bool is_ally(const lua_character_handle);
 bool flag(const lua_character_handle, int);
+int count();
 sol::optional<lua_character_handle> player();
 sol::optional<lua_character_handle> create(const position_t&, int);
 sol::optional<lua_character_handle> create_xy(int, int, int);
@@ -115,6 +116,11 @@ bool Chara::is_player(const lua_character_handle handle)
 bool Chara::is_ally(const lua_character_handle handle)
 {
     return !Chara::is_player(handle) && conv_chara(handle).index <= 16;
+}
+
+int Chara::count()
+{
+    return gdata_other_character_count;
 }
 
 bool Chara::flag(const lua_character_handle handle, int flag)
@@ -163,6 +169,7 @@ void Chara::bind(sol::table& Elona)
     Chara.set_function("is_alive", Chara::is_alive);
     Chara.set_function("is_player", Chara::is_player);
     Chara.set_function("is_ally", Chara::is_ally);
+    Chara.set_function("count", Chara::count);
     Chara.set_function("flag", Chara::flag);
     Chara.set_function("player", Chara::player);
     Chara.set_function("create", sol::overload(Chara::create, Chara::create_xy));
@@ -496,12 +503,18 @@ void Rand::bind(sol::table& Elona)
 }
 
 namespace Item {
+int count();
 sol::optional<lua_item_handle> create(const position_t&, int, int);
 sol::optional<lua_item_handle> create_xy(int, int, int, int);
 bool has_enchantment(const lua_item_handle, int);
 void remove(lua_item_handle);
 
 void bind(sol::table& Elona);
+}
+
+int Item::count()
+{
+    return inv_sum(-1);
 }
 
 sol::optional<lua_item_handle> Item::create(const position_t& position, int id, int number)
@@ -536,6 +549,7 @@ void Item::remove(lua_item_handle handle)
 void Item::bind(sol::table& Elona)
 {
     sol::table Item = Elona.create_named("Item");
+    Item.set_function("count", Item::count);
     Item.set_function("create", sol::overload(Item::create, Item::create_xy));
     Item.set_function("remove", Item::remove);
     Item.set_function("has_enchantment", Item::has_enchantment);

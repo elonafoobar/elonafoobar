@@ -37,3 +37,5 @@ custom_see_handler("^table$", function() return "table", lua_url:format("2.5", "
 custom_see_handler("^function$", function() return "function", lua_url:format("2.6", "") end)
 custom_see_handler("^userdata$", function() return "userdata", lua_url:format("2.7", "") end)
 custom_see_handler("^array$", function() return "array", lua_url:format("11.1", "") end)
+custom_see_handler("^iterator$", function() return "iterator", lua_url:format("7.3", "") end)
+

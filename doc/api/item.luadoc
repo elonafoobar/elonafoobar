@@ -2,6 +2,10 @@
 --  @usage local Item = Elona.require("Item")
 module "Item"
 
+--- Returns the number of items on the ground.
+-- @treturn num the item count
+function count() end
+
 --- Attempts to create an item of the given quantity at a position.
 --- Returns the item stack if it was created, nil otherwise.
 -- @function create
@@ -26,5 +30,5 @@ function remove(item) end
 --- Iterates between two item indices.
 -- @tparam num from the starting index
 -- @tparam num to the ending index
--- @return table an item iterator
+-- @treturn iterator an item iterator
 function iter(from, to) end

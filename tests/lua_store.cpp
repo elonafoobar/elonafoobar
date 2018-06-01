@@ -221,8 +221,8 @@ TEST_CASE("Test isolation between environments", "[Lua: Store]")
     sol::environment second_env(sol, sol::create, sol.globals());
     elona::lua::store first_store;
     elona::lua::store second_store;
-    first_store.init(sol, first_env);
-    second_store.init(sol, second_env);
+    first_store.init_no_attach(sol);
+    second_store.init_no_attach(sol);
     first_env["Store"] = first_store;
     second_env["Store"] = second_store;
 

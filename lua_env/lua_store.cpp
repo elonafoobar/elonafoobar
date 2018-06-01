@@ -24,10 +24,10 @@ void store::init(sol::state& state)
     state["Store"] = this;
 }
 
-void store::init(sol::state& state, sol::environment& env)
+void store::init_no_attach(sol::state& state)
 {
     bind(state);
-    // Set the pointer to this store outside of here.
+    // The caller will set the pointer to this store outside of here.
 }
 
 void store::bind(sol::state& state)
@@ -35,7 +35,7 @@ void store::bind(sol::state& state)
     //sol::table metatable = state.create_table_with();
 
     state.new_usertype<lua::store>("LuaStore",
-                                   sol::meta_function::new_index , [](lua::store& s, std::string key, const sol::object val, sol::this_state tstate){
+                                   sol::meta_function::new_index , [](lua::store& s, std::string key, const sol::object val){
         s.set(key, val);
                                    },
                                    sol::meta_function::index , [](lua::store& s, std::string key, sol::this_state tstate) {

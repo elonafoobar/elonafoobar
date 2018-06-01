@@ -41,7 +41,7 @@ struct mod_info
 
             env["_MOD_NAME"] = name;
             store = std::make_shared<lua::store>();
-            store->init(*state, env);
+            store->init_no_attach(*state);
             env.set("Store", store);
         }
     mod_info(const mod_info&) = delete;

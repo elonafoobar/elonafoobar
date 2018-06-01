@@ -21,6 +21,15 @@ function is_ally(character) end
 -- @treturn LuaCharacter (mut) a reference to the player
 function player() end
 
+--- Returns the number of other characters in the current map.
+-- @treturn num the character count
+function count() end
+
+--- Gets a flag on a character.
+-- @tparam LuaCharacter chara (const) the character to get the flag from
+-- @tparam Enums.CharaFlag flag the flag to get
+function flag(chara, flag) end
+
 --- Attempts to create a character at a given position.
 --- Returns the character if creation succeeded, nil otherwise.
 -- @tparam LuaPosition position (const) position to create the character at
@@ -29,13 +38,8 @@ function player() end
 -- @treturn[2] nil
 function create(position, id) end
 
---- Gets a flag on a character.
--- @tparam LuaCharacter chara (const) the character to get the flag from
--- @tparam Enums.CharaFlag flag the flag to get
-function flag(chara, flag) end
-
 --- Iterates between two character indices.
 -- @tparam num from the starting index
 -- @tparam num to the ending index
--- @return table a character iterator
+-- @treturn iterator a character iterator
 function iter(from, to) end
