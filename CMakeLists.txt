@@ -181,16 +181,16 @@ endif()
 
 # Copy folders
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                   COMMAND ${CMAKE_COMMAND} -E copy_directory
+                   COMMAND ${CMAKE_COMMAND} -E copy_if_different
                    "${CMAKE_CURRENT_SOURCE_DIR}/runtime"
                    "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                   COMMAND ${CMAKE_COMMAND} -E copy_directory
+                   COMMAND ${CMAKE_COMMAND} -E copy_if_different
                    "${CMAKE_CURRENT_SOURCE_DIR}/data"
                    "$<TARGET_FILE_DIR:${PROJECT_NAME}>/data")
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                   COMMAND ${CMAKE_COMMAND} -E copy_directory
+                   COMMAND ${CMAKE_COMMAND} -E copy_if_different
                    "${CMAKE_CURRENT_SOURCE_DIR}/lang"
                    "$<TARGET_FILE_DIR:${PROJECT_NAME}>/lang")
 
@@ -198,23 +198,23 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 # Copy assets from Elona 1.22 if they are present
 if(EXISTS "${CMAKE_PREFIX_PATH}/elona")
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                     COMMAND ${CMAKE_COMMAND} -E copy_directory
+                     COMMAND ${CMAKE_COMMAND} -E copy_if_different
                      "${CMAKE_PREFIX_PATH}/elona/graphic"
                      "$<TARGET_FILE_DIR:${PROJECT_NAME}>/graphic")
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                     COMMAND ${CMAKE_COMMAND} -E copy_directory
+                     COMMAND ${CMAKE_COMMAND} -E copy_if_different
                      "${CMAKE_PREFIX_PATH}/elona/map"
                      "$<TARGET_FILE_DIR:${PROJECT_NAME}>/map")
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                     COMMAND ${CMAKE_COMMAND} -E copy_directory
+                     COMMAND ${CMAKE_COMMAND} -E copy_if_different
                      "${CMAKE_PREFIX_PATH}/elona/original"
                      "$<TARGET_FILE_DIR:${PROJECT_NAME}>/original")
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                     COMMAND ${CMAKE_COMMAND} -E copy_directory
+                     COMMAND ${CMAKE_COMMAND} -E copy_if_different
                      "${CMAKE_PREFIX_PATH}/elona/sound"
                      "$<TARGET_FILE_DIR:${PROJECT_NAME}>/sound")
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                     COMMAND ${CMAKE_COMMAND} -E copy_directory
+                     COMMAND ${CMAKE_COMMAND} -E copy_if_different
                      "${CMAKE_PREFIX_PATH}/elona/user"
                      "$<TARGET_FILE_DIR:${PROJECT_NAME}>/user")
   message("Elona 1.22 distribution found.")
@@ -340,7 +340,7 @@ INSTALL(CODE "
 
 if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                     COMMAND ${CMAKE_COMMAND} -E copy_directory
+                     COMMAND ${CMAKE_COMMAND} -E copy_if_different
                      "${CMAKE_CURRENT_SOURCE_DIR}/tests/data"
                      "$<TARGET_FILE_DIR:${PROJECT_NAME}>/tests/data")
 endif()
