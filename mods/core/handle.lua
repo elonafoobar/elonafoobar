@@ -179,11 +179,17 @@ end
 
 -- Chara.iter(from, to)
 function Handle.iter_charas(from, to)
+   if from > to then
+      return nil
+   end
    return iter, {handles=Handle.CharaHandles, to=to}, from
 end
 
 -- Item.iter(from, to)
 function Handle.iter_items(from, to)
+   if from > to then
+      return nil
+   end
    return iter, {handles=Handle.ItemHandles, to=to}, from
 end
 

@@ -4,7 +4,7 @@ module "Enums"
 
 --- The identification state of an item.
 -- @enum IdentifyState
--- @usage local item = Item.create(10, 10, 792 3)
+-- @usage local item = Item.create(10, 10, 792, 3)
 --item.identify_state = Enums.IdentifyState.Completely
 -- @tfield Enums.IdentifyState Unidentified
 -- @tfield Enums.IdentifyState Partly

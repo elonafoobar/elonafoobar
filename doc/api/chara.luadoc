@@ -24,7 +24,7 @@ function player() end
 --- Attempts to create a character at a given position.
 --- Returns the character if creation succeeded, nil otherwise.
 -- @tparam LuaPosition position (const) position to create the character at
--- @tparam num id the character prototype id
+-- @tparam num id the character prototype ID
 -- @treturn[1] LuaCharacter the created character
 -- @treturn[2] nil
 function create(position, id) end
@@ -33,3 +33,9 @@ function create(position, id) end
 -- @tparam LuaCharacter chara (const) the character to get the flag from
 -- @tparam Enums.CharaFlag flag the flag to get
 function flag(chara, flag) end
+
+--- Iterates between two character indices.
+-- @tparam num from the starting index
+-- @tparam num to the ending index
+-- @return table a character iterator
+function iter(from, to) end

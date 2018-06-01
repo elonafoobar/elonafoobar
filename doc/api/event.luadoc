@@ -17,7 +17,7 @@ module "Event"
 -- @usage local GUI = Elona.require("GUI")
 -- local Event = Elona.require("Event")
 -- local function my_chara_moved_handler(chara)
---     GUI.txt("A character with ID " .. chara.idx .. " is about to move. ")
+--     GUI.txt("The character " .. chara.name .. " is about to move. ")
 -- end
 --
 -- Event.register(Event.EventKind.CharaMoved, my_chara_moved_handler)

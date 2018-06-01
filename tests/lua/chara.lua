@@ -60,4 +60,20 @@ lrun("test Chara.create", function()
         lequal(putit.position.y, 8)
 end)
 
+lrun("test Chara.iter", function()
+        Testing.start_in_debug_map()
+
+        Chara.create(0, 0, 3)
+        Chara.create(0, 1, 3)
+
+        local count = tally()
+        lequal(count, 3)
+
+        Chara.create(0, 2, 3)
+
+        local count = tally()
+        lequal(count, 4)
+end)
+
+
 assert(lresults())

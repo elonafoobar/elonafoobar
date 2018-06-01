@@ -1,7 +1,7 @@
 --- A set of events that can be listened for using the <code>Event</code> module.
 -- @see Event
 -- @usage local Event = Elona.require("Event")
--- function my_chara_moved_handler(chara)
+-- local function my_chara_moved_handler(chara)
 --    -- your code here
 -- end
 -- Event.register(Event.EventKind.CharaMoved, my_chara_moved_handler)
@@ -50,12 +50,12 @@ module "Event.EventKind"
 
 --- Fired when a character is about to start moving.
 -- @event CharaMoved
--- @tfield LuaCharacter chara the character that moved
+-- @tfield LuaCharacter chara the character that is moving
 -- @usage local GUI = Elona.require("GUI")
 -- local Event = Elona.require("Event")
 --
 -- local function my_chara_moved_handler(chara)
---     GUI.txt("A character with ID " .. chara.idx .. " is about to move. ")
+--     GUI.txt("The character " .. chara.name .. " is about to move. ")
 -- end
 --
 -- Event.register(Event.EventKind.CharaMoved, my_chara_moved_handler)
@@ -63,7 +63,7 @@ module "Event.EventKind"
 --- Fired when a player's turn has just begun.
 -- @event PlayerTurn
 
---- Fired when all characters have finished acting this turn.
+--- Fired when all characters have finished their actions this turn.
 -- @event AllTurnsFinished
 
 --- Fired after a map has been either created or loaded.
@@ -73,7 +73,7 @@ module "Event.EventKind"
 -- local Map = Elona.require("Map")
 --
 -- local function place_characters()
---     for i in 0, 5 do
+--     for i=0, 50 do
 --         local pos = Map.random_pos()
 --         Chara.create(pos, 3)
 --     end

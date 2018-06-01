@@ -2,7 +2,13 @@
 -- @classmod LuaCharacter
 
 --- [R] The index of this character in the global characters array.
--- @tfield num idx
+-- @tfield num index
+
+--- [R] The prototype ID of this character.
+-- @tfield num id
+
+--- [R] The character's proper name without any qualifiers.
+-- @tfield string name
 
 --- [RW] The character's position.
 -- @tfield LuaPosition position
@@ -51,13 +57,35 @@ function apply_ailment(ailment, power) end
 function recruit_as_ally() end
 
 --- Sets a flag on a character.
+--- <b>Note</b>: Currently, all flags up to
+--- <code>IsQuickTempered</code> are "intrinsic" and are always reset
+--- when a character is refreshed each turn. To change these flags,
+--- you must call this function inside a handler for
+--- <code>EventKind.CharaRefreshed</code>, or the flag will be reset
+--- later.
 -- @tparam Enums.CharaFlag flag the flag to set
 -- @tparam bool value the flag's new value
--- @usage local chara = Chara.player()
---chara:set_flag(Enums.CharaFlag.IsFloating, true)
+-- @usage local Event = Elona.require("Event")
+-- local Enums = Elona.require("Enums")
+--
+-- local function make_invisible(chara)
+--   chara:set_flag(Enums.CharaFlag.IsInvisible, true) -- intrinsic, reset on refresh
+-- end
+--
+-- -- force this flag to be overridden after a character is refreshed.
+-- Event.register(Event.EventKind.CharaRefreshed, make_invisible)
+-- Event.register(Event.EventKind.CharaCreated, make_invisible)
+
 function set_flag(flag, value) end
 
---- Makes a character gain experience in a skill.
--- @tparam num id the skill id
+--- Makes a character gain a new skill or spell. This only has an
+--- effect if the character does not already know the skill/spell.
+-- @tparam num id the skill/spell ID
+-- @tparam num initial_level the intial skill/spell level
+-- @tparam[opt] num initial_stock the initial spell stock for spells
+function gain_skill(id, initial_level, initial_stock) end
+
+--- Makes a character gain experience in a skill or spell.
+-- @tparam num id the skill/spell ID
 -- @tparam num amount the amount of experience
 function gain_skill_exp(id, amount) end

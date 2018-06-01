@@ -9,13 +9,21 @@ local potions = {736, 711, 706, 626, 577, 566, 559, 519, 433, 432,
 429, 382, 379, 376, 375, 372, 370, 368, 364, 287, 286, 285, 262, 76,
 75, 74, 72, 71, 70, 69, 68, 30, 29, 28, 27}
 
+local scrolls = {737, 709, 638, 632, 549, 515, 509, 508, 507, 506,
+502, 501, 500, 479, 431, 430, 411, 398, 395, 390, 389, 388, 384, 363,
+362, 288, 245, 244, 243, 242, 236, 209, 17, 16, 15, 14}
+
 local rods = {581, 570, 565, 551, 545, 518, 517, 485, 480, 412, 391,
 385, 377, 366, 290, 203, 202, 176, 175, 125, 123, 122, 121, 120, 119,
 19, 18}
 
-local all = table.merge(table.deepcopy(potions), table.deepcopy(rods), true)
+local all = table.merge(table.merge(table.deepcopy(potions),
+                                    table.deepcopy(scrolls),
+                                    true),
+                        table.deepcopy(rods), true)
 
 local potion_switcher = 241
+local scroll_switcher = 100
 local rod_switcher = 186
 
 local function make_sandbag(x, y, chara_id)
@@ -29,12 +37,10 @@ local function make_item_variants(x, y, item_id)
    for _, curse_state in pairs({Enums.CurseState.Blessed,
                                 Enums.CurseState.None,
                                 Enums.CurseState.Cursed}) do
-      local item = Item.create(x, y, item_id, 1)
+      local item = Item.create(x, y, item_id, 10)
       item.curse_state = curse_state
       item.identify_state = Enums.IdentifyState.Completely
       item.count = 999
-      GUI.txt_color(4)
-      GUI.txt(item.index .. ", ")
    end
 end
 
@@ -47,6 +53,9 @@ local function switch_item_type(chara)
    elseif chara.index == Store.rod_chara.index then
       list = rods
       GUI.txt("*rod* ")
+   elseif chara.index == Store.scroll_chara.index then
+      list = scrolls
+      GUI.txt("*scroll* ")
    else
       GUI.txt_color(0)
       return
@@ -54,8 +63,6 @@ local function switch_item_type(chara)
 
    for i, item in Item.iter(5080, 5480) do
       if table.find(all, function(id) return item.id == id end) then
-         GUI.txt_color(3)
-         GUI.txt(item.index .. ", ")
          Item.remove(item)
       end
    end
@@ -77,6 +84,7 @@ end
 
 local function setup()
    Store.potion_chara = make_sandbag(23, 28, potion_switcher)
+   Store.scroll_chara = make_sandbag(25, 28, scroll_switcher)
    Store.rod_chara = make_sandbag(27, 28, rod_switcher)
 
    Store.test_chara = make_sandbag(25, 22, 34)

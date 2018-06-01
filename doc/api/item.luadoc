@@ -6,7 +6,7 @@ module "Item"
 --- Returns the item stack if it was created, nil otherwise.
 -- @function create
 -- @tparam LuaPosition position (const) position to create the item at
--- @tparam num id the item prototype id
+-- @tparam num id the item prototype ID
 -- @tparam num number the number of items to create
 -- @treturn[1] LuaItem the created item stack
 -- @treturn[2] nil
@@ -14,6 +14,17 @@ function create(position, id, number) end
 
 --- Checks if an item has an enchantment.
 -- @tparam LuaItem item (const) an item
--- @tparam num id the id of the enchantment
+-- @tparam num id the ID of the enchantment
 -- @treturn bool true if the item has the enchantment
 function has_enchantment(item, id) end
+
+--- Removes this item from the game world. The item passed in will no
+--- longer be valid for use.
+-- @tparam LuaItem item (mut) an item
+function remove(item) end
+
+--- Iterates between two item indices.
+-- @tparam num from the starting index
+-- @tparam num to the ending index
+-- @return table an item iterator
+function iter(from, to) end
