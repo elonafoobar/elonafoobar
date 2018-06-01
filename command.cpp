@@ -2814,7 +2814,8 @@ turn_result_t do_open_command()
     if (inv[ci].count != 0)
     {
         invfile = inv[ci].count;
-        invcontainer(1) = ci;
+        invcontainer(1) = inv[ci].id;
+        const auto container_ci = ci;
         if (inv[ci].id == 641)
         {
             refweight = -1;
@@ -2872,7 +2873,7 @@ turn_result_t do_open_command()
                     + u8"."s));
             invctrl(1) = 1;
         }
-        if (invfile == 6 || inv[invcontainer(1)].id == 641)
+        if (invfile == 6 || invcontainer(1) == 641)
         {
             if (invfile == 6)
             {
@@ -2897,7 +2898,7 @@ turn_result_t do_open_command()
         ctrl_file(file_operation2_t::_3, u8"shoptmp.s2");
         if (refweight != 0)
         {
-            inv[invcontainer(1)].weight = refweight;
+            inv[container_ci].weight = refweight;
             refresh_burden_state();
         }
         update_screen();
