@@ -35,7 +35,8 @@ In all commits, the C++ source code should be formatted by `clang-format`.
 
 We use Git flow. See http://nvie.com/posts/a-successful-git-branching-model/ for details, and we recommend this tool: https://github.com/nvie/gitflow.
 
-
+# Code style
+See [CODE_STYLE.md](CODE_STYLE.md).
 
 # Commit messages
 
