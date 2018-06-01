@@ -16445,6 +16445,7 @@ int pick_up_item()
         inv[ci].own_state = 0;
     }
     ibitmod(12, ci, 0);
+    item_checkknown(ci);
     int stat = item_stack(cc, ci);
     if (stat == 0)
     {
