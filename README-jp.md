@@ -77,7 +77,7 @@ Visual Studioを使ってデバッグする場合は、`build\ElonaFoobar.sln`�
 
 # How To Contribute
 
-詳細はCONTRIBUTING.mdを参照してください。
+詳細は[CONTRIBUTING.md](CONTRIBUTING.md)を参照してください。
 
 
 
