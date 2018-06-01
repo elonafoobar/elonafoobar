@@ -5,7 +5,7 @@
 #include "../character.hpp"
 #include "../enums.hpp"
 #include "../filesystem.hpp"
-#include "../foobar_save.hpp"
+#include "../gdata.hpp"
 #include "../init.hpp"
 #include "../item.hpp"
 #include "../itemgen.hpp"
