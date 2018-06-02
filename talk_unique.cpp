@@ -12,6 +12,7 @@
 #include "macro.hpp"
 #include "map_cell.hpp"
 #include "menu.hpp"
+#include "random.hpp"
 #include "shop.hpp"
 #include "status_ailment.hpp"
 #include "talk.hpp"

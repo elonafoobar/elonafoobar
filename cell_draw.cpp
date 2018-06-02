@@ -7,6 +7,7 @@
 #include "item.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 using namespace elona;
@@ -526,26 +527,22 @@ void cell_draw()
             const int x_ = repw(1) + repw - 1 - cnt;
             int px_ = 0;
             int py_ = 0;
-            if (reph(3) == y)
+            if (reph(3) == y && x_ == repw(2) && cdata[0].state == 1)
             {
-                if (x_ == repw(2))
+                px_ =
+                    (cdata[0].position.x - scx) * inf_tiles + inf_screenx - 48;
+                if (scxbk == scx)
                 {
-                    px_ = (cdata[0].position.x - scx) * inf_tiles + inf_screenx
-                        - 48;
-                    if (scxbk == scx)
-                    {
-                        px_ -= sxfix;
-                    }
-                    py_ = (cdata[0].position.y + 1 - scy) * inf_tiles
-                        + inf_screeny;
-                    if (scybk == scy)
-                    {
-                        py_ -= syfix;
-                    }
-                    gmode(5, inf_tiles, inf_tiles, 50 + flick_);
-                    pos(px_, py_);
-                    gcopy(3, 800, 208, 144, 48);
+                    px_ -= sxfix;
                 }
+                py_ = (cdata[0].position.y + 1 - scy) * inf_tiles + inf_screeny;
+                if (scybk == scy)
+                {
+                    py_ -= syfix;
+                }
+                gmode(5, inf_tiles, inf_tiles, 50 + flick_);
+                pos(px_, py_);
+                gcopy(3, 800, 208, 144, 48);
             }
             if (reph(2) == y && x_ == repw(2) && cdata[0].state == 1)
             {

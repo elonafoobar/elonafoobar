@@ -1089,8 +1089,11 @@ int get_trait_info(int traitmode, int tid)
                 u8"あなたの脳は原始化した。"s, u8"Your brain degenerates."s);
             return 1;
         }
-        sdata(165, 0) =
-            clamp(sdata(165, 0) + trait(tid) * 4, int{sdata(165, 0) > 0}, 9999);
+        if (sdata.get(165, 0).original_level != 0)
+        {
+            sdata(165, 0) = clamp(
+                sdata(165, 0) + trait(tid) * 4, int{sdata(165, 0) > 0}, 9999);
+        }
         return 1;
     }
     if (tid == 32)

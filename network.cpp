@@ -4,6 +4,7 @@
 #include "elona.hpp"
 #include "input.hpp"
 #include "macro.hpp"
+#include "random.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 

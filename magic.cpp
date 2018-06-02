@@ -24,6 +24,7 @@
 #include "mef.hpp"
 #include "menu.hpp"
 #include "quest.hpp"
+#include "random.hpp"
 #include "status_ailment.hpp"
 #include "trait.hpp"
 #include "ui.hpp"
@@ -183,10 +184,10 @@ int magic()
             }
             if (rapidmagic)
             {
-                efp = efp / 2 + 1;
-                dice1 = dice1 / 2 + 1;
-                dice2 = dice2 / 2 + 1;
-                bonus = bonus / 2 + 1;
+                elep = elep * 4 / 5 + 1;
+                dice1 = dice1 * 4 / 5 + 1;
+                dice2 = dice2 * 4 / 5 + 1;
+                bonus = bonus * 4 / 5 + 1;
             }
             switch (the_ability_db[efid]->sdataref1)
             {
@@ -652,6 +653,15 @@ int magic()
                         }
                     }
                 }
+                else if (efid == 660)
+                {
+                    if (is_in_fov(cc))
+                    {
+                        txt(lang(
+                            u8"「余分な機能は削除してしまえ」"s,
+                            u8"\"Delete.\""s));
+                    }
+                }
                 else if (is_in_fov(cc))
                 {
                     if (tc >= 16)
@@ -685,8 +695,6 @@ int magic()
                 }
                 if (efid == 660)
                 {
-                    txt(lang(
-                        u8"「余分な機能は削除してしまえ」"s, u8"\"Delete.\""s));
                     cdata[tc].hp = cdata[tc].max_hp / 12 + 1;
                     goto the_end;
                 }
@@ -723,7 +731,7 @@ int magic()
                     if (p != -1)
                     {
                         i = sdata.get(10 + p, tc).original_level
-                            - cdata[tc].attr_adjs[p];
+                            + cdata[tc].attr_adjs[p];
                         if (i > 0)
                         {
                             i = i * efp / 2000 + 1;
@@ -743,8 +751,7 @@ int magic()
             case 7:
                 if (cc == 0)
                 {
-                    if (gdata_other_character_count + 100
-                        >= ELONA_MAX_OTHER_CHARACTERS)
+                    if (gdata_crowd_density + 100 >= ELONA_MAX_OTHER_CHARACTERS)
                     {
                         txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
                         obvious = 0;
@@ -805,9 +812,9 @@ int magic()
                     {
                         dbid = 176;
                     }
-                    chara_create(
+                    const auto success = chara_create(
                         -1, dbid, cdata[tc].position.x, cdata[tc].position.y);
-                    if (efid != 643)
+                    if (success && efid != 643)
                     {
                         if (cdata[rc].id == cdata[cc].id)
                         {
@@ -842,6 +849,10 @@ int magic()
                     telex = cdata[tc].position.x;
                     teley = cdata[tc].position.y;
                     tc = cc;
+                    if (gdata_mount != 0 && gdata_mount == tc)
+                    {
+                        goto the_end;
+                    }
                 }
                 if (efid == 620)
                 {
@@ -869,7 +880,7 @@ int magic()
                     }
                     goto the_end;
                 }
-                if (efid != 619 && encfind(tc, 22) != -1)
+                if (efid != 619 && efid != 635 && encfind(tc, 22) != -1)
                 {
                     if (is_in_fov(tc))
                     {
@@ -881,7 +892,7 @@ int magic()
                 }
                 if (efid == 635)
                 {
-                    if (tc == cc)
+                    if (encfind(cc, 22) != -1)
                     {
                         if (is_in_fov(tc))
                         {
@@ -3482,7 +3493,10 @@ label_2181_internal:
         snd(100);
         {
             menu_result result = ctrl_inventory();
-            f = result.succeeded ? 1 : 0;
+            if (!result.succeeded)
+            {
+                break;
+            }
         }
         if (inv[ci].quality >= 4 || ibit(10, ci) == 1)
         {
@@ -4120,7 +4134,7 @@ label_2181_internal:
             {
                 continue;
             }
-            if (cnt <= 16)
+            if (belong_to_same_team(cdata[cc], cdata[cnt]))
             {
                 continue;
             }
@@ -4387,6 +4401,16 @@ label_2181_internal:
                         u8"\"You are so lowly.\""s,
                         u8"\"Get off me.\""s);
                 }
+            }
+        }
+        if (efid == 638)
+        {
+            if (is_in_fov(tc))
+            {
+                txt(lang(
+                    name(cc) + u8"は"s + name(tc) + u8"を睨み付けた。"s,
+                    name(cc) + u8" gaze"s + _s(cc) + u8" at "s + name(tc)
+                        + u8"."s));
             }
         }
         dmgcon(tc, status_ailment_t::dimmed, 200);

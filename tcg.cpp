@@ -6,6 +6,7 @@
 #include "filesystem.hpp"
 #include "input.hpp"
 #include "macro.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 

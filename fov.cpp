@@ -6,6 +6,8 @@
 namespace elona
 {
 
+std::array<std::array<int, 2>, 15> fovlist;
+
 int dy_at_modfov = 0;
 int dx_at_modfov = 0;
 int ay_at_modfov = 0;
@@ -32,6 +34,14 @@ bool is_in_fov(int cc)
 
 int fov_los(int prm_629, int prm_630, int prm_631, int prm_632)
 {
+    if (prm_629 < 0 || mdata(0) <= prm_629 || prm_630 < 0 || mdata(1) <= prm_630
+        || prm_631 < 0 || mdata(0) <= prm_631 || prm_632 < 0
+        || mdata(1) <= prm_632)
+    {
+        // Out of range
+        return 0;
+    }
+
     dy_at_modfov = prm_632 - prm_630;
     dx_at_modfov = prm_631 - prm_629;
     ay_at_modfov = std::abs(dy_at_modfov);
@@ -646,6 +656,44 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
     maxroute = p_at_modfov;
     return 1;
 }
+
+
+
+void init_fovlist()
+{
+    std::array<std::array<bool, 17>, 17> fovmap;
+    for (int y = 0; y < 17; ++y)
+    {
+        for (int x = 0; x < 17; ++x)
+        {
+            fovmap[y][x] = dist(x, y, 17 / 2, 17 / 2) <= 15 / 2;
+        }
+    }
+    for (int y = 0; y < 17; ++y)
+    {
+        bool f{};
+        for (int x = 0; x < 17; ++x)
+        {
+            if (fovmap[y][x])
+            {
+                if (!f)
+                {
+                    fovlist[y][0] = x;
+                    f = true;
+                }
+            }
+            else
+            {
+                if (f)
+                {
+                    fovlist[y][1] = x;
+                    break;
+                }
+            }
+        }
+    }
+}
+
 
 
 } // namespace elona

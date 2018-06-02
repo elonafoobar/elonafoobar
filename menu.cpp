@@ -18,6 +18,7 @@
 #include "menu.hpp"
 #include "network.hpp"
 #include "quest.hpp"
+#include "random.hpp"
 #include "trait.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -4503,42 +4504,38 @@ label_196901_internal:
         result.succeeded = false;
         return result;
     }
-    xnotesel(buff);
-    buff = "";
+    std::vector<std::string> traits_by_enchantments;
     for (int i = 0; i < 30; ++i)
     {
         if (cdata_body_part(tc, i) % 10000 != 0)
         {
             ci = cdata_body_part(tc, i) % 10000 - 1;
-            int cnt = 0;
-            for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
+            for (const auto& enc : inv[ci].enchantments)
             {
-                if (inv[ci].enchantments[cnt].id == 0)
-                {
+                if (enc.id == 0)
                     break;
-                }
-                get_enchantment_description(
-                    inv[ci].enchantments[cnt].id,
-                    inv[ci].enchantments[cnt].power,
-                    0,
-                    true);
-                if (s == ""s)
+                get_enchantment_description(enc.id, enc.power, 0, true);
+                if (!s(0).empty())
                 {
-                    continue;
+                    traits_by_enchantments.push_back(s);
                 }
-                xnoteadd(s);
             }
         }
     }
-    notesel(buff);
-    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
+    std::sort(
+        std::begin(traits_by_enchantments), std::end(traits_by_enchantments));
+    traits_by_enchantments.erase(
+        std::unique(
+            std::begin(traits_by_enchantments),
+            std::end(traits_by_enchantments)),
+        std::end(traits_by_enchantments));
+    for (const auto& trait : traits_by_enchantments)
     {
-        noteget(s, cnt);
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
         listn(0, listmax) =
             lang(his(tc, 1) + u8"装備は"s, cnven(his(tc, 1)) + u8" equipment "s)
-            + s;
+            + trait;
         ++listmax;
     }
     if (tc != 0)
@@ -5438,15 +5435,18 @@ label_1978_internal:
         {
             goto label_1977_internal;
         }
-        // TODO move the below somewhere else to decouple questteleport
+        // TODO move the below somewhere else to decouple quest_teleport
         tc = qdata(0, p);
         rq = p;
         client = tc;
         efid = 619;
         magic();
         tc = client;
-        questteleport = 1;
-        talk_to_npc();
+        if (cdata[0].state == 1)
+        {
+            quest_teleport = true;
+            talk_to_npc();
+        }
         if (chatteleport == 1)
         {
             chatteleport = 0;
@@ -6770,7 +6770,8 @@ int ctrl_ally()
         }
         if (allyctrl != 1)
         {
-            if (cdata[cnt].is_escorted() == 1)
+            if (cdata[cnt].is_escorted()
+                || cdata[cnt].is_escorted_in_sub_quest())
             {
                 continue;
             }

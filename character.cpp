@@ -16,6 +16,7 @@
 #include "lua_env/lua_env.hpp"
 #include "map_cell.hpp"
 #include "quest.hpp"
+#include "random.hpp"
 #include "range.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
@@ -977,7 +978,13 @@ void chara_place()
                 name(rc) + u8"は何かに潰されて息絶えた。"s,
                 name(rc) + u8" is killed."s));
             cdata[rc].state = 0;
+
             chara_killed(cdata[rc]);
+
+            // Exclude town residents because they occupy character slots even
+            // if they are dead.
+            modify_crowd_density(rc, -1);
+
         }
         if (cdata[rc].character_role != 0)
         {
@@ -1226,14 +1233,7 @@ void chara_refresh(int cc)
     cdata[cc].equipment_type = 0;
     attacknum = 0;
     cdata[cc].rate_to_pierce = 0;
-    if (sdata(186, cc))
-    {
-        cdata[cc].rate_of_critical_hit = int(std::sqrt(sdata(186, cc))) + 2;
-    }
-    else
-    {
-        cdata[cc].rate_of_critical_hit = 0;
-    }
+    cdata[cc].rate_of_critical_hit = 0;
     cdata[cc].curse_power = 0;
     cdata[cc].extra_attack = 0;
     cdata[cc].extra_shot = 0;
@@ -1446,6 +1446,7 @@ void chara_refresh(int cc)
                 {
                     cdata[cc].extra_shot +=
                         inv[rp].enchantments[cnt].power / 15;
+                    cdata[cc].extra_shot = 100;
                     continue;
                 }
                 if (rp2 == 21 || rp2 == 45 || rp2 == 46 || rp2 == 47)
@@ -1592,6 +1593,10 @@ void chara_refresh(int cc)
     {
         cdata[cc].extra_attack += int(std::sqrt(sdata(166, cc))) * 3 / 2 + 4;
     }
+    if (sdata(186, cc))
+    {
+        cdata[cc].rate_of_critical_hit += int(std::sqrt(sdata(186, cc))) + 2;
+    }
     if (cdata[cc].rate_of_critical_hit > 30)
     {
         cdata[cc].hit_bonus += (cdata[cc].rate_of_critical_hit - 30) * 2;
@@ -1610,15 +1615,14 @@ void chara_refresh(int cc)
 
 int relationbetween(int c1, int c2)
 {
-    (void)c2;
     if (cdata[c1].relationship >= -2)
     {
-        if (cdata[c1].relationship <= -3)
+        if (cdata[c2].relationship <= -3)
         {
             return -3;
         }
     }
-    else if (cdata[c1].relationship >= -2)
+    else if (cdata[c2].relationship >= -2)
     {
         return -3;
     }
@@ -1860,6 +1864,7 @@ void chara_vanquish(int cc)
     cdata[cc].state = 0;
     cdata[cc].character_role = 0;
     quest_check();
+    modify_crowd_density(cc, 1);
 }
 
 int chara_copy(int prm_848)
@@ -1934,6 +1939,9 @@ int chara_copy(int prm_848)
     cdata[c_at_m139].is_ridden() = false;
     cdata[c_at_m139].needs_refreshing_status() = true;
     cdata[c_at_m139].is_hung_on_sand_bag() = false;
+
+    modify_crowd_density(c_at_m139, 1);
+    ++npcmemory(1, cdata[c_at_m139].id);
     return 1;
 }
 
@@ -1995,12 +2003,6 @@ void chara_delete(int cc)
 int chara_relocate(int prm_784, int prm_785, int prm_786)
 {
     int tc_at_m125 = 0;
-    int x_at_m125 = 0;
-    int y_at_m125 = 0;
-    int p1_at_m125 = 0;
-    int p2_at_m125 = 0;
-    int p3_at_m125 = 0;
-    int hp_at_m125 = 0;
     int p_at_m125 = 0;
     int invrangecc_at_m125 = 0;
     int cnt2_at_m125 = 0;
@@ -2041,15 +2043,26 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
             chara_vanquish(tc_at_m125);
         }
     }
+
+    // Backups for changing
+    position_t position;
+    position_t initial_position;
+    int relationship;
+    int original_relationship;
+    int hate;
+    int enemy_id;
+    int hp;
     if (prm_786 == 1)
     {
-        x_at_m125 = cdata[tc_at_m125].position.x;
-        y_at_m125 = cdata[tc_at_m125].position.y;
+        // Change
+        position = cdata[tc_at_m125].position;
+        initial_position = cdata[tc_at_m125].initial_position;
+        relationship = cdata[tc_at_m125].relationship;
+        original_relationship = cdata[tc_at_m125].original_relationship;
+        hate = cdata[tc_at_m125].hate;
+        enemy_id = cdata[tc_at_m125].enemy_id;
+        hp = cdata[tc_at_m125].hp;
     }
-    p1_at_m125 = cdata[tc_at_m125].relationship;
-    p2_at_m125 = cdata[tc_at_m125].hate;
-    p3_at_m125 = cdata[tc_at_m125].state;
-    hp_at_m125 = cdata[tc_at_m125].hp;
     cdata[prm_784].item_which_will_be_used = 0;
     cdata[prm_784].is_livestock() = false;
     const auto tmp = inv_getheader(prm_784);
@@ -2099,13 +2112,14 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
     }
     if (prm_786 == 1)
     {
+        // Change
         cdata[tc_at_m125].state = 1;
-        cdata[tc_at_m125].position.x = x_at_m125;
-        cdata[tc_at_m125].position.y = y_at_m125;
-        cdata[tc_at_m125].relationship = p1_at_m125;
-        cdata[tc_at_m125].hate = p2_at_m125;
-        cdata[tc_at_m125].hp = hp_at_m125;
-        cdata[tc_at_m125].state = p3_at_m125;
+        cdata[tc_at_m125].position = position;
+        cdata[tc_at_m125].initial_position = initial_position;
+        cdata[tc_at_m125].relationship = relationship;
+        cdata[tc_at_m125].original_relationship = original_relationship;
+        cdata[tc_at_m125].hate = hate;
+        cdata[tc_at_m125].hp = hp;
         map(cdata[tc_at_m125].position.x, cdata[tc_at_m125].position.y, 1) =
             tc_at_m125 + 1;
     }
@@ -2149,10 +2163,21 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
     rc = tc_at_m125;
     wear_most_valuable_equipment_for_all_body_parts();
     chara_refresh(tc_at_m125);
+<<<<<<< HEAD
 
     // TODO handle transferring through Lua robustly
     lua::lua.on_chara_creation(cdata[tc_at_m125]);
 
+=======
+    if (tc_at_m125 < 57)
+    {
+        modify_crowd_density(prm_784, -1);
+    }
+    if (prm_784 < 57)
+    {
+        modify_crowd_density(tc_at_m125, 1);
+    }
+>>>>>>> f54479e0db1bcb2b1b285e185c17d63a041ca700
     return prm_784;
 }
 
@@ -2184,6 +2209,15 @@ int chara_armor_class(int cc)
     {
         return 171;
     }
+}
+
+
+
+bool belong_to_same_team(const character& c1, const character& c2)
+{
+    return (c1.relationship >= 0 && c2.relationship >= 0)
+        || (c1.relationship == -1 && c2.relationship == -1)
+        || (c1.relationship <= -2 && c2.relationship <= -2);
 }
 
 

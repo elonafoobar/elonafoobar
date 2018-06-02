@@ -14,6 +14,7 @@
 #include "main.hpp"
 #include "map.hpp"
 #include "mef.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 

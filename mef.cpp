@@ -7,6 +7,7 @@
 #include "fov.hpp"
 #include "item.hpp"
 #include "map.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 namespace elona

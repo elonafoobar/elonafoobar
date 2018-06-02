@@ -4,10 +4,10 @@
 #include "character.hpp"
 #include "config.hpp"
 #include "draw.hpp"
-#include "foobar_save.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 
@@ -175,9 +175,9 @@ void initialize_ui_constants()
     inf_raderx = 1;
     inf_raderw = 136;
     inf_screenw = windoww / inf_tiles + (windoww % inf_tiles != 0);
-    if (windowh > 768)
+    if (windowh > 1200)
     {
-        windowh = 768;
+        windowh = 1200;
     }
     inf_screenh = (windowh - inf_verh) / inf_tiles;
     if ((windowh - inf_verh) % inf_tiles != 0)
@@ -444,7 +444,7 @@ void render_hud()
     sy = inf_bary + 2 + vfix;
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        sx = inf_raderw + cnt * 47 + 168;
+        sx = inf_raderw + cnt * 47 + 168 - 2;
         if (cnt < 8)
         {
             if (cdata[0].attr_adjs[cnt] < 0)
@@ -456,7 +456,7 @@ void render_hud()
                 color(0, 0, 0);
             }
             pos(sx, sy);
-            gcopy(3, 0, 440, 24, 16);
+            gcopy(3, 0, 440, 28, 16);
             mes(sdata(10 + cnt, 0)); // TODO coupling
             color(0, 0, 0);
         }
@@ -1015,8 +1015,8 @@ void render_autoturn_animation()
     {
         label_1433();
         msgtemp = "";
+        render_hud();
     }
-    render_hud();
     if (cdata[0].continuous_action_id == 7)
     {
         if (rowactre == 0)
@@ -1224,10 +1224,10 @@ void update_slight()
     int lx = 0;
     slight.clear();
     ++msync;
-    sy(2) = cdata[0].position.y - 7;
-    sy(3) = cdata[0].position.y + 7;
-    sy(4) = 7 - cdata[0].position.y;
-    sx(3) = cdata[0].position.x - 7 - 2;
+    sy(2) = cdata[0].position.y - 17 / 2;
+    sy(3) = cdata[0].position.y + 17 / 2;
+    sy(4) = 17 / 2 - cdata[0].position.y;
+    sx(3) = cdata[0].position.x - 17 / 2;
     if (config::instance().scroll)
     {
         repw(0) = inf_screenw + 2;
@@ -1296,10 +1296,10 @@ void update_slight()
             {
                 if (sy < sy(3))
                 {
-                    sx(2) = fovlist(0, sy + sy(4)) + sx(3);
+                    sx(2) = fovlist[sy + sy(4)][0] + sx(3);
                     if (sx >= sx(2))
                     {
-                        if (sx < fovlist(1, sy + sy(4)) + sx(3))
+                        if (sx < fovlist[sy + sy(4)][1] + sx(3))
                         {
                             if (fov_los(
                                     cdata[0].position.x,

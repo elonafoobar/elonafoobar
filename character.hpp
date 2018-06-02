@@ -528,6 +528,8 @@ void chara_set_generation_filter();
 
 int access_character_info();
 
+bool belong_to_same_team(const character& c1, const character& c2);
+
 
 } // namespace elona
 

@@ -87,8 +87,8 @@ set(CORE_SOURCES
     filesystem.cpp
     fish.cpp
     food.cpp
-    foobar_save.cpp
     fov.cpp
+    gdata.cpp
     get_card_info.cpp
     get_random_item_id.cpp
     get_random_npc_id.cpp

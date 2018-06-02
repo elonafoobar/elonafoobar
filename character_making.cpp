@@ -12,6 +12,7 @@
 #include "main_menu.hpp"
 #include "menu.hpp"
 #include "race.hpp"
+#include "random.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 

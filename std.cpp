@@ -965,18 +965,6 @@ void func_1(const std::string&, int)
 
 
 
-void xnotesel(std::string&)
-{
-}
-
-
-
-void xnoteadd(const std::string&)
-{
-}
-
-
-
 // FIXME:
 // The texture which created with SDL_TEXTUREACCESS_TARGET cannot be
 // locked/unlocked.

@@ -12,6 +12,29 @@
 #include "random.hpp"
 #include "variables.hpp"
 
+
+namespace
+{
+
+
+int calculate_original_value(const item& ci)
+{
+    if (the_item_db[ci.id]->category == 60000)
+    {
+        return ci.value * 100 / (80 + std::max(1, ci.subname) * 20)
+            - the_item_material_db[ci.material]->value * 2;
+    }
+    else
+    {
+        return ci.value * 100 / the_item_material_db[ci.material]->value;
+    }
+}
+
+
+} // namespace
+
+
+
 namespace elona
 {
 
@@ -662,7 +685,6 @@ void determine_item_material()
 
 void change_item_material()
 {
-    int originalvalue = 0;
     inv[ci].color = 0;
     p = inv[ci].material;
     reftype = the_item_db[inv[ci].id]->category;
@@ -671,10 +693,12 @@ void change_item_material()
     {
         enchantment_remove(ci, e.id, e.power);
     }
-    originalvalue = inv[ci].value * 100 / the_item_material_db[p]->value;
+
+    const auto original_value = calculate_original_value(inv[ci]);
+
     dbid = inv[ci].id;
     access_item_db(10);
-    inv[ci].value = originalvalue;
+    inv[ci].value = original_value;
     if (fixmaterial != 0)
     {
         inv[ci].material = fixmaterial;

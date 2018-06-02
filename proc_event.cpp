@@ -226,7 +226,7 @@ void proc_event()
         randomize();
         flt();
         fixlv = 4;
-        initlv = gdata_current_dungeon_level / 4;
+        initlv = clamp(gdata_current_dungeon_level / 4, 50, 250);
         chara_create(-1, c, -3, 0);
         cdata[rc].is_lord_of_dungeon() = true;
         cdata[rc].relationship = -3;

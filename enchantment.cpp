@@ -1,6 +1,7 @@
 #include "enchantment.hpp"
 #include "elona.hpp"
 #include "item.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 namespace elona
@@ -519,7 +520,7 @@ int enchantment_generate(int prm_451)
         return 0;
     }
     i_at_m47 = 0;
-    exrand_rnd(p_at_m47, sum_at_m47);
+    p_at_m47 = rnd(sum_at_m47);
     for (int cnt = 0, cnt_end = (max_at_m47); cnt < cnt_end; ++cnt)
     {
         if (p_at_m47 < enclist(1, cnt))
@@ -764,7 +765,7 @@ int enchantment_add(
                 return 0;
             }
             i_at_m48 = 0;
-            exrand_rnd(p_at_m48, sum_at_m48);
+            p_at_m48 = rnd(sum_at_m48);
             for (int cnt = 0, cnt_end = (max_at_m48); cnt < cnt_end; ++cnt)
             {
                 if (p_at_m48 < enclist(1, cnt))

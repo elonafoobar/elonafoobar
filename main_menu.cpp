@@ -7,6 +7,7 @@
 #include "input.hpp"
 #include "macro.hpp"
 #include "main_menu.hpp"
+#include "random.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 #include "version.hpp"

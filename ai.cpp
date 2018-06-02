@@ -198,7 +198,7 @@ turn_result_t ai_proc_basic()
                 int stat = can_do_ranged_attack();
                 if (stat == 1)
                 {
-                    label_2217();
+                    do_ranged_attack();
                     return turn_result_t::turn_end;
                 }
             }
@@ -254,7 +254,7 @@ turn_result_t ai_proc_basic()
                     int stat = can_do_ranged_attack();
                     if (stat == 1)
                     {
-                        label_2217();
+                        do_ranged_attack();
                         return turn_result_t::turn_end;
                     }
                 }
@@ -278,7 +278,7 @@ turn_result_t ai_proc_basic()
             int stat = can_do_ranged_attack();
             if (stat == 1)
             {
-                label_2217();
+                do_ranged_attack();
                 return turn_result_t::turn_end;
             }
         }
@@ -425,8 +425,8 @@ turn_result_t proc_npc_movement_event(bool retreat)
         {
             if (cdata[cc].enemy_id != tc)
             {
-                cell_swap(cc, tc);
-                if (is_in_fov(cc))
+                const auto did_swap = cell_swap(cc, tc);
+                if (did_swap && is_in_fov(cc))
                 {
                     txt(lang(
                         name(cc) + u8"は"s + name(tc) + u8"を押しのけた。"s,
@@ -452,7 +452,7 @@ turn_result_t proc_npc_movement_event(bool retreat)
             }
         }
     }
-    if (cc > 16)
+    if (cc >= 16)
     {
         if (cdata[cc].quality > 3)
         {
@@ -737,7 +737,7 @@ turn_result_t ai_proc_misc_map_events()
         }
     }
 label_2692_internal:
-    if (cc > 16)
+    if (cc >= 16)
     {
         if (mdata(6) == 3 || mdata(6) == 2)
         {
@@ -934,7 +934,6 @@ label_2692_internal:
                 {
                     flt(20);
                     p(0) = rnd(4);
-                    p(1) = 0;
                     if (p == 0 || cdata[cc].has_anorexia())
                     {
                         flttypemajor = 57000;
@@ -947,8 +946,8 @@ label_2692_internal:
                     {
                         flttypeminor = 52002;
                     }
-                    int stat = itemcreate(cc, p(1), -1, -1, 0);
-                    if (stat == 1)
+                    int stat = itemcreate(cc, 0, -1, -1, 0);
+                    if (stat == 1 && the_item_db[inv[ci].id]->is_drinkable)
                     {
                         if (inv[ci].id == 577)
                         {

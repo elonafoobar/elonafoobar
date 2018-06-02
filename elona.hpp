@@ -13,7 +13,7 @@
 #include <string>
 #include <unordered_map>
 #include "enums.hpp"
-#include "macro_gdata.hpp"
+#include "gdata.hpp"
 #include "snail/color.hpp"
 #include "snail/font.hpp"
 #include "snail/input.hpp"
@@ -542,12 +542,8 @@ void picload(const fs::path& file, int immediately = 0);
 void pos(int x, int y = 0);
 
 
-void randomize(std::random_device::result_type seed = std::random_device{}());
-
 
 void redraw();
-
-int rnd(int n);
 
 void screen(int window_id, int width, int height, int mode, int x, int y);
 
@@ -573,17 +569,8 @@ void wpoke(int& x, size_t index, int y);
 // imported functions
 
 
-void exrand_randomize(
-    std::random_device::result_type seed = std::random_device{}());
-
-void exrand_rnd(int& resul, int max);
 
 void func_1(const std::string&, int);
-
-void xnotesel(std::string&);
-
-
-void xnoteadd(const std::string&);
 
 void gfini(int width, int height);
 

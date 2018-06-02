@@ -195,9 +195,10 @@ label_20591:
             }
             if (inv[cnt].body_part != 0)
             {
-                if (mainweapon == -1)
+                if (reftype == 10000)
                 {
-                    if (reftype == 10000)
+                    if (mainweapon == -1
+                        || inv[cnt].body_part < inv[mainweapon].body_part)
                     {
                         mainweapon = cnt;
                     }
@@ -1672,9 +1673,20 @@ label_2061_internal:
                     {
                         f = 0;
                     }
-                    if (inv[ci].id == 16 || inv[ci].id == ELONA_MAX_CHARACTERS)
+                    // scroll of teleport/treasure map/deeds
+                    switch (inv[ci].id)
                     {
-                        f = 0;
+                    case 16:
+                    case 245:
+                    case 621:
+                    case 344:
+                    case 521:
+                    case 522:
+                    case 542:
+                    case 543:
+                    case 572:
+                    case 712: f = 0; break;
+                    default: break;
                     }
                 }
                 if (reftype == 52000)
@@ -1811,6 +1823,7 @@ label_2061_internal:
                         + u8"."s));
             }
             item_stack(0, ci, 1);
+            refresh_burden_state();
             invsubroutine = 0;
             result.succeeded = true;
             return result;
@@ -1927,6 +1940,17 @@ label_2061_internal:
         }
         if (invctrl == 23)
         {
+            if (invctrl(1) == 4)
+            {
+                if (ibit(13, ci))
+                {
+                    snd(27);
+                    txt(lang(
+                        u8"それはあなたの大事なものだ。<調べる>メニューから解除できる。"s,
+                        u8"It's set as no-drop. You can reset it from the <examine> menu."s));
+                    goto label_2060_internal;
+                }
+            }
             item_separate(ci);
             invsubroutine = 0;
             result.succeeded = true;

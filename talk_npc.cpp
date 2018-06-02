@@ -14,6 +14,7 @@
 #include "map_cell.hpp"
 #include "menu.hpp"
 #include "quest.hpp"
+#include "random.hpp"
 #include "shop.hpp"
 #include "talk.hpp"
 #include "ui.hpp"
@@ -822,7 +823,6 @@ talk_result_t talk_npc()
                 return talk_result_t::talk_npc;
             }
             randomize(adata(24, gdata_current_map));
-            exrand_randomize(adata(24, gdata_current_map));
             for (int cnt = 0; cnt < 50; ++cnt)
             {
                 arenaop(0) = 0;
