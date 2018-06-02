@@ -690,6 +690,8 @@ void Debug::bind(sol::table& Elona)
 namespace LuaCharacter
 {
 void damage_hp(character&, int);
+void damage_hp_source(character&, int, damage_source_t);
+void damage_hp_chara(character&, int, const lua_character_handle);
 void apply_ailment(character&, status_ailment_t, int);
 bool recruit_as_ally(character&);
 void set_flag(character&, int, bool);
@@ -700,13 +702,24 @@ void gain_skill_exp(character&, int, int);
 
 void LuaCharacter::damage_hp(character& self, int amount)
 {
-    assert(amount > 0); // TODO does this need verification?
-    elona::dmghp(self.index, amount, -11); // TODO defaults to unseen hand
+    LuaCharacter::damage_hp_source(self, amount, damage_source_t::unseen_hand);
+}
+
+void LuaCharacter::damage_hp_source(character& self, int amount, damage_source_t source)
+{
+    assert(amount > 0);
+    elona::dmghp(self.index, amount, static_cast<int>(source));
+}
+
+void LuaCharacter::damage_hp_chara(character& self, int amount, const lua_character_handle handle)
+{
+    assert(amount > 0);
+    elona::dmghp(self.index, amount, conv_chara(handle).index);
 }
 
 void LuaCharacter::apply_ailment(character& self, status_ailment_t ailment, int power)
 {
-    assert(power > 0); // TODO does this need verification?
+    assert(power > 0);
     elona::dmgcon(self.index, ailment, power);
 }
 
@@ -766,7 +779,7 @@ void init_usertypes(lua_env& lua)
                                            "y", &position_t::y
         );
     lua.get_state()->new_usertype<character>( "LuaCharacter",
-                                        "damage_hp", &LuaCharacter::damage_hp,
+                                        "damage_hp", sol::overload(&LuaCharacter::damage_hp, &LuaCharacter::damage_hp_source, &LuaCharacter::damage_hp_chara),
                                         "apply_ailment", &LuaCharacter::apply_ailment,
                                         "recruit_as_ally", &LuaCharacter::recruit_as_ally,
                                         "set_flag", &LuaCharacter::set_flag,
@@ -832,6 +845,29 @@ void init_enums(sol::table& Elona)
         "Tunnel", tile_kind_t::tunnel,
         "Room", tile_kind_t::room,
         "Fog", tile_kind_t::fog
+        );
+    Enums["DamageSource"] = Enums.create_with(
+        "Trap", damage_source_t::trap,
+        "Overcasting", damage_source_t::overcasting,
+        "Starvation", damage_source_t::starvation,
+        "Poisoning", damage_source_t::poisoning,
+        "Curse", damage_source_t::curse,
+        "BackpackWeight", damage_source_t::backpack_weight,
+        "FallFromStairs", damage_source_t::fall_from_stairs,
+        "Audience", damage_source_t::audience,
+        "Burn", damage_source_t::burn,
+        "Adventuring", damage_source_t::adventuring,
+        "UnseenHand", damage_source_t::unseen_hand,
+        "FoodPoisoning", damage_source_t::food_poisoning,
+        "BloodLoss", damage_source_t::blood_loss,
+        "EtherDisease", damage_source_t::ether_disease,
+        "Acid", damage_source_t::acid,
+        "Shatter", damage_source_t::shatter,
+        "AtomicBomb", damage_source_t::atomic_bomb,
+        "IronMaiden", damage_source_t::iron_maiden,
+        "Guillotine", damage_source_t::guillotine,
+        "Hanging", damage_source_t::hanging,
+        "Mochi", damage_source_t::mochi
         );
 
     // This table is too big to be defined using create_with.

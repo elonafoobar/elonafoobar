@@ -39,9 +39,18 @@
 
 --- Damages this character.
 -- @tparam num amount the amount to damage
+-- @tparam[opt] Enums.DamageSource source the source of the damage (defaults to the unseen hand)
 -- @usage local chara = Chara.player()
---chara:damage(100)
-function damage_hp(amount) end
+--chara:damage_hp(100)
+function damage_hp(amount, source) end
+
+--- Damages this character, with the source being set as another character.
+-- @tparam num amount the amount to damage
+-- @tparam LuaCharacter source the character acting as the source of the damage
+-- @usage local chara = Chara.player()
+--local other = Chara.create(0, 0, 3)
+--chara:damage_hp(100, other)
+function damage_hp(amount, source) end
 
 --- Applies a status ailment to this character.
 -- @tparam Enums.StatusAilment ailment the kind of status ailment

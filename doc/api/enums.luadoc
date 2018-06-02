@@ -48,6 +48,32 @@ StatusAilment = {}
 -- @tfield Enums.TileKind Fog
 TileKind = {}
 
+--- A source of damage to be used with <code>LuaCharacter.damage_hp</code>.
+-- @enum DamageSource
+-- @see LuaCharacter.damage_hp
+-- @tfield Enums.DamageSource Trap
+-- @tfield Enums.DamageSource Overcasting
+-- @tfield Enums.DamageSource Starvation
+-- @tfield Enums.DamageSource Poisoning
+-- @tfield Enums.DamageSource Curse
+-- @tfield Enums.DamageSource BackpackWeight
+-- @tfield Enums.DamageSource FallFromStairs
+-- @tfield Enums.DamageSource Audience
+-- @tfield Enums.DamageSource Burn
+-- @tfield Enums.DamageSource Adventuring
+-- @tfield Enums.DamageSource UnseenHand
+-- @tfield Enums.DamageSource FoodPoisoning
+-- @tfield Enums.DamageSource BloodLoss
+-- @tfield Enums.DamageSource EtherDisease
+-- @tfield Enums.DamageSource Acid
+-- @tfield Enums.DamageSource Shatter
+-- @tfield Enums.DamageSource AtomicBomb
+-- @tfield Enums.DamageSource IronMaiden
+-- @tfield Enums.DamageSource Guillotine
+-- @tfield Enums.DamageSource Hanging
+-- @tfield Enums.DamageSource Mochi
+DamageSource = {}
+
 --- A flag that can be set on a character.
 -- @enum CharaFlag
 -- @see LuaCharacter.set_flag

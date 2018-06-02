@@ -1,11 +1,10 @@
 local Event = Elona.require("Event")
 local Chara = Elona.require("Chara")
-local Map = Elona.require("Map")
+local Enums = Elona.require("Enums")
 
 local function setup()
-   for i=0, 40 do
-      Chara.create(Map.random_pos(), 248)
-   end
+   local chara = Chara.player()
+   chara:damage_hp(999999, Enums.DamageSource.Shatter)
 end
 
-Event.register(Event.EventKind.MapInitialized, setup)
+Event.register(Event.EventKind.AllTurnsFinished, setup)
