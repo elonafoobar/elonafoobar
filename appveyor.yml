@@ -76,7 +76,7 @@ build_script:
   - chcp 65001
   - cd %PREFIX%
   - appveyor DownloadFile http://ylvania.style.coocan.jp/file/elona122.zip
-  - 7z x elona122.zip > nul
+  - 7z x elona122.zip
   - cd %APPVEYOR_BUILD_FOLDER%
   - mkdir bin
   - cd bin
