@@ -264,6 +264,7 @@ void lua_env::clear_mod_stores()
 void lua_env::reload()
 {
     clear(); // Unload character/item handles while they're still available.
+    get_state()->set("_IS_TEST", config::instance().is_test);
     scan_all_mods(filesystem::dir::mods());
     load_core_mod(filesystem::dir::mods());
 }

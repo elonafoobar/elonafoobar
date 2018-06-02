@@ -275,6 +275,10 @@ int cell_findspace(int prm_796, int prm_797, int prm_798)
 
 static int _random_tile(elona_vector1<int> tile)
 {
+    if(tile(1) == 0 || tile(2) == 0)
+    {
+        return tile(0);
+    }
     return tile(0) + (rnd(tile(2)) == 0) * rnd(tile(1));
 }
 

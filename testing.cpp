@@ -44,6 +44,7 @@ void start_in_debug_map()
 
     gdata_current_map = 9999; // Debug map
     gdata_current_dungeon_level = 2;
+    init_fovlist();
     initialize_map();
 }
 
@@ -66,10 +67,8 @@ void pre_init()
     title(u8"Elona Foobar version "s + latest_version.short_string());
 
     initialize_config(fs::path("tests/data/config.json"));
-    config::instance().is_test = true;
 
-    //lua::lua.scan_all_mods(filesystem::dir::mods());
-    //lua::lua.load_core_mod(filesystem::dir::mods());
+    config::instance().is_test = true;
 
     configure_lua();
 }
@@ -82,6 +81,7 @@ void post_run()
 
 void reset_state()
 {
+    config::instance().is_test = true;
     lua::lua.reload();
     configure_lua();
     initialize_elona();
