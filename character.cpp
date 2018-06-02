@@ -2091,7 +2091,7 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
     }
 
     // TODO handle transferring through Lua robustly
-    lua::lua.on_chara_removal(cdata[prm_784]);
+    // lua::lua.on_chara_removal(cdata[prm_784]);
 
     sdata.copy(tc_at_m125, prm_784);
     sdata.clear(prm_784);
@@ -2163,12 +2163,10 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
     rc = tc_at_m125;
     wear_most_valuable_equipment_for_all_body_parts();
     chara_refresh(tc_at_m125);
-<<<<<<< HEAD
 
     // TODO handle transferring through Lua robustly
-    lua::lua.on_chara_creation(cdata[tc_at_m125]);
+    // lua::lua.on_chara_creation(cdata[tc_at_m125]);
 
-=======
     if (tc_at_m125 < 57)
     {
         modify_crowd_density(prm_784, -1);
@@ -2177,7 +2175,7 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
     {
         modify_crowd_density(tc_at_m125, 1);
     }
->>>>>>> f54479e0db1bcb2b1b285e185c17d63a041ca700
+
     return prm_784;
 }
 

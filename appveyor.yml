@@ -83,6 +83,7 @@ build_script:
   - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DWITH_TESTS=TESTS %CMAKE_ARGS% ..
   - cmake --build .
   - cd %CONFIGURATION%
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
   - ElonaFoobar.exe
   - cd %APPVEYOR_BUILD_FOLDER%
   - rd /q /s bin

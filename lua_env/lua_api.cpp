@@ -5,6 +5,7 @@
 #include "../dmgheal.hpp"
 #include "../enchantment.hpp"
 #include "../fov.hpp"
+#include "../gdata.hpp"
 #include "../item.hpp"
 #include "../itemgen.hpp"
 #include "../log.hpp"
@@ -120,7 +121,7 @@ bool Chara::is_ally(const lua_character_handle handle)
 
 int Chara::count()
 {
-    return gdata_other_character_count;
+    return gdata_crowd_density;
 }
 
 bool Chara::flag(const lua_character_handle handle, int flag)
