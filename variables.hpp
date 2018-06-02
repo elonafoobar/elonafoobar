@@ -1,9 +1,9 @@
 #pragma once
 
 #include "elona.hpp"
-#include "enums.hpp"
 #include "optional.hpp"
 #include "position.hpp"
+#include "random.hpp"
 #include "talk.hpp"
 
 
@@ -85,10 +85,9 @@ ELONA_EXTERN(elona_vector3<int> pochart);
 ELONA_EXTERN(elona_vector2<int> podata);
 ELONA_EXTERN(elona_vector1<std::string> popostname);
 ELONA_EXTERN(int refreshmode);
-ELONA_EXTERN(int questteleport);
+ELONA_EXTERN(bool quest_teleport);
 ELONA_EXTERN(int gspdorg);
 ELONA_EXTERN(int gspd);
-ELONA_EXTERN(elona_vector2<int> fovlist);
 ELONA_EXTERN(int s_p);
 ELONA_EXTERN(int scposval);
 ELONA_EXTERN(int weatherbk);
@@ -407,6 +406,7 @@ ELONA_EXTERN(int allyctrl);
 ELONA_EXTERN(int am);
 ELONA_EXTERN(int ammo);
 ELONA_EXTERN(int ammoproc);
+ELONA_EXTERN(int ammoprocbk);
 ELONA_EXTERN(int animode);
 ELONA_EXTERN(int aniy);
 ELONA_EXTERN(int area);
@@ -789,7 +789,7 @@ int pick_up_item();
 int drop_item();
 int equip_item(int);
 int unlock_box(int);
-int label_2217();
+void do_ranged_attack();
 int gain_skills_by_geen_engineering();
 int transplant_body_parts();
 int new_ally_joins();
@@ -1112,7 +1112,6 @@ void save_game();
 void save_game(const fs::path&);
 turn_result_t do_enter_strange_gate();
 void main_title_loop();
-void initialize_fovmap_and_fovlist();
 turn_result_t do_debug_console();
 turn_result_t do_exit_debug_console();
 void disarm_trap();

@@ -10,6 +10,7 @@
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "mef.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 namespace elona
@@ -698,7 +699,7 @@ int quest_generate()
                 break;
             }
         }
-        p = qdata(1, qdata(12, rq));
+        p = qdata(12, rq);
         if (qdata(4, rq) == 0)
         {
             rewardfix = 140

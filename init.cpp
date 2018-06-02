@@ -17,7 +17,7 @@
 #include "event.hpp"
 #include "filesystem.hpp"
 #include "fish.hpp"
-#include "foobar_save.hpp"
+#include "fov.hpp"
 #include "i18n.hpp"
 #include "init.hpp"
 #include "input.hpp"
@@ -32,6 +32,7 @@
 #include "mef.hpp"
 #include "network.hpp"
 #include "race.hpp"
+#include "random.hpp"
 #include "range.hpp"
 #include "trait.hpp"
 #include "ui.hpp"
@@ -1178,7 +1179,7 @@ void initialize_game()
         const fs::path& save_dir = filesystem::dir::save();
         load_save_data(save_dir);
     }
-    initialize_fovmap_and_fovlist();
+    init_fovlist();
     initialize_map();
 }
 

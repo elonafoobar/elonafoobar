@@ -110,7 +110,7 @@ void cell_check(int prm_603, int prm_604)
 
 
 
-void cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
+bool cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
 {
     int x2_at_m81 = 0;
     int y2_at_m81 = 0;
@@ -118,7 +118,7 @@ void cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
     {
         if (gdata_mount == prm_605 || gdata_mount == prm_606)
         {
-            return;
+            return false;
         }
     }
     tc_at_m81 = prm_606;
@@ -155,7 +155,7 @@ void cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
             cdata[gdata_mount].position.y = cdata[0].position.y;
         }
     }
-    return;
+    return true;
 }
 
 

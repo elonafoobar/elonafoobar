@@ -14,6 +14,7 @@
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "mapgen.hpp"
+#include "random.hpp"
 #include "quest.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -2725,6 +2726,7 @@ label_1742_internal:
             cdata[rc].hp = cdata[rc].max_hp;
             cdata[rc].mp = cdata[rc].max_mp;
         }
+        chara_refresh(cnt);
     }
     if (mdata(7) == 1)
     {
@@ -2932,13 +2934,14 @@ label_1744_internal:
         }
     }
     label_1745();
-    gdata_other_character_count = 0;
+    gdata_crowd_density = 0;
     for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         cdata[cnt].turn_cost = 0;
         if (cdata[cnt].id == 343)
         {
             getunid(cnt);
+            chara_refresh(cnt);
         }
         if (noaggrorefresh == 0)
         {
@@ -2946,12 +2949,9 @@ label_1744_internal:
             cdata[cnt].hate = 0;
         }
         cdata[cnt].vision_flag = 0;
-        if (cnt > 57)
+        if (cdata[cnt].state != 0)
         {
-            if (cdata[cnt].state != 0)
-            {
-                ++gdata_other_character_count;
-            }
+            modify_crowd_density(cnt, 1);
         }
     }
     cdata[0].current_map = gdata_current_map;
@@ -3428,6 +3428,10 @@ label_1744_internal:
             for (int cnt = 0; cnt < 16; ++cnt)
             {
                 if (cdata[cnt].state != 1)
+                {
+                    continue;
+                }
+                if (cnt != 0 && cdata[cnt].current_map)
                 {
                     continue;
                 }

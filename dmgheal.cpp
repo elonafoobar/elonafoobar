@@ -15,6 +15,7 @@
 #include "item.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
+#include "random.hpp"
 #include "quest.hpp"
 #include "status_ailment.hpp"
 #include "variables.hpp"
@@ -794,8 +795,8 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 }
             }
             ndeathcause = lang(
-                cdatan(0, cc) + u8"に殺された。"s,
-                u8"was killed by "s + cdatan(0, cc));
+                cdatan(0, prm_855) + u8"に殺された。"s,
+                u8"was killed by "s + cdatan(0, prm_855));
         }
         else
         {
@@ -1104,23 +1105,6 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             cell_removechara(
                 cdata[prm_853].position.x, cdata[prm_853].position.y);
         }
-        if (cdata[prm_853].breaks_into_debris())
-        {
-            if (is_in_fov(prm_853))
-            {
-                x = cdata[prm_853].position.x;
-                y = cdata[prm_853].position.y;
-                snd(45, false, false);
-                animeblood(prm_853, 1, ele_at_m141);
-            }
-            spillfrag(cdata[prm_853].position.x, cdata[prm_853].position.y, 3);
-        }
-        else
-        {
-            snd(8 + rnd(2), false, false);
-            animeblood(prm_853, 0, ele_at_m141);
-            spillblood(cdata[prm_853].position.x, cdata[prm_853].position.y, 4);
-        }
         if (cdata[prm_853].character_role == 0)
         {
             cdata[prm_853].state = 0;
@@ -1155,6 +1139,27 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     cdata[prm_853].state = 0;
                 }
             }
+        }
+        if (prm_853 == 0)
+        {
+            cell_draw();
+        }
+        if (cdata[prm_853].breaks_into_debris())
+        {
+            if (is_in_fov(prm_853))
+            {
+                x = cdata[prm_853].position.x;
+                y = cdata[prm_853].position.y;
+                snd(45, false, false);
+                animeblood(prm_853, 1, ele_at_m141);
+            }
+            spillfrag(cdata[prm_853].position.x, cdata[prm_853].position.y, 3);
+        }
+        else
+        {
+            snd(8 + rnd(2), false, false);
+            animeblood(prm_853, 0, ele_at_m141);
+            spillblood(cdata[prm_853].position.x, cdata[prm_853].position.y, 4);
         }
         if (prm_853 == 0)
         {
@@ -1337,7 +1342,12 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     u8"You feel sad for a moment."s));
             }
         }
-        --gdata_other_character_count;
+        if (cdata[prm_853].state == 0)
+        {
+            // Exclude town residents because they occupy character slots even
+            // if they are dead.
+            modify_crowd_density(prm_853, -1);
+        }
         if (gdata_mount)
         {
             if (prm_853 == gdata_mount)
