@@ -38,9 +38,9 @@ CurseState = {}
 -- @tfield Enums.StatusAilment Sick
 StatusAilment = {}
 
---- A type of tile to be used with <code>Map.set_tile</code>.
+--- A type of tile to be used with <code>Map.generate_tile</code>.
 -- @enum TileKind
--- @see Map.set_tile
+-- @see Map.generate_tile
 -- @tfield Enums.TileKind Normal
 -- @tfield Enums.TileKind Wall
 -- @tfield Enums.TileKind Tunnel

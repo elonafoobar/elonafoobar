@@ -1,14 +1,11 @@
 local Event = Elona.require("Event")
-local Item = Elona.require("Item")
 local Chara = Elona.require("Chara")
-local GUI = Elona.require("GUI")
+local Map = Elona.require("Map")
 
-local function iter()
-   for i, chara in Chara.iter(0, 10) do
-      if chara.index == 0 then
-         GUI.txt("Player found: " .. chara.name .. " ")
-      end
+local function setup()
+   for i=0, 40 do
+      Chara.create(Map.random_pos(), 248)
    end
 end
 
-Event.register(Event.EventKind.CharaMoved, iter)
+Event.register(Event.EventKind.MapInitialized, setup)

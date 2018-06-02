@@ -282,10 +282,11 @@ bool can_access(const position_t&);
 bool can_access_xy(int, int);
 position_t bound_within(const position_t&);
 position_t random_pos();
-void set_tile(const position_t&, tile_kind_t);
-void set_tile_xy(int, int, tile_kind_t);
-void set_tile_memory(const position_t&, tile_kind_t);
-void set_tile_memory_xy(int, int, tile_kind_t);
+int generate_tile(tile_kind_t);
+void set_tile(const position_t&, int);
+void set_tile_xy(int, int, int);
+void set_tile_memory(const position_t&, int);
+void set_tile_memory_xy(int, int, int);
 
 void bind(sol::table& Elona);
 }
@@ -361,12 +362,17 @@ position_t Map::random_pos()
                 });
 }
 
-void Map::set_tile(const position_t& position, tile_kind_t type)
+int Map::generate_tile(tile_kind_t type)
+{
+    return elona::cell_get_type(type);
+}
+
+void Map::set_tile(const position_t& position, int type)
 {
     Map::set_tile_xy(position.x, position.y, type);
 }
 
-void Map::set_tile_xy(int x, int y, tile_kind_t type)
+void Map::set_tile_xy(int x, int y, int type)
 {
     if(Map::is_overworld())
     {
@@ -377,15 +383,15 @@ void Map::set_tile_xy(int x, int y, tile_kind_t type)
         return;
     }
 
-    elona::map(x, y, 0) = elona::cell_get_type(type);
+    elona::map(x, y, 0) = type;
 }
 
-void Map::set_tile_memory(const position_t& position, tile_kind_t type)
+void Map::set_tile_memory(const position_t& position, int type)
 {
     Map::set_tile_memory_xy(position.x, position.y, type);
 }
 
-void Map::set_tile_memory_xy(int x, int y, tile_kind_t type)
+void Map::set_tile_memory_xy(int x, int y, int type)
 {
     if(Map::is_overworld())
     {
@@ -396,7 +402,7 @@ void Map::set_tile_memory_xy(int x, int y, tile_kind_t type)
         return;
     }
 
-    elona::map(x, y, 2) = elona::cell_get_type(type);
+    elona::map(x, y, 2) = type;
 }
 
 void Map::bind(sol::table& Elona)
@@ -409,6 +415,7 @@ void Map::bind(sol::table& Elona)
     Map.set_function("can_access", sol::overload(Map::can_access, Map::can_access_xy));
     Map.set_function("bound_within", Map::bound_within);
     Map.set_function("random_pos", Map::random_pos);
+    Map.set_function("generate_tile", Map::generate_tile);
     Map.set_function("set_tile", sol::overload(Map::set_tile, Map::set_tile_xy));
     Map.set_function("set_tile_memory", sol::overload(Map::set_tile_memory, Map::set_tile_memory_xy));
 }
@@ -932,6 +939,12 @@ api_manager::api_manager(lua_env* lua)
     init_usertypes(*lua);
 }
 
+bool api_manager::is_loaded()
+{
+    bool loaded = api_env["_LOADED"];
+    return loaded;
+}
+
 sol::optional<sol::table> api_manager::try_find_api(const std::string& module_namespace,
                                                     const std::string& module_name)
 {
@@ -947,6 +960,13 @@ sol::optional<sol::table> api_manager::try_find_api(const std::string& module_na
 
 void api_manager::load_core(lua_env& lua, const fs::path& mods_dir)
 {
+    // Don't load the core mod again if it's already loaded, because
+    // all the tables will be read-only.
+    if (is_loaded())
+    {
+        return;
+    }
+
     auto result = lua.get_state()->safe_script_file(filesystem::make_preferred_path_in_utf8(
                                            mods_dir / "core" / "init.lua"),
                                        api_env);

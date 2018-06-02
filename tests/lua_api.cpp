@@ -15,7 +15,7 @@ void lua_testcase(const std::string& filename)
     REQUIRE_NOTHROW(elona::lua::lua.get_state()->safe_script_file("tests/lua/"s + filename));
 }
 
-TEST_CASE("Test Elona.require", "[Lua: API]")
+TEST_CASE("test Elona.require", "[Lua: API]")
 {
     elona::lua::lua_env lua;
     lua.scan_all_mods(filesystem::dir::mods());
@@ -26,6 +26,11 @@ local Rand = Elona.require("Rand")
 assert(Rand ~= nil)
 assert(type(Rand.coinflip) == "function")
 )"));
+}
+
+TEST_CASE("test core API tables are read-only", "[Lua: API]")
+{
+    lua_testcase("readonly.lua");
 }
 
 TEST_CASE("Core API: Chara", "[Lua: API]")

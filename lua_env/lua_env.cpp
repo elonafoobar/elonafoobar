@@ -177,7 +177,6 @@ void lua_env::scan_all_mods(const fs::path& mods_dir)
             }
 
             std::unique_ptr<mod_info> info = std::make_unique<mod_info>(mod_name, get_state());
-            api_mgr->bind(*this, *info);
             this->mods.emplace(mod_name, std::move(info));
         }
     }

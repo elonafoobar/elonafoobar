@@ -32,7 +32,7 @@ lrun("test Map.can_access", function()
         lequal(Map.can_access(pos), true)
         lequal(Map.can_access(pos.x, pos.y), true)
 
-        Map.set_tile(5, 5, Enums.TileKind.Wall)
+        Map.set_tile(5, 5, Map.generate_tile(Enums.TileKind.Wall))
         lequal(Map.can_access(pos), false)
         lequal(Map.can_access(pos.x, pos.y), false)
 end)

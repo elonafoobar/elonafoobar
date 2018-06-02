@@ -30,17 +30,21 @@ function bound_within(position) end
 -- @treturn LuaPosition a random position
 function random_pos() end
 
---- Sets a tile of the current map. Only checks if the position is valid, not things like blocking objects.
---- The actual tile created varies depending on the current map's tileset. It can be one of several different types in the same tile category.
--- @tparam LuaPosition position (const) the map position
+--- Generates a random tile ID from the current map's tileset.
+--- Tile kinds can contain one of several different tile variations.
 -- @tparam Enums.TileKind kind (const) the tile kind to set
--- @usage Map.set_tile(10, 10, Enums.TileKind.Room)
+-- @treturn num the generated tile ID
 -- @see Enums.TileKind
-function set_tile(position, kind) end
+function generate_tile(kind) end
+
+--- Sets a tile of the current map. Only checks if the position is valid, not things like blocking objects.
+-- @tparam LuaPosition position (const) the map position
+-- @tparam num kind the tile ID to set
+-- @usage Map.set_tile(10, 10, Map.generate_tile(Enums.TileKind.Room))
+function set_tile(position, id) end
 
 --- Sets the player's memory of a tile position to the given tile kind.
 -- @tparam LuaPosition position (const) the map position
--- @tparam Enums.TileKind kind (const) the tile kind to set
--- @usage Map.set_tile_memory(10, 10, Enums.TileKind.Room)
--- @see Enums.TileKind
-function set_memory(position, kind) end
+-- @tparam num id the tile ID to set
+-- @usage Map.set_tile_memory(10, 10, Map.generate_tile(Enums.TileKind.Room))
+function set_memory(position, id) end

@@ -62,6 +62,12 @@ public:
     sol::table get_api_table();
 private:
     /***
+     * Returns true if the Elona table has already been loaded into
+     * the API manager's Lua environment.
+     */
+    bool is_loaded();
+
+    /***
      * An isolated Lua environment where all C++ function bindings are
      * kept. This currently does not include usertype tables, because
      * some parts of the API implemented in Lua have to get at them

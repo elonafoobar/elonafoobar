@@ -57,13 +57,14 @@ local function run_life()
       end
       for y = 1, Map.width() do
          for x = 1, Map.height() do
+            local tile
             if Store.grid[x][y] == 1 and Map.can_access(x, y) then
-               Map.set_tile(x, y, Enums.TileKind.Wall)
-               Map.set_tile_memory(x, y, Enums.TileKind.Wall)
+               tile = Map.generate_tile(Enums.TileKind.Wall)
             else
-               Map.set_tile(x, y, Enums.TileKind.Room)
-               Map.set_tile_memory(x, y, Enums.TileKind.Room)
+               tile = Map.generate_tile(Enums.TileKind.Room)
             end
+            Map.set_tile(x, y, tile)
+            Map.set_tile_memory(x, y, tile)
          end
       end
       Store.grid = evolve(grid)
