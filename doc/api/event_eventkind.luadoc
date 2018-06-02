@@ -33,6 +33,7 @@ module "Event.EventKind"
 -- flags (the first 32) will be automatically set from their prototype
 -- definitions on refresh. This currently means if you want to set a
 -- character's intrinsic flag, you have to do so on this event.
+-- @see LuaCharacter.set_flag
 -- @event CharaRefreshed
 -- @tfield LuaCharacter chara the character that was refreshed
 

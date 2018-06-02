@@ -74,7 +74,9 @@ TileKind = {}
 -- @tfield Enums.DamageSource Mochi
 DamageSource = {}
 
---- A flag that can be set on a character.
+--- A flag that can be set on a character. The first 32 flags (up to
+--- <code>IsQuickTempered</code>) are "intrinsic" and will be reset
+--- when the character is refreshed.
 -- @enum CharaFlag
 -- @see LuaCharacter.set_flag
 -- @tfield Enums.CharaFlag IsFloating

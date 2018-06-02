@@ -68,6 +68,7 @@ label_17401:
                 if (cdata[cnt].state == 9)
                 {
                     cdata[cnt].state = 1;
+                    lua::lua.on_chara_loaded(cdata[cnt]);
                 }
             }
         }
@@ -2719,6 +2720,7 @@ label_1742_internal:
         }
         rc = cnt;
         cdata[rc].state = 1;
+        lua::lua.on_chara_loaded(cdata[rc]);
         if (cdata[cnt].is_contracting() == 1)
         {
             cxinit = cdata[0].position.x;

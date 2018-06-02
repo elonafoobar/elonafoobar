@@ -39,25 +39,25 @@ public:
 
     void AddCallbacks(int amount)
     {
+        elona::lua::lua.load_mod_from_script("bench", "");
         for (int i = 0; i < amount; i++)
         {
-            elona::lua::lua.run_in_mod("core", R"(
-local Event = Elona.require("Event")
+            elona::lua::lua.run_in_mod("bench", R"(
 local GUI = Elona.require("GUI")
-local function my_func()
+local Event = Elona.require("Event")
+
+local function my_func(chara)
   for i=1, 100 do
-    GUI.txt(tostring(chara))
+    GUI.txt(chara.name)
   end
 end
-
 Event.register(Event.CharaMoved, my_func)
 )");
-
         }
     }
 };
 
-BENCHMARK_F(LuaCallbacksWanderFixture, BenchLuaCallbacksWander250, 5, 50)
+BENCHMARK_F(LuaCallbacksWanderFixture, BenchLuaCallbacksWander1000, 5, 50)
 {
     run_npc_turns();
 }

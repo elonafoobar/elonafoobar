@@ -48,7 +48,7 @@ function damage_hp(amount, source) end
 -- @tparam num amount the amount to damage
 -- @tparam LuaCharacter source the character acting as the source of the damage
 -- @usage local chara = Chara.player()
---local other = Chara.create(0, 0, 3)
+-- local other = Chara.create(0, 0, 3)
 --chara:damage_hp(100, other)
 function damage_hp(amount, source) end
 
@@ -65,15 +65,15 @@ function apply_ailment(ailment, power) end
 -- @treturn bool true if the character was recruited successfully
 function recruit_as_ally() end
 
---- Sets a flag on a character.
---- <b>Note</b>: Currently, all flags up to
---- <code>IsQuickTempered</code> are "intrinsic" and are always reset
---- when a character is refreshed each turn. To change these flags,
---- you must call this function inside a handler for
---- <code>EventKind.CharaRefreshed</code>, or the flag will be reset
---- later.
+--- Sets a flag on a character. <b>Note</b>: Currently, all flags up
+--- to <code>IsQuickTempered</code> are "intrinsic" and are always
+--- reset when a character is refreshed each turn. To change these
+--- flags, you must call this function inside a handler for
+--- <code>Event.EventKind.CharaRefreshed</code>, or the flag will be
+--- reset later.
 -- @tparam Enums.CharaFlag flag the flag to set
 -- @tparam bool value the flag's new value
+-- @see Event.EventKind.CharaRefreshed
 -- @usage local Event = Elona.require("Event")
 -- local Enums = Elona.require("Enums")
 --
@@ -94,7 +94,8 @@ function set_flag(flag, value) end
 -- @tparam[opt] num initial_stock the initial spell stock for spells
 function gain_skill(id, initial_level, initial_stock) end
 
---- Makes a character gain experience in a skill or spell.
+--- Makes a character gain experience in a skill or spell. This only
+--- has an effect if the character already knows the skill/spell.
 -- @tparam num id the skill/spell ID
 -- @tparam num amount the amount of experience
 function gain_skill_exp(id, amount) end

@@ -6012,6 +6012,7 @@ turn_result_t exit_map()
             if (cdata[cnt].state == 8)
             {
                 cdata[cnt].state = 1;
+                lua::lua.on_chara_loaded(cdata[cnt]); // TODO add separate Lua event for revival
             }
             continue;
         }

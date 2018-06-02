@@ -11,6 +11,7 @@
 #include "item.hpp"
 #include "item_db.hpp"
 #include "itemgen.hpp"
+#include "lua_env/lua_env.hpp"
 #include "macro.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
@@ -336,6 +337,7 @@ void prompt_hiring()
             cdata[0].gold -= calchirecost(tc) * 20;
             await(250);
             cdata[tc].state = 1;
+            lua::lua.on_chara_loaded(cdata[tc]);
             txtef(2);
             txt(lang(
                 cdatan(0, tc) + u8"を家に迎えた。"s,
