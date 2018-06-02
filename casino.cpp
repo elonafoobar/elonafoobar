@@ -990,7 +990,7 @@ bool casino_blackjack()
     casino_choose_card();
     if (rtval == 0)
     {
-        return false;
+        return true;
     }
     stake = rtval;
     winrow = 0;
