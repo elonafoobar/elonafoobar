@@ -983,7 +983,7 @@ void refresh_burden_state();
 void gain_special_action();
 void add_quality_parentheses();
 void revive_character();
-void label_1538();
+void do_chara_revival();
 void label_15380();
 void label_1539();
 void label_15390();

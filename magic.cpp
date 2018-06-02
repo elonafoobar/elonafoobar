@@ -2187,7 +2187,7 @@ label_2181_internal:
             }
             rc = stat;
         }
-        label_1538();
+        do_chara_revival();
         cxinit = cdata[cc].position.x;
         cyinit = cdata[cc].position.y;
         chara_place();

@@ -3520,7 +3520,7 @@ void refresh_burden_state()
 
 void revive_character()
 {
-    label_1538();
+    do_chara_revival();
     cxinit = cdata[0].position.x;
     cyinit = cdata[0].position.y;
     chara_place();
@@ -3536,7 +3536,7 @@ void revive_character()
 
 
 
-void label_1538()
+void do_chara_revival()
 {
     label_15380();
     label_15390();
@@ -3568,6 +3568,7 @@ void label_15380()
     cdata[rc].current_map = 0;
     cdata[rc].relationship = cdata[rc].original_relationship;
     cdata[rc].nutrition = 8000;
+    lua::lua.on_chara_loaded(cdata[rc]); // TODO add separate Lua event for revival
     return;
 }
 
@@ -3622,7 +3623,7 @@ void label_15390()
 
 void label_1540()
 {
-    label_1538();
+    do_chara_revival();
     if (rc == 0)
     {
         gdata_is_returning_or_escaping = 0;
