@@ -398,6 +398,7 @@ void input::_handle_event(const ::SDL_TextInputEvent& event)
     if (_is_ime_active) // event.text is IME-translated.
     {
         _keys[static_cast<size_t>(snail::key::enter)]._release();
+        _keys[static_cast<size_t>(snail::key::keypad_enter)]._release();
         _is_ime_active = false;
     }
 }
