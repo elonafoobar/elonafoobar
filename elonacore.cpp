@@ -4774,7 +4774,7 @@ void character_drops_item()
     }
     if (cdata[rc].id == 175 || cdata[rc].id == 177 || cdata[rc].id == 178)
     {
-        if (npcmemory(0, cdata[rc].id) == 0)
+        if (npcmemory(0, cdata[rc].id) == 1)
         {
             drop(0) = 290;
             drop(1) = 421;
