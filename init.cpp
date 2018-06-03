@@ -667,6 +667,7 @@ void initialize_elona()
     initialize_recipe();
     initialize_nefia_names();
     initialize_home_adata();
+    initialize_damage_popups();
     load_character_sprite();
     if (config::instance().music == 1 && DMINIT() == 0)
     {

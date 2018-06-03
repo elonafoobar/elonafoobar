@@ -990,7 +990,7 @@ bool casino_blackjack()
     casino_choose_card();
     if (rtval == 0)
     {
-        return false;
+        return true;
     }
     stake = rtval;
     winrow = 0;
@@ -1267,7 +1267,7 @@ bool casino_blackjack()
                 + u8" has been added to your loot list!"s));
         if (winrow > 3)
         {
-            if (rnd(200) < winrow * 5 + 5)
+            if (winrow + 1 > rnd(10))
             {
                 flt();
                 itemcreate(-1, 559, -1, -1, 0);

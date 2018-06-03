@@ -157,6 +157,7 @@ if(WITH_TESTS STREQUAL "TESTS")
     tests/lua_mods.cpp
     tests/lua_serialization.cpp
     tests/lua_store.cpp
+    tests/elonacore.cpp
     tests/serialization.cpp
     ${CORE_SOURCES}
     )

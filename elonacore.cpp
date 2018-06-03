@@ -1219,41 +1219,54 @@ int winposy(int prm_539, int prm_540)
 
 
 
-void cutname(std::string& prm_541, int prm_542)
+void cutname(std::string& utf8_string, int max_length_charwise)
 {
-    int len_at_m71 = 0;
-    elona_vector1<std::string> buf_at_m71;
-    int p_at_m71 = 0;
-    if (strlen_u(prm_541) > size_t(prm_542))
+    if (max_length_charwise == 0)
     {
-        len_at_m71 = zentohan(prm_541, buf_at_m71, 0);
-        SDIM2(buf_at_m71, len_at_m71);
-        zentohan(prm_541, prm_541, len_at_m71);
-        if (strlen_u(prm_541) > size_t(prm_542))
+        utf8_string = std::string();
+        return;
+    }
+
+    int current_char = 0;
+    size_t current_byte = 0;
+    bool multibyte = false;
+    while (current_char < max_length_charwise && current_byte < utf8_string.size())
+    {
+        if (static_cast<unsigned char>(utf8_string[current_byte]) > 0x7F)
         {
-            len_at_m71 = 0;
-            while (1)
+            current_byte++;
+            current_char++;
+            while ((static_cast<unsigned char>(utf8_string[current_byte] & 0xC0)) == 0x80)
             {
-                if (len_at_m71 >= prm_542)
+                // Fullwidth characters count as length 2.
+                if (!multibyte)
+                {
+                    current_char++;
+                    multibyte = true;
+                }
+                if (current_char > max_length_charwise)
+                {
+                    current_byte--;
+                    break;
+                }
+
+                current_byte++;
+                if (current_byte > utf8_string.size())
                 {
                     break;
                 }
-                p_at_m71 = prm_541[len_at_m71];
-                if ((p_at_m71 >= 129 && p_at_m71 <= 159)
-                    || (p_at_m71 >= 224 && p_at_m71 <= 252))
-                {
-                    p_at_m71 = 2;
-                }
-                else
-                {
-                    p_at_m71 = 1;
-                }
-                len_at_m71 += p_at_m71;
             }
-            prm_541 = strmid(prm_541, 0, len_at_m71) + u8".."s;
         }
+        else
+        {
+            current_char++;
+            current_byte++;
+        }
+
+        multibyte = false;
     }
-    return;
+
+    utf8_string = utf8_string.substr(0, current_byte);
 }
 
 
@@ -4764,7 +4777,7 @@ void character_drops_item()
     }
     if (cdata[rc].id == 175 || cdata[rc].id == 177 || cdata[rc].id == 178)
     {
-        if (npcmemory(0, cdata[rc].id) == 0)
+        if (npcmemory(0, cdata[rc].id) == 1)
         {
             drop(0) = 290;
             drop(1) = 421;
@@ -19715,7 +19728,8 @@ void do_play_scene()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s),
+        std::string scene_file = lang(u8"scene1.hsp", u8"scene2.hsp");
+        std::ifstream in{(filesystem::dir::data() / scene_file).native(),
                          std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -19746,7 +19760,8 @@ label_2681:
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s),
+        std::string scene_file = lang(u8"scene1.hsp", u8"scene2.hsp");
+        std::ifstream in{(filesystem::dir::data() / scene_file).native(),
                          std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))

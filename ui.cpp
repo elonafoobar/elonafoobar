@@ -1224,10 +1224,12 @@ void update_slight()
     int lx = 0;
     slight.clear();
     ++msync;
-    sy(2) = cdata[0].position.y - 17 / 2;
-    sy(3) = cdata[0].position.y + 17 / 2;
-    sy(4) = 17 / 2 - cdata[0].position.y;
-    sx(3) = cdata[0].position.x - 17 / 2;
+
+    position_t center{cdata[0].position.x - (fov_max + 2) / 2,
+                      (fov_max + 2) / 2 - cdata[0].position.y};
+    sy(2) = cdata[0].position.y - fov_max / 2;
+    sy(3) = cdata[0].position.y + fov_max / 2;
+
     if (config::instance().scroll)
     {
         repw(0) = inf_screenw + 2;
@@ -1292,38 +1294,28 @@ void update_slight()
                     goto label_1431_internal;
                 }
             }
-            if (sy > sy(2))
+            if (sy(2) <= sy && sy <= sy(3))
             {
-                if (sy < sy(3))
+                if (sx >= fovlist[sy + center.y][0] + center.x
+                    && sx < fovlist[sy + center.y][1] + center.x)
                 {
-                    sx(2) = fovlist[sy + sy(4)][0] + sx(3);
-                    if (sx >= sx(2))
+                    if (fov_los(
+                            cdata[0].position.x, cdata[0].position.y, sx, sy))
                     {
-                        if (sx < fovlist[sy + sy(4)][1] + sx(3))
+                    label_1430_internal:
+                        mapsync(sx, sy) = msync;
+                        if (map(sx, sy, 1) != 0)
                         {
-                            if (fov_los(
-                                    cdata[0].position.x,
-                                    cdata[0].position.y,
-                                    sx,
-                                    sy))
-                            {
-                            label_1430_internal:
-                                mapsync(sx, sy) = msync;
-                                if (map(sx, sy, 1) != 0)
-                                {
-                                    cdata[map(sx, sy, 1) - 1].vision_flag =
-                                        msync;
-                                }
-                                if (map(sx, sy, 2) != map(sx, sy, 0))
-                                {
-                                    map(sx, sy, 2) = map(sx, sy, 0);
-                                    draw_minimap_pixel();
-                                }
-                                map(sx, sy, 5) = map(sx, sy, 4);
-                                ++lx;
-                                continue;
-                            }
+                            cdata[map(sx, sy, 1) - 1].vision_flag = msync;
                         }
+                        if (map(sx, sy, 2) != map(sx, sy, 0))
+                        {
+                            map(sx, sy, 2) = map(sx, sy, 0);
+                            draw_minimap_pixel();
+                        }
+                        map(sx, sy, 5) = map(sx, sy, 4);
+                        ++lx;
+                        continue;
                     }
                 }
             }
