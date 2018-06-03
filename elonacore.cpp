@@ -19716,7 +19716,8 @@ void do_play_scene()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s),
+        std::string scene_file = lang(u8"scene1.hsp", u8"scene2.hsp");
+        std::ifstream in{(filesystem::dir::data() / scene_file).native(),
                          std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -19747,7 +19748,8 @@ label_2681:
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s),
+        std::string scene_file = lang(u8"scene1.hsp", u8"scene2.hsp");
+        std::ifstream in{(filesystem::dir::data() / scene_file).native(),
                          std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
