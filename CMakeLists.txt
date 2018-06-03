@@ -146,6 +146,7 @@ if(WITH_TESTS STREQUAL "TESTS")
   # Test sources
   set(TEST_SOURCES
     tests/tests.cpp
+    tests/elonacore.cpp
     tests/serialization.cpp
     ${CORE_SOURCES}
     )
