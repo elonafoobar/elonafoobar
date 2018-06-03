@@ -9,7 +9,7 @@ namespace elona
 
 struct position_t;
 
-extern std::array<std::array<int, 2>, 15> fovlist;
+extern std::array<std::array<int, 2>, 17> fovlist;
 
 // Returns wheather the PC can see  the position or the character.
 bool is_in_fov(const position_t&);

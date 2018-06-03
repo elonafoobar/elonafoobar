@@ -6,7 +6,7 @@
 namespace elona
 {
 
-std::array<std::array<int, 2>, 15> fovlist;
+std::array<std::array<int, 2>, 17> fovlist;
 
 int dy_at_modfov = 0;
 int dx_at_modfov = 0;
