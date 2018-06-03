@@ -1213,7 +1213,8 @@ turn_result_t play_scene()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{lang(u8"data/scene1.hsp"s, u8"data/scene2.hsp"s),
+        std::ifstream in{lang((filesystem::dir::data() / u8"scene1.hsp"s).native(),
+                              (filesystem::dir::data() / u8"scene2.hsp"s).native()),
                          std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
