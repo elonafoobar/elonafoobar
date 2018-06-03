@@ -661,18 +661,19 @@ int get_route(int prm_633, int prm_634, int prm_635, int prm_636)
 
 void init_fovlist()
 {
-    std::array<std::array<bool, 17>, 17> fovmap;
-    for (int y = 0; y < 17; ++y)
+    std::array<std::array<bool, fov_max + 2>, fov_max + 2> fovmap;
+    for (int y = 0; y < fov_max + 2; ++y)
     {
-        for (int x = 0; x < 17; ++x)
+        for (int x = 0; x < fov_max + 2; ++x)
         {
-            fovmap[y][x] = dist(x, y, 17 / 2, 17 / 2) <= 15 / 2;
+            fovmap[y][x] =
+                dist(x, y, (fov_max + 2) / 2, (fov_max + 2) / 2) <= fov_max / 2;
         }
     }
-    for (int y = 0; y < 17; ++y)
+    for (int y = 0; y < fov_max + 2; ++y)
     {
         bool f{};
-        for (int x = 0; x < 17; ++x)
+        for (int x = 0; x < fov_max + 2; ++x)
         {
             if (fovmap[y][x])
             {
