@@ -98,8 +98,42 @@ std::string format_builtins_character(const hil::FunctionCall& func, const chara
 {
     ELONA_DEFINE_I18N_BUILTIN("name", name(chara.index));
     ELONA_DEFINE_I18N_BUILTIN("basename", cdatan(0, chara.index));
+    ELONA_DEFINE_I18N_BUILTIN("he", he(chara.index));
+    ELONA_DEFINE_I18N_BUILTIN("his", his(chara.index));
+    ELONA_DEFINE_I18N_BUILTIN("him", him(chara.index));
+
+    // English only
+    ELONA_DEFINE_I18N_BUILTIN("is", is(chara.index));
+    ELONA_DEFINE_I18N_BUILTIN("s", _s(chara.index, true));
+    ELONA_DEFINE_I18N_BUILTIN("have", have(chara.index));
+    ELONA_DEFINE_I18N_BUILTIN("himself", yourself(chara.index));
+    ELONA_DEFINE_I18N_BUILTIN("his_owned", your(chara.index));
     ELONA_DEFINE_I18N_BUILTIN("name_nojob", sncnv(cdatan(0, chara.index)));
+
+    // Japanese only
+    ELONA_DEFINE_I18N_BUILTIN("kare_wa", npcn(chara.index));
+    //ELONA_DEFINE_I18N_BUILTIN("yoro", _yoro(chara, func.args.at(1));
     //ELONA_DEFINE_I18N_BUILTIN("dozo", _dozo(chara, func.args.at(1));
+    //ELONA_DEFINE_I18N_BUILTIN("thanks", _thanks(chara, func.args.at(1));
+    //ELONA_DEFINE_I18N_BUILTIN("rob", _rob(chara, func.args.at(1));
+    //ELONA_DEFINE_I18N_BUILTIN("ka", _ka(chara, func.args.at(1));
+    //ELONA_DEFINE_I18N_BUILTIN("da", _da(chara, func.args.at(1));
+    //ELONA_DEFINE_I18N_BUILTIN("nda", _nda(chara, func.args.at(1));
+    //ELONA_DEFINE_I18N_BUILTIN("noka", _noka(chara, func.args.at(1));
+    //ELONA_DEFINE_I18N_BUILTIN("kana", _kana(chara, func.args.at(1));
+    //ELONA_DEFINE_I18N_BUILTIN("kimi", _kimi(chara, func.args.at(1));
+    //ELONA_DEFINE_I18N_BUILTIN("ru", _ru(chara, func.args.at(1));
+    //ELONA_DEFINE_I18N_BUILTIN("tanomu", _tanomu(chara, func.args.at(1));
+    //ELONA_DEFINE_I18N_BUILTIN("ore", _ore(chara, func.args.at(1));
+    //ELONA_DEFINE_I18N_BUILTIN("ga", _ga(chara, func.args.at(1));
+    //ELONA_DEFINE_I18N_BUILTIN("dana", _dana(chara, func.args.at(1));
+    //ELONA_DEFINE_I18N_BUILTIN("kure", _kure(chara, func.args.at(1));
+    //ELONA_DEFINE_I18N_BUILTIN("daro", _daro(chara, func.args.at(1));
+    //ELONA_DEFINE_I18N_BUILTIN("yo", _yo(chara, func.args.at(1));
+    //ELONA_DEFINE_I18N_BUILTIN("aru", _aru(chara, func.args.at(1));
+    //ELONA_DEFINE_I18N_BUILTIN("u", _u(chara, func.args.at(1));
+    //ELONA_DEFINE_I18N_BUILTIN("na", _na(chara, func.args.at(1));
+    //ELONA_DEFINE_I18N_BUILTIN("ta", _ta(chara, func.args.at(1));
 
     return "<unknown function (" + func.name + ")>";
 }
@@ -108,6 +142,11 @@ std::string format_builtins_item(const hil::FunctionCall& func, const item& item
 {
     ELONA_DEFINE_I18N_BUILTIN("name", itemname(item.index));
     ELONA_DEFINE_I18N_BUILTIN("basename", ioriginalnameref(item.id));
+
+    // English only
+    ELONA_DEFINE_I18N_BUILTIN("is", is2(item.number));
+    ELONA_DEFINE_I18N_BUILTIN("s", _s2(item.number));
+    ELONA_DEFINE_I18N_BUILTIN("does", does(item.number));
 
     return "<unknown function (" + func.name + ")>";
 }

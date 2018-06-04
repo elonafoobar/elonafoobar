@@ -171,8 +171,8 @@ locale {
 
         dungeon {
             _20 = "Dungeon"
-            _21 = "Forest"
-            _22 = "Tower"
+            _21 = "Tower"
+            _22 = "Forest"
             _23 = "Fort"
         }
 

@@ -1,21 +1,5 @@
 locale {
-
     map {
-        you_see = "${_1}がある。"
-        you_see_an_entrance = "${_1}への入り口がある(入り口の危険度は${_2}階相当)。"
-
-        dungeon {
-            _20 = "洞窟"
-            _21 = "塔"
-            _22 = "森"
-            _23 = "砦"
-        }
-
-        quest {
-            outskirts = "街近辺"
-            urban_area = "市街地"
-        }
-
         unique {
             _4 {
                 name = "ノースティリス"
@@ -179,5 +163,20 @@ locale {
                 name = "テストワールド北関所"
             }
         }
+
+        quest {
+            outskirts = "街近辺"
+            urban_area = "市街地"
+        }
+
+        dungeon {
+            _20 = "洞窟"
+            _21 = "塔"
+            _22 = "森"
+            _23 = "砦"
+        }
+
+        you_see = "${_1}がある。"
+        you_see_an_entrance = "${_1}への入り口がある(入り口の危険度は${_2}階相当)。"
     }
 }
