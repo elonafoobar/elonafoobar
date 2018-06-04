@@ -48,6 +48,7 @@ std::string _(
     return ret ? ret : "";
 }
 
+// i18n::fmt("core.locale.charname", cdata[cc], cdata[tc]);
 
 
 } // namespace i18n

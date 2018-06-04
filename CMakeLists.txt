@@ -147,6 +147,7 @@ if(WITH_TESTS STREQUAL "TESTS")
   set(TEST_SOURCES
     tests/tests.cpp
     tests/elonacore.cpp
+    tests/i18n.cpp
     tests/serialization.cpp
     ${CORE_SOURCES}
     )
@@ -159,6 +160,8 @@ elseif(WITH_TESTS STREQUAL "BENCH")
   # Benchmark sources
   set(BENCH_SOURCES
     bench/ai.cpp
+    bench/generate.cpp
+    bench/i18n.cpp
     bench/magic.cpp
     bench/util.cpp
     ${CORE_SOURCES}
