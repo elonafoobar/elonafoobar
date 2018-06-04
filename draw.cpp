@@ -26,10 +26,13 @@ struct damage_popup_t
     int character;
     snail::color color;
 
-    damage_popup_t() : frame(-1),
-                       text(std::string()),
-                       character(-1),
-                       color(snail::color(255, 255, 255, 255)) {}
+    damage_popup_t()
+        : frame(-1)
+        , text(std::string())
+        , character(-1)
+        , color(snail::color(255, 255, 255, 255))
+    {
+    }
 };
 
 
