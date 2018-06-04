@@ -142,6 +142,8 @@ public:
 
     Value& operator[](size_t index);
     Value& operator[](const std::string& key);
+    const Value& operator[](size_t index) const;
+    const Value& operator[](const std::string& key) const;
 
     // Returns true if two objects share any keys (non-nesting).
     bool sharesKeyWith(const hcl::Value& v) const;
@@ -1733,6 +1735,34 @@ inline Value& Value::operator[](const std::string& key)
         return *v;
 
     return *setChild(key, Value());
+}
+
+inline const Value& Value::operator[](size_t index) const
+{
+    if (!valid())
+        failwith("not valid");
+
+    if (!is<List>())
+        failwith("type must be list to index by int");
+
+    if (list_->size() <= index)
+        failwith("index out of bound");
+
+    if (const Value* v = find(index))
+        return *v;
+
+    failwith("no such key");
+}
+
+inline const Value& Value::operator[](const std::string& key) const
+{
+    if (!valid())
+        failwith("not valid");
+
+    if (const Value* v = findChild(key))
+        return *v;
+
+    failwith("no such key");
 }
 
 template<typename T>

@@ -1,3 +1,6 @@
+#ifndef MICROHIL_H_
+#define MICROHIL_H_
+
 #include <fstream>
 #include <iostream>
 #include <istream>
@@ -553,7 +556,7 @@ inline Token Lexer::nextString()
             if (c == '{')
                 return Token(TokenType::STRING, s);
             else
-                s += "s";
+                s += "$";
         }
         dollar = false;
         if (c == '$') {
@@ -918,6 +921,14 @@ inline Context Parser::parse()
     while (true)
     {
         if (!parseText(text))
+        {
+            if (errorReason().size() > 0)
+                return context;
+            break;
+        }
+
+        nextToken(true);
+        if (token().type() == TokenType::END_OF_FILE)
             break;
 
         context.textParts.emplace_back(std::move(text));
@@ -964,7 +975,6 @@ inline bool Parser::parseText(std::string& text)
 
 inline bool Parser::parseHil(Value& currentValue)
 {
-    nextToken(true);
     switch (token().type())
     {
     case TokenType::RBRACE:
@@ -992,7 +1002,7 @@ inline bool Parser::parseHil(Value& currentValue)
         }
     }
     default:
-        addError("unsupported value: ");
+        addError("unsupported value");
         return false;
     }
 }
@@ -1027,3 +1037,5 @@ inline bool Parser::parseFunction(Value& currentValue, std::string ident)
 } // namespace internal
 
 } // namespace hil
+
+#endif // MICROHIL_H_

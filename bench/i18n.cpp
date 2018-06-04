@@ -24,30 +24,30 @@ std::string random_string(size_t length)
 
 BENCHMARK(I18n, BenchI18n1Param, 5, 50)
 {
-    i18n::fmtb("${_1}", random_string(10));
+    i18n::fmt_hil("${_1}", random_string(10));
 }
 
 BENCHMARK(I18n, BenchI18n2Params, 5, 50)
 {
-    i18n::fmtb("${_1} ${_2}", random_string(10), random_string(10));
+    i18n::fmt_hil("${_1} ${_2}", random_string(10), random_string(10));
 }
 
 BENCHMARK(I18n, BenchI18n3Params, 5, 50)
 {
-    i18n::fmtb("${_1} ${_2} ${_3}", random_string(10), random_string(10), random_string(10));
+    i18n::fmt_hil("${_1} ${_2} ${_3}", random_string(10), random_string(10), random_string(10));
 }
 
 BENCHMARK(I18n, BenchI18n4Params, 5, 50)
 {
-    i18n::fmtb("${_1} ${_2} ${_3} ${_4}", random_string(10), random_string(10), random_string(10), random_string(10));
+    i18n::fmt_hil("${_1} ${_2} ${_3} ${_4}", random_string(10), random_string(10), random_string(10), random_string(10));
 }
 
 BENCHMARK(I18n, BenchI18n5Params, 5, 50)
 {
-    i18n::fmtb("${_1} ${_2} ${_3} ${_4} ${_5}", random_string(10), random_string(10), random_string(10), random_string(10), random_string(10));
+    i18n::fmt_hil("${_1} ${_2} ${_3} ${_4} ${_5}", random_string(10), random_string(10), random_string(10), random_string(10), random_string(10));
 }
 
 BENCHMARK(I18n, BenchI18n6Params, 5, 50)
 {
-    i18n::fmtb("${_1} ${_2} ${_3} ${_4} ${_5} ${_6}", random_string(10), random_string(10), random_string(10), random_string(10), random_string(10), random_string(10));
+    i18n::fmt_hil("${_1} ${_2} ${_3} ${_4} ${_5} ${_6}", random_string(10), random_string(10), random_string(10), random_string(10), random_string(10), random_string(10));
 }
