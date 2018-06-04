@@ -1837,6 +1837,9 @@ void chara_mod_impression(int cc, int delta)
 
 void chara_vanquish(int cc)
 {
+    if (cc == 0)
+        return;
+
     if (cc == gdata_mount)
     {
         ride_end();
