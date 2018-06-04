@@ -217,6 +217,10 @@ void config_query_language()
         {
             break;
         }
+        if (getkey(snail::key::keypad_enter))
+        {
+            break;
+        }
         if (getkey(snail::key::space))
         {
             break;
@@ -476,7 +480,7 @@ void load_config(const fs::path& json_file)
             }),
         std::make_unique<config_string>(
             u8"key_get2",
-            u8"0",
+            u8"0 ",
             [&](auto value) { key_get2 = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_drop",

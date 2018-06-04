@@ -843,6 +843,7 @@ void stick(int& out, int allow_repeat_keys)
     out += check_key_pressed(3, snail::key::down, false);
     out += check_key_pressed(4, snail::key::space, false);
     out += check_key_pressed(5, snail::key::enter, false);
+    out += check_key_pressed(5, snail::key::keypad_enter, false);
     out += check_key_pressed(6, snail::key::ctrl, true);
     out += check_key_pressed(7, snail::key::escape, false);
     // out += check_key_pressed(8,  /* Mouse left */,  false);
