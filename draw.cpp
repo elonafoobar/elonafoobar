@@ -362,6 +362,9 @@ void show_damage_popups(int inf_ver)
         int mondmgpos{};
         for (auto&& damage_popup2 : damage_popups)
         {
+            if (damage_popup2.frame == -1)
+                continue;
+
             if (damage_popup.frame >= damage_popup2.frame)
             {
                 if (cc.position == cdata[damage_popup2.character].position)
