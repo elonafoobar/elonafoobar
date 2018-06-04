@@ -28,6 +28,9 @@ TEST_CASE("test formats", "[I18N: Format]")
     REQUIRE(i18n::fmt_hil("${_1}", u8"foo"s) == u8"foo"s);
     REQUIRE(i18n::fmt_hil("${_1} ${_2}", u8"foo"s, 2) == u8"foo 2"s);
     REQUIRE(i18n::fmt_hil("${_1} ${_1}", u8"foo"s, 2) == u8"foo foo"s);
+    REQUIRE(i18n::fmt_hil("You see ${_1}.", u8"Palmia") == u8"You see Palmia."s);
+    REQUIRE(i18n::fmt_hil("You see ${_1} the ${_2}.", u8"Adam" , u8"rock thrower")
+            == u8"You see Adam the rock thrower."s);
 }
 
 TEST_CASE("test format chara", "[I18N: Format]")
@@ -48,6 +51,26 @@ TEST_CASE("test format item", "[I18N: Format]")
     REQUIRE(i18n::fmt_hil("${_1}", i) == u8"<item: "s + std::to_string(i.index) + u8">"s);
 }
 
+TEST_CASE("test format character by function", "[I18N: Format]")
+{
+    testing::start_in_debug_map();
+    REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
+    character& chara = elona::cdata[elona::rc];
+
+    REQUIRE(i18n::fmt_hil("${name(_1)}", chara) == u8"何か"s);
+    REQUIRE(i18n::fmt_hil("${basename(_1)}", chara) == u8"プチ"s);
+}
+
+TEST_CASE("test format item by function", "[I18N: Format]")
+{
+    testing::start_in_debug_map();
+    REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, 3));
+    item& i = elona::inv[elona::ci];
+
+    REQUIRE(i18n::fmt_hil("${name(_1)}", i) == u8"3個のプチトロ"s);
+    REQUIRE(i18n::fmt_hil("${basename(_1)}", i) == u8"プチトロ"s);
+}
+
 
 TEST_CASE("test i18n store literal", "[I18N: Store]")
 {
@@ -58,7 +81,7 @@ locale {
 )");
 
     REQUIRE(store.get(u8"core.locale.foo") == u8"bar");
-    REQUIRE_THROWS(store.get(u8"core.locale.baz"));
+    REQUIRE(store.get(u8"core.locale.baz") == u8"Unknown ID: core.locale.baz");
 }
 
 TEST_CASE("test i18n store nested literal", "[I18N: Store]")
@@ -99,9 +122,9 @@ locale {
 }
 )");
 
-    REQUIRE(store.get(u8"core.locale.foo.bar") == u8"bar: ");
-    REQUIRE(store.get(u8"core.locale.foo.bar", 12) == u8"bar: 12");
-    REQUIRE(store.get(u8"core.locale.foo.bar", "baz") == u8"bar: baz");
+    REQUIRE(store.get(u8"core.locale.foo") == u8"bar: ");
+    REQUIRE(store.get(u8"core.locale.foo", 12) == u8"bar: 12");
+    REQUIRE(store.get(u8"core.locale.foo", u8"baz") == u8"bar: baz");
 }
 
 TEST_CASE("test i18n store multiple interpolation", "[I18N: Store]")
@@ -112,8 +135,8 @@ locale {
 }
 )");
 
-    REQUIRE(store.get(u8"core.locale.foo.bar") == u8": ");
-    REQUIRE(store.get(u8"core.locale.foo.bar", 42) == u8": 42");
-    REQUIRE(store.get(u8"core.locale.foo.bar", 12, "bar") == u8"bar: 12");
-    REQUIRE(store.get(u8"core.locale.foo.bar", "bar", "baz") == u8"baz: bar");
+    REQUIRE(store.get(u8"core.locale.foo") == u8": ");
+    REQUIRE(store.get(u8"core.locale.foo", 42) == u8": 42");
+    REQUIRE(store.get(u8"core.locale.foo", 12, u8"bar") == u8"bar: 12");
+    REQUIRE(store.get(u8"core.locale.foo", u8"bar", u8"baz") == u8"baz: bar");
 }

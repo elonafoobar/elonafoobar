@@ -405,6 +405,7 @@ void initialize_elona()
     initialize_keywait();
 
     i18n::load(jp ? u8"jp" : u8"en");
+    i18n::s.init(jp ? filesystem::path("lang2") / "jp" : filesystem::path("lang2") / "en");
 
     initialize_ui_constants();
     if (config::instance().fullscreen)

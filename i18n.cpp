@@ -17,6 +17,7 @@ namespace elona
 namespace i18n
 {
 
+i18n::store s;
 
 void store::init(fs::path path)
 {
@@ -81,6 +82,38 @@ void store::visit(const hcl::Value& value,
         visit_object(value.as<hcl::Object>(), current_key, hcl_file);
     }
 }
+
+
+// TODO
+// "${your(_1)}${get(_2, core.locale.ability, name)} skill increases."
+
+
+#define ELONA_DEFINE_I18N_BUILTIN(func_name, return_value) \
+    if(func.name == func_name) \
+    { \
+        return return_value; \
+    }
+
+std::string format_builtins_character(const hil::FunctionCall& func, const character& chara)
+{
+    ELONA_DEFINE_I18N_BUILTIN("name", name(chara.index));
+    ELONA_DEFINE_I18N_BUILTIN("basename", cdatan(0, chara.index));
+    ELONA_DEFINE_I18N_BUILTIN("name_nojob", sncnv(cdatan(0, chara.index)));
+    //ELONA_DEFINE_I18N_BUILTIN("dozo", _dozo(chara, func.args.at(1));
+
+    return "<unknown function (" + func.name + ")>";
+}
+
+std::string format_builtins_item(const hil::FunctionCall& func, const item& item)
+{
+    ELONA_DEFINE_I18N_BUILTIN("name", itemname(item.index));
+    ELONA_DEFINE_I18N_BUILTIN("basename", ioriginalnameref(item.id));
+
+    return "<unknown function (" + func.name + ")>";
+}
+
+#undef ELONA_DEFINE_I18N_BUILTIN
+
 
 void load(const std::string& language)
 {

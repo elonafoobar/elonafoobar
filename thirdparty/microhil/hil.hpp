@@ -155,10 +155,6 @@ enum class TokenType {
     RBRACK, // ]
     RPAREN, // )
     RBRACE, // }
-
-    ASSIGN, // =
-    ADD,    // +
-    SUB,    // -
 };
 
 class Token {
@@ -245,7 +241,6 @@ private:
     bool consumeForValue(TokenType);
     bool consumeEOLorEOFForKey();
 
-    Context parseContext();
     bool parseText(std::string&);
     bool parseHil(Value&);
     bool parseFunction(Value&, std::string);
@@ -696,20 +691,6 @@ inline Token Lexer::nextToken(bool isInHil)
         }
 
         switch (c) {
-        case '=':
-            next();
-            return Token(TokenType::ASSIGN, "=");
-        case '+':
-            next();
-            return Token(TokenType::ADD, "+");
-        case '-':
-            next();
-            if (current(&c) && isdigit(static_cast<unsigned char>(c))) {
-                return nextNumber(false, true);
-            }
-            else {
-                return Token(TokenType::SUB, "-");
-            }
         case '{':
             next();
             return Token(TokenType::LBRACE, "{");
@@ -729,15 +710,20 @@ inline Token Lexer::nextToken(bool isInHil)
             next();
             return Token(TokenType::RBRACK, "]");
         case ',':
-            next();
-            return Token(TokenType::COMMA, ",");
-        case '.':
-            next();
-            if(current(&c) && isdigit(static_cast<unsigned char>(c))) {
-                return nextNumber(true, false);
+            if (isInHil) {
+                next();
+                return Token(TokenType::COMMA, ",");
             }
             else {
-                return Token(TokenType::PERIOD, ".");
+                return nextString();
+            }
+        case '.':
+            if (isInHil) {
+                next();
+                return Token(TokenType::COMMA, ".");
+            }
+            else {
+                return nextString();
             }
         default:
             if (isInHil)
@@ -923,7 +909,11 @@ inline Context Parser::parse()
         if (!parseText(text))
         {
             if (errorReason().size() > 0)
+            {
+                context.textParts.clear();
+                context.hilParts.clear();
                 return context;
+            }
             break;
         }
 

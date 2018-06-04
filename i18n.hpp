@@ -119,6 +119,11 @@ inline bool ident_eq(std::string ident, int count)
     return false;
 }
 
+
+std::string format_builtins_character(const hil::FunctionCall&, const character&);
+std::string format_builtins_item(const hil::FunctionCall&, const item&);
+
+
 namespace detail
 {
 
@@ -140,7 +145,7 @@ std::string fmt_literal(std::string const& s)
     return s;
 }
 
-template <typename Head>
+template <typename Head = const char* const&>
 std::string fmt_literal(const char* const& c)
 {
     return std::string(c);
@@ -158,10 +163,22 @@ std::string fmt_literal(Head const& head)
     return std::to_string(head);
 }
 
+template <typename Head = const character&>
+std::string fmt_func(hil::FunctionCall const& func, const character& chara)
+{
+    return format_builtins_character(func, chara);
+}
+
+template <typename Head = const item&>
+std::string fmt_func(hil::FunctionCall const& func, const item& item)
+{
+    return format_builtins_item(func, item);
+}
+
 template <typename Head>
 std::string fmt_func(hil::FunctionCall const& func, Head const& head)
 {
-    return "func";
+    return "<unknown function (" + func.name + ")>";
 }
 
 
@@ -208,16 +225,10 @@ void fmt_go(const hil::Context& ctxt,
 
 } // namespace detail
 
-template <typename Head, typename... Tail>
-std::string fmt_with_context(const hil::Context& ctxt, Head const& head, Tail&&... tail)
+inline std::string fmt_after_conv(const hil::Context& ctxt, const std::vector<std::string>& formatted)
 {
-    if (ctxt.textParts.size() == 1)
-        return ctxt.textParts[0];
-
-    std::vector<std::string> formatted(ctxt.hilParts.size());
-    detail::fmt_go(ctxt, 1, formatted, head, std::forward<Tail>(tail)...);
-
     std::string s;
+
     for (size_t i = 0; i < formatted.size(); i++)
     {
         s += ctxt.textParts.at(i);
@@ -229,25 +240,28 @@ std::string fmt_with_context(const hil::Context& ctxt, Head const& head, Tail&&.
     return s;
 }
 
+template <typename Head, typename... Tail>
+std::string fmt_with_context(const hil::Context& ctxt, Head const& head, Tail&&... tail)
+{
+    if (ctxt.textParts.size() == 1)
+        return ctxt.textParts[0];
+
+    std::vector<std::string> formatted(ctxt.hilParts.size());
+    detail::fmt_go(ctxt, 1, formatted, head, std::forward<Tail>(tail)...);
+
+    return fmt_after_conv(ctxt, formatted);
+}
+
 template <typename... Tail>
 std::string fmt_with_context(const hil::Context& ctxt, Tail&&... tail)
 {
     if (ctxt.textParts.size() == 1)
-        return ctxt.textParts.at(0);
+        return ctxt.textParts[0];
 
     std::vector<std::string> formatted(ctxt.hilParts.size());
     detail::fmt_go(ctxt, 1, formatted, std::forward<Tail>(tail)...);
 
-    std::string s;
-    for (size_t i = 0; i < formatted.size(); i++)
-    {
-        s += ctxt.textParts.at(i);
-        s += formatted.at(i);
-    }
-
-    s += ctxt.textParts.back();
-
-    return s;
+    return fmt_after_conv(ctxt, formatted);
 }
 
 template <typename Head, typename... Tail>
@@ -284,7 +298,7 @@ public:
         const auto& found = storage.find(key);
         if (found == storage.end())
         {
-            throw new std::runtime_error(u8"No translation with ID " + key + " exists.");
+            return u8"Unknown ID: " + key;
         }
 
         return fmt_with_context(found->second, head, std::forward<Tail>(tail)...);
@@ -296,7 +310,31 @@ public:
         const auto& found = storage.find(key);
         if (found == storage.end())
         {
-            throw new std::runtime_error(u8"No translation with ID " + key + " exists.");
+            return u8"Unknown ID: " + key;
+        }
+
+        return fmt_with_context(found->second, std::forward<Tail>(tail)...);
+    }
+
+    template <typename Head, typename... Tail>
+    std::string get_or_blank(const std::string& key, Head const& head, Tail&&... tail)
+    {
+        const auto& found = storage.find(key);
+        if (found == storage.end())
+        {
+            return "";
+        }
+
+        return fmt_with_context(found->second, head, std::forward<Tail>(tail)...);
+    }
+
+    template <typename... Tail>
+    std::string get_or_blank(const std::string& key, Tail&&... tail)
+    {
+        const auto& found = storage.find(key);
+        if (found == storage.end())
+        {
+            return "";
         }
 
         return fmt_with_context(found->second, std::forward<Tail>(tail)...);
@@ -309,6 +347,7 @@ private:
     std::unordered_map<std::string, hil::Context> storage;
 };
 
+extern i18n::store s;
 
 } // namespace i18n
 } // namespace elona
