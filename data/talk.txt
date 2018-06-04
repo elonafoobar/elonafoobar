@@ -62,7 +62,7 @@ The codes are listed below.
 
 
 	/Editing Tips/
-* When testing, save your game infront of a NPC and use defLoadFolder. setting in the config.txt to quick load/launch the game.
+* When testing, save your game infront of a NPC and use defLoadFolder. setting in the config.json to quick load/launch the game.
 
 
 	/Sunstrike/
