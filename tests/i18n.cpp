@@ -12,6 +12,16 @@
 using namespace std::literals::string_literals;
 using namespace elona;
 
+i18n::store load(const std::string& str)
+{
+    i18n::store store;
+
+    std::stringstream ss(str);
+
+    REQUIRE_NOTHROW(store.load(ss, "test.hcl"));
+    return store;
+}
+
 TEST_CASE("test formats", "[I18N: Format]")
 {
     REQUIRE(i18n::fmt_hil("${_1}", 1) == u8"1"s);
@@ -39,16 +49,71 @@ TEST_CASE("test format item", "[I18N: Format]")
 }
 
 
-TEST_CASE("test i18n store loading", "[I18N: Store]")
+TEST_CASE("test i18n store literal", "[I18N: Store]")
 {
-    i18n::store store;
-
-    std::stringstream ss(R"(
+    i18n::store store = load(R"(
 locale {
     foo = "bar"
 }
 )");
 
-    REQUIRE_NOTHROW(store.load(ss, "test.hcl"));
     REQUIRE(store.get(u8"core.locale.foo") == u8"bar");
+    REQUIRE_THROWS(store.get(u8"core.locale.baz"));
+}
+
+TEST_CASE("test i18n store nested literal", "[I18N: Store]")
+{
+    i18n::store store = load(R"(
+locale {
+    foo {
+        bar = "baz"
+    }
+}
+)");
+
+    REQUIRE(store.get(u8"core.locale.foo.bar") == u8"baz");
+}
+
+TEST_CASE("test i18n store multiple nested literals", "[I18N: Store]")
+{
+    i18n::store store = load(R"(
+locale {
+    foo {
+        bar = "baz"
+    }
+    hoge {
+        fuga = "piyo"
+    }
+}
+)");
+
+    REQUIRE(store.get(u8"core.locale.foo.bar") == u8"baz");
+    REQUIRE(store.get(u8"core.locale.hoge.fuga") == u8"piyo");
+}
+
+TEST_CASE("test i18n store interpolation", "[I18N: Store]")
+{
+    i18n::store store = load(R"(
+locale {
+    foo = "bar: ${_1}"
+}
+)");
+
+    REQUIRE(store.get(u8"core.locale.foo.bar") == u8"bar: ");
+    REQUIRE(store.get(u8"core.locale.foo.bar", 12) == u8"bar: 12");
+    REQUIRE(store.get(u8"core.locale.foo.bar", "baz") == u8"bar: baz");
+}
+
+TEST_CASE("test i18n store multiple interpolation", "[I18N: Store]")
+{
+    i18n::store store = load(R"(
+locale {
+    foo = "${_2}: ${_1}"
+}
+)");
+
+    REQUIRE(store.get(u8"core.locale.foo.bar") == u8": ");
+    REQUIRE(store.get(u8"core.locale.foo.bar", 42) == u8": 42");
+    REQUIRE(store.get(u8"core.locale.foo.bar", 12, "bar") == u8"bar: 12");
+    REQUIRE(store.get(u8"core.locale.foo.bar", "bar", "baz") == u8"baz: bar");
 }
