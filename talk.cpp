@@ -124,7 +124,7 @@ void talk_to_npc()
     }
     chatval(1) = 0;
     chatval(2) = 1;
-    if (cdata[tc].quality == 6)
+    if (cdata[tc].quality == 6 && tc >= 16)
     {
         chatval(1) = cdata[tc].id;
         chatval(2) = 0;
