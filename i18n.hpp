@@ -9,6 +9,7 @@
 #include "cat.hpp"
 #include "character.hpp"
 #include "filesystem.hpp"
+#include "optional.hpp"
 #include "item.hpp"
 
 
@@ -317,24 +318,24 @@ public:
     }
 
     template <typename Head, typename... Tail>
-    std::string get_or_blank(const std::string& key, Head const& head, Tail&&... tail)
+    optional<std::string> get_optional(const std::string& key, Head const& head, Tail&&... tail)
     {
         const auto& found = storage.find(key);
         if (found == storage.end())
         {
-            return "";
+            return none;
         }
 
         return fmt_with_context(found->second, head, std::forward<Tail>(tail)...);
     }
 
     template <typename... Tail>
-    std::string get_or_blank(const std::string& key, Tail&&... tail)
+    optional<std::string> get_optional(const std::string& key, Tail&&... tail)
     {
         const auto& found = storage.find(key);
         if (found == storage.end())
         {
-            return "";
+            return none;
         }
 
         return fmt_with_context(found->second, std::forward<Tail>(tail)...);

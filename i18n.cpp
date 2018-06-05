@@ -70,6 +70,7 @@ void store::visit(const hcl::Value& value,
         std::stringstream ss(value.as<std::string>());
 
         hil::ParseResult p = hil::parse(ss);
+        // TODO validate ident names?
         if (!p.valid())
         {
             throw new i18n_error(hcl_file, "HIL parse error: " + p.errorReason);
@@ -93,6 +94,13 @@ void store::visit(const hcl::Value& value,
     { \
         return return_value; \
     }
+
+std::string format_builtins_argless(const hil::FunctionCall& func)
+{
+    ELONA_DEFINE_I18N_BUILTIN("you", name(0));
+
+    return "<unknown function (" + func.name + ")>";
+}
 
 std::string format_builtins_character(const hil::FunctionCall& func, const character& chara)
 {

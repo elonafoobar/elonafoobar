@@ -72,6 +72,18 @@ TEST_CASE("test format item by function", "[I18N: Format]")
 }
 
 
+TEST_CASE("test i18n builtin: s()", "[I18N: Builtins]")
+{
+    testing::start_in_debug_map();
+    set_english();
+    REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
+    character& chara = elona::cdata[elona::rc];
+    TODO normalize randomization
+
+    REQUIRE(i18n::fmt_hil("${name(_1)} go${s(_1, true)} to hell.", chara) == u8"The putit goes to hell.")
+}
+
+
 TEST_CASE("test i18n store literal", "[I18N: Store]")
 {
     i18n::store store = load(R"(
@@ -140,3 +152,4 @@ locale {
     REQUIRE(store.get(u8"core.locale.foo", 12, u8"bar") == u8"bar: 12");
     REQUIRE(store.get(u8"core.locale.foo", u8"bar", u8"baz") == u8"baz: bar");
 }
+
