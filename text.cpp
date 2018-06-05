@@ -346,9 +346,17 @@ std::string mapname(int id, bool description)
         name = i18n::s.get("core.locale.map.unique._" +
                            std::to_string(adata(16, id)) +
                            ".name");
-        desc = i18n::s.get_or_blank("core.locale.map.unique._" +
-                                    std::to_string(adata(16, id)) +
-                                    ".desc");
+        auto desc_opt = i18n::s.get_optional("core.locale.map.unique._" +
+                                             std::to_string(adata(16, id)) +
+                                             ".desc");
+        if (desc_opt)
+        {
+            desc = *desc_opt;
+        }
+        else
+        {
+            desc = "";
+        }
     }
 
     if (description)

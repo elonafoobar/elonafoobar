@@ -5,6 +5,7 @@
 #include "element.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
+#include "i18n.hpp"
 #include "map.hpp"
 #include "random.hpp"
 #include "variables.hpp"

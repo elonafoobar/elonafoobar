@@ -208,7 +208,7 @@ std::string space_if_needed()
 {
     if (jp)
     {
-        return ""
+        return "";
     }
     else
     {

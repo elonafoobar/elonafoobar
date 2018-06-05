@@ -4,6 +4,7 @@
 #include "character.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
+#include "i18n.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
@@ -395,14 +396,14 @@ void txteledmg(int type, int attacker, int target, int element)
     if (type == 0 && is_in_fov(target))
     {
         auto text = i18n::s.get_optional("core.locale.damage.element._"s + std::to_string(element),
-                                         cdata[target])
+                                         cdata[target]);
         if (text)
         {
             txt(*text);
         }
         else
         {
-            txt(i18n::s.get("core.locale.damage.element.default", cdata[target]))
+            txt(i18n::s.get("core.locale.damage.element.default", cdata[target]));
         }
     }
     else if (type == 1)
@@ -411,7 +412,7 @@ void txteledmg(int type, int attacker, int target, int element)
                                          std::to_string(element) +
                                          ".active",
                                          cdata[target],
-                                         cdata[attacker])
+                                         cdata[attacker]);
         if (text)
         {
             txt(*text);
@@ -419,7 +420,7 @@ void txteledmg(int type, int attacker, int target, int element)
         else
         {
             txt(i18n::s.get("core.locale.damage.death_by.element.default.active",
-                            cdata[target], cdata[attacker]))
+                            cdata[target], cdata[attacker]));
         }
     }
     else if (type == 2)
@@ -428,7 +429,7 @@ void txteledmg(int type, int attacker, int target, int element)
                                          std::to_string(element) +
                                          ".passive",
                                          cdata[target],
-                                         cdata[attacker])
+                                         cdata[attacker]);
         if (text)
         {
             txt(*text);
@@ -436,7 +437,7 @@ void txteledmg(int type, int attacker, int target, int element)
         else
         {
             txt(i18n::s.get("core.locale.damage.death_by.element.default.passive",
-                            cdata[target], cdata[attacker]))
+                            cdata[target], cdata[attacker]));
         }
     }
 }

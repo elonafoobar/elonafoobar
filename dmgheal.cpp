@@ -12,6 +12,7 @@
 #include "elona.hpp"
 #include "event.hpp"
 #include "fov.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
@@ -731,13 +732,13 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 }
             }
             ndeathcause = i18n::s.get("core.locale.damage.death_by.chara.killed.passive",
-                                        cdata[prm_855])
+                                      cdata[prm_855]);
         }
         else
         {
             if (prm_855 == -6)
             {
-                dmgheal_death_by_backpack(prm_853);
+                dmgheal_death_by_backpack(cdata[prm_853]);
             }
             else
             {
@@ -1220,36 +1221,38 @@ bool actionsp(int cc, int sp)
     return true;
 }
 
-void dmgheal_death_by_backpack(int prm_853)
+void dmgheal_death_by_backpack(character& chara)
 {
-    p_at_m141(0) = -1;
-    p_at_m141(1) = 0;
-    for (const auto& cnt : items(0))
+    int heaviest_item_index = -1;
+    int heaviest_weight = 0;
+    std::string heaviest_item_name;
+
+    for (const auto& cnt : items(chara.index))
     {
         if (inv[cnt].number == 0)
         {
             continue;
         }
-        if (inv[cnt].weight > p_at_m141(1))
+        if (inv[cnt].weight > heaviest_weight)
         {
-            p_at_m141(0) = cnt;
-            p_at_m141(1) = inv[cnt].weight;
+            heaviest_item_index = cnt;
+            heaviest_weight = inv[cnt].weight;
         }
     }
-    if (p_at_m141 == -1)
+    if (heaviest_item_index == -1)
     {
-        rtvaln = i18n::s.get("core.locale.damage.death_by.other._6.backpack", rtvaln);
+        heaviest_item_name = i18n::s.get("core.locale.damage.death_by.other._6.backpack");
     }
     else
     {
-        rtvaln = itemname(p_at_m141);
+        heaviest_item_name = itemname(heaviest_item_index);
     }
     txt(i18n::s.get("core.locale.damage.death_by.other._6.text",
-                    cdata[prm_853],
-                    rtvaln));
-    if (prm_853 == 0)
+                    chara,
+                    heaviest_item_name));
+    if (chara.index == 0)
     {
-        ndeathcause = i18n::s.get("core.locale.damage.death_by.other._6.death_cause", rtvaln);
+        ndeathcause = i18n::s.get("core.locale.damage.death_by.other._6.death_cause", heaviest_item_name);
     }
 }
 
