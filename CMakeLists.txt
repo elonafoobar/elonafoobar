@@ -148,6 +148,7 @@ if(WITH_TESTS STREQUAL "TESTS")
     tests/tests.cpp
     tests/elonacore.cpp
     tests/i18n.cpp
+    tests/i18n_regressions.cpp
     tests/serialization.cpp
     ${CORE_SOURCES}
     )

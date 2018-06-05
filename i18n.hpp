@@ -298,7 +298,7 @@ public:
         const auto& found = storage.find(key);
         if (found == storage.end())
         {
-            return u8"Unknown ID: " + key;
+            return u8"<Unknown ID: " + key + ">";
         }
 
         return fmt_with_context(found->second, head, std::forward<Tail>(tail)...);
@@ -310,7 +310,7 @@ public:
         const auto& found = storage.find(key);
         if (found == storage.end())
         {
-            return u8"Unknown ID: " + key;
+            return u8"<Unknown ID: " + key + ">";
         }
 
         return fmt_with_context(found->second, std::forward<Tail>(tail)...);

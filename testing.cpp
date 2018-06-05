@@ -69,6 +69,11 @@ void post_run()
 void reset_state()
 {
     initialize_elona();
+
+    // reset translations
+    elona::jp = 1;
+    elona::en = 0;
+    set_item_info();
 }
 
 } // namespace testing
