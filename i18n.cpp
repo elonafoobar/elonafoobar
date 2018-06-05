@@ -102,6 +102,14 @@ std::string format_builtins_argless(const hil::FunctionCall& func)
     return "<unknown function (" + func.name + ")>";
 }
 
+std::string format_builtins_bool(const hil::FunctionCall& func, bool value)
+{
+    ELONA_DEFINE_I18N_BUILTIN("s", _s(value ? 0 : 1, true));
+    ELONA_DEFINE_I18N_BUILTIN("is", is(value ? 0 : 1));
+
+    return "<unknown function (" + func.name + ")>";
+}
+
 std::string format_builtins_character(const hil::FunctionCall& func, const character& chara)
 {
     ELONA_DEFINE_I18N_BUILTIN("name", name(chara.index));
@@ -111,8 +119,8 @@ std::string format_builtins_character(const hil::FunctionCall& func, const chara
     ELONA_DEFINE_I18N_BUILTIN("him", him(chara.index));
 
     // English only
-    ELONA_DEFINE_I18N_BUILTIN("is", is(chara.index));
     ELONA_DEFINE_I18N_BUILTIN("s", _s(chara.index, true));
+    ELONA_DEFINE_I18N_BUILTIN("is", is(chara.index));
     ELONA_DEFINE_I18N_BUILTIN("have", have(chara.index));
     ELONA_DEFINE_I18N_BUILTIN("himself", yourself(chara.index));
     ELONA_DEFINE_I18N_BUILTIN("his_owned", your(chara.index));
@@ -196,6 +204,17 @@ std::string _(
     return ret ? ret : "";
 }
 
+std::string space_if_needed()
+{
+    if (jp)
+    {
+        return ""
+    }
+    else
+    {
+        return u8" ";
+    }
+}
 
 
 

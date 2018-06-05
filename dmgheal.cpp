@@ -263,14 +263,8 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 }
                 cdata[cnt].is_lay_hand_available() = false;
                 txtef(9);
-                txt(lang(
-                    name(cnt)
-                        + u8"は叫んだ。「この者にジュアの加護を。レイハンド！」"s,
-                    name(cnt) + u8" shout"s + _s(cnt) + u8", "s
-                        + u8"\"Lay hand!\""s));
-                txt(lang(
-                    name(prm_853) + u8"は回復した。"s,
-                    name(prm_853) + u8" "s + is(prm_853) + u8" healed."s));
+                txt(i18n::s.get("core.locale.damage.lay_hand", cdata[cnt]));
+                txt(i18n::s.get("core.locale.damage.is_healed", cdata[prm_853]));
                 cdata[prm_853].hp = cdata[prm_853].max_hp / 2;
                 animode = 100 + prm_853;
                 play_animation(19);
@@ -317,41 +311,27 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             txtcontinue();
             if (dmglevel_at_m141 == -1)
             {
-                txt(lang(
-                    u8"かすり傷をつけた。"s,
-                    u8"make"s + _s(c3_at_m141) + u8" a scratch."s));
+                txt(i18n::s.get("core.locale.damage.levels.scratch", cdata[prm_853], cdata[c3_at_m141]));
             }
             if (dmglevel_at_m141 == 0)
             {
                 txtef(5);
-                txt(lang(
-                    u8"軽い傷を負わせた。"s,
-                    u8"slightly wound"s + _s(c3_at_m141) + u8" "s + him(prm_853)
-                        + u8"."s));
+                txt(i18n::s.get("core.locale.damage.levels.slightly", cdata[prm_853], cdata[c3_at_m141]));
             }
             if (dmglevel_at_m141 == 1)
             {
                 txtef(11);
-                txt(lang(
-                    u8"傷つけた。"s,
-                    u8"moderately wound"s + _s(c3_at_m141) + u8" "s
-                        + him(prm_853) + u8"."s));
+                txt(i18n::s.get("core.locale.damage.levels.moderately", cdata[prm_853], cdata[c3_at_m141]));
             }
             if (dmglevel_at_m141 == 2)
             {
                 txtef(10);
-                txt(lang(
-                    u8"深い傷を負わせた。"s,
-                    u8"severely wound"s + _s(c3_at_m141) + u8" "s + him(prm_853)
-                        + u8"."s));
+                txt(i18n::s.get("core.locale.damage.levels.severely", cdata[prm_853], cdata[c3_at_m141]));
             }
             if (dmglevel_at_m141 >= 3)
             {
                 txtef(3);
-                txt(lang(
-                    u8"致命傷を与えた。"s,
-                    u8"critically wound"s + _s(c3_at_m141) + u8" "s
-                        + him(prm_853) + u8"!"s));
+                txt(i18n::s.get("core.locale.damage.levels.critically", cdata[prm_853], cdata[c3_at_m141]));
             }
             rowact_check(prm_853);
             goto label_1369_internal;
@@ -361,9 +341,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             if (is_in_fov(prm_853))
             {
                 txtef(11);
-                txt(lang(
-                    name(prm_853) + u8"は痛手を負った。"s,
-                    name(prm_853) + u8" scream"s + _s(prm_853) + u8"."s));
+                txt(i18n::s.get("core.locale.damage.reactions.screams", cdata[prm_853]));
             }
         }
         if (dmglevel_at_m141 == 2)
@@ -371,10 +349,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             if (is_in_fov(prm_853))
             {
                 txtef(10);
-                txt(lang(
-                    name(prm_853) + u8"は苦痛にもだえた。"s,
-                    name(prm_853) + u8" writhe"s + _s(prm_853)
-                        + u8" in pain."s));
+                txt(i18n::s.get("core.locale.damage.reactions.writhes_in_pain", cdata[prm_853]));
             }
         }
         if (dmglevel_at_m141 >= 3)
@@ -382,10 +357,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             if (is_in_fov(prm_853))
             {
                 txtef(3);
-                txt(lang(
-                    name(prm_853) + u8"は悲痛な叫び声をあげた。"s,
-                    name(prm_853) + u8" "s + is(prm_853)
-                        + u8" severely hurt!"s));
+                txt(i18n::s.get("core.locale.damage.reactions.is_severely_hurt", cdata[prm_853]));
             }
         }
         if (dmg_at_m141 < 0)
@@ -397,9 +369,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             if (is_in_fov(prm_853))
             {
                 txtef(4);
-                txt(lang(
-                    name(prm_853) + u8"は回復した。"s,
-                    name(prm_853) + u8" "s + is(prm_853) + u8" healed."s));
+                txt(i18n::s.get("core.locale.damage.is_healed", cdata[prm_853]));
             }
         }
     label_1369_internal:
@@ -434,10 +404,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                             if (is_in_fov(prm_853))
                             {
                                 txtef(4);
-                                txt(lang(
-                                    name(prm_853) + u8"は恐怖して逃げ出した。"s,
-                                    name(prm_853) + u8" run"s + _s(prm_853)
-                                        + u8" away in terror."s));
+                                txt(i18n::s.get("core.locale.damage.runs_away_in_terror", cdata[prm_853]));
                             }
                         }
                     }
@@ -543,10 +510,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             if (ele_at_m141 != 54 && ele_at_m141 != 58 && ele_at_m141 != 59)
             {
                 cdata[prm_853].sleep = 0;
-                txt(lang(
-                    name(prm_853) + u8"は眠りを妨げられた。"s,
-                    name(prm_853) + your(prm_853) + u8" sleep "s + is(prm_853)
-                        + u8" disturbed."s));
+                txt(i18n::s.get("core.locale.damage.sleep_is_disturbed", cdata[prm_853]));
             }
         }
         if (prm_855 == 0)
@@ -576,7 +540,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 cdata[prm_853].will_explode_soon() = true;
                 txtef(9);
-                txt(lang(u8" *カチッ* "s, u8"*click*"s));
+                txt(i18n::s.get("core.locale.damage.explode_click"));
             }
         }
         if (cdata[prm_853].splits())
@@ -589,10 +553,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     {
                         if (chara_copy(prm_853))
                         {
-                            txt(lang(
-                                name(prm_853) + u8"は分裂した！"s,
-                                name(prm_853) + u8" split"s + _s(prm_853)
-                                    + u8"!"s));
+                            txt(i18n::s.get("core.locale.damage.splits", cdata[prm_853]));
                         }
                     }
                 }
@@ -614,10 +575,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                         {
                             if (chara_copy(prm_853))
                             {
-                                txt(lang(
-                                    name(prm_853) + u8"は分裂した！"s,
-                                    name(prm_853) + u8" split"s + _s(prm_853)
-                                        + u8"!"s));
+                                txt(i18n::s.get("core.locale.damage.splits", cdata[prm_853]));
                             }
                         }
                     }
@@ -635,10 +593,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                         if (is_in_fov(prm_853))
                         {
                             txtef(4);
-                            txt(lang(
-                                name(prm_853) + u8"は怒りに体を奮わせた！"s,
-                                name(prm_853) + u8" "s + is(prm_853)
-                                    + u8" engulfed in fury!"s));
+                                txt(i18n::s.get("core.locale.damage.is_engulfed_in_fury", cdata[prm_853]));
                         }
                         cdata[prm_853].furious += rnd(30) + 15;
                     }
@@ -723,18 +678,13 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     if (prm_853 >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
-                        txt(lang(
-                            u8"粉々の肉片に変えた。"s,
-                            u8"transform"s + _s(c3_at_m141) + u8" "s
-                                + him(prm_853)
-                                + u8" into several pieces of meat."s));
+                        txt(i18n::s.get("core.locale.damage.death_by.chara.transformed_into_meat.active",
+                                        cdata[prm_853], c3_at_m141));
                     }
                     else
                     {
-                        txt(lang(
-                            name(prm_853) + u8"は粉々の肉片に変えられた。"s,
-                            name(prm_853) + u8" "s + is(prm_853)
-                                + u8" transformed into several pieces of meat."s));
+                        txt(i18n::s.get("core.locale.damage.death_by.chara.transformed_into_meat.passive",
+                                        cdata[prm_853], c3_at_m141));
                     }
                 }
                 if (p_at_m141 == 1)
@@ -742,17 +692,13 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     if (prm_853 >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
-                        txt(lang(
-                            u8"破壊した。"s,
-                            u8"destroy"s + _s(c3_at_m141) + u8" "s
-                                + him(prm_853) + u8"."s));
+                        txt(i18n::s.get("core.locale.damage.death_by.chara.destroyed.active",
+                                        cdata[prm_853], c3_at_m141));
                     }
                     else
                     {
-                        txt(lang(
-                            name(prm_853) + u8"は破壊された。"s,
-                            name(prm_853) + u8" "s + is(prm_853)
-                                + u8" killed."s));
+                        txt(i18n::s.get("core.locale.damage.death_by.chara.destroyed.passive",
+                                        cdata[prm_853], c3_at_m141));
                     }
                 }
                 if (p_at_m141 == 2)
@@ -760,17 +706,13 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     if (prm_853 >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
-                        txt(lang(
-                            u8"ミンチにした。"s,
-                            u8"mince"s + _s(c3_at_m141) + u8" "s + him(prm_853)
-                                + u8"."s));
+                        txt(i18n::s.get("core.locale.damage.death_by.chara.minced.active",
+                                        cdata[prm_853], c3_at_m141));
                     }
                     else
                     {
-                        txt(lang(
-                            name(prm_853) + u8"はミンチにされた。"s,
-                            name(prm_853) + u8" "s + is(prm_853)
-                                + u8" minced."s));
+                        txt(i18n::s.get("core.locale.damage.death_by.chara.minced.passive",
+                                        cdata[prm_853], c3_at_m141));
                     }
                 }
                 if (p_at_m141 == 3)
@@ -778,302 +720,38 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     if (prm_853 >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
-                        txt(lang(
-                            u8"殺した。"s,
-                            u8"kill"s + _s(c3_at_m141) + u8" "s + him(prm_853)
-                                + u8"."s));
+                        txt(i18n::s.get("core.locale.damage.death_by.chara.killed.active",
+                                        cdata[prm_853], c3_at_m141));
                     }
                     else
                     {
-                        txt(lang(
-                            name(prm_853) + u8"は殺された。"s,
-                            name(prm_853) + u8" "s + is(prm_853)
-                                + u8" slain."s));
+                        txt(i18n::s.get("core.locale.damage.death_by.chara.killed.passive",
+                                        cdata[prm_853], c3_at_m141));
                     }
                 }
             }
-            ndeathcause = lang(
-                cdatan(0, prm_855) + u8"に殺された。"s,
-                u8"was killed by "s + cdatan(0, prm_855));
+            ndeathcause = i18n::s.get("core.locale.damage.death_by.chara.killed.passive",
+                                        cdata[prm_855])
         }
         else
         {
-            if (prm_855 == -11)
-            {
-                txt(lang(
-                    name(prm_853) + u8"は見えざる手に葬られた。"s,
-                    name(prm_853) + u8" "s + is(prm_853)
-                        + u8" assassinated by the unseen hand."s));
-                if (prm_853 == 0)
-                {
-                    ndeathcause = lang(
-                        u8"見えざる手に葬られた。"s,
-                        u8"got assassinated by the unseen hand"s);
-                }
-            }
-            if (prm_855 == -1)
-            {
-                txt(lang(
-                    name(prm_853) + u8"は罠にかかって死んだ。"s,
-                    name(prm_853) + u8" "s + is(prm_853)
-                        + u8" caught in a trap and die"s + _s(prm_853)
-                        + u8"."s));
-                if (prm_853 == 0)
-                {
-                    ndeathcause = lang(
-                        u8"罠にかかって死んだ。"s,
-                        u8"got caught in a trap and died"s);
-                }
-            }
-            if (prm_855 == -2)
-            {
-                txt(lang(
-                    name(prm_853) + u8"はマナの反動で死んだ。"s,
-                    name(prm_853) + u8" die"s + _s(prm_853)
-                        + u8" from over-casting."s));
-                if (prm_853 == 0)
-                {
-                    ndeathcause = lang(
-                        u8"マナの反動で消滅した。"s,
-                        u8"was completely wiped by magic reaction"s);
-                }
-            }
-            if (prm_855 == -3)
-            {
-                txt(lang(
-                    name(prm_853) + u8"は餓死した。"s,
-                    name(prm_853) + u8" "s + is(prm_853)
-                        + u8" starved to death."s));
-                if (prm_853 == 0)
-                {
-                    ndeathcause =
-                        lang(u8"飢え死にした。"s, u8"was starved to death"s);
-                }
-            }
-            if (prm_855 == -4)
-            {
-                txt(lang(
-                    name(prm_853) + u8"は毒に蝕まれ死んだ。"s,
-                    name(prm_853) + u8" "s + is(prm_853)
-                        + u8" killed with poison."s));
-                if (prm_853 == 0)
-                {
-                    ndeathcause = lang(
-                        u8"毒にもがき苦しみながら死んだ。"s,
-                        u8"miserably died from poison"s);
-                }
-            }
-            if (prm_855 == -13)
-            {
-                txt(lang(
-                    name(prm_853) + u8"は出血多量で死んだ。"s,
-                    name(prm_853) + u8" die"s + _s(prm_853)
-                        + u8" from loss of blood"s));
-                if (prm_853 == 0)
-                {
-                    ndeathcause = lang(
-                        u8"血を流しすぎて死んだ。"s,
-                        u8"died from loss of blood"s);
-                }
-            }
-            if (prm_855 == -5)
-            {
-                txt(lang(
-                    name(prm_853) + u8"は呪いの力で死んだ。"s,
-                    name(prm_853) + u8" die"s + _s(prm_853)
-                        + u8" from curse."s));
-                if (prm_853 == 0)
-                {
-                    ndeathcause =
-                        lang(u8"呪い殺された。"s, u8"died from curse"s);
-                }
-            }
-            if (prm_855 == -7)
-            {
-                txt(lang(
-                    name(prm_853) + u8"は階段から転げ落ちて死んだ。"s,
-                    name(prm_853) + u8" tumble"s + _s(prm_853)
-                        + u8" from stairs and die"s + _s(prm_853) + u8"."s));
-                if (prm_853 == 0)
-                {
-                    ndeathcause = lang(
-                        u8"階段から転げ落ちて亡くなった。"s,
-                        u8"tumbled from stairs and died"s);
-                }
-            }
-            if (prm_855 == -8)
-            {
-                txt(lang(
-                    name(prm_853) + u8"は聴衆に殺された。"s,
-                    name(prm_853) + u8" "s + is(prm_853)
-                        + u8" killed by an audience."s));
-                if (prm_853 == 0)
-                {
-                    ndeathcause = lang(
-                        u8"演奏中に激怒した聴衆に殺された。"s,
-                        u8"was killed by an audience"s);
-                }
-            }
-            if (prm_855 == -9)
-            {
-                txt(lang(
-                    name(prm_853) + u8"は焼け死んだ。"s,
-                    name(prm_853) + u8" "s + is(prm_853)
-                        + u8" burnt and turned into ash."s));
-                if (prm_853 == 0)
-                {
-                    ndeathcause = lang(
-                        u8"焼けて消滅した。"s,
-                        u8"was burnt and turned into ash"s);
-                }
-            }
-            if (prm_855 == -12)
-            {
-                txt(lang(
-                    name(prm_853) + u8"は食中毒で死んだ。"s,
-                    name(prm_853) + u8" "s + is(prm_853)
-                        + u8" killed by food poisoning."s));
-                if (prm_853 == 0)
-                {
-                    ndeathcause = lang(
-                        u8"食中毒で倒れた。"s,
-                        u8"got killed by food poisoning"s);
-                }
-            }
-            if (prm_855 == -14)
-            {
-                txt(lang(
-                    name(prm_853) + u8"はエーテルに侵食され死んだ。"s,
-                    name(prm_853) + u8" die"s + _s(prm_853)
-                        + u8" of the Ether disease."s));
-                if (prm_853 == 0)
-                {
-                    ndeathcause = lang(
-                        u8"エーテルの病に倒れた。"s,
-                        u8"died of the Ether disease"s);
-                }
-            }
-            if (prm_855 == -15)
-            {
-                txt(lang(
-                    name(prm_853) + u8"は溶けて液体になった。"s,
-                    name(prm_853) + u8" melt"s + _s(prm_853) + u8" down."s));
-                if (prm_853 == 0)
-                {
-                    ndeathcause =
-                        lang(u8"溶けて液体になった。"s, u8"melted down"s);
-                }
-            }
-            if (prm_855 == -16)
-            {
-                txt(lang(
-                    name(prm_853) + u8"はバラバラになった。"s,
-                    name(prm_853) + u8" shatter"s + _s(prm_853) + u8"."s));
-                if (prm_853 == 0)
-                {
-                    ndeathcause = lang(u8"自殺した。"s, u8"committed suicide"s);
-                }
-            }
-            if (prm_855 == -17)
-            {
-                txt(lang(
-                    name(prm_853) + u8"は核爆発に巻き込まれて塵となった。"s,
-                    name(prm_853) + u8" "s + is(prm_853)
-                        + u8" turned into atoms."s));
-                if (prm_853 == 0)
-                {
-                    ndeathcause = lang(
-                        u8"核爆発に巻き込まれて死んだ。"s,
-                        u8"was killed by an atomic bomb"s);
-                }
-            }
-            if (prm_855 == -18)
-            {
-                txt(lang(
-                    name(prm_853)
-                        + u8"はアイアンメイデンの中で串刺しになって果てた。"s,
-                    name(prm_853) + u8" step"s + _s(prm_853)
-                        + u8" in an iron maiden and die"s + _s(prm_853)
-                        + u8"."s));
-                if (prm_853 == 0)
-                {
-                    ndeathcause = lang(
-                        u8"アイアンメイデンにはさまれて死んだ。"s,
-                        u8"stepped in an iron maiden and died"s);
-                }
-            }
-            if (prm_855 == -19)
-            {
-                txt(lang(
-                    name(prm_853) + u8"はギロチンで首をちょんぎられて死んだ。"s,
-                    name(prm_853) + u8" "s + is(prm_853)
-                        + u8" guillotined and die"s + _s(prm_853) + u8"."s));
-                if (prm_853 == 0)
-                {
-                    ndeathcause = lang(
-                        u8"ギロチンで首を落とされて死んだ。"s,
-                        u8"was guillotined"s);
-                }
-            }
-            if (prm_855 == -20)
-            {
-                txt(lang(
-                    name(prm_853) + u8"は首を吊った。"s,
-                    name(prm_853) + u8" hang"s + _s(prm_853) + u8" "s
-                        + his(prm_853) + u8"self."s));
-                if (prm_853 == 0)
-                {
-                    ndeathcause = lang(
-                        u8"首を吊った。"s, u8"commited suicide by hanging"s);
-                }
-            }
-            if (prm_855 == -21)
-            {
-                txt(lang(
-                    name(prm_853) + u8"はもちを喉に詰まらせて死んだ。"s,
-                    name(prm_853) + u8" choke"s + _s(prm_853)
-                        + u8" on mochi and die."s));
-                if (prm_853 == 0)
-                {
-                    ndeathcause = lang(
-                        u8"もちを喉に詰まらせて死んだ。"s,
-                        u8"ate mochi and died"s);
-                }
-            }
             if (prm_855 == -6)
             {
-                p_at_m141(0) = -1;
-                p_at_m141(1) = 0;
-                for (const auto& cnt : items(0))
-                {
-                    if (inv[cnt].number == 0)
-                    {
-                        continue;
-                    }
-                    if (inv[cnt].weight > p_at_m141(1))
-                    {
-                        p_at_m141(0) = cnt;
-                        p_at_m141(1) = inv[cnt].weight;
-                    }
-                }
-                if (p_at_m141 == -1)
-                {
-                    rtvaln = lang(u8"荷物"s, u8"backpack"s);
-                }
-                else
-                {
-                    rtvaln = itemname(p_at_m141);
-                }
-                txt(lang(
-                    name(prm_853) + u8"は"s + rtvaln
-                        + u8"の重さに耐え切れず死んだ。"s,
-                    name(prm_853) + u8" "s + is(prm_853) + u8" squashed by "s
-                        + rtvaln + u8"."s));
+                dmgheal_death_by_backpack(prm_853);
+            }
+            else
+            {
+                int death_kind = -prm_855;
+
+                txt(i18n::s.get("core.locale.damage.death_by.other._" +
+                                std::to_string(death_kind) +
+                                ".text",
+                                cdata[prm_853]));
                 if (prm_853 == 0)
                 {
-                    ndeathcause = lang(
-                        rtvaln + u8"の重さに耐え切れず潰れた。"s,
-                        u8"was squashed by "s + rtvaln);
+                    ndeathcause = i18n::s.get("core.locale.damage.death_by.other._" +
+                                              std::to_string(death_kind) +
+                                              ".death_cause");
                 }
             }
         }
@@ -1335,9 +1013,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             chara_custom_talk(prm_853, 102);
             if (prm_853 < 16)
             {
-                txt(lang(
-                    u8"あなたは悲しくなった。"s,
-                    u8"You feel sad for a moment."s));
+                txt(i18n::s.get("core.locale.damage.you_feel_sad"));
             }
         }
         if (cdata[prm_853].state == 0)
@@ -1350,10 +1026,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         {
             if (prm_853 == gdata_mount)
             {
-                txt(lang(
-                    name(0) + u8"は"s + name(prm_853) + u8"の死体から降りた。"s,
-                    name(0) + u8" get off the corpse of "s + name(prm_853)
-                        + u8"."s));
+                txt(i18n::s.get("core.locale.damage.get_off_corpse", cdata[prm_853]));
                 ride_end();
             }
         }
@@ -1387,8 +1060,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         }
         if (cdata[prm_853].is_death_master() == 1)
         {
-            txt(lang(
-                u8"死の宣告は無効になった。"s, u8"The death word breaks."s));
+            txt(i18n::s.get("core.locale.damage.death_word_breaks"));
             for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
             {
                 if (cdata[cnt].state != 1)
@@ -1436,17 +1108,11 @@ void end_dmghp()
     {
         if (is_in_fov(prm_853))
         {
-            txt(u8"("s + dmg_at_m141 + u8")"s + lang(u8" "s, ""s));
+            txt(u8"("s + dmg_at_m141 + u8")"s + i18n::space_if_needed());
             if (rnd(20) == 0)
             {
-                txt(lang(u8"「くっ！」"s, u8"\"Kill me already!\""s),
-                    lang(u8"「まだまだ！」"s, u8"\"No..not yet...!\""s),
-                    lang(
-                        u8"「もう限界…」"s,
-                        u8"\"I can't take it anymore...\""s),
-                    lang(u8"「うぐぐ」"s, u8"\"Argh!\""s),
-                    lang(u8"「あう」"s, u8"\"Uhhh\""s),
-                    lang(u8"「ああんっ」"s, u8"\"Ugggg\""s));
+                int picked = rnd(6);
+                txt(i18n::s.get("core.locale.damage.sand_bag._" + std::to_string(picked)));
             }
         }
     }
@@ -1481,9 +1147,7 @@ void dmgmp(int cc, int delta)
             if (damage < 10)
                 return;
         }
-        txt(lang(
-            u8"マナの反動が"s + name(cc) + u8"の精神を蝕んだ！"s,
-            u8"Magic reaction hurts "s + name(cc) + u8"!"s));
+        txt(i18n::s.get("core.locale.damage.magic_reaction_hurts", cdata[cc]));
         dmghp(cc, damage, -2);
     }
 }
@@ -1556,6 +1220,38 @@ bool actionsp(int cc, int sp)
     return true;
 }
 
+void dmgheal_death_by_backpack(int prm_853)
+{
+    p_at_m141(0) = -1;
+    p_at_m141(1) = 0;
+    for (const auto& cnt : items(0))
+    {
+        if (inv[cnt].number == 0)
+        {
+            continue;
+        }
+        if (inv[cnt].weight > p_at_m141(1))
+        {
+            p_at_m141(0) = cnt;
+            p_at_m141(1) = inv[cnt].weight;
+        }
+    }
+    if (p_at_m141 == -1)
+    {
+        rtvaln = i18n::s.get("core.locale.damage.death_by.other._6.backpack", rtvaln);
+    }
+    else
+    {
+        rtvaln = itemname(p_at_m141);
+    }
+    txt(i18n::s.get("core.locale.damage.death_by.other._6.text",
+                    cdata[prm_853],
+                    rtvaln));
+    if (prm_853 == 0)
+    {
+        ndeathcause = i18n::s.get("core.locale.damage.death_by.other._6.death_cause", rtvaln);
+    }
+}
 
 
 } // namespace elona

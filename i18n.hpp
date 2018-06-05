@@ -121,9 +121,12 @@ inline bool ident_eq(std::string ident, int count)
 }
 
 
+std::string format_builtins_argless(const hil::FunctionCall&);
+std::string format_builtins_bool(const hil::FunctionCall&, bool);
 std::string format_builtins_character(const hil::FunctionCall&, const character&);
 std::string format_builtins_item(const hil::FunctionCall&, const item&);
 
+std::string space_if_needed();
 
 namespace detail
 {
