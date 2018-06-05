@@ -311,22 +311,6 @@ void picload(basic_image& img, int mode)
     application::instance().get_renderer().render_image(
         img, detail::current_tex_buffer().x, detail::current_tex_buffer().y);
 
-#if 0 // disable it temporarily
-    if (filesystem::to_utf8_path(filepath).find(u8"interface.bmp") != std::string::npos)
-    {
-        basic_image ex{filepath.parent_path() / u8"interface_ex.png"};
-        application::instance().get_renderer().render_image(ex, 0, 656);
-        basic_image ex2{filepath.parent_path() / u8"interface_ex2.png"};
-        application::instance().get_renderer().render_image(
-            ex2, 144, 656);
-        application::instance().get_renderer().render_image(
-            ex2, 144, 704);
-        basic_image ex3{filepath.parent_path() / u8"interface_ex3.png"};
-        application::instance().get_renderer().render_image(
-            ex3, 144, 752);
-    }
-#endif
-
     application::instance().get_renderer().set_blend_mode(save);
 }
 
