@@ -1696,14 +1696,13 @@ turn_result_t do_use_command()
             for (int cnt = 0; cnt < 3; ++cnt)
             {
                 randomize(inv[ci].subname + inv[ci].param1 * 10 + cnt);
-                int stat = enchantment_add(
+                if (enchantment_add(
                     ci,
                     enchantment_generate(enchantment_gen_level(4)),
                     enchantment_gen_p(),
                     0,
                     0,
-                    1);
-                if (stat != 0)
+                    1))
                 {
                     if (rtval == 34)
                     {
@@ -1752,8 +1751,7 @@ turn_result_t do_use_command()
                     txt(lang(
                         u8"その力は次第に脅威になっている。"s,
                         u8"Its power is becoming a threat."s));
-                    int stat = enchantment_add(ci, 45, 50);
-                    if (stat == 0)
+                    if (enchantment_add(ci, 45, 50))
                     {
                         inv[ci].enchantments[14].id = 0;
                         txt(lang(
