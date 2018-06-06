@@ -1,6 +1,7 @@
 locale {
     death_by {
         chara {
+            # _1 is victim, _2 is attacker.
             transformed_into_meat {
                 active = "transform${s(_2)} ${him(_1)} into several pieces of meat."
                 passive = "${name(_1)} ${is(_1)} transformed into several pieces of meat."
@@ -20,8 +21,9 @@ locale {
             death_cause = "was killed by ${basename(_1)}"
         }
         element {
+            # _1 is victim, _2 is attacker.
             default {
-                active = "kill${_s(_2)} ${him(_1)}."
+                active = "kill${s(_2)} ${him(_1)}."
                 passive = "${name(_1)} ${is(_1)} killed."
             }
             _50 {
@@ -98,7 +100,7 @@ locale {
             }
             _6 {
                 text = "${name(_1)} ${is(_1)} squashed by ${_2}."
-                death_cause = "was squashed by ${_1}."
+                death_cause = "was squashed by ${_1}"
                 backpack = "backpack"
             }
             _7 {

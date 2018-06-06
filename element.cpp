@@ -408,7 +408,7 @@ void txteledmg(int type, int attacker, int target, int element)
     }
     else if (type == 1)
     {
-        auto text = i18n::s.get_optional("core.locale.damage.death_by.element._"s +
+        auto text = i18n::s.get_optional("core.locale.death_by.element._"s +
                                          std::to_string(element) +
                                          ".active",
                                          cdata[target],
@@ -419,13 +419,13 @@ void txteledmg(int type, int attacker, int target, int element)
         }
         else
         {
-            txt(i18n::s.get("core.locale.damage.death_by.element.default.active",
+            txt(i18n::s.get("core.locale.death_by.element.default.active",
                             cdata[target], cdata[attacker]));
         }
     }
     else if (type == 2)
     {
-        auto text = i18n::s.get_optional("core.locale.damage.death_by.element._"s +
+        auto text = i18n::s.get_optional("core.locale.death_by.element._"s +
                                          std::to_string(element) +
                                          ".passive",
                                          cdata[target],
@@ -436,7 +436,7 @@ void txteledmg(int type, int attacker, int target, int element)
         }
         else
         {
-            txt(i18n::s.get("core.locale.damage.death_by.element.default.passive",
+            txt(i18n::s.get("core.locale.death_by.element.default.passive",
                             cdata[target], cdata[attacker]));
         }
     }

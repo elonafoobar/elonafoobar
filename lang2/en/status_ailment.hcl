@@ -9,11 +9,11 @@ locale {
             heal = "${name(_1)} recover${s(_1)} from confusion."
         }
         paralyzed {
-            apply = "${name(_1)} ${is(_1)} paralyzed"
+            apply = "${name(_1)} ${is(_1)} paralyzed."
             heal = "${name(_1)} recover${s(_1)} from paralysis."
         }
         poisoned {
-            apply = "${name(_1)} ${is(_1)} poisoned"
+            apply = "${name(_1)} ${is(_1)} poisoned."
             heal = "${name(_1)} recover${s(_1)} from poison."
         }
         sleep {

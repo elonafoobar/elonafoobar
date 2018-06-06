@@ -15,7 +15,7 @@ locale {
         furthermore = "Futhermore,"
 
         is_frightened = "${name(_1)} ${is(_1)} frightened."
-        critical = "Critical Hit!"
+        critical_hit = "Critical Hit!"
 
         wields_proudly = "${name(_1)} wield${s(_1)} ${_2} proudly."
 
@@ -37,13 +37,13 @@ locale {
 
         weapon {
             # <attacker> <verb>s something with his <weapon>.
-            attacks_with = "${name(_1)} ${_2}${s(_1, _5)} ${name(_3)} with ${his(_1)} ${_4}."
+            attacks_with = "${name(_1)} ${_2}${s(_1)} ${name(_3)} with ${his(_1)} ${_4}."
 
             # <attacker> <verb>s something and <...>
-            attacks_and = "${name(_1)} ${_2}${s(_1, _5)} ${name(_3)}${_4}"
+            attacks_and = "${name(_1)} ${_2}${s(_1)} ${name(_3)} ${_4}"
 
-            attacks_unarmed = "${name(_1)} ${_2}${s(_1, _4)} ${name(_3)}."
-            attacks_unarmed_and = "${name(_1)} ${_2}${s(_1, _4)} ${name(_3)} ${_5}."
+            attacks_unarmed = "${name(_1)} ${_2}${s(_1)} ${name(_3)}."
+            attacks_unarmed_and = "${name(_1)} ${_2}${s(_1)} ${name(_3)} ${_4}"
 
             and = "and"
 

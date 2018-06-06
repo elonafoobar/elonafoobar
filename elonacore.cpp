@@ -18362,9 +18362,7 @@ label_22191_internal:
     if (cdata[cc].fear != 0)
     {
         ++msgdup;
-        txt(lang(
-            name(cc) + u8"は怖気づいた。"s,
-            name(cc) + u8" "s + is(cc) + u8" frightened."s));
+        txt(i18n::s.get("core.locale.damage.is_frightened", cdata[cc]));
         return;
     }
     if (map(cdata[tc].position.x, cdata[tc].position.y, 8) != 0)
@@ -18394,7 +18392,7 @@ label_22191_internal:
             if (cc == 0)
             {
                 txtef(3);
-                txt(lang(u8"会心の一撃！ "s, u8"Critical Hit!"s));
+                txt(i18n::s.get("core.locale.damage.critical_hit"));
             }
         }
         dmg = calcattackdmg();
@@ -18431,11 +18429,7 @@ label_22191_internal:
                     if (rnd(5) == 0)
                     {
                         txtef(9);
-                        txt(lang(
-                            name(cc) + u8"は"s + s(1)
-                                + u8"を誇らしげに構えた。"s,
-                            name(cc) + u8" wield"s + _s(cc) + u8" "s + s(1)
-                                + u8" proudly."s));
+                        txt(i18n::s.get("core.locale.damage.wields_proudly", cdata[cc], s(1)));
                     }
                 }
                 i = 1;
@@ -18453,7 +18447,7 @@ label_22191_internal:
         {
             if (extraattack)
             {
-                txt(lang(u8"さらに"s, u8"Furthermore,"s));
+                txt(i18n::s.get("core.locale.damage.furthermore"));
                 txtcontinue();
             }
             if (attackskill == 106)
@@ -18461,231 +18455,57 @@ label_22191_internal:
                 if (tc >= 16)
                 {
                     gdata(809) = 2;
-                    txt(lang(
-                        aln(cc) + name(tc) + u8"を"s
-                            + _melee(0, cdata[cc].melee_attack_type),
-                        name(cc) + u8" "s
-                            + _melee(0, cdata[cc].melee_attack_type) + _s(cc)
-                            + u8" "s + name(tc) + u8" and"s));
+                    txt(i18n::s.get("core.locale.damage.weapon.attacks_unarmed_and",
+                                    cdata[cc],
+                                    _melee(0, cdata[cc].melee_attack_type),
+                                    cdata[tc],
+                                    i18n::s.get("core.locale.damage.weapon.and")));
                 }
                 else
                 {
-                    txt(lang(
-                        aln(tc) + name(cc) + u8"に"s
-                            + _melee(1, cdata[cc].melee_attack_type),
-                        name(cc) + u8" "s
-                            + _melee(1, cdata[cc].melee_attack_type) + _s(cc)
-                            + u8" "s + name(tc) + u8"."s));
+                    txt(i18n::s.get("core.locale.damage.weapon.attacks_unarmed",
+                                    cdata[cc],
+                                    _melee(1, cdata[cc].melee_attack_type),
+                                    cdata[tc]));
                 }
             }
-            if (attackskill == 108)
+            else
             {
-                s = lang(u8"弓"s, u8"bow"s);
-                if (tc >= 16)
+                optional<std::string> weapon_name = none;
+                if (attackskill == 111)
                 {
-                    gdata(809) = 2;
-                    txt(lang(
-                        aln(cc) + name(tc) + u8"を射撃し"s,
-                        name(cc) + u8" shoot"s + _s(cc) + u8" "s + name(tc)
-                            + u8" and"s));
+                    // Special case for thrown weapons.
+                    weapon_name = itemname(cw, 1, 1);
                 }
                 else
                 {
-                    txt(lang(
-                        aln(tc) + name(cc) + u8"に"s + s(i) + u8"で撃たれた。"s,
-                        name(cc) + u8" shoot"s + _s(cc) + u8" "s + name(tc)
-                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
+                    weapon_name = i18n::s.get_optional("core.locale.damage.weapon._" +
+                                                       std::to_string(attackskill) +
+                                                       ".name");
                 }
-            }
-            if (attackskill == 109)
-            {
-                s = lang(u8"クロスボウ"s, u8"crossbow"s);
-                if (tc >= 16)
+                if (weapon_name)
                 {
-                    gdata(809) = 2;
-                    txt(lang(
-                        aln(cc) + name(tc) + u8"を射撃し"s,
-                        name(cc) + u8" shoot"s + _s(cc) + u8" "s + name(tc)
-                            + u8" and"s));
-                }
-                else
-                {
-                    txt(lang(
-                        aln(tc) + name(cc) + u8"に"s + s(i) + u8"で撃たれた。"s,
-                        name(cc) + u8" shoot"s + _s(cc) + u8" "s + name(tc)
-                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
-                }
-            }
-            if (attackskill == 110)
-            {
-                s = lang(u8"銃"s, u8"gun"s);
-                if (tc >= 16)
-                {
-                    gdata(809) = 2;
-                    txt(lang(
-                        aln(cc) + name(tc) + u8"を射撃し"s,
-                        name(cc) + u8" shoot"s + _s(cc) + u8" "s + name(tc)
-                            + u8" and"s));
-                }
-                else
-                {
-                    txt(lang(
-                        aln(tc) + name(cc) + u8"に"s + s(i) + u8"で撃たれた。"s,
-                        name(cc) + u8" shoot"s + _s(cc) + u8" "s + name(tc)
-                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
-                }
-            }
-            if (attackskill == 100)
-            {
-                s = lang(u8"長剣"s, u8"sword"s);
-                if (tc >= 16)
-                {
-                    gdata(809) = 2;
-                    txt(lang(
-                        aln(cc) + name(tc) + u8"を切り払い"s,
-                        name(cc) + u8" slash"s + _s(cc) + u8" "s + name(tc)
-                            + u8" and"s));
-                }
-                else
-                {
-                    txt(lang(
-                        aln(tc) + name(cc) + u8"に"s + s(i) + u8"で切られた。"s,
-                        name(cc) + u8" slash"s + _s(cc) + u8" "s + name(tc)
-                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
-                }
-            }
-            if (attackskill == 104)
-            {
-                s = lang(u8"槍"s, u8"spear"s);
-                if (tc >= 16)
-                {
-                    gdata(809) = 2;
-                    txt(lang(
-                        aln(cc) + name(tc) + u8"を突き刺して"s,
-                        name(cc) + u8" stab"s + _s(cc) + u8" "s + name(tc)
-                            + u8" and"s));
-                }
-                else
-                {
-                    txt(lang(
-                        aln(tc) + name(cc) + u8"に"s + s(i) + u8"で刺された。"s,
-                        name(cc) + u8" stab"s + _s(cc) + u8" "s + name(tc)
-                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
-                }
-            }
-            if (attackskill == 105)
-            {
-                s = lang(u8"杖"s, u8"staff"s);
-                if (tc >= 16)
-                {
-                    gdata(809) = 2;
-                    txt(lang(
-                        aln(cc) + name(tc) + u8"を打って"s,
-                        name(cc) + u8" smash"s + _s(cc) + u8" "s + name(tc)
-                            + u8" and"s));
-                }
-                else
-                {
-                    txt(lang(
-                        aln(tc) + name(cc) + u8"に"s + s(i) + u8"で打たれた。"s,
-                        name(cc) + u8" smash"s + _s(cc) + u8" "s + name(tc)
-                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
-                }
-            }
-            if (attackskill == 101)
-            {
-                s = lang(u8"短剣"s, u8"dagger"s);
-                if (tc >= 16)
-                {
-                    gdata(809) = 2;
-                    txt(lang(
-                        aln(cc) + name(tc) + u8"を突き刺して"s,
-                        name(cc) + u8" stab"s + _s(cc) + u8" "s + name(tc)
-                            + u8" and"s));
-                }
-                else
-                {
-                    txt(lang(
-                        aln(tc) + name(cc) + u8"に"s + s(i) + u8"で刺された。"s,
-                        name(cc) + u8" stab"s + _s(cc) + u8" "s + name(tc)
-                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
-                }
-            }
-            if (attackskill == 103)
-            {
-                s = lang(u8"鈍器"s, u8"mace"s);
-                if (tc >= 16)
-                {
-                    gdata(809) = 2;
-                    txt(lang(
-                        aln(cc) + name(tc) + u8"を打って"s,
-                        name(cc) + u8" smash"s + _s(cc) + u8" "s + name(tc)
-                            + u8" and"s));
-                }
-                else
-                {
-                    txt(lang(
-                        aln(tc) + name(cc) + u8"に"s + s(i) + u8"で打たれた。"s,
-                        name(cc) + u8" smash"s + _s(cc) + u8" "s + name(tc)
-                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
-                }
-            }
-            if (attackskill == 102)
-            {
-                s = lang(u8"斧"s, u8"axe"s);
-                if (tc >= 16)
-                {
-                    gdata(809) = 2;
-                    txt(lang(
-                        aln(cc) + name(tc) + u8"を切り払い"s,
-                        name(cc) + u8" slash"s + _s(cc) + u8" "s + name(tc)
-                            + u8" and"s));
-                }
-                else
-                {
-                    txt(lang(
-                        aln(tc) + name(cc) + u8"に"s + s(i) + u8"で切られた。"s,
-                        name(cc) + u8" slash"s + _s(cc) + u8" "s + name(tc)
-                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
-                }
-            }
-            if (attackskill == 107)
-            {
-                s = lang(u8"鎌"s, u8"scythe"s);
-                if (tc >= 16)
-                {
-                    gdata(809) = 2;
-                    txt(lang(
-                        aln(cc) + name(tc) + u8"を切り払い"s,
-                        name(cc) + u8" slash"s + _s(cc) + u8" "s + name(tc)
-                            + u8" and"s));
-                }
-                else
-                {
-                    txt(lang(
-                        aln(tc) + name(cc) + u8"に"s + s(i) + u8"で切られた。"s,
-                        name(cc) + u8" slash"s + _s(cc) + u8" "s + name(tc)
-                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
-                }
-            }
-            if (attackskill == 111)
-            {
-                s = itemname(cw, 1, 1);
-                if (tc >= 16)
-                {
-                    gdata(809) = 2;
-                    txt(lang(
-                        aln(cc) + name(tc) + u8"に"s + s(i) + u8"を投げ"s,
-                        name(cc) + u8" shoot"s + _s(cc) + u8" "s + name(tc)
-                            + u8" and"s));
-                }
-                else
-                {
-                    txt(lang(
-                        aln(tc) + name(cc) + u8"に"s + s(i)
-                            + u8"で攻撃された。"s,
-                        name(cc) + u8" shoot"s + _s(cc) + u8" "s + name(tc)
-                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
+                    if (tc >= 16)
+                    {
+                        gdata(809) = 2;
+                        txt(i18n::s.get("core.locale.damage.weapon.attacks_and",
+                                        cdata[cc],
+                                        i18n::s.get("core.locale.damage.weapon._" +
+                                                    std::to_string(attackskill) +
+                                                    ".verb_and"),
+                                        cdata[tc],
+                                        i18n::s.get("core.locale.damage.weapon.and")));
+                    }
+                    else
+                    {
+                        txt(i18n::s.get("core.locale.damage.weapon.attacks_with",
+                                        cdata[cc],
+                                        i18n::s.get("core.locale.damage.weapon._" +
+                                                    std::to_string(attackskill) +
+                                                    ".verb"),
+                                        cdata[tc],
+                                        *weapon_name));
+                    }
                 }
             }
         }
@@ -18776,10 +18596,8 @@ label_22191_internal:
                         if (is_in_fov(cc))
                         {
                             txtef(8);
-                            txt(lang(
-                                u8"棘が"s + name(cc) + u8"に刺さった。"s,
-                                name(cc) + u8" "s + is(cc)
-                                    + u8" stuck by several thorns."s));
+                            txt(i18n::s.get("core.locale.damage.reactive_attack.thorns",
+                                            cdata[cc]));
                         }
                         dmghp(
                             cc,
@@ -18794,11 +18612,8 @@ label_22191_internal:
                         if (is_in_fov(cc))
                         {
                             txtef(8);
-                            txt(lang(
-                                u8"エーテルの棘が"s + name(cc)
-                                    + u8"に刺さった。"s,
-                                name(cc) + u8" "s + is(cc)
-                                    + u8" stuck by several ether thorns."s));
+                            txt(i18n::s.get("core.locale.damage.reactive_attack.ether_thorns",
+                                            cdata[cc]));
                         }
                         dmghp(
                             cc,
@@ -18829,9 +18644,7 @@ label_22191_internal:
                         if (is_in_fov(tc))
                         {
                             txtef(8);
-                            txt(lang(
-                                u8"酸が飛び散った。"s,
-                                u8"Acids spread over the ground."s));
+                            txt(i18n::s.get("core.locale.damage.reactive_attack.acids"));
                         }
                         efid = 455;
                         efp = cdata[tc].damage_reaction_info / 1000;
@@ -18863,22 +18676,16 @@ label_22191_internal:
         {
             if (extraattack)
             {
-                txt(lang(u8"さらに"s, u8"Furthermore,"s));
+                txt(i18n::s.get("core.locale.damage.furthermore"));
                 txtcontinue();
             }
             if (tc < 16)
             {
-                txt(lang(
-                    aln(tc) + name(cc) + u8"の攻撃を避けた。"s,
-                    name(tc) + u8" evade"s + _s(tc) + u8" "s + name(cc)
-                        + u8"."s));
+                txt(i18n::s.get("core.locale.damage.miss.ally", cdata[cc], cdata[tc]));
             }
             else
             {
-                txt(lang(
-                    aln(cc) + u8"攻撃をかわされた。"s,
-                    name(cc) + u8" miss"s + _s(cc, true) + u8" "s + name(tc)
-                        + u8"."s));
+                txt(i18n::s.get("core.locale.damage.miss.other", cdata[cc], cdata[tc]));
             }
             add_damage_popup(u8"miss", tc, {0, 0, 0});
         }
@@ -18889,22 +18696,16 @@ label_22191_internal:
         {
             if (extraattack)
             {
-                txt(lang(u8"さらに"s, u8"Furthermore,"s));
+                txt(i18n::s.get("core.locale.damage.furthermore"));
                 txtcontinue();
             }
             if (tc < 16)
             {
-                txt(lang(
-                    aln(tc) + name(cc) + u8"の攻撃を華麗に避けた。"s,
-                    name(tc) + u8" skillfully evade"s + _s(tc) + u8" "s
-                        + name(cc) + u8"."s));
+                txt(i18n::s.get("core.locale.damage.evade.ally", cdata[cc], cdata[tc]));
             }
             else
             {
-                txt(lang(
-                    aln(cc) + u8"攻撃を華麗にかわされた。"s,
-                    name(tc) + u8" skillfully evade"s + _s(tc) + u8" "s
-                        + name(cc) + u8"."s));
+                txt(i18n::s.get("core.locale.damage.evade.other", cdata[cc], cdata[tc]));
             }
             add_damage_popup(u8"evade!!", tc, {0, 0, 0});
         }

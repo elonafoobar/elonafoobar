@@ -679,12 +679,12 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     if (prm_853 >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
-                        txt(i18n::s.get("core.locale.damage.death_by.chara.transformed_into_meat.active",
+                        txt(i18n::s.get("core.locale.death_by.chara.transformed_into_meat.active",
                                         cdata[prm_853], is_player));
                     }
                     else
                     {
-                        txt(i18n::s.get("core.locale.damage.death_by.chara.transformed_into_meat.passive",
+                        txt(i18n::s.get("core.locale.death_by.chara.transformed_into_meat.passive",
                                         cdata[prm_853], is_player));
                     }
                 }
@@ -693,12 +693,12 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     if (prm_853 >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
-                        txt(i18n::s.get("core.locale.damage.death_by.chara.destroyed.active",
+                        txt(i18n::s.get("core.locale.death_by.chara.destroyed.active",
                                         cdata[prm_853], is_player));
                     }
                     else
                     {
-                        txt(i18n::s.get("core.locale.damage.death_by.chara.destroyed.passive",
+                        txt(i18n::s.get("core.locale.death_by.chara.destroyed.passive",
                                         cdata[prm_853], is_player));
                     }
                 }
@@ -707,12 +707,12 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     if (prm_853 >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
-                        txt(i18n::s.get("core.locale.damage.death_by.chara.minced.active",
+                        txt(i18n::s.get("core.locale.death_by.chara.minced.active",
                                         cdata[prm_853], is_player));
                     }
                     else
                     {
-                        txt(i18n::s.get("core.locale.damage.death_by.chara.minced.passive",
+                        txt(i18n::s.get("core.locale.death_by.chara.minced.passive",
                                         cdata[prm_853], is_player));
                     }
                 }
@@ -721,17 +721,17 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     if (prm_853 >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
-                        txt(i18n::s.get("core.locale.damage.death_by.chara.killed.active",
+                        txt(i18n::s.get("core.locale.death_by.chara.killed.active",
                                         cdata[prm_853], is_player));
                     }
                     else
                     {
-                        txt(i18n::s.get("core.locale.damage.death_by.chara.killed.passive",
+                        txt(i18n::s.get("core.locale.death_by.chara.killed.passive",
                                         cdata[prm_853], is_player));
                     }
                 }
             }
-            ndeathcause = i18n::s.get("core.locale.damage.death_by.chara.killed.passive",
+            ndeathcause = i18n::s.get("core.locale.death_by.chara.killed.passive",
                                       cdata[prm_855]);
         }
         else
@@ -744,13 +744,13 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 int death_kind = -prm_855;
 
-                txt(i18n::s.get("core.locale.damage.death_by.other._" +
+                txt(i18n::s.get("core.locale.death_by.other._" +
                                 std::to_string(death_kind) +
                                 ".text",
                                 cdata[prm_853]));
                 if (prm_853 == 0)
                 {
-                    ndeathcause = i18n::s.get("core.locale.damage.death_by.other._" +
+                    ndeathcause = i18n::s.get("core.locale.death_by.other._" +
                                               std::to_string(death_kind) +
                                               ".death_cause");
                 }
@@ -1241,18 +1241,18 @@ void dmgheal_death_by_backpack(character& chara)
     }
     if (heaviest_item_index == -1)
     {
-        heaviest_item_name = i18n::s.get("core.locale.damage.death_by.other._6.backpack");
+        heaviest_item_name = i18n::s.get("core.locale.death_by.other._6.backpack");
     }
     else
     {
         heaviest_item_name = itemname(heaviest_item_index);
     }
-    txt(i18n::s.get("core.locale.damage.death_by.other._6.text",
+    txt(i18n::s.get("core.locale.death_by.other._6.text",
                     chara,
                     heaviest_item_name));
     if (chara.index == 0)
     {
-        ndeathcause = i18n::s.get("core.locale.damage.death_by.other._6.death_cause", heaviest_item_name);
+        ndeathcause = i18n::s.get("core.locale.death_by.other._6.death_cause", heaviest_item_name);
     }
 }
 
