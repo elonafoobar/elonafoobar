@@ -5410,7 +5410,7 @@ label_1978_internal:
         else
         {
             pos(wx + 270, y + 2);
-            mes(lang(u8"★?"s, u8"$ x "s) + p);
+            mes(lang(u8"★×"s, u8"$ x "s) + p);
         }
         color(0, 0, 0);
         font(13 - en * 2);
