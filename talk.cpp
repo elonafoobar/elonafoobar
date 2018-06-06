@@ -2287,9 +2287,9 @@ int talk_guide_quest_client()
         {
             // Check duplicate
             bool duplicated{};
-            for (int cnt = 0, cnt_end = (cnt); cnt < cnt_end; ++cnt)
+            for (int j = 0; j < i; ++j)
             {
-                if (gdata(160 + cnt) == quest_id)
+                if (gdata(160 + j) == quest_id)
                 {
                     duplicated = true;
                     break;
