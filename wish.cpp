@@ -402,6 +402,10 @@ bool grant_special_wishing(const std::string& wish)
             txt(u8"fame +1,000,000");
             cdata[0].fame += 1'000'000;
         }
+        else
+        {
+            return false; // No match
+        }
     }
     else
     {
