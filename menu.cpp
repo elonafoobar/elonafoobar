@@ -4485,7 +4485,7 @@ label_196901_internal:
             list(0, listmax) = 1;
             list(1, listmax) = 99999;
             listn(0, listmax) = lang(u8"[その他]"s, u8"[ETC]"s)
-                + lang(u8"あなたのエーテル病の進行は早い。"s,
+                + lang(u8"あなたのエーテル病の進行は早い"s,
                        u8"Your Ether disease grows fast."s);
             ++listmax;
         }
@@ -4494,7 +4494,7 @@ label_196901_internal:
             list(0, listmax) = 1;
             list(1, listmax) = 99999;
             listn(0, listmax) = lang(u8"[その他]"s, u8"[ETC]"s)
-                + lang(u8"あなたのエーテル病の進行は遅い。"s,
+                + lang(u8"あなたのエーテル病の進行は遅い"s,
                        u8"Your Ether disease grows slow."s);
             ++listmax;
         }
