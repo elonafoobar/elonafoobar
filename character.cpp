@@ -1886,6 +1886,13 @@ bool chara_copy(int cc)
         {
             continue;
         }
+        if (map(x, y, 6) != 0)
+        {
+            if (chipm(7, map(x, y, 6) % 1000) & 4)
+            {
+                continue;
+            }
+        }
         if (map(x, y, 1) == 0)
         {
             if (!(chipm(7, map(x, y, 0)) & 4))
