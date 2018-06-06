@@ -207,8 +207,10 @@ if(EXISTS "${CMAKE_PREFIX_PATH}/elona")
                      "${CMAKE_PREFIX_PATH}/elona/map"
                      "$<TARGET_FILE_DIR:${PROJECT_NAME}>/map")
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                     COMMAND ${CMAKE_COMMAND} -E copy_directory
-                     "${CMAKE_PREFIX_PATH}/elona/original"
+                     COMMAND ${CMAKE_COMMAND} -E copy
+                     "${CMAKE_PREFIX_PATH}/elona/original/export.txt"
+                     "${CMAKE_PREFIX_PATH}/elona/original/face1.bmp"
+                     "${CMAKE_PREFIX_PATH}/elona/original/musiclist.txt"
                      "$<TARGET_FILE_DIR:${PROJECT_NAME}>/original")
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
                      COMMAND ${CMAKE_COMMAND} -E copy_directory
