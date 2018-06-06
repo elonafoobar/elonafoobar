@@ -1874,14 +1874,14 @@ bool chara_copy(int cc)
     int x;
     int y;
 
-    for (int i = 0; i < 8; ++i)
+    for (int i = 0; i < 4; ++i)
     {
-        y = cdata[cc].position.y - rnd(i / 4 + 1) + rnd(i / 4 + 1);
+        y = cdata[cc].position.y - rnd(2) + rnd(2);
         if (y < 0 || y >= mdata(1))
         {
             continue;
         }
-        x = cdata[cc].position.x - rnd(i / 4 + 1) + rnd(i / 4 + 1);
+        x = cdata[cc].position.x - rnd(2) + rnd(2);
         if (x < 0 || x >= mdata(0))
         {
             continue;
