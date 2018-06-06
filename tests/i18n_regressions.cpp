@@ -13,68 +13,26 @@
 using namespace std::literals::string_literals;
 using namespace elona;
 
-void normalize_item(item& i)
-{
-    i.quality = 3;
-    i.curse_state = curse_state_t::none;
-    i.identification_state = identification_state_t::completely_identified;
-    i.material = 34;
-    i.quality = 1;
-    i.dv = 0;
-    i.pv = 0;
-    i.count = 1;
-    i.dice_x = 0;
-    i.dice_y = 0;
-    i.damage_bonus = 0;
-    i.hit_bonus = 0;
-    i.subname = 0;
-    i.enchantments.clear();
-}
-
-std::string test_itemname(int id, int number, bool prefix = false)
-{
-    REQUIRE(itemcreate(-1, id, 0, 0, number) == 1);
-    int index = elona::ci;
-    normalize_item(elona::inv[index]);
-    std::string name = itemname(index, number, prefix ? 0 : 1);
-    item_delete(index);
-    return name;
-}
-
-void set_english()
-{
-    elona::en = 1;
-    elona::jp = 0;
-    set_item_info();
-}
-
-item& create_item(int id, int number)
-{
-    REQUIRE(itemcreate(-1, id, 0, 0, number) == 1);
-    normalize_item(elona::inv[elona::ci]);
-    return elona::inv[elona::ci];
-}
-
 TEST_CASE("test itemname: counters", "[I18N: Regressions]")
 {
     testing::start_in_debug_map();
-    REQUIRE(test_itemname(792, 1) == u8"プチトロ");
-    REQUIRE(test_itemname(792, 3) == u8"3個のプチトロ");
-    REQUIRE(test_itemname(444, 3) == u8"3着の鉛の防弾服");
-    REQUIRE(test_itemname(434, 3) == u8"3冊の自己変容の魔法書(残り1回)");
-    REQUIRE(test_itemname(4, 3) == u8"3本の鉛の棍棒");
-    REQUIRE(test_itemname(771, 3) == u8"3服のブルーカプセルドラッグ");
-    REQUIRE(test_itemname(742, 3) == u8"★3巻のすくつ探索許可証");
-    REQUIRE(test_itemname(448, 3) == u8"3対の鉛の合成篭手");
-    REQUIRE(test_itemname(12, 3) == u8"3対の鉛の合成靴");
-    REQUIRE(test_itemname(54, 3) == u8"3枚の金貨");
-    REQUIRE(test_itemname(55, 3) == u8"3枚のプラチナ硬貨");
+    REQUIRE(testing::test_itemname(792, 1) == u8"プチトロ");
+    REQUIRE(testing::test_itemname(792, 3) == u8"3個のプチトロ");
+    REQUIRE(testing::test_itemname(444, 3) == u8"3着の鉛の防弾服");
+    REQUIRE(testing::test_itemname(434, 3) == u8"3冊の自己変容の魔法書(残り1回)");
+    REQUIRE(testing::test_itemname(4, 3) == u8"3本の鉛の棍棒");
+    REQUIRE(testing::test_itemname(771, 3) == u8"3服のブルーカプセルドラッグ");
+    REQUIRE(testing::test_itemname(742, 3) == u8"★3巻のすくつ探索許可証");
+    REQUIRE(testing::test_itemname(448, 3) == u8"3対の鉛の合成篭手");
+    REQUIRE(testing::test_itemname(12, 3) == u8"3対の鉛の合成靴");
+    REQUIRE(testing::test_itemname(54, 3) == u8"3枚の金貨");
+    REQUIRE(testing::test_itemname(55, 3) == u8"3枚のプラチナ硬貨");
 }
 
 TEST_CASE("test itemname: curse state", "[I18N: Regressions]")
 {
     testing::start_in_debug_map();
-    item& i = create_item(792, 1);
+    item& i = testing::create_item(792, 1);
     i.identification_state = identification_state_t::completely_identified;
 
     SECTION("Blessed")
@@ -118,7 +76,7 @@ TEST_CASE("test itemname: curse state", "[I18N: Regressions]")
 TEST_CASE("test itemname: rotten", "[I18N: Regressions]")
 {
     testing::start_in_debug_map();
-    item& i = create_item(197, 1);
+    item& i = testing::create_item(197, 1);
     i.material = 35;
     i.identification_state = identification_state_t::completely_identified;
 
@@ -132,7 +90,7 @@ TEST_CASE("test itemname: rotten", "[I18N: Regressions]")
 TEST_CASE("test itemname: material kit", "[I18N: Regressions]")
 {
     testing::start_in_debug_map();
-    item& i = create_item(630, 3);
+    item& i = testing::create_item(630, 3);
     i.identification_state = identification_state_t::completely_identified;
 
     i.material = 22;
@@ -144,7 +102,7 @@ TEST_CASE("test itemname: material kit", "[I18N: Regressions]")
 TEST_CASE("test itemname: furniture", "[I18N: Regressions]")
 {
     testing::start_in_debug_map();
-    item& i = create_item(778, 3);
+    item& i = testing::create_item(778, 3);
     i.identification_state = identification_state_t::completely_identified;
 
     i.material = 0;
@@ -156,7 +114,7 @@ TEST_CASE("test itemname: furniture", "[I18N: Regressions]")
 TEST_CASE("test itemname: gift", "[I18N: Regressions]")
 {
     testing::start_in_debug_map();
-    item& i = create_item(729, 3);
+    item& i = testing::create_item(729, 3);
     i.identification_state = identification_state_t::completely_identified;
 
     i.param4 = 0;
@@ -171,7 +129,7 @@ TEST_CASE("test itemname: gift", "[I18N: Regressions]")
 TEST_CASE("test itemname: eternal force", "[I18N: Regressions]")
 {
     testing::start_in_debug_map();
-    item& i = create_item(4, 3);
+    item& i = testing::create_item(4, 3);
     i.identification_state = identification_state_t::completely_identified;
     i.subname = 10000;
 
@@ -184,7 +142,7 @@ TEST_CASE("test itemname: eternal force", "[I18N: Regressions]")
 TEST_CASE("test itemname: enchantment name", "[I18N: Regressions]")
 {
     testing::start_in_debug_map();
-    item& i = create_item(4, 3);
+    item& i = testing::create_item(4, 3);
     i.identification_state = identification_state_t::completely_identified;
 
     i.subname = 10000;
@@ -201,7 +159,7 @@ TEST_CASE("test itemname: enchantment name", "[I18N: Regressions]")
 TEST_CASE("test itemname: quality", "[I18N: Regressions]")
 {
     testing::start_in_debug_map();
-    item& i = create_item(4, 3);
+    item& i = testing::create_item(4, 3);
     i.identification_state = identification_state_t::completely_identified;
     i.material = 15;
 
@@ -231,7 +189,7 @@ TEST_CASE("test itemname: quality", "[I18N: Regressions]")
 TEST_CASE("test itemname: known/original name", "[I18N: Regressions]")
 {
     testing::start_in_debug_map();
-    item& i = create_item(4, 1);
+    item& i = testing::create_item(4, 1);
 
     SECTION("Unidentified")
     {
@@ -252,7 +210,7 @@ TEST_CASE("test itemname: known/original name", "[I18N: Regressions]")
     }
     SECTION("Not completely identified and of high category")
     {
-        i = create_item(252, 1);
+        i = testing::create_item(252, 1);
         i.quality = 4;
         i.identification_state = identification_state_t::almost_identified;
         REQUIRE(itemname(i.index) == u8"ジュアの癒しの魔法書(残り1回)");
@@ -302,7 +260,7 @@ TEST_CASE("test itemname: books", "[I18N: Regressions]")
 
     SECTION("Textbooks")
     {
-        item& i = create_item(563, 3);
+        item& i = testing::create_item(563, 3);
         i.param1 = 106;
         REQUIRE(itemname(i.index) == u8"3冊の《格闘》という題名の学習書");
         i.param1 = 107;
@@ -311,7 +269,7 @@ TEST_CASE("test itemname: books", "[I18N: Regressions]")
 
     SECTION("Books")
     {
-        item& i = create_item(24, 3);
+        item& i = testing::create_item(24, 3);
         i.param1 = 1;
         REQUIRE(itemname(i.index) == u8"3冊の《迷子の兵士に送るマニュアル》という題名の本");
         i.param1 = 3;
@@ -320,7 +278,7 @@ TEST_CASE("test itemname: books", "[I18N: Regressions]")
 
     SECTION("Books of Rachel")
     {
-        item& i = create_item(668, 3);
+        item& i = testing::create_item(668, 3);
         i.param2 = 1;
         REQUIRE(itemname(i.index) == u8"3冊の第1巻目のレイチェルの絵本");
         i.param2 = 2;
@@ -329,7 +287,7 @@ TEST_CASE("test itemname: books", "[I18N: Regressions]")
 
     SECTION("Spellbooks")
     {
-        item& i = create_item(22, 3);
+        item& i = testing::create_item(22, 3);
         i.identification_state = identification_state_t::completely_identified;
         i.quality = 1;
         i.count = 2;
@@ -342,12 +300,12 @@ TEST_CASE("test itemname: books", "[I18N: Regressions]")
 TEST_CASE("test itemname: counters special cases", "[I18N: Regressions]")
 {
     testing::start_in_debug_map();
-    REQUIRE(test_itemname(622, 3) == u8"★3枚の小さなメダル");
-    REQUIRE(test_itemname(730, 3) == u8"★3枚の友情の証");
-    REQUIRE(test_itemname(724, 3) == u8"★3枚の音楽チケット");
+    REQUIRE(testing::test_itemname(622, 3) == u8"★3枚の小さなメダル");
+    REQUIRE(testing::test_itemname(730, 3) == u8"★3枚の友情の証");
+    REQUIRE(testing::test_itemname(724, 3) == u8"★3枚の音楽チケット");
 
     {
-        item& i = create_item(783, 3);
+        item& i = testing::create_item(783, 3);
         i.param1 = 1;
         i.subname = 0;
         REQUIRE(itemname(i.index) == u8"3枚のカスタムレシピ");
@@ -360,7 +318,7 @@ TEST_CASE("test itemname: recipe", "[I18N: Regressions]")
 
     SECTION("Custom")
     {
-        item& i = create_item(783, 1);
+        item& i = testing::create_item(783, 1);
         i.param1 = 1;
         i.subname = 0;
         REQUIRE(itemname(i.index) == u8"カスタムレシピ");
@@ -368,7 +326,7 @@ TEST_CASE("test itemname: recipe", "[I18N: Regressions]")
 
     SECTION("Named")
     {
-        item& i = create_item(783, 1);
+        item& i = testing::create_item(783, 1);
         i.param1 = 1;
         i.subname = 792 + 400;
         REQUIRE(itemname(i.index) == u8"《プチトロ》のレシピ");
@@ -379,28 +337,28 @@ TEST_CASE("test itemname: recipe", "[I18N: Regressions]")
 TEST_CASE("test itemname: counters (english)", "[I18N: Regressions]")
 {
     testing::start_in_debug_map();
-    set_english();
+    testing::set_english();
 
-    REQUIRE(test_itemname(792, 1) == u8"putitoro");
-    REQUIRE(test_itemname(792, 3) == u8"3 putitoros");
+    REQUIRE(testing::test_itemname(792, 1) == u8"putitoro");
+    REQUIRE(testing::test_itemname(792, 3) == u8"3 putitoros");
 }
 
 TEST_CASE("test itemname: prefixes (english)", "[I18N: Regressions]")
 {
     testing::start_in_debug_map();
-    set_english();
+    testing::set_english();
 
-    REQUIRE(test_itemname(792, 1, true) == u8"a putitoro");
-    REQUIRE(test_itemname(792, 3, true) == u8"3 putitoros");
-    REQUIRE(test_itemname(180, 1, true) == u8"an apple");
+    REQUIRE(testing::test_itemname(792, 1, true) == u8"a putitoro");
+    REQUIRE(testing::test_itemname(792, 3, true) == u8"3 putitoros");
+    REQUIRE(testing::test_itemname(180, 1, true) == u8"an apple");
 }
 
 TEST_CASE("test itemname: prefixes and curse state", "[I18N: Regressions]")
 {
     testing::start_in_debug_map();
-    set_english();
+    testing::set_english();
 
-    item& i = create_item(4, 1);
+    item& i = testing::create_item(4, 1);
     i.quality = 4;
     i.identification_state = identification_state_t::completely_identified;
     i.curse_state = curse_state_t::cursed;

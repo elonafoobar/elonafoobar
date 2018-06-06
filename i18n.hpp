@@ -179,6 +179,12 @@ std::string fmt_func(hil::FunctionCall const& func, const item& item)
     return format_builtins_item(func, item);
 }
 
+template <typename Head = bool>
+std::string fmt_func(hil::FunctionCall const& func, bool const& value)
+{
+    return format_builtins_bool(func, value);
+}
+
 template <typename Head>
 std::string fmt_func(hil::FunctionCall const& func, Head const& head)
 {
@@ -189,7 +195,7 @@ std::string fmt_func(hil::FunctionCall const& func, Head const& head)
 template <typename... Tail>
 void fmt_go(const hil::Context& ctxt,
                    int count,
-                   std::vector<std::string>& formatted)
+                    std::vector<optional<std::string>>& formatted)
 {
 }
 
@@ -197,7 +203,7 @@ void fmt_go(const hil::Context& ctxt,
 template <typename Head, typename... Tail>
 void fmt_go(const hil::Context& ctxt,
                    int count,
-                   std::vector<std::string>& formatted,
+                   std::vector<optional<std::string>>& formatted,
                    Head const& head,
                    Tail&&... tail)
 {
@@ -221,6 +227,10 @@ void fmt_go(const hil::Context& ctxt,
             {
                 formatted.at(i) = fmt_func(func, head);
             }
+            else if (func.args.size() == 0)
+            {
+                formatted.at(i) = format_builtins_argless(func);
+            }
         }
     }
 
@@ -229,14 +239,21 @@ void fmt_go(const hil::Context& ctxt,
 
 } // namespace detail
 
-inline std::string fmt_after_conv(const hil::Context& ctxt, const std::vector<std::string>& formatted)
+inline std::string fmt_after_conv(const hil::Context& ctxt, const std::vector<optional<std::string>>& formatted)
 {
     std::string s;
 
     for (size_t i = 0; i < formatted.size(); i++)
     {
         s += ctxt.textParts.at(i);
-        s += formatted.at(i);
+        if(formatted.at(i))
+        {
+            s += *formatted.at(i);
+        }
+        else
+        {
+            s += "<error>";
+        }
     }
 
     s += ctxt.textParts.back();
@@ -250,7 +267,7 @@ std::string fmt_with_context(const hil::Context& ctxt, Head const& head, Tail&&.
     if (ctxt.textParts.size() == 1)
         return ctxt.textParts[0];
 
-    std::vector<std::string> formatted(ctxt.hilParts.size());
+    std::vector<optional<std::string>> formatted(ctxt.hilParts.size());
     detail::fmt_go(ctxt, 1, formatted, head, std::forward<Tail>(tail)...);
 
     return fmt_after_conv(ctxt, formatted);
@@ -262,7 +279,7 @@ std::string fmt_with_context(const hil::Context& ctxt, Tail&&... tail)
     if (ctxt.textParts.size() == 1)
         return ctxt.textParts[0];
 
-    std::vector<std::string> formatted(ctxt.hilParts.size());
+    std::vector<optional<std::string>> formatted(ctxt.hilParts.size());
     detail::fmt_go(ctxt, 1, formatted, std::forward<Tail>(tail)...);
 
     return fmt_after_conv(ctxt, formatted);

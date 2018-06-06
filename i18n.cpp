@@ -102,9 +102,19 @@ std::string format_builtins_argless(const hil::FunctionCall& func)
     return "<unknown function (" + func.name + ")>";
 }
 
+inline std::string builtin_s(const hil::FunctionCall& func, int chara_index)
+{
+    bool needs_e = false;
+    if(func.args.size() > 1)
+    {
+        needs_e = func.args[1].as<bool>();
+    }
+    return _s(chara_index, needs_e);
+}
+
 std::string format_builtins_bool(const hil::FunctionCall& func, bool value)
 {
-    ELONA_DEFINE_I18N_BUILTIN("s", _s(value ? 0 : 1, true));
+    ELONA_DEFINE_I18N_BUILTIN("s", builtin_s(func, value ? 0 : 1));
     ELONA_DEFINE_I18N_BUILTIN("is", is(value ? 0 : 1));
 
     return "<unknown function (" + func.name + ")>";
@@ -119,7 +129,7 @@ std::string format_builtins_character(const hil::FunctionCall& func, const chara
     ELONA_DEFINE_I18N_BUILTIN("him", him(chara.index));
 
     // English only
-    ELONA_DEFINE_I18N_BUILTIN("s", _s(chara.index, true));
+    ELONA_DEFINE_I18N_BUILTIN("s", builtin_s(func, chara.index));
     ELONA_DEFINE_I18N_BUILTIN("is", is(chara.index));
     ELONA_DEFINE_I18N_BUILTIN("have", have(chara.index));
     ELONA_DEFINE_I18N_BUILTIN("himself", yourself(chara.index));
@@ -128,6 +138,7 @@ std::string format_builtins_character(const hil::FunctionCall& func, const chara
 
     // Japanese only
     ELONA_DEFINE_I18N_BUILTIN("kare_wa", npcn(chara.index));
+    ELONA_DEFINE_I18N_BUILTIN("aln", aln(chara.index));
     //ELONA_DEFINE_I18N_BUILTIN("yoro", _yoro(chara, func.args.at(1));
     //ELONA_DEFINE_I18N_BUILTIN("dozo", _dozo(chara, func.args.at(1));
     //ELONA_DEFINE_I18N_BUILTIN("thanks", _thanks(chara, func.args.at(1));

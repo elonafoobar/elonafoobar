@@ -146,6 +146,7 @@ if(WITH_TESTS STREQUAL "TESTS")
   # Test sources
   set(TEST_SOURCES
     tests/tests.cpp
+    tests/util.cpp
     tests/elonacore.cpp
     tests/i18n.cpp
     tests/i18n_regressions.cpp

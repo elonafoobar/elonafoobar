@@ -68,7 +68,7 @@ void healsp(int cc, int delta)
 int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
 {
     int ele_at_m141 = 0;
-    int c3_at_m141 = 0;
+    bool is_player = false;
     int r_at_m141 = 0;
     int dmglevel_at_m141 = 0;
     int f_at_m141 = 0;
@@ -79,11 +79,11 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
     ele_at_m141 = prm_856;
     if (txt3rd == 0)
     {
-        c3_at_m141 = prm_855;
+        is_player = prm_855 == 0;
     }
     else
     {
-        c3_at_m141 = -1;
+        is_player = false;
     }
     if (cdata[prm_853].state != 1)
     {
@@ -289,7 +289,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         }
         if (gdata(809) == 1)
         {
-            txteledmg(0, c3_at_m141, prm_853, ele_at_m141);
+            txteledmg(0, is_player ? 0 : -1, prm_853, ele_at_m141);
             goto label_1369_internal;
         }
         if (dmglevel_at_m141 > 0)
@@ -312,27 +312,27 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             txtcontinue();
             if (dmglevel_at_m141 == -1)
             {
-                txt(i18n::s.get("core.locale.damage.levels.scratch", cdata[prm_853], cdata[c3_at_m141]));
+                txt(i18n::s.get("core.locale.damage.levels.scratch", cdata[prm_853], is_player));
             }
             if (dmglevel_at_m141 == 0)
             {
                 txtef(5);
-                txt(i18n::s.get("core.locale.damage.levels.slightly", cdata[prm_853], cdata[c3_at_m141]));
+                txt(i18n::s.get("core.locale.damage.levels.slightly", cdata[prm_853], is_player));
             }
             if (dmglevel_at_m141 == 1)
             {
                 txtef(11);
-                txt(i18n::s.get("core.locale.damage.levels.moderately", cdata[prm_853], cdata[c3_at_m141]));
+                txt(i18n::s.get("core.locale.damage.levels.moderately", cdata[prm_853], is_player));
             }
             if (dmglevel_at_m141 == 2)
             {
                 txtef(10);
-                txt(i18n::s.get("core.locale.damage.levels.severely", cdata[prm_853], cdata[c3_at_m141]));
+                txt(i18n::s.get("core.locale.damage.levels.severely", cdata[prm_853], is_player));
             }
             if (dmglevel_at_m141 >= 3)
             {
                 txtef(3);
-                txt(i18n::s.get("core.locale.damage.levels.critically", cdata[prm_853], cdata[c3_at_m141]));
+                txt(i18n::s.get("core.locale.damage.levels.critically", cdata[prm_853], is_player));
             }
             rowact_check(prm_853);
             goto label_1369_internal;
@@ -664,11 +664,11 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 if (prm_853 >= 16 && gdata(809) == 2)
                 {
                     txtcontinue();
-                    txteledmg(1, c3_at_m141, prm_853, ele_at_m141);
+                    txteledmg(1, is_player, prm_853, ele_at_m141);
                 }
                 else
                 {
-                    txteledmg(2, c3_at_m141, prm_853, ele_at_m141);
+                    txteledmg(2, is_player, prm_853, ele_at_m141);
                 }
             }
             else
@@ -680,12 +680,12 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     {
                         txtcontinue();
                         txt(i18n::s.get("core.locale.damage.death_by.chara.transformed_into_meat.active",
-                                        cdata[prm_853], c3_at_m141));
+                                        cdata[prm_853], is_player));
                     }
                     else
                     {
                         txt(i18n::s.get("core.locale.damage.death_by.chara.transformed_into_meat.passive",
-                                        cdata[prm_853], c3_at_m141));
+                                        cdata[prm_853], is_player));
                     }
                 }
                 if (p_at_m141 == 1)
@@ -694,12 +694,12 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     {
                         txtcontinue();
                         txt(i18n::s.get("core.locale.damage.death_by.chara.destroyed.active",
-                                        cdata[prm_853], c3_at_m141));
+                                        cdata[prm_853], is_player));
                     }
                     else
                     {
                         txt(i18n::s.get("core.locale.damage.death_by.chara.destroyed.passive",
-                                        cdata[prm_853], c3_at_m141));
+                                        cdata[prm_853], is_player));
                     }
                 }
                 if (p_at_m141 == 2)
@@ -708,12 +708,12 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     {
                         txtcontinue();
                         txt(i18n::s.get("core.locale.damage.death_by.chara.minced.active",
-                                        cdata[prm_853], c3_at_m141));
+                                        cdata[prm_853], is_player));
                     }
                     else
                     {
                         txt(i18n::s.get("core.locale.damage.death_by.chara.minced.passive",
-                                        cdata[prm_853], c3_at_m141));
+                                        cdata[prm_853], is_player));
                     }
                 }
                 if (p_at_m141 == 3)
@@ -722,12 +722,12 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     {
                         txtcontinue();
                         txt(i18n::s.get("core.locale.damage.death_by.chara.killed.active",
-                                        cdata[prm_853], c3_at_m141));
+                                        cdata[prm_853], is_player));
                     }
                     else
                     {
                         txt(i18n::s.get("core.locale.damage.death_by.chara.killed.passive",
-                                        cdata[prm_853], c3_at_m141));
+                                        cdata[prm_853], is_player));
                     }
                 }
             }
