@@ -2213,7 +2213,7 @@ turn_result_t do_use_command()
                 if (adata(20, gdata_current_map) != -1)
                 {
                     txt(lang(
-                        u8"クエストを放棄してシェルターに非難する？"s,
+                        u8"クエストを放棄してシェルターに避難する？"s,
                         u8"Really give up the quest and evacuate to the shelter?"s));
                     ELONA_YES_NO_PROMPT();
                     rtval = show_prompt(promptx, prompty, 160);
