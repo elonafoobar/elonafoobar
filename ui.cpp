@@ -3,6 +3,7 @@
 #include "audio.hpp"
 #include "character.hpp"
 #include "config.hpp"
+#include "debug.hpp"
 #include "draw.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
@@ -1425,25 +1426,9 @@ void label_1433()
     radery = sy;
     pos(inf_raderx + sx, inf_radery + sy);
     gcopy(3, 15, 338, 6, 6);
-    for (int y = 0; y < mdata(1); ++y)
+    if (debug::voldemort)
     {
-        for (int x = 0; x < mdata(0); ++x)
-        {
-            int sx = clamp(120 * x / mdata(0), 2, 112);
-            int sy = clamp(84 * y / mdata(1), 2, 76);
-            if (map(x, y, 6) / 1000 % 100 == 11)
-            {
-                // Downstairs
-                pos(inf_raderx + sx, inf_radery + sy);
-                gcopy(3, 15, 338, 6, 6);
-            }
-            else if (map(x, y, 6) / 1000 % 100 == 10)
-            {
-                // Upstairs
-                pos(inf_raderx + sx, inf_radery + sy);
-                gcopy(3, 15, 338, 6, 6);
-            }
-        }
+        render_stair_positions_in_minimap();
     }
     screendrawhack = 5;
     if (config::instance().env)
@@ -1466,6 +1451,30 @@ void label_1433()
         }
     }
     return;
+}
+
+void render_stair_positions_in_minimap()
+{
+    for (int y = 0; y < mdata(1); ++y)
+    {
+        for (int x = 0; x < mdata(0); ++x)
+        {
+            int sx = clamp(120 * x / mdata(0), 2, 112);
+            int sy = clamp(84 * y / mdata(1), 2, 76);
+            if (map(x, y, 6) / 1000 % 100 == 11)
+            {
+                // Downstairs
+                pos(inf_raderx + sx, inf_radery + sy);
+                gcopy(3, 15, 338, 6, 6);
+            }
+            else if (map(x, y, 6) / 1000 % 100 == 10)
+            {
+                // Upstairs
+                pos(inf_raderx + sx, inf_radery + sy);
+                gcopy(3, 15, 338, 6, 6);
+            }
+        }
+    }
 }
 
 void render_weather_effect_rain()
