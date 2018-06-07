@@ -19,6 +19,7 @@ void report_error(const char* what)
     MessageBoxA(NULL, what, "Error", MB_OK | MB_ICONSTOP);
 #endif
     ELONA_LOG("Error: " << what);
+    std::cerr << "Error: " << what << std::endl;
 }
 } // namespace elona
 

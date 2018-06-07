@@ -724,6 +724,10 @@ void load_config(const fs::path& json_file)
             u8"autosave",
             0,
             [&](auto value) { config::instance().autosave = value; }),
+        std::make_unique<config_integer>(
+            u8"damage_popup",
+            1,
+            [&](auto value) { config::instance().damage_popup = value; }),
     };
 
     picojson::value value;
