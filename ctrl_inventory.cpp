@@ -30,6 +30,14 @@ menu_result ctrl_inventory()
     int showmoney = 0;
     int citrade = 0;
     int dropcontinue = 0;
+
+    // mode is set to 6 when dealing with various inventory routines.
+    // But mode 6 also indicates in cell_draw() to draw items as
+    // stacked. So, back up mode first before doing anything, or
+    // update_screen() will redraw items on the ground as stacked.
+    int inv_mode = mode;
+    mode = 0;
+
 label_20591:
     if (invctrl == 22)
     {
@@ -1104,7 +1112,7 @@ label_2061_internal:
     cursor_check();
     invmark(invctrl) = page * 1000 + cs;
     ELONA_GET_SELECTED_ITEM(p, 0);
-    if (mode == 9)
+    if (inv_mode == 9)
     {
         if (listmax == 0)
         {
@@ -1310,7 +1318,7 @@ label_2061_internal:
                 return result;
             }
             page_save();
-            if (mode == 6 && inv[ci].number > 1 && invctrl != 22)
+            if (inv_mode == 6 && inv[ci].number > 1 && invctrl != 22)
             {
                 if (invctrl == 11)
                 {
@@ -1349,7 +1357,7 @@ label_2061_internal:
             {
                 in = inv[ci].number;
             }
-            if (mode == 6 && invctrl != 22 && invctrl != 24)
+            if (inv_mode == 6 && invctrl != 22 && invctrl != 24)
             {
                 if (invctrl == 11)
                 {
