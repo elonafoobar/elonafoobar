@@ -1343,7 +1343,11 @@ void apply_general_eating_effect()
     {
         if (rnd(10) == 0 || cdata[cc].nutrition >= 12000)
         {
-            modweight(cc, rnd(3) + 1, cdata[cc].nutrition >= 12000);
+            modweight(
+                cc,
+                rnd(3) + 1,
+                cdata[cc].nutrition >= 20000
+                    && rnd(30000 / std::max(1, cdata[cc].nutrition) + 2) == 0);
         }
     }
     if (cdata[cc].id == 261)

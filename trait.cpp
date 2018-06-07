@@ -511,7 +511,7 @@ int get_trait_info(int traitmode, int tid)
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = lang(
-                    u8"行商人の元で働き交渉の技術を学ぶ"s,
+                    u8"行商人の下で働き交渉の技術を学ぶ"s,
                     u8"Working under a trader improves your negotiation skill."s);
                 traitrefn(3) = lang(
                     u8"あなたは交渉が上手い[交渉+4]"s,
