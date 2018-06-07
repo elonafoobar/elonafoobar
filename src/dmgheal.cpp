@@ -827,10 +827,6 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 }
             }
         }
-        if (prm_853 == 0)
-        {
-            cell_draw();
-        }
         if (cdata[prm_853].breaks_into_debris())
         {
             if (is_in_fov(prm_853))

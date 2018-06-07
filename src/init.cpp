@@ -730,24 +730,6 @@ void initialize_elona()
     cyclemax(3) = 1;
     cyclemax(4) = 0;
 
-    shadowmap(0) = 0;
-    shadowmap(1) = 9;
-    shadowmap(2) = 10;
-    shadowmap(3) = 5;
-    shadowmap(4) = 12;
-    shadowmap(5) = 7;
-    shadowmap(6) = 0;
-    shadowmap(7) = 1;
-    shadowmap(8) = 11;
-    shadowmap(9) = 0;
-    shadowmap(10) = 6;
-    shadowmap(11) = 3;
-    shadowmap(12) = 8;
-    shadowmap(13) = 4;
-    shadowmap(14) = 2;
-    shadowmap(15) = 0;
-    shadowmap(16) = 0;
-
     lastctrl = 1;
 
     DIM2(invicon, 40);

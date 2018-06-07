@@ -2274,115 +2274,95 @@ void animeload(int prm_807, int prm_808)
 
 
 
-void animeblood(int prm_809, int prm_810, int prm_811)
+void animeblood(int cc, int animation_type, int element)
 {
-    int ele2_at_m133 = 0;
-    elona_vector1<int> x_at_m133;
-    elona_vector1<int> y_at_m133;
-    int cnt2_at_m133 = 0;
-    if (is_in_fov(prm_809) == 0)
-    {
+    if (is_in_fov(cc) == 0)
         return;
-    }
     if (config::instance().animewait == 0)
-    {
         return;
-    }
+
+    int cnt2_at_m133 = 0;
+
     screenupdate = -1;
     update_screen();
-    if (prm_810 == 0)
+
+    if (animation_type == 0)
     {
         prepare_item_image(16, 0);
     }
-    if (prm_810 == 1)
+    if (animation_type == 1)
     {
         prepare_item_image(18, 0);
     }
-    dx_at_m133 = (cdata[prm_809].position.x - scx) * inf_tiles + inf_screenx;
-    dy_at_m133(0) = (cdata[prm_809].position.y - scy) * inf_tiles + inf_screeny;
+    dx_at_m133 = (cdata[cc].position.x - scx) * inf_tiles + inf_screenx;
+    dy_at_m133(0) = (cdata[cc].position.y - scy) * inf_tiles + inf_screeny;
     dy_at_m133(1) = 0;
     gsel(4);
     gmode(0);
     pos(0, 0);
     gcopy(0, dx_at_m133 - 48, dy_at_m133 - 56, 144, 160);
-    ele2_at_m133 = 0;
-    if (prm_811 == 52)
+
+    int ele2_at_m133 = 1;
+    gsel(7);
+    switch (element)
     {
-        ele2_at_m133 = 1;
-        gsel(7);
+    case 52:
         picload(filesystem::dir::graphic() / u8"anime18.bmp");
         dy_at_m133(1) = -16;
-    }
-    if (prm_811 == 51)
-    {
-        ele2_at_m133 = 1;
-        gsel(7);
+        break;
+    case 51:
         picload(filesystem::dir::graphic() / u8"anime19.bmp");
         dy_at_m133(1) = -16;
-    }
-    if (prm_811 == 50)
-    {
-        ele2_at_m133 = 1;
-        gsel(7);
+        break;
+    case 50:
         picload(filesystem::dir::graphic() / u8"anime20.bmp");
         dy_at_m133(1) = -20;
-    }
-    if (prm_811 == 56)
-    {
-        ele2_at_m133 = 1;
-        gsel(7);
+        break;
+    case 56:
         picload(filesystem::dir::graphic() / u8"anime22.bmp");
         dy_at_m133(1) = -24;
-    }
-    if (prm_811 == 53)
-    {
-        ele2_at_m133 = 1;
-        gsel(7);
+        break;
+    case 53:
         picload(filesystem::dir::graphic() / u8"anime21.bmp");
         dy_at_m133(1) = -16;
-    }
-    if (prm_811 == 54)
-    {
-        ele2_at_m133 = 1;
-        gsel(7);
+        break;
+    case 54:
         picload(filesystem::dir::graphic() / u8"anime23.bmp");
         dy_at_m133(1) = -16;
-    }
-    if (prm_811 == 57)
-    {
-        ele2_at_m133 = 1;
-        gsel(7);
+        break;
+    case 57:
         picload(filesystem::dir::graphic() / u8"anime24.bmp");
         dy_at_m133(1) = -16;
-    }
-    if (prm_811 == 59)
-    {
-        ele2_at_m133 = 1;
-        gsel(7);
+        break;
+    case 59:
         picload(filesystem::dir::graphic() / u8"anime25.bmp");
         dy_at_m133(1) = -16;
-    }
-    if (prm_811 == 58)
-    {
-        ele2_at_m133 = 1;
-        gsel(7);
+        break;
+    case 58:
         picload(filesystem::dir::graphic() / u8"anime26.bmp");
         dy_at_m133(1) = -16;
-    }
-    if (prm_811 == 55 || prm_811 == 63)
-    {
-        ele2_at_m133 = 1;
-        gsel(7);
+        break;
+    case 55:
+    case 63:
         picload(filesystem::dir::graphic() / u8"anime27.bmp");
         dy_at_m133(1) = -16;
+        break;
+    default:
+        ele2_at_m133 = 0;
+        break;
     }
+
     gmode(2);
     gsel(0);
+
+    elona_vector1<int> x_at_m133;
+    elona_vector1<int> y_at_m133;
     for (int cnt = 0; cnt < 20; ++cnt)
     {
         x_at_m133(cnt) = rnd(48) - 24;
         y_at_m133(cnt) = rnd(16);
     }
+
     for (int cnt = 0; cnt < 6; ++cnt)
     {
         cnt2_at_m133 = cnt * 2;
@@ -2415,8 +2395,8 @@ void animeblood(int prm_809, int prm_810, int prm_811)
         gcopy(4, 0, 0, 144, 160);
         await(config::instance().animewait * (ele2_at_m133 == 0 ? 1.75 : 2.75));
     }
+
     gmode(2);
-    return;
 }
 
 
