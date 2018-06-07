@@ -23,6 +23,7 @@ public:
     int autonumlock;
     int autosave;
     int autoturn;
+    int damage_popup;
     int env;
     int extraclass;
     int extrahelp;
