@@ -4,7 +4,6 @@
 #include "character.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
-#include "i18n.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
@@ -393,52 +392,332 @@ void resistmod(int cc, int element, int delta)
 
 void txteledmg(int type, int attacker, int target, int element)
 {
-    if (type == 0 && is_in_fov(target))
+    switch (element)
     {
-        auto text = i18n::s.get_optional("core.locale.damage.element._"s + std::to_string(element),
-                                         cdata[target]);
-        if (text)
+    case 50:
+        if (type == 0)
         {
-            txt(*text);
+            if (is_in_fov(target))
+            {
+                txt(lang(
+                    name(target) + u8"は燃え上がった。"s,
+                    name(target) + u8" "s + is(target) + u8" burnt."s));
+            }
         }
-        else
+        else if (type == 1)
         {
-            txt(i18n::s.get("core.locale.damage.element.default", cdata[target]));
+            txt(lang(
+                u8"燃やし尽くした。"s,
+                u8"burn"s + _s(attacker) + u8" "s + him(target)
+                    + u8" to death."s));
         }
-    }
-    else if (type == 1)
-    {
-        auto text = i18n::s.get_optional("core.locale.death_by.element._"s +
-                                         std::to_string(element) +
-                                         ".active",
-                                         cdata[target],
-                                         cdata[attacker]);
-        if (text)
+        else if (type == 2)
         {
-            txt(*text);
+            txt(lang(
+                name(target) + u8"は燃え尽きて灰になった。"s,
+                name(target) + u8" "s + is(target) + u8" burnt to ashes."s));
         }
-        else
+        break;
+    case 51:
+        if (type == 0)
         {
-            txt(i18n::s.get("core.locale.death_by.element.default.active",
-                            cdata[target], cdata[attacker]));
+            if (is_in_fov(target))
+            {
+                txt(lang(
+                    name(target) + u8"は凍えた。"s,
+                    name(target) + u8" "s + is(target) + u8" frozen."s));
+            }
         }
-    }
-    else if (type == 2)
-    {
-        auto text = i18n::s.get_optional("core.locale.death_by.element._"s +
-                                         std::to_string(element) +
-                                         ".passive",
-                                         cdata[target],
-                                         cdata[attacker]);
-        if (text)
+        else if (type == 1)
         {
-            txt(*text);
+            txt(lang(
+                u8"氷の塊に変えた。"s,
+                u8"transform"s + _s(attacker) + u8" "s + him(target)
+                    + u8" to an ice sculpture."s));
         }
-        else
+        else if (type == 2)
         {
-            txt(i18n::s.get("core.locale.death_by.element.default.passive",
-                            cdata[target], cdata[attacker]));
+            txt(lang(
+                name(target) + u8"は氷の彫像になった。"s,
+                name(target) + u8" "s + is(target) + u8" frozen and turn"s
+                    + _s(target) + u8" into an ice sculpture."s));
         }
+        break;
+    case 52:
+        if (type == 0)
+        {
+            if (is_in_fov(target))
+            {
+                txt(lang(
+                    name(target) + u8"に電流が走った。"s,
+                    name(target) + u8" "s + is(target) + u8" shocked."s));
+            }
+        }
+        else if (type == 1)
+        {
+            txt(lang(
+                u8"焦げカスにした。"s,
+                u8"electrocute"s + _s(attacker) + u8" "s + him(target)
+                    + u8" to death."s));
+        }
+        else if (type == 2)
+        {
+            txt(lang(
+                name(target) + u8"は雷に打たれ死んだ。"s,
+                name(target) + u8" "s + is(target)
+                    + u8" struck by lightning and die"s + _s(target) + u8"."s));
+        }
+        break;
+    case 53:
+        if (type == 0)
+        {
+            if (is_in_fov(target))
+            {
+                txt(lang(
+                    name(target) + u8"は闇の力で傷ついた。"s,
+                    name(target) + u8" "s + is(target)
+                        + u8" struck by dark force."s));
+            }
+        }
+        else if (type == 1)
+        {
+            txt(lang(
+                u8"闇に飲み込んだ。"s,
+                u8"let"s + _s(attacker) + u8" the depths swallow "s
+                    + him(target) + u8"."s));
+        }
+        else if (type == 2)
+        {
+            txt(lang(
+                name(target) + u8"は闇に蝕まれて死んだ。"s,
+                name(target) + u8" "s + is(target)
+                    + u8" consumed by darkness."s));
+        }
+        break;
+    case 58:
+        if (type == 0)
+        {
+            if (is_in_fov(target))
+            {
+                txt(lang(
+                    name(target) + u8"の神経は傷ついた。"s,
+                    name(target) + your(target) + u8" nerves are hurt."s));
+            }
+        }
+        else if (type == 1)
+        {
+            txt(lang(
+                u8"神経を破壊した。"s,
+                u8"destroy"s + _s(attacker) + u8" "s + his(target)
+                    + u8" nerves."s));
+        }
+        else if (type == 2)
+        {
+            txt(lang(
+                name(target) + u8"は神経を蝕まれて死んだ。"s,
+                name(target) + u8" die"s + _s(target)
+                    + u8" from neurofibroma."s));
+        }
+        break;
+    case 54:
+        if (type == 0)
+        {
+            if (is_in_fov(target))
+            {
+                txt(lang(
+                    name(target) + u8"は狂気に襲われた。"s,
+                    name(target) + u8" suffer"s + _s(target)
+                        + u8" a splitting headache."s));
+            }
+        }
+        else if (type == 1)
+        {
+            txt(lang(
+                u8"再起不能にした。"s,
+                u8"completely disable"s + _s(attacker) + u8" "s + him(target)
+                    + u8"."s));
+        }
+        else if (type == 2)
+        {
+            txt(lang(
+                name(target) + u8"は発狂して死んだ。"s,
+                name(target) + u8" lose"s + _s(target) + u8" "s + his(target)
+                    + u8" mind and commit"s + _s(target) + u8" a suicide."s));
+        }
+        break;
+    case 59:
+        if (type == 0)
+        {
+            if (is_in_fov(target))
+            {
+                txt(lang(
+                    name(target) + u8"は混沌の渦で傷ついた。"s,
+                    name(target) + u8" "s + is(target)
+                        + u8" hurt by chaotic force."s));
+            }
+        }
+        else if (type == 1)
+        {
+            txt(lang(
+                u8"混沌の渦に吸い込んだ。"s,
+                u8"let"s + _s(attacker) + u8" the chaos consume "s + him(target)
+                    + u8"."s));
+        }
+        else if (type == 2)
+        {
+            txt(lang(
+                name(target) + u8"は混沌の渦に吸収された。"s,
+                name(target) + u8" "s + is(target)
+                    + u8" drawn into a chaotic vortex."s));
+        }
+        break;
+    case 56:
+        if (type == 0)
+        {
+            if (is_in_fov(target))
+            {
+                txt(lang(
+                    name(target) + u8"は冥界の冷気で傷ついた。"s,
+                    name(target) + u8" "s + is(target)
+                        + u8" chilled by infernal squall."s));
+            }
+        }
+        else if (type == 1)
+        {
+            txt(lang(
+                u8"冥界に墜とした。"s,
+                u8"entrap"s + _s(attacker) + u8" "s + him(target)
+                    + u8" into the inferno."s));
+        }
+        else if (type == 2)
+        {
+            txt(lang(
+                name(target) + u8"は冥界に墜ちた。"s,
+                name(target) + u8" go"s + _s(target, true) + u8" to hell."s));
+        }
+        break;
+    case 55:
+        if (type == 0)
+        {
+            if (is_in_fov(target))
+            {
+                txt(lang(
+                    name(target) + u8"は吐き気を催した。"s,
+                    name(target) + u8" suffer"s + _s(target)
+                        + u8" from venom."s));
+            }
+        }
+        else if (type == 1)
+        {
+            txt(lang(
+                u8"毒殺した。"s,
+                u8"kill"s + _s(attacker) + u8" "s + him(target)
+                    + u8" with poison."s));
+        }
+        else if (type == 2)
+        {
+            txt(lang(
+                name(target) + u8"は毒に蝕まれて死んだ。"s,
+                name(target) + u8" "s + is(target) + u8" poisoned to death."s));
+        }
+        break;
+    case 57:
+        if (type == 0)
+        {
+            if (is_in_fov(target))
+            {
+                txt(lang(
+                    name(target) + u8"は轟音の衝撃を受けた。"s,
+                    name(target) + u8" "s + is(target)
+                        + u8" shocked by a shrill sound"s));
+            }
+        }
+        else if (type == 1)
+        {
+            txt(lang(
+                u8"聴覚を破壊し殺した。"s,
+                u8"shatter"s + _s(attacker) + u8" "s + him(target)
+                    + u8" to atoms."s));
+        }
+        else if (type == 2)
+        {
+            txt(lang(
+                name(target) + u8"は朦朧となって死んだ。"s,
+                name(target) + u8" resonate"s + _s(target)
+                    + u8" and break up."s));
+        }
+        break;
+    case 63:
+        if (type == 0)
+        {
+            if (is_in_fov(target))
+            {
+                txt(lang(
+                    name(target) + u8"は酸に焼かれた。"s,
+                    name(target) + u8" "s + is(target) + u8" burnt by acid."s));
+            }
+        }
+        else if (type == 1)
+        {
+            txt(lang(
+                u8"ドロドロに溶かした。"s,
+                u8"melt"s + _s(attacker) + u8" "s + him(target) + u8" away."s));
+        }
+        else if (type == 2)
+        {
+            txt(lang(
+                name(target) + u8"は酸に焼かれ溶けた。"s,
+                name(target) + u8" melt"s + _s(target) + u8"."s));
+        }
+        break;
+    case 61:
+        if (type == 0)
+        {
+            if (is_in_fov(target))
+            {
+                txt(lang(
+                    name(target) + u8"は切り傷を負った。"s,
+                    name(target) + u8" get"s + _s(target) + u8" a cut."s));
+            }
+        }
+        else if (type == 1)
+        {
+            txt(lang(
+                u8"千切りにした。"s,
+                u8"cut"s + _s(attacker) + u8" "s + him(target)
+                    + u8" into thin strips."s));
+        }
+        else if (type == 2)
+        {
+            txt(lang(
+                name(target) + u8"は千切りになった。"s,
+                name(target) + u8" "s + is(target)
+                    + u8" cut into thin strips."s));
+        }
+        break;
+    default:
+        if (type == 0)
+        {
+            if (is_in_fov(target))
+            {
+                txt(lang(
+                    name(target) + u8"は傷ついた。"s,
+                    name(target) + u8" "s + is(target) + u8" wounded."s));
+            }
+        }
+        else if (type == 1)
+        {
+            txt(lang(
+                u8"殺した。"s,
+                u8"kill"s + _s(attacker) + u8" "s + him(target) + u8"."s));
+        }
+        else if (type == 2)
+        {
+            txt(lang(
+                name(target) + u8"は死んだ。"s,
+                name(target) + u8" "s + is(target) + u8" killed."s));
+        }
+        break;
     }
 }
 
