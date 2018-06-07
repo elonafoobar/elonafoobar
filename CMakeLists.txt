@@ -179,40 +179,6 @@ else()
   message("Using provided dependency prefix ${CMAKE_PREFIX_PATH}")
 endif()
 
-# Kludgy function to work around the lack of directory support in copy_if_different
-function(copy_nonexisting src rel final)
-  file(GLOB_RECURSE allfiles RELATIVE "${rel}" "${src}/*")
-
-  foreach( each_file ${allfiles} )
-    set(destinationfile "${CMAKE_BINARY_DIR}/${final}/${each_file}")
-    set(sourcefile "${rel}/${each_file}")
-    add_custom_command(TARGET ${PROJECT_NAME}
-      POST_BUILD
-      COMMAND ${CMAKE_COMMAND}
-      -Ddestinationfile=${destinationfile}
-      -Dsourcefile=${sourcefile}
-      -P ${CMAKE_MODULE_PATH}/copy_nonexisting.cmake
-      )
-  endforeach(each_file)
-endfunction()
-
-# Copy folders
-copy_nonexisting("runtime" "${CMAKE_SOURCE_DIR}/runtime" ".")
-copy_nonexisting("data" "${CMAKE_SOURCE_DIR}/data" "data")
-copy_nonexisting("lang" "${CMAKE_SOURCE_DIR}/lang" "lang")
-
-# Copy assets from Elona 1.22 if they are present
-if(EXISTS "${CMAKE_PREFIX_PATH}/elona")
-  copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/graphic" "${CMAKE_PREFIX_PATH}/elona/graphic" "graphic")
-  copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/map" "${CMAKE_PREFIX_PATH}/elona/map" "map")
-  copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/original" "${CMAKE_PREFIX_PATH}/elona/original" "original")
-  copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/sound" "${CMAKE_PREFIX_PATH}/elona/sound" "sound")
-  copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/user" "${CMAKE_PREFIX_PATH}/elona/user" "user")
-  message("Elona 1.22 distribution found.")
-else()
-  message(WARNING "Elona 1.22 distribution not found at ${CMAKE_PREFIX_PATH}/elona. The game cannot be run without assets. Please manually copy the 'graphic', 'map', 'original', 'sound' and 'user' directories from Elona 1.22 to the ElonaFoobar output path after building.")
-endif()
-
 if(WIN32)
   # Force FindBoost to look for libraries with -mt-sgd
   set(Boost_USE_STATIC_LIBS ON)
@@ -224,7 +190,7 @@ if(WIN32)
   # Specify dynamic libraries to copy to output folder after build
   file(GLOB copy_sources "${CMAKE_PREFIX_PATH}/lib/*${CMAKE_SHARED_LIBRARY_SUFFIX}")
   set(copy_dest "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
-  message("Will copy libraries to ${copy_dest}")
+  message("Will copy libraries to output folder.")
 
   # Perform the copy
   foreach(copy_source ${copy_sources})
@@ -328,6 +294,41 @@ INSTALL(CODE "
     include(BundleUtilities)
     fixup_bundle(\"${APPS}\" \"\" \"${DIRS}\")
     " COMPONENT Runtime)
+
+# Kludgy function to work around the lack of directory support in copy_if_different
+function(copy_nonexisting src rel final)
+  file(GLOB_RECURSE allfiles RELATIVE "${rel}" "${src}/*")
+
+  foreach( each_file ${allfiles} )
+    set(destinationfile "$<TARGET_FILE_DIR:${PROJECT_NAME}>/${final}/${each_file}")
+    set(sourcefile "${rel}/${each_file}")
+    message(${destinationfile})
+    add_custom_command(TARGET ${PROJECT_NAME}
+      POST_BUILD
+      COMMAND ${CMAKE_COMMAND}
+      -Ddestinationfile=${destinationfile}
+      -Dsourcefile=${sourcefile}
+      -P ${CMAKE_MODULE_PATH}/copy_nonexisting.cmake
+      )
+  endforeach(each_file)
+endfunction()
+
+# Copy folders
+copy_nonexisting("runtime" "${CMAKE_SOURCE_DIR}/runtime" ".")
+copy_nonexisting("data" "${CMAKE_SOURCE_DIR}/data" "data")
+copy_nonexisting("lang" "${CMAKE_SOURCE_DIR}/lang" "lang")
+
+# Copy assets from Elona 1.22 if they are present
+if(EXISTS "${CMAKE_PREFIX_PATH}/elona")
+  copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/graphic" "${CMAKE_PREFIX_PATH}/elona/graphic" "graphic")
+  copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/map" "${CMAKE_PREFIX_PATH}/elona/map" "map")
+  copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/original" "${CMAKE_PREFIX_PATH}/elona/original" "original")
+  copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/sound" "${CMAKE_PREFIX_PATH}/elona/sound" "sound")
+  copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/user" "${CMAKE_PREFIX_PATH}/elona/user" "user")
+  message("Elona 1.22 distribution found.")
+else()
+  message(WARNING "Elona 1.22 distribution not found at ${CMAKE_PREFIX_PATH}/elona. The game cannot be run without assets. Please manually copy the 'graphic', 'map', 'original', 'sound' and 'user' directories from Elona 1.22 to the ElonaFoobar output path after building.")
+endif()
 
 if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
   copy_nonexisting("tests/data" "${CMAKE_CURRENT_SOURCE_DIR}/tests/data" "tests/data")
