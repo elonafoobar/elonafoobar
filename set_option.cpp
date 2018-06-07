@@ -1,5 +1,6 @@
 #include "audio.hpp"
 #include "config.hpp"
+#include "draw.hpp"
 #include "elona.hpp"
 #include "macro.hpp"
 #include "menu.hpp"
@@ -381,6 +382,11 @@ std::vector<config_menu> create_config_menu()
         lang(u8"有効", u8"On"),
         lang(u8"無効", u8"Off"));
     ELONA_CONFIG_ITEM(lang(u8"入荷頻度", u8"Restock Interval"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"ダメージポップアップ", u8"Damage popup"),
+        config::instance().damage_popup,
+        lang(u8"あり", u8"On"),
+        lang(u8"なし", u8"Off"));
 
 #undef ELONA_CONFIG_ITEM
 #undef ELONA_CONFIG_ITEM_YESNO
@@ -1587,6 +1593,27 @@ void set_option()
                     set_config(
                         u8"restock_interval",
                         config::instance().restock_interval);
+                    reset_page = true;
+                    continue;
+                }
+                if (cs == 5)
+                {
+                    config::instance().damage_popup += p;
+                    if (config::instance().damage_popup > 1)
+                    {
+                        config::instance().damage_popup = 1;
+                    }
+                    else if (config::instance().damage_popup < 0)
+                    {
+                        config::instance().damage_popup = 0;
+                    }
+                    snd(20);
+                    set_config(
+                        u8"damage_popup", config::instance().damage_popup);
+                    if (!config::instance().damage_popup)
+                    {
+                        clear_damage_popups();
+                    }
                     reset_page = true;
                     continue;
                 }

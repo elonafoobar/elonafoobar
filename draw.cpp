@@ -331,6 +331,10 @@ void clear_damage_popups()
 
 void show_damage_popups(int inf_ver)
 {
+    if (config::instance().damage_popup == 0)
+    {
+        return;
+    }
     if (damage_popups_active == 0)
     {
         return;
