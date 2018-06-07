@@ -252,7 +252,8 @@ void input_text_dialog(
     int y,
     int val2,
     bool is_cancelable,
-    bool as_filename)
+    bool as_filename,
+    bool max_length)
 {
     int ime_esc = 0;
 
@@ -326,12 +327,30 @@ void input_text_dialog(
             {
                 p(4) += 1;
             }
+            p(4) = std::min(p(4), 20);
         }
+        noteget(s, 0);
+
+        if (max_length && p(4) == 20)
+        {
+            if (inputlog(0).back() != '\n')
+            {
+                cutname(inputlog, 20);
+            }
+            cutname(s, 20);
+        }
+        else if (!max_length && p(4) > 18)
+        {
+            p(4) = 18;
+            cutname(s, 18);
+            s += u8"…";
+            p(4) += 2;
+        }
+
         gmode(4, -1, -1, p(1) / 2 + 50);
         pos(x + 34 + p(4) * 8, y + 5);
         gcopy(3, 0, 336, 12, 24);
         gmode(2);
-        noteget(s, 0);
         color(255, 255, 255);
         pos(x + 36, y + 9);
         mes(s);
