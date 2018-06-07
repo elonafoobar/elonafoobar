@@ -151,7 +151,7 @@ locale {
 )");
 
     REQUIRE(store.get(u8"core.locale.foo") == u8"<error>: <error>");
-    REQUIRE(store.get(u8"core.locale.foo", 42) == u8"<error: 42");
+    REQUIRE(store.get(u8"core.locale.foo", 42) == u8"<error>: 42");
     REQUIRE(store.get(u8"core.locale.foo", 12, u8"bar") == u8"bar: 12");
     REQUIRE(store.get(u8"core.locale.foo", u8"bar", u8"baz") == u8"baz: bar");
     REQUIRE(store.get(u8"core.locale.foo", u8"bar", u8"baz", "hoge") == u8"baz: bar");
