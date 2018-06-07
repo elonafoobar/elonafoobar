@@ -1837,6 +1837,9 @@ void chara_mod_impression(int cc, int delta)
 
 void chara_vanquish(int cc)
 {
+    if (cc == 0)
+        return;
+
     if (cc == gdata_mount)
     {
         ride_end();
@@ -1851,83 +1854,87 @@ void chara_vanquish(int cc)
     modify_crowd_density(cc, 1);
 }
 
-int chara_copy(int prm_848)
+
+
+bool chara_copy(int cc)
 {
-    int c_at_m139 = 0;
-    int f_at_m139 = 0;
-    int y_at_m139 = 0;
-    int x_at_m139 = 0;
-    c_at_m139 = 0;
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-         ++cnt)
+    int slot{};
+    for (int i = ELONA_MAX_PARTY_CHARACTERS; i < ELONA_MAX_CHARACTERS; ++i)
     {
-        if (cdata[cnt].state == 0)
+        if (cdata[i].state == 0)
         {
-            c_at_m139 = cnt;
+            slot = i;
             break;
         }
     }
-    if (c_at_m139 == 0)
+    if (slot == 0)
+        return false;
+
+    bool placed{};
+    int x;
+    int y;
+
+    for (int i = 0; i < 4; ++i)
     {
-        return 0;
-    }
-    f_at_m139 = 0;
-    for (int cnt = 0; cnt < 8; ++cnt)
-    {
-        y_at_m139 =
-            cdata[prm_848].position.y - rnd((cnt / 4 + 1)) + rnd((cnt / 4 + 1));
-        if (y_at_m139 < 0 || y_at_m139 >= mdata(1))
+        y = cdata[cc].position.y - rnd(2) + rnd(2);
+        if (y < 0 || y >= mdata(1))
         {
             continue;
         }
-        x_at_m139 =
-            cdata[prm_848].position.x - rnd((cnt / 4 + 1)) + rnd((cnt / 4 + 1));
-        if (x_at_m139 < 0 || x_at_m139 >= mdata(0))
+        x = cdata[cc].position.x - rnd(2) + rnd(2);
+        if (x < 0 || x >= mdata(0))
         {
             continue;
         }
-        if (map(x_at_m139, y_at_m139, 1) == 0)
+        if (map(x, y, 6) != 0)
         {
-            if ((chipm(7, map(x_at_m139, y_at_m139, 0)) & 4) == 0)
+            if (chipm(7, map(x, y, 6) % 1000) & 4)
             {
-                f_at_m139 = 1;
+                continue;
+            }
+        }
+        if (map(x, y, 1) == 0)
+        {
+            if (!(chipm(7, map(x, y, 0)) & 4))
+            {
+                placed = true;
                 break;
             }
         }
     }
-    if (f_at_m139 == 0)
+    if (!placed)
+        return false;
+
+    chara_delete(slot);
+    sdata.copy(slot, cc);
+    cdata(slot) = cdata(cc);
+    for (int i = 0; i < 10; ++i)
     {
-        return 0;
+        cdatan(i, slot) = cdatan(i, cc);
     }
-    chara_delete(c_at_m139);
-    sdata.copy(c_at_m139, prm_848);
-    cdata(c_at_m139) = cdata(prm_848);
-    for (int cnt = 0; cnt < 10; ++cnt)
-    {
-        cdatan(cnt, c_at_m139) = cdatan(cnt, prm_848);
-    }
-    map(x_at_m139, y_at_m139, 1) = c_at_m139 + 1;
-    cdata[c_at_m139].position.x = x_at_m139;
-    cdata[c_at_m139].position.y = y_at_m139;
-    cdata[c_at_m139].impression = 0;
-    cdata[c_at_m139].gold = 0;
+    map(x, y, 1) = slot + 1;
+    cdata[slot].position.x = x;
+    cdata[slot].position.y = y;
+    cdata[slot].impression = 0;
+    cdata[slot].gold = 0;
     for (int i = 0; i < 30; ++i)
     {
-        cdata_body_part(c_at_m139, i) =
-            cdata_body_part(c_at_m139, i) / 10000 * 10000;
+        cdata_body_part(slot, i) = cdata_body_part(slot, i) / 10000 * 10000;
     }
-    cdata[c_at_m139].original_relationship = -3;
-    cdata[c_at_m139].has_own_sprite() = false;
-    cdata[c_at_m139].is_livestock() = false;
-    cdata[c_at_m139].is_married() = false;
-    cdata[c_at_m139].is_ridden() = false;
-    cdata[c_at_m139].needs_refreshing_status() = true;
-    cdata[c_at_m139].is_hung_on_sand_bag() = false;
+    cdata[slot].original_relationship = -3;
+    cdata[slot].has_own_sprite() = false;
+    cdata[slot].is_livestock() = false;
+    cdata[slot].is_married() = false;
+    cdata[slot].is_ridden() = false;
+    cdata[slot].needs_refreshing_status() = true;
+    cdata[slot].is_hung_on_sand_bag() = false;
 
-    modify_crowd_density(c_at_m139, 1);
-    ++npcmemory(1, cdata[c_at_m139].id);
-    return 1;
+    modify_crowd_density(slot, 1);
+    ++npcmemory(1, cdata[slot].id);
+
+    return true;
 }
+
 
 
 void chara_delete(int prm_783)

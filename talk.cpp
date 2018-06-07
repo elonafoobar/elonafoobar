@@ -124,7 +124,7 @@ void talk_to_npc()
     }
     chatval(1) = 0;
     chatval(2) = 1;
-    if (cdata[tc].quality == 6)
+    if (cdata[tc].quality == 6 && tc >= 16)
     {
         chatval(1) = cdata[tc].id;
         chatval(2) = 0;
@@ -2252,54 +2252,58 @@ void talk_window_show()
     color(0, 0, 0);
 }
 
-int talk_guide_quest_client(int)
+
+
+int talk_guide_quest_client()
 {
-    int i_at_m193 = 0;
-    int f_at_m193 = 0;
-    j_at_m193 = 0;
-    for (int cnt = 0; cnt < 5; ++cnt)
+    constexpr int max_quest = 5;
+
+    int ret{};
+
+    for (int i = 0; i < max_quest; ++i)
     {
-        p_at_m193 = gdata(160 + cnt);
-        if (qdata(8, p_at_m193) == 1)
+        const auto quest_id = gdata(160 + i);
+        if (qdata(8, quest_id) != 1)
+            continue;
+        if (gdata_current_dungeon_level != 1)
+            continue;
+
+        auto client = -1;
+        if (qdata(3, quest_id) == 1011)
         {
-            if (gdata_current_dungeon_level == 1)
+            if (qdata(1, quest_id) == gdata_current_map)
             {
-                i_at_m193 = -1;
-                if (qdata(3, p_at_m193) == 1011)
+                client = qdata(10, quest_id);
+            }
+        }
+        if (qdata(3, quest_id) == 1002)
+        {
+            if (qdata(1, qdata(10, quest_id)) == gdata_current_map)
+            {
+                client = qdata(0, qdata(10, quest_id));
+            }
+        }
+        if (client != -1)
+        {
+            // Check duplicate
+            bool duplicated{};
+            for (int j = 0; j < i; ++j)
+            {
+                if (gdata(160 + j) == quest_id)
                 {
-                    if (qdata(1, p_at_m193) == gdata_current_map)
-                    {
-                        i_at_m193 = qdata(10, p_at_m193);
-                    }
+                    duplicated = true;
+                    break;
                 }
-                if (qdata(3, p_at_m193) == 1002)
-                {
-                    if (qdata(1, qdata(10, p_at_m193)) == gdata_current_map)
-                    {
-                        i_at_m193 = qdata(0, qdata(10, p_at_m193));
-                    }
-                }
-                if (i_at_m193 != -1)
-                {
-                    f_at_m193 = 0;
-                    for (int cnt = 0, cnt_end = (cnt); cnt < cnt_end; ++cnt)
-                    {
-                        if (gdata(160 + cnt) == p_at_m193)
-                        {
-                            f_at_m193 = 1;
-                            break;
-                        }
-                    }
-                    if (f_at_m193 == 0)
-                    {
-                        rtval(j_at_m193) = i_at_m193;
-                        ++j_at_m193;
-                    }
-                }
+            }
+            if (!duplicated)
+            {
+                rtval(ret) = client;
+                ++ret;
             }
         }
     }
-    return j_at_m193;
+
+    return ret;
 }
 
 

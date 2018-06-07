@@ -83,7 +83,7 @@ buff['11'] = {
   message_0 = "は悪夢に襲われた。",
   message_1 = "",
   description = function(self, power)
-    return "神経幻影耐性の減少"
+    return "神経幻惑耐性の減少"
   end,
 }
 buff['12'] = {

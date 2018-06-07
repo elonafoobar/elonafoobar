@@ -548,25 +548,28 @@ talk_result_t talk_npc()
              && cdata[tc].character_role < 2000)
             || cdata[tc].character_role == 2003)
         {
-            if (cdata[0].karma < -30)
+            if (cdata[0].karma < -30 && cdata[0].is_incognito() == 0)
             {
-                if (gdata_current_map != 14)
+                if (gdata_current_map != 1 && gdata_current_map != 7)
                 {
-                    if (gdata_current_map != 7)
+                    listmax = 0;
+                    if (chatval == 10)
                     {
-                        if (cdata[0].is_incognito() == 0)
-                        {
-                            listmax = 0;
-                            buff = lang(
-                                u8"犯罪者に売る物はない"s + _yo(),
-                                u8"I don't have business with criminals."s);
-                            tc = tc * 1 + 0;
-                            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
-                            chatesc = 1;
-                            ELONA_TALK_SCENE_CUT();
-                            return talk_result_t::talk_npc;
-                        }
+                        buff = lang(
+                            u8"犯罪者に売る物はない"s + _yo(),
+                            u8"I don't have business with criminals."s);
                     }
+                    else
+                    {
+                        buff = lang(
+                            u8"犯罪者から買う物はない"s + _yo(),
+                            u8"I don't have business with criminals."s);
+                    }
+                    tc = tc * 1 + 0;
+                    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+                    chatesc = 1;
+                    ELONA_TALK_SCENE_CUT();
+                    return talk_result_t::talk_npc;
                 }
             }
         }

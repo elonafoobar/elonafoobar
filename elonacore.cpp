@@ -14560,7 +14560,8 @@ void get_fish()
 
 void spot_fishing()
 {
-    int fishstat = 0;
+    static int fishstat;
+
     if (cdata[cc].continuous_action_id == 0)
     {
         txt(lang(u8"釣りを始めた。"s, u8"You start fishing."s));

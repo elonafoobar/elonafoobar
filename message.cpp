@@ -6,6 +6,7 @@
 #include "map.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
+#include <ctype.h>
 
 
 namespace elona
@@ -109,7 +110,9 @@ void key_check(int prm_299)
                 await(10);
                 bool any_key_pressed = false;
 
-                if (getkey(snail::key::space) || getkey(snail::key::enter))
+                if (getkey(snail::key::space)
+                    || getkey(snail::key::enter)
+                    || getkey(snail::key::keypad_enter))
                 {
                     any_key_pressed = true;
                 }
@@ -160,6 +163,14 @@ void key_check(int prm_299)
         objprm(0, ""s);
     }
     {
+        // Holding down a numpad key sometimes sets "key" to a
+        // non-numpad number key, and these get passed to the player
+        // as a mispress, so counteract that here.
+        if (key.size() == 1 && isdigit(static_cast<unsigned char>(key(0)[0])))
+        {
+            key = "";
+        }
+
         // Experimental implementation
         if (getkey(snail::key::keypad_0))
             key = "0 ";
@@ -209,15 +220,54 @@ void key_check(int prm_299)
         {
             p_at_m19 = 3;
         }
-        if (getkey(snail::key::pageup))
+        else if (getkey(snail::key::pageup))
         {
             p_at_m19 = 6;
         }
-        if (getkey(snail::key::end))
+        else if (getkey(snail::key::end))
         {
             p_at_m19 = 9;
         }
-        if (getkey(snail::key::pagedown))
+        else if (getkey(snail::key::pagedown))
+        {
+            p_at_m19 = 12;
+        }
+
+        // Handle the case of the current key matching the movement
+        // keybindings set in the user's config.
+        else if (key == key_west)
+        {
+            p_at_m19 = 1;
+        }
+        else if (key == key_north)
+        {
+            p_at_m19 = 2;
+        }
+        else if (key == key_east)
+        {
+            p_at_m19 = 4;
+        }
+        else if (key == key_south)
+        {
+            p_at_m19 = 8;
+        }
+        else if (key == key_northwest)
+        {
+            p_at_m19 = 3;
+        }
+        else if (key == key_northeast)
+        {
+            p_at_m19 = 6;
+        }
+        else if (key == key_southwest)
+        {
+            p_at_m19 = 9;
+        }
+        else if (key == key_southeast)
+        {
+            p_at_m19 = 12;
+        }
+        else if (key == key_southeast)
         {
             p_at_m19 = 12;
         }
