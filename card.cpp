@@ -70,7 +70,8 @@ reset_page:
             40);
 
         display_topic(lang(u8"NPCの名前", u8"NPC name"), wx + 46, wy + 36);
-        display_topic(lang(u8"殺害数", u8"Kill"), wx + 455, wy + 36);
+        display_topic(lang(u8"殺害数", u8"Kill"), wx + 385, wy + 36);
+        display_topic(lang(u8"生成数", u8"Generate"), wx + 475, wy + 36);
 
         keyrange = 0;
         for (int i = 0; i < pagesize; ++i)
@@ -89,11 +90,14 @@ reset_page:
             p = pagesize * page + i;
             if (p >= listmax)
                 break;
+            x = wx + 46;
+            y = wy + 66 + i * 19 - 1;
+            display_key(x, y, i);
             cs_list(
                 cs == i,
                 i18n::_(u8"character", std::to_string(list(0, p)), u8"name"),
-                wx + 61,
-                wy + 66 + i * 19 - 1,
+                x + 30,
+                y,
                 0,
                 card(0, list(0, p)) ? 0 : 4);
             if (card(0, list(0, p)))
@@ -104,8 +108,10 @@ reset_page:
             {
                 color(128, 128, 128);
             }
-            pos(wx + 470, wy + 66 + i * 19 + 2);
+            pos(x + 365, y + 3);
             mes(npcmemory(0, list(0, p)));
+            pos(x + 455, y + 3);
+            mes(npcmemory(1, list(0, p)));
             color(0, 0, 0);
         }
 
