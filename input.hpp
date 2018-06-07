@@ -34,7 +34,7 @@ void input_text_dialog(
     int val2,
     bool is_cancelable = true,
     bool as_filename = false,
-    bool max_length = true);
+    bool limit_length = true);
 
 
 } // namespace elona

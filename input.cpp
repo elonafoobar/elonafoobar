@@ -253,7 +253,7 @@ void input_text_dialog(
     int val2,
     bool is_cancelable,
     bool as_filename,
-    bool max_length)
+    bool limit_length)
 {
     int ime_esc = 0;
 
@@ -331,7 +331,7 @@ void input_text_dialog(
         }
         noteget(s, 0);
 
-        if (max_length && p(4) == 20)
+        if (limit_length && p(4) == 20)
         {
             if (inputlog(0).back() != '\n')
             {
@@ -339,7 +339,7 @@ void input_text_dialog(
             }
             cutname(s, 20);
         }
-        else if (!max_length && p(4) > 18)
+        else if (!limit_length && p(4) > 18)
         {
             p(4) = 18;
             cutname(s, 18);
