@@ -2284,7 +2284,7 @@ void animeload(int prm_807, int prm_808)
     gsel(0);
     gmode(2);
     i_at_m133(0) = 5;
-    i_at_m133(1) = 50;
+    i_at_m133(1) = config::instance().animewait * 3.5;
     r_at_m133 = 0;
     if (prm_807 == 8)
     {
@@ -2293,21 +2293,21 @@ void animeload(int prm_807, int prm_808)
     if (prm_807 == 10)
     {
         i_at_m133(0) = 8;
-        i_at_m133(1) = 30;
+        i_at_m133(1) = config::instance().animewait * 2.5;
         r_at_m133 = 0.2;
         snd(119);
     }
     if (prm_807 == 11)
     {
         i_at_m133(0) = 5;
-        i_at_m133(1) = 50;
+        i_at_m133(1) = config::instance().animewait * 3.5;
         r_at_m133 = 0;
         snd(118);
     }
     if (prm_807 == 14)
     {
         i_at_m133(0) = 6;
-        i_at_m133(1) = 50;
+        i_at_m133(1) = config::instance().animewait * 3.5;
     }
     for (int cnt = 0, cnt_end = (i_at_m133); cnt < cnt_end; ++cnt)
     {
@@ -2318,7 +2318,7 @@ void animeload(int prm_807, int prm_808)
         redraw();
         pos(dx_at_m133 - 24, dy_at_m133 - 40);
         gcopy(4, 0, 0, 96, 96);
-        await(config::instance().animewait + i_at_m133(1));
+        await(i_at_m133(1));
     }
     gmode(2);
     return;
@@ -2465,7 +2465,7 @@ void animeblood(int prm_809, int prm_810, int prm_811)
         redraw();
         pos(dx_at_m133 - 48, dy_at_m133 - 56);
         gcopy(4, 0, 0, 144, 160);
-        await(config::instance().animewait + 15 + (ele2_at_m133 != 0) * 20);
+        await(config::instance().animewait * (ele2_at_m133 == 0 ? 1.75 : 2.75));
     }
     gmode(2);
     return;
@@ -12238,7 +12238,7 @@ label_2128_internal:
     pos(x - 48 - 24, y - 48 - 24);
     gcopy(4, 0, 0, 144, 144);
     gmode(2);
-    await(30);
+    await(config::instance().wait1);
     key_check(1);
     x = cdata[0].position.x;
     y = cdata[0].position.y;
@@ -12359,7 +12359,7 @@ turn_result_t do_debug_console()
     objsel(2);
     while (1)
     {
-        await(20);
+        await(config::instance().wait1);
         int a{};
         stick(a);
         if (a == 128)
@@ -14097,7 +14097,7 @@ void label_2151()
     {
         gmode(4, -1, -1, cnt * 10);
         label_2149();
-        await(200);
+        await(config::instance().animewait * 10);
     }
     gmode(2);
     cc = 0;
@@ -14152,7 +14152,7 @@ void label_2151()
         gdata_minute = 0;
         cc = 0;
         label_2149();
-        await(500);
+        await(config::instance().animewait * 25);
     }
     if (gdata(98) != 0)
     {
@@ -14604,7 +14604,7 @@ void spot_fishing()
                     ++scrturn;
                     update_screen();
                     redraw();
-                    await(config::instance().wait1 * 2);
+                    await(config::instance().animewait * 2);
                 }
                 if (rnd(3) == 0)
                 {
@@ -14627,7 +14627,7 @@ void spot_fishing()
                 ++scrturn;
                 update_screen();
                 redraw();
-                await(config::instance().wait1 * 2);
+                await(config::instance().animewait * 2);
             }
             if (rnd(10))
             {
@@ -14653,7 +14653,7 @@ void spot_fishing()
                 update_screen();
                 addefmap(fishx, fishy, 5, 2);
                 redraw();
-                await(config::instance().wait1 * 2);
+                await(config::instance().animewait * 2);
             }
             if (the_fish_db[fish]->difficulty >= rnd(sdata(185, 0) + 1))
             {
@@ -14679,7 +14679,7 @@ void spot_fishing()
                 ++scrturn;
                 update_screen();
                 redraw();
-                await(config::instance().wait1 * 2);
+                await(config::instance().animewait * 2);
             }
             snd(14 + rnd(2));
             fishanime = 0;
@@ -18061,7 +18061,7 @@ turn_result_t try_to_open_locked_door()
             {
                 screenupdate = -1;
                 update_screen();
-                await(100);
+                await(config::instance().animewait * 5);
                 return turn_result_t::turn_end;
             }
             feat(2) = 0;
@@ -18126,7 +18126,7 @@ turn_result_t try_to_open_locked_door()
     }
     if (cc == 0)
     {
-        await(100);
+        await(config::instance().animewait * 5);
     }
     return turn_result_t::turn_end;
 }

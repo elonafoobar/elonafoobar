@@ -1054,7 +1054,7 @@ void render_autoturn_animation()
                         snd(52);
                     }
                     gcopy(9, cnt / 2 % 5 * 144, 0, 144, 96);
-                    await(40);
+                    await(config::instance().animewait * 2);
                 }
                 if (cdata[0].continuous_action_id == 7)
                 {
@@ -1066,7 +1066,7 @@ void render_autoturn_animation()
                         }
                     }
                     gcopy(9, cnt / 3 % 3 * 144, 0, 144, 96);
-                    await(50);
+                    await(config::instance().animewait * 2.5);
                 }
                 if (cdata[0].continuous_action_id == 8)
                 {
@@ -1075,7 +1075,7 @@ void render_autoturn_animation()
                         snd(55);
                     }
                     gcopy(9, cnt / 2 % 3 * 144, 0, 144, 96);
-                    await(55);
+                    await(config::instance().animewait * 2.75);
                 }
                 if (cdata[0].continuous_action_id == 9)
                 {
@@ -1084,7 +1084,7 @@ void render_autoturn_animation()
                         snd(54);
                     }
                     gcopy(9, cnt / 2 % 4 * 144, 0, 144, 96);
-                    await(60);
+                    await(config::instance().animewait * 3);
                 }
                 redraw();
             }
@@ -2688,7 +2688,7 @@ void windowanime(
         redraw();
         if (cnt != prm_730 - 1)
         {
-            await(15);
+            await(config::instance().animewait * 0.75);
         }
         pos(prm_726, prm_727);
         gcopy(prm_731, 0, 0, prm_728, prm_729);
@@ -2737,7 +2737,7 @@ void windowanimecorner(
         redraw();
         if (cnt != prm_736)
         {
-            await(15);
+            await(config::instance().animewait * 0.75);
         }
         pos(prm_732, prm_733);
         gcopy(prm_737, 0, 0, prm_734, prm_735);

@@ -4,6 +4,7 @@
 #include "animation.hpp"
 #include "audio.hpp"
 #include "character.hpp"
+#include "config.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
@@ -497,7 +498,7 @@ void label_1888()
             magic();
             snd(63);
             mode = 0;
-            await(500);
+            await(config::instance().animewait * 20);
         }
         cdata[0].god_id = core_god::int2godid(inv[ci].param1);
         switch_religion();
