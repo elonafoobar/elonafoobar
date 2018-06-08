@@ -714,7 +714,7 @@ main_menu_result_t character_making_final_phase()
         if (stat == 0)
         {
             clear_background_in_character_making();
-            character_making_select_feats_and_alias(false);
+            return main_menu_result_t::character_making_select_feats_and_alias_looped;
         }
         if (stat != -1)
         {
