@@ -9977,7 +9977,7 @@ label_1948_internal:
         if (key == key_enter)
         {
             label_1955();
-            keyrelease();
+            wait_key_released();
             goto label_1948_internal;
         }
         int a{};
@@ -9992,12 +9992,12 @@ label_1948_internal:
                 || chipm(0, map(tlocx, tlocy, 0)) == 1)
             {
                 snd(27);
-                keyrelease();
+                wait_key_released();
                 goto label_1948_internal;
             }
             tile = map(tlocx, tlocy, 0);
             snd(5);
-            keyrelease();
+            wait_key_released();
         }
         tx = clamp((mousex - inf_screenx), 0, windoww) / 48;
         ty = clamp((mousey - inf_screeny), 0, (windowh - inf_verh)) / 48;

@@ -37,7 +37,7 @@ void input_text_dialog(
     bool limit_length = true);
 
 void key_check(int = 0);
-void keyrelease();
+void wait_key_released();
 void wait_key_pressed(bool only_enter_or_cancel = false);
 
 

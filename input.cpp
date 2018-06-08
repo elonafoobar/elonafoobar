@@ -957,7 +957,7 @@ void key_check(int prm_299)
 
 
 
-void keyrelease()
+void wait_key_released()
 {
     while (1)
     {
@@ -967,7 +967,7 @@ void keyrelease()
         if (result == 0)
         {
             key_check();
-            if (key == ""s)
+            if (key(0).empty())
             {
                 break;
             }
