@@ -399,26 +399,8 @@ void input_text_dialog(
 
 void key_check(int prm_299)
 {
-    int p_at_m19 = 0;
-    int a_at_m19 = 0;
-    int f_at_m19 = 0;
-    int j_at_m19 = 0;
-    int prevjoy_at_m19 = 0;
-    int b_at_m19 = 0;
-    std::string keyactive_at_m19;
-    int scon_at_m19 = 0;
-    if (ginfo(2) == 0)
-    {
-        objsel(0);
-    }
-    else
-    {
-        key = "";
-        objprm(0, ""s);
-        keylog = "";
-        await(100);
-        return;
-    }
+    static int prevjoy_at_m19{};
+
     if (msgalert == 1)
     {
         if (config::instance().alert > 1)
@@ -426,48 +408,12 @@ void key_check(int prm_299)
             for (int i = 0; i < config::instance().alert; ++i)
             {
                 await(config::instance().wait1);
-                bool any_key_pressed = false;
-
-                if (getkey(snail::key::space)
-                    || getkey(snail::key::enter)
-                    || getkey(snail::key::keypad_enter))
-                {
-                    any_key_pressed = true;
-                }
-                else
-                {
-                    for (int i = 0; i < 26; ++i)
-                    {
-                        if (getkey(snail::key(int(snail::key::key_a) + i)))
-                        {
-                            any_key_pressed = true;
-                            break;
-                        }
-                    }
-                    for (int i = 0; i < 10; ++i)
-                    {
-                        if (getkey(snail::key(int(snail::key::key_0) + i)))
-                        {
-                            any_key_pressed = true;
-                            break;
-                        }
-                        if (getkey(snail::key(int(snail::key::keypad_0) + i)))
-                        {
-                            any_key_pressed = true;
-                            break;
-                        }
-                    }
-                }
-                if (!any_key_pressed)
-                {
-                    break;
-                }
             }
-            msgalert = 0;
             keylog = "";
-            objprm(0, ""s);
         }
+        msgalert = 0;
     }
+
     key = "";
     if (keylog != ""s)
     {
@@ -478,44 +424,41 @@ void key_check(int prm_299)
         }
         key = keylog;
         keylog = "";
-        objprm(0, ""s);
     }
-    {
-        // Holding down a numpad key sometimes sets "key" to a
-        // non-numpad number key, and these get passed to the player
-        // as a mispress, so counteract that here.
-        if (key.size() == 1 && isdigit(static_cast<unsigned char>(key(0)[0])))
-        {
-            key = "";
-        }
 
-        // Experimental implementation
-        if (getkey(snail::key::keypad_0))
-            key = "0 ";
-        else if (getkey(snail::key::keypad_1))
-            key = "1 ";
-        else if (getkey(snail::key::keypad_2))
-            key = "2 ";
-        else if (getkey(snail::key::keypad_3))
-            key = "3 ";
-        else if (getkey(snail::key::keypad_4))
-            key = "4 ";
-        else if (getkey(snail::key::keypad_5))
-            key = "5 ";
-        else if (getkey(snail::key::keypad_6))
-            key = "6 ";
-        else if (getkey(snail::key::keypad_7))
-            key = "7 ";
-        else if (getkey(snail::key::keypad_8))
-            key = "8 ";
-        else if (getkey(snail::key::keypad_9))
-            key = "9 ";
+    // Holding down a numpad key sometimes sets "key" to a
+    // non-numpad number key, and these get passed to the player
+    // as a mispress, so counteract that here.
+    if (key.size() == 1 && isdigit(static_cast<unsigned char>(key(0)[0])))
+    {
+        key = "";
     }
+
+    if (getkey(snail::key::keypad_0))
+        key = "0 ";
+    else if (getkey(snail::key::keypad_1))
+        key = "1 ";
+    else if (getkey(snail::key::keypad_2))
+        key = "2 ";
+    else if (getkey(snail::key::keypad_3))
+        key = "3 ";
+    else if (getkey(snail::key::keypad_4))
+        key = "4 ";
+    else if (getkey(snail::key::keypad_5))
+        key = "5 ";
+    else if (getkey(snail::key::keypad_6))
+        key = "6 ";
+    else if (getkey(snail::key::keypad_7))
+        key = "7 ";
+    else if (getkey(snail::key::keypad_8))
+        key = "8 ";
+    else if (getkey(snail::key::keypad_9))
+        key = "9 ";
+
     mousel = 0;
-    f_at_m19 = 0;
     key_tab = 0;
     key_escape = 0;
-    p_at_m19 = stick(15);
+    int p_at_m19 = stick(15);
     if (p_at_m19 != 0)
     {
         if (p_at_m19 == 128)
@@ -623,7 +566,7 @@ void key_check(int prm_299)
     }
     if (config::instance().joypad)
     {
-        j_at_m19 = 0;
+        int j_at_m19 = 0;
         DIGETJOYSTATE(j_at_m19, 0);
         if (HMMBITCHECK(j_at_m19, 0))
         {
@@ -641,7 +584,7 @@ void key_check(int prm_299)
         {
             p_at_m19 += 4;
         }
-        a_at_m19 = 0;
+        int a_at_m19 = 0;
         for (int cnt = 0; cnt < 12; ++cnt)
         {
             if (HMMBITCHECK(j_at_m19, 4 + cnt))
@@ -670,7 +613,7 @@ void key_check(int prm_299)
                     }
                     if (prm_299 == 0)
                     {
-                        b_at_m19 = 0;
+                        int b_at_m19 = 0;
                         if (key == key_fire)
                         {
                             key = key_northeast;
@@ -727,6 +670,7 @@ void key_check(int prm_299)
             keybd_wait = 1000;
         }
     }
+    int f_at_m19 = 0;
     if (p_at_m19 == 1)
     {
         if (key_alt == 0)
@@ -835,14 +779,6 @@ void key_check(int prm_299)
     }
     if (f_at_m19)
     {
-        if (keyactive_at_m19 != key)
-        {
-            keyactive_at_m19 = key;
-        }
-        if (keybd_wait == 0)
-        {
-            keyactive_at_m19 = key;
-        }
         if (prm_299 == 1)
         {
             if (keybd_attacking != 0)
@@ -917,31 +853,25 @@ void key_check(int prm_299)
         keybd_wait = 0;
         keybd_attacking = 0;
         running = 0;
-        keyactive_at_m19 = "";
     }
+
+    bool shortcut{};
     for (int i = 0; i < 10; ++i)
     {
         if (getkey(snail::key(int(snail::key::key_0) + i)))
         {
             key = u8"sc";
             sc = i;
-            if (key_shift == 1 || key_ctrl == 1)
+            if (key_shift || key_ctrl)
             {
                 sc += 10;
             }
-            keybd_event(i, 0, 2);
-            scon_at_m19 = 1;
+            keylog = "";
+            shortcut = true;
         }
     }
-    if (scon_at_m19)
-    {
-        key = u8"sc"s;
-        scon_at_m19 = 0;
-        keylog = "";
-        objprm(0, ""s);
-        return;
-    }
-    if (keyhalt != 0)
+
+    if (!shortcut && keyhalt != 0)
     {
         if (key != ""s || keybd_wait != 0)
         {
@@ -952,7 +882,6 @@ void key_check(int prm_299)
             keyhalt = 0;
         }
     }
-    return;
 }
 
 
