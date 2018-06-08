@@ -404,7 +404,7 @@ void proc_event()
         break;
     case 7:
         label_1444();
-        press();
+        wait_key_pressed();
         screenupdate = -1;
         update_entire_screen();
         break;

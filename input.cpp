@@ -977,7 +977,7 @@ void keyrelease()
 
 
 
-void press(bool only_enter_of_cancel)
+void wait_key_pressed(bool only_enter_or_cancel)
 {
     if (config::instance().is_test)
         return;
@@ -986,7 +986,7 @@ void press(bool only_enter_of_cancel)
     {
         await(config::instance().wait1);
         key_check();
-        if (only_enter_of_cancel)
+        if (only_enter_or_cancel)
         {
             if (key == key_enter || key == key_cancel)
             {
@@ -995,7 +995,7 @@ void press(bool only_enter_of_cancel)
         }
         else
         {
-            if (key != ""s)
+            if (!key(0).empty())
             {
                 break;
             }
@@ -1003,6 +1003,7 @@ void press(bool only_enter_of_cancel)
     }
     keyhalt = 1;
 }
+
 
 
 } // namespace elona

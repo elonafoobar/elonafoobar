@@ -20758,7 +20758,7 @@ turn_result_t pc_died()
             u8"You have been buried. Bye...(Hit any key to exit)"s);
         draw_caption();
         redraw();
-        press();
+        wait_key_pressed();
         return turn_result_t::finish_elona;
     }
     s = u8"dead"s

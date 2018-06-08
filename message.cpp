@@ -126,7 +126,7 @@ void anime_halt()
         gzoom(3, 552, 504, 120, 22, 120, cnt * 2 + 1);
         redraw();
     }
-    press(true);
+    wait_key_pressed(true);
     snd(20);
     for (int cnt = 0; cnt < 7; ++cnt)
     {
