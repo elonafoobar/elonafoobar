@@ -202,7 +202,6 @@ main_menu_result_t main_title_menu()
         if (key == u8"f"s)
         {
             snd(20);
-            await(400);
             return main_menu_result_t::finish_elona;
         }
     }
@@ -437,7 +436,6 @@ main_menu_result_t main_menu_continue()
         {
             playerid = listn(0, p);
             snd(20);
-            await(200);
             mode = 3;
             return main_menu_result_t::initialize_game;
         }

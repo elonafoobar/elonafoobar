@@ -366,7 +366,7 @@ talk_result_t talk_house_visitor()
                     txt(lang(
                         name(tc) + u8"は吐いた。"s, name(tc) + u8" vomits."s));
                     snd(104);
-                    await(10);
+                    await(config::instance().animewait / 2);
                     update_screen();
                 }
             }
