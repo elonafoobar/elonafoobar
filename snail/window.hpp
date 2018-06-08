@@ -49,6 +49,14 @@ public:
     };
 
 
+    enum class fullscreen_mode_t : Uint32
+    {
+        windowed = 0,
+        fullscreen = SDL_WINDOW_FULLSCREEN,
+        fullscreen_desktop = SDL_WINDOW_FULLSCREEN_DESKTOP,
+    };
+
+
     ::SDL_Window* ptr() noexcept
     {
         return _ptr.get();

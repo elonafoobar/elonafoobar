@@ -1,5 +1,6 @@
 #include <sstream>
 #include "../detail/sdl.hpp"
+#include <iostream>
 
 
 namespace elona
@@ -51,7 +52,6 @@ void renderer::set_draw_color(const color& color)
         ::SDL_SetRenderDrawColor(ptr(), color.r, color.g, color.b, color.a));
 }
 
-
 renderer::renderer(window& target_window, int flag)
 {
     _ptr = detail::enforce_sdl(::SDL_CreateRenderer(
@@ -78,7 +78,6 @@ void renderer::present()
 {
     ::SDL_RenderPresent(ptr());
 }
-
 
 void renderer::render_point(int x, int y)
 {

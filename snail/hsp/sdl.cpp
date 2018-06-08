@@ -3,7 +3,9 @@
 #include "../font.hpp"
 #include "../color.hpp"
 #include "../detail/sdl.hpp"
+#include "../window.hpp"
 #include <unordered_map>
+#include <iostream>
 
 
 namespace {
@@ -568,12 +570,12 @@ int ginfo(int type)
     case 3: return detail::current_buffer; // target window id
     case 4: return 0; // window x1
     case 5: return 0; // window y1
-    case 6: return 800; // window x2
-    case 7: return 600; // window y2
+    case 6: return application::instance().width(); // window x2
+    case 7: return application::instance().height(); // window y2
     case 8: return 0; // window scroll x
     case 9: return 0; // window scroll y
-    case 10: return 800; // window width
-    case 11: return 600; // window height
+    case 10: return application::instance().width(); // window width
+    case 11: return application::instance().height(); // window height
     case 12:
         return detail::current_tex_buffer().tex_width; // window client width
     case 13:
@@ -846,21 +848,30 @@ void line(int x, int y)
     detail::current_tex_buffer().y = y;
 }
 
-void title(const std::string& title_str)
+void title(const std::string& title_str,
+           const std::string& display_mode,
+           window::fullscreen_mode_t fullscreen_mode)
 {
-    application::instance().initialize(800, 600, title_str);
+    application::instance().initialize(title_str);
+
+    application::instance().set_fullscreen_mode(fullscreen_mode);
+    if (display_mode != "")
+    {
+        application::instance().set_display_mode(display_mode);
+    }
+
     detail::tmp_buffer = snail::detail::enforce_sdl(::SDL_CreateTexture(
         application::instance().get_renderer().ptr(),
         SDL_PIXELFORMAT_ARGB8888,
         SDL_TEXTUREACCESS_TARGET,
-        1000,
-        1000));
+        4096,
+        4096));
     application::instance().register_finalizer(
         []() { ::SDL_DestroyTexture(detail::tmp_buffer); });
     input::instance().set_key_repeat(10, 3);
     application::instance().register_finalizer(
         [&]() { font_detail::font_cache.clear(); });
-    buffer(0, 800, 600);
+    buffer(0, application::instance().width(), application::instance().height());
 }
 
 } // namespace hsp

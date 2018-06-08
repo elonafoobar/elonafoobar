@@ -9,6 +9,7 @@
 
 #include "snail/application.hpp"
 #include "snail/hsp.hpp"
+#include "snail/window.hpp"
 
 #include "config.hpp"
 #include "defines.hpp"
@@ -911,9 +912,11 @@ std::string strmid(const std::string& source, int pos, int length)
 
 
 
-void title(const std::string& title_str)
+void title(const std::string& title_str,
+           const std::string& display_mode,
+           snail::window::fullscreen_mode_t fullscreen_mode)
 {
-    snail::hsp::title(title_str);
+    snail::hsp::title(title_str, display_mode, fullscreen_mode);
 }
 
 

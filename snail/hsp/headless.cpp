@@ -52,7 +52,7 @@ void boxf(const snail::color&)
 {
 }
 
-void buffer(int, int, int)
+foid buffer(int, int, int)
 {
 }
 

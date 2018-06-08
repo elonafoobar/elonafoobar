@@ -43,7 +43,7 @@ public:
     static application& instance();
 
 
-    void initialize(int width, int height, const std::string& title);
+    void initialize(const std::string& title);
 
     void quit();
 

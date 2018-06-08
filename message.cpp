@@ -800,12 +800,15 @@ void msg_newline()
     p_at_txtfunc = (windoww - inf_msgx) / 192;
     gmode(0);
     pos(inf_msgx, inf_msgy + 5);
-    gcopy(
+    std::cout << windoww << " " << inf_msgx << std::endl;
+    std::cout << "============================NEWLINE" << std::endl;
+    gcopy( // BUG
         0,
         inf_msgx,
         inf_msgy + 5 + inf_msgspace,
         windoww - inf_msgx,
         inf_msgspace * 3 + en * 3);
+    std::cout << "============================NEWLINEEND" << std::endl;
     for (int cnt = 0, cnt_end = (p_at_txtfunc + 1); cnt < cnt_end; ++cnt)
     {
         if (cnt == p_at_txtfunc)
