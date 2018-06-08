@@ -107,7 +107,7 @@ void key_check(int prm_299)
         {
             for (int i = 0; i < config::instance().alert; ++i)
             {
-                await(10);
+                await(config::instance().wait1);
                 bool any_key_pressed = false;
 
                 if (getkey(snail::key::space)
@@ -643,7 +643,7 @@ void keyrelease()
 {
     while (1)
     {
-        await(30);
+        await(config::instance().wait1);
         int result{};
         stick(result, 768);
         if (result == 0)
@@ -666,7 +666,7 @@ void press(bool only_enter_of_cancel)
 
     while (1)
     {
-        await(20);
+        await(config::instance().wait1);
         key_check();
         if (only_enter_of_cancel)
         {
@@ -728,7 +728,7 @@ void anime_halt()
     gsel(0);
     for (int cnt = 0; cnt < 12; ++cnt)
     {
-        await(10);
+        await(config::instance().wait1 / 3);
         pos(x_at_txtfunc, y_at_txtfunc + 12 - cnt);
         gzoom(3, 552, 504, 120, 22, 120, cnt * 2 + 1);
         redraw();
@@ -737,7 +737,7 @@ void anime_halt()
     snd(20);
     for (int cnt = 0; cnt < 7; ++cnt)
     {
-        await(10);
+        await(config::instance().wait1 / 3);
         pos(x_at_txtfunc, y_at_txtfunc);
         gcopy(3, 672, 504, 120, 24);
         if (cnt != 6)

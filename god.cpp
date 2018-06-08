@@ -4,6 +4,7 @@
 #include "animation.hpp"
 #include "audio.hpp"
 #include "character.hpp"
+#include "config.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
@@ -497,7 +498,7 @@ void label_1888()
             magic();
             snd(63);
             mode = 0;
-            await(500);
+            await(config::instance().animewait * 20);
         }
         cdata[0].god_id = core_god::int2godid(inv[ci].param1);
         switch_religion();
@@ -804,170 +805,6 @@ turn_result_t do_pray()
         }
         ++gdata_god_rank;
     }
-    return turn_result_t::turn_end;
-}
-
-
-
-turn_result_t do_offer()
-{
-    if (cdata[0].god_id.empty())
-    {
-        txt(lang(
-            u8"あなたは神を信仰していないが、試しに捧げてみた。"s,
-            u8"You don't believe in God."s));
-        return turn_result_t::turn_end;
-    }
-    rowact_item(ci);
-    item_separate(ci);
-    txt(lang(
-        u8"あなたは"s + itemname(ci) + u8"を"s
-            + i18n::_(u8"god", cdata[0].god_id, u8"name")
-            + u8"に捧げ、その名を唱えた。"s,
-        u8"You put "s + itemname(ci)
-            + u8" on the altar and mutter the name of "s
-            + i18n::_(u8"god", cdata[0].god_id, u8"name") + u8"."s));
-    snd(121);
-    play_animation(7);
-    int stat = item_find(60002);
-    if (stat != -1)
-    {
-        ti = stat;
-    }
-    else
-    {
-        return turn_result_t::turn_end;
-    }
-    if (inv[ci].id == 204)
-    {
-        i = clamp(inv[ci].weight / 200, 1, 50);
-        if (inv[ci].param3 < 0)
-        {
-            i = 1;
-        }
-    }
-    else
-    {
-        i = 25;
-    }
-    if (core_god::int2godid(inv[ti].param1) != cdata[0].god_id)
-    {
-        f = 0;
-        if (inv[ti].param1 == 0)
-        {
-            f = 1;
-            txt(lang(
-                u8"異世界で、"s + i18n::_(u8"god", cdata[0].god_id, u8"name")
-                    + u8"が空白の祭壇の権利を主張した。"s,
-                i18n::_(u8"god", cdata[0].god_id, u8"name")
-                    + u8" claims the empty altar."s));
-        }
-        else
-        {
-            txt(lang(
-                u8"異様な霧が現れ、"s
-                    + i18n::_(u8"god", cdata[0].god_id, u8"name") + u8"と"s
-                    + i18n::_(
-                          u8"god",
-                          core_god::int2godid(inv[ti].param1),
-                          u8"name")
-                    + u8"の幻影がせめぎあった。"s,
-                u8"Strange fogs surround all over the place. You see shadows of "s
-                    + i18n::_(u8"god", cdata[0].god_id, u8"name") + u8" and "s
-                    + i18n::_(
-                          u8"god",
-                          core_god::int2godid(inv[ti].param1),
-                          u8"name")
-                    + u8" make a fierce dance."s));
-            if (rnd(17) <= i)
-            {
-                f = 1;
-            }
-            else
-            {
-                f = 0;
-            }
-        }
-        if (f == 1)
-        {
-            modpiety(i * 5);
-            cdata[0].praying_point += i * 30;
-            animode = 100;
-            play_animation(19);
-            snd(120);
-            if (inv[ti].param1 != 0)
-            {
-                txt(lang(
-                    u8"あなたの神の幻影は、次第に色濃くなった。"s,
-                    u8"The shadow of your god slowly gets bolder."s));
-            }
-            txtef(5);
-            txt(lang(
-                i18n::_(u8"god", cdata[0].god_id, u8"name") + u8"は"s
-                    + itemname(ti) + u8"を支配した。"s,
-                i18n::_(u8"god", cdata[0].god_id, u8"name")
-                    + u8" takes over the altar."s));
-            txtgod(cdata[0].god_id, 2);
-            inv[ti].param1 = core_god::godid2int(cdata[0].god_id);
-        }
-        else
-        {
-            txt(lang(
-                i18n::_(u8"god", core_god::int2godid(inv[ti].param1), u8"name")
-                    + u8"は祭壇を守りきった。"s,
-                i18n::_(u8"god", core_god::int2godid(inv[ti].param1), u8"name")
-                    + u8" keeps the altar."s));
-            txtgod(core_god::int2godid(inv[ti].param1), 3);
-            label_1892();
-        }
-    }
-    else
-    {
-        txtef(2);
-        for (int cnt = 0; cnt < 1; ++cnt)
-        {
-            if (i >= 15)
-            {
-                txt(lang(
-                    itemname(ci) + u8"はまばゆく輝いて消えた。"s,
-                    itemname(ci) + u8" shine"s + _s2(inv[ci].number)
-                        + u8" all around and disappear"s + _s2(inv[ci].number)
-                        + u8"."s));
-                txtgod(cdata[0].god_id, 4);
-                break;
-            }
-            if (i >= 10)
-            {
-                txt(lang(
-                    itemname(ci)
-                        + u8"は輝いて消え、三つ葉のクローバーがふってきた。"s,
-                    itemname(ci) + u8" shine"s + _s2(inv[ci].number)
-                        + u8" for a moment and disappear"s + _s2(inv[ci].number)
-                        + u8". A three-leaved falls from the altar."s));
-                break;
-            }
-            if (i >= 5)
-            {
-                txt(lang(
-                    itemname(ci) + u8"は一瞬輝いて消えた。"s,
-                    itemname(ci) + u8" shine"s + _s2(inv[ci].number)
-                        + u8" for a moment and disappear"s + _s2(inv[ci].number)
-                        + u8"."s));
-                break;
-            }
-            if (i >= 1)
-            {
-                txt(lang(
-                    itemname(ci) + u8"は消えた。"s,
-                    itemname(ci) + u8" disappear"s + _s2(inv[ci].number)
-                        + u8"."s));
-                break;
-            }
-        }
-        modpiety(i);
-        cdata[0].praying_point += i * 7;
-    }
-    removeitem(ci, inv[ci].number);
     return turn_result_t::turn_end;
 }
 

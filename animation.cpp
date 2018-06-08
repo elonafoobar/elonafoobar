@@ -108,7 +108,7 @@ void play_animation_6_5_7_11(int animeid, int anicol)
     {
         if (animeid == 11)
         {
-            await(5);
+            await(config::instance().animewait / 4);
         }
         else
         {
@@ -389,7 +389,7 @@ void play_animation_0(int anicol, int anisound)
             }
             ++ap(cnt);
         }
-        await(config::instance().animewait + 15);
+        await(config::instance().animewait * 1.75);
         redraw();
     }
     if (anisound)
@@ -690,7 +690,7 @@ void play_animation_20()
             pos(anidx, anidy - cnt * 96);
             gcopy(7, cnt2 / 2 * 96, (cnt == 0) * 96, 96, 96);
         }
-        await(config::instance().animewait + 25);
+        await(config::instance().animewait * 2.25);
         redraw();
     }
 }
@@ -816,7 +816,7 @@ void play_animation_19()
         {
             break;
         }
-        await(config::instance().animewait + 25);
+        await(config::instance().animewait * 2.25);
         redraw();
     }
 }
@@ -891,7 +891,7 @@ void play_animation_22()
         {
             break;
         }
-        await(config::instance().animewait + 40);
+        await(config::instance().animewait * 3);
         redraw();
     }
     await(config::instance().animewait);
@@ -964,7 +964,7 @@ void play_animation_21()
         {
             break;
         }
-        await(config::instance().animewait + 40);
+        await(config::instance().animewait * 3);
         redraw();
     }
     await(config::instance().animewait);
