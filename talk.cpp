@@ -2039,7 +2039,7 @@ label_2258_internal:
     key_check();
     cursor_check();
     int a{};
-    stick(a, 128);
+    a = stick(128);
     if (a == 128)
     {
         if (scenemode)

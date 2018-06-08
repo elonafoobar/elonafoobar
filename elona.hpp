@@ -548,7 +548,7 @@ void redraw();
 void screen(int window_id, int width, int height, int mode, int x, int y);
 
 
-void stick(int& out, int = 0);
+int stick(int allow_repeat_keys = 0);
 
 
 size_t strlen_u(const std::string& str);

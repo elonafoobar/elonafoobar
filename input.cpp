@@ -515,7 +515,7 @@ void key_check(int prm_299)
     f_at_m19 = 0;
     key_tab = 0;
     key_escape = 0;
-    stick(p_at_m19, 15);
+    p_at_m19 = stick(15);
     if (p_at_m19 != 0)
     {
         if (p_at_m19 == 128)
@@ -963,7 +963,7 @@ void wait_key_released()
     {
         await(config::instance().wait1);
         int result{};
-        stick(result, 768);
+        result = stick(768);
         if (result == 0)
         {
             key_check();
