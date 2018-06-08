@@ -14596,15 +14596,18 @@ void spot_fishing()
         {
             if (rnd(5) == 0)
             {
-                for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end; ++cnt)
+                if (config::instance().animewait != 0)
                 {
-                    fishanime(0) = 1;
-                    fishanime(1) = 3 + rnd(3);
-                    addefmap(fishx, fishy, 4, 2);
-                    ++scrturn;
-                    update_screen();
-                    redraw();
-                    await(config::instance().animewait * 2);
+                    for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end; ++cnt)
+                    {
+                        fishanime(0) = 1;
+                        fishanime(1) = 3 + rnd(3);
+                        addefmap(fishx, fishy, 4, 2);
+                        ++scrturn;
+                        update_screen();
+                        redraw();
+                        await(config::instance().animewait * 2);
+                    }
                 }
                 if (rnd(3) == 0)
                 {
@@ -14622,12 +14625,15 @@ void spot_fishing()
             fishanime = 2;
             snd(46);
             cdata[0].emotion_icon = 220;
-            for (int cnt = 0, cnt_end = (8 + rnd(10)); cnt < cnt_end; ++cnt)
+            if (config::instance().animewait != 0)
             {
-                ++scrturn;
-                update_screen();
-                redraw();
-                await(config::instance().animewait * 2);
+                for (int cnt = 0, cnt_end = (8 + rnd(10)); cnt < cnt_end; ++cnt)
+                {
+                    ++scrturn;
+                    update_screen();
+                    redraw();
+                    await(config::instance().animewait * 2);
+                }
             }
             if (rnd(10))
             {
@@ -14642,18 +14648,21 @@ void spot_fishing()
         if (fishstat == 3)
         {
             fishanime = 3;
-            for (int cnt = 0, cnt_end = (28 + rnd(15)); cnt < cnt_end; ++cnt)
+            if (config::instance().animewait != 0)
             {
-                if (cnt % 7 == 0)
+                for (int cnt = 0, cnt_end = (28 + rnd(15)); cnt < cnt_end; ++cnt)
                 {
-                    snd(89);
+                    if (cnt % 7 == 0)
+                    {
+                        snd(89);
+                    }
+                    fishanime(1) = cnt;
+                    ++scrturn;
+                    update_screen();
+                    addefmap(fishx, fishy, 5, 2);
+                    redraw();
+                    await(config::instance().animewait * 2);
                 }
-                fishanime(1) = cnt;
-                ++scrturn;
-                update_screen();
-                addefmap(fishx, fishy, 5, 2);
-                redraw();
-                await(config::instance().animewait * 2);
             }
             if (the_fish_db[fish]->difficulty >= rnd(sdata(185, 0) + 1))
             {
@@ -14669,17 +14678,20 @@ void spot_fishing()
         {
             fishanime = 4;
             snd(88);
-            for (int cnt = 0; cnt < 21; ++cnt)
+            if (config::instance().animewait != 0)
             {
-                fishanime(1) = cnt;
-                if (cnt == 1)
+                for (int cnt = 0; cnt < 21; ++cnt)
                 {
-                    addefmap(fishx, fishy, 1, 3);
+                    fishanime(1) = cnt;
+                    if (cnt == 1)
+                    {
+                        addefmap(fishx, fishy, 1, 3);
+                    }
+                    ++scrturn;
+                    update_screen();
+                    redraw();
+                    await(config::instance().animewait * 2);
                 }
-                ++scrturn;
-                update_screen();
-                redraw();
-                await(config::instance().animewait * 2);
             }
             snd(14 + rnd(2));
             fishanime = 0;
