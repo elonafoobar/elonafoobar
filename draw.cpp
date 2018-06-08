@@ -29,7 +29,7 @@ struct damage_popup_t
     damage_popup_t()
         : frame(-1)
         , text(std::string())
-        , character(-1)
+        , character(0)
         , color(snail::color(255, 255, 255, 255))
     {
     }
