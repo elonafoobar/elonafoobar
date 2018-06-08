@@ -61,7 +61,6 @@ namespace elona
 
 
 
-
 std::string operator+(const std::string& lhs, int rhs)
 {
     return lhs + std::to_string(rhs);
@@ -822,11 +821,7 @@ void stick(int& out, int allow_repeat_keys)
                                  int n, snail::key key, bool is_modifier) {
         if ((1 << n) & allow_repeat_keys)
         {
-            if (is_modifier)
-                return (1 << n)
-                    * snail::input::instance().is_pressed_exactly(key);
-            else
-                return (1 << n) * snail::input::instance().is_pressed(key);
+            return (1 << n) * snail::input::instance().is_pressed(key);
         }
         else
         {
@@ -854,18 +849,13 @@ void stick(int& out, int allow_repeat_keys)
     {
         if (out & 1 || out & 4)
         {
-            out |=
-                2 * snail::input::instance().is_pressed_exactly(snail::key::up);
-            out |= 8
-                * snail::input::instance().is_pressed_exactly(snail::key::down);
+            out |= 2 * snail::input::instance().is_pressed(snail::key::up);
+            out |= 8 * snail::input::instance().is_pressed(snail::key::down);
         }
         if (out & 2 || out & 8)
         {
-            out |= 1
-                * snail::input::instance().is_pressed_exactly(snail::key::left);
-            out |= 4
-                * snail::input::instance().is_pressed_exactly(
-                      snail::key::right);
+            out |= 1 * snail::input::instance().is_pressed(snail::key::left);
+            out |= 4 * snail::input::instance().is_pressed(snail::key::right);
         }
     }
 }
