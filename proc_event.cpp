@@ -8,6 +8,7 @@
 #include "dmgheal.hpp"
 #include "elona.hpp"
 #include "event.hpp"
+#include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "map_cell.hpp"

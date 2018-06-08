@@ -36,5 +36,9 @@ void input_text_dialog(
     bool as_filename = false,
     bool limit_length = true);
 
+void key_check(int = 0);
+void keyrelease();
+void press(bool = false);
+
 
 } // namespace elona

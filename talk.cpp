@@ -10,6 +10,7 @@
 #include "draw.hpp"
 #include "event.hpp"
 #include "i18n.hpp"
+#include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "mef.hpp"

@@ -2,6 +2,7 @@
 #include "config.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
+#include "input.hpp"
 #include "macro.hpp"
 #include "menu.hpp"
 #include "network.hpp"

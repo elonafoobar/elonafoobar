@@ -5,6 +5,7 @@
 #include "character.hpp"
 #include "config.hpp"
 #include "draw.hpp"
+#include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "macro.hpp"
