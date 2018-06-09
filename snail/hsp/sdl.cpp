@@ -909,7 +909,6 @@ void title(const std::string& title_str,
     application::instance().set_fullscreen_mode(fullscreen_mode);
 
     detail::setup_tmp_buffers();
-    input::instance().set_key_repeat(10, 3);
     application::instance().register_finalizer(
         [&]() { font_detail::font_cache.clear(); });
     buffer(0, application::instance().width(), application::instance().height());
