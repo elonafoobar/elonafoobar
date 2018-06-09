@@ -23,6 +23,166 @@
 using namespace elona;
 
 
+namespace
+{
+
+
+
+bool can_place_character_at(const auto& position_t position, bool allow_stairs)
+{
+    // Out of range
+    if (position.x < 0 || mdata(0) <= position.x || position.y < 0
+        || mdata(1) <= position.y)
+        return false;
+
+    // Wall
+    if (chipm(7, map(position.x, position.y, 0)) & 4)
+        return false;
+
+    // There is someone.
+    if (map(position.x, position.y, 1) != 0)
+        return false;
+
+    if (map(position.x, position.y, 6) != 0)
+    {
+        // There is an object which prevents from walking through.
+        if (chipm(7, map(position.x, position.y, 6) % 1000) & 4)
+            return false;
+
+        cell_featread(position.x, position.y);
+        // Upstairs/downstairs.
+        if (feat(1) == 11 || feat(1) == 10)
+        {
+            if (!allow_stairs)
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+
+
+bool chara_place_internal(
+    character& cc,
+    optional<position_t> position,
+    bool enemy_respawn)
+{
+    int x;
+    int y;
+
+    for (int i = 0;; ++i)
+    {
+        if (i == 99)
+        {
+            if (cc.index >= 57)
+            {
+                // Give up.
+                return false;
+            }
+        }
+        if (i > 99)
+        {
+            if (mdata(0) == 0)
+            {
+                return false;
+            }
+            y = (i - 100) / mdata(0);
+            x = (i - 100) % mdata(0);
+            if (y >= mdata(1))
+            {
+                if (cc.index != 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    x = rnd(mdata(0));
+                    y = rnd(mdata(1));
+                    if (map(x, y, 1) != 0)
+                    {
+                        map(x, y, 1) = 0;
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (position)
+            {
+                x = position->x + rnd(i + 1) - rnd(i + 1);
+                y = position->y + rnd(i + 1) - rnd(i + 1);
+            }
+            else
+            {
+                x = rnd(mdata(0) - 4) + 2;
+                y = rnd(mdata(1) - 4) + 2;
+            }
+            if (enemy_respawn && i < 20)
+            {
+                const auto threshold = cdata[0].vision_distance / 2;
+                if (std::abs(cdata[0].position.x - x) <= threshold
+                    && std::abs(cdata[0].position.y - x) <= threshold)
+                {
+                    // Too close
+                    continue;
+                }
+            }
+        }
+
+        if (can_place_character_at(position, cc.index == 0 || position))
+        {
+            break;
+        }
+    }
+
+    // Do place character.
+    cc.initial_position = cc.position = {x, y};
+    map(x, y, 1) = cc.index + 1;
+
+    return true; // placed successfully.
+}
+
+
+
+void failed_to_place_character(character& cc)
+{
+    if (cc.index < 16)
+    {
+        cc.state = 8;
+        txt(lang(
+            name(cc.index) + u8"とはぐれた。"s,
+            name(cc.index) + u8" loses "s + his(cc.index) + u8" way."s));
+    }
+    else
+    {
+        txt(lang(
+            name(cc.index) + u8"は何かに潰されて息絶えた。"s,
+            name(cc.index) + u8" is killed."s));
+        cc.state = 0;
+        // Exclude town residents because they occupy character slots even
+        // if they are dead.
+        modify_crowd_density(cc.index, -1);
+    }
+    if (cc.character_role != 0)
+    {
+        cc.state = 2;
+    }
+    if (cc.character_role == 13)
+    {
+        cc.state = 4;
+        cc.time_to_revive = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
+            + gdata_year * 24 * 30 * 12 + 24 + rnd(12);
+    }
+}
+
+
+
+} // namespace
+
+
 
 namespace elona
 {
@@ -823,178 +983,31 @@ int chara_get_free_slot_ally()
 
 void chara_place()
 {
-    int placefail = 0;
     if (rc == -1)
-    {
         return;
-    }
+
     if (rc == 56)
     {
         cdata[rc].state = 0;
         return;
     }
-    placefail = 0;
-    if (gdata_mount == rc)
+
+    if (gdata_mount != 0 && gdata_mount == rc)
     {
-        if (rc != 0)
-        {
-            cdata[rc].position.x = cdata[0].position.x;
-            cdata[rc].position.y = cdata[0].position.y;
-            return;
-        }
+        cdata[rc].position = cdata[0].position;
+        return;
     }
-    for (int cnt = 0;; ++cnt)
+
+    const auto success = chara_place_internal(
+        cdata[rc],
+        cxinit >= 0 ? optional<position_t>({cxinit, cyinit}) : none,
+        cxinit == -2);
+    if (!success)
     {
-        if (cnt == 99)
-        {
-            if (rc >= 57)
-            {
-                placefail = 1;
-                break;
-            }
-        }
-        if (cnt > 99)
-        {
-            if (mdata(0) == 0)
-            {
-                placefail = 1;
-                break;
-            }
-            y = (cnt - 100) / mdata(0);
-            x = (cnt - 100) % mdata(0);
-            if (y >= mdata(1))
-            {
-                if (rc != 0)
-                {
-                    placefail = 1;
-                    break;
-                }
-                else
-                {
-                    x = rnd(mdata(0));
-                    y = rnd(mdata(1));
-                    if (map(x, y, 1) != 0)
-                    {
-                        map(x, y, 1) = 0;
-                    }
-                }
-            }
-        }
-        else
-        {
-            x = rnd(mdata(0) - 4) + 2;
-            y = rnd(mdata(1) - 4) + 2;
-            if (cxinit >= 0)
-            {
-                if (cnt == 0)
-                {
-                    x = cxinit;
-                    y = cyinit;
-                }
-                else
-                {
-                    x = cxinit + rnd((cnt + 1)) - rnd((cnt + 1));
-                    y = cyinit + rnd((cnt + 1)) - rnd((cnt + 1));
-                }
-            }
-            if (cnt < 20)
-            {
-                if (cxinit == -2)
-                {
-                    p = cdata[0].vision_distance / 2;
-                    if (x >= cdata[0].position.x - p
-                        && x <= cdata[0].position.x + p)
-                    {
-                        if (y >= cdata[0].position.y - p
-                            && y <= cdata[0].position.y + p)
-                        {
-                            continue;
-                        }
-                    }
-                }
-            }
-        }
-        if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
-        {
-            continue;
-        }
-        if (chipm(7, map(x, y, 0)) & 4)
-        {
-            continue;
-        }
-        if (map(x, y, 1) != 0)
-        {
-            continue;
-        }
-        if (map(x, y, 6) != 0)
-        {
-            if (chipm(7, map(x, y, 6) % 1000) & 4)
-            {
-                continue;
-            }
-            cell_featread(x, y);
-            if (feat(1) == 11)
-            {
-                if (rc != 0)
-                {
-                    if (cxinit < 0)
-                    {
-                        continue;
-                    }
-                }
-            }
-            if (feat(1) == 10)
-            {
-                if (rc != 0)
-                {
-                    if (cxinit < 0)
-                    {
-                        continue;
-                    }
-                }
-            }
-        }
-        cdata[rc].initial_position.x = x;
-        cdata[rc].initial_position.y = y;
-        map(x, y, 1) = rc + 1;
-        cdata[rc].position.x = x;
-        cdata[rc].position.y = y;
-        p = 1;
-        break;
+        failed_to_place_character(cdata[rc]);
     }
-    if (placefail == 1)
-    {
-        if (rc < 16)
-        {
-            cdata[rc].state = 8;
-            txt(lang(
-                name(rc) + u8"とはぐれた。"s,
-                name(rc) + u8" loses "s + his(rc) + u8" way."s));
-        }
-        else
-        {
-            txt(lang(
-                name(rc) + u8"は何かに潰されて息絶えた。"s,
-                name(rc) + u8" is killed."s));
-            cdata[rc].state = 0;
-            // Exclude town residents because they occupy character slots even
-            // if they are dead.
-            modify_crowd_density(rc, -1);
-        }
-        if (cdata[rc].character_role != 0)
-        {
-            cdata[rc].state = 2;
-        }
-        if (cdata[rc].character_role == 13)
-        {
-            cdata[rc].state = 4;
-            cdata[rc].time_to_revive = gdata_hour + gdata_day * 24
-                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24
-                + rnd(12);
-        }
-    }
-    return;
 }
+
 
 
 int chara_create_internal()
