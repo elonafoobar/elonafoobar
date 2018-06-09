@@ -110,12 +110,56 @@ struct TexBuffer
 int current_buffer;
 std::vector<TexBuffer> tex_buffers;
 ::SDL_Texture* tmp_buffer;
+::SDL_Texture* tmp_buffer_slow;
 
 TexBuffer& current_tex_buffer()
 {
     return tex_buffers[current_buffer];
 }
 
+void setup_tmp_buffers()
+{
+  // Default buffer for high-frequency texture copies.
+  detail::tmp_buffer = snail::detail::enforce_sdl(::SDL_CreateTexture(
+      application::instance().get_renderer().ptr(),
+      SDL_PIXELFORMAT_ARGB8888,
+      SDL_TEXTUREACCESS_TARGET,
+      1024,
+      1024));
+
+  // Slow buffer for texture copies larger than 1024 pixels.
+  // The only real places where this gets used seem to be when
+  // rendering the message box and when rendering fullscreen
+  // backgrounds.
+  detail::tmp_buffer_slow = snail::detail::enforce_sdl(::SDL_CreateTexture(
+      application::instance().get_renderer().ptr(),
+      SDL_PIXELFORMAT_ARGB8888,
+      SDL_TEXTUREACCESS_TARGET,
+      // The assumption here is that it's pointless to copy a texture
+      // larger than the size of the screen, because the player wouldn't
+      // see the rest of the texture. That should save some cycles on less
+      // powerful GPUs.
+      std::max(1024, application::instance().width()),
+      std::max(1024, application::instance().height())));
+
+  application::instance().register_finalizer(
+      []() {
+        ::SDL_DestroyTexture(detail::tmp_buffer);
+        ::SDL_DestroyTexture(detail::tmp_buffer_slow);
+      });
+}
+
+::SDL_Texture* get_tmp_buffer(int width, int height)
+{
+    if (width > 1024 || height > 1024)
+    {
+        return tmp_buffer_slow;
+    }
+    else
+    {
+        return tmp_buffer;
+    }
+}
 
 
 void set_blend_mode()
@@ -479,11 +523,12 @@ void gcopy(int window_id, int src_x, int src_y, int src_width, int src_height)
     if (window_id == detail::current_buffer)
     {
         src_width =
-            src_width == 0 ? detail::current_tex_buffer().width : src_width,
+            src_width == 0 ? detail::current_tex_buffer().width : src_width;
         src_height =
-            src_height == 0 ? detail::current_tex_buffer().height : src_height,
+            src_height == 0 ? detail::current_tex_buffer().height : src_height;
+        auto tmp_buffer = detail::get_tmp_buffer(src_width, src_height);
         application::instance().get_renderer().set_render_target(
-            detail::tmp_buffer);
+            tmp_buffer);
         if (window_id >= 10)
         {
             const auto save =
@@ -505,7 +550,7 @@ void gcopy(int window_id, int src_x, int src_y, int src_width, int src_height)
             0);
         gsel(window_id);
         application::instance().get_renderer().render_image(
-            detail::tmp_buffer,
+            tmp_buffer,
             0,
             0,
             src_width,
@@ -685,8 +730,9 @@ void grotate(
 
     if (window_id == detail::current_buffer)
     {
+        auto tmp_buffer = detail::get_tmp_buffer(dst_width, dst_height);
         application::instance().get_renderer().set_render_target(
-            detail::tmp_buffer);
+            tmp_buffer);
         if (window_id < 10)
         {
             application::instance().get_renderer().set_blend_mode(
@@ -722,7 +768,7 @@ void grotate(
 
         gsel(window_id);
         application::instance().get_renderer().render_image(
-            detail::tmp_buffer,
+            tmp_buffer,
             0,
             0,
             dst_width,
@@ -780,10 +826,12 @@ void gzoom(
             detail::tex_buffers[window_id].texture, 255));
     }
 
+    auto tmp_buffer = detail::get_tmp_buffer(dst_width, dst_height);
+
     if (window_id == detail::current_buffer)
     {
         application::instance().get_renderer().set_render_target(
-            detail::tmp_buffer);
+            tmp_buffer);
         if (window_id < 10)
         {
             application::instance().get_renderer().set_blend_mode(
@@ -814,7 +862,7 @@ void gzoom(
             dst_height);
         gsel(window_id);
         application::instance().get_renderer().render_image(
-            detail::tmp_buffer,
+            tmp_buffer,
             0,
             0,
             dst_width,
@@ -854,20 +902,13 @@ void title(const std::string& title_str,
 {
     application::instance().initialize(title_str);
 
-    application::instance().set_fullscreen_mode(fullscreen_mode);
     if (display_mode != "")
     {
         application::instance().set_display_mode(display_mode);
     }
+    application::instance().set_fullscreen_mode(fullscreen_mode);
 
-    detail::tmp_buffer = snail::detail::enforce_sdl(::SDL_CreateTexture(
-        application::instance().get_renderer().ptr(),
-        SDL_PIXELFORMAT_ARGB8888,
-        SDL_TEXTUREACCESS_TARGET,
-        4096,
-        4096));
-    application::instance().register_finalizer(
-        []() { ::SDL_DestroyTexture(detail::tmp_buffer); });
+    detail::setup_tmp_buffers();
     input::instance().set_key_repeat(10, 3);
     application::instance().register_finalizer(
         [&]() { font_detail::font_cache.clear(); });
