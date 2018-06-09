@@ -357,6 +357,11 @@ void input::_update()
 
 void input::_handle_event(const ::SDL_KeyboardEvent& event)
 {
+    if (_is_ime_active)
+    {
+        _is_ime_active = false;
+    }
+
     const auto k = sdlkey2key(event.keysym.sym);
     if (k == key::none)
         return;
