@@ -61,7 +61,6 @@ namespace elona
 
 
 
-
 std::string operator+(const std::string& lhs, int rhs)
 {
     return lhs + std::to_string(rhs);
@@ -816,17 +815,13 @@ void screen(int window_id, int width, int height, int mode, int x, int y)
 
 
 
-void stick(int& out, int allow_repeat_keys)
+int stick(int allow_repeat_keys)
 {
     auto check_key_pressed = [allow_repeat_keys](
                                  int n, snail::key key, bool is_modifier) {
         if ((1 << n) & allow_repeat_keys)
         {
-            if (is_modifier)
-                return (1 << n)
-                    * snail::input::instance().is_pressed_exactly(key);
-            else
-                return (1 << n) * snail::input::instance().is_pressed(key);
+            return (1 << n) * snail::input::instance().is_pressed(key);
         }
         else
         {
@@ -835,39 +830,36 @@ void stick(int& out, int allow_repeat_keys)
         }
     };
 
-    out = 0;
+    int ret{};
 
-    out += check_key_pressed(0, snail::key::left, false);
-    out += check_key_pressed(1, snail::key::up, false);
-    out += check_key_pressed(2, snail::key::right, false);
-    out += check_key_pressed(3, snail::key::down, false);
-    out += check_key_pressed(4, snail::key::space, false);
-    out += check_key_pressed(5, snail::key::enter, false);
-    out += check_key_pressed(5, snail::key::keypad_enter, false);
-    out += check_key_pressed(6, snail::key::ctrl, true);
-    out += check_key_pressed(7, snail::key::escape, false);
-    // out += check_key_pressed(8,  /* Mouse left */,  false);
-    // out += check_key_pressed(9,  /* Mouse right */, false);
-    out += check_key_pressed(10, snail::key::tab, false);
+    ret += check_key_pressed(0, snail::key::left, false);
+    ret += check_key_pressed(1, snail::key::up, false);
+    ret += check_key_pressed(2, snail::key::right, false);
+    ret += check_key_pressed(3, snail::key::down, false);
+    ret += check_key_pressed(4, snail::key::space, false);
+    ret += check_key_pressed(5, snail::key::enter, false);
+    ret += check_key_pressed(5, snail::key::keypad_enter, false);
+    ret += check_key_pressed(6, snail::key::ctrl, true);
+    ret += check_key_pressed(7, snail::key::escape, false);
+    // ret += check_key_pressed(8,  /* Mouse left */,  false);
+    // ret += check_key_pressed(9,  /* Mouse right */, false);
+    ret += check_key_pressed(10, snail::key::tab, false);
 
     if (allow_repeat_keys == 15)
     {
-        if (out & 1 || out & 4)
+        if (ret & 1 || ret & 4)
         {
-            out |=
-                2 * snail::input::instance().is_pressed_exactly(snail::key::up);
-            out |= 8
-                * snail::input::instance().is_pressed_exactly(snail::key::down);
+            ret |= 2 * snail::input::instance().is_pressed(snail::key::up);
+            ret |= 8 * snail::input::instance().is_pressed(snail::key::down);
         }
-        if (out & 2 || out & 8)
+        if (ret & 2 || ret & 8)
         {
-            out |= 1
-                * snail::input::instance().is_pressed_exactly(snail::key::left);
-            out |= 4
-                * snail::input::instance().is_pressed_exactly(
-                      snail::key::right);
+            ret |= 1 * snail::input::instance().is_pressed(snail::key::left);
+            ret |= 4 * snail::input::instance().is_pressed(snail::key::right);
         }
     }
+
+    return ret;
 }
 
 

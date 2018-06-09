@@ -1832,7 +1832,7 @@ label_2747:
             gcopy(3, 496, 528, sx, 5);
         }
         redraw();
-        press();
+        wait_key_pressed();
         update_entire_screen();
         snd(20);
         goto label_2747;

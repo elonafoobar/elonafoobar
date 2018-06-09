@@ -1275,7 +1275,7 @@ label_2181_internal:
         pos(wx, wy);
         gcopy(4, 400, 0, ww, wh);
         redraw();
-        press();
+        wait_key_pressed();
         snd(71);
         break;
     case 1135:

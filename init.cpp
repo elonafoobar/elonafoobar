@@ -136,12 +136,7 @@ void initialize_directories()
     }
 }
 
-void initialize_keywait()
-{
-    snail::input::instance().set_key_repeat(
-        elona::config::instance().initialkeywait,
-        elona::config::instance().keywait);
-}
+
 
 void load_character_sprite()
 {
@@ -402,8 +397,6 @@ void initialize_config(const fs::path& config_file)
 
 void initialize_elona()
 {
-    initialize_keywait();
-
     i18n::load(jp ? u8"jp" : u8"en");
 
     initialize_ui_constants();

@@ -9977,11 +9977,11 @@ label_1948_internal:
         if (key == key_enter)
         {
             label_1955();
-            keyrelease();
+            wait_key_released();
             goto label_1948_internal;
         }
         int a{};
-        stick(a, 768);
+        a = stick(768);
         if (a == 256)
         {
             key = key_enter;
@@ -9992,12 +9992,12 @@ label_1948_internal:
                 || chipm(0, map(tlocx, tlocy, 0)) == 1)
             {
                 snd(27);
-                keyrelease();
+                wait_key_released();
                 goto label_1948_internal;
             }
             tile = map(tlocx, tlocy, 0);
             snd(5);
-            keyrelease();
+            wait_key_released();
         }
         tx = clamp((mousex - inf_screenx), 0, windoww) / 48;
         ty = clamp((mousey - inf_screeny), 0, (windowh - inf_verh)) / 48;
@@ -10209,7 +10209,7 @@ label_1956_internal:
     redraw();
     await(config::instance().wait1);
     int a{};
-    stick(a);
+    a = stick();
     if (a == 256)
     {
         p = mousex / 24 + mousey / 24 * ww;
@@ -12361,7 +12361,7 @@ turn_result_t do_debug_console()
     {
         await(config::instance().wait1);
         int a{};
-        stick(a);
+        a = stick();
         if (a == 128)
         {
             return do_exit_debug_console();
@@ -19748,7 +19748,7 @@ void do_play_scene()
     scidx += s(0).size();
 label_2681:
     int a{};
-    stick(a, 128);
+    a = stick(128);
     if (a == 128)
     {
         scene_cut = 1;
@@ -19970,7 +19970,7 @@ label_2684_internal:
     for (int cnt = 1; cnt < 16; ++cnt)
     {
         await(30);
-        stick(a, 128);
+        a = stick(128);
         if (a == 128)
         {
             scene_cut = 1;
@@ -20758,7 +20758,7 @@ turn_result_t pc_died()
             u8"You have been buried. Bye...(Hit any key to exit)"s);
         draw_caption();
         redraw();
-        press();
+        wait_key_pressed();
         return turn_result_t::finish_elona;
     }
     s = u8"dead"s
