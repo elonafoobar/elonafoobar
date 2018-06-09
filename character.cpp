@@ -28,7 +28,7 @@ namespace
 
 
 
-bool can_place_character_at(const auto& position_t position, bool allow_stairs)
+bool can_place_character_at(const position_t& position, bool allow_stairs)
 {
     // Out of range
     if (position.x < 0 || mdata(0) <= position.x || position.y < 0
@@ -99,12 +99,36 @@ bool chara_place_internal(
                 }
                 else
                 {
+                    // Make the cell placable.
                     x = rnd(mdata(0));
                     y = rnd(mdata(1));
+                    // FIXME: I refered to oor, but I think it is not perfect.
+                    // Break wall.
+                    if (chipm(7, map(x, y, 0)) & 4)
+                    {
+                        map(x, y, 0) = tile_tunnel;
+                    }
+                    // Delete someone there.
+                    // TODO: Work around. Need delete him/her *completely*.
                     if (map(x, y, 1) != 0)
                     {
                         map(x, y, 1) = 0;
                     }
+                    if (map(x, y, 6) != 0)
+                    {
+                        cell_featread(x, y);
+                        if (feat(1) == 21)
+                        {
+                            // Open closed doors.
+                            cell_featset(x, y, tile_dooropen, 20, 0, -1);
+                        }
+                        else if (feat(1) == 22)
+                        {
+                            // Reveal hidden path.
+                            map(x, y, 6) = 0;
+                        }
+                    }
+                    assert(can_place_character_at({x, y}, true));
                 }
             }
         }
@@ -132,7 +156,7 @@ bool chara_place_internal(
             }
         }
 
-        if (can_place_character_at(position, cc.index == 0 || position))
+        if (can_place_character_at({x, y}, cc.index == 0 || position))
         {
             break;
         }
