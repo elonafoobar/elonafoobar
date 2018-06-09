@@ -4,6 +4,7 @@
 #include "config.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
+#include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "ui.hpp"

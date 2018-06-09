@@ -397,4 +397,542 @@ void input_text_dialog(
 }
 
 
+void key_check(int prm_299)
+{
+    static int prevjoy_at_m19{};
+
+    if (msgalert == 1)
+    {
+        if (config::instance().alert > 1)
+        {
+            for (int i = 0; i < config::instance().alert; ++i)
+            {
+                await(config::instance().wait1);
+            }
+            keylog = "";
+        }
+        msgalert = 0;
+    }
+
+    key = "";
+    if (keylog != ""s)
+    {
+        keylog = strmid(keylog, 0, 1);
+        if (keylog(0)[0] == '\n')
+        {
+            keylog = key_enter;
+        }
+        key = keylog;
+        keylog = "";
+    }
+
+    // Holding down a numpad key sometimes sets "key" to a
+    // non-numpad number key, and these get passed to the player
+    // as a mispress, so counteract that here.
+    if (key.size() == 1 && isdigit(static_cast<unsigned char>(key(0)[0])))
+    {
+        key = "";
+    }
+
+    if (getkey(snail::key::keypad_0))
+        key = "0 ";
+    else if (getkey(snail::key::keypad_1))
+        key = "1 ";
+    else if (getkey(snail::key::keypad_2))
+        key = "2 ";
+    else if (getkey(snail::key::keypad_3))
+        key = "3 ";
+    else if (getkey(snail::key::keypad_4))
+        key = "4 ";
+    else if (getkey(snail::key::keypad_5))
+        key = "5 ";
+    else if (getkey(snail::key::keypad_6))
+        key = "6 ";
+    else if (getkey(snail::key::keypad_7))
+        key = "7 ";
+    else if (getkey(snail::key::keypad_8))
+        key = "8 ";
+    else if (getkey(snail::key::keypad_9))
+        key = "9 ";
+
+    mousel = 0;
+    key_tab = 0;
+    key_escape = 0;
+    int p_at_m19 = stick(15);
+    if (p_at_m19 != 0)
+    {
+        if (p_at_m19 == 128)
+        {
+            if (keywait == 0)
+            {
+                key = key_cancel;
+                key_escape = 1;
+            }
+        }
+        if (p_at_m19 == 1024)
+        {
+            key_tab = 1;
+            key = key_next;
+        }
+    }
+    else
+    {
+        if (getkey(snail::key::home))
+        {
+            p_at_m19 = 3;
+        }
+        else if (getkey(snail::key::pageup))
+        {
+            p_at_m19 = 6;
+        }
+        else if (getkey(snail::key::end))
+        {
+            p_at_m19 = 9;
+        }
+        else if (getkey(snail::key::pagedown))
+        {
+            p_at_m19 = 12;
+        }
+
+        // Handle the case of the current key matching the movement
+        // keybindings set in the user's config.
+        else if (key == key_west)
+        {
+            p_at_m19 = 1;
+        }
+        else if (key == key_north)
+        {
+            p_at_m19 = 2;
+        }
+        else if (key == key_east)
+        {
+            p_at_m19 = 4;
+        }
+        else if (key == key_south)
+        {
+            p_at_m19 = 8;
+        }
+        else if (key == key_northwest)
+        {
+            p_at_m19 = 3;
+        }
+        else if (key == key_northeast)
+        {
+            p_at_m19 = 6;
+        }
+        else if (key == key_southwest)
+        {
+            p_at_m19 = 9;
+        }
+        else if (key == key_southeast)
+        {
+            p_at_m19 = 12;
+        }
+        else if (key == key_southeast)
+        {
+            p_at_m19 = 12;
+        }
+    }
+    if (getkey(snail::key::ctrl))
+    {
+        key_ctrl = 1;
+    }
+    else
+    {
+        key_ctrl = 0;
+    }
+    if (getkey(snail::key::alt))
+    {
+        key_alt = 1;
+    }
+    else
+    {
+        key_alt = 0;
+    }
+    if (getkey(snail::key::shift))
+    {
+        keybd_wait = 100000;
+        key_shift = 1;
+        if (keywait == 0)
+        {
+            key = key_cancel;
+            keywait = 1;
+        }
+    }
+    else
+    {
+        keywait = 0;
+        key_shift = 0;
+    }
+    if (config::instance().joypad)
+    {
+        int j_at_m19 = 0;
+        DIGETJOYSTATE(j_at_m19, 0);
+        if (HMMBITCHECK(j_at_m19, 0))
+        {
+            p_at_m19 += 2;
+        }
+        if (HMMBITCHECK(j_at_m19, 1))
+        {
+            p_at_m19 += 8;
+        }
+        if (HMMBITCHECK(j_at_m19, 2))
+        {
+            p_at_m19 += 1;
+        }
+        if (HMMBITCHECK(j_at_m19, 3))
+        {
+            p_at_m19 += 4;
+        }
+        int a_at_m19 = 0;
+        for (int cnt = 0; cnt < 12; ++cnt)
+        {
+            if (HMMBITCHECK(j_at_m19, 4 + cnt))
+            {
+                a_at_m19 = 1;
+                if (jkey(cnt) == key_alter)
+                {
+                    key_alt = 1;
+                }
+                if (jkey(cnt) == key_cancel)
+                {
+                    key_shift = 1;
+                    if (p_at_m19 != 0)
+                    {
+                        keybd_wait = 100000;
+                    }
+                }
+                if (prevjoy_at_m19 != cnt)
+                {
+                    key = jkey(cnt);
+                    prevjoy_at_m19 = cnt;
+                    if (key == key_esc)
+                    {
+                        key = key_cancel;
+                        key_escape = 1;
+                    }
+                    if (prm_299 == 0)
+                    {
+                        int b_at_m19 = 0;
+                        if (key == key_fire)
+                        {
+                            key = key_northeast;
+                            b_at_m19 = 1;
+                        }
+                        if (key == key_target)
+                        {
+                            key = key_northwest;
+                            b_at_m19 = 1;
+                        }
+                        if (key == key_get)
+                        {
+                            key = key_northeast;
+                            b_at_m19 = 1;
+                        }
+                        if (key == key_alter)
+                        {
+                            key = key_northwest;
+                            b_at_m19 = 1;
+                        }
+                        if (b_at_m19 == 0 && key != key_enter
+                            && key != key_cancel && key != key_esc)
+                        {
+                            key = key_identify;
+                        }
+                    }
+                }
+            }
+        }
+        if (a_at_m19 == 0)
+        {
+            prevjoy_at_m19 = -1;
+        }
+        else if (prm_299 == 2)
+        {
+            return;
+        }
+    }
+    if (quickkeywait)
+    {
+        if (p_at_m19 != 0)
+        {
+            return;
+        }
+        else
+        {
+            quickkeywait = 0;
+        }
+    }
+    if (keybd_wait >= 100000)
+    {
+        if (key_shift == 0)
+        {
+            keybd_wait = 1000;
+        }
+    }
+    int f_at_m19 = 0;
+    if (p_at_m19 == 1)
+    {
+        if (key_alt == 0)
+        {
+            key = key_west;
+            f_at_m19 = 1;
+        }
+    }
+    if (p_at_m19 == 2)
+    {
+        if (key_alt == 0)
+        {
+            key = key_north;
+            f_at_m19 = 1;
+        }
+    }
+    if (p_at_m19 == 4)
+    {
+        if (key_alt == 0)
+        {
+            key = key_east;
+            f_at_m19 = 1;
+        }
+    }
+    if (p_at_m19 == 8)
+    {
+        if (key_alt == 0)
+        {
+            key = key_south;
+            f_at_m19 = 1;
+        }
+    }
+    if (p_at_m19 == 3)
+    {
+        key = key_northwest;
+        f_at_m19 = 1;
+    }
+    if (p_at_m19 == 6)
+    {
+        key = key_northeast;
+        f_at_m19 = 1;
+    }
+    if (p_at_m19 == 9)
+    {
+        key = key_southwest;
+        f_at_m19 = 1;
+    }
+    if (p_at_m19 == 12)
+    {
+        key = key_southeast;
+        f_at_m19 = 1;
+    }
+
+    if (getkey(snail::key::f1))
+    {
+        key = u8"F1";
+    }
+    else if (getkey(snail::key::f2))
+    {
+        key = u8"F2";
+    }
+    else if (getkey(snail::key::f3))
+    {
+        key = u8"F3";
+    }
+    else if (getkey(snail::key::f4))
+    {
+        key = u8"F4";
+    }
+    else if (getkey(snail::key::f5))
+    {
+        key = u8"F5";
+    }
+    else if (getkey(snail::key::f6))
+    {
+        key = u8"F6";
+    }
+    else if (getkey(snail::key::f7))
+    {
+        key = u8"F7";
+    }
+    else if (getkey(snail::key::f8))
+    {
+        key = u8"F8";
+    }
+    else if (getkey(snail::key::f9))
+    {
+        key = u8"F9";
+    }
+    else if (getkey(snail::key::f10))
+    {
+        key = u8"F10";
+    }
+    else if (getkey(snail::key::f11))
+    {
+        key = u8"F11";
+    }
+    else if (getkey(snail::key::f12))
+    {
+        key = u8"F12";
+    }
+
+    if (prm_299 == 2)
+    {
+        return;
+    }
+    if (f_at_m19)
+    {
+        if (prm_299 == 1)
+        {
+            if (keybd_attacking != 0)
+            {
+                if (keybd_wait % config::instance().attackwait != 0)
+                {
+                    key = ""s;
+                }
+            }
+            else if (config::instance().scroll == 0)
+            {
+                if (keybd_wait
+                    < config::instance().walkwait * config::instance().startrun)
+                {
+                    if (keybd_wait % config::instance().walkwait != 0)
+                    {
+                        key = "";
+                    }
+                }
+                else
+                {
+                    running = 1;
+                    if (keybd_wait < 100000)
+                    {
+                        if (keybd_wait % config::instance().runwait != 0)
+                        {
+                            key = ""s;
+                        }
+                    }
+                }
+            }
+            else if (p_at_m19 == 0)
+            {
+                if (keybd_wait < 10)
+                {
+                    if (keybd_wait != 0)
+                    {
+                        key = ""s;
+                    }
+                }
+            }
+            else if (keybd_wait > config::instance().startrun)
+            {
+                if (config::instance().runscroll == 0)
+                {
+                    if (keybd_wait % config::instance().runwait != 0)
+                    {
+                        key = "";
+                    }
+                }
+                running = 1;
+            }
+        }
+        else if (keybd_wait < 14)
+        {
+            if (keybd_wait != 0 && keybd_wait != 7)
+            {
+                key = "";
+            }
+        }
+        else if (keybd_wait < 1000)
+        {
+            if (keybd_wait % 2 != 1)
+            {
+                key = ""s;
+            }
+        }
+        ++keybd_wait;
+    }
+    else
+    {
+        keybd_wait = 0;
+        keybd_attacking = 0;
+        running = 0;
+    }
+
+    bool shortcut{};
+    for (int i = 0; i < 10; ++i)
+    {
+        if (getkey(snail::key(int(snail::key::key_0) + i)))
+        {
+            key = u8"sc";
+            sc = i;
+            if (key_shift || key_ctrl)
+            {
+                sc += 10;
+            }
+            keylog = "";
+            shortcut = true;
+        }
+    }
+
+    if (!shortcut && keyhalt != 0)
+    {
+        if (key != ""s || keybd_wait != 0)
+        {
+            key = "";
+        }
+        else
+        {
+            keyhalt = 0;
+        }
+    }
+}
+
+
+
+void wait_key_released()
+{
+    while (1)
+    {
+        await(config::instance().wait1);
+        int result{};
+        result = stick(768);
+        if (result == 0)
+        {
+            key_check();
+            if (key(0).empty())
+            {
+                break;
+            }
+        }
+    }
+}
+
+
+
+void wait_key_pressed(bool only_enter_or_cancel)
+{
+    if (config::instance().is_test)
+        return;
+
+    while (1)
+    {
+        await(config::instance().wait1);
+        key_check();
+        if (only_enter_or_cancel)
+        {
+            if (key == key_enter || key == key_cancel)
+            {
+                break;
+            }
+        }
+        else
+        {
+            if (!key(0).empty())
+            {
+                break;
+            }
+        }
+    }
+    keyhalt = 1;
+}
+
+
+
 } // namespace elona

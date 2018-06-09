@@ -2762,7 +2762,7 @@ void label_1836()
         tcgdraw();
         cursor_at_tcg = 1;
         await(15);
-        stick(a_at_tcg);
+        a_at_tcg = stick();
         key_check();
         if (key == key_east)
         {
@@ -3296,7 +3296,7 @@ void label_18462()
         if (init)
         {
             spellused_at_tcg = 0;
-            stick(a_at_tcg);
+            a_at_tcg = stick();
             if (a_at_tcg)
             {
                 cpdata_at_tcg(4, 0) = 0;

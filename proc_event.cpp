@@ -8,6 +8,7 @@
 #include "dmgheal.hpp"
 #include "elona.hpp"
 #include "event.hpp"
+#include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "map_cell.hpp"
@@ -403,7 +404,7 @@ void proc_event()
         break;
     case 7:
         label_1444();
-        press();
+        wait_key_pressed();
         screenupdate = -1;
         update_entire_screen();
         break;

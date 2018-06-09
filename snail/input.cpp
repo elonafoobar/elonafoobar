@@ -275,45 +275,7 @@ input& input::instance() noexcept
 
 
 
-/*
-_initial_key_wait = 10, _key_wait = 3
-a a a a a a a a a a a a a a a a a a a a
-0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9
-*                   *     *     *     *
-*/
 bool input::is_pressed(key k) const
-{
-    if (!_keys[static_cast<size_t>(k)].is_pressed())
-        return false;
-
-    // Trying to repeat a modifier key will cause the modifier to be pressed
-    // repeatedly. For the case of shift this causes the cancel action to
-    // constantly fire. We want to treat modifiers as held instead of trying to
-    // repeat them.
-    if (is_modifier(k))
-        return true;
-
-    const auto repeat = _keys[static_cast<size_t>(k)].repeat();
-    if (repeat == 0)
-    {
-        return true;
-    }
-    else if (repeat == _initial_key_wait)
-    {
-        return true;
-    }
-    else if (
-        repeat > _initial_key_wait
-        && (repeat - _initial_key_wait) % _key_wait == 0)
-    {
-        return true;
-    }
-    return false;
-}
-
-
-
-bool input::is_pressed_exactly(key k) const
 {
     return _keys[static_cast<size_t>(k)].is_pressed();
 }
@@ -322,15 +284,7 @@ bool input::is_pressed_exactly(key k) const
 
 bool input::was_pressed_just_now(key k) const
 {
-    return is_pressed_exactly(k) && _keys[static_cast<size_t>(k)].repeat() == 0;
-}
-
-
-
-void input::set_key_repeat(int initial_key_wait, int key_wait) noexcept
-{
-    _initial_key_wait = std::max(initial_key_wait, 1);
-    _key_wait = std::max(key_wait, 1);
+    return is_pressed(k) && _keys[static_cast<size_t>(k)].repeat() == 0;
 }
 
 
@@ -357,6 +311,11 @@ void input::_update()
 
 void input::_handle_event(const ::SDL_KeyboardEvent& event)
 {
+    if (_is_ime_active)
+    {
+        _is_ime_active = false;
+    }
+
     const auto k = sdlkey2key(event.keysym.sym);
     if (k == key::none)
         return;
