@@ -1625,11 +1625,8 @@ label_19341_internal:
                 txt(lang(u8" *こねこね* "s, u8"*pug*"s),
                     lang(u8" *トントン* "s, u8"*clank*"s));
             }
-            for (int cnt = 0; cnt < 20; ++cnt)
-            {
-                redraw();
-                await(30);
-            }
+            redraw();
+            await(config::instance().animewait * 5);
             gdata_minute = 0;
             cc = 0;
             --cdata[cc].continuous_action_turn;

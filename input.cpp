@@ -286,7 +286,7 @@ void input_text_dialog(
             --cnt;
             continue;
         }
-        await(40);
+        await(config::instance().wait1);
         window2(x, y, dx, 36, 0, 2);
         pos(x + dx / 2 - 60, y - 32);
         gcopy(3, 128, 288, 128, 32);

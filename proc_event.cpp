@@ -794,7 +794,7 @@ void proc_event()
             pos(dx, dy - 48 - clamp(p(3) * 2, 0, 148));
             grotate(7, i / 3 % 2 * 192, 96, 0, 192, 96);
             redraw();
-            await(config::instance().animewait + 50);
+            await(config::instance().animewait * 3.5);
         }
         gmode(2);
         update_entire_screen();
@@ -924,7 +924,7 @@ void proc_event()
                 {
                     snd(45);
                 }
-                await(25);
+                await(config::instance().animewait);
             }
         }
         break;

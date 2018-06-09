@@ -891,7 +891,7 @@ void addefmap(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
 void anime_halt();
 void animeblood(int = 0, int = 0, int = 0);
 void animeload(int = 0, int = 0);
-void auto_turn(int = 0);
+void auto_turn(int delay);
 void atxinit();
 void begintempinv();
 void bmes(const std::string&, int = 0, int = 0, int = 0);
