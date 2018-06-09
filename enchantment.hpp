@@ -3,14 +3,14 @@
 namespace elona
 {
 
-int enchantment_add(
-    int = 0,
-    int = 0,
-    int = 0,
-    int = 0,
-    int = 0,
-    int = 0,
-    int = 0);
+bool enchantment_add(
+    int ci,
+    int type,
+    int power,
+    int flip_percentage = 0,
+    bool not_halve = false,
+    bool only_check = false,
+    bool force = false);
 int encfind(int = 0, int = 0);
 bool encfindspec(int = 0, int = 0);
 void enchantment_remove(int = 0, int = 0, int = 0);

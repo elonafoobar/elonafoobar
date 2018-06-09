@@ -86,7 +86,6 @@ void load_musiclist()
 void backup_config_files()
 {
     std::pair<const char*, const char*> files[] = {
-        {u8"./original/config.txt", u8"./config.txt"},
         {u8"./original/export.txt", u8"./user/export.txt"},
         {u8"./original/lastwords.txt", u8"./user/lastwords.txt"},
         {u8"./original/lastwords-e.txt", u8"./user/lastwords-e.txt"},
@@ -140,12 +139,7 @@ void initialize_directories()
     }
 }
 
-void initialize_keywait()
-{
-    snail::input::instance().set_key_repeat(
-        elona::config::instance().initialkeywait,
-        elona::config::instance().keywait);
-}
+
 
 void load_character_sprite()
 {
@@ -413,8 +407,6 @@ void initialize_config(const fs::path& config_file)
 
 void initialize_elona()
 {
-    initialize_keywait();
-
     i18n::load(jp ? u8"jp" : u8"en");
 
     initialize_ui_constants();

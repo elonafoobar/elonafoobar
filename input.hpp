@@ -33,7 +33,12 @@ void input_text_dialog(
     int y,
     int val2,
     bool is_cancelable = true,
-    bool as_filename = false);
+    bool as_filename = false,
+    bool limit_length = true);
+
+void key_check(int = 0);
+void wait_key_released();
+void wait_key_pressed(bool only_enter_or_cancel = false);
 
 
 } // namespace elona

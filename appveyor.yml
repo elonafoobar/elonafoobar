@@ -109,3 +109,4 @@ after_build:
 
 artifacts:
   - path: bin\ElonaFoobar-windows.zip
+

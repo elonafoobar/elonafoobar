@@ -4,8 +4,8 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "dmgheal.hpp"
 #include "debug.hpp"
+#include "dmgheal.hpp"
 #include "event.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
@@ -394,11 +394,18 @@ bool grant_special_wishing(const std::string& wish)
         flt();
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 5);
     }
-    else if (wish == u8"名声" || wish == u8"fame")
+    else if (gdata_wizard)
     {
-        txtef(5);
-        txt(u8"fame +1,000,000");
-        cdata[0].fame += 1'000'000;
+        if (wish == u8"名声" || wish == u8"fame")
+        {
+            txtef(5);
+            txt(u8"fame +1,000,000");
+            cdata[0].fame += 1'000'000;
+        }
+        else
+        {
+            return false; // No match
+        }
     }
     else
     {

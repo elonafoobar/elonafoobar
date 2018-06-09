@@ -336,7 +336,7 @@ void prompt_hiring()
         {
             snd(12);
             cdata[0].gold -= calchirecost(tc) * 20;
-            await(250);
+            await(config::instance().animewait * 10);
             cdata[tc].state = 1;
             lua::lua.on_chara_loaded(cdata[tc]);
             txtef(2);
@@ -371,7 +371,7 @@ void start_home_map_mode()
     tile = 0;
     while (1)
     {
-        await(10);
+        await(config::instance().wait1);
         int stat = target_position();
         if (stat == -1)
         {

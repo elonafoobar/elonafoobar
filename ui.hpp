@@ -33,6 +33,7 @@ void draw_caption();
 void update_scrolling_info();
 void update_slight();
 void label_1433();
+void render_stair_positions_in_minimap();
 void render_weather_effect_rain();
 void render_weather_effect_hard_rain();
 void render_weather_effect_snow();

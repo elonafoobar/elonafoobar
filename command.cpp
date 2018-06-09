@@ -1696,14 +1696,13 @@ turn_result_t do_use_command()
             for (int cnt = 0; cnt < 3; ++cnt)
             {
                 randomize(inv[ci].subname + inv[ci].param1 * 10 + cnt);
-                int stat = enchantment_add(
+                if (enchantment_add(
                     ci,
                     enchantment_generate(enchantment_gen_level(4)),
                     enchantment_gen_p(),
                     0,
                     0,
-                    1);
-                if (stat != 0)
+                    1))
                 {
                     if (rtval == 34)
                     {
@@ -1752,8 +1751,7 @@ turn_result_t do_use_command()
                     txt(lang(
                         u8"その力は次第に脅威になっている。"s,
                         u8"Its power is becoming a threat."s));
-                    int stat = enchantment_add(ci, 45, 50);
-                    if (stat == 0)
+                    if (enchantment_add(ci, 45, 50))
                     {
                         inv[ci].enchantments[14].id = 0;
                         txt(lang(
@@ -2215,7 +2213,7 @@ turn_result_t do_use_command()
                 if (adata(20, gdata_current_map) != -1)
                 {
                     txt(lang(
-                        u8"クエストを放棄してシェルターに非難する？"s,
+                        u8"クエストを放棄してシェルターに避難する？"s,
                         u8"Really give up the quest and evacuate to the shelter?"s));
                     ELONA_YES_NO_PROMPT();
                     rtval = show_prompt(promptx, prompty, 160);
@@ -3851,7 +3849,6 @@ turn_result_t do_exit_command()
             msg_halt();
             update_screen();
         }
-        await(300);
         return turn_result_t::finish_elona;
     }
     if (rtval == 2)

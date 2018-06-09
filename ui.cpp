@@ -3,6 +3,7 @@
 #include "audio.hpp"
 #include "character.hpp"
 #include "config.hpp"
+#include "debug.hpp"
 #include "draw.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
@@ -1005,7 +1006,7 @@ void load_continuous_action_animation()
 
 void render_autoturn_animation()
 {
-    if (racount == 0)
+    if (racount == 0 && config::instance().animewait != 0)
     {
         load_continuous_action_animation();
     }
@@ -1019,7 +1020,7 @@ void render_autoturn_animation()
     }
     if (cdata[0].continuous_action_id == 7)
     {
-        if (rowactre == 0)
+        if (rowactre == 0 && config::instance().animewait != 0)
         {
             render_fishing_animation();
         }
@@ -1028,6 +1029,7 @@ void render_autoturn_animation()
     sy = inf_ver - 30;
     int w = 148;
     int h = 25;
+
     window2(sx, sy, w, h, 0, 5);
     font(13 - en * 2, snail::font_t::style_t::bold);
     pos(sx + 43, sy + 6);
@@ -1035,62 +1037,66 @@ void render_autoturn_animation()
     pos(sx + 18, sy + 12);
     gmode(2, 24, 24);
     grotate(3, 72, 392, 0.0174532925199433 * (gdata_minute / 4 % 2 * 90));
+
     if (cdata[0].continuous_action_id == 9 || cdata[0].continuous_action_id == 5
         || cdata[0].continuous_action_id == 8
         || (cdata[0].continuous_action_id == 7 && rowactre != 0))
     {
-        window2(sx, sy - 104, 148, 101, 0, 5);
-        if (racount % 15 == 0)
+        if (config::instance().animewait != 0)
         {
-            for (int cnt = 0; cnt < 10; ++cnt)
+            window2(sx, sy - 104, 148, 101, 0, 5);
+            if (racount % 15 == 0)
             {
-                gmode(0);
-                pos(sx + 2, sy - 102);
-                if (cdata[0].continuous_action_id == 5)
+                for (int cnt = 0; cnt < 10; ++cnt)
                 {
-                    if (cnt == 2)
+                    gmode(0);
+                    pos(sx + 2, sy - 102);
+                    if (cdata[0].continuous_action_id == 5)
                     {
-                        snd(52);
-                    }
-                    gcopy(9, cnt / 2 % 5 * 144, 0, 144, 96);
-                    await(40);
-                }
-                if (cdata[0].continuous_action_id == 7)
-                {
-                    if (racount == 0)
-                    {
-                        if (cnt == 0)
+                        if (cnt == 2)
                         {
-                            snd(57);
+                            snd(52);
                         }
+                        gcopy(9, cnt / 2 % 5 * 144, 0, 144, 96);
+                        await(config::instance().animewait * 2);
                     }
-                    gcopy(9, cnt / 3 % 3 * 144, 0, 144, 96);
-                    await(50);
-                }
-                if (cdata[0].continuous_action_id == 8)
-                {
-                    if (cnt == 4)
+                    if (cdata[0].continuous_action_id == 7)
                     {
-                        snd(55);
+                        if (racount == 0)
+                        {
+                            if (cnt == 0)
+                            {
+                                snd(57);
+                            }
+                        }
+                        gcopy(9, cnt / 3 % 3 * 144, 0, 144, 96);
+                        await(config::instance().animewait * 2.5);
                     }
-                    gcopy(9, cnt / 2 % 3 * 144, 0, 144, 96);
-                    await(55);
-                }
-                if (cdata[0].continuous_action_id == 9)
-                {
-                    if (cnt == 2)
+                    if (cdata[0].continuous_action_id == 8)
                     {
-                        snd(54);
+                        if (cnt == 4)
+                        {
+                            snd(55);
+                        }
+                        gcopy(9, cnt / 2 % 3 * 144, 0, 144, 96);
+                        await(config::instance().animewait * 2.75);
                     }
-                    gcopy(9, cnt / 2 % 4 * 144, 0, 144, 96);
-                    await(60);
+                    if (cdata[0].continuous_action_id == 9)
+                    {
+                        if (cnt == 2)
+                        {
+                            snd(54);
+                        }
+                        gcopy(9, cnt / 2 % 4 * 144, 0, 144, 96);
+                        await(config::instance().animewait * 3);
+                    }
+                    redraw();
                 }
-                redraw();
             }
-        }
-        else
-        {
-            gcopy(9, 0, 0, 144, 96);
+            else
+            {
+                gcopy(9, 0, 0, 144, 96);
+            }
         }
         ++racount;
         redraw();
@@ -1425,25 +1431,9 @@ void label_1433()
     radery = sy;
     pos(inf_raderx + sx, inf_radery + sy);
     gcopy(3, 15, 338, 6, 6);
-    for (int y = 0; y < mdata(1); ++y)
+    if (debug::voldemort)
     {
-        for (int x = 0; x < mdata(0); ++x)
-        {
-            int sx = clamp(120 * x / mdata(0), 2, 112);
-            int sy = clamp(84 * y / mdata(1), 2, 76);
-            if (map(x, y, 6) / 1000 % 100 == 11)
-            {
-                // Downstairs
-                pos(inf_raderx + sx, inf_radery + sy);
-                gcopy(3, 15, 338, 6, 6);
-            }
-            else if (map(x, y, 6) / 1000 % 100 == 10)
-            {
-                // Upstairs
-                pos(inf_raderx + sx, inf_radery + sy);
-                gcopy(3, 15, 338, 6, 6);
-            }
-        }
+        render_stair_positions_in_minimap();
     }
     screendrawhack = 5;
     if (config::instance().env)
@@ -1466,6 +1456,30 @@ void label_1433()
         }
     }
     return;
+}
+
+void render_stair_positions_in_minimap()
+{
+    for (int y = 0; y < mdata(1); ++y)
+    {
+        for (int x = 0; x < mdata(0); ++x)
+        {
+            int sx = clamp(120 * x / mdata(0), 2, 112);
+            int sy = clamp(84 * y / mdata(1), 2, 76);
+            if (map(x, y, 6) / 1000 % 100 == 11)
+            {
+                // Downstairs
+                pos(inf_raderx + sx, inf_radery + sy);
+                gcopy(3, 15, 338, 6, 6);
+            }
+            else if (map(x, y, 6) / 1000 % 100 == 10)
+            {
+                // Upstairs
+                pos(inf_raderx + sx, inf_radery + sy);
+                gcopy(3, 15, 338, 6, 6);
+            }
+        }
+    }
 }
 
 void render_weather_effect_rain()
@@ -2679,7 +2693,7 @@ void windowanime(
         redraw();
         if (cnt != prm_730 - 1)
         {
-            await(15);
+            await(config::instance().animewait * 0.75);
         }
         pos(prm_726, prm_727);
         gcopy(prm_731, 0, 0, prm_728, prm_729);
@@ -2728,7 +2742,7 @@ void windowanimecorner(
         redraw();
         if (cnt != prm_736)
         {
-            await(15);
+            await(config::instance().animewait * 0.75);
         }
         pos(prm_732, prm_733);
         gcopy(prm_737, 0, 0, prm_734, prm_735);

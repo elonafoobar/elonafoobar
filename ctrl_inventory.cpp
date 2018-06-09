@@ -1341,7 +1341,6 @@ label_2061_internal:
                 {
                     screenupdate = -1;
                     update_screen();
-                    stick(p);
                     goto label_2060_internal;
                 }
             }

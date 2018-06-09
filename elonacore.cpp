@@ -2285,7 +2285,7 @@ void animeload(int prm_807, int prm_808)
     gsel(0);
     gmode(2);
     i_at_m133(0) = 5;
-    i_at_m133(1) = 50;
+    i_at_m133(1) = config::instance().animewait * 3.5;
     r_at_m133 = 0;
     if (prm_807 == 8)
     {
@@ -2294,21 +2294,21 @@ void animeload(int prm_807, int prm_808)
     if (prm_807 == 10)
     {
         i_at_m133(0) = 8;
-        i_at_m133(1) = 30;
+        i_at_m133(1) = config::instance().animewait * 2.5;
         r_at_m133 = 0.2;
         snd(119);
     }
     if (prm_807 == 11)
     {
         i_at_m133(0) = 5;
-        i_at_m133(1) = 50;
+        i_at_m133(1) = config::instance().animewait * 3.5;
         r_at_m133 = 0;
         snd(118);
     }
     if (prm_807 == 14)
     {
         i_at_m133(0) = 6;
-        i_at_m133(1) = 50;
+        i_at_m133(1) = config::instance().animewait * 3.5;
     }
     for (int cnt = 0, cnt_end = (i_at_m133); cnt < cnt_end; ++cnt)
     {
@@ -2319,7 +2319,7 @@ void animeload(int prm_807, int prm_808)
         redraw();
         pos(dx_at_m133 - 24, dy_at_m133 - 40);
         gcopy(4, 0, 0, 96, 96);
-        await(config::instance().animewait + i_at_m133(1));
+        await(i_at_m133(1));
     }
     gmode(2);
     return;
@@ -2466,7 +2466,7 @@ void animeblood(int prm_809, int prm_810, int prm_811)
         redraw();
         pos(dx_at_m133 - 48, dy_at_m133 - 56);
         gcopy(4, 0, 0, 144, 160);
-        await(config::instance().animewait + 15 + (ele2_at_m133 != 0) * 20);
+        await(config::instance().animewait * (ele2_at_m133 == 0 ? 1.75 : 2.75));
     }
     gmode(2);
     return;
@@ -9982,11 +9982,11 @@ label_1948_internal:
         if (key == key_enter)
         {
             label_1955();
-            keyrelease();
+            wait_key_released();
             goto label_1948_internal;
         }
         int a{};
-        stick(a, 768);
+        a = stick(768);
         if (a == 256)
         {
             key = key_enter;
@@ -9997,12 +9997,12 @@ label_1948_internal:
                 || chipm(0, map(tlocx, tlocy, 0)) == 1)
             {
                 snd(27);
-                keyrelease();
+                wait_key_released();
                 goto label_1948_internal;
             }
             tile = map(tlocx, tlocy, 0);
             snd(5);
-            keyrelease();
+            wait_key_released();
         }
         tx = clamp((mousex - inf_screenx), 0, windoww) / 48;
         ty = clamp((mousey - inf_screeny), 0, (windowh - inf_verh)) / 48;
@@ -10214,7 +10214,7 @@ label_1956_internal:
     redraw();
     await(config::instance().wait1);
     int a{};
-    stick(a);
+    a = stick();
     if (a == 256)
     {
         p = mousex / 24 + mousey / 24 * ww;
@@ -12246,7 +12246,7 @@ label_2128_internal:
     pos(x - 48 - 24, y - 48 - 24);
     gcopy(4, 0, 0, 144, 144);
     gmode(2);
-    await(30);
+    await(config::instance().wait1);
     key_check(1);
     x = cdata[0].position.x;
     y = cdata[0].position.y;
@@ -12367,9 +12367,9 @@ turn_result_t do_debug_console()
     objsel(2);
     while (1)
     {
-        await(20);
+        await(config::instance().wait1);
         int a{};
-        stick(a);
+        a = stick();
         if (a == 128)
         {
             return do_exit_debug_console();
@@ -14105,7 +14105,7 @@ void label_2151()
     {
         gmode(4, -1, -1, cnt * 10);
         label_2149();
-        await(200);
+        await(config::instance().animewait * 10);
     }
     gmode(2);
     cc = 0;
@@ -14160,7 +14160,7 @@ void label_2151()
         gdata_minute = 0;
         cc = 0;
         label_2149();
-        await(500);
+        await(config::instance().animewait * 25);
     }
     if (gdata(98) != 0)
     {
@@ -14568,7 +14568,8 @@ void get_fish()
 
 void spot_fishing()
 {
-    int fishstat = 0;
+    static int fishstat;
+
     if (cdata[cc].continuous_action_id == 0)
     {
         txt(lang(u8"釣りを始めた。"s, u8"You start fishing."s));
@@ -14603,15 +14604,18 @@ void spot_fishing()
         {
             if (rnd(5) == 0)
             {
-                for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end; ++cnt)
+                if (config::instance().animewait != 0)
                 {
-                    fishanime(0) = 1;
-                    fishanime(1) = 3 + rnd(3);
-                    addefmap(fishx, fishy, 4, 2);
-                    ++scrturn;
-                    update_screen();
-                    redraw();
-                    await(config::instance().wait1 * 2);
+                    for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end; ++cnt)
+                    {
+                        fishanime(0) = 1;
+                        fishanime(1) = 3 + rnd(3);
+                        addefmap(fishx, fishy, 4, 2);
+                        ++scrturn;
+                        update_screen();
+                        redraw();
+                        await(config::instance().animewait * 2);
+                    }
                 }
                 if (rnd(3) == 0)
                 {
@@ -14629,12 +14633,15 @@ void spot_fishing()
             fishanime = 2;
             snd(46);
             cdata[0].emotion_icon = 220;
-            for (int cnt = 0, cnt_end = (8 + rnd(10)); cnt < cnt_end; ++cnt)
+            if (config::instance().animewait != 0)
             {
-                ++scrturn;
-                update_screen();
-                redraw();
-                await(config::instance().wait1 * 2);
+                for (int cnt = 0, cnt_end = (8 + rnd(10)); cnt < cnt_end; ++cnt)
+                {
+                    ++scrturn;
+                    update_screen();
+                    redraw();
+                    await(config::instance().animewait * 2);
+                }
             }
             if (rnd(10))
             {
@@ -14649,18 +14656,21 @@ void spot_fishing()
         if (fishstat == 3)
         {
             fishanime = 3;
-            for (int cnt = 0, cnt_end = (28 + rnd(15)); cnt < cnt_end; ++cnt)
+            if (config::instance().animewait != 0)
             {
-                if (cnt % 7 == 0)
+                for (int cnt = 0, cnt_end = (28 + rnd(15)); cnt < cnt_end; ++cnt)
                 {
-                    snd(89);
+                    if (cnt % 7 == 0)
+                    {
+                        snd(89);
+                    }
+                    fishanime(1) = cnt;
+                    ++scrturn;
+                    update_screen();
+                    addefmap(fishx, fishy, 5, 2);
+                    redraw();
+                    await(config::instance().animewait * 2);
                 }
-                fishanime(1) = cnt;
-                ++scrturn;
-                update_screen();
-                addefmap(fishx, fishy, 5, 2);
-                redraw();
-                await(config::instance().wait1 * 2);
             }
             if (the_fish_db[fish]->difficulty >= rnd(sdata(185, 0) + 1))
             {
@@ -14676,17 +14686,20 @@ void spot_fishing()
         {
             fishanime = 4;
             snd(88);
-            for (int cnt = 0; cnt < 21; ++cnt)
+            if (config::instance().animewait != 0)
             {
-                fishanime(1) = cnt;
-                if (cnt == 1)
+                for (int cnt = 0; cnt < 21; ++cnt)
                 {
-                    addefmap(fishx, fishy, 1, 3);
+                    fishanime(1) = cnt;
+                    if (cnt == 1)
+                    {
+                        addefmap(fishx, fishy, 1, 3);
+                    }
+                    ++scrturn;
+                    update_screen();
+                    redraw();
+                    await(config::instance().animewait * 2);
                 }
-                ++scrturn;
-                update_screen();
-                redraw();
-                await(config::instance().wait1 * 2);
             }
             snd(14 + rnd(2));
             fishanime = 0;
@@ -18072,7 +18085,7 @@ turn_result_t try_to_open_locked_door()
             {
                 screenupdate = -1;
                 update_screen();
-                await(100);
+                await(config::instance().animewait * 5);
                 return turn_result_t::turn_end;
             }
             feat(2) = 0;
@@ -18137,7 +18150,7 @@ turn_result_t try_to_open_locked_door()
     }
     if (cc == 0)
     {
-        await(100);
+        await(config::instance().animewait * 5);
     }
     return turn_result_t::turn_end;
 }
@@ -19747,7 +19760,7 @@ void do_play_scene()
     scidx += s(0).size();
 label_2681:
     int a{};
-    stick(a, 128);
+    a = stick(128);
     if (a == 128)
     {
         scene_cut = 1;
@@ -19969,7 +19982,7 @@ label_2684_internal:
     for (int cnt = 1; cnt < 16; ++cnt)
     {
         await(30);
-        stick(a, 128);
+        a = stick(128);
         if (a == 128)
         {
             scene_cut = 1;
@@ -20757,7 +20770,7 @@ turn_result_t pc_died()
             u8"You have been buried. Bye...(Hit any key to exit)"s);
         draw_caption();
         redraw();
-        press();
+        wait_key_pressed();
         return turn_result_t::finish_elona;
     }
     s = u8"dead"s

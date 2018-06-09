@@ -5,6 +5,7 @@
 #include "character.hpp"
 #include "config.hpp"
 #include "draw.hpp"
+#include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "macro.hpp"
@@ -1188,7 +1189,7 @@ label_1857_internal:
                 {
                     break;
                 }
-                s = matname(j0) + lang(u8" ? "s, u8" x "s) + j1 + u8"("s
+                s = matname(j0) + lang(u8" × "s, u8" x "s) + j1 + u8"("s
                     + mat(j0) + u8")"s;
                 if (mat(j0) >= j1)
                 {

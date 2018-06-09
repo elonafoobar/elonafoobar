@@ -199,9 +199,9 @@ struct character
     // will break save compatibility.
 
     // Index of this character into the global cdata array.
-    // Used for communicating with legacy code that takes integer index arguments.
-    // New code should pass character& instead.
-    // Not serialized; set on creation and load.
+    // Used for communicating with legacy code that takes integer index
+    // arguments. New code should pass character& instead. Not serialized; set
+    // on creation and load.
     int index = -1;
 
     int state = 0;
@@ -507,7 +507,7 @@ int chara_create_internal();
 void chara_place();
 int chara_relocate(int = 0, int = 0, int = 0);
 void chara_refresh(int);
-int chara_copy(int = 0);
+bool chara_copy(int cc);
 void chara_delete(int = 0);
 void chara_vanquish(int = 0);
 void chara_killed(character&);

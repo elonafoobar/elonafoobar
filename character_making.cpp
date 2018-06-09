@@ -715,7 +715,7 @@ main_menu_result_t character_making_final_phase()
         if (stat == 0)
         {
             clear_background_in_character_making();
-            character_making_select_feats_and_alias(false);
+            return main_menu_result_t::character_making_select_feats_and_alias_looped;
         }
         if (stat != -1)
         {
@@ -854,7 +854,6 @@ main_menu_result_t character_making_final_phase()
             mat(i) = 0;
         }
     }
-    await(250);
     mode = 5;
     cdata[0].index = 0;
     lua::lua.on_chara_creation(cdata[0]);

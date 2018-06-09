@@ -16,8 +16,8 @@
 #include "lua_env/lua_env.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
-#include "random.hpp"
 #include "quest.hpp"
+#include "random.hpp"
 #include "status_ailment.hpp"
 #include "variables.hpp"
 
@@ -588,8 +588,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 {
                     if (mdata(6) != 1)
                     {
-                        int stat = chara_copy(prm_853);
-                        if (stat == 1)
+                        if (chara_copy(prm_853))
                         {
                             txt(lang(
                                 name(prm_853) + u8"は分裂した！"s,
@@ -614,8 +613,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     {
                         if (mdata(6) != 1)
                         {
-                            int stat = chara_copy(prm_853);
-                            if (stat == 1)
+                            if (chara_copy(prm_853))
                             {
                                 txt(lang(
                                     name(prm_853) + u8"は分裂した！"s,

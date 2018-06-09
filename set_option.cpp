@@ -1,6 +1,8 @@
 #include "audio.hpp"
 #include "config.hpp"
+#include "draw.hpp"
 #include "elona.hpp"
+#include "input.hpp"
 #include "macro.hpp"
 #include "menu.hpp"
 #include "network.hpp"
@@ -176,7 +178,7 @@ std::vector<config_menu> create_config_menu()
     ELONA_CONFIG_ITEM(lang(u8"言語(Language)", u8"Language"));
     ELONA_CONFIG_ITEM(lang(u8"拡張設定(Foobar)", u8"Ex setting(Foobar)"));
 
-    ret.emplace_back(lang(u8"ゲームの設定", u8"Game Setting"), 440, 400);
+    ret.emplace_back(lang(u8"ゲームの設定", u8"Game Setting"), 440, 350);
     ELONA_CONFIG_ITEM_YESNO(
         lang(u8"ノルンの冒険ガイド", u8"Extra Help"),
         config::instance().extrahelp,
@@ -225,14 +227,6 @@ std::vector<config_menu> create_config_menu()
     ELONA_CONFIG_ITEM_INTEGER(
         lang(u8"アラートウェイト", u8"Alert Wait"),
         config::instance().alert,
-        u8"{} wait");
-    ELONA_CONFIG_ITEM_INTEGER(
-        lang(u8"キーウェイト(初回)", u8"Initial Key Wait"),
-        config::instance().initialkeywait,
-        u8"{} wait");
-    ELONA_CONFIG_ITEM_INTEGER(
-        lang(u8"キーウェイト", u8"Key Wait"),
-        config::instance().keywait,
         u8"{} wait");
 
     ret.emplace_back(lang(u8"画面と音の設定", u8"Screen & Sound"), 440, 370);
@@ -381,6 +375,11 @@ std::vector<config_menu> create_config_menu()
         lang(u8"有効", u8"On"),
         lang(u8"無効", u8"Off"));
     ELONA_CONFIG_ITEM(lang(u8"入荷頻度", u8"Restock Interval"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"ダメージポップアップ", u8"Damage popup"),
+        config::instance().damage_popup,
+        lang(u8"あり", u8"On"),
+        lang(u8"なし", u8"Off"));
 
 #undef ELONA_CONFIG_ITEM
 #undef ELONA_CONFIG_ITEM_YESNO
@@ -1032,39 +1031,6 @@ void set_option()
                     reset_page = true;
                     continue;
                 }
-                if (cs == 11)
-                {
-                    config::instance().initialkeywait += p;
-                    if (config::instance().initialkeywait > 20)
-                    {
-                        config::instance().initialkeywait = 20;
-                    }
-                    else if (config::instance().initialkeywait < 0)
-                    {
-                        config::instance().initialkeywait = 0;
-                    }
-                    snd(20);
-                    set_config(
-                        u8"initialKeyWait", config::instance().initialkeywait);
-                    reset_page = true;
-                    continue;
-                }
-                if (cs == 12)
-                {
-                    config::instance().keywait += p;
-                    if (config::instance().keywait > 20)
-                    {
-                        config::instance().keywait = 20;
-                    }
-                    else if (config::instance().keywait < 0)
-                    {
-                        config::instance().keywait = 0;
-                    }
-                    snd(20);
-                    set_config(u8"keyWait", config::instance().keywait);
-                    reset_page = true;
-                    continue;
-                }
             }
             if (submenu == 2)
             {
@@ -1590,6 +1556,27 @@ void set_option()
                     reset_page = true;
                     continue;
                 }
+                if (cs == 5)
+                {
+                    config::instance().damage_popup += p;
+                    if (config::instance().damage_popup > 1)
+                    {
+                        config::instance().damage_popup = 1;
+                    }
+                    else if (config::instance().damage_popup < 0)
+                    {
+                        config::instance().damage_popup = 0;
+                    }
+                    snd(20);
+                    set_config(
+                        u8"damage_popup", config::instance().damage_popup);
+                    if (!config::instance().damage_popup)
+                    {
+                        clear_damage_popups();
+                    }
+                    reset_page = true;
+                    continue;
+                }
             }
         }
         if (key == key_cancel)
@@ -1608,8 +1595,6 @@ void set_option()
                     initialize_server_info();
                 }
             }
-            snail::input::instance().set_key_repeat(
-                config::instance().initialkeywait, config::instance().keywait);
             return;
         }
     }

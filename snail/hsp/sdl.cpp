@@ -167,7 +167,7 @@ struct MessageBox
         buffer += input.get_text();
         if (!input.is_ime_active())
         {
-            if (input.is_pressed(key::enter))
+            if (input.is_pressed(key::enter) || input.is_pressed(key::keypad_enter))
             {
                 // New line.
                 buffer += '\n';
@@ -857,7 +857,6 @@ void title(const std::string& title_str)
         1000));
     application::instance().register_finalizer(
         []() { ::SDL_DestroyTexture(detail::tmp_buffer); });
-    input::instance().set_key_repeat(10, 3);
     application::instance().register_finalizer(
         [&]() { font_detail::font_cache.clear(); });
     buffer(0, 800, 600);

@@ -26,10 +26,13 @@ struct damage_popup_t
     int character;
     snail::color color;
 
-    damage_popup_t() : frame(-1),
-                       text(std::string()),
-                       character(-1),
-                       color(snail::color(255, 255, 255, 255)) {}
+    damage_popup_t()
+        : frame(-1)
+        , text(std::string())
+        , character(-1)
+        , color(snail::color(255, 255, 255, 255))
+    {
+    }
 };
 
 
@@ -328,6 +331,10 @@ void clear_damage_popups()
 
 void show_damage_popups(int inf_ver)
 {
+    if (config::instance().damage_popup == 0)
+    {
+        return;
+    }
     if (damage_popups_active == 0)
     {
         return;
@@ -362,6 +369,9 @@ void show_damage_popups(int inf_ver)
         int mondmgpos{};
         for (auto&& damage_popup2 : damage_popups)
         {
+            if (damage_popup2.frame == -1)
+                continue;
+
             if (damage_popup.frame >= damage_popup2.frame)
             {
                 if (cc.position == cdata[damage_popup2.character].position)
