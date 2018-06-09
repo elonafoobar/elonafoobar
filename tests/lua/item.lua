@@ -12,7 +12,7 @@ lrun("test Item.create", function()
         lequal(item.position.x, item_pos.x)
         lequal(item.position.y, item_pos.y)
 
-        local item = Item.create(item_pos.x, item_pos.y + 1, 792, 3)
+        item = Item.create(item_pos.x, item_pos.y + 1, 792, 3)
         lok(item ~= nil, "Item was nil")
         lequal(item.number, 3)
         lequal(item.position.x, item_pos.x)
@@ -43,7 +43,7 @@ end)
 
 local function tally()
    local count = 0
-   for _, item in Item.iter(5080, 5480) do
+   for _, _ in Item.iter(5080, 5480) do
       count = count + 1
    end
    return count
@@ -60,7 +60,7 @@ lrun("test Item.iter", function()
 
         Item.create(0, 2, 792, 3)
 
-        local count = tally()
+        count = tally()
         lequal(count, 3)
 end)
 

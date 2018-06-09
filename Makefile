@@ -59,5 +59,6 @@ ldoc:
 luacheck:
 	luacheck --version
 	luacheck mods/
+	luacheck tests/lua
 
 rebuild: clean build

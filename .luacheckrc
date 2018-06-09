@@ -43,7 +43,7 @@ files['.luacheckrc'] = {
 -------------------------------------------------------------------------------
 local LINE_LENGTH = false
 local IGNORE = {'21./%w+_$', '21./^_%w+$', '213/[ijk]', '213/index', '213/key'}
-local NOT_GLOBALS = {'coroutine', 'io', 'socket', 'dofile', 'loadfile'}
+local NOT_GLOBALS = {'coroutine', 'socket', 'dofile', 'loadfile'}
 
 local STD_ELONA = 'lua52c+elona+stdlib'
 
@@ -62,9 +62,7 @@ codes = true
 --List of files and directories to exclude
 exclude_files = {
     --Ignore special folders
-    '**/.*/*', --Ignore if path starts with .
-    '**/mod/stdlib/', --Ignore from symlinked
-    '**/vendor/',
+    '**/.*/*' --Ignore if path starts with .
 }
 
 -------------------------------------------------------------------------------
@@ -79,7 +77,9 @@ exclude_files = {
 
 files['**/mods'] = {std = STD_ELONA}
 files['**/mods/core'] = {std = "+core"}
-files['tests/lua'] = {std = "+tests"}
+files['tests/lua/*.lua'] = {std = "+tests"}
+files['tests/lua/classes/*.lua'] = {std = "+tests"}
+files['tests/lua/support'] = {std = "+minctest"}
 
 -------------------------------------------------------------------------------
 --[STDS ELONA]--
@@ -188,7 +188,8 @@ stds.elona = {
         },
         -- @LuaCharacter@
         LuaCharacter = { other_fields = true },
-        LuaItem = { other_fields = true }
+        LuaItem = { other_fields = true },
+        LuaPosition = { other_fields = true }
     },
 }
 
@@ -227,8 +228,13 @@ stds.tests = {
             fields = {
                "start_in_debug_map", "reset_state"
             },
-        },
+        }
     },
+}
+
+--(( minctest ))--
+stds.minctest = {
+    globals = stds.tests.read_globals
 }
 
 --[[

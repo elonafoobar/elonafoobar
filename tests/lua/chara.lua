@@ -75,7 +75,7 @@ end)
 
 local function tally()
    local count = 0
-   for _, chara in Chara.iter(0, 245) do
+   for _, _ in Chara.iter(0, 245) do
       count = count + 1
    end
    return count
@@ -92,7 +92,7 @@ lrun("test Chara.iter", function()
 
         Chara.create(0, 2, 3)
 
-        local count = tally()
+        count = tally()
         lequal(count, 43)
 end)
 

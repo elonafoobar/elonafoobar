@@ -24,7 +24,7 @@ lrun("test LuaCharacter:recruit_as_ally", function()
         -- Caller is expected to use Chara.is_alive() to check validity
         -- lequal(putit:recruit_as_ally(), false)
 
-        local putit = Chara.create(0, 0, 3)
+        putit = Chara.create(0, 0, 3)
         lequal(putit:recruit_as_ally(), true)
         lequal(putit:recruit_as_ally(), false)
 end)
