@@ -315,8 +315,7 @@ std::string mapname_dungeon(int id)
 
     if (suffix_id >= 20 && suffix_id <= 23)
     {
-        name += i18n::s.get("core.locale.map.dungeon._" +
-                            std::to_string(suffix_id));
+        name += i18n::s.get_enum("core.locale.map.dungeon", suffix_id);
     }
     return name;
 }
@@ -343,12 +342,8 @@ std::string mapname(int id, bool description)
         name = mapname_dungeon(id);
         break;
     default:
-        name = i18n::s.get("core.locale.map.unique._" +
-                           std::to_string(adata(16, id)) +
-                           ".name");
-        auto desc_opt = i18n::s.get_optional("core.locale.map.unique._" +
-                                             std::to_string(adata(16, id)) +
-                                             ".desc");
+        name = i18n::s.get_enum_property("core.locale.map.unique", adata(16, id), "name");
+        auto desc_opt = i18n::s.get_enum_property_opt("core.locale.map.unique", adata(16, id), "desc");
         if (desc_opt)
         {
             desc = *desc_opt;
@@ -391,8 +386,7 @@ std::string txtbuilding(int prm_368, int prm_369)
     int p_at_m32 = 0;
     std::string s_at_m32;
     p_at_m32 = bddata(0, prm_368, prm_369);
-    s_at_m32 = lang(
-        bdrefn(p_at_m32) + u8"がある。"s, u8"You see "s + bdrefn(p_at_m32));
+    s_at_m32 = i18n::s.get("core.locale.map.you_see", bdrefn(p_at_m32));
     return s_at_m32;
 }
 

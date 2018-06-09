@@ -112,7 +112,8 @@ inline bool ident_eq(std::string ident, int count)
     if (ident.size() == 2)
     {
         char c = ident[1];
-        if (c - '0' == count)
+        int c_as_digit = c - '0';
+        if (c_as_digit == count)
         {
             return true;
         }
@@ -193,7 +194,7 @@ std::string fmt_func(hil::FunctionCall const& func, Head const& head)
 
 
 template <typename... Tail>
-void fmt_go(const hil::Context& ctxt,
+void fmt_internal(const hil::Context& ctxt,
                    int count,
                     std::vector<optional<std::string>>& formatted)
 {
@@ -201,7 +202,7 @@ void fmt_go(const hil::Context& ctxt,
 
 
 template <typename Head, typename... Tail>
-void fmt_go(const hil::Context& ctxt,
+void fmt_internal(const hil::Context& ctxt,
                    int count,
                    std::vector<optional<std::string>>& formatted,
                    Head const& head,
@@ -234,19 +235,20 @@ void fmt_go(const hil::Context& ctxt,
         }
     }
 
-    fmt_go(ctxt, count + 1, formatted, std::forward<Tail>(tail)...);
+    fmt_internal(ctxt, count + 1, formatted, std::forward<Tail>(tail)...);
 }
 
 } // namespace detail
 
-inline std::string fmt_after_conv(const hil::Context& ctxt, const std::vector<optional<std::string>>& formatted)
+inline std::string fmt_interpolate_converted(const hil::Context& ctxt,
+                                             const std::vector<optional<std::string>>& formatted)
 {
     std::string s;
 
     for (size_t i = 0; i < formatted.size(); i++)
     {
         s += ctxt.textParts.at(i);
-        if(formatted.at(i))
+        if (formatted.at(i))
         {
             s += *formatted.at(i);
         }
@@ -268,9 +270,9 @@ std::string fmt_with_context(const hil::Context& ctxt, Head const& head, Tail&&.
         return ctxt.textParts[0];
 
     std::vector<optional<std::string>> formatted(ctxt.hilParts.size());
-    detail::fmt_go(ctxt, 1, formatted, head, std::forward<Tail>(tail)...);
+    detail::fmt_internal(ctxt, 1, formatted, head, std::forward<Tail>(tail)...);
 
-    return fmt_after_conv(ctxt, formatted);
+    return fmt_interpolate_converted(ctxt, formatted);
 }
 
 template <typename... Tail>
@@ -280,11 +282,13 @@ std::string fmt_with_context(const hil::Context& ctxt, Tail&&... tail)
         return ctxt.textParts[0];
 
     std::vector<optional<std::string>> formatted(ctxt.hilParts.size());
-    detail::fmt_go(ctxt, 1, formatted, std::forward<Tail>(tail)...);
+    detail::fmt_internal(ctxt, 1, formatted, std::forward<Tail>(tail)...);
 
-    return fmt_after_conv(ctxt, formatted);
+    return fmt_interpolate_converted(ctxt, formatted);
 }
 
+
+// For testing use
 template <typename Head, typename... Tail>
 std::string fmt_hil(const std::string& hil, Head const& head, Tail&&... tail)
 {
@@ -359,6 +363,64 @@ public:
         }
 
         return fmt_with_context(found->second, std::forward<Tail>(tail)...);
+    }
+
+
+    // Convenience methods for cases like "core.element._<enum index>.name"
+
+    template <typename Head, typename... Tail>
+    std::string get_enum(const std::string& key,
+                         int index,
+                         Head const& head,
+                         Tail&&... tail)
+    {
+        return get(key_head + "._" + std::to_string(index), head, std::forward<Tail>(tail)...);
+    }
+
+    template <typename... Tail>
+    std::string get_enum(const std::string& key,
+                         int index,
+                         Tail&&... tail)
+    {
+        return get(key + "._" + std::to_string(index), std::forward<Tail>(tail)...);
+    }
+
+    template <typename Head, typename... Tail>
+    std::string get_enum_property(const std::string& key_head,
+                         int index,
+                         const std::string& key_tail,
+                         Head const& head,
+                         Tail&&... tail)
+    {
+        return get(key_head + "._" + std::to_string(index) + "." + key_tail, head, std::forward<Tail>(tail)...);
+    }
+
+    template <typename... Tail>
+    std::string get_enum_property(const std::string& key_head,
+                         int index,
+                         const std::string& key_tail,
+                         Tail&&... tail)
+    {
+        return get(key_head + "._" + std::to_string(index) + "." + key_tail, std::forward<Tail>(tail)...);
+    }
+
+    template <typename Head, typename... Tail>
+    optional<std::string> get_enum_property_opt(const std::string& key_head,
+                                            int index,
+                                            const std::string& key_tail,
+                                            Head const& head,
+                                            Tail&&... tail)
+    {
+        return get_optional(key_head + "._" + std::to_string(index) + "." + key_tail, head, std::forward<Tail>(tail)...);
+    }
+
+    template <typename... Tail>
+    optional<std::string> get_enum_property_opt(const std::string& key_head,
+                                            int index,
+                                            const std::string& key_tail,
+                                            Tail&&... tail)
+    {
+        return get_optional(key_head + "._" + std::to_string(index) + "." + key_tail, std::forward<Tail>(tail)...);
     }
 
 private:
