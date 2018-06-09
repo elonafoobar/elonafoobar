@@ -17,9 +17,9 @@ function ReadOnly.make_read_only(t)
 	local mt = {
 		-- hide the actual table being accessed
 		__metatable = "read only table",
-		__index = function(tab, k) return t[k] end,
+		__index = function(_, k) return t[k] end,
 		__pairs = function() return pairs(t) end,
-		__newindex = function (t,k,v)
+		__newindex = function (_,_,_)
 			error("attempt to update a read-only table", 2)
 		end
 	}

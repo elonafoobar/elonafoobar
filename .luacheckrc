@@ -77,14 +77,9 @@ exclude_files = {
 --[Base]--
 -------------------------------------------------------------------------------
 
-local std_core = {
-   std = STD_ELONA,
-   ignore = {'122'} -- The core mod is special, since we add on parts of the API that are implemented in Lua there, so don't check for read-only fields.
-}
-
-files['**/mods/'] = {std = STD_ELONA}
-files['**/mods/core'] = std_core
-files['**/tests/lua'] = {std = STD_ELONA .. "+tests"}
+files['**/mods'] = {std = STD_ELONA}
+files['**/mods/core'] = {std = "+core"}
+files['tests/lua'] = {std = "+tests"}
 
 -------------------------------------------------------------------------------
 --[STDS ELONA]--
@@ -148,7 +143,7 @@ stds.elona = {
               },
               GUI = {
                  fields = {
-                    "txt"
+                    "txt", "txt_color"
                  },
               },
               Debug = {
@@ -190,9 +185,28 @@ stds.elona = {
         -- @Store@: Mod-local data storage.
         Store = {
            other_fields = true
-        }
+        },
+        -- @LuaCharacter@
+        LuaCharacter = { other_fields = true },
+        LuaItem = { other_fields = true }
     },
 }
+
+--(( core ))--
+stds.core = {
+    globals = {
+       "_IS_TEST", "_LOADED", "pairs", "table",
+        Elona = {
+           fields = {
+              core = {
+                 other_fields = true,
+                 fields = stds.elona.read_globals.Elona.fields
+              }
+           }
+        }
+    }
+}
+
 
 --(( stdlib extensions ))--
 stds.stdlib = {
@@ -208,7 +222,7 @@ stds.stdlib = {
 --(( tests ))--
 stds.tests = {
     read_globals = {
-        "lrun", "lequal", "lfequal", "lok", "lresults()",
+        "lrun", "lequal", "lfequal", "lok", "lresults",
         Testing = {
             fields = {
                "start_in_debug_map", "reset_state"
