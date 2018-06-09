@@ -184,14 +184,13 @@ void application::proc_event()
 
 void application::set_fullscreen_mode(window::fullscreen_mode_t fullscreen_mode)
 {
-    detail::enforce_sdl(::SDL_SetWindowFullscreen((*_window).ptr(),
-                                                  static_cast<Uint32>(fullscreen_mode)));
+  (*_window).set_fullscreen_mode(fullscreen_mode);
     _fullscreen_mode = fullscreen_mode;
 }
 
 std::map<std::string, ::SDL_DisplayMode> application::get_display_modes()
 {
-    static int display_in_use = 0; /* Only using first display */
+    static int display_in_use = 0; // Assume the first display is being used.
     std::map<std::string, ::SDL_DisplayMode> display_modes;
 
     int display_mode_count = ::SDL_GetNumDisplayModes(display_in_use);
@@ -237,13 +236,6 @@ std::string application::get_default_display_mode()
     return display_modes.begin()->first;
 }
 
-::SDL_DisplayMode application::get_display_mode()
-{
-    ::SDL_DisplayMode mode;
-    detail::enforce_sdl(::SDL_GetWindowDisplayMode((*_window).ptr(), &mode));
-    return mode;
-}
-
 void application::set_display_mode(const std::string& display_mode_str)
 {
     auto display_modes = get_display_modes();
@@ -263,15 +255,16 @@ void application::set_display_mode(::SDL_DisplayMode display_mode)
 {
     if (is_fullscreen())
     {
-        detail::enforce_sdl(::SDL_SetWindowDisplayMode((*_window).ptr(), &display_mode));
+        (*_window).set_display_mode(display_mode);
     }
     else
     {
-        ::SDL_SetWindowSize((*_window).ptr(), display_mode.w, display_mode.h);
+        (*_window).set_size(display_mode.w, display_mode.h);
     }
 
     _width = display_mode.w;
     _height = display_mode.h;
+    (*_window).move_to_center();
 }
 
 

@@ -109,11 +109,10 @@ public:
 
     std::string get_default_display_mode();
 
-    ::SDL_DisplayMode get_display_mode();
+    ::SDL_DisplayMode get_display_mode() { return (*_window).get_display_mode(); }
 
     void set_display_mode(const std::string&);
     void set_display_mode(const ::SDL_DisplayMode);
-
 
 
 private:

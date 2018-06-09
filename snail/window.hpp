@@ -63,6 +63,16 @@ public:
     }
 
 
+    void move_to_center();
+
+    void set_size(int width, int height);
+
+    void set_display_mode(::SDL_DisplayMode display_mode);
+
+    ::SDL_DisplayMode get_display_mode();
+
+    void set_fullscreen_mode(fullscreen_mode_t fullscreen_mode);
+
     window(
         const std::string& title,
         int x,
