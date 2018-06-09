@@ -52,7 +52,7 @@ void boxf(const snail::color&)
 {
 }
 
-foid buffer(int, int, int)
+void buffer(int, int, int)
 {
 }
 
@@ -101,7 +101,7 @@ void line(int, int, int, int)
 {
 }
 
-void title(const std::string&)
+void title(const std::string&, const std::string&, window::fullscreen_mode_t)
 {
 }
 
