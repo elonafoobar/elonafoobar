@@ -124,11 +124,14 @@ std::string format_builtins_character(const hil::FunctionCall& func, const chara
 {
     ELONA_DEFINE_I18N_BUILTIN("name", name(chara.index));
     ELONA_DEFINE_I18N_BUILTIN("basename", cdatan(0, chara.index));
+    ELONA_DEFINE_I18N_BUILTIN("he2", he(chara.index, 1));
+    ELONA_DEFINE_I18N_BUILTIN("his2", his(chara.index, 1));
+    ELONA_DEFINE_I18N_BUILTIN("him2", him(chara.index, 1));
+
+    // English only
     ELONA_DEFINE_I18N_BUILTIN("he", he(chara.index));
     ELONA_DEFINE_I18N_BUILTIN("his", his(chara.index));
     ELONA_DEFINE_I18N_BUILTIN("him", him(chara.index));
-
-    // English only
     ELONA_DEFINE_I18N_BUILTIN("s", builtin_s(func, chara.index));
     ELONA_DEFINE_I18N_BUILTIN("is", is(chara.index));
     ELONA_DEFINE_I18N_BUILTIN("have", have(chara.index));
@@ -138,7 +141,6 @@ std::string format_builtins_character(const hil::FunctionCall& func, const chara
 
     // Japanese only
     ELONA_DEFINE_I18N_BUILTIN("kare_wa", npcn(chara.index));
-    ELONA_DEFINE_I18N_BUILTIN("aln", aln(chara.index));
     //ELONA_DEFINE_I18N_BUILTIN("yoro", _yoro(chara, func.args.at(1));
     //ELONA_DEFINE_I18N_BUILTIN("dozo", _dozo(chara, func.args.at(1));
     //ELONA_DEFINE_I18N_BUILTIN("thanks", _thanks(chara, func.args.at(1));

@@ -56,12 +56,10 @@ TEST_CASE("test format item", "[I18N: Formatting]")
 TEST_CASE("test format character by function", "[I18N: Formatting]")
 {
     testing::start_in_debug_map();
-    REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
-    character& chara = elona::cdata[elona::rc];
+    character& chara = testing::create_chara(PUTIT_PROTO_ID, 4, 8);
 
     REQUIRE(i18n::fmt_hil("${name(_1)}", chara) == u8"何か"s);
     REQUIRE(i18n::fmt_hil("${basename(_1)}", chara) == u8"プチ"s);
-    REQUIRE(false);
 }
 
 TEST_CASE("test format item by function", "[I18N: Formatting]")
@@ -71,18 +69,6 @@ TEST_CASE("test format item by function", "[I18N: Formatting]")
 
     REQUIRE(i18n::fmt_hil("${name(_1)}", i) == u8"3個のプチトロ"s);
     REQUIRE(i18n::fmt_hil("${basename(_1)}", i) == u8"プチトロ"s);
-}
-
-
-TEST_CASE("test i18n builtin: s()", "[I18N: Formatting]")
-{
-    testing::start_in_debug_map();
-    testing::set_english();
-    character& chara = testing::create_chara(PUTIT_PROTO_ID, 24, 24);
-    update_screen();
-
-    REQUIRE(i18n::fmt_hil("${name(_1)} go${s(_1)} to hell.", chara) == u8"the putit gos to hell.");
-    REQUIRE(i18n::fmt_hil("${name(_1)} go${s(_1, true)} to hell.", chara) == u8"the putit goes to hell.");
 }
 
 

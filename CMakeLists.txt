@@ -149,7 +149,7 @@ if(WITH_TESTS STREQUAL "TESTS")
     tests/util.cpp
     tests/elonacore.cpp
     tests/i18n.cpp
-    tests/i18n_regressions.cpp
+    tests/i18n_builtins.cpp
     tests/serialization.cpp
     ${CORE_SOURCES}
     )
@@ -307,7 +307,6 @@ function(copy_nonexisting src rel final)
   foreach( each_file ${allfiles} )
     set(destinationfile "$<TARGET_FILE_DIR:${PROJECT_NAME}>/${final}/${each_file}")
     set(sourcefile "${rel}/${each_file}")
-    message(${destinationfile})
     add_custom_command(TARGET ${PROJECT_NAME}
       POST_BUILD
       COMMAND ${CMAKE_COMMAND}

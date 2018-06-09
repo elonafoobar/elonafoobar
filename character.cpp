@@ -1105,6 +1105,60 @@ int chara_create_internal()
     return 1;
 }
 
+void initialize_character()
+{
+    if (mode != 1)
+    {
+        chara_add_quality_parens();
+    }
+    cdata[rc].state = 1;
+    cdata[rc].interest = 100;
+    cdata[rc].impression = 50;
+    cdata[rc].vision_distance = 14;
+    if (cdata[rc].id == 205)
+    {
+        cdata[rc].image = rnd(33) * 2 + cdata[rc].sex + 1;
+    }
+    if (rc == 0)
+    {
+        cdata[rc].nutrition = 9000;
+    }
+    else
+    {
+        cdata[rc].nutrition = 5000 + rnd(4000);
+    }
+    cdata[rc].height = cdata[rc].height + rnd((cdata[rc].height / 5 + 1))
+        - rnd((cdata[rc].height / 5 + 1));
+    cdata[rc].weight =
+        cdata[rc].height * cdata[rc].height * (rnd(6) + 18) / 10000;
+    update_required_experience(rc);
+    init_character_skills(rc);
+    if (cdata[rc].portrait == 0)
+    {
+        cdata[rc].portrait = rnd(32);
+    }
+    cdata[rc].personality = rnd(4);
+    cdata[rc].talk_type = rnd(7);
+    supply_initial_equipments();
+    chara_refresh(rc);
+    modify_crowd_density(rc, 1);
+    cdata[rc].hp = cdata[rc].max_hp;
+    cdata[rc].mp = cdata[rc].max_mp;
+    cdata[rc].sp = cdata[rc].max_sp;
+    if (rc == 0)
+    {
+        gdata_initial_cart_limit = 80000;
+        gdata_current_cart_limit = gdata_initial_cart_limit;
+    }
+    if (cdata[rc].has_lay_hand())
+    {
+        cdata[rc].is_lay_hand_available() = true;
+    }
+    cm = 0;
+    return;
+}
+
+
 
 int chara_create(int prm_756, int prm_757, int prm_758, int prm_759)
 {
@@ -2170,6 +2224,23 @@ std::string chara_refstr(int prm_0258, int prm_0259)
     dbspec = prm_0259;
     access_character_info();
     return refstr;
+}
+
+void chara_add_quality_parens()
+{
+    if (fixlv == 4)
+    {
+        cdatan(0, rc) = i18n::_(u8"ui", u8"bracket_left") + cdatan(0, rc)
+            + i18n::_(u8"ui", u8"bracket_right");
+        cdata[rc].level = cdata[rc].level * 10 / 8;
+    }
+    if (fixlv == 5)
+    {
+        cdatan(0, rc) =
+            lang(u8"《"s, u8"{"s) + cdatan(0, rc) + lang(u8"》"s, u8"}"s);
+        cdata[rc].level = cdata[rc].level * 10 / 6;
+    }
+    return;
 }
 
 } // namespace elona

@@ -133,61 +133,61 @@ namespace detail
 {
 
 template <typename Head = character const&>
-std::string fmt_literal(character const& c)
+std::string format_literal_type(character const& c)
 {
     return "<character: "s + std::to_string(c.index) + ">"s;
 }
 
 template <typename Head = item const&>
-std::string fmt_literal(item const& i)
+std::string format_literal_type(item const& i)
 {
     return "<item: "s + std::to_string(i.index) + ">"s;
 }
 
 template <typename Head>
-std::string fmt_literal(std::string const& s)
+std::string format_literal_type(std::string const& s)
 {
     return s;
 }
 
 template <typename Head = const char* const&>
-std::string fmt_literal(const char* const& c)
+std::string format_literal_type(const char* const& c)
 {
     return std::string(c);
 }
 
 template <typename Char>
-std::string fmt_literal(std::basic_string<Char> const& c)
+std::string format_literal_type(std::basic_string<Char> const& c)
 {
     return c;
 }
 
 template <typename Head>
-std::string fmt_literal(Head const& head)
+std::string format_literal_type(Head const& head)
 {
     return std::to_string(head);
 }
 
 template <typename Head = const character&>
-std::string fmt_func(hil::FunctionCall const& func, const character& chara)
+std::string format_function_type(hil::FunctionCall const& func, const character& chara)
 {
     return format_builtins_character(func, chara);
 }
 
 template <typename Head = const item&>
-std::string fmt_func(hil::FunctionCall const& func, const item& item)
+std::string format_function_type(hil::FunctionCall const& func, const item& item)
 {
     return format_builtins_item(func, item);
 }
 
 template <typename Head = bool>
-std::string fmt_func(hil::FunctionCall const& func, bool const& value)
+std::string format_function_type(hil::FunctionCall const& func, bool const& value)
 {
     return format_builtins_bool(func, value);
 }
 
 template <typename Head>
-std::string fmt_func(hil::FunctionCall const& func, Head const& head)
+std::string format_function_type(hil::FunctionCall const& func, Head const& head)
 {
     return "<unknown function (" + func.name + ")>";
 }
@@ -195,8 +195,8 @@ std::string fmt_func(hil::FunctionCall const& func, Head const& head)
 
 template <typename... Tail>
 void fmt_internal(const hil::Context& ctxt,
-                   int count,
-                    std::vector<optional<std::string>>& formatted)
+                  int count,
+                  std::vector<optional<std::string>>& formatted)
 {
 }
 
@@ -216,21 +216,29 @@ void fmt_internal(const hil::Context& ctxt,
             std::string ident = v.as<std::string>();
             if (ident_eq(ident, count))
             {
-                formatted.at(i) = fmt_literal(head);
+                formatted.at(i) = format_literal_type(head);
             }
         }
         else if (v.is<hil::FunctionCall>())
         {
             hil::FunctionCall func = v.as<hil::FunctionCall>();
-            std::string ident = func.args.at(0).as<std::string>();
 
-            if (ident_eq(ident, count))
-            {
-                formatted.at(i) = fmt_func(func, head);
-            }
-            else if (func.args.size() == 0)
+            if (func.args.size() == 0)
             {
                 formatted.at(i) = format_builtins_argless(func);
+            }
+            else if (func.args.at(0).is<std::string>())
+            {
+                std::string ident = func.args.at(0).as<std::string>();
+                if (ident_eq(ident, count))
+                {
+                    formatted.at(i) = format_function_type(func, head);
+                }
+            }
+            else if (func.args.at(0).is<bool>())
+            {
+                formatted.at(i) = format_builtins_bool(func,
+                                                       func.args.at(0).as<bool>());
             }
         }
     }
@@ -374,7 +382,7 @@ public:
                          Head const& head,
                          Tail&&... tail)
     {
-        return get(key_head + "._" + std::to_string(index), head, std::forward<Tail>(tail)...);
+        return get(key + "._" + std::to_string(index), head, std::forward<Tail>(tail)...);
     }
 
     template <typename... Tail>

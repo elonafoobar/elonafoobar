@@ -802,21 +802,4 @@ void set_material_specific_attributes()
     return;
 }
 
-void add_quality_parentheses()
-{
-    if (fixlv == 4)
-    {
-        cdatan(0, rc) = i18n::_(u8"ui", u8"bracket_left") + cdatan(0, rc)
-            + i18n::_(u8"ui", u8"bracket_right");
-        cdata[rc].level = cdata[rc].level * 10 / 8;
-    }
-    if (fixlv == 5)
-    {
-        cdatan(0, rc) =
-            lang(u8"《"s, u8"{"s) + cdatan(0, rc) + lang(u8"》"s, u8"}"s);
-        cdata[rc].level = cdata[rc].level * 10 / 6;
-    }
-    return;
-}
-
 } // namespace elona
