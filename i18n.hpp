@@ -254,7 +254,7 @@ inline std::string fmt_interpolate_converted(const hil::Context& ctxt,
         }
         else
         {
-            s += "<error: pos " + std::to_string(i) + ">";
+            s += "<error>";
         }
     }
 
@@ -386,9 +386,9 @@ public:
     }
 
     template <typename Head, typename... Tail>
-    std::string get_enum(const std::string& key_head,
-                         const std::string& key_tail,
+    std::string get_enum_property(const std::string& key_head,
                          int index,
+                         const std::string& key_tail,
                          Head const& head,
                          Tail&&... tail)
     {
@@ -396,18 +396,18 @@ public:
     }
 
     template <typename... Tail>
-    std::string get_enum(const std::string& key_head,
-                         const std::string& key_tail,
+    std::string get_enum_property(const std::string& key_head,
                          int index,
+                         const std::string& key_tail,
                          Tail&&... tail)
     {
         return get(key_head + "._" + std::to_string(index) + "." + key_tail, std::forward<Tail>(tail)...);
     }
 
     template <typename Head, typename... Tail>
-    optional<std::string> get_enum_optional(const std::string& key_head,
-                                            const std::string& key_tail,
+    optional<std::string> get_enum_property_opt(const std::string& key_head,
                                             int index,
+                                            const std::string& key_tail,
                                             Head const& head,
                                             Tail&&... tail)
     {
@@ -415,9 +415,9 @@ public:
     }
 
     template <typename... Tail>
-    optional<std::string> get_enum_optional(const std::string& key_head,
-                                            const std::string& key_tail,
+    optional<std::string> get_enum_property_opt(const std::string& key_head,
                                             int index,
+                                            const std::string& key_tail,
                                             Tail&&... tail)
     {
         return get_optional(key_head + "._" + std::to_string(index) + "." + key_tail, std::forward<Tail>(tail)...);
