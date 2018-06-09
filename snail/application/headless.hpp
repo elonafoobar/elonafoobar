@@ -21,13 +21,13 @@ public:
 
     int width() const noexcept
     {
-        return 1;
+        return 800;
     }
 
 
     int height() const noexcept
     {
-        return 1;
+        return 600;
     }
 
     const std::string& title() const noexcept
