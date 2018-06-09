@@ -315,8 +315,7 @@ std::string mapname_dungeon(int id)
 
     if (suffix_id >= 20 && suffix_id <= 23)
     {
-        name += i18n::s.get("core.locale.map.dungeon._" +
-                            std::to_string(suffix_id));
+        name += i18n::s.get_enum("core.locale.map.dungeon", suffix_id);
     }
     return name;
 }
@@ -343,12 +342,8 @@ std::string mapname(int id, bool description)
         name = mapname_dungeon(id);
         break;
     default:
-        name = i18n::s.get("core.locale.map.unique._" +
-                           std::to_string(adata(16, id)) +
-                           ".name");
-        auto desc_opt = i18n::s.get_optional("core.locale.map.unique._" +
-                                             std::to_string(adata(16, id)) +
-                                             ".desc");
+        name = i18n::s.get_enum("core.locale.map.unique", "name", adata(16, id));
+        auto desc_opt = i18n::s.get_enum_optional("core.locale.map.unique", "desc", adata(16, id));
         if (desc_opt)
         {
             desc = *desc_opt;

@@ -68,22 +68,22 @@ void healsp(int cc, int delta)
 int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
 {
     int ele_at_m141 = 0;
-    bool is_player = false;
     int r_at_m141 = 0;
     int dmglevel_at_m141 = 0;
     int f_at_m141 = 0;
     int se_at_m141 = 0;
     elona_vector1<int> p_at_m141;
     int exp_at_m141 = 0;
+    int c3_at_m141 = 0;
     elona::prm_853 = prm_853;
     ele_at_m141 = prm_856;
     if (txt3rd == 0)
     {
-        is_player = prm_855 == 0;
+        c3_at_m141 = prm_855;
     }
     else
     {
-        is_player = false;
+        c3_at_m141 = -1;
     }
     if (cdata[prm_853].state != 1)
     {
