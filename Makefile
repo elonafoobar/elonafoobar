@@ -55,6 +55,7 @@ ldoc:
 	cp doc/uikit.min.css $(BIN_DIR)/doc/uikit.min.css
 	cp doc/red_putit.png $(BIN_DIR)/doc/red_putit.png
 	cd $(BIN_DIR) && ldoc -c ../doc/config.ld -l ../doc -s ../doc ../doc/api/
+	cp -r $(BIN_DIR)/doc docs
 
 luacheck:
 	luacheck --version
