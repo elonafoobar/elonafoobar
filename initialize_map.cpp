@@ -11,6 +11,8 @@
 #include "event.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "lua_env/event_manager.hpp"
+#include "lua_env/lua_env.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "mapgen.hpp"
@@ -67,6 +69,7 @@ label_17401:
                 if (cdata[cnt].state == 9)
                 {
                     cdata[cnt].state = 1;
+                    lua::lua.on_chara_loaded(cdata[cnt]);
                 }
             }
         }
@@ -75,6 +78,7 @@ label_17401:
         ""s + gdata_current_map + u8"_"s + (100 + gdata_current_dungeon_level);
     if (mode == 3)
     {
+        lua::lua.get_handle_manager().clear_map_local_handles();
         ctrl_file(file_operation_t::_1);
         ctrl_file(file_operation2_t::_3, u8"inv_"s + mid + u8".s2");
         goto label_1744_internal;
@@ -96,6 +100,7 @@ label_17401:
     }
     if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
     {
+        lua::lua.get_handle_manager().clear_map_local_handles();
         ctrl_file(file_operation_t::_1);
         if (mdata(7) == 0)
         {
@@ -165,7 +170,7 @@ label_1741_internal:
     }
     for (int cnt = 1320; cnt < 5480; ++cnt)
     {
-        inv[cnt].number = 0;
+        item_remove(inv[cnt]);
     }
     DIM2(mdata, 100);
     mdata(11) = gdata_current_dungeon_level;
@@ -926,6 +931,8 @@ label_1741_internal:
             }
             else
             {
+                // Move existing characters/items to the middle of the
+                // map if the home was upgraded.
                 ctrl_file(file_operation2_t::_3, u8"inv_"s + mid + u8".s2");
                 for (const auto& cnt : items(-1))
                 {
@@ -2667,6 +2674,7 @@ label_1741_internal:
     randomize();
     mdata(19) = gdata(184);
     mdata(21) = 1;
+    lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::map_created>();
 label_1742_internal:
     if (gdata_current_map == 4)
     {
@@ -2713,6 +2721,7 @@ label_1742_internal:
         }
         rc = cnt;
         cdata[rc].state = 1;
+        lua::lua.on_chara_loaded(cdata[rc]);
         if (cdata[cnt].is_contracting() == 1)
         {
             cxinit = cdata[0].position.x;
@@ -2966,6 +2975,7 @@ label_1744_internal:
     label_1746();
     label_1439();
     update_scrolling_info();
+
     if (mdata(6) == 3)
     {
         quest_refresh_list();
@@ -3504,6 +3514,9 @@ label_1744_internal:
                     + u8" minites."s));
         }
     }
+
+    lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::map_initialized>();
+
     return turn_result_t::turn_begin;
 }
 

@@ -1,0 +1,20 @@
+--- Functions for manipulating the player's user interface.
+--  @usage local GUI = Elona.require("GUI")
+module "GUI"
+
+--- Prints some text in the HUD message window.
+-- @tparam string message the message to print
+function txt(message) end
+
+--- Sets the color of the text printed with GUI.txt.
+--- Valid colors are 0 - 20.
+--- 0 - white
+--- 1 - green
+--- 2 - red
+--- 3 - purple
+--- 4 - tan
+--- 5 - yellow
+--- 6 - gray
+-- @tparam num color the color to set
+-- @see GUI.txt
+function txt_color(color) end

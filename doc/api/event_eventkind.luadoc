@@ -1,0 +1,83 @@
+--- A set of events that can be listened for using the <code>Event</code> module.
+-- @see Event
+-- @usage local Event = Elona.require("Event")
+-- local function my_chara_moved_handler(chara)
+--    -- your code here
+-- end
+-- Event.register(Event.EventKind.CharaMoved, my_chara_moved_handler)
+module "Event.EventKind"
+
+--- Fired after the game has finished initially loading.
+--- This will only ever be fired once per game session.
+-- @event GameInitialized
+
+--- Fired after a map has been initially created.
+-- @event MapCreated
+
+--- Fired after a character has been initially created (but not loaded
+--- from a savefile).
+-- @event CharaCreated
+-- @tfield LuaCharacter chara the character that was created
+
+--- Fired after an item has been initially created (but not loaded
+--- from a savefile).
+-- @event ItemCreated
+-- @tfield LuaItem item the item that was created
+
+--- Fired after a character is no longer valid for use inside scripts.
+-- @event CharaRemoved
+-- @tfield LuaCharacter chara the character that was removed
+
+--- Fired after a character is refreshed. This means various
+-- attributes like speed are recalculated. Also, intrinsic character
+-- flags (the first 32) will be automatically set from their prototype
+-- definitions on refresh. This currently means if you want to set a
+-- character's intrinsic flag, you have to do so on this event.
+-- @see LuaCharacter.set_flag
+-- @event CharaRefreshed
+-- @tfield LuaCharacter chara the character that was refreshed
+
+--- Fired after a character is hurt.
+-- @event CharaRefreshed
+-- @tfield LuaCharacter chara the character that was hurt
+-- @tfield num amount the amount of damage
+
+--- Fired after a character was killed. This might not remove the
+--- character, because they might revive at some later time (like NPCs
+--- in towns). As such, you shouldn't remove the character's data from
+--- global storage here.
+-- @event CharaKilled
+-- @tfield LuaCharacter chara the character that was killed
+
+--- Fired when a character is about to start moving.
+-- @event CharaMoved
+-- @tfield LuaCharacter chara the character that is moving
+-- @usage local GUI = Elona.require("GUI")
+-- local Event = Elona.require("Event")
+--
+-- local function my_chara_moved_handler(chara)
+--     GUI.txt("The character " .. chara.name .. " is about to move. ")
+-- end
+--
+-- Event.register(Event.EventKind.CharaMoved, my_chara_moved_handler)
+
+--- Fired when a player's turn has just begun.
+-- @event PlayerTurn
+
+--- Fired when all characters have finished their actions this turn.
+-- @event AllTurnsFinished
+
+--- Fired after a map has been either created or loaded.
+-- @event MapInitialized
+-- @usage local Chara = Elona.require("Chara")
+-- local Event = Elona.require("Event")
+-- local Map = Elona.require("Map")
+--
+-- local function place_characters()
+--     for i=0, 50 do
+--         local pos = Map.random_pos()
+--         Chara.create(pos, 3)
+--     end
+-- end
+--
+-- Event.register(Event.EventKind.MapInitialized, place_characters)

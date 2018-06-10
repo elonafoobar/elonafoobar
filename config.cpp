@@ -328,14 +328,6 @@ void load_config(const fs::path& json_file)
             1,
             [&](auto value) { config::instance().attackanime = value; }),
         std::make_unique<config_integer>(
-            u8"initialKeyWait",
-            10,
-            [&](auto value) { config::instance().initialkeywait = value; }),
-        std::make_unique<config_integer>(
-            u8"keyWait",
-            5,
-            [&](auto value) { config::instance().keywait = value; }),
-        std::make_unique<config_integer>(
             u8"envEffect",
             1,
             [&](auto value) { config::instance().env = value; }),
@@ -724,6 +716,10 @@ void load_config(const fs::path& json_file)
             u8"autosave",
             0,
             [&](auto value) { config::instance().autosave = value; }),
+        std::make_unique<config_string>(
+            u8"startup_script",
+            "",
+            [&](auto value) { config::instance().startup_script = std::string{value}; }),
         std::make_unique<config_integer>(
             u8"damage_popup",
             1,

@@ -18,6 +18,7 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "lua_env/lua_env.hpp"
 #include "macro.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
@@ -846,6 +847,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         }
         if (ct >= ELONA_MAX_CHARACTERS)
         {
+            lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::all_turns_finished>();
             return turn_result_t::all_turns_finished;
         }
     }
@@ -1413,6 +1415,7 @@ turn_result_t pc_turn(bool advance_time)
 {
     if (advance_time)
     {
+        lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::player_turn>();
         if (gdata_catches_god_signal)
         {
             if (rnd(1000) == 0)
@@ -1832,7 +1835,7 @@ label_2747:
             gcopy(3, 496, 528, sx, 5);
         }
         redraw();
-        press();
+        wait_key_pressed();
         update_entire_screen();
         snd(20);
         goto label_2747;

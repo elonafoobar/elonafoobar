@@ -7,6 +7,7 @@
 #include "item.hpp"
 #include "item_db.hpp"
 #include "item_material.hpp"
+#include "lua_env/lua_env.hpp"
 #include "map_cell.hpp"
 #include "random.hpp"
 #include "variables.hpp"
@@ -305,7 +306,7 @@ int do_create_item(int slot, int x, int y)
         if (slot >= 0)
         {
             cdata[slot].gold += inv[ci].number;
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             return 1;
         }
     }
@@ -480,6 +481,8 @@ int do_create_item(int slot, int x, int y)
     {
         inv[ci].number = initnum;
     }
+
+    lua::lua.on_item_creation(inv[ci]);
 
     if (nostack == 1)
     {

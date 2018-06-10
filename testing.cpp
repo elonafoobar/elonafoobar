@@ -3,6 +3,7 @@
 #include "gdata.hpp"
 #include "init.hpp"
 #include "log.hpp"
+#include "lua_env/lua_env.hpp"
 #include "variables.hpp"
 #include "version.hpp"
 
@@ -12,7 +13,7 @@ namespace testing
 {
 
 const fs::path save_dir("tests/data/save");
-const std::string player_id = "sav_ruin";
+const std::string player_id = "sav_testbed";
 
 void load_previous_savefile()
 {
@@ -43,7 +44,15 @@ void start_in_debug_map()
 
     gdata_current_map = 9999; // Debug map
     gdata_current_dungeon_level = 2;
+    init_fovlist();
     initialize_map();
+}
+
+void configure_lua()
+{
+    sol::table Testing = lua::lua.get_state()->create_named_table("Testing");
+    Testing.set_function("start_in_debug_map", start_in_debug_map);
+    Testing.set_function("reset_state", reset_state);
 }
 
 void pre_init()
@@ -51,13 +60,17 @@ void pre_init()
     log::initialize();
 
     initialize_cat_db();
+    configure_lua();
 
     foobar_save.initialize();
 
     title(u8"Elona Foobar version "s + latest_version.short_string());
 
     initialize_config(fs::path("tests/data/config.json"));
+
     config::instance().is_test = true;
+
+    configure_lua();
 }
 
 void post_run()
@@ -68,6 +81,9 @@ void post_run()
 
 void reset_state()
 {
+    config::instance().is_test = true;
+    lua::lua.reload();
+    configure_lua();
     initialize_elona();
 
     // reset translations

@@ -36,6 +36,7 @@
 #include "item_material.hpp"
 #include "itemgen.hpp"
 #include "log.hpp"
+#include "lua_env/lua_env.hpp"
 #include "macro.hpp"
 #include "main.hpp"
 #include "map.hpp"
@@ -3473,7 +3474,7 @@ void refresh_burden_state()
 
 void revive_character()
 {
-    label_1538();
+    do_chara_revival();
     cxinit = cdata[0].position.x;
     cyinit = cdata[0].position.y;
     chara_place();
@@ -3489,7 +3490,7 @@ void revive_character()
 
 
 
-void label_1538()
+void do_chara_revival()
 {
     label_15380();
     label_15390();
@@ -3521,6 +3522,7 @@ void label_15380()
     cdata[rc].current_map = 0;
     cdata[rc].relationship = cdata[rc].original_relationship;
     cdata[rc].nutrition = 8000;
+    lua::lua.on_chara_loaded(cdata[rc]); // TODO add separate Lua event for revival
     return;
 }
 
@@ -3575,7 +3577,7 @@ void label_15390()
 
 void label_1540()
 {
-    label_1538();
+    do_chara_revival();
     if (rc == 0)
     {
         gdata_is_returning_or_escaping = 0;
@@ -3670,7 +3672,8 @@ int convertartifact(int prm_930, int prm_931)
     {
         flt(the_item_db[inv[prm_930].id]->level, 4);
         flttypeminor = the_item_db[inv[prm_930].id]->subcategory;
-        inv[prm_930].number = 0;
+        item_remove(inv[prm_930]);
+
         itemcreate(
             inv_getowner(prm_930),
             0,
@@ -4124,7 +4127,7 @@ void character_drops_item()
             }
             if (f)
             {
-                inv[ci].number = 0;
+                item_remove(inv[ci]);
                 continue;
             }
             inv[ci].position.x = cdata[rc].position.x;
@@ -4140,7 +4143,7 @@ void character_drops_item()
                 item_copy(ci, ti);
                 inv[ti].own_state = -2;
             }
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
         }
         cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
         create_pcpic(0, true);
@@ -4283,7 +4286,7 @@ void character_drops_item()
             }
             item_copy(ci, ti);
         }
-        inv[ci].number = 0;
+        item_remove(inv[ci]);
     }
     if (cdata[rc].quality >= 4 || rnd(20) == 0 || cdata[rc].drops_gold() == 1
         || rc < 16)
@@ -5967,6 +5970,7 @@ turn_result_t exit_map()
             if (cdata[cnt].state == 8)
             {
                 cdata[cnt].state = 1;
+                lua::lua.on_chara_loaded(cdata[cnt]); // TODO add separate Lua event for revival
             }
             continue;
         }
@@ -6111,7 +6115,7 @@ void label_1745()
                         }
                         if (inv[cnt].own_state == 0)
                         {
-                            inv[cnt].number = 0;
+                            item_remove(inv[cnt]);
                             cell_refresh(
                                 inv[cnt].position.x, inv[cnt].position.y);
                         }
@@ -6268,7 +6272,7 @@ void label_1745()
                                 if (inv[ci].weight <= 0
                                     || inv[ci].weight >= 4000)
                                 {
-                                    inv[ci].number = 0;
+                                    item_remove(inv[ci]);
                                 }
                             }
                         }
@@ -7791,7 +7795,8 @@ void label_1755()
         {
             continue;
         }
-        inv[cnt].number = 0;
+        item_remove(inv[cnt]);
+
         cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
     }
     if (adata(29, gdata_current_map) == 1)
@@ -8273,7 +8278,7 @@ void begintempinv()
     ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
     for (const auto& cnt : items(-1))
     {
-        inv[cnt].number = 0;
+        item_remove(inv[cnt]);
     }
     return;
 }
@@ -9092,7 +9097,7 @@ void supply_income()
     {
         for (const auto& cnt : items(-1))
         {
-            inv[cnt].number = 0;
+            item_remove(inv[cnt]);
         }
     }
     mode = 6;
@@ -9922,11 +9927,11 @@ label_1948_internal:
         if (key == key_enter)
         {
             label_1955();
-            keyrelease();
+            wait_key_released();
             goto label_1948_internal;
         }
         int a{};
-        stick(a, 768);
+        a = stick(768);
         if (a == 256)
         {
             key = key_enter;
@@ -9937,12 +9942,12 @@ label_1948_internal:
                 || chipm(0, map(tlocx, tlocy, 0)) == 1)
             {
                 snd(27);
-                keyrelease();
+                wait_key_released();
                 goto label_1948_internal;
             }
             tile = map(tlocx, tlocy, 0);
             snd(5);
-            keyrelease();
+            wait_key_released();
         }
         tx = clamp((mousex - inf_screenx), 0, windoww) / 48;
         ty = clamp((mousey - inf_screeny), 0, (windowh - inf_verh)) / 48;
@@ -10154,7 +10159,7 @@ label_1956_internal:
     redraw();
     await(config::instance().wait1);
     int a{};
-    stick(a);
+    a = stick();
     if (a == 256)
     {
         p = mousex / 24 + mousey / 24 * ww;
@@ -11592,7 +11597,7 @@ void remove_card_and_figures()
     {
         if (inv[cnt].id == 504 || inv[cnt].id == 503)
         {
-            inv[cnt].number = 0;
+            item_remove(inv[cnt]);
         }
     }
     return;
@@ -11823,7 +11828,7 @@ void load_gene_files()
     cdata(0).clear();
     for (const auto& cnt : items(-1))
     {
-        inv[cnt].number = 0;
+        item_remove(inv[cnt]);
     }
     for (const auto& cnt : items(0))
     {
@@ -11989,6 +11994,9 @@ void create_cnpc()
 void load_save_data(const fs::path& base_save_dir)
 {
     ELONA_LOG("Load save data: " << playerid);
+
+    // TODO instead serialize/deserialize data
+    lua::lua.get_handle_manager().clear_map_local_handles();
 
     filemod = "";
     ctrl_file(file_operation_t::_10);
@@ -12306,7 +12314,7 @@ turn_result_t do_debug_console()
     {
         await(config::instance().wait1);
         int a{};
-        stick(a);
+        a = stick();
         if (a == 128)
         {
             return do_exit_debug_console();
@@ -13905,7 +13913,7 @@ void continuous_action_others()
         if (inv[ci].id == 54)
         {
             snd(11);
-            inv[ti].number = 0;
+            item_remove(inv[ti]);
             cdata[0].gold += in;
         }
         else
@@ -16275,7 +16283,7 @@ int pick_up_item()
             snd(11);
             ti = ci;
             in = inv[ci].number;
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             msgkeep = 1;
             txt(lang(
                 name(cc) + u8"は"s + itemname(ti, in) + u8"を拾った。"s,
@@ -16982,6 +16990,10 @@ turn_result_t do_bash()
 
 turn_result_t proc_movement_event()
 {
+    auto handle = lua::lua.get_handle_manager().get_chara_handle(cdata[cc]);
+    if(handle != sol::lua_nil)
+        lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::character_moved>(handle);
+
     if (cdata[cc].is_ridden())
     {
         return turn_result_t::turn_end;
@@ -17324,7 +17336,7 @@ void proc_autopick()
             }
             snd(45);
             txt(i18n::fmt(u8"ui", u8"autopick", u8"destroyed")(itemname(ci)));
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             cell_refresh(x, y);
             map(x, y, 5) = map(x, y, 4);
             break;
@@ -19693,7 +19705,7 @@ void do_play_scene()
     scidx += s(0).size();
 label_2681:
     int a{};
-    stick(a, 128);
+    a = stick(128);
     if (a == 128)
     {
         scene_cut = 1;
@@ -19915,7 +19927,7 @@ label_2684_internal:
     for (int cnt = 1; cnt < 16; ++cnt)
     {
         await(30);
-        stick(a, 128);
+        a = stick(128);
         if (a == 128)
         {
             scene_cut = 1;
@@ -20703,7 +20715,7 @@ turn_result_t pc_died()
             u8"You have been buried. Bye...(Hit any key to exit)"s);
         draw_caption();
         redraw();
-        press();
+        wait_key_pressed();
         return turn_result_t::finish_elona;
     }
     s = u8"dead"s

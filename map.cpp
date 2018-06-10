@@ -41,7 +41,7 @@ void map_reload(const std::string& prm_935)
             {
                 if (the_item_db[inv[cnt].id]->category == 57000)
                 {
-                    inv[cnt].number = 0;
+                    item_remove(inv[cnt]);
                     cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
                 }
             }

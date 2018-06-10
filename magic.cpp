@@ -1275,7 +1275,7 @@ label_2181_internal:
         pos(wx, wy);
         gcopy(4, 400, 0, ww, wh);
         redraw();
-        press();
+        wait_key_pressed();
         snd(71);
         break;
     case 1135:
@@ -2198,7 +2198,7 @@ label_2181_internal:
             }
             rc = stat;
         }
-        label_1538();
+        do_chara_revival();
         cxinit = cdata[cc].position.x;
         cyinit = cdata[cc].position.y;
         chara_place();
@@ -3856,7 +3856,7 @@ label_2181_internal:
                     u8"You destroy "s + itemname(ci) + u8" and extract "s + p
                         + u8" recharge powers. (Total:"s + gdata_charge_power
                         + u8")"s));
-                inv[ci].number = 0;
+                item_remove(inv[ci]);
                 refresh_burden_state();
             }
         }
@@ -4005,7 +4005,7 @@ label_2181_internal:
             animeload(8, cc);
             fltbk = the_item_db[inv[ci].id]->category;
             valuebk = calcitemvalue(ci, 0);
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             for (int cnt = 0;; ++cnt)
             {
                 flt(calcobjlv(efp / 10) + 5, calcfixlv(3));
@@ -4020,7 +4020,7 @@ label_2181_internal:
                 }
                 if (inv[ci].value > valuebk * 3 / 2 + 1000)
                 {
-                    inv[ci].number = 0;
+                    item_remove(inv[ci]);
                     continue;
                 }
                 else
@@ -4581,7 +4581,7 @@ label_2181_internal:
         {
             for (const auto& cnt : items(-1))
             {
-                inv[cnt].number = 0;
+                item_remove(inv[cnt]);
             }
         }
         shoptrade = 0;

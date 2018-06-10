@@ -67,7 +67,7 @@ void shop_refresh()
 {
     for (const auto& cnt : items(-1))
     {
-        inv[cnt].number = 0;
+        item_remove(inv[cnt]);
     }
     p = std::min(80, 20 + cdata[tc].shop_rank / 2);
     if (cdata[tc].character_role == 1007)
@@ -591,7 +591,7 @@ void shop_refresh()
         }
         if (f)
         {
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             continue;
         }
         if (cdata[tc].character_role == 1012)
@@ -616,7 +616,7 @@ void shop_refresh()
                 inv[ci].number = inv[ci].number / 2 + 1;
                 if (rnd(2))
                 {
-                    inv[ci].number = 0;
+                    item_remove(inv[ci]);
                     continue;
                 }
             }
@@ -625,7 +625,7 @@ void shop_refresh()
                 inv[ci].number = inv[ci].number / 2 + 1;
                 if (rnd(3))
                 {
-                    inv[ci].number = 0;
+                    item_remove(inv[ci]);
                     continue;
                 }
             }
@@ -635,7 +635,7 @@ void shop_refresh()
         p = the_item_db[inv[ci].id]->category;
         if (is_cursed(inv[ci].curse_state))
         {
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             continue;
         }
         if (inv[ci].curse_state == curse_state_t::blessed)
@@ -646,7 +646,7 @@ void shop_refresh()
         {
             if (inv[ci].id == 516)
             {
-                inv[ci].number = 0;
+                item_remove(inv[ci]);
             }
         }
         if (p == 57000)
@@ -655,7 +655,7 @@ void shop_refresh()
             {
                 if (rnd(5))
                 {
-                    inv[ci].number = 0;
+                    item_remove(inv[ci]);
                 }
             }
         }

@@ -2854,7 +2854,7 @@ turn_result_t do_open_command()
         {
             for (const auto& cnt : items(-1))
             {
-                inv[cnt].number = 0;
+                item_remove(inv[cnt]);
             }
         }
         shoptrade = 0;

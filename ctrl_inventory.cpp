@@ -127,7 +127,7 @@ label_20591:
         {
             if (inv[cnt].number <= 0)
             {
-                inv[cnt].number = 0;
+                item_remove(inv[cnt]);
                 continue;
             }
             if (inv[cnt].id == 488)
@@ -140,7 +140,7 @@ label_20591:
                     u8"Invalid Item Id found. Item No:"s + cnt + u8", Id:"s
                     + inv[cnt].id
                     + u8" has been removed from your inventory."s);
-                inv[cnt].number = 0;
+                item_remove(inv[cnt]);
                 inv[cnt].id = 0;
                 continue;
             }
@@ -1341,7 +1341,6 @@ label_2061_internal:
                 {
                     screenupdate = -1;
                     update_screen();
-                    stick(p);
                     goto label_2060_internal;
                 }
             }
@@ -1999,7 +1998,7 @@ label_2061_internal:
                         + cnvweight(qdata(12, gdata_executing_immediate_quest))
                         + u8")"s);
                 }
-                inv[ci].number = 0;
+                item_remove(inv[ci]);
                 refresh_burden_state();
                 goto label_20591;
             }
@@ -2117,7 +2116,7 @@ label_2061_internal:
             if (inv[ci].id == 54)
             {
                 cdata[0].gold += in;
-                inv[ci].number = 0;
+                item_remove(inv[ci]);
             }
             else
             {

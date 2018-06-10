@@ -1,0 +1,17 @@
+--- Functions for working with randomness.
+--  @usage local Rand = Elona.require("Rand")
+module "Rand"
+
+--- Returns a random number from 0 to n, exclusive.
+-- @tparam num n
+-- @treturn num a number in [0, n)
+function rnd(n) end
+
+--- Returns true one out of every n times.
+-- @tparam num n
+-- @treturn bool true one out of every n times
+function one_in(n) end
+
+--- Returns true 50% of the time.
+-- @treturn bool true 50% of the time
+function coinflip() end
