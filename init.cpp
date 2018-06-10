@@ -1,3 +1,4 @@
+#include "init.hpp"
 #include "ability.hpp"
 #include "adventurer.hpp"
 #include "audio.hpp"
@@ -19,13 +20,13 @@
 #include "fish.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
-#include "init.hpp"
 #include "input.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "item_material.hpp"
 #include "itemgen.hpp"
 #include "log.hpp"
+#include "lua_env/lua_env.hpp"
 #include "macro.hpp"
 #include "main.hpp"
 #include "main_menu.hpp"
@@ -50,6 +51,8 @@ namespace
 
 void main_loop()
 {
+    lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::game_initialized>();
+
     while (true)
     {
         bool finished = turn_wrapper();
@@ -176,6 +179,13 @@ void start_elona()
     if (config::instance().noadebug)
     {
         mode = 4;
+        initialize_game();
+        main_loop();
+        return;
+    }
+    else if (config::instance().startup_script != ""s)
+    {
+        mode = 6;
         initialize_game();
         main_loop();
         return;
@@ -792,6 +802,10 @@ int run()
 
     initialize_config(filesystem::dir::exe() / u8"config.json");
     initialize_elona();
+
+    lua::lua.scan_all_mods(filesystem::dir::mods());
+    lua::lua.load_core_mod(filesystem::dir::mods());
+
     start_elona();
 
     return 0;
@@ -1160,6 +1174,17 @@ void initialize_game()
         event_add(24);
         sceneid = 0;
         do_play_scene();
+    }
+    if (mode == 6)
+    {
+        playerid = u8"sav_testbed"s;
+        initialize_debug_globals();
+        initialize_testbed();
+        if(config::instance().startup_script != ""s)
+        {
+            lua::lua.run_startup_script(config::instance().startup_script);
+        }
+        mode = 2;
     }
     if (mode == 2)
     {

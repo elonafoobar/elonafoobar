@@ -8,6 +8,7 @@ namespace elona
 void initialize_config(const fs::path&);
 void initialize_cat_db();
 void initialize_elona();
+void init_fovlist();
 void initialize_game();
 void initialize_debug_globals();
 int run();

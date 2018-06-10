@@ -13,6 +13,7 @@
 #include "event.hpp"
 #include "fov.hpp"
 #include "item.hpp"
+#include "lua_env/lua_env.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
 #include "quest.hpp"
@@ -693,6 +694,12 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             }
         }
     }
+
+    {
+        auto handle = lua::lua.get_handle_manager().get_chara_handle(cdata[prm_853]);
+        lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::character_damaged>(handle, dmg_at_m141);
+    }
+
     if (cdata[prm_853].hp < 0)
     {
         se_at_m141 = eleinfo(ele_at_m141, 1);
@@ -1422,6 +1429,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             }
         }
         end_dmghp();
+
+        chara_killed(cdata[prm_853]);
+
         return 0;
     }
     end_dmghp();

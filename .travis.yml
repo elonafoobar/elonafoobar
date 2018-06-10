@@ -69,7 +69,7 @@ script:
   - wget --no-verbose "http://ylvania.style.coocan.jp/file/elona122.zip"
   - unzip -qq elona122.zip
   - rm elona122.zip
-  - cd ..
+  - cd "$TRAVIS_BUILD_DIR"
   - make clean
   - make tests VERBOSE=1
   - bin/ElonaFoobar

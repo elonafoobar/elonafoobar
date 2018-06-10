@@ -13,6 +13,8 @@ struct position_t
     int x = 0;
     int y = 0;
 
+    position_t() {}
+    position_t(int _x, int _y) : x(_x), y(_y) {}
 
     template <typename Archive>
     void serialize(Archive& ar)

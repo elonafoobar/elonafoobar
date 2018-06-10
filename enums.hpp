@@ -28,6 +28,31 @@ enum class identification_state_t
     completely_identified,
 };
 
+enum class damage_source_t : int
+{
+    trap = -1,
+    overcasting = -2,
+    starvation = -3,
+    poisoning = -4,
+    curse = -5,
+    backpack_weight = -6,
+    fall_from_stairs = -7,
+    audience = -8,
+    burn = -9,
+    adventuring = -10, // used in unused casino codepath
+    unseen_hand = -11,
+    food_poisoning = -12,
+    blood_loss = -13,
+    ether_disease = -14,
+    acid = -15,
+    shatter = -16,
+    atomic_bomb = -17,
+    iron_maiden = -18,
+    guillotine = -19,
+    hanging = -20,
+    mochi = -21,
+};
+
 enum class turn_result_t
 {
     none,

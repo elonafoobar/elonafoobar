@@ -1003,7 +1003,7 @@ void quest_exit_map()
         {
             if (inv[cnt].own_state == 4)
             {
-                inv[cnt].number = 0;
+                item_remove(inv[cnt]);
             }
         }
         refresh_burden_state();

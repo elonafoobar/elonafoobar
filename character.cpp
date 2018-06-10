@@ -13,6 +13,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "lua_env/lua_env.hpp"
 #include "map_cell.hpp"
 #include "quest.hpp"
 #include "random.hpp"
@@ -186,6 +187,7 @@ void failed_to_place_character(character& cc)
             name(cc.index) + u8"は何かに潰されて息絶えた。"s,
             name(cc.index) + u8" is killed."s));
         cc.state = 0;
+        chara_killed(cc);
         // Exclude town residents because they occupy character slots even
         // if they are dead.
         modify_crowd_density(cc.index, -1);
@@ -193,12 +195,14 @@ void failed_to_place_character(character& cc)
     if (cc.character_role != 0)
     {
         cc.state = 2;
+        chara_killed(cc);
     }
     if (cc.character_role == 13)
     {
         cc.state = 4;
         cc.time_to_revive = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
             + gdata_year * 24 * 30 * 12 + 24 + rnd(12);
+        chara_killed(cc);
     }
 }
 
@@ -1138,6 +1142,9 @@ int chara_create_internal()
     cdata[rc].quality = fixlv;
     cdata[rc].index = rc;
     initialize_character();
+
+    lua::lua.on_chara_creation(cdata[rc]);
+
     rtval = rc;
     return 1;
 }
@@ -1632,6 +1639,12 @@ void chara_refresh(int cc)
     refresh_burden_state();
     refreshspeed(cc);
     cdata[cc].needs_refreshing_status() = false;
+
+    auto handle = lua::lua.get_handle_manager().get_chara_handle(cdata[cc]);
+    if(handle != sol::lua_nil)
+    {
+        lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::character_refreshed>(handle);
+    }
 }
 
 int relationbetween(int c1, int c2)
@@ -1972,20 +1985,59 @@ bool chara_copy(int cc)
     return true;
 }
 
-
-
-void chara_delete(int prm_783)
+void chara_killed(character& chara)
 {
-    for (const auto& cnt : items(prm_783))
+    // Regardless of whether or not this character will revive, run
+    // the character killed callback.
+    auto handle = lua::lua.get_handle_manager().get_chara_handle(chara);
+    lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::character_killed>(handle);
+
+    if(chara.state == 0)
     {
-        inv[cnt].number = 0;
+        // This character slot is invalid, and can be overwritten by
+        // newly created characters at any time. Run any Lua callbacks
+        // to clean up character things.
+        lua::lua.on_chara_removal(chara);
+    }
+    else if(chara.state == 2 || chara.state == 4 || chara.state == 6)
+    {
+        // This character revives.
+    }
+    else
+    {
+        assert(0);
+    }
+}
+
+
+
+void chara_delete(int cc)
+{
+    int state = cdata[cc].state;
+    if(cc != -1 && cdata[cc].index != -1 && state != 0)
+    {
+        // This character slot was previously occupied and is
+        // currently valid. If the state were 0, then chara_killed
+        // would have been called to run the chara removal handler for
+        // the Lua state. We'll have to run it now.
+        lua::lua.on_chara_removal(cdata[cc]);
+    }
+    else
+    {
+        // This character slot is invalid, so the removal callback
+        // must have been ran already.
+    }
+
+    for (const auto& cnt : items(cc))
+    {
+        item_remove(inv[cnt]);
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        cdatan(cnt, prm_783) = "";
+        cdatan(cnt, cc) = "";
     }
-    sdata.clear(prm_783);
-    cdata(prm_783).clear();
+    sdata.clear(cc);
+    cdata(cc).clear();
     return;
 }
 
@@ -2079,11 +2131,17 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
         inv[cnt].body_part = 0;
         ++p_at_m125;
     }
+
+    // TODO handle transferring through Lua robustly
+    // lua::lua.on_chara_removal(cdata[prm_784]);
+
     sdata.copy(tc_at_m125, prm_784);
     sdata.clear(prm_784);
     cdata(tc_at_m125) = cdata(prm_784);
     cdata(prm_784).clear();
+
     cdata(tc_at_m125).index = tc_at_m125;
+
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         cdatan(cnt, tc_at_m125) = cdatan(cnt, prm_784);
@@ -2149,6 +2207,10 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
     rc = tc_at_m125;
     wear_most_valuable_equipment_for_all_body_parts();
     chara_refresh(tc_at_m125);
+
+    // TODO handle transferring through Lua robustly
+    // lua::lua.on_chara_creation(cdata[tc_at_m125]);
+
     if (tc_at_m125 < 57)
     {
         modify_crowd_density(prm_784, -1);
@@ -2157,6 +2219,7 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
     {
         modify_crowd_density(tc_at_m125, 1);
     }
+
     return prm_784;
 }
 

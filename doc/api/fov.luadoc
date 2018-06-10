@@ -1,0 +1,28 @@
+--- Functions for testing visibility.
+--  @usage local FOV = Elona.require("FOV")
+module "FOV"
+
+--- Checks if there is line of sight between two positions in the current map.
+-- @tparam LuaPosition from (const) the position from
+-- @tparam LuaPosition to (const) the position to
+-- @treturn bool true if there is line of sight between the positions
+function los(from, to) end
+
+--- Returns true if the player can see the given character, taking
+--- blindness into account.
+-- @tparam LuaCharacter character (const) a character
+-- @treturn bool true if the player can see the character
+function you_see(character) end
+
+--- Returns true if the player can see the given position, taking
+--- blindness into account.
+-- @tparam LuaPosition position (const) a position
+-- @treturn bool true if the player can see the position
+function you_see(position) end
+
+--- Forces an update of the player's field of view cache.
+--- You should run this if you're creating objects inside Lua and
+--- expecting them to be visible to the player immediately after, or
+--- if you're updating the layout of the map and expecting the
+--- player's visible object list to change.
+function refresh() end

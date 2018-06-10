@@ -15,7 +15,6 @@ namespace elona
 {
 
 elona_vector2<int> cellobjdata;
-elona_vector1<int> tile_room;
 int i_at_m68;
 int tx_at_m168 = 0;
 int ty_at_m168 = 0;
