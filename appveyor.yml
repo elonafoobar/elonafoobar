@@ -6,7 +6,7 @@ os:
 
 environment:
   matrix:
-  - CMAKE_ARGS: -G "Visual Studio 15 2017 Win64"
+  - CMAKE_ARGS: -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Debug
     BOOST_VERSION: 1.66.0
     BOOST_ROOT: C:\Libraries\boost_1_66_0
     PREFIX: C:\SDK
@@ -27,6 +27,9 @@ for:
 
   configuration:
     - Release
+
+  environment:
+    CMAKE_ARGS: -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release
 
 
 branches:
