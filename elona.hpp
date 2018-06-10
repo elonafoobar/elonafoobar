@@ -505,7 +505,7 @@ void mes(const std::string& text);
 
 void mes(int n);
 
-void mesbox(std::string& buffer);
+void mesbox(std::string& buffer, bool text = false);
 
 void mkdir(const fs::path& path);
 

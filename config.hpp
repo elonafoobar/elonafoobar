@@ -39,6 +39,7 @@ public:
     int hp_bar;
     int ignoredislike;
     int joypad;
+    int keywait;
     int language;
     int leash_icon;
     int msgaddtime;

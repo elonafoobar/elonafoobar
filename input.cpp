@@ -262,7 +262,7 @@ void input_text_dialog(
 
     pos(x, y);
     inputlog = "";
-    mesbox(inputlog);
+    mesbox(inputlog, true);
     pos(x + 4, y + 4);
     gfini(dx - 1, 35);
     gfdec(60, 60, 60);
@@ -853,7 +853,10 @@ void key_check(int prm_299)
     bool shortcut{};
     for (int i = 0; i < 10; ++i)
     {
-        if (getkey(snail::key(int(snail::key::key_0) + i)))
+        const auto pressed = snail::input::instance().is_pressed(
+            snail::key(int(snail::key::key_0) + i),
+            prm_299 == 1 ? 1 : config::instance().keywait);
+        if (pressed)
         {
             key = u8"sc";
             sc = i;

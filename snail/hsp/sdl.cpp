@@ -2,6 +2,8 @@
 #include "../input.hpp"
 #include "../font.hpp"
 #include "../color.hpp"
+// TODO: this dependency is not good.
+#include "../../config.hpp"
 #include "../detail/sdl.hpp"
 #include "../window.hpp"
 #include <unordered_map>
@@ -201,8 +203,9 @@ namespace mesbox_detail
 
 struct MessageBox
 {
-    MessageBox(std::string& buffer)
+    MessageBox(std::string& buffer, bool text)
         : buffer(buffer)
+        , text(text)
     {
     }
 
@@ -211,34 +214,48 @@ struct MessageBox
     {
         auto& input = input::instance();
         buffer += input.get_text();
-        if (!input.is_ime_active())
+
+        if (text)
         {
-            if (input.is_pressed(key::enter) || input.is_pressed(key::keypad_enter))
+            if (!input.is_ime_active())
+            {
+                if (input.was_pressed_just_now(key::enter)
+                    || input.was_pressed_just_now(key::keypad_enter))
+                {
+                    // New line.
+                    buffer += '\n';
+                }
+                else if (input.is_pressed(key::backspace) && !buffer.empty())
+                {
+                    // Delete the last character.
+                    size_t last_byte_count{};
+                    for (size_t i = 0; i < buffer.size();)
+                    {
+                        const auto byte = strutil::byte_count(buffer[i]);
+                        last_byte_count = byte;
+                        i += byte;
+                    }
+                    buffer.erase(buffer.size() - last_byte_count, last_byte_count);
+                }
+                else if (
+                    input.is_pressed(key::key_v)
+                    && input.is_pressed(key::ctrl))
+                {
+                    // Paste.
+                    std::unique_ptr<char, decltype(&::SDL_free)> text_ptr{
+                        ::SDL_GetClipboardText(), ::SDL_free};
+
+                    buffer += strutil::replace(text_ptr.get(), u8"\r\n", u8"\n");
+                }
+            }
+        }
+        else
+        {
+            if (input.is_pressed(key::enter, config::instance().keywait)
+                || input.is_pressed(key::keypad_enter, config::instance().keywait))
             {
                 // New line.
                 buffer += '\n';
-            }
-            else if (input.is_pressed(key::backspace) && !buffer.empty())
-            {
-                // Delete the last character.
-                size_t last_byte_count{};
-                for (size_t i = 0; i < buffer.size();)
-                {
-                    const auto byte = strutil::byte_count(buffer[i]);
-                    last_byte_count = byte;
-                    i += byte;
-                }
-                buffer.erase(buffer.size() - last_byte_count, last_byte_count);
-            }
-            else if (
-                input.is_pressed(key::key_v)
-                && input.is_pressed(key::ctrl))
-            {
-                // Paste.
-                std::unique_ptr<char, decltype(&::SDL_free)> text_ptr{
-                    ::SDL_GetClipboardText(), ::SDL_free};
-
-                buffer += strutil::replace(text_ptr.get(), u8"\r\n", u8"\n");
             }
         }
     }
@@ -246,6 +263,7 @@ struct MessageBox
 
 private:
     std::string& buffer;
+    bool text;
 };
 
 std::vector<std::unique_ptr<MessageBox>> message_boxes;
@@ -292,10 +310,10 @@ void mes(const std::string& text)
     }
 }
 
-void mesbox(std::string& buffer)
+void mesbox(std::string& buffer, bool text)
 {
     mesbox_detail::message_boxes.emplace_back(
-        std::make_unique<mesbox_detail::MessageBox>(buffer));
+        std::make_unique<mesbox_detail::MessageBox>(buffer, text));
 }
 
 void picload(basic_image& img, int mode)

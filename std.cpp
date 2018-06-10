@@ -575,9 +575,9 @@ void mes(int n)
 
 
 
-void mesbox(std::string& buffer)
+void mesbox(std::string& buffer, bool text)
 {
-    snail::hsp::mesbox(buffer);
+    snail::hsp::mesbox(buffer, text);
 }
 
 

@@ -30,7 +30,7 @@ inline T clamp(const T& x, const T& min, const T& max)
 
 int timeGetTime();
 void mes(const std::string& text);
-void mesbox(std::string& buffer);
+void mesbox(std::string& buffer, bool text);
 void picload(basic_image& img, int mode);
 void pos(int x, int y);
 void redraw();
