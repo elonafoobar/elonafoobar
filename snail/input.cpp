@@ -275,9 +275,21 @@ input& input::instance() noexcept
 
 
 
-bool input::is_pressed(key k) const
+/*
+key_wait = 1
+a a a a a a a a a a a a a a a a a a a a a
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
+x x x x x x x x x x x x x x x x x x x x x
+
+key_wait = 5
+a a a a a a a a a a a a a a a a a a a a a
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
+x         x         x         x         x
+*/
+bool input::is_pressed(key k, int key_wait) const
 {
-    return _keys[static_cast<size_t>(k)].is_pressed();
+    const auto& key = _keys[static_cast<size_t>(k)];
+    return key.is_pressed() && key.repeat() % key_wait == 0;
 }
 
 

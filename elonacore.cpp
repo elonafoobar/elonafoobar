@@ -12306,9 +12306,9 @@ turn_result_t do_debug_console()
     font(14 - en * 2);
     objmode(2);
     pos(0, 24);
-    mesbox(dbm);
+    mesbox(dbm, true);
     pos(0, 0);
-    mesbox(buff);
+    mesbox(buff, true);
     objsel(2);
     while (1)
     {

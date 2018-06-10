@@ -254,7 +254,7 @@ inline bool is_modifier(key k)
 class input final : public lib::noncopyable
 {
 public:
-    bool is_pressed(key k) const;
+    bool is_pressed(key k, int key_wait = 1) const;
     bool was_pressed_just_now(key k) const;
 
     bool is_ime_active() const;

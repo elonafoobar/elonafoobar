@@ -262,7 +262,7 @@ void input_text_dialog(
 
     pos(x, y);
     inputlog = "";
-    mesbox(inputlog);
+    mesbox(inputlog, true);
     pos(x + 4, y + 4);
     gfini(dx - 1, 35);
     gfdec(60, 60, 60);

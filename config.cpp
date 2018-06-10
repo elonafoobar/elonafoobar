@@ -724,6 +724,10 @@ void load_config(const fs::path& json_file)
             u8"damage_popup",
             1,
             [&](auto value) { config::instance().damage_popup = value; }),
+        std::make_unique<config_integer>(
+            u8"keyWait",
+            5,
+            [&](auto value) { config::instance().keywait = value; }),
     };
 
     picojson::value value;

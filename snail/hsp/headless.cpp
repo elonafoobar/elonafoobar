@@ -16,7 +16,7 @@ void mes(const std::string& message)
 {
 }
 
-void mesbox(std::string&)
+void mesbox(std::string&, bool)
 {
 }
 
