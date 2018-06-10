@@ -810,7 +810,8 @@ main_menu_result_t character_making_final_phase()
     {
         inputlog = "";
         input_text_dialog(
-            (windoww - 230) / 2 + inf_screenx, winposy(120), 10, false, true);
+            (windoww - 230) / 2 + inf_screenx, winposy(120), 10, false);
+        inputlog = filesystem::normalize_as_filename(inputlog);
         cmname = ""s + inputlog;
         if (cmname == ""s || cmname == u8" "s)
         {
@@ -819,7 +820,7 @@ main_menu_result_t character_making_final_phase()
         playerid = u8"sav_"s + cmname;
         if (range::any_of(
                 filesystem::dir_entries{filesystem::dir::save(),
-                                        filesystem::dir_entries::type::dir},
+                                        filesystem::dir_entries::type::all},
                 [&](const auto& entry) {
                     return filesystem::to_utf8_path(entry.path().filename())
                         == playerid;

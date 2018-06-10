@@ -33,7 +33,6 @@ void input_text_dialog(
     int y,
     int val2,
     bool is_cancelable = true,
-    bool as_filename = false,
     bool limit_length = true);
 
 
