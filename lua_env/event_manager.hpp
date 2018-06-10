@@ -46,6 +46,8 @@ enum class event_kind_t : unsigned
     player_turn,
     all_turns_finished,
 
+    script_loaded,
+
     COUNT // for iterating over all event kinds
 };
 

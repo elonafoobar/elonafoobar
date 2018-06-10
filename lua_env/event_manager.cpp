@@ -32,7 +32,9 @@ void init_event_kinds(sol::table& Event)
 
         "CharaMoved", event_kind_t::character_moved,
         "PlayerTurn", event_kind_t::player_turn,
-        "AllTurnsFinished", event_kind_t::all_turns_finished
+        "AllTurnsFinished", event_kind_t::all_turns_finished,
+
+        "ScriptLoaded", event_kind_t::script_loaded
         );
 }
 

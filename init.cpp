@@ -1164,6 +1164,7 @@ void initialize_testbed()
 
 void initialize_game()
 {
+    bool script_loaded = false;
     autopick::instance().load(playerid);
 
     mtilefilecur = -1;
@@ -1195,9 +1196,10 @@ void initialize_game()
         playerid = u8"sav_testbed"s;
         initialize_debug_globals();
         initialize_testbed();
-        if(config::instance().startup_script != ""s)
+        if (config::instance().startup_script != ""s)
         {
             lua::lua.run_startup_script(config::instance().startup_script);
+            script_loaded = true;
         }
         mode = 2;
     }
@@ -1214,6 +1216,11 @@ void initialize_game()
     }
     init_fovlist();
     initialize_map();
+
+    if (script_loaded)
+    {
+        lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::script_loaded>();
+    }
 }
 
 void main_title_loop()
