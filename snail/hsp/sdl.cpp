@@ -857,7 +857,6 @@ void title(const std::string& title_str)
         1000));
     application::instance().register_finalizer(
         []() { ::SDL_DestroyTexture(detail::tmp_buffer); });
-    input::instance().set_key_repeat(10, 3);
     application::instance().register_finalizer(
         [&]() { font_detail::font_cache.clear(); });
     buffer(0, 800, 600);

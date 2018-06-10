@@ -1,0 +1,101 @@
+--- Represents a character.
+-- @classmod LuaCharacter
+
+--- [R] The index of this character in the global characters array.
+-- @tfield num index
+
+--- [R] The prototype ID of this character.
+-- @tfield num id
+
+--- [R] The character's proper name without any qualifiers.
+-- @tfield string name
+
+--- [RW] The character's position.
+-- @tfield LuaPosition position
+
+--- [R] The character's current HP.
+-- @tfield num hp
+
+--- [R] The character's maximum HP.
+-- @tfield num max_hp
+
+--- [R] The character's current MP.
+-- @tfield num mp
+
+--- [R] The character's maximum MP.
+-- @tfield num max_mp
+
+--- [R] The character's current stamina.
+-- @tfield num sp
+
+--- [R] The character's maximum stamina.
+-- @tfield num max_sp
+
+--- [RW] The shop rank of this character. Used only if they are a shopkeeper.
+-- @tfield num shop_rank
+
+--- [RW] The role this character takes on.
+-- @tfield num character_role
+
+--- Damages this character.
+-- @tparam num amount the amount to damage
+-- @tparam[opt] Enums.DamageSource source the source of the damage (defaults to the unseen hand)
+-- @usage local chara = Chara.player()
+--chara:damage_hp(100)
+function damage_hp(amount, source) end
+
+--- Damages this character, with the source being set as another character.
+-- @tparam num amount the amount to damage
+-- @tparam LuaCharacter source the character acting as the source of the damage
+-- @usage local chara = Chara.player()
+-- local other = Chara.create(0, 0, 3)
+--chara:damage_hp(100, other)
+function damage_hp(amount, source) end
+
+--- Applies a status ailment to this character.
+-- @tparam Enums.StatusAilment ailment the kind of status ailment
+-- @tparam num power the power of the status ailment
+-- @usage local chara = Chara.player()
+--chara:apply_ailment(Enums.StatusAilment.Blinded, 100)
+function apply_ailment(ailment, power) end
+
+--- Attempts to recruit this character as an ally of the player.
+--- This will only work if the character isn't already an ally, isn't
+--- the player, is alive and the player has a free party slot.
+-- @treturn bool true if the character was recruited successfully
+function recruit_as_ally() end
+
+--- Sets a flag on a character. <b>Note</b>: Currently, all flags up
+--- to <code>IsQuickTempered</code> are "intrinsic" and are always
+--- reset when a character is refreshed each turn. To change these
+--- flags, you must call this function inside a handler for
+--- <code>Event.EventKind.CharaRefreshed</code>, or the flag will be
+--- reset later.
+-- @tparam Enums.CharaFlag flag the flag to set
+-- @tparam bool value the flag's new value
+-- @see Event.EventKind.CharaRefreshed
+-- @usage local Event = Elona.require("Event")
+-- local Enums = Elona.require("Enums")
+--
+-- local function make_invisible(chara)
+--   chara:set_flag(Enums.CharaFlag.IsInvisible, true) -- intrinsic, reset on refresh
+-- end
+--
+-- -- force this flag to be overridden after a character is refreshed.
+-- Event.register(Event.EventKind.CharaRefreshed, make_invisible)
+-- Event.register(Event.EventKind.CharaCreated, make_invisible)
+
+function set_flag(flag, value) end
+
+--- Makes a character gain a new skill or spell. This only has an
+--- effect if the character does not already know the skill/spell.
+-- @tparam num id the skill/spell ID
+-- @tparam num initial_level the intial skill/spell level
+-- @tparam[opt] num initial_stock the initial spell stock for spells
+function gain_skill(id, initial_level, initial_stock) end
+
+--- Makes a character gain experience in a skill or spell. This only
+--- has an effect if the character already knows the skill/spell.
+-- @tparam num id the skill/spell ID
+-- @tparam num amount the amount of experience
+function gain_skill_exp(id, amount) end

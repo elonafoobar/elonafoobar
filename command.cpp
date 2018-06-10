@@ -2854,7 +2854,7 @@ turn_result_t do_open_command()
         {
             for (const auto& cnt : items(-1))
             {
-                inv[cnt].number = 0;
+                item_remove(inv[cnt]);
             }
         }
         shoptrade = 0;
@@ -3849,7 +3849,6 @@ turn_result_t do_exit_command()
             msg_halt();
             update_screen();
         }
-        await(300);
         return turn_result_t::finish_elona;
     }
     if (rtval == 2)

@@ -23,7 +23,7 @@ i18n::store load(const std::string& str)
     return store;
 }
 
-TEST_CASE("test formats", "[I18N: Format]")
+TEST_CASE("test formats", "[I18N: Formatting]")
 {
     REQUIRE(i18n::fmt_hil("${_1}", 1) == u8"1"s);
     REQUIRE(i18n::fmt_hil("${_1}", u8"foo"s) == u8"foo"s);
@@ -35,7 +35,7 @@ TEST_CASE("test formats", "[I18N: Format]")
             == u8"You see Adam the rock thrower."s);
 }
 
-TEST_CASE("test format chara", "[I18N: Format]")
+TEST_CASE("test format chara", "[I18N: Formatting]")
 {
     testing::start_in_debug_map();
     REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
@@ -44,7 +44,7 @@ TEST_CASE("test format chara", "[I18N: Format]")
     REQUIRE(i18n::fmt_hil("${_1}", chara) == u8"<character: "s + std::to_string(chara.index) + u8">"s);
 }
 
-TEST_CASE("test format item", "[I18N: Format]")
+TEST_CASE("test format item", "[I18N: Formatting]")
 {
     testing::start_in_debug_map();
     REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, 3));
@@ -53,36 +53,22 @@ TEST_CASE("test format item", "[I18N: Format]")
     REQUIRE(i18n::fmt_hil("${_1}", i) == u8"<item: "s + std::to_string(i.index) + u8">"s);
 }
 
-TEST_CASE("test format character by function", "[I18N: Format]")
+TEST_CASE("test format character by function", "[I18N: Formatting]")
 {
     testing::start_in_debug_map();
-    REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
-    character& chara = elona::cdata[elona::rc];
+    character& chara = testing::create_chara(PUTIT_PROTO_ID, 4, 8);
 
     REQUIRE(i18n::fmt_hil("${name(_1)}", chara) == u8"何か"s);
     REQUIRE(i18n::fmt_hil("${basename(_1)}", chara) == u8"プチ"s);
-    REQUIRE(false);
 }
 
-TEST_CASE("test format item by function", "[I18N: Format]")
+TEST_CASE("test format item by function", "[I18N: Formatting]")
 {
     testing::start_in_debug_map();
     item& i = testing::create_item(PUTITORO_PROTO_ID, 3);
 
     REQUIRE(i18n::fmt_hil("${name(_1)}", i) == u8"3個のプチトロ"s);
     REQUIRE(i18n::fmt_hil("${basename(_1)}", i) == u8"プチトロ"s);
-}
-
-
-TEST_CASE("test i18n builtin: s()", "[I18N: Format]")
-{
-    testing::start_in_debug_map();
-    testing::set_english();
-    character& chara = testing::create_chara(PUTIT_PROTO_ID, 24, 24);
-    update_screen();
-
-    REQUIRE(i18n::fmt_hil("${name(_1)} go${s(_1)} to hell.", chara) == u8"the putit gos to hell.");
-    REQUIRE(i18n::fmt_hil("${name(_1)} go${s(_1, true)} to hell.", chara) == u8"the putit goes to hell.");
 }
 
 
@@ -128,6 +114,41 @@ locale {
     REQUIRE(store.get(u8"core.locale.hoge.fuga") == u8"piyo");
 }
 
+TEST_CASE("test i18n store enum", "[I18N: Store]")
+{
+    i18n::store store = load(R"(
+locale {
+    foo {
+        _1 = "bar"
+        _2 = "baz"
+    }
+}
+)");
+
+    REQUIRE(store.get_enum(u8"core.locale.foo", 1) == u8"bar");
+    REQUIRE(store.get_enum(u8"core.locale.foo", 2) == u8"baz");
+}
+
+
+TEST_CASE("test i18n store complex enum", "[I18N: Store]")
+{
+    i18n::store store = load(R"(
+locale {
+    foo {
+        _1 {
+            name = "bar"
+        }
+        _2 {
+            name = "baz"
+        }
+    }
+}
+)");
+
+    REQUIRE(store.get_enum_property(u8"core.locale.foo", 1, "name") == u8"bar");
+    REQUIRE(store.get_enum_property(u8"core.locale.foo", 2, "name") == u8"baz");
+}
+
 TEST_CASE("test i18n store interpolation", "[I18N: Store]")
 {
     i18n::store store = load(R"(
@@ -157,3 +178,22 @@ locale {
     REQUIRE(store.get(u8"core.locale.foo", u8"bar", u8"baz", "hoge") == u8"baz: bar");
 }
 
+
+TEST_CASE("test i18n store enum interpolation", "[I18N: Store]")
+{
+    i18n::store store = load(R"(
+locale {
+    foo {
+        _1 {
+            name = "bar: ${_1}"
+        }
+        _2 {
+            name = "baz: ${_1}"
+        }
+    }
+}
+)");
+
+    REQUIRE(store.get_enum_property(u8"core.locale.foo", 1, "name", "dood") == u8"bar: dood");
+    REQUIRE(store.get_enum_property(u8"core.locale.foo", 2, "name", "dood") == u8"baz: dood");
+}

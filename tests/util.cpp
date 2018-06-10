@@ -13,8 +13,15 @@ namespace testing
 
 void set_english()
 {
-    elona::en = 1;
     elona::jp = 0;
+    elona::en = 1;
+    set_item_info();
+}
+
+void set_japanese()
+{
+    elona::jp = 1;
+    elona::en = 0;
     set_item_info();
 }
 
@@ -55,6 +62,7 @@ item& create_item(int id, int number)
 
 character& create_chara(int id, int x, int y)
 {
+    elona::fixlv = 0;
     REQUIRE(chara_create(-1, id, x, y));
     return elona::cdata[elona::rc];
 }

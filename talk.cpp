@@ -10,6 +10,7 @@
 #include "draw.hpp"
 #include "event.hpp"
 #include "i18n.hpp"
+#include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "mef.hpp"
@@ -366,7 +367,7 @@ talk_result_t talk_house_visitor()
                     txt(lang(
                         name(tc) + u8"は吐いた。"s, name(tc) + u8" vomits."s));
                     snd(104);
-                    await(10);
+                    await(config::instance().animewait / 2);
                     update_screen();
                 }
             }
@@ -2038,7 +2039,7 @@ label_2258_internal:
     key_check();
     cursor_check();
     int a{};
-    stick(a, 128);
+    a = stick(128);
     if (a == 128)
     {
         if (scenemode)

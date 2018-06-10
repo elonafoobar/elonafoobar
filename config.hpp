@@ -36,9 +36,7 @@ public:
     int hideshopresult;
     int hp_bar;
     int ignoredislike;
-    int initialkeywait;
     int joypad;
-    int keywait;
     int language;
     int leash_icon;
     int msgaddtime;
@@ -59,6 +57,7 @@ public:
     int skiprandevents;
     int sound;
     int startrun;
+    std::string startup_script;
     int story;
     int wait1;
     int walkwait;

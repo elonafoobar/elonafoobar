@@ -255,10 +255,7 @@ class input final : public lib::noncopyable
 {
 public:
     bool is_pressed(key k) const;
-    bool is_pressed_exactly(key k) const;
     bool was_pressed_just_now(key k) const;
-
-    void set_key_repeat(int initial_key_wait, int key_wait) noexcept;
 
     bool is_ime_active() const;
 
@@ -284,8 +281,6 @@ public:
 
 private:
     std::array<button, static_cast<size_t>(key::_size)> _keys;
-    int _initial_key_wait = 30; // frame
-    int _key_wait = 5; // frame
     std::string _text;
     bool _is_ime_active{};
 

@@ -10,6 +10,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item_db.hpp"
+#include "lua_env/lua_env.hpp"
 #include "main.hpp"
 #include "map.hpp"
 #include "mef.hpp"
@@ -455,7 +456,7 @@ void removeitem(int ci, int delta)
     }
     if (inv[ci].number <= 0)
     {
-        inv[ci].number = 0;
+        item_remove(inv[ci]);
         if (mode != 6 && ci >= 5080)
         {
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
@@ -470,7 +471,9 @@ void item_copy(int a, int b)
     if (a < 0 || b < 0)
         return;
 
-    inv(b) = inv(a);
+    inv[b] = inv[a];
+    // Restore "index".
+    inv[b].index = b;
 }
 
 
@@ -478,14 +481,46 @@ void item_copy(int a, int b)
 void item_exchange(int a, int b)
 {
     using std::swap;
-    swap(inv(a), inv(b));
+    swap(inv[a], inv[b]);
+    // Restore "index".
+    inv[a].index = a;
+    inv[b].index = b;
 }
 
 
+void item_remove(item& i)
+{
+    i.number = 0;
 
+    // It seems like item images are not removed from the map if the
+    // item is on the ground, so explicitly clear them.
+    bool on_ground = i.index >= 5080;
+    if(on_ground)
+    {
+        cell_refresh(i.position.x, i.position.y);
+    }
+    lua::lua.on_item_removal(i);
+}
+
+// TODO this only runs after an invalid item slot is replaced by a new
+// item. The callbacks actually need to run wherever item.number is
+// set to 0, which is in many more places.
 void item_delete(int ci)
 {
-    inv(ci).clear();
+    if(inv[ci].index != -1 && inv[ci].number > 0)
+    {
+        // This item slot was previously occupied, but the item is now
+        // invalid.
+        lua::lua.on_item_removal(inv[ci]);
+    }
+    else
+    {
+        // This item slot has never been previously occupied (since
+        // its idx is -1), so don't run the removal callback.
+    }
+    inv[ci].clear();
+    // Restore "index".
+    inv[ci].index = ci;
 }
 
 
@@ -495,7 +530,7 @@ void item_num(int ci, int delta)
     inv[ci].number += delta;
     if (inv[ci].number < 0)
     {
-        inv[ci].number = 0;
+        item_remove(inv[ci]);
     }
     if (ci >= 5080)
     {
@@ -1487,7 +1522,7 @@ int item_stack(int inventory_id, int ci, int show_message)
         if (stackable)
         {
             inv[i].number += inv[ci].number;
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             ti = i;
             did_stack = true;
             break;
@@ -2076,7 +2111,7 @@ int inv_compress(int owner)
             {
                 if (!ibit(5, cnt) && inv[cnt].value < threshold)
                 {
-                    inv[cnt].number = 0;
+                    item_remove(inv[cnt]);
                     ++number_of_deleted_items;
                     if (inv[cnt].position.x >= 0
                         && inv[cnt].position.x < mdata(0)
@@ -2112,7 +2147,7 @@ int inv_compress(int owner)
     {
         // Destroy 1 existing item forcely.
         slot = get_random_inv(owner);
-        inv[slot].number = 0;
+        item_remove(inv[slot]);
         if (mode != 6)
         {
             if (inv[slot].position.x >= 0 && inv[slot].position.x < mdata(0)
@@ -2181,7 +2216,7 @@ int inv_getfreeid_force()
         p = rnd(invrange) + invhead;
         if (inv[p].body_part == 0)
         {
-            inv[p].number = 0;
+            item_remove(inv[p]);
             if (cdata[tc].item_which_will_be_used == p)
             {
                 cdata[tc].item_which_will_be_used = 0;

@@ -504,12 +504,14 @@ extern cdata_t cdata;
 
 int chara_create(int = 0, int = 0, int = 0, int = 0);
 int chara_create_internal();
+void initialize_character();
 void chara_place();
 int chara_relocate(int = 0, int = 0, int = 0);
 void chara_refresh(int);
 bool chara_copy(int cc);
 void chara_delete(int = 0);
 void chara_vanquish(int = 0);
+void chara_killed(character&);
 int chara_find(int = 0);
 int chara_find_ally(int = 0);
 int chara_get_free_slot();
@@ -524,6 +526,7 @@ int chara_armor_class(int = 0);
 
 void initialize_character_filters();
 void chara_set_generation_filter();
+void chara_add_quality_parens();
 
 int access_character_info();
 

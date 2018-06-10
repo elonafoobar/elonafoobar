@@ -1,0 +1,142 @@
+--- Enumerations for various data types.
+--  @usage local Enums = Elona.require("Enums")
+module "Enums"
+
+--- The identification state of an item.
+-- @enum IdentifyState
+-- @usage local item = Item.create(10, 10, 792, 3)
+--item.identify_state = Enums.IdentifyState.Completely
+-- @tfield Enums.IdentifyState Unidentified
+-- @tfield Enums.IdentifyState Partly
+-- @tfield Enums.IdentifyState Almost
+-- @tfield Enums.IdentifyState Completely
+IdentifyState = {}
+
+--- The curse state of an item.
+-- @enum CurseState
+-- @usage local item = Item.create(10, 10, 792, 3)
+--item.curse_state = Enums.CurseState.Blessed
+-- @tfield Enums.CurseState Doomed
+-- @tfield Enums.CurseState Cursed
+-- @tfield Enums.CurseState None
+-- @tfield Enums.CurseState Blessed
+CurseState = {}
+
+--- A status effect applicable to a character.
+-- @enum StatusAilment
+-- @see LuaCharacter.apply_ailment
+-- @tfield Enums.StatusAilment Blinded
+-- @tfield Enums.StatusAilment Confused
+-- @tfield Enums.StatusAilment Paralyzed
+-- @tfield Enums.StatusAilment Poisoned
+-- @tfield Enums.StatusAilment Sleep
+-- @tfield Enums.StatusAilment Fear
+-- @tfield Enums.StatusAilment Dimmed
+-- @tfield Enums.StatusAilment Bleeding
+-- @tfield Enums.StatusAilment Drunk
+-- @tfield Enums.StatusAilment Insane
+-- @tfield Enums.StatusAilment Sick
+StatusAilment = {}
+
+--- A type of tile to be used with <code>Map.generate_tile</code>.
+-- @enum TileKind
+-- @see Map.generate_tile
+-- @tfield Enums.TileKind Normal
+-- @tfield Enums.TileKind Wall
+-- @tfield Enums.TileKind Tunnel
+-- @tfield Enums.TileKind Room
+-- @tfield Enums.TileKind Fog
+TileKind = {}
+
+--- A source of damage to be used with <code>LuaCharacter.damage_hp</code>.
+-- @enum DamageSource
+-- @see LuaCharacter.damage_hp
+-- @tfield Enums.DamageSource Trap
+-- @tfield Enums.DamageSource Overcasting
+-- @tfield Enums.DamageSource Starvation
+-- @tfield Enums.DamageSource Poisoning
+-- @tfield Enums.DamageSource Curse
+-- @tfield Enums.DamageSource BackpackWeight
+-- @tfield Enums.DamageSource FallFromStairs
+-- @tfield Enums.DamageSource Audience
+-- @tfield Enums.DamageSource Burn
+-- @tfield Enums.DamageSource Adventuring
+-- @tfield Enums.DamageSource UnseenHand
+-- @tfield Enums.DamageSource FoodPoisoning
+-- @tfield Enums.DamageSource BloodLoss
+-- @tfield Enums.DamageSource EtherDisease
+-- @tfield Enums.DamageSource Acid
+-- @tfield Enums.DamageSource Shatter
+-- @tfield Enums.DamageSource AtomicBomb
+-- @tfield Enums.DamageSource IronMaiden
+-- @tfield Enums.DamageSource Guillotine
+-- @tfield Enums.DamageSource Hanging
+-- @tfield Enums.DamageSource Mochi
+DamageSource = {}
+
+--- A flag that can be set on a character. The first 32 flags (up to
+--- <code>IsQuickTempered</code>) are "intrinsic" and will be reset
+--- when the character is refreshed.
+-- @enum CharaFlag
+-- @see LuaCharacter.set_flag
+-- @tfield Enums.CharaFlag IsFloating
+-- @tfield Enums.CharaFlag IsInvisible
+-- @tfield Enums.CharaFlag CanSeeInvisible
+-- @tfield Enums.CharaFlag IsImmuneToConfusion
+-- @tfield Enums.CharaFlag IsImmuneToBlindness
+-- @tfield Enums.CharaFlag IsImmuneToFear
+-- @tfield Enums.CharaFlag IsImmuneToSleep
+-- @tfield Enums.CharaFlag IsImmuneToParalyzation
+-- @tfield Enums.CharaFlag IsImmuneToPoison
+-- @tfield Enums.CharaFlag CanDigestRottenFood
+-- @tfield Enums.CharaFlag IsProtectedFromThieves
+-- @tfield Enums.CharaFlag IsIncognito
+-- @tfield Enums.CharaFlag DropsGold
+-- @tfield Enums.CharaFlag Explodes
+-- @tfield Enums.CharaFlag IsDeathMaster
+-- @tfield Enums.CharaFlag CanCastRapidMagic
+-- @tfield Enums.CharaFlag HasLayHand
+-- @tfield Enums.CharaFlag IsSuitableForMount
+-- @tfield Enums.CharaFlag Splits
+-- @tfield Enums.CharaFlag HasCursedEquipments
+-- @tfield Enums.CharaFlag IsUnsuitableForMount
+-- @tfield Enums.CharaFlag IsImmuneToElementalDamage
+-- @tfield Enums.CharaFlag Splits2
+-- @tfield Enums.CharaFlag IsMetal
+-- @tfield Enums.CharaFlag CuresBleedingQuickly
+-- @tfield Enums.CharaFlag HasPowerBash
+-- @tfield Enums.CharaFlag IsImmuneToMine
+-- @tfield Enums.CharaFlag IsQuickTempered
+-- @tfield Enums.CharaFlag IsLivestock
+-- @tfield Enums.CharaFlag IsMarried
+-- @tfield Enums.CharaFlag HasMadeGene
+-- @tfield Enums.CharaFlag IsEscorted
+-- @tfield Enums.CharaFlag IsTemporary
+-- @tfield Enums.CharaFlag IsSilent
+-- @tfield Enums.CharaFlag HasBeenUsedStethoscope
+-- @tfield Enums.CharaFlag HasOwnSprite
+-- @tfield Enums.CharaFlag IsLeashed
+-- @tfield Enums.CharaFlag IsContracting
+-- @tfield Enums.CharaFlag IsQuestTarget
+-- @tfield Enums.CharaFlag IsEscortedInSubQuest
+-- @tfield Enums.CharaFlag WillExplodeSoon
+-- @tfield Enums.CharaFlag IsSentencedDaeth
+-- @tfield Enums.CharaFlag IsLayHandAvailable
+-- @tfield Enums.CharaFlag IsRidden
+-- @tfield Enums.CharaFlag IsLordOfDungeon
+-- @tfield Enums.CharaFlag HasOwnName
+-- @tfield Enums.CharaFlag IsPregnant
+-- @tfield Enums.CharaFlag DoesNotSearchEnemy
+-- @tfield Enums.CharaFlag IsContractingWithReaper
+-- @tfield Enums.CharaFlag NeedsRefreshingStatus
+-- @tfield Enums.CharaFlag VisitedJustNow
+-- @tfield Enums.CharaFlag BreaksIntoDebris
+-- @tfield Enums.CharaFlag IsBestFriend
+-- @tfield Enums.CharaFlag IsHungOnSandBag
+-- @tfield Enums.CharaFlag HasAnorexia
+-- @tfield Enums.CharaFlag WasPassedItemByYouJustNow
+-- @tfield Enums.CharaFlag CuresMpFrequently
+-- @tfield Enums.CharaFlag HasCustomTalk
+-- @tfield Enums.CharaFlag HasLearnedWords
+-- @tfield Enums.CharaFlag OnlyChristmas
+CharaFlag = {}

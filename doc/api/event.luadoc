@@ -1,0 +1,30 @@
+--- Allows you to register new event callbacks when initializing mods.
+-- @see Event.EventKind
+-- @usage local Event = Elona.require("Event")
+module "Event"
+
+--- Registers a new event handler.
+--- This function will append a new callback hander for the given
+--- event to the end of the callback list for that event. Then, when
+--- the event is fired, each callback in the list will be run in the
+--- order in which they were registered. The callbacks will receive
+--- the arguments specified in the documentation for the event. These
+--- arguments will differ between event types. Read the documentation
+--- for the event you're handling to see the available event
+--- arguments for it.
+-- @tparam Event.EventKind event_id the event kind to register
+-- @tparam function handler the handler for this event
+-- @usage local GUI = Elona.require("GUI")
+-- local Event = Elona.require("Event")
+-- local function my_chara_moved_handler(chara)
+--     GUI.txt("The character " .. chara.name .. " is about to move. ")
+-- end
+--
+-- Event.register(Event.EventKind.CharaMoved, my_chara_moved_handler)
+function register(event_id, handler) end
+
+--- Triggers an event from a Lua script.
+--- WARNING: This does not currently stop recursion!
+-- @tparam Event.EventKind event the event to trigger
+-- @tparam table data the event data
+function trigger(event, data) end

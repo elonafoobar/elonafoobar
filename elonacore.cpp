@@ -36,6 +36,7 @@
 #include "item_material.hpp"
 #include "itemgen.hpp"
 #include "log.hpp"
+#include "lua_env/lua_env.hpp"
 #include "macro.hpp"
 #include "main.hpp"
 #include "map.hpp"
@@ -449,61 +450,6 @@ void initialize_building_daga()
     bdrefn(4) = lang(u8"寺院"s, u8"Temple"s);
     bdrefn(5) = lang(u8"盗賊の隠れ家"s, u8"Smuggler's Hideout"s);
     bdrefn(6) = lang(u8"灯台"s, u8"Light House"s);
-    return;
-}
-
-
-
-void initialize_character()
-{
-    if (mode != 1)
-    {
-        add_quality_parentheses();
-    }
-    cdata[rc].state = 1;
-    cdata[rc].interest = 100;
-    cdata[rc].impression = 50;
-    cdata[rc].vision_distance = 14;
-    if (cdata[rc].id == 205)
-    {
-        cdata[rc].image = rnd(33) * 2 + cdata[rc].sex + 1;
-    }
-    if (rc == 0)
-    {
-        cdata[rc].nutrition = 9000;
-    }
-    else
-    {
-        cdata[rc].nutrition = 5000 + rnd(4000);
-    }
-    cdata[rc].height = cdata[rc].height + rnd((cdata[rc].height / 5 + 1))
-        - rnd((cdata[rc].height / 5 + 1));
-    cdata[rc].weight =
-        cdata[rc].height * cdata[rc].height * (rnd(6) + 18) / 10000;
-    update_required_experience(rc);
-    init_character_skills(rc);
-    if (cdata[rc].portrait == 0)
-    {
-        cdata[rc].portrait = rnd(32);
-    }
-    cdata[rc].personality = rnd(4);
-    cdata[rc].talk_type = rnd(7);
-    supply_initial_equipments();
-    chara_refresh(rc);
-    modify_crowd_density(rc, 1);
-    cdata[rc].hp = cdata[rc].max_hp;
-    cdata[rc].mp = cdata[rc].max_mp;
-    cdata[rc].sp = cdata[rc].max_sp;
-    if (rc == 0)
-    {
-        gdata_initial_cart_limit = 80000;
-        gdata_current_cart_limit = gdata_initial_cart_limit;
-    }
-    if (cdata[rc].has_lay_hand())
-    {
-        cdata[rc].is_lay_hand_available() = true;
-    }
-    cm = 0;
     return;
 }
 
@@ -2284,7 +2230,7 @@ void animeload(int prm_807, int prm_808)
     gsel(0);
     gmode(2);
     i_at_m133(0) = 5;
-    i_at_m133(1) = 50;
+    i_at_m133(1) = config::instance().animewait * 3.5;
     r_at_m133 = 0;
     if (prm_807 == 8)
     {
@@ -2293,21 +2239,21 @@ void animeload(int prm_807, int prm_808)
     if (prm_807 == 10)
     {
         i_at_m133(0) = 8;
-        i_at_m133(1) = 30;
+        i_at_m133(1) = config::instance().animewait * 2.5;
         r_at_m133 = 0.2;
         snd(119);
     }
     if (prm_807 == 11)
     {
         i_at_m133(0) = 5;
-        i_at_m133(1) = 50;
+        i_at_m133(1) = config::instance().animewait * 3.5;
         r_at_m133 = 0;
         snd(118);
     }
     if (prm_807 == 14)
     {
         i_at_m133(0) = 6;
-        i_at_m133(1) = 50;
+        i_at_m133(1) = config::instance().animewait * 3.5;
     }
     for (int cnt = 0, cnt_end = (i_at_m133); cnt < cnt_end; ++cnt)
     {
@@ -2318,7 +2264,7 @@ void animeload(int prm_807, int prm_808)
         redraw();
         pos(dx_at_m133 - 24, dy_at_m133 - 40);
         gcopy(4, 0, 0, 96, 96);
-        await(config::instance().animewait + i_at_m133(1));
+        await(i_at_m133(1));
     }
     gmode(2);
     return;
@@ -2465,7 +2411,7 @@ void animeblood(int prm_809, int prm_810, int prm_811)
         redraw();
         pos(dx_at_m133 - 48, dy_at_m133 - 56);
         gcopy(4, 0, 0, 144, 160);
-        await(config::instance().animewait + 15 + (ele2_at_m133 != 0) * 20);
+        await(config::instance().animewait * (ele2_at_m133 == 0 ? 1.75 : 2.75));
     }
     gmode(2);
     return;
@@ -3528,7 +3474,7 @@ void refresh_burden_state()
 
 void revive_character()
 {
-    label_1538();
+    do_chara_revival();
     cxinit = cdata[0].position.x;
     cyinit = cdata[0].position.y;
     chara_place();
@@ -3544,7 +3490,7 @@ void revive_character()
 
 
 
-void label_1538()
+void do_chara_revival()
 {
     label_15380();
     label_15390();
@@ -3576,6 +3522,7 @@ void label_15380()
     cdata[rc].current_map = 0;
     cdata[rc].relationship = cdata[rc].original_relationship;
     cdata[rc].nutrition = 8000;
+    lua::lua.on_chara_loaded(cdata[rc]); // TODO add separate Lua event for revival
     return;
 }
 
@@ -3630,7 +3577,7 @@ void label_15390()
 
 void label_1540()
 {
-    label_1538();
+    do_chara_revival();
     if (rc == 0)
     {
         gdata_is_returning_or_escaping = 0;
@@ -3725,7 +3672,8 @@ int convertartifact(int prm_930, int prm_931)
     {
         flt(the_item_db[inv[prm_930].id]->level, 4);
         flttypeminor = the_item_db[inv[prm_930].id]->subcategory;
-        inv[prm_930].number = 0;
+        item_remove(inv[prm_930]);
+
         itemcreate(
             inv_getowner(prm_930),
             0,
@@ -4179,7 +4127,7 @@ void character_drops_item()
             }
             if (f)
             {
-                inv[ci].number = 0;
+                item_remove(inv[ci]);
                 continue;
             }
             inv[ci].position.x = cdata[rc].position.x;
@@ -4195,7 +4143,7 @@ void character_drops_item()
                 item_copy(ci, ti);
                 inv[ti].own_state = -2;
             }
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
         }
         cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
         create_pcpic(0, true);
@@ -4338,7 +4286,7 @@ void character_drops_item()
             }
             item_copy(ci, ti);
         }
-        inv[ci].number = 0;
+        item_remove(inv[ci]);
     }
     if (cdata[rc].quality >= 4 || rnd(20) == 0 || cdata[rc].drops_gold() == 1
         || rc < 16)
@@ -6022,6 +5970,7 @@ turn_result_t exit_map()
             if (cdata[cnt].state == 8)
             {
                 cdata[cnt].state = 1;
+                lua::lua.on_chara_loaded(cdata[cnt]); // TODO add separate Lua event for revival
             }
             continue;
         }
@@ -6166,7 +6115,7 @@ void label_1745()
                         }
                         if (inv[cnt].own_state == 0)
                         {
-                            inv[cnt].number = 0;
+                            item_remove(inv[cnt]);
                             cell_refresh(
                                 inv[cnt].position.x, inv[cnt].position.y);
                         }
@@ -6323,7 +6272,7 @@ void label_1745()
                                 if (inv[ci].weight <= 0
                                     || inv[ci].weight >= 4000)
                                 {
-                                    inv[ci].number = 0;
+                                    item_remove(inv[ci]);
                                 }
                             }
                         }
@@ -7846,7 +7795,8 @@ void label_1755()
         {
             continue;
         }
-        inv[cnt].number = 0;
+        item_remove(inv[cnt]);
+
         cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
     }
     if (adata(29, gdata_current_map) == 1)
@@ -8328,7 +8278,7 @@ void begintempinv()
     ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
     for (const auto& cnt : items(-1))
     {
-        inv[cnt].number = 0;
+        item_remove(inv[cnt]);
     }
     return;
 }
@@ -9147,7 +9097,7 @@ void supply_income()
     {
         for (const auto& cnt : items(-1))
         {
-            inv[cnt].number = 0;
+            item_remove(inv[cnt]);
         }
     }
     mode = 6;
@@ -9977,11 +9927,11 @@ label_1948_internal:
         if (key == key_enter)
         {
             label_1955();
-            keyrelease();
+            wait_key_released();
             goto label_1948_internal;
         }
         int a{};
-        stick(a, 768);
+        a = stick(768);
         if (a == 256)
         {
             key = key_enter;
@@ -9992,12 +9942,12 @@ label_1948_internal:
                 || chipm(0, map(tlocx, tlocy, 0)) == 1)
             {
                 snd(27);
-                keyrelease();
+                wait_key_released();
                 goto label_1948_internal;
             }
             tile = map(tlocx, tlocy, 0);
             snd(5);
-            keyrelease();
+            wait_key_released();
         }
         tx = clamp((mousex - inf_screenx), 0, windoww) / 48;
         ty = clamp((mousey - inf_screeny), 0, (windowh - inf_verh)) / 48;
@@ -10209,7 +10159,7 @@ label_1956_internal:
     redraw();
     await(config::instance().wait1);
     int a{};
-    stick(a);
+    a = stick();
     if (a == 256)
     {
         p = mousex / 24 + mousey / 24 * ww;
@@ -11647,7 +11597,7 @@ void remove_card_and_figures()
     {
         if (inv[cnt].id == 504 || inv[cnt].id == 503)
         {
-            inv[cnt].number = 0;
+            item_remove(inv[cnt]);
         }
     }
     return;
@@ -11878,7 +11828,7 @@ void load_gene_files()
     cdata(0).clear();
     for (const auto& cnt : items(-1))
     {
-        inv[cnt].number = 0;
+        item_remove(inv[cnt]);
     }
     for (const auto& cnt : items(0))
     {
@@ -12044,6 +11994,9 @@ void create_cnpc()
 void load_save_data(const fs::path& base_save_dir)
 {
     ELONA_LOG("Load save data: " << playerid);
+
+    // TODO instead serialize/deserialize data
+    lua::lua.get_handle_manager().clear_map_local_handles();
 
     filemod = "";
     ctrl_file(file_operation_t::_10);
@@ -12238,7 +12191,7 @@ label_2128_internal:
     pos(x - 48 - 24, y - 48 - 24);
     gcopy(4, 0, 0, 144, 144);
     gmode(2);
-    await(30);
+    await(config::instance().wait1);
     key_check(1);
     x = cdata[0].position.x;
     y = cdata[0].position.y;
@@ -12359,9 +12312,9 @@ turn_result_t do_debug_console()
     objsel(2);
     while (1)
     {
-        await(20);
+        await(config::instance().wait1);
         int a{};
-        stick(a);
+        a = stick();
         if (a == 128)
         {
             return do_exit_debug_console();
@@ -13960,7 +13913,7 @@ void continuous_action_others()
         if (inv[ci].id == 54)
         {
             snd(11);
-            inv[ti].number = 0;
+            item_remove(inv[ti]);
             cdata[0].gold += in;
         }
         else
@@ -14097,7 +14050,7 @@ void label_2151()
     {
         gmode(4, -1, -1, cnt * 10);
         label_2149();
-        await(200);
+        await(config::instance().animewait * 10);
     }
     gmode(2);
     cc = 0;
@@ -14152,7 +14105,7 @@ void label_2151()
         gdata_minute = 0;
         cc = 0;
         label_2149();
-        await(500);
+        await(config::instance().animewait * 25);
     }
     if (gdata(98) != 0)
     {
@@ -14596,15 +14549,18 @@ void spot_fishing()
         {
             if (rnd(5) == 0)
             {
-                for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end; ++cnt)
+                if (config::instance().animewait != 0)
                 {
-                    fishanime(0) = 1;
-                    fishanime(1) = 3 + rnd(3);
-                    addefmap(fishx, fishy, 4, 2);
-                    ++scrturn;
-                    update_screen();
-                    redraw();
-                    await(config::instance().wait1 * 2);
+                    for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end; ++cnt)
+                    {
+                        fishanime(0) = 1;
+                        fishanime(1) = 3 + rnd(3);
+                        addefmap(fishx, fishy, 4, 2);
+                        ++scrturn;
+                        update_screen();
+                        redraw();
+                        await(config::instance().animewait * 2);
+                    }
                 }
                 if (rnd(3) == 0)
                 {
@@ -14622,12 +14578,15 @@ void spot_fishing()
             fishanime = 2;
             snd(46);
             cdata[0].emotion_icon = 220;
-            for (int cnt = 0, cnt_end = (8 + rnd(10)); cnt < cnt_end; ++cnt)
+            if (config::instance().animewait != 0)
             {
-                ++scrturn;
-                update_screen();
-                redraw();
-                await(config::instance().wait1 * 2);
+                for (int cnt = 0, cnt_end = (8 + rnd(10)); cnt < cnt_end; ++cnt)
+                {
+                    ++scrturn;
+                    update_screen();
+                    redraw();
+                    await(config::instance().animewait * 2);
+                }
             }
             if (rnd(10))
             {
@@ -14642,18 +14601,21 @@ void spot_fishing()
         if (fishstat == 3)
         {
             fishanime = 3;
-            for (int cnt = 0, cnt_end = (28 + rnd(15)); cnt < cnt_end; ++cnt)
+            if (config::instance().animewait != 0)
             {
-                if (cnt % 7 == 0)
+                for (int cnt = 0, cnt_end = (28 + rnd(15)); cnt < cnt_end; ++cnt)
                 {
-                    snd(89);
+                    if (cnt % 7 == 0)
+                    {
+                        snd(89);
+                    }
+                    fishanime(1) = cnt;
+                    ++scrturn;
+                    update_screen();
+                    addefmap(fishx, fishy, 5, 2);
+                    redraw();
+                    await(config::instance().animewait * 2);
                 }
-                fishanime(1) = cnt;
-                ++scrturn;
-                update_screen();
-                addefmap(fishx, fishy, 5, 2);
-                redraw();
-                await(config::instance().wait1 * 2);
             }
             if (the_fish_db[fish]->difficulty >= rnd(sdata(185, 0) + 1))
             {
@@ -14669,17 +14631,20 @@ void spot_fishing()
         {
             fishanime = 4;
             snd(88);
-            for (int cnt = 0; cnt < 21; ++cnt)
+            if (config::instance().animewait != 0)
             {
-                fishanime(1) = cnt;
-                if (cnt == 1)
+                for (int cnt = 0; cnt < 21; ++cnt)
                 {
-                    addefmap(fishx, fishy, 1, 3);
+                    fishanime(1) = cnt;
+                    if (cnt == 1)
+                    {
+                        addefmap(fishx, fishy, 1, 3);
+                    }
+                    ++scrturn;
+                    update_screen();
+                    redraw();
+                    await(config::instance().animewait * 2);
                 }
-                ++scrturn;
-                update_screen();
-                redraw();
-                await(config::instance().wait1 * 2);
             }
             snd(14 + rnd(2));
             fishanime = 0;
@@ -16318,7 +16283,7 @@ int pick_up_item()
             snd(11);
             ti = ci;
             in = inv[ci].number;
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             msgkeep = 1;
             txt(lang(
                 name(cc) + u8"は"s + itemname(ti, in) + u8"を拾った。"s,
@@ -17025,6 +16990,10 @@ turn_result_t do_bash()
 
 turn_result_t proc_movement_event()
 {
+    auto handle = lua::lua.get_handle_manager().get_chara_handle(cdata[cc]);
+    if(handle != sol::lua_nil)
+        lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::character_moved>(handle);
+
     if (cdata[cc].is_ridden())
     {
         return turn_result_t::turn_end;
@@ -17367,7 +17336,7 @@ void proc_autopick()
             }
             snd(45);
             txt(i18n::fmt(u8"ui", u8"autopick", u8"destroyed")(itemname(ci)));
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             cell_refresh(x, y);
             map(x, y, 5) = map(x, y, 4);
             break;
@@ -18061,7 +18030,7 @@ turn_result_t try_to_open_locked_door()
             {
                 screenupdate = -1;
                 update_screen();
-                await(100);
+                await(config::instance().animewait * 5);
                 return turn_result_t::turn_end;
             }
             feat(2) = 0;
@@ -18126,7 +18095,7 @@ turn_result_t try_to_open_locked_door()
     }
     if (cc == 0)
     {
-        await(100);
+        await(config::instance().animewait * 5);
     }
     return turn_result_t::turn_end;
 }
@@ -18362,7 +18331,9 @@ label_22191_internal:
     if (cdata[cc].fear != 0)
     {
         ++msgdup;
-        txt(i18n::s.get("core.locale.damage.is_frightened", cdata[cc]));
+        txt(lang(
+            name(cc) + u8"は怖気づいた。"s,
+            name(cc) + u8" "s + is(cc) + u8" frightened."s));
         return;
     }
     if (map(cdata[tc].position.x, cdata[tc].position.y, 8) != 0)
@@ -18392,7 +18363,7 @@ label_22191_internal:
             if (cc == 0)
             {
                 txtef(3);
-                txt(i18n::s.get("core.locale.damage.critical_hit"));
+                txt(lang(u8"会心の一撃！ "s, u8"Critical Hit!"s));
             }
         }
         dmg = calcattackdmg();
@@ -18429,7 +18400,11 @@ label_22191_internal:
                     if (rnd(5) == 0)
                     {
                         txtef(9);
-                        txt(i18n::s.get("core.locale.damage.wields_proudly", cdata[cc], s(1)));
+                        txt(lang(
+                            name(cc) + u8"は"s + s(1)
+                                + u8"を誇らしげに構えた。"s,
+                            name(cc) + u8" wield"s + _s(cc) + u8" "s + s(1)
+                                + u8" proudly."s));
                     }
                 }
                 i = 1;
@@ -18447,7 +18422,7 @@ label_22191_internal:
         {
             if (extraattack)
             {
-                txt(i18n::s.get("core.locale.damage.furthermore"));
+                txt(lang(u8"さらに"s, u8"Furthermore,"s));
                 txtcontinue();
             }
             if (attackskill == 106)
@@ -18455,57 +18430,231 @@ label_22191_internal:
                 if (tc >= 16)
                 {
                     gdata(809) = 2;
-                    txt(i18n::s.get("core.locale.damage.weapon.attacks_unarmed_and",
-                                    cdata[cc],
-                                    _melee(0, cdata[cc].melee_attack_type),
-                                    cdata[tc],
-                                    i18n::s.get("core.locale.damage.weapon.and")));
+                    txt(lang(
+                        aln(cc) + name(tc) + u8"を"s
+                            + _melee(0, cdata[cc].melee_attack_type),
+                        name(cc) + u8" "s
+                            + _melee(0, cdata[cc].melee_attack_type) + _s(cc)
+                            + u8" "s + name(tc) + u8" and"s));
                 }
                 else
                 {
-                    txt(i18n::s.get("core.locale.damage.weapon.attacks_unarmed",
-                                    cdata[cc],
-                                    _melee(1, cdata[cc].melee_attack_type),
-                                    cdata[tc]));
+                    txt(lang(
+                        aln(tc) + name(cc) + u8"に"s
+                            + _melee(1, cdata[cc].melee_attack_type),
+                        name(cc) + u8" "s
+                            + _melee(1, cdata[cc].melee_attack_type) + _s(cc)
+                            + u8" "s + name(tc) + u8"."s));
                 }
             }
-            else
+            if (attackskill == 108)
             {
-                optional<std::string> weapon_name = none;
-                if (attackskill == 111)
+                s = lang(u8"弓"s, u8"bow"s);
+                if (tc >= 16)
                 {
-                    // Special case for thrown weapons.
-                    weapon_name = itemname(cw, 1, 1);
+                    gdata(809) = 2;
+                    txt(lang(
+                        aln(cc) + name(tc) + u8"を射撃し"s,
+                        name(cc) + u8" shoot"s + _s(cc) + u8" "s + name(tc)
+                            + u8" and"s));
                 }
                 else
                 {
-                    weapon_name = i18n::s.get_optional("core.locale.damage.weapon._" +
-                                                       std::to_string(attackskill) +
-                                                       ".name");
+                    txt(lang(
+                        aln(tc) + name(cc) + u8"に"s + s(i) + u8"で撃たれた。"s,
+                        name(cc) + u8" shoot"s + _s(cc) + u8" "s + name(tc)
+                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
                 }
-                if (weapon_name)
+            }
+            if (attackskill == 109)
+            {
+                s = lang(u8"クロスボウ"s, u8"crossbow"s);
+                if (tc >= 16)
                 {
-                    if (tc >= 16)
-                    {
-                        gdata(809) = 2;
-                        txt(i18n::s.get("core.locale.damage.weapon.attacks_and",
-                                        cdata[cc],
-                                        i18n::s.get("core.locale.damage.weapon._" +
-                                                    std::to_string(attackskill) +
-                                                    ".verb_and"),
-                                        cdata[tc],
-                                        i18n::s.get("core.locale.damage.weapon.and")));
-                    }
-                    else
-                    {
-                        txt(i18n::s.get("core.locale.damage.weapon.attacks_with",
-                                        cdata[cc],
-                                        i18n::s.get("core.locale.damage.weapon._" +
-                                                    std::to_string(attackskill) +
-                                                    ".verb"),
-                                        cdata[tc],
-                                        *weapon_name));
-                    }
+                    gdata(809) = 2;
+                    txt(lang(
+                        aln(cc) + name(tc) + u8"を射撃し"s,
+                        name(cc) + u8" shoot"s + _s(cc) + u8" "s + name(tc)
+                            + u8" and"s));
+                }
+                else
+                {
+                    txt(lang(
+                        aln(tc) + name(cc) + u8"に"s + s(i) + u8"で撃たれた。"s,
+                        name(cc) + u8" shoot"s + _s(cc) + u8" "s + name(tc)
+                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
+                }
+            }
+            if (attackskill == 110)
+            {
+                s = lang(u8"銃"s, u8"gun"s);
+                if (tc >= 16)
+                {
+                    gdata(809) = 2;
+                    txt(lang(
+                        aln(cc) + name(tc) + u8"を射撃し"s,
+                        name(cc) + u8" shoot"s + _s(cc) + u8" "s + name(tc)
+                            + u8" and"s));
+                }
+                else
+                {
+                    txt(lang(
+                        aln(tc) + name(cc) + u8"に"s + s(i) + u8"で撃たれた。"s,
+                        name(cc) + u8" shoot"s + _s(cc) + u8" "s + name(tc)
+                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
+                }
+            }
+            if (attackskill == 100)
+            {
+                s = lang(u8"長剣"s, u8"sword"s);
+                if (tc >= 16)
+                {
+                    gdata(809) = 2;
+                    txt(lang(
+                        aln(cc) + name(tc) + u8"を切り払い"s,
+                        name(cc) + u8" slash"s + _s(cc) + u8" "s + name(tc)
+                            + u8" and"s));
+                }
+                else
+                {
+                    txt(lang(
+                        aln(tc) + name(cc) + u8"に"s + s(i) + u8"で切られた。"s,
+                        name(cc) + u8" slash"s + _s(cc) + u8" "s + name(tc)
+                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
+                }
+            }
+            if (attackskill == 104)
+            {
+                s = lang(u8"槍"s, u8"spear"s);
+                if (tc >= 16)
+                {
+                    gdata(809) = 2;
+                    txt(lang(
+                        aln(cc) + name(tc) + u8"を突き刺して"s,
+                        name(cc) + u8" stab"s + _s(cc) + u8" "s + name(tc)
+                            + u8" and"s));
+                }
+                else
+                {
+                    txt(lang(
+                        aln(tc) + name(cc) + u8"に"s + s(i) + u8"で刺された。"s,
+                        name(cc) + u8" stab"s + _s(cc) + u8" "s + name(tc)
+                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
+                }
+            }
+            if (attackskill == 105)
+            {
+                s = lang(u8"杖"s, u8"staff"s);
+                if (tc >= 16)
+                {
+                    gdata(809) = 2;
+                    txt(lang(
+                        aln(cc) + name(tc) + u8"を打って"s,
+                        name(cc) + u8" smash"s + _s(cc) + u8" "s + name(tc)
+                            + u8" and"s));
+                }
+                else
+                {
+                    txt(lang(
+                        aln(tc) + name(cc) + u8"に"s + s(i) + u8"で打たれた。"s,
+                        name(cc) + u8" smash"s + _s(cc) + u8" "s + name(tc)
+                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
+                }
+            }
+            if (attackskill == 101)
+            {
+                s = lang(u8"短剣"s, u8"dagger"s);
+                if (tc >= 16)
+                {
+                    gdata(809) = 2;
+                    txt(lang(
+                        aln(cc) + name(tc) + u8"を突き刺して"s,
+                        name(cc) + u8" stab"s + _s(cc) + u8" "s + name(tc)
+                            + u8" and"s));
+                }
+                else
+                {
+                    txt(lang(
+                        aln(tc) + name(cc) + u8"に"s + s(i) + u8"で刺された。"s,
+                        name(cc) + u8" stab"s + _s(cc) + u8" "s + name(tc)
+                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
+                }
+            }
+            if (attackskill == 103)
+            {
+                s = lang(u8"鈍器"s, u8"mace"s);
+                if (tc >= 16)
+                {
+                    gdata(809) = 2;
+                    txt(lang(
+                        aln(cc) + name(tc) + u8"を打って"s,
+                        name(cc) + u8" smash"s + _s(cc) + u8" "s + name(tc)
+                            + u8" and"s));
+                }
+                else
+                {
+                    txt(lang(
+                        aln(tc) + name(cc) + u8"に"s + s(i) + u8"で打たれた。"s,
+                        name(cc) + u8" smash"s + _s(cc) + u8" "s + name(tc)
+                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
+                }
+            }
+            if (attackskill == 102)
+            {
+                s = lang(u8"斧"s, u8"axe"s);
+                if (tc >= 16)
+                {
+                    gdata(809) = 2;
+                    txt(lang(
+                        aln(cc) + name(tc) + u8"を切り払い"s,
+                        name(cc) + u8" slash"s + _s(cc) + u8" "s + name(tc)
+                            + u8" and"s));
+                }
+                else
+                {
+                    txt(lang(
+                        aln(tc) + name(cc) + u8"に"s + s(i) + u8"で切られた。"s,
+                        name(cc) + u8" slash"s + _s(cc) + u8" "s + name(tc)
+                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
+                }
+            }
+            if (attackskill == 107)
+            {
+                s = lang(u8"鎌"s, u8"scythe"s);
+                if (tc >= 16)
+                {
+                    gdata(809) = 2;
+                    txt(lang(
+                        aln(cc) + name(tc) + u8"を切り払い"s,
+                        name(cc) + u8" slash"s + _s(cc) + u8" "s + name(tc)
+                            + u8" and"s));
+                }
+                else
+                {
+                    txt(lang(
+                        aln(tc) + name(cc) + u8"に"s + s(i) + u8"で切られた。"s,
+                        name(cc) + u8" slash"s + _s(cc) + u8" "s + name(tc)
+                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
+                }
+            }
+            if (attackskill == 111)
+            {
+                s = itemname(cw, 1, 1);
+                if (tc >= 16)
+                {
+                    gdata(809) = 2;
+                    txt(lang(
+                        aln(cc) + name(tc) + u8"に"s + s(i) + u8"を投げ"s,
+                        name(cc) + u8" shoot"s + _s(cc) + u8" "s + name(tc)
+                            + u8" and"s));
+                }
+                else
+                {
+                    txt(lang(
+                        aln(tc) + name(cc) + u8"に"s + s(i)
+                            + u8"で攻撃された。"s,
+                        name(cc) + u8" shoot"s + _s(cc) + u8" "s + name(tc)
+                            + u8" with "s + his(cc) + u8" "s + s(i) + u8"."s));
                 }
             }
         }
@@ -18596,8 +18745,10 @@ label_22191_internal:
                         if (is_in_fov(cc))
                         {
                             txtef(8);
-                            txt(i18n::s.get("core.locale.damage.reactive_attack.thorns",
-                                            cdata[cc]));
+                            txt(lang(
+                                u8"棘が"s + name(cc) + u8"に刺さった。"s,
+                                name(cc) + u8" "s + is(cc)
+                                    + u8" stuck by several thorns."s));
                         }
                         dmghp(
                             cc,
@@ -18612,8 +18763,11 @@ label_22191_internal:
                         if (is_in_fov(cc))
                         {
                             txtef(8);
-                            txt(i18n::s.get("core.locale.damage.reactive_attack.ether_thorns",
-                                            cdata[cc]));
+                            txt(lang(
+                                u8"エーテルの棘が"s + name(cc)
+                                    + u8"に刺さった。"s,
+                                name(cc) + u8" "s + is(cc)
+                                    + u8" stuck by several ether thorns."s));
                         }
                         dmghp(
                             cc,
@@ -18644,7 +18798,9 @@ label_22191_internal:
                         if (is_in_fov(tc))
                         {
                             txtef(8);
-                            txt(i18n::s.get("core.locale.damage.reactive_attack.acids"));
+                            txt(lang(
+                                u8"酸が飛び散った。"s,
+                                u8"Acids spread over the ground."s));
                         }
                         efid = 455;
                         efp = cdata[tc].damage_reaction_info / 1000;
@@ -18676,16 +18832,22 @@ label_22191_internal:
         {
             if (extraattack)
             {
-                txt(i18n::s.get("core.locale.damage.furthermore"));
+                txt(lang(u8"さらに"s, u8"Furthermore,"s));
                 txtcontinue();
             }
             if (tc < 16)
             {
-                txt(i18n::s.get("core.locale.damage.miss.ally", cdata[cc], cdata[tc]));
+                txt(lang(
+                    aln(tc) + name(cc) + u8"の攻撃を避けた。"s,
+                    name(tc) + u8" evade"s + _s(tc) + u8" "s + name(cc)
+                        + u8"."s));
             }
             else
             {
-                txt(i18n::s.get("core.locale.damage.miss.other", cdata[cc], cdata[tc]));
+                txt(lang(
+                    aln(cc) + u8"攻撃をかわされた。"s,
+                    name(cc) + u8" miss"s + _s(cc, true) + u8" "s + name(tc)
+                        + u8"."s));
             }
             add_damage_popup(u8"miss", tc, {0, 0, 0});
         }
@@ -18696,16 +18858,22 @@ label_22191_internal:
         {
             if (extraattack)
             {
-                txt(i18n::s.get("core.locale.damage.furthermore"));
+                txt(lang(u8"さらに"s, u8"Furthermore,"s));
                 txtcontinue();
             }
             if (tc < 16)
             {
-                txt(i18n::s.get("core.locale.damage.evade.ally", cdata[cc], cdata[tc]));
+                txt(lang(
+                    aln(tc) + name(cc) + u8"の攻撃を華麗に避けた。"s,
+                    name(tc) + u8" skillfully evade"s + _s(tc) + u8" "s
+                        + name(cc) + u8"."s));
             }
             else
             {
-                txt(i18n::s.get("core.locale.damage.evade.other", cdata[cc], cdata[tc]));
+                txt(lang(
+                    aln(cc) + u8"攻撃を華麗にかわされた。"s,
+                    name(tc) + u8" skillfully evade"s + _s(tc) + u8" "s
+                        + name(cc) + u8"."s));
             }
             add_damage_popup(u8"evade!!", tc, {0, 0, 0});
         }
@@ -19537,7 +19705,7 @@ void do_play_scene()
     scidx += s(0).size();
 label_2681:
     int a{};
-    stick(a, 128);
+    a = stick(128);
     if (a == 128)
     {
         scene_cut = 1;
@@ -19759,7 +19927,7 @@ label_2684_internal:
     for (int cnt = 1; cnt < 16; ++cnt)
     {
         await(30);
-        stick(a, 128);
+        a = stick(128);
         if (a == 128)
         {
             scene_cut = 1;
@@ -20547,7 +20715,7 @@ turn_result_t pc_died()
             u8"You have been buried. Bye...(Hit any key to exit)"s);
         draw_caption();
         redraw();
-        press();
+        wait_key_pressed();
         return turn_result_t::finish_elona;
     }
     s = u8"dead"s

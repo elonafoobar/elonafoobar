@@ -131,6 +131,11 @@ set(CORE_SOURCES
     ui.cpp
     variables.cpp
     wish.cpp
+    lua_env/event_manager.cpp
+    lua_env/handle_manager.cpp
+    lua_env/lua_env.cpp
+    lua_env/lua_api.cpp
+    lua_env/lua_store.cpp
     ${PROJECT_BINARY_DIR}/version.cpp
 )
 
@@ -147,9 +152,15 @@ if(WITH_TESTS STREQUAL "TESTS")
   set(TEST_SOURCES
     tests/tests.cpp
     tests/util.cpp
+    tests/lua_api.cpp
+    tests/lua_callbacks.cpp
+    tests/lua_handles.cpp
+    tests/lua_mods.cpp
+    tests/lua_serialization.cpp
+    tests/lua_store.cpp
     tests/elonacore.cpp
     tests/i18n.cpp
-    tests/i18n_regressions.cpp
+    tests/i18n_builtins.cpp
     tests/serialization.cpp
     ${CORE_SOURCES}
     )
@@ -164,6 +175,7 @@ elseif(WITH_TESTS STREQUAL "BENCH")
     bench/ai.cpp
     bench/generate.cpp
     bench/i18n.cpp
+    bench/lua_callbacks.cpp
     bench/magic.cpp
     bench/util.cpp
     ${CORE_SOURCES}
@@ -262,6 +274,10 @@ else()
     set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DDEBUG")
 endif()
 
+if(WITH_TESTS STREQUAL "BENCH")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
+endif()
+
 # Force GCC to output warnings about undefined symbols
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     string(APPEND CMAKE_SHARED_LINKER_FLAGS " -Wl,--no-undefined")
@@ -307,7 +323,6 @@ function(copy_nonexisting src rel final)
   foreach( each_file ${allfiles} )
     set(destinationfile "$<TARGET_FILE_DIR:${PROJECT_NAME}>/${final}/${each_file}")
     set(sourcefile "${rel}/${each_file}")
-    message(${destinationfile})
     add_custom_command(TARGET ${PROJECT_NAME}
       POST_BUILD
       COMMAND ${CMAKE_COMMAND}
@@ -323,6 +338,7 @@ copy_nonexisting("runtime" "${CMAKE_SOURCE_DIR}/runtime" ".")
 copy_nonexisting("data" "${CMAKE_SOURCE_DIR}/data" "data")
 copy_nonexisting("lang" "${CMAKE_SOURCE_DIR}/lang" "lang")
 copy_nonexisting("lang2" "${CMAKE_SOURCE_DIR}/lang2" "lang2")
+copy_nonexisting("mods" "${CMAKE_SOURCE_DIR}/mods" "mods")
 
 # Copy assets from Elona 1.22 if they are present
 if(EXISTS "${CMAKE_PREFIX_PATH}/elona")
@@ -338,4 +354,15 @@ endif()
 
 if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
   copy_nonexisting("tests/data" "${CMAKE_CURRENT_SOURCE_DIR}/tests/data" "tests/data")
+endif()
+
+if(WITH_TESTS STREQUAL "TESTS")
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                     COMMAND ${CMAKE_COMMAND} -E copy_directory
+                     "${CMAKE_CURRENT_SOURCE_DIR}/tests/lua"
+                     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/tests/lua")
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                     COMMAND ${CMAKE_COMMAND} -E copy_directory
+                     "${CMAKE_CURRENT_SOURCE_DIR}/tests/lua/classes"
+                     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/tests/lua/classes")
 endif()
