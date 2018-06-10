@@ -504,6 +504,7 @@ extern cdata_t cdata;
 
 int chara_create(int = 0, int = 0, int = 0, int = 0);
 int chara_create_internal();
+void initialize_character();
 void chara_place();
 int chara_relocate(int = 0, int = 0, int = 0);
 void chara_refresh(int);
@@ -525,6 +526,7 @@ int chara_armor_class(int = 0);
 
 void initialize_character_filters();
 void chara_set_generation_filter();
+void chara_add_quality_parens();
 
 int access_character_info();
 

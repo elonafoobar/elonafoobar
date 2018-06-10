@@ -85,6 +85,11 @@ void reset_state()
     lua::lua.reload();
     configure_lua();
     initialize_elona();
+
+    // reset translations
+    elona::jp = 1;
+    elona::en = 0;
+    set_item_info();
 }
 
 } // namespace testing
