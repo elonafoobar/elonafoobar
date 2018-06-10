@@ -48,3 +48,7 @@ function set_tile(position, id) end
 -- @tparam num id the tile ID to set
 -- @usage Map.set_tile_memory(10, 10, Map.generate_tile(Enums.TileKind.Room))
 function set_memory(position, id) end
+
+--- Returns true if the player is in an overworld map.
+-- @treturn bool true if the player is in the overworld
+function is_overworld() end
