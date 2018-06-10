@@ -67,7 +67,7 @@ sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-im
 4. Open the `Developer Command Prompt for VS 2017`.
 5. `cd path/to/ElonaFoobar & nmake -f Makefile.win`
 
-To debug with Visual Studio, open `build\ElonaFoobar.sln`.
+To debug with Visual Studio, open `bin\ElonaFoobar.sln`.
 
 # How To Play
 
