@@ -471,7 +471,9 @@ void item_copy(int a, int b)
     if (a < 0 || b < 0)
         return;
 
-    inv(b) = inv(a);
+    inv[b] = inv[a];
+    // Restore "index".
+    inv[b].index = b;
 }
 
 
@@ -479,7 +481,10 @@ void item_copy(int a, int b)
 void item_exchange(int a, int b)
 {
     using std::swap;
-    swap(inv(a), inv(b));
+    swap(inv[a], inv[b]);
+    // Restore "index".
+    inv[a].index = a;
+    inv[b].index = b;
 }
 
 
@@ -513,7 +518,9 @@ void item_delete(int ci)
         // This item slot has never been previously occupied (since
         // its idx is -1), so don't run the removal callback.
     }
-    inv(ci).clear();
+    inv[ci].clear();
+    // Restore "index".
+    inv[ci].index = ci;
 }
 
 
