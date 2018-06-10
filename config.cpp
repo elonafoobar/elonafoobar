@@ -6,6 +6,7 @@
 #include "json.hpp"
 #include "range.hpp"
 #include "variables.hpp"
+#include "snail/window.hpp"
 
 
 
@@ -977,10 +978,6 @@ void load_config2(const fs::path& json_file)
         std::make_unique<config_integer>(
             u8"windowY", 0, [&](auto value) { windowy = value; }),
         std::make_unique<config_integer>(
-            u8"windowW", 800, [&](auto value) { windoww = value; }),
-        std::make_unique<config_integer>(
-            u8"windowH", 600, [&](auto value) { windowh = value; }),
-        std::make_unique<config_integer>(
             u8"clockX", 0, [&](auto value) { inf_clockx = value; }),
         std::make_unique<config_integer>(
             u8"clockW", 120, [&](auto value) { inf_clockw = value; }),
@@ -992,6 +989,8 @@ void load_config2(const fs::path& json_file)
             u8"charamake_wiz",
             0,
             [&](auto value) { config::instance().wizard = value; }),
+        std::make_unique<config_string>(
+            u8"display_mode", "", [&](auto value) { config::instance().display_mode = value; }),
     };
 
     std::ifstream file{json_file.native(),
@@ -1014,6 +1013,20 @@ void load_config2(const fs::path& json_file)
     }
 }
 
+snail::window::fullscreen_mode_t config_get_fullscreen_mode()
+{
+    snail::window::fullscreen_mode_t mode;
+
+    switch(config::instance().fullscreen)
+    {
+    case 0: mode = snail::window::fullscreen_mode_t::windowed; break;
+    case 1: mode = snail::window::fullscreen_mode_t::fullscreen; break;
+    case 2: mode = snail::window::fullscreen_mode_t::fullscreen_desktop; break;
+    default: throw new std::runtime_error("Invalid fullscreen mode");
+    }
+
+    return mode;
+}
 
 config& config::instance()
 {

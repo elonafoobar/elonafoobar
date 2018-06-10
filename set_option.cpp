@@ -401,7 +401,6 @@ namespace elona
 
 int submenu = 0;
 
-
 void set_option()
 {
     int cfg_sound2 = config::instance().sound;
@@ -409,6 +408,33 @@ void set_option()
     int cfg_fullscreen2 = config::instance().fullscreen;
     int windoww2 = windoww;
     int windowh2 = windowh;
+
+    const auto display_modes = snail::application::instance().get_display_modes();
+    std::string default_display_mode = snail::application::instance().get_default_display_mode();
+    std::vector<std::string> display_mode_names;
+    std::string cfg_display_mode = config::instance().display_mode;
+
+    int display_mode_index = -1;
+    int index = 0;
+    int default_index = 0;
+
+    for(const auto pair : display_modes) {
+        display_mode_names.emplace_back(pair.first);
+        if (pair.first == cfg_display_mode)
+        {
+            display_mode_index = index;
+        }
+        else if (pair.first == default_display_mode)
+        {
+            default_index = index;
+        }
+        index++;
+    }
+    if (display_mode_index == -1 || config::instance().display_mode == "")
+    {
+        cfg_display_mode = default_display_mode;
+        display_mode_index = default_index;
+    }
 
     const auto config_menu_definitions = create_config_menu();
 
@@ -675,11 +701,12 @@ void set_option()
                 {
                     s(0) = lang(u8"ウィンドウ"s, u8"Window mode"s);
                     s(1) = lang(u8"フルスクリーン"s, u8"Full screen"s);
+                    s(2) = lang(u8"フルスクリーン2"s, u8"Desktop fullscr"s);
                     mes(s(cfg_fullscreen2));
                 }
                 if (cnt == 3)
                 {
-                    mes(""s + windoww2 + u8" * "s + windowh2);
+                    mes(cfg_display_mode);
                 }
             }
             else if (submenu == 5)
@@ -1069,9 +1096,9 @@ void set_option()
                 if (cs == 2)
                 {
                     cfg_fullscreen2 += p;
-                    if (cfg_fullscreen2 > 1)
+                    if (cfg_fullscreen2 > 2)
                     {
-                        cfg_fullscreen2 = 1;
+                        cfg_fullscreen2 = 2;
                     }
                     else if (cfg_fullscreen2 < 0)
                     {
@@ -1198,43 +1225,20 @@ void set_option()
                 }
                 if (cs == 3)
                 {
-                    x(0) = 800;
-                    x(1) = 800;
-                    x(2) = 1024;
-                    x(3) = 1152;
-                    x(4) = 1280;
-                    x(5) = 1280;
-                    y(0) = 600;
-                    y(1) = 696;
-                    y(2) = 768;
-                    y(3) = 864;
-                    y(4) = 768;
-                    y(5) = 1024;
-                    i = 0;
-                    for (int cnt = 0; cnt < 5; ++cnt)
+                    display_mode_index += p;
+                    if (display_mode_index < 0)
                     {
-                        if (windoww2 == x(cnt))
-                        {
-                            if (windowh2 == y(cnt))
-                            {
-                                i = cnt;
-                                break;
-                            }
-                        }
+                        display_mode_index = 0;
                     }
-                    i += p;
-                    if (i < 0)
+                    else if (display_mode_index > static_cast<int>(display_mode_names.size()) - 1)
                     {
-                        i = 0;
+                        display_mode_index = static_cast<int>(display_mode_names.size()) - 1;
                     }
-                    else if (i > 4)
-                    {
-                        i = 4;
-                    }
-                    windoww2 = x(i);
-                    windowh2 = y(i);
-                    set_config(u8"windowW", windoww2);
-                    set_config(u8"windowH", windowh2);
+                    cfg_display_mode = display_mode_names[display_mode_index];
+                    auto display_mode = display_modes.at(cfg_display_mode);
+                    windoww2 = display_mode.w;
+                    windowh2 = display_mode.h;
+                    set_config(u8"display_mode", cfg_display_mode);
                     snd(20);
                     reset_page = true;
                     continue;

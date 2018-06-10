@@ -3,6 +3,7 @@
 #include <string>
 #include "filesystem.hpp"
 #include "lib/noncopyable.hpp"
+#include "snail/window.hpp"
 
 
 
@@ -24,6 +25,7 @@ public:
     int autosave;
     int autoturn;
     int damage_popup;
+    std::string display_mode;
     int env;
     int extraclass;
     int extrahelp;
@@ -93,6 +95,7 @@ void set_config(const std::string& key, int value);
 void set_config(const std::string& key, const std::string& value);
 void set_config(const std::string& key, const std::string& value1, int value2);
 
+snail::window::fullscreen_mode_t config_get_fullscreen_mode();
 
 
 } // namespace elona

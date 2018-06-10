@@ -49,11 +49,29 @@ public:
     };
 
 
+    enum class fullscreen_mode_t : Uint32
+    {
+        windowed = 0,
+        fullscreen = SDL_WINDOW_FULLSCREEN,
+        fullscreen_desktop = SDL_WINDOW_FULLSCREEN_DESKTOP,
+    };
+
+
     ::SDL_Window* ptr() noexcept
     {
         return _ptr.get();
     }
 
+
+    void move_to_center();
+
+    void set_size(int width, int height);
+
+    void set_display_mode(::SDL_DisplayMode display_mode);
+
+    ::SDL_DisplayMode get_display_mode();
+
+    void set_fullscreen_mode(fullscreen_mode_t fullscreen_mode);
 
     window(
         const std::string& title,
