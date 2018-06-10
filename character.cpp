@@ -2140,6 +2140,8 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
     cdata(tc_at_m125) = cdata(prm_784);
     cdata(prm_784).clear();
 
+    cdata(tc_at_m125).index = tc_at_m125;
+
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         cdatan(cnt, tc_at_m125) = cdatan(cnt, prm_784);
