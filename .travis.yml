@@ -8,16 +8,24 @@ matrix:
           compiler: gcc-7
           addons:
               apt:
+                  config:
+                    retries: true
+                  update: true
                   sources:
                       - ubuntu-toolchain-r-test
                   packages:
                       - g++-7
                       - cmake
-                      - liblua5.2-dev
                       - zlib1g-dev
-                        # Boost and SDL2 library versions provided are too old, they must be compiled manually.
+                        # Boost, Lua and SDL2 library versions provided are too old, they must be compiled manually.
         - os: osx
           compiler: clang
+
+env:
+  global:
+    - SDL_VIDEODRIVER=dummy
+    - SDL_AUDIODRIVER=disk
+    - MAKEFLAGS=-j8
 
 cache:
     directories:
@@ -54,9 +62,17 @@ script:
        export LD_RUN_PATH="/usr/lib:$LD_RUN_PATH";
        export CMAKE_ARGS="$CMAKE_ARGS -DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=TRUE";
        gcc -v && g++ -v;
+       export AUDIODEV=null;
     fi
   - env
-  - make VERBOSE=1
+  - cd deps
+  - wget --no-verbose "http://ylvania.style.coocan.jp/file/elona122.zip"
+  - unzip -qq elona122.zip
+  - rm elona122.zip
+  - cd "$TRAVIS_BUILD_DIR"
+  - make clean
+  - make tests VERBOSE=1
+  - bin/ElonaFoobar
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ccache --show-stats; fi
 
 notifications:

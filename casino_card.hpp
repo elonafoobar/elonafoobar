@@ -18,4 +18,4 @@ int cpblackcard(int = 0);
 int cpcardnum(int = 0);
 int cpscore(int = 0);
 
-}
+} // namespace elona

@@ -67,7 +67,7 @@ sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-im
 4. Open the `Developer Command Prompt for VS 2017`.
 5. `cd path/to/ElonaFoobar & nmake -f Makefile.win`
 
-To debug with Visual Studio, open `build\ElonaFoobar.sln`.
+To debug with Visual Studio, open `bin\ElonaFoobar.sln`.
 
 # How To Play
 
@@ -77,7 +77,7 @@ To debug with Visual Studio, open `build\ElonaFoobar.sln`.
 
 # How To Contribute
 
-See CONTRIBUTING.md for details.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 
 
@@ -89,12 +89,19 @@ contents in this repository. Note that images, sounds and fonts are not included
 ## Thirdparty libraries
 
 * picojson: see thirdparty/picojson/LICENSE.
+* Catch2: see thirdparty/catch2/LICENSE.
+* hayai: see thirdparty/hayai/LICENSE.
+* sol2: see thirdparty/sol2/LICENSE.
 * cmake/FindXXX.cmake: see cmake/LICENSE.
+
+## Lua libraries
+
+* [inspect.lua](https://github.com/kikito/inspect.lua) (MIT)
 
 
 
 <!-- Badges -->
-[appveyor-build-status]: https://ci.appveyor.com/project/ki-foobar/elonafoobar-onee4/branch/develop
+[appveyor-build-status]: https://ci.appveyor.com/project/ki-foobar/elonafoobar/branch/develop
 [appveyor-build-status-svg]: https://ci.appveyor.com/api/projects/status/jqhbtdkx86lool4t/branch/develop?svg=true
 [travis-build-status]: https://travis-ci.org/ElonaFoobar/ElonaFoobar?branch=develop
 [travis-build-status-svg]: https://travis-ci.org/ElonaFoobar/ElonaFoobar.svg?branch=develop

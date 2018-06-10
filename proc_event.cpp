@@ -5,14 +5,16 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "config.hpp"
+#include "dmgheal.hpp"
 #include "elona.hpp"
 #include "event.hpp"
+#include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
-#include "random.hpp"
 #include "quest.hpp"
+#include "random.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -225,7 +227,7 @@ void proc_event()
         randomize();
         flt();
         fixlv = 4;
-        initlv = gdata_current_dungeon_level / 4;
+        initlv = clamp(gdata_current_dungeon_level / 4, 50, 250);
         chara_create(-1, c, -3, 0);
         cdata[rc].is_lord_of_dungeon() = true;
         cdata[rc].relationship = -3;
@@ -402,7 +404,7 @@ void proc_event()
         break;
     case 7:
         label_1444();
-        press();
+        wait_key_pressed();
         screenupdate = -1;
         update_entire_screen();
         break;
@@ -793,7 +795,7 @@ void proc_event()
             pos(dx, dy - 48 - clamp(p(3) * 2, 0, 148));
             grotate(7, i / 3 % 2 * 192, 96, 0, 192, 96);
             redraw();
-            await(config::instance().animewait + 50);
+            await(config::instance().animewait * 3.5);
         }
         gmode(2);
         update_entire_screen();
@@ -923,7 +925,7 @@ void proc_event()
                 {
                     snd(45);
                 }
-                await(25);
+                await(config::instance().animewait);
             }
         }
         break;

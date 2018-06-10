@@ -34,6 +34,8 @@ void get_random_npc_id()
             continue;
         if (fltselect != data.fltselect)
             continue;
+        if (fltselect == 2 && npcmemory(1, data.id) != 0)
+            continue;
         if (flttypemajor != 0 && flttypemajor != data.category)
             continue;
         if (!fltnrace(0).empty() && fltnrace(0) != data.race)

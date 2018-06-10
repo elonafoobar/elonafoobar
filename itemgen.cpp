@@ -7,9 +7,33 @@
 #include "item.hpp"
 #include "item_db.hpp"
 #include "item_material.hpp"
+#include "lua_env/lua_env.hpp"
 #include "map_cell.hpp"
-#include "variables.hpp"
 #include "random.hpp"
+#include "variables.hpp"
+
+
+namespace
+{
+
+
+int calculate_original_value(const item& ci)
+{
+    if (the_item_db[ci.id]->category == 60000)
+    {
+        return ci.value * 100 / (80 + std::max(1, ci.subname) * 20)
+            - the_item_material_db[ci.material]->value * 2;
+    }
+    else
+    {
+        return ci.value * 100 / the_item_material_db[ci.material]->value;
+    }
+}
+
+
+} // namespace
+
+
 
 namespace elona
 {
@@ -81,6 +105,7 @@ int do_create_item(int slot, int x, int y)
         return 0;
 
     item_delete(ci);
+    inv[ci].index = ci;
 
     if (slot == -1 && mode != 6 && mode != 9)
     {
@@ -281,7 +306,7 @@ int do_create_item(int slot, int x, int y)
         if (slot >= 0)
         {
             cdata[slot].gold += inv[ci].number;
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             return 1;
         }
     }
@@ -456,6 +481,8 @@ int do_create_item(int slot, int x, int y)
     {
         inv[ci].number = initnum;
     }
+
+    lua::lua.on_item_creation(inv[ci]);
 
     if (nostack == 1)
     {
@@ -658,7 +685,6 @@ void determine_item_material()
 
 void change_item_material()
 {
-    int originalvalue = 0;
     inv[ci].color = 0;
     p = inv[ci].material;
     reftype = the_item_db[inv[ci].id]->category;
@@ -667,10 +693,12 @@ void change_item_material()
     {
         enchantment_remove(ci, e.id, e.power);
     }
-    originalvalue = inv[ci].value * 100 / the_item_material_db[p]->value;
+
+    const auto original_value = calculate_original_value(inv[ci]);
+
     dbid = inv[ci].id;
     access_item_db(10);
-    inv[ci].value = originalvalue;
+    inv[ci].value = original_value;
     if (fixmaterial != 0)
     {
         inv[ci].material = fixmaterial;
@@ -773,23 +801,6 @@ void set_material_specific_attributes()
         {
             ibitmod(2, ci, 1);
         }
-    }
-    return;
-}
-
-void add_quality_parentheses()
-{
-    if (fixlv == 4)
-    {
-        cdatan(0, rc) = i18n::_(u8"ui", u8"bracket_left") + cdatan(0, rc)
-            + i18n::_(u8"ui", u8"bracket_right");
-        cdata[rc].level = cdata[rc].level * 10 / 8;
-    }
-    if (fixlv == 5)
-    {
-        cdatan(0, rc) =
-            lang(u8"《"s, u8"{"s) + cdatan(0, rc) + lang(u8"》"s, u8"}"s);
-        cdata[rc].level = cdata[rc].level * 10 / 6;
     }
     return;
 }

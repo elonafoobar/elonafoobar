@@ -10,11 +10,13 @@
 #include "draw.hpp"
 #include "event.hpp"
 #include "i18n.hpp"
+#include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "mef.hpp"
 #include "menu.hpp"
 #include "quest.hpp"
+#include "random.hpp"
 #include "shop.hpp"
 #include "status_ailment.hpp"
 #include "ui.hpp"
@@ -98,7 +100,7 @@ void talk_to_npc()
             txt(lang(
                 name(tc) + u8"は耳を貸さない。"s,
                 name(tc) + u8" won't listen."s));
-            questteleport = 0;
+            quest_teleport = false;
             update_screen();
             return;
         }
@@ -123,7 +125,7 @@ void talk_to_npc()
     }
     chatval(1) = 0;
     chatval(2) = 1;
-    if (cdata[tc].quality == 6)
+    if (cdata[tc].quality == 6 && tc >= 16)
     {
         chatval(1) = cdata[tc].id;
         chatval(2) = 0;
@@ -169,9 +171,9 @@ void talk_to_npc()
             }
         }
     }
-    if (questteleport == 1)
+    if (quest_teleport)
     {
-        questteleport = 0;
+        quest_teleport = false;
         talk_wrapper(talk_result_t::talk_quest_giver);
         return;
     }
@@ -365,7 +367,7 @@ talk_result_t talk_house_visitor()
                     txt(lang(
                         name(tc) + u8"は吐いた。"s, name(tc) + u8" vomits."s));
                     snd(104);
-                    await(10);
+                    await(config::instance().animewait / 2);
                     update_screen();
                 }
             }
@@ -1259,7 +1261,8 @@ talk_result_t talk_game_begin()
         buff = lang(
             u8"この洞窟…雨をしのぐにはちょうどいいわ。ロミアス、危険がないか奥を調べて来て。"s,
             u8"This cave...it's a good place to keep out the rain. Lomias, check the inner chamber to be sure there is no danger lurking here."s);
-        tc = tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
+        tc =
+            tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1274,7 +1277,8 @@ talk_result_t talk_game_begin()
         }
         listmax = 0;
         buff = lang(u8"わかった。ここで待っていろ"s, u8"Okay. Wait here."s);
-        tc = tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
+        tc =
+            tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1304,7 +1308,8 @@ talk_result_t talk_game_begin()
         buff = lang(
             u8"…今の音は？ …ロミアス、大丈夫？"s,
             u8"...what was that sound? ...Lomias, are you alright?"s);
-        tc = tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
+        tc =
+            tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1321,7 +1326,8 @@ talk_result_t talk_game_begin()
         buff = lang(
             u8"ああ、問題ない。どうやらこの洞窟は昔、誰かが住んでいたようだな。奥を見て来たが、今はもう使われていないようだ。"s,
             u8"It's nothing. Looks like this cave is long abandoned. It's a good place to stay."s);
-        tc = tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
+        tc =
+            tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1338,7 +1344,8 @@ talk_result_t talk_game_begin()
         buff = lang(
             u8"そう、ならば都合がいいわ。…あら、あなた何を持っているの？ …キャーッ、プチじゃない！"s,
             u8"I see, that's convenient for us...wait Lomias, what arey you carrying?...Argh! Putits!"s);
-        tc = tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
+        tc =
+            tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1355,7 +1362,8 @@ talk_result_t talk_game_begin()
         buff = lang(
             u8"こいつらか？心配する必要はない。以前、人間にペットとして飼われていたのだろう、ふふ…私によくなついているようだ。"s,
             u8"Don't worry. It appears these putits had been kept as pets by someone. They are kind of...cute."s);
-        tc = tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
+        tc =
+            tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1372,7 +1380,8 @@ talk_result_t talk_game_begin()
         buff = lang(
             u8"うふ！あなたにも優しいところがあるのね。…来て。どうやら怪我人が意識を取り戻したみたいよ。"s,
             u8"Huh, sounds like even you have a soft spot...Come here, the injured is about to wake up."s);
-        tc = tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
+        tc =
+            tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1406,7 +1415,8 @@ talk_result_t talk_game_begin()
         listmax = 0;
         buff =
             u8"…意識が…もう戻ったのか？ 驚いたな。君の回復を待つために、我々の急を要する旅がいつまで中断されるのか、気を揉んでいたのだが。"s;
-        tc = tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
+        tc =
+            tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1454,7 +1464,8 @@ talk_result_t talk_game_begin()
         listmax = 0;
         buff =
             u8"ロミアス、喋りすぎよ。たとえ意識の朦朧とした怪我人が相手だとしても。"s;
-        tc = tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
+        tc =
+            tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1470,7 +1481,8 @@ talk_result_t talk_game_begin()
         listmax = 0;
         buff = u8"…そうだな。私の悪い癖だ、わかってはいる。…さて、"s
             + cdatan(0, 0) + u8"といったな、"s;
-        tc = tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
+        tc =
+            tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1489,7 +1501,8 @@ talk_result_t talk_game_begin()
         listmax = 0;
         buff =
             u8"...you...you're awake already? Remarkable. I was beginning to worry that nursing a lowly adventurer would bring our urgent travel to a halt."s;
-        tc = tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
+        tc =
+            tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1537,7 +1550,8 @@ talk_result_t talk_game_begin()
         listmax = 0;
         buff =
             u8"You talk too much Lomias, even though the one injured before you is still dazed."s;
-        tc = tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
+        tc =
+            tc * (chara_find(33) == 0) + (chara_find(33) != 0) * chara_find(33);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1553,7 +1567,8 @@ talk_result_t talk_game_begin()
         listmax = 0;
         buff = u8"...yes, it's a bad habit of mine. Well, "s + cdatan(0, 0)
             + u8"..."s;
-        tc = tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
+        tc =
+            tc * (chara_find(34) == 0) + (chara_find(34) != 0) * chara_find(34);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::_(u8"ui", u8"more");
         ++listmax;
@@ -1972,7 +1987,7 @@ talk_result_t talk_invest()
 
 void talk_end()
 {
-    questteleport = 0;
+    quest_teleport = false;
     if (scenemode == 0)
     {
         screenupdate = -1;
@@ -2024,7 +2039,7 @@ label_2258_internal:
     key_check();
     cursor_check();
     int a{};
-    stick(a, 128);
+    a = stick(128);
     if (a == 128)
     {
         if (scenemode)
@@ -2190,7 +2205,9 @@ void talk_window_show()
     if (chatval(2) == 1)
     {
         s = i18n::_(
-            u8"ui", u8"impression", u8"_"s + chara_impression_level(cdata[tc].impression));
+            u8"ui",
+            u8"impression",
+            u8"_"s + chara_impression_level(cdata[tc].impression));
         if (cdata[tc].impression < 150)
         {
             s(1) = ""s + cdata[tc].impression;
@@ -2236,56 +2253,59 @@ void talk_window_show()
     color(0, 0, 0);
 }
 
-int talk_guide_quest_client(int)
+
+
+int talk_guide_quest_client()
 {
-    int i_at_m193 = 0;
-    int f_at_m193 = 0;
-    j_at_m193 = 0;
-    for (int cnt = 0; cnt < 5; ++cnt)
+    constexpr int max_quest = 5;
+
+    int ret{};
+
+    for (int i = 0; i < max_quest; ++i)
     {
-        p_at_m193 = gdata(160 + cnt);
-        if (qdata(8, p_at_m193) == 1)
+        const auto quest_id = gdata(160 + i);
+        if (qdata(8, quest_id) != 1)
+            continue;
+        if (gdata_current_dungeon_level != 1)
+            continue;
+
+        auto client = -1;
+        if (qdata(3, quest_id) == 1011)
         {
-            if (gdata_current_dungeon_level == 1)
+            if (qdata(1, quest_id) == gdata_current_map)
             {
-                i_at_m193 = -1;
-                if (qdata(3, p_at_m193) == 1011)
+                client = qdata(10, quest_id);
+            }
+        }
+        if (qdata(3, quest_id) == 1002)
+        {
+            if (qdata(1, qdata(10, quest_id)) == gdata_current_map)
+            {
+                client = qdata(0, qdata(10, quest_id));
+            }
+        }
+        if (client != -1)
+        {
+            // Check duplicate
+            bool duplicated{};
+            for (int j = 0; j < i; ++j)
+            {
+                if (gdata(160 + j) == quest_id)
                 {
-                    if (qdata(1, p_at_m193) == gdata_current_map)
-                    {
-                        i_at_m193 = qdata(10, p_at_m193);
-                    }
+                    duplicated = true;
+                    break;
                 }
-                if (qdata(3, p_at_m193) == 1002)
-                {
-                    if (qdata(1, qdata(10, p_at_m193)) == gdata_current_map)
-                    {
-                        i_at_m193 = qdata(0, qdata(10, p_at_m193));
-                    }
-                }
-                if (i_at_m193 != -1)
-                {
-                    f_at_m193 = 0;
-                    for (int cnt = 0, cnt_end = (cnt); cnt < cnt_end; ++cnt)
-                    {
-                        if (gdata(160 + cnt) == p_at_m193)
-                        {
-                            f_at_m193 = 1;
-                            break;
-                        }
-                    }
-                    if (f_at_m193 == 0)
-                    {
-                        rtval(j_at_m193) = i_at_m193;
-                        ++j_at_m193;
-                    }
-                }
+            }
+            if (!duplicated)
+            {
+                rtval(ret) = client;
+                ++ret;
             }
         }
     }
-    return j_at_m193;
-}
 
+    return ret;
+}
 
 
 
@@ -2314,4 +2334,4 @@ int talk_check_trade(int prm_1081)
 }
 
 
-}
+} // namespace elona

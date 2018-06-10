@@ -21,6 +21,8 @@ void map_randomtile(int = 0, int = 0);
 void map_randsite(int = 0, int = 0);
 void map_setfog(int = 0, int = 0);
 
+void generate_debug_map();
+void generate_random_nefia();
 int initialize_quest_map_crop();
 int initialize_random_nefia_rdtype1();
 int initialize_random_nefia_rdtype4();
@@ -29,4 +31,4 @@ int initialize_random_nefia_rdtype2();
 int initialize_random_nefia_rdtype3();
 int initialize_quest_map_party();
 
-}
+} // namespace elona

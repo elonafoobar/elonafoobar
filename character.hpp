@@ -195,6 +195,14 @@ struct character
 {
     character();
 
+    // NOTE: Don't add new fields unless you add them to serialization, which
+    // will break save compatibility.
+
+    // Index of this character into the global cdata array.
+    // Used for communicating with legacy code that takes integer index
+    // arguments. New code should pass character& instead. Not serialized; set
+    // on creation and load.
+    int index = -1;
 
     int state = 0;
     position_t position;
@@ -496,12 +504,14 @@ extern cdata_t cdata;
 
 int chara_create(int = 0, int = 0, int = 0, int = 0);
 int chara_create_internal();
+void initialize_character();
 void chara_place();
 int chara_relocate(int = 0, int = 0, int = 0);
 void chara_refresh(int);
-int chara_copy(int = 0);
+bool chara_copy(int cc);
 void chara_delete(int = 0);
 void chara_vanquish(int = 0);
+void chara_killed(character&);
 int chara_find(int = 0);
 int chara_find_ally(int = 0);
 int chara_get_free_slot();
@@ -516,8 +526,11 @@ int chara_armor_class(int = 0);
 
 void initialize_character_filters();
 void chara_set_generation_filter();
+void chara_add_quality_parens();
 
 int access_character_info();
+
+bool belong_to_same_team(const character& c1, const character& c2);
 
 
 } // namespace elona

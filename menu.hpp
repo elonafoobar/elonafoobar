@@ -9,9 +9,9 @@ enum class turn_result_t;
 
 struct menu_result
 {
-   bool succeeded; // true if stat was 1, false if it was 0
-   bool pressed_f1; // true if menu_feats_internal returned -1
-   turn_result_t turn_result;
+    bool succeeded; // true if stat was 1, false if it was 0
+    bool pressed_f1; // true if menu_feats_internal returned -1
+    turn_result_t turn_result;
 };
 
 void text_set();

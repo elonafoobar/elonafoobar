@@ -4,6 +4,7 @@
 #include "character.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 

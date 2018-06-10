@@ -12,6 +12,8 @@ namespace elona
 
 struct version_t
 {
+    // NOTE: Don't add new fields unless you add them to serialization, which
+    // will break save compatibility.
     int major;
     int minor;
     int patch;
@@ -41,6 +43,7 @@ struct version_t
     template <typename Archive>
     void serialize(Archive& ar)
     {
+        // WARNING: Changing this will break save compatibility!
         ar(major);
         ar(minor);
         ar(patch);

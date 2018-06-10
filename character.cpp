@@ -13,13 +13,202 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "lua_env/lua_env.hpp"
 #include "map_cell.hpp"
 #include "quest.hpp"
+#include "random.hpp"
 #include "range.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
 
 using namespace elona;
+
+
+namespace
+{
+
+
+
+bool can_place_character_at(const position_t& position, bool allow_stairs)
+{
+    // Out of range
+    if (position.x < 0 || mdata(0) <= position.x || position.y < 0
+        || mdata(1) <= position.y)
+        return false;
+
+    // Wall
+    if (chipm(7, map(position.x, position.y, 0)) & 4)
+        return false;
+
+    // There is someone.
+    if (map(position.x, position.y, 1) != 0)
+        return false;
+
+    if (map(position.x, position.y, 6) != 0)
+    {
+        // There is an object which prevents from walking through.
+        if (chipm(7, map(position.x, position.y, 6) % 1000) & 4)
+            return false;
+
+        cell_featread(position.x, position.y);
+        // Upstairs/downstairs.
+        if (feat(1) == 11 || feat(1) == 10)
+        {
+            if (!allow_stairs)
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+
+
+bool chara_place_internal(
+    character& cc,
+    optional<position_t> position,
+    bool enemy_respawn)
+{
+    int x;
+    int y;
+
+    for (int i = 0;; ++i)
+    {
+        if (i == 99)
+        {
+            if (cc.index >= 57)
+            {
+                // Give up.
+                return false;
+            }
+        }
+        if (i > 99)
+        {
+            if (mdata(0) == 0)
+            {
+                return false;
+            }
+            y = (i - 100) / mdata(0);
+            x = (i - 100) % mdata(0);
+            if (y >= mdata(1))
+            {
+                if (cc.index != 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    // Make the cell placable.
+                    x = rnd(mdata(0));
+                    y = rnd(mdata(1));
+                    // FIXME: I refered to oor, but I think it is not perfect.
+                    // Break wall.
+                    if (chipm(7, map(x, y, 0)) & 4)
+                    {
+                        map(x, y, 0) = tile_tunnel;
+                    }
+                    // Delete someone there.
+                    // TODO: Work around. Need delete him/her *completely*.
+                    if (map(x, y, 1) != 0)
+                    {
+                        map(x, y, 1) = 0;
+                    }
+                    if (map(x, y, 6) != 0)
+                    {
+                        cell_featread(x, y);
+                        if (feat(1) == 21)
+                        {
+                            // Open closed doors.
+                            cell_featset(x, y, tile_dooropen, 20, 0, -1);
+                        }
+                        else if (feat(1) == 22)
+                        {
+                            // Reveal hidden path.
+                            map(x, y, 6) = 0;
+                        }
+                    }
+                    assert(can_place_character_at({x, y}, true));
+                }
+            }
+        }
+        else
+        {
+            if (position)
+            {
+                x = position->x + rnd(i + 1) - rnd(i + 1);
+                y = position->y + rnd(i + 1) - rnd(i + 1);
+            }
+            else
+            {
+                x = rnd(mdata(0) - 4) + 2;
+                y = rnd(mdata(1) - 4) + 2;
+            }
+            if (enemy_respawn && i < 20)
+            {
+                const auto threshold = cdata[0].vision_distance / 2;
+                if (std::abs(cdata[0].position.x - x) <= threshold
+                    && std::abs(cdata[0].position.y - x) <= threshold)
+                {
+                    // Too close
+                    continue;
+                }
+            }
+        }
+
+        if (can_place_character_at({x, y}, cc.index == 0 || position))
+        {
+            break;
+        }
+    }
+
+    // Do place character.
+    cc.initial_position = cc.position = {x, y};
+    map(x, y, 1) = cc.index + 1;
+
+    return true; // placed successfully.
+}
+
+
+
+void failed_to_place_character(character& cc)
+{
+    if (cc.index < 16)
+    {
+        cc.state = 8;
+        txt(lang(
+            name(cc.index) + u8"とはぐれた。"s,
+            name(cc.index) + u8" loses "s + his(cc.index) + u8" way."s));
+    }
+    else
+    {
+        txt(lang(
+            name(cc.index) + u8"は何かに潰されて息絶えた。"s,
+            name(cc.index) + u8" is killed."s));
+        cc.state = 0;
+        chara_killed(cc);
+        // Exclude town residents because they occupy character slots even
+        // if they are dead.
+        modify_crowd_density(cc.index, -1);
+    }
+    if (cc.character_role != 0)
+    {
+        cc.state = 2;
+        chara_killed(cc);
+    }
+    if (cc.character_role == 13)
+    {
+        cc.state = 4;
+        cc.time_to_revive = gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
+            + gdata_year * 24 * 30 * 12 + 24 + rnd(12);
+        chara_killed(cc);
+    }
+}
+
+
+
+} // namespace
 
 
 
@@ -788,20 +977,18 @@ void chara_set_generation_filter()
 
 int chara_get_free_slot()
 {
-    f_at_m125 = -1;
+    int rc = -1;
     for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
          ++cnt)
     {
         if (cdata[cnt].state == 0)
         {
-            f_at_m125 = cnt;
+            rc = cnt;
             break;
         }
     }
-    return f_at_m125;
+    return rc;
 }
-
-
 
 int chara_get_free_slot_ally()
 {
@@ -824,174 +1011,29 @@ int chara_get_free_slot_ally()
 
 void chara_place()
 {
-    int placefail = 0;
     if (rc == -1)
-    {
         return;
-    }
+
     if (rc == 56)
     {
         cdata[rc].state = 0;
         return;
     }
-    placefail = 0;
-    if (gdata_mount == rc)
+
+    if (gdata_mount != 0 && gdata_mount == rc)
     {
-        if (rc != 0)
-        {
-            cdata[rc].position.x = cdata[0].position.x;
-            cdata[rc].position.y = cdata[0].position.y;
-            return;
-        }
+        cdata[rc].position = cdata[0].position;
+        return;
     }
-    for (int cnt = 0;; ++cnt)
+
+    const auto success = chara_place_internal(
+        cdata[rc],
+        cxinit >= 0 ? optional<position_t>({cxinit, cyinit}) : none,
+        cxinit == -2);
+    if (!success)
     {
-        if (cnt == 99)
-        {
-            if (rc >= 57)
-            {
-                placefail = 1;
-                break;
-            }
-        }
-        if (cnt > 99)
-        {
-            if (mdata(0) == 0)
-            {
-                placefail = 1;
-                break;
-            }
-            y = (cnt - 100) / mdata(0);
-            x = (cnt - 100) % mdata(0);
-            if (y >= mdata(1))
-            {
-                if (rc != 0)
-                {
-                    placefail = 1;
-                    break;
-                }
-                else
-                {
-                    x = rnd(mdata(0));
-                    y = rnd(mdata(1));
-                    if (map(x, y, 1) != 0)
-                    {
-                        map(x, y, 1) = 0;
-                    }
-                }
-            }
-        }
-        else
-        {
-            x = rnd(mdata(0) - 4) + 2;
-            y = rnd(mdata(1) - 4) + 2;
-            if (cxinit >= 0)
-            {
-                if (cnt == 0)
-                {
-                    x = cxinit;
-                    y = cyinit;
-                }
-                else
-                {
-                    x = cxinit + rnd((cnt + 1)) - rnd((cnt + 1));
-                    y = cyinit + rnd((cnt + 1)) - rnd((cnt + 1));
-                }
-            }
-            if (cnt < 20)
-            {
-                if (cxinit == -2)
-                {
-                    p = cdata[0].vision_distance / 2;
-                    if (x >= cdata[0].position.x - p
-                        && x <= cdata[0].position.x + p)
-                    {
-                        if (y >= cdata[0].position.y - p
-                            && y <= cdata[0].position.y + p)
-                        {
-                            continue;
-                        }
-                    }
-                }
-            }
-        }
-        if (x < 0 || y < 0 || x >= mdata(0) || y >= mdata(1))
-        {
-            continue;
-        }
-        if (chipm(7, map(x, y, 0)) & 4)
-        {
-            continue;
-        }
-        if (map(x, y, 1) != 0)
-        {
-            continue;
-        }
-        if (map(x, y, 6) != 0)
-        {
-            if (chipm(7, map(x, y, 6) % 1000) & 4)
-            {
-                continue;
-            }
-            cell_featread(x, y);
-            if (feat(1) == 11)
-            {
-                if (rc != 0)
-                {
-                    if (cxinit < 0)
-                    {
-                        continue;
-                    }
-                }
-            }
-            if (feat(1) == 10)
-            {
-                if (rc != 0)
-                {
-                    if (cxinit < 0)
-                    {
-                        continue;
-                    }
-                }
-            }
-        }
-        cdata[rc].initial_position.x = x;
-        cdata[rc].initial_position.y = y;
-        map(x, y, 1) = rc + 1;
-        cdata[rc].position.x = x;
-        cdata[rc].position.y = y;
-        p = 1;
-        break;
+        failed_to_place_character(cdata[rc]);
     }
-    if (placefail == 1)
-    {
-        if (rc < 16)
-        {
-            cdata[rc].state = 8;
-            txt(lang(
-                name(rc) + u8"とはぐれた。"s,
-                name(rc) + u8" loses "s + his(rc) + u8" way."s));
-        }
-        else
-        {
-            txt(lang(
-                name(rc) + u8"は何かに潰されて息絶えた。"s,
-                name(rc) + u8" is killed."s));
-            cdata[rc].state = 0;
-        }
-        if (cdata[rc].character_role != 0)
-        {
-            cdata[rc].state = 2;
-        }
-        if (cdata[rc].character_role == 13)
-        {
-            cdata[rc].state = 4;
-            cdata[rc].time_to_revive = gdata_hour + gdata_day * 24
-                + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24
-                + rnd(12);
-        }
-    }
-    return;
 }
 
 
@@ -1000,15 +1042,7 @@ int chara_create_internal()
 {
     if (rc == -1)
     {
-        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-             ++cnt)
-        {
-            if (cdata[cnt].state == 0)
-            {
-                rc = cnt;
-                break;
-            }
-        }
+        rc = chara_get_free_slot();
         if (rc == -1)
         {
             rc = 56;
@@ -1106,10 +1140,68 @@ int chara_create_internal()
         cdata[rc].image = 280;
     }
     cdata[rc].quality = fixlv;
+    cdata[rc].index = rc;
     initialize_character();
+
+    lua::lua.on_chara_creation(cdata[rc]);
+
     rtval = rc;
     return 1;
 }
+
+void initialize_character()
+{
+    if (mode != 1)
+    {
+        chara_add_quality_parens();
+    }
+    cdata[rc].state = 1;
+    cdata[rc].interest = 100;
+    cdata[rc].impression = 50;
+    cdata[rc].vision_distance = 14;
+    if (cdata[rc].id == 205)
+    {
+        cdata[rc].image = rnd(33) * 2 + cdata[rc].sex + 1;
+    }
+    if (rc == 0)
+    {
+        cdata[rc].nutrition = 9000;
+    }
+    else
+    {
+        cdata[rc].nutrition = 5000 + rnd(4000);
+    }
+    cdata[rc].height = cdata[rc].height + rnd((cdata[rc].height / 5 + 1))
+        - rnd((cdata[rc].height / 5 + 1));
+    cdata[rc].weight =
+        cdata[rc].height * cdata[rc].height * (rnd(6) + 18) / 10000;
+    update_required_experience(rc);
+    init_character_skills(rc);
+    if (cdata[rc].portrait == 0)
+    {
+        cdata[rc].portrait = rnd(32);
+    }
+    cdata[rc].personality = rnd(4);
+    cdata[rc].talk_type = rnd(7);
+    supply_initial_equipments();
+    chara_refresh(rc);
+    modify_crowd_density(rc, 1);
+    cdata[rc].hp = cdata[rc].max_hp;
+    cdata[rc].mp = cdata[rc].max_mp;
+    cdata[rc].sp = cdata[rc].max_sp;
+    if (rc == 0)
+    {
+        gdata_initial_cart_limit = 80000;
+        gdata_current_cart_limit = gdata_initial_cart_limit;
+    }
+    if (cdata[rc].has_lay_hand())
+    {
+        cdata[rc].is_lay_hand_available() = true;
+    }
+    cm = 0;
+    return;
+}
+
 
 
 int chara_create(int prm_756, int prm_757, int prm_758, int prm_759)
@@ -1229,14 +1321,7 @@ void chara_refresh(int cc)
     cdata[cc].equipment_type = 0;
     attacknum = 0;
     cdata[cc].rate_to_pierce = 0;
-    if (sdata(186, cc))
-    {
-        cdata[cc].rate_of_critical_hit = int(std::sqrt(sdata(186, cc))) + 2;
-    }
-    else
-    {
-        cdata[cc].rate_of_critical_hit = 0;
-    }
+    cdata[cc].rate_of_critical_hit = 0;
     cdata[cc].curse_power = 0;
     cdata[cc].extra_attack = 0;
     cdata[cc].extra_shot = 0;
@@ -1449,6 +1534,7 @@ void chara_refresh(int cc)
                 {
                     cdata[cc].extra_shot +=
                         inv[rp].enchantments[cnt].power / 15;
+                    cdata[cc].extra_shot = 100;
                     continue;
                 }
                 if (rp2 == 21 || rp2 == 45 || rp2 == 46 || rp2 == 47)
@@ -1595,6 +1681,10 @@ void chara_refresh(int cc)
     {
         cdata[cc].extra_attack += int(std::sqrt(sdata(166, cc))) * 3 / 2 + 4;
     }
+    if (sdata(186, cc))
+    {
+        cdata[cc].rate_of_critical_hit += int(std::sqrt(sdata(186, cc))) + 2;
+    }
     if (cdata[cc].rate_of_critical_hit > 30)
     {
         cdata[cc].hit_bonus += (cdata[cc].rate_of_critical_hit - 30) * 2;
@@ -1603,19 +1693,24 @@ void chara_refresh(int cc)
     refresh_burden_state();
     refreshspeed(cc);
     cdata[cc].needs_refreshing_status() = false;
+
+    auto handle = lua::lua.get_handle_manager().get_chara_handle(cdata[cc]);
+    if(handle != sol::lua_nil)
+    {
+        lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::character_refreshed>(handle);
+    }
 }
 
 int relationbetween(int c1, int c2)
 {
-    (void)c2;
     if (cdata[c1].relationship >= -2)
     {
-        if (cdata[c1].relationship <= -3)
+        if (cdata[c2].relationship <= -3)
         {
             return -3;
         }
     }
-    else if (cdata[c1].relationship >= -2)
+    else if (cdata[c2].relationship >= -2)
     {
         return -3;
     }
@@ -1846,6 +1941,9 @@ void chara_mod_impression(int cc, int delta)
 
 void chara_vanquish(int cc)
 {
+    if (cc == 0)
+        return;
+
     if (cc == gdata_mount)
     {
         ride_end();
@@ -1857,96 +1955,143 @@ void chara_vanquish(int cc)
     cdata[cc].state = 0;
     cdata[cc].character_role = 0;
     quest_check();
+    modify_crowd_density(cc, 1);
 }
 
-int chara_copy(int prm_848)
+
+
+bool chara_copy(int cc)
 {
-    int c_at_m139 = 0;
-    int f_at_m139 = 0;
-    int y_at_m139 = 0;
-    int x_at_m139 = 0;
-    c_at_m139 = 0;
-    for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-         ++cnt)
+    int slot{};
+    for (int i = ELONA_MAX_PARTY_CHARACTERS; i < ELONA_MAX_CHARACTERS; ++i)
     {
-        if (cdata[cnt].state == 0)
+        if (cdata[i].state == 0)
         {
-            c_at_m139 = cnt;
+            slot = i;
             break;
         }
     }
-    if (c_at_m139 == 0)
+    if (slot == 0)
+        return false;
+
+    bool placed{};
+    int x;
+    int y;
+
+    for (int i = 0; i < 4; ++i)
     {
-        return 0;
-    }
-    f_at_m139 = 0;
-    for (int cnt = 0; cnt < 8; ++cnt)
-    {
-        y_at_m139 =
-            cdata[prm_848].position.y - rnd((cnt / 4 + 1)) + rnd((cnt / 4 + 1));
-        if (y_at_m139 < 0 || y_at_m139 >= mdata(1))
+        y = cdata[cc].position.y - rnd(2) + rnd(2);
+        if (y < 0 || y >= mdata(1))
         {
             continue;
         }
-        x_at_m139 =
-            cdata[prm_848].position.x - rnd((cnt / 4 + 1)) + rnd((cnt / 4 + 1));
-        if (x_at_m139 < 0 || x_at_m139 >= mdata(0))
+        x = cdata[cc].position.x - rnd(2) + rnd(2);
+        if (x < 0 || x >= mdata(0))
         {
             continue;
         }
-        if (map(x_at_m139, y_at_m139, 1) == 0)
+        if (map(x, y, 6) != 0)
         {
-            if ((chipm(7, map(x_at_m139, y_at_m139, 0)) & 4) == 0)
+            if (chipm(7, map(x, y, 6) % 1000) & 4)
             {
-                f_at_m139 = 1;
+                continue;
+            }
+        }
+        if (map(x, y, 1) == 0)
+        {
+            if (!(chipm(7, map(x, y, 0)) & 4))
+            {
+                placed = true;
                 break;
             }
         }
     }
-    if (f_at_m139 == 0)
+    if (!placed)
+        return false;
+
+    chara_delete(slot);
+    sdata.copy(slot, cc);
+    cdata(slot) = cdata(cc);
+    for (int i = 0; i < 10; ++i)
     {
-        return 0;
+        cdatan(i, slot) = cdatan(i, cc);
     }
-    chara_delete(c_at_m139);
-    sdata.copy(c_at_m139, prm_848);
-    cdata(c_at_m139) = cdata(prm_848);
-    for (int cnt = 0; cnt < 10; ++cnt)
-    {
-        cdatan(cnt, c_at_m139) = cdatan(cnt, prm_848);
-    }
-    map(x_at_m139, y_at_m139, 1) = c_at_m139 + 1;
-    cdata[c_at_m139].position.x = x_at_m139;
-    cdata[c_at_m139].position.y = y_at_m139;
-    cdata[c_at_m139].impression = 0;
-    cdata[c_at_m139].gold = 0;
+    map(x, y, 1) = slot + 1;
+    cdata[slot].position.x = x;
+    cdata[slot].position.y = y;
+    cdata[slot].impression = 0;
+    cdata[slot].gold = 0;
     for (int i = 0; i < 30; ++i)
     {
-        cdata_body_part(c_at_m139, i) =
-            cdata_body_part(c_at_m139, i) / 10000 * 10000;
+        cdata_body_part(slot, i) = cdata_body_part(slot, i) / 10000 * 10000;
     }
-    cdata[c_at_m139].original_relationship = -3;
-    cdata[c_at_m139].has_own_sprite() = false;
-    cdata[c_at_m139].is_livestock() = false;
-    cdata[c_at_m139].is_married() = false;
-    cdata[c_at_m139].is_ridden() = false;
-    cdata[c_at_m139].needs_refreshing_status() = true;
-    cdata[c_at_m139].is_hung_on_sand_bag() = false;
-    return 1;
+    cdata[slot].original_relationship = -3;
+    cdata[slot].has_own_sprite() = false;
+    cdata[slot].is_livestock() = false;
+    cdata[slot].is_married() = false;
+    cdata[slot].is_ridden() = false;
+    cdata[slot].needs_refreshing_status() = true;
+    cdata[slot].is_hung_on_sand_bag() = false;
+
+    modify_crowd_density(slot, 1);
+    ++npcmemory(1, cdata[slot].id);
+
+    return true;
+}
+
+void chara_killed(character& chara)
+{
+    // Regardless of whether or not this character will revive, run
+    // the character killed callback.
+    auto handle = lua::lua.get_handle_manager().get_chara_handle(chara);
+    lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::character_killed>(handle);
+
+    if(chara.state == 0)
+    {
+        // This character slot is invalid, and can be overwritten by
+        // newly created characters at any time. Run any Lua callbacks
+        // to clean up character things.
+        lua::lua.on_chara_removal(chara);
+    }
+    else if(chara.state == 2 || chara.state == 4 || chara.state == 6)
+    {
+        // This character revives.
+    }
+    else
+    {
+        assert(0);
+    }
 }
 
 
-void chara_delete(int prm_783)
+
+void chara_delete(int cc)
 {
-    for (const auto& cnt : items(prm_783))
+    int state = cdata[cc].state;
+    if(cc != -1 && cdata[cc].index != -1 && state != 0)
     {
-        inv[cnt].number = 0;
+        // This character slot was previously occupied and is
+        // currently valid. If the state were 0, then chara_killed
+        // would have been called to run the chara removal handler for
+        // the Lua state. We'll have to run it now.
+        lua::lua.on_chara_removal(cdata[cc]);
+    }
+    else
+    {
+        // This character slot is invalid, so the removal callback
+        // must have been ran already.
+    }
+
+    for (const auto& cnt : items(cc))
+    {
+        item_remove(inv[cnt]);
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        cdatan(cnt, prm_783) = "";
+        cdatan(cnt, cc) = "";
     }
-    sdata.clear(prm_783);
-    cdata(prm_783).clear();
+    sdata.clear(cc);
+    cdata(cc).clear();
     return;
 }
 
@@ -1954,12 +2099,6 @@ void chara_delete(int prm_783)
 int chara_relocate(int prm_784, int prm_785, int prm_786)
 {
     int tc_at_m125 = 0;
-    int x_at_m125 = 0;
-    int y_at_m125 = 0;
-    int p1_at_m125 = 0;
-    int p2_at_m125 = 0;
-    int p3_at_m125 = 0;
-    int hp_at_m125 = 0;
     int p_at_m125 = 0;
     int invrangecc_at_m125 = 0;
     int cnt2_at_m125 = 0;
@@ -2000,15 +2139,26 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
             chara_vanquish(tc_at_m125);
         }
     }
+
+    // Backups for changing
+    position_t position;
+    position_t initial_position;
+    int relationship;
+    int original_relationship;
+    int hate;
+    int enemy_id;
+    int hp;
     if (prm_786 == 1)
     {
-        x_at_m125 = cdata[tc_at_m125].position.x;
-        y_at_m125 = cdata[tc_at_m125].position.y;
+        // Change
+        position = cdata[tc_at_m125].position;
+        initial_position = cdata[tc_at_m125].initial_position;
+        relationship = cdata[tc_at_m125].relationship;
+        original_relationship = cdata[tc_at_m125].original_relationship;
+        hate = cdata[tc_at_m125].hate;
+        enemy_id = cdata[tc_at_m125].enemy_id;
+        hp = cdata[tc_at_m125].hp;
     }
-    p1_at_m125 = cdata[tc_at_m125].relationship;
-    p2_at_m125 = cdata[tc_at_m125].hate;
-    p3_at_m125 = cdata[tc_at_m125].state;
-    hp_at_m125 = cdata[tc_at_m125].hp;
     cdata[prm_784].item_which_will_be_used = 0;
     cdata[prm_784].is_livestock() = false;
     const auto tmp = inv_getheader(prm_784);
@@ -2035,10 +2185,17 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
         inv[cnt].body_part = 0;
         ++p_at_m125;
     }
+
+    // TODO handle transferring through Lua robustly
+    // lua::lua.on_chara_removal(cdata[prm_784]);
+
     sdata.copy(tc_at_m125, prm_784);
     sdata.clear(prm_784);
     cdata(tc_at_m125) = cdata(prm_784);
     cdata(prm_784).clear();
+
+    cdata(tc_at_m125).index = tc_at_m125;
+
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         cdatan(cnt, tc_at_m125) = cdatan(cnt, prm_784);
@@ -2053,13 +2210,14 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
     }
     if (prm_786 == 1)
     {
+        // Change
         cdata[tc_at_m125].state = 1;
-        cdata[tc_at_m125].position.x = x_at_m125;
-        cdata[tc_at_m125].position.y = y_at_m125;
-        cdata[tc_at_m125].relationship = p1_at_m125;
-        cdata[tc_at_m125].hate = p2_at_m125;
-        cdata[tc_at_m125].hp = hp_at_m125;
-        cdata[tc_at_m125].state = p3_at_m125;
+        cdata[tc_at_m125].position = position;
+        cdata[tc_at_m125].initial_position = initial_position;
+        cdata[tc_at_m125].relationship = relationship;
+        cdata[tc_at_m125].original_relationship = original_relationship;
+        cdata[tc_at_m125].hate = hate;
+        cdata[tc_at_m125].hp = hp;
         map(cdata[tc_at_m125].position.x, cdata[tc_at_m125].position.y, 1) =
             tc_at_m125 + 1;
     }
@@ -2103,6 +2261,19 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
     rc = tc_at_m125;
     wear_most_valuable_equipment_for_all_body_parts();
     chara_refresh(tc_at_m125);
+
+    // TODO handle transferring through Lua robustly
+    // lua::lua.on_chara_creation(cdata[tc_at_m125]);
+
+    if (tc_at_m125 < 57)
+    {
+        modify_crowd_density(prm_784, -1);
+    }
+    if (prm_784 < 57)
+    {
+        modify_crowd_density(tc_at_m125, 1);
+    }
+
     return prm_784;
 }
 
@@ -2138,6 +2309,13 @@ int chara_armor_class(int cc)
 
 
 
+bool belong_to_same_team(const character& c1, const character& c2)
+{
+    return (c1.relationship >= 0 && c2.relationship >= 0)
+        || (c1.relationship == -1 && c2.relationship == -1)
+        || (c1.relationship <= -2 && c2.relationship <= -2);
+}
+
 
 
 std::string chara_refstr(int prm_0258, int prm_0259)
@@ -2147,6 +2325,23 @@ std::string chara_refstr(int prm_0258, int prm_0259)
     dbspec = prm_0259;
     access_character_info();
     return refstr;
+}
+
+void chara_add_quality_parens()
+{
+    if (fixlv == 4)
+    {
+        cdatan(0, rc) = i18n::_(u8"ui", u8"bracket_left") + cdatan(0, rc)
+            + i18n::_(u8"ui", u8"bracket_right");
+        cdata[rc].level = cdata[rc].level * 10 / 8;
+    }
+    if (fixlv == 5)
+    {
+        cdatan(0, rc) =
+            lang(u8"《"s, u8"{"s) + cdatan(0, rc) + lang(u8"》"s, u8"}"s);
+        cdata[rc].level = cdata[rc].level * 10 / 6;
+    }
+    return;
 }
 
 } // namespace elona

@@ -6,6 +6,7 @@
 #include "json.hpp"
 #include "range.hpp"
 #include "variables.hpp"
+#include "snail/window.hpp"
 
 
 
@@ -180,8 +181,58 @@ namespace elona
 {
 
 
+void config_query_language()
+{
+    buffer(4);
+    picload(filesystem::dir::graphic() / u8"lang.bmp");
+    gsel(0);
+    gmode(0);
+    p = 0;
 
-void load_config()
+    while (1)
+    {
+        boxf();
+        pos(160, 170);
+        gcopy(4, 0, 0, 340, 100);
+        pos(180, 220 + p * 20);
+        gcopy(4, 360, 6, 20, 18);
+        redraw();
+        await(30);
+        if (getkey(snail::key::down))
+        {
+            p = 1;
+        }
+        if (getkey(snail::key::keypad_2))
+        {
+            p = 1;
+        }
+        if (getkey(snail::key::up))
+        {
+            p = 0;
+        }
+        if (getkey(snail::key::keypad_8))
+        {
+            p = 0;
+        }
+        if (getkey(snail::key::enter))
+        {
+            break;
+        }
+        if (getkey(snail::key::keypad_enter))
+        {
+            break;
+        }
+        if (getkey(snail::key::space))
+        {
+            break;
+        }
+    }
+
+    config::instance().language = p;
+    set_config(u8"language", p);
+}
+
+void load_config(const fs::path& json_file)
 {
     // FIXME std::string{value} => value
     std::unique_ptr<config_base> config_list[] = {
@@ -278,14 +329,6 @@ void load_config()
             1,
             [&](auto value) { config::instance().attackanime = value; }),
         std::make_unique<config_integer>(
-            u8"initialKeyWait",
-            10,
-            [&](auto value) { config::instance().initialkeywait = value; }),
-        std::make_unique<config_integer>(
-            u8"keyWait",
-            5,
-            [&](auto value) { config::instance().keywait = value; }),
-        std::make_unique<config_integer>(
             u8"envEffect",
             1,
             [&](auto value) { config::instance().env = value; }),
@@ -305,6 +348,10 @@ void load_config()
             u8"netChat",
             1,
             [&](auto value) { config::instance().netchat = value; }),
+        std::make_unique<config_integer>(
+            u8"noaDebug",
+            0,
+            [&](auto value) { config::instance().noadebug = value; }),
         std::make_unique<config_integer>(
             u8"serverList",
             0,
@@ -426,7 +473,7 @@ void load_config()
             }),
         std::make_unique<config_string>(
             u8"key_get2",
-            u8"0",
+            u8"0 ",
             [&](auto value) { key_get2 = std::string{value}; }),
         std::make_unique<config_string>(
             u8"key_drop",
@@ -670,19 +717,30 @@ void load_config()
             u8"autosave",
             0,
             [&](auto value) { config::instance().autosave = value; }),
+        std::make_unique<config_string>(
+            u8"startup_script",
+            "",
+            [&](auto value) { config::instance().startup_script = std::string{value}; }),
+        std::make_unique<config_integer>(
+            u8"damage_popup",
+            1,
+            [&](auto value) { config::instance().damage_popup = value; }),
+        std::make_unique<config_integer>(
+            u8"keyWait",
+            5,
+            [&](auto value) { config::instance().keywait = value; }),
     };
 
     picojson::value value;
 
     {
-        std::ifstream file{(filesystem::dir::exe() / u8"config.json").native(),
+        std::ifstream file{json_file.native(),
                            std::ios::binary};
         if (!file)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
-                + filesystem::make_preferred_path_in_utf8(
-                      filesystem::dir::exe() / u8"config.json")};
+                + filesystem::make_preferred_path_in_utf8(json_file)};
         }
         fileutil::skip_bom(file);
 
@@ -738,52 +796,9 @@ void load_config()
     {
         config::instance().startrun = 1000;
     }
-
     if (config::instance().language == -1)
     {
-        buffer(4);
-        picload(filesystem::dir::graphic() / u8"lang.bmp");
-        gsel(0);
-        gmode(0);
-        p = 0;
-
-        while (1)
-        {
-            boxf();
-            pos(160, 170);
-            gcopy(4, 0, 0, 340, 100);
-            pos(180, 220 + p * 20);
-            gcopy(4, 360, 6, 20, 18);
-            redraw();
-            await(30);
-            if (getkey(snail::key::down))
-            {
-                p = 1;
-            }
-            if (getkey(snail::key::keypad_2))
-            {
-                p = 1;
-            }
-            if (getkey(snail::key::up))
-            {
-                p = 0;
-            }
-            if (getkey(snail::key::keypad_8))
-            {
-                p = 0;
-            }
-            if (getkey(snail::key::enter))
-            {
-                break;
-            }
-            if (getkey(snail::key::space))
-            {
-                break;
-            }
-        }
-
-        config::instance().language = p;
-        set_config(u8"language", p);
+        config_query_language();
     }
     if (config::instance().language == 0)
     {
@@ -923,7 +938,7 @@ void set_config(const std::string& key, const std::string& value1, int value2)
 
 
 
-void load_config2()
+void load_config2(const fs::path& json_file)
 {
     std::unique_ptr<config_base> config_list[] = {
         std::make_unique<config_integer>(
@@ -967,10 +982,6 @@ void load_config2()
         std::make_unique<config_integer>(
             u8"windowY", 0, [&](auto value) { windowy = value; }),
         std::make_unique<config_integer>(
-            u8"windowW", 800, [&](auto value) { windoww = value; }),
-        std::make_unique<config_integer>(
-            u8"windowH", 600, [&](auto value) { windowh = value; }),
-        std::make_unique<config_integer>(
             u8"clockX", 0, [&](auto value) { inf_clockx = value; }),
         std::make_unique<config_integer>(
             u8"clockW", 120, [&](auto value) { inf_clockw = value; }),
@@ -982,16 +993,17 @@ void load_config2()
             u8"charamake_wiz",
             0,
             [&](auto value) { config::instance().wizard = value; }),
+        std::make_unique<config_string>(
+            u8"display_mode", "", [&](auto value) { config::instance().display_mode = value; }),
     };
 
-    std::ifstream file{(filesystem::dir::exe() / u8"config.json").native(),
+    std::ifstream file{json_file.native(),
                        std::ios::binary};
     if (!file)
     {
         throw config_loading_error{
             u8"Failed to open: "s
-            + filesystem::make_preferred_path_in_utf8(
-                  filesystem::dir::exe() / u8"config.json")};
+            + filesystem::make_preferred_path_in_utf8(json_file)};
     }
 
     fileutil::skip_bom(file);
@@ -1005,6 +1017,20 @@ void load_config2()
     }
 }
 
+snail::window::fullscreen_mode_t config_get_fullscreen_mode()
+{
+    snail::window::fullscreen_mode_t mode;
+
+    switch(config::instance().fullscreen)
+    {
+    case 0: mode = snail::window::fullscreen_mode_t::windowed; break;
+    case 1: mode = snail::window::fullscreen_mode_t::fullscreen; break;
+    case 2: mode = snail::window::fullscreen_mode_t::fullscreen_desktop; break;
+    default: throw new std::runtime_error("Invalid fullscreen mode");
+    }
+
+    return mode;
+}
 
 config& config::instance()
 {

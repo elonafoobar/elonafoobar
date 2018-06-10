@@ -1,12 +1,13 @@
 #include "equipment.hpp"
 #include "adventurer.hpp"
 #include "calc.hpp"
-#include "class.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "class.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
 #include "itemgen.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 namespace elona
@@ -237,7 +238,7 @@ void supply_new_equipment()
             }
             if (inv[ci].number != 0)
             {
-                inv[ci].number = 0;
+                item_remove(inv[ci]);
                 f = 1;
                 break;
             }
@@ -345,7 +346,6 @@ void supply_new_equipment()
     }
     return;
 }
-
 
 
 
@@ -974,7 +974,7 @@ void supply_initial_equipments()
                     {
                         if (cnt < 14)
                         {
-                            inv[ci].number = 0;
+                            item_remove(inv[ci]);
                             continue;
                         }
                     }
@@ -1002,7 +1002,7 @@ void supply_initial_equipments()
                             {
                                 if (cnt < 14)
                                 {
-                                    inv[ci].number = 0;
+                                    item_remove(inv[ci]);
                                     continue;
                                 }
                             }
@@ -1013,7 +1013,7 @@ void supply_initial_equipments()
                             {
                                 if (cnt < 14)
                                 {
-                                    inv[ci].number = 0;
+                                    item_remove(inv[ci]);
                                     continue;
                                 }
                             }
@@ -1049,7 +1049,7 @@ void supply_initial_equipments()
                             {
                                 if (cnt < 14)
                                 {
-                                    inv[ci].number = 0;
+                                    item_remove(inv[ci]);
                                     continue;
                                 }
                             }

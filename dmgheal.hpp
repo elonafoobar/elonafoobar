@@ -10,7 +10,7 @@ namespace elona
 void healhp(int cc, int delta);
 void healmp(int cc, int delta);
 void healsp(int cc, int delta);
-int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857);
+int dmghp(int, int, int = 0, int = 0, int = 0);
 void end_dmghp();
 void dmgmp(int cc, int delta);
 void dmgsp(int cc, int delta);
@@ -20,4 +20,4 @@ bool actionsp(int cc, int sp);
 
 
 
-}
+} // namespace elona

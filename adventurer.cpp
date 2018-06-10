@@ -1,13 +1,14 @@
 #include "adventurer.hpp"
+#include <string>
 #include "ability.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "equipment.hpp"
 #include "item.hpp"
-#include "itemgen.hpp"
 #include "item_db.hpp"
+#include "itemgen.hpp"
+#include "random.hpp"
 #include "variables.hpp"
-#include <string>
 
 namespace elona
 {
@@ -207,36 +208,36 @@ void label_2662()
                         + u8" has been expired."s));
             }
         }
-        if (cdata[rc].current_map == gdata_current_map)
+        if (cdata[rc].current_map != gdata_current_map)
         {
-            continue;
-        }
-        if (cdata[rc].state == 5)
-        {
-            create_adventurer();
-            continue;
-        }
-        if (cdata[rc].state == 4)
-        {
-            if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
-                    + gdata_year * 24 * 30 * 12
-                >= cdata[rc].time_to_revive)
+            if (cdata[rc].state == 5)
             {
-                if (rnd(3) == 0)
-                {
-                    addnews(5, rc);
-                    cdata[rc].state = 0;
-                    create_adventurer();
-                }
-                else
-                {
-                    addnews(3, rc);
-                    cdata[rc].state = 3;
-                }
+                create_adventurer();
                 continue;
             }
+            if (cdata[rc].state == 4)
+            {
+                if (gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
+                        + gdata_year * 24 * 30 * 12
+                    >= cdata[rc].time_to_revive)
+                {
+                    if (rnd(3) == 0)
+                    {
+                        addnews(5, rc);
+                        cdata[rc].state = 0;
+                        create_adventurer();
+                    }
+                    else
+                    {
+                        addnews(3, rc);
+                        cdata[rc].state = 3;
+                    }
+                    continue;
+                }
+            }
         }
-        if (rnd(60) == 0)
+        if ((cdata[rc].current_map != gdata_current_map || mdata(6) == 1)
+            && rnd(60) == 0)
         {
             for (int cnt = 0; cnt < 10; ++cnt)
             {
@@ -264,6 +265,10 @@ void label_2662()
             cdata[rc].current_map = p;
             cdata[rc].current_dungeon_level = 1;
         }
+        if (cdata[rc].current_map == gdata_current_map)
+        {
+            continue;
+        }
         if (rnd(200) == 0)
         {
             if (adata(0, cdata[rc].current_map) != 3)
@@ -282,8 +287,8 @@ void label_2662()
         }
         if (rnd(2000) == 0)
         {
-            cdata[rc].experience +=
-                cdata[rc].level * cdata[rc].level * cdata[rc].level * 5;
+            cdata[rc].experience += clamp(cdata[rc].level, 1, 1000)
+                * clamp(cdata[rc].level, 1, 1000) * 100;
             int fame = rnd(cdata[rc].level * cdata[rc].level / 20 + 10) + 10;
             cdata[rc].fame += fame;
             addnews(4, rc, fame);
@@ -328,7 +333,7 @@ int label_2664()
             {
                 cdata[rc].item_which_will_be_used = 0;
             }
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             f = 1;
             break;
         }

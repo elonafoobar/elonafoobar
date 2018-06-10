@@ -14,4 +14,4 @@ main_menu_result_t character_making_final_phase();
 
 void show_race_or_class_info(int, int);
 
-}
+} // namespace elona

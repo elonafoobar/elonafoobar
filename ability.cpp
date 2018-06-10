@@ -4,6 +4,7 @@
 #include "character.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
+#include "random.hpp"
 #include "range.hpp"
 #include "variables.hpp"
 
@@ -17,7 +18,7 @@ int lv_at_m77 = 0;
 int exp_at_m77 = 0;
 int growth_at_m77 = 0;
 int lvchange_at_m77 = 0;
-}
+} // namespace
 
 
 

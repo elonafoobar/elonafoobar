@@ -1,10 +1,11 @@
 #include "network.hpp"
-#include "config.hpp"
-#include "ui.hpp"
 #include "audio.hpp"
+#include "config.hpp"
 #include "elona.hpp"
 #include "input.hpp"
 #include "macro.hpp"
+#include "random.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 
@@ -774,4 +775,4 @@ label_1402_internal:
 
 
 
-}
+} // namespace elona

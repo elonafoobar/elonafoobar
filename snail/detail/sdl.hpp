@@ -36,6 +36,36 @@ void enforce_img(int result);
 void enforce_mixer(int result);
 
 
+#if defined(SNAIL_RENDERER_HEADLESS)
+
+template <typename T>
+T* enforce_sdl(T* result)
+{
+    return result;
+}
+
+
+template <typename T>
+T* enforce_ttf(T* result)
+{
+    return result;
+}
+
+
+template <typename T>
+T* enforce_img(T* result)
+{
+    return result;
+}
+
+
+template <typename T>
+T* enforce_mixer(T* result)
+{
+    return result;
+}
+
+#elif defined(SNAIL_RENDERER_SDL)
 
 template <typename T>
 T* enforce_sdl(T* result)
@@ -63,6 +93,11 @@ T* enforce_mixer(T* result)
 {
     return result ? result : throw sdl_error(::Mix_GetError());
 }
+
+
+#else
+#error Unsupported renderer
+#endif
 
 
 

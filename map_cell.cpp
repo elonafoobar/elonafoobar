@@ -110,7 +110,7 @@ void cell_check(int prm_603, int prm_604)
 
 
 
-void cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
+bool cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
 {
     int x2_at_m81 = 0;
     int y2_at_m81 = 0;
@@ -118,7 +118,7 @@ void cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
     {
         if (gdata_mount == prm_605 || gdata_mount == prm_606)
         {
-            return;
+            return false;
         }
     }
     tc_at_m81 = prm_606;
@@ -155,7 +155,7 @@ void cell_swap(int prm_605, int prm_606, int prm_607, int prm_608)
             cdata[gdata_mount].position.y = cdata[0].position.y;
         }
     }
-    return;
+    return true;
 }
 
 
@@ -271,6 +271,43 @@ int cell_findspace(int prm_796, int prm_797, int prm_798)
         }
     }
     return f_at_m130;
+}
+
+static int _random_tile(elona_vector1<int> tile)
+{
+    if(tile(1) == 0 || tile(2) == 0)
+    {
+        return tile(0);
+    }
+    return tile(0) + (rnd(tile(2)) == 0) * rnd(tile(1));
+}
+
+int cell_get_type(tile_kind_t type)
+{
+    // TODO dedup from map_converttile?
+    elona_vector1<int> tile;
+    switch(type)
+    {
+    case tile_kind_t::normal:
+        tile = tile_default;
+        break;
+    case tile_kind_t::wall:
+        tile = tile_wall;
+        break;
+    case tile_kind_t::tunnel:
+        tile = tile_tunnel;
+        break;
+    case tile_kind_t::room:
+        tile = tile_room;
+        break;
+    case tile_kind_t::fog:
+        tile = tile_fog;
+        break;
+    default:
+        assert(0);
+    }
+
+    return _random_tile(tile);
 }
 
 } // namespace elona

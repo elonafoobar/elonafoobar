@@ -19,6 +19,7 @@
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
 #include "debug.hpp"
+#include "dmgheal.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
@@ -26,7 +27,6 @@
 #include "event.hpp"
 #include "filesystem.hpp"
 #include "fish.hpp"
-#include "foobar_save.hpp"
 #include "food.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
@@ -36,6 +36,7 @@
 #include "item_material.hpp"
 #include "itemgen.hpp"
 #include "log.hpp"
+#include "lua_env/lua_env.hpp"
 #include "macro.hpp"
 #include "main.hpp"
 #include "map.hpp"
@@ -62,48 +63,7 @@ using namespace elona;
 namespace
 {
 
-
-
 std::string atbuff;
-
-
-
-int ask_direction_to_close()
-{
-    int number_of_doors{};
-    position_t pos;
-    for (int dy = -1; dy <= 1; ++dy)
-    {
-        for (int dx = -1; dx <= 1; ++dx)
-        {
-            if (dy == 0 && dx == 0)
-                continue;
-            int x = cdata[0].position.x + dx;
-            int y = cdata[0].position.y + dy;
-            cell_featread(x, y);
-            if (feat(1) == 20 && map(x, y, 1) == 0)
-            {
-                ++number_of_doors;
-                pos = {x, y};
-            }
-        }
-    }
-    if (number_of_doors == 1)
-    {
-        x = pos.x;
-        y = pos.y;
-        return 1;
-    }
-
-    txt(lang(u8"何を閉める？"s, u8"Which door do you want to close? "s));
-    update_screen();
-    return ask_direction();
-}
-
-
-
-
-
 
 } // namespace
 
@@ -490,62 +450,6 @@ void initialize_building_daga()
     bdrefn(4) = lang(u8"寺院"s, u8"Temple"s);
     bdrefn(5) = lang(u8"盗賊の隠れ家"s, u8"Smuggler's Hideout"s);
     bdrefn(6) = lang(u8"灯台"s, u8"Light House"s);
-    return;
-}
-
-
-
-void initialize_character()
-{
-    if (mode != 1)
-    {
-        add_quality_parentheses();
-    }
-    cdata[rc].state = 1;
-    cdata[rc].interest = 100;
-    cdata[rc].impression = 50;
-    cdata[rc].vision_distance = 14;
-    if (cdata[rc].id == 205)
-    {
-        cdata[rc].image = rnd(33) * 2 + cdata[rc].sex + 1;
-    }
-    if (rc == 0)
-    {
-        cdata[rc].nutrition = 9000;
-    }
-    else
-    {
-        cdata[rc].nutrition = 5000 + rnd(4000);
-    }
-    cdata[rc].height = cdata[rc].height + rnd((cdata[rc].height / 5 + 1))
-        - rnd((cdata[rc].height / 5 + 1));
-    cdata[rc].weight =
-        cdata[rc].height * cdata[rc].height * (rnd(6) + 18) / 10000;
-    update_required_experience(rc);
-    init_character_skills(rc);
-    if (cdata[rc].portrait == 0)
-    {
-        cdata[rc].portrait = rnd(32);
-    }
-    cdata[rc].personality = rnd(4);
-    cdata[rc].talk_type = rnd(7);
-    supply_initial_equipments();
-    chara_refresh(rc);
-    ++gdata_other_character_count;
-    cdata[rc].hp = cdata[rc].max_hp;
-    cdata[rc].mp = cdata[rc].max_mp;
-    cdata[rc].sp = cdata[rc].max_sp;
-    if (rc == 0)
-    {
-        initialize_fovmap_and_fovlist();
-        gdata_initial_cart_limit = 80000;
-        gdata_current_cart_limit = gdata_initial_cart_limit;
-    }
-    if (cdata[rc].has_lay_hand())
-    {
-        cdata[rc].is_lay_hand_available() = true;
-    }
-    cm = 0;
     return;
 }
 
@@ -1260,41 +1164,54 @@ int winposy(int prm_539, int prm_540)
 
 
 
-void cutname(std::string& prm_541, int prm_542)
+void cutname(std::string& utf8_string, int max_length_charwise)
 {
-    int len_at_m71 = 0;
-    elona_vector1<std::string> buf_at_m71;
-    int p_at_m71 = 0;
-    if (strlen_u(prm_541) > size_t(prm_542))
+    if (max_length_charwise == 0)
     {
-        len_at_m71 = zentohan(prm_541, buf_at_m71, 0);
-        SDIM2(buf_at_m71, len_at_m71);
-        zentohan(prm_541, prm_541, len_at_m71);
-        if (strlen_u(prm_541) > size_t(prm_542))
+        utf8_string = std::string();
+        return;
+    }
+
+    int current_char = 0;
+    size_t current_byte = 0;
+    bool multibyte = false;
+    while (current_char < max_length_charwise && current_byte < utf8_string.size())
+    {
+        if (static_cast<unsigned char>(utf8_string[current_byte]) > 0x7F)
         {
-            len_at_m71 = 0;
-            while (1)
+            current_byte++;
+            current_char++;
+            while ((static_cast<unsigned char>(utf8_string[current_byte] & 0xC0)) == 0x80)
             {
-                if (len_at_m71 >= prm_542)
+                // Fullwidth characters count as length 2.
+                if (!multibyte)
+                {
+                    current_char++;
+                    multibyte = true;
+                }
+                if (current_char > max_length_charwise)
+                {
+                    current_byte--;
+                    break;
+                }
+
+                current_byte++;
+                if (current_byte > utf8_string.size())
                 {
                     break;
                 }
-                p_at_m71 = prm_541[len_at_m71];
-                if ((p_at_m71 >= 129 && p_at_m71 <= 159)
-                    || (p_at_m71 >= 224 && p_at_m71 <= 252))
-                {
-                    p_at_m71 = 2;
-                }
-                else
-                {
-                    p_at_m71 = 1;
-                }
-                len_at_m71 += p_at_m71;
             }
-            prm_541 = strmid(prm_541, 0, len_at_m71) + u8".."s;
         }
+        else
+        {
+            current_char++;
+            current_byte++;
+        }
+
+        multibyte = false;
     }
-    return;
+
+    utf8_string = utf8_string.substr(0, current_byte);
 }
 
 
@@ -1883,15 +1800,8 @@ void fixaiact(int prm_753)
 
 void refreshspeed(int cc)
 {
-    if (cdata[cc].speed_correction_value == 0)
-    {
-        cdata[cc].current_speed = sdata(18, cc);
-    }
-    else
-    {
-        cdata[cc].current_speed = sdata(18, cc)
-            * clamp((100 - cdata[cc].speed_correction_value), 0, 100) / 100;
-    }
+    cdata[cc].current_speed = sdata(18, cc)
+        * clamp((100 - cdata[cc].speed_correction_value), 0, 100) / 100;
     if (cdata[cc].current_speed < 10)
     {
         cdata[cc].current_speed = 10;
@@ -1903,10 +1813,15 @@ void refreshspeed(int cc)
 
     if (gdata_mount != 0)
     {
-        cdata[0].current_speed = sdata(18, gdata_mount) * 100
-            / clamp((100 + sdata(18, gdata_mount)
-                     - sdata(10, gdata_mount) * 3 / 2 - sdata(301, 0) * 2
-                     - (cdata[gdata_mount].is_suitable_for_mount() == 1) * 50),
+        const auto mount_speed = sdata(18, gdata_mount)
+            * clamp(100 - cdata[gdata_mount].speed_correction_value, 0, 100)
+            / 100;
+
+        cdata[0].current_speed = mount_speed * 100
+            / clamp(100 + mount_speed - sdata(10, gdata_mount) * 3 / 2
+                        - sdata(301, 0) * 2
+                        - (cdata[gdata_mount].is_suitable_for_mount() == 1)
+                            * 50,
                     100,
                     1000);
         if (cdata[gdata_mount].is_unsuitable_for_mount())
@@ -1916,7 +1831,7 @@ void refreshspeed(int cc)
         if (gdata_mount == cc)
         {
             cdata[cc].current_speed =
-                clamp(sdata(10, cc) + sdata(301, 0), 10, sdata(18, cc));
+                clamp(sdata(10, cc) + sdata(301, 0), 10, mount_speed);
             return;
         }
     }
@@ -2315,7 +2230,7 @@ void animeload(int prm_807, int prm_808)
     gsel(0);
     gmode(2);
     i_at_m133(0) = 5;
-    i_at_m133(1) = 50;
+    i_at_m133(1) = config::instance().animewait * 3.5;
     r_at_m133 = 0;
     if (prm_807 == 8)
     {
@@ -2324,21 +2239,21 @@ void animeload(int prm_807, int prm_808)
     if (prm_807 == 10)
     {
         i_at_m133(0) = 8;
-        i_at_m133(1) = 30;
+        i_at_m133(1) = config::instance().animewait * 2.5;
         r_at_m133 = 0.2;
         snd(119);
     }
     if (prm_807 == 11)
     {
         i_at_m133(0) = 5;
-        i_at_m133(1) = 50;
+        i_at_m133(1) = config::instance().animewait * 3.5;
         r_at_m133 = 0;
         snd(118);
     }
     if (prm_807 == 14)
     {
         i_at_m133(0) = 6;
-        i_at_m133(1) = 50;
+        i_at_m133(1) = config::instance().animewait * 3.5;
     }
     for (int cnt = 0, cnt_end = (i_at_m133); cnt < cnt_end; ++cnt)
     {
@@ -2349,7 +2264,7 @@ void animeload(int prm_807, int prm_808)
         redraw();
         pos(dx_at_m133 - 24, dy_at_m133 - 40);
         gcopy(4, 0, 0, 96, 96);
-        await(config::instance().animewait + i_at_m133(1));
+        await(i_at_m133(1));
     }
     gmode(2);
     return;
@@ -2496,7 +2411,7 @@ void animeblood(int prm_809, int prm_810, int prm_811)
         redraw();
         pos(dx_at_m133 - 48, dy_at_m133 - 56);
         gcopy(4, 0, 0, 144, 160);
-        await(config::instance().animewait + 15 + (ele2_at_m133 != 0) * 20);
+        await(config::instance().animewait * (ele2_at_m133 == 0 ? 1.75 : 2.75));
     }
     gmode(2);
     return;
@@ -2584,7 +2499,7 @@ void check_kill(int prm_836, int prm_837)
     {
         if (prm_836 == 0 || cdata[prm_836].relationship >= 10)
         {
-            if (prm_837 > 16)
+            if (prm_837 >= 16)
             {
                 ++gdata_kill_count;
                 if (cdata[prm_837].id == gdata_fighters_guild_target)
@@ -3559,7 +3474,7 @@ void refresh_burden_state()
 
 void revive_character()
 {
-    label_1538();
+    do_chara_revival();
     cxinit = cdata[0].position.x;
     cyinit = cdata[0].position.y;
     chara_place();
@@ -3575,7 +3490,7 @@ void revive_character()
 
 
 
-void label_1538()
+void do_chara_revival()
 {
     label_15380();
     label_15390();
@@ -3607,6 +3522,7 @@ void label_15380()
     cdata[rc].current_map = 0;
     cdata[rc].relationship = cdata[rc].original_relationship;
     cdata[rc].nutrition = 8000;
+    lua::lua.on_chara_loaded(cdata[rc]); // TODO add separate Lua event for revival
     return;
 }
 
@@ -3661,7 +3577,7 @@ void label_15390()
 
 void label_1540()
 {
-    label_1538();
+    do_chara_revival();
     if (rc == 0)
     {
         gdata_is_returning_or_escaping = 0;
@@ -3756,7 +3672,8 @@ int convertartifact(int prm_930, int prm_931)
     {
         flt(the_item_db[inv[prm_930].id]->level, 4);
         flttypeminor = the_item_db[inv[prm_930].id]->subcategory;
-        inv[prm_930].number = 0;
+        item_remove(inv[prm_930]);
+
         itemcreate(
             inv_getowner(prm_930),
             0,
@@ -4210,7 +4127,7 @@ void character_drops_item()
             }
             if (f)
             {
-                inv[ci].number = 0;
+                item_remove(inv[ci]);
                 continue;
             }
             inv[ci].position.x = cdata[rc].position.x;
@@ -4226,7 +4143,7 @@ void character_drops_item()
                 item_copy(ci, ti);
                 inv[ti].own_state = -2;
             }
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
         }
         cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
         create_pcpic(0, true);
@@ -4341,7 +4258,8 @@ void character_drops_item()
                             reftype = the_item_db[inv[ci].id]->category;
                             enchantment_add(
                                 ci,
-                                enchantment_generate(enchantment_gen_level(rnd(4))),
+                                enchantment_generate(
+                                    enchantment_gen_level(rnd(4))),
                                 enchantment_gen_p());
                             animeload(8, rc);
                         }
@@ -4368,7 +4286,7 @@ void character_drops_item()
             }
             item_copy(ci, ti);
         }
-        inv[ci].number = 0;
+        item_remove(inv[ci]);
     }
     if (cdata[rc].quality >= 4 || rnd(20) == 0 || cdata[rc].drops_gold() == 1
         || rc < 16)
@@ -4804,7 +4722,7 @@ void character_drops_item()
     }
     if (cdata[rc].id == 175 || cdata[rc].id == 177 || cdata[rc].id == 178)
     {
-        if (npcmemory(0, cdata[rc].id) == 0)
+        if (npcmemory(0, cdata[rc].id) == 1)
         {
             drop(0) = 290;
             drop(1) = 421;
@@ -4955,6 +4873,7 @@ void character_drops_item()
         {
             flt(cdata[rc].level, 2);
             flttypemajor = 92000;
+            nostack = 1;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
             if (inv[ci].value < 800)
             {
@@ -5646,24 +5565,12 @@ turn_result_t show_house_board()
     rtval = stat;
     switch (rtval)
     {
-    case 0:
-        start_home_map_mode();
-        break;
-    case 2:
-        show_home_value();
-        break;
-    case 3:
-        prompt_move_ally();
-        break;
-    case 4:
-        prompt_ally_staying();
-        break;
-    case 5:
-        try_extend_shop();
-        break;
-    case 6:
-        prompt_hiring();
-        break;
+    case 0: start_home_map_mode(); break;
+    case 2: show_home_value(); break;
+    case 3: prompt_move_ally(); break;
+    case 4: prompt_ally_staying(); break;
+    case 5: try_extend_shop(); break;
+    case 6: prompt_hiring(); break;
     }
     tlocinitx = 0;
     tlocinity = 0;
@@ -5678,7 +5585,7 @@ void monster_respawn()
     if (adata(16, gdata_current_map) == 101
         || adata(16, gdata_current_map) == 102)
     {
-        if (gdata_other_character_count < mdata(10) / 2)
+        if (gdata_crowd_density < mdata(10) / 2)
         {
             if (rnd(2) == 0)
             {
@@ -5691,7 +5598,7 @@ void monster_respawn()
     {
         return;
     }
-    if (gdata_other_character_count < mdata(10) / 4)
+    if (gdata_crowd_density < mdata(10) / 4)
     {
         if (rnd(2) == 0)
         {
@@ -5699,7 +5606,7 @@ void monster_respawn()
             chara_create(-1, dbid, -2, 0);
         }
     }
-    if (gdata_other_character_count < mdata(10) / 2)
+    if (gdata_crowd_density < mdata(10) / 2)
     {
         if (rnd(4) == 0)
         {
@@ -5707,7 +5614,7 @@ void monster_respawn()
             chara_create(-1, dbid, -2, 0);
         }
     }
-    if (gdata_other_character_count < mdata(10))
+    if (gdata_crowd_density < mdata(10))
     {
         if (rnd(8) == 0)
         {
@@ -5742,6 +5649,11 @@ turn_result_t exit_map()
                 }
             }
         }
+    }
+    if (mdata(6) == 7)
+    {
+        rq = gdata_executing_immediate_quest;
+        quest_exit_map();
     }
     msg_newline();
     msgtemp = u8"  "s;
@@ -5914,8 +5826,6 @@ turn_result_t exit_map()
     }
     if (mdata(6) == 7)
     {
-        rq = gdata_executing_immediate_quest;
-        quest_exit_map();
         gdata_current_map = gdata_previous_map2;
         gdata_current_dungeon_level = gdata_previous_dungeon_level;
         mapstartx = gdata_previous_x;
@@ -6060,6 +5970,7 @@ turn_result_t exit_map()
             if (cdata[cnt].state == 8)
             {
                 cdata[cnt].state = 1;
+                lua::lua.on_chara_loaded(cdata[cnt]); // TODO add separate Lua event for revival
             }
             continue;
         }
@@ -6074,15 +5985,21 @@ turn_result_t exit_map()
     }
     if (mdata(7) == 1)
     {
-        label_1739();
+        // This map should be saved.
+        save_map_local_data();
     }
     else
     {
-        label_1738();
+        // This is a tempory map, so wipe its data (shelter, special quest instance)
+        prepare_charas_for_map_unload();
+
+        // delete all map-local data
         if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
         {
             ctrl_file(file_operation_t::_11);
         }
+
+        // forget about all NPCs that were here
         for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
              ++cnt)
         {
@@ -6098,13 +6015,16 @@ turn_result_t exit_map()
 
 
 
-void label_1738()
+void prepare_charas_for_map_unload()
 {
+    // interrupt continuous actions
     for (int cnt = 0; cnt < 57; ++cnt)
     {
         rowactend(cnt);
         cdata[cnt].item_which_will_be_used = 0;
     }
+
+    // remove living adventurers from the map and set their states
     for (int cnt = 16; cnt < 55; ++cnt)
     {
         if (cdata[cnt].state == 1)
@@ -6113,25 +6033,26 @@ void label_1738()
             cdata[cnt].state = 3;
         }
     }
-    return;
 }
 
 
 
-void label_1739()
+void save_map_local_data()
 {
-    label_1738();
-    for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+    prepare_charas_for_map_unload();
+    for (int y = 0; y < mdata(1); ++y)
     {
-        y = cnt;
-        for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+        for (int x = 0; x < mdata(0); ++x)
         {
-            map(cnt, y, 7) = 0;
+            map(x, y, 7) = 0;
         }
     }
+
+    // write map data and characters/skill data local to this map
     ctrl_file(file_operation_t::_2);
+
+    // write data for items/character inventories local to this map
     ctrl_file(file_operation2_t::_4, u8"inv_"s + mid + u8".s2");
-    return;
 }
 
 
@@ -6194,7 +6115,7 @@ void label_1745()
                         }
                         if (inv[cnt].own_state == 0)
                         {
-                            inv[cnt].number = 0;
+                            item_remove(inv[cnt]);
                             cell_refresh(
                                 inv[cnt].position.x, inv[cnt].position.y);
                         }
@@ -6351,7 +6272,7 @@ void label_1745()
                                 if (inv[ci].weight <= 0
                                     || inv[ci].weight >= 4000)
                                 {
-                                    inv[ci].number = 0;
+                                    item_remove(inv[ci]);
                                 }
                             }
                         }
@@ -6668,13 +6589,6 @@ void label_1750()
                 adata(2, p) = y;
                 break;
             }
-        }
-        if ((33 > map(adata(1, cnt), adata(2, cnt), 0)
-             || map(adata(1, cnt), adata(2, cnt), 0) >= 66)
-            && chipm(0, map(adata(1, cnt), adata(2, cnt), 0)) != 4
-            && chipm(1, map(adata(1, cnt), adata(2, cnt), 0)) != 9)
-        {
-            map(adata(1, cnt), adata(2, cnt), 0) = 33;
         }
         cell_featset(
             adata(1, cnt),
@@ -7559,7 +7473,7 @@ void label_1754()
         {
             if (cdata[gdata_fire_giant].state == 1)
             {
-                if (gdata_other_character_count < 30)
+                if (gdata_crowd_density < 70)
                 {
                     if (rnd(4) == 0)
                     {
@@ -7581,8 +7495,8 @@ void label_1754()
     {
         if (qdata(8, gdata_executing_immediate_quest) != 3)
         {
-            if (gdata_other_character_count
-                < gdata_left_minutes_of_executing_quest / 600)
+            if (gdata_crowd_density
+                < gdata_left_minutes_of_executing_quest / 60)
             {
                 dbid = 0;
                 if (rnd(4) == 0)
@@ -7766,7 +7680,7 @@ void label_1754()
     }
     if (adata(16, gdata_current_map) == 101)
     {
-        if (gdata_other_character_count > 0)
+        if (gdata_crowd_density > 0)
         {
             if (rnd(25) == 0)
             {
@@ -7849,7 +7763,7 @@ void label_1754()
     }
     if (adata(16, gdata_current_map) == 102)
     {
-        if (gdata_other_character_count > 0)
+        if (gdata_crowd_density > 0)
         {
             if (rnd(25) == 0)
             {
@@ -7881,7 +7795,8 @@ void label_1755()
         {
             continue;
         }
-        inv[cnt].number = 0;
+        item_remove(inv[cnt]);
+
         cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
     }
     if (adata(29, gdata_current_map) == 1)
@@ -8363,7 +8278,7 @@ void begintempinv()
     ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
     for (const auto& cnt : items(-1))
     {
-        inv[cnt].number = 0;
+        item_remove(inv[cnt]);
     }
     return;
 }
@@ -8579,7 +8494,7 @@ label_1894_internal:
     case 15:
         for (int cnt = 0; cnt < 20; ++cnt)
         {
-            p = rnd(gdata_other_character_count + 1) + 57;
+            p = rnd(gdata_crowd_density + 1) + 57;
             if (p >= ELONA_MAX_CHARACTERS)
             {
                 --cnt;
@@ -9182,7 +9097,7 @@ void supply_income()
     {
         for (const auto& cnt : items(-1))
         {
-            inv[cnt].number = 0;
+            item_remove(inv[cnt]);
         }
     }
     mode = 6;
@@ -10012,11 +9927,11 @@ label_1948_internal:
         if (key == key_enter)
         {
             label_1955();
-            keyrelease();
+            wait_key_released();
             goto label_1948_internal;
         }
         int a{};
-        stick(a, 768);
+        a = stick(768);
         if (a == 256)
         {
             key = key_enter;
@@ -10027,12 +9942,12 @@ label_1948_internal:
                 || chipm(0, map(tlocx, tlocy, 0)) == 1)
             {
                 snd(27);
-                keyrelease();
+                wait_key_released();
                 goto label_1948_internal;
             }
             tile = map(tlocx, tlocy, 0);
             snd(5);
-            keyrelease();
+            wait_key_released();
         }
         tx = clamp((mousex - inf_screenx), 0, windoww) / 48;
         ty = clamp((mousey - inf_screeny), 0, (windowh - inf_verh)) / 48;
@@ -10244,7 +10159,7 @@ label_1956_internal:
     redraw();
     await(config::instance().wait1);
     int a{};
-    stick(a);
+    a = stick();
     if (a == 256)
     {
         p = mousex / 24 + mousey / 24 * ww;
@@ -11388,6 +11303,7 @@ turn_result_t do_gatcha()
             {
                 p = 416;
             }
+            flt();
             int stat = itemcreate(
                 -1, p, cdata[cc].position.x, cdata[cc].position.y, 0);
             if (stat != 0)
@@ -11681,7 +11597,7 @@ void remove_card_and_figures()
     {
         if (inv[cnt].id == 504 || inv[cnt].id == 503)
         {
-            inv[cnt].number = 0;
+            item_remove(inv[cnt]);
         }
     }
     return;
@@ -11912,7 +11828,7 @@ void load_gene_files()
     cdata(0).clear();
     for (const auto& cnt : items(-1))
     {
-        inv[cnt].number = 0;
+        item_remove(inv[cnt]);
     }
     for (const auto& cnt : items(0))
     {
@@ -12075,13 +11991,16 @@ void create_cnpc()
 
 
 
-void load_save_data()
+void load_save_data(const fs::path& base_save_dir)
 {
     ELONA_LOG("Load save data: " << playerid);
 
+    // TODO instead serialize/deserialize data
+    lua::lua.get_handle_manager().clear_map_local_handles();
+
     filemod = "";
     ctrl_file(file_operation_t::_10);
-    const auto save_dir = filesystem::dir::save(playerid);
+    const auto save_dir = base_save_dir / filesystem::u8path(playerid);
     buff(0).clear();
     if (!fs::exists(save_dir / u8"filelist.txt"))
     {
@@ -12116,7 +12035,8 @@ void load_save_data()
             bcopy(save_dir / s(0), filesystem::dir::tmp() / s(0));
         }
     }
-    ctrl_file(file_operation_t::_7);
+    ELONA_LOG("asd " << save_dir);
+    ctrl_file(file_operation2_t::_7, save_dir);
     migrate_save_data();
     set_item_info();
     for (int cnt = 0; cnt < 16; ++cnt)
@@ -12136,8 +12056,12 @@ void load_save_data()
 }
 
 
-
 void save_game()
+{
+    save_game(filesystem::dir::save());
+}
+
+void save_game(const fs::path& base_save_dir)
 {
     ELONA_LOG("Save game: " << playerid);
 
@@ -12155,7 +12079,7 @@ void save_game()
     ctrl_file(file_operation2_t::_4, u8"inv_"s + mid + u8".s2");
     save_f = 0;
     for (const auto& entry : filesystem::dir_entries{
-             filesystem::dir::save(), filesystem::dir_entries::type::dir})
+             base_save_dir, filesystem::dir_entries::type::dir})
     {
         if (filesystem::to_utf8_path(entry.path().filename()) == playerid)
         {
@@ -12163,7 +12087,7 @@ void save_game()
             break;
         }
     }
-    const auto save_dir = filesystem::dir::save(playerid);
+    const auto save_dir = base_save_dir / filesystem::u8path(playerid);
     if (save_f == 0)
     {
         mkdir(save_dir);
@@ -12190,7 +12114,7 @@ void save_game()
             }
         }
     }
-    ctrl_file(file_operation_t::_8);
+    ctrl_file(file_operation2_t::_8, save_dir);
     filemod = "";
     buff(0).clear();
     for (const auto& entry :
@@ -12203,7 +12127,7 @@ void save_game()
     notesel(buff);
     {
         std::ofstream out{
-            (filesystem::dir::save(playerid) / u8"filelist.txt").native(),
+            (save_dir / u8"filelist.txt").native(),
             std::ios::binary};
         out << buff(0) << std::endl;
     }
@@ -12223,56 +12147,6 @@ turn_result_t do_enter_strange_gate()
     gdata_destination_dungeon_level = 1;
     levelexitby = 2;
     return turn_result_t::exit_map;
-}
-
-
-
-void initialize_fovmap_and_fovlist()
-{
-    elona_vector2<int> fovmap;
-    DIM3(fovlist, 2, 15);
-    DIM3(fovmap, 34, 30);
-    if (cdata[0].vision_distance < 1)
-    {
-        cdata[0].vision_distance = 1;
-    }
-    if (cdata[0].vision_distance >= 15)
-    {
-        cdata[0].vision_distance = 14;
-    }
-    for (int cnt = 0; cnt < 15; ++cnt)
-    {
-        y = cnt;
-        for (int cnt = 0; cnt < 19; ++cnt)
-        {
-            x = cnt;
-            if (dist(x * 10 / 12, y, 7, 7) < 7)
-            {
-                fovmap(x, y) = 1;
-            }
-        }
-    }
-    for (int cnt = 0; cnt < 15; ++cnt)
-    {
-        y = cnt;
-        p(1) = 0;
-        for (int cnt = 0; cnt < 19; ++cnt)
-        {
-            x = cnt;
-            p = fovmap(x, y);
-            if (p != 0 && p(1) == 0)
-            {
-                fovlist(0, y) = x;
-                p(1) = 1;
-            }
-            if (p == 0 && p(1) == 1)
-            {
-                fovlist(1, y) = x;
-                break;
-            }
-        }
-    }
-    return;
 }
 
 
@@ -12317,7 +12191,7 @@ label_2128_internal:
     pos(x - 48 - 24, y - 48 - 24);
     gcopy(4, 0, 0, 144, 144);
     gmode(2);
-    await(30);
+    await(config::instance().wait1);
     key_check(1);
     x = cdata[0].position.x;
     y = cdata[0].position.y;
@@ -12432,15 +12306,15 @@ turn_result_t do_debug_console()
     font(14 - en * 2);
     objmode(2);
     pos(0, 24);
-    mesbox(dbm);
+    mesbox(dbm, true);
     pos(0, 0);
-    mesbox(buff);
+    mesbox(buff, true);
     objsel(2);
     while (1)
     {
-        await(20);
+        await(config::instance().wait1);
         int a{};
-        stick(a);
+        a = stick();
         if (a == 128)
         {
             return do_exit_debug_console();
@@ -12535,6 +12409,7 @@ int search_material_spot()
     if (feat(1) == 27)
     {
         atxlv += sdata(161, 0) / 3;
+        atxspot = 16;
     }
     if (feat(1) == 26)
     {
@@ -12679,13 +12554,6 @@ label_21451_internal:
                 {
                     return;
                 }
-                if (feat(3) != 0)
-                {
-                    if (cc > 16)
-                    {
-                        return;
-                    }
-                }
             }
             if (feat(0) != tile_trap && cc == 0)
             {
@@ -12761,7 +12629,10 @@ label_21451_internal:
                             u8"墨が噴き出した。"s,
                             u8"Gallons of ink spreads."s));
                     }
-                    dmgcon(cc, status_ailment_t::blinded, 100 + gdata_current_dungeon_level * 2);
+                    dmgcon(
+                        cc,
+                        status_ailment_t::blinded,
+                        100 + gdata_current_dungeon_level * 2);
                 }
                 if (feat(2) == 6)
                 {
@@ -12771,7 +12642,10 @@ label_21451_internal:
                             u8"刺激的な匂いがただよう。"s,
                             u8"Stimulative gas spreads."s));
                     }
-                    dmgcon(cc, status_ailment_t::paralyzed, 100 + gdata_current_dungeon_level * 2);
+                    dmgcon(
+                        cc,
+                        status_ailment_t::paralyzed,
+                        100 + gdata_current_dungeon_level * 2);
                 }
                 if (feat(2) == 5)
                 {
@@ -12781,7 +12655,10 @@ label_21451_internal:
                             u8"臭い匂いがたちこめた。"s,
                             u8"Smelly gas spreads."s));
                     }
-                    dmgcon(cc, status_ailment_t::confused, 100 + gdata_current_dungeon_level * 2);
+                    dmgcon(
+                        cc,
+                        status_ailment_t::confused,
+                        100 + gdata_current_dungeon_level * 2);
                 }
                 if (feat(2) == 3)
                 {
@@ -12853,7 +12730,10 @@ label_21451_internal:
                             u8"毒ガスが噴き出した。"s,
                             u8"Poisonous gas spreads."s));
                     }
-                    dmgcon(cc, status_ailment_t::poisoned, 100 + gdata_current_dungeon_level * 2);
+                    dmgcon(
+                        cc,
+                        status_ailment_t::poisoned,
+                        100 + gdata_current_dungeon_level * 2);
                 }
                 if (feat(2) == 2)
                 {
@@ -12863,7 +12743,10 @@ label_21451_internal:
                             u8"催眠ガスが噴き出した。"s,
                             u8"Sleeping gas spreads."s));
                     }
-                    dmgcon(cc, status_ailment_t::sleep, 100 + gdata_current_dungeon_level * 2);
+                    dmgcon(
+                        cc,
+                        status_ailment_t::sleep,
+                        100 + gdata_current_dungeon_level * 2);
                 }
                 if (feat(2) == 7)
                 {
@@ -12887,7 +12770,8 @@ label_21451_internal:
 
 void continuous_action_perform()
 {
-    int performtips = 0;
+    static int performtips;
+
     if (cdata[cc].continuous_action_id == 0)
     {
         if (is_in_fov(cc))
@@ -12902,7 +12786,10 @@ void continuous_action_perform()
         cdata[cc].continuous_action_item = ci;
         cdata[cc].quality_of_performance = 40;
         cdata[cc].tip_gold = 0;
-        performtips = 0;
+        if (cc == 0)
+        {
+            performtips = 0;
+        }
         return;
     }
     if (cdata[cc].continuous_action_turn > 0)
@@ -13061,7 +12948,10 @@ void continuous_action_perform()
                 {
                     p = cdata[cc].quality_of_performance
                             * cdata[cc].quality_of_performance
-                            * (100 + inv[ci].param1 / 5) / 100 / 1000
+                            * (100
+                               + inv[cdata[cc].continuous_action_item].param1
+                                   / 5)
+                            / 100 / 1000
                         + rnd(10);
                     p = clamp(
                         cdata[tc].gold * clamp(p(0), 1, 100) / 125,
@@ -13109,7 +12999,7 @@ void continuous_action_perform()
                         cdata[cc].quality_of_performance -= p;
                     }
                 }
-                if (encfindspec(ci, 60))
+                if (encfindspec(cdata[cc].continuous_action_item, 60))
                 {
                     if (rnd(15) == 0)
                     {
@@ -13175,7 +13065,9 @@ void continuous_action_perform()
                                     {
                                         continue;
                                     }
-                                    if (encfindspec(ci, 49))
+                                    if (encfindspec(
+                                            cdata[cc].continuous_action_item,
+                                            49))
                                     {
                                         flt(calcobjlv(
                                                 cdata[cc].quality_of_performance
@@ -13331,8 +13223,8 @@ void continuous_action_perform()
     }
     if (cdata[cc].quality_of_performance > 40)
     {
-        cdata[cc].quality_of_performance =
-            cdata[cc].quality_of_performance * (100 + inv[ci].param1 / 5) / 100;
+        cdata[cc].quality_of_performance = cdata[cc].quality_of_performance
+            * (100 + inv[cdata[cc].continuous_action_item].param1 / 5) / 100;
     }
     if (cdata[cc].tip_gold != 0)
     {
@@ -13975,14 +13867,11 @@ void continuous_action_others()
     if (gdata(91) == 105)
     {
         tg = inv_getowner(ci);
-        if (tg != -1)
+        if ((tg != -1 && cdata[tg].state != 1) || inv[ci].number <= 0)
         {
-            if (cdata[tg].state != 1)
-            {
-                txt(lang(u8"行動を中断した。"s, u8"You abort stealing."s));
-                rowactend(cc);
-                return;
-            }
+            txt(lang(u8"行動を中断した。"s, u8"You abort stealing."s));
+            rowactend(cc);
+            return;
         }
         in = 1;
         if (inv[ci].id == 54)
@@ -14024,7 +13913,7 @@ void continuous_action_others()
         if (inv[ci].id == 54)
         {
             snd(11);
-            inv[ti].number = 0;
+            item_remove(inv[ti]);
             cdata[0].gold += in;
         }
         else
@@ -14161,7 +14050,7 @@ void label_2151()
     {
         gmode(4, -1, -1, cnt * 10);
         label_2149();
-        await(200);
+        await(config::instance().animewait * 10);
     }
     gmode(2);
     cc = 0;
@@ -14216,7 +14105,7 @@ void label_2151()
         gdata_minute = 0;
         cc = 0;
         label_2149();
-        await(500);
+        await(config::instance().animewait * 25);
     }
     if (gdata(98) != 0)
     {
@@ -14317,7 +14206,10 @@ void label_2151()
     msg_halt();
     play_music();
     autosave = 1 * (gdata_current_map != 35);
-    return;
+    if (adata(16, gdata_current_map) == 102)
+    {
+        update_shop();
+    }
 }
 
 
@@ -14588,8 +14480,7 @@ void select_random_fish()
     fish = 1;
     if (dbsum != 0)
     {
-        int dbtmp;
-        exrand_rnd(dbtmp, dbsum);
+        const auto dbtmp = rnd(dbsum);
         for (int cnt = 0, cnt_end = (dbmax); cnt < cnt_end; ++cnt)
         {
             if (dblist(1, cnt) > dbtmp)
@@ -14622,7 +14513,8 @@ void get_fish()
 
 void spot_fishing()
 {
-    int fishstat = 0;
+    static int fishstat;
+
     if (cdata[cc].continuous_action_id == 0)
     {
         txt(lang(u8"釣りを始めた。"s, u8"You start fishing."s));
@@ -14657,15 +14549,18 @@ void spot_fishing()
         {
             if (rnd(5) == 0)
             {
-                for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end; ++cnt)
+                if (config::instance().animewait != 0)
                 {
-                    fishanime(0) = 1;
-                    fishanime(1) = 3 + rnd(3);
-                    addefmap(fishx, fishy, 4, 2);
-                    ++scrturn;
-                    update_screen();
-                    redraw();
-                    await(config::instance().wait1 * 2);
+                    for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end; ++cnt)
+                    {
+                        fishanime(0) = 1;
+                        fishanime(1) = 3 + rnd(3);
+                        addefmap(fishx, fishy, 4, 2);
+                        ++scrturn;
+                        update_screen();
+                        redraw();
+                        await(config::instance().animewait * 2);
+                    }
                 }
                 if (rnd(3) == 0)
                 {
@@ -14683,12 +14578,15 @@ void spot_fishing()
             fishanime = 2;
             snd(46);
             cdata[0].emotion_icon = 220;
-            for (int cnt = 0, cnt_end = (8 + rnd(10)); cnt < cnt_end; ++cnt)
+            if (config::instance().animewait != 0)
             {
-                ++scrturn;
-                update_screen();
-                redraw();
-                await(config::instance().wait1 * 2);
+                for (int cnt = 0, cnt_end = (8 + rnd(10)); cnt < cnt_end; ++cnt)
+                {
+                    ++scrturn;
+                    update_screen();
+                    redraw();
+                    await(config::instance().animewait * 2);
+                }
             }
             if (rnd(10))
             {
@@ -14703,18 +14601,21 @@ void spot_fishing()
         if (fishstat == 3)
         {
             fishanime = 3;
-            for (int cnt = 0, cnt_end = (28 + rnd(15)); cnt < cnt_end; ++cnt)
+            if (config::instance().animewait != 0)
             {
-                if (cnt % 7 == 0)
+                for (int cnt = 0, cnt_end = (28 + rnd(15)); cnt < cnt_end; ++cnt)
                 {
-                    snd(89);
+                    if (cnt % 7 == 0)
+                    {
+                        snd(89);
+                    }
+                    fishanime(1) = cnt;
+                    ++scrturn;
+                    update_screen();
+                    addefmap(fishx, fishy, 5, 2);
+                    redraw();
+                    await(config::instance().animewait * 2);
                 }
-                fishanime(1) = cnt;
-                ++scrturn;
-                update_screen();
-                addefmap(fishx, fishy, 5, 2);
-                redraw();
-                await(config::instance().wait1 * 2);
             }
             if (the_fish_db[fish]->difficulty >= rnd(sdata(185, 0) + 1))
             {
@@ -14730,17 +14631,20 @@ void spot_fishing()
         {
             fishanime = 4;
             snd(88);
-            for (int cnt = 0; cnt < 21; ++cnt)
+            if (config::instance().animewait != 0)
             {
-                fishanime(1) = cnt;
-                if (cnt == 1)
+                for (int cnt = 0; cnt < 21; ++cnt)
                 {
-                    addefmap(fishx, fishy, 1, 3);
+                    fishanime(1) = cnt;
+                    if (cnt == 1)
+                    {
+                        addefmap(fishx, fishy, 1, 3);
+                    }
+                    ++scrturn;
+                    update_screen();
+                    redraw();
+                    await(config::instance().animewait * 2);
                 }
-                ++scrturn;
-                update_screen();
-                redraw();
-                await(config::instance().wait1 * 2);
             }
             snd(14 + rnd(2));
             fishanime = 0;
@@ -14972,7 +14876,7 @@ void spot_mining_or_wall()
                 }
             }
         }
-        if (f == 1 || gdata_tutorial_flag == 2)
+        if (f == 1 || (gdata_tutorial_flag == 2 && gdata_current_map == 7))
         {
             rtval = 0;
             if (rnd(5) == 0)
@@ -15289,10 +15193,7 @@ int calcmagiccontrol(int prm_1076, int prm_1077)
 {
     if (sdata(188, prm_1076) != 0)
     {
-        if ((cdata[prm_1076].relationship >= 0
-             && cdata[prm_1077].relationship >= 0)
-            || (cdata[prm_1076].relationship <= -1
-                && cdata[prm_1077].relationship <= -1))
+        if (belong_to_same_team(cdata[prm_1076], cdata[prm_1077]))
         {
             if (sdata(188, prm_1076) * 5 > rnd(dmg + 1))
             {
@@ -15421,7 +15322,9 @@ int label_2168()
                 name(cc) + u8" try"s + _s(cc)
                     + u8" to cast a spell in confusion."s));
         }
+        const auto tcbk = tc(0);
         int stat = try_to_cast_spell();
+        tc = tcbk;
         if (stat == 0)
         {
             efsource = 0;
@@ -15694,8 +15597,12 @@ int drink_well()
         if (p > 55)
         {
             flt();
-            itemcreate(-1, 54, cdata[cc].position.x, cdata[cc].position.y, 0);
-            inv[ci].number = rnd(sdata(159, cc) / 2 * 50 + 100) + 1;
+            itemcreate(
+                -1,
+                54,
+                cdata[cc].position.x,
+                cdata[cc].position.y,
+                rnd(sdata(159, cc) / 2 * 50 + 100) + 1);
             txt(lang(
                 name(cc) + u8"は水の中に金貨を見つけた。"s,
                 name(cc) + u8" find"s + _s(cc)
@@ -16376,7 +16283,7 @@ int pick_up_item()
             snd(11);
             ti = ci;
             in = inv[ci].number;
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             msgkeep = 1;
             txt(lang(
                 name(cc) + u8"は"s + itemname(ti, in) + u8"を拾った。"s,
@@ -16517,6 +16424,7 @@ int pick_up_item()
         inv[ci].own_state = 0;
     }
     ibitmod(12, ci, 0);
+    item_checkknown(ci);
     int stat = item_stack(cc, ci);
     if (stat == 0)
     {
@@ -16556,7 +16464,7 @@ int pick_up_item()
                             + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12;
                     }
                 }
-                else if (inv[ti].param3 != 0)
+                else if (inv[ti].param3 != 0 && inv[ti].material == 35)
                 {
                     inv[ti].param3 = gdata_hour + gdata_day * 24
                         + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12
@@ -16731,6 +16639,7 @@ int drop_item()
     inv[ci].position.y = cdata[cc].position.y;
     itemturn(ci);
     int stat = item_stack(-1, ci);
+    const auto tibk = ti; // TODO: refactor
     if (stat == 0 || dropval == 0)
     {
         ti = inv_getfreeid(-1);
@@ -16762,7 +16671,7 @@ int drop_item()
             u8"You drop "s + itemname(ti, in) + u8"."s));
     }
     refresh_burden_state();
-    if (inv[ti].id == 516)
+    if (inv[tibk].id == 516)
     {
         int stat = item_find(60002, 0);
         if (stat != -1)
@@ -16770,10 +16679,10 @@ int drop_item()
             p = stat;
             if (core_god::int2godid(inv[p].param1) == cdata[cc].god_id)
             {
-                if (inv[ti].curse_state != curse_state_t::blessed)
+                if (inv[tibk].curse_state != curse_state_t::blessed)
                 {
                     snd(64);
-                    inv[ti].curse_state = curse_state_t::blessed;
+                    inv[tibk].curse_state = curse_state_t::blessed;
                     txtef(2);
                     txt(lang(
                         u8"水は祝福を受けた。"s, u8"The water is blessed."s));
@@ -17081,6 +16990,10 @@ turn_result_t do_bash()
 
 turn_result_t proc_movement_event()
 {
+    auto handle = lua::lua.get_handle_manager().get_chara_handle(cdata[cc]);
+    if(handle != sol::lua_nil)
+        lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::character_moved>(handle);
+
     if (cdata[cc].is_ridden())
     {
         return turn_result_t::turn_end;
@@ -17423,7 +17336,7 @@ void proc_autopick()
             }
             snd(45);
             txt(i18n::fmt(u8"ui", u8"autopick", u8"destroyed")(itemname(ci)));
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             cell_refresh(x, y);
             map(x, y, 5) = map(x, y, 4);
             break;
@@ -18117,7 +18030,7 @@ turn_result_t try_to_open_locked_door()
             {
                 screenupdate = -1;
                 update_screen();
-                await(100);
+                await(config::instance().animewait * 5);
                 return turn_result_t::turn_end;
             }
             feat(2) = 0;
@@ -18182,14 +18095,14 @@ turn_result_t try_to_open_locked_door()
     }
     if (cc == 0)
     {
-        await(100);
+        await(config::instance().animewait * 5);
     }
     return turn_result_t::turn_end;
 }
 
 
 
-int label_2217()
+void do_ranged_attack()
 {
     int ammox = 0;
     int ammoy = 0;
@@ -18197,6 +18110,7 @@ int label_2217()
     attacknum = 0;
     ele = 0;
     ammoproc = -1;
+    ammoprocbk = -1;
     ammox = cdata[tc].position.x;
     ammoy = cdata[tc].position.y;
     attackitem = cw;
@@ -18223,7 +18137,7 @@ int label_2217()
                                 u8"You are too exhausted!"s));
                             dmgsp(0, encammoref(2, ammoproc) / 2 + 1);
                             ammoproc = -1;
-                            return 1;
+                            return;
                         }
                     }
                     dmgsp(0, rnd(encammoref(2, ammoproc) + 1));
@@ -18234,6 +18148,7 @@ int label_2217()
     }
     if (ammoproc == 0)
     {
+        ammoprocbk = ammoproc;
         for (int cnt = 0; cnt < 3; ++cnt)
         {
             can_do_ranged_attack();
@@ -18256,6 +18171,7 @@ int label_2217()
     }
     else if (ammoproc == 5)
     {
+        ammoprocbk = ammoproc;
         for (int cnt = 0; cnt < 10; ++cnt)
         {
             can_do_ranged_attack();
@@ -18301,7 +18217,7 @@ int label_2217()
     }
     attackvar = 0;
     ammoproc = -1;
-    return 0;
+    ammoprocbk = -1;
 }
 
 
@@ -18323,7 +18239,7 @@ void try_to_melee_attack()
                     int stat = can_do_ranged_attack();
                     if (stat == 1)
                     {
-                        label_2217();
+                        do_ranged_attack();
                     }
                 }
             }
@@ -18356,7 +18272,10 @@ void try_to_melee_attack()
                         + u8" with "s + his(cc) + u8" shield."s));
             }
             dmghp(tc, rnd(sdata(168, cc)) + 1, cc);
-            dmgcon(tc, status_ailment_t::dimmed, 50 + int(std::sqrt(sdata(168, cc))) * 15);
+            dmgcon(
+                tc,
+                status_ailment_t::dimmed,
+                50 + int(std::sqrt(sdata(168, cc))) * 15);
             cdata[tc].paralyzed += rnd(3);
         }
     }
@@ -18420,7 +18339,7 @@ label_22191_internal:
     if (map(cdata[tc].position.x, cdata[tc].position.y, 8) != 0)
     {
         bool return_now = mef_proc_from_physical_attack(tc);
-        if(return_now)
+        if (return_now)
         {
             return;
         }
@@ -19404,14 +19323,14 @@ turn_result_t do_plant()
         txt(lang(
             u8"この場所には埋められない。"s, u8"You can't plant it here."s));
         update_screen();
-                        return turn_result_t::pc_turn_user_error;
+        return turn_result_t::pc_turn_user_error;
     }
     if (map(cdata[cc].position.x, cdata[cc].position.y, 6) != 0)
     {
         txt(lang(
             u8"この場所には埋められない。"s, u8"You can't plant it here."s));
         update_screen();
-                        return turn_result_t::pc_turn_user_error;
+        return turn_result_t::pc_turn_user_error;
     }
     int val0;
     if (chipm(0, map(cdata[0].position.x, cdata[0].position.y, 0)) == 2)
@@ -19697,7 +19616,7 @@ void initialize_economy()
             }
             podata(200, p) = podata(100, p) * 5 + rnd(1000);
         }
-        label_1739();
+        save_map_local_data();
     }
     gdata_current_map = bkdata(0);
     gdata_current_dungeon_level = bkdata(1);
@@ -19767,7 +19686,8 @@ void do_play_scene()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s),
+        std::string scene_file = lang(u8"scene1.hsp", u8"scene2.hsp");
+        std::ifstream in{(filesystem::dir::data() / scene_file).native(),
                          std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -19785,7 +19705,7 @@ void do_play_scene()
     scidx += s(0).size();
 label_2681:
     int a{};
-    stick(a, 128);
+    a = stick(128);
     if (a == 128)
     {
         scene_cut = 1;
@@ -19798,7 +19718,8 @@ label_2681:
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s),
+        std::string scene_file = lang(u8"scene1.hsp", u8"scene2.hsp");
+        std::ifstream in{(filesystem::dir::data() / scene_file).native(),
                          std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -20006,7 +19927,7 @@ label_2684_internal:
     for (int cnt = 1; cnt < 16; ++cnt)
     {
         await(30);
-        stick(a, 128);
+        a = stick(128);
         if (a == 128)
         {
             scene_cut = 1;
@@ -20794,7 +20715,7 @@ turn_result_t pc_died()
             u8"You have been buried. Bye...(Hit any key to exit)"s);
         draw_caption();
         redraw();
-        press();
+        wait_key_pressed();
         return turn_result_t::finish_elona;
     }
     s = u8"dead"s

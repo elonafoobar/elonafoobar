@@ -67,7 +67,7 @@ sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-im
 4. `Developer Command Prompt for VS 2017`を開いてください。
 5. `cd path/to/ElonaFoobar & nmake -f Makefile.win`
 
-Visual Studioを使ってデバッグする場合は、`build\ElonaFoobar.sln`を開いてください。
+Visual Studioを使ってデバッグする場合は、`bin\ElonaFoobar.sln`を開いてください。
 
 # How To Play
 
@@ -77,7 +77,7 @@ Visual Studioを使ってデバッグする場合は、`build\ElonaFoobar.sln`�
 
 # How To Contribute
 
-詳細はCONTRIBUTING.mdを参照してください。
+詳細は[CONTRIBUTING.md](CONTRIBUTING.md)を参照してください。
 
 
 
@@ -91,12 +91,19 @@ MIT Licenseです。詳細はLICENSEを参照してください。このライ�
 ## サードパーティーライブラリ
 
 * picojson: thirdparty/picojson/LICENSEを参照してください。
+* Catch2: thirdparty/catch2/LICENSEを参照してください。
+* hayai: thirdparty/hayai/LICENSEを参照してください。
+* sol2: thirdparty/sol2/LICENSEを参照してください。
 * cmake/FindXXX.cmake: cmake/LICENSEを参照してください。
+
+## Luaライブラリ
+
+* [inspect.lua](https://github.com/kikito/inspect.lua) (MIT)
 
 
 
 <!-- Badges -->
-[appveyor-build-status]: https://ci.appveyor.com/project/ki-foobar/elonafoobar-onee4/branch/develop
+[appveyor-build-status]: https://ci.appveyor.com/project/ki-foobar/elonafoobar/branch/develop
 [appveyor-build-status-svg]: https://ci.appveyor.com/api/projects/status/jqhbtdkx86lool4t/branch/develop?svg=true
 [travis-build-status]: https://travis-ci.org/ElonaFoobar/ElonaFoobar?branch=develop
 [travis-build-status-svg]: https://travis-ci.org/ElonaFoobar/ElonaFoobar.svg?branch=develop

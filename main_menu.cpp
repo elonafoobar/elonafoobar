@@ -3,10 +3,11 @@
 #include "character_making.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"
-#include "main_menu.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "macro.hpp"
+#include "main_menu.hpp"
+#include "random.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 #include "version.hpp"
@@ -201,7 +202,6 @@ main_menu_result_t main_title_menu()
         if (key == u8"f"s)
         {
             snd(20);
-            await(400);
             return main_menu_result_t::finish_elona;
         }
     }
@@ -213,9 +213,9 @@ main_menu_result_t main_menu_wrapper()
     main_menu_result_t result = main_title_menu();
     bool finished = false;
     bool game_initialized = false;
-    while(!finished)
+    while (!finished)
     {
-        switch(result)
+        switch (result)
         {
             // Main menu
 
@@ -277,9 +277,7 @@ main_menu_result_t main_menu_wrapper()
             result = main_menu_result_t::finish_elona;
             finished = true;
             break;
-        default:
-            assert(0);
-            break;
+        default: assert(0); break;
         }
     }
     return result;
@@ -438,7 +436,6 @@ main_menu_result_t main_menu_continue()
         {
             playerid = listn(0, p);
             snd(20);
-            await(200);
             mode = 3;
             return main_menu_result_t::initialize_game;
         }

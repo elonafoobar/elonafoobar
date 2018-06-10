@@ -8,6 +8,7 @@
 #include "item_db.hpp"
 #include "itemgen.hpp"
 #include "menu.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 namespace elona
@@ -66,9 +67,9 @@ void shop_refresh()
 {
     for (const auto& cnt : items(-1))
     {
-        inv[cnt].number = 0;
+        item_remove(inv[cnt]);
     }
-    p = 20 + cdata[tc].shop_rank / 2;
+    p = std::min(80, 20 + cdata[tc].shop_rank / 2);
     if (cdata[tc].character_role == 1007)
     {
         p = 6 + cdata[tc].shop_rank / 10;
@@ -88,10 +89,6 @@ void shop_refresh()
     if (cdata[tc].character_role == 1018)
     {
         p /= 2;
-    }
-    if (p > 80)
-    {
-        p = 80;
     }
     for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
     {
@@ -564,6 +561,7 @@ void shop_refresh()
                 continue;
             }
         }
+        nostack = 1;
         int stat = itemcreate(-1, dbid, -1, -1, 0);
         if (stat == 0)
         {
@@ -593,7 +591,7 @@ void shop_refresh()
         }
         if (f)
         {
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             continue;
         }
         if (cdata[tc].character_role == 1012)
@@ -618,7 +616,7 @@ void shop_refresh()
                 inv[ci].number = inv[ci].number / 2 + 1;
                 if (rnd(2))
                 {
-                    inv[ci].number = 0;
+                    item_remove(inv[ci]);
                     continue;
                 }
             }
@@ -627,7 +625,7 @@ void shop_refresh()
                 inv[ci].number = inv[ci].number / 2 + 1;
                 if (rnd(3))
                 {
-                    inv[ci].number = 0;
+                    item_remove(inv[ci]);
                     continue;
                 }
             }
@@ -637,7 +635,7 @@ void shop_refresh()
         p = the_item_db[inv[ci].id]->category;
         if (is_cursed(inv[ci].curse_state))
         {
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             continue;
         }
         if (inv[ci].curse_state == curse_state_t::blessed)
@@ -648,7 +646,7 @@ void shop_refresh()
         {
             if (inv[ci].id == 516)
             {
-                inv[ci].number = 0;
+                item_remove(inv[ci]);
             }
         }
         if (p == 57000)
@@ -657,7 +655,7 @@ void shop_refresh()
             {
                 if (rnd(5))
                 {
-                    inv[ci].number = 0;
+                    item_remove(inv[ci]);
                 }
             }
         }
@@ -706,8 +704,7 @@ void shop_refresh()
     else
     {
         cdata[tc].time_to_restore = gdata_hour + gdata_day * 24
-            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12
-            - 1;
+            + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 - 1;
     }
 }
 

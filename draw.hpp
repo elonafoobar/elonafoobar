@@ -21,6 +21,7 @@ enum class show_hp_bar_side
 
 void show_hp_bar(show_hp_bar_side side, int inf_clocky);
 
+void initialize_damage_popups();
 void add_damage_popup(
     const std::string& text,
     int character,

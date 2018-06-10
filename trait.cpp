@@ -511,7 +511,7 @@ int get_trait_info(int traitmode, int tid)
             if (trait(tid) >= 0)
             {
                 traitrefn(2) = lang(
-                    u8"行商人の元で働き交渉の技術を学ぶ"s,
+                    u8"行商人の下で働き交渉の技術を学ぶ"s,
                     u8"Working under a trader improves your negotiation skill."s);
                 traitrefn(3) = lang(
                     u8"あなたは交渉が上手い[交渉+4]"s,
@@ -1089,8 +1089,11 @@ int get_trait_info(int traitmode, int tid)
                 u8"あなたの脳は原始化した。"s, u8"Your brain degenerates."s);
             return 1;
         }
-        sdata(165, 0) =
-            clamp(sdata(165, 0) + trait(tid) * 4, int{sdata(165, 0) > 0}, 9999);
+        if (sdata.get(165, 0).original_level != 0)
+        {
+            sdata(165, 0) = clamp(
+                sdata(165, 0) + trait(tid) * 4, int{sdata(165, 0) > 0}, 9999);
+        }
         return 1;
     }
     if (tid == 32)

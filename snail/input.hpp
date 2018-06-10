@@ -232,7 +232,8 @@ enum class key
 
 inline bool is_modifier(key k)
 {
-    switch(k) {
+    switch (k)
+    {
     case key::ctrl:
     case key::ctrl_l:
     case key::ctrl_r:
@@ -244,10 +245,8 @@ inline bool is_modifier(key k)
     case key::gui_r:
     case key::alt:
     case key::alt_l:
-    case key::alt_r:
-        return true;
-    default:
-        return false;
+    case key::alt_r: return true;
+    default: return false;
     }
 }
 
@@ -255,11 +254,8 @@ inline bool is_modifier(key k)
 class input final : public lib::noncopyable
 {
 public:
-    bool is_pressed(key k) const;
-    bool is_pressed_exactly(key k) const;
+    bool is_pressed(key k, int key_wait = 1) const;
     bool was_pressed_just_now(key k) const;
-
-    void set_key_repeat(int initial_key_wait, int key_wait) noexcept;
 
     bool is_ime_active() const;
 
@@ -285,8 +281,6 @@ public:
 
 private:
     std::array<button, static_cast<size_t>(key::_size)> _keys;
-    int _initial_key_wait = 30; // frame
-    int _key_wait = 5; // frame
     std::string _text;
     bool _is_ime_active{};
 

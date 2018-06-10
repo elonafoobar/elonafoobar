@@ -306,6 +306,19 @@ std::string maplevel(int)
 }
 
 
+std::string mapname_dungeon(int id)
+{
+    int suffix_id = adata(0, id);
+    std::string name = mapnamerd(
+        adata(5, id),
+        std::min(adata(17, id) / 5, int(length2(mapnamerd) - 1)));
+
+    if (suffix_id >= 20 && suffix_id <= 23)
+    {
+        name += i18n::s.get_enum("core.locale.map.dungeon", suffix_id);
+    }
+    return name;
+}
 
 std::string mapname(int id, bool description)
 {
@@ -314,179 +327,31 @@ std::string mapname(int id, bool description)
 
     switch (adata(16, id))
     {
-    case 4: name = lang(u8"ノースティリス"s, u8"North Tyris"s); break;
-    case 5:
-        name = lang(u8"ヴェルニース"s, u8"Vernis"s);
-        desc = lang(
-            u8"ヴェルニースの街が見える。辺りは活気に満ちている。"s,
-            u8"You see Vernis. The mining town is full of liveliness."s);
-        break;
-    case 11:
-        name = lang(u8"ポート・カプール"s, u8"Port Kapul"s);
-        desc = lang(
-            u8"ポート・カプールが見える。港は船で賑わっている。"s,
-            u8"You see Port Kapul. The port is crowded with merchants."s);
-        break;
-    case 12:
-        name = lang(u8"ヨウィン"s, u8"Yowyn"s);
-        desc = lang(
-            u8"ヨウィンの村が見える。懐かしい土の匂いがする。"s,
-            u8"You see a small town, Yowyn. You remember fondly the smell of the soil."s);
-        break;
-    case 14:
-        name = lang(u8"ダルフィ"s, u8"Derphy"s);
-        desc = lang(
-            u8"ダルフィの街がある。何やら危険な香りがする。"s,
-            u8"You see the infamous rogue's den Derphy."s);
-        break;
-    case 15:
-        name = lang(u8"パルミア"s, u8"Palmia"s);
-        desc = lang(
-            u8"パルミアの都がある。都は高い壁に囲われている。"s,
-            u8"You see the great city of Palmia. Entire city is surrounded by tall wall."s);
-        break;
-    case 16: name = lang(u8"灼熱の塔"s, u8"the Tower of Fire"s); break;
-    case 17:
-        name = lang(u8"死者の洞窟"s, u8" the crypt of the damned "s);
-        break;
-    case 18: name = lang(u8"古城"s, u8"the Ancient Castle"s); break;
-    case 7:
-        name = lang(u8"わが家"s, u8"Your Home"s);
-        desc = lang(u8"あなたの家だ。"s, u8"It's your sweet home."s);
-        break;
-    case 3:
-        name = lang(u8"レシマス"s, u8"Lesimas"s);
-        desc = lang(
-            u8"レシマスの洞窟がある。運命の鼓動を感じる。"s,
-            u8"You see the dungeon of Lesimas. The wheel of fortune starts to turn."s);
-        break;
-    case 42:
-        name = lang(u8"すくつ"s, u8"the Void"s);
-        desc = lang(u8"なんだこの場所は…？"s, u8"What is this place?"s);
-        break;
-    case 2: name = lang(u8"野外"s, u8"Wilderness"s); break;
-    case 10:
-        name = lang(u8"ルミエスト墓所"s, u8"the graveyard"s);
-        desc = lang(
-            u8"墓所が見える。辺りは静寂に包まれている…"s,
-            u8"You see the graveyard of Lumiest. It's silent. Very silent."s);
-        break;
-    case 6: name = lang(u8"闘技場"s, u8"Arena"s); break;
-    case 19: name = lang(u8"竜窟"s, u8"the Dragon's Nest"s); break;
-    case 20:
-        name = lang(u8"神々の休戦地"s, u8"the Truce Ground"s);
-        desc = lang(
-            u8"寺院がある。神聖な雰囲気がする。"s,
-            u8"You see old shrines. Sacred air surrounds the ground."s);
-        break;
-    case 21:
-        name = lang(u8"アクリ・テオラ"s, u8"Cyber Dome"s);
-        desc = lang(
-            u8"何やら奇妙な建物がある。"s,
-            u8"You see a very strange building."s);
-        break;
-    case 22:
-        name = lang(u8"混沌の城《獣》"s, u8"Fort of Chaos <Beast>"s);
-        desc = lang(
-            u8"不気味な城がある。絶対に入ってはいけない予感がする。(危険度は666階相当)"s,
-            u8"You see an unearthly fort. Your inner voice warns you to not go there. (Approximate danger level: 666) "s);
-        break;
-    case 23:
-        name = lang(u8"混沌の城《機甲》"s, u8"Fort of Chaos <Machine>"s);
-        desc = lang(
-            u8"不気味な城がある。絶対に入ってはいけない予感がする。(危険度は666階相当)"s,
-            u8"You see an unearthly fort. Your inner voice warns you to not go there. (Approximate danger level: 666) "s);
-        break;
-    case 24:
-        name = lang(u8"混沌の城《奇形》"s, u8"Fort of Chaos <Collapsed>"s);
-        desc = lang(
-            u8"不気味な城がある。絶対に入ってはいけない予感がする。(危険度は666階相当)"s,
-            u8"You see an unearthly fort. Your inner voice warns you to not go there. (Approximate danger level: 666) "s);
-        break;
-    case 40: name = lang(u8"コロシアム"s, u8"Pet Arena"s); break;
-    case 101: name = lang(u8"博物館"s, u8"My Museum"s); break;
-    case 102: name = lang(u8"店"s, u8"Shop"s); break;
-    case 103: name = lang(u8"畑"s, u8"Crop"s); break;
-    case 104: name = lang(u8"倉庫"s, u8"Storage House"s); break;
-    case 31: name = lang(u8"牧場"s, u8"Ranch"s); break;
-    case 30: name = lang(u8"シェルター"s, u8"Shelter"s); break;
-    case 32: name = lang(u8"パルミア大使館"s, u8"the Embassy"s); break;
-    case 9: name = lang(u8"実験場"s, u8"Test Ground"s); break;
-    case 33:
-        name = lang(u8"ノイエル"s, u8"Noyel"s);
-        desc = lang(
-            u8"ノイエルの村がある。子供たちの笑い声が聞こえる。"s,
-            u8"You see Noyel. The laughters of children travel from the playground."s);
-        break;
-    case 34:
-        name = lang(u8"工房ミラル・ガロク"s, u8"Miral and Garok's Workshop"s);
-        break;
-    case 35: name = lang(u8"ハウスドーム"s, u8"Show House"s); break;
-    case 25: name = lang(u8"ラーナ"s, u8"Larna"s); break;
-    case 26: name = lang(u8"山道"s, u8"the Mountain Pass"s); break;
-    case 27: name = lang(u8"子犬の洞窟"s, u8"the Puppy Cave"s); break;
-    case 28: name = lang(u8"イークの洞窟"s, u8"the Yeek's Nest"s); break;
-    case 29:
-        name = lang(u8"妹の館"s, u8"the mansion of younger sister"s);
-        break;
-    case 36:
-        name = lang(u8"ルミエスト"s, u8"Lumiest"s);
-        desc = lang(
-            u8"ルミエストの都が見える。水のせせらぎが聴こえる。"s,
-            u8"You see Lumiest. Murmuring of water pleasantly echoes."s);
-        break;
-    case 37: name = lang(u8"ピラミッド"s, u8"the Pyramid"s); break;
-    case 38: name = lang(u8"ﾐﾉﾀｳﾛｽの巣"s, u8"the Minotaur's Nest"s); break;
-    case 41:
-        name = lang(u8"牢獄"s, u8"Jail"s);
-        desc = lang(
-            u8"収容所がある。入り口は固く閉ざされている。"s,
-            u8"You see a prison. The entrance is strictly closed."s);
-        break;
-    case 43:
-        name = lang(u8"ノースティリス南関所"s, u8"North Tyris south border"s);
-        break;
-    case 44: name = lang(u8"サウスティリス"s, u8"South Tyris"s); break;
-    case 45:
-        name = lang(u8"サウスティリス北関所"s, u8"South Tyris north border"s);
-        break;
-    case 46: name = lang(u8"煙とパイプ亭"s, u8"The smoke and pipe"s); break;
-    case 47: name = lang(u8"テストワールド"s, u8"Test World"s); break;
-    case 48:
-        name = lang(u8"テストワールド北関所"s, u8"Test World north border"s);
-        break;
     case 13:
         if (gdata_executing_immediate_quest_type == 1001)
         {
-            name = lang(u8"街近辺"s, u8"The outskirts"s);
+            name = i18n::s.get("core.locale.map.quest.outskirts");
         }
         if (gdata_executing_immediate_quest_type == 1010
             || gdata_executing_immediate_quest_type == 1008)
         {
-            name = lang(u8"市街地"s, u8"Urban area"s);
+            name = i18n::s.get("core.locale.map.quest.urban_area");
         }
         break;
     case 8:
-        name = mapnamerd(
-            adata(5, id),
-            std::min(adata(17, id) / 5, int(length2(mapnamerd) - 1)));
-        if (adata(0, id) == 20)
-        {
-            name += lang(u8"洞窟"s, u8"Dungeon"s);
-        }
-        if (adata(0, id) == 22)
-        {
-            name += lang(u8"森"s, u8"Forest"s);
-        }
-        if (adata(0, id) == 21)
-        {
-            name += lang(u8"塔"s, u8"Tower"s);
-        }
-        if (adata(0, id) == 23)
-        {
-            name += lang(u8"砦"s, u8"Fort"s);
-        }
+        name = mapname_dungeon(id);
         break;
+    default:
+        name = i18n::s.get_enum_property("core.locale.map.unique", adata(16, id), "name");
+        auto desc_opt = i18n::s.get_enum_property_opt("core.locale.map.unique", adata(16, id), "desc");
+        if (desc_opt)
+        {
+            desc = *desc_opt;
+        }
+        else
+        {
+            desc = "";
+        }
     }
 
     if (description)
@@ -501,16 +366,11 @@ std::string mapname(int id, bool description)
         }
         else if (adata(0, id) >= 20)
         {
-            return lang(
-                name + u8"への入り口がある(入り口の危険度は"s + adata(17, id)
-                    + u8"階相当)。"s,
-                u8"You see an entrance leading to "s + name
-                    + u8".(Approximate danger level: "s + adata(17, id)
-                    + u8") "s);
+            return i18n::s.get("core.locale.map.you_see_an_entrance", name, adata(17, id));
         }
         else
         {
-            return lang(name + u8"がある。"s, u8"You see "s + name + u8"."s);
+            return i18n::s.get("core.locale.map.you_see", name);
         }
     }
     else
@@ -526,8 +386,7 @@ std::string txtbuilding(int prm_368, int prm_369)
     int p_at_m32 = 0;
     std::string s_at_m32;
     p_at_m32 = bddata(0, prm_368, prm_369);
-    s_at_m32 = lang(
-        bdrefn(p_at_m32) + u8"がある。"s, u8"You see "s + bdrefn(p_at_m32));
+    s_at_m32 = i18n::s.get("core.locale.map.you_see", bdrefn(p_at_m32));
     return s_at_m32;
 }
 

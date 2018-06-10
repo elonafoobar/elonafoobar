@@ -7,10 +7,12 @@
 #include "draw.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "lua_env/lua_env.hpp"
 #include "macro.hpp"
 #include "main_menu.hpp"
 #include "menu.hpp"
 #include "race.hpp"
+#include "random.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -21,7 +23,7 @@ elona_vector1<std::string> cmrace;
 std::string cmclass;
 elona_vector1<int> cmstats;
 elona_vector1<int> cmlock;
-}
+} // namespace
 
 
 
@@ -511,7 +513,8 @@ main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
             }
             if (p == 1)
             {
-                return main_menu_result_t::character_making_select_feats_and_alias;
+                return main_menu_result_t::
+                    character_making_select_feats_and_alias;
             }
             if (cmlock(p - 2) != 0)
             {
@@ -544,7 +547,8 @@ main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
     }
 }
 
-main_menu_result_t character_making_select_feats_and_alias(bool is_choosing_feat)
+main_menu_result_t character_making_select_feats_and_alias(
+    bool is_choosing_feat)
 {
     if (is_choosing_feat)
     {
@@ -676,7 +680,8 @@ main_menu_result_t character_making_select_feats_and_alias(bool is_choosing_feat
         if (getkey(snail::key::f1))
         {
             show_game_help();
-            return main_menu_result_t::character_making_select_feats_and_alias_looped;
+            return main_menu_result_t::
+                character_making_select_feats_and_alias_looped;
         }
     }
 }
@@ -710,7 +715,7 @@ main_menu_result_t character_making_final_phase()
         if (stat == 0)
         {
             clear_background_in_character_making();
-            character_making_select_feats_and_alias(false);
+            return main_menu_result_t::character_making_select_feats_and_alias_looped;
         }
         if (stat != -1)
         {
@@ -806,7 +811,8 @@ main_menu_result_t character_making_final_phase()
     {
         inputlog = "";
         input_text_dialog(
-            (windoww - 230) / 2 + inf_screenx, winposy(120), 10, false, true);
+            (windoww - 230) / 2 + inf_screenx, winposy(120), 10, false);
+        inputlog = filesystem::normalize_as_filename(inputlog);
         cmname = ""s + inputlog;
         if (cmname == ""s || cmname == u8" "s)
         {
@@ -815,7 +821,7 @@ main_menu_result_t character_making_final_phase()
         playerid = u8"sav_"s + cmname;
         if (range::any_of(
                 filesystem::dir_entries{filesystem::dir::save(),
-                                        filesystem::dir_entries::type::dir},
+                                        filesystem::dir_entries::type::all},
                 [&](const auto& entry) {
                     return filesystem::to_utf8_path(entry.path().filename())
                         == playerid;
@@ -849,8 +855,9 @@ main_menu_result_t character_making_final_phase()
             mat(i) = 0;
         }
     }
-    await(250);
     mode = 5;
+    cdata[0].index = 0;
+    lua::lua.on_chara_creation(cdata[0]);
     return main_menu_result_t::initialize_game;
 }
 

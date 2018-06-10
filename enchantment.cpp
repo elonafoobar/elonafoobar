@@ -1,12 +1,46 @@
 #include "enchantment.hpp"
 #include "elona.hpp"
 #include "item.hpp"
+#include "item_db.hpp"
+#include "random.hpp"
 #include "variables.hpp"
+
+using namespace elona;
+
+
+
+namespace
+{
+
+elona_vector2<int> encref;
+
+
+
+bool check_enchantment_filters(int category, int type)
+{
+    constexpr auto max_enchantment_filters = 2;
+
+    for (int i = 0; i < max_enchantment_filters; ++i)
+    {
+        const auto filter = encref(3 + i, type);
+        if (filter == 0 || enchantment_filter(category, filter))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+
+} // namespace
+
+
 
 namespace elona
 {
 
-elona_vector2<int> encref;
 elona_vector2<int> enclist;
 elona_vector2<int> egoenc;
 elona_vector2<int> egoref;
@@ -475,8 +509,6 @@ int enchantment_filter(int prm_449, int prm_450)
 
 
 
-
-
 int enchantment_generate(int prm_451)
 {
     int sum_at_m47 = 0;
@@ -521,7 +553,7 @@ int enchantment_generate(int prm_451)
         return 0;
     }
     i_at_m47 = 0;
-    exrand_rnd(p_at_m47, sum_at_m47);
+    p_at_m47 = rnd(sum_at_m47);
     for (int cnt = 0, cnt_end = (max_at_m47); cnt < cnt_end; ++cnt)
     {
         if (p_at_m47 < enclist(1, cnt))
@@ -635,166 +667,137 @@ void enchantment_remove(int prm_455, int prm_456, int prm_457)
 
 
 
-int enchantment_add(
-    int prm_458,
-    int prm_459,
-    int prm_460,
-    int prm_461,
-    int prm_462,
-    int prm_463,
-    int prm_464)
+bool enchantment_add(
+    int ci,
+    int type,
+    int power,
+    int flip_percentage,
+    bool not_halve,
+    bool only_check,
+    bool force)
 {
+    const auto category = the_item_db[inv[ci].id]->category;
+
+    if (type == 0)
+    {
+        return false;
+    }
+
+    if (!force)
+    {
+        if (!check_enchantment_filters(
+                category, type >= 10000 ? type / 10000 : type))
+        {
+            return false;
+        }
+        else if (category == 25000 && !not_halve)
+        {
+            return false;
+        }
+    }
+
+    int enc = type;
+    int encp = power;
+
     int sum_at_m48 = 0;
     int max_at_m48 = 0;
     int i_at_m48 = 0;
-    if (prm_459 == 0)
+
+    switch (enc)
     {
-        return 0;
-    }
-    if (prm_459 >= 10000)
-    {
-        enc_at_m48 = prm_459 / 10000;
-    }
-    else
-    {
-        enc_at_m48 = prm_459;
-    }
-    if (prm_464 == 0)
-    {
-        if (encref(3, enc_at_m48) != 0)
+    case 1:
+        enc = rnd(10) + 10;
+        enc += 10000;
+        if (rnd(100) < flip_percentage)
         {
-            if (enchantment_filter(reftype, encref(3, enc_at_m48)) == 0)
+            encp = power * -2;
+        }
+        break;
+    case 2:
+        enc = 20000 + randomele();
+        if (rnd(100) < flip_percentage)
+        {
+            encp = power * -2;
+        }
+        break;
+    case 3:
+        enc = rnd(40) + 150;
+        enc += 30000;
+        if (rnd(100) < flip_percentage)
+        {
+            encp = power * -2;
+        }
+        break;
+    case 6:
+        enc = rnd(10) + 10;
+        enc += 60000;
+        break;
+    case 7:
+        enc = randomele();
+        enc += 70000;
+        break;
+    case 8:
+        sum_at_m48 = 0;
+        max_at_m48 = 0;
+        for (int cnt = 0; cnt < 26; ++cnt)
+        {
+            if (encprocref(3, cnt) != 0)
             {
-                if (encref(4, enc_at_m48) == 0)
+                if (enchantment_filter(category, encprocref(3, cnt)) == 0)
                 {
-                    return 0;
-                }
-                else if (enchantment_filter(reftype, encref(4, enc_at_m48)) == 0)
-                {
-                    return 0;
-                }
-            }
-        }
-        else if (reftype == 25000)
-        {
-            if (prm_462 == 0)
-            {
-                return 0;
-            }
-        }
-    }
-    enc_at_m48 = prm_459;
-    encp_at_m48 = prm_460;
-    if (enc_at_m48 < 20)
-    {
-        if (enc_at_m48 == 1)
-        {
-            enc_at_m48 = rnd(10) + 10;
-            enc_at_m48 += 10000;
-            if (prm_461 != 0)
-            {
-                if (rnd(100) < prm_461)
-                {
-                    encp_at_m48 = prm_460 * -2;
-                }
-            }
-        }
-        if (enc_at_m48 == 2)
-        {
-            enc_at_m48 = randomele();
-            enc_at_m48 += 20000;
-            if (prm_461 != 0)
-            {
-                if (rnd(100) < prm_461)
-                {
-                    encp_at_m48 = prm_460 * -2;
-                }
-            }
-        }
-        if (enc_at_m48 == 3)
-        {
-            enc_at_m48 = rnd(40) + 150;
-            enc_at_m48 += 30000;
-            if (prm_461 != 0)
-            {
-                if (rnd(100) < prm_461)
-                {
-                    encp_at_m48 = prm_460 * -2;
-                }
-            }
-        }
-        if (enc_at_m48 == 6)
-        {
-            enc_at_m48 = rnd(10) + 10;
-            enc_at_m48 += 60000;
-        }
-        if (enc_at_m48 == 7)
-        {
-            enc_at_m48 = randomele();
-            enc_at_m48 += 70000;
-        }
-        if (enc_at_m48 == 8)
-        {
-            sum_at_m48 = 0;
-            max_at_m48 = 0;
-            for (int cnt = 0; cnt < 26; ++cnt)
-            {
-                if (encprocref(3, cnt) != 0)
-                {
-                    if (enchantment_filter(reftype, encprocref(3, cnt)) == 0)
+                    if (encprocref(4, cnt) == 0)
                     {
-                        if (encprocref(4, cnt) == 0)
-                        {
-                            continue;
-                        }
-                        else if (enchantment_filter(reftype, encprocref(4, cnt)) == 0)
-                        {
-                            continue;
-                        }
+                        continue;
+                    }
+                    else if (
+                        enchantment_filter(category, encprocref(4, cnt)) == 0)
+                    {
+                        continue;
                     }
                 }
-                sum_at_m48 += encprocref(2, cnt);
-                enclist(0, max_at_m48) = cnt;
-                enclist(1, max_at_m48) = sum_at_m48;
-                ++max_at_m48;
             }
-            if (max_at_m48 == 0)
-            {
-                return 0;
-            }
-            i_at_m48 = 0;
-            exrand_rnd(p_at_m48, sum_at_m48);
-            for (int cnt = 0, cnt_end = (max_at_m48); cnt < cnt_end; ++cnt)
-            {
-                if (p_at_m48 < enclist(1, cnt))
-                {
-                    i_at_m48 = enclist(0, cnt);
-                    break;
-                }
-            }
-            enc_at_m48 = 80000 + i_at_m48;
+            sum_at_m48 += encprocref(2, cnt);
+            enclist(0, max_at_m48) = cnt;
+            enclist(1, max_at_m48) = sum_at_m48;
+            ++max_at_m48;
         }
-        if (enc_at_m48 == 9)
+        if (max_at_m48 == 0)
         {
-            enc_at_m48 = rnd(rnd(6) + 1);
-            encp_at_m48 =
-                clamp(encp_at_m48, 0, 500) * encammoref(1, enc_at_m48) / 500
-                + encammoref(0, enc_at_m48);
-            enc_at_m48 += 90000;
-            encp_at_m48 += encp_at_m48 * 1000;
+            return false;
         }
+        i_at_m48 = 0;
+        p_at_m48 = rnd(sum_at_m48);
+        for (int cnt = 0, cnt_end = (max_at_m48); cnt < cnt_end; ++cnt)
+        {
+            if (p_at_m48 < enclist(1, cnt))
+            {
+                i_at_m48 = enclist(0, cnt);
+                break;
+            }
+        }
+        enc = 80000 + i_at_m48;
+        break;
+    case 9:
+        enc = rnd(rnd(6) + 1);
+        encp =
+            clamp(encp, 0, 500) * encammoref(1, enc) / 500 + encammoref(0, enc);
+        enc += 90000;
+        encp += encp * 1000;
+        break;
+    default: break;
     }
+
     i_at_m48 = -1;
     for (int cnt = 0; cnt < 15; ++cnt)
     {
-        if (inv[prm_458].enchantments[cnt].id == enc_at_m48)
+        if (inv[ci].enchantments[cnt].id == enc)
         {
             i_at_m48 = cnt;
             continue;
         }
         if (i_at_m48 == -1)
         {
-            if (inv[prm_458].enchantments[cnt].id == 0)
+            if (inv[ci].enchantments[cnt].id == 0)
             {
                 i_at_m48 = cnt;
             }
@@ -802,45 +805,50 @@ int enchantment_add(
     }
     if (i_at_m48 == -1)
     {
-        return 0;
+        return false;
     }
-    if (inv[prm_458].enchantments[i_at_m48].id == enc_at_m48)
+
+    if (inv[ci].enchantments[i_at_m48].id == enc)
     {
-        if (reftype == 25000)
+        if (category == 25000)
         {
-            return 0;
+            return false;
         }
-        if (!prm_462)
+        if (!not_halve)
         {
-            encp_at_m48 /= 2;
+            encp /= 2;
         }
     }
-    if (prm_463)
+
+    if (only_check)
     {
-        rtval(0) = enc_at_m48;
-        rtval(1) = encp_at_m48;
-        return 0;
+        rtval(0) = enc;
+        rtval(1) = encp;
+        return true;
     }
-    if (inv[prm_458].enchantments[i_at_m48].id == enc_at_m48)
+
+    if (inv[ci].enchantments[i_at_m48].id == enc)
     {
-        encp_at_m48 += inv[prm_458].enchantments[i_at_m48].power;
+        encp += inv[ci].enchantments[i_at_m48].power;
     }
-    inv[prm_458].enchantments[i_at_m48].id = enc_at_m48;
-    inv[prm_458].enchantments[i_at_m48].power = encp_at_m48;
-    if (prm_459 < 10000)
+    inv[ci].enchantments[i_at_m48].id = enc;
+    inv[ci].enchantments[i_at_m48].power = encp;
+
+    if (type < 10000)
     {
-        p_at_m48 = prm_459;
+        p_at_m48 = type;
     }
     else
     {
-        p_at_m48 = prm_459 / 10000;
+        p_at_m48 = type / 10000;
     }
-    if (inv[prm_458].value * encref(1, p_at_m48) / 100 > 0)
+    if (inv[ci].value * encref(1, p_at_m48) / 100 > 0)
     {
-        inv[prm_458].value = inv[prm_458].value * encref(1, p_at_m48) / 100;
+        inv[ci].value = inv[ci].value * encref(1, p_at_m48) / 100;
     }
-    enchantment_sort(prm_458);
-    return 1;
+    enchantment_sort(ci);
+
+    return true;
 }
 
 
@@ -849,7 +857,11 @@ void add_enchantments_depending_on_ego()
 {
     for (int cnt = 0, cnt_end = (rnd(rnd(5) + 1) + 1); cnt < cnt_end; ++cnt)
     {
-        enchantment_add(ci, enchantment_generate(enchantment_gen_level(egolv)), enchantment_gen_p(), 8);
+        enchantment_add(
+            ci,
+            enchantment_generate(enchantment_gen_level(egolv)),
+            enchantment_gen_p(),
+            8);
     }
     inv[ci].subname = 20000 + rnd(maxegominorn);
     return;
@@ -885,11 +897,19 @@ void add_enchantment_by_fixed_ego()
     ego_add(ci, p);
     if (rnd(2) == 0)
     {
-        enchantment_add(ci, enchantment_generate(enchantment_gen_level(egolv)), enchantment_gen_p(), 20);
+        enchantment_add(
+            ci,
+            enchantment_generate(enchantment_gen_level(egolv)),
+            enchantment_gen_p(),
+            20);
     }
     if (rnd(4) == 0)
     {
-        enchantment_add(ci, enchantment_generate(enchantment_gen_level(egolv)), enchantment_gen_p(), 25);
+        enchantment_add(
+            ci,
+            enchantment_generate(enchantment_gen_level(egolv)),
+            enchantment_gen_p(),
+            25);
     }
     return;
 }
@@ -988,7 +1008,8 @@ void add_enchantments()
                 if (rnd(10) == 0)
                 {
                     ibitmod(15, ci, 1);
-                    enchantment_add(ci, enchantment_generate(99), enchantment_gen_p());
+                    enchantment_add(
+                        ci, enchantment_generate(99), enchantment_gen_p());
                     inv[ci].curse_state = curse_state_t::blessed;
                 }
             }
@@ -998,7 +1019,8 @@ void add_enchantments()
             enchantment_add(
                 ci,
                 enchantment_generate(enchantment_gen_level(egolv)),
-                enchantment_gen_p() + (fixlv == 5) * 100 + (ibit(15, ci) == 1) * 100,
+                enchantment_gen_p() + (fixlv == 5) * 100
+                    + (ibit(15, ci) == 1) * 100,
                 20 - (fixlv == 5) * 10 - (ibit(15, ci) == 1) * 20);
         }
     }
@@ -1006,7 +1028,11 @@ void add_enchantments()
     {
         for (int cnt = 0, cnt_end = (rnd(3)); cnt < cnt_end; ++cnt)
         {
-            enchantment_add(ci, enchantment_generate(enchantment_gen_level(egolv)), enchantment_gen_p(), 10);
+            enchantment_add(
+                ci,
+                enchantment_generate(enchantment_gen_level(egolv)),
+                enchantment_gen_p(),
+                10);
         }
     }
     if (is_cursed(inv[ci].curse_state))
@@ -1039,7 +1065,6 @@ void add_enchantments()
     }
     return;
 }
-
 
 
 

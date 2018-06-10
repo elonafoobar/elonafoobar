@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.0)
 
 
 # Project
-project(ElonaFoobar VERSION 0.2.4)
+project(ElonaFoobar VERSION 0.2.5)
 
 
 # Versioning
@@ -36,6 +36,17 @@ enable_language(CXX)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+
+# Options
+option(WITH_TESTS "Build test executable (TESTS or BENCH)" "NONE")
+
+if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
+  SET(SNAIL_HEADLESS ON CACHE BOOL "Snail headless")
+  add_definitions(-DSNAIL_RENDERER_HEADLESS)
+else()
+  SET(SNAIL_HEADLESS OFF CACHE BOOL "Snail SDL")
+  add_definitions(-DSNAIL_RENDERER_SDL)
+endif()
 
 # Source files
 set(CORE_SOURCES
@@ -76,8 +87,8 @@ set(CORE_SOURCES
     filesystem.cpp
     fish.cpp
     food.cpp
-    foobar_save.cpp
     fov.cpp
+    gdata.cpp
     get_card_info.cpp
     get_random_item_id.cpp
     get_random_npc_id.cpp
@@ -92,7 +103,6 @@ set(CORE_SOURCES
     itemgen.cpp
     log.cpp
     magic.cpp
-    main.cpp
     main_menu.cpp
     map.cpp
     map_cell.cpp
@@ -114,19 +124,68 @@ set(CORE_SOURCES
     talk_npc.cpp
     talk_unique.cpp
     tcg.cpp
+    testing.cpp
     text.cpp
     trait.cpp
     turn_sequence.cpp
     ui.cpp
     variables.cpp
     wish.cpp
+    lua_env/event_manager.cpp
+    lua_env/handle_manager.cpp
+    lua_env/lua_env.cpp
+    lua_env/lua_api.cpp
+    lua_env/lua_store.cpp
     ${PROJECT_BINARY_DIR}/version.cpp
 )
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
+
 # Executable
-add_executable(${PROJECT_NAME} WIN32 MACOSX_BUNDLE ${CORE_SOURCES})
+if(WITH_TESTS STREQUAL "TESTS")
+  set (CATCH_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/catch2})
+  add_library(Catch INTERFACE)
+  target_include_directories(Catch INTERFACE ${CATCH_INCLUDE_DIR})
+
+  # Test sources
+  set(TEST_SOURCES
+    tests/tests.cpp
+    tests/util.cpp
+    tests/lua_api.cpp
+    tests/lua_callbacks.cpp
+    tests/lua_handles.cpp
+    tests/lua_mods.cpp
+    tests/lua_serialization.cpp
+    tests/lua_store.cpp
+    tests/elonacore.cpp
+    tests/i18n.cpp
+    tests/i18n_builtins.cpp
+    tests/serialization.cpp
+    ${CORE_SOURCES}
+    )
+
+  add_executable(${PROJECT_NAME} ${TEST_SOURCES})
+  target_link_libraries(${PROJECT_NAME} Catch)
+elseif(WITH_TESTS STREQUAL "BENCH")
+  add_subdirectory(thirdparty/hayai)
+
+  # Benchmark sources
+  set(BENCH_SOURCES
+    bench/ai.cpp
+    bench/generate.cpp
+    bench/i18n.cpp
+    bench/lua_callbacks.cpp
+    bench/magic.cpp
+    bench/util.cpp
+    ${CORE_SOURCES}
+    )
+
+  add_executable(${PROJECT_NAME} ${BENCH_SOURCES})
+  target_link_libraries(${PROJECT_NAME} hayai_main ${LIB_TIMING})
+else()
+  add_executable(${PROJECT_NAME} WIN32 MACOSX_BUNDLE ${CORE_SOURCES} main.cpp)
+endif()
 
 
 # If a CMake prefix was not provided, assume dependencies are in "./deps"
@@ -135,50 +194,6 @@ if("${CMAKE_PREFIX_PATH}" STREQUAL "")
   message("No dependency prefix provided, using ${CMAKE_PREFIX_PATH}")
 else()
   message("Using provided dependency prefix ${CMAKE_PREFIX_PATH}")
-endif()
-
-
-# Copy folders
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                   COMMAND ${CMAKE_COMMAND} -E copy_directory
-                   "${CMAKE_CURRENT_SOURCE_DIR}/runtime"
-                   "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
-
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                   COMMAND ${CMAKE_COMMAND} -E copy_directory
-                   "${CMAKE_CURRENT_SOURCE_DIR}/data"
-                   "$<TARGET_FILE_DIR:${PROJECT_NAME}>/data")
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                   COMMAND ${CMAKE_COMMAND} -E copy_directory
-                   "${CMAKE_CURRENT_SOURCE_DIR}/lang"
-                   "$<TARGET_FILE_DIR:${PROJECT_NAME}>/lang")
-
-
-# Copy assets from Elona 1.22 if they are present
-if(EXISTS "${CMAKE_PREFIX_PATH}/elona")
-  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                     COMMAND ${CMAKE_COMMAND} -E copy_directory
-                     "${CMAKE_PREFIX_PATH}/elona/graphic"
-                     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/graphic")
-  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                     COMMAND ${CMAKE_COMMAND} -E copy_directory
-                     "${CMAKE_PREFIX_PATH}/elona/map"
-                     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/map")
-  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                     COMMAND ${CMAKE_COMMAND} -E copy_directory
-                     "${CMAKE_PREFIX_PATH}/elona/original"
-                     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/original")
-  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                     COMMAND ${CMAKE_COMMAND} -E copy_directory
-                     "${CMAKE_PREFIX_PATH}/elona/sound"
-                     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/sound")
-  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-                     COMMAND ${CMAKE_COMMAND} -E copy_directory
-                     "${CMAKE_PREFIX_PATH}/elona/user"
-                     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/user")
-  message("Elona 1.22 distribution found.")
-else()
-  message(WARNING "Elona 1.22 distribution not found at ${CMAKE_PREFIX_PATH}/elona. The game cannot be run without assets. Please manually copy the 'graphic', 'map', 'original', 'sound' and 'user' directories from Elona 1.22 to the ElonaFoobar output path after building.")
 endif()
 
 if(WIN32)
@@ -192,7 +207,7 @@ if(WIN32)
   # Specify dynamic libraries to copy to output folder after build
   file(GLOB copy_sources "${CMAKE_PREFIX_PATH}/lib/*${CMAKE_SHARED_LIBRARY_SUFFIX}")
   set(copy_dest "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
-  message("Will copy libraries to ${copy_dest}")
+  message("Will copy libraries to output folder.")
 
   # Perform the copy
   foreach(copy_source ${copy_sources})
@@ -259,6 +274,10 @@ else()
     set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DDEBUG")
 endif()
 
+if(WITH_TESTS STREQUAL "BENCH")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
+endif()
+
 # Force GCC to output warnings about undefined symbols
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     string(APPEND CMAKE_SHARED_LINKER_FLAGS " -Wl,--no-undefined")
@@ -267,8 +286,17 @@ endif()
 
 # My libraries
 add_subdirectory(snail)
-target_link_libraries(${PROJECT_NAME} snail)
 
+if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
+  target_link_libraries(${PROJECT_NAME} snail_headless)
+else()
+  target_link_libraries(${PROJECT_NAME} snail)
+endif()
+
+
+INSTALL(TARGETS ElonaFoobar
+    BUNDLE DESTINATION . COMPONENT Runtime
+    RUNTIME DESTINATION bin COMPONENT Runtime)
 
 # Create macOS .app bundle
 SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/ElonaFoobar")
@@ -281,13 +309,60 @@ IF(WIN32)
   SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/ElonaFoobar.exe")
 ENDIF(WIN32)
 
-INSTALL(TARGETS ElonaFoobar
-    BUNDLE DESTINATION . COMPONENT Runtime
-    RUNTIME DESTINATION bin COMPONENT Runtime)
-
 SET(DIRS ${LINK_DIRECTORIES})
 
 INSTALL(CODE "
     include(BundleUtilities)
     fixup_bundle(\"${APPS}\" \"\" \"${DIRS}\")
     " COMPONENT Runtime)
+
+# Kludgy function to work around the lack of directory support in copy_if_different
+function(copy_nonexisting src rel final)
+  file(GLOB_RECURSE allfiles RELATIVE "${rel}" "${src}/*")
+
+  foreach( each_file ${allfiles} )
+    set(destinationfile "$<TARGET_FILE_DIR:${PROJECT_NAME}>/${final}/${each_file}")
+    set(sourcefile "${rel}/${each_file}")
+    add_custom_command(TARGET ${PROJECT_NAME}
+      POST_BUILD
+      COMMAND ${CMAKE_COMMAND}
+      -Ddestinationfile=${destinationfile}
+      -Dsourcefile=${sourcefile}
+      -P ${CMAKE_MODULE_PATH}/copy_nonexisting.cmake
+      )
+  endforeach(each_file)
+endfunction()
+
+# Copy folders
+copy_nonexisting("runtime" "${CMAKE_SOURCE_DIR}/runtime" ".")
+copy_nonexisting("data" "${CMAKE_SOURCE_DIR}/data" "data")
+copy_nonexisting("lang" "${CMAKE_SOURCE_DIR}/lang" "lang")
+copy_nonexisting("lang2" "${CMAKE_SOURCE_DIR}/lang2" "lang2")
+copy_nonexisting("mods" "${CMAKE_SOURCE_DIR}/mods" "mods")
+
+# Copy assets from Elona 1.22 if they are present
+if(EXISTS "${CMAKE_PREFIX_PATH}/elona")
+  copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/graphic" "${CMAKE_PREFIX_PATH}/elona/graphic" "graphic")
+  copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/map" "${CMAKE_PREFIX_PATH}/elona/map" "map")
+  copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/original" "${CMAKE_PREFIX_PATH}/elona/original" "original")
+  copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/sound" "${CMAKE_PREFIX_PATH}/elona/sound" "sound")
+  copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/user" "${CMAKE_PREFIX_PATH}/elona/user" "user")
+  message("Elona 1.22 distribution found.")
+else()
+  message(WARNING "Elona 1.22 distribution not found at ${CMAKE_PREFIX_PATH}/elona. The game cannot be run without assets. Please manually copy the 'graphic', 'map', 'original', 'sound' and 'user' directories from Elona 1.22 to the ElonaFoobar output path after building.")
+endif()
+
+if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
+  copy_nonexisting("tests/data" "${CMAKE_CURRENT_SOURCE_DIR}/tests/data" "tests/data")
+endif()
+
+if(WITH_TESTS STREQUAL "TESTS")
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                     COMMAND ${CMAKE_COMMAND} -E copy_directory
+                     "${CMAKE_CURRENT_SOURCE_DIR}/tests/lua"
+                     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/tests/lua")
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                     COMMAND ${CMAKE_COMMAND} -E copy_directory
+                     "${CMAKE_CURRENT_SOURCE_DIR}/tests/lua/classes"
+                     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/tests/lua/classes")
+endif()

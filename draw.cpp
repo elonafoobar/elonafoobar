@@ -8,6 +8,7 @@
 #include "item_db.hpp"
 #include "map.hpp"
 #include "mef.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 
@@ -25,21 +26,18 @@ struct damage_popup_t
     int character;
     snail::color color;
 
-
-    damage_popup_t(
-        const std::string& text,
-        int character,
-        const snail::color& color)
-        : frame(0)
-        , text(text)
-        , character(character)
-        , color(color)
+    damage_popup_t()
+        : frame(-1)
+        , text(std::string())
+        , character(-1)
+        , color(snail::color(255, 255, 255, 255))
     {
     }
 };
 
 
 std::vector<damage_popup_t> damage_popups;
+int damage_popups_active = 0;
 
 
 
@@ -277,38 +275,78 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
 }
 
 
+void initialize_damage_popups()
+{
+    damage_popups_active = 0;
+    for (int i = 0; i < max_damage_popups; i++)
+    {
+        damage_popups.emplace_back(damage_popup_t{});
+    }
+}
 
 void add_damage_popup(
     const std::string& text,
     int character,
     const snail::color& color)
 {
-    if (damage_popups.size() == max_damage_popups)
+    if (damage_popups_active == max_damage_popups)
     {
         // Substitute a new damage popup for popup whose frame is the maximum.
         auto oldest = std::max_element(
             std::begin(damage_popups),
             std::end(damage_popups),
             [](const auto& a, const auto& b) { return a.frame < b.frame; });
-        *oldest = damage_popup_t{text, character, color};
+        oldest->frame = 0;
+        oldest->text = text;
+        oldest->character = character;
+        oldest->color = color;
     }
     else
     {
-        damage_popups.emplace_back(text, character, color);
+        for (auto&& damage_popup : damage_popups)
+        {
+            if (damage_popup.frame == -1)
+            {
+                damage_popup.frame = 0;
+                damage_popup.text = text;
+                damage_popup.character = character;
+                damage_popup.color = color;
+                ++damage_popups_active;
+                break;
+            }
+        }
     }
 }
 
 
 void clear_damage_popups()
 {
-    damage_popups.clear();
+    for (auto&& damage_popup : damage_popups)
+    {
+        damage_popup.frame = -1;
+    }
+    damage_popups_active = 0;
 }
 
 
 void show_damage_popups(int inf_ver)
 {
+    if (config::instance().damage_popup == 0)
+    {
+        return;
+    }
+    if (damage_popups_active == 0)
+    {
+        return;
+    }
+
     for (auto&& damage_popup : damage_popups)
     {
+        if (damage_popup.frame == -1)
+        {
+            continue;
+        }
+
         const auto& cc = cdata[damage_popup.character];
         if (gdata(20) != 40)
         {
@@ -331,6 +369,9 @@ void show_damage_popups(int inf_ver)
         int mondmgpos{};
         for (auto&& damage_popup2 : damage_popups)
         {
+            if (damage_popup2.frame == -1)
+                continue;
+
             if (damage_popup.frame >= damage_popup2.frame)
             {
                 if (cc.position == cdata[damage_popup2.character].position)
@@ -357,13 +398,13 @@ void show_damage_popups(int inf_ver)
         color(0, 0, 0);
 
         ++damage_popup.frame;
+
+        if (damage_popup.frame > 20)
+        {
+            damage_popup = {};
+            --damage_popups_active;
+        }
     }
-    damage_popups.erase(
-        std::remove_if(
-            std::begin(damage_popups),
-            std::end(damage_popups),
-            [](const auto& d) { return d.frame > 20; }),
-        std::end(damage_popups));
 }
 
 void draw_emo(int cc, int x, int y)
@@ -398,10 +439,10 @@ void load_pcc_part(int cc, int body_part, const char* body_part_str)
     gmode(2);
     pos(0, 0);
     set_color_mod(
-            255 - c_col(0, pcc(body_part, cc) / 1000),
-            255 - c_col(1, pcc(body_part, cc) / 1000),
-            255 - c_col(2, pcc(body_part, cc) / 1000),
-            10 + cc);
+        255 - c_col(0, pcc(body_part, cc) / 1000),
+        255 - c_col(1, pcc(body_part, cc) / 1000),
+        255 - c_col(2, pcc(body_part, cc) / 1000),
+        10 + cc);
     gcopy(10 + cc, 256, 0, 128, 198);
     set_color_mod(255, 255, 255, 10 + cc);
 }

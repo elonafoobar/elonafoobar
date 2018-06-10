@@ -6,12 +6,15 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "config.hpp"
+#include "dmgheal.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
+#include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "macro.hpp"
 #include "menu.hpp"
+#include "random.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -858,7 +861,7 @@ void label_1877()
 void casino_wrapper()
 {
     bool finished = false;
-    while(!finished)
+    while (!finished)
     {
         finished = casino_start();
     }
@@ -919,7 +922,7 @@ bool casino_start()
     }
     else if (rtval == 1)
     {
-        while(!finished)
+        while (!finished)
         {
             finished = casino_blackjack();
         }
@@ -988,7 +991,7 @@ bool casino_blackjack()
     casino_choose_card();
     if (rtval == 0)
     {
-        return false;
+        return true;
     }
     stake = rtval;
     winrow = 0;
@@ -1265,7 +1268,7 @@ bool casino_blackjack()
                 + u8" has been added to your loot list!"s));
         if (winrow > 3)
         {
-            if (rnd(200) < winrow * 5 + 5)
+            if (winrow + 1 > rnd(10))
             {
                 flt();
                 itemcreate(-1, 559, -1, -1, 0);

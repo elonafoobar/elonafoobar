@@ -1,29 +1,31 @@
 #include "turn_sequence.hpp"
-#include "buff.hpp"
 #include "ability.hpp"
-#include "audio.hpp"
 #include "ai.hpp"
+#include "audio.hpp"
+#include "buff.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "command.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"
 #include "debug.hpp"
+#include "dmgheal.hpp"
 #include "elona.hpp"
 #include "event.hpp"
-#include "foobar_save.hpp"
 #include "food.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
+#include "lua_env/lua_env.hpp"
 #include "macro.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
 #include "menu.hpp"
 #include "network.hpp"
 #include "quest.hpp"
+#include "random.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 #include "wish.hpp"
@@ -278,7 +280,7 @@ turn_result_t npc_turn()
     {
         if (cc != gdata_fire_giant)
         {
-            if (cc > 16)
+            if (cc >= 16)
             {
                 if (gdata_released_fire_giant != 0)
                 {
@@ -641,39 +643,19 @@ bool turn_wrapper()
         {
             // Turn lifecycle
 
-        case turn_result_t::turn_begin:
-            result = turn_begin();
-            break;
-        case turn_result_t::turn_end:
-            result = turn_end();
-            break;
-        case turn_result_t::pass_one_turn:
-            result = pass_turns(true);
-            break;
+        case turn_result_t::turn_begin: result = turn_begin(); break;
+        case turn_result_t::turn_end: result = turn_end(); break;
+        case turn_result_t::pass_one_turn: result = pass_turns(true); break;
         case turn_result_t::pass_one_turn_freeze_time:
             result = pass_turns(false);
             break;
-        case turn_result_t::pc_turn:
-            result = pc_turn();
-            break;
-        case turn_result_t::npc_turn:
-            result = npc_turn();
-            break;
-        case turn_result_t::pc_turn_user_error:
-            result = pc_turn(false);
-            break;
-        case turn_result_t::pc_died:
-            result = pc_died();
-            break;
-        case turn_result_t::initialize_map:
-            result = initialize_map();
-            break;
-        case turn_result_t::exit_map:
-            result = exit_map();
-            break;
-        case turn_result_t::play_scene:
-            result = play_scene();
-            break;
+        case turn_result_t::pc_turn: result = pc_turn(); break;
+        case turn_result_t::npc_turn: result = npc_turn(); break;
+        case turn_result_t::pc_turn_user_error: result = pc_turn(false); break;
+        case turn_result_t::pc_died: result = pc_died(); break;
+        case turn_result_t::initialize_map: result = initialize_map(); break;
+        case turn_result_t::exit_map: result = exit_map(); break;
+        case turn_result_t::play_scene: result = play_scene(); break;
         case turn_result_t::finish_elona:
             finish_elona();
             finished = true;
@@ -693,9 +675,7 @@ bool turn_wrapper()
         case turn_result_t::show_quest_board:
             result = show_quest_board();
             break;
-        case turn_result_t::show_skill_list:
-            result = show_skill_list();
-            break;
+        case turn_result_t::show_skill_list: result = show_skill_list(); break;
         case turn_result_t::show_spell_list:
             result = show_spell_list();
             break;
@@ -725,9 +705,7 @@ bool turn_wrapper()
             result = turn_result_t::turn_begin;
             break;
         case turn_result_t::none:
-        default:
-            assert(0);
-            break;
+        default: assert(0); break;
         }
     }
     return finished;
@@ -741,17 +719,10 @@ turn_result_t pass_turns(bool time)
     {
         switch (result)
         {
-            case turn_result_t::all_turns_finished:
-                finished = true;
-                break;
-            case turn_result_t::pass_one_turn:
-                time = true;
-                break;
-            case turn_result_t::pass_one_turn_freeze_time:
-                time = false;
-                break;
-            default:
-                return result;
+        case turn_result_t::all_turns_finished: finished = true; break;
+        case turn_result_t::pass_one_turn: time = true; break;
+        case turn_result_t::pass_one_turn_freeze_time: time = false; break;
+        default: return result;
         }
         result = pass_one_turn(time);
     }
@@ -876,6 +847,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         }
         if (ct >= ELONA_MAX_CHARACTERS)
         {
+            lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::all_turns_finished>();
             return turn_result_t::all_turns_finished;
         }
     }
@@ -1060,9 +1032,9 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         {
             if (cdata[cc].choked)
             {
-                await(120);
+                await(config::instance().animewait * 6);
             }
-            await(60);
+            await(config::instance().animewait * 3);
             sxfix = 0;
             syfix = 0;
             update_screen();
@@ -1223,72 +1195,72 @@ turn_result_t pass_one_turn(bool label_2738_flg)
         --cdata[cc].continuous_action_turn;
         if (cdata[cc].continuous_action_id == 7)
         {
-            auto_turn(40);
+            auto_turn(config::instance().animewait * 2);
             spot_fishing();
         }
         if (cdata[cc].continuous_action_id == 5)
         {
-            auto_turn(15);
+            auto_turn(config::instance().animewait * 0.75);
             spot_mining_or_wall();
         }
         if (cdata[cc].continuous_action_id == 8)
         {
-            auto_turn(15);
+            auto_turn(config::instance().animewait * 0.75);
             spot_material();
         }
         if (cdata[cc].continuous_action_id == 9)
         {
-            auto_turn(15);
+            auto_turn(config::instance().animewait * 0.75);
             spot_digging();
         }
         if (cdata[cc].continuous_action_id == 4)
         {
-            auto_turn(5);
+            auto_turn(config::instance().animewait / 4);
             do_rest();
         }
         if (cdata[cc].continuous_action_id == 1)
         {
-            auto_turn(100);
+            auto_turn(config::instance().animewait * 5);
             return do_eat_command();
         }
         if (cdata[cc].continuous_action_id == 2)
         {
-            auto_turn(25);
+            auto_turn(config::instance().animewait * 1.25);
             return do_read_command();
         }
         if (cdata[cc].continuous_action_id == 11)
         {
-            auto_turn(50);
+            auto_turn(config::instance().animewait * 2.5);
             continuous_action_sex();
         }
         if (cdata[cc].continuous_action_id == 10)
         {
             if (gdata(91) == 103)
             {
-                auto_turn(40);
+                auto_turn(config::instance().animewait * 2);
             }
             else if (gdata(91) == 104)
             {
-                auto_turn(40);
+                auto_turn(config::instance().animewait * 2);
             }
             else if (gdata(91) == 105)
             {
-                auto_turn(50);
+                auto_turn(config::instance().animewait * 2.5);
             }
             else
             {
-                auto_turn(20);
+                auto_turn(config::instance().animewait);
             }
             continuous_action_others();
         }
         if (cdata[cc].continuous_action_id == 12)
         {
-            auto_turn(20);
+            auto_turn(config::instance().animewait);
             label_19342();
         }
         if (cdata[cc].continuous_action_id == 6)
         {
-            auto_turn(40);
+            auto_turn(config::instance().animewait * 2);
             continuous_action_perform();
         }
         if (cdata[cc].continuous_action_id == 3)
@@ -1427,7 +1399,7 @@ turn_result_t turn_end()
             if (cc != 0)
             {
                 update_screen();
-                await(200);
+                await(config::instance().animewait * 10);
             }
             txtef(9);
             txt(u8" *tick* "s);
@@ -1443,6 +1415,7 @@ turn_result_t pc_turn(bool advance_time)
 {
     if (advance_time)
     {
+        lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::player_turn>();
         if (gdata_catches_god_signal)
         {
             if (rnd(1000) == 0)
@@ -1470,7 +1443,7 @@ turn_result_t pc_turn(bool advance_time)
         }
         if (gdata(30))
         {
-            await(10);
+            await(config::instance().wait1 / 3);
             for (int dy = -1; dy <= 1; ++dy)
             {
                 y = cdata[0].position.y + dy;
@@ -1506,7 +1479,7 @@ turn_result_t pc_turn(bool advance_time)
             cell_check(cdata[cc].position.x + 1, cdata[cc].position.y);
             if (cellaccess != gdata(33))
             {
-                if (cellchara > 16 || cellchara == -1)
+                if (cellchara >= 16 || cellchara == -1)
                 {
                     gdata(30) = 0;
                 }
@@ -1514,7 +1487,7 @@ turn_result_t pc_turn(bool advance_time)
             cell_check(cdata[cc].position.x - 1, cdata[cc].position.y);
             if (cellaccess != gdata(31))
             {
-                if (cellchara > 16 || cellchara == -1)
+                if (cellchara >= 16 || cellchara == -1)
                 {
                     gdata(30) = 0;
                 }
@@ -1522,7 +1495,7 @@ turn_result_t pc_turn(bool advance_time)
             cell_check(cdata[cc].position.x, cdata[cc].position.y + 1);
             if (cellaccess != gdata(34))
             {
-                if (cellchara > 16 || cellchara == -1)
+                if (cellchara >= 16 || cellchara == -1)
                 {
                     gdata(30) = 0;
                 }
@@ -1530,7 +1503,7 @@ turn_result_t pc_turn(bool advance_time)
             cell_check(cdata[cc].position.x, cdata[cc].position.y - 1);
             if (cellaccess != gdata(32))
             {
-                if (cellchara > 16 || cellchara == -1)
+                if (cellchara >= 16 || cellchara == -1)
                 {
                     gdata(30) = 0;
                 }
@@ -1538,7 +1511,7 @@ turn_result_t pc_turn(bool advance_time)
             cell_check(cdata[0].next_position.x, cdata[0].next_position.y);
             if (cellaccess == 0)
             {
-                if (cellchara > 16 || cellchara == -1)
+                if (cellchara >= 16 || cellchara == -1)
                 {
                     gdata(30) = 0;
                 }
@@ -1819,7 +1792,6 @@ label_2747:
         key = "";
         save_game();
         txt(lang(u8" *保存* "s, u8" *Save* "s));
-        await(100);
     }
     if (key == key_quickload)
     {
@@ -1827,7 +1799,8 @@ label_2747:
         msg_newline();
         msgtemp = u8"  "s;
         firstturn = 1;
-        load_save_data();
+        const auto save_dir = filesystem::dir::save();
+        load_save_data(save_dir);
         mode = 3;
         return turn_result_t::initialize_map;
     }
@@ -1862,7 +1835,7 @@ label_2747:
             gcopy(3, 496, 528, sx, 5);
         }
         redraw();
-        press();
+        wait_key_pressed();
         update_entire_screen();
         snd(20);
         goto label_2747;
@@ -2557,4 +2530,4 @@ label_2747:
 }
 
 
-}
+} // namespace elona

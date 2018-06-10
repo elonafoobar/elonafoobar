@@ -1,7 +1,9 @@
 #pragma once
 
 #include <string>
+#include "filesystem.hpp"
 #include "lib/noncopyable.hpp"
+#include "snail/window.hpp"
 
 
 
@@ -22,6 +24,8 @@ public:
     int autonumlock;
     int autosave;
     int autoturn;
+    int damage_popup;
+    std::string display_mode;
     int env;
     int extraclass;
     int extrahelp;
@@ -34,7 +38,6 @@ public:
     int hideshopresult;
     int hp_bar;
     int ignoredislike;
-    int initialkeywait;
     int joypad;
     int keywait;
     int language;
@@ -45,6 +48,7 @@ public:
     int net;
     int netchat;
     int netwish;
+    int noadebug;
     int objectshadow;
     int restock_interval;
     int runscroll;
@@ -56,6 +60,7 @@ public:
     int skiprandevents;
     int sound;
     int startrun;
+    std::string startup_script;
     int story;
     int wait1;
     int walkwait;
@@ -76,6 +81,7 @@ public:
     int use_autopick_in_conquered_nefia;
     int use_autopick_in_conquered_quest_map;
 
+    bool is_test = false; // testing use only
 
 private:
     config() = default;
@@ -83,14 +89,14 @@ private:
 
 
 
-void load_config2();
-void load_config();
-
+void load_config2(const fs::path& json_file);
+void load_config(const fs::path& json_file);
 
 void set_config(const std::string& key, int value);
 void set_config(const std::string& key, const std::string& value);
 void set_config(const std::string& key, const std::string& value1, int value2);
 
+snail::window::fullscreen_mode_t config_get_fullscreen_mode();
 
 
 } // namespace elona

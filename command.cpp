@@ -10,6 +10,7 @@
 #include "config.hpp"
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
+#include "dmgheal.hpp"
 #include "draw.hpp"
 #include "enchantment.hpp"
 #include "food.hpp"
@@ -26,6 +27,7 @@
 #include "menu.hpp"
 #include "network.hpp"
 #include "quest.hpp"
+#include "random.hpp"
 #include "shop.hpp"
 #include "snail/application.hpp"
 #include "ui.hpp"
@@ -34,7 +36,7 @@
 namespace elona
 {
 
- // TODO organize by order in pc_turn()
+// TODO organize by order in pc_turn()
 
 turn_result_t do_give_command()
 {
@@ -66,7 +68,8 @@ turn_result_t do_give_command()
     {
         if (tc < 16)
         {
-            if (cdata[tc].is_escorted() == 0)
+            if (!cdata[tc].is_escorted()
+                && !cdata[tc].is_escorted_in_sub_quest())
             {
                 return try_interact_with_npc();
             }
@@ -459,6 +462,7 @@ turn_result_t do_search_command()
                                 u8"なんと小さなメダルを見つけた！"s,
                                 u8"You find a small coin!"s));
                             map(x, y, 6) = 0;
+                            flt();
                             itemcreate(-1, 622, x, y, 0);
                         }
                         else
@@ -999,7 +1003,10 @@ turn_result_t do_offer_command()
             + u8" on the altar and mutter the name of "s
             + i18n::_(u8"god", cdata[0].god_id, u8"name") + u8"."s));
     snd(121);
+    const auto tcbk = tc(0);
+    tc = 0;
     play_animation(7);
+    tc = tcbk;
     int stat = item_find(60002);
     if (stat != -1)
     {
@@ -1396,6 +1403,13 @@ turn_result_t do_dip_command()
                         u8"Ops! You drop the empty bottle into the well..."s));
                     return turn_result_t::turn_end;
                 }
+                if (inv_getfreeid(0) == -1)
+                {
+                    txt(lang(
+                        u8"バックパックが一杯だ。"s,
+                        u8"Your inventory is full."s));
+                    return turn_result_t::turn_end;
+                }
                 if (inv[ci].id == 602)
                 {
                     --gdata_holy_well_count;
@@ -1670,7 +1684,6 @@ turn_result_t do_use_command()
                 itemname(ci) + u8"は十分に血を吸い成長できる！"s,
                 itemname(ci) + u8" sucked enough blood and ready to grow!"s));
             randomize(inv[ci].subname);
-            exrand_randomize(inv[ci].subname);
             if (inv[ci].param1 >= 4 + rnd(12))
             {
                 txt(lang(
@@ -1683,10 +1696,13 @@ turn_result_t do_use_command()
             for (int cnt = 0; cnt < 3; ++cnt)
             {
                 randomize(inv[ci].subname + inv[ci].param1 * 10 + cnt);
-                exrand_randomize(inv[ci].subname + inv[ci].param1 * 10 + cnt);
-                int stat = enchantment_add(
-                    ci, enchantment_generate(enchantment_gen_level(4)), enchantment_gen_p(), 0, 0, 1);
-                if (stat != 0)
+                if (enchantment_add(
+                    ci,
+                    enchantment_generate(enchantment_gen_level(4)),
+                    enchantment_gen_p(),
+                    0,
+                    0,
+                    1))
                 {
                     if (rtval == 34)
                     {
@@ -1730,14 +1746,12 @@ turn_result_t do_use_command()
                     itemname(ci) + u8"は嬉しげに震えた。"s,
                     itemname(ci) + u8" vibrates as if she is pleased."s));
                 randomize(inv[ci].subname);
-                exrand_randomize(inv[ci].subname);
                 if (inv[ci].param1 >= 4 + rnd(12))
                 {
                     txt(lang(
                         u8"その力は次第に脅威になっている。"s,
                         u8"Its power is becoming a threat."s));
-                    int stat = enchantment_add(ci, 45, 50);
-                    if (stat == 0)
+                    if (enchantment_add(ci, 45, 50))
                     {
                         inv[ci].enchantments[14].id = 0;
                         txt(lang(
@@ -1749,7 +1763,6 @@ turn_result_t do_use_command()
                 ++inv[ci].param1;
             }
             randomize();
-            exrand_randomize();
         }
         chara_refresh(cc);
         update_screen();
@@ -2083,7 +2096,7 @@ turn_result_t do_use_command()
                 u8"このエリアでは使えない。"s,
                 u8"You cant use it in this area."s));
             update_screen();
-                            return turn_result_t::pc_turn_user_error;
+            return turn_result_t::pc_turn_user_error;
         }
         txt(lang(u8"誰を吊るす？"s, u8"Hang who?"s));
         update_screen();
@@ -2200,7 +2213,7 @@ turn_result_t do_use_command()
                 if (adata(20, gdata_current_map) != -1)
                 {
                     txt(lang(
-                        u8"クエストを放棄してシェルターに非難する？"s,
+                        u8"クエストを放棄してシェルターに避難する？"s,
                         u8"Really give up the quest and evacuate to the shelter?"s));
                     ELONA_YES_NO_PROMPT();
                     rtval = show_prompt(promptx, prompty, 160);
@@ -2407,7 +2420,8 @@ turn_result_t do_use_command()
             u8"原子爆弾を設置した。逃げろォー！"s,
             u8"You set up the nuke...now run!!"s));
         snd(58);
-        mef_add(cdata[cc].position.x, cdata[cc].position.y, 7, 632, 10, 100, cc);
+        mef_add(
+            cdata[cc].position.x, cdata[cc].position.y, 7, 632, 10, 100, cc);
         goto label_2229_internal;
     case 48:
         if (gdata_current_map != 35 || usermapid == 0)
@@ -2798,7 +2812,8 @@ turn_result_t do_open_command()
     if (inv[ci].count != 0)
     {
         invfile = inv[ci].count;
-        invcontainer(1) = ci;
+        invcontainer(1) = inv[ci].id;
+        const auto container_ci = ci;
         if (inv[ci].id == 641)
         {
             refweight = -1;
@@ -2839,7 +2854,7 @@ turn_result_t do_open_command()
         {
             for (const auto& cnt : items(-1))
             {
-                inv[cnt].number = 0;
+                item_remove(inv[cnt]);
             }
         }
         shoptrade = 0;
@@ -2856,7 +2871,7 @@ turn_result_t do_open_command()
                     + u8"."s));
             invctrl(1) = 1;
         }
-        if (invfile == 6 || inv[invcontainer(1)].id == 641)
+        if (invfile == 6 || invcontainer(1) == 641)
         {
             if (invfile == 6)
             {
@@ -2881,7 +2896,7 @@ turn_result_t do_open_command()
         ctrl_file(file_operation2_t::_3, u8"shoptmp.s2");
         if (refweight != 0)
         {
-            inv[invcontainer(1)].weight = refweight;
+            inv[container_ci].weight = refweight;
             refresh_burden_state();
         }
         update_screen();
@@ -3354,41 +3369,40 @@ turn_result_t do_movement_command()
         }
         return proc_movement_event();
     }
-    if (gdata_current_dungeon_level == 1 || mdata(6) == 6)
+    if (mdata(6) == 6
+        || (gdata_current_dungeon_level == 1 && mdata(6) != 1
+            && (mdata(6) < 20 || 23 < mdata(6))))
     {
-        if (mdata(6) != 1)
+        if (cdata[cc].next_position.x < 0
+            || cdata[cc].next_position.x > mdata(0) - 1
+            || cdata[cc].next_position.y < 0
+            || cdata[cc].next_position.y > mdata(1) - 1)
         {
-            if (cdata[cc].next_position.x < 0
-                || cdata[cc].next_position.x > mdata(0) - 1
-                || cdata[cc].next_position.y < 0
-                || cdata[cc].next_position.y > mdata(1) - 1)
+            txt(lang(
+                mdatan(0) + u8"を去る？ "s,
+                u8"Do you want to leave "s + mdatan(0) + u8"? "s));
+            if (mdata(6) == 7)
             {
-                txt(lang(
-                    mdatan(0) + u8"を去る？ "s,
-                    u8"Do you want to leave "s + mdatan(0) + u8"? "s));
-                if (mdata(6) == 7)
+                if (gdata(73) != 3)
                 {
-                    if (gdata(73) != 3)
-                    {
-                        txt(lang(
-                            u8"注意！現在のクエストは失敗に終わってしまう。"s,
-                            u8"Warning! You are going to abandon your current quest."s));
-                    }
+                    txt(lang(
+                        u8"注意！現在のクエストは失敗に終わってしまう。"s,
+                        u8"Warning! You are going to abandon your current quest."s));
                 }
-                ELONA_YES_NO_PROMPT();
-                rtval = show_prompt(promptx, prompty, 160);
-                update_screen();
-                if (rtval == 0)
-                {
-                    gdata(60) = cdata[0].position.x;
-                    gdata(61) = cdata[0].position.y;
-                    snd(49);
-                    --gdata_current_dungeon_level;
-                    levelexitby = 4;
-                    return turn_result_t::exit_map;
-                }
-                return turn_result_t::pc_turn_user_error;
             }
+            ELONA_YES_NO_PROMPT();
+            rtval = show_prompt(promptx, prompty, 160);
+            update_screen();
+            if (rtval == 0)
+            {
+                gdata(60) = cdata[0].position.x;
+                gdata(61) = cdata[0].position.y;
+                snd(49);
+                --gdata_current_dungeon_level;
+                levelexitby = 4;
+                return turn_result_t::exit_map;
+            }
+            return turn_result_t::pc_turn_user_error;
         }
     }
     if (cellfeat != -1)
@@ -3558,7 +3572,7 @@ turn_result_t do_fire_command()
             return turn_result_t::pc_turn_user_error;
         }
     }
-    label_2217();
+    do_ranged_attack();
     return turn_result_t::turn_end;
 }
 
@@ -3835,7 +3849,6 @@ turn_result_t do_exit_command()
             msg_halt();
             update_screen();
         }
-        await(300);
         return turn_result_t::finish_elona;
     }
     if (rtval == 2)

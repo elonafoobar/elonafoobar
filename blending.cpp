@@ -10,10 +10,11 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
-#include "itemgen.hpp"
 #include "item_db.hpp"
+#include "itemgen.hpp"
 #include "macro.hpp"
 #include "map_cell.hpp"
+#include "random.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -904,10 +905,18 @@ label_1928_internal:
     }
     if (p != -1)
     {
-        snd(17);
         ci = p;
+        if (ibit(13, ci))
+        {
+            snd(27);
+            txt(lang(
+                u8"それはあなたの大事なものだ。<調べる>メニューから解除できる。"s,
+                u8"It's set as no-drop. You can reset it from the <examine> menu."s));
+            goto label_1928_internal;
+        }
         rpref(10 + step * 2 + 0) = ci;
         rpref(10 + step * 2 + 1) = inv[ci].id;
+        snd(17);
         txt(lang(
             itemname(ci) + u8"を選んだ。"s,
             u8"You add "s + itemname(ci) + u8"."s));
@@ -1616,11 +1625,8 @@ label_19341_internal:
                 txt(lang(u8" *こねこね* "s, u8"*pug*"s),
                     lang(u8" *トントン* "s, u8"*clank*"s));
             }
-            for (int cnt = 0; cnt < 20; ++cnt)
-            {
-                redraw();
-                await(30);
-            }
+            redraw();
+            await(config::instance().animewait * 5);
             gdata_minute = 0;
             cc = 0;
             --cdata[cc].continuous_action_turn;
@@ -1846,6 +1852,12 @@ void label_1935()
             txt(lang(
                 u8"あっ！空き瓶を井戸に落としてしまった…"s,
                 u8"Ops! You drop the empty bottle into the well..."s));
+            break;
+        }
+        if (inv_getfreeid(0) == -1)
+        {
+            txt(lang(
+                u8"バックパックが一杯だ。"s, u8"Your inventory is full."s));
             break;
         }
         cibk = ci;

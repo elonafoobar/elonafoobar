@@ -7,15 +7,19 @@
 #include "character_status.hpp"
 #include "config.hpp"
 #include "debug.hpp"
+#include "dmgheal.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "event.hpp"
 #include "fov.hpp"
+#include "i18n.hpp"
 #include "item.hpp"
+#include "lua_env/lua_env.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
-#include "status_ailment.hpp"
 #include "quest.hpp"
+#include "random.hpp"
+#include "status_ailment.hpp"
 #include "variables.hpp"
 
 
@@ -65,13 +69,13 @@ void healsp(int cc, int delta)
 int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
 {
     int ele_at_m141 = 0;
-    int c3_at_m141 = 0;
     int r_at_m141 = 0;
     int dmglevel_at_m141 = 0;
     int f_at_m141 = 0;
     int se_at_m141 = 0;
     elona_vector1<int> p_at_m141;
     int exp_at_m141 = 0;
+    int c3_at_m141 = 0;
     elona::prm_853 = prm_853;
     ele_at_m141 = prm_856;
     if (txt3rd == 0)
@@ -154,7 +158,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         if (cdata[prm_853].hp - dmg_at_m141 <= 0)
         {
             if (clamp(
-                    25 + cdata[prm_853].buffs[buff_find(prm_853, 18)].power / 17,
+                    25
+                        + cdata[prm_853].buffs[buff_find(prm_853, 18)].power
+                            / 17,
                     25,
                     80)
                 >= rnd(100))
@@ -446,23 +452,38 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 if (rnd(10) < prm_857 / 75 + 4)
                 {
-                    dmgcon(prm_853, status_ailment_t::blinded, rnd(prm_857 / 3 * 2 + 1));
+                    dmgcon(
+                        prm_853,
+                        status_ailment_t::blinded,
+                        rnd(prm_857 / 3 * 2 + 1));
                 }
                 if (rnd(20) < prm_857 / 50 + 4)
                 {
-                    dmgcon(prm_853, status_ailment_t::paralyzed, rnd(prm_857 / 3 * 2 + 1));
+                    dmgcon(
+                        prm_853,
+                        status_ailment_t::paralyzed,
+                        rnd(prm_857 / 3 * 2 + 1));
                 }
                 if (rnd(20) < prm_857 / 50 + 4)
                 {
-                    dmgcon(prm_853, status_ailment_t::confused, rnd(prm_857 / 3 * 2 + 1));
+                    dmgcon(
+                        prm_853,
+                        status_ailment_t::confused,
+                        rnd(prm_857 / 3 * 2 + 1));
                 }
                 if (rnd(20) < prm_857 / 50 + 4)
                 {
-                    dmgcon(prm_853, status_ailment_t::poisoned, rnd(prm_857 / 3 * 2 + 1));
+                    dmgcon(
+                        prm_853,
+                        status_ailment_t::poisoned,
+                        rnd(prm_857 / 3 * 2 + 1));
                 }
                 if (rnd(20) < prm_857 / 50 + 4)
                 {
-                    dmgcon(prm_853, status_ailment_t::sleep, rnd(prm_857 / 3 * 2 + 1));
+                    dmgcon(
+                        prm_853,
+                        status_ailment_t::sleep,
+                        rnd(prm_857 / 3 * 2 + 1));
                 }
             }
             if (ele_at_m141 == 52)
@@ -568,8 +589,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 {
                     if (mdata(6) != 1)
                     {
-                        int stat = chara_copy(prm_853);
-                        if (stat == 1)
+                        if (chara_copy(prm_853))
                         {
                             txt(lang(
                                 name(prm_853) + u8"は分裂した！"s,
@@ -594,8 +614,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     {
                         if (mdata(6) != 1)
                         {
-                            int stat = chara_copy(prm_853);
-                            if (stat == 1)
+                            if (chara_copy(prm_853))
                             {
                                 txt(lang(
                                     name(prm_853) + u8"は分裂した！"s,
@@ -676,6 +695,12 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             }
         }
     }
+
+    {
+        auto handle = lua::lua.get_handle_manager().get_chara_handle(cdata[prm_853]);
+        lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::character_damaged>(handle, dmg_at_m141);
+    }
+
     if (cdata[prm_853].hp < 0)
     {
         se_at_m141 = eleinfo(ele_at_m141, 1);
@@ -776,8 +801,8 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 }
             }
             ndeathcause = lang(
-                cdatan(0, cc) + u8"に殺された。"s,
-                u8"was killed by "s + cdatan(0, cc));
+                cdatan(0, prm_855) + u8"に殺された。"s,
+                u8"was killed by "s + cdatan(0, prm_855));
         }
         else
         {
@@ -1086,23 +1111,6 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             cell_removechara(
                 cdata[prm_853].position.x, cdata[prm_853].position.y);
         }
-        if (cdata[prm_853].breaks_into_debris())
-        {
-            if (is_in_fov(prm_853))
-            {
-                x = cdata[prm_853].position.x;
-                y = cdata[prm_853].position.y;
-                snd(45, false, false);
-                animeblood(prm_853, 1, ele_at_m141);
-            }
-            spillfrag(cdata[prm_853].position.x, cdata[prm_853].position.y, 3);
-        }
-        else
-        {
-            snd(8 + rnd(2), false, false);
-            animeblood(prm_853, 0, ele_at_m141);
-            spillblood(cdata[prm_853].position.x, cdata[prm_853].position.y, 4);
-        }
         if (cdata[prm_853].character_role == 0)
         {
             cdata[prm_853].state = 0;
@@ -1137,6 +1145,27 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     cdata[prm_853].state = 0;
                 }
             }
+        }
+        if (prm_853 == 0)
+        {
+            cell_draw();
+        }
+        if (cdata[prm_853].breaks_into_debris())
+        {
+            if (is_in_fov(prm_853))
+            {
+                x = cdata[prm_853].position.x;
+                y = cdata[prm_853].position.y;
+                snd(45, false, false);
+                animeblood(prm_853, 1, ele_at_m141);
+            }
+            spillfrag(cdata[prm_853].position.x, cdata[prm_853].position.y, 3);
+        }
+        else
+        {
+            snd(8 + rnd(2), false, false);
+            animeblood(prm_853, 0, ele_at_m141);
+            spillblood(cdata[prm_853].position.x, cdata[prm_853].position.y, 4);
         }
         if (prm_853 == 0)
         {
@@ -1319,7 +1348,12 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     u8"You feel sad for a moment."s));
             }
         }
-        --gdata_other_character_count;
+        if (cdata[prm_853].state == 0)
+        {
+            // Exclude town residents because they occupy character slots even
+            // if they are dead.
+            modify_crowd_density(prm_853, -1);
+        }
         if (gdata_mount)
         {
             if (prm_853 == gdata_mount)
@@ -1396,6 +1430,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             }
         }
         end_dmghp();
+
+        chara_killed(cdata[prm_853]);
+
         return 0;
     }
     end_dmghp();
@@ -1532,4 +1569,4 @@ bool actionsp(int cc, int sp)
 
 
 
-}
+} // namespace elona

@@ -1,10 +1,12 @@
 #pragma once
 
+#include "version.hpp"
+
 
 #define gdata_death_count gdata(0)
 #define gdata_deepest_dungeon_level gdata(1)
 #define gdata_kill_count gdata(2)
-#define gdata_other_character_count gdata(3)
+#define gdata_crowd_density gdata(3)
 #define gdata_play_turns gdata(4)
 #define gdata_pc_home_x gdata(5)
 #define gdata_pc_home_y gdata(6)
@@ -126,3 +128,37 @@
     gdata(827)
 #define gdata_wizard gdata(828)
 #define gdata_lost_wallet_count gdata(851)
+
+
+namespace elona
+{
+
+
+struct foobar_save_t
+{
+    // NOTE: Don't add new fields unless you add them to serialization, which
+    // will break save compatibility.
+    bool is_autodig_enabled{};
+    version_t version;
+
+
+    void initialize();
+
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        // WARNING: Changing this will break save compatibility!
+        ar(is_autodig_enabled);
+    }
+};
+
+
+extern foobar_save_t foobar_save;
+
+
+// TODO: Make gdata class and make this function method.
+void modify_crowd_density(int cc, int delta);
+
+
+} // namespace elona

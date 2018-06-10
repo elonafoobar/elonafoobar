@@ -5,6 +5,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "dmgheal.hpp"
 #include "elona.hpp"
 #include "event.hpp"
 #include "fov.hpp"
@@ -14,6 +15,7 @@
 #include "itemgen.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
+#include "random.hpp"
 #include "status_ailment.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
@@ -490,7 +492,6 @@ void sickifcursed(curse_state_t curse_state, int drinker, int prm_882)
 
 
 
-
 void cook()
 {
     snd(25);
@@ -541,6 +542,7 @@ void cook()
             + u8"を作った。"s,
         u8"You cook "s + s + u8" with "s + itemname(cooktool, 1)
             + u8" and make "s + itemname(ci, 1) + u8"."s));
+    item_stack(0, ci, 1);
     int rank = inv[ci].param2;
     if (rank > 2)
     {
@@ -752,7 +754,10 @@ void apply_general_eating_effect()
         }
         nutrition = 3500;
     }
-    nutrition = nutrition * (100 + inv[ci].param2 * 15) / 100;
+    if (the_item_db[inv[ci].id]->category == 57000)
+    {
+        nutrition = nutrition * (100 + inv[ci].param2 * 15) / 100;
+    }
     for (int cnt = 0, cnt_end = (fdmax); cnt < cnt_end; ++cnt)
     {
         if (fdlist(1, cnt) > 0)
@@ -1338,7 +1343,11 @@ void apply_general_eating_effect()
     {
         if (rnd(10) == 0 || cdata[cc].nutrition >= 12000)
         {
-            modweight(cc, rnd(3) + 1, cdata[cc].nutrition >= 12000);
+            modweight(
+                cc,
+                rnd(3) + 1,
+                cdata[cc].nutrition >= 20000
+                    && rnd(30000 / std::max(1, cdata[cc].nutrition) + 2) == 0);
         }
     }
     if (cdata[cc].id == 261)

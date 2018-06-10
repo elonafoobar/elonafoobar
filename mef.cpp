@@ -2,10 +2,12 @@
 #include "ability.hpp"
 #include "audio.hpp"
 #include "character.hpp"
+#include "dmgheal.hpp"
 #include "event.hpp"
 #include "fov.hpp"
 #include "item.hpp"
 #include "map.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 namespace elona
@@ -208,8 +210,8 @@ void mef_proc(int tc)
                 {
                     snd(46);
                     txt(lang(
-                            name(tc) + u8"は酸に焼かれた。"s,
-                            name(tc) + u8" melt"s + _s(tc) + u8"."s));
+                        name(tc) + u8"は酸に焼かれた。"s,
+                        name(tc) + u8" melt"s + _s(tc) + u8"."s));
                 }
                 if (mef(6, ef) == 0)
                 {
@@ -233,8 +235,8 @@ void mef_proc(int tc)
         {
             snd(6);
             txt(lang(
-                    name(tc) + u8"は燃えた。"s,
-                    name(tc) + u8" "s + is(tc) + u8" burnt."s));
+                name(tc) + u8"は燃えた。"s,
+                name(tc) + u8" "s + is(tc) + u8" burnt."s));
         }
         if (mef(6, ef) == 0)
         {
@@ -243,8 +245,7 @@ void mef_proc(int tc)
                 hostileaction(0, tc);
             }
         }
-        int stat =
-            dmghp(tc, rnd(mef(5, ef) / 15 + 5) + 1, -9, 50, mef(5, ef));
+        int stat = dmghp(tc, rnd(mef(5, ef) / 15 + 5) + 1, -9, 50, mef(5, ef));
         if (stat == 0)
         {
             check_kill(mef(6, ef), tc);
@@ -258,8 +259,8 @@ void mef_proc(int tc)
             {
                 snd(46);
                 txt(lang(
-                        name(tc) + u8"は地面の液体を浴びた。"s,
-                        name(tc) + u8" step"s + _s(tc) + u8" in the pool."s));
+                    name(tc) + u8"は地面の液体を浴びた。"s,
+                    name(tc) + u8" step"s + _s(tc) + u8" in the pool."s));
             }
             wet(tc, 25);
             if (mef(6, ef) == 0)
@@ -300,9 +301,8 @@ bool mef_proc_from_movement(int cc)
                 if (is_in_fov(cc))
                 {
                     txt(lang(
-                            name(cc) + u8"は蜘蛛の巣を振り払った。"s,
-                            name(cc) + u8" destroy"s + _s(cc)
-                            + u8" the cobweb."s));
+                        name(cc) + u8"は蜘蛛の巣を振り払った。"s,
+                        name(cc) + u8" destroy"s + _s(cc) + u8" the cobweb."s));
                 }
                 mef_delete(i);
             }
@@ -312,8 +312,8 @@ bool mef_proc_from_movement(int cc)
                 if (is_in_fov(cc))
                 {
                     txt(lang(
-                            name(cc) + u8"は蜘蛛の巣にひっかかった。"s,
-                            name(cc) + u8" "s + is(cc)
+                        name(cc) + u8"は蜘蛛の巣にひっかかった。"s,
+                        name(cc) + u8" "s + is(cc)
                             + u8" caught in a cobweb."s));
                 }
                 return true;
@@ -338,8 +338,8 @@ bool mef_proc_from_physical_attack(int tc)
             if (is_in_fov(cc))
             {
                 txt(lang(
-                        name(cc) + u8"は霧の中の幻影を攻撃した。"s,
-                        name(cc) + u8" attack"s + _s(cc)
+                    name(cc) + u8"は霧の中の幻影を攻撃した。"s,
+                    name(cc) + u8" attack"s + _s(cc)
                         + u8" an illusion in the mist."s));
             }
             return true;
@@ -355,7 +355,6 @@ void mef_clear_all()
         mef(0, cnt) = 0;
     }
 }
-
 
 
 

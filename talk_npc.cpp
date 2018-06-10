@@ -1,4 +1,3 @@
-#include "talk.hpp"
 #include "ability.hpp"
 #include "adventurer.hpp"
 #include "audio.hpp"
@@ -11,11 +10,13 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "item_db.hpp"
-#include "quest.hpp"
 #include "macro.hpp"
 #include "map_cell.hpp"
 #include "menu.hpp"
+#include "quest.hpp"
+#include "random.hpp"
 #include "shop.hpp"
+#include "talk.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -28,42 +29,30 @@ void talk_wrapper(talk_result_t initial)
 {
     talk_result_t result = initial;
     bool finished = false;
-    while(!finished) {
-        switch(result) {
-        case talk_result_t::talk_npc:
-            result = talk_npc();
-            break;
-        case talk_result_t::talk_unique:
-            result = talk_unique();
-            break;
+    while (!finished)
+    {
+        switch (result)
+        {
+        case talk_result_t::talk_npc: result = talk_npc(); break;
+        case talk_result_t::talk_unique: result = talk_unique(); break;
         case talk_result_t::talk_quest_giver:
             result = talk_quest_giver();
             break;
         case talk_result_t::talk_house_visitor:
             result = talk_house_visitor();
             break;
-        case talk_result_t::talk_sleeping:
-            result = talk_sleeping();
-            break;
-        case talk_result_t::talk_busy:
-            result = talk_busy();
-            break;
+        case talk_result_t::talk_sleeping: result = talk_sleeping(); break;
+        case talk_result_t::talk_busy: result = talk_busy(); break;
         case talk_result_t::talk_finish_escort:
             result = talk_finish_escort();
             break;
-        case talk_result_t::talk_game_begin:
-            result = talk_game_begin();
-            break;
-        case talk_result_t::talk_more:
-            result = talk_more();
-            break;
+        case talk_result_t::talk_game_begin: result = talk_game_begin(); break;
+        case talk_result_t::talk_more: result = talk_more(); break;
         case talk_result_t::talk_end:
             talk_end();
             finished = true;
             break;
-        default:
-            assert(0);
-            break;
+        default: assert(0); break;
         }
     }
 }
@@ -559,25 +548,28 @@ talk_result_t talk_npc()
              && cdata[tc].character_role < 2000)
             || cdata[tc].character_role == 2003)
         {
-            if (cdata[0].karma < -30)
+            if (cdata[0].karma < -30 && cdata[0].is_incognito() == 0)
             {
-                if (gdata_current_map != 14)
+                if (gdata_current_map != 1 && gdata_current_map != 7)
                 {
-                    if (gdata_current_map != 7)
+                    listmax = 0;
+                    if (chatval == 10)
                     {
-                        if (cdata[0].is_incognito() == 0)
-                        {
-                            listmax = 0;
-                            buff = lang(
-                                u8"犯罪者に売る物はない"s + _yo(),
-                                u8"I don't have business with criminals."s);
-                            tc = tc * 1 + 0;
-                            ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
-                            chatesc = 1;
-                            ELONA_TALK_SCENE_CUT();
-                            return talk_result_t::talk_npc;
-                        }
+                        buff = lang(
+                            u8"犯罪者に売る物はない"s + _yo(),
+                            u8"I don't have business with criminals."s);
                     }
+                    else
+                    {
+                        buff = lang(
+                            u8"犯罪者から買う物はない"s + _yo(),
+                            u8"I don't have business with criminals."s);
+                    }
+                    tc = tc * 1 + 0;
+                    ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"more"));
+                    chatesc = 1;
+                    ELONA_TALK_SCENE_CUT();
+                    return talk_result_t::talk_npc;
                 }
             }
         }
@@ -834,7 +826,6 @@ talk_result_t talk_npc()
                 return talk_result_t::talk_npc;
             }
             randomize(adata(24, gdata_current_map));
-            exrand_randomize(adata(24, gdata_current_map));
             for (int cnt = 0; cnt < 50; ++cnt)
             {
                 arenaop(0) = 0;

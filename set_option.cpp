@@ -1,6 +1,8 @@
 #include "audio.hpp"
 #include "config.hpp"
+#include "draw.hpp"
 #include "elona.hpp"
+#include "input.hpp"
 #include "macro.hpp"
 #include "menu.hpp"
 #include "network.hpp"
@@ -176,7 +178,7 @@ std::vector<config_menu> create_config_menu()
     ELONA_CONFIG_ITEM(lang(u8"言語(Language)", u8"Language"));
     ELONA_CONFIG_ITEM(lang(u8"拡張設定(Foobar)", u8"Ex setting(Foobar)"));
 
-    ret.emplace_back(lang(u8"ゲームの設定", u8"Game Setting"), 440, 400);
+    ret.emplace_back(lang(u8"ゲームの設定", u8"Game Setting"), 440, 380);
     ELONA_CONFIG_ITEM_YESNO(
         lang(u8"ノルンの冒険ガイド", u8"Extra Help"),
         config::instance().extrahelp,
@@ -225,10 +227,6 @@ std::vector<config_menu> create_config_menu()
     ELONA_CONFIG_ITEM_INTEGER(
         lang(u8"アラートウェイト", u8"Alert Wait"),
         config::instance().alert,
-        u8"{} wait");
-    ELONA_CONFIG_ITEM_INTEGER(
-        lang(u8"キーウェイト(初回)", u8"Initial Key Wait"),
-        config::instance().initialkeywait,
         u8"{} wait");
     ELONA_CONFIG_ITEM_INTEGER(
         lang(u8"キーウェイト", u8"Key Wait"),
@@ -381,6 +379,11 @@ std::vector<config_menu> create_config_menu()
         lang(u8"有効", u8"On"),
         lang(u8"無効", u8"Off"));
     ELONA_CONFIG_ITEM(lang(u8"入荷頻度", u8"Restock Interval"));
+    ELONA_CONFIG_ITEM_YESNO(
+        lang(u8"ダメージポップアップ", u8"Damage popup"),
+        config::instance().damage_popup,
+        lang(u8"あり", u8"On"),
+        lang(u8"なし", u8"Off"));
 
 #undef ELONA_CONFIG_ITEM
 #undef ELONA_CONFIG_ITEM_YESNO
@@ -402,7 +405,6 @@ namespace elona
 
 int submenu = 0;
 
-
 void set_option()
 {
     int cfg_sound2 = config::instance().sound;
@@ -410,6 +412,33 @@ void set_option()
     int cfg_fullscreen2 = config::instance().fullscreen;
     int windoww2 = windoww;
     int windowh2 = windowh;
+
+    const auto display_modes = snail::application::instance().get_display_modes();
+    std::string default_display_mode = snail::application::instance().get_default_display_mode();
+    std::vector<std::string> display_mode_names;
+    std::string cfg_display_mode = config::instance().display_mode;
+
+    int display_mode_index = -1;
+    int index = 0;
+    int default_index = 0;
+
+    for(const auto pair : display_modes) {
+        display_mode_names.emplace_back(pair.first);
+        if (pair.first == cfg_display_mode)
+        {
+            display_mode_index = index;
+        }
+        else if (pair.first == default_display_mode)
+        {
+            default_index = index;
+        }
+        index++;
+    }
+    if (display_mode_index == -1 || config::instance().display_mode == "")
+    {
+        cfg_display_mode = default_display_mode;
+        display_mode_index = default_index;
+    }
 
     const auto config_menu_definitions = create_config_menu();
 
@@ -676,11 +705,12 @@ void set_option()
                 {
                     s(0) = lang(u8"ウィンドウ"s, u8"Window mode"s);
                     s(1) = lang(u8"フルスクリーン"s, u8"Full screen"s);
+                    s(2) = lang(u8"フルスクリーン2"s, u8"Desktop fullscr"s);
                     mes(s(cfg_fullscreen2));
                 }
                 if (cnt == 3)
                 {
-                    mes(""s + windoww2 + u8" * "s + windowh2);
+                    mes(cfg_display_mode);
                 }
             }
             else if (submenu == 5)
@@ -714,7 +744,8 @@ void set_option()
                     const auto value = config::instance().restock_interval;
                     if (value)
                     {
-                        mes(std::to_string(value) + lang(u8"日", u8" day" + _s2(value)));
+                        mes(std::to_string(value)
+                            + lang(u8"日", u8" day" + _s2(value)));
                     }
                     else
                     {
@@ -1033,30 +1064,14 @@ void set_option()
                 }
                 if (cs == 11)
                 {
-                    config::instance().initialkeywait += p;
-                    if (config::instance().initialkeywait > 20)
-                    {
-                        config::instance().initialkeywait = 20;
-                    }
-                    else if (config::instance().initialkeywait < 0)
-                    {
-                        config::instance().initialkeywait = 0;
-                    }
-                    snd(20);
-                    set_config(u8"initialKeyWait", config::instance().initialkeywait);
-                    reset_page = true;
-                    continue;
-                }
-                if (cs == 12)
-                {
                     config::instance().keywait += p;
-                    if (config::instance().keywait > 20)
+                    if (config::instance().keywait > 10)
                     {
-                        config::instance().keywait = 20;
+                        config::instance().keywait = 10;
                     }
-                    else if (config::instance().keywait < 0)
+                    else if (config::instance().keywait < 1)
                     {
-                        config::instance().keywait = 0;
+                        config::instance().keywait = 1;
                     }
                     snd(20);
                     set_config(u8"keyWait", config::instance().keywait);
@@ -1101,9 +1116,9 @@ void set_option()
                 if (cs == 2)
                 {
                     cfg_fullscreen2 += p;
-                    if (cfg_fullscreen2 > 1)
+                    if (cfg_fullscreen2 > 2)
                     {
-                        cfg_fullscreen2 = 1;
+                        cfg_fullscreen2 = 2;
                     }
                     else if (cfg_fullscreen2 < 0)
                     {
@@ -1230,43 +1245,20 @@ void set_option()
                 }
                 if (cs == 3)
                 {
-                    x(0) = 800;
-                    x(1) = 800;
-                    x(2) = 1024;
-                    x(3) = 1152;
-                    x(4) = 1280;
-                    x(5) = 1280;
-                    y(0) = 600;
-                    y(1) = 696;
-                    y(2) = 768;
-                    y(3) = 864;
-                    y(4) = 768;
-                    y(5) = 1024;
-                    i = 0;
-                    for (int cnt = 0; cnt < 5; ++cnt)
+                    display_mode_index += p;
+                    if (display_mode_index < 0)
                     {
-                        if (windoww2 == x(cnt))
-                        {
-                            if (windowh2 == y(cnt))
-                            {
-                                i = cnt;
-                                break;
-                            }
-                        }
+                        display_mode_index = 0;
                     }
-                    i += p;
-                    if (i < 0)
+                    else if (display_mode_index > static_cast<int>(display_mode_names.size()) - 1)
                     {
-                        i = 0;
+                        display_mode_index = static_cast<int>(display_mode_names.size()) - 1;
                     }
-                    else if (i > 4)
-                    {
-                        i = 4;
-                    }
-                    windoww2 = x(i);
-                    windowh2 = y(i);
-                    set_config(u8"windowW", windoww2);
-                    set_config(u8"windowH", windowh2);
+                    cfg_display_mode = display_mode_names[display_mode_index];
+                    auto display_mode = display_modes.at(cfg_display_mode);
+                    windoww2 = display_mode.w;
+                    windowh2 = display_mode.h;
+                    set_config(u8"display_mode", cfg_display_mode);
                     snd(20);
                     reset_page = true;
                     continue;
@@ -1582,7 +1574,30 @@ void set_option()
                         config::instance().restock_interval = 0;
                     }
                     snd(20);
-                    set_config(u8"restock_interval", config::instance().restock_interval);
+                    set_config(
+                        u8"restock_interval",
+                        config::instance().restock_interval);
+                    reset_page = true;
+                    continue;
+                }
+                if (cs == 5)
+                {
+                    config::instance().damage_popup += p;
+                    if (config::instance().damage_popup > 1)
+                    {
+                        config::instance().damage_popup = 1;
+                    }
+                    else if (config::instance().damage_popup < 0)
+                    {
+                        config::instance().damage_popup = 0;
+                    }
+                    snd(20);
+                    set_config(
+                        u8"damage_popup", config::instance().damage_popup);
+                    if (!config::instance().damage_popup)
+                    {
+                        clear_damage_popups();
+                    }
                     reset_page = true;
                     continue;
                 }
@@ -1596,7 +1611,7 @@ void set_option()
                 set_option();
                 return;
             }
-            load_config();
+            load_config(filesystem::dir::exe() / u8"config.json");
             if (mode == 0)
             {
                 if (config::instance().net)
@@ -1604,7 +1619,6 @@ void set_option()
                     initialize_server_info();
                 }
             }
-            snail::input::instance().set_key_repeat(config::instance().initialkeywait, config::instance().keywait);
             return;
         }
     }

@@ -18,6 +18,7 @@
 #include "menu.hpp"
 #include "network.hpp"
 #include "quest.hpp"
+#include "random.hpp"
 #include "trait.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -1212,7 +1213,8 @@ turn_result_t play_scene()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{lang(u8"scene1.hsp"s, u8"scene2.hsp"s),
+        std::string scene_file = lang(u8"scene1.hsp", u8"scene2.hsp");
+        std::ifstream in{(filesystem::dir::data() / scene_file).native(),
                          std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -1367,8 +1369,8 @@ turn_result_t show_spell_list()
         if (spell(cnt) > 0)
         {
             list(0, listmax) = cnt + 400;
-            list(1, listmax) =
-                the_ability_db[400 + cnt]->related_basic_attribute; // TODO coupling
+            list(1, listmax) = the_ability_db[400 + cnt]
+                                   ->related_basic_attribute; // TODO coupling
             ++listmax;
         }
     }
@@ -2086,7 +2088,7 @@ void label_2032()
 
 menu_result menu_character_sheet()
 {
-    menu_result result = { false, false, turn_result_t::none };
+    menu_result result = {false, false, turn_result_t::none};
     int cs_buff = 0;
     int returnfromportrait = 0;
     int cs_buffmax = 0;
@@ -2319,6 +2321,7 @@ label_2034_internal:
                 + lang(u8"スキルトラック"s, u8"Track Skill"s) + u8"]"s;
         }
     }
+    color(0, 0, 0);
     showtitle(s, s, 236, 1);
 label_2035_internal:
     s = "";
@@ -3037,7 +3040,7 @@ label_2035_internal:
 
 menu_result menu_equipment()
 {
-    menu_result result = { false, false, turn_result_t::none };
+    menu_result result = {false, false, turn_result_t::none};
     int cs_prev = 0;
     int mainhand = 0;
     cc = 0;
@@ -3372,7 +3375,7 @@ label_2052_internal:
 
 menu_result menu_materials()
 {
-    menu_result result = { false, false, turn_result_t::none };
+    menu_result result = {false, false, turn_result_t::none};
     listmax = 0;
     page = 0;
     pagesize = 15;
@@ -4280,7 +4283,7 @@ void deco_traits_menu()
 
 menu_result menu_feats_internal()
 {
-    menu_result result = { false, false, turn_result_t::none };
+    menu_result result = {false, false, turn_result_t::none};
     int featrq = 0;
 label_196901_internal:
     listmax = 0;
@@ -4482,7 +4485,7 @@ label_196901_internal:
             list(0, listmax) = 1;
             list(1, listmax) = 99999;
             listn(0, listmax) = lang(u8"[その他]"s, u8"[ETC]"s)
-                + lang(u8"あなたのエーテル病の進行は早い。"s,
+                + lang(u8"あなたのエーテル病の進行は早い"s,
                        u8"Your Ether disease grows fast."s);
             ++listmax;
         }
@@ -4491,7 +4494,7 @@ label_196901_internal:
             list(0, listmax) = 1;
             list(1, listmax) = 99999;
             listn(0, listmax) = lang(u8"[その他]"s, u8"[ETC]"s)
-                + lang(u8"あなたのエーテル病の進行は遅い。"s,
+                + lang(u8"あなたのエーテル病の進行は遅い"s,
                        u8"Your Ether disease grows slow."s);
             ++listmax;
         }
@@ -4502,42 +4505,38 @@ label_196901_internal:
         result.succeeded = false;
         return result;
     }
-    xnotesel(buff);
-    buff = "";
+    std::vector<std::string> traits_by_enchantments;
     for (int i = 0; i < 30; ++i)
     {
         if (cdata_body_part(tc, i) % 10000 != 0)
         {
             ci = cdata_body_part(tc, i) % 10000 - 1;
-            int cnt = 0;
-            for (int cnt_end = cnt + (15); cnt < cnt_end; ++cnt)
+            for (const auto& enc : inv[ci].enchantments)
             {
-                if (inv[ci].enchantments[cnt].id == 0)
-                {
+                if (enc.id == 0)
                     break;
-                }
-                get_enchantment_description(
-                    inv[ci].enchantments[cnt].id,
-                    inv[ci].enchantments[cnt].power,
-                    0,
-                    true);
-                if (s == ""s)
+                get_enchantment_description(enc.id, enc.power, 0, true);
+                if (!s(0).empty())
                 {
-                    continue;
+                    traits_by_enchantments.push_back(s);
                 }
-                xnoteadd(s);
             }
         }
     }
-    notesel(buff);
-    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
+    std::sort(
+        std::begin(traits_by_enchantments), std::end(traits_by_enchantments));
+    traits_by_enchantments.erase(
+        std::unique(
+            std::begin(traits_by_enchantments),
+            std::end(traits_by_enchantments)),
+        std::end(traits_by_enchantments));
+    for (const auto& trait : traits_by_enchantments)
     {
-        noteget(s, cnt);
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
         listn(0, listmax) =
             lang(his(tc, 1) + u8"装備は"s, cnven(his(tc, 1)) + u8" equipment "s)
-            + s;
+            + trait;
         ++listmax;
     }
     if (tc != 0)
@@ -4546,12 +4545,15 @@ label_196901_internal:
         {
             if (jp)
             {
-                listn(0, cnt) = strutil::replace(listn(0, cnt), u8"あなた", he(tc, 1));
+                listn(0, cnt) =
+                    strutil::replace(listn(0, cnt), u8"あなた", he(tc, 1));
             }
             if (en)
             {
-                listn(0, cnt) = strutil::replace(listn(0, cnt), u8" your", his(tc, 1));
-                listn(0, cnt) = strutil::replace(listn(0, cnt), u8" you", him(tc, 1));
+                listn(0, cnt) =
+                    strutil::replace(listn(0, cnt), u8" your", his(tc, 1));
+                listn(0, cnt) =
+                    strutil::replace(listn(0, cnt), u8" you", him(tc, 1));
             }
         }
     }
@@ -4679,11 +4681,7 @@ label_1970_internal:
         i = list(0, p);
         if (i < 0)
         {
-            cs_list(
-                cs == cnt,
-                listn(0, p),
-                wx + 114,
-                wy + 66 + cnt * 19 - 1);
+            cs_list(cs == cnt, listn(0, p), wx + 114, wy + 66 + cnt * 19 - 1);
             continue;
         }
         int text_color{};
@@ -4720,15 +4718,9 @@ label_1970_internal:
         gcopy(3, 384 + traitref * 24, 336, 24, 24);
         switch (text_color)
         {
-        case 0:
-            color(10, 10, 10);
-            break;
-        case 1:
-            color(0, 0, 200);
-            break;
-        case 2:
-            color(200, 0, 0);
-            break;
+        case 0: color(10, 10, 10); break;
+        case 1: color(0, 0, 200); break;
+        case 2: color(200, 0, 0); break;
         }
         cs_list(cs == cnt, listn(0, p), wx + x, wy + 66 + cnt * 19 - 1, 0, -1);
         color(0, 0, 0);
@@ -4737,15 +4729,9 @@ label_1970_internal:
             pos(wx + 270, wy + 66 + cnt * 19 + 2);
             switch (text_color)
             {
-            case 0:
-                color(10, 10, 10);
-                break;
-            case 1:
-                color(0, 0, 200);
-                break;
-            case 2:
-                color(200, 0, 0);
-                break;
+            case 0: color(10, 10, 10); break;
+            case 1: color(0, 0, 200); break;
+            case 2: color(200, 0, 0); break;
             }
             mes(traitrefn(2));
             color(0, 0, 0);
@@ -4928,7 +4914,7 @@ label_1970_internal:
 menu_result menu_journal()
 {
 
-    menu_result result = { false, false, turn_result_t::none };
+    menu_result result = {false, false, turn_result_t::none};
     curmenu = 1;
     page = 99;
     pagesize = 40;
@@ -5424,7 +5410,7 @@ label_1978_internal:
         else
         {
             pos(wx + 270, y + 2);
-            mes(lang(u8"★?"s, u8"$ x "s) + p);
+            mes(lang(u8"★×"s, u8"$ x "s) + p);
         }
         color(0, 0, 0);
         font(13 - en * 2);
@@ -5450,15 +5436,18 @@ label_1978_internal:
         {
             goto label_1977_internal;
         }
-        // TODO move the below somewhere else to decouple questteleport
+        // TODO move the below somewhere else to decouple quest_teleport
         tc = qdata(0, p);
         rq = p;
         client = tc;
         efid = 619;
         magic();
         tc = client;
-        questteleport = 1;
-        talk_to_npc();
+        if (cdata[0].state == 1)
+        {
+            quest_teleport = true;
+            talk_to_npc();
+        }
         if (chatteleport == 1)
         {
             chatteleport = 0;
@@ -6782,7 +6771,8 @@ int ctrl_ally()
         }
         if (allyctrl != 1)
         {
-            if (cdata[cnt].is_escorted() == 1)
+            if (cdata[cnt].is_escorted()
+                || cdata[cnt].is_escorted_in_sub_quest())
             {
                 continue;
             }
@@ -7559,4 +7549,4 @@ label_2024_internal:
     goto label_2024_internal;
 }
 
-}
+} // namespace elona

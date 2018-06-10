@@ -3,11 +3,13 @@
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
-#include "draw.hpp"
 #include "config.hpp"
+#include "draw.hpp"
+#include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "macro.hpp"
+#include "random.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -1187,7 +1189,7 @@ label_1857_internal:
                 {
                     break;
                 }
-                s = matname(j0) + lang(u8" ? "s, u8" x "s) + j1 + u8"("s
+                s = matname(j0) + lang(u8" × "s, u8" x "s) + j1 + u8"("s
                     + mat(j0) + u8")"s;
                 if (mat(j0) >= j1)
                 {
@@ -1278,10 +1280,12 @@ label_1857_internal:
             fixlv = 3;
         }
         flt(calcobjlv(sdata(matval, 0)), calcfixlv(fixlv));
+        nostack = 1;
         itemcreate(0, p, -1, -1, 0);
         txt(lang(
             itemname(ci, 1) + u8"を製造した。"s,
             u8"You producted "s + itemname(ci, 1) + u8"."s));
+        item_stack(0, ci, 0);
         r2 = matuse;
         gain_crafting_experience(matval);
         chara_refresh(0);

@@ -26,7 +26,7 @@ void talk_window_init();
 void talk_window_show();
 void talk_window_query();
 int talk_check_trade(int = 0);
-int talk_guide_quest_client(int = 0);
+int talk_guide_quest_client();
 
 talk_result_t talk_more();
 talk_result_t talk_sleeping();
@@ -44,4 +44,4 @@ void talk_wrapper(talk_result_t);
 talk_result_t talk_npc();
 talk_result_t talk_unique();
 
-}
+} // namespace elona

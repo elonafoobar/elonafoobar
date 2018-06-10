@@ -1,0 +1,14 @@
+--- Various iterators.
+-- @usage local Iter = Elona.require("Iter")
+
+module "Iter"
+
+--- Iterates over positions in a rectangle.
+-- @tparam num x starting x position
+-- @tparam num y starting y position
+-- @tparam num sx ending x position
+-- @tparam num sy ending y position
+-- @usage for pos in Iter.rectangle_iter(10, 10, 20, 20) do
+--     Item.create(pos.x, pos.y, 792, 1)
+-- end
+function rectangle_iter(x, y, sx, sy) end

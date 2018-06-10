@@ -1,0 +1,11 @@
+--- Functions for working with the state of the game world.
+--  @usage local World = Elona.require("World")
+module "World"
+
+--- Returns the time in hours since year 0.
+-- @treturn num the time in hours
+function time() end
+
+--- Returns true if the player is in an overworld map.
+-- @treturn bool true if the player is in the overworld
+function is_in_overworld() end

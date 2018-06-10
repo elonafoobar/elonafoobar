@@ -4,6 +4,7 @@
 #include "character.hpp"
 #include "config.hpp"
 #include "fov.hpp"
+#include "random.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
 
@@ -353,7 +354,6 @@ void update_required_experience(int cc)
         cdata[cc].required_experience = 100000000;
     }
 }
-
 
 
 

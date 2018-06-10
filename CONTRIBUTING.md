@@ -29,13 +29,23 @@ If your changes are big or you need help, you can send a pull request with prefi
 
 In all commits, the C++ source code should be formatted by `clang-format`.
 
+## Lua API features
+
+1. Create a binding in `lua_api.cpp` inside the appropriate namespace.
+  - Add overrides for functions taking `position_t` so two `int`s can be passed instead.
+2. Set the binding on the correct table in `lua::init()`.
+3. Update `.luacheckrc` with the new table value.
+4. Add LDoc documentation in `doc/api`.
+5. Add tests inside `tests/lua_api.cpp`.
+6. Provide a playtest script demonstrating the API in the pull request.
 
 
 # Branching rules
 
 We use Git flow. See http://nvie.com/posts/a-successful-git-branching-model/ for details, and we recommend this tool: https://github.com/nvie/gitflow.
 
-
+# Code style
+See [CODE_STYLE.md](CODE_STYLE.md).
 
 # Commit messages
 

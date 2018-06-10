@@ -8,6 +8,7 @@
 #include "config.hpp"
 #include "ctrl_file.hpp"
 #include "debug.hpp"
+#include "dmgheal.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
 #include "food.hpp"
@@ -23,6 +24,7 @@
 #include "mef.hpp"
 #include "menu.hpp"
 #include "quest.hpp"
+#include "random.hpp"
 #include "status_ailment.hpp"
 #include "trait.hpp"
 #include "ui.hpp"
@@ -182,10 +184,10 @@ int magic()
             }
             if (rapidmagic)
             {
-                efp = efp / 2 + 1;
-                dice1 = dice1 / 2 + 1;
-                dice2 = dice2 / 2 + 1;
-                bonus = bonus / 2 + 1;
+                elep = elep * 4 / 5 + 1;
+                dice1 = dice1 * 4 / 5 + 1;
+                dice2 = dice2 * 4 / 5 + 1;
+                bonus = bonus * 4 / 5 + 1;
             }
             switch (the_ability_db[efid]->sdataref1)
             {
@@ -651,6 +653,15 @@ int magic()
                         }
                     }
                 }
+                else if (efid == 660)
+                {
+                    if (is_in_fov(cc))
+                    {
+                        txt(lang(
+                            u8"「余分な機能は削除してしまえ」"s,
+                            u8"\"Delete.\""s));
+                    }
+                }
                 else if (is_in_fov(cc))
                 {
                     if (tc >= 16)
@@ -684,8 +695,6 @@ int magic()
                 }
                 if (efid == 660)
                 {
-                    txt(lang(
-                        u8"「余分な機能は削除してしまえ」"s, u8"\"Delete.\""s));
                     cdata[tc].hp = cdata[tc].max_hp / 12 + 1;
                     goto the_end;
                 }
@@ -722,7 +731,7 @@ int magic()
                     if (p != -1)
                     {
                         i = sdata.get(10 + p, tc).original_level
-                            - cdata[tc].attr_adjs[p];
+                            + cdata[tc].attr_adjs[p];
                         if (i > 0)
                         {
                             i = i * efp / 2000 + 1;
@@ -742,8 +751,7 @@ int magic()
             case 7:
                 if (cc == 0)
                 {
-                    if (gdata_other_character_count + 100
-                        >= ELONA_MAX_OTHER_CHARACTERS)
+                    if (gdata_crowd_density + 100 >= ELONA_MAX_OTHER_CHARACTERS)
                     {
                         txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
                         obvious = 0;
@@ -804,9 +812,9 @@ int magic()
                     {
                         dbid = 176;
                     }
-                    chara_create(
+                    const auto success = chara_create(
                         -1, dbid, cdata[tc].position.x, cdata[tc].position.y);
-                    if (efid != 643)
+                    if (success && efid != 643)
                     {
                         if (cdata[rc].id == cdata[cc].id)
                         {
@@ -841,6 +849,10 @@ int magic()
                     telex = cdata[tc].position.x;
                     teley = cdata[tc].position.y;
                     tc = cc;
+                    if (gdata_mount != 0 && gdata_mount == tc)
+                    {
+                        goto the_end;
+                    }
                 }
                 if (efid == 620)
                 {
@@ -868,7 +880,7 @@ int magic()
                     }
                     goto the_end;
                 }
-                if (efid != 619 && encfind(tc, 22) != -1)
+                if (efid != 619 && efid != 635 && encfind(tc, 22) != -1)
                 {
                     if (is_in_fov(tc))
                     {
@@ -880,7 +892,7 @@ int magic()
                 }
                 if (efid == 635)
                 {
-                    if (tc == cc)
+                    if (encfind(cc, 22) != -1)
                     {
                         if (is_in_fov(tc))
                         {
@@ -1263,7 +1275,7 @@ label_2181_internal:
         pos(wx, wy);
         gcopy(4, 400, 0, ww, wh);
         redraw();
-        press();
+        wait_key_pressed();
         snd(71);
         break;
     case 1135:
@@ -2186,7 +2198,7 @@ label_2181_internal:
             }
             rc = stat;
         }
-        label_1538();
+        do_chara_revival();
         cxinit = cdata[cc].position.x;
         cyinit = cdata[cc].position.y;
         chara_place();
@@ -3481,7 +3493,10 @@ label_2181_internal:
         snd(100);
         {
             menu_result result = ctrl_inventory();
-            f = result.succeeded ? 1 : 0;
+            if (!result.succeeded)
+            {
+                break;
+            }
         }
         if (inv[ci].quality >= 4 || ibit(10, ci) == 1)
         {
@@ -3508,7 +3523,8 @@ label_2181_internal:
             enchantment_add(
                 ci,
                 enchantment_generate(enchantment_gen_level(egolv)),
-                enchantment_gen_p() + (fixlv == 5) * 100 + (ibit(15, ci) == 1) * 100,
+                enchantment_gen_p() + (fixlv == 5) * 100
+                    + (ibit(15, ci) == 1) * 100,
                 20 - (fixlv == 5) * 10 - (ibit(15, ci) == 1) * 20);
         }
         randomize();
@@ -3840,7 +3856,7 @@ label_2181_internal:
                     u8"You destroy "s + itemname(ci) + u8" and extract "s + p
                         + u8" recharge powers. (Total:"s + gdata_charge_power
                         + u8")"s));
-                inv[ci].number = 0;
+                item_remove(inv[ci]);
                 refresh_burden_state();
             }
         }
@@ -3989,7 +4005,7 @@ label_2181_internal:
             animeload(8, cc);
             fltbk = the_item_db[inv[ci].id]->category;
             valuebk = calcitemvalue(ci, 0);
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             for (int cnt = 0;; ++cnt)
             {
                 flt(calcobjlv(efp / 10) + 5, calcfixlv(3));
@@ -4004,7 +4020,7 @@ label_2181_internal:
                 }
                 if (inv[ci].value > valuebk * 3 / 2 + 1000)
                 {
-                    inv[ci].number = 0;
+                    item_remove(inv[ci]);
                     continue;
                 }
                 else
@@ -4118,7 +4134,7 @@ label_2181_internal:
             {
                 continue;
             }
-            if (cnt <= 16)
+            if (belong_to_same_team(cdata[cc], cdata[cnt]))
             {
                 continue;
             }
@@ -4387,6 +4403,16 @@ label_2181_internal:
                 }
             }
         }
+        if (efid == 638)
+        {
+            if (is_in_fov(tc))
+            {
+                txt(lang(
+                    name(cc) + u8"は"s + name(tc) + u8"を睨み付けた。"s,
+                    name(cc) + u8" gaze"s + _s(cc) + u8" at "s + name(tc)
+                        + u8"."s));
+            }
+        }
         dmgcon(tc, status_ailment_t::dimmed, 200);
         break;
     case 652:
@@ -4489,41 +4515,56 @@ label_2181_internal:
         refresh_burden_state();
         break;
     case 464:
+    {
+        bool fastest = config::instance().animewait == 0;
+        std::string messages;
+
         animeload(10, tc);
-        for (int cnt = 0,
-                 cnt_end = cnt + (clamp(4 + rnd((efp / 50 + 1)), 1, 15));
-             cnt < cnt_end;
-             ++cnt)
+        for (int i = 0; i < clamp(4 + rnd(efp / 50 + 1), 1, 15); ++i)
         {
             snd(64);
             flt(calcobjlv(efp / 10), calcfixlv(3));
-            dbid = 0;
             dbid = 54;
-            p = 400 + rnd(efp);
+            int number = 400 + rnd(efp);
             if (rnd(30) == 0)
             {
                 dbid = 55;
-                p = 1;
+                number = 1;
             }
             if (rnd(80) == 0)
             {
                 dbid = 622;
-                p = 1;
+                number = 1;
             }
             if (rnd(2000) == 0)
             {
                 dbid = 290;
-                p = 1;
+                number = 1;
             }
             nostack = 1;
-            itemcreate(-1, dbid, cdata[cc].position.x, cdata[cc].position.y, p);
-            txt(lang(
+            itemcreate(
+                -1, dbid, cdata[cc].position.x, cdata[cc].position.y, number);
+            const auto message = lang(
                 itemname(ci) + u8"が降ってきた！"s,
-                itemname(ci) + u8" fall"s + _s2(inv[ci].number) + u8" down!"s));
-            await(100);
+                itemname(ci) + u8" fall"s + _s2(inv[ci].number) + u8" down!"s);
+            if (fastest)
+            {
+                messages += message;
+            }
+            else
+            {
+                txt(message);
+                await(config::instance().animewait * 4);
+                redraw();
+            }
+        }
+        if (fastest)
+        {
+            txt(messages);
             redraw();
         }
         break;
+    }
     case 463:
         snd(72);
         txt(lang(
@@ -4540,7 +4581,7 @@ label_2181_internal:
         {
             for (const auto& cnt : items(-1))
             {
-                inv[cnt].number = 0;
+                item_remove(inv[cnt]);
             }
         }
         shoptrade = 0;

@@ -5,6 +5,7 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "debug.hpp"
+#include "dmgheal.hpp"
 #include "event.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
@@ -14,6 +15,7 @@
 #include "map_cell.hpp"
 #include "network.hpp"
 #include "optional.hpp"
+#include "random.hpp"
 #include "variables.hpp"
 
 
@@ -392,11 +394,18 @@ bool grant_special_wishing(const std::string& wish)
         flt();
         itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 5);
     }
-    else if (wish == u8"名声" || wish == u8"fame")
+    else if (gdata_wizard)
     {
-        txtef(5);
-        txt(u8"fame +1,000,000");
-        cdata[0].fame += 1'000'000;
+        if (wish == u8"名声" || wish == u8"fame")
+        {
+            txtef(5);
+            txt(u8"fame +1,000,000");
+            cdata[0].fame += 1'000'000;
+        }
+        else
+        {
+            return false; // No match
+        }
     }
     else
     {
@@ -506,7 +515,7 @@ bool wish_for_item(const std::string& input)
             {
                 // Remove this item and retry.
                 selector.remove(id);
-                inv[ci].number = 0;
+                item_remove(inv[ci]);
                 --itemmemory(1, inv[ci].id);
                 cell_refresh(inv[ci].position.x, inv[ci].position.y);
                 continue;
@@ -523,7 +532,7 @@ bool wish_for_item(const std::string& input)
         }
         else if (inv[ci].id == 602)
         {
-            inv[ci].number = 0;
+            item_remove(inv[ci]);
             flt();
             itemcreate(-1, 516, cdata[cc].position.x, cdata[cc].position.y, 3);
             inv[ci].curse_state = curse_state_t::blessed;
@@ -533,14 +542,6 @@ bool wish_for_item(const std::string& input)
             || the_item_db[inv[ci].id]->category == 53000)
         {
             inv[ci].number = 3 + rnd(2);
-            switch (inv[ci].id)
-            {
-            case 559: inv[ci].number = 2 + rnd(2); break;
-            case 502: inv[ci].number = 2; break;
-            case 243: inv[ci].number = 1; break;
-            case 621: inv[ci].number = 1; break;
-            case 706: inv[ci].number = 1; break;
-            }
             if (inv[ci].value >= 20000)
             {
                 inv[ci].number = 1;
@@ -552,6 +553,14 @@ bool wish_for_item(const std::string& input)
             else if (inv[ci].value >= 5000)
             {
                 inv[ci].number = 3;
+            }
+            switch (inv[ci].id)
+            {
+            case 559: inv[ci].number = 2 + rnd(2); break;
+            case 502: inv[ci].number = 2; break;
+            case 243: inv[ci].number = 1; break;
+            case 621: inv[ci].number = 1; break;
+            case 706: inv[ci].number = 1; break;
             }
         }
         if (debug::voldemort && number_of_items != 0)

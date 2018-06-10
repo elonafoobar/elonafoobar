@@ -9,6 +9,7 @@
 #include "item.hpp"
 #include "item_db.hpp"
 #include "map.hpp"
+#include "random.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -107,7 +108,7 @@ void play_animation_6_5_7_11(int animeid, int anicol)
     {
         if (animeid == 11)
         {
-            await(5);
+            await(config::instance().animewait / 4);
         }
         else
         {
@@ -171,7 +172,11 @@ void play_animation_3(int anicol, int anisound)
                     pos((anidx - scx) * inf_tiles + inf_screenx + inf_tiles / 2,
                         (anidy - scy) * inf_tiles + inf_screeny + 16);
                     gmode(2, inf_tiles, inf_tiles);
-                    set_color_mod(255 - c_col(0, anicol), 255 - c_col(1, anicol), 255 - c_col(2, anicol), 7);
+                    set_color_mod(
+                        255 - c_col(0, anicol),
+                        255 - c_col(1, anicol),
+                        255 - c_col(2, anicol),
+                        7);
                     grotate(
                         7,
                         cnt2 * 48,
@@ -253,7 +258,11 @@ void play_animation_17_2(int animeid, int anicol, int anisound)
                         pos(sx * inf_tiles + inf_screenx,
                             sy * inf_tiles + inf_screeny);
                         gmode(2, 48, 48);
-                        set_color_mod(255 - c_col(0, anicol), 255 - c_col(1, anicol), 255 - c_col(2, anicol), 7);
+                        set_color_mod(
+                            255 - c_col(0, anicol),
+                            255 - c_col(1, anicol),
+                            255 - c_col(2, anicol),
+                            7);
                         gcopy(7, anip * 48, 96, 48, 48);
                         set_color_mod(255, 255, 255, 7);
                     }
@@ -360,7 +369,11 @@ void play_animation_0(int anicol, int anisound)
                     {
                         pos(ax(cnt), ay(cnt));
                         gmode(2, inf_tiles, inf_tiles);
-                        set_color_mod(255 - c_col(0, anicol), 255 - c_col(1, anicol), 255 - c_col(2, anicol), 7);
+                        set_color_mod(
+                            255 - c_col(0, anicol),
+                            255 - c_col(1, anicol),
+                            255 - c_col(2, anicol),
+                            7);
                         grotate(
                             7,
                             ap(cnt) * 48,
@@ -376,7 +389,7 @@ void play_animation_0(int anicol, int anisound)
             }
             ++ap(cnt);
         }
-        await(config::instance().animewait + 15);
+        await(config::instance().animewait * 1.75);
         redraw();
     }
     if (anisound)
@@ -480,7 +493,7 @@ void play_animation_ranged_attack(int animeid, int anicol, int anisound)
         snd(36);
     }
     ax = (cdata[cc].position.x - scx) * inf_tiles;
-    ay = (cdata[cc].position.y - scy) * inf_tiles - 12;
+    ay = (cdata[cc].position.y - scy) * inf_tiles + inf_screeny + 8;
     ap = dist(
              cdata[cc].position.x,
              cdata[cc].position.y,
@@ -677,7 +690,7 @@ void play_animation_20()
             pos(anidx, anidy - cnt * 96);
             gcopy(7, cnt2 / 2 * 96, (cnt == 0) * 96, 96, 96);
         }
-        await(config::instance().animewait + 25);
+        await(config::instance().animewait * 2.25);
         redraw();
     }
 }
@@ -803,7 +816,7 @@ void play_animation_19()
         {
             break;
         }
-        await(config::instance().animewait + 25);
+        await(config::instance().animewait * 2.25);
         redraw();
     }
 }
@@ -878,7 +891,7 @@ void play_animation_22()
         {
             break;
         }
-        await(config::instance().animewait + 40);
+        await(config::instance().animewait * 3);
         redraw();
     }
     await(config::instance().animewait);
@@ -951,7 +964,7 @@ void play_animation_21()
         {
             break;
         }
-        await(config::instance().animewait + 40);
+        await(config::instance().animewait * 3);
         redraw();
     }
     await(config::instance().animewait);
