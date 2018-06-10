@@ -427,6 +427,14 @@ void initialize_elona()
     redraw();
     buffer(3, 1440, 800);
     picload(filesystem::dir::graphic() / u8"interface.bmp", 1);
+
+    pos(0, 656);
+    picload(filesystem::dir::graphic() / u8"interface_ex1.png", 1);
+    pos(144, 656);
+    picload(filesystem::dir::graphic() / u8"interface_ex2.png", 1);
+    pos(144, 752);
+    picload(filesystem::dir::graphic() / u8"interface_ex3.png", 1);
+
     buffer(4, windoww, windowh);
     buffer(8, windoww, windowh);
     gsel(0);
