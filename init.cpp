@@ -100,7 +100,7 @@ void backup_config_files()
         if (!fs::exists(to_path))
         {
             if (!fs::exists(from_path)) {
-                throw new std::runtime_error("Original config file " + from_path.string() + " didn't exist.");
+                throw std::runtime_error("Original config file " + from_path.string() + " didn't exist.");
             }
             fs::copy_file(from_path, to_path);
         }

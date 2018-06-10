@@ -1026,7 +1026,7 @@ snail::window::fullscreen_mode_t config_get_fullscreen_mode()
     case 0: mode = snail::window::fullscreen_mode_t::windowed; break;
     case 1: mode = snail::window::fullscreen_mode_t::fullscreen; break;
     case 2: mode = snail::window::fullscreen_mode_t::fullscreen_desktop; break;
-    default: throw new std::runtime_error("Invalid fullscreen mode");
+    default: throw std::runtime_error("Invalid fullscreen mode");
     }
 
     return mode;
