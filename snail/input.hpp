@@ -125,6 +125,7 @@ enum class key
     right,
 
     insert,
+    clear,
     numlock,
     capslock,
 

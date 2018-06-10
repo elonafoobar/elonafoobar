@@ -488,6 +488,10 @@ void key_check(int prm_299)
         {
             p_at_m19 = 12;
         }
+        else if (getkey(snail::key::clear))
+        {
+            key = key_wait;
+        }
 
         // Handle the case of the current key matching the movement
         // keybindings set in the user's config.

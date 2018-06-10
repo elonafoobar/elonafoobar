@@ -80,6 +80,7 @@ key sdlkey2key(::SDL_Keycode k)
     case SDLK_LEFT: return key::left;
     case SDLK_RIGHT: return key::right;
     case SDLK_INSERT: return key::insert;
+    case SDLK_CLEAR: return key::clear;
     case SDLK_NUMLOCKCLEAR: return key::numlock;
     case SDLK_CAPSLOCK: return key::capslock;
     case SDLK_HOME: return key::home;
