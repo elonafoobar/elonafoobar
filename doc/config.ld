@@ -1,5 +1,4 @@
 --luacheck: ignore
---ldoc -c doc/config.ld -s doc -l doc ./lua_api.cpp
 project = "elomod"
 title = "elomod"
 description = "ElonaFoobar Mod API"
@@ -17,7 +16,7 @@ format = "discount"
 template_escape = ">"
 dir = "./doc"
 examples = {"./doc/examples"}
-readme = "./doc/readme.md"
+topics = {"./doc/readme.md", "./doc/topics/localization.md"}
 
 new_type("event", "Events", false, "Event Parameters")
 new_type("enum", "Enums", false, "Enum Values")

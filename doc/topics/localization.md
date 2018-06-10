@@ -1,0 +1,170 @@
+# Localization
+In order to allow players who are fluent in different languages to understand all kinds of content in the game, a localization system is needed. This allows a single piece of text to be translated across any language, instead of hard-coding strings for all possible languages in the code.
+
+## Getting started
+In ElonaFoobar, locale files are written in the [Hashicorp Configuration Language](https://github.com/hashicorp/hcl), or HCL. HCL is a friendlier alternative to other configuration syntaxes, and is easy to read and write. Here is a simple example of a locale file.
+
+```
+locale {
+    my_string = "Hello, world!"
+}
+```
+
+Let's say the above config file is part of a mod named `my_mod`. Locale files would be placed in a folder structure like `my_mod/locale/en/my_strings.hcl`. The placement of the `my_strings.hcl` file in the `en/` folder indicates it is to be used with the English language. When the locale files are loaded, the localization ID `my_mod.locale.my_string` will be automatically generated for you, pointing to the text `"Hello, world!"`. When you want to use this text somewhere, you can use the `I18N` API.
+
+```
+local I18N = Elona.require("I18N")
+local my_string = I18N.get("my_mod.locale.my_string")
+
+-- Assuming English is the current language:
+assert(my_string == "Hello, world!")
+```
+
+Now all a translator has to do in order to add language support is to add a new subfolder in their native language in the `locale` directory, like this:
+
+```
+locale {
+    my_string = "こんにちは世界！"
+}
+```
+
+If this file is named `my_mod/locale/ja/my_strings.hcl`, then switching the language to Japanese will have this effect:
+
+```
+local I18N = Elona.require("I18N")
+local my_string = I18N.get("my_mod.locale.my_string")
+assert(my_string == "こんにちは世界！")
+```
+
+Notice that we didn't have to change any code, yet got a different result based on the language. This system will allow for easily allowing people fluent in any language to play the game and understand additional content added by modders.
+
+Note that if a given translation string doesn't exist, an error will be raised. Make sure that all the translations you want to define have been placed in `locale`, or things will break. (You can also make optional translations for specific circumstances. See below for details.)
+
+## Organization
+When creating new translation strings, it helps to organize sets of related localizations by grouping them together. HCL allows for this by the usage of objects, or sections:
+
+```
+locale {
+  some_section {
+    greeting = "Hello, world!"
+  }
+  other_section {
+    greeting = "Welcome, traveler!"
+  }
+}
+```
+
+Once again, assume this file is part of a mod named `my_mod`. When this file is loaded, both `my_mod.locale.some_section.greeting` and `my_mod.locale.other_section.greeting` will be available for use.
+
+It also helps to name translation files logically. For example, all the translations relating to characters being added could go in `chara.hcl`, and translations for items in `item.hcl`.
+
+A handy feature of HCL is the ability to add comments. Use them for adding more detail.
+
+```
+locale {
+  # You can write comments like this.
+  // Or this.
+  my_string = "Hello, world!"
+}
+```
+
+## Interpolation
+This is nice and all, but you may be wondering: what happens if I want to insert text somewhere inside the localized text? For example, a common case is adding the name of a character or place in a string. This is possible using the [Hashicorp Interpolation Language](https://github.com/hashicorp/hil), or HIL. Don't worry, it's easier than it seems:
+
+```
+locale {
+  you_see = "You see ${_1}."
+}
+```
+
+You can tell that this string uses HIL by the dollar sign and brace syntax (`${_1}`). The thing inside the braces indicates what gets placed there. In this case, the `_1` stands for the first argument passed to the localization formatter. You can pass arguments to translations like this:
+
+```
+local my_string = I18N.get("my_mod.locale.you_see", "Vernis")
+assert(my_string == "You see Vernis.")
+```
+
+Note that you can pass more arguments to the formatter without any difference.
+
+```
+local my_string = I18N.get("my_mod.locale.you_see", "Vernis", "and some putits")
+assert(my_string == "You see Vernis.")
+```
+
+However, passing *less* arguments than the locale string uses will result in formatting issues. These won't cause errors, but unsightly `<error>` text will show up in the formatted string.
+
+```
+local my_string = I18N.get("my_mod.locale.you_see")
+assert(my_string == "You see <error>.")
+```
+
+## Functions in interpolations
+Say you want to insert the name of a character in a localized string. You attempt to do something like this:
+
+```
+locale {
+  greeting = "Hello, ${_1}!"
+}
+```
+
+Then you try passing a character in:
+
+```
+local player = Chara.player()
+local my_string = I18N.get("my_mod.locale.greeting", player)
+```
+
+But this gives you the text `<character: 0>`. What's going on? The issue is you passed in a character `object` instead of the character's name. This could be remedied like so:
+
+```
+local my_string = I18N.get("my_mod.locale.greeting", player.name)
+```
+
+However, there's a better way to do this, which makes the intent of the localization clearer. You can pass the character object to the function as before, but change the locale file to this:
+
+```
+locale {
+  greeting = "Hello, ${name(_1)}!"
+}
+```
+
+This has the effect of placing the character's name in the string. Now it's clear that the thing being passed to the formatter is a character, since the `name` function is being called. There are various functions that may be called; see the `I18N` documentation for a complete list.
+
+## Enums
+Some of the localizations that are part of the base game have this format.
+
+```
+locale {
+    fruit {
+        _0 = "apple",
+        _1 = "banana",
+        _2 = "pear"
+    }
+}
+```
+
+This indicates that the object `fruit` is an *enum*, or enumeration. These are used for translating strings tied to specific integer IDs that are used by the game. In these cases, it is important that each numbered item in the enum has the same format.
+
+## Optional enum translations
+Sometimes, translations for a given enum item might not exist. For example, some map entrances lack descriptions:
+
+```
+locale {
+    map {
+        _4 {
+            name = "North Tyris"
+        }
+        _5 {
+            name = "Vernis"
+            desc = "You see Vernis. The mining town is full of liveliness."
+        }
+
+        // ...
+    }
+}
+```
+
+But the `I18N.get_enum_property` function will raise an error if a given translation string doesn't exist. The solution is to use `I18N.get_enum_property_opt` instead:
+
+```
+```

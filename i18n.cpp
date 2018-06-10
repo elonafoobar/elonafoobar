@@ -169,8 +169,8 @@ std::string format_builtins_character(const hil::FunctionCall& func, const chara
 
 std::string format_builtins_item(const hil::FunctionCall& func, const item& item)
 {
-    ELONA_DEFINE_I18N_BUILTIN("name", itemname(item.index));
-    ELONA_DEFINE_I18N_BUILTIN("basename", ioriginalnameref(item.id));
+    ELONA_DEFINE_I18N_BUILTIN("itemname", itemname(item.index));
+    ELONA_DEFINE_I18N_BUILTIN("itembasename", ioriginalnameref(item.id));
 
     // English only
     ELONA_DEFINE_I18N_BUILTIN("is", is2(item.number));

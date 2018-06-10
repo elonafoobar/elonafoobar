@@ -1,11 +1,13 @@
 #include "testing.hpp"
 #include "config.hpp"
 #include "gdata.hpp"
+#include "i18n.hpp"
 #include "init.hpp"
 #include "log.hpp"
 #include "lua_env/lua_env.hpp"
 #include "variables.hpp"
 #include "version.hpp"
+#include <sstream>
 
 namespace elona
 {
@@ -48,11 +50,20 @@ void start_in_debug_map()
     initialize_map();
 }
 
+void load_translations(const std::string& hcl)
+{
+    i18n::s.clear();
+
+    std::stringstream ss(hcl);
+    i18n::s.load(ss, "test.hcl");
+}
+
 void configure_lua()
 {
     sol::table Testing = lua::lua.get_state()->create_named_table("Testing");
     Testing.set_function("start_in_debug_map", start_in_debug_map);
     Testing.set_function("reset_state", reset_state);
+    Testing.set_function("load_translations", load_translations);
 }
 
 void pre_init()

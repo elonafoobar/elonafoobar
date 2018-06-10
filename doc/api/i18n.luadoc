@@ -1,0 +1,19 @@
+--- Functions for localization.
+--- See the localization section for more information.
+--  @usage local I18N = Elona.require("I18N")
+module "I18N"
+
+--- Gets a localized string and optionally formats it with arguments.
+--- This will raise an error if the localization string doesn't exist.
+-- @tparam string key the ID of the localization string
+-- @treturn string the formatted string
+-- @usage I18N.get("core.locale.map.you_see", "Vernis")
+function get(key, ...) end
+
+--- Gets a localized string and optionally formats it with arguments.
+--- This will return nil if the localization string doesn't exist.
+-- @tparam string key the ID of the localization string
+-- @treturn[1] string the formatted string
+-- @treturn[2] nil
+-- @usage I18N.get("core.locale.map.you_see", "Vernis")
+function get_optional(key, ...) end

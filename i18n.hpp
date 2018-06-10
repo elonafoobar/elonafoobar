@@ -2,6 +2,7 @@
 
 #include "thirdparty/microhcl/hcl.hpp"
 #include "thirdparty/microhil/hil.hpp"
+#include "thirdparty/sol2/sol.hpp"
 
 #include <string>
 #include <unordered_map>
@@ -9,8 +10,9 @@
 #include "cat.hpp"
 #include "character.hpp"
 #include "filesystem.hpp"
-#include "optional.hpp"
 #include "item.hpp"
+#include "lua_env/lua_api.hpp"
+#include "optional.hpp"
 
 
 using namespace std::literals::string_literals;
@@ -162,6 +164,32 @@ std::string format_literal_type(std::basic_string<Char> const& c)
     return c;
 }
 
+template <typename Head = const sol::object&>
+std::string format_literal_type(sol::object const& object)
+{
+    if (object.is<int>())
+    {
+        return std::to_string(object.as<int>());
+    }
+    if (object.is<double>())
+    {
+        return std::to_string(object.as<double>());
+    }
+    if (object.is<bool>())
+    {
+        return std::to_string(object.as<bool>());
+    }
+    if (object.is<std::string>())
+    {
+        return object.as<std::string>();
+    }
+    if (object.is<sol::table>())
+    {
+        return "<lua table>";
+    }
+    return "<lua object>";
+}
+
 template <typename Head>
 std::string format_literal_type(Head const& head)
 {
@@ -178,6 +206,29 @@ template <typename Head = const item&>
 std::string format_function_type(hil::FunctionCall const& func, const item& item)
 {
     return format_builtins_item(func, item);
+}
+
+template <typename Head = const sol::object&>
+std::string format_function_type(hil::FunctionCall const& func, const sol::object& object)
+{
+    if (object.is<bool>())
+    {
+        return format_builtins_bool(func, object.as<bool>());
+    }
+    else if (object.is<sol::table>())
+    {
+        sol::table table = object.as<sol::table>();
+        if (lua::is_chara_handle(table))
+        {
+            return format_builtins_character(func, lua::conv_chara(table));
+        }
+        else if (lua::is_item_handle(table))
+        {
+            return format_builtins_item(func, lua::conv_item(table));
+        }
+    }
+
+    return "<unknown lua object (" + func.name + ")>";
 }
 
 template <typename Head = bool>
@@ -324,6 +375,7 @@ public:
 
     void init(fs::path);
     void load(std::istream&, const std::string&);
+    void clear() { storage.clear(); }
 
     template <typename Head, typename... Tail>
     std::string get(const std::string& key, Head const& head, Tail&&... tail)
