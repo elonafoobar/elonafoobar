@@ -252,7 +252,6 @@ void input_text_dialog(
     int y,
     int val2,
     bool is_cancelable,
-    bool as_filename,
     bool limit_length)
 {
     int ime_esc = 0;
@@ -384,10 +383,6 @@ void input_text_dialog(
     }
     gmode(2);
     clrobj(1);
-    if (as_filename)
-    {
-        inputlog = filesystem::normalize_as_filename(inputlog);
-    }
     if (en)
     {
         inputlog = strutil::replace(inputlog, u8"\"", u8"'");
