@@ -15,3 +15,7 @@ function dump_charas() end
 
 --- Dumps all items to the debug console and log file.
 function dump_items() end
+
+--- Runs a script which is located in the data/script/ folder. <b>Note</b>: This function is only available for use in the debug console.
+-- @tparam string script_file the filename of the script in data/script/
+function run_script(script_file) end

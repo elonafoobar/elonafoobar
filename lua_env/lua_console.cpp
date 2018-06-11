@@ -30,6 +30,11 @@ lua_console::lua_console(lua_env* lua)
     lua_->get_state()->safe_script_file(filesystem::make_preferred_path_in_utf8(
                                             filesystem::dir::mods() / "core"s / "console.lua"),
                                         console_env_);
+
+    sol::table Debug = console_env_["Debug"];
+    Debug.set_function("run_script", [this](const std::string& script_file) {
+                                         lua_->run_startup_script(script_file);
+                                     });
 }
 
 void lua_console::print_single_line(const std::string& line)

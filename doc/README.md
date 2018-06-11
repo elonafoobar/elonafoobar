@@ -31,7 +31,7 @@ Now let's run a function at a given interval. Run this code to spawn an item aft
 Event.register(Event.EventKind.AllTurnsFinished, function() Item.create(Map.random_pos(), 792) end)
 ```
 
-Wait for many turns. Soon the map will be flooded with putitoros!
+Wait many turns. Soon the map will be flooded with putitoros!
 
 ![putitoros](../putitoros.png)
 
@@ -42,7 +42,9 @@ You can run a script at startup by adding a parameter to your `config.json`. Cop
 "startup_script": "life.lua"
 ```
 
-Starting the game will place you in a script testing map, isolated from your other saves. There you can see the script in action. The `life.lua` script will run Conway's Game of Life by setting tiles in the map. Let's break down how it works.
+Starting the game will place you in a script testing map, isolated from your other saves. There you can see the script in action. You can also load scripts from the debug console by running `Debug.load_script("<script name>.lua")`.
+
+The `life.lua` script will run Conway's Game of Life by setting tiles in the map. Let's break down how it works.
 
 ### Module requires
 
