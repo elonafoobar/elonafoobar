@@ -196,7 +196,7 @@ std::map<std::string, ::SDL_DisplayMode> application::get_display_modes()
     int display_mode_count = ::SDL_GetNumDisplayModes(display_in_use);
     if (display_mode_count < 1)
     {
-        throw new detail::sdl_error("No display modes available");
+        throw detail::sdl_error("No display modes available");
     }
 
     for (int i = 0; i < display_mode_count; ++i) {
@@ -222,7 +222,7 @@ std::string application::get_default_display_mode()
     auto display_modes = get_display_modes();
     if (display_modes.size() == 0)
     {
-        throw new detail::sdl_error("No display modes available");
+        throw detail::sdl_error("No display modes available");
     }
 
     for (const auto pair : display_modes)
@@ -241,11 +241,11 @@ void application::set_display_mode(const std::string& display_mode_str)
     auto display_modes = get_display_modes();
     if (display_modes.size() == 0)
     {
-        throw new detail::sdl_error("No display modes available");
+        throw detail::sdl_error("No display modes available");
     }
     if (display_modes.find(display_mode_str) == display_modes.end())
     {
-        throw new detail::sdl_error("No such display mode: " + display_mode_str);
+        throw detail::sdl_error("No such display mode: " + display_mode_str);
     }
 
     set_display_mode(display_modes[display_mode_str]);

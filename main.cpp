@@ -41,10 +41,9 @@ int main(int argc, char** argv)
     catch (std::exception& e)
     {
         report_error(e.what());
-        throw e;
     }
     catch (...)
     {
-        report_error(u8"Error occurred for some reason.");
+        report_error("Unknown");
     }
 }
