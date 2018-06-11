@@ -12,23 +12,18 @@ Debug.print("Hello.")
 
 It should output the following.
 
-```
-> Debug.print("Hello.")
-Hello.
-nil
-```
+![debug_print](../debug_print.png)
 
 The text `Hello.` should be printed, followed by `nil`. The last thing printed after execution (in this case, `nil`) is the return value of the statement that was run.
 
-To spawn a monster next to your current position, run this code.
+To spawn a monster next to your character, run these two lines of code. You can use variables defined in earlier code statements in later ones.
 
 ```
 pos = Chara.player().position
-
 Chara.create(pos.x, pos.y+1, 3)
 ```
 
-This should create a putit right in front of you.
+A putit should be created right in front of you.
 
 Now let's run a function at a given interval. Run this code to spawn an item after each turn ends.
 
@@ -37,6 +32,8 @@ Event.register(Event.EventKind.AllTurnsFinished, function() Item.create(Map.rand
 ```
 
 Wait for many turns. Soon the map will be flooded with putitoros!
+
+![putitoros](../putitoros.png)
 
 ## Writing scripts
 You can run a script at startup by adding a parameter to your `config.json`. Copy the `life.lua` example into your `data/script` folder, and add this line to your `config.json`:
