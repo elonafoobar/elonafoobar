@@ -2,16 +2,16 @@
 --  @usage local Debug = Elona.require("Debug")
 module "Debug"
 
---- Logs a message to log.txt.
+--- Prints a message to the debug console and log file.
 -- @tparam string message the message to log
-function log(message) end
+function print(message) end
 
---- Reports an error to the game console and log file.
+--- Reports an error to the game console, debug console and log file.
 -- @tparam string message the error message to report
 function report_error(message) end
 
---- Dumps all characters to the log.
-function dump_characters() end
+--- Dumps all characters to the debug console and log file.
+function dump_charas() end
 
---- Dumps all items to the log.
+--- Dumps all items to the debug console and log file.
 function dump_items() end

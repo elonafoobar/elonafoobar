@@ -1765,11 +1765,11 @@ label_2747:
         {
             if (getkey(snail::key::shift))
             {
-                debug::console.grab_input();
+                lua::lua.get_console().grab_input();
             }
             else
             {
-                debug::console.toggle();
+                lua::lua.get_console().toggle();
             }
             key = "";
         }
@@ -2345,7 +2345,7 @@ label_2747:
     }
     if (key == key_save || key_escape == 1)
     {
-        if (!debug::console.just_exited())
+        if (!lua::lua.get_console().just_exited())
         {
             return do_exit_command();
         }
@@ -2544,7 +2544,7 @@ label_2747:
         update_screen();
     }
 
-    debug::console.end_just_exited();
+    lua::lua.get_console().end_just_exited();
     goto label_2747;
 }
 

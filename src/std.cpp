@@ -16,6 +16,7 @@
 #include "elona.hpp"
 #include "log.hpp"
 #include "macro.hpp"
+#include "lua_env/lua_env.hpp"
 #include "util.hpp"
 #include "variables.hpp"
 #ifdef ELONA_OS_WINDOWS

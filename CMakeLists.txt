@@ -133,8 +133,9 @@ set(CORE_SOURCES
     src/wish.cpp
     src/lua_env/event_manager.cpp
     src/lua_env/handle_manager.cpp
-    src/lua_env/lua_env.cpp
     src/lua_env/lua_api.cpp
+    src/lua_env/lua_console.cpp
+    src/lua_env/lua_env.cpp
     src/lua_env/lua_store.cpp
     src/version.cpp
 )

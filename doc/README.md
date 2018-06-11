@@ -4,6 +4,41 @@ Welcome traveler! This is the documentation for the ElonaFoobar mod API.
 Before proceeding, **please note** that the API will almost certainly undergo substantial changes before it is stabilized. If you write anything with the API, expect that it **will** break sometime in the future, until all the serious design/implementation issues and bugs have been worked out.
 
 ## Testing it out
+Start a new game and activate `voldemort` mode by pressing F12. All characters should have health bars visible. Now press `~` (that's the tilde key) to bring up the debug console. You can use this to run Lua code in-game. Run this code to print something in the console.
+
+```
+Debug.print("Hello.")
+```
+
+It should output the following.
+
+```
+> Debug.print("Hello.")
+Hello.
+nil
+```
+
+The text `Hello.` should be printed, followed by `nil`. The last thing printed after execution (in this case, `nil`) is the return value of the statement that was run.
+
+To spawn a monster next to your current position, run this code.
+
+```
+pos = Chara.player().position
+
+Chara.create(pos.x, pos.y+1, 3)
+```
+
+This should create a putit right in front of you.
+
+Now let's run a function at a given interval. Run this code to spawn an item after each turn ends.
+
+```
+Event.register(Event.EventKind.AllTurnsFinished, function() Item.create(Map.random_pos(), 792) end)
+```
+
+Wait for many turns. Soon the map will be flooded with putitoros!
+
+## Writing scripts
 You can run a script at startup by adding a parameter to your `config.json`. Copy the `life.lua` example into your `data/script` folder, and add this line to your `config.json`:
 
 ```

@@ -8,6 +8,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "lua_env/lua_env.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
@@ -977,7 +978,7 @@ void render_hud()
 
     show_damage_popups();
 
-    debug::console.draw();
+    lua::lua.get_console().draw();
 }
 
 void load_continuous_action_animation()

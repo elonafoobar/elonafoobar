@@ -41,6 +41,8 @@ lua_env::lua_env()
     event_manager::init(*this);
 
     handle_mgr = std::make_unique<handle_manager>(this);
+
+    console = std::make_unique<lua_console>(this);
 }
 
 api_manager& lua_env::get_api_manager()
@@ -56,6 +58,11 @@ event_manager& lua_env::get_event_manager()
 handle_manager& lua_env::get_handle_manager()
 {
     return *handle_mgr;
+}
+
+lua_console& lua_env::get_console()
+{
+    return *console;
 }
 
 void report_error(sol::error err)
@@ -179,9 +186,9 @@ void lua_env::scan_all_mods(const fs::path& mods_dir)
             const std::string mod_name = entry.path().filename().string();
             ELONA_LOG("Found mod " << mod_name);
 
-            if (mod_name == "script")
+            if(mod_name == "script" || mod_name == "console")
             {
-                throw std::runtime_error("\"script\" is a reserved mod name.");
+                throw new std::runtime_error("\"" + mod_name + "\" is a reserved mod name."s);
             }
 
             std::unique_ptr<mod_info> info =
