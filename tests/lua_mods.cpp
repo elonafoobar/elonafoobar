@@ -23,6 +23,17 @@ TEST_CASE("Test that _MOD_NAME is defined", "[Lua: Mods]")
     REQUIRE_NOTHROW(lua.run_in_mod("my_mod", R"(assert(_MOD_NAME == "my_mod"))"));
 }
 
+TEST_CASE("Test that _MOD_NAME cannot be overwritten", "[Lua: Mods]")
+{
+    elona::lua::lua_env lua;
+    lua.reload();
+
+    REQUIRE_NOTHROW(lua.load_mod_from_script("my_mod", ""));
+
+    REQUIRE_THROWS(lua.run_in_mod("my_mod", R"(_MOD_NAME = "dood")"));
+    REQUIRE_NOTHROW(lua.run_in_mod("my_mod", R"(assert(_MOD_NAME == "my_mod"))"));
+}
+
 TEST_CASE("Test that sandboxing removes unsafe functions", "[Lua: Mods]")
 {
     elona::lua::lua_env lua;

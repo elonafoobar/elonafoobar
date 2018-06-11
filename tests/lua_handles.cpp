@@ -63,7 +63,7 @@ TEST_CASE("Test that handle properties can be written", "[Lua: Handles]")
     }
     SECTION("Items")
     {
-        REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, 3));
+        REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 0, 0, 1));
         item& item = elona::inv[elona::ci];
         auto handle = elona::lua::lua.get_handle_manager().get_item_handle(item);
         elona::lua::lua.get_state()->set("item", handle);

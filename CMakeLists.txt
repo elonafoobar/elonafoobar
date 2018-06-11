@@ -154,6 +154,7 @@ if(WITH_TESTS STREQUAL "TESTS")
     tests/util.cpp
     tests/lua_api.cpp
     tests/lua_callbacks.cpp
+    tests/lua_events.cpp
     tests/lua_handles.cpp
     tests/lua_mods.cpp
     tests/lua_serialization.cpp
