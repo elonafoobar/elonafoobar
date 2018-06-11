@@ -71,7 +71,7 @@ To debug with Visual Studio, open `bin\ElonaFoobar.sln`.
 
 # How To Play
 
-1. If not done already, copy the `data`, `graphic`, `map`, `original`, `sound` and `user` folders from vanilla v1.22 to the directory containing the executable.
+1. Copy the `data`, `graphic`, `map`, `original`, `sound` and `user` folders from vanilla v1.22 to the directory containing the executable. Make sure not to overwrite any files that already exist, as they have been updated in this version.
 2. Execute `bin/ElonaFoobar`, `bin/ElonaFoobar.app` or `bin/Debug/ElonaFoobar.exe`.
 
 
