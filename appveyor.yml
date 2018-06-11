@@ -107,6 +107,7 @@ after_build:
   - rd /q /s bin\ElonaFoobar\original
   - rd /q /s bin\ElonaFoobar\sound
   - rd /q /s bin\ElonaFoobar\user
+  - xcopy /s /e runtime\* bin\ElonaFoobar
   - cd bin
   - 7z a -y ElonaFoobar-windows.zip ElonaFoobar
 
