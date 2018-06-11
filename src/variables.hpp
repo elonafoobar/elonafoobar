@@ -906,6 +906,7 @@ void csfix();
 void cslinedown();
 void cslineup();
 void cursor_check();
+size_t utf8_cut_index(const std::string&, int);
 void cutname(std::string&, int = 0);
 void delbottomcard(int = 0);
 void delmef(int = 0);

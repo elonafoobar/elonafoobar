@@ -222,7 +222,6 @@ void initialize_ui_constants()
     screenmsgy = inf_screeny + inf_tiles * 2;
     prompty = (windowh - inf_verh - 30) / 2 - 4;
     promptx = (windoww - 10) / 2 + 3;
-    return;
 }
 
 void label_1416()
@@ -977,6 +976,8 @@ void render_hud()
     }
 
     show_damage_popups();
+
+    debug::console.draw();
 }
 
 void load_continuous_action_animation()
@@ -1457,7 +1458,6 @@ void label_1433()
             render_weather_effect_etherwind();
         }
     }
-    return;
 }
 
 void render_stair_positions_in_minimap()

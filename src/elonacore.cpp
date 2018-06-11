@@ -1167,14 +1167,11 @@ int winposy(int prm_539, int prm_540)
     return (windowh - prm_539) / 2;
 }
 
-
-
-void cutname(std::string& utf8_string, int max_length_charwise)
+size_t utf8_cut_index(const std::string& utf8_string, int max_length_charwise)
 {
     if (max_length_charwise == 0)
     {
-        utf8_string = std::string();
-        return;
+        return 0;
     }
 
     int current_char = 0;
@@ -1219,7 +1216,12 @@ void cutname(std::string& utf8_string, int max_length_charwise)
         multibyte = false;
     }
 
-    utf8_string = utf8_string.substr(0, current_byte);
+    return current_byte;
+}
+
+void cutname(std::string& utf8_string, int max_length_charwise)
+{
+    utf8_string = utf8_string.substr(0, utf8_cut_index(utf8_string, max_length_charwise));
 }
 
 

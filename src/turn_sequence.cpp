@@ -1761,6 +1761,18 @@ label_2747:
 
     if (gdata_wizard)
     {
+        if (snail::input::instance().was_pressed_just_now(snail::key::backquote))
+        {
+            if (getkey(snail::key::shift))
+            {
+                debug::console.grab_input();
+            }
+            else
+            {
+                debug::console.toggle();
+            }
+            key = "";
+        }
         if (getkey(snail::key::f5))
         {
             what_do_you_wish_for();
@@ -2333,7 +2345,10 @@ label_2747:
     }
     if (key == key_save || key_escape == 1)
     {
-        return do_exit_command();
+        if (!debug::console.just_exited())
+        {
+            return do_exit_command();
+        }
     }
     if (key == key_dig)
     {
@@ -2529,6 +2544,7 @@ label_2747:
         update_screen();
     }
 
+    debug::console.end_just_exited();
     goto label_2747;
 }
 

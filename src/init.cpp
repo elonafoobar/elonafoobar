@@ -12,6 +12,7 @@
 #include "config.hpp"
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
+#include "debug.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
@@ -760,6 +761,18 @@ void initialize_elona()
     {
         snail::input::instance().disable_numlock();
     }
+
+    // TODO construct here
+    auto size = snail::application::instance().get_renderer().calculate_text_size("a");
+    debug::console.set_char_width(size.width);
+    debug::console.set_char_height(size.height);
+    debug::console.set_width(windoww);
+    debug::console.set_height(static_cast<int>(0.35 * windowh));
+    debug::console.set_max_chars();
+    debug::console.set_max_lines();
+
+    debug::console.log(u8"ElonaFoobar Debug console");
+    debug::console.log(u8"ver."s + latest_version.short_string() + " (" + latest_version.revision + ") OS: " + latest_version.platform + ", timestamp: " + latest_version.timestamp);
 }
 
 int run()
