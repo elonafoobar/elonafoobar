@@ -762,10 +762,17 @@ void initialize_elona()
         snail::input::instance().disable_numlock();
     }
 
-    // TODO construct here
-    auto size = snail::application::instance().get_renderer().calculate_text_size("a");
-    lua::lua.get_console().setup_constants(size.width, size.height,
-                                           windoww, static_cast<int>(0.35 * windowh));
+    if (config::instance().is_test)
+    {
+        lua::lua.get_console().setup_constants(10, 14,
+                                               windoww, static_cast<int>(0.35 * windowh));
+    }
+    else
+    {
+        auto size = snail::application::instance().get_renderer().calculate_text_size("a");
+        lua::lua.get_console().setup_constants(size.width, size.height,
+                                               windoww, static_cast<int>(0.35 * windowh));
+    }
 
     lua::lua.get_console().print(u8"ElonaFoobar Debug console");
     lua::lua.get_console().print(u8"ver."s + latest_version.short_string() + " (" + latest_version.revision + ") OS: " + latest_version.platform + ", timestamp: " + latest_version.timestamp);
