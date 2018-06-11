@@ -55,16 +55,16 @@ void event_manager::init(lua_env& lua)
                            return lua.get_event_manager().unregister_event(event, env, func);
                        });
 
-    Event.set_function("clear", [&lua](sol::this_environment this_env) {
-                           sol::environment& env = this_env;
-                           lua.get_event_manager().clear_mod_callbacks(env);
-                       });
-
-    Event.set_function("clear", [&lua](event_kind_t event,
-                                          sol::this_environment this_env) {
-                           sol::environment& env = this_env;
-                           lua.get_event_manager().clear_mod_callbacks(event, env);
-                       });
+    Event.set_function("clear", sol::overload(
+                           [&lua](sol::this_environment this_env) {
+                               sol::environment& env = this_env;
+                               lua.get_event_manager().clear_mod_callbacks(env);
+                           },
+                           [&lua](event_kind_t event,
+                                  sol::this_environment this_env) {
+                               sol::environment& env = this_env;
+                               lua.get_event_manager().clear_mod_callbacks(event, env);
+                           }));
 
     Event.set_function("trigger", [&lua](event_kind_t event,
                                          sol::table data) {
@@ -125,7 +125,7 @@ void event_manager::clear_mod_callbacks(event_kind_t event,
     {
         sol::optional<std::string> mod_name = env["_MOD_NAME"];
         assert(mod_name);
-        iter->second.clear();
+        iter->second.remove_all_from_mod(mod_name.value());
     }
 }
 

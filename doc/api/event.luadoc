@@ -25,7 +25,10 @@ function register(event_id, handler) end
 
 --- Unregisters an event handler that was previously registered with
 --- <code>Event.register</code>. This has no effect if the handler was
---- not already registered.
+--- not already registered. <b>Note</b>: If the handler was registered
+--- multiple times, only one of the registrations will be removed. In
+--- this case, call <code>Event.unregister</code> multiple times to
+--- remove any extra registrations.
 -- @tparam Event.EventKind event_id the event kind to unregister
 -- @tparam function handler the previously registered handler
 function unregister(event_id, handler) end

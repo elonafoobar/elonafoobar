@@ -107,6 +107,23 @@ public:
         }
     }
 
+    /***
+     * Removes callbacks originating from the given mod.
+     */
+    void remove_all_from_mod(const std::string& mod_name) {
+        for (auto it = functions.begin(); it != functions.end(); /*it++*/)
+        {
+            if (it->mod_name == mod_name)
+            {
+                it = functions.erase(it);
+            }
+            else
+            {
+                it++;
+            }
+        }
+    }
+
     void clear() { functions.clear(); }
 
     template<typename... Args>

@@ -221,9 +221,6 @@ public:
     /***
      * Instantiates a new mod by running the given Lua code.
      *
-     * NOTE: This requires the mods to have unique names between
-     * tests.
-     *
      * For testing use only.
      */
     void load_mod_from_script(const std::string& name, const std::string& script);
