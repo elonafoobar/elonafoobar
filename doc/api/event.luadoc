@@ -23,8 +23,24 @@ module "Event"
 -- Event.register(Event.EventKind.CharaMoved, my_chara_moved_handler)
 function register(event_id, handler) end
 
+--- Unregisters an event handler that was previously registered with
+--- <code>Event.register</code>. This has no effect if the handler was
+--- not already registered.
+-- @tparam Event.EventKind event_id the event kind to unregister
+-- @tparam function handler the previously registered handler
+function unregister(event_id, handler) end
+
+--- Clears all event handlers that were registered for the given event
+--- kind from the current mod.
+-- @tparam Event.EventKind event_id the event kind to clear handlers for
+function clear(event_id) end
+
+--- Clears all event handlers that were registered from the current
+--- mod.
+function clear() end
+
 --- Triggers an event from a Lua script.
---- WARNING: This does not currently stop recursion!
+--- WARNING: This does not currently prevent infinite recursion!
 -- @tparam Event.EventKind event the event to trigger
 -- @tparam table data the event data
 function trigger(event, data) end

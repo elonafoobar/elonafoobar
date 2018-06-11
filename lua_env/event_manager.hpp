@@ -92,6 +92,23 @@ public:
         functions.emplace_back(mod_env, function, *mod_name);
     }
 
+    /***
+     * Removes a callback from the callback list.
+     */
+    void remove(const std::string& mod_name, sol::protected_function &function)
+    {
+        for (auto it = functions.begin(); it != functions.end(); it++)
+        {
+            if (it->mod_name == mod_name && it->function == function)
+            {
+                functions.erase(it);
+                return;
+            }
+        }
+    }
+
+    void clear() { functions.clear(); }
+
     template<typename... Args>
     void run(retval_type<void>, Args&&... args)
     {
@@ -154,6 +171,22 @@ public:
      * Registers a new event handler from a mod's environment.
      */
     void register_event(event_kind_t, sol::environment&, sol::protected_function&);
+
+    /***
+     * Unregisters an event handler from a mod's environment by
+     * comparing the function reference passed in.
+     */
+    void unregister_event(event_kind_t, sol::environment&, sol::protected_function&);
+
+    /***
+     * Clears all mod-local callbacks of the given event kind.
+     */
+    void clear_mod_callbacks(event_kind_t, sol::environment&);
+
+    /***
+     * Clears all mod-local callbacks.
+     */
+    void clear_mod_callbacks(sol::environment&);
 
     /***
      * Runs all callbacks for this event in the order they were registered.

@@ -48,6 +48,24 @@ void event_manager::init(lua_env& lua)
                            lua.get_event_manager().register_event(event, env, func);
                        });
 
+    Event.set_function("unregister", [&lua](event_kind_t event,
+                                          sol::protected_function func,
+                                          sol::this_environment this_env) {
+                           sol::environment& env = this_env;
+                           return lua.get_event_manager().unregister_event(event, env, func);
+                       });
+
+    Event.set_function("clear", [&lua](sol::this_environment this_env) {
+                           sol::environment& env = this_env;
+                           lua.get_event_manager().clear_mod_callbacks(env);
+                       });
+
+    Event.set_function("clear", [&lua](event_kind_t event,
+                                          sol::this_environment this_env) {
+                           sol::environment& env = this_env;
+                           lua.get_event_manager().clear_mod_callbacks(event, env);
+                       });
+
     Event.set_function("trigger", [&lua](event_kind_t event,
                                          sol::table data) {
                            lua.get_event_manager().trigger_event(event, data);
@@ -83,6 +101,41 @@ void event_manager::register_event(event_kind_t event,
     if(iter != events.end())
     {
         iter->second.push(env, callback);
+    }
+}
+
+void event_manager::unregister_event(event_kind_t event,
+                                   sol::environment& env,
+                                   sol::protected_function& callback)
+{
+    auto iter = events.find(event);
+    if(iter != events.end())
+    {
+        sol::optional<std::string> mod_name = env["_MOD_NAME"];
+        assert(mod_name);
+        iter->second.remove(*mod_name, callback);
+    }
+}
+
+void event_manager::clear_mod_callbacks(event_kind_t event,
+                                        sol::environment& env)
+{
+    auto iter = events.find(event);
+    if(iter != events.end())
+    {
+        sol::optional<std::string> mod_name = env["_MOD_NAME"];
+        assert(mod_name);
+        iter->second.clear();
+    }
+}
+
+void event_manager::clear_mod_callbacks(sol::environment& env)
+{
+    unsigned event_count = static_cast<unsigned>(event_kind_t::COUNT);
+    for(unsigned i = 0; i < event_count; i++)
+    {
+        event_kind_t event_kind = static_cast<event_kind_t>(i);
+        clear_mod_callbacks(event_kind, env);
     }
 }
 
