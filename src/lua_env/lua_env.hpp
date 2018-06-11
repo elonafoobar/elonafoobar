@@ -124,11 +124,6 @@ public:
     /***
      * Runs the startup script with the given filename. It is expected
      * to be found under the data/script/ folder.
-     *
-     * Currently, this is always executed after the map has been
-     * initialized. This will also re-run game, map and character
-     * initialization hooks, because they would have been run already
-     * by that point.
      */
     void run_startup_script(const std::string&);
 
@@ -204,6 +199,8 @@ public:
 
     /***
      * Unloads all characters and items tracked by handles.
+     *
+     * Stage after is not_started.
      *
      * For testing use only.
      */
@@ -298,7 +295,7 @@ private:
     /***
      * The loading stage the environment is currently in. Used for
      * tracking the lifecycle of mod loading and ensuring the loading
-     * functions are ran in the correct order.
+     * functions are run in the correct order.
      */
     mod_loading_stage_t stage = mod_loading_stage_t::not_started;
 };

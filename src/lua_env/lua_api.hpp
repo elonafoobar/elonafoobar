@@ -47,7 +47,7 @@ public:
      *
      * This is done by lua_env on construction. It must be done before
      * more mods can be loaded, because they all implicitly depend on
-     * the core mod..
+     * the core mod.
      */
     void load_core(lua_env&, const fs::path&);
 

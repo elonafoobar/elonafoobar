@@ -54,6 +54,10 @@ public:
     sol::object get_chara_handle(character& chara);
     sol::object get_item_handle(item& item);
 
+    /***
+     * Clears all handles, including global handles (like the
+     * player/party)
+     */
     void clear_all_handles();
 
     /***
