@@ -3,6 +3,9 @@
 #include <algorithm>
 #include <iostream>
 #include <tuple>
+#ifdef _WIN32
+#include <windows.h> // GetKeyboardState, keybd_event
+#endif
 
 using namespace elona::snail;
 
@@ -305,6 +308,34 @@ bool input::was_pressed_just_now(key k) const
 bool input::is_ime_active() const
 {
     return _is_ime_active;
+}
+
+
+void input::disable_numlock()
+{
+    // SDL always reports numlock as being off when the program
+    // starts, even if it was on before. The Shift+numpad strangeness
+    // only happens on Windows, so it should be reasonable to use
+    // Windows APIs here.
+#ifdef _WIN32
+    if (GetKeyState(VK_NUMLOCK))
+    {
+        keybd_event(VK_NUMLOCK, 0x45, KEYEVENTF_EXTENDEDKEY, 0);
+        keybd_event(VK_NUMLOCK, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
+        _needs_restore_numlock = true;
+    }
+#endif
+}
+
+void input::restore_numlock()
+{
+#ifdef _WIN32
+    if (!GetKeyState(VK_NUMLOCK) && _needs_restore_numlock)
+    {
+        keybd_event(VK_NUMLOCK, 0x45, KEYEVENTF_EXTENDEDKEY, 0);
+        keybd_event(VK_NUMLOCK, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
+    }
+#endif
 }
 
 

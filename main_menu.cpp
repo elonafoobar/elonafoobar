@@ -123,8 +123,7 @@ main_menu_result_t main_title_menu()
     {
         if (config::instance().autonumlock)
         {
-            // TODO
-            // if NumLock key is pressed, send an event to release the key.
+            snail::input::instance().disable_numlock();
         }
         tx += (rnd(10) + 2) * p(1);
         ty += (rnd(10) + 2) * p(2);
