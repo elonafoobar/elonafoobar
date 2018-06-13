@@ -11,7 +11,6 @@
 #include "ui.hpp"
 #include "variables.hpp"
 #include "version.hpp"
-#include <iostream>
 
 namespace elona
 {
