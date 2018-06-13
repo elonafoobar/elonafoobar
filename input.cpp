@@ -3,6 +3,7 @@
 #include "blending.hpp"
 #include "config.hpp"
 #include "elona.hpp"
+#include "enums.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -453,10 +454,13 @@ void key_check(int prm_299)
     mousel = 0;
     key_tab = 0;
     key_escape = 0;
-    int p_at_m19 = stick(15);
+    int p_at_m19 = stick(stick_key::left
+                         | stick_key::up
+                         | stick_key::right
+                         | stick_key::down);
     if (p_at_m19 != 0)
     {
-        if (p_at_m19 == 128)
+        if (p_at_m19 == stick_key::escape)
         {
             if (keywait == 0)
             {
@@ -464,7 +468,7 @@ void key_check(int prm_299)
                 key_escape = 1;
             }
         }
-        if (p_at_m19 == 1024)
+        if (p_at_m19 == stick_key::tab)
         {
             key_tab = 1;
             key = key_next;
@@ -666,7 +670,7 @@ void key_check(int prm_299)
         }
     }
     int f_at_m19 = 0;
-    if (p_at_m19 == 1)
+    if (p_at_m19 == stick_key::left)
     {
         if (key_alt == 0)
         {
@@ -674,7 +678,7 @@ void key_check(int prm_299)
             f_at_m19 = 1;
         }
     }
-    if (p_at_m19 == 2)
+    if (p_at_m19 == stick_key::up)
     {
         if (key_alt == 0)
         {
@@ -682,7 +686,7 @@ void key_check(int prm_299)
             f_at_m19 = 1;
         }
     }
-    if (p_at_m19 == 4)
+    if (p_at_m19 == stick_key::right)
     {
         if (key_alt == 0)
         {
@@ -690,7 +694,7 @@ void key_check(int prm_299)
             f_at_m19 = 1;
         }
     }
-    if (p_at_m19 == 8)
+    if (p_at_m19 == stick_key::down)
     {
         if (key_alt == 0)
         {
@@ -890,7 +894,7 @@ void wait_key_released()
     {
         await(config::instance().wait1);
         int result{};
-        result = stick(768);
+        result = stick(stick_key::mouse_left | stick_key::mouse_right);
         if (result == 0)
         {
             key_check();
