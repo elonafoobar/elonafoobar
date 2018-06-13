@@ -335,10 +335,6 @@ endfunction()
 
 # Copy folders
 copy_nonexisting("runtime" "${CMAKE_SOURCE_DIR}/runtime" ".")
-copy_nonexisting("data" "${CMAKE_SOURCE_DIR}/data" "data")
-copy_nonexisting("lang" "${CMAKE_SOURCE_DIR}/lang" "lang")
-copy_nonexisting("lang2" "${CMAKE_SOURCE_DIR}/lang2" "lang2")
-copy_nonexisting("mods" "${CMAKE_SOURCE_DIR}/mods" "mods")
 
 # Copy assets from Elona 1.22 if they are present
 if(EXISTS "${CMAKE_PREFIX_PATH}/elona")
