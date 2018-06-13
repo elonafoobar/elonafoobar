@@ -45,12 +45,12 @@ TEST_CASE("Test that API tables aren't reset", "[Lua: Serialization]")
     elona::lua::lua_env lua;
     lua.reload();
 
-    REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(Rand = Elona.require("Rand"))"));
-    REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Rand ~= nil)"));
+    REQUIRE_NOTHROW(lua.load_mod_from_script("test", ""));
+    REQUIRE_NOTHROW(lua.run_in_mod("test", R"(Rand = Elona.require("Rand"); assert(Rand ~= nil))"));
 
     lua.clear_mod_stores();
 
-    REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Rand ~= nil)"));
+    REQUIRE_NOTHROW(lua.run_in_mod("test", R"(Rand = Elona.require("Rand"); assert(Rand ~= nil))"));
 }
 
 TEST_CASE("Test that globals aren't reset", "[Lua: Serialization]")
@@ -74,7 +74,7 @@ TEST_CASE("Test that store can be reset and map init hooks re-run", "[Lua: Seria
     REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
-function my_map_init_hook()
+local function my_map_init_hook()
    Store.val = 42
 end
 

@@ -21,7 +21,7 @@ TEST_CASE("Test registering of callback", "[Lua: Events]")
     REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
-function my_handler()
+local function my_handler()
    Store.thing = "dood"
 end
 
@@ -43,7 +43,7 @@ TEST_CASE("Test registering of callback multiple times", "[Lua: Events]")
     REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
-function my_handler()
+local function my_handler()
    Store.called_times = Store.called_times + 1
 end
 
@@ -68,7 +68,7 @@ TEST_CASE("Test unregistering of callback", "[Lua: Events]")
     REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
-function my_handler()
+local function my_handler()
    Store.thing = "dood"
 end
 
@@ -91,7 +91,7 @@ TEST_CASE("Test unregistering of callback multiple times", "[Lua: Events]")
     REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
-function my_handler()
+local function my_handler()
    Store.called_times = Store.called_times + 1
 end
 
@@ -120,7 +120,7 @@ TEST_CASE("Test unregistering of callback without registering", "[Lua: Events]")
     REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
-function my_handler()
+local function my_handler()
    Store.called_times = Store.called_times + 1
 end
 
@@ -142,7 +142,7 @@ TEST_CASE("Test unregistering of callback inside callback", "[Lua: Events]")
     REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
-function my_handler()
+local function my_handler()
    Store.called_times = Store.called_times + 1
    Event.unregister(Event.EventKind.AllTurnsFinished, my_handler)
 end
@@ -166,7 +166,7 @@ TEST_CASE("Test clearing of single callback type", "[Lua: Events]")
     REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
-function my_handler()
+local function my_handler()
    Store.called_times = Store.called_times + 1
 end
 
@@ -192,7 +192,7 @@ TEST_CASE("Test clearing of all callback types", "[Lua: Events]")
     REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
-function my_handler()
+local function my_handler()
    Store.called_times = Store.called_times + 1
 end
 
@@ -218,7 +218,7 @@ TEST_CASE("Test isolation of event clearing between mods", "[Lua: Events]")
     REQUIRE_NOTHROW(lua.load_mod_from_script("first_mod", R"(
 local Event = Elona.require("Event")
 
-function my_handler()
+local function my_handler()
    Store.called_times = Store.called_times + 1
 end
 
@@ -245,12 +245,12 @@ TEST_CASE("Test triggering of callback inside another callback", "[Lua: Events]"
     REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
-function first_handler()
+local function first_handler()
    Store.first = true
    Event.trigger(Event.EventKind.PlayerTurn, {})
 end
 
-function second_handler()
+local function second_handler()
    Store.second = true
 end
 

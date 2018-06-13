@@ -20,7 +20,7 @@ TEST_CASE("Test character created callback", "[Lua: Mods]")
     REQUIRE_NOTHROW(elona::lua::lua.load_mod_from_script("test_chara_created", R"(
 local Event = Elona.require("Event")
 
-function my_chara_created_handler(chara)
+local function my_chara_created_handler(chara)
    Store.charas[chara.index] = chara
 end
 
@@ -45,7 +45,7 @@ TEST_CASE("Test character hurt callback", "[Lua: Mods]")
     REQUIRE_NOTHROW(elona::lua::lua.load_mod_from_script("test_chara_hurt", R"(
 local Event = Elona.require("Event")
 
-function my_chara_hurt_handler(chara, amount)
+local function my_chara_hurt_handler(chara, amount)
    Store.hurt_idx = chara.index
    Store.hurt_amount = amount
 end
@@ -75,7 +75,7 @@ TEST_CASE("Test character removed callback", "[Lua: Mods]")
     REQUIRE_NOTHROW(elona::lua::lua.load_mod_from_script("test_chara_removed", R"(
 local Event = Elona.require("Event")
 
-function my_chara_removed_handler(chara)
+local function my_chara_removed_handler(chara)
    Store.removed_idx = chara.index
 end
 
@@ -101,7 +101,7 @@ TEST_CASE("Test character killed callback", "[Lua: Mods]")
     REQUIRE_NOTHROW(elona::lua::lua.load_mod_from_script("test_chara_killed", R"(
 local Event = Elona.require("Event")
 
-function my_chara_killed_handler(chara)
+local function my_chara_killed_handler(chara)
    Store.killed_idx = chara.index
 end
 
@@ -127,11 +127,11 @@ TEST_CASE("Test that killed event is fired for townsfolk but not removed event",
     REQUIRE_NOTHROW(elona::lua::lua.load_mod_from_script("test_townsperson_killed", R"(
 local Event = Elona.require("Event")
 
-function my_chara_removed_handler(chara)
+local function my_chara_removed_handler(chara)
    Store.removed_idx = chara.index
 end
 
-function my_chara_killed_handler(chara)
+local function my_chara_killed_handler(chara)
    Store.killed_idx = chara.index
 end
 
@@ -163,11 +163,11 @@ TEST_CASE("Test that killed event is fired for special characters but not remove
     REQUIRE_NOTHROW(elona::lua::lua.load_mod_from_script("test_special_chara_killed", R"(
 local Event = Elona.require("Event")
 
-function my_chara_removed_handler(chara)
+local function my_chara_removed_handler(chara)
    Store.removed_idx = chara.index
 end
 
-function my_chara_killed_handler(chara)
+local function my_chara_killed_handler(chara)
    Store.killed_idx = chara.index
 end
 
@@ -200,7 +200,7 @@ TEST_CASE("Test item created callback", "[Lua: Mods]")
     REQUIRE_NOTHROW(elona::lua::lua.load_mod_from_script("test_item_created", R"(
 local Event = Elona.require("Event")
 
-function my_item_created_handler(item)
+local function my_item_created_handler(item)
    Store.items[item.index] = item
 end
 
