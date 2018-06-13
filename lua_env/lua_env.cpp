@@ -6,8 +6,9 @@
 #include "../log.hpp"
 #include "../variables.hpp"
 #include "event_manager.hpp"
-#include <vector>
 #include <map>
+#include <sstream>
+#include <vector>
 
 namespace elona
 {
@@ -271,9 +272,22 @@ void lua_env::reload()
     load_core_mod(filesystem::dir::mods());
 }
 
-int deny(lua_State* L)
+int deny(sol::table table, sol::object key, sol::object value, sol::this_state ts)
 {
-    return luaL_error(L, "This variable is read-only.");
+    std::stringstream ss;
+    if (key.is<std::string>())
+    {
+        ss << "Cannot assign to the global variable \"" << key.as<std::string>() << "\". ";
+    }
+    else
+    {
+        ss << "An attempt was made to assign to a global variable. ";
+    }
+
+    ss << "Please prefix the assignment with \"local\" to make it a local variable.";
+
+    lua_State* L = ts;
+    return luaL_error(L, ss.str().c_str());
 }
 
 void lua_env::setup_mod_globals(mod_info& mod, sol::table& table)
