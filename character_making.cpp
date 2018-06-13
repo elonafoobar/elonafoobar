@@ -15,6 +15,7 @@
 #include "random.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
+#include <iostream>
 
 
 namespace
@@ -23,6 +24,7 @@ elona_vector1<std::string> cmrace;
 std::string cmclass;
 elona_vector1<int> cmstats;
 elona_vector1<int> cmlock;
+elona_vector1<int> alias_lock;
 } // namespace
 
 
@@ -81,7 +83,7 @@ main_menu_result_t character_making_select_race()
     windowshadow = 1;
 
     bool reset_page = true;
-    while (1)
+    while (true)
     {
         if (reset_page)
         {
@@ -208,7 +210,7 @@ main_menu_result_t character_making_select_sex(bool advanced_to_next_menu)
     }
     windowshadow = 1;
 
-    while (1)
+    while (true)
     {
         s(0) = lang(u8"性別の選択"s, u8"Gender Selection"s);
         s(1) = strhint3b;
@@ -306,7 +308,7 @@ main_menu_result_t character_making_select_class(bool advanced_to_next_menu)
     }
     windowshadow = 1;
 
-    while (1)
+    while (true)
     {
         if (cs != cs_bk)
         {
@@ -386,7 +388,7 @@ main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
     }
 
     bool init = true;
-    while (1)
+    while (true)
     {
         if (init)
         {
@@ -513,8 +515,7 @@ main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
             }
             if (p == 1)
             {
-                return main_menu_result_t::
-                    character_making_select_feats_and_alias;
+                return main_menu_result_t::character_making_select_feats;
             }
             if (cmlock(p - 2) != 0)
             {
@@ -547,42 +548,52 @@ main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
     }
 }
 
-main_menu_result_t character_making_select_feats_and_alias(
-    bool is_choosing_feat)
+main_menu_result_t character_making_select_feats()
 {
-    if (is_choosing_feat)
+    gdata_acquirable_feat_count = 3;
+    DIM2(trait, 500);
+    DIM2(spact, 500);
+    gain_race_feat();
+    gmode(0);
+    pos(0, 0);
+    gcopy(4, 0, 0, windoww, windowh);
+    gmode(2);
+    s = lang(
+        u8"フィートとは、君の持っている有益な特徴だ。3つまで選べるよ。"s,
+        u8"Choose your feats wisely."s);
+    draw_caption();
+    font(13 - en * 2, snail::font_t::style_t::bold);
+    pos(20, windowh - 20);
+    mes(u8"Press F1 to show help."s);
+    if (geneuse != ""s)
     {
-        gdata_acquirable_feat_count = 3;
-        DIM2(trait, 500);
-        DIM2(spact, 500);
-        gain_race_feat();
-        gmode(0);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
-        gmode(2);
-        s = lang(
-            u8"フィートとは、君の持っている有益な特徴だ。3つまで選べるよ。"s,
-            u8"Choose your feats wisely."s);
-        draw_caption();
-        font(13 - en * 2, snail::font_t::style_t::bold);
-        pos(20, windowh - 20);
-        mes(u8"Press F1 to show help."s);
-        if (geneuse != ""s)
-        {
-            pos(20, windowh - 36);
-            mes(u8"Gene from "s + geneuse);
-        }
-        menu_result result = menu_feats();
-        clear_background_in_character_making();
-        if (result.pressed_f1)
-        {
-            return main_menu_result_t::character_making_select_feats_and_alias;
-        }
-        if (!result.succeeded)
-        {
-            return main_menu_result_t::character_making_role_attributes_looped;
-        }
+        pos(20, windowh - 36);
+        mes(u8"Gene from "s + geneuse);
     }
+
+    menu_result result = menu_feats();
+    clear_background_in_character_making();
+
+    if (result.pressed_f1)
+    {
+        return main_menu_result_t::character_making_select_feats;
+    }
+    if (!result.succeeded)
+    {
+        return main_menu_result_t::character_making_role_attributes_looped;
+    }
+
+    return main_menu_result_t::character_making_select_alias;
+}
+
+main_menu_result_t character_making_select_alias(bool advanced_to_next_menu)
+{
+    bool reroll_aliases = true;
+    bool redraw_aliases = true;
+    bool restore_previous_alias = !advanced_to_next_menu;
+
+    DIM2(alias_lock, 18);
+
     pagemax = 0;
     page = 0;
     gmode(0);
@@ -606,32 +617,18 @@ main_menu_result_t character_making_select_feats_and_alias(
     cs_bk = -1;
     list(0, 0) = -1;
 
-    while (1)
+    if (restore_previous_alias)
     {
-        if (cs != cs_bk)
+        cs = 1;
+    }
+
+    while (true)
+    {
+        if (reroll_aliases)
         {
-            s(0) = lang(u8"異名の選択"s, u8"Alias Selection"s);
-            s(1) = strhint3b;
-            display_window(
-                (windoww - 400) / 2 + inf_screenx,
-                winposy(458, 1) + 20,
-                400,
-                458);
-            ++cmbg;
-            x = ww / 3 * 2;
-            y = wh - 80;
-            gmode(4, 180, 300, 40);
-            pos(wx + ww / 2, wy + wh / 2);
-            grotate(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
-            gmode(2);
-            display_topic(
-                lang(u8"異名の候補"s, u8"Alias List"s), wx + 28, wy + 30);
-            font(14 - en * 2);
             for (int cnt = 0; cnt < 17; ++cnt)
             {
-                key_list(cnt) = key_select(cnt);
-                keyrange = cnt + 1;
-                if (list(0, 0) == -1)
+                if (list(0, 0) == -1 && alias_lock(cnt) == 0)
                 {
                     if (gdata_wizard == 1)
                     {
@@ -646,14 +643,57 @@ main_menu_result_t character_making_select_feats_and_alias(
                 {
                     listn(0, cnt) = lang(u8"リロール"s, u8"Reroll"s);
                 }
+                else if (restore_previous_alias && cnt == 1)
+                {
+                    listn(0, cnt) = cmaka;
+                    restore_previous_alias = false;
+                }
+            }
+            reroll_aliases = false;
+        }
+        if (redraw_aliases)
+        {
+            s(0) = lang(u8"異名の選択"s, u8"Alias Selection"s);
+            s(1) =
+                strhint3b + key_mode2 + lang(u8" [異名のロック]", u8" [Lock Alias]");
+            display_window(
+                (windoww - 400) / 2 + inf_screenx,
+                winposy(458, 1) + 20,
+                400,
+                458);
+            ++cmbg;
+            x = ww / 3 * 2;
+            y = wh - 80;
+            gmode(4, 180, 300, 40);
+            pos(wx + ww / 2, wy + wh / 2);
+            grotate(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
+            gmode(2);
+            display_topic(
+                lang(u8"異名の候補"s, u8"Alias List"s), wx + 28, wy + 30);
+            for (int cnt = 0; cnt < 17; ++cnt)
+            {
+                font(14 - en * 2);
+                key_list(cnt) = key_select(cnt);
+                keyrange = cnt + 1;
                 pos(wx + 38, wy + 66 + cnt * 19 - 2);
                 gcopy(3, cnt * 24 + 72, 30, 24, 18);
                 cs_list(
                     cs == cnt, listn(0, cnt), wx + 64, wy + 66 + cnt * 19 - 1);
+                if (alias_lock(cnt) == 1)
+                {
+                    font(12 - en * 2, snail::font_t::style_t::bold);
+                    pos(wx + 280, wy + 66 + cnt * 19 + 2);
+                    color(20, 20, 140);
+                    mes(u8"Locked!"s);
+                    color(0, 0, 0);
+                }
+
             }
             cs_bk = cs;
             list(0, 0) = 0;
+            redraw_aliases = false;
         }
+
         redraw();
         await(config::instance().wait1);
         key_check();
@@ -666,33 +706,49 @@ main_menu_result_t character_making_select_feats_and_alias(
                 list(0, 0) = -1;
                 snd(103);
                 cs_bk = -1;
+                reroll_aliases = true;
+                redraw_aliases = true;
             }
             else
             {
                 cmaka = listn(0, p);
-                return main_menu_result_t::character_making_final_phase;
+                return main_menu_result_t::character_making_customize_appearance;
             }
+        }
+        if (key == key_mode2 && cs != -1)
+        {
+            if (alias_lock(cs) != 0)
+            {
+                alias_lock(cs) = 0;
+            }
+            else
+            {
+                alias_lock(cs) = 1;
+            }
+            snd(20);
+            redraw_aliases = true;
         }
         if (key == key_cancel)
         {
-            return main_menu_result_t::character_making_select_feats_and_alias;
+            return main_menu_result_t::character_making_select_feats;
         }
         if (getkey(snail::key::f1))
         {
             show_game_help();
-            return main_menu_result_t::
-                character_making_select_feats_and_alias_looped;
+            return main_menu_result_t:: character_making_select_alias_looped;
+        }
+        if (cs != cs_bk)
+        {
+            redraw_aliases = true;
         }
     }
 }
 
-main_menu_result_t character_making_final_phase()
+main_menu_result_t character_making_customize_appearance()
 {
-    int cmportrait = 0;
-    std::string cmname;
     pcc(15, 0) = 0;
 
-    while (1)
+    while (true)
     {
         gmode(0);
         pos(0, 0);
@@ -715,7 +771,7 @@ main_menu_result_t character_making_final_phase()
         if (stat == 0)
         {
             clear_background_in_character_making();
-            return main_menu_result_t::character_making_select_feats_and_alias_looped;
+            return main_menu_result_t::character_making_select_alias_looped;
         }
         if (stat != -1)
         {
@@ -725,12 +781,19 @@ main_menu_result_t character_making_final_phase()
         clear_background_in_character_making();
     }
     clear_background_in_character_making();
-    cmportrait = cdata[rc].portrait;
 
-    while (1)
+    return main_menu_result_t::character_making_final_phase;
+}
+
+main_menu_result_t character_making_final_phase()
+{
+    std::string cmname;
+    int cmportrait = cdata[rc].portrait;
+
+    while (true)
     {
         snd(94);
-        while (1)
+        while (true)
         {
             gmode(0);
             pos(0, 0);
@@ -787,9 +850,11 @@ main_menu_result_t character_making_final_phase()
             lang(u8"いいえ"s, u8"No"s), u8"b"s, ""s + promptmax);
         ELONA_APPEND_PROMPT(
             lang(u8"最初から"s, u8"Restart"s), u8"c"s, ""s + promptmax);
+        ELONA_APPEND_PROMPT(
+            lang(u8"戻る"s, u8"Go back"s), u8"d"s, ""s + promptmax);
         rtval = show_prompt(promptx, 240, 160);
         snd(20);
-        if (rtval != 1 && rtval != -1)
+        if (rtval != 1)
         {
             break;
         }
@@ -799,6 +864,13 @@ main_menu_result_t character_making_final_phase()
         nowindowanime = 0;
         return main_menu_result_t::main_menu_new_game;
     }
+    else if (rtval == 3)
+    {
+        nowindowanime = 0;
+        clear_background_in_character_making();
+        load_background_variants(2);
+        return main_menu_result_t::character_making_customize_appearance;
+    }
     gmode(0);
     pos(0, 100);
     gcopy(2, 0, 0, windoww, windowh - 100);
@@ -807,11 +879,15 @@ main_menu_result_t character_making_final_phase()
         u8"最後の質問だ。君の名前は？"s, u8"Last question. What's your name?"s);
     draw_caption();
 
-    while (1)
+    while (true)
     {
         inputlog = "";
-        input_text_dialog(
-            (windoww - 230) / 2 + inf_screenx, winposy(120), 10, false);
+        bool canceled = input_text_dialog(
+            (windoww - 230) / 2 + inf_screenx, winposy(120), 10, true);
+        if (canceled)
+        {
+            return main_menu_result_t::character_making_final_phase;
+        }
         inputlog = filesystem::normalize_as_filename(inputlog);
         cmname = ""s + inputlog;
         if (cmname == ""s || cmname == u8" "s)

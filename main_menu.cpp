@@ -30,13 +30,7 @@ main_menu_result_t main_title_menu()
     key_list(4) = u8"e"s;
     key_list(5) = u8"f"s;
     pagesize = 0;
-    gsel(2);
-    for (int cnt = 0; cnt < 8; ++cnt)
-    {
-        pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(
-            filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"), 1);
-    }
+    load_background_variants(2);
     gsel(4);
     gmode(0);
     pos(0, 0);
@@ -257,11 +251,17 @@ main_menu_result_t main_menu_wrapper()
         case main_menu_result_t::character_making_role_attributes_looped:
             result = character_making_role_attributes(false);
             break;
-        case main_menu_result_t::character_making_select_feats_and_alias:
-            result = character_making_select_feats_and_alias();
+        case main_menu_result_t::character_making_select_feats:
+            result = character_making_select_feats();
             break;
-        case main_menu_result_t::character_making_select_feats_and_alias_looped:
-            result = character_making_select_feats_and_alias(false);
+        case main_menu_result_t::character_making_select_alias:
+            result = character_making_select_alias();
+            break;
+        case main_menu_result_t::character_making_select_alias_looped:
+            result = character_making_select_alias(false);
+            break;
+        case main_menu_result_t::character_making_customize_appearance:
+            result = character_making_customize_appearance();
             break;
         case main_menu_result_t::character_making_final_phase:
             result = character_making_final_phase();
@@ -301,13 +301,7 @@ main_menu_result_t main_menu_new_game()
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"void.bmp", 1);
     gzoom(4, 0, 0, 800, 600, windoww, windowh);
-    gsel(2);
-    for (int cnt = 0; cnt < 8; ++cnt)
-    {
-        pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(
-            filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"), 1);
-    }
+    load_background_variants(2);
     gsel(3);
     pos(960, 96);
     picload(filesystem::dir::graphic() / u8"deco_cm.bmp", 1);

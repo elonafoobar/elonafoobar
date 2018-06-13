@@ -2227,6 +2227,19 @@ void fillbg(int prm_743, int prm_744, int prm_745, int prm_746, int prm_747)
     return;
 }
 
+void load_background_variants(int buffer)
+{
+    int buffer_bk = ginfo(3);
+    gsel(buffer);
+    for (int cnt = 0; cnt < 8; ++cnt)
+    {
+        pos(cnt % 4 * 180, cnt / 4 * 300);
+        picload(
+            filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"), 1);
+    }
+    gsel(buffer_bk);
+}
+
 void clear_background_in_character_making()
 {
     gsel(4);

@@ -247,14 +247,14 @@ void input_number_dialog(int x, int y, int max_number)
 
 
 
-void input_text_dialog(
+bool input_text_dialog(
     int x,
     int y,
     int val2,
     bool is_cancelable,
     bool limit_length)
 {
-    int ime_esc = 0;
+    bool canceled = false;
 
     snd(26);
     dx = val2 * 16 + 60;
@@ -269,7 +269,6 @@ void input_text_dialog(
 
     notesel(inputlog);
     p(1) = 2;
-    ime_esc = 0;
 
     for (int cnt = 0;; ++cnt)
     {
@@ -346,15 +345,6 @@ void input_text_dialog(
             p(4) += 2;
         }
 
-        gmode(4, -1, -1, p(1) / 2 + 50);
-        pos(x + 34 + p(4) * 8, y + 5);
-        gcopy(3, 0, 336, 12, 24);
-        gmode(2);
-        color(255, 255, 255);
-        pos(x + 36, y + 9);
-        mes(s);
-        color(0, 0, 0);
-
         if (strutil::contains(inputlog(0), u8"\n"))
         {
             rtval = 0;
@@ -366,13 +356,12 @@ void input_text_dialog(
             inputlog = "";
             if (is_cancelable)
             {
-                ime_esc = 1;
+                canceled = true;
             }
         }
-        redraw();
         if (is_cancelable)
         {
-            if (ime_esc == 1)
+            if (canceled)
             {
                 inputlog = "";
                 keywait = 1;
@@ -380,6 +369,17 @@ void input_text_dialog(
                 break;
             }
         }
+
+        gmode(4, -1, -1, p(1) / 2 + 50);
+        pos(x + 34 + p(4) * 8, y + 5);
+        gcopy(3, 0, 336, 12, 24);
+        gmode(2);
+        color(255, 255, 255);
+        pos(x + 36, y + 9);
+        mes(s);
+        color(0, 0, 0);
+
+        redraw();
     }
     gmode(2);
     clrobj(1);
@@ -389,6 +389,8 @@ void input_text_dialog(
     }
     rm_crlf(inputlog);
     onkey_0();
+
+    return canceled;
 }
 
 
