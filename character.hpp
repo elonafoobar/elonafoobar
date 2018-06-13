@@ -505,7 +505,7 @@ extern cdata_t cdata;
 int chara_create(int = 0, int = 0, int = 0, int = 0);
 int chara_create_internal();
 void initialize_character();
-void chara_place();
+bool chara_place();
 int chara_relocate(int = 0, int = 0, int = 0);
 void chara_refresh(int);
 bool chara_copy(int cc);
