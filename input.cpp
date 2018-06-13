@@ -396,6 +396,9 @@ void input_text_dialog(
 void key_check(int prm_299)
 {
     static int prevjoy_at_m19{};
+    bool delay_keypress = false;
+    bool delay_enter = false;
+    static int keywait_enter{};
 
     if (msgalert == 1)
     {
@@ -563,6 +566,17 @@ void key_check(int prm_299)
         keywait = 0;
         key_shift = 0;
     }
+
+    if (snail::input::instance().is_pressed(snail::key::enter))
+    {
+        key = key_enter;
+        delay_enter = true;
+    }
+    else
+    {
+        keywait_enter = 0;
+    }
+
     if (config::instance().joypad)
     {
         int j_at_m19 = 0;
@@ -669,13 +683,12 @@ void key_check(int prm_299)
             keybd_wait = 1000;
         }
     }
-    int f_at_m19 = 0;
     if (p_at_m19 == stick_key::left)
     {
         if (key_alt == 0)
         {
             key = key_west;
-            f_at_m19 = 1;
+            delay_keypress = true;
         }
     }
     if (p_at_m19 == stick_key::up)
@@ -683,7 +696,7 @@ void key_check(int prm_299)
         if (key_alt == 0)
         {
             key = key_north;
-            f_at_m19 = 1;
+            delay_keypress = true;
         }
     }
     if (p_at_m19 == stick_key::right)
@@ -691,7 +704,7 @@ void key_check(int prm_299)
         if (key_alt == 0)
         {
             key = key_east;
-            f_at_m19 = 1;
+            delay_keypress = true;
         }
     }
     if (p_at_m19 == stick_key::down)
@@ -699,28 +712,28 @@ void key_check(int prm_299)
         if (key_alt == 0)
         {
             key = key_south;
-            f_at_m19 = 1;
+            delay_keypress = true;
         }
     }
     if (p_at_m19 == 3)
     {
         key = key_northwest;
-        f_at_m19 = 1;
+        delay_keypress = true;
     }
     if (p_at_m19 == 6)
     {
         key = key_northeast;
-        f_at_m19 = 1;
+        delay_keypress = true;
     }
     if (p_at_m19 == 9)
     {
         key = key_southwest;
-        f_at_m19 = 1;
+        delay_keypress = true;
     }
     if (p_at_m19 == 12)
     {
         key = key_southeast;
-        f_at_m19 = 1;
+        delay_keypress = true;
     }
 
     if (getkey(snail::key::f1))
@@ -776,7 +789,7 @@ void key_check(int prm_299)
     {
         return;
     }
-    if (f_at_m19)
+    if (delay_keypress)
     {
         if (prm_299 == 1)
         {
@@ -831,6 +844,7 @@ void key_check(int prm_299)
                 running = 1;
             }
         }
+        // Press the key every 7 frames twice.
         else if (keybd_wait < 14)
         {
             if (keybd_wait != 0 && keybd_wait != 7)
@@ -838,6 +852,7 @@ void key_check(int prm_299)
                 key = "";
             }
         }
+        // Press the key every other frame.
         else if (keybd_wait < 1000)
         {
             if (keybd_wait % 2 != 1)
@@ -852,6 +867,18 @@ void key_check(int prm_299)
         keybd_wait = 0;
         keybd_attacking = 0;
         running = 0;
+    }
+
+    if (delay_enter)
+    {
+        if (keywait_enter < 20)
+        {
+            if (keywait_enter != 0)
+            {
+                key = "";
+            }
+        }
+        keywait_enter++;
     }
 
     bool shortcut{};
