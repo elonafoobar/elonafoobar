@@ -15,7 +15,6 @@
 #include "random.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
-#include <iostream>
 
 
 namespace
