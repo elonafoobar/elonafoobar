@@ -11,6 +11,7 @@
 #include "ui.hpp"
 #include "variables.hpp"
 #include "version.hpp"
+#include <iostream>
 
 namespace elona
 {
@@ -312,32 +313,6 @@ main_menu_result_t main_menu_new_game()
     pos(960, 96);
     picload(filesystem::dir::graphic() / u8"deco_cm.bmp", 1);
     gsel(0);
-    if (range::distance(filesystem::dir_entries{
-            filesystem::dir::save(), filesystem::dir_entries::type::dir})
-        >= 5)
-    {
-        keyrange = 0;
-        gmode(0);
-        pos(0, 0);
-        gcopy(4, 0, 0, windoww, windowh);
-        gmode(2);
-        s = lang(
-            u8"これ以上は冒険者を保存できない。"s,
-            u8"Save slots are full. You have to delete some of your adventurers."s);
-        draw_caption();
-        redraw();
-        while (1)
-        {
-            key_check();
-            cursor_check();
-            await(config::instance().wait1);
-            if (key != ""s)
-            {
-                return main_menu_result_t::main_title_menu;
-            }
-        }
-        return main_menu_result_t::main_title_menu;
-    }
     return main_menu_result_t::character_making_select_race;
 }
 
@@ -345,28 +320,14 @@ main_menu_result_t main_menu_new_game()
 
 main_menu_result_t main_menu_continue()
 {
+    int save_data_count = 0;
+    int index = 0;
     cs = 0;
     cs_bk = -1;
-    gsel(4);
-    pos(0, 0);
-    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
-    gzoom(4, 0, 0, 800, 600, windoww, windowh);
-    gsel(0);
-    gmode(0);
-    pos(0, 0);
-    gcopy(4, 0, 0, windoww, windowh);
-    gmode(2);
-    if (jp)
-    {
-        s = u8"どの冒険を再開するんだい？"s;
-    }
-    else
-    {
-        s = u8"Which save game do you want to continue?"s;
-    }
-    draw_caption();
+    page = 0;
+    pagesize = 5;
     keyrange = 0;
-    int save_data_count = 0;
+
     for (const auto& entry : filesystem::dir_entries{
              filesystem::dir::save(), filesystem::dir_entries::type::dir})
     {
@@ -376,41 +337,76 @@ main_menu_result_t main_menu_continue()
         {
             continue;
         }
+
+        // the number of bytes read by bload depends on the size of
+        // the string passed in, so make it 100 bytes long.
+        playerheader = std::string(100, '\0');
         bload(header_filepath, playerheader);
+
         list(0, save_data_count) = save_data_count;
         listn(0, save_data_count) = s;
         listn(1, save_data_count) = ""s + playerheader;
         key_list(save_data_count) = key_select(save_data_count);
-        ++keyrange;
         ++save_data_count;
     }
+    listmax = save_data_count;
     windowshadow = 1;
 
     while (true)
     {
+savegame_change_page:
+        cs_bk = -1;
+        pagemax = (listmax - 1) / pagesize;
+        if (page < 0)
+        {
+            page = pagemax;
+        }
+        else if (page > pagemax)
+        {
+            page = 0;
+        }
+
+        clear_background_in_continue();
+        if (jp)
+        {
+            s = u8"どの冒険を再開するんだい？"s;
+        }
+        else
+        {
+            s = u8"Which save game do you want to continue?"s;
+        }
+        draw_caption();
+savegame_draw_page:
         if (jp)
         {
             s(0) = u8"冒険者の選択"s;
-            s(1) = u8"BackSpace [削除]  "s + strhint3b;
+            s(1) = u8"BackSpace [削除]  "s + strhint2 + strhint3b;
         }
         else
         {
             s(0) = u8"Game Selection"s;
-            s(1) = u8"BackSpace [Delete]  "s + strhint3b;
+            s(1) = u8"BackSpace [Delete]  "s + strhint2 + strhint3b;
         }
         display_window(
             (windoww - 440) / 2 + inf_screenx, winposy(288, 1), 440, 288);
         cs_listbk();
-        for (int cnt = 0, cnt_end = save_data_count; cnt < cnt_end; ++cnt)
+        keyrange = 0;
+        for (int cnt = 0, cnt_end = pagesize; cnt < cnt_end; ++cnt)
         {
+            index = pagesize * page + cnt;
+            if (index >= listmax)
+            {
+                break;
+            }
             x = wx + 20;
             y = cnt * 40 + wy + 50;
             display_key(x + 20, y - 2, cnt);
             font(11 - en * 2);
             pos(x + 48, y - 4);
-            mes(listn(0, cnt));
+            mes(listn(0, index));
             font(13 - en * 2);
-            cs_list(cs == cnt, listn(1, cnt), x + 48, y + 8);
+            cs_list(cs == cnt, listn(1, index), x + 48, y + 8);
+            ++keyrange;
         }
         cs_bk = cs;
         if (save_data_count == 0)
@@ -424,11 +420,16 @@ main_menu_result_t main_menu_continue()
         key_check();
         cursor_check();
         p = -1;
-        for (int cnt = 0, cnt_end = (keyrange); cnt < cnt_end; ++cnt)
+        for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
         {
+            index = pagesize * page + cnt;
+            if (index >= listmax)
+            {
+                break;
+            }
             if (key == key_select(cnt))
             {
-                p = list(0, cnt);
+                p = list(0, index);
                 break;
             }
         }
@@ -486,10 +487,29 @@ main_menu_result_t main_menu_continue()
                 }
             }
         }
+        if (key == key_pageup)
+        {
+            if (pagemax != 0)
+            {
+                snd(1);
+                ++page;
+                goto savegame_change_page;
+            }
+        }
+        if (key == key_pagedown)
+        {
+            if (pagemax != 0)
+            {
+                snd(1);
+                --page;
+                goto savegame_change_page;
+            }
+        }
         if (key == key_cancel)
         {
             return main_menu_result_t::main_title_menu;
         }
+        goto savegame_draw_page;
     }
 }
 

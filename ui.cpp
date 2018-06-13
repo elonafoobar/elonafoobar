@@ -2224,7 +2224,6 @@ void fillbg(int prm_743, int prm_744, int prm_745, int prm_746, int prm_747)
         }
     }
     gmode(2);
-    return;
 }
 
 void clear_background_in_character_making()
@@ -2238,9 +2237,20 @@ void clear_background_in_character_making()
     pos(0, 0);
     gcopy(4, 0, 0, windoww, 64);
     gmode(2);
-    return;
 }
 
+void clear_background_in_continue()
+{
+    gsel(4);
+    pos(0, 0);
+    picload(filesystem::dir::graphic() / u8"void.bmp", 1);
+    gzoom(4, 0, 0, 800, 600, windoww, windowh);
+    gsel(0);
+    gmode(0);
+    pos(0, 0);
+    gcopy(4, 0, 0, windoww, windowh);
+    gmode(2);
+}
 
 
 void draw_scroll(int x, int y, int width, int height)

@@ -160,6 +160,9 @@ void bload(const fs::path& filename, std::string& data, int size, int)
     }
     auto buf = read_binary(in, size).first;
     data = std::string{buf.get(), static_cast<size_t>(size)};
+
+    // Trim trailing NUL bytes from the string that was read.
+    data.erase(std::remove(data.begin(), data.end(), '\0'), data.end());
 }
 
 
