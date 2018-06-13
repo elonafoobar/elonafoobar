@@ -28,10 +28,16 @@ assert(type(Rand.coinflip) == "function")
 )"));
 }
 
-TEST_CASE("test core API tables are read-only", "[Lua: API]")
+TEST_CASE("test loading of non-ASCII filepaths", "[Lua: Misc]")
+{
+    lua_testcase(u8"Windowsファイル名.lua");
+}
+
+TEST_CASE("test that core API tables are read-only", "[Lua: API]")
 {
     lua_testcase("readonly.lua");
 }
+
 
 TEST_CASE("Core API: Chara", "[Lua: API]")
 {

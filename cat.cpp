@@ -1,4 +1,5 @@
 #include "cat.hpp"
+#include "defines.hpp"
 #include <iostream>
 #include <string>
 using namespace std::string_literals;
@@ -23,7 +24,7 @@ void engine::initialize()
 
 void engine::load(const fs::path& filepath)
 {
-#ifdef _WIN32
+#ifdef ELONA_OS_WINDOWS
     std::wstring filepath_str = filepath.native();
     if (luaL_dowfile(ptr(), filepath_str.c_str()) != 0)
 #else
