@@ -227,11 +227,20 @@ endif()
 include_directories(${Boost_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 
-if(NOT DEFINED LUA_INCLUDE_DIR OR NOT DEFINED LUA_LIBRARIES)
+if(WIN32)
+  # Build custom version of Lua 5.3 with UTF-16 filename support
+  add_subdirectory(thirdparty/lib/lua)
+  target_include_directories(${PROJECT_NAME} PUBLIC thirdparty/lib/lua/lua/)
+  target_link_libraries(${PROJECT_NAME} liblua53)
+else()
+  if(NOT DEFINED LUA_INCLUDE_DIR OR NOT DEFINED LUA_LIBRARIES)
     find_package(Lua REQUIRED)
+  endif()
+  include_directories(${LUA_INCLUDE_DIR})
+  target_link_libraries(${PROJECT_NAME} ${LUA_LIBRARIES})
 endif()
-include_directories(${LUA_INCLUDE_DIR})
-target_link_libraries(${PROJECT_NAME} ${LUA_LIBRARIES})
+
+
 
 if(NOT DEFINED SDL2_INCLUDE_DIR OR NOT DEFINED SDL2_LIBRARIES)
     find_package(SDL2 REQUIRED)
@@ -283,7 +292,6 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     string(APPEND CMAKE_SHARED_LINKER_FLAGS " -Wl,--no-undefined")
 endif()
 
-
 # My libraries
 add_subdirectory(snail)
 
@@ -294,19 +302,17 @@ else()
 endif()
 
 
-INSTALL(TARGETS ElonaFoobar
+INSTALL(TARGETS ${PROJECT_NAME}
     BUNDLE DESTINATION . COMPONENT Runtime
     RUNTIME DESTINATION bin COMPONENT Runtime)
 
 # Create macOS .app bundle
-SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/ElonaFoobar")
+SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/${PROJECT_NAME}")
 IF(APPLE)
-  SET(plugin_dest_dir ElonaFoobar.app/Contents/MacOS)
-  SET(qtconf_dest_dir ElonaFoobar.app/Contents/Resources)
-  SET(APPS "\${CMAKE_INSTALL_PREFIX}/ElonaFoobar.app")
+  SET(APPS "\${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}.app")
 ENDIF(APPLE)
 IF(WIN32)
-  SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/ElonaFoobar.exe")
+  SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/${PROJECT_NAME}.exe")
 ENDIF(WIN32)
 
 SET(DIRS ${LINK_DIRECTORIES})
@@ -349,7 +355,7 @@ if(EXISTS "${CMAKE_PREFIX_PATH}/elona")
   copy_nonexisting("${CMAKE_PREFIX_PATH}/elona/user" "${CMAKE_PREFIX_PATH}/elona/user" "user")
   message("Elona 1.22 distribution found.")
 else()
-  message(WARNING "Elona 1.22 distribution not found at ${CMAKE_PREFIX_PATH}/elona. The game cannot be run without assets. Please manually copy the 'graphic', 'map', 'original', 'sound' and 'user' directories from Elona 1.22 to the ElonaFoobar output path after building.")
+  message(WARNING "Elona 1.22 distribution not found at ${CMAKE_PREFIX_PATH}/elona. The game cannot be run without assets. Please manually copy the 'graphic', 'map', 'original', 'sound' and 'user' directories from Elona 1.22 to the ${PROJECT_NAME} output path after building.")
 endif()
 
 if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))

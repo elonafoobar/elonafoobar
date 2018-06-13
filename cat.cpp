@@ -23,8 +23,13 @@ void engine::initialize()
 
 void engine::load(const fs::path& filepath)
 {
+#ifdef _WIN32
+    std::wstring filepath_str = filepath.native();
+    if (luaL_dowfile(ptr(), filepath_str.c_str()) != 0)
+#else
     std::string filepath_str = filesystem::to_narrow_path(filepath);
     if (luaL_dofile(ptr(), filepath_str.c_str()) != 0)
+#endif
     {
         const char* error_msg = lua_tostring(ptr(), -1);
         throw std::runtime_error(
