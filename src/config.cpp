@@ -250,6 +250,9 @@ void config_query_language()
     set_config(u8"language", p);
 }
 
+#define CONFIG_OPTION(key, type, callback) \
+    conf.bind<type>(key, [&](auto value) callback);
+
 void load_config(const fs::path& json_file)
 {
     // FIXME std::string{value} => value
