@@ -550,7 +550,7 @@ talk_result_t talk_npc()
         {
             if (cdata[0].karma < -30 && cdata[0].is_incognito() == 0)
             {
-                if (gdata_current_map != 1 && gdata_current_map != 7)
+                if (gdata_current_map != 14 && gdata_current_map != 7)
                 {
                     listmax = 0;
                     if (chatval == 10)
