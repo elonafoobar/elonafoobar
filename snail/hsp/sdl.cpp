@@ -225,6 +225,11 @@ struct MessageBox
                     // New line.
                     buffer += '\n';
                 }
+                else if (input.was_pressed_just_now(key::escape))
+                {
+                    // A tab character indicates input was canceled.
+                    buffer += '\t';
+                }
                 else if (input.is_pressed(key::backspace) && !buffer.empty())
                 {
                     if (backspace_held_frames == 0

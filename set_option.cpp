@@ -451,12 +451,8 @@ void set_option()
     page_bk = 0;
     cs_bk2 = 0;
 
-    gsel(mode == 10 ? 2 : 4);
-    for (int i = 0; i < 8; ++i)
-    {
-        pos(i % 4 * 180, i / 4 * 300);
-        picload(filesystem::dir::graphic() / (u8"g"s + (i + 1) + u8".bmp"), 1);
-    }
+    int bg_variant_buffer = mode == 10 ? 2 : 4;
+    load_background_variants(bg_variant_buffer);
     gsel(0);
 
     if (mode == 0)

@@ -397,13 +397,7 @@ void start_home_map_mode()
 
 void show_home_value()
 {
-    gsel(4);
-    for (int cnt = 0; cnt < 8; ++cnt)
-    {
-        pos(cnt % 4 * 180, cnt / 4 * 300);
-        picload(
-            filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"), 1);
-    }
+    load_background_variants(4);
     gsel(0);
     snd(26);
     pagesize = 0;
