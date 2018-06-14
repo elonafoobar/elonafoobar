@@ -233,6 +233,42 @@ void input_number_dialog(int x, int y, int max_number)
             snd(5);
             number = max_number;
         }
+        if (key == key_northwest)
+        {
+            snd(5);
+            number -= 100;
+            if (number < 1)
+            {
+                number = 1;
+            }
+        }
+        if (key == key_northeast)
+        {
+            snd(5);
+            number += 100;
+            if (number > max_number)
+            {
+                number = max_number;
+            }
+        }
+        if (key == key_southwest)
+        {
+            snd(5);
+            number -= 10;
+            if (number < 1)
+            {
+                number = 1;
+            }
+        }
+        if (key == key_southeast)
+        {
+            snd(5);
+            number += 10;
+            if (number > max_number)
+            {
+                number = max_number;
+            }
+        }
         inputlog = ""s + number;
     }
     if (f == -1)
