@@ -1023,7 +1023,7 @@ bool chara_place()
     if (gdata_mount != 0 && gdata_mount == rc)
     {
         cdata[rc].position = cdata[0].position;
-        return false;
+        return true;
     }
 
     const auto success = chara_place_internal(
