@@ -97,16 +97,14 @@ public:
 
     bool is_test = false; // testing use only
 
-    void set_bind_callback(const std::string& key,
-                           std::function<void(const hcl::Value&)> callback)
-    {
-        callbacks.emplace(key, std::move(callback));
-    }
-
     template <typename T>
     void bind(const std::string& key,
                   std::function<void(T)> callback)
     {
+        if (!def.exists(key))
+        {
+            throw std::runtime_error("No such config value " + key);
+        }
         callbacks.emplace(key, [callback](const hcl::Value& value){ callback(value.as<T>()); });
     }
 
@@ -139,6 +137,20 @@ public:
         }
         if (verify_types(value, key))
         {
+            if (value.is<int>())
+            {
+                int temp = value;
+                if (auto max = def.get_max(key))
+                {
+                    temp = std::min(temp, max);
+                }
+                if (auto min = def.get_min(key))
+                {
+                    temp = std::max(temp, min);
+                }
+                value = temp;
+            }
+
             storage.emplace(key, std::move(value));
         }
         else

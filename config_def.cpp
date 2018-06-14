@@ -13,6 +13,7 @@ namespace elona
 void config_def::init(const fs::path& path)
 {
     clear();
+
     // TODO support loading multiple files.
     std::ifstream ifs(filesystem::make_preferred_path_in_utf8(path));
     load(ifs, path.string());
