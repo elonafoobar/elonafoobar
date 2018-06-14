@@ -44,6 +44,6 @@ int main(int argc, char** argv)
     }
     catch (...)
     {
-        report_error("Unknown");
+        report_error("Unknown error happened.");
     }
 }

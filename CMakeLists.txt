@@ -74,6 +74,7 @@ set(CORE_SOURCES
     src/class.cpp
     src/command.cpp
     src/config.cpp
+    src/config_def.cpp
     src/ctrl_file.cpp
     src/ctrl_inventory.cpp
     src/crafting.cpp

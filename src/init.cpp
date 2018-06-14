@@ -756,6 +756,7 @@ void initialize_elona()
 
 int run()
 {
+    config::instance().init();
     lua::lua = std::make_unique<lua::lua_env>();
     const fs::path config_file = filesystem::dir::exe() / u8"config.json";
     initialize_cat_db();
@@ -774,7 +775,7 @@ int run()
     lua::lua->scan_all_mods(filesystem::dir::mods());
     lua::lua->load_core_mod(filesystem::dir::mods());
 
-    start_elona();
+    //start_elona();
 
     return 0;
 }

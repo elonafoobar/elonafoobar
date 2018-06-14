@@ -2,11 +2,13 @@
 #include <fstream>
 #include <functional>
 #include <stdexcept>
-#include "thirdparty/microhcl/hcl.hpp"
 #include "elona.hpp"
+#include "json.hpp"
 #include "range.hpp"
 #include "snail/window.hpp"
 #include "variables.hpp"
+#include "thirdparty/microhcl/hcl.hpp"
+
 
 
 
@@ -37,7 +39,7 @@ void for_each_with_index(Iterator first, Iterator last, Function f)
 
 struct config_base
 {
-    virtual void set(const hcl::Object& options) = 0;
+    virtual void set(const picojson::object& options) = 0;
 };
 
 
@@ -63,7 +65,7 @@ struct config_value : public config_base
     virtual ~config_value() = default;
 
 
-    virtual void set(const hcl::Object& options) override
+    virtual void set(const picojson::object& options) override
     {
         const auto itr = options.find(name);
         if (itr == std::end(options) || !itr->second.template is<T>())
@@ -120,7 +122,7 @@ struct config_key : public config_base
     virtual ~config_key() = default;
 
 
-    virtual void set(const hcl::Object& options) override
+    virtual void set(const picojson::object& options) override
     {
         const auto itr = options.find(name);
         if (itr == std::end(options) || !itr->second.template is<std::string>())
@@ -159,24 +161,24 @@ struct config_key_sequence : public config_base
     virtual ~config_key_sequence() = default;
 
 
-    virtual void set(const hcl::Object& options) override
+    virtual void set(const picojson::object& options) override
     {
         const auto itr = options.find(name);
         if (itr == std::end(options)
-            || !itr->second.template is<hcl::List>())
+            || !itr->second.template is<picojson::array>())
         {
             callback(default_value);
         }
         else
         {
             // FIXME: check type of each element.
-            const auto keys = options.at(name).as<hcl::List>();
+            const auto keys = options.at(name).get<picojson::array>();
             std::vector<std::string> keys_;
             range::transform(
                 keys,
                 std::back_inserter(keys_),
-                [](const hcl::Value& key) {
-                    return key.as<std::string>();
+                [](const picojson::value& key) {
+                    return key.get<std::string>();
                 });
             callback(keys_);
         }
@@ -250,7 +252,7 @@ void config_query_language()
     set_config(u8"language", p);
 }
 
-void load_config(const fs::path& hcl_file)
+void load_config(const fs::path& json_file)
 {
     // FIXME std::string{value} => value
     std::unique_ptr<config_base> config_list[] = {
@@ -837,30 +839,22 @@ void load_config(const fs::path& hcl_file)
             [&](auto value) { config::instance().keywait = value; }),
     };
 
-    hcl::Value value;
+    picojson::value value;
 
     {
-        std::ifstream file{hcl_file.native(), std::ios::binary};
+        std::ifstream file{json_file.native(), std::ios::binary};
         if (!file)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
-                + filesystem::make_preferred_path_in_utf8(hcl_file)};
+                + filesystem::make_preferred_path_in_utf8(json_file)};
         }
         fileutil::skip_bom(file);
 
-        hcl::ParseResult parseResult = hcl::parse(is);
-        if (!parseResult.valid()) {
-            throw config_loading_error{
-                u8"Failed to parse "s
-                + filesystem::make_preferred_path_in_utf8(hcl_file) + u8": "
-                + parseResult.errorReason};
-        }
-
-        value = parseResult.value;
+        file >> value;
     }
 
-    const hcl::Object& options = value.as<hcl::Object>();
+    const picojson::object& options = value.get<picojson::object>();
     for (const auto& config : config_list)
     {
         config->set(options);
@@ -944,7 +938,7 @@ void load_config(const fs::path& hcl_file)
 
 void set_config(const std::string& key, int value)
 {
-    hcl::Value options;
+    picojson::value options;
 
     {
         std::ifstream file{(filesystem::dir::exe() / u8"config.json").native(),
@@ -960,7 +954,7 @@ void set_config(const std::string& key, int value)
         file >> options;
     }
 
-    options.as<hcl::Object>()[key] = hcl::Value{int64_t{value}};
+    options.get<picojson::object>()[key] = picojson::value{int64_t{value}};
 
     {
         std::ofstream file{(filesystem::dir::exe() / u8"config.json").native(),
@@ -980,7 +974,7 @@ void set_config(const std::string& key, int value)
 
 void set_config(const std::string& key, const std::string& value)
 {
-    hcl::Value options;
+    picojson::value options;
 
     {
         std::ifstream file{(filesystem::dir::exe() / u8"config.json").native(),
@@ -996,7 +990,7 @@ void set_config(const std::string& key, const std::string& value)
         file >> options;
     }
 
-    options.as<hcl::Object>()[key] = hcl::Value{value};
+    options.get<picojson::object>()[key] = picojson::value{value};
 
     {
         std::ofstream file{(filesystem::dir::exe() / u8"config.json").native(),
@@ -1016,7 +1010,7 @@ void set_config(const std::string& key, const std::string& value)
 
 void set_config(const std::string& key, const std::string& value1, int value2)
 {
-    hcl::Value options;
+    picojson::value options;
 
     {
         std::ifstream file{(filesystem::dir::exe() / u8"config.json").native(),
@@ -1032,13 +1026,7 @@ void set_config(const std::string& key, const std::string& value1, int value2)
         file >> options;
     }
 
-<<<<<<< HEAD:src/config.cpp
-    options.get<picojson::object>()[key] = picojson::value{value1};
-    UNUSED(value2); // TODO
-=======
     options.as<hcl::Object>()[key] = hcl::Value{value1};
-    (void)value2; // TODO
->>>>>>> Will be annoying.:config.cpp
 
     {
         std::ofstream file{(filesystem::dir::exe() / u8"config.json").native(),
@@ -1142,10 +1130,10 @@ void load_config2(const fs::path& json_file)
     }
 
     fileutil::skip_bom(file);
-    hcl::Value value;
+    picojson::value value;
     file >> value;
 
-    const hcl::Object& options = value.as<hcl::Object>();
+    const picojson::object& options = value.get<picojson::object>();
     for (const auto& config : config_list)
     {
         config->set(options);
@@ -1173,6 +1161,15 @@ config& config::instance()
     return the_instance;
 }
 
+void config::init()
+{
+    def.clear();
+    const fs::path config_def_file =
+        filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
+    def.init(config_def_file);
+    //std::ifstream ifs{filesystem::make_preferred_path_in_utf8(config_def_file.native())};
+    //load(ifs, config_def_file.string());
+}
 
 void config::load(std::istream& is, const std::string& hcl_file)
 {
@@ -1188,7 +1185,7 @@ void config::load(std::istream& is, const std::string& hcl_file)
 
     if (!value.is<hcl::Object>() || !value.has("config"))
     {
-        throw i18n_error(hcl_file, "\"config\" object not found at top level");
+        throw config_loading_error(hcl_file + ": \"config\" object not found at top level");
     }
 
     const hcl::Value conf = value["config"];
@@ -1202,11 +1199,11 @@ void config::visit_object(const hcl::Object& object,
 {
     for (const auto& pair : object)
     {
-        visit_config_item(pair.second, current_key + "." + pair.first, hcl_file);
+        visit(pair.second, current_key + "." + pair.first, hcl_file);
     }
 }
 
-void config::visit_config_item(const hcl::Value& value,
+void config::visit(const hcl::Value& value,
                        const std::string& current_key,
                        const std::string& hcl_file)
 {
@@ -1220,49 +1217,26 @@ void config::visit_config_item(const hcl::Value& value,
     }
 }
 
-void config::set(const std::string& key, const hcl::Value value)
+void config::write()
 {
-    storage.emplace(current_key, std::move(value));
-}
-
-void config::write(const fs::path hcl_file)
-{
-
-}
-
-int config::get_int(const std::string& key)
-{
-    if (!storage[key].is<int>())
     {
-        // TODO fallback to default specified in config definition instead
-        throw std::runtime_error("Integer expected for key " + key);
+        std::ifstream file{(filesystem::dir::exe() / u8"config.hcl").native(),
+                           std::ios::binary};
+        if (!file)
+        {
+            throw config_loading_error{
+                u8"Failed to open: "s
+                + filesystem::make_preferred_path_in_utf8(
+                      filesystem::dir::exe() / u8"config.hcl")};
+        }
+        fileutil::skip_bom(file);
+
+        for (auto&& pair : storage)
+        {
+            // TODO write
+            // file << storage;
+        }
     }
-
-    return storage[key].as<int>();
 }
-
-bool config::get_bool(const std::string& key)
-{
-    if (!storage[key].is<bool>())
-    {
-        // TODO fallback to default specified in config definition instead
-        throw std::runtime_error("Boolean expected for key " + key);
-    }
-
-    return storage[key].as<bool>();
-}
-
-std::string config::get_string(const std::string& key)
-{
-    if (!storage[key].is<std::string>())
-    {
-        // TODO fallback to default specified in config definition instead
-        throw std::runtime_error("String expected for key " + key);
-    }
-
-    return storage[key].as<std::string>();
-}
-
-
 
 } // namespace elona

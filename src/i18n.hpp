@@ -429,7 +429,7 @@ public:
     store(){};
     ~store() = default;
 
-    void init(fs::path);
+    void init(const fs::path&);
     void load(std::istream&, const std::string&);
     void clear()
     {
