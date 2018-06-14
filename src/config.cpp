@@ -10,8 +10,6 @@
 #include "thirdparty/microhcl/hcl.hpp"
 
 
-
-
 namespace
 {
 
@@ -1161,14 +1159,32 @@ config& config::instance()
     return the_instance;
 }
 
-void config::init()
+void config::init(const fs::path& path)
 {
-    def.clear();
+    clear();
     const fs::path config_def_file =
         filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
     def.init(config_def_file);
-    //std::ifstream ifs{filesystem::make_preferred_path_in_utf8(config_def_file.native())};
-    //load(ifs, config_def_file.string());
+
+    load_defaults();
+
+    std::ifstream ifs{filesystem::make_preferred_path_in_utf8(path.native())};
+    load(ifs, path.string());
+}
+
+void config::load_defaults()
+{
+    for (auto& pair : def)
+    {
+        const std::string& key = pair.first;
+
+        // Sections don't have defaults, so trying to set them would
+        // cause an error.
+        if (!def.is<config_def::config_section_def>(key))
+        {
+            set(pair.first, def.get_default(key));
+        }
+    }
 }
 
 void config::load(std::istream& is, const std::string& hcl_file)
@@ -1209,12 +1225,50 @@ void config::visit(const hcl::Value& value,
 {
     if (value.is<hcl::Object>())
     {
+        if (!def.is<config_def::config_section_def>(current_key))
+        {
+            throw config_loading_error(hcl_file + ": No such config section \"" + current_key + "\".");
+        }
         visit_object(value.as<hcl::Object>(), current_key, hcl_file);
     }
     else
     {
-        storage.emplace(current_key, std::move(value));
+        set(current_key, value);
     }
+}
+
+bool config::verify_types(const hcl::Value& value, const std::string& current_key)
+{
+    if (def.is<config_def::config_section_def>(current_key))
+    {
+        // It doesn't make sense to set a section as a value.
+        return false;
+    }
+    if (value.is<bool>() && !def.is<config_def::config_bool_def>(current_key))
+    {
+        return false;
+    }
+    if (value.is<int>() && !def.is<config_def::config_int_def>(current_key))
+    {
+        return false;
+    }
+    if (value.is<hcl::List>() && !def.is<config_def::config_list_def>(current_key))
+    {
+        return false;
+    }
+    if (value.is<std::string>())
+    {
+        if (def.is<config_def::config_enum_def>(current_key))
+        {
+            return def.is_valid_enum_variant(current_key, value.as<std::string>());
+        }
+        else if (!def.is<config_def::config_string_def>(current_key))
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 void config::write()

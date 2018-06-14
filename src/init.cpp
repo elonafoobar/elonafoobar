@@ -756,10 +756,9 @@ void initialize_elona()
 
 int run()
 {
-    config::instance().init();
-    lua::lua = std::make_unique<lua::lua_env>();
-    const fs::path config_file = filesystem::dir::exe() / u8"config.json";
-    initialize_cat_db();
+    config::instance().init(filesystem::dir::exe() / u8"config.hcl");
+    //const fs::path config_file = filesystem::dir::exe() / u8"config.json";
+    //initialize_cat_db();
 
     load_config2(config_file);
 

@@ -44,7 +44,6 @@ void config_def::visit_object(const hcl::Object& object,
                           const std::string& current_key,
                           const std::string& hcl_file)
 {
-    std::cout << current_key << std::endl;
     for (const auto& pair : object)
     {
         visit(pair.second, current_key + "." + pair.first, hcl_file);
@@ -55,7 +54,6 @@ void config_def::visit(const hcl::Value& value,
                        const std::string& current_key,
                        const std::string& hcl_file)
 {
-    std::cout << current_key << std::endl;
     if (value.is<hcl::Object>())
     {
         visit_item(value.as<hcl::Object>(), current_key, hcl_file);
@@ -78,7 +76,6 @@ config_def::item config_def::visit_bare_value(const hcl::Value& default_value,
                        const std::string& current_key,
                        const std::string& hcl_file)
 {
-    std::cout << current_key << std::endl;
     item i;
     if (default_value.is<bool>())
     {
@@ -104,7 +101,6 @@ void config_def::visit_item(const hcl::Object& item,
                        const std::string& current_key,
                        const std::string& hcl_file)
 {
-    std::cout << current_key << std::endl;
     config_def_item_data dat = config_def_item_data{};
     optional<config_def::item> i;
 
@@ -153,6 +149,11 @@ void config_def::visit_item(const hcl::Object& item,
     }
     else
     {
+        if (item.find("default") == item.end())
+        {
+            throw config_def_error(hcl_file, current_key, "No default value provided.");
+        }
+
         auto default_value = item.at("default");
         if (default_value.is<int>())
         {
@@ -173,11 +174,10 @@ void config_def::visit_item(const hcl::Object& item,
     items.emplace(current_key, *i);
 }
 
-config_section_def config_def::visit_section(const hcl::Object& section,
+config_def::config_section_def config_def::visit_section(const hcl::Object& section,
                    const std::string& current_key,
                    const std::string& hcl_file)
 {
-    std::cout << current_key << std::endl;
     config_section_def def{};
 
     if (section.find("options") == section.end())
@@ -190,7 +190,7 @@ config_section_def config_def::visit_section(const hcl::Object& section,
     return def;
 }
 
-config_int_def config_def::visit_int(int default_value,
+config_def::config_int_def config_def::visit_int(int default_value,
                const hcl::Object& item)
 {
     config_int_def def;
@@ -209,22 +209,22 @@ config_int_def config_def::visit_int(int default_value,
     return def;
 }
 
-config_bool_def config_def::visit_bool(bool default_value)
+config_def::config_bool_def config_def::visit_bool(bool default_value)
 {
     return config_bool_def{default_value};
 }
 
-config_string_def config_def::visit_string(const std::string& default_value)
+config_def::config_string_def config_def::visit_string(const std::string& default_value)
 {
     return config_string_def{default_value};
 }
 
-config_list_def config_def::visit_list(const hcl::List& default_value)
+config_def::config_list_def config_def::visit_list(const hcl::List& default_value)
 {
     return config_list_def{default_value};
 }
 
-config_enum_def config_def::visit_enum(const std::string& default_value,
+config_def::config_enum_def config_def::visit_enum(const std::string& default_value,
                            const hcl::Object& item,
                            const std::string& current_key,
                            const std::string& hcl_file)
@@ -249,7 +249,9 @@ config_enum_def config_def::visit_enum(const std::string& default_value,
 
     if (variants.find(default_value) == variants.end())
     {
-        throw config_def_error(hcl_file, current_key, "Default enum value " + default_value + " not provided in enum variant list.");
+        throw config_def_error(hcl_file, current_key,
+                               "Default enum value " + default_value
+                               + " not provided in enum variant list.");
     }
 
     def.variants = variants;

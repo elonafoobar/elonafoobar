@@ -20,8 +20,15 @@ class config : public lib::noncopyable
 public:
     static config& instance();
 
-    void init();
+    void init(const fs::path&);
     void write();
+
+    void clear()
+    {
+        def.clear();
+        storage.clear();
+        callbacks.clear();
+    }
 
     int alert;
     int alwayscenter;
@@ -97,6 +104,13 @@ public:
     }
 
     template <typename T>
+    void bind(const std::string& key,
+                  std::function<void(T)> callback)
+    {
+        callbacks.emplace(key, [callback](const hcl::Value& value){ callback(value.as<T>()); });
+    }
+
+    template <typename T>
     T get(const std::string& key)
     {
         if (storage.find(key) == storage.end())
@@ -104,18 +118,37 @@ public:
             // TODO fallback to default specified in config definition instead
             throw std::runtime_error("No such config value " + key);
         }
+        if (!def.is<T>(key))
+        {
+            throw std::runtime_error("Expected type \"" + def.type_to_string(key) + "\" for key " + key);
+        }
         if (!storage[key].is<T>())
         {
-            // TODO fallback to default specified in config definition instead
-            throw std::runtime_error("Expected different type for key " + key);
+            throw std::runtime_error("BUG: Stored value had wrong type for key " + key +
+                                     " (this should never happen)");
         }
         return storage[key].as<T>();
     }
 
     void set(const std::string& key, const hcl::Value value)
     {
-        std::cout << "Setting " << key << ": " << value << std::endl;
-        storage.emplace(key, std::move(value));
+        std::cout << "set: " << key << " to " << value << std::endl;
+        if (!def.exists(key))
+        {
+            throw std::runtime_error("No such config key " + key);
+        }
+        if (verify_types(value, key))
+        {
+            storage.emplace(key, std::move(value));
+        }
+        else
+        {
+            std::stringstream ss;
+            ss << "Wrong config item type for key " << key << ": ";
+            ss << def.type_to_string(key) << " expected, got ";
+            ss << value;
+            throw std::runtime_error(ss.str());
+        }
 
         if (callbacks.find(key) != callbacks.end())
         {
@@ -128,9 +161,11 @@ private:
     ~config() = default;
 
     void load(std::istream&, const std::string&);
+    void load_defaults();
 
     void visit(const hcl::Value&, const std::string&, const std::string&);
     void visit_object(const hcl::Object&, const std::string&, const std::string&);
+    bool verify_types(const hcl::Value&, const std::string&);
 
     config_def def;
     std::map<std::string, hcl::Value> storage;

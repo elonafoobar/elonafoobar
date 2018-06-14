@@ -30,7 +30,7 @@ config_def {
             enable_sound = true
 
             always_center = {
-                default = ""
+                default = true
                 doc = "Always keep the center of the screen near the player when walking near the edge of the screen."
             }
 
