@@ -913,8 +913,7 @@ void finish_elona()
     }
     if (config::instance().autonumlock)
     {
-        keybd_event(144);
-        keybd_event(144, 0, 2);
+        snail::input::instance().restore_numlock();
     }
     if (mutex_handle != 0)
     {
