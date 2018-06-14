@@ -2,10 +2,10 @@
 #include "filesystem.hpp"
 #include "optional.hpp"
 #include "thirdparty/microhcl/hcl.hpp"
-#include <map>
 #include <fstream>
 #include <iostream>
-#include <set>
+#include <map>
+#include <vector>
 
 namespace elona
 {
@@ -38,17 +38,26 @@ void config_def::load(std::istream& is, const std::string& hcl_file)
 
     const hcl::Value conf = value["config_def"];
 
-    visit_object(conf.as<hcl::Object>(), "core.config", hcl_file);
+    auto def = visit_object(conf.as<hcl::Object>(), "core.config", hcl_file);
+
+    data.emplace("core.config", config_def_item_data{});
+    items.emplace("core.config", def);
 }
 
-void config_def::visit_object(const hcl::Object& object,
+config_def::config_section_def config_def::visit_object(const hcl::Object& object,
                           const std::string& current_key,
                           const std::string& hcl_file)
 {
+    config_section_def def{};
+
     for (const auto& pair : object)
     {
-        visit(pair.second, current_key + "." + pair.first, hcl_file);
+        std::string key = current_key + "." + pair.first;
+        visit(pair.second, key, hcl_file);
+        def.children.emplace_back(std::move(key));
     }
+
+    return def;
 }
 
 void config_def::visit(const hcl::Value& value,
@@ -179,16 +188,12 @@ config_def::config_section_def config_def::visit_section(const hcl::Object& sect
                    const std::string& current_key,
                    const std::string& hcl_file)
 {
-    config_section_def def{};
-
     if (section.find("options") == section.end())
     {
         throw config_def_error(hcl_file, current_key, "Section has no field named \"options.\"");
     }
     const hcl::Object& options = section.at("options").as<hcl::Object>();
-    visit_object(options, current_key, hcl_file);
-
-    return def;
+    return visit_object(options, current_key, hcl_file);
 }
 
 config_def::config_int_def config_def::visit_int(int default_value,
@@ -237,18 +242,21 @@ config_def::config_enum_def config_def::visit_enum(const std::string& default_va
     }
 
     hcl::List hcl_variants = item.at("variants").as<hcl::List>();
-    std::set<std::string> variants;
+    std::vector<std::string> variants;
+    int default_index = -1;
+    int i = 0;
     for (auto& item : hcl_variants)
     {
         std::string variant = item.as<std::string>();
-        if (variants.find(variant) != variants.end())
+        if (variant == default_value)
         {
-            throw config_def_error(hcl_file, current_key, "Duplicate enum variant " + variant);
+            default_index = i;
         }
-        variants.insert(variant);
+        variants.emplace_back(std::move(variant));
+        i++;
     }
 
-    if (variants.find(default_value) == variants.end())
+    if (default_index == -1)
     {
         throw config_def_error(hcl_file, current_key,
                                "Default enum value " + default_value
@@ -256,7 +264,7 @@ config_def::config_enum_def config_def::visit_enum(const std::string& default_va
     }
 
     def.variants = variants;
-    def.default_value = default_value;
+    def.default_index = default_index;
 
     return def;
 }

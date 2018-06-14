@@ -3,7 +3,7 @@
 #include "filesystem.hpp"
 #include "optional.hpp"
 #include <cassert>
-#include <set>
+#include <vector>
 #include <sstream>
 #include <boost/variant.hpp>
 #include <boost/variant/get.hpp>
@@ -40,6 +40,7 @@ class config_def
 public:
     struct config_section_def
     {
+        std::vector<std::string> children;
     };
 
     struct config_bool_def
@@ -66,8 +67,8 @@ public:
 
     struct config_enum_def
     {
-        std::string default_value;
-        std::set<std::string> variants;
+        int default_index;
+        std::vector<std::string> variants;
 
         std::string to_string() const
             {
@@ -124,21 +125,21 @@ public:
     };
 
     template <typename T>
-    bool is(const std::string& key) { return items.at(key).type() == typeid(T); };
+    bool is(const std::string& key) const { return items.at(key).type() == typeid(T); };
 
     template <typename T>
-    const T& get(const std::string& key){ return boost::get<T>(items.at(key)); }
+    const T& get(const std::string& key) const { return boost::get<T>(items.at(key)); }
 
     bool is_visible(const std::string& key) { return data.at(key).visible; }
     bool is_preload(const std::string& key) { return data.at(key).preload; }
-    bool is_valid_enum_variant(const std::string& key, const std::string& variant)
+    bool is_valid_enum_variant(const std::string& key, int index)
     {
         if(!is<config_enum_def>(key))
         {
             return false;
         }
         auto variants = get<config_enum_def>(key).variants;
-        return variants.find(variant) != variants.end();
+        return index >= 0 && index < static_cast<int>(variants.size());
     }
 
     inline std::string type_to_string(const std::string& key)
@@ -197,14 +198,26 @@ public:
         }
         else
         {
-            const config_enum_def& enum_def = get<config_enum_def>(key);
-            if (!is_valid_enum_variant(key, enum_def.default_value))
-            {
-                throw new config_def_error(key, "Default enum value " + enum_def.default_value +
-                                            " not included in valid enum variants.");
-            }
-            return enum_def.default_value;
+            return get<config_enum_def>(key).default_index;
         }
+    }
+
+    std::vector<std::string> get_children(const std::string& key) const
+    {
+        if (!is<config_section_def>(key))
+        {
+            throw config_def_error(key, "Cannot get children for non-section " + key);
+        }
+        return get<config_section_def>(key).children;
+    }
+
+    std::vector<std::string> get_variants(const std::string& key) const
+    {
+        if (!is<config_enum_def>(key))
+        {
+            throw config_def_error(key, "Cannot get variants for non-enum " + key);
+        }
+        return get<config_enum_def>(key).variants;
     }
 
     optional<int> get_max(const std::string& key)
@@ -236,7 +249,7 @@ public:
 
 private:
     void visit(const hcl::Value&, const std::string&, const std::string&);
-    void visit_object(const hcl::Object&, const std::string&, const std::string&);
+    config_section_def visit_object(const hcl::Object&, const std::string&, const std::string&);
 
     void visit_item(const hcl::Object&, const std::string&, const std::string&);
     item visit_bare_value(const hcl::Value&, const std::string&, const std::string&);

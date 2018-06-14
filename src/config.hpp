@@ -21,13 +21,15 @@ public:
     static config& instance();
 
     void init(const fs::path&);
+    void load(std::istream&, const std::string&);
     void write();
 
     void clear()
     {
         def.clear();
         storage.clear();
-        callbacks.clear();
+        getters.clear();
+        setters.clear();
     }
 
     int alert;
@@ -97,15 +99,25 @@ public:
 
     bool is_test = false; // testing use only
 
-    template <typename T>
-    void bind(const std::string& key,
-                  std::function<void(T)> callback)
+    void bind_getter(const std::string& key,
+                     std::function<hcl::Value(void)> getter)
     {
         if (!def.exists(key))
         {
             throw std::runtime_error("No such config value " + key);
         }
-        callbacks.emplace(key, [callback](const hcl::Value& value){ callback(value.as<T>()); });
+        getters.emplace(key, getter);
+    }
+
+    template <typename T>
+    void bind_setter(const std::string& key,
+                  std::function<void(const T&)> setter)
+    {
+        if (!def.exists(key))
+        {
+            throw std::runtime_error("No such config value " + key);
+        }
+        setters.emplace(key, [setter](const hcl::Value& value){ setter(value.as<T>()); });
     }
 
     template <typename T>
@@ -125,7 +137,15 @@ public:
             throw std::runtime_error("BUG: Stored value had wrong type for key " + key +
                                      " (this should never happen)");
         }
-        return storage[key].as<T>();
+
+        if (getters.find(key) != getters.end())
+        {
+            return getters[key]().as<T>();
+        }
+        else
+        {
+            return storage[key].as<T>();
+        }
     }
 
     void set(const std::string& key, const hcl::Value value)
@@ -139,19 +159,21 @@ public:
         {
             if (value.is<int>())
             {
-                int temp = value;
+                int temp = value.as<int>();
                 if (auto max = def.get_max(key))
                 {
-                    temp = std::min(temp, max);
+                    temp = std::min(temp, *max);
                 }
                 if (auto min = def.get_min(key))
                 {
-                    temp = std::max(temp, min);
+                    temp = std::max(temp, *min);
                 }
-                value = temp;
+                storage.emplace(key, temp);
             }
-
-            storage.emplace(key, std::move(value));
+            else
+            {
+                storage.emplace(key, std::move(value));
+            }
         }
         else
         {
@@ -162,17 +184,18 @@ public:
             throw std::runtime_error(ss.str());
         }
 
-        if (callbacks.find(key) != callbacks.end())
+        if (setters.find(key) != setters.end())
         {
-            callbacks[key](value);
+            setters[key](value);
         }
     }
+
+    const config_def& get_def() const { return def; }
 
 private:
     config() {}
     ~config() = default;
 
-    void load(std::istream&, const std::string&);
     void load_defaults();
 
     void visit(const hcl::Value&, const std::string&, const std::string&);
@@ -181,7 +204,8 @@ private:
 
     config_def def;
     std::map<std::string, hcl::Value> storage;
-    std::map<std::string, std::function<void(const hcl::Value&)>> callbacks;
+    std::map<std::string, std::function<hcl::Value(void)>> getters;
+    std::map<std::string, std::function<void(const hcl::Value&)>> setters;
 };
 
 

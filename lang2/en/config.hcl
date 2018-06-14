@@ -1,9 +1,11 @@
 locale {
     config {
         common {
+            menu = "Menu"
+
             yes_no {
-                # NOTE: This text is implicitly chosen for boolean values without an explicit "yesno"
-                # option.
+                # NOTE: This text is implicitly chosen for boolean values without an explicit
+                # "yes_no" option.
                 default {
                     yes = "Yes"
                     no = "No"
@@ -245,6 +247,7 @@ DOC
                 transparency {
                     name = "Transparency"
                     doc = "Message box transparency."
+                    formatter = "${_1}*10 %"#TODO
                 }
             }
 
@@ -270,7 +273,7 @@ DOC
                 start_run_wait {
                     name = "Run Start Wait"
                     doc = "Number of movement commands to play when walking before starting to run."
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = "${After } ${_1}+1 steps" # TODO
                 }
                 attack_wait {
                     name = "Attack Interval"

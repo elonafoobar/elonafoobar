@@ -1,6 +1,7 @@
 #include "config.hpp"
 #include <fstream>
 #include <functional>
+#include <string>
 #include <stdexcept>
 #include "elona.hpp"
 #include "json.hpp"
@@ -250,442 +251,142 @@ void config_query_language()
     set_config(u8"language", p);
 }
 
-#define CONFIG_OPTION(key, type, callback) \
-    conf.bind<type>(key, [&](auto value) callback);
+#define CONFIG_OPTION(confkey, type, getter) \
+    conf.bind_getter(confkey, [&]() { return (getter); } );             \
+    conf.bind_setter<type>(confkey, [&](auto value) { getter = value; } )
 
-void load_config(const fs::path& json_file)
+#define CONFIG_KEY(confkey, keyname) \
+    CONFIG_OPTION((confkey), std::string, config::instance().keyname)
+
+void load_config(const fs::path& hcl_file)
 {
-    // FIXME std::string{value} => value
     auto& conf = config::instance();
 
-    conf.bind<int>("anime.alert_wait", [&](auto value) { config::instance().alert = value; });
-    conf.bind<int>("anime.anime_wait", [&](auto value) { config::instance().animewait = value; });
-    conf.bind<int>("anime.general_wait", [&](auto value) { config::instance().wait1 = value; });
-    conf.bind<bool>("anime.scroll", [&](auto value) { config::instance().scroll = value; });
+    // TODO do inversions
 
-    conf.bind<bool>("screen.enable_music", [&](auto value) { config::instance().music = value; });
-    conf.bind<bool>("screen.enable_sound", [&](auto value) { config::instance().sound = value; });
-    conf.bind<bool>("screen.always_center", [&](auto value) { config::instance().always_center = value; });
-    conf.bind<bool>("screen.heartbeat", [&](auto value) { config::instance().heartbeat = value; });
-    conf.bind<bool>("screen.high_quality_shadows", [&](auto value) { config::instance().shadow = value; }); // TODO
-    conf.bind<bool>("screen.object_shadows", [&](auto value) { config::instance().objectshadow = value; });
+    CONFIG_OPTION("anime.alert_wait"s,                 int,         config::instance().alert);
+    // CONFIG_OPTION("anime.anime_wait",                 int,         config::instance().animewait);
+    // CONFIG_OPTION("anime.attack_anime",               bool,        config::instance().attackanime);
+    // CONFIG_OPTION("anime.attack_wait",                int,         config::instance().attackwait);
+    // CONFIG_OPTION("anime.auto_turn_speed",            std::string, config::instance().autoturn);
+    // CONFIG_OPTION("anime.general_wait",               int,         config::instance().wait1);
+    // CONFIG_OPTION("anime.scroll",                     bool,        config::instance().scroll);
+    // CONFIG_OPTION("anime.title_effect",               bool,        false); // Unsupported option
+    // CONFIG_OPTION("anime.weather_effect",             bool,        config::instance().env); // TODO change name
+    // CONFIG_OPTION("anime.window_anime",               bool,        config::instance().windowanime);
+    // CONFIG_OPTION("balance.restock_interval",         int,         config::instance().restock_interval);
+    // CONFIG_OPTION("debug.noa_debug",                  bool,        config::instance().noadeabug);
+    // CONFIG_OPTION("font.english",                     std::string, config::instance().font2);
+    // CONFIG_OPTION("font.japanese",                    std::string, config::instance().font1);
+    // CONFIG_OPTION("font.size_adjustment",             int,         sizefix);
+    // CONFIG_OPTION("font.vertical_offset",             int,         vfix);
+    // CONFIG_OPTION("foobar.hp_bar_position",           std::string, config::instance().hp_bar);
+    // CONFIG_OPTION("foobar.leash_icon",                bool,        config::instance().leash_icon);
+    // CONFIG_OPTION("game.attack_neutral_npcs",         bool,        config::instance().ignoredislike); // TODO INVERT
+    // CONFIG_OPTION("game.extra_help",                  bool,        config::instance().extrahelp);
+    // CONFIG_OPTION("game.show_sense_quality_updates",  bool,        config::instance().hideautoidentify); // TODO INVERT
+    // CONFIG_OPTION("game.show_shop_updates",           bool,        config::instance().hideshopresult); // TODO INVERT
+    // CONFIG_OPTION("game.story",                       bool,        config::instance().story);
+    // CONFIG_OPTION("input.autodisable_numlock",        bool,        config::instance().autonumlock);
+    // CONFIG_OPTION("input.run_wait",                   int,         config::instance().runwait);
+    // CONFIG_OPTION("input.start_run_wait",             int,         config::instance().start_run_wait);
+    // CONFIG_OPTION("input.walk_wait",                  int,         config::instance().walkwait);
+    // CONFIG_OPTION("message.add_timestamps",           bool,        config::instance().msgaddtime);
+    // CONFIG_OPTION("message.transparency",             int,         config::instance().msgtrans);
+    // CONFIG_OPTION("net.chat",                         bool,        config::instance().netchat);
+    // CONFIG_OPTION("net.enabled",                      bool,        config::instance().net);
+    // CONFIG_OPTION("net.serverlist",                   bool,        config::instance().serverlist);
+    // CONFIG_OPTION("net.wish",                         bool,        config::instance().netwish);
+    // CONFIG_OPTION("screen.always_center",             bool,        config::instance().always_center);
+    // CONFIG_OPTION("screen.enable_music",              bool,        config::instance().music);
+    // CONFIG_OPTION("screen.enable_sound",              bool,        config::instance().sound);
+    // CONFIG_OPTION("screen.heartbeat",                 bool,        config::instance().heartbeat);
+    // CONFIG_OPTION("screen.high_quality_shadows",      bool,        config::instance().shadow); // TODO change name
+    // CONFIG_OPTION("screen.object_shadows",            bool,        config::instance().objectshadow);
+    // CONFIG_OPTION("anime.screen_refresh",             int,         config::instance().scrsync);
+    // CONFIG_OPTION("anime.scroll_when_run",            bool,        config::instance().runscroll);
+    // CONFIG_OPTION("screen.skip_random_event_popups",  bool,        config::instance().skiprandevents);
+    // CONFIG_OPTION("foobar.autopick",                  bool,        config::instance().use_autopick);
+    // CONFIG_OPTION("foobar.autosave",                  bool,        config::instance().autosave);
+    // CONFIG_OPTION("foobar.startup_script",            std::string, config::instance().startup_script);
+    // CONFIG_OPTION("foobar.damage_popup",              bool,        config::instance().damage_popup);
+    // CONFIG_OPTION("input.key_wait",                   int,         config::instance().keywait);
 
-    conf.bind<bool>("game.attack_neutral_npcs", [&](auto value) { config::instance().ignoredislike = !value; });
-    conf.bind<bool>("game.story", [&](auto value) { config::instance().story = value; });
-    conf.bind<bool>("game.extra_help", [&](auto value) { config::instance().extrahelp = value; });
-    conf.bind<std::string>("font.japanese", [&](auto value) { config::instance().font1 = value; });
-    conf.bind<std::string>("font.english", [&](auto value) { config::instance().font2 = value; });
-    conf.bind<int>("font.vertical_offset", [&](auto value) { vfix = value; });
-    conf.bind<int>("font.size_adjustment", [&](auto value) { sizefix = value; });
-    conf.bind<std::string>("foobar.hp_bar_position", [&](auto value) { config::instance().hp_bar = value; });
-    conf.bind<bool>("foobar.leash_icon", [&](auto value) { config::instance().leash_icon = value; });
-    conf.bind<int>("input.start_run_wait", [&](auto value) { config::instance().start_run_wait = value; });
-    conf.bind<int>("input.walk_wait", [&](auto value) { config::instance().walkwait = value; });
-    conf.bind<int>("balance.restock_interval", [&](auto value) { config::instance().restock_interval = value; });
-    conf.bind<int>("input.run_wait", [&](auto value) { config::instance().runwait = value; });
-    conf.bind<std::string>("anime.auto_turn_speed", [&](auto value) { config::instance().autoturn = value; });
-    conf.bind<bool>("input.autodisable_numlock", [&](auto value) { config::instance().autonumlock = value; });
-    conf.bind<int>("anime.attack_wait", [&](auto value) { config::instance().attackwait = value; });
-    conf.bind<bool>("anime.attack_anime", [&](auto value) { config::instance().attackanime = value; });
-    conf.bind<bool>("anime.weather_effect", [&](auto value) { config::instance().env = value; }); // TODO
-    conf.bind<bool>("anime.title_effect", [&](auto value) { /* Unsupported option */ });
-    conf.bind<bool>("net.enabled", [&](auto value) { config::instance().net = value; });
-    conf.bind<bool>("net.wish", [&](auto value) { config::instance().netwish = value; });
-    conf.bind<bool>("net.chat", [&](auto value) { config::instance().netchat = value; });
-    conf.bind<bool>("debug.noa_debug", [&](auto value) { config::instance().noadeabug = value; });
-    conf.bind<bool>("net.serverlist", [&](auto value) { config::instance().serverlist = value; });
-    conf.bind<bool>("anime.window_anime", [&](auto value) { config::instance().windowanime = value; });
-    conf.bind<bool>("game.show_sense_quality_updates", [&](auto value) { config::instance().hideautoidentify = !value; });
-    conf.bind<bool>("game.show_shop_updates", [&](auto value) { config::instance().hideshopresult = !value; });
-    conf.bind<int>("message.transparency", [&](auto value) { config::instance().msgtrans = value; });
-    conf.bind<bool>("message.add_timestamps", [&](auto value) { config::instance().msgaddtime = value; });
+    // CONFIG_KEY("key.north", key_north);
+    // CONFIG_KEY("key.south", key_south);
+    // CONFIG_KEY("key.west", key_west);
+    // CONFIG_KEY("key.east", key_east);
+    // CONFIG_KEY("key.northwest", key_northwest);
+    // CONFIG_KEY("key.northeast", key_northeast);
+    // CONFIG_KEY("key.southwest", key_southwest);
+    // CONFIG_KEY("key.southeast", key_southeast);
+    // CONFIG_KEY("key.wait", key_wait);
+    // CONFIG_KEY("key.cancel", key_cancel);
+    // CONFIG_KEY("key.esc", key_esc);
+    // CONFIG_KEY("key.alter", key_alter);
+    // CONFIG_KEY("key.pageup", key_pageup);
+    // CONFIG_KEY("key.pagedown", key_pagedown);
+    // CONFIG_KEY("key.mode", key_mode);
+    // CONFIG_KEY("key.mode2", key_mode2);
+    // CONFIG_KEY("key.quick_menu", key_quick_menu);
+    // CONFIG_KEY("key.zap", key_zap);
+    // CONFIG_KEY("key.inventory", key_inventory);
+    // CONFIG_KEY("key.quick_inventory", key_quick_inventory);
+    // CONFIG_KEY("key.get", key_get);
+    // CONFIG_KEY("key.get2", key_get2);
+    // CONFIG_KEY("key.drop", key_drop);
+    // CONFIG_KEY("key.chara_info", key_chara_info);
+    // CONFIG_KEY("key.enter", key_enter);
+    // CONFIG_KEY("key.eat", key_eat);
+    // CONFIG_KEY("key.wear", key_wear);
+    // CONFIG_KEY("key.cast", key_cast);
+    // CONFIG_KEY("key.drink", key_drink);
+    // CONFIG_KEY("key.read", key_read);
+    // CONFIG_KEY("key.fire", key_fire);
+    // CONFIG_KEY("key.go_down", key_go_down);
+    // CONFIG_KEY("key.go_up", key_go_up);
+    // CONFIG_KEY("key.save", key_save);
+    // CONFIG_KEY("key.search", key_search);
+    // CONFIG_KEY("key.interact", key_interact);
+    // CONFIG_KEY("key.identify", key_identify);
+    // CONFIG_KEY("key.skill", key_skill);
+    // CONFIG_KEY("key.close", key_close);
+    // CONFIG_KEY("key.rest", key_rest);
+    // CONFIG_KEY("key.target", key_target);
+    // CONFIG_KEY("key.dig", key_dig);
+    // CONFIG_KEY("key.use", key_use);
+    // CONFIG_KEY("key.bash", key_bash);
+    // CONFIG_KEY("key.open", key_open);
+    // CONFIG_KEY("key.dip", key_dip);
+    // CONFIG_KEY("key.pray", key_pray);
+    // CONFIG_KEY("key.offer", key_offer);
+    // CONFIG_KEY("key.journal", key_journal);
+    // CONFIG_KEY("key.material", key_material);
+    // CONFIG_KEY("key.trait", key_trait);
+    // CONFIG_KEY("key.look", key_look);
+    // CONFIG_KEY("key.give", key_give);
+    // CONFIG_KEY("key.throw", key_throw);
+    // CONFIG_KEY("key.ammo", key_ammo);
+    // CONFIG_KEY("key.autodig", key_autodig);
+    // CONFIG_KEY("key.quicksave", key_quicksave);
+    // CONFIG_KEY("key.quickload", key_quickload);
+    // CONFIG_KEY("key.help", key_help);
+    // CONFIG_KEY("key.message_log", key_message_log);
 
-    std::unique_ptr<config_base> config_list[] = {
-        std::make_unique<config_key>(
-            u8"key_cancel",
-            u8"\\",
-            [&](auto value, auto jk) {
-                key_cancel = std::string{value};
-                jkey(jk) = std::string{value};
-            }),
-        std::make_unique<config_key>(
-            u8"key_esc",
-            u8"^",
-            [&](auto value, auto jk) {
-                key_esc = std::string{value};
-                jkey(jk) = std::string{value};
-            }),
-        std::make_unique<config_key>(
-            u8"key_alter",
-            u8"[",
-            [&](auto value, auto jk) {
-                key_alter = std::string{value};
-                jkey(jk) = std::string{value};
-            }),
-        std::make_unique<config_string>(
-            u8"key_north",
-            u8"8 ",
-            [&](auto value) { key_north = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_south",
-            u8"2 ",
-            [&](auto value) { key_south = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_west",
-            u8"4 ",
-            [&](auto value) { key_west = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_east",
-            u8"6 ",
-            [&](auto value) { key_east = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_northwest",
-            u8"7 ",
-            [&](auto value) { key_northwest = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_northeast",
-            u8"9 ",
-            [&](auto value) { key_northeast = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_southwest",
-            u8"1 ",
-            [&](auto value) { key_southwest = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_southeast",
-            u8"3 ",
-            [&](auto value) { key_southeast = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_wait",
-            u8"5 ",
-            [&](auto value) { key_wait = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_inventory",
-            u8"X",
-            [&](auto value) { key_inventory = std::string{value}; }),
-        std::make_unique<config_key>(
-            u8"key_help",
-            u8"?",
-            [&](auto value, auto jk) {
-                key_help = std::string{value};
-                jkey(jk) = std::string{value};
-            }),
-        std::make_unique<config_string>(
-            u8"key_msglog",
-            u8"/",
-            [&](auto value) { key_msglog = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_pageup",
-            u8"+",
-            [&](auto value) { key_pageup = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_pagedown",
-            u8"-",
-            [&](auto value) { key_pagedown = std::string{value}; }),
-        std::make_unique<config_key>(
-            u8"key_get",
-            u8"g",
-            [&](auto value, auto jk) {
-                key_get = std::string{value};
-                jkey(jk) = std::string{value};
-            }),
-        std::make_unique<config_string>(
-            u8"key_get2",
-            u8"0 ",
-            [&](auto value) { key_get2 = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_drop",
-            u8"d",
-            [&](auto value) { key_drop = std::string{value}; }),
-        std::make_unique<config_key>(
-            u8"key_charainfo",
-            u8"c",
-            [&](auto value, auto jk) {
-                key_charainfo = std::string{value};
-                jkey(jk) = std::string{value};
-            }),
-        std::make_unique<config_key>(
-            u8"key_enter",
-            u8" ",
-            [&](auto value, auto jk) {
-                key_enter = std::string{value};
-                jkey(jk) = std::string{value};
-            }),
-        std::make_unique<config_string>(
-            u8"key_eat",
-            u8"e",
-            [&](auto value) { key_eat = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_wear",
-            u8"w",
-            [&](auto value) { key_wear = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_cast",
-            u8"v",
-            [&](auto value) { key_cast = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_drink",
-            u8"q",
-            [&](auto value) { key_drink = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_read",
-            u8"r",
-            [&](auto value) { key_read = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_zap",
-            u8"z",
-            [&](auto value) { key_zap = std::string{value}; }),
-        std::make_unique<config_key>(
-            u8"key_fire",
-            u8"f",
-            [&](auto value, auto jk) {
-                key_fire = std::string{value};
-                jkey(jk) = std::string{value};
-            }),
-        std::make_unique<config_string>(
-            u8"key_goDown",
-            u8">",
-            [&](auto value) { key_godown = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_goUp",
-            u8"<",
-            [&](auto value) { key_goup = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_save",
-            u8"S",
-            [&](auto value) { key_save = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_search",
-            u8"s",
-            [&](auto value) { key_search = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_interact",
-            u8"i",
-            [&](auto value) { key_interact = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_identify",
-            u8"x",
-            [&](auto value) { key_identify = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_skill",
-            u8"a",
-            [&](auto value) { key_skill = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_close",
-            u8"C",
-            [&](auto value) { key_close = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_rest",
-            u8"R",
-            [&](auto value) { key_rest = std::string{value}; }),
-        std::make_unique<config_key>(
-            u8"key_target",
-            u8"*",
-            [&](auto value, auto jk) {
-                key_target = std::string{value};
-                jkey(jk) = std::string{value};
-            }),
-        std::make_unique<config_string>(
-            u8"key_dig",
-            u8"D",
-            [&](auto value) { key_dig = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_use",
-            u8"t",
-            [&](auto value) { key_use = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_bash",
-            u8"b",
-            [&](auto value) { key_bash = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_open",
-            u8"o",
-            [&](auto value) { key_open = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_dip",
-            u8"B",
-            [&](auto value) { key_dip = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_pray",
-            u8"p",
-            [&](auto value) { key_pray = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_offer",
-            u8"O",
-            [&](auto value) { key_offer = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_journal",
-            u8"j",
-            [&](auto value) { key_journal = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_material",
-            u8"m",
-            [&](auto value) { key_material = std::string{value}; }),
-        std::make_unique<config_key>(
-            u8"key_quick",
-            u8"z",
-            [&](auto value, auto jk) {
-                key_quick = std::string{value};
-                jkey(jk) = std::string{value};
-            }),
-        std::make_unique<config_string>(
-            u8"key_trait",
-            u8"F",
-            [&](auto value) { key_trait = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_look",
-            u8"l",
-            [&](auto value) { key_look = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_give",
-            u8"G",
-            [&](auto value) { key_give = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_throw",
-            u8"T",
-            [&](auto value) { key_throw = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_mode",
-            u8"z",
-            [&](auto value) { key_mode = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_mode2",
-            u8"*",
-            [&](auto value) { key_mode2 = std::string{value}; }),
-        std::make_unique<config_key>(
-            u8"key_ammo",
-            u8"A",
-            [&](auto value, auto jk) {
-                key_ammo = std::string{value};
-                jkey(jk) = std::string{value};
-            }),
-        std::make_unique<config_key>(
-            u8"key_quickinv",
-            u8"x",
-            [&](auto value, auto jk) {
-                key_quickinv = std::string{value};
-                jkey(jk) = std::string{value};
-            }),
-        std::make_unique<config_string>(
-            u8"key_quicksave",
-            u8"F1",
-            [&](auto value) { key_quicksave = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_quickload",
-            u8"F2",
-            [&](auto value) { key_quickload = std::string{value}; }),
-        std::make_unique<config_string>(
-            u8"key_autodig",
-            u8"H",
-            [&](auto value) { key_autodig = std::string{value}; }),
-        std::make_unique<config_integer>(
-            u8"zkey",
-            0,
-            0,
-            1,
-            [&](auto value) { config::instance().zkey = value; }),
-        std::make_unique<config_integer>(
-            u8"xkey",
-            0,
-            0,
-            1,
-            [&](auto value) { config::instance().xkey = value; }),
-        std::make_unique<config_integer>(
-            u8"scr_sync",
-            2,
-            0,
-            15,
-            [&](auto value) { config::instance().scrsync = value; }),
-        std::make_unique<config_integer>(
-            u8"scroll_run",
-            1,
-            0,
-            1,
-            [&](auto value) { config::instance().runscroll = value; }),
-        std::make_unique<config_integer>(
-            u8"skipRandEvents",
-            0,
-            0,
-            1,
-            [&](auto value) { config::instance().skiprandevents = value; }),
-        std::make_unique<config_key_sequence>(
-            u8"key_set",
-            std::vector<std::string>{
-                u8"a",
-                u8"b",
-                u8"c",
-                u8"d",
-                u8"e",
-                u8"f",
-                u8"g",
-                u8"h",
-                u8"i",
-                u8"j",
-                u8"k",
-                u8"l",
-                u8"m",
-                u8"n",
-                u8"o",
-                u8"p",
-                u8"q",
-                u8"r",
-                u8"s",
-            },
-            [&](const auto& values) {
-                for_each_with_index(
-                    std::begin(values),
-                    std::end(values),
-                    [&](auto index, auto value) { key_select(index) = value; });
-            }),
-        std::make_unique<config_integer>(
-            u8"use_autopick",
-            1,
-            0,
-            1,
-            [&](auto value) { config::instance().use_autopick = value; }),
-        std::make_unique<config_integer>(
-            u8"autosave",
-            0,
-            0,
-            1,
-            [&](auto value) { config::instance().autosave = value; }),
-        std::make_unique<config_string>(
-            u8"startup_script",
-            "",
-            [&](auto value) { config::instance().startup_script = std::string{value}; }),
-        std::make_unique<config_integer>(
-            u8"damage_popup",
-            1,
-            0,
-            1,
-            [&](auto value) { config::instance().damage_popup = value; }),
-        std::make_unique<config_integer>(
-            u8"keyWait",
-            5,
-            1,
-            10,
-            [&](auto value) { config::instance().keywait = value; }),
-    };
+    conf.bind_setter<hcl::List>("key.key_set",
+                    [&](auto values)
+                        {
+                            for_each_with_index(
+                                std::begin(values),
+                                std::end(values),
+                                [&](auto index, hcl::Value value) {
+                                    std::string s = value.as<std::string>();
+                                    key_select(index) = s;
+                                });
+                        });
 
-    picojson::value value;
-
-    {
-        std::ifstream file{json_file.native(), std::ios::binary};
-        if (!file)
-        {
-            throw config_loading_error{
-                u8"Failed to open: "s
-                + filesystem::make_preferred_path_in_utf8(json_file)};
-        }
-        fileutil::skip_bom(file);
-
-        file >> value;
-    }
-
-    const picojson::object& options = value.get<picojson::object>();
-    for (const auto& config : config_list)
-    {
-        config->set(options);
-    }
+    std::ifstream ifs{filesystem::make_preferred_path_in_utf8(hcl_file.native())};
+    conf.load(ifs, hcl_file.string());
 
     key_prev = key_northwest;
     key_next = key_northeast;
@@ -747,17 +448,17 @@ void load_config(const fs::path& json_file)
     if (key_mode == ""s)
     {
         key_mode = u8"z"s;
-        set_config("key_mode", key_mode);
+        conf.set("key.mode", key_mode);
     }
     if (key_mode2 == ""s)
     {
         key_mode2 = u8"*"s;
-        set_config("key_mode2", key_mode2);
+        conf.set("key.mode2", key_mode2);
     }
     if (key_ammo == ""s)
     {
         key_ammo = u8"A"s;
-        set_config("key_mode2", key_ammo);
+        conf.set("key.ammo", key_ammo);
     }
 }
 
@@ -774,8 +475,8 @@ void set_config(const std::string& key, int value)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
-                + filesystem::make_preferred_path_in_utf8(
-                      filesystem::dir::exe() / u8"config.json")};
+                    + filesystem::make_preferred_path_in_utf8(
+                        filesystem::dir::exe() / u8"config.json")};
         }
         fileutil::skip_bom(file);
         file >> options;
@@ -790,8 +491,8 @@ void set_config(const std::string& key, int value)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
-                + filesystem::make_preferred_path_in_utf8(
-                      filesystem::dir::exe() / u8"config.json")};
+                    + filesystem::make_preferred_path_in_utf8(
+                        filesystem::dir::exe() / u8"config.json")};
         }
         options.serialize(std::ostream_iterator<char>(file), true);
     }
@@ -810,8 +511,8 @@ void set_config(const std::string& key, const std::string& value)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
-                + filesystem::make_preferred_path_in_utf8(
-                      filesystem::dir::exe() / u8"config.json")};
+                    + filesystem::make_preferred_path_in_utf8(
+                        filesystem::dir::exe() / u8"config.json")};
         }
         fileutil::skip_bom(file);
         file >> options;
@@ -826,8 +527,8 @@ void set_config(const std::string& key, const std::string& value)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
-                + filesystem::make_preferred_path_in_utf8(
-                      filesystem::dir::exe() / u8"config.json")};
+                    + filesystem::make_preferred_path_in_utf8(
+                        filesystem::dir::exe() / u8"config.json")};
         }
         options.serialize(std::ostream_iterator<char>(file), true);
     }
@@ -846,8 +547,8 @@ void set_config(const std::string& key, const std::string& value1, int value2)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
-                + filesystem::make_preferred_path_in_utf8(
-                      filesystem::dir::exe() / u8"config.json")};
+                    + filesystem::make_preferred_path_in_utf8(
+                        filesystem::dir::exe() / u8"config.json")};
         }
         fileutil::skip_bom(file);
         file >> options;
@@ -862,8 +563,8 @@ void set_config(const std::string& key, const std::string& value1, int value2)
         {
             throw config_loading_error{
                 u8"Failed to open: "s
-                + filesystem::make_preferred_path_in_utf8(
-                      filesystem::dir::exe() / u8"config.json")};
+                    + filesystem::make_preferred_path_in_utf8(
+                        filesystem::dir::exe() / u8"config.json")};
         }
         options.serialize(std::ostream_iterator<char>(file), true);
     }
@@ -953,7 +654,7 @@ void load_config2(const fs::path& json_file)
     {
         throw config_loading_error{
             u8"Failed to open: "s
-            + filesystem::make_preferred_path_in_utf8(json_file)};
+                + filesystem::make_preferred_path_in_utf8(json_file)};
     }
 
     fileutil::skip_bom(file);
@@ -996,9 +697,6 @@ void config::init(const fs::path& path)
     def.init(config_def_file);
 
     load_defaults();
-
-    std::ifstream ifs{filesystem::make_preferred_path_in_utf8(path.native())};
-    load(ifs, path.string());
 }
 
 void config::load_defaults()
@@ -1049,8 +747,8 @@ void config::visit_object(const hcl::Object& object,
 }
 
 void config::visit(const hcl::Value& value,
-                       const std::string& current_key,
-                       const std::string& hcl_file)
+                   const std::string& current_key,
+                   const std::string& hcl_file)
 {
     if (value.is<hcl::Object>())
     {
@@ -1089,7 +787,7 @@ bool config::verify_types(const hcl::Value& value, const std::string& current_ke
     {
         if (def.is<config_def::config_enum_def>(current_key))
         {
-            return def.is_valid_enum_variant(current_key, value.as<std::string>());
+            return def.is_valid_enum_variant(current_key, value.as<int>());
         }
         else if (!def.is<config_def::config_string_def>(current_key))
         {
@@ -1109,8 +807,8 @@ void config::write()
         {
             throw config_loading_error{
                 u8"Failed to open: "s
-                + filesystem::make_preferred_path_in_utf8(
-                      filesystem::dir::exe() / u8"config.hcl")};
+                    + filesystem::make_preferred_path_in_utf8(
+                        filesystem::dir::exe() / u8"config.hcl")};
         }
         fileutil::skip_bom(file);
 
