@@ -491,14 +491,6 @@ void item_exchange(int a, int b)
 void item_remove(item& i)
 {
     i.number = 0;
-
-    // It seems like item images are not removed from the map if the
-    // item is on the ground, so explicitly clear them.
-    bool on_ground = i.index >= 5080;
-    if(on_ground)
-    {
-        cell_refresh(i.position.x, i.position.y);
-    }
     lua::lua.on_item_removal(i);
 }
 
