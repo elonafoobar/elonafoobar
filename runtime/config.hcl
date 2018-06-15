@@ -1,27 +1,20 @@
 config {
     language = {
-        language = ""
+        language = 1
     }
-
-    # Place the name of a save folder to load on startup here, like "sav_noa".
-    default_save = ""
 
     screen {
         # Fullscreen mode.
-        # One of: "windowed", "fullscreen", "desktop_fullscreen"
-        fullscreen = "windowed"
+        fullscreen = 0
 
-        enable_music = true
-        enable_sound = true
-
-        # Always center the screen.
-        always_center = true
+        music = 1
+        sound = true
 
         # Render shadows at higher quality.
         high_quality_shadows = true # shadow
 
         # Enable shadows on objects.
-        object_shadow = true
+        object_shadows = true
 
         # Play heartbeat sound when health is low.
         heartbeat = true
@@ -40,6 +33,9 @@ config {
         # TODO
         scroll_when_run = true
 
+        # Always center the screen.
+        always_center = true
+
         # Number of frames to wait for most animations/actions.
         # Valid values are 0 - 50.
         general_wait = 30 # wait1
@@ -56,13 +52,13 @@ config {
 
         # Speed of auto-turn actions.
         # One of: "normal", "high", "highest"
-        auto_turn_speed = "normal"
+        auto_turn_speed = 0
 
         # Play animations when melee attacking.
         attack_anime = true
 
         # Play weather-related animations.
-        env_effect = true
+        weather_effect = true
 
         # Play animations at the title screen.
         # NOTE: Currently not implemented.
@@ -95,6 +91,9 @@ config {
     }
 
     game {
+        # Place the name of a save folder to load on startup here, like "sav_noa".
+        default_save = ""
+
         # Attack non-hostile, non-ally NPCs when running into them.
         attack_neutral_npcs = false # ignore_dislike
 
@@ -104,11 +103,11 @@ config {
         # Show extra help popups for new players.
         extra_help = true
 
-        # Show identify status updates from Sense Quality.
-        show_autoidentify = true
+        # Hide identify status updates from Sense Quality.
+        hide_autoidentify = false
 
-        # Show daily shop reports of items sold for player-owned shops.
-        show_shop_updates = true # hide_shopResult
+        # Hide daily shop reports of items sold for player-owned shops.
+        hide_shop_updates = false # hide_shopResult
     }
 
     debug {
@@ -166,7 +165,7 @@ config {
     # Extra config settings added in ElonaFoobar.
     foobar {
         # Position to display the HP bar. One of: "hide", "left", "right"
-        hp_bar_position = "right" # hide, left, right
+        hp_bar_position = 2 # hide, left, right
 
         # Shows an icon for pets that are leashed.
         leash_icon = true

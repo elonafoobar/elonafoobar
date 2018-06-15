@@ -20,7 +20,7 @@ class config : public lib::noncopyable
 public:
     static config& instance();
 
-    void init(const fs::path&);
+    void init();
     void load(std::istream&, const std::string&, bool);
     void write();
 
@@ -33,69 +33,70 @@ public:
     }
 
     int alert;
-    int alwayscenter;
+    bool alwayscenter;
     int animewait;
-    int attackanime;
+    bool attackanime;
     int attackwait;
-    int autonumlock;
-    int autosave;
+    bool autonumlock;
+    bool autosave;
     int autoturn;
-    int damage_popup;
+    bool damage_popup;
     std::string display_mode;
-    int env;
-    int extraclass;
-    int extrahelp;
-    int extrarace;
+    bool env;
+    bool extraclass;
+    bool extrahelp;
+    bool extrarace;
     std::string font1;
     std::string font2;
     int fullscreen;
-    int heart;
-    int hideautoidentify;
-    int hideshopresult;
+    bool heart;
+    bool hideautoidentify;
+    bool hideshopresult;
     int hp_bar;
-    int ignoredislike;
-    int joypad;
+    bool ignoredislike;
+    bool joypad;
     int keywait;
     int language;
-    int leash_icon;
-    int msgaddtime;
+    bool leash_icon;
+    bool msgaddtime;
     int msgtrans;
     int music;
-    int net;
-    int netchat;
-    int netwish;
-    int noadebug;
-    int objectshadow;
+    bool net;
+    bool netchat;
+    bool netwish;
+    bool noadebug;
+    bool objectshadow;
     int restock_interval;
-    int runscroll;
+    bool runscroll;
     int runwait;
-    int scroll;
+    bool scroll;
     int scrsync;
-    int serverlist;
-    int shadow;
-    int skiprandevents;
-    int sound;
+    bool serverlist;
+    bool shadow;
+    bool skiprandevents;
+    bool sound;
     int startrun;
     std::string startup_script;
-    int story;
+    bool story;
+    bool titleanime;
     int wait1;
     int walkwait;
-    int windowanime;
-    int wizard;
-    int xkey;
-    int zkey;
+    bool windowanime;
+    bool wizard;
+    bool xkey;
+    bool zkey;
 
-    int use_autopick;
-    int use_autopick_in_home;
-    int use_autopick_in_dungeon;
-    int use_autopick_in_shop;
-    int use_autopick_in_ranch;
-    int use_autopick_in_crop;
-    int use_autopick_in_storage_house;
-    int use_autopick_in_shelter;
-    int use_autopick_in_town;
-    int use_autopick_in_conquered_nefia;
-    int use_autopick_in_conquered_quest_map;
+    bool use_autopick;
+    bool use_autopick_in_home;
+    bool use_autopick_in_dungeon;
+    bool use_autopick_in_shop;
+    bool use_autopick_in_ranch;
+    bool use_autopick_in_crop;
+    bool use_autopick_in_storage_house;
+    bool use_autopick_in_shelter;
+    bool use_autopick_in_town;
+    bool use_autopick_in_conquered_nefia;
+    bool use_autopick_in_conquered_quest_map;
 
     bool is_test = false; // testing use only
 
@@ -122,6 +123,7 @@ public:
 
     void inject_enum(const std::string& key, std::vector<std::string> variants, int default_index)
     {
+        // TODO
         def.inject_enum(key, variants, default_index);
     }
 
@@ -133,23 +135,25 @@ public:
             // TODO fallback to default specified in config definition instead
             throw std::runtime_error("No such config value " + key);
         }
-        if (!def.is<T>(key))
+        if (!storage[key].is<T>())
         {
             throw std::runtime_error("Expected type \"" + def.type_to_string(key) + "\" for key " + key);
         }
-        if (!storage[key].is<T>())
-        {
-            throw std::runtime_error("BUG: Stored value had wrong type for key " + key +
-                                     " (this should never happen)");
-        }
 
-        if (getters.find(key) != getters.end())
+        try
         {
-            return getters[key]().as<T>();
+            if (getters.find(key) != getters.end())
+            {
+                return getters[key]().as<T>();
+            }
+            else
+            {
+                return storage[key].as<T>();
+            }
         }
-        else
+        catch (std::exception& e)
         {
-            return storage[key].as<T>();
+            throw std::runtime_error("Error on getting config value " + key + ": " + e.what());
         }
     }
 
@@ -159,6 +163,12 @@ public:
         if (!def.exists(key))
         {
             throw std::runtime_error("No such config key " + key);
+        }
+        if (def.is<config_def::config_enum_def>(key)
+            && def.get<config_def::config_enum_def>(key).pending)
+        {
+            // The values need to be injected at runtime, but they aren't known yet.
+            return;
         }
         if (verify_types(value, key))
         {
@@ -191,6 +201,7 @@ public:
 
         if (setters.find(key) != setters.end())
         {
+            std::cout << "run setter: " << key << std::endl;
             setters[key](value);
         }
     }
@@ -201,7 +212,7 @@ private:
     config() {}
     ~config() = default;
 
-    void load_defaults();
+    void load_defaults(bool);
 
     void visit(const hcl::Value&, const std::string&, const std::string&, bool);
     void visit_object(const hcl::Object&, const std::string&, const std::string&, bool);

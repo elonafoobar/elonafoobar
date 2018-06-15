@@ -41,6 +41,11 @@ locale {
                     yes = "On"
                     no = "Off"
                 }
+
+                unsupported {
+                    yes = "No(unsupported)"
+                    no = "No(unsupported)"
+                }
             }
 
             formatter {
@@ -179,9 +184,7 @@ DOC
                 }
                 title_effect {
                     name = "Title Water Effect"
-                    variants {
-                        unsupported = "No(unsupported)"
-                    }
+                    yes_no = core.locale.config.common.yes_no.unsupported
                     doc = <<DOC
 Play animations at the title screen.
 NOTE: Currently not implemented.
@@ -288,6 +291,7 @@ DOC
             }
 
             balance {
+                name = "Game Balance"
                 doc = "These settings affect game balance."
                 restock_interval {
                     name = "Restock Interval"

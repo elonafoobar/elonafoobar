@@ -69,22 +69,23 @@ public:
     {
         int default_index;
         std::vector<std::string> variants;
+        bool pending = false;
 
         std::string to_string() const
+        {
+            std::stringstream ss;
+            ss << "[";
+            for (auto it = variants.begin(); it != variants.end(); ++it)
             {
-                std::stringstream ss;
-                ss << "[";
-                for (auto it = variants.begin(); it != variants.end(); ++it)
+                ss << *it;
+                if (it != std::prev(variants.end()))
                 {
-                    ss << *it;
-                    if (it != std::prev(variants.end()))
-                    {
-                        ss << ", ";
-                    }
+                    ss << ", ";
                 }
-                ss << "]";
-                return ss.str();
             }
+            ss << "]";
+            return ss.str();
+        }
     };
 
     struct config_def_item_data
@@ -103,7 +104,11 @@ public:
 
     typedef std::map<std::string, item>::const_iterator const_iterator;
 
-    config_def() {};
+    config_def()
+    {
+        locale_root = "core.locale.config.menu";
+    }
+
     ~config_def() = default;
 
     void init(const fs::path&);
@@ -118,20 +123,36 @@ public:
         data.clear();
     }
 
-    bool exists(const std::string& key)
+    bool exists(const std::string& key) const
     {
         return items.find(key) != items.end()
             && data.find(key) != data.end();
     };
 
+    void inject_enum(const std::string& key, std::vector<std::string> variants, int default_index)
+    {
+        if(!exists(key) || !is<config_enum_def>(key))
+        {
+            throw config_def_error(key, "No such enum " + key);
+        }
+
+        auto& def = get<config_enum_def>(key);
+        def.variants = std::move(variants);
+        def.default_index = default_index;
+        def.pending = false;
+    }
+
     template <typename T>
-    bool is(const std::string& key) const { return items.at(key).type() == typeid(T); };
+    bool is(const std::string& key) const { return exists(key) && items.at(key).type() == typeid(T); };
+
+    template <typename T>
+    T& get(const std::string& key) { return boost::get<T>(items.at(key)); }
 
     template <typename T>
     const T& get(const std::string& key) const { return boost::get<T>(items.at(key)); }
 
-    bool is_visible(const std::string& key) { return data.at(key).visible; }
-    bool is_preload(const std::string& key) { return data.at(key).preload; }
+    bool is_visible(const std::string& key) const { return data.at(key).visible; }
+    bool is_preload(const std::string& key) const { return data.at(key).preload; }
     bool is_valid_enum_variant(const std::string& key, int index)
     {
         if(!is<config_enum_def>(key))
@@ -222,6 +243,10 @@ public:
 
     optional<int> get_max(const std::string& key)
     {
+        if (is<config_enum_def>(key))
+        {
+            return static_cast<int>(get<config_enum_def>(key).variants.size() - 1);
+        }
         if (!is<config_int_def>(key))
         {
             throw config_def_error(key, "Cannot get max value for non-integer option " + key);
@@ -231,6 +256,10 @@ public:
 
     optional<int> get_min(const std::string& key)
     {
+        if (is<config_enum_def>(key))
+        {
+            return 0;
+        }
         if (!is<config_int_def>(key))
         {
             throw config_def_error(key, "Cannot get min value for non-integer option " + key);
@@ -246,6 +275,8 @@ public:
         }
         return data[key].doc;
     }
+
+    const std::string& get_locale_root() const { return locale_root; }
 
 private:
     void visit(const hcl::Value&, const std::string&, const std::string&);
@@ -263,6 +294,7 @@ private:
                                const std::string&,
                                const std::string&);
 
+    std::string locale_root;
     std::map<std::string, item> items;
     std::map<std::string, config_def_item_data> data;
 };

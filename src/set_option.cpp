@@ -23,10 +23,10 @@ public:
     std::string name;
     std::string key;
 
-    config_menu_item_base(const std::string& key)
+    config_menu_item_base(const std::string& key, const std::string& locale_key)
         : key(key)
     {
-        name = i18n::s.get("core.locale." + key + ".name");
+        name = i18n::s.get(locale_key + ".name");
     }
 
     virtual ~config_menu_item_base() noexcept = default;
@@ -42,10 +42,11 @@ public:
 
     config_menu_item_yesno(
         const std::string& key,
+        const std::string& locale_key,
         bool variable,
         const std::string& yes,
         const std::string& no)
-        : config_menu_item_base(key)
+        : config_menu_item_base(key, locale_key)
         , variable(variable)
         , yes(yes)
         , no(no)
@@ -73,8 +74,10 @@ class config_menu_item_info : public config_menu_item_base
 public:
     std::string info;
 
-    config_menu_item_info(const std::string& key, const std::string& info)
-        : config_menu_item_base(key)
+    config_menu_item_info(const std::string& key,
+                          const std::string& locale_key,
+                          const std::string& info)
+        : config_menu_item_base(key, locale_key)
         , info(info)
     {
     }
@@ -91,9 +94,10 @@ public:
 
     config_menu_item_integer(
         const std::string& key,
+        const std::string& locale_key,
         int variable,
         const std::string& text)
-        : config_menu_item_base(key)
+        : config_menu_item_base(key, locale_key)
         , variable(variable)
         , text(text)
     {
@@ -125,9 +129,10 @@ public:
 
     config_menu_item_choice(
         const std::string& key,
+        const std::string& locale_key,
         int variable,
         const std::vector<std::string>& texts)
-        : config_menu_item_base(key)
+        : config_menu_item_base(key, locale_key)
         , variable(variable)
         , texts(texts)
     {
@@ -172,40 +177,45 @@ public:
 };
 
 
-#define ELONA_CONFIG_ITEM(key) \
-    ret.back().items.emplace_back(std::make_unique<config_menu_item_base>(key))
+#define ELONA_CONFIG_ITEM(def_key, locale_key)                                  \
+    ret.back().items.emplace_back(std::make_unique<config_menu_item_base>(def_key, locale_key))
 
-#define ELONA_CONFIG_ITEM_YESNO(key, yes, no) \
+#define ELONA_CONFIG_ITEM_YESNO(def_key, locale_key, yes, no)   \
     ret.back().items.emplace_back( \
-        std::make_unique<config_menu_item_yesno>(key, conf.get<bool>(key), yes, no))
+        std::make_unique<config_menu_item_yesno>(def_key, locale_key, conf.get<bool>(def_key), yes, no))
 
-#define ELONA_CONFIG_ITEM_INFO(key, info) \
+#define ELONA_CONFIG_ITEM_INFO(def_key, locale_key, info)       \
     ret.back().items.emplace_back( \
-        std::make_unique<config_menu_item_info>(key, info))
+        std::make_unique<config_menu_item_info>(def_key, locale_key, info))
 
-#define ELONA_CONFIG_ITEM_INTEGER(key, formatter) \
+#define ELONA_CONFIG_ITEM_INTEGER(def_key, locale_key, formatter)       \
     ret.back().items.emplace_back( \
-        std::make_unique<config_menu_item_integer>(key, conf.get<int>(key), formatter))
+        std::make_unique<config_menu_item_integer>(def_key, locale_key, conf.get<int>(def_key), formatter))
 
-#define ELONA_CONFIG_ITEM_CHOICE(key, choices)                     \
-    ret.back().items.emplace_back(std::make_unique<config_menu_item_choice>(key, conf.get<int>(key), choices))
+#define ELONA_CONFIG_ITEM_CHOICE(def_key, locale_key, choices)                  \
+    ret.back().items.emplace_back(std::make_unique<config_menu_item_choice>(def_key, locale_key, conf.get<int>(def_key), choices))
 
 
 void visit_section(config&, const std::string&, std::vector<config_menu>&);
 void visit_config_item(config&, const std::string&, std::vector<config_menu>&);
 
 
-void visit_toplevel(config& conf, const std::string& current_key, std::vector<config_menu>& ret)
+void visit_toplevel(config& conf, std::vector<config_menu>& ret)
 {
-    std::string def_key  = "core." + current_key;
-    int x = 370;
-    int y = 285;
+    std::string def_key = "core.config";
+    auto children = conf.get_def().get_children(def_key);
+    int font_size = 14;
+    int w = 370;
+    int h = 165 + ((font_size + 1) * children.size());
 
-    ret.emplace_back(i18n::s.get("core.locale." + current_key + ".name"), x, y);
+    ret.emplace_back(i18n::s.get(conf.get_def().get_locale_root() + ".name"), w, h);
 
     for (const auto& child : conf.get_def().get_children(def_key))
     {
-        ELONA_CONFIG_ITEM(current_key);
+        if (conf.get_def().is_visible(def_key + "." + child))
+        {
+            ELONA_CONFIG_ITEM(def_key + "." + child, conf.get_def().get_locale_root() + "." + child);
+        }
     }
     for (const auto& child : conf.get_def().get_children(def_key))
     {
@@ -215,28 +225,52 @@ void visit_toplevel(config& conf, const std::string& current_key, std::vector<co
 
 void visit_section(config& conf, const std::string& current_key, std::vector<config_menu>& ret)
 {
-    std::string def_key  = "core." + current_key;
-    int x = 370;
-    int y = 285;
+    std::string def_key = "core.config." + current_key;
+    std::string locale_key = conf.get_def().get_locale_root() + "." + current_key;
+    auto children = conf.get_def().get_children(def_key);
+    int font_size = 14;
+    int w = 440;
+    int h = 165 + ((font_size + 1) * children.size());
 
-    ret.emplace_back(i18n::s.get("core.locale." + current_key + ".name"), x, y);
+    if (!conf.get_def().exists(def_key))
+    {
+        throw std::runtime_error("No such config option \"" + current_key + "\".");
+    }
+    if (!conf.get_def().is_visible(def_key))
+    {
+        return;
+    }
+
+    std::cout << locale_key << std::endl;
+    ret.emplace_back(i18n::s.get(locale_key + ".name"), w, h);
 
     for (const auto& child : conf.get_def().get_children(def_key))
     {
-        visit_config_item(conf, child, ret);
+        visit_config_item(conf, current_key + "." + child, ret);
     }
 }
 
 void visit_config_item(config& conf, const std::string& current_key, std::vector<config_menu>& ret)
 {
-    std::string def_key  = "core." + current_key;
+    std::string def_key = "core.config." + current_key;
+    std::string locale_key = conf.get_def().get_locale_root() + "." + current_key;
+
+    if (!conf.get_def().exists(def_key))
+    {
+        throw std::runtime_error("No such config option \"" + current_key + "\".");
+    }
+    if (!conf.get_def().is_visible(def_key))
+    {
+        return;
+    }
+
     if (conf.get_def().is<config_def::config_bool_def>(def_key))
     {
-        ELONA_CONFIG_ITEM_YESNO(current_key, "asd", "zxc");
+        ELONA_CONFIG_ITEM_YESNO(def_key, locale_key, "asd", "zxc");
     }
     else if (conf.get_def().is<config_def::config_int_def>(def_key))
     {
-        ELONA_CONFIG_ITEM_INTEGER(current_key, "${_1} asd");
+        ELONA_CONFIG_ITEM_INTEGER(def_key, locale_key, "${_1} asd");
     }
     else if (conf.get_def().is<config_def::config_enum_def>(def_key))
     {
@@ -245,10 +279,10 @@ void visit_config_item(config& conf, const std::string& current_key, std::vector
 
         for (const auto& variant : variants)
         {
-            choices.emplace_back(i18n::s.get("core.locale." + current_key + ".variants." + variant));
+            choices.emplace_back(i18n::s.get(locale_key + ".variants." + variant));
         }
 
-        ELONA_CONFIG_ITEM_CHOICE(current_key, choices);
+        ELONA_CONFIG_ITEM_CHOICE(def_key, locale_key, choices);
     }
     else if (conf.get_def().is<config_def::config_string_def>(def_key))
     {
@@ -260,11 +294,11 @@ void visit_config_item(config& conf, const std::string& current_key, std::vector
     }
     else if (conf.get_def().is<config_def::config_section_def>(def_key))
     {
-        throw new std::runtime_error("You cannot currently define nested sections.");
+        throw std::runtime_error("You cannot currently define nested sections.");
     }
     else
     {
-        throw new std::runtime_error("asdf");
+        throw std::runtime_error("asdf");
     }
 }
 
@@ -273,7 +307,7 @@ std::vector<config_menu> create_config_menu()
     std::vector<config_menu> ret;
     auto& conf = config::instance();
 
-    visit_toplevel(conf, "config", ret);
+    visit_toplevel(conf, ret);
 
     // ret.emplace_back(lang(u8"オプション", u8"Option"), 370, 285);
     // ELONA_CONFIG_ITEM(lang(u8"ゲームの設定", u8"Game Setting"));
@@ -1754,7 +1788,8 @@ void set_option()
                 set_option();
                 return;
             }
-            load_config(filesystem::dir::exe() / u8"config.json");
+            config::instance().write();
+            //load_config(filesystem::dir::exe() / u8"config.json");
             if (mode == 0)
             {
                 if (config::instance().net)

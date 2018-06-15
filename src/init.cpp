@@ -390,7 +390,6 @@ void initialize_config(const fs::path& config_file)
     SDIM2(buff, 10000);
     initialize_jkey();
 
-    config::instance().init();
     load_config(config_file);
 }
 
@@ -763,6 +762,7 @@ int run()
 
     foobar_save.initialize();
 
+    config::instance().init();
     load_config2(config_file);
 
     title(u8"Elona Foobar version "s + latest_version.short_string(),
