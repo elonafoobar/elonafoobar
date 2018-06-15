@@ -8,6 +8,7 @@
 #include "character_status.hpp"
 #include "config.hpp"
 #include "draw.hpp"
+#include "enums.hpp"
 #include "event.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
@@ -2039,8 +2040,8 @@ label_2258_internal:
     key_check();
     cursor_check();
     int a{};
-    a = stick(128);
-    if (a == 128)
+    a = stick(stick_key::escape);
+    if (a == stick_key::escape)
     {
         if (scenemode)
         {

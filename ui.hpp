@@ -47,7 +47,9 @@ void animation_fade_in();
 void label_1444();
 void label_1445();
 void render_fishing_animation();
+void load_background_variants(int buffer);
 void clear_background_in_character_making();
+void clear_background_in_continue();
 
 void draw_scroll(int x, int y, int width, int height);
 void cs_listbk();

@@ -225,27 +225,40 @@ struct MessageBox
                     // New line.
                     buffer += '\n';
                 }
+                else if (input.was_pressed_just_now(key::escape))
+                {
+                    // A tab character indicates input was canceled.
+                    buffer += '\t';
+                }
                 else if (input.is_pressed(key::backspace) && !buffer.empty())
                 {
-                    // Delete the last character.
-                    size_t last_byte_count{};
-                    for (size_t i = 0; i < buffer.size();)
+                    if (backspace_held_frames == 0
+                        || (backspace_held_frames > 15 && backspace_held_frames % 2 == 0))
                     {
-                        const auto byte = strutil::byte_count(buffer[i]);
-                        last_byte_count = byte;
-                        i += byte;
+                        // Delete the last character.
+                        size_t last_byte_count{};
+                        for (size_t i = 0; i < buffer.size();)
+                        {
+                            const auto byte = strutil::byte_count(buffer[i]);
+                            last_byte_count = byte;
+                            i += byte;
+                        }
+                        buffer.erase(buffer.size() - last_byte_count, last_byte_count);
                     }
-                    buffer.erase(buffer.size() - last_byte_count, last_byte_count);
+                    backspace_held_frames++;
                 }
-                else if (
-                    input.is_pressed(key::key_v)
-                    && input.is_pressed(key::ctrl))
+                else if (input.is_pressed(key::key_v)
+                         && input.is_pressed(key::ctrl))
                 {
                     // Paste.
                     std::unique_ptr<char, decltype(&::SDL_free)> text_ptr{
                         ::SDL_GetClipboardText(), ::SDL_free};
 
                     buffer += strutil::replace(text_ptr.get(), u8"\r\n", u8"\n");
+                }
+                else if(!input.is_pressed(key::backspace))
+                {
+                    backspace_held_frames = 0;
                 }
             }
         }
@@ -264,6 +277,7 @@ struct MessageBox
 private:
     std::string& buffer;
     bool text;
+    int backspace_held_frames{};
 };
 
 std::vector<std::unique_ptr<MessageBox>> message_boxes;

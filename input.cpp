@@ -3,6 +3,7 @@
 #include "blending.hpp"
 #include "config.hpp"
 #include "elona.hpp"
+#include "enums.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -233,6 +234,42 @@ void input_number_dialog(int x, int y, int max_number)
             snd(5);
             number = max_number;
         }
+        if (key == key_northwest)
+        {
+            snd(5);
+            number -= 100;
+            if (number < 1)
+            {
+                number = 1;
+            }
+        }
+        if (key == key_northeast)
+        {
+            snd(5);
+            number += 100;
+            if (number > max_number)
+            {
+                number = max_number;
+            }
+        }
+        if (key == key_southwest)
+        {
+            snd(5);
+            number -= 10;
+            if (number < 1)
+            {
+                number = 1;
+            }
+        }
+        if (key == key_southeast)
+        {
+            snd(5);
+            number += 10;
+            if (number > max_number)
+            {
+                number = max_number;
+            }
+        }
         inputlog = ""s + number;
     }
     if (f == -1)
@@ -247,14 +284,14 @@ void input_number_dialog(int x, int y, int max_number)
 
 
 
-void input_text_dialog(
+bool input_text_dialog(
     int x,
     int y,
     int val2,
     bool is_cancelable,
     bool limit_length)
 {
-    int ime_esc = 0;
+    bool canceled = false;
 
     snd(26);
     dx = val2 * 16 + 60;
@@ -269,7 +306,6 @@ void input_text_dialog(
 
     notesel(inputlog);
     p(1) = 2;
-    ime_esc = 0;
 
     for (int cnt = 0;; ++cnt)
     {
@@ -346,15 +382,6 @@ void input_text_dialog(
             p(4) += 2;
         }
 
-        gmode(4, -1, -1, p(1) / 2 + 50);
-        pos(x + 34 + p(4) * 8, y + 5);
-        gcopy(3, 0, 336, 12, 24);
-        gmode(2);
-        color(255, 255, 255);
-        pos(x + 36, y + 9);
-        mes(s);
-        color(0, 0, 0);
-
         if (strutil::contains(inputlog(0), u8"\n"))
         {
             rtval = 0;
@@ -366,13 +393,12 @@ void input_text_dialog(
             inputlog = "";
             if (is_cancelable)
             {
-                ime_esc = 1;
+                canceled = true;
             }
         }
-        redraw();
         if (is_cancelable)
         {
-            if (ime_esc == 1)
+            if (canceled)
             {
                 inputlog = "";
                 keywait = 1;
@@ -380,6 +406,17 @@ void input_text_dialog(
                 break;
             }
         }
+
+        gmode(4, -1, -1, p(1) / 2 + 50);
+        pos(x + 34 + p(4) * 8, y + 5);
+        gcopy(3, 0, 336, 12, 24);
+        gmode(2);
+        color(255, 255, 255);
+        pos(x + 36, y + 9);
+        mes(s);
+        color(0, 0, 0);
+
+        redraw();
     }
     gmode(2);
     clrobj(1);
@@ -389,12 +426,17 @@ void input_text_dialog(
     }
     rm_crlf(inputlog);
     onkey_0();
+
+    return canceled;
 }
 
 
 void key_check(int prm_299)
 {
     static int prevjoy_at_m19{};
+    bool delay_keypress = false;
+    bool delay_enter = false;
+    static int keywait_enter{};
 
     if (msgalert == 1)
     {
@@ -453,10 +495,13 @@ void key_check(int prm_299)
     mousel = 0;
     key_tab = 0;
     key_escape = 0;
-    int p_at_m19 = stick(15);
+    int p_at_m19 = stick(stick_key::left
+                         | stick_key::up
+                         | stick_key::right
+                         | stick_key::down);
     if (p_at_m19 != 0)
     {
-        if (p_at_m19 == 128)
+        if (p_at_m19 == stick_key::escape)
         {
             if (keywait == 0)
             {
@@ -464,7 +509,7 @@ void key_check(int prm_299)
                 key_escape = 1;
             }
         }
-        if (p_at_m19 == 1024)
+        if (p_at_m19 == stick_key::tab)
         {
             key_tab = 1;
             key = key_next;
@@ -487,6 +532,10 @@ void key_check(int prm_299)
         else if (getkey(snail::key::pagedown))
         {
             p_at_m19 = 12;
+        }
+        else if (getkey(snail::key::clear))
+        {
+            key = key_wait;
         }
 
         // Handle the case of the current key matching the movement
@@ -559,6 +608,17 @@ void key_check(int prm_299)
         keywait = 0;
         key_shift = 0;
     }
+
+    if (snail::input::instance().is_pressed(snail::key::enter))
+    {
+        key = key_enter;
+        delay_enter = true;
+    }
+    else
+    {
+        keywait_enter = 0;
+    }
+
     if (config::instance().joypad)
     {
         int j_at_m19 = 0;
@@ -665,58 +725,57 @@ void key_check(int prm_299)
             keybd_wait = 1000;
         }
     }
-    int f_at_m19 = 0;
-    if (p_at_m19 == 1)
+    if (p_at_m19 == stick_key::left)
     {
         if (key_alt == 0)
         {
             key = key_west;
-            f_at_m19 = 1;
+            delay_keypress = true;
         }
     }
-    if (p_at_m19 == 2)
+    if (p_at_m19 == stick_key::up)
     {
         if (key_alt == 0)
         {
             key = key_north;
-            f_at_m19 = 1;
+            delay_keypress = true;
         }
     }
-    if (p_at_m19 == 4)
+    if (p_at_m19 == stick_key::right)
     {
         if (key_alt == 0)
         {
             key = key_east;
-            f_at_m19 = 1;
+            delay_keypress = true;
         }
     }
-    if (p_at_m19 == 8)
+    if (p_at_m19 == stick_key::down)
     {
         if (key_alt == 0)
         {
             key = key_south;
-            f_at_m19 = 1;
+            delay_keypress = true;
         }
     }
     if (p_at_m19 == 3)
     {
         key = key_northwest;
-        f_at_m19 = 1;
+        delay_keypress = true;
     }
     if (p_at_m19 == 6)
     {
         key = key_northeast;
-        f_at_m19 = 1;
+        delay_keypress = true;
     }
     if (p_at_m19 == 9)
     {
         key = key_southwest;
-        f_at_m19 = 1;
+        delay_keypress = true;
     }
     if (p_at_m19 == 12)
     {
         key = key_southeast;
-        f_at_m19 = 1;
+        delay_keypress = true;
     }
 
     if (getkey(snail::key::f1))
@@ -772,7 +831,7 @@ void key_check(int prm_299)
     {
         return;
     }
-    if (f_at_m19)
+    if (delay_keypress)
     {
         if (prm_299 == 1)
         {
@@ -827,6 +886,7 @@ void key_check(int prm_299)
                 running = 1;
             }
         }
+        // Press the key every 7 frames twice.
         else if (keybd_wait < 14)
         {
             if (keybd_wait != 0 && keybd_wait != 7)
@@ -834,6 +894,7 @@ void key_check(int prm_299)
                 key = "";
             }
         }
+        // Press the key every other frame.
         else if (keybd_wait < 1000)
         {
             if (keybd_wait % 2 != 1)
@@ -848,6 +909,18 @@ void key_check(int prm_299)
         keybd_wait = 0;
         keybd_attacking = 0;
         running = 0;
+    }
+
+    if (delay_enter)
+    {
+        if (keywait_enter < 20)
+        {
+            if (keywait_enter != 0)
+            {
+                key = "";
+            }
+        }
+        keywait_enter++;
     }
 
     bool shortcut{};
@@ -890,7 +963,7 @@ void wait_key_released()
     {
         await(config::instance().wait1);
         int result{};
-        result = stick(768);
+        result = stick(stick_key::mouse_left | stick_key::mouse_right);
         if (result == 0)
         {
             key_check();
