@@ -35,7 +35,7 @@ if errorlevel 1 (
 )
 
 
-mkdir include lib > nul 2>&1
+mkdir lib include > nul 2>&1
 
 
 : SDL2
@@ -101,14 +101,16 @@ if not exist lib\SDL2_image.lib (
 : Lua 5.3.4
 if not exist %LUA_ARCHIVE% (
     echo Downloading %LUA%...
-    powershell -Command "(New-Object Net.WebClient).DownloadFile('https://www.lua.org/ftp/lua-5.3.4.tar.gz', 'lua-5.3.4.tar.gz')"
+    powershell -Command "(New-Object Net.WebClient).DownloadFile('https://www.lua.org/ftp/%LUA_ARCHIVE%', '%LUA_ARCHIVE%')"
 )
 
-if not exist ..\thirdparty\lib\lua\src (
+if not exist lib\lua (
     echo Extracting %LUA%...
+    mkdir lib\lua
+    copy ..\cmake\lua\* lib\lua
     7z x %LUA_ARCHIVE% -so | 7z x -aoa -si -ttar > nul
-    move %LUA%\src ..\thirdparty\lib\lua\ > nul
-    pushd ..\thirdparty\lib\lua\src
+    move %LUA%\src lib\lua\ > nul
+    pushd lib\lua\src
     patch -p0 --binary < ..\lua_wstring_5.3.4.patch
     popd
     rd /q /s %LUA%

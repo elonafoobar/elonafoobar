@@ -229,8 +229,8 @@ target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 
 if(WIN32)
   # Build custom version of Lua 5.3 with UTF-16 filename support
-  add_subdirectory(thirdparty/lib/lua)
-  target_include_directories(${PROJECT_NAME} PUBLIC thirdparty/lib/lua/lua/)
+  add_subdirectory(${CMAKE_PREFIX_PATH}/lib/lua)
+  target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_PREFIX_PATH}/lib/lua/src/)
   target_link_libraries(${PROJECT_NAME} liblua53)
 else()
   if(NOT DEFINED LUA_INCLUDE_DIR OR NOT DEFINED LUA_LIBRARIES)

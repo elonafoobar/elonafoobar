@@ -6,46 +6,46 @@ if(NOT GIT_FOUND)
     message(FATAL_ERROR "Git not Found")
 endif()
 
-include_directories ( lua lua/ )
+include_directories ( lua src/ )
 set ( SRC_CORE
-  lua/lapi.c
-  lua/lcode.c
-  lua/lctype.c
-  lua/ldebug.c
-  lua/ldo.c
-  lua/ldump.c
-  lua/lfunc.c
-  lua/lgc.c
-  lua/llex.c
-  lua/lmem.c
-  lua/lobject.c
-  lua/lopcodes.c
-  lua/lparser.c
-  lua/lstate.c
-  lua/lstring.c
-  lua/ltable.c
-  lua/ltm.c
-  lua/lundump.c
-  lua/lvm.c
-  lua/lzio.c
-  lua/lwstring.c )
+  src/lapi.c
+  src/lcode.c
+  src/lctype.c
+  src/ldebug.c
+  src/ldo.c
+  src/ldump.c
+  src/lfunc.c
+  src/lgc.c
+  src/llex.c
+  src/lmem.c
+  src/lobject.c
+  src/lopcodes.c
+  src/lparser.c
+  src/lstate.c
+  src/lstring.c
+  src/ltable.c
+  src/ltm.c
+  src/lundump.c
+  src/lvm.c
+  src/lzio.c
+  src/lwstring.c )
 set ( SRC_LIB
-  lua/lauxlib.c
-  lua/lbaselib.c
-  # lua/lbitlib.c
-  lua/lcorolib.c
-  lua/ldblib.c
-  lua/liolib.c
-  lua/lmathlib.c
-  lua/loslib.c
-  lua/lstrlib.c
-  lua/ltablib.c
-  lua/lutf8lib.c
-  lua/loadlib.c
-  lua/linit.c )
+  src/lauxlib.c
+  src/lbaselib.c
+  # src/lbitlib.c
+  src/lcorolib.c
+  src/ldblib.c
+  src/liolib.c
+  src/lmathlib.c
+  src/loslib.c
+  src/lstrlib.c
+  src/ltablib.c
+  src/lutf8lib.c
+  src/loadlib.c
+  src/linit.c )
 
 add_library ( liblua53 STATIC ${SRC_CORE} ${SRC_LIB} )
-target_include_directories( liblua53 INTERFACE lua/ )
+target_include_directories( liblua53 INTERFACE src/ )
 set_target_properties ( liblua53 PROPERTIES OUTPUT_NAME lua53 )
 
 set(CompilerFlags
