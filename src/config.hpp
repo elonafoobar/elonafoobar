@@ -2,8 +2,9 @@
 
 #include "filesystem.hpp"
 #include "lib/noncopyable.hpp"
-#include "snail/window.hpp"
 #include "config_def.hpp"
+#include "elona.hpp"
+#include "snail/window.hpp"
 #include <map>
 #include <string>
 #include <iostream>
@@ -175,14 +176,7 @@ public:
             if (value.is<int>())
             {
                 int temp = value.as<int>();
-                if (auto max = def.get_max(key))
-                {
-                    temp = std::min(temp, *max);
-                }
-                if (auto min = def.get_min(key))
-                {
-                    temp = std::max(temp, *min);
-                }
+                temp = clamp(temp, def.get_min(key), def.get_max(key));
                 storage.emplace(key, temp);
             }
             else
@@ -201,8 +195,7 @@ public:
 
         if (setters.find(key) != setters.end())
         {
-            std::cout << "run setter: " << key << std::endl;
-            setters[key](value);
+            setters[key](storage.at(key));
         }
     }
 

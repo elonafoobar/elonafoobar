@@ -178,7 +178,7 @@ DOC
                     name = "Attack Animation"
                     doc = "Play animations when melee attacking."
                 }
-                env_effect {
+                weather_effect {
                     name = "Weather Effect"
                     doc = "Play weather-related animations."
                 }
@@ -232,13 +232,13 @@ DOC
                     name = "Extra Help"
                     doc = "Show extra help popups for new players."
                 }
-                show_autoidentify {
-                    name = "Show Auto-Identify"
-                    doc = "Show identify status updates from Sense Quality."
+                hide_autoidentify {
+                    name = "Hide Auto-Identify"
+                    doc = "Hide identify status updates from Sense Quality."
                 }
-                show_shop_updates {
-                    name = "Show Show Updates"
-                    doc = "Show daily shop reports of items sold for shops you own."
+                hide_shop_updates {
+                    name = "Hide Show Updates"
+                    doc = "Hide daily shop reports of items sold for shops you own."
                 }
             }
 
@@ -333,7 +333,7 @@ DOC
                     yesno = core.locale.config.common.yes_no.use_dont_use
                 }
                 autosave {
-                    name = "Autopick"
+                    name = "Autosave"
                     doc = "Automatically save the game at certain intervals."
                     yesno = core.locale.config.common.yes_no.enable_disable
                 }

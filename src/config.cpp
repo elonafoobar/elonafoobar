@@ -729,7 +729,7 @@ bool config::verify_types(const hcl::Value& value, const std::string& current_ke
     {
         if (def.is<config_def::config_enum_def>(current_key))
         {
-            return def.is_valid_enum_variant(current_key, value.as<int>());
+            return true;
         }
         else if (!def.is<config_def::config_int_def>(current_key))
         {

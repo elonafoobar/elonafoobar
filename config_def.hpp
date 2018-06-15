@@ -51,8 +51,8 @@ public:
     struct config_int_def
     {
         int default_value = 0;
-        optional<int> min = none;
-        optional<int> max = none;
+        int min = 0;
+        int max = 0;
     };
 
     struct config_string_def
@@ -241,7 +241,7 @@ public:
         return get<config_enum_def>(key).variants;
     }
 
-    optional<int> get_max(const std::string& key)
+    int get_max(const std::string& key)
     {
         if (is<config_enum_def>(key))
         {
@@ -254,7 +254,7 @@ public:
         return get<config_int_def>(key).max;
     }
 
-    optional<int> get_min(const std::string& key)
+    int get_min(const std::string& key)
     {
         if (is<config_enum_def>(key))
         {
@@ -285,7 +285,7 @@ private:
     void visit_item(const hcl::Object&, const std::string&, const std::string&);
     item visit_bare_value(const hcl::Value&, const std::string&, const std::string&);
     config_section_def visit_section(const hcl::Object&, const std::string&, const std::string&);
-    config_int_def visit_int(int, const hcl::Object&);
+    config_int_def visit_int(int, const hcl::Object&, const std::string&, const std::string&);
     config_bool_def visit_bool(bool);
     config_string_def visit_string(const std::string&);
     config_list_def visit_list(const hcl::List&);

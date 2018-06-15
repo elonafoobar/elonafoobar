@@ -68,12 +68,6 @@ void config_def::visit(const hcl::Value& value,
     {
         visit_item(value.as<hcl::Object>(), current_key, hcl_file);
     }
-    else if (value.is<int>())
-    {
-        item i = config_int_def{value.as<int>(), none, none};
-        data.emplace(current_key, config_def_item_data{});
-        items.emplace(current_key, i);
-    }
     else
     {
         item i = visit_bare_value(value, current_key, hcl_file);
@@ -109,8 +103,8 @@ config_def::item config_def::visit_bare_value(const hcl::Value& default_value,
 }
 
 void config_def::visit_item(const hcl::Object& item,
-                       const std::string& current_key,
-                       const std::string& hcl_file)
+                            const std::string& current_key,
+                            const std::string& hcl_file)
 {
     config_def_item_data dat = config_def_item_data{};
     optional<config_def::item> i;
@@ -162,7 +156,7 @@ void config_def::visit_item(const hcl::Object& item,
         auto default_value = item.at("default");
         if (default_value.is<int>())
         {
-            i = visit_int(default_value.as<int>(), item);
+            i = visit_int(default_value.as<int>(), item, current_key, hcl_file);
         }
         else
         {
@@ -192,19 +186,23 @@ config_def::config_section_def config_def::visit_section(const hcl::Object& sect
 }
 
 config_def::config_int_def config_def::visit_int(int default_value,
-               const hcl::Object& item)
+                                                 const hcl::Object& item,
+                                                 const std::string& current_key,
+                                                 const std::string& hcl_file)
 {
     config_int_def def;
 
-    if (item.find("min") != item.end())
+    if (item.find("min") == item.end())
     {
-        def.min = item.at("min").as<int>();
+        throw config_def_error(hcl_file, current_key, "Integer option has no \"min\" field.");
     }
-    if (item.find("max") != item.end())
+    if (item.find("max") == item.end())
     {
-        def.max = item.at("max").as<int>();
+        throw config_def_error(hcl_file, current_key, "Integer option has no \"max\" field.");
     }
 
+    def.min = item.at("min").as<int>();
+    def.max = item.at("max").as<int>();
     def.default_value = default_value;
 
     return def;

@@ -93,8 +93,16 @@ config_def {
             japanese = "Kochi Gothic.ttf"
             english = "Bitstream Sans Vera Mono.ttf"
 
-            vertical_offset = -1 # fontVfix1
-            size_adjustment = 1 # fontSfix1
+            vertical_offset = {
+                default = -1
+                min = -10
+                max = 10
+            }
+            size_adjustment = {
+                default = 1
+                min = -5
+                max = 5
+            }
         }
     }
 
@@ -242,14 +250,20 @@ DOC
         options = {
             msg_line = {
                 default = 4
+                min = 0
+                max = 8
                 preload = true
             }
             tile_size = {
                 default = 48
+                min = 48
+                max = 48
                 preload = true
             }
             font_size = {
                 default = 14
+                min = 14
+                max = 14
                 preload = true
             }
             inf_ver_type = {
@@ -272,14 +286,20 @@ DOC
             }
             clock_x = {
                 default = 0
+                min = 0
+                max = 10000
                 preload = true
             }
             clock_w = {
                 default = 120
+                min = 0
+                max = 800
                 preload = true
             }
             clock_h = {
                 default = 120
+                min = 0
+                max = 600
                 preload = true
             }
         }

@@ -141,11 +141,11 @@ public:
     void change(int p)
     {
         variable += p;
-        if (p < 0)
+        if (variable < 0)
         {
             variable = 0;
         }
-        if (p >= static_cast<int>(texts.size()))
+        if (variable > static_cast<int>(texts.size() - 1))
         {
             variable = static_cast<int>(texts.size() - 1);
         }
