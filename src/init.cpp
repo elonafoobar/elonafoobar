@@ -797,8 +797,7 @@ void initialize_elona()
 
     if (config::instance().autonumlock)
     {
-        // TODO
-        // if NumLock key is pressed, send an event to release the key.
+        snail::input::instance().disable_numlock();
     }
 }
 

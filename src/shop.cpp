@@ -694,6 +694,7 @@ void shop_refresh()
         {
             inv[ci].value = inv[ci].value * 3 / 2;
         }
+        item_stack(-1, ci);
     }
     if (config::instance().restock_interval)
     {
