@@ -187,7 +187,7 @@ config_def {
             }
 
             select_wait = {
-                default = 7
+                default = 10
                 min = 1
                 max = 20
             }

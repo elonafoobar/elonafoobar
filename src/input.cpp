@@ -882,18 +882,16 @@ void key_check(key_wait_delay_t delay_type)
                 running = 1;
             }
         }
-        // Press the key every 7 frames twice.
-        else if (keybd_wait < 14)
+        else if (keybd_wait < config::instance().select_fast_start * config::instance().select_wait)
         {
-            if (keybd_wait != 0 && keybd_wait != 7)
+            if (keybd_wait % config::instance().select_wait != 0)
             {
                 key = "";
             }
         }
-        // Press the key every other frame.
         else if (keybd_wait < 1000)
         {
-            if (keybd_wait % 2 != 1)
+            if (keybd_wait % config::instance().select_fast_wait != 0)
             {
                 key = ""s;
             }

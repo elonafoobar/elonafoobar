@@ -296,7 +296,9 @@ void load_config(const fs::path& hcl_file)
     CONFIG_OPTION("input.key_wait"s,                  int,         config::instance().keywait);
     CONFIG_OPTION("input.run_wait"s,                  int,         config::instance().runwait);
     CONFIG_OPTION("input.start_run_wait"s,            int,         config::instance().startrun);
-    CONFIG_OPTION("input.walk_wait"s,                 int,         config::instance().walkwait);
+    CONFIG_OPTION("input.select_wait"s,               int,         config::instance().select_wait);
+    CONFIG_OPTION("input.select_fast_start_wait"s,    int,         config::instance().select_fast_start);
+    CONFIG_OPTION("input.select_fast_wait"s,          int,         config::instance().select_fast_wait);
     CONFIG_OPTION("message.add_timestamps"s,          bool,        config::instance().msgaddtime);
     CONFIG_OPTION("message.transparency"s,            int,         config::instance().msgtrans);
     CONFIG_OPTION("net.chat"s,                        bool,        config::instance().netchat);

@@ -72,6 +72,9 @@ public:
     int runwait;
     bool scroll;
     int scrsync;
+    int select_fast_start;
+    int select_wait;
+    int select_fast_wait;
     bool serverlist;
     bool shadow;
     bool skiprandevents;
