@@ -263,115 +263,114 @@ void load_config(const fs::path& hcl_file)
     auto& conf = config::instance();
 
     // TODO do inversions
+    CONFIG_OPTION("anime.alert_wait"s,                int,         config::instance().alert);
+    CONFIG_OPTION("anime.anime_wait",                 int,         config::instance().animewait);
+    CONFIG_OPTION("anime.attack_anime",               bool,        config::instance().attackanime);
+    CONFIG_OPTION("anime.attack_wait",                int,         config::instance().attackwait);
+    CONFIG_OPTION("anime.auto_turn_speed",            int,         config::instance().autoturn);
+    CONFIG_OPTION("anime.general_wait",               int,         config::instance().wait1);
+    CONFIG_OPTION("anime.scroll",                     bool,        config::instance().scroll);
+    CONFIG_OPTION("anime.title_effect",               bool,        false); // Unsupported option
+    CONFIG_OPTION("anime.weather_effect",             bool,        config::instance().env); // TODO change name
+    CONFIG_OPTION("anime.window_anime",               bool,        config::instance().windowanime);
+    CONFIG_OPTION("balance.restock_interval",         int,         config::instance().restock_interval);
+    CONFIG_OPTION("debug.noa_debug",                  bool,        config::instance().noadeabug);
+    CONFIG_OPTION("font.english",                     std::string, config::instance().font2);
+    CONFIG_OPTION("font.japanese",                    std::string, config::instance().font1);
+    CONFIG_OPTION("font.size_adjustment",             int,         sizefix);
+    CONFIG_OPTION("font.vertical_offset",             int,         vfix);
+    CONFIG_OPTION("foobar.hp_bar_position",           int,         config::instance().hp_bar);
+    CONFIG_OPTION("foobar.leash_icon",                bool,        config::instance().leash_icon);
+    CONFIG_OPTION("game.attack_neutral_npcs",         bool,        config::instance().ignoredislike); // TODO INVERT
+    CONFIG_OPTION("game.extra_help",                  bool,        config::instance().extrahelp);
+    CONFIG_OPTION("game.show_sense_quality_updates",  bool,        config::instance().hideautoidentify); // TODO INVERT
+    CONFIG_OPTION("game.show_shop_updates",           bool,        config::instance().hideshopresult); // TODO INVERT
+    CONFIG_OPTION("game.story",                       bool,        config::instance().story);
+    CONFIG_OPTION("input.autodisable_numlock",        bool,        config::instance().autonumlock);
+    CONFIG_OPTION("input.run_wait",                   int,         config::instance().runwait);
+    CONFIG_OPTION("input.start_run_wait",             int,         config::instance().start_run_wait);
+    CONFIG_OPTION("input.walk_wait",                  int,         config::instance().walkwait);
+    CONFIG_OPTION("message.add_timestamps",           bool,        config::instance().msgaddtime);
+    CONFIG_OPTION("message.transparency",             int,         config::instance().msgtrans);
+    CONFIG_OPTION("net.chat",                         bool,        config::instance().netchat);
+    CONFIG_OPTION("net.enabled",                      bool,        config::instance().net);
+    CONFIG_OPTION("net.serverlist",                   bool,        config::instance().serverlist);
+    CONFIG_OPTION("net.wish",                         bool,        config::instance().netwish);
+    CONFIG_OPTION("screen.always_center",             bool,        config::instance().always_center);
+    CONFIG_OPTION("screen.enable_music",              bool,        config::instance().music);
+    CONFIG_OPTION("screen.enable_sound",              bool,        config::instance().sound);
+    CONFIG_OPTION("screen.heartbeat",                 bool,        config::instance().heartbeat);
+    CONFIG_OPTION("screen.high_quality_shadows",      bool,        config::instance().shadow); // TODO change name
+    CONFIG_OPTION("screen.object_shadows",            bool,        config::instance().objectshadow);
+    CONFIG_OPTION("anime.screen_refresh",             int,         config::instance().scrsync);
+    CONFIG_OPTION("anime.scroll_when_run",            bool,        config::instance().runscroll);
+    CONFIG_OPTION("screen.skip_random_event_popups",  bool,        config::instance().skiprandevents);
+    CONFIG_OPTION("foobar.autopick",                  bool,        config::instance().use_autopick);
+    CONFIG_OPTION("foobar.autosave",                  bool,        config::instance().autosave);
+    CONFIG_OPTION("foobar.startup_script",            std::string, config::instance().startup_script);
+    CONFIG_OPTION("foobar.damage_popup",              bool,        config::instance().damage_popup);
+    CONFIG_OPTION("input.key_wait",                   int,         config::instance().keywait);
 
-    CONFIG_OPTION("anime.alert_wait"s,                 int,         config::instance().alert);
-    // CONFIG_OPTION("anime.anime_wait",                 int,         config::instance().animewait);
-    // CONFIG_OPTION("anime.attack_anime",               bool,        config::instance().attackanime);
-    // CONFIG_OPTION("anime.attack_wait",                int,         config::instance().attackwait);
-    // CONFIG_OPTION("anime.auto_turn_speed",            std::string, config::instance().autoturn);
-    // CONFIG_OPTION("anime.general_wait",               int,         config::instance().wait1);
-    // CONFIG_OPTION("anime.scroll",                     bool,        config::instance().scroll);
-    // CONFIG_OPTION("anime.title_effect",               bool,        false); // Unsupported option
-    // CONFIG_OPTION("anime.weather_effect",             bool,        config::instance().env); // TODO change name
-    // CONFIG_OPTION("anime.window_anime",               bool,        config::instance().windowanime);
-    // CONFIG_OPTION("balance.restock_interval",         int,         config::instance().restock_interval);
-    // CONFIG_OPTION("debug.noa_debug",                  bool,        config::instance().noadeabug);
-    // CONFIG_OPTION("font.english",                     std::string, config::instance().font2);
-    // CONFIG_OPTION("font.japanese",                    std::string, config::instance().font1);
-    // CONFIG_OPTION("font.size_adjustment",             int,         sizefix);
-    // CONFIG_OPTION("font.vertical_offset",             int,         vfix);
-    // CONFIG_OPTION("foobar.hp_bar_position",           std::string, config::instance().hp_bar);
-    // CONFIG_OPTION("foobar.leash_icon",                bool,        config::instance().leash_icon);
-    // CONFIG_OPTION("game.attack_neutral_npcs",         bool,        config::instance().ignoredislike); // TODO INVERT
-    // CONFIG_OPTION("game.extra_help",                  bool,        config::instance().extrahelp);
-    // CONFIG_OPTION("game.show_sense_quality_updates",  bool,        config::instance().hideautoidentify); // TODO INVERT
-    // CONFIG_OPTION("game.show_shop_updates",           bool,        config::instance().hideshopresult); // TODO INVERT
-    // CONFIG_OPTION("game.story",                       bool,        config::instance().story);
-    // CONFIG_OPTION("input.autodisable_numlock",        bool,        config::instance().autonumlock);
-    // CONFIG_OPTION("input.run_wait",                   int,         config::instance().runwait);
-    // CONFIG_OPTION("input.start_run_wait",             int,         config::instance().start_run_wait);
-    // CONFIG_OPTION("input.walk_wait",                  int,         config::instance().walkwait);
-    // CONFIG_OPTION("message.add_timestamps",           bool,        config::instance().msgaddtime);
-    // CONFIG_OPTION("message.transparency",             int,         config::instance().msgtrans);
-    // CONFIG_OPTION("net.chat",                         bool,        config::instance().netchat);
-    // CONFIG_OPTION("net.enabled",                      bool,        config::instance().net);
-    // CONFIG_OPTION("net.serverlist",                   bool,        config::instance().serverlist);
-    // CONFIG_OPTION("net.wish",                         bool,        config::instance().netwish);
-    // CONFIG_OPTION("screen.always_center",             bool,        config::instance().always_center);
-    // CONFIG_OPTION("screen.enable_music",              bool,        config::instance().music);
-    // CONFIG_OPTION("screen.enable_sound",              bool,        config::instance().sound);
-    // CONFIG_OPTION("screen.heartbeat",                 bool,        config::instance().heartbeat);
-    // CONFIG_OPTION("screen.high_quality_shadows",      bool,        config::instance().shadow); // TODO change name
-    // CONFIG_OPTION("screen.object_shadows",            bool,        config::instance().objectshadow);
-    // CONFIG_OPTION("anime.screen_refresh",             int,         config::instance().scrsync);
-    // CONFIG_OPTION("anime.scroll_when_run",            bool,        config::instance().runscroll);
-    // CONFIG_OPTION("screen.skip_random_event_popups",  bool,        config::instance().skiprandevents);
-    // CONFIG_OPTION("foobar.autopick",                  bool,        config::instance().use_autopick);
-    // CONFIG_OPTION("foobar.autosave",                  bool,        config::instance().autosave);
-    // CONFIG_OPTION("foobar.startup_script",            std::string, config::instance().startup_script);
-    // CONFIG_OPTION("foobar.damage_popup",              bool,        config::instance().damage_popup);
-    // CONFIG_OPTION("input.key_wait",                   int,         config::instance().keywait);
-
-    // CONFIG_KEY("key.north", key_north);
-    // CONFIG_KEY("key.south", key_south);
-    // CONFIG_KEY("key.west", key_west);
-    // CONFIG_KEY("key.east", key_east);
-    // CONFIG_KEY("key.northwest", key_northwest);
-    // CONFIG_KEY("key.northeast", key_northeast);
-    // CONFIG_KEY("key.southwest", key_southwest);
-    // CONFIG_KEY("key.southeast", key_southeast);
-    // CONFIG_KEY("key.wait", key_wait);
-    // CONFIG_KEY("key.cancel", key_cancel);
-    // CONFIG_KEY("key.esc", key_esc);
-    // CONFIG_KEY("key.alter", key_alter);
-    // CONFIG_KEY("key.pageup", key_pageup);
-    // CONFIG_KEY("key.pagedown", key_pagedown);
-    // CONFIG_KEY("key.mode", key_mode);
-    // CONFIG_KEY("key.mode2", key_mode2);
-    // CONFIG_KEY("key.quick_menu", key_quick_menu);
-    // CONFIG_KEY("key.zap", key_zap);
-    // CONFIG_KEY("key.inventory", key_inventory);
-    // CONFIG_KEY("key.quick_inventory", key_quick_inventory);
-    // CONFIG_KEY("key.get", key_get);
-    // CONFIG_KEY("key.get2", key_get2);
-    // CONFIG_KEY("key.drop", key_drop);
-    // CONFIG_KEY("key.chara_info", key_chara_info);
-    // CONFIG_KEY("key.enter", key_enter);
-    // CONFIG_KEY("key.eat", key_eat);
-    // CONFIG_KEY("key.wear", key_wear);
-    // CONFIG_KEY("key.cast", key_cast);
-    // CONFIG_KEY("key.drink", key_drink);
-    // CONFIG_KEY("key.read", key_read);
-    // CONFIG_KEY("key.fire", key_fire);
-    // CONFIG_KEY("key.go_down", key_go_down);
-    // CONFIG_KEY("key.go_up", key_go_up);
-    // CONFIG_KEY("key.save", key_save);
-    // CONFIG_KEY("key.search", key_search);
-    // CONFIG_KEY("key.interact", key_interact);
-    // CONFIG_KEY("key.identify", key_identify);
-    // CONFIG_KEY("key.skill", key_skill);
-    // CONFIG_KEY("key.close", key_close);
-    // CONFIG_KEY("key.rest", key_rest);
-    // CONFIG_KEY("key.target", key_target);
-    // CONFIG_KEY("key.dig", key_dig);
-    // CONFIG_KEY("key.use", key_use);
-    // CONFIG_KEY("key.bash", key_bash);
-    // CONFIG_KEY("key.open", key_open);
-    // CONFIG_KEY("key.dip", key_dip);
-    // CONFIG_KEY("key.pray", key_pray);
-    // CONFIG_KEY("key.offer", key_offer);
-    // CONFIG_KEY("key.journal", key_journal);
-    // CONFIG_KEY("key.material", key_material);
-    // CONFIG_KEY("key.trait", key_trait);
-    // CONFIG_KEY("key.look", key_look);
-    // CONFIG_KEY("key.give", key_give);
-    // CONFIG_KEY("key.throw", key_throw);
-    // CONFIG_KEY("key.ammo", key_ammo);
-    // CONFIG_KEY("key.autodig", key_autodig);
-    // CONFIG_KEY("key.quicksave", key_quicksave);
-    // CONFIG_KEY("key.quickload", key_quickload);
-    // CONFIG_KEY("key.help", key_help);
-    // CONFIG_KEY("key.message_log", key_message_log);
+    CONFIG_KEY("key.north", key_north);
+    CONFIG_KEY("key.south", key_south);
+    CONFIG_KEY("key.west", key_west);
+    CONFIG_KEY("key.east", key_east);
+    CONFIG_KEY("key.northwest", key_northwest);
+    CONFIG_KEY("key.northeast", key_northeast);
+    CONFIG_KEY("key.southwest", key_southwest);
+    CONFIG_KEY("key.southeast", key_southeast);
+    CONFIG_KEY("key.wait", key_wait);
+    CONFIG_KEY("key.cancel", key_cancel);
+    CONFIG_KEY("key.esc", key_esc);
+    CONFIG_KEY("key.alter", key_alter);
+    CONFIG_KEY("key.pageup", key_pageup);
+    CONFIG_KEY("key.pagedown", key_pagedown);
+    CONFIG_KEY("key.mode", key_mode);
+    CONFIG_KEY("key.mode2", key_mode2);
+    CONFIG_KEY("key.quick_menu", key_quick_menu);
+    CONFIG_KEY("key.zap", key_zap);
+    CONFIG_KEY("key.inventory", key_inventory);
+    CONFIG_KEY("key.quick_inventory", key_quick_inventory);
+    CONFIG_KEY("key.get", key_get);
+    CONFIG_KEY("key.get2", key_get2);
+    CONFIG_KEY("key.drop", key_drop);
+    CONFIG_KEY("key.chara_info", key_chara_info);
+    CONFIG_KEY("key.enter", key_enter);
+    CONFIG_KEY("key.eat", key_eat);
+    CONFIG_KEY("key.wear", key_wear);
+    CONFIG_KEY("key.cast", key_cast);
+    CONFIG_KEY("key.drink", key_drink);
+    CONFIG_KEY("key.read", key_read);
+    CONFIG_KEY("key.fire", key_fire);
+    CONFIG_KEY("key.go_down", key_go_down);
+    CONFIG_KEY("key.go_up", key_go_up);
+    CONFIG_KEY("key.save", key_save);
+    CONFIG_KEY("key.search", key_search);
+    CONFIG_KEY("key.interact", key_interact);
+    CONFIG_KEY("key.identify", key_identify);
+    CONFIG_KEY("key.skill", key_skill);
+    CONFIG_KEY("key.close", key_close);
+    CONFIG_KEY("key.rest", key_rest);
+    CONFIG_KEY("key.target", key_target);
+    CONFIG_KEY("key.dig", key_dig);
+    CONFIG_KEY("key.use", key_use);
+    CONFIG_KEY("key.bash", key_bash);
+    CONFIG_KEY("key.open", key_open);
+    CONFIG_KEY("key.dip", key_dip);
+    CONFIG_KEY("key.pray", key_pray);
+    CONFIG_KEY("key.offer", key_offer);
+    CONFIG_KEY("key.journal", key_journal);
+    CONFIG_KEY("key.material", key_material);
+    CONFIG_KEY("key.trait", key_trait);
+    CONFIG_KEY("key.look", key_look);
+    CONFIG_KEY("key.give", key_give);
+    CONFIG_KEY("key.throw", key_throw);
+    CONFIG_KEY("key.ammo", key_ammo);
+    CONFIG_KEY("key.autodig", key_autodig);
+    CONFIG_KEY("key.quicksave", key_quicksave);
+    CONFIG_KEY("key.quickload", key_quickload);
+    CONFIG_KEY("key.help", key_help);
+    CONFIG_KEY("key.message_log", key_message_log);
 
     conf.bind_setter<hcl::List>("key.key_set",
                     [&](auto values)
@@ -574,99 +573,39 @@ void set_config(const std::string& key, const std::string& value1, int value2)
 
 void load_config2(const fs::path& json_file)
 {
-    std::unique_ptr<config_base> config_list[] = {
-        std::make_unique<config_integer>(
-            u8"language",
-            -1,
-            -1,
-            1,
-            [&](auto value) { config::instance().language = value; }),
-        std::make_unique<config_integer>(
-            u8"fullscreen",
-            0,
-            0,
-            2,
-            [&](auto value) { config::instance().fullscreen = value; }),
-        std::make_unique<config_integer>(
-            u8"music",
-            1,
-            0,
-            1,
-            [&](auto value) { config::instance().music = value; }),
-        std::make_unique<config_integer>(
-            u8"sound",
-            1,
-            0,
-            1,
-            [&](auto value) { config::instance().sound = value; }),
-        std::make_unique<config_integer>(
-            u8"extraRace",
-            0,
-            0,
-            1,
-            [&](auto value) { config::instance().extrarace = value; }),
-        std::make_unique<config_integer>(
-            u8"extraClass",
-            0,
-            0,
-            1,
-            [&](auto value) { config::instance().extraclass = value; }),
-        std::make_unique<config_integer>(
-            u8"joypad",
-            1,
-            0,
-            1,
-            [&](auto value) { config::instance().joypad = value; }),
-        std::make_unique<config_integer>(
-            u8"msgLine", 4, 4, 4, [&](auto value) { inf_msgline = value; }),
-        std::make_unique<config_integer>(
-            u8"tileSize", 48, 48, 48, [&](auto value) { inf_tiles = value; }),
-        std::make_unique<config_integer>(
-            u8"fontSize", 14, 14, 14, [&](auto value) { inf_mesfont = value; }),
-        std::make_unique<config_integer>(
-            u8"infVerType", 1, 1, 1, [&](auto value) { inf_vertype = value; }),
-        std::make_unique<config_integer>(
-            u8"windowX", 800, 800, 1600, [&](auto value) { windowx = value; }),
-        std::make_unique<config_integer>(
-            u8"windowY", 600, 600, 1200, [&](auto value) { windowy = value; }),
-        std::make_unique<config_integer>(
-            u8"clockX", 0, 0, 0, [&](auto value) { inf_clockx = value; }),
-        std::make_unique<config_integer>(
-            u8"clockW", 120, 120, 120, [&](auto value) { inf_clockw = value; }),
-        std::make_unique<config_integer>(
-            u8"clockH", 96, 96, 96, [&](auto value) { inf_clockh = value; }),
-        std::make_unique<config_string>(
-            u8"defLoadFolder", "", [&](auto value) { defload = value; }),
-        std::make_unique<config_integer>(
-            u8"charamake_wiz",
-            0,
-            0,
-            1,
-            [&](auto value) { config::instance().wizard = value; }),
-        std::make_unique<config_string>(
-            u8"display_mode",
-            "",
-            [&](auto value) { config::instance().display_mode = value; }),
-    };
+    auto& conf = config::instance();
 
-    std::ifstream file{json_file.native(), std::ios::binary};
-    if (!file)
-    {
-        throw config_loading_error{
-            u8"Failed to open: "s
-                + filesystem::make_preferred_path_in_utf8(json_file)};
-    }
+    conf.load_defaults();
+    conf.inject_enum("core.config.language.language", {"none", "en", "jp"}, 0);
+    conf.inject_enum("core.config.screen.display_mode", {""}, 0);
+    conf.inject_enum("core.config.game.default_save", {""}, 0);
 
-    fileutil::skip_bom(file);
-    picojson::value value;
-    file >> value;
+    CONFIG_OPTION("language.language"s,   int,         config::instance().language);
+    CONFIG_OPTION("screen.fullscreen"s,   int,         config::instance().fullscreen);
+    CONFIG_OPTION("screen.music"s,        int,         config::instance().music);
+    CONFIG_OPTION("screen.sound"s,        bool,        config::instance().sound);
+    CONFIG_OPTION("balance.extra_race"s,  bool,        config::instance().extrarace);
+    CONFIG_OPTION("balance.extra_class"s, bool,        config::instance().extraclass);
+    CONFIG_OPTION("input.joypad"s,        bool,        config::instance().joypad);
+    CONFIG_OPTION("ui.msg_line"s,         int,         inf_msgline);
+    CONFIG_OPTION("ui.tile_size"s,        int,         inf_tiles);
+    CONFIG_OPTION("ui.font_size",         int,         inf_mesfont);
+    CONFIG_OPTION("ui.inf_ver_type",      int,         inf_vertype);
+    CONFIG_OPTION("ui.window_x",          int,         windowx);
+    CONFIG_OPTION("ui.window_y",          int,         windowy);
+    CONFIG_OPTION("ui.clock_x",           int,         inf_clockx);
+    CONFIG_OPTION("ui.clock_w",           int,         inf_clockw);
+    CONFIG_OPTION("ui.clock_h",           int,         inf_clockh);
+    CONFIG_OPTION("game.default_save",         std::string, defload);    // TODO runtime enum
+    CONFIG_OPTION("debug.wizard",         int,         config::instance().wizard);
+    CONFIG_OPTION("screen.display_mode",  std::string, config::instance().display_mode);
 
-    const picojson::object& options = value.get<picojson::object>();
-    for (const auto& config : config_list)
-    {
-        config->set(options);
-    }
+    std::ifstream ifs{filesystem::make_preferred_path_in_utf8(hcl_file.native())};
+    conf.load(ifs, hcl_file.string(), true);
 }
+
+#undef CONFIG_OPTION
+#undef CONFIG_KEY
 
 snail::window::fullscreen_mode_t config_get_fullscreen_mode()
 {
@@ -695,8 +634,6 @@ void config::init(const fs::path& path)
     const fs::path config_def_file =
         filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
     def.init(config_def_file);
-
-    load_defaults();
 }
 
 void config::load_defaults()
@@ -738,7 +675,8 @@ void config::load(std::istream& is, const std::string& hcl_file)
 
 void config::visit_object(const hcl::Object& object,
                           const std::string& current_key,
-                          const std::string& hcl_file)
+                          const std::string& hcl_file,
+                          bool preload)
 {
     for (const auto& pair : object)
     {
@@ -748,7 +686,8 @@ void config::visit_object(const hcl::Object& object,
 
 void config::visit(const hcl::Value& value,
                    const std::string& current_key,
-                   const std::string& hcl_file)
+                   const std::string& hcl_file,
+                   bool preload)
 {
     if (value.is<hcl::Object>())
     {
@@ -760,7 +699,10 @@ void config::visit(const hcl::Value& value,
     }
     else
     {
-        set(current_key, value);
+        if (preload == def.is_preload(current_key))
+        {
+            set(current_key, value);
+        }
     }
 }
 

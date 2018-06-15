@@ -21,7 +21,7 @@ public:
     static config& instance();
 
     void init(const fs::path&);
-    void load(std::istream&, const std::string&);
+    void load(std::istream&, const std::string&, bool);
     void write();
 
     void clear()
@@ -120,6 +120,11 @@ public:
         setters.emplace(key, [setter](const hcl::Value& value){ setter(value.as<T>()); });
     }
 
+    void inject_enum(const std::string& key, std::vector<std::string> variants, int default_index)
+    {
+        def.inject_enum(key, variants, default_index);
+    }
+
     template <typename T>
     T get(const std::string& key)
     {
@@ -198,8 +203,8 @@ private:
 
     void load_defaults();
 
-    void visit(const hcl::Value&, const std::string&, const std::string&);
-    void visit_object(const hcl::Object&, const std::string&, const std::string&);
+    void visit(const hcl::Value&, const std::string&, const std::string&, bool);
+    void visit_object(const hcl::Object&, const std::string&, const std::string&, bool);
     bool verify_types(const hcl::Value&, const std::string&);
 
     config_def def;

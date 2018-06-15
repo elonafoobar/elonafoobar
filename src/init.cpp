@@ -390,6 +390,7 @@ void initialize_config(const fs::path& config_file)
     SDIM2(buff, 10000);
     initialize_jkey();
 
+    config::instance().init();
     load_config(config_file);
 }
 
@@ -756,25 +757,25 @@ void initialize_elona()
 
 int run()
 {
-    config::instance().init(filesystem::dir::exe() / u8"config.hcl");
-    //const fs::path config_file = filesystem::dir::exe() / u8"config.json";
-    //initialize_cat_db();
+    fs::path config_file = filesystem::dir::exe() / u8"config.hcl";
+
+    initialize_cat_db();
+
+    foobar_save.initialize();
 
     load_config2(config_file);
 
-    title(
-        u8"Elona Foobar version "s + latest_version.short_string(),
-        config::instance().display_mode,
-        config_get_fullscreen_mode());
+    title(u8"Elona Foobar version "s + latest_version.short_string(),
+          config::instance().display_mode,
+          config_get_fullscreen_mode());
 
     initialize_config(config_file);
-    init_assets();
     initialize_elona();
 
-    lua::lua->scan_all_mods(filesystem::dir::mods());
-    lua::lua->load_core_mod(filesystem::dir::mods());
+    lua::lua.scan_all_mods(filesystem::dir::mods());
+    lua::lua.load_core_mod(filesystem::dir::mods());
 
-    //start_elona();
+    start_elona();
 
     return 0;
 }

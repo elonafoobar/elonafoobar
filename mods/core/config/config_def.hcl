@@ -1,12 +1,6 @@
 # TODO: autogenerate config menu from this structure
 
 config {
-    default_save = {
-        default = ""
-        visible = false
-        preload = true
-    }
-
     screen = {
         type = "section"
         options = {
@@ -26,8 +20,12 @@ config {
                 type = "enum"
                 variants = ["none", "direct_music", "mci"]
                 default = "direct_music"
+                preload = true
             }
-            sound = true
+            sound = {
+                default = true
+                preload = true
+            }
             high_quality_shadows = true
             object_shadow = true
             heartbeat = true
@@ -98,14 +96,8 @@ config {
         font = {
             type = "section"
             options = {
-                japanese = {
-                    default = "Kochi Gothic.ttf"
-                    visible = false
-                }
-                english = {
-                    default = "Bitstream Sans Vera Mono.ttf"
-                    visible = false;
-                }
+                japanese = "Kochi Gothic.ttf"
+                english = "Bitstream Sans Vera Mono.ttf"
 
                 vertical_offset = -1 # fontVfix1
                 size_adjustment = 1 # fontSfix1
@@ -115,6 +107,11 @@ config {
         game = {
             type = "section"
             options = {
+                default_save = {
+                    type = "runtime_enum"
+                    preload = true
+                }
+
                 attack_neutral_npcs = false
                 story = true
                 extra_help = true
@@ -127,7 +124,10 @@ config {
             type = "section"
             visible = false
             options = {
-                wizard = false
+                wizard = {
+                    default = false
+                    preload = true
+                }
                 noa_debug = false
             }
         }
@@ -148,7 +148,10 @@ config {
         input = {
             type = "section"
             options = {
-                joypad = false
+                joypad = {
+                    default = false
+                    preload = true
+                }
                 autodisable_numlock = true
 
                 walk_wait = {
@@ -191,8 +194,15 @@ config {
                 max = 10
             }
 
-            extra_race = false
-            extra_class = false
+            extra_race = {
+                default = false
+                preload = true
+            }
+
+            extra_class = {
+                default = false
+                preload = true
+            }
         }
 
         foobar = {
@@ -221,6 +231,59 @@ config {
             options = {
                 language = {
                     type = "runtime_enum"
+                    preload = true
+                }
+            }
+        }
+
+        ui = {
+            type = "section"
+            visible = false
+            doc = <<DOC
+These settings are for internal use.
+Changing them may break things.
+DOC
+            options = {
+                msg_line = {
+                    default = 4
+                    preload = true
+                }
+                tile_size = {
+                    default = 48
+                    preload = true
+                }
+                font_size = {
+                    default = 14
+                    preload = true
+                }
+                inf_ver_type = {
+                    default = 1
+                    min = 1
+                    max = 1
+                    preload = true
+                }
+                window_x = {
+                    default = 800
+                    min = 800
+                    max = 1600
+                    preload = true
+                }
+                window_y = {
+                    default = 800
+                    min = 800
+                    max = 1600
+                    preload = true
+                }
+                clock_x = {
+                    default = 0
+                    preload = true
+                }
+                clock_w = {
+                    default = 120
+                    preload = true
+                }
+                clock_h = {
+                    default = 120
                     preload = true
                 }
             }
