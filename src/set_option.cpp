@@ -90,22 +90,28 @@ class config_menu_item_integer : public config_menu_item_base
 {
 public:
     int variable;
+    int min;
+    int max;
     std::string text;
 
     config_menu_item_integer(
         const std::string& key,
         const std::string& locale_key,
         int variable,
+        int min,
+        int max,
         const std::string& text)
         : config_menu_item_base(key, locale_key)
         , variable(variable)
+        , min(min)
+        , max(max)
         , text(text)
     {
     }
 
     void change(int p)
     {
-        variable += p;
+        variable = clamp(variable + p, min, max);
     }
 
     std::string get_text()
@@ -190,7 +196,11 @@ public:
 
 #define ELONA_CONFIG_ITEM_INTEGER(def_key, locale_key, formatter)       \
     ret.back().items.emplace_back( \
-        std::make_unique<config_menu_item_integer>(def_key, locale_key, conf.get<int>(def_key), formatter))
+        std::make_unique<config_menu_item_integer>(def_key, locale_key, \
+                                                   conf.get<int>(def_key), \
+                                                   conf.get_def().get_min(def_key), \
+                                                   conf.get_def().get_max(def_key), \
+                                                   formatter))
 
 #define ELONA_CONFIG_ITEM_CHOICE(def_key, locale_key, choices)                  \
     ret.back().items.emplace_back(std::make_unique<config_menu_item_choice>(def_key, locale_key, conf.get<int>(def_key), choices))
@@ -1789,7 +1799,6 @@ set_option_begin:
                 return;
             }
             config::instance().write();
-            //load_config(filesystem::dir::exe() / u8"config.json");
             if (mode == 0)
             {
                 if (config::instance().net)

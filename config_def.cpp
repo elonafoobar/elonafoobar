@@ -109,10 +109,6 @@ void config_def::visit_item(const hcl::Object& item,
     config_def_item_data dat = config_def_item_data{};
     optional<config_def::item> i;
 
-    if (item.find("doc") != item.end())
-    {
-        dat.doc = item.at("doc").as<std::string>();
-    }
     if (item.find("visible") != item.end())
     {
         dat.visible = item.at("visible").as<bool>();

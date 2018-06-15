@@ -92,7 +92,6 @@ public:
     {
         bool visible = true;
         bool preload = false;
-        std::string doc = "";
     };
 
     typedef boost::variant<config_section_def,
@@ -241,7 +240,7 @@ public:
         return get<config_enum_def>(key).variants;
     }
 
-    int get_max(const std::string& key)
+    int get_max(const std::string& key) const
     {
         if (is<config_enum_def>(key))
         {
@@ -254,7 +253,7 @@ public:
         return get<config_int_def>(key).max;
     }
 
-    int get_min(const std::string& key)
+    int get_min(const std::string& key) const
     {
         if (is<config_enum_def>(key))
         {
@@ -265,15 +264,6 @@ public:
             throw config_def_error(key, "Cannot get min value for non-integer option " + key);
         }
         return get<config_int_def>(key).min;
-    }
-
-    optional<std::string> get_doc(const std::string& key)
-    {
-        if (data.find(key) == data.end())
-        {
-            return none;
-        }
-        return data[key].doc;
     }
 
     const std::string& get_locale_root() const { return locale_root; }

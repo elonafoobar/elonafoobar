@@ -288,10 +288,25 @@ DOC
                     doc = "Number of frames to wait between presses of shortcut keys."
                     formatter = core.locale.config.common.formatter.wait
                 }
+                select_wait {
+                    name = "Select Wait"
+                    doc = "Number of frames to wait between item selection initially."
+                    formatter = core.locale.config.common.formatter.wait
+                }
+                select_fast_start_wait {
+                    name = "Select Fast Start Wait"
+                    doc = "Number of selections to wait before selecting quickly."
+                    formatter = core.locale.config.common.formatter.wait
+                }
+                select_fast_wait {
+                    name = "Select Fast Wait"
+                    doc = "Number of frames to wait between item selection when selecting quickly."
+                    formatter = core.locale.config.common.formatter.wait
+                }
             }
 
             balance {
-                name = "Game Balance"
+                name = "Game Balance Setting"
                 doc = "These settings affect game balance."
                 restock_interval {
                     name = "Restock Interval"

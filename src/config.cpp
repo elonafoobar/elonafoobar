@@ -751,7 +751,7 @@ bool config::verify_types(const hcl::Value& value, const std::string& current_ke
 void config::write()
 {
     {
-        std::ifstream file{(filesystem::dir::exe() / u8"config.hcl").native(),
+        std::ofstream file{(filesystem::dir::exe() / u8"config.hcl").native(),
                            std::ios::binary};
         if (!file)
         {
@@ -760,13 +760,13 @@ void config::write()
                     + filesystem::make_preferred_path_in_utf8(
                         filesystem::dir::exe() / u8"config.hcl")};
         }
-        fileutil::skip_bom(file);
 
+        hcl::Value value = hcl::Value(hcl::Object());
         for (auto&& pair : storage)
         {
-            // TODO write
-            // file << storage;
+            value[pair.first] = pair.second;
         }
+        file << value;
     }
 }
 

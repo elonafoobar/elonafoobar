@@ -185,6 +185,24 @@ config_def {
                 min = 1
                 max = 10
             }
+
+            select_wait = {
+                default = 7
+                min = 1
+                max = 20
+            }
+
+            select_fast_start_wait = {
+                default = 2
+                min = 0
+                max = 10
+            }
+
+            select_fast_wait = {
+                default = 2
+                min = 1
+                max = 20
+            }
         }
     }
 

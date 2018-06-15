@@ -108,7 +108,7 @@ public:
         {
             throw std::runtime_error("No such config value " + key);
         }
-        getters.emplace(key, getter);
+        getters[key] = getter;
     }
 
     template <typename T>
@@ -119,7 +119,7 @@ public:
         {
             throw std::runtime_error("No such config value " + key);
         }
-        setters.emplace(key, [setter](const hcl::Value& value){ setter(value.as<T>()); });
+        setters[key] = [setter](const hcl::Value& value){ setter(value.as<T>()); };
     }
 
     void inject_enum(const std::string& key, std::vector<std::string> variants, int default_index)
@@ -177,11 +177,18 @@ public:
             {
                 int temp = value.as<int>();
                 temp = clamp(temp, def.get_min(key), def.get_max(key));
-                storage.emplace(key, temp);
+                std::cout << "zxc " << temp << std::endl;
+                storage[key] = temp;
             }
             else
             {
-                storage.emplace(key, std::move(value));
+                storage[key] = std::move(value);
+            }
+
+            if (setters.find(key) != setters.end())
+            {
+                std::cout << "SET " << key << " to " << storage.at(key) << std::endl;
+                setters[key](storage.at(key));
             }
         }
         else
@@ -191,11 +198,6 @@ public:
             ss << def.type_to_string(key) << " expected, got ";
             ss << value;
             throw std::runtime_error(ss.str());
-        }
-
-        if (setters.find(key) != setters.end())
-        {
-            setters[key](storage.at(key));
         }
     }
 
