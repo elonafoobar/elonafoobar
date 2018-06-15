@@ -584,6 +584,7 @@ void set_option()
 
     const auto config_menu_definitions = create_config_menu();
 
+set_option_begin:
     listmax = 0;
     page = 0;
     pagesize = 18;
@@ -616,10 +617,10 @@ void set_option()
         gmode(2);
     }
 
-    const auto& menu_def = config_menu_definitions[submenu];
-    const auto menu_title = menu_def.title;
-    const auto width = menu_def.width;
-    const auto height = menu_def.height;
+    auto& menu_def = config_menu_definitions[submenu];
+    auto menu_title = menu_def.title;
+    auto width = menu_def.width;
+    auto height = menu_def.height;
 
     for (const auto& menu_item : menu_def.items)
     {
@@ -725,26 +726,26 @@ void set_option()
                 ++keyrange;
             }
         }
-        if (submenu == 5)
-        {
-            p(0) = 0;
-            p(1) = cnvjkey(key_enter);
-            p(2) = cnvjkey(key_cancel);
-            p(3) = cnvjkey(key_quickinv);
-            p(4) = cnvjkey(key_quick);
-            p(5) = cnvjkey(key_alter);
-            p(6) = cnvjkey(key_get);
-            p(7) = cnvjkey(key_fire);
-            p(8) = cnvjkey(key_target);
-            p(9) = cnvjkey(key_esc);
-            p(10) = cnvjkey(key_help);
-            p(11) = cnvjkey(key_charainfo);
-            p(12) = cnvjkey(key_ammo);
-            for (int cnt = 1; cnt < 20; ++cnt)
-            {
-                list(1, cnt) = p(cnt);
-            }
-        }
+        // if (submenu == 5)
+        // {
+        //     p(0) = 0;
+        //     p(1) = cnvjkey(key_enter);
+        //     p(2) = cnvjkey(key_cancel);
+        //     p(3) = cnvjkey(key_quickinv);
+        //     p(4) = cnvjkey(key_quick);
+        //     p(5) = cnvjkey(key_alter);
+        //     p(6) = cnvjkey(key_get);
+        //     p(7) = cnvjkey(key_fire);
+        //     p(8) = cnvjkey(key_target);
+        //     p(9) = cnvjkey(key_esc);
+        //     p(10) = cnvjkey(key_help);
+        //     p(11) = cnvjkey(key_charainfo);
+        //     p(12) = cnvjkey(key_ammo);
+        //     for (int cnt = 1; cnt < 20; ++cnt)
+        //     {
+        //         list(1, cnt) = p(cnt);
+        //     }
+        // }
         font(14 - en * 2);
         cs_listbk();
         for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -764,16 +765,16 @@ void set_option()
             {
                 x = 0;
             }
-            if (submenu == 3)
-            {
-                if (config::instance().net == 0)
-                {
-                    if (cnt >= 1)
-                    {
-                        continue;
-                    }
-                }
-            }
+            // if (submenu == 3)
+            // {
+            //     if (config::instance().net == 0)
+            //     {
+            //         if (cnt >= 1)
+            //         {
+            //             continue;
+            //         }
+            //     }
+            // }
             cs_list(cs == cnt, s, wx + 56 + x, wy + 66 + cnt * 19 - 1, 0);
             if ((submenu != 5 || cnt <= 0) && submenu != 0)
             {
@@ -932,13 +933,12 @@ void set_option()
         ELONA_GET_SELECTED_ITEM(p, cs = i);
         if (p != -1)
         {
-            // if (submenu == 0)
-            // {
-            //     submenu = p + 1;
-            //     snd(20);
-            //     set_option();
-            //     return;
-            // }
+            if (submenu == 0)
+            {
+                submenu = p + 1;
+                snd(20);
+                goto set_option_begin;
+            }
         }
         // if (submenu == 5)
         // {
