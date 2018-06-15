@@ -349,7 +349,7 @@ else()
 endif()
 
 if((WITH_TESTS STREQUAL "TESTS") OR (WITH_TESTS STREQUAL "BENCH"))
-  copy_nonexisting("tests/data" "${CMAKE_CURRENT_SOURCE_DIR}/src/tests/data" "tests/data")
+  copy_nonexisting("${CMAKE_CURRENT_SOURCE_DIR}/src/tests/data" "${CMAKE_CURRENT_SOURCE_DIR}/src/tests/data" "tests/data")
 endif()
 
 if(WITH_TESTS STREQUAL "TESTS")
