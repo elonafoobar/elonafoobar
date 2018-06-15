@@ -286,10 +286,10 @@ void load_config(const fs::path& hcl_file)
     CONFIG_OPTION("foobar.hp_bar_position"s,          int,         config::instance().hp_bar);
     CONFIG_OPTION("foobar.leash_icon"s,               bool,        config::instance().leash_icon);
     CONFIG_OPTION("foobar.startup_script"s,           std::string, config::instance().startup_script);
-    CONFIG_OPTION("game.attack_neutral_npcs"s,        bool,        config::instance().ignoredislike); // TODO INVERT
+    CONFIG_OPTION("game.attack_neutral_npcs"s,        bool,        config::instance().attack_neutral_npcs);
     CONFIG_OPTION("game.extra_help"s,                 bool,        config::instance().extrahelp);
-    CONFIG_OPTION("game.hide_autoidentify"s,          bool,        config::instance().hideautoidentify); // TODO INVERT
-    CONFIG_OPTION("game.hide_shop_updates"s,          bool,        config::instance().hideshopresult); // TODO INVERT
+    CONFIG_OPTION("game.hide_autoidentify"s,          bool,        config::instance().hideautoidentify);
+    CONFIG_OPTION("game.hide_shop_updates"s,          bool,        config::instance().hideshopresult);
     CONFIG_OPTION("game.story"s,                      bool,        config::instance().story);
     CONFIG_OPTION("input.attack_wait"s,               int,         config::instance().attackwait);
     CONFIG_OPTION("input.autodisable_numlock"s,       bool,        config::instance().autonumlock);
@@ -309,7 +309,7 @@ void load_config(const fs::path& hcl_file)
     CONFIG_OPTION("screen.music"s,                    int,         config::instance().music);
     CONFIG_OPTION("screen.sound"s,                    bool,        config::instance().sound);
     CONFIG_OPTION("screen.heartbeat"s,                bool,        config::instance().heart);
-    CONFIG_OPTION("screen.high_quality_shadows"s,     bool,        config::instance().shadow); // TODO change name
+    CONFIG_OPTION("screen.high_quality_shadows"s,     bool,        config::instance().shadow);
     CONFIG_OPTION("screen.object_shadows"s,           bool,        config::instance().objectshadow);
     CONFIG_OPTION("screen.skip_random_event_popups"s, bool,        config::instance().skiprandevents);
 
@@ -465,114 +465,6 @@ void load_config(const fs::path& hcl_file)
 
 
 
-void set_config(const std::string& key, int value)
-{
-    picojson::value options;
-
-    {
-        std::ifstream file{(filesystem::dir::exe() / u8"config.json").native(),
-                           std::ios::binary};
-        if (!file)
-        {
-            throw config_loading_error{
-                u8"Failed to open: "s
-                    + filesystem::make_preferred_path_in_utf8(
-                        filesystem::dir::exe() / u8"config.json")};
-        }
-        fileutil::skip_bom(file);
-        file >> options;
-    }
-
-    options.get<picojson::object>()[key] = picojson::value{int64_t{value}};
-
-    {
-        std::ofstream file{(filesystem::dir::exe() / u8"config.json").native(),
-                           std::ios::binary};
-        if (!file)
-        {
-            throw config_loading_error{
-                u8"Failed to open: "s
-                    + filesystem::make_preferred_path_in_utf8(
-                        filesystem::dir::exe() / u8"config.json")};
-        }
-        options.serialize(std::ostream_iterator<char>(file), true);
-    }
-}
-
-
-
-void set_config(const std::string& key, const std::string& value)
-{
-    picojson::value options;
-
-    {
-        std::ifstream file{(filesystem::dir::exe() / u8"config.json").native(),
-                           std::ios::binary};
-        if (!file)
-        {
-            throw config_loading_error{
-                u8"Failed to open: "s
-                    + filesystem::make_preferred_path_in_utf8(
-                        filesystem::dir::exe() / u8"config.json")};
-        }
-        fileutil::skip_bom(file);
-        file >> options;
-    }
-
-    options.get<picojson::object>()[key] = picojson::value{value};
-
-    {
-        std::ofstream file{(filesystem::dir::exe() / u8"config.json").native(),
-                           std::ios::binary};
-        if (!file)
-        {
-            throw config_loading_error{
-                u8"Failed to open: "s
-                    + filesystem::make_preferred_path_in_utf8(
-                        filesystem::dir::exe() / u8"config.json")};
-        }
-        options.serialize(std::ostream_iterator<char>(file), true);
-    }
-}
-
-
-
-void set_config(const std::string& key, const std::string& value1, int value2)
-{
-    picojson::value options;
-
-    {
-        std::ifstream file{(filesystem::dir::exe() / u8"config.json").native(),
-                           std::ios::binary};
-        if (!file)
-        {
-            throw config_loading_error{
-                u8"Failed to open: "s
-                    + filesystem::make_preferred_path_in_utf8(
-                        filesystem::dir::exe() / u8"config.json")};
-        }
-        fileutil::skip_bom(file);
-        file >> options;
-    }
-
-    options.as<hcl::Object>()[key] = hcl::Value{value1};
-
-    {
-        std::ofstream file{(filesystem::dir::exe() / u8"config.json").native(),
-                           std::ios::binary};
-        if (!file)
-        {
-            throw config_loading_error{
-                u8"Failed to open: "s
-                    + filesystem::make_preferred_path_in_utf8(
-                        filesystem::dir::exe() / u8"config.json")};
-        }
-        options.serialize(std::ostream_iterator<char>(file), true);
-    }
-}
-
-
-
 void load_config2(const fs::path& hcl_file)
 {
     auto& conf = config::instance();
@@ -723,31 +615,25 @@ bool config::verify_types(const hcl::Value& value, const std::string& current_ke
         // It doesn't make sense to set a section as a value.
         return false;
     }
-    if (value.is<bool>() && !def.is<config_def::config_bool_def>(current_key))
+    if (value.is<bool>())
     {
-        return false;
+        return def.is<config_def::config_bool_def>(current_key);
     }
     if (value.is<int>())
     {
-        if (def.is<config_def::config_enum_def>(current_key))
-        {
-            return true;
-        }
-        else if (!def.is<config_def::config_int_def>(current_key))
-        {
-            return false;
-        }
+        return def.is<config_def::config_enum_def>(current_key)
+            || def.is<config_def::config_int_def>(current_key);
     }
-    if (value.is<hcl::List>() && !def.is<config_def::config_list_def>(current_key))
+    if (value.is<hcl::List>())
     {
-        return false;
+        return def.is<config_def::config_list_def>(current_key);
     }
-    if (value.is<std::string>() && !def.is<config_def::config_string_def>(current_key))
+    if (value.is<std::string>())
     {
-        return false;
+        return def.is<config_def::config_string_def>(current_key);
     }
 
-    return true;
+    return false;
 }
 
 void config::write()

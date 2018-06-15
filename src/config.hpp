@@ -54,7 +54,7 @@ public:
     bool hideautoidentify;
     bool hideshopresult;
     int hp_bar;
-    bool ignoredislike;
+    bool attack_neutral_npcs;
     bool joypad;
     int keywait;
     int language;
