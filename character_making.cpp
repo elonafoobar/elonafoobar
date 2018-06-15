@@ -642,7 +642,7 @@ main_menu_result_t character_making_select_alias(bool advanced_to_next_menu)
                 {
                     listn(0, cnt) = lang(u8"リロール"s, u8"Reroll"s);
                 }
-                else if (restore_previous_alias && cnt == 1)
+                else if (restore_previous_alias && cnt == 1 && cmaka != "")
                 {
                     listn(0, cnt) = cmaka;
                     restore_previous_alias = false;
@@ -853,7 +853,7 @@ main_menu_result_t character_making_final_phase()
             lang(u8"戻る"s, u8"Go back"s), u8"d"s, ""s + promptmax);
         rtval = show_prompt(promptx, 240, 160);
         snd(20);
-        if (rtval != 1)
+        if (rtval != -1 && rtval != 1)
         {
             break;
         }
