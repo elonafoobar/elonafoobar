@@ -146,6 +146,11 @@ stds.elona = {
                     "txt", "txt_color"
                  },
               },
+              I18N = {
+                 fields = {
+                    "get", "get_optional", "get_enum", "get_enum_property", "get_enum_property_optional"
+                 }
+              },
               Debug = {
                  fields = {
                     "log", "dump_characters", "dump_items", "inspect"

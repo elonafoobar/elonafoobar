@@ -342,8 +342,8 @@ std::string mapname(int id, bool description)
         name = mapname_dungeon(id);
         break;
     default:
-        name = i18n::s.get_enum_property("core.locale.map.unique", adata(16, id), "name");
-        auto desc_opt = i18n::s.get_enum_property_opt("core.locale.map.unique", adata(16, id), "desc");
+        name = i18n::s.get_enum_property("core.locale.map.unique", "name", adata(16, id));
+        auto desc_opt = i18n::s.get_enum_property_opt("core.locale.map.unique", "desc", adata(16, id));
         if (desc_opt)
         {
             desc = *desc_opt;

@@ -17,6 +17,8 @@ locale {
   piyo = "She ${is(false)} nice."
   hello = "Hello, ${name(_1)}!"
   hello_base = "Hello, ${basename(_1)}!"
+  item = "Got ${itemname(_1)}!"
+  item_base = "Got ${itembasename(_1)}!"
 }
 ]])
 
@@ -32,8 +34,8 @@ locale {
         lequal(I18N.get("core.locale.hello_base", chara), "Hello, プチ!")
 
         local item = Item.create(0, 1, 792, 3)
-        lequal(I18N.get("core.locale.hello", item), "Hello, 3個のプチトロ!")
-        lequal(I18N.get("core.locale.hello_base", item), "Hello, プチトロ!")
+        lequal(I18N.get("core.locale.item", item), "Got 3個のプチトロ!")
+        lequal(I18N.get("core.locale.item_base", item), "Got プチトロ!")
 end)
 
 lrun("test I18N.get_optional", function()
@@ -47,6 +49,8 @@ locale {
   piyo = "She ${is(false)} nice."
   hello = "Hello, ${name(_1)}!"
   hello_base = "Hello, ${basename(_1)}!"
+  item = "Got ${itemname(_1)}!"
+  item_base = "Got ${itembasename(_1)}!"
 }
 ]])
 
@@ -62,11 +66,80 @@ locale {
         lequal(I18N.get_optional("core.locale.hello_base", chara), "Hello, プチ!")
 
         local item = Item.create(0, 1, 792, 3)
-        lequal(I18N.get_optional("core.locale.hello", item), "Hello, 3個のプチトロ!")
-        lequal(I18N.get_optional("core.locale.hello_base", item), "Hello, プチトロ!")
+        lequal(I18N.get_optional("core.locale.item", item), "Got 3個のプチトロ!")
+        lequal(I18N.get_optional("core.locale.item_base", item), "Got プチトロ!")
 
         lequal(I18N.get_optional("core.locale.asdfg"), nil)
         lequal(I18N.get_optional(""), nil)
+end)
+
+lrun("test I18N.get_enum", function()
+        Testing.load_translations([[
+locale {
+  foo {
+    _0 = "bar"
+    _1 = "baz"
+    _2 = "hoge ${_1}"
+  }
+}
+]])
+
+        lequal(I18N.get_enum("core.locale.foo", 0), "bar")
+        lequal(I18N.get_enum("core.locale.foo", 1), "baz")
+        lequal(I18N.get_enum("core.locale.foo", 2), "hoge <error>")
+        lequal(I18N.get_enum("core.locale.foo", 2, "quux"), "hoge quux")
+end)
+
+lrun("test I18N.get_enum_property", function()
+        Testing.load_translations([[
+locale {
+  foo {
+    _0 {
+        name = "foo"
+        desc = "bar"
+    }
+    _1 {
+        name = "baz"
+        desc = "quux"
+    }
+    _2 {
+        name = "hoge"
+        desc = "piyo ${_1}"
+    }
+  }
+}
+]])
+
+        lequal(I18N.get_enum_property("core.locale.foo", "name", 0), "foo")
+        lequal(I18N.get_enum_property("core.locale.foo", "name", 1), "baz")
+        lequal(I18N.get_enum_property("core.locale.foo", "name", 2), "hoge")
+        lequal(I18N.get_enum_property("core.locale.foo", "desc", 0), "bar")
+        lequal(I18N.get_enum_property("core.locale.foo", "desc", 1), "quux")
+        lequal(I18N.get_enum_property("core.locale.foo", "desc", 2), "piyo <error>")
+        lequal(I18N.get_enum_property("core.locale.foo", "desc", 2, "fuga"), "piyo fuga")
+end)
+
+lrun("test I18N.get_enum_property_optional", function()
+        Testing.load_translations([[
+locale {
+  foo {
+    _0 {
+        name = "foo"
+    }
+    _1 {
+        name = "baz"
+        desc = "bar ${_1}"
+    }
+  }
+}
+]])
+
+        lequal(I18N.get_enum_property_optional("core.locale.foo", "name", 0), "foo")
+        lequal(I18N.get_enum_property_optional("core.locale.foo", "name", 1), "baz")
+        lequal(I18N.get_enum_property_optional("core.locale.foo", "desc", 0), nil)
+        lequal(I18N.get_enum_property_optional("core.locale.foo", "desc", 0, "hoge"), nil)
+        lequal(I18N.get_enum_property_optional("core.locale.foo", "desc", 1), "bar <error>")
+        lequal(I18N.get_enum_property_optional("core.locale.foo", "desc", 1, "hoge"), "bar hoge")
 end)
 
 assert(lresults())

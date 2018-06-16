@@ -85,10 +85,6 @@ void store::visit(const hcl::Value& value,
 }
 
 
-// TODO
-// "${your(_1)}${get(_2, core.locale.ability, name)} skill increases."
-
-
 #define ELONA_DEFINE_I18N_BUILTIN(func_name, return_value) \
     if(func.name == func_name) \
     { \

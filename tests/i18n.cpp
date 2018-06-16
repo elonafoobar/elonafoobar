@@ -67,8 +67,8 @@ TEST_CASE("test format item by function", "[I18N: Formatting]")
     testing::start_in_debug_map();
     item& i = testing::create_item(PUTITORO_PROTO_ID, 3);
 
-    REQUIRE(i18n::fmt_hil("${name(_1)}", i) == u8"3個のプチトロ"s);
-    REQUIRE(i18n::fmt_hil("${basename(_1)}", i) == u8"プチトロ"s);
+    REQUIRE(i18n::fmt_hil("${itemname(_1)}", i) == u8"3個のプチトロ"s);
+    REQUIRE(i18n::fmt_hil("${itembasename(_1)}", i) == u8"プチトロ"s);
 }
 
 
@@ -145,8 +145,8 @@ locale {
 }
 )");
 
-    REQUIRE(store.get_enum_property(u8"core.locale.foo", 1, "name") == u8"bar");
-    REQUIRE(store.get_enum_property(u8"core.locale.foo", 2, "name") == u8"baz");
+    REQUIRE(store.get_enum_property(u8"core.locale.foo", "name", 1) == u8"bar");
+    REQUIRE(store.get_enum_property(u8"core.locale.foo", "name", 2) == u8"baz");
 }
 
 TEST_CASE("test i18n store interpolation", "[I18N: Store]")
@@ -194,6 +194,6 @@ locale {
 }
 )");
 
-    REQUIRE(store.get_enum_property(u8"core.locale.foo", 1, "name", "dood") == u8"bar: dood");
-    REQUIRE(store.get_enum_property(u8"core.locale.foo", 2, "name", "dood") == u8"baz: dood");
+    REQUIRE(store.get_enum_property(u8"core.locale.foo", "name", 1, "dood") == u8"bar: dood");
+    REQUIRE(store.get_enum_property(u8"core.locale.foo", "name", 2, "dood") == u8"baz: dood");
 }

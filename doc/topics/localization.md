@@ -131,7 +131,7 @@ locale {
 This has the effect of placing the character's name in the string. Now it's clear that the thing being passed to the formatter is a character, since the `name` function is being called. There are various functions that may be called; see the `I18N` documentation for a complete list.
 
 ## Enums
-Some of the localizations that are part of the base game have this format.
+Some of the legacy localizations that are part of the base game have this format.
 
 ```
 locale {
@@ -143,7 +143,49 @@ locale {
 }
 ```
 
-This indicates that the object `fruit` is an *enum*, or enumeration. These are used for translating strings tied to specific integer IDs that are used by the game. In these cases, it is important that each numbered item in the enum has the same format.
+This indicates that the object `fruit` is an *enum*, or enumeration. These are used for translating strings tied to specific integer IDs that are used by the game. In these cases, it is important that each numbered item in the enum has the same format (strings or objects).
+
+You could do something like this to retrieve an enum's property.
+
+```
+local fruit_id = 1
+local fruit = I18N.get("core.locale.fruit._" .. fruit_id)
+```
+
+However, it's cleaner to do this instead.
+
+```
+local fruit_id = 1
+local fruit = I18N.get_enum("core.locale.fruit", fruit_id)
+```
+
+`I18N.get_enum` is equivalent to the first version and will retrieve the given localized string for the enum. Of course, this depends on the localization group having the enum format.
+
+## Enums with properties
+Sometimes enums will have multiple properties per ID, like this.
+```
+locale {
+    fruit {
+        _0 {
+            name = "apple"
+            color = "red"
+        _1 {
+            name = "banana"
+            color = "yellow"
+        _2 {
+            name = "pear"
+            color = "green"
+        }
+    }
+}
+```
+
+In this case `I18N.get_enum` shouldn't be used, since it's for enums whose IDs point to single strings. Instead, use `I18N.get_enum_property`.
+
+```
+local fruit_id = 1
+local fruit = I18N.get_enum_property("core.locale.fruit", "name", fruit_id)
+```
 
 ## Optional enum translations
 Sometimes, translations for a given enum item might not exist. For example, some map entrances lack descriptions:
@@ -164,7 +206,17 @@ locale {
 }
 ```
 
-But the `I18N.get_enum_property` function will raise an error if a given translation string doesn't exist. The solution is to use `I18N.get_enum_property_opt` instead:
+But the `I18N.get_enum_property` function will raise an error if a given translation string doesn't exist. The solution is to use `I18N.get_enum_property_optional` instead:
 
 ```
+local town_id = 4
+local town_name = I18N.get_enum_property("core.locale.map", "name", town_id)
+local town_desc = I18N.get_enum_property_optional("core.locale.map", "desc", town_id)
+if town_desc ~= nil then
+    GUI.txt(town_desc)
+else
+    GUI.txt(town_name)
+end
 ```
+
+In summary, use `I18N.get_enum_property` for properties that must exist, and `I18N.get_enum_property_optional` for ones that might not.
