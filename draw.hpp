@@ -27,7 +27,7 @@ void add_damage_popup(
     int character,
     const snail::color& color);
 void clear_damage_popups();
-void show_damage_popups(int inf_ver);
+void show_damage_popups();
 
 void draw_emo(int = 0, int = 0, int = 0);
 void load_pcc_part(int cc, int body_part, const char* body_part_str);

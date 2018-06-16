@@ -205,7 +205,6 @@ main_menu_result_t main_menu_wrapper()
     // Start off in the title menu.
     main_menu_result_t result = main_title_menu();
     bool finished = false;
-    bool game_initialized = false;
     while (!finished)
     {
         switch (result)

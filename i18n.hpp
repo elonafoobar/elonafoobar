@@ -9,8 +9,9 @@
 #include "cat.hpp"
 #include "character.hpp"
 #include "filesystem.hpp"
-#include "optional.hpp"
 #include "item.hpp"
+#include "macro.hpp"
+#include "optional.hpp"
 
 
 using namespace std::literals::string_literals;
@@ -189,6 +190,8 @@ std::string format_function_type(hil::FunctionCall const& func, bool const& valu
 template <typename Head>
 std::string format_function_type(hil::FunctionCall const& func, Head const& head)
 {
+    UNUSED(head);
+
     return "<unknown function (" + func.name + ")>";
 }
 
@@ -198,6 +201,9 @@ void fmt_internal(const hil::Context& ctxt,
                   int count,
                   std::vector<optional<std::string>>& formatted)
 {
+    UNUSED(ctxt);
+    UNUSED(count);
+    UNUSED(formatted);
 }
 
 

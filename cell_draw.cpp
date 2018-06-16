@@ -355,7 +355,7 @@ void initialize_cloud_data()
 void render_cloud()
 {
     static int dummy = ((void)initialize_cloud_data(), 0);
-    (void)dummy;
+    UNUSED(dummy);
 
     for (size_t i = 0; i < clouds.size(); ++i)
     {

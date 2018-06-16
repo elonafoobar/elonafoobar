@@ -214,7 +214,8 @@ void initialize_ui_constants()
     inf_mpy = inf_ver - 12;
     inf_msgx = inf_raderw;
     inf_msgspace = 15;
-    inf_maxmsglen = (windoww - inf_msgx - 28) / inf_mesfont * 2 - 1;
+    int inf_maxmsglen_i = std::max((windoww - inf_msgx - 28) / inf_mesfont * 2 - 1, 0);
+    inf_maxmsglen = static_cast<size_t>(inf_maxmsglen_i);
     inf_maxlog = (inf_msgy - 100) / inf_msgspace + 3;
     inf_very = windowh - inf_verh;
     screenmsgy = inf_screeny + inf_tiles * 2;
@@ -974,7 +975,7 @@ void render_hud()
             inf_clocky);
     }
 
-    show_damage_popups(inf_ver);
+    show_damage_popups();
 }
 
 void load_continuous_action_animation()

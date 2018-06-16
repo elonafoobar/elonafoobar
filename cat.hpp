@@ -5,6 +5,7 @@
 #include <lua.hpp>
 #include "filesystem.hpp"
 #include "lib/noncopyable.hpp"
+#include "macro.hpp"
 #include "optional.hpp"
 
 
@@ -116,7 +117,7 @@ private:
             std::nullptr_t> = nullptr>
     T to_cpp_type(int index)
     {
-        (void)index;
+        UNUSED(index);
         return nullptr;
     }
 

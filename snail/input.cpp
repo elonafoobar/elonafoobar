@@ -409,6 +409,8 @@ void input::_handle_event(const ::SDL_TextInputEvent& event)
 
 void input::_handle_event(const ::SDL_TextEditingEvent& event)
 {
+    (void)event;
+
     _is_ime_active = true;
 }
 

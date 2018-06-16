@@ -10667,7 +10667,7 @@ void show_item_description()
             int npc_count{};
             for (const auto& discord : the_character_db)
             {
-                (void)discord;
+                UNUSED(discord);
                 ++npc_count;
             }
             const auto percentage = std::min(100 * card_count / npc_count, 100);
@@ -17354,7 +17354,7 @@ void proc_autopick()
                 }
             }
             elona::ci = ci;
-            (void)do_open_command();
+            (void)do_open_command(); // Result is unused.
             break;
         }
         if (did_something && !op.sound.empty())

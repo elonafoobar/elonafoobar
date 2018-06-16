@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include "elona.hpp"
 #include "json.hpp"
+#include "macro.hpp"
 #include "range.hpp"
 #include "snail/window.hpp"
 #include "variables.hpp"
@@ -1025,7 +1026,7 @@ void set_config(const std::string& key, const std::string& value1, int value2)
     }
 
     options.get<picojson::object>()[key] = picojson::value{value1};
-    (void)value2; // TODO
+    UNUSED(value2); // TODO
 
     {
         std::ofstream file{(filesystem::dir::exe() / u8"config.json").native(),

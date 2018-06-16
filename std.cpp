@@ -15,9 +15,10 @@
 #include "defines.hpp"
 #include "elona.hpp"
 #include "log.hpp"
+#include "macro.hpp"
 #include "util.hpp"
 #include "variables.hpp"
-#if defined(ELONA_OS_WINDOWS)
+#ifdef ELONA_OS_WINDOWS
 #include <windows.h> // MessageBoxA
 #endif
 
@@ -124,9 +125,9 @@ void bcopy(const fs::path& from, const fs::path& to)
 // fullscreen
 void bgscr(int window_id, int width, int height, int, int)
 {
-    (void)window_id;
-    (void)width;
-    (void)height;
+    UNUSED(window_id);
+    UNUSED(width);
+    UNUSED(height);
 }
 
 
@@ -249,8 +250,8 @@ void buffer(int window_id, int width, int height)
 
 void chgdisp(int, int width, int height)
 {
-    (void)width;
-    (void)height;
+    UNUSED(width);
+    UNUSED(height);
 }
 
 
@@ -339,6 +340,8 @@ int dialog(const std::string& message, int option)
 #elif defined(ELONA_OS_MACOS)
     return dialog_macos(message, option);
 #else
+    UNUSED(message);
+    UNUSED(option);
     return 0;
 #endif
 }
@@ -383,7 +386,7 @@ void getstr(
     char delimiter,
     int limit)
 {
-    (void)limit;
+    UNUSED(limit);
     auto pos = source.find(delimiter, offset);
     if (pos == std::string::npos)
     {
@@ -594,16 +597,16 @@ void mkdir(const fs::path& path)
 
 void mmload(const fs::path& filepath, int id, int mode)
 {
-    (void)filepath;
-    (void)id;
-    (void)mode;
+    UNUSED(filepath);
+    UNUSED(id);
+    UNUSED(mode);
 }
 
 
 
 void mmplay(int id)
 {
-    (void)id;
+    UNUSED(id);
 }
 
 
@@ -771,8 +774,8 @@ void objsel(int)
 
 void pget(int x, int y)
 {
-    (void)x;
-    (void)y;
+    UNUSED(x);
+    UNUSED(y);
 }
 
 
@@ -809,12 +812,12 @@ void redraw()
 
 void screen(int window_id, int width, int height, int mode, int x, int y)
 {
-    (void)window_id;
-    (void)width;
-    (void)height;
-    (void)mode;
-    (void)x;
-    (void)y;
+    UNUSED(window_id);
+    UNUSED(width);
+    UNUSED(height);
+    UNUSED(mode);
+    UNUSED(x);
+    UNUSED(y);
 }
 
 
@@ -822,7 +825,7 @@ void screen(int window_id, int width, int height, int mode, int x, int y)
 int stick(int allow_repeat_keys)
 {
     auto check_key_pressed = [allow_repeat_keys](
-                                 int n, snail::key key, bool is_modifier) {
+                                 int n, snail::key key) {
         if ((1 << n) & allow_repeat_keys)
         {
             return (1 << n) * snail::input::instance().is_pressed(key);
@@ -836,18 +839,18 @@ int stick(int allow_repeat_keys)
 
     int ret{};
 
-    ret += check_key_pressed(0, snail::key::left, false);
-    ret += check_key_pressed(1, snail::key::up, false);
-    ret += check_key_pressed(2, snail::key::right, false);
-    ret += check_key_pressed(3, snail::key::down, false);
-    ret += check_key_pressed(4, snail::key::space, false);
-    ret += check_key_pressed(5, snail::key::enter, false);
-    ret += check_key_pressed(5, snail::key::keypad_enter, false);
-    ret += check_key_pressed(6, snail::key::ctrl, true);
-    ret += check_key_pressed(7, snail::key::escape, false);
+    ret += check_key_pressed(0, snail::key::left);
+    ret += check_key_pressed(1, snail::key::up);
+    ret += check_key_pressed(2, snail::key::right);
+    ret += check_key_pressed(3, snail::key::down);
+    ret += check_key_pressed(4, snail::key::space);
+    ret += check_key_pressed(5, snail::key::enter);
+    ret += check_key_pressed(5, snail::key::keypad_enter);
+    ret += check_key_pressed(6, snail::key::ctrl);
+    ret += check_key_pressed(7, snail::key::escape);
     // ret += check_key_pressed(8,  /* Mouse left */,  false);
-    // ret += check_key_pressed(9,  /* Mouse right */, false);
-    ret += check_key_pressed(10, snail::key::tab, false);
+    // ret += check_key_pressed(9,  /* Mouse right */);
+    ret += check_key_pressed(10, snail::key::tab);
 
     if (allow_repeat_keys == 15)
     {
@@ -918,8 +921,8 @@ void title(const std::string& title_str,
 
 void width(int width, int height, int, int)
 {
-    (void)width;
-    (void)height;
+    UNUSED(width);
+    UNUSED(height);
 }
 
 
@@ -1012,8 +1015,8 @@ void set_color_mod(int r, int g, int b, int window_id)
 
 void gfini(int width, int height)
 {
-    (void)width;
-    (void)height;
+    UNUSED(width);
+    UNUSED(height);
     // gf_detail::rect = {detail::current_tex_buffer().x,
     // detail::current_tex_buffer().y, width, height}; const auto texture =
     // snail::application::instance().get_renderer().render_target();
@@ -1025,9 +1028,9 @@ void gfini(int width, int height)
 
 void gfdec(int r, int g, int b)
 {
-    (void)r;
-    (void)g;
-    (void)b;
+    UNUSED(r);
+    UNUSED(g);
+    UNUSED(b);
     // gf_detail::map([](uint8_t v_, int v)
     //     {
     //         v = std::min(v, static_cast<int>(v_));
@@ -1040,9 +1043,9 @@ void gfdec(int r, int g, int b)
 
 void gfdec2(int r, int g, int b)
 {
-    (void)r;
-    (void)g;
-    (void)b;
+    UNUSED(r);
+    UNUSED(g);
+    UNUSED(b);
     // gf_detail::map([](uint8_t v_, int v)
     //     {
     //         v = std::min(v, static_cast<int>(v_) - 1);
@@ -1055,9 +1058,9 @@ void gfdec2(int r, int g, int b)
 
 void gfinc(int r, int g, int b)
 {
-    (void)r;
-    (void)g;
-    (void)b;
+    UNUSED(r);
+    UNUSED(g);
+    UNUSED(b);
     // gf_detail::map([](uint8_t v_, int v)
     //     {
     //         v = std::min(v, 255 - static_cast<int>(v_));
@@ -1090,6 +1093,8 @@ int aplobj(const std::string&, int)
 
 void apledit(int& out, int kind, int column_no)
 {
+    UNUSED(column_no);
+
     if (kind == 0)
     {
         // Current position of cursor
