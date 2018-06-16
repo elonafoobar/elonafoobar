@@ -36,14 +36,14 @@ void store::load(std::istream& is, const std::string& hcl_file)
 
     if (!parseResult.valid()) {
         std::cerr << parseResult.errorReason << std::endl;
-        throw new i18n_error(hcl_file, parseResult.errorReason);
+        throw i18n_error(hcl_file, parseResult.errorReason);
     }
 
     const hcl::Value& value = parseResult.value;
 
     if (!value.is<hcl::Object>() || !value.has("locale"))
     {
-        throw new i18n_error(hcl_file, "\"locale\" object not found");
+        throw i18n_error(hcl_file, "\"locale\" object not found");
     }
 
     const hcl::Value locale = value["locale"];
@@ -73,7 +73,7 @@ void store::visit(const hcl::Value& value,
         // TODO validate ident names?
         if (!p.valid())
         {
-            throw new i18n_error(hcl_file, "HIL parse error: " + p.errorReason);
+            throw i18n_error(hcl_file, "HIL parse error: " + p.errorReason);
         }
 
         storage.emplace(current_key, std::move(p.context));

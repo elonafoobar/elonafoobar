@@ -7,6 +7,54 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
+## [0.2.5] - 2018-06-10
+
+### Added
+
+- Introduce Lua API for experimenting/playtesting.
+- Increase rate of potion of cure corruption at casino.
+  - Same as omake.
+- Improve performance of damage popup.
+- Improve key sensitivity.
+- Improve shadow rendering.
+- Add resolution switching options/fullscreen.
+- Add unique portrait for some NPCs.
+- Decrease animation wait depending on `animewait` setting.
+- Show generation count to deck menu.
+- Limit the length of user input text in input dialog.
+- Add option to toggle damage popup(`damage_popup`).
+- Adjust formula to calculate PC's weight.
+
+### Deleted
+
+- Do not copy `original\config.txt`, no longer needed.
+- Hide stair position markers in minimap in muggle mode.
+
+### Fixed
+
+- [vanilla] Fix known issues since vanilla in Elona Bugfix wiki.
+  - Too many...
+- [vanilla] Fix the lords of Chaos Chastles not dropping rod of wishing.
+- [vanilla] Fix PC dying in main scenario in a certain condition.
+- [vanilla] Fix you cannot talk to your pet unique NPC like god's servant.
+- [vanilla] Fix infinite loop when entering map filled with doors or walls.
+- Fix not being to quit blackjack at casino.
+- Fix story scene not being played even if enabled.
+- Fix name cutting algorithm in Japanese.
+- Fix being unable to run by pressing numpad keys and Shift key.
+- Fix numpad Enter not working.
+- Fix Enter key not working sometimes.
+- Fix being able to wish "fame" even in muggle mode.
+- Fix living weapon not gaining enchantments.
+- Fix being unable to wish items/skills in wizard mode.
+- Fix bone file mojibake in Japanese.
+- Validate PC's name more strictly.
+- Fix crash in using deck.
+- Fix going back from PCC editor in character making, then skipping the editor.
+- Fix typo(in Japanese).
+
+
+
 ## [0.2.4] - 2018-05-20
 
 ### Fixed

@@ -78,7 +78,7 @@ character& conv_chara(lua_character_handle handle)
     if (!is_chara_handle(handle))
     {
         std::cerr << "Handle not valid" << std::endl;
-        throw new sol::error("not valid handle");
+        throw sol::error("not valid handle");
     }
     sol::object obj = handle["cpp_ref"];
     return obj.as<character&>();
@@ -89,7 +89,7 @@ item& conv_item(lua_item_handle handle)
     if (!is_item_handle(handle))
     {
         std::cerr << "Handle not valid" << std::endl;
-        throw new sol::error("not valid handle");
+        throw sol::error("not valid handle");
     }
     sol::object obj = handle["cpp_ref"];
     return obj.as<item&>();
@@ -1294,7 +1294,7 @@ void api_manager::load_core(lua_env& lua, const fs::path& mods_dir)
         sol::error err = result;
         std::string what = err.what();
         ELONA_LOG(what);
-        throw new std::runtime_error("Failed initializing core mod!");
+        throw std::runtime_error("Failed initializing core mod!");
     }
 }
 

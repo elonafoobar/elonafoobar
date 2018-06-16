@@ -30,7 +30,7 @@ inline T clamp(const T& x, const T& min, const T& max)
 
 int timeGetTime();
 void mes(const std::string& text);
-void mesbox(std::string& buffer);
+void mesbox(std::string& buffer, bool text);
 void picload(basic_image& img, int mode);
 void pos(int x, int y);
 void redraw();
@@ -71,7 +71,9 @@ void gzoom(
     bool blend);
 void line(int x, int y);
 void line(int x1, int y1, int x2, int y2);
-void title(const std::string& title_str);
+void title(const std::string& title_str,
+           const std::string& display_mode,
+           window::fullscreen_mode_t fullscreen_mode);
 
 } // namespace hsp
 } // namespace snail

@@ -298,9 +298,10 @@ int skillexp(int id, int cc, int experience, int prm_572, int prm_573)
         {
             if (prm_573 != 1000)
             {
-                exp2_at_m77 = rnd(cdata[cc].required_experience * exp_at_m77
-                                      / 1000 / (cdata[cc].level + prm_573)
-                                  + 1)
+                exp2_at_m77 =
+                    rnd(double(cdata[cc].required_experience) * exp_at_m77
+                            / 1000 / (cdata[cc].level + prm_573)
+                        + 1)
                     + rnd(2);
                 cdata[cc].experience += exp2_at_m77;
                 if (cc == 0)

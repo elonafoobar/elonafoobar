@@ -1,4 +1,6 @@
 #include <algorithm>
+#include <map>
+#include <sstream>
 #include "../input.hpp"
 
 
@@ -27,21 +29,23 @@ void application::set_title(const std::string& title)
 
 
 
-void application::initialize(int width, int height, const std::string& title)
+void application::initialize(const std::string& title)
 {
-    _width = width;
-    _height = height;
+    _width = 800;
+    _height = 600;
     _title = title;
     _window.reset(new window(
         title,
         window::position_undefined,
         window::position_undefined,
-        width,
-        height,
+        800,
+        600,
         window::shown));
     _renderer.reset(new renderer(
         *_window, renderer::accelerated | renderer::present_vsync));
     ::SDL_StartTextInput();
+
+    set_display_mode(get_default_display_mode());
 }
 
 
@@ -176,6 +180,91 @@ void application::proc_event()
     {
         std::exit(0);
     }
+}
+
+void application::set_fullscreen_mode(window::fullscreen_mode_t fullscreen_mode)
+{
+  (*_window).set_fullscreen_mode(fullscreen_mode);
+    _fullscreen_mode = fullscreen_mode;
+}
+
+std::map<std::string, ::SDL_DisplayMode> application::get_display_modes()
+{
+    static int display_in_use = 0; // Assume the first display is being used.
+    std::map<std::string, ::SDL_DisplayMode> display_modes;
+
+    int display_mode_count = ::SDL_GetNumDisplayModes(display_in_use);
+    if (display_mode_count < 1)
+    {
+        throw detail::sdl_error("No display modes available");
+    }
+
+    for (int i = 0; i < display_mode_count; ++i) {
+        SDL_DisplayMode mode;
+        detail::enforce_sdl(::SDL_GetDisplayMode(display_in_use, i, &mode));
+
+        if (mode.w < 800 || mode.h < 600)
+        {
+            continue;
+        }
+
+        std::stringstream ss;
+        ss << mode.w << "x" << mode.h << "@" << mode.refresh_rate << "Hz";
+
+        display_modes.emplace(ss.str(), mode);
+    }
+
+    return display_modes;
+}
+
+std::string application::get_default_display_mode()
+{
+    auto display_modes = get_display_modes();
+    if (display_modes.size() == 0)
+    {
+        throw detail::sdl_error("No display modes available");
+    }
+
+    for (const auto pair : display_modes)
+    {
+        if (pair.second.w == 800 && pair.second.h == 600)
+        {
+            return pair.first;
+        }
+    }
+
+    return display_modes.begin()->first;
+}
+
+void application::set_display_mode(const std::string& display_mode_str)
+{
+    auto display_modes = get_display_modes();
+    if (display_modes.size() == 0)
+    {
+        throw detail::sdl_error("No display modes available");
+    }
+    if (display_modes.find(display_mode_str) == display_modes.end())
+    {
+        throw detail::sdl_error("No such display mode: " + display_mode_str);
+    }
+
+    set_display_mode(display_modes[display_mode_str]);
+}
+
+void application::set_display_mode(::SDL_DisplayMode display_mode)
+{
+    if (is_fullscreen())
+    {
+        (*_window).set_display_mode(display_mode);
+    }
+    else
+    {
+        (*_window).set_size(display_mode.w, display_mode.h);
+    }
+
+    _width = display_mode.w;
+    _height = display_mode.h;
+    (*_window).move_to_center();
 }
 
 

@@ -3,6 +3,9 @@
 #include <algorithm>
 #include <iostream>
 #include <tuple>
+#ifdef _WIN32
+#include <windows.h> // GetKeyboardState, keybd_event
+#endif
 
 using namespace elona::snail;
 
@@ -80,6 +83,7 @@ key sdlkey2key(::SDL_Keycode k)
     case SDLK_LEFT: return key::left;
     case SDLK_RIGHT: return key::right;
     case SDLK_INSERT: return key::insert;
+    case SDLK_CLEAR: return key::clear;
     case SDLK_NUMLOCKCLEAR: return key::numlock;
     case SDLK_CAPSLOCK: return key::capslock;
     case SDLK_HOME: return key::home;
@@ -275,9 +279,21 @@ input& input::instance() noexcept
 
 
 
-bool input::is_pressed(key k) const
+/*
+key_wait = 1
+a a a a a a a a a a a a a a a a a a a a a
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
+x x x x x x x x x x x x x x x x x x x x x
+
+key_wait = 5
+a a a a a a a a a a a a a a a a a a a a a
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
+x         x         x         x         x
+*/
+bool input::is_pressed(key k, int key_wait) const
 {
-    return _keys[static_cast<size_t>(k)].is_pressed();
+    const auto& key = _keys[static_cast<size_t>(k)];
+    return key.is_pressed() && key.repeat() % key_wait == 0;
 }
 
 
@@ -292,6 +308,34 @@ bool input::was_pressed_just_now(key k) const
 bool input::is_ime_active() const
 {
     return _is_ime_active;
+}
+
+
+void input::disable_numlock()
+{
+    // SDL always reports numlock as being off when the program
+    // starts, even if it was on before. The Shift+numpad strangeness
+    // only happens on Windows, so it should be reasonable to use
+    // Windows APIs here.
+#ifdef _WIN32
+    if (GetKeyState(VK_NUMLOCK))
+    {
+        keybd_event(VK_NUMLOCK, 0x45, KEYEVENTF_EXTENDEDKEY, 0);
+        keybd_event(VK_NUMLOCK, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
+        _needs_restore_numlock = true;
+    }
+#endif
+}
+
+void input::restore_numlock()
+{
+#ifdef _WIN32
+    if (!GetKeyState(VK_NUMLOCK) && _needs_restore_numlock)
+    {
+        keybd_event(VK_NUMLOCK, 0x45, KEYEVENTF_EXTENDEDKEY, 0);
+        keybd_event(VK_NUMLOCK, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
+    }
+#endif
 }
 
 

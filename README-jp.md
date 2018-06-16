@@ -67,11 +67,11 @@ sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-im
 4. `Developer Command Prompt for VS 2017`を開いてください。
 5. `cd path/to/ElonaFoobar & nmake -f Makefile.win`
 
-Visual Studioを使ってデバッグする場合は、`build\ElonaFoobar.sln`を開いてください。
+Visual Studioを使ってデバッグする場合は、`bin\ElonaFoobar.sln`を開いてください。
 
 # How To Play
 
-1. `data`、`graphic`、`map`、`original`、`sound`、`user`フォルダが存在しない場合は、それらを本家開発版(v1.22)から実行ファイルのあるフォルダへとコピーしてください。
+1. `data`、`graphic`、`map`、`original`、`sound`、`user`フォルダを本家開発版(v1.22)から実行ファイルのあるフォルダへとコピーしてください。このとき、Foobarに存在するファイルは上書きしないようにしてください。本家と同名のファイルはFoobarで更新されています。
 2. `bin/ElonaFoobar`(Linux)、`bin/ElonaFoobar.app`(macOS)、`bin\Debug\ElonaFoobar.exe`(Windows)を実行してください
 
 
@@ -91,7 +91,14 @@ MIT Licenseです。詳細はLICENSEを参照してください。このライ�
 ## サードパーティーライブラリ
 
 * picojson: thirdparty/picojson/LICENSEを参照してください。
+* Catch2: thirdparty/catch2/LICENSEを参照してください。
+* hayai: thirdparty/hayai/LICENSEを参照してください。
+* sol2: thirdparty/sol2/LICENSEを参照してください。
 * cmake/FindXXX.cmake: cmake/LICENSEを参照してください。
+
+## Luaライブラリ
+
+* [inspect.lua](https://github.com/kikito/inspect.lua) (MIT)
 
 
 
