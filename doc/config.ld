@@ -16,7 +16,7 @@ format = "discount"
 template_escape = ">"
 dir = "./doc"
 examples = {"./doc/examples"}
-topics = {"./doc/readme.md", "./doc/topics/localization.md"}
+topics = {"./doc/readme.md", "./doc/topics/localization.md", "./doc/topics/localization_functions.md"}
 
 new_type("event", "Events", false, "Event Parameters")
 new_type("enum", "Enums", false, "Enum Values")

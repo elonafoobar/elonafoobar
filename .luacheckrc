@@ -231,7 +231,7 @@ stds.tests = {
         "lrun", "lequal", "lfequal", "lok", "lresults",
         Testing = {
             fields = {
-               "start_in_debug_map", "reset_state"
+               "start_in_debug_map", "reset_state", "load_translations"
             },
         }
     },

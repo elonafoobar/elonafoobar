@@ -842,24 +842,29 @@ sol::optional<std::string> I18N::get_enum_property_optional(const std::string& k
     {
     case 0:
         opt = i18n::s.get_enum_property_opt(key_head, key_tail, index);
+        break;
     case 1:
         opt = i18n::s.get_enum_property_opt(key_head, key_tail, index,
                            args[0].get<sol::object>());
+        break;
     case 2:
         opt = i18n::s.get_enum_property_opt(key_head, key_tail, index,
                            args[0].get<sol::object>(),
                            args[1].get<sol::object>());
+        break;
     case 3:
         opt = i18n::s.get_enum_property_opt(key_head, key_tail, index,
                            args[0].get<sol::object>(),
                            args[1].get<sol::object>(),
                            args[2].get<sol::object>());
+        break;
     case 4:
         opt = i18n::s.get_enum_property_opt(key_head, key_tail, index,
                            args[0].get<sol::object>(),
                            args[1].get<sol::object>(),
                            args[2].get<sol::object>(),
                            args[3].get<sol::object>());
+        break;
     case 5:
         opt = i18n::s.get_enum_property_opt(key_head, key_tail, index,
                            args[0].get<sol::object>(),
@@ -867,6 +872,7 @@ sol::optional<std::string> I18N::get_enum_property_optional(const std::string& k
                            args[2].get<sol::object>(),
                            args[3].get<sol::object>(),
                            args[4].get<sol::object>());
+        break;
     case 6:
     default:
         opt = i18n::s.get_enum_property_opt(key_head, key_tail, index,
