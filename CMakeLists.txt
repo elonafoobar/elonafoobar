@@ -240,8 +240,6 @@ else()
   target_link_libraries(${PROJECT_NAME} ${LUA_LIBRARIES})
 endif()
 
-
-
 if(NOT DEFINED SDL2_INCLUDE_DIR OR NOT DEFINED SDL2_LIBRARIES)
     find_package(SDL2 REQUIRED)
 endif()
