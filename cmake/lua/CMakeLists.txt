@@ -1,11 +1,6 @@
 project ( lua C )
 cmake_minimum_required ( VERSION 2.8 )
 
-find_package(Git)
-if(NOT GIT_FOUND)
-    message(FATAL_ERROR "Git not Found")
-endif()
-
 include_directories ( lua src/ )
 set ( SRC_CORE
   src/lapi.c
@@ -59,8 +54,3 @@ set(CompilerFlags
 foreach(CompilerFlag ${CompilerFlags})
   string(REPLACE "/MD" "/MT" ${CompilerFlag} "${${CompilerFlag}}")
 endforeach()
-
-#add_library ( libluadll SHARED ${SRC_CORE} ${SRC_LIB} )
-#target_compile_definitions ( libluadll PRIVATE _CRT_SECURE_NO_WARNINGS LUA_BUILD_AS_DLL )
-#target_include_directories( libluadll INTERFACE lua/ )
-#set_target_properties ( libluadll PROPERTIES OUTPUT_NAME lua53 )
