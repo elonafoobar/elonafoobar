@@ -7586,9 +7586,7 @@ void label_1754()
             {
                 snd(44);
                 txtef(2);
-                txt(lang(
-                    u8"ジャーナルが更新された。"s,
-                    u8"Your journal has been updated."s));
+                txt(i18n::s.get("core.locale.quest.journal_updated"));
                 gdata_kamikaze_attack = 3;
                 txtef(9);
                 txt(lang(
@@ -20324,9 +20322,7 @@ void weather_changes()
                     ++gdata_pael_and_her_mom;
                     snd(44);
                     txtef(2);
-                    txt(lang(
-                        u8"ジャーナルが更新された。"s,
-                        u8"Your journal has been updated."s));
+                    txt(i18n::s.get("core.locale.quest.journal_updated"));
                 }
             }
         }

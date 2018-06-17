@@ -88,9 +88,7 @@ void quest_check()
                     gdata_putit_attacks = 2;
                     snd(44);
                     txtef(2);
-                    txt(lang(
-                        u8"ジャーナルが更新された。"s,
-                        u8"Your journal has been updated."s));
+                    txt(i18n::s.get("core.locale.quest.journal_updated"));
                 }
             }
         }
@@ -103,9 +101,7 @@ void quest_check()
                     gdata_thieves_hideout = 2;
                     snd(44);
                     txtef(2);
-                    txt(lang(
-                        u8"ジャーナルが更新された。"s,
-                        u8"Your journal has been updated."s));
+                    txt(i18n::s.get("core.locale.quest.journal_updated"));
                 }
             }
         }
@@ -118,9 +114,7 @@ void quest_check()
                     gdata_nightmare = 3;
                     snd(44);
                     txtef(2);
-                    txt(lang(
-                        u8"ジャーナルが更新された。"s,
-                        u8"Your journal has been updated."s));
+                    txt(i18n::s.get("core.locale.quest.journal_updated"));
                 }
             }
         }
@@ -136,9 +130,7 @@ void quest_check()
                     gdata_cat_house = 2;
                     snd(44);
                     txtef(2);
-                    txt(lang(
-                        u8"ジャーナルが更新された。"s,
-                        u8"Your journal has been updated."s));
+                    txt(i18n::s.get("core.locale.quest.journal_updated"));
                 }
             }
         }
@@ -151,9 +143,7 @@ void quest_check()
                     gdata_defense_line = 3;
                     snd(44);
                     txtef(2);
-                    txt(lang(
-                        u8"ジャーナルが更新された。"s,
-                        u8"Your journal has been updated."s));
+                    txt(i18n::s.get("core.locale.quest.journal_updated"));
                 }
             }
         }
@@ -169,9 +159,7 @@ void quest_check()
                     gdata_sewer_sweeping = 2;
                     snd(44);
                     txtef(2);
-                    txt(lang(
-                        u8"ジャーナルが更新された。"s,
-                        u8"Your journal has been updated."s));
+                    txt(i18n::s.get("core.locale.quest.journal_updated"));
                 }
             }
         }

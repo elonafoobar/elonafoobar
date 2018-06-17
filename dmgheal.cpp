@@ -1250,9 +1250,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                             gdata_novice_knight = 2;
                             snd(44);
                             txtef(2);
-                            txt(lang(
-                                u8"ジャーナルが更新された。"s,
-                                u8"Your journal has been updated."s));
+                            txt(i18n::s.get("core.locale.quest.journal_updated"));
                         }
                     }
                     if (cdata[prm_853].id == 257)
@@ -1262,9 +1260,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                             gdata_pyramid_trial = 1000;
                             snd(44);
                             txtef(2);
-                            txt(lang(
-                                u8"ジャーナルが更新された。"s,
-                                u8"Your journal has been updated."s));
+                            txt(i18n::s.get("core.locale.quest.journal_updated"));
                             txt(lang(
                                 u8"クエストを達成した！"s,
                                 u8"You have completed the quest!"s));
@@ -1278,9 +1274,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                             gdata_minotaur_king = 2;
                             snd(44);
                             txtef(2);
-                            txt(lang(
-                                u8"ジャーナルが更新された。"s,
-                                u8"Your journal has been updated."s));
+                            txt(i18n::s.get("core.locale.quest.journal_updated"));
                         }
                     }
                     if (cdata[prm_853].id == 318)

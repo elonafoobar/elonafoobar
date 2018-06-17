@@ -847,9 +847,7 @@ void proc_event()
             gdata_red_blossom_in_palmia = 2;
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
         }
         if (mdata(6) == 3 || mdata(6) == 2)
         {
