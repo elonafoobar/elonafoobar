@@ -459,7 +459,7 @@ void window_recipe_(
     }
     pos(dx_at_m184, dy_at_m184);
     mes(""s + i_at_m184 + u8"."s
-        + i18n::s.get("core.locale.blending.window.start");
+        + i18n::s.get("core.locale.blending.window.start"));
     dy_at_m184 += 30;
     if (rppage == 0)
     {
@@ -573,7 +573,7 @@ label_1923:
             txtnew();
             txt(i18n::s.get("core.locale.blending.prompt.how_many"));
             ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.blending.prompt.start_blending"),
+                i18n::s.get("core.locale.blending.prompt.start"),
                 u8"a"s,
                 ""s + promptmax);
             ELONA_APPEND_PROMPT(
@@ -817,7 +817,7 @@ label_1928_internal:
     display_window(
         (windoww - 780) / 2 + inf_screenx, winposy(445), 380, 432, 74);
     display_topic(i18n::s.get("core.locale.blending.steps.item_name"), wx + 28, wy + 30);
-    s = i18n::s.get("core.locale.blending.steps.rtem_counter", listmax);
+    s = i18n::s.get("core.locale.blending.steps.item_counter", listmax);
     font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
     pos(wx + 130, wy + wh - 65 - wh % 8);
     mes(s);
@@ -999,7 +999,7 @@ std::string rpsuccessrate(int prm_1040)
 {
     if (prm_1040 == 100)
     {
-        return i18n::s.get("core.locale.blending.success_rate.perfect")
+        return i18n::s.get("core.locale.blending.success_rate.perfect");
     }
     if (prm_1040 >= 90)
     {
