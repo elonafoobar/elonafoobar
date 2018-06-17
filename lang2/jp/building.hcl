@@ -1,12 +1,14 @@
 locale {
     building {
         can_only_use_in_world_map = "それはワールドマップでしか使えない。"
-        cannot_build_here = "その場所には建てられない。"
+        cannot_build_it_here = "その場所には建てられない。"
         cannot_build_anymore = "もうこれ以上建物は建てられない。"
         really_build_it_here = "本当にこの場所に建設する？ "
 
         built_new_house = "新しい家を建てた！ "
         built_new = "あなたは${_1}を建設した！ "
+
+        not_enough_money = "お金が足りない…"
 
         names {
             _521 = "博物館"
@@ -27,7 +29,7 @@ locale {
 
         house_board {
             only_use_in_home = "ここはあなたの家ではない。"
-            item_count = "${_3}には${_1}個のアイテムと${_2}個の家具がある(アイテム最大${_4}個) "
+            item_count = "${_1}には${_2}個のアイテムと${_3}個の家具がある(アイテム最大${_4}個) "
             what_do = "何をする？"
 
             choices {
@@ -46,7 +48,6 @@ locale {
             hire {
                 who = "誰を雇用する？"
                 too_many_guests = "家はすでに人であふれかえっている。"
-                not_enough_money = "お金が足りない…"
                 you_hire = "${basename(_1)}を家に迎えた。"
             }
 
@@ -59,7 +60,7 @@ locale {
                 dont_touch_me = "${basename(_1)}「触るな！」"
                 where = "${basename(_1)}をどこに移動させる？"
                 invalid = "その場所には移動させることができない。"
-                moved = "${basename(_1)}を移動させた。"
+                is_moved = "${basename(_1)}を移動させた。"
             }
 
             staying {
@@ -81,10 +82,12 @@ locale {
                 value = "価値"
                 heirloom_rank = "家宝ランク"
 
-                base = "基本."
-                deco = "家具."
-                heir = "家宝."
-                total = "総合."
+                type {
+                    base = "基本."
+                    deco = "家具."
+                    heir = "家宝."
+                    total = "総合."
+                }
 
                 star = "★"
                 place = "${_1}位."

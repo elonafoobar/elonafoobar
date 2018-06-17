@@ -1,12 +1,14 @@
 locale {
     building {
         can_only_use_in_world_map = "You can only use it in the world map."
-        cannot_build_here = "You can't build it here."
+        cannot_build_it_here = "You can't build it here."
         cannot_build_anymore = "You can't build a building anymore."
         really_build_it_here = "Really build it here? "
 
         built_new_house = "You've built a new house!"
         built_new = "You've built a ${_1}!"
+
+        not_enough_money = "You don't have enough money..."
 
         names {
             _521 = "museum"
@@ -27,7 +29,7 @@ locale {
 
         house_board {
             only_use_in_home = "You can only use it in your home."
-            item_count = "There are ${_1} items and ${_2} furniture in ${_3}.(Max:${_4}) "
+            item_count = "There are ${_2} items and ${_3} furniture in ${_1}.(Max:${_4}) "
             what_do = "What do you want to do?"
 
             choices {
@@ -46,7 +48,6 @@ locale {
             hire {
                 who = "Who do you want to hire?"
                 too_many_guests = "You already have too many guests in your home."
-                not_enough_money = "You don't have enough money..."
                 you_hire = "You hire ${basename(_1)}."
             }
 
@@ -59,7 +60,7 @@ locale {
                 dont_touch_me = "${basename(_1)}\"Don't touch me!\""
                 where = "Where do you want to move ${basename(_1)}?"
                 invalid = "The location is invalid."
-                moved = "${basename(_1)} ${is(_1)} moved to the location."
+                is_moved = "${basename(_1)} ${is(_1)} moved to the location."
             }
 
             staying {
@@ -81,10 +82,12 @@ locale {
                 value = "Value"
                 heirloom_rank = "Heirloom Rank"
 
-                base = "Base"
-                deco = "Deco"
-                heir = "Heir"
-                total = "Total"
+                type {
+                    base = "Base"
+                    deco = "Deco"
+                    heir = "Heir"
+                    total = "Total"
+                }
 
                 star = "*"
                 place = "${_1}"
