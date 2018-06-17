@@ -12346,7 +12346,7 @@ int efstatusfix(int doomed, int cursed, int none, int blessed)
     case curse_state_t::cursed: return cursed;
     case curse_state_t::none: return none;
     case curse_state_t::blessed: return blessed;
-    default: assert(0);
+    default: assert(0); return none;
     }
 }
 
