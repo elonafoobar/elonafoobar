@@ -1,5 +1,6 @@
 #pragma once
 
+#include <map>
 #include "../scene.hpp"
 #include "../effect.hpp"
 
@@ -20,13 +21,13 @@ public:
 
     int width() const noexcept
     {
-        return 1;
+        return 800;
     }
 
 
     int height() const noexcept
     {
-        return 1;
+        return 600;
     }
 
     const std::string& title() const noexcept
@@ -43,7 +44,7 @@ public:
     static application& instance();
 
 
-    void initialize(int width, int height, const std::string& title);
+    void initialize(const std::string& title);
 
     void quit();
 
@@ -58,6 +59,22 @@ public:
 
 
     void proc_event();
+
+    bool is_fullscreen() { return false; }
+
+    window::fullscreen_mode_t get_fullscreen_mode() { return window::fullscreen_mode_t::windowed; }
+
+    void set_fullscreen_mode(window::fullscreen_mode_t);
+
+
+    std::map<std::string, ::SDL_DisplayMode> get_display_modes() { return {}; }
+
+    std::string get_default_display_mode() { return ""; }
+
+    ::SDL_DisplayMode get_display_mode() { return ::SDL_DisplayMode{}; }
+
+    void set_display_mode(const std::string&);
+    void set_display_mode(const ::SDL_DisplayMode);
 
 
 private:

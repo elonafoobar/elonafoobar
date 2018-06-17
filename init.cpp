@@ -100,7 +100,7 @@ void backup_config_files()
         if (!fs::exists(to_path))
         {
             if (!fs::exists(from_path)) {
-                throw new std::runtime_error("Original config file " + from_path.string() + " didn't exist.");
+                throw std::runtime_error("Original config file " + from_path.string() + " didn't exist.");
             }
             fs::copy_file(from_path, to_path);
         }
@@ -366,7 +366,6 @@ void initialize_cat_db()
     cat::global.register_function(u8"sdata", cat_sdata);
     cat::global.register_function(u8"cbitmod", cat_cbitmod);
 
-
     the_ability_db.initialize();
     the_buff_db.initialize();
     the_character_db.initialize();
@@ -380,6 +379,9 @@ void initialize_cat_db()
 
 void initialize_config(const fs::path& config_file)
 {
+    windoww = snail::application::instance().width();
+    windowh = snail::application::instance().height();
+
     time_warn = timeGetTime() / 1000;
     time_begin = timeGetTime() / 1000;
 
@@ -401,7 +403,6 @@ void initialize_config(const fs::path& config_file)
     SDIM2(buff, 10000);
     initialize_jkey();
 
-    load_config2(config_file);
     load_config(config_file);
 }
 
@@ -411,7 +412,7 @@ void initialize_elona()
     i18n::s.init(jp ? filesystem::path("lang2") / "jp" : filesystem::path("lang2") / "en");
 
     initialize_ui_constants();
-    if (config::instance().fullscreen)
+    if (config::instance().fullscreen != 0)
     {
         chgdisp(1, windoww, windowh);
         bgscr(0, windoww, windowh, 0, 0);
@@ -426,6 +427,14 @@ void initialize_elona()
     redraw();
     buffer(3, 1440, 800);
     picload(filesystem::dir::graphic() / u8"interface.bmp", 1);
+
+    pos(0, 656);
+    picload(filesystem::dir::graphic() / u8"interface_ex1.png", 1);
+    pos(144, 656);
+    picload(filesystem::dir::graphic() / u8"interface_ex2.png", 1);
+    pos(144, 752);
+    picload(filesystem::dir::graphic() / u8"interface_ex3.png", 1);
+
     buffer(4, windoww, windowh);
     buffer(8, windoww, windowh);
     gsel(0);
@@ -788,20 +797,24 @@ void initialize_elona()
 
     if (config::instance().autonumlock)
     {
-        // TODO
-        // if NumLock key is pressed, send an event to release the key.
+        snail::input::instance().disable_numlock();
     }
 }
 
 int run()
 {
+    const fs::path config_file = filesystem::dir::exe() / u8"config.json";
     initialize_cat_db();
 
     foobar_save.initialize();
 
-    title(u8"Elona Foobar version "s + latest_version.short_string());
+    load_config2(config_file);
 
-    initialize_config(filesystem::dir::exe() / u8"config.json");
+    title(u8"Elona Foobar version "s + latest_version.short_string(),
+          config::instance().display_mode,
+          config_get_fullscreen_mode());
+
+    initialize_config(config_file);
     initialize_elona();
 
     lua::lua.scan_all_mods(filesystem::dir::mods());

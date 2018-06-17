@@ -6,7 +6,7 @@ os:
 
 environment:
   matrix:
-  - CMAKE_ARGS: -G "Visual Studio 15 2017 Win64"
+  - CMAKE_ARGS: -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Debug
     BOOST_VERSION: 1.66.0
     BOOST_ROOT: C:\Libraries\boost_1_66_0
     PREFIX: C:\SDK
@@ -27,6 +27,9 @@ for:
 
   configuration:
     - Release
+
+  environment:
+    CMAKE_ARGS: -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release
 
 
 branches:
@@ -104,6 +107,7 @@ after_build:
   - rd /q /s bin\ElonaFoobar\original
   - rd /q /s bin\ElonaFoobar\sound
   - rd /q /s bin\ElonaFoobar\user
+  - xcopy /s /e /y runtime\* bin\ElonaFoobar
   - cd bin
   - 7z a -y ElonaFoobar-windows.zip ElonaFoobar
 

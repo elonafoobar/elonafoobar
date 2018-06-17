@@ -149,7 +149,7 @@ void lua_env::load_mod(const fs::path& path, mod_info& mod)
     {
         sol::error err = result;
         report_error(err);
-        throw new std::runtime_error("Failed initializing mod "s + mod.name);
+        throw std::runtime_error("Failed initializing mod "s + mod.name);
     }
 }
 
@@ -157,7 +157,7 @@ void lua_env::scan_all_mods(const fs::path& mods_dir)
 {
     if(stage != mod_loading_stage_t::not_started)
     {
-        throw new std::runtime_error("Mods have already been scanned!");
+        throw std::runtime_error("Mods have already been scanned!");
     }
 
     const std::string init_script = "init.lua";
@@ -173,7 +173,7 @@ void lua_env::scan_all_mods(const fs::path& mods_dir)
 
             if(mod_name == "script")
             {
-                throw new std::runtime_error("\"script\" is a reserved mod name.");
+                throw std::runtime_error("\"script\" is a reserved mod name.");
             }
 
             std::unique_ptr<mod_info> info = std::make_unique<mod_info>(mod_name, get_state());
@@ -187,13 +187,13 @@ void lua_env::load_core_mod(const fs::path& mods_dir)
 {
     if(stage != mod_loading_stage_t::scan_finished)
     {
-        throw new std::runtime_error("Mods haven't been scanned yet!");
+        throw std::runtime_error("Mods haven't been scanned yet!");
     }
 
     auto val = this->mods.find("core");
     if (val == this->mods.end())
     {
-        throw new std::runtime_error("Core mod was not found. Does \"mods/core\" exist?");
+        throw std::runtime_error("Core mod was not found. Does \"mods/core\" exist?");
     }
 
     // Load the core mod before any others. The core API table will be
@@ -206,7 +206,7 @@ void lua_env::load_all_mods(const fs::path& mods_dir)
 {
     if(stage != mod_loading_stage_t::core_mod_loaded)
     {
-        throw new std::runtime_error("Core mod wasn't loaded!");
+        throw std::runtime_error("Core mod wasn't loaded!");
     }
     for (auto& pair : this->mods)
     {
@@ -229,11 +229,11 @@ void lua_env::run_startup_script(const std::string& name)
 {
     if(stage < mod_loading_stage_t::core_mod_loaded)
     {
-        throw new std::runtime_error("Core mod wasn't loaded!");
+        throw std::runtime_error("Core mod wasn't loaded!");
     }
     if(this->mods.find(name) != this->mods.end())
     {
-        throw new std::runtime_error("Startup script was already run.");
+        throw std::runtime_error("Startup script was already run.");
     }
 
     std::unique_ptr<mod_info> script_mod = std::make_unique<mod_info>("script", get_state());
@@ -299,12 +299,12 @@ void lua_env::load_mod_from_script(const std::string& name, const std::string& s
 {
     if(stage < mod_loading_stage_t::core_mod_loaded)
     {
-        throw new std::runtime_error("Core mod wasn't loaded!");
+        throw std::runtime_error("Core mod wasn't loaded!");
     }
     {
         auto val = mods.find(name);
         if(val != mods.end())
-            throw new std::runtime_error("Mod "s + name + " was already initialized."s);
+            throw std::runtime_error("Mod "s + name + " was already initialized."s);
     }
 
     std::unique_ptr<mod_info> info = std::make_unique<mod_info>(name, get_state());
@@ -315,7 +315,7 @@ void lua_env::load_mod_from_script(const std::string& name, const std::string& s
     {
         sol::error err = result;
         report_error(err);
-        throw new std::runtime_error("Failed initializing mod "s + info->name);
+        throw std::runtime_error("Failed initializing mod "s + info->name);
     }
 
     this->mods.emplace(name, std::move(info));
@@ -325,7 +325,7 @@ void lua_env::run_in_mod(const std::string& name, const std::string& script)
 {
     auto val = mods.find(name);
     if(val == mods.end())
-        throw new std::runtime_error("No such mod "s + name + "."s);
+        throw std::runtime_error("No such mod "s + name + "."s);
     this->lua->script(script, val->second->env);
 }
 

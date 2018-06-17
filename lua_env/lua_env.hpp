@@ -247,7 +247,7 @@ public:
     mod_info* get_mod(const std::string& name) {
         auto val = mods.find(name);
         if(val == mods.end())
-            throw new std::runtime_error("No such mod "s + name + "."s);
+            throw std::runtime_error("No such mod "s + name + "."s);
         return val->second.get();
     }
 private:

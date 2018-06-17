@@ -17,6 +17,7 @@
 #include "snail/color.hpp"
 #include "snail/font.hpp"
 #include "snail/input.hpp"
+#include "snail/window.hpp"
 #include "util.hpp"
 
 
@@ -504,7 +505,7 @@ void mes(const std::string& text);
 
 void mes(int n);
 
-void mesbox(std::string& buffer);
+void mesbox(std::string& buffer, bool text = false);
 
 void mkdir(const fs::path& path);
 
@@ -555,7 +556,9 @@ size_t strlen_u(const std::string& str);
 
 std::string strmid(const std::string& source, int pos, int length);
 
-void title(const std::string& title_str);
+void title(const std::string& title_str,
+           const std::string& display_mode = "",
+           snail::window::fullscreen_mode_t fullscreen_mode = snail::window::fullscreen_mode_t::windowed);
 
 void width(int width, int height, int, int);
 

@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <map>
 #include "../input.hpp"
 
 
@@ -22,7 +23,7 @@ void application::set_title(const std::string& title)
 
 
 
-void application::initialize(int width, int height, const std::string& title)
+void initialize(const std::string& title)
 {
 }
 
@@ -58,6 +59,18 @@ void application::proc_event()
 {
 }
 
+
+void set_fullscreen_mode(window::fullscreen_mode_t)
+{
+}
+
+void set_display_mode(const std::string&)
+{
+}
+
+void set_display_mode(const ::SDL_DisplayMode)
+{
+}
 
 } // namespace snail
 } // namespace elona

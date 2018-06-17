@@ -913,8 +913,7 @@ void finish_elona()
     }
     if (config::instance().autonumlock)
     {
-        keybd_event(144);
-        keybd_event(144, 0, 2);
+        snail::input::instance().restore_numlock();
     }
     if (mutex_handle != 0)
     {
@@ -9931,12 +9930,12 @@ label_1948_internal:
             goto label_1948_internal;
         }
         int a{};
-        a = stick(768);
-        if (a == 256)
+        a = stick(stick_key::mouse_left | stick_key::mouse_right);
+        if (a == stick_key::mouse_left)
         {
             key = key_enter;
         }
-        if (a == 512)
+        if (a == stick_key::mouse_right)
         {
             if (chipm(0, map(tlocx, tlocy, 0)) == 2
                 || chipm(0, map(tlocx, tlocy, 0)) == 1)
@@ -10160,7 +10159,7 @@ label_1956_internal:
     await(config::instance().wait1);
     int a{};
     a = stick();
-    if (a == 256)
+    if (a == stick_key::mouse_left)
     {
         p = mousex / 24 + mousey / 24 * ww;
         if (p >= listmax)
@@ -10173,7 +10172,7 @@ label_1956_internal:
         label_1958();
         return;
     }
-    if (a == 512)
+    if (a == stick_key::mouse_right)
     {
         label_1958();
         return;
@@ -12306,16 +12305,16 @@ turn_result_t do_debug_console()
     font(14 - en * 2);
     objmode(2);
     pos(0, 24);
-    mesbox(dbm);
+    mesbox(dbm, true);
     pos(0, 0);
-    mesbox(buff);
+    mesbox(buff, true);
     objsel(2);
     while (1)
     {
         await(config::instance().wait1);
         int a{};
         a = stick();
-        if (a == 128)
+        if (a == stick_key::escape)
         {
             return do_exit_debug_console();
         }
@@ -19504,8 +19503,8 @@ void do_play_scene()
     scidx += s(0).size();
 label_2681:
     int a{};
-    a = stick(128);
-    if (a == 128)
+    a = stick(stick_key::escape);
+    if (a == stick_key::escape)
     {
         scene_cut = 1;
     }
@@ -19726,8 +19725,8 @@ label_2684_internal:
     for (int cnt = 1; cnt < 16; ++cnt)
     {
         await(30);
-        a = stick(128);
-        if (a == 128)
+        a = stick(stick_key::escape);
+        if (a == stick_key::escape)
         {
             scene_cut = 1;
         }

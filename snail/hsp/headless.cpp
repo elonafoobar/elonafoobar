@@ -16,7 +16,7 @@ void mes(const std::string& message)
 {
 }
 
-void mesbox(std::string&)
+void mesbox(std::string&, bool)
 {
 }
 
@@ -101,7 +101,7 @@ void line(int, int, int, int)
 {
 }
 
-void title(const std::string&)
+void title(const std::string&, const std::string&, window::fullscreen_mode_t)
 {
 }
 

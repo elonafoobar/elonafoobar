@@ -125,6 +125,7 @@ enum class key
     right,
 
     insert,
+    clear,
     numlock,
     capslock,
 
@@ -254,10 +255,31 @@ inline bool is_modifier(key k)
 class input final : public lib::noncopyable
 {
 public:
-    bool is_pressed(key k) const;
+    bool is_pressed(key k, int key_wait = 1) const;
     bool was_pressed_just_now(key k) const;
 
     bool is_ime_active() const;
+
+
+   /***
+    * Disables NumLock to prevent strange Windows-specific behavior when
+    * holding Shift and pressing a numpad key. What happens with NumLock
+    * enabled is the numpad key reverts to its non-NumLock functionality,
+    * but Shift becomes depressed for some reason. This prevents the
+    * player from running when holding Shift and pressing a numpad
+    * movement key. This does not happen on Linux, so it's probably a
+    * Windows-specific quirk.
+    *
+    * This method has no effect on platforms besides Windows.
+    */
+    void disable_numlock();
+
+    /***
+     * Restores NumLock if it was disabled at some point by disable_numlock().
+     *
+     * This method has no effect on platforms besides Windows.
+     */
+    void restore_numlock();
 
     std::string get_text()
     {
@@ -283,6 +305,7 @@ private:
     std::array<button, static_cast<size_t>(key::_size)> _keys;
     std::string _text;
     bool _is_ime_active{};
+    bool _needs_restore_numlock{};
 
     input() = default;
 };

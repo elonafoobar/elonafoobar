@@ -9,6 +9,7 @@
 
 #include "snail/application.hpp"
 #include "snail/hsp.hpp"
+#include "snail/window.hpp"
 
 #include "config.hpp"
 #include "defines.hpp"
@@ -159,6 +160,9 @@ void bload(const fs::path& filename, std::string& data, int size, int)
     }
     auto buf = read_binary(in, size).first;
     data = std::string{buf.get(), static_cast<size_t>(size)};
+
+    // Trim trailing NUL bytes from the string that was read.
+    data.erase(std::remove(data.begin(), data.end(), '\0'), data.end());
 }
 
 
@@ -574,9 +578,9 @@ void mes(int n)
 
 
 
-void mesbox(std::string& buffer)
+void mesbox(std::string& buffer, bool text)
 {
-    snail::hsp::mesbox(buffer);
+    snail::hsp::mesbox(buffer, text);
 }
 
 
@@ -903,9 +907,11 @@ std::string strmid(const std::string& source, int pos, int length)
 
 
 
-void title(const std::string& title_str)
+void title(const std::string& title_str,
+           const std::string& display_mode,
+           snail::window::fullscreen_mode_t fullscreen_mode)
 {
-    snail::hsp::title(title_str);
+    snail::hsp::title(title_str, display_mode, fullscreen_mode);
 }
 
 
