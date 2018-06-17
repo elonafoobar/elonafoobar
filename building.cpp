@@ -165,10 +165,10 @@ turn_result_t build_new_building()
         adata(21, p) = 1;
         adata(12, p) = 1;
     }
-    s = i18n::s.get_enum("core.locale.building.names", inv[ci].id)
+    s = i18n::s.get_enum("core.locale.building.names", inv[ci].id);
     snd(58);
     txtef(5);
-    txt(i18n::s.get("core.locale.building.built_new", s));
+    txt(i18n::s.get("core.locale.building.built_new", s(0)));
     label_1749();
     --inv[ci].number;
     cell_refresh(inv[ci].position.x, inv[ci].position.y);
@@ -232,15 +232,15 @@ turn_result_t show_house_board()
     }
     txt(i18n::s.get("core.locale.building.house_board.item_count",
                     mapname(gdata_current_map),
-                    p,
-                    p(1)
+                    p(0),
+                    p(1),
                     p(2)));
     if (adata(16, gdata_current_map) == 102)
     {
         if (getworker(gdata_current_map) != -1)
         {
             txt(i18n::s.get("core.locale.building.shop.current_shopkeeper",
-                            getworker(gdata_current_map)));
+                            cdata[getworker(gdata_current_map)]));
         }
         else
         {
@@ -252,7 +252,7 @@ turn_result_t show_house_board()
         if (getworker(gdata_current_map) != -1)
         {
             txt(i18n::s.get("core.locale.building.ranch.current_breeder",
-                            getworker(gdata_current_map)));
+                            cdata[getworker(gdata_current_map)]));
         }
         else
         {
@@ -1061,7 +1061,7 @@ void show_shop_log()
                                         customer,
                                         cdata[worker],
                                         sold,
-                                        s));
+                                        s(0)));
         }
         skillexp(156, worker, clamp(int(std::sqrt(income(0))) * 6, 25, 1000));
     }
