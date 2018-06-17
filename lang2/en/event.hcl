@@ -25,6 +25,7 @@ locale {
             _2 = "\"You're back!\""
             _3 = "\"I was waiting for you.\""
             _4 = "\"Nice to see you again.\""
+            _5 = "\"Welcome home!\"" # JP has 6 choices, so add one extra
         }
 
         bomb = "* RRROOM-KABOOOOM*"
