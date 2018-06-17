@@ -2,6 +2,8 @@ locale {
     quest {
         journal_updated = "Your journal has been updated."
 
+        monsters_remaining = "${_1} more to go."
+
         area_is_secured = "The area is secured!"
         successfully_slay = "You successfully slay the target."
         you_are_victorious = "You are victorious!"
@@ -27,6 +29,7 @@ locale {
         }
 
         giver {
+            have_something_to_ask = ""
             days_to_perform = "You have ${_1} days to perform the task."
             how_about_it = "How about it?"
 
@@ -39,10 +42,10 @@ locale {
         }
 
         info {
-            gold = "${_1} gold pieces"
+            gold_pieces = "${_1} gold pieces"
             and = " and "
             no_deadline = "-"
-            days_counter = "d"
+            days = "${_1}d"
             heavy = "(Heavy!)"
             now = " (Now ${_1})"
 
@@ -63,12 +66,8 @@ locale {
                 text = "Eliminate monsters."
             }
 
-            supply {
-                text = "Give ${_1} to the client."
-            }
-
             deliver {
-                text = "Deliver ${_1} to ${_2} who lives in ${_3}."
+                text = "Deliver ${_1} to ${_3} who lives in ${_2}."
             }
 
             cook {
