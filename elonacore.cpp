@@ -8632,9 +8632,7 @@ label_1894_internal:
                 flttypemajor = fsetremain(rnd(length(fsetremain)));
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         }
         break;
     case 4:
@@ -8805,9 +8803,7 @@ label_1894_internal:
                 }
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         }
         else
         {
@@ -11309,9 +11305,7 @@ turn_result_t do_gatcha()
             {
                 inv[ci].param2 = 0;
             }
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         }
         else
         {
@@ -13441,9 +13435,7 @@ void continuous_action_sex()
             flt();
             itemcreate(
                 -1, 54, cdata[cc].position.x, cdata[cc].position.y, sexvalue);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             modify_karma(0, -1);
         }
         else
@@ -14785,9 +14777,7 @@ void spot_digging()
                                     cdata[0].position.y,
                                     0);
                             }
-                            txt(lang(
-                                u8"何かが足元に転がってきた。"s,
-                                u8"Something is put on the ground."s));
+                            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
                             autosave = 1 * (gdata_current_map != 35);
                             --inv[cnt].number;
                             break;

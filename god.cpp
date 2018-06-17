@@ -758,9 +758,7 @@ turn_result_t do_pray()
                     -1, 672, cdata[0].position.x, cdata[0].position.y, 0);
                 inv[ci].param1 = 166;
             }
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         }
         if (gdata_god_rank == 5)
         {
@@ -799,9 +797,7 @@ turn_result_t do_pray()
                 dbid = 621;
             }
             itemcreate(-1, dbid, cdata[0].position.x, cdata[0].position.y, 0);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         }
         ++gdata_god_rank;
     }

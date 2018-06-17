@@ -212,9 +212,7 @@ void proc_event()
         flt();
         itemcreate(
             -1, 55, cdata[0].position.x, cdata[0].position.y, rnd(3) + 2);
-        txt(lang(
-            u8"何かが足元に転がってきた。"s,
-            u8"Something is put on the ground."s));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         autosave = 1 * (gdata_current_map != 35);
         break;
     case 29:
@@ -300,9 +298,7 @@ void proc_event()
         txt(lang(
             u8"クエストを達成した！"s, u8"You have completed the quest!"s));
         snd(51);
-        txt(lang(
-            u8"何かが足元に転がってきた。"s,
-            u8"Something is put on the ground."s));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         modrank(2, 300, 8);
         gdata(74) = calcfame(0, gdata_current_dungeon_level * 30 + 200);
         txtef(2);

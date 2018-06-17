@@ -1372,8 +1372,7 @@ void quest_complete()
         ""s + gdata(74) + u8"の名声値を手に入れた。"s,
         u8"You gain "s + gdata(74) + u8" fame."s));
     cdata[0].fame += gdata(74);
-    txt(lang(
-        u8"何かが足元に転がってきた。"s, u8"Something is put on the ground."s));
+    txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     if (qdata(3, rq) == 1002)
     {
         --qdata(15, qdata(10, rq));
