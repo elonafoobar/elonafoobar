@@ -753,7 +753,7 @@ int magic()
                 {
                     if (gdata_crowd_density + 100 >= ELONA_MAX_OTHER_CHARACTERS)
                     {
-                        txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+                        txt(i18n::s.get("core.locale.common.nothing_happens"));
                         obvious = 0;
                         goto the_end;
                     }
@@ -863,7 +863,7 @@ int magic()
                 {
                     if (map(tlocx, tlocy, 1) == 0)
                     {
-                        txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+                        txt(i18n::s.get("core.locale.common.nothing_happens"));
                         obvious = 0;
                         goto the_end;
                     }
@@ -1929,7 +1929,7 @@ label_2181_internal:
     case 1117:
         if (tc >= 16)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -1985,7 +1985,7 @@ label_2181_internal:
         }
         if (tc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             break;
         }
         if (encfind(tc, 33) != -1)
@@ -2071,7 +2071,7 @@ label_2181_internal:
         }
         if (f == 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
         }
         chara_refresh(0);
@@ -2079,7 +2079,7 @@ label_2181_internal:
     case 1121:
         if (tc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             break;
         }
         if (is_cursed(efstatus))
@@ -2138,7 +2138,7 @@ label_2181_internal:
         }
         if (f == 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
         }
         chara_refresh(0);
@@ -2146,7 +2146,7 @@ label_2181_internal:
     case 411:
         if (cc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -2158,7 +2158,7 @@ label_2181_internal:
     case 461:
         if (mdata(6) == 1)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -2181,7 +2181,7 @@ label_2181_internal:
             int stat = show_hire_menu();
             if (stat == -1)
             {
-                txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+                txt(i18n::s.get("core.locale.common.nothing_happens"));
                 obvious = 0;
                 break;
             }
@@ -2330,7 +2330,7 @@ label_2181_internal:
         }
         if (p(1) == 0 && p(2) == 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
         }
         else
@@ -2342,7 +2342,7 @@ label_2181_internal:
     case 413:
         if (tc >= 16)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             break;
         }
         if (is_cursed(efstatus))
@@ -2369,7 +2369,7 @@ label_2181_internal:
     case 1104:
         if (tc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -2448,7 +2448,7 @@ label_2181_internal:
         }
         if (f == 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -2469,7 +2469,7 @@ label_2181_internal:
         {
             if (cdata[tc].level <= 1)
             {
-                txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+                txt(i18n::s.get("core.locale.common.nothing_happens"));
                 obvious = 0;
                 break;
             }
@@ -2555,13 +2555,13 @@ label_2181_internal:
     case 1107:
         if (tc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
         if (cdata[0].god_id.empty())
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -2577,7 +2577,7 @@ label_2181_internal:
         }
         if (cdata[0].god_id.empty())
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
         }
         else
@@ -2761,7 +2761,7 @@ label_2181_internal:
     case 429:
         if (tc >= 16)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -2969,7 +2969,7 @@ label_2181_internal:
     case 1141:
         if (tc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -3026,7 +3026,7 @@ label_2181_internal:
     case 428:
         if (tc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -3225,7 +3225,7 @@ label_2181_internal:
         }
         else
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
         }
         break;
@@ -3261,7 +3261,7 @@ label_2181_internal:
     case 1137:
         if (cc != 0 && cc < 16)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             break;
         }
         flt(cdata[0].level / 2 + 5, 3);
@@ -3299,7 +3299,7 @@ label_2181_internal:
     case 435:
         if (cc != 0 || tc == 0 || cdata[tc].relationship == 10)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -3446,7 +3446,7 @@ label_2181_internal:
     case 1145:
         if (cc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -3483,7 +3483,7 @@ label_2181_internal:
     case 49:
         if (cc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -3549,7 +3549,7 @@ label_2181_internal:
     case 1127:
         if (cc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -3615,7 +3615,7 @@ label_2181_internal:
         }
         else
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
         }
         if (equip != 0)
@@ -3631,7 +3631,7 @@ label_2181_internal:
     case 1128:
         if (cc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -3652,7 +3652,7 @@ label_2181_internal:
     case 1125:
         if (cc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             break;
         }
         invsubroutine = 1;
@@ -3699,7 +3699,7 @@ label_2181_internal:
     case 1129:
         if (cc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -3808,7 +3808,7 @@ label_2181_internal:
     case 629:
         if (cc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -3865,7 +3865,7 @@ label_2181_internal:
     label_2184_internal:
         if (tc == 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -3913,7 +3913,7 @@ label_2181_internal:
     case 1140:
         if (cc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -3971,7 +3971,7 @@ label_2181_internal:
             }
             else
             {
-                txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+                txt(i18n::s.get("core.locale.common.nothing_happens"));
                 obvious = 0;
             }
         }
@@ -3980,7 +3980,7 @@ label_2181_internal:
     case 1132:
         if (cc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
             break;
         }
@@ -4035,7 +4035,7 @@ label_2181_internal:
         }
         else
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             obvious = 0;
         }
         break;
@@ -4112,7 +4112,7 @@ label_2181_internal:
         {
             if (homemapmode == 0)
             {
-                txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+                txt(i18n::s.get("core.locale.common.nothing_happens"));
             }
             obvious = 0;
         }
@@ -4312,7 +4312,7 @@ label_2181_internal:
     case 1131:
         if (tc != 0)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             break;
         }
         snd(64);

@@ -930,7 +930,7 @@ turn_result_t pass_one_turn(bool label_2738_flg)
                 {
                     if (gdata_current_map == gdata(850))
                     {
-                        txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+                        txt(i18n::s.get("core.locale.common.nothing_happens"));
                         goto label_2740_internal;
                     }
                 }

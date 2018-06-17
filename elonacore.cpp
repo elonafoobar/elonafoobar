@@ -15386,7 +15386,7 @@ int label_2168()
     }
     if (noeffect == 1)
     {
-        txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+        txt(i18n::s.get("core.locale.common.nothing_happens"));
         efsource = 0;
         return 1;
     }
@@ -15792,7 +15792,7 @@ int label_2172()
             txt(lang(
                 itemname(ci, 1) + u8"を振った。"s,
                 u8"You zap "s + itemname(ci, 1) + u8"."s));
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
         }
         return 0;
     }
@@ -15818,7 +15818,7 @@ int label_2172()
                 txt(lang(
                     itemname(ci, 1) + u8"を振った。"s,
                     u8"You zap "s + itemname(ci, 1) + u8"."s));
-                txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+                txt(i18n::s.get("core.locale.common.nothing_happens"));
             }
             goto label_2173_internal;
         }
@@ -15972,7 +15972,7 @@ int label_2174()
     {
         if (efid != 300)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             return 1;
         }
     }
@@ -19163,7 +19163,7 @@ void dipcursed(int prm_1078, int)
         }
         return;
     }
-    txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+    txt(i18n::s.get("core.locale.common.nothing_happens"));
     return;
 }
 

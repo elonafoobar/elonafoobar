@@ -658,7 +658,7 @@ turn_result_t do_throw_command()
             {
                 if (cdata[tc].id != 319 || tc < 16)
                 {
-                    txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+                    txt(i18n::s.get("core.locale.common.nothing_happens"));
                     return turn_result_t::turn_end;
                 }
                 if (gdata_current_map == 6 || gdata_current_map == 40
@@ -1589,7 +1589,7 @@ turn_result_t do_dip_command()
             return turn_result_t::turn_end;
         }
     }
-    txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+    txt(i18n::s.get("core.locale.common.nothing_happens"));
     return turn_result_t::turn_end;
 }
 
