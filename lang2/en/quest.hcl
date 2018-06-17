@@ -2,31 +2,52 @@ locale {
     quest {
         journal_updated = "Your journal has been updated."
 
-        monsters_remaining = "${_1} more to go."
+        hunt {
+            complete = "The area is secured!"
+            remaining = "${_1} more to go."
+        }
+        party {
+            is_over = "The party is over."
+            final_score = "Your final score is ${_1} points!"
+            complete = "People had a hell of a good time!"
+            fail = "The party turned out to be a big flop..."
+        }
+        collect {
+            complete = "You complete the task!"
+            fail = "You fail to fulfill your task..."
+        }
+        conquer {
+            complete = "You successfully slay the target."
+            fail = "You failed to slay the target..."
+        }
+        deliver {
+            you_commit_a_serious_crime = "You commit a serious crime!"
+        }
+        escort {
+            complete = "You complete the escort."
+            you_failed_to_protect = "You have failed to protect the client."
+            you_left_your_client = "You left your client."
 
-        area_is_secured = "The area is secured!"
-        successfully_slay = "You successfully slay the target."
-        you_are_victorious = "You are victorious!"
-        stairs_appear = "Stairs appear."
+            failed {
+                assassin = "\"Hey, the assassins are killing me.\""
+                poison = "\"Poison! P-P-Poison in my vein!!\""
+                deadline = "\"I missed the deadline. I don't have a right to live anymore.\" ${name(_1)} pours a bottole of molotov cocktail over ${himself(_1)}."
+            }
+        }
+        arena {
+            you_are_victorious = "You are victorious!"
+            your_team_is_victorious = "Your team is victorious!"
+            your_team_is_defeated = "Your team is defeated."
+            stairs_appear = "Stairs appear."
+        }
 
-        you_were_defeated = "You are defeated."
-        you_commit_serious_crime = "You commit a serious crime!"
-        you_failed_to_protect = "You have failed to protect the client."
-        you_left_your_client = "You left your client."
+        you_were_defeated = "You were defeated."
 
-        your_team_is_victorious = "Your team is victorious!"
-        your_team_is_defeated = "Your team is defeated."
-
-        completed_the_quest = "You have completed the quest taken from ${_1}."
-        failed_the_quest = "You have failed the quest taken from ${_1}."
+        completed = "You have completed the quest!"
+        completed_taken_from = "You have completed the quest taken from ${_1}."
+        failed_taken_from = "You have failed the quest taken from ${_1}."
         gain_fame = "You gain ${_1} fame."
         lose_fame = "You lose ${_1} fame."
-
-        escort_failed {
-            assassin = "\"Hey, the assassins are killing me.\""
-            poison = "\"Poison! P-P-Poison in my vein!!\""
-            deadline = "\"I missed the deadline. I don't have a right to live anymore.\" ${name(_1)} pours a bottole of molotov cocktail over ${himself(_1)}."
-        }
 
         giver {
             have_something_to_ask = ""
@@ -49,7 +70,7 @@ locale {
             heavy = "(Heavy!)"
             now = " (Now ${_1})"
 
-            harvets {
+            harvest {
                 text = "Gather harvests weight ${_1}."
             }
 
@@ -66,12 +87,12 @@ locale {
                 text = "Eliminate monsters."
             }
 
-            deliver {
-                text = "Deliver ${_1} to ${_3} who lives in ${_2}."
+            supply {
+                text = "Give ${_1} to the client."
             }
 
-            cook {
-                text = "Give ${_1} to the client."
+            deliver {
+                text = "Deliver ${_1} to ${_3} who lives in ${_2}."
             }
 
             conquer {

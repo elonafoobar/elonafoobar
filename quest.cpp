@@ -189,9 +189,7 @@ void quest_check()
             else
             {
                 txtef(4);
-                txt(lang(
-                    u8"[殲滅依頼]残り"s + p_at_m119 + u8"体"s + u8"] "s,
-                    ""s + p_at_m119 + u8" more to go."s));
+                txt(i18n::s.get("core.locale.quest.hunt.remaining", p_at_m119));
             }
         }
         if (gdata_executing_immediate_quest_type == 1008)
@@ -210,28 +208,26 @@ void quest_set_data(int val0)
 {
     randomize(qdata(0, rq) + 1);
     s(6) = "";
-    s(5) = lang(
-        u8"金貨"s + qdata(6, rq) + u8"枚"s,
-        ""s + qdata(6, rq) + u8" gold pieces"s);
+    s(5) = i18n::s.get("core.locale.quest.info.gold_pieces", qdata(6, rq));
     if (qdata(7, rq) != 0)
     {
         if (qdata(7, rq) < 10000)
         {
-            s(5) += lang(u8"と"s, u8" and "s)
+            s(5) += i18n::s.get("core.locale.quest.info.and")
                 + i18n::_(u8"ui", u8"reward", u8"_"s + qdata(7, rq));
         }
         else
         {
-            s(5) += lang(u8"と"s, u8" and "s) + fltname(qdata(7, rq));
+            s(5) += i18n::s.get("core.locale.quest.info.and") + fltname(qdata(7, rq));
         }
     }
     if (qdata(9, rq) == -1)
     {
-        nquestdate = lang(u8"即時"s, u8"-"s);
+        nquestdate = i18n::s.get("core.locale.quest.info.no_deadline");
     }
     else
     {
-        nquestdate = ""s + qdata(9, rq) + lang(u8"日"s, u8"d"s);
+        nquestdate = i18n::s.get("core.locale.quest.info.days", qdata(9, rq));
     }
     if (qdata(3, rq) == 1006)
     {
@@ -239,13 +235,10 @@ void quest_set_data(int val0)
         parse_quest_board_text(val0);
         s(10) = ""s + cnvweight(qdata(12, rq));
         s(11) = mapname(qdata(1, rq));
-        s(4) = lang(
-            ""s + s(10) + u8"の作物の納入"s,
-            u8"Gather harvests weight "s + s(10) + u8"."s);
+        s(4) = i18n::s.get("core.locale.quest.info.harvest.text", s(10));
         if (gdata_executing_immediate_quest == rq)
         {
-            s(4) += lang(u8"(現在"s, u8" (Now "s) + cnvweight(qdata(13, rq))
-                + u8")"s;
+            s(4) += i18n::s.get("core.locale.quest.info.now", cnvweight(qdata(13, rq)));
         }
         s(6) = s(4);
     }
@@ -253,12 +246,12 @@ void quest_set_data(int val0)
     {
         s = u8"%PARTY"s;
         parse_quest_board_text(val0);
-        s(10) = ""s + qdata(12, rq) + lang(u8"ポイント"s, u8" points"s);
+        s(10) = i18n::s.get("core.locale.quest.info.party.points", qdata(12, rq));
         s(11) = mapname(qdata(1, rq));
-        s(4) = lang(""s + s(10) + u8"の獲得"s, u8"Gather "s + s(10) + u8"."s);
+        s(4) = i18n::s.get("core.locale.quest.info.party.text", s(10));
         if (gdata_executing_immediate_quest == rq)
         {
-            s(4) += lang(u8"(現在"s, u8" (Now "s) + qdata(13, rq) + u8")"s;
+            s(4) += i18n::s.get("core.locale.quest.info.now", qdata(13, rq));
         }
         s(6) = s(4);
     }
@@ -267,16 +260,14 @@ void quest_set_data(int val0)
         s = u8"%ESCORT,"s + qdata(4, rq);
         parse_quest_board_text(val0);
         s(11) = ""s + mapname(qdata(12, rq));
-        s(4) = lang(
-            u8"クライアントを"s + s(11),
-            u8"Escort the client to "s + s(11) + u8"."s);
-        s(6) = s(4) + lang(u8"まで護衛"s, ""s);
+        s(4) = i18n::s.get("core.locale.quest.info.escort.text", s(11));
+        s(6) = s(4);
     }
     if (qdata(3, rq) == 1001)
     {
         s = u8"%HUNT"s;
         parse_quest_board_text(val0);
-        s(4) = lang(u8"全ての敵の殲滅"s, u8"Eliminate monsters."s);
+        s(4) = i18n::s.get("core.locale.quest.info.hunt.text");
         s(6) = s(4);
     }
     if (qdata(3, rq) == 1004)
@@ -284,8 +275,7 @@ void quest_set_data(int val0)
         s = u8"%SUPPLY"s;
         parse_quest_board_text(val0);
         s(4) = cnvarticle(cnvitemname(qdata(11, rq)));
-        s(6) =
-            lang(s(4) + u8"の納入"s, u8"Give "s + s(4) + u8" to the client."s);
+        s(6) = i18n::s.get("core.locale.quest.info.supply.text", s(4));
     }
     if (qdata(3, rq) == 1002)
     {
@@ -296,13 +286,10 @@ void quest_set_data(int val0)
         s(12) = ""s + qname(qdata(10, rq));
         if (iorgweight(qdata(11, rq)) > 50000)
         {
-            s(10) += lang(u8"(凄く重い)"s, u8"(Heavy!)"s);
+            s(10) += i18n::s.get("core.locale.quest.info.heavy");
         }
-        s(4) = lang(
-            ""s + s(11) + u8"に住む"s + s(12) + u8"に"s + s(10),
-            u8"Deliver "s + s(10) + u8" to "s + s(12) + u8" who lives in "s
-                + s(11) + u8"."s);
-        s(6) = s(4) + lang(u8"を配達"s, ""s);
+        s(4) = i18n::s.get("core.locale.quest.info.deliver.text", s(10), s(11), s(12));
+        s(6) = s(4);
     }
     if (qdata(3, rq) == 1003)
     {
@@ -313,8 +300,7 @@ void quest_set_data(int val0)
         }
         parse_quest_board_text(val0);
         s(4) = cnvarticle(foodname(qdata(12, rq), ""s, qdata(13, rq)));
-        s(6) =
-            lang(s(4) + u8"の納入"s, u8"Give "s + s(4) + u8" to the client."s);
+        s(6) = i18n::s.get("core.locale.quest.info.supply.text", s(4));
     }
     if (qdata(3, rq) == 1008)
     {
@@ -323,10 +309,10 @@ void quest_set_data(int val0)
         s(4) = chara_refstr(qdata(12, rq), 2);
         if (qdata(12, rq) == 343)
         {
-            s(4) = lang(u8"正体不明の存在"s, u8"unknown monster"s);
+            s(4) = i18n::s.get("core.locale.quest.info.conquer.unknown_monster");
         }
         s(10) = ""s + qdata(5, rq) * 10 / 6;
-        s(6) = lang(s(4) + u8"の討伐"s, u8"Slay "s + s(4) + u8"."s);
+        s(6) = i18n::s.get("core.locale.quest.info.conquer.text", s(4));
     }
     if (qdata(3, rq) == 1010)
     {
@@ -334,7 +320,7 @@ void quest_set_data(int val0)
         parse_quest_board_text(val0);
         s(4) = chara_refstr(qdata(12, rq), 2);
         s(10) = ""s + qdata(5, rq) * 3 / 2;
-        s(6) = lang(u8"全ての敵の殲滅"s, u8"Eliminate monsters"s);
+        s(6) = i18n::s.get("core.locale.quest.info.hunt.text");
     }
     if (qdata(3, rq) == 1011)
     {
@@ -349,94 +335,79 @@ void quest_set_data(int val0)
         }
         else
         {
-            s(12) = lang(s(11) + u8"に住む人物"s, u8"the target in "s + s(11));
+            s(12) = i18n::s.get("core.locale.quest.info.collect.target", s(11));
         }
         if (iorgweight(qdata(11, rq)) > 50000)
         {
-            s(10) += lang(u8"(凄く重い)"s, u8"(Heavy!)"s);
+            s(10) += i18n::s.get("core.locale.quest.info.heavy");
         }
-        s(4) = lang(
-            u8"依頼人のために"s + s(12) + u8"から"s + s(10),
-            u8"Acquire "s + s(10) + u8" from "s + s(12)
-                + u8" for the client."s);
-        s(6) = s(4) + lang(u8"を調達"s, ""s);
+        s(4) = i18n::s.get("core.locale.quest.info.collect.text", s(10), s(12));
+        s(6) = s(4);
     }
     text_replace_tags_in_quest_text();
     if (val0 == 1)
     {
-        buff = lang(_kimi(3) + u8"に頼みたいことがある"s + _nda(), ""s) + buff;
+        buff = i18n::s.get("core.locale.quest.giver.have_something_to_ask", cc) + buff;
         if (qdata(9, rq) != -1)
         {
-            buff += lang(
-                u8"期限は残り"s + qdata(9, rq) + u8"日"s + _da(),
-                u8" You have "s + qdata(9, rq)
-                    + u8" days to perform the task. "s);
+            buff += i18n::s.get("core.locale.quest.giver.days_to_perform", qdata(9, rq), cc);
         }
-        buff += lang(u8"依頼を受けてくれるの"s + _kana(1), u8"How about it?"s);
+        buff += i18n::s.get("core.locale.quest.giver.how_about_it", cc);
     }
     if (val0 == 2)
     {
         if (qdata(8, rq) == 3)
         {
-            buff += u8"@QC["s + lang(u8"依頼 完了"s, u8"Complete"s) + u8"]"s
+            buff += u8"@QC["s + i18n::s.get("core.locale.quest.journal.complete") + u8"]"s
                 + s(3) + u8"\n"s;
         }
         else
         {
-            buff += u8"@QL["s + lang(u8"依頼"s, u8"Job"s) + u8"] "s + s(3)
+            buff += u8"@QL["s + i18n::s.get("core.locale.quest.journal.job") + u8"] "s + s(3)
                 + u8"\n"s;
         }
-        buff += lang(u8"依頼: "s, u8"Client  : "s) + qname(rq) + u8"\n"s;
-        buff += lang(u8"場所: "s, u8"Location: "s) + mapname(qdata(1, rq))
-            + u8"\n"s;
-        buff += lang(u8"期限: "s, u8"Deadline: "s);
+        buff += i18n::s.get("core.locale.quest.journal.client") + qname(rq) + u8"\n"s;
+        buff += i18n::s.get("core.locale.quest.journal.location") + mapname(qdata(1, rq)) + u8"\n"s;
+        buff += i18n::s.get("core.locale.quest.journal.deadline");
         if (qdata(9, rq) != -1)
         {
-            buff += lang(u8"残り"s, ""s);
+            buff += i18n::s.get("core.locale.quest.journal.remaining");
         }
         buff += nquestdate + u8"\n"s;
-        s(5) = lang(u8"報酬: "s, u8"Reward  : "s) + s(5);
+        s(5) = i18n::s.get("core.locale.quest.journal.reward") + s(5);
         talk_conv(s(5), 40 - en * 10);
         buff += s(5) + u8"\n"s;
+        s(4) = i18n::s.get("core.locale.quest.journal.detail");
         if (qdata(8, rq) == 3)
         {
-            s(4) = lang(
-                u8"内容: あとは報告するだけだ。"s,
-                u8"Detail  : Report to the client."s);
+            s(4) += i18n::s.get("core.locale.quest.journal.report_to_the_client");
         }
         else
         {
-            s(4) = lang(u8"内容: "s, u8"Detail  : "s) + s(6);
+            s(4) += s(6);
         }
         talk_conv(s(4), 40 - en * 10);
         buff += s(4) + u8"\n"s;
     }
     if (val0 == 3)
     {
-        buff = lang(
-            u8"依頼を無事終わらせたよう"s + _dana() + _thanks(2),
-            u8"You've done well. Thanks. Here's your reward."s);
+        buff = i18n::s.get("core.locale.quest.giver.complete.done_well", cc);
         if (elona::stoi(s(5)) != 0)
         {
-            txt(lang(u8"報酬の"s + s(5) + u8"を受けとって"s + _kure(), ""s));
+            txt(i18n::s.get("core.locale.quest.giver.complete.take_reward", s(5), cc));
         }
         if (qdata(3, rq) == 1006)
         {
             if (qdata(12, rq) * 125 / 100 < qdata(13, rq))
             {
-                buff += lang(
-                    u8"予想以上にいい働きだったから、幾らか色を付けておいた"s
-                        + _yo(),
-                    u8"I've added some extra coins since you worked really hard."s);
+                buff += i18n::s.get("core.locale.quest.giver.complete.extra_coins", cc);
             }
         }
         if (qdata(3, rq) == 1009)
         {
             if (qdata(12, rq) * 150 / 100 < qdata(13, rq))
             {
-                buff += lang(
-                    u8"予想以上の盛り上がりだったから、おまけをあげる"s + _yo(),
-                    u8"The party was terrific! I'll give you these tickets as an extra bonus."s);
+                buff += i18n::s.get("core.locale.quest.giver.complete.music_tickets", cc);
             }
         }
     }
@@ -1014,9 +985,7 @@ void quest_exit_map()
             }
             else
             {
-                txt(lang(
-                    u8"あなたはクライアントを置き去りにした。"s,
-                    u8"You left your client."s));
+                txt(i18n::s.get("core.locale.quest.escort.you_left_your_client"));
             }
         }
         quest_failed(gdata_executing_immediate_quest_type);
@@ -1049,29 +1018,23 @@ void quest_failed(int val0)
     if (val0 == 1)
     {
         adata(22, gdata_previous_map2) = 0;
-        txt(lang(u8"あなたは敗北した。"s, u8"You were defeated."s));
+        txt(i18n::s.get("core.locale.quest.you_were_defeated"));
         modrank(0, -100);
     }
     if (val0 >= 1000)
     {
-        txt(lang(
-            qname(rq) + u8"から受けた依頼は失敗に終わった。"s,
-            u8"You have failed the quest taken from "s + qname(rq) + u8"."s));
+        txt(i18n::s.get("core.locale.quest.failed_taken_from", qname(rq)));
         if (qdata(3, rq) == 1002)
         {
             --qdata(15, qdata(10, rq));
             txtef(8);
-            txt(lang(
-                u8"あなたは重大な罪を犯した!"s,
-                u8"You commit a serious crime!"s));
+            txt(i18n::s.get("core.locale.quest.deliver.you_commit_a_serious_crime"));
             modify_karma(0, -20);
         }
         if (qdata(3, rq) == 1007)
         {
             txtef(8);
-            txt(lang(
-                u8"あなたは護衛の任務を果たせなかった。"s,
-                u8"You have failed to protect the client."s));
+            txt(i18n::s.get("core.locale.quest.escort.you_failed_to_protect"));
             for (int cnt = 0; cnt < 16; ++cnt)
             {
                 if (cnt != 0)
@@ -1086,28 +1049,18 @@ void quest_failed(int val0)
                             {
                                 if (qdata(4, rq) == 0)
                                 {
-                                    s = lang(
-                                        u8"「おい、暗殺者が私の後ろにいるぞ」"s,
-                                        u8"\"Hey, the assassins are killing me.\""s);
+                                    s = i18n::s.get("core.locale.quest.escort.failed.assassin");
                                     p = -11;
                                 }
                                 if (qdata(4, rq) == 1)
                                 {
-                                    s = lang(
-                                        u8"「毒が、毒がー！」"s,
-                                        u8"\"Poison! P-P-Poison in my vein!!\""s);
+                                    s = i18n::s.get("core.locale.quest.escort.failed.poison");
                                     p = -4;
                                 }
                                 if (qdata(4, rq) == 2)
                                 {
-                                    s = lang(
-                                        u8"「時間切れだ。こうなったら…」"s +
-                                            name(tc) +
-                                            u8"は火をかぶった。"s,
-                                            u8"\"I missed the deadline. I don't have a right to live anymore.\""s +
-                                            u8" "s + name(tc) +
-                                            u8" pours a bottole of molotov cocktail over "s +
-                                            him(tc) + u8"self."s);
+                                    s = i18n::s.get("core.locale.quest.escort.failed.deadline",
+                                                    cdata[tc]);
                                     mef_add(
                                         cdata[0].position.x,
                                         cdata[0].position.y,
@@ -1139,8 +1092,7 @@ void quest_failed(int val0)
     int stat = decfame(0, 40);
     p = stat;
     txtef(3);
-    txt(lang(
-        u8"名声値を"s + p + u8"失った。"s, u8"You lose "s + p + u8" fame."s));
+    txt(i18n::s.get("core.locale.quest.lose_fame", p));
     return;
 }
 
@@ -1163,12 +1115,9 @@ void quest_team_victorious()
     if (petarenawin == 1)
     {
         txtef(2);
-        txt(lang(
-            u8"あなたのチームは勝利した！"s, u8"Your team is victorious!"s));
+        txt(i18n::s.get("core.locale.quest.arena.your_team_is_victorious"));
         txtef(2);
-        txt(lang(
-            ""s + gdata(74) + u8"の名声値を手に入れた。"s,
-            u8"You gain "s + gdata(74) + u8" fame."s));
+        txt(i18n::s.get("core.locale.quest.gain_fame", gdata(74)));
         cdata[0].fame += gdata(74);
         modrank(1, 100, 2);
         ++adata(23, gdata_previous_map2);
@@ -1184,7 +1133,7 @@ void quest_team_victorious()
     else
     {
         txtef(8);
-        txt(lang(u8"あなたのチームは敗北した。"s, u8"Your team is defeated."s));
+        txt(i18n::s.get("core.locale.quest.arena.your_team_is_defeated"));
         adata(23, gdata_previous_map2) = 0;
         modrank(1, -100);
         int stat = decfame(0, 60);
@@ -1192,9 +1141,7 @@ void quest_team_victorious()
         if (arenaop == 0)
         {
             txtef(3);
-            txt(lang(
-                u8"名声値を"s + p + u8"失った。"s,
-                u8"You lose "s + p + u8" fame."s));
+            txt(i18n::s.get("core.locale.quest.lose_fame", p));
         }
     }
     return;
@@ -1211,14 +1158,12 @@ void quest_all_targets_killed()
     {
         snd(69);
         txtef(2);
-        txt(lang(u8"あなたは勝利した！"s, u8"You are victorious!"s));
+        txt(i18n::s.get("core.locale.quest.arena.you_are_victorious"));
         txtef(2);
-        txt(lang(
-            ""s + gdata(74) + u8"の名声値を手に入れた。"s,
-            u8"You gain "s + gdata(74) + u8" fame."s));
+        txt(i18n::s.get("core.locale.quest.gain_fame", gdata(74)));
         modrank(0, 100, 2);
         cdata[0].fame += gdata(74);
-        txt(lang(u8"外への階段が現れた。"s, u8"Stairs appear."s));
+        txt(i18n::s.get("core.locale.quest.arena.stairs_appear"));
         map_placeupstairs(mdata(0) / 2, mdata(1) / 2);
         ++adata(22, gdata_previous_map2);
         if (adata(22, gdata_previous_map2) % 20 == 0)
@@ -1235,20 +1180,19 @@ void quest_all_targets_killed()
     {
         qdata(8, gdata_executing_immediate_quest) = 3;
         txtef(2);
-        txt(lang(u8"エリアを制圧した！"s, u8"The area is secured!"s));
+        txt(i18n::s.get("core.locale.quest.hunt.complete"));
     }
     if (gdata_executing_immediate_quest_type == 1007)
     {
         txtef(2);
-        txt(lang(u8"エリアを制圧した！"s, u8"The area is secured!"s));
+        txt(i18n::s.get("core.locale.quest.hunt.complete"));
     }
     if (gdata_executing_immediate_quest_type == 1008)
     {
         gdata_left_minutes_of_executing_quest = 0;
         qdata(8, gdata_executing_immediate_quest) = 3;
         txtef(2);
-        txt(lang(
-            u8"討伐に成功した！"s, u8"You successfully slay the target."s));
+        txt(i18n::s.get("core.locale.quest.conquer.complete"));
     }
     return;
 }
@@ -1352,13 +1296,9 @@ void quest_complete()
     modify_karma(0, 1);
     gdata(74) = calcfame(0, qdata(5, rq) * 3 + 10);
     txtef(2);
-    txt(lang(
-        qname(rq) + u8"から受けた依頼を完了した。"s,
-        u8"You have completed the quest taken from "s + qname(rq) + u8"."s));
+    txt(i18n::s.get("core.locale.quest.completed_taken_from", qname(rq)));
     txtef(2);
-    txt(lang(
-        ""s + gdata(74) + u8"の名声値を手に入れた。"s,
-        u8"You gain "s + gdata(74) + u8" fame."s));
+    txt(i18n::s.get("core.locale.quest.gain_fame", gdata(74)));
     cdata[0].fame += gdata(74);
     txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
     if (qdata(3, rq) == 1002)

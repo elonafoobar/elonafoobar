@@ -2,31 +2,52 @@ locale {
     quest {
         journal_updated = "ジャーナルが更新された。"
 
-        monsters_remaining = "[殲滅依頼]残り${_1}体] "
+        hunt {
+            complete = "エリアを制圧した！"
+            remaining = "[殲滅依頼]残り${_1}体] "
+        }
+        party {
+            is_over = "パーティーは終了した。"
+            final_score = "最終得点は${_1}ポイントだった！"
+            complete = "パーティーは大盛況だった！"
+            fail = "パーティーはぐだぐだになった…"
+        }
+        collect {
+            complete = "無事に納入を終えた！"
+            fail = "納入は間に合わなかった…"
+        }
+        conquer {
+            complete = "討伐に成功した！"
+            fail = "討伐に失敗した…"
+        }
+        deliver {
+            you_commit_a_serious_crime = "あなたは重大な罪を犯した!"
+        }
+        escort {
+            complete = "あなたは無事に護衛の任務を終えた。"
+            you_failed_to_protect = "あなたは護衛の任務を果たせなかった。"
+            you_left_your_client = "あなたはクライアントを置き去りにした。"
 
-        area_is_secured = "エリアを制圧した！"
-        successfully_slay = "討伐に成功した！"
-        you_are_victorious = "あなたは勝利した！"
-        stairs_appear = "外への階段が現れた。"
+            failed {
+                assassin = "「おい、暗殺者が私の後ろにいるぞ」"
+                poison = "「毒が、毒がー！」"
+                deadline = "「時間切れだ。こうなったら…」${name(_1)}は火をかぶった。"
+            }
+        }
+        arena {
+            you_are_victorious = "あなたは勝利した！"
+            your_team_is_victorious = "あなたのチームは勝利した！"
+            your_team_is_defeated = "あなたのチームは敗北した。"
+            stairs_appear = "外への階段が現れた。"
+        }
 
         you_were_defeated = "あなたは敗北した。"
-        you_commit_serious_crime = "あなたは重大な罪を犯した!"
-        you_failed_to_protect = "あなたは護衛の任務を果たせなかった。"
-        you_left_your_client = "あなたはクライアントを置き去りにした。"
 
-        your_team_is_victorious = "あなたのチームは勝利した！"
-        your_team_is_defeated = "あなたのチームは敗北した。"
-
-        completed_the_quest = "${_1}から受けた依頼を完了した。"
-        failed_the_quest = "${_1}から受けた依頼は失敗に終わった。"
+        completed = "クエストを達成した！"
+        completed_taken_from = "${_1}から受けた依頼を完了した。"
+        failed_taken_from = "${_1}から受けた依頼は失敗に終わった。"
         gain_fame = "${_1}の名声値を手に入れた。"
         lose_fame = "名声値を${_1}失った。"
-
-        escort_failed {
-            assassin = "「おい、暗殺者が私の後ろにいるぞ」"
-            poison = "「毒が、毒がー！」"
-            deadline = "「時間切れだ。こうなったら…」${name(_1)}は火をかぶった。"
-        }
 
         giver {
             have_something_to_ask = "${kimi(3)}に頼みたいことがある${nda()}"
@@ -49,7 +70,7 @@ locale {
             heavy = "(凄く重い)"
             now = "(現在${_1})"
 
-            harvets {
+            harvest {
                 text = "${_1}の作物の納入"
             }
 

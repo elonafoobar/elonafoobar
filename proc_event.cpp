@@ -32,32 +32,24 @@ void proc_event()
         switch (gdata_executing_immediate_quest_type)
         {
         case 1009:
-            txt(lang(u8"パーティーは終了した。"s, u8"The party is over."s));
+            txt(i18n::s.get("core.locale.quest.party.is_over"));
             calcpartyscore();
             calcpartyscore2();
-            txt(lang(
-                u8"最終得点は"s + qdata(13, gdata_executing_immediate_quest)
-                    + u8"ポイントだった！"s,
-                u8"Your final score is "s
-                    + qdata(13, gdata_executing_immediate_quest)
-                    + u8" points!"s));
+            txt(i18n::s.get("core.locale.quest.party.final_score",
+                            qdata(13, gdata_executing_immediate_quest)));
             if (qdata(12, gdata_executing_immediate_quest)
                 <= qdata(13, gdata_executing_immediate_quest))
             {
                 gdata(73) = 3;
                 qdata(8, gdata_executing_immediate_quest) = 3;
                 txtef(2);
-                txt(lang(
-                    u8"パーティーは大盛況だった！"s,
-                    u8"People had a hell of a good time!"s));
+                txt(i18n::s.get("core.locale.quest.party.complete"));
                 msg_halt();
             }
             else
             {
                 txtef(8);
-                txt(lang(
-                    u8"パーティーはぐだぐだになった…"s,
-                    u8"The party turned out to be a big flop..."s));
+                txt(i18n::s.get("core.locale.quest.party.fail"));
             }
             break;
         case 1006:
@@ -67,22 +59,18 @@ void proc_event()
                 gdata(73) = 3;
                 qdata(8, gdata_executing_immediate_quest) = 3;
                 txtef(2);
-                txt(lang(
-                    u8"無事に納入を終えた！"s, u8"You complete the task!"s));
+                txt(i18n::s.get("core.locale.quest.collect.complete"));
                 msg_halt();
             }
             else
             {
                 txtef(8);
-                txt(lang(
-                    u8"納入は間に合わなかった…"s,
-                    u8"You fail to fulfill your task..."s));
+                txt(i18n::s.get("core.locale.quest.collect.fail"));
             }
             break;
         case 1008:
             txtef(8);
-            txt(lang(
-                u8"討伐に失敗した…"s, u8"You failed to slay the target..."s));
+                txt(i18n::s.get("core.locale.quest.conquer.fail"));
             break;
         }
         levelexitby = 4;
@@ -295,16 +283,13 @@ void proc_event()
         itemcreate(-1, 239, cdata[0].position.x, cdata[0].position.y, 0);
         inv[ci].param2 = 0;
         txtef(2);
-        txt(lang(
-            u8"クエストを達成した！"s, u8"You have completed the quest!"s));
+        txt(i18n::s.get("core.locale.quest.completed"));
         snd(51);
         txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         modrank(2, 300, 8);
         gdata(74) = calcfame(0, gdata_current_dungeon_level * 30 + 200);
         txtef(2);
-        txt(lang(
-            ""s + gdata(74) + u8"の名声値を手に入れた。"s,
-            u8"You gain "s + gdata(74) + u8" fame."s));
+        txt(i18n::s.get("core.locale.quest.gain_fame", gdata(74)));
         cdata[0].fame += gdata(74);
         if (gdata_current_map == 42)
         {
@@ -320,9 +305,7 @@ void proc_event()
         }
         break;
     case 16:
-        txt(lang(
-            u8"あなたは無事に護衛の任務を終えた。"s,
-            u8"You complete the escort."s));
+        txt(i18n::s.get("core.locale.quest.escort.complete"));
         tc = evdata2(evnum - (evnum != 0) * 1);
         talk_to_npc();
         rq = evdata1(evnum - (evnum != 0) * 1);
