@@ -174,6 +174,11 @@ label_1894_internal:
             id0 = 1;
         }
     }
+
+    s = i18n::s.get_enum_property("core.locale.event.popup", "title", id0);
+    buff = i18n::s.get_enum_property("core.locale.event.popup", "text", id0);
+    std::string event_bg;
+
     switch (id0)
     {
     case 15:
@@ -187,141 +192,58 @@ label_1894_internal:
             }
             if (cdata[p].state == 1)
             {
-                txt(lang(
-                    name(p) + u8"「ぎゃぁーー！」"s,
-                    name(p) + u8" screams, "s + u8"\"Ahhhhhhh!\""s));
+                txt(i18n::s.get("core.locale.event.popup._15.scream", cdata[p]));
                 dmghp(p, 99999, -11);
                 break;
             }
         }
-        s = lang(u8"殺人鬼"s, u8"Murderer"s);
-        buff = lang(
-            u8"街のどこかで悲鳴があがった。あなたはガードが慌しく走っていくのを目撃した。「人殺し、人殺しだ！！」"s,
-            u8"Suddenly, a painful shriek rises from somewhere in the town. You see several guards hastily run by."s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"なむ…"s, u8"Sorry for you."s);
-        ++listmax;
-        show_random_event_window(u8"bg_re9");
+        listmax = 1;
+        event_bg = u8"bg_re9";
         break;
     case 14:
-        s = lang(u8"謎のご馳走"s, u8"Strange Feast"s);
-        buff = lang(
-            u8"あなたは目の前にご馳走をみつけた。"s,
-            u8"You come across a strange feast."s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"食べる"s, u8"(Eat)"s);
-        ++listmax;
-        list(0, listmax) = 2;
-        listn(0, listmax) = lang(u8"立ち去る"s, u8"(Leave)"s);
-        ++listmax;
-        show_random_event_window(u8"bg_re10");
-        if (rtval == 1)
-        {
-            cdata[0].nutrition = 15000;
-            txt(lang(u8"なかなか美味しかった。"s, u8"It was tasty."s),
-                lang(u8"悪くない。"s, u8"Not bad at all."s),
-                lang(u8"あなたは舌鼓をうった。"s, u8"You smack your lips."s));
-            show_eating_message();
-            chara_anorexia(0);
-        }
+        listmax = 2;
+        event_bg = u8"bg_re10";
         break;
     case 13:
-        s = lang(u8"ご馳走の匂い"s, u8"Smell of Food"s);
-        buff = lang(
-            u8"どこからともなく漂うご馳走の匂いで、あなたの胃は不満を叫び始めた。"s,
-            u8"A sweet smell of food floats from nowhere. Your stomach growls but you can't find out where it comes from."s);
         cdata[0].nutrition -= 5000;
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"腹減った…"s, u8"I'm hungry now!"s);
-        ++listmax;
-        show_random_event_window(u8"bg_re10");
+        listmax = 1;
+        event_bg = u8"bg_re10";
         break;
     case 1:
-        s = lang(u8"不運の回避"s, u8"Avoiding Misfortune"s);
-        buff = lang(
-            u8"あなたは一瞬嫌な予感がしたが、それはやがて消えた。"s,
-            u8"You sense a bad feeling for a moment but it fades away quickly."s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"よし"s, u8"Good."s);
-        ++listmax;
-        show_random_event_window(u8"bg_re8");
+        listmax = 1;
+        event_bg = u8"bg_re8";
         break;
     case 24:
         efid = 1113;
         tc = 0;
         magic();
-        s = lang(u8"才能の開花"s, u8"Your Potential"s);
-        buff = lang(
-            u8"突然あなたの才能は開花した！"s,
-            u8"Suddenly you develop your gift!"s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"ワァオー"s, u8"Woohoo!"s);
-        ++listmax;
-        show_random_event_window(u8"bg_re4");
+        listmax = 1;
+        event_bg = u8"bg_re4";
         break;
     case 18:
         skillexp(181, 0, 1000, 6, 1000);
-        s = lang(u8"信仰の深まり"s, u8"Gaining Faith"s);
-        buff = lang(
-            u8"夢の中で、あなたは偉大なる者の穏やかな威光に触れた。"s,
-            u8"In your dream, a saint comes out and blesses you."s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"神よ"s, u8"Great."s);
-        ++listmax;
-        show_random_event_window(u8"bg_re12");
+        listmax = 1;
+        event_bg = u8"bg_re12";
         break;
     case 12:
-        s = lang(u8"マテリアルの発見"s, u8"Small Luck"s);
-        buff = lang(
-            u8"石ころにつまずいて転んだ拍子に、あなたは幾つかのマテリアルを見つけた。"s,
-            u8"You stumble over a stone and find some materials on the ground. "s);
         efid = 1117;
         efp = 100;
         tc = 0;
         magic();
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"よし"s, u8"Nice."s);
-        ++listmax;
-        show_random_event_window(u8"bg_re3");
+        listmax = 1;
+        event_bg = u8"bg_re3";
         break;
     case 23:
         efid = 1117;
         efp = 200;
         tc = 0;
         magic();
-        s = lang(u8"夢の中の収穫"s, u8"Dream Harvest"s);
-        buff = lang(
-            u8"夢の中で、あなたはのんきにマテリアルを採取していた"s,
-            u8"In your dream, you harvest materials peacefully."s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"るん♪"s, u8"Sweet."s);
-        ++listmax;
-        show_random_event_window(u8"bg_re3");
+        listmax = 1;
+        event_bg = u8"bg_re3";
         break;
     case 10:
-        s = lang(u8"野営跡の発見"s, u8"Camping Site"s);
-        buff = lang(
-            u8"あなたは何者かが野営した跡を見つけた。辺りには食べ残しやがらくたが散らばっている。もしかしたら、何か役に立つものがあるかもしれない。"s,
-            u8"You discover a camping site someone left behind. Chunks of leftovers and junks remain here. You may possibly find some useful items."s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"調べる"s, u8"(Search)"s);
-        ++listmax;
-        list(0, listmax) = 2;
-        listn(0, listmax) = lang(u8"立ち去る"s, u8"(Leave)"s);
-        ++listmax;
-        show_random_event_window(u8"bg_re3");
-        if (rtval == 1)
-        {
-            for (int cnt = 0, cnt_end = (1 + rnd(4)); cnt < cnt_end; ++cnt)
-            {
-                flt();
-                flttypemajor = fsetremain(rnd(length(fsetremain)));
-                itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
-            }
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
-        }
+        listmax = 2;
+        event_bg = u8"bg_re3";
         break;
     case 4:
         snd(116);
@@ -329,14 +251,8 @@ label_1894_internal:
         efp = 100;
         tc = 0;
         magic();
-        s = lang(u8"不気味な夢"s, u8"Creepy Dream"s);
-        buff = lang(
-            u8"あなたは不気味な夢をみた。陰気な幾つもの瞳があなたを凝視し、どこからともなく笑い声がこだました。「ケラケラケラ…ミツケタヨ…ケラケラ」あなたが二度寝返りをうった後、その夢は終わった。"s,
-            u8"In your dreams, several pairs of gloomy eyes stare at you and laughter seemingly from nowhere echoes around you.  \"Keh-la keh-la keh-la I found you...I found you.. keh-la keh-la keh-la\" After tossing around a couple times, the dream is gone."s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"おかしな夢だ"s, u8"Strange..."s);
-        ++listmax;
-        show_random_event_window(u8"bg_re5");
+        listmax = 1;
+        event_bg = u8"bg_re5";
         break;
     case 22:
         snd(116);
@@ -344,14 +260,8 @@ label_1894_internal:
         efp = 100;
         tc = 0;
         magic();
-        s = lang(u8"怪物の夢"s, u8"Monster Dream"s);
-        buff = lang(
-            u8"あなたは怪物と戦っていた。醜い化け物に斬りかかろうとした時、怪物は悲鳴をあげた。「オレハオマエダ！オマエハオレダ！」あなたは自分の呻き声に起こされた。"s,
-            u8"You are fighting an ugly monster. You are about to thrust a dagger into the neck of the monster. And the monster screams. \"You are me! I am you!\" You are awakened by your own low moan."s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"ううぅん…"s, u8"Urrgh..hh.."s);
-        ++listmax;
-        show_random_event_window(u8"bg_re2");
+        listmax = 1;
+        event_bg = u8"bg_re2";
         break;
     case 19:
         flt();
@@ -359,23 +269,13 @@ label_1894_internal:
         txt(lang(
             itemname(ci, 1) + u8"をバックパックに入れた。"s,
             u8"You put "s + itemname(ci, 1) + u8" in your backpack."s));
-        s = lang(u8"宝を埋める夢"s, u8"Treasure of Dream"s);
-        buff = lang(
-            u8"あなたは夢の中で宝を埋めた。あなたはすぐに飛び起き、その場所を紙に書き留めた"s,
-            u8"You buried treasure in your dream. You quickly get up and write down the location."s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"ワァオー"s, u8"Woohoo!"s);
-        ++listmax;
-        show_random_event_window(u8"bg_re15");
+        listmax = 1;
+        event_bg = u8"bg_re15";
         break;
     case 20:
         buff_add(tc, 19, 777, 1500);
-        s = lang(u8"幸運の日"s, u8"Lucky Day"s);
-        buff = lang(u8"うみみゃぁ！"s, u8"Mewmewmew!"s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"ワァオー"s, u8"Woohoo!"s);
-        ++listmax;
-        show_random_event_window(u8"bg_re12");
+        listmax = 1;
+        event_bg = u8"bg_re12";
         break;
     case 21:
         flt();
@@ -383,20 +283,13 @@ label_1894_internal:
         txt(lang(
             itemname(ci, 1) + u8"をバックパックに入れた。"s,
             u8"You put "s + itemname(ci, 1) + u8" in your backpack."s));
-        s = lang(u8"運命の気まぐれ"s, u8"Quirk of Fate"s);
-        buff =
-            lang(u8"うみみゃっ、見つけたね！"s, u8"Mewmew? You've found me!"s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"ワァオー"s, u8"Woohoo!"s);
-        ++listmax;
-        show_random_event_window(u8"bg_re15");
+        listmax = 1;
+        event_bg = u8"bg_re15";
         break;
     case 5:
         if (trait(42))
         {
-            txt(lang(
-                u8"あなたは祈祷を捧げ呪いのつぶやきを無効にした。"s,
-                u8"Your prayer nullifies the curse."s));
+            txt(i18n::s.get("core.locale.event.popup._22.no_effect"));
         }
         else
         {
@@ -424,14 +317,8 @@ label_1894_internal:
                 event_add(26);
             }
         }
-        s = lang(u8"呪いのつぶやき"s, u8"Cursed Whispering"s);
-        buff = lang(
-            u8"どこからともなく聞こえる呪いのつぶやきが、あなたの眠りを妨げた。"s,
-            u8"Your sleep is disturbed by a harshly whispering that comes from nowhere."s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"眠れない…"s, u8"Can't...sleep..."s);
-        ++listmax;
-        show_random_event_window(u8"bg_re5");
+        listmax = 1;
+        event_bg = u8"bg_re5";
         break;
     case 8:
         p = rnd(cdata[0].gold / 8 + 1);
@@ -448,35 +335,105 @@ label_1894_internal:
         }
         else
         {
-            txt(lang(
-                u8"損害はなかった。"s,
-                u8"The thief fails to steal money from you."s));
+            txt(i18n::s.get("core.locale.event.popup._8.no_effect"));
         }
-        s = lang(u8"悪意ある手"s, u8"Malicious Hand"s);
-        buff = lang(
-            u8"悪意のある手が忍び寄り、あなたが気付かない間に金貨を奪って逃げた。"s,
-            u8"A malicious hand slips and steals your money."s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"盗人め…"s, u8"Bloody thieves..."s);
-        ++listmax;
-        show_random_event_window(u8"bg_re9");
+        listmax = 1;
+        event_bg = u8"bg_re9";
         break;
     case 11:
-        s = lang(u8"冒険者の遺骸"s, u8"Corpse"s);
-        buff = lang(
-            u8"この場所で力尽きた冒険者の遺骸を見つけた。既に朽ちかけている骨と、身に着けていたと思われる幾つかの装備が散らばっている。"s,
-            u8"You find a corpse of an adventurer. There're bones and equipment scatters on the ground waiting to decay."s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"あさる"s, u8"(Loot)"s);
-        ++listmax;
-        list(0, listmax) = 2;
-        listn(0, listmax) = lang(u8"埋葬する"s, u8"(Bury)"s);
-        ++listmax;
-        show_random_event_window(u8"bg_re7");
+        listmax = 2;
+        event_bg = u8"bg_re7";
+        break;
+    case 2:
+        efid = 1104;
+        efp = 100;
+        tc = 0;
+        magic();
+        listmax = 1;
+        event_bg = u8"bg_re6";
+        break;
+    case 3:
+        efid = 1119;
+        efp = 100;
+        tc = 0;
+        magic();
+        listmax = 1;
+        event_bg = u8"bg_re4";
+        break;
+    case 6:
+        skillexp(154, 0, 1000);
+        listmax = 1;
+        event_bg = u8"bg_re4";
+        break;
+    case 7:
+        skillexp(155, 0, 1000);
+        listmax = 1;
+        event_bg = u8"bg_re4";
+        break;
+    case 9:
+        ++cdata[0].platinum_coin;
+        listmax = 1;
+        event_bg = u8"bg_re1";
+        break;
+    case 16:
+        p = rnd(cdata[0].gold / 10 + 1000) + 1;
+        cdata[0].gold += p;
+        txt(lang(
+            u8"金貨"s + p + u8"枚を手に入れた。"s,
+            u8"You pick up "s + p + u8" gold pieces."s));
+        listmax = 1;
+        event_bg = u8"bg_re1";
+        break;
+    case 17:
+        efid = 451;
+        efp = 800;
+        tc = 0;
+        magic();
+        listmax = 1;
+        event_bg = u8"bg_re11";
+        break;
+    }
+
+    for(int cnt = 0; cnt < listmax; cnt++)
+    {
+        list(0, cnt) = cnt;
+        listn(0, cnt) = i18n::s.get_enum_property("core.locale.event.popup",
+                                                  "choices._" + std::to_string(cnt),
+                                                  id0);
+    }
+
+    show_random_event_window(event_bg);
+
+    switch(id0)
+    {
+    case 14:
         if (rtval == 1)
         {
+            cdata[0].nutrition = 15000;
+            int text_index = rnd(3);
+            txt(i18n::s.get("core.locale.event.popup._14.results._" + std::to_string(text_index)));
+            show_eating_message();
+            chara_anorexia(0);
+        }
+        break;
+    case 10:
+        if (rtval == 1)
+        {
+            for (int cnt = 0, cnt_end = (1 + rnd(4)); cnt < cnt_end; ++cnt)
+            {
+                flt();
+                flttypemajor = fsetremain(rnd(length(fsetremain)));
+                itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
+            }
             txt(lang(
-                u8"あなたは遺留品をあさった。"s, u8"You loot the remains."s));
+                u8"何かが足元に転がってきた。"s,
+                u8"Something is put on the ground."s));
+        }
+        break;
+    case 11:
+        if (rtval == 1)
+        {
+            txt(i18n::s.get("core.locale.event.popup._11.loot"));
             modify_karma(0, -2);
             for (int cnt = 0, cnt_end = (1 + rnd(3)); cnt < cnt_end; ++cnt)
             {
@@ -497,102 +454,9 @@ label_1894_internal:
         }
         else
         {
-            txt(lang(
-                u8"あなたは骨と遺留品を埋葬した。"s,
-                u8"You bury the corpse with respect."s));
+            txt(i18n::s.get("core.locale.event.popup._11.bury"));
             modify_karma(0, 5);
         }
-        break;
-    case 2:
-        efid = 1104;
-        efp = 100;
-        tc = 0;
-        magic();
-        s = lang(u8"魔法使いの夢"s, u8"Wizard's Dream"s);
-        buff = lang(
-            u8"夢の中であなたは赤い髪の魔術師に出会った。「誰じゃ、お主は？ふむ、間違った者の夢に現れてしまったようじゃ。すまぬな。お詫びといってはなんじゃが…」魔法使いは指をくるりと回した。あなたは軽い頭痛を覚えた。"s,
-            u8"In your dream, you meet a wizard with a red mustache. \"Who are you? Hmm, I guess I picked up the wrong man's dream. My apology for disturbing your sleep. To make up for this...\" The wizard draws a circle in the air and vanishs. You feel the effects of a faint headache."s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"おかしな夢だ"s, u8"A weird dream."s);
-        ++listmax;
-        show_random_event_window(u8"bg_re6");
-        break;
-    case 3:
-        efid = 1119;
-        efp = 100;
-        tc = 0;
-        magic();
-        s = lang(u8"成長のきざし"s, u8"Development"s);
-        buff = lang(
-            u8"長年の鍛錬の成果が実ったようだ。なかなか眠りにつけず考えごとをしていたあなたは、ふと、自らの技術に関する新しいアイデアを思いついた。"s,
-            u8"You lie awake, sunk deep into thought. As memories of your journey flow from one into another, you chance upon a new theory to improve one of your skills."s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"よし！"s, u8"Good!"s);
-        ++listmax;
-        show_random_event_window(u8"bg_re4");
-        break;
-    case 6:
-        skillexp(154, 0, 1000);
-        s = lang(u8"自然治癒力の向上"s, u8"Regeneration"s);
-        buff = lang(
-            u8"身体が妙に火照ってあなたは目を覚ました。気がつくと、腕にあった傷跡が完全に消えていた。"s,
-            u8"Your entire body flushes. When you wake up, a scar in your arm is gone."s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"よし"s, u8"Good."s);
-        ++listmax;
-        show_random_event_window(u8"bg_re4");
-        break;
-    case 7:
-        skillexp(155, 0, 1000);
-        s = lang(u8"瞑想力の向上"s, u8"Meditation"s);
-        buff = lang(
-            u8"あなたは、夢の中でも驚くほど理性を保っていた。まるで瞑想を行っている時のように、あなたは心の平和を感じた。"s,
-            u8"In your dream, you meditate and feel inner peace."s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"よし"s, u8"Good."s);
-        ++listmax;
-        show_random_event_window(u8"bg_re4");
-        break;
-    case 9:
-        ++cdata[0].platinum_coin;
-        s = lang(u8"路上に転がる幸運"s, u8"Great Luck"s);
-        buff = lang(
-            u8"下を向いて歩いていると、幸運にもプラチナ硬貨を見つけた。"s,
-            u8"You stumble over a stone and find a platinum coin."s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"ラッキー！"s, u8"What a luck!"s);
-        ++listmax;
-        show_random_event_window(u8"bg_re1");
-        break;
-    case 16:
-        p = rnd(cdata[0].gold / 10 + 1000) + 1;
-        cdata[0].gold += p;
-        txt(lang(
-            u8"金貨"s + p + u8"枚を手に入れた。"s,
-            u8"You pick up "s + p + u8" gold pieces."s));
-        s = lang(u8"発狂した金持ち"s, u8"Mad Millionaire"s);
-        buff = lang(
-            u8"発狂した金持ちが、何か叫びながら金貨をばらまいている…"s,
-            u8"A rich mad man is scattering his money all over the ground."s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"ラッキー！"s, u8"What a luck!"s);
-        ++listmax;
-        show_random_event_window(u8"bg_re1");
-        break;
-    case 17:
-        efid = 451;
-        efp = 800;
-        tc = 0;
-        magic();
-        s = lang(u8"辻プリースト"s, u8"Wandering Priest"s);
-        buff = lang(
-            u8"突然、向かいからやって来た一人の神官が、すれ違いざまにあなたに魔法をかけた。「ノープロブレム」"s,
-            u8"A priest comes up to you and casts a spell on you. \"No problem.\""s);
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"ありがとう"s, u8"Thanks."s);
-        ++listmax;
-        show_random_event_window(u8"bg_re11");
-        break;
     }
 
     cc = 0;
@@ -715,12 +579,10 @@ label_1897_internal:
     goto label_1897_internal;
 }
 
-
-
 int label_1898()
 {
     key = "";
     return rtval;
 }
 
-}
+} // namespace elona
