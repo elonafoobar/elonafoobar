@@ -1005,7 +1005,6 @@ void initialize_random_nefia_rdtype10();
 void initialize_home_mdata();
 turn_result_t build_new_building();
 void initialize_home_adata();
-turn_result_t show_house_board();
 void prepare_hourse_board_tiles();
 void label_1724();
 void show_shop_log();
