@@ -85,21 +85,33 @@ void store::visit(const hcl::Value& value,
 }
 
 
-// TODO
-// "${your(_1)}${get(_2, core.locale.ability, name)} skill increases."
-
-
 #define ELONA_DEFINE_I18N_BUILTIN(func_name, return_value) \
     if(func.name == func_name) \
     { \
         return return_value; \
     }
 
+#define ELONA_DEFINE_I18N_BUILTIN_CHARA(func_name, func_ident) \
+    if(func.name == func_name)               \
+    { \
+        int tc_bk = tc; \
+        tc = chara.index; \
+        std::string val;                                        \
+        if (func.args.size() > 1) \
+            val = func_ident(func.args[1].as<int>());   \
+        else                                                      \
+            val = func_ident();   \
+        tc = tc_bk; \
+        return val; \
+    }
+
+#define UNKNOWN_FUNCTION "<unknown function(" + func.name + ")>"
+
 std::string format_builtins_argless(const hil::FunctionCall& func)
 {
     ELONA_DEFINE_I18N_BUILTIN("you", name(0));
 
-    return "<unknown function (" + func.name + ")>";
+    return UNKNOWN_FUNCTION;
 }
 
 inline std::string builtin_s(const hil::FunctionCall& func, int chara_index)
@@ -117,7 +129,7 @@ std::string format_builtins_bool(const hil::FunctionCall& func, bool value)
     ELONA_DEFINE_I18N_BUILTIN("s", builtin_s(func, value ? 0 : 1));
     ELONA_DEFINE_I18N_BUILTIN("is", is(value ? 0 : 1));
 
-    return "<unknown function (" + func.name + ")>";
+    return UNKNOWN_FUNCTION;
 }
 
 std::string format_builtins_character(const hil::FunctionCall& func, const character& chara)
@@ -141,30 +153,32 @@ std::string format_builtins_character(const hil::FunctionCall& func, const chara
 
     // Japanese only
     ELONA_DEFINE_I18N_BUILTIN("kare_wa", npcn(chara.index));
-    //ELONA_DEFINE_I18N_BUILTIN("yoro", _yoro(chara, func.args.at(1));
-    //ELONA_DEFINE_I18N_BUILTIN("dozo", _dozo(chara, func.args.at(1));
-    //ELONA_DEFINE_I18N_BUILTIN("thanks", _thanks(chara, func.args.at(1));
-    //ELONA_DEFINE_I18N_BUILTIN("rob", _rob(chara, func.args.at(1));
-    //ELONA_DEFINE_I18N_BUILTIN("ka", _ka(chara, func.args.at(1));
-    //ELONA_DEFINE_I18N_BUILTIN("da", _da(chara, func.args.at(1));
-    //ELONA_DEFINE_I18N_BUILTIN("nda", _nda(chara, func.args.at(1));
-    //ELONA_DEFINE_I18N_BUILTIN("noka", _noka(chara, func.args.at(1));
-    //ELONA_DEFINE_I18N_BUILTIN("kana", _kana(chara, func.args.at(1));
-    //ELONA_DEFINE_I18N_BUILTIN("kimi", _kimi(chara, func.args.at(1));
-    //ELONA_DEFINE_I18N_BUILTIN("ru", _ru(chara, func.args.at(1));
-    //ELONA_DEFINE_I18N_BUILTIN("tanomu", _tanomu(chara, func.args.at(1));
-    //ELONA_DEFINE_I18N_BUILTIN("ore", _ore(chara, func.args.at(1));
-    //ELONA_DEFINE_I18N_BUILTIN("ga", _ga(chara, func.args.at(1));
-    //ELONA_DEFINE_I18N_BUILTIN("dana", _dana(chara, func.args.at(1));
-    //ELONA_DEFINE_I18N_BUILTIN("kure", _kure(chara, func.args.at(1));
-    //ELONA_DEFINE_I18N_BUILTIN("daro", _daro(chara, func.args.at(1));
-    //ELONA_DEFINE_I18N_BUILTIN("yo", _yo(chara, func.args.at(1));
-    //ELONA_DEFINE_I18N_BUILTIN("aru", _aru(chara, func.args.at(1));
-    //ELONA_DEFINE_I18N_BUILTIN("u", _u(chara, func.args.at(1));
-    //ELONA_DEFINE_I18N_BUILTIN("na", _na(chara, func.args.at(1));
-    //ELONA_DEFINE_I18N_BUILTIN("ta", _ta(chara, func.args.at(1));
 
-    return "<unknown function (" + func.name + ")>";
+    // TODO refactor
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("yoro", _yoro);
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("dozo", _dozo);
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("thanks", _thanks);
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("rob", _rob);
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("ka", _ka);
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("da", _da);
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("nda", _nda);
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("noka", _noka);
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("kana", _kana);
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("kimi", _kimi);
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("ru", _ru);
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("tanomu", _tanomu);
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("ore", _ore);
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("ga", _ga);
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("dana", _dana);
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("kure", _kure);
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("daro", _daro);
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("yo", _yo);
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("aru", _aru);
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("u", _u);
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("na", _na);
+    ELONA_DEFINE_I18N_BUILTIN_CHARA("ta", _ta);
+
+    return UNKNOWN_FUNCTION;
 }
 
 std::string format_builtins_item(const hil::FunctionCall& func, const item& item)
@@ -177,10 +191,12 @@ std::string format_builtins_item(const hil::FunctionCall& func, const item& item
     ELONA_DEFINE_I18N_BUILTIN("s", _s2(item.number));
     ELONA_DEFINE_I18N_BUILTIN("does", does(item.number));
 
-    return "<unknown function (" + func.name + ")>";
+    return UNKNOWN_FUNCTION;
 }
 
 #undef ELONA_DEFINE_I18N_BUILTIN
+#undef ELONA_DEFINE_I18N_BUILTIN_CHARA
+#undef UNKNOWN_FUNCTION
 
 
 void load(const std::string& language)

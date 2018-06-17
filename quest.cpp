@@ -347,12 +347,12 @@ void quest_set_data(int val0)
     text_replace_tags_in_quest_text();
     if (val0 == 1)
     {
-        buff = i18n::s.get("core.locale.quest.giver.have_something_to_ask", cc) + buff;
+        buff = i18n::s.get("core.locale.quest.giver.have_something_to_ask", cdata[cc]) + buff;
         if (qdata(9, rq) != -1)
         {
-            buff += i18n::s.get("core.locale.quest.giver.days_to_perform", qdata(9, rq), cc);
+            buff += i18n::s.get("core.locale.quest.giver.days_to_perform", qdata(9, rq), cdata[cc]);
         }
-        buff += i18n::s.get("core.locale.quest.giver.how_about_it", cc);
+        buff += i18n::s.get("core.locale.quest.giver.how_about_it", cdata[cc]);
     }
     if (val0 == 2)
     {
@@ -391,23 +391,23 @@ void quest_set_data(int val0)
     }
     if (val0 == 3)
     {
-        buff = i18n::s.get("core.locale.quest.giver.complete.done_well", cc);
+        buff = i18n::s.get("core.locale.quest.giver.complete.done_well", cdata[cc]);
         if (elona::stoi(s(5)) != 0)
         {
-            txt(i18n::s.get("core.locale.quest.giver.complete.take_reward", s(5), cc));
+            txt(i18n::s.get("core.locale.quest.giver.complete.take_reward", s(5), cdata[cc]));
         }
         if (qdata(3, rq) == 1006)
         {
             if (qdata(12, rq) * 125 / 100 < qdata(13, rq))
             {
-                buff += i18n::s.get("core.locale.quest.giver.complete.extra_coins", cc);
+                buff += i18n::s.get("core.locale.quest.giver.complete.extra_coins", cdata[cc]);
             }
         }
         if (qdata(3, rq) == 1009)
         {
             if (qdata(12, rq) * 150 / 100 < qdata(13, rq))
             {
-                buff += i18n::s.get("core.locale.quest.giver.complete.music_tickets", cc);
+                buff += i18n::s.get("core.locale.quest.giver.complete.music_tickets", cdata[cc]);
             }
         }
     }
@@ -1092,7 +1092,7 @@ void quest_failed(int val0)
     int stat = decfame(0, 40);
     p = stat;
     txtef(3);
-    txt(i18n::s.get("core.locale.quest.lose_fame", p));
+    txt(i18n::s.get("core.locale.quest.lose_fame", p(0)));
     return;
 }
 
@@ -1141,7 +1141,7 @@ void quest_team_victorious()
         if (arenaop == 0)
         {
             txtef(3);
-            txt(i18n::s.get("core.locale.quest.lose_fame", p));
+            txt(i18n::s.get("core.locale.quest.lose_fame", p(0)));
         }
     }
     return;

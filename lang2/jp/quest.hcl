@@ -50,15 +50,15 @@ locale {
         lose_fame = "名声値を${_1}失った。"
 
         giver {
-            have_something_to_ask = "${kimi(3)}に頼みたいことがある${nda()}"
-            days_to_perform = "期限は残り${_1}日${da()}"
-            how_about_it = "依頼を受けてくれるの${kana(1)}"
+            have_something_to_ask = "${kimi(_1, 3)}に頼みたいことがある${nda(_1)}"
+            days_to_perform = "期限は残り${_1}日${da(_2)}"
+            how_about_it = "依頼を受けてくれるの${kana(_1, 1)}"
 
             complete {
-                done_well = "依頼を無事終わらせたよう${dana()}${thanks(2)}"
-                take_reward = "報酬の${_1}を受けとって${kure()}"
-                extra_coins = "予想以上にいい働きだったから、幾らか色を付けておいた${yo()}"
-                music_tickets = "予想以上の盛り上がりだったから、おまけをあげる${yo()}"
+                done_well = "依頼を無事終わらせたよう${dana(_1)}${thanks(_1, 2)}"
+                take_reward = "報酬の${_1}を受けとって${kure(_1)}"
+                extra_coins = "予想以上にいい働きだったから、幾らか色を付けておいた${yo(_1)}"
+                music_tickets = "予想以上の盛り上がりだったから、おまけをあげる${yo(_1)}"
             }
         }
 
