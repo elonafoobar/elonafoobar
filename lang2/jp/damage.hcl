@@ -1,12 +1,12 @@
 locale {
     damage {
         miss {
-            ally = "${aln(_2)}${name(_1)}の攻撃を避けた。"
-            other = "${aln(_1)}攻撃をかわされた。"
+            ally = "${kare_wa(_2)}${name(_1)}の攻撃を避けた。"
+            other = "${kare_wa(_1)}攻撃をかわされた。"
         }
         evade {
-            ally = "${aln(_2)}${name(_1)}の攻撃を華麗に避けた。"
-            other = "${aln(_1)}攻撃を華麗にかわされた。"
+            ally = "${kare_wa(_2)}${name(_1)}の攻撃を華麗に避けた。"
+            other = "${kare_wa(_1)}攻撃を華麗にかわされた。"
         }
         furthermore = "さらに"
 
@@ -32,11 +32,11 @@ locale {
         magic_reaction_hurts = "マナの反動が${name(_1)}の精神を蝕んだ！"
 
         weapon {
-            attacks_with = "${aln(_1)}${name(_3)}に${_4}で${_2}。"
-            attacks_and = "${aln(_1)}${name(_3)}を${_2}${_4}"
+            attacks_with = "${kare_wa(_1)}${name(_3)}に${_4}で${_2}。"
+            attacks_and = "${kare_wa(_1)}${name(_3)}を${_2}${_4}"
 
-            attacks_unarmed = "${aln(_1)}${name(_3)}に${_2}"
-            attacks_unarmed_and = "${aln(_1)}${name(_3)}を${_2}"
+            attacks_unarmed = "${kare_wa(_1)}${name(_3)}に${_2}"
+            attacks_unarmed_and = "${kare_wa(_1)}${name(_3)}を${_2}${_4}"
 
             and = ""
 

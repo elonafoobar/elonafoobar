@@ -18448,9 +18448,7 @@ label_22191_internal:
                 }
                 else
                 {
-                    weapon_name = i18n::s.get_optional("core.locale.damage.weapon._" +
-                                                       std::to_string(attackskill) +
-                                                       ".name");
+                    weapon_name = i18n::s.get_enum_property_opt("core.locale.damage.weapon", attackskill, "name");
                 }
                 if (weapon_name)
                 {
@@ -18459,9 +18457,9 @@ label_22191_internal:
                         gdata(809) = 2;
                         txt(i18n::s.get("core.locale.damage.weapon.attacks_and",
                                         cdata[cc],
-                                        i18n::s.get("core.locale.damage.weapon._" +
-                                                    std::to_string(attackskill) +
-                                                    ".verb_and"),
+                                        i18n::s.get_enum_property("core.locale.damage.weapon",
+                                                                  attackskill,
+                                                                  "verb_and"),
                                         cdata[tc],
                                         i18n::s.get("core.locale.damage.weapon.and")));
                     }
@@ -18469,9 +18467,9 @@ label_22191_internal:
                     {
                         txt(i18n::s.get("core.locale.damage.weapon.attacks_with",
                                         cdata[cc],
-                                        i18n::s.get("core.locale.damage.weapon._" +
-                                                    std::to_string(attackskill) +
-                                                    ".verb"),
+                                        i18n::s.get_enum_property("core.locale.damage.weapon",
+                                                                  attackskill,
+                                                                  "verb"),
                                         cdata[tc],
                                         *weapon_name));
                     }
@@ -18491,7 +18489,7 @@ label_22191_internal:
                 attackskill,
                 cc,
                 clamp((sdata(173, tc) * 2 - sdata(attackskill, cc) + 1), 5, 50)
-                    / expmodifer,
+                / expmodifer,
                 0,
                 4);
             if (attackrange == 0)
@@ -18527,7 +18525,7 @@ label_22191_internal:
                     chara_armor_class(tc),
                     tc,
                     clamp((250 * rtdmg / cdata[tc].max_hp + 1), 3, 100)
-                        / expmodifer,
+                    / expmodifer,
                     0,
                     5);
                 if (cdata[tc].equipment_type & 1)
@@ -18699,8 +18697,8 @@ label_22191_internal:
                         txtef(2);
                         snd(61);
                         txt(lang(
-                            itemname(cw) + u8"は十分に血を味わった！"s,
-                            itemname(cw) + u8" has tasted enough blood!"s));
+                                itemname(cw) + u8"は十分に血を味わった！"s,
+                                itemname(cw) + u8" has tasted enough blood!"s));
                     }
                 }
             }

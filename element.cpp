@@ -395,8 +395,8 @@ void txteledmg(int type, int attacker, int target, int element)
 {
     if (type == 0 && is_in_fov(target))
     {
-        auto text = i18n::s.get_optional("core.locale.damage.element._"s + std::to_string(element),
-                                         cdata[target]);
+        auto text = i18n::s.get_enum_optional("core.locale.damage.element"s, element,
+                                              cdata[target]);
         if (text)
         {
             txt(*text);
@@ -408,11 +408,9 @@ void txteledmg(int type, int attacker, int target, int element)
     }
     else if (type == 1)
     {
-        auto text = i18n::s.get_optional("core.locale.death_by.element._"s +
-                                         std::to_string(element) +
-                                         ".active",
-                                         cdata[target],
-                                         cdata[attacker]);
+        auto text = i18n::s.get_enum_property_opt("core.locale.death_by.element"s, element, "active",
+                                                  cdata[target],
+                                                  cdata[attacker]);
         if (text)
         {
             txt(*text);
@@ -425,11 +423,9 @@ void txteledmg(int type, int attacker, int target, int element)
     }
     else if (type == 2)
     {
-        auto text = i18n::s.get_optional("core.locale.death_by.element._"s +
-                                         std::to_string(element) +
-                                         ".passive",
-                                         cdata[target],
-                                         cdata[attacker]);
+        auto text = i18n::s.get_enum_property_opt("core.locale.death_by.element"s, element, "passive",
+                                                  cdata[target],
+                                                  cdata[attacker]);
         if (text)
         {
             txt(*text);

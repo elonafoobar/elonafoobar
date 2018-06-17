@@ -751,15 +751,15 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 int death_kind = -prm_855;
 
-                txt(i18n::s.get("core.locale.death_by.other._" +
-                                std::to_string(death_kind) +
-                                ".text",
+                txt(i18n::s.get("core.locale.death_by.other",
+                                death_kind,
+                                "text",
                                 cdata[prm_853]));
                 if (prm_853 == 0)
                 {
-                    ndeathcause = i18n::s.get("core.locale.death_by.other._" +
-                                              std::to_string(death_kind) +
-                                              ".death_cause");
+                    ndeathcause = i18n::s.get_enum_property("core.locale.death_by.other",
+                                                            death_kind,
+                                                            "death_cause");
                 }
             }
         }
@@ -1123,7 +1123,7 @@ void end_dmghp()
             if (rnd(20) == 0)
             {
                 int picked = rnd(6);
-                txt(i18n::s.get("core.locale.damage.sand_bag._" + std::to_string(picked)));
+                txt(i18n::s.get_enum("core.locale.damage.sand_bag", picked));
             }
         }
     }
@@ -1251,18 +1251,18 @@ void dmgheal_death_by_backpack(character& chara)
     }
     if (heaviest_item_index == -1)
     {
-        heaviest_item_name = i18n::s.get("core.locale.death_by.other._6.backpack");
+        heaviest_item_name = i18n::s.get_enum_property("core.locale.death_by.other", 6, "backpack");
     }
     else
     {
         heaviest_item_name = itemname(heaviest_item_index);
     }
-    txt(i18n::s.get("core.locale.death_by.other._6.text",
-                    chara,
-                    heaviest_item_name));
+    txt(i18n::s.get_enum_property("core.locale.death_by.other", 6, "text",
+                                  chara,
+                                  heaviest_item_name));
     if (chara.index == 0)
     {
-        ndeathcause = i18n::s.get("core.locale.death_by.other._6.death_cause", heaviest_item_name);
+        ndeathcause = i18n::s.get_enum_property("core.locale.death_by.other", 6, "death_cause", heaviest_item_name);
     }
 }
 

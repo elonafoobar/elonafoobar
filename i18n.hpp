@@ -396,6 +396,23 @@ public:
     }
 
     template <typename Head, typename... Tail>
+    optional<std::string> get_enum_optional(const std::string& key,
+                         int index,
+                         Head const& head,
+                         Tail&&... tail)
+    {
+        return get_optional(key + "._" + std::to_string(index), head, std::forward<Tail>(tail)...);
+    }
+
+    template <typename... Tail>
+    optional<std::string> get_enum_optional(const std::string& key,
+                         int index,
+                         Tail&&... tail)
+    {
+        return get_optional(key + "._" + std::to_string(index), std::forward<Tail>(tail)...);
+    }
+
+    template <typename Head, typename... Tail>
     std::string get_enum_property(const std::string& key_head,
                          int index,
                          const std::string& key_tail,
