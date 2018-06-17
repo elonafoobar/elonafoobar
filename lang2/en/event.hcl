@@ -5,7 +5,7 @@ locale {
         ehekatl = "memememw...MEMEMEM...MEWWWWWW!"
 
         guarded_by_lord = "Be aware! This level is guarded by the lord of ${_1}, ${basename(_2)}."
-        deepest_level = "It seems you have reached the deepest level of this dungeon."
+        reached_deepest_level = "It seems you have reached the deepest level of this dungeon."
 
         seal_broken = "The seal of this level is now broken!"
 

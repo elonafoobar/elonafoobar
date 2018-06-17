@@ -96,16 +96,11 @@ void proc_event()
             evdata1(evnum - (evnum != 0) * 1),
             evdata2(evnum - (evnum != 0) * 1));
         txtef(4);
-        txt(lang(
-            u8"ビッグダディの肩から、リトルシスターが滑り落ちた。「Mr Bubbles！！」"s,
-            u8"The little sister slips from Big Daddy's shoulder, "s
-                + u8"\"Mr.Bubbles!\""s));
+        txt(i18n::s.get("core.locale.event.little_sister_slips"));
         break;
     case 28:
         txtef(5);
-        txt(lang(
-            u8"…ぅっぅぅ…っぅぅっぅううううみみゃぁ！！！"s,
-            u8"memememw...MEMEMEM...MEWWWWWW!"s));
+        txt(i18n::s.get("core.locale.event.ehekatl"));
         msg_halt();
         play_animation(21);
         flt();
@@ -138,23 +133,16 @@ void proc_event()
         break;
     case 12:
         update_screen();
-        s = lang(u8"ペットとの再会"s, u8"Reunion with your pet"s);
-        buff = lang(
-            u8"あなたは懐かしい鳴き声に気付いて、ふと歩みを止めた。なんと、船が難破した時に居なくなったあなたのペットが、嬉しそうに走ってくる！あなたのペットは…"s,
-            u8"As you approach the mining town, you notice a familiar call and stop walking. Your old pet who got separated from you during the shipwreck is now running towards you joyfully! Your pet is..."s);
-        listmax = 0;
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(u8"犬だ！"s, u8"a dog!"s);
-        ++listmax;
-        list(0, listmax) = 2;
-        listn(0, listmax) = lang(u8"猫だ！"s, u8"a cat!"s);
-        ++listmax;
-        list(0, listmax) = 3;
-        listn(0, listmax) = lang(u8"クマだ！"s, u8"a bear!"s);
-        ++listmax;
-        list(0, listmax) = 4;
-        listn(0, listmax) = lang(u8"少女だ！"s, u8"a little girl!"s);
-        ++listmax;
+        s = i18n::s.get("core.locale.event.popup.reunion_with_pet.title");
+        buff = i18n::s.get("core.locale.event.popup.reunion_with_pet.text");
+        listmax = 4;
+        for (int cnt = 0; cnt < listmax; cnt++)
+        {
+            list(0, cnt) = cnt;
+            listn(0, cnt) = i18n::s.get_enum_property("core.locale.event.popup",
+                                                      "choices._" + std::to_string(cnt),
+                                                      "reunion_with_pet");
+        }
         show_random_event_window(u8"bg_re13");
         p = 3;
         if (rtval == 1)
@@ -181,16 +169,16 @@ void proc_event()
         break;
     case 13:
         play_music(80);
-        s = lang(u8"結婚"s, u8"Marriage"s);
-        buff = lang(u8"長い交際の末、遂にあなたと"s + name(marry) +
-                u8"は固い絆で結ばれた。婚儀の後、あなたの元に幾つか祝儀品が届けられた。"s,
-            u8"At last, you and "s + name(marry) +
-                u8" are united in marriage! After the wedding ceremony, you receive some gifts."s);
-        listmax = 0;
-        list(0, listmax) = 1;
-        listn(0, listmax) = lang(
-            u8"生涯をあなたに捧げる"s, u8"Without you, life has no meaning."s);
-        ++listmax;
+        s = i18n::s.get("core.locale.event.popup.marriage.title");
+        buff = i18n::s.get("core.locale.event.popup.marriage.text", cdata[marry]);
+        listmax = 1;
+        for (int cnt = 0; cnt < listmax; cnt++)
+        {
+            list(0, cnt) = cnt;
+            listn(0, cnt) = i18n::s.get_enum_property("core.locale.event.popup",
+                                                      "choices._" + std::to_string(cnt),
+                                                      "marriage");
+        }
         show_random_event_window(u8"bg_re14");
         for (int i = 0; i < 5; ++i)
         {
@@ -223,12 +211,7 @@ void proc_event()
         tc = rc;
         adata(20, gdata_current_map) = tc;
         txtef(3);
-        txt(lang(
-            u8"気をつけろ！この階は"s + mapname(gdata_current_map)
-                + u8"の守護者、"s + cdatan(0, tc) + u8"によって守られている。"s,
-            u8"Be aware! This level is guarded by the lord of "s
-                + mapname(gdata_current_map) + u8", "s + cdatan(0, tc)
-                + u8"."s));
+        txt(i18n::s.get("core.locale.event.guarded_by_lord", mapname(gdata_current_map), cdata[tc]));
     }
     break;
     case 4:
@@ -251,16 +234,9 @@ void proc_event()
         tc = rc;
         adata(20, gdata_current_map) = tc;
         cdatan(0, rc) += u8" Lv"s + cdata[rc].level;
-        txt(lang(
-            u8"どうやら最深層まで辿り着いたらしい…"s,
-            u8"It seems you have reached the deepest level of this dungeon."s));
+        txt(i18n::s.get("core.locale.event.reached_deepest_level"));
         txtef(3);
-        txt(lang(
-            u8"気をつけろ！この階は"s + mapname(gdata_current_map)
-                + u8"の守護者、"s + cdatan(0, tc) + u8"によって守られている。"s,
-            u8"Be aware! This level is guarded by the lord of "s
-                + mapname(gdata_current_map) + u8", "s + cdatan(0, tc)
-                + u8"."s));
+        txt(i18n::s.get("core.locale.event.guarded_by_lord", mapname(gdata_current_map), cdata[tc]));
         break;
     case 5:
         play_music(64);
@@ -297,9 +273,7 @@ void proc_event()
         {
             adata(20, gdata_current_map) = 0;
             gdata(186) = gdata(186) + 5;
-            txt(lang(
-                u8"この階の封印が解けたようだ！"s,
-                u8"The seal of this level is now broken!"s));
+            txt(i18n::s.get("core.locale.event.seal_broken"));
         }
         else
         {
@@ -343,15 +317,13 @@ void proc_event()
         }
         else
         {
-            txt(lang(
-                u8"レベル6に達していないので能力値の減少はない。"s,
-                u8"Death penalty won't be applied until you hit Lv 6."s));
+            txt(i18n::s.get("core.locale.event.death_penalty_not_applied"));
         }
         if (gdata_ether_disease_stage >= 20000)
         {
             modcorrupt(-2000);
         }
-        txt(lang(u8"金貨を幾らか失った…"s, u8"You lost some money."s));
+        txt(i18n::s.get("core.locale.event.you_lost_some_money"));
         cdata[0].gold -= cdata[0].gold / 3;
         decfame(0, 10);
         chara_refresh(0);
@@ -375,8 +347,7 @@ void proc_event()
             if (cdata[tc].state == 1)
             {
                 txtef(4);
-                txt(lang(
-                    u8"パエル「おかあさんーー！！」"s, u8"\"M-mom...!!\""s));
+                txt(i18n::s.get("core.locale.event.pael"));
                 cdata[tc].relationship = -3;
                 cdata[tc].hate = 1000;
                 cdata[tc].enemy_id = 0;
@@ -398,8 +369,7 @@ void proc_event()
         --gdata_number_of_waiting_guests;
         if (chara_get_free_slot() == -1)
         {
-            txt(lang(
-                u8"ゲストは行方不明になった。"s, u8"The guest lost his way."s));
+            txt(i18n::s.get("core.locale.event.guest_lost_his_way"));
             break;
         }
         if (rnd(3) == 0)
@@ -495,9 +465,7 @@ void proc_event()
             }
             if (tc == 0)
             {
-                txt(lang(
-                    u8"ゲストはすでに居なくなっていた。"s,
-                    u8"It seems the guest has already left your house."s));
+                txt(i18n::s.get("core.locale.event.guest_already_left"));
                 break;
             }
             cdata[tc].state = 1;
@@ -606,10 +574,7 @@ void proc_event()
             if (cdata[cc].character_role != 13 && cdata[cc].character_role != 3)
             {
                 cdata[cc].emotion_icon = 2010;
-                txt(lang(
-                    name(cc) + u8"「目が！目がー！！」"s,
-                    name(cc) + u8" shout"s + _s(cc) + u8" "s
-                        + u8"\"Eyes! My eyes!\""s));
+                txt(i18n::s.get("core.locale.event.my_eyes", cdata[cc]))
             }
         }
         break;
@@ -636,23 +601,12 @@ void proc_event()
         for (int j = 0; j < clamp(i(0), 0, 3); ++j)
         {
             txtef(9);
-            if (jp)
-            {
-                txt(u8"「おかえり」"s,
-                    u8"「よう戻ったか」"s,
-                    u8"「無事で何よりです」"s,
-                    u8"「おかか♪」"s,
-                    u8"「待ってたよ」"s,
-                    u8"「おかえりなさい！」"s);
-            }
-            if (en)
-            {
-                txt(u8"\"Welcome home!\""s,
-                    u8"\"Hey, dear.\""s,
-                    u8"\"You're back!\""s,
-                    u8"\"I was waiting for you.\""s,
-                    u8"\"Nice to see you again.\""s);
-            }
+            // TODO JP had 6 choices but EN had 5. An extra choice was
+            // added for EN so the lists would be the same length. It
+            // would be nice to have a way to check the number of
+            // variants in a list of translation choices.
+            int text_index = rnd(6);
+            txt(i18n::s.get_enum("core.locale.event.okaeri", text_index));
         }
         if (gdata_number_of_waiting_guests != 0)
         {
@@ -677,7 +631,7 @@ void proc_event()
         if (mdata(6) == 1)
             break;
         txtef(3);
-        txt(lang(u8" *ゴゴゴゴゴゴ* "s, u8"* RRROOM-KABOOOOM*"s));
+        txt(i18n::s.get("core.locale.event.bomb"));
         msg_halt();
         gsel(7);
         pos(0, 0);
@@ -864,7 +818,7 @@ void proc_event()
         gdata_weather = 1;
         envonly = 1;
         play_music();
-        txt(lang(u8"終末の日が訪れた。"s, u8"Let's Ragnarok!"s));
+        txt(i18n::s.get("core.locale.event.ragnarok"));
         msg_halt();
         play_animation(21);
         for (int i = 0; i < 200; ++i)
@@ -927,9 +881,7 @@ void proc_event()
         if (evdata1(evnum - (evnum != 0) * 1) != 0)
             break;
         txtef(3);
-        txt(lang(
-            u8"けたたましい警報が鳴り響いた！"s,
-            u8"*beeeeeep!* An alarm sounds loudly!"s));
+        txt(i18n::s.get("core.locale.event.alarm"));
         for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS;
              ++cc)
         {
@@ -944,7 +896,7 @@ void proc_event()
     case 26:
         if (mdata(6) == 1)
             break;
-        txt(lang(u8"強盗があなたに目をつけた！"s, u8"Blaggers pick on you!"s));
+        txt(i18n::s.get("core.locale.event.beggars"));
         for (int i = 0; i < 3; ++i)
         {
             flt();

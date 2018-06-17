@@ -5,7 +5,7 @@ locale {
         ehekatl = "…ぅっぅぅ…っぅぅっぅううううみみゃぁ！！！"
 
         guarded_by_lord = "気をつけろ！この階は${_1}の守護者、${basename(_2)}によって守られている。"
-        deepest_level = "どうやら最深層まで辿り着いたらしい…"
+        reached_deepest_level = "どうやら最深層まで辿り着いたらしい…"
 
         seal_broken = "この階の封印が解けたようだ！"
 

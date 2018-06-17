@@ -411,7 +411,7 @@ label_1894_internal:
         {
             cdata[0].nutrition = 15000;
             int text_index = rnd(3);
-            txt(i18n::s.get("core.locale.event.popup._14.results._" + std::to_string(text_index)));
+            txt(i18n::s.get_enum("core.locale.event.popup._14.results", text_index));
             show_eating_message();
             chara_anorexia(0);
         }
