@@ -760,8 +760,6 @@ int run()
 
     initialize_cat_db();
 
-    foobar_save.initialize();
-
     config::instance().init();
     load_config2(config_file);
 

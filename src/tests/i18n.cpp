@@ -13,6 +13,8 @@
 using namespace std::literals::string_literals;
 using namespace elona;
 
+namespace
+{
 i18n::store load(const std::string& str)
 {
     i18n::store store;
@@ -21,6 +23,7 @@ i18n::store load(const std::string& str)
 
     REQUIRE_NOTHROW(store.load(ss, "test.hcl"));
     return store;
+}
 }
 
 TEST_CASE("test formats", "[I18N: Formatting]")

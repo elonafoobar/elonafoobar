@@ -130,9 +130,17 @@ public:
 
     void inject_enum(const std::string& key, std::vector<std::string> variants, int default_index)
     {
-        if(!exists(key) || !is<config_enum_def>(key))
+        if (!exists(key) || !is<config_enum_def>(key))
         {
             throw config_def_error(key, "No such enum " + key);
+        }
+        if (!get<config_enum_def>(key).pending)
+        {
+            throw config_def_error(key, "Attempted to inject an enum, but it was not of type runtime_enum: " + key);
+        }
+        if (default_index < 0 || default_index >= static_cast<int>(variants.size()))
+        {
+            throw config_def_error(key, "Default index is out of bounds: " + key);
         }
 
         auto& def = get<config_enum_def>(key);

@@ -74,7 +74,6 @@ void config_def::visit(const hcl::Value& value,
         data.emplace(current_key, config_def_item_data{});
         items.emplace(current_key, i);
     }
-    std::cout << current_key << ": " << type_to_string(current_key) << std::endl;
 }
 
 config_def::item config_def::visit_bare_value(const hcl::Value& default_value,
@@ -135,7 +134,7 @@ void config_def::visit_item(const hcl::Object& item,
         }
         else if (type == "runtime_enum")
         {
-            i = config_def::config_enum_def{0, {""}, true};
+            i = config_def::config_enum_def{0, {}, true};
         }
         else
         {

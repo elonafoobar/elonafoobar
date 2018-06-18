@@ -98,12 +98,13 @@ void pre_init()
     initialize_cat_db();
     configure_lua();
 
-    load_config2(fs::path("tests/data/config.json"));
+    config::instance().init();
+    load_config2(fs::path("tests/data/config.hcl"));
 
     title(u8"Elona Foobar version "s + latest_version.short_string());
 
     init_assets();
-    initialize_config(fs::path("tests/data/config.json"));
+    initialize_config(fs::path("tests/data/config.hcl"));
 
     config::instance().is_test = true;
 
