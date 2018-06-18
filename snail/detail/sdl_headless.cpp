@@ -7,23 +7,23 @@ namespace detail
 
 
 
-void enforce_sdl(int result)
+void enforce_sdl(int)
 {
 }
 
 
-void enforce_ttf(int result)
+void enforce_ttf(int)
 {
 }
 
 
-void enforce_image(int result)
+void enforce_image(int)
 {
 }
 
 
 
-void enforce_mixer(int result)
+void enforce_mixer(int)
 {
 }
 

@@ -21,7 +21,7 @@ void renderer::set_blend_mode(blend_mode_t)
     return nullptr;
 }
 
-void renderer::set_render_target(::SDL_Texture* texture)
+void renderer::set_render_target(::SDL_Texture*)
 {
 }
 

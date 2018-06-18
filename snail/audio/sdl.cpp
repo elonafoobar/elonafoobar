@@ -22,9 +22,6 @@ constexpr int temporary_channels_size = 6;
 
 std::vector<Mix_Chunk*> chunks;
 
-int envwprev{};
-int musicprev{};
-
 Mix_Music* played_music = nullptr;
 } // namespace
 

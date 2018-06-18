@@ -285,9 +285,11 @@ if(WITH_TESTS STREQUAL "BENCH")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
 endif()
 
-# Force GCC to output warnings about undefined symbols
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    string(APPEND CMAKE_SHARED_LINKER_FLAGS " -Wl,--no-undefined")
+    # Force GCC to output warnings about undefined symbols
+    string(APPEND CMAKE_CXX_FLAGS " -Wl,--no-undefined")
+    # Disable deprecated declarations, because it causes warnings with Boost locale's use of auto_ptr
+    string(APPEND CMAKE_CXX_FLAGS " -Wno-deprecated-declarations")
 endif()
 
 # My libraries

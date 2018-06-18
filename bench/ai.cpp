@@ -38,17 +38,13 @@ public:
         sdata(17, 0) = 9999;
         for (int i = 0; i < 10; i++)
         {
-            int x = i % 50;
-            int y = i / 50;
-            assert(chara_create(-1, 328, x, y));
+            assert(chara_create(-1, 328, i % 50, i / 50));
             assert(new_ally_joins() == 1);
         }
 
         for (int i = 10; i < amount; i++)
         {
-            int x = i % 50;
-            int y = i / 50;
-            assert(chara_create(-1, 328, x, y));
+            assert(chara_create(-1, 328, i % 50, i / 50));
         }
     }
 };
@@ -86,17 +82,13 @@ public:
         sdata(17, 0) = 9999;
         for (int i = 1; i < 10; i++)
         {
-            int x = i % 50;
-            int y = i / 50;
-            assert(chara_create(-1, 60, x, y));
+            assert(chara_create(-1, 60, i % 50, i / 50));
             assert(new_ally_joins() == 1);
         }
 
         for (int i = 10; i < amount; i++)
         {
-            int x = i % 50;
-            int y = i / 50;
-            assert(chara_create(-1, 60, x, y));
+            assert(chara_create(-1, 60, i % 50, i / 50));
         }
     }
 };

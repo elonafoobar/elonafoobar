@@ -410,8 +410,6 @@ void set_option()
     int cfg_sound2 = config::instance().sound;
     int cfg_music2 = config::instance().music;
     int cfg_fullscreen2 = config::instance().fullscreen;
-    int windoww2 = windoww;
-    int windowh2 = windowh;
 
     const auto display_modes = snail::application::instance().get_display_modes();
     std::string default_display_mode = snail::application::instance().get_default_display_mode();
@@ -1251,9 +1249,6 @@ void set_option()
                         display_mode_index = static_cast<int>(display_mode_names.size()) - 1;
                     }
                     cfg_display_mode = display_mode_names[display_mode_index];
-                    auto display_mode = display_modes.at(cfg_display_mode);
-                    windoww2 = display_mode.w;
-                    windowh2 = display_mode.h;
                     set_config(u8"display_mode", cfg_display_mode);
                     snd(20);
                     reset_page = true;

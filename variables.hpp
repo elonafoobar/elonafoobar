@@ -519,7 +519,7 @@ ELONA_EXTERN(int inf_clockh);
 ELONA_EXTERN(int inf_clockw);
 ELONA_EXTERN(int inf_clockx);
 ELONA_EXTERN(int inf_maxlog);
-ELONA_EXTERN(int inf_maxmsglen);
+ELONA_EXTERN(size_t inf_maxmsglen);
 ELONA_EXTERN(int inf_mesfont);
 ELONA_EXTERN(int inf_msgline);
 ELONA_EXTERN(int inf_msgspace);

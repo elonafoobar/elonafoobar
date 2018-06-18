@@ -278,7 +278,7 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
 void initialize_damage_popups()
 {
     damage_popups_active = 0;
-    for (int i = 0; i < max_damage_popups; i++)
+    for (size_t i = 0; i < max_damage_popups; i++)
     {
         damage_popups.emplace_back(damage_popup_t{});
     }
@@ -329,7 +329,7 @@ void clear_damage_popups()
 }
 
 
-void show_damage_popups(int inf_ver)
+void show_damage_popups()
 {
     if (config::instance().damage_popup == 0)
     {

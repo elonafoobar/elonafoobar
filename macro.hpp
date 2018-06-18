@@ -69,3 +69,5 @@
 
 #define ELONA_GET_SELECTED_INDEX_THIS_PAGE(var) \
     ELONA_GET_SELECTED_ITEM_BASE(var, i, 0)
+
+#define UNUSED(x) (void)x

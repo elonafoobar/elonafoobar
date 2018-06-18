@@ -17,13 +17,13 @@ application& application::instance()
 }
 
 
-void application::set_title(const std::string& title)
+void application::set_title(const std::string&)
 {
 }
 
 
 
-void initialize(const std::string& title)
+void initialize(const std::string&)
 {
 }
 
@@ -38,7 +38,7 @@ void application::quit()
 
 
 
-void application::register_finalizer(std::function<void()> finalizer)
+void application::register_finalizer(std::function<void()>)
 {
 }
 

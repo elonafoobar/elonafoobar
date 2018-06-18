@@ -12,7 +12,7 @@ int timeGetTime()
     return 0;
 }
 
-void mes(const std::string& message)
+void mes(const std::string&)
 {
 }
 

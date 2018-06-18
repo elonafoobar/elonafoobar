@@ -10667,7 +10667,7 @@ void show_item_description()
             int npc_count{};
             for (const auto& discord : the_character_db)
             {
-                (void)discord;
+                UNUSED(discord);
                 ++npc_count;
             }
             const auto percentage = std::min(100 * card_count / npc_count, 100);
@@ -12371,7 +12371,7 @@ int efstatusfix(int doomed, int cursed, int none, int blessed)
     case curse_state_t::cursed: return cursed;
     case curse_state_t::none: return none;
     case curse_state_t::blessed: return blessed;
-    default: assert(0);
+    default: assert(0); return none;
     }
 }
 
@@ -17379,7 +17379,7 @@ void proc_autopick()
                 }
             }
             elona::ci = ci;
-            (void)do_open_command();
+            (void)do_open_command(); // Result is unused.
             break;
         }
         if (did_something && !op.sound.empty())
