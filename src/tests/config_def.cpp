@@ -201,6 +201,45 @@ config_def {
 )"));
 }
 
+TEST_CASE("Test providing non-string enum variant", "[Config: Definition]")
+{
+    REQUIRE(load_fails(R"(
+config_def {
+    foo = {
+        type = "enum"
+        variants = ["bar", "baz", 42]
+        default = "bar"
+    }
+}
+)"));
+}
+
+TEST_CASE("Test providing non-string default value in enum", "[Config: Definition]")
+{
+    REQUIRE(load_fails(R"(
+config_def {
+    foo = {
+        type = "enum"
+        variants = ["bar", "baz", "quux"]
+        default = 42
+    }
+}
+)"));
+}
+
+TEST_CASE("Test providing non-list variants in enum", "[Config: Definition]")
+{
+    REQUIRE(load_fails(R"(
+config_def {
+    foo = {
+        type = "enum"
+        variants = 42
+        default = "foo"
+    }
+}
+)"));
+}
+
 TEST_CASE("Test defining runtime enum config value", "[Config: Definition]")
 {
     config_def def = load(R"(
@@ -208,6 +247,7 @@ config_def {
     foo = {
         type = "runtime_enum"
     }
+    bar = "baz"
 }
 )");
 
@@ -225,6 +265,8 @@ config_def {
     REQUIRE(variants.at(0) == "foo");
     REQUIRE(variants.at(1) == "bar");
     REQUIRE(variants.at(2) == "baz");
+
+    REQUIRE_THROWS(def.inject_enum("core.config.bar", {"foo", "bar", "baz"}, 1));
 }
 
 TEST_CASE("Test providing invalid default index in injected enum", "[Config: Definition]")
@@ -350,4 +392,113 @@ config_def {
     REQUIRE(children.at(1) == "bar");
 
     REQUIRE_THROWS(def.get_children("core.config.hoge"));
+}
+
+TEST_CASE("Test get_max/get_min (integer)", "[Config: Definition]")
+{
+    config_def def = load(R"(
+config_def {
+    foo = {
+        default = 42
+        min = 0
+        max = 100
+    }
+    hoge = "piyo"
+}
+)");
+    REQUIRE(def.get_min("core.config.foo") == 0);
+    REQUIRE(def.get_max("core.config.foo") == 100);
+
+    REQUIRE_THROWS(def.get_min("core.config.hoge"));
+    REQUIRE_THROWS(def.get_max("core.config.hoge"));
+}
+
+TEST_CASE("Test get_max/get_min (enum)", "[Config: Definition]")
+{
+    config_def def = load(R"(
+config_def {
+    foo = {
+        type = "enum"
+        variants = ["bar", "baz", "quux"]
+        default = "baz"
+    }
+}
+)");
+
+    REQUIRE(def.get_min("core.config.foo") == 0);
+    REQUIRE(def.get_max("core.config.foo") == 2);
+}
+
+TEST_CASE("Test definition with extended syntax", "[Config: Definition]")
+{
+    config_def def = load(R"(
+config_def {
+    foo = {
+        default = "bar"
+    }
+}
+)");
+
+    REQUIRE(def.get_default("core.config.foo").is<std::string>());
+    REQUIRE(def.get_default("core.config.foo").as<std::string>() == "bar");
+}
+
+TEST_CASE("Test exists", "[Config: Definition]")
+{
+    config_def def = load(R"(
+config_def {
+    foo = "bar"
+}
+)");
+
+    REQUIRE(def.exists("core.config.foo") == true);
+    REQUIRE(def.exists("core.config.baz") == false);
+}
+
+
+TEST_CASE("Test is_visible", "[Config: Definition]")
+{
+    config_def def = load(R"(
+config_def {
+    foo = "bar"
+    baz = {
+        default = "quux"
+        visible = true
+    }
+    hoge = {
+        default = "piyo"
+        visible = false
+    }
+}
+)");
+
+    REQUIRE(def.is_visible("core.config.foo") == true);
+    REQUIRE(def.is_visible("core.config.baz") == true);
+    REQUIRE(def.is_visible("core.config.hoge") == false);
+}
+
+TEST_CASE("Test is_preload", "[Config: Definition]")
+{
+    config_def def = load(R"(
+config_def {
+    foo = "bar"
+    baz = {
+        default = "quux"
+        preload = true
+    }
+    hoge = {
+        default = "piyo"
+        preload = false
+    }
+}
+)");
+
+    REQUIRE(def.is_preload("core.config.foo") == false);
+    REQUIRE(def.is_preload("core.config.baz") == true);
+    REQUIRE(def.is_preload("core.config.hoge") == false);
+}
+
+TEST_CASE("Test is_valid_enum_variant", "[Config: Definition]")
+{
+    REQUIRE(false);
 }
