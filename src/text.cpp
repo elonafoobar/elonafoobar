@@ -596,14 +596,21 @@ std::string
 foodname(int type, const std::string& ingredient_, int rank, int character_id)
 {
     std::string ingredient = ingredient_;
-    if ((type == 1 || type == 8) && character_id == 0)
+    if (type == 1 || type == 8)
     {
-        // Food created from character drops
-        ingredient = i18n::s.get_enum_property("core.locale.food.names", type, "default_origin");
+        // Food created from character drops (meat and eggs)
+        if (character_id == 0)
+        {
+            ingredient = i18n::s.get_enum_property("core.locale.food.names", type, "default_origin");
+        }
+        else
+        {
+            ingredient = chara_refstr(character_id, 2);
+        }
     }
-    else if (type == 7 || type == 5)
+    else if (type == 5 || type == 7)
     {
-        // Bread and noodles always have a default origin
+        // Food that always always has a default origin (bread and noodles)
         ingredient = i18n::s.get_enum_property("core.locale.food.names", type, "default_origin");
     }
     else if (ingredient == ""s)
