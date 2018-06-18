@@ -5,6 +5,7 @@
 #include <memory>
 #include <fstream>
 #include "cat.hpp"
+#include "defines.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "random.hpp"
@@ -25,7 +26,11 @@ void store::init(fs::path path)
     for (const auto& entry : filesystem::dir_entries{
              path, filesystem::dir_entries::type::file})
     {
+#ifdef ELONA_OS_WINDOWS
+        std::ifstream ifs(entry.path().native());
+#else
         std::ifstream ifs(filesystem::make_preferred_path_in_utf8(entry.path()));
+#endif
         load(ifs, entry.path().string());
     }
 }
