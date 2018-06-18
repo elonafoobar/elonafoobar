@@ -887,7 +887,6 @@ main_menu_result_t character_making_final_phase()
         {
             return main_menu_result_t::character_making_final_phase;
         }
-        inputlog = filesystem::normalize_as_filename(inputlog);
         cmname = ""s + inputlog;
         if (cmname == ""s || cmname == u8" "s)
         {
