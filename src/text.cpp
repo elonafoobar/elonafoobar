@@ -593,222 +593,35 @@ std::string txtskillchange(int id, int cc, bool increase)
 
 
 std::string
-foodname(int type, const std::string& prm_374, int rank, int character_id)
+foodname(int type, const std::string& ingredient_, int rank, int character_id)
 {
-    std::string s_ = prm_374;
-    std::string ingredient;
-
-    switch (type)
+    std::string ingredient = ingredient_;
+    if ((type == 1 || type == 8) && character_id == 0)
     {
-    case 1:
-        if (character_id == 0)
-        {
-            ingredient = lang(u8"動物"s, u8"beast"s);
-        }
-        else
-        {
-            ingredient = chara_refstr(character_id, 2);
-        }
-        switch (rank)
-        {
-        case 1:
-            return lang(
-                u8"グロテスクな"s + ingredient + u8"の肉"s,
-                u8"grotesque "s + ingredient + u8" meat"s);
-        case 2:
-            return lang(
-                u8"焼け焦げた"s + ingredient + u8"の肉"s,
-                u8"charred "s + ingredient + u8" meat"s);
-        case 3:
-            return lang(
-                ""s + ingredient + u8"のこんがり肉"s, u8"roast "s + ingredient);
-        case 4:
-            return lang(
-                ""s + ingredient + u8"肉のオードブル"s,
-                u8"deep fried "s + ingredient);
-        case 5:
-            return lang(
-                ""s + ingredient + u8"のピリ辛炒め"s,
-                u8"skewer grilled "s + ingredient);
-        case 6:
-            return lang(
-                ""s + ingredient + u8"コロッケ"s, ingredient + u8" croquette"s);
-        case 7:
-            return lang(
-                ""s + ingredient + u8"のハンバーグ"s,
-                ingredient + u8" hamburger"s);
-        case 8:
-            return lang(
-                ""s + ingredient + u8"肉の大葉焼き"s,
-                ingredient + u8" cutlet"s);
-        case 9:
-            return lang(
-                ""s + ingredient + u8"ステーキ"s, ingredient + u8" steak"s);
-        }
-        return s_;
-    case 2:
-        if (s_ == ""s)
-        {
-            s_ = lang(u8"野菜"s, u8"vegetable"s);
-        }
-        switch (rank)
-        {
-        case 1: return lang(u8"生ごみ同然の"s + s_, u8"kitchen refuse "s + s_);
-        case 2: return lang(u8"悪臭を放つ"s + s_, u8"smelly "s + s_);
-        case 3: return lang(""s + s_ + u8"のサラダ"s, s_ + u8" salad"s);
-        case 4: return lang(""s + s_ + u8"の炒め物"s, u8"fried "s + s_);
-        case 5: return lang(""s + s_ + u8"風味の肉じゃが"s, s_ + u8" roll"s);
-        case 6: return lang(""s + s_ + u8"の天ぷら"s, s_ + u8" tempura"s);
-        case 7: return lang(""s + s_ + u8"の煮込み"s, s_ + u8" gratin"s);
-        case 8:
-            return lang(
-                ""s + s_ + u8"シチュー"s, u8"meat and "s + s_ + u8" stew"s);
-        case 9: return lang(""s + s_ + u8"風カレー"s, s_ + u8" curry"s);
-        }
-        return s_;
-    case 3:
-        if (s_ == ""s)
-        {
-            s_ = lang(u8"果物"s, u8"fruit"s);
-        }
-        switch (rank)
-        {
-        case 1: return lang(u8"食べてはならない"s + s_, u8"dangerous "s + s_);
-        case 2: return lang(u8"べっちょりした"s + s_, u8"doubtful "s + s_);
-        case 3:
-            return lang(
-                ""s + s_ + u8"のフルーツサラダ"s, s_ + u8" jelly salad"s);
-        case 4: return lang(""s + s_ + u8"のプリン"s, s_ + u8" pudding"s);
-        case 5: return lang(""s + s_ + u8"シャーベット"s, s_ + u8" sherbet"s);
-        case 6: return lang(""s + s_ + u8"シェイク"s, s_ + u8" ice cream"s);
-        case 7: return lang(""s + s_ + u8"クレープ"s, s_ + u8" crepe"s);
-        case 8:
-            return lang(""s + s_ + u8"フルーツケーキ"s, s_ + u8" fruit cake"s);
-        case 9: return lang(""s + s_ + u8"パフェ"s, s_ + u8" grand parfait"s);
-        }
-        return s_;
-    case 5:
-        ingredient = lang(u8"麺"s, u8"noodle"s);
-        switch (rank)
-        {
-        case 1: return lang(u8"禁断の"s + ingredient, u8"risky "s + ingredient);
-        case 2:
-            return lang(
-                u8"のびてふにゃった"s + ingredient,
-                u8"exhausted "s + ingredient);
-        case 3: return lang(u8"サラダパスタ"s, u8"salad pasta"s);
-        case 4: return lang(u8"うどん"s, u8"udon"s);
-        case 5: return lang(u8"冷やし蕎麦"s, u8"soba"s);
-        case 6: return lang(u8"ペペロンチーノ"s, u8"peperoncino"s);
-        case 7: return lang(u8"カルボナーラ"s, u8"carbonara"s);
-        case 8: return lang(u8"ラーメン"s, u8"ramen"s);
-        case 9: return lang(u8"ミートスパゲティ"s, u8"meat spaghetti"s);
-        }
-        return s_;
-    case 4:
-        if (s_ == ""s)
-        {
-            s_ = lang(u8"お菓子"s, u8"candy"s);
-        }
-        switch (rank)
-        {
-        case 1: return lang(u8"原型を留めない"s + s_, u8"collapsed "s + s_);
-        case 2: return lang(u8"まずそうな"s + s_, u8"nasty "s + s_);
-        case 3: return lang(""s + s_ + u8"クッキー"s, s_ + u8" cookie"s);
-        case 4: return lang(""s + s_ + u8"のゼリー"s, s_ + u8" jelly"s);
-        case 5: return lang(""s + s_ + u8"パイ"s, s_ + u8" pie"s);
-        case 6: return lang(""s + s_ + u8"まんじゅう"s, s_ + u8" bun"s);
-        case 7:
-            return lang(
-                ""s + s_ + u8"風味のシュークリーム"s, s_ + u8" cream puff"s);
-        case 8: return lang(""s + s_ + u8"のケーキ"s, s_ + u8" cake"s);
-        case 9:
-            return lang(""s + s_ + u8"風ザッハトルテ"s, s_ + u8" sachertorte"s);
-        }
-        return s_;
-    case 6:
-        if (s_ == ""s)
-        {
-            s_ = lang(u8"魚"s, u8"fish"s);
-        }
-        switch (rank)
-        {
-        case 1: return lang(""s + s_ + u8"の残骸"s, u8"leftover "s + s_);
-        case 2: return lang(u8"骨だけ残った"s + s_, u8"bony "s + s_);
-        case 3: return lang(""s + s_ + u8"のフライ"s, u8"fried "s + s_);
-        case 4: return lang(""s + s_ + u8"の煮込み"s, u8"stewed "s + s_);
-        case 5: return lang(""s + s_ + u8"スープ"s, s_ + u8" soup"s);
-        case 6: return lang(""s + s_ + u8"の天ぷら"s, s_ + u8" tempura"s);
-        case 7: return lang(""s + s_ + u8"ソーセージ"s, s_ + u8" sausage"s);
-        case 8: return lang(""s + s_ + u8"の刺身"s, s_ + u8" sashimi"s);
-        case 9: return lang(""s + s_ + u8"の活け作り"s, s_ + u8" sushi"s);
-        }
-        return s_;
-    case 7:
-        ingredient = lang(u8"パン"s, u8"bread"s);
-        switch (rank)
-        {
-        case 1:
-            return lang(u8"恐怖の"s + ingredient, u8"fearsome "s + ingredient);
-        case 2:
-            return lang(u8"ガチガチの"s + ingredient, u8"hard "s + ingredient);
-        case 3: return lang(u8"くるみパン"s, u8"walnut bread"s);
-        case 4: return lang(u8"アップルパイ"s, u8"apple pie"s);
-        case 5: return lang(u8"サンドイッチ"s, u8"sandwich"s);
-        case 6: return lang(u8"クロワッサン"s, u8"croissant"s);
-        case 7: return lang(u8"コロッケパン"s, u8"croquette sandwich"s);
-        case 8: return lang(u8"カレーパン"s, u8"chocolate babka"s);
-        case 9: return lang(u8"メロンパン"s, u8"melon flavored bread"s);
-        }
-        return s_;
-    case 8:
-        if (character_id == 0)
-        {
-            ingredient = lang(u8"鳥"s, u8"animal"s);
-        }
-        else
-        {
-            ingredient = chara_refstr(character_id, 2);
-        }
-        switch (rank)
-        {
-        case 1:
-            return lang(
-                u8"グロテスクな"s + ingredient + u8"の卵"s,
-                u8"grotesque "s + ingredient + u8" egg"s);
-        case 2:
-            return lang(
-                u8"焦げた"s + ingredient + u8"の卵"s,
-                u8"overcooked "s + ingredient + u8" egg"s);
-        case 3:
-            return lang(
-                ingredient + u8"の卵の目玉焼き"s,
-                u8"fried "s + ingredient + u8" egg"s);
-        case 4:
-            return lang(
-                ingredient + u8"風味のキッシュ"s, ingredient + u8" egg toast"s);
-        case 5:
-            return lang(
-                u8"半熟"s + ingredient,
-                u8"soft boiled "s + ingredient + u8" egg"s);
-        case 6:
-            return lang(
-                ingredient + u8"の卵入りスープ"s,
-                u8"soup with "s + ingredient + u8" egg"s);
-        case 7:
-            return lang(
-                u8"熟成"s + ingredient + u8"チーズ"s,
-                u8"mature "s + ingredient + u8" cheese"s);
-        case 8:
-            return lang(
-                ingredient + u8"のレアチーズケーキ"s,
-                ingredient + u8" cheese cake"s);
-        case 9:
-            return lang(
-                ingredient + u8"風オムライス"s, ingredient + u8" omelet"s);
-        }
-        return s_;
-    default: return s_;
+        // Food created from character drops
+        ingredient = i18n::s.get_enum_property("core.locale.food.names", type, "default_origin");
+    }
+    else if (type == 7 || type == 5)
+    {
+        // Bread and noodles always have a default origin
+        ingredient = i18n::s.get_enum_property("core.locale.food.names", type, "default_origin");
+    }
+    else if (ingredient == ""s)
+    {
+        // No ingredient name was provided
+        ingredient = i18n::s.get_enum_property("core.locale.food.names", type, "default_origin");
+    }
+
+    if (type < 1 || type > 8)
+    {
+        return ingredient;
+    }
+    else
+    {
+        return i18n::s.get_enum_property("core.locale.food.names",
+                                         type,
+                                         std::to_string(rank),
+                                         ingredient);
     }
 }
 

@@ -181,7 +181,7 @@ locale {
             recovers_from = "${name(_1)}の拒食症は治った。"
         }
 
-        vomit = "${name(_1)}は吐いた。"
+        vomits = "${name(_1)}は吐いた。"
         spits_alien_children = "${name(_1)}は体内のエイリアンを吐き出した！"
 
         eat_status {
@@ -198,6 +198,10 @@ locale {
             raw_meat = "生肉だ…"
             powder = "粉の味がする…"
             raw = "生で食べるものじゃないな…"
+            boring {
+                _0 = "まずいわけではないが…"
+                _1 = "平凡な味だ。"
+            }
 
             raw_glum = "${name(_1)}は渋い顔をした。"
 
@@ -213,7 +217,7 @@ locale {
                 like = "これはあなたの大好きな人肉だ！"
                 dislike = "これは人肉だ…うぇぇ！"
                 would_have_rather_eaten = "人肉の方が好みだが…"
-                dialog = "ウマイ！"
+                delicious = "ウマイ！"
             }
 
             bomb_fish = "「げふぅ」${name(_1)}は${itemname(_2)}を吐き出した。"
@@ -273,10 +277,6 @@ locale {
             }
 
             quality {
-                boring {
-                    _0 = "まずいわけではないが…"
-                    _1 = "平凡な味だ。"
-                }
                 bad {
                     _0 = "うぅ…腹を壊しそうだ。"
                     _1 = "まずい！"

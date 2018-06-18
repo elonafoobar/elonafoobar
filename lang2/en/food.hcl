@@ -181,7 +181,7 @@ locale {
             recovers_from = "${name(_1)} manage${s(_1)} to recover from anorexia."
         }
 
-        vomit = "${name(_1)} vomit${s(_1)}."
+        vomits = "${name(_1)} vomit${s(_1)}."
         spits_alien_children = "${name(_1)} spit${s(_1)} alien children from ${his(_1)} body!"
 
         eat_status {
@@ -198,6 +198,10 @@ locale {
             raw_meat = "Ugh...Raw meat..."
             powder = "It tastes like...powder..."
             raw = "Er...this needs to be cooked."
+            boring {
+                _0 = "It doesn't taste awful but..."
+                _1 = "Very boring food."
+            }
 
             raw_glum = "${name(_1)} looks glum."
 
@@ -213,10 +217,10 @@ locale {
                 like = "It's your favorite human flesh!"
                 dislike = "Eeeek! It's human flesh!"
                 would_have_rather_eaten = "You would've rather eaten human flesh."
-                dialog = "Delicious!"
+                delicious = "ウマイ！"
             }
 
-            bomb_fish = "「Ugh-Ughu」 ${name(_1)} spew${s(_1)} up ${itemname(_2)}."
+            bomb_fish = "「Ugh-Ughu」 ${name(_1)} spew${s(_1)} up ${itemname(_2)}." # TODO
             little_sister = "${name(_1)} evolve${s(_1)}."
             hero_cheese = "The food is a charm!"
 
@@ -273,10 +277,6 @@ locale {
             }
 
             quality {
-                boring {
-                    _0 = "It doesn't taste awful but..."
-                    _1 = "Very boring food."
-                }
                 bad {
                     _0 = "Boy, it gives your stomach trouble!"
                     _1 = "Ugh! Yuk!"

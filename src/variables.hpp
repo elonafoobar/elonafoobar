@@ -970,7 +970,6 @@ void get_random_item_id();
 void set_item_info();
 void end_dmghp();
 void init_character_skills(int);
-void get_hungry(int);
 void proc_turn_end(int);
 void refresh_burden_state();
 void gain_special_action();
