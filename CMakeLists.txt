@@ -154,6 +154,7 @@ if(WITH_TESTS STREQUAL "TESTS")
   set(TEST_SOURCES
     src/tests/tests.cpp
     src/tests/util.cpp
+    src/tests/config.cpp
     src/tests/config_def.cpp
     src/tests/lua_api.cpp
     src/tests/lua_callbacks.cpp

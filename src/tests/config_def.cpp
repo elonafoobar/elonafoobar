@@ -36,7 +36,7 @@ bool load_fails(const std::string& str)
 
     return false;
 }
-}
+} // namespace
 
 TEST_CASE("Test invalid config def format", "[Config: Definition]")
 {
@@ -45,7 +45,7 @@ blah = 4
 )"));
 }
 
-TEST_CASE("Test wrong config def object name", "[Config: Definition]")
+TEST_CASE("Test invalid config def object name", "[Config: Definition]")
 {
     REQUIRE(load_fails(R"(
 config {}

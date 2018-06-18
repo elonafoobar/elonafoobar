@@ -16,12 +16,16 @@ namespace elona
 
 class config_def;
 
-class config : public lib::noncopyable
+class config
 {
 public:
     static config& instance();
 
-    void init();
+    config() {}
+    ~config() = default;
+
+    void init(const fs::path&);
+    void init(const config_def);
     void load(std::istream&, const std::string&, bool);
     void write();
 
@@ -207,9 +211,6 @@ public:
     const config_def& get_def() const { return def; }
 
 private:
-    config() {}
-    ~config() = default;
-
     void load_defaults(bool);
 
     void visit(const hcl::Value&, const std::string&, const std::string&, bool);

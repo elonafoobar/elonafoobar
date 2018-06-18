@@ -521,12 +521,16 @@ config& config::instance()
     return the_instance;
 }
 
-void config::init()
+void config::init(const fs::path& config_def_file)
 {
     clear();
-    const fs::path config_def_file =
-        filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
     def.init(config_def_file);
+}
+
+void config::init(const config_def def_)
+{
+    clear();
+    def = def_;
 }
 
 void config::load_defaults(bool preload)

@@ -98,7 +98,9 @@ void pre_init()
     initialize_cat_db();
     configure_lua();
 
-    config::instance().init();
+    const fs::path config_def_file =
+        filesystem::dir::mods() / u8"core"s / u8"config"s / u8"config_def.hcl"s;
+    config::instance().init(config_def_file);
     load_config2(fs::path("tests/data/config.hcl"));
 
     title(u8"Elona Foobar version "s + latest_version.short_string());
