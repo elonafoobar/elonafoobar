@@ -1425,7 +1425,6 @@ void fileadd(const fs::path& filepath, int prm_693)
         noteunsel();
         return;
     }
-    ELONA_LOG("fileadd(" << mark_a << "): " << filename);
     noteadd(mark_a + filename);
     noteunsel();
 }
