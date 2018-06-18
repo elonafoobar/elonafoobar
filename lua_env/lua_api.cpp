@@ -807,7 +807,8 @@ void init_usertypes(lua_env& lua)
                                      "number", &item::number,
                                      "id", &item::id,
                                      "count", &item::count,
-                                     "name", sol::property([](item& i) { return elona::itemname(i.index); })
+                                     "name", sol::property([](item& i) { return elona::itemname(i.index); }),
+                                     "param1", &item::param1
         );
 }
 
