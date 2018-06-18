@@ -2217,7 +2217,6 @@ int chara_relocate(int prm_784, int prm_785, int prm_786)
         cdata[tc_at_m125].relationship = relationship;
         cdata[tc_at_m125].original_relationship = original_relationship;
         cdata[tc_at_m125].hate = hate;
-        cdata[tc_at_m125].enemy_id = enemy_id;
         cdata[tc_at_m125].hp = hp;
         map(cdata[tc_at_m125].position.x, cdata[tc_at_m125].position.y, 1) =
             tc_at_m125 + 1;
