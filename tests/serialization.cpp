@@ -133,5 +133,5 @@ TEST_CASE("Test ability data compatibility", "[C++: Serialization]")
 TEST_CASE("Test foobar save data compatibility", "[C++: Serialization]")
 {
     load_previous_savefile();
-    REQUIRE(elona::foobar_save.is_autodig_enabled == 0);
+    REQUIRE(elona::foobar_data.is_autodig_enabled == 0);
 }

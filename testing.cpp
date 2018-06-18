@@ -62,8 +62,6 @@ void pre_init()
     initialize_cat_db();
     configure_lua();
 
-    foobar_save.initialize();
-
     load_config2(fs::path("tests/data/config.json"));
 
     title(u8"Elona Foobar version "s + latest_version.short_string());

@@ -887,7 +887,7 @@ void render_hud()
         sy -= 20;
     }
 
-    if (foobar_save.is_autodig_enabled)
+    if (foobar_data.is_autodig_enabled)
     {
         pos(sx, sy);
         gcopy(3, 0, 416, 50 + en * 30, 15);
