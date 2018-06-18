@@ -11990,6 +11990,30 @@ void create_cnpc()
 
 
 
+// TODO: Delete this function when v1.0.0 stable is released.
+// Save data in v0.2.5 is not compatible with that in v0.2.6 or later. To make
+// matters worse, foobar's version is not saved in v0.2.5 save. As a result, we
+// cannot migrate save data in a usual way, `migrate_save_data()` function.
+// This function
+// 1. Delete old meta data file, `foobar_save.s1`.
+// 2. Set v0.2.5 to foobar_data.
+// Now, you can detect that the version is v0.2.5 and use usual migration code,
+// `migrate_save_data()`.
+void migrate_save_data_from_025_to_026(const fs::path& save_dir)
+{
+    const auto old_meta_data_filepath = save_dir / "foobar_save.s1";
+
+    if (fs::exists(old_meta_data_filepath))
+        // v0.2.6 or later
+        return;
+
+    // v0.2.5
+    fs::remove(old_meta_data_filepath);
+    foobar_data.version = {0, 2, 5, "", "", ""};
+}
+
+
+
 void load_save_data(const fs::path& base_save_dir)
 {
     ELONA_LOG("Load save data: " << playerid);
@@ -12035,6 +12059,7 @@ void load_save_data(const fs::path& base_save_dir)
         }
     }
     ELONA_LOG("asd " << save_dir);
+    migrate_save_data_from_025_to_026(save_dir);
     ctrl_file(file_operation2_t::_7, save_dir);
     migrate_save_data();
     set_item_info();

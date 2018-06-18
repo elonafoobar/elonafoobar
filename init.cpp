@@ -806,8 +806,6 @@ int run()
     const fs::path config_file = filesystem::dir::exe() / u8"config.json";
     initialize_cat_db();
 
-    foobar_save.initialize();
-
     load_config2(config_file);
 
     title(u8"Elona Foobar version "s + latest_version.short_string(),

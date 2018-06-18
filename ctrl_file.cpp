@@ -438,21 +438,21 @@ void fmode_7_8(bool read, const fs::path& dir)
     }
 
     {
-        const auto filepath = dir / u8"foobar_save.s1";
+        const auto filepath = dir / u8"foobar_data.s1";
         if (read)
         {
             if (fs::exists(filepath))
             {
                 std::ifstream in{filepath.native(), std::ios::binary};
                 putit::binary_iarchive ar{in};
-                ar.load(foobar_save);
+                ar.load(foobar_data);
             }
         }
         else
         {
             std::ofstream out{filepath.native(), std::ios::binary};
             putit::binary_oarchive ar{out};
-            ar.save(foobar_save);
+            ar.save(foobar_data);
         }
     }
 

@@ -2339,11 +2339,11 @@ label_2747:
 
     if (key == key_autodig)
     {
-        foobar_save.is_autodig_enabled = !foobar_save.is_autodig_enabled;
+        foobar_data.is_autodig_enabled = !foobar_data.is_autodig_enabled;
         txt(i18n::_(
             u8"ui",
             u8"autodig",
-            foobar_save.is_autodig_enabled ? u8"enabled" : u8"disabled"));
+            foobar_data.is_autodig_enabled ? u8"enabled" : u8"disabled"));
         goto label_2747;
     }
 
@@ -2483,7 +2483,7 @@ label_2747:
         // Autodig
         int x = cdata[0].next_position.x;
         int y = cdata[0].next_position.y;
-        if (foobar_save.is_autodig_enabled)
+        if (foobar_data.is_autodig_enabled)
         {
             if (0 <= x && x < mdata(0) && 0 <= y && y < mdata(1)
                 && (chipm(7, map(x, y, 0)) & 4) && chipm(0, map(x, y, 0)) != 3
