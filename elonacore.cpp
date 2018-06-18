@@ -12003,7 +12003,7 @@ void migrate_save_data_from_025_to_026(const fs::path& save_dir)
 {
     const auto old_meta_data_filepath = save_dir / "foobar_save.s1";
 
-    if (fs::exists(old_meta_data_filepath))
+    if (!fs::exists(old_meta_data_filepath))
         // v0.2.6 or later
         return;
 
