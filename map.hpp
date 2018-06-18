@@ -7,6 +7,6 @@
 namespace elona
 {
 
-void map_reload(const std::string&);
+void map_reload(const std::string& map_filename);
 
 } // namespace elona
