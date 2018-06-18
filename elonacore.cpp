@@ -11853,6 +11853,8 @@ void migrate_save_data(const fs::path& save_dir)
             ctrl_file(file_operation_t::_2);
         }
     }
+
+    foobar_data.version = latest_version;
 }
 
 
