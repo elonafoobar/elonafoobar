@@ -11640,7 +11640,7 @@ void label_2088()
 
 
 
-void migrate_save_data()
+void migrate_save_data(const fs::path& save_dir)
 {
     int p1 = 0;
     int p3 = 0;
@@ -11749,7 +11749,110 @@ void migrate_save_data()
     gdata_version = 1220;
     cdata[0].has_own_sprite() = true;
     initialize_recipememory();
-    return;
+
+    if (foobar_data.version.id() <= 205)
+    {
+        // Fix corrupted map data.
+        // Iterate all map file
+        for (const auto& entry :
+             filesystem::dir_entries{save_dir,
+                                     filesystem::dir_entries::type::file,
+                                     std::regex{R"(map_\d+_\d+\.s2)"}})
+        {
+            int map_id;
+            int level;
+            {
+                const std::regex pattern{R"(map_(\d+)_(\d+)\.s2)"};
+                std::smatch match;
+                const auto str = entry.path().filename().string();
+                std::regex_match(str, match, pattern);
+                map_id = std::stoi(match.str(1));
+                level = std::stoi(match.str(2)) - 100;
+                mid = std::to_string(map_id) + "_" + std::to_string(level + 100);
+            }
+            // Read mdata/map/cdata/sdata/mef/cdatan2/mdatan.
+            ctrl_file(file_operation_t::_1);
+            // Read inv.
+            ctrl_file(file_operation2_t::_3, "inv_" + mid + ".s2");
+
+            ELONA_LOG("Fix corrupted map: " << mdatan(0) << "(" << mid << ")");
+            if (mdata(7) == 1 && mdata(17) == 0 && level == 1)
+            {
+                fs::path map_filename;
+                switch (map_id)
+                {
+                case 36: map_filename = u8"lumiest"; break;
+                case 5: map_filename = u8"vernis"; break;
+                case 15: map_filename = u8"palmia"; break;
+                case 11: map_filename = u8"kapul"; break;
+                case 12: map_filename = u8"yowyn"; break;
+                case 14: map_filename = u8"rogueden"; break;
+                case 33: map_filename = u8"noyel"; break;
+                default:
+                    ELONA_LOG("Refresh map data: 1");
+                    for (const auto& i : items(-1))
+                    {
+                        if (inv[i].number > 0)
+                        {
+                            ELONA_LOG("  " << cnvitemname(inv[i].id));
+                            cell_refresh(inv[i].position.x, inv[i].position.y);
+                        }
+                    }
+                    // Write inv.
+                    ctrl_file(file_operation2_t::_4, "inv_" + mid + ".s2");
+                    // Write mdata/map/cdata/sdata/mef/cdatan2/mdatan.
+                    ctrl_file(file_operation_t::_2);
+                    continue;
+                }
+
+                ELONA_LOG("Reinitialize map items.");
+                fmapfile =
+                    (filesystem::dir::map() / map_filename).generic_string();
+                ctrl_file(file_operation_t::_16);
+
+                for (int i = 0; i < 400; ++i)
+                {
+                    if (cmapdata(0, i) == 0)
+                        continue;
+                    const auto x = cmapdata(1, i);
+                    const auto y = cmapdata(2, i);
+                    for (const auto& i : items(-1))
+                    {
+                        if (inv[i].number > 0
+                            && inv[i].position == position_t{x, y})
+                        {
+                            inv[i].number = 0;
+                        }
+                    }
+                    if (cmapdata(4, i) == 0)
+                    {
+                        flt();
+                        int stat = itemcreate(-1, cmapdata(0, i), x, y, 0);
+                        if (stat != 0)
+                        {
+                            inv[ci].own_state = cmapdata(3, i);
+                        }
+                        cell_refresh(x, y);
+                    }
+                }
+            }
+            else
+            {
+                ELONA_LOG("Refresh map data: 2");
+                for (const auto& i : items(-1))
+                {
+                    if (inv[i].number > 0)
+                    {
+                        cell_refresh(inv[i].position.x, inv[i].position.y);
+                    }
+                }
+            }
+            // Write inv.
+            ctrl_file(file_operation2_t::_4, "inv_" + mid + ".s2");
+            // Write mdata/map/cdata/sdata/mef/cdatan2/mdatan.
+            ctrl_file(file_operation_t::_2);
+        }
+    }
 }
 
 
@@ -12061,7 +12164,7 @@ void load_save_data(const fs::path& base_save_dir)
     ELONA_LOG("asd " << save_dir);
     migrate_save_data_from_025_to_026(save_dir);
     ctrl_file(file_operation2_t::_7, save_dir);
-    migrate_save_data();
+    migrate_save_data(save_dir);
     set_item_info();
     for (int cnt = 0; cnt < 16; ++cnt)
     {
