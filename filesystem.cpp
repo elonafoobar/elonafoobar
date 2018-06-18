@@ -175,35 +175,5 @@ std::string to_utf8_path(const fs::path& path)
 
 
 
-std::string normalize_as_filename(const std::string& str)
-{
-    std::string ret{str};
-
-    for (const auto invalid_char : {
-             '"',
-             '\\',
-             '<',
-             '>',
-             '/',
-             '?',
-             '|',
-             '*',
-             ':',
-             '.',
-         })
-    {
-        ret =
-            strutil::replace(ret, std::string{invalid_char}, std::string{'_'});
-    }
-    if (!ret.empty() && ret.back() == ' ')
-    {
-        ret = ret.substr(0, ret.size() - 1);
-    }
-
-    return ret;
-}
-
-
-
 } // namespace filesystem
 } // namespace elona
