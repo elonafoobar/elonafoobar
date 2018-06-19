@@ -7,6 +7,43 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
+## [0.2.6] - 2018-06-19
+
+### Added
+
+- Validate and limit integer options.
+- Now numpad 5 key works like other numpad keys.
+- Implement "autonumlock" in vanilla. (only Windows)
+- Implement extra number prompt like omake.
+- Adjust key sensitivity of Enter/BackSpace key.
+- Implement alias lock like omake.
+  - You can lock aliases by `key_mode2`(default: `*`), and locked aliases do not change by rerolling.
+- Selected alias is restored when you go back the alias rolling menu.
+- Possible to go back the portrait menu at the final character making phase.
+- You can now cancel the final name input box in character making.
+- Stack goods at shop.
+- Add Lua API: `LuaCharacter.experience`.
+
+### Fixed
+
+- Fix some of errors not being displayed.
+- Fix README.md and README-jp.md to fix the current state.
+- Fix overflow of character level experience.
+- Fix being unable to sell/buy in Derphy if you are a criminal.
+- Fix glitch of log window if you use the default font bundled in foobar.
+- Fix foobar's version not being stored in save data.
+- Fix items on the ground getting transparent when opening temporary inventory(5080-5480).
+  - Such as blackjack and spell of 4-dimentional pocket.
+  - Also fix the transparent items getting duplicate when the map is re-generated.
+- Fix corrupted map data due to the above bug.
+- Fix crash if foobar is placed in folder which contains non-ascii characters.
+  - To avoid this issue, change the naming convention of save file, from `sav_{player name}` to random-generated name like `df04-0b4b-d0cc-a11b`.
+- Fix infinite loop in AI routine.
+- Fix autopick "to save" mark, `*`, conflicts with part of item name(in Japanese).
+  - Change the mark from `*` to `%`.
+
+
+
 ## [0.2.5] - 2018-06-10
 
 ### Added
