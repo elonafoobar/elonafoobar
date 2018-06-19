@@ -708,13 +708,11 @@ void LuaCharacter::damage_hp(character& self, int amount)
 
 void LuaCharacter::damage_hp_source(character& self, int amount, damage_source_t source)
 {
-    assert(amount > 0);
     elona::dmghp(self.index, amount, static_cast<int>(source));
 }
 
 void LuaCharacter::damage_hp_chara(character& self, int amount, const lua_character_handle handle)
 {
-    assert(amount > 0);
     elona::dmghp(self.index, amount, conv_chara(handle).index);
 }
 
@@ -797,7 +795,8 @@ void init_usertypes(lua_env& lua)
                                         "index", sol::readonly(&character::index),
                                         "id", sol::readonly(&character::id),
                                         "position", &character::position,
-                                        "name", sol::property([](character& c) { return elona::cdatan(0, c.index); })
+                                        "name", sol::property([](character& c) { return elona::cdatan(0, c.index); }),
+                                        "experience", &character::experience
         );
     lua.get_state()->new_usertype<item>( "LuaItem",
                                      "curse_state", &item::curse_state,
