@@ -6,7 +6,7 @@ os:
 
 environment:
   matrix:
-  - CMAKE_ARGS: -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Debug
+  - CMAKE_ARGS: -G "Visual Studio 15 2017 Win64"
     BOOST_VERSION: 1.66.0
     BOOST_ROOT: C:\Libraries\boost_1_66_0
     PREFIX: C:\SDK
@@ -27,9 +27,6 @@ for:
 
   configuration:
     - Release
-
-  environment:
-    CMAKE_ARGS: -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release
 
 
 branches:
@@ -87,16 +84,16 @@ build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
   - mkdir bin
   - cd bin
-  - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DWITH_TESTS=TESTS %CMAKE_ARGS% ..
-  - cmake --build .
+  - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DWITH_TESTS=TESTS %CMAKE_ARGS% -DCMAKE_BUILD_TYPE=%CONFIGURATION% ..
+  - cmake --build . --config %CONFIGURATION%
   - cd %CONFIGURATION%
   - ElonaFoobar.exe
   - cd %APPVEYOR_BUILD_FOLDER%
   - rd /q /s bin
   - mkdir bin
   - cd bin
-  - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DWITH_TESTS=OFF %CMAKE_ARGS% ..
-  - cmake --build .
+  - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DWITH_TESTS=OFF %CMAKE_ARGS% -DCMAKE_BUILD_TYPE=%CONFIGURATION% ..
+  - cmake --build . --config %CONFIGURATION%
 
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
