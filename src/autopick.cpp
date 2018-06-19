@@ -59,8 +59,8 @@ bool autopick::try_load(const fs::path& filepath)
         std::string line_ = line;
         operation op{operation::type_t::pick_up};
 
-        if (strutil::starts_with(line_, u8"*=")
-            || strutil::starts_with(line_, u8"=*"))
+        if (strutil::starts_with(line_, u8"%=")
+            || strutil::starts_with(line_, u8"=%"))
         {
             op.type = operation::type_t::save_and_no_drop;
             line_ = line_.substr(2);
@@ -73,7 +73,7 @@ bool autopick::try_load(const fs::path& filepath)
                 op.type = operation::type_t::do_nothing;
                 line_ = line_.substr(1);
                 break;
-            case '*':
+            case '%':
                 op.type = operation::type_t::save;
                 line_ = line_.substr(1);
                 break;
