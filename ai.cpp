@@ -417,6 +417,11 @@ turn_result_t proc_npc_movement_event(bool retreat)
         {
             cdata[cc].enemy_id = tc;
             cdata[cc].hate += 4;
+            distance = dist(
+                cdata[tc].position.x,
+                cdata[tc].position.y,
+                cdata[cc].position.x,
+                cdata[cc].position.y);
             return ai_proc_basic();
         }
         else if (
