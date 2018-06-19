@@ -6,7 +6,7 @@ os:
 
 environment:
   matrix:
-  - CMAKE_ARGS: -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Debug
+  - CMAKE_ARGS: -G "Visual Studio 15 2017 Win64"
     BOOST_VERSION: 1.66.0
     BOOST_ROOT: C:\Libraries\boost_1_66_0
     PREFIX: C:\SDK
@@ -27,9 +27,6 @@ for:
 
   configuration:
     - Release
-
-  environment:
-    CMAKE_ARGS: -G "Visual Studio 15 2017 Win64" -DCMAKE_BUILD_TYPE=Release
 
 
 branches:
@@ -65,15 +62,19 @@ before_build:
     %NEEDDEPENDS% copy SDL2_ttf-2.0.14\include\* %PREFIX%\include > nul
     %NEEDDEPENDS% copy SDL2_ttf-2.0.14\lib\x64\* %PREFIX%\lib > nul
   - |-
-    %NEEDDEPENDS% appveyor DownloadFile http://downloads.sourceforge.net/luabinaries/lua-5.3.4_Win64_vc14_lib.zip
-    %NEEDDEPENDS% 7z x -y lua-5.3.4_Win64_vc14_lib.zip -olua53 > nul
-    %NEEDDEPENDS% copy lua53\include\* %PREFIX%\include > nul
-    %NEEDDEPENDS% copy lua53\* %PREFIX%\lib > nul
-  - |-
     %NEEDDEPENDS% appveyor DownloadFile http://www.libsdl.org/projects/SDL_image/release/SDL2_image-devel-2.0.3-VC.zip
     %NEEDDEPENDS% 7z x -y SDL2_image-devel-2.0.3-VC.zip > nul
     %NEEDDEPENDS% copy SDL2_image-2.0.3\include\* %PREFIX%\include > nul
     %NEEDDEPENDS% copy SDL2_image-2.0.3\lib\x64\* %PREFIX%\lib > nul
+  - |-
+    %NEEDDEPENDS% appveyor DownloadFile https://www.lua.org/ftp/lua-5.3.4.tar.gz
+    %NEEDDEPENDS% mkdir %PREFIX%\lib\lua\src > nul
+    %NEEDDEPENDS% copy %APPVEYOR_BUILD_FOLDER%\cmake\lua\* %PREFIX%\lib\lua > nul
+    %NEEDDEPENDS% 7z x lua-5.3.4.tar.gz -so | 7z x -aoa -si -ttar > nul
+    %NEEDDEPENDS% xcopy /s /e /y lua-5.3.4\src\* %PREFIX%\lib\lua\src > nul
+    %NEEDDEPENDS% cd %PREFIX%\lib\lua\src
+    %NEEDDEPENDS% patch -p0 --binary < ..\lua_wstring_5.3.4.patch
+    %NEEDDEPENDS% cd %TEMP%
 
 build_script:
   - chcp 65001
@@ -83,16 +84,16 @@ build_script:
   - cd %APPVEYOR_BUILD_FOLDER%
   - mkdir bin
   - cd bin
-  - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DWITH_TESTS=TESTS %CMAKE_ARGS% ..
-  - cmake --build .
+  - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DWITH_TESTS=TESTS %CMAKE_ARGS% -DCMAKE_BUILD_TYPE=%CONFIGURATION% ..
+  - cmake --build . --config %CONFIGURATION%
   - cd %CONFIGURATION%
   - ElonaFoobar.exe
   - cd %APPVEYOR_BUILD_FOLDER%
   - rd /q /s bin
   - mkdir bin
   - cd bin
-  - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DWITH_TESTS=OFF %CMAKE_ARGS% ..
-  - cmake --build .
+  - cmake -DCMAKE_PREFIX_PATH=%PREFIX% -DWITH_TESTS=OFF %CMAKE_ARGS% -DCMAKE_BUILD_TYPE=%CONFIGURATION% ..
+  - cmake --build . --config %CONFIGURATION%
 
 after_build:
   - cd %APPVEYOR_BUILD_FOLDER%
@@ -107,6 +108,7 @@ after_build:
   - rd /q /s bin\ElonaFoobar\original
   - rd /q /s bin\ElonaFoobar\sound
   - rd /q /s bin\ElonaFoobar\user
+  - xcopy /s /e /y runtime\* bin\ElonaFoobar
   - cd bin
   - 7z a -y ElonaFoobar-windows.zip ElonaFoobar
 
