@@ -9,6 +9,23 @@
 #include <boost/filesystem.hpp>
 namespace fs = boost::filesystem;
 
+
+namespace std
+{
+
+template <>
+struct hash<fs::path>
+{
+    size_t operator()(const fs::path& key) const
+    {
+        return hash<fs::path::string_type>()(key.native());
+    }
+};
+
+} // namespace std
+
+
+
 #include "range.hpp"
 
 

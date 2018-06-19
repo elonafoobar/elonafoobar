@@ -1,6 +1,8 @@
 #pragma once
 
+#include <unordered_map>
 #include "filesystem.hpp"
+#include "lib/noncopyable.hpp"
 
 
 
@@ -38,9 +40,33 @@ enum class file_operation2_t
 };
 
 
+
+class save_t : public lib::noncopyable
+{
+public:
+    static save_t& instance();
+
+
+    void clear();
+    void add(const fs::path& filename);
+    void remove(const fs::path& filename);
+
+    void save(const fs::path& save_dir);
+
+
+private:
+    save_t() = default;
+
+    std::unordered_map<fs::path, bool> saved_files;
+};
+
+
+
 void ctrl_file(file_operation_t file_operation);
 void ctrl_file(file_operation2_t file_operation, const fs::path& filepath);
-void fileadd(const fs::path& filepath, int prm_693 = 0);
+void tmpload(const fs::path& filename);
+bool writeloadedbuff(const fs::path& filename);
+void writeloadedbuff_clear();
 
 
 } // namespace elona

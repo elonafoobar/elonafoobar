@@ -23,7 +23,7 @@ void load_previous_savefile()
     elona::testing::reset_state();
     // This file was saved directly after the dialog at the start of the game.
     elona::playerid = "sav_foobar_test";
-    load_save_data(save_dir);
+    load_save_data(filesystem::dir::exe() / save_dir);
     elona::firstturn = 1;
     elona::mode =
         3; // begin the game as if it were loaded from a save; load inv_xxx.s2
@@ -32,10 +32,10 @@ void load_previous_savefile()
 
 void save_and_reload()
 {
-    save_game(save_dir);
+    save_game(filesystem::dir::exe() / save_dir);
     elona::testing::reset_state();
     elona::firstturn = 1;
-    load_save_data(save_dir);
+    load_save_data(filesystem::dir::exe() / save_dir);
 }
 
 void start_in_map(int map, int level)
@@ -44,7 +44,7 @@ void start_in_map(int map, int level)
     initialize_debug_globals();
 
     elona::playerid = player_id;
-    fs::remove_all(save_dir / elona::playerid);
+    fs::remove_all(filesystem::dir::exe() / save_dir / elona::playerid);
 
     gdata_current_map = map; // Debug map
     gdata_current_dungeon_level = level;
@@ -119,7 +119,7 @@ void pre_init()
 
 void post_run()
 {
-    fs::remove_all(save_dir / player_id);
+    fs::remove_all(filesystem::dir::exe() / save_dir / player_id);
     finish_elona();
 }
 

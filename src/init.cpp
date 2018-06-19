@@ -439,7 +439,6 @@ void initialize_elona()
     DIM2(fixeditemenc, 20);
     DIM2(dir, 5);
     DIM3(dblist, 2, 800);
-    SDIM1(filemod);
     SDIM2(inputlog, 100);
     SDIM2(key, 20);
     SDIM2(keylog, 20);

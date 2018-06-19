@@ -1772,6 +1772,7 @@ void tcgdeck()
             s_at_tcg(cnt) = i18n::s.get("core.locale.tcg.deck.name", s_at_tcg(cnt));
             const auto deck_filepath =
                 filesystem::dir::tmp() / (u8"deck_"s + cnt + u8".s2");
+            tmpload(filesystem::u8path(u8"deck_"s + cnt + u8".s2"));
             if (!fs::exists(deck_filepath))
             {
                 s_at_tcg(cnt) += " (" + i18n::s.get("core.locale.tcg.deck.new") + ")";
@@ -1797,6 +1798,7 @@ void tcgdeck()
         }
         DIM2(deck, 1000);
         curdeck = rtval;
+        tmpload(filesystem::u8path(u8"deck_"s + curdeck + u8".s2"));
         if (fs::exists(
                 filesystem::dir::tmp() / (u8"deck_"s + curdeck + u8".s2")))
         {
@@ -2709,6 +2711,7 @@ label_1830_internal:
                 ctrl_file(
                     file_operation2_t::_23,
                     filesystem::dir::tmp() / (u8"deck_"s + curdeck + u8".s2"));
+                writeloadedbuff(u8"deck_"s + curdeck + u8".s2");
             }
             else
             {

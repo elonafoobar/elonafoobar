@@ -1128,20 +1128,17 @@ turn_result_t pass_one_turn(bool label_2738_flg)
 
 void label_27412()
 {
-label_27411_internal:
+    std::cerr << "emoicon update:" << cdata[cc].turn << std::endl;
     cdata[cc].emotion_icon -= 100;
     if (cdata[cc].emotion_icon < 0)
     {
         cdata[cc].emotion_icon = 0;
     }
-    if (mdata(14) == 2)
+    if (mdata(14) == 2 && gdata_weather >= 3)
     {
-        if (gdata_weather >= 3)
-        {
-            cdata[cc].wet = 50;
-        }
+        cdata[cc].wet = 50;
     }
-    if (cdata[cc].experience >= cdata[cc].required_experience)
+    while (cdata[cc].experience >= cdata[cc].required_experience)
     {
         if (cc == 0)
         {
@@ -1150,9 +1147,7 @@ label_27411_internal:
         }
         r2 = 0;
         gain_level(cc);
-        goto label_27411_internal;
     }
-    return;
 }
 
 
@@ -1628,6 +1623,7 @@ label_2747:
         const auto save_dir = filesystem::dir::save();
         load_save_data(save_dir);
         mode = 3;
+        std::cerr << "emoicon:" << cdata[cc].emotion_icon << std::endl;
         return turn_result_t::initialize_map;
     }
 

@@ -2523,6 +2523,7 @@ turn_result_t do_open_command()
             }
         }
         ctrl_file(file_operation2_t::_4, u8"shoptmp.s2");
+        tmpload(filesystem::u8path(u8"shop"s + invfile + u8".s2"));
         if (fs::exists(
                 filesystem::dir::tmp() / (u8"shop"s + invfile + u8".s2")))
         {
