@@ -410,7 +410,7 @@ void initialize_config(const fs::path& config_file)
 void initialize_elona()
 {
     i18n::load(jp ? u8"jp" : u8"en");
-    i18n::s.init(jp ? filesystem::path("lang2") / "jp" : filesystem::path("lang2") / "en");
+    i18n::s.init(jp ? filesystem::path("locale") / "jp" : filesystem::path("locale") / "en");
 
     initialize_ui_constants();
     if (config::instance().fullscreen != 0)
