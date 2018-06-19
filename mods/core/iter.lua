@@ -2,7 +2,6 @@ local Iter = {}
 
 function Iter.rectangle_iter_step (size, pos)
    local old = pos
-   print(pos.x .. " " .. pos.y)
    pos.x = pos.x + 1
    if pos.x == size.sx then
       pos.x = size.x

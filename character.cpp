@@ -1009,21 +1009,21 @@ int chara_get_free_slot_ally()
 
 
 
-void chara_place()
+bool chara_place()
 {
     if (rc == -1)
-        return;
+        return false;
 
     if (rc == 56)
     {
         cdata[rc].state = 0;
-        return;
+        return false;
     }
 
     if (gdata_mount != 0 && gdata_mount == rc)
     {
         cdata[rc].position = cdata[0].position;
-        return;
+        return true;
     }
 
     const auto success = chara_place_internal(
@@ -1034,6 +1034,8 @@ void chara_place()
     {
         failed_to_place_character(cdata[rc]);
     }
+
+    return success;
 }
 
 
@@ -1206,6 +1208,8 @@ void initialize_character()
 
 int chara_create(int prm_756, int prm_757, int prm_758, int prm_759)
 {
+    bool success = false;
+
     chara_createhack = -1;
     if (prm_758 == -3)
     {
@@ -1242,7 +1246,7 @@ int chara_create(int prm_756, int prm_757, int prm_758, int prm_759)
         {
             if (prm_758 != -1)
             {
-                chara_place();
+                success = chara_place();
             }
         }
     }
@@ -1251,7 +1255,8 @@ int chara_create(int prm_756, int prm_757, int prm_758, int prm_759)
         rc = 56;
         return 0;
     }
-    return 1;
+
+    return success ? 1 : 0;
 }
 
 void chara_refresh(int cc)
