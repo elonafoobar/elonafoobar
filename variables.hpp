@@ -1096,7 +1096,7 @@ turn_result_t do_gatcha();
 void dump_player_info();
 void remove_card_and_figures();
 void label_2088();
-void migrate_save_data();
+void migrate_save_data(const fs::path& filepath);
 void label_2090();
 void get_inheritance();
 void load_gene_files();

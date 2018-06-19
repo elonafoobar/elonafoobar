@@ -17,60 +17,58 @@ namespace elona
 
 
 
-void map_reload(const std::string& prm_935)
+void map_reload(const std::string& map_filename)
 {
-    int y_at_m166 = 0;
-    int x_at_m166 = 0;
-    fmapfile = (filesystem::dir::map() / prm_935).generic_string();
+    fmapfile = (filesystem::dir::map() / map_filename).generic_string();
     ctrl_file(file_operation_t::_16);
-    for (int cnt = 0, cnt_end = (mdata(1)); cnt < cnt_end; ++cnt)
+
+    for (int y = 0; y < mdata(1); ++y)
     {
-        y_at_m166 = cnt;
-        for (int cnt = 0, cnt_end = (mdata(0)); cnt < cnt_end; ++cnt)
+        for (int x = 0; x < mdata(0); ++x)
         {
-            map(cnt, y_at_m166, 8) = 0;
-            map(cnt, y_at_m166, 9) = 0;
+            map(x, y, 8) = 0;
+            map(x, y, 9) = 0;
         }
     }
+
     mef_clear_all();
-    for (const auto& cnt : items(-1))
+
+    for (const auto& i : items(-1))
     {
-        if (inv[cnt].number > 0)
+        if (inv[i].number > 0)
         {
-            if (inv[cnt].own_state == 1)
+            if (inv[i].own_state == 1)
             {
-                if (the_item_db[inv[cnt].id]->category == 57000)
+                if (the_item_db[inv[i].id]->category == 57000)
                 {
-                    item_remove(inv[cnt]);
-                    cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
+                    item_remove(inv[i]);
+                    cell_refresh(inv[i].position.x, inv[i].position.y);
                 }
             }
         }
     }
-    for (int cnt = 0; cnt < 400; ++cnt)
+
+    for (int i = 0; i < 400; ++i)
     {
-        if (cmapdata(0, cnt) == 0)
-        {
+        if (cmapdata(0, i) == 0)
             continue;
-        }
-        x_at_m166 = cmapdata(1, cnt);
-        y_at_m166 = cmapdata(2, cnt);
-        if (cmapdata(4, cnt) == 0)
+        const auto x = cmapdata(1, i);
+        const auto y = cmapdata(2, i);
+        if (cmapdata(4, i) == 0)
         {
-            if (map(x_at_m166, y_at_m166, 4) == 0)
+            if (map(x, y, 4) == 0)
             {
                 flt();
                 int stat =
-                    itemcreate(-1, cmapdata(0, cnt), x_at_m166, y_at_m166, 0);
+                    itemcreate(-1, cmapdata(0, i), x, y, 0);
                 if (stat != 0)
                 {
-                    inv[ci].own_state = cmapdata(3, cnt);
+                    inv[ci].own_state = cmapdata(3, i);
                 }
             }
-            cell_refresh(x_at_m166, y_at_m166);
+            cell_refresh(x, y);
         }
     }
-    return;
 }
 
 
