@@ -6,7 +6,7 @@ bak/
 *.o
 *.a
 bin/
-/version.cpp
+src/version.cpp
 /*.vcxproj
 /*.sln
 /*.filters
