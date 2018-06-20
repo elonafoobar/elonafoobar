@@ -1,8 +1,16 @@
 #include "cat.hpp"
-#include "defines.hpp"
 #include <iostream>
 #include <string>
+#include "defines.hpp"
 using namespace std::string_literals;
+
+
+#ifdef ELONA_OS_WINDOWS
+#define ELONA_luaL_dofile luaL_dowfile
+#else
+#define ELONA_luaL_dofile luaL_dofile
+#endif
+
 
 namespace elona
 {
@@ -24,13 +32,7 @@ void engine::initialize()
 
 void engine::load(const fs::path& filepath)
 {
-#ifdef ELONA_OS_WINDOWS
-    std::wstring filepath_str = filepath.native();
-    if (luaL_dowfile(ptr(), filepath_str.c_str()) != 0)
-#else
-    std::string filepath_str = filesystem::to_narrow_path(filepath);
-    if (luaL_dofile(ptr(), filepath_str.c_str()) != 0)
-#endif
+    if (ELONA_luaL_dofile(ptr(), filepath.native().c_str()) != 0)
     {
         const char* error_msg = lua_tostring(ptr(), -1);
         throw std::runtime_error(
