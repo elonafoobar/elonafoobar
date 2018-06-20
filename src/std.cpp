@@ -354,13 +354,12 @@ void exec(const std::string&, int)
 
 
 
-
-
 void font(int size, snail::font_t::style_t style)
 {
-    const auto& filename = filesystem::path(u8"font")
-        / lang(config::instance().font1, config::instance().font2);
-    snail::hsp::font(size, style, filesystem::make_preferred_path_in_utf8(filename));
+    const auto& filepath = filesystem::path(u8"font")
+        / filesystem::u8path(lang(
+              config::instance().font1, config::instance().font2));
+    snail::hsp::font(size, style, filepath);
 }
 
 

@@ -1,16 +1,17 @@
 #include "../application.hpp"
-#include "../input.hpp"
-#include "../font.hpp"
 #include "../color.hpp"
+#include "../font.hpp"
+#include "../input.hpp"
 // TODO: this dependency is not good.
+#include <iostream>
+#include <unordered_map>
 #include "../../config.hpp"
 #include "../detail/sdl.hpp"
 #include "../window.hpp"
-#include <unordered_map>
-#include <iostream>
 
 
-namespace {
+namespace
+{
 
 struct font_cache_key
 {
@@ -505,7 +506,7 @@ void color(int r, int g, int b)
         detail::current_tex_buffer().color);
 }
 
-void font(int size, font_t::style_t style, const std::string& filename)
+void font(int size, font_t::style_t style, const fs::path& filepath)
 {
     auto& renderer = application::instance().get_renderer();
     if (renderer.font().size() == size && renderer.font().style() == style)
@@ -521,10 +522,7 @@ void font(int size, font_t::style_t style, const std::string& filename)
         const auto inserted = font_detail::font_cache.emplace(
             std::piecewise_construct,
             std::forward_as_tuple(size, style),
-            std::forward_as_tuple(
-                filename,
-                size,
-                style));
+            std::forward_as_tuple(filepath, size, style));
         renderer.set_font(inserted.first->second);
     }
 }
@@ -933,4 +931,3 @@ void title(const std::string& title_str,
 } // namespace hsp
 } // namespace snail
 } // namespace elona
-

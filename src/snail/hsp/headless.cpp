@@ -60,7 +60,7 @@ void color(int, int, int)
 {
 }
 
-void font(int, snail::font_t::style_t, const std::string&)
+void font(int, snail::font_t::style_t, const fs::path&)
 {
 }
 
