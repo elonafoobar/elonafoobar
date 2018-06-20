@@ -6,13 +6,16 @@ bak/
 *.o
 *.a
 bin/
-/version.cpp
+src/version.cpp
 /*.vcxproj
 /*.sln
 /*.filters
 deps/include/
 deps/lib/
 deps/elona/
+deps/*.zip
+deps/*.tar.gz
+thirdparty/lib/lua/src/
 CMakeFiles/
 snail/Debug
 snail/snail.dir
