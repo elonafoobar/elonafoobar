@@ -2,12 +2,13 @@
 #include "../config.hpp"
 #include "../filesystem.hpp"
 #include "../input.hpp"
-#include "lua_env.hpp"
+#include "../macro.hpp"
 #include "../snail/application.hpp"
 #include "../snail/blend_mode.hpp"
 #include "../ui.hpp"
 #include "../util.hpp"
 #include "../variables.hpp"
+#include "lua_env.hpp"
 #include <boost/algorithm/string/predicate.hpp>
 
 namespace elona
@@ -121,6 +122,8 @@ inline bool lua_console::is_incomplete_lua_line(const sol::error& error)
 
 bool lua_console::lua_error_handler(const std::string& input, const sol::protected_function_result pfr)
 {
+    UNUSED(input);
+
     bool multiline_ended = true;
 
     if (pfr.status() == sol::call_status::syntax)
