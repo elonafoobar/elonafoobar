@@ -23,7 +23,7 @@ locale {
         lay_hand = "${name(_1)} shout${s(_1)}, \"Lay hand!\""
 
         runs_away_in_terror = "${name(_1)} run${s(_1)} away in terror."
-        sleep_is_disturbed = "${name(_1)}${r(_1)} sleep ${is(_1)} disturbed"
+        sleep_is_disturbed = "${name(_1)}${his_owned(_1)} sleep ${is(_1)} disturbed"
 
         explode_click = "*click*"
         splits = "${name(_1)} split${s(_1)}!"
@@ -139,7 +139,7 @@ locale {
             _55 = "${name(_1)} suffer${s(_1)} from venom."
             _56 = "${name(_1)} ${is(_1)} chilled by infernal squall."
             _57 = "${name(_1)} ${is(_1)} shocked by a shrill sound."
-            _58 = "${name(_1)}${r(_1)} nerves are hurt."
+            _58 = "${name(_1)}${his_owned(_1)} nerves are hurt."
             _59 = "${name(_1)} ${is(_1)} hurt by chaotic force."
             # _60
             _61 = "${name(_1)} get${s(_1)} a cut."
