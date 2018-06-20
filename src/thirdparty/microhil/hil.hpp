@@ -40,6 +40,8 @@ template<typename T> struct call_traits_ref {
 
 template<typename T> struct call_traits;
 template<> struct call_traits<bool> : public internal::call_traits_value<bool> {};
+template<> struct call_traits<int> : public internal::call_traits_value<int> {};
+template<> struct call_traits<int64_t> : public internal::call_traits_value<int64_t> {};
 template<> struct call_traits<std::string> : public internal::call_traits_ref<std::string> {};
 template<> struct call_traits<FunctionCall> : public internal::call_traits_ref<FunctionCall> {};
 
@@ -55,12 +57,15 @@ public:
     enum Type {
         NULL_TYPE,
         BOOL_TYPE,
+        INT_TYPE,
         IDENT_TYPE,
         FUNCTION_TYPE,
     };
 
     Value() : type_(NULL_TYPE), null_(nullptr) {}
     Value(bool v) : type_(BOOL_TYPE), bool_(v) {}
+    Value(int v) : type_(INT_TYPE), int_(v) {}
+    Value(int64_t v) : type_(INT_TYPE), int_(v) {}
     Value(const std::string& v) : type_(IDENT_TYPE), string_(new std::string(v)) {}
     Value(const char* v) : type_(IDENT_TYPE), string_(new std::string(v)) {}
     Value(const FunctionCall& v) : type_(FUNCTION_TYPE), func_(new FunctionCall(v)) {}
@@ -92,6 +97,7 @@ private:
     union {
         void* null_;
         bool bool_;
+        int64_t int_;
         std::string* string_;
         FunctionCall* func_;
     };
@@ -739,6 +745,7 @@ inline const char* Value::typeToString(Value::Type type)
     switch (type) {
     case NULL_TYPE:   return "null";
     case BOOL_TYPE:   return "bool";
+    case INT_TYPE:    return "int";
     case IDENT_TYPE:
         return "string";
     case FUNCTION_TYPE:  return "function call";
@@ -752,6 +759,7 @@ inline Value::Value(const Value& v) :
     switch (v.type_) {
     case NULL_TYPE: null_ = v.null_; break;
     case BOOL_TYPE: bool_ = v.bool_; break;
+    case INT_TYPE: int_ = v.int_; break;
     case IDENT_TYPE:
         string_ = new std::string(*v.string_);
         break;
@@ -769,6 +777,7 @@ inline Value::Value(Value&& v) noexcept :
     switch (v.type_) {
     case NULL_TYPE: null_ = v.null_; break;
     case BOOL_TYPE: bool_ = v.bool_; break;
+    case INT_TYPE: int_ = v.int_; break;
     case IDENT_TYPE:
         string_ = v.string_;
         break;
@@ -794,6 +803,7 @@ inline Value& Value::operator=(const Value& v)
     switch (v.type_) {
     case NULL_TYPE: null_ = v.null_; break;
     case BOOL_TYPE: bool_ = v.bool_; break;
+    case INT_TYPE: int_ = v.int_; break;
     case IDENT_TYPE:
         string_ = new std::string(*v.string_);
         break;
@@ -818,6 +828,7 @@ inline Value& Value::operator=(Value&& v) noexcept
     switch (v.type_) {
     case NULL_TYPE: null_ = v.null_; break;
     case BOOL_TYPE: bool_ = v.bool_; break;
+    case INT_TYPE: int_ = v.int_; break;
     case IDENT_TYPE:
         string_ = v.string_;
         break;
@@ -852,6 +863,16 @@ template<> struct Value::ValueConverter<bool>
     bool is(const Value& v) { return v.type() == Value::BOOL_TYPE; }
     bool to(const Value& v) { v.assureType<bool>(); return v.bool_; }
 };
+template<> struct Value::ValueConverter<int64_t>
+{
+    bool is(const Value& v) { return v.type() == Value::INT_TYPE; }
+    int64_t to(const Value& v) { v.assureType<int64_t>(); return v.int_; }
+};
+template<> struct Value::ValueConverter<int>
+{
+    bool is(const Value& v) { return v.type() == Value::INT_TYPE; }
+    int to(const Value& v) { v.assureType<int>(); return static_cast<int>(v.int_); }
+};
 template<> struct Value::ValueConverter<std::string>
 {
     bool is(const Value& v) { return v.type() == Value::IDENT_TYPE; }
@@ -866,6 +887,8 @@ template<> struct Value::ValueConverter<FunctionCall>
 namespace internal {
 template<typename T> inline const char* type_name();
 template<> inline const char* type_name<bool>() { return "bool"; }
+template<> inline const char* type_name<int>() { return "int"; }
+template<> inline const char* type_name<int64_t>() { return "int64_t"; }
 template<> inline const char* type_name<std::string>() { return "string"; }
 template<> inline const char* type_name<hil::FunctionCall>() { return "function call"; }
 } // namespace internal
@@ -1024,6 +1047,9 @@ inline bool Parser::parseFunction(Value& currentValue, std::string ident)
             break;
         case TokenType::BOOL:
             func.args.emplace_back(token().boolValue());
+            break;
+        case TokenType::NUMBER:
+            func.args.emplace_back(token().intValue());
             break;
         default:
             addError("error parsing function arguments: " + func.name);
