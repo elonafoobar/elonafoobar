@@ -29,8 +29,6 @@ void initialize(const std::string&)
 
 
 
-
-
 void application::quit()
 {
     _will_quit = true;

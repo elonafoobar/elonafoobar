@@ -59,8 +59,7 @@ void map_reload(const std::string& map_filename)
             if (map(x, y, 4) == 0)
             {
                 flt();
-                int stat =
-                    itemcreate(-1, cmapdata(0, i), x, y, 0);
+                int stat = itemcreate(-1, cmapdata(0, i), x, y, 0);
                 if (stat != 0)
                 {
                     inv[ci].own_state = cmapdata(3, i);

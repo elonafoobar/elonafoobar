@@ -653,8 +653,8 @@ main_menu_result_t character_making_select_alias(bool advanced_to_next_menu)
         if (redraw_aliases)
         {
             s(0) = lang(u8"異名の選択"s, u8"Alias Selection"s);
-            s(1) =
-                strhint3b + key_mode2 + lang(u8" [異名のロック]", u8" [Lock Alias]");
+            s(1) = strhint3b + key_mode2
+                + lang(u8" [異名のロック]", u8" [Lock Alias]");
             display_window(
                 (windoww - 400) / 2 + inf_screenx,
                 winposy(458, 1) + 20,
@@ -686,7 +686,6 @@ main_menu_result_t character_making_select_alias(bool advanced_to_next_menu)
                     mes(u8"Locked!"s);
                     color(0, 0, 0);
                 }
-
             }
             cs_bk = cs;
             list(0, 0) = 0;
@@ -711,7 +710,8 @@ main_menu_result_t character_making_select_alias(bool advanced_to_next_menu)
             else
             {
                 cmaka = listn(0, p);
-                return main_menu_result_t::character_making_customize_appearance;
+                return main_menu_result_t::
+                    character_making_customize_appearance;
             }
         }
         if (key == key_mode2 && cs != -1)
@@ -734,7 +734,7 @@ main_menu_result_t character_making_select_alias(bool advanced_to_next_menu)
         if (getkey(snail::key::f1))
         {
             show_game_help();
-            return main_menu_result_t:: character_making_select_alias_looped;
+            return main_menu_result_t::character_making_select_alias_looped;
         }
         if (cs != cs_bk)
         {

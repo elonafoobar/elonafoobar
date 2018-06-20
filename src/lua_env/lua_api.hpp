@@ -29,6 +29,7 @@ public:
      * For testing use only.
      */
     static void bind(lua_env&);
+
 public:
     explicit api_manager(lua_env*);
 
@@ -51,8 +52,9 @@ public:
      * tables. So, the Rand table would be accessed from Lua by
      * calling Elona.require("Rand").
      */
-    sol::optional<sol::table> try_find_api(const std::string& module_namespace,
-                                           const std::string& module_name);
+    sol::optional<sol::table> try_find_api(
+        const std::string& module_namespace,
+        const std::string& module_name);
 
     /***
      * Returns the reference to the core API table "Elona" in the API
@@ -60,6 +62,7 @@ public:
      * their own API methods to it.
      */
     sol::table get_api_table();
+
 private:
     /***
      * Returns true if the Elona table has already been loaded into

@@ -4,5 +4,4 @@ namespace elona
 {
 
 void run_npc_turns();
-
 }

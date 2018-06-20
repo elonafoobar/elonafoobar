@@ -1,13 +1,13 @@
 #include "../thirdparty/catch2/catch.hpp"
 #include "../thirdparty/sol2/sol.hpp"
 
-#include "tests.hpp"
 #include "../character.hpp"
 #include "../item.hpp"
 #include "../itemgen.hpp"
 #include "../lua_env/lua_store.hpp"
 #include "../testing.hpp"
 #include "../variables.hpp"
+#include "tests.hpp"
 
 using namespace std::literals::string_literals;
 
@@ -85,7 +85,8 @@ TEST_CASE("Test that tables can be set", "[Lua: Store]")
     elona::lua::store store;
     store.init(sol);
 
-    REQUIRE_NOTHROW(sol.safe_script(R"(Store["my_table"] = { [0]=42, [1]="Scut!", [2]=false, [3]=nil, bell=" *リン* " })"));
+    REQUIRE_NOTHROW(sol.safe_script(
+        R"(Store["my_table"] = { [0]=42, [1]="Scut!", [2]=false, [3]=nil, bell=" *リン* " })"));
 
     sol::table my_table = sol["Store"]["my_table"];
 
@@ -94,36 +95,32 @@ TEST_CASE("Test that tables can be set", "[Lua: Store]")
     auto fx = [&iterations](sol::object key, sol::object value) {
         ++iterations;
         sol::type keytype = key.get_type();
-        switch (keytype) {
+        switch (keytype)
+        {
         case sol::type::number:
-            switch (key.as<int>()) {
-            case 0:
-                REQUIRE((value.as<int>() == 42));
-                break;
-            case 1:
-                REQUIRE((value.as<std::string>() == "Scut!"));
-                break;
-            case 2:
-                REQUIRE((value.as<bool>() == false));
-                break;
-            case 3:
-                REQUIRE((value.is<sol::lua_nil_t>()));
-                break;
+            switch (key.as<int>())
+            {
+            case 0: REQUIRE((value.as<int>() == 42)); break;
+            case 1: REQUIRE((value.as<std::string>() == "Scut!")); break;
+            case 2: REQUIRE((value.as<bool>() == false)); break;
+            case 3: REQUIRE((value.is<sol::lua_nil_t>())); break;
             }
             break;
         case sol::type::string:
-            if (key.as<std::string>() == "bell") {
+            if (key.as<std::string>() == "bell")
+            {
                 REQUIRE((value.as<std::string>() == " *リン* "));
             }
             break;
-        default:
-            break;
+        default: break;
         }
     };
     my_table.for_each(fx);
     REQUIRE(iterations == tablesize);
 
-    auto fxpair = [&fx](std::pair<sol::object, sol::object> kvp) { fx(kvp.first, kvp.second); };
+    auto fxpair = [&fx](std::pair<sol::object, sol::object> kvp) {
+        fx(kvp.first, kvp.second);
+    };
     iterations = 0;
     my_table.for_each(fxpair);
     REQUIRE(iterations == tablesize);
@@ -136,11 +133,17 @@ TEST_CASE("Test that tables can be retrieved", "[Lua: Store]")
     elona::lua::store store;
     store.init(sol);
 
-    sol::table my_table = sol.create_table_with(0, 42,
-                                                1, "Scut!",
-                                                2, false,
-                                                3, sol::lua_nil, // does nothing
-                                                "bell"," *リン* ");
+    sol::table my_table = sol.create_table_with(
+        0,
+        42,
+        1,
+        "Scut!",
+        2,
+        false,
+        3,
+        sol::lua_nil, // does nothing
+        "bell",
+        " *リン* ");
     auto view = sol::state_view(sol);
     auto obj = sol::object(my_table);
     store.set("my_table"s, obj);
@@ -152,36 +155,32 @@ TEST_CASE("Test that tables can be retrieved", "[Lua: Store]")
     auto fx = [&iterations](sol::object key, sol::object value) {
         ++iterations;
         sol::type keytype = key.get_type();
-        switch (keytype) {
+        switch (keytype)
+        {
         case sol::type::number:
-            switch (key.as<int>()) {
-            case 0:
-                REQUIRE((value.as<int>() == 42));
-                break;
-            case 1:
-                REQUIRE((value.as<std::string>() == "Scut!"));
-                break;
-            case 2:
-                REQUIRE((value.as<bool>() == false));
-                break;
-            case 3:
-                REQUIRE((value.is<sol::lua_nil_t>()));
-                break;
+            switch (key.as<int>())
+            {
+            case 0: REQUIRE((value.as<int>() == 42)); break;
+            case 1: REQUIRE((value.as<std::string>() == "Scut!")); break;
+            case 2: REQUIRE((value.as<bool>() == false)); break;
+            case 3: REQUIRE((value.is<sol::lua_nil_t>())); break;
             }
             break;
         case sol::type::string:
-            if (key.as<std::string>() == "bell") {
+            if (key.as<std::string>() == "bell")
+            {
                 REQUIRE((value.as<std::string>() == " *リン* "));
             }
             break;
-        default:
-            break;
+        default: break;
         }
     };
     my_table.for_each(fx);
     REQUIRE(iterations == tablesize);
 
-    auto fxpair = [&fx](std::pair<sol::object, sol::object> kvp) { fx(kvp.first, kvp.second); };
+    auto fxpair = [&fx](std::pair<sol::object, sol::object> kvp) {
+        fx(kvp.first, kvp.second);
+    };
     iterations = 0;
     my_table.for_each(fxpair);
     REQUIRE(iterations == tablesize);
@@ -194,12 +193,10 @@ TEST_CASE("Test that positions can be set", "[Lua: Store]")
     elona::lua::store store;
     store.init(sol);
 
-    sol.new_usertype<position_t>( "LuaPosition",
-                                  "x", &position_t::x,
-                                  "y", &position_t::y
-        );
+    sol.new_usertype<position_t>(
+        "LuaPosition", "x", &position_t::x, "y", &position_t::y);
 
-    position_t my_position = { 24, 47 };
+    position_t my_position = {24, 47};
 
     auto view = sol::state_view(sol);
     auto obj = sol::make_object(sol, my_position);
@@ -227,10 +224,13 @@ TEST_CASE("Test isolation between environments", "[Lua: Store]")
     second_env["Store"] = second_store;
 
     REQUIRE_NOTHROW(sol.safe_script(R"(Store["message"] = "dood")", first_env));
-    REQUIRE_NOTHROW(sol.safe_script(R"(Store["message"] = "putit")", second_env));
+    REQUIRE_NOTHROW(
+        sol.safe_script(R"(Store["message"] = "putit")", second_env));
 
-    REQUIRE_NOTHROW(sol.safe_script(R"(assert(Store["message"] == "dood"))", first_env));
-    REQUIRE_NOTHROW(sol.safe_script(R"(assert(Store["message"] == "putit"))", second_env));
+    REQUIRE_NOTHROW(
+        sol.safe_script(R"(assert(Store["message"] == "dood"))", first_env));
+    REQUIRE_NOTHROW(
+        sol.safe_script(R"(assert(Store["message"] == "putit"))", second_env));
 }
 
 
@@ -241,7 +241,8 @@ TEST_CASE("Test multiple table assignment", "[Lua: Store]")
     elona::lua::store store;
     store.init(sol);
 
-    REQUIRE_NOTHROW(sol.safe_script(R"(Store.thing = { [0]=0,[1]=1,[2]=2,[3]={1,2,3} })"));
+    REQUIRE_NOTHROW(
+        sol.safe_script(R"(Store.thing = { [0]=0,[1]=1,[2]=2,[3]={1,2,3} })"));
 
     sol::table my_table = sol["Store"]["thing"];
     int a = my_table[0];
@@ -251,7 +252,8 @@ TEST_CASE("Test multiple table assignment", "[Lua: Store]")
     REQUIRE(b == 1);
     REQUIRE(c == 2);
 
-    REQUIRE_NOTHROW(sol.safe_script(R"(Store.thing = { [0]=2,[1]=1,[2]=0,[3]={3,2,1} })"));
+    REQUIRE_NOTHROW(
+        sol.safe_script(R"(Store.thing = { [0]=2,[1]=1,[2]=0,[3]={3,2,1} })"));
 
     my_table = sol["Store"]["thing"];
     a = my_table[0];

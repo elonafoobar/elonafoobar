@@ -556,9 +556,11 @@ size_t strlen_u(const std::string& str);
 
 std::string strmid(const std::string& source, int pos, int length);
 
-void title(const std::string& title_str,
-           const std::string& display_mode = "",
-           snail::window::fullscreen_mode_t fullscreen_mode = snail::window::fullscreen_mode_t::windowed);
+void title(
+    const std::string& title_str,
+    const std::string& display_mode = "",
+    snail::window::fullscreen_mode_t fullscreen_mode =
+        snail::window::fullscreen_mode_t::windowed);
 
 void width(int width, int height, int, int);
 

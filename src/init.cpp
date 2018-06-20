@@ -51,7 +51,8 @@ namespace
 
 void main_loop()
 {
-    lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::game_initialized>();
+    lua::lua.get_event_manager()
+        .run_callbacks<lua::event_kind_t::game_initialized>();
 
     while (true)
     {
@@ -99,8 +100,11 @@ void backup_config_files()
         const auto to_path = filesystem::path(from_to.second);
         if (!fs::exists(to_path))
         {
-            if (!fs::exists(from_path)) {
-                throw std::runtime_error("Original config file " + from_path.string() + " didn't exist.");
+            if (!fs::exists(from_path))
+            {
+                throw std::runtime_error(
+                    "Original config file " + from_path.string()
+                    + " didn't exist.");
             }
             fs::copy_file(from_path, to_path);
         }
@@ -410,7 +414,9 @@ void initialize_config(const fs::path& config_file)
 void initialize_elona()
 {
     i18n::load(jp ? u8"jp" : u8"en");
-    i18n::s.init(jp ? filesystem::path("locale") / "jp" : filesystem::path("locale") / "en");
+    i18n::s.init(
+        jp ? filesystem::path("locale") / "jp"
+           : filesystem::path("locale") / "en");
 
     initialize_ui_constants();
     if (config::instance().fullscreen != 0)
@@ -809,9 +815,10 @@ int run()
 
     load_config2(config_file);
 
-    title(u8"Elona Foobar version "s + latest_version.short_string(),
-          config::instance().display_mode,
-          config_get_fullscreen_mode());
+    title(
+        u8"Elona Foobar version "s + latest_version.short_string(),
+        config::instance().display_mode,
+        config_get_fullscreen_mode());
 
     initialize_config(config_file);
     initialize_elona();
@@ -1193,7 +1200,7 @@ void initialize_game()
         playerid = u8"sav_testbed"s;
         initialize_debug_globals();
         initialize_testbed();
-        if(config::instance().startup_script != ""s)
+        if (config::instance().startup_script != ""s)
         {
             lua::lua.run_startup_script(config::instance().startup_script);
         }
