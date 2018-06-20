@@ -46,10 +46,10 @@ locale {
             you_add = "${itemname(_1)}を選んだ。"
         }
 
-        you_lose = "${itemname(_1)}を失った。"
+        you_lose = "${itemname(_1, 1)}を失った。"
 
         started = "${name(_1)}は${_2}の調合をはじめた。"
-        succeeded = "${itemname(_1)}の作成に成功した！" #TODO
+        succeeded = "${itemname(_1, 1)}の作成に成功した！"
         failed = "調合失敗！"
 
         required_material_not_found = "調合に必要な材料が見つからない。"
@@ -82,18 +82,18 @@ locale {
 
             poisoned_food = "あなたはにやりと口元を歪めた。"
 
-            put_on = "${itemname(_1)}に${itemname(_2)}を塗りたくった。" # TODO
+            put_on = "${itemname(_1)}に${itemname(_2, 1)}を塗りたくった。"
             good_idea_but = "いいアイデアだ！しかし…"
             gains_fireproof = "${itemname(_1)}は熱から守られた。"
             gains_acidproof = "${itemname(_1)}は酸から守られた。"
 
-            bait_attachment = "${itemname(_2)}を${itemname(_1)}に装着した。" # TODO
+            bait_attachment = "${itemname(_2, 1)}を${itemname(_1)}に装着した。"
 
-            blessed_item = "${itemname(_2)}を${itemname(_1)}に降りかけた。" # TODO
+            blessed_item = "${itemname(_2, 1)}を${itemname(_1)}に降りかけた。"
             becomes_blessed = "${itemname(_1)}は銀色に輝いた。"
             becomes_cursed = "${itemname(_1)}は黒いオーラに包まれた。"
 
-            well_refill = "${itemname(_2)}を${itemname(_1)}に放り込んだ。" # TODO
+            well_refill = "${itemname(_2, 1)}を${itemname(_1)}に放り込んだ。"
             empty_bottle_shatters = "空き瓶の割れる音がした。"
             holy_well_polluted = "井戸は汚れた。"
             well_dry = "${itemname(_1)}は完全に枯れている。"

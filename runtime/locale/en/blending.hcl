@@ -46,10 +46,10 @@ locale {
             you_add = "You add ${itemname(_1)}."
         }
 
-        you_lose = "You lose ${itemname(_1)}." # TODO
+        you_lose = "You lose ${itemname(_1, 1)}."
 
         started = "${name(_1)} start${s(_1)} blending of ${_2}."
-        succeeded = "You successfully create ${itemname(_1)}!" #TODO
+        succeeded = "You successfully create ${itemname(_1, 1)}!"
         failed = "The blending attempt failed!"
 
         required_material_not_found = "A required material cannot be found."
@@ -82,18 +82,18 @@ locale {
 
             poisoned_food = "You grin."
 
-            put_on = "You put ${itemname(_2)} on ${itemname(_1)}." # TODO
+            put_on = "You put ${itemname(_2, 1)} on ${itemname(_1)}."
             good_idea_but = "A good idea! But..."
             gains_fireproof = "${itemname(_1)} gain${s(_1)} fireproof."
             gains_acidproof = "${itemname(_1)} gain${s(_1)} acidproof."
 
-            bait_attachment = "You bait ${itemname(_1)} with ${itemname(_2)}." # TODO
+            bait_attachment = "You bait ${itemname(_1)} with ${itemname(_2, 1)}."
 
-            blessed_item = "You shower ${itemname(_1)} on ${itemname(_2)}." # TODO
+            blessed_item = "You shower ${itemname(_1)} on ${itemname(_2, 1)}."
             becomes_blessed = "${itemname(_1)} shine${s(_1)} silvery."
             becomes_cursed = "${itemname(_1)} ${is(_1)} wrapped by a dark aura."
 
-            well_refill = "You throw ${itemname(_1)} into ${itemname(_2)}." # TODO
+            well_refill = "You throw ${itemname(_1)} into ${itemname(_2, 1)}."
             empty_bottle_shatters = "You hear the sound of the empty bottle shatters."
             holy_well_polluted = "The holy well is polluted."
             well_dry = "${itemname(_1)} is completely dry."
