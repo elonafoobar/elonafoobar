@@ -519,62 +519,59 @@ void key_check(int prm_299)
     {
         if (getkey(snail::key::home))
         {
-            p_at_m19 = 3;
+            p_at_m19 = stick_key::up | stick_key::left;
         }
         else if (getkey(snail::key::pageup))
         {
-            p_at_m19 = 6;
+            p_at_m19 = stick_key::up | stick_key::right;
         }
         else if (getkey(snail::key::end))
         {
-            p_at_m19 = 9;
+            p_at_m19 = stick_key::down | stick_key::left;
         }
         else if (getkey(snail::key::pagedown))
         {
-            p_at_m19 = 12;
-        }
-        else if (getkey(snail::key::clear))
-        {
-            key = key_wait;
+            p_at_m19 = stick_key::down | stick_key::right;
         }
 
         // Handle the case of the current key matching the movement
         // keybindings set in the user's config.
         else if (key == key_west)
         {
-            p_at_m19 = 1;
+            p_at_m19 = stick_key::left;
         }
         else if (key == key_north)
         {
-            p_at_m19 = 2;
+            p_at_m19 = stick_key::up;
         }
         else if (key == key_east)
         {
-            p_at_m19 = 4;
+            p_at_m19 = stick_key::right;
         }
         else if (key == key_south)
         {
-            p_at_m19 = 8;
+            p_at_m19 = stick_key::down;
         }
         else if (key == key_northwest)
         {
-            p_at_m19 = 3;
+            p_at_m19 = stick_key::up | stick_key::left;
         }
         else if (key == key_northeast)
         {
-            p_at_m19 = 6;
+            p_at_m19 = stick_key::up | stick_key::right;
         }
         else if (key == key_southwest)
         {
-            p_at_m19 = 9;
+            p_at_m19 = stick_key::down | stick_key::left;
         }
         else if (key == key_southeast)
         {
-            p_at_m19 = 12;
+            p_at_m19 = stick_key::down | stick_key::right;
         }
-        else if (key == key_southeast)
+        else if (key == key_wait)
         {
-            p_at_m19 = 12;
+            p_at_m19 = 0;
+            delay_keypress = true;
         }
     }
     if (getkey(snail::key::ctrl))
@@ -757,24 +754,29 @@ void key_check(int prm_299)
             delay_keypress = true;
         }
     }
-    if (p_at_m19 == 3)
+    if (p_at_m19 == (stick_key::up | stick_key::left))
     {
         key = key_northwest;
         delay_keypress = true;
     }
-    if (p_at_m19 == 6)
+    if (p_at_m19 == (stick_key::up | stick_key::right))
     {
         key = key_northeast;
         delay_keypress = true;
     }
-    if (p_at_m19 == 9)
+    if (p_at_m19 == (stick_key::down | stick_key::left))
     {
         key = key_southwest;
         delay_keypress = true;
     }
-    if (p_at_m19 == 12)
+    if (p_at_m19 == (stick_key::down | stick_key::right))
     {
         key = key_southeast;
+        delay_keypress = true;
+    }
+    if (getkey(snail::key::clear))
+    {
+        key = key_wait;
         delay_keypress = true;
     }
 
@@ -866,7 +868,7 @@ void key_check(int prm_299)
             }
             else if (p_at_m19 == 0)
             {
-                if (keybd_wait < 10)
+                if (keybd_wait < 20)
                 {
                     if (keybd_wait != 0)
                     {
@@ -926,9 +928,8 @@ void key_check(int prm_299)
     bool shortcut{};
     for (int i = 0; i < 10; ++i)
     {
-        const auto pressed = snail::input::instance().is_pressed(
-            snail::key(int(snail::key::key_0) + i),
-            prm_299 == 1 ? 1 : config::instance().keywait);
+        const auto pressed = snail::input::instance().was_pressed_just_now(
+            snail::key(int(snail::key::key_0) + i));
         if (pressed)
         {
             key = u8"sc";
