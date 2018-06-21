@@ -90,10 +90,6 @@ void store::visit(const hcl::Value& value,
 }
 
 
-// TODO
-// "${your(_1)}${get(_2, core.locale.ability, name)} skill increases."
-
-
 #define ELONA_DEFINE_I18N_BUILTIN(func_name, return_value) \
     if(func.name == func_name) \
     { \
@@ -115,6 +111,21 @@ inline std::string builtin_s(const hil::FunctionCall& func, int chara_index)
         needs_e = func.args[1].as<bool>();
     }
     return _s(chara_index, needs_e);
+}
+
+inline std::string builtin_itemname(const hil::FunctionCall& func, const item& item)
+{
+    int number = item.number;
+    bool needs_the = true;
+    if(func.args.size() > 1)
+    {
+        number = func.args[1].as<int>();
+    }
+    if(func.args.size() > 2)
+    {
+        needs_the = func.args[2].as<bool>();
+    }
+    return itemname(item.index, number, needs_the ? 0 : 1);
 }
 
 std::string format_builtins_bool(const hil::FunctionCall& func, bool value)
@@ -174,8 +185,8 @@ std::string format_builtins_character(const hil::FunctionCall& func, const chara
 
 std::string format_builtins_item(const hil::FunctionCall& func, const item& item)
 {
-    ELONA_DEFINE_I18N_BUILTIN("name", itemname(item.index));
-    ELONA_DEFINE_I18N_BUILTIN("basename", ioriginalnameref(item.id));
+    ELONA_DEFINE_I18N_BUILTIN("itemname", builtin_itemname(func, item));
+    ELONA_DEFINE_I18N_BUILTIN("itembasename", ioriginalnameref(item.id));
 
     // English only
     ELONA_DEFINE_I18N_BUILTIN("is", is2(item.number));

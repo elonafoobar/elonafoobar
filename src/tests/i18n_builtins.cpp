@@ -121,6 +121,32 @@ TEST_CASE("test i18n builtin: basename()", "[I18N: Builtins]")
     REQUIRE(i18n::fmt_hil("${basename(_1)}", chara) == u8"putit");
 }
 
+TEST_CASE("test i18n builtin: itemname()", "[I18N: Builtins]")
+{
+    testing::start_in_debug_map();
+    testing::set_english();
+    item& item = testing::create_item(PUTITORO_PROTO_ID, 1);
+    update_slight();
+
+    REQUIRE(i18n::fmt_hil("${itemname(_1)}", item) == u8"a putitoro");
+    REQUIRE(i18n::fmt_hil("${itemname(_1, 1)}", item) == u8"a putitoro");
+    REQUIRE(i18n::fmt_hil("${itemname(_1, 2)}", item) == u8"2 putitoros");
+    REQUIRE(i18n::fmt_hil("${itemname(_1, 1, false)}", item) == u8"putitoro");
+    REQUIRE(i18n::fmt_hil("${itemname(_1, 2, false)}", item) == u8"2 putitoros");
+    REQUIRE(i18n::fmt_hil("${itemname(_1, 1, true)}", item) == u8"a putitoro");
+    REQUIRE(i18n::fmt_hil("${itemname(_1, 2, true)}", item) == u8"2 putitoros");
+}
+
+TEST_CASE("test i18n builtin: itembasename()", "[I18N: Builtins]")
+{
+    testing::start_in_debug_map();
+    testing::set_english();
+    item& item = testing::create_item(PUTITORO_PROTO_ID, 1);
+    update_slight();
+
+    REQUIRE(i18n::fmt_hil("${itembasename(_1)}", item) == u8"putitoro");
+}
+
 TEST_CASE("test i18n builtin: s()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();

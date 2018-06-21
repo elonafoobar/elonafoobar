@@ -67,8 +67,8 @@ TEST_CASE("test format item by function", "[I18N: Formatting]")
     testing::start_in_debug_map();
     item& i = testing::create_item(PUTITORO_PROTO_ID, 3);
 
-    REQUIRE(i18n::fmt_hil("${name(_1)}", i) == u8"3個のプチトロ"s);
-    REQUIRE(i18n::fmt_hil("${basename(_1)}", i) == u8"プチトロ"s);
+    REQUIRE(i18n::fmt_hil("${itemname(_1)}", i) == u8"3個のプチトロ"s);
+    REQUIRE(i18n::fmt_hil("${itembasename(_1)}", i) == u8"プチトロ"s);
 }
 
 
