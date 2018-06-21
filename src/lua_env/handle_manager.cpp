@@ -1,11 +1,11 @@
 #include "handle_manager.hpp"
+#include <cassert>
+#include <set>
 #include "../character.hpp"
 #include "../config.hpp"
 #include "../item.hpp"
 #include "../log.hpp"
 #include "lua_env.hpp"
-#include <cassert>
-#include <set>
 
 namespace elona
 {
@@ -16,12 +16,14 @@ handle_manager::handle_manager(lua_env* lua)
 {
     this->lua = lua;
     this->lua->get_state()->set("_IS_TEST", config::instance().is_test);
-    this->handle_env = sol::environment(*(this->lua->get_state()),
-                                        sol::create,
-                                        this->lua->get_state()->globals());
+    this->handle_env = sol::environment(
+        *(this->lua->get_state()),
+        sol::create,
+        this->lua->get_state()->globals());
 
     // Load the Lua chunk for storing handles.
-    this->lua->get_state()->safe_script(R"(Handle = require "mods/core/handle")", this->handle_env);
+    this->lua->get_state()->safe_script(
+        R"(Handle = require "mods/core/handle")", this->handle_env);
 
     bind(*lua);
 }
@@ -42,7 +44,7 @@ void handle_manager::bind(lua_env& lua)
 
 void handle_manager::create_chara_handle(character& chara)
 {
-    if(chara_handles.find(chara.index) != chara_handles.end())
+    if (chara_handles.find(chara.index) != chara_handles.end())
     {
         handle_env["Handle"]["assert_chara_valid"](chara);
         return;
@@ -53,7 +55,7 @@ void handle_manager::create_chara_handle(character& chara)
 
 void handle_manager::create_item_handle(item& item)
 {
-    if(item_handles.find(item.index) != item_handles.end())
+    if (item_handles.find(item.index) != item_handles.end())
     {
         handle_env["Handle"]["assert_item_valid"](item);
         return;
@@ -90,14 +92,15 @@ void handle_manager::remove_item_handle(item& item)
 
 sol::object handle_manager::get_chara_handle(character& chara)
 {
-    if(chara.index == -1)
+    if (chara.index == -1)
     {
         ELONA_LOG("Tried getting handle to character of index -1");
         return sol::lua_nil;
     }
-    if(chara_handles.find(chara.index) == chara_handles.end())
+    if (chara_handles.find(chara.index) == chara_handles.end())
     {
-        //std::cout << "Character " << chara.index << " not found." << std::endl;
+        // std::cout << "Character " << chara.index << " not found." <<
+        // std::endl;
         return sol::lua_nil;
     }
     sol::object handle = handle_env["Handle"]["CharaHandles"][chara.index];
@@ -107,14 +110,14 @@ sol::object handle_manager::get_chara_handle(character& chara)
 
 sol::object handle_manager::get_item_handle(item& item)
 {
-    if(item.index == -1)
+    if (item.index == -1)
     {
         ELONA_LOG("Tried getting handle to item of index -1");
         return sol::lua_nil;
     }
-    if(item_handles.find(item.index) == item_handles.end())
+    if (item_handles.find(item.index) == item_handles.end())
     {
-        //std::cout << "Item " << item.index << " not found." << std::endl;
+        // std::cout << "Item " << item.index << " not found." << std::endl;
         return sol::lua_nil;
     }
     sol::object handle = handle_env["Handle"]["ItemHandles"][item.index];
@@ -126,18 +129,20 @@ void handle_manager::clear_all_handles()
 {
     chara_handles.clear();
     item_handles.clear();
-    handle_env["Handle"]["CharaHandles"] = this->lua->get_state()->create_table_with();
-    handle_env["Handle"]["ItemHandles"] = this->lua->get_state()->create_table_with();
+    handle_env["Handle"]["CharaHandles"] =
+        this->lua->get_state()->create_table_with();
+    handle_env["Handle"]["ItemHandles"] =
+        this->lua->get_state()->create_table_with();
 }
 
 // Player/party handles are global, so don't clear them when e.g. changing maps
 void handle_manager::clear_map_local_handles()
 {
-    for(int i = ELONA_MAX_PARTY_CHARACTERS; i < ELONA_MAX_CHARACTERS; i++)
+    for (int i = ELONA_MAX_PARTY_CHARACTERS; i < ELONA_MAX_CHARACTERS; i++)
     {
         remove_chara_handle(cdata[i]);
     }
-    for(int i = 1320; i < 5480; i++)
+    for (int i = 1320; i < 5480; i++)
     {
         remove_item_handle(inv[i]);
     }

@@ -345,7 +345,7 @@ main_menu_result_t main_menu_continue()
 
     while (true)
     {
-savegame_change_page:
+    savegame_change_page:
         cs_bk = -1;
         pagemax = (listmax - 1) / pagesize;
         if (page < 0)
@@ -367,7 +367,7 @@ savegame_change_page:
             s = u8"Which save game do you want to continue?"s;
         }
         draw_caption();
-savegame_draw_page:
+    savegame_draw_page:
         if (jp)
         {
             s(0) = u8"冒険者の選択"s;

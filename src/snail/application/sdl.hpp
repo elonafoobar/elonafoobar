@@ -99,9 +99,15 @@ public:
 
     void proc_event();
 
-    bool is_fullscreen() { return _fullscreen_mode != window::fullscreen_mode_t::windowed; }
+    bool is_fullscreen()
+    {
+        return _fullscreen_mode != window::fullscreen_mode_t::windowed;
+    }
 
-    window::fullscreen_mode_t get_fullscreen_mode() { return _fullscreen_mode; }
+    window::fullscreen_mode_t get_fullscreen_mode()
+    {
+        return _fullscreen_mode;
+    }
 
     void set_fullscreen_mode(window::fullscreen_mode_t);
 
@@ -109,7 +115,10 @@ public:
 
     std::string get_default_display_mode();
 
-    ::SDL_DisplayMode get_display_mode() { return (*_window).get_display_mode(); }
+    ::SDL_DisplayMode get_display_mode()
+    {
+        return (*_window).get_display_mode();
+    }
 
     void set_display_mode(const std::string&);
     void set_display_mode(const ::SDL_DisplayMode);
@@ -131,7 +140,8 @@ private:
     fps_manager _fps_manager;
     std::vector<std::unique_ptr<effect_base>> _effects;
     std::vector<lib::scope_guard> _finalizers;
-    window::fullscreen_mode_t _fullscreen_mode = window::fullscreen_mode_t::windowed;
+    window::fullscreen_mode_t _fullscreen_mode =
+        window::fullscreen_mode_t::windowed;
 
     application() = default;
 

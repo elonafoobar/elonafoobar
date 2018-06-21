@@ -12,7 +12,8 @@ void lua_testcase(const std::string& filename)
     elona::testing::reset_state();
     elona::lua::lua.get_state()->open_libraries(sol::lib::io, sol::lib::os);
     elona::lua::lua.get_api_manager().bind(elona::lua::lua);
-    REQUIRE_NOTHROW(elona::lua::lua.get_state()->safe_script_file("tests/lua/"s + filename));
+    REQUIRE_NOTHROW(elona::lua::lua.get_state()->safe_script_file(
+        "tests/lua/"s + filename));
 }
 
 TEST_CASE("test Elona.require", "[Lua: API]")

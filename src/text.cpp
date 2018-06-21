@@ -310,8 +310,7 @@ std::string mapname_dungeon(int id)
 {
     int suffix_id = adata(0, id);
     std::string name = mapnamerd(
-        adata(5, id),
-        std::min(adata(17, id) / 5, int(length2(mapnamerd) - 1)));
+        adata(5, id), std::min(adata(17, id) / 5, int(length2(mapnamerd) - 1)));
 
     if (suffix_id >= 20 && suffix_id <= 23)
     {
@@ -338,12 +337,12 @@ std::string mapname(int id, bool description)
             name = i18n::s.get("core.locale.map.quest.urban_area");
         }
         break;
-    case 8:
-        name = mapname_dungeon(id);
-        break;
+    case 8: name = mapname_dungeon(id); break;
     default:
-        name = i18n::s.get_enum_property("core.locale.map.unique", adata(16, id), "name");
-        auto desc_opt = i18n::s.get_enum_property_opt("core.locale.map.unique", adata(16, id), "desc");
+        name = i18n::s.get_enum_property(
+            "core.locale.map.unique", adata(16, id), "name");
+        auto desc_opt = i18n::s.get_enum_property_opt(
+            "core.locale.map.unique", adata(16, id), "desc");
         if (desc_opt)
         {
             desc = *desc_opt;
@@ -366,7 +365,8 @@ std::string mapname(int id, bool description)
         }
         else if (adata(0, id) >= 20)
         {
-            return i18n::s.get("core.locale.map.you_see_an_entrance", name, adata(17, id));
+            return i18n::s.get(
+                "core.locale.map.you_see_an_entrance", name, adata(17, id));
         }
         else
         {

@@ -1,7 +1,7 @@
 #include "fpsmanager.hpp"
+#include <numeric>
 #include "detail/sdl.hpp"
 #include "hsp.hpp"
-#include <numeric>
 
 
 
@@ -63,7 +63,8 @@ void fps_manager::wait()
     }
     else
     {
-        duration_to_wait = _t0 + _frame_count * 1000 / fps() - hsp::timeGetTime();
+        duration_to_wait =
+            _t0 + _frame_count * 1000 / fps() - hsp::timeGetTime();
     }
 
     if (duration_to_wait > 0)

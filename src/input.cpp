@@ -495,10 +495,8 @@ void key_check(int prm_299)
     mousel = 0;
     key_tab = 0;
     key_escape = 0;
-    int p_at_m19 = stick(stick_key::left
-                         | stick_key::up
-                         | stick_key::right
-                         | stick_key::down);
+    int p_at_m19 = stick(
+        stick_key::left | stick_key::up | stick_key::right | stick_key::down);
     if (p_at_m19 != 0)
     {
         if (p_at_m19 == stick_key::escape)

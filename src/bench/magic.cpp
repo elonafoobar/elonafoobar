@@ -1,17 +1,16 @@
 #include "../thirdparty/hayai/hayai.hpp"
 
-#include "util.hpp"
-#include "../testing.hpp"
+#include <cassert>
 #include "../ability.hpp"
 #include "../character.hpp"
 #include "../debug.hpp"
+#include "../testing.hpp"
 #include "../variables.hpp"
-#include <cassert>
+#include "util.hpp"
 
 using namespace elona;
 
-class MagicChainBombFixture
-    :   public ::hayai::Fixture
+class MagicChainBombFixture : public ::hayai::Fixture
 {
 public:
     virtual void SetUp()

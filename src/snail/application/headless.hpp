@@ -1,8 +1,8 @@
 #pragma once
 
 #include <map>
-#include "../scene.hpp"
 #include "../effect.hpp"
+#include "../scene.hpp"
 
 
 namespace elona
@@ -60,18 +60,33 @@ public:
 
     void proc_event();
 
-    bool is_fullscreen() { return false; }
+    bool is_fullscreen()
+    {
+        return false;
+    }
 
-    window::fullscreen_mode_t get_fullscreen_mode() { return window::fullscreen_mode_t::windowed; }
+    window::fullscreen_mode_t get_fullscreen_mode()
+    {
+        return window::fullscreen_mode_t::windowed;
+    }
 
     void set_fullscreen_mode(window::fullscreen_mode_t);
 
 
-    std::map<std::string, ::SDL_DisplayMode> get_display_modes() { return {}; }
+    std::map<std::string, ::SDL_DisplayMode> get_display_modes()
+    {
+        return {};
+    }
 
-    std::string get_default_display_mode() { return ""; }
+    std::string get_default_display_mode()
+    {
+        return "";
+    }
 
-    ::SDL_DisplayMode get_display_mode() { return ::SDL_DisplayMode{}; }
+    ::SDL_DisplayMode get_display_mode()
+    {
+        return ::SDL_DisplayMode{};
+    }
 
     void set_display_mode(const std::string&);
     void set_display_mode(const ::SDL_DisplayMode);
@@ -86,5 +101,5 @@ private:
     void main_loop();
 };
 
-}
-}
+} // namespace snail
+} // namespace elona
