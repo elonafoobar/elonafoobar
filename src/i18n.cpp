@@ -107,6 +107,36 @@ std::string format_builtins_argless(const hil::FunctionCall& func)
     return "<unknown function (" + func.name + ")>";
 }
 
+inline std::string builtin_he(const hil::FunctionCall& func, int chara_index)
+{
+    bool bilingual = false;
+    if(func.args.size() > 1)
+    {
+        bilingual = func.args[1].as<bool>();
+    }
+    return he(chara_index, bilingual);
+}
+
+inline std::string builtin_his(const hil::FunctionCall& func, int chara_index)
+{
+    bool bilingual = false;
+    if(func.args.size() > 1)
+    {
+        bilingual = func.args[1].as<bool>();
+    }
+    return his(chara_index, bilingual);
+}
+
+inline std::string builtin_him(const hil::FunctionCall& func, int chara_index)
+{
+    bool bilingual = false;
+    if(func.args.size() > 1)
+    {
+        bilingual = func.args[1].as<bool>();
+    }
+    return him(chara_index, bilingual);
+}
+
 inline std::string builtin_s(const hil::FunctionCall& func, int chara_index)
 {
     bool needs_e = false;
@@ -146,14 +176,11 @@ std::string format_builtins_character(
 {
     ELONA_DEFINE_I18N_BUILTIN("name", name(chara.index));
     ELONA_DEFINE_I18N_BUILTIN("basename", cdatan(0, chara.index));
-    ELONA_DEFINE_I18N_BUILTIN("he2", he(chara.index, 1));
-    ELONA_DEFINE_I18N_BUILTIN("his2", his(chara.index, 1));
-    ELONA_DEFINE_I18N_BUILTIN("him2", him(chara.index, 1));
+    ELONA_DEFINE_I18N_BUILTIN("he", builtin_he(func, chara.index));
+    ELONA_DEFINE_I18N_BUILTIN("his", builtin_his(func, chara.index));
+    ELONA_DEFINE_I18N_BUILTIN("him", builtin_him(func, chara.index));
 
     // English only
-    ELONA_DEFINE_I18N_BUILTIN("he", he(chara.index));
-    ELONA_DEFINE_I18N_BUILTIN("his", his(chara.index));
-    ELONA_DEFINE_I18N_BUILTIN("him", him(chara.index));
     ELONA_DEFINE_I18N_BUILTIN("s", builtin_s(func, chara.index));
     ELONA_DEFINE_I18N_BUILTIN("is", is(chara.index));
     ELONA_DEFINE_I18N_BUILTIN("have", have(chara.index));

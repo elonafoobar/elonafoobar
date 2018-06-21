@@ -26,14 +26,14 @@ TEST_CASE("test i18n builtin: he()", "[I18N: Builtins]")
     SECTION("Japanese")
     {
         testing::set_japanese();
-        REQUIRE(i18n::fmt_hil("${he2(_1)}", you) == u8"彼");
-        REQUIRE(i18n::fmt_hil("${he2(_1)}", chara) == u8"彼女");
+        REQUIRE(i18n::fmt_hil("${he(_1, true)}", you) == u8"彼");
+        REQUIRE(i18n::fmt_hil("${he(_1, true)}", chara) == u8"彼女");
     }
     SECTION("English")
     {
         testing::set_english();
-        REQUIRE(i18n::fmt_hil("${he2(_1)}", you) == u8"he");
-        REQUIRE(i18n::fmt_hil("${he2(_1)}", chara) == u8"she");
+        REQUIRE(i18n::fmt_hil("${he(_1, true)}", you) == u8"he");
+        REQUIRE(i18n::fmt_hil("${he(_1, true)}", chara) == u8"she");
         REQUIRE(i18n::fmt_hil("${he(_1)}", you) == u8"you");
         REQUIRE(i18n::fmt_hil("${he(_1)}", chara) == u8"she");
         REQUIRE(i18n::fmt_hil("${he(_1)}", out_of_fov) == u8"it");
@@ -53,14 +53,14 @@ TEST_CASE("test i18n builtin: his()", "[I18N: Builtins]")
     SECTION("Japanese")
     {
         testing::set_japanese();
-        REQUIRE(i18n::fmt_hil("${his2(_1)}", you) == u8"あなたの");
-        REQUIRE(i18n::fmt_hil("${his2(_1)}", chara) == u8"彼女の");
+        REQUIRE(i18n::fmt_hil("${his(_1, true)}", you) == u8"あなたの");
+        REQUIRE(i18n::fmt_hil("${his(_1, true)}", chara) == u8"彼女の");
     }
     SECTION("English")
     {
         testing::set_english();
-        REQUIRE(i18n::fmt_hil("${his2(_1)}", you) == u8"your");
-        REQUIRE(i18n::fmt_hil("${his2(_1)}", chara) == u8"her");
+        REQUIRE(i18n::fmt_hil("${his(_1, true)}", you) == u8"your");
+        REQUIRE(i18n::fmt_hil("${his(_1, true)}", chara) == u8"her");
         REQUIRE(i18n::fmt_hil("${his(_1)}", you) == u8"your");
         REQUIRE(i18n::fmt_hil("${his(_1)}", chara) == u8"her");
         REQUIRE(i18n::fmt_hil("${his(_1)}", out_of_fov) == u8"its");
@@ -80,14 +80,14 @@ TEST_CASE("test i18n builtin: him()", "[I18N: Builtins]")
     SECTION("Japanese")
     {
         testing::set_japanese();
-        REQUIRE(i18n::fmt_hil("${him2(_1)}", you) == u8"彼");
-        REQUIRE(i18n::fmt_hil("${him2(_1)}", chara) == u8"彼女");
+        REQUIRE(i18n::fmt_hil("${him(_1, true)}", you) == u8"彼");
+        REQUIRE(i18n::fmt_hil("${him(_1, true)}", chara) == u8"彼女");
     }
     SECTION("English")
     {
         testing::set_english();
-        REQUIRE(i18n::fmt_hil("${him2(_1)}", you) == u8"him");
-        REQUIRE(i18n::fmt_hil("${him2(_1)}", chara) == u8"her");
+        REQUIRE(i18n::fmt_hil("${him(_1, true)}", you) == u8"him");
+        REQUIRE(i18n::fmt_hil("${him(_1, true)}", chara) == u8"her");
         REQUIRE(i18n::fmt_hil("${him(_1)}", you) == u8"yourself");
         REQUIRE(i18n::fmt_hil("${him(_1)}", chara) == u8"her");
         REQUIRE(i18n::fmt_hil("${him(_1)}", out_of_fov) == u8"it");
