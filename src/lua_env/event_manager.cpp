@@ -120,7 +120,6 @@ void event_manager::register_event(
     }
 }
 
-<<<<<<< HEAD
 void event_manager::unregister_event(event_kind_t event,
                                    sol::environment& env,
                                    sol::protected_function& callback)
@@ -158,9 +157,6 @@ void event_manager::clear_mod_callbacks(sol::environment& env)
 
 void event_manager::trigger_event(event_kind_t event,
                                   sol::table data)
-=======
-void event_manager::trigger_event(event_kind_t event, sol::table data)
->>>>>>> 1926f7cff2006baf5abb03a6ba41225ea7c70a3c
 {
     auto iter = events.find(event);
     if (iter != events.end())

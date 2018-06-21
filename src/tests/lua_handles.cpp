@@ -176,21 +176,12 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
     {
         REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
         character& chara = elona::cdata[elona::rc];
-<<<<<<< HEAD
         auto handle = elona::lua::lua.get_handle_manager().get_chara_handle(chara);
 
         REQUIRE_NOTHROW(elona::lua::lua.load_mod_from_script("test", ""));
 
         elona::lua::lua.get_mod("test")->env.set("chara", handle);
         REQUIRE_NOTHROW(elona::lua::lua.run_in_mod("test", "Store.charas = {[0]=chara}"));
-=======
-        auto handle =
-            elona::lua::lua.get_handle_manager().get_chara_handle(chara);
-        elona::lua::lua.get_state()->set("chara", handle);
-
-        REQUIRE_NOTHROW(elona::lua::lua.load_mod_from_script(
-            "test", "Store.charas = {[0]=chara}"));
->>>>>>> 1926f7cff2006baf5abb03a6ba41225ea7c70a3c
 
         chara_delete(chara.index);
 
@@ -201,21 +192,12 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
     {
         REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, 3));
         item& item = elona::inv[elona::ci];
-<<<<<<< HEAD
         auto handle = elona::lua::lua.get_handle_manager().get_item_handle(item);
 
         REQUIRE_NOTHROW(elona::lua::lua.load_mod_from_script("test2", ""));
 
         elona::lua::lua.get_mod("test2")->env.set("item", handle);
         REQUIRE_NOTHROW(elona::lua::lua.run_in_mod("test2", "Store.items = {[0]=item}"));
-=======
-        auto handle =
-            elona::lua::lua.get_handle_manager().get_item_handle(item);
-        elona::lua::lua.get_state()->set("item", handle);
-
-        REQUIRE_NOTHROW(elona::lua::lua.load_mod_from_script(
-            "test2", "Store.items = {[0]=item}"));
->>>>>>> 1926f7cff2006baf5abb03a6ba41225ea7c70a3c
 
         item_delete(item.index);
 

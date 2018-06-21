@@ -47,14 +47,8 @@ TEST_CASE("Test that API tables aren't reset", "[Lua: Serialization]")
     elona::lua::lua_env lua;
     lua.reload();
 
-<<<<<<< HEAD
     REQUIRE_NOTHROW(lua.load_mod_from_script("test", ""));
     REQUIRE_NOTHROW(lua.run_in_mod("test", R"(Rand = Elona.require("Rand"); assert(Rand ~= nil))"));
-=======
-    REQUIRE_NOTHROW(
-        lua.load_mod_from_script("test", R"(Rand = Elona.require("Rand"))"));
-    REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Rand ~= nil)"));
->>>>>>> 1926f7cff2006baf5abb03a6ba41225ea7c70a3c
 
     lua.clear_mod_stores();
 
