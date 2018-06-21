@@ -1,6 +1,31 @@
 # Localization functions
 These are the functions available for use inside localization string interpolations. See the Localization section for more information.
 
+## name(chara (LuaCharacter))
+- Returns: `you` if `chara` is the player, `something` if the `chara` is out of sight of the player, else the full name of the character (with `the` prefixed if appropriate).
+- Examples:
+  + As player: `"${name(_1)}"` -> `"you"`
+  + As non-player: `"${name(_1)}"` -> `"putit"`
+  + As non-player who is out of sight: `"${name(_1)}"` -> `"something"`
+
+## basename(chara (LuaCharacter))
+- Returns: the unqualified name of the character regardless of player/non-player or in-sight/out-of-sight.
+- Examples:
+  + `"${basename(_1)}"` -> `"putit"`
+
+## itemname(item (LuaItem), number (num = 0), needs_article (bool = true))
+- Returns: `something` if the `chara` is out of sight of the player, else the fully descriptive item name with amount/details included.
+- Examples:
+  + `"${itemname(_1)}"` -> `"a putitoro"`
+  + `"${itemname(_1, 2)}"` -> `"2 putitoros"`
+  + `"${itemname(_1, 1, false)}"` -> `"putitoro"`
+  + `"${itemname(_1, 1, true)}"` -> `"a putitoro"`
+
+## itembasename(item (LuaItem))
+- Returns: the unqualified name of the item regardless of its status/number.
+- Examples:
+  + `"${itembasename(_1)}"` -> `"putitoro"`
+
 ## you()
 - Returns: name of the current player.
 - Examples:
@@ -33,3 +58,58 @@ These are the functions available for use inside localization string interpolati
 - Examples:
   + `"You ${is(_1)} hurt." -> "You are hurt."`
   + `"She ${is(_1)} happy." -> "She is happy."`
+
+## have(chara (LuaCharacter))
+- Returns: `have` if `chara` is the player, else `has`.
+
+## he(chara (LuaCharacter))
+- Returns: `you` if `chara` is the player, else gender-specific `he`.
+
+## him(chara (LuaCharacter))
+- Returns: `you` if `chara` is the player, else gender-specific `him`.
+
+## his(chara (LuaCharacter))
+- Returns: `your` if `chara` is the player, else gender-specific `his`.
+
+## his_owned(chara (LuaCharacter))
+- Returns: `r` if `chara` is the player, else `'s`.
+- Examples:
+  + `"you${his_owned(_1)}" -> "your"`
+  + `"the putit${his_owned(_1)}" -> "the putit's"`
+
+## name_nojob(chara (LuaCharacter))
+- Returns: name of the character with the job stripped.
+- Examples:
+  + Using the name `"Putit the mochi vendor"`, `"${name_nojob${_1}}"` -> `"Putit "`
+
+## kare_wa(chara (LuaCharacter))
+- Returns: blank if `chara` is the player, "{name}は" if the character is in sight, else "それは". For Japanese only.
+
+## himself(chara (LuaCharacter))
+- Returns: `yourself` if `chara` is the player, else gender-specific `himself`.
+
+# Other functions
+There are various other functions leftover for Japanese-specific sentence fragments. They are listed here for completeness.
+
+- `yoro(LuaCharacter, int)`
+- `dozo(LuaCharacter, int)`
+- `thanks(LuaCharacter, int)`
+- `rob(LuaCharacter, int)`
+- `ka(LuaCharacter, int)`
+- `da(LuaCharacter, int)`
+- `nda(LuaCharacter, int)`
+- `noka(LuaCharacter, int)`
+- `kana(LuaCharacter, int)`
+- `kimi(LuaCharacter, int)`
+- `ru(LuaCharacter, int)`
+- `tanomu(LuaCharacter, int)`
+- `ore(LuaCharacter, int)`
+- `ga(LuaCharacter, int)`
+- `dana(LuaCharacter, int)`
+- `kure(LuaCharacter, int)`
+- `daro(LuaCharacter, int)`
+- `yo(LuaCharacter, int)`
+- `aru(LuaCharacter, int)`
+- `u(LuaCharacter, int)`
+- `na(LuaCharacter, int)`
+- `ta(LuaCharacter, int)`
