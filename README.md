@@ -25,6 +25,7 @@
 
 * Visual Studio 2017 x64
 * 7-Zip or similar (for automated dependency extraction using `7z.exe`)
+* `patch.exe` (for patching Lua with UTF-16 filename support. It comes with Git for Windows. Make sure it's on your path.)
 
 ### Additional requirements for Linux
 
@@ -63,7 +64,7 @@ sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-im
 
 1. Download and install the binaries for Boost `1.66` from [here](https://dl.bintray.com/boostorg/release/1.66.0/binaries/boost_1_66_0-msvc-14.1-64.exe).
 2. Edit `Makefile.win` to point to your Boost install directory.
-3. Run `download.bat` inside the `deps` folder to download the other dependencies to `deps\include` and `deps\lib` (you have to have `7z.exe` on your `PATH`).
+3. Run `download.bat` inside the `deps` folder to download and extract the other dependencies to `deps\include`, `deps\lib` and `thirdparty\lib` (you have to have `7z.exe` and `patch.exe` on your `PATH`). This will also patch Lua for UTF-16 filename support.
 4. Open the `Developer Command Prompt for VS 2017`.
 5. `cd path/to/ElonaFoobar & nmake -f Makefile.win`
 
@@ -71,7 +72,7 @@ To debug with Visual Studio, open `bin\ElonaFoobar.sln`.
 
 # How To Play
 
-1. If not done already, copy the `data`, `graphic`, `map`, `original`, `sound` and `user` folders from vanilla v1.22 to the directory containing the executable.
+1. Copy the `data`, `graphic`, `map`, `original`, `sound` and `user` folders from vanilla v1.22 to the directory containing the executable. Make sure not to overwrite any files that already exist, as they have been updated in this version.
 2. Execute `bin/ElonaFoobar`, `bin/ElonaFoobar.app` or `bin/Debug/ElonaFoobar.exe`.
 
 

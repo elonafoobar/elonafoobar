@@ -37,6 +37,9 @@
 --- [RW] The role this character takes on.
 -- @tfield num character_role
 
+--- [RW] The character's current experience points.
+-- @tfield num experience
+
 --- Damages this character.
 -- @tparam num amount the amount to damage
 -- @tparam[opt] Enums.DamageSource source the source of the damage (defaults to the unseen hand)

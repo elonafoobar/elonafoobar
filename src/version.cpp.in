@@ -1,0 +1,25 @@
+#include "version.hpp"
+
+
+namespace elona
+{
+
+
+/* clang-format off */
+
+
+// @VARIABLE@ is replaced by CMake.
+const version_t latest_version{
+    @PROJECT_VERSION_MAJOR@,
+    @PROJECT_VERSION_MINOR@,
+    @PROJECT_VERSION_PATCH@,
+    u8"@PROJECT_VERSION_REVISION@",
+    u8"@PROJECT_VERSION_TIMESTAMP@",
+    u8"@PROJECT_VERSION_PLATFORM@",
+};
+
+
+/* clang-format on */
+
+
+} // namespace elona

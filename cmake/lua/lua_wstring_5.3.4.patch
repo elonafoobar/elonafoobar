@@ -1,0 +1,522 @@
+diff --git lauxlib.c lauxlib.c
+index 7b14ca4d..1c76bf90 100644
+--- lauxlib.c
++++ lauxlib.c
+@@ -231,7 +231,11 @@ LUALIB_API int luaL_error (lua_State *L, const char *fmt, ...) {
+ }
+ 
+ 
++#ifdef _WIN32
++LUALIB_API int luaL_fileresult (lua_State *L, int stat, const wchar_t *fname) {
++#else
+ LUALIB_API int luaL_fileresult (lua_State *L, int stat, const char *fname) {
++#endif
+   int en = errno;  /* calls to Lua API may change this value */
+   if (stat) {
+     lua_pushboolean(L, 1);
+@@ -240,7 +244,7 @@ LUALIB_API int luaL_fileresult (lua_State *L, int stat, const char *fname) {
+   else {
+     lua_pushnil(L);
+     if (fname)
+-      lua_pushfstring(L, "%s: %s", fname, strerror(en));
++      lua_pushfstring(L, "%S: %s", fname, strerror(en));
+     else
+       lua_pushstring(L, strerror(en));
+     lua_pushinteger(L, en);
+@@ -711,8 +715,18 @@ LUALIB_API int luaL_loadfilex (lua_State *L, const char *filename,
+     lf.f = stdin;
+   }
+   else {
++#ifdef _WIN32
++    const wchar_t* wfilename;
++#endif
+     lua_pushfstring(L, "@%s", filename);
++#ifdef _WIN32
++    lua_pushstring(L, filename);
++    wfilename = luaL_checkwstring(L, -1);
++    lf.f = _wfopen(wfilename, L"r");
++    lua_pop(L, 1);
++#else
+     lf.f = fopen(filename, "r");
++#endif
+     if (lf.f == NULL) return errfile(L, "open", fnameindex);
+   }
+   if (skipcomment(&lf, &c))  /* read initial portion */
+diff --git lauxlib.h lauxlib.h
+index 1d65c975..26253572 100644
+--- lauxlib.h
++++ lauxlib.h
+@@ -70,7 +70,11 @@ LUALIB_API int (luaL_error) (lua_State *L, const char *fmt, ...);
+ LUALIB_API int (luaL_checkoption) (lua_State *L, int arg, const char *def,
+                                    const char *const lst[]);
+ 
++#ifdef _WIN32
++LUALIB_API int (luaL_fileresult) (lua_State *L, int stat, const wchar_t *fname);
++#else
+ LUALIB_API int (luaL_fileresult) (lua_State *L, int stat, const char *fname);
++#endif
+ LUALIB_API int (luaL_execresult) (lua_State *L, int stat);
+ 
+ /* predefined references */
+@@ -138,6 +142,25 @@ LUALIB_API void (luaL_requiref) (lua_State *L, const char *modname,
+ 
+ #define luaL_loadbuffer(L,s,sz,n)	luaL_loadbufferx(L,s,sz,n,NULL)
+ 
++/*
++** {======================================================================
++** wstring patch API
++** =======================================================================
++*/
++
++
++LUALIB_API const wchar_t *(luaL_optwstring) (lua_State *L, int index, const wchar_t *def);
++LUALIB_API const wchar_t *(luaL_optlwstring) (lua_State *L, int index, const wchar_t *def, size_t *length);
++LUALIB_API const wchar_t *(luaL_checkwstring) (lua_State *L, int index);
++LUALIB_API const wchar_t *(luaL_checklwstring) (lua_State *L, int index, size_t *length);
++LUALIB_API int	(luaL_loadwfile) (lua_State *L, const wchar_t *filename);
++
++#define luaL_dowfile(L, fn)	\
++	(luaL_loadwfile(L, fn) || lua_pcall(L, 0, LUA_MULTRET, 0))
++
++/* }====================================================================== */
++
++
+ 
+ /*
+ ** {======================================================
+diff --git lbaselib.c lbaselib.c
+index 98602952..471589b9 100644
+--- lbaselib.c
++++ lbaselib.c
+@@ -360,9 +360,17 @@ static int dofilecont (lua_State *L, int d1, lua_KContext d2) {
+ 
+ 
+ static int luaB_dofile (lua_State *L) {
++#ifdef _WIN32
++  const wchar_t *fname = luaL_optwstring(L, 1, NULL);
++#else
+   const char *fname = luaL_optstring(L, 1, NULL);
++#endif
+   lua_settop(L, 1);
++#ifdef _WIN32
++  if (luaL_loadwfile(L, fname) != LUA_OK)
++#else
+   if (luaL_loadfile(L, fname) != LUA_OK)
++#endif
+     return lua_error(L);
+   lua_callk(L, 0, LUA_MULTRET, 0, dofilecont);
+   return dofilecont(L, 0, 0);
+diff --git liolib.c liolib.c
+index 8491edca..19ef9ef9 100644
+--- liolib.c
++++ liolib.c
+@@ -33,15 +33,27 @@
+ 
+ /* accepted extensions to 'mode' in 'fopen' */
+ #if !defined(L_MODEEXT)
++#ifdef _WIN32
++#define L_MODEEXT	L"b"
++#else
+ #define L_MODEEXT	"b"
+ #endif
++#endif
+ 
+ /* Check whether 'mode' matches '[rwa]%+?[L_MODEEXT]*' */
++#ifdef _WIN32
++static int l_checkmode (const wchar_t *mode) {
++  return (*mode != '\0' && wcschr(L"rwa", *(mode++)) != NULL &&
++         (*mode != '+' || (++mode, 1)) &&  /* skip if char is '+' */
++         (wcsspn(mode, L_MODEEXT) == wcslen(mode)));  /* check extensions */
++}
++#else
+ static int l_checkmode (const char *mode) {
+   return (*mode != '\0' && strchr("rwa", *(mode++)) != NULL &&
+          (*mode != '+' || (++mode, 1)) &&  /* skip if char is '+' */
+          (strspn(mode, L_MODEEXT) == strlen(mode)));  /* check extensions */
+ }
++#endif
+ 
+ #endif
+ 
+@@ -61,7 +73,7 @@ static int l_checkmode (const char *mode) {
+ 
+ #elif defined(LUA_USE_WINDOWS)	/* }{ */
+ 
+-#define l_popen(L,c,m)		(_popen(c,m))
++#define l_popen(L,c,m)		(_wpopen(c,m))
+ #define l_pclose(L,file)	(_pclose(file))
+ 
+ #else				/* }{ */
+@@ -249,12 +261,22 @@ static void opencheck (lua_State *L, const char *fname, const char *mode) {
+ 
+ 
+ static int io_open (lua_State *L) {
++#ifdef _WIN32
++  const wchar_t *filename = luaL_checkwstring(L, 1);
++  const wchar_t *mode = luaL_optwstring(L, 2, L"r");
++  const wchar_t *md = mode;  /* to traverse/check mode */
++#else
+   const char *filename = luaL_checkstring(L, 1);
+   const char *mode = luaL_optstring(L, 2, "r");
+-  LStream *p = newfile(L);
+   const char *md = mode;  /* to traverse/check mode */
++#endif
++  LStream *p = newfile(L);
+   luaL_argcheck(L, l_checkmode(md), 2, "invalid mode");
++#ifdef _WIN32
++  p->f = _wfopen(filename, mode);
++#else
+   p->f = fopen(filename, mode);
++#endif
+   return (p->f == NULL) ? luaL_fileresult(L, 0, filename) : 1;
+ }
+ 
+@@ -269,8 +291,13 @@ static int io_pclose (lua_State *L) {
+ 
+ 
+ static int io_popen (lua_State *L) {
++#ifdef _WIN32
++  const wchar_t *filename = luaL_checkwstring(L, 1);
++  const wchar_t *mode = luaL_optwstring(L, 2, L"r");
++#else
+   const char *filename = luaL_checkstring(L, 1);
+   const char *mode = luaL_optstring(L, 2, "r");
++#endif
+   LStream *p = newprefile(L);
+   p->f = l_popen(L, filename, mode);
+   p->closef = &io_pclose;
+diff --git loadlib.c loadlib.c
+index d1941a99..18528933 100644
+--- loadlib.c
++++ loadlib.c
+@@ -166,16 +166,18 @@ static lua_CFunction lsys_sym (lua_State *L, void *lib, const char *sym) {
+ ** of LUA_EXEC_DIR with the executable's path.
+ */
+ static void setprogdir (lua_State *L) {
+-  char buff[MAX_PATH + 1];
+-  char *lb;
+-  DWORD nsize = sizeof(buff)/sizeof(char);
+-  DWORD n = GetModuleFileNameA(NULL, buff, nsize);  /* get exec. name */
+-  if (n == 0 || n == nsize || (lb = strrchr(buff, '\\')) == NULL)
++  wchar_t buff[MAX_PATH + 1];
++  wchar_t *lb;
++  DWORD nsize = MAX_PATH + 1;
++  DWORD n = GetModuleFileNameW(NULL, buff, nsize);
++  if (n == 0 || n == nsize || (lb = wcsrchr(buff, L'\\')) == NULL)
+     luaL_error(L, "unable to get ModuleFileName");
+   else {
+-    *lb = '\0';  /* cut name on the last '\\' to get the path */
+-    luaL_gsub(L, lua_tostring(L, -1), LUA_EXEC_DIR, buff);
+-    lua_remove(L, -2);  /* remove original string */
++    *lb = L'\0';
++    lua_pushwstring(L, buff);
++    luaL_gsub(L, lua_tostring(L, -2), LUA_EXEC_DIR, lua_tostring(L, -1));
++    lua_remove(L, -3);  /* remove original string */
++    lua_remove(L, -2);  /* remove utf-8 copy of buff */
+   }
+ }
+ 
+@@ -184,10 +186,13 @@ static void setprogdir (lua_State *L) {
+ 
+ static void pusherror (lua_State *L) {
+   int error = GetLastError();
+-  char buffer[128];
+-  if (FormatMessageA(FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_FROM_SYSTEM,
+-      NULL, error, 0, buffer, sizeof(buffer)/sizeof(char), NULL))
+-    lua_pushstring(L, buffer);
++  wchar_t* buffer;
++  if (FormatMessageW(FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER,
++      NULL, error, 0, (wchar_t*)&buffer, 0, NULL))
++  {
++    lua_pushwstring(L, buffer);
++    LocalFree((HLOCAL)buffer);
++  }
+   else
+     lua_pushfstring(L, "system error %d\n", error);
+ }
+@@ -198,8 +203,13 @@ static void lsys_unloadlib (void *lib) {
+ 
+ 
+ static void *lsys_load (lua_State *L, const char *path, int seeglb) {
+-  HMODULE lib = LoadLibraryExA(path, NULL, LUA_LLE_FLAGS);
++  const wchar_t* wpath;
++  HMODULE lib;
+   (void)(seeglb);  /* not used: symbols are 'global' by default */
++  lua_pushstring(L, path);
++  wpath = lua_towstring(L, -1);
++  lib = LoadLibraryExW(wpath, NULL, LUA_LLE_FLAGS);
++  lua_pop(L, 1);
+   if (lib == NULL) pusherror(L);
+   return lib;
+ }
+@@ -413,8 +423,13 @@ static int ll_loadlib (lua_State *L) {
+ */
+ 
+ 
++#ifdef _WIN32
++static int readable (const wchar_t *filename) {
++  FILE *f = _wfopen(filename, L"r");  /* try to open file */
++#else
+ static int readable (const char *filename) {
+   FILE *f = fopen(filename, "r");  /* try to open file */
++#endif
+   if (f == NULL) return 0;  /* open failed */
+   fclose(f);
+   return 1;
+@@ -443,8 +458,18 @@ static const char *searchpath (lua_State *L, const char *name,
+   while ((path = pushnexttemplate(L, path)) != NULL) {
+     const char *filename = luaL_gsub(L, lua_tostring(L, -1),
+                                      LUA_PATH_MARK, name);
++#if _WIN32
++    int r;
++#endif
+     lua_remove(L, -2);  /* remove path template */
++#if _WIN32
++    lua_pushvalue(L, -1);
++    r = readable(lua_towstring(L, -1));
++    lua_pop(L, 1);
++    if (r)  /* does file exist and is readable? */
++#else
+     if (readable(filename))  /* does file exist and is readable? */
++#endif
+       return filename;  /* return that file name */
+     lua_pushfstring(L, "\n\tno file '%s'", filename);
+     lua_remove(L, -2);  /* remove file name */
+diff --git loslib.c loslib.c
+index dd2bb378..143dfe0e 100644
+--- loslib.c
++++ loslib.c
+@@ -21,6 +21,9 @@
+ #include "lauxlib.h"
+ #include "lualib.h"
+ 
++#ifdef _WIN32
++#include <wchar.h>
++#endif
+ 
+ /*
+ ** {==================================================================
+@@ -139,8 +142,13 @@ static time_t l_checktime (lua_State *L, int arg) {
+ 
+ 
+ static int os_execute (lua_State *L) {
++#ifdef _WIN32
++  const wchar_t *cmd = luaL_optwstring(L, 1, NULL);
++  int stat = _wsystem(cmd);
++#else
+   const char *cmd = luaL_optstring(L, 1, NULL);
+   int stat = system(cmd);
++#endif
+   if (cmd != NULL)
+     return luaL_execresult(L, stat);
+   else {
+@@ -152,14 +160,35 @@ static int os_execute (lua_State *L) {
+ 
+ static int os_remove (lua_State *L) {
+   const char *filename = luaL_checkstring(L, 1);
++#ifdef _WIN32
++  const wchar_t *wfilename;
++  int result;
++  lua_pushvalue(L, 1);
++  wfilename = luaL_checkwstring(L, -1);
++  result = _wremove(wfilename);
++  lua_pop(L, 1);
++  return luaL_fileresult(L, result == 0, wfilename);
++#else
+   return luaL_fileresult(L, remove(filename) == 0, filename);
++#endif
+ }
+ 
+ 
+ static int os_rename (lua_State *L) {
+   const char *fromname = luaL_checkstring(L, 1);
++#ifdef _WIN32
++  const wchar_t *toname = luaL_checkwstring(L, 2);
++  const wchar_t *wfromname;
++  int result;
++  lua_pushvalue(L, 1);
++  wfromname = luaL_checkwstring(L, -1);
++  result = _wrename(wfromname, toname);
++  lua_pop(L, 1);
++  return luaL_fileresult(L, result == 0, NULL);
++#else
+   const char *toname = luaL_checkstring(L, 2);
+   return luaL_fileresult(L, rename(fromname, toname) == 0, NULL);
++#endif
+ }
+ 
+ 
+diff --git lua.h lua.h
+index fc4e2388..2ccb60b7 100644
+--- lua.h
++++ lua.h
+@@ -389,6 +389,23 @@ LUA_API void      (lua_setallocf) (lua_State *L, lua_Alloc f, void *ud);
+ #endif
+ /* }============================================================== */
+ 
++/*
++** {======================================================================
++** wstring patch API
++** =======================================================================
++*/
++
++
++#define LUA_HAS_WSTRING 1
++
++LUA_API const wchar_t *(lua_towstring) (lua_State *L, int index);
++LUA_API const wchar_t *(lua_tolwstring) (lua_State *L, int index, size_t *length);
++LUA_API void (lua_pushwstring) (lua_State *L, const wchar_t *value);
++LUA_API void (lua_pushlwstring) (lua_State *L, const wchar_t *value, size_t size);
++
++/* }====================================================================== */
++
++
+ /*
+ ** {======================================================================
+ ** Debug API
+diff --git lwstring.c lwstring.c
+new file mode 100644
+index 00000000..89ebe3cc
+--- lwstring.c
++++ lwstring.c
+@@ -0,0 +1,140 @@
++#define LUA_CORE
++#include "lua.h"
++#include "lauxlib.h"
++
++#ifdef _WIN32
++#include <windows.h>
++#else
++#include <stdlib.h>
++#endif
++
++LUA_API const wchar_t *lua_tolwstring (lua_State *L, int index, size_t *length) {
++  switch (lua_type(L, index)) {
++  case LUA_TSTRING: {
++    const char *utf8;
++    size_t size8, size16;
++    wchar_t *utf16;
++    utf8 = lua_tolstring(L, index, &size8);
++#ifdef _WIN32
++    size16 = MultiByteToWideChar(CP_UTF8, 0, utf8, (int)size8, 0, 0);
++#else
++    size16 = mbstowcs(NULL, utf8, size8);
++#endif
++    if (size16 > INT_MAX)
++      size16 = INT_MAX;
++    utf16 = (wchar_t*)lua_newuserdata(L, (size16+1) * sizeof(wchar_t));
++#ifdef _WIN32
++    MultiByteToWideChar(CP_UTF8, 0, utf8, (int)size8, utf16, (int)size16);
++#else
++    size16 = mbstowcs(utf16, utf8, size8);
++#endif
++    utf16[size16] = 0;
++    lua_replace(L, index);
++    if (length)
++      *length = size16;  /* remove trailing 0 */
++    return utf16;
++  }
++  case LUA_TUSERDATA:
++    if (length)
++      *length = lua_rawlen(L, index)  / sizeof(wchar_t) - 1;  /* remove trailing 0 */
++    return (const wchar_t*)lua_touserdata(L, index);
++  default:
++    return 0;
++  }
++}
++
++LUA_API const wchar_t *lua_towstring (lua_State *L, int index) {
++  return lua_tolwstring(L, index, 0);
++}
++
++LUA_API const wchar_t *luaL_optwstring (lua_State *L, int narg, const wchar_t *def) {
++  if (lua_isnoneornil(L, narg))
++    return def;
++  else
++    return luaL_checkwstring(L, narg);
++}
++
++LUA_API const wchar_t *luaL_optlwstring (lua_State *L, int narg, const wchar_t *def, size_t *length) {
++  if (lua_isnoneornil(L, narg))
++    return def;
++  else
++    return luaL_checklwstring(L, narg, length);
++}
++
++LUA_API const wchar_t *luaL_checkwstring (lua_State *L, int index) {
++  if (lua_type(L, index)!=LUA_TUSERDATA)
++    luaL_checkstring(L, index);
++  return lua_towstring(L, index);
++}
++
++LUA_API const wchar_t *luaL_checklwstring (lua_State *L, int index, size_t *length) {
++  luaL_checkstring(L, index);
++  return lua_tolwstring(L, index, length);
++}
++
++LUA_API void lua_pushwstring (lua_State *L, const wchar_t *value) {
++#ifdef _WIN32
++  size_t size8;
++  char *utf8;
++  size8 = WideCharToMultiByte(CP_UTF8, 0, value, -1, 0, 0, 0, 0);
++  if (size8 > INT_MAX)
++    size8 = INT_MAX;
++  utf8 = (char*)lua_newuserdata(L, size8);
++  WideCharToMultiByte(CP_UTF8, 0, value, -1, utf8, (int)size8, 0, 0);
++  lua_pushlstring(L, utf8, size8 - 1);  /* remove the terminating NULL, Lua adds another one */
++  lua_remove(L, -2);  /* remove the utf-8 userdata */
++#else
++  size_t size8;
++  size8 = wcstombs(NULL, value, 0);
++  if (size8==(size_t)-1)
++    luaL_error(L, "could not convert wstring to string");
++  if (size8 > INT_MAX)
++    size8 = INT_MAX;
++  else {
++    char *utf8;
++    utf8 = (char*)lua_newuserdata(L, size8);
++    size8 = wcstombs(utf8, value, size8);
++    lua_pushlstring(L, utf8, size8 - 1);  /* remove the terminating NULL, Lua adds another one */
++    lua_remove(L, -2);  /* remove the utf-8 userdata */
++  }
++#endif
++}
++
++LUA_API void lua_pushlwstring (lua_State *L, const wchar_t *value, size_t isize) {
++  size_t osize;
++  char *utf8;
++#ifdef _WIN32
++  if (isize > INT_MAX)
++    isize = INT_MAX;
++  osize = WideCharToMultiByte(CP_UTF8, 0, value, (int)isize, 0, 0, 0, 0);
++  if (osize > INT_MAX)
++    osize = INT_MAX;
++  utf8 = (char*)lua_newuserdata(L, (int)osize);
++  WideCharToMultiByte(CP_UTF8, 0, value, (int)isize, utf8, (int)osize, 0, 0);
++#else
++  size_t i;
++  /* wcstombs is not capable of converting embedded zeros, so we do it
++   * manually */
++  osize = 0;
++  for (i=0; i<isize; ++i)
++    osize += wctomb(NULL, value[i]);
++  utf8 = (char*)lua_newuserdata(L, (int)osize);
++  for (i=0; i<isize; ++i)
++    utf8 += wctomb(utf8, value[i]);
++#endif
++  lua_pushlstring(L, utf8, osize);
++  lua_remove(L, -2);  /* remove the utf-8 userdata */
++}
++
++LUA_API int luaL_loadwfile (lua_State *L, const wchar_t *filename) {
++  int result;
++  int top;
++  top = lua_gettop(L);
++  lua_pushwstring(L, filename);
++  result = luaL_loadfile(L, lua_tostring(L, -1));
++  lua_remove(L, top+1);
++  return result;
++}
++
++/* vi: ts=2 sts=2 sw=2 et
++*/
