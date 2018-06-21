@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include "audio.hpp"
 #include "character.hpp"
 #include "config.hpp"
@@ -7,7 +8,6 @@
 #include "map.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
-#include <ctype.h>
 
 
 namespace elona

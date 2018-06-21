@@ -122,34 +122,33 @@ TexBuffer& current_tex_buffer()
 
 void setup_tmp_buffers()
 {
-  // Default buffer for high-frequency texture copies.
-  detail::tmp_buffer = snail::detail::enforce_sdl(::SDL_CreateTexture(
-      application::instance().get_renderer().ptr(),
-      SDL_PIXELFORMAT_ARGB8888,
-      SDL_TEXTUREACCESS_TARGET,
-      1024,
-      1024));
+    // Default buffer for high-frequency texture copies.
+    detail::tmp_buffer = snail::detail::enforce_sdl(::SDL_CreateTexture(
+        application::instance().get_renderer().ptr(),
+        SDL_PIXELFORMAT_ARGB8888,
+        SDL_TEXTUREACCESS_TARGET,
+        1024,
+        1024));
 
-  // Slow buffer for texture copies larger than 1024 pixels.
-  // The only real places where this gets used seem to be when
-  // rendering the message box and when rendering fullscreen
-  // backgrounds.
-  detail::tmp_buffer_slow = snail::detail::enforce_sdl(::SDL_CreateTexture(
-      application::instance().get_renderer().ptr(),
-      SDL_PIXELFORMAT_ARGB8888,
-      SDL_TEXTUREACCESS_TARGET,
-      // The assumption here is that it's pointless to copy a texture
-      // larger than the size of the screen, because the player wouldn't
-      // see the rest of the texture. That should save some cycles on less
-      // powerful GPUs.
-      std::max(1024, application::instance().width()),
-      std::max(1024, application::instance().height())));
+    // Slow buffer for texture copies larger than 1024 pixels.
+    // The only real places where this gets used seem to be when
+    // rendering the message box and when rendering fullscreen
+    // backgrounds.
+    detail::tmp_buffer_slow = snail::detail::enforce_sdl(::SDL_CreateTexture(
+        application::instance().get_renderer().ptr(),
+        SDL_PIXELFORMAT_ARGB8888,
+        SDL_TEXTUREACCESS_TARGET,
+        // The assumption here is that it's pointless to copy a texture
+        // larger than the size of the screen, because the player wouldn't
+        // see the rest of the texture. That should save some cycles on less
+        // powerful GPUs.
+        std::max(1024, application::instance().width()),
+        std::max(1024, application::instance().height())));
 
-  application::instance().register_finalizer(
-      []() {
+    application::instance().register_finalizer([]() {
         ::SDL_DestroyTexture(detail::tmp_buffer);
         ::SDL_DestroyTexture(detail::tmp_buffer_slow);
-      });
+    });
 }
 
 ::SDL_Texture* get_tmp_buffer(int width, int height)
@@ -234,7 +233,8 @@ struct MessageBox
                 else if (input.is_pressed(key::backspace) && !buffer.empty())
                 {
                     if (backspace_held_frames == 0
-                        || (backspace_held_frames > 15 && backspace_held_frames % 2 == 0))
+                        || (backspace_held_frames > 15
+                            && backspace_held_frames % 2 == 0))
                     {
                         // Delete the last character.
                         size_t last_byte_count{};
@@ -244,20 +244,22 @@ struct MessageBox
                             last_byte_count = byte;
                             i += byte;
                         }
-                        buffer.erase(buffer.size() - last_byte_count, last_byte_count);
+                        buffer.erase(
+                            buffer.size() - last_byte_count, last_byte_count);
                     }
                     backspace_held_frames++;
                 }
-                else if (input.is_pressed(key::key_v)
-                         && input.is_pressed(key::ctrl))
+                else if (
+                    input.is_pressed(key::key_v) && input.is_pressed(key::ctrl))
                 {
                     // Paste.
                     std::unique_ptr<char, decltype(&::SDL_free)> text_ptr{
                         ::SDL_GetClipboardText(), ::SDL_free};
 
-                    buffer += strutil::replace(text_ptr.get(), u8"\r\n", u8"\n");
+                    buffer +=
+                        strutil::replace(text_ptr.get(), u8"\r\n", u8"\n");
                 }
-                else if(!input.is_pressed(key::backspace))
+                else if (!input.is_pressed(key::backspace))
                 {
                     backspace_held_frames = 0;
                 }
@@ -266,7 +268,8 @@ struct MessageBox
         else
         {
             if (input.is_pressed(key::enter, config::instance().keywait)
-                || input.is_pressed(key::keypad_enter, config::instance().keywait))
+                || input.is_pressed(
+                       key::keypad_enter, config::instance().keywait))
             {
                 // New line.
                 buffer += '\n';
@@ -337,10 +340,8 @@ void picload(basic_image& img, int mode)
     {
         buffer(detail::current_buffer, img.width(), img.height());
     }
-    const auto save =
-        application::instance().get_renderer().blend_mode();
-    application::instance().get_renderer().set_blend_mode(
-        blend_mode_t::none);
+    const auto save = application::instance().get_renderer().blend_mode();
+    application::instance().get_renderer().set_blend_mode(blend_mode_t::none);
     application::instance().get_renderer().render_image(
         img, detail::current_tex_buffer().x, detail::current_tex_buffer().y);
 
@@ -424,8 +425,7 @@ void boxf(int x1, int y1, int x2, int y2, const snail::color& color)
         application::instance().get_renderer().set_blend_mode(
             blend_mode_t::blend);
     }
-    application::instance().get_renderer().fill_rect(
-        x1, y1, x2 - x1, y2 - y1);
+    application::instance().get_renderer().fill_rect(x1, y1, x2 - x1, y2 - y1);
     detail::current_tex_buffer().color.a = save_alpha;
 }
 
@@ -483,8 +483,7 @@ void buffer(int window_id, int width, int height)
             ::SDL_DestroyTexture(ptr);
         });
 
-    const auto save =
-        application::instance().get_renderer().render_target();
+    const auto save = application::instance().get_renderer().render_target();
     application::instance().get_renderer().set_render_target(
         detail::tex_buffers[window_id].texture);
     application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
@@ -541,16 +540,14 @@ void gcopy(int window_id, int src_x, int src_y, int src_width, int src_height)
         src_height =
             src_height == 0 ? detail::current_tex_buffer().height : src_height;
         auto tmp_buffer = detail::get_tmp_buffer(src_width, src_height);
-        application::instance().get_renderer().set_render_target(
-            tmp_buffer);
+        application::instance().get_renderer().set_render_target(tmp_buffer);
         if (window_id >= 10)
         {
             const auto save =
                 application::instance().get_renderer().blend_mode();
             application::instance().get_renderer().set_blend_mode(
                 blend_mode_t::none);
-            application::instance().get_renderer().set_draw_color(
-                {0, 0, 0, 0});
+            application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
             application::instance().get_renderer().set_blend_mode(save);
         }
         application::instance().get_renderer().clear();
@@ -745,14 +742,12 @@ void grotate(
     if (window_id == detail::current_buffer)
     {
         auto tmp_buffer = detail::get_tmp_buffer(dst_width, dst_height);
-        application::instance().get_renderer().set_render_target(
-            tmp_buffer);
+        application::instance().get_renderer().set_render_target(tmp_buffer);
         if (window_id < 10)
         {
             application::instance().get_renderer().set_blend_mode(
                 blend_mode_t::none);
-            application::instance().get_renderer().set_draw_color(
-                {0, 0, 0, 0});
+            application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
         }
         else
         {
@@ -760,8 +755,7 @@ void grotate(
                 application::instance().get_renderer().blend_mode();
             application::instance().get_renderer().set_blend_mode(
                 blend_mode_t::none);
-            application::instance().get_renderer().set_draw_color(
-                {0, 0, 0, 0});
+            application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
             application::instance().get_renderer().set_blend_mode(save);
         }
         application::instance().get_renderer().clear();
@@ -844,14 +838,12 @@ void gzoom(
 
     if (window_id == detail::current_buffer)
     {
-        application::instance().get_renderer().set_render_target(
-            tmp_buffer);
+        application::instance().get_renderer().set_render_target(tmp_buffer);
         if (window_id < 10)
         {
             application::instance().get_renderer().set_blend_mode(
                 blend_mode_t::none);
-            application::instance().get_renderer().set_draw_color(
-                {0, 0, 0, 0});
+            application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
         }
         else
         {
@@ -859,8 +851,7 @@ void gzoom(
                 application::instance().get_renderer().blend_mode();
             application::instance().get_renderer().set_blend_mode(
                 blend_mode_t::none);
-            application::instance().get_renderer().set_draw_color(
-                {0, 0, 0, 0});
+            application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
             application::instance().get_renderer().set_blend_mode(save);
         }
         application::instance().get_renderer().clear();
@@ -910,9 +901,10 @@ void line(int x, int y)
     detail::current_tex_buffer().y = y;
 }
 
-void title(const std::string& title_str,
-           const std::string& display_mode,
-           window::fullscreen_mode_t fullscreen_mode)
+void title(
+    const std::string& title_str,
+    const std::string& display_mode,
+    window::fullscreen_mode_t fullscreen_mode)
 {
     application::instance().initialize(title_str);
 
@@ -925,7 +917,8 @@ void title(const std::string& title_str,
     detail::setup_tmp_buffers();
     application::instance().register_finalizer(
         [&]() { font_detail::font_cache.clear(); });
-    buffer(0, application::instance().width(), application::instance().height());
+    buffer(
+        0, application::instance().width(), application::instance().height());
 }
 
 } // namespace hsp

@@ -1,18 +1,17 @@
 #include "../thirdparty/hayai/hayai.hpp"
 
-#include "util.hpp"
+#include <cassert>
 #include "../ability.hpp"
-#include "../testing.hpp"
 #include "../character.hpp"
 #include "../debug.hpp"
 #include "../event.hpp"
+#include "../testing.hpp"
 #include "../variables.hpp"
-#include <cassert>
+#include "util.hpp"
 
 using namespace elona;
 
-class AiFightFixture
-    :   public ::hayai::Fixture
+class AiFightFixture : public ::hayai::Fixture
 {
 public:
     virtual void SetUp()
@@ -55,8 +54,7 @@ BENCHMARK_F(AiFightFixture, BenchAiFight64, 5, 50)
 }
 
 
-class AiMagicFixture
-    :   public ::hayai::Fixture
+class AiMagicFixture : public ::hayai::Fixture
 {
 public:
     virtual void SetUp()
@@ -99,8 +97,7 @@ BENCHMARK_F(AiMagicFixture, BenchAiMagic64, 5, 50)
 }
 
 
-class AiRagnarokFixture
-    :   public ::hayai::Fixture
+class AiRagnarokFixture : public ::hayai::Fixture
 {
 public:
     virtual void SetUp()

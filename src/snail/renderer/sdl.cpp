@@ -1,6 +1,6 @@
-#include <sstream>
 #include "../detail/sdl.hpp"
 #include <iostream>
+#include <sstream>
 
 
 namespace elona
@@ -55,9 +55,7 @@ void renderer::set_draw_color(const color& color)
 renderer::renderer(window& target_window, int flag)
 {
     _ptr = detail::enforce_sdl(::SDL_CreateRenderer(
-                                                    target_window.ptr(),
-                                                    -1,
-                                                    static_cast<::SDL_RendererFlags>(flag)));
+        target_window.ptr(), -1, static_cast<::SDL_RendererFlags>(flag)));
     detail::enforce_sdl(
         ::SDL_SetRenderDrawBlendMode(ptr(), SDL_BLENDMODE_BLEND));
 }

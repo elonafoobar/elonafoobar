@@ -475,7 +475,15 @@ void gzoom(
     int dst_height,
     bool blend)
 {
-    snail::hsp::gzoom(window_id, src_x, src_y, src_width, src_height, dst_width, dst_height, blend);
+    snail::hsp::gzoom(
+        window_id,
+        src_x,
+        src_y,
+        src_width,
+        src_height,
+        dst_width,
+        dst_height,
+        blend);
 }
 
 
@@ -823,8 +831,7 @@ void screen(int window_id, int width, int height, int mode, int x, int y)
 
 int stick(int allow_repeat_keys)
 {
-    auto check_key_pressed = [allow_repeat_keys](
-                                 int n, snail::key key) {
+    auto check_key_pressed = [allow_repeat_keys](int n, snail::key key) {
         if ((1 << n) & allow_repeat_keys)
         {
             return (1 << n) * snail::input::instance().is_pressed(key);
@@ -909,9 +916,10 @@ std::string strmid(const std::string& source, int pos, int length)
 
 
 
-void title(const std::string& title_str,
-           const std::string& display_mode,
-           snail::window::fullscreen_mode_t fullscreen_mode)
+void title(
+    const std::string& title_str,
+    const std::string& display_mode,
+    snail::window::fullscreen_mode_t fullscreen_mode)
 {
     snail::hsp::title(title_str, display_mode, fullscreen_mode);
 }

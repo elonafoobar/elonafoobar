@@ -321,7 +321,8 @@ void input::disable_numlock()
     if (GetKeyState(VK_NUMLOCK))
     {
         keybd_event(VK_NUMLOCK, 0x45, KEYEVENTF_EXTENDEDKEY, 0);
-        keybd_event(VK_NUMLOCK, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
+        keybd_event(
+            VK_NUMLOCK, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
         _needs_restore_numlock = true;
     }
 #endif
@@ -333,7 +334,8 @@ void input::restore_numlock()
     if (!GetKeyState(VK_NUMLOCK) && _needs_restore_numlock)
     {
         keybd_event(VK_NUMLOCK, 0x45, KEYEVENTF_EXTENDEDKEY, 0);
-        keybd_event(VK_NUMLOCK, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
+        keybd_event(
+            VK_NUMLOCK, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0);
     }
 #endif
 }
