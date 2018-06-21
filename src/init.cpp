@@ -113,22 +113,6 @@ void backup_config_files()
 
 
 
-void check_double_launching()
-{
-    mutex_handle = CreateMutexA(0, 0, u8"Elona"s);
-    if (func_3() == 183)
-    {
-        dialog(
-            lang(
-                u8"二重起動のため終了します。"s,
-                u8"The program is already running."s),
-            1);
-        end();
-        return;
-    }
-    return;
-}
-
 void initialize_directories()
 {
     const boost::filesystem::path paths[] = {filesystem::dir::save(),
@@ -394,8 +378,6 @@ void initialize_config(const fs::path& config_file)
 
     backup_config_files();
 
-    check_double_launching();
-
     initialize_directories();
 
     // The config setup routine needs these variables allocated to
@@ -419,16 +401,6 @@ void initialize_elona()
            : filesystem::path("locale") / "en");
 
     initialize_ui_constants();
-    if (config::instance().fullscreen != 0)
-    {
-        chgdisp(1, windoww, windowh);
-        bgscr(0, windoww, windowh, 0, 0);
-        width(windoww, windowh, 0, 0);
-    }
-    else
-    {
-        screen(0, windoww, windowh, 0, windowx, windowy);
-    }
     gsel(0);
     boxf();
     redraw();

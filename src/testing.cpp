@@ -43,7 +43,7 @@ void start_in_debug_map()
     initialize_debug_globals();
 
     elona::playerid = player_id;
-    elona_delete(save_dir / elona::playerid);
+    fs::remove_all(save_dir / elona::playerid);
 
     gdata_current_map = 9999; // Debug map
     gdata_current_dungeon_level = 2;
@@ -87,7 +87,7 @@ void pre_init()
 
 void post_run()
 {
-    elona_delete(save_dir / player_id);
+    fs::remove_all(save_dir / player_id);
     finish_elona();
 }
 

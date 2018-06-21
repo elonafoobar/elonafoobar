@@ -107,31 +107,6 @@ void await(int msec)
 
 
 
-// CANNOT BE IMPLEMENTED
-void axobj(int, const std::string&, int, int)
-{
-}
-
-
-
-void bcopy(const fs::path& from, const fs::path& to)
-{
-    ELONA_LOG("Copy file: from " << from << " to " << to);
-    fs::copy_file(from, to, fs::copy_option::overwrite_if_exists);
-}
-
-
-
-// fullscreen
-void bgscr(int window_id, int width, int height, int, int)
-{
-    UNUSED(window_id);
-    UNUSED(width);
-    UNUSED(height);
-}
-
-
-
 void boxf(int x1, int y1, int x2, int y2, const snail::color& color)
 {
     snail::hsp::boxf(x1, y1, x2, y2, color);
@@ -248,37 +223,12 @@ void buffer(int window_id, int width, int height)
 
 
 
-void chgdisp(int, int width, int height)
-{
-    UNUSED(width);
-    UNUSED(height);
-}
-
-
-
-void clrobj(int)
-{
-}
-
-
-
 void color(int r, int g, int b)
 {
     snail::hsp::color(r, g, b);
 }
 
 
-
-void delcom(int)
-{
-}
-
-
-
-void elona_delete(const fs::path& filename)
-{
-    fs::remove_all(filename);
-}
 
 #if defined(ELONA_OS_WINDOWS)
 std::wstring get_utf16(const std::string& str)
@@ -539,41 +489,6 @@ void line(int x, int y)
 
 
 
-void memcpy(
-    elona_vector2<int>& src,
-    int src_i,
-    int src_j,
-    elona_vector2<int>& dst,
-    int dst_i,
-    int dst_j,
-    size_t size)
-{
-    const auto len = length(src);
-    const auto len2 = length2(src);
-    auto count = size;
-    for (size_t i = 0; i < len2; ++i)
-    {
-        for (size_t j = 0; j < len; ++j)
-        {
-            src(src_j + j, src_i + i) = dst(dst_j + j, dst_i + i);
-            count -= sizeof(int);
-            if (count == 0)
-                return;
-        }
-    }
-}
-
-
-
-// void memexpand(void* memory, size_t size)
-// {
-// }
-
-// void memfile(void* buf)
-// {
-// }
-
-
 void mes(const std::string& text)
 {
     snail::hsp::mes(text);
@@ -591,13 +506,6 @@ void mes(int n)
 void mesbox(std::string& buffer, bool text)
 {
     snail::hsp::mesbox(buffer, text);
-}
-
-
-
-void mkdir(const fs::path& path)
-{
-    fs::create_directory(path);
 }
 
 
@@ -761,19 +669,7 @@ void noteunsel()
 
 
 
-void objmode(int, int)
-{
-}
-
-
-
 void objprm(int, const std::string&)
-{
-}
-
-
-
-void objsel(int)
 {
 }
 
@@ -813,18 +709,6 @@ void pos(int x, int y)
 void redraw()
 {
     snail::hsp::redraw();
-}
-
-
-
-void screen(int window_id, int width, int height, int mode, int x, int y)
-{
-    UNUSED(window_id);
-    UNUSED(width);
-    UNUSED(height);
-    UNUSED(mode);
-    UNUSED(x);
-    UNUSED(y);
 }
 
 
@@ -926,14 +810,6 @@ void title(
 
 
 
-void width(int width, int height, int, int)
-{
-    UNUSED(width);
-    UNUSED(height);
-}
-
-
-
 int wpeek(int x, size_t index)
 {
     if (index == 0)
@@ -965,12 +841,6 @@ void wpoke(int& x, size_t index, int y)
 
 
 // imported functions
-
-
-
-void func_1(const std::string&, int)
-{
-}
 
 
 
@@ -1084,20 +954,6 @@ void ematan(int, int, int)
 
 
 
-int aplsel(const std::string&)
-{
-    return 0;
-}
-
-
-
-int aplobj(const std::string&, int)
-{
-    return 0;
-}
-
-
-
 void apledit(int& out, int kind, int column_no)
 {
     UNUSED(column_no);
@@ -1125,21 +981,6 @@ void func_2(int, int, int, int, int, int)
 
 
 
-void memcpy_(
-    std::string& dst,
-    std::string& src,
-    int size,
-    int dst_offset,
-    int src_offset)
-{
-    for (int i = 0; i < size; ++i)
-    {
-        dst[i + dst_offset] = src[i + src_offset];
-    }
-}
-
-
-
 void DIINIT()
 {
 }
@@ -1159,50 +1000,9 @@ void DIGETJOYSTATE(int, int)
 
 
 
-void HMMBITON(int& x, int n)
-{
-    x |= 1 << n;
-}
-
-
-
-void HMMBITOFF(int& x, int n)
-{
-    x &= ~(1 << n);
-}
-
-
-
 int HMMBITCHECK(int x, int n)
 {
     return x & (1 << n) ? 1 : 0;
-}
-
-
-
-int sockopen(int, const std::string&, int)
-{
-    return 0;
-}
-
-
-
-void sockclose()
-{
-}
-
-
-
-int sockget(const std::string&, int)
-{
-    return 0;
-}
-
-
-
-int sockput(const std::string&)
-{
-    return 0;
 }
 
 
@@ -1238,94 +1038,6 @@ void netdlname(const std::string&)
 
 
 void netrequest(const std::string&)
-{
-}
-
-
-
-void GetLastError()
-{
-}
-
-
-
-int CreateMutexA(int, int, const std::string&)
-{
-    return 42; // Any positive number.
-}
-
-
-
-void CloseHandle(int)
-{
-}
-
-
-
-int func_3()
-{
-    return 0;
-}
-
-
-
-int LCMapStringA(int, int, const std::string&, int, const std::string&, int)
-{
-    return 0;
-}
-
-
-
-int GetUserDefaultLCID()
-{
-    return 0;
-}
-
-
-
-void AppendMenuA()
-{
-}
-
-
-
-void CheckMenuRadioItem()
-{
-}
-
-
-
-void CreateMenu()
-{
-}
-
-
-
-void CreatePopupMenu()
-{
-}
-
-
-
-void DrawMenuBar()
-{
-}
-
-
-
-void SetMenu()
-{
-}
-
-
-
-void keybd_event(int, int, int)
-{
-}
-
-
-
-void GetKeyboardState(elona_vector1<int>&)
 {
 }
 
@@ -1367,18 +1079,6 @@ int ImmGetOpenStatus(int)
 void onkey_0()
 {
     snail::hsp::onkey_0();
-}
-
-
-
-void onkey_1()
-{
-}
-
-
-
-void end()
-{
 }
 
 

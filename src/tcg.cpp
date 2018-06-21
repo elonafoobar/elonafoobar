@@ -112,20 +112,21 @@ int emax_at_tcg = 0;
 
 int cdbit(int prm_985, int prm_986)
 {
-    return HMMBITCHECK(card_at_tcg(30 + prm_985 / 32, prm_986), prm_985 % 32);
+    return (card_at_tcg(30, prm_986) & (1 << prm_985)) ? 1 : 0;
 }
 
 
 
 void cdbitmod(int prm_987, int prm_988, int prm_989)
 {
-    if (prm_989 == 0)
+    if (prm_989)
     {
-        HMMBITOFF(card_at_tcg(30 + prm_987 / 32, prm_988), prm_987 % 32);
-        return;
+        card_at_tcg(30, prm_988) |= (1 << prm_987);
     }
-    HMMBITON(card_at_tcg(30 + prm_987 / 32, prm_988), prm_987 % 32);
-    return;
+    else
+    {
+        card_at_tcg(30, prm_988) &= ~(1 << prm_987);
+    }
 }
 
 

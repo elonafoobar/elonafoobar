@@ -1282,7 +1282,7 @@ void fmode_10()
              filesystem::dir_entries::type::file,
              std::regex{u8R"(.*\..*)"}))
     {
-        elona_delete(entry.path());
+        fs::remove_all(entry.path());
     }
 }
 
@@ -1290,7 +1290,7 @@ void fmode_10()
 // deletes a saved game.
 void fmode_9()
 {
-    elona_delete(filesystem::dir::save(playerid));
+    fs::remove_all(filesystem::dir::save(playerid));
 }
 
 
@@ -1312,31 +1312,31 @@ void fmode_11_12(file_operation_t file_operation)
     if (!fs::exists(filepath))
         return;
 
-    elona_delete(filepath);
+    fs::remove_all(filepath);
     fileadd(filepath, 1);
     if (file_operation == file_operation_t::_11)
     {
         filepath = filesystem::dir::tmp() / (u8"cdata_"s + mid + u8".s2");
-        elona_delete(filepath);
+        fs::remove_all(filepath);
         fileadd(filepath, 1);
         filepath = filesystem::dir::tmp() / (u8"sdata_"s + mid + u8".s2");
-        elona_delete(filepath);
+        fs::remove_all(filepath);
         fileadd(filepath, 1);
         filepath = filesystem::dir::tmp() / (u8"cdatan_"s + mid + u8".s2");
-        elona_delete(filepath);
+        fs::remove_all(filepath);
         fileadd(filepath, 1);
         filepath = filesystem::dir::tmp() / (u8"inv_"s + mid + u8".s2");
-        elona_delete(filepath);
+        fs::remove_all(filepath);
         fileadd(filepath, 1);
     }
     filepath = filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2");
-    elona_delete(filepath);
+    fs::remove_all(filepath);
     fileadd(filepath, 1);
     filepath = filesystem::dir::tmp() / (u8"mdatan_"s + mid + u8".s2");
-    elona_delete(filepath);
+    fs::remove_all(filepath);
     fileadd(filepath, 1);
     filepath = filesystem::dir::tmp() / (u8"mef_"s + mid + u8".s2");
-    elona_delete(filepath);
+    fs::remove_all(filepath);
     fileadd(filepath, 1);
 }
 
@@ -1353,7 +1353,7 @@ void fmode_13()
              filesystem::dir_entries::type::file,
              std::regex{u8R"(.*_)"s + area + u8R"(_.*\..*)"}))
     {
-        elona_delete(entry.path());
+        fs::remove_all(entry.path());
         fileadd(entry.path(), 1);
     }
 }
