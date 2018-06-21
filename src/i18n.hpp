@@ -32,9 +32,11 @@ public:
         what_ = oss.str();
     }
 
-    const char* what() const noexcept {
+    const char* what() const noexcept
+    {
         return what_.c_str();
     }
+
 private:
     std::string what_;
 };
@@ -125,7 +127,9 @@ inline bool ident_eq(std::string ident, int count)
 
 std::string format_builtins_argless(const hil::FunctionCall&);
 std::string format_builtins_bool(const hil::FunctionCall&, bool);
-std::string format_builtins_character(const hil::FunctionCall&, const character&);
+std::string format_builtins_character(
+    const hil::FunctionCall&,
+    const character&);
 std::string format_builtins_item(const hil::FunctionCall&, const item&);
 
 std::string space_if_needed();
@@ -170,25 +174,33 @@ std::string format_literal_type(Head const& head)
 }
 
 template <typename Head = const character&>
-std::string format_function_type(hil::FunctionCall const& func, const character& chara)
+std::string format_function_type(
+    hil::FunctionCall const& func,
+    const character& chara)
 {
     return format_builtins_character(func, chara);
 }
 
 template <typename Head = const item&>
-std::string format_function_type(hil::FunctionCall const& func, const item& item)
+std::string format_function_type(
+    hil::FunctionCall const& func,
+    const item& item)
 {
     return format_builtins_item(func, item);
 }
 
 template <typename Head = bool>
-std::string format_function_type(hil::FunctionCall const& func, bool const& value)
+std::string format_function_type(
+    hil::FunctionCall const& func,
+    bool const& value)
 {
     return format_builtins_bool(func, value);
 }
 
 template <typename Head>
-std::string format_function_type(hil::FunctionCall const& func, Head const& head)
+std::string format_function_type(
+    hil::FunctionCall const& func,
+    Head const& head)
 {
     UNUSED(head);
 
@@ -197,9 +209,10 @@ std::string format_function_type(hil::FunctionCall const& func, Head const& head
 
 
 template <typename... Tail>
-void fmt_internal(const hil::Context& ctxt,
-                  int count,
-                  std::vector<optional<std::string>>& formatted)
+void fmt_internal(
+    const hil::Context& ctxt,
+    int count,
+    std::vector<optional<std::string>>& formatted)
 {
     UNUSED(ctxt);
     UNUSED(count);
@@ -208,11 +221,12 @@ void fmt_internal(const hil::Context& ctxt,
 
 
 template <typename Head, typename... Tail>
-void fmt_internal(const hil::Context& ctxt,
-                   int count,
-                   std::vector<optional<std::string>>& formatted,
-                   Head const& head,
-                   Tail&&... tail)
+void fmt_internal(
+    const hil::Context& ctxt,
+    int count,
+    std::vector<optional<std::string>>& formatted,
+    Head const& head,
+    Tail&&... tail)
 {
     for (size_t i = 0; i < formatted.size(); i++)
     {
@@ -243,8 +257,8 @@ void fmt_internal(const hil::Context& ctxt,
             }
             else if (func.args.at(0).is<bool>())
             {
-                formatted.at(i) = format_builtins_bool(func,
-                                                       func.args.at(0).as<bool>());
+                formatted.at(i) =
+                    format_builtins_bool(func, func.args.at(0).as<bool>());
             }
         }
     }
@@ -254,8 +268,9 @@ void fmt_internal(const hil::Context& ctxt,
 
 } // namespace detail
 
-inline std::string fmt_interpolate_converted(const hil::Context& ctxt,
-                                             const std::vector<optional<std::string>>& formatted)
+inline std::string fmt_interpolate_converted(
+    const hil::Context& ctxt,
+    const std::vector<optional<std::string>>& formatted)
 {
     std::string s;
 
@@ -278,7 +293,8 @@ inline std::string fmt_interpolate_converted(const hil::Context& ctxt,
 }
 
 template <typename Head, typename... Tail>
-std::string fmt_with_context(const hil::Context& ctxt, Head const& head, Tail&&... tail)
+std::string
+fmt_with_context(const hil::Context& ctxt, Head const& head, Tail&&... tail)
 {
     if (ctxt.textParts.size() == 1)
         return ctxt.textParts[0];
@@ -309,7 +325,8 @@ std::string fmt_hil(const std::string& hil, Head const& head, Tail&&... tail)
     std::stringstream ss(hil);
 
     hil::ParseResult p = hil::parse(ss);
-    if (p.errorReason.size() != 0) {
+    if (p.errorReason.size() != 0)
+    {
         std::cerr << hil << std::endl;
         std::cerr << p.errorReason << std::endl;
     }
@@ -325,7 +342,7 @@ std::string fmt_hil(const std::string& hil, Head const& head, Tail&&... tail)
 class store
 {
 public:
-    store() {};
+    store(){};
     ~store() = default;
 
     void init(fs::path);
@@ -340,7 +357,8 @@ public:
             return u8"<Unknown ID: " + key + ">";
         }
 
-        return fmt_with_context(found->second, head, std::forward<Tail>(tail)...);
+        return fmt_with_context(
+            found->second, head, std::forward<Tail>(tail)...);
     }
 
     template <typename... Tail>
@@ -356,7 +374,8 @@ public:
     }
 
     template <typename Head, typename... Tail>
-    optional<std::string> get_optional(const std::string& key, Head const& head, Tail&&... tail)
+    optional<std::string>
+    get_optional(const std::string& key, Head const& head, Tail&&... tail)
     {
         const auto& found = storage.find(key);
         if (found == storage.end())
@@ -364,7 +383,8 @@ public:
             return none;
         }
 
-        return fmt_with_context(found->second, head, std::forward<Tail>(tail)...);
+        return fmt_with_context(
+            found->second, head, std::forward<Tail>(tail)...);
     }
 
     template <typename... Tail>
@@ -383,63 +403,81 @@ public:
     // Convenience methods for cases like "core.element._<enum index>.name"
 
     template <typename Head, typename... Tail>
-    std::string get_enum(const std::string& key,
-                         int index,
-                         Head const& head,
-                         Tail&&... tail)
+    std::string get_enum(
+        const std::string& key,
+        int index,
+        Head const& head,
+        Tail&&... tail)
     {
-        return get(key + "._" + std::to_string(index), head, std::forward<Tail>(tail)...);
+        return get(
+            key + "._" + std::to_string(index),
+            head,
+            std::forward<Tail>(tail)...);
     }
 
     template <typename... Tail>
-    std::string get_enum(const std::string& key,
-                         int index,
-                         Tail&&... tail)
+    std::string get_enum(const std::string& key, int index, Tail&&... tail)
     {
-        return get(key + "._" + std::to_string(index), std::forward<Tail>(tail)...);
+        return get(
+            key + "._" + std::to_string(index), std::forward<Tail>(tail)...);
     }
 
     template <typename Head, typename... Tail>
-    std::string get_enum_property(const std::string& key_head,
-                         int index,
-                         const std::string& key_tail,
-                         Head const& head,
-                         Tail&&... tail)
+    std::string get_enum_property(
+        const std::string& key_head,
+        int index,
+        const std::string& key_tail,
+        Head const& head,
+        Tail&&... tail)
     {
-        return get(key_head + "._" + std::to_string(index) + "." + key_tail, head, std::forward<Tail>(tail)...);
+        return get(
+            key_head + "._" + std::to_string(index) + "." + key_tail,
+            head,
+            std::forward<Tail>(tail)...);
     }
 
     template <typename... Tail>
-    std::string get_enum_property(const std::string& key_head,
-                         int index,
-                         const std::string& key_tail,
-                         Tail&&... tail)
+    std::string get_enum_property(
+        const std::string& key_head,
+        int index,
+        const std::string& key_tail,
+        Tail&&... tail)
     {
-        return get(key_head + "._" + std::to_string(index) + "." + key_tail, std::forward<Tail>(tail)...);
+        return get(
+            key_head + "._" + std::to_string(index) + "." + key_tail,
+            std::forward<Tail>(tail)...);
     }
 
     template <typename Head, typename... Tail>
-    optional<std::string> get_enum_property_opt(const std::string& key_head,
-                                            int index,
-                                            const std::string& key_tail,
-                                            Head const& head,
-                                            Tail&&... tail)
+    optional<std::string> get_enum_property_opt(
+        const std::string& key_head,
+        int index,
+        const std::string& key_tail,
+        Head const& head,
+        Tail&&... tail)
     {
-        return get_optional(key_head + "._" + std::to_string(index) + "." + key_tail, head, std::forward<Tail>(tail)...);
+        return get_optional(
+            key_head + "._" + std::to_string(index) + "." + key_tail,
+            head,
+            std::forward<Tail>(tail)...);
     }
 
     template <typename... Tail>
-    optional<std::string> get_enum_property_opt(const std::string& key_head,
-                                            int index,
-                                            const std::string& key_tail,
-                                            Tail&&... tail)
+    optional<std::string> get_enum_property_opt(
+        const std::string& key_head,
+        int index,
+        const std::string& key_tail,
+        Tail&&... tail)
     {
-        return get_optional(key_head + "._" + std::to_string(index) + "." + key_tail, std::forward<Tail>(tail)...);
+        return get_optional(
+            key_head + "._" + std::to_string(index) + "." + key_tail,
+            std::forward<Tail>(tail)...);
     }
 
 private:
     void visit(const hcl::Value&, const std::string&, const std::string&);
-    void visit_object(const hcl::Object&, const std::string&, const std::string&);
+    void
+    visit_object(const hcl::Object&, const std::string&, const std::string&);
 
     std::unordered_map<std::string, hil::Context> storage;
 };

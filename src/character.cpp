@@ -1700,9 +1700,10 @@ void chara_refresh(int cc)
     cdata[cc].needs_refreshing_status() = false;
 
     auto handle = lua::lua.get_handle_manager().get_chara_handle(cdata[cc]);
-    if(handle != sol::lua_nil)
+    if (handle != sol::lua_nil)
     {
-        lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::character_refreshed>(handle);
+        lua::lua.get_event_manager()
+            .run_callbacks<lua::event_kind_t::character_refreshed>(handle);
     }
 }
 
@@ -2049,16 +2050,17 @@ void chara_killed(character& chara)
     // Regardless of whether or not this character will revive, run
     // the character killed callback.
     auto handle = lua::lua.get_handle_manager().get_chara_handle(chara);
-    lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::character_killed>(handle);
+    lua::lua.get_event_manager()
+        .run_callbacks<lua::event_kind_t::character_killed>(handle);
 
-    if(chara.state == 0)
+    if (chara.state == 0)
     {
         // This character slot is invalid, and can be overwritten by
         // newly created characters at any time. Run any Lua callbacks
         // to clean up character things.
         lua::lua.on_chara_removal(chara);
     }
-    else if(chara.state == 2 || chara.state == 4 || chara.state == 6)
+    else if (chara.state == 2 || chara.state == 4 || chara.state == 6)
     {
         // This character revives.
     }
@@ -2073,7 +2075,7 @@ void chara_killed(character& chara)
 void chara_delete(int cc)
 {
     int state = cdata[cc].state;
-    if(cc != -1 && cdata[cc].index != -1 && state != 0)
+    if (cc != -1 && cdata[cc].index != -1 && state != 0)
     {
         // This character slot was previously occupied and is
         // currently valid. If the state were 0, then chara_killed

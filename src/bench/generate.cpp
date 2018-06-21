@@ -1,15 +1,14 @@
 #include "../thirdparty/hayai/hayai.hpp"
 
-#include "util.hpp"
-#include "../testing.hpp"
+#include <cassert>
 #include "../ability.hpp"
 #include "../character.hpp"
 #include "../debug.hpp"
+#include "../testing.hpp"
 #include "../variables.hpp"
-#include <cassert>
+#include "util.hpp"
 
-class GenerateCharacterFixture
-    :   public ::hayai::Fixture
+class GenerateCharacterFixture : public ::hayai::Fixture
 {
 public:
     virtual void SetUp()
@@ -30,6 +29,7 @@ public:
         assert(chara_create(-1, 3, x, y) == 1);
         i++;
     }
+
 private:
     int i = 0;
 };

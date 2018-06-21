@@ -1174,13 +1174,16 @@ void cutname(std::string& utf8_string, int max_length_charwise)
     int current_char = 0;
     size_t current_byte = 0;
     bool multibyte = false;
-    while (current_char < max_length_charwise && current_byte < utf8_string.size())
+    while (current_char < max_length_charwise
+           && current_byte < utf8_string.size())
     {
         if (static_cast<unsigned char>(utf8_string[current_byte]) > 0x7F)
         {
             current_byte++;
             current_char++;
-            while ((static_cast<unsigned char>(utf8_string[current_byte] & 0xC0)) == 0x80)
+            while (
+                (static_cast<unsigned char>(utf8_string[current_byte] & 0xC0))
+                == 0x80)
             {
                 // Fullwidth characters count as length 2.
                 if (!multibyte)
@@ -3521,7 +3524,8 @@ void label_15380()
     cdata[rc].current_map = 0;
     cdata[rc].relationship = cdata[rc].original_relationship;
     cdata[rc].nutrition = 8000;
-    lua::lua.on_chara_loaded(cdata[rc]); // TODO add separate Lua event for revival
+    lua::lua.on_chara_loaded(
+        cdata[rc]); // TODO add separate Lua event for revival
     return;
 }
 
@@ -5969,7 +5973,8 @@ turn_result_t exit_map()
             if (cdata[cnt].state == 8)
             {
                 cdata[cnt].state = 1;
-                lua::lua.on_chara_loaded(cdata[cnt]); // TODO add separate Lua event for revival
+                lua::lua.on_chara_loaded(
+                    cdata[cnt]); // TODO add separate Lua event for revival
             }
             continue;
         }
@@ -5989,7 +5994,8 @@ turn_result_t exit_map()
     }
     else
     {
-        // This is a tempory map, so wipe its data (shelter, special quest instance)
+        // This is a tempory map, so wipe its data (shelter, special quest
+        // instance)
         prepare_charas_for_map_unload();
 
         // delete all map-local data
@@ -11768,7 +11774,8 @@ void migrate_save_data(const fs::path& save_dir)
                 std::regex_match(str, match, pattern);
                 map_id = std::stoi(match.str(1));
                 level = std::stoi(match.str(2)) - 100;
-                mid = std::to_string(map_id) + "_" + std::to_string(level + 100);
+                mid =
+                    std::to_string(map_id) + "_" + std::to_string(level + 100);
             }
             // Read mdata/map/cdata/sdata/mef/cdatan2/mdatan.
             ctrl_file(file_operation_t::_1);
@@ -12255,9 +12262,8 @@ void save_game(const fs::path& base_save_dir)
     }
     notesel(buff);
     {
-        std::ofstream out{
-            (save_dir / u8"filelist.txt").native(),
-            std::ios::binary};
+        std::ofstream out{(save_dir / u8"filelist.txt").native(),
+                          std::ios::binary};
         out << buff(0) << std::endl;
     }
     ELONA_LOG("Save game: finish");
@@ -14680,7 +14686,8 @@ void spot_fishing()
             {
                 if (config::instance().animewait != 0)
                 {
-                    for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end; ++cnt)
+                    for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end;
+                         ++cnt)
                     {
                         fishanime(0) = 1;
                         fishanime(1) = 3 + rnd(3);
@@ -14732,7 +14739,8 @@ void spot_fishing()
             fishanime = 3;
             if (config::instance().animewait != 0)
             {
-                for (int cnt = 0, cnt_end = (28 + rnd(15)); cnt < cnt_end; ++cnt)
+                for (int cnt = 0, cnt_end = (28 + rnd(15)); cnt < cnt_end;
+                     ++cnt)
                 {
                     if (cnt % 7 == 0)
                     {
@@ -17120,8 +17128,9 @@ turn_result_t do_bash()
 turn_result_t proc_movement_event()
 {
     auto handle = lua::lua.get_handle_manager().get_chara_handle(cdata[cc]);
-    if(handle != sol::lua_nil)
-        lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::character_moved>(handle);
+    if (handle != sol::lua_nil)
+        lua::lua.get_event_manager()
+            .run_callbacks<lua::event_kind_t::character_moved>(handle);
 
     if (cdata[cc].is_ridden())
     {

@@ -1,10 +1,10 @@
 #include "../thirdparty/catch2/catch.hpp"
 
-#include "tests.hpp"
 #include "../enums.hpp"
 #include "../item.hpp"
 #include "../itemgen.hpp"
 #include "../variables.hpp"
+#include "tests.hpp"
 
 namespace elona
 {

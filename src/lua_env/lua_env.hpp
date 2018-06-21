@@ -1,15 +1,15 @@
 #pragma once
 
-#include "../thirdparty/sol2/sol.hpp"
+#include <map>
+#include <vector>
 #include "../character.hpp"
 #include "../filesystem.hpp"
 #include "../item.hpp"
+#include "../thirdparty/sol2/sol.hpp"
 #include "event_manager.hpp"
 #include "handle_manager.hpp"
 #include "lua_api.hpp"
 #include "lua_store.hpp"
-#include <map>
-#include <vector>
 
 namespace elona
 {
@@ -74,7 +74,10 @@ public:
     /***
      * Returns a shared pointer to this lua_env's internal Lua state.
      */
-    std::shared_ptr<sol::state> get_state() { return lua; }
+    std::shared_ptr<sol::state> get_state()
+    {
+        return lua;
+    }
 
     /***
      * Builds a list of all available mods in the user's mods/ folder.
@@ -225,12 +228,14 @@ public:
      *
      * For testing use only.
      */
-    mod_info* get_mod(const std::string& name) {
+    mod_info* get_mod(const std::string& name)
+    {
         auto val = mods.find(name);
-        if(val == mods.end())
+        if (val == mods.end())
             throw std::runtime_error("No such mod "s + name + "."s);
         return val->second.get();
     }
+
 private:
     /***
      * Runs the init script for the given mod. The mod will have been
@@ -256,7 +261,14 @@ private:
         // Whitelist functions that are safe for usage in user-written scripts.
         // This list can be expanded.
         static const std::string safe_functions[] = {
-            "assert", "type", "pairs", "ipairs", "next", "print", "tostring", "error"
+            "assert",
+            "type",
+            "pairs",
+            "ipairs",
+            "next",
+            "print",
+            "tostring",
+            "error"
         };
 
         for(const std::string& function_name : safe_functions)

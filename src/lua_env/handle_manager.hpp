@@ -1,9 +1,9 @@
 #pragma once
 
-#include "lua_env.hpp"
+#include <set>
 #include "../character.hpp"
 #include "../item.hpp"
-#include <set>
+#include "lua_env.hpp"
 
 namespace elona
 {
@@ -61,6 +61,7 @@ public:
      * Player and party character/item handles are not cleared.
      */
     void clear_map_local_handles();
+
 private:
     void bind(lua_env&);
 

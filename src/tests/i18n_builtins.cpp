@@ -1,14 +1,14 @@
 #include "../thirdparty/catch2/catch.hpp"
 
-#include "tests.hpp"
-#include "../testing.hpp"
+#include <sstream>
 #include "../character.hpp"
 #include "../i18n.hpp"
 #include "../item.hpp"
 #include "../itemgen.hpp"
+#include "../testing.hpp"
 #include "../ui.hpp"
 #include "../variables.hpp"
-#include <sstream>
+#include "tests.hpp"
 
 using namespace std::literals::string_literals;
 using namespace elona;
@@ -121,6 +121,32 @@ TEST_CASE("test i18n builtin: basename()", "[I18N: Builtins]")
     REQUIRE(i18n::fmt_hil("${basename(_1)}", chara) == u8"putit");
 }
 
+TEST_CASE("test i18n builtin: itemname()", "[I18N: Builtins]")
+{
+    testing::start_in_debug_map();
+    testing::set_english();
+    item& item = testing::create_item(PUTITORO_PROTO_ID, 1);
+    update_slight();
+
+    REQUIRE(i18n::fmt_hil("${itemname(_1)}", item) == u8"a putitoro");
+    REQUIRE(i18n::fmt_hil("${itemname(_1, 1)}", item) == u8"a putitoro");
+    REQUIRE(i18n::fmt_hil("${itemname(_1, 2)}", item) == u8"2 putitoros");
+    REQUIRE(i18n::fmt_hil("${itemname(_1, 1, false)}", item) == u8"putitoro");
+    REQUIRE(i18n::fmt_hil("${itemname(_1, 2, false)}", item) == u8"2 putitoros");
+    REQUIRE(i18n::fmt_hil("${itemname(_1, 1, true)}", item) == u8"a putitoro");
+    REQUIRE(i18n::fmt_hil("${itemname(_1, 2, true)}", item) == u8"2 putitoros");
+}
+
+TEST_CASE("test i18n builtin: itembasename()", "[I18N: Builtins]")
+{
+    testing::start_in_debug_map();
+    testing::set_english();
+    item& item = testing::create_item(PUTITORO_PROTO_ID, 1);
+    update_slight();
+
+    REQUIRE(i18n::fmt_hil("${itembasename(_1)}", item) == u8"putitoro");
+}
+
 TEST_CASE("test i18n builtin: s()", "[I18N: Builtins]")
 {
     testing::start_in_debug_map();
@@ -128,8 +154,12 @@ TEST_CASE("test i18n builtin: s()", "[I18N: Builtins]")
     character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
     update_slight();
 
-    REQUIRE(i18n::fmt_hil("something go${s(_1)} to hell.", chara) == u8"something gos to hell.");
-    REQUIRE(i18n::fmt_hil("something go${s(_1, true)} to hell.", chara) == u8"something goes to hell.");
+    REQUIRE(
+        i18n::fmt_hil("something go${s(_1)} to hell.", chara)
+        == u8"something gos to hell.");
+    REQUIRE(
+        i18n::fmt_hil("something go${s(_1, true)} to hell.", chara)
+        == u8"something goes to hell.");
 }
 
 TEST_CASE("test i18n builtin: is()", "[I18N: Builtins]")
@@ -141,9 +171,14 @@ TEST_CASE("test i18n builtin: is()", "[I18N: Builtins]")
     update_slight();
 
     REQUIRE(i18n::fmt_hil("you ${is(_1)} killed.", you) == u8"you are killed.");
-    REQUIRE(i18n::fmt_hil("something ${is(_1)} killed.", chara) == u8"something is killed.");
-    REQUIRE(i18n::fmt_hil("you ${is(true)} killed.", you) == u8"you are killed.");
-    REQUIRE(i18n::fmt_hil("something ${is(false)} killed.", chara) == u8"something is killed.");
+    REQUIRE(
+        i18n::fmt_hil("something ${is(_1)} killed.", chara)
+        == u8"something is killed.");
+    REQUIRE(
+        i18n::fmt_hil("you ${is(true)} killed.", you) == u8"you are killed.");
+    REQUIRE(
+        i18n::fmt_hil("something ${is(false)} killed.", chara)
+        == u8"something is killed.");
 }
 
 TEST_CASE("test i18n builtin: have()", "[I18N: Builtins]")
@@ -181,7 +216,8 @@ TEST_CASE("test i18n builtin: his_owned()", "[I18N: Builtins]")
     update_slight();
 
     REQUIRE(i18n::fmt_hil("you${his_owned(_1)}", you) == u8"your");
-    REQUIRE(i18n::fmt_hil("the putit${his_owned(_1)}", chara) == u8"the putit's");
+    REQUIRE(
+        i18n::fmt_hil("the putit${his_owned(_1)}", chara) == u8"the putit's");
 }
 
 TEST_CASE("test i18n builtin: name_nojob()", "[I18N: Builtins]")

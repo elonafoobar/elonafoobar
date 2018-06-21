@@ -3,14 +3,6 @@
 #include "defines.hpp"
 #include "util.hpp"
 
-#if defined(ELONA_OS_WINDOWS)
-// For WideCharToMultiByte().
-#include <windows.h>
-#define USE_UTF16_AS_FILEPATH 1
-#else
-#define USE_UTF16_AS_FILEPATH 0
-#endif
-
 // For get_executable_path()
 #if defined(ELONA_OS_WINDOWS)
 #include <windows.h> // GetModuleFileName
@@ -24,26 +16,10 @@
 #error Unsupported OS
 #endif
 
-#include <iostream>
+
 
 namespace
 {
-
-
-#if USE_UTF16_AS_FILEPATH
-int get_needed_buffer_size(const wchar_t* str)
-{
-    return WideCharToMultiByte(CP_THREAD_ACP, 0, str, -1, NULL, 0, NULL, NULL);
-}
-
-
-int utf16_to_ansi(const wchar_t* from, char* to, int buffer_size)
-{
-    return WideCharToMultiByte(
-        CP_THREAD_ACP, 0, from, -1, to, buffer_size, NULL, NULL);
-}
-#endif
-
 
 
 fs::path get_executable_path()
@@ -147,25 +123,6 @@ std::string make_preferred_path_in_utf8(const fs::path& path)
         path_.make_preferred().native());
 }
 
-
-std::string to_narrow_path(const fs::path& path)
-{
-#if USE_UTF16_AS_FILEPATH
-    const auto wide_c_str = path.native().c_str();
-
-    int needed_length = get_needed_buffer_size(wide_c_str);
-    if (needed_length == 0)
-        throw std::runtime_error(u8"Error: in to_narrow_path()");
-    auto buffer = std::make_unique<char[]>(needed_length);
-    int used_length = utf16_to_ansi(wide_c_str, buffer.get(), needed_length);
-    if (used_length == 0)
-        throw std::runtime_error(u8"Error: in to_narrow_path()");
-
-    return std::string{buffer.get()};
-#else
-    return path.native();
-#endif
-}
 
 
 std::string to_utf8_path(const fs::path& path)

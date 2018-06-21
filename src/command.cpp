@@ -1697,12 +1697,12 @@ turn_result_t do_use_command()
             {
                 randomize(inv[ci].subname + inv[ci].param1 * 10 + cnt);
                 if (enchantment_add(
-                    ci,
-                    enchantment_generate(enchantment_gen_level(4)),
-                    enchantment_gen_p(),
-                    0,
-                    0,
-                    1))
+                        ci,
+                        enchantment_generate(enchantment_gen_level(4)),
+                        enchantment_gen_p(),
+                        0,
+                        0,
+                        1))
                 {
                     if (rtval == 34)
                     {

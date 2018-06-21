@@ -499,7 +499,7 @@ void item_remove(item& i)
 // set to 0, which is in many more places.
 void item_delete(int ci)
 {
-    if(inv[ci].index != -1 && inv[ci].number > 0)
+    if (inv[ci].index != -1 && inv[ci].number > 0)
     {
         // This item slot was previously occupied, but the item is now
         // invalid.

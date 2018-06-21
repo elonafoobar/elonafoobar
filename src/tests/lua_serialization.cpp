@@ -1,7 +1,6 @@
 #include "../thirdparty/catch2/catch.hpp"
 #include "../thirdparty/sol2/sol.hpp"
 
-#include "tests.hpp"
 #include "../character.hpp"
 #include "../filesystem.hpp"
 #include "../item.hpp"
@@ -9,6 +8,7 @@
 #include "../lua_env/lua_env.hpp"
 #include "../testing.hpp"
 #include "../variables.hpp"
+#include "tests.hpp"
 
 using namespace elona::testing;
 
@@ -29,8 +29,10 @@ TEST_CASE("Test that store can be reset across mods", "[Lua: Serialization]")
     elona::lua::lua_env lua;
     lua.reload();
 
-    REQUIRE_NOTHROW(lua.load_mod_from_script("test1", "Store.mine = false; Store.thing = 1"));
-    REQUIRE_NOTHROW(lua.load_mod_from_script("test2", "Store.theirs = true; Store.thing = 2"));
+    REQUIRE_NOTHROW(lua.load_mod_from_script(
+        "test1", "Store.mine = false; Store.thing = 1"));
+    REQUIRE_NOTHROW(lua.load_mod_from_script(
+        "test2", "Store.theirs = true; Store.thing = 2"));
 
     lua.clear_mod_stores();
 
@@ -45,8 +47,14 @@ TEST_CASE("Test that API tables aren't reset", "[Lua: Serialization]")
     elona::lua::lua_env lua;
     lua.reload();
 
+<<<<<<< HEAD
     REQUIRE_NOTHROW(lua.load_mod_from_script("test", ""));
     REQUIRE_NOTHROW(lua.run_in_mod("test", R"(Rand = Elona.require("Rand"); assert(Rand ~= nil))"));
+=======
+    REQUIRE_NOTHROW(
+        lua.load_mod_from_script("test", R"(Rand = Elona.require("Rand"))"));
+    REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Rand ~= nil)"));
+>>>>>>> 1926f7cff2006baf5abb03a6ba41225ea7c70a3c
 
     lua.clear_mod_stores();
 
@@ -66,7 +74,9 @@ TEST_CASE("Test that globals aren't reset", "[Lua: Serialization]")
     REQUIRE_NOTHROW(lua.run_in_mod("test", R"(assert(_MOD_NAME == "test"))"));
 }
 
-TEST_CASE("Test that store can be reset and map init hooks re-run", "[Lua: Serialization]")
+TEST_CASE(
+    "Test that store can be reset and map init hooks re-run",
+    "[Lua: Serialization]")
 {
     elona::lua::lua_env lua;
     lua.reload();
@@ -81,13 +91,15 @@ end
 Event.register(Event.EventKind.MapInitialized, my_map_init_hook)
 )"));
 
-    lua.get_event_manager().run_callbacks<elona::lua::event_kind_t::map_initialized>();
+    lua.get_event_manager()
+        .run_callbacks<elona::lua::event_kind_t::map_initialized>();
     REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Store.val == 42)"));
 
     lua.clear_mod_stores();
 
     REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Store.thing == nil)"));
 
-    lua.get_event_manager().run_callbacks<elona::lua::event_kind_t::map_initialized>();
+    lua.get_event_manager()
+        .run_callbacks<elona::lua::event_kind_t::map_initialized>();
     REQUIRE_NOTHROW(lua.run_in_mod("test", "assert(Store.val == 42)"));
 }
