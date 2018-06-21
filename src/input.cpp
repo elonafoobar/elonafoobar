@@ -431,12 +431,30 @@ bool input_text_dialog(
 }
 
 
-void key_check(int prm_299)
+bool is_keypress_delayed(int held_frames, int keywait, int initial_keywait)
+{
+    if (held_frames < initial_keywait)
+    {
+        if (held_frames == 0)
+        {
+            return false;
+        }
+    }
+    else if (held_frames % keywait == 0)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+void key_check(key_wait_delay_t delay_type)
 {
     static int prevjoy_at_m19{};
     bool delay_keypress = false;
     bool delay_enter = false;
-    static int keywait_enter{};
+    static int enter_held_frames{};
+    static int shortcut_held_frames{};
 
     if (msgalert == 1)
     {
@@ -614,7 +632,7 @@ void key_check(int prm_299)
     }
     else
     {
-        keywait_enter = 0;
+        enter_held_frames = 0;
     }
 
     if (config::instance().joypad)
@@ -664,7 +682,7 @@ void key_check(int prm_299)
                         key = key_cancel;
                         key_escape = 1;
                     }
-                    if (prm_299 == 0)
+                    if (delay_type == key_wait_delay_t::always)
                     {
                         int b_at_m19 = 0;
                         if (key == key_fire)
@@ -700,7 +718,7 @@ void key_check(int prm_299)
         {
             prevjoy_at_m19 = -1;
         }
-        else if (prm_299 == 2)
+        else if (delay_type == key_wait_delay_t::none)
         {
             return;
         }
@@ -830,13 +848,13 @@ void key_check(int prm_299)
         key = u8"F12";
     }
 
-    if (prm_299 == 2)
+    if (delay_type == key_wait_delay_t::none)
     {
         return;
     }
     if (delay_keypress)
     {
-        if (prm_299 == 1)
+        if (delay_type == key_wait_delay_t::walk_run)
         {
             if (keybd_attacking != 0)
             {
@@ -916,20 +934,23 @@ void key_check(int prm_299)
 
     if (delay_enter)
     {
-        if (keywait_enter < 20)
+        if (is_keypress_delayed(enter_held_frames, 1, 20))
         {
-            if (keywait_enter != 0)
-            {
-                key = "";
-            }
+            key = "";
         }
-        keywait_enter++;
+        enter_held_frames++;
     }
 
     bool shortcut{};
+    int shortcut_delay = config::instance().keywait;
+    if (delay_type == key_wait_delay_t::walk_run)
+    {
+        shortcut_delay = 1;
+    }
+
     for (int i = 0; i < 10; ++i)
     {
-        const auto pressed = snail::input::instance().was_pressed_just_now(
+        const auto pressed = snail::input::instance().is_pressed(
             snail::key(int(snail::key::key_0) + i));
         if (pressed)
         {
@@ -942,6 +963,19 @@ void key_check(int prm_299)
             keylog = "";
             shortcut = true;
         }
+    }
+
+    if (shortcut)
+    {
+        if (is_keypress_delayed(shortcut_held_frames, shortcut_delay, 20))
+        {
+            key = "";
+        }
+        ++shortcut_held_frames;
+    }
+    else
+    {
+        shortcut_held_frames = 0;
     }
 
     if (!shortcut && keyhalt != 0)

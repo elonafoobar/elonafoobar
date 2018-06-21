@@ -1,5 +1,5 @@
 #pragma once
-
+#include "enums.hpp"
 
 
 namespace elona
@@ -35,7 +35,7 @@ bool input_text_dialog(
     bool is_cancelable = true,
     bool limit_length = true);
 
-void key_check(int = 0);
+void key_check(key_wait_delay_t = key_wait_delay_t::always);
 void wait_key_released();
 void wait_key_pressed(bool only_enter_or_cancel = false);
 
