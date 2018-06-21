@@ -16,12 +16,11 @@ format = "discount"
 template_escape = ">"
 dir = "./doc"
 examples = {"./doc/examples"}
-topics = {"./doc/readme.md", "./doc/topics/localization.md", "./doc/topics/localization_functions.md"}
+topics = {"./doc/readme.md", "./doc/topics/i18n.md", "./doc/topics/i18n_functions.md"}
 
 new_type("event", "Events", false, "Event Parameters")
 new_type("enum", "Enums", false, "Enum Values")
 
--- https://forums.factorio.com/viewtopic.php?t=32039#p202158
 custom_see_handler("^(http[s]?%:%/%/.-) (.+)$",
     function(url, name)
         return name, url
