@@ -44,7 +44,11 @@ void init_event_kinds(sol::table& Event)
         "PlayerTurn",
         event_kind_t::player_turn,
         "AllTurnsFinished",
-        event_kind_t::all_turns_finished);
+        event_kind_t::all_turns_finished,
+
+        "ScriptLoaded",
+        event_kind_t::script_loaded
+        );
 }
 
 void event_manager::init(lua_env& lua)

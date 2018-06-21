@@ -3,6 +3,8 @@ local Enums = Elona.require("Enums")
 local Item = Elona.require("Item")
 local Chara = Elona.require("Chara")
 local GUI = Elona.require("GUI")
+local Iter = Elona.require("Iter")
+local Map = Elona.require("Map")
 local table = Elona.require("table")
 
 local potions = {736, 711, 706, 626, 577, 566, 559, 519, 433, 432,
@@ -74,6 +76,15 @@ local function switch_item_type(chara)
    end
 end
 
+local function gain_magic_skills()
+   Chara.player():gain_skill_exp(14, 999999)
+   Chara.player():gain_skill_exp(155, 999999)
+   Chara.player():gain_skill_exp(174, 999999)
+   Chara.player():gain_skill(164, 9999)
+   Chara.player():gain_skill(172, 9999)
+   Chara.player():gain_skill(188, 9999)
+end
+
 local function gain_all_spells()
    for spell_id=400, 466 do
       if spell_id ~= 426 and spell_id ~= 427 then
@@ -89,15 +100,15 @@ local function setup()
 
    Store.test_chara = make_sandbag(25, 22, 34)
 
-   -- TODO add docs
-   Chara.player():gain_skill_exp(14, 999999)
-   Chara.player():gain_skill_exp(155, 999999)
-   Chara.player():gain_skill_exp(174, 999999)
-   Chara.player():gain_skill(164, 9999)
-   Chara.player():gain_skill(172, 9999)
-   Chara.player():gain_skill(188, 9999)
+   gain_magic_skills()
    gain_all_spells()
+
+   for pos in Iter.rectangle_iter(17, 17, 33, 33) do
+      if pos.x == 17 or pos.y == 17 or pos.x == 33 or pos.y == 33 then
+         Map.set_tile(pos.x, pos.y, Map.generate_tile(Enums.TileKind.Wall))
+      end
+   end
 end
 
-Event.register(Event.EventKind.MapInitialized, setup)
+Event.register(Event.EventKind.ScriptLoaded, setup)
 Event.register(Event.EventKind.CharaDamaged, switch_item_type)
