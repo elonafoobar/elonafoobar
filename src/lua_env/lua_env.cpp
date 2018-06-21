@@ -8,6 +8,9 @@
 #include "../log.hpp"
 #include "../variables.hpp"
 #include "event_manager.hpp"
+#include <map>
+#include <sstream>
+#include <vector>
 
 namespace elona
 {
@@ -147,6 +150,8 @@ void lua_env::on_item_removal(item& item)
 
 void lua_env::load_mod(const fs::path& path, mod_info& mod)
 {
+    setup_and_lock_mod_globals(mod);
+
     auto result = this->lua->safe_script_file(
         filesystem::make_preferred_path_in_utf8(path / mod.name / "init.lua"),
         mod.env);
@@ -244,8 +249,8 @@ void lua_env::run_startup_script(const std::string& name)
     }
 
     std::unique_ptr<mod_info> script_mod =
-        std::make_unique<mod_info>("script", get_state());
-    api_mgr->bind(*this, *script_mod);
+            std::make_unique<mod_info>("script", get_state());
+    setup_and_lock_mod_globals(*script_mod);
 
     lua->safe_script_file(
         filesystem::make_preferred_path_in_utf8(
@@ -280,6 +285,47 @@ void lua_env::reload()
     load_core_mod(filesystem::dir::mods());
 }
 
+int deny(sol::table table, sol::object key, sol::object value, sol::this_state ts)
+{
+    std::stringstream ss;
+    if (key.is<std::string>())
+    {
+        ss << "Cannot assign to the global variable \"" << key.as<std::string>() << "\". ";
+    }
+    else
+    {
+        ss << "An attempt was made to assign to a global variable. ";
+    }
+
+    ss << "Please prefix the assignment with \"local\" to make it a local variable.";
+
+    lua_State* L = ts;
+    return luaL_error(L, ss.str().c_str());
+}
+
+void lua_env::setup_mod_globals(mod_info& mod, sol::table& table)
+{
+    table["Store"] = mod.store;
+    table["Elona"] = api_mgr->bind(*this);
+    table["_MOD_NAME"] = mod.name;
+    setup_sandbox(*this->lua, table);
+}
+
+void lua_env::setup_and_lock_mod_globals(mod_info& mod)
+{
+    sol::table env_metatable = lua->create_table_with();
+
+    // Globals have to be set on the metatable, not the mod's
+    // environment itself.
+    setup_mod_globals(mod, env_metatable);
+
+    // Prevent writing of new globals.
+    env_metatable[sol::meta_function::new_index] = deny;
+    env_metatable[sol::meta_function::index] = env_metatable;
+
+    mod.env[sol::metatable_key] = env_metatable;
+}
+
 
 // For testing use
 
@@ -308,7 +354,8 @@ void lua_env::clear()
 
 void lua_env::load_mod_from_script(
     const std::string& name,
-    const std::string& script)
+    const std::string& script,
+    bool readonly)
 {
     if (stage < mod_loading_stage_t::core_mod_loaded)
     {
@@ -322,8 +369,17 @@ void lua_env::load_mod_from_script(
     }
 
     std::unique_ptr<mod_info> info =
-        std::make_unique<mod_info>(name, get_state());
-    api_mgr->bind(*this, *info);
+            std::make_unique<mod_info>(name, get_state());
+
+    if (readonly)
+    {
+        setup_and_lock_mod_globals(*info);
+    }
+    else
+    {
+        // Set the globals directly on the environment table for testing use.
+        setup_mod_globals(*info, info->env);
+    }
 
     auto result = this->lua->safe_script(script, info->env);
     if (!result.valid())
@@ -333,15 +389,30 @@ void lua_env::load_mod_from_script(
         throw std::runtime_error("Failed initializing mod "s + info->name);
     }
 
-    this->mods.emplace(name, std::move(info));
+    this->mods[name] = std::move(info);
 }
 
 void lua_env::run_in_mod(const std::string& name, const std::string& script)
 {
     auto val = mods.find(name);
-    if (val == mods.end())
+    if(val == mods.end())
+    {
         throw std::runtime_error("No such mod "s + name + "."s);
-    this->lua->script(script, val->second->env);
+    }
+
+    // Prevent outputting things in the test log on errors, but still
+    // throw if the result is invalid so tests can catch it.
+    auto ignore_handler = [](lua_State*, sol::protected_function_result pfr) {
+                              return pfr;
+                          };
+
+    auto result = this->lua->script(script, val->second->env, ignore_handler);
+
+    if (!result.valid())
+    {
+        sol::error err = result;
+        throw err;
+    }
 }
 
 } // namespace lua

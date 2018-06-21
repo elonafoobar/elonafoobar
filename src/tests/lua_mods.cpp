@@ -24,6 +24,21 @@ TEST_CASE("Test that _MOD_NAME is defined", "[Lua: Mods]")
         lua.run_in_mod("my_mod", R"(assert(_MOD_NAME == "my_mod"))"));
 }
 
+TEST_CASE("Test that globals cannot be overwritten", "[Lua: Mods]")
+{
+    elona::lua::lua_env lua;
+    lua.reload();
+
+    REQUIRE_NOTHROW(lua.load_mod_from_script("my_mod", "", true));
+
+    REQUIRE_THROWS(lua.run_in_mod("my_mod", R"(_MOD_NAME = "dood")"));
+    REQUIRE_THROWS(lua.run_in_mod("my_mod", R"(dood = "dood")"));
+    REQUIRE_THROWS(lua.run_in_mod("my_mod", R"(function dood() end)"));
+    REQUIRE_THROWS(lua.run_in_mod("my_mod", R"(Elona = "dood")"));
+    REQUIRE_THROWS(lua.run_in_mod("my_mod", R"(Store = "dood")"));
+    REQUIRE_NOTHROW(lua.run_in_mod("my_mod", R"(assert(_MOD_NAME == "my_mod"))"));
+}
+
 TEST_CASE("Test that sandboxing removes unsafe functions", "[Lua: Mods]")
 {
     elona::lua::lua_env lua;
@@ -99,7 +114,7 @@ TEST_CASE("Test modification of store inside callback", "[Lua: Mods]")
     REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
-function my_turn_handler()
+local function my_turn_handler()
   Store.thing = Store.thing + 1
 end
 
@@ -150,7 +165,7 @@ TEST_CASE("Test complex nested table assignment", "[Lua: Mods]")
     REQUIRE_NOTHROW(lua.load_mod_from_script("test", R"(
 local Event = Elona.require("Event")
 
-function my_turn_handler()
+local function my_turn_handler()
    for x = 1, 20 do
       for y = 1, 20 do
          Store.grid[x][y] = 1

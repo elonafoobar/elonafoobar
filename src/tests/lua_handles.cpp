@@ -76,7 +76,7 @@ TEST_CASE("Test that handle properties can be written", "[Lua: Handles]")
     }
     SECTION("Items")
     {
-        REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, 3));
+        REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 0, 0, 1));
         item& item = elona::inv[elona::ci];
         auto handle =
             elona::lua::lua.get_handle_manager().get_item_handle(item);
@@ -176,12 +176,12 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
     {
         REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
         character& chara = elona::cdata[elona::rc];
-        auto handle =
-            elona::lua::lua.get_handle_manager().get_chara_handle(chara);
-        elona::lua::lua.get_state()->set("chara", handle);
+        auto handle = elona::lua::lua.get_handle_manager().get_chara_handle(chara);
 
-        REQUIRE_NOTHROW(elona::lua::lua.load_mod_from_script(
-            "test", "Store.charas = {[0]=chara}"));
+        REQUIRE_NOTHROW(elona::lua::lua.load_mod_from_script("test", ""));
+
+        elona::lua::lua.get_mod("test")->env.set("chara", handle);
+        REQUIRE_NOTHROW(elona::lua::lua.run_in_mod("test", "Store.charas = {[0]=chara}"));
 
         chara_delete(chara.index);
 
@@ -192,12 +192,12 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
     {
         REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, 3));
         item& item = elona::inv[elona::ci];
-        auto handle =
-            elona::lua::lua.get_handle_manager().get_item_handle(item);
-        elona::lua::lua.get_state()->set("item", handle);
+        auto handle = elona::lua::lua.get_handle_manager().get_item_handle(item);
 
-        REQUIRE_NOTHROW(elona::lua::lua.load_mod_from_script(
-            "test2", "Store.items = {[0]=item}"));
+        REQUIRE_NOTHROW(elona::lua::lua.load_mod_from_script("test2", ""));
+
+        elona::lua::lua.get_mod("test2")->env.set("item", handle);
+        REQUIRE_NOTHROW(elona::lua::lua.run_in_mod("test2", "Store.items = {[0]=item}"));
 
         item_delete(item.index);
 

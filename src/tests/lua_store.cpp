@@ -263,13 +263,3 @@ TEST_CASE("Test multiple table assignment", "[Lua: Store]")
     REQUIRE(b == 1);
     REQUIRE(c == 0);
 }
-
-// TEST_CASE("Test prevention of reassignment of Store", "[Lua: Store]")
-// {
-//     sol::state sol;
-//     sol.open_libraries(sol::lib::base);
-//     elona::lua::store store;
-//     store.init(sol);
-//
-//     REQUIRE_THROWS(sol.safe_script(R"(Store = {})"));
-// }

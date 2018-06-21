@@ -18,9 +18,9 @@ class api_manager
 public:
     /***
      * Exposes the core API table ("Elona") from the isolated Lua API
-     * environment to a given mod.
+     * environment by table reference.
      */
-    static void bind(lua_env&, mod_info&);
+    static sol::table bind(lua_env&);
 
     /***
      * Exposes the core API table ("Elona") from the isolated Lua API
@@ -28,8 +28,7 @@ public:
      *
      * For testing use only.
      */
-    static void bind(lua_env&);
-
+    static void set_on(lua_env&);
 public:
     explicit api_manager(lua_env*);
 

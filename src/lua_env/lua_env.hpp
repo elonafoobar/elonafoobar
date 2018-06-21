@@ -32,43 +32,17 @@ class handle_manager;
  */
 struct mod_info
 {
-    explicit mod_info(
-        const std::string name_,
-        std::shared_ptr<sol::state> state)
-        : name(name_)
+    explicit mod_info(const std::string name_, std::shared_ptr<sol::state> state) : name(name_)
     {
         // This environment is created with no globals.
         env = sol::environment(*state, sol::create);
 
-        setup_sandbox(*state, env);
-
-        env["_MOD_NAME"] = name;
         store = std::make_shared<lua::store>();
         store->init_no_attach(*state);
-        env.set("Store", store);
     }
     mod_info(const mod_info&) = delete;
     mod_info& operator=(const mod_info&) = delete;
     ~mod_info() = default;
-
-    static void setup_sandbox(const sol::state& state, sol::environment& env)
-    {
-        // Whitelist functions that are safe for usage in user-written scripts.
-        // This list can be expanded.
-        static const std::string safe_functions[] = {"assert",
-                                                     "type",
-                                                     "pairs",
-                                                     "ipairs",
-                                                     "next",
-                                                     "print",
-                                                     "tostring",
-                                                     "error"};
-
-        for (const std::string& function_name : safe_functions)
-        {
-            env[function_name] = state[function_name];
-        }
-    }
 
     std::string name;
     sol::environment env;
@@ -232,14 +206,11 @@ public:
     /***
      * Instantiates a new mod by running the given Lua code.
      *
-     * NOTE: This requires the mods to have unique names between
-     * tests.
-     *
      * For testing use only.
      */
-    void load_mod_from_script(
-        const std::string& name,
-        const std::string& script);
+    void load_mod_from_script(const std::string& name,
+                              const std::string& script,
+                              bool readonly = false);
 
     /***
      * Runs the given Lua code in an existing mod.
@@ -274,6 +245,37 @@ private:
      */
     void load_mod(const fs::path& path, mod_info&);
 
+    /***
+     * Sets up the global variables of a mod and locks them so they
+     * cannot be overwritten.
+     */
+    void setup_and_lock_mod_globals(mod_info&);
+
+    /***
+     * Sets the global variables of a mod on the given table.
+     */
+    void setup_mod_globals(mod_info& mod, sol::table&);
+
+    static void setup_sandbox(const sol::state& state, sol::table& metatable)
+    {
+        // Whitelist functions that are safe for usage in user-written scripts.
+        // This list can be expanded.
+        static const std::string safe_functions[] = {
+            "assert",
+            "type",
+            "pairs",
+            "ipairs",
+            "next",
+            "print",
+            "tostring",
+            "error"
+        };
+
+        for(const std::string& function_name : safe_functions)
+        {
+            metatable[function_name] = state[function_name];
+        }
+    }
 private:
     /***
      * The underlying Lua state shared across all mod/API
