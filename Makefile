@@ -45,7 +45,7 @@ clean: FORCE
 
 
 format: FORCE
-	$(FIND) . \( -name "*.cpp" -or -name "*.hpp" \) -print0 | $(XARGS) -0 $(FORMAT) -i
+	$(FIND) src \( -name "*.cpp" -or -name "*.hpp" -not -name "thirdparty" \) -print0 | $(XARGS) -0 $(FORMAT) -i
 
 ldoc:
 	mkdir -p $(BIN_DIR)/doc

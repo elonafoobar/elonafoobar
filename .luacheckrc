@@ -98,7 +98,10 @@ stds.elona = {
               },
               Event = {
                  fields = {
-                    "register", "clear"
+                    "register", "unregister", "clear", "trigger",
+                    EventKind = {
+                      other_fields = true,
+                    }
                  },
               },
               Chara = {
