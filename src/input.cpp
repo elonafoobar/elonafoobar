@@ -606,7 +606,8 @@ void key_check(int prm_299)
         key_shift = 0;
     }
 
-    if (snail::input::instance().is_pressed(snail::key::enter))
+    if (snail::input::instance().is_pressed(snail::key::enter)
+        || snail::input::instance().is_pressed(snail::key::keypad_enter))
     {
         key = key_enter;
         delay_enter = true;
