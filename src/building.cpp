@@ -56,17 +56,14 @@ turn_result_t build_new_building()
 {
     if (mdata(6) != 1)
     {
-        txt(lang(
-            u8"それはワールドマップでしか使えない。"s,
-            u8"You can only use it in the world map."s));
+        txt(i18n::s.get("core.locale.building.can_only_use_in_world_map"));
         update_screen();
         return turn_result_t::pc_turn_user_error;
     }
     cell_featread(cdata[0].position.x, cdata[0].position.y);
     if (feat(0) != 0)
     {
-        txt(lang(
-            u8"その場所には建てられない。"s, u8"You can't build it here."s));
+        txt(i18n::s.get("core.locale.building.cannot_build_it_here"));
         update_screen();
         return turn_result_t::pc_turn_user_error;
     }
@@ -81,13 +78,11 @@ turn_result_t build_new_building()
     }
     if (area == -1)
     {
-        txt(lang(
-            u8"もうこれ以上建物は建てられない。"s,
-            u8"You can't build a building anymore."s));
+        txt(i18n::s.get("core.locale.building.cannot_build_anymore"));
         update_screen();
         return turn_result_t::pc_turn_user_error;
     }
-    txt(lang(u8"本当にこの場所に建設する？ "s, u8"Really build it here? "s));
+    txt(i18n::s.get("core.locale.building.really_build_it_here"));
     ELONA_YES_NO_PROMPT();
     rtval = show_prompt(promptx, prompty, 160);
     if (rtval != 0)
@@ -113,7 +108,7 @@ turn_result_t build_new_building()
         gdata_pc_home_y = adata(2, 7);
         snd(58);
         txtef(2);
-        txt(lang(u8"新しい家を建てた！ "s, u8"You've built a new house!"s));
+        txt(i18n::s.get("core.locale.building.built_new_house"));
         msg_halt();
         snd(49);
         return turn_result_t::exit_map;
@@ -137,28 +132,24 @@ turn_result_t build_new_building()
         adata(16, p) = 101;
         adata(15, p) = 151;
         adata(21, p) = 1;
-        s = lang(u8"博物館"s, u8"museum"s);
     }
     if (inv[ci].id == 522)
     {
         adata(16, p) = 102;
         adata(15, p) = 150;
         adata(21, p) = 1;
-        s = lang(u8"店"s, u8"shop"s);
     }
     if (inv[ci].id == 542)
     {
         adata(16, p) = 103;
         adata(15, p) = 152;
         adata(21, p) = 2;
-        s = lang(u8"畑"s, u8"crop"s);
     }
     if (inv[ci].id == 543)
     {
         adata(16, p) = 104;
         adata(15, p) = 153;
         adata(21, p) = 1;
-        s = lang(u8"倉庫"s, u8"storage"s);
     }
     if (inv[ci].id == 572)
     {
@@ -166,7 +157,6 @@ turn_result_t build_new_building()
         adata(15, p) = 154;
         adata(21, p) = 2;
         adata(12, p) = 1;
-        s = lang(u8"牧場"s, u8"ranch"s);
     }
     if (inv[ci].id == 712)
     {
@@ -174,13 +164,11 @@ turn_result_t build_new_building()
         adata(15, p) = 138;
         adata(21, p) = 1;
         adata(12, p) = 1;
-        s = lang(u8"ダンジョン"s, u8"dungeon"s);
     }
+    s = i18n::s.get_enum("core.locale.building.names", inv[ci].id);
     snd(58);
     txtef(5);
-    txt(lang(
-        u8"あなたは"s + s + u8"を建設した！ "s,
-        u8"You've built a "s + s + u8"!"s));
+    txt(i18n::s.get("core.locale.building.built_new", s(0)));
     label_1749();
     --inv[ci].number;
     cell_refresh(inv[ci].position.x, inv[ci].position.y);
@@ -210,6 +198,158 @@ void addbuilding(int prm_1082, int prm_1083, int prm_1084, int prm_1085)
     return;
 }
 
+turn_result_t show_house_board()
+{
+    txtnew();
+    if (mdata(6) != 5)
+    {
+        ++msgdup;
+        txt(i18n::s.get("core.locale.building.house_board.only_use_in_home"));
+        update_screen();
+        return turn_result_t::pc_turn_user_error;
+    }
+    p(0) = 0;
+    p(1) = 0;
+    p(2) = 0;
+    for (const auto& cnt : items(-1))
+    {
+        ++p(2);
+        if (inv[cnt].number != 0)
+        {
+            if (the_item_db[inv[cnt].id]->category != 60000)
+            {
+                ++p;
+            }
+            else
+            {
+                ++p(1);
+            }
+        }
+    }
+    if (mdata(18) != 0)
+    {
+        p(2) = mdata(18);
+    }
+    txt(i18n::s.get("core.locale.building.house_board.item_count",
+                    mapname(gdata_current_map),
+                    p(0),
+                    p(1),
+                    p(2)));
+    if (adata(16, gdata_current_map) == 102)
+    {
+        if (getworker(gdata_current_map) != -1)
+        {
+            txt(i18n::s.get("core.locale.building.shop.current_shopkeeper",
+                            cdata[getworker(gdata_current_map)]));
+        }
+        else
+        {
+            txt(i18n::s.get("core.locale.building.shop.no_assigned_shopkeeper"));
+        }
+    }
+    if (adata(16, gdata_current_map) == 31)
+    {
+        if (getworker(gdata_current_map) != -1)
+        {
+            txt(i18n::s.get("core.locale.building.ranch.current_breeder",
+                            cdata[getworker(gdata_current_map)]));
+        }
+        else
+        {
+            txt(i18n::s.get("core.locale.building.ranch.no_assigned_breeder"));
+        }
+    }
+    if (gdata_current_map == 7)
+    {
+        p = 0;
+        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
+             ++cnt)
+        {
+            if (cdata[cnt].state == 1 || cdata[cnt].state == 2)
+            {
+                if (cdata[cnt].character_role != 0)
+                {
+                    ++p;
+                }
+            }
+        }
+        txt(i18n::s.get("core.locale.building.home.staying.count",
+                        p(0),
+                        gdata_home_scale + 2));
+    }
+    txtnew();
+    txt(i18n::s.get("core.locale.building.house_board.what_do"));
+    p = 0;
+    if (adata(16, gdata_current_map) == 102)
+    {
+        ELONA_APPEND_PROMPT(
+            i18n::s.get("core.locale.building.house_board.choices.assign_a_shopkeeper"),
+            u8"null"s,
+            ""s + 4);
+        if (mdata(18) < 400)
+        {
+            ELONA_APPEND_PROMPT(
+                i18n::s.get("core.locale.building.house_board.choices.extend", calcshopreform()),
+                u8"null"s,
+                ""s + 5);
+        }
+    }
+    if (adata(16, gdata_current_map) == 31)
+    {
+        ELONA_APPEND_PROMPT(
+            i18n::s.get("core.locale.building.house_board.choices.assign_a_breeder"),
+            u8"null"s,
+            ""s + 4);
+    }
+    ELONA_APPEND_PROMPT(
+        i18n::s.get("core.locale.building.house_board.choices.design"),
+        u8"null"s,
+        ""s + 0);
+    if (gdata_current_map == 7)
+    {
+        ELONA_APPEND_PROMPT(
+            i18n::s.get("core.locale.building.house_board.choices.home_rank"),
+            u8"null"s,
+            ""s + 2);
+        ELONA_APPEND_PROMPT(
+            i18n::s.get("core.locale.building.house_board.choices.allies_in_your_home"),
+            u8"null"s,
+            ""s + 4);
+        if (gdata_current_dungeon_level == 1)
+        {
+            ELONA_APPEND_PROMPT(
+                i18n::s.get("core.locale.building.house_board.choices.recruit_a_servant"),
+                u8"null"s,
+                ""s + 6);
+        }
+        ELONA_APPEND_PROMPT(
+                i18n::s.get("core.locale.building.house_board.choices.move_a_stayer"),
+            u8"null"s, ""s + 3);
+    }
+    int stat = show_prompt(promptx, prompty, 240);
+    if (stat == -1)
+    {
+        update_screen();
+        return turn_result_t::pc_turn_user_error;
+    }
+    rtval = stat;
+    switch (rtval)
+    {
+    case 0: start_home_map_mode(); break;
+    case 2: show_home_value(); break;
+    case 3: prompt_move_ally(); break;
+    case 4: prompt_ally_staying(); break;
+    case 5: try_extend_shop(); break;
+    case 6: prompt_hiring(); break;
+    }
+    tlocinitx = 0;
+    tlocinity = 0;
+    screenupdate = -1;
+    update_screen();
+    return turn_result_t::show_house_board;
+}
+
+
 void prompt_hiring()
 {
     txtnew();
@@ -227,9 +367,7 @@ void prompt_hiring()
     }
     if (p >= gdata_home_scale + 2)
     {
-        txt(lang(
-            u8"家はすでに人であふれかえっている。"s,
-            u8"You already have too many guests in your home."s));
+        txt(i18n::s.get("core.locale.building.home.hire.too_many_guests"));
         return;
     }
     for (int cnt = 0; cnt < 10; ++cnt)
@@ -263,44 +401,32 @@ void prompt_hiring()
             if (p == 0)
             {
                 cdata[rc].character_role = 1001;
-                cdatan(0, rc) = lang(
-                    u8"武具店の"s + cdatan(0, rc),
-                    cdatan(0, rc) + u8" of armory"s);
+                cdatan(0, rc) = i18n::s.get("core.locale.building.guests.armory", cdata[rc]);
             }
             if (p == 1)
             {
                 cdata[rc].character_role = 1006;
-                cdatan(0, rc) = lang(
-                    u8"雑貨屋の"s + cdatan(0, rc),
-                    cdatan(0, rc) + u8" of general store"s);
+                cdatan(0, rc) = i18n::s.get("core.locale.building.guests.general_store", cdata[rc]);
             }
             if (p == 2)
             {
                 cdata[rc].character_role = 1004;
-                cdatan(0, rc) = lang(
-                    u8"魔法店の"s + cdatan(0, rc),
-                    cdatan(0, rc) + u8" of magic store"s);
+                cdatan(0, rc) = i18n::s.get("core.locale.building.guests.magic_store", cdata[rc]);
             }
             if (p == 3)
             {
                 cdata[rc].character_role = 1008;
-                cdatan(0, rc) = lang(
-                    u8"何でも屋の"s + cdatan(0, rc),
-                    cdatan(0, rc) + u8" of goods store"s);
+                cdatan(0, rc) = i18n::s.get("core.locale.building.guests.goods_store", cdata[rc]);
             }
             if (p == 4)
             {
                 cdata[rc].character_role = 1001;
-                cdatan(0, rc) = lang(
-                    u8"武具店の"s + cdatan(0, rc),
-                    cdatan(0, rc) + u8" of armory"s);
+                cdatan(0, rc) = i18n::s.get("core.locale.building.guests.armory", cdata[rc]);
             }
             if (p == 5)
             {
                 cdata[rc].character_role = 1007;
-                cdatan(0, rc) = lang(
-                    u8"ブラックマーケットの"s + cdatan(0, rc),
-                    cdatan(0, rc) + u8" of blackmarket"s);
+                cdatan(0, rc) = i18n::s.get("core.locale.building.guests.blackmarket", cdata[rc]);
             }
             randomize();
             cdata[rc].shop_rank = rnd(15) + 1;
@@ -320,7 +446,7 @@ void prompt_hiring()
     }
     randomize();
     txtnew();
-    txt(lang(u8"誰を雇用する？"s, u8"Who do you want to hire?"s));
+    txt(i18n::s.get("core.locale.building.home.hire.who"));
     allyctrl = 1;
     int stat = show_hire_menu();
     if (stat != -1)
@@ -329,8 +455,7 @@ void prompt_hiring()
         txtnew();
         if (cdata[0].gold < calchirecost(tc) * 20)
         {
-            txt(lang(
-                u8"お金が足りない…"s, u8"You don't have enough money..."s));
+            txt(i18n::s.get("core.locale.building.not_enough_money"));
         }
         else
         {
@@ -340,9 +465,7 @@ void prompt_hiring()
             cdata[tc].state = 1;
             lua::lua.on_chara_loaded(cdata[tc]);
             txtef(2);
-            txt(lang(
-                cdatan(0, tc) + u8"を家に迎えた。"s,
-                u8"You hire "s + cdatan(0, tc) + u8"."s));
+            txt(i18n::s.get("core.locale.building.home.hire.you_hire", cdata[tc]));
             snd(64);
         }
     }
@@ -363,9 +486,7 @@ void start_home_map_mode()
     homemapmode = 1;
     prepare_hourse_board_tiles();
     txtnew();
-    txt(lang(
-        u8"マウスの左クリックでタイルの敷設、右クリックでタイルの取得、移動キーでスクリーン移動、決定キーでタイル一覧、キャンセルキーで終了。"s,
-        u8"Left click to place the tile, right click to pick the tile under your mouse cursor, movement keys to move current position, hit the enter key to show the list of tiles, hit the cancel key to exit."s));
+    txt(i18n::s.get("core.locale.building.home.design.help"));
     tlocinitx = cdata[0].position.x;
     tlocinity = cdata[0].position.y;
     tile = 0;
@@ -403,12 +524,13 @@ void show_home_value()
     pagesize = 0;
     keyrange = 0;
     key_list = key_cancel;
-    s(0) = lang(u8"家の情報"s, u8"Home Value"s);
-    s(1) = lang(u8"決定ｷｰ,"s, u8"Enter key,"s) + strhint3;
+
+    s(0) = i18n::s.get("core.locale.building.home.rank.title");
+    s(1) = i18n::s.get("core.locale.building.home.rank.enter_key");
     windowshadow = 1;
     display_window((windoww - 440) / 2 + inf_screenx, winposy(360), 440, 360);
-    display_topic(lang(u8"価値"s, u8"Value"s), wx + 28, wy + 36);
-    display_topic(lang(u8"家宝ランク"s, u8"Heirloom Rank"s), wx + 28, wy + 106);
+    display_topic(i18n::s.get("core.locale.building.home.rank.value"), wx + 28, wy + 36);
+    display_topic(i18n::s.get("core.locale.building.home.rank.heirloom_rank"), wx + 28, wy + 106);
     ++cmbg;
     x = ww / 5 * 2;
     y = wh - 80;
@@ -417,10 +539,10 @@ void show_home_value()
     grotate(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
     gmode(2);
     calc_home_rank();
-    s(0) = lang(u8"基本."s, u8"Base"s);
-    s(1) = lang(u8"家具."s, u8"Deco"s);
-    s(2) = lang(u8"家宝."s, u8"Heir"s);
-    s(3) = lang(u8"総合."s, u8"Total"s);
+    s(0) = i18n::s.get("core.locale.building.home.rank.type.base");
+    s(1) = i18n::s.get("core.locale.building.home.rank.type.deco");
+    s(2) = i18n::s.get("core.locale.building.home.rank.type.heir");
+    s(3) = i18n::s.get("core.locale.building.home.rank.type.total");
     p(0) = gdata_basic_point_of_home_rank;
     p(1) = gdata(77);
     p(2) = gdata(78);
@@ -438,7 +560,7 @@ void show_home_value()
              ++cnt)
         {
             pos(x + 35 + cnt * 13 + en * 8, y - 2);
-            bmes(lang(u8"★"s, u8"*"s), 255, 255, 50);
+            bmes(i18n::s.get("core.locale.building.home.rank.star"), 255, 255, 50);
         }
     }
     font(12 + sizefix - en * 2);
@@ -463,7 +585,7 @@ void show_home_value()
             chipi(2, p(1)) * inf_tiles / chipi(3, p(1)),
             inf_tiles);
         pos(wx + 68, cnt * 16 + wy + 138);
-        mes(""s + cnvrank((10 - cnt)) + lang(u8"位."s, ""s));
+        mes(i18n::s.get("core.locale.building.home.rank.place", cnvrank(10 - cnt)));
         pos(wx + 110, cnt * 16 + wy + 138);
         mes(itemname(p));
     }
@@ -488,7 +610,7 @@ void prompt_move_ally()
     {
 
         txtnew();
-        txt(lang(u8"誰を移動させる？"s, u8"Move who?"s));
+        txt(i18n::s.get("core.locale.building.home.move.who"));
         allyctrl = 0;
         int stat = show_hire_menu();
         if (stat == -1)
@@ -499,8 +621,7 @@ void prompt_move_ally()
         {
             txtnew();
             txtef(9);
-            txt(cdatan(0, stat)
-                + lang(u8"「触るな！」"s, (u8" "s + u8"\"Don't touch me!\""s)));
+            txt(i18n::s.get("core.locale.building.home.move.dont_touch_me", cdata[stat]));
             break;
         }
         tchome = stat;
@@ -508,9 +629,7 @@ void prompt_move_ally()
         snd(20);
     label_1718_internal:
         txtnew();
-        txt(lang(
-            cdatan(0, tc) + u8"をどこに移動させる？"s,
-            u8"Where do you want to move "s + cdatan(0, tc) + u8"?"s));
+        txt(i18n::s.get("core.locale.building.home.move.where", cdata[stat]));
         {
             int stat = target_position();
             if (stat == -1)
@@ -520,9 +639,7 @@ void prompt_move_ally()
         }
         if (chipm(7, map(tlocx, tlocy, 0)) & 4 || map(tlocx, tlocy, 1) != 0)
         {
-            txt(lang(
-                u8"その場所には移動させることができない。"s,
-                u8"The location is invalid."s));
+            txt(i18n::s.get("core.locale.building.home.move.invalid"));
             goto label_1718_internal;
         }
         tc = tchome;
@@ -534,9 +651,7 @@ void prompt_move_ally()
         cdata[tc].initial_position.y = tlocy;
         rowactend(tc);
         txtnew();
-        txt(lang(
-            cdatan(0, tc) + u8"を移動させた。"s,
-            cdatan(0, tc) + u8" "s + is(tc) + u8" moved to the location."s));
+        txt(i18n::s.get("core.locale.building.home.move.is_moved", cdata[tc]));
         snd(43);
     }
 }
@@ -556,18 +671,12 @@ void prompt_ally_staying()
                 if (gdata_current_map == 7)
                 {
                     cdata[c].current_map = 0;
-                    txt(lang(
-                        cdatan(0, c) + u8"の滞在を取り消した。"s,
-                        cdatan(0, c) + u8" "s + is(c)
-                            + u8" no longer staying at your home."s));
+                    txt(i18n::s.get("core.locale.building.home.staying.remove.ally", cdata[c]));
                 }
                 else
                 {
                     removeworker(gdata_current_map);
-                    txt(lang(
-                        cdatan(0, c) + u8"を役目から外した。"s,
-                        u8"You remove "s + cdatan(0, c) + u8" from "s + his(c)
-                            + u8" job."s));
+                    txt(i18n::s.get("core.locale.building.home.staying.remove.worker", cdata[c]));
                 }
             }
             else
@@ -576,18 +685,12 @@ void prompt_ally_staying()
                 {
                     cdata[c].initial_position.x = cdata[c].position.x;
                     cdata[c].initial_position.y = cdata[c].position.y;
-                    txt(lang(
-                        cdatan(0, c) + u8"を滞在させた。"s,
-                        cdatan(0, c) + u8" stay"s + _s(c)
-                            + u8" at your home now."s));
+                    txt(i18n::s.get("core.locale.building.home.staying.add.ally", cdata[c]));
                 }
                 else
                 {
                     removeworker(gdata_current_map);
-                    txt(lang(
-                        cdatan(0, c) + u8"を任命した。"s,
-                        cdatan(0, c) + u8" take"s + _s(c)
-                            + u8" charge of the job now."s));
+                    txt(i18n::s.get("core.locale.building.home.staying.add.worker", cdata[c]));
                 }
                 cdata[c].current_map = gdata_current_map;
             }
@@ -600,7 +703,7 @@ void try_extend_shop()
     txtnew();
     if (cdata[0].gold < calcshopreform())
     {
-        txt(lang(u8"お金が足りない…"s, u8"You don't have enough money..."s));
+        txt(i18n::s.get("core.locale.building.not_enough_money"));
     }
     else
     {
@@ -608,11 +711,7 @@ void try_extend_shop()
         cdata[0].gold -= calcshopreform();
         mdata(18) = clamp(mdata(18) + 10, 1, 400);
         txtef(2);
-        txt(lang(
-            u8"店を拡張した！これからは"s + mdata(18)
-                + u8"個のアイテムを陳列できる。"s,
-            u8"You extend your shop! You can display max of "s + mdata(18)
-                + u8" items now!"s));
+        txt(i18n::s.get("core.locale.building.shop.extend", mdata(18)));
     }
 }
 
@@ -726,11 +825,10 @@ void show_shop_log()
     int customer = 0;
     int dblistmax = 0;
     worker = getworker(area);
+    std::string shop_mark = u8"["s + i18n::s.get("core.locale.building.shop.info") + u8"]"s;
     if (worker == -1)
     {
-        txt(lang(
-            u8"[店]店には店番がいない。"s,
-            u8"[Shop]Your shop doesn't have a shopkeeper."s));
+        txt(shop_mark + i18n::s.get("core.locale.building.shop.log.no_shopkeeper"));
         return;
     }
     sold = 0;
@@ -943,34 +1041,27 @@ void show_shop_log()
     {
         if (config::instance().hideshopresult == 0)
         {
-            txt(lang(
-                u8"[店]"s + customer + u8"人が来客したが、"s + cdatan(0, worker)
-                    + u8"はアイテムを一つも売れなかった。"s,
-                u8"[Shop]"s + customer + u8" customers visited your shop but "s
-                    + cdatan(0, worker) + u8" couldn't sell any item."s));
+            txt(shop_mark + i18n::s.get("core.locale.building.shop.log.could_not_sell",
+                                        customer,
+                                        cdata[worker]));
         }
     }
     else
     {
         if (config::instance().hideshopresult <= 1)
         {
-            s = ""s + income + lang(u8"gold"s, u8" gold pieces"s);
+            s = i18n::s.get("core.locale.building.shop.log.gold", income(0));
             if (income(1) != 0)
             {
-                s += lang(
-                    u8"と"s + income(1) + u8"個のアイテム"s,
-                    u8" and "s + income(1) + u8" items"s);
+                s += i18n::s.get("core.locale.building.shop.log.and_items", income(1));
             }
             snd(24);
             txtef(5);
-            txt(lang(
-                u8"[店]"s + customer + u8"人の来客があり、"s + cdatan(0, worker)
-                    + u8"は"s + sold + u8"個のアイテムを売却した。"s + s
-                    + u8"が売り上げとして金庫に保管された。"s,
-                u8"[Shop]"s + customer + u8" customers visited your shop and "s
-                    + cdatan(0, worker) + u8" sold "s + sold + u8" items. "s
-                    + cdatan(0, worker) + u8" put "s + s
-                    + u8" in the shop strong box."s));
+            txt(shop_mark + i18n::s.get("core.locale.building.shop.log.sold_items",
+                                        customer,
+                                        cdata[worker],
+                                        sold,
+                                        s(0)));
         }
         skillexp(156, worker, clamp(int(std::sqrt(income(0))) * 6, 25, 1000));
     }
@@ -1096,13 +1187,11 @@ void update_museum()
             txtef(8);
         }
         txtnew();
-        txt(lang(
-            u8"ランク変動("s + rankn(10, 3) + u8" "s + rankorg / 100
-                + u8"位 → "s + rankcur / 100 + u8"位 )《"s + ranktitle(3)
-                + u8"》"s,
-            u8"Museum Rank:"s + cnvrank(rankorg / 100) + u8"->"s
-                + cnvrank(rankcur / 100) + u8" Your museum is now known as <"s
-                + ranktitle(3) + u8">."s));
+        txt(i18n::s.get("core.locale.building.museum.rank_change",
+                        cnvrank(rankorg / 100),
+                        cnvrank(rankcur / 100),
+                        ranktitle(3),
+                        rankn(10, 3)));
     }
     mdata(10) = (100 - gdata(123) / 100) / 2 + 1;
     return;
@@ -1213,15 +1302,13 @@ void calc_home_rank()
             txtef(8);
         }
         txtnew();
-        txt(lang(
-            u8"家具("s + gdata(77) / 100 + u8"点) 家宝("s + gdata(78) / 100
-                + u8"点) ランク変動("s + rankn(10, 4) + u8" "s + rankorg / 100
-                + u8"位 → "s + rankcur / 100 + u8"位 )《"s + ranktitle(4)
-                + u8"》"s,
-            u8"Furniture Value:"s + gdata(77) / 100 + u8" Heirloom Value:"s
-                + gdata(78) / 100 + u8" Home Rank:"s + cnvrank(rankorg / 100)
-                + u8"->"s + cnvrank(rankcur / 100)
-                + u8" Your home is now known as <"s + ranktitle(4) + u8">."s));
+        txt(i18n::s.get("core.locale.building.home.rank.change",
+                        gdata(77) / 100,
+                        gdata(78) / 100,
+                        cnvrank(rankorg / 100),
+                        cnvrank(rankcur / 100),
+                        ranktitle(4),
+                        rankn(10, 4)));
     }
     return;
 }

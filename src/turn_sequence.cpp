@@ -3,6 +3,7 @@
 #include "ai.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
+#include "building.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "command.hpp"
