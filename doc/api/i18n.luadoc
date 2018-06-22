@@ -1,10 +1,11 @@
 --- Functions for localization.
---- See the localization section for more information.
+--- See the I18N section for more information.
 --  @usage local I18N = Elona.require("I18N")
 module "I18N"
 
 --- Gets a localized string and optionally formats it with arguments.
---- This will raise an error if the localization string doesn't exist.
+--- This will return a string with a warning if the localization
+--- string doesn't exist.
 -- @tparam string key the ID of the localization string
 -- @treturn string the formatted string
 -- @usage I18N.get("core.locale.map.you_see", "Vernis")
@@ -15,5 +16,31 @@ function get(key, ...) end
 -- @tparam string key the ID of the localization string
 -- @treturn[1] string the formatted string
 -- @treturn[2] nil
--- @usage I18N.get("core.locale.map.you_see", "Vernis")
 function get_optional(key, ...) end
+
+--- Gets a localized string from an enum-style localization object.
+--- This will return a string with a warning if the localization
+--- string doesn't exist.
+-- @tparam string key the ID of the localization string
+-- @tparam num index the index into the enum
+-- @treturn string the formatted string
+function get_enum(key, index, ...) end
+
+--- Gets a localized string from an enum-style localization object
+--- where the enum's children are themselves objects. This will return
+--- a string with a warning if the localization string doesn't exist.
+-- @tparam string key_base the base ID of the localization string
+-- @tparam string key_property the property of the enum object to get
+-- @tparam num index the index into the enum
+-- @treturn string the formatted string
+function get_enum_property(key_base, key_property, index, ...) end
+
+--- Gets a localized string from an enum-style localization object
+--- where the enum's children are themselves objects. This will return
+--- nil if the localization string doesn't exist.
+-- @tparam string key_base the base ID of the localization string
+-- @tparam string key_property the property of the enum object to get
+-- @tparam num index the index into the enum
+-- @treturn[1] string the formatted string
+-- @treturn[2] nil
+function get_enum_property_optional(key_base, key_property, index, ...) end

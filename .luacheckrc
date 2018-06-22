@@ -66,20 +66,14 @@ exclude_files = {
 }
 
 -------------------------------------------------------------------------------
---[Mod Prototypes]--
--------------------------------------------------------------------------------
---Set default prototype files
--- files['**/data.lua'].std = STD_DATA
-
--------------------------------------------------------------------------------
 --[Base]--
 -------------------------------------------------------------------------------
 
-files['**/mods'] = {std = STD_ELONA}
-files['**/mods/core'] = {std = "+core"}
-files['tests/lua/*.lua'] = {std = "+tests"}
-files['tests/lua/classes/*.lua'] = {std = "+tests"}
-files['tests/lua/support'] = {std = "+minctest"}
+files['**/runtime/mods'] = {std = STD_ELONA}
+files['**/runtime/mods/core'] = {std = "+core"}
+files['src/tests/lua/*.lua'] = {std = "+tests"}
+files['src/tests/lua/classes/*.lua'] = {std = "+tests"}
+files['src/tests/lua/support'] = {std = "+minctest"}
 
 -------------------------------------------------------------------------------
 --[STDS ELONA]--

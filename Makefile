@@ -60,7 +60,7 @@ ldoc:
 
 luacheck:
 	luacheck --version
-	luacheck mods/
-	luacheck tests/lua
+	luacheck runtime/mods/
+	luacheck src/tests/lua
 
 rebuild: clean build

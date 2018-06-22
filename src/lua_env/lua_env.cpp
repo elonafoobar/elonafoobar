@@ -287,6 +287,9 @@ void lua_env::reload()
 
 int deny(sol::table table, sol::object key, sol::object value, sol::this_state ts)
 {
+    UNUSED(table);
+    UNUSED(value);
+
     std::stringstream ss;
     if (key.is<std::string>())
     {
