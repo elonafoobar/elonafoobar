@@ -7430,9 +7430,7 @@ void label_1754()
             {
                 snd(44);
                 txtef(2);
-                txt(lang(
-                    u8"ジャーナルが更新された。"s,
-                    u8"Your journal has been updated."s));
+                txt(i18n::s.get("core.locale.quest.journal_updated"));
                 gdata_kamikaze_attack = 3;
                 txtef(9);
                 txt(lang(
@@ -8476,9 +8474,7 @@ label_1894_internal:
                 flttypemajor = fsetremain(rnd(length(fsetremain)));
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         }
         break;
     case 4:
@@ -8649,9 +8645,7 @@ label_1894_internal:
                 }
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         }
         else
         {
@@ -11153,9 +11147,7 @@ turn_result_t do_gatcha()
             {
                 inv[ci].param2 = 0;
             }
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         }
         else
         {
@@ -13415,9 +13407,7 @@ void continuous_action_sex()
             flt();
             itemcreate(
                 -1, 54, cdata[cc].position.x, cdata[cc].position.y, sexvalue);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             modify_karma(0, -1);
         }
         else
@@ -14761,9 +14751,7 @@ void spot_digging()
                                     cdata[0].position.y,
                                     0);
                             }
-                            txt(lang(
-                                u8"何かが足元に転がってきた。"s,
-                                u8"Something is put on the ground."s));
+                            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
                             autosave = 1 * (gdata_current_map != 35);
                             --inv[cnt].number;
                             break;
@@ -15362,7 +15350,7 @@ int label_2168()
     }
     if (noeffect == 1)
     {
-        txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+        txt(i18n::s.get("core.locale.common.nothing_happens"));
         efsource = 0;
         return 1;
     }
@@ -15768,7 +15756,7 @@ int label_2172()
             txt(lang(
                 itemname(ci, 1) + u8"を振った。"s,
                 u8"You zap "s + itemname(ci, 1) + u8"."s));
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
         }
         return 0;
     }
@@ -15794,7 +15782,7 @@ int label_2172()
                 txt(lang(
                     itemname(ci, 1) + u8"を振った。"s,
                     u8"You zap "s + itemname(ci, 1) + u8"."s));
-                txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+                txt(i18n::s.get("core.locale.common.nothing_happens"));
             }
             goto label_2173_internal;
         }
@@ -15948,7 +15936,7 @@ int label_2174()
     {
         if (efid != 300)
         {
-            txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             return 1;
         }
     }
@@ -19140,7 +19128,7 @@ void dipcursed(int prm_1078, int)
         }
         return;
     }
-    txt(lang(u8"何もおきない… "s, u8"Nothing happens..."s));
+    txt(i18n::s.get("core.locale.common.nothing_happens"));
     return;
 }
 
@@ -20311,9 +20299,7 @@ void weather_changes()
                     ++gdata_pael_and_her_mom;
                     snd(44);
                     txtef(2);
-                    txt(lang(
-                        u8"ジャーナルが更新された。"s,
-                        u8"Your journal has been updated."s));
+                    txt(i18n::s.get("core.locale.quest.journal_updated"));
                 }
             }
         }

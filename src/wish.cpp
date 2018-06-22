@@ -653,13 +653,13 @@ bool wish_for_skill(const std::string& input)
         }
         else
         {
-            txt(lang(u8"何もおきない… ", u8"Nothing happens..."));
+            txt(i18n::s.get("core.locale.common.nothing_happens"));
             return false;
         }
     }
     else
     {
-        txt(lang(u8"何もおきない… ", u8"Nothing happens..."));
+        txt(i18n::s.get("core.locale.common.nothing_happens"));
         return false;
     }
     return true;
@@ -685,7 +685,7 @@ bool process_wish()
 
     if (inputlog(0) == "" || inputlog(0) == u8" ")
     {
-        txt(lang(u8"何もおきない… ", u8"Nothing happens..."));
+        txt(i18n::s.get("core.locale.common.nothing_happens"));
         return false;
     }
     if (en)
