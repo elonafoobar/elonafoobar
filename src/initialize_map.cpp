@@ -16,8 +16,8 @@
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "mapgen.hpp"
-#include "random.hpp"
 #include "quest.hpp"
+#include "random.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -2674,7 +2674,8 @@ label_1741_internal:
     randomize();
     mdata(19) = gdata(184);
     mdata(21) = 1;
-    lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::map_created>();
+    lua::lua.get_event_manager()
+        .run_callbacks<lua::event_kind_t::map_created>();
 label_1742_internal:
     if (gdata_current_map == 4)
     {
@@ -3515,7 +3516,8 @@ label_1744_internal:
         }
     }
 
-    lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::map_initialized>();
+    lua::lua.get_event_manager()
+        .run_callbacks<lua::event_kind_t::map_initialized>();
 
     return turn_result_t::turn_begin;
 }

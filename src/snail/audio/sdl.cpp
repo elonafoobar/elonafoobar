@@ -1,5 +1,5 @@
-#include "../application.hpp"
 #include "../detail/sdl.hpp"
+#include "../application.hpp"
 
 #include <vector>
 
@@ -55,8 +55,7 @@ void DSLOADFNAME(const std::string& filepath, int channel)
     if (auto chunk = chunks[channel])
         Mix_FreeChunk(chunk);
 
-    auto chunk = snail::detail::enforce_mixer(
-        Mix_LoadWAV(filepath.c_str()));
+    auto chunk = snail::detail::enforce_mixer(Mix_LoadWAV(filepath.c_str()));
     chunks[channel] = chunk;
 }
 
@@ -109,8 +108,7 @@ void DMLOADFNAME(const std::string& filepath, int)
     if (played_music)
         ::Mix_FreeMusic(played_music);
 
-    played_music = snail::detail::enforce_mixer(
-        Mix_LoadMUS(filepath.c_str()));
+    played_music = snail::detail::enforce_mixer(Mix_LoadMUS(filepath.c_str()));
 }
 
 

@@ -13,4 +13,4 @@ void initialize_game();
 void initialize_debug_globals();
 int run();
 
-}
+} // namespace elona

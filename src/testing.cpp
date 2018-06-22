@@ -22,7 +22,8 @@ void load_previous_savefile()
     elona::playerid = "sav_foobar_test";
     load_save_data(save_dir);
     elona::firstturn = 1;
-    elona::mode = 3; // begin the game as if it were loaded from a save; load inv_xxx.s2
+    elona::mode =
+        3; // begin the game as if it were loaded from a save; load inv_xxx.s2
     initialize_map();
 }
 

@@ -1,5 +1,6 @@
 #include "lua_env.hpp"
 
+#include <iterator>
 #include "../ability.hpp"
 #include "../character.hpp"
 #include "../dmgheal.hpp"
@@ -15,7 +16,6 @@
 #include "../status_ailment.hpp"
 #include "../ui.hpp"
 #include "../variables.hpp"
-#include <iterator>
 
 /***
  * See doc/api for the API documentation.
@@ -65,7 +65,7 @@ character& conv_chara(lua_character_handle handle)
 {
     sol::object obj = handle["cpp_ref"];
     bool is_valid = handle["is_valid"];
-    if(!is_valid || !obj.is<character&>())
+    if (!is_valid || !obj.is<character&>())
     {
         std::cerr << "Handle not valid" << std::endl;
         throw sol::error("not valid handle");
@@ -77,7 +77,7 @@ item& conv_item(lua_item_handle handle)
 {
     sol::object obj = handle["cpp_ref"];
     bool is_valid = handle["is_valid"];
-    if(!is_valid || !obj.is<item&>())
+    if (!is_valid || !obj.is<item&>())
     {
         std::cerr << "Handle not valid" << std::endl;
         throw sol::error("not valid handle");
@@ -86,7 +86,8 @@ item& conv_item(lua_item_handle handle)
 }
 
 
-namespace Chara {
+namespace Chara
+{
 bool is_alive(const lua_character_handle);
 bool is_player(const lua_character_handle);
 bool is_ally(const lua_character_handle);
@@ -97,12 +98,12 @@ sol::optional<lua_character_handle> create(const position_t&, int);
 sol::optional<lua_character_handle> create_xy(int, int, int);
 
 void bind(sol::table& Elona);
-};
+}; // namespace Chara
 
 bool Chara::is_alive(const lua_character_handle handle)
 {
     bool is_valid = handle["is_valid"];
-    if(!is_valid)
+    if (!is_valid)
     {
         return false;
     }
@@ -126,7 +127,7 @@ int Chara::count()
 
 bool Chara::flag(const lua_character_handle handle, int flag)
 {
-    if(flag < 5 || flag > 991 || (flag > 32 && flag < 960))
+    if (flag < 5 || flag > 991 || (flag > 32 && flag < 960))
     {
         return false;
     }
@@ -135,17 +136,21 @@ bool Chara::flag(const lua_character_handle handle, int flag)
 
 sol::optional<lua_character_handle> Chara::player()
 {
-    if(elona::cdata[0].state == 0) {
+    if (elona::cdata[0].state == 0)
+    {
         return sol::nullopt;
     }
     else
     {
-        lua_character_handle handle = lua::lua.get_handle_manager().get_chara_handle(elona::cdata[0]);
+        lua_character_handle handle =
+            lua::lua.get_handle_manager().get_chara_handle(elona::cdata[0]);
         return handle;
     }
 }
 
-sol::optional<lua_character_handle> Chara::create(const position_t& position, int id)
+sol::optional<lua_character_handle> Chara::create(
+    const position_t& position,
+    int id)
 {
     return Chara::create_xy(position.x, position.y, id);
 }
@@ -153,9 +158,11 @@ sol::optional<lua_character_handle> Chara::create(const position_t& position, in
 sol::optional<lua_character_handle> Chara::create_xy(int x, int y, int id)
 {
     elona::flt();
-    if(elona::chara_create(-1, id, x, y) != 0)
+    if (elona::chara_create(-1, id, x, y) != 0)
     {
-        lua_character_handle handle = lua::lua.get_handle_manager().get_chara_handle(elona::cdata[elona::rc]);
+        lua_character_handle handle =
+            lua::lua.get_handle_manager().get_chara_handle(
+                elona::cdata[elona::rc]);
         return handle;
     }
     else
@@ -173,15 +180,17 @@ void Chara::bind(sol::table& Elona)
     Chara.set_function("count", Chara::count);
     Chara.set_function("flag", Chara::flag);
     Chara.set_function("player", Chara::player);
-    Chara.set_function("create", sol::overload(Chara::create, Chara::create_xy));
+    Chara.set_function(
+        "create", sol::overload(Chara::create, Chara::create_xy));
 }
 
-namespace Pos {
+namespace Pos
+{
 int dist(const position_t&, const position_t&);
 int dist_xy(int, int, int, int);
 
 void bind(sol::table& Elona);
-}
+} // namespace Pos
 
 int Pos::dist(const position_t& from, const position_t& to)
 {
@@ -200,17 +209,16 @@ void Pos::bind(sol::table& Elona)
 }
 
 
-namespace World {
+namespace World
+{
 int time();
 
 void bind(sol::table& Elona);
-};
+}; // namespace World
 
 int World::time()
 {
-    return gdata_hour
-        + gdata_day * 24
-        + gdata_month * 24 * 30
+    return gdata_hour + gdata_day * 24 + gdata_month * 24 * 30
         + gdata_year * 24 * 30 * 12;
 }
 
@@ -221,27 +229,30 @@ void World::bind(sol::table& Elona)
 }
 
 
-namespace Magic {
+namespace Magic
+{
 void cast_self(lua_character_handle, int, int, const position_t&);
 void cast(lua_character_handle, lua_character_handle, int, int);
 
 void bind(sol::table& Elona);
-}
+} // namespace Magic
 
-void Magic::cast_self(lua_character_handle caster,
-                      int effect_id,
-                      int effect_power,
-                      const position_t& target_location)
+void Magic::cast_self(
+    lua_character_handle caster,
+    int effect_id,
+    int effect_power,
+    const position_t& target_location)
 {
     elona::tlocx = target_location.x;
     elona::tlocy = target_location.y;
     Magic::cast(caster, caster, effect_id, effect_power);
 }
 
-void Magic::cast(lua_character_handle caster,
-                 lua_character_handle target,
-                 int effect_id,
-                 int effect_power)
+void Magic::cast(
+    lua_character_handle caster,
+    lua_character_handle target,
+    int effect_id,
+    int effect_power)
 {
     int ccbk = elona::cc;
     int tcbk = elona::tc;
@@ -256,7 +267,7 @@ void Magic::cast(lua_character_handle caster,
         elona::cc = ccbk;
         elona::tc = tcbk;
     }
-    catch(std::exception& e)
+    catch (std::exception& e)
     {
         // Always reset the values of cc/tc if a handle is invalid.
         elona::cc = ccbk;
@@ -273,7 +284,8 @@ void Magic::bind(sol::table& Elona)
     Magic.set_function("cast", sol::overload(Magic::cast_self, Magic::cast));
 }
 
-namespace Map {
+namespace Map
+{
 int width();
 int height();
 bool is_overworld();
@@ -290,7 +302,7 @@ void set_tile_memory(const position_t&, int);
 void set_tile_memory_xy(int, int, int);
 
 void bind(sol::table& Elona);
-}
+} // namespace Map
 
 int Map::width()
 {
@@ -314,7 +326,7 @@ bool Map::valid(const position_t& position)
 
 bool Map::valid_xy(int x, int y)
 {
-    if(Map::is_overworld())
+    if (Map::is_overworld())
     {
         return false;
     }
@@ -333,7 +345,7 @@ bool Map::can_access(const position_t& position)
 
 bool Map::can_access_xy(int x, int y)
 {
-    if(Map::is_overworld())
+    if (Map::is_overworld())
     {
         return false;
     }
@@ -343,24 +355,15 @@ bool Map::can_access_xy(int x, int y)
 
 position_t Map::bound_within(const position_t& position)
 {
-    int x = clamp(
-        position.x,
-        0,
-        mdata(0) - 1);
-    int y = clamp(
-        position.y,
-        0,
-        mdata(1) - 1);
+    int x = clamp(position.x, 0, mdata(0) - 1);
+    int y = clamp(position.y, 0, mdata(1) - 1);
     return position_t{x, y};
 }
 
 position_t Map::random_pos()
 {
     return Map::bound_within(
-        position_t{
-            elona::rnd(mdata(0) - 1),
-                elona::rnd(mdata(1) - 1)
-                });
+        position_t{elona::rnd(mdata(0) - 1), elona::rnd(mdata(1) - 1)});
 }
 
 int Map::generate_tile(tile_kind_t type)
@@ -375,11 +378,11 @@ void Map::set_tile(const position_t& position, int type)
 
 void Map::set_tile_xy(int x, int y, int type)
 {
-    if(Map::is_overworld())
+    if (Map::is_overworld())
     {
         return;
     }
-    if(!Map::valid_xy(x, y))
+    if (!Map::valid_xy(x, y))
     {
         return;
     }
@@ -394,11 +397,11 @@ void Map::set_tile_memory(const position_t& position, int type)
 
 void Map::set_tile_memory_xy(int x, int y, int type)
 {
-    if(Map::is_overworld())
+    if (Map::is_overworld())
     {
         return;
     }
-    if(!Map::valid_xy(x, y))
+    if (!Map::valid_xy(x, y))
     {
         return;
     }
@@ -413,15 +416,20 @@ void Map::bind(sol::table& Elona)
     Map.set_function("height", Map::height);
     Map.set_function("is_overworld", Map::is_overworld);
     Map.set_function("valid", sol::overload(Map::valid, Map::valid_xy));
-    Map.set_function("can_access", sol::overload(Map::can_access, Map::can_access_xy));
+    Map.set_function(
+        "can_access", sol::overload(Map::can_access, Map::can_access_xy));
     Map.set_function("bound_within", Map::bound_within);
     Map.set_function("random_pos", Map::random_pos);
     Map.set_function("generate_tile", Map::generate_tile);
-    Map.set_function("set_tile", sol::overload(Map::set_tile, Map::set_tile_xy));
-    Map.set_function("set_tile_memory", sol::overload(Map::set_tile_memory, Map::set_tile_memory_xy));
+    Map.set_function(
+        "set_tile", sol::overload(Map::set_tile, Map::set_tile_xy));
+    Map.set_function(
+        "set_tile_memory",
+        sol::overload(Map::set_tile_memory, Map::set_tile_memory_xy));
 }
 
-namespace FOV {
+namespace FOV
+{
 bool los(const position_t&, const position_t&);
 bool los_xy(int, int, int, int);
 bool you_see(const lua_character_handle);
@@ -430,7 +438,7 @@ bool you_see_pos_xy(int, int);
 void refresh();
 
 void bind(sol::table& Elona);
-};
+}; // namespace FOV
 
 bool FOV::los(const position_t& from, const position_t& to)
 {
@@ -471,20 +479,21 @@ void FOV::bind(sol::table& Elona)
 {
     sol::table FOV = Elona.create_named("FOV");
     FOV.set_function("los", sol::overload(FOV::los, FOV::los_xy));
-    FOV.set_function("you_see", sol::overload(FOV::you_see_pos,
-                                              FOV::you_see_pos_xy,
-                                              FOV::you_see));
+    FOV.set_function(
+        "you_see",
+        sol::overload(FOV::you_see_pos, FOV::you_see_pos_xy, FOV::you_see));
     FOV.set_function("refresh", FOV::refresh);
 }
 
 
-namespace Rand {
+namespace Rand
+{
 int rnd(int n);
 bool one_in(int n);
 bool coinflip();
 
 void bind(sol::table& Elona);
-};
+}; // namespace Rand
 
 
 int Rand::rnd(int n)
@@ -510,7 +519,8 @@ void Rand::bind(sol::table& Elona)
     Rand.set_function("coinflip", Rand::coinflip);
 }
 
-namespace Item {
+namespace Item
+{
 int count();
 sol::optional<lua_item_handle> create(const position_t&, int, int);
 sol::optional<lua_item_handle> create_xy(int, int, int, int);
@@ -518,14 +528,15 @@ bool has_enchantment(const lua_item_handle, int);
 void remove(lua_item_handle);
 
 void bind(sol::table& Elona);
-}
+} // namespace Item
 
 int Item::count()
 {
     return inv_sum(-1);
 }
 
-sol::optional<lua_item_handle> Item::create(const position_t& position, int id, int number)
+sol::optional<lua_item_handle>
+Item::create(const position_t& position, int id, int number)
 {
     return Item::create_xy(position.x, position.y, id, number);
 }
@@ -533,9 +544,10 @@ sol::optional<lua_item_handle> Item::create(const position_t& position, int id, 
 sol::optional<lua_item_handle> Item::create_xy(int x, int y, int id, int number)
 {
     elona::flt();
-    if(elona::itemcreate(-1, id, x, y, number) != 0)
+    if (elona::itemcreate(-1, id, x, y, number) != 0)
     {
-        lua_item_handle handle = lua::lua.get_handle_manager().get_item_handle(elona::inv[elona::ci]); // TODO deglobalize ci
+        lua_item_handle handle = lua::lua.get_handle_manager().get_item_handle(
+            elona::inv[elona::ci]); // TODO deglobalize ci
         return handle;
     }
     else
@@ -564,15 +576,16 @@ void Item::bind(sol::table& Elona)
 }
 
 
-namespace Skill {
+namespace Skill
+{
 int level(int, const lua_character_handle);
 
 void bind(sol::table& Elona);
-}
+} // namespace Skill
 
 int Skill::level(int skill, const lua_character_handle handle)
 {
-    if(skill < 0 || skill >= 600)
+    if (skill < 0 || skill >= 600)
     {
         return -1;
     }
@@ -586,12 +599,13 @@ void Skill::bind(sol::table& Elona)
 }
 
 
-namespace GUI {
+namespace GUI
+{
 void txt(const std::string&);
 void txt_color(int);
 
 void bind(sol::table&);
-};
+}; // namespace GUI
 
 void GUI::txt(const std::string& message)
 {
@@ -600,7 +614,7 @@ void GUI::txt(const std::string& message)
 
 void GUI::txt_color(int color)
 {
-    if(color < 0 || color > 20)
+    if (color < 0 || color > 20)
     {
         return;
     }
@@ -623,7 +637,7 @@ void dump_characters();
 void dump_items();
 
 void bind(sol::table& Elona);
-}
+} // namespace Debug
 
 void Debug::log(const std::string& message)
 {
@@ -637,7 +651,8 @@ void Debug::report_error(const std::string& message)
 
     GUI::txt_color(3);
     GUI::txt("Script error: ");
-    while (getline(sstream, line, '\n')) {
+    while (getline(sstream, line, '\n'))
+    {
         GUI::txt_color(3);
         GUI::txt(line + "  ");
     }
@@ -650,9 +665,11 @@ void Debug::dump_characters()
     ELONA_LOG("===== Charas =====")
     for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
-        if(elona::cdata[cnt].state != 0)
-            ELONA_LOG(elona::cdata[cnt].index << ") Name: " << elona::name(cnt) <<
-                      ", Pos: " << elona::cdata[cnt].position);
+        if (elona::cdata[cnt].state != 0)
+            ELONA_LOG(
+                elona::cdata[cnt].index
+                << ") Name: " << elona::name(cnt)
+                << ", Pos: " << elona::cdata[cnt].position);
     }
 }
 
@@ -661,12 +678,14 @@ void Debug::dump_items()
     ELONA_LOG("===== Items  =====")
     for (const auto& cnt : items(-1))
     {
-        if(elona::inv[cnt].number != 0)
-            ELONA_LOG(elona::inv[cnt].index <<") Name: " << elona::itemname(cnt) <<
-                      ", Pos: "   << elona::inv[cnt].position <<
-                      ", Curse: " << static_cast<int>(elona::inv[cnt].curse_state) <<
-                      ", Ident: " << static_cast<int>(elona::inv[cnt].identification_state) <<
-                      ", Count: " << elona::inv[cnt].count);
+        if (elona::inv[cnt].number != 0)
+            ELONA_LOG(
+                elona::inv[cnt].index
+                << ") Name: " << elona::itemname(cnt)
+                << ", Pos: " << elona::inv[cnt].position << ", Curse: "
+                << static_cast<int>(elona::inv[cnt].curse_state) << ", Ident: "
+                << static_cast<int>(elona::inv[cnt].identification_state)
+                << ", Count: " << elona::inv[cnt].count);
     }
 }
 
@@ -699,24 +718,33 @@ void set_flag(character&, int, bool);
 void gain_skill(character&, int, int);
 void gain_skill_stock(character&, int, int, int);
 void gain_skill_exp(character&, int, int);
-}
+} // namespace LuaCharacter
 
 void LuaCharacter::damage_hp(character& self, int amount)
 {
     LuaCharacter::damage_hp_source(self, amount, damage_source_t::unseen_hand);
 }
 
-void LuaCharacter::damage_hp_source(character& self, int amount, damage_source_t source)
+void LuaCharacter::damage_hp_source(
+    character& self,
+    int amount,
+    damage_source_t source)
 {
     elona::dmghp(self.index, amount, static_cast<int>(source));
 }
 
-void LuaCharacter::damage_hp_chara(character& self, int amount, const lua_character_handle handle)
+void LuaCharacter::damage_hp_chara(
+    character& self,
+    int amount,
+    const lua_character_handle handle)
 {
     elona::dmghp(self.index, amount, conv_chara(handle).index);
 }
 
-void LuaCharacter::apply_ailment(character& self, status_ailment_t ailment, int power)
+void LuaCharacter::apply_ailment(
+    character& self,
+    status_ailment_t ailment,
+    int power)
 {
     assert(power > 0);
     elona::dmgcon(self.index, ailment, power);
@@ -726,7 +754,8 @@ bool LuaCharacter::recruit_as_ally(character& self)
 {
     // can't use Chara methods because they take a handle...
     // TODO: DRY (would need to be far-reaching)
-    if(self.state == 0 || (self.index != 0 && self.index <= 16) || self.index == 0)
+    if (self.state == 0 || (self.index != 0 && self.index <= 16)
+        || self.index == 0)
     {
         return false;
     }
@@ -736,7 +765,7 @@ bool LuaCharacter::recruit_as_ally(character& self)
 
 void LuaCharacter::set_flag(character& self, int flag, bool value)
 {
-    if(flag < 5 || flag > 991 || (flag > 32 && flag < 960))
+    if (flag < 5 || flag > 991 || (flag > 32 && flag < 960))
     {
         return;
     }
@@ -748,9 +777,13 @@ void LuaCharacter::gain_skill(character& self, int skill, int initial_level)
     LuaCharacter::gain_skill_stock(self, skill, initial_level, 0);
 }
 
-void LuaCharacter::gain_skill_stock(character& self, int skill, int initial_level, int initial_stock)
+void LuaCharacter::gain_skill_stock(
+    character& self,
+    int skill,
+    int initial_level,
+    int initial_stock)
 {
-    if(skill < 0 || skill >= 600)
+    if (skill < 0 || skill >= 600)
     {
         return;
     }
@@ -759,7 +792,7 @@ void LuaCharacter::gain_skill_stock(character& self, int skill, int initial_leve
 
 void LuaCharacter::gain_skill_exp(character& self, int skill, int amount)
 {
-    if(skill < 0 || skill >= 600)
+    if (skill < 0 || skill >= 600)
     {
         return;
     }
@@ -772,41 +805,77 @@ void LuaCharacter::gain_skill_exp(character& self, int skill, int amount)
  */
 void init_usertypes(lua_env& lua)
 {
-    lua.get_state()->new_usertype<position_t>( "LuaPosition",
-                                            sol::constructors<position_t(), position_t(int, int)>(),
-                                           "x", &position_t::x,
-                                           "y", &position_t::y
-        );
-    lua.get_state()->new_usertype<character>( "LuaCharacter",
-                                        "damage_hp", sol::overload(&LuaCharacter::damage_hp, &LuaCharacter::damage_hp_source, &LuaCharacter::damage_hp_chara),
-                                        "apply_ailment", &LuaCharacter::apply_ailment,
-                                        "recruit_as_ally", &LuaCharacter::recruit_as_ally,
-                                        "set_flag", &LuaCharacter::set_flag,
-                                        "gain_skill", sol::overload(&LuaCharacter::gain_skill, &LuaCharacter::gain_skill_stock),
-                                        "gain_skill_exp", &LuaCharacter::gain_skill_exp,
-                                        "hp", sol::readonly(&character::hp),
-                                        "max_hp", sol::readonly(&character::max_hp),
-                                        "mp", sol::readonly(&character::mp),
-                                        "max_mp", sol::readonly(&character::max_mp),
-                                        "sp", sol::readonly(&character::sp),
-                                        "max_sp", sol::readonly(&character::max_sp),
-                                        "shop_rank", &character::shop_rank,
-                                        "character_role", &character::character_role,
-                                        "index", sol::readonly(&character::index),
-                                        "id", sol::readonly(&character::id),
-                                        "position", &character::position,
-                                        "name", sol::property([](character& c) { return elona::cdatan(0, c.index); }),
-                                        "experience", &character::experience
-        );
-    lua.get_state()->new_usertype<item>( "LuaItem",
-                                     "curse_state", &item::curse_state,
-                                     "identify_state", &item::identification_state,
-                                     "index", sol::readonly(&item::index),
-                                     "position", &item::position,
-                                     "number", &item::number,
-                                     "id", &item::id,
-                                     "count", &item::count,
-                                     "name", sol::property([](item& i) { return elona::itemname(i.index); })
+    lua.get_state()->new_usertype<position_t>(
+        "LuaPosition",
+        sol::constructors<position_t(), position_t(int, int)>(),
+        "x",
+        &position_t::x,
+        "y",
+        &position_t::y);
+    lua.get_state()->new_usertype<character>(
+        "LuaCharacter",
+        "damage_hp",
+        sol::overload(
+            &LuaCharacter::damage_hp,
+            &LuaCharacter::damage_hp_source,
+            &LuaCharacter::damage_hp_chara),
+        "apply_ailment",
+        &LuaCharacter::apply_ailment,
+        "recruit_as_ally",
+        &LuaCharacter::recruit_as_ally,
+        "set_flag",
+        &LuaCharacter::set_flag,
+        "gain_skill",
+        sol::overload(
+            &LuaCharacter::gain_skill, &LuaCharacter::gain_skill_stock),
+        "gain_skill_exp",
+        &LuaCharacter::gain_skill_exp,
+        "hp",
+        sol::readonly(&character::hp),
+        "max_hp",
+        sol::readonly(&character::max_hp),
+        "mp",
+        sol::readonly(&character::mp),
+        "max_mp",
+        sol::readonly(&character::max_mp),
+        "sp",
+        sol::readonly(&character::sp),
+        "max_sp",
+        sol::readonly(&character::max_sp),
+        "shop_rank",
+        &character::shop_rank,
+        "character_role",
+        &character::character_role,
+        "index",
+        sol::readonly(&character::index),
+        "id",
+        sol::readonly(&character::id),
+        "position",
+        &character::position,
+        "name",
+        sol::property([](character& c) { return elona::cdatan(0, c.index); }),
+        "experience",
+        &character::experience);
+    lua.get_state()->new_usertype<item>(
+        "LuaItem",
+        "curse_state",
+        &item::curse_state,
+        "identify_state",
+        &item::identification_state,
+        "index",
+        sol::readonly(&item::index),
+        "position",
+        &item::position,
+        "number",
+        &item::number,
+        "id",
+        &item::id,
+        "count",
+        &item::count,
+        "name",
+        sol::property([](item& i) { return elona::itemname(i.index); }),
+        "param1",
+        &item::param1
         );
 }
 
@@ -815,60 +884,100 @@ void init_enums(sol::table& Elona)
     sol::table Enums = Elona.create_named("Enums");
 
     Enums["IdentifyState"] = Enums.create_with(
-        "Unidentified", identification_state_t::unidentified,
-        "Partly", identification_state_t::partly_identified,
-        "Almost", identification_state_t::almost_identified,
-        "Completely", identification_state_t::completely_identified
-        );
+        "Unidentified",
+        identification_state_t::unidentified,
+        "Partly",
+        identification_state_t::partly_identified,
+        "Almost",
+        identification_state_t::almost_identified,
+        "Completely",
+        identification_state_t::completely_identified);
     Enums["CurseState"] = Enums.create_with(
-        "Doomed", curse_state_t::doomed,
-        "Cursed", curse_state_t::cursed,
-        "None", curse_state_t::none,
-        "Blessed", curse_state_t::blessed
-        );
+        "Doomed",
+        curse_state_t::doomed,
+        "Cursed",
+        curse_state_t::cursed,
+        "None",
+        curse_state_t::none,
+        "Blessed",
+        curse_state_t::blessed);
     Enums["StatusAilment"] = Enums.create_with(
-        "Blinded", status_ailment_t::blinded,
-        "Confused", status_ailment_t::confused,
-        "Paralyzed", status_ailment_t::paralyzed,
-        "Poisoned", status_ailment_t::poisoned,
-        "Sleep", status_ailment_t::sleep,
-        "Fear", status_ailment_t::fear,
-        "Dimmed", status_ailment_t::dimmed,
-        "Bleeding", status_ailment_t::bleeding,
-        "Drunk", status_ailment_t::drunk,
-        "Insane", status_ailment_t::insane,
-        "Sick", status_ailment_t::sick
-        );
+        "Blinded",
+        status_ailment_t::blinded,
+        "Confused",
+        status_ailment_t::confused,
+        "Paralyzed",
+        status_ailment_t::paralyzed,
+        "Poisoned",
+        status_ailment_t::poisoned,
+        "Sleep",
+        status_ailment_t::sleep,
+        "Fear",
+        status_ailment_t::fear,
+        "Dimmed",
+        status_ailment_t::dimmed,
+        "Bleeding",
+        status_ailment_t::bleeding,
+        "Drunk",
+        status_ailment_t::drunk,
+        "Insane",
+        status_ailment_t::insane,
+        "Sick",
+        status_ailment_t::sick);
     Enums["TileKind"] = Enums.create_with(
-        "Normal", tile_kind_t::normal,
-        "Wall", tile_kind_t::wall,
-        "Tunnel", tile_kind_t::tunnel,
-        "Room", tile_kind_t::room,
-        "Fog", tile_kind_t::fog
-        );
+        "Normal",
+        tile_kind_t::normal,
+        "Wall",
+        tile_kind_t::wall,
+        "Tunnel",
+        tile_kind_t::tunnel,
+        "Room",
+        tile_kind_t::room,
+        "Fog",
+        tile_kind_t::fog);
     Enums["DamageSource"] = Enums.create_with(
-        "Trap", damage_source_t::trap,
-        "Overcasting", damage_source_t::overcasting,
-        "Starvation", damage_source_t::starvation,
-        "Poisoning", damage_source_t::poisoning,
-        "Curse", damage_source_t::curse,
-        "BackpackWeight", damage_source_t::backpack_weight,
-        "FallFromStairs", damage_source_t::fall_from_stairs,
-        "Audience", damage_source_t::audience,
-        "Burn", damage_source_t::burn,
-        "Adventuring", damage_source_t::adventuring,
-        "UnseenHand", damage_source_t::unseen_hand,
-        "FoodPoisoning", damage_source_t::food_poisoning,
-        "BloodLoss", damage_source_t::blood_loss,
-        "EtherDisease", damage_source_t::ether_disease,
-        "Acid", damage_source_t::acid,
-        "Shatter", damage_source_t::shatter,
-        "AtomicBomb", damage_source_t::atomic_bomb,
-        "IronMaiden", damage_source_t::iron_maiden,
-        "Guillotine", damage_source_t::guillotine,
-        "Hanging", damage_source_t::hanging,
-        "Mochi", damage_source_t::mochi
-        );
+        "Trap",
+        damage_source_t::trap,
+        "Overcasting",
+        damage_source_t::overcasting,
+        "Starvation",
+        damage_source_t::starvation,
+        "Poisoning",
+        damage_source_t::poisoning,
+        "Curse",
+        damage_source_t::curse,
+        "BackpackWeight",
+        damage_source_t::backpack_weight,
+        "FallFromStairs",
+        damage_source_t::fall_from_stairs,
+        "Audience",
+        damage_source_t::audience,
+        "Burn",
+        damage_source_t::burn,
+        "Adventuring",
+        damage_source_t::adventuring,
+        "UnseenHand",
+        damage_source_t::unseen_hand,
+        "FoodPoisoning",
+        damage_source_t::food_poisoning,
+        "BloodLoss",
+        damage_source_t::blood_loss,
+        "EtherDisease",
+        damage_source_t::ether_disease,
+        "Acid",
+        damage_source_t::acid,
+        "Shatter",
+        damage_source_t::shatter,
+        "AtomicBomb",
+        damage_source_t::atomic_bomb,
+        "IronMaiden",
+        damage_source_t::iron_maiden,
+        "Guillotine",
+        damage_source_t::guillotine,
+        "Hanging",
+        damage_source_t::hanging,
+        "Mochi",
+        damage_source_t::mochi);
 
     // This table is too big to be defined using create_with.
     sol::table CharaFlag = Enums.create_named("CharaFlag");
@@ -939,7 +1048,7 @@ void init_enums(sol::table& Elona)
         {"OnlyChristmas", 991},
     };
 
-    for(const auto& pair : chara_flags)
+    for (const auto& pair : chara_flags)
     {
         CharaFlag.set(pair.first, pair.second);
     }
@@ -949,9 +1058,10 @@ void init_enums(sol::table& Elona)
 api_manager::api_manager(lua_env* lua)
 {
     this->lua = lua;
-    this->api_env = sol::environment(*(this->lua->get_state()),
-                                     sol::create,
-                                     this->lua->get_state()->globals());
+    this->api_env = sol::environment(
+        *(this->lua->get_state()),
+        sol::create,
+        this->lua->get_state()->globals());
 
     // Bind the API tables at e.g. Elona["core"]["Chara"]
     sol::table Elona = api_env.create_named("Elona");
@@ -981,8 +1091,9 @@ bool api_manager::is_loaded()
     return loaded;
 }
 
-sol::optional<sol::table> api_manager::try_find_api(const std::string& module_namespace,
-                                                    const std::string& module_name)
+sol::optional<sol::table> api_manager::try_find_api(
+    const std::string& module_namespace,
+    const std::string& module_name)
 {
     sol::optional<sol::table> table = api_env["Elona"][module_namespace];
     if (!table)
@@ -1003,9 +1114,9 @@ void api_manager::load_core(lua_env& lua, const fs::path& mods_dir)
         return;
     }
 
-    auto result = lua.get_state()->safe_script_file(filesystem::make_preferred_path_in_utf8(
-                                           mods_dir / "core" / "init.lua"),
-                                       api_env);
+    auto result = lua.get_state()->safe_script_file(
+        filesystem::make_preferred_path_in_utf8(mods_dir / "core" / "init.lua"),
+        api_env);
     if (!result.valid())
     {
         sol::error err = result;
@@ -1015,9 +1126,9 @@ void api_manager::load_core(lua_env& lua, const fs::path& mods_dir)
     }
 }
 
-void api_manager::bind(lua_env& lua, mod_info& mod)
+sol::table api_manager::bind(lua_env& lua)
 {
-    mod.env.create_named("Elona",
+    return lua.get_state()->create_named_table("Elona",
                          "require", sol::overload(
                              [&lua](const std::string& parent, const std::string& module) {
                                  sol::optional<sol::table> result = sol::nullopt;
@@ -1030,34 +1141,17 @@ void api_manager::bind(lua_env& lua, mod_info& mod)
                                  sol::optional<sol::table> result = sol::nullopt;
                                  result = lua.get_api_manager().try_find_api("core", module);
                                  return result;
-                             }
-                             ));
+                             }));
+}
+
+void api_manager::set_on(lua_env& lua)
+{
+    lua.get_state()->set("Elona", bind(lua));
 }
 
 sol::table api_manager::get_api_table()
 {
     return api_env["Elona"]["core"];
-}
-
-
-// For testing use
-void api_manager::bind(lua_env& lua)
-{
-    lua.get_state()->create_named_table("Elona",
-                         "require", sol::overload(
-                             [&lua](const std::string& parent, const std::string& module) {
-                                 sol::optional<sol::table> result = sol::nullopt;
-                                 result = lua.get_api_manager().try_find_api(parent, module);
-                                 return result;
-                             },
-
-                             // If no mod name is provided, assume it is "core".
-                             [&lua](const std::string& module) {
-                                 sol::optional<sol::table> result = sol::nullopt;
-                                 result = lua.get_api_manager().try_find_api("core", module);
-                                 return result;
-                             }
-                             ));
 }
 
 } // namespace lua
