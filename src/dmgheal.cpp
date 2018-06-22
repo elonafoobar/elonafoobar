@@ -761,8 +761,8 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 if (prm_853 == 0)
                 {
                     ndeathcause = i18n::s.get_enum_property("core.locale.death_by.other",
-                                                            death_kind,
-                                                            "death_cause");
+                                                            "death_cause",
+                                                            death_kind);
                 }
             }
         }
@@ -1248,18 +1248,19 @@ void dmgheal_death_by_backpack(character& chara)
     }
     if (heaviest_item_index == -1)
     {
-        heaviest_item_name = i18n::s.get_enum_property("core.locale.death_by.other", 6, "backpack");
+        heaviest_item_name = i18n::s.get_enum_property("core.locale.death_by.other", "backpack", 6);
     }
     else
     {
         heaviest_item_name = itemname(heaviest_item_index);
     }
-    txt(i18n::s.get_enum_property("core.locale.death_by.other", 6, "text",
+    txt(i18n::s.get_enum_property("core.locale.death_by.other", "text", 6,
                                   chara,
                                   heaviest_item_name));
     if (chara.index == 0)
     {
-        ndeathcause = i18n::s.get_enum_property("core.locale.death_by.other", 6, "death_cause", heaviest_item_name);
+        ndeathcause = i18n::s.get_enum_property("core.locale.death_by.other", "death_cause", 6,
+                                                heaviest_item_name);
     }
 }
 

@@ -166,16 +166,16 @@ inline std::string builtin_s(const hil::FunctionCall& func, int chara_index)
 inline std::string builtin_itemname(const hil::FunctionCall& func, const item& item)
 {
     int number = item.number;
-    bool needs_the = true;
+    bool needs_article = true;
     if(func.args.size() > 1)
     {
         number = func.args[1].as<int>();
     }
     if(func.args.size() > 2)
     {
-        needs_the = func.args[2].as<bool>();
+        needs_article = func.args[2].as<bool>();
     }
-    return itemname(item.index, number, needs_the ? 0 : 1);
+    return itemname(item.index, number, needs_article ? 0 : 1);
 }
 
 std::string format_builtins_bool(const hil::FunctionCall& func, bool value)

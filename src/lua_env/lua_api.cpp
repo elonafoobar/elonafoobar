@@ -7,6 +7,7 @@
 #include "../enchantment.hpp"
 #include "../fov.hpp"
 #include "../gdata.hpp"
+#include "../i18n.hpp"
 #include "../item.hpp"
 #include "../itemgen.hpp"
 #include "../log.hpp"
@@ -27,9 +28,6 @@ namespace elona
 
 namespace lua
 {
-
-typedef sol::table lua_character_handle;
-typedef sol::table lua_item_handle;
 
 /***
  * The below two functions marshal Lua handles to C++ references.
@@ -61,27 +59,39 @@ typedef sol::table lua_item_handle;
  * See mods/core/handle.lua for the Lua side of things.
  */
 
-character& conv_chara(lua_character_handle handle)
+bool is_chara_handle(sol::table handle)
 {
     sol::object obj = handle["cpp_ref"];
     bool is_valid = handle["is_valid"];
-    if (!is_valid || !obj.is<character&>())
+    return is_valid && obj.is<character&>();
+}
+
+bool is_item_handle(sol::table handle)
+{
+    sol::object obj = handle["cpp_ref"];
+    bool is_valid = handle["is_valid"];
+    return is_valid && obj.is<item&>();
+}
+
+character& conv_chara(lua_character_handle handle)
+{
+    if (!is_chara_handle(handle))
     {
         std::cerr << "Handle not valid" << std::endl;
         throw sol::error("not valid handle");
     }
+    sol::object obj = handle["cpp_ref"];
     return obj.as<character&>();
 }
 
 item& conv_item(lua_item_handle handle)
 {
-    sol::object obj = handle["cpp_ref"];
-    bool is_valid = handle["is_valid"];
-    if (!is_valid || !obj.is<item&>())
+    if (!is_item_handle(handle))
     {
         std::cerr << "Handle not valid" << std::endl;
         throw sol::error("not valid handle");
     }
+    sol::object obj = handle["cpp_ref"];
     return obj.as<item&>();
 }
 
@@ -629,6 +639,283 @@ void GUI::bind(sol::table& Elona)
 }
 
 
+namespace I18N {
+std::string get(const std::string&, sol::variadic_args);
+sol::optional<std::string> get_optional(const std::string&, sol::variadic_args);
+std::string get_enum(const std::string&, int, sol::variadic_args);
+std::string get_enum_property(const std::string&, const std::string&, int, sol::variadic_args);
+sol::optional<std::string> get_enum_property_optional(const std::string&,
+                                                      const std::string&,
+                                                      int,
+                                                      sol::variadic_args);
+
+void bind(sol::table&);
+}
+
+std::string I18N::get(const std::string& key, sol::variadic_args args)
+{
+    switch (args.size())
+    {
+    case 0:
+        return i18n::s.get(key);
+    case 1:
+        return i18n::s.get(key,
+                           args[0].get<sol::object>());
+    case 2:
+        return i18n::s.get(key,
+                           args[0].get<sol::object>(),
+                           args[1].get<sol::object>());
+    case 3:
+        return i18n::s.get(key,
+                           args[0].get<sol::object>(),
+                           args[1].get<sol::object>(),
+                           args[2].get<sol::object>());
+    case 4:
+        return i18n::s.get(key,
+                           args[0].get<sol::object>(),
+                           args[1].get<sol::object>(),
+                           args[2].get<sol::object>(),
+                           args[3].get<sol::object>());
+    case 5:
+        return i18n::s.get(key,
+                           args[0].get<sol::object>(),
+                           args[1].get<sol::object>(),
+                           args[2].get<sol::object>(),
+                           args[3].get<sol::object>(),
+                           args[4].get<sol::object>());
+    case 6:
+    default:
+        return i18n::s.get(key,
+                           args[0].get<sol::object>(),
+                           args[1].get<sol::object>(),
+                           args[2].get<sol::object>(),
+                           args[3].get<sol::object>(),
+                           args[4].get<sol::object>(),
+                           args[5].get<sol::object>());
+    }
+}
+
+sol::optional<std::string> I18N::get_optional(const std::string& key, sol::variadic_args args)
+{
+    optional<std::string> opt = none;
+
+    switch (args.size())
+    {
+    case 0:
+        opt = i18n::s.get_optional(key);
+        break;
+    case 1:
+        opt = i18n::s.get_optional(key,
+                                   args[0].get<sol::object>());
+        break;
+    case 2:
+        opt = i18n::s.get_optional(key,
+                                   args[0].get<sol::object>(),
+                                   args[1].get<sol::object>());
+        break;
+    case 3:
+        opt = i18n::s.get_optional(key,
+                                   args[0].get<sol::object>(),
+                                   args[1].get<sol::object>(),
+                                   args[2].get<sol::object>());
+        break;
+    case 4:
+        opt = i18n::s.get_optional(key,
+                                   args[0].get<sol::object>(),
+                                   args[1].get<sol::object>(),
+                                   args[2].get<sol::object>(),
+                                   args[3].get<sol::object>());
+        break;
+    case 5:
+        opt = i18n::s.get_optional(key,
+                                   args[0].get<sol::object>(),
+                                   args[1].get<sol::object>(),
+                                   args[2].get<sol::object>(),
+                                   args[3].get<sol::object>(),
+                                   args[4].get<sol::object>());
+        break;
+    case 6:
+    default:
+        opt = i18n::s.get_optional(key,
+                                   args[0].get<sol::object>(),
+                                   args[1].get<sol::object>(),
+                                   args[2].get<sol::object>(),
+                                   args[3].get<sol::object>(),
+                                   args[4].get<sol::object>(),
+                                   args[5].get<sol::object>());
+        break;
+    }
+
+    if (opt)
+    {
+        return *opt;
+    }
+
+    return sol::nullopt;
+}
+
+std::string I18N::get_enum(const std::string& key, int index, sol::variadic_args args)
+{
+    switch (args.size())
+    {
+    case 0:
+        return i18n::s.get_enum(key, index);
+    case 1:
+        return i18n::s.get_enum(key, index,
+                           args[0].get<sol::object>());
+    case 2:
+        return i18n::s.get_enum(key, index,
+                           args[0].get<sol::object>(),
+                           args[1].get<sol::object>());
+    case 3:
+        return i18n::s.get_enum(key, index,
+                           args[0].get<sol::object>(),
+                           args[1].get<sol::object>(),
+                           args[2].get<sol::object>());
+    case 4:
+        return i18n::s.get_enum(key, index,
+                           args[0].get<sol::object>(),
+                           args[1].get<sol::object>(),
+                           args[2].get<sol::object>(),
+                           args[3].get<sol::object>());
+    case 5:
+        return i18n::s.get_enum(key, index,
+                           args[0].get<sol::object>(),
+                           args[1].get<sol::object>(),
+                           args[2].get<sol::object>(),
+                           args[3].get<sol::object>(),
+                           args[4].get<sol::object>());
+    case 6:
+    default:
+        return i18n::s.get_enum(key, index,
+                           args[0].get<sol::object>(),
+                           args[1].get<sol::object>(),
+                           args[2].get<sol::object>(),
+                           args[3].get<sol::object>(),
+                           args[4].get<sol::object>(),
+                           args[5].get<sol::object>());
+    }
+}
+
+std::string I18N::get_enum_property(const std::string& key_head,
+                              const std::string& key_tail,
+                              int index,
+                              sol::variadic_args args)
+{
+    optional<std::string> opt = none;
+
+    switch (args.size())
+    {
+    case 0:
+        return i18n::s.get_enum_property(key_head, key_tail, index);
+    case 1:
+        return i18n::s.get_enum_property(key_head, key_tail, index,
+                           args[0].get<sol::object>());
+    case 2:
+        return i18n::s.get_enum_property(key_head, key_tail, index,
+                           args[0].get<sol::object>(),
+                           args[1].get<sol::object>());
+    case 3:
+        return i18n::s.get_enum_property(key_head, key_tail, index,
+                           args[0].get<sol::object>(),
+                           args[1].get<sol::object>(),
+                           args[2].get<sol::object>());
+    case 4:
+        return i18n::s.get_enum_property(key_head, key_tail, index,
+                           args[0].get<sol::object>(),
+                           args[1].get<sol::object>(),
+                           args[2].get<sol::object>(),
+                           args[3].get<sol::object>());
+    case 5:
+        return i18n::s.get_enum_property(key_head, key_tail, index,
+                           args[0].get<sol::object>(),
+                           args[1].get<sol::object>(),
+                           args[2].get<sol::object>(),
+                           args[3].get<sol::object>(),
+                           args[4].get<sol::object>());
+    case 6:
+    default:
+        return i18n::s.get_enum_property(key_head, key_tail, index,
+                           args[0].get<sol::object>(),
+                           args[1].get<sol::object>(),
+                           args[2].get<sol::object>(),
+                           args[3].get<sol::object>(),
+                           args[4].get<sol::object>(),
+                           args[5].get<sol::object>());
+    }
+}
+
+sol::optional<std::string> I18N::get_enum_property_optional(const std::string& key_head,
+                                                      const std::string& key_tail,
+                                                      int index,
+                                                      sol::variadic_args args)
+{
+    optional<std::string> opt = none;
+
+    switch (args.size())
+    {
+    case 0:
+        opt = i18n::s.get_enum_property_opt(key_head, key_tail, index);
+        break;
+    case 1:
+        opt = i18n::s.get_enum_property_opt(key_head, key_tail, index,
+                           args[0].get<sol::object>());
+        break;
+    case 2:
+        opt = i18n::s.get_enum_property_opt(key_head, key_tail, index,
+                           args[0].get<sol::object>(),
+                           args[1].get<sol::object>());
+        break;
+    case 3:
+        opt = i18n::s.get_enum_property_opt(key_head, key_tail, index,
+                           args[0].get<sol::object>(),
+                           args[1].get<sol::object>(),
+                           args[2].get<sol::object>());
+        break;
+    case 4:
+        opt = i18n::s.get_enum_property_opt(key_head, key_tail, index,
+                           args[0].get<sol::object>(),
+                           args[1].get<sol::object>(),
+                           args[2].get<sol::object>(),
+                           args[3].get<sol::object>());
+        break;
+    case 5:
+        opt = i18n::s.get_enum_property_opt(key_head, key_tail, index,
+                           args[0].get<sol::object>(),
+                           args[1].get<sol::object>(),
+                           args[2].get<sol::object>(),
+                           args[3].get<sol::object>(),
+                           args[4].get<sol::object>());
+        break;
+    case 6:
+    default:
+        opt = i18n::s.get_enum_property_opt(key_head, key_tail, index,
+                           args[0].get<sol::object>(),
+                           args[1].get<sol::object>(),
+                           args[2].get<sol::object>(),
+                           args[3].get<sol::object>(),
+                           args[4].get<sol::object>(),
+                           args[5].get<sol::object>());
+    }
+
+    if (opt)
+    {
+        return *opt;
+    }
+
+    return sol::nullopt;
+}
+
+void I18N::bind(sol::table& Elona)
+{
+    sol::table I18N = Elona.create_named("I18N");
+    I18N.set_function("get", I18N::get);
+    I18N.set_function("get_optional", I18N::get_optional);
+    I18N.set_function("get_enum", I18N::get_enum);
+    I18N.set_function("get_enum_property", I18N::get_enum_property);
+    I18N.set_function("get_enum_property_optional", I18N::get_enum_property_optional);
+}
+
 namespace Debug
 {
 void log(const std::string&);
@@ -1076,6 +1363,7 @@ api_manager::api_manager(lua_env* lua)
     Item::bind(core);
     Skill::bind(core);
     GUI::bind(core);
+    I18N::bind(core);
     Map::bind(core);
     Debug::bind(core);
 

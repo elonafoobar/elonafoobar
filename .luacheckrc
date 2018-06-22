@@ -66,20 +66,14 @@ exclude_files = {
 }
 
 -------------------------------------------------------------------------------
---[Mod Prototypes]--
--------------------------------------------------------------------------------
---Set default prototype files
--- files['**/data.lua'].std = STD_DATA
-
--------------------------------------------------------------------------------
 --[Base]--
 -------------------------------------------------------------------------------
 
-files['**/mods'] = {std = STD_ELONA}
-files['**/mods/core'] = {std = "+core"}
-files['tests/lua/*.lua'] = {std = "+tests"}
-files['tests/lua/classes/*.lua'] = {std = "+tests"}
-files['tests/lua/support'] = {std = "+minctest"}
+files['**/runtime/mods'] = {std = STD_ELONA}
+files['**/runtime/mods/core'] = {std = "+core"}
+files['src/tests/lua/*.lua'] = {std = "+tests"}
+files['src/tests/lua/classes/*.lua'] = {std = "+tests"}
+files['src/tests/lua/support'] = {std = "+minctest"}
 
 -------------------------------------------------------------------------------
 --[STDS ELONA]--
@@ -148,6 +142,11 @@ stds.elona = {
                  fields = {
                     "txt", "txt_color"
                  },
+              },
+              I18N = {
+                 fields = {
+                    "get", "get_optional", "get_enum", "get_enum_property", "get_enum_property_optional"
+                 }
               },
               Debug = {
                  fields = {
@@ -229,7 +228,7 @@ stds.tests = {
         "lrun", "lequal", "lfequal", "lok", "lresults",
         Testing = {
             fields = {
-               "start_in_debug_map", "reset_state"
+               "start_in_debug_map", "reset_state", "load_translations"
             },
         }
     },

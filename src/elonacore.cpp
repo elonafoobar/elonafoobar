@@ -18412,7 +18412,7 @@ label_22191_internal:
                 }
                 else
                 {
-                    weapon_name = i18n::s.get_enum_property_opt("core.locale.damage.weapon", attackskill, "name");
+                    weapon_name = i18n::s.get_enum_property_opt("core.locale.damage.weapon", "name", attackskill);
                 }
                 if (weapon_name)
                 {
@@ -18422,8 +18422,8 @@ label_22191_internal:
                         txt(i18n::s.get("core.locale.damage.weapon.attacks_and",
                                         cdata[cc],
                                         i18n::s.get_enum_property("core.locale.damage.weapon",
-                                                                  attackskill,
-                                                                  "verb_and"),
+                                                                  "verb_and",
+                                                                  attackskill),
                                         cdata[tc],
                                         i18n::s.get("core.locale.damage.weapon.and")));
                     }
@@ -18432,8 +18432,8 @@ label_22191_internal:
                         txt(i18n::s.get("core.locale.damage.weapon.attacks_with",
                                         cdata[cc],
                                         i18n::s.get_enum_property("core.locale.damage.weapon",
-                                                                  attackskill,
-                                                                  "verb"),
+                                                                  "verb",
+                                                                  attackskill),
                                         cdata[tc],
                                         *weapon_name));
                     }

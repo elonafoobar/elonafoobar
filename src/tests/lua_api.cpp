@@ -3,6 +3,7 @@
 #include "../filesystem.hpp"
 #include "../lua_env/lua_env.hpp"
 #include "../testing.hpp"
+#include "../variables.hpp"
 
 using namespace std::literals::string_literals;
 using namespace elona;
@@ -10,6 +11,7 @@ using namespace elona;
 void lua_testcase(const std::string& filename)
 {
     elona::testing::reset_state();
+    elona::fixlv = 0;
     elona::lua::lua.get_state()->open_libraries(sol::lib::io, sol::lib::os);
     elona::lua::lua.get_api_manager().set_on(elona::lua::lua);
     REQUIRE_NOTHROW(elona::lua::lua.get_state()->safe_script_file(
@@ -58,6 +60,11 @@ TEST_CASE("Core API: Item", "[Lua: API]")
 TEST_CASE("Core API: Map", "[Lua: API]")
 {
     lua_testcase("map.lua");
+}
+
+TEST_CASE("Core API: I18N", "[Lua: API]")
+{
+    lua_testcase("i18n.lua");
 }
 
 

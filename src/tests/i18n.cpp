@@ -152,8 +152,8 @@ locale {
 }
 )");
 
-    REQUIRE(store.get_enum_property(u8"core.locale.foo", 1, "name") == u8"bar");
-    REQUIRE(store.get_enum_property(u8"core.locale.foo", 2, "name") == u8"baz");
+    REQUIRE(store.get_enum_property(u8"core.locale.foo", "name", 1) == u8"bar");
+    REQUIRE(store.get_enum_property(u8"core.locale.foo", "name", 2) == u8"baz");
 }
 
 TEST_CASE("test i18n store interpolation", "[I18N: Store]")
@@ -203,10 +203,6 @@ locale {
 }
 )");
 
-    REQUIRE(
-        store.get_enum_property(u8"core.locale.foo", 1, "name", "dood")
-        == u8"bar: dood");
-    REQUIRE(
-        store.get_enum_property(u8"core.locale.foo", 2, "name", "dood")
-        == u8"baz: dood");
+    REQUIRE(store.get_enum_property(u8"core.locale.foo", "name", 1, "dood") == u8"bar: dood");
+    REQUIRE(store.get_enum_property(u8"core.locale.foo", "name", 2, "dood") == u8"baz: dood");
 }
