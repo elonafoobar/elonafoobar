@@ -37,6 +37,10 @@ locale {
                 name = "Your Home"
                 desc = "It's your sweet home."
             }
+            _39 {
+                name = "Your Dungeon"
+                desc = "It's your dungeon."
+            }
             _3 {
                 name = "Lesimas"
                 desc = "You see the dungeon of Lesimas. The wheel of fortune starts to turn."

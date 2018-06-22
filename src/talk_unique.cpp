@@ -170,9 +170,7 @@ talk_result_t talk_unique()
             }
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"いいだろう。死ぬ準備ができたら、声をかけろ。実験場まで案内してやろう。"s,
@@ -204,9 +202,7 @@ talk_result_t talk_unique()
             }
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(u8"よし…付いて来い。"s, u8"Follow me."s);
             tc = tc * 1 + 0;
@@ -236,14 +232,10 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"驚いた。この実験から生きて帰って来た冒険者は、貴様がはじめてだ。これで、ザナンの上層部が、研究を見直してくれるといいが。あんな不細工な化け物を率いて戦場を駆け回るのは、御免だからな。"s,
@@ -299,9 +291,7 @@ talk_result_t talk_unique()
             }
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"頼もしいよ。問題の家は、すぐ南に隣接しているわ。頑張ってね！"s,
@@ -338,14 +328,10 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"え、スライムを退治してくれたの？ありがとうございます♪あたしのぬいぐるみたちも喜んでるわ。これ、役に立つかわからないけど、とっておいてね。"s,
@@ -403,9 +389,7 @@ talk_result_t talk_unique()
             }
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"あ…ありがとうございます！よろしくお願いしますね！"s,
@@ -446,14 +430,10 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"ええ、噂はもう届いています。あのごろつき団がいなくなって、私達ほんと安心しました。ありがとうございます。少ないですが、店長がお礼にとこれを♪"s,
@@ -641,9 +621,7 @@ talk_result_t talk_unique()
             }
             if (gdata_tutorial_flag == 3)
             {
-                txt(lang(
-                    u8"何かが足元に転がってきた。"s,
-                    u8"Something is put on the ground."s));
+                txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
                 flt();
                 itemcreate(-1, 14, cdata[0].position.x, cdata[0].position.y, 0);
                 inv[ci].identification_state =
@@ -744,9 +722,7 @@ talk_result_t talk_unique()
                 flt();
                 itemcreate(
                     -1, 636, cdata[0].position.x, cdata[0].position.y, 2);
-                txt(lang(
-                    u8"何かが足元に転がってきた。"s,
-                    u8"Something is put on the ground."s));
+                txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
                 listmax = 0;
                 buff = lang(
                     u8"迷宮に落ちている宝箱の開け方を知っておく必要があるな。足元に宝箱を置くので、xキー、またはスペースキーで開けてみるんだ。"s,
@@ -845,9 +821,7 @@ talk_result_t talk_unique()
             inv[ci].subname = 9;
             inv[ci].identification_state =
                 identification_state_t::completely_identified;
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             gdata_tutorial_flag = 1;
             return talk_result_t::talk_unique;
         }
@@ -904,9 +878,7 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             for (int cnt = 0; cnt < 3; ++cnt)
             {
                 flt();
@@ -973,9 +945,7 @@ talk_result_t talk_unique()
             inv[ci].identification_state =
                 identification_state_t::completely_identified;
             inv[ci].curse_state = curse_state_t::blessed;
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             gdata_tutorial_flag = 5;
             return talk_result_t::talk_unique;
         }
@@ -1019,9 +989,7 @@ talk_result_t talk_unique()
             itemcreate(-1, 68, cdata[0].position.x, cdata[0].position.y, 0);
             inv[ci].identification_state =
                 identification_state_t::completely_identified;
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             gdata_tutorial_flag = 6;
         }
         return talk_result_t::talk_end;
@@ -1123,14 +1091,10 @@ talk_result_t talk_unique()
             itemcreate(-1, 559, cdata[0].position.x, cdata[0].position.y, 0);
             flt();
             itemcreate(-1, 621, cdata[0].position.x, cdata[0].position.y, 0);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             return talk_result_t::talk_unique;
         }
         break;
@@ -1277,9 +1241,7 @@ talk_result_t talk_unique()
                 u8"You receive a key of Lesimas 25th level. Your journal has been updated."s));
             flt();
             itemcreate(-1, 360, cdata[0].position.x, cdata[0].position.y, 0);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             gdata_main_quest_flag = 125;
             return talk_result_t::talk_end;
         }
@@ -1690,9 +1652,7 @@ talk_result_t talk_unique()
             inv[ci].param2 = 0;
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             txt(lang(
                 cdatan(0, tc) + u8"は自ら命を絶った…"s,
                 cdatan(0, tc) + u8" kills himself..."s));
@@ -1856,9 +1816,7 @@ talk_result_t talk_unique()
             }
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             gdata_pael_and_her_mom = 1;
             return talk_result_t::talk_end;
         }
@@ -1900,9 +1858,7 @@ talk_result_t talk_unique()
             }
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             ++gdata_pael_and_her_mom;
             return talk_result_t::talk_end;
         }
@@ -1919,9 +1875,7 @@ talk_result_t talk_unique()
             }
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             ++gdata_pael_and_her_mom;
             return talk_result_t::talk_end;
         }
@@ -1938,9 +1892,7 @@ talk_result_t talk_unique()
             }
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             ++gdata_pael_and_her_mom;
             return talk_result_t::talk_end;
         }
@@ -2009,14 +1961,10 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"これは少ないですが、私の感謝の気持ちです。受け取ってくださいな。"s,
@@ -2219,9 +2167,7 @@ talk_result_t talk_unique()
             }
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"よしきた。じゃあ、お前さんのとびきりの嫁を連れてきてくれ！"s,
@@ -2332,9 +2278,7 @@ talk_result_t talk_unique()
                 snd(51);
                 snd(44);
                 txtef(2);
-                txt(lang(
-                    u8"ジャーナルが更新された。"s,
-                    u8"Your journal has been updated."s));
+                txt(i18n::s.get("core.locale.quest.journal_updated"));
                 gdata_wife_collector = 1000;
             }
             chara_vanquish(rc);
@@ -2343,9 +2287,7 @@ talk_result_t talk_unique()
             itemcreate(-1, 640, cdata[0].position.x, cdata[0].position.y, 2);
             flt();
             itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 2);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             listmax = 0;
             buff = lang(
                 u8"これは…すごい嫁だ…！お前さんとは女の趣味が合いそうだな。また嫁を連れてきてくれれば、いいものを渡すぜ。"s,
@@ -2392,9 +2334,7 @@ talk_result_t talk_unique()
             }
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"助かります。こんな試験、私にはできっこないんです。奴らの住処は、この村を出てすぐ西の洞窟。頼みますよ。"s,
@@ -2437,14 +2377,10 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             gdata_novice_knight = 1000;
             return talk_result_t::talk_end;
         }
@@ -2516,9 +2452,7 @@ talk_result_t talk_unique()
             }
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"よかったぁ！ポピーは、きっといつもの洞窟で迷っちゃったの。この街を出て、すぐ東にある洞窟だよ。冒険者さん、よろしくね。"s,
@@ -2559,14 +2493,10 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             gdata_puppys_cave = 1000;
             chara_vanquish(chara_find_ally(225));
             flt();
@@ -2609,9 +2539,7 @@ talk_result_t talk_unique()
             }
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"おお、ありがたい。家は南の畑の近くにあります。中にどんな猫がいるのかわからないので、十分気をつけてください。"s,
@@ -2650,14 +2578,10 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"なんと、猫使いなる魔物が住み着いていたのですか。いやぁ、猫退治なんて軽い依頼ではなかったですね。ははは。私の家で亡くなった冒険者さん達も、あなたのおかげで浮かばれるでしょう。どうぞ、お礼を受け取ってください。"s,
@@ -2729,9 +2653,7 @@ talk_result_t talk_unique()
             }
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"フハハハァッ。そうこなくてはならぬ。貴殿の力、頼りにしておる。戦の準備ができ次第、声をかけてくれ。"s,
@@ -2763,9 +2685,7 @@ talk_result_t talk_unique()
             }
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"フハァ。貴殿にオパートスの加護のあらんことを祈っておるぞ！"s,
@@ -2793,14 +2713,10 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"フアハァァァァハハハ。フハー！ファハハハ、フ、フハッ、ブ、ブバァッ…ゲホッ…ゲホ…す…すまん。震えるほど興奮したぞ、ぬしの雄姿に。解放軍も、これで無事にパルミアの国境を越えることができる。どうか、この感謝の気持ちを受け取ってくれ。"s,
@@ -2852,9 +2768,7 @@ talk_result_t talk_unique()
             }
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"助かります。準備ができ次第、声をかけてください。必ず遠隔武器を持参してください！"s,
@@ -2886,9 +2800,7 @@ talk_result_t talk_unique()
             }
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"伝令に現地まで案内させます。くれぐれも、奴らの接近を許さないように！パルミア軍の撤退が完了次第、連絡を入れます。"s,
@@ -2916,14 +2828,10 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"お疲れ様であります。まさか、あの死地から戻って来ることができるなんて！戦友の無事も確認し、感謝の言葉もありません。どうかこの報酬を受け取ってください。"s,
@@ -2973,9 +2881,7 @@ talk_result_t talk_unique()
             }
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"はわぁ。ほんとですか〜！楽しみにしてますぅ♪う〜。ねっこねっここっねこ♪は〜やくこないかな♪るんるんるん♪"s,
@@ -3028,14 +2934,10 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             gdata_mias_dream = 1000;
             chara_relocate(chara_find_ally(246), -1);
             cdata[rc].relationship = -1;
@@ -3095,9 +2997,7 @@ talk_result_t talk_unique()
             {
                 snd(44);
                 txtef(2);
-                txt(lang(
-                    u8"ジャーナルが更新された。"s,
-                    u8"Your journal has been updated."s));
+                txt(i18n::s.get("core.locale.quest.journal_updated"));
                 gdata_rare_books = 1;
                 return talk_result_t::talk_end;
             }
@@ -3220,14 +3120,10 @@ talk_result_t talk_unique()
                     u8"クエストを達成した！"s,
                     u8"You have completed the quest!"s));
                 snd(51);
-                txt(lang(
-                    u8"何かが足元に転がってきた。"s,
-                    u8"Something is put on the ground."s));
+                txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
                 snd(44);
                 txtef(2);
-                txt(lang(
-                    u8"ジャーナルが更新された。"s,
-                    u8"Your journal has been updated."s));
+                txt(i18n::s.get("core.locale.quest.journal_updated"));
                 gdata_rare_books = 1000;
             }
             return talk_result_t::talk_end;
@@ -3293,12 +3189,8 @@ talk_result_t talk_unique()
             }
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             cdata[0].gold -= 20000;
             snd(12);
             flt();
@@ -3350,14 +3242,10 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             gdata_red_blossom_in_palmia = 1000;
             listmax = 0;
             buff = lang(
@@ -3399,9 +3287,7 @@ talk_result_t talk_unique()
             }
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             gdata_red_blossom_in_palmia = 1;
             listmax = 0;
             buff = lang(
@@ -3431,9 +3317,7 @@ talk_result_t talk_unique()
             ELONA_TALK_SCENE_CUT();
             return talk_result_t::talk_end;
         }
-        txt(lang(
-            u8"何かが足元に転がってきた。"s,
-            u8"Something is put on the ground."s));
+        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
         cdata[0].gold -= 12000;
         snd(12);
         flt();
@@ -3487,12 +3371,8 @@ talk_result_t talk_unique()
             inv[ci].param2 = 5;
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             listmax = 0;
             buff = lang(
                 u8"よしよし…このモンスターボールを持っていくがいい。使い方はわかっておるな？そう、瀕死のモンスターに投げつけるだけでよい。ボールのLvより上の相手には効かないから、気をつけるのじゃ。5個のボールにモンスターを捕獲して持ってきてくれ。いいか、「ボールに入れたまま」持ってくるのじゃぞ！"s,
@@ -3576,14 +3456,10 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             gdata_ambitious_scientist = 1000;
         }
         return talk_result_t::talk_end;
@@ -3627,9 +3503,7 @@ talk_result_t talk_unique()
             }
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"その言葉、待っていたぜ！下水道は宿屋の近くにある。気をつけろ、奴らは手強いぞ！"s,
@@ -3669,14 +3543,10 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"なんだってー！あの下水道をほんとに浄化したというのか？さすがに、お前を選んだ俺の目は確かだったということか…ともかく礼をいうぞ！この報酬を受け取ってくれ。"s,
@@ -3743,9 +3613,7 @@ talk_result_t talk_unique()
                     gdata_mages_guild_quota = 30;
                     snd(44);
                     txtef(2);
-                    txt(lang(
-                        u8"ジャーナルが更新された。"s,
-                        u8"Your journal has been updated."s));
+                    txt(i18n::s.get("core.locale.quest.journal_updated"));
                     listmax = 0;
                     buff = lang(
                         u8"ギルドポイントを規定の値まで集めたら、また私に話しかけてくれ。"s,
@@ -3794,9 +3662,7 @@ talk_result_t talk_unique()
                 snd(51);
                 snd(44);
                 txtef(2);
-                txt(lang(
-                    u8"ジャーナルが更新された。"s,
-                    u8"Your journal has been updated."s));
+                txt(i18n::s.get("core.locale.quest.journal_updated"));
                 txtef(5);
                 txt(lang(
                     u8"魔術士ギルドに加入した！"s,
@@ -3841,9 +3707,7 @@ talk_result_t talk_unique()
             gdata_mages_guild_quota = 75 - gdata(128) / 200;
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"良い心がけです。あなたにランク昇格のためのノルマを与えましょう。世界に散らばった古書物を解読し、納入してください。"s +
@@ -3893,14 +3757,10 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             modrank(8, 500, 8);
             listmax = 0;
             buff = lang(
@@ -3958,9 +3818,7 @@ talk_result_t talk_unique()
                     gdata_joining_thieves_guild = 1;
                     snd(44);
                     txtef(2);
-                    txt(lang(
-                        u8"ジャーナルが更新された。"s,
-                        u8"Your journal has been updated."s));
+                    txt(i18n::s.get("core.locale.quest.journal_updated"));
                     listmax = 0;
                     buff = lang(
                         u8"なに、簡単な試験だ。一定のレベルを越えた冒険者には、税金が毎月徴収されるのは知っているな？その税金を4ヶ月滞納するだけだ。無論、お前は犯罪者となり、国の犬に追われる事になるだろう。その覚悟がないならば、盗賊ギルドに入るなど諦めることだ。"s,
@@ -4009,9 +3867,7 @@ talk_result_t talk_unique()
                 snd(51);
                 snd(44);
                 txtef(2);
-                txt(lang(
-                    u8"ジャーナルが更新された。"s,
-                    u8"Your journal has been updated."s));
+                txt(i18n::s.get("core.locale.quest.journal_updated"));
                 txtef(5);
                 txt(lang(
                     u8"盗賊ギルドに加入した！"s,
@@ -4056,9 +3912,7 @@ talk_result_t talk_unique()
             gdata_thieves_guild_quota = (10000 - gdata(128)) * 6 + 1000;
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"良い心がけです。あなたにランク昇格のためのノルマを与えましょう。他人の所有物を奪い取り、盗品を売り払いなさい。金貨"s +
@@ -4108,14 +3962,10 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             modrank(8, 500, 8);
             listmax = 0;
             buff = lang(
@@ -4173,9 +4023,7 @@ talk_result_t talk_unique()
                     gdata_joining_fighters_guild = 1;
                     snd(44);
                     txtef(2);
-                    txt(lang(
-                        u8"ジャーナルが更新された。"s,
-                        u8"Your journal has been updated."s));
+                    txt(i18n::s.get("core.locale.quest.journal_updated"));
                     while (1)
                     {
                         flt(10);
@@ -4254,9 +4102,7 @@ talk_result_t talk_unique()
                 snd(51);
                 snd(44);
                 txtef(2);
-                txt(lang(
-                    u8"ジャーナルが更新された。"s,
-                    u8"Your journal has been updated."s));
+                txt(i18n::s.get("core.locale.quest.journal_updated"));
                 txtef(5);
                 txt(lang(
                     u8"戦士ギルドに加入した！"s,
@@ -4321,9 +4167,7 @@ talk_result_t talk_unique()
             gdata_fighters_guild_quota2 = 1;
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"良い心がけです。あなたにランク昇格のためのノルマを与えましょう。"s +
@@ -4373,14 +4217,10 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             modrank(8, 500, 8);
             listmax = 0;
             buff = lang(
@@ -4429,9 +4269,7 @@ talk_result_t talk_unique()
             }
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             listmax = 0;
             buff = lang(
                 u8"なに、真か！では早々にミノタウロスの巣窟に向かい、首領を退治して来てもらいたい。場所は確かヨウィンの南と聞いておる。頼むぞ！"s,
@@ -4478,14 +4316,10 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             gdata_minotaur_king = 1000;
             return talk_result_t::talk_end;
         }
@@ -4570,14 +4404,10 @@ talk_result_t talk_unique()
             gdata_little_sister = 0;
             flt();
             itemcreate(-1, 699, cdata[0].position.x, cdata[0].position.y, 0);
-            txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
-            txt(lang(
-                u8"ジャーナルが更新された。"s,
-                u8"Your journal has been updated."s));
+            txt(i18n::s.get("core.locale.quest.journal_updated"));
             gdata_little_sister = 1;
             return talk_result_t::talk_end;
         }
@@ -4724,9 +4554,7 @@ talk_result_t talk_unique()
                 flt();
                 itemcreate(
                     -1, 699, cdata[0].position.x, cdata[0].position.y, 0);
-                txt(lang(
-                    u8"何かが足元に転がってきた。"s,
-                    u8"Something is put on the ground."s));
+                txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
                 return talk_result_t::talk_end;
             }
             if (chatval == 3)
@@ -4887,9 +4715,7 @@ talk_result_t talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                txt(lang(
-                    u8"何かが足元に転がってきた。"s,
-                    u8"Something is put on the ground."s));
+                txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
                 flt();
                 itemcreate(
                     -1, 767, cdata[0].position.x, cdata[0].position.y, 0);
