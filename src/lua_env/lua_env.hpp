@@ -1,15 +1,15 @@
 #pragma once
 
-#include "../thirdparty/sol2/sol.hpp"
+#include <map>
+#include <vector>
 #include "../character.hpp"
 #include "../filesystem.hpp"
 #include "../item.hpp"
+#include "../thirdparty/sol2/sol.hpp"
 #include "event_manager.hpp"
 #include "handle_manager.hpp"
 #include "lua_api.hpp"
 #include "lua_store.hpp"
-#include <map>
-#include <vector>
 
 namespace elona
 {
@@ -33,34 +33,16 @@ class handle_manager;
 struct mod_info
 {
     explicit mod_info(const std::string name_, std::shared_ptr<sol::state> state) : name(name_)
-        {
-            // This environment is created with no globals.
-            env = sol::environment(*state, sol::create);
+    {
+        // This environment is created with no globals.
+        env = sol::environment(*state, sol::create);
 
-            setup_sandbox(*state, env);
-
-            env["_MOD_NAME"] = name;
-            store = std::make_shared<lua::store>();
-            store->init_no_attach(*state);
-            env.set("Store", store);
-        }
+        store = std::make_shared<lua::store>();
+        store->init_no_attach(*state);
+    }
     mod_info(const mod_info&) = delete;
     mod_info& operator=(const mod_info&) = delete;
     ~mod_info() = default;
-
-    static void setup_sandbox(const sol::state& state, sol::environment& env)
-    {
-        // Whitelist functions that are safe for usage in user-written scripts.
-        // This list can be expanded.
-        static const std::string safe_functions[] = {
-            "assert", "type", "pairs", "ipairs", "next", "print", "tostring", "error"
-        };
-
-        for(const std::string& function_name : safe_functions)
-        {
-            env[function_name] = state[function_name];
-        }
-    }
 
     std::string name;
     sol::environment env;
@@ -92,7 +74,10 @@ public:
     /***
      * Returns a shared pointer to this lua_env's internal Lua state.
      */
-    std::shared_ptr<sol::state> get_state() { return lua; }
+    std::shared_ptr<sol::state> get_state()
+    {
+        return lua;
+    }
 
     /***
      * Builds a list of all available mods in the user's mods/ folder.
@@ -221,12 +206,11 @@ public:
     /***
      * Instantiates a new mod by running the given Lua code.
      *
-     * NOTE: This requires the mods to have unique names between
-     * tests.
-     *
      * For testing use only.
      */
-    void load_mod_from_script(const std::string& name, const std::string& script);
+    void load_mod_from_script(const std::string& name,
+                              const std::string& script,
+                              bool readonly = false);
 
     /***
      * Runs the given Lua code in an existing mod.
@@ -244,12 +228,14 @@ public:
      *
      * For testing use only.
      */
-    mod_info* get_mod(const std::string& name) {
+    mod_info* get_mod(const std::string& name)
+    {
         auto val = mods.find(name);
-        if(val == mods.end())
+        if (val == mods.end())
             throw std::runtime_error("No such mod "s + name + "."s);
         return val->second.get();
     }
+
 private:
     /***
      * Runs the init script for the given mod. The mod will have been
@@ -258,6 +244,38 @@ private:
      * Will throw if there was an error on running the script.
      */
     void load_mod(const fs::path& path, mod_info&);
+
+    /***
+     * Sets up the global variables of a mod and locks them so they
+     * cannot be overwritten.
+     */
+    void setup_and_lock_mod_globals(mod_info&);
+
+    /***
+     * Sets the global variables of a mod on the given table.
+     */
+    void setup_mod_globals(mod_info& mod, sol::table&);
+
+    static void setup_sandbox(const sol::state& state, sol::table& metatable)
+    {
+        // Whitelist functions that are safe for usage in user-written scripts.
+        // This list can be expanded.
+        static const std::string safe_functions[] = {
+            "assert",
+            "type",
+            "pairs",
+            "ipairs",
+            "next",
+            "print",
+            "tostring",
+            "error"
+        };
+
+        for(const std::string& function_name : safe_functions)
+        {
+            metatable[function_name] = state[function_name];
+        }
+    }
 private:
     /***
      * The underlying Lua state shared across all mod/API

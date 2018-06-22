@@ -1,6 +1,5 @@
 #include "../thirdparty/catch2/catch.hpp"
 
-#include "tests.hpp"
 #include "../ability.hpp"
 #include "../character.hpp"
 #include "../enums.hpp"
@@ -11,6 +10,7 @@
 #include "../itemgen.hpp"
 #include "../testing.hpp"
 #include "../variables.hpp"
+#include "tests.hpp"
 
 using namespace Catch;
 using namespace elona::testing;

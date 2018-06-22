@@ -411,8 +411,10 @@ void set_option()
     int cfg_music2 = config::instance().music;
     int cfg_fullscreen2 = config::instance().fullscreen;
 
-    const auto display_modes = snail::application::instance().get_display_modes();
-    std::string default_display_mode = snail::application::instance().get_default_display_mode();
+    const auto display_modes =
+        snail::application::instance().get_display_modes();
+    std::string default_display_mode =
+        snail::application::instance().get_default_display_mode();
     std::vector<std::string> display_mode_names;
     std::string cfg_display_mode = config::instance().display_mode;
 
@@ -420,7 +422,8 @@ void set_option()
     int index = 0;
     int default_index = 0;
 
-    for(const auto pair : display_modes) {
+    for (const auto pair : display_modes)
+    {
         display_mode_names.emplace_back(pair.first);
         if (pair.first == cfg_display_mode)
         {
@@ -1244,9 +1247,12 @@ void set_option()
                     {
                         display_mode_index = 0;
                     }
-                    else if (display_mode_index > static_cast<int>(display_mode_names.size()) - 1)
+                    else if (
+                        display_mode_index
+                        > static_cast<int>(display_mode_names.size()) - 1)
                     {
-                        display_mode_index = static_cast<int>(display_mode_names.size()) - 1;
+                        display_mode_index =
+                            static_cast<int>(display_mode_names.size()) - 1;
                     }
                     cfg_display_mode = display_mode_names[display_mode_index];
                     set_config(u8"display_mode", cfg_display_mode);

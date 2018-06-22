@@ -5,10 +5,10 @@
 #include "filesystem.hpp"
 #include "item.hpp"
 #include "log.hpp"
+#include "lua_env/lua_env.hpp"
 #include "mef.hpp"
 #include "putit.hpp"
 #include "variables.hpp"
-#include "lua_env/lua_env.hpp"
 
 using namespace elona;
 
@@ -402,7 +402,8 @@ void save(const fs::path& filepath, T& data, size_t begin, size_t end)
 // - Foobar save data
 // - quest data
 // - list of pending events
-// - lots of things relevant to the player only, like traits/material counts/spell data/recipes...
+// - lots of things relevant to the player only, like traits/material
+// counts/spell data/recipes...
 // - trading cards
 // - appearance of the character (PCC)
 // - adventurer news
@@ -462,11 +463,13 @@ void fmode_7_8(bool read, const fs::path& dir)
         {
             if (fs::exists(filepath))
             {
-                for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++) {
+                for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++)
+                {
                     lua::lua.on_chara_unloaded(cdata[index]);
                 }
                 load(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
-                for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++) {
+                for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++)
+                {
                     cdata[index].index = index;
                     lua::lua.on_chara_loaded(cdata[index]);
                 }
@@ -530,12 +533,12 @@ void fmode_7_8(bool read, const fs::path& dir)
         {
             if (fs::exists(filepath))
             {
-                for(int index = 0; index < 1320; index++)
+                for (int index = 0; index < 1320; index++)
                 {
                     lua::lua.on_item_unloaded(inv[index]);
                 }
                 load(filepath, inv, 0, 1320);
-                for(int index = 0; index < 1320; index++)
+                for (int index = 0; index < 1320; index++)
                 {
                     inv[index].index = index;
                     lua::lua.on_item_loaded(inv[index]);
@@ -790,11 +793,13 @@ void fmode_14_15(bool read)
         {
             if (fs::exists(filepath))
             {
-                for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++) {
+                for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++)
+                {
                     lua::lua.on_chara_unloaded(cdata[index]);
                 }
                 load(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
-                for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++) {
+                for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++)
+                {
                     cdata[index].index = index;
                     lua::lua.on_chara_loaded(cdata[index]);
                 }
@@ -861,12 +866,12 @@ void fmode_14_15(bool read)
         {
             if (fs::exists(filepath))
             {
-                for(int index = 0; index < 1320; index++)
+                for (int index = 0; index < 1320; index++)
                 {
                     lua::lua.on_item_unloaded(inv[index]);
                 }
                 load(filepath, inv, 0, 1320);
-                for(int index = 0; index < 1320; index++)
+                for (int index = 0; index < 1320; index++)
                 {
                     inv[index].index = index;
                     lua::lua.on_item_loaded(inv[index]);
@@ -986,7 +991,10 @@ void fmode_1_2(bool read)
         const auto filepath = dir / (u8"cdata_"s + mid + u8".s2");
         if (read)
         {
-            for (int index = ELONA_MAX_PARTY_CHARACTERS; index < ELONA_MAX_CHARACTERS; index++) {
+            for (int index = ELONA_MAX_PARTY_CHARACTERS;
+                 index < ELONA_MAX_CHARACTERS;
+                 index++)
+            {
                 lua::lua.on_chara_unloaded(cdata[index]);
             }
             load(
@@ -994,7 +1002,10 @@ void fmode_1_2(bool read)
                 cdata,
                 ELONA_MAX_PARTY_CHARACTERS,
                 ELONA_MAX_CHARACTERS);
-            for (int index = ELONA_MAX_PARTY_CHARACTERS; index < ELONA_MAX_CHARACTERS; index++) {
+            for (int index = ELONA_MAX_PARTY_CHARACTERS;
+                 index < ELONA_MAX_CHARACTERS;
+                 index++)
+            {
                 cdata[index].index = index;
                 lua::lua.on_chara_loaded(cdata[index]);
             }
@@ -1153,12 +1164,12 @@ void fmode_3_4(bool read, const fs::path& filename)
     const auto filepath = filesystem::dir::tmp() / filename;
     if (read)
     {
-        for(int index = 1320; index < 5480; index++)
+        for (int index = 1320; index < 5480; index++)
         {
             lua::lua.on_item_unloaded(inv[index]);
         }
         load(filepath, inv, 1320, 5480);
-        for(int index = 1320; index < 5480; index++)
+        for (int index = 1320; index < 5480; index++)
         {
             inv[index].index = index;
             lua::lua.on_item_loaded(inv[index]);
@@ -1199,7 +1210,10 @@ void fmode_17()
         const auto filepath = dir / (u8"cdata_"s + mid + u8".s2");
         if (true)
         {
-            for (int index = ELONA_MAX_PARTY_CHARACTERS; index < ELONA_MAX_CHARACTERS; index++) {
+            for (int index = ELONA_MAX_PARTY_CHARACTERS;
+                 index < ELONA_MAX_CHARACTERS;
+                 index++)
+            {
                 lua::lua.on_chara_unloaded(cdata[index]);
             }
             load(
@@ -1207,7 +1221,10 @@ void fmode_17()
                 cdata,
                 ELONA_MAX_PARTY_CHARACTERS,
                 ELONA_MAX_CHARACTERS);
-            for (int index = ELONA_MAX_PARTY_CHARACTERS; index < ELONA_MAX_CHARACTERS; index++) {
+            for (int index = ELONA_MAX_PARTY_CHARACTERS;
+                 index < ELONA_MAX_CHARACTERS;
+                 index++)
+            {
                 cdata[index].index = index;
                 lua::lua.on_chara_loaded(cdata[index]);
             }

@@ -184,7 +184,7 @@ void application::proc_event()
 
 void application::set_fullscreen_mode(window::fullscreen_mode_t fullscreen_mode)
 {
-  (*_window).set_fullscreen_mode(fullscreen_mode);
+    (*_window).set_fullscreen_mode(fullscreen_mode);
     _fullscreen_mode = fullscreen_mode;
 }
 
@@ -199,7 +199,8 @@ std::map<std::string, ::SDL_DisplayMode> application::get_display_modes()
         throw detail::sdl_error("No display modes available");
     }
 
-    for (int i = 0; i < display_mode_count; ++i) {
+    for (int i = 0; i < display_mode_count; ++i)
+    {
         SDL_DisplayMode mode;
         detail::enforce_sdl(::SDL_GetDisplayMode(display_in_use, i, &mode));
 

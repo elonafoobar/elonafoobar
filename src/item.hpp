@@ -43,9 +43,9 @@ struct item
     // will break save compatibility.
 
     // Index of this item into the global cdata array.
-    // Used for communicating with legacy code that takes integer index arguments.
-    // New code should pass item& instead.
-    // Not serialized; set on creation and load.
+    // Used for communicating with legacy code that takes integer index
+    // arguments. New code should pass item& instead. Not serialized; set on
+    // creation and load.
     int index = -1;
 
     int number = 0;

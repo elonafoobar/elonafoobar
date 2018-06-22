@@ -9,9 +9,10 @@ namespace snail
 
 void window::move_to_center()
 {
-    ::SDL_SetWindowPosition(ptr(),
-                            initial_position::position_centered,
-                            initial_position::position_centered);
+    ::SDL_SetWindowPosition(
+        ptr(),
+        initial_position::position_centered,
+        initial_position::position_centered);
 }
 
 void window::set_size(int width, int height)
@@ -33,8 +34,8 @@ void window::set_display_mode(::SDL_DisplayMode display_mode)
 
 void window::set_fullscreen_mode(fullscreen_mode_t fullscreen_mode)
 {
-    detail::enforce_sdl(::SDL_SetWindowFullscreen(ptr(),
-                                                  static_cast<Uint32>(fullscreen_mode)));
+    detail::enforce_sdl(
+        ::SDL_SetWindowFullscreen(ptr(), static_cast<Uint32>(fullscreen_mode)));
 }
 
 window::window(

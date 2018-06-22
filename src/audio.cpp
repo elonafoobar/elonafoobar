@@ -3,8 +3,8 @@
 #include "config.hpp"
 #include "elona.hpp"
 #include "snail/application.hpp"
-#include "variables.hpp"
 #include "snail/audio.hpp"
+#include "variables.hpp"
 
 
 namespace

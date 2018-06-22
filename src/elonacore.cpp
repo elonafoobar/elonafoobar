@@ -1174,13 +1174,16 @@ void cutname(std::string& utf8_string, int max_length_charwise)
     int current_char = 0;
     size_t current_byte = 0;
     bool multibyte = false;
-    while (current_char < max_length_charwise && current_byte < utf8_string.size())
+    while (current_char < max_length_charwise
+           && current_byte < utf8_string.size())
     {
         if (static_cast<unsigned char>(utf8_string[current_byte]) > 0x7F)
         {
             current_byte++;
             current_char++;
-            while ((static_cast<unsigned char>(utf8_string[current_byte] & 0xC0)) == 0x80)
+            while (
+                (static_cast<unsigned char>(utf8_string[current_byte] & 0xC0))
+                == 0x80)
             {
                 // Fullwidth characters count as length 2.
                 if (!multibyte)
@@ -3521,7 +3524,8 @@ void label_15380()
     cdata[rc].current_map = 0;
     cdata[rc].relationship = cdata[rc].original_relationship;
     cdata[rc].nutrition = 8000;
-    lua::lua.on_chara_loaded(cdata[rc]); // TODO add separate Lua event for revival
+    lua::lua.on_chara_loaded(
+        cdata[rc]); // TODO add separate Lua event for revival
     return;
 }
 
@@ -5417,168 +5421,6 @@ void removeworker(int map_id)
 
 
 
-turn_result_t show_house_board()
-{
-    txtnew();
-    if (mdata(6) != 5)
-    {
-        ++msgdup;
-        txt(lang(
-            u8"ここはあなたの家ではない。"s,
-            u8"You can only use it in your home."s));
-        update_screen();
-        return turn_result_t::pc_turn_user_error;
-    }
-    p(0) = 0;
-    p(1) = 0;
-    p(2) = 0;
-    for (const auto& cnt : items(-1))
-    {
-        ++p(2);
-        if (inv[cnt].number != 0)
-        {
-            if (the_item_db[inv[cnt].id]->category != 60000)
-            {
-                ++p;
-            }
-            else
-            {
-                ++p(1);
-            }
-        }
-    }
-    if (mdata(18) != 0)
-    {
-        p(2) = mdata(18);
-    }
-    txt(lang(
-        mapname(gdata_current_map) + u8"には"s + p + u8"個のアイテムと"s + p(1)
-            + u8"個の家具がある(アイテム最大"s + p(2) + u8"個) "s,
-        u8"There are "s + p + u8" items and "s + p(1) + u8" furniture in "s
-            + mapname(gdata_current_map) + u8".(Max: "s + p(2) + u8") "s));
-    if (adata(16, gdata_current_map) == 102)
-    {
-        if (getworker(gdata_current_map) != -1)
-        {
-            txt(lang(
-                u8"現在の店主は"s + cdatan(0, getworker(gdata_current_map))
-                    + u8"だ。"s,
-                u8"Current shopkeeper is "s
-                    + cdatan(0, getworker(gdata_current_map)) + u8"."s));
-        }
-        else
-        {
-            txt(lang(
-                u8"現在店主はいない。"s,
-                u8"You haven't assigned a shopkeeper yet."s));
-        }
-    }
-    if (adata(16, gdata_current_map) == 31)
-    {
-        if (getworker(gdata_current_map) != -1)
-        {
-            txt(lang(
-                u8"現在のブリーダーは"s
-                    + cdatan(0, getworker(gdata_current_map)) + u8"だ。"s,
-                u8"Current breeder is "s
-                    + cdatan(0, getworker(gdata_current_map)) + u8"."s));
-        }
-        else
-        {
-            txt(lang(
-                u8"現在ブリーダーはいない。"s,
-                u8"You haven't assigned a breeder yet."s));
-        }
-    }
-    if (gdata_current_map == 7)
-    {
-        p = 0;
-        for (int cnt = ELONA_MAX_PARTY_CHARACTERS; cnt < ELONA_MAX_CHARACTERS;
-             ++cnt)
-        {
-            if (cdata[cnt].state == 1 || cdata[cnt].state == 2)
-            {
-                if (cdata[cnt].character_role != 0)
-                {
-                    ++p;
-                }
-            }
-        }
-        txt(lang(
-            u8"現在"s + p + u8"人の滞在者がいる(最大"s + (gdata_home_scale + 2)
-                + u8"人) "s,
-            ""s + p + u8" members are staying at your home. (Max: "s
-                + (gdata_home_scale + 2) + u8")."s));
-    }
-    txtnew();
-    txt(lang(u8"何をする？"s, u8"What do you want to do?"s));
-    p = 0;
-    if (adata(16, gdata_current_map) == 102)
-    {
-        ELONA_APPEND_PROMPT(
-            lang(u8"仲間に店主を頼む"s, u8"Assign a shopkeeper"s),
-            u8"null"s,
-            ""s + 4);
-        if (mdata(18) < 400)
-        {
-            ELONA_APPEND_PROMPT(
-                lang(u8"店を拡張"s, u8"Extend"s) + u8"("s + calcshopreform()
-                    + u8" GP)"s,
-                u8"null"s,
-                ""s + 5);
-        }
-    }
-    if (adata(16, gdata_current_map) == 31)
-    {
-        ELONA_APPEND_PROMPT(
-            lang(u8"ブリーダーを任命する"s, u8"Assign a breeder"s),
-            u8"null"s,
-            ""s + 4);
-    }
-    ELONA_APPEND_PROMPT(
-        lang(u8"家の模様替え"s, u8"Design"s), u8"null"s, ""s + 0);
-    if (gdata_current_map == 7)
-    {
-        ELONA_APPEND_PROMPT(
-            lang(u8"家の情報"s, u8"Home rank"s), u8"null"s, ""s + 2);
-        ELONA_APPEND_PROMPT(
-            lang(u8"仲間の滞在"s, u8"Allies in your home"s),
-            u8"null"s,
-            ""s + 4);
-        if (gdata_current_dungeon_level == 1)
-        {
-            ELONA_APPEND_PROMPT(
-                lang(u8"使用人を募集する"s, u8"Recruit a servant"s),
-                u8"null"s,
-                ""s + 6);
-        }
-        ELONA_APPEND_PROMPT(
-            lang(u8"滞在者の移動"s, u8"Move a stayer"s), u8"null"s, ""s + 3);
-    }
-    int stat = show_prompt(promptx, prompty, 240);
-    if (stat == -1)
-    {
-        update_screen();
-        return turn_result_t::pc_turn_user_error;
-    }
-    rtval = stat;
-    switch (rtval)
-    {
-    case 0: start_home_map_mode(); break;
-    case 2: show_home_value(); break;
-    case 3: prompt_move_ally(); break;
-    case 4: prompt_ally_staying(); break;
-    case 5: try_extend_shop(); break;
-    case 6: prompt_hiring(); break;
-    }
-    tlocinitx = 0;
-    tlocinity = 0;
-    screenupdate = -1;
-    update_screen();
-    return turn_result_t::show_house_board;
-}
-
-
 void monster_respawn()
 {
     if (adata(16, gdata_current_map) == 101
@@ -5969,7 +5811,8 @@ turn_result_t exit_map()
             if (cdata[cnt].state == 8)
             {
                 cdata[cnt].state = 1;
-                lua::lua.on_chara_loaded(cdata[cnt]); // TODO add separate Lua event for revival
+                lua::lua.on_chara_loaded(
+                    cdata[cnt]); // TODO add separate Lua event for revival
             }
             continue;
         }
@@ -5989,7 +5832,8 @@ turn_result_t exit_map()
     }
     else
     {
-        // This is a tempory map, so wipe its data (shelter, special quest instance)
+        // This is a tempory map, so wipe its data (shelter, special quest
+        // instance)
         prepare_charas_for_map_unload();
 
         // delete all map-local data
@@ -11768,7 +11612,8 @@ void migrate_save_data(const fs::path& save_dir)
                 std::regex_match(str, match, pattern);
                 map_id = std::stoi(match.str(1));
                 level = std::stoi(match.str(2)) - 100;
-                mid = std::to_string(map_id) + "_" + std::to_string(level + 100);
+                mid =
+                    std::to_string(map_id) + "_" + std::to_string(level + 100);
             }
             // Read mdata/map/cdata/sdata/mef/cdatan2/mdatan.
             ctrl_file(file_operation_t::_1);
@@ -12255,9 +12100,8 @@ void save_game(const fs::path& base_save_dir)
     }
     notesel(buff);
     {
-        std::ofstream out{
-            (save_dir / u8"filelist.txt").native(),
-            std::ios::binary};
+        std::ofstream out{(save_dir / u8"filelist.txt").native(),
+                          std::ios::binary};
         out << buff(0) << std::endl;
     }
     ELONA_LOG("Save game: finish");
@@ -14680,7 +14524,8 @@ void spot_fishing()
             {
                 if (config::instance().animewait != 0)
                 {
-                    for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end; ++cnt)
+                    for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end;
+                         ++cnt)
                     {
                         fishanime(0) = 1;
                         fishanime(1) = 3 + rnd(3);
@@ -14732,7 +14577,8 @@ void spot_fishing()
             fishanime = 3;
             if (config::instance().animewait != 0)
             {
-                for (int cnt = 0, cnt_end = (28 + rnd(15)); cnt < cnt_end; ++cnt)
+                for (int cnt = 0, cnt_end = (28 + rnd(15)); cnt < cnt_end;
+                     ++cnt)
                 {
                     if (cnt % 7 == 0)
                     {
@@ -17120,8 +16966,9 @@ turn_result_t do_bash()
 turn_result_t proc_movement_event()
 {
     auto handle = lua::lua.get_handle_manager().get_chara_handle(cdata[cc]);
-    if(handle != sol::lua_nil)
-        lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::character_moved>(handle);
+    if (handle != sol::lua_nil)
+        lua::lua.get_event_manager()
+            .run_callbacks<lua::event_kind_t::character_moved>(handle);
 
     if (cdata[cc].is_ridden())
     {

@@ -5,18 +5,19 @@
 namespace elona
 {
 
-enum stick_key {
-    left         = 1 << 0,
-    up           = 1 << 1,
-    right        = 1 << 2,
-    down         = 1 << 3,
-    space        = 1 << 4,
-    enter        = 1 << 5,
-    ctrl         = 1 << 6,
-    escape       = 1 << 7,
-    mouse_left   = 1 << 8,
-    mouse_right  = 1 << 9,
-    tab          = 1 << 10,
+enum stick_key
+{
+    left = 1 << 0,
+    up = 1 << 1,
+    right = 1 << 2,
+    down = 1 << 3,
+    space = 1 << 4,
+    enter = 1 << 5,
+    ctrl = 1 << 6,
+    escape = 1 << 7,
+    mouse_left = 1 << 8,
+    mouse_right = 1 << 9,
+    tab = 1 << 10,
 };
 
 enum class curse_state_t

@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../thirdparty/sol2/sol.hpp"
+#include <unordered_map>
+#include <vector>
+#include <boost/serialization/strong_typedef.hpp>
+#include <boost/variant.hpp>
 #include "../character.hpp"
 #include "../position.hpp"
-#include <vector>
-#include <unordered_map>
-#include <boost/variant.hpp>
-#include <boost/serialization/strong_typedef.hpp>
+#include "../thirdparty/sol2/sol.hpp"
 
 namespace elona
 {
@@ -35,9 +35,12 @@ class store
 
 
 public:
-    void clear() { store_inner.clear(); }
-    void set(std::string key, const sol::object&);
-    sol::object get(std::string key, sol::state_view& view);
+    void clear()
+    {
+        store_inner.clear();
+    }
+    void set(std::string key, const sol::object &);
+    sol::object get(std::string key, sol::state_view &view);
 
     /***
      * A variant representing all possible objects that can be kept in
@@ -46,11 +49,8 @@ public:
      * Characters and items are not included since they are wrapped
      * into handles, which are Lua tables.
      */
-    typedef boost::variant<int,
-                           bool,
-                           std::string,
-                           sol::table,
-                           position_t> object;
+    typedef boost::variant<int, bool, std::string, sol::table, position_t>
+        object;
 
     /***
      * Creates an API binding to the Store on the global Lua state.
@@ -68,27 +68,30 @@ public:
      * constructor of mod_info in lua_env).
      */
     void init_no_attach(sol::state &state);
-private:
 
+private:
     /***
      * Binds the LuaStore usertype to the given Lua state.
      */
-    static void bind(sol::state&);
+    static void bind(sol::state &);
 
     /***
      * Serializes a compatible userdata object (for now, only positions)
      */
-    static object serialize_userdata(const sol::object&);
+    static object serialize_userdata(const sol::object &);
 
-    static sol::table serialize_table(sol::state_view&, sol::table&);
-    static void convert_table_value(sol::object&, sol::state_view&);
+    static sol::table serialize_table(sol::state_view &, sol::table &);
+    static void convert_table_value(sol::object &, sol::state_view &);
 
     /***
      * Deserializes a compatible userdata object (for now, only positions)
      */
-    static sol::object deserialize_userdata(const store::object&, sol::state_view&);
+    static sol::object deserialize_userdata(
+        const store::object &,
+        sol::state_view &);
 
-    static sol::object deserialize_position(position_t, sol::state_view&);
+    static sol::object deserialize_position(position_t, sol::state_view &);
+
 private:
     std::unordered_map<std::string, std::pair<sol::type, object>> store_inner;
 };
