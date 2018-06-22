@@ -349,33 +349,7 @@ public:
     void load(std::istream&, const std::string&);
 
     template <typename Head, typename... Tail>
-    std::string get(const std::string& key, Head const& head, Tail&&... tail)
-    {
-        const auto& found = storage.find(key);
-        if (found == storage.end())
-        {
-            return u8"<Unknown ID: " + key + ">";
-        }
-
-        return fmt_with_context(
-            found->second, head, std::forward<Tail>(tail)...);
-    }
-
-    template <typename... Tail>
-    std::string get(const std::string& key, Tail&&... tail)
-    {
-        const auto& found = storage.find(key);
-        if (found == storage.end())
-        {
-            return u8"<Unknown ID: " + key + ">";
-        }
-
-        return fmt_with_context(found->second, std::forward<Tail>(tail)...);
-    }
-
-    template <typename Head, typename... Tail>
-    optional<std::string>
-    get_optional(const std::string& key, Head const& head, Tail&&... tail)
+    optional<std::string> get_optional(const std::string& key, Head const& head, Tail&&... tail)
     {
         const auto& found = storage.find(key);
         if (found == storage.end())
@@ -399,6 +373,32 @@ public:
         return fmt_with_context(found->second, std::forward<Tail>(tail)...);
     }
 
+    template <typename Head, typename... Tail>
+    std::string get(const std::string& key, Head const& head, Tail&&... tail)
+    {
+        if (auto text = get_optional(key, head, std::forward<Tail>(tail)...))
+        {
+            return *text;
+        }
+        else
+        {
+            return u8"<Unknown ID: " + key + ">";
+        }
+    }
+
+    template <typename... Tail>
+    std::string get(const std::string& key, Tail&&... tail)
+    {
+        if (auto text = get_optional(key, std::forward<Tail>(tail)...))
+        {
+            return *text;
+        }
+        else
+        {
+            return u8"<Unknown ID: " + key + ">";
+        }
+    }
+
 
     // Convenience methods for cases like "core.element._<enum index>.name"
 
@@ -420,6 +420,23 @@ public:
     {
         return get(
             key + "._" + std::to_string(index), std::forward<Tail>(tail)...);
+    }
+
+    template <typename Head, typename... Tail>
+    optional<std::string> get_enum_optional(const std::string& key,
+                         int index,
+                         Head const& head,
+                         Tail&&... tail)
+    {
+        return get_optional(key + "._" + std::to_string(index), head, std::forward<Tail>(tail)...);
+    }
+
+    template <typename... Tail>
+    optional<std::string> get_enum_optional(const std::string& key,
+                         int index,
+                         Tail&&... tail)
+    {
+        return get_optional(key + "._" + std::to_string(index), std::forward<Tail>(tail)...);
     }
 
     template <typename Head, typename... Tail>
