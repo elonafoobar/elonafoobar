@@ -12,17 +12,17 @@ namespace elona
 namespace lua
 {
 
-handle_manager::handle_manager(lua_env* lua)
+handle_manager::handle_manager(lua_env* lua_)
 {
-    this->lua = lua;
-    this->lua->get_state()->set("_IS_TEST", config::instance().is_test);
-    this->handle_env = sol::environment(
-        *(this->lua->get_state()),
+    lua = lua_;
+    lua->get_state()->set("_IS_TEST", config::instance().is_test);
+    handle_env = sol::environment(
+        *(lua->get_state()),
         sol::create,
-        this->lua->get_state()->globals());
+        lua->get_state()->globals());
 
     // Load the Lua chunk for storing handles.
-    this->lua->get_state()->safe_script(
+    lua->get_state()->safe_script(
         R"(Handle = require "mods/core/handle")", this->handle_env);
 
     bind(*lua);

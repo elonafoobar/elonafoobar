@@ -22,7 +22,7 @@ class lua_console
 {
 public:
     typedef boost::circular_buffer<std::string> buffer;
-    static constexpr int max_lines = 100;
+    static constexpr int max_buffer_size = 100;
 
     explicit lua_console(lua_env*);
 
@@ -34,7 +34,7 @@ public:
         width_ = width;
         height_ = height;
         max_chars_ = (width_ / char_width_) - 1;
-        max_lines_ = height_ / char_height_;
+        max_lines_ = static_cast<size_t>(height_ / char_height_);
     }
     bool just_exited() { return just_exited_; }
     void end_just_exited() { just_exited_ = false; }
@@ -62,8 +62,9 @@ private:
     int width_ = 800;
     int height_ = 250;
     int max_chars_ = 0;
-    int max_lines_ = 0;
-    int pos_ = 0;
+    size_t max_lines_ = 0;
+    size_t pos_ = 0;
+    size_t last_size_ = 0;
     buffer buf_;
     buffer input_history_;
     std::string input_;

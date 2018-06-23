@@ -26,7 +26,15 @@ class api_manager
 public:
     /***
      * Exposes the core API table ("Elona") from the isolated Lua API
-     * environment by table reference.
+     * environment to a given mod.
+     */
+    static void bind(lua_env&, mod_info&);
+
+    /***
+     * Exposes the core API table ("Elona") from the isolated Lua API
+     * environment to the global lua state.
+     *
+     * For testing use only.
      */
     static sol::table bind(lua_env&);
 
@@ -47,7 +55,7 @@ public:
      *
      * This is done by lua_env on construction. It must be done before
      * more mods can be loaded, because they all implicitly depend on
-     * the core mod.
+     * the core mod..
      */
     void load_core(lua_env&, const fs::path&);
 

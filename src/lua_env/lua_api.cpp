@@ -959,19 +959,21 @@ void I18N::bind(sol::table& Elona)
         "get_enum_property_optional", I18N::get_enum_property_optional);
 }
 
+
 namespace Debug
 {
-void log(const std::string&);
+void print(const std::string&);
 void report_error(const std::string&);
-void dump_characters();
+void dump_charas();
 void dump_items();
 
 void bind(sol::table& Elona);
-} // namespace Debug
+}
 
-void Debug::log(const std::string& message)
+void Debug::print(const std::string& message)
 {
     ELONA_LOG(message);
+    lua::lua.get_console().print(message);
 }
 
 void Debug::report_error(const std::string& message)
@@ -981,50 +983,55 @@ void Debug::report_error(const std::string& message)
 
     GUI::txt_color(3);
     GUI::txt("Script error: ");
-    while (getline(sstream, line, '\n'))
-    {
+    while (getline(sstream, line, '\n')) {
         GUI::txt_color(3);
         GUI::txt(line + "  ");
     }
 
-    ELONA_LOG("Script error: " << message);
+    Debug::print("Script error: "s + message);
 }
 
-void Debug::dump_characters()
+void Debug::dump_charas()
 {
-    ELONA_LOG("===== Charas =====")
+    std::stringstream ss;
+
+    ss << "===== Charas =====";
+
     for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
-        if (elona::cdata[cnt].state != 0)
-            ELONA_LOG(
-                elona::cdata[cnt].index
-                << ") Name: " << elona::name(cnt)
-                << ", Pos: " << elona::cdata[cnt].position);
+        if(elona::cdata[cnt].state != 0)
+            ss << elona::cdata[cnt].index << ") Name: " << elona::name(cnt) <<
+                ", Pos: " << elona::cdata[cnt].position << "\n";
     }
+
+    Debug::print(ss.str());
 }
 
 void Debug::dump_items()
 {
-    ELONA_LOG("===== Items  =====")
+    std::stringstream ss;
+
+    ss << "===== Items  =====";
+
     for (const auto& cnt : items(-1))
     {
-        if (elona::inv[cnt].number != 0)
-            ELONA_LOG(
-                elona::inv[cnt].index
-                << ") Name: " << elona::itemname(cnt)
-                << ", Pos: " << elona::inv[cnt].position << ", Curse: "
-                << static_cast<int>(elona::inv[cnt].curse_state) << ", Ident: "
-                << static_cast<int>(elona::inv[cnt].identification_state)
-                << ", Count: " << elona::inv[cnt].count);
+        if(elona::inv[cnt].number != 0)
+            ss << elona::inv[cnt].index << ") Name: " << elona::itemname(cnt) <<
+                      ", Pos: "   << elona::inv[cnt].position <<
+                      ", Curse: " << static_cast<int>(elona::inv[cnt].curse_state) <<
+                      ", Ident: " << static_cast<int>(elona::inv[cnt].identification_state) <<
+                      ", Count: " << elona::inv[cnt].count << "\n";
     }
+
+    Debug::print(ss.str());
 }
 
 void Debug::bind(sol::table& Elona)
 {
     sol::table Debug = Elona.create_named("Debug");
-    Debug.set_function("log", Debug::log);
+    Debug.set_function("print", Debug::print);
     Debug.set_function("report_error", Debug::report_error);
-    Debug.set_function("dump_characters", Debug::dump_characters);
+    Debug.set_function("dump_charas", Debug::dump_charas);
     Debug.set_function("dump_items", Debug::dump_items);
 }
 
@@ -1454,6 +1461,25 @@ void api_manager::load_core(lua_env& lua, const fs::path& mods_dir)
         ELONA_LOG(what);
         throw std::runtime_error("Failed initializing core mod!");
     }
+}
+
+void api_manager::bind(lua_env& lua, mod_info& mod)
+{
+    mod.env.create_named("Elona",
+                         "require", sol::overload(
+                             [&lua](const std::string& parent, const std::string& module) {
+                                 sol::optional<sol::table> result = sol::nullopt;
+                                 result = lua.get_api_manager().try_find_api(parent, module);
+                                 return result;
+                             },
+
+                             // If no mod name is provided, assume it is "core".
+                             [&lua](const std::string& module) {
+                                 sol::optional<sol::table> result = sol::nullopt;
+                                 result = lua.get_api_manager().try_find_api("core", module);
+                                 return result;
+                             }
+                             ));
 }
 
 sol::table api_manager::bind(lua_env& lua)

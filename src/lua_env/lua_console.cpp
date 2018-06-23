@@ -24,8 +24,8 @@ lua_console::lua_console(lua_env* lua)
                                     sol::create,
                                     lua_->get_state()->globals());
 
-    buf_ = buffer(max_lines);
-    input_history_ = buffer(max_lines);
+    buf_ = buffer(max_buffer_size);
+    input_history_ = buffer(max_buffer_size);
 
     console_env_.set("_API_TABLES", lua->get_api_manager().get_api_table());
     console_env_.set("_MOD_NAME", "console");
@@ -93,9 +93,9 @@ void lua_console::draw()
 
     elona::color(255, 255, 255);
 
-    size_t n = std::min(static_cast<size_t>(max_lines_ - 1), buf_.size());
+    size_t n = std::min((max_lines_ - 1) + pos_, buf_.size());
     int i = 0;
-    for(auto it = buf_.end() - n; it < buf_.end(); it++)
+    for (auto it = buf_.end() - n; it < buf_.end() - pos_; it++)
     {
         elona::pos(4, char_height_ * i);
         font(inf_mesfont - en * 2);
@@ -111,6 +111,14 @@ void lua_console::draw()
         mes((is_multiline_ ? PROMPT_SECONDARY : PROMPT_PRIMARY) +
             u8" "s + input_ +
             (cursor_visible_ ? u8"|" : ""));
+    }
+
+    if (pos_ > 0)
+    {
+        std::string line_count = std::to_string(pos_ + max_lines_) + "/" + std::to_string(buf_.size());
+        elona::pos(windoww - (line_count.size() * char_width_), 0);
+        font(inf_mesfont - en * 2);
+        mes(line_count);
     }
 
     elona::color(0, 0, 0);
@@ -239,7 +247,12 @@ void lua_console::grab_input()
         noteget(input_, 0);
 
         await(config::instance().wait1);
-        key_check();
+        key_check(key_wait_delay_t::walk_run);
+
+        if (last_size_ != input_.size())
+        {
+            pos_ = 0;
+        }
 
         if (getkey(snail::key::escape))
         {
@@ -272,6 +285,37 @@ void lua_console::grab_input()
                 }
             }
         }
+        else if (snail::input::instance().is_pressed(snail::key::pageup,
+                                                     config::instance().keywait))
+        {
+            if (buf_.size() >= max_lines_)
+            {
+                if (pos_ + max_lines_ > buf_.size() - max_lines_ + 1)
+                {
+                    pos_ = buf_.size() - max_lines_ + 1;
+                }
+                else
+                {
+                    pos_ += max_lines_;
+                }
+            }
+            else
+            {
+                pos_ = 0;
+            }
+        }
+        else if (snail::input::instance().is_pressed(snail::key::pagedown,
+                                                     config::instance().keywait))
+        {
+            if (pos_ < max_lines_)
+            {
+                pos_ = 0;
+            }
+            else
+            {
+                pos_ -= max_lines_;
+            }
+        }
         else if (getkey(snail::key::enter))
         {
             rm_crlf(input_);
@@ -293,7 +337,9 @@ void lua_console::grab_input()
             }
             inputlog = "";
             input_ = "";
+            pos_ = 0;
         }
+        last_size_ = input_.size();
     }
 
     onkey_0();
