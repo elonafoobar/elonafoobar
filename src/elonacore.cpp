@@ -12137,7 +12137,7 @@ label_2128_internal:
     gcopy(4, 0, 0, 144, 144);
     gmode(2);
     await(config::instance().wait1);
-    key_check(1);
+    key_check(key_wait_delay_t::walk_run);
     x = cdata[0].position.x;
     y = cdata[0].position.y;
     if (key == key_alter)

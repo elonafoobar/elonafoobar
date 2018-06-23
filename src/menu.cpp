@@ -373,7 +373,7 @@ label_2699_internal:
     ++t;
     redraw();
     await(config::instance().wait1);
-    key_check(2);
+    key_check(key_wait_delay_t::none);
     if (key == key_north)
     {
         key = listn(1, 3);

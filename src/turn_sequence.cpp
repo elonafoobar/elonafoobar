@@ -1752,7 +1752,7 @@ label_2747:
     }
 
     await(config::instance().wait1);
-    key_check(1);
+    key_check(key_wait_delay_t::walk_run);
 
     if (ginfo(2) != 0)
     {
