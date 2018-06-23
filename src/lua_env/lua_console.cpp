@@ -191,15 +191,23 @@ bool lua_console::interpret_lua(const std::string& input)
     if (result.valid())
     {
         console_env_.set("_LAST_RESULT", result.get<sol::object>());
-        auto as_string = lua_->get_state()->safe_script("return inspect(_LAST_RESULT)", console_env_);
 
-        if (as_string.valid())
+        if (result.get<sol::object>() == sol::lua_nil)
         {
-            print(result.get<std::string>());
+            print("nil");
         }
         else
         {
-            print("<Unknown result>");
+            auto as_string = lua_->get_state()->safe_script("return inspect(_LAST_RESULT)", console_env_);
+
+            if (as_string.valid())
+            {
+                print(result.get<std::string>());
+            }
+            else
+            {
+                print("<Unknown result>");
+            }
         }
     }
     else if (multiline_ended)
@@ -267,7 +275,7 @@ void lua_console::grab_input()
                     || static_cast<size_t>(history_index) < input_history_.size() - 1)
                 {
                     ++history_index;
-                    input_ = input_history_.at(history_index);
+                    input_ = input_history_.at(input_history_.size() - history_index - 1);
                     inputlog = input_;
                 }
             }
@@ -280,7 +288,7 @@ void lua_console::grab_input()
                 if (history_index > 0)
                 {
                     --history_index;
-                    input_ = input_history_.at(history_index);
+                    input_ = input_history_.at(input_history_.size() - history_index - 1);
                     inputlog = input_;
                 }
             }
