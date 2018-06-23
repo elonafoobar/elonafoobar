@@ -11,7 +11,7 @@ function count() end
 -- @function create
 -- @tparam LuaPosition position (const) position to create the item at
 -- @tparam num id the item prototype ID
--- @tparam num number the number of items to create
+-- @tparam[opt] num number the number of items to create (default 1)
 -- @treturn[1] LuaItem the created item stack
 -- @treturn[2] nil
 function create(position, id, number) end

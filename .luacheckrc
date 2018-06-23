@@ -71,6 +71,7 @@ exclude_files = {
 
 files['**/runtime/mods'] = {std = STD_ELONA}
 files['**/runtime/mods/core'] = {std = "+core"}
+files['**/runtime/mods/core/console.lua'] = {std = "+core+console"}
 files['src/tests/lua/*.lua'] = {std = "+tests"}
 files['src/tests/lua/classes/*.lua'] = {std = "+tests"}
 files['src/tests/lua/support'] = {std = "+minctest"}
@@ -150,7 +151,7 @@ stds.elona = {
               },
               Debug = {
                  fields = {
-                    "log", "dump_characters", "dump_items", "inspect"
+                    "print", "dump_characters", "dump_items", "inspect"
                  }
               },
               ReadOnly = {
@@ -207,6 +208,14 @@ stds.core = {
               }
            }
         }
+    }
+}
+
+
+--(( console ))--
+stds.console = {
+    globals = {
+       "_LAST_RESULT", "_API_TABLES", "inspect"
     }
 }
 
