@@ -178,6 +178,15 @@ void event_manager::trigger_event(event_kind_t event, sol::table data)
     }
 }
 
+void event_manager::clear(event_kind_t event)
+{
+    auto iter = events.find(event);
+    if(iter != events.end())
+    {
+        iter->second.clear();
+    }
+}
+
 void event_manager::clear()
 {
     events.clear();

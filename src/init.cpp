@@ -1194,8 +1194,8 @@ void initialize_game()
 
     if (script_loaded)
     {
-        lua::lua.get_event_manager()
-            .run_callbacks<lua::event_kind_t::script_loaded>();
+        lua::lua.get_event_manager().run_callbacks<lua::event_kind_t::script_loaded>();
+        lua::lua.get_event_manager().clear(lua::event_kind_t::script_loaded);
     }
 }
 

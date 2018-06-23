@@ -186,7 +186,7 @@ void lua_env::scan_all_mods(const fs::path& mods_dir)
             const std::string mod_name = entry.path().filename().string();
             ELONA_LOG("Found mod " << mod_name);
 
-            if(mod_name == "script" || mod_name == "console")
+            if (mod_name == "console")
             {
                 throw new std::runtime_error("\"" + mod_name + "\" is a reserved mod name."s);
             }
@@ -248,13 +248,24 @@ void lua_env::run_startup_script(const std::string& name)
     {
         throw std::runtime_error("Core mod wasn't loaded!");
     }
-    if (this->mods.find(name) != this->mods.end())
+
+    auto it = this->mods.find(name);
+    if (it != this->mods.end())
     {
-        throw std::runtime_error("Startup script was already run.");
+        txtef(2);
+        txt(lang(
+                u8"スクリプト"s + name + u8"を再実行する。"s,
+                u8"Re-running script "s + name + u8". "s));
+        event_mgr->clear_mod_callbacks(it->second->env);
+        lua->safe_script_file(
+            filesystem::make_preferred_path_in_utf8(
+                filesystem::dir::data() / "script"s / name),
+            it->second->env);
+        return;
     }
 
     std::unique_ptr<mod_info> script_mod =
-        std::make_unique<mod_info>("script", get_state());
+            std::make_unique<mod_info>(name, get_state());
     setup_and_lock_mod_globals(*script_mod);
 
     lua->safe_script_file(
@@ -263,14 +274,14 @@ void lua_env::run_startup_script(const std::string& name)
         script_mod->env);
 
     ELONA_LOG("Loaded startup script " << name);
-    txtef(8);
+    txtef(2);
     txt(lang(
-        u8"スクリプト"s + config::instance().startup_script
+        u8"スクリプト"s + name
             + u8"が読み込まれました。"s,
-        u8"Loaded script "s + config::instance().startup_script + u8". "s));
+        u8"Loaded script "s + name + u8". "s));
     txtnew();
 
-    this->mods.emplace("script", std::move(script_mod));
+    this->mods.emplace(name, std::move(script_mod));
 }
 
 void lua_env::clear_mod_stores()

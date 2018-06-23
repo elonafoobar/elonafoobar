@@ -37,6 +37,7 @@ lua_console::lua_console(lua_env* lua)
     Debug.set_function("run_script", [this](const std::string& script_file) {
                                          lua_->run_startup_script(script_file);
                                          lua_->get_event_manager().run_callbacks<event_kind_t::script_loaded>();
+                                         lua_->get_event_manager().clear(lua::event_kind_t::script_loaded);
                                      });
 }
 

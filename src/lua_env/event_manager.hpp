@@ -254,6 +254,11 @@ public:
         return events.at(event).run(callbacks::retval_type<R>{});
     }
 
+    /***
+     * Clears all callbacks across all mods for the given event kind.
+     */
+    void clear(event_kind_t event);
+
     void clear();
 
     typedef std::unordered_map<event_kind_t, callbacks> container;
