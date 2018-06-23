@@ -14,15 +14,15 @@ namespace lua
 
 handle_manager::handle_manager(lua_env* lua_)
 {
-    lua = lua_;
-    lua->get_state()->set("_IS_TEST", config::instance().is_test);
+    this->lua = lua_;
+    this->lua->get_state()->set("_IS_TEST", config::instance().is_test);
     handle_env = sol::environment(
-        *(lua->get_state()),
+        *(this->lua->get_state()),
         sol::create,
-        lua->get_state()->globals());
+        this->lua->get_state()->globals());
 
     // Load the Lua chunk for storing handles.
-    lua->get_state()->safe_script(
+    this->lua->get_state()->safe_script(
         R"(Handle = require "mods/core/handle")", this->handle_env);
 
     bind(*lua);

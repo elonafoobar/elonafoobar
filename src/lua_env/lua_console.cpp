@@ -21,8 +21,7 @@ lua_console::lua_console(lua_env* lua)
 {
     lua_ = lua;
     console_env_ = sol::environment(*(lua_->get_state()),
-                                    sol::create,
-                                    lua_->get_state()->globals());
+                                    sol::create);
 
     buf_ = buffer(max_buffer_size);
     input_history_ = buffer(max_buffer_size);
@@ -30,8 +29,15 @@ lua_console::lua_console(lua_env* lua)
 
 void lua_console::bind_api()
 {
-    console_env_.set("_API_TABLES", lua_->get_api_manager().get_api_table());
+    console_env_["require"] = (*lua_->get_state())["require"];
     console_env_.set("_MOD_NAME", "console");
+
+    // Automatically import all API tables into the console
+    // environment.
+    auto fx = [this](sol::object key, sol::object value) { console_env_.set(key, value); };
+    sol::table Elona = lua_->get_api_manager().get_api_table();
+    Elona.for_each(fx);
+
     lua_->get_state()->safe_script_file(filesystem::make_preferred_path_in_utf8(
                                             filesystem::dir::mods() / "core"s / "console.lua"),
                                         console_env_);

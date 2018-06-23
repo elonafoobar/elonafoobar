@@ -215,7 +215,7 @@ stds.core = {
 --(( console ))--
 stds.console = {
     globals = {
-       "_LAST_RESULT", "_API_TABLES", "inspect"
+       "_LAST_RESULT", "inspect"
     }
 }
 

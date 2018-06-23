@@ -772,12 +772,9 @@ void initialize_elona()
         auto size = snail::application::instance().get_renderer().calculate_text_size("a");
         lua::lua.get_console().setup_constants(size.width, size.height,
                                                windoww, static_cast<int>(0.35 * windowh));
+        lua::lua.get_console().bind_api();
     }
 
-    // Defer binding APIs to the console until initialization time
-    // because get_executable_path() can't be run before everything
-    // else.
-    lua::lua.get_console().bind_api();
     lua::lua.get_console().print(u8"ElonaFoobar Debug console");
     lua::lua.get_console().print(u8"ver."s + latest_version.short_string() + " (" + latest_version.revision + ") OS: " + latest_version.platform + ", timestamp: " + latest_version.timestamp);
 }
