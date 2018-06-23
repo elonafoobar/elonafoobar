@@ -27,6 +27,20 @@ extern std::vector<item_chip_t> item_chips;
 
 
 
+struct chara_chip_t
+{
+    int x;
+    int y;
+    int width;
+    int height;
+    int offset_y;
+};
+
+
+extern std::vector<chara_chip_t> chara_chips;
+
+
+
 void prepare_item_image(int id, int color);
 void prepare_item_image(int id, int color, int character_image);
 

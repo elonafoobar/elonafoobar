@@ -428,6 +428,86 @@ void initialize_item_chips()
 
 
 
+void initialize_chara_chips()
+{
+    for (size_t i = 0; i < chara_chips.size(); ++i)
+    {
+        chara_chips[i].x = i % 33 * inf_tiles;
+        chara_chips[i].y = i / 33 * inf_tiles;
+        chara_chips[i].width = inf_tiles;
+        chara_chips[i].height = inf_tiles;
+        chara_chips[i].offset_y = 16;
+    }
+
+    chara_chips[176].offset_y = 8;
+    chara_chips[225].offset_y = 29;
+    chara_chips[230].offset_y = 12;
+    chara_chips[256].offset_y = 16;
+    chara_chips[277].offset_y = 29;
+    chara_chips[201].height = inf_tiles * 2;
+    chara_chips[201].offset_y = inf_tiles + 16;
+    chara_chips[228].height = inf_tiles * 2;
+    chara_chips[228].offset_y = inf_tiles + 8;
+    chara_chips[231].height = inf_tiles * 2;
+    chara_chips[231].offset_y = inf_tiles + 16;
+    chara_chips[232].height = inf_tiles * 2;
+    chara_chips[232].offset_y = inf_tiles + 16;
+    chara_chips[233].height = inf_tiles * 2;
+    chara_chips[233].offset_y = inf_tiles + 8;
+    chara_chips[297].height = inf_tiles * 2;
+    chara_chips[297].offset_y = inf_tiles + 16;
+    chara_chips[235].height = inf_tiles * 2;
+    chara_chips[235].offset_y = inf_tiles + 16;
+    chara_chips[280].height = inf_tiles * 2;
+    chara_chips[280].offset_y = inf_tiles + 32;
+    chara_chips[338].height = inf_tiles * 2;
+    chara_chips[338].offset_y = inf_tiles + 32;
+    chara_chips[339].height = inf_tiles * 2;
+    chara_chips[339].offset_y = inf_tiles + 16;
+    chara_chips[341].height = inf_tiles * 2;
+    chara_chips[341].offset_y = inf_tiles + 16;
+    chara_chips[342].height = inf_tiles * 2;
+    chara_chips[342].offset_y = inf_tiles + 12;
+    chara_chips[343].height = inf_tiles * 2;
+    chara_chips[343].offset_y = inf_tiles + 16;
+    chara_chips[349].height = inf_tiles * 2;
+    chara_chips[349].offset_y = inf_tiles + 8;
+    chara_chips[351].height = inf_tiles * 2;
+    chara_chips[351].offset_y = inf_tiles + 8;
+    chara_chips[389].height = inf_tiles * 2;
+    chara_chips[389].offset_y = inf_tiles + 16;
+    chara_chips[391].height = inf_tiles * 2;
+    chara_chips[391].offset_y = inf_tiles + 16;
+    chara_chips[393].height = inf_tiles * 2;
+    chara_chips[393].offset_y = inf_tiles + 16;
+    chara_chips[398].height = inf_tiles * 2;
+    chara_chips[398].offset_y = inf_tiles + 16;
+    chara_chips[404].height = inf_tiles * 2;
+    chara_chips[404].offset_y = inf_tiles + 16;
+    chara_chips[405].height = inf_tiles * 2;
+    chara_chips[405].offset_y = inf_tiles + 16;
+    chara_chips[408].height = inf_tiles * 2;
+    chara_chips[408].offset_y = inf_tiles + 16;
+    chara_chips[413].height = inf_tiles * 2;
+    chara_chips[413].offset_y = inf_tiles + 16;
+    chara_chips[429].height = inf_tiles * 2;
+    chara_chips[429].offset_y = inf_tiles + 8;
+    chara_chips[430].height = inf_tiles * 2;
+    chara_chips[430].offset_y = inf_tiles + 8;
+    chara_chips[432].height = inf_tiles * 2;
+    chara_chips[432].offset_y = inf_tiles + 8;
+    chara_chips[433].height = inf_tiles * 2;
+    chara_chips[433].offset_y = inf_tiles + 8;
+    chara_chips[439].height = inf_tiles * 2;
+    chara_chips[439].offset_y = inf_tiles + 8;
+    chara_chips[442].height = inf_tiles * 2;
+    chara_chips[442].offset_y = inf_tiles + 8;
+    chara_chips[447].height = inf_tiles * 2;
+    chara_chips[447].offset_y = inf_tiles + 16;
+}
+
+
+
 } // namespace
 
 
@@ -436,6 +516,7 @@ namespace elona
 
 
 std::vector<item_chip_t> item_chips{825};
+std::vector<chara_chip_t> chara_chips{925};
 
 
 
@@ -495,12 +576,12 @@ void prepare_item_image(int id, int color, int character_image)
             5);
         gzoom(
             5,
-            chipc(0, character_id) + 8,
-            chipc(1, character_id) + 4
-                + (chipc(3, character_id) > inf_tiles) * 8,
-            chipc(2, character_id) - 16,
-            chipc(3, character_id) - 8
-                - (chipc(3, character_id) > inf_tiles) * 10,
+            chara_chips[character_id].x + 8,
+            chara_chips[character_id].y + 4
+                + (chara_chips[character_id].height > inf_tiles) * 8,
+            chara_chips[character_id].width - 16,
+            chara_chips[character_id].height - 8
+                - (chara_chips[character_id].height > inf_tiles) * 10,
             22,
             20);
         set_color_mod(255, 255, 255, 5);
@@ -512,7 +593,7 @@ void prepare_item_image(int id, int color, int character_image)
     {
         const auto character_id = character_image % 1000;
         const auto character_color = character_image / 1000;
-        pos(8, 1058 - chipc(3, character_id));
+        pos(8, 1058 - chara_chips[character_id].height);
         set_color_mod(
             255 - c_col(0, character_color),
             255 - c_col(1, character_color),
@@ -520,13 +601,13 @@ void prepare_item_image(int id, int color, int character_image)
             5);
         gcopy(
             5,
-            chipc(0, character_id) + 8,
-            chipc(1, character_id) + 2,
-            chipc(2, character_id) - 16,
-            chipc(3, character_id) - 8);
+            chara_chips[character_id].x + 8,
+            chara_chips[character_id].y + 2,
+            chara_chips[character_id].width - 16,
+            chara_chips[character_id].height - 8);
         set_color_mod(255, 255, 255, 5);
         gmode(4, -1, -1, 192);
-        pos(0, 960 + (chipc(3, character_id) == inf_tiles) * 48);
+        pos(0, 960 + (chara_chips[character_id].height == inf_tiles) * 48);
         set_color_mod(
             255 - c_col(0, color),
             255 - c_col(1, color),
@@ -534,9 +615,10 @@ void prepare_item_image(int id, int color, int character_image)
         gcopy(
             1,
             144,
-            768 + (chipc(3, character_id) > inf_tiles) * 48,
+            768 + (chara_chips[character_id].height > inf_tiles) * 48,
             inf_tiles,
-            chipc(3, character_id) + (chipc(3, character_id) > inf_tiles) * 48);
+            chara_chips[character_id].height
+                + (chara_chips[character_id].height > inf_tiles) * 48);
         set_color_mod(255, 255, 255);
         gmode(2);
         gsel(0);
@@ -820,7 +902,7 @@ void chara_preparepic(int prm_618, int prm_619)
         p_at_m83 = prm_619;
     }
     gsel(5);
-    boxf(0, 960, chipc(2, prm_618), chipc(3, prm_618) + 960);
+    boxf(0, 960, chara_chips[prm_618].width, chara_chips[prm_618].height + 960);
     pos(0, 960);
     set_color_mod(
         255 - c_col(0, p_at_m83),
@@ -828,12 +910,12 @@ void chara_preparepic(int prm_618, int prm_619)
         255 - c_col(2, p_at_m83));
     gcopy(
         5,
-        chipc(0, prm_618),
-        chipc(1, prm_618),
-        chipc(2, prm_618),
-        chipc(3, prm_618));
+        chara_chips[prm_618].x,
+        chara_chips[prm_618].y,
+        chara_chips[prm_618].width,
+        chara_chips[prm_618].height);
     set_color_mod(255, 255, 255);
-    gfini(chipc(2, prm_618), chipc(3, prm_618));
+    gfini(chara_chips[prm_618].width, chara_chips[prm_618].height);
     gfdec2(c_col(0, p_at_m83), c_col(1, p_at_m83), c_col(2, p_at_m83));
     gsel(0);
     return;
@@ -1111,89 +1193,8 @@ void initialize_item_chip()
     SDIM3(tname, 16, 11);
     tname(1) = lang(u8"日干し岩"s, u8"a dryrock"s);
     tname(2) = lang(u8"畑"s, u8"a field"s);
-    DIM3(chipc, 6, 925);
-    for (int cnt = 0; cnt < 825; ++cnt)
-    {
-        chipc(0, cnt) = cnt % 33 * inf_tiles;
-        chipc(1, cnt) = cnt / 33 * inf_tiles;
-        chipc(2, cnt) = inf_tiles;
-        chipc(3, cnt) = inf_tiles;
-        chipc(4, cnt) = 16;
-    }
-    for (int cnt = 825; cnt < 925; ++cnt)
-    {
-        chipc(0, cnt) = cnt % 33 * inf_tiles;
-        chipc(1, cnt) = cnt / 33 * inf_tiles;
-        chipc(2, cnt) = inf_tiles;
-        chipc(3, cnt) = inf_tiles;
-        chipc(4, cnt) = 16;
-    }
-    chipc(4, 176) = 8;
-    chipc(4, 225) = 29;
-    chipc(4, 230) = 12;
-    chipc(4, 256) = 16;
-    chipc(4, 277) = 29;
-    chipc(3, 201) = inf_tiles * 2;
-    chipc(4, 201) = inf_tiles + 16;
-    chipc(3, 228) = inf_tiles * 2;
-    chipc(4, 228) = inf_tiles + 8;
-    chipc(3, 231) = inf_tiles * 2;
-    chipc(4, 231) = inf_tiles + 16;
-    chipc(3, 232) = inf_tiles * 2;
-    chipc(4, 232) = inf_tiles + 16;
-    chipc(3, 233) = inf_tiles * 2;
-    chipc(4, 233) = inf_tiles + 8;
-    chipc(3, 297) = inf_tiles * 2;
-    chipc(4, 297) = inf_tiles + 16;
-    chipc(3, 235) = inf_tiles * 2;
-    chipc(4, 235) = inf_tiles + 16;
-    chipc(3, 280) = inf_tiles * 2;
-    chipc(4, 280) = inf_tiles + 32;
-    chipc(3, 338) = inf_tiles * 2;
-    chipc(4, 338) = inf_tiles + 32;
-    chipc(3, 339) = inf_tiles * 2;
-    chipc(4, 339) = inf_tiles + 16;
-    chipc(3, 341) = inf_tiles * 2;
-    chipc(4, 341) = inf_tiles + 16;
-    chipc(3, 342) = inf_tiles * 2;
-    chipc(4, 342) = inf_tiles + 12;
-    chipc(3, 343) = inf_tiles * 2;
-    chipc(4, 343) = inf_tiles + 16;
-    chipc(3, 349) = inf_tiles * 2;
-    chipc(4, 349) = inf_tiles + 8;
-    chipc(3, 351) = inf_tiles * 2;
-    chipc(4, 351) = inf_tiles + 8;
-    chipc(3, 389) = inf_tiles * 2;
-    chipc(4, 389) = inf_tiles + 16;
-    chipc(3, 391) = inf_tiles * 2;
-    chipc(4, 391) = inf_tiles + 16;
-    chipc(3, 393) = inf_tiles * 2;
-    chipc(4, 393) = inf_tiles + 16;
-    chipc(3, 398) = inf_tiles * 2;
-    chipc(4, 398) = inf_tiles + 16;
-    chipc(3, 404) = inf_tiles * 2;
-    chipc(4, 404) = inf_tiles + 16;
-    chipc(3, 405) = inf_tiles * 2;
-    chipc(4, 405) = inf_tiles + 16;
-    chipc(3, 408) = inf_tiles * 2;
-    chipc(4, 408) = inf_tiles + 16;
-    chipc(3, 413) = inf_tiles * 2;
-    chipc(4, 413) = inf_tiles + 16;
-    chipc(3, 429) = inf_tiles * 2;
-    chipc(4, 429) = inf_tiles + 8;
-    chipc(3, 430) = inf_tiles * 2;
-    chipc(4, 430) = inf_tiles + 8;
-    chipc(3, 432) = inf_tiles * 2;
-    chipc(4, 432) = inf_tiles + 8;
-    chipc(3, 433) = inf_tiles * 2;
-    chipc(4, 433) = inf_tiles + 8;
-    chipc(3, 439) = inf_tiles * 2;
-    chipc(4, 439) = inf_tiles + 8;
-    chipc(3, 442) = inf_tiles * 2;
-    chipc(4, 442) = inf_tiles + 8;
-    chipc(3, 447) = inf_tiles * 2;
-    chipc(4, 447) = inf_tiles + 16;
     initialize_item_chips();
+    initialize_chara_chips();
     initialize_map_chip();
 }
 

@@ -1163,7 +1163,7 @@ void calc_collection_value(bool val0)
     else
     {
         rtval = cdata[56].level / 10 + 2;
-        if (chipc(3, cdata[56].image % 1000) > inf_tiles)
+        if (chara_chips[cdata[56].image % 1000].height > inf_tiles)
         {
             rtval = rtval / 2 * 3 + 40;
         }

@@ -462,9 +462,14 @@ void tcgdrawcard(int prm_994, int prm_995)
                 p_at_tcg = card_at_tcg(17, prm_994) % 1000;
                 chara_preparepic(p_at_tcg, card_at_tcg(17, prm_994) / 1000);
                 pos(x_at_tcg + 13,
-                    y_at_tcg + 32 - chipc(4, p_at_tcg)
-                        + chipc(3, p_at_tcg) / 6);
-                gcopy(5, 0, 960, chipc(2, p_at_tcg), chipc(3, p_at_tcg));
+                    y_at_tcg + 32 - chara_chips[p_at_tcg].offset_y
+                        + chara_chips[p_at_tcg].height / 6);
+                gcopy(
+                    5,
+                    0,
+                    960,
+                    chara_chips[p_at_tcg].width,
+                    chara_chips[p_at_tcg].height);
             }
             else
             {
@@ -2179,9 +2184,14 @@ void label_1823()
                 chara_preparepic(n_at_tcg, card_at_tcg(17, m_at_tcg) / 1000);
                 gsel(4);
                 pos(x_at_tcg + 13,
-                    y_at_tcg + 32 - chipc(4, n_at_tcg)
-                        + chipc(3, n_at_tcg) / 6);
-                gcopy(5, 0, 960, chipc(2, n_at_tcg), chipc(3, n_at_tcg));
+                    y_at_tcg + 32 - chara_chips[n_at_tcg].offset_y
+                        + chara_chips[n_at_tcg].height / 6);
+                gcopy(
+                    5,
+                    0,
+                    960,
+                    chara_chips[n_at_tcg].width,
+                    chara_chips[n_at_tcg].height);
             }
             else
             {

@@ -2378,13 +2378,14 @@ label_2035_internal:
             i = cdata[cc].image % 1000;
             chara_preparepic(cdata[cc].image % 1000, cdata[cc].image / 1000);
             pos(wx + 596 + 22, wy + 86 + 24);
-            gmode(2, chipc(2, i), chipc(3, i));
+            gmode(2, chara_chips[i].width, chara_chips[i].height);
             grotate(
                 5,
                 0,
                 960,
                 0,
-                chipc(2, i) / (1 + (chipc(3, i) > inf_tiles)),
+                chara_chips[i].width
+                    / (1 + (chara_chips[i].height > inf_tiles)),
                 inf_tiles);
         }
         font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
@@ -3841,8 +3842,8 @@ label_2041_internal:
         i = cdata[cc].image % 1000;
         chara_preparepic(cdata[cc].image % 1000, cdata[cc].image / 1000);
         pos(wx + 280, wy + 130);
-        gmode(2, chipc(2, i), chipc(3, i));
-        grotate(5, 0, 960, 0, chipc(2, i), chipc(3, i));
+        gmode(2, chara_chips[i].width, chara_chips[i].height);
+        grotate(5, 0, 960, 0, chara_chips[i].width, chara_chips[i].height);
     }
     gmode(2);
     font(14 - en * 2);
@@ -5590,13 +5591,13 @@ label_1982_internal:
         i(1) = cdata[list(0, p)].image / 1000;
         chara_preparepic(i, i(1));
         pos(wx + 40, wy + 74 + cnt * 19 - 8);
-        gmode(2, chipc(2, i), chipc(3, i));
+        gmode(2, chara_chips[i].width, chara_chips[i].height);
         grotate(
             5,
             0,
             960,
             0,
-            chipc(2, i) / (1 + (chipc(3, i) > inf_tiles)),
+            chara_chips[i].width / (1 + (chara_chips[i].height > inf_tiles)),
             inf_tiles);
         i = list(0, p);
         s = cdatan(0, i);
@@ -5878,13 +5879,13 @@ label_1990_internal:
         i(1) = cdata[list(0, p)].image / 1000;
         chara_preparepic(i, i(1));
         pos(wx + 40, wy + 74 + cnt * 19 - 8);
-        gmode(2, chipc(2, i), chipc(3, i));
+        gmode(2, chara_chips[i].width, chara_chips[i].height);
         grotate(
             5,
             0,
             960,
             0,
-            chipc(2, i) / (1 + (chipc(3, i) > inf_tiles)),
+            chara_chips[i].width / (1 + (chara_chips[i].height > inf_tiles)),
             inf_tiles);
         pos(wx + 84, wy + 66 + cnt * 19 + 2);
         mes(cnvrank(p + 1) + lang(u8"位"s, ""s));
@@ -6946,13 +6947,14 @@ label_1961_internal:
             i(1) = cdata[list(0, p)].image / 1000;
             chara_preparepic(i, i(1));
             pos(wx + 40, wy + 74 + cnt * 19 - 8);
-            gmode(2, chipc(2, i), chipc(3, i));
+            gmode(2, chara_chips[i].width, chara_chips[i].height);
             grotate(
                 5,
                 0,
                 960,
                 0,
-                chipc(2, i) / (1 + (chipc(3, i) > inf_tiles)),
+                chara_chips[i].width
+                    / (1 + (chara_chips[i].height > inf_tiles)),
                 inf_tiles);
         }
         i = list(0, p);
