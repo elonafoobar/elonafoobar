@@ -5,6 +5,7 @@
 #include "../macro.hpp"
 #include "../snail/application.hpp"
 #include "../snail/blend_mode.hpp"
+#include "../snail/input.hpp"
 #include "../ui.hpp"
 #include "../util.hpp"
 #include "../variables.hpp"
@@ -238,13 +239,14 @@ void lua_console::grab_input()
         noteget(input_, 0);
 
         await(config::instance().wait1);
-        key_check(0);
+        key_check();
 
         if (getkey(snail::key::escape))
         {
             focused_ = false;
         }
-        else if (getkey(snail::key::up))
+        else if (snail::input::instance().is_pressed(snail::key::up,
+                                                     config::instance().keywait))
         {
             if (input_history_.size() > 0)
             {
@@ -257,7 +259,8 @@ void lua_console::grab_input()
                 }
             }
         }
-        else if (getkey(snail::key::down))
+        else if (snail::input::instance().is_pressed(snail::key::down,
+                                                     config::instance().keywait))
         {
             if (input_history_.size() > 0)
             {
