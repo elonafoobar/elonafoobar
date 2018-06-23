@@ -35,6 +35,12 @@ Wait many turns. Soon the map will be flooded with putitoros!
 
 ![putitoros](../putitoros.png)
 
+To stop the event from running, run the following function.
+
+```
+Event.clear()
+```
+
 ## Writing scripts
 You can run a script at startup by adding a parameter to your `config.json`. Copy the `life.lua` example into your `data/script` folder, and add this line to your `config.json`:
 
