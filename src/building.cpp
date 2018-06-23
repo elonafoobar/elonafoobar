@@ -230,29 +230,33 @@ turn_result_t show_house_board()
     {
         p(2) = mdata(18);
     }
-    txt(i18n::s.get("core.locale.building.house_board.item_count",
-                    mapname(gdata_current_map),
-                    p(0),
-                    p(1),
-                    p(2)));
+    txt(i18n::s.get(
+        "core.locale.building.house_board.item_count",
+        mapname(gdata_current_map),
+        p(0),
+        p(1),
+        p(2)));
     if (adata(16, gdata_current_map) == 102)
     {
         if (getworker(gdata_current_map) != -1)
         {
-            txt(i18n::s.get("core.locale.building.shop.current_shopkeeper",
-                            cdata[getworker(gdata_current_map)]));
+            txt(i18n::s.get(
+                "core.locale.building.shop.current_shopkeeper",
+                cdata[getworker(gdata_current_map)]));
         }
         else
         {
-            txt(i18n::s.get("core.locale.building.shop.no_assigned_shopkeeper"));
+            txt(i18n::s.get(
+                "core.locale.building.shop.no_assigned_shopkeeper"));
         }
     }
     if (adata(16, gdata_current_map) == 31)
     {
         if (getworker(gdata_current_map) != -1)
         {
-            txt(i18n::s.get("core.locale.building.ranch.current_breeder",
-                            cdata[getworker(gdata_current_map)]));
+            txt(i18n::s.get(
+                "core.locale.building.ranch.current_breeder",
+                cdata[getworker(gdata_current_map)]));
         }
         else
         {
@@ -273,9 +277,10 @@ turn_result_t show_house_board()
                 }
             }
         }
-        txt(i18n::s.get("core.locale.building.home.staying.count",
-                        p(0),
-                        gdata_home_scale + 2));
+        txt(i18n::s.get(
+            "core.locale.building.home.staying.count",
+            p(0),
+            gdata_home_scale + 2));
     }
     txtnew();
     txt(i18n::s.get("core.locale.building.house_board.what_do"));
@@ -283,13 +288,16 @@ turn_result_t show_house_board()
     if (adata(16, gdata_current_map) == 102)
     {
         ELONA_APPEND_PROMPT(
-            i18n::s.get("core.locale.building.house_board.choices.assign_a_shopkeeper"),
+            i18n::s.get(
+                "core.locale.building.house_board.choices.assign_a_shopkeeper"),
             u8"null"s,
             ""s + 4);
         if (mdata(18) < 400)
         {
             ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.building.house_board.choices.extend", calcshopreform()),
+                i18n::s.get(
+                    "core.locale.building.house_board.choices.extend",
+                    calcshopreform()),
                 u8"null"s,
                 ""s + 5);
         }
@@ -297,7 +305,8 @@ turn_result_t show_house_board()
     if (adata(16, gdata_current_map) == 31)
     {
         ELONA_APPEND_PROMPT(
-            i18n::s.get("core.locale.building.house_board.choices.assign_a_breeder"),
+            i18n::s.get(
+                "core.locale.building.house_board.choices.assign_a_breeder"),
             u8"null"s,
             ""s + 4);
     }
@@ -312,19 +321,23 @@ turn_result_t show_house_board()
             u8"null"s,
             ""s + 2);
         ELONA_APPEND_PROMPT(
-            i18n::s.get("core.locale.building.house_board.choices.allies_in_your_home"),
+            i18n::s.get(
+                "core.locale.building.house_board.choices.allies_in_your_home"),
             u8"null"s,
             ""s + 4);
         if (gdata_current_dungeon_level == 1)
         {
             ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.building.house_board.choices.recruit_a_servant"),
+                i18n::s.get("core.locale.building.house_board.choices.recruit_"
+                            "a_servant"),
                 u8"null"s,
                 ""s + 6);
         }
         ELONA_APPEND_PROMPT(
-                i18n::s.get("core.locale.building.house_board.choices.move_a_stayer"),
-            u8"null"s, ""s + 3);
+            i18n::s.get(
+                "core.locale.building.house_board.choices.move_a_stayer"),
+            u8"null"s,
+            ""s + 3);
     }
     int stat = show_prompt(promptx, prompty, 240);
     if (stat == -1)
@@ -401,32 +414,38 @@ void prompt_hiring()
             if (p == 0)
             {
                 cdata[rc].character_role = 1001;
-                cdatan(0, rc) = i18n::s.get("core.locale.building.guests.armory", cdata[rc]);
+                cdatan(0, rc) = i18n::s.get(
+                    "core.locale.building.guests.armory", cdata[rc]);
             }
             if (p == 1)
             {
                 cdata[rc].character_role = 1006;
-                cdatan(0, rc) = i18n::s.get("core.locale.building.guests.general_store", cdata[rc]);
+                cdatan(0, rc) = i18n::s.get(
+                    "core.locale.building.guests.general_store", cdata[rc]);
             }
             if (p == 2)
             {
                 cdata[rc].character_role = 1004;
-                cdatan(0, rc) = i18n::s.get("core.locale.building.guests.magic_store", cdata[rc]);
+                cdatan(0, rc) = i18n::s.get(
+                    "core.locale.building.guests.magic_store", cdata[rc]);
             }
             if (p == 3)
             {
                 cdata[rc].character_role = 1008;
-                cdatan(0, rc) = i18n::s.get("core.locale.building.guests.goods_store", cdata[rc]);
+                cdatan(0, rc) = i18n::s.get(
+                    "core.locale.building.guests.goods_store", cdata[rc]);
             }
             if (p == 4)
             {
                 cdata[rc].character_role = 1001;
-                cdatan(0, rc) = i18n::s.get("core.locale.building.guests.armory", cdata[rc]);
+                cdatan(0, rc) = i18n::s.get(
+                    "core.locale.building.guests.armory", cdata[rc]);
             }
             if (p == 5)
             {
                 cdata[rc].character_role = 1007;
-                cdatan(0, rc) = i18n::s.get("core.locale.building.guests.blackmarket", cdata[rc]);
+                cdatan(0, rc) = i18n::s.get(
+                    "core.locale.building.guests.blackmarket", cdata[rc]);
             }
             randomize();
             cdata[rc].shop_rank = rnd(15) + 1;
@@ -465,7 +484,8 @@ void prompt_hiring()
             cdata[tc].state = 1;
             lua::lua.on_chara_loaded(cdata[tc]);
             txtef(2);
-            txt(i18n::s.get("core.locale.building.home.hire.you_hire", cdata[tc]));
+            txt(i18n::s.get(
+                "core.locale.building.home.hire.you_hire", cdata[tc]));
             snd(64);
         }
     }
@@ -529,8 +549,12 @@ void show_home_value()
     s(1) = i18n::s.get("core.locale.building.home.rank.enter_key");
     windowshadow = 1;
     display_window((windoww - 440) / 2 + inf_screenx, winposy(360), 440, 360);
-    display_topic(i18n::s.get("core.locale.building.home.rank.value"), wx + 28, wy + 36);
-    display_topic(i18n::s.get("core.locale.building.home.rank.heirloom_rank"), wx + 28, wy + 106);
+    display_topic(
+        i18n::s.get("core.locale.building.home.rank.value"), wx + 28, wy + 36);
+    display_topic(
+        i18n::s.get("core.locale.building.home.rank.heirloom_rank"),
+        wx + 28,
+        wy + 106);
     ++cmbg;
     x = ww / 5 * 2;
     y = wh - 80;
@@ -560,7 +584,11 @@ void show_home_value()
              ++cnt)
         {
             pos(x + 35 + cnt * 13 + en * 8, y - 2);
-            bmes(i18n::s.get("core.locale.building.home.rank.star"), 255, 255, 50);
+            bmes(
+                i18n::s.get("core.locale.building.home.rank.star"),
+                255,
+                255,
+                50);
         }
     }
     font(12 + sizefix - en * 2);
@@ -585,7 +613,8 @@ void show_home_value()
             chipi(2, p(1)) * inf_tiles / chipi(3, p(1)),
             inf_tiles);
         pos(wx + 68, cnt * 16 + wy + 138);
-        mes(i18n::s.get("core.locale.building.home.rank.place", cnvrank(10 - cnt)));
+        mes(i18n::s.get(
+            "core.locale.building.home.rank.place", cnvrank(10 - cnt)));
         pos(wx + 110, cnt * 16 + wy + 138);
         mes(itemname(p));
     }
@@ -621,7 +650,8 @@ void prompt_move_ally()
         {
             txtnew();
             txtef(9);
-            txt(i18n::s.get("core.locale.building.home.move.dont_touch_me", cdata[stat]));
+            txt(i18n::s.get(
+                "core.locale.building.home.move.dont_touch_me", cdata[stat]));
             break;
         }
         tchome = stat;
@@ -671,12 +701,16 @@ void prompt_ally_staying()
                 if (gdata_current_map == 7)
                 {
                     cdata[c].current_map = 0;
-                    txt(i18n::s.get("core.locale.building.home.staying.remove.ally", cdata[c]));
+                    txt(i18n::s.get(
+                        "core.locale.building.home.staying.remove.ally",
+                        cdata[c]));
                 }
                 else
                 {
                     removeworker(gdata_current_map);
-                    txt(i18n::s.get("core.locale.building.home.staying.remove.worker", cdata[c]));
+                    txt(i18n::s.get(
+                        "core.locale.building.home.staying.remove.worker",
+                        cdata[c]));
                 }
             }
             else
@@ -685,12 +719,16 @@ void prompt_ally_staying()
                 {
                     cdata[c].initial_position.x = cdata[c].position.x;
                     cdata[c].initial_position.y = cdata[c].position.y;
-                    txt(i18n::s.get("core.locale.building.home.staying.add.ally", cdata[c]));
+                    txt(i18n::s.get(
+                        "core.locale.building.home.staying.add.ally",
+                        cdata[c]));
                 }
                 else
                 {
                     removeworker(gdata_current_map);
-                    txt(i18n::s.get("core.locale.building.home.staying.add.worker", cdata[c]));
+                    txt(i18n::s.get(
+                        "core.locale.building.home.staying.add.worker",
+                        cdata[c]));
                 }
                 cdata[c].current_map = gdata_current_map;
             }
@@ -825,10 +863,12 @@ void show_shop_log()
     int customer = 0;
     int dblistmax = 0;
     worker = getworker(area);
-    std::string shop_mark = u8"["s + i18n::s.get("core.locale.building.shop.info") + u8"]"s;
+    std::string shop_mark =
+        u8"["s + i18n::s.get("core.locale.building.shop.info") + u8"]"s;
     if (worker == -1)
     {
-        txt(shop_mark + i18n::s.get("core.locale.building.shop.log.no_shopkeeper"));
+        txt(shop_mark
+            + i18n::s.get("core.locale.building.shop.log.no_shopkeeper"));
         return;
     }
     sold = 0;
@@ -1041,9 +1081,11 @@ void show_shop_log()
     {
         if (config::instance().hideshopresult == 0)
         {
-            txt(shop_mark + i18n::s.get("core.locale.building.shop.log.could_not_sell",
-                                        customer,
-                                        cdata[worker]));
+            txt(shop_mark
+                + i18n::s.get(
+                      "core.locale.building.shop.log.could_not_sell",
+                      customer,
+                      cdata[worker]));
         }
     }
     else
@@ -1053,15 +1095,18 @@ void show_shop_log()
             s = i18n::s.get("core.locale.building.shop.log.gold", income(0));
             if (income(1) != 0)
             {
-                s += i18n::s.get("core.locale.building.shop.log.and_items", income(1));
+                s += i18n::s.get(
+                    "core.locale.building.shop.log.and_items", income(1));
             }
             snd(24);
             txtef(5);
-            txt(shop_mark + i18n::s.get("core.locale.building.shop.log.sold_items",
-                                        customer,
-                                        cdata[worker],
-                                        sold,
-                                        s(0)));
+            txt(shop_mark
+                + i18n::s.get(
+                      "core.locale.building.shop.log.sold_items",
+                      customer,
+                      cdata[worker],
+                      sold,
+                      s(0)));
         }
         skillexp(156, worker, clamp(int(std::sqrt(income(0))) * 6, 25, 1000));
     }
@@ -1187,11 +1232,12 @@ void update_museum()
             txtef(8);
         }
         txtnew();
-        txt(i18n::s.get("core.locale.building.museum.rank_change",
-                        cnvrank(rankorg / 100),
-                        cnvrank(rankcur / 100),
-                        ranktitle(3),
-                        rankn(10, 3)));
+        txt(i18n::s.get(
+            "core.locale.building.museum.rank_change",
+            cnvrank(rankorg / 100),
+            cnvrank(rankcur / 100),
+            ranktitle(3),
+            rankn(10, 3)));
     }
     mdata(10) = (100 - gdata(123) / 100) / 2 + 1;
     return;
@@ -1302,13 +1348,14 @@ void calc_home_rank()
             txtef(8);
         }
         txtnew();
-        txt(i18n::s.get("core.locale.building.home.rank.change",
-                        gdata(77) / 100,
-                        gdata(78) / 100,
-                        cnvrank(rankorg / 100),
-                        cnvrank(rankcur / 100),
-                        ranktitle(4),
-                        rankn(10, 4)));
+        txt(i18n::s.get(
+            "core.locale.building.home.rank.change",
+            gdata(77) / 100,
+            gdata(78) / 100,
+            cnvrank(rankorg / 100),
+            cnvrank(rankcur / 100),
+            ranktitle(4),
+            rankn(10, 4)));
     }
     return;
 }

@@ -639,110 +639,116 @@ void GUI::bind(sol::table& Elona)
 }
 
 
-namespace I18N {
+namespace I18N
+{
 std::string get(const std::string&, sol::variadic_args);
 sol::optional<std::string> get_optional(const std::string&, sol::variadic_args);
 std::string get_enum(const std::string&, int, sol::variadic_args);
-std::string get_enum_property(const std::string&, const std::string&, int, sol::variadic_args);
-sol::optional<std::string> get_enum_property_optional(const std::string&,
-                                                      const std::string&,
-                                                      int,
-                                                      sol::variadic_args);
+std::string get_enum_property(
+    const std::string&,
+    const std::string&,
+    int,
+    sol::variadic_args);
+sol::optional<std::string> get_enum_property_optional(
+    const std::string&,
+    const std::string&,
+    int,
+    sol::variadic_args);
 
 void bind(sol::table&);
-}
+} // namespace I18N
 
 std::string I18N::get(const std::string& key, sol::variadic_args args)
 {
     switch (args.size())
     {
-    case 0:
-        return i18n::s.get(key);
-    case 1:
-        return i18n::s.get(key,
-                           args[0].get<sol::object>());
+    case 0: return i18n::s.get(key);
+    case 1: return i18n::s.get(key, args[0].get<sol::object>());
     case 2:
-        return i18n::s.get(key,
-                           args[0].get<sol::object>(),
-                           args[1].get<sol::object>());
+        return i18n::s.get(
+            key, args[0].get<sol::object>(), args[1].get<sol::object>());
     case 3:
-        return i18n::s.get(key,
-                           args[0].get<sol::object>(),
-                           args[1].get<sol::object>(),
-                           args[2].get<sol::object>());
+        return i18n::s.get(
+            key,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>());
     case 4:
-        return i18n::s.get(key,
-                           args[0].get<sol::object>(),
-                           args[1].get<sol::object>(),
-                           args[2].get<sol::object>(),
-                           args[3].get<sol::object>());
+        return i18n::s.get(
+            key,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>(),
+            args[3].get<sol::object>());
     case 5:
-        return i18n::s.get(key,
-                           args[0].get<sol::object>(),
-                           args[1].get<sol::object>(),
-                           args[2].get<sol::object>(),
-                           args[3].get<sol::object>(),
-                           args[4].get<sol::object>());
+        return i18n::s.get(
+            key,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>(),
+            args[3].get<sol::object>(),
+            args[4].get<sol::object>());
     case 6:
     default:
-        return i18n::s.get(key,
-                           args[0].get<sol::object>(),
-                           args[1].get<sol::object>(),
-                           args[2].get<sol::object>(),
-                           args[3].get<sol::object>(),
-                           args[4].get<sol::object>(),
-                           args[5].get<sol::object>());
+        return i18n::s.get(
+            key,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>(),
+            args[3].get<sol::object>(),
+            args[4].get<sol::object>(),
+            args[5].get<sol::object>());
     }
 }
 
-sol::optional<std::string> I18N::get_optional(const std::string& key, sol::variadic_args args)
+sol::optional<std::string> I18N::get_optional(
+    const std::string& key,
+    sol::variadic_args args)
 {
     optional<std::string> opt = none;
 
     switch (args.size())
     {
-    case 0:
-        opt = i18n::s.get_optional(key);
-        break;
-    case 1:
-        opt = i18n::s.get_optional(key,
-                                   args[0].get<sol::object>());
-        break;
+    case 0: opt = i18n::s.get_optional(key); break;
+    case 1: opt = i18n::s.get_optional(key, args[0].get<sol::object>()); break;
     case 2:
-        opt = i18n::s.get_optional(key,
-                                   args[0].get<sol::object>(),
-                                   args[1].get<sol::object>());
+        opt = i18n::s.get_optional(
+            key, args[0].get<sol::object>(), args[1].get<sol::object>());
         break;
     case 3:
-        opt = i18n::s.get_optional(key,
-                                   args[0].get<sol::object>(),
-                                   args[1].get<sol::object>(),
-                                   args[2].get<sol::object>());
+        opt = i18n::s.get_optional(
+            key,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>());
         break;
     case 4:
-        opt = i18n::s.get_optional(key,
-                                   args[0].get<sol::object>(),
-                                   args[1].get<sol::object>(),
-                                   args[2].get<sol::object>(),
-                                   args[3].get<sol::object>());
+        opt = i18n::s.get_optional(
+            key,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>(),
+            args[3].get<sol::object>());
         break;
     case 5:
-        opt = i18n::s.get_optional(key,
-                                   args[0].get<sol::object>(),
-                                   args[1].get<sol::object>(),
-                                   args[2].get<sol::object>(),
-                                   args[3].get<sol::object>(),
-                                   args[4].get<sol::object>());
+        opt = i18n::s.get_optional(
+            key,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>(),
+            args[3].get<sol::object>(),
+            args[4].get<sol::object>());
         break;
     case 6:
     default:
-        opt = i18n::s.get_optional(key,
-                                   args[0].get<sol::object>(),
-                                   args[1].get<sol::object>(),
-                                   args[2].get<sol::object>(),
-                                   args[3].get<sol::object>(),
-                                   args[4].get<sol::object>(),
-                                   args[5].get<sol::object>());
+        opt = i18n::s.get_optional(
+            key,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>(),
+            args[3].get<sol::object>(),
+            args[4].get<sol::object>(),
+            args[5].get<sol::object>());
         break;
     }
 
@@ -754,101 +760,122 @@ sol::optional<std::string> I18N::get_optional(const std::string& key, sol::varia
     return sol::nullopt;
 }
 
-std::string I18N::get_enum(const std::string& key, int index, sol::variadic_args args)
+std::string
+I18N::get_enum(const std::string& key, int index, sol::variadic_args args)
 {
     switch (args.size())
     {
-    case 0:
-        return i18n::s.get_enum(key, index);
-    case 1:
-        return i18n::s.get_enum(key, index,
-                           args[0].get<sol::object>());
+    case 0: return i18n::s.get_enum(key, index);
+    case 1: return i18n::s.get_enum(key, index, args[0].get<sol::object>());
     case 2:
-        return i18n::s.get_enum(key, index,
-                           args[0].get<sol::object>(),
-                           args[1].get<sol::object>());
+        return i18n::s.get_enum(
+            key, index, args[0].get<sol::object>(), args[1].get<sol::object>());
     case 3:
-        return i18n::s.get_enum(key, index,
-                           args[0].get<sol::object>(),
-                           args[1].get<sol::object>(),
-                           args[2].get<sol::object>());
+        return i18n::s.get_enum(
+            key,
+            index,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>());
     case 4:
-        return i18n::s.get_enum(key, index,
-                           args[0].get<sol::object>(),
-                           args[1].get<sol::object>(),
-                           args[2].get<sol::object>(),
-                           args[3].get<sol::object>());
+        return i18n::s.get_enum(
+            key,
+            index,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>(),
+            args[3].get<sol::object>());
     case 5:
-        return i18n::s.get_enum(key, index,
-                           args[0].get<sol::object>(),
-                           args[1].get<sol::object>(),
-                           args[2].get<sol::object>(),
-                           args[3].get<sol::object>(),
-                           args[4].get<sol::object>());
+        return i18n::s.get_enum(
+            key,
+            index,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>(),
+            args[3].get<sol::object>(),
+            args[4].get<sol::object>());
     case 6:
     default:
-        return i18n::s.get_enum(key, index,
-                           args[0].get<sol::object>(),
-                           args[1].get<sol::object>(),
-                           args[2].get<sol::object>(),
-                           args[3].get<sol::object>(),
-                           args[4].get<sol::object>(),
-                           args[5].get<sol::object>());
+        return i18n::s.get_enum(
+            key,
+            index,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>(),
+            args[3].get<sol::object>(),
+            args[4].get<sol::object>(),
+            args[5].get<sol::object>());
     }
 }
 
-std::string I18N::get_enum_property(const std::string& key_head,
-                              const std::string& key_tail,
-                              int index,
-                              sol::variadic_args args)
+std::string I18N::get_enum_property(
+    const std::string& key_head,
+    const std::string& key_tail,
+    int index,
+    sol::variadic_args args)
 {
     optional<std::string> opt = none;
 
     switch (args.size())
     {
-    case 0:
-        return i18n::s.get_enum_property(key_head, key_tail, index);
+    case 0: return i18n::s.get_enum_property(key_head, key_tail, index);
     case 1:
-        return i18n::s.get_enum_property(key_head, key_tail, index,
-                           args[0].get<sol::object>());
+        return i18n::s.get_enum_property(
+            key_head, key_tail, index, args[0].get<sol::object>());
     case 2:
-        return i18n::s.get_enum_property(key_head, key_tail, index,
-                           args[0].get<sol::object>(),
-                           args[1].get<sol::object>());
+        return i18n::s.get_enum_property(
+            key_head,
+            key_tail,
+            index,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>());
     case 3:
-        return i18n::s.get_enum_property(key_head, key_tail, index,
-                           args[0].get<sol::object>(),
-                           args[1].get<sol::object>(),
-                           args[2].get<sol::object>());
+        return i18n::s.get_enum_property(
+            key_head,
+            key_tail,
+            index,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>());
     case 4:
-        return i18n::s.get_enum_property(key_head, key_tail, index,
-                           args[0].get<sol::object>(),
-                           args[1].get<sol::object>(),
-                           args[2].get<sol::object>(),
-                           args[3].get<sol::object>());
+        return i18n::s.get_enum_property(
+            key_head,
+            key_tail,
+            index,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>(),
+            args[3].get<sol::object>());
     case 5:
-        return i18n::s.get_enum_property(key_head, key_tail, index,
-                           args[0].get<sol::object>(),
-                           args[1].get<sol::object>(),
-                           args[2].get<sol::object>(),
-                           args[3].get<sol::object>(),
-                           args[4].get<sol::object>());
+        return i18n::s.get_enum_property(
+            key_head,
+            key_tail,
+            index,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>(),
+            args[3].get<sol::object>(),
+            args[4].get<sol::object>());
     case 6:
     default:
-        return i18n::s.get_enum_property(key_head, key_tail, index,
-                           args[0].get<sol::object>(),
-                           args[1].get<sol::object>(),
-                           args[2].get<sol::object>(),
-                           args[3].get<sol::object>(),
-                           args[4].get<sol::object>(),
-                           args[5].get<sol::object>());
+        return i18n::s.get_enum_property(
+            key_head,
+            key_tail,
+            index,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>(),
+            args[3].get<sol::object>(),
+            args[4].get<sol::object>(),
+            args[5].get<sol::object>());
     }
 }
 
-sol::optional<std::string> I18N::get_enum_property_optional(const std::string& key_head,
-                                                      const std::string& key_tail,
-                                                      int index,
-                                                      sol::variadic_args args)
+sol::optional<std::string> I18N::get_enum_property_optional(
+    const std::string& key_head,
+    const std::string& key_tail,
+    int index,
+    sol::variadic_args args)
 {
     optional<std::string> opt = none;
 
@@ -858,44 +885,59 @@ sol::optional<std::string> I18N::get_enum_property_optional(const std::string& k
         opt = i18n::s.get_enum_property_opt(key_head, key_tail, index);
         break;
     case 1:
-        opt = i18n::s.get_enum_property_opt(key_head, key_tail, index,
-                           args[0].get<sol::object>());
+        opt = i18n::s.get_enum_property_opt(
+            key_head, key_tail, index, args[0].get<sol::object>());
         break;
     case 2:
-        opt = i18n::s.get_enum_property_opt(key_head, key_tail, index,
-                           args[0].get<sol::object>(),
-                           args[1].get<sol::object>());
+        opt = i18n::s.get_enum_property_opt(
+            key_head,
+            key_tail,
+            index,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>());
         break;
     case 3:
-        opt = i18n::s.get_enum_property_opt(key_head, key_tail, index,
-                           args[0].get<sol::object>(),
-                           args[1].get<sol::object>(),
-                           args[2].get<sol::object>());
+        opt = i18n::s.get_enum_property_opt(
+            key_head,
+            key_tail,
+            index,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>());
         break;
     case 4:
-        opt = i18n::s.get_enum_property_opt(key_head, key_tail, index,
-                           args[0].get<sol::object>(),
-                           args[1].get<sol::object>(),
-                           args[2].get<sol::object>(),
-                           args[3].get<sol::object>());
+        opt = i18n::s.get_enum_property_opt(
+            key_head,
+            key_tail,
+            index,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>(),
+            args[3].get<sol::object>());
         break;
     case 5:
-        opt = i18n::s.get_enum_property_opt(key_head, key_tail, index,
-                           args[0].get<sol::object>(),
-                           args[1].get<sol::object>(),
-                           args[2].get<sol::object>(),
-                           args[3].get<sol::object>(),
-                           args[4].get<sol::object>());
+        opt = i18n::s.get_enum_property_opt(
+            key_head,
+            key_tail,
+            index,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>(),
+            args[3].get<sol::object>(),
+            args[4].get<sol::object>());
         break;
     case 6:
     default:
-        opt = i18n::s.get_enum_property_opt(key_head, key_tail, index,
-                           args[0].get<sol::object>(),
-                           args[1].get<sol::object>(),
-                           args[2].get<sol::object>(),
-                           args[3].get<sol::object>(),
-                           args[4].get<sol::object>(),
-                           args[5].get<sol::object>());
+        opt = i18n::s.get_enum_property_opt(
+            key_head,
+            key_tail,
+            index,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>(),
+            args[3].get<sol::object>(),
+            args[4].get<sol::object>(),
+            args[5].get<sol::object>());
     }
 
     if (opt)
@@ -913,7 +955,8 @@ void I18N::bind(sol::table& Elona)
     I18N.set_function("get_optional", I18N::get_optional);
     I18N.set_function("get_enum", I18N::get_enum);
     I18N.set_function("get_enum_property", I18N::get_enum_property);
-    I18N.set_function("get_enum_property_optional", I18N::get_enum_property_optional);
+    I18N.set_function(
+        "get_enum_property_optional", I18N::get_enum_property_optional);
 }
 
 namespace Debug
@@ -1162,8 +1205,7 @@ void init_usertypes(lua_env& lua)
         "name",
         sol::property([](item& i) { return elona::itemname(i.index); }),
         "param1",
-        &item::param1
-        );
+        &item::param1);
 }
 
 void init_enums(sol::table& Elona)
@@ -1416,20 +1458,22 @@ void api_manager::load_core(lua_env& lua, const fs::path& mods_dir)
 
 sol::table api_manager::bind(lua_env& lua)
 {
-    return lua.get_state()->create_named_table("Elona",
-                         "require", sol::overload(
-                             [&lua](const std::string& parent, const std::string& module) {
-                                 sol::optional<sol::table> result = sol::nullopt;
-                                 result = lua.get_api_manager().try_find_api(parent, module);
-                                 return result;
-                             },
+    return lua.get_state()->create_named_table(
+        "Elona",
+        "require",
+        sol::overload(
+            [&lua](const std::string& parent, const std::string& module) {
+                sol::optional<sol::table> result = sol::nullopt;
+                result = lua.get_api_manager().try_find_api(parent, module);
+                return result;
+            },
 
-                             // If no mod name is provided, assume it is "core".
-                             [&lua](const std::string& module) {
-                                 sol::optional<sol::table> result = sol::nullopt;
-                                 result = lua.get_api_manager().try_find_api("core", module);
-                                 return result;
-                             }));
+            // If no mod name is provided, assume it is "core".
+            [&lua](const std::string& module) {
+                sol::optional<sol::table> result = sol::nullopt;
+                result = lua.get_api_manager().try_find_api("core", module);
+                return result;
+            }));
 }
 
 void api_manager::set_on(lua_env& lua)

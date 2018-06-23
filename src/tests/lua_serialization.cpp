@@ -48,11 +48,13 @@ TEST_CASE("Test that API tables aren't reset", "[Lua: Serialization]")
     lua.reload();
 
     REQUIRE_NOTHROW(lua.load_mod_from_script("test", ""));
-    REQUIRE_NOTHROW(lua.run_in_mod("test", R"(Rand = Elona.require("Rand"); assert(Rand ~= nil))"));
+    REQUIRE_NOTHROW(lua.run_in_mod(
+        "test", R"(Rand = Elona.require("Rand"); assert(Rand ~= nil))"));
 
     lua.clear_mod_stores();
 
-    REQUIRE_NOTHROW(lua.run_in_mod("test", R"(Rand = Elona.require("Rand"); assert(Rand ~= nil))"));
+    REQUIRE_NOTHROW(lua.run_in_mod(
+        "test", R"(Rand = Elona.require("Rand"); assert(Rand ~= nil))"));
 }
 
 TEST_CASE("Test that globals aren't reset", "[Lua: Serialization]")

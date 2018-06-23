@@ -20,7 +20,8 @@ enum stick_key
     tab = 1 << 10,
 };
 
-enum class key_wait_delay_t {
+enum class key_wait_delay_t
+{
     always,
     walk_run,
     none,

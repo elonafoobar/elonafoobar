@@ -101,15 +101,15 @@ void store::visit(
     }
 
 #define ELONA_DEFINE_I18N_BUILTIN_CHARA(func_name, func_ident) \
-    if(func.name == func_name)               \
+    if (func.name == func_name) \
     { \
         int tc_bk = tc; \
         tc = chara.index; \
-        std::string val;                                        \
+        std::string val; \
         if (func.args.size() > 1) \
-            val = func_ident(func.args[1].as<int>());   \
-        else                                                      \
-            val = func_ident();   \
+            val = func_ident(func.args[1].as<int>()); \
+        else \
+            val = func_ident(); \
         tc = tc_bk; \
         return val; \
     }
@@ -126,7 +126,7 @@ std::string format_builtins_argless(const hil::FunctionCall& func)
 inline std::string builtin_he(const hil::FunctionCall& func, int chara_index)
 {
     bool bilingual = false;
-    if(func.args.size() > 1)
+    if (func.args.size() > 1)
     {
         bilingual = func.args[1].as<bool>();
     }
@@ -136,7 +136,7 @@ inline std::string builtin_he(const hil::FunctionCall& func, int chara_index)
 inline std::string builtin_his(const hil::FunctionCall& func, int chara_index)
 {
     bool bilingual = false;
-    if(func.args.size() > 1)
+    if (func.args.size() > 1)
     {
         bilingual = func.args[1].as<bool>();
     }
@@ -146,7 +146,7 @@ inline std::string builtin_his(const hil::FunctionCall& func, int chara_index)
 inline std::string builtin_him(const hil::FunctionCall& func, int chara_index)
 {
     bool bilingual = false;
-    if(func.args.size() > 1)
+    if (func.args.size() > 1)
     {
         bilingual = func.args[1].as<bool>();
     }
@@ -163,15 +163,17 @@ inline std::string builtin_s(const hil::FunctionCall& func, int chara_index)
     return _s(chara_index, needs_e);
 }
 
-inline std::string builtin_itemname(const hil::FunctionCall& func, const item& item)
+inline std::string builtin_itemname(
+    const hil::FunctionCall& func,
+    const item& item)
 {
     int number = item.number;
     bool needs_article = true;
-    if(func.args.size() > 1)
+    if (func.args.size() > 1)
     {
         number = func.args[1].as<int>();
     }
-    if(func.args.size() > 2)
+    if (func.args.size() > 2)
     {
         needs_article = func.args[2].as<bool>();
     }

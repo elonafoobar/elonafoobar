@@ -36,7 +36,8 @@ TEST_CASE("Test that globals cannot be overwritten", "[Lua: Mods]")
     REQUIRE_THROWS(lua.run_in_mod("my_mod", R"(function dood() end)"));
     REQUIRE_THROWS(lua.run_in_mod("my_mod", R"(Elona = "dood")"));
     REQUIRE_THROWS(lua.run_in_mod("my_mod", R"(Store = "dood")"));
-    REQUIRE_NOTHROW(lua.run_in_mod("my_mod", R"(assert(_MOD_NAME == "my_mod"))"));
+    REQUIRE_NOTHROW(
+        lua.run_in_mod("my_mod", R"(assert(_MOD_NAME == "my_mod"))"));
 }
 
 TEST_CASE("Test that sandboxing removes unsafe functions", "[Lua: Mods]")

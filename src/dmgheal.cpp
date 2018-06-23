@@ -266,7 +266,8 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 cdata[cnt].is_lay_hand_available() = false;
                 txtef(9);
                 txt(i18n::s.get("core.locale.damage.lay_hand", cdata[cnt]));
-                txt(i18n::s.get("core.locale.damage.is_healed", cdata[prm_853]));
+                txt(i18n::s.get(
+                    "core.locale.damage.is_healed", cdata[prm_853]));
                 cdata[prm_853].hp = cdata[prm_853].max_hp / 2;
                 animode = 100 + prm_853;
                 play_animation(19);
@@ -313,27 +314,42 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             txtcontinue();
             if (dmglevel_at_m141 == -1)
             {
-                txt(i18n::s.get("core.locale.damage.levels.scratch", cdata[prm_853], is_player));
+                txt(i18n::s.get(
+                    "core.locale.damage.levels.scratch",
+                    cdata[prm_853],
+                    is_player));
             }
             if (dmglevel_at_m141 == 0)
             {
                 txtef(5);
-                txt(i18n::s.get("core.locale.damage.levels.slightly", cdata[prm_853], is_player));
+                txt(i18n::s.get(
+                    "core.locale.damage.levels.slightly",
+                    cdata[prm_853],
+                    is_player));
             }
             if (dmglevel_at_m141 == 1)
             {
                 txtef(11);
-                txt(i18n::s.get("core.locale.damage.levels.moderately", cdata[prm_853], is_player));
+                txt(i18n::s.get(
+                    "core.locale.damage.levels.moderately",
+                    cdata[prm_853],
+                    is_player));
             }
             if (dmglevel_at_m141 == 2)
             {
                 txtef(10);
-                txt(i18n::s.get("core.locale.damage.levels.severely", cdata[prm_853], is_player));
+                txt(i18n::s.get(
+                    "core.locale.damage.levels.severely",
+                    cdata[prm_853],
+                    is_player));
             }
             if (dmglevel_at_m141 >= 3)
             {
                 txtef(3);
-                txt(i18n::s.get("core.locale.damage.levels.critically", cdata[prm_853], is_player));
+                txt(i18n::s.get(
+                    "core.locale.damage.levels.critically",
+                    cdata[prm_853],
+                    is_player));
             }
             rowact_check(prm_853);
             goto label_1369_internal;
@@ -343,7 +359,8 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             if (is_in_fov(prm_853))
             {
                 txtef(11);
-                txt(i18n::s.get("core.locale.damage.reactions.screams", cdata[prm_853]));
+                txt(i18n::s.get(
+                    "core.locale.damage.reactions.screams", cdata[prm_853]));
             }
         }
         if (dmglevel_at_m141 == 2)
@@ -351,7 +368,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             if (is_in_fov(prm_853))
             {
                 txtef(10);
-                txt(i18n::s.get("core.locale.damage.reactions.writhes_in_pain", cdata[prm_853]));
+                txt(i18n::s.get(
+                    "core.locale.damage.reactions.writhes_in_pain",
+                    cdata[prm_853]));
             }
         }
         if (dmglevel_at_m141 >= 3)
@@ -359,7 +378,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             if (is_in_fov(prm_853))
             {
                 txtef(3);
-                txt(i18n::s.get("core.locale.damage.reactions.is_severely_hurt", cdata[prm_853]));
+                txt(i18n::s.get(
+                    "core.locale.damage.reactions.is_severely_hurt",
+                    cdata[prm_853]));
             }
         }
         if (dmg_at_m141 < 0)
@@ -371,7 +392,8 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             if (is_in_fov(prm_853))
             {
                 txtef(4);
-                txt(i18n::s.get("core.locale.damage.is_healed", cdata[prm_853]));
+                txt(i18n::s.get(
+                    "core.locale.damage.is_healed", cdata[prm_853]));
             }
         }
     label_1369_internal:
@@ -406,7 +428,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                             if (is_in_fov(prm_853))
                             {
                                 txtef(4);
-                                txt(i18n::s.get("core.locale.damage.runs_away_in_terror", cdata[prm_853]));
+                                txt(i18n::s.get(
+                                    "core.locale.damage.runs_away_in_terror",
+                                    cdata[prm_853]));
                             }
                         }
                     }
@@ -512,7 +536,8 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             if (ele_at_m141 != 54 && ele_at_m141 != 58 && ele_at_m141 != 59)
             {
                 cdata[prm_853].sleep = 0;
-                txt(i18n::s.get("core.locale.damage.sleep_is_disturbed", cdata[prm_853]));
+                txt(i18n::s.get(
+                    "core.locale.damage.sleep_is_disturbed", cdata[prm_853]));
             }
         }
         if (prm_855 == 0)
@@ -555,7 +580,8 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     {
                         if (chara_copy(prm_853))
                         {
-                            txt(i18n::s.get("core.locale.damage.splits", cdata[prm_853]));
+                            txt(i18n::s.get(
+                                "core.locale.damage.splits", cdata[prm_853]));
                         }
                     }
                 }
@@ -577,7 +603,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                         {
                             if (chara_copy(prm_853))
                             {
-                                txt(i18n::s.get("core.locale.damage.splits", cdata[prm_853]));
+                                txt(i18n::s.get(
+                                    "core.locale.damage.splits",
+                                    cdata[prm_853]));
                             }
                         }
                     }
@@ -595,7 +623,9 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                         if (is_in_fov(prm_853))
                         {
                             txtef(4);
-                                txt(i18n::s.get("core.locale.damage.is_engulfed_in_fury", cdata[prm_853]));
+                            txt(i18n::s.get(
+                                "core.locale.damage.is_engulfed_in_fury",
+                                cdata[prm_853]));
                         }
                         cdata[prm_853].furious += rnd(30) + 15;
                     }
@@ -689,13 +719,19 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     if (prm_853 >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
-                        txt(i18n::s.get("core.locale.death_by.chara.transformed_into_meat.active",
-                                        cdata[prm_853], is_player));
+                        txt(i18n::s.get(
+                            "core.locale.death_by.chara.transformed_into_meat."
+                            "active",
+                            cdata[prm_853],
+                            is_player));
                     }
                     else
                     {
-                        txt(i18n::s.get("core.locale.death_by.chara.transformed_into_meat.passive",
-                                        cdata[prm_853], is_player));
+                        txt(i18n::s.get(
+                            "core.locale.death_by.chara.transformed_into_meat."
+                            "passive",
+                            cdata[prm_853],
+                            is_player));
                     }
                 }
                 if (p_at_m141 == 1)
@@ -703,13 +739,17 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     if (prm_853 >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
-                        txt(i18n::s.get("core.locale.death_by.chara.destroyed.active",
-                                        cdata[prm_853], is_player));
+                        txt(i18n::s.get(
+                            "core.locale.death_by.chara.destroyed.active",
+                            cdata[prm_853],
+                            is_player));
                     }
                     else
                     {
-                        txt(i18n::s.get("core.locale.death_by.chara.destroyed.passive",
-                                        cdata[prm_853], is_player));
+                        txt(i18n::s.get(
+                            "core.locale.death_by.chara.destroyed.passive",
+                            cdata[prm_853],
+                            is_player));
                     }
                 }
                 if (p_at_m141 == 2)
@@ -717,13 +757,17 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     if (prm_853 >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
-                        txt(i18n::s.get("core.locale.death_by.chara.minced.active",
-                                        cdata[prm_853], is_player));
+                        txt(i18n::s.get(
+                            "core.locale.death_by.chara.minced.active",
+                            cdata[prm_853],
+                            is_player));
                     }
                     else
                     {
-                        txt(i18n::s.get("core.locale.death_by.chara.minced.passive",
-                                        cdata[prm_853], is_player));
+                        txt(i18n::s.get(
+                            "core.locale.death_by.chara.minced.passive",
+                            cdata[prm_853],
+                            is_player));
                     }
                 }
                 if (p_at_m141 == 3)
@@ -731,18 +775,22 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     if (prm_853 >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
-                        txt(i18n::s.get("core.locale.death_by.chara.killed.active",
-                                        cdata[prm_853], is_player));
+                        txt(i18n::s.get(
+                            "core.locale.death_by.chara.killed.active",
+                            cdata[prm_853],
+                            is_player));
                     }
                     else
                     {
-                        txt(i18n::s.get("core.locale.death_by.chara.killed.passive",
-                                        cdata[prm_853], is_player));
+                        txt(i18n::s.get(
+                            "core.locale.death_by.chara.killed.passive",
+                            cdata[prm_853],
+                            is_player));
                     }
                 }
             }
-            ndeathcause = i18n::s.get("core.locale.death_by.chara.killed.passive",
-                                      cdata[prm_855]);
+            ndeathcause = i18n::s.get(
+                "core.locale.death_by.chara.killed.passive", cdata[prm_855]);
         }
         else
         {
@@ -754,15 +802,17 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 int death_kind = -prm_855;
 
-                txt(i18n::s.get("core.locale.death_by.other",
-                                death_kind,
-                                "text",
-                                cdata[prm_853]));
+                txt(i18n::s.get(
+                    "core.locale.death_by.other",
+                    death_kind,
+                    "text",
+                    cdata[prm_853]));
                 if (prm_853 == 0)
                 {
-                    ndeathcause = i18n::s.get_enum_property("core.locale.death_by.other",
-                                                            "death_cause",
-                                                            death_kind);
+                    ndeathcause = i18n::s.get_enum_property(
+                        "core.locale.death_by.other",
+                        "death_cause",
+                        death_kind);
                 }
             }
         }
@@ -927,7 +977,8 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                             gdata_novice_knight = 2;
                             snd(44);
                             txtef(2);
-                            txt(i18n::s.get("core.locale.quest.journal_updated"));
+                            txt(i18n::s.get(
+                                "core.locale.quest.journal_updated"));
                         }
                     }
                     if (cdata[prm_853].id == 257)
@@ -937,7 +988,8 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                             gdata_pyramid_trial = 1000;
                             snd(44);
                             txtef(2);
-                            txt(i18n::s.get("core.locale.quest.journal_updated"));
+                            txt(i18n::s.get(
+                                "core.locale.quest.journal_updated"));
                             txt(lang(
                                 u8"クエストを達成した！"s,
                                 u8"You have completed the quest!"s));
@@ -951,7 +1003,8 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                             gdata_minotaur_king = 2;
                             snd(44);
                             txtef(2);
-                            txt(i18n::s.get("core.locale.quest.journal_updated"));
+                            txt(i18n::s.get(
+                                "core.locale.quest.journal_updated"));
                         }
                     }
                     if (cdata[prm_853].id == 318)
@@ -1027,7 +1080,8 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         {
             if (prm_853 == gdata_mount)
             {
-                txt(i18n::s.get("core.locale.damage.get_off_corpse", cdata[prm_853]));
+                txt(i18n::s.get(
+                    "core.locale.damage.get_off_corpse", cdata[prm_853]));
                 ride_end();
             }
         }
@@ -1244,19 +1298,19 @@ void dmgheal_death_by_backpack(character& chara)
     }
     if (heaviest_item_index == -1)
     {
-        heaviest_item_name = i18n::s.get_enum_property("core.locale.death_by.other", "backpack", 6);
+        heaviest_item_name = i18n::s.get_enum_property(
+            "core.locale.death_by.other", "backpack", 6);
     }
     else
     {
         heaviest_item_name = itemname(heaviest_item_index);
     }
-    txt(i18n::s.get_enum_property("core.locale.death_by.other", "text", 6,
-                                  chara,
-                                  heaviest_item_name));
+    txt(i18n::s.get_enum_property(
+        "core.locale.death_by.other", "text", 6, chara, heaviest_item_name));
     if (chara.index == 0)
     {
-        ndeathcause = i18n::s.get_enum_property("core.locale.death_by.other", "death_cause", 6,
-                                                heaviest_item_name);
+        ndeathcause = i18n::s.get_enum_property(
+            "core.locale.death_by.other", "death_cause", 6, heaviest_item_name);
     }
 }
 

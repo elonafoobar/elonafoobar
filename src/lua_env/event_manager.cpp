@@ -47,8 +47,7 @@ void init_event_kinds(sol::table& Event)
         event_kind_t::all_turns_finished,
 
         "ScriptLoaded",
-        event_kind_t::script_loaded
-        );
+        event_kind_t::script_loaded);
 }
 
 void event_manager::init(lua_env& lua)
@@ -66,28 +65,31 @@ void event_manager::init(lua_env& lua)
             lua.get_event_manager().register_event(event, env, func);
         });
 
-    Event.set_function("unregister", [&lua](event_kind_t event,
-                                          sol::protected_function func,
-                                          sol::this_environment this_env) {
-                           sol::environment& env = this_env;
-                           return lua.get_event_manager().unregister_event(event, env, func);
-                       });
+    Event.set_function(
+        "unregister",
+        [&lua](
+            event_kind_t event,
+            sol::protected_function func,
+            sol::this_environment this_env) {
+            sol::environment& env = this_env;
+            return lua.get_event_manager().unregister_event(event, env, func);
+        });
 
-    Event.set_function("clear", sol::overload(
-                           [&lua](sol::this_environment this_env) {
-                               sol::environment& env = this_env;
-                               lua.get_event_manager().clear_mod_callbacks(env);
-                           },
-                           [&lua](event_kind_t event,
-                                  sol::this_environment this_env) {
-                               sol::environment& env = this_env;
-                               lua.get_event_manager().clear_mod_callbacks(event, env);
-                           }));
+    Event.set_function(
+        "clear",
+        sol::overload(
+            [&lua](sol::this_environment this_env) {
+                sol::environment& env = this_env;
+                lua.get_event_manager().clear_mod_callbacks(env);
+            },
+            [&lua](event_kind_t event, sol::this_environment this_env) {
+                sol::environment& env = this_env;
+                lua.get_event_manager().clear_mod_callbacks(event, env);
+            }));
 
-    Event.set_function("trigger", [&lua](event_kind_t event,
-                                         sol::table data) {
-                           lua.get_event_manager().trigger_event(event, data);
-                       });
+    Event.set_function("trigger", [&lua](event_kind_t event, sol::table data) {
+        lua.get_event_manager().trigger_event(event, data);
+    });
 
     init_event_kinds(Event);
 }
@@ -124,12 +126,13 @@ void event_manager::register_event(
     }
 }
 
-void event_manager::unregister_event(event_kind_t event,
-                                   sol::environment& env,
-                                   sol::protected_function& callback)
+void event_manager::unregister_event(
+    event_kind_t event,
+    sol::environment& env,
+    sol::protected_function& callback)
 {
     auto iter = events.find(event);
-    if(iter != events.end())
+    if (iter != events.end())
     {
         sol::optional<std::string> mod_name = env["_MOD_NAME"];
         assert(mod_name);
@@ -137,11 +140,12 @@ void event_manager::unregister_event(event_kind_t event,
     }
 }
 
-void event_manager::clear_mod_callbacks(event_kind_t event,
-                                        sol::environment& env)
+void event_manager::clear_mod_callbacks(
+    event_kind_t event,
+    sol::environment& env)
 {
     auto iter = events.find(event);
-    if(iter != events.end())
+    if (iter != events.end())
     {
         sol::optional<std::string> mod_name = env["_MOD_NAME"];
         assert(mod_name);
@@ -152,15 +156,14 @@ void event_manager::clear_mod_callbacks(event_kind_t event,
 void event_manager::clear_mod_callbacks(sol::environment& env)
 {
     unsigned event_count = static_cast<unsigned>(event_kind_t::COUNT);
-    for(unsigned i = 0; i < event_count; i++)
+    for (unsigned i = 0; i < event_count; i++)
     {
         event_kind_t event_kind = static_cast<event_kind_t>(i);
         clear_mod_callbacks(event_kind, env);
     }
 }
 
-void event_manager::trigger_event(event_kind_t event,
-                                  sol::table data)
+void event_manager::trigger_event(event_kind_t event, sol::table data)
 {
     auto iter = events.find(event);
     if (iter != events.end())

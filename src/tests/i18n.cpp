@@ -203,6 +203,10 @@ locale {
 }
 )");
 
-    REQUIRE(store.get_enum_property(u8"core.locale.foo", "name", 1, "dood") == u8"bar: dood");
-    REQUIRE(store.get_enum_property(u8"core.locale.foo", "name", 2, "dood") == u8"baz: dood");
+    REQUIRE(
+        store.get_enum_property(u8"core.locale.foo", "name", 1, "dood")
+        == u8"bar: dood");
+    REQUIRE(
+        store.get_enum_property(u8"core.locale.foo", "name", 2, "dood")
+        == u8"baz: dood");
 }

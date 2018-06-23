@@ -232,7 +232,8 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -328,7 +329,8 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -430,7 +432,8 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -621,7 +624,8 @@ talk_result_t talk_unique()
             }
             if (gdata_tutorial_flag == 3)
             {
-                txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+                txt(i18n::s.get(
+                    "core.locale.common.something_is_put_on_the_ground"));
                 flt();
                 itemcreate(-1, 14, cdata[0].position.x, cdata[0].position.y, 0);
                 inv[ci].identification_state =
@@ -722,7 +726,8 @@ talk_result_t talk_unique()
                 flt();
                 itemcreate(
                     -1, 636, cdata[0].position.x, cdata[0].position.y, 2);
-                txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+                txt(i18n::s.get(
+                    "core.locale.common.something_is_put_on_the_ground"));
                 listmax = 0;
                 buff = lang(
                     u8"迷宮に落ちている宝箱の開け方を知っておく必要があるな。足元に宝箱を置くので、xキー、またはスペースキーで開けてみるんだ。"s,
@@ -821,7 +826,8 @@ talk_result_t talk_unique()
             inv[ci].subname = 9;
             inv[ci].identification_state =
                 identification_state_t::completely_identified;
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             gdata_tutorial_flag = 1;
             return talk_result_t::talk_unique;
         }
@@ -878,7 +884,8 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             for (int cnt = 0; cnt < 3; ++cnt)
             {
                 flt();
@@ -945,7 +952,8 @@ talk_result_t talk_unique()
             inv[ci].identification_state =
                 identification_state_t::completely_identified;
             inv[ci].curse_state = curse_state_t::blessed;
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             gdata_tutorial_flag = 5;
             return talk_result_t::talk_unique;
         }
@@ -989,7 +997,8 @@ talk_result_t talk_unique()
             itemcreate(-1, 68, cdata[0].position.x, cdata[0].position.y, 0);
             inv[ci].identification_state =
                 identification_state_t::completely_identified;
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             gdata_tutorial_flag = 6;
         }
         return talk_result_t::talk_end;
@@ -1091,7 +1100,8 @@ talk_result_t talk_unique()
             itemcreate(-1, 559, cdata[0].position.x, cdata[0].position.y, 0);
             flt();
             itemcreate(-1, 621, cdata[0].position.x, cdata[0].position.y, 0);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -1241,7 +1251,8 @@ talk_result_t talk_unique()
                 u8"You receive a key of Lesimas 25th level. Your journal has been updated."s));
             flt();
             itemcreate(-1, 360, cdata[0].position.x, cdata[0].position.y, 0);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             gdata_main_quest_flag = 125;
             return talk_result_t::talk_end;
         }
@@ -1961,7 +1972,8 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -2287,7 +2299,8 @@ talk_result_t talk_unique()
             itemcreate(-1, 640, cdata[0].position.x, cdata[0].position.y, 2);
             flt();
             itemcreate(-1, 55, cdata[0].position.x, cdata[0].position.y, 2);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             listmax = 0;
             buff = lang(
                 u8"これは…すごい嫁だ…！お前さんとは女の趣味が合いそうだな。また嫁を連れてきてくれれば、いいものを渡すぜ。"s,
@@ -2377,7 +2390,8 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -2493,7 +2507,8 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -2578,7 +2593,8 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -2713,7 +2729,8 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -2828,7 +2845,8 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -2934,7 +2952,8 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -3120,7 +3139,8 @@ talk_result_t talk_unique()
                     u8"クエストを達成した！"s,
                     u8"You have completed the quest!"s));
                 snd(51);
-                txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+                txt(i18n::s.get(
+                    "core.locale.common.something_is_put_on_the_ground"));
                 snd(44);
                 txtef(2);
                 txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -3190,7 +3210,8 @@ talk_result_t talk_unique()
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             cdata[0].gold -= 20000;
             snd(12);
             flt();
@@ -3242,7 +3263,8 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -3372,7 +3394,8 @@ talk_result_t talk_unique()
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             listmax = 0;
             buff = lang(
                 u8"よしよし…このモンスターボールを持っていくがいい。使い方はわかっておるな？そう、瀕死のモンスターに投げつけるだけでよい。ボールのLvより上の相手には効かないから、気をつけるのじゃ。5個のボールにモンスターを捕獲して持ってきてくれ。いいか、「ボールに入れたまま」持ってくるのじゃぞ！"s,
@@ -3456,7 +3479,8 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -3543,7 +3567,8 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -3757,7 +3782,8 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -3962,7 +3988,8 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -4217,7 +4244,8 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -4316,7 +4344,8 @@ talk_result_t talk_unique()
             txt(lang(
                 u8"クエストを達成した！"s, u8"You have completed the quest!"s));
             snd(51);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -4404,7 +4433,8 @@ talk_result_t talk_unique()
             gdata_little_sister = 0;
             flt();
             itemcreate(-1, 699, cdata[0].position.x, cdata[0].position.y, 0);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             snd(44);
             txtef(2);
             txt(i18n::s.get("core.locale.quest.journal_updated"));
@@ -4554,7 +4584,8 @@ talk_result_t talk_unique()
                 flt();
                 itemcreate(
                     -1, 699, cdata[0].position.x, cdata[0].position.y, 0);
-                txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+                txt(i18n::s.get(
+                    "core.locale.common.something_is_put_on_the_ground"));
                 return talk_result_t::talk_end;
             }
             if (chatval == 3)
@@ -4715,7 +4746,8 @@ talk_result_t talk_unique()
                 ELONA_APPEND_RESPONSE(0, i18n::_(u8"ui", u8"bye"));
                 chatesc = 1;
                 ELONA_TALK_SCENE_CUT();
-                txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+                txt(i18n::s.get(
+                    "core.locale.common.something_is_put_on_the_ground"));
                 flt();
                 itemcreate(
                     -1, 767, cdata[0].position.x, cdata[0].position.y, 0);
