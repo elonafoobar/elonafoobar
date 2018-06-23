@@ -1,4 +1,5 @@
 #include "testing.hpp"
+#include <sstream>
 #include "config.hpp"
 #include "gdata.hpp"
 #include "i18n.hpp"
@@ -7,7 +8,6 @@
 #include "lua_env/lua_env.hpp"
 #include "variables.hpp"
 #include "version.hpp"
-#include <sstream>
 
 namespace elona
 {

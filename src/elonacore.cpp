@@ -2353,9 +2353,7 @@ void animeblood(int cc, int animation_type, int element)
         picload(filesystem::dir::graphic() / u8"anime27.bmp");
         dy_at_m133(1) = -16;
         break;
-    default:
-        ele2_at_m133 = 0;
-        break;
+    default: ele2_at_m133 = 0; break;
     }
 
     gmode(2);
@@ -8460,7 +8458,8 @@ label_1894_internal:
                 flttypemajor = fsetremain(rnd(length(fsetremain)));
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
         }
         break;
     case 4:
@@ -8631,7 +8630,8 @@ label_1894_internal:
                 }
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
         }
         else
         {
@@ -11133,7 +11133,8 @@ turn_result_t do_gatcha()
             {
                 inv[ci].param2 = 0;
             }
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
         }
         else
         {
@@ -11539,7 +11540,8 @@ void migrate_save_data(const fs::path& save_dir)
                              (p1 + p2 + 1),
                              20));
                 const auto file_ = filesystem::dir::tmp() / file;
-                fs::copy_file(file_, file_cnv, fs::copy_option::overwrite_if_exists);
+                fs::copy_file(
+                    file_, file_cnv, fs::copy_option::overwrite_if_exists);
                 fileadd(file_cnv);
                 fs::remove_all(file_);
                 fileadd(file_, 1);
@@ -11983,7 +11985,10 @@ void load_save_data(const fs::path& base_save_dir)
         noteget(s, cnt);
         if (strutil::contains(s(0), u8".s2"))
         {
-            fs::copy_file(save_dir / s(0), filesystem::dir::tmp() / s(0), fs::copy_option::overwrite_if_exists);
+            fs::copy_file(
+                save_dir / s(0),
+                filesystem::dir::tmp() / s(0),
+                fs::copy_option::overwrite_if_exists);
         }
     }
     ELONA_LOG("asd " << save_dir);
@@ -12056,7 +12061,10 @@ void save_game(const fs::path& base_save_dir)
         const auto path = save_dir / filesystem::u8path(save_s);
         if (save_p)
         {
-            fs::copy_file(filesystem::dir::tmp() / filesystem::u8path(save_s), path, fs::copy_option::overwrite_if_exists);
+            fs::copy_file(
+                filesystem::dir::tmp() / filesystem::u8path(save_s),
+                path,
+                fs::copy_option::overwrite_if_exists);
         }
         else
         {
@@ -13389,7 +13397,8 @@ void continuous_action_sex()
             flt();
             itemcreate(
                 -1, 54, cdata[cc].position.x, cdata[cc].position.y, sexvalue);
-            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get(
+                "core.locale.common.something_is_put_on_the_ground"));
             modify_karma(0, -1);
         }
         else
@@ -14733,7 +14742,9 @@ void spot_digging()
                                     cdata[0].position.y,
                                     0);
                             }
-                            txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+                            txt(
+                                i18n::s.get("core.locale.common.something_is_"
+                                            "put_on_the_ground"));
                             autosave = 1 * (gdata_current_map != 35);
                             --inv[cnt].number;
                             break;
@@ -18344,7 +18355,10 @@ label_22191_internal:
                     if (rnd(5) == 0)
                     {
                         txtef(9);
-                        txt(i18n::s.get("core.locale.damage.wields_proudly", cdata[cc], s(1)));
+                        txt(i18n::s.get(
+                            "core.locale.damage.wields_proudly",
+                            cdata[cc],
+                            s(1)));
                     }
                 }
                 i = 1;
@@ -18370,18 +18384,20 @@ label_22191_internal:
                 if (tc >= 16)
                 {
                     gdata(809) = 2;
-                    txt(i18n::s.get("core.locale.damage.weapon.attacks_unarmed_and",
-                                    cdata[cc],
-                                    _melee(0, cdata[cc].melee_attack_type),
-                                    cdata[tc],
-                                    i18n::s.get("core.locale.damage.weapon.and")));
+                    txt(i18n::s.get(
+                        "core.locale.damage.weapon.attacks_unarmed_and",
+                        cdata[cc],
+                        _melee(0, cdata[cc].melee_attack_type),
+                        cdata[tc],
+                        i18n::s.get("core.locale.damage.weapon.and")));
                 }
                 else
                 {
-                    txt(i18n::s.get("core.locale.damage.weapon.attacks_unarmed",
-                                    cdata[cc],
-                                    _melee(1, cdata[cc].melee_attack_type),
-                                    cdata[tc]));
+                    txt(i18n::s.get(
+                        "core.locale.damage.weapon.attacks_unarmed",
+                        cdata[cc],
+                        _melee(1, cdata[cc].melee_attack_type),
+                        cdata[tc]));
                 }
             }
             else
@@ -18394,30 +18410,35 @@ label_22191_internal:
                 }
                 else
                 {
-                    weapon_name = i18n::s.get_enum_property_opt("core.locale.damage.weapon", "name", attackskill);
+                    weapon_name = i18n::s.get_enum_property_opt(
+                        "core.locale.damage.weapon", "name", attackskill);
                 }
                 if (weapon_name)
                 {
                     if (tc >= 16)
                     {
                         gdata(809) = 2;
-                        txt(i18n::s.get("core.locale.damage.weapon.attacks_and",
-                                        cdata[cc],
-                                        i18n::s.get_enum_property("core.locale.damage.weapon",
-                                                                  "verb_and",
-                                                                  attackskill),
-                                        cdata[tc],
-                                        i18n::s.get("core.locale.damage.weapon.and")));
+                        txt(i18n::s.get(
+                            "core.locale.damage.weapon.attacks_and",
+                            cdata[cc],
+                            i18n::s.get_enum_property(
+                                "core.locale.damage.weapon",
+                                "verb_and",
+                                attackskill),
+                            cdata[tc],
+                            i18n::s.get("core.locale.damage.weapon.and")));
                     }
                     else
                     {
-                        txt(i18n::s.get("core.locale.damage.weapon.attacks_with",
-                                        cdata[cc],
-                                        i18n::s.get_enum_property("core.locale.damage.weapon",
-                                                                  "verb",
-                                                                  attackskill),
-                                        cdata[tc],
-                                        *weapon_name));
+                        txt(i18n::s.get(
+                            "core.locale.damage.weapon.attacks_with",
+                            cdata[cc],
+                            i18n::s.get_enum_property(
+                                "core.locale.damage.weapon",
+                                "verb",
+                                attackskill),
+                            cdata[tc],
+                            *weapon_name));
                     }
                 }
             }
@@ -18435,7 +18456,7 @@ label_22191_internal:
                 attackskill,
                 cc,
                 clamp((sdata(173, tc) * 2 - sdata(attackskill, cc) + 1), 5, 50)
-                / expmodifer,
+                    / expmodifer,
                 0,
                 4);
             if (attackrange == 0)
@@ -18471,7 +18492,7 @@ label_22191_internal:
                     chara_armor_class(tc),
                     tc,
                     clamp((250 * rtdmg / cdata[tc].max_hp + 1), 3, 100)
-                    / expmodifer,
+                        / expmodifer,
                     0,
                     5);
                 if (cdata[tc].equipment_type & 1)
@@ -18509,8 +18530,9 @@ label_22191_internal:
                         if (is_in_fov(cc))
                         {
                             txtef(8);
-                            txt(i18n::s.get("core.locale.damage.reactive_attack.thorns",
-                                            cdata[cc]));
+                            txt(i18n::s.get(
+                                "core.locale.damage.reactive_attack.thorns",
+                                cdata[cc]));
                         }
                         dmghp(
                             cc,
@@ -18525,8 +18547,10 @@ label_22191_internal:
                         if (is_in_fov(cc))
                         {
                             txtef(8);
-                            txt(i18n::s.get("core.locale.damage.reactive_attack.ether_thorns",
-                                            cdata[cc]));
+                            txt(i18n::s.get(
+                                "core.locale.damage.reactive_attack.ether_"
+                                "thorns",
+                                cdata[cc]));
                         }
                         dmghp(
                             cc,
@@ -18557,7 +18581,8 @@ label_22191_internal:
                         if (is_in_fov(tc))
                         {
                             txtef(8);
-                            txt(i18n::s.get("core.locale.damage.reactive_attack.acids"));
+                            txt(i18n::s.get(
+                                "core.locale.damage.reactive_attack.acids"));
                         }
                         efid = 455;
                         efp = cdata[tc].damage_reaction_info / 1000;
@@ -18594,11 +18619,13 @@ label_22191_internal:
             }
             if (tc < 16)
             {
-                txt(i18n::s.get("core.locale.damage.miss.ally", cdata[cc], cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.damage.miss.ally", cdata[cc], cdata[tc]));
             }
             else
             {
-                txt(i18n::s.get("core.locale.damage.miss.other", cdata[cc], cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.damage.miss.other", cdata[cc], cdata[tc]));
             }
             add_damage_popup(u8"miss", tc, {0, 0, 0});
         }
@@ -18614,11 +18641,13 @@ label_22191_internal:
             }
             if (tc < 16)
             {
-                txt(i18n::s.get("core.locale.damage.evade.ally", cdata[cc], cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.damage.evade.ally", cdata[cc], cdata[tc]));
             }
             else
             {
-                txt(i18n::s.get("core.locale.damage.evade.other", cdata[cc], cdata[tc]));
+                txt(i18n::s.get(
+                    "core.locale.damage.evade.other", cdata[cc], cdata[tc]));
             }
             add_damage_popup(u8"evade!!", tc, {0, 0, 0});
         }
@@ -18643,8 +18672,8 @@ label_22191_internal:
                         txtef(2);
                         snd(61);
                         txt(lang(
-                                itemname(cw) + u8"は十分に血を味わった！"s,
-                                itemname(cw) + u8" has tasted enough blood!"s));
+                            itemname(cw) + u8"は十分に血を味わった！"s,
+                            itemname(cw) + u8" has tasted enough blood!"s));
                     }
                 }
             }

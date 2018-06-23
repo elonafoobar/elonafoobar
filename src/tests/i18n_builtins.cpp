@@ -132,7 +132,8 @@ TEST_CASE("test i18n builtin: itemname()", "[I18N: Builtins]")
     REQUIRE(i18n::fmt_hil("${itemname(_1, 1)}", item) == u8"a putitoro");
     REQUIRE(i18n::fmt_hil("${itemname(_1, 2)}", item) == u8"2 putitoros");
     REQUIRE(i18n::fmt_hil("${itemname(_1, 1, false)}", item) == u8"putitoro");
-    REQUIRE(i18n::fmt_hil("${itemname(_1, 2, false)}", item) == u8"2 putitoros");
+    REQUIRE(
+        i18n::fmt_hil("${itemname(_1, 2, false)}", item) == u8"2 putitoros");
     REQUIRE(i18n::fmt_hil("${itemname(_1, 1, true)}", item) == u8"a putitoro");
     REQUIRE(i18n::fmt_hil("${itemname(_1, 2, true)}", item) == u8"2 putitoros");
 }

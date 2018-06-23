@@ -37,6 +37,7 @@ public:
      * For testing use only.
      */
     static void set_on(lua_env&);
+
 public:
     explicit api_manager(lua_env*);
 

@@ -36,8 +36,9 @@ void proc_event()
             txt(i18n::s.get("core.locale.quest.party.is_over"));
             calcpartyscore();
             calcpartyscore2();
-            txt(i18n::s.get("core.locale.quest.party.final_score",
-                            qdata(13, gdata_executing_immediate_quest)));
+            txt(i18n::s.get(
+                "core.locale.quest.party.final_score",
+                qdata(13, gdata_executing_immediate_quest)));
             if (qdata(12, gdata_executing_immediate_quest)
                 <= qdata(13, gdata_executing_immediate_quest))
             {
@@ -71,7 +72,7 @@ void proc_event()
             break;
         case 1008:
             txtef(8);
-                txt(i18n::s.get("core.locale.quest.conquer.fail"));
+            txt(i18n::s.get("core.locale.quest.conquer.fail"));
             break;
         }
         levelexitby = 4;

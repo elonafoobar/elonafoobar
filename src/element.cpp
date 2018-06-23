@@ -395,45 +395,56 @@ void txteledmg(int type, int attacker, int target, int element)
 {
     if (type == 0 && is_in_fov(target))
     {
-        auto text = i18n::s.get_enum_optional("core.locale.damage.element"s, element,
-                                              cdata[target]);
+        auto text = i18n::s.get_enum_optional(
+            "core.locale.damage.element"s, element, cdata[target]);
         if (text)
         {
             txt(*text);
         }
         else
         {
-            txt(i18n::s.get("core.locale.damage.element.default", cdata[target]));
+            txt(i18n::s.get(
+                "core.locale.damage.element.default", cdata[target]));
         }
     }
     else if (type == 1)
     {
-        auto text = i18n::s.get_enum_property_opt("core.locale.death_by.element"s, "active", element,
-                                                  cdata[target],
-                                                  cdata[attacker]);
+        auto text = i18n::s.get_enum_property_opt(
+            "core.locale.death_by.element"s,
+            "active",
+            element,
+            cdata[target],
+            cdata[attacker]);
         if (text)
         {
             txt(*text);
         }
         else
         {
-            txt(i18n::s.get("core.locale.death_by.element.default.active",
-                            cdata[target], cdata[attacker]));
+            txt(i18n::s.get(
+                "core.locale.death_by.element.default.active",
+                cdata[target],
+                cdata[attacker]));
         }
     }
     else if (type == 2)
     {
-        auto text = i18n::s.get_enum_property_opt("core.locale.death_by.element"s, "passive", element,
-                                                  cdata[target],
-                                                  cdata[attacker]);
+        auto text = i18n::s.get_enum_property_opt(
+            "core.locale.death_by.element"s,
+            "passive",
+            element,
+            cdata[target],
+            cdata[attacker]);
         if (text)
         {
             txt(*text);
         }
         else
         {
-            txt(i18n::s.get("core.locale.death_by.element.default.passive",
-                            cdata[target], cdata[attacker]));
+            txt(i18n::s.get(
+                "core.locale.death_by.element.default.passive",
+                cdata[target],
+                cdata[attacker]));
         }
     }
 }

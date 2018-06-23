@@ -1,5 +1,6 @@
 #include "lua_env.hpp"
 #include <map>
+#include <sstream>
 #include <vector>
 #include "../character.hpp"
 #include "../config.hpp"
@@ -8,9 +9,6 @@
 #include "../log.hpp"
 #include "../variables.hpp"
 #include "event_manager.hpp"
-#include <map>
-#include <sstream>
-#include <vector>
 
 namespace elona
 {
@@ -249,7 +247,7 @@ void lua_env::run_startup_script(const std::string& name)
     }
 
     std::unique_ptr<mod_info> script_mod =
-            std::make_unique<mod_info>("script", get_state());
+        std::make_unique<mod_info>("script", get_state());
     setup_and_lock_mod_globals(*script_mod);
 
     lua->safe_script_file(
@@ -285,7 +283,11 @@ void lua_env::reload()
     load_core_mod(filesystem::dir::mods());
 }
 
-int deny(sol::table table, sol::object key, sol::object value, sol::this_state ts)
+int deny(
+    sol::table table,
+    sol::object key,
+    sol::object value,
+    sol::this_state ts)
 {
     UNUSED(table);
     UNUSED(value);
@@ -293,14 +295,16 @@ int deny(sol::table table, sol::object key, sol::object value, sol::this_state t
     std::stringstream ss;
     if (key.is<std::string>())
     {
-        ss << "Cannot assign to the global variable \"" << key.as<std::string>() << "\". ";
+        ss << "Cannot assign to the global variable \"" << key.as<std::string>()
+           << "\". ";
     }
     else
     {
         ss << "An attempt was made to assign to a global variable. ";
     }
 
-    ss << "Please prefix the assignment with \"local\" to make it a local variable.";
+    ss << "Please prefix the assignment with \"local\" to make it a local "
+          "variable.";
 
     lua_State* L = ts;
     return luaL_error(L, ss.str().c_str());
@@ -372,7 +376,7 @@ void lua_env::load_mod_from_script(
     }
 
     std::unique_ptr<mod_info> info =
-            std::make_unique<mod_info>(name, get_state());
+        std::make_unique<mod_info>(name, get_state());
 
     if (readonly)
     {
@@ -398,7 +402,7 @@ void lua_env::load_mod_from_script(
 void lua_env::run_in_mod(const std::string& name, const std::string& script)
 {
     auto val = mods.find(name);
-    if(val == mods.end())
+    if (val == mods.end())
     {
         throw std::runtime_error("No such mod "s + name + "."s);
     }
@@ -406,8 +410,8 @@ void lua_env::run_in_mod(const std::string& name, const std::string& script)
     // Prevent outputting things in the test log on errors, but still
     // throw if the result is invalid so tests can catch it.
     auto ignore_handler = [](lua_State*, sol::protected_function_result pfr) {
-                              return pfr;
-                          };
+        return pfr;
+    };
 
     auto result = this->lua->script(script, val->second->env, ignore_handler);
 

@@ -218,7 +218,8 @@ void quest_set_data(int val0)
         }
         else
         {
-            s(5) += i18n::s.get("core.locale.quest.info.and") + fltname(qdata(7, rq));
+            s(5) += i18n::s.get("core.locale.quest.info.and")
+                + fltname(qdata(7, rq));
         }
     }
     if (qdata(9, rq) == -1)
@@ -238,7 +239,8 @@ void quest_set_data(int val0)
         s(4) = i18n::s.get("core.locale.quest.info.harvest.text", s(10));
         if (gdata_executing_immediate_quest == rq)
         {
-            s(4) += i18n::s.get("core.locale.quest.info.now", cnvweight(qdata(13, rq)));
+            s(4) += i18n::s.get(
+                "core.locale.quest.info.now", cnvweight(qdata(13, rq)));
         }
         s(6) = s(4);
     }
@@ -246,7 +248,8 @@ void quest_set_data(int val0)
     {
         s = u8"%PARTY"s;
         parse_quest_board_text(val0);
-        s(10) = i18n::s.get("core.locale.quest.info.party.points", qdata(12, rq));
+        s(10) =
+            i18n::s.get("core.locale.quest.info.party.points", qdata(12, rq));
         s(11) = mapname(qdata(1, rq));
         s(4) = i18n::s.get("core.locale.quest.info.party.text", s(10));
         if (gdata_executing_immediate_quest == rq)
@@ -288,7 +291,8 @@ void quest_set_data(int val0)
         {
             s(10) += i18n::s.get("core.locale.quest.info.heavy");
         }
-        s(4) = i18n::s.get("core.locale.quest.info.deliver.text", s(10), s(11), s(12));
+        s(4) = i18n::s.get(
+            "core.locale.quest.info.deliver.text", s(10), s(11), s(12));
         s(6) = s(4);
     }
     if (qdata(3, rq) == 1003)
@@ -309,7 +313,8 @@ void quest_set_data(int val0)
         s(4) = chara_refstr(qdata(12, rq), 2);
         if (qdata(12, rq) == 343)
         {
-            s(4) = i18n::s.get("core.locale.quest.info.conquer.unknown_monster");
+            s(4) =
+                i18n::s.get("core.locale.quest.info.conquer.unknown_monster");
         }
         s(10) = ""s + qdata(5, rq) * 10 / 6;
         s(6) = i18n::s.get("core.locale.quest.info.conquer.text", s(4));
@@ -347,10 +352,15 @@ void quest_set_data(int val0)
     text_replace_tags_in_quest_text();
     if (val0 == 1)
     {
-        buff = i18n::s.get("core.locale.quest.giver.have_something_to_ask", cdata[cc]) + buff;
+        buff = i18n::s.get(
+                   "core.locale.quest.giver.have_something_to_ask", cdata[cc])
+            + buff;
         if (qdata(9, rq) != -1)
         {
-            buff += i18n::s.get("core.locale.quest.giver.days_to_perform", qdata(9, rq), cdata[cc]);
+            buff += i18n::s.get(
+                "core.locale.quest.giver.days_to_perform",
+                qdata(9, rq),
+                cdata[cc]);
         }
         buff += i18n::s.get("core.locale.quest.giver.how_about_it", cdata[cc]);
     }
@@ -358,16 +368,19 @@ void quest_set_data(int val0)
     {
         if (qdata(8, rq) == 3)
         {
-            buff += u8"@QC["s + i18n::s.get("core.locale.quest.journal.complete") + u8"]"s
+            buff += u8"@QC["s
+                + i18n::s.get("core.locale.quest.journal.complete") + u8"]"s
                 + s(3) + u8"\n"s;
         }
         else
         {
-            buff += u8"@QL["s + i18n::s.get("core.locale.quest.journal.job") + u8"] "s + s(3)
-                + u8"\n"s;
+            buff += u8"@QL["s + i18n::s.get("core.locale.quest.journal.job")
+                + u8"] "s + s(3) + u8"\n"s;
         }
-        buff += i18n::s.get("core.locale.quest.journal.client") + qname(rq) + u8"\n"s;
-        buff += i18n::s.get("core.locale.quest.journal.location") + mapname(qdata(1, rq)) + u8"\n"s;
+        buff += i18n::s.get("core.locale.quest.journal.client") + qname(rq)
+            + u8"\n"s;
+        buff += i18n::s.get("core.locale.quest.journal.location")
+            + mapname(qdata(1, rq)) + u8"\n"s;
         buff += i18n::s.get("core.locale.quest.journal.deadline");
         if (qdata(9, rq) != -1)
         {
@@ -380,7 +393,8 @@ void quest_set_data(int val0)
         s(4) = i18n::s.get("core.locale.quest.journal.detail");
         if (qdata(8, rq) == 3)
         {
-            s(4) += i18n::s.get("core.locale.quest.journal.report_to_the_client");
+            s(4) +=
+                i18n::s.get("core.locale.quest.journal.report_to_the_client");
         }
         else
         {
@@ -391,23 +405,30 @@ void quest_set_data(int val0)
     }
     if (val0 == 3)
     {
-        buff = i18n::s.get("core.locale.quest.giver.complete.done_well", cdata[cc]);
+        buff = i18n::s.get(
+            "core.locale.quest.giver.complete.done_well", cdata[cc]);
         if (elona::stoi(s(5)) != 0)
         {
-            txt(i18n::s.get("core.locale.quest.giver.complete.take_reward", s(5), cdata[cc]));
+            txt(i18n::s.get(
+                "core.locale.quest.giver.complete.take_reward",
+                s(5),
+                cdata[cc]));
         }
         if (qdata(3, rq) == 1006)
         {
             if (qdata(12, rq) * 125 / 100 < qdata(13, rq))
             {
-                buff += i18n::s.get("core.locale.quest.giver.complete.extra_coins", cdata[cc]);
+                buff += i18n::s.get(
+                    "core.locale.quest.giver.complete.extra_coins", cdata[cc]);
             }
         }
         if (qdata(3, rq) == 1009)
         {
             if (qdata(12, rq) * 150 / 100 < qdata(13, rq))
             {
-                buff += i18n::s.get("core.locale.quest.giver.complete.music_tickets", cdata[cc]);
+                buff += i18n::s.get(
+                    "core.locale.quest.giver.complete.music_tickets",
+                    cdata[cc]);
             }
         }
     }
@@ -985,7 +1006,8 @@ void quest_exit_map()
             }
             else
             {
-                txt(i18n::s.get("core.locale.quest.escort.you_left_your_client"));
+                txt(i18n::s.get(
+                    "core.locale.quest.escort.you_left_your_client"));
             }
         }
         quest_failed(gdata_executing_immediate_quest_type);
@@ -1028,7 +1050,8 @@ void quest_failed(int val0)
         {
             --qdata(15, qdata(10, rq));
             txtef(8);
-            txt(i18n::s.get("core.locale.quest.deliver.you_commit_a_serious_crime"));
+            txt(i18n::s.get(
+                "core.locale.quest.deliver.you_commit_a_serious_crime"));
             modify_karma(0, -20);
         }
         if (qdata(3, rq) == 1007)
@@ -1049,18 +1072,24 @@ void quest_failed(int val0)
                             {
                                 if (qdata(4, rq) == 0)
                                 {
-                                    s = i18n::s.get("core.locale.quest.escort.failed.assassin");
+                                    s = i18n::s.get(
+                                        "core.locale.quest.escort.failed."
+                                        "assassin");
                                     p = -11;
                                 }
                                 if (qdata(4, rq) == 1)
                                 {
-                                    s = i18n::s.get("core.locale.quest.escort.failed.poison");
+                                    s = i18n::s.get(
+                                        "core.locale.quest.escort.failed."
+                                        "poison");
                                     p = -4;
                                 }
                                 if (qdata(4, rq) == 2)
                                 {
-                                    s = i18n::s.get("core.locale.quest.escort.failed.deadline",
-                                                    cdata[tc]);
+                                    s = i18n::s.get(
+                                        "core.locale.quest.escort.failed."
+                                        "deadline",
+                                        cdata[tc]);
                                     mef_add(
                                         cdata[0].position.x,
                                         cdata[0].position.y,

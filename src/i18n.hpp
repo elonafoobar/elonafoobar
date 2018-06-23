@@ -218,7 +218,9 @@ std::string format_function_type(
 }
 
 template <typename Head = const sol::object&>
-std::string format_function_type(hil::FunctionCall const& func, const sol::object& object)
+std::string format_function_type(
+    hil::FunctionCall const& func,
+    const sol::object& object)
 {
     if (object.is<bool>())
     {
@@ -398,10 +400,14 @@ public:
 
     void init(fs::path);
     void load(std::istream&, const std::string&);
-    void clear() { storage.clear(); }
+    void clear()
+    {
+        storage.clear();
+    }
 
     template <typename Head, typename... Tail>
-    optional<std::string> get_optional(const std::string& key, Head const& head, Tail&&... tail)
+    optional<std::string>
+    get_optional(const std::string& key, Head const& head, Tail&&... tail)
     {
         const auto& found = storage.find(key);
         if (found == storage.end())
@@ -475,20 +481,24 @@ public:
     }
 
     template <typename Head, typename... Tail>
-    optional<std::string> get_enum_optional(const std::string& key,
-                         int index,
-                         Head const& head,
-                         Tail&&... tail)
+    optional<std::string> get_enum_optional(
+        const std::string& key,
+        int index,
+        Head const& head,
+        Tail&&... tail)
     {
-        return get_optional(key + "._" + std::to_string(index), head, std::forward<Tail>(tail)...);
+        return get_optional(
+            key + "._" + std::to_string(index),
+            head,
+            std::forward<Tail>(tail)...);
     }
 
     template <typename... Tail>
-    optional<std::string> get_enum_optional(const std::string& key,
-                         int index,
-                         Tail&&... tail)
+    optional<std::string>
+    get_enum_optional(const std::string& key, int index, Tail&&... tail)
     {
-        return get_optional(key + "._" + std::to_string(index), std::forward<Tail>(tail)...);
+        return get_optional(
+            key + "._" + std::to_string(index), std::forward<Tail>(tail)...);
     }
 
     template <typename Head, typename... Tail>
@@ -506,10 +516,11 @@ public:
     }
 
     template <typename... Tail>
-    std::string get_enum_property(const std::string& key_head,
-                         const std::string& key_tail,
-                         int index,
-                         Tail&&... tail)
+    std::string get_enum_property(
+        const std::string& key_head,
+        const std::string& key_tail,
+        int index,
+        Tail&&... tail)
     {
         return get(
             key_head + "._" + std::to_string(index) + "." + key_tail,
@@ -517,11 +528,12 @@ public:
     }
 
     template <typename Head, typename... Tail>
-    optional<std::string> get_enum_property_opt(const std::string& key_head,
-                                            const std::string& key_tail,
-                                            int index,
-                                            Head const& head,
-                                            Tail&&... tail)
+    optional<std::string> get_enum_property_opt(
+        const std::string& key_head,
+        const std::string& key_tail,
+        int index,
+        Head const& head,
+        Tail&&... tail)
     {
         return get_optional(
             key_head + "._" + std::to_string(index) + "." + key_tail,
@@ -530,10 +542,11 @@ public:
     }
 
     template <typename... Tail>
-    optional<std::string> get_enum_property_opt(const std::string& key_head,
-                                            const std::string& key_tail,
-                                            int index,
-                                            Tail&&... tail)
+    optional<std::string> get_enum_property_opt(
+        const std::string& key_head,
+        const std::string& key_tail,
+        int index,
+        Tail&&... tail)
     {
         return get_optional(
             key_head + "._" + std::to_string(index) + "." + key_tail,
