@@ -138,7 +138,7 @@ main_menu_result_t character_making_select_race()
             chara_delete(0);
             access_race_info(3, listn(1, page * pagesize + cs));
             access_race_info(11, listn(1, page * pagesize + cs));
-            show_race_or_class_info(0, 0);
+            show_race_or_class_info(0);
         }
         redraw();
         await(config::instance().wait1);
@@ -350,7 +350,7 @@ main_menu_result_t character_making_select_class(bool advanced_to_next_menu)
             chara_delete(0);
             access_class_info(3, listn(1, cs));
             access_class_info(11, listn(1, cs));
-            show_race_or_class_info(0, 1);
+            show_race_or_class_info(1);
             redraw();
         }
         await(config::instance().wait1);
@@ -937,14 +937,14 @@ main_menu_result_t character_making_final_phase()
 
 
 
-void show_race_or_class_info(int CNT, int val0)
+void show_race_or_class_info(int val0)
 {
     if (val0 == 1)
     {
-        chara_preparepic(ref1, CNT);
+        chara_preparepic(ref1);
         pos(wx + 380, wy - chara_chips[ref1].height + 60);
         gcopy(5, 0, 960, inf_tiles, chara_chips[ref1].height);
-        chara_preparepic(ref2, CNT);
+        chara_preparepic(ref2);
         pos(wx + 350, wy - chara_chips[ref1].height + 60);
         gcopy(5, 0, 960, inf_tiles, chara_chips[ref1].height);
         pos(wx + 460, wy + 38);
@@ -953,7 +953,7 @@ void show_race_or_class_info(int CNT, int val0)
     else
     {
         gmode(4, chara_chips[ref1].width, chara_chips[ref1].height, 40);
-        chara_preparepic(ref1, CNT);
+        chara_preparepic(ref1);
         pos(wx + 480, wy + 96);
         grotate_(
             5,
@@ -961,7 +961,7 @@ void show_race_or_class_info(int CNT, int val0)
             960,
             chara_chips[ref1].width * 2,
             chara_chips[ref1].height * 2);
-        chara_preparepic(ref2, CNT);
+        chara_preparepic(ref2);
         pos(wx + 350, wy + 96);
         grotate_(
             5,

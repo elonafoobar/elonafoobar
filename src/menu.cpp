@@ -2370,7 +2370,7 @@ label_2035_internal:
         else
         {
             i = cdata[cc].image % 1000;
-            chara_preparepic(cdata[cc].image % 1000, cdata[cc].image / 1000);
+            chara_preparepic(cdata[cc]);
             pos(wx + 596 + 22, wy + 86 + 24);
             gmode(2, chara_chips[i].width, chara_chips[i].height);
             grotate_(
@@ -3826,7 +3826,7 @@ label_2041_internal:
     else
     {
         i = cdata[cc].image % 1000;
-        chara_preparepic(cdata[cc].image % 1000, cdata[cc].image / 1000);
+        chara_preparepic(cdata[cc]);
         pos(wx + 280, wy + 130);
         gmode(2, chara_chips[i].width, chara_chips[i].height);
         grotate_(5, 0, 960, chara_chips[i].width, chara_chips[i].height);
@@ -5569,7 +5569,7 @@ label_1982_internal:
         }
         i(0) = cdata[list(0, p)].image % 1000;
         i(1) = cdata[list(0, p)].image / 1000;
-        chara_preparepic(i, i(1));
+        chara_preparepic(cdata[list(0, p)]);
         pos(wx + 40, wy + 74 + cnt * 19 - 8);
         gmode(2, chara_chips[i].width, chara_chips[i].height);
         grotate_(
@@ -5852,7 +5852,7 @@ label_1990_internal:
         }
         i(0) = cdata[list(0, p)].image % 1000;
         i(1) = cdata[list(0, p)].image / 1000;
-        chara_preparepic(i, i(1));
+        chara_preparepic(cdata[list(0, p)]);
         pos(wx + 40, wy + 74 + cnt * 19 - 8);
         gmode(2, chara_chips[i].width, chara_chips[i].height);
         grotate_(
@@ -6915,7 +6915,7 @@ label_1961_internal:
         {
             i(0) = cdata[list(0, p)].image % 1000;
             i(1) = cdata[list(0, p)].image / 1000;
-            chara_preparepic(i, i(1));
+            chara_preparepic(cdata[list(0, p)]);
             pos(wx + 40, wy + 74 + cnt * 19 - 8);
             gmode(2, chara_chips[i].width, chara_chips[i].height);
             grotate_(

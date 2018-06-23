@@ -65,7 +65,11 @@ void show_damage_popups();
 void draw_emo(int = 0, int = 0, int = 0);
 void load_pcc_part(int cc, int body_part, const char* body_part_str);
 void set_pcc_depending_on_equipments(int cc, int ci);
-void chara_preparepic(int prm_618, int prm_619 = 0);
+
+struct character;
+void chara_preparepic(const character& cc);
+void chara_preparepic(int image_id);
+
 void create_pcpic(int cc, bool prm_410);
 void initialize_map_chip();
 void initialize_item_chip();

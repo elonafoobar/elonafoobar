@@ -883,33 +883,29 @@ void set_pcc_depending_on_equipments(int cc, int ci)
 }
 
 
-void chara_preparepic(int prm_618, int prm_619)
+
+void chara_preparepic(const character& cc)
 {
-    int p_at_m83 = 0;
-    if (prm_619 == 0)
-    {
-        p_at_m83 = prm_618 / 1000;
-    }
-    else
-    {
-        p_at_m83 = prm_619;
-    }
+    chara_preparepic(cc.image);
+}
+
+
+
+void chara_preparepic(int image_id)
+{
+    const auto chip_id = image_id % 1000;
+    const auto color_id = image_id / 1000;
+    const auto& chip = chara_chips[chip_id];
     gsel(5);
-    boxf(0, 960, chara_chips[prm_618].width, chara_chips[prm_618].height);
+    boxf(0, 960, chip.width, chip.height);
     pos(0, 960);
     set_color_mod(
-        255 - c_col(0, p_at_m83),
-        255 - c_col(1, p_at_m83),
-        255 - c_col(2, p_at_m83));
-    gcopy(
-        5,
-        chara_chips[prm_618].x,
-        chara_chips[prm_618].y,
-        chara_chips[prm_618].width,
-        chara_chips[prm_618].height);
+        255 - c_col(0, color_id),
+        255 - c_col(1, color_id),
+        255 - c_col(2, color_id));
+    gcopy(5, chip.x, chip.y, chip.width, chip.height);
     set_color_mod(255, 255, 255);
     gsel(0);
-    return;
 }
 
 

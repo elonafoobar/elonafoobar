@@ -2140,7 +2140,7 @@ void talk_window_show()
         {
             p(0) = cdata[tc].image % 1000;
             p(1) = cdata[tc].image / 1000;
-            chara_preparepic(p, p(1));
+            chara_preparepic(cdata[tc]);
             pos(wx + 82, wy + 125 - chara_chips[p].offset_y);
             gmode(2, chara_chips[p].width, chara_chips[p].height);
             grotate_(
