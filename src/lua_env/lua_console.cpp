@@ -26,8 +26,11 @@ lua_console::lua_console(lua_env* lua)
 
     buf_ = buffer(max_buffer_size);
     input_history_ = buffer(max_buffer_size);
+}
 
-    console_env_.set("_API_TABLES", lua->get_api_manager().get_api_table());
+void lua_console::bind_api()
+{
+    console_env_.set("_API_TABLES", lua_->get_api_manager().get_api_table());
     console_env_.set("_MOD_NAME", "console");
     lua_->get_state()->safe_script_file(filesystem::make_preferred_path_in_utf8(
                                             filesystem::dir::mods() / "core"s / "console.lua"),

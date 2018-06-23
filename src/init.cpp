@@ -774,6 +774,10 @@ void initialize_elona()
                                                windoww, static_cast<int>(0.35 * windowh));
     }
 
+    // Defer binding APIs to the console until initialization time
+    // because get_executable_path() can't be run before everything
+    // else.
+    lua::lua.get_console().bind_api();
     lua::lua.get_console().print(u8"ElonaFoobar Debug console");
     lua::lua.get_console().print(u8"ver."s + latest_version.short_string() + " (" + latest_version.revision + ") OS: " + latest_version.platform + ", timestamp: " + latest_version.timestamp);
 }

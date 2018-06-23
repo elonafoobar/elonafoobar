@@ -26,6 +26,8 @@ public:
 
     explicit lua_console(lua_env*);
 
+    void bind_api();
+
     void toggle() { enabled_ = !enabled_; }
     void setup_constants(int char_width, int char_height, int width, int height)
     {
