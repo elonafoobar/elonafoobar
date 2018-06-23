@@ -1205,7 +1205,10 @@ void init_usertypes(lua_env& lua)
         "name",
         sol::property([](item& i) { return elona::itemname(i.index); }),
         "param1",
-        &item::param1);
+        &item::param1,
+        "param2",
+        &item::param2
+        );
 }
 
 void init_enums(sol::table& Elona)

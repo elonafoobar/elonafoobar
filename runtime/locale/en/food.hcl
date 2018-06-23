@@ -190,7 +190,7 @@ locale {
             cursed_drink = "${name(_1)} feel${s(_1)} grumpy."
         }
 
-        cook = "You cook ${_1} with ${_itemname(_2)} and make ${_itemname(_3)}." #TODO
+        cook = "You cook ${_1} with ${_itemname(_2, 1)} and make ${_itemname(_3, 1)}."
 
         effect {
             rotten = "Ugh! Rotten food!"
@@ -220,7 +220,7 @@ locale {
                 delicious = "ウマイ！"
             }
 
-            bomb_fish = "「Ugh-Ughu」 ${name(_1)} spew${s(_1)} up ${itemname(_2)}." # TODO
+            bomb_fish = "「Ugh-Ughu」 ${name(_1)} spew${s(_1)} up ${itemname(_2, 1)}."
             little_sister = "${name(_1)} evolve${s(_1)}."
             hero_cheese = "The food is a charm!"
 

@@ -190,7 +190,7 @@ locale {
             cursed_drink = "${name(_1)}は気分が悪くなった。"
         }
 
-        cook = "${_itemname(_2)}で${_1}を料理して、${_itemname(_3)}を作った。" #TODO
+        cook = "${_itemname(_2, 1)}で${_1}を料理して、${_itemname(_3, 1)}を作った。"
 
         effect {
             rotten = "うげっ！腐ったものを食べてしまった…うわ…"
@@ -220,7 +220,7 @@ locale {
                 delicious = "ウマイ！"
             }
 
-            bomb_fish = "「げふぅ」${name(_1)}は${itemname(_2)}を吐き出した。"
+            bomb_fish = "「げふぅ」${name(_1)}は${itemname(_2, 1)}を吐き出した。"
             little_sister = "${name(_1)}は進化した。"
             hero_cheese = "これは縁起がいい！"
 

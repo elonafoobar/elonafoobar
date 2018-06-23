@@ -856,7 +856,6 @@ std::string does(int = 0);
 std::string elename(int = 0);
 std::string fixtxt(const std::string&, int = 0);
 std::string fltname(int = 0);
-std::string foodname(int, const std::string&, int = 0, int = 0);
 std::string getnpctxt(const std::string&, const std::string&);
 std::string guildname();
 std::string have(int = 0);

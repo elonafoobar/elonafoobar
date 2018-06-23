@@ -1876,4 +1876,45 @@ void eating_effect_pregnant()
     return;
 }
 
+
+std::string
+foodname(int type, const std::string& ingredient_, int rank, int character_id)
+{
+    std::string ingredient = ingredient_;
+    if (type == 1 || type == 8)
+    {
+        // Food created from character drops (meat and eggs)
+        if (character_id == 0)
+        {
+            ingredient = i18n::s.get_enum_property("core.locale.food.names", "default_origin", type);
+        }
+        else
+        {
+            ingredient = chara_refstr(character_id, 2);
+        }
+    }
+    else if (type == 5 || type == 7)
+    {
+        // Food that always always has a default origin (bread and noodles)
+        ingredient = i18n::s.get_enum_property("core.locale.food.names", "default_origin", type);
+    }
+    else if (ingredient == ""s)
+    {
+        // No ingredient name was provided
+        ingredient = i18n::s.get_enum_property("core.locale.food.names", "default_origin", type);
+    }
+
+    if ((type < 1 || type > 8) || (rank < 1 || rank > 9))
+    {
+        return ingredient;
+    }
+    else
+    {
+        return i18n::s.get_enum_property("core.locale.food.names",
+                                         type,
+                                         "_" + std::to_string(rank),
+                                         ingredient);
+    }
+}
+
 } // namespace elona
