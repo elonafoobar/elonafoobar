@@ -14,18 +14,6 @@ using namespace elona;
 
 
 
-// TODO create struct/class, instead of macro
-#define chipiX(x) chipi(0, (x))
-#define chipiY(x) chipi(1, (x))
-#define chipiW(x) chipi(2, (x))
-#define chipiH(x) chipi(3, (x))
-#define chipiF(x) chipi(4, (x))
-#define chipiS(x) chipi(5, (x))
-#define chipiSh(x) chipi(6, (x))
-#define chipiA(x) chipi(7, (x))
-
-
-
 namespace
 {
 
@@ -720,12 +708,13 @@ void draw_map8(int x, int y, int dx, int dy, int scrturn)
         const auto p2 = map(x, y, 8) - 1;
         auto p0 = mef(1, p2) % 10000;
         const auto p1 = mef(1, p2) / 10000;
-        pos(dx, dy - chipiF(p0));
-        if (chipiA(p0))
+        pos(dx, dy - item_chips[p0].offset_y);
+        if (item_chips[p0].animation)
         {
-            p0 += (scrturn + p2) % (chipiA(p0) + 1)
-                - ((scrturn + p2) % (chipiA(p0) + 1) == chipiA(p0)) * 2
-                    * (chipiA(p0) != 0);
+            p0 += (scrturn + p2) % (item_chips[p0].animation + 1)
+                - ((scrturn + p2) % (item_chips[p0].animation + 1)
+                   == item_chips[p0].animation)
+                    * 2 * (item_chips[p0].animation != 0);
         }
         if (mef(1, p2) > 10000)
         {
@@ -734,7 +723,7 @@ void draw_map8(int x, int y, int dx, int dy, int scrturn)
         }
         else
         {
-            gcopy(1, chipiX(p0), chipiY(p0), inf_tiles, inf_tiles);
+            gcopy(1, item_chips[p0].x, item_chips[p0].y, inf_tiles, inf_tiles);
         }
     }
 }
@@ -780,64 +769,76 @@ void draw_items(int x, int y, int dx, int dy, int scrturn)
                 prepare_item_image(p_, i_, inv[items[i]].param1);
                 if (mdata(6) == 1)
                 {
-                    gmode(2, chipiW(p_), chipiH(p_));
+                    gmode(2, item_chips[p_].width, item_chips[p_].height);
                     pos(dx + 24, dy + 24 - stack_height / 2);
                     grotate(1, 0, 960, 0, 24, 24);
                 }
                 else
                 {
-                    if (config::instance().objectshadow && chipiSh(p_))
+                    if (config::instance().objectshadow
+                        && item_chips[p_].shadow)
                     {
-                        gmode(2, chipiW(p_), chipiH(p_), 70);
-                        if (chipiH(p_) == inf_tiles)
+                        gmode(
+                            2, item_chips[p_].width, item_chips[p_].height, 70);
+                        if (item_chips[p_].height == inf_tiles)
                         {
-                            pos(dx + chipiW(p_) / 2 + chipiSh(p_) / 80 + 2,
-                                dy - chipiF(p_) + 22 - stack_height);
-                            if (chipiF(p_) < 24)
+                            pos(dx + item_chips[p_].width / 2
+                                    + item_chips[p_].shadow / 80 + 2,
+                                dy - item_chips[p_].offset_y + 22
+                                    - stack_height);
+                            if (item_chips[p_].offset_y < 24)
                             {
                                 func_2(
                                     1,
                                     0,
                                     960,
-                                    chipiSh(p_) / 2,
-                                    chipiW(p_),
-                                    chipiH(p_));
+                                    item_chips[p_].shadow / 2,
+                                    item_chips[p_].width,
+                                    item_chips[p_].height);
                             }
                         }
                         else
                         {
-                            pos(dx + chipiW(p_) / 2 + chipiSh(p_) / 4,
-                                dy - chipiF(p_) + 46 - stack_height);
+                            pos(dx + item_chips[p_].width / 2
+                                    + item_chips[p_].shadow / 4,
+                                dy - item_chips[p_].offset_y + 46
+                                    - stack_height);
                             func_2(
                                 1,
                                 0,
                                 960,
-                                chipiSh(p_) * 2,
-                                chipiW(p_),
-                                chipiH(p_));
+                                item_chips[p_].shadow * 2,
+                                item_chips[p_].width,
+                                item_chips[p_].height);
                         }
                         gmode(2);
                     }
-                    pos(dx, dy - chipiF(p_) - stack_height);
-                    if (chipiA(p_) == 0)
+                    pos(dx, dy - item_chips[p_].offset_y - stack_height);
+                    if (item_chips[p_].animation == 0)
                     {
-                        gcopy(1, 0, 960, chipiW(p_), chipiH(p_));
+                        gcopy(
+                            1,
+                            0,
+                            960,
+                            item_chips[p_].width,
+                            item_chips[p_].height);
                     }
                     else
                     {
                         gcopy(
                             1,
-                            chipiX(p_)
-                                + (scrturn % (chipiA(p_) + 1)
-                                   - (scrturn % (chipiA(p_) + 1) == chipiA(p_))
-                                       * 2 * (chipiA(p_) != 0))
+                            item_chips[p_].x
+                                + (scrturn % (item_chips[p_].animation + 1)
+                                   - (scrturn % (item_chips[p_].animation + 1)
+                                      == item_chips[p_].animation)
+                                       * 2 * (item_chips[p_].animation != 0))
                                     * inf_tiles,
-                            chipiY(p_),
-                            chipiW(p_),
-                            chipiH(p_));
+                            item_chips[p_].y,
+                            item_chips[p_].width,
+                            item_chips[p_].height);
                     }
                 }
-                stack_height += chipiS(p_);
+                stack_height += item_chips[p_].stack_height;
                 if (p_ == 531 && chipc(3, i_) == 96)
                 {
                     stack_height += 44;
@@ -857,56 +858,65 @@ void draw_items(int x, int y, int dx, int dy, int scrturn)
             }
             if (mdata(6) == 1)
             {
-                gmode(2, chipiW(p_), chipiH(p_));
+                gmode(2, item_chips[p_].width, item_chips[p_].height);
                 pos(dx + 24, dy + 24);
                 grotate(1, 0, 960, 0, 24, 24);
             }
             else
             {
-                if (config::instance().objectshadow && chipiSh(p_))
+                if (config::instance().objectshadow && item_chips[p_].shadow)
                 {
-                    gmode(2, chipiW(p_), chipiH(p_), 80);
-                    if (chipiH(p_) == inf_tiles)
+                    gmode(2, item_chips[p_].width, item_chips[p_].height, 80);
+                    if (item_chips[p_].height == inf_tiles)
                     {
-                        pos(dx + chipiW(p_) / 2 + chipiSh(p_) / 80 + 2,
-                            dy - chipiF(p_) + 22);
-                        if (chipiF(p_) < 24)
+                        pos(dx + item_chips[p_].width / 2
+                                + item_chips[p_].shadow / 80 + 2,
+                            dy - item_chips[p_].offset_y + 22);
+                        if (item_chips[p_].offset_y < 24)
                         {
                             func_2(
                                 1,
                                 0,
                                 960,
-                                chipiSh(p_) / 2,
-                                chipiW(p_),
-                                chipiH(p_));
+                                item_chips[p_].shadow / 2,
+                                item_chips[p_].width,
+                                item_chips[p_].height);
                         }
                     }
                     else
                     {
-                        pos(dx + chipiW(p_) / 2 + chipiSh(p_) / 4,
-                            dy - chipiF(p_) + 46);
+                        pos(dx + item_chips[p_].width / 2
+                                + item_chips[p_].shadow / 4,
+                            dy - item_chips[p_].offset_y + 46);
                         func_2(
-                            1, 0, 960, chipiSh(p_) * 2, chipiW(p_), chipiH(p_));
+                            1,
+                            0,
+                            960,
+                            item_chips[p_].shadow * 2,
+                            item_chips[p_].width,
+                            item_chips[p_].height);
                     }
                     gmode(2);
                 }
-                pos(dx, dy - chipiF(p_));
-                if (chipiA(p_) == 0)
+                pos(dx, dy - item_chips[p_].offset_y);
+                if (item_chips[p_].animation == 0)
                 {
-                    gcopy(1, 0, 960, chipiW(p_), chipiH(p_));
+                    gcopy(
+                        1, 0, 960, item_chips[p_].width, item_chips[p_].height);
                 }
                 else
                 {
                     gcopy(
                         1,
-                        chipiX(p_)
-                            + (scrturn % (chipiA(p_) + 1)
-                               - (scrturn % (chipiA(p_) + 1) == chipiA(p_)) * 2
-                                   * (chipiA(p_) != 0))
+                        item_chips[p_].x
+                            + (scrturn % (item_chips[p_].animation + 1)
+                               - (scrturn % (item_chips[p_].animation + 1)
+                                  == item_chips[p_].animation)
+                                   * 2 * (item_chips[p_].animation != 0))
                                 * inf_tiles,
-                        chipiY(p_),
-                        chipiW(p_),
-                        chipiH(p_));
+                        item_chips[p_].y,
+                        item_chips[p_].width,
+                        item_chips[p_].height);
                 }
             }
         }

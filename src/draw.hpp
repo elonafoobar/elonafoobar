@@ -1,11 +1,30 @@
 #pragma once
 
 #include <string>
+#include <vector>
 #include "snail/color.hpp"
 
 
 namespace elona
 {
+
+
+
+struct item_chip_t
+{
+    int x;
+    int y;
+    int width;
+    int height;
+    int offset_y;
+    int stack_height;
+    int shadow;
+    int animation;
+};
+
+
+extern std::vector<item_chip_t> item_chips;
+
 
 
 void prepare_item_image(int id, int color);
