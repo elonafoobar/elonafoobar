@@ -942,23 +942,35 @@ void show_race_or_class_info(int CNT, int val0)
     if (val0 == 1)
     {
         chara_preparepic(ref1, CNT);
-        pos(wx + 380, wy - chipc(3, ref1) + 60);
-        gcopy(5, 0, 960, inf_tiles, chipc(3, ref1));
+        pos(wx + 380, wy - chara_chips[ref1].height + 60);
+        gcopy(5, 0, 960, inf_tiles, chara_chips[ref1].height);
         chara_preparepic(ref2, CNT);
-        pos(wx + 350, wy - chipc(3, ref1) + 60);
-        gcopy(5, 0, 960, inf_tiles, chipc(3, ref1));
+        pos(wx + 350, wy - chara_chips[ref1].height + 60);
+        gcopy(5, 0, 960, inf_tiles, chara_chips[ref1].height);
         pos(wx + 460, wy + 38);
         mes(lang(u8"種族: "s, u8"Race: "s) + cmrace(1));
     }
     else
     {
-        gmode(4, chipc(2, ref1), chipc(3, ref1), 40);
+        gmode(4, chara_chips[ref1].width, chara_chips[ref1].height, 40);
         chara_preparepic(ref1, CNT);
         pos(wx + 480, wy + 96);
-        grotate(5, 0, 960, 0, chipc(2, ref1) * 2, chipc(3, ref1) * 2);
+        grotate(
+            5,
+            0,
+            960,
+            0,
+            chara_chips[ref1].width * 2,
+            chara_chips[ref1].height * 2);
         chara_preparepic(ref2, CNT);
         pos(wx + 350, wy + 96);
-        grotate(5, 0, 960, 0, chipc(2, ref1) * 2, chipc(3, ref1) * 2);
+        grotate(
+            5,
+            0,
+            960,
+            0,
+            chara_chips[ref1].width * 2,
+            chara_chips[ref1].height * 2);
         gmode(2);
     }
     font(14 - en * 2);

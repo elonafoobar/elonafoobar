@@ -20576,13 +20576,13 @@ void show_game_score_ranking()
         p = elona::stoi(s(1)) % 1000;
         chara_preparepic(p);
         pos(x - 22, y + 12);
-        gmode(2, chipc(2, p), chipc(3, p));
+        gmode(2, chara_chips[p].width, chara_chips[p].height);
         grotate(
             5,
             0,
             960,
             0,
-            chipc(2, p) / (1 + (chipc(3, p) > inf_tiles)),
+            chara_chips[p].width / (1 + (chara_chips[p].height > inf_tiles)),
             inf_tiles);
         color(0, 0, 0);
     }

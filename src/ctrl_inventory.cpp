@@ -1056,13 +1056,13 @@ label_2061_internal:
         p(1) = inv[p].image % 1000;
         prepare_item_image(p(1), inv[p].color, inv[p].param1);
         pos(wx + 37, wy + 69 + cnt * 19);
-        gmode(2, chipi(2, p(1)), chipi(3, p(1)));
+        gmode(2, item_chips[p(1)].width, item_chips[p(1)].height);
         grotate(
             1,
             0,
             960,
             0,
-            chipi(2, p(1)) * inf_tiles / chipi(3, p(1)),
+            item_chips[p(1)].width * inf_tiles / item_chips[p(1)].height,
             inf_tiles);
         if (inv[p].body_part != 0)
         {

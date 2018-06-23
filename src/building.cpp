@@ -604,13 +604,13 @@ void show_home_value()
         p(1) = inv[p].image % 1000;
         prepare_item_image(p(1), inv[p].color, inv[p].param1);
         pos(wx + 37, cnt * 16 + wy + 138);
-        gmode(2, chipi(2, p(1)), chipi(3, p(1)));
+        gmode(2, item_chips[p(1)].width, item_chips[p(1)].height);
         grotate(
             1,
             0,
             960,
             0,
-            chipi(2, p(1)) * inf_tiles / chipi(3, p(1)),
+            item_chips[p(1)].width * inf_tiles / item_chips[p(1)].height,
             inf_tiles);
         pos(wx + 68, cnt * 16 + wy + 138);
         mes(i18n::s.get(
@@ -1163,7 +1163,7 @@ void calc_collection_value(bool val0)
     else
     {
         rtval = cdata[56].level / 10 + 2;
-        if (chipc(3, cdata[56].image % 1000) > inf_tiles)
+        if (chara_chips[cdata[56].image % 1000].height > inf_tiles)
         {
             rtval = rtval / 2 * 3 + 40;
         }
