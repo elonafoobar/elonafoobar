@@ -44,8 +44,10 @@ clean: FORCE
 	-@$(RM) -rf $(BIN_DIR)
 
 
+# Format src/*.{hpp,cpp} except under src/thirdparty.
 format: FORCE
-	$(FIND) src \( -name "*.cpp" -or -name "*.hpp" -not -name "thirdparty" \) -print0 | $(XARGS) -0 $(FORMAT) -i
+	$(FIND) src \( -type d -name "thirdparty" -prune \) -or \( -name "*.cpp" -or -name "*.hpp" \) -print0 | \
+		$(XARGS) -n 1 -0 -I{} sh -c "$(FORMAT) -i {}; echo {}"
 
 ldoc:
 	mkdir -p $(BIN_DIR)/doc
