@@ -1452,9 +1452,7 @@ label_0313_internal:
     }
     if (strlen_u(s_) > 66)
     {
-        len_ = zentohan(s_, buf_, 0);
-        SDIM2(buf_, len_);
-        zentohan(s_, s_, len_);
+        s_ = zentohan(s_);
     }
     skip_ = 0;
     return s_;

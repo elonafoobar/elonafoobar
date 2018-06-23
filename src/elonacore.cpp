@@ -65,6 +65,34 @@ namespace
 
 std::string atbuff;
 
+
+
+void memcpy(
+    elona_vector2<int>& src,
+    int src_i,
+    int src_j,
+    elona_vector2<int>& dst,
+    int dst_i,
+    int dst_j,
+    size_t size)
+{
+    const auto len = length(src);
+    const auto len2 = length2(src);
+    auto count = size;
+    for (size_t i = 0; i < len2; ++i)
+    {
+        for (size_t j = 0; j < len; ++j)
+        {
+            src(src_j + j, src_i + i) = dst(dst_j + j, dst_i + i);
+            count -= sizeof(int);
+            if (count == 0)
+                return;
+        }
+    }
+}
+
+
+
 } // namespace
 
 
@@ -140,14 +168,6 @@ int noeffect = 0;
 int inumbk = 0;
 int attackitem = 0;
 int extraattack = 0;
-
-
-
-int zentohan(const std::string& prm_209, std::string& prm_210, int prm_211)
-{
-    return LCMapStringA(
-        GetUserDefaultLCID(), 4194304, prm_209, -1, prm_210, prm_211);
-}
 
 
 
@@ -903,24 +923,10 @@ void initialize_picfood()
 
 void finish_elona()
 {
-    int ieopen = 0;
-    int ie_event = 0;
-    int ie = 0;
-    if (ieopen)
-    {
-        delcom(ie_event);
-        delcom(ie);
-    }
     if (config::instance().autonumlock)
     {
         snail::input::instance().restore_numlock();
     }
-    if (mutex_handle != 0)
-    {
-        CloseHandle(mutex_handle);
-    }
-    end();
-    return;
 }
 
 
@@ -9550,7 +9556,7 @@ label_1945_internal:
                 rtval = show_prompt(promptx, prompty, 160);
                 if (rtval == 0)
                 {
-                    elona_delete(filesystem::path(u8"./user/"s + userfile));
+                    fs::remove_all(filesystem::path(u8"./user/"s + userfile));
                     goto label_19431_internal;
                 }
                 goto label_1944_internal;
@@ -11533,9 +11539,9 @@ void migrate_save_data(const fs::path& save_dir)
                              (p1 + p2 + 1),
                              20));
                 const auto file_ = filesystem::dir::tmp() / file;
-                bcopy(file_, file_cnv);
+                fs::copy_file(file_, file_cnv, fs::copy_option::overwrite_if_exists);
                 fileadd(file_cnv);
-                elona_delete(file_);
+                fs::remove_all(file_);
                 fileadd(file_, 1);
             }
         }
@@ -11977,7 +11983,7 @@ void load_save_data(const fs::path& base_save_dir)
         noteget(s, cnt);
         if (strutil::contains(s(0), u8".s2"))
         {
-            bcopy(save_dir / s(0), filesystem::dir::tmp() / s(0));
+            fs::copy_file(save_dir / s(0), filesystem::dir::tmp() / s(0), fs::copy_option::overwrite_if_exists);
         }
     }
     ELONA_LOG("asd " << save_dir);
@@ -12036,7 +12042,7 @@ void save_game(const fs::path& base_save_dir)
     const auto save_dir = base_save_dir / filesystem::u8path(playerid);
     if (save_f == 0)
     {
-        mkdir(save_dir);
+        fs::create_directory(save_dir);
     }
     notesel(filemod);
     for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
@@ -12050,13 +12056,13 @@ void save_game(const fs::path& base_save_dir)
         const auto path = save_dir / filesystem::u8path(save_s);
         if (save_p)
         {
-            bcopy(filesystem::dir::tmp() / filesystem::u8path(save_s), path);
+            fs::copy_file(filesystem::dir::tmp() / filesystem::u8path(save_s), path, fs::copy_option::overwrite_if_exists);
         }
         else
         {
             if (fs::exists(path) && !fs::is_directory(path))
             {
-                elona_delete(path);
+                fs::remove_all(path);
             }
         }
     }
@@ -12249,12 +12255,10 @@ turn_result_t do_debug_console()
         noteadd(""s);
     }
     font(14 - en * 2);
-    objmode(2);
     pos(0, 24);
     mesbox(dbm, true);
     pos(0, 0);
     mesbox(buff, true);
-    objsel(2);
     while (1)
     {
         await(config::instance().wait1);
@@ -12271,8 +12275,6 @@ turn_result_t do_debug_console()
 
 turn_result_t do_exit_debug_console()
 {
-    clrobj(1);
-    clrobj(2);
     if (dbg_exitshowroom == 1)
     {
         dbg_exitshowroom = 0;

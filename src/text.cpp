@@ -15,6 +15,15 @@ int talkref = 0;
 elona_vector1<int> p_at_m41;
 
 
+
+std::string zentohan(const std::string& str)
+{
+    // TODO: Implement.
+    return str;
+}
+
+
+
 std::string cnvrank(int n)
 {
     if (jp)

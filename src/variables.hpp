@@ -818,7 +818,7 @@ int roundmargin(int = 0, int = 0);
 int route_info(int&, int&, int = 0);
 int talk_conv(std::string&, int = 0);
 int winposy(int = 0, int = 0);
-int zentohan(const std::string&, std::string&, int = 0);
+std::string zentohan(const std::string&);
 std::string _aru(int = 0);
 std::string _da(int = 0);
 std::string _dana(int = 0);

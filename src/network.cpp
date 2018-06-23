@@ -20,6 +20,41 @@ std::string chatreadurl;
 std::string votereadurl;
 
 
+namespace
+{
+
+
+
+int sockopen(int, const std::string&, int)
+{
+    return 0;
+}
+
+
+
+void sockclose()
+{
+}
+
+
+
+int sockget(const std::string&, int)
+{
+    return 0;
+}
+
+
+
+int sockput(const std::string&)
+{
+    return 0;
+}
+
+
+
+} // namespace
+
+
 
 namespace elona
 {
@@ -357,7 +392,7 @@ int net_dllist(const std::string& prm_886, int prm_887)
     file_at_m147 = (filesystem::dir::user() / u8"net.tmp").generic_string();
     if (fs::exists(file_at_m147))
     {
-        elona_delete(file_at_m147);
+        fs::remove_all(file_at_m147);
     }
     netdlname(file_at_m147);
     netload(u8"cliplog.txt"s);
@@ -442,7 +477,7 @@ int net_dl(const std::string& prm_888, const std::string& prm_889)
 {
     if (fs::exists(filesystem::dir::user() / prm_889))
     {
-        elona_delete(filesystem::dir::user() / prm_889);
+        fs::remove_all(filesystem::dir::user() / prm_889);
     }
     neturl(u8"http://homepage3.nifty.com/rfish/userfile/"s);
     netdlname((filesystem::dir::user() / prm_889).generic_string());

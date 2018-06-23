@@ -309,11 +309,7 @@ bool input_text_dialog(
 
     for (int cnt = 0;; ++cnt)
     {
-        if (ginfo(2) == 0)
-        {
-            objsel(1);
-        }
-        else
+        if (ginfo(2) != 0)
         {
             objprm(1, ""s);
             inputlog = "";
@@ -419,7 +415,6 @@ bool input_text_dialog(
         redraw();
     }
     gmode(2);
-    clrobj(1);
     if (en)
     {
         inputlog = strutil::replace(inputlog, u8"\"", u8"'");
