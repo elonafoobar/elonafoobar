@@ -145,6 +145,21 @@ replace(const std::string& str, const std::string& from, const std::string& to)
 
 
 
+inline std::string remove_line_ending(const std::string& str)
+{
+    std::string ret;
+    for (const auto& c : str)
+    {
+        if (c != '\n' && c != '\r')
+        {
+            ret += c;
+        }
+    }
+    return ret;
+}
+
+
+
 } // namespace strutil
 
 

@@ -1204,7 +1204,6 @@ void removeitem(int, int);
 void removeworker(int = 0);
 void ride_begin(int = 0);
 void ride_end();
-void rm_crlf(std::string&);
 void rowact_check(int = 0);
 void rowact_item(int = 0);
 void rowactend(int = 0);

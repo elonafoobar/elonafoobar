@@ -1081,19 +1081,4 @@ int talk_conv(std::string& text, int max_line_length)
 
 
 
-void rm_crlf(std::string& str)
-{
-    std::string ret;
-    for (const auto& c : str)
-    {
-        if (c != '\n' && c != '\r')
-        {
-            ret += c;
-        }
-    }
-    str = ret;
-}
-
-
-
 } // namespace elona
