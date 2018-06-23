@@ -6,9 +6,6 @@ PROGRAM = $(BIN_DIR)\ElonaFoobar.exe
 TEST_RUNNER = $(BIN_DIR)\test_runner.exe
 BENCH_RUNNER = $(BIN_DIR)\bench_runner.exe
 
-FORMAT = clang-format
-FIND = find
-XARGS = xargs
 MKDIR = mkdir
 
 BOOST_ROOT = $(BOOST_INCLUDEDIR)
@@ -51,10 +48,6 @@ $(BENCH_RUNNER):
 
 clean: FORCE
 	-rd /q /s $(BIN_DIR)
-
-
-format: FORCE
-	$(FIND) . \( -name "*.cpp" -or -name "*.hpp" \) -print0 | $(XARGS) -0 $(FORMAT) -i
 
 FORCE:
 
