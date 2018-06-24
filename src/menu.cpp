@@ -1413,9 +1413,12 @@ label_2029_internal:
         ++keyrange;
         if (cnt % 2 == 0)
         {
-            pos(wx + 70, wy + 66 + cnt * 19);
-            gfini(620, 18);
-            gfdec2(12, 14, 16);
+            boxf(
+                wx + 70,
+                wy + 66 + cnt * 19,
+                wx + 70 + 620,
+                wy + 66 + cnt * 19 + 18,
+                snail::color{12, 14, 16, 16});
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
@@ -1641,9 +1644,12 @@ label_2009_internal:
         ++keyrange;
         if (cnt % 2 == 0)
         {
-            pos(wx + 70, wy + 66 + cnt * 19);
-            gfini(490, 18);
-            gfdec2(12, 14, 16);
+            boxf(
+                wx + 70,
+                wy + 66 + cnt * 19,
+                wx + 70 + 490,
+                wy + 66 + cnt * 19 + 18,
+                snail::color{12, 14, 16, 16});
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
@@ -2642,8 +2648,7 @@ label_2035_internal:
             if (cs_buff == cnt)
             {
                 pos(x, y);
-                gfini(32, 32);
-                gfinc(20, 20, 50);
+                boxf(x, y, x + 32, y + 32, snail::color{200, 200, 255, 63});
             }
         }
         if (cs_buffmax != 0)
@@ -2713,9 +2718,12 @@ label_2035_internal:
             }
             if (p(1) % 2 == 0)
             {
-                pos(wx + x, wy + 66 + cnt * 19);
-                gfini(595 + dx, 18);
-                gfdec2(12, 14, 16);
+                boxf(
+                    wx + x,
+                    wy + 66 + cnt * 19,
+                    wx + x + 595 + dx,
+                    wy + 66 + cnt * 19 + 18,
+                    snail::color{12, 14, 16, 16});
             }
             if (list(0, p) < 100)
             {
@@ -3160,9 +3168,12 @@ label_2052_internal:
         ++keyrange;
         if (cnt % 2 == 0)
         {
-            pos(wx + 100, wy + 60 + cnt * 19);
-            gfini(558, 18);
-            gfdec(12, 14, 16);
+            boxf(
+                wx + 100,
+                wy + 60 + cnt * 19,
+                wx + 100 + 558,
+                wy + 60 + cnt * 19 + 18,
+                snail::color{12, 14, 16, 16});
         }
         q = i18n::_(u8"ui", u8"body_part", u8"_"s + list(1, p));
         if (list(0, p) == mainhand)
@@ -3427,9 +3438,12 @@ label_1861_internal:
         ++keyrange;
         if (cnt % 2 == 0)
         {
-            pos(wx + 70, wy + 66 + cnt * 19);
-            gfini(490, 18);
-            gfdec2(12, 14, 16);
+            boxf(
+                wx + 70,
+                wy + 66 + cnt * 19,
+                wx + 70 + 490,
+                wy + 66 + cnt * 19 + 18,
+                snail::color{12, 14, 16, 16});
         }
         display_key(wx + 68, wy + 66 + cnt * 19 - 2, cnt);
     }
@@ -4642,9 +4656,12 @@ label_1970_internal:
         }
         if (cnt % 2 == 0)
         {
-            pos(wx + 57, wy + 66 + cnt * 19);
-            gfini(640, 18);
-            gfdec2(12, 14, 16);
+            boxf(
+                wx + 57,
+                wy + 66 + cnt * 19,
+                wx + 57 + 640,
+                wy + 66 + cnt * 19 + 18,
+                snail::color{12, 14, 16, 16});
         }
         if (list(1, p) >= 10000 || list(0, p) < 0)
         {
@@ -5339,9 +5356,7 @@ label_1978_internal:
         }
         key_list(cnt) = key_select(cnt);
         ++keyrange;
-        pos(wx + 70, y);
-        gfini(460, 18);
-        gfdec2(12, 14, 16);
+        boxf(wx + 70, y, wx + 70 + 460, y + 18, snail::color{12, 14, 16, 16});
         display_key(wx + 70, y - 2, cnt);
     }
     cs_listbk();
@@ -5572,9 +5587,12 @@ label_1982_internal:
         ++keyrange;
         if (cnt % 2 == 0)
         {
-            pos(wx + 70, wy + 66 + cnt * 19);
-            gfini(600, 18);
-            gfdec2(12, 14, 16);
+            boxf(
+                wx + 70,
+                wy + 66 + cnt * 19,
+                wx + 70 + 600,
+                wy + 66 + cnt * 19 + 18,
+                snail::color{12, 14, 16, 16});
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
@@ -5718,9 +5736,12 @@ label_1986_internal:
         ++keyrange;
         if (cnt % 2 == 0)
         {
-            pos(wx + 70, wy + 66 + cnt * 19);
-            gfini(440, 18);
-            gfdec2(12, 14, 16);
+            boxf(
+                wx + 70,
+                wy + 66 + cnt * 19,
+                wx + 70 + 440,
+                wy + 66 + cnt * 19 + 18,
+                snail::color{12, 14, 16, 16});
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
@@ -5860,9 +5881,12 @@ label_1990_internal:
         ++keyrange;
         if (cnt % 2 == 0)
         {
-            pos(wx + 70, wy + 66 + cnt * 19);
-            gfini(540, 18);
-            gfdec2(12, 14, 16);
+            boxf(
+                wx + 70,
+                wy + 66 + cnt * 19,
+                wx + 70 + 540,
+                wy + 66 + cnt * 19 + 18,
+                snail::color{12, 14, 16, 16});
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
@@ -6481,9 +6505,12 @@ label_2283_internal:
         ++keyrange;
         if (cnt % 2 == 0)
         {
-            pos(wx + 74, wy + 76 + cnt * 19);
-            gfini(365, 18);
-            gfdec2(12, 14, 16);
+            boxf(
+                wx + 74,
+                wy + 76 + cnt * 19,
+                wx + 74 + 365,
+                wy + 76 + cnt * 19 + 18,
+                snail::color{12, 14, 16, 16});
         }
         display_key(wx + 72, wy + 76 + cnt * 19 - 2, cnt);
     }
@@ -6926,9 +6953,12 @@ label_1961_internal:
         ++keyrange;
         if (cnt % 2 == 0)
         {
-            pos(wx + 70, wy + 66 + cnt * 19);
-            gfini(500, 18);
-            gfdec2(12, 14, 16);
+            boxf(
+                wx + 70,
+                wy + 66 + cnt * 19,
+                wx + 70 + 500,
+                wy + 66 + cnt * 19 + 18,
+                snail::color{12, 14, 16, 16});
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
@@ -7357,9 +7387,12 @@ label_2016_internal:
         ++keyrange;
         if (cnt % 2 == 0)
         {
-            pos(wx + 70, wy + 66 + cnt * 19);
-            gfini(ww - 100, 18);
-            gfdec2(12, 14, 16);
+            boxf(
+                wx + 70,
+                wy + 66 + cnt * 19,
+                wx + 70 + ww - 100,
+                wy + 66 + cnt * 19 + 18,
+                snail::color{12, 14, 16, 16});
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }

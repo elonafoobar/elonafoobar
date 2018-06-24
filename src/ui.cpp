@@ -1360,15 +1360,15 @@ void label_1433()
             ap = 0;
             if (cdata[cnt].relationship == 10)
             {
-                ap(0) = 1;
-                ap(1) = 1;
-                ap(2) = 25;
+                ap(0) = 127;
+                ap(1) = 127;
+                ap(2) = 255;
             }
             if (cdata[cnt].relationship == -3)
             {
-                ap(0) = 25;
-                ap(1) = 1;
-                ap(2) = 1;
+                ap(0) = 255;
+                ap(1) = 127;
+                ap(2) = 127;
             }
             if (cnt == 0)
             {
@@ -1387,10 +1387,16 @@ void label_1433()
                             if (sy < (inf_screenh - 1) * inf_tiles)
                             {
                                 pos(sx, sy * (sy > 0));
-                                gfini(
-                                    inf_tiles,
-                                    inf_tiles + (sy < 0) * inf_screeny);
-                                gfinc(ap, ap(1), ap(2));
+                                boxf(
+                                    sx,
+                                    sy * (sy > 0),
+                                    sx + inf_tiles,
+                                    sy * (sy > 0) + inf_tiles
+                                        + (sy < 0) * inf_screeny,
+                                    snail::color{(uint8_t)ap,
+                                                 (uint8_t)ap(1),
+                                                 (uint8_t)ap(2),
+                                                 32});
                                 if (cnt == camera)
                                 {
                                     gmode(4, -1, -1, 120);
@@ -1730,16 +1736,24 @@ void label_1439()
                 raderw,
                 raderh);
             pos(688 + sx(1), 528 + sy(1));
-            gfini(raderw, raderh);
             if (chipm(7, map(sx, sy, 0)) & 4)
             {
-                gfdec2(100, 100, 100);
+                boxf(
+                    688 + sx(1),
+                    528 + sy(1),
+                    688 + sx(1) + raderw,
+                    528 + sy(1) + raderh,
+                    snail::color{0, 0, 0, 100});
             }
         }
     }
     pos(688, 528);
-    gfini(raderw * mdata(0), raderh * mdata(1));
-    gfinc(10, 10, 10);
+    boxf(
+        688,
+        528,
+        688 + raderw * mdata(0),
+        528 + raderh * mdata(1),
+        snail::color{255, 255, 255, 10});
     gsel(0);
     return;
 }
@@ -1764,9 +1778,7 @@ void fade_out()
     for (int cnt = 0; cnt < 50; ++cnt)
     {
         await(20);
-        pos(0, 0);
-        gfini(windoww, windowh);
-        gfdec2(5, 5, 5);
+        boxf(0, 0, windoww, windowh, snail::color{0, 0, 0, 5});
         redraw();
     }
     for (int cnt = 0; cnt < 30; ++cnt)
@@ -1781,18 +1793,19 @@ void fade_out()
     return;
 }
 
+
+
 void label_1442()
 {
-    for (int cnt = 0; cnt < 50; ++cnt)
+    for (int i = 0; i < 50; ++i)
     {
         await(20);
-        pos(0, 0);
-        gfini(windoww, windowh);
-        gfdec2(5, 5, 5);
+        boxf(0, 0, windoww, windowh, snail::color{0, 0, 0, 5});
         redraw();
     }
-    return;
 }
+
+
 
 void animation_fade_in()
 {
@@ -2589,32 +2602,48 @@ void window2(
         pos(prm_656 + 4, prm_657 + 4);
         gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
         pos(prm_656 + 4, prm_657 + 4);
-        gfini(x2_at_m93 - 4, y2_at_m93 - 4);
-        gfdec2(195, 205, 195);
+        boxf(
+            prm_656 + 4,
+            prm_657 + 4,
+            prm_656 + 4 + x2_at_m93 - 4,
+            prm_657 + 4 + y2_at_m93 - 4,
+            snail::color{0, 0, 0, 195});
     }
     if (prm_661 == 2)
     {
         pos(prm_656 + 4, prm_657 + 4);
         gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
         pos(prm_656 + 4, prm_657 + 4);
-        gfini(x2_at_m93 - 4, y2_at_m93 - 4);
-        gfdec2(210, 215, 205);
+        boxf(
+            prm_656 + 4,
+            prm_657 + 4,
+            prm_656 + 4 + x2_at_m93 - 4,
+            prm_657 + 4 + y2_at_m93 - 4,
+            snail::color{0, 0, 0, 210});
     }
     if (prm_661 == 3)
     {
         pos(prm_656 + 4, prm_657 + 4);
         gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
         pos(prm_656 + 4, prm_657 + 4);
-        gfini(x2_at_m93 - 4, y2_at_m93 - 4);
-        gfdec2(10, 13, 16);
+        boxf(
+            prm_656 + 4,
+            prm_657 + 4,
+            prm_656 + 4 + x2_at_m93 - 4,
+            prm_657 + 4 + y2_at_m93 - 4,
+            snail::color{0, 0, 0, 10});
     }
     if (prm_661 == 4)
     {
         pos(prm_656 + 4, prm_657 + 4);
         gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
         pos(prm_656 + 4, prm_657 + 4);
-        gfini(x2_at_m93 - 4, y2_at_m93 - 4);
-        gfdec2(195, 205, 195);
+        boxf(
+            prm_656 + 4,
+            prm_657 + 4,
+            prm_656 + 4 + x2_at_m93 - 4,
+            prm_657 + 4 + y2_at_m93 - 4,
+            snail::color{0, 0, 0, 195});
     }
     if (prm_661 == 6)
     {
@@ -2663,8 +2692,12 @@ void window2(
         pos(prm_656 + 2, prm_657 + 2);
         gzoom(3, 24, 72, 228, 144, x2_at_m93 - 4, y2_at_m93 - 5);
         pos(prm_656 + 2, prm_657 + 2);
-        gfini(x2_at_m93 - 4, y2_at_m93 - 4);
-        gfdec2(195, 205, 195);
+        boxf(
+            prm_656 + 4,
+            prm_657 + 4,
+            prm_656 + 4 + x2_at_m93 - 4,
+            prm_657 + 4 + y2_at_m93 - 4,
+            snail::color{0, 0, 0, 195});
     }
     return;
 }

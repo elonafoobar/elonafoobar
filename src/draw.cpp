@@ -535,8 +535,6 @@ void prepare_item_image(int id, int color)
         255 - c_col(0, color), 255 - c_col(1, color), 255 - c_col(2, color));
     gcopy(1, x, y, w, h);
     set_color_mod(255, 255, 255);
-    gfini(w, h);
-    gfdec2(c_col(0, color), c_col(1, color), c_col(2, color));
     gsel(0);
 }
 
@@ -853,11 +851,6 @@ void load_pcc_part(int cc, int body_part, const char* body_part_str)
     pos(256, 0);
     gcopy(10 + cc, 128, 0, 128, 198);
     pos(256, 0);
-    gfini(128, 198);
-    gfdec2(
-        c_col(0, pcc(body_part, cc) / 1000),
-        c_col(1, pcc(body_part, cc) / 1000),
-        c_col(2, pcc(body_part, cc) / 1000));
     gmode(2);
     pos(0, 0);
     set_color_mod(
@@ -915,8 +908,6 @@ void chara_preparepic(int prm_618, int prm_619)
         chara_chips[prm_618].width,
         chara_chips[prm_618].height);
     set_color_mod(255, 255, 255);
-    gfini(chara_chips[prm_618].width, chara_chips[prm_618].height);
-    gfdec2(c_col(0, p_at_m83), c_col(1, p_at_m83), c_col(2, p_at_m83));
     gsel(0);
     return;
 }

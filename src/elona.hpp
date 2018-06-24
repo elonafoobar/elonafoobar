@@ -525,14 +525,6 @@ void wpoke(int& x, size_t index, int y);
 
 
 
-void gfini(int width, int height);
-
-void gfdec(int r, int g, int b);
-
-void gfdec2(int r, int g, int b);
-
-void gfinc(int r, int g, int b);
-
 void ematan(int, int, int);
 
 void apledit(int&, int, int = 0);

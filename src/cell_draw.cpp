@@ -995,8 +995,6 @@ void draw_npc(int x, int y, int dx, int dy, int ani_, int ground_)
                     chara_chips[p_].width,
                     chara_chips[p_].height);
                 set_color_mod(255, 255, 255);
-                gfini(chara_chips[p_].width, chara_chips[p_].height);
-                gfdec2(c_col(0, col_), c_col(1, col_), c_col(2, col_));
                 gsel(0);
                 if (mdata(6) == 1)
                 {
@@ -1359,11 +1357,14 @@ void cell_draw()
                                 + std::min(dx_, 0),
                             12);
                         pos(std::max(dx_, 0), dy_ - 20);
-                        gfini(
-                            inf_tiles - std::max(dx_ + inf_tiles - windoww, 0)
+                        boxf(
+                            std::max(dx_, 0),
+                            dy_ - 20,
+                            std::max(dx_, 0) + inf_tiles
+                                - std::max(dx_ + inf_tiles - windoww, 0)
                                 + std::min(dx_, 0),
-                            8);
-                        gfdec2(25, 25, 25);
+                            dy_ - 20 + 8,
+                            snail::color{0, 0, 0, 25});
                     }
                 }
             }
@@ -1373,17 +1374,23 @@ void cell_draw()
                 if (chipm(2, ground_))
                 {
                     pos(std::max(dx_, 0), dy_);
-                    gfini(
-                        inf_tiles - std::max(dx_ + inf_tiles - windoww, 0)
+                    boxf(
+                        std::max(dx_, 0),
+                        dy_,
+                        std::max(dx_, 0),
+                        dy_ + 24 + inf_tiles
+                            - std::max(dx_ + inf_tiles - windoww, 0)
                             + std::min(dx_, 0),
-                        24);
-                    gfdec2(16, 16, 16);
+                        snail::color{0, 0, 0, 16});
                     pos(std::max(dx_, 0), dy_ + 24);
-                    gfini(
-                        inf_tiles - std::max(dx_ + inf_tiles - windoww, 0)
+                    boxf(
+                        std::max(dx_, 0),
+                        dy_ + 24,
+                        std::max(dx_, 0) + inf_tiles
+                            - std::max(dx_ + inf_tiles - windoww, 0)
                             + std::min(dx_, 0),
-                        12);
-                    gfdec2(12, 12, 12);
+                        dy_ + 24 + 12,
+                        snail::color{0, 0, 0, 12});
                 }
             }
         }

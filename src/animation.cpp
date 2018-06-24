@@ -140,8 +140,6 @@ void play_animation_3(int anicol, int anisound)
     gsel(7);
     picload(filesystem::dir::graphic() / u8"anime7.bmp");
     pos(0, 0);
-    gfini(480, 48);
-    gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
     gsel(4);
     pos(0, 0);
     gmode(0);
@@ -207,8 +205,6 @@ void play_animation_17_2(int animeid, int anicol, int anisound)
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"anime5.bmp");
     pos(0, 96);
-    gfini(480, 48);
-    gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
     int anidx = (anix - scx) * inf_tiles + inf_screenx + 24;
     int anidy = (aniy - scy) * inf_tiles + inf_screeny + 24;
     gsel(4);
@@ -303,8 +299,6 @@ void play_animation_0(int anicol, int anisound)
     gsel(7);
     picload(filesystem::dir::graphic() / u8"anime6.bmp");
     pos(0, 0);
-    gfini(480, 48);
-    gfdec2(c_col(0, anicol), c_col(1, anicol), c_col(2, anicol));
     gsel(4);
     gmode(0);
     pos(0, 0);

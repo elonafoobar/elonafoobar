@@ -1127,9 +1127,12 @@ label_1857_internal:
         ++keyrange;
         if (cnt % 2 == 0)
         {
-            pos(wx + 70, wy + 66 + cnt * 19);
-            gfini(540, 18);
-            gfdec2(12, 14, 16);
+            boxf(
+                wx + 70,
+                wy + 66 + cnt * 19,
+                wx + 70 + 540,
+                wy + 66 + cnt * 19 + 18,
+                snail::color{12, 14, 16, 16});
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }

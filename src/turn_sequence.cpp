@@ -1761,6 +1761,12 @@ label_2747:
 
     if (gdata_wizard)
     {
+        if (getkey(snail::key::f3))
+        {
+            efid = 657;
+            magic();
+            return turn_result_t::turn_end;
+        }
         if (getkey(snail::key::f5))
         {
             what_do_you_wish_for();

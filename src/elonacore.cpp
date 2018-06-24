@@ -6090,97 +6090,54 @@ void label_1746()
     gsel(2);
     gmode(0);
     pos(0, 0);
-    gcopy(6, 0, 0, 33 * inf_tiles, 25 * inf_tiles);
-    p(0) = 5;
-    p(1) = 5;
-    p(2) = 5;
-    shade = 15;
+    // gcopy(6, 0, 0, 33 * inf_tiles, 25 * inf_tiles);
+
+    int shadow = 5;
     if (mdata(14) == 2)
     {
-        if (gdata_hour >= 24)
+        if (gdata_hour >= 24 || (gdata_hour >= 0 && gdata_hour < 4))
         {
-            p(0) = 110;
-            p(1) = 90;
-            p(2) = 60;
-            shade = 8;
-        }
-        if (gdata_hour >= 0 && gdata_hour < 4)
-        {
-            p(0) = 110;
-            p(1) = 90;
-            p(2) = 60;
-            shade = 8;
+            shadow = 110;
         }
         if (gdata_hour >= 4 && gdata_hour < 10)
         {
-            p(0) = 70 - (gdata_hour - 3) * 10;
-            p(1) = 80 - (gdata_hour - 3) * 12;
-            p(2) = 60 - (gdata_hour - 3) * 10;
-            if (p < 10)
-            {
-                p = 10;
-                shade = (gdata_hour - 3) * 2 + 8;
-            }
+            shadow = std::min(10, 70 - (gdata_hour - 3) * 10);
         }
         if (gdata_hour >= 10 && gdata_hour < 12)
         {
-            p(0) = 10;
-            p(1) = 10;
-            p(2) = 10;
-            shade = 25;
+            shadow = 10;
         }
         if (gdata_hour >= 12 && gdata_hour < 17)
         {
-            p(0) = 0;
-            p(1) = 0;
-            p(2) = 0;
-            shade = 25;
+            shadow = 1;
         }
         if (gdata_hour >= 17 && gdata_hour < 21)
         {
-            p(0) = 0 + (gdata_hour - 17) * 20;
-            p(1) = 15 + (gdata_hour - 16) * 15;
-            p(2) = 10 + (gdata_hour - 16) * 10;
-            shade = 12;
+            shadow = (gdata_hour - 17) * 20;
         }
         if (gdata_hour >= 21 && gdata_hour < 24)
         {
-            p(0) = 80 + (gdata_hour - 21) * 10;
-            p(1) = 70 + (gdata_hour - 21) * 10;
-            p(2) = 40 + (gdata_hour - 21) * 5;
-            shade = 7;
+            shadow = 80 + (gdata_hour - 21) * 10;
         }
-        if (gdata_weather == 3)
+        if (gdata_weather == 3 && shadow < 40)
         {
-            if (p < 40)
-            {
-                p(0) = 40;
-                p(1) = 40;
-                p(2) = 40;
-            }
+            shadow = 40;
         }
-        if (gdata_weather == 4)
+        if (gdata_weather == 4 && shadow < 65)
         {
-            if (p < 65)
-            {
-                p(0) = 65;
-                p(1) = 65;
-                p(2) = 65;
-            }
+            shadow = 65;
         }
-        if (gdata_current_map == 33)
+        if (gdata_current_map == 33 && (gdata_hour >= 17 || gdata_hour < 7))
         {
-            if (gdata_hour >= 17 || gdata_hour < 7)
-            {
-                p += 35;
-                p(1) += 35;
-                p(2) += 35;
-            }
+            shadow += 35;
         }
     }
+
     pos(0, 0);
-    gfini(33 * inf_tiles, 25 * inf_tiles);
-    gfdec2(p, p(1), p(2));
+    gmode(0);
+    set_color_mod(255 - shadow, 255 - shadow, 255 - shadow, 6);
+    gcopy(6, 0, 0, 33 * inf_tiles, 25 * inf_tiles);
+    set_color_mod(255, 255, 255, 6);
     gmode(4, -1, -1, 30);
     if (mdata(2) == 0)
     {
@@ -9417,9 +9374,12 @@ label_1945_internal:
         ++keyrange;
         if (cnt % 2 == 0)
         {
-            pos(wx + 70, wy + 66 + cnt * 19);
-            gfini(540, 18);
-            gfdec2(12, 14, 16);
+            boxf(
+                wx + 70,
+                wy + 66 + cnt * 19,
+                wx + 70 + 540,
+                wy + 66 + cnt * 19 + 18,
+                snail::color{12, 14, 16, 16});
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
