@@ -1,34 +1,36 @@
 locale {
     magic {
-        too_exhausted = "You are too exhausted!"
-        it_is_cursed = "It's cursed!"
-        resists = "${name(_1)} resist${s(_1)}."
-        melts_alien_children = "${name(_1)}${his_owned(_1)} alien children melt in ${his(_1)} stomach."
-
+        common {
+            too_exhausted = "You are too exhausted!"
+            it_is_cursed = "It's cursed!"
+            resists = "${name(_1)} resist${s(_1)}."
+            melts_alien_children = "${name(_1)}${his_owned(_1)} alien children melt in ${his(_1)} stomach."
+        }
 
         slow = "${name(_1)}${his_owned(_1)} aging process slows down."
         speed = "${name(_1)}${his_owned(_1)} aging process speeds up."
 
         bolt {
-            self = "The bolt hits ${name(_1)}."
+            ally = "The bolt hits ${name(_1)}."
             other = "The bolt hits ${name(_1)} and"
         }
-        is_sane_again = "${name(_1)} ${is(_1)} completely sane again."
 
         explosion {
+            # JP uses different words (爆発 and 誘爆) for explosions that were started originally or
+            # as part of a chain. The text is the same in EN, however.
             begins = "${name(_1)} explode${s(_1)}."
             collateral = "${name(_1)} explode${s(_1)}."
-            self = "The explosion hits ${name(_1)}."
+            ally = "The explosion hits ${name(_1)}."
             other = "The explosion hits ${name(_1)} and"
         }
 
         ball {
-            self = "The Ball hits ${name(_1)}."
+            ally = "The Ball hits ${name(_1)}."
             other = "The ball hits ${name(_1)} and"
         }
 
         arrow {
-            self = "The arrow hits ${name(_1)}."
+            ally = "The arrow hits ${name(_1)}."
             other = "The arrow hits ${name(_1)} and"
         }
 
@@ -39,20 +41,22 @@ locale {
             completely = "${name(_1)} ${is(_1)} completely healed."
         }
 
+        rain_of_sanity = "${name(_1)} ${is(_1)} completely sane again."
+
         special_attack {
             self = "${name(_1)} cast ${_2}."
             other = "${name(_1)} ${_2}."
         }
 
         sucks_blood {
-            self = "${name(_1)} suck${s(_1)} ${name(_2)}${his_owned(_2)} blood."
+            ally = "${name(_1)} suck${s(_1)} ${name(_2)}${his_owned(_2)} blood."
             other = "${name(_1)} suck${s(_1)} ${name(_2)}${his_owned(_2)} blood and"
         }
 
         disassembly = "\"Delete.\""
 
         touch {
-            self = "${name(_1)} touch${s(_1, true)} ${name(_2)} with ${his(_1)} ${_3} ${_4}."
+            ally = "${name(_1)} touch${s(_1, true)} ${name(_2)} with ${his(_1)} ${_3} ${_4}."
             other = "${name(_1)} touch${s(_1, true)} ${name(_2)} with ${his(_1)} ${_3} ${_4} and"
         }
 
@@ -77,7 +81,7 @@ locale {
             breath = "breath"
             named = "${_1} breath"
             bellows = "${name(_1)} bellow${s(_1)} ${_2} from ${his(_1)} mouth."
-            self = "The breath hits ${_1} and"
+            ally = "The breath hits ${_1}."
             other = "The breath hits ${_1} and"
         }
 
@@ -91,7 +95,7 @@ locale {
         map {
             need_global_map = "You need to read it while you are in the global map."
             cursed = "The cursed map crumbles as you touch."
-            use = "There's a mark on the map..."
+            apply = "There's a mark on the map..."
         }
 
         love_potion {
@@ -101,7 +105,7 @@ locale {
             other = "${name(_1)} give${s(_1)} ${you()} the eye."
         }
 
-        pregnancy = "${name(_1)} put${s(_1)} something into ${name(_2)}${his_owned(_2)} body!"
+        pregnant = "${name(_1)} put${s(_1)} something into ${name(_2)}${his_owned(_2)} body!"
 
         examine_self = "You examine yourself."
 
@@ -132,7 +136,7 @@ locale {
 
         acid {
             self = "Arrrrg!"
-            use = "The sulfuric acid melts ${name(_1)}."
+            apply = "The sulfuric acid melts ${name(_1)}."
         }
 
         water {
@@ -142,17 +146,17 @@ locale {
 
         restore_stamina {
             dialog = "*quaff* Juicy!"
-            use = "${name(_1)} restore${s(_1)} some stamina."
+            apply = "${name(_1)} restore${s(_1)} some stamina."
         }
 
         restore_stamina_greater {
             dialog = "*quaff*"
-            use = "${name(_1)} greatly restore${s(_1)} stamina."
+            apply = "${name(_1)} greatly restore${s(_1)} stamina."
         }
 
         salt {
             snail = "It's salt! ${name(_1)} start${s(_1)} to melt."
-            use = "\"Salty!\""
+            apply = "\"Salty!\""
         }
 
         dirty_water {
@@ -208,7 +212,12 @@ locale {
         }
 
         holy_veil = "A golden aura wraps ${name(_1)}!"
-        create_material = "Some ${_1} fall from above!"
+
+        create_material {
+            materials = "materials"
+            junks = "junks"
+            apply = "Some ${_1} fall from above!"
+        }
 
         mutation {
             offensive = "${name(_1)} cast${s(_1)} an insane glance on ${name(_2)}."
@@ -216,15 +225,12 @@ locale {
             apply = "You mutate."
         }
 
-        cure_mutation {
-            #cursed = "It's cursed!"
-            apply = "You are now one step closer to yourself."
-        }
+        cure_mutation = "You are now one step closer to yourself."
 
         resurrection {
             cursed = "Hoards of undead raise from the hell!"
             fail = "${name(_1)}${his_owned(_1)} prayer doesn't reach the underworld."
-            apply = "${name_nojob(_1)} ${have(_1)} been resurrected!"
+            apply = "${_1} ${have(_1)} been resurrected!" # TODO
             dialog = "\"Thanks!\""
         }
 
@@ -245,7 +251,7 @@ locale {
             suddenly = "Suddenly, "
             furthermore = "Furthermore, "
             gain_knowledge = "you gain knowledge of a spell, ${_1}."
-            losen_knowledge = "Suddenly, you lose knowledge of a spell, ${_1}."
+            lose_knowledge = "Suddenly, you lose knowledge of a spell, ${_1}."
         }
 
         descent {
@@ -288,7 +294,7 @@ locale {
 
         vorpal {
             sound = "*Gash*"
-            self = "${name(_1)} cut${s(_1)} ${name(_2)}${his_owned(_2)} head."
+            ally = "${name(_1)} cut${s(_1)} ${name(_2)}${his_owned(_2)} head."
             other = "${name(_1)} cut${s(_1)} ${name(_2)}${his_owned(_2)} head and"
         }
 
@@ -318,7 +324,6 @@ locale {
 
         harvest_mana = "${name(_1)}${his_owned(_1)} mana is restored."
         absorb_magic = "${name(_1)} absorb${s(_1)} mana from the air."
-
         poison_attack = "${name(_1)} ${is(_1)} hit by poison!"
         ink_attack = "Ink squirts into ${name(_1)}${his_owned(_1)} face!"
         confusion = "A foul stench floods ${name(_1)}${his_owned(_1)} nostrils!"
@@ -342,7 +347,7 @@ locale {
         }
 
         domination {
-            does_not_work = "The effect doesn't work in this area."
+            does_not_work_in_area = "The effect doesn't work in this area."
             cannot_be_charmed = "${name(_1)} cannot be charmed."
         }
 
@@ -417,6 +422,7 @@ locale {
         gravity = "${name(_1)} feel${s(_1)} gravity."
         mewmewmew = "Mewmewmew!"
         meteor = "Innumerable meteorites fall all over the area!"
+
         cheer {
             apply = "${name(_1)} cheer${s(_1)}."
             is_excited = "${name(_1)} ${is(_1)} excited!"
@@ -433,7 +439,7 @@ locale {
             apply = "${name(_1)} insult${s(_1)} ${name(_2)}."
         }
 
-        eye_of_dimness = "${name(_1)} gaze${s(_1)} at ${name(_2)}."
+        gaze = "${name(_1)} gaze${s(_1)} at ${name(_2)}."
         molotov = "${name(_1)} ${is(_1)} surrounded by flames."
 
         scavenge {
