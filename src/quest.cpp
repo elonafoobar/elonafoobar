@@ -6,6 +6,7 @@
 #include "character_status.hpp"
 #include "dmgheal.hpp"
 #include "event.hpp"
+#include "food.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"

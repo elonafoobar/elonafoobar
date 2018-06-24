@@ -5,6 +5,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "debug.hpp"
 #include "dmgheal.hpp"
 #include "elona.hpp"
 #include "event.hpp"
@@ -117,23 +118,8 @@ void continuous_action_eating_finish()
                 if (inv[ci].param3 < 0)
                 {
                     txtef(9);
-                    if (jp)
-                    {
-                        txt(u8"「うぐぐ！なんだこの飯は！」"s,
-                            u8"「うっ！」"s,
-                            u8"「……！！」"s,
-                            u8"「あれれ…」"s,
-                            u8"「…これは何の嫌がらせですか」"s,
-                            u8"「まずい！」"s);
-                    }
-                    if (en)
-                    {
-                        txt(u8"\"Yuck!!\""s,
-                            u8"\"....!!\""s,
-                            u8"\"W-What...\""s,
-                            u8"\"Are you teasing me?\""s,
-                            u8"\"You fool!\""s);
-                    }
+                    // TODO JP had six options, EN only had five.
+                    txt(i18n::s.get_enum("core.locale.food.passed_rotten", rnd(6)));
                     dmghp(cc, 999, -12);
                     if (cdata[cc].state != 1)
                     {
@@ -158,10 +144,8 @@ void continuous_action_eating_finish()
         if (is_in_fov(cc))
         {
             txtef(8);
-            txt(lang(
-                name(cc) + u8"はもちを喉につまらせた！"s,
-                name(cc) + u8" choke"s + _s(cc) + u8" on mochi!"s));
-            txt(lang(u8"「むがっ」"s, u8"\"Mm-ghmm\""s));
+            txt(i18n::s.get("core.locale.food.mochi.chokes", cdata[cc]));
+            txt(i18n::s.get("core.locale.food.mochi.dialog"));
         }
         ++cdata[cc].choked;
     }
@@ -170,68 +154,62 @@ void continuous_action_eating_finish()
 
 
 
+void get_hungry(int cc)
+{
+    if ((trait(158) && rnd(3) == 0) || debug::voldemort)
+        return;
+
+    int p = cdata[cc].nutrition / 1000;
+    cdata[cc].nutrition -= 8;
+    if (cdata[cc].nutrition / 1000 != p)
+    {
+        if (p == 1)
+        {
+            msgalert = 1;
+            txt(i18n::s.get_enum("core.locale.food.hunger_status.starving", rnd(2)));
+        }
+        else if (p == 2)
+        {
+            msgalert = 1;
+            txt(i18n::s.get_enum("core.locale.food.hunger_status.very_hungry", rnd(2)));
+        }
+        else if (p == 5)
+        {
+            msgalert = 1;
+            txt(i18n::s.get_enum("core.locale.food.hunger_status.hungry", rnd(3)));
+        }
+        refreshspeed(cc);
+    }
+}
+
+
 void show_eating_message()
 {
     txtef(2);
     if (cdata[cc].nutrition >= 12000)
     {
-        txt(lang(
-                u8"もう当分食べなくてもいい。"s,
-                u8"Phew! You are pretty bloated."s),
-            lang(
-                u8"こんなに食べたことはない！"s,
-                u8"You've never eaten this much before!"s),
-            lang(
-                u8"信じられないぐらい満腹だ！"s,
-                u8"Your stomach is unbelievably full!"s));
-        return;
+        txt(i18n::s.get_enum("core.locale.food.eating_message.bloated", rnd(3)));
     }
-    if (cdata[cc].nutrition >= 10000)
+    else if (cdata[cc].nutrition >= 10000)
     {
-        txt(lang(u8"あなたは満足した。"s, u8"You are satisfied!"s),
-            lang(u8"満腹だ！"s, u8"This hearty meal has filled your stomach."s),
-            lang(u8"あなたは食欲を満たした。"s, u8"You really ate!"s),
-            lang(
-                u8"あなたは幸せそうに腹をさすった。"s,
-                u8"You pat your stomach contentedly."s));
-        return;
+        txt(i18n::s.get_enum("core.locale.food.eating_message.satisfied", rnd(4)));
     }
-    if (cdata[cc].nutrition >= 5000)
+    else if (cdata[cc].nutrition >= 5000)
     {
-        txt(lang(u8"まだ食べられるな…"s, u8"You can eat more."s),
-            lang(u8"あなたは腹をさすった。"s, u8"You pat your stomach."s),
-            lang(
-                u8"少し食欲を満たした。"s,
-                u8"You satisfied your appetite a little."s));
-        return;
+        txt(i18n::s.get_enum("core.locale.food.eating_message.normal", rnd(3)));
     }
-    if (cdata[cc].nutrition >= 2000)
+    else if (cdata[cc].nutrition >= 2000)
     {
-        txt(lang(u8"まだまだ食べたりない。"s, u8"You are still a bit hungry."s),
-            lang(u8"物足りない…"s, u8"Not enough..."s),
-            lang(u8"まだ空腹だ。"s, u8"You want to eat more."s),
-            lang(
-                u8"少しは腹の足しになったか…"s,
-                u8"Your stomach is still somewhat empty."s));
-        return;
+        txt(i18n::s.get_enum("core.locale.food.eating_message.hungry", rnd(4)));
     }
-    if (cdata[cc].nutrition >= 1000)
+    else if (cdata[cc].nutrition >= 1000)
     {
-        txt(lang(u8"全然食べたりない！"s, u8"No, it was not enough at all."s),
-            lang(u8"腹の足しにもならない。"s, u8"You still feel very hungry."s),
-            lang(u8"すぐにまた腹が鳴った。"s, u8"You aren't satisfied."s));
-        return;
+        txt(i18n::s.get_enum("core.locale.food.eating_message.very_hungry", rnd(3)));
     }
-    txt(lang(
-            u8"こんな量では意味がない！"s,
-            u8"It didn't help you from starving!"s),
-        lang(
-            u8"これぐらいでは、死を少し先に延ばしただけだ。"s,
-            u8"It prolonged your death for seconds."s),
-        lang(
-            u8"無意味だ…もっと栄養をとらなければ。"s,
-            u8"Empty! Your stomach is still empty!"s));
-    return;
+    else
+    {
+        txt(i18n::s.get_enum("core.locale.food.eating_message.starving", rnd(3)));
+    }
 }
 
 
@@ -240,9 +218,7 @@ void eat_rotten_food()
 {
     if (cdata[cc].can_digest_rotten_food() == 1)
     {
-        txt(lang(
-            u8"しかし、"s + name(cc) + u8"は何ともなかった。"s,
-            u8"But "s + name(cc) + your(cc) + u8" stomach isn't affected."s));
+        txt(i18n::s.get("core.locale.food.not_affected_by_rotten", cdata[cc]));
         return;
     }
     fdmax = 0;
@@ -310,10 +286,7 @@ void cure_anorexia(int cc)
     cdata[cc].has_anorexia() = false;
     if (is_in_fov(cc) || cc < 16)
     {
-        txt(lang(
-            name(cc) + u8"の拒食症は治った。"s,
-            name(cc) + u8" manage"s + _s(cc)
-                + u8" to recover from anorexia."s));
+        txt(i18n::s.get("core.locale.food.anorexia.recovers_from", cdata[cc]));
         snd(65);
     }
 }
@@ -327,19 +300,14 @@ void chara_vomit(int prm_876)
     if (is_in_fov(prm_876))
     {
         snd(104);
-        txt(lang(
-            name(prm_876) + u8"は吐いた。"s,
-            name(prm_876) + u8" vomit"s + _s(prm_876) + u8"."s));
+        txt(i18n::s.get("core.locale.food.vomits", cdata[prm_876]));
     }
     if (cdata[prm_876].is_pregnant())
     {
         cdata[prm_876].is_pregnant() = false;
         if (is_in_fov(prm_876))
         {
-            txt(lang(
-                name(prm_876) + u8"は体内のエイリアンを吐き出した！"s,
-                name(prm_876) + u8" spit"s + _s(prm_876)
-                    + u8" alien children from "s + his(prm_876) + u8" body!"s));
+            txt(i18n::s.get("core.locale.food.spits_alien_children", cdata[prm_876]));
         }
     }
     if (cdata[prm_876].buffs[0].id != 0)
@@ -400,10 +368,7 @@ void chara_vomit(int prm_876)
                 cdata[prm_876].has_anorexia() = true;
                 if (is_in_fov(prm_876))
                 {
-                    txt(lang(
-                        name(prm_876) + u8"は拒食症になった。"s,
-                        name(prm_876) + u8" develop"s + _s(prm_876)
-                            + u8" anorexia."s));
+                    txt(i18n::s.get("core.locale.food.anorexia.develops", cdata[prm_876]));
                     snd(65);
                 }
             }
@@ -437,9 +402,7 @@ void eatstatus(curse_state_t curse_state, int eater)
         cdata[eater].nutrition -= 1500;
         if (is_in_fov(eater))
         {
-            txt(lang(
-                name(eater) + u8"は嫌な感じがした。"s,
-                name(eater) + u8" feel"s + _s(eater) + u8" bad."s));
+            txt(i18n::s.get("core.locale.food.eat_status.bad", cdata[eater]));
         }
         chara_vomit(eater);
     }
@@ -447,9 +410,7 @@ void eatstatus(curse_state_t curse_state, int eater)
     {
         if (is_in_fov(eater))
         {
-            txt(lang(
-                name(eater) + u8"は良い予感がした。"s,
-                name(eater) + u8" feel"s + _s(eater) + u8" good."s));
+            txt(i18n::s.get("core.locale.food.eat_status.good", cdata[eater]));
         }
         if (rnd(5) == 0)
         {
@@ -482,9 +443,7 @@ void sickifcursed(curse_state_t curse_state, int drinker, int prm_882)
     {
         if (is_in_fov(drinker))
         {
-            txt(lang(
-                name(drinker) + u8"は気分が悪くなった。"s,
-                name(drinker) + u8" feel"s + _s(drinker) + u8" grumpy."s));
+            txt(i18n::s.get("core.locale.food.eat_status.cursed_drink", cdata[drinker]));
         }
         dmgcon(drinker, status_ailment_t::sick, 200);
     }
@@ -537,11 +496,7 @@ void cook()
         p = 1;
     }
     make_dish(ci, p);
-    txt(lang(
-        itemname(cooktool) + u8"で"s + s + u8"を料理して、"s + itemname(ci, 1)
-            + u8"を作った。"s,
-        u8"You cook "s + s + u8" with "s + itemname(cooktool, 1)
-            + u8" and make "s + itemname(ci, 1) + u8"."s));
+    txt(i18n::s.get("core.locale.food.cook", s(0), inv[cooktool], inv[ci]));
     item_stack(0, ci, 1);
     int rank = inv[ci].param2;
     if (rank > 2)
@@ -796,7 +751,7 @@ void apply_general_eating_effect()
                         s = chara_refstr(inv[ci].subname, 8);
                         if (strutil::contains(s(0), u8"/man/"))
                         {
-                            txt(lang(u8"ウマイ！"s, u8"Delicious!"s));
+                            txt(i18n::s.get("core.locale.food.effect.human.delicious"));
                             break;
                         }
                     }
@@ -806,9 +761,7 @@ void apply_general_eating_effect()
             {
                 if (inv[ci].param3 < 0)
                 {
-                    txt(lang(
-                        u8"うげっ！腐ったものを食べてしまった…うわ…"s,
-                        u8"Ugh! Rotten food!"s));
+                    txt(i18n::s.get("core.locale.food.effect.rotten"));
                     break;
                 }
             }
@@ -816,71 +769,50 @@ void apply_general_eating_effect()
             {
                 if (p == 1)
                 {
-                    txt(lang(u8"生肉だ…"s, u8"Ugh...Raw meat..."s));
+                    txt(i18n::s.get("core.locale.food.effect.raw_meat"));
                     break;
                 }
                 if (p == 7)
                 {
-                    txt(lang(
-                        u8"粉の味がする…"s, u8"It tastes like...powder..."s));
+                    txt(i18n::s.get("core.locale.food.effect.powder"));
                     break;
                 }
                 if (p == 5)
                 {
-                    txt(lang(
-                        u8"生で食べるものじゃないな…"s,
-                        u8"Er...this needs to be cooked."s));
+                    txt(i18n::s.get("core.locale.food.effect.raw"));
                     break;
                 }
-                txt(lang(
-                        u8"まずいわけではないが…"s,
-                        u8"It doesn't taste awful but..."s),
-                    lang(u8"平凡な味だ。"s, u8"Very boring food."s));
+                txt(i18n::s.get_enum("core.locale.food.effect.boring", rnd(2)));
                 break;
             }
             if (inv[ci].param2 < 3)
             {
-                txt(lang(
-                        u8"うぅ…腹を壊しそうだ。"s,
-                        u8"Boy, it gives your stomach trouble!"s),
-                    lang(u8"まずい！"s, u8"Ugh! Yuk!"s),
-                    lang(u8"ひどい味だ！"s, u8"Awful taste!!"s));
+                txt(i18n::s.get_enum("core.locale.food.effect.quality.bad", rnd(3)));
                 break;
             }
             if (inv[ci].param2 < 5)
             {
-                txt(lang(
-                        u8"まあまあの味だ。"s, u8"Uh-uh, the taste is so so."s),
-                    lang(u8"悪くない味だ。"s, u8"The taste is not bad."s));
+                txt(i18n::s.get_enum("core.locale.food.effect.quality.so_so", rnd(2)));
                 break;
             }
             if (inv[ci].param2 < 7)
             {
-                txt(lang(u8"かなりいける。"s, u8"It tasted good."s),
-                    lang(u8"それなりに美味しかった。"s, u8"Decent meal."s));
+                txt(i18n::s.get_enum("core.locale.food.effect.quality.good", rnd(2)));
                 break;
             }
             if (inv[ci].param2 < 9)
             {
-                txt(lang(u8"美味しい！"s, u8"Delicious!"s),
-                    lang(u8"これはいける！"s, u8"Gee what a good taste!"s),
-                    lang(u8"いい味だ！"s, u8"It tasted pretty good!"s));
+                txt(i18n::s.get_enum("core.locale.food.effect.quality.great", rnd(3)));
                 break;
             }
-            txt(lang(u8"最高に美味しい！"s, u8"Wow! Terrific food!"s),
-                lang(u8"まさに絶品だ！"s, u8"Yummy! Absolutely yummy!"s),
-                lang(
-                    u8"天にも昇る味だ！"s,
-                    u8"It tasted like seventh heaven!"s));
+            txt(i18n::s.get_enum("core.locale.food.effect.quality.delicious", rnd(3)));
         }
     }
     else if (inv[ci].material == 35)
     {
         if (inv[ci].param3 < 0)
         {
-            txt(lang(
-                name(cc) + u8"は渋い顔をした。"s,
-                name(cc) + u8" looks glum."s));
+            txt(i18n::s.get("core.locale.food.effect.raw_glum", cdata[cc]));
         }
     }
     if (inv[ci].id == 425)
@@ -938,9 +870,7 @@ void apply_general_eating_effect()
         if (cc == 0)
         {
             txtef(2);
-            txt(lang(
-                u8"このハーブは活力の源だ。"s,
-                u8"This herb invigorates you."s));
+            txt(i18n::s.get("core.locale.food.effect.herb.curaria"));
         }
     }
     if (inv[ci].id == 422)
@@ -1000,9 +930,7 @@ void apply_general_eating_effect()
         if (cc == 0)
         {
             txtef(2);
-            txt(lang(
-                u8"新たな力が湧きあがってくる。"s,
-                u8"You feel might coming through your body."s));
+            txt(i18n::s.get("core.locale.food.effect.herb.morgia"));
         }
     }
     if (inv[ci].id == 423)
@@ -1062,9 +990,7 @@ void apply_general_eating_effect()
         if (cc == 0)
         {
             txtef(2);
-            txt(lang(
-                u8"魔力の向上を感じる。"s,
-                u8"You feel magical power springs up inside you."s));
+            txt(i18n::s.get("core.locale.food.effect.herb.mareilon"));
         }
     }
     if (inv[ci].id == 424)
@@ -1124,9 +1050,7 @@ void apply_general_eating_effect()
         if (cc == 0)
         {
             txtef(2);
-            txt(lang(
-                u8"感覚が研ぎ澄まされるようだ。"s,
-                u8"You feel as your sense is sharpened."s));
+            txt(i18n::s.get("core.locale.food.effect.herb.spenseweed"));
         }
     }
     if (inv[ci].id == 426)
@@ -1186,9 +1110,7 @@ void apply_general_eating_effect()
         if (cc == 0)
         {
             txtef(2);
-            txt(lang(
-                u8"ホルモンが活発化した。"s,
-                u8"Your hormones are activated."s));
+            txt(i18n::s.get("core.locale.food.effect.herb.alraunia"));
         }
     }
     if (inv[ci].id == 427)
@@ -1267,15 +1189,11 @@ void apply_general_eating_effect()
             {
                 if (trait(41))
                 {
-                    txt(lang(
-                        u8"これはあなたの大好きな人肉だ！"s,
-                        u8"It's your favorite human flesh!"s));
+                    txt(i18n::s.get("core.locale.food.effect.human.like"));
                 }
                 else
                 {
-                    txt(lang(
-                        u8"これは人肉だ…うぇぇ！"s,
-                        u8"Eeeek! It's human flesh!"s));
+                    txt(i18n::s.get("core.locale.food.effect.human.dislike"));
                     damage_insanity(cc, 15);
                     dmgcon(cc, status_ailment_t::insane, 150);
                     if (trait(41) == 0)
@@ -1292,9 +1210,7 @@ void apply_general_eating_effect()
             }
             else if (trait(41))
             {
-                txt(lang(
-                    u8"人肉の方が好みだが…"s,
-                    u8"You would've rather eaten human flesh."s));
+                txt(i18n::s.get("core.locale.food.effect.human.would_have_rather_eaten"));
                 nutrition = nutrition * 2 / 3;
             }
         }
@@ -1359,11 +1275,7 @@ void apply_general_eating_effect()
             flttypeminor = 58500;
             itemcreate(-1, 0, cdata[cc].position.x, cdata[cc].position.y, 0);
             txtef(9);
-            txt(lang(
-                u8"「げふぅ」"s + name(cc) + u8"は"s + itemname(ci, 1)
-                    + u8"を吐き出した。"s,
-                u8"「Ugh-Ughu」 "s + name(cc) + u8" spews up "s
-                    + itemname(ci, 1) + u8"."s));
+            txt(i18n::s.get("core.locale.food.effect.bomb_fish", cdata[cc], inv[ci]));
             ci = cibk;
         }
     }
@@ -1372,9 +1284,7 @@ void apply_general_eating_effect()
         if (inv[ci].subname == 319)
         {
             txtef(2);
-            txt(lang(
-                name(cc) + u8"は進化した。"s,
-                name(cc) + u8" evolve"s + _s(cc) + u8"."s));
+            txt(i18n::s.get("core.locale.food.effect.little_sister", cdata[cc]));
             if (rnd(sdata.get(2, cc).original_level
                         * sdata.get(2, cc).original_level
                     + 1)
@@ -1403,7 +1313,7 @@ void apply_general_eating_effect()
     }
     if (inv[ci].id == 755)
     {
-        txt(lang(u8"これは縁起がいい！"s, u8"The food is a charm!"s));
+        txt(i18n::s.get("core.locale.food.effect.hero_cheese"));
         skillmod(19, cc, 2000);
     }
     if (inv[ci].id == 702)
@@ -1426,9 +1336,7 @@ void apply_general_eating_effect()
     {
         if (cc < 16)
         {
-            txt(lang(
-                name(cc) + u8"はクッキーの中のおみくじを読んだ。"s,
-                name(cc) + u8" read"s + _s(cc) + u8" the paper fortune."s));
+            txt(i18n::s.get("core.locale.food.effect.fortune_cookie", cdata[cc]));
             read_talk_file(u8"%COOKIE2");
             if (inv[ci].curse_state == curse_state_t::blessed
                 || (inv[ci].curse_state == curse_state_t::none && rnd(2)))
@@ -1441,22 +1349,15 @@ void apply_general_eating_effect()
     }
     if (inv[ci].id == 667)
     {
-        txt(lang(
-            name(cc) + u8"の心はすこし癒された。"s,
-            name(cc) + your(cc) + u8" heart is warmed."s));
+        txt(i18n::s.get("core.locale.food.effect.sisters_love_fueled_lunch", cdata[cc]));
         healsan(cc, 30);
     }
     if (ibit(14, ci) == 1)
     {
         if (is_in_fov(cc))
         {
-            txt(lang(
-                u8"これは毒されている！"s + name(cc)
-                    + u8"はもがき苦しみのたうちまわった！"s,
-                u8"It's poisoned! "s + name(cc) + u8" writhe"s + _s(cc)
-                    + u8" in agony!"s));
-            txt(lang(u8"「ギャァァ…！」"s, u8"\"Gyaaaaa...!\""s),
-                lang(u8"「ブッ！」"s, u8"\"Ugh!\""s));
+            txt(i18n::s.get("core.locale.food.effect.poisoned.text", cdata[cc]));
+            txt(i18n::s.get_enum("core.locale.food.effect.poisoned.dialog", rnd(2)));
         }
         dmghp(cc, rnd(250) + 250, -4);
         if (cdata[cc].state != 1)
@@ -1475,20 +1376,12 @@ void apply_general_eating_effect()
     {
         if (cc == 0)
         {
-            txt(lang(u8"あなたは興奮した！"s, u8"You are excited!"s));
+            txt(i18n::s.get("core.locale.food.effect.spiked.self"));
         }
         else
         {
             txtef(9);
-            txt(name(cc)
-                    + lang(
-                          u8"「なんだか…変な気分なの…」"s,
-                          (u8" gasps, "s + u8"\"I f-feel...strange...\""s)),
-                name(cc)
-                    + lang(
-                          u8"「あれ…なにこの感じは…」"s,
-                          (u8"gasps "s
-                           + u8"\"Uh..uh..What is this feeling...\""s)));
+            txt(i18n::s.get_enum("core.locale.food.effect.spiked.other", rnd(2), cdata[cc]));
             cdata[cc].emotion_icon = 317;
             chara_mod_impression(cc, 30);
             modify_karma(0, -10);
@@ -1586,15 +1479,8 @@ void apply_general_eating_effect()
             {
                 if (is_in_fov(cc))
                 {
-                    txt(lang(
-                        name(cc) + u8"の"s
-                            + i18n::_(
-                                  u8"ability", std::to_string(enc), u8"name")
-                            + u8"は成長期に突入した。"s,
-                        name(cc) + his(cc) + u8" "s
-                            + i18n::_(
-                                  u8"ability", std::to_string(enc), u8"name")
-                            + u8" enters a period of rapid growth."s));
+                    txt(i18n::s.get("core.locale.food.effect.growth", cdata[cc],
+                                    i18n::_(u8"ability", std::to_string(enc), u8"name")));
                 }
                 buff_add(
                     cc,
@@ -1617,10 +1503,7 @@ void eating_effect_eat_iron()
     if (is_in_fov(cc))
     {
         txtef(8);
-        txt(lang(
-            u8"まるで鉄のように硬い！"s + name(cc) + u8"の胃は悲鳴をあげた。"s,
-            u8"It's too hard! "s + name(cc) + your(cc)
-                + u8" stomach screams."s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.iron", cdata[cc]));
     }
     dmgcon(cc, status_ailment_t::dimmed, 200);
     return;
@@ -1633,9 +1516,7 @@ void eating_effect_insanity()
     if (is_in_fov(cc))
     {
         txtef(8);
-        txt(lang(
-            u8"気が変になりそうな味だ。"s,
-            u8"It tastes really, really strange."s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.insanity", cdata[cc]));
     }
     damage_insanity(cc, 25);
     dmgcon(cc, status_ailment_t::insane, 500);
@@ -1649,9 +1530,7 @@ void eating_effect_eat_horse()
     if (is_in_fov(cc))
     {
         txtef(2);
-        txt(lang(
-            u8"馬肉だ！これは精がつきそうだ。"s,
-            u8"A horsemeat! It's nourishing"s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.horse", cdata[cc]));
     }
     skillexp(11, cc, 100);
     return;
@@ -1664,10 +1543,7 @@ void eating_effect_eat_holy_one()
     if (is_in_fov(cc))
     {
         txtef(2);
-        txt(lang(
-            name(cc) + u8"は神聖なものを汚した気がした。"s,
-            name(cc) + u8" feel"s + _s(cc) + u8" as "s + he(cc) + u8" "s
-                + have(cc) + u8" been corrupted."s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.holy_one", cdata[cc]));
     }
     if (rnd(5) == 0)
     {
@@ -1682,7 +1558,7 @@ void eating_effect_eat_at()
 {
     if (is_in_fov(cc))
     {
-        txt(lang(u8"＠を食べるなんて…"s, u8"You dare to eat @..."s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.at", cdata[cc]));
     }
     return;
 }
@@ -1698,7 +1574,7 @@ void eating_effect_eat_guard()
     if (is_in_fov(cc))
     {
         txtef(8);
-        txt(lang(u8"ガード達はあなたを憎悪した。"s, u8"Guards hate you."s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.guard", cdata[cc]));
     }
     modify_karma(cc, -15);
     return;
@@ -1711,9 +1587,7 @@ void eating_effect_fire()
     if (is_in_fov(cc))
     {
         txtef(2);
-        txt(lang(
-            name(cc) + u8"の体は一瞬燃え上がった。"s,
-            name(cc) + your(cc) + u8" body burns up for a second."s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.fire", cdata[cc]));
     }
     resistmod(cc, 50, 100);
     return;
@@ -1726,8 +1600,7 @@ void eating_effect_insanity2()
     if (is_in_fov(cc))
     {
         txtef(8);
-        txt(lang(
-            name(cc) + u8"の胃は狂気で満たされた。"s, u8"Sheer madness!"s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.insanity2", cdata[cc]));
     }
     resistmod(cc, 54, 50);
     damage_insanity(cc, 200);
@@ -1742,9 +1615,7 @@ void eating_effect_eat_cute_one()
     if (is_in_fov(cc))
     {
         txtef(2);
-        txt(lang(
-            u8"肌がつるつるになりそうだ。"s,
-            name(cc) + your(cc) + u8" skin becomes smooth."s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.cute_one", cdata[cc]));
     }
     skillexp(17, cc, 150);
     return;
@@ -1757,9 +1628,7 @@ void eating_effect_eat_lovely_one()
     if (is_in_fov(cc))
     {
         txtef(2);
-        txt(lang(
-            name(cc) + u8"は恋をしている気分になった！"s,
-            name(cc) + u8" feel"s + _s(cc) + u8" love!"s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.lovely_one", cdata[cc]));
     }
     skillexp(17, cc, 400);
     return;
@@ -1772,7 +1641,7 @@ void eating_effect_eat_poisonous_one()
     if (is_in_fov(cc))
     {
         txtef(8);
-        txt(lang(u8"これは有毒だ！"s, u8"Argh! It's poisonous!"s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.poisonous_one", cdata[cc]));
     }
     dmgcon(cc, status_ailment_t::poisoned, 100);
     return;
@@ -1785,9 +1654,7 @@ void eating_effect_regeneration()
     if (is_in_fov(cc))
     {
         txtef(2);
-        txt(lang(
-            u8"血が沸き立つようだ。"s,
-            u8"A troll meat. This must be good for your body."s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.troll", cdata[cc]));
     }
     skillexp(154, cc, 200);
     return;
@@ -1800,9 +1667,7 @@ void eating_effect_eat_rotten_one()
     if (is_in_fov(cc))
     {
         txtef(8);
-        txt(lang(
-            u8"腐ってるなんて分かりきっていたのに…うげぇ"s,
-            u8"Of course, it's rotten! Urgh..."s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.rotten_one", cdata[cc]));
     }
     eat_rotten_food();
     return;
@@ -1815,7 +1680,7 @@ void eating_effect_strength()
     if (is_in_fov(cc))
     {
         txtef(2);
-        txt(lang(u8"力が湧いてくるようだ。"s, u8"Mighty taste!"s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.strength", cdata[cc]));
     }
     skillexp(10, cc, 250);
     return;
@@ -1828,9 +1693,7 @@ void eating_effect_magic()
     if (is_in_fov(cc))
     {
         txtef(2);
-        txt(lang(
-            u8"微かな魔力の刺激を感じた。"s,
-            name(cc) + u8" "s + is(cc) + u8" magically stimulated."s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.magic", cdata[cc]));
     }
     skillexp(155, cc, 500);
     return;
@@ -1843,10 +1706,7 @@ void eating_effect_insanity3()
     if (is_in_fov(cc))
     {
         txtef(8);
-        txt(lang(
-            u8"胃の調子がおかしい…"s,
-            u8"Something is wrong with "s + name(cc) + your(cc)
-                + u8" stomach..."s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.insanity3", cdata[cc]));
     }
     dmgcon(cc, status_ailment_t::confused, 200);
     return;
@@ -1859,9 +1719,7 @@ void eating_effect_calm()
     if (is_in_fov(cc))
     {
         txtef(2);
-        txt(lang(
-            u8"この肉は心を落ち着かせる効果があるようだ。"s,
-            u8"Eating this brings "s + name(cc) + u8" inner peace."s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.calm", cdata[cc]));
     }
     healsan(cc, 20);
     return;
@@ -1874,8 +1732,7 @@ void eating_effect_insanity4()
     if (is_in_fov(cc))
     {
         txtef(8);
-        txt(lang(
-            name(cc) + u8"の胃は狂気で満たされた。"s, u8"Sheer madness!"s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.insanity2", cdata[cc]));
     }
     damage_insanity(cc, 50);
     if (rnd(5) == 0)
@@ -1892,9 +1749,7 @@ void eating_effect_chaos()
     if (is_in_fov(cc))
     {
         txtef(8);
-        txt(lang(
-            name(cc) + u8"の胃は混沌で満たされた。"s,
-            name(cc) + u8" "s + is(cc) + u8" shaken by a chaotic power."s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.chaos", cdata[cc]));
     }
     dmgcon(cc, status_ailment_t::confused, 300);
     return;
@@ -1907,9 +1762,7 @@ void eating_effect_lightning()
     if (is_in_fov(cc))
     {
         txtef(8);
-        txt(lang(
-            name(cc) + u8"の神経に電流が走った。"s,
-            name(cc) + your(cc) + u8" nerve is damaged."s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.lightning", cdata[cc]));
     }
     dmgcon(cc, status_ailment_t::paralyzed, 300);
     return;
@@ -1925,7 +1778,7 @@ void eating_effect_eat_cat()
     }
     if (is_in_fov(cc))
     {
-        txt(lang(u8"猫を食べるなんて！！"s, u8"How can you eat a cat!!"s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.cat", cdata[cc]));
     }
     modify_karma(0, -5);
     return;
@@ -1942,9 +1795,7 @@ void eating_effect_ether()
     if (is_in_fov(cc))
     {
         txtef(8);
-        txt(lang(
-            name(cc) + u8"の体内はエーテルで満たされた。"s,
-            u8"Ether corrupts your body."s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.ether", cdata[cc]));
     }
     modcorrupt(1000);
     return;
@@ -1957,9 +1808,7 @@ void eating_effect_constitution()
     if (is_in_fov(cc))
     {
         txtef(2);
-        txt(lang(
-            u8"体力がつきそうだ。"s,
-            u8"This food is good for your endurance."s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.constitution", cdata[cc]));
     }
     return;
 }
@@ -1971,8 +1820,7 @@ void eating_effect_magic2()
     if (is_in_fov(cc))
     {
         txtef(2);
-        txt(lang(
-            u8"魔力が鍛えられる。"s, u8"This food is good for your magic."s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.magic2", cdata[cc]));
     }
     return;
 }
@@ -1984,8 +1832,7 @@ void eating_effect_strength2()
     if (is_in_fov(cc))
     {
         txtef(2);
-        txt(lang(
-            u8"力がつきそうだ。"s, u8"This food is good for your strength."s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.strength2", cdata[cc]));
     }
     return;
 }
@@ -1997,9 +1844,7 @@ void eating_effect_will()
     if (is_in_fov(cc))
     {
         txtef(2);
-        txt(lang(
-            u8"精神が少しずぶとくなった。"s,
-            u8"This food is good for your will power."s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.will", cdata[cc]));
     }
     return;
 }
@@ -2011,9 +1856,7 @@ void eating_effect_quick()
     if (is_in_fov(cc))
     {
         txtef(2);
-        txt(lang(
-            u8"ワアーォ、"s + name(cc) + u8"は速くなった気がする！"s,
-            u8"Wow, "s + name(cc) + u8" speed"s + _s(cc) + u8" up!"s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.speed", cdata[cc]));
     }
     skillexp(
         18, cc, clamp(2500 - sdata(18, cc) * sdata(18, cc) / 10, 20, 2500));
@@ -2026,13 +1869,52 @@ void eating_effect_pregnant()
 {
     if (is_in_fov(cc))
     {
-        txt(lang(
-            u8"何かが"s + name(cc) + u8"の体内に入り込んだ。"s,
-            u8"Something gets into "s + name(cc) + your(cc) + u8" body."s));
+        txt(i18n::s.get("core.locale.food.effect.corpse.pregnant", cdata[cc]));
     }
     tc = cc;
     get_pregnant();
     return;
+}
+
+
+std::string
+foodname(int type, const std::string& ingredient_, int rank, int character_id)
+{
+    std::string ingredient = ingredient_;
+    if (type == 1 || type == 8)
+    {
+        // Food created from character drops (meat and eggs)
+        if (character_id == 0)
+        {
+            ingredient = i18n::s.get_enum_property("core.locale.food.names", "default_origin", type);
+        }
+        else
+        {
+            ingredient = chara_refstr(character_id, 2);
+        }
+    }
+    else if (type == 5 || type == 7)
+    {
+        // Food that always always has a default origin (bread and noodles)
+        ingredient = i18n::s.get_enum_property("core.locale.food.names", "default_origin", type);
+    }
+    else if (ingredient == ""s)
+    {
+        // No ingredient name was provided
+        ingredient = i18n::s.get_enum_property("core.locale.food.names", "default_origin", type);
+    }
+
+    if ((type < 1 || type > 8) || (rank < 1 || rank > 9))
+    {
+        return ingredient;
+    }
+    else
+    {
+        return i18n::s.get_enum_property("core.locale.food.names",
+                                         type,
+                                         "_" + std::to_string(rank),
+                                         ingredient);
+    }
 }
 
 } // namespace elona

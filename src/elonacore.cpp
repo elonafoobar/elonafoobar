@@ -3040,46 +3040,6 @@ void start_stealing()
 
 
 
-void get_hungry(int cc)
-{
-    if ((trait(158) && rnd(3) == 0) || debug::voldemort)
-        return;
-
-    int p = cdata[cc].nutrition / 1000;
-    cdata[cc].nutrition -= 8;
-    if (cdata[cc].nutrition / 1000 != p)
-    {
-        if (p == 1)
-        {
-            msgalert = 1;
-            txt(lang(u8"このままだと餓死してしまう！"s, u8"You are starving!"s),
-                lang(
-                    u8"腹が減ってほとんど死にかけている。"s,
-                    u8"You are almost dead from hunger."s));
-        }
-        else if (p == 2)
-        {
-            msgalert = 1;
-            txt(lang(
-                    u8"空腹で目が回りだした…"s,
-                    u8"Your hunger makes you dizzy."s),
-                lang(
-                    u8"すぐに何かを食べなくては…"s,
-                    u8"You have to eat something NOW."s));
-        }
-        else if (p == 5)
-        {
-            msgalert = 1;
-            txt(lang(u8"腹がすいてきた。"s, u8"You are getting hungry."s),
-                lang(u8"空腹になった。"s, u8"You feel hungry."s),
-                lang(u8"さて何を食べようか。"s, u8"Now what shall I eat?"s));
-        }
-        refreshspeed(cc);
-    }
-}
-
-
-
 void proc_turn_end(int cc)
 {
     int regen = 0;

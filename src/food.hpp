@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 namespace elona
 {
@@ -13,6 +14,7 @@ void chara_vomit(int = 0);
 void eatstatus(curse_state_t, int);
 void sickifcursed(curse_state_t, int, int);
 void cure_anorexia(int = 0);
+void get_hungry(int);
 void show_eating_message();
 void eat_rotten_food();
 
@@ -49,5 +51,7 @@ void eating_effect_strength2();
 void eating_effect_will();
 void eating_effect_quick();
 void eating_effect_pregnant();
+
+std::string foodname(int, const std::string&, int = 0, int = 0);
 
 } // namespace elona
