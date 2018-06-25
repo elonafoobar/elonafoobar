@@ -110,21 +110,11 @@ std::string cnvdate(int datetime_id, bool show_hour)
         datetime_id -= 8640;
     }
     int year = datetime_id / 24 / 30 / 12;
-    if (jp)
+
+    ret = i18n::s.get("core.locale.ui.date", year, month, day);
+    if (show_hour)
     {
-        ret = ""s + year + u8"年"s + month + u8"月"s + day + u8"日"s;
-        if (show_hour)
-        {
-            ret += std::to_string(hour) + u8"時";
-        }
-    }
-    else
-    {
-        ret = ""s + year + u8" "s + month + u8"/"s + day + u8" "s;
-        if (show_hour)
-        {
-            ret += std::to_string(hour) + u8"h";
-        }
+        ret += i18n::s.get("core.locale.ui.date_hour", hour);
     }
 
     return ret;
@@ -137,9 +127,7 @@ std::string cnvplaytime(int datetime_id)
     const int h = datetime_id / 60 / 60;
     const int m = datetime_id / 60 % 60;
     const int s = datetime_id % 60;
-    return lang(
-        std::to_string(h) + u8"時間" + m + u8"分" + s + u8"秒",
-        std::to_string(h) + u8":" + m + u8":" + s + u8" Sec");
+    return i18n::s.get("core.locale.ui.playtime", h, m, s);
 }
 
 
