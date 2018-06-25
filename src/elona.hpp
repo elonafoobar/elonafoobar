@@ -356,12 +356,12 @@ void await(int msec);
 
 
 void boxf(
-    int x1,
-    int y1,
-    int x2,
-    int y2,
+    int x,
+    int y,
+    int width,
+    int height,
     const snail::color& color = {0, 0, 0, 0});
-void boxf(const snail::color& color = {0, 0, 0, 0});
+void boxf();
 
 
 void buffer(int window_id, int width = 0, int heihgt = 0);
@@ -524,14 +524,6 @@ void wpoke(int& x, size_t index, int y);
 // imported functions
 
 
-
-void gfini(int width, int height);
-
-void gfdec(int r, int g, int b);
-
-void gfdec2(int r, int g, int b);
-
-void gfinc(int r, int g, int b);
 
 void ematan(int, int, int);
 

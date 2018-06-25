@@ -410,9 +410,9 @@ void await(int msec)
     await_detail::last_await = now;
 }
 
-void boxf(int x1, int y1, int x2, int y2, const snail::color& color)
+void boxf(int x, int y, int width, int height, const snail::color& color)
 {
-    const auto save_alpha = detail::current_tex_buffer().color.a;
+    const auto save_color = detail::current_tex_buffer().color;
     detail::current_tex_buffer().color = color;
     application::instance().get_renderer().set_draw_color(color);
     if (color == snail::color{0, 0, 0, 0})
@@ -425,8 +425,8 @@ void boxf(int x1, int y1, int x2, int y2, const snail::color& color)
         application::instance().get_renderer().set_blend_mode(
             blend_mode_t::blend);
     }
-    application::instance().get_renderer().fill_rect(x1, y1, x2 - x1, y2 - y1);
-    detail::current_tex_buffer().color.a = save_alpha;
+    application::instance().get_renderer().fill_rect(x, y, width, height);
+    detail::current_tex_buffer().color = save_color;
 }
 
 void boxf(const snail::color& color)

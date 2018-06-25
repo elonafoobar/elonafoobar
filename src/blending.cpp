@@ -315,9 +315,7 @@ void window_recipe_(
             prm_1054 - prm_1054 % 8,
             0,
             -1);
-        pos(prm_1051 + prm_1053 - 522, 0);
-        gfini(486, 69);
-        gfdec(40, 40, 40);
+        boxf(prm_1051 + prm_1053 - 522, 0, 486, 69, {30, 30, 30});
         windowshadow = 0;
     }
     window(prm_1051, prm_1052, prm_1053, prm_1054 - prm_1054 % 8, 0, 0);
@@ -364,14 +362,23 @@ void window_recipe_(
     font(13 - en * 2);
     i_at_m184 = 1;
     pos(dx_at_m184 - 10, dy_at_m184 - 2);
-    gfini(prm_1053 - 60, 17);
     if (step == i_at_m184 - 2)
     {
-        gfdec2(10, 20, 30);
+        boxf(
+            dx_at_m184 - 10,
+            dy_at_m184 - 2,
+            prm_1053 - 60,
+            17,
+            {60, 20, 10, 32});
     }
     else if (step > i_at_m184 - 2)
     {
-        gfdec2(25, 30, 35);
+        boxf(
+            dx_at_m184 - 10,
+            dy_at_m184 - 2,
+            prm_1053 - 60,
+            17,
+            {20, 20, 20, 32});
     }
     if (step == -1)
     {
@@ -396,14 +403,23 @@ void window_recipe_(
             break;
         }
         pos(dx_at_m184 - 10, dy_at_m184 - 2);
-        gfini(prm_1053 - 60, 17);
         if (step == i_at_m184 - 2)
         {
-            gfdec2(10, 20, 30);
+            boxf(
+                dx_at_m184 - 10,
+                dy_at_m184 - 2,
+                prm_1053 - 60,
+                17,
+                {60, 20, 10, 32});
         }
         else if (step > i_at_m184 - 2)
         {
-            gfdec2(25, 30, 35);
+            boxf(
+                dx_at_m184 - 10,
+                dy_at_m184 - 2,
+                prm_1053 - 60,
+                17,
+                {20, 20, 20, 32});
         }
         if (step <= cnt)
         {
@@ -428,14 +444,23 @@ void window_recipe_(
     pos(wx + ww + 243, wy - 4);
     gcopy(3, 1040, 96, 160, 70);
     pos(dx_at_m184 - 10, dy_at_m184 - 2);
-    gfini(prm_1053 - 60, 17);
     if (step == i_at_m184 - 2)
     {
-        gfdec2(10, 20, 30);
+        boxf(
+            dx_at_m184 - 10,
+            dy_at_m184 - 2,
+            prm_1053 - 60,
+            17,
+            {60, 20, 10, 32});
     }
     else if (step > i_at_m184 - 2)
     {
-        gfdec2(25, 30, 35);
+        boxf(
+            dx_at_m184 - 10,
+            dy_at_m184 - 2,
+            prm_1053 - 60,
+            17,
+            {20, 20, 20, 32});
     }
     pos(dx_at_m184, dy_at_m184);
     mes(""s + i_at_m184 + u8"."s
@@ -693,9 +718,7 @@ label_1925_internal:
         ++keyrange;
         if (cnt % 2 == 0)
         {
-            pos(wx + 70, wy + 60 + cnt * 19);
-            gfini(ww - 100, 18);
-            gfdec2(12, 14, 16);
+            boxf(wx + 70, wy + 60 + cnt * 19, ww - 100, 18, {12, 14, 16, 16});
         }
         pos(wx + 37, wy + 70 + cnt * 19);
         gmode(2, item_chips[550].width, item_chips[550].height);
@@ -823,9 +846,7 @@ label_1928_internal:
         ++keyrange;
         if (cnt % 2 == 0)
         {
-            pos(wx + 70, wy + 60 + cnt * 19);
-            gfini(ww - 100, 18);
-            gfdec2(12, 14, 16);
+            boxf(wx + 70, wy + 60 + cnt * 19, ww - 100, 18, {12, 14, 16, 16});
         }
     }
     font(14 - en * 2);

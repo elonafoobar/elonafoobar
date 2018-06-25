@@ -1006,9 +1006,7 @@ label_2061_internal:
         ++keyrange;
         if (cnt % 2 == 0)
         {
-            pos(wx + 70, wy + 60 + cnt * 19);
-            gfini(540, 18);
-            gfdec2(12, 14, 16);
+            boxf(wx + 70, wy + 60 + cnt * 19, 540, 18, {12, 14, 16, 16});
         }
     }
     font(14 - en * 2);

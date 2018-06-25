@@ -978,11 +978,7 @@ void draw_npc(int x, int y, int dx, int dy, int ani_, int ground_)
                     chara_chips[p_].offset_y += 24;
                 }
                 gsel(5);
-                boxf(
-                    0,
-                    960,
-                    chara_chips[p_].width,
-                    chara_chips[p_].height + 960);
+                boxf(0, 960, chara_chips[p_].width, chara_chips[p_].height);
                 pos(0, 960);
                 set_color_mod(
                     255 - c_col(0, col_),
@@ -995,8 +991,6 @@ void draw_npc(int x, int y, int dx, int dy, int ani_, int ground_)
                     chara_chips[p_].width,
                     chara_chips[p_].height);
                 set_color_mod(255, 255, 255);
-                gfini(chara_chips[p_].width, chara_chips[p_].height);
-                gfdec2(c_col(0, col_), c_col(1, col_), c_col(2, col_));
                 gsel(0);
                 if (mdata(6) == 1)
                 {
@@ -1358,12 +1352,13 @@ void cell_draw()
                             inf_tiles - std::max(dx_ + inf_tiles - windoww, 0)
                                 + std::min(dx_, 0),
                             12);
-                        pos(std::max(dx_, 0), dy_ - 20);
-                        gfini(
+                        boxf(
+                            std::max(dx_, 0),
+                            dy_ - 20,
                             inf_tiles - std::max(dx_ + inf_tiles - windoww, 0)
                                 + std::min(dx_, 0),
-                            8);
-                        gfdec2(25, 25, 25);
+                            8,
+                            {0, 0, 0, 25});
                     }
                 }
             }
@@ -1372,18 +1367,20 @@ void cell_draw()
                 ground_ = map(x_, y - 1, 0);
                 if (chipm(2, ground_))
                 {
-                    pos(std::max(dx_, 0), dy_);
-                    gfini(
+                    boxf(
+                        std::max(dx_, 0),
+                        dy_,
                         inf_tiles - std::max(dx_ + inf_tiles - windoww, 0)
                             + std::min(dx_, 0),
-                        24);
-                    gfdec2(16, 16, 16);
-                    pos(std::max(dx_, 0), dy_ + 24);
-                    gfini(
+                        24,
+                        {0, 0, 0, 16});
+                    boxf(
+                        std::max(dx_, 0),
+                        dy_ + 24,
                         inf_tiles - std::max(dx_ + inf_tiles - windoww, 0)
                             + std::min(dx_, 0),
-                        12);
-                    gfdec2(12, 12, 12);
+                        12,
+                        {0, 0, 0, 12});
                 }
             }
         }

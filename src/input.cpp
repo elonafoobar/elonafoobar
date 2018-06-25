@@ -45,12 +45,7 @@ int show_prompt(int x, int y, int width, show_prompt_type type, int val4)
     gsel(0);
     sx = x - width / 2;
     sy = y - promptmax * 10;
-    boxf(
-        sx + 12,
-        sy + 12,
-        sx + width - 5,
-        sy + promptmax * 20 + 37,
-        snail::color{60, 60, 60, 128});
+    boxf(sx + 12, sy + 12, width - 17, promptmax * 20 + 25, {60, 60, 60, 128});
     keyhalt = 1;
 
     if (type == show_prompt_type::with_number)
@@ -65,9 +60,7 @@ int show_prompt(int x, int y, int width, show_prompt_type type, int val4)
         {
             dx += std::to_string(val5).size() * 8;
         }
-        pos(dx(1) + sx + 24, dy + 4);
-        gfini(dx - 42, 35);
-        gfdec(60, 60, 60);
+        boxf(dx(1) + sx + 24, dy + 4, dx - 42, 35, {0, 0, 0, 127});
     }
 
     while (1)
@@ -176,9 +169,7 @@ void input_number_dialog(int x, int y, int max_number)
     {
         dx += strlen_u(std::to_string(max_number)) * 8;
     }
-    pos(x + 24, y + 4);
-    gfini(dx - 42, 35);
-    gfdec(60, 60, 60);
+    boxf(x + 24, y + 4, dx - 42, 35, {0, 0, 0, 127});
     while (1)
     {
         window2(x + 20, y, dx - 40, 36, 0, 2);
@@ -300,9 +291,7 @@ bool input_text_dialog(
     pos(x, y);
     inputlog = "";
     mesbox(inputlog, true);
-    pos(x + 4, y + 4);
-    gfini(dx - 1, 35);
-    gfdec(60, 60, 60);
+    boxf(x + 4, y + 4, dx - 1, 35, {0, 0, 0, 127});
 
     notesel(inputlog);
     p(1) = 2;

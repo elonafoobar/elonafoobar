@@ -311,11 +311,7 @@ void label_1872()
 {
     x(1) = 300;
     cs = -1;
-    boxf(
-        170,
-        noteinfo() * 20 + 120 + txtadvmsgfix + 16,
-        170 + x(1),
-        noteinfo() * 20 + 120 + txtadvmsgfix + 16 + 20 * listmax);
+    boxf(170, noteinfo() * 20 + 120 + txtadvmsgfix + 16, x(1), 20 * listmax);
     font(14 - en * 2);
     cs_listbk();
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
