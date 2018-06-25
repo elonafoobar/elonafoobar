@@ -37,6 +37,9 @@ locale {
         beggars = "Blaggers pick on you!"
 
         popup {
+            skip = "\"${_1}\""
+            title = " < ${_1} > "
+
             _15 {
                 title = "Murderer"
                 text = "Suddenly, a painful shriek rises from somewhere in the town. You see several guards hastily run by."
@@ -173,7 +176,7 @@ locale {
                 }
             }
 
-            _22 {
+            _5 {
                 title = "Cursed Whispering"
                 text = "Your sleep is disturbed by a harshly whispering that comes from nowhere."
 
@@ -192,6 +195,7 @@ locale {
                     _0 = "Bloody thieves..."
                 }
 
+                you_lose = "You lose ${_1} gold pieces."
                 no_effect = "The thief fails to steal money from you."
             }
 

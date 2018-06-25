@@ -1,185 +1,222 @@
 #include "ability.hpp"
+#include "optional.hpp"
 #include "variables.hpp"
 
 namespace elona
 {
 
-int proc_random_event()
+optional<std::pair<int, int>> generate_random_event_mode9()
 {
-    int id0 = 0;
-    int id1 = 0;
+    int event_id = 0;
+    int luck_threshold = 0;
+
+    if (!cdata[0].god_id.empty())
+    {
+        if (rnd(12) == 0)
+        {
+            event_id = 18;
+        }
+    }
+    if (rnd(80) == 0)
+    {
+        event_id = 4;
+        luck_threshold = 120;
+    }
+    if (rnd(20) == 0)
+    {
+        event_id = 3;
+    }
+    if (rnd(25) == 0)
+    {
+        event_id = 2;
+    }
+    if (rnd(100) == 0)
+    {
+        event_id = 5;
+        luck_threshold = 65;
+    }
+    if (rnd(20) == 0)
+    {
+        event_id = 6;
+    }
+    if (rnd(20) == 0)
+    {
+        event_id = 7;
+    }
+    if (rnd(250) == 0)
+    {
+        if (inv_getfreeid(0) != -1)
+        {
+            event_id = 19;
+        }
+    }
+    if (rnd(10000) == 0)
+    {
+        if (inv_getfreeid(0) != -1)
+        {
+            event_id = 21;
+        }
+    }
+    if (rnd(70) == 0)
+    {
+        event_id = 8;
+        luck_threshold = 40;
+    }
+    if (rnd(200) == 0)
+    {
+        event_id = 20;
+    }
+    if (rnd(50) == 0)
+    {
+        event_id = 23;
+    }
+    if (rnd(300) == 0)
+    {
+        event_id = 24;
+    }
+    if (rnd(90) == 0)
+    {
+        event_id = 22;
+        luck_threshold = 70;
+    }
+
+    if (event_id == 0)
+    {
+        return none;
+    }
+
+    return std::make_pair(event_id, luck_threshold);
+}
+
+optional<std::pair<int, int>> generate_random_event()
+{
+    int event_id = 0;
+    int luck_threshold = 0;
+
     if (gspd < 10)
     {
-        return 0;
+        return none;
     }
     if (dbg_skipevent)
     {
-        return 0;
+        return none;
     }
     if (mode == 12)
     {
-        return 0;
+        return none;
     }
     if (mode == 9)
     {
-        if (!cdata[0].god_id.empty())
-        {
-            if (rnd(12) == 0)
-            {
-                id0 = 18;
-            }
-        }
-        if (rnd(80) == 0)
-        {
-            id0 = 4;
-            id1 = 120;
-        }
-        if (rnd(20) == 0)
-        {
-            id0 = 3;
-        }
-        if (rnd(25) == 0)
-        {
-            id0 = 2;
-        }
-        if (rnd(100) == 0)
-        {
-            id0 = 5;
-            id1 = 65;
-        }
-        if (rnd(20) == 0)
-        {
-            id0 = 6;
-        }
-        if (rnd(20) == 0)
-        {
-            id0 = 7;
-        }
-        if (rnd(250) == 0)
-        {
-            if (inv_getfreeid(0) != -1)
-            {
-                id0 = 19;
-            }
-        }
-        if (rnd(10000) == 0)
-        {
-            if (inv_getfreeid(0) != -1)
-            {
-                id0 = 21;
-            }
-        }
-        if (rnd(70) == 0)
-        {
-            id0 = 8;
-            id1 = 40;
-        }
-        if (rnd(200) == 0)
-        {
-            id0 = 20;
-        }
-        if (rnd(50) == 0)
-        {
-            id0 = 23;
-        }
-        if (rnd(300) == 0)
-        {
-            id0 = 24;
-        }
-        if (rnd(90) == 0)
-        {
-            id0 = 22;
-            id1 = 70;
-        }
-        goto label_1894_internal;
+        return generate_random_event_mode9();
     }
     if (mdata(6) != 1)
     {
         if (cdata[0].continuous_action_id != 0)
         {
-            return 0;
+            return none;
         }
     }
     if (mdata(6) == 5)
     {
-        return 0;
+        return none;
     }
     if (rnd(30) == 0)
     {
-        id0 = 17;
+        event_id = 17;
     }
     if (rnd(25) == 0)
     {
-        id0 = 16;
+        event_id = 16;
     }
     if (rnd(25) == 0)
     {
-        id0 = 12;
+        event_id = 12;
     }
     if (rnd(50) == 0)
     {
-        id0 = 9;
+        event_id = 9;
     }
     if (rnd(80) == 0)
     {
-        id0 = 14;
+        event_id = 14;
     }
     if (rnd(50) == 0)
     {
-        id0 = 8;
-        id1 = 40;
+        event_id = 8;
+        luck_threshold = 40;
     }
     if (rnd(80) == 0)
     {
-        id0 = 13;
-        id1 = 45;
+        event_id = 13;
+        luck_threshold = 45;
     }
     if (mdata(6) == 3)
     {
         if (rnd(25) == 0)
         {
-            id0 = 15;
-            id1 = 80;
+            event_id = 15;
+            luck_threshold = 80;
         }
-        goto label_1894_internal;
+        if (event_id == 0)
+        {
+            return none;
+        }
+        else
+        {
+            return std::make_pair(event_id, luck_threshold);
+        }
     }
     if (mdata(6) == 1)
     {
         if (rnd(40))
         {
-            return 0;
+            return none;
         }
-        goto label_1894_internal;
+        if (event_id == 0)
+        {
+            return none;
+        }
+        else
+        {
+            return std::make_pair(event_id, luck_threshold);
+        }
     }
     if (rnd(25) == 0)
     {
-        id0 = 10;
+        event_id = 10;
     }
     if (rnd(25) == 0)
     {
-        id0 = 11;
+        event_id = 11;
     }
 label_1894_internal:
-    if (id0 == 0)
+    if (event_id == 0)
     {
-        return 0;
+        return none;
     }
+
+    return std::make_pair(event_id, luck_threshold);
+}
+
+void run_random_event(int event_id, int luck_threshold)
+{
     cc = 0;
     tc = 0;
     listmax = 0;
-    if (id1 != 0)
+    if (luck_threshold != 0)
     {
-        if (rnd(sdata(19, 0) + 1) > id1)
+        // Default to "Avoiding Misfortune" if Luck is good enough.
+        if (rnd(sdata(19, 0) + 1) > luck_threshold)
         {
-            id0 = 1;
+            event_id = 1;
         }
     }
 
-    s = i18n::s.get_enum_property("core.locale.event.popup", "title", id0);
-    buff = i18n::s.get_enum_property("core.locale.event.popup", "text", id0);
+    s = i18n::s.get_enum_property("core.locale.event.popup", "title", event_id);
+    buff = i18n::s.get_enum_property("core.locale.event.popup", "text", event_id);
     std::string event_bg;
 
-    switch (id0)
+    switch (event_id)
     {
     case 15:
         for (int cnt = 0; cnt < 20; ++cnt)
@@ -192,7 +229,7 @@ label_1894_internal:
             }
             if (cdata[p].state == 1)
             {
-                txt(i18n::s.get("core.locale.event.popup._15.scream", cdata[p]));
+                txt(i18n::s.get_enum_property("core.locale.event.popup", "scream", 15, cdata[p]));
                 dmghp(p, 99999, -11);
                 break;
             }
@@ -266,9 +303,8 @@ label_1894_internal:
     case 19:
         flt();
         itemcreate(0, 621, -1, -1, 0);
-        txt(lang(
-            itemname(ci, 1) + u8"をバックパックに入れた。"s,
-            u8"You put "s + itemname(ci, 1) + u8" in your backpack."s));
+        txt(i18n::s.get("core.locale.common.you_put_in_your_backpack",
+                inv[ci]));
         listmax = 1;
         event_bg = u8"bg_re15";
         break;
@@ -280,16 +316,15 @@ label_1894_internal:
     case 21:
         flt();
         itemcreate(0, 721, -1, -1, 0);
-        txt(lang(
-            itemname(ci, 1) + u8"をバックパックに入れた。"s,
-            u8"You put "s + itemname(ci, 1) + u8" in your backpack."s));
+        txt(i18n::s.get("core.locale.common.you_put_in_your_backpack",
+                inv[ci]));
         listmax = 1;
         event_bg = u8"bg_re15";
         break;
     case 5:
         if (trait(42))
         {
-            txt(i18n::s.get("core.locale.event.popup._22.no_effect"));
+            txt(i18n::s.get_enum_property("core.locale.event.popup", "no_effect", 5));
         }
         else
         {
@@ -328,14 +363,13 @@ label_1894_internal:
         }
         if (p > 0)
         {
-            txt(lang(
-                u8"金貨"s + p + u8"枚を失った。"s,
-                u8"You lose "s + p + u8" gold pieces."s));
+            txt(i18n::s.get_enum_property("core.locale.event.popup", "you_lose", 8,
+                                          p(0)));
             cdata[0].gold -= p;
         }
         else
         {
-            txt(i18n::s.get("core.locale.event.popup._8.no_effect"));
+            txt(i18n::s.get_enum_property("core.locale.event.popup", "no_effect", 8));
         }
         listmax = 1;
         event_bg = u8"bg_re9";
@@ -378,9 +412,8 @@ label_1894_internal:
     case 16:
         p = rnd(cdata[0].gold / 10 + 1000) + 1;
         cdata[0].gold += p;
-        txt(lang(
-            u8"金貨"s + p + u8"枚を手に入れた。"s,
-            u8"You pick up "s + p + u8" gold pieces."s));
+        txt(i18n::s.get_enum_property("core.locale.event.popup", "you_pick_up", 16,
+                        p(0)));
         listmax = 1;
         event_bg = u8"bg_re1";
         break;
@@ -399,19 +432,19 @@ label_1894_internal:
         list(0, cnt) = cnt;
         listn(0, cnt) = i18n::s.get_enum_property("core.locale.event.popup",
                                                   "choices._" + std::to_string(cnt),
-                                                  id0);
+                                                  event_id);
     }
 
     show_random_event_window(event_bg);
 
-    switch(id0)
+    switch(event_id)
     {
     case 14:
         if (rtval == 1)
         {
             cdata[0].nutrition = 15000;
-            int text_index = rnd(3);
-            txt(i18n::s.get_enum("core.locale.event.popup._14.results", text_index));
+            txt(i18n::s.get_enum_property("core.locale.event.popup", "results", 14
+                                          "_" + std::to_string(rnd(3)));
             show_eating_message();
             chara_anorexia(0);
         }
@@ -426,14 +459,14 @@ label_1894_internal:
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
             txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+                    u8"何かが足元に転がってきた。"s,
+                    u8"Something is put on the ground."s));
         }
         break;
     case 11:
         if (rtval == 1)
         {
-            txt(i18n::s.get("core.locale.event.popup._11.loot"));
+            txt(i18n::s.get_enum_property("core.locale.event.popup", "loot", 11));
             modify_karma(0, -2);
             for (int cnt = 0, cnt_end = (1 + rnd(3)); cnt < cnt_end; ++cnt)
             {
@@ -449,19 +482,31 @@ label_1894_internal:
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
             txt(lang(
-                u8"何かが足元に転がってきた。"s,
-                u8"Something is put on the ground."s));
+                    u8"何かが足元に転がってきた。"s,
+                    u8"Something is put on the ground."s));
         }
         else
         {
-            txt(i18n::s.get("core.locale.event.popup._11.bury"));
+            txt(i18n::s.get_enum_property("core.locale.event.popup", "bury", 11));
             modify_karma(0, 5);
         }
     }
 
     cc = 0;
     load_continuous_action_animation();
-    return 1;
+}
+
+int proc_random_event()
+{
+    if (auto pair = generate_random_event())
+    {
+        run_random_event(pair->first, pair->second);
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 
@@ -474,7 +519,7 @@ int show_random_event_window(const std::string& file)
         {
             snd(62);
             txt(""s + buff);
-            txt(lang(u8"「"s, u8"\""s) + listn(0, 0) + lang(u8"」"s, u8"\""s));
+            txt(i18n::s.get("core.locale.event.popup.skip", listn(0, 0)));
             rtval = -1;
             return rtval;
         }
@@ -523,7 +568,7 @@ label_1897_internal:
     boxl(wx + 12, wy + 6, wx + tx + 12, wy + ty + 6);
     color(0, 0, 0);
     font(14 - en * 2);
-    q = lang(u8"《 "s + s + u8" 》"s, u8" < "s + s + u8" > "s);
+    q = i18n::s.get("core.locale.event.popup.title", s(0));
     pos(wx + 40, wy + 16);
     color(30, 20, 10);
     bmes(q, 245, 235, 225);
