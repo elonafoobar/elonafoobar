@@ -5,7 +5,11 @@ locale {
             it_is_cursed = "It's cursed!"
             resists = "${name(_1)} resist${s(_1)}."
             melts_alien_children = "${name(_1)}${his_owned(_1)} alien children melt in ${his(_1)} stomach."
+            cursed = "${name(_1)} hear${s(_1)} devils laugh."
         }
+
+        # By convention, if the magic text contains both the name of the target and caster, the
+        # caster will be argument _1, and the target will be argument _2.
 
         slow = "${name(_1)}${his_owned(_1)} aging process slows down."
         speed = "${name(_1)}${his_owned(_1)} aging process speeds up."
@@ -19,7 +23,7 @@ locale {
             # JP uses different words (爆発 and 誘爆) for explosions that were started originally or
             # as part of a chain. The text is the same in EN, however.
             begins = "${name(_1)} explode${s(_1)}."
-            collateral = "${name(_1)} explode${s(_1)}."
+            chain = "${name(_1)} explode${s(_1)}."
             ally = "The explosion hits ${name(_1)}."
             other = "The explosion hits ${name(_1)} and"
         }
@@ -69,7 +73,7 @@ locale {
             prevented = "Magical field prevents teleportation."
             suspicious_hand {
                 succeeded = "${name(_1)} steal${s(_1)} ${_3} gold pieces from ${name(_2)}."
-                prevented = "${name(_1)} guard${s(_1)} ${his(_1)} wallet from a thief"
+                prevented = "${name(_1)} guard${s(_1)} ${his(_1)} wallet from a thief."
                 after = "A thief escapes laughing."
             }
             shadow_step = "${name(_1)} teleport${s(_1)} toward ${basename(_2)}."
@@ -78,7 +82,7 @@ locale {
         }
 
         breath {
-            breath = "breath"
+            no_element = "breath"
             named = "${_1} breath"
             bellows = "${name(_1)} bellow${s(_1)} ${_2} from ${his(_1)} mouth."
             ally = "The breath hits ${_1}."
@@ -96,6 +100,7 @@ locale {
             need_global_map = "You need to read it while you are in the global map."
             cursed = "The cursed map crumbles as you touch."
             apply = "There's a mark on the map..."
+            mark = "O"
         }
 
         love_potion {
@@ -107,11 +112,13 @@ locale {
 
         pregnant = "${name(_1)} put${s(_1)} something into ${name(_2)}${his_owned(_2)} body!"
 
-        examine_self = "You examine yourself."
+        mirror = "You examine yourself."
 
         milk {
-            cursed_self = "Geee it's cursed! The taste is very dangerous."
-            cursed_other = "\"Argh, the milk is cursed!\""
+            cursed {
+                self = "Geee it's cursed! The taste is very dangerous."
+                other = "\"Argh, the milk is cursed!\""
+            }
             self = "The taste is very thick, almost addictive."
             other = "「うまー」"
         }
@@ -207,11 +214,7 @@ locale {
             cannot_during_swim = "You can't fish while swimming."
         }
 
-        holy_light {
-            cursed = "${name(_1)} hear${s(_1)} devils laugh."
-        }
-
-        holy_veil = "A golden aura wraps ${name(_1)}!"
+        prayer = "A golden aura wraps ${name(_1)}!"
 
         create_material {
             materials = "materials"
@@ -220,7 +223,7 @@ locale {
         }
 
         mutation {
-            offensive = "${name(_1)} cast${s(_1)} an insane glance on ${name(_2)}."
+            spell = "${name(_1)} cast${s(_1)} an insane glance on ${name(_2)}."
             resist = "You resist the threat of mutation."
             apply = "You mutate."
         }
@@ -230,7 +233,7 @@ locale {
         resurrection {
             cursed = "Hoards of undead raise from the hell!"
             fail = "${name(_1)}${his_owned(_1)} prayer doesn't reach the underworld."
-            apply = "${_1} ${have(_1)} been resurrected!" # TODO
+            apply = "${_1} ${have(_2)} been resurrected!"
             dialog = "\"Thanks!\""
         }
 
@@ -250,14 +253,11 @@ locale {
         gain_knowledge {
             suddenly = "Suddenly, "
             furthermore = "Furthermore, "
-            gain_knowledge = "you gain knowledge of a spell, ${_1}."
-            lose_knowledge = "Suddenly, you lose knowledge of a spell, ${_1}."
+            gain = "you gain knowledge of a spell, ${_1}."
+            lose = "Suddenly, you lose knowledge of a spell, ${_1}."
         }
 
-        descent {
-            apply = "${name(_1)} lose${s(_1)} a level..."
-        }
-
+        descent = "${name(_1)} lose${s(_1)} a level..."
         gain_skill = "${name(_1)} gain${s(_1)} a skill of ${_2}!"
 
         faith {
@@ -269,8 +269,8 @@ locale {
         gain_skill_potential {
             the = "The "
             furthermore_the = "Furthermore, the "
-            increases = "potential of ${_1} skill increases."
-            decreases = "The potential of ${_1} skill decreases."
+            increases = "potential of ${name(_1)}${his_owned(_1)} ${_2} skill increases."
+            decreases = "The potential of ${name(_1)}${his_owned(_1)} ${_2} skill decreases."
         }
 
         troll_blood {
@@ -280,8 +280,8 @@ locale {
 
         gain_potential {
             blessed = "${name(_1)}${his_owned(_1)} potential of every attribute expands."
-            increases = "${name(_1)}${his_owned(_1)} potential of ${_1} expands."
-            decreases = "${name(_1)}${his_owned(_1)} potential of ${_1} decreases."
+            increases = "${name(_1)}${his_owned(_1)} potential of ${_2} expands."
+            decreases = "${name(_1)}${his_owned(_1)} potential of ${_2} decreases."
         }
 
         vanish = "${name(_1)} vanish${s(_1, true)}."
@@ -315,7 +315,7 @@ locale {
             cancel = "The air around you gradually loses power."
             during_quest = "Returning while taking a quest if forbidden. Are you sure you want to return?"
             begin = "The air around you becomes charged."
-            during_dungeon = "The lord of the dungeon might disappear if you escape now."
+            lord_may_disappear = "The lord of the dungeon might disappear if you escape now."
         }
 
         return {
@@ -331,7 +331,7 @@ locale {
         sleep = "Strange sweet liquid splashes onto ${name(_1)}!"
 
         curse {
-            offensive = "${name(_1)} point${s(_1)} ${name(_2)} and mutter${s(_1)} a curse."
+            spell = "${name(_1)} point${s(_1)} ${name(_2)} and mutter${s(_1)} a curse."
             no_effect = "Your prayer nullifies the curse."
             apply = "${name(_1)}${his_owned(_1)} ${_2} glows black."
         }
@@ -445,7 +445,7 @@ locale {
         scavenge {
             apply = "${name(_1)} loot${s(_1)} ${name(_2)}${his_owned(_2)} backpack."
             rotten = "${name(_1)} notice${s(_1)} unusual odor from ${itemname(_2, 1)} and step${s(_1)} back."
-            eats = "${name(_1)} eat${s(_1)} ${itemname(_1, 1)}!"
+            eats = "${name(_1)} eat${s(_1)} ${itemname(_2, 1)}!"
         }
 
         wizards_harvest = "${itemname(_1)} fall${s(_1)} down!"

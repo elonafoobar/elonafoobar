@@ -5,6 +5,7 @@ locale {
             it_is_cursed = "これは呪われている！"
             resists = "${name(_1)}は抵抗した。"
             melts_alien_children = "${name(_1)}の体内のエイリアンは溶けた。"
+            cursed = "${name(_1)}は悪魔が笑う声を聞いた。"
         }
 
         slow = "${name(_1)}の老化は遅くなった。"
@@ -17,7 +18,7 @@ locale {
 
         explosion {
             begins = "${name(_1)}は爆発した。"
-            collateral = "${name(_1)}は誘爆した。"
+            chain = "${name(_1)}は誘爆した。"
             ally = "爆風が${name(_1)}に命中した。"
             other = "爆風は${name(_1)}に命中し"
         }
@@ -54,8 +55,8 @@ locale {
         disassembly = "「余分な機能は削除してしまえ」"
 
         touch {
-            ally = "${name(_1)}は${name(_2)}に${_3}${_5}で${_4}"
-            other = "${kare_wa(_1)}${name(_2)}を${_3}${_5}で${4}"
+            ally = "${name(_1)}は${name(_2)}に${_3}${_4}で${_5}"
+            other = "${kare_wa(_1)}${name(_2)}を${_3}${_4}で${_5}"
         }
 
         hunger = "${name(_1)}はお腹が減った。"
@@ -71,12 +72,12 @@ locale {
                 after = "泥棒は笑って逃げた。"
             }
             shadow_step = "${name(_1)}は${basename(_2)}の元に移動した。"
-            draw_shadow = "${name(_2)}は引き寄せられた。"
+            draw_shadow = "${name(_1)}は引き寄せられた。"
             disappears = "${name(_1)}は突然消えた。"
         }
 
         breath {
-            breath = ""
+            no_element = ""
             named = "${_1}の"
             bellows = "${name(_1)}は${_2}ブレスを吐いた。"
             ally = "ブレスは${name(_1)}に命中した。"
@@ -94,6 +95,7 @@ locale {
             need_global_map = "それはグローバルマップで読む必要がある。"
             cursed = "呪われた地図は触れると崩れ落ちた。"
             apply = "何かの場所を記した地図のようだ…"
+            mark = "○"
         }
 
         love_potion {
@@ -105,11 +107,13 @@ locale {
 
         pregnant = "${name(_1)}は${name(_2)}の口の中に何かを送り込んだ！"
 
-        examine_self = "あなたは自分の状態を調べた。"
+        mirror = "あなたは自分の状態を調べた。"
 
         milk {
-            cursed_self = "うわ、これは呪われている。なんだかやばい味だ…"
-            cursed_other = "「ぺっぺっ、まずー」"
+            cursed {
+                self = "うわ、これは呪われている。なんだかやばい味だ…"
+                other = "「ぺっぺっ、まずー」"
+            }
             self = "濃厚で病み付きになりそうな味だ。"
             other = "「うまー」"
         }
@@ -205,11 +209,7 @@ locale {
             cannot_during_swim = "水の中からは釣れない。"
         }
 
-        holy_light {
-            cursed = "${name(_1)}は悪魔が笑う声を聞いた。"
-        }
-
-        holy_veil = "${name(_1)}は黄金の輝きに包まれた！"
+        prayer = "${name(_1)}は黄金の輝きに包まれた！"
 
         create_material {
             materials = "素材"
@@ -218,7 +218,7 @@ locale {
         }
 
         mutation {
-            offensive = "${name(_1)}は${name(_2)}を気の狂いそうな眼差しで見た。"
+            spell = "${name(_1)}は${name(_2)}を気の狂いそうな眼差しで見た。"
             resist = "あなたは変異を受け付けなかった。"
             apply = "あなたは変容した！ "
         }
@@ -248,14 +248,11 @@ locale {
         gain_knowledge {
             suddenly = "突然、"
             furthermore = "さらに、"
-            gain_knowledge = "${you()}は${_1}の魔法の知識を得た。"
-            lose_knowledge = "突然、${you()}は${_1}の魔法の知識を失った。"
+            gain = "${you()}は${_1}の魔法の知識を得た。"
+            lose = "突然、${you()}は${_1}の魔法の知識を失った。"
         }
 
-        descent {
-            apply = "${name(_1)}のレベルが下がった…"
-        }
-
+        descent = "${name(_1)}のレベルが下がった…"
         gain_skill = "${name(_1)}は${_2}の技術を獲得した！"
 
         faith {
@@ -313,7 +310,7 @@ locale {
             cancel = "脱出を中止した。"
             during_quest = "依頼請負中の帰還は法律で禁止されている。それでも帰還する？"
             begin = "周囲の大気がざわめきだした。"
-            during_dungeon = "このままダンジョンを出ると、この階のクエストは達成できない…"
+            lord_may_disappear = "このままダンジョンを出ると、この階のクエストは達成できない…"
         }
 
         return {
@@ -329,7 +326,7 @@ locale {
         sleep = "${name(_1)}は甘い液体を浴びた！"
 
         curse {
-            offensive = "${name(_1)}は${name(_2)}を指差して呪いの言葉を呟いた。"
+            spell = "${name(_1)}は${name(_2)}を指差して呪いの言葉を呟いた。"
             no_effect = "あなたは祈祷を捧げ呪いのつぶやきを無効にした。"
             apply = "${name(_1)}の${_2}は黒く輝いた。"
         }
@@ -369,7 +366,7 @@ locale {
 
         change_material {
             more_power_needed = "アーティファクトの再生成にはパワーが足りない。"
-            artifact_reconstructed = "${name(_1)}の${itemname(_2, 1)}は再生成された。"
+            artifact_reconstructed = "${name(_1)}の${_2}は${itemname(_3, 1)}は再生成された。"
             apply = "${name(_1)}の${itemname(_2, 1)}に変化した。"
         }
 
