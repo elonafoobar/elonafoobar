@@ -2790,8 +2790,7 @@ label_2035_internal:
                     {
                         i = i / 5;
                     }
-                    s = "";
-                    enchantment_print_level(i);
+                    s = enchantment_print_level(i);
                     pos(wx + 282, wy + 66 + cnt * 19 + 2);
                     mes(s);
                 }

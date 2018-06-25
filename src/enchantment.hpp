@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 namespace elona
 {
@@ -20,7 +21,8 @@ int enchantment_gen_p(int = 0);
 void enchantment_sort(int = 0);
 int enchantment_filter(int = 0, int = 0);
 void initialize_enchantment_data();
-void enchantment_print_level(int = 0);
+std::string enchantment_print_level(int = 0);
+void get_enchantment_description(int, int, int, bool = false);
 void add_enchantments_depending_on_ego();
 void add_enchantment_by_fixed_ego();
 void add_enchantments();

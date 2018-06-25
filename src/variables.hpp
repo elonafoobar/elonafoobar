@@ -932,7 +932,6 @@ void load_random_name_table();
 void load_random_title_table();
 std::string cheer_up_message(int);
 void initialize_enchantment_data();
-void get_enchantment_description(int, int, int, bool = false);
 void initialize_ego_data();
 void add_enchantments_depending_on_ego();
 void add_enchantment_by_fixed_ego();
