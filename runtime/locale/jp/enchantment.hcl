@@ -1,6 +1,7 @@
 locale {
     enchantment {
         level = "*"
+        it = "それは"
 
         with_parameters {
             attribute {

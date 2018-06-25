@@ -1059,7 +1059,6 @@ void equip_melee_weapon();
 turn_result_t try_interact_with_npc();
 void sort_list_by_column1();
 void sort_list_and_listn_by_column1();
-void show_item_description();
 void label_2076();
 void prompt_stop_continuous_action();
 void try_to_return();

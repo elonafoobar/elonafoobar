@@ -58,6 +58,7 @@ void label_1964();
 int ctrl_ally();
 void label_2022();
 int change_npc_tone();
+void item_show_description();
 
 menu_result ctrl_inventory();
 
