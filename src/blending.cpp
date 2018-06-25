@@ -315,7 +315,6 @@ void window_recipe_(
             prm_1054 - prm_1054 % 8,
             0,
             -1);
-        pos(prm_1051 + prm_1053 - 522, 0);
         boxf(prm_1051 + prm_1053 - 522, 0, 486, 69, {30, 30, 30});
         windowshadow = 0;
     }
@@ -719,7 +718,6 @@ label_1925_internal:
         ++keyrange;
         if (cnt % 2 == 0)
         {
-            pos(wx + 70, wy + 60 + cnt * 19);
             boxf(wx + 70, wy + 60 + cnt * 19, ww - 100, 18, {12, 14, 16, 16});
         }
         pos(wx + 37, wy + 70 + cnt * 19);

@@ -2637,7 +2637,6 @@ label_2035_internal:
             gcopy(5, cdata[cc].buffs[cnt].id * 32, 1120, 32, 32);
             if (cs_buff == cnt)
             {
-                pos(x, y);
                 boxf(x, y, 32, 32, {200, 200, 255, 63});
             }
         }

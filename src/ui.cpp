@@ -1386,7 +1386,6 @@ void label_1433()
                         {
                             if (sy < (inf_screenh - 1) * inf_tiles)
                             {
-                                pos(sx, sy * (sy > 0));
                                 boxf(
                                     sx,
                                     sy * (sy > 0),
@@ -1741,7 +1740,6 @@ void label_1439()
             }
         }
     }
-    pos(688, 528);
     boxf(688, 528, raderw * mdata(0), raderh * mdata(1), {255, 255, 255, 10});
     gsel(0);
     return;
@@ -2590,7 +2588,6 @@ void window2(
     {
         pos(prm_656 + 4, prm_657 + 4);
         gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
-        pos(prm_656 + 4, prm_657 + 4);
         boxf(
             prm_656 + 4,
             prm_657 + 4,
@@ -2602,7 +2599,6 @@ void window2(
     {
         pos(prm_656 + 4, prm_657 + 4);
         gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
-        pos(prm_656 + 4, prm_657 + 4);
         boxf(
             prm_656 + 4,
             prm_657 + 4,
@@ -2614,7 +2610,6 @@ void window2(
     {
         pos(prm_656 + 4, prm_657 + 4);
         gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
-        pos(prm_656 + 4, prm_657 + 4);
         boxf(
             prm_656 + 4,
             prm_657 + 4,
@@ -2626,7 +2621,6 @@ void window2(
     {
         pos(prm_656 + 4, prm_657 + 4);
         gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
-        pos(prm_656 + 4, prm_657 + 4);
         boxf(
             prm_656 + 4,
             prm_657 + 4,
@@ -2680,7 +2674,6 @@ void window2(
     {
         pos(prm_656 + 2, prm_657 + 2);
         gzoom(3, 24, 72, 228, 144, x2_at_m93 - 4, y2_at_m93 - 5);
-        pos(prm_656 + 2, prm_657 + 2);
         boxf(
             prm_656 + 4,
             prm_657 + 4,

@@ -1352,7 +1352,6 @@ void cell_draw()
                             inf_tiles - std::max(dx_ + inf_tiles - windoww, 0)
                                 + std::min(dx_, 0),
                             12);
-                        pos(std::max(dx_, 0), dy_ - 20);
                         boxf(
                             std::max(dx_, 0),
                             dy_ - 20,
@@ -1368,7 +1367,6 @@ void cell_draw()
                 ground_ = map(x_, y - 1, 0);
                 if (chipm(2, ground_))
                 {
-                    pos(std::max(dx_, 0), dy_);
                     boxf(
                         std::max(dx_, 0),
                         dy_,
@@ -1376,7 +1374,6 @@ void cell_draw()
                             + std::min(dx_, 0),
                         24,
                         {0, 0, 0, 16});
-                    pos(std::max(dx_, 0), dy_ + 24);
                     boxf(
                         std::max(dx_, 0),
                         dy_ + 24,

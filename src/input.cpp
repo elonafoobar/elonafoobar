@@ -60,7 +60,6 @@ int show_prompt(int x, int y, int width, show_prompt_type type, int val4)
         {
             dx += std::to_string(val5).size() * 8;
         }
-        pos(dx(1) + sx + 24, dy + 4);
         boxf(dx(1) + sx + 24, dy + 4, dx - 42, 35, {0, 0, 0, 127});
     }
 
@@ -170,7 +169,6 @@ void input_number_dialog(int x, int y, int max_number)
     {
         dx += strlen_u(std::to_string(max_number)) * 8;
     }
-    pos(x + 24, y + 4);
     boxf(x + 24, y + 4, dx - 42, 35, {0, 0, 0, 127});
     while (1)
     {
@@ -293,7 +291,6 @@ bool input_text_dialog(
     pos(x, y);
     inputlog = "";
     mesbox(inputlog, true);
-    pos(x + 4, y + 4);
     boxf(x + 4, y + 4, dx - 1, 35, {0, 0, 0, 127});
 
     notesel(inputlog);
