@@ -528,7 +528,7 @@ void prepare_item_image(int id, int color)
     const auto h = item_chips[id].height;
 
     gsel(1);
-    boxf(0, 960, w, h + 960);
+    boxf(0, 960, w, h);
 
     pos(0, 960);
     set_color_mod(
@@ -552,7 +552,7 @@ void prepare_item_image(int id, int color, int character_image)
     const auto h = item_chips[id].height;
 
     gsel(1);
-    boxf(0, 960, w, h + 960);
+    boxf(0, 960, w, h);
 
     if (id == 528) // Cards
     {
@@ -845,7 +845,7 @@ void load_pcc_part(int cc, int body_part, const char* body_part_str)
 
     pos(128, 0);
     picload(filepath, 1);
-    boxf(256, 0, 384, 198);
+    boxf(256, 0, 128, 198);
     gmode(4, -1, -1, 256);
     pget(128, 0);
     pos(256, 0);
@@ -895,7 +895,7 @@ void chara_preparepic(int prm_618, int prm_619)
         p_at_m83 = prm_619;
     }
     gsel(5);
-    boxf(0, 960, chara_chips[prm_618].width, chara_chips[prm_618].height + 960);
+    boxf(0, 960, chara_chips[prm_618].width, chara_chips[prm_618].height);
     pos(0, 960);
     set_color_mod(
         255 - c_col(0, p_at_m83),

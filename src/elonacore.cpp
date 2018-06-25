@@ -9374,12 +9374,7 @@ label_1945_internal:
         ++keyrange;
         if (cnt % 2 == 0)
         {
-            boxf(
-                wx + 70,
-                wy + 66 + cnt * 19,
-                wx + 70 + 540,
-                wy + 66 + cnt * 19 + 18,
-                snail::color{12, 14, 16, 16});
+            boxf(wx + 70, wy + 66 + cnt * 19, 540, 18, {12, 14, 16, 16});
         }
         display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
     }
@@ -19567,7 +19562,7 @@ label_2684_internal:
     gzoom(4, 0, 0, 640, 480, windoww, y2 - y1);
     gmode(2);
     boxf(0, 0, windoww, y1, {5, 5, 5});
-    boxf(0, y2, windoww, windowh, {5, 5, 5});
+    boxf(0, y2, windoww, windowh - y2, {5, 5, 5});
     if (val0 == 1)
     {
         gsel(0);
@@ -19640,7 +19635,7 @@ label_2684_internal:
     y_at_txtfunc = windowh - 60;
     anime_halt();
     boxf(0, 0, windoww, y1, {5, 5, 5});
-    boxf(0, y2, windoww, windowh, {5, 5, 5});
+    boxf(0, y2, windoww, windowh - y2, {5, 5, 5});
     goto label_2681;
 }
 

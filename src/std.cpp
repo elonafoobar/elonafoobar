@@ -107,16 +107,16 @@ void await(int msec)
 
 
 
-void boxf(int x1, int y1, int x2, int y2, const snail::color& color)
+void boxf(int x, int y, int width, int height, const snail::color& color)
 {
-    snail::hsp::boxf(x1, y1, x2, y2, color);
+    snail::hsp::boxf(x, y, width, height, color);
 }
 
 
 
-void boxf(const snail::color& color)
+void boxf()
 {
-    snail::hsp::boxf(color);
+    snail::hsp::boxf({0, 0, 0, 0});
 }
 
 

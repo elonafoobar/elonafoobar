@@ -1006,12 +1006,7 @@ label_2061_internal:
         ++keyrange;
         if (cnt % 2 == 0)
         {
-            boxf(
-                wx + 70,
-                wy + 60 + cnt * 19,
-                wx + 70 + 540,
-                wy + 60 + cnt * 19 + 18,
-                snail::color{12, 14, 16, 16});
+            boxf(wx + 70, wy + 60 + cnt * 19, 540, 18, {12, 14, 16, 16});
         }
     }
     font(14 - en * 2);

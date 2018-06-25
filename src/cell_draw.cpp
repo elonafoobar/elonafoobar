@@ -978,11 +978,7 @@ void draw_npc(int x, int y, int dx, int dy, int ani_, int ground_)
                     chara_chips[p_].offset_y += 24;
                 }
                 gsel(5);
-                boxf(
-                    0,
-                    960,
-                    chara_chips[p_].width,
-                    chara_chips[p_].height + 960);
+                boxf(0, 960, chara_chips[p_].width, chara_chips[p_].height);
                 pos(0, 960);
                 set_color_mod(
                     255 - c_col(0, col_),
@@ -1360,11 +1356,10 @@ void cell_draw()
                         boxf(
                             std::max(dx_, 0),
                             dy_ - 20,
-                            std::max(dx_, 0) + inf_tiles
-                                - std::max(dx_ + inf_tiles - windoww, 0)
+                            inf_tiles - std::max(dx_ + inf_tiles - windoww, 0)
                                 + std::min(dx_, 0),
-                            dy_ - 20 + 8,
-                            snail::color{0, 0, 0, 25});
+                            8,
+                            {0, 0, 0, 25});
                     }
                 }
             }
@@ -1377,20 +1372,18 @@ void cell_draw()
                     boxf(
                         std::max(dx_, 0),
                         dy_,
-                        std::max(dx_, 0),
-                        dy_ + 24 + inf_tiles
-                            - std::max(dx_ + inf_tiles - windoww, 0)
+                        inf_tiles - std::max(dx_ + inf_tiles - windoww, 0)
                             + std::min(dx_, 0),
-                        snail::color{0, 0, 0, 16});
+                        24,
+                        {0, 0, 0, 16});
                     pos(std::max(dx_, 0), dy_ + 24);
                     boxf(
                         std::max(dx_, 0),
                         dy_ + 24,
-                        std::max(dx_, 0) + inf_tiles
-                            - std::max(dx_ + inf_tiles - windoww, 0)
+                        inf_tiles - std::max(dx_ + inf_tiles - windoww, 0)
                             + std::min(dx_, 0),
-                        dy_ + 24 + 12,
-                        snail::color{0, 0, 0, 12});
+                        12,
+                        {0, 0, 0, 12});
                 }
             }
         }
