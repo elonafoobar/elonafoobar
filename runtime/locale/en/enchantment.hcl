@@ -31,7 +31,7 @@ locale {
 
             extra_damage = "deals ${_1} damage."
             invokes = "invokes ${_1}."
-            can_be_loaded_with {
+            ammo {
                 text = "can be loaded with ${_1}."
                 max = "Max ${_1}"
             }

@@ -1,6 +1,6 @@
 locale {
     enchantment {
-        level = "#"
+        level = "*"
 
         with_parameters {
             attribute {
@@ -31,7 +31,7 @@ locale {
 
             extra_damage = "${_1}属性の追加ダメージを与える"
             invokes = "${_1}を発動する"
-            can_be_loaded_with {
+            ammo {
                 text = "${_1}を装填できる"
                 max = "最大${_1}発"
             }

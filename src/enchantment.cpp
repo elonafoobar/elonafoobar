@@ -459,7 +459,7 @@ std::string enchantment_print_level(int prm_448)
             s += u8"+"s;
             break;
         }
-        s += lang(u8"*"s, u8"#"s);
+        s += i18n::s.get("core.locale.enchantment.level");
     }
     return s;
 }
@@ -493,20 +493,15 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                     i18n::_(u8"ability", std::to_string(sid), u8"name");
                 if (category == 57000)
                 {
-                    s = lang(
-                            skill_name + u8"を減衰させる毒素を含んでいる"s,
-                            u8"has which deteriorates your "s + skill_name
-                                + u8"."s)
-                        + enchantment_level_string(power / 50);
+                    s = i18n::s.get("core.locale.enchantment.with_parameters.attribute.in_food.decreases", skill_name);
+                    s += enchantment_level_string(power / 50);
 
                 }
                 else
                 {
-                    s = lang(
-                        skill_name + u8"を"s + std::abs(power / 50 + 1)
-                            + u8"下げる"s,
-                        u8"decreases your "s + skill_name + u8" by "s
-                            + std::abs(power / 50 + 1) + u8"."s);
+                    s = i18n::s.get("core.locale.enchantment.with_parameters.attribute.other.decreases",
+                                    skill_name,
+                                    std::abs(power / 50 + 1));
                 }
             }
             else
@@ -515,19 +510,14 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                     i18n::_(u8"ability", std::to_string(sid), u8"name");
                 if (category == 57000)
                 {
-                    s = lang(
-                            skill_name + u8"を増強させる栄養をもっている"s,
-                            u8"has essential nutrients to enhance your "s
-                                + skill_name + u8"."s)
-                    + enchantment_level_string(power / 50);
+                    s = i18n::s.get("core.locale.enchantment.with_parameters.attribute.in_food.increases", skill_name);
+                    s += enchantment_level_string(power / 50);
                 }
                 else
                 {
-                    s = lang(
-                        skill_name + u8"を"s + std::abs(power / 50 + 1)
-                            + u8"上げる"s,
-                        u8"increases your "s + skill_name + u8" by "s
-                            + std::abs(power / 50 + 1) + u8"."s);
+                    s = i18n::s.get("core.locale.enchantment.with_parameters.attribute.other.increases",
+                                    skill_name,
+                                    std::abs(power / 50 + 1));
                 }
             }
             break;
@@ -536,12 +526,8 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             if (power / 2 < 0)
             {
                 rtval = 9;
-                s = lang(
-                    i18n::_(u8"ability", std::to_string(sid), u8"name")
-                        + u8"への耐性を弱化する"s,
-                    u8"weakens your resistance to "s
-                        + i18n::_(u8"ability", std::to_string(sid), u8"name")
-                        + u8"."s);
+                s = i18n::s.get("core.locale.enchantment.with_parameters.resistance.decreases",
+                                i18n::_(u8"ability", std::to_string(sid), u8"name"));
             }
             else
             {
@@ -551,13 +537,8 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                     u8"enchantment_description");
                 if (s == ""s)
                 {
-                    s = lang(
-                        i18n::_(u8"ability", std::to_string(sid), u8"name")
-                            + u8"への耐性を授ける"s,
-                        u8"grants your resistance to "s
-                            + i18n::_(
-                                  u8"ability", std::to_string(sid), u8"name")
-                            + u8"."s);
+                    s = i18n::s.get("core.locale.enchantment.with_parameters.resistance.increases",
+                                    i18n::_(u8"ability", std::to_string(sid), u8"name"));
                 }
             }
             s += enchantment_level_string(power / 100);
@@ -567,12 +548,8 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             if (power / 50 + 1 < 0)
             {
                 rtval = 9;
-                s = lang(
-                    i18n::_(u8"ability", std::to_string(sid), u8"name")
-                        + u8"の技能を下げる"s,
-                    u8"decreases your "s
-                        + i18n::_(u8"ability", std::to_string(sid), u8"name")
-                        + u8" skill."s);
+                s = i18n::s.get("core.locale.enchantment.with_parameters.skill.decreases",
+                                i18n::_(u8"ability", std::to_string(sid), u8"name"));
             }
             else
             {
@@ -582,13 +559,8 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                     u8"enchantment_description");
                 if (s == ""s)
                 {
-                    s = lang(
-                        i18n::_(u8"ability", std::to_string(sid), u8"name")
-                            + u8"の技能を上げる"s,
-                        u8"improves your "s
-                            + i18n::_(
-                                  u8"ability", std::to_string(sid), u8"name")
-                            + u8" skill."s);
+                    s = i18n::s.get("core.locale.enchantment.with_parameters.skill.increases",
+                                    i18n::_(u8"ability", std::to_string(sid), u8"name"));
                 }
             }
             s += enchantment_level_string((power / 50 + 1) / 5);
@@ -597,23 +569,14 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             rtval = 8;
             if (category == 57000)
             {
-                s = lang(
-                        i18n::_(u8"ability", std::to_string(sid), u8"name")
-                            + u8"の成長を助ける栄養をもっている"s,
-                        u8"can help you exercise your "s
-                            + i18n::_(
-                                  u8"ability", std::to_string(sid), u8"name")
-                            + u8" faster."s)
-                + enchantment_level_string(power / 50);
+                s = i18n::s.get("core.locale.enchantment.with_parameters.skill_maintenance.in_food",
+                                i18n::_(u8"ability", std::to_string(sid), u8"name"));
+                s +=  enchantment_level_string(power / 50);
             }
             else
             {
-                s = lang(
-                    i18n::_(u8"ability", std::to_string(sid), u8"name")
-                        + u8"を維持する"s,
-                    u8"maintains "s
-                        + i18n::_(u8"ability", std::to_string(sid), u8"name")
-                        + u8"."s);
+                s = i18n::s.get("core.locale.enchantment.with_parameters.skill_maintenance.other",
+                                i18n::_(u8"ability", std::to_string(sid), u8"name"));
             }
             break;
         case 7:
@@ -622,46 +585,37 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                 u8"ability", std::to_string(sid), u8"enchantment_description");
             if (s == ""s)
             {
-                s = lang(
-                    ""s + i18n::_(u8"ability", std::to_string(sid), u8"name")
-                        + u8"属性の追加ダメージを与える"s,
-                    u8"deals "s
-                        + i18n::_(u8"ability", std::to_string(sid), u8"name")
-                        + u8" damage."s);
+                s = i18n::s.get("core.locale.enchantment.with_parameters.extra_damage",
+                                i18n::_(u8"ability", std::to_string(sid), u8"name"));
             }
             s += enchantment_level_string(power / 100);
             break;
         case 8:
             rtval = 4;
             sid = encprocref(0, sid);
-            s = lang(
-                ""s + i18n::_(u8"ability", std::to_string(sid), u8"name")
-                    + u8"を発動する"s,
-                u8"invokes "s
-                    + i18n::_(u8"ability", std::to_string(sid), u8"name")
-                    + u8"."s);
+            s = i18n::s.get("core.locale.enchantment.with_parameters.invokes",
+                            i18n::_(u8"ability", std::to_string(sid), u8"name"));
             s += enchantment_level_string(power / 50);
             break;
         case 9:
             rtval = 4;
-            s = lang(
-                ""s + ammoname(sid) + u8"を装填できる"s,
-                u8"can be loaded with "s + ammoname(sid) + u8"."s);
-            s += lang(u8" [最大"s, u8" [Max "s) + power / 1000
-                + lang(u8"発]"s, u8"]"s);
+            s = i18n::s.get("core.locale.enchantment.with_parameters.ammo.text",
+                            ammoname(sid));
+            s += " ["
+                + i18n::s.get("core.locale.enchantment.with_parameters.ammo.max", power / 1000)
+                + "]";
             break;
         }
         return;
     }
+
+    s = i18n::s.get_enum("core.locale.enchantment.no_parameters", val0);
 
     switch (val0)
     {
     case 0: s = u8"?????"s; break;
     case 21:
         rtval = 9;
-        s = lang(
-            u8"ランダムなテレポートを引き起こす"s,
-            u8"causes random teleport."s);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -673,7 +627,6 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         break;
     case 45:
         rtval = 9;
-        s = lang(u8"使用者の生き血を吸う"s, u8"sucks blood of the wielder."s);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -685,7 +638,6 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         break;
     case 46:
         rtval = 9;
-        s = lang(u8"あなたの成長を妨げる"s, u8"disturbs your growth."s);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -697,7 +649,6 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         break;
     case 47:
         rtval = 9;
-        s = lang(u8"魔物を呼び寄せる"s, u8"attracts monsters."s);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -709,49 +660,33 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         break;
     case 22:
         rtval = 4;
-        s = lang(
-            u8"テレポートを妨害する"s, u8"prevents you from teleporting."s);
         break;
     case 23:
         rtval = 4;
-        s = lang(u8"盲目を無効にする"s, u8"negates the effect of blindness."s);
         break;
     case 24:
         rtval = 4;
-        s = lang(u8"麻痺を無効にする"s, u8"negates the effect of paralysis."s);
         break;
     case 25:
         rtval = 4;
-        s = lang(u8"混乱を無効にする"s, u8"negates the effect of confusion."s);
         break;
     case 26:
         rtval = 4;
-        s = lang(u8"恐怖を無効にする"s, u8"negates the effect of fear."s);
         break;
     case 27:
         rtval = 4;
-        s = lang(u8"睡眠を無効にする"s, u8"negates the effect of sleep."s);
         break;
     case 28:
         rtval = 4;
-        s = lang(u8"毒を無効にする"s, u8"negates the effect of poison."s);
         break;
     case 41:
         rtval = 4;
-        s = lang(
-            u8"アイテムを盗まれなくする"s, u8"protects you from thieves."s);
         break;
     case 42:
         rtval = 4;
-        s = lang(
-            u8"腐ったものを難なく消化させる"s,
-            u8"allows you to digest rotten food."s);
         break;
     case 29:
         rtval = 4;
-        s = lang(
-            u8"速度を上げ、ワールドマップでの移動時間を短くする"s,
-            u8"speeds up your travel progress."s);
         if (trait)
         {
             rtval(1) = power / 100;
@@ -763,34 +698,21 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         break;
     case 30:
         rtval = 4;
-        s = lang(
-            u8"エーテルの風からあなたを保護する"s,
-            u8"protects you from Etherwind."s);
         break;
     case 31:
         rtval = 4;
-        s = lang(
-            u8"雷雨と雪による足止めを無効にする"s,
-            u8"negates the effect of being stranded by bad weather."s);
         break;
     case 48:
         rtval = 4;
-        s = lang(
-            u8"異物の体内への侵入を防ぐ"s,
-            u8"prevents aliens from entering your body."s);
         break;
     case 32:
         rtval = 4;
-        s = lang(u8"あなたを浮遊させる"s, u8"floats you."s);
         break;
     case 33:
         rtval = 4;
-        s = lang(
-            u8"あなたを変異から保護する"s, u8"protects you from mutation."s);
         break;
     case 34:
         rtval = 4;
-        s = lang(u8"魔法の威力を高める"s, u8"enhances your spells."s);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -802,15 +724,9 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         break;
     case 35:
         rtval = 4;
-        s = lang(
-            u8"透明な存在を見ることを可能にする"s,
-            u8"allows you to see invisible creatures."s);
         break;
     case 36:
         rtval = 4;
-        s = lang(
-            u8"攻撃対象からスタミナを吸収する"s,
-            u8"absorbs stamina from an enemy."s);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -822,12 +738,9 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         break;
     case 37:
         rtval = 4;
-        s = lang(u8"全てを終結させる"s, u8"brings an end."s);
         break;
     case 38:
         rtval = 4;
-        s = lang(
-            u8"攻撃対象からマナを吸収する"s, u8"absorbs MP from an enemy."s);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -839,9 +752,6 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         break;
     case 39:
         rtval = 4;
-        s = lang(
-            u8"完全貫通攻撃発動の機会を増やす"s,
-            u8"gives you a chance to throw an absolute piercing attack."s);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -853,9 +763,6 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         break;
     case 44:
         rtval = 4;
-        s = lang(
-            u8"クリティカルヒットの機会を増やす"s,
-            u8"increases your chance to deliver critical hits."s);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -867,9 +774,6 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         break;
     case 50:
         rtval = 4;
-        s = lang(
-            u8"追加打撃の機会を増やす"s,
-            u8"increases the chance of extra melee attack."s);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -881,9 +785,6 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         break;
     case 51:
         rtval = 4;
-        s = lang(
-            u8"追加射撃の機会を増やす"s,
-            u8"increases the chance of extra ranged attack."s);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -895,7 +796,6 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         break;
     case 40:
         rtval = 4;
-        s = lang(u8"稀に時を止める"s, u8"occasionally stops time."s);
         if (trait)
         {
             rtval(1) = power / 100;
@@ -907,8 +807,6 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         break;
     case 43:
         rtval = 4;
-        s = lang(
-            u8"呪いの言葉から保護する"s, u8"protects you from cursing words."s);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -920,15 +818,9 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         break;
     case 49:
         rtval = 4;
-        s = lang(
-            u8"演奏報酬の品質を上げる"s,
-            u8"increases the qualitiy of reward."s);
         break;
     case 52:
         rtval = 4;
-        s = lang(
-            u8"被る物理ダメージを軽減する"s,
-            u8"decreases physical damage you take."s);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -940,9 +832,6 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         break;
     case 53:
         rtval = 4;
-        s = lang(
-            u8"被るダメージを稀に無効にする"s,
-            u8"sometimes nullifies damage you take."s);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -954,9 +843,6 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         break;
     case 54:
         rtval = 4;
-        s = lang(
-            u8"攻撃された時、相手に切り傷のダメージを与える"s,
-            u8"deals cut damage to the attacker."s);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -968,18 +854,12 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         break;
     case 55:
         rtval = 4;
-        s = lang(u8"出血を抑える"s, u8"diminishs bleeding."s);
         break;
     case 56:
         rtval = 4;
-        s = lang(
-            u8"神が発する電波をキャッチする"s, u8"catches signals from God."s);
         break;
     case 57:
         rtval = 4;
-        s = lang(
-            u8"竜族に対して強力な威力を発揮する"s,
-            u8"inflicts massive damage to dragons."s);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -991,9 +871,6 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         break;
     case 58:
         rtval = 4;
-        s = lang(
-            u8"不死者に対して強力な威力を発揮する"s,
-            u8"inflicts massive damage to undeads."s);
         if (trait)
         {
             rtval(1) = power / 50;
@@ -1005,19 +882,12 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         break;
     case 59:
         rtval = 4;
-        s = lang(u8"他者の信仰を明らかにする"s, u8"reveals religion."s);
         break;
     case 60:
         rtval = 4;
-        s = lang(
-            u8"深い音色で聴衆を酔わす"s,
-            u8"makes audience drunk with haunting tones."s);
         break;
     case 61:
         rtval = 4;
-        s = lang(
-            u8"神に対して強力な威力を発揮する"s,
-            u8"inflicts massive damage to Gods."s);
         if (trait)
         {
             rtval(1) = power / 50;
