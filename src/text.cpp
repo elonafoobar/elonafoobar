@@ -266,17 +266,11 @@ std::vector<std::string> txtsetwinword(int n)
 void initialize_nefia_names()
 {
     SDIM4(mapnamerd, 20, 2, 5);
-    mapnamerd(0, 0) = lang(u8"はじまりの"s, u8"Beginner's "s);
-    mapnamerd(1, 0) = lang(u8"安全な"s, u8"Safe "s);
-    mapnamerd(0, 1) = lang(u8"冒険者の"s, u8"Adventurer's"s);
-    mapnamerd(1, 1) = lang(u8"時めきの"s, u8"Exciting "s);
-    mapnamerd(0, 2) = lang(u8"迷いの"s, u8"Dangerous "s);
-    mapnamerd(1, 2) = lang(u8"勇者の"s, u8"Servant's "s);
-    mapnamerd(0, 3) = lang(u8"死の"s, u8"Fearful "s);
-    mapnamerd(1, 3) = lang(u8"闇の"s, u8"Shadow "s);
-    mapnamerd(0, 4) = lang(u8"不帰の"s, u8"King's "s);
-    mapnamerd(1, 4) = lang(u8"混沌の"s, u8"Chaotic "s);
-    return;
+    for (int cnt = 0; cnt < 5; cnt++)
+    {
+        mapnamerd(0, cnt) = i18n::s.get_enum("core.locale.map.nefia.prefix.type_a", cnt);
+        mapnamerd(1, cnt) = i18n::s.get_enum("core.locale.map.nefia.prefix.type_b", cnt);
+    }
 }
 
 
@@ -323,7 +317,7 @@ std::string mapname_dungeon(int id)
 
     if (suffix_id >= 20 && suffix_id <= 23)
     {
-        name += i18n::s.get_enum("core.locale.map.dungeon", suffix_id);
+        name += i18n::s.get_enum("core.locale.map.nefia.suffix", suffix_id);
     }
     return name;
 }
