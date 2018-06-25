@@ -169,6 +169,8 @@ locale {
         }
 
         nefia {
+            level = ""
+
             prefix {
                 type_a {
                     _0 = "Beginner's "

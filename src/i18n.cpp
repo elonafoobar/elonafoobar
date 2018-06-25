@@ -188,6 +188,13 @@ std::string format_builtins_bool(const hil::FunctionCall& func, bool value)
     return UNKNOWN_FUNCTION;
 }
 
+std::string format_builtins_string(const hil::FunctionCall& func, std::string value)
+{
+    ELONA_DEFINE_I18N_BUILTIN("trim_job", sncnv(value));
+
+    return UNKNOWN_FUNCTION;
+}
+
 std::string format_builtins_character(
     const hil::FunctionCall& func,
     const character& chara)

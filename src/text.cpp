@@ -43,7 +43,7 @@ std::string cnvrank(int n)
 
 std::string cnvarticle(const std::string& str)
 {
-    return lang(str, '[' + str + ']');
+    return i18n::s.get("core.locale.ui.article", str);
 }
 
 
@@ -143,79 +143,77 @@ std::string sncnv(const std::string& name_with_job)
 
 std::string sngeneral(const std::string& name)
 {
-    return lang(u8"雑貨屋の"s + name, sncnv(name) + u8"the general vendor"s);
+    return i18n::s.get("core.locale.chara.job.general_vendor", name);
 }
 
 
 
 std::string sninn(const std::string& name)
 {
-    return lang(u8"宿屋の"s + name, sncnv(name) + u8"the Innkeeper"s);
+    return i18n::s.get("core.locale.chara.job.innkeeper", name);
 }
 
 
 
 std::string sntrade(const std::string& name)
 {
-    return lang(u8"交易店の"s + name, sncnv(name) + u8"the trader"s);
+    return i18n::s.get("core.locale.chara.job.trader", name);
 }
 
 
 
 std::string sngoods(const std::string& name)
 {
-    return lang(u8"何でも屋の"s + name, sncnv(name) + u8"the goods vendor"s);
+    return i18n::s.get("core.locale.chara.job.goods_vendor", name);
 }
 
 
 
 std::string snbakery(const std::string& name)
 {
-    return lang(u8"パン屋の"s + name, sncnv(name) + u8"the baker"s);
+    return i18n::s.get("core.locale.chara.job.baker", name);
 }
 
 
 
 std::string snmagic(const std::string& name)
 {
-    return lang(u8"魔法店の"s + name, sncnv(name) + u8"the magic vendor"s);
+    return i18n::s.get("core.locale.chara.job.magic_vendor", name);
 }
 
 
 
 std::string snarmor(const std::string& name)
 {
-    return lang(u8"武具店の"s + name, sncnv(name) + u8"the blacksmith"s);
+    return i18n::s.get("core.locale.chara.job.blacksmith", name);
 }
 
 
 
 std::string sntrainer(const std::string& name)
 {
-    return lang(u8"ギルドの"s + name, sncnv(name) + u8"the trainer"s);
+    return i18n::s.get("core.locale.chara.job.trainer", name);
 }
 
 
 
 std::string snfish(const std::string& name)
 {
-    return lang(u8"釣具店の"s + name, sncnv(name) + u8"the fisher"s);
+    return i18n::s.get("core.locale.chara.job.fisher", name);
 }
 
 
 
 std::string snblack(const std::string& name)
 {
-    return lang(
-        u8"ブラックマーケットの"s + name,
-        sncnv(name) + u8"the blackmarket vendor"s);
+    return i18n::s.get("core.locale.chara.job.blacksmith", name);
 }
 
 
 
 std::string snfood(const std::string& name)
 {
-    return lang(u8"食品店"s + name, sncnv(name) + u8"the food vendor"s);
+    return i18n::s.get("core.locale.chara.job.food_vendor", name);
 }
 
 
@@ -235,17 +233,12 @@ void txtsetlastword()
 std::vector<std::string> txtsetwinword(int n)
 {
     std::vector<std::string> ret;
-    sample(
-        std::vector<std::string>{
-            lang(u8"遂に…！", u8"Finally!"),
-            lang(u8"当然の結果だ", u8"It's a matter of course."),
-            lang(u8"おぉぉぉぉ！", u8"Woooooo!"),
-            lang(u8"ふっ", u8"Heh."),
-            lang(u8"今日は眠れないな", u8"I can't sleep tonight."),
-            lang(u8"またそんな冗談を", u8"You're kidding."),
-        },
-        std::back_inserter(ret),
-        n);
+    std::vector<std::string> choices;
+    for (int cnt = 0; cnt < 6; cnt++)
+    {
+        choices.push_back(i18n::s.get_enum("core.locale.scenario.win_words", cnt));
+    }
+    sample(choices, std::back_inserter(ret), n);
     return ret;
 }
 
@@ -290,7 +283,7 @@ std::string maplevel(int)
                 + cnvrank(
                        (gdata_current_dungeon_level
                         - adata(17, gdata_current_map) + 1))
-                + lang(u8"層"s, ""s);
+                + i18n::s.get("core.locale.map.nefia.level");
         }
     }
     return "";
@@ -1052,18 +1045,13 @@ std::string cnvweight(int weight)
 
 std::string fltname(int category)
 {
-    switch (category)
+    if (auto text = i18n::s.get_enum_optional("core.locale.item.filter_name", category))
     {
-    case 60001: return lang(u8"井戸", u8"well");
-    case 57000: return lang(u8"食べ物", u8"food");
-    case 56000: return lang(u8"杖", u8"rods");
-    case 53000: return lang(u8"巻物", u8"scrolls");
-    case 52000: return lang(u8"ポーション", u8"potions");
-    case 64000: return lang(u8"ジャンク", u8"junks");
-    case 77000: return lang(u8"鉱石", u8"ores");
-    case 60000: return lang(u8"家具", u8"furniture");
-    case 25000: return lang(u8"矢弾", u8"ammos");
-    default: return lang(u8"不明", u8"Unknown");
+        return *text;
+    }
+    else
+    {
+        return i18n::s.get("core.locale.item.filter_name.default");
     }
 }
 

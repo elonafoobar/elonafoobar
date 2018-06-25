@@ -97,18 +97,21 @@ Examples:
 - `"you${his_owned(_1)}" -> "your"`
 - `"the putit${his_owned(_1)}" -> "the putit's"`
 
-## name\_nojob(chara (LuaCharacter))
-Returns: name of the character with the job stripped.
+## trim\_job(name (string)
+Returns: `name` with everything after the first space trimmed and an extra space added.
 
 Examples:
 
-- Using the name `"Putit the mochi vendor"`, `"${name_nojob${_1}}"` -> `"Putit "`
+- Using the string `"Putit the mochi vendor"`, `"${trim_job${_1}}"` -> `"Putit "`
 
 ## kare_wa(chara (LuaCharacter))
 Returns: blank if `chara` is the player, "{name}は" if the character is in sight, else "それは". For Japanese only.
 
 ## himself(chara (LuaCharacter))
 Returns: `yourself` if `chara` is the player, else gender-specific `himself`.
+
+## does(chara (LuaCharacter))
+Returns: `do` if `chara` is the player, else `does`.
 
 # Other functions
 There are various other functions leftover for Japanese-specific sentence fragments. They are listed here for completeness.

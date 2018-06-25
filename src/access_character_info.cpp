@@ -52,9 +52,9 @@ int access_character_info()
         cdatan(0, rc) = i18n::_(u8"character", std::to_string(dbid), u8"name");
         if (data->has_random_name)
         {
-            cdatan(0, rc) = lang(
-                cdatan(0, rc) + u8"の" + randomname(),
-                randomname() + u8" the " + cdatan(0, rc));
+            cdatan(0, rc) = i18n::s.get("core.locale.chara.job.own_name",
+                                        cdatan(0, rc),
+                                        randomname());
             cdata[rc].has_own_name() = true;
         }
         cdata[rc].original_relationship = cdata[rc].relationship =

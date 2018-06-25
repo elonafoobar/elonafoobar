@@ -129,6 +129,7 @@ inline bool ident_eq(std::string ident, int count)
 
 std::string format_builtins_argless(const hil::FunctionCall&);
 std::string format_builtins_bool(const hil::FunctionCall&, bool);
+std::string format_builtins_string(const hil::FunctionCall&, std::string);
 std::string format_builtins_character(
     const hil::FunctionCall&,
     const character&);
@@ -226,6 +227,10 @@ std::string format_function_type(
     {
         return format_builtins_bool(func, object.as<bool>());
     }
+    else if (object.is<std::string>())
+    {
+        return format_builtins_string(func, object.as<std::string>());
+    }
     else if (object.is<sol::table>())
     {
         sol::table table = object.as<sol::table>();
@@ -248,6 +253,14 @@ std::string format_function_type(
     bool const& value)
 {
     return format_builtins_bool(func, value);
+}
+
+template <typename Head = std::string>
+std::string format_function_type(
+    hil::FunctionCall const& func,
+    std::string const& value)
+{
+    return format_builtins_string(func, value);
 }
 
 template <typename Head>

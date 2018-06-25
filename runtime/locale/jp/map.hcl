@@ -169,6 +169,8 @@ locale {
         }
 
         nefia {
+            level = "層"
+
             prefix {
                 type_a {
                     _0 = "はじまりの"
