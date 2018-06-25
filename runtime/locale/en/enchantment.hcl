@@ -5,33 +5,36 @@ locale {
         with_parameters {
             attribute {
                 in_food {
-                    increases =
-                    decreases =
+                    increases = "has essential nutrients to enhance your ${_1}."
+                    decreases = "has which deteriorates your ${_1}."
                 }
                 other {
-                    increases =
-                    decreases =
+                    increases = "increases your ${_1} by ${_2}."
+                    decreases = "decreases your ${_1} by ${_2}."
                 }
             }
 
             resistance {
-                increases =
-                decreases =
+                increases = "grants your resistance to ${_1}."
+                decreases = "weakens your resistance to ${_1}."
             }
 
             skill {
-                increases =
-                decreases =
+                increases = "improves your ${_1} skill."
+                decreases = "decreases your ${_1} skill."
             }
 
             skill_maintenance {
-                in_food =
-                other =
+                in_food = "can help you exercise your ${_1} faster."
+                other = "maintains ${_1}."
             }
 
-            extra_damage =
-            invokes =
-            can_be_loaded_with =
+            extra_damage = "deals ${_1} damage."
+            invokes = "invokes ${_1}."
+            can_be_loaded_with {
+                text = "can be loaded with ${_1}."
+                max = "Max ${_1}"
+            }
         }
 
         no_parameters {
