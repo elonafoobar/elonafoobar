@@ -208,6 +208,7 @@ std::string format_builtins_character(
     // English only
     ELONA_DEFINE_I18N_BUILTIN("s", builtin_s(func, chara.index));
     ELONA_DEFINE_I18N_BUILTIN("is", is(chara.index));
+    ELONA_DEFINE_I18N_BUILTIN("does", does(chara.index == 0));
     ELONA_DEFINE_I18N_BUILTIN("have", have(chara.index));
     ELONA_DEFINE_I18N_BUILTIN("himself", yourself(chara.index));
     ELONA_DEFINE_I18N_BUILTIN("his_owned", your(chara.index));

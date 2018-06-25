@@ -65,7 +65,7 @@ locale {
         }
 
         hunger = "Suddenly ${name(_1)} feel${s(_1)} hungry."
-        weaken = "${name(_1) ${is(_1)} weakened."
+        weaken = "${name(_1)} ${is(_1)} weakened."
 
         summon = "Several monsters come out from a portal."
 
@@ -200,7 +200,7 @@ locale {
         }
 
         perform {
-            do_not_know = "${name(_1)} ${does(_1)}n't know how to play an instrument."# TODO
+            do_not_know = "${name(_1)} ${does(_1)}n't know how to play an instrument."
         }
 
         cook {
