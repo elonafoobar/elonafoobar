@@ -34,6 +34,14 @@ locale {
             ammo {
                 text = "can be loaded with ${_1}."
                 max = "Max ${_1}"
+                kinds {
+                    _0 = "rapid ammo"
+                    _1 = "explosive ammo"
+                    _2 = "piercing ammo"
+                    _3 = "magic ammo"
+                    _4 = "time stop ammo"
+                    _5 = "burst ammo"
+                }
             }
         }
 
@@ -79,6 +87,35 @@ locale {
             _59 = "reveals religion."
             _60 = "makes audience drunk with haunting tones."
             _61 = "inflicts massive damage to Gods."
+        }
+
+        item_ego {
+            major {
+                # TODO the append position differs based on language.
+                _0 = "of fire"
+                _1 = "of silence"
+                _2 = "of cold"
+                _3 = "of lightning"
+                _4 = "of defender"
+                _5 = "of healing"
+                _6 = "of resist blind"
+                _7 = "of resist paralysis"
+                _8 = "of resist confusion"
+                _9 = "of resist fear"
+                _10 = "of resist sleep"
+            }
+            minor {
+                _0 = "singing"
+                _1 = "servant's"
+                _2 = "follower's"
+                _3 = "howling"
+                _4 = "glowing"
+                _5 = "conspicuous"
+                _6 = "magical"
+                _7 = "enchanted"
+                _8 = "mighty"
+                _9 = "trustworthy"
+            }
         }
     }
 }

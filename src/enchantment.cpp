@@ -76,12 +76,12 @@ void initialize_enchantment_data()
     encammoref(0, 5) = 2;
     encammoref(1, 5) = 5;
     encammoref(2, 5) = 15;
-    ammoname(0) = lang(u8"連射弾"s, u8"rapid ammo"s);
-    ammoname(1) = lang(u8"炸裂弾"s, u8"explosive ammo"s);
-    ammoname(2) = lang(u8"貫通弾"s, u8"piercing ammo"s);
-    ammoname(3) = lang(u8"魔弾"s, u8"magic ammo"s);
-    ammoname(4) = lang(u8"時止弾"s, u8"time stop ammo"s);
-    ammoname(5) = lang(u8"バースト"s, u8"burst ammo"s);
+
+    for (int cnt = 0; cnt < 6; cnt++)
+    {
+        ammoname(cnt) = i18n::s.get_enum("core.locale.enchantment.with_parameters.ammo.kinds", cnt);
+    }
+
     encref(0, 21) = -1;
     encref(1, 21) = 50;
     encref(2, 21) = 75;
@@ -1514,7 +1514,12 @@ void initialize_ego_data()
     DIM3(egoenc, 20, 11);
     DIM3(egoref, 2, 11);
     DIM2(egolist, 11);
-    egoname(1) = lang(u8"静寂の"s, u8"of silence"s);
+
+    for (int cnt = 0; cnt < 11; cnt++)
+    {
+        egoname(cnt) = i18n::s.get_enum("core.locale.enchantment.item_ego.major", cnt);
+    }
+
     egoref(0, 1) = 0;
     egoref(1, 1) = 1;
     p = 1;
@@ -1522,19 +1527,16 @@ void initialize_ego_data()
     egoenc(1, p) = 100;
     egoenc(2, p) = 22;
     egoenc(3, p) = 100;
-    egoname(6) = lang(u8"耐盲目の"s, u8"of resist blind"s);
     egoref(0, 6) = 1;
     egoref(1, 6) = 1;
     p = 6;
     egoenc(0, p) = 23;
     egoenc(1, p) = 100;
-    egoname(8) = lang(u8"耐混乱の"s, u8"of resist confusion"s);
     egoref(0, 8) = 1;
     egoref(1, 8) = 1;
     p = 8;
     egoenc(0, p) = 25;
     egoenc(1, p) = 100;
-    egoname(0) = lang(u8"烈火の"s, u8"of fire"s);
     egoref(0, 0) = 1;
     egoref(1, 0) = 3;
     p = 0;
@@ -1542,7 +1544,6 @@ void initialize_ego_data()
     egoenc(1, p) = 150;
     egoenc(2, p) = 70050;
     egoenc(3, p) = 150;
-    egoname(2) = lang(u8"氷結の"s, u8"of cold"s);
     egoref(0, 2) = 1;
     egoref(1, 2) = 3;
     p = 2;
@@ -1550,7 +1551,6 @@ void initialize_ego_data()
     egoenc(1, p) = 150;
     egoenc(2, p) = 70051;
     egoenc(3, p) = 150;
-    egoname(3) = lang(u8"稲妻の"s, u8"of lightning"s);
     egoref(0, 3) = 1;
     egoref(1, 3) = 3;
     p = 3;
@@ -1558,31 +1558,26 @@ void initialize_ego_data()
     egoenc(1, p) = 150;
     egoenc(2, p) = 70052;
     egoenc(3, p) = 150;
-    egoname(5) = lang(u8"癒し手の"s, u8"of healing"s);
     egoref(0, 5) = 1;
     egoref(1, 5) = 1;
     p = 5;
     egoenc(0, p) = 30154;
     egoenc(1, p) = 100;
-    egoname(7) = lang(u8"耐麻痺の"s, u8"of resist paralysis"s);
     egoref(0, 7) = 2;
     egoref(1, 7) = 1;
     p = 7;
     egoenc(0, p) = 24;
     egoenc(1, p) = 100;
-    egoname(9) = lang(u8"耐恐怖の"s, u8"of resist fear"s);
     egoref(0, 9) = 0;
     egoref(1, 9) = 1;
     p = 9;
     egoenc(0, p) = 26;
     egoenc(1, p) = 100;
-    egoname(10) = lang(u8"睡眠防止の"s, u8"of resist sleep"s);
     egoref(0, 10) = 0;
     egoref(1, 10) = 1;
     p = 10;
     egoenc(0, p) = 27;
     egoenc(1, p) = 100;
-    egoname(4) = lang(u8"防衛者の"s, u8"of defender"s);
     egoref(0, 4) = 3;
     egoref(1, 4) = 10000;
     p = 4;
@@ -1592,18 +1587,13 @@ void initialize_ego_data()
     egoenc(3, p) = 100;
     egoenc(4, p) = 20052;
     egoenc(5, p) = 100;
-    egominorn(0) = lang(u8"唄う"s, u8"singing"s);
-    egominorn(1) = lang(u8"召使の"s, u8"servant's"s);
-    egominorn(2) = lang(u8"従者の"s, u8"follower's"s);
-    egominorn(3) = lang(u8"呻く"s, u8"howling"s);
-    egominorn(4) = lang(u8"輝く"s, u8"glowing"s);
-    egominorn(5) = lang(u8"異彩の"s, u8"conspicuous"s);
-    egominorn(6) = lang(u8"魔力を帯びた"s, u8"magical"s);
-    egominorn(7) = lang(u8"闇を砕く"s, u8"enchanted"s);
-    egominorn(8) = lang(u8"強力な"s, u8"mighty"s);
-    egominorn(9) = lang(u8"頼れる"s, u8"trustworthy"s);
+
+    for (int cnt = 0; cnt < 10; cnt++)
+    {
+        egominorn(cnt) = i18n::s.get_enum("core.locale.enchantment.item_ego.minor", cnt);
+    }
+
     maxegominorn = egominorn.size();
-    return;
 }
 
 void ego_add(int prm_465, int prm_466)
