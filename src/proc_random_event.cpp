@@ -1,96 +1,111 @@
 #include "ability.hpp"
+#include "audio.hpp"
+#include "buff.hpp"
+#include "calc.hpp"
+#include "config.hpp"
+#include "character.hpp"
+#include "character_status.hpp"
+#include "dmgheal.hpp"
+#include "event.hpp"
+#include "food.hpp"
+#include "i18n.hpp"
+#include "input.hpp"
+#include "item.hpp"
+#include "itemgen.hpp"
 #include "optional.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
+#include <cassert>
 
 namespace elona
 {
 
 optional<std::pair<int, int>> generate_random_event_mode9()
 {
-    int event_id = 0;
+    int id = 0;
     int luck_threshold = 0;
 
     if (!cdata[0].god_id.empty())
     {
         if (rnd(12) == 0)
         {
-            event_id = 18;
+            id = 18;
         }
     }
     if (rnd(80) == 0)
     {
-        event_id = 4;
+        id = 4;
         luck_threshold = 120;
     }
     if (rnd(20) == 0)
     {
-        event_id = 3;
+        id = 3;
     }
     if (rnd(25) == 0)
     {
-        event_id = 2;
+        id = 2;
     }
     if (rnd(100) == 0)
     {
-        event_id = 5;
+        id = 5;
         luck_threshold = 65;
     }
     if (rnd(20) == 0)
     {
-        event_id = 6;
+        id = 6;
     }
     if (rnd(20) == 0)
     {
-        event_id = 7;
+        id = 7;
     }
     if (rnd(250) == 0)
     {
         if (inv_getfreeid(0) != -1)
         {
-            event_id = 19;
+            id = 19;
         }
     }
     if (rnd(10000) == 0)
     {
         if (inv_getfreeid(0) != -1)
         {
-            event_id = 21;
+            id = 21;
         }
     }
     if (rnd(70) == 0)
     {
-        event_id = 8;
+        id = 8;
         luck_threshold = 40;
     }
     if (rnd(200) == 0)
     {
-        event_id = 20;
+        id = 20;
     }
     if (rnd(50) == 0)
     {
-        event_id = 23;
+        id = 23;
     }
     if (rnd(300) == 0)
     {
-        event_id = 24;
+        id = 24;
     }
     if (rnd(90) == 0)
     {
-        event_id = 22;
+        id = 22;
         luck_threshold = 70;
     }
 
-    if (event_id == 0)
+    if (id == 0)
     {
         return none;
     }
 
-    return std::make_pair(event_id, luck_threshold);
+    return std::make_pair(id, luck_threshold);
 }
 
 optional<std::pair<int, int>> generate_random_event()
 {
-    int event_id = 0;
+    int id = 0;
     int luck_threshold = 0;
 
     if (gspd < 10)
@@ -122,48 +137,48 @@ optional<std::pair<int, int>> generate_random_event()
     }
     if (rnd(30) == 0)
     {
-        event_id = 17;
+        id = 17;
     }
     if (rnd(25) == 0)
     {
-        event_id = 16;
+        id = 16;
     }
     if (rnd(25) == 0)
     {
-        event_id = 12;
+        id = 12;
     }
     if (rnd(50) == 0)
     {
-        event_id = 9;
+        id = 9;
     }
     if (rnd(80) == 0)
     {
-        event_id = 14;
+        id = 14;
     }
     if (rnd(50) == 0)
     {
-        event_id = 8;
+        id = 8;
         luck_threshold = 40;
     }
     if (rnd(80) == 0)
     {
-        event_id = 13;
+        id = 13;
         luck_threshold = 45;
     }
     if (mdata(6) == 3)
     {
         if (rnd(25) == 0)
         {
-            event_id = 15;
+            id = 15;
             luck_threshold = 80;
         }
-        if (event_id == 0)
+        if (id == 0)
         {
             return none;
         }
         else
         {
-            return std::make_pair(event_id, luck_threshold);
+            return std::make_pair(id, luck_threshold);
         }
     }
     if (mdata(6) == 1)
@@ -172,34 +187,35 @@ optional<std::pair<int, int>> generate_random_event()
         {
             return none;
         }
-        if (event_id == 0)
+        if (id == 0)
         {
             return none;
         }
         else
         {
-            return std::make_pair(event_id, luck_threshold);
+            return std::make_pair(id, luck_threshold);
         }
     }
     if (rnd(25) == 0)
     {
-        event_id = 10;
+        id = 10;
     }
     if (rnd(25) == 0)
     {
-        event_id = 11;
+        id = 11;
     }
 label_1894_internal:
-    if (event_id == 0)
+    if (id == 0)
     {
         return none;
     }
 
-    return std::make_pair(event_id, luck_threshold);
+    return std::make_pair(id, luck_threshold);
 }
 
-void run_random_event(int event_id, int luck_threshold)
+void run_random_event(int id, int luck_threshold)
 {
+    assert(id != 0);
     cc = 0;
     tc = 0;
     listmax = 0;
@@ -208,15 +224,15 @@ void run_random_event(int event_id, int luck_threshold)
         // Default to "Avoiding Misfortune" if Luck is good enough.
         if (rnd(sdata(19, 0) + 1) > luck_threshold)
         {
-            event_id = 1;
+            id = 1;
         }
     }
 
-    s = i18n::s.get_enum_property("core.locale.event.popup", "title", event_id);
-    buff = i18n::s.get_enum_property("core.locale.event.popup", "text", event_id);
+    s = i18n::s.get_enum_property("core.locale.event.popup", "title", id);
+    buff = i18n::s.get_enum_property("core.locale.event.popup", "text", id);
     std::string event_bg;
 
-    switch (event_id)
+    switch (id)
     {
     case 15:
         for (int cnt = 0; cnt < 20; ++cnt)
@@ -432,25 +448,26 @@ void run_random_event(int event_id, int luck_threshold)
         list(0, cnt) = cnt;
         listn(0, cnt) = i18n::s.get_enum_property("core.locale.event.popup",
                                                   "choices._" + std::to_string(cnt),
-                                                  event_id);
+                                                  id);
     }
 
-    show_random_event_window(event_bg);
+    int result = show_random_event_window(event_bg);
 
-    switch(event_id)
+    switch(id)
     {
     case 14:
-        if (rtval == 1)
+        if (result == 0)
         {
             cdata[0].nutrition = 15000;
-            txt(i18n::s.get_enum_property("core.locale.event.popup", "results", 14
-                                          "_" + std::to_string(rnd(3)));
+            txt(i18n::s.get_enum_property("core.locale.event.popup",
+                                          "results._" + std::to_string(rnd(3)),
+                                          14));
             show_eating_message();
             chara_anorexia(0);
         }
         break;
     case 10:
-        if (rtval == 1)
+        if (result == 0)
         {
             for (int cnt = 0, cnt_end = (1 + rnd(4)); cnt < cnt_end; ++cnt)
             {
@@ -464,7 +481,7 @@ void run_random_event(int event_id, int luck_threshold)
         }
         break;
     case 11:
-        if (rtval == 1)
+        if (result == 0)
         {
             txt(i18n::s.get_enum_property("core.locale.event.popup", "loot", 11));
             modify_karma(0, -2);
@@ -618,16 +635,10 @@ label_1897_internal:
     }
     if (rtval != -1)
     {
-        label_1898();
-        return 0;
+        key = "";
+        return rtval;
     }
     goto label_1897_internal;
-}
-
-int label_1898()
-{
-    key = "";
-    return rtval;
 }
 
 } // namespace elona

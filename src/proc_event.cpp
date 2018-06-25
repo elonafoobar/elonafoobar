@@ -139,27 +139,28 @@ void proc_event()
         for (int cnt = 0; cnt < listmax; cnt++)
         {
             list(0, cnt) = cnt;
-            listn(0, cnt) = i18n::s.get_enum_property("core.locale.event.popup",
-                                                      "choices._" + std::to_string(cnt),
-                                                      "reunion_with_pet");
+            listn(0, cnt) = i18n::s.get_enum("core.locale.event.popup.reunion_with_pet.choices",
+                                             cnt);
         }
-        show_random_event_window(u8"bg_re13");
-        p = 3;
-        if (rtval == 1)
         {
-            p = 165;
-        }
-        if (rtval == 2)
-        {
-            p = 164;
-        }
-        if (rtval == 3)
-        {
-            p = 108;
-        }
-        if (rtval == 4)
-        {
-            p = 166;
+            int result = show_random_event_window(u8"bg_re13");
+            p = 3;
+            if (result == 0)
+            {
+                p = 165;
+            }
+            if (result == 1)
+            {
+                p = 164;
+            }
+            if (result == 2)
+            {
+                p = 108;
+            }
+            if (result == 3)
+            {
+                p = 166;
+            }
         }
         flt();
         initlv = cdata[0].level * 2 / 3 + 1;
@@ -175,9 +176,8 @@ void proc_event()
         for (int cnt = 0; cnt < listmax; cnt++)
         {
             list(0, cnt) = cnt;
-            listn(0, cnt) = i18n::s.get_enum_property("core.locale.event.popup",
-                                                      "choices._" + std::to_string(cnt),
-                                                      "marriage");
+            listn(0, cnt) = i18n::s.get_enum("core.locale.event.popup.marriage.choices",
+                                             cnt);
         }
         show_random_event_window(u8"bg_re14");
         for (int i = 0; i < 5; ++i)
@@ -574,7 +574,7 @@ void proc_event()
             if (cdata[cc].character_role != 13 && cdata[cc].character_role != 3)
             {
                 cdata[cc].emotion_icon = 2010;
-                txt(i18n::s.get("core.locale.event.my_eyes", cdata[cc]))
+                txt(i18n::s.get("core.locale.event.my_eyes", cdata[cc]));
             }
         }
         break;

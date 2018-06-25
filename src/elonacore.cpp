@@ -129,7 +129,6 @@ elona_vector1<int> fsetperform;
 elona_vector1<int> fsetrare;
 elona_vector1<int> fsetplantartifact;
 elona_vector1<int> fsetplantunknown;
-elona_vector1<int> fsetremain;
 elona_vector1<int> fsetbarrel;
 elona_vector1<int> isetgiftminor;
 elona_vector1<int> isetgiftmajor;

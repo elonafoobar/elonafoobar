@@ -123,7 +123,7 @@ locale {
 
             _10 {
                 title = "Camping Site"
-                desc = "You discover a camping site someone left behind. Chunks of leftovers and junks remain here. You may possibly find some useful items."
+                text = "You discover a camping site someone left behind. Chunks of leftovers and junks remain here. You may possibly find some useful items."
 
                 choices {
                     _0 = "(Search)"
