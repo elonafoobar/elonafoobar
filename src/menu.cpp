@@ -3250,7 +3250,7 @@ label_2052_internal:
         {
             ci = cdata_body_part(cc, p) % 10000 - 1;
             cs_prev = cs;
-            show_item_description();
+            item_show_description();
             nowindowanime = 1;
             returnfromidentify = 0;
             screenupdate = -1;
@@ -7515,8 +7515,7 @@ void item_show_description()
     int inhmax = 0;
     if (ci < 0)
     {
-        dialog(
-            u8"暫定エラー回避処置です。お手数ですが、どの持ち物メニュー(例えば飲む、振る、食べるなど）から調査(xキー)を押したか報告お願いします。"s);
+        dialog(i18n::s.get("core.locale.item.desc.window.error"));
         return;
     }
     snd(26);
@@ -7548,67 +7547,52 @@ void item_show_description()
         if (inv[ci].material != 0)
         {
             list(0, p) = 7;
-            listn(0, p) = lang(
-                u8"それは"s
-                    + i18n::_(
-                          u8"item_material",
-                          std::to_string(inv[ci].material),
-                          u8"name")
-                    + u8"で作られている"s,
-                u8"It is made of "s
-                    + i18n::_(
-                          u8"item_material",
-                          std::to_string(inv[ci].material),
-                          u8"name")
-                    + u8"."s);
+            listn(0, p) = i18n::s.get("core.locale.item.desc.it_is_made_of",
+                                      i18n::_(u8"item_material",
+                                              std::to_string(inv[ci].material),
+                                              u8"name"));
             ++p;
         }
         if (inv[ci].material == 8)
         {
             list(0, p) = 7;
-            listn(0, p) = lang(
-                u8"それは装備している間、エーテルの病の進行を早める"s,
-                u8"It speeds up the ether disease while equipping."s);
+            listn(0, p) = i18n::s.get("core.locale.item.desc.speeds_up_ether_disease");
             ++p;
         }
         if (ibit(1, ci))
         {
             list(0, p) = 7;
-            listn(0, p) =
-                lang(u8"それは酸では傷つかない"s, u8"It is acidproof."s);
+            listn(0, p) = i18n::s.get("core.locale.item.desc.bit.acidproof");
             ++p;
         }
         if (ibit(2, ci))
         {
             list(0, p) = 7;
-            listn(0, p) =
-                lang(u8"それは炎では燃えない"s, u8"It is fireproof."s);
+            listn(0, p) = i18n::s.get("core.locale.item.desc.bit.fireproof");
             ++p;
         }
         if (ibit(5, ci))
         {
             list(0, p) = 7;
-            listn(0, p) = lang(u8"それは貴重な品だ"s, u8"It is precious."s);
+            listn(0, p) = i18n::s.get("core.locale.item.desc.bit.precious");
             ++p;
         }
         if (ibit(8, ci))
         {
             list(0, p) = 7;
-            listn(0, p) = lang(
-                u8"それはエヘカトルの祝福を受けている"s,
-                u8"It is blessed by Ehekatl."s);
+            listn(0, p) = i18n::s.get("core.locale.item.desc.bit.blessed_by_ehekatl");
             ++p;
         }
         if (ibit(9, ci))
         {
             list(0, p) = 7;
-            listn(0, p) = lang(u8"それは盗品だ"s, u8"It is a stolen item."s);
+            listn(0, p) = i18n::s.get("core.locale.item.desc.bit.stolen");
             ++p;
         }
         if (ibit(10, ci))
         {
             list(0, p) = 7;
-            listn(0, p) = lang(u8"それは生きている"s, u8"It is alive."s)
+            listn(0, p) = i18n::s.get("core.locale.item.desc.bit.alive")
                 + u8" [Lv:"s + inv[ci].param1 + u8" Exp:"s
                 + clamp(inv[ci].param2 * 100 / calcexpalive(inv[ci].param1),
                         0,
@@ -7619,44 +7603,35 @@ void item_show_description()
         if (ibit(16, ci))
         {
             list(0, p) = 7;
-            listn(0, p) = lang(
-                u8"それはショウルームでのみ使用できる。"s,
-                u8"It can be only used in a show room."s);
+            listn(0, p) = i18n::s.get("core.locale.item.desc.bit.show_room_only");
             ++p;
         }
         if (ibit(17, ci))
         {
             list(0, p) = 7;
-            listn(0, p) = lang(
-                u8"それは心温まる手作り品だ"s, u8"It is a hand-made item."s);
+            listn(0, p) = i18n::s.get("core.locale.item.desc.bit.handmade");
             ++p;
         }
         if (inv[ci].dice_x != 0)
         {
             const auto pierce = calc_rate_to_pierce(inv[ci].id);
             list(0, p) = 5;
-            listn(0, p) = lang(
-                              u8"それは武器として扱うことができる"s,
-                              u8"It can be wielded as a weapon."s)
+            listn(0, p) = i18n::s.get("core.locale.item.desc.weapon.it_can_be_wielded")
                 + u8" ("s + inv[ci].dice_x + u8"d"s + inv[ci].dice_y
-                + lang(u8" 貫通 "s, u8" Pierce "s) + pierce + u8"%)"s;
+                + i18n::s.get("core.locale.item.desc.weapon.pierce") + pierce + u8"%)"s;
             ++p;
             if (reftype == 10000)
             {
                 if (inv[ci].weight <= 1500)
                 {
                     list(0, p) = 5;
-                    listn(0, p) = lang(
-                        u8"それは片手でも扱いやすい"s,
-                        u8"It is a light weapon."s);
+                    listn(0, p) = i18n::s.get("core.locale.item.desc.weapon.light");
                     ++p;
                 }
                 if (inv[ci].weight >= 4000)
                 {
                     list(0, p) = 5;
-                    listn(0, p) = lang(
-                        u8"それは両手持ちに適している"s,
-                        u8"It is a heavy weapon."s);
+                    listn(0, p) = i18n::s.get("core.locale.item.desc.weapon.heavy");
                     ++p;
                 }
             }
@@ -7664,23 +7639,13 @@ void item_show_description()
         if (inv[ci].hit_bonus != 0 || inv[ci].damage_bonus != 0)
         {
             list(0, p) = 5;
-            listn(0, p) = lang(
-                u8"それは攻撃修正に"s + inv[ci].hit_bonus
-                    + u8"を加え、ダメージを"s + inv[ci].damage_bonus
-                    + u8"増加させる"s,
-                u8"It modifies hit bonus by "s + inv[ci].hit_bonus
-                    + u8" and damage bonus by "s + inv[ci].damage_bonus
-                    + u8"."s);
+            listn(0, p) = i18n::s.get("core.locale.item.desc.bonus", inv[ci].hit_bonus, inv[ci].damage_bonus);
             ++p;
         }
         if (inv[ci].pv != 0 || inv[ci].dv != 0)
         {
             list(0, p) = 6;
-            listn(0, p) = lang(
-                u8"それはDVを"s + inv[ci].dv + u8"上昇させ、PVを"s + inv[ci].pv
-                    + u8"上昇させる"s,
-                u8"It modifies DV by "s + inv[ci].dv + u8" and PV by "s
-                    + inv[ci].pv + u8"."s);
+            listn(0, p) = i18n::s.get("core.locale.item.desc.dv_pv", inv[ci].dv, inv[ci].pv);
             ++p;
         }
         if (inv[ci].id == 701)
@@ -7699,11 +7664,9 @@ void item_show_description()
             }
             const auto percentage = std::min(100 * card_count / npc_count, 100);
             list(0, p) = 7;
-            listn(0, p) = lang(
-                u8"集めたカード: "s + card_count + u8"/" + npc_count + u8"("
-                    + percentage + u8"%)",
-                u8"Collected cards: "s + card_count + u8"/" + npc_count + u8"("
-                    + percentage + u8"%)");
+            listn(0, p) = i18n::s.get("core.locale.item.desc.deck")
+                + u8": "s + card_count + u8"/" + npc_count + u8"("
+                + percentage + u8"%)";
             ++p;
         }
     }
@@ -7711,9 +7674,7 @@ void item_show_description()
         <= identification_state_t::partly_identified)
     {
         list(0, p) = 0;
-        listn(0, p) = lang(
-            u8"このアイテムに関する知識を得るには、鑑定する必要がある。"s,
-            u8"You have to identify the item to gain knowledge."s);
+        listn(0, p) = i18n::s.get("core.locale.item.desc.have_to_identify");
         ++p;
     }
     if (inv[ci].identification_state
@@ -7749,7 +7710,7 @@ void item_show_description()
         if (ibit(15, ci))
         {
             list(0, p) = 4;
-            listn(0, p) = lang(u8"相手は死ぬ"s, u8"The enemy dies."s);
+            listn(0, p) = i18n::s.get("core.locale.item.desc.bit.eternal_force");
             ++p;
         }
         if (jp)
@@ -7815,9 +7776,7 @@ void item_show_description()
     if (p == 0)
     {
         list(0, p) = 0;
-        listn(0, p) = lang(
-            u8"特に情報はない"s,
-            u8"There is no information about this object."s);
+        listn(0, p) = i18n::s.get("core.locale.item.desc.no_information");
         ++p;
     }
     listmax = p;
@@ -7842,7 +7801,7 @@ label_2069_internal:
         page = 0;
     }
 label_2070_internal:
-    s(0) = lang(u8"アイテムの知識"s, u8"Known Information"s);
+    s(0) = i18n::s.get("core.locale.item.desc.window.title");
     s(1) = strhint4 + strhint3;
     display_window((windoww - 600) / 2 + inf_screenx, winposy(408), 600, 408);
     display_topic(itemname(ci), wx + 28, wy + 34);

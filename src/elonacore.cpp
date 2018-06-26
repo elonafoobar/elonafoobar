@@ -103,8 +103,6 @@ namespace elona
 
 int prm_518;
 
-elona_vector1<int> inhlist;
-
 double r_at_m133;
 
 
@@ -11180,7 +11178,7 @@ void dump_player_info()
                 q(1) = cnvweight(inv[p(1)].weight);
                 ci = p(1);
                 dump_return = 1;
-                show_item_description();
+                item_show_description();
             }
             else
             {

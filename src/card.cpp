@@ -6,6 +6,7 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
+#include "menu.hpp"
 #include "itemgen.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -165,7 +166,7 @@ reset_page:
             int pagesize_bk = pagesize;
             int page_bk = page;
             int cs_bk = cs;
-            show_item_description();
+            item_show_description();
             inv[ci].number = 0;
             inv[tmp.index] = tmp;
             pagesize = pagesize_bk;

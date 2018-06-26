@@ -1117,7 +1117,7 @@ label_2061_internal:
         }
         if (invctrl == 1)
         {
-            show_item_description();
+            item_show_description();
             goto label_20591;
         }
         if (invctrl == 2)
@@ -2202,7 +2202,7 @@ label_2061_internal:
         if (listmax != 0)
         {
             ci = list(0, pagesize * page + cs);
-            show_item_description();
+            item_show_description();
             goto label_20591;
         }
     }

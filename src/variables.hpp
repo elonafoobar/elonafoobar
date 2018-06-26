@@ -76,6 +76,8 @@ ELONA_EXTERN(int gspdorg);
 ELONA_EXTERN(int gspd);
 ELONA_EXTERN(int scposval);
 ELONA_EXTERN(int weatherbk);
+ELONA_EXTERN(elona_vector1<int> inhlist);
+
 
 // crafting.cpp / blending.cpp
 ELONA_EXTERN(elona_vector1<int> rpsourcelist);

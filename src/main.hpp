@@ -12,8 +12,6 @@ void update_screen();
 
 extern int prm_518;
 
-extern elona_vector1<int> inhlist;
-
 extern int i_at_m68;
 extern double r_at_m133;
 
