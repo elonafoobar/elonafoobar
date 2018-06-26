@@ -200,7 +200,7 @@ void shop_refresh()
             }
             if (rnd(10) == 0)
             {
-                dbid = isetdeed(rnd(length(isetdeed)));
+                dbid = choice(isetdeed);
             }
         }
         if (cdata[tc].character_role == 1003)
@@ -232,7 +232,7 @@ void shop_refresh()
         }
         if (cdata[tc].character_role == 1007)
         {
-            flttypemajor = fsetwear(rnd(length(fsetwear)));
+            flttypemajor = choice(fsetwear);
             if (rnd(3) == 0)
             {
                 fixlv = 3;
@@ -245,7 +245,7 @@ void shop_refresh()
         if (cdata[tc].character_role == 1010
             || cdata[tc].character_role == 2003)
         {
-            flttypemajor = fsetwear(rnd(length(fsetwear)));
+            flttypemajor = choice(fsetwear);
             fixlv = 3;
             if (rnd(2) == 0)
             {
@@ -269,7 +269,7 @@ void shop_refresh()
             flttypemajor = 56000;
             if (rnd(3) == 0)
             {
-                flttypemajor = fsetwear(rnd(length(fsetwear)));
+                flttypemajor = choice(fsetwear);
             }
             if (rnd(3) == 0)
             {
@@ -293,7 +293,7 @@ void shop_refresh()
             }
             if (rnd(10) == 0)
             {
-                dbid = isetdeed(rnd(length(isetdeed)));
+                dbid = choice(isetdeed);
             }
             if (rnd(15) == 0)
             {
@@ -380,7 +380,7 @@ void shop_refresh()
             flttypemajor = 55000;
             if (rnd(3))
             {
-                dbid = isetdeed(rnd(length(isetdeed)));
+                dbid = choice(isetdeed);
             }
             if (rnd(5) == 0)
             {

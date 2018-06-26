@@ -211,7 +211,7 @@ int do_create_item(int slot, int x, int y)
     inv[ci].color = icolref(inv[ci].id);
     if (inv[ci].color == 1)
     {
-        inv[ci].color = randcolor(rnd(length(randcolor)));
+        inv[ci].color = choice(randcolor);
     }
     if (inv[ci].id == 519)
     {
@@ -219,7 +219,7 @@ int do_create_item(int slot, int x, int y)
     }
     if (inv[ci].id == 24 && inv[ci].param1 == 0)
     {
-        inv[ci].param1 = isetbook(rnd(length(isetbook)));
+        inv[ci].param1 = choice(isetbook);
     }
     if (inv[ci].id == 563 && inv[ci].param1 == 0)
     {
@@ -227,7 +227,7 @@ int do_create_item(int slot, int x, int y)
     }
     if (inv[ci].id == 783)
     {
-        inv[ci].subname = rpsourcelist(rnd(length(rpsourcelist)));
+        inv[ci].subname = choice(rpsourcelist);
         inv[ci].param1 = 1;
     }
 

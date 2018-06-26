@@ -1249,7 +1249,7 @@ bool casino_blackjack()
             }
             flt(calcobjlv(rnd(stake + winrow * 2) + winrow * 3 / 2 + stake / 2),
                 i);
-            flttypemajor = fsetwear(rnd(length(fsetwear)));
+            flttypemajor = choice(fsetwear);
             itemcreate(-1, 0, -1, -1, 0);
             if (inv[ci].number == 0)
             {

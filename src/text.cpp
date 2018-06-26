@@ -592,8 +592,6 @@ std::string txtskillchange(int id, int cc, bool increase)
 
 
 
-
-
 std::string _yoro(int mark)
 {
     std::vector<std::string> candidates[][2] = {
@@ -2278,7 +2276,7 @@ std::string randomname()
 
     while (1)
     {
-        ret = rn1(rnd(length(rn1)));
+        ret = choice(rn1);
         if (ret.empty())
         {
             continue;
@@ -2292,7 +2290,7 @@ std::string randomname()
         }
         if (rnd(5))
         {
-            ret += rn2(rnd(length(rn2)));
+            ret += choice(rn2);
         }
         const auto length = ret.size();
         if (length < 4)

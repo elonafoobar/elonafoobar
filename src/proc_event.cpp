@@ -195,7 +195,7 @@ void proc_event()
         for (int i = 0; i < 5; ++i)
         {
             flt(calcobjlv(cdata[marry].level + 5), calcfixlv(3));
-            flttypemajor = fsetchest(rnd(length(fsetchest)));
+            flttypemajor = choice(fsetchest);
             itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
         }
         itemcreate(-1, 559, cdata[0].position.x, cdata[0].position.y, 0);

@@ -1091,13 +1091,13 @@ int fltsetdungeon()
 {
     if (rnd(20) == 0)
     {
-        return fsetrare(rnd(length(fsetrare)));
+        return choice(fsetrare);
     }
     if (rnd(3) == 0)
     {
-        return fsetwear(rnd(length(fsetwear)));
+        return choice(fsetwear);
     }
-    return fsetitem(rnd(length(fsetitem)));
+    return choice(fsetitem);
 }
 
 
@@ -4350,7 +4350,7 @@ void character_drops_item()
         {
             p = 0;
             flt(calcobjlv(cdata[tc].level), calcfixlv(2));
-            flttypemajor = fsetwear(rnd(length(fsetwear)));
+            flttypemajor = choice(fsetwear);
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
@@ -4358,7 +4358,7 @@ void character_drops_item()
         {
             p = 0;
             flt(calcobjlv(cdata[tc].level), calcfixlv(2));
-            flttypemajor = fsetweapon(rnd(length(fsetweapon)));
+            flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
@@ -4464,7 +4464,7 @@ void character_drops_item()
         {
             p = 0;
             flt(calcobjlv(cdata[tc].level), calcfixlv(2));
-            flttypemajor = fsetwear(rnd(length(fsetwear)));
+            flttypemajor = choice(fsetwear);
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
@@ -4472,7 +4472,7 @@ void character_drops_item()
         {
             p = 0;
             flt(calcobjlv(cdata[tc].level), calcfixlv(2));
-            flttypemajor = fsetweapon(rnd(length(fsetweapon)));
+            flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
@@ -4498,7 +4498,7 @@ void character_drops_item()
         {
             p = 0;
             flt(calcobjlv(cdata[tc].level), calcfixlv(2));
-            flttypemajor = fsetwear(rnd(length(fsetwear)));
+            flttypemajor = choice(fsetwear);
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
@@ -4506,7 +4506,7 @@ void character_drops_item()
         {
             p = 0;
             flt(calcobjlv(cdata[tc].level), calcfixlv(2));
-            flttypemajor = fsetweapon(rnd(length(fsetweapon)));
+            flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
@@ -8372,7 +8372,7 @@ label_1894_internal:
             for (int cnt = 0, cnt_end = (1 + rnd(4)); cnt < cnt_end; ++cnt)
             {
                 flt();
-                flttypemajor = fsetremain(rnd(length(fsetremain)));
+                flttypemajor = choice(fsetremain);
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
             txt(i18n::s.get(
@@ -8539,11 +8539,11 @@ label_1894_internal:
                 flt(0, calcfixlv(3));
                 if (rnd(3) == 0)
                 {
-                    flttypemajor = fsetwear(rnd(length(fsetwear)));
+                    flttypemajor = choice(fsetwear);
                 }
                 else
                 {
-                    flttypemajor = fsetremain(rnd(length(fsetremain)));
+                    flttypemajor = choice(fsetremain);
                 }
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
@@ -8869,10 +8869,10 @@ void supply_income()
             dbid = 0;
             flt(calcobjlv((100 - gdata((120 + cnt2)) / 100) / 2 + 1),
                 calcfixlv(3 + (rnd(12) < trait(39))));
-            flttypemajor = fsetincome(rnd(length(fsetincome)));
+            flttypemajor = choice(fsetincome);
             if (rnd(5) == 0)
             {
-                flttypemajor = fsetwear(rnd(length(fsetwear)));
+                flttypemajor = choice(fsetwear);
             }
             if (rnd(100 + gdata((120 + cnt2)) / 5) < 2)
             {
@@ -12951,8 +12951,7 @@ void continuous_action_perform()
                                                 / 10),
                                             calcfixlv(3));
                                     }
-                                    flttypemajor =
-                                        fsetperform(rnd(length(fsetperform)));
+                                    flttypemajor = choice(fsetperform);
                                     dbid = 0;
                                     if (gdata_executing_immediate_quest_type
                                         == 1009)
@@ -14648,8 +14647,7 @@ void spot_digging()
                                 {
                                     fixlv = 5;
                                 }
-                                flttypemajor =
-                                    fsetchest(rnd(length(fsetchest)));
+                                flttypemajor = choice(fsetchest);
                                 itemcreate(
                                     -1,
                                     0,
@@ -16760,7 +16758,7 @@ turn_result_t do_bash()
             flt(calcobjlv(
                     gdata_current_dungeon_level * (gdata_current_map != 30)),
                 calcfixlv(2));
-            flttypemajor = fsetbarrel(rnd(length(fsetbarrel)));
+            flttypemajor = choice(fsetbarrel);
             itemcreate(-1, 0, x, y, 0);
             if (is_in_fov(cc))
             {
@@ -17598,7 +17596,7 @@ void open_box()
             }
         }
         flt(calcobjlv(inv[ri].param1), calcfixlv(p));
-        flttypemajor = fsetchest(rnd(length(fsetchest)));
+        flttypemajor = choice(fsetchest);
         if (cnt > 0)
         {
             if (rnd(3) != 0)
@@ -17631,7 +17629,7 @@ void open_box()
         if (inv[ri].id == 415 || inv[ri].id == 416)
         {
             flttypeminor = 0;
-            flttypemajor = fsetwear(rnd(length(fsetwear)));
+            flttypemajor = choice(fsetwear);
             fixlv = 3;
             if (inv[ri].id == 416)
             {
@@ -17826,7 +17824,7 @@ void open_new_year_gift()
         flt();
         itemcreate(
             -1,
-            isetgiftminor(rnd(length(isetgiftminor))),
+            choice(isetgiftminor),
             cdata[0].position.x,
             cdata[0].position.y,
             1);
@@ -17866,7 +17864,7 @@ void open_new_year_gift()
         flt();
         itemcreate(
             -1,
-            isetgiftgrand(rnd(length(isetgiftgrand))),
+            choice(isetgiftgrand),
             cdata[0].position.x,
             cdata[0].position.y,
             1);
@@ -17880,11 +17878,7 @@ void open_new_year_gift()
     }
     flt();
     itemcreate(
-        -1,
-        isetgiftmajor(rnd(length(isetgiftmajor))),
-        cdata[0].position.x,
-        cdata[0].position.y,
-        1);
+        -1, choice(isetgiftmajor), cdata[0].position.x, cdata[0].position.y, 1);
     return;
 }
 
@@ -19181,7 +19175,7 @@ void label_2236()
     dbid = 0;
     if (feat(2) == 39)
     {
-        flttypemajor = fsetplantunknown(rnd(length(fsetplantunknown)));
+        flttypemajor = choice(fsetplantunknown);
         if (rnd(100) == 0)
         {
             dbid = 559;
@@ -19189,7 +19183,7 @@ void label_2236()
     }
     if (feat(2) == 40 || (feat(2) == 39 && rnd(50) == 0))
     {
-        flttypemajor = fsetplantartifact(rnd(length(fsetplantartifact)));
+        flttypemajor = choice(fsetplantartifact);
         fixlv = 4;
         autosave = 1 * (gdata_current_map != 35);
     }
