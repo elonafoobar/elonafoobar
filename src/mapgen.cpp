@@ -894,7 +894,7 @@ void rndshuffle(elona_vector1<int>& prm_534)
 {
     int p_at_m68 = 0;
     int r_at_m68 = 0;
-    p_at_m68 = length(prm_534);
+    p_at_m68 = prm_534.size();
     for (int cnt = 0, cnt_end = (p_at_m68); cnt < cnt_end; ++cnt)
     {
         r_at_m68 = rnd(p_at_m68);
@@ -3185,7 +3185,7 @@ void dimmix(elona_vector1<int>& prm_983)
 {
     int mx_at_m172 = 0;
     int r_at_m172 = 0;
-    mx_at_m172 = length(prm_983);
+    mx_at_m172 = prm_983.size();
     for (int cnt = 0, cnt_end = (mx_at_m172); cnt < cnt_end; ++cnt)
     {
         r_at_m172 = cnt + rnd((mx_at_m172 - cnt));

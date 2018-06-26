@@ -313,13 +313,13 @@ int do_create_item(int slot, int x, int y)
 
     if (inv[ci].id == 729)
     {
-        inv[ci].param4 = rnd(rnd(rnd(length(giftvalue)) + 1) + 1);
+        inv[ci].param4 = rnd(rnd(rnd(giftvalue.size()) + 1) + 1);
         inv[ci].value = inv[ci].param4 * 2500 + 500;
     }
 
     if (inv[ci].id == 578)
     {
-        inv[ci].param2 = rnd(rnd(length(moneybox)) + 1);
+        inv[ci].param2 = rnd(rnd(moneybox.size()) + 1);
         inv[ci].value =
             inv[ci].param2 * inv[ci].param2 * inv[ci].param2 * 1000 + 1000;
     }

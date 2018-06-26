@@ -329,7 +329,7 @@ void grow_primary_skills(int cc)
             sdata.get(cnt, cc).original_level = 2000;
         }
     }
-    for (int cnt = 0, cnt_end = (length(mainskill)); cnt < cnt_end; ++cnt)
+    for (int cnt = 0, cnt_end = (mainskill.size()); cnt < cnt_end; ++cnt)
     {
         sdata.get(mainskill(cnt), cc).original_level += rnd(3);
         if (sdata.get(mainskill(cnt), cc).original_level > 2000)

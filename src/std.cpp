@@ -172,7 +172,7 @@ void bload(const fs::path& filename, elona_vector1<int>& data, int size, int)
             + filesystem::make_preferred_path_in_utf8(filename));
     }
     auto buf = read_binary(in, size).first;
-    for (size_t i = 0; i < length(data); ++i)
+    for (size_t i = 0; i < data.size(); ++i)
     {
         data(i) = reinterpret_cast<int*>(buf.get())[i];
         size -= sizeof(int);
@@ -463,13 +463,6 @@ int stoi(const std::string& s)
     {
         return 0;
     }
-}
-
-
-
-size_t length(const std::string& str)
-{
-    return str.size();
 }
 
 

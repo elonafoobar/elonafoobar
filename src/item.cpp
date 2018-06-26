@@ -892,7 +892,7 @@ std::string itemname(int prm_518, int prm_519, int prm_520)
     elona_vector1<std::string> buf_;
     elona::prm_518 = prm_518;
     if (inv[prm_518].id >= maxitemid - 2
-        || size_t(inv[prm_518].id) > length(ioriginalnameref))
+        || size_t(inv[prm_518].id) > ioriginalnameref.size())
     {
         return lang(
             u8"未知のアイテム(バージョン非互換)"s,

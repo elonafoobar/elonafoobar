@@ -76,7 +76,7 @@ void memcpy(
     int dst_j,
     size_t size)
 {
-    const auto len = length(src);
+    const auto len = src.i_size();
     const auto len2 = src.j_size();
     auto count = size;
     for (size_t i = 0; i < len2; ++i)
@@ -7180,7 +7180,7 @@ int label_1753()
         adata(11, p) = 1;
         adata(12, p) = 0;
         adata(20, p) = 0;
-        adata(5, p) = rnd(length(mapnamerd));
+        adata(5, p) = rnd(mapnamerd.i_size());
         map(x, y, 6) = 1;
         if (adata(0, p) == 20)
         {

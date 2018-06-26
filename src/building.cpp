@@ -396,7 +396,7 @@ void prompt_hiring()
         }
         else
         {
-            hire = rnd(length(isethire));
+            hire = rnd(isethire.size());
         }
         dbid = isethire(hire);
         randomize(gdata_day + cnt);

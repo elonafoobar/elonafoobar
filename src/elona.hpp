@@ -464,26 +464,6 @@ int instr(const std::string& str, size_t pos, const std::string pattern);
 int stoi(const std::string&);
 
 
-template <typename T>
-size_t length(elona_vector2<T>& arr)
-{
-    return arr.i_size();
-}
-
-
-
-template <typename T>
-size_t length(const elona_vector1<T>& arr)
-{
-    return arr.size();
-}
-
-
-
-size_t length(const std::string& str);
-
-
-
 void line(int x1, int y1, int x2, int y2);
 
 void line(int x, int y);
