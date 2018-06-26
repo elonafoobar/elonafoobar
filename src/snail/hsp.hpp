@@ -46,11 +46,10 @@ void font(int size, font_t::style_t style, const fs::path& filepath);
 void gcopy(int window_id, int src_x, int src_y, int src_width, int src_height);
 int ginfo(int type);
 void gmode(int mode, int width, int height, int alpha);
-void grotate2(
+void grotate_(
     int window_id,
     int src_x,
     int src_y,
-    double angle,
     int dst_width,
     int dst_height);
 void grotate(

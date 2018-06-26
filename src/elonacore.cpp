@@ -12044,7 +12044,7 @@ label_2128_internal:
     if (key_alt == 0)
     {
         pos(x, y - 48);
-        grotate(3, 212, 432, 0, 28, 28);
+        grotate_(3, 212, 432, 28, 28);
         pos(x, y + 48);
         grotate(3, 212, 432, 1.0 * 3.14, 28, 28);
         pos(x + 48, y);
@@ -19599,7 +19599,7 @@ label_2684_internal:
         }
         pos(windoww / 2, y + 4);
         gmode(6, 344, 72, 70);
-        grotate(3, 456, 144, 0, dx, 72);
+        grotate_(3, 456, 144, dx, 72);
     }
     x = 40;
     for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
@@ -20208,7 +20208,7 @@ void conquer_lesimas()
     y = wh - 140;
     gmode(4, 180, 300, 250);
     pos(wx + ww - 120, wy + wh / 2);
-    grotate(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
+    grotate_(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, x, y);
     gmode(2);
     display_topic(lang(u8"制覇までの軌跡"s, u8"Trace"s), wx + 28, wy + 40);
     font(14 - en * 2);
@@ -20492,11 +20492,10 @@ void show_game_score_ranking()
         chara_preparepic(p);
         pos(x - 22, y + 12);
         gmode(2, chara_chips[p].width, chara_chips[p].height);
-        grotate(
+        grotate_(
             5,
             0,
             960,
-            0,
             chara_chips[p].width / (1 + (chara_chips[p].height > inf_tiles)),
             inf_tiles);
         color(0, 0, 0);

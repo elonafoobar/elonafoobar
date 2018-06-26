@@ -402,6 +402,13 @@ int ginfo(int type);
 
 void gmode(int mode, int width = -1, int height = -1, int alpha = 255);
 
+void grotate_(
+    int window_id,
+    int src_x,
+    int src_y,
+    int dst_width = 0,
+    int dst_height = 0);
+
 void grotate(
     int window_id,
     int src_x,

@@ -722,7 +722,7 @@ label_1925_internal:
         }
         pos(wx + 37, wy + 70 + cnt * 19);
         gmode(2, item_chips[550].width, item_chips[550].height);
-        grotate(1, 0, 960, 0, inf_tiles, inf_tiles);
+        grotate_(1, 0, 960, inf_tiles, inf_tiles);
         pos(wx + 330, wy + 53 + cnt * 19);
         if (blendchecklist(cnt) == 1)
         {
@@ -870,11 +870,10 @@ label_1928_internal:
         prepare_item_image(p(1), inv[p].color, inv[p].param1);
         pos(wx + 37, wy + 69 + cnt * 19);
         gmode(2, item_chips[p(1)].width, item_chips[p(1)].height);
-        grotate(
+        grotate_(
             1,
             0,
             960,
-            0,
             item_chips[p(1)].width * inf_tiles / item_chips[p(1)].height,
             inf_tiles);
         if (inv[p].body_part != 0)

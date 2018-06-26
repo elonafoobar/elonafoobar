@@ -273,7 +273,7 @@ void play_animation_17_2(int animeid, int anicol, int anisound)
             {
                 pos(anidx, anidy);
                 gmode(4, 96, 96, 250 - cnt * cnt * 2);
-                grotate(7, cnt * 96, 0, 0, 96, 96);
+                grotate_(7, cnt * 96, 0, 96, 96);
             }
         }
         redraw();

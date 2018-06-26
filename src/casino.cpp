@@ -224,7 +224,7 @@ void label_1870()
         }
         gmode(4, x(1), y(1), cnt * 25);
         pos(x + x(1) / 2 - 10 + cnt, y + y(1) / 2);
-        grotate(2, 0, 0, 0, x(1), y(1));
+        grotate_(2, 0, 0, x(1), y(1));
         if (atxpic != 0)
         {
             x(0) = 345;
@@ -272,11 +272,10 @@ void label_1870()
                 gcopy(2, x, y, x(1), y(1));
                 pos(x + x(1) / 2, y + y(1) / 2);
                 gmode(2, inf_tiles, inf_tiles);
-                grotate(
+                grotate_(
                     1,
                     mattile % 33 * 32,
                     mattile / 33 * 32,
-                    0,
                     cnt2 * 9,
                     cnt2 * 9);
             }
@@ -302,7 +301,7 @@ void label_1871()
         gcopy(2, x - 50, y - 50, 100 + x(1), y(1) + 100);
         gmode(4, x(1), y(1), 250 - cnt * 25);
         pos(x + x(1) / 2 - 2 * cnt, y + y(1) / 2);
-        grotate(2, 0, 0, 0, x(1), y(1));
+        grotate_(2, 0, 0, x(1), y(1));
         await(15);
         redraw();
     }

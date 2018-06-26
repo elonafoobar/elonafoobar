@@ -660,6 +660,16 @@ void gmode(int mode, int width, int height, int alpha)
     detail::current_tex_buffer().color.a = clamp(alpha, 0, 255);
 }
 
+void grotate_(
+    int window_id,
+    int src_x,
+    int src_y,
+    int dst_width,
+    int dst_height)
+{
+    grotate(window_id, src_x, src_y, 0, dst_width, dst_height);
+}
+
 void grotate2(
     int window_id,
     int src_x,

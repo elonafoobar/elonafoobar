@@ -545,12 +545,12 @@ void draw_character_sprite_in_world_map(
     // Shadow
     gmode(6, 32, 16, 85);
     pos(x + 24, y + 27);
-    grotate(3, 240, 384, 0, 20, 10);
+    grotate_(3, 240, 384, 20, 10);
 
     // Character sprite
     gmode(2, 32, 48);
     pos(x + 24, y + 14);
-    grotate(texture_id, frame, direction * 48, 0, 16, 24);
+    grotate_(texture_id, frame, direction * 48, 16, 24);
 }
 
 
@@ -565,12 +565,12 @@ void draw_character_sprite_in_water(
     // Upper body
     gmode(2, 32, 28);
     pos(x + 24, y + 16);
-    grotate(texture_id, frame, direction * 48, 0, 24, 24);
+    grotate_(texture_id, frame, direction * 48, 24, 24);
 
     // Lower body
     gmode(4, 32, 20, 146);
     pos(x + 24, y + 36);
-    grotate(texture_id, frame, direction * 48 + 28, 0, 24, 16);
+    grotate_(texture_id, frame, direction * 48 + 28, 24, 16);
 }
 
 
@@ -591,7 +591,7 @@ void draw_character_sprite(
     // Character sprite
     gmode(2, 32, 48);
     pos(x + 24, y + dy + 8);
-    grotate(texture_id, frame, direction * 48, 0, 24, 40);
+    grotate_(texture_id, frame, direction * 48, 24, 40);
 }
 
 
@@ -771,7 +771,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn)
                 {
                     gmode(2, item_chips[p_].width, item_chips[p_].height);
                     pos(dx + 24, dy + 24 - stack_height / 2);
-                    grotate(1, 0, 960, 0, 24, 24);
+                    grotate_(1, 0, 960, 24, 24);
                 }
                 else
                 {
@@ -860,7 +860,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn)
             {
                 gmode(2, item_chips[p_].width, item_chips[p_].height);
                 pos(dx + 24, dy + 24);
-                grotate(1, 0, 960, 0, 24, 24);
+                grotate_(1, 0, 960, 24, 24);
             }
             else
             {
@@ -996,10 +996,10 @@ void draw_npc(int x, int y, int dx, int dy, int ani_, int ground_)
                 {
                     gmode(6, 32, 16, 85);
                     pos(dx + 24, dy + 32);
-                    grotate(3, 240, 384, 0, 20, 10);
+                    grotate_(3, 240, 384, 20, 10);
                     gmode(2, chara_chips[p_].width, chara_chips[p_].height);
                     pos(dx + 24, dy + 24 - chara_chips[p_].offset_y / 4);
-                    grotate(5, 0, 960, 0, 24, chara_chips[p_].height / 2);
+                    grotate_(5, 0, 960, 24, chara_chips[p_].height / 2);
                     if (cdata[c_].emotion_icon != 0)
                     {
                         draw_emo(

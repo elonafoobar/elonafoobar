@@ -1844,13 +1844,8 @@ void label_1445()
             pos(x * evtiles, y * evtiles);
             gmode(0, inf_tiles, inf_tiles);
             ap = map(dx, dy, 0);
-            grotate(
-                2,
-                ap % 33 * inf_tiles,
-                ap / 33 * inf_tiles,
-                0,
-                evtiles,
-                evtiles);
+            grotate_(
+                2, ap % 33 * inf_tiles, ap / 33 * inf_tiles, evtiles, evtiles);
         }
     }
     return;
@@ -1931,14 +1926,14 @@ void render_fishing_animation()
         sy2 = inf_tiles / 2 + 12;
         gmode(2, 48, 48);
         pos(sx + sx2 + 1, sy + sy2 + 40);
-        grotate(9, 48, 0, 0, 48, 48);
+        grotate_(9, 48, 0, 48, 48);
     }
     if (fishdir == 1)
     {
         sx2 = inf_tiles / 2 - 26;
         sy2 = inf_tiles / 2 - 12 + rnd(3) - 3;
         pos(sx + sx2 - 16, sy + sy2 + 25);
-        grotate(9, 48, 0, 0, 48, 48);
+        grotate_(9, 48, 0, 48, 48);
     }
     if (fishdir == 2)
     {
@@ -1950,7 +1945,7 @@ void render_fishing_animation()
         sx2 = inf_tiles / 2 + 26;
         sy2 = inf_tiles / 2 - 12 + rnd(3) - 3;
         pos(sx + sx2 + 14, sy + sy2 + 25);
-        grotate(9, 48, 0, 0, 48, 48);
+        grotate_(9, 48, 0, 48, 48);
     }
     if (fishdir == 2)
     {
@@ -2632,7 +2627,7 @@ void window2(
     {
         pos(prm_656 + x2_at_m93 / 2, prm_657 + y2_at_m93 / 2);
         gmode(4, 228, 144, 180);
-        grotate(3, 24, 72, 0, x2_at_m93 - 4, y2_at_m93 - 4);
+        grotate_(3, 24, 72, x2_at_m93 - 4, y2_at_m93 - 4);
     }
     gmode(2, 16, 16);
     for (int cnt = 0, cnt_end = (x2_at_m93 / 16 - 2); cnt < cnt_end; ++cnt)

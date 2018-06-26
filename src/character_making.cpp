@@ -113,7 +113,7 @@ main_menu_result_t character_making_select_race()
             y = wh - 80;
             gmode(4, 180, 300, 50);
             pos(wx + ww / 4, wy + wh / 2);
-            grotate(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
+            grotate_(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, x, y);
             gmode(2);
             display_topic(
                 lang(u8"選択できる種族"s, u8"Race"s), wx + 28, wy + 30);
@@ -219,7 +219,7 @@ main_menu_result_t character_making_select_sex(bool advanced_to_next_menu)
         y = wh - 60;
         gmode(4, 180, 300, 30);
         pos(wx + ww / 2, wy + wh / 2);
-        grotate(2, 0, 0, 0, x, y);
+        grotate_(2, 0, 0, x, y);
         gmode(2);
         display_topic(lang(u8"性別の候補"s, u8"Gender"s), wx + 28, wy + 30);
         listn(0, 0) = cnven(i18n::_(u8"ui", u8"male"));
@@ -323,7 +323,7 @@ main_menu_result_t character_making_select_class(bool advanced_to_next_menu)
             y = wh - 80;
             gmode(4, 180, 300, 50);
             pos(wx + ww / 4, wy + wh / 2);
-            grotate(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
+            grotate_(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, x, y);
             gmode(2);
             display_topic(
                 lang(u8"選択できる職業"s, u8"Class"s), wx + 28, wy + 30);
@@ -461,7 +461,7 @@ main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
         y = 240;
         gmode(4, 180, 300, 30);
         pos(wx + 85, wy + wh / 2);
-        grotate(2, 0, 0, 0, x, y);
+        grotate_(2, 0, 0, x, y);
         gmode(2);
         display_topic(lang(u8"能力"s, u8"Attributes"s), wx + 28, wy + 30);
         font(12 + sizefix - en * 2);
@@ -485,7 +485,7 @@ main_menu_result_t character_making_role_attributes(bool advanced_to_next_menu)
             {
                 pos(wx + 198, wy + 76 + cnt * 23);
                 gmode(2, inf_tiles, inf_tiles);
-                grotate(1, (cnt - 2) * inf_tiles, 672, 0, inf_tiles, inf_tiles);
+                grotate_(1, (cnt - 2) * inf_tiles, 672, inf_tiles, inf_tiles);
                 pos(wx + 210, wy + 66 + cnt * 23);
                 mes(""s + list(0, cnt) / 1000000);
                 if (cmlock(cnt - 2) == 1)
@@ -665,7 +665,7 @@ main_menu_result_t character_making_select_alias(bool advanced_to_next_menu)
             y = wh - 80;
             gmode(4, 180, 300, 40);
             pos(wx + ww / 2, wy + wh / 2);
-            grotate(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
+            grotate_(2, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, x, y);
             gmode(2);
             display_topic(
                 lang(u8"異名の候補"s, u8"Alias List"s), wx + 28, wy + 30);
@@ -955,20 +955,18 @@ void show_race_or_class_info(int CNT, int val0)
         gmode(4, chara_chips[ref1].width, chara_chips[ref1].height, 40);
         chara_preparepic(ref1, CNT);
         pos(wx + 480, wy + 96);
-        grotate(
+        grotate_(
             5,
             0,
             960,
-            0,
             chara_chips[ref1].width * 2,
             chara_chips[ref1].height * 2);
         chara_preparepic(ref2, CNT);
         pos(wx + 350, wy + 96);
-        grotate(
+        grotate_(
             5,
             0,
             960,
-            0,
             chara_chips[ref1].width * 2,
             chara_chips[ref1].height * 2);
         gmode(2);
@@ -1069,8 +1067,8 @@ void show_race_or_class_info(int CNT, int val0)
             }
             pos(cnt * 150 + tx + 13, ty + 7);
             gmode(2, inf_tiles, inf_tiles);
-            grotate(
-                1, (cnt2 * 3 + cnt) * inf_tiles, 672, 0, inf_tiles, inf_tiles);
+            grotate_(
+                1, (cnt2 * 3 + cnt) * inf_tiles, 672, inf_tiles, inf_tiles);
             pos(cnt * 150 + tx + 32, ty);
             mes(strmid(
                     i18n::_(u8"ability", std::to_string(r), u8"name"),
@@ -1103,7 +1101,7 @@ void show_race_or_class_info(int CNT, int val0)
     {
         pos(tx + 13, ty + 6);
         gmode(2, inf_tiles, inf_tiles);
-        grotate(1, 0, 672, 0, inf_tiles, inf_tiles);
+        grotate_(1, 0, 672, inf_tiles, inf_tiles);
         pos(tx + 32, ty);
         mes(s);
         ty += 14;
@@ -1123,11 +1121,10 @@ void show_race_or_class_info(int CNT, int val0)
             }
             pos(tx + 13, ty + 6);
             gmode(2, inf_tiles, inf_tiles);
-            grotate(
+            grotate_(
                 1,
                 (the_ability_db[cnt]->related_basic_attribute - 10) * inf_tiles,
                 672,
-                0,
                 inf_tiles,
                 inf_tiles);
             s(1) = i18n::_(u8"ability", std::to_string(cnt), u8"description");

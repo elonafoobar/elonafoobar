@@ -681,7 +681,7 @@ label_1402_internal:
     y = wh - 80;
     gmode(4, 180, 300, 50);
     pos(wx + ww / 3 * 2, wy + wh / 2);
-    grotate(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
+    grotate_(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, x, y);
     gmode(2);
     s(0) = lang(u8"投票項目"s, u8"Choice"s);
     s(1) = "";

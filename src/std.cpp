@@ -382,15 +382,14 @@ constexpr T rad2deg(T rad)
 
 
 
-void grotate2(
+void grotate_(
     int window_id,
     int src_x,
     int src_y,
-    double angle,
     int dst_width,
     int dst_height)
 {
-    snail::hsp::grotate2(window_id, src_x, src_y, angle, dst_width, dst_height);
+    snail::hsp::grotate_(window_id, src_x, src_y, dst_width, dst_height);
 }
 
 

@@ -77,7 +77,7 @@ void gmode(int, int, int, int)
 {
 }
 
-void grotate2(int, int, int, double, int, int)
+void grotate_(int, int, int, int, int)
 {
 }
 

@@ -562,7 +562,7 @@ void set_option()
         y = wh - 80;
         gmode(4, 180, 300, 50);
         pos(wx + ww / 3, wy + wh / 2);
-        grotate(p, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
+        grotate_(p, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, x, y);
         gmode(2);
         keyrange = 0;
         for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
