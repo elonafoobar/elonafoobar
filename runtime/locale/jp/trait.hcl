@@ -1,5 +1,33 @@
 locale {
     trait {
+        window {
+            title = "特徴と体質"
+            enter = "決定 [フィート取得]  "
+            ally = "仲間"
+
+            name = "特徴の名称"
+            level = "段階"
+            detail = "特徴の効果"
+
+            available_feats = "◆ 取得できるフィート"
+            feats_and_traits = "◆ 特徴と体質"
+            requirement = "(条件不足)"
+
+            you_can_acquire = "残り ${_1}個のフィートを取得できる"
+            already_maxed = "これ以上取得できない。"
+
+            your_trait = "${_1}の特性"
+
+            category {
+                feat = "フィート"
+                mutation = "変異"
+                race = "先天"
+                ether_disease = "ｴｰﾃﾙ病"
+                etc = "その他"
+            }
+
+            his_equipment = "${_1}装備は${_2}"
+        }
 
         ########## Feats ##########
 
@@ -411,7 +439,7 @@ locale {
         }
 
 
-        ########## Mutation/Race/Disease traits ##########
+        ########## Mutation/Race traits ##########
 
         _41 {
             positive {
@@ -839,6 +867,9 @@ locale {
                 }
             }
         }
+
+        ########## Ether Disease traits ##########
+
         _201 {
             positive {
                 gain ="あなたの周りの重力は軽減した。"
@@ -1018,6 +1049,17 @@ locale {
                     _0 ="あなたの手から毒が滴っている[ポーション毒化 毒耐性強化]"
                 }
             }
+        }
+
+        ########## Other traits ##########
+
+        incognito = "あなたは変装している"
+        pregnant = "あなたは寄生されている"
+        anorexia = "あなたは拒食症だ"
+        body_is_complicated = "あなたは複雑な体をしている[速度-${_1}%]"
+        ether_disease_grows {
+            fast = "あなたのエーテル病の進行は早い"
+            slow = "あなたのエーテル病の進行は遅い"
         }
     }
 }

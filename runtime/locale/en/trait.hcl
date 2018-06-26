@@ -1,5 +1,33 @@
 locale {
     trait {
+        window {
+            title ="Feats and Traits"
+            enter ="Enter [Gain Feat]  "
+            ally ="Ally"
+
+            name ="Name"
+            level ="Level"
+            detail ="Detail"
+
+            available_feats = "[Available feats]"
+            feats_and_traits = "[Feats and traits]"
+            requirement = "(requirement)"
+
+            you_can_acquire ="You can acquire ${_1} feats"
+            already_maxed = "You already have maxed out the feat."
+
+            your_trait = "${_1}'s Trait"
+
+            category {
+                feat = "Feat"
+                mutation = "Mutation"
+                race = "Race"
+                ether_disease = "Disease"
+                etc = "ETC"
+            }
+
+            his_equipment = "${_1} equipment ${_2}"
+        }
 
         ########## Feats ##########
 
@@ -1018,6 +1046,17 @@ locale {
                     _0 ="Poison drips from your hands. [Poison potions RES Poison+]"
                 }
             }
+        }
+
+        ########## Other traits ##########
+
+        incognito = "You are disguising yourself."
+        pregnant = "You are pregnant."
+        anorexia = "You have anorexia."
+        body_is_complicated = "Your body is complicated. [SPD-${_1}%]"
+        ether_disease_grows {
+            fast = "Your Ether disease grows fast."
+            slow = "Your Ether disease grows slow."
         }
     }
 }
