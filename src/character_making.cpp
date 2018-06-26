@@ -853,7 +853,7 @@ main_menu_result_t character_making_final_phase()
         ELONA_APPEND_PROMPT(
             lang(u8"最初から"s, u8"Restart"s), u8"c"s, ""s + promptmax);
         ELONA_APPEND_PROMPT(
-            lang(u8"戻る"s, u8"Go back"s), u8"d"s, ""s + promptmax);
+            lang(u8"前に戻る"s, u8"Go back"s), u8"d"s, ""s + promptmax);
         rtval = show_prompt(promptx, 240, 160);
         snd(20);
         if (rtval != -1 && rtval != 1)
