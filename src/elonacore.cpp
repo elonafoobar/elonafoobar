@@ -77,7 +77,7 @@ void memcpy(
     size_t size)
 {
     const auto len = length(src);
-    const auto len2 = length2(src);
+    const auto len2 = src.j_size();
     auto count = size;
     for (size_t i = 0; i < len2; ++i)
     {

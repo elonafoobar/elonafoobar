@@ -319,7 +319,7 @@ std::string mapname_dungeon(int id)
 {
     int suffix_id = adata(0, id);
     std::string name = mapnamerd(
-        adata(5, id), std::min(adata(17, id) / 5, int(length2(mapnamerd) - 1)));
+        adata(5, id), std::min(adata(17, id) / 5, int(mapnamerd.j_size() - 1)));
 
     if (suffix_id >= 20 && suffix_id <= 23)
     {
@@ -2336,7 +2336,7 @@ std::string random_title(int prm_439)
 redo:
     for (int cnt = 0; cnt < 1; ++cnt)
     {
-        p_at_m41(2) = rnd(length2(rnlist));
+        p_at_m41(2) = rnd(rnlist.j_size());
         p_at_m41(1) = rnd(14);
         if (rnlist(p_at_m41(1), p_at_m41(2)) == ""s)
         {
@@ -2430,7 +2430,7 @@ redo:
 
     for (int cnt = 0; cnt < 100; ++cnt)
     {
-        p_at_m41(4) = rnd(length2(rnlist));
+        p_at_m41(4) = rnd(rnlist.j_size());
         if (p_at_m41(4) == p_at_m41(2))
         {
             continue;

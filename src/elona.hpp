@@ -482,12 +482,6 @@ size_t length(const elona_vector1<T>& arr)
 
 size_t length(const std::string& str);
 
-template <typename T>
-size_t length2(const elona_vector2<T>& arr)
-{
-    return arr.j_size();
-}
-
 
 
 void line(int x1, int y1, int x2, int y2);
