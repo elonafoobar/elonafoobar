@@ -126,6 +126,34 @@ struct elona_vector1
 
 
 
+    typename std::vector<T>::iterator begin()
+    {
+        return std::begin(storage);
+    }
+
+
+
+    typename std::vector<T>::iterator end()
+    {
+        return std::end(storage);
+    }
+
+
+
+    typename std::vector<T>::const_iterator begin() const
+    {
+        return std::begin(storage);
+    }
+
+
+
+    typename std::vector<T>::const_iterator end() const
+    {
+        return std::end(storage);
+    }
+
+
+
 private:
     std::vector<T> storage;
 };
