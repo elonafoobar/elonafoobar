@@ -337,6 +337,8 @@ struct character
     void clear();
     void clear_flags();
 
+    operator int() const { return index; }
+
 
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS
 

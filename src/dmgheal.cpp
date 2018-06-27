@@ -14,6 +14,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "optional.hpp"
 #include "lua_env/lua_env.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
@@ -28,7 +29,7 @@ namespace elona
 {
 
 
-int prm_853;
+int victim;
 int dmg_at_m141 = 0;
 
 
@@ -66,58 +67,60 @@ void healsp(int cc, int delta)
 
 
 
-int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
+int dmghp(int victim_id, int amount, int damage_source, int element, int element_power)
 {
-    int ele_at_m141 = 0;
-    int r_at_m141 = 0;
-    int dmglevel_at_m141 = 0;
-    int f_at_m141 = 0;
-    int se_at_m141 = 0;
+    int damage_level = 0;
     elona_vector1<int> p_at_m141;
-    int exp_at_m141 = 0;
-    bool is_player = false;
-    elona::prm_853 = prm_853;
-    ele_at_m141 = prm_856;
+    int gained_exp = 0;
+    bool attacker_is_player = false;
+
+    character& victim = cdata[victim_id];
+    optional<character&> attacker = none;
+    if (damage_source >= 0)
+    {
+        attacker = cdata[damage_source];
+    }
+
     if (txt3rd == 0)
     {
-        is_player = prm_855 == 0;
+        attacker_is_player = damage_source == 0;
     }
     else
     {
-        is_player = false;
+        attacker_is_player = false;
     }
-    if (cdata[prm_853].state != 1)
+    if (victim.state != 1)
     {
-        end_dmghp();
+        end_dmghp(victim);
         return 0;
     }
-    dmg_at_m141 = prm_854 * (1 + (cdata[prm_853].furious > 0));
-    if (prm_855 >= 0)
+    dmg_at_m141 = amount * (1 + (victim.furious > 0));
+    if (attacker)
     {
-        if (cdata[prm_855].furious > 0)
+        if (attacker->furious > 0)
         {
             dmg_at_m141 *= 2;
         }
     }
-    if (ele_at_m141 != 0 && ele_at_m141 < 61)
+    if (element != 0 && element < 61)
     {
-        r_at_m141 = sdata(ele_at_m141, prm_853) / 50;
-        if (r_at_m141 < 3)
+        int resistance = sdata(element, victim) / 50;
+        if (resistance < 3)
         {
             dmg_at_m141 =
-                dmg_at_m141 * 150 / clamp((r_at_m141 * 50 + 50), 40, 150);
+                dmg_at_m141 * 150 / clamp((resistance * 50 + 50), 40, 150);
         }
-        else if (r_at_m141 < 10)
+        else if (resistance < 10)
         {
-            dmg_at_m141 = dmg_at_m141 * 100 / (r_at_m141 * 50 + 50);
+            dmg_at_m141 = dmg_at_m141 * 100 / (resistance * 50 + 50);
         }
         else
         {
             dmg_at_m141 = 0;
         }
-        dmg_at_m141 = dmg_at_m141 * 100 / (sdata(60, prm_853) / 2 + 50);
+        dmg_at_m141 = dmg_at_m141 * 100 / (sdata(60, victim) / 2 + 50);
     }
-    if (prm_855 == 0)
+    if (attacker_is_player)
     {
         if (critical)
         {
@@ -128,38 +131,38 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             snd(2);
         }
     }
-    if (cdata[prm_853].wet > 0)
+    if (victim.wet > 0)
     {
-        if (ele_at_m141 == 50 || prm_855 == -9)
+        if (element == 50 || damage_source == -9)
         {
             dmg_at_m141 = dmg_at_m141 / 3;
         }
-        if (ele_at_m141 == 52)
+        if (element == 52)
         {
             dmg_at_m141 = dmg_at_m141 * 3 / 2;
         }
     }
-    if (ele_at_m141)
+    if (element)
     {
-        if (ele_at_m141 != 60)
+        if (element != 60)
         {
-            if (cdata[prm_853].is_immune_to_elemental_damage())
+            if (victim.is_immune_to_elemental_damage())
             {
                 dmg_at_m141 = 0;
             }
         }
     }
-    if (cdata[prm_853].is_metal())
+    if (victim.is_metal())
     {
         dmg_at_m141 = rnd(dmg_at_m141 / 10 + 2);
     }
-    if (cdata[prm_853].is_contracting_with_reaper())
+    if (victim.is_contracting_with_reaper())
     {
-        if (cdata[prm_853].hp - dmg_at_m141 <= 0)
+        if (victim.hp - dmg_at_m141 <= 0)
         {
             if (clamp(
                     25
-                        + cdata[prm_853].buffs[buff_find(prm_853, 18)].power
+                        + victim.buffs[buff_find(victim, 18)].power
                             / 17,
                     25,
                     80)
@@ -169,85 +172,85 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             }
         }
     }
-    if (cdata[prm_853].nullify_damage > 0)
+    if (victim.nullify_damage > 0)
     {
-        if (cdata[prm_853].nullify_damage > rnd(100))
+        if (victim.nullify_damage > rnd(100))
         {
             dmg_at_m141 = 0;
         }
     }
-    if (ele_at_m141 == 658)
+    if (element == 658)
     {
-        dmg_at_m141 = prm_854;
+        dmg_at_m141 = amount;
     }
     rtdmg = dmg_at_m141;
 
-    if (prm_853 == 0 && cdata[0].god_id == core_god::opatos)
+    if (victim == 0 && cdata[0].god_id == core_god::opatos)
     {
         dmg_at_m141 = dmg_at_m141 * 90 / 100;
     }
 
-    if (debug::voldemort && prm_853 == 0)
+    if (debug::voldemort && victim == 0)
     {
         dmg_at_m141 = 0;
     }
-    cdata[prm_853].hp -= dmg_at_m141;
+    victim.hp -= dmg_at_m141;
 
 
-    if (is_in_fov(prm_853))
+    if (is_in_fov(victim))
     {
-        add_damage_popup(std::to_string(dmg_at_m141), prm_853, {0, 0, 0});
+        add_damage_popup(std::to_string(dmg_at_m141), victim, {0, 0, 0});
     }
 
 
-    if (ele_at_m141 == 56)
+    if (element == 56)
     {
-        if (prm_855 >= 0)
+        if (attacker)
         {
             if (dmg_at_m141 > 0)
             {
                 healhp(
-                    prm_855,
+                    attacker->index,
                     clamp(
-                        rnd(dmg_at_m141 * (150 + prm_857 * 2) / 1000 + 10),
+                        rnd(dmg_at_m141 * (150 + element_power * 2) / 1000 + 10),
                         1,
-                        cdata[prm_855].max_hp / 10 + rnd(5)));
+                        attacker->max_hp / 10 + rnd(5)));
             }
         }
     }
-    if (prm_853 == 0)
+    if (victim == 0)
     {
         gdata(30) = 0;
-        if (cdata[prm_853].hp < 0)
+        if (victim.hp < 0)
         {
             if (event_id() != -1)
             {
                 if (event_id() != 21)
                 {
-                    cdata[prm_853].hp = 1;
+                    victim.hp = 1;
                 }
             }
             if (gdata_current_map == 40)
             {
-                cdata[prm_853].hp = 1;
+                victim.hp = 1;
             }
         }
     }
     if (dmg_at_m141 <= 0)
     {
-        dmglevel_at_m141 = -1;
+        damage_level = -1;
     }
     else
     {
-        dmglevel_at_m141 = dmg_at_m141 * 6 / cdata[prm_853].max_hp;
+        damage_level = dmg_at_m141 * 6 / victim.max_hp;
     }
-    if (cdata[prm_853].hp < 0)
+    if (victim.hp < 0)
     {
-        if (prm_853 < 16)
+        if (victim < 16)
         {
             for (int cnt = 0; cnt < 16; ++cnt)
             {
-                if (prm_853 == cnt)
+                if (victim == cnt)
                 {
                     continue;
                 }
@@ -267,44 +270,44 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 txtef(9);
                 txt(i18n::s.get("core.locale.damage.lay_hand", cdata[cnt]));
                 txt(i18n::s.get(
-                    "core.locale.damage.is_healed", cdata[prm_853]));
-                cdata[prm_853].hp = cdata[prm_853].max_hp / 2;
-                animode = 100 + prm_853;
+                    "core.locale.damage.is_healed", victim));
+                victim.hp = victim.max_hp / 2;
+                animode = 100 + victim;
                 play_animation(19);
                 snd(120);
                 break;
             }
         }
-        else if (cdata[prm_853].is_hung_on_sand_bag())
+        else if (victim.is_hung_on_sand_bag())
         {
-            cdata[prm_853].hp = cdata[prm_853].max_hp;
+            victim.hp = victim.max_hp;
         }
     }
-    if (cdata[prm_853].hp >= 0)
+    if (victim.hp >= 0)
     {
-        if (dmglevel_at_m141 > 1)
+        if (damage_level > 1)
         {
             spillblood(
-                cdata[prm_853].position.x,
-                cdata[prm_853].position.y,
+                victim.position.x,
+                victim.position.y,
                 1 + rnd(2));
         }
         if (gdata(809) == 1)
         {
-            txteledmg(0, is_player ? 0 : -1, prm_853, ele_at_m141);
+            txteledmg(0, attacker_is_player ? 0 : -1, victim, element);
             goto label_1369_internal;
         }
-        if (dmglevel_at_m141 > 0)
+        if (damage_level > 0)
         {
-            if (cdata[prm_853].max_hp / 2 > cdata[prm_853].hp)
+            if (victim.max_hp / 2 > victim.hp)
             {
-                ++dmglevel_at_m141;
-                if (cdata[prm_853].max_hp / 4 > cdata[prm_853].hp)
+                ++damage_level;
+                if (victim.max_hp / 4 > victim.hp)
                 {
-                    ++dmglevel_at_m141;
-                    if (cdata[prm_853].max_hp / 10 > cdata[prm_853].hp)
+                    ++damage_level;
+                    if (victim.max_hp / 10 > victim.hp)
                     {
-                        ++dmglevel_at_m141;
+                        ++damage_level;
                     }
                 }
             }
@@ -312,242 +315,243 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
         if (gdata(809) == 2)
         {
             txtcontinue();
-            if (dmglevel_at_m141 == -1)
+            if (damage_level == -1)
             {
                 txt(i18n::s.get(
                     "core.locale.damage.levels.scratch",
-                    cdata[prm_853],
-                    is_player));
+                    victim,
+                    attacker_is_player));
             }
-            if (dmglevel_at_m141 == 0)
+            if (damage_level == 0)
             {
                 txtef(5);
                 txt(i18n::s.get(
                     "core.locale.damage.levels.slightly",
-                    cdata[prm_853],
-                    is_player));
+                    victim,
+                    attacker_is_player));
             }
-            if (dmglevel_at_m141 == 1)
+            if (damage_level == 1)
             {
                 txtef(11);
                 txt(i18n::s.get(
                     "core.locale.damage.levels.moderately",
-                    cdata[prm_853],
-                    is_player));
+                    victim,
+                    attacker_is_player));
             }
-            if (dmglevel_at_m141 == 2)
+            if (damage_level == 2)
             {
                 txtef(10);
                 txt(i18n::s.get(
                     "core.locale.damage.levels.severely",
-                    cdata[prm_853],
-                    is_player));
+                    victim,
+                    attacker_is_player));
             }
-            if (dmglevel_at_m141 >= 3)
+            if (damage_level >= 3)
             {
                 txtef(3);
                 txt(i18n::s.get(
                     "core.locale.damage.levels.critically",
-                    cdata[prm_853],
-                    is_player));
+                    victim,
+                    attacker_is_player));
             }
-            rowact_check(prm_853);
+            rowact_check(victim);
             goto label_1369_internal;
         }
-        if (dmglevel_at_m141 == 1)
+        if (damage_level == 1)
         {
-            if (is_in_fov(prm_853))
+            if (is_in_fov(victim))
             {
                 txtef(11);
                 txt(i18n::s.get(
-                    "core.locale.damage.reactions.screams", cdata[prm_853]));
+                    "core.locale.damage.reactions.screams", victim));
             }
         }
-        if (dmglevel_at_m141 == 2)
+        if (damage_level == 2)
         {
-            if (is_in_fov(prm_853))
+            if (is_in_fov(victim))
             {
                 txtef(10);
                 txt(i18n::s.get(
                     "core.locale.damage.reactions.writhes_in_pain",
-                    cdata[prm_853]));
+                    victim));
             }
         }
-        if (dmglevel_at_m141 >= 3)
+        if (damage_level >= 3)
         {
-            if (is_in_fov(prm_853))
+            if (is_in_fov(victim))
             {
                 txtef(3);
                 txt(i18n::s.get(
                     "core.locale.damage.reactions.is_severely_hurt",
-                    cdata[prm_853]));
+                    victim));
             }
         }
         if (dmg_at_m141 < 0)
         {
-            if (cdata[prm_853].hp > cdata[prm_853].max_hp)
+            if (victim.hp > victim.max_hp)
             {
-                cdata[prm_853].hp = cdata[prm_853].max_hp;
+                victim.hp = victim.max_hp;
             }
-            if (is_in_fov(prm_853))
+            if (is_in_fov(victim))
             {
                 txtef(4);
                 txt(i18n::s.get(
-                    "core.locale.damage.is_healed", cdata[prm_853]));
+                    "core.locale.damage.is_healed", victim));
             }
         }
     label_1369_internal:
-        rowact_check(prm_853);
-        if (cdata[prm_853].hp < cdata[prm_853].max_hp / 5)
+        rowact_check(victim);
+        if (victim.hp < victim.max_hp / 5)
         {
-            if (prm_853 != 0)
+            if (victim != 0)
             {
-                if (cdata[prm_853].fear == 0)
+                if (victim.fear == 0)
                 {
-                    if (cdata[prm_853].is_immune_to_fear() == 0)
+                    bool runs_away = false;
+                    if (victim.is_immune_to_fear() == 0)
                     {
-                        if (dmg_at_m141 * 100 / cdata[prm_853].max_hp + 10
+                        if (dmg_at_m141 * 100 / victim.max_hp + 10
                             > rnd(200))
                         {
-                            f_at_m141 = 1;
+                            runs_away = true;
                         }
                         else
                         {
-                            f_at_m141 = 0;
+                            runs_away = false;
                         }
-                        if (prm_855 == 0)
+                        if (attacker_is_player)
                         {
-                            if (trait(44))
+                            if (trait(44)) // Gentle Face
                             {
-                                f_at_m141 = 0;
+                                runs_away = false;
                             }
                         }
-                        if (f_at_m141)
+                        if (runs_away)
                         {
-                            cdata[prm_853].fear = rnd(20) + 5;
-                            if (is_in_fov(prm_853))
+                            victim.fear = rnd(20) + 5;
+                            if (is_in_fov(victim))
                             {
                                 txtef(4);
                                 txt(i18n::s.get(
                                     "core.locale.damage.runs_away_in_terror",
-                                    cdata[prm_853]));
+                                    victim));
                             }
                         }
                     }
                 }
             }
         }
-        if (ele_at_m141)
+        if (element)
         {
-            if (ele_at_m141 == 59)
+            if (element == 59)
             {
-                if (rnd(10) < prm_857 / 75 + 4)
+                if (rnd(10) < element_power / 75 + 4)
                 {
                     dmgcon(
-                        prm_853,
+                        victim,
                         status_ailment_t::blinded,
-                        rnd(prm_857 / 3 * 2 + 1));
+                        rnd(element_power / 3 * 2 + 1));
                 }
-                if (rnd(20) < prm_857 / 50 + 4)
+                if (rnd(20) < element_power / 50 + 4)
                 {
                     dmgcon(
-                        prm_853,
+                        victim,
                         status_ailment_t::paralyzed,
-                        rnd(prm_857 / 3 * 2 + 1));
+                        rnd(element_power / 3 * 2 + 1));
                 }
-                if (rnd(20) < prm_857 / 50 + 4)
+                if (rnd(20) < element_power / 50 + 4)
                 {
                     dmgcon(
-                        prm_853,
+                        victim,
                         status_ailment_t::confused,
-                        rnd(prm_857 / 3 * 2 + 1));
+                        rnd(element_power / 3 * 2 + 1));
                 }
-                if (rnd(20) < prm_857 / 50 + 4)
+                if (rnd(20) < element_power / 50 + 4)
                 {
                     dmgcon(
-                        prm_853,
+                        victim,
                         status_ailment_t::poisoned,
-                        rnd(prm_857 / 3 * 2 + 1));
+                        rnd(element_power / 3 * 2 + 1));
                 }
-                if (rnd(20) < prm_857 / 50 + 4)
+                if (rnd(20) < element_power / 50 + 4)
                 {
                     dmgcon(
-                        prm_853,
+                        victim,
                         status_ailment_t::sleep,
-                        rnd(prm_857 / 3 * 2 + 1));
+                        rnd(element_power / 3 * 2 + 1));
                 }
             }
-            if (ele_at_m141 == 52)
+            if (element == 52)
             {
-                if (rnd(3 + (cdata[prm_853].quality >= 4) * 3) == 0)
+                if (rnd(3 + (victim.quality >= 4) * 3) == 0)
                 {
-                    ++cdata[prm_853].paralyzed;
+                    ++victim.paralyzed;
                 }
             }
-            if (ele_at_m141 == 53)
+            if (element == 53)
             {
-                dmgcon(prm_853, status_ailment_t::blinded, rnd(prm_857 + 1));
+                dmgcon(victim, status_ailment_t::blinded, rnd(element_power + 1));
             }
-            if (ele_at_m141 == 58)
+            if (element == 58)
             {
-                dmgcon(prm_853, status_ailment_t::paralyzed, rnd(prm_857 + 1));
+                dmgcon(victim, status_ailment_t::paralyzed, rnd(element_power + 1));
             }
-            if (ele_at_m141 == 54)
+            if (element == 54)
             {
-                dmgcon(prm_853, status_ailment_t::confused, rnd(prm_857 + 1));
+                dmgcon(victim, status_ailment_t::confused, rnd(element_power + 1));
             }
-            if (ele_at_m141 == 57)
+            if (element == 57)
             {
-                dmgcon(prm_853, status_ailment_t::confused, rnd(prm_857 + 1));
+                dmgcon(victim, status_ailment_t::confused, rnd(element_power + 1));
             }
-            if (ele_at_m141 == 55)
+            if (element == 55)
             {
-                dmgcon(prm_853, status_ailment_t::poisoned, rnd(prm_857 + 1));
+                dmgcon(victim, status_ailment_t::poisoned, rnd(element_power + 1));
             }
-            if (ele_at_m141 == 61)
+            if (element == 61)
             {
-                dmgcon(prm_853, status_ailment_t::bleeding, rnd(prm_857 + 1));
+                dmgcon(victim, status_ailment_t::bleeding, rnd(element_power + 1));
             }
-            if (ele_at_m141 == 62)
+            if (element == 62)
             {
-                if (prm_853 == 0)
+                if (victim == 0)
                 {
-                    modcorrupt(rnd(prm_857 + 1));
+                    modcorrupt(rnd(element_power + 1));
                 }
             }
-            if (ele_at_m141 == 63)
+            if (element == 63)
             {
-                if (prm_853 == 0 || rnd(3) == 0)
+                if (victim == 0 || rnd(3) == 0)
                 {
-                    item_acid(prm_853, -1);
+                    item_acid(victim, -1);
                 }
             }
         }
-        if ((ele_at_m141 == 50 || prm_855 == -9) && cdata[prm_853].wet == 0)
+        if ((element == 50 || damage_source == -9) && victim.wet == 0)
         {
-            item_fire(prm_853, -1);
+            item_fire(victim, -1);
         }
-        if (ele_at_m141 == 51)
+        if (element == 51)
         {
-            item_cold(prm_853, -1);
+            item_cold(victim, -1);
         }
-        if (cdata[prm_853].sleep != 0)
+        if (victim.sleep != 0)
         {
-            if (ele_at_m141 != 54 && ele_at_m141 != 58 && ele_at_m141 != 59)
+            if (element != 54 && element != 58 && element != 59)
             {
-                cdata[prm_853].sleep = 0;
+                victim.sleep = 0;
                 txt(i18n::s.get(
-                    "core.locale.damage.sleep_is_disturbed", cdata[prm_853]));
+                    "core.locale.damage.sleep_is_disturbed", victim));
             }
         }
-        if (prm_855 == 0)
+        if (attacker_is_player)
         {
-            hostileaction(0, prm_853);
-            gdata(94) = prm_853;
+            hostileaction(0, victim);
+            gdata(94) = victim;
         }
-        if (prm_853 == 0)
+        if (victim == 0)
         {
-            if (cdata[prm_853].max_hp / 4 > cdata[prm_853].hp)
+            if (victim.max_hp / 4 > victim.hp)
             {
                 if (config::instance().sound)
                 {
@@ -561,120 +565,120 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 }
             }
         }
-        if (cdata[prm_853].explodes())
+        if (victim.explodes())
         {
             if (rnd(3) == 0)
             {
-                cdata[prm_853].will_explode_soon() = true;
+                victim.will_explode_soon() = true;
                 txtef(9);
                 txt(i18n::s.get("core.locale.damage.explode_click"));
             }
         }
-        if (cdata[prm_853].splits())
+        if (victim.splits())
         {
             if (gdata(809) != 1)
             {
-                if (dmg_at_m141 > cdata[prm_853].max_hp / 20 || rnd(10) == 0)
+                if (dmg_at_m141 > victim.max_hp / 20 || rnd(10) == 0)
                 {
                     if (mdata(6) != 1)
                     {
-                        if (chara_copy(prm_853))
+                        if (chara_copy(victim))
                         {
                             txt(i18n::s.get(
-                                "core.locale.damage.splits", cdata[prm_853]));
+                                "core.locale.damage.splits", victim));
                         }
                     }
                 }
             }
         }
-        if (cdata[prm_853].splits2())
+        if (victim.splits2())
         {
             if (gdata(809) != 1)
             {
                 if (rnd(3) == 0)
                 {
-                    if (cdata[prm_853].confused == 0
-                        && cdata[prm_853].dimmed == 0
-                        && cdata[prm_853].poisoned == 0
-                        && cdata[prm_853].paralyzed == 0
-                        && cdata[prm_853].blind == 0)
+                    if (victim.confused == 0
+                        && victim.dimmed == 0
+                        && victim.poisoned == 0
+                        && victim.paralyzed == 0
+                        && victim.blind == 0)
                     {
                         if (mdata(6) != 1)
                         {
-                            if (chara_copy(prm_853))
+                            if (chara_copy(victim))
                             {
                                 txt(i18n::s.get(
                                     "core.locale.damage.splits",
-                                    cdata[prm_853]));
+                                    victim));
                             }
                         }
                     }
                 }
             }
         }
-        if (cdata[prm_853].is_quick_tempered())
+        if (victim.is_quick_tempered())
         {
             if (gdata(809) != 1)
             {
-                if (cdata[prm_853].furious == 0)
+                if (victim.furious == 0)
                 {
                     if (rnd(20) == 0)
                     {
-                        if (is_in_fov(prm_853))
+                        if (is_in_fov(victim))
                         {
                             txtef(4);
                             txt(i18n::s.get(
                                 "core.locale.damage.is_engulfed_in_fury",
-                                cdata[prm_853]));
+                                victim));
                         }
-                        cdata[prm_853].furious += rnd(30) + 15;
+                        victim.furious += rnd(30) + 15;
                     }
                 }
             }
         }
-        if (prm_855 >= 0)
+        if (attacker)
         {
-            f_at_m141 = 0;
-            if (cdata[prm_853].relationship <= -3)
+            bool apply_hate = false;
+            if (victim.relationship <= -3)
             {
-                if (cdata[prm_855].original_relationship > -3)
+                if (attacker->original_relationship > -3)
                 {
-                    if (cdata[prm_853].hate == 0 || rnd(4) == 0)
+                    if (victim.hate == 0 || rnd(4) == 0)
                     {
-                        f_at_m141 = 1;
+                        apply_hate = true;
                     }
                 }
             }
-            else if (cdata[prm_855].original_relationship <= -3)
+            else if (attacker->original_relationship <= -3)
             {
-                if (cdata[prm_853].hate == 0 || rnd(4) == 0)
+                if (victim.hate == 0 || rnd(4) == 0)
                 {
-                    f_at_m141 = 1;
+                    apply_hate = true;
                 }
             }
-            if (prm_855 != 0)
+            if (!attacker_is_player)
             {
-                if (cdata[prm_855].enemy_id == prm_853)
+                if (attacker->enemy_id == victim)
                 {
                     if (rnd(3) == 0)
                     {
-                        f_at_m141 = 1;
+                        apply_hate = true;
                     }
                 }
             }
-            if (f_at_m141)
+            if (apply_hate)
             {
-                if (prm_853 != 0)
+                if (victim != 0)
                 {
-                    cdata[prm_853].enemy_id = prm_855;
-                    if (cdata[prm_853].hate == 0)
+                    victim.enemy_id = attacker->index;
+                    if (victim.hate == 0)
                     {
-                        cdata[prm_853].emotion_icon = 218;
-                        cdata[prm_853].hate = 20;
+                        victim.emotion_icon = 218;
+                        victim.hate = 20;
                     }
                     else
                     {
-                        cdata[prm_853].hate += 2;
+                        victim.hate += 2;
                     }
                 }
             }
@@ -683,131 +687,131 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
 
     {
         auto handle =
-            lua::lua.get_handle_manager().get_chara_handle(cdata[prm_853]);
+            lua::lua.get_handle_manager().get_chara_handle(victim);
         lua::lua.get_event_manager()
             .run_callbacks<lua::event_kind_t::character_damaged>(
                 handle, dmg_at_m141);
     }
 
-    if (cdata[prm_853].hp < 0)
+    if (victim.hp < 0)
     {
-        se_at_m141 = eleinfo(ele_at_m141, 1);
-        if (se_at_m141)
+        int se = eleinfo(element, 1);
+        if (se)
         {
-            snd(se_at_m141, false, false);
+            snd(se, false, false);
         }
         txtef(3);
-        if (prm_855 >= 0)
+        if (attacker)
         {
-            if (ele_at_m141)
+            if (element)
             {
-                if (prm_853 >= 16 && gdata(809) == 2)
+                if (victim >= 16 && gdata(809) == 2)
                 {
                     txtcontinue();
-                    txteledmg(1, is_player, prm_853, ele_at_m141);
+                    txteledmg(1, attacker_is_player, victim, element);
                 }
                 else
                 {
-                    txteledmg(2, is_player, prm_853, ele_at_m141);
+                    txteledmg(2, attacker_is_player, victim, element);
                 }
             }
             else
             {
-                p_at_m141 = rnd(4);
-                if (p_at_m141 == 0)
+                int death_type = rnd(4);
+                if (death_type == 0)
                 {
-                    if (prm_853 >= 16 && gdata(809) == 2)
+                    if (victim >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
                         txt(i18n::s.get(
                             "core.locale.death_by.chara.transformed_into_meat."
                             "active",
-                            cdata[prm_853],
-                            is_player));
+                            victim,
+                            attacker_is_player));
                     }
                     else
                     {
                         txt(i18n::s.get(
                             "core.locale.death_by.chara.transformed_into_meat."
                             "passive",
-                            cdata[prm_853],
-                            is_player));
+                            victim,
+                            attacker_is_player));
                     }
                 }
-                if (p_at_m141 == 1)
+                if (death_type == 1)
                 {
-                    if (prm_853 >= 16 && gdata(809) == 2)
+                    if (victim >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
                         txt(i18n::s.get(
                             "core.locale.death_by.chara.destroyed.active",
-                            cdata[prm_853],
-                            is_player));
+                            victim,
+                            attacker_is_player));
                     }
                     else
                     {
                         txt(i18n::s.get(
                             "core.locale.death_by.chara.destroyed.passive",
-                            cdata[prm_853],
-                            is_player));
+                            victim,
+                            attacker_is_player));
                     }
                 }
-                if (p_at_m141 == 2)
+                if (death_type == 2)
                 {
-                    if (prm_853 >= 16 && gdata(809) == 2)
+                    if (victim >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
                         txt(i18n::s.get(
                             "core.locale.death_by.chara.minced.active",
-                            cdata[prm_853],
-                            is_player));
+                            victim,
+                            attacker_is_player));
                     }
                     else
                     {
                         txt(i18n::s.get(
                             "core.locale.death_by.chara.minced.passive",
-                            cdata[prm_853],
-                            is_player));
+                            victim,
+                            attacker_is_player));
                     }
                 }
-                if (p_at_m141 == 3)
+                if (death_type == 3)
                 {
-                    if (prm_853 >= 16 && gdata(809) == 2)
+                    if (victim >= 16 && gdata(809) == 2)
                     {
                         txtcontinue();
                         txt(i18n::s.get(
                             "core.locale.death_by.chara.killed.active",
-                            cdata[prm_853],
-                            is_player));
+                            victim,
+                            attacker_is_player));
                     }
                     else
                     {
                         txt(i18n::s.get(
                             "core.locale.death_by.chara.killed.passive",
-                            cdata[prm_853],
-                            is_player));
+                            victim,
+                            attacker_is_player));
                     }
                 }
             }
             ndeathcause = i18n::s.get(
-                "core.locale.death_by.chara.killed.passive", cdata[prm_855]);
+                "core.locale.death_by.chara.death_cause", *attacker);
         }
         else
         {
-            if (prm_855 == -6)
+            if (damage_source == -6)
             {
-                dmgheal_death_by_backpack(cdata[prm_853]);
+                dmgheal_death_by_backpack(victim);
             }
             else
             {
-                int death_kind = -prm_855;
+                int death_kind = -damage_source;
 
                 txt(i18n::s.get(
                     "core.locale.death_by.other",
                     death_kind,
                     "text",
-                    cdata[prm_853]));
-                if (prm_853 == 0)
+                    victim));
+                if (victim == 0)
                 {
                     ndeathcause = i18n::s.get_enum_property(
                         "core.locale.death_by.other",
@@ -816,134 +820,134 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 }
             }
         }
-        if (prm_855 == -9 || ele_at_m141 == 50)
+        if (damage_source == -9 || element == 50)
         {
             mef_add(
-                cdata[prm_853].position.x,
-                cdata[prm_853].position.y,
+                victim.position.x,
+                victim.position.y,
                 5,
                 24,
                 rnd(10) + 5,
                 100,
-                prm_855);
+                damage_source);
         }
-        if (ele_at_m141 == 56)
+        if (element == 56)
         {
-            if (prm_855 >= 0)
+            if (attacker)
             {
                 if (dmg_at_m141 > 0)
                 {
-                    healhp(cc, rnd(dmg_at_m141 * (200 + prm_857) / 1000 + 5));
+                    healhp(cc, rnd(dmg_at_m141 * (200 + element_power) / 1000 + 5));
                 }
             }
         }
-        if (gdata_mount != prm_853 || prm_853 == 0)
+        if (gdata_mount != victim || victim == 0)
         {
             cell_removechara(
-                cdata[prm_853].position.x, cdata[prm_853].position.y);
+                victim.position.x, victim.position.y);
         }
-        if (cdata[prm_853].character_role == 0)
+        if (victim.character_role == 0)
         {
-            cdata[prm_853].state = 0;
+            victim.state = 0;
         }
-        else if (cdata[prm_853].character_role == 13)
+        else if (victim.character_role == 13)
         {
-            cdata[prm_853].state = 4;
-            cdata[prm_853].time_to_revive = gdata_hour + gdata_day * 24
+            victim.state = 4;
+            victim.time_to_revive = gdata_hour + gdata_day * 24
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 24
                 + rnd(12);
         }
         else
         {
-            cdata[prm_853].state = 2;
-            cdata[prm_853].time_to_revive = gdata_hour + gdata_day * 24
+            victim.state = 2;
+            victim.time_to_revive = gdata_hour + gdata_day * 24
                 + gdata_month * 24 * 30 + gdata_year * 24 * 30 * 12 + 48;
         }
-        if (prm_853 != 0)
+        if (victim != 0)
         {
-            if (prm_853 < 16)
+            if (victim < 16)
             {
-                chara_mod_impression(prm_853, -10);
-                cdata[prm_853].state = 6;
-                cdata[prm_853].current_map = 0;
-                if (cdata[prm_853].is_escorted() == 1)
+                chara_mod_impression(victim, -10);
+                victim.state = 6;
+                victim.current_map = 0;
+                if (victim.is_escorted() == 1)
                 {
-                    event_add(15, cdata[prm_853].id);
-                    cdata[prm_853].state = 0;
+                    event_add(15, victim.id);
+                    victim.state = 0;
                 }
-                if (cdata[prm_853].is_escorted_in_sub_quest() == 1)
+                if (victim.is_escorted_in_sub_quest() == 1)
                 {
-                    cdata[prm_853].state = 0;
+                    victim.state = 0;
                 }
             }
         }
-        if (cdata[prm_853].breaks_into_debris())
+        if (victim.breaks_into_debris())
         {
-            if (is_in_fov(prm_853))
+            if (is_in_fov(victim))
             {
-                x = cdata[prm_853].position.x;
-                y = cdata[prm_853].position.y;
+                x = victim.position.x;
+                y = victim.position.y;
                 snd(45, false, false);
-                animeblood(prm_853, 1, ele_at_m141);
+                animeblood(victim, 1, element);
             }
-            spillfrag(cdata[prm_853].position.x, cdata[prm_853].position.y, 3);
+            spillfrag(victim.position.x, victim.position.y, 3);
         }
         else
         {
             snd(8 + rnd(2), false, false);
-            animeblood(prm_853, 0, ele_at_m141);
-            spillblood(cdata[prm_853].position.x, cdata[prm_853].position.y, 4);
+            animeblood(victim, 0, element);
+            spillblood(victim.position.x, victim.position.y, 4);
         }
-        if (prm_853 == 0)
+        if (victim == 0)
         {
             ++gdata_death_count;
         }
-        if (prm_853 == gdata(94))
+        if (victim == gdata(94))
         {
             gdata(94) = 0;
         }
-        if (prm_855 >= 0)
+        if (attacker)
         {
-            if (prm_855 != 0)
+            if (!attacker_is_player)
             {
-                chara_custom_talk(prm_855, 103);
+                chara_custom_talk(*attacker, 103);
             }
-            exp_at_m141 = clamp(cdata[prm_853].level, 1, 200)
-                    * clamp((cdata[prm_853].level + 1), 1, 200)
-                    * clamp((cdata[prm_853].level + 2), 1, 200) / 20
+            gained_exp = clamp(victim.level, 1, 200)
+                    * clamp((victim.level + 1), 1, 200)
+                    * clamp((victim.level + 2), 1, 200) / 20
                 + 8;
-            if (cdata[prm_853].level > cdata[prm_855].level)
+            if (victim.level > attacker->level)
             {
-                exp_at_m141 /= 4;
+                gained_exp /= 4;
             }
-            if (cdata[prm_853].splits() || cdata[prm_853].splits2())
+            if (victim.splits() || victim.splits2())
             {
-                exp_at_m141 /= 20;
+                gained_exp /= 20;
             }
-            cdata[prm_855].experience += exp_at_m141;
-            if (prm_855 == 0)
+            attacker->experience += gained_exp;
+            if (attacker_is_player)
             {
-                gdata_sleep_experience += exp_at_m141;
+                gdata_sleep_experience += gained_exp;
             }
-            cdata[prm_855].hate = 0;
-            if (prm_855 < 16)
+            attacker->hate = 0;
+            if (attacker->index < 16)
             {
-                cdata[prm_855].enemy_id = 0;
+                attacker->enemy_id = 0;
                 cdata[0].enemy_id = 0;
                 gdata(94) = 0;
             }
         }
-        if (prm_853 != 0)
+        if (victim != 0)
         {
             if (gdata_current_map != 35)
             {
                 if (gdata_current_map != 42)
                 {
-                    if (cdata[prm_853].id == 2)
+                    if (victim.id == 2)
                     {
                         event_add(1);
                     }
-                    if (cdata[prm_853].id == 141)
+                    if (victim.id == 141)
                     {
                         txtef(2);
                         txt(lang(
@@ -952,7 +956,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                         snd(51);
                         gdata_magic_stone_of_fool = 1;
                     }
-                    if (cdata[prm_853].id == 143)
+                    if (victim.id == 143)
                     {
                         txtef(2);
                         txt(lang(
@@ -961,7 +965,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                         snd(51);
                         gdata_magic_stone_of_king = 1;
                     }
-                    if (cdata[prm_853].id == 144)
+                    if (victim.id == 144)
                     {
                         txtef(2);
                         txt(lang(
@@ -970,7 +974,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                         snd(51);
                         gdata_magic_stone_of_sage = 1;
                     }
-                    if (cdata[prm_853].id == 242)
+                    if (victim.id == 242)
                     {
                         if (gdata_novice_knight < 1000)
                         {
@@ -981,7 +985,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                                 "core.locale.quest.journal_updated"));
                         }
                     }
-                    if (cdata[prm_853].id == 257)
+                    if (victim.id == 257)
                     {
                         if (gdata_pyramid_trial < 1000)
                         {
@@ -996,7 +1000,7 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                             snd(51);
                         }
                     }
-                    if (cdata[prm_853].id == 300)
+                    if (victim.id == 300)
                     {
                         if (gdata_minotaur_king < 1000)
                         {
@@ -1007,14 +1011,14 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                                 "core.locale.quest.journal_updated"));
                         }
                     }
-                    if (cdata[prm_853].id == 318)
+                    if (victim.id == 318)
                     {
                         event_add(
                             27,
-                            cdata[prm_853].position.x,
-                            cdata[prm_853].position.y);
+                            victim.position.x,
+                            victim.position.y);
                     }
-                    if (cdata[prm_853].id == 319)
+                    if (victim.id == 319)
                     {
                         ++gdata_kill_count_of_little_sister;
                         txtef(3);
@@ -1033,78 +1037,78 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                             == adata(10, gdata_current_map)
                         || gdata_current_map == 42)
                     {
-                        if (adata(20, gdata_current_map) == prm_853
-                            && cdata[prm_853].is_lord_of_dungeon() == 1)
+                        if (adata(20, gdata_current_map) == victim
+                            && victim.is_lord_of_dungeon() == 1)
                         {
                             event_add(5);
                         }
                     }
-                    if (cdata[prm_853].id == 331)
+                    if (victim.id == 331)
                     {
                         if (rnd(4) == 0)
                         {
                             event_add(
                                 28,
-                                cdata[prm_853].position.x,
-                                cdata[prm_853].position.y);
+                                victim.position.x,
+                                victim.position.y);
                         }
                     }
                     quest_check();
                 }
                 else if (gdata_current_map == 42)
                 {
-                    if (adata(20, gdata_current_map) == prm_853
-                        && cdata[prm_853].is_lord_of_dungeon() == 1)
+                    if (adata(20, gdata_current_map) == victim
+                        && victim.is_lord_of_dungeon() == 1)
                     {
                         event_add(5);
                     }
                 }
             }
         }
-        if (prm_853 != 0)
+        if (victim != 0)
         {
-            ++npcmemory(0, cdata[prm_853].id);
-            chara_custom_talk(prm_853, 102);
-            if (prm_853 < 16)
+            ++npcmemory(0, victim.id);
+            chara_custom_talk(victim, 102);
+            if (victim < 16)
             {
                 txt(i18n::s.get("core.locale.damage.you_feel_sad"));
             }
         }
-        if (cdata[prm_853].state == 0)
+        if (victim.state == 0)
         {
             // Exclude town residents because they occupy character slots even
             // if they are dead.
-            modify_crowd_density(prm_853, -1);
+            modify_crowd_density(victim, -1);
         }
         if (gdata_mount)
         {
-            if (prm_853 == gdata_mount)
+            if (victim == gdata_mount)
             {
                 txt(i18n::s.get(
-                    "core.locale.damage.get_off_corpse", cdata[prm_853]));
+                    "core.locale.damage.get_off_corpse", victim));
                 ride_end();
             }
         }
-        check_kill(prm_855, prm_853);
+        check_kill(damage_source, victim);
         catitem = 0;
         rollanatomy = 0;
         if (rnd(60) == 0)
         {
             rollanatomy = 1;
         }
-        if (prm_855 >= 0)
+        if (attacker)
         {
-            if (cdata[prm_855].id == 260)
+            if (attacker->id == 260)
             {
-                catitem = prm_855;
+                catitem = attacker->index;
             }
-            if (int(std::sqrt(sdata(161, prm_855))) > rnd(150))
+            if (int(std::sqrt(sdata(161, attacker->index))) > rnd(150))
             {
                 rollanatomy = 1;
             }
-            skillexp(161, prm_855, 10 + rollanatomy * 4);
+            skillexp(161, attacker->index, 10 + rollanatomy * 4);
         }
-        rc = prm_853;
+        rc = victim;
         character_drops_item();
         if (gdata_current_map == 40)
         {
@@ -1113,32 +1117,31 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 snd(69);
             }
         }
-        if (cdata[prm_853].is_death_master() == 1)
+        if (victim.is_death_master() == 1)
         {
             txt(i18n::s.get("core.locale.damage.death_word_breaks"));
-            for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+            for (int chara_index = 0; chara_index < ELONA_MAX_CHARACTERS; ++chara_index)
             {
-                if (cdata[cnt].state != 1)
+                if (cdata[chara_index].state != 1)
                 {
                     continue;
                 }
-                p_at_m141 = cnt;
-                for (int cnt = 0; cnt < 16; ++cnt)
+                for (int buff_index = 0; buff_index < 16; ++buff_index)
                 {
-                    if (cdata[p_at_m141].buffs[cnt].id == 0)
+                    if (cdata[chara_index].buffs[buff_index].id == 0)
                     {
                         break;
                     }
-                    if (cdata[p_at_m141].buffs[cnt].id == 16)
+                    if (cdata[chara_index].buffs[buff_index].id == 16)
                     {
-                        buff_delete(p_at_m141, cnt);
-                        --cnt;
+                        buff_delete(chara_index, buff_index);
+                        --buff_index;
                         continue;
                     }
                 }
             }
         }
-        if (prm_855 == 0)
+        if (attacker_is_player)
         {
             if (gdata_catches_god_signal)
             {
@@ -1148,23 +1151,23 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                 }
             }
         }
-        end_dmghp();
 
-        chara_killed(cdata[prm_853]);
+        end_dmghp(victim);
+        chara_killed(victim);
 
         return 0;
     }
-    end_dmghp();
+    end_dmghp(victim);
     return 1;
 }
 
 
 
-void end_dmghp()
+void end_dmghp(const character& victim)
 {
-    if (cdata[prm_853].is_hung_on_sand_bag())
+    if (victim.is_hung_on_sand_bag())
     {
-        if (is_in_fov(prm_853))
+        if (is_in_fov(victim))
         {
             txt(u8"("s + dmg_at_m141 + u8")"s + i18n::space_if_needed());
             if (rnd(20) == 0)
@@ -1176,7 +1179,6 @@ void end_dmghp()
     }
     gdata(809) = 0;
     txt3rd = 0;
-    return;
 }
 
 
