@@ -2716,14 +2716,14 @@ void windowanime(
         boxl(
             cenx_at_m105 - x2_at_m105 / prm_730 * cnt,
             ceny_at_m105 - y2_at_m105 / prm_730 * cnt,
-            cenx_at_m105 + x2_at_m105 / prm_730 * cnt,
-            ceny_at_m105 + y2_at_m105 / prm_730 * cnt);
+            2 * x2_at_m105 / prm_730 * cnt,
+            2 * y2_at_m105 / prm_730 * cnt);
         color(240, 240, 240);
         boxl(
             cenx_at_m105 - x2_at_m105 / prm_730 * cnt - 1,
             ceny_at_m105 - y2_at_m105 / prm_730 * cnt - 1,
-            cenx_at_m105 + x2_at_m105 / prm_730 * cnt - 1,
-            ceny_at_m105 + y2_at_m105 / prm_730 * cnt - 1);
+            2 * x2_at_m105 / prm_730 * cnt - 1,
+            2 * y2_at_m105 / prm_730 * cnt - 1);
         color(0, 0, 0);
         redraw();
         if (cnt != prm_730 - 1)
@@ -2765,14 +2765,14 @@ void windowanimecorner(
         boxl(
             prm_732 + prm_734,
             prm_733 + prm_735,
-            prm_732 + prm_734 - (prm_734 - prm_732) / prm_736 * cnt,
-            prm_733 + prm_735 - (prm_735 - prm_733) / prm_736 * cnt);
+            (prm_732 - prm_734) / prm_736 * cnt,
+            (prm_733 - prm_735) / prm_736 * cnt);
         color(240, 240, 240);
         boxl(
             prm_732 + prm_734 - 1,
             prm_733 + prm_735 - 1,
-            prm_732 + prm_734 - (prm_734 - prm_732) / prm_736 * cnt - 1,
-            prm_733 + prm_735 - (prm_735 - prm_733) / prm_736 * cnt - 1);
+            (prm_732 - prm_734) / prm_736 * cnt,
+            (prm_733 - prm_735) / prm_736 * cnt);
         color(0, 0, 0);
         redraw();
         if (cnt != prm_736)

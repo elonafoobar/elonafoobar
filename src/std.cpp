@@ -121,6 +121,18 @@ void boxf()
 
 
 
+void boxl(int x, int y, int width, int height)
+{
+    const auto x2 = x + width;
+    const auto y2 = y + height;
+    line(x, y, x2, y);
+    line(x2, y, x2, y2);
+    line(x2, y2, x, y2);
+    line(x, y2, x, y);
+}
+
+
+
 void bload(const fs::path& filename, std::string& data, int size, int)
 {
     if (size == 0)
@@ -470,13 +482,6 @@ int stoi(const std::string& s)
 void line(int x1, int y1, int x2, int y2)
 {
     snail::hsp::line(x1, y1, x2, y2);
-}
-
-
-
-void line(int x, int y)
-{
-    snail::hsp::line(x, y);
 }
 
 

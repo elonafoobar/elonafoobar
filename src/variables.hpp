@@ -890,7 +890,6 @@ void auto_turn(int delay);
 void atxinit();
 void begintempinv();
 void bmes(const std::string&, int = 0, int = 0, int = 0);
-void boxl(int = 0, int = 0, int = 0, int = 0);
 void calcdecksize();
 void calcdomain();
 void calcstartattb(int = 0);

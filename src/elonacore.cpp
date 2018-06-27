@@ -1729,17 +1729,6 @@ int imeget()
 
 
 
-void boxl(int x1, int y1, int x2, int y2)
-{
-    pos(x1, y2);
-    line(x1, y1);
-    line(x2, y1);
-    line(x2, y2);
-    line(x1, y2);
-}
-
-
-
 std::string fixtxt(const std::string& prm_724, int prm_725)
 {
     std::string m_at_m104;
@@ -8711,7 +8700,7 @@ label_1897_internal:
     gcopy(7, 0, 0, tx, ty);
     gmode(2);
     color(240, 230, 220);
-    boxl(wx + 12, wy + 6, wx + tx + 12, wy + ty + 6);
+    boxl(wx + 12, wy + 6, tx, ty);
     color(0, 0, 0);
     font(14 - en * 2);
     q = lang(u8"《 "s + s + u8" 》"s, u8" < "s + s + u8" > "s);
@@ -9882,11 +9871,7 @@ label_1956_internal:
                 if (chipm(7, list(0, p)) & 4)
                 {
                     color(240, 230, 220);
-                    boxl(
-                        wx + cnt * 24,
-                        wy + cnt2 * 24,
-                        wx + cnt * 24 + 24,
-                        wy + cnt2 * 24 + 24);
+                    boxl(wx + cnt * 24, wy + cnt2 * 24, 24, 24);
                     color(0, 0, 0);
                 }
             }
