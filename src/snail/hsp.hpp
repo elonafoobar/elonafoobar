@@ -69,8 +69,7 @@ void gzoom(
     int dst_width,
     int dst_height,
     bool blend);
-void line(int x, int y);
-void line(int x1, int y1, int x2, int y2);
+void line(int x1, int y1, int x2, int y2, const snail::color& color);
 void title(
     const std::string& title_str,
     const std::string& display_mode,

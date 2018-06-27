@@ -899,17 +899,17 @@ void gzoom(
         dst_height);
 }
 
-void line(int x1, int y1, int x2, int y2)
+
+
+void line(int x1, int y1, int x2, int y2, const snail::color& color)
 {
-    snail::application::instance().get_renderer().render_line(x1, y1, x2, y2);
+    auto&& renderer = snail::application::instance().get_renderer();
+    renderer.set_draw_color(color);
+    renderer.render_line(x1, y1, x2, y2);
+    renderer.set_draw_color({0, 0, 0});
 }
 
-void line(int x, int y)
-{
-    line(detail::current_tex_buffer().x, detail::current_tex_buffer().y, x, y);
-    detail::current_tex_buffer().x = x;
-    detail::current_tex_buffer().y = y;
-}
+
 
 void title(
     const std::string& title_str,

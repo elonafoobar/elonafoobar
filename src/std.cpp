@@ -121,14 +121,14 @@ void boxf()
 
 
 
-void boxl(int x, int y, int width, int height)
+void boxl(int x, int y, int width, int height, const snail::color& color)
 {
     const auto x2 = x + width;
     const auto y2 = y + height;
-    line(x, y, x2, y);
-    line(x2, y, x2, y2);
-    line(x2, y2, x, y2);
-    line(x, y2, x, y);
+    line(x, y, x2, y, color);
+    line(x2, y, x2, y2, color);
+    line(x2, y2, x, y2, color);
+    line(x, y2, x, y, color);
 }
 
 
@@ -479,9 +479,9 @@ int stoi(const std::string& s)
 
 
 
-void line(int x1, int y1, int x2, int y2)
+void line(int x1, int y1, int x2, int y2, const snail::color& color)
 {
-    snail::hsp::line(x1, y1, x2, y2);
+    snail::hsp::line(x1, y1, x2, y2, color);
 }
 
 

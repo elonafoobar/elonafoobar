@@ -326,20 +326,18 @@ void window_recipe_(
     window(prm_1051, prm_1052, prm_1053, prm_1054 - prm_1054 % 8, 0, 0);
     window_recipe2();
     gmode(2);
-    color(194, 170, 146);
     line(
         prm_1051 + 50 + 0,
         prm_1052 + prm_1054 - 48 - prm_1054 % 8,
         prm_1051 + prm_1053 - 40,
-        prm_1052 + prm_1054 - 48 - prm_1054 % 8);
-    color(0, 0, 0);
-    color(234, 220, 188);
+        prm_1052 + prm_1054 - 48 - prm_1054 % 8,
+        {194, 170, 146});
     line(
         prm_1051 + 50 + 0,
         prm_1052 + prm_1054 - 49 - prm_1054 % 8,
         prm_1051 + prm_1053 - 40,
-        prm_1052 + prm_1054 - 49 - prm_1054 % 8);
-    color(0, 0, 0);
+        prm_1052 + prm_1054 - 49 - prm_1054 % 8,
+        {234, 220, 188});
     s_at_m184(0) = u8"Page."s + (rppage + 1) + u8"/"s + (rppage(1) + 1);
     s_at_m184(1) = ""s + key_prev + u8","s + key_next + ""s
         + lang(u8"[ページ切替]  "s, u8"[Page]  "s);

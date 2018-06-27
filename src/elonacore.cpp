@@ -8699,8 +8699,7 @@ label_1897_internal:
     pos(wx + 12, wy + 6);
     gcopy(7, 0, 0, tx, ty);
     gmode(2);
-    color(240, 230, 220);
-    boxl(wx + 12, wy + 6, tx, ty);
+    boxl(wx + 12, wy + 6, tx, ty, {240, 230, 220});
     font(14 - en * 2);
     q = lang(u8"《 "s + s + u8" 》"s, u8" < "s + s + u8" > "s);
     bmes(q, wx + 40, wy + 16, {245, 235, 225}, {30, 20, 10});
@@ -9863,9 +9862,8 @@ label_1956_internal:
                     24);
                 if (chipm(7, list(0, p)) & 4)
                 {
-                    color(240, 230, 220);
-                    boxl(wx + cnt * 24, wy + cnt2 * 24, 24, 24);
-                    color(0, 0, 0);
+                    boxl(
+                        wx + cnt * 24, wy + cnt2 * 24, 24, 24, {240, 230, 220});
                 }
             }
             ++p;

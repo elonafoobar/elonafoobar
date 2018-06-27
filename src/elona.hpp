@@ -391,7 +391,7 @@ void boxf(
     const snail::color& color = {0, 0, 0, 0});
 void boxf();
 
-void boxl(int x, int y, int width, int height);
+void boxl(int x, int y, int width, int height, const snail::color& color);
 
 
 void buffer(int window_id, int width = 0, int heihgt = 0);
@@ -466,7 +466,12 @@ int instr(const std::string& str, size_t pos, const std::string pattern);
 int stoi(const std::string&);
 
 
-void line(int x1, int y1, int x2, int y2);
+void line(
+    int x1,
+    int y1,
+    int x2,
+    int y2,
+    const snail::color& color = {0, 0, 0});
 
 
 

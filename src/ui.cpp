@@ -1486,13 +1486,14 @@ void render_weather_effect_rain()
          ++cnt)
     {
         s_p = rnd(100);
-        color(170 - s_p, 200 - s_p, 250 - s_p);
         line(
             rainx(cnt) - 40,
             rainy(cnt) - cnt % 3 - 1,
             rainx(cnt) - 39 + cnt % 2,
-            rainy(cnt));
-        color(0, 0, 0);
+            rainy(cnt),
+            {static_cast<uint8_t>(170 - s_p),
+             static_cast<uint8_t>(200 - s_p),
+             static_cast<uint8_t>(250 - s_p)});
         if (rainx(cnt) == 0)
         {
             rainx(cnt) = rnd(windoww) + 40;
@@ -1530,13 +1531,14 @@ void render_weather_effect_hard_rain()
          ++cnt)
     {
         s_p = rnd(100);
-        color(170 - s_p, 200 - s_p, 250 - s_p);
         line(
             rainx(cnt) - 40,
             rainy(cnt) - cnt % 5 - 4,
             rainx(cnt) - 39 + cnt % 2,
-            rainy(cnt));
-        color(0, 0, 0);
+            rainy(cnt),
+            {static_cast<uint8_t>(170 - s_p),
+             static_cast<uint8_t>(200 - s_p),
+             static_cast<uint8_t>(250 - s_p)});
         if (rainx(cnt) == 0)
         {
             rainx(cnt) = rnd(windoww) + 40;
@@ -2005,18 +2007,18 @@ void display_window(
     gmode(2);
     pos(prm_668 + 30 + prm_672, prm_669 + prm_671 - 47 - prm_671 % 8);
     gcopy(3, 96, 360, 24, 16);
-    color(194, 170, 146);
     line(
         prm_668 + 50 + prm_672,
         prm_669 + prm_671 - 48 - prm_671 % 8,
         prm_668 + prm_670 - 40,
-        prm_669 + prm_671 - 48 - prm_671 % 8);
-    color(234, 220, 188);
+        prm_669 + prm_671 - 48 - prm_671 % 8,
+        {194, 170, 146});
     line(
         prm_668 + 50 + prm_672,
         prm_669 + prm_671 - 49 - prm_671 % 8,
         prm_668 + prm_670 - 40,
-        prm_669 + prm_671 - 49 - prm_671 % 8);
+        prm_669 + prm_671 - 49 - prm_671 % 8,
+        {234, 220, 188});
     font(15 + en - en * 2);
     bmes(
         s,
@@ -2051,6 +2053,8 @@ void display_note(const std::string& prm_674, int prm_675)
     return;
 }
 
+
+
 void display_topic(const std::string& prm_676, int prm_677, int prm_678, int)
 {
     font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
@@ -2063,8 +2067,9 @@ void display_topic(const std::string& prm_676, int prm_677, int prm_678, int)
         prm_678 + 21,
         prm_677 + strlen_u(prm_676) * 7 + 36,
         prm_678 + 21);
-    return;
 }
+
+
 
 void display_customkey(const std::string& key, int x, int y)
 {
@@ -2396,18 +2401,18 @@ void showscroll(const std::string& title, int x, int y, int width, int height)
 
     pos(x + 40, y + height - 67 - height % 8);
     gcopy(3, 96, 360, 24, 16);
-    color(194, 173, 161);
     line(
         x + 60,
         y + height - 68 - height % 8,
         x + width - 40,
-        y + height - 68 - height % 8);
-    color(224, 213, 191);
+        y + height - 68 - height % 8,
+        {194, 173, 161});
     line(
         x + 60,
         y + height - 69 - height % 8,
         x + width - 40,
-        y + height - 69 - height % 8);
+        y + height - 69 - height % 8,
+        {224, 213, 191});
     font(12 + sizefix - en * 2);
     color(0, 0, 0);
     pos(x + 68, y + height - 63 - height % 8);
@@ -2692,19 +2697,18 @@ void windowanime(
     ceny_at_m105 = prm_727 + y2_at_m105;
     for (int cnt = 1, cnt_end = cnt + (prm_730 - 1); cnt < cnt_end; ++cnt)
     {
-        color(30, 30, 30);
         boxl(
             cenx_at_m105 - x2_at_m105 / prm_730 * cnt,
             ceny_at_m105 - y2_at_m105 / prm_730 * cnt,
             2 * x2_at_m105 / prm_730 * cnt,
-            2 * y2_at_m105 / prm_730 * cnt);
-        color(240, 240, 240);
+            2 * y2_at_m105 / prm_730 * cnt,
+            {30, 30, 30});
         boxl(
             cenx_at_m105 - x2_at_m105 / prm_730 * cnt - 1,
             ceny_at_m105 - y2_at_m105 / prm_730 * cnt - 1,
             2 * x2_at_m105 / prm_730 * cnt - 1,
-            2 * y2_at_m105 / prm_730 * cnt - 1);
-        color(0, 0, 0);
+            2 * y2_at_m105 / prm_730 * cnt - 1,
+            {240, 240, 240});
         redraw();
         if (cnt != prm_730 - 1)
         {
@@ -2741,19 +2745,18 @@ void windowanimecorner(
     y2_at_m105 = prm_735 - prm_733;
     for (int cnt = 1, cnt_end = cnt + (prm_736); cnt < cnt_end; ++cnt)
     {
-        color(30, 30, 30);
         boxl(
             prm_732 + prm_734,
             prm_733 + prm_735,
             (prm_732 - prm_734) / prm_736 * cnt,
-            (prm_733 - prm_735) / prm_736 * cnt);
-        color(240, 240, 240);
+            (prm_733 - prm_735) / prm_736 * cnt,
+            {30, 30, 30});
         boxl(
             prm_732 + prm_734 - 1,
             prm_733 + prm_735 - 1,
             (prm_732 - prm_734) / prm_736 * cnt,
-            (prm_733 - prm_735) / prm_736 * cnt);
-        color(0, 0, 0);
+            (prm_733 - prm_735) / prm_736 * cnt,
+            {240, 240, 240});
         redraw();
         if (cnt != prm_736)
         {

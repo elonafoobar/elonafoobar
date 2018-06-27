@@ -703,10 +703,14 @@ void tcgdraw()
             for (int cnt = 0; cnt < 3; ++cnt)
             {
                 p_at_tcg = (t_at_tcg / 4 + cnt) % 7;
-                color(p_at_tcg * 20, 25 + p_at_tcg * 20, 60 + p_at_tcg * 20);
                 boxl(
-                    chainx_at_tcg - p_at_tcg, chainy_at_tcg - p_at_tcg, 72, 96);
-                color(0, 0, 0);
+                    chainx_at_tcg - p_at_tcg,
+                    chainy_at_tcg - p_at_tcg,
+                    72,
+                    96,
+                    {static_cast<uint8_t>(p_at_tcg * 20),
+                     static_cast<uint8_t>(25 + p_at_tcg * 20),
+                     static_cast<uint8_t>(60 + p_at_tcg * 20)});
             }
         }
         for (int cnt = 0, cnt_end = (efllistmax_at_tcg); cnt < cnt_end; ++cnt)

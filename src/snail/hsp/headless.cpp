@@ -93,11 +93,7 @@ void gzoom(int, int, int, int, int, int, int, bool)
 {
 }
 
-void line(int, int)
-{
-}
-
-void line(int, int, int, int)
+void line(int, int, int, int, const snail::color&)
 {
 }
 
