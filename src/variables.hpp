@@ -967,7 +967,6 @@ void itemname_additional_info();
 void initialize_craft_material_data();
 void get_random_item_id();
 void set_item_info();
-void end_dmghp();
 void init_character_skills(int);
 void proc_turn_end(int);
 void refresh_burden_state();
