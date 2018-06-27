@@ -36,5 +36,3 @@ lrun("test Map.can_access", function()
         lequal(Map.can_access(pos), false)
         lequal(Map.can_access(pos.x, pos.y), false)
 end)
-
-assert(lresults())

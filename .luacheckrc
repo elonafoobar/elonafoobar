@@ -138,6 +138,11 @@ stds.elona = {
                     "level"
                  },
               },
+              Trait = {
+                 fields = {
+                    "level", "min", "max", "set", "modify"
+                 },
+              },
               GUI = {
                  fields = {
                     "txt", "txt_color"

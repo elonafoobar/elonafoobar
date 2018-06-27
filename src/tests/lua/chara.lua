@@ -95,6 +95,3 @@ lrun("test Chara.iter", function()
         count = tally()
         lequal(count, 43)
 end)
-
-
-assert(lresults())

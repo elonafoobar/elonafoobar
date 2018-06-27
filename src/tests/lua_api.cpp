@@ -16,6 +16,7 @@ void lua_testcase(const std::string& filename)
     elona::lua::lua.get_api_manager().set_on(elona::lua::lua);
     REQUIRE_NOTHROW(elona::lua::lua.get_state()->safe_script_file(
         "tests/lua/"s + filename));
+    REQUIRE_NOTHROW(elona::lua::lua.get_state()->safe_script(R"(assert(lresults()))"));
 }
 
 TEST_CASE("test Elona.require", "[Lua: API]")
@@ -65,6 +66,11 @@ TEST_CASE("Core API: Map", "[Lua: API]")
 TEST_CASE("Core API: I18N", "[Lua: API]")
 {
     lua_testcase("i18n.lua");
+}
+
+TEST_CASE("Core API: Trait", "[Lua: API]")
+{
+    lua_testcase("trait.lua");
 }
 
 

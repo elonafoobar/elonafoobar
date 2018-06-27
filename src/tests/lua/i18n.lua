@@ -141,5 +141,3 @@ locale {
         lequal(I18N.get_enum_property_optional("core.locale.foo", "desc", 1), "bar <error>")
         lequal(I18N.get_enum_property_optional("core.locale.foo", "desc", 1, "hoge"), "bar hoge")
 end)
-
-assert(lresults())
