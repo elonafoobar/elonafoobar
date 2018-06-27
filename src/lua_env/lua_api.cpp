@@ -2,6 +2,7 @@
 
 #include <iterator>
 #include "../ability.hpp"
+#include "../audio.hpp"
 #include "../character.hpp"
 #include "../dmgheal.hpp"
 #include "../enchantment.hpp"
@@ -15,6 +16,7 @@
 #include "../map_cell.hpp"
 #include "../position.hpp"
 #include "../status_ailment.hpp"
+#include "../trait.hpp"
 #include "../ui.hpp"
 #include "../variables.hpp"
 
@@ -609,6 +611,102 @@ void Skill::bind(sol::table& Elona)
 }
 
 
+namespace Trait
+{
+sol::optional<int> level(int);
+sol::optional<int> min(int);
+sol::optional<int> max(int);
+void set(int, int);
+void modify(int, int);
+
+void bind(sol::table& Elona);
+} // namespace Trait
+
+sol::optional<int> Trait::level(int trait_id)
+{
+    if (get_trait_info(0, trait_id) == 0)
+    {
+        return sol::nullopt;
+    }
+    return elona::trait(trait_id);
+}
+
+sol::optional<int> Trait::min(int trait_id)
+{
+    if (get_trait_info(0, trait_id) == 0)
+    {
+        return sol::nullopt;
+    }
+    return elona::traitref(1);
+}
+
+sol::optional<int> Trait::max(int trait_id)
+{
+    if (get_trait_info(0, trait_id) == 0)
+    {
+        return sol::nullopt;
+    }
+    return elona::traitref(2);
+}
+
+void Trait::set(int trait_id, int level)
+{
+    if (get_trait_info(0, trait_id) == 0)
+    {
+        return;
+    }
+    if (elona::trait(trait_id) < level)
+    {
+        snd(61);
+        elona::txtef(2);
+        elona::txt(traitrefn(0));
+    }
+    else if (elona::trait(trait_id) > level)
+    {
+        snd(61);
+        elona::txtef(3);
+        elona::txt(traitrefn(1));
+    }
+    elona::trait(trait_id) = clamp(level,
+                                   elona::traitref(1),
+                                   elona::traitref(2));
+}
+
+void Trait::modify(int trait_id, int delta)
+{
+    if (get_trait_info(0, trait_id) == 0)
+    {
+        return;
+    }
+    if (delta > 0)
+    {
+        snd(61);
+        elona::txtef(2);
+        elona::txt(traitrefn(0));
+    }
+    else if (delta < 0)
+    {
+        snd(61);
+        elona::txtef(3);
+        elona::txt(traitrefn(1));
+    }
+    elona::trait(trait_id) = clamp(elona::trait(trait_id) + delta,
+                                   elona::traitref(1),
+                                   elona::traitref(2));
+}
+
+void Trait::bind(sol::table& Elona)
+{
+    sol::table Trait = Elona.create_named("Trait");
+    Trait.set_function("level", Trait::level);
+    Trait.set_function("min", Trait::min);
+    Trait.set_function("max", Trait::max);
+    Trait.set_function("set", Trait::set);
+    Trait.set_function("modify", Trait::modify);
+}
+
+
+
 namespace GUI
 {
 void txt(const std::string&);
@@ -1048,6 +1146,7 @@ void set_flag(character&, int, bool);
 void gain_skill(character&, int, int);
 void gain_skill_stock(character&, int, int, int);
 void gain_skill_exp(character&, int, int);
+void modify_trait(character&, int, int);
 } // namespace LuaCharacter
 
 void LuaCharacter::damage_hp(character& self, int amount)
@@ -1407,6 +1506,7 @@ api_manager::api_manager(lua_env* lua)
     Rand::bind(core);
     Item::bind(core);
     Skill::bind(core);
+    Trait::bind(core);
     GUI::bind(core);
     I18N::bind(core);
     Map::bind(core);

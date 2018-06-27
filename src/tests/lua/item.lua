@@ -63,5 +63,3 @@ lrun("test Item.iter", function()
         count = tally()
         lequal(count, 3)
 end)
-
-assert(lresults())
