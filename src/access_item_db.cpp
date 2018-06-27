@@ -1911,7 +1911,7 @@ int access_item_db(int dbmode)
         if (dbmode == 3)
         {
             inv[ci].param1 = rnd(5) + 2;
-            inv[ci].param2 = isetfruit(rnd(length(isetfruit)));
+            inv[ci].param2 = choice(isetfruit);
         }
         break;
     case 522:

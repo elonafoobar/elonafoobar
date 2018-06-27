@@ -76,8 +76,8 @@ void memcpy(
     int dst_j,
     size_t size)
 {
-    const auto len = length(src);
-    const auto len2 = length2(src);
+    const auto len = src.i_size();
+    const auto len2 = src.j_size();
     auto count = size;
     for (size_t i = 0; i < len2; ++i)
     {
@@ -1091,13 +1091,13 @@ int fltsetdungeon()
 {
     if (rnd(20) == 0)
     {
-        return fsetrare(rnd(length(fsetrare)));
+        return choice(fsetrare);
     }
     if (rnd(3) == 0)
     {
-        return fsetwear(rnd(length(fsetwear)));
+        return choice(fsetwear);
     }
-    return fsetitem(rnd(length(fsetitem)));
+    return choice(fsetitem);
 }
 
 
@@ -1725,17 +1725,6 @@ int imeget()
     imesw_at_ime_control = ImmGetOpenStatus(himc_at_ime_control);
     ImmReleaseContext(hwnd, himc_at_ime_control);
     return imesw_at_ime_control;
-}
-
-
-
-void boxl(int x1, int y1, int x2, int y2)
-{
-    pos(x1, y2);
-    line(x1, y1);
-    line(x2, y1);
-    line(x2, y2);
-    line(x1, y2);
 }
 
 
@@ -4350,7 +4339,7 @@ void character_drops_item()
         {
             p = 0;
             flt(calcobjlv(cdata[tc].level), calcfixlv(2));
-            flttypemajor = fsetwear(rnd(length(fsetwear)));
+            flttypemajor = choice(fsetwear);
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
@@ -4358,7 +4347,7 @@ void character_drops_item()
         {
             p = 0;
             flt(calcobjlv(cdata[tc].level), calcfixlv(2));
-            flttypemajor = fsetweapon(rnd(length(fsetweapon)));
+            flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
@@ -4464,7 +4453,7 @@ void character_drops_item()
         {
             p = 0;
             flt(calcobjlv(cdata[tc].level), calcfixlv(2));
-            flttypemajor = fsetwear(rnd(length(fsetwear)));
+            flttypemajor = choice(fsetwear);
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
@@ -4472,7 +4461,7 @@ void character_drops_item()
         {
             p = 0;
             flt(calcobjlv(cdata[tc].level), calcfixlv(2));
-            flttypemajor = fsetweapon(rnd(length(fsetweapon)));
+            flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
@@ -4498,7 +4487,7 @@ void character_drops_item()
         {
             p = 0;
             flt(calcobjlv(cdata[tc].level), calcfixlv(2));
-            flttypemajor = fsetwear(rnd(length(fsetwear)));
+            flttypemajor = choice(fsetwear);
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
@@ -4506,7 +4495,7 @@ void character_drops_item()
         {
             p = 0;
             flt(calcobjlv(cdata[tc].level), calcfixlv(2));
-            flttypemajor = fsetweapon(rnd(length(fsetweapon)));
+            flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
             itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
         }
@@ -7180,7 +7169,7 @@ int label_1753()
         adata(11, p) = 1;
         adata(12, p) = 0;
         adata(20, p) = 0;
-        adata(5, p) = rnd(length(mapnamerd));
+        adata(5, p) = rnd(mapnamerd.i_size());
         map(x, y, 6) = 1;
         if (adata(0, p) == 20)
         {
@@ -8372,7 +8361,7 @@ label_1894_internal:
             for (int cnt = 0, cnt_end = (1 + rnd(4)); cnt < cnt_end; ++cnt)
             {
                 flt();
-                flttypemajor = fsetremain(rnd(length(fsetremain)));
+                flttypemajor = choice(fsetremain);
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
             txt(i18n::s.get(
@@ -8539,11 +8528,11 @@ label_1894_internal:
                 flt(0, calcfixlv(3));
                 if (rnd(3) == 0)
                 {
-                    flttypemajor = fsetwear(rnd(length(fsetwear)));
+                    flttypemajor = choice(fsetwear);
                 }
                 else
                 {
-                    flttypemajor = fsetremain(rnd(length(fsetremain)));
+                    flttypemajor = choice(fsetremain);
                 }
                 itemcreate(-1, 0, cdata[0].position.x, cdata[0].position.y, 0);
             }
@@ -8711,7 +8700,7 @@ label_1897_internal:
     gcopy(7, 0, 0, tx, ty);
     gmode(2);
     color(240, 230, 220);
-    boxl(wx + 12, wy + 6, wx + tx + 12, wy + ty + 6);
+    boxl(wx + 12, wy + 6, tx, ty);
     color(0, 0, 0);
     font(14 - en * 2);
     q = lang(u8"《 "s + s + u8" 》"s, u8" < "s + s + u8" > "s);
@@ -8869,10 +8858,10 @@ void supply_income()
             dbid = 0;
             flt(calcobjlv((100 - gdata((120 + cnt2)) / 100) / 2 + 1),
                 calcfixlv(3 + (rnd(12) < trait(39))));
-            flttypemajor = fsetincome(rnd(length(fsetincome)));
+            flttypemajor = choice(fsetincome);
             if (rnd(5) == 0)
             {
-                flttypemajor = fsetwear(rnd(length(fsetwear)));
+                flttypemajor = choice(fsetwear);
             }
             if (rnd(100 + gdata((120 + cnt2)) / 5) < 2)
             {
@@ -9882,11 +9871,7 @@ label_1956_internal:
                 if (chipm(7, list(0, p)) & 4)
                 {
                     color(240, 230, 220);
-                    boxl(
-                        wx + cnt * 24,
-                        wy + cnt2 * 24,
-                        wx + cnt * 24 + 24,
-                        wy + cnt2 * 24 + 24);
+                    boxl(wx + cnt * 24, wy + cnt2 * 24, 24, 24);
                     color(0, 0, 0);
                 }
             }
@@ -12044,7 +12029,7 @@ label_2128_internal:
     if (key_alt == 0)
     {
         pos(x, y - 48);
-        grotate(3, 212, 432, 0, 28, 28);
+        grotate_(3, 212, 432, 28, 28);
         pos(x, y + 48);
         grotate(3, 212, 432, 1.0 * 3.14, 28, 28);
         pos(x + 48, y);
@@ -12951,8 +12936,7 @@ void continuous_action_perform()
                                                 / 10),
                                             calcfixlv(3));
                                     }
-                                    flttypemajor =
-                                        fsetperform(rnd(length(fsetperform)));
+                                    flttypemajor = choice(fsetperform);
                                     dbid = 0;
                                     if (gdata_executing_immediate_quest_type
                                         == 1009)
@@ -14648,8 +14632,7 @@ void spot_digging()
                                 {
                                     fixlv = 5;
                                 }
-                                flttypemajor =
-                                    fsetchest(rnd(length(fsetchest)));
+                                flttypemajor = choice(fsetchest);
                                 itemcreate(
                                     -1,
                                     0,
@@ -16760,7 +16743,7 @@ turn_result_t do_bash()
             flt(calcobjlv(
                     gdata_current_dungeon_level * (gdata_current_map != 30)),
                 calcfixlv(2));
-            flttypemajor = fsetbarrel(rnd(length(fsetbarrel)));
+            flttypemajor = choice(fsetbarrel);
             itemcreate(-1, 0, x, y, 0);
             if (is_in_fov(cc))
             {
@@ -17598,7 +17581,7 @@ void open_box()
             }
         }
         flt(calcobjlv(inv[ri].param1), calcfixlv(p));
-        flttypemajor = fsetchest(rnd(length(fsetchest)));
+        flttypemajor = choice(fsetchest);
         if (cnt > 0)
         {
             if (rnd(3) != 0)
@@ -17631,7 +17614,7 @@ void open_box()
         if (inv[ri].id == 415 || inv[ri].id == 416)
         {
             flttypeminor = 0;
-            flttypemajor = fsetwear(rnd(length(fsetwear)));
+            flttypemajor = choice(fsetwear);
             fixlv = 3;
             if (inv[ri].id == 416)
             {
@@ -17826,7 +17809,7 @@ void open_new_year_gift()
         flt();
         itemcreate(
             -1,
-            isetgiftminor(rnd(length(isetgiftminor))),
+            choice(isetgiftminor),
             cdata[0].position.x,
             cdata[0].position.y,
             1);
@@ -17866,7 +17849,7 @@ void open_new_year_gift()
         flt();
         itemcreate(
             -1,
-            isetgiftgrand(rnd(length(isetgiftgrand))),
+            choice(isetgiftgrand),
             cdata[0].position.x,
             cdata[0].position.y,
             1);
@@ -17880,11 +17863,7 @@ void open_new_year_gift()
     }
     flt();
     itemcreate(
-        -1,
-        isetgiftmajor(rnd(length(isetgiftmajor))),
-        cdata[0].position.x,
-        cdata[0].position.y,
-        1);
+        -1, choice(isetgiftmajor), cdata[0].position.x, cdata[0].position.y, 1);
     return;
 }
 
@@ -19181,7 +19160,7 @@ void label_2236()
     dbid = 0;
     if (feat(2) == 39)
     {
-        flttypemajor = fsetplantunknown(rnd(length(fsetplantunknown)));
+        flttypemajor = choice(fsetplantunknown);
         if (rnd(100) == 0)
         {
             dbid = 559;
@@ -19189,7 +19168,7 @@ void label_2236()
     }
     if (feat(2) == 40 || (feat(2) == 39 && rnd(50) == 0))
     {
-        flttypemajor = fsetplantartifact(rnd(length(fsetplantartifact)));
+        flttypemajor = choice(fsetplantartifact);
         fixlv = 4;
         autosave = 1 * (gdata_current_map != 35);
     }
@@ -19599,7 +19578,7 @@ label_2684_internal:
         }
         pos(windoww / 2, y + 4);
         gmode(6, 344, 72, 70);
-        grotate(3, 456, 144, 0, dx, 72);
+        grotate_(3, 456, 144, dx, 72);
     }
     x = 40;
     for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
@@ -20208,7 +20187,7 @@ void conquer_lesimas()
     y = wh - 140;
     gmode(4, 180, 300, 250);
     pos(wx + ww - 120, wy + wh / 2);
-    grotate(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, 0, x, y);
+    grotate_(4, cmbg / 4 % 4 * 180, cmbg / 4 / 4 % 2 * 300, x, y);
     gmode(2);
     display_topic(lang(u8"制覇までの軌跡"s, u8"Trace"s), wx + 28, wy + 40);
     font(14 - en * 2);
@@ -20492,11 +20471,10 @@ void show_game_score_ranking()
         chara_preparepic(p);
         pos(x - 22, y + 12);
         gmode(2, chara_chips[p].width, chara_chips[p].height);
-        grotate(
+        grotate_(
             5,
             0,
             960,
-            0,
             chara_chips[p].width / (1 + (chara_chips[p].height > inf_tiles)),
             inf_tiles);
         color(0, 0, 0);

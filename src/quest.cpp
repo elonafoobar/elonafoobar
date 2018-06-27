@@ -559,7 +559,7 @@ int quest_generate()
                 continue;
             }
             flt(40, 2);
-            flttypemajor = fsetcollect(rnd(length(fsetcollect)));
+            flttypemajor = choice(fsetcollect);
             int stat = itemcreate(n, 0, -1, -1, 0);
             if (stat != 0)
             {
@@ -674,7 +674,7 @@ int quest_generate()
         qdata(7, rq) = 5;
         while (1)
         {
-            qdata(12, rq) = asettown(rnd(length(asettown)));
+            qdata(12, rq) = choice(asettown);
             if (qdata(12, rq) != gdata_current_map)
             {
                 break;
@@ -835,7 +835,7 @@ int quest_generate()
             qdata(10, rq) = i;
             flt();
             dbmode = 1;
-            flttypemajor = fsetdeliver(rnd(length(fsetdeliver)));
+            flttypemajor = choice(fsetdeliver);
             get_random_item_id();
             qdata(12, rq) = flttypemajor;
             qdata(7, rq) = 5;
@@ -911,7 +911,7 @@ int quest_generate()
         qdata(9, rq) = rnd(6) + 2;
         flt();
         dbmode = 1;
-        flttypemajor = fsetsupply(rnd(length(fsetsupply)));
+        flttypemajor = choice(fsetsupply);
         get_random_item_id();
         qdata(7, rq) = 5;
         qdata(11, rq) = dbid;
@@ -1296,24 +1296,23 @@ void quest_complete()
             {
                 if (qdata(7, rq) == 1)
                 {
-                    flttypemajor = fsetwear(rnd(length(fsetwear)));
+                    flttypemajor = choice(fsetwear);
                 }
                 if (qdata(7, rq) == 2)
                 {
-                    flttypemajor = fsetmagic(rnd(length(fsetmagic)));
+                    flttypemajor = choice(fsetmagic);
                 }
                 if (qdata(7, rq) == 3)
                 {
-                    flttypemajor = fsetarmor(rnd(length(fsetarmor)));
+                    flttypemajor = choice(fsetarmor);
                 }
                 if (qdata(7, rq) == 4)
                 {
-                    flttypemajor = fsetweapon(rnd(length(fsetweapon)));
+                    flttypemajor = choice(fsetweapon);
                 }
                 if (qdata(7, rq) == 5)
                 {
-                    flttypemajor =
-                        fsetrewardsupply(rnd(length(fsetrewardsupply)));
+                    flttypemajor = choice(fsetrewardsupply);
                 }
             }
             else

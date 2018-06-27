@@ -345,11 +345,11 @@ int label_2664()
     flt(cdata[rc].level, 4);
     if (rnd(3) == 0)
     {
-        flttypemajor = fsetwear(rnd(length(fsetwear)));
+        flttypemajor = choice(fsetwear);
     }
     else
     {
-        flttypemajor = fsetitem(rnd(length(fsetitem)));
+        flttypemajor = choice(fsetitem);
     }
     int stat = itemcreate(rc, 0, -1, -1, 0);
     if (stat == 0)

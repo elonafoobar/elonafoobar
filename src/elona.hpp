@@ -126,6 +126,34 @@ struct elona_vector1
 
 
 
+    typename std::vector<T>::iterator begin()
+    {
+        return std::begin(storage);
+    }
+
+
+
+    typename std::vector<T>::iterator end()
+    {
+        return std::end(storage);
+    }
+
+
+
+    typename std::vector<T>::const_iterator begin() const
+    {
+        return std::begin(storage);
+    }
+
+
+
+    typename std::vector<T>::const_iterator end() const
+    {
+        return std::end(storage);
+    }
+
+
+
 private:
     std::vector<T> storage;
 };
@@ -363,6 +391,8 @@ void boxf(
     const snail::color& color = {0, 0, 0, 0});
 void boxf();
 
+void boxl(int x, int y, int width, int height);
+
 
 void buffer(int window_id, int width = 0, int heihgt = 0);
 
@@ -402,6 +432,13 @@ int ginfo(int type);
 
 void gmode(int mode, int width = -1, int height = -1, int alpha = 255);
 
+void grotate_(
+    int window_id,
+    int src_x,
+    int src_y,
+    int dst_width = 0,
+    int dst_height = 0);
+
 void grotate(
     int window_id,
     int src_x,
@@ -429,35 +466,7 @@ int instr(const std::string& str, size_t pos, const std::string pattern);
 int stoi(const std::string&);
 
 
-template <typename T>
-size_t length(elona_vector2<T>& arr)
-{
-    return arr.i_size();
-}
-
-
-
-template <typename T>
-size_t length(const elona_vector1<T>& arr)
-{
-    return arr.size();
-}
-
-
-
-size_t length(const std::string& str);
-
-template <typename T>
-size_t length2(const elona_vector2<T>& arr)
-{
-    return arr.j_size();
-}
-
-
-
 void line(int x1, int y1, int x2, int y2);
-
-void line(int x, int y);
 
 
 
@@ -539,19 +548,6 @@ int DIGETJOYNUM();
 void DIGETJOYSTATE(int, int);
 
 int HMMBITCHECK(int, int);
-
-void netinit();
-
-
-void netexec(int&);
-
-void neterror(const std::string&);
-
-void neturl(const std::string&);
-
-void netdlname(const std::string&);
-
-void netrequest(const std::string&);
 
 
 int CreateMutexA(int, int, const std::string&);

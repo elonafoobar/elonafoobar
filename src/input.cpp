@@ -408,7 +408,7 @@ bool input_text_dialog(
     {
         inputlog = strutil::replace(inputlog, u8"\"", u8"'");
     }
-    rm_crlf(inputlog);
+    inputlog = strutil::remove_line_ending(inputlog);
     onkey_0();
 
     return canceled;

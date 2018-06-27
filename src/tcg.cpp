@@ -705,10 +705,7 @@ void tcgdraw()
                 p_at_tcg = (t_at_tcg / 4 + cnt) % 7;
                 color(p_at_tcg * 20, 25 + p_at_tcg * 20, 60 + p_at_tcg * 20);
                 boxl(
-                    chainx_at_tcg - p_at_tcg,
-                    chainy_at_tcg - p_at_tcg,
-                    chainx_at_tcg + 72 + p_at_tcg,
-                    chainy_at_tcg + 96 + p_at_tcg);
+                    chainx_at_tcg - p_at_tcg, chainy_at_tcg - p_at_tcg, 72, 96);
                 color(0, 0, 0);
             }
         }

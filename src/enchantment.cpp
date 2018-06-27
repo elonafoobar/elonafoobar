@@ -1162,7 +1162,7 @@ void initialize_ego_data()
     egominorn(7) = lang(u8"闇を砕く"s, u8"enchanted"s);
     egominorn(8) = lang(u8"強力な"s, u8"mighty"s);
     egominorn(9) = lang(u8"頼れる"s, u8"trustworthy"s);
-    maxegominorn = length(egominorn);
+    maxegominorn = egominorn.size();
     return;
 }
 

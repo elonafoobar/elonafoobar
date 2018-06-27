@@ -121,6 +121,18 @@ void boxf()
 
 
 
+void boxl(int x, int y, int width, int height)
+{
+    const auto x2 = x + width;
+    const auto y2 = y + height;
+    line(x, y, x2, y);
+    line(x2, y, x2, y2);
+    line(x2, y2, x, y2);
+    line(x, y2, x, y);
+}
+
+
+
 void bload(const fs::path& filename, std::string& data, int size, int)
 {
     if (size == 0)
@@ -172,7 +184,7 @@ void bload(const fs::path& filename, elona_vector1<int>& data, int size, int)
             + filesystem::make_preferred_path_in_utf8(filename));
     }
     auto buf = read_binary(in, size).first;
-    for (size_t i = 0; i < length(data); ++i)
+    for (size_t i = 0; i < data.size(); ++i)
     {
         data(i) = reinterpret_cast<int*>(buf.get())[i];
         size -= sizeof(int);
@@ -382,15 +394,14 @@ constexpr T rad2deg(T rad)
 
 
 
-void grotate2(
+void grotate_(
     int window_id,
     int src_x,
     int src_y,
-    double angle,
     int dst_width,
     int dst_height)
 {
-    snail::hsp::grotate2(window_id, src_x, src_y, angle, dst_width, dst_height);
+    snail::hsp::grotate_(window_id, src_x, src_y, dst_width, dst_height);
 }
 
 
@@ -468,23 +479,9 @@ int stoi(const std::string& s)
 
 
 
-size_t length(const std::string& str)
-{
-    return str.size();
-}
-
-
-
 void line(int x1, int y1, int x2, int y2)
 {
     snail::hsp::line(x1, y1, x2, y2);
-}
-
-
-
-void line(int x, int y)
-{
-    snail::hsp::line(x, y);
 }
 
 
@@ -906,42 +903,6 @@ int HMMBITCHECK(int x, int n)
 
 
 
-void netinit()
-{
-}
-
-
-
-void netexec(int&)
-{
-}
-
-
-
-void neterror(const std::string&)
-{
-}
-
-
-
-void neturl(const std::string&)
-{
-}
-
-
-
-void netdlname(const std::string&)
-{
-}
-
-
-
-void netrequest(const std::string&)
-{
-}
-
-
-
 int timeGetTime()
 {
     return snail::hsp::timeGetTime();
@@ -1077,21 +1038,6 @@ int talk_conv(std::string& text, int max_line_length)
     {
         return talk_conv_en(text, max_line_length);
     }
-}
-
-
-
-void rm_crlf(std::string& str)
-{
-    std::string ret;
-    for (const auto& c : str)
-    {
-        if (c != '\n' && c != '\r')
-        {
-            ret += c;
-        }
-    }
-    str = ret;
 }
 
 

@@ -97,7 +97,7 @@ void showcard2(int prm_425, int prm_426)
             {
                 pos(card_at_cardcontrol(3, prm_425) + 32,
                     card_at_cardcontrol(4, prm_425) + 36);
-                grotate(5, 144, 240, 0, 64, 104);
+                grotate_(5, 144, 240, 64, 104);
                 col_at_cardcontrol(0) = 140;
                 col_at_cardcontrol(1) = 140;
                 col_at_cardcontrol(2) = 255;
@@ -106,7 +106,7 @@ void showcard2(int prm_425, int prm_426)
             {
                 pos(card_at_cardcontrol(3, prm_425) + 32,
                     card_at_cardcontrol(4, prm_425) + 40);
-                grotate(5, 1104, 288, 0, 64, 104);
+                grotate_(5, 1104, 288, 64, 104);
                 col_at_cardcontrol(0) = 255;
                 col_at_cardcontrol(1) = 140;
                 col_at_cardcontrol(2) = 140;
@@ -115,7 +115,7 @@ void showcard2(int prm_425, int prm_426)
             {
                 pos(card_at_cardcontrol(3, prm_425) + 32,
                     card_at_cardcontrol(4, prm_425) + 50);
-                grotate(5, 480, 336, 0, 64, 84);
+                grotate_(5, 480, 336, 64, 84);
                 col_at_cardcontrol(0) = 240;
                 col_at_cardcontrol(1) = 240;
                 col_at_cardcontrol(2) = 240;
@@ -124,7 +124,7 @@ void showcard2(int prm_425, int prm_426)
             {
                 pos(card_at_cardcontrol(3, prm_425) + 28,
                     card_at_cardcontrol(4, prm_425) + 48);
-                grotate(5, 1200, 288, 0, 64, 80);
+                grotate_(5, 1200, 288, 64, 80);
                 col_at_cardcontrol(0) = 140;
                 col_at_cardcontrol(1) = 255;
                 col_at_cardcontrol(2) = 140;
@@ -133,7 +133,7 @@ void showcard2(int prm_425, int prm_426)
             {
                 pos(card_at_cardcontrol(3, prm_425) + 28,
                     card_at_cardcontrol(4, prm_425) + 44);
-                grotate(5, 1296, 336, 0, 72, 86);
+                grotate_(5, 1296, 336, 72, 86);
                 col_at_cardcontrol(0) = 250;
                 col_at_cardcontrol(1) = 250;
                 col_at_cardcontrol(2) = 105;
@@ -356,7 +356,7 @@ int opencard2(int prm_428, int prm_429)
         }
         pos(card_at_cardcontrol(3, prm_428) + 32,
             card_at_cardcontrol(4, prm_428) + 48);
-        grotate(3, 736, 216, 0, 64 - cnt * 14, 96);
+        grotate_(3, 736, 216, 64 - cnt * 14, 96);
         await(10);
         redraw();
     }

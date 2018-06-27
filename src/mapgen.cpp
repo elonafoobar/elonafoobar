@@ -894,7 +894,7 @@ void rndshuffle(elona_vector1<int>& prm_534)
 {
     int p_at_m68 = 0;
     int r_at_m68 = 0;
-    p_at_m68 = length(prm_534);
+    p_at_m68 = prm_534.size();
     for (int cnt = 0, cnt_end = (p_at_m68); cnt < cnt_end; ++cnt)
     {
         r_at_m68 = rnd(p_at_m68);
@@ -1390,7 +1390,7 @@ void map_randsite(int prm_971, int prm_972)
                 flt();
                 itemcreate(-1, 172, x_at_m169, y_at_m169, 0);
                 inv[ci].own_state = 1;
-                inv[ci].param1 = isetgod(rnd(length(isetgod)));
+                inv[ci].param1 = choice(isetgod);
                 return;
             }
         }
@@ -1449,7 +1449,7 @@ void map_randsite(int prm_971, int prm_972)
         if (rnd(18) == 0)
         {
             flt(calcobjlv(rnd(cdata[0].level + 10)), calcfixlv(3));
-            flttypemajor = fsetwear(rnd(length(fsetwear)));
+            flttypemajor = choice(fsetwear);
             itemcreate(-1, 0, x_at_m169, y_at_m169, 0);
             return;
         }
@@ -2148,7 +2148,7 @@ void generate_random_nefia()
     if (rdtype == 3)
     {
         flt();
-        flttypemajor = fsetwear(rnd(length(fsetwear)));
+        flttypemajor = choice(fsetwear);
         fixlv = 4;
         itemcreate(-1, 0, -1, -1, 0);
         mobdensity = mdata(10) / 2;
@@ -2320,7 +2320,7 @@ int initialize_quest_map_crop()
             tile = 31;
         }
         size = clamp(dist(dx, dy, mdata(0) / 2, mdata(1) / 2) / 8, 0, 8);
-        crop = isetcrop(rnd(length(isetcrop)));
+        crop = choice(isetcrop);
         for (int cnt = dy, cnt_end = cnt + (h); cnt < cnt_end; ++cnt)
         {
             y = cnt;
@@ -2346,7 +2346,7 @@ int initialize_quest_map_crop()
                 }
                 else
                 {
-                    dbid = isetcrop(rnd(length(isetcrop)));
+                    dbid = choice(isetcrop);
                 }
                 flt();
                 itemcreate(-1, dbid, x, y, 0);
@@ -3185,7 +3185,7 @@ void dimmix(elona_vector1<int>& prm_983)
 {
     int mx_at_m172 = 0;
     int r_at_m172 = 0;
-    mx_at_m172 = length(prm_983);
+    mx_at_m172 = prm_983.size();
     for (int cnt = 0, cnt_end = (mx_at_m172); cnt < cnt_end; ++cnt)
     {
         r_at_m172 = cnt + rnd((mx_at_m172 - cnt));

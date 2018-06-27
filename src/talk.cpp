@@ -2143,13 +2143,8 @@ void talk_window_show()
             chara_preparepic(p, p(1));
             pos(wx + 82, wy + 125 - chara_chips[p].offset_y);
             gmode(2, chara_chips[p].width, chara_chips[p].height);
-            grotate(
-                5,
-                0,
-                960,
-                0,
-                chara_chips[p].width * 2,
-                chara_chips[p].height * 2);
+            grotate_(
+                5, 0, 960, chara_chips[p].width * 2, chara_chips[p].height * 2);
         }
         else
         {

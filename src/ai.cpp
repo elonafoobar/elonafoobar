@@ -125,36 +125,21 @@ turn_result_t ai_proc_basic()
                             flt();
                             flttypemajor = 52000;
                             stat = itemcreate(
-                                cc,
-                                isetthrowpotionminor(
-                                    rnd(length(isetthrowpotionminor))),
-                                -1,
-                                -1,
-                                0);
+                                cc, choice(isetthrowpotionminor), -1, -1, 0);
                         }
                         if (act == -9998)
                         {
                             flt();
                             flttypemajor = 52000;
                             stat = itemcreate(
-                                cc,
-                                isetthrowpotionmajor(
-                                    rnd(length(isetthrowpotionmajor))),
-                                -1,
-                                -1,
-                                0);
+                                cc, choice(isetthrowpotionmajor), -1, -1, 0);
                         }
                         if (act == -9997)
                         {
                             flt();
                             flttypemajor = 52000;
                             stat = itemcreate(
-                                cc,
-                                isetthrowpotiongreater(
-                                    rnd(length(isetthrowpotiongreater))),
-                                -1,
-                                -1,
-                                0);
+                                cc, choice(isetthrowpotiongreater), -1, -1, 0);
                         }
                         if (act == -9996)
                         {
