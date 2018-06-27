@@ -794,7 +794,7 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
                 }
             }
             ndeathcause = i18n::s.get(
-                "core.locale.death_by.chara.death_cause", victim);
+                "core.locale.death_by.chara.death_cause", *attacker);
         }
         else
         {
