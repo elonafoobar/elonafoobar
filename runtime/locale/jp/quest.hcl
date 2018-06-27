@@ -1,6 +1,7 @@
 locale {
     quest {
         journal_updated = "ジャーナルが更新された。"
+        minutes_left = "クエスト[残り${_1}分]"
 
         hunt {
             complete = "エリアを制圧した！"

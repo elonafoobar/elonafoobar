@@ -9267,32 +9267,6 @@ turn_result_t do_use_magic()
 }
 
 
-
-turn_result_t call_npc()
-{
-    txt(lang(
-        name(tc) + u8"を何と呼ぶ？ "s,
-        u8"What do you want to call "s + him(tc) + u8"? "s));
-    inputlog = "";
-    input_text_dialog((windoww - 220) / 2 + inf_screenx, winposy(90), 12);
-    if (inputlog == ""s)
-    {
-        txt(lang(u8"名前をつけるのはやめた。"s, u8"You changed your mind."s));
-    }
-    else
-    {
-        cdatan(0, tc) = ""s + inputlog;
-        cdata[tc].has_own_name() = true;
-        txt(lang(
-            ""s + cdatan(0, tc) + u8"という名前で呼ぶことにした。"s,
-            u8"You named "s + him(tc) + u8" "s + cdatan(0, tc) + u8"."s));
-    }
-    gmode(2);
-    update_screen();
-    return turn_result_t::pc_turn_user_error;
-}
-
-
 void equip_melee_weapon()
 {
     attacknum = 0;

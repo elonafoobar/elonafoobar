@@ -1,6 +1,7 @@
 locale {
     quest {
         journal_updated = "Your journal has been updated."
+        minutes_left = "${_1} min left for the quest."
 
         hunt {
             complete = "The area is secured!"
