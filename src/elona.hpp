@@ -549,19 +549,6 @@ void DIGETJOYSTATE(int, int);
 
 int HMMBITCHECK(int, int);
 
-void netinit();
-
-
-void netexec(int&);
-
-void neterror(const std::string&);
-
-void neturl(const std::string&);
-
-void netdlname(const std::string&);
-
-void netrequest(const std::string&);
-
 
 int CreateMutexA(int, int, const std::string&);
 
