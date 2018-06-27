@@ -4282,7 +4282,7 @@ label_196901_internal:
         {
             break;
         }
-        int stat = get_trait_info(0, cnt);
+        int stat = apply_trait(0, cnt);
         if (stat == 0)
         {
             continue;
@@ -4345,7 +4345,7 @@ label_196901_internal:
             continue;
         }
         int tid = i;
-        int stat = get_trait_info(0, tid);
+        int stat = apply_trait(0, tid);
         featrq = stat;
         s = "";
         if (list(1, cnt) < 10000)
@@ -4667,7 +4667,7 @@ label_1970_internal:
         int text_color{};
         if (list(1, p) != 99999)
         {
-            int stat = get_trait_info(0, i);
+            int stat = apply_trait(0, i);
             featrq = stat;
             if (trait(i) == 0)
             {
@@ -4735,7 +4735,7 @@ label_1970_internal:
                 if (list(1, p) < 10000)
                 {
                     int tid = list(0, p);
-                    get_trait_info(0, tid);
+                    apply_trait(0, tid);
                     if (traitref(2) <= trait(tid))
                     {
                         if (mode != 1)

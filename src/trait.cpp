@@ -204,7 +204,7 @@ void trait_format(int tid, int min, int max)
 } // namespace
 
 
-int get_trait_info(int traitmode, int tid)
+int apply_trait(int traitmode, int tid)
 {
     const auto data = the_trait_db[tid];
     if (!data)
