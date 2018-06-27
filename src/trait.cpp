@@ -57,43 +57,44 @@ void trait_format_other_parameterized(const std::string& i18n_prefix, int tid, i
     {
         for (int cnt = 0; cnt > min + 1; cnt--)
         {
+            int index = (-cnt) + 3;
             switch (tid)
             {
             case 202:
                 // "You have sores on your face. [CHR${_1}]"
-                traitrefn(cnt + 3) = i18n::s.get_enum(full_prefix, cnt,
+                traitrefn(index) = i18n::s.get_enum(full_prefix, cnt,
                                                       level * (4 + cdata[0].level / 5));
                 break;
             case 203:
                 // "Your feet transformed into hooves. [SPD+${_1} Can't wear boots]"
-                traitrefn(cnt + 3) = i18n::s.get_enum(full_prefix, cnt,
+                traitrefn(index) = i18n::s.get_enum(full_prefix, cnt,
                                                       20 + cdata[0].level / 2);
                 break;
             case 204:
                 // "You have 4 eyes. [PER+${_1} CHR${_2}]"
-                traitrefn(cnt + 3) = i18n::s.get_enum(full_prefix, cnt,
+                traitrefn(index) = i18n::s.get_enum(full_prefix, cnt,
                                                       (5 + cdata[0].level / 3) * -1);
                 break;
             case 205:
                 // "You have grown feather. [SPD+${_1} Weight-20% Can't wear cloaks]"
-                traitrefn(cnt + 3) = i18n::s.get_enum(full_prefix, cnt,
+                traitrefn(index) = i18n::s.get_enum(full_prefix, cnt,
                                                       (12 + cdata[0].level / 4));
                 break;
             case 206:
                 // "Your neck is extremely thick. [CHR${_1} PV+${_2} Can't wear amulets]"
-                traitrefn(cnt + 3) = i18n::s.get_enum(full_prefix, cnt,
+                traitrefn(index) = i18n::s.get_enum(full_prefix, cnt,
                                                       (5 + cdata[0].level / 5) * -1,
                                                       (12 + cdata[0].level));
                 break;
             case 207:
                 // "Desire for violence arises within you. [DV${_1} Dmg bonus+${_2}]"
-                traitrefn(cnt + 3) = i18n::s.get_enum(full_prefix, cnt,
+                traitrefn(index) = i18n::s.get_enum(full_prefix, cnt,
                                                       (15 + cdata[0].level * 3 / 2) * -1,
                                                       (5 + cdata[0].level * 2 / 3));
                 break;
             case 208:
                 // "Your head has grown huge. [CON${_1} DEX${_2} LER+${_3} WIL+${_4}]"
-                traitrefn(cnt + 3) = i18n::s.get_enum(full_prefix, cnt,
+                traitrefn(index) = i18n::s.get_enum(full_prefix, cnt,
                                                       (5 + cdata[0].level / 3) * -1,
                                                       (4 + cdata[0].level / 4) * -1,
                                                       (6 + cdata[0].level / 2),
@@ -101,22 +102,22 @@ void trait_format_other_parameterized(const std::string& i18n_prefix, int tid, i
                 break;
             case 211:
                 // "You suffer debilitation. [HP-15% STR${_1}]"
-                traitrefn(cnt + 3) = i18n::s.get_enum(full_prefix, cnt,
+                traitrefn(index) = i18n::s.get_enum(full_prefix, cnt,
                                                       (4 + cdata[0].level / 2) * -1);
                 break;
             case 212:
                 // "You have dementia. [MP-15% MAG${_1}]"
-                traitrefn(cnt + 3) = i18n::s.get_enum(full_prefix, cnt,
+                traitrefn(index) = i18n::s.get_enum(full_prefix, cnt,
                                                       (4 + cdata[0].level / 2) * -1);
                 break;
             case 213:
                 // "You are covered by heavy carapace. [PV+${_1} SPD${_2}]"
-                traitrefn(cnt + 3) = i18n::s.get_enum(full_prefix, cnt,
+                traitrefn(index) = i18n::s.get_enum(full_prefix, cnt,
                                                       (15 + cdata[0].level / 2),
                                                       (20 + cdata[0].level / 2) * -1);
                 break;
             default:
-                traitrefn(cnt + 3) = i18n::s.get_enum(full_prefix, cnt);
+                traitrefn(index) = i18n::s.get_enum(full_prefix, cnt);
                 break;
             }
         }
@@ -146,7 +147,7 @@ void trait_format_other_parameterless(const std::string& i18n_prefix, int tid, i
         }
         for (int cnt = 0; cnt > min + 1; cnt--)
         {
-            traitrefn(cnt + 3) = i18n::s.get_enum(i18n_prefix + ".negative.levels", (-cnt));
+            traitrefn((-cnt) + 3) = i18n::s.get_enum(i18n_prefix + ".negative.levels", (-cnt));
         }
     }
 }
