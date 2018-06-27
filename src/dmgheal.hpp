@@ -11,7 +11,7 @@ void healhp(int cc, int delta);
 void healmp(int cc, int delta);
 void healsp(int cc, int delta);
 int dmghp(int, int, int = 0, int = 0, int = 0);
-void end_dmghp();
+void end_dmghp(const character&);
 void dmgmp(int cc, int delta);
 void dmgsp(int cc, int delta);
 void healsan(int prm_862, int prm_863);
