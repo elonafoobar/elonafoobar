@@ -720,16 +720,14 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
                     {
                         txtcontinue();
                         txt(i18n::s.get(
-                            "core.locale.death_by.chara.transformed_into_meat."
-                            "active",
+                            "core.locale.death_by.chara.transformed_into_meat.active",
                             cdata[prm_853],
                             is_player));
                     }
                     else
                     {
                         txt(i18n::s.get(
-                            "core.locale.death_by.chara.transformed_into_meat."
-                            "passive",
+                            "core.locale.death_by.chara.transformed_into_meat.passive",
                             cdata[prm_853],
                             is_player));
                     }
@@ -802,10 +800,10 @@ int dmghp(int prm_853, int prm_854, int prm_855, int prm_856, int prm_857)
             {
                 int death_kind = -prm_855;
 
-                txt(i18n::s.get(
+                txt(i18n::s.get_enum_property(
                     "core.locale.death_by.other",
-                    death_kind,
                     "text",
+                    death_kind,
                     cdata[prm_853]));
                 if (prm_853 == 0)
                 {
