@@ -437,12 +437,10 @@ void render_hud()
     }
     sx = inf_hpx + 16;
     sy = inf_hpy - 8;
-    pos(sx + 4, sy);
-    bmes(""s + cdata[0].hp + u8"("s + cdata[0].max_hp + u8")"s, 255, 255, 255);
+    bmes(""s + cdata[0].hp + u8"("s + cdata[0].max_hp + u8")"s, sx + 4, sy);
     sx = inf_mpx + 16;
     sy = inf_mpy - 8;
-    pos(sx + 4, sy);
-    bmes(""s + cdata[0].mp + u8"("s + cdata[0].max_mp + u8")"s, 255, 255, 255);
+    bmes(""s + cdata[0].mp + u8"("s + cdata[0].max_mp + u8")"s, sx + 4, sy);
     font(13 - en * 2);
     sy = inf_bary + 2 + vfix;
     for (int cnt = 0; cnt < 10; ++cnt)
@@ -494,22 +492,18 @@ void render_hud()
     sx = windoww - 240;
     pos(sx, sy);
     gcopy(3, 0, 392, 24, 24);
-    pos(sx + 28, sy + 2);
-    bmes(""s + cdata[0].gold + u8" gp"s, 255, 255, 255);
+    bmes(""s + cdata[0].gold + u8" gp"s, sx + 28, sy + 2);
     sx = windoww - 120;
     pos(sx, sy);
     gcopy(3, 24, 392, 24, 24);
-    pos(sx + 28, sy + 2);
-    bmes(""s + cdata[0].platinum_coin + u8" pp"s, 255, 255, 255);
+    bmes(""s + cdata[0].platinum_coin + u8" pp"s, sx + 28, sy + 2);
     pos(4, inf_ver - 16);
     gcopy(3, 48, 392, 24, 24);
-    pos(32, inf_ver - 14);
     bmes(
         u8"Lv"s + cdata[0].level + u8"/"s
             + (cdata[0].required_experience - cdata[0].experience),
-        255,
-        255,
-        255);
+        32,
+        inf_ver - 14);
     if (cdata[0].position.x < 6)
     {
         if (mode != 9)
@@ -926,13 +920,11 @@ void render_hud()
     grotate(3, 0, 288, 0.0174532925199433 * (gdata_hour * 30), 48, 48);
     pos(inf_clockw - 3, inf_clocky + 17 + vfix);
     mes(""s + gdata_year + u8"/"s + gdata_month + u8"/"s + gdata_day);
-    pos(inf_clockw + 6, inf_clocky + 35);
     bmes(
         i18n::_(u8"ui", u8"time", u8"_"s + gdata_hour / 4) + u8" "s
             + i18n::_(u8"ui", u8"weather", u8"_"s + gdata_weather),
-        255,
-        255,
-        255);
+        inf_clockw + 6,
+        inf_clocky + 35);
     ap3 = 0;
     for (int cnt = 0; cnt < 3; ++cnt)
     {
@@ -950,22 +942,18 @@ void render_hud()
             }
             continue;
         }
-        pos(16, inf_clocky + 155 - ap3 * 16);
         bmes(
             ""s
                 + strmid(
                       i18n::_(u8"ability", std::to_string(ap), u8"name"), 0, 6),
-            255,
-            255,
-            255);
-        pos(66, inf_clocky + 155 - ap3 * 16);
+            16,
+            inf_clocky + 155 - ap3 * 16);
         bmes(
             ""s + sdata.get(ap, ap2).original_level + u8"."s
                 + std::to_string(1000 + sdata.get(ap, ap2).experience % 1000)
                       .substr(1),
-            255,
-            255,
-            255);
+            66,
+            inf_clocky + 155 - ap3 * 16);
         ++ap3;
     }
     if (config::instance().hp_bar)
@@ -1034,8 +1022,7 @@ void render_autoturn_animation()
 
     window2(sx, sy, w, h, 0, 5);
     font(13 - en * 2, snail::font_t::style_t::bold);
-    pos(sx + 43, sy + 6);
-    bmes(u8"AUTO TURN"s, 235, 235, 235);
+    bmes(u8"AUTO TURN"s, sx + 43, sy + 6, {235, 235, 235});
     pos(sx + 18, sy + 12);
     gmode(2, 24, 24);
     grotate(3, 72, 392, 0.0174532925199433 * (gdata_minute / 4 % 2 * 90));
@@ -2031,14 +2018,14 @@ void display_window(
         prm_668 + prm_670 - 40,
         prm_669 + prm_671 - 49 - prm_671 % 8);
     font(15 + en - en * 2);
-    color(0, 0, 0);
-    pos(prm_668 + 45 * prm_670 / 200 + 34 - strlen_u(s) * 4
+    bmes(
+        s,
+        prm_668 + 45 * prm_670 / 200 + 34 - strlen_u(s) * 4
             + clamp(int(s(0).size() * 8 - 120), 0, 200) / 2,
-        prm_669 + 4 + vfix);
-    color(20, 10, 0);
-    bmes(s, 255, 255, 255);
+        prm_669 + 4 + vfix,
+        {255, 255, 255},
+        {20, 10, 0});
     font(12 + sizefix - en * 2);
-    color(0, 0, 0);
     pos(prm_668 + 58 + prm_672, prm_669 + prm_671 - 43 - prm_671 % 8);
     mes(s(1));
     if (pagesize != 0)
@@ -2086,10 +2073,7 @@ void display_customkey(const std::string& key, int x, int y)
     font(15 - en * 2);
     pos(624, 30);
     gcopy(3, 0, 30, 24, 18);
-    pos(629, 31);
-    color(50, 60, 80);
-    bmes(key, 250, 240, 230);
-    color(0, 0, 0);
+    bmes(key, 629, 31, {250, 240, 230}, {50, 60, 80});
     gmode(2, inf_tiles, inf_tiles);
     gsel(0);
     pos(x, y);
@@ -2185,25 +2169,21 @@ void drawmenu(int prm_742)
             gcopy(3, 288 + p(cnt) * 48, 48, 48, 48);
             gmode(2);
         }
-        pos(x_at_m107 + cnt * 50 + 46 - strlen_u(s(cnt)) * 3, y_at_m107 + 7);
-        if (curmenu == cnt)
-        {
-            bmes(s(cnt), 255, 255, 255);
-        }
-        else
-        {
-            bmes(s(cnt), 165, 165, 165);
-        }
+        bmes(
+            s(cnt),
+            x_at_m107 + cnt * 50 + 46 - strlen_u(s(cnt)) * 3,
+            y_at_m107 + 7,
+            curmenu == cnt ? snail::color{255, 255, 255}
+                           : snail::color{165, 165, 165});
     }
-    pos(x_at_m107 + x_at_m107(1) - 150, y_at_m107 + 28);
     bmes(
         ""s + key_prev + u8","s + key_next + u8",Tab "s
             + lang(u8"[メニュー切替]"s, u8"[Change]"s),
-        255,
-        255,
-        255);
-    return;
+        x_at_m107 + x_at_m107(1) - 150,
+        y_at_m107 + 28);
 }
+
+
 
 void fillbg(int prm_743, int prm_744, int prm_745, int prm_746, int prm_747)
 {
@@ -2813,9 +2793,7 @@ void showtitle(const std::string&, const std::string& prm_739, int prm_740, int)
     gmode(2);
     pos(x_at_m106, y_at_m106 + (mode != 1));
     gcopy(3, 96, 360, 24, 16);
-    pos(x_at_m106 + 32, y_at_m106 + 1 + jp);
-    bmes(prm_739, 250, 250, 250);
-    return;
+    bmes(prm_739, x_at_m106 + 32, y_at_m106 + 1 + jp, {250, 250, 250});
 }
 
 

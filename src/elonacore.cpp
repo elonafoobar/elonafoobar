@@ -8701,13 +8701,9 @@ label_1897_internal:
     gmode(2);
     color(240, 230, 220);
     boxl(wx + 12, wy + 6, tx, ty);
-    color(0, 0, 0);
     font(14 - en * 2);
     q = lang(u8"《 "s + s + u8" 》"s, u8" < "s + s + u8" > "s);
-    pos(wx + 40, wy + 16);
-    color(30, 20, 10);
-    bmes(q, 245, 235, 225);
-    color(0, 0, 0);
+    bmes(q, wx + 40, wy + 16, {245, 235, 225}, {30, 20, 10});
     font(14 - en * 2);
     color(30, 30, 30);
     pos(wx + 24, wy + ty + 20);
@@ -9080,13 +9076,11 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
                    cdata[0].position.x, cdata[0].position.y, prm_1057, prm_1058)
                 > cdata[0].vision_distance / 2)
         {
-            pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
-            ++dy_at_m186;
             bmes(
                 lang(u8"視界範囲外"s, u8"This location is out of sight."s),
-                255,
-                2552,
-                255);
+                100,
+                windowh - inf_verh - 45 - dy_at_m186 * 20);
+            ++dy_at_m186;
             cansee = 0;
             return;
         }
@@ -9099,10 +9093,7 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
         {
             tc = i_at_m186;
             s = txttargetlevel(cc, tc);
-            pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
-            ++dy_at_m186;
-            bmes(s, 255, 2552, 255);
-            pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
+            bmes(s, 100, windowh - inf_verh - 45 - dy_at_m186 * 20);
             ++dy_at_m186;
             bmes(
                 lang(u8"現在のターゲットは"s, u8"You are targeting "s)
@@ -9113,16 +9104,18 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
                           cdata[i_at_m186].position.x,
                           cdata[i_at_m186].position.y)
                     + u8")"s,
-                255,
-                2552,
-                255);
+                100,
+                windowh - inf_verh - 45 - dy_at_m186 * 20);
+            ++dy_at_m186;
         }
     }
     if (map(prm_1057, prm_1058, 5) != 0)
     {
-        pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
+        bmes(
+            txtitemoncell(prm_1057, prm_1058),
+            100,
+            windowh - inf_verh - 45 - dy_at_m186 * 20);
         ++dy_at_m186;
-        bmes(txtitemoncell(prm_1057, prm_1058), 255, 2552, 255);
     }
     if (map(prm_1057, prm_1058, 6) != 0)
     {
@@ -9132,21 +9125,21 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
             {
                 p_at_m186 = map(prm_1057, prm_1058, 6) / 100000 % 100
                     + map(prm_1057, prm_1058, 6) / 10000000 * 100;
-                pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
+                bmes(
+                    mapname(p_at_m186, true),
+                    100,
+                    windowh - inf_verh - 45 - dy_at_m186 * 20);
                 ++dy_at_m186;
-                bmes(mapname(p_at_m186, true), 255, 2552, 255);
             }
             if (map(prm_1057, prm_1058, 6) / 1000 % 100 == 34)
             {
-                pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
-                ++dy_at_m186;
                 bmes(
                     txtbuilding(
                         map(prm_1057, prm_1058, 6) / 100000 % 100,
                         map(prm_1057, prm_1058, 6) / 10000000),
-                    255,
-                    2552,
-                    255);
+                    100,
+                    windowh - inf_verh - 45 - dy_at_m186 * 20);
+                ++dy_at_m186;
             }
         }
     }
@@ -19586,10 +19579,7 @@ label_2684_internal:
         y = y1 + 28 + (9 - noteinfo() / 2 + cnt) * 20;
         noteget(s, cnt);
         x = windoww / 2 - strlen_u(s(0)) * 4;
-        color(10, 10, 10);
-        pos(x, y);
-        bmes(s, 240, 240, 240);
-        color(0, 0, 0);
+        bmes(s, x, y, {240, 240, 240}, {10, 10, 10});
     }
     gsel(0);
     for (int cnt = 1; cnt < 16; ++cnt)

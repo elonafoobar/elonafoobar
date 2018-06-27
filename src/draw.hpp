@@ -74,4 +74,14 @@ void create_pcpic(int cc, bool prm_410);
 void initialize_map_chip();
 void initialize_item_chip();
 
+
+void bmes(
+    const std::string& message,
+    int x,
+    int y,
+    const snail::color& text_color = {255, 255, 255, 255},
+    const snail::color& shadow_color = {0, 0, 0, 255});
+
+
+
 } // namespace elona

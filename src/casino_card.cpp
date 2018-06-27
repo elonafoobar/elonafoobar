@@ -1,5 +1,6 @@
 #include "casino_card.hpp"
 #include "audio.hpp"
+#include "draw.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
@@ -166,17 +167,16 @@ void showcard2(int prm_425, int prm_426)
                 s_at_cardcontrol = u8"Jo"s;
                 tx_at_cardcontrol = -12;
             }
-            pos(card_at_cardcontrol(3, prm_425) + 18
-                    - (card_at_cardcontrol(0, prm_425) >= 10) * 12
-                    + tx_at_cardcontrol,
-                card_at_cardcontrol(4, prm_425) + 28);
-            color(10, 10, 10);
             bmes(
                 s_at_cardcontrol,
-                col_at_cardcontrol(0),
-                col_at_cardcontrol(1),
-                col_at_cardcontrol(2));
-            color(0, 0, 0);
+                card_at_cardcontrol(3, prm_425) + 18
+                    - (card_at_cardcontrol(0, prm_425) >= 10) * 12
+                    + tx_at_cardcontrol,
+                card_at_cardcontrol(4, prm_425) + 28,
+                {static_cast<uint8_t>(col_at_cardcontrol(0)),
+                 static_cast<uint8_t>(col_at_cardcontrol(1)),
+                 static_cast<uint8_t>(col_at_cardcontrol(2))},
+                {10, 10, 10});
         }
         else
         {
@@ -209,12 +209,15 @@ void showcardpile()
         }
     }
     font(16 - en * 2, snail::font_t::style_t::bold);
-    color(10, 10, 10);
-    pos(pilex_at_cardcontrol + 8, piley_at_cardcontrol + 70);
-    bmes(u8"X "s + pilestack_at_cardcontrol, 240, 240, 240);
-    color(0, 0, 0);
-    return;
+    bmes(
+        u8"X "s + pilestack_at_cardcontrol,
+        pilex_at_cardcontrol + 8,
+        piley_at_cardcontrol + 70,
+        {240, 240, 240},
+        {10, 10, 10});
 }
+
+
 
 void showcard()
 {

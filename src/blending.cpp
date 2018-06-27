@@ -261,10 +261,12 @@ void window_recipe2(int val0)
     dy_at_m183 = 10;
     font(15 - en * 2, snail::font_t::style_t::bold);
     s_at_m183 = ""s + rpsuccessrate(rpdiff(rpid, step, -1));
-    pos(dx_at_m183 + 140, dy_at_m183);
-    color(30, 30, 30);
-    bmes(lang(u8"成功率: "s, u8"Success Rate: "s) + s_at_m183, 235, 235, 235);
-    color(0, 0, 0);
+    bmes(
+        lang(u8"成功率: "s, u8"Success Rate: "s) + s_at_m183,
+        dx_at_m183 + 140,
+        dy_at_m183,
+        {235, 235, 235},
+        {30, 30, 30});
     p_at_m183 = rpdata(1, rpid);
     if (rpmode)
     {
@@ -284,12 +286,15 @@ void window_recipe2(int val0)
         s_at_m183 += lang(u8"と"s, u8" and "s) + p_at_m183 / 10000
             + lang(u8"時間"s, u8" hours"s);
     }
-    pos(dx_at_m183 + 140, dy_at_m183 + 20);
-    color(40, 40, 40);
-    bmes(lang(u8"必要時間: "s, u8"Time: "s) + s_at_m183, 235, 235, 235);
-    color(0, 0, 0);
-    return;
+    bmes(
+        lang(u8"必要時間: "s, u8"Time: "s) + s_at_m183,
+        dx_at_m183 + 140,
+        dy_at_m183 + 20,
+        {235, 235, 235},
+        {40, 40, 40});
 }
+
+
 
 void window_recipe_(
     int prm_1050,

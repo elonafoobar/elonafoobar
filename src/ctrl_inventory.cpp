@@ -848,40 +848,29 @@ label_2060_internal:
                 gcopy(3, 288 + invicon(p) * 48, 48, 48, 48);
                 gmode(2);
             }
-            pos(x + cnt * 44 + 46
+            bmes(
+                i18n::_(u8"ui", u8"inventory_command", u8"_"s + p),
+                x + cnt * 44 + 46
                     - strlen_u(
                           i18n::_(u8"ui", u8"inventory_command", u8"_"s + p))
                         * 3,
-                y + 7);
-            if (invctrl == p)
-            {
-                bmes(
-                    i18n::_(u8"ui", u8"inventory_command", u8"_"s + p),
-                    255,
-                    255,
-                    255);
-            }
-            else
-            {
-                bmes(
-                    i18n::_(u8"ui", u8"inventory_command", u8"_"s + p),
-                    165,
-                    165,
-                    165);
-            }
+                y + 7,
+                invctrl == p ? snail::color{255, 255, 255}
+                             : snail::color{165, 165, 165});
             if (invkey(p) != ""s)
             {
-                pos(x + cnt * 44 + 46, y + 18);
-                bmes(u8"("s + invkey(p) + u8")"s, 235, 235, 235);
+                bmes(
+                    u8"("s + invkey(p) + u8")"s,
+                    x + cnt * 44 + 46,
+                    y + 18,
+                    {235, 235, 235});
             }
         }
-        pos(x + 325, y + 32);
         bmes(
             ""s + key_prev + u8","s + key_next + u8",Tab "s
                 + lang(u8"[メニュー切替]"s, u8"[Change]"s),
-            255,
-            255,
-            255);
+            x + 325,
+            y + 32);
     }
 label_2061_internal:
     s = lang(

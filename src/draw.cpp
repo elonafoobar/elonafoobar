@@ -641,11 +641,12 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
             const int y = inf_clocky + 200 - 180 * right + cnt * 32;
             // std::cout << "HP bar(" << i << "):name: " << position_t{x, y} <<
             // std::endl;
-            pos(x, y);
-            color(0, 0, 0);
-            const auto color = cc.state == 1 ? snail::color{255, 255, 255}
-                                             : snail::color{255, 35, 35};
-            bmes(name, color.r, color.g, color.b);
+            bmes(
+                name,
+                x,
+                y,
+                cc.state == 1 ? snail::color{255, 255, 255}
+                              : snail::color{255, 35, 35});
             if (cc.state == 1)
             {
                 const int width = clamp(cc.hp * 30 / cc.max_hp, 1, 30);
@@ -812,10 +813,7 @@ void show_damage_popups()
         y += syfix * (scy != scybk) * (scrollp >= 3);
 
         font(2 + cfg_dmgfont - en * 2);
-        pos(x, y);
-        color(damage_popup.color.r, damage_popup.color.g, damage_popup.color.b);
-        bmes(damage_popup.text, 255, 255, 255);
-        color(0, 0, 0);
+        bmes(damage_popup.text, x, y, {255, 255, 255}, damage_popup.color);
 
         ++damage_popup.frame;
 
@@ -1184,6 +1182,31 @@ void initialize_item_chip()
     initialize_chara_chips();
     initialize_map_chip();
 }
+
+
+
+void bmes(
+    const std::string& message,
+    int x,
+    int y,
+    const snail::color& text_color,
+    const snail::color& shadow_color)
+{
+    color(shadow_color.r, shadow_color.g, shadow_color.b);
+    for (int dy = -1; dy <= 1; ++dy)
+    {
+        for (int dx = -1; dx <= 1; ++dx)
+        {
+            pos(x + dx, y + dy);
+            mes(message);
+        }
+    }
+    color(text_color.r, text_color.g, text_color.b);
+    pos(x, y);
+    mes(message);
+    color(0, 0, 0);
+}
+
 
 
 } // namespace elona

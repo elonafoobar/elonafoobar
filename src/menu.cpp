@@ -367,8 +367,7 @@ label_2699_internal:
         }
         gmode(2);
         s = listn(0, p);
-        pos(x(cnt) + tx + 25 - strlen_u(s) * 3, y(cnt) + ty + 19);
-        bmes(s, 255, 255, 255);
+        bmes(s, x(cnt) + tx + 25 - strlen_u(s) * 3, y(cnt) + ty + 19);
     }
     ++t;
     redraw();
@@ -522,14 +521,12 @@ void show_ex_help()
         pos(wx + 10, wy + 42);
         gcopy(3, 960, 144, 96, 120);
         font(16 - en * 2, snail::font_t::style_t::bold);
-        pos(wx + 142, wy + 13);
-        color(80, 60, 50);
         bmes(
             lang(u8"- ノルンの冒険ガイド -"s, u8"- Norne's travel guide -"s),
-            255,
-            245,
-            235);
-        color(0, 0, 0);
+            wx + 142,
+            wy + 13,
+            {255, 245, 235},
+            {80, 60, 50});
         tx = wx + 120;
         ty = wy + 55;
         font(15 - en * 2);
@@ -5310,8 +5307,7 @@ label_1978_internal:
     gcopy(4, 0, 0, windoww, inf_ver);
     gmode(2);
     font(16 - en * 2);
-    pos(wx + ww + 20, wy);
-    bmes(u8"Page "s + (page + 1) + u8"/"s + (pagemax + 1), 255, 255, 255);
+    bmes(u8"Page "s + (page + 1) + u8"/"s + (pagemax + 1), wx + ww + 20, wy);
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
@@ -6078,8 +6074,7 @@ label_2272_internal:
             ++keyrange;
             display_key(x - 30, y + 21, cnt);
             font(12 + sizefix - en * 2);
-            pos(x - 2, y + jp * 2);
-            bmes(cnven(popostname(p)), 255, 255, 255);
+            bmes(cnven(popostname(p)), x - 2, y + jp * 2);
             font(14 - en * 2);
             if (podata(0 + cnt, city) == 0)
             {
@@ -6632,14 +6627,12 @@ label_1887_internal:
     wx = (windoww - dx) / 2 + inf_screenx;
     wy = winposy(dy);
     font(18 - en * 2, snail::font_t::style_t::bold);
-    pos(wx + 20, wy + 20);
     bmes(
         lang(u8"《 "s, u8"< "s)
             + i18n::_(u8"god", core_god::int2godid(inv[ci].param1), u8"name")
             + lang(u8" 》"s, u8" >"s),
-        255,
-        255,
-        255);
+        wx + 20,
+        wy + 20);
     get_god_description();
     gmes(buff, wx + 23, wy + 60, dx - 60, {30, 30, 30}, true);
     font(14 - en * 2);

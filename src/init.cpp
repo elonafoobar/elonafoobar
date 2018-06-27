@@ -591,10 +591,7 @@ void initialize_elona()
     {
         pos(i * 24 + 72, 30);
         gcopy(3, 0, 30, 24, 18);
-        pos(i * 24 + 77, 31);
-        color(50, 60, 80);
-        bmes(key_select(i), 250, 240, 230);
-        color(0, 0, 0);
+        bmes(key_select(i), i * 24 + 77, 31, {250, 240, 230}, {50, 60, 80});
     }
     gsel(0);
     gmode(2);

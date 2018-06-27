@@ -81,26 +81,6 @@ namespace elona
 
 
 
-void bmes(const std::string& str, int r, int g, int b)
-{
-    int x = ginfo(22);
-    int y = ginfo(23);
-    for (int dy = -1; dy <= 1; ++dy)
-    {
-        for (int dx = -1; dx <= 1; ++dx)
-        {
-            pos(x + dx, y + dy);
-            mes(str);
-        }
-    }
-    color(r, g, b);
-    pos(x, y);
-    mes(str);
-    color(0, 0, 0);
-}
-
-
-
 void txtcontinue()
 {
     tcontinue_at_txtfunc = 1;

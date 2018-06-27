@@ -2,6 +2,7 @@
 #include "audio.hpp"
 #include "blending.hpp"
 #include "config.hpp"
+#include "draw.hpp"
 #include "elona.hpp"
 #include "enums.hpp"
 #include "ui.hpp"
@@ -36,10 +37,7 @@ int show_prompt(int x, int y, int width, show_prompt_type type, int val4)
         }
         pos(i * 24 + 624, 30);
         gcopy(3, 0, 30, 24, 18);
-        pos(i * 24 + 629, 31);
-        color(50, 60, 80);
-        bmes(promptl(1, i), 250, 240, 230);
-        color(0, 0, 0);
+        bmes(promptl(1, i), i * 24 + 629, 31, {250, 240, 230}, {50, 60, 80});
     }
 
     gsel(0);
