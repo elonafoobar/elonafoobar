@@ -806,10 +806,10 @@ int dmghp(int victim_id, int amount, int damage_source, int element, int element
             {
                 int death_kind = -damage_source;
 
-                txt(i18n::s.get(
+                txt(i18n::s.get_enum_property(
                     "core.locale.death_by.other",
-                    death_kind,
                     "text",
+                    death_kind,
                     victim));
                 if (victim == 0)
                 {
