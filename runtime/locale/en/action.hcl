@@ -4,231 +4,6 @@ locale {
         hit_key_for_help = "Hit ? key to display help."
         really_attack = "Really attack ${name(_1)}?"
 
-        activity {
-            stops = "${name(_1)} stop${s(_1)} ${_2}."
-            cancel = "Do you want to cancel ${_1}? "
-
-            perform {
-                start = "${name(_1)} start${s(_1)} to play ${itemname(_2)}."
-
-                sound { # NOTE
-                    _0 = "*Tiki*"
-                    _1 = "*Dan*"
-                    _2 = "*Lala*"
-                    _3 = "*Cha*"
-                }
-
-                gets_angry = "${name(_1)} get${s(_1)} angry."
-                disinterest_dialog {
-                    _0 = "\"Boring.\""
-                    _1 = "\"I've heard this before.\""
-                    _2 = "\"This song again?\""
-                }
-                angry_dialog {
-                    _0 = "\"Boo boo!\""
-                    _1 = "\"Shut it!\""
-                    _2 = "\"What are you doing!\""
-                    _3 = "\"You can't play shit.\""
-                }
-                interest_dialog {
-                    _0 = "${name(_1)} clap${s(_1)}."
-                    _1 = "${name(_1)} listene${s(_1)} to ${name(_2)}${his_owned(_2)} music joyfully."
-                    _2 = "\"Bravo!\""
-                    _3 = "\"Nice song.\""
-                    _4 = "\"Scut!\""
-                    _5 = "${name(_1)} ${is(_1)} excited!"
-                }
-
-                throws_rock = "${name(_1)} throw${s(_1)} a rock."
-
-                finish = "You finish your performance."
-
-                quality {
-                    _0 = "It is a waste of time."
-                    _1 = "Almost everyone ignores you."
-                    _2 = "You need to practice lot more."
-                    _3 = "Not good."
-                    _4 = "People seem to like your performance."
-                    _5 = "Your performance is successful."
-                    _6 = "Wonderful!"
-                    _7 = "Great performance. Everyone cheers you."
-                    _8 = "A Legendary stage!"
-                }
-
-                tip = "The audience gives ${name(_1)} total of ${_2} gold pieces."
-            }
-
-            sex {
-                take_clothes_off = "${name(_1)} begin${s(_1)} to take ${his(_1)} clothes off."
-                spare_life = "\"I-I don't really know that ${_1}. Please spare my life!\""
-
-                dialog {
-                    _0 = "\"Yes!\""
-                    _1 = "\"Ohhh\""
-                    _2 = "*gasp*"
-                    _3 = "*rumble*"
-                    _4 = "\"come on!\""
-                }
-
-                after_dialog {
-                    # TODO: JP has 5 choices, but EN had 4.
-                    _0 = "\"You are awesome!"
-                    _1 = "\"Oh my god...."
-                    _2 = "\"Okay, okay, you win!"
-                    _3 = "\"Holy...!"
-                    _4 = "\"You are awesome!"
-                }
-
-                take = "Here, take this.\""
-                take_all_i_have = "Take this money, it's all I have!\""
-                gets_furious = "${name(_1)} gets furious, \"And you think you can just run away?\""
-            }
-
-            steal {
-                start = "You target ${itemname(_1, 1)}."
-                notice {
-                    in_fov = "${name(_1)} notice${s(_1)} you,"
-                    out_of_fov = "${name(_1)} hear${s(_1)} loud noise,"
-                    dialog {
-                        guard = "\"You there, stop!\""
-                        other = "\"Guards! Guards!\""
-                    }
-                    you_are_found = "You are found stealing."
-                }
-                target_is_dead = "The target is dead."
-                cannot_be_stolen = "It can't be stolen."
-                you_lose_the_target = "You lose the target."
-                it_is_too_heavy = "It's too heavy."
-                someone_else_is_using = "Someone else is using the item."
-                abort = "You abort stealing."
-                succeed = "You successfully steal ${itemname(_1)}."
-                guilt = "You feel the stings of conscience."
-            }
-
-            rest {
-                start = "You lie down to rest."
-                finish = "You finished taking a rest."
-                drop_off_to_sleep = "After a short while, you drop off to sleep."
-            }
-
-            sleep {
-                start {
-                    global = "You start to camp."
-                    other = "You lie down."
-                }
-                finish = "You fall asleep."
-
-                but_you_cannot = "But you can't sleep right now."
-                new_gene = "You spent a night with ${name(_1)}. A new gene is created."
-                slept_for = "You have slept for ${_1} hours. You are refreshed."
-
-                wake_up {
-                    so_so = "You wake up feeling so so."
-                    good = "You wake up feeling good. Your potential increases. (Total:${_1}%)"
-                }
-            }
-
-            construct {
-                start = "You start to construct ${itemname(_1, 1)}."
-                finish = "You finish constructing ${itemname(_1, 1)}."
-            }
-
-            pull_hatch {
-                start = "You start to pull the hatch."
-                finish = "You finish pulling the hatch of ${itemname(_1, 1)}."
-            }
-
-            dig = "You start to pick ${_1}."
-
-            study {
-                start {
-                    bored = "You are bored."
-                    studying = "You begin to study ${_1}."
-                    training = "You start training."
-                    weather_is_bad = "The weather's bad outside, you have plenty of time to waste."
-                }
-                finish {
-                    studying = "You finish studying ${_1}."
-                    training = "You finish training."
-                }
-            }
-
-            read {
-                start = "${name(_1)} start${s(_1)} to read ${itemname(_2, 1)}."
-                finish = "${name(_1)} ${have(_1)} finished reading the book."
-            }
-
-            harvest {
-                _0 = "*sing*"
-                _1 = "*pull*"
-                _2 = "*thud*"
-                _3 = "*rumble*"
-                _4 = "*gasp*"
-                finish = "You harvest ${itemname(_1, 1)}. (${_2})"
-            }
-
-            fish {
-                start = "You start fishing."
-                fail = "A waste of a time..."
-                get = "You get ${itemname(_1, 1)}!"
-            }
-
-            material {
-                start = "You start to search the spot."
-                mining {
-                    fails = "Your mining attempt fails."
-                    no_more = "There's no more ore around."
-                }
-                fishing {
-                    fails = "Your fishing attempt fails."
-                    no_more = "The spring dries up."
-                }
-                searching {
-                    fails = "Your searching attempt fails."
-                    no_more = "You can't find anything anymore."
-                }
-                plant {
-                    no_more = "There's no more plant around."
-                }
-            }
-
-            dig_spot {
-                start {
-                    global = "You start to dig the ground."
-                    other = "You start to dig the spot."
-                }
-
-                sound {
-                    _0 = "*clink*"
-                    _1 = "*smash*"
-                    _2 = "*thud*"
-                    _3 = "*sing*"
-                    _4 = "*sigh*"
-                }
-
-                finish = "You finish digging."
-                something_is_there = "*click* ...something is there!"
-            }
-
-            dig_mining {
-                start {
-                    wall = "You start to dig the wall."
-                    spot = "You start to dig the mining spot."
-                }
-                hard = "These walls look pretty hard!"
-
-                finish {
-                    wall = "You finished digging the wall."
-                    find = "You found something out of crushed heaps of rock."
-                }
-
-                fail = "Your back hurts...You give up digging."
-            }
-
-            iron_maiden = "Suddenly, the iron maiden falls forward."
-            guillotine = "Suddenly, the guillotine is activated."
-        }
-
         backpack_squashing = "Your backpack is squashing you!"
 
         day_breaks = "Day breaks."
@@ -254,7 +29,7 @@ locale {
             }
         }
 
-        timestop {
+        time_stop {
             begins = "${name(_1)} stop${s(_1)} time."
             ends = "Time starts to run again."
         }
@@ -268,6 +43,34 @@ locale {
         cannot_see_location = "You can't see the location."
         out_of_range = "It's out of range."
 
+
+        exit_map {
+            not_permitted = "You are not permitted to explore this dungeon."
+            no_invitation_to_pyramid = "You don't have an invitation."
+            cannot_enter_jail = "The guards turn you away from the jail."
+            surface {
+                returned_to = "You returned to the surface of ${_1}"
+                left = "You left the surface of ${_1}."
+            }
+
+            delivered_to_your_home = "You were delivered to your home."
+
+            entered = "You entered ${_1}."
+            returned_to = "You returned to ${_1}"
+            left = "You left ${_1}."
+
+            burdened_by_cargo = "The weight of your cargo burdens your traveling speed."
+
+            mountain_pass = "You entered the Mountain Pass."
+            larna = "You reached the town of Larna."
+
+            it_is_hot = "It's hot!"
+
+            gate {
+                step_into = "You stepped into the gate. The gate disappears."
+                need_network = "You have to turn on network setting."
+            }
+        }
 
         interact {
             choose = "Choose the direction of the target."
@@ -331,6 +134,13 @@ locale {
             sense_something = "You sense something under your foot."
             walk_into = "You walk into ${_1}."
             twinkle = "*twinkle*"
+
+            item_on_cell {
+                item = "You see ${_1} here."
+                construction = "${_1} is constructed here."
+                not_owned = "You see ${_1} placed here." # TODO correct name?
+                more_than_three = "There are ${_1} items lying here."
+            }
 
             feature {
                 stair {
@@ -425,7 +235,7 @@ locale {
                 ambush {
                     text = "Ambush!"
                     distance_from_nearest_town = "Distance from nearest town:${_1}" # NOTE
-                    enemy_strength = "Enemy strength:${_1}"
+                    enemy_strength = "Enemy strength:${_1}" # NOTE
 
                     rank {
                         putit = "Putit Rank"
@@ -436,7 +246,49 @@ locale {
                         dragon = "Dragon Rank"
                     }
                 }
+
+                diastrophism = "A sudden diastrophism hits the continent."
             }
+        }
+
+        target {
+            out_of_sight = "This location is out of sight."
+            you_are_targeting = "You are targeting ${name(_1)}.(Distance ${_2})"
+
+            level {
+                _0 = "You can absolutely beat ${him(_1)} with your eyes closed and arms crossed."
+                _1 = "You bet you can beat ${him(_1)} with your eyes closed."
+                _2 = "${he(_1)} ${is(_1)} an easy opponent." # TODO cnven(he())
+                _3 = "You will probably win."
+                _4 = "Won't be an easy fight."
+                _5 = "The opponent looks quite strong."
+                _6 = "${he(_1)} ${is(_1)} at least twice stronger than you." # TODO cnven(he())
+                _7 = "You will get killed unless miracles happen."
+                _8 = "You will get killed, a hundred percent sure."
+                _9 = "${he(_1)} can mince you with ${his(_1)} eyes closed." # TODO cnven(he())
+                _10 = "If ${he(_1)} is a giant, you are less than a dropping of an ant."
+            }
+        }
+
+        look {
+            find_nothing = "You look around and find nothing."
+            cannot_see = "You can't see the location."
+            target = "You target ${name(_1)}."
+            target_the_ground = "You target the ground."
+        }
+
+        ranged {
+            load_normal_ammo = "You load normal ammo."
+            no_target = "You find no target."
+        }
+
+        ammo {
+            need_to_equip = "You need to equip an ammo."
+            is_not_capable = "${itemname(_1)} isn't capable of changing ammos."
+
+            current = "Current Ammo Type" # NOTE
+            normal = "Normal"
+            unlimited = "Unlimited"
         }
 
         unlock {
@@ -627,20 +479,6 @@ locale {
             success = "${basename(_1)} join${s(_1)} your party!"
         }
 
-        ranged {
-            load_normal_ammo = "You load normal ammo."
-            no_target = "You find no target."
-        }
-
-        ammo {
-            need_to_equip = "You need to equip an ammo."
-            is_not_capable = "${itemname(_1)} isn't capable of changing ammos."
-
-            current = "Current Ammo Type" # NOTE
-            normal = "Normal"
-            unlimited = "Unlimited"
-        }
-
         offer {
             do_not_believe = "You don't believe in God."
             execute = "You put ${itemname(_1)} on the altar and mutter the name of ${_2}."
@@ -656,13 +494,6 @@ locale {
                 okay = "${itemname(_1)} shine${s(_1)} for a moment and disappear${s(_1)}."
                 poor = "${itemname(_1)} disappear${s(_1)}."
             }
-        }
-
-        look {
-            find_nothing = "You look around and find nothing."
-            cannot_see = "You can't see the location."
-            target = "You target ${name(_1)}."
-            target_the_ground = "You target the ground."
         }
 
         shortcut {
