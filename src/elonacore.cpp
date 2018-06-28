@@ -7978,7 +7978,7 @@ void atxinit()
         pos(0, 0);
         picload(filesystem::dir::graphic() / (atxbg + u8".bmp"s), 1);
         pos(0, inf_msgh);
-        gzoom(4, 0, 0, 240, 160, windoww, windowh - inf_verh - inf_msgh);
+        gcopy(4, 0, 0, 240, 160, windoww, windowh - inf_verh - inf_msgh);
         gmode(2);
         p = windoww / 192;
         for (int cnt = 0, cnt_end = (p + 1); cnt < cnt_end; ++cnt)
@@ -7996,7 +7996,7 @@ void atxinit()
         }
         window2(windoww - 208, 0, 208, 98, 0, 0);
         pos(windoww - 204, 4);
-        gzoom(0, 120, 88, windoww - 120, windowh - inf_verh - 112, 200, 90);
+        gcopy(0, 120, 88, windoww - 120, windowh - inf_verh - 112, 200, 90);
         gsel(0);
     }
     return;
@@ -8699,15 +8699,10 @@ label_1897_internal:
     pos(wx + 12, wy + 6);
     gcopy(7, 0, 0, tx, ty);
     gmode(2);
-    color(240, 230, 220);
-    boxl(wx + 12, wy + 6, tx, ty);
-    color(0, 0, 0);
+    boxl(wx + 12, wy + 6, tx, ty, {240, 230, 220});
     font(14 - en * 2);
     q = lang(u8"《 "s + s + u8" 》"s, u8" < "s + s + u8" > "s);
-    pos(wx + 40, wy + 16);
-    color(30, 20, 10);
-    bmes(q, 245, 235, 225);
-    color(0, 0, 0);
+    bmes(q, wx + 40, wy + 16, {245, 235, 225}, {30, 20, 10});
     font(14 - en * 2);
     color(30, 30, 30);
     pos(wx + 24, wy + ty + 20);
@@ -9080,13 +9075,11 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
                    cdata[0].position.x, cdata[0].position.y, prm_1057, prm_1058)
                 > cdata[0].vision_distance / 2)
         {
-            pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
-            ++dy_at_m186;
             bmes(
                 lang(u8"視界範囲外"s, u8"This location is out of sight."s),
-                255,
-                2552,
-                255);
+                100,
+                windowh - inf_verh - 45 - dy_at_m186 * 20);
+            ++dy_at_m186;
             cansee = 0;
             return;
         }
@@ -9099,10 +9092,7 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
         {
             tc = i_at_m186;
             s = txttargetlevel(cc, tc);
-            pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
-            ++dy_at_m186;
-            bmes(s, 255, 2552, 255);
-            pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
+            bmes(s, 100, windowh - inf_verh - 45 - dy_at_m186 * 20);
             ++dy_at_m186;
             bmes(
                 lang(u8"現在のターゲットは"s, u8"You are targeting "s)
@@ -9113,16 +9103,18 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
                           cdata[i_at_m186].position.x,
                           cdata[i_at_m186].position.y)
                     + u8")"s,
-                255,
-                2552,
-                255);
+                100,
+                windowh - inf_verh - 45 - dy_at_m186 * 20);
+            ++dy_at_m186;
         }
     }
     if (map(prm_1057, prm_1058, 5) != 0)
     {
-        pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
+        bmes(
+            txtitemoncell(prm_1057, prm_1058),
+            100,
+            windowh - inf_verh - 45 - dy_at_m186 * 20);
         ++dy_at_m186;
-        bmes(txtitemoncell(prm_1057, prm_1058), 255, 2552, 255);
     }
     if (map(prm_1057, prm_1058, 6) != 0)
     {
@@ -9132,21 +9124,21 @@ void txttargetnpc(int prm_1057, int prm_1058, int prm_1059)
             {
                 p_at_m186 = map(prm_1057, prm_1058, 6) / 100000 % 100
                     + map(prm_1057, prm_1058, 6) / 10000000 * 100;
-                pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
+                bmes(
+                    mapname(p_at_m186, true),
+                    100,
+                    windowh - inf_verh - 45 - dy_at_m186 * 20);
                 ++dy_at_m186;
-                bmes(mapname(p_at_m186, true), 255, 2552, 255);
             }
             if (map(prm_1057, prm_1058, 6) / 1000 % 100 == 34)
             {
-                pos(100, windowh - inf_verh - 45 - dy_at_m186 * 20);
-                ++dy_at_m186;
                 bmes(
                     txtbuilding(
                         map(prm_1057, prm_1058, 6) / 100000 % 100,
                         map(prm_1057, prm_1058, 6) / 10000000),
-                    255,
-                    2552,
-                    255);
+                    100,
+                    windowh - inf_verh - 45 - dy_at_m186 * 20);
+                ++dy_at_m186;
             }
         }
     }
@@ -9860,7 +9852,7 @@ label_1956_internal:
             if (p < listmax)
             {
                 pos(wx + cnt * 24, wy + cnt2 * 24);
-                gzoom(
+                gcopy(
                     2,
                     list(0, p) % ww * 48,
                     list(0, p) / ww * 48,
@@ -9870,9 +9862,8 @@ label_1956_internal:
                     24);
                 if (chipm(7, list(0, p)) & 4)
                 {
-                    color(240, 230, 220);
-                    boxl(wx + cnt * 24, wy + cnt2 * 24, 24, 24);
-                    color(0, 0, 0);
+                    boxl(
+                        wx + cnt * 24, wy + cnt2 * 24, 24, 24, {240, 230, 220});
                 }
             }
             ++p;
@@ -13873,9 +13864,8 @@ void label_2150()
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"bg_night.bmp", 1);
     pos(0, 0);
-    gzoom(4, 0, 0, 640, 480, windoww, windowh - inf_verh);
+    gcopy(4, 0, 0, 640, 480, windoww, windowh - inf_verh);
     gsel(0);
-    return;
 }
 
 
@@ -19538,7 +19528,7 @@ label_2684_internal:
     pos(0, 0);
     picload(filesystem::dir::graphic() / (u8""s + file + u8".bmp"), 1);
     pos(0, y1);
-    gzoom(4, 0, 0, 640, 480, windoww, y2 - y1);
+    gcopy(4, 0, 0, 640, 480, windoww, y2 - y1);
     gmode(2);
     boxf(0, 0, windoww, y1, {5, 5, 5});
     boxf(0, y2, windoww, windowh - y2, {5, 5, 5});
@@ -19586,10 +19576,7 @@ label_2684_internal:
         y = y1 + 28 + (9 - noteinfo() / 2 + cnt) * 20;
         noteget(s, cnt);
         x = windoww / 2 - strlen_u(s(0)) * 4;
-        color(10, 10, 10);
-        pos(x, y);
-        bmes(s, 240, 240, 240);
-        color(0, 0, 0);
+        bmes(s, x, y, {240, 240, 240}, {10, 10, 10});
     }
     gsel(0);
     for (int cnt = 1; cnt < 16; ++cnt)
@@ -20160,7 +20147,7 @@ void conquer_lesimas()
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"void.bmp", 1);
     pos(0, 0);
-    gzoom(4, 0, 0, 640, 480, windoww, windowh);
+    gcopy(4, 0, 0, 640, 480, windoww, windowh);
     gsel(0);
     animation_fade_in();
     pos(0, 0);
@@ -20407,7 +20394,7 @@ void show_game_score_ranking()
     notesel(buff);
     gmode(0);
     pos(0, 0);
-    gzoom(4, 0, 0, 800, 600, windoww, windowh);
+    gcopy(4, 0, 0, 800, 600, windoww, windowh);
     gmode(2);
     x = 135;
     y = 134;
@@ -20468,7 +20455,7 @@ void show_game_score_ranking()
         pos(x + 480, y + 20);
         mes(""s + s + lang(u8"点"s, ""s));
         p = elona::stoi(s(1)) % 1000;
-        chara_preparepic(p);
+        chara_preparepic(elona::stoi(s(1)));
         pos(x - 22, y + 12);
         gmode(2, chara_chips[p].width, chara_chips[p].height);
         grotate_(

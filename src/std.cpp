@@ -121,14 +121,14 @@ void boxf()
 
 
 
-void boxl(int x, int y, int width, int height)
+void boxl(int x, int y, int width, int height, const snail::color& color)
 {
     const auto x2 = x + width;
     const auto y2 = y + height;
-    line(x, y, x2, y);
-    line(x2, y, x2, y2);
-    line(x2, y2, x, y2);
-    line(x, y2, x, y);
+    line(x, y, x2, y, color);
+    line(x2, y, x2, y2, color);
+    line(x2, y2, x, y2, color);
+    line(x, y2, x, y, color);
 }
 
 
@@ -326,9 +326,17 @@ void font(int size, snail::font_t::style_t style)
 
 
 
-void gcopy(int window_id, int src_x, int src_y, int src_width, int src_height)
+void gcopy(
+    int window_id,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height,
+    int dst_width,
+    int dst_height)
 {
-    snail::hsp::gcopy(window_id, src_x, src_y, src_width, src_height);
+    snail::hsp::gcopy(
+        window_id, src_x, src_y, src_width, src_height, dst_width, dst_height);
 }
 
 
@@ -426,29 +434,6 @@ void gsel(int window_id)
 
 
 
-void gzoom(
-    int window_id,
-    int src_x,
-    int src_y,
-    int src_width,
-    int src_height,
-    int dst_width,
-    int dst_height,
-    bool blend)
-{
-    snail::hsp::gzoom(
-        window_id,
-        src_x,
-        src_y,
-        src_width,
-        src_height,
-        dst_width,
-        dst_height,
-        blend);
-}
-
-
-
 int instr(const std::string& str, size_t pos, const std::string pattern)
 {
     if (pattern == "\n")
@@ -479,9 +464,9 @@ int stoi(const std::string& s)
 
 
 
-void line(int x1, int y1, int x2, int y2)
+void line(int x1, int y1, int x2, int y2, const snail::color& color)
 {
-    snail::hsp::line(x1, y1, x2, y2);
+    snail::hsp::line(x1, y1, x2, y2, color);
 }
 
 

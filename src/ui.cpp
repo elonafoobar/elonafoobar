@@ -437,12 +437,10 @@ void render_hud()
     }
     sx = inf_hpx + 16;
     sy = inf_hpy - 8;
-    pos(sx + 4, sy);
-    bmes(""s + cdata[0].hp + u8"("s + cdata[0].max_hp + u8")"s, 255, 255, 255);
+    bmes(""s + cdata[0].hp + u8"("s + cdata[0].max_hp + u8")"s, sx + 4, sy);
     sx = inf_mpx + 16;
     sy = inf_mpy - 8;
-    pos(sx + 4, sy);
-    bmes(""s + cdata[0].mp + u8"("s + cdata[0].max_mp + u8")"s, 255, 255, 255);
+    bmes(""s + cdata[0].mp + u8"("s + cdata[0].max_mp + u8")"s, sx + 4, sy);
     font(13 - en * 2);
     sy = inf_bary + 2 + vfix;
     for (int cnt = 0; cnt < 10; ++cnt)
@@ -494,22 +492,18 @@ void render_hud()
     sx = windoww - 240;
     pos(sx, sy);
     gcopy(3, 0, 392, 24, 24);
-    pos(sx + 28, sy + 2);
-    bmes(""s + cdata[0].gold + u8" gp"s, 255, 255, 255);
+    bmes(""s + cdata[0].gold + u8" gp"s, sx + 28, sy + 2);
     sx = windoww - 120;
     pos(sx, sy);
     gcopy(3, 24, 392, 24, 24);
-    pos(sx + 28, sy + 2);
-    bmes(""s + cdata[0].platinum_coin + u8" pp"s, 255, 255, 255);
+    bmes(""s + cdata[0].platinum_coin + u8" pp"s, sx + 28, sy + 2);
     pos(4, inf_ver - 16);
     gcopy(3, 48, 392, 24, 24);
-    pos(32, inf_ver - 14);
     bmes(
         u8"Lv"s + cdata[0].level + u8"/"s
             + (cdata[0].required_experience - cdata[0].experience),
-        255,
-        255,
-        255);
+        32,
+        inf_ver - 14);
     if (cdata[0].position.x < 6)
     {
         if (mode != 9)
@@ -926,13 +920,11 @@ void render_hud()
     grotate(3, 0, 288, 0.0174532925199433 * (gdata_hour * 30), 48, 48);
     pos(inf_clockw - 3, inf_clocky + 17 + vfix);
     mes(""s + gdata_year + u8"/"s + gdata_month + u8"/"s + gdata_day);
-    pos(inf_clockw + 6, inf_clocky + 35);
     bmes(
         i18n::_(u8"ui", u8"time", u8"_"s + gdata_hour / 4) + u8" "s
             + i18n::_(u8"ui", u8"weather", u8"_"s + gdata_weather),
-        255,
-        255,
-        255);
+        inf_clockw + 6,
+        inf_clocky + 35);
     ap3 = 0;
     for (int cnt = 0; cnt < 3; ++cnt)
     {
@@ -950,22 +942,18 @@ void render_hud()
             }
             continue;
         }
-        pos(16, inf_clocky + 155 - ap3 * 16);
         bmes(
             ""s
                 + strmid(
                       i18n::_(u8"ability", std::to_string(ap), u8"name"), 0, 6),
-            255,
-            255,
-            255);
-        pos(66, inf_clocky + 155 - ap3 * 16);
+            16,
+            inf_clocky + 155 - ap3 * 16);
         bmes(
             ""s + sdata.get(ap, ap2).original_level + u8"."s
                 + std::to_string(1000 + sdata.get(ap, ap2).experience % 1000)
                       .substr(1),
-            255,
-            255,
-            255);
+            66,
+            inf_clocky + 155 - ap3 * 16);
         ++ap3;
     }
     if (config::instance().hp_bar)
@@ -1034,8 +1022,7 @@ void render_autoturn_animation()
 
     window2(sx, sy, w, h, 0, 5);
     font(13 - en * 2, snail::font_t::style_t::bold);
-    pos(sx + 43, sy + 6);
-    bmes(u8"AUTO TURN"s, 235, 235, 235);
+    bmes(u8"AUTO TURN"s, sx + 43, sy + 6, {235, 235, 235});
     pos(sx + 18, sy + 12);
     gmode(2, 24, 24);
     grotate(3, 72, 392, 0.0174532925199433 * (gdata_minute / 4 % 2 * 90));
@@ -1499,13 +1486,14 @@ void render_weather_effect_rain()
          ++cnt)
     {
         s_p = rnd(100);
-        color(170 - s_p, 200 - s_p, 250 - s_p);
         line(
             rainx(cnt) - 40,
             rainy(cnt) - cnt % 3 - 1,
             rainx(cnt) - 39 + cnt % 2,
-            rainy(cnt));
-        color(0, 0, 0);
+            rainy(cnt),
+            {static_cast<uint8_t>(170 - s_p),
+             static_cast<uint8_t>(200 - s_p),
+             static_cast<uint8_t>(250 - s_p)});
         if (rainx(cnt) == 0)
         {
             rainx(cnt) = rnd(windoww) + 40;
@@ -1543,13 +1531,14 @@ void render_weather_effect_hard_rain()
          ++cnt)
     {
         s_p = rnd(100);
-        color(170 - s_p, 200 - s_p, 250 - s_p);
         line(
             rainx(cnt) - 40,
             rainy(cnt) - cnt % 5 - 4,
             rainx(cnt) - 39 + cnt % 2,
-            rainy(cnt));
-        color(0, 0, 0);
+            rainy(cnt),
+            {static_cast<uint8_t>(170 - s_p),
+             static_cast<uint8_t>(200 - s_p),
+             static_cast<uint8_t>(250 - s_p)});
         if (rainx(cnt) == 0)
         {
             rainx(cnt) = rnd(windoww) + 40;
@@ -1604,7 +1593,7 @@ void render_weather_effect_snow()
             }
         }
         pos(rainx(cnt), rainy(cnt));
-        gcopy(3, rainx(cnt) % 2 * 8, 600 + cnt % 6 * 8);
+        gcopy(3, rainx(cnt) % 2 * 8, 600 + cnt % 6 * 8, 8, 8);
     }
     weatherbk = gdata_weather;
     gmode(2);
@@ -1631,7 +1620,7 @@ void render_weather_effect_etherwind()
         else
         {
             pos(rainx(cnt), rainy(cnt));
-            gcopy(3, 16 + rainx(cnt) % 2 * 8, 600 + cnt % 6 * 8);
+            gcopy(3, 16 + rainx(cnt) % 2 * 8, 600 + cnt % 6 * 8, 8, 8);
             rainx(cnt) += rnd(3) - 1;
             rainy(cnt) -= rnd(2) + cnt % 5;
         }
@@ -2018,27 +2007,27 @@ void display_window(
     gmode(2);
     pos(prm_668 + 30 + prm_672, prm_669 + prm_671 - 47 - prm_671 % 8);
     gcopy(3, 96, 360, 24, 16);
-    color(194, 170, 146);
     line(
         prm_668 + 50 + prm_672,
         prm_669 + prm_671 - 48 - prm_671 % 8,
         prm_668 + prm_670 - 40,
-        prm_669 + prm_671 - 48 - prm_671 % 8);
-    color(234, 220, 188);
+        prm_669 + prm_671 - 48 - prm_671 % 8,
+        {194, 170, 146});
     line(
         prm_668 + 50 + prm_672,
         prm_669 + prm_671 - 49 - prm_671 % 8,
         prm_668 + prm_670 - 40,
-        prm_669 + prm_671 - 49 - prm_671 % 8);
+        prm_669 + prm_671 - 49 - prm_671 % 8,
+        {234, 220, 188});
     font(15 + en - en * 2);
-    color(0, 0, 0);
-    pos(prm_668 + 45 * prm_670 / 200 + 34 - strlen_u(s) * 4
+    bmes(
+        s,
+        prm_668 + 45 * prm_670 / 200 + 34 - strlen_u(s) * 4
             + clamp(int(s(0).size() * 8 - 120), 0, 200) / 2,
-        prm_669 + 4 + vfix);
-    color(20, 10, 0);
-    bmes(s, 255, 255, 255);
+        prm_669 + 4 + vfix,
+        {255, 255, 255},
+        {20, 10, 0});
     font(12 + sizefix - en * 2);
-    color(0, 0, 0);
     pos(prm_668 + 58 + prm_672, prm_669 + prm_671 - 43 - prm_671 % 8);
     mes(s(1));
     if (pagesize != 0)
@@ -2064,6 +2053,8 @@ void display_note(const std::string& prm_674, int prm_675)
     return;
 }
 
+
+
 void display_topic(const std::string& prm_676, int prm_677, int prm_678, int)
 {
     font(12 + sizefix - en * 2, snail::font_t::style_t::bold);
@@ -2076,8 +2067,9 @@ void display_topic(const std::string& prm_676, int prm_677, int prm_678, int)
         prm_678 + 21,
         prm_677 + strlen_u(prm_676) * 7 + 36,
         prm_678 + 21);
-    return;
 }
+
+
 
 void display_customkey(const std::string& key, int x, int y)
 {
@@ -2086,10 +2078,7 @@ void display_customkey(const std::string& key, int x, int y)
     font(15 - en * 2);
     pos(624, 30);
     gcopy(3, 0, 30, 24, 18);
-    pos(629, 31);
-    color(50, 60, 80);
-    bmes(key, 250, 240, 230);
-    color(0, 0, 0);
+    bmes(key, 629, 31, {250, 240, 230}, {50, 60, 80});
     gmode(2, inf_tiles, inf_tiles);
     gsel(0);
     pos(x, y);
@@ -2185,25 +2174,21 @@ void drawmenu(int prm_742)
             gcopy(3, 288 + p(cnt) * 48, 48, 48, 48);
             gmode(2);
         }
-        pos(x_at_m107 + cnt * 50 + 46 - strlen_u(s(cnt)) * 3, y_at_m107 + 7);
-        if (curmenu == cnt)
-        {
-            bmes(s(cnt), 255, 255, 255);
-        }
-        else
-        {
-            bmes(s(cnt), 165, 165, 165);
-        }
+        bmes(
+            s(cnt),
+            x_at_m107 + cnt * 50 + 46 - strlen_u(s(cnt)) * 3,
+            y_at_m107 + 7,
+            curmenu == cnt ? snail::color{255, 255, 255}
+                           : snail::color{165, 165, 165});
     }
-    pos(x_at_m107 + x_at_m107(1) - 150, y_at_m107 + 28);
     bmes(
         ""s + key_prev + u8","s + key_next + u8",Tab "s
             + lang(u8"[メニュー切替]"s, u8"[Change]"s),
-        255,
-        255,
-        255);
-    return;
+        x_at_m107 + x_at_m107(1) - 150,
+        y_at_m107 + 28);
 }
+
+
 
 void fillbg(int prm_743, int prm_744, int prm_745, int prm_746, int prm_747)
 {
@@ -2241,7 +2226,7 @@ void clear_background_in_character_making()
     gsel(4);
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"void.bmp", 1);
-    gzoom(4, 0, 0, 800, 600, windoww, windowh);
+    gcopy(4, 0, 0, 800, 600, windoww, windowh);
     gsel(0);
     gmode(0);
     pos(0, 0);
@@ -2254,7 +2239,7 @@ void clear_background_in_continue()
     gsel(4);
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"void.bmp", 1);
-    gzoom(4, 0, 0, 800, 600, windoww, windowh);
+    gcopy(4, 0, 0, 800, 600, windoww, windowh);
     gsel(0);
     gmode(0);
     pos(0, 0);
@@ -2416,18 +2401,18 @@ void showscroll(const std::string& title, int x, int y, int width, int height)
 
     pos(x + 40, y + height - 67 - height % 8);
     gcopy(3, 96, 360, 24, 16);
-    color(194, 173, 161);
     line(
         x + 60,
         y + height - 68 - height % 8,
         x + width - 40,
-        y + height - 68 - height % 8);
-    color(224, 213, 191);
+        y + height - 68 - height % 8,
+        {194, 173, 161});
     line(
         x + 60,
         y + height - 69 - height % 8,
         x + width - 40,
-        y + height - 69 - height % 8);
+        y + height - 69 - height % 8,
+        {224, 213, 191});
     font(12 + sizefix - en * 2);
     color(0, 0, 0);
     pos(x + 68, y + height - 63 - height % 8);
@@ -2577,12 +2562,12 @@ void window2(
     if (prm_661 == 0)
     {
         pos(prm_656 + 4, prm_657 + 4);
-        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
+        gcopy(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
     }
     if (prm_661 == 1)
     {
         pos(prm_656 + 4, prm_657 + 4);
-        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
+        gcopy(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
         boxf(
             prm_656 + 4,
             prm_657 + 4,
@@ -2593,7 +2578,7 @@ void window2(
     if (prm_661 == 2)
     {
         pos(prm_656 + 4, prm_657 + 4);
-        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
+        gcopy(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
         boxf(
             prm_656 + 4,
             prm_657 + 4,
@@ -2604,7 +2589,7 @@ void window2(
     if (prm_661 == 3)
     {
         pos(prm_656 + 4, prm_657 + 4);
-        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
+        gcopy(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
         boxf(
             prm_656 + 4,
             prm_657 + 4,
@@ -2615,7 +2600,7 @@ void window2(
     if (prm_661 == 4)
     {
         pos(prm_656 + 4, prm_657 + 4);
-        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
+        gcopy(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
         boxf(
             prm_656 + 4,
             prm_657 + 4,
@@ -2633,9 +2618,9 @@ void window2(
     for (int cnt = 0, cnt_end = (x2_at_m93 / 16 - 2); cnt < cnt_end; ++cnt)
     {
         pos(cnt * 16 + prm_656 + 16, prm_657);
-        gcopy(3, prm_660 * 48 + dx_at_m93 + 16, dy_at_m93);
+        gcopy(3, prm_660 * 48 + dx_at_m93 + 16, dy_at_m93, 16, 16);
         pos(cnt * 16 + prm_656 + 16, prm_657 + y2_at_m93 - 16);
-        gcopy(3, prm_660 * 48 + dx_at_m93 + 16, dy_at_m93 + 32);
+        gcopy(3, prm_660 * 48 + dx_at_m93 + 16, dy_at_m93 + 32, 16, 16);
     }
     pos(x3_at_m93, prm_657);
     gcopy(3, prm_660 * 48 + dx_at_m93 + 16, dy_at_m93, x2_at_m93 % 16, 16);
@@ -2649,26 +2634,26 @@ void window2(
     for (int cnt = 0, cnt_end = (p_at_m93); cnt < cnt_end; ++cnt)
     {
         pos(prm_656, cnt * 16 + prm_657 + 16);
-        gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93 + 16);
+        gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93 + 16, 16, 16);
         pos(prm_656 + x2_at_m93 - 16, cnt * 16 + prm_657 + 16);
-        gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93 + 16);
+        gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93 + 16, 16, 16);
     }
     pos(prm_656, y3_at_m93);
     gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93 + 16, 16, y2_at_m93 % 16);
     pos(prm_656 + x2_at_m93 - 16, y3_at_m93);
     gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93 + 16, 16, y2_at_m93 % 16);
     pos(prm_656, prm_657);
-    gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93);
+    gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93, 16, 16);
     pos(prm_656, prm_657 + y2_at_m93 - 16);
-    gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93 + 32);
+    gcopy(3, prm_660 * 48 + dx_at_m93, dy_at_m93 + 32, 16, 16);
     pos(prm_656 + x2_at_m93 - 16, prm_657);
-    gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93);
+    gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93, 16, 16);
     pos(prm_656 + x2_at_m93 - 16, prm_657 + y2_at_m93 - 16);
-    gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93 + 32);
+    gcopy(3, prm_660 * 48 + dx_at_m93 + 32, dy_at_m93 + 32, 16, 16);
     if (prm_661 == 5)
     {
         pos(prm_656 + 2, prm_657 + 2);
-        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 4, y2_at_m93 - 5);
+        gcopy(3, 24, 72, 228, 144, x2_at_m93 - 4, y2_at_m93 - 5);
         boxf(
             prm_656 + 4,
             prm_657 + 4,
@@ -2712,19 +2697,18 @@ void windowanime(
     ceny_at_m105 = prm_727 + y2_at_m105;
     for (int cnt = 1, cnt_end = cnt + (prm_730 - 1); cnt < cnt_end; ++cnt)
     {
-        color(30, 30, 30);
         boxl(
             cenx_at_m105 - x2_at_m105 / prm_730 * cnt,
             ceny_at_m105 - y2_at_m105 / prm_730 * cnt,
             2 * x2_at_m105 / prm_730 * cnt,
-            2 * y2_at_m105 / prm_730 * cnt);
-        color(240, 240, 240);
+            2 * y2_at_m105 / prm_730 * cnt,
+            {30, 30, 30});
         boxl(
             cenx_at_m105 - x2_at_m105 / prm_730 * cnt - 1,
             ceny_at_m105 - y2_at_m105 / prm_730 * cnt - 1,
             2 * x2_at_m105 / prm_730 * cnt - 1,
-            2 * y2_at_m105 / prm_730 * cnt - 1);
-        color(0, 0, 0);
+            2 * y2_at_m105 / prm_730 * cnt - 1,
+            {240, 240, 240});
         redraw();
         if (cnt != prm_730 - 1)
         {
@@ -2761,19 +2745,18 @@ void windowanimecorner(
     y2_at_m105 = prm_735 - prm_733;
     for (int cnt = 1, cnt_end = cnt + (prm_736); cnt < cnt_end; ++cnt)
     {
-        color(30, 30, 30);
         boxl(
             prm_732 + prm_734,
             prm_733 + prm_735,
             (prm_732 - prm_734) / prm_736 * cnt,
-            (prm_733 - prm_735) / prm_736 * cnt);
-        color(240, 240, 240);
+            (prm_733 - prm_735) / prm_736 * cnt,
+            {30, 30, 30});
         boxl(
             prm_732 + prm_734 - 1,
             prm_733 + prm_735 - 1,
             (prm_732 - prm_734) / prm_736 * cnt,
-            (prm_733 - prm_735) / prm_736 * cnt);
-        color(0, 0, 0);
+            (prm_733 - prm_735) / prm_736 * cnt,
+            {240, 240, 240});
         redraw();
         if (cnt != prm_736)
         {
@@ -2813,9 +2796,7 @@ void showtitle(const std::string&, const std::string& prm_739, int prm_740, int)
     gmode(2);
     pos(x_at_m106, y_at_m106 + (mode != 1));
     gcopy(3, 96, 360, 24, 16);
-    pos(x_at_m106 + 32, y_at_m106 + 1 + jp);
-    bmes(prm_739, 250, 250, 250);
-    return;
+    bmes(prm_739, x_at_m106 + 32, y_at_m106 + 1 + jp, {250, 250, 250});
 }
 
 

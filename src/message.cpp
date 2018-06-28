@@ -81,26 +81,6 @@ namespace elona
 
 
 
-void bmes(const std::string& str, int r, int g, int b)
-{
-    int x = ginfo(22);
-    int y = ginfo(23);
-    for (int dy = -1; dy <= 1; ++dy)
-    {
-        for (int dx = -1; dx <= 1; ++dx)
-        {
-            pos(x + dx, y + dy);
-            mes(str);
-        }
-    }
-    color(r, g, b);
-    pos(x, y);
-    mes(str);
-    color(0, 0, 0);
-}
-
-
-
 void txtcontinue()
 {
     tcontinue_at_txtfunc = 1;
@@ -123,7 +103,7 @@ void anime_halt()
     {
         await(config::instance().wait1 / 3);
         pos(x_at_txtfunc, y_at_txtfunc + 12 - cnt);
-        gzoom(3, 552, 504, 120, 22, 120, cnt * 2 + 1);
+        gcopy(3, 552, 504, 120, 22, 120, cnt * 2 + 1);
         redraw();
     }
     wait_key_pressed(true);
@@ -136,7 +116,7 @@ void anime_halt()
         if (cnt != 6)
         {
             pos(x_at_txtfunc, y_at_txtfunc + cnt * 2);
-            gzoom(3, 552, 504, 120, 22, 120, 22 - cnt * 4);
+            gcopy(3, 552, 504, 120, 22, 120, 22 - cnt * 4);
         }
         redraw();
     }

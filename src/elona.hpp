@@ -391,7 +391,7 @@ void boxf(
     const snail::color& color = {0, 0, 0, 0});
 void boxf();
 
-void boxl(int x, int y, int width, int height);
+void boxl(int x, int y, int width, int height, const snail::color& color);
 
 
 void buffer(int window_id, int width = 0, int heihgt = 0);
@@ -415,8 +415,10 @@ void gcopy(
     int window_id,
     int src_x,
     int src_y,
-    int src_width = 0,
-    int src_height = 0);
+    int src_width,
+    int src_height,
+    int dst_width = -1,
+    int dst_height = -1);
 
 bool getkey(snail::key);
 
@@ -449,24 +451,18 @@ void grotate(
 
 void gsel(int window_id);
 
-void gzoom(
-    int window_id,
-    int src_x,
-    int src_y,
-    int src_width,
-    int src_height,
-    int dst_width,
-    int dst_height,
-    bool blend = false);
-
-
 int instr(const std::string& str, size_t pos, const std::string pattern);
 
 
 int stoi(const std::string&);
 
 
-void line(int x1, int y1, int x2, int y2);
+void line(
+    int x1,
+    int y1,
+    int x2,
+    int y2,
+    const snail::color& color = {0, 0, 0});
 
 
 

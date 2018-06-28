@@ -467,7 +467,7 @@ void set_option()
         gmode(0);
         pos(0, 0);
         picload(filesystem::dir::graphic() / u8"title.bmp", 1);
-        gzoom(4, 0, 0, 800, 600, windoww, windowh);
+        gcopy(4, 0, 0, 800, 600, windoww, windowh);
         gsel(0);
         gmode(0);
         pos(0, 0);

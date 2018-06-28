@@ -583,12 +583,11 @@ void show_home_value()
              cnt < cnt_end;
              ++cnt)
         {
-            pos(x + 35 + cnt * 13 + en * 8, y - 2);
             bmes(
                 i18n::s.get("core.locale.building.home.rank.star"),
-                255,
-                255,
-                50);
+                x + 35 + cnt * 13 + en * 8,
+                y - 2,
+                {255, 255, 50});
         }
     }
     font(12 + sizefix - en * 2);

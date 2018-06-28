@@ -2130,7 +2130,7 @@ void talk_window_show()
             p = elona::stoi(actor(1, rc));
         }
         pos(wx + 42, wy + 42);
-        gzoom(4, p % 16 * 48, p / 16 * 72, 48, 72, 80, 112);
+        gcopy(4, p % 16 * 48, p / 16 * 72, 48, 72, 80, 112);
     }
     else
     {
@@ -2140,7 +2140,7 @@ void talk_window_show()
         {
             p(0) = cdata[tc].image % 1000;
             p(1) = cdata[tc].image / 1000;
-            chara_preparepic(p, p(1));
+            chara_preparepic(cdata[tc]);
             pos(wx + 82, wy + 125 - chara_chips[p].offset_y);
             gmode(2, chara_chips[p].width, chara_chips[p].height);
             grotate_(
@@ -2157,7 +2157,7 @@ void talk_window_show()
                 chatpicloaded = 1;
             }
             pos(wx + 42, wy + 42);
-            gzoom(4, 0, 0, 80, 112, 80, 112);
+            gcopy(4, 0, 0, 80, 112, 80, 112);
         }
     }
     font(10 - en * 2);

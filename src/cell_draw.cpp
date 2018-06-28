@@ -224,7 +224,7 @@ void render_shadow_low(int light)
         {
             elona::pos(
                 x * inf_tiles + inf_screenx, y * inf_tiles + inf_screeny);
-            gcopy(3, 144, 752);
+            gcopy(3, 144, 752, inf_tiles, inf_tiles);
         }
     }
 }
@@ -349,7 +349,9 @@ void render_shadow(int p_, int dx_, int dy_)
                 gcopy(
                     3,
                     0 + deco[p_]._0 * inf_tiles,
-                    656 + deco[p_]._1 * inf_tiles);
+                    656 + deco[p_]._1 * inf_tiles,
+                    inf_tiles,
+                    inf_tiles);
             }
         }
     }
@@ -386,7 +388,7 @@ void render_shadow(int p_, int dx_, int dy_)
             i_ = shadowmap[p2_];
         }
         pos(dx_, dy_);
-        gcopy(3, 144 + i_ * inf_tiles, 752);
+        gcopy(3, 144 + i_ * inf_tiles, 752, inf_tiles, inf_tiles);
     }
 }
 
@@ -607,7 +609,12 @@ void draw_one_map_tile(int x, int y, int tile, int dx = 0)
 {
     gmode(0, inf_tiles, inf_tiles);
     pos(x, y);
-    gcopy(2, (tile % 33 + dx) * inf_tiles, tile / 33 * inf_tiles);
+    gcopy(
+        2,
+        (tile % 33 + dx) * inf_tiles,
+        tile / 33 * inf_tiles,
+        inf_tiles,
+        inf_tiles);
 }
 
 
@@ -619,11 +626,12 @@ void draw_blood_pool_and_fragments(int x, int y)
     {
         if (const auto fragments = map(x, y, 7) / 10)
         {
-            gcopy(5, fragments * inf_tiles + 288, 1152);
+            gcopy(5, fragments * inf_tiles + 288, 1152, inf_tiles, inf_tiles);
         }
         if (const auto blood = map(x, y, 7) % 10)
         {
-            gcopy(5, std::min(6, blood) * inf_tiles, 1152);
+            gcopy(
+                5, std::min(6, blood) * inf_tiles, 1152, inf_tiles, inf_tiles);
         }
     }
 }
@@ -655,7 +663,12 @@ void draw_efmap(int x, int y, int dx, int dy, bool update_frame)
         {
             gmode(4, 32, 32, 150);
             pos(dx + 8, dy + 8);
-            gcopy(3, mefsubref(0, p_) + efmap(1, x, y) * 32, mefsubref(1, p_));
+            gcopy(
+                3,
+                mefsubref(0, p_) + efmap(1, x, y) * 32,
+                mefsubref(1, p_),
+                32,
+                32);
         }
         gmode(2, inf_tiles, inf_tiles);
     }
@@ -1332,7 +1345,9 @@ void cell_draw()
                     gcopy(
                         3,
                         192 + light.x * 48 + rnd(light.frame + 1) * inf_tiles,
-                        704);
+                        704,
+                        inf_tiles,
+                        inf_tiles);
                 }
             }
 

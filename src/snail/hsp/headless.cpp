@@ -64,7 +64,7 @@ void font(int, snail::font_t::style_t, const fs::path&)
 {
 }
 
-void gcopy(int, int, int, int, int)
+void gcopy(int, int, int, int, int, int, int)
 {
 }
 
@@ -89,15 +89,9 @@ void gsel(int)
 {
 }
 
-void gzoom(int, int, int, int, int, int, int, bool)
-{
-}
 
-void line(int, int)
-{
-}
 
-void line(int, int, int, int)
+void line(int, int, int, int, const snail::color&)
 {
 }
 

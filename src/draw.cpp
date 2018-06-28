@@ -572,7 +572,7 @@ void prepare_item_image(int id, int color, int character_image)
             255 - c_col(1, character_color),
             255 - c_col(2, character_color),
             5);
-        gzoom(
+        gcopy(
             5,
             chara_chips[character_id].x + 8,
             chara_chips[character_id].y + 4
@@ -641,11 +641,12 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
             const int y = inf_clocky + 200 - 180 * right + cnt * 32;
             // std::cout << "HP bar(" << i << "):name: " << position_t{x, y} <<
             // std::endl;
-            pos(x, y);
-            color(0, 0, 0);
-            const auto color = cc.state == 1 ? snail::color{255, 255, 255}
-                                             : snail::color{255, 35, 35};
-            bmes(name, color.r, color.g, color.b);
+            bmes(
+                name,
+                x,
+                y,
+                cc.state == 1 ? snail::color{255, 255, 255}
+                              : snail::color{255, 35, 35});
             if (cc.state == 1)
             {
                 const int width = clamp(cc.hp * 30 / cc.max_hp, 1, 30);
@@ -654,7 +655,7 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
                 // std::cout << "HP bar(" << i << "):bar:  " << position_t{x_,
                 // y_} << std::endl;
                 pos(x_, y_);
-                gzoom(3, 480 - width, 517, width, 3, width * 3, 9);
+                gcopy(3, 480 - width, 517, width, 3, width * 3, 9);
 
                 // Show leash icon.
                 if (config::instance().leash_icon && cdata[i].is_leashed())
@@ -667,25 +668,23 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
                     pos(right ? std::min(x, x_) - icon_width / 2
                               : std::max(x_ + 90, int(x + strlen_u(name) * 7)),
                         y);
-                    gzoom(
+                    gcopy(
                         1,
                         0,
                         960,
                         icon_width,
                         icon_height,
                         icon_width / 2,
-                        icon_height / 2,
-                        true);
+                        icon_height / 2);
                     gmode(5);
-                    gzoom(
+                    gcopy(
                         1,
                         0,
                         960,
                         icon_width,
                         icon_height,
                         icon_width / 2,
-                        icon_height / 2,
-                        true);
+                        icon_height / 2);
                     gmode(2);
                 }
             }
@@ -812,10 +811,7 @@ void show_damage_popups()
         y += syfix * (scy != scybk) * (scrollp >= 3);
 
         font(2 + cfg_dmgfont - en * 2);
-        pos(x, y);
-        color(damage_popup.color.r, damage_popup.color.g, damage_popup.color.b);
-        bmes(damage_popup.text, 255, 255, 255);
-        color(0, 0, 0);
+        bmes(damage_popup.text, x, y, {255, 255, 255}, damage_popup.color);
 
         ++damage_popup.frame;
 
@@ -831,7 +827,7 @@ void draw_emo(int cc, int x, int y)
 {
     gmode(2, 16, 16);
     pos(x + 16, y);
-    gcopy(3, 32 + cdata[cc].emotion_icon % 100 * 16, 608);
+    gcopy(3, 32 + cdata[cc].emotion_icon % 100 * 16, 608, 16, 16);
 }
 
 
@@ -883,33 +879,29 @@ void set_pcc_depending_on_equipments(int cc, int ci)
 }
 
 
-void chara_preparepic(int prm_618, int prm_619)
+
+void chara_preparepic(const character& cc)
 {
-    int p_at_m83 = 0;
-    if (prm_619 == 0)
-    {
-        p_at_m83 = prm_618 / 1000;
-    }
-    else
-    {
-        p_at_m83 = prm_619;
-    }
+    chara_preparepic(cc.image);
+}
+
+
+
+void chara_preparepic(int image_id)
+{
+    const auto chip_id = image_id % 1000;
+    const auto color_id = image_id / 1000;
+    const auto& chip = chara_chips[chip_id];
     gsel(5);
-    boxf(0, 960, chara_chips[prm_618].width, chara_chips[prm_618].height);
+    boxf(0, 960, chip.width, chip.height);
     pos(0, 960);
     set_color_mod(
-        255 - c_col(0, p_at_m83),
-        255 - c_col(1, p_at_m83),
-        255 - c_col(2, p_at_m83));
-    gcopy(
-        5,
-        chara_chips[prm_618].x,
-        chara_chips[prm_618].y,
-        chara_chips[prm_618].width,
-        chara_chips[prm_618].height);
+        255 - c_col(0, color_id),
+        255 - c_col(1, color_id),
+        255 - c_col(2, color_id));
+    gcopy(5, chip.x, chip.y, chip.width, chip.height);
     set_color_mod(255, 255, 255);
     gsel(0);
-    return;
 }
 
 
@@ -1188,6 +1180,31 @@ void initialize_item_chip()
     initialize_chara_chips();
     initialize_map_chip();
 }
+
+
+
+void bmes(
+    const std::string& message,
+    int x,
+    int y,
+    const snail::color& text_color,
+    const snail::color& shadow_color)
+{
+    color(shadow_color.r, shadow_color.g, shadow_color.b);
+    for (int dy = -1; dy <= 1; ++dy)
+    {
+        for (int dx = -1; dx <= 1; ++dx)
+        {
+            pos(x + dx, y + dy);
+            mes(message);
+        }
+    }
+    color(text_color.r, text_color.g, text_color.b);
+    pos(x, y);
+    mes(message);
+    color(0, 0, 0);
+}
+
 
 
 } // namespace elona
