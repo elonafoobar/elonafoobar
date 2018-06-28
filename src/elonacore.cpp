@@ -1,4 +1,5 @@
 #include "ability.hpp"
+#include "activity.hpp"
 #include "adventurer.hpp"
 #include "ai.hpp"
 #include "animation.hpp"
@@ -123,7 +124,6 @@ int r3 = 0;
 int refdiff = 0;
 int traveldone = 0;
 elona_vector1<int> fsetincome;
-elona_vector1<int> fsetperform;
 elona_vector1<int> fsetrare;
 elona_vector1<int> fsetplantartifact;
 elona_vector1<int> fsetplantunknown;

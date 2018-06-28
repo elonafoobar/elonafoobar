@@ -174,6 +174,9 @@ ELONA_EXTERN(elona_vector1<std::string> netbuf);
 // proc_random_event.cpp
 ELONA_EXTERN(elona_vector1<int> fsetremain);
 
+// activity.cpp
+ELONA_EXTERN(elona_vector1<int> fsetperform);
+
 ELONA_EXTERN(elona_vector1<int> _randcolor);
 ELONA_EXTERN(elona_vector1<int> aniref);
 ELONA_EXTERN(elona_vector1<int> anix);

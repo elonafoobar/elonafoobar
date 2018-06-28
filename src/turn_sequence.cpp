@@ -1,5 +1,6 @@
 #include "turn_sequence.hpp"
 #include "ability.hpp"
+#include "activity.hpp"
 #include "ai.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
@@ -1156,7 +1157,10 @@ turn_result_t pass_one_turn(bool label_2738_flg)
     }
     if (cdata[cc].continuous_action_id != 0)
     {
-        activity_proc(cdata[cc]);
+        if (auto result = activity_proc(cdata[cc]))
+        {
+            return *result;
+        }
     }
     if (cdata[cc].needs_refreshing_status())
     {

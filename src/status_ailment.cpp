@@ -1,5 +1,6 @@
 #include "status_ailment.hpp"
 #include "ability.hpp"
+#include "activity.hpp"
 #include "buff.hpp"
 #include "character.hpp"
 #include "element.hpp"

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <type_traits>
 #include "ability.hpp"
+#include "activity.hpp"
 #include "blending.hpp"
 #include "character.hpp"
 #include "crafting.hpp"

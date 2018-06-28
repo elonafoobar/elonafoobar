@@ -1,5 +1,23 @@
 #include "activity.hpp"
+#include "ability.hpp"
+#include "animation.hpp"
+#include "audio.hpp"
+#include "calc.hpp"
 #include "character.hpp"
+#include "character_status.hpp"
+#include "command.hpp"
+#include "config.hpp"
+#include "dmgheal.hpp"
+#include "enchantment.hpp"
+#include "food.hpp"
+#include "fov.hpp"
+#include "map_cell.hpp"
+#include "optional.hpp"
+#include "i18n.hpp"
+#include "itemgen.hpp"
+#include "input.hpp"
+#include "status_ailment.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 namespace elona
@@ -97,7 +115,7 @@ void activity_handle_damage(character& chara)
     chara.stops_continuous_action_if_damaged = 0;
 }
 
-void activity_proc(character& chara)
+optional<turn_result_t> activity_proc(character& chara)
 {
     ci = chara.continuous_action_item;
     --chara.continuous_action_turn;
@@ -189,6 +207,8 @@ void activity_proc(character& chara)
             return turn_result_t::exit_map;
         }
     }
+
+    return none;
 }
 
 void prompt_stop_continuous_action()
@@ -204,6 +224,8 @@ void prompt_stop_continuous_action()
     rtval = show_prompt(promptx, prompty, 160);
     return;
 }
+
+
 
 void continuous_action_perform()
 {
@@ -239,7 +261,7 @@ void continuous_action_perform()
                 if (rnd(10) == 0)
                 {
                     txtef(4);
-                    txt(lang(u8"ﾁｬﾗﾝ♪ "s, u8"*Tiki*"s),
+                    txt(lang(u8"ﾁï½¬ﾗﾝ♪ "s, u8"*Tiki*"s),
                         lang(u8"ﾎﾟﾛﾝ♪ "s, u8"*Dan*"s),
                         lang(u8"ﾀﾞｰﾝ♪ "s, u8"*Lala*"s));
                 }
@@ -327,7 +349,7 @@ void continuous_action_perform()
                         txtef(9);
                         if (jp)
                         {
-                            txt(u8"「飽きた」"s,
+                            txt(u8"「é£½きた」"s,
                                 u8"「前にも聴いたよ」"s,
                                 u8"「またこの曲か…」"s);
                         }
@@ -518,8 +540,7 @@ void continuous_action_perform()
                                                 / 10),
                                             calcfixlv(3));
                                     }
-                                    flttypemajor =
-                                        fsetperform(rnd(length(fsetperform)));
+                                    flttypemajor = choice(fsetperform);
                                     dbid = 0;
                                     if (gdata_executing_immediate_quest_type
                                         == 1009)
@@ -682,8 +703,6 @@ void continuous_action_perform()
     }
     return;
 }
-
-
 
 void continuous_action_sex()
 {
@@ -894,90 +913,124 @@ void continuous_action_sex()
 }
 
 
-void continuous_action_blending()
+void continuous_action_eating()
 {
-label_19341_internal:
-    rpid = rpref(0);
-    if (rpid == 0)
-    {
-        rowactend(cc);
-        return;
-    }
     if (cdata[cc].continuous_action_id == 0)
     {
-        txtnew();
-        txt(i18n::s.get("core.locale.blending.started", cdata[cc], rpname(rpid)));
-        cdata[cc].continuous_action_id = 12;
-        cdata[cc].continuous_action_turn = rpref(2) % 10000;
+        cdata[cc].continuous_action_id = 1;
+        cdata[cc].continuous_action_turn = 8;
+        cdata[cc].continuous_action_item = ci;
+        if (is_in_fov(cc))
+        {
+            snd(18);
+            if (inv[ci].own_state == 1 && cc < 16)
+            {
+                txt(lang(
+                    name(cc) + u8"は"s + itemname(ci, 1)
+                        + u8"をこっそりと口に運んだ。"s,
+                    name(cc) + u8" start"s + _s(cc) + u8" to eat "s
+                        + itemname(ci, 1) + u8" in secret."s));
+            }
+            else
+            {
+                txt(lang(
+                    name(cc) + u8"は"s + itemname(ci, 1) + u8"を口に運んだ。"s,
+                    name(cc) + u8" start"s + _s(cc) + u8" to eat "s
+                        + itemname(ci, 1) + u8"."s));
+            }
+            if (inv[ci].id == 204 && inv[ci].subname == 344)
+            {
+                txt(lang(u8"「いただきマンモス」"s, u8"\"Let's eatammoth.\""s));
+            }
+        }
         return;
     }
     if (cdata[cc].continuous_action_turn > 0)
     {
-        if (rnd(30) == 0)
-        {
-            txtef(4);
-            txt(i18n::s.get_enum("core.locale.blending.sounds", rnd(2)));
-        }
         return;
     }
-    if (rpref(2) >= 10000)
+    if (is_in_fov(cc))
     {
-        cdata[cc].continuous_action_turn = rpref(2) / 10000;
-        for (int cnt = 0;; ++cnt)
-        {
-            mode = 12;
-            ++gdata_hour;
-            weather_changes();
-            render_hud();
-            if (cnt % 5 == 0)
-            {
-                txtef(4);
-                txt(i18n::s.get_enum("core.locale.blending.sounds", rnd(2)));
-            }
-            redraw();
-            await(config::instance().animewait * 5);
-            gdata_minute = 0;
-            cc = 0;
-            --cdata[cc].continuous_action_turn;
-            if (cdata[cc].continuous_action_turn <= 0)
-            {
-                int stat = label_1931();
-                if (stat == 0)
-                {
-                    txt(i18n::s.get("core.locale.blending.required_material_not_found"));
-                    break;
-                }
-                label_1933();
-                if (rpref(1) > 0)
-                {
-                    cdata[cc].continuous_action_turn = rpref(2) / 10000;
-                    cnt = 0 - 1;
-                    continue;
-                }
-                else
-                {
-                    break;
-                }
-            }
-        }
-        rowactend(cc);
-        mode = 0;
-        return;
+        txt(lang(
+            npcn(cc) + itemname(ci, 1) + u8"を食べ終えた。"s,
+            name(cc) + u8" "s + have(cc) + u8" finished eating "s
+                + itemname(ci, 1) + u8"."s));
     }
-    int stat = label_1931();
-    if (stat == 0)
-    {
-        txt(i18n::s.get("core.locale.blending.required_material_not_found"));
-        rowactend(cc);
-        return;
-    }
-    label_1933();
-    if (rpref(1) > 0)
-    {
-        cdata[cc].continuous_action_id = 0;
-        goto label_19341_internal;
-    }
+    continuous_action_eating_finish();
     rowactend(cc);
+    return;
+}
+
+
+
+void continuous_action_eating_finish()
+{
+    apply_general_eating_effect(ci);
+    if (cc == 0)
+    {
+        item_identify(inv[ci], identification_state_t::partly_identified);
+    }
+    if (chara_unequip(ci))
+    {
+        chara_refresh(cc);
+    }
+    --inv[ci].number;
+    if (ci >= 5080)
+    {
+        cell_refresh(inv[ci].position.x, inv[ci].position.y);
+    }
+    else if (cc == 0)
+    {
+        refresh_burden_state();
+    }
+    if (cc == 0)
+    {
+        show_eating_message();
+    }
+    else
+    {
+        if (ci == cdata[cc].item_which_will_be_used)
+        {
+            cdata[cc].item_which_will_be_used = 0;
+        }
+        if (cdata[cc].was_passed_item_by_you_just_now())
+        {
+            if (inv[ci].material == 35)
+            {
+                if (inv[ci].param3 < 0)
+                {
+                    txtef(9);
+                    // TODO JP had six options, EN only had five.
+                    txt(i18n::s.get_enum("core.locale.food.passed_rotten", rnd(6)));
+                    dmghp(cc, 999, -12);
+                    if (cdata[cc].state != 1)
+                    {
+                        if (cdata[cc].relationship > 0)
+                        {
+                            modify_karma(0, -5);
+                        }
+                        else
+                        {
+                            modify_karma(0, -1);
+                        }
+                    }
+                    chara_mod_impression(tc, -25);
+                    return;
+                }
+            }
+        }
+    }
+    chara_anorexia(cc);
+    if ((inv[ci].id == 755 && rnd(3)) || (inv[ci].id == 756 && rnd(10) == 0))
+    {
+        if (is_in_fov(cc))
+        {
+            txtef(8);
+            txt(i18n::s.get("core.locale.food.mochi.chokes", cdata[cc]));
+            txt(i18n::s.get("core.locale.food.mochi.dialog"));
+        }
+        ++cdata[cc].choked;
+    }
     return;
 }
 

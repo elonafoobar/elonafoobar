@@ -1,5 +1,6 @@
 #include "talk.hpp"
 #include "ability.hpp"
+#include "activity.hpp"
 #include "adventurer.hpp"
 #include "animation.hpp"
 #include "audio.hpp"

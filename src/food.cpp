@@ -1,5 +1,6 @@
 #include "food.hpp"
 #include "ability.hpp"
+
 #include "audio.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
@@ -28,130 +29,6 @@ int cieat = 0;
 int nutrition = 0;
 int fdmax = 0;
 elona_vector2<int> fdlist;
-
-void continuous_action_eating()
-{
-    if (cdata[cc].continuous_action_id == 0)
-    {
-        cdata[cc].continuous_action_id = 1;
-        cdata[cc].continuous_action_turn = 8;
-        cdata[cc].continuous_action_item = ci;
-        if (is_in_fov(cc))
-        {
-            snd(18);
-            if (inv[ci].own_state == 1 && cc < 16)
-            {
-                txt(lang(
-                    name(cc) + u8"は"s + itemname(ci, 1)
-                        + u8"をこっそりと口に運んだ。"s,
-                    name(cc) + u8" start"s + _s(cc) + u8" to eat "s
-                        + itemname(ci, 1) + u8" in secret."s));
-            }
-            else
-            {
-                txt(lang(
-                    name(cc) + u8"は"s + itemname(ci, 1) + u8"を口に運んだ。"s,
-                    name(cc) + u8" start"s + _s(cc) + u8" to eat "s
-                        + itemname(ci, 1) + u8"."s));
-            }
-            if (inv[ci].id == 204 && inv[ci].subname == 344)
-            {
-                txt(lang(u8"「いただきマンモス」"s, u8"\"Let's eatammoth.\""s));
-            }
-        }
-        return;
-    }
-    if (cdata[cc].continuous_action_turn > 0)
-    {
-        return;
-    }
-    if (is_in_fov(cc))
-    {
-        txt(lang(
-            npcn(cc) + itemname(ci, 1) + u8"を食べ終えた。"s,
-            name(cc) + u8" "s + have(cc) + u8" finished eating "s
-                + itemname(ci, 1) + u8"."s));
-    }
-    continuous_action_eating_finish();
-    rowactend(cc);
-    return;
-}
-
-
-
-void continuous_action_eating_finish()
-{
-    cieat = ci;
-    apply_general_eating_effect();
-    ci = cieat;
-    if (cc == 0)
-    {
-        item_identify(inv[ci], identification_state_t::partly_identified);
-    }
-    if (chara_unequip(ci))
-    {
-        chara_refresh(cc);
-    }
-    --inv[ci].number;
-    if (ci >= 5080)
-    {
-        cell_refresh(inv[ci].position.x, inv[ci].position.y);
-    }
-    else if (cc == 0)
-    {
-        refresh_burden_state();
-    }
-    if (cc == 0)
-    {
-        show_eating_message();
-    }
-    else
-    {
-        if (ci == cdata[cc].item_which_will_be_used)
-        {
-            cdata[cc].item_which_will_be_used = 0;
-        }
-        if (cdata[cc].was_passed_item_by_you_just_now())
-        {
-            if (inv[ci].material == 35)
-            {
-                if (inv[ci].param3 < 0)
-                {
-                    txtef(9);
-                    // TODO JP had six options, EN only had five.
-                    txt(i18n::s.get_enum("core.locale.food.passed_rotten", rnd(6)));
-                    dmghp(cc, 999, -12);
-                    if (cdata[cc].state != 1)
-                    {
-                        if (cdata[cc].relationship > 0)
-                        {
-                            modify_karma(0, -5);
-                        }
-                        else
-                        {
-                            modify_karma(0, -1);
-                        }
-                    }
-                    chara_mod_impression(tc, -25);
-                    return;
-                }
-            }
-        }
-    }
-    chara_anorexia(cc);
-    if ((inv[ci].id == 755 && rnd(3)) || (inv[ci].id == 756 && rnd(10) == 0))
-    {
-        if (is_in_fov(cc))
-        {
-            txtef(8);
-            txt(i18n::s.get("core.locale.food.mochi.chokes", cdata[cc]));
-            txt(i18n::s.get("core.locale.food.mochi.dialog"));
-        }
-        ++cdata[cc].choked;
-    }
-    return;
-}
-
 
 
 void get_hungry(int cc)
@@ -523,7 +400,7 @@ void make_dish(int ci, int type)
 
 
 
-void apply_general_eating_effect()
+void apply_general_eating_effect(int cieat)
 {
     tc = cc;
     DIM3(fdlist, 2, 10);
