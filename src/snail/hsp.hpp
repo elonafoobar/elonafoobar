@@ -43,7 +43,14 @@ void boxf(const color& color);
 void buffer(int window_id, int width, int height);
 void color(int r, int g, int b);
 void font(int size, font_t::style_t style, const fs::path& filepath);
-void gcopy(int window_id, int src_x, int src_y, int src_width, int src_height);
+void gcopy(
+    int window_id,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height,
+    int dst_width,
+    int dst_height);
 int ginfo(int type);
 void gmode(int mode, int width, int height, int alpha);
 void grotate_(
@@ -60,15 +67,6 @@ void grotate(
     int dst_width,
     int dst_height);
 void gsel(int window_id);
-void gzoom(
-    int window_id,
-    int src_x,
-    int src_y,
-    int src_width,
-    int src_height,
-    int dst_width,
-    int dst_height,
-    bool blend);
 void line(int x1, int y1, int x2, int y2, const snail::color& color);
 void title(
     const std::string& title_str,

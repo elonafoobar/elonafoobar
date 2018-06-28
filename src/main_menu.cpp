@@ -35,7 +35,7 @@ main_menu_result_t main_title_menu()
     gmode(0);
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"title.bmp", 1);
-    gzoom(4, 0, 0, 800, 600, windoww, windowh);
+    gcopy(4, 0, 0, 800, 600, windoww, windowh);
     gmode(2);
     font(13 - en * 2);
     color(255, 255, 255);
@@ -298,7 +298,7 @@ main_menu_result_t main_menu_new_game()
     gsel(4);
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"void.bmp", 1);
-    gzoom(4, 0, 0, 800, 600, windoww, windowh);
+    gcopy(4, 0, 0, 800, 600, windoww, windowh);
     load_background_variants(2);
     gsel(3);
     pos(960, 96);
@@ -513,7 +513,7 @@ main_menu_result_t main_menu_incarnate()
     gsel(4);
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"void.bmp", 1);
-    gzoom(4, 0, 0, 800, 600, windoww, windowh);
+    gcopy(4, 0, 0, 800, 600, windoww, windowh);
     gsel(0);
     gmode(0);
     pos(0, 0);

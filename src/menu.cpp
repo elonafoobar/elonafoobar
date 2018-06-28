@@ -2342,7 +2342,7 @@ label_2035_internal:
         {
             p = cdata[cc].sex * 64 + cdata[cc].portrait;
             pos(wx + 560, wy + 27);
-            gzoom(4, p % 16 * 48, p / 16 * 72, 48, 72, 80, 112);
+            gcopy(4, p % 16 * 48, p / 16 * 72, 48, 72, 80, 112);
         }
         else
         {
@@ -2353,7 +2353,7 @@ label_2035_internal:
                 if (fs::exists(filepath))
                 {
                     pos(wx + 560, wy + 27);
-                    gzoom(4, 0, 0, 80, 112, 80, 112);
+                    gcopy(4, 0, 0, 80, 112, 80, 112);
                 }
             }
         }
@@ -3799,12 +3799,12 @@ label_2041_internal:
         {
             p = cdata[cc].sex * 64 + cdata[cc].portrait;
             pos(wx + 238, wy + 75);
-            gzoom(4, p % 16 * 48, p / 16 * 72, 48, 72, 80, 112);
+            gcopy(4, p % 16 * 48, p / 16 * 72, 48, 72, 80, 112);
         }
         else if (cdata[cc].portrait != -1)
         {
             pos(wx + 238, wy + 75);
-            gzoom(
+            gcopy(
                 7,
                 std::abs((cdata[cc].portrait + 2)) * 80,
                 0,
@@ -6602,7 +6602,7 @@ void begin_to_believe_god()
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"bg_altar.bmp", 1);
     pos(0, 0);
-    gzoom(4, 0, 0, 600, 400, windoww, windowh - inf_verh);
+    gcopy(4, 0, 0, 600, 400, windoww, windowh - inf_verh);
     gsel(0);
     keyrange = 0;
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)

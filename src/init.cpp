@@ -422,7 +422,7 @@ void initialize_elona()
     if (inf_tiles != 48)
     {
         pos(0, 0);
-        gzoom(1, 0, 0, 1584, 1200, 33 * inf_tiles, 25 * inf_tiles);
+        gcopy(1, 0, 0, 1584, 1200, 33 * inf_tiles, 25 * inf_tiles);
     }
     buffer(2, 33 * inf_tiles, 25 * inf_tiles);
     buffer(6, 33 * inf_tiles, 25 * inf_tiles);

@@ -416,7 +416,9 @@ void gcopy(
     int src_x,
     int src_y,
     int src_width = 0,
-    int src_height = 0);
+    int src_height = 0,
+    int dst_width = -1,
+    int dst_height = -1);
 
 bool getkey(snail::key);
 
@@ -448,17 +450,6 @@ void grotate(
     int dst_height = 0);
 
 void gsel(int window_id);
-
-void gzoom(
-    int window_id,
-    int src_x,
-    int src_y,
-    int src_width,
-    int src_height,
-    int dst_width,
-    int dst_height,
-    bool blend = false);
-
 
 int instr(const std::string& str, size_t pos, const std::string pattern);
 

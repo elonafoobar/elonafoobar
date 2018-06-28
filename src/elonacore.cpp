@@ -7978,7 +7978,7 @@ void atxinit()
         pos(0, 0);
         picload(filesystem::dir::graphic() / (atxbg + u8".bmp"s), 1);
         pos(0, inf_msgh);
-        gzoom(4, 0, 0, 240, 160, windoww, windowh - inf_verh - inf_msgh);
+        gcopy(4, 0, 0, 240, 160, windoww, windowh - inf_verh - inf_msgh);
         gmode(2);
         p = windoww / 192;
         for (int cnt = 0, cnt_end = (p + 1); cnt < cnt_end; ++cnt)
@@ -7996,7 +7996,7 @@ void atxinit()
         }
         window2(windoww - 208, 0, 208, 98, 0, 0);
         pos(windoww - 204, 4);
-        gzoom(0, 120, 88, windoww - 120, windowh - inf_verh - 112, 200, 90);
+        gcopy(0, 120, 88, windoww - 120, windowh - inf_verh - 112, 200, 90);
         gsel(0);
     }
     return;
@@ -9852,7 +9852,7 @@ label_1956_internal:
             if (p < listmax)
             {
                 pos(wx + cnt * 24, wy + cnt2 * 24);
-                gzoom(
+                gcopy(
                     2,
                     list(0, p) % ww * 48,
                     list(0, p) / ww * 48,
@@ -13864,9 +13864,8 @@ void label_2150()
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"bg_night.bmp", 1);
     pos(0, 0);
-    gzoom(4, 0, 0, 640, 480, windoww, windowh - inf_verh);
+    gcopy(4, 0, 0, 640, 480, windoww, windowh - inf_verh);
     gsel(0);
-    return;
 }
 
 
@@ -19529,7 +19528,7 @@ label_2684_internal:
     pos(0, 0);
     picload(filesystem::dir::graphic() / (u8""s + file + u8".bmp"), 1);
     pos(0, y1);
-    gzoom(4, 0, 0, 640, 480, windoww, y2 - y1);
+    gcopy(4, 0, 0, 640, 480, windoww, y2 - y1);
     gmode(2);
     boxf(0, 0, windoww, y1, {5, 5, 5});
     boxf(0, y2, windoww, windowh - y2, {5, 5, 5});
@@ -20148,7 +20147,7 @@ void conquer_lesimas()
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"void.bmp", 1);
     pos(0, 0);
-    gzoom(4, 0, 0, 640, 480, windoww, windowh);
+    gcopy(4, 0, 0, 640, 480, windoww, windowh);
     gsel(0);
     animation_fade_in();
     pos(0, 0);
@@ -20395,7 +20394,7 @@ void show_game_score_ranking()
     notesel(buff);
     gmode(0);
     pos(0, 0);
-    gzoom(4, 0, 0, 800, 600, windoww, windowh);
+    gcopy(4, 0, 0, 800, 600, windoww, windowh);
     gmode(2);
     x = 135;
     y = 134;

@@ -2226,7 +2226,7 @@ void clear_background_in_character_making()
     gsel(4);
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"void.bmp", 1);
-    gzoom(4, 0, 0, 800, 600, windoww, windowh);
+    gcopy(4, 0, 0, 800, 600, windoww, windowh);
     gsel(0);
     gmode(0);
     pos(0, 0);
@@ -2239,7 +2239,7 @@ void clear_background_in_continue()
     gsel(4);
     pos(0, 0);
     picload(filesystem::dir::graphic() / u8"void.bmp", 1);
-    gzoom(4, 0, 0, 800, 600, windoww, windowh);
+    gcopy(4, 0, 0, 800, 600, windoww, windowh);
     gsel(0);
     gmode(0);
     pos(0, 0);
@@ -2562,12 +2562,12 @@ void window2(
     if (prm_661 == 0)
     {
         pos(prm_656 + 4, prm_657 + 4);
-        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
+        gcopy(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
     }
     if (prm_661 == 1)
     {
         pos(prm_656 + 4, prm_657 + 4);
-        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
+        gcopy(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
         boxf(
             prm_656 + 4,
             prm_657 + 4,
@@ -2578,7 +2578,7 @@ void window2(
     if (prm_661 == 2)
     {
         pos(prm_656 + 4, prm_657 + 4);
-        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
+        gcopy(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
         boxf(
             prm_656 + 4,
             prm_657 + 4,
@@ -2589,7 +2589,7 @@ void window2(
     if (prm_661 == 3)
     {
         pos(prm_656 + 4, prm_657 + 4);
-        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
+        gcopy(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
         boxf(
             prm_656 + 4,
             prm_657 + 4,
@@ -2600,7 +2600,7 @@ void window2(
     if (prm_661 == 4)
     {
         pos(prm_656 + 4, prm_657 + 4);
-        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
+        gcopy(3, 24, 72, 228, 144, x2_at_m93 - 6, y2_at_m93 - 8);
         boxf(
             prm_656 + 4,
             prm_657 + 4,
@@ -2653,7 +2653,7 @@ void window2(
     if (prm_661 == 5)
     {
         pos(prm_656 + 2, prm_657 + 2);
-        gzoom(3, 24, 72, 228, 144, x2_at_m93 - 4, y2_at_m93 - 5);
+        gcopy(3, 24, 72, 228, 144, x2_at_m93 - 4, y2_at_m93 - 5);
         boxf(
             prm_656 + 4,
             prm_657 + 4,

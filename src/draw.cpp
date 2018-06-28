@@ -572,7 +572,7 @@ void prepare_item_image(int id, int color, int character_image)
             255 - c_col(1, character_color),
             255 - c_col(2, character_color),
             5);
-        gzoom(
+        gcopy(
             5,
             chara_chips[character_id].x + 8,
             chara_chips[character_id].y + 4
@@ -655,7 +655,7 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
                 // std::cout << "HP bar(" << i << "):bar:  " << position_t{x_,
                 // y_} << std::endl;
                 pos(x_, y_);
-                gzoom(3, 480 - width, 517, width, 3, width * 3, 9);
+                gcopy(3, 480 - width, 517, width, 3, width * 3, 9);
 
                 // Show leash icon.
                 if (config::instance().leash_icon && cdata[i].is_leashed())
@@ -668,25 +668,23 @@ void show_hp_bar(show_hp_bar_side side, int inf_clocky)
                     pos(right ? std::min(x, x_) - icon_width / 2
                               : std::max(x_ + 90, int(x + strlen_u(name) * 7)),
                         y);
-                    gzoom(
+                    gcopy(
                         1,
                         0,
                         960,
                         icon_width,
                         icon_height,
                         icon_width / 2,
-                        icon_height / 2,
-                        true);
+                        icon_height / 2);
                     gmode(5);
-                    gzoom(
+                    gcopy(
                         1,
                         0,
                         960,
                         icon_width,
                         icon_height,
                         icon_width / 2,
-                        icon_height / 2,
-                        true);
+                        icon_height / 2);
                     gmode(2);
                 }
             }

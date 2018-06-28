@@ -526,58 +526,29 @@ void font(int size, font_t::style_t style, const fs::path& filepath)
     }
 }
 
-void gcopy(int window_id, int src_x, int src_y, int src_width, int src_height)
+void gcopy(
+    int window_id,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height,
+    int dst_width,
+    int dst_height)
 {
+    auto&& renderer = snail::application::instance().get_renderer();
+
     detail::set_blend_mode();
     snail::detail::enforce_sdl(::SDL_SetTextureAlphaMod(
         detail::tex_buffers[window_id].texture,
         detail::current_tex_buffer().color.a));
-
-    if (window_id == detail::current_buffer)
-    {
-        src_width =
-            src_width == 0 ? detail::current_tex_buffer().width : src_width;
-        src_height =
-            src_height == 0 ? detail::current_tex_buffer().height : src_height;
-        auto tmp_buffer = detail::get_tmp_buffer(src_width, src_height);
-        application::instance().get_renderer().set_render_target(tmp_buffer);
-        if (window_id >= 10)
-        {
-            const auto save =
-                application::instance().get_renderer().blend_mode();
-            application::instance().get_renderer().set_blend_mode(
-                blend_mode_t::none);
-            application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
-            application::instance().get_renderer().set_blend_mode(save);
-        }
-        application::instance().get_renderer().clear();
-        application::instance().get_renderer().render_image(
-            detail::tex_buffers[window_id].texture,
-            src_x,
-            src_y,
-            src_width,
-            src_height,
-            0,
-            0);
-        gsel(window_id);
-        application::instance().get_renderer().render_image(
-            tmp_buffer,
-            0,
-            0,
-            src_width,
-            src_height,
-            detail::current_tex_buffer().x,
-            detail::current_tex_buffer().y);
-        return;
-    }
 
     int dst_x = detail::current_tex_buffer().x;
     int dst_y = detail::current_tex_buffer().y;
     src_width = src_width == 0 ? detail::current_tex_buffer().width : src_width;
     src_height =
         src_height == 0 ? detail::current_tex_buffer().height : src_height;
-    int dst_width = src_width;
-    int dst_height = src_height;
+    dst_width = dst_width == -1 ? src_width : dst_width;
+    dst_height = dst_height == -1 ? src_height : dst_height;
 
     if (src_x < 0)
     {
@@ -604,16 +575,50 @@ void gcopy(int window_id, int src_x, int src_y, int src_width, int src_height)
         dst_height -= excess;
     }
 
-    application::instance().get_renderer().render_image(
-        detail::tex_buffers[window_id].texture,
-        src_x,
-        src_y,
-        src_width,
-        src_height,
-        dst_x,
-        dst_y,
-        dst_width,
-        dst_height);
+    if (window_id == detail::current_buffer)
+    {
+        src_width =
+            src_width == 0 ? detail::current_tex_buffer().width : src_width;
+        src_height =
+            src_height == 0 ? detail::current_tex_buffer().height : src_height;
+        auto tmp_buffer = detail::get_tmp_buffer(src_width, src_height);
+        renderer.set_render_target(tmp_buffer);
+        if (window_id >= 10)
+        {
+            const auto save = renderer.blend_mode();
+            renderer.set_blend_mode(blend_mode_t::none);
+            renderer.set_draw_color({0, 0, 0, 0});
+            renderer.set_blend_mode(save);
+        }
+        renderer.clear();
+        renderer.render_image(
+            detail::tex_buffers[window_id].texture,
+            src_x,
+            src_y,
+            src_width,
+            src_height,
+            0,
+            0,
+            dst_width,
+            dst_height);
+        gsel(window_id);
+        renderer.render_image(
+            tmp_buffer, 0, 0, dst_width, dst_height, dst_x, dst_y);
+        return;
+    }
+    else
+    {
+        renderer.render_image(
+            detail::tex_buffers[window_id].texture,
+            src_x,
+            src_y,
+            src_width,
+            src_height,
+            dst_x,
+            dst_y,
+            dst_width,
+            dst_height);
+    }
 }
 
 int ginfo(int type)
@@ -817,86 +822,6 @@ void gsel(int window_id)
     detail::current_buffer = window_id;
     application::instance().get_renderer().set_render_target(
         detail::current_tex_buffer().texture);
-}
-
-void gzoom(
-    int window_id,
-    int src_x,
-    int src_y,
-    int src_width,
-    int src_height,
-    int dst_width,
-    int dst_height,
-    bool blend)
-{
-    if (blend)
-    {
-        detail::set_blend_mode();
-        snail::detail::enforce_sdl(::SDL_SetTextureAlphaMod(
-            detail::tex_buffers[window_id].texture,
-            detail::current_tex_buffer().color.a));
-    }
-    else
-    {
-        application::instance().get_renderer().set_blend_mode(
-            blend_mode_t::none);
-        snail::detail::enforce_sdl(::SDL_SetTextureAlphaMod(
-            detail::tex_buffers[window_id].texture, 255));
-    }
-
-    auto tmp_buffer = detail::get_tmp_buffer(dst_width, dst_height);
-
-    if (window_id == detail::current_buffer)
-    {
-        application::instance().get_renderer().set_render_target(tmp_buffer);
-        if (window_id < 10)
-        {
-            application::instance().get_renderer().set_blend_mode(
-                blend_mode_t::none);
-            application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
-        }
-        else
-        {
-            const auto save =
-                application::instance().get_renderer().blend_mode();
-            application::instance().get_renderer().set_blend_mode(
-                blend_mode_t::none);
-            application::instance().get_renderer().set_draw_color({0, 0, 0, 0});
-            application::instance().get_renderer().set_blend_mode(save);
-        }
-        application::instance().get_renderer().clear();
-        application::instance().get_renderer().render_image(
-            detail::tex_buffers[window_id].texture,
-            src_x,
-            src_y,
-            src_width,
-            src_height,
-            0,
-            0,
-            dst_width,
-            dst_height);
-        gsel(window_id);
-        application::instance().get_renderer().render_image(
-            tmp_buffer,
-            0,
-            0,
-            dst_width,
-            dst_height,
-            detail::current_tex_buffer().x,
-            detail::current_tex_buffer().y);
-        return;
-    }
-
-    application::instance().get_renderer().render_image(
-        detail::tex_buffers[window_id].texture,
-        src_x,
-        src_y,
-        src_width,
-        src_height,
-        detail::current_tex_buffer().x,
-        detail::current_tex_buffer().y,
-        dst_width,
-        dst_height);
 }
 
 

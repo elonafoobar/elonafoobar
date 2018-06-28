@@ -326,9 +326,17 @@ void font(int size, snail::font_t::style_t style)
 
 
 
-void gcopy(int window_id, int src_x, int src_y, int src_width, int src_height)
+void gcopy(
+    int window_id,
+    int src_x,
+    int src_y,
+    int src_width,
+    int src_height,
+    int dst_width,
+    int dst_height)
 {
-    snail::hsp::gcopy(window_id, src_x, src_y, src_width, src_height);
+    snail::hsp::gcopy(
+        window_id, src_x, src_y, src_width, src_height, dst_width, dst_height);
 }
 
 
@@ -422,29 +430,6 @@ void grotate(
 void gsel(int window_id)
 {
     snail::hsp::gsel(window_id);
-}
-
-
-
-void gzoom(
-    int window_id,
-    int src_x,
-    int src_y,
-    int src_width,
-    int src_height,
-    int dst_width,
-    int dst_height,
-    bool blend)
-{
-    snail::hsp::gzoom(
-        window_id,
-        src_x,
-        src_y,
-        src_width,
-        src_height,
-        dst_width,
-        dst_height,
-        blend);
 }
 
 

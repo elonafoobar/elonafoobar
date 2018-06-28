@@ -103,7 +103,7 @@ void anime_halt()
     {
         await(config::instance().wait1 / 3);
         pos(x_at_txtfunc, y_at_txtfunc + 12 - cnt);
-        gzoom(3, 552, 504, 120, 22, 120, cnt * 2 + 1);
+        gcopy(3, 552, 504, 120, 22, 120, cnt * 2 + 1);
         redraw();
     }
     wait_key_pressed(true);
@@ -116,7 +116,7 @@ void anime_halt()
         if (cnt != 6)
         {
             pos(x_at_txtfunc, y_at_txtfunc + cnt * 2);
-            gzoom(3, 552, 504, 120, 22, 120, 22 - cnt * 4);
+            gcopy(3, 552, 504, 120, 22, 120, 22 - cnt * 4);
         }
         redraw();
     }
